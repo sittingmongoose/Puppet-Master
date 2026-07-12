@@ -1,0 +1,817 @@
+{
+  "assignment_id": "A005M15-000076-INTEGRATED-MACRO15-A27048DCD484-0009",
+  "attempt_id": "attempt-0015",
+  "audit_id": "audit-20260710-005-plan-assurance-model-lanes-fresh-agent-exhaustive",
+  "coverage": {
+    "all_micro_windows_reviewed": true,
+    "all_source_lines_reviewed": true,
+    "all_source_units_accounted": true,
+    "both_exact_and_adversarial_lenses_applied": true,
+    "dimensions_checked": [
+      "behavior",
+      "capabilities",
+      "inputs_outputs",
+      "contracts",
+      "states_transitions",
+      "authority",
+      "ownership",
+      "consumers",
+      "gui_truth",
+      "failures_recovery",
+      "security_privacy",
+      "propagation",
+      "operations",
+      "scale_performance",
+      "compatibility_migration",
+      "acceptance_oracles",
+      "builder_discretion",
+      "ambiguity_unknowns",
+      "missing_callers_consumers",
+      "invalid_states_transitions",
+      "concurrency_races",
+      "partial_failure",
+      "recovery_rollback",
+      "authority_boundaries",
+      "privacy_data_lifecycle",
+      "untrusted_inputs",
+      "gui_misleading_states",
+      "offline_network_loss",
+      "scale_limits",
+      "accessibility",
+      "localization",
+      "observability_support",
+      "destructive_actions",
+      "cross_document_seams",
+      "test_falsifiability",
+      "unknown_unknowns"
+    ]
+  },
+  "items": [
+    {
+      "builder_discretion": false,
+      "confidence": 0.99,
+      "dimensions": ["behavior", "capabilities", "inputs_outputs", "gui_truth"],
+      "evidence": [
+        {
+          "exact_quote": "      \"label\": \"Add Plugin (Install/Local)\",",
+          "line_end": 24500,
+          "line_start": 24500,
+          "path": "Plans/PMConcept_Control_Reconciliation.json",
+          "source_sha256": "cc3485b335e4bba3ed3192b1e15f8163d4b1c10f193c4ad74500b484e5f0dfc2"
+        }
+      ],
+      "gap_kind": "none",
+      "impact": "The concept inventory visibly proposes plugin installation/local addition alongside reload, MCP, and skill-management controls, preserving useful GUI source lineage for later owner adjudication.",
+      "item_id": "M15-0065-001",
+      "item_type": "feature",
+      "severity": "info",
+      "source_unit_refs": ["SEMANTIC:JSON_FIELD:Plans/PMConcept_Control_Reconciliation.json:controls:CONT-064", "STRUCTURAL:$.controls"],
+      "statement": "This window inventories plugin, MCP, and skill-management settings, including numeric and checkbox inputs, add/reload actions, an MCP provider selector, and a password input, but does not promote them to production behavior.",
+      "title": "Plugin, MCP, and skill settings are preserved as concept controls"
+    },
+    {
+      "builder_discretion": false,
+      "confidence": 0.97,
+      "dimensions": ["contracts", "authority", "failures_recovery", "security_privacy", "privacy_data_lifecycle", "untrusted_inputs", "test_falsifiability"],
+      "evidence": [
+        {
+          "exact_quote": "        \"type\": \"password\",",
+          "line_end": 24596,
+          "line_start": 24596,
+          "path": "Plans/PMConcept_Control_Reconciliation.json",
+          "source_sha256": "cc3485b335e4bba3ed3192b1e15f8163d4b1c10f193c4ad74500b484e5f0dfc2"
+        },
+        {
+          "exact_quote": "      \"canonical_command_id\": null,",
+          "line_end": 24604,
+          "line_start": 24604,
+          "path": "Plans/PMConcept_Control_Reconciliation.json",
+          "source_sha256": "cc3485b335e4bba3ed3192b1e15f8163d4b1c10f193c4ad74500b484e5f0dfc2"
+        }
+      ],
+      "gap_kind": "missing_secret_lifecycle_and_execution_contract",
+      "impact": "Promotion without an owner-defined secret boundary could expose credentials or create a nonfunctional security-sensitive field with no persistence, redaction, revocation, error, or acceptance semantics.",
+      "item_id": "M15-0065-002",
+      "item_type": "gap",
+      "severity": "high",
+      "source_unit_refs": ["SEMANTIC:JSON_FIELD:Plans/PMConcept_Control_Reconciliation.json:controls:CONT-064"],
+      "statement": "The MCP password control has no canonical command, wiring key, storage authority, lifetime, redaction, validation, failure recovery, or receipt contract; those choices cannot safely be delegated to a builder.",
+      "title": "MCP credential handling is intentionally uncontracted"
+    },
+    {
+      "builder_discretion": false,
+      "confidence": 0.99,
+      "dimensions": ["authority", "ownership", "compatibility_migration", "acceptance_oracles", "builder_discretion", "cross_document_seams"],
+      "evidence": [
+        {
+          "exact_quote": "      \"owner_rationale\": \"Owner-adjudicated as concept/source-lineage only. This control is not production evidence and is not promoted until a canonical owner doc accepts the behavior and a production wiring row supplies command/state/receipt/test evidence.\"",
+          "line_end": 24363,
+          "line_start": 24363,
+          "path": "Plans/PMConcept_Control_Reconciliation.json",
+          "source_sha256": "cc3485b335e4bba3ed3192b1e15f8163d4b1c10f193c4ad74500b484e5f0dfc2"
+        }
+      ],
+      "gap_kind": "none",
+      "impact": "The reconciliation record prevents concept controls from being mistaken for build-ready requirements and names the evidence classes required before promotion.",
+      "item_id": "M15-0065-003",
+      "item_type": "explicit_non_gap",
+      "severity": "info",
+      "source_unit_refs": ["SEMANTIC:JSON_FIELD:Plans/PMConcept_Control_Reconciliation.json:controls:CONT-064"],
+      "statement": "The repeated owner rationale is an explicit governance boundary: canonical owner acceptance plus command, state, receipt, and test evidence is required before any control in this segment becomes production truth.",
+      "title": "Concept lineage is explicitly barred from production evidence"
+    },
+    {
+      "builder_discretion": false,
+      "confidence": 0.99,
+      "dimensions": ["behavior", "capabilities", "states_transitions", "gui_truth"],
+      "evidence": [
+        {
+          "exact_quote": "        \"onchange\": \"toast('LSP globally ' + (this.checked ? 'enabled' : 'disabled'))\"",
+          "line_end": 24911,
+          "line_start": 24911,
+          "path": "Plans/PMConcept_Control_Reconciliation.json",
+          "source_sha256": "cc3485b335e4bba3ed3192b1e15f8163d4b1c10f193c4ad74500b484e5f0dfc2"
+        }
+      ],
+      "gap_kind": "none",
+      "impact": "The concept captures discoverable global and per-server LSP toggles for rust-analyzer, tsserver, pyright, and lua-ls, plus registry search and custom-server entry points.",
+      "item_id": "M15-0066-001",
+      "item_type": "feature",
+      "severity": "info",
+      "source_unit_refs": ["SEMANTIC:JSON_FIELD:Plans/PMConcept_Control_Reconciliation.json:controls:CONT-065", "STRUCTURAL:$.controls"],
+      "statement": "The LSP registry concept includes search filtering, a global enable switch, individual server enable switches, and a custom-server action; current handlers only express toast-level visual behavior.",
+      "title": "LSP registry and enablement controls are inventoried"
+    },
+    {
+      "builder_discretion": false,
+      "confidence": 0.99,
+      "dimensions": ["contracts", "states_transitions", "gui_truth", "failures_recovery", "operations", "invalid_states_transitions", "partial_failure", "recovery_rollback", "offline_network_loss", "observability_support", "test_falsifiability"],
+      "evidence": [
+        {
+          "exact_quote": "        \"onclick\": \"toast('Opening custom LSP server dialog...')\"",
+          "line_end": 25047,
+          "line_start": 25047,
+          "path": "Plans/PMConcept_Control_Reconciliation.json",
+          "source_sha256": "cc3485b335e4bba3ed3192b1e15f8163d4b1c10f193c4ad74500b484e5f0dfc2"
+        },
+        {
+          "exact_quote": "      \"canonical_command_id\": null,",
+          "line_end": 25056,
+          "line_start": 25056,
+          "path": "Plans/PMConcept_Control_Reconciliation.json",
+          "source_sha256": "cc3485b335e4bba3ed3192b1e15f8163d4b1c10f193c4ad74500b484e5f0dfc2"
+        }
+      ],
+      "gap_kind": "missing_lsp_lifecycle_contract",
+      "impact": "A promoted GUI could report enabled or opened states without starting, stopping, configuring, health-checking, or recovering a language server, producing misleading state and untestable failures.",
+      "item_id": "M15-0066-002",
+      "item_type": "gap",
+      "severity": "high",
+      "source_unit_refs": ["SEMANTIC:JSON_FIELD:Plans/PMConcept_Control_Reconciliation.json:controls:CONT-065"],
+      "statement": "No canonical command, persisted state model, process ownership, startup/timeout/retry behavior, partial-failure recovery, network-loss behavior, observability receipt, or acceptance oracle is supplied for global, per-server, or custom LSP operations.",
+      "title": "LSP controls can toast success without an executable lifecycle"
+    },
+    {
+      "builder_discretion": false,
+      "confidence": 0.98,
+      "dimensions": ["behavior", "capabilities", "inputs_outputs", "compatibility_migration", "gui_truth"],
+      "evidence": [
+        {
+          "exact_quote": "      \"label\": \"Bind Shortcut\",",
+          "line_end": 25319,
+          "line_start": 25319,
+          "path": "Plans/PMConcept_Control_Reconciliation.json",
+          "source_sha256": "cc3485b335e4bba3ed3192b1e15f8163d4b1c10f193c4ad74500b484e5f0dfc2"
+        },
+        {
+          "exact_quote": "      \"label\": \"/settings\",",
+          "line_end": 25437,
+          "line_start": 25437,
+          "path": "Plans/PMConcept_Control_Reconciliation.json",
+          "source_sha256": "cc3485b335e4bba3ed3192b1e15f8163d4b1c10f193c4ad74500b484e5f0dfc2"
+        }
+      ],
+      "gap_kind": "none",
+      "impact": "The inventory preserves proposed shortcut scope, key capture, reset/export/import entry points, and configurable chat-command tokens for later ownership decisions.",
+      "item_id": "M15-0067-001",
+      "item_type": "feature",
+      "severity": "info",
+      "source_unit_refs": ["SEMANTIC:JSON_FIELD:Plans/PMConcept_Control_Reconciliation.json:controls:CONT-066", "STRUCTURAL:$.controls"],
+      "statement": "This segment proposes scoped shortcut binding and editable chat-command aliases, including /settings, /model, and /effort, while remaining concept-only.",
+      "title": "Shortcut and chat-command configuration is represented"
+    },
+    {
+      "builder_discretion": false,
+      "confidence": 0.98,
+      "dimensions": ["contracts", "failures_recovery", "security_privacy", "partial_failure", "recovery_rollback", "untrusted_inputs", "destructive_actions", "test_falsifiability"],
+      "evidence": [
+        {
+          "exact_quote": "      \"label\": \"Reset all\",",
+          "line_end": 25368,
+          "line_start": 25368,
+          "path": "Plans/PMConcept_Control_Reconciliation.json",
+          "source_sha256": "cc3485b335e4bba3ed3192b1e15f8163d4b1c10f193c4ad74500b484e5f0dfc2"
+        },
+        {
+          "exact_quote": "      \"label\": \"Export/Import\",",
+          "line_end": 25391,
+          "line_start": 25391,
+          "path": "Plans/PMConcept_Control_Reconciliation.json",
+          "source_sha256": "cc3485b335e4bba3ed3192b1e15f8163d4b1c10f193c4ad74500b484e5f0dfc2"
+        }
+      ],
+      "gap_kind": "missing_destructive_and_import_transaction_contract",
+      "impact": "Unspecified reset and import semantics could erase bindings, accept malicious or incompatible files, or leave a partially applied keymap with no deterministic recovery path.",
+      "item_id": "M15-0067-002",
+      "item_type": "gap",
+      "severity": "high",
+      "source_unit_refs": ["SEMANTIC:JSON_FIELD:Plans/PMConcept_Control_Reconciliation.json:controls:CONT-066"],
+      "statement": "Reset-all and export/import lack confirmation scope, format/version validation, conflict policy, atomicity, rollback, backup, permission, and falsifiable success/failure receipts.",
+      "title": "Shortcut reset and import have no safety transaction"
+    },
+    {
+      "builder_discretion": false,
+      "confidence": 0.96,
+      "dimensions": ["inputs_outputs", "scale_performance", "ambiguity_unknowns", "scale_limits", "accessibility", "localization", "test_falsifiability"],
+      "evidence": [
+        {
+          "exact_quote": "      \"label\": \"300\",",
+          "line_end": 25145,
+          "line_start": 25145,
+          "path": "Plans/PMConcept_Control_Reconciliation.json",
+          "source_sha256": "cc3485b335e4bba3ed3192b1e15f8163d4b1c10f193c4ad74500b484e5f0dfc2"
+        },
+        {
+          "exact_quote": "        \"type\": \"number\",",
+          "line_end": 25147,
+          "line_start": 25147,
+          "path": "Plans/PMConcept_Control_Reconciliation.json",
+          "source_sha256": "cc3485b335e4bba3ed3192b1e15f8163d4b1c10f193c4ad74500b484e5f0dfc2"
+        }
+      ],
+      "gap_kind": "ambiguous_unbounded_numeric_settings",
+      "impact": "Builders and users cannot determine units, valid limits, localization, performance effects, or how invalid values should be announced and recovered.",
+      "item_id": "M15-0067-003",
+      "item_type": "gap",
+      "severity": "medium",
+      "source_unit_refs": ["SEMANTIC:JSON_FIELD:Plans/PMConcept_Control_Reconciliation.json:controls:CONT-066"],
+      "statement": "The LSP Timing & Behavior number inputs expose bare numeric labels such as 300, 2000, and 1000 without semantic names, units, minimums, maximums, overflow behavior, or validation oracles.",
+      "title": "LSP timing numbers are unlabeled and unbounded"
+    },
+    {
+      "builder_discretion": false,
+      "confidence": 0.99,
+      "dimensions": ["contracts", "authority", "security_privacy", "authority_boundaries", "untrusted_inputs", "destructive_actions", "test_falsifiability"],
+      "evidence": [
+        {
+          "exact_quote": "      \"label\": \"/revoke-evidence\",",
+          "line_end": 25593,
+          "line_start": 25593,
+          "path": "Plans/PMConcept_Control_Reconciliation.json",
+          "source_sha256": "cc3485b335e4bba3ed3192b1e15f8163d4b1c10f193c4ad74500b484e5f0dfc2"
+        },
+        {
+          "exact_quote": "      \"label\": \"/approve\",",
+          "line_end": 25619,
+          "line_start": 25619,
+          "path": "Plans/PMConcept_Control_Reconciliation.json",
+          "source_sha256": "cc3485b335e4bba3ed3192b1e15f8163d4b1c10f193c4ad74500b484e5f0dfc2"
+        }
+      ],
+      "gap_kind": "missing_privileged_chat_command_authority_contract",
+      "impact": "If promoted as editable aliases without an immutable authorization boundary, approval or evidence revocation could be ambiguous, spoofable, accidentally invoked, or dispatched under the wrong principal or scope.",
+      "item_id": "M15-0068-001",
+      "item_type": "gap",
+      "severity": "critical",
+      "source_unit_refs": ["SEMANTIC:JSON_FIELD:Plans/PMConcept_Control_Reconciliation.json:controls:CONT-067", "STRUCTURAL:$.controls"],
+      "statement": "The proposed /revoke-evidence and /approve text controls have no canonical command IDs, parser rules, collision handling, caller identity, authorization scope, confirmation, audit receipt, replay protection, or failure behavior.",
+      "title": "Privileged chat aliases have no authority boundary"
+    },
+    {
+      "builder_discretion": false,
+      "confidence": 0.98,
+      "dimensions": ["capabilities", "inputs_outputs", "authority", "ownership", "propagation", "cross_document_seams"],
+      "evidence": [
+        {
+          "exact_quote": "      \"label\": \"app.agent_rules.application_markdown\",",
+          "line_end": 25668,
+          "line_start": 25668,
+          "path": "Plans/PMConcept_Control_Reconciliation.json",
+          "source_sha256": "cc3485b335e4bba3ed3192b1e15f8163d4b1c10f193c4ad74500b484e5f0dfc2"
+        },
+        {
+          "exact_quote": "      \"label\": \".puppet-master/project-rules.md\",",
+          "line_end": 25694,
+          "line_start": 25694,
+          "path": "Plans/PMConcept_Control_Reconciliation.json",
+          "source_sha256": "cc3485b335e4bba3ed3192b1e15f8163d4b1c10f193c4ad74500b484e5f0dfc2"
+        }
+      ],
+      "gap_kind": "missing_rules_precedence_and_reload_contract",
+      "impact": "Without an owner-defined precedence and propagation model, application and project rule sources may conflict, load stale content, or apply to an unintended project or agent.",
+      "item_id": "M15-0068-002",
+      "item_type": "gap",
+      "severity": "high",
+      "source_unit_refs": ["SEMANTIC:JSON_FIELD:Plans/PMConcept_Control_Reconciliation.json:controls:CONT-067"],
+      "statement": "Application and project rule paths are named, but their authority, path trust boundary, precedence, merge behavior, reload trigger, invalid-file handling, propagation consumers, and observable applied-version receipt are unspecified.",
+      "title": "Rule source precedence and propagation are undefined"
+    },
+    {
+      "builder_discretion": false,
+      "confidence": 0.99,
+      "dimensions": ["ownership", "acceptance_oracles", "builder_discretion", "cross_document_seams"],
+      "evidence": [
+        {
+          "exact_quote": "      \"owner_rationale\": \"Owner-adjudicated as concept/source-lineage only. This control is not production evidence and is not promoted until a canonical owner doc accepts the behavior and a production wiring row supplies command/state/receipt/test evidence.\"",
+          "line_end": 25878,
+          "line_start": 25878,
+          "path": "Plans/PMConcept_Control_Reconciliation.json",
+          "source_sha256": "cc3485b335e4bba3ed3192b1e15f8163d4b1c10f193c4ad74500b484e5f0dfc2"
+        }
+      ],
+      "gap_kind": "none",
+      "impact": "The explicit owner boundary keeps rule, command, and editor concepts from silently becoming implementation discretion.",
+      "item_id": "M15-0068-003",
+      "item_type": "explicit_non_gap",
+      "severity": "info",
+      "source_unit_refs": ["SEMANTIC:JSON_FIELD:Plans/PMConcept_Control_Reconciliation.json:controls:CONT-067"],
+      "statement": "The segment consistently declares that owner acceptance and production wiring evidence are prerequisites for promotion.",
+      "title": "Owner adjudication remains a hard promotion gate"
+    },
+    {
+      "builder_discretion": false,
+      "confidence": 0.99,
+      "dimensions": ["contracts", "states_transitions", "failures_recovery", "concurrency_races", "partial_failure", "recovery_rollback", "untrusted_inputs", "destructive_actions", "test_falsifiability"],
+      "evidence": [
+        {
+          "exact_quote": "      \"label\": \"ask overwrite keep both\",",
+          "line_end": 26191,
+          "line_start": 26191,
+          "path": "Plans/PMConcept_Control_Reconciliation.json",
+          "source_sha256": "cc3485b335e4bba3ed3192b1e15f8163d4b1c10f193c4ad74500b484e5f0dfc2"
+        },
+        {
+          "exact_quote": "      \"label\": \"Copy Move\",",
+          "line_end": 26214,
+          "line_start": 26214,
+          "path": "Plans/PMConcept_Control_Reconciliation.json",
+          "source_sha256": "cc3485b335e4bba3ed3192b1e15f8163d4b1c10f193c4ad74500b484e5f0dfc2"
+        }
+      ],
+      "gap_kind": "missing_file_operation_safety_contract",
+      "impact": "Concurrent, interrupted, cross-filesystem, or conflicting copy/move operations could overwrite data, duplicate files, strand partial output, or present success before durability without a specified recovery route.",
+      "item_id": "M15-0069-001",
+      "item_type": "gap",
+      "severity": "critical",
+      "source_unit_refs": ["SEMANTIC:JSON_FIELD:Plans/PMConcept_Control_Reconciliation.json:controls:CONT-068", "STRUCTURAL:$.controls"],
+      "statement": "The file-manager conflict and copy/move controls do not define source/destination validation, overwrite confirmation, keep-both naming, symlink and traversal policy, atomicity, cancellation, concurrency, partial-failure cleanup, undo/rollback, or durable receipts.",
+      "title": "File overwrite and move semantics lack data-loss safeguards"
+    },
+    {
+      "builder_discretion": false,
+      "confidence": 0.97,
+      "dimensions": ["capabilities", "inputs_outputs", "security_privacy", "scale_limits", "ambiguity_unknowns"],
+      "evidence": [
+        {
+          "exact_quote": "      \"label\": \"SSH & Debug\",",
+          "line_end": 26262,
+          "line_start": 26262,
+          "path": "Plans/PMConcept_Control_Reconciliation.json",
+          "source_sha256": "cc3485b335e4bba3ed3192b1e15f8163d4b1c10f193c4ad74500b484e5f0dfc2"
+        },
+        {
+          "exact_quote": "      \"label\": \"22\",",
+          "line_end": 26285,
+          "line_start": 26285,
+          "path": "Plans/PMConcept_Control_Reconciliation.json",
+          "source_sha256": "cc3485b335e4bba3ed3192b1e15f8163d4b1c10f193c4ad74500b484e5f0dfc2"
+        }
+      ],
+      "gap_kind": "ambiguous_ssh_numeric_input",
+      "impact": "The likely port setting cannot be safely validated or localized from the inventory alone, and malformed or privileged port values have no defined error behavior.",
+      "item_id": "M15-0069-002",
+      "item_type": "gap",
+      "severity": "medium",
+      "source_unit_refs": ["SEMANTIC:JSON_FIELD:Plans/PMConcept_Control_Reconciliation.json:controls:CONT-068"],
+      "statement": "The SSH & Debug section exposes a number input labeled only 22, with no semantic field name, allowed range, defaulting rule, privilege constraint, or validation oracle.",
+      "title": "SSH port intent is only implied by a bare value"
+    },
+    {
+      "builder_discretion": false,
+      "confidence": 0.98,
+      "dimensions": ["contracts", "authority", "security_privacy", "authority_boundaries", "privacy_data_lifecycle", "offline_network_loss", "observability_support"],
+      "evidence": [
+        {
+          "exact_quote": "      \"label\": \"SSH key Password Agent\",",
+          "line_end": 26311,
+          "line_start": 26311,
+          "path": "Plans/PMConcept_Control_Reconciliation.json",
+          "source_sha256": "cc3485b335e4bba3ed3192b1e15f8163d4b1c10f193c4ad74500b484e5f0dfc2"
+        },
+        {
+          "exact_quote": "      \"canonical_command_id\": null,",
+          "line_end": 26318,
+          "line_start": 26318,
+          "path": "Plans/PMConcept_Control_Reconciliation.json",
+          "source_sha256": "cc3485b335e4bba3ed3192b1e15f8163d4b1c10f193c4ad74500b484e5f0dfc2"
+        }
+      ],
+      "gap_kind": "missing_ssh_authentication_contract",
+      "impact": "Promotion without an explicit trust and credential model could leak passwords or keys, silently fall back to weaker authentication, or leave users unable to diagnose host-key, agent, or network failures.",
+      "item_id": "M15-0070-001",
+      "item_type": "gap",
+      "severity": "critical",
+      "source_unit_refs": ["SEMANTIC:JSON_FIELD:Plans/PMConcept_Control_Reconciliation.json:controls:CONT-069", "STRUCTURAL:$.controls"],
+      "statement": "The SSH key/password/agent selector lacks credential-source authority, secret storage and clearing, host-key verification, fallback ordering, prompting, offline behavior, failure recovery, and audit/diagnostic receipt semantics.",
+      "title": "SSH authentication choices lack a trust boundary"
+    },
+    {
+      "builder_discretion": false,
+      "confidence": 0.99,
+      "dimensions": ["behavior", "states_transitions", "gui_truth", "accessibility"],
+      "evidence": [
+        {
+          "exact_quote": "      \"role\": \"tablist\",",
+          "line_end": 26434,
+          "line_start": 26434,
+          "path": "Plans/PMConcept_Control_Reconciliation.json",
+          "source_sha256": "cc3485b335e4bba3ed3192b1e15f8163d4b1c10f193c4ad74500b484e5f0dfc2"
+        },
+        {
+          "exact_quote": "        \"aria-selected\": \"true\",",
+          "line_end": 26466,
+          "line_start": 26466,
+          "path": "Plans/PMConcept_Control_Reconciliation.json",
+          "source_sha256": "cc3485b335e4bba3ed3192b1e15f8163d4b1c10f193c4ad74500b484e5f0dfc2"
+        }
+      ],
+      "gap_kind": "none",
+      "impact": "The concept at least records selected-state and tablist semantics for Terminal, Problems, Output, Ports, Browser, and Debug, providing an accessibility-oriented shape for later owner work.",
+      "item_id": "M15-0070-002",
+      "item_type": "gui_truth",
+      "severity": "info",
+      "source_unit_refs": ["SEMANTIC:JSON_FIELD:Plans/PMConcept_Control_Reconciliation.json:controls:CONT-069"],
+      "statement": "The bottom panel models a tablist with Terminal initially active and uses aria-selected and roving tabindex values to represent the visible tab state.",
+      "title": "Bottom-panel tab state has partial semantic modeling"
+    },
+    {
+      "builder_discretion": false,
+      "confidence": 1.0,
+      "dimensions": ["states_transitions", "gui_truth", "invalid_states_transitions", "accessibility", "test_falsifiability"],
+      "evidence": [
+        {
+          "exact_quote": "        \"click_handler_without_keyboard_parity\"",
+          "line_end": 26477,
+          "line_start": 26477,
+          "path": "Plans/PMConcept_Control_Reconciliation.json",
+          "source_sha256": "cc3485b335e4bba3ed3192b1e15f8163d4b1c10f193c4ad74500b484e5f0dfc2"
+        },
+        {
+          "exact_quote": "        \"click_handler_without_keyboard_parity\"",
+          "line_end": 26647,
+          "line_start": 26647,
+          "path": "Plans/PMConcept_Control_Reconciliation.json",
+          "source_sha256": "cc3485b335e4bba3ed3192b1e15f8163d4b1c10f193c4ad74500b484e5f0dfc2"
+        }
+      ],
+      "gap_kind": "missing_keyboard_tab_interaction",
+      "impact": "Keyboard and assistive-technology users may be unable to change tabs even though the controls advertise tab roles and selectable state.",
+      "item_id": "M15-0070-003",
+      "item_type": "gap",
+      "severity": "high",
+      "source_unit_refs": ["SEMANTIC:JSON_FIELD:Plans/PMConcept_Control_Reconciliation.json:controls:CONT-069"],
+      "statement": "Every visible bottom-panel tab is click-driven and explicitly flagged as lacking keyboard parity; no Arrow, Home, End, Enter, or Space transition contract is supplied.",
+      "title": "Bottom-panel tabs advertise semantics but exclude keyboard operation"
+    },
+    {
+      "builder_discretion": false,
+      "confidence": 1.0,
+      "dimensions": ["gui_truth", "compatibility_migration", "acceptance_oracles", "test_falsifiability"],
+      "evidence": [
+        {
+          "exact_quote": "        \"Contains mock/demo/local fixture state and is excluded from acceptance evidence unless replaced by a real state contract.\"",
+          "line_end": 26737,
+          "line_start": 26737,
+          "path": "Plans/PMConcept_Control_Reconciliation.json",
+          "source_sha256": "cc3485b335e4bba3ed3192b1e15f8163d4b1c10f193c4ad74500b484e5f0dfc2"
+        }
+      ],
+      "gap_kind": "none",
+      "impact": "The mock terminal, problem, browser-session, and local-host data cannot be used to claim implementation or acceptance closure.",
+      "item_id": "M15-0071-001",
+      "item_type": "explicit_non_gap",
+      "severity": "info",
+      "source_unit_refs": ["SEMANTIC:JSON_FIELD:Plans/PMConcept_Control_Reconciliation.json:controls:CONT-070", "STRUCTURAL:$.controls"],
+      "statement": "The reconciliation record explicitly classifies the bottom-panel data and actions as concept fixtures and excludes them from acceptance evidence until backed by a real state contract.",
+      "title": "Fixture-only bottom-panel state is explicitly non-evidence"
+    },
+    {
+      "builder_discretion": false,
+      "confidence": 0.99,
+      "dimensions": ["contracts", "states_transitions", "authority", "gui_truth", "observability_support", "cross_document_seams", "test_falsifiability"],
+      "evidence": [
+        {
+          "exact_quote": "        \"title\": \"cmd.terminal.show\",",
+          "line_end": 26752,
+          "line_start": 26752,
+          "path": "Plans/PMConcept_Control_Reconciliation.json",
+          "source_sha256": "cc3485b335e4bba3ed3192b1e15f8163d4b1c10f193c4ad74500b484e5f0dfc2"
+        },
+        {
+          "exact_quote": "      \"canonical_command_id\": null,",
+          "line_end": 26764,
+          "line_start": 26764,
+          "path": "Plans/PMConcept_Control_Reconciliation.json",
+          "source_sha256": "cc3485b335e4bba3ed3192b1e15f8163d4b1c10f193c4ad74500b484e5f0dfc2"
+        }
+      ],
+      "gap_kind": "fixture_command_token_without_production_binding",
+      "impact": "A production-looking Reveal in Terminal or Focus shell action could be mistaken for a wired capability despite having only demo dispatch, no canonical command, no authoritative state transition, and no receipt or test oracle.",
+      "item_id": "M15-0071-002",
+      "item_type": "gap",
+      "severity": "high",
+      "source_unit_refs": ["SEMANTIC:JSON_FIELD:Plans/PMConcept_Control_Reconciliation.json:controls:CONT-070"],
+      "statement": "The terminal buttons carry command-like tokens and call PM_TERMINAL_DEMO, but canonical_command_id and wiring_matrix_key remain null and the controls are fixture-only.",
+      "title": "Terminal command tokens are not production command evidence"
+    },
+    {
+      "builder_discretion": false,
+      "confidence": 1.0,
+      "dimensions": ["gui_truth", "invalid_states_transitions", "accessibility", "test_falsifiability"],
+      "evidence": [
+        {
+          "exact_quote": "        \"custom_click_target_missing_role\",",
+          "line_end": 26819,
+          "line_start": 26819,
+          "path": "Plans/PMConcept_Control_Reconciliation.json",
+          "source_sha256": "cc3485b335e4bba3ed3192b1e15f8163d4b1c10f193c4ad74500b484e5f0dfc2"
+        },
+        {
+          "exact_quote": "        \"click_handler_without_keyboard_parity\"",
+          "line_end": 27053,
+          "line_start": 27053,
+          "path": "Plans/PMConcept_Control_Reconciliation.json",
+          "source_sha256": "cc3485b335e4bba3ed3192b1e15f8163d4b1c10f193c4ad74500b484e5f0dfc2"
+        }
+      ],
+      "gap_kind": "inaccessible_click_only_rows_and_subtabs",
+      "impact": "Users who cannot use a pointer may be unable to reveal diagnostic sessions or switch Console, Network, and Evidence content, while assistive technology receives no reliable interactive semantics.",
+      "item_id": "M15-0071-003",
+      "item_type": "gap",
+      "severity": "high",
+      "source_unit_refs": ["SEMANTIC:JSON_FIELD:Plans/PMConcept_Control_Reconciliation.json:controls:CONT-070"],
+      "statement": "Problem rows and Browser subtabs use onclick handlers on non-interactive tr and span elements and are explicitly flagged for missing roles and keyboard parity.",
+      "title": "Diagnostic rows and Browser subtabs are pointer-only"
+    },
+    {
+      "builder_discretion": false,
+      "confidence": 1.0,
+      "dimensions": ["gui_truth", "failures_recovery", "accessibility", "observability_support"],
+      "evidence": [
+        {
+          "exact_quote": "        \"disabled_control_missing_visible_reason_ref\"",
+          "line_end": 26903,
+          "line_start": 26903,
+          "path": "Plans/PMConcept_Control_Reconciliation.json",
+          "source_sha256": "cc3485b335e4bba3ed3192b1e15f8163d4b1c10f193c4ad74500b484e5f0dfc2"
+        }
+      ],
+      "gap_kind": "disabled_state_without_visible_reason",
+      "impact": "A disabled bottom-panel control can appear broken or permanently unavailable without telling the user which prerequisite, failure, permission, or recovery action applies.",
+      "item_id": "M15-0071-004",
+      "item_type": "gap",
+      "severity": "medium",
+      "source_unit_refs": ["SEMANTIC:JSON_FIELD:Plans/PMConcept_Control_Reconciliation.json:controls:CONT-070"],
+      "statement": "The disabled checkbox state has no visible reason reference or specified linkage to a prerequisite, diagnostic explanation, or recovery action.",
+      "title": "Disabled bottom-panel state has no explanation"
+    },
+    {
+      "builder_discretion": false,
+      "confidence": 1.0,
+      "dimensions": ["gui_truth", "compatibility_migration", "acceptance_oracles", "test_falsifiability"],
+      "evidence": [
+        {
+          "exact_quote": "        \"onclick\": \"PM_TERMINAL_DEMO.dispatch('cmd.dev.show_problems',{})\"",
+          "line_end": 27077,
+          "line_start": 27077,
+          "path": "Plans/PMConcept_Control_Reconciliation.json",
+          "source_sha256": "cc3485b335e4bba3ed3192b1e15f8163d4b1c10f193c4ad74500b484e5f0dfc2"
+        },
+        {
+          "exact_quote": "        \"Contains mock/demo/local fixture state and is excluded from acceptance evidence unless replaced by a real state contract.\"",
+          "line_end": 27091,
+          "line_start": 27091,
+          "path": "Plans/PMConcept_Control_Reconciliation.json",
+          "source_sha256": "cc3485b335e4bba3ed3192b1e15f8163d4b1c10f193c4ad74500b484e5f0dfc2"
+        }
+      ],
+      "gap_kind": "none",
+      "impact": "The show-problems demo cannot be counted as production wiring or acceptance proof merely because it contains a plausible command token.",
+      "item_id": "M15-0072-001",
+      "item_type": "explicit_non_gap",
+      "severity": "info",
+      "source_unit_refs": ["SEMANTIC:JSON_FIELD:Plans/PMConcept_Control_Reconciliation.json:controls:CONT-071", "STRUCTURAL:$.controls"],
+      "statement": "Show Problems is explicitly bound to PM_TERMINAL_DEMO and classified as concept_fixture_only, with fixture state excluded from acceptance evidence.",
+      "title": "Show Problems remains explicitly fixture-only"
+    },
+    {
+      "builder_discretion": false,
+      "confidence": 1.0,
+      "dimensions": ["gui_truth", "failures_recovery", "accessibility", "observability_support"],
+      "evidence": [
+        {
+          "exact_quote": "        \"disabled_control_missing_visible_reason_ref\"",
+          "line_end": 27112,
+          "line_start": 27112,
+          "path": "Plans/PMConcept_Control_Reconciliation.json",
+          "source_sha256": "cc3485b335e4bba3ed3192b1e15f8163d4b1c10f193c4ad74500b484e5f0dfc2"
+        }
+      ],
+      "gap_kind": "disabled_state_without_visible_reason",
+      "impact": "Users cannot distinguish an intentional prerequisite gate from a defect, permission denial, unsupported capability, or recoverable runtime failure.",
+      "item_id": "M15-0072-002",
+      "item_type": "gap",
+      "severity": "medium",
+      "source_unit_refs": ["SEMANTIC:JSON_FIELD:Plans/PMConcept_Control_Reconciliation.json:controls:CONT-071"],
+      "statement": "Two disabled bottom-panel checkbox controls are explicitly flagged as missing a visible reason reference and have no command, state owner, or recovery explanation.",
+      "title": "Disabled controls conceal prerequisites and recovery"
+    },
+    {
+      "builder_discretion": false,
+      "confidence": 0.99,
+      "dimensions": ["contracts", "states_transitions", "authority", "gui_truth", "failures_recovery", "concurrency_races", "partial_failure", "recovery_rollback", "authority_boundaries", "accessibility", "destructive_actions", "test_falsifiability"],
+      "evidence": [
+        {
+          "exact_quote": "      \"label\": \"feat/schema-update 2 dirty\",",
+          "line_end": 27226,
+          "line_start": 27226,
+          "path": "Plans/PMConcept_Control_Reconciliation.json",
+          "source_sha256": "cc3485b335e4bba3ed3192b1e15f8163d4b1c10f193c4ad74500b484e5f0dfc2"
+        },
+        {
+          "exact_quote": "      \"label\": \"+ Create New Worktree\",",
+          "line_end": 27366,
+          "line_start": 27366,
+          "path": "Plans/PMConcept_Control_Reconciliation.json",
+          "source_sha256": "cc3485b335e4bba3ed3192b1e15f8163d4b1c10f193c4ad74500b484e5f0dfc2"
+        },
+        {
+          "exact_quote": "      \"label\": \"Unbind\",",
+          "line_end": 27401,
+          "line_start": 27401,
+          "path": "Plans/PMConcept_Control_Reconciliation.json",
+          "source_sha256": "cc3485b335e4bba3ed3192b1e15f8163d4b1c10f193c4ad74500b484e5f0dfc2"
+        }
+      ],
+      "gap_kind": "missing_worktree_binding_transaction_and_accessibility_contract",
+      "impact": "Binding, creation, or unbinding could target the wrong worktree, lose association with dirty work, race filesystem or Git state, or become inaccessible to keyboard users, with no defined rollback or receipt.",
+      "item_id": "M15-0072-003",
+      "item_type": "gap",
+      "severity": "critical",
+      "source_unit_refs": ["SEMANTIC:JSON_FIELD:Plans/PMConcept_Control_Reconciliation.json:controls:CONT-071"],
+      "statement": "Worktree selection, creation, and unbinding are click handlers on concept-only controls with no canonical commands, authorization scope, dirty-state interlock, concurrent-change check, atomic transition, rollback, durable receipt, or keyboard-operable role and name contract.",
+      "title": "Worktree binding actions lack authority, safety, and keyboard semantics"
+    },
+    {
+      "builder_discretion": false,
+      "confidence": 0.99,
+      "dimensions": ["states_transitions", "gui_truth", "scale_performance", "gui_misleading_states", "scale_limits", "accessibility", "observability_support", "destructive_actions", "test_falsifiability"],
+      "evidence": [
+        {
+          "exact_quote": "      \"label\": \"42k/128k Usage 42,180 / 128,000 Input 38.2k tokens Output 3.9k tokens Compact Now More Details\",",
+          "line_end": 27436,
+          "line_start": 27436,
+          "path": "Plans/PMConcept_Control_Reconciliation.json",
+          "source_sha256": "cc3485b335e4bba3ed3192b1e15f8163d4b1c10f193c4ad74500b484e5f0dfc2"
+        },
+        {
+          "exact_quote": "        \"custom_click_target_missing_role\",",
+          "line_end": 27451,
+          "line_start": 27451,
+          "path": "Plans/PMConcept_Control_Reconciliation.json",
+          "source_sha256": "cc3485b335e4bba3ed3192b1e15f8163d4b1c10f193c4ad74500b484e5f0dfc2"
+        }
+      ],
+      "gap_kind": "static_usage_and_compaction_control_without_state_contract",
+      "impact": "Static token counts and a production-looking Compact Now affordance can misrepresent current capacity or trigger an irreversible context transformation without explaining freshness, scope, eligibility, progress, failure, or resulting evidence retention.",
+      "item_id": "M15-0072-004",
+      "item_type": "gap",
+      "severity": "high",
+      "source_unit_refs": ["SEMANTIC:JSON_FIELD:Plans/PMConcept_Control_Reconciliation.json:controls:CONT-071"],
+      "statement": "The usage hover control embeds fixed usage values and Compact Now text in a click-only span with no role or keyboard parity, canonical command, live-data source, staleness model, compaction transition, failure recovery, or acceptance receipt.",
+      "title": "Usage and compaction UI can present stale or unsafe state"
+    }
+  ],
+  "model": "gpt-5.6-sol",
+  "phase": "blind_macro_window_review",
+  "reasoning_effort": "xhigh",
+  "schema_version": "macro-review-result-v1",
+  "segments": [
+    {
+      "core_range": [24339, 24727],
+      "covered_source_unit_refs": ["SEMANTIC:JSON_FIELD:Plans/PMConcept_Control_Reconciliation.json:controls:CONT-064", "STRUCTURAL:$.controls"],
+      "item_ids": ["M15-0065-001", "M15-0065-002", "M15-0065-003"],
+      "reviewed": true,
+      "summary": "Reviewed all plugin, MCP, and skills concept controls; retained the explicit promotion boundary and identified the unowned credential lifecycle and execution contract.",
+      "window_id": "WIN-A27048DCD484-0065"
+    },
+    {
+      "core_range": [24728, 25110],
+      "covered_source_unit_refs": ["SEMANTIC:JSON_FIELD:Plans/PMConcept_Control_Reconciliation.json:controls:CONT-065", "STRUCTURAL:$.controls"],
+      "item_ids": ["M15-0066-001", "M15-0066-002"],
+      "reviewed": true,
+      "summary": "Reviewed formatter and LSP registry controls; the proposed search and toggle surface is preserved, while toast-only handlers lack a production lifecycle, recovery, and oracle contract.",
+      "window_id": "WIN-A27048DCD484-0066"
+    },
+    {
+      "core_range": [25111, 25505],
+      "covered_source_unit_refs": ["SEMANTIC:JSON_FIELD:Plans/PMConcept_Control_Reconciliation.json:controls:CONT-066", "STRUCTURAL:$.controls"],
+      "item_ids": ["M15-0067-001", "M15-0067-002", "M15-0067-003"],
+      "reviewed": true,
+      "summary": "Reviewed LSP timing, shortcut, and chat-command settings; reset/import safety and numeric input semantics remain uncontracted.",
+      "window_id": "WIN-A27048DCD484-0067"
+    },
+    {
+      "core_range": [25506, 25904],
+      "covered_source_unit_refs": ["SEMANTIC:JSON_FIELD:Plans/PMConcept_Control_Reconciliation.json:controls:CONT-067", "STRUCTURAL:$.controls"],
+      "item_ids": ["M15-0068-001", "M15-0068-002", "M15-0068-003"],
+      "reviewed": true,
+      "summary": "Reviewed privileged chat aliases, rule-source fields, and editor UX concepts; approval/revocation authority and rule precedence are unresolved, while owner adjudication remains explicit.",
+      "window_id": "WIN-A27048DCD484-0068"
+    },
+    {
+      "core_range": [25905, 26301],
+      "covered_source_unit_refs": ["SEMANTIC:JSON_FIELD:Plans/PMConcept_Control_Reconciliation.json:controls:CONT-068", "STRUCTURAL:$.controls"],
+      "item_ids": ["M15-0069-001", "M15-0069-002"],
+      "reviewed": true,
+      "summary": "Reviewed editor and file-manager settings through the start of SSH & Debug; file mutation safety and the implied SSH numeric field remain undefined.",
+      "window_id": "WIN-A27048DCD484-0069"
+    },
+    {
+      "core_range": [26302, 26685],
+      "covered_source_unit_refs": ["SEMANTIC:JSON_FIELD:Plans/PMConcept_Control_Reconciliation.json:controls:CONT-069", "STRUCTURAL:$.controls"],
+      "item_ids": ["M15-0070-001", "M15-0070-002", "M15-0070-003"],
+      "reviewed": true,
+      "summary": "Reviewed SSH authentication settings and bottom-panel tabs; partial tab semantics exist, but credential trust and complete keyboard operation are absent.",
+      "window_id": "WIN-A27048DCD484-0070"
+    },
+    {
+      "core_range": [26686, 27064],
+      "covered_source_unit_refs": ["SEMANTIC:JSON_FIELD:Plans/PMConcept_Control_Reconciliation.json:controls:CONT-070", "STRUCTURAL:$.controls"],
+      "item_ids": ["M15-0071-001", "M15-0071-002", "M15-0071-003", "M15-0071-004"],
+      "reviewed": true,
+      "summary": "Reviewed bottom-panel collapse, terminal, Problems, Ports, Browser, and subtab controls; fixture exclusion is clear, while production binding, keyboard semantics, and disabled-state explanations are missing.",
+      "window_id": "WIN-A27048DCD484-0071"
+    },
+    {
+      "core_range": [27065, 27461],
+      "covered_source_unit_refs": ["SEMANTIC:JSON_FIELD:Plans/PMConcept_Control_Reconciliation.json:controls:CONT-071", "STRUCTURAL:$.controls"],
+      "item_ids": ["M15-0072-001", "M15-0072-002", "M15-0072-003", "M15-0072-004"],
+      "reviewed": true,
+      "summary": "Reviewed show-problems, disabled states, worktree binding/create/unbind, and usage/compaction controls; fixture boundaries are explicit, but destructive authority, transaction recovery, live-state truth, and accessibility contracts are absent.",
+      "window_id": "WIN-A27048DCD484-0072"
+    }
+  ],
+  "self_attestation": {
+    "no_canonical_writes": true,
+    "no_external_research_during_blind_review": true,
+    "no_peer_result_access": true,
+    "no_prior_audit_access": true,
+    "no_unrelated_source_access": true,
+    "terminal_after_submission": true
+  },
+  "source_binding": {
+    "bundle_id": "MACRO15-A27048DCD484-0009",
+    "document_path": "Plans/PMConcept_Control_Reconciliation.json",
+    "micro_window_ids": ["WIN-A27048DCD484-0065", "WIN-A27048DCD484-0066", "WIN-A27048DCD484-0067", "WIN-A27048DCD484-0068", "WIN-A27048DCD484-0069", "WIN-A27048DCD484-0070", "WIN-A27048DCD484-0071", "WIN-A27048DCD484-0072"],
+    "source_sha256": "cc3485b335e4bba3ed3192b1e15f8163d4b1c10f193c4ad74500b484e5f0dfc2"
+  },
+  "status": "completed",
+  "synthesis": {
+    "cross_document_questions": [
+      "Which canonical owner document accepts or retires each plugin, MCP, skill, formatter, LSP, shortcut, rule, editor, file-manager, SSH, bottom-panel, worktree, and usage control family?",
+      "Where are the production command, authoritative state, handler, receipt, and test rows for any concept control that is promoted?",
+      "Which canonical security owner defines MCP secret lifecycle, SSH authentication trust, privileged approval and evidence-revocation authority, and worktree mutation authorization?",
+      "Which canonical GUI owner defines keyboard interaction, visible disabled reasons, stale-data presentation, and error or recovery states for the bottom-panel and usage surfaces?"
+    ],
+    "feature_family_keys": [
+      "plugin-mcp-skill-settings",
+      "formatter-lsp-registry",
+      "shortcut-chat-command-configuration",
+      "rules-editor-ux",
+      "file-manager-operations",
+      "ssh-debug-authentication",
+      "bottom-runtime-tabs-and-diagnostics",
+      "worktree-binding",
+      "context-usage-and-compaction"
+    ],
+    "research_queries": [
+      "Secure desktop credential lifecycle patterns for MCP tokens and SSH key password agent selection",
+      "Atomic copy move overwrite keep-both conflict recovery and cancellation UX contracts",
+      "Accessible tablist and custom interactive-row keyboard behavior for desktop GUI frameworks",
+      "Safe worktree binding creation unbinding dirty-state concurrency and rollback semantics",
+      "Live token usage freshness and user-visible context compaction progress failure and recovery patterns"
+    ]
+  },
+  "task_thread_id": "/root/a005m15_b5_000076_attempt_0015_terminal"
+}

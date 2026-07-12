@@ -253,6 +253,73 @@
     }
     .activity-bar-toggle:hover { color: var(--text-primary); }
 
+    /* ── activity bar customization: drag-reorder / hide-to-tray ──
+       (pm6-js-panels initActivityBarCustomization owns the behavior) */
+    .pm-ab-ghost {
+      position: fixed;
+      z-index: 12001;
+      margin: 0;
+      opacity: .85;
+      pointer-events: none;
+    }
+    .pm-ab-drop-indicator {
+      position: fixed;
+      z-index: 12001;
+      height: 2px;
+      border-radius: 1px;
+      background: var(--accent-blue);
+      pointer-events: none;
+    }
+    body.pm-ab-dragging { cursor: grabbing; }
+    /* kill both the base and the friendly hover scale while dragging */
+    body.pm-ab-dragging .activity-bar .icon:hover .symbol { transform: none !important; }
+    .activity-bar .icon.pm-ab-drag-src { opacity: .35; }
+    /* drop-to-hide affordance: More lights up while a drag hovers it */
+    .activity-bar .icon.pm-ab-drop-hot {
+      color: var(--text-primary);
+      background: var(--surface-elevated);
+    }
+    #abMoreBtn[data-empty="1"] { display: none; }
+    /* the tray target must be droppable even while it is still empty */
+    body.pm-ab-dragging #abMoreBtn[data-empty="1"] { display: flex; }
+    .pm-ab-tray {
+      position: fixed;
+      z-index: 12000;
+      display: flex;
+      flex-direction: column;
+      gap: 2px;
+      min-width: 160px;
+      max-width: 240px;
+      padding: var(--xs);
+      background: var(--surface-elevated);
+      border: 1px solid var(--border-light);
+      border-radius: var(--border-radius);
+      box-shadow: var(--elev-2);
+    }
+    .pm-ab-tray-row {
+      display: flex;
+      align-items: center;
+      gap: var(--sm);
+      padding: var(--xs) var(--sm);
+      border: none;
+      background: none;
+      color: var(--text-secondary);
+      font-family: var(--body-font);
+      font-size: 12px;
+      text-align: left;
+      border-radius: var(--border-radius);
+      cursor: pointer;
+    }
+    .pm-ab-tray-row:hover { background: var(--surface); color: var(--text-primary); }
+    .pm-ab-tray-row .pm-ab-tray-ico {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      width: 16px;
+      height: 16px;
+      flex: none;
+    }
+
     .files-panel {
       width: var(--files-panel-w, 260px);
       min-width: 200px;

@@ -1,0 +1,718 @@
+{
+  "assignment_records": {
+    "A005ERSC-0001": {
+      "agent_path_actual": "/root/sol_controller_v29/a005_ersc_0001_attempt_0001_ultra_v29",
+      "agent_path_required": "/root/a005_external_research_universal_shadow_certification_0001_attempt_0001_terminal",
+      "agent_path_schema_match": false,
+      "binding_checks": {
+        "activation": true,
+        "certification_coverage": true,
+        "intent_overlay": true,
+        "packet": true,
+        "receipt_native_result_hashes": true,
+        "source_feature_bindings": true
+      },
+      "candidate_credit": 0,
+      "certification_decision_counts": {
+        "uncertain": 243
+      },
+      "feature_count": 243,
+      "feature_refs_digest": "c9b26b45bd8bcb87c8fe3bdb24115b61392654bd5dbee4bcc057adc242989067",
+      "packet_id": "ERSCPKT-0001",
+      "packet_sha256": "66b83cfb424874a8191330c1e20d7a0d2aeeaa2e1e98d7124d3dd5e91d0e566e",
+      "primary_errors": [
+        "input-binding:source_transaction_digest",
+        "schema:agent_path:'/root/sol_controller_v29/a005_ersc_0001_attempt_0001_ultra_v29' does not match '^/root/a005_external_research_universal_shadow_certification_[0-9]{4}_attempt_0001_terminal$'"
+      ],
+      "receipt_sha256": "49391a9c473b08bd7377d6ad4e3cd0c311821105978ef13546537d9942e88a5b",
+      "result_model": "gpt-5.6-sol",
+      "result_reasoning_effort": "ultra",
+      "result_sha256": "c2ce7f591f1463b77d9a5ad99bae177374172491546df31164ba088014d877cc",
+      "result_status": "completed",
+      "source_transaction_digest_actual": "27f74ed0281da5ba6a9ce51e9c31213b5444dacd17ea7fb74b3a4ef4e618d0d6",
+      "source_transaction_digest_expected": "c4ce218e0aa044d850b1b026fe10b98766138748b585e2680916fb80964cc70f",
+      "source_transaction_digest_match": false,
+      "status": "rejected",
+      "terminal_response": "PMR1",
+      "terminal_status": "completed"
+    },
+    "A005ERSC-0002": {
+      "agent_path_actual": "/root/sol_controller_v29/a005_ersc_0002_attempt_0001_ultra_v29",
+      "agent_path_required": "/root/a005_external_research_universal_shadow_certification_0002_attempt_0001_terminal",
+      "agent_path_schema_match": false,
+      "binding_checks": {
+        "activation": true,
+        "certification_coverage": true,
+        "intent_overlay": true,
+        "packet": true,
+        "receipt_native_result_hashes": true,
+        "source_feature_bindings": true
+      },
+      "candidate_credit": 0,
+      "certification_decision_counts": {
+        "uncertain": 243
+      },
+      "feature_count": 243,
+      "feature_refs_digest": "b536b169b494708e6cba92b51a1c626abd98eb977a3396dc35371b6b7da32faf",
+      "packet_id": "ERSCPKT-0002",
+      "packet_sha256": "ecf221e05e0e6ac38c8044c83b74f23987baab83039bb5c978bc7d3a64cada65",
+      "primary_errors": [
+        "input-binding:source_transaction_digest",
+        "schema:agent_path:'/root/sol_controller_v29/a005_ersc_0002_attempt_0001_ultra_v29' does not match '^/root/a005_external_research_universal_shadow_certification_[0-9]{4}_attempt_0001_terminal$'"
+      ],
+      "receipt_sha256": "2556e7619ec05e5f7326b31bd87db1d6069c35a0081e9d2f75444ff88bc9b2d3",
+      "result_model": "gpt-5.6-sol",
+      "result_reasoning_effort": "ultra",
+      "result_sha256": "d3b0329016915768f13cb4e61bb18324db0e91c7f37a7d9ee214bd89f8a13413",
+      "result_status": "completed",
+      "source_transaction_digest_actual": "09ab0d1456f38885a2b0dba4a41681520afbd0ee4e562b1f85e92bd30322979d",
+      "source_transaction_digest_expected": "c4ce218e0aa044d850b1b026fe10b98766138748b585e2680916fb80964cc70f",
+      "source_transaction_digest_match": false,
+      "status": "rejected",
+      "terminal_response": "PMR1",
+      "terminal_status": "completed"
+    },
+    "A005ERSC-0003": {
+      "agent_path_actual": "/root/sol_controller_v29/a005_ersc_0003_attempt_0001_ultra_v29",
+      "agent_path_required": "/root/a005_external_research_universal_shadow_certification_0003_attempt_0001_terminal",
+      "agent_path_schema_match": false,
+      "binding_checks": {
+        "activation": true,
+        "certification_coverage": true,
+        "intent_overlay": true,
+        "packet": true,
+        "receipt_native_result_hashes": true,
+        "source_feature_bindings": true
+      },
+      "candidate_credit": 0,
+      "certification_decision_counts": {
+        "uncertain": 243
+      },
+      "feature_count": 243,
+      "feature_refs_digest": "7105ea724cdef3a7f6ececcbe68581c14a9d40a6fc729078240bc6231eb680bf",
+      "packet_id": "ERSCPKT-0003",
+      "packet_sha256": "85f612466589b85a4cfe0cdeb9487ac0b0c4400d7726d090dc68f82e11add398",
+      "primary_errors": [
+        "input-binding:source_transaction_digest",
+        "schema:agent_path:'/root/sol_controller_v29/a005_ersc_0003_attempt_0001_ultra_v29' does not match '^/root/a005_external_research_universal_shadow_certification_[0-9]{4}_attempt_0001_terminal$'"
+      ],
+      "receipt_sha256": "7b3e19c4b615f5e6d3a2baf6c24c6f9927a922988b564502eb8e9ef64a3e7b6a",
+      "result_model": "gpt-5.6-sol",
+      "result_reasoning_effort": "ultra",
+      "result_sha256": "b9815c0eed265619f32c9efc9384756edf2cc7d8214bb7a95f0e53c4a2a628a0",
+      "result_status": "completed",
+      "source_transaction_digest_actual": "45565012999baa68c4f245ac800b8a0c1045588eed217ff87c62f4fe1b17bed3",
+      "source_transaction_digest_expected": "c4ce218e0aa044d850b1b026fe10b98766138748b585e2680916fb80964cc70f",
+      "source_transaction_digest_match": false,
+      "status": "rejected",
+      "terminal_response": "PMR1",
+      "terminal_status": "completed"
+    },
+    "A005ERSC-0004": {
+      "agent_path_actual": "/root/sol_controller_v29/a005_ersc_0004_attempt_0001_ultra_v29",
+      "agent_path_required": "/root/a005_external_research_universal_shadow_certification_0004_attempt_0001_terminal",
+      "agent_path_schema_match": false,
+      "binding_checks": {
+        "activation": true,
+        "certification_coverage": true,
+        "intent_overlay": true,
+        "packet": true,
+        "receipt_native_result_hashes": true,
+        "source_feature_bindings": true
+      },
+      "candidate_credit": 0,
+      "certification_decision_counts": {
+        "uncertain": 243
+      },
+      "feature_count": 243,
+      "feature_refs_digest": "2aeedf77073000a31d23b457eecf36922e64d4d19431f802c497c9b6be582db9",
+      "packet_id": "ERSCPKT-0004",
+      "packet_sha256": "57fbe4b6a9e808945251780b9c5b8492d368c7d7f0de160ecd8ca73c1b675780",
+      "primary_errors": [
+        "input-binding:source_transaction_digest",
+        "schema:agent_path:'/root/sol_controller_v29/a005_ersc_0004_attempt_0001_ultra_v29' does not match '^/root/a005_external_research_universal_shadow_certification_[0-9]{4}_attempt_0001_terminal$'"
+      ],
+      "receipt_sha256": "81a253f69edd07cebf12c7470b3fde33cef98458f9a3e3b96386b07a9867737b",
+      "result_model": "gpt-5.6-sol",
+      "result_reasoning_effort": "ultra",
+      "result_sha256": "036ae57bf540986a5a246876bdff12b3fcaf214abd46017950a6ffcc088ad85f",
+      "result_status": "completed",
+      "source_transaction_digest_actual": "df24661c4fc69c1fb9541cc6e4c961bf1c9a90135465aa3bdfff3a9f46550846",
+      "source_transaction_digest_expected": "c4ce218e0aa044d850b1b026fe10b98766138748b585e2680916fb80964cc70f",
+      "source_transaction_digest_match": false,
+      "status": "rejected",
+      "terminal_response": "PMR1",
+      "terminal_status": "completed"
+    },
+    "A005ERSC-0005": {
+      "agent_path_actual": "/root/sol_controller_v29/a005_ersc_0005_attempt_0001_ultra_v29",
+      "agent_path_required": "/root/a005_external_research_universal_shadow_certification_0005_attempt_0001_terminal",
+      "agent_path_schema_match": false,
+      "binding_checks": {
+        "activation": true,
+        "certification_coverage": true,
+        "intent_overlay": true,
+        "packet": true,
+        "receipt_native_result_hashes": true,
+        "source_feature_bindings": true
+      },
+      "candidate_credit": 0,
+      "certification_decision_counts": {
+        "uncertain": 243
+      },
+      "feature_count": 243,
+      "feature_refs_digest": "52bfdbf31196c9627509aa71bc0bcc34d79e73411a6fe6f576ee04015b041ef6",
+      "packet_id": "ERSCPKT-0005",
+      "packet_sha256": "fbc4c82540e5cfdded860c27d12c57b895da2159f603320da5a3046d88f94283",
+      "primary_errors": [
+        "input-binding:source_transaction_digest",
+        "schema:agent_path:'/root/sol_controller_v29/a005_ersc_0005_attempt_0001_ultra_v29' does not match '^/root/a005_external_research_universal_shadow_certification_[0-9]{4}_attempt_0001_terminal$'"
+      ],
+      "receipt_sha256": "bc03544b926a1e662c0341860847cdf481b93b7e15d6ead2c93f54bfa514e04c",
+      "result_model": "gpt-5.6-sol",
+      "result_reasoning_effort": "ultra",
+      "result_sha256": "8669011411f5494e2e53d97aba39cc530987524f693add8096e187de615d8262",
+      "result_status": "completed",
+      "source_transaction_digest_actual": "1f3cadb6ea644c1b2d8cbc32d261fcb2ba4a361480527b156b2155d3b3af4196",
+      "source_transaction_digest_expected": "c4ce218e0aa044d850b1b026fe10b98766138748b585e2680916fb80964cc70f",
+      "source_transaction_digest_match": false,
+      "status": "rejected",
+      "terminal_response": "PMR1",
+      "terminal_status": "completed"
+    },
+    "A005ERSC-0006": {
+      "agent_path_actual": "/root/sol_controller_v29/a005_ersc_0006_attempt_0001_ultra_v29",
+      "agent_path_required": "/root/a005_external_research_universal_shadow_certification_0006_attempt_0001_terminal",
+      "agent_path_schema_match": false,
+      "binding_checks": {
+        "activation": true,
+        "certification_coverage": true,
+        "intent_overlay": true,
+        "packet": true,
+        "receipt_native_result_hashes": true,
+        "source_feature_bindings": true
+      },
+      "candidate_credit": 0,
+      "certification_decision_counts": {
+        "uncertain": 243
+      },
+      "feature_count": 243,
+      "feature_refs_digest": "64eadfb403f3395fb010ac702655d9407fbb59bcda51fd1d1b129dfc13917a2d",
+      "packet_id": "ERSCPKT-0006",
+      "packet_sha256": "7950d060991bfcab0f7e30a6c7841cab6b26925abf2c384d3d3818f8cbce7c55",
+      "primary_errors": [
+        "input-binding:source_transaction_digest",
+        "schema:agent_path:'/root/sol_controller_v29/a005_ersc_0006_attempt_0001_ultra_v29' does not match '^/root/a005_external_research_universal_shadow_certification_[0-9]{4}_attempt_0001_terminal$'"
+      ],
+      "receipt_sha256": "c8d1ece357b52ab9c460babbdc1ccb5297e5ffec827f0315ff0b073603c912eb",
+      "result_model": "gpt-5.6-sol",
+      "result_reasoning_effort": "ultra",
+      "result_sha256": "0eba662e59ea6577e1d9d9eeb1ce4d2220a9072fd10b0428426d7ab7bb445f6f",
+      "result_status": "completed",
+      "source_transaction_digest_actual": "54b7f693a3c63fcef31daabc2a1e6cde859182e35c69938e7f1c11bcbe363e0d",
+      "source_transaction_digest_expected": "c4ce218e0aa044d850b1b026fe10b98766138748b585e2680916fb80964cc70f",
+      "source_transaction_digest_match": false,
+      "status": "rejected",
+      "terminal_response": "PMR1",
+      "terminal_status": "completed"
+    },
+    "A005ERSC-0007": {
+      "agent_path_actual": "/root/sol_controller_v29/a005_ersc_0007_attempt_0001_ultra_v29",
+      "agent_path_required": "/root/a005_external_research_universal_shadow_certification_0007_attempt_0001_terminal",
+      "agent_path_schema_match": false,
+      "binding_checks": {
+        "activation": true,
+        "certification_coverage": true,
+        "intent_overlay": true,
+        "packet": true,
+        "receipt_native_result_hashes": true,
+        "source_feature_bindings": true
+      },
+      "candidate_credit": 0,
+      "certification_decision_counts": {
+        "uncertain": 243
+      },
+      "feature_count": 243,
+      "feature_refs_digest": "8a9eb6506b5cd76c597015c934b240eb163e8eac7ff141ba870f33345224779e",
+      "packet_id": "ERSCPKT-0007",
+      "packet_sha256": "6a376c8757d74b7f1123247ecd99f5d889bbb3503527950573054407dde04258",
+      "primary_errors": [
+        "input-binding:source_transaction_digest",
+        "schema:agent_path:'/root/sol_controller_v29/a005_ersc_0007_attempt_0001_ultra_v29' does not match '^/root/a005_external_research_universal_shadow_certification_[0-9]{4}_attempt_0001_terminal$'"
+      ],
+      "receipt_sha256": "ba20c28f6666d92328b6cc8c7926cdb1457306b3b1555b95ab8dde9850e1e5f7",
+      "result_model": "gpt-5.6-sol",
+      "result_reasoning_effort": "ultra",
+      "result_sha256": "81d825c57cb445f73ac7e522e107e61cb07a50d66eb6c36f89f384268d0b06ef",
+      "result_status": "completed",
+      "source_transaction_digest_actual": "27f74ed0281da5ba6a9ce51e9c31213b5444dacd17ea7fb74b3a4ef4e618d0d6",
+      "source_transaction_digest_expected": "c4ce218e0aa044d850b1b026fe10b98766138748b585e2680916fb80964cc70f",
+      "source_transaction_digest_match": false,
+      "status": "rejected",
+      "terminal_response": "PMR1",
+      "terminal_status": "completed"
+    },
+    "A005ERSC-0008": {
+      "agent_path_actual": "/root/sol_controller_v29/a005_ersc_0008_attempt_0001_ultra_v29",
+      "agent_path_required": "/root/a005_external_research_universal_shadow_certification_0008_attempt_0001_terminal",
+      "agent_path_schema_match": false,
+      "binding_checks": {
+        "activation": true,
+        "certification_coverage": true,
+        "intent_overlay": true,
+        "packet": true,
+        "receipt_native_result_hashes": true,
+        "source_feature_bindings": true
+      },
+      "candidate_credit": 0,
+      "certification_decision_counts": {
+        "uncertain": 243
+      },
+      "feature_count": 243,
+      "feature_refs_digest": "fe99f021602734aa15eb52a1aed0b5ca982c1854ae763ee5850ed9d293e0e24b",
+      "packet_id": "ERSCPKT-0008",
+      "packet_sha256": "1ac62ef5135d7d6ccb2417cc8ce18d94b26646191a6d1db34e15876f2f3f41d2",
+      "primary_errors": [
+        "input-binding:source_transaction_digest",
+        "schema:agent_path:'/root/sol_controller_v29/a005_ersc_0008_attempt_0001_ultra_v29' does not match '^/root/a005_external_research_universal_shadow_certification_[0-9]{4}_attempt_0001_terminal$'"
+      ],
+      "receipt_sha256": "70fcd950fe5179164cba4ceef1685e0a5cfcafb6081c8bf7cbfaf9c6c2c6deaf",
+      "result_model": "gpt-5.6-sol",
+      "result_reasoning_effort": "ultra",
+      "result_sha256": "0765ed90b7211272a3215dee3257aa65dffb43959a3aff41cf2914b6ee49c0ea",
+      "result_status": "completed",
+      "source_transaction_digest_actual": "77e38000bd8900baf0dfb15e79d67b19071708d4f0cf166d50e768c124f5039d",
+      "source_transaction_digest_expected": "c4ce218e0aa044d850b1b026fe10b98766138748b585e2680916fb80964cc70f",
+      "source_transaction_digest_match": false,
+      "status": "rejected",
+      "terminal_response": "PMR1",
+      "terminal_status": "completed"
+    }
+  },
+  "audit_id": "audit-20260710-005-plan-assurance-model-lanes-fresh-agent-exhaustive",
+  "common_mode_concerns": [
+    "All eight candidate results carry a source_transaction_digest different from the one bound by the universal-shadow source transaction; the wrong values comprise seven distinct digests because A005ERSC-0001 and A005ERSC-0007 repeat one value.",
+    "All eight candidate results use the sol-controller-v29 agent-path family, and all eight fail the strict canonical external-research agent_path pattern.",
+    "Native capture points to session records outside the audit-local evidence root; their contents were not read under the local-only constraint, so no content-level native-session claim is made.",
+    "The packet, result, receipt, native-capture, and source feature hashes are internally consistent across all 1,944 cohort features; the failures therefore present as shared binding/common-mode defects rather than isolated byte corruption.",
+    "The requested scenario_adversarial/wave-0001/external_research prefix does not exist; the bound primary evidence is under master/external_research, so path identity is drifted at the report interface."
+  ],
+  "comparison": {
+    "activation_core_sha256": "fe5280ca2ab94e009471e00960bb002db111cee81ad382baaef3d972622a4ea5",
+    "activation_envelope_sha256": "54517e98452354eacb7b17c9ad0689406d9eb199eb6f55dc162b6ff621d32707",
+    "current_primary_evidence_path": "master/external_research/universal-shadow-certification-wave-0001/validation/activation-binding-v8-validator-runtime-supersession/activation-transactions-v29-ultra/cohort-0001/postrun/primary_postrun.json",
+    "current_primary_evidence_path_exists": true,
+    "expected_primary_sha256": "45bec51e3bedc80f9ca2af7bb10d0fdecf581021a803eae723bc0d699084f214",
+    "native_capture_sha256": "ed1fa2fa82239163ebabee3d35643e235d2ad63e16f2c29fcbd22a0e157dc1ef",
+    "observed_primary_sha256": "45bec51e3bedc80f9ca2af7bb10d0fdecf581021a803eae723bc0d699084f214",
+    "path_drift": true,
+    "primary_assignment_ids_reconciled": true,
+    "primary_binding_pins_reconciled": true,
+    "primary_counts_reconciled": true,
+    "primary_error_sets_reconciled": true,
+    "primary_reported_status": "fail_closed",
+    "primary_requested_path": "master/scenario_adversarial/wave-0001/external_research/universal-shadow-certification-wave-0001/validation/activation-binding-v8-validator-runtime-supersession/activation-transactions-v29-ultra/cohort-0001/postrun/primary_postrun.json",
+    "primary_requested_path_exists": false,
+    "primary_sha256_match": true,
+    "result_schema_sha256": "1b3b8a256e95e84f35d00c4fa3294d722caa760ded22f161dcb9f18844ed939d"
+  },
+  "counts": {
+    "activation_authorizations": 8,
+    "activation_transaction_assignments": 8,
+    "assignment_count": 8,
+    "certification_feature_decisions_observed": 1944,
+    "eligible_assignments": 0,
+    "feature_count": 1944,
+    "feature_count_per_assignment": 243,
+    "intent_overlays": 8,
+    "native_capture_rows": 8,
+    "packets": 8,
+    "receipts": 8,
+    "rejected_assignments": 8,
+    "results": 8,
+    "source_assignments_rehashed": 24,
+    "source_features_rehashed": 1944,
+    "unresolved_assignments": 0
+  },
+  "credits": {
+    "candidate": 0,
+    "certification": 0,
+    "coverage": 0,
+    "merge": 0,
+    "promotion": 0,
+    "research": 0,
+    "spec": 0
+  },
+  "discrepancies": [
+    {
+      "assignment_ids": [
+        "A005ERSC-0001",
+        "A005ERSC-0002",
+        "A005ERSC-0003",
+        "A005ERSC-0004",
+        "A005ERSC-0005",
+        "A005ERSC-0006",
+        "A005ERSC-0007",
+        "A005ERSC-0008"
+      ],
+      "code": "canonical_agent_path",
+      "count": 8,
+      "expected_pattern": "^/root/a005_external_research_universal_shadow_certification_[0-9]{4}_attempt_0001_terminal$",
+      "impact": "rejects every assignment at strict result-schema validation",
+      "observed_path_family": "/root/sol_controller_v29/a005_ersc_NNNN_attempt_0001_ultra_v29"
+    },
+    {
+      "assignment_ids": [
+        "A005ERSC-0001",
+        "A005ERSC-0002",
+        "A005ERSC-0003",
+        "A005ERSC-0004",
+        "A005ERSC-0005",
+        "A005ERSC-0006",
+        "A005ERSC-0007",
+        "A005ERSC-0008"
+      ],
+      "code": "historical_dispatch_intent_lineage",
+      "count": 8,
+      "current_authorization_effort": "ultra",
+      "historical_dispatch_intent_effort": "xhigh",
+      "historical_preparation_status": "BLOCKED_AWAITING_INDEPENDENT_PRELAUNCH",
+      "impact": "common-mode lineage discrepancy; current v29 authorization explicitly supersedes the blocked prelaunch intent"
+    },
+    {
+      "assignment_ids": [
+        "A005ERSC-0001",
+        "A005ERSC-0002",
+        "A005ERSC-0003",
+        "A005ERSC-0004",
+        "A005ERSC-0005",
+        "A005ERSC-0006",
+        "A005ERSC-0007",
+        "A005ERSC-0008"
+      ],
+      "code": "input_binding_source_transaction_digest",
+      "count": 8,
+      "expected_digest": "c4ce218e0aa044d850b1b026fe10b98766138748b585e2680916fb80964cc70f",
+      "impact": "rejects every assignment at strict input binding",
+      "observed_distinct_actual_digests": 7
+    },
+    {
+      "assignment_ids": [],
+      "code": "requested_path_prefix",
+      "count": 1,
+      "expected_primary_and_report_prefix": "master/scenario_adversarial/wave-0001/external_research/",
+      "impact": "report-level drift; fail closed",
+      "observed_primary_and_report_prefix": "master/external_research/"
+    }
+  ],
+  "errors": {
+    "assignment_error_codes": {
+      "input-binding:source_transaction_digest": {
+        "assignment_count": 8,
+        "assignment_ids": [
+          "A005ERSC-0001",
+          "A005ERSC-0002",
+          "A005ERSC-0003",
+          "A005ERSC-0004",
+          "A005ERSC-0005",
+          "A005ERSC-0006",
+          "A005ERSC-0007",
+          "A005ERSC-0008"
+        ]
+      },
+      "schema:agent_path": {
+        "assignment_count": 8,
+        "assignment_ids": [
+          "A005ERSC-0001",
+          "A005ERSC-0002",
+          "A005ERSC-0003",
+          "A005ERSC-0004",
+          "A005ERSC-0005",
+          "A005ERSC-0006",
+          "A005ERSC-0007",
+          "A005ERSC-0008"
+        ]
+      }
+    },
+    "primary_error_sets_reconciled": true,
+    "report_level": [
+      "requested_primary_path_missing_under_requested_scenario_adversarial_prefix"
+    ],
+    "unresolved_assignment_ids": []
+  },
+  "evidence": {
+    "activation": {
+      "activation_core_sha256": "fe5280ca2ab94e009471e00960bb002db111cee81ad382baaef3d972622a4ea5",
+      "activation_envelope_sha256": "54517e98452354eacb7b17c9ad0689406d9eb199eb6f55dc162b6ff621d32707",
+      "activation_granted": true,
+      "authorization_count": 8,
+      "envelope_status": "SEALED_ACTIVE",
+      "transaction_id": "A005-ERSC-V29-ULTRA-ATOMIC8-cohort-0001"
+    },
+    "feature_obligations": {
+      "cohort_feature_count": 1944,
+      "cohort_feature_records_exact_after_independent_reconstruction": true,
+      "cohort_feature_refs_digest": "829d38d2683db5998b09ce04af386f92dc348a9432483ce5c5dbb9b90e871e6c",
+      "cohort_feature_refs_digest_matches_prelaunch_pin": true,
+      "cohort_source_row_bindings_exact": true,
+      "owner_domain_count": 16,
+      "owner_domain_counts": {
+        "agents_models_providers": 110,
+        "automation_scheduling_notifications": 17,
+        "collaboration_chat_communication": 42,
+        "cross_cutting_platform": 44,
+        "data_contracts_interchange": 127,
+        "gui_ux_accessibility": 200,
+        "installation_updates_recovery": 9,
+        "observability_testing_evaluation": 94,
+        "orchestration_runtime_execution": 180,
+        "permissions_security_privacy": 427,
+        "planning_specification_governance": 198,
+        "source_control_workspace_code": 143,
+        "storage_artifacts_history": 126,
+        "tools_integrations_mcp": 162,
+        "usage_costs_quotas": 52,
+        "work_nodes_tasks_goals": 13
+      },
+      "source_assignment_count": 24,
+      "source_assignment_counts": {
+        "A005ERU-0001": 110,
+        "A005ERU-0002": 17,
+        "A005ERU-0003": 42,
+        "A005ERU-0004": 44,
+        "A005ERU-0005": 127,
+        "A005ERU-0006": 103,
+        "A005ERU-0007": 97,
+        "A005ERU-0008": 9,
+        "A005ERU-0009": 94,
+        "A005ERU-0010": 93,
+        "A005ERU-0011": 87,
+        "A005ERU-0012": 110,
+        "A005ERU-0013": 107,
+        "A005ERU-0014": 105,
+        "A005ERU-0015": 105,
+        "A005ERU-0016": 104,
+        "A005ERU-0017": 94,
+        "A005ERU-0018": 69,
+        "A005ERU-0019": 74,
+        "A005ERU-0020": 126,
+        "A005ERU-0021": 80,
+        "A005ERU-0022": 82,
+        "A005ERU-0023": 52,
+        "A005ERU-0024": 13
+      }
+    },
+    "native_capture": {
+      "descendant_count": 0,
+      "row_count": 8,
+      "sha256": "ed1fa2fa82239163ebabee3d35643e235d2ad63e16f2c29fcbd22a0e157dc1ef",
+      "unique_identity_closure": true
+    },
+    "packets": {
+      "all_feature_records_exact_after_independent_reconstruction": true,
+      "all_packet_feature_counts_243": true,
+      "all_packet_sha256_pins_match": true,
+      "packet_count": 8,
+      "packet_ids": [
+        "ERSCPKT-0001",
+        "ERSCPKT-0002",
+        "ERSCPKT-0003",
+        "ERSCPKT-0004",
+        "ERSCPKT-0005",
+        "ERSCPKT-0006",
+        "ERSCPKT-0007",
+        "ERSCPKT-0008"
+      ]
+    },
+    "question_obligations": {
+      "all_original_question_records_bound": true,
+      "research_obligation_count": 2055,
+      "research_questions": 2055,
+      "scenario_obligation_count": 2055
+    },
+    "receipts": {
+      "all_receipt_native_hashes_match": true,
+      "all_result_hashes_match_receipts": true,
+      "receipt_count": 8,
+      "terminal_response": "PMR1",
+      "terminal_status": "completed"
+    },
+    "result_schema": {
+      "path": "master/external_research/universal-shadow-certification-wave-0001/validation/activation-binding-v8-validator-runtime-supersession/activation-transactions-v29-ultra/cohort-0001/result_schema_ultra_v29.json",
+      "schema_checks_removed": 0,
+      "sha256": "1b3b8a256e95e84f35d00c4fa3294d722caa760ded22f161dcb9f18844ed939d",
+      "sha256_matches_primary_pin": true
+    },
+    "universal_research": {
+      "cohort_source_feature_count": 1944,
+      "global_source_assignments": 24,
+      "global_source_features": 3888,
+      "global_source_packets": 24,
+      "global_source_postrun_eligible": 24,
+      "global_source_results": 24,
+      "research_group_count_in_cohort": 325,
+      "research_state_counts": {
+        "researched": 1944
+      },
+      "source_feature_bindings_checked": 1944,
+      "source_hash_pin_count": 11,
+      "source_hash_pin_matches": 11,
+      "source_records": 4079,
+      "source_transaction_digest": "c4ce218e0aa044d850b1b026fe10b98766138748b585e2680916fb80964cc70f",
+      "source_transaction_digest_recomputed": "c4ce218e0aa044d850b1b026fe10b98766138748b585e2680916fb80964cc70f",
+      "source_transaction_digest_recomputed_matches": true,
+      "supported_claims": 3269
+    }
+  },
+  "fresh_review": {
+    "controller": "fresh-direct-luna-reviewer-B",
+    "descendants": 0,
+    "followups": 0,
+    "fork_turns": "none",
+    "fresh_direct": true,
+    "model": "gpt-5.6-luna",
+    "reasoning_effort": "max",
+    "retries": 0,
+    "reviewer": "B",
+    "subagents": 0
+  },
+  "report": {
+    "only_named_write": true,
+    "parent_preexisted": false,
+    "path": "master/scenario_adversarial/wave-0001/external_research/universal-shadow-certification-wave-0001/validation/activation-binding-v8-validator-runtime-supersession/activation-transactions-v29-ultra/cohort-0001/postrun/luna_independent_postrun.json",
+    "write_mode": "exclusive-add"
+  },
+  "schema_version": "audit005-certification-postrun-v31-luna-independent-reviewer-b-report-v1",
+  "scope": {
+    "audit_id": "audit-20260710-005-plan-assurance-model-lanes-fresh-agent-exhaustive",
+    "canonical_plans_read": false,
+    "cohort_id": "cohort-0001",
+    "evidence_root": "master/external_research/universal-shadow-certification-wave-0001",
+    "read_scope": [
+      "activation",
+      "feature_obligations",
+      "intent",
+      "native_capture",
+      "packet",
+      "question_obligations",
+      "receipt",
+      "result",
+      "schema",
+      "universal_research"
+    ],
+    "wave_id": "universal-shadow-certification-wave-0001"
+  },
+  "side_effects": {
+    "observed_preexisting_transaction": {
+      "activation_granted": true,
+      "candidate_credit": 0,
+      "certification_credit": 0,
+      "completed_receipts": 8,
+      "completed_results": 8,
+      "native_capture_rows": 8,
+      "promotion_credit": 0
+    },
+    "report_write": {
+      "files_written": 1,
+      "only_named_report": true,
+      "write_mode": "exclusive-add"
+    },
+    "reviewer_side_effects": {
+      "activation_artifacts_written": 0,
+      "canonical_plans_modified": false,
+      "credit_awarded": 0,
+      "descendants_spawned": 0,
+      "followups_sent": 0,
+      "launches": 0,
+      "native_capture_written": 0,
+      "packets_written": 0,
+      "prompts_written": 0,
+      "receipts_written": 0,
+      "results_written": 0,
+      "retries": 0,
+      "spec_edits": 0
+    }
+  },
+  "status": "fail_closed",
+  "validity_dimensions": {
+    "activation": {
+      "activation_granted": true,
+      "assignment_count": 8,
+      "status": "pass",
+      "transaction_scope": "exact8"
+    },
+    "assignment_set": {
+      "eligible_ids": [],
+      "rejected_ids": [
+        "A005ERSC-0001",
+        "A005ERSC-0002",
+        "A005ERSC-0003",
+        "A005ERSC-0004",
+        "A005ERSC-0005",
+        "A005ERSC-0006",
+        "A005ERSC-0007",
+        "A005ERSC-0008"
+      ],
+      "status": "pass",
+      "unresolved_ids": []
+    },
+    "canonical_agent_path": {
+      "mismatched_assignments": 8,
+      "required_pattern": "^/root/a005_external_research_universal_shadow_certification_[0-9]{4}_attempt_0001_terminal$",
+      "status": "fail"
+    },
+    "feature_obligations": {
+      "feature_count": 1944,
+      "source_feature_bindings_checked": 1944,
+      "status": "pass"
+    },
+    "input_binding_source_transaction_digest": {
+      "expected": "c4ce218e0aa044d850b1b026fe10b98766138748b585e2680916fb80964cc70f",
+      "mismatched_assignments": 8,
+      "status": "fail"
+    },
+    "native_capture": {
+      "descendant_count": 0,
+      "rows": 8,
+      "status": "pass",
+      "unique_identity_closure": true
+    },
+    "packet_binding": {
+      "assignments_passed": 8,
+      "feature_records_passed": 1944,
+      "status": "pass"
+    },
+    "primary_reconciliation": {
+      "counts_match": true,
+      "error_sets_match": true,
+      "primary_sha256_match": true,
+      "status": "pass"
+    },
+    "question_obligations": {
+      "research_questions": 2055,
+      "scenario_obligations": 2055,
+      "status": "pass"
+    },
+    "receipt_binding": {
+      "assignments_passed": 8,
+      "status": "pass",
+      "terminal_completed_pmr1": 8
+    },
+    "result_schema": {
+      "schema_error_assignments": 8,
+      "schema_sha256_matches_pin": true,
+      "status": "fail"
+    },
+    "semantic_certification": {
+      "eligible_feature_count": 0,
+      "semantic_recertification_performed": false,
+      "status": "fail_closed"
+    },
+    "universal_research": {
+      "cohort_features_reconstructed": 1944,
+      "source_hash_pins_match": true,
+      "status": "pass"
+    }
+  },
+  "wave_id": "universal-shadow-certification-wave-0001"
+}

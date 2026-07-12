@@ -1,0 +1,62 @@
+L00000001	{
+L00000002	  "schema_id": "pm.web_policy_negative_fixtures.v1",
+L00000003	  "purpose": "Validator-facing negative fixtures for web permission, security, cache, citation, and browser-unavailable coverage.",
+L00000004	  "egress_assertions": [
+L00000005	    {"case_id": "metadata_ip_denied", "input_url": "http://169.254.169.254/latest/meta-data", "expected_host_class": "private_or_metadata", "expected_decision": "deny", "expected_reason": "private_host_denied"},
+L00000006	    {"case_id": "localhost_denied", "input_url": "http://localhost:8080", "expected_host_class": "localhost", "expected_decision": "deny", "expected_reason": "private_host_denied"},
+L00000007	    {"case_id": "loopback_ip_denied", "input_url": "http://127.0.0.1:3000", "expected_host_class": "localhost", "expected_decision": "deny", "expected_reason": "private_host_denied"},
+L00000008	    {"case_id": "ipv6_loopback_denied", "input_url": "http://[::1]:3000", "expected_host_class": "localhost", "expected_decision": "deny", "expected_reason": "private_host_denied"},
+L00000009	    {"case_id": "ipv6_link_local_denied", "input_url": "http://[fe80::1]/", "expected_host_class": "private_or_metadata", "expected_decision": "deny", "expected_reason": "private_host_denied"},
+L00000010	    {"case_id": "rfc1918_private_ip_denied", "input_url": "http://10.0.0.5/internal", "expected_host_class": "private_or_metadata", "expected_decision": "deny", "expected_reason": "private_host_denied"},
+L00000011	    {"case_id": "file_url_denied", "input_url": "file:///etc/passwd", "expected_host_class": "file_scheme", "expected_decision": "deny", "expected_reason": "private_host_denied"},
+L00000012	    {"case_id": "redirect_to_private_denied", "input_url": "https://docs.example.com/redirect", "expected_host_class": "public", "redirect_target_url": "http://10.0.0.5/internal", "expected_redirect_host_class": "private_or_metadata", "expected_decision": "deny", "expected_redirect_decision": "deny", "expected_reason": "private_host_denied"},
+L00000013	    {"case_id": "dns_rebind_to_private_denied", "input_url": "https://rebind.example.test/resource", "expected_host_class": "public", "resolved_ip": "10.0.0.7", "expected_resolved_host_class": "private_or_metadata", "dns_rebind_detected": true, "expected_decision": "deny", "expected_reason": "dns_rebind_denied"},
+L00000014	    {"case_id": "public_https_allowed_for_fetch_preflight", "input_url": "https://docs.example.com/guide", "expected_host_class": "public", "expected_decision": "ask", "expected_reason": "permission_required"}
+L00000015	  ],
+L00000016	  "permission_scope_assertions": [
+L00000017	    {"case_id": "search_scope_wildcard", "tool_id": "websearch", "input_text": "latest docs", "expected_scope": "*"},
+L00000018	    {"case_id": "research_scope_wildcard", "tool_id": "webresearch", "input_text": "compare current tools", "expected_scope": "*"},
+L00000019	    {"case_id": "fetch_scope_host", "tool_id": "webfetch", "input_url": "https://docs.example.com/guide", "expected_scope": "https://example.com/*"},
+L00000020	    {"case_id": "extract_scope_host", "tool_id": "webextract", "input_url": "https://docs.example.com/pricing", "expected_scope": "https://example.com/*"},
+L00000021	    {"case_id": "crawl_scope_root_host", "tool_id": "webcrawl", "root_url": "https://docs.example.com/start", "expected_scope": "https://example.com/*"},
+L00000022	    {"case_id": "map_scope_root_host", "tool_id": "webmap", "root_url": "https://docs.example.com/start", "expected_scope": "https://example.com/*"}
+L00000023	  ],
+L00000024	  "run_mode_assertions": [
+L00000025	    {"case_id": "plan_websearch_ask", "run_mode": "plan", "network_policy": "ask", "tool_id": "websearch", "expected_decision": "ask", "must_show_card": true},
+L00000026	    {"case_id": "deep_plan_webresearch_ask", "run_mode": "plan", "effective_overlay": "deep_plan", "normalized_runtime_mode": "plan", "network_policy": "ask", "tool_id": "webresearch", "expected_decision": "ask", "must_show_card": true},
+L00000027	    {"case_id": "plan_no_network_denies_fetch", "run_mode": "plan", "network_policy": "deny", "tool_id": "webfetch", "expected_decision": "deny", "expected_reason": "network_blocked_by_policy", "must_show_card": true}
+L00000028	  ],
+L00000029	  "crawl_policy_assertions": [
+L00000030	    {"case_id": "robots_denied_records_reason", "tool_id": "webcrawl", "root_url": "https://example.com/private", "respect_robots": true, "robots_allowed": false, "expected_decision": "deny", "expected_reason": "robots_denied"},
+L00000031	    {"case_id": "fanout_cap_records_reason", "tool_id": "webcrawl", "root_url": "https://example.com", "requested_max_pages": 1000, "policy_fanout_limit": 50, "expected_decision": "partial_or_denied", "expected_reason": "fanout_capped"},
+L00000032	    {"case_id": "depth_cap_records_reason", "tool_id": "webmap", "root_url": "https://example.com", "requested_max_depth": 99, "policy_max_depth": 3, "expected_decision": "partial_or_denied", "expected_reason": "depth_capped"}
+L00000033	  ],
+L00000034	  "redaction_assertions": [
+L00000035	    {"case_id": "url_query_token_redacted", "surface": "url_query", "input_url": "https://docs.example.com/callback?token=raw-secret-value&query=browser", "expected_redacted_url": "https://docs.example.com/callback?token=REDACTED&query=browser", "forbidden_tokens": ["raw-secret-value"], "expected_error": "unredacted_query_secret"},
+L00000036	    {"case_id": "browser_screenshot_missing_redaction_status", "surface": "browser_artifact", "artifact_kind": "browser_screenshot", "redaction_status": null, "expected_error": "missing_redaction_status"},
+L00000037	    {"case_id": "browser_network_failed_redaction_status", "surface": "browser_artifact", "artifact_kind": "network", "redaction_status": "failed", "expected_error": "artifact_redaction_failed"}
+L00000038	  ],
+L00000039	  "negative_cases": [
+L00000040	    {"case_id": "no_raw_secret_projection", "surface": "provider_projection", "input_kind": "projected_config", "must_reject": ["raw_api_key", "oauth_token", "password", "cookie", "authorization_header"], "expected_error": "raw_secret_in_projection"},
+L00000041	    {"case_id": "ssrf_private_host_denied", "surface": "egress_policy", "input_url": "http://169.254.169.254/latest/meta-data", "expected_decision": "deny", "expected_reason": "private_host_denied"},
+L00000042	    {"case_id": "localhost_denied_without_explicit_private_host_approval", "surface": "egress_policy", "input_url": "http://localhost:8080", "expected_decision": "deny", "expected_reason": "private_host_denied"},
+L00000043	    {"case_id": "plan_mode_web_visible_ask_not_silent_deny", "surface": "run_mode_policy", "run_mode": "plan", "tool_id": "websearch", "expected_decision": "ask", "must_show_card": true},
+L00000044	    {"case_id": "strict_no_network_denies_with_card", "surface": "run_mode_policy", "run_mode": "plan", "network_policy": "deny", "tool_id": "webfetch", "expected_decision": "deny", "expected_reason": "network_blocked_by_policy", "must_show_card": true},
+L00000045	    {"case_id": "search_scope_wildcard_not_host", "surface": "permission_scope", "tool_id": "websearch", "input_text": "latest docs", "expected_scope": "*", "forbidden_scope": "https://latest docs/*"},
+L00000046	    {"case_id": "fetch_scope_host_scoped", "surface": "permission_scope", "tool_id": "webfetch", "input_url": "https://docs.example.com/guide", "expected_scope": "https://example.com/*"},
+L00000047	    {"case_id": "crawl_robots_denial_recorded", "surface": "crawl_policy", "tool_id": "webcrawl", "root_url": "https://example.com/private", "respect_robots": true, "expected_reason": "robots_denied", "must_record_evidence": true},
+L00000048	    {"case_id": "crawl_fanout_depth_cap_recorded", "surface": "crawl_policy", "tool_id": "webcrawl", "root_url": "https://example.com", "max_pages": 1000, "max_depth": 99, "expected_reason": "fanout_or_depth_capped", "must_record_evidence": true},
+L00000049	    {"case_id": "cache_no_secret_and_ttl_required", "surface": "cache_policy", "tool_id": "webfetch", "cache_state": "stored", "must_require": ["ttl_seconds", "no_secret_verified", "redaction_profile_id"], "must_equal": {"no_secret_verified": true}},
+L00000050	    {"case_id": "browser_runtime_unavailable_remediation", "surface": "browser_runtime", "requested_runtime": "pm_native_browser", "runtime_state": "runtime_unavailable", "must_require": ["remediation_action_ids", "visible_card"]},
+L00000051	    {"case_id": "prompt_injection_visible_chips_not_hidden", "surface": "page_representation", "input_kind": "page_prompt_injection", "must_require": ["prompt_injection_chips", "visible_card"], "must_not": ["hidden_system_prompt_merge"]},
+L00000052	    {"case_id": "url_query_redaction_required", "surface": "redaction_policy", "input_url": "https://docs.example.com/callback?token=raw-secret-value", "forbidden_tokens": ["raw-secret-value"], "expected_error": "unredacted_query_secret"},
+L00000053	    {"case_id": "browser_artifact_missing_redaction_rejected", "surface": "browser_artifact", "artifact_kind": "browser_screenshot", "redaction_status": null, "expected_error": "missing_redaction_status"},
+L00000054	    {"case_id": "browser_artifact_failed_redaction_rejected", "surface": "browser_artifact", "artifact_kind": "network", "redaction_status": "failed", "expected_error": "artifact_redaction_failed"},
+L00000055	    {"case_id": "research_snippet_only_citation_rejected", "surface": "research_citation", "evidence_kind": "search_snippet", "snippet_only": true, "expected_error": "citation_not_read_backed"},
+L00000056	    {"case_id": "prd_planning_research_source_evidence_required", "surface": "planning_source_intake", "invocation_source": "planning_wizard", "tool_id": "webresearch", "must_require_one_of": ["ledger_source_evidence_ref", "plan_source_evidence_ref"], "must_require": ["read_receipt_refs", "citation_refs"], "must_not": ["WorkNode", "NodeSeed", "runtime_queue"]},
+L00000057	    {"case_id": "evidence_agentic_invocation_missing_reason", "surface": "evidence_schema", "invocation_source": "agent_initiated", "must_require": ["agent_reason"], "expected_error": "missing_agent_reason"},
+L00000058	    {"case_id": "api_web_call_agentic_invocation_missing_reason", "surface": "runtime_artifact_api_web_call", "invocation_source": "agent_initiated", "must_require": ["agent_reason"], "expected_error": "missing_agent_reason"},
+L00000059	    {"case_id": "browser_recording_agentic_invocation_missing_reason", "surface": "runtime_artifact_browser_recording", "invocation_source": "agent_initiated", "must_require": ["agent_reason"], "expected_error": "missing_agent_reason"},
+L00000060	    {"case_id": "evidence_planning_research_source_evidence_required", "surface": "evidence_schema", "invocation_source": "planning_wizard", "tool_id": "webresearch", "must_require_one_of": ["ledger_source_evidence_ref", "plan_source_evidence_ref"], "must_not": ["WorkNode", "NodeSeed", "runtime_queue"], "expected_error": "missing_planning_source_evidence_ref"}
+L00000061	  ]
+L00000062	}

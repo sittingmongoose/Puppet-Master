@@ -1,0 +1,448 @@
+{
+  "assignment_id": "A005M15-000204-INTEGRATED-MACRO15-260897E3D690-0001",
+  "attempt_id": "attempt-0015",
+  "audit_id": "audit-20260710-005-plan-assurance-model-lanes-fresh-agent-exhaustive",
+  "coverage": {
+    "all_micro_windows_reviewed": true,
+    "all_source_lines_reviewed": true,
+    "all_source_units_accounted": true,
+    "both_exact_and_adversarial_lenses_applied": true,
+    "dimensions_checked": [
+      "behavior",
+      "capabilities",
+      "inputs_outputs",
+      "contracts",
+      "states_transitions",
+      "authority",
+      "ownership",
+      "consumers",
+      "gui_truth",
+      "failures_recovery",
+      "security_privacy",
+      "propagation",
+      "operations",
+      "scale_performance",
+      "compatibility_migration",
+      "acceptance_oracles",
+      "builder_discretion",
+      "ambiguity_unknowns",
+      "missing_callers_consumers",
+      "invalid_states_transitions",
+      "concurrency_races",
+      "partial_failure",
+      "recovery_rollback",
+      "authority_boundaries",
+      "privacy_data_lifecycle",
+      "untrusted_inputs",
+      "gui_misleading_states",
+      "offline_network_loss",
+      "scale_limits",
+      "accessibility",
+      "localization",
+      "observability_support",
+      "destructive_actions",
+      "cross_document_seams",
+      "test_falsifiability",
+      "unknown_unknowns"
+    ]
+  },
+  "items": [
+    {
+      "builder_discretion": false,
+      "confidence": 1.0,
+      "dimensions": [
+        "behavior",
+        "capabilities",
+        "inputs_outputs",
+        "contracts",
+        "compatibility_migration",
+        "acceptance_oracles",
+        "test_falsifiability"
+      ],
+      "evidence": [
+        {
+          "exact_quote": "\"schema_id\":{\"type\":\"string\",\"const\":\"pm.runtime_artifact.hitl_approval.schema.v1\"}",
+          "line_end": 1,
+          "line_start": 1,
+          "path": "Plans/runtime_artifact_hitl_approval.schema.json",
+          "source_sha256": "0f2bc9cf68498f9adfd703c2d2ab91cf524f540b86d4a734fb73428ede50ef84"
+        },
+        {
+          "exact_quote": "\"artifact_type\":{\"type\":\"string\",\"const\":\"hitl_approval\"}",
+          "line_end": 1,
+          "line_start": 1,
+          "path": "Plans/runtime_artifact_hitl_approval.schema.json",
+          "source_sha256": "0f2bc9cf68498f9adfd703c2d2ab91cf524f540b86d4a734fb73428ede50ef84"
+        }
+      ],
+      "gap_kind": "none",
+      "impact": "Instances are unambiguously identifiable as version-one HITL approval runtime artifacts.",
+      "item_id": "A005M15-I001",
+      "item_type": "feature",
+      "severity": "info",
+      "source_unit_refs": [
+        "SEMANTIC:JSON_ROOT:Plans/runtime_artifact_hitl_approval.schema.json",
+        "STRUCTURAL:$"
+      ],
+      "statement": "The root schema fixes both the schema identifier and artifact type to the version-one HITL approval contract.",
+      "title": "Versioned HITL approval artifact identity"
+    },
+    {
+      "builder_discretion": false,
+      "confidence": 1.0,
+      "dimensions": [
+        "inputs_outputs",
+        "contracts",
+        "security_privacy",
+        "acceptance_oracles",
+        "untrusted_inputs",
+        "test_falsifiability"
+      ],
+      "evidence": [
+        {
+          "exact_quote": "\"additionalProperties\":false,\"required\":[\"schema_id\",\"artifact_id\",\"artifact_type\",\"project_id\",\"run_id\",\"attempt_id\",\"created_at_utc\",\"projection_freshness\",\"projection_health\",\"retention_class\",\"routing_refs\",\"type_payload\"]",
+          "line_end": 1,
+          "line_start": 1,
+          "path": "Plans/runtime_artifact_hitl_approval.schema.json",
+          "source_sha256": "0f2bc9cf68498f9adfd703c2d2ab91cf524f540b86d4a734fb73428ede50ef84"
+        }
+      ],
+      "gap_kind": "none",
+      "impact": "Unknown root keys are rejected and the listed identity, projection, retention, routing, and payload fields cannot be omitted.",
+      "item_id": "A005M15-I002",
+      "item_type": "explicit_non_gap",
+      "severity": "info",
+      "source_unit_refs": [
+        "SEMANTIC:JSON_ROOT:Plans/runtime_artifact_hitl_approval.schema.json",
+        "STRUCTURAL:$"
+      ],
+      "statement": "The artifact envelope is closed at the root and declares twelve required properties.",
+      "title": "Closed required root envelope"
+    },
+    {
+      "builder_discretion": false,
+      "confidence": 1.0,
+      "dimensions": [
+        "inputs_outputs",
+        "contracts",
+        "consumers",
+        "propagation",
+        "acceptance_oracles",
+        "test_falsifiability"
+      ],
+      "evidence": [
+        {
+          "exact_quote": "\"routing_refs\":{\"type\":\"array\",\"minItems\":1,\"items\":{\"type\":\"string\",\"minLength\":1}}",
+          "line_end": 1,
+          "line_start": 1,
+          "path": "Plans/runtime_artifact_hitl_approval.schema.json",
+          "source_sha256": "0f2bc9cf68498f9adfd703c2d2ab91cf524f540b86d4a734fb73428ede50ef84"
+        }
+      ],
+      "gap_kind": "none",
+      "impact": "Every valid artifact carries at least one non-empty routing reference for downstream propagation.",
+      "item_id": "A005M15-I003",
+      "item_type": "contract",
+      "severity": "info",
+      "source_unit_refs": [
+        "SEMANTIC:JSON_ROOT:Plans/runtime_artifact_hitl_approval.schema.json",
+        "STRUCTURAL:$"
+      ],
+      "statement": "Routing references are a required non-empty array whose members are non-empty strings.",
+      "title": "Minimum routing reference contract"
+    },
+    {
+      "builder_discretion": true,
+      "confidence": 0.99,
+      "dimensions": [
+        "behavior",
+        "inputs_outputs",
+        "contracts",
+        "states_transitions",
+        "authority",
+        "ownership",
+        "consumers",
+        "failures_recovery",
+        "security_privacy",
+        "compatibility_migration",
+        "acceptance_oracles",
+        "builder_discretion",
+        "ambiguity_unknowns",
+        "invalid_states_transitions",
+        "partial_failure",
+        "recovery_rollback",
+        "authority_boundaries",
+        "privacy_data_lifecycle",
+        "untrusted_inputs",
+        "destructive_actions",
+        "cross_document_seams",
+        "test_falsifiability"
+      ],
+      "evidence": [
+        {
+          "exact_quote": "\"type_payload\":{\"type\":\"object\",\"minProperties\":1}",
+          "line_end": 1,
+          "line_start": 1,
+          "path": "Plans/runtime_artifact_hitl_approval.schema.json",
+          "source_sha256": "0f2bc9cf68498f9adfd703c2d2ab91cf524f540b86d4a734fb73428ede50ef84"
+        }
+      ],
+      "gap_kind": "underconstrained_type_payload",
+      "impact": "Mutually incompatible payload shapes can validate, leaving approval decisions, denial or revocation states, approver authority, policy basis, recovery semantics, and consumer parsing to builder discretion.",
+      "item_id": "A005M15-I004",
+      "item_type": "gap",
+      "severity": "critical",
+      "source_unit_refs": [
+        "SEMANTIC:JSON_ROOT:Plans/runtime_artifact_hitl_approval.schema.json",
+        "STRUCTURAL:$"
+      ],
+      "statement": "The HITL-specific payload requires only one property and defines no property names, value types, closed shape, approval outcome, authority proof, lifecycle state, or recovery fields.",
+      "title": "HITL payload has no semantic contract"
+    },
+    {
+      "builder_discretion": true,
+      "confidence": 1.0,
+      "dimensions": [
+        "inputs_outputs",
+        "contracts",
+        "operations",
+        "acceptance_oracles",
+        "builder_discretion",
+        "ambiguity_unknowns",
+        "invalid_states_transitions",
+        "observability_support",
+        "test_falsifiability"
+      ],
+      "evidence": [
+        {
+          "exact_quote": "\"created_at_utc\":{\"type\":\"string\",\"minLength\":1}",
+          "line_end": 1,
+          "line_start": 1,
+          "path": "Plans/runtime_artifact_hitl_approval.schema.json",
+          "source_sha256": "0f2bc9cf68498f9adfd703c2d2ab91cf524f540b86d4a734fb73428ede50ef84"
+        }
+      ],
+      "gap_kind": "timestamp_format_unconstrained",
+      "impact": "Malformed or non-UTC timestamps can validate, undermining ordering, expiry, audit reconstruction, and deterministic validation.",
+      "item_id": "A005M15-I005",
+      "item_type": "gap",
+      "severity": "high",
+      "source_unit_refs": [
+        "SEMANTIC:JSON_ROOT:Plans/runtime_artifact_hitl_approval.schema.json",
+        "STRUCTURAL:$"
+      ],
+      "statement": "The field named created_at_utc is only constrained to a non-empty string and does not require a date-time format or UTC offset.",
+      "title": "UTC creation timestamp is not format validated"
+    },
+    {
+      "builder_discretion": true,
+      "confidence": 1.0,
+      "dimensions": [
+        "inputs_outputs",
+        "contracts",
+        "states_transitions",
+        "consumers",
+        "gui_truth",
+        "failures_recovery",
+        "operations",
+        "compatibility_migration",
+        "acceptance_oracles",
+        "builder_discretion",
+        "ambiguity_unknowns",
+        "invalid_states_transitions",
+        "gui_misleading_states",
+        "localization",
+        "observability_support",
+        "cross_document_seams",
+        "test_falsifiability"
+      ],
+      "evidence": [
+        {
+          "exact_quote": "\"projection_freshness\":{\"type\":\"string\"},\"projection_health\":{\"type\":\"string\"},\"retention_class\":{\"type\":\"string\"}",
+          "line_end": 1,
+          "line_start": 1,
+          "path": "Plans/runtime_artifact_hitl_approval.schema.json",
+          "source_sha256": "0f2bc9cf68498f9adfd703c2d2ab91cf524f540b86d4a734fb73428ede50ef84"
+        }
+      ],
+      "gap_kind": "unbounded_state_vocabulary",
+      "impact": "Empty, misspelled, localized, or contradictory state labels validate and can produce divergent consumer behavior or misleading GUI status.",
+      "item_id": "A005M15-I006",
+      "item_type": "gap",
+      "severity": "high",
+      "source_unit_refs": [
+        "SEMANTIC:JSON_ROOT:Plans/runtime_artifact_hitl_approval.schema.json",
+        "STRUCTURAL:$"
+      ],
+      "statement": "Projection freshness, projection health, and retention class accept any string, including empty strings, without enumerated vocabularies or transition constraints.",
+      "title": "Projection and retention states are unconstrained"
+    },
+    {
+      "builder_discretion": true,
+      "confidence": 1.0,
+      "dimensions": [
+        "inputs_outputs",
+        "contracts",
+        "authority",
+        "ownership",
+        "consumers",
+        "security_privacy",
+        "propagation",
+        "operations",
+        "acceptance_oracles",
+        "builder_discretion",
+        "ambiguity_unknowns",
+        "missing_callers_consumers",
+        "partial_failure",
+        "authority_boundaries",
+        "privacy_data_lifecycle",
+        "observability_support",
+        "cross_document_seams",
+        "test_falsifiability"
+      ],
+      "evidence": [
+        {
+          "exact_quote": "\"thread_id\":{\"type\":\"string\"},\"node_id\":{\"type\":\"string\"},\"provider_attempt_ref\":{\"type\":\"string\"},\"usage_event_ref\":{\"type\":\"string\"}",
+          "line_end": 1,
+          "line_start": 1,
+          "path": "Plans/runtime_artifact_hitl_approval.schema.json",
+          "source_sha256": "0f2bc9cf68498f9adfd703c2d2ab91cf524f540b86d4a734fb73428ede50ef84"
+        },
+        {
+          "exact_quote": "\"receipt_refs\":{\"type\":\"array\",\"items\":{\"type\":\"string\",\"minLength\":1}},\"producer_ref\":{\"type\":\"string\"},\"actor_ref\":{\"type\":\"string\"}",
+          "line_end": 1,
+          "line_start": 1,
+          "path": "Plans/runtime_artifact_hitl_approval.schema.json",
+          "source_sha256": "0f2bc9cf68498f9adfd703c2d2ab91cf524f540b86d4a734fb73428ede50ef84"
+        }
+      ],
+      "gap_kind": "optional_unvalidated_lineage",
+      "impact": "An approval artifact can validate without an actor, producer, receipt, node, thread, provider attempt, or usage link; present scalar references may be empty and no referential integrity is testable.",
+      "item_id": "A005M15-I007",
+      "item_type": "gap",
+      "severity": "high",
+      "source_unit_refs": [
+        "SEMANTIC:JSON_ROOT:Plans/runtime_artifact_hitl_approval.schema.json",
+        "STRUCTURAL:$"
+      ],
+      "statement": "Lineage and authority references are optional; most accept empty strings, receipt_refs may be empty, and the schema establishes no cross-reference validity.",
+      "title": "Approval lineage and actor authority are not guaranteed"
+    },
+    {
+      "builder_discretion": true,
+      "confidence": 0.99,
+      "dimensions": [
+        "behavior",
+        "inputs_outputs",
+        "contracts",
+        "states_transitions",
+        "consumers",
+        "failures_recovery",
+        "propagation",
+        "operations",
+        "scale_performance",
+        "acceptance_oracles",
+        "builder_discretion",
+        "ambiguity_unknowns",
+        "missing_callers_consumers",
+        "concurrency_races",
+        "partial_failure",
+        "recovery_rollback",
+        "offline_network_loss",
+        "scale_limits",
+        "observability_support",
+        "cross_document_seams",
+        "test_falsifiability",
+        "unknown_unknowns"
+      ],
+      "evidence": [
+        {
+          "exact_quote": "\"artifact_id\":{\"type\":\"string\",\"minLength\":1}",
+          "line_end": 1,
+          "line_start": 1,
+          "path": "Plans/runtime_artifact_hitl_approval.schema.json",
+          "source_sha256": "0f2bc9cf68498f9adfd703c2d2ab91cf524f540b86d4a734fb73428ede50ef84"
+        },
+        {
+          "exact_quote": "\"project_id\":{\"type\":\"string\",\"minLength\":1},\"run_id\":{\"type\":\"string\",\"minLength\":1},\"attempt_id\":{\"type\":\"string\",\"minLength\":1}",
+          "line_end": 1,
+          "line_start": 1,
+          "path": "Plans/runtime_artifact_hitl_approval.schema.json",
+          "source_sha256": "0f2bc9cf68498f9adfd703c2d2ab91cf524f540b86d4a734fb73428ede50ef84"
+        }
+      ],
+      "gap_kind": "identifier_relationships_unconstrained",
+      "impact": "Duplicate artifacts, nonexistent parents, cross-project references, attempt/run mismatches, and concurrent replacement ambiguity cannot be rejected by this schema.",
+      "item_id": "A005M15-I008",
+      "item_type": "gap",
+      "severity": "medium",
+      "source_unit_refs": [
+        "SEMANTIC:JSON_ROOT:Plans/runtime_artifact_hitl_approval.schema.json",
+        "STRUCTURAL:$"
+      ],
+      "statement": "Artifact, project, run, and attempt identifiers are non-empty strings, but uniqueness, formats, parent existence, relational consistency, cardinality, and concurrency semantics are unspecified.",
+      "title": "Identifier integrity and concurrency rules are absent"
+    }
+  ],
+  "model": "gpt-5.6-sol",
+  "phase": "blind_macro_window_review",
+  "reasoning_effort": "xhigh",
+  "schema_version": "macro-review-result-v1",
+  "segments": [
+    {
+      "core_range": [
+        1,
+        1
+      ],
+      "covered_source_unit_refs": [
+        "SEMANTIC:JSON_ROOT:Plans/runtime_artifact_hitl_approval.schema.json",
+        "STRUCTURAL:$"
+      ],
+      "item_ids": [
+        "A005M15-I001",
+        "A005M15-I002",
+        "A005M15-I003",
+        "A005M15-I004",
+        "A005M15-I005",
+        "A005M15-I006",
+        "A005M15-I007",
+        "A005M15-I008"
+      ],
+      "reviewed": true,
+      "summary": "Reviewed the complete one-line JSON Schema root under exact and adversarial lenses: identity, closed-envelope, and routing constraints are explicit, while HITL semantics, timestamps, state vocabularies, lineage authority, identifier integrity, recovery, and concurrency remain underconstrained.",
+      "window_id": "WIN-260897E3D690-0001"
+    }
+  ],
+  "self_attestation": {
+    "no_canonical_writes": true,
+    "no_external_research_during_blind_review": true,
+    "no_peer_result_access": true,
+    "no_prior_audit_access": true,
+    "no_unrelated_source_access": true,
+    "terminal_after_submission": true
+  },
+  "source_binding": {
+    "bundle_id": "MACRO15-260897E3D690-0001",
+    "document_path": "Plans/runtime_artifact_hitl_approval.schema.json",
+    "micro_window_ids": [
+      "WIN-260897E3D690-0001"
+    ],
+    "source_sha256": "0f2bc9cf68498f9adfd703c2d2ab91cf524f540b86d4a734fb73428ede50ef84"
+  },
+  "status": "completed",
+  "synthesis": {
+    "cross_document_questions": [
+      "Which canonical contract defines the allowed projection_freshness, projection_health, and retention_class values and transitions?",
+      "Where are approval outcome, approver authority, policy basis, decision timing, denial, revocation, and recovery semantics specified for type_payload?",
+      "Which consumers require the optional lineage references, and where is their referential integrity enforced?"
+    ],
+    "feature_family_keys": [
+      "runtime_artifact",
+      "hitl_approval",
+      "projection_state",
+      "routing_lineage"
+    ],
+    "research_queries": []
+  },
+  "task_thread_id": "/root/a005m15_b10_000204_attempt_0015_terminal"
+}

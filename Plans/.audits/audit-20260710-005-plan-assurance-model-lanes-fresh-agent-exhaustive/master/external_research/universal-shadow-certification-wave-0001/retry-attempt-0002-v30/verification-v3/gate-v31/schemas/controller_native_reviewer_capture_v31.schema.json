@@ -1,0 +1,146 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "urn:a005:universal-shadow-certification:controller-native-reviewer-capture:v31",
+  "title": "Audit005 V31 controller-native reviewer capture",
+  "type": "object",
+  "additionalProperties": false,
+  "required": ["schema_version", "audit_id", "wave_id", "attempt_id", "slot_id", "capture_authority", "identity_authority", "controller_native", "reviewer_native", "closure", "hash_closure", "report_binding", "checkpoint", "scope"],
+  "properties": {
+    "schema_version": {"const": "universal-shadow-certification-controller-native-reviewer-capture-v31-v1"},
+    "audit_id": {"const": "audit-20260710-005-plan-assurance-model-lanes-fresh-agent-exhaustive"},
+    "wave_id": {"const": "universal-shadow-certification-wave-0001"},
+    "attempt_id": {"const": "attempt-0002"},
+    "slot_id": {"enum": ["c1-primary-rejected-set-postrun", "c1-atomic8-prelaunch", "c2-primary-rejected-set-postrun", "c2-atomic8-prelaunch"]},
+    "capture_authority": {"const": "controller_parent_native_session_records"},
+    "identity_authority": {"const": "native_session_not_report_self_attestation"},
+    "controller_native": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["native_thread_id", "native_turn_id", "actual_model", "actual_reasoning_effort", "session_prefix_line_count", "session_prefix_sha256", "turn_start_line", "turn_end_line", "turn_segment_sha256", "spawn_call_line", "spawn_call_id", "spawn_record_sha256", "spawn_result_line", "spawn_result_record_sha256", "terminal_record_line", "terminal_record_sha256"],
+      "properties": {
+        "native_thread_id": {"const": "019f553d-af6e-7c91-a43f-d81e06d100fd"},
+        "native_turn_id": {"type": "string", "pattern": "^[0-9a-f]{8}-[0-9a-f]{4}-7[0-9a-f]{3}-[89ab][0-9a-f]{3}-[0-9a-f]{12}$"},
+        "actual_model": {"const": "gpt-5.6-luna"},
+        "actual_reasoning_effort": {"const": "max"},
+        "session_prefix_line_count": {"type": "integer", "minimum": 1},
+        "session_prefix_sha256": {"$ref": "#/$defs/sha256"},
+        "turn_start_line": {"type": "integer", "minimum": 1},
+        "turn_end_line": {"type": "integer", "minimum": 1},
+        "turn_segment_sha256": {"$ref": "#/$defs/sha256"},
+        "spawn_call_line": {"type": "integer", "minimum": 1},
+        "spawn_call_id": {"type": "string", "minLength": 1},
+        "spawn_record_sha256": {"$ref": "#/$defs/sha256"},
+        "spawn_result_line": {"type": "integer", "minimum": 1},
+        "spawn_result_record_sha256": {"$ref": "#/$defs/sha256"},
+        "terminal_record_line": {"type": "integer", "minimum": 1},
+        "terminal_record_sha256": {"$ref": "#/$defs/sha256"}
+      }
+    },
+    "reviewer_native": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["native_thread_id", "native_turn_id", "parent_thread_id", "session_sha256", "session_line_count", "session_meta_line", "session_meta_record_sha256", "task_started_line", "task_started_record_sha256", "turn_context_line", "turn_context_record_sha256", "task_complete_line", "task_complete_record_sha256", "task_complete_is_last_line", "actual_model", "actual_reasoning_effort", "collaboration_model", "collaboration_reasoning_effort", "fork_context", "fork_turns", "forked_from_id", "terminal_status", "terminal_report_sha256"],
+      "properties": {
+        "native_thread_id": {"type": "string", "pattern": "^[0-9a-f]{8}-[0-9a-f]{4}-7[0-9a-f]{3}-[89ab][0-9a-f]{3}-[0-9a-f]{12}$"},
+        "native_turn_id": {"type": "string", "pattern": "^[0-9a-f]{8}-[0-9a-f]{4}-7[0-9a-f]{3}-[89ab][0-9a-f]{3}-[0-9a-f]{12}$"},
+        "parent_thread_id": {"const": "019f553d-af6e-7c91-a43f-d81e06d100fd"},
+        "session_sha256": {"$ref": "#/$defs/sha256"},
+        "session_line_count": {"type": "integer", "minimum": 1},
+        "session_meta_line": {"type": "integer", "minimum": 1},
+        "session_meta_record_sha256": {"$ref": "#/$defs/sha256"},
+        "task_started_line": {"type": "integer", "minimum": 1},
+        "task_started_record_sha256": {"$ref": "#/$defs/sha256"},
+        "turn_context_line": {"type": "integer", "minimum": 1},
+        "turn_context_record_sha256": {"$ref": "#/$defs/sha256"},
+        "task_complete_line": {"type": "integer", "minimum": 1},
+        "task_complete_record_sha256": {"$ref": "#/$defs/sha256"},
+        "task_complete_is_last_line": {"const": true},
+        "actual_model": {"const": "gpt-5.6-luna"},
+        "actual_reasoning_effort": {"const": "max"},
+        "collaboration_model": {"const": "gpt-5.6-luna"},
+        "collaboration_reasoning_effort": {"const": "max"},
+        "fork_context": {"const": false},
+        "fork_turns": {"const": "none"},
+        "forked_from_id": {"type": "null"},
+        "terminal_status": {"const": "completed"},
+        "terminal_report_sha256": {"$ref": "#/$defs/sha256"}
+      }
+    },
+    "closure": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["matching_spawn_count", "followup_task_count", "send_message_count", "interrupt_count", "retry_count", "descendant_spawn_count", "post_terminal_reuse_actions"],
+      "properties": {
+        "matching_spawn_count": {"const": 1},
+        "followup_task_count": {"const": 0},
+        "send_message_count": {"const": 0},
+        "interrupt_count": {"const": 0},
+        "retry_count": {"const": 0},
+        "descendant_spawn_count": {"const": 0},
+        "post_terminal_reuse_actions": {"type": "array", "maxItems": 0}
+      }
+    },
+    "hash_closure": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["stable_double_read", "path_symlink", "report_sha256", "checkpoint_sha256", "child_session_sha256", "parent_session_prefix_sha256", "parent_turn_segment_sha256", "spawn_record_sha256", "spawn_result_record_sha256", "terminal_record_sha256"],
+      "properties": {
+        "stable_double_read": {"const": true},
+        "path_symlink": {"const": false},
+        "report_sha256": {"$ref": "#/$defs/sha256"},
+        "checkpoint_sha256": {"$ref": "#/$defs/sha256"},
+        "child_session_sha256": {"$ref": "#/$defs/sha256"},
+        "parent_session_prefix_sha256": {"$ref": "#/$defs/sha256"},
+        "parent_turn_segment_sha256": {"$ref": "#/$defs/sha256"},
+        "spawn_record_sha256": {"$ref": "#/$defs/sha256"},
+        "spawn_result_record_sha256": {"$ref": "#/$defs/sha256"},
+        "terminal_record_sha256": {"$ref": "#/$defs/sha256"}
+      }
+    },
+    "report_binding": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["relative_path", "raw_sha256", "byte_count", "inode", "mtime_epoch", "semantic_status", "identity_fields_authoritative", "terminal_sender_native_thread_id", "terminal_report_sha256"],
+      "properties": {
+        "relative_path": {"type": "string", "pattern": "^master/", "minLength": 1},
+        "raw_sha256": {"$ref": "#/$defs/sha256"},
+        "byte_count": {"type": "integer", "minimum": 1},
+        "inode": {"type": "integer", "minimum": 1},
+        "mtime_epoch": {"type": "integer", "minimum": 1},
+        "semantic_status": {"enum": ["fail_closed", "PASS"]},
+        "identity_fields_authoritative": {"const": false},
+        "terminal_sender_native_thread_id": {"type": "string", "pattern": "^[0-9a-f]{8}-[0-9a-f]{4}-7[0-9a-f]{3}-[89ab][0-9a-f]{3}-[0-9a-f]{12}$"},
+        "terminal_report_sha256": {"$ref": "#/$defs/sha256"}
+      }
+    },
+    "checkpoint": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["relative_path", "raw_sha256", "record_count"],
+      "properties": {
+        "relative_path": {"type": "string", "pattern": "^controller-native-checkpoints/"},
+        "raw_sha256": {"$ref": "#/$defs/sha256"},
+        "record_count": {"const": 4}
+      }
+    },
+    "scope": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["activation_authorized", "launch_authorized", "spawn", "spawn_count", "result_count", "receipt_count", "runtime_native_capture_rows", "activation_transactions", "credit"],
+      "properties": {
+        "activation_authorized": {"const": false},
+        "launch_authorized": {"const": false},
+        "spawn": {"const": "none"},
+        "spawn_count": {"const": 0},
+        "result_count": {"const": 0},
+        "receipt_count": {"const": 0},
+        "runtime_native_capture_rows": {"const": 0},
+        "activation_transactions": {"const": 0},
+        "credit": {"const": 0}
+      }
+    }
+  },
+  "$defs": {
+    "sha256": {"type": "string", "pattern": "^[0-9a-f]{64}$"}
+  }
+}

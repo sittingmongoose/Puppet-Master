@@ -1,0 +1,183 @@
+{
+  "assignment_id": "A005M-000138-INTEGRATED-MACRO-8C88D9F4CA2B-0003",
+  "attempt_id": "attempt-0014",
+  "audit_id": "audit-20260710-005-plan-assurance-model-lanes-fresh-agent-exhaustive",
+  "blindness": {
+    "external_research": "deferred_to_feature_research_phase",
+    "peer_results": "forbidden",
+    "prior_audits": "forbidden",
+    "unrelated_sources": "forbidden"
+  },
+  "bundle_core_range": [
+    3785,
+    5716
+  ],
+  "bundle_id": "MACRO-8C88D9F4CA2B-0003",
+  "context_ranges": [
+    [
+      3773,
+      3784
+    ],
+    [
+      5717,
+      5728
+    ]
+  ],
+  "document_path": "Plans/Wiring_Matrix.production.json",
+  "micro_window_ids": [
+    "WIN-8C88D9F4CA2B-0011",
+    "WIN-8C88D9F4CA2B-0012",
+    "WIN-8C88D9F4CA2B-0013",
+    "WIN-8C88D9F4CA2B-0014",
+    "WIN-8C88D9F4CA2B-0015"
+  ],
+  "phase": "blind_macro_window_review",
+  "required_dimensions": [
+    "behavior",
+    "capabilities",
+    "inputs_outputs",
+    "contracts",
+    "states_transitions",
+    "authority",
+    "ownership",
+    "consumers",
+    "gui_truth",
+    "failures_recovery",
+    "security_privacy",
+    "propagation",
+    "operations",
+    "scale_performance",
+    "compatibility_migration",
+    "acceptance_oracles",
+    "builder_discretion",
+    "ambiguity_unknowns",
+    "missing_callers_consumers",
+    "invalid_states_transitions",
+    "concurrency_races",
+    "partial_failure",
+    "recovery_rollback",
+    "authority_boundaries",
+    "privacy_data_lifecycle",
+    "untrusted_inputs",
+    "gui_misleading_states",
+    "offline_network_loss",
+    "scale_limits",
+    "accessibility",
+    "localization",
+    "observability_support",
+    "destructive_actions",
+    "cross_document_seams",
+    "test_falsifiability",
+    "unknown_unknowns"
+  ],
+  "result_schema_ref": "schemas/macro_review_result.schema.json",
+  "review_instructions": "Read every assigned core line and account for every required_source_unit_ref. Apply both exact-behavior and adversarial-negative-space lenses across every required dimension. Extract concise feature, behavior, contract, state, authority, consumer, GUI, failure/recovery, oracle, gap, unknown, and explicit-non-gap items with exact source evidence. Do not merely paraphrase headings or copy unit refs. Each segment must name its complete required_source_unit_refs list and at least one item. Write exactly one regular JSON payload inside the assigned output directory; result.json is recommended but the filename is not semantic. Do not write a terminal seal. Return PMR1 only after the JSON payload is fully written.",
+  "schema_version": "macro-context-capsule-v1",
+  "segments": [
+    {
+      "core_range": [
+        3785,
+        4169
+      ],
+      "core_sha256": "3b4aee495f73d28d61c388695d31a062ca4cd3b48079a45ba3983281f137594d",
+      "plan_unit_ids": [],
+      "required_source_unit_refs": [
+        "SEMANTIC:JSON_FIELD:Plans/Wiring_Matrix.production.json:entries:CONT-011",
+        "STRUCTURAL:$.entries"
+      ],
+      "semantic_block_ids": [
+        "JSON_FIELD:Plans/Wiring_Matrix.production.json:entries:CONT-011"
+      ],
+      "structural_paths": [
+        "$.entries"
+      ],
+      "token_estimate": 9041,
+      "window_id": "WIN-8C88D9F4CA2B-0011"
+    },
+    {
+      "core_range": [
+        4170,
+        4554
+      ],
+      "core_sha256": "e16015b56f2b8b1059e3da4473c39fd8db6f2229ae66ae4f1d525d0e96a6e9be",
+      "plan_unit_ids": [],
+      "required_source_unit_refs": [
+        "SEMANTIC:JSON_FIELD:Plans/Wiring_Matrix.production.json:entries:CONT-012",
+        "STRUCTURAL:$.entries"
+      ],
+      "semantic_block_ids": [
+        "JSON_FIELD:Plans/Wiring_Matrix.production.json:entries:CONT-012"
+      ],
+      "structural_paths": [
+        "$.entries"
+      ],
+      "token_estimate": 9741,
+      "window_id": "WIN-8C88D9F4CA2B-0012"
+    },
+    {
+      "core_range": [
+        4555,
+        4939
+      ],
+      "core_sha256": "0c99f8a342724c2972f59b0068fb45cc558f764201b1a37ab5d701d56c591722",
+      "plan_unit_ids": [],
+      "required_source_unit_refs": [
+        "SEMANTIC:JSON_FIELD:Plans/Wiring_Matrix.production.json:entries:CONT-013",
+        "STRUCTURAL:$.entries"
+      ],
+      "semantic_block_ids": [
+        "JSON_FIELD:Plans/Wiring_Matrix.production.json:entries:CONT-013"
+      ],
+      "structural_paths": [
+        "$.entries"
+      ],
+      "token_estimate": 8731,
+      "window_id": "WIN-8C88D9F4CA2B-0013"
+    },
+    {
+      "core_range": [
+        4940,
+        5324
+      ],
+      "core_sha256": "54899ab01c5358ae918043ca4a6fbdcbcfbf462d380be2ac86a168e45a48ac69",
+      "plan_unit_ids": [],
+      "required_source_unit_refs": [
+        "SEMANTIC:JSON_FIELD:Plans/Wiring_Matrix.production.json:entries:CONT-014",
+        "STRUCTURAL:$.entries"
+      ],
+      "semantic_block_ids": [
+        "JSON_FIELD:Plans/Wiring_Matrix.production.json:entries:CONT-014"
+      ],
+      "structural_paths": [
+        "$.entries"
+      ],
+      "token_estimate": 8971,
+      "window_id": "WIN-8C88D9F4CA2B-0014"
+    },
+    {
+      "core_range": [
+        5325,
+        5716
+      ],
+      "core_sha256": "41b645f5919c980ff8b774524f7843d7e39eaefad43e99978aa063eb05b4b5af",
+      "plan_unit_ids": [],
+      "required_source_unit_refs": [
+        "SEMANTIC:JSON_FIELD:Plans/Wiring_Matrix.production.json:entries:CONT-015",
+        "STRUCTURAL:$.entries"
+      ],
+      "semantic_block_ids": [
+        "JSON_FIELD:Plans/Wiring_Matrix.production.json:entries:CONT-015"
+      ],
+      "structural_paths": [
+        "$.entries"
+      ],
+      "token_estimate": 8763,
+      "window_id": "WIN-8C88D9F4CA2B-0015"
+    }
+  ],
+  "source_excerpt_line_format": "L######## followed by a tab and exact canonical source text",
+  "source_excerpt_ref": "capsules/source/cd/cd6be45e67b01b20f0844712089f8b9b225639503b734512dfa3d4229780a7ab.txt",
+  "source_excerpt_sha256": "cd6be45e67b01b20f0844712089f8b9b225639503b734512dfa3d4229780a7ab",
+  "source_sha256": "01b3f170ce11d2f53a01be423c14390354e6bea881fed5322807a0db7e65c36d",
+  "token_estimate": 45247
+}

@@ -1,0 +1,1527 @@
+{
+  "audit_id": "audit-20260710-005-plan-assurance-model-lanes-fresh-agent-exhaustive",
+  "schema_version": "owner-merge-result-v1",
+  "phase": "owner_domain_shard_merge",
+  "assignment_id": "A005OM-0002",
+  "attempt_id": "attempt-0001",
+  "task_thread_id": "/root/a005_owner_merge_0002_attempt_0001_terminal",
+  "model": "gpt-5.6-sol",
+  "reasoning_effort": "xhigh",
+  "status": "completed",
+  "input_binding": {
+    "packet_id": "OMPKT-0002",
+    "packet_sha256": "904631e257378b5c7f43bb92b48fae166c750c93e56a46e4c0a1dfadff2ad99c",
+    "local_feature_refs_digest": "3c82bdfb44a17741ef00dddd3fd1bed0d504f91569137d402db3a718733a7fc3"
+  },
+  "coverage": {
+    "assigned_local_feature_count": 38,
+    "assigned_local_feature_refs": [
+      "LF::A005C-0004::FLOCAL-0026",
+      "LF::A005C-0004::FLOCAL-0055",
+      "LF::A005C-0004::FLOCAL-0099",
+      "LF::A005C-0004::FLOCAL-0103",
+      "LF::A005C-0004::FLOCAL-0104",
+      "LF::A005C-0004::FLOCAL-0119",
+      "LF::A005C-0004::FLOCAL-0120",
+      "LF::A005C-0004::FLOCAL-0137",
+      "LF::A005C-0004::FLOCAL-0139",
+      "LF::A005C-0004::FLOCAL-0140",
+      "LF::A005C-0004::FLOCAL-0144",
+      "LF::A005C-0004::FLOCAL-0148",
+      "LF::A005C-0004::FLOCAL-0169",
+      "LF::A005C-0004::FLOCAL-0172",
+      "LF::A005C-0004::FLOCAL-0182",
+      "LF::A005C-0004::FLOCAL-0185",
+      "LF::A005C-0004::FLOCAL-0218",
+      "LF::A005C-0004::FLOCAL-0234",
+      "LF::A005C-0005::FLOCAL-0012",
+      "LF::A005C-0005::FLOCAL-0231",
+      "LF::A005C-0006::FLOCAL-0060",
+      "LF::A005C-0006::FLOCAL-0210",
+      "LF::A005C-0006::FLOCAL-0212",
+      "LF::A005C-0006::FLOCAL-0213",
+      "LF::A005C-0006::FLOCAL-0214",
+      "LF::A005C-0006::FLOCAL-0215",
+      "LF::A005C-0006::FLOCAL-0225",
+      "LF::A005C-0011::FLOCAL-0022",
+      "LF::A005C-0011::FLOCAL-0088",
+      "LF::A005C-0012::FLOCAL-0049",
+      "LF::A005C-0014::FLOCAL-0026",
+      "LF::A005C-0014::FLOCAL-0032",
+      "LF::A005C-0014::FLOCAL-0036",
+      "LF::A005C-0015::FLOCAL-0015",
+      "LF::A005C-0015::FLOCAL-0016",
+      "LF::A005C-0017::FLOCAL-0115",
+      "LF::A005C-0022::FLOCAL-0010",
+      "LF::A005C-0022::FLOCAL-0035"
+    ]
+  },
+  "provisional_features": [
+    {
+      "provisional_feature_id": "PF-0001",
+      "title": "DL-026 has retained entry conditions but no exit contract",
+      "summary": "DL-026 defines entry reasons for retained but not reason aggregation, authority to add or clear reasons, expiry, concurrent updates, exit predicates, cleanup resumption, rollback, or audit and notification oracles.",
+      "owner_domain": "automation_scheduling_notifications",
+      "feature_kinds": [
+        "governance_control"
+      ],
+      "aliases": [],
+      "local_feature_refs": [
+        "LF::A005C-0004::FLOCAL-0026"
+      ],
+      "source_documents": [
+        "Plans/Decision_Log.md"
+      ],
+      "source_unit_refs": [
+        "PLANUNIT:DL-026",
+        "SEMANTIC:PLANUNIT:DL-026"
+      ],
+      "risk_level": "high",
+      "spec_state": "under_specified",
+      "gap_summary": "DL-026 defines entry reasons for retained but not reason aggregation, authority to add or clear reasons, expiry, concurrent updates, exit predicates, cleanup resumption, rollback, or audit and notification oracles.",
+      "cross_domain_terms": [
+        "decision-ledger-authority",
+        "recovery and remediation"
+      ],
+      "confidence": 0.86
+    },
+    {
+      "provisional_feature_id": "PF-0002",
+      "title": "Scheduler default lacks fairness and scale contracts",
+      "summary": "DP-043 declares scored event-driven scheduling and defensive redundant wakeups but no score formula, tie-break, starvation bound, deduplication, queue limit, or overload behavior.",
+      "owner_domain": "automation_scheduling_notifications",
+      "feature_kinds": [
+        "system"
+      ],
+      "aliases": [],
+      "local_feature_refs": [
+        "LF::A005C-0004::FLOCAL-0055"
+      ],
+      "source_documents": [
+        "Plans/Decision_Policy.md"
+      ],
+      "source_unit_refs": [
+        "PLANUNIT:DP-043",
+        "SEMANTIC:PLANUNIT:DP-043"
+      ],
+      "risk_level": "high",
+      "spec_state": "under_specified",
+      "gap_summary": "DP-043 declares scored event-driven scheduling and defensive redundant wakeups but no score formula, tie-break, starvation bound, deduplication, queue limit, or overload behavior.",
+      "cross_domain_terms": [
+        "spec-lock-governance",
+        "scheduler-retry",
+        "scheduler readiness and retry"
+      ],
+      "confidence": 0.86
+    },
+    {
+      "provisional_feature_id": "PF-0003",
+      "title": "Single-scheduler authority boundary",
+      "summary": "The runtime scheduler exclusively owns readiness and transition state, while package and seam overseers remain governance roles without hidden scheduler authority.",
+      "owner_domain": "automation_scheduling_notifications",
+      "feature_kinds": [
+        "governance_control"
+      ],
+      "aliases": [],
+      "local_feature_refs": [
+        "LF::A005C-0004::FLOCAL-0099",
+        "LF::A005C-0004::FLOCAL-0120"
+      ],
+      "source_documents": [
+        "Plans/Executor_Protocol.md"
+      ],
+      "source_unit_refs": [
+        "SEMANTIC:PROLOGUE:Plans/Executor_Protocol.md:CONT-001",
+        "PLANUNIT:EP-004",
+        "SEMANTIC:PLANUNIT:EP-004"
+      ],
+      "risk_level": "low",
+      "spec_state": "well_specified",
+      "gap_summary": "No gap in this observation; preserve the explicit contract and its stated boundary.\nNo gap in this observation; preserve the explicit contract and its stated boundary.",
+      "cross_domain_terms": [
+        "scheduler readiness and retry",
+        "document-set packaging"
+      ],
+      "confidence": 0.97
+    },
+    {
+      "provisional_feature_id": "PF-0004",
+      "title": "Ready-eligible states conflict with the declared closed lifecycle",
+      "summary": "The canonical lifecycle declares done and failed terminal and contains queued but not pending or reopened. The scheduler nevertheless admits reopened or an unspecified equivalent state and the prerequisite event transitions blocked nodes to pending. The excerpt does not define legal transitions into or out of those values.",
+      "owner_domain": "automation_scheduling_notifications",
+      "feature_kinds": [
+        "workflow"
+      ],
+      "aliases": [],
+      "local_feature_refs": [
+        "LF::A005C-0004::FLOCAL-0103"
+      ],
+      "source_documents": [
+        "Plans/Executor_Protocol.md"
+      ],
+      "source_unit_refs": [
+        "SEMANTIC:PROLOGUE:Plans/Executor_Protocol.md:CONT-001",
+        "PLANUNIT:EP-025",
+        "SEMANTIC:PLANUNIT:EP-025"
+      ],
+      "risk_level": "critical",
+      "spec_state": "contradictory",
+      "gap_summary": "The canonical lifecycle declares done and failed terminal and contains queued but not pending or reopened. The scheduler nevertheless admits reopened or an unspecified equivalent state and the prerequisite event transitions blocked nodes to pending. The excerpt does not define legal transitions into or out of those values.",
+      "cross_domain_terms": [
+        "scheduler readiness and retry",
+        "GUI state truth"
+      ],
+      "confidence": 0.86
+    },
+    {
+      "provisional_feature_id": "PF-0005",
+      "title": "Wake coalescing has a deterministic concurrency contract",
+      "summary": "Wake admission is scoped per run and generation, primary selection is deterministic, additional reasons remain observable, and watchdog polling cannot overtake event-driven work.",
+      "owner_domain": "automation_scheduling_notifications",
+      "feature_kinds": [
+        "feature"
+      ],
+      "aliases": [],
+      "local_feature_refs": [
+        "LF::A005C-0004::FLOCAL-0104"
+      ],
+      "source_documents": [
+        "Plans/Executor_Protocol.md"
+      ],
+      "source_unit_refs": [
+        "SEMANTIC:PROLOGUE:Plans/Executor_Protocol.md:CONT-001"
+      ],
+      "risk_level": "low",
+      "spec_state": "well_specified",
+      "gap_summary": "No gap in this observation; preserve the explicit contract and its stated boundary.",
+      "cross_domain_terms": [],
+      "confidence": 0.97
+    },
+    {
+      "provisional_feature_id": "PF-0006",
+      "title": "EP-003 names roles without acceptance-grade capabilities",
+      "summary": "EP-003 preserves role names and the no-scheduler boundary but has no role-specific inputs, outputs, allowed actions, or decision authority, so it does not close the role ambiguity present in the source prose.",
+      "owner_domain": "automation_scheduling_notifications",
+      "feature_kinds": [
+        "governance_control"
+      ],
+      "aliases": [],
+      "local_feature_refs": [
+        "LF::A005C-0004::FLOCAL-0119"
+      ],
+      "source_documents": [
+        "Plans/Executor_Protocol.md"
+      ],
+      "source_unit_refs": [
+        "PLANUNIT:EP-003",
+        "SEMANTIC:PLANUNIT:EP-003"
+      ],
+      "risk_level": "medium",
+      "spec_state": "partially_specified",
+      "gap_summary": "EP-003 preserves role names and the no-scheduler boundary but has no role-specific inputs, outputs, allowed actions, or decision authority, so it does not close the role ambiguity present in the source prose.",
+      "cross_domain_terms": [
+        "scheduler readiness and retry",
+        "decision authority and policy",
+        "GUI state truth"
+      ],
+      "confidence": 0.86
+    },
+    {
+      "provisional_feature_id": "PF-0007",
+      "title": "Scheduler addendum supersedes lexical dispatch",
+      "summary": "The dated scheduler addendum is explicitly authoritative over the preserved earlier lexical-dispatch loop, which is retained only as a superseded baseline.",
+      "owner_domain": "automation_scheduling_notifications",
+      "feature_kinds": [
+        "system",
+        "workflow"
+      ],
+      "aliases": [],
+      "local_feature_refs": [
+        "LF::A005C-0004::FLOCAL-0137",
+        "LF::A005C-0004::FLOCAL-0139"
+      ],
+      "source_documents": [
+        "Plans/Executor_Protocol.md"
+      ],
+      "source_unit_refs": [
+        "PLANUNIT:EP-021",
+        "SEMANTIC:PLANUNIT:EP-021",
+        "PLANUNIT:EP-023",
+        "SEMANTIC:PLANUNIT:EP-023"
+      ],
+      "risk_level": "low",
+      "spec_state": "well_specified",
+      "gap_summary": "No gap in this observation; preserve the explicit contract and its stated boundary.\nNo gap in this observation; preserve the explicit contract and its stated boundary.",
+      "cross_domain_terms": [
+        "scheduler readiness and retry"
+      ],
+      "confidence": 0.97
+    },
+    {
+      "provisional_feature_id": "PF-0008",
+      "title": "EP-024 preserves the full scheduler-pass stages",
+      "summary": "Candidate refresh, readiness and capacity recomputation, ready-set scoring, observability, and dispatch are all represented in the PlanUnit.",
+      "owner_domain": "automation_scheduling_notifications",
+      "feature_kinds": [
+        "workflow"
+      ],
+      "aliases": [],
+      "local_feature_refs": [
+        "LF::A005C-0004::FLOCAL-0140"
+      ],
+      "source_documents": [
+        "Plans/Executor_Protocol.md"
+      ],
+      "source_unit_refs": [
+        "PLANUNIT:EP-024",
+        "SEMANTIC:PLANUNIT:EP-024"
+      ],
+      "risk_level": "low",
+      "spec_state": "well_specified",
+      "gap_summary": "No gap in this observation; preserve the explicit contract and its stated boundary.",
+      "cross_domain_terms": [
+        "scheduler readiness and retry"
+      ],
+      "confidence": 0.97
+    },
+    {
+      "provisional_feature_id": "PF-0009",
+      "title": "Wake values remain single-owned",
+      "summary": "Forward-reference boundaries preserve one later owner for wake reasons, wake values, and polling rules instead of redefining them locally.",
+      "owner_domain": "automation_scheduling_notifications",
+      "feature_kinds": [
+        "feature"
+      ],
+      "aliases": [],
+      "local_feature_refs": [
+        "LF::A005C-0004::FLOCAL-0144",
+        "LF::A005C-0004::FLOCAL-0172"
+      ],
+      "source_documents": [
+        "Plans/Executor_Protocol.md"
+      ],
+      "source_unit_refs": [
+        "PLANUNIT:EP-028",
+        "SEMANTIC:PLANUNIT:EP-028",
+        "PLANUNIT:EP-053",
+        "SEMANTIC:PLANUNIT:EP-053"
+      ],
+      "risk_level": "low",
+      "spec_state": "well_specified",
+      "gap_summary": "No gap in this observation; preserve the explicit contract and its stated boundary.\nNo gap in this observation; preserve the explicit contract and its stated boundary.",
+      "cross_domain_terms": [
+        "scheduler-readiness-capacity-and-wake-coalescing"
+      ],
+      "confidence": 0.97
+    },
+    {
+      "provisional_feature_id": "PF-0010",
+      "title": "Same-wake prerequisite cascade",
+      "summary": "Cleared prerequisites synchronously reevaluate direct dependents, allowing readiness in the same wake cycle without an extra scheduler pass.",
+      "owner_domain": "automation_scheduling_notifications",
+      "feature_kinds": [
+        "feature",
+        "workflow"
+      ],
+      "aliases": [],
+      "local_feature_refs": [
+        "LF::A005C-0004::FLOCAL-0148",
+        "LF::A005C-0004::FLOCAL-0185"
+      ],
+      "source_documents": [
+        "Plans/Executor_Protocol.md"
+      ],
+      "source_unit_refs": [
+        "PLANUNIT:EP-029",
+        "SEMANTIC:PLANUNIT:EP-029",
+        "PLANUNIT:EP-066",
+        "SEMANTIC:PLANUNIT:EP-066"
+      ],
+      "risk_level": "low",
+      "spec_state": "well_specified",
+      "gap_summary": "No gap in this observation; preserve the explicit contract and its stated boundary.\nNo gap in this observation; preserve the explicit contract and its stated boundary.",
+      "cross_domain_terms": [
+        "scheduler-readiness-capacity-and-wake-coalescing",
+        "provider-account-actor-resolution-and-usage",
+        "GUI state truth"
+      ],
+      "confidence": 0.97
+    },
+    {
+      "provisional_feature_id": "PF-0011",
+      "title": "Scheduler pass lacks a snapshot-and-commit boundary",
+      "summary": "Refresh, scoring, capacity selection, queue analysis, and dispatch are specified as one deterministic pass without an atomic snapshot version or compare-and-swap rule.",
+      "owner_domain": "automation_scheduling_notifications",
+      "feature_kinds": [
+        "workflow"
+      ],
+      "aliases": [],
+      "local_feature_refs": [
+        "LF::A005C-0004::FLOCAL-0169"
+      ],
+      "source_documents": [
+        "Plans/Executor_Protocol.md"
+      ],
+      "source_unit_refs": [
+        "PLANUNIT:EP-050",
+        "SEMANTIC:PLANUNIT:EP-050"
+      ],
+      "risk_level": "high",
+      "spec_state": "under_specified",
+      "gap_summary": "Refresh, scoring, capacity selection, queue analysis, and dispatch are specified as one deterministic pass without an atomic snapshot version or compare-and-swap rule.",
+      "cross_domain_terms": [
+        "scheduler-readiness-capacity-and-wake-coalescing",
+        "scheduler readiness and retry"
+      ],
+      "confidence": 0.86
+    },
+    {
+      "provisional_feature_id": "PF-0012",
+      "title": "Readiness inputs have no consistency version",
+      "summary": "The predicate joins lifecycle, blockers, projections, generation, worktree conflict, and capacity without requiring they come from one scheduler snapshot.",
+      "owner_domain": "automation_scheduling_notifications",
+      "feature_kinds": [
+        "gui_surface"
+      ],
+      "aliases": [],
+      "local_feature_refs": [
+        "LF::A005C-0004::FLOCAL-0182"
+      ],
+      "source_documents": [
+        "Plans/Executor_Protocol.md"
+      ],
+      "source_unit_refs": [
+        "PLANUNIT:EP-063",
+        "SEMANTIC:PLANUNIT:EP-063"
+      ],
+      "risk_level": "medium",
+      "spec_state": "under_specified",
+      "gap_summary": "The predicate joins lifecycle, blockers, projections, generation, worktree conflict, and capacity without requiring they come from one scheduler snapshot.",
+      "cross_domain_terms": [
+        "scheduler-readiness-capacity-and-wake-coalescing",
+        "safe-point-remediation-and-replan-generation",
+        "runtime-context-authority-and-worktree-binding",
+        "runtime worktree binding",
+        "scheduler readiness and retry"
+      ],
+      "confidence": 0.86
+    },
+    {
+      "provisional_feature_id": "PF-0013",
+      "title": "Capacity-aware dispatch lacks a capacity model",
+      "summary": "Scheduler ownership is clear, but capacity units, reservation/release rules, fairness, starvation bounds, and overload observability are not defined.",
+      "owner_domain": "automation_scheduling_notifications",
+      "feature_kinds": [
+        "governance_control"
+      ],
+      "aliases": [],
+      "local_feature_refs": [
+        "LF::A005C-0004::FLOCAL-0218"
+      ],
+      "source_documents": [
+        "Plans/Executor_Protocol.md"
+      ],
+      "source_unit_refs": [
+        "PLANUNIT:EP-098",
+        "SEMANTIC:PLANUNIT:EP-098"
+      ],
+      "risk_level": "high",
+      "spec_state": "under_specified",
+      "gap_summary": "Scheduler ownership is clear, but capacity units, reservation/release rules, fairness, starvation bounds, and overload observability are not defined.",
+      "cross_domain_terms": [
+        "worknode_intake_dispatch_and_receipts",
+        "fable_scheduler_and_event_consistency",
+        "scheduler readiness and retry"
+      ],
+      "confidence": 0.86
+    },
+    {
+      "provisional_feature_id": "PF-0014",
+      "title": "FABLE runtime constants are explicit",
+      "summary": "EP-114 closes key scheduler and transport values with exact wake ordering, timeout, backpressure, and receipt behavior.",
+      "owner_domain": "automation_scheduling_notifications",
+      "feature_kinds": [
+        "data_model"
+      ],
+      "aliases": [],
+      "local_feature_refs": [
+        "LF::A005C-0004::FLOCAL-0234"
+      ],
+      "source_documents": [
+        "Plans/Executor_Protocol.md"
+      ],
+      "source_unit_refs": [
+        "PLANUNIT:EP-114",
+        "SEMANTIC:PLANUNIT:EP-114"
+      ],
+      "risk_level": "low",
+      "spec_state": "well_specified",
+      "gap_summary": "EP-114 closes key scheduler and transport values with exact wake ordering, timeout, backpressure, and receipt behavior.",
+      "cross_domain_terms": [
+        "stream_history_transport_and_backpressure",
+        "fable_scheduler_and_event_consistency",
+        "scheduler readiness and retry",
+        "dispatch receipt integrity"
+      ],
+      "confidence": 0.86
+    },
+    {
+      "provisional_feature_id": "PF-0015",
+      "title": "Early Final GUI PlanUnits are addressable but not behaviorally falsifiable",
+      "summary": "F3-002 through F3-007 carry descriptive canonical text but repeat migration-oriented acceptance criteria, empty dependency fields, and no feature-specific executable oracle for the routes, records, transitions, projection trust, or attention projections they define.",
+      "owner_domain": "automation_scheduling_notifications",
+      "feature_kinds": [
+        "gui_surface"
+      ],
+      "aliases": [],
+      "local_feature_refs": [
+        "LF::A005C-0005::FLOCAL-0012"
+      ],
+      "source_documents": [
+        "Plans/FinalGUISpec.md"
+      ],
+      "source_unit_refs": [
+        "PLANUNIT:F3-002",
+        "PLANUNIT:F3-003",
+        "PLANUNIT:F3-004",
+        "PLANUNIT:F3-005",
+        "PLANUNIT:F3-006",
+        "PLANUNIT:F3-007",
+        "SEMANTIC:PLANUNIT:F3-002",
+        "SEMANTIC:PLANUNIT:F3-003",
+        "SEMANTIC:PLANUNIT:F3-004",
+        "SEMANTIC:PLANUNIT:F3-005",
+        "SEMANTIC:PLANUNIT:F3-006",
+        "SEMANTIC:PLANUNIT:F3-007"
+      ],
+      "risk_level": "high",
+      "spec_state": "under_specified",
+      "gap_summary": "F3-002 through F3-007 carry descriptive canonical text but repeat migration-oriented acceptance criteria, empty dependency fields, and no feature-specific executable oracle for the routes, records, transitions, projection trust, or attention projections they define.",
+      "cross_domain_terms": [
+        "promoted_widgets",
+        "visualizer_security",
+        "projection_and_mutation_gates",
+        "help_notifications_and_attention",
+        "account_and_operational_identity",
+        "slint_shell_and_renderers",
+        "workspace_tray_and_side_panels",
+        "search_indexing_replace_and_routing"
+      ],
+      "confidence": 0.9
+    },
+    {
+      "provisional_feature_id": "PF-0016",
+      "title": "Help and attention surfaces omit accessibility and localization contracts",
+      "summary": "The terminology, help, notification, badge, routing, and attention-projection units do not specify keyboard or screen-reader semantics, non-color status cues, focus/help behavior, pluralization, text expansion, truncation, or localized route-label acceptance.",
+      "owner_domain": "automation_scheduling_notifications",
+      "feature_kinds": [
+        "gui_surface"
+      ],
+      "aliases": [],
+      "local_feature_refs": [
+        "LF::A005C-0005::FLOCAL-0231"
+      ],
+      "source_documents": [
+        "Plans/FinalGUISpec.md"
+      ],
+      "source_unit_refs": [
+        "PLANUNIT:F3-015",
+        "PLANUNIT:F3-016",
+        "PLANUNIT:F3-017",
+        "PLANUNIT:F3-018",
+        "PLANUNIT:F3-019",
+        "PLANUNIT:F3-020",
+        "PLANUNIT:F3-021",
+        "SEMANTIC:PLANUNIT:F3-015",
+        "SEMANTIC:PLANUNIT:F3-016",
+        "SEMANTIC:PLANUNIT:F3-017",
+        "SEMANTIC:PLANUNIT:F3-018",
+        "SEMANTIC:PLANUNIT:F3-019",
+        "SEMANTIC:PLANUNIT:F3-020",
+        "SEMANTIC:PLANUNIT:F3-021"
+      ],
+      "risk_level": "medium",
+      "spec_state": "under_specified",
+      "gap_summary": "The terminology, help, notification, badge, routing, and attention-projection units do not specify keyboard or screen-reader semantics, non-color status cues, focus/help behavior, pluralization, text expansion, truncation, or localized route-label acceptance.",
+      "cross_domain_terms": [
+        "promoted_widgets",
+        "visualizer_security",
+        "projection_and_mutation_gates",
+        "help_notifications_and_attention",
+        "account_and_operational_identity",
+        "slint_shell_and_renderers",
+        "workspace_tray_and_side_panels",
+        "search_indexing_replace_and_routing"
+      ],
+      "confidence": 0.9
+    },
+    {
+      "provisional_feature_id": "PF-0017",
+      "title": "Project attention and concern propagation contract",
+      "summary": "Local project-attention-and-alerts subject normalized from 2 validated packet observation(s): Project attention and concern propagation contract; Concern and notification lifecycle is not fully deterministic. These are observations to test, not automatic conclusions.",
+      "owner_domain": "automation_scheduling_notifications",
+      "feature_kinds": [
+        "feature"
+      ],
+      "aliases": [
+        "project-attention-and-alerts"
+      ],
+      "local_feature_refs": [
+        "LF::A005C-0006::FLOCAL-0060"
+      ],
+      "source_documents": [
+        "Plans/FinalGUISpec.md"
+      ],
+      "source_unit_refs": [
+        "PLANUNIT:F3-121",
+        "PLANUNIT:F3-122",
+        "PLANUNIT:F3-123",
+        "PLANUNIT:F3-124",
+        "PLANUNIT:F3-125",
+        "PLANUNIT:F3-126",
+        "PLANUNIT:F3-127",
+        "SEMANTIC:PLANUNIT:F3-121",
+        "SEMANTIC:PLANUNIT:F3-122",
+        "SEMANTIC:PLANUNIT:F3-123",
+        "SEMANTIC:PLANUNIT:F3-124",
+        "SEMANTIC:PLANUNIT:F3-125",
+        "SEMANTIC:PLANUNIT:F3-126",
+        "SEMANTIC:PLANUNIT:F3-127"
+      ],
+      "risk_level": "high",
+      "spec_state": "partially_specified",
+      "gap_summary": "Observed gaps or unknowns: Concern and notification lifecycle is not fully deterministic [state_machine_ambiguity]. Preserved explicit non-gaps: Project attention and concern propagation contract",
+      "cross_domain_terms": [
+        "project-attention-and-alerts",
+        "automation_scheduling_notifications",
+        "FinalGUISpec",
+        "F3-121",
+        "F3-122",
+        "F3-123",
+        "F3-124",
+        "F3-125",
+        "F3-126",
+        "F3-127"
+      ],
+      "confidence": 0.94
+    },
+    {
+      "provisional_feature_id": "PF-0018",
+      "title": "Notifications settings protect secrets and non-audio state",
+      "summary": "Local notifications_dry_and_free_models_settings subject normalized from 1 validated packet observation(s): Notifications settings protect secrets and non-audio state. These are observations to test, not automatic conclusions.",
+      "owner_domain": "automation_scheduling_notifications",
+      "feature_kinds": [
+        "gui_surface"
+      ],
+      "aliases": [
+        "notifications_dry_and_free_models_settings"
+      ],
+      "local_feature_refs": [
+        "LF::A005C-0006::FLOCAL-0210"
+      ],
+      "source_documents": [
+        "Plans/FinalGUISpec.md"
+      ],
+      "source_unit_refs": [
+        "PLANUNIT:F3-405",
+        "SEMANTIC:PLANUNIT:F3-405"
+      ],
+      "risk_level": "low",
+      "spec_state": "well_specified",
+      "gap_summary": "No gap asserted by the assigned observation(s); preserve these explicit boundaries: Notifications settings protect secrets and non-audio state",
+      "cross_domain_terms": [
+        "notifications_dry_and_free_models_settings",
+        "automation_scheduling_notifications",
+        "FinalGUISpec",
+        "F3-405"
+      ],
+      "confidence": 0.9
+    },
+    {
+      "provisional_feature_id": "PF-0019",
+      "title": "DRY guard is user-controllable without weakening other rules",
+      "summary": "Local notifications_dry_and_free_models_settings subject normalized from 1 validated packet observation(s): DRY guard is user-controllable without weakening other rules. These are observations to test, not automatic conclusions.",
+      "owner_domain": "automation_scheduling_notifications",
+      "feature_kinds": [
+        "gui_surface"
+      ],
+      "aliases": [
+        "notifications_dry_and_free_models_settings"
+      ],
+      "local_feature_refs": [
+        "LF::A005C-0006::FLOCAL-0212"
+      ],
+      "source_documents": [
+        "Plans/FinalGUISpec.md"
+      ],
+      "source_unit_refs": [
+        "PLANUNIT:F3-406",
+        "SEMANTIC:PLANUNIT:F3-406"
+      ],
+      "risk_level": "low",
+      "spec_state": "well_specified",
+      "gap_summary": "No gap asserted by the assigned observation(s); preserve these explicit boundaries: DRY guard is user-controllable without weakening other rules",
+      "cross_domain_terms": [
+        "notifications_dry_and_free_models_settings",
+        "automation_scheduling_notifications",
+        "FinalGUISpec",
+        "F3-406"
+      ],
+      "confidence": 0.9
+    },
+    {
+      "provisional_feature_id": "PF-0020",
+      "title": "Free Models catalog balances density and critical status",
+      "summary": "Local notifications_dry_and_free_models_settings subject normalized from 1 validated packet observation(s): Free Models catalog balances density and critical status. These are observations to test, not automatic conclusions.",
+      "owner_domain": "automation_scheduling_notifications",
+      "feature_kinds": [
+        "gui_surface"
+      ],
+      "aliases": [
+        "notifications_dry_and_free_models_settings"
+      ],
+      "local_feature_refs": [
+        "LF::A005C-0006::FLOCAL-0213"
+      ],
+      "source_documents": [
+        "Plans/FinalGUISpec.md"
+      ],
+      "source_unit_refs": [
+        "PLANUNIT:F3-407",
+        "SEMANTIC:PLANUNIT:F3-407"
+      ],
+      "risk_level": "low",
+      "spec_state": "well_specified",
+      "gap_summary": "No gap asserted by the assigned observation(s); preserve these explicit boundaries: Free Models catalog balances density and critical status",
+      "cross_domain_terms": [
+        "notifications_dry_and_free_models_settings",
+        "automation_scheduling_notifications",
+        "FinalGUISpec",
+        "F3-407"
+      ],
+      "confidence": 0.9
+    },
+    {
+      "provisional_feature_id": "PF-0021",
+      "title": "Free Models refresh preserves known-good state",
+      "summary": "Local notifications_dry_and_free_models_settings subject normalized from 1 validated packet observation(s): Free Models refresh preserves known-good state. These are observations to test, not automatic conclusions.",
+      "owner_domain": "automation_scheduling_notifications",
+      "feature_kinds": [
+        "gui_surface"
+      ],
+      "aliases": [
+        "notifications_dry_and_free_models_settings"
+      ],
+      "local_feature_refs": [
+        "LF::A005C-0006::FLOCAL-0214"
+      ],
+      "source_documents": [
+        "Plans/FinalGUISpec.md"
+      ],
+      "source_unit_refs": [
+        "PLANUNIT:F3-408",
+        "SEMANTIC:PLANUNIT:F3-408"
+      ],
+      "risk_level": "low",
+      "spec_state": "well_specified",
+      "gap_summary": "No gap asserted by the assigned observation(s); preserve these explicit boundaries: Free Models refresh preserves known-good state",
+      "cross_domain_terms": [
+        "notifications_dry_and_free_models_settings",
+        "automation_scheduling_notifications",
+        "FinalGUISpec",
+        "F3-408"
+      ],
+      "confidence": 0.9
+    },
+    {
+      "provisional_feature_id": "PF-0022",
+      "title": "Top-10 overrides and unavailable states remain visible",
+      "summary": "Local notifications_dry_and_free_models_settings subject normalized from 1 validated packet observation(s): Top-10 overrides and unavailable states remain visible. These are observations to test, not automatic conclusions.",
+      "owner_domain": "automation_scheduling_notifications",
+      "feature_kinds": [
+        "gui_surface"
+      ],
+      "aliases": [
+        "notifications_dry_and_free_models_settings"
+      ],
+      "local_feature_refs": [
+        "LF::A005C-0006::FLOCAL-0215"
+      ],
+      "source_documents": [
+        "Plans/FinalGUISpec.md"
+      ],
+      "source_unit_refs": [
+        "PLANUNIT:F3-409",
+        "SEMANTIC:PLANUNIT:F3-409"
+      ],
+      "risk_level": "low",
+      "spec_state": "well_specified",
+      "gap_summary": "No gap asserted by the assigned observation(s); preserve these explicit boundaries: Top-10 overrides and unavailable states remain visible",
+      "cross_domain_terms": [
+        "notifications_dry_and_free_models_settings",
+        "automation_scheduling_notifications",
+        "FinalGUISpec",
+        "F3-409"
+      ],
+      "confidence": 0.9
+    },
+    {
+      "provisional_feature_id": "PF-0023",
+      "title": "Shared alert acknowledge, dismiss, mute, and snooze lifecycle",
+      "summary": "The shared alert lifecycle covers acknowledge, dismiss, mute, and snooze transitions, including authority, scope, temporal behavior, concurrency, recovery, and GUI projection.",
+      "owner_domain": "automation_scheduling_notifications",
+      "feature_kinds": [
+        "feature",
+        "workflow"
+      ],
+      "aliases": [
+        "concern-alert-lifecycle",
+        "alert state mutations",
+        "alert lifecycle"
+      ],
+      "local_feature_refs": [
+        "LF::A005C-0006::FLOCAL-0225",
+        "LF::A005C-0014::FLOCAL-0036"
+      ],
+      "source_documents": [
+        "Plans/FinalGUISpec.md",
+        "Plans/Wiring_Matrix.production.json"
+      ],
+      "source_unit_refs": [
+        "PLANUNIT:F3-401",
+        "SEMANTIC:PLANUNIT:F3-401:CONT-004",
+        "SEMANTIC:JSON_FIELD:Plans/Wiring_Matrix.production.json:entries:CONT-002",
+        "STRUCTURAL:$.entries",
+        "SEMANTIC:JSON_FIELD:Plans/Wiring_Matrix.production.json:entries:CONT-003"
+      ],
+      "risk_level": "high",
+      "spec_state": "partially_specified",
+      "gap_summary": "No gap asserted by the assigned observation(s); preserve these explicit boundaries: Shared alert lifecycle is explicit\nObserved gaps or unknowns: Alert event emission does not prove a valid transition; Mute Rule lifecycle and scope are undefined; Alert UI recovery after partial failure is unspecified; Snooze has no temporal state contract.",
+      "cross_domain_terms": [
+        "concern-alert-lifecycle",
+        "automation_scheduling_notifications",
+        "FinalGUISpec",
+        "F3-401",
+        "alert.rule_muted",
+        "snooze expiry",
+        "expected version",
+        "alert-state-mutations",
+        "alert state mutations",
+        "alert lifecycle"
+      ],
+      "confidence": 0.9
+    },
+    {
+      "provisional_feature_id": "PF-0024",
+      "title": "Event Driven Scheduler",
+      "summary": "Event Driven Scheduler is a distinct catalog concern with 2 assigned validated observation(s): Event-driven wakeups lack delivery and recovery semantics; Scheduler alignment lacks an ordered precedence contract",
+      "owner_domain": "automation_scheduling_notifications",
+      "feature_kinds": [
+        "workflow"
+      ],
+      "aliases": [
+        "event_driven_scheduler"
+      ],
+      "local_feature_refs": [
+        "LF::A005C-0011::FLOCAL-0022"
+      ],
+      "source_documents": [
+        "Plans/Progression_Gates.md"
+      ],
+      "source_unit_refs": [
+        "PLANUNIT:PG-046",
+        "PLANUNIT:PG-053",
+        "SEMANTIC:PLANUNIT:PG-046",
+        "SEMANTIC:PLANUNIT:PG-053"
+      ],
+      "risk_level": "critical",
+      "spec_state": "under_specified",
+      "gap_summary": "Observed gaps: Event-driven wakeups lack delivery and recovery semantics; Scheduler alignment lacks an ordered precedence contract",
+      "cross_domain_terms": [
+        "Event Driven Scheduler",
+        "event_driven_scheduler"
+      ],
+      "confidence": 0.82
+    },
+    {
+      "provisional_feature_id": "PF-0025",
+      "title": "Scheduler Wake Mapping",
+      "summary": "Scheduler Wake Mapping is a distinct catalog concern with 1 assigned validated observation(s): Wake and attempt transitions remain ambiguous",
+      "owner_domain": "automation_scheduling_notifications",
+      "feature_kinds": [
+        "workflow"
+      ],
+      "aliases": [
+        "scheduler_wake_mapping"
+      ],
+      "local_feature_refs": [
+        "LF::A005C-0011::FLOCAL-0088"
+      ],
+      "source_documents": [
+        "Plans/Provider_Stream_Mapping_External_Reference_A2A.md"
+      ],
+      "source_unit_refs": [
+        "PLANUNIT:PSMERA-022",
+        "PLANUNIT:PSMERA-023",
+        "SEMANTIC:PLANUNIT:PSMERA-022",
+        "SEMANTIC:PLANUNIT:PSMERA-023"
+      ],
+      "risk_level": "high",
+      "spec_state": "under_specified",
+      "gap_summary": "Observed gaps: Wake and attempt transitions remain ambiguous",
+      "cross_domain_terms": [
+        "Scheduler Wake Mapping",
+        "scheduler_wake_mapping"
+      ],
+      "confidence": 0.82
+    },
+    {
+      "provisional_feature_id": "PF-0026",
+      "title": "Sound notification event taxonomy is missing",
+      "summary": "Validated packet observation, retained as a distinct local catalog concept: Settings ownership and shell mute/DND precedence are clear, but exact action-needed and completion event mapping is left to builder discretion.",
+      "owner_domain": "automation_scheduling_notifications",
+      "feature_kinds": [
+        "cross_cutting_concern"
+      ],
+      "aliases": [],
+      "local_feature_refs": [
+        "LF::A005C-0012::FLOCAL-0049"
+      ],
+      "source_documents": [
+        "Plans/Section15_MVP_Promoted_Features_Spec.md"
+      ],
+      "source_unit_refs": [
+        "PLANUNIT:SMPFS-082",
+        "SEMANTIC:PLANUNIT:SMPFS-082"
+      ],
+      "risk_level": "medium",
+      "spec_state": "under_specified",
+      "gap_summary": "Observed gap or uncertainty (sound_event_mapping_unspecified): Settings ownership and shell mute/DND precedence are clear, but exact action-needed and completion event mapping is left to builder discretion.",
+      "cross_domain_terms": [],
+      "confidence": 0.84
+    },
+    {
+      "provisional_feature_id": "PF-0027",
+      "title": "Notification delivery, sounds, and credential recovery",
+      "summary": "Notification test-send and delivery lifecycle, authorization, masking, rate limits, credentials, idempotency, network recovery, delete/restore, and operator remediation.",
+      "owner_domain": "automation_scheduling_notifications",
+      "feature_kinds": [
+        "integration"
+      ],
+      "aliases": [
+        "notifications sounds wiring",
+        "notification delivery"
+      ],
+      "local_feature_refs": [
+        "LF::A005C-0014::FLOCAL-0026"
+      ],
+      "source_documents": [
+        "Plans/Wiring_Matrix.md",
+        "Plans/Wiring_Matrix.production.json"
+      ],
+      "source_unit_refs": [
+        "PLANUNIT:WM-039",
+        "SEMANTIC:PLANUNIT:WM-039",
+        "SEMANTIC:JSON_FIELD:Plans/Wiring_Matrix.production.json:entries:CONT-061",
+        "STRUCTURAL:$.entries"
+      ],
+      "risk_level": "high",
+      "spec_state": "contradictory",
+      "gap_summary": "Observed gaps or unknowns: Notification delivery and credential recovery paths remain open; Opening notification settings is modeled as settings mutation.",
+      "cross_domain_terms": [
+        "test send",
+        "credential lifecycle",
+        "delivery receipt",
+        "notifications-sounds-wiring",
+        "notifications sounds wiring",
+        "notification delivery"
+      ],
+      "confidence": 0.94
+    },
+    {
+      "provisional_feature_id": "PF-0028",
+      "title": "Sound asset, mapping, pack, preview, import, and export",
+      "summary": "Sound asset lifecycle, mappings, pack import/upload/export, preview playback, file safety, remote transfer, events, resource limits, and rollback.",
+      "owner_domain": "automation_scheduling_notifications",
+      "feature_kinds": [
+        "system"
+      ],
+      "aliases": [
+        "sound catalog",
+        "notification sound assets"
+      ],
+      "local_feature_refs": [
+        "LF::A005C-0014::FLOCAL-0032"
+      ],
+      "source_documents": [
+        "Plans/Wiring_Matrix.production.json"
+      ],
+      "source_unit_refs": [
+        "SEMANTIC:JSON_FIELD:Plans/Wiring_Matrix.production.json:entries:CONT-061",
+        "STRUCTURAL:$.entries",
+        "SEMANTIC:JSON_FIELD:Plans/Wiring_Matrix.production.json:entries:CONT-062"
+      ],
+      "risk_level": "critical",
+      "spec_state": "partially_specified",
+      "gap_summary": "Observed gaps or unknowns: Sound asset delete and export omit destructive and filesystem semantics; Durable sound restore, mapping, import, and upload effects have no domain events; Sound pack import and upload lack an untrusted-input and resource-lifecycle boundary; Sound preview has no playback state or device-failure contract.",
+      "cross_domain_terms": [
+        "sound pack",
+        "audio preview",
+        "codec validation",
+        "notifications-sounds-wiring",
+        "sound catalog",
+        "notification sound assets"
+      ],
+      "confidence": 0.94
+    },
+    {
+      "provisional_feature_id": "PF-0029",
+      "title": "Notification destination configuration",
+      "summary": "Notification destination configuration is a distinct catalog concept because its lifecycle, authority, consumers, or failure modes differ from adjacent controls. Notification destination create, delete, and toggle commands are named as durable mutations but declare no persisted domain event and do not specify storage authority, version preconditions, idempotency, downstream projection updates, conflict handling, undo, or rollback.",
+      "owner_domain": "automation_scheduling_notifications",
+      "feature_kinds": [
+        "system"
+      ],
+      "aliases": [
+        "notification mapping",
+        "notification override"
+      ],
+      "local_feature_refs": [
+        "LF::A005C-0015::FLOCAL-0015"
+      ],
+      "source_documents": [
+        "Plans/Wiring_Matrix.production.json"
+      ],
+      "source_unit_refs": [
+        "SEMANTIC:JSON_FIELD:Plans/Wiring_Matrix.production.json:entries:CONT-044",
+        "SEMANTIC:JSON_FIELD:Plans/Wiring_Matrix.production.json:entries:CONT-045",
+        "STRUCTURAL:$.entries"
+      ],
+      "risk_level": "critical",
+      "spec_state": "partially_specified",
+      "gap_summary": "Preserved explicit contracts/non-gaps: Window 45 consistently requires accessibility evidence. Preserved gaps, unknowns, or contradictions: Notification mutations conflict with no-persist effect contracts; Notification updates lack authoritative durable transition semantics.",
+      "cross_domain_terms": [
+        "notification-configuration",
+        "notification mapping",
+        "notification override",
+        "notification destination configuration"
+      ],
+      "confidence": 0.78
+    },
+    {
+      "provisional_feature_id": "PF-0030",
+      "title": "Notification test delivery",
+      "summary": "Notification test delivery is a distinct catalog concept because its lifecycle, authority, consumers, or failure modes differ from adjacent controls. Notification destination test is an external side effect but has no typed target and sample payload constraints, authorization, secret redaction, confirmation, idempotency, timeout, retry/backoff, rate and cost limits, remote-result settlement, cancellation, or partial-failure oracle.",
+      "owner_domain": "automation_scheduling_notifications",
+      "feature_kinds": [
+        "integration"
+      ],
+      "aliases": [
+        "test notification"
+      ],
+      "local_feature_refs": [
+        "LF::A005C-0015::FLOCAL-0016"
+      ],
+      "source_documents": [
+        "Plans/Wiring_Matrix.production.json"
+      ],
+      "source_unit_refs": [
+        "SEMANTIC:JSON_FIELD:Plans/Wiring_Matrix.production.json:entries:CONT-044"
+      ],
+      "risk_level": "high",
+      "spec_state": "under_specified",
+      "gap_summary": "Preserved gaps, unknowns, or contradictions: Notification test delivery is treated as a local no-persist receipt.",
+      "cross_domain_terms": [
+        "notification-configuration",
+        "test notification",
+        "notification test delivery"
+      ],
+      "confidence": 0.7
+    },
+    {
+      "provisional_feature_id": "PF-0031",
+      "title": "Notification trust and action boundary",
+      "summary": "Validated local observation normalized as a distinct catalog concern: Shared notification copy discloses stale/degraded projection state, opens PM routes only, and separates dismissal from canonical resolution.",
+      "owner_domain": "automation_scheduling_notifications",
+      "feature_kinds": [
+        "governance_control"
+      ],
+      "aliases": [],
+      "local_feature_refs": [
+        "LF::A005C-0017::FLOCAL-0115"
+      ],
+      "source_documents": [
+        "Plans/assistant-chat-design.md"
+      ],
+      "source_unit_refs": [
+        "PLANUNIT:ACD-428",
+        "SEMANTIC:PLANUNIT:ACD-428"
+      ],
+      "risk_level": "low",
+      "spec_state": "well_specified",
+      "gap_summary": "No gap is asserted by this validated observation; correctness beyond the assigned evidence remains for later certification.",
+      "cross_domain_terms": [
+        "notification-trust",
+        "remote-ssh-authority",
+        "automation_scheduling_notifications"
+      ],
+      "confidence": 0.96
+    },
+    {
+      "provisional_feature_id": "PF-0032",
+      "title": "Project Attention and Durable Alert Lifecycle",
+      "summary": "Keeps attention distinct from runtime status and models durable alert delivery, coalescing, acknowledgement, snooze, resolution, and escalation.",
+      "owner_domain": "automation_scheduling_notifications",
+      "feature_kinds": [
+        "system"
+      ],
+      "aliases": [
+        "attention records"
+      ],
+      "local_feature_refs": [
+        "LF::A005C-0022::FLOCAL-0010"
+      ],
+      "source_documents": [
+        "Plans/storage-plan.md"
+      ],
+      "source_unit_refs": [
+        "PLANUNIT:SP-044",
+        "SEMANTIC:PLANUNIT:SP-044",
+        "PLANUNIT:SP-045",
+        "SEMANTIC:PLANUNIT:SP-045"
+      ],
+      "risk_level": "high",
+      "spec_state": "partially_specified",
+      "gap_summary": "Alert transition and coalescing precedence is underdefined",
+      "cross_domain_terms": [
+        "project attention",
+        "durable alerts"
+      ],
+      "confidence": 0.79
+    },
+    {
+      "provisional_feature_id": "PF-0033",
+      "title": "Notification Destination and Delivery Receipt Persistence",
+      "summary": "Stores notification destinations, credential refs, delivery outcomes, retries, sound refs, retention, and revocation propagation.",
+      "owner_domain": "automation_scheduling_notifications",
+      "feature_kinds": [
+        "system"
+      ],
+      "aliases": [
+        "notification receipts"
+      ],
+      "local_feature_refs": [
+        "LF::A005C-0022::FLOCAL-0035"
+      ],
+      "source_documents": [
+        "Plans/storage-plan.md"
+      ],
+      "source_unit_refs": [
+        "PLANUNIT:SP-222",
+        "SEMANTIC:PLANUNIT:SP-222"
+      ],
+      "risk_level": "high",
+      "spec_state": "under_specified",
+      "gap_summary": "Notification receipt retention and provider-payload encryption are unspecified",
+      "cross_domain_terms": [
+        "notification delivery",
+        "destination profile"
+      ],
+      "confidence": 0.78
+    }
+  ],
+  "local_feature_memberships": [
+    {
+      "local_feature_ref": "LF::A005C-0004::FLOCAL-0026",
+      "provisional_feature_id": "PF-0001",
+      "merge_disposition": "singleton",
+      "rationale": "Retained as a singleton because no other local feature in the shard describes the same product feature under the same authority and lifecycle."
+    },
+    {
+      "local_feature_ref": "LF::A005C-0004::FLOCAL-0055",
+      "provisional_feature_id": "PF-0002",
+      "merge_disposition": "singleton",
+      "rationale": "Retained as a singleton because no other local feature in the shard describes the same product feature under the same authority and lifecycle."
+    },
+    {
+      "local_feature_ref": "LF::A005C-0004::FLOCAL-0099",
+      "provisional_feature_id": "PF-0003",
+      "merge_disposition": "merged_synonym",
+      "rationale": "Merged as a true synonym because the member observations describe the same product feature under the same authority and lifecycle."
+    },
+    {
+      "local_feature_ref": "LF::A005C-0004::FLOCAL-0103",
+      "provisional_feature_id": "PF-0004",
+      "merge_disposition": "singleton",
+      "rationale": "Retained as a singleton because no other local feature in the shard describes the same product feature under the same authority and lifecycle."
+    },
+    {
+      "local_feature_ref": "LF::A005C-0004::FLOCAL-0104",
+      "provisional_feature_id": "PF-0005",
+      "merge_disposition": "singleton",
+      "rationale": "Retained as a singleton because no other local feature in the shard describes the same product feature under the same authority and lifecycle."
+    },
+    {
+      "local_feature_ref": "LF::A005C-0004::FLOCAL-0119",
+      "provisional_feature_id": "PF-0006",
+      "merge_disposition": "singleton",
+      "rationale": "Retained as a singleton because no other local feature in the shard describes the same product feature under the same authority and lifecycle."
+    },
+    {
+      "local_feature_ref": "LF::A005C-0004::FLOCAL-0120",
+      "provisional_feature_id": "PF-0003",
+      "merge_disposition": "merged_synonym",
+      "rationale": "Merged as a true synonym because the member observations describe the same product feature under the same authority and lifecycle."
+    },
+    {
+      "local_feature_ref": "LF::A005C-0004::FLOCAL-0137",
+      "provisional_feature_id": "PF-0007",
+      "merge_disposition": "merged_synonym",
+      "rationale": "Merged as a true synonym because the member observations describe the same product feature under the same authority and lifecycle."
+    },
+    {
+      "local_feature_ref": "LF::A005C-0004::FLOCAL-0139",
+      "provisional_feature_id": "PF-0007",
+      "merge_disposition": "merged_synonym",
+      "rationale": "Merged as a true synonym because the member observations describe the same product feature under the same authority and lifecycle."
+    },
+    {
+      "local_feature_ref": "LF::A005C-0004::FLOCAL-0140",
+      "provisional_feature_id": "PF-0008",
+      "merge_disposition": "singleton",
+      "rationale": "Retained as a singleton because no other local feature in the shard describes the same product feature under the same authority and lifecycle."
+    },
+    {
+      "local_feature_ref": "LF::A005C-0004::FLOCAL-0144",
+      "provisional_feature_id": "PF-0009",
+      "merge_disposition": "merged_synonym",
+      "rationale": "Merged as a true synonym because the member observations describe the same product feature under the same authority and lifecycle."
+    },
+    {
+      "local_feature_ref": "LF::A005C-0004::FLOCAL-0148",
+      "provisional_feature_id": "PF-0010",
+      "merge_disposition": "merged_synonym",
+      "rationale": "Merged as a true synonym because the member observations describe the same product feature under the same authority and lifecycle."
+    },
+    {
+      "local_feature_ref": "LF::A005C-0004::FLOCAL-0169",
+      "provisional_feature_id": "PF-0011",
+      "merge_disposition": "singleton",
+      "rationale": "Retained as a singleton because no other local feature in the shard describes the same product feature under the same authority and lifecycle."
+    },
+    {
+      "local_feature_ref": "LF::A005C-0004::FLOCAL-0172",
+      "provisional_feature_id": "PF-0009",
+      "merge_disposition": "merged_synonym",
+      "rationale": "Merged as a true synonym because the member observations describe the same product feature under the same authority and lifecycle."
+    },
+    {
+      "local_feature_ref": "LF::A005C-0004::FLOCAL-0182",
+      "provisional_feature_id": "PF-0012",
+      "merge_disposition": "singleton",
+      "rationale": "Retained as a singleton because no other local feature in the shard describes the same product feature under the same authority and lifecycle."
+    },
+    {
+      "local_feature_ref": "LF::A005C-0004::FLOCAL-0185",
+      "provisional_feature_id": "PF-0010",
+      "merge_disposition": "merged_synonym",
+      "rationale": "Merged as a true synonym because the member observations describe the same product feature under the same authority and lifecycle."
+    },
+    {
+      "local_feature_ref": "LF::A005C-0004::FLOCAL-0218",
+      "provisional_feature_id": "PF-0013",
+      "merge_disposition": "singleton",
+      "rationale": "Retained as a singleton because no other local feature in the shard describes the same product feature under the same authority and lifecycle."
+    },
+    {
+      "local_feature_ref": "LF::A005C-0004::FLOCAL-0234",
+      "provisional_feature_id": "PF-0014",
+      "merge_disposition": "singleton",
+      "rationale": "Retained as a singleton because no other local feature in the shard describes the same product feature under the same authority and lifecycle."
+    },
+    {
+      "local_feature_ref": "LF::A005C-0005::FLOCAL-0012",
+      "provisional_feature_id": "PF-0015",
+      "merge_disposition": "singleton",
+      "rationale": "Retained as a singleton because no other local feature in the shard describes the same product feature under the same authority and lifecycle."
+    },
+    {
+      "local_feature_ref": "LF::A005C-0005::FLOCAL-0231",
+      "provisional_feature_id": "PF-0016",
+      "merge_disposition": "singleton",
+      "rationale": "Retained as a singleton because no other local feature in the shard describes the same product feature under the same authority and lifecycle."
+    },
+    {
+      "local_feature_ref": "LF::A005C-0006::FLOCAL-0060",
+      "provisional_feature_id": "PF-0017",
+      "merge_disposition": "singleton",
+      "rationale": "Retained as a singleton because no other local feature in the shard describes the same product feature under the same authority and lifecycle."
+    },
+    {
+      "local_feature_ref": "LF::A005C-0006::FLOCAL-0210",
+      "provisional_feature_id": "PF-0018",
+      "merge_disposition": "singleton",
+      "rationale": "Retained as a singleton because no other local feature in the shard describes the same product feature under the same authority and lifecycle."
+    },
+    {
+      "local_feature_ref": "LF::A005C-0006::FLOCAL-0212",
+      "provisional_feature_id": "PF-0019",
+      "merge_disposition": "singleton",
+      "rationale": "Retained as a singleton because no other local feature in the shard describes the same product feature under the same authority and lifecycle."
+    },
+    {
+      "local_feature_ref": "LF::A005C-0006::FLOCAL-0213",
+      "provisional_feature_id": "PF-0020",
+      "merge_disposition": "singleton",
+      "rationale": "Retained as a singleton because no other local feature in the shard describes the same product feature under the same authority and lifecycle."
+    },
+    {
+      "local_feature_ref": "LF::A005C-0006::FLOCAL-0214",
+      "provisional_feature_id": "PF-0021",
+      "merge_disposition": "singleton",
+      "rationale": "Retained as a singleton because no other local feature in the shard describes the same product feature under the same authority and lifecycle."
+    },
+    {
+      "local_feature_ref": "LF::A005C-0006::FLOCAL-0215",
+      "provisional_feature_id": "PF-0022",
+      "merge_disposition": "singleton",
+      "rationale": "Retained as a singleton because no other local feature in the shard describes the same product feature under the same authority and lifecycle."
+    },
+    {
+      "local_feature_ref": "LF::A005C-0006::FLOCAL-0225",
+      "provisional_feature_id": "PF-0023",
+      "merge_disposition": "merged_synonym",
+      "rationale": "Merged as a true synonym because the member observations describe the same product feature under the same authority and lifecycle."
+    },
+    {
+      "local_feature_ref": "LF::A005C-0011::FLOCAL-0022",
+      "provisional_feature_id": "PF-0024",
+      "merge_disposition": "singleton",
+      "rationale": "Retained as a singleton because no other local feature in the shard describes the same product feature under the same authority and lifecycle."
+    },
+    {
+      "local_feature_ref": "LF::A005C-0011::FLOCAL-0088",
+      "provisional_feature_id": "PF-0025",
+      "merge_disposition": "singleton",
+      "rationale": "Retained as a singleton because no other local feature in the shard describes the same product feature under the same authority and lifecycle."
+    },
+    {
+      "local_feature_ref": "LF::A005C-0012::FLOCAL-0049",
+      "provisional_feature_id": "PF-0026",
+      "merge_disposition": "singleton",
+      "rationale": "Retained as a singleton because no other local feature in the shard describes the same product feature under the same authority and lifecycle."
+    },
+    {
+      "local_feature_ref": "LF::A005C-0014::FLOCAL-0026",
+      "provisional_feature_id": "PF-0027",
+      "merge_disposition": "singleton",
+      "rationale": "Retained as a singleton because no other local feature in the shard describes the same product feature under the same authority and lifecycle."
+    },
+    {
+      "local_feature_ref": "LF::A005C-0014::FLOCAL-0032",
+      "provisional_feature_id": "PF-0028",
+      "merge_disposition": "singleton",
+      "rationale": "Retained as a singleton because no other local feature in the shard describes the same product feature under the same authority and lifecycle."
+    },
+    {
+      "local_feature_ref": "LF::A005C-0014::FLOCAL-0036",
+      "provisional_feature_id": "PF-0023",
+      "merge_disposition": "merged_synonym",
+      "rationale": "Merged as a true synonym because the member observations describe the same product feature under the same authority and lifecycle."
+    },
+    {
+      "local_feature_ref": "LF::A005C-0015::FLOCAL-0015",
+      "provisional_feature_id": "PF-0029",
+      "merge_disposition": "singleton",
+      "rationale": "Retained as a singleton because no other local feature in the shard describes the same product feature under the same authority and lifecycle."
+    },
+    {
+      "local_feature_ref": "LF::A005C-0015::FLOCAL-0016",
+      "provisional_feature_id": "PF-0030",
+      "merge_disposition": "singleton",
+      "rationale": "Retained as a singleton because no other local feature in the shard describes the same product feature under the same authority and lifecycle."
+    },
+    {
+      "local_feature_ref": "LF::A005C-0017::FLOCAL-0115",
+      "provisional_feature_id": "PF-0031",
+      "merge_disposition": "singleton",
+      "rationale": "Retained as a singleton because no other local feature in the shard describes the same product feature under the same authority and lifecycle."
+    },
+    {
+      "local_feature_ref": "LF::A005C-0022::FLOCAL-0010",
+      "provisional_feature_id": "PF-0032",
+      "merge_disposition": "singleton",
+      "rationale": "Retained as a singleton because no other local feature in the shard describes the same product feature under the same authority and lifecycle."
+    },
+    {
+      "local_feature_ref": "LF::A005C-0022::FLOCAL-0035",
+      "provisional_feature_id": "PF-0033",
+      "merge_disposition": "singleton",
+      "rationale": "Retained as a singleton because no other local feature in the shard describes the same product feature under the same authority and lifecycle."
+    }
+  ],
+  "relationships": [
+    {
+      "source_provisional_feature_id": "PF-0002",
+      "target_provisional_feature_id": "PF-0008",
+      "relationship_type": "extends",
+      "supporting_local_feature_refs": [
+        "LF::A005C-0004::FLOCAL-0055",
+        "LF::A005C-0004::FLOCAL-0140"
+      ],
+      "rationale": "Fairness, scoring, and overload semantics extend the scheduler-pass stages but are not the same lifecycle contract."
+    },
+    {
+      "source_provisional_feature_id": "PF-0004",
+      "target_provisional_feature_id": "PF-0010",
+      "relationship_type": "potential_conflict",
+      "supporting_local_feature_refs": [
+        "LF::A005C-0004::FLOCAL-0103",
+        "LF::A005C-0004::FLOCAL-0148",
+        "LF::A005C-0004::FLOCAL-0185"
+      ],
+      "rationale": "The same-wake cascade uses readiness transitions whose pending or reopened states conflict with the declared closed lifecycle."
+    },
+    {
+      "source_provisional_feature_id": "PF-0005",
+      "target_provisional_feature_id": "PF-0014",
+      "relationship_type": "interacts_with",
+      "supporting_local_feature_refs": [
+        "LF::A005C-0004::FLOCAL-0104",
+        "LF::A005C-0004::FLOCAL-0234"
+      ],
+      "rationale": "Wake coalescing behavior interacts with the explicit runtime wake ordering and timeout constants without being synonymous with them."
+    },
+    {
+      "source_provisional_feature_id": "PF-0006",
+      "target_provisional_feature_id": "PF-0003",
+      "relationship_type": "interacts_with",
+      "supporting_local_feature_refs": [
+        "LF::A005C-0004::FLOCAL-0119",
+        "LF::A005C-0004::FLOCAL-0099",
+        "LF::A005C-0004::FLOCAL-0120"
+      ],
+      "rationale": "Role capability ambiguity interacts with the single-scheduler boundary, while overseer role contracts remain distinct from scheduler authority."
+    },
+    {
+      "source_provisional_feature_id": "PF-0011",
+      "target_provisional_feature_id": "PF-0012",
+      "relationship_type": "interacts_with",
+      "supporting_local_feature_refs": [
+        "LF::A005C-0004::FLOCAL-0169",
+        "LF::A005C-0004::FLOCAL-0182"
+      ],
+      "rationale": "Scheduler pass atomicity and readiness-input consistency share snapshot concerns but govern different scopes and failure surfaces."
+    },
+    {
+      "source_provisional_feature_id": "PF-0013",
+      "target_provisional_feature_id": "PF-0002",
+      "relationship_type": "interacts_with",
+      "supporting_local_feature_refs": [
+        "LF::A005C-0004::FLOCAL-0218",
+        "LF::A005C-0004::FLOCAL-0055"
+      ],
+      "rationale": "Capacity reservation semantics interact with fairness and overload behavior, but capacity accounting and score policy remain distinct."
+    },
+    {
+      "source_provisional_feature_id": "PF-0021",
+      "target_provisional_feature_id": "PF-0020",
+      "relationship_type": "extends",
+      "supporting_local_feature_refs": [
+        "LF::A005C-0006::FLOCAL-0214",
+        "LF::A005C-0006::FLOCAL-0213"
+      ],
+      "rationale": "Known-good refresh behavior extends the Free Models catalog while retaining a distinct refresh lifecycle and recovery promise."
+    },
+    {
+      "source_provisional_feature_id": "PF-0022",
+      "target_provisional_feature_id": "PF-0020",
+      "relationship_type": "interacts_with",
+      "supporting_local_feature_refs": [
+        "LF::A005C-0006::FLOCAL-0215",
+        "LF::A005C-0006::FLOCAL-0213"
+      ],
+      "rationale": "Override and unavailable-state visibility is consumed by the catalog but has a distinct user-visible state promise."
+    },
+    {
+      "source_provisional_feature_id": "PF-0025",
+      "target_provisional_feature_id": "PF-0024",
+      "relationship_type": "extends",
+      "supporting_local_feature_refs": [
+        "LF::A005C-0011::FLOCAL-0088",
+        "LF::A005C-0011::FLOCAL-0022"
+      ],
+      "rationale": "Wake and attempt mapping specializes the event-driven scheduler but retains its own transition contract."
+    },
+    {
+      "source_provisional_feature_id": "PF-0026",
+      "target_provisional_feature_id": "PF-0028",
+      "relationship_type": "interacts_with",
+      "supporting_local_feature_refs": [
+        "LF::A005C-0012::FLOCAL-0049",
+        "LF::A005C-0014::FLOCAL-0032"
+      ],
+      "rationale": "Sound event taxonomy selects sound mappings and assets, while event classification and asset lifecycle remain distinct authorities."
+    },
+    {
+      "source_provisional_feature_id": "PF-0030",
+      "target_provisional_feature_id": "PF-0029",
+      "relationship_type": "depends_on",
+      "supporting_local_feature_refs": [
+        "LF::A005C-0015::FLOCAL-0016",
+        "LF::A005C-0015::FLOCAL-0015"
+      ],
+      "rationale": "A notification test delivery requires a destination configuration, but external test-send settlement is not a configuration mutation lifecycle."
+    },
+    {
+      "source_provisional_feature_id": "PF-0027",
+      "target_provisional_feature_id": "PF-0033",
+      "relationship_type": "interacts_with",
+      "supporting_local_feature_refs": [
+        "LF::A005C-0014::FLOCAL-0026",
+        "LF::A005C-0022::FLOCAL-0035"
+      ],
+      "rationale": "Delivery and credential recovery produce outcomes consumed by receipt persistence, while transport recovery and durable storage remain separate."
+    },
+    {
+      "source_provisional_feature_id": "PF-0017",
+      "target_provisional_feature_id": "PF-0023",
+      "relationship_type": "interacts_with",
+      "supporting_local_feature_refs": [
+        "LF::A005C-0006::FLOCAL-0060",
+        "LF::A005C-0006::FLOCAL-0225",
+        "LF::A005C-0014::FLOCAL-0036"
+      ],
+      "rationale": "Project attention and concern propagation consumes the shared alert lifecycle but also includes broader propagation and notification behavior."
+    },
+    {
+      "source_provisional_feature_id": "PF-0032",
+      "target_provisional_feature_id": "PF-0023",
+      "relationship_type": "interacts_with",
+      "supporting_local_feature_refs": [
+        "LF::A005C-0022::FLOCAL-0010",
+        "LF::A005C-0006::FLOCAL-0225",
+        "LF::A005C-0014::FLOCAL-0036"
+      ],
+      "rationale": "Durable attention records persist and coalesce alert state, while mutation authority and storage lifecycle remain distinct."
+    },
+    {
+      "source_provisional_feature_id": "PF-0031",
+      "target_provisional_feature_id": "PF-0017",
+      "relationship_type": "interacts_with",
+      "supporting_local_feature_refs": [
+        "LF::A005C-0017::FLOCAL-0115",
+        "LF::A005C-0006::FLOCAL-0060"
+      ],
+      "rationale": "Notification trust copy projects attention state and actions without becoming the canonical concern-resolution lifecycle."
+    }
+  ],
+  "self_attestation": {
+    "all_local_features_mapped_once": true,
+    "only_true_synonyms_merged": true,
+    "distinct_lifecycles_preserved": true,
+    "gaps_and_non_gaps_preserved": true,
+    "no_cross_domain_merge": true,
+    "no_external_or_peer_inputs_used": true
+  }
+}

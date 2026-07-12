@@ -1,0 +1,498 @@
+{
+  "audit_id": "audit-20260710-005-plan-assurance-model-lanes-fresh-agent-exhaustive",
+  "schema_version": "external-research-universal-result-v1",
+  "phase": "universal_external_research",
+  "assignment_id": "A005ERU-0008",
+  "attempt_id": "attempt-0001",
+  "task_thread_id": "/root/a005_external_research_universal_0008_attempt_0001_terminal",
+  "model": "gpt-5.6-sol",
+  "reasoning_effort": "xhigh",
+  "status": "completed",
+  "input_binding": {
+    "packet_id": "ERUPKT-0008",
+    "packet_sha256": "c60c2c5fd674e0854b58d3150590634f40a94a8e3784077b58c25e04b9ecfc1a",
+    "feature_refs_digest": "af8eced6b16cf9527705e8b46ae78f4fe7147ca7c3368c007013fbea12ec89e0",
+    "source_rows_digest": "9f7a877d043e5d6e2b214c25f54ec9b4a6ae5e813d07f0b1d0cd3ae155e48110"
+  },
+  "coverage": {
+    "feature_count": 17,
+    "feature_refs": [
+      "OPF::A005OM-0008::PF-0001",
+      "OPF::A005OM-0008::PF-0002",
+      "OPF::A005OM-0008::PF-0003",
+      "OPF::A005OM-0008::PF-0004",
+      "OPF::A005OM-0008::PF-0005",
+      "OPF::A005OM-0008::PF-0006",
+      "OPF::A005OM-0008::PF-0007",
+      "OPF::A005OM-0008::PF-0008",
+      "OPF::A005OM-0008::PF-0009",
+      "OPF::A005OM-0008::PF-0010",
+      "OPF::A005OM-0008::PF-0011",
+      "OPF::A005OM-0008::PF-0012",
+      "OPF::A005OM-0008::PF-0013",
+      "OPF::A005OM-0008::PF-0014",
+      "OPF::A005OM-0008::PF-0015",
+      "OPF::A005OM-0008::PF-0016",
+      "OPF::A005OM-0008::PF-0017"
+    ]
+  },
+  "feature_results": [
+    {
+      "provisional_feature_ref": "OPF::A005OM-0008::PF-0001",
+      "source_row_sha256": "78fc9c63a11ca7eb8c2dbe5f4432c02a956c8df94f6619180c40b71f2fe5056a",
+      "research_group_id": "state-precedence-and-migration",
+      "research_state": "researched",
+      "search_attempts": ["site:git-scm.com/docs git config scope precedence official", "site:kubernetes.io/docs storage version migration API migration official", "site:sqlite.org/lang_transaction.html concurrent transactions official"],
+      "insufficient_evidence_reason": null,
+      "sources": [
+        {"source_id":"PF1-S1","url":"https://git-scm.com/docs/git-config","title":"Git - git-config Documentation","publisher":"Git project","source_type":"official_product_documentation","accessed_date":"2026-07-11","section_anchor":"Configuration File","evidence_snippet":"Git defines an ordered configuration stack and states that the last value read takes precedence, making scope precedence deterministic.","applicability":"Provides a concrete model for resolving project, user, and system scoped values."},
+        {"source_id":"PF1-S2","url":"https://kubernetes.io/docs/tasks/manage-kubernetes-objects/storage-version-migration/","title":"Migrate Kubernetes Objects Using Storage Version Migration","publisher":"Kubernetes project","source_type":"official_product_documentation","accessed_date":"2026-07-11","section_anchor":"Migrate Kubernetes Objects Using Storage Version Migration","evidence_snippet":"Migration is represented by a resource with immutable target identity, resourceVersion, and observable Running and Succeeded conditions.","applicability":"Shows explicit identity, concurrency versioning, completion state, and post-migration verification."},
+        {"source_id":"PF1-S3","url":"https://sqlite.org/lang_transaction.html","title":"Transaction","publisher":"SQLite project","source_type":"official_product_documentation","accessed_date":"2026-07-11","section_anchor":"2.1 Read transactions versus write transactions","evidence_snippet":"SQLite permits concurrent readers but one writer; conflicting writes fail with SQLITE_BUSY and commits can be retried while the transaction remains active.","applicability":"Provides a concrete conflict and retry model for concurrent alias writeback."}
+      ],
+      "supported_claims": [
+        {"claim_id":"PF1-C1","claim":"Scoped state needs a total precedence order, not an implicit fallback chain.","source_ids":["PF1-S1"],"applicability":"Directly applies to choosing project, legacy alias, user, and default values."},
+        {"claim_id":"PF1-C2","claim":"Alias migration needs stable identity, optimistic concurrency, explicit terminal status, and verification.","source_ids":["PF1-S2","PF1-S3"],"applicability":"Applies to read-triggered migration under multiple projects or processes."}
+      ],
+      "external_baseline_summary":"A mature baseline specifies a total scope order, captures the version read, performs one transactional compare-and-write, exposes migration identity and terminal status, and verifies the new representation before retiring the alias.",
+      "confirmed_gaps":["Fallback precedence is not total or testable.","Migration has no idempotency key, compare-and-swap rule, or completion receipt.","Writeback timing and multi-project writer conflicts are undefined."],
+      "underspecifications":["Behavior when both legacy and scoped keys differ is absent.","Downgrade and partial-write recovery are absent."],
+      "contradictions":[],
+      "missed_failure_modes":["A stale reader overwrites a newer scoped value.","A deleted legacy alias is resurrected by another process.","A crash occurs after new-key write but before alias retirement."],
+      "conclusion_changed":false,
+      "conclusion_change_summary":"External evidence confirms the packet conclusion and supplies a concrete acceptance model without changing the under-specified classification.",
+      "proposed_spec_deltas":["Define precedence as project scoped value, then compatible legacy alias, then user value, then default, with conflicts surfaced rather than silently merged.","Require a migration receipt containing project_id, old_key, new_key, source_version, target_version, attempt_id, outcome, and conflict reason.","Make migration one idempotent transaction using optimistic concurrency; verify the target before tombstoning the alias."],
+      "scenario_implications":["Test two projects opening the same legacy state concurrently and prove neither captures the other's state.","Crash at every write boundary and prove a subsequent read converges once."],
+      "adversarial_implications":["A malicious or stale process must not use the legacy alias to overwrite a newer scoped value.","Cross-project identifiers must be validated to prevent state confusion or disclosure."]
+    },
+    {
+      "provisional_feature_ref": "OPF::A005OM-0008::PF-0002",
+      "source_row_sha256": "c8ac3b070bded7071a501845d135157414a65e7f331cfb964db56e0e8b764239",
+      "research_group_id": "deprecation-and-retired-ownership",
+      "research_state": "researched",
+      "search_attempts": ["site:rfc-editor.org RFC deprecation sunset header 9745 8594", "site:kubernetes.io/docs deprecation policy rollback compatibility official"],
+      "insufficient_evidence_reason": null,
+      "sources": [
+        {"source_id":"PF2-S1","url":"https://www.rfc-editor.org/rfc/rfc9745.html","title":"RFC 9745: The Deprecation HTTP Response Header Field","publisher":"IETF / RFC Editor","source_type":"official_standard","accessed_date":"2026-07-11","section_anchor":"Sections 2.2, 3, 4, and 5","evidence_snippet":"The standard separates deprecation date, scope, human documentation, sunset, and behavior; deprecation alone does not change resource behavior.","applicability":"Defines how a retired bridge can remain lineage-only while pointing clearly to replacement ownership."},
+        {"source_id":"PF2-S2","url":"https://kubernetes.io/docs/reference/using-api/deprecation-policy/","title":"Kubernetes Deprecation Policy","publisher":"Kubernetes project","source_type":"official_product_documentation","accessed_date":"2026-07-11","section_anchor":"Deprecating parts of the API","evidence_snippet":"Kubernetes retains decoding and conversion of persisted deprecated data and requires upgrade then rollback compatibility within its policy window.","applicability":"Shows that retired ownership can be unambiguous while compatibility responsibilities remain explicit."}
+      ],
+      "supported_claims": [
+        {"claim_id":"PF2-C1","claim":"A retired bridge should identify replacement ownership and keep deprecation behavior distinct from replacement behavior.","source_ids":["PF2-S1"],"applicability":"Matches CRAU-001's lineage-only boundary."},
+        {"claim_id":"PF2-C2","claim":"Retirement must preserve explicitly bounded compatibility obligations for stored legacy data.","source_ids":["PF2-S2"],"applicability":"Applies to migration lineage without re-owning atomized behavior."}
+      ],
+      "external_baseline_summary":"Standards distinguish the owner of the replacement from the compatibility bridge and require explicit scope, transition documentation, and any remaining decode or rollback obligations.",
+      "confirmed_gaps":[],
+      "underspecifications":["The packet does not show whether CRAU-001 records a retirement date, compatibility window, or machine-readable replacement reference."],
+      "contradictions":[],
+      "missed_failure_modes":["A consumer mistakes lineage prose for a still-supported authority.","Legacy persisted data outlives the compatibility decoder."],
+      "conclusion_changed":false,
+      "conclusion_change_summary":"The external baseline supports the affirmative conclusion that retired bridge ownership is unambiguous; only lifecycle metadata may need strengthening.",
+      "proposed_spec_deltas":["Preserve the non-ownership clause and add explicit replacement PlanUnit references, compatibility obligations, retirement state, and sunset criterion.","State that the retired bridge cannot define new behavior and that conflicts resolve in favor of the named replacement owner."],
+      "scenario_implications":["Trace an old persisted object through the bridge to its current owner and back through a supported rollback.","Verify tooling cannot select the retired bridge as an implementation owner."],
+      "adversarial_implications":["Prevent crafted legacy identifiers from reactivating retired authority.","Reject ambiguous replacement links rather than choosing an owner heuristically."]
+    },
+    {
+      "provisional_feature_ref": "OPF::A005OM-0008::PF-0003",
+      "source_row_sha256": "e2be38c594e35253ab46fccba008a97028b067b7c684c2162d6e56d418c2365f",
+      "research_group_id": "atomic-auto-apply",
+      "research_state": "researched",
+      "search_attempts": ["site:sqlite.org atomic commit official rollback journal crash recovery", "site:theupdateframework.github.io specification client workflow recoverable state"],
+      "insufficient_evidence_reason": null,
+      "sources": [
+        {"source_id":"PF3-S1","url":"https://sqlite.org/transactional.html","title":"SQLite Is Transactional","publisher":"SQLite project","source_type":"official_product_documentation","accessed_date":"2026-07-11","section_anchor":"SQLite is Transactional","evidence_snippet":"SQLite guarantees all changes in one transaction occur completely or not at all even across program, OS, or power failure, and crash-simulates this claim in tests.","applicability":"Defines the crash-recovery property Auto Apply needs when changing the active model set."},
+        {"source_id":"PF3-S2","url":"https://theupdateframework.github.io/specification/latest/","title":"The Update Framework Specification","publisher":"The Update Framework project","source_type":"official_standard","accessed_date":"2026-07-11","section_anchor":"5. Detailed client workflow","evidence_snippet":"The client workflow fixes update time, validates each stage, aborts and reports failures, and requires failed attempts not to leave the client unrecoverable.","applicability":"Provides fail-closed staged activation and recoverability semantics for automatic application."}
+      ],
+      "supported_claims": [
+        {"claim_id":"PF3-C1","claim":"Auto Apply must expose a single atomic commit boundary and retain the prior active set until commit.","source_ids":["PF3-S1"],"applicability":"Applies to last-known-good model activation."},
+        {"claim_id":"PF3-C2","claim":"Each automatic attempt needs staged validation, abort/report outcomes, and a recoverable next attempt.","source_ids":["PF3-S2"],"applicability":"Applies to automatic Free Models selection and activation."}
+      ],
+      "external_baseline_summary":"A proven automatic-apply flow stages a candidate, validates it, atomically changes the active pointer, records the outcome, and leaves the previous configuration usable after any crash or validation failure.",
+      "confirmed_gaps":["Concurrency ownership and duplicate Auto Apply attempts are unspecified.","Crash points before and after active-pointer commit are unspecified."],
+      "underspecifications":["Candidate snapshot identity, validation deadline, and last-known-good retention are absent."],
+      "contradictions":[],
+      "missed_failure_modes":["Two Auto Apply workers activate different snapshots.","The candidate is valid when selected but disappears before commit.","Receipt persistence succeeds while activation does not, or the reverse."],
+      "conclusion_changed":false,
+      "conclusion_change_summary":"Research confirms the partial specification and turns concurrency and crash recovery into falsifiable atomicity requirements.",
+      "proposed_spec_deltas":["Define states idle, staging, validating, committing, active, failed, and recovered with one monotonic attempt_id.","Allow one writer per project; duplicate triggers join or return the existing attempt.","Commit candidate configuration and receipt atomically, retain last-known-good, and recover by inspecting the durable commit marker."],
+      "scenario_implications":["Kill the process at every state transition and prove the active set is either old or fully new.","Race manual selection with Auto Apply and define deterministic authority."],
+      "adversarial_implications":["An untrusted catalog response must not replace the last-known-good before provenance and policy checks pass.","Retry storms must not create repeated side effects or exhaust storage." ]
+    },
+    {
+      "provisional_feature_ref": "OPF::A005OM-0008::PF-0004",
+      "source_row_sha256": "aa528b6f16ba0258b9f0d9d42befae046ec00a5a8d7e2f539b04877c46cc1944",
+      "research_group_id": "bounded-reconnect-contract",
+      "research_state": "researched",
+      "search_attempts": ["site:grpc.io/docs/guides connection backoff protocol official reconnect", "site:grpc.github.io grpc connectivity semantics state machine", "site:rfc-editor.org/rfc/rfc9110 Retry-After official"],
+      "insufficient_evidence_reason": null,
+      "sources": [
+        {"source_id":"PF4-S1","url":"https://grpc.io/docs/guides/retry/","title":"Retry","publisher":"gRPC project","source_type":"official_product_documentation","accessed_date":"2026-07-11","section_anchor":"How gRPC client retry works","evidence_snippet":"gRPC defines retryable status codes, maximum attempts, exponential backoff, jitter, throttling, and a commitment point after which no retry occurs.","applicability":"Supplies the missing bounded attempt and deduplication-relevant retry policy."},
+        {"source_id":"PF4-S2","url":"https://grpc.github.io/grpc/core/md_doc_connectivity-semantics-and-api.html","title":"gRPC Connectivity Semantics and API","publisher":"gRPC project","source_type":"mature_open_source_documentation","accessed_date":"2026-07-11","section_anchor":"States of Connectivity","evidence_snippet":"The channel state machine defines CONNECTING, READY, TRANSIENT_FAILURE, IDLE, SHUTDOWN, legal transitions, and the reasons for those transitions.","applicability":"Provides observable reconnect states and terminal shutdown behavior."}
+      ],
+      "supported_claims": [
+        {"claim_id":"PF4-C1","claim":"One bounded auto-retry must define whether the initial call counts, which errors are retryable, delay, timeout, and commitment point.","source_ids":["PF4-S1"],"applicability":"Directly makes the GUI promise testable."},
+        {"claim_id":"PF4-C2","claim":"Reconnect UI must be derived from a legal connectivity state transition and expose terminal offline or shutdown state.","source_ids":["PF4-S2"],"applicability":"Prevents copy from promising recovery when the channel is terminal."}
+      ],
+      "external_baseline_summary":"Production reconnect contracts pair an explicit connectivity state machine with attempt limits, retryable classifications, deadlines, backoff, commitment rules, and observable terminal outcomes.",
+      "confirmed_gaps":["No attempt identity, legal state transitions, retryable error set, timeout, cancellation, or receipt is defined.","The phrase one retry is ambiguous about total attempts."],
+      "underspecifications":["No rule maps backend state to user-visible copy or disables duplicate requests."],
+      "contradictions":["The GUI makes a bounded guarantee that the control contract cannot currently falsify."],
+      "missed_failure_modes":["A late success arrives after cancellation.","Duplicate clicks create parallel reconnect loops.","The connection succeeds but authentication or protocol negotiation fails."],
+      "conclusion_changed":true,
+      "conclusion_change_summary":"The conclusion becomes stronger: this is not only missing retry detail; the current GUI promise is contractually contradictory until backed by attempt and state semantics.",
+      "proposed_spec_deltas":["Define requested, connecting, waiting_to_retry, retrying, ready, offline_terminal, cancelled, and failed_terminal states with legal transitions.","Define exactly two total connection attempts, one retryable-error allowlist, per-attempt and overall deadlines, cancellation precedence, and late-result suppression.","Emit a receipt with request_id, attempt count, timestamps, error classes, terminal state, and whether user action is available."],
+      "scenario_implications":["Verify offline, TLS failure, auth failure, timeout, cancellation, and late success each produce deterministic state and copy.","Double-click reconnect and prove only one request identity executes."],
+      "adversarial_implications":["Jitter and a retry cap must prevent coordinated reconnect storms.","Untrusted error text must not leak credentials or be rendered as authoritative recovery guidance."]
+    },
+    {
+      "provisional_feature_ref": "OPF::A005OM-0008::PF-0005",
+      "source_row_sha256": "04b57a7090f1b0bd1b53ecb251ae0840c0e1276aeb7ab162cf35c09da0d57b6e",
+      "research_group_id": "artifact-trust-and-provenance",
+      "research_state": "researched",
+      "search_attempts": ["site:slsa.dev/spec/v1.2 provenance official verification", "site:theupdateframework.github.io specification rollback freeze attacks", "site:spdx.github.io/spdx-spec SBOM lifecycle official spec"],
+      "insufficient_evidence_reason": null,
+      "sources": [
+        {"source_id":"PF5-S1","url":"https://slsa.dev/spec/v1.2/","title":"SLSA Specification 1.2","publisher":"SLSA project","source_type":"official_standard","accessed_date":"2026-07-11","section_anchor":"Attestation formats and Verifying artifacts","evidence_snippet":"SLSA separates production, distribution, artifact verification, platform assessment, provenance, and verification summaries into explicit responsibilities.","applicability":"Defines end-to-end provenance production and verification coverage."},
+        {"source_id":"PF5-S2","url":"https://theupdateframework.github.io/specification/latest/","title":"The Update Framework Specification","publisher":"The Update Framework project","source_type":"official_standard","accessed_date":"2026-07-11","section_anchor":"Client workflow and threat model","evidence_snippet":"TUF verifies threshold signatures, hashes, versions, expiration, and consistent metadata, aborting and reporting rollback, freeze, mix-and-match, or signature failures.","applicability":"Defines the downloadable artifact trust lifecycle, key rotation, and fail-closed update behavior."},
+        {"source_id":"PF5-S3","url":"https://spdx.github.io/spdx-spec/v3.0.1/model/Software/Classes/Sbom/","title":"Sbom - SPDX Specification 3.0.1","publisher":"SPDX / Linux Foundation","source_type":"official_standard","accessed_date":"2026-07-11","section_anchor":"Description and Properties","evidence_snippet":"SPDX models an SBOM as a collection for one package with creation information, root elements, external identifiers, integrity methods, and lifecycle-oriented SBOM types.","applicability":"Provides interoperable SBOM identity and linkage fields that must bind to the signed artifact."}
+      ],
+      "supported_claims": [
+        {"claim_id":"PF5-C1","claim":"Trust requires verification against policy, not merely publishing signatures or provenance.","source_ids":["PF5-S1","PF5-S2"],"applicability":"Applies to every downloadable binary before execution."},
+        {"claim_id":"PF5-C2","claim":"The SBOM, provenance, signature, and artifact must share immutable subject identity and digest mappings.","source_ids":["PF5-S1","PF5-S3"],"applicability":"Closes the unspecified bridge coverage between trust artifacts."}
+      ],
+      "external_baseline_summary":"Current supply-chain baselines bind artifact digests to signed provenance and SBOM subjects, verify them against policy before use, rotate trust roots safely, and fail closed on expiration, rollback, mix-and-match, or missing evidence.",
+      "confirmed_gaps":["Trust-artifact subject binding and bridge coverage are unspecified.","Verification, revocation, expiration, and key-rotation lifecycle are unspecified."],
+      "underspecifications":["No accepted algorithms, threshold policy, trust-root bootstrap, or offline behavior is stated."],
+      "contradictions":[],
+      "missed_failure_modes":["A valid SBOM describes a different binary.","A valid signature chains to an expired or revoked trust root.","Old provenance is mixed with a new artifact of the same name."],
+      "conclusion_changed":true,
+      "conclusion_change_summary":"Research broadens the gap from unspecified lifecycle to missing cryptographic subject binding and verifier policy across every bridge.",
+      "proposed_spec_deltas":["Define one artifact subject tuple of release, platform target, size, and SHA-256 shared by signature, SLSA provenance, and SPDX SBOM.","Specify trusted-root bootstrap and rotation, threshold verification, expiration, revocation, offline-cache rules, and fail-closed error classes.","Require a machine-readable verification receipt that records evidence digests, policy version, verifier identity, time basis, and result."],
+      "scenario_implications":["Test correct artifact, swapped SBOM, stale provenance, expired metadata, rotated root, offline cache, and rollback attack.","Verify every platform binary has complete evidence coverage."],
+      "adversarial_implications":["Reject mix-and-match and freeze attacks even when individual files have valid signatures.","Do not allow unsigned bridge metadata to redirect a verifier to attacker-controlled evidence." ]
+    },
+    {
+      "provisional_feature_ref": "OPF::A005OM-0008::PF-0006",
+      "source_row_sha256": "360700b263abfc574b6cd9997f02adb6d3ae6206e6ab9e7b9fcfcf9a9e7e83d9",
+      "research_group_id": "schema-migration-fixtures",
+      "research_state": "researched",
+      "search_attempts": ["site:kubernetes.io custom resource definition versioning conversion webhook official", "site:github.com/json-schema-org JSON-Schema-Test-Suite official"],
+      "insufficient_evidence_reason": null,
+      "sources": [
+        {"source_id":"PF6-S1","url":"https://kubernetes.io/docs/tasks/extend-kubernetes/custom-resources/custom-resource-definition-versioning/","title":"Versions in CustomResourceDefinitions","publisher":"Kubernetes project","source_type":"official_product_documentation","accessed_date":"2026-07-11","section_anchor":"Writing, reading, and updating versioned CustomResourceDefinition objects","evidence_snippet":"Kubernetes permits old and new served versions concurrently, preserves stored versions, requires conversion identity, and defines explicit failed conversion responses.","applicability":"Provides lifecycle and failure semantics for schema conversion fixtures."},
+        {"source_id":"PF6-S2","url":"https://github.com/json-schema-org/JSON-Schema-Test-Suite","title":"JSON Schema Test Suite","publisher":"JSON Schema project","source_type":"mature_open_source_documentation","accessed_date":"2026-07-11","section_anchor":"Sample Test Case, Additional Assumptions, Known Limitations","evidence_snippet":"The language-agnostic suite pairs schemas with valid and invalid instances, covers each supported draft, remote references, optional behavior, and documents untestable limits.","applicability":"Defines fixture completeness beyond a few representative happy paths."}
+      ],
+      "supported_claims": [
+        {"claim_id":"PF6-C1","claim":"Migration fixtures must cover every supported source-target pair, success and explicit failure, and mixed-version operation.","source_ids":["PF6-S1"],"applicability":"Applies to config schema migration and forward compatibility."},
+        {"claim_id":"PF6-C2","claim":"Fixtures need valid and invalid boundary instances plus declared optional or unsupported behavior.","source_ids":["PF6-S2"],"applicability":"Applies to null, empty, unknown, duplicate, remote, and malformed config states."}
+      ],
+      "external_baseline_summary":"A robust migration suite is version-matrix driven, includes positive and negative fixtures, preserves stable identity, tests round trips where promised, and validates explicit failures and mixed-version reads.",
+      "confirmed_gaps":["Critical edge-state fixture coverage is incomplete.","Failure outputs and source-target version matrix are not executable contracts."],
+      "underspecifications":["Unknown fields, absent versus null, malformed legacy values, duplicate migration, and mixed-version concurrency lack fixtures."],
+      "contradictions":[],
+      "missed_failure_modes":["A conversion succeeds but loses a field.","A second migration changes already-migrated data.","Old and new clients alternately rewrite the same config."],
+      "conclusion_changed":true,
+      "conclusion_change_summary":"The gap is broader than omitted edge fixtures: the migration suite lacks a declared version matrix, invariants, and failure oracle.",
+      "proposed_spec_deltas":["Publish a source-version by target-version matrix with allowed, rejected, and round-trip-required cells.","Require fixtures for absent, null, empty, unknown, duplicate, maximum-size, malformed, already-migrated, and interrupted states.","For every fixture assert output bytes or semantic equivalence, stable identity, warnings, error code, mutation boundary, and idempotent second run."],
+      "scenario_implications":["Run all fixtures against each supported schema version and both read-only preview and commit modes.","Simulate old and new clients during migration and verify declared compatibility."],
+      "adversarial_implications":["Bound resource use for oversized or deeply nested inputs.","Reject conversion outputs that mutate immutable identity or smuggle unknown privileged fields." ]
+    },
+    {
+      "provisional_feature_ref": "OPF::A005OM-0008::PF-0007",
+      "source_row_sha256": "780affe2db4ad044ebc3905408d9f8888f4336a530c5a5cf4d8a67f0d084d9fb",
+      "research_group_id": "generated-link-validation",
+      "research_state": "researched",
+      "search_attempts": ["site:rfc-editor.org/rfc/rfc3986 URI reference resolution official", "W3C Link Checker documentation recursive redirects fragments"],
+      "insufficient_evidence_reason": null,
+      "sources": [
+        {"source_id":"PF7-S1","url":"https://www.rfc-editor.org/rfc/rfc3986.html","title":"RFC 3986: Uniform Resource Identifier (URI): Generic Syntax","publisher":"IETF / RFC Editor","source_type":"official_standard","accessed_date":"2026-07-11","section_anchor":"Sections 4 and 5, Usage and Reference Resolution","evidence_snippet":"RFC 3986 distinguishes absolute URIs and relative references and defines a deterministic algorithm for resolving a reference against a base URI.","applicability":"Defines renderer-independent syntax and resolution checks for generated links."},
+        {"source_id":"PF7-S2","url":"https://dev.w3.org/perl/modules/W3C/LinkChecker/docs/checklink","title":"W3C Link Checker Documentation","publisher":"World Wide Web Consortium","source_type":"mature_open_source_documentation","accessed_date":"2026-07-11","section_anchor":"Command-line documentation and recursive checking","evidence_snippet":"The W3C checker extracts anchors and links, checks dereferenceability including fragments, reports redirects, and supports bounded recursive checking.","applicability":"Defines network, fragment, redirect, and traversal validation modes beyond URI parsing."}
+      ],
+      "supported_claims": [
+        {"claim_id":"PF7-C1","claim":"Validation must separate syntax and base-resolution checks from dereference checks.","source_ids":["PF7-S1"],"applicability":"Generated documents may be valid offline even when remote targets are unavailable."},
+        {"claim_id":"PF7-C2","claim":"Fragments, redirects, recursion, authentication, exclusions, and transient network outcomes need explicit modes.","source_ids":["PF7-S2"],"applicability":"Applies to CI, release, and offline generated-document validation."}
+      ],
+      "external_baseline_summary":"Mature link validation distinguishes URI syntax, relative resolution, local target and fragment existence, and live dereference; it makes redirects, recursion depth, exclusions, authentication, and transient failures explicit.",
+      "confirmed_gaps":["Validation modes and failure semantics are incomplete.","Renderer/base-URI context is not bound to each result."],
+      "underspecifications":["Redirect policy, fragment checks, mailto/file schemes, authentication, robots, offline mode, and retryable network errors are not classified."],
+      "contradictions":[],
+      "missed_failure_modes":["A link parses but resolves differently under another renderer base.","A target returns 200 while the fragment is absent.","A redirect crosses to a forbidden scheme or host."],
+      "conclusion_changed":true,
+      "conclusion_change_summary":"Research changes the conclusion from incomplete failure semantics to a missing multi-mode validation model; one pass/fail result cannot represent syntax, render, and live-network truth.",
+      "proposed_spec_deltas":["Define deterministic modes: syntax, resolved-local, rendered-fragment, and live-network; record which modes ran.","Bind each result to document path, renderer, base URI, resolved target, redirect chain, status class, and retryability.","Specify allowed schemes/hosts, recursion depth, timeouts, authentication prohibition, offline skips, and release-blocking severities."],
+      "scenario_implications":["Validate the same generated document under every supported renderer and base path.","Test broken fragment, redirect loop, forbidden scheme, offline run, timeout, 401, 404, 410, and transient 503."],
+      "adversarial_implications":["Prevent SSRF by blocking private addresses and unsafe schemes in live validation.","Cap recursion, redirects, response bytes, and total time to resist link bombs." ]
+    },
+    {
+      "provisional_feature_ref": "OPF::A005OM-0008::PF-0008",
+      "source_row_sha256": "cea58487b543d2de2ecba1e8e50f3c27fed3b987f171d6b1337a441236a59d48",
+      "research_group_id": "install-update-lifecycle",
+      "research_state": "researched",
+      "search_attempts": ["site:theupdateframework.github.io specification client workflow abort report failure", "site:packagekit.freedesktop.org transaction errors status update install official"],
+      "insufficient_evidence_reason": null,
+      "sources": [
+        {"source_id":"PF8-S1","url":"https://theupdateframework.github.io/specification/latest/","title":"The Update Framework Specification","publisher":"The Update Framework project","source_type":"official_standard","accessed_date":"2026-07-11","section_anchor":"5. Detailed client workflow","evidence_snippet":"The workflow records a fixed start time, validates and persists trusted metadata in order, aborts and reports specific failures, and preserves future recoverability.","applicability":"Defines the security and recovery lifecycle for update discovery through trusted target selection."},
+        {"source_id":"PF8-S2","url":"https://packagekit.freedesktop.org/gtk-doc/specification.html","title":"PackageKit Specification","publisher":"PackageKit project","source_type":"mature_open_source_documentation","accessed_date":"2026-07-11","section_anchor":"Error Enums, Cancellation, Transactions, Status Values","evidence_snippet":"PackageKit models package work as transaction IDs with standardized errors, cancellation, success and failure examples, status values, progress, logging, and GUI-consumable completion.","applicability":"Provides user-visible lifecycle and typed failure states for install and update operations."}
+      ],
+      "supported_claims": [
+        {"claim_id":"PF8-C1","claim":"Install/update must be an ordered fail-closed transaction lifecycle with recoverable aborts.","source_ids":["PF8-S1"],"applicability":"Applies to download, verify, stage, install, activate, and rollback."},
+        {"claim_id":"PF8-C2","claim":"Every operation needs stable identity, standardized status and error classes, cancellation, and a GUI-consumable terminal result.","source_ids":["PF8-S2"],"applicability":"Directly resolves the GUI classification contradiction."}
+      ],
+      "external_baseline_summary":"A production updater exposes stable transaction identity and ordered phases, verifies trust before mutation, classifies cancellation and errors, persists auditable outcomes, and drives user-visible progress and terminal recovery actions from backend truth.",
+      "confirmed_gaps":["Install and update lifecycle phases and mutation boundaries are not specified.","User-visible failure behavior conflicts with non-GUI classification."],
+      "underspecifications":["Cancellation cutoff, reboot requirement, rollback eligibility, offline behavior, and recovery action are absent."],
+      "contradictions":["A user-visible failure state is required while the owning unit is classified as not GUI-related."],
+      "missed_failure_modes":["Trust verification passes but staging runs out of disk.","Installation succeeds but activation or restart fails.","Cancellation arrives after the irreversible mutation boundary."],
+      "conclusion_changed":true,
+      "conclusion_change_summary":"External implementations confirm a single feature must own both backend transaction truth and GUI projection; the classification conflict is build-blocking, not cosmetic.",
+      "proposed_spec_deltas":["Define discovered, downloading, verifying, staged, installing, activating, succeeded, failed_recoverable, failed_terminal, rolling_back, rolled_back, and cancelled states.","Mark the user-visible projection GUI-related while retaining backend lifecycle ownership; map every state and error code to copy and actions.","Define the irreversible boundary, cancellation precedence, reboot handling, rollback preconditions, provenance receipt, and safe retry identity."],
+      "scenario_implications":["Exercise network loss, bad signature, disk full, permission denial, crash, reboot required, activation failure, rollback failure, and cancellation at every phase.","Verify GUI state is derived solely from the durable transaction receipt."],
+      "adversarial_implications":["Never expose an unverified artifact as ready to install.","Sanitize backend detail while preserving stable localized error codes and forensic data." ]
+    },
+    {
+      "provisional_feature_ref": "OPF::A005OM-0008::PF-0009",
+      "source_row_sha256": "e35472290486d2a55143569927daec43ef69afdc3a121ab30f123e6ecfeb482b",
+      "research_group_id": "platform-compatibility-matrix",
+      "research_state": "researched",
+      "search_attempts": ["site:doc.rust-lang.org rustc platform support tiers official", "site:packaging.python.org specifications platform compatibility tags official"],
+      "insufficient_evidence_reason": null,
+      "sources": [
+        {"source_id":"PF9-S1","url":"https://doc.rust-lang.org/beta/rustc/platform-support.html","title":"Platform Support - The rustc book","publisher":"Rust project","source_type":"official_product_documentation","accessed_date":"2026-07-11","section_anchor":"Platform Support and support tiers","evidence_snippet":"Rust identifies targets by target triple and attaches distinct guarantees: Tier 1 builds and passes tests, Tier 2 builds but may not be tested, and Tier 3 has no guarantees.","applicability":"Defines target identity and evidence strength for Rust platform binaries."},
+        {"source_id":"PF9-S2","url":"https://packaging.python.org/en/latest/specifications/platform-compatibility-tags/","title":"Platform Compatibility Tags","publisher":"Python Packaging Authority","source_type":"official_standard","accessed_date":"2026-07-11","section_anchor":"Overview","evidence_snippet":"Compatibility is encoded as interpreter, ABI, and platform tags so installers can decide whether a built distribution is compatible with the running system.","applicability":"Provides a concrete machine-readable compatibility matching model."}
+      ],
+      "supported_claims": [
+        {"claim_id":"PF9-C1","claim":"A platform row needs an immutable target identity and an explicit guarantee or test tier.","source_ids":["PF9-S1"],"applicability":"Applies to every shipped Rust binary."},
+        {"claim_id":"PF9-C2","claim":"Compatibility matching must include runtime/ABI/platform dimensions, not OS name alone.","source_ids":["PF9-S2"],"applicability":"Applies to installer selection and launch diagnostics."}
+      ],
+      "external_baseline_summary":"Mature compatibility matrices use machine-readable architecture, OS, ABI, runtime, and minimum-version tags, state the evidence tier for each target, and reject unsupported combinations before launch.",
+      "confirmed_gaps":["Matrix coverage and recovery semantics are incomplete.","Support level and evidence per platform row are not stated."],
+      "underspecifications":["CPU architecture, libc/ABI, minimum OS, packaging format, Web/WASM, emulation, and signing/notarization dimensions are absent or unclear."],
+      "contradictions":[],
+      "missed_failure_modes":["The correct OS receives the wrong architecture or libc binary.","A build succeeds but was never launch-tested.","A previously supported host falls below a raised minimum runtime version."],
+      "conclusion_changed":false,
+      "conclusion_change_summary":"External baselines confirm the matrix and recovery gap and provide precise compatibility dimensions and evidence tiers.",
+      "proposed_spec_deltas":["Define a row key of Rust target triple, OS minimum, ABI/libc minimum, architecture features, package format, distribution channel, and signature requirements.","Attach support tier, build evidence, launch test, update test, rollback test, and last-certified version to each row.","Define preflight mismatch error codes and safe recovery choices: alternate artifact, supported emulation, browser/WASM path, or explicit unsupported state."],
+      "scenario_implications":["Test each matrix row on its minimum supported environment and one intentionally unsupported neighbor.","Verify artifact selection cannot fall back across ABI or architecture boundaries."],
+      "adversarial_implications":["Treat platform metadata as signed release policy to prevent downgrade to a weaker artifact.","Do not execute an unknown target merely because the filename resembles the host platform." ]
+    },
+    {
+      "provisional_feature_ref": "OPF::A005OM-0008::PF-0010",
+      "source_row_sha256": "d020ae65fc1a038a65d1b1bc9f5da91a6187dcc1e201564931c7a2299d1c7813",
+      "research_group_id": "migration-rollback-gates",
+      "research_state": "researched",
+      "search_attempts": ["site:postgresql.org/docs pg_upgrade revert official", "site:kubernetes.io/docs deprecation policy upgrade rollback compatibility official", "site:nist.gov backup restore testing official"],
+      "insufficient_evidence_reason": null,
+      "sources": [
+        {"source_id":"PF10-S1","url":"https://www.postgresql.org/docs/17/pgupgrade.html","title":"pg_upgrade","publisher":"PostgreSQL Global Development Group","source_type":"official_product_documentation","accessed_date":"2026-07-11","section_anchor":"Run pg_upgrade and Reverting to old cluster","evidence_snippet":"pg_upgrade provides a no-mutation check, requires access isolation, and makes revert safety depend on copy, clone, or link mode and whether the new cluster has started.","applicability":"Shows rollback eligibility must be evaluated at specific lifecycle boundaries."},
+        {"source_id":"PF10-S2","url":"https://kubernetes.io/docs/reference/using-api/deprecation-policy/","title":"Kubernetes Deprecation Policy","publisher":"Kubernetes project","source_type":"official_product_documentation","accessed_date":"2026-07-11","section_anchor":"API deprecation rules","evidence_snippet":"The policy requires persisted data to remain decodable and supports upgrade followed by rollback without mandatory conversion within the compatibility window.","applicability":"Defines a compatibility gate for forward migrations and rollback."}
+      ],
+      "supported_claims": [
+        {"claim_id":"PF10-C1","claim":"Rollback eligibility is stateful and can be lost after a specific activation or write boundary.","source_ids":["PF10-S1"],"applicability":"Applies to release migration mode and first post-migration write."},
+        {"claim_id":"PF10-C2","claim":"Migration gates must preserve decode and rollback compatibility or explicitly require a verified backup.","source_ids":["PF10-S2"],"applicability":"Applies to supported release windows and stored schema versions."}
+      ],
+      "external_baseline_summary":"A release migration gate runs compatibility checks without mutation, isolates writers, records backup and mode, marks the precise point rollback ceases to be direct, and requires tested restore when old storage becomes unsafe.",
+      "confirmed_gaps":["Migration and rollback lifecycle states are not defined.","The existing backup/restore gate is not tied to rollback eligibility transitions."],
+      "underspecifications":["Preflight, quiescence, cancellation cutoff, first new-format write, cleanup, and downgrade windows are absent."],
+      "contradictions":[],
+      "missed_failure_modes":["A user assumes rollback remains possible after the new version writes shared data.","External modules are binary-incompatible despite core preflight success.","Backup exists but has never been restored."],
+      "conclusion_changed":true,
+      "conclusion_change_summary":"Research changes the gap from a generic missing lifecycle to a required rollback-eligibility state machine whose safety changes at mode-specific boundaries.",
+      "proposed_spec_deltas":["Define preflight, backup_verified, quiesced, migrating, migrated_not_activated, activated_no_new_write, rollback_direct, rollback_requires_restore, completed, and failed states.","Record migration mode, source/target versions, compatibility results, backup receipt, first irreversible write, rollback deadline, and cleanup authorization.","Block migration until a restore rehearsal or equivalent executable oracle passes for major or destructive changes."],
+      "scenario_implications":["Fail before copy, during migration, after migration before activation, and after first new-format write; assert the permitted recovery path.","Include incompatible extension/module and insufficient-disk preflight cases."],
+      "adversarial_implications":["Do not let an untrusted source cluster execute migration code without an explicit trust boundary.","Prevent rollback to a vulnerable release unless policy explicitly authorizes it." ]
+    },
+    {
+      "provisional_feature_ref": "OPF::A005OM-0008::PF-0011",
+      "source_row_sha256": "d5c6282779218b8c40cfeee33e7da49400ac01d1b0c16ba2bae0e5dd73761cd1",
+      "research_group_id": "typed-release-receipts",
+      "research_state": "researched",
+      "search_attempts": ["site:github.com/in-toto/attestation Statement predicateType specification", "site:github.com/secure-systems-lab/dsse envelope payloadType signature specification", "site:slsa.dev/spec/v1.2 verification summary attestation"],
+      "insufficient_evidence_reason": null,
+      "sources": [
+        {"source_id":"PF11-S1","url":"https://github.com/in-toto/attestation/blob/main/spec/README.md","title":"in-toto Attestation Framework Spec","publisher":"in-toto project","source_type":"official_standard","accessed_date":"2026-07-11","section_anchor":"Framework layers and validation model","evidence_snippet":"The framework separates predicate, statement, authenticated envelope, and bundle; the statement binds subjects and predicate type for automated policy consumers.","applicability":"Defines executable semantics for receipt type, subject binding, authentication, and grouping."},
+        {"source_id":"PF11-S2","url":"https://github.com/secure-systems-lab/dsse","title":"DSSE: Dead Simple Signing Envelope","publisher":"Secure Systems Lab","source_type":"official_standard","accessed_date":"2026-07-11","section_anchor":"Features, What is it, Versioning","evidence_snippet":"DSSE authenticates both message and payload type, avoids canonicalization, supports arbitrary encodings, and explicitly leaves key management outside the envelope spec.","applicability":"Defines the signature envelope while showing that key lifecycle must be specified separately."}
+      ],
+      "supported_claims": [
+        {"claim_id":"PF11-C1","claim":"Receipt fields need typed subject and predicate semantics, not just names.","source_ids":["PF11-S1"],"applicability":"Applies to signing, SBOM, update, migration, and verification receipts."},
+        {"claim_id":"PF11-C2","claim":"Authentication must bind the receipt payload type and bytes, while key trust and lifecycle remain explicit external policy.","source_ids":["PF11-S2"],"applicability":"Prevents type-confusion and unsigned lifecycle assumptions."}
+      ],
+      "external_baseline_summary":"Executable receipt contracts define a versioned type URI, immutable subjects and digests, typed predicate schema, authenticated envelope, issuer and verifier semantics, validation algorithm, lifecycle state, and retention/redaction policy.",
+      "confirmed_gaps":["Receipt fields lack executable types, validation rules, and lifecycle transitions.","Cross-receipt subject and causal linkage are unspecified."],
+      "underspecifications":["Canonical bytes, signature envelope, issuer authority, verification time, supersession, revocation, retention, and privacy are absent."],
+      "contradictions":[],
+      "missed_failure_modes":["A syntactically valid receipt uses the wrong predicate type.","Two receipts refer to the same name but different digests.","A receipt is validly signed by an unauthorized or expired key."],
+      "conclusion_changed":true,
+      "conclusion_change_summary":"External standards show the field-list gap is structural: without subject, predicate, envelope, and lifecycle semantics, receipts cannot be safely verified or composed.",
+      "proposed_spec_deltas":["Define a common receipt envelope with schema_version, receipt_type URI, receipt_id, subject digest set, issuer, issued_at, attempt_id, predecessor IDs, outcome, and typed predicate.","Specify canonical validation and DSSE authentication, plus separate trust-root, authorization, expiration, revocation, and verifier-time rules.","Define immutable, superseded, revoked, and expired states; retention and redaction; and fail-closed behavior for unknown major types."],
+      "scenario_implications":["Validate unknown fields, unknown major type, missing digest, mismatched subject, invalid signature, revoked issuer, clock skew, and supersession chain.","Trace one release through signing, SBOM, install, and migration receipts by digest and causal IDs."],
+      "adversarial_implications":["Authenticate payload type to prevent a valid signature being replayed as another receipt class.","Bound bundle size and graph traversal to resist receipt bombs and cycles." ]
+    },
+    {
+      "provisional_feature_ref": "OPF::A005OM-0008::PF-0012",
+      "source_row_sha256": "13221d3d37fe6c71adf1c73608ecc1a58cd32d9acb4aa7dc4cf03140d030f75b",
+      "research_group_id": "safe-point-transaction-and-compensation",
+      "research_state": "researched",
+      "search_attempts": ["site:postgresql.org/docs SAVEPOINT ROLLBACK TO SAVEPOINT official", "site:learn.microsoft.com compensating transaction pattern official", "site:docs.aws.amazon.com saga orchestration idempotency semantic locking"],
+      "insufficient_evidence_reason": null,
+      "sources": [
+        {"source_id":"PF12-S1","url":"https://www.postgresql.org/docs/current/sql-savepoint.html","title":"SAVEPOINT","publisher":"PostgreSQL Global Development Group","source_type":"official_product_documentation","accessed_date":"2026-07-11","section_anchor":"Description and Notes","evidence_snippet":"A savepoint is named inside a transaction and permits all commands after it to be rolled back while preserving earlier transaction state; release explicitly destroys it.","applicability":"Defines an atomic local safe-point boundary and identity."},
+        {"source_id":"PF12-S2","url":"https://learn.microsoft.com/en-us/azure/architecture/patterns/compensating-transaction","title":"Compensating Transaction Pattern","publisher":"Microsoft","source_type":"official_product_documentation","accessed_date":"2026-07-11","section_anchor":"Solution and Issues and considerations","evidence_snippet":"Distributed recovery records how to undo each completed step, accounts for concurrent changes, resumes failed compensation, and makes compensation steps idempotent.","applicability":"Defines recovery when restore-and-retry spans effects outside one atomic transaction."},
+        {"source_id":"PF12-S3","url":"https://docs.aws.amazon.com/prescriptive-guidance/latest/cloud-design-patterns/saga-orchestration.html","title":"Saga Orchestration Pattern","publisher":"Amazon Web Services","source_type":"official_product_documentation","accessed_date":"2026-07-11","section_anchor":"Issues and considerations","evidence_snippet":"Saga participants need idempotency for crashes and retries; concurrent sagas can see stale data, so semantic locking and detailed observability are recommended.","applicability":"Provides concurrency and durable retry controls for orchestrated safe-point recovery."}
+      ],
+      "supported_claims": [
+        {"claim_id":"PF12-C1","claim":"A safe point needs stable identity and a containing transaction or consistency boundary.","source_ids":["PF12-S1"],"applicability":"Applies to run_id plus safe_point_id and atomic local restoration."},
+        {"claim_id":"PF12-C2","claim":"External effects require durable, idempotent compensation and concurrency control before retry.","source_ids":["PF12-S2","PF12-S3"],"applicability":"Applies when a run has already changed multiple stores or services."}
+      ],
+      "external_baseline_summary":"Safe restore-and-retry is either rollback within one named transaction boundary or a durable saga that restores and compensates each effect, verifies invariants, and only then creates one idempotent retry attempt under semantic lock.",
+      "confirmed_gaps":["Run and safe-point identity, authority, confirmation, atomicity, and partial-restore behavior are missing.","The current generic receipt does not establish a recovery transaction."],
+      "underspecifications":["Eligibility, staleness, concurrent run fencing, external side effects, compensation order, verification, and retry lineage are absent."],
+      "contradictions":["The action promises restore then retry while its disposition permits no-persist behavior that cannot prove either step."],
+      "missed_failure_modes":["Restore partially succeeds and retry begins anyway.","The selected safe point belongs to another run or stale branch.","Compensation itself fails or is repeated after a crash."],
+      "conclusion_changed":true,
+      "conclusion_change_summary":"Research establishes two distinct recovery models—atomic rollback and distributed compensation—and shows the current contract specifies neither, making the generic route disposition contradictory.",
+      "proposed_spec_deltas":["Require run_id, safe_point_id, snapshot digest, expected current version, actor authority, confirmation policy, and exclusive recovery lease.","Define states requested, validating, restoring, compensating, verifying, restored, retry_created, completed, failed_recoverable, and failed_terminal.","Retry only after invariant verification; give it a new attempt_id linked to the recovery receipt and make every restore/compensation step idempotent."],
+      "scenario_implications":["Test local atomic restore, distributed compensation, stale safe point, concurrent run, cancel before and after mutation, compensation crash, verification failure, and retry creation failure.","Prove no retry begins from a partially restored state."],
+      "adversarial_implications":["Authorize restore separately from ordinary retry because it can discard work.","Fence stale workers so they cannot continue writing after a recovery lease is acquired." ]
+    },
+    {
+      "provisional_feature_ref": "OPF::A005OM-0008::PF-0013",
+      "source_row_sha256": "8192b8a82e0fa00e98654b0c5bdd0de09d8b893eba2448d6a7433ba6b7e31de0",
+      "research_group_id": "restore-correctness-oracle",
+      "research_state": "researched",
+      "search_attempts": ["site:postgresql.org/docs pg_verifybackup official backup verification", "site:nist.gov SP 1339 backup testing recovery exercises official"],
+      "insufficient_evidence_reason": null,
+      "sources": [
+        {"source_id":"PF13-S1","url":"https://www.postgresql.org/docs/current/app-pgverifybackup.html","title":"pg_verifybackup","publisher":"PostgreSQL Global Development Group","source_type":"official_product_documentation","accessed_date":"2026-07-11","section_anchor":"Description","evidence_snippet":"Manifest, file, checksum, and WAL verification detect many problems but cannot prove a usable restore; PostgreSQL explicitly requires test restores and data correctness checks.","applicability":"Directly confirms that structural validity is not a restore oracle."},
+        {"source_id":"PF13-S2","url":"https://csrc.nist.gov/pubs/sp/1339/final","title":"NIST SP 1339: OT Backup Quick Start Guide","publisher":"National Institute of Standards and Technology","source_type":"official_standard","accessed_date":"2026-07-11","section_anchor":"Abstract","evidence_snippet":"Effective backup management integrates backups with change management, creates them regularly, tests them, and reviews them during recovery exercises.","applicability":"Defines operational testing and recovery exercise obligations for restore points."}
+      ],
+      "supported_claims": [
+        {"claim_id":"PF13-C1","claim":"Schema and checksum validity are necessary but insufficient; a test restore and semantic data checks are required.","source_ids":["PF13-S1"],"applicability":"Applies to the restore-point artifact envelope and payload."},
+        {"claim_id":"PF13-C2","claim":"Restore points need recurring recovery exercises linked to change management.","source_ids":["PF13-S2"],"applicability":"Applies to lifecycle, retention, and compatibility drift."}
+      ],
+      "external_baseline_summary":"A restore point is accepted only after identity, manifest, completeness, checksum, dependency/WAL, version-compatibility, test-restore, and domain-invariant checks; lifecycle evidence records creation, verification, use, failure, retention, and deletion.",
+      "confirmed_gaps":["Structural validity does not prove restore correctness.","No executable semantic oracle or recovery lifecycle is defined."],
+      "underspecifications":["Payload type closure, compatibility, dependencies, encryption keys, test-restore cadence, retention, and deletion authority are absent."],
+      "contradictions":[],
+      "missed_failure_modes":["All checksums pass but required external data or keys are missing.","Restore boots but contains semantically inconsistent data.","A valid old restore point is incompatible with the current runtime."],
+      "conclusion_changed":false,
+      "conclusion_change_summary":"Authoritative sources directly confirm the packet conclusion and provide the missing semantic restore oracle.",
+      "proposed_spec_deltas":["Close the payload discriminator set or define versioned extension rules and required validators per type.","Require manifest, content digests, source runtime version, dependency set, encryption requirements, and compatibility policy.","Define a restore certification receipt from isolated test restore plus named domain invariants; uncertified points cannot be labeled restorable."],
+      "scenario_implications":["Corrupt manifest, missing file, valid checksum with wrong semantic data, missing key, incompatible version, and successful isolated restore must have distinct outcomes.","Periodically rehearse a representative restore and record RTO/RPO results."],
+      "adversarial_implications":["Authenticate manifests and restore-point metadata to prevent substitution.","Restore into an isolated location before activation to prevent path traversal, overwrite, or code-execution attacks." ]
+    },
+    {
+      "provisional_feature_ref": "OPF::A005OM-0008::PF-0014",
+      "source_row_sha256": "f4fe1bf98764ef06372971df50269e998051f75f533d747836a1f202a5ef3886",
+      "research_group_id": "unsaved-recovery-lifecycle",
+      "research_state": "researched",
+      "search_attempts": ["site:code.visualstudio.com docs hot exit backup unsaved files official", "site:gnu.org/software/emacs/manual auto save files recovery official"],
+      "insufficient_evidence_reason": null,
+      "sources": [
+        {"source_id":"PF14-S1","url":"https://code.visualstudio.com/docs/editing/codebasics","title":"Basic Editing","publisher":"Microsoft Visual Studio Code","source_type":"official_product_documentation","accessed_date":"2026-07-11","section_anchor":"Save / Auto Save and Hot Exit","evidence_snippet":"VS Code separately backs up dirty files, restores them after unexpected close, defines hot-exit modes, and documents backup locations for recovery.","applicability":"Provides snapshot discovery, workspace behavior, and user-configurable recovery semantics."},
+        {"source_id":"PF14-S2","url":"https://www.gnu.org/software/emacs/manual/html_node/emacs/Recover.html","title":"Recovering Data from Auto-Saves","publisher":"GNU Project","source_type":"official_product_documentation","accessed_date":"2026-07-11","section_anchor":"Recovering Data from Auto-Saves","evidence_snippet":"Emacs maps auto-saves to files and interrupted sessions, compares dates and diffs, requires confirmation, and only changes the original file after an explicit save.","applicability":"Defines identity, conflict comparison, confirmation, and non-destructive recovery."},
+        {"source_id":"PF14-S3","url":"https://www.gnu.org/s/emacs/manual/html_node/emacs/Auto-Save-Files.html","title":"Auto-Save Files","publisher":"GNU Project","source_type":"official_product_documentation","accessed_date":"2026-07-11","section_anchor":"Auto-Save Files","evidence_snippet":"Auto-saves use separate uniquely derived files; saving deletes them by default, renaming follows the visited file, and buffer close can retain or prompt before deletion.","applicability":"Provides cleanup triggers and snapshot naming behavior."}
+      ],
+      "supported_claims": [
+        {"claim_id":"PF14-C1","claim":"Recovery snapshots need stable document, workspace, session, and generation identity plus discoverable storage.","source_ids":["PF14-S1","PF14-S2"],"applicability":"Applies to named and untitled unsaved buffers across restarts."},
+        {"claim_id":"PF14-C2","claim":"Recovery must compare versions and remain non-destructive until explicit user commit; cleanup has defined triggers.","source_ids":["PF14-S2","PF14-S3"],"applicability":"Prevents stale recovery from overwriting newer disk content."}
+      ],
+      "external_baseline_summary":"Mature editors identify recovery by workspace, document, session, and generation, store snapshots separately, surface age and diffs, restore non-destructively, and define cleanup after save, discard, retention expiry, or confirmed deletion.",
+      "confirmed_gaps":["Unsaved recovery identity and retention are under-specified.","Cleanup authority and conflict handling are not defined."],
+      "underspecifications":["Untitled buffers, renamed/moved files, symlinks, multiple windows, newer disk content, encrypted projects, quotas, and privacy are absent."],
+      "contradictions":[],
+      "missed_failure_modes":["A snapshot is attached to the wrong project or renamed file.","A stale snapshot overwrites newer external edits.","Sensitive abandoned content persists indefinitely or is synced unintentionally."],
+      "conclusion_changed":true,
+      "conclusion_change_summary":"External products broaden the gap from identity and retention to include non-destructive conflict resolution, discoverability, and privacy-aware cleanup.",
+      "proposed_spec_deltas":["Define snapshot_id from workspace_id, document_id or untitled_id, session_id, generation, base content digest, and created_at.","Restore into a dirty buffer, never directly over the source; require comparison and confirmation when the source digest changed.","Define retention by count, age, and quota; cleanup after durable save or explicit discard; protect encrypted or sensitive content and record deletion outcomes."],
+      "scenario_implications":["Test crash, normal exit, untitled content, rename, external edit, duplicate windows, missing workspace, quota pressure, and user discard.","Verify recovery remains discoverable without opening an exact historical window."],
+      "adversarial_implications":["Do not derive recovery paths from untrusted filenames without canonicalization.","Encrypt or exclude secrets and securely scope snapshots to the owning user and project." ]
+    },
+    {
+      "provisional_feature_ref": "OPF::A005OM-0008::PF-0015",
+      "source_row_sha256": "1e5983d31efbb7c15996c94eef3e70f510cfae7adda990febde9ae076f2f748d",
+      "research_group_id": "command-vocabulary-migration",
+      "research_state": "researched",
+      "search_attempts": ["site:kubernetes.io custom resource definition versioning mixed clients official", "site:rfc-editor.org RFC 9745 deprecation scope documentation sunset"],
+      "insufficient_evidence_reason": null,
+      "sources": [
+        {"source_id":"PF15-S1","url":"https://kubernetes.io/docs/tasks/extend-kubernetes/custom-resources/custom-resource-definition-versioning/","title":"Versions in CustomResourceDefinitions","publisher":"Kubernetes project","source_type":"official_product_documentation","accessed_date":"2026-07-11","section_anchor":"Overview and Writing, reading, and updating versioned objects","evidence_snippet":"Kubernetes explicitly serves old and new versions during migration, identifies one storage version, defines conversion, and does not rewrite stored objects merely on read.","applicability":"Provides a dual-vocabulary transition and write-boundary model."},
+        {"source_id":"PF15-S2","url":"https://www.rfc-editor.org/rfc/rfc9745.html","title":"RFC 9745: The Deprecation HTTP Response Header Field","publisher":"IETF / RFC Editor","source_type":"official_standard","accessed_date":"2026-07-11","section_anchor":"Sections 2.2, 3, 4, and 5","evidence_snippet":"Deprecation identifies scope and date, can link transition documentation, and can declare sunset without silently changing current behavior.","applicability":"Defines disclosure for migration-only command aliases and their replacement vocabulary."}
+      ],
+      "supported_claims": [
+        {"claim_id":"PF15-C1","claim":"Old and new command vocabulary can coexist only with explicit serving, canonical-storage, and conversion rules.","source_ids":["PF15-S1"],"applicability":"Applies to wrapper aliases and forward-only storage migration."},
+        {"claim_id":"PF15-C2","claim":"Every migration-only term needs scope, replacement documentation, deprecation state, and sunset criterion.","source_ids":["PF15-S2"],"applicability":"Directly resolves the unidentified migration-only terms."}
+      ],
+      "external_baseline_summary":"A safe vocabulary migration inventories every old term, maps it to one canonical replacement, defines whether it is served and stored, preserves behavior during a bounded compatibility window, discloses deprecation, and makes cutover and rollback explicit.",
+      "confirmed_gaps":["SP-004 does not identify migration-only terms.","Forward-only migration lacks transaction and rollback semantics.","The wrapper split lacks executable disclosure behavior."],
+      "underspecifications":["Alias precedence, warning channel, telemetry, stored-form normalization, mixed-version clients, cutoff, and unknown-term errors are absent."],
+      "contradictions":[],
+      "missed_failure_modes":["Old and new terms are accepted with different semantics.","A read implicitly rewrites state and destroys rollback compatibility.","An alias survives past sunset in one wrapper path."],
+      "conclusion_changed":true,
+      "conclusion_change_summary":"Research turns the three gaps into one missing versioned-vocabulary protocol with inventory, dual-service rules, canonical storage, and sunset evidence.",
+      "proposed_spec_deltas":["Add a complete table of legacy term, canonical term, accepted input versions, emitted output version, warning code, storage form, deprecation date, sunset gate, and owner.","Do not mutate on read; perform explicit idempotent conversion under transaction with preview, receipt, and rollback eligibility.","Specify mixed-client behavior and reject ambiguous or removed terms with stable machine-readable errors and replacement guidance."],
+      "scenario_implications":["Replay every legacy command through old and new wrappers and compare canonical effects.","Test mixed clients before, during, and after cutover plus rollback before and after canonical write."],
+      "adversarial_implications":["Prevent alias smuggling where a deprecated spelling bypasses new validation or authorization.","Cap legacy parser complexity and reject ambiguous normalization." ]
+    },
+    {
+      "provisional_feature_ref": "OPF::A005OM-0008::PF-0016",
+      "source_row_sha256": "497da363113a9009212192f073f7461b0caeba0e7e8465c6f713d730a85ca385",
+      "research_group_id": "bulk-compensation",
+      "research_state": "researched",
+      "search_attempts": ["site:learn.microsoft.com azure architecture compensating transaction pattern official", "site:docs.aws.amazon.com saga orchestration idempotency semantic locking official"],
+      "insufficient_evidence_reason": null,
+      "sources": [
+        {"source_id":"PF16-S1","url":"https://learn.microsoft.com/en-us/azure/architecture/patterns/compensating-transaction","title":"Compensating Transaction Pattern","publisher":"Microsoft","source_type":"official_product_documentation","accessed_date":"2026-07-11","section_anchor":"Solution and Issues and considerations","evidence_snippet":"The workflow records each completed step and undo action, accounts for concurrent changes, makes compensation resumable and idempotent, and alerts when manual recovery is required.","applicability":"Defines deterministic recovery for partially successful bulk actions."},
+        {"source_id":"PF16-S2","url":"https://docs.aws.amazon.com/prescriptive-guidance/latest/cloud-design-patterns/saga-orchestration.html","title":"Saga Orchestration Pattern","publisher":"Amazon Web Services","source_type":"official_product_documentation","accessed_date":"2026-07-11","section_anchor":"Issues and considerations and Implementation","evidence_snippet":"AWS identifies idempotency, semantic locking, transaction isolation, observability, retries, and compensating actions as required considerations for multi-step distributed work.","applicability":"Provides concurrency, orchestration, and audit semantics for bulk partial success."}
+      ],
+      "supported_claims": [
+        {"claim_id":"PF16-C1","claim":"Each bulk item needs a durable forward outcome and compensation recipe before later items execute.","source_ids":["PF16-S1"],"applicability":"Applies to deterministic rollback and resume."},
+        {"claim_id":"PF16-C2","claim":"Concurrent bulk operations need idempotency, semantic locking, isolation expectations, and observability.","source_ids":["PF16-S2"],"applicability":"Applies to overlapping targets and repeated requests."}
+      ],
+      "external_baseline_summary":"A deterministic bulk workflow uses one operation identity, per-item state and idempotency keys, declared atomic or best-effort policy, durable compensation plans, semantic locks, resumable recovery, and a final aggregate receipt including manual-recovery residue.",
+      "confirmed_gaps":["Partial-success rollback and compensation are not deterministic.","No per-item or aggregate state machine is defined."],
+      "underspecifications":["Ordering, parallelism, dependency groups, stop policy, compensation order, compensation failure, retry, cancellation, and manual residue are absent."],
+      "contradictions":[],
+      "missed_failure_modes":["A compensation overwrites a concurrent valid change.","The compensator crashes and repeats a non-idempotent undo.","Dependent items report success after a prerequisite failed."],
+      "conclusion_changed":true,
+      "conclusion_change_summary":"Research broadens nondeterminism from rollback order to concurrency, idempotency, dependency, and resumable-compensation requirements.",
+      "proposed_spec_deltas":["Define bulk_id, immutable ordered target set, dependency groups, policy (atomic where supported or compensating), per-item idempotency key, and expected version.","Persist pending, running, succeeded, failed, compensating, compensated, compensation_failed, skipped_dependency, and cancelled per item plus aggregate terminal state.","Specify lock scope, stop/continue rule, compensation order, resume cursor, manual recovery receipt, and late cancellation semantics."],
+      "scenario_implications":["Test all success, first/middle/last failure, overlapping bulks, crash during forward work, crash during compensation, dependency failure, manual residue, and repeated request.","Assert aggregate truth is derivable from immutable per-item outcomes."],
+      "adversarial_implications":["Use expected versions so compensation cannot erase an intervening authorized update.","Bound target count, concurrency, retries, and receipt size to resist resource exhaustion." ]
+    },
+    {
+      "provisional_feature_ref": "OPF::A005OM-0008::PF-0017",
+      "source_row_sha256": "1b03a75550667ce93dc210c4ed6462bf5052a05df9c2abc219f45f04f4762624",
+      "research_group_id": "durable-storage-recovery",
+      "research_state": "researched",
+      "search_attempts": ["site:sqlite.org atomic commit crash recovery official", "site:nist.gov SP 1339 backup testing recovery exercises official", "site:freedesktop.org systemd inhibit shutdown delay timeout official", "site:freedesktop.org systemd tmpfiles cleanup retention official"],
+      "insufficient_evidence_reason": null,
+      "sources": [
+        {"source_id":"PF17-S1","url":"https://sqlite.org/transactional.html","title":"SQLite Is Transactional","publisher":"SQLite project","source_type":"official_product_documentation","accessed_date":"2026-07-11","section_anchor":"SQLite is Transactional","evidence_snippet":"SQLite claims complete-or-not-at-all transactions across process, OS, and power failure and validates the claim with crash and power-loss simulation.","applicability":"Defines atomic durable-store mutation and crash-test expectations."},
+        {"source_id":"PF17-S2","url":"https://csrc.nist.gov/pubs/sp/1339/final","title":"NIST SP 1339: OT Backup Quick Start Guide","publisher":"National Institute of Standards and Technology","source_type":"official_standard","accessed_date":"2026-07-11","section_anchor":"Abstract","evidence_snippet":"NIST requires backups to be integrated with change management, created regularly, tested, and reviewed during recovery exercises.","applicability":"Defines backup/restore evidence beyond checksum presence."},
+        {"source_id":"PF17-S3","url":"https://www.freedesktop.org/software/systemd/man/250/systemd-inhibit.html","title":"systemd-inhibit","publisher":"systemd project","source_type":"mature_open_source_documentation","accessed_date":"2026-07-11","section_anchor":"Description and --mode","evidence_snippet":"Shutdown work can take a named block or bounded delay inhibitor; delay locks expire and are then ignored so shutdown can proceed.","applicability":"Provides lock ownership, reason, override, and bounded shutdown behavior."},
+        {"source_id":"PF17-S4","url":"https://www.freedesktop.org/software/systemd/man/systemd-tmpfiles.html","title":"systemd-tmpfiles","publisher":"systemd project","source_type":"mature_open_source_documentation","accessed_date":"2026-07-11","section_anchor":"Description","evidence_snippet":"System and user cleanup are separately configured and owned; create, remove, and clean operations use prioritized configuration and can be reapplied safely.","applicability":"Provides explicit cleanup ownership and retention enforcement for temporary recovery artifacts."}
+      ],
+      "supported_claims": [
+        {"claim_id":"PF17-C1","claim":"Backup and recovery mutations need atomic boundaries and crash-injection tests.","source_ids":["PF17-S1"],"applicability":"Applies to seglog, redb, projector, backup manifests, and fallback reconciliation."},
+        {"claim_id":"PF17-C2","claim":"A checksum-valid backup still needs recurring restore exercises and change-management linkage.","source_ids":["PF17-S2"],"applicability":"Applies to backup certification and failed-restore rollback."},
+        {"claim_id":"PF17-C3","claim":"Shutdown and cleanup need bounded locks, named authority, timeout outcomes, and separate system/user ownership.","source_ids":["PF17-S3","PF17-S4"],"applicability":"Applies to partial flush, stale locks, disk-full cleanup, and recovery artifact retention."}
+      ],
+      "external_baseline_summary":"A mature storage-recovery contract combines atomic crash-tested writes, immutable backup snapshots, verified restore rehearsals, quarantined corruption with authorization, versioned reconciliation, leased locks, bounded shutdown and flush, deterministic disk-full cleanup, and governed trace retention/redaction.",
+      "confirmed_gaps":["Backup transaction atomicity and failed-restore rollback are undefined.","Fallback stores lack a reconciliation protocol.","Corruption deletion lacks quarantine and authorization.","Shutdown timeout and partial-flush outcomes are undefined."],
+      "underspecifications":["Lock lease and steal rules, disk-full cleanup guarantees, trace redaction/retention, destructive confirmation, and recovery ownership are absent."],
+      "contradictions":[],
+      "missed_failure_modes":["Backup captures mutually inconsistent stores.","Restore fails after partially replacing the active root.","A stale lock is stolen while its owner still writes.","Disk-full cleanup deletes the only recoverable state.","A shutdown timeout leaves some stores durable and others unflushed."],
+      "conclusion_changed":true,
+      "conclusion_change_summary":"External evidence confirms all listed gaps and unifies them under missing transaction, authority, and recovery-oracle contracts; the feature remains critical and materially broader than checksum validation.",
+      "proposed_spec_deltas":["Define a backup transaction that freezes or versions every participating store, writes a manifest of roots and digests, commits atomically, and never replaces the last certified backup until test restore passes.","Restore into a staging root, verify checksums and domain invariants, atomically switch the active root, and preserve the prior root until a success receipt; roll back the switch on failure.","Define corruption quarantine with evidence, actor authority, appeal/restore path, and no deletion before replacement durability is proven.","Use owner/token/lease/heartbeat locks with bounded stale detection and fenced writers; define shutdown phase deadlines and partial-flush receipts.","Specify disk-full reserve space, cleanup priority, protected artifacts, trace redaction, retention, and explicit destructive confirmation."],
+      "scenario_implications":["Inject crash and disk-full at every backup, restore, reconciliation, compaction, quarantine, and shutdown boundary.","Test stale and live lock contention, fallback divergence, corrupted primary plus valid backup, corrupted backup, partial flush, timeout, and cleanup with only one recovery copy.","Run recurring full restore exercises and compare declared RTO/RPO with measured results."],
+      "adversarial_implications":["Authenticate manifests and fence stale writers to prevent rollback, substitution, and split-brain corruption.","Quarantine rather than delete attacker-triggered parse failures, and require separate authorization for destructive cleanup.","Redact credentials, paths, and user content from traces before retention or export." ]
+    }
+  ],
+  "self_attestation": {
+    "live_public_web_browsed": true,
+    "every_feature_researched_or_blocked": true,
+    "authoritative_sources_prioritized": true,
+    "per_feature_source_mapping_complete": true,
+    "plans_not_edited": true,
+    "no_peer_or_prior_research_used": true
+  }
+}

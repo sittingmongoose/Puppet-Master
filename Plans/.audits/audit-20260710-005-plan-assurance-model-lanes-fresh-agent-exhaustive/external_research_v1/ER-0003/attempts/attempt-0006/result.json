@@ -1,0 +1,613 @@
+{
+  "audit_id": "audit-20260710-005-plan-assurance-model-lanes-fresh-agent-exhaustive",
+  "schema_version": "external-research-result-v6",
+  "phase": "external_research_current_web_research",
+  "assignment_id": "ER-0003",
+  "attempt_id": "attempt-0006",
+  "controller_thread_id": "019f5078-6501-7223-b52f-2251010bdc41",
+  "agent_path": "/root/a005_external_research_recovery_er_0003_attempt_0006_terminal",
+  "model": "gpt-5.6-luna",
+  "reasoning_effort": "max",
+  "status": "completed",
+  "activation_transaction_id": "A005-ER6-1929c7554722a0dc365396f7",
+  "activation_core_sha256": "8da5c171485bb636310d1a1cfc4f8978fee6f57fd4b46273e0b2ac9b1e10d602",
+  "leaf_dispatch_authorization_sha256": "b01d873131f76784176dd1239ee4a533109edf3f27f6490793ae8d30a25b9a46",
+  "topic": "Versioned file-revert operation contracts versus whole-turn or conversation rewind",
+  "owner_domains": [
+    "source_control_workspace_code",
+    "orchestration_runtime_execution"
+  ],
+  "feature_refs": [
+    "OPF::A005OM-0018::PF-0071",
+    "OPF::A005OM-0019::PF-0066"
+  ],
+  "research_questions": [
+    "What contracts make a versioned file-revert operation safe, previewable, atomic, auditable, and distinguishable from whole-turn or conversation rewind?",
+    "How do Git, IDE, and agent coding systems bind identity, snapshots, workspace state, and rollback scope?",
+    "Which race, partial-write, stale-base, conflict, and recovery failure modes require explicit handling?",
+    "Which patterns should Puppet Master adopt or reject for file-level versus turn-level recovery?"
+  ],
+  "question_coverage": [
+    {
+      "question_index": 0,
+      "question": "What contracts make a versioned file-revert operation safe, previewable, atomic, auditable, and distinguishable from whole-turn or conversation rewind?",
+      "coverage_state": "covered",
+      "evidence_refs": [
+        "F-001",
+        "F-002",
+        "F-004",
+        "F-005",
+        "IMP-001",
+        "IMP-002"
+      ]
+    },
+    {
+      "question_index": 1,
+      "question": "How do Git, IDE, and agent coding systems bind identity, snapshots, workspace state, and rollback scope?",
+      "coverage_state": "covered",
+      "evidence_refs": [
+        "F-001",
+        "F-002",
+        "F-003",
+        "F-007",
+        "P-001",
+        "P-003",
+        "P-004",
+        "P-005"
+      ]
+    },
+    {
+      "question_index": 2,
+      "question": "Which race, partial-write, stale-base, conflict, and recovery failure modes require explicit handling?",
+      "coverage_state": "covered",
+      "evidence_refs": [
+        "F-005",
+        "F-006",
+        "F-008",
+        "FM-001",
+        "FM-002",
+        "FM-003",
+        "FM-004",
+        "FM-005",
+        "FM-006",
+        "FM-007",
+        "FM-008"
+      ]
+    },
+    {
+      "question_index": 3,
+      "question": "Which patterns should Puppet Master adopt or reject for file-level versus turn-level recovery?",
+      "coverage_state": "covered",
+      "evidence_refs": [
+        "IMP-001",
+        "IMP-002",
+        "IMP-003",
+        "IMP-004",
+        "IMP-005",
+        "IMP-006",
+        "IMP-007",
+        "IMP-008",
+        "NI-001",
+        "NI-002",
+        "NI-003",
+        "NI-004"
+      ]
+    }
+  ],
+  "source_availability": "available",
+  "unavailable_evidence": [
+    "No public source in this review defines Puppet Master's implementation-specific transaction boundary, on-disk snapshot schema, or policy for non-file side effects."
+  ],
+  "sources": [
+    {
+      "url": "https://git-scm.com/docs/git-restore",
+      "title": "Git - git-restore Documentation",
+      "publisher": "Git",
+      "published_date": null,
+      "access_date": "2026-07-11",
+      "source_tier": "official",
+      "material_relevance": "Defines explicit restore source, pathspec scope, and separate working-tree versus index targets, including patch and unmerged-path behavior."
+    },
+    {
+      "url": "https://git-scm.com/docs/git-revert",
+      "title": "Git - git-revert Documentation",
+      "publisher": "Git",
+      "published_date": null,
+      "access_date": "2026-07-11",
+      "source_tier": "official",
+      "material_relevance": "Distinguishes commit-level inverse changes from file extraction and documents clean-tree, continue, skip, quit, and abort semantics."
+    },
+    {
+      "url": "https://git-scm.com/docs/git-reflog",
+      "title": "Git - git-reflog Documentation",
+      "publisher": "Git",
+      "published_date": null,
+      "access_date": "2026-07-11",
+      "source_tier": "official",
+      "material_relevance": "Provides durable local reference-transition history, old/new object identity, named historical states, and expiration behavior relevant to audit and recovery."
+    },
+    {
+      "url": "https://git-scm.com/docs/git-worktree.html",
+      "title": "Git - git-worktree Documentation",
+      "publisher": "Git",
+      "published_date": null,
+      "access_date": "2026-07-11",
+      "source_tier": "official",
+      "material_relevance": "Shows that a worktree has a path and checkout identity while sharing repository data but keeping per-worktree HEAD and index state."
+    },
+    {
+      "url": "https://code.visualstudio.com/docs/chat/chat-checkpoints",
+      "title": "Revert changes with checkpoints and editing requests",
+      "publisher": "Microsoft Visual Studio Code",
+      "published_date": null,
+      "access_date": "2026-07-11",
+      "source_tier": "official",
+      "material_relevance": "Documents per-request workspace snapshots, file-change previews, separate checkpoint restore versus editing a request, conversation effects, and redo."
+    },
+    {
+      "url": "https://code.claude.com/docs/en/checkpointing",
+      "title": "Checkpointing",
+      "publisher": "Anthropic Claude Code",
+      "published_date": null,
+      "access_date": "2026-07-11",
+      "source_tier": "official",
+      "material_relevance": "Documents code-before-edit checkpoints, separate restore-code and restore-conversation actions, retention, and gaps for Bash or external edits."
+    },
+    {
+      "url": "https://github.com/google-gemini/gemini-cli/blob/main/docs/reference/commands.md",
+      "title": "gemini-cli command reference",
+      "publisher": "Google Gemini CLI",
+      "published_date": null,
+      "access_date": "2026-07-11",
+      "source_tier": "mature_open_source",
+      "material_relevance": "Documents project-scoped chat checkpoints and /restore of project files to the state immediately before a tool execution."
+    },
+    {
+      "url": "https://sqlite.org/atomiccommit.html",
+      "title": "Atomic Commit In SQLite",
+      "publisher": "SQLite",
+      "published_date": null,
+      "access_date": "2026-07-11",
+      "source_tier": "official",
+      "material_relevance": "Explains rollback journals, locking, flush ordering, commit markers, crash rollback, cache invalidation, and multi-file super-journals."
+    },
+    {
+      "url": "https://www.sqlite.org/wal.html",
+      "title": "Write-Ahead Logging",
+      "publisher": "SQLite",
+      "published_date": null,
+      "access_date": "2026-07-11",
+      "source_tier": "official",
+      "material_relevance": "Describes WAL as an atomic commit and rollback mode that lets readers continue from the original database while changes are committed to the log."
+    },
+    {
+      "url": "https://www.rfc-editor.org/rfc/rfc5789.html",
+      "title": "RFC 5789: PATCH Method for HTTP",
+      "publisher": "IETF RFC Editor",
+      "published_date": "2010-03",
+      "access_date": "2026-07-11",
+      "source_tier": "standard",
+      "material_relevance": "Normatively covers known-base collisions, conditional application, idempotence, and atomic all-or-nothing patch semantics across affected files."
+    },
+    {
+      "url": "https://www.rfc-editor.org/rfc/rfc9110.html",
+      "title": "RFC 9110: HTTP Semantics",
+      "publisher": "IETF RFC Editor",
+      "published_date": "2022-06",
+      "access_date": "2026-07-11",
+      "source_tier": "standard",
+      "material_relevance": "Defines strong If-Match preconditions, lost-update protection, precondition evaluation before mutation, and 412 failure behavior."
+    },
+    {
+      "url": "https://pubs.opengroup.org/onlinepubs/9799919799/functions/rename.html",
+      "title": "rename, renameat - POSIX.1-2024",
+      "publisher": "The Open Group",
+      "published_date": "2024",
+      "access_date": "2026-07-11",
+      "source_tier": "standard",
+      "material_relevance": "Defines the filesystem rename operation and its required atomic action, useful as one boundary primitive but not a complete multi-file transaction."
+    }
+  ],
+  "findings": [
+    {
+      "finding_id": "F-001",
+      "claim": "A safe file-level revert needs an explicit target identity and scope: source snapshot or object, path set, and destination state. Git restore exposes the source and pathspec and separately selects the working tree, index, or both; the pathspec limits the affected paths.",
+      "evidence_class": "supported_claim",
+      "source_urls": [
+        "https://git-scm.com/docs/git-restore"
+      ],
+      "confidence": 0.98,
+      "notes": "This is a directly documented Git contract; it establishes scope and identity but does not by itself establish crash-safe multi-file atomicity."
+    },
+    {
+      "finding_id": "F-002",
+      "claim": "File restore, commit revert, and conversation rewind are different operations. Git revert records new commits that reverse earlier commits, whereas Git restore extracts selected paths; VS Code separates editing a prior request from restoring a workspace checkpoint, and Claude Code separately offers restore code, restore conversation, or both.",
+      "evidence_class": "supported_claim",
+      "source_urls": [
+        "https://git-scm.com/docs/git-revert",
+        "https://git-scm.com/docs/git-restore",
+        "https://code.visualstudio.com/docs/chat/chat-checkpoints",
+        "https://code.claude.com/docs/en/checkpointing"
+      ],
+      "confidence": 0.98,
+      "notes": "The systems use different names and storage models, but the documented scope split is consistent: content state and conversation state must not be silently conflated."
+    },
+    {
+      "finding_id": "F-003",
+      "claim": "Auditability depends on stable identity and a history of transitions. Git reflogs record reference-tip changes with old and new object IDs, while linked worktrees have path-specific checkout state and separate per-worktree HEAD and index files; agent checkpoints are session-oriented and subject to retention or capture limits.",
+      "evidence_class": "supported_claim",
+      "source_urls": [
+        "https://git-scm.com/docs/git-reflog",
+        "https://git-scm.com/docs/git-worktree.html",
+        "https://code.claude.com/docs/en/checkpointing"
+      ],
+      "confidence": 0.96,
+      "notes": "Git provides durable repository-local transition evidence; agent checkpoints complement rather than replace permanent version history."
+    },
+    {
+      "finding_id": "F-004",
+      "claim": "Previewability is a first-class recovery affordance: Git restore supports patch selection, and VS Code can show which files changed in a chat request together with added and removed line counts before a checkpoint is restored.",
+      "evidence_class": "supported_claim",
+      "source_urls": [
+        "https://git-scm.com/docs/git-restore",
+        "https://code.visualstudio.com/docs/chat/chat-checkpoints"
+      ],
+      "confidence": 0.97,
+      "notes": "A preview should describe the exact write set and diff; a timestamp or opaque checkpoint label is not sufficient for a high-impact revert."
+    },
+    {
+      "finding_id": "F-005",
+      "claim": "Atomic multi-file apply requires an all-or-nothing contract and no partially visible result. RFC 5789 requires an entire PATCH to apply atomically and forbids applying any changes when it cannot be fully applied; SQLite journals preimages, flushes them before changing the database, flushes changed data, and treats journal removal as the commit point so recovery can roll back an interrupted write.",
+      "evidence_class": "supported_claim",
+      "source_urls": [
+        "https://www.rfc-editor.org/rfc/rfc5789.html",
+        "https://sqlite.org/atomiccommit.html"
+      ],
+      "confidence": 0.98,
+      "notes": "For a file-revert operation, the analogue is a staged write set plus a durable preimage or commit marker, not a loop of independent writes reported as one success."
+    },
+    {
+      "finding_id": "F-006",
+      "claim": "Stale-base writes should fail closed. RFC 5789 recommends a conditional request with a strong ETag when a patch depends on a known base, and RFC 9110 requires If-Match to be evaluated before the mutation and disallows applying the method when the condition is false; SQLite also checks a modification counter before reusing cached state after a lock is released.",
+      "evidence_class": "supported_claim",
+      "source_urls": [
+        "https://www.rfc-editor.org/rfc/rfc5789.html",
+        "https://www.rfc-editor.org/rfc/rfc9110.html",
+        "https://sqlite.org/atomiccommit.html"
+      ],
+      "confidence": 0.98,
+      "notes": "A content digest or generation is the local equivalent of the strong validator; a timestamp alone is weaker and should not authorize destructive overwrite."
+    },
+    {
+      "finding_id": "F-007",
+      "claim": "Agent checkpoints commonly capture only a bounded subset of workspace effects. Claude Code documents tracking file edits made by its file-editing tools while excluding Bash and normally external concurrent edits; Gemini CLI documents restoring project files to the state before a tool; VS Code checkpoints snapshot affected files before each chat request.",
+      "evidence_class": "supported_claim",
+      "source_urls": [
+        "https://code.claude.com/docs/en/checkpointing",
+        "https://github.com/google-gemini/gemini-cli/blob/main/docs/reference/commands.md",
+        "https://code.visualstudio.com/docs/chat/chat-checkpoints"
+      ],
+      "confidence": 0.96,
+      "notes": "A checkpoint label must state which writers and state channels were captured; it cannot imply complete rollback of commands, generated artifacts, or outside edits unless those are explicitly included."
+    },
+    {
+      "finding_id": "F-008",
+      "claim": "Atomic filesystem replacement is only one boundary primitive. POSIX requires rename to be atomic, while SQLite still needs locking, journaling, flushing, and recovery to make a multi-step transaction crash-safe; rename alone cannot make a multi-file revert transactional.",
+      "evidence_class": "inference",
+      "source_urls": [
+        "https://pubs.opengroup.org/onlinepubs/9799919799/functions/rename.html",
+        "https://sqlite.org/atomiccommit.html"
+      ],
+      "confidence": 0.95,
+      "notes": "Inference from the filesystem and transaction documents: use atomic rename for each prepared replacement, but add a manifest or journal for the operation as a whole."
+    }
+  ],
+  "competitor_standard_patterns": [
+    {
+      "pattern_id": "P-001",
+      "pattern": "Git exposes source identity, pathspec scope, and independent working-tree/index destinations, with optional patch selection.",
+      "evidence_class": "supported_claim",
+      "source_urls": [
+        "https://git-scm.com/docs/git-restore"
+      ],
+      "implication": "Adopt an explicit scope and destination contract for file-level recovery; do not use an unqualified revert command whose target is inferred from UI position."
+    },
+    {
+      "pattern_id": "P-002",
+      "pattern": "Git separates commit-level inverse history from path-level content restore and exposes continue, skip, quit, and abort states for interrupted sequences.",
+      "evidence_class": "supported_claim",
+      "source_urls": [
+        "https://git-scm.com/docs/git-revert"
+      ],
+      "implication": "Model recovery as a typed operation with explicit lifecycle and abort behavior rather than treating all undo actions as one rewind primitive."
+    },
+    {
+      "pattern_id": "P-003",
+      "pattern": "VS Code chat checkpoints snapshot affected files before each request, expose file-change counts, and distinguish restoring a checkpoint from editing a previous request.",
+      "evidence_class": "supported_claim",
+      "source_urls": [
+        "https://code.visualstudio.com/docs/chat/chat-checkpoints"
+      ],
+      "implication": "Adopt per-request write-set previews and keep content rollback separate from conversation editing or replay."
+    },
+    {
+      "pattern_id": "P-004",
+      "pattern": "Claude Code presents separate restore-code, restore-conversation, and restore-both actions, while documenting that Bash and external edits are outside normal checkpoint capture and that checkpoints expire.",
+      "evidence_class": "supported_claim",
+      "source_urls": [
+        "https://code.claude.com/docs/en/checkpointing"
+      ],
+      "implication": "Adopt explicit state-channel selection and disclose incomplete capture and retention limits at the point of recovery."
+    },
+    {
+      "pattern_id": "P-005",
+      "pattern": "Gemini CLI separates project-scoped chat save/resume from /restore, which restores project files to the state before a tool execution when checkpointing is enabled.",
+      "evidence_class": "supported_claim",
+      "source_urls": [
+        "https://github.com/google-gemini/gemini-cli/blob/main/docs/reference/commands.md"
+      ],
+      "implication": "Keep conversation checkpoint identity and file snapshot identity distinct even when both are exposed in one recovery menu."
+    },
+    {
+      "pattern_id": "P-006",
+      "pattern": "SQLite uses rollback journals for preimages and a WAL mode that lets readers continue from the original database while changes are committed to a log; multi-file transactions use a super-journal to coordinate atomicity.",
+      "evidence_class": "supported_claim",
+      "source_urls": [
+        "https://sqlite.org/atomiccommit.html",
+        "https://www.sqlite.org/wal.html"
+      ],
+      "implication": "Adopt a journal or manifest pattern for recovery metadata and define the commit point independently of individual file-copy completion."
+    }
+  ],
+  "failure_modes": [
+    {
+      "failure_id": "FM-001",
+      "failure_mode": "Concurrent edits or a stale base cause a revert to overwrite newer work.",
+      "evidence_class": "supported_claim",
+      "source_urls": [
+        "https://www.rfc-editor.org/rfc/rfc5789.html",
+        "https://www.rfc-editor.org/rfc/rfc9110.html"
+      ],
+      "mitigation_or_gap": "Bind every destructive apply to an expected current per-file digest or workspace generation; evaluate it immediately before mutation and return a stale/conflict result without writing when it does not match."
+    },
+    {
+      "failure_id": "FM-002",
+      "failure_mode": "A crash or power loss occurs after some bytes or files have been written but before the operation finishes.",
+      "evidence_class": "supported_claim",
+      "source_urls": [
+        "https://sqlite.org/atomiccommit.html",
+        "https://pubs.opengroup.org/onlinepubs/9799919799/functions/rename.html"
+      ],
+      "mitigation_or_gap": "Prepare a complete preimage or journal, flush recovery metadata before mutation, use temporary replacements and atomic rename at the file boundary, and recover from an explicit incomplete marker."
+    },
+    {
+      "failure_id": "FM-003",
+      "failure_mode": "A multi-file revert commits only a prefix of its intended write set, leaving a semantically inconsistent workspace.",
+      "evidence_class": "supported_claim",
+      "source_urls": [
+        "https://www.rfc-editor.org/rfc/rfc5789.html",
+        "https://sqlite.org/atomiccommit.html"
+      ],
+      "mitigation_or_gap": "Use a manifest with expected member count and hashes, a prepared state, one durable commit point, and rollback or recovery for every directly affected file; never report success per file as operation success."
+    },
+    {
+      "failure_id": "FM-004",
+      "failure_mode": "The checkpoint omits edits made by shell commands, another process, or a different session, so the user believes the workspace was fully restored when it was not.",
+      "evidence_class": "supported_claim",
+      "source_urls": [
+        "https://code.claude.com/docs/en/checkpointing",
+        "https://github.com/google-gemini/gemini-cli/blob/main/docs/reference/commands.md",
+        "https://code.visualstudio.com/docs/chat/chat-checkpoints"
+      ],
+      "mitigation_or_gap": "Record capture authority and observed writers; inventory the full write set before apply, mark uncaptured channels as unsupported, and require a fresh diff after recovery."
+    },
+    {
+      "failure_id": "FM-005",
+      "failure_mode": "A file-level action is accidentally interpreted as a turn-level or conversation rewind, deleting unrelated later edits or changing the model context.",
+      "evidence_class": "supported_claim",
+      "source_urls": [
+        "https://git-scm.com/docs/git-restore",
+        "https://git-scm.com/docs/git-revert",
+        "https://code.visualstudio.com/docs/chat/chat-checkpoints",
+        "https://code.claude.com/docs/en/checkpointing"
+      ],
+      "mitigation_or_gap": "Make scope kind and state channels mandatory, show them in preview and confirmation, and reject scope widening unless the user explicitly selects it."
+    },
+    {
+      "failure_id": "FM-006",
+      "failure_mode": "The target file is already unmerged, has changed path/type, or contains a conflict that a blind restore would destroy.",
+      "evidence_class": "supported_claim",
+      "source_urls": [
+        "https://git-scm.com/docs/git-restore"
+      ],
+      "mitigation_or_gap": "Detect unmerged and path/type drift before apply; default to a conflict result that preserves the current file, with explicit merge or overwrite modes and a rendered diff."
+    },
+    {
+      "failure_id": "FM-007",
+      "failure_mode": "The requested snapshot has expired, been pruned, or is no longer reachable, so recovery silently targets the wrong or incomplete state.",
+      "evidence_class": "supported_claim",
+      "source_urls": [
+        "https://git-scm.com/docs/git-reflog",
+        "https://code.claude.com/docs/en/checkpointing"
+      ],
+      "mitigation_or_gap": "Validate snapshot existence and content hashes before preview, expose retention and garbage-collection status, and fail with an unavailable-snapshot result instead of substituting a nearby state."
+    },
+    {
+      "failure_id": "FM-008",
+      "failure_mode": "A rename, deletion, submodule, symlink, or directory replacement changes identity even when a path string appears unchanged.",
+      "evidence_class": "inference",
+      "source_urls": [
+        "https://git-scm.com/docs/git-restore",
+        "https://pubs.opengroup.org/onlinepubs/9799919799/functions/rename.html"
+      ],
+      "mitigation_or_gap": "Bind a snapshot entry to path, object/content digest, file kind, and relevant repository metadata; treat identity drift as a conflict and include rename/delete effects in the write-set preview."
+    }
+  ],
+  "implications": [
+    {
+      "implication_id": "IMP-001",
+      "implication": "Adopt an explicit RevertRequest contract with operation_id, scope_kind (file_set, turn, or conversation), workspace_id, base_snapshot, target_snapshot, expected_current, paths, preview_digest, reason, and actor.",
+      "evidence_class": "inference",
+      "source_urls": [
+        "https://git-scm.com/docs/git-restore",
+        "https://code.visualstudio.com/docs/chat/chat-checkpoints",
+        "https://code.claude.com/docs/en/checkpointing",
+        "https://www.rfc-editor.org/rfc/rfc9110.html"
+      ],
+      "rationale": "The reviewed systems make source, path, conversation, and current-state identity explicit in different ways; a single typed contract prevents an ambiguous rewind command from choosing scope implicitly."
+    },
+    {
+      "implication_id": "IMP-002",
+      "implication": "Use a two-phase recovery lifecycle: preview, validate scope and current hashes, prepare the complete write set, atomically commit, verify post-state, and emit a receipt; any failed validation or commit must leave a recoverable pre-state.",
+      "evidence_class": "inference",
+      "source_urls": [
+        "https://sqlite.org/atomiccommit.html",
+        "https://www.rfc-editor.org/rfc/rfc5789.html",
+        "https://pubs.opengroup.org/onlinepubs/9799919799/functions/rename.html"
+      ],
+      "rationale": "SQLite and PATCH provide the all-or-nothing and recovery model, while POSIX rename supplies a useful per-file promotion primitive; the combination implies a manifest/journal around the whole write set."
+    },
+    {
+      "implication_id": "IMP-003",
+      "implication": "File-level recovery should preserve the conversation and touch only the named paths by default; turn-level recovery may alter prompt history and its associated file set, but it must not be silently substituted for a file revert.",
+      "evidence_class": "inference",
+      "source_urls": [
+        "https://git-scm.com/docs/git-restore",
+        "https://code.visualstudio.com/docs/chat/chat-checkpoints",
+        "https://code.claude.com/docs/en/checkpointing"
+      ],
+      "rationale": "Git pathspec scope and the separate code/conversation actions in VS Code and Claude Code show that users need independent control over disk state and conversational state."
+    },
+    {
+      "implication_id": "IMP-004",
+      "implication": "Require optimistic concurrency checks using per-file content digests plus a workspace or transaction generation, and fail closed on mismatch rather than applying last-writer-wins restoration.",
+      "evidence_class": "inference",
+      "source_urls": [
+        "https://www.rfc-editor.org/rfc/rfc5789.html",
+        "https://www.rfc-editor.org/rfc/rfc9110.html",
+        "https://sqlite.org/atomiccommit.html"
+      ],
+      "rationale": "Strong validators, conditional patching, and SQLite's modification-counter check all encode the same stale-base rule: validate the observed state immediately before mutation."
+    },
+    {
+      "implication_id": "IMP-005",
+      "implication": "Maintain an append-only recovery audit record containing operation identity, actor, scope, source and target snapshot IDs, before/after hashes, changed paths, preview digest, validation results, conflict details, commit point, and final status.",
+      "evidence_class": "inference",
+      "source_urls": [
+        "https://git-scm.com/docs/git-reflog",
+        "https://code.visualstudio.com/docs/chat/chat-checkpoints",
+        "https://code.claude.com/docs/en/checkpointing"
+      ],
+      "rationale": "Git reflogs demonstrate transition history, while checkpoint UIs expose request and file-change context; combining identity, write set, and outcome makes recovery auditable rather than merely reversible."
+    },
+    {
+      "implication_id": "IMP-006",
+      "implication": "Represent snapshot membership and capture authority explicitly. A checkpoint must identify whether it covers direct file edits, shell effects, generated artifacts, repository metadata, external writers, and conversation state, rather than implying complete workspace recovery.",
+      "evidence_class": "inference",
+      "source_urls": [
+        "https://code.claude.com/docs/en/checkpointing",
+        "https://github.com/google-gemini/gemini-cli/blob/main/docs/reference/commands.md",
+        "https://code.visualstudio.com/docs/chat/chat-checkpoints"
+      ],
+      "rationale": "The agent systems document different capture boundaries and exclusions; PM should turn those boundaries into machine-readable coverage, not hidden behavior."
+    },
+    {
+      "implication_id": "IMP-007",
+      "implication": "Separate durable repository and governance history from ephemeral UI or agent checkpoints, and make retention, expiry, and garbage-collection behavior visible before a user relies on a snapshot.",
+      "evidence_class": "inference",
+      "source_urls": [
+        "https://git-scm.com/docs/git-reflog",
+        "https://git-scm.com/docs/git-revert",
+        "https://code.claude.com/docs/en/checkpointing"
+      ],
+      "rationale": "Git documents reflog expiration and Claude documents checkpoint cleanup; neither should be presented as an indefinite substitute for permanent version history."
+    },
+    {
+      "implication_id": "IMP-008",
+      "implication": "Reject an implicit rollback-last-turn operation as the file-level recovery contract. Require explicit user confirmation when the requested scope expands from selected files to a workspace, turn, or conversation, or when a commit-level inverse is requested instead of content restoration.",
+      "evidence_class": "inference",
+      "source_urls": [
+        "https://git-scm.com/docs/git-revert",
+        "https://code.visualstudio.com/docs/chat/chat-checkpoints",
+        "https://code.claude.com/docs/en/checkpointing"
+      ],
+      "rationale": "The reviewed products expose separate commands or actions for these scopes; silent scope expansion would violate the identity and preview contracts established elsewhere in the evidence."
+    }
+  ],
+  "novel_ideas": [
+    {
+      "idea_id": "NI-001",
+      "idea": "Recovery capability matrix",
+      "evidence_class": "inference",
+      "source_urls": [
+        "https://git-scm.com/docs/git-restore",
+        "https://code.visualstudio.com/docs/chat/chat-checkpoints",
+        "https://code.claude.com/docs/en/checkpointing"
+      ],
+      "rationale": "Store each recovery artifact against two dimensions: scope (hunk, file, path set, workspace, turn, conversation) and state channel (disk, index, refs, generated outputs, external side effects, conversation). Permit execution only on channels the artifact actually captures."
+    },
+    {
+      "idea_id": "NI-002",
+      "idea": "Revert lease",
+      "evidence_class": "inference",
+      "source_urls": [
+        "https://www.rfc-editor.org/rfc/rfc5789.html",
+        "https://www.rfc-editor.org/rfc/rfc9110.html"
+      ],
+      "rationale": "Issue a short-lived conditional operation ticket containing the expected current digest or generation, target snapshot, scope, and nonce. On mismatch or expiry, transition the ticket to stale without modifying the file, making races explicit and retry-safe."
+    },
+    {
+      "idea_id": "NI-003",
+      "idea": "Shadow preimage manifest",
+      "evidence_class": "inference",
+      "source_urls": [
+        "https://sqlite.org/atomiccommit.html",
+        "https://pubs.opengroup.org/onlinepubs/9799919799/functions/rename.html"
+      ],
+      "rationale": "Before mutation, create a manifest of every intended member and its preimage digest, stage replacements in a private location, verify the manifest, then promote replacements and publish one commit marker. A directory or multi-file operation can recover from the marker just as SQLite recovers from journals and a super-journal."
+    },
+    {
+      "idea_id": "NI-004",
+      "idea": "Post-recovery proof receipt",
+      "evidence_class": "inference",
+      "source_urls": [
+        "https://sqlite.org/atomiccommit.html",
+        "https://code.visualstudio.com/docs/chat/chat-checkpoints",
+        "https://code.claude.com/docs/en/checkpointing"
+      ],
+      "rationale": "Emit a proof-oriented record with before/after hashes, observed touched paths, capture coverage, validation results, commit-marker state, and a terminal status such as committed, aborted, recovered, or partial-unsupported. This prevents a UI success message from outrunning filesystem evidence."
+    }
+  ],
+  "unresolved_questions": [
+    {
+      "question_id": "UQ-001",
+      "question": "What exact Puppet Master UI, storage format, retention policy, and transaction boundary should govern file-level and turn-level recovery?",
+      "evidence_class": "no_evidence",
+      "source_urls": []
+    }
+  ],
+  "self_attestation": {
+    "current_web_research_performed": true,
+    "official_or_primary_sources_first": true,
+    "direct_urls_only": true,
+    "source_count_contract_checked": true,
+    "supported_inference_no_evidence_labels_present": true,
+    "no_fabricated_claims": true,
+    "no_long_quotations": true,
+    "topic_and_refs_binding_verified": true,
+    "exact_attempt_id_verified": true,
+    "fresh_direct_terminal_contract_acknowledged": true,
+    "fresh_current_public_web_research_redone": true,
+    "canonical_agent_path_is_only_leaf_known_identity": true,
+    "native_identity_deferred_to_controller_receipt_and_capture": true,
+    "prior_attempt_result_bodies_and_peer_outputs_not_read": true,
+    "leaf_local_schema_conformance_check_passed_before_final_write": true,
+    "exact_schema_key_set_verified": true,
+    "source_registry_unique_and_complete": true,
+    "source_registry_completed_before_claim_emission": true,
+    "activation_core_and_authorization_verified": true,
+    "blocked_prelaunch_intent_treated_as_lineage_only": true,
+    "result_required_before_pmr1": true,
+    "pmr1_not_returned_before_result_write": true
+  }
+}

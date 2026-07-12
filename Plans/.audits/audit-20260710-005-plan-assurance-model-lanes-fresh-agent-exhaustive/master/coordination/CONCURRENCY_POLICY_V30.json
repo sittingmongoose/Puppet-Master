@@ -1,0 +1,80 @@
+{
+  "audit_id": "audit-20260710-005-plan-assurance-model-lanes-fresh-agent-exhaustive",
+  "schema_version": "audit-concurrency-policy-v30",
+  "status": "LUNA_CONTROLLER_FAIL_CLOSED_AND_RESET_CONTINUITY",
+  "effective_date": "2026-07-12",
+  "supersedes_prospectively": "master/coordination/CONCURRENCY_POLICY_V29.json",
+  "prior_policies_mutated": false,
+  "user_authority": {
+    "user_away": true,
+    "future_snapshot_required": false,
+    "bias": "prefer_aggressive_use_over_unused_quota",
+    "model_aware_usage_requested": true,
+    "reset_pause_authorized": false
+  },
+  "active_semantic_transactions_at_observation": {
+    "scenario_cohort_0002": {
+      "model": "gpt-5.6-sol",
+      "reasoning_effort": "ultra",
+      "assignment_count": 8,
+      "atomic_transaction_count": 1
+    },
+    "universal_shadow_certification": {
+      "model": "gpt-5.6-sol",
+      "reasoning_effort": "ultra",
+      "assignment_count": 16,
+      "atomic_transaction_count": 2
+    },
+    "total_created_semantic_identities": 24,
+    "duplicate_or_restart_count": 0,
+    "candidate_credit": 0
+  },
+  "luna_controller_failure": {
+    "failed_controller_thread_id": "019f5078-6501-7223-b52f-2251010bdc41",
+    "failed_direct_fork_thread_id": "019f5530-c0eb-7993-aa0d-915fe7bfd0dc",
+    "failed_healthy_root_fork_thread_id": "019f5531-2f7e-7d23-9c8f-40e3b0395635",
+    "failure_signature": "systemError with sub-two-second zero-agent-output turn",
+    "in_place_recovery_attempts": 1,
+    "fork_recovery_attempts": 2,
+    "reviewer_or_report_created": false,
+    "luna_requirement_waived": false,
+    "sol_substitution_for_luna_forbidden": true,
+    "post_reset_action": "recover one explicit gpt-5.6-luna max controller before independent postruns"
+  },
+  "final_live_head_delta_fail_closed": {
+    "preparation_script": "master/final_live_head_delta/final-live-head-delta-0001/prepare_final_live_head_delta_0001.py",
+    "script_expected_source_scope_raw_sha256": "25027060861687c5a8e45024844d9de9e6c0a38f68a9470f2a84cb1774b86015",
+    "live_frozen_source_scope": "master/macro/frozen/epoch-0016/manifests/source_scope.jsonl",
+    "live_frozen_source_scope_raw_sha256": "963911b952c3909c9012ed25a35151719b4f3f18b173cc6fffc8bbc1036e4e46",
+    "live_frozen_source_scope_row_count": 135,
+    "activation_count": 0,
+    "preparation_artifact_count": 0,
+    "credit": 0,
+    "pin_patch_authorized": false,
+    "required_next_action": "independently localize and append-only bind the exact stable source-scope bytes"
+  },
+  "reset_continuity": {
+    "estimated_reset_utc": "2026-07-12T07:23:34Z",
+    "pre_reset_new_semantic_launches": 0,
+    "do_not_interrupt_valid_inflight_work": true,
+    "post_reset_semantic_cap": 32,
+    "post_reset_atomic_transaction_cap": 8,
+    "post_reset_maximum_atomic_transactions": 4,
+    "post_reset_pause": false,
+    "first_actions": [
+      "recompute exact terminal result and receipt counts",
+      "preserve every existing identity and result",
+      "recover one explicit Luna max controller",
+      "complete primary and independent postruns",
+      "resume final live-head delta preparation only after exact source-scope binding"
+    ]
+  },
+  "quality_invariants": {
+    "candidate_credit_before_independent_postrun": 0,
+    "no_duplicate_or_restart_of_terminal_work": true,
+    "canonical_plan_writes_authorized": false,
+    "lineage_or_result_mutation_authorized": false,
+    "external_research_requirement_reduced": false,
+    "semantic_scope_reduced": false
+  }
+}

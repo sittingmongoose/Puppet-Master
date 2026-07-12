@@ -1,0 +1,608 @@
+{
+  "assignment_id": "A005M15-000222-INTEGRATED-MACRO15-3294B58F2A3F-0001",
+  "attempt_id": "attempt-0015",
+  "audit_id": "audit-20260710-005-plan-assurance-model-lanes-fresh-agent-exhaustive",
+  "coverage": {
+    "all_micro_windows_reviewed": true,
+    "all_source_lines_reviewed": true,
+    "all_source_units_accounted": true,
+    "both_exact_and_adversarial_lenses_applied": true,
+    "dimensions_checked": [
+      "behavior",
+      "capabilities",
+      "inputs_outputs",
+      "contracts",
+      "states_transitions",
+      "authority",
+      "ownership",
+      "consumers",
+      "gui_truth",
+      "failures_recovery",
+      "security_privacy",
+      "propagation",
+      "operations",
+      "scale_performance",
+      "compatibility_migration",
+      "acceptance_oracles",
+      "builder_discretion",
+      "ambiguity_unknowns",
+      "missing_callers_consumers",
+      "invalid_states_transitions",
+      "concurrency_races",
+      "partial_failure",
+      "recovery_rollback",
+      "authority_boundaries",
+      "privacy_data_lifecycle",
+      "untrusted_inputs",
+      "gui_misleading_states",
+      "offline_network_loss",
+      "scale_limits",
+      "accessibility",
+      "localization",
+      "observability_support",
+      "destructive_actions",
+      "cross_document_seams",
+      "test_falsifiability",
+      "unknown_unknowns"
+    ]
+  },
+  "items": [
+    {
+      "builder_discretion": false,
+      "confidence": 1.0,
+      "dimensions": [
+        "behavior",
+        "capabilities",
+        "contracts",
+        "compatibility_migration"
+      ],
+      "evidence": [
+        {
+          "exact_quote": "  \"$schema\": \"https://json-schema.org/draft/2020-12/schema\",",
+          "line_end": 2,
+          "line_start": 2,
+          "path": "Plans/test_strategy.schema.json",
+          "source_sha256": "fdafdd03f5686668adacb2aac67a17920671525f9b96939d9b01fdc2475c91fb"
+        },
+        {
+          "exact_quote": "  \"$id\": \"pm.test_strategy.schema.v1\",",
+          "line_end": 3,
+          "line_start": 3,
+          "path": "Plans/test_strategy.schema.json",
+          "source_sha256": "fdafdd03f5686668adacb2aac67a17920671525f9b96939d9b01fdc2475c91fb"
+        },
+        {
+          "exact_quote": "  \"title\": \"Puppet Master Test Strategy (Interview Output)\",",
+          "line_end": 4,
+          "line_start": 4,
+          "path": "Plans/test_strategy.schema.json",
+          "source_sha256": "fdafdd03f5686668adacb2aac67a17920671525f9b96939d9b01fdc2475c91fb"
+        },
+        {
+          "exact_quote": "  \"type\": \"object\",",
+          "line_end": 5,
+          "line_start": 5,
+          "path": "Plans/test_strategy.schema.json",
+          "source_sha256": "fdafdd03f5686668adacb2aac67a17920671525f9b96939d9b01fdc2475c91fb"
+        }
+      ],
+      "gap_kind": "none",
+      "impact": "The artifact has an explicit versioned identity and a deterministic root JSON type for validator and consumer selection.",
+      "item_id": "A005M15-I001",
+      "item_type": "contract",
+      "severity": "info",
+      "source_unit_refs": [
+        "SEMANTIC:JSON_PREFIX:Plans/test_strategy.schema.json",
+        "SEMANTIC:JSON_FIELD:Plans/test_strategy.schema.json:$schema",
+        "SEMANTIC:JSON_FIELD:Plans/test_strategy.schema.json:$id",
+        "SEMANTIC:JSON_FIELD:Plans/test_strategy.schema.json:title",
+        "SEMANTIC:JSON_FIELD:Plans/test_strategy.schema.json:type",
+        "STRUCTURAL:$",
+        "STRUCTURAL:$.$id",
+        "STRUCTURAL:$.$schema",
+        "STRUCTURAL:$.title",
+        "STRUCTURAL:$.type"
+      ],
+      "statement": "The document declares a Draft 2020-12 object schema with the stable identifier pm.test_strategy.schema.v1 and scopes the artifact as a Puppet Master Test Strategy interview output.",
+      "title": "Versioned test-strategy object contract"
+    },
+    {
+      "builder_discretion": false,
+      "confidence": 1.0,
+      "dimensions": [
+        "inputs_outputs",
+        "contracts",
+        "compatibility_migration",
+        "acceptance_oracles"
+      ],
+      "evidence": [
+        {
+          "exact_quote": "  \"additionalProperties\": false,",
+          "line_end": 6,
+          "line_start": 6,
+          "path": "Plans/test_strategy.schema.json",
+          "source_sha256": "fdafdd03f5686668adacb2aac67a17920671525f9b96939d9b01fdc2475c91fb"
+        },
+        {
+          "exact_quote": "  \"required\": [\"schema_id\", \"project\", \"generatedAt\", \"coverageLevel\", \"items\"],",
+          "line_end": 7,
+          "line_start": 7,
+          "path": "Plans/test_strategy.schema.json",
+          "source_sha256": "fdafdd03f5686668adacb2aac67a17920671525f9b96939d9b01fdc2475c91fb"
+        }
+      ],
+      "gap_kind": "none",
+      "impact": "Producers cannot omit the artifact identity, project, timestamp, declared coverage, or test items, and unknown root fields are rejected.",
+      "item_id": "A005M15-I002",
+      "item_type": "contract",
+      "severity": "info",
+      "source_unit_refs": [
+        "SEMANTIC:JSON_FIELD:Plans/test_strategy.schema.json:additionalProperties",
+        "SEMANTIC:JSON_FIELD:Plans/test_strategy.schema.json:required",
+        "SEMANTIC:JSON_FIELD:Plans/test_strategy.schema.json:properties",
+        "STRUCTURAL:$.additionalProperties",
+        "STRUCTURAL:$.properties",
+        "STRUCTURAL:$.required"
+      ],
+      "statement": "The root is closed to unlisted properties and requires schema_id, project, generatedAt, coverageLevel, and items.",
+      "title": "Closed root with mandatory strategy fields"
+    },
+    {
+      "builder_discretion": false,
+      "confidence": 1.0,
+      "dimensions": [
+        "behavior",
+        "inputs_outputs",
+        "contracts",
+        "acceptance_oracles"
+      ],
+      "evidence": [
+        {
+          "exact_quote": "      \"minItems\": 1,",
+          "line_end": 30,
+          "line_start": 30,
+          "path": "Plans/test_strategy.schema.json",
+          "source_sha256": "fdafdd03f5686668adacb2aac67a17920671525f9b96939d9b01fdc2475c91fb"
+        },
+        {
+          "exact_quote": "        \"additionalProperties\": false,",
+          "line_end": 33,
+          "line_start": 33,
+          "path": "Plans/test_strategy.schema.json",
+          "source_sha256": "fdafdd03f5686668adacb2aac67a17920671525f9b96939d9b01fdc2475c91fb"
+        },
+        {
+          "exact_quote": "        \"required\": [\n          \"id\",\n          \"sourcePhaseId\",\n          \"criterion\",\n          \"testType\",\n          \"testFile\",\n          \"testName\",\n          \"verificationCommand\"\n        ],",
+          "line_end": 42,
+          "line_start": 34,
+          "path": "Plans/test_strategy.schema.json",
+          "source_sha256": "fdafdd03f5686668adacb2aac67a17920671525f9b96939d9b01fdc2475c91fb"
+        }
+      ],
+      "gap_kind": "none",
+      "impact": "Every conforming strategy has at least one closed test item with a traceable phase, criterion, test locator, and verification command.",
+      "item_id": "A005M15-I003",
+      "item_type": "acceptance_oracle",
+      "severity": "info",
+      "source_unit_refs": [
+        "SEMANTIC:JSON_FIELD:Plans/test_strategy.schema.json:properties",
+        "STRUCTURAL:$.properties"
+      ],
+      "statement": "The items array must be nonempty, each item rejects unlisted fields, and seven core test-definition fields are mandatory.",
+      "title": "Nonempty closed test-item records"
+    },
+    {
+      "builder_discretion": false,
+      "confidence": 1.0,
+      "dimensions": [
+        "behavior",
+        "inputs_outputs",
+        "contracts"
+      ],
+      "evidence": [
+        {
+          "exact_quote": "      \"enum\": [\"Basic\", \"Standard\", \"Comprehensive\"]",
+          "line_end": 26,
+          "line_start": 26,
+          "path": "Plans/test_strategy.schema.json",
+          "source_sha256": "fdafdd03f5686668adacb2aac67a17920671525f9b96939d9b01fdc2475c91fb"
+        }
+      ],
+      "gap_kind": "none",
+      "impact": "Coverage labels are lexically interoperable across producers and consumers.",
+      "item_id": "A005M15-I004",
+      "item_type": "behavior",
+      "severity": "info",
+      "source_unit_refs": [
+        "SEMANTIC:JSON_FIELD:Plans/test_strategy.schema.json:properties",
+        "STRUCTURAL:$.properties"
+      ],
+      "statement": "coverageLevel accepts exactly Basic, Standard, or Comprehensive.",
+      "title": "Three-level coverage vocabulary"
+    },
+    {
+      "builder_discretion": false,
+      "confidence": 1.0,
+      "dimensions": [
+        "inputs_outputs",
+        "contracts",
+        "propagation",
+        "cross_document_seams"
+      ],
+      "evidence": [
+        {
+          "exact_quote": "  \"$defs\": {\n    \"ref\": {\n      \"type\": \"string\",\n      \"minLength\": 1\n    }\n  }",
+          "line_end": 76,
+          "line_start": 71,
+          "path": "Plans/test_strategy.schema.json",
+          "source_sha256": "fdafdd03f5686668adacb2aac67a17920671525f9b96939d9b01fdc2475c91fb"
+        },
+        {
+          "exact_quote": "}",
+          "line_end": 77,
+          "line_start": 77,
+          "path": "Plans/test_strategy.schema.json",
+          "source_sha256": "fdafdd03f5686668adacb2aac67a17920671525f9b96939d9b01fdc2475c91fb"
+        }
+      ],
+      "gap_kind": "none",
+      "impact": "All research, receipt, and capability reference arrays share one nonempty-string representation.",
+      "item_id": "A005M15-I005",
+      "item_type": "contract",
+      "severity": "info",
+      "source_unit_refs": [
+        "SEMANTIC:JSON_FIELD:Plans/test_strategy.schema.json:$defs",
+        "SEMANTIC:JSON_SUFFIX:Plans/test_strategy.schema.json",
+        "STRUCTURAL:$.$defs"
+      ],
+      "statement": "The schema centralizes reference values in $defs.ref as strings with minimum length one and closes the root document after that definition.",
+      "title": "Shared nonempty reference primitive"
+    },
+    {
+      "builder_discretion": true,
+      "confidence": 0.99,
+      "dimensions": [
+        "contracts",
+        "authority",
+        "failures_recovery",
+        "security_privacy",
+        "acceptance_oracles",
+        "builder_discretion",
+        "authority_boundaries",
+        "untrusted_inputs",
+        "destructive_actions",
+        "test_falsifiability"
+      ],
+      "evidence": [
+        {
+          "exact_quote": "          \"testFile\": {\"type\": \"string\", \"minLength\": 1},\n          \"testName\": {\"type\": \"string\", \"minLength\": 1},\n          \"verificationCommand\": {\"type\": \"string\", \"minLength\": 1},",
+          "line_end": 50,
+          "line_start": 48,
+          "path": "Plans/test_strategy.schema.json",
+          "source_sha256": "fdafdd03f5686668adacb2aac67a17920671525f9b96939d9b01fdc2475c91fb"
+        }
+      ],
+      "gap_kind": "unsafe_executable_and_path_strings",
+      "impact": "A consumer that executes verificationCommand or resolves testFile without an external trust policy can accept destructive commands, traversal-like paths, or otherwise nonportable locators while the payload remains schema-valid.",
+      "item_id": "A005M15-I006",
+      "item_type": "gap",
+      "severity": "high",
+      "source_unit_refs": [
+        "SEMANTIC:JSON_FIELD:Plans/test_strategy.schema.json:properties",
+        "STRUCTURAL:$.properties"
+      ],
+      "statement": "testFile, testName, and verificationCommand are constrained only as nonempty strings; the schema defines no command grammar, allowlist, execution authority, working directory, timeout, exit-code oracle, or path boundary.",
+      "title": "Executable command and file locator lack safety contract"
+    },
+    {
+      "builder_discretion": true,
+      "confidence": 0.99,
+      "dimensions": [
+        "behavior",
+        "contracts",
+        "consumers",
+        "acceptance_oracles",
+        "builder_discretion",
+        "ambiguity_unknowns",
+        "gui_misleading_states",
+        "test_falsifiability"
+      ],
+      "evidence": [
+        {
+          "exact_quote": "      \"enum\": [\"Basic\", \"Standard\", \"Comprehensive\"]",
+          "line_end": 26,
+          "line_start": 26,
+          "path": "Plans/test_strategy.schema.json",
+          "source_sha256": "fdafdd03f5686668adacb2aac67a17920671525f9b96939d9b01fdc2475c91fb"
+        },
+        {
+          "exact_quote": "      \"minItems\": 1,",
+          "line_end": 30,
+          "line_start": 30,
+          "path": "Plans/test_strategy.schema.json",
+          "source_sha256": "fdafdd03f5686668adacb2aac67a17920671525f9b96939d9b01fdc2475c91fb"
+        }
+      ],
+      "gap_kind": "coverage_label_without_normative_depth",
+      "impact": "A strategy containing one minimally valid item may claim Comprehensive coverage, so downstream status displays or gates cannot infer completeness from coverageLevel alone.",
+      "item_id": "A005M15-I007",
+      "item_type": "gap",
+      "severity": "high",
+      "source_unit_refs": [
+        "SEMANTIC:JSON_FIELD:Plans/test_strategy.schema.json:properties",
+        "STRUCTURAL:$.properties"
+      ],
+      "statement": "The three coverage labels are not coupled to conditional item counts, test categories, capability coverage, provenance, evidence, or other measurable completeness criteria.",
+      "title": "Comprehensive coverage is not structurally falsifiable"
+    },
+    {
+      "builder_discretion": true,
+      "confidence": 0.99,
+      "dimensions": [
+        "contracts",
+        "states_transitions",
+        "consumers",
+        "propagation",
+        "ambiguity_unknowns",
+        "invalid_states_transitions",
+        "partial_failure",
+        "cross_document_seams",
+        "test_falsifiability"
+      ],
+      "evidence": [
+        {
+          "exact_quote": "          \"id\": {\"type\": \"string\", \"minLength\": 1},\n          \"sourcePhaseId\": {\"type\": \"string\", \"minLength\": 1},",
+          "line_end": 45,
+          "line_start": 44,
+          "path": "Plans/test_strategy.schema.json",
+          "source_sha256": "fdafdd03f5686668adacb2aac67a17920671525f9b96939d9b01fdc2475c91fb"
+        }
+      ],
+      "gap_kind": "identity_and_phase_referential_integrity",
+      "impact": "Duplicate item identities and dangling or mistyped phase references remain valid, leaving consumers to resolve collisions and partial linkage inconsistently.",
+      "item_id": "A005M15-I008",
+      "item_type": "gap",
+      "severity": "medium",
+      "source_unit_refs": [
+        "SEMANTIC:JSON_FIELD:Plans/test_strategy.schema.json:properties",
+        "STRUCTURAL:$.properties"
+      ],
+      "statement": "id and sourcePhaseId are only nonempty strings; the items array has no uniqueItems constraint and the schema provides no identifier pattern or cross-artifact referential-integrity rule.",
+      "title": "Item and phase identities are not integrity-checked"
+    },
+    {
+      "builder_discretion": true,
+      "confidence": 0.99,
+      "dimensions": [
+        "inputs_outputs",
+        "contracts",
+        "consumers",
+        "security_privacy",
+        "acceptance_oracles",
+        "privacy_data_lifecycle",
+        "cross_document_seams",
+        "test_falsifiability"
+      ],
+      "evidence": [
+        {
+          "exact_quote": "    \"methodResearchRefs\": {\n      \"type\": \"array\",\n      \"items\": {\"$ref\": \"#/$defs/ref\"}",
+          "line_end": 14,
+          "line_start": 12,
+          "path": "Plans/test_strategy.schema.json",
+          "source_sha256": "fdafdd03f5686668adacb2aac67a17920671525f9b96939d9b01fdc2475c91fb"
+        },
+        {
+          "exact_quote": "          \"evidencePath\": {\"type\": \"string\"},",
+          "line_end": 53,
+          "line_start": 53,
+          "path": "Plans/test_strategy.schema.json",
+          "source_sha256": "fdafdd03f5686668adacb2aac67a17920671525f9b96939d9b01fdc2475c91fb"
+        }
+      ],
+      "gap_kind": "optional_unresolved_provenance_and_evidence",
+      "impact": "A valid artifact can omit research, installation, capability, and evidence linkage entirely; when supplied, empty or duplicate arrays and unresolvable strings can still pass schema validation.",
+      "item_id": "A005M15-I009",
+      "item_type": "gap",
+      "severity": "high",
+      "source_unit_refs": [
+        "SEMANTIC:JSON_FIELD:Plans/test_strategy.schema.json:properties",
+        "SEMANTIC:JSON_FIELD:Plans/test_strategy.schema.json:$defs",
+        "STRUCTURAL:$.properties",
+        "STRUCTURAL:$.$defs"
+      ],
+      "statement": "All three reference families and evidencePath are optional, reference arrays have no minimum size or uniqueness requirement, and $defs.ref guarantees only a nonempty string rather than an existing authorized target.",
+      "title": "Evidence and provenance closure are optional and unresolved"
+    },
+    {
+      "builder_discretion": true,
+      "confidence": 0.98,
+      "dimensions": [
+        "contracts",
+        "states_transitions",
+        "consumers",
+        "compatibility_migration",
+        "ambiguity_unknowns",
+        "invalid_states_transitions"
+      ],
+      "evidence": [
+        {
+          "exact_quote": "          \"exampleOnly\": {\"type\": \"boolean\"}",
+          "line_end": 66,
+          "line_start": 66,
+          "path": "Plans/test_strategy.schema.json",
+          "source_sha256": "fdafdd03f5686668adacb2aac67a17920671525f9b96939d9b01fdc2475c91fb"
+        }
+      ],
+      "gap_kind": "tri_state_example_semantics",
+      "impact": "Consumers may disagree whether an omitted flag means false, unknown, inherited, or legacy, which can accidentally promote illustrative tests into required strategy coverage.",
+      "item_id": "A005M15-I010",
+      "item_type": "gap",
+      "severity": "medium",
+      "source_unit_refs": [
+        "SEMANTIC:JSON_FIELD:Plans/test_strategy.schema.json:properties",
+        "STRUCTURAL:$.properties"
+      ],
+      "statement": "exampleOnly is optional and has no declared default or behavioral relationship to coverage, verification, or evidence, creating three representable states with only two named meanings.",
+      "title": "Optional exampleOnly flag has undefined absent state"
+    },
+    {
+      "builder_discretion": true,
+      "confidence": 0.94,
+      "dimensions": [
+        "inputs_outputs",
+        "contracts",
+        "operations",
+        "compatibility_migration",
+        "acceptance_oracles",
+        "cross_document_seams",
+        "test_falsifiability"
+      ],
+      "evidence": [
+        {
+          "exact_quote": "    \"generatedAt\": {\"type\": \"string\", \"format\": \"date-time\"},",
+          "line_end": 11,
+          "line_start": 11,
+          "path": "Plans/test_strategy.schema.json",
+          "source_sha256": "fdafdd03f5686668adacb2aac67a17920671525f9b96939d9b01fdc2475c91fb"
+        }
+      ],
+      "gap_kind": "validator_format_assertion_portability",
+      "impact": "Different Draft 2020-12 validator configurations may disagree on whether a malformed date-time is rejected, weakening portable acceptance behavior and timestamp ordering assumptions.",
+      "item_id": "A005M15-I011",
+      "item_type": "gap",
+      "severity": "medium",
+      "source_unit_refs": [
+        "SEMANTIC:JSON_FIELD:Plans/test_strategy.schema.json:properties",
+        "STRUCTURAL:$.properties"
+      ],
+      "statement": "generatedAt relies on the date-time format keyword, but the schema does not declare or otherwise enforce a consumer-wide format-assertion policy.",
+      "title": "Timestamp rejection semantics depend on validator configuration"
+    },
+    {
+      "builder_discretion": true,
+      "confidence": 0.99,
+      "dimensions": [
+        "inputs_outputs",
+        "operations",
+        "scale_performance",
+        "scale_limits",
+        "untrusted_inputs"
+      ],
+      "evidence": [
+        {
+          "exact_quote": "      \"type\": \"array\",\n      \"minItems\": 1,",
+          "line_end": 30,
+          "line_start": 29,
+          "path": "Plans/test_strategy.schema.json",
+          "source_sha256": "fdafdd03f5686668adacb2aac67a17920671525f9b96939d9b01fdc2475c91fb"
+        },
+        {
+          "exact_quote": "          \"id\": {\"type\": \"string\", \"minLength\": 1},",
+          "line_end": 44,
+          "line_start": 44,
+          "path": "Plans/test_strategy.schema.json",
+          "source_sha256": "fdafdd03f5686668adacb2aac67a17920671525f9b96939d9b01fdc2475c91fb"
+        }
+      ],
+      "gap_kind": "unbounded_payload_size",
+      "impact": "A schema-valid payload can contain arbitrarily many items and arbitrarily large strings, exposing parsers, renderers, storage, and downstream tooling to unbounded work or memory use.",
+      "item_id": "A005M15-I012",
+      "item_type": "gap",
+      "severity": "medium",
+      "source_unit_refs": [
+        "SEMANTIC:JSON_FIELD:Plans/test_strategy.schema.json:properties",
+        "STRUCTURAL:$.properties"
+      ],
+      "statement": "The schema sets minimum sizes but no maxItems, maxLength, or aggregate payload limit for test items, references, or free-text fields.",
+      "title": "Strategy payload has no scale bounds"
+    }
+  ],
+  "model": "gpt-5.6-sol",
+  "phase": "blind_macro_window_review",
+  "reasoning_effort": "xhigh",
+  "schema_version": "macro-review-result-v1",
+  "segments": [
+    {
+      "core_range": [
+        1,
+        77
+      ],
+      "covered_source_unit_refs": [
+        "SEMANTIC:JSON_PREFIX:Plans/test_strategy.schema.json",
+        "SEMANTIC:JSON_FIELD:Plans/test_strategy.schema.json:$schema",
+        "SEMANTIC:JSON_FIELD:Plans/test_strategy.schema.json:$id",
+        "SEMANTIC:JSON_FIELD:Plans/test_strategy.schema.json:title",
+        "SEMANTIC:JSON_FIELD:Plans/test_strategy.schema.json:type",
+        "SEMANTIC:JSON_FIELD:Plans/test_strategy.schema.json:additionalProperties",
+        "SEMANTIC:JSON_FIELD:Plans/test_strategy.schema.json:required",
+        "SEMANTIC:JSON_FIELD:Plans/test_strategy.schema.json:properties",
+        "SEMANTIC:JSON_FIELD:Plans/test_strategy.schema.json:$defs",
+        "SEMANTIC:JSON_SUFFIX:Plans/test_strategy.schema.json",
+        "STRUCTURAL:$",
+        "STRUCTURAL:$.$defs",
+        "STRUCTURAL:$.$id",
+        "STRUCTURAL:$.$schema",
+        "STRUCTURAL:$.additionalProperties",
+        "STRUCTURAL:$.properties",
+        "STRUCTURAL:$.required",
+        "STRUCTURAL:$.title",
+        "STRUCTURAL:$.type"
+      ],
+      "item_ids": [
+        "A005M15-I001",
+        "A005M15-I002",
+        "A005M15-I003",
+        "A005M15-I004",
+        "A005M15-I005",
+        "A005M15-I006",
+        "A005M15-I007",
+        "A005M15-I008",
+        "A005M15-I009",
+        "A005M15-I010",
+        "A005M15-I011",
+        "A005M15-I012"
+      ],
+      "reviewed": true,
+      "summary": "Reviewed all 77 core lines and all 19 assigned semantic and structural source units under exact and adversarial lenses. The schema strongly closes root and item shapes, but leaves coverage depth, command execution authority, identity and reference integrity, evidence closure, absent-state semantics, validator format behavior, and resource limits to consumers; it defines no GUI, accessibility, localization, offline, concurrency, rollback, or observability behavior in this window.",
+      "window_id": "WIN-3294B58F2A3F-0001"
+    }
+  ],
+  "self_attestation": {
+    "no_canonical_writes": true,
+    "no_external_research_during_blind_review": true,
+    "no_peer_result_access": true,
+    "no_prior_audit_access": true,
+    "no_unrelated_source_access": true,
+    "terminal_after_submission": true
+  },
+  "source_binding": {
+    "bundle_id": "MACRO15-3294B58F2A3F-0001",
+    "document_path": "Plans/test_strategy.schema.json",
+    "micro_window_ids": [
+      "WIN-3294B58F2A3F-0001"
+    ],
+    "source_sha256": "fdafdd03f5686668adacb2aac67a17920671525f9b96939d9b01fdc2475c91fb"
+  },
+  "status": "completed",
+  "synthesis": {
+    "cross_document_questions": [
+      "Which canonical consumer executes verificationCommand, and what allowlist, sandbox, working-directory, timeout, and exit-code contract constrains it?",
+      "Which canonical owner defines uniqueness and referential integrity for item id, sourcePhaseId, methodResearchRefs, installationReceiptRefs, and requiredCapabilityRefs?",
+      "Where are Basic, Standard, and Comprehensive translated into measurable coverage obligations that make the declared level falsifiable?",
+      "Is test_strategy.schema.json intentionally only a planning artifact, or must another canonical receipt prove execution outcome and bind evidencePath to immutable evidence?"
+    ],
+    "feature_family_keys": [
+      "test-strategy-interview-output",
+      "test-strategy-schema-contract",
+      "test-coverage-levels",
+      "test-verification-command",
+      "test-evidence-and-provenance"
+    ],
+    "research_queries": [
+      "JSON Schema Draft 2020-12 format annotation versus assertion portability for date-time",
+      "secure representation and sandboxed execution of machine-readable test verification commands",
+      "schema patterns for referential integrity and evidence provenance in test strategy artifacts"
+    ]
+  },
+  "task_thread_id": "/root/a005m15_b11_000222_attempt_0015_terminal"
+}

@@ -1,0 +1,537 @@
+{
+  "assignment_id": "A005M15-000103-INTEGRATED-MACRO15-673E34012C23-0001",
+  "attempt_id": "attempt-0015",
+  "audit_id": "audit-20260710-005-plan-assurance-model-lanes-fresh-agent-exhaustive",
+  "coverage": {
+    "all_micro_windows_reviewed": true,
+    "all_source_lines_reviewed": true,
+    "all_source_units_accounted": true,
+    "both_exact_and_adversarial_lenses_applied": true,
+    "dimensions_checked": [
+      "behavior",
+      "capabilities",
+      "inputs_outputs",
+      "contracts",
+      "states_transitions",
+      "authority",
+      "ownership",
+      "consumers",
+      "gui_truth",
+      "failures_recovery",
+      "security_privacy",
+      "propagation",
+      "operations",
+      "scale_performance",
+      "compatibility_migration",
+      "acceptance_oracles",
+      "builder_discretion",
+      "ambiguity_unknowns",
+      "missing_callers_consumers",
+      "invalid_states_transitions",
+      "concurrency_races",
+      "partial_failure",
+      "recovery_rollback",
+      "authority_boundaries",
+      "privacy_data_lifecycle",
+      "untrusted_inputs",
+      "gui_misleading_states",
+      "offline_network_loss",
+      "scale_limits",
+      "accessibility",
+      "localization",
+      "observability_support",
+      "destructive_actions",
+      "cross_document_seams",
+      "test_falsifiability",
+      "unknown_unknowns"
+    ]
+  },
+  "items": [
+    {
+      "builder_discretion": true,
+      "confidence": 0.94,
+      "dimensions": ["behavior", "inputs_outputs", "states_transitions", "gui_truth", "ambiguity_unknowns", "invalid_states_transitions", "test_falsifiability"],
+      "evidence": [
+        {
+          "exact_quote": "Acceptance criterion AC-08 requires UI/workflow state to normalize deterministically into the canonical runtime mode enum before strategy selection, and Interview, BrainStorm, and Crew must not create additional runtime mode values.",
+          "line_end": 919,
+          "line_start": 919,
+          "path": "Plans/Run_Modes.md",
+          "source_sha256": "8fbb20f19c293128bb9f79d8e14be0b565e02aeaf0ee804723207fd778e0eb8e"
+        }
+      ],
+      "gap_kind": "normalization_contract_underspecified",
+      "impact": "Implementations can deterministically choose different mappings for the same UI/workflow state, especially for unknown, stale, or combined workflow values, while still claiming compliance.",
+      "item_id": "M15-001",
+      "item_type": "gap",
+      "severity": "high",
+      "source_unit_refs": ["PLANUNIT:RM-033", "SEMANTIC:PLANUNIT:RM-033"],
+      "statement": "The criterion fixes ordering and prohibits enum growth, but it does not define the complete UI/workflow-to-runtime mapping, precedence for combined states, or rejection/fallback behavior for unmapped states.",
+      "title": "UI workflow normalization lacks a total mapping"
+    },
+    {
+      "builder_discretion": false,
+      "confidence": 0.99,
+      "dimensions": ["behavior", "contracts", "states_transitions", "failures_recovery", "authority_boundaries", "test_falsifiability"],
+      "evidence": [
+        {
+          "exact_quote": "Acceptance criteria AC-09 and AC-10 require regular mode with dae disallowed to fall back to HTE while persisting regular_dae_disallowed, and yolo with dae disallowed to fail before provider spawn with yolo_requires_dae_provider rather than silently downgrading.",
+          "line_end": 925,
+          "line_start": 925,
+          "path": "Plans/Run_Modes.md",
+          "source_sha256": "8fbb20f19c293128bb9f79d8e14be0b565e02aeaf0ee804723207fd778e0eb8e"
+        }
+      ],
+      "gap_kind": "none",
+      "impact": "The regular and yolo branches have distinct, observable, falsifiable outcomes and prevent a dangerous silent downgrade in yolo.",
+      "item_id": "M15-002",
+      "item_type": "explicit_non_gap",
+      "severity": "info",
+      "source_unit_refs": ["PLANUNIT:RM-034", "SEMANTIC:PLANUNIT:RM-034"],
+      "statement": "The DAE-disallowed policy is explicitly split by mode, persists the regular fallback reason, and requires yolo failure before provider spawn.",
+      "title": "DAE policy branches are explicit and testable"
+    },
+    {
+      "builder_discretion": true,
+      "confidence": 0.92,
+      "dimensions": ["behavior", "states_transitions", "failures_recovery", "scale_performance", "ambiguity_unknowns", "concurrency_races", "test_falsifiability"],
+      "evidence": [
+        {
+          "exact_quote": "Policy denials, FileSafe blocks, UI-only terminal actions, and different shell fingerprints MUST NOT increment the same streak.",
+          "line_end": 931,
+          "line_start": 931,
+          "path": "Plans/Run_Modes.md",
+          "source_sha256": "8fbb20f19c293128bb9f79d8e14be0b565e02aeaf0ee804723207fd778e0eb8e"
+        }
+      ],
+      "gap_kind": "counter_partition_and_atomicity_unspecified",
+      "impact": "Concurrent attempts or inconsistent fingerprint implementations can merge or split streaks differently, producing nondeterministic kill decisions.",
+      "item_id": "M15-003",
+      "item_type": "gap",
+      "severity": "high",
+      "source_unit_refs": ["PLANUNIT:RM-035", "SEMANTIC:PLANUNIT:RM-035"],
+      "statement": "The exclusion set is preserved, but the canonical fingerprint algorithm, counter partition key, atomic update rule, and boundary behavior for the sliding window are not defined here.",
+      "title": "Kill counters lack concurrency and partition semantics"
+    },
+    {
+      "builder_discretion": true,
+      "confidence": 0.93,
+      "dimensions": ["behavior", "states_transitions", "gui_truth", "failures_recovery", "concurrency_races", "gui_misleading_states", "test_falsifiability"],
+      "evidence": [
+        {
+          "exact_quote": "Acceptance criteria AC-14 and AC-15 preserve terminal identity behavior: Open in Terminal and Show Terminal reveal the existing terminal_session_id when available, explicit restart or replacement mints a new terminal_session_id, and clear-scrollback/reveal-only actions preserve current runtime identity.",
+          "line_end": 937,
+          "line_start": 937,
+          "path": "Plans/Run_Modes.md",
+          "source_sha256": "8fbb20f19c293128bb9f79d8e14be0b565e02aeaf0ee804723207fd778e0eb8e"
+        }
+      ],
+      "gap_kind": "terminal_identity_race_unspecified",
+      "impact": "Simultaneous reveal and restart/replacement requests can reveal a stale session, mint duplicate sessions, or attach the UI to an identity different from the active runtime.",
+      "item_id": "M15-004",
+      "item_type": "gap",
+      "severity": "medium",
+      "source_unit_refs": ["PLANUNIT:RM-036", "SEMANTIC:PLANUNIT:RM-036"],
+      "statement": "Identity preservation and minting are specified, but stale-session detection, serialization of competing actions, and the observable result when the referenced session disappears during reveal are not.",
+      "title": "Terminal reveal and replacement races are undefined"
+    },
+    {
+      "builder_discretion": false,
+      "confidence": 0.98,
+      "dimensions": ["contracts", "states_transitions", "failures_recovery", "propagation", "compatibility_migration", "acceptance_oracles"],
+      "evidence": [
+        {
+          "exact_quote": "Run modes do not replace shared failure_class or blocked_reason_code taxonomy; failover reason codes hard_exhaustion_failover, auth_failure_failover, workspace_deactivated_failover, model_unsupported_failover, and provider_unhealthy_failover remain stable in reason_codes or owning runtime/audit envelopes, and mode changes do not rewrite original failover reasons.",
+          "line_end": 943,
+          "line_start": 943,
+          "path": "Plans/Run_Modes.md",
+          "source_sha256": "8fbb20f19c293128bb9f79d8e14be0b565e02aeaf0ee804723207fd778e0eb8e"
+        }
+      ],
+      "gap_kind": "none",
+      "impact": "Failure provenance remains stable across mode changes and can be audited without conflating policy state with provider failover state.",
+      "item_id": "M15-005",
+      "item_type": "explicit_non_gap",
+      "severity": "info",
+      "source_unit_refs": ["PLANUNIT:RM-037", "SEMANTIC:PLANUNIT:RM-037"],
+      "statement": "The unit explicitly preserves the shared failure taxonomy and forbids mode changes from rewriting original failover reasons.",
+      "title": "Failover reason continuity is preserved"
+    },
+    {
+      "builder_discretion": false,
+      "confidence": 0.98,
+      "dimensions": ["behavior", "contracts", "states_transitions", "failures_recovery", "invalid_states_transitions", "partial_failure", "test_falsifiability"],
+      "evidence": [
+        {
+          "exact_quote": "Headless ask denial remains explicit and non-magical: when tool policy resolves to ask and no interactive approval path exists, headless_ask_denied is blocked/denied rather than auto-retry, and blocked outcomes do not count as qualifying writes or retryable provider errors.",
+          "line_end": 949,
+          "line_start": 949,
+          "path": "Plans/Run_Modes.md",
+          "source_sha256": "8fbb20f19c293128bb9f79d8e14be0b565e02aeaf0ee804723207fd778e0eb8e"
+        }
+      ],
+      "gap_kind": "none",
+      "impact": "Headless denial cannot inflate retry or write-thrash counters and cannot silently enter an automatic retry loop.",
+      "item_id": "M15-006",
+      "item_type": "explicit_non_gap",
+      "severity": "info",
+      "source_unit_refs": ["PLANUNIT:RM-038", "SEMANTIC:PLANUNIT:RM-038"],
+      "statement": "The headless ask path has an explicit blocked classification and explicit counter exclusions.",
+      "title": "Headless denial counter semantics are explicit"
+    },
+    {
+      "builder_discretion": true,
+      "confidence": 0.9,
+      "dimensions": ["behavior", "authority", "ownership", "failures_recovery", "recovery_rollback", "authority_boundaries", "ambiguity_unknowns", "test_falsifiability"],
+      "evidence": [
+        {
+          "exact_quote": "Runtime safe points are required only for mutation-capable attempts: ask/plan remain read-only and need no mutation safe points for ordinary planning or inspection, while regular/yolo create safe points before risky mutation-capable attempts; addendum acceptance preserves retry taxonomy, explicit headless denial, blocked-counter exclusions, and safe-point creation by execution authority.",
+          "line_end": 955,
+          "line_start": 955,
+          "path": "Plans/Run_Modes.md",
+          "source_sha256": "8fbb20f19c293128bb9f79d8e14be0b565e02aeaf0ee804723207fd778e0eb8e"
+        }
+      ],
+      "gap_kind": "safe_point_risk_threshold_undefined",
+      "impact": "Different builders can classify the same mutation as risky or non-risky and legitimately omit rollback protection for destructive actions.",
+      "item_id": "M15-007",
+      "item_type": "gap",
+      "severity": "high",
+      "source_unit_refs": ["PLANUNIT:RM-039", "SEMANTIC:PLANUNIT:RM-039"],
+      "statement": "The unit binds safe points to execution authority and mutation capability, but it does not define the risk predicate that decides which mutation-capable attempts require a safe point or the required behavior when safe-point creation fails.",
+      "title": "Safe-point applicability leaves the risk predicate open"
+    },
+    {
+      "builder_discretion": true,
+      "confidence": 0.95,
+      "dimensions": ["behavior", "contracts", "states_transitions", "authority", "ambiguity_unknowns", "authority_boundaries", "cross_document_seams", "test_falsifiability"],
+      "evidence": [
+        {
+          "exact_quote": "All Assistant Chat modes operate within the active thread worktree when one is bound: Ask reads, Agent edits, Plan/Deep Plan executes plans, and Debug targets the worktree; mode transitions do not change worktree binding because binding is thread-level, not mode-level.",
+          "line_end": 961,
+          "line_start": 961,
+          "path": "Plans/Run_Modes.md",
+          "source_sha256": "8fbb20f19c293128bb9f79d8e14be0b565e02aeaf0ee804723207fd778e0eb8e"
+        },
+        {
+          "exact_quote": "ask/plan remain read-only and need no mutation safe points for ordinary planning or inspection",
+          "line_end": 955,
+          "line_start": 955,
+          "path": "Plans/Run_Modes.md",
+          "source_sha256": "8fbb20f19c293128bb9f79d8e14be0b565e02aeaf0ee804723207fd778e0eb8e"
+        }
+      ],
+      "gap_kind": "plan_mode_authority_ambiguity",
+      "impact": "A builder can interpret Plan/Deep Plan as mutation-capable execution even though the nearby run-mode rule says plan remains read-only, widening authority without a clear transition.",
+      "item_id": "M15-008",
+      "item_type": "gap",
+      "severity": "high",
+      "source_unit_refs": ["PLANUNIT:RM-040", "SEMANTIC:PLANUNIT:RM-040"],
+      "statement": "The phrase 'Plan/Deep Plan executes plans' is not reconciled with the adjacent requirement that plan remain read-only; the label-to-runtime-mode mapping and mutation authority boundary need an explicit distinction.",
+      "title": "Plan execution wording conflicts with read-only plan semantics"
+    },
+    {
+      "builder_discretion": true,
+      "confidence": 0.91,
+      "dimensions": ["capabilities", "consumers", "gui_truth", "builder_discretion", "gui_misleading_states", "accessibility", "localization", "test_falsifiability"],
+      "evidence": [
+        {
+          "exact_quote": "Worktree commands cmd.chat.worktree.* remain available in all modes subject to when-clauses, and the worktree header button and dropdown menu are always visible regardless of current mode.",
+          "line_end": 967,
+          "line_start": 967,
+          "path": "Plans/Run_Modes.md",
+          "source_sha256": "8fbb20f19c293128bb9f79d8e14be0b565e02aeaf0ee804723207fd778e0eb8e"
+        }
+      ],
+      "gap_kind": "gui_disabled_state_unspecified",
+      "impact": "The always-visible control can appear actionable when its command is disallowed, with inconsistent disabled, hidden, or explanatory behavior across surfaces and assistive technologies.",
+      "item_id": "M15-009",
+      "item_type": "gap",
+      "severity": "medium",
+      "source_unit_refs": ["PLANUNIT:RM-041", "SEMANTIC:PLANUNIT:RM-041"],
+      "statement": "Visibility is fixed and command availability is conditional, but the unit does not specify the button/menu disabled state, reason presentation, keyboard behavior, or accessible labeling when a when-clause fails.",
+      "title": "Always-visible worktree controls lack unavailable-state truth"
+    },
+    {
+      "builder_discretion": false,
+      "confidence": 0.97,
+      "dimensions": ["states_transitions", "failures_recovery", "propagation", "recovery_rollback", "acceptance_oracles", "invalid_states_transitions"],
+      "evidence": [
+        {
+          "exact_quote": "Runtime mode affects immediate recovery affordances but not blocked classification: interactive modes may present auth/approval/clarification, headless modes yield blocked_reason_code=headless_ask_denied, later mode/prerequisite changes may resume by creating a new attempt snapshot without rewriting original blocked classification, and restore-before-rerun safe-point policy still applies.",
+          "line_end": 973,
+          "line_start": 973,
+          "path": "Plans/Run_Modes.md",
+          "source_sha256": "8fbb20f19c293128bb9f79d8e14be0b565e02aeaf0ee804723207fd778e0eb8e"
+        }
+      ],
+      "gap_kind": "none",
+      "impact": "Recovery can proceed without destroying historical classification, and rerun cannot bypass required restoration.",
+      "item_id": "M15-010",
+      "item_type": "state_transition",
+      "severity": "info",
+      "source_unit_refs": ["PLANUNIT:RM-042", "SEMANTIC:PLANUNIT:RM-042"],
+      "statement": "The blocked-to-resumed transition creates a new attempt snapshot, preserves the original blocked record, and retains restore-before-rerun policy.",
+      "title": "Blocked recovery preserves immutable history"
+    },
+    {
+      "builder_discretion": true,
+      "confidence": 0.93,
+      "dimensions": ["states_transitions", "failures_recovery", "operations", "scale_performance", "ambiguity_unknowns", "invalid_states_transitions", "offline_network_loss", "observability_support", "test_falsifiability"],
+      "evidence": [
+        {
+          "exact_quote": "Deferred/waiting run semantics keep a run active while any node is runnable; if no node is runnable but blocked, backoff, or prerequisite-waiting work remains, the run is deferred/waiting rather than terminal, and terminal completion requires no runnable, blocked, backoff, or unresolved prerequisite work.",
+          "line_end": 979,
+          "line_start": 979,
+          "path": "Plans/Run_Modes.md",
+          "source_sha256": "8fbb20f19c293128bb9f79d8e14be0b565e02aeaf0ee804723207fd778e0eb8e"
+        }
+      ],
+      "gap_kind": "deferred_liveness_unspecified",
+      "impact": "Permanently blocked, lost-wakeup, or unreachable-prerequisite runs can remain active forever without a deterministic escalation, cancellation, or support signal.",
+      "item_id": "M15-011",
+      "item_type": "gap",
+      "severity": "high",
+      "source_unit_refs": ["PLANUNIT:RM-043", "SEMANTIC:PLANUNIT:RM-043"],
+      "statement": "The terminal predicate is explicit, but wakeup ownership, backoff ceilings, prerequisite loss, offline behavior, deadlock detection, and operator cancellation for indefinitely deferred runs are not specified.",
+      "title": "Deferred runs have no liveness or abandonment contract"
+    },
+    {
+      "builder_discretion": true,
+      "confidence": 0.92,
+      "dimensions": ["inputs_outputs", "contracts", "consumers", "gui_truth", "failures_recovery", "observability_support", "gui_misleading_states", "scale_limits", "test_falsifiability"],
+      "evidence": [
+        {
+          "exact_quote": "Headless blocked discovery emits blocked_notice with blocked_reason_code=headless_ask_denied, surfaces blocked node count in CLI/log or dashboard summaries when available, includes the exact missing permission or approval, and returns status unavailable with reason headless to tool and operation-card consumers when no interactive presenter exists.",
+          "line_end": 985,
+          "line_start": 985,
+          "path": "Plans/Run_Modes.md",
+          "source_sha256": "8fbb20f19c293128bb9f79d8e14be0b565e02aeaf0ee804723207fd778e0eb8e"
+        }
+      ],
+      "gap_kind": "blocked_notice_payload_underspecified",
+      "impact": "CLI, logs, dashboards, tools, and operation cards can disagree on counts and reasons, especially when several nodes require different permissions or approvals.",
+      "item_id": "M15-012",
+      "item_type": "gap",
+      "severity": "medium",
+      "source_unit_refs": ["PLANUNIT:RM-044", "SEMANTIC:PLANUNIT:RM-044"],
+      "statement": "The consumer outcomes are named, but the blocked_notice schema, multi-blocker representation, count availability requirement, ordering, deduplication, and update/clear behavior are not defined.",
+      "title": "Headless blocked notices lack a multi-consumer payload contract"
+    },
+    {
+      "builder_discretion": true,
+      "confidence": 0.95,
+      "dimensions": ["capabilities", "consumers", "gui_truth", "failures_recovery", "builder_discretion", "gui_misleading_states", "accessibility", "localization", "observability_support", "test_falsifiability"],
+      "evidence": [
+        {
+          "exact_quote": "If a UI session is attached, headless blocked discovery may surface a dashboard badge or notification; headless contexts must not offer GUI-only recovery actions such as Open in Terminal and must instead provide resume guidance, permission-preset adjustment, interactive mode change, allowed fallback strategy, orchestrator-facing blockage, or abort guidance.",
+          "line_end": 991,
+          "line_start": 991,
+          "path": "Plans/Run_Modes.md",
+          "source_sha256": "8fbb20f19c293128bb9f79d8e14be0b565e02aeaf0ee804723207fd778e0eb8e"
+        }
+      ],
+      "gap_kind": "attached_ui_notification_optional",
+      "impact": "An attached UI may give no visible indication of a blocked headless run, and different builders can choose different recovery guidance without a priority or eligibility contract.",
+      "item_id": "M15-013",
+      "item_type": "gap",
+      "severity": "medium",
+      "source_unit_refs": ["PLANUNIT:RM-045", "SEMANTIC:PLANUNIT:RM-045"],
+      "statement": "The prohibition on GUI-only recovery is strong, but 'may surface' leaves attached-session notification optional and no lifecycle, accessibility, localization, deduplication, or stale-badge clearing oracle is provided.",
+      "title": "Attached UI blockage signaling remains discretionary"
+    },
+    {
+      "builder_discretion": true,
+      "confidence": 0.96,
+      "dimensions": ["contracts", "authority", "ownership", "security_privacy", "failures_recovery", "authority_boundaries", "untrusted_inputs", "destructive_actions", "cross_document_seams", "test_falsifiability"],
+      "evidence": [
+        {
+          "exact_quote": "Run modes do not redefine mutation_capable: the tool registry declares mutation_capable bool default false, the node planner propagates it into node plans, and modes only control whether mutation-capable attempts may occur and therefore whether safe points are relevant.",
+          "line_end": 997,
+          "line_start": 997,
+          "path": "Plans/Run_Modes.md",
+          "source_sha256": "8fbb20f19c293128bb9f79d8e14be0b565e02aeaf0ee804723207fd778e0eb8e"
+        }
+      ],
+      "gap_kind": "mutation_classifier_fail_open_default",
+      "impact": "A newly registered, malformed, or adversarial mutation-capable tool that omits the flag can be treated as non-mutating, bypassing mode gating and safe-point protection.",
+      "item_id": "M15-014",
+      "item_type": "gap",
+      "severity": "critical",
+      "source_unit_refs": ["PLANUNIT:RM-046", "SEMANTIC:PLANUNIT:RM-046"],
+      "statement": "Because mutation_capable defaults to false, omission is safety-significant; this unit provides no fail-closed registration validation or invariant proving that every mutating tool is explicitly classified before use.",
+      "title": "Default-false mutation classification can fail open"
+    },
+    {
+      "builder_discretion": true,
+      "confidence": 0.94,
+      "dimensions": ["inputs_outputs", "contracts", "states_transitions", "authority", "ownership", "propagation", "operations", "concurrency_races", "partial_failure", "recovery_rollback", "privacy_data_lifecycle", "observability_support", "test_falsifiability"],
+      "evidence": [
+        {
+          "exact_quote": "Runtime identity and blocked-policy continuity require execution_role, requested_account_id, operational_identity, account-switch and pressure ownership, blocked_sequence minting and persistence, startup recovery rehydration/handshake, unchanged DAE jail/approval policy ownership, usage switch-history, and usage execution-role follow-through across mode changes and blocked recovery; cov-159 exact item markers remain lineage evidence.",
+          "line_end": 1003,
+          "line_start": 1003,
+          "path": "Plans/Run_Modes.md",
+          "source_sha256": "8fbb20f19c293128bb9f79d8e14be0b565e02aeaf0ee804723207fd778e0eb8e"
+        }
+      ],
+      "gap_kind": "identity_rehydration_atomicity_unspecified",
+      "impact": "Crash recovery or concurrent account/mode changes can rehydrate a mixed identity-policy snapshot, duplicate or reorder blocked sequences, or attribute usage to the wrong account or role.",
+      "item_id": "M15-015",
+      "item_type": "gap",
+      "severity": "critical",
+      "source_unit_refs": ["PLANUNIT:RM-047", "SEMANTIC:PLANUNIT:RM-047"],
+      "statement": "The required continuity fields are enumerated, but snapshot versioning, atomic persistence, precedence during concurrent changes, blocked_sequence uniqueness/ordering, handshake idempotency, and partial-rehydration rollback are unspecified.",
+      "title": "Runtime identity recovery lacks an atomic snapshot contract"
+    },
+    {
+      "builder_discretion": true,
+      "confidence": 0.92,
+      "dimensions": ["contracts", "states_transitions", "authority", "consumers", "failures_recovery", "operations", "ambiguity_unknowns", "invalid_states_transitions", "partial_failure", "recovery_rollback", "authority_boundaries", "offline_network_loss", "observability_support", "test_falsifiability"],
+      "evidence": [
+        {
+          "exact_quote": "  Discovery/configuration/GUI availability is not permission to mutate, attach, expose ports, push images, inject\n  secrets, use remote hosts, or certify completion. Blocked host outcomes such as permission_denied, filesafe_blocked,\n  runtime_disabled, runtime_unavailable, capability_unavailable, host_untrusted, host_unreachable, and test_gap_policy\n  remain `blocked != failed`.",
+          "line_end": 1043,
+          "line_start": 1040,
+          "path": "Plans/Run_Modes.md",
+          "source_sha256": "8fbb20f19c293128bb9f79d8e14be0b565e02aeaf0ee804723207fd778e0eb8e"
+        }
+      ],
+      "gap_kind": "blocked_host_precedence_and_recovery_unspecified",
+      "impact": "The same multi-cause host incident can receive different primary states, retry behavior, and user guidance, or remain blocked indefinitely after the underlying condition clears.",
+      "item_id": "M15-016",
+      "item_type": "gap",
+      "severity": "high",
+      "source_unit_refs": ["PLANUNIT:RM-048", "SEMANTIC:PLANUNIT:RM-048"],
+      "statement": "The authority boundary and blocked-not-failed rule are explicit, but precedence among simultaneous blocked reasons, retryability, unblock detection, state transition after recovery, and receipt requirements for those transitions are not defined.",
+      "title": "Host blocked outcomes lack precedence and recovery transitions"
+    },
+    {
+      "builder_discretion": true,
+      "confidence": 0.99,
+      "dimensions": ["contracts", "consumers", "gui_truth", "propagation", "acceptance_oracles", "builder_discretion", "gui_misleading_states", "accessibility", "cross_document_seams", "test_falsifiability"],
+      "evidence": [
+        {
+          "exact_quote": "GUI consumers render streaming_partial, failed, adjusted, blocked, unknown, and settled distinctly and do not treat blocked != failed runtime outcomes as zero usage or final settled cost.",
+          "line_end": 1125,
+          "line_start": 1125,
+          "path": "Plans/Run_Modes.md",
+          "source_sha256": "8fbb20f19c293128bb9f79d8e14be0b565e02aeaf0ee804723207fd778e0eb8e"
+        },
+        {
+          "exact_quote": "gui_related: false\ngui_classification_reason: Run-mode outcome semantics feed GUI projections but are backend policy/state contracts.",
+          "line_end": 1127,
+          "line_start": 1126,
+          "path": "Plans/Run_Modes.md",
+          "source_sha256": "8fbb20f19c293128bb9f79d8e14be0b565e02aeaf0ee804723207fd778e0eb8e"
+        }
+      ],
+      "gap_kind": "gui_classification_contradicts_normative_gui_contract",
+      "impact": "GUI-specific assurance, ownership, accessibility review, and visual-state fixtures can be skipped even though the PlanUnit contains mandatory user-visible rendering behavior.",
+      "item_id": "M15-017",
+      "item_type": "gap",
+      "severity": "high",
+      "source_unit_refs": ["PLANUNIT:RM-049", "SEMANTIC:PLANUNIT:RM-049"],
+      "statement": "RM-049 is classified gui_related false while its canonical text and acceptance criteria directly require distinct GUI rendering and drill-through behavior; the classification conflicts with the normative surface contract.",
+      "title": "Usage projection is misclassified as non-GUI"
+    }
+  ],
+  "model": "gpt-5.6-sol",
+  "phase": "blind_macro_window_review",
+  "reasoning_effort": "xhigh",
+  "schema_version": "macro-review-result-v1",
+  "segments": [
+    {
+      "core_range": [916, 987],
+      "covered_source_unit_refs": [
+        "PLANUNIT:RM-033",
+        "PLANUNIT:RM-034",
+        "PLANUNIT:RM-035",
+        "PLANUNIT:RM-036",
+        "PLANUNIT:RM-037",
+        "PLANUNIT:RM-038",
+        "PLANUNIT:RM-039",
+        "PLANUNIT:RM-040",
+        "PLANUNIT:RM-041",
+        "PLANUNIT:RM-042",
+        "PLANUNIT:RM-043",
+        "PLANUNIT:RM-044",
+        "SEMANTIC:PLANUNIT:RM-033",
+        "SEMANTIC:PLANUNIT:RM-034",
+        "SEMANTIC:PLANUNIT:RM-035",
+        "SEMANTIC:PLANUNIT:RM-036",
+        "SEMANTIC:PLANUNIT:RM-037",
+        "SEMANTIC:PLANUNIT:RM-038",
+        "SEMANTIC:PLANUNIT:RM-039",
+        "SEMANTIC:PLANUNIT:RM-040",
+        "SEMANTIC:PLANUNIT:RM-041",
+        "SEMANTIC:PLANUNIT:RM-042",
+        "SEMANTIC:PLANUNIT:RM-043",
+        "SEMANTIC:PLANUNIT:RM-044"
+      ],
+      "item_ids": ["M15-001", "M15-002", "M15-003", "M15-004", "M15-005", "M15-006", "M15-007", "M15-008", "M15-009", "M15-010", "M15-011", "M15-012"],
+      "reviewed": true,
+      "summary": "Reviewed RM-033 through RM-044 line by line across normalization, provider fallback, counters, terminal identity, taxonomy continuity, headless denial, safe points, worktree behavior, blocked recovery, deferred liveness, and consumer status truth. Strong non-gaps coexist with material mapping, race, authority, liveness, and GUI-state gaps.",
+      "window_id": "WIN-673E34012C23-0005"
+    },
+    {
+      "core_range": [988, 1171],
+      "covered_source_unit_refs": [
+        "PLANUNIT:RM-045",
+        "PLANUNIT:RM-046",
+        "PLANUNIT:RM-047",
+        "PLANUNIT:RM-048",
+        "PLANUNIT:RM-049",
+        "SEMANTIC:PLANUNIT:RM-045",
+        "SEMANTIC:PLANUNIT:RM-046",
+        "SEMANTIC:PLANUNIT:RM-047",
+        "SEMANTIC:PLANUNIT:RM-048",
+        "SEMANTIC:PLANUNIT:RM-049"
+      ],
+      "item_ids": ["M15-013", "M15-014", "M15-015", "M15-016", "M15-017"],
+      "reviewed": true,
+      "summary": "Reviewed RM-045 through RM-049 and every intervening core line, including migration/retired-bridge context and compile addenda. The strongest risks are optional attached-UI signaling, fail-open mutation classification, non-atomic identity recovery, incomplete blocked-host recovery semantics, and a contradictory GUI classification.",
+      "window_id": "WIN-673E34012C23-0006"
+    }
+  ],
+  "self_attestation": {
+    "no_canonical_writes": true,
+    "no_external_research_during_blind_review": true,
+    "no_peer_result_access": true,
+    "no_prior_audit_access": true,
+    "no_unrelated_source_access": true,
+    "terminal_after_submission": true
+  },
+  "source_binding": {
+    "bundle_id": "MACRO15-673E34012C23-0001",
+    "document_path": "Plans/Run_Modes.md",
+    "micro_window_ids": ["WIN-673E34012C23-0005", "WIN-673E34012C23-0006"],
+    "source_sha256": "8fbb20f19c293128bb9f79d8e14be0b565e02aeaf0ee804723207fd778e0eb8e"
+  },
+  "status": "completed",
+  "synthesis": {
+    "cross_document_questions": [
+      "Where is the complete UI/workflow-state to canonical-runtime-mode mapping, including unknown and combined states, normatively owned?",
+      "How do Assistant Chat Plan and Deep Plan labels map to the read-only runtime plan mode versus execution-capable Agent behavior?",
+      "Which owner defines fail-closed mutation_capable registration validation and proves propagation into every node plan?",
+      "Which storage contract makes runtime identity, blocked_sequence, account ownership, and usage attribution an atomic recoverable snapshot?",
+      "Should RM-049 be gui_related true so its mandatory Usage rendering and drill-through behavior enters GUI assurance?"
+    ],
+    "feature_family_keys": [
+      "run-mode-normalization",
+      "dae-provider-policy",
+      "runtime-counters-and-safe-points",
+      "terminal-and-worktree-continuity",
+      "blocked-recovery-and-deferred-liveness",
+      "containerized-host-authority",
+      "usage-settlement-gui-projection"
+    ],
+    "research_queries": [
+      "fail-closed capability metadata defaults for plugin and tool registries",
+      "atomic crash-recovery snapshots for identity policy and usage attribution",
+      "liveness and abandonment semantics for indefinitely blocked workflow DAGs",
+      "accessible unavailable-state patterns for always-visible conditional controls"
+    ]
+  },
+  "task_thread_id": "/root/a005m15_b6_000103_attempt_0015_terminal"
+}

@@ -1,0 +1,3392 @@
+{
+  "audit_id": "audit-20260710-005-plan-assurance-model-lanes-fresh-agent-exhaustive",
+  "schema_version": "feature-catalog-result-v1",
+  "phase": "feature_catalog_normalization",
+  "assignment_id": "A005C-0008",
+  "attempt_id": "attempt-0001",
+  "task_thread_id": "/root/a005_catalog_0008_attempt_0001_terminal",
+  "model": "gpt-5.6-sol",
+  "reasoning_effort": "xhigh",
+  "status": "completed",
+  "input_binding": {
+    "packet_id": "CATPKT-0008",
+    "packet_sha256": "8f90116a8181a08348ae968c2ac0596ef4be0f470f537979a4f070ae3e36f0a5",
+    "atom_ids_digest": "250c2e6942823d9f1f62c6527c27627060a172075d24d3dff683a2b00c8d11ff",
+    "family_keys_digest": "4819c56bae8e8d402a1b9307e4fa781b8483b7a20c2163c25b570f23a84a920e"
+  },
+  "coverage": {
+    "assigned_atom_count": 257,
+    "assigned_atom_ids": [
+      "ATOM-00AE5BE0B7634D82739E",
+      "ATOM-00AF205B777CF0CBD11F",
+      "ATOM-012D3421E534F850295B",
+      "ATOM-036267FD69C78D3BBB02",
+      "ATOM-0418CABC889E4A8B9D4C",
+      "ATOM-0498FD987769A981A78D",
+      "ATOM-04C087D3B52F091B93A1",
+      "ATOM-0522896571949D721FF7",
+      "ATOM-0535E70C962E953AAD3B",
+      "ATOM-060CC808D6B06719AEF5",
+      "ATOM-063D2CE9F5A48C5FAFB4",
+      "ATOM-06C7811587DBF2DEF9A0",
+      "ATOM-08FFB11D8D80E57E53B1",
+      "ATOM-099E97C057E91AB3C928",
+      "ATOM-09ADE1D56B1A1D693851",
+      "ATOM-09F11AC94AB1A071CE47",
+      "ATOM-0A2319E761F7EC820B46",
+      "ATOM-0A31BB053295DB050618",
+      "ATOM-0AF2ADB3888CBF837A80",
+      "ATOM-0DB5FD630D2A67788155",
+      "ATOM-0E0155D291AE10B09D6E",
+      "ATOM-0E05A32F43F32B5E1602",
+      "ATOM-100DE98BEC0E83019649",
+      "ATOM-1099A236C968A2D2FBDA",
+      "ATOM-10C9B7668D3DBA5EC913",
+      "ATOM-1182E15ADD23DC7469D1",
+      "ATOM-12803E6281473142F00A",
+      "ATOM-13B1296FF72BFC8CA60B",
+      "ATOM-13C1EB30CD3666B3FA61",
+      "ATOM-17BA3D86BE8E711DFC88",
+      "ATOM-17C2234F3C54D0C89E65",
+      "ATOM-17FE79EC3AEA1092F004",
+      "ATOM-196C8BCDA53CE8731AFD",
+      "ATOM-197AD8FB4683AE1A9071",
+      "ATOM-19A5D7B48E2DEAF80D53",
+      "ATOM-1AF88F75E468A34F6CF4",
+      "ATOM-1D8ED9C74D1A50773E30",
+      "ATOM-1DF09E65349DD3AECF2C",
+      "ATOM-1ED638AAF1C8324183DD",
+      "ATOM-206EB0025B5E63B9AA0C",
+      "ATOM-20BAC707BB428D31DBC8",
+      "ATOM-20BD441B832C0F2DFFB2",
+      "ATOM-20F66D36AB90387F0E61",
+      "ATOM-212244DF3A3A9F3FF5F5",
+      "ATOM-22438631565A2CA5F2CB",
+      "ATOM-2445975B82EEA4BC5BF9",
+      "ATOM-2563D1E1A0803CF51CC5",
+      "ATOM-2695FBAD935AB15BA7C8",
+      "ATOM-27B935CA1D10730F8490",
+      "ATOM-27CDF09DB9E0E15D9268",
+      "ATOM-2AB265C4D9FCEED82BED",
+      "ATOM-2B6B0EAB04BDC421AFA0",
+      "ATOM-2BA9D0A8E56A46418A23",
+      "ATOM-300A38485762710863AD",
+      "ATOM-308058A9C446AF454A42",
+      "ATOM-30D00A888FBE97617308",
+      "ATOM-31BA9B66BD82329BAE1C",
+      "ATOM-33250CB3BCFD23BCADC0",
+      "ATOM-347C20A016CF2265A911",
+      "ATOM-34B7AAB56E03EC1AEFAC",
+      "ATOM-35B2F9053C351E041DD9",
+      "ATOM-35E01C2E72ECAF5A4D1F",
+      "ATOM-363EEEE1890154ADB3BB",
+      "ATOM-37213C42CE26BE371821",
+      "ATOM-377E2E6AA8B3FD625E80",
+      "ATOM-37A8C4516EF5DA1E0A58",
+      "ATOM-37BB0547892B88A3F5E0",
+      "ATOM-38448599BD9830D6EB6D",
+      "ATOM-394BD9A4504F67C3CF9F",
+      "ATOM-394F93898A7F043551C5",
+      "ATOM-395FD44FD72B1ED491C7",
+      "ATOM-3A18E96D7B9AD37F6CFF",
+      "ATOM-3A56A404106CE7A17567",
+      "ATOM-3ABA7EC6FF90EE010FEF",
+      "ATOM-3AE2BC8D9387D76123ED",
+      "ATOM-3B6B72FA255687D73DFD",
+      "ATOM-3B7FDB64FFFC93657E6E",
+      "ATOM-3EF04FC2E2C2338A1012",
+      "ATOM-3FB1E982C48F96AF8AC8",
+      "ATOM-3FFE8EB122829CC6E77A",
+      "ATOM-405AD009356BDF033A62",
+      "ATOM-417DC105A8DF6E45F3A1",
+      "ATOM-433C8A418D99A15F570E",
+      "ATOM-4503EF28C742D7FA26A3",
+      "ATOM-45F076D16DD65092E94D",
+      "ATOM-46502B1729B678C4B9DA",
+      "ATOM-48E7468C706C66DB2C00",
+      "ATOM-48FBC0B23EDF777E73B6",
+      "ATOM-493E7D5A837F0EE928A0",
+      "ATOM-497A946469AD5BE4775A",
+      "ATOM-4AB69AFDE4ECE6B6F451",
+      "ATOM-4BBBD4E963D7EC58A2A0",
+      "ATOM-4C8CB2D9E6901DF44778",
+      "ATOM-4D896645A2258DEB511C",
+      "ATOM-4DD9F525C8FBA35605B7",
+      "ATOM-4F7BAAD665DB0A7EA883",
+      "ATOM-50429610C5E98C1386F3",
+      "ATOM-50C801BDB26A63EB5D9B",
+      "ATOM-50D8E4A46DABB16758EE",
+      "ATOM-5251E8D260D5AFBDECD5",
+      "ATOM-52D6AE8EE76B4EB34F27",
+      "ATOM-537D1EA6E513CD26E043",
+      "ATOM-539496F9225CABA84846",
+      "ATOM-53B1D214626348135B7F",
+      "ATOM-53CCCB8291D027D5D13A",
+      "ATOM-540A4FBBCCB95ADDF873",
+      "ATOM-55143818FD2FE845B06A",
+      "ATOM-5843BD8C63EBB073D7A1",
+      "ATOM-58AD66881023835B58FC",
+      "ATOM-59CEBD161F9CD1844285",
+      "ATOM-5AD4973F8EAEAAE0B985",
+      "ATOM-5BD593964B11507F8161",
+      "ATOM-5C83D1209C7A0E84D1CD",
+      "ATOM-5D49DA1D734F9CCE6EE9",
+      "ATOM-5DCE6143C40FEAEAE495",
+      "ATOM-5EB6AB88A8CE41C5908D",
+      "ATOM-60500DCF098EDE31CC60",
+      "ATOM-608DCE3250D5AA84F301",
+      "ATOM-61D134A29A0CDBBDAE68",
+      "ATOM-67D7C545FD412109EDAC",
+      "ATOM-6AB78FDCC28F4C7D3139",
+      "ATOM-6E2D34695990D1AA8E8E",
+      "ATOM-6F408701EE885BD26224",
+      "ATOM-6F60EFDF523726798C31",
+      "ATOM-70EED451A15A3977774B",
+      "ATOM-71BFF77116198A7C387E",
+      "ATOM-7247BA74F9823DA53725",
+      "ATOM-73F34FD5B13E768D98C8",
+      "ATOM-758B745119183B080D30",
+      "ATOM-7626551416B6010E3DC2",
+      "ATOM-7750C5AFCAECEC607241",
+      "ATOM-77690D0C0EF16B0AE564",
+      "ATOM-79BD85EEE8D54DC0684C",
+      "ATOM-79E30EC78D0C42BC7B1A",
+      "ATOM-7B86EA8E013527E2F8C4",
+      "ATOM-7CEFD3F6EE40602657BB",
+      "ATOM-7FBC9450346FE02CE008",
+      "ATOM-811BB2513A0454BB646E",
+      "ATOM-820954450479A1E314E4",
+      "ATOM-83346696BD7361657E55",
+      "ATOM-8389E444D43584BCE2B4",
+      "ATOM-83DDC16B220F0CC2D378",
+      "ATOM-84BA5692634EA3FD8739",
+      "ATOM-84C2FD3F71E7DFE22D2E",
+      "ATOM-855A79CDCBF589BBBE90",
+      "ATOM-86EE8113BB462083EE32",
+      "ATOM-885579715DB0C1117C4B",
+      "ATOM-8B3F95C8EC8F7EB1F5FE",
+      "ATOM-8C44B9A7EC4CBEA1543E",
+      "ATOM-8D21C2FDB6C65DD94A04",
+      "ATOM-8D221005066E9F07AA84",
+      "ATOM-8DD197BDEC81960F9E00",
+      "ATOM-8E050FE0AD9A10E805E1",
+      "ATOM-8EABED37BD4367CB46EE",
+      "ATOM-8F073B4E44314A5C8682",
+      "ATOM-8F4DB251609EB91DB30F",
+      "ATOM-8F6C2290D27614BAD42E",
+      "ATOM-904658A3389C80331A6D",
+      "ATOM-90DF27A07C4154C0CB1A",
+      "ATOM-90FBEBBF6FFB61BC8805",
+      "ATOM-916F6AB693837FFCFF39",
+      "ATOM-9280235CCE392AC6D85A",
+      "ATOM-955919C192B8AF938041",
+      "ATOM-95741C72A6ABB791414B",
+      "ATOM-9627F9C5C7E14F955CFB",
+      "ATOM-96C13F2B72A538ADB5F0",
+      "ATOM-99D0C30AB76C942E84CE",
+      "ATOM-9F832D1686D0E3E13F62",
+      "ATOM-A15741E681FCE00FA04D",
+      "ATOM-A18DF72F5E6763D66A2E",
+      "ATOM-A26D0EF9BC13EDD774AB",
+      "ATOM-A2E44BC893D4DED3535E",
+      "ATOM-A569168EFD35FFD9DBE5",
+      "ATOM-A6A544076CE94C487EAC",
+      "ATOM-AA5B50EC83AD21C8EAB9",
+      "ATOM-AC1518B7D51A94CFB438",
+      "ATOM-AE179BE83FB89FF1C342",
+      "ATOM-AE4ADA4D8B1B0111FFD9",
+      "ATOM-AF4FD5724C6FCB2F57E0",
+      "ATOM-AF59F5948984D704B9D3",
+      "ATOM-B19358F93AD01750A16A",
+      "ATOM-B22743BEF7B446C93F78",
+      "ATOM-B35D170DD3BB76619309",
+      "ATOM-B4EF7D140C759754228E",
+      "ATOM-B5851E648186484CC5FA",
+      "ATOM-B5E353DDFC4AAED2E87E",
+      "ATOM-B8202579912DC01F335C",
+      "ATOM-B86C9453FF5F7F6E222E",
+      "ATOM-B941FBC6F44341B67189",
+      "ATOM-B9CC3C93A79A6D502EA5",
+      "ATOM-BA5A8D1343BB9C79A233",
+      "ATOM-BB0DBD1604CEE9CF50A5",
+      "ATOM-BC0B5792D139C0667C33",
+      "ATOM-BC9B6C72C2FFF353A32B",
+      "ATOM-BDA375B969C1A25C78AD",
+      "ATOM-BF157821B3101F3AE0C5",
+      "ATOM-BFD9AB02718524AD9627",
+      "ATOM-C03AFEA475C9EDB334D8",
+      "ATOM-C0AEFD706AD4F57AEF04",
+      "ATOM-C0F91968042A802B85BD",
+      "ATOM-C10876D088B415355553",
+      "ATOM-C12627F635FEF897CAC0",
+      "ATOM-C26AE548E0E5D00CFDD0",
+      "ATOM-C53B35E1EC6C050F03A0",
+      "ATOM-C5BACBEFC4276907CBD7",
+      "ATOM-C8500F986059E032E162",
+      "ATOM-C896C6C8D3092E488B75",
+      "ATOM-C8EBAC031935AD461B2F",
+      "ATOM-C99775ED94DA83C29367",
+      "ATOM-CA789F9996478DC2728F",
+      "ATOM-CC86D0719750B9C2F055",
+      "ATOM-CD5536C1A441CFBEC9E8",
+      "ATOM-CF8A2A747A29C5AEA5FA",
+      "ATOM-D0D3B64FF7920E1BC453",
+      "ATOM-D14F9159F335077570FA",
+      "ATOM-D1C949D2B9E7FC414CF7",
+      "ATOM-D2FBD3FC9B18C9E23FCC",
+      "ATOM-D400232768A8C18D8578",
+      "ATOM-D51C267F40B14FFDF173",
+      "ATOM-D7503D21AA601EB93230",
+      "ATOM-D78E22A417500EEFAE71",
+      "ATOM-D8E951975EFD42F500EA",
+      "ATOM-D923E684BB279EA3D9A0",
+      "ATOM-DC106C2C209EE5EF8E04",
+      "ATOM-DCEEA0910F941977A9AB",
+      "ATOM-DDAA1C6F689272444A97",
+      "ATOM-DE7C8AD23ECAD7E6C7E1",
+      "ATOM-DFD898F2622173A6771A",
+      "ATOM-E0455441B02D8B5399EB",
+      "ATOM-E08E2A16E1F8E0E2BADD",
+      "ATOM-E119CDA60A1E8655E4CD",
+      "ATOM-E220CEED03D40B7CBF22",
+      "ATOM-E41A1276B66BBE41D0DC",
+      "ATOM-E545875927AD5704B573",
+      "ATOM-E612D0F7154D5B850B76",
+      "ATOM-E6628B9079EDAC9FC393",
+      "ATOM-E73E8260344B38FE26FA",
+      "ATOM-E7FB3DBF0B4BF7B69C5E",
+      "ATOM-E92D2542B19F15994B73",
+      "ATOM-EAA6A9FF0362FB856C17",
+      "ATOM-EB4CBD2035EEAF7D3109",
+      "ATOM-EEF9C9D4190383D7D75D",
+      "ATOM-EF4802086A7085B7A8A1",
+      "ATOM-F059BEAEAF2A51EDC047",
+      "ATOM-F0FDA8A97CC7628148DE",
+      "ATOM-F18AB49D1FFF2B55E9C6",
+      "ATOM-F4035FB1BCB698C09078",
+      "ATOM-F6BAAC7C5995741275DE",
+      "ATOM-F80810CA0D63C3330644",
+      "ATOM-F8359FE4A46C699E74C1",
+      "ATOM-FA0D0C70103AAAA07A1A",
+      "ATOM-FB3123039DF4465E3714",
+      "ATOM-FC5C0F23FA01FA1CC787",
+      "ATOM-FD09B8FC44DA83F6C5F9",
+      "ATOM-FD6AF96ADF602EB0D4A8",
+      "ATOM-FF7EFD043243227AF3D5",
+      "ATOM-FFA69A214AC3BA6521B0"
+    ],
+    "assigned_family_key_count": 63,
+    "assigned_family_keys": [
+      "account-failover",
+      "agent-config",
+      "agent-subagent-authority",
+      "agent_config_readiness",
+      "authentication_lifecycle",
+      "capability-catalog-and-runtime-routing",
+      "cleanup-lifecycle-and-evidence",
+      "command-template-trust",
+      "credential-boundaries",
+      "credential_route_epoch",
+      "debug-instrumentation-lifecycle",
+      "effort_settlement",
+      "entitlement_quota_settlement",
+      "evidence-retention",
+      "extraction-owner-routing",
+      "first_run_account_readiness_projection",
+      "formatter-event-recovery",
+      "free_models_account_setup_delegation",
+      "free_models_auto_apply",
+      "free_models_catalog_identity",
+      "migration-lineage-reconciliation",
+      "model-resolution-acceptance",
+      "model-role-and-capability-lane-routing",
+      "model-settings-and-inspector-gui",
+      "model_capability_confidence_ui",
+      "model_precedence_and_availability",
+      "model_selection_router",
+      "model_usage_signal_display",
+      "multi-account-routing",
+      "multi_account_resolution",
+      "opencode-baseline-reproducibility",
+      "operational_identity_and_goal_runtime",
+      "orchestrator-runner-wrappers",
+      "permission-and-hitl-lifecycle",
+      "persona-runtime-controls-and-capability-snapshot",
+      "persona-runtime-preferences",
+      "platform_specs_retirement",
+      "pricing-billing-and-token-usage",
+      "projection_and_native_auth",
+      "prompt-compaction-integrity",
+      "provider-account-profiles",
+      "provider-model-selection-and-precedence",
+      "provider_account_isolation",
+      "provider_capability_epochs",
+      "provider_error_observability",
+      "provider_native_metadata_replay",
+      "provider_policy",
+      "provider_usage_settings_projection",
+      "requested-effective-identity",
+      "requested-effective-identity-and-retry-snapshots",
+      "retry_budget_token_store",
+      "shared_pressure_bounded_fallback",
+      "shortcut-registry-and-management",
+      "skills-and-shortcuts",
+      "skills-discovery-permissions-runtime-and-gui",
+      "skills-plugins-supply-chain",
+      "testing_policy_inheritance",
+      "usage-pressure",
+      "usage_pressure_and_selection",
+      "variants-aliases-and-selection",
+      "vision-bridge-and-teacher-model-disclosure",
+      "web-provider-capability-mirror",
+      "workspace-cleanup"
+    ]
+  },
+  "features": [
+    {
+      "feature_id": "FLOCAL-0001",
+      "title": "Workspace-scoped cleanup policy and safety boundary",
+      "summary": "Local normalized feature covering Cleanup protection, isolation, and DRY ownership form a strong non-gap; Cleanup module single-source guard; Intended-workspace predicate is undefined; Untracked root state remains protected; Non-git prepare failure is localized; Prepare uses execution workspace without reset; Git-clean exclude grammar is unspecified; Post-execution broad clean is forbidden; Output allowlist has no registration contract; Cross-plan cleanup boundary lacks enforcement shape; Interview cleanup applicability is underspecified; Cleanup config projection remains flexible; Worktree removal is distinct from git clean. Distinct authority, lifecycle, consumers, and failure semantics are retained through its assigned atom partition.",
+      "feature_kind": "system",
+      "owner_domain": "source_control_workspace_code",
+      "secondary_domains": [],
+      "aliases": [],
+      "atom_ids": [
+        "ATOM-7626551416B6010E3DC2",
+        "ATOM-59CEBD161F9CD1844285",
+        "ATOM-CF8A2A747A29C5AEA5FA",
+        "ATOM-38448599BD9830D6EB6D",
+        "ATOM-0522896571949D721FF7",
+        "ATOM-FA0D0C70103AAAA07A1A",
+        "ATOM-C99775ED94DA83C29367",
+        "ATOM-AF4FD5724C6FCB2F57E0",
+        "ATOM-F8359FE4A46C699E74C1",
+        "ATOM-537D1EA6E513CD26E043",
+        "ATOM-B5E353DDFC4AAED2E87E",
+        "ATOM-5C83D1209C7A0E84D1CD",
+        "ATOM-84C2FD3F71E7DFE22D2E"
+      ],
+      "source_documents": [
+        "Plans/MiscPlan.md"
+      ],
+      "source_unit_refs": [
+        "PLANUNIT:M-005",
+        "PLANUNIT:M-006",
+        "PLANUNIT:M-007",
+        "PLANUNIT:M-008",
+        "PLANUNIT:M-009",
+        "PLANUNIT:M-010",
+        "SEMANTIC:PLANUNIT:M-005",
+        "SEMANTIC:PLANUNIT:M-006",
+        "SEMANTIC:PLANUNIT:M-007",
+        "SEMANTIC:PLANUNIT:M-008",
+        "SEMANTIC:PLANUNIT:M-009",
+        "SEMANTIC:PLANUNIT:M-010",
+        "PLANUNIT:M-043",
+        "SEMANTIC:PLANUNIT:M-043",
+        "PLANUNIT:M-044",
+        "SEMANTIC:PLANUNIT:M-044",
+        "PLANUNIT:M-054",
+        "SEMANTIC:PLANUNIT:M-054",
+        "PLANUNIT:M-055",
+        "SEMANTIC:PLANUNIT:M-055",
+        "PLANUNIT:M-056",
+        "SEMANTIC:PLANUNIT:M-056",
+        "PLANUNIT:M-057",
+        "SEMANTIC:PLANUNIT:M-057",
+        "PLANUNIT:M-061",
+        "SEMANTIC:PLANUNIT:M-061",
+        "PLANUNIT:M-062",
+        "SEMANTIC:PLANUNIT:M-062",
+        "PLANUNIT:M-069",
+        "SEMANTIC:PLANUNIT:M-069",
+        "PLANUNIT:M-072",
+        "SEMANTIC:PLANUNIT:M-072",
+        "PLANUNIT:M-063",
+        "SEMANTIC:PLANUNIT:M-063",
+        "PLANUNIT:M-070",
+        "SEMANTIC:PLANUNIT:M-070"
+      ],
+      "risk_level": "high",
+      "spec_state": "partially_specified",
+      "gap_summary": "Validated observations: Cleanup protection, isolation, and DRY ownership form a strong non-gap; Cleanup module single-source guard; Untracked root state remains protected; Non-git prepare failure is localized; Prepare uses execution workspace without reset; Post-execution broad clean is forbidden; Worktree removal is distinct from git clean. Preserved gaps or unknowns: Intended-workspace predicate is undefined; Git-clean exclude grammar is unspecified; Output allowlist has no registration contract; Cross-plan cleanup boundary lacks enforcement shape; Interview cleanup applicability is underspecified; Cleanup config projection remains flexible.",
+      "research_questions": [
+        "Which current external standards and proven implementations should define Workspace-scoped cleanup policy and safety boundary, with concrete attention to Intended-workspace predicate is undefined; Git-clean exclude grammar is unspecified; Output allowlist has no registration contract; Cross-plan cleanup boundary lacks enforcement shape; Interview cleanup applicability is underspecified; Cleanup config projection remains flexible?"
+      ],
+      "scenario_requirements": [
+        "Inject the edge or failure state described by \"Intended-workspace predicate is undefined\"; certification passes only if the resulting authority decision, state transition, durable evidence, recovery behavior, and user-visible outcome are deterministic and falsifiable."
+      ],
+      "cross_packet_terms": [
+        "workspace identity",
+        "pattern semantics",
+        "allowlist registration",
+        "cross plan enforcement",
+        "workspace and allowlist predicate",
+        "equivalent context and defaults"
+      ],
+      "confidence": 0.84
+    },
+    {
+      "feature_id": "FLOCAL-0002",
+      "title": "Runner cleanup wrappers and process termination",
+      "summary": "Local normalized feature covering Runner cleanup lacks complete termination, skip, and caller-adoption oracles; SDK fallback gap is retired; Orchestrator wrapper lacks failure transitions; Subprocess buffer bounds are not quantified; Cleanup signature remains unreconciled. Distinct authority, lifecycle, consumers, and failure semantics are retained through its assigned atom partition.",
+      "feature_kind": "workflow",
+      "owner_domain": "orchestration_runtime_execution",
+      "secondary_domains": [],
+      "aliases": [],
+      "atom_ids": [
+        "ATOM-100DE98BEC0E83019649",
+        "ATOM-04C087D3B52F091B93A1",
+        "ATOM-060CC808D6B06719AEF5",
+        "ATOM-539496F9225CABA84846",
+        "ATOM-DFD898F2622173A6771A"
+      ],
+      "source_documents": [
+        "Plans/MiscPlan.md"
+      ],
+      "source_unit_refs": [
+        "PLANUNIT:M-011",
+        "PLANUNIT:M-012",
+        "PLANUNIT:M-013",
+        "PLANUNIT:M-014",
+        "PLANUNIT:M-015",
+        "PLANUNIT:M-016",
+        "SEMANTIC:PLANUNIT:M-011",
+        "SEMANTIC:PLANUNIT:M-012",
+        "SEMANTIC:PLANUNIT:M-013",
+        "SEMANTIC:PLANUNIT:M-014",
+        "SEMANTIC:PLANUNIT:M-015",
+        "SEMANTIC:PLANUNIT:M-016",
+        "PLANUNIT:M-064",
+        "SEMANTIC:PLANUNIT:M-064",
+        "PLANUNIT:M-071",
+        "SEMANTIC:PLANUNIT:M-071",
+        "PLANUNIT:M-073",
+        "SEMANTIC:PLANUNIT:M-073",
+        "PLANUNIT:M-053",
+        "SEMANTIC:PLANUNIT:M-053"
+      ],
+      "risk_level": "high",
+      "spec_state": "partially_specified",
+      "gap_summary": "Validated observations: SDK fallback gap is retired. Preserved gaps or unknowns: Runner cleanup lacks complete termination, skip, and caller-adoption oracles; Orchestrator wrapper lacks failure transitions; Subprocess buffer bounds are not quantified; Cleanup signature remains unreconciled.",
+      "research_questions": [
+        "Which current external standards and proven implementations should define Runner cleanup wrappers and process termination, with concrete attention to Runner cleanup lacks complete termination, skip, and caller-adoption oracles; Orchestrator wrapper lacks failure transitions; Subprocess buffer bounds are not quantified; Cleanup signature remains unreconciled?"
+      ],
+      "scenario_requirements": [
+        "Inject the edge or failure state described by \"Runner cleanup lacks complete termination, skip, and caller-adoption oracles\"; certification passes only if the resulting authority decision, state transition, durable evidence, recovery behavior, and user-visible outcome are deterministic and falsifiable."
+      ],
+      "cross_packet_terms": [
+        "termination and skip observability gap",
+        "wrapper failure matrix",
+        "buffer limit undefined",
+        "signature mismatch"
+      ],
+      "confidence": 0.84
+    },
+    {
+      "feature_id": "FLOCAL-0003",
+      "title": "Evidence retention, pruning, and manual cleanup",
+      "summary": "Local normalized feature covering Evidence pruning races and cleanup-control placement remain underspecified; Evidence run-count retention remains unresolved; Evidence-pruning race has no guard protocol; Run lineage for evidence retention is undefined; All-worktrees deletion preview is optional; Cleanup races are explicitly unguarded; Recovery-lineage release condition is undefined; Cleanup lifecycle has states but no transition table; Manual-clean UX is not singular. Distinct authority, lifecycle, consumers, and failure semantics are retained through its assigned atom partition.",
+      "feature_kind": "workflow",
+      "owner_domain": "storage_artifacts_history",
+      "secondary_domains": [],
+      "aliases": [],
+      "atom_ids": [
+        "ATOM-212244DF3A3A9F3FF5F5",
+        "ATOM-8389E444D43584BCE2B4",
+        "ATOM-86EE8113BB462083EE32",
+        "ATOM-E612D0F7154D5B850B76",
+        "ATOM-17C2234F3C54D0C89E65",
+        "ATOM-758B745119183B080D30",
+        "ATOM-7750C5AFCAECEC607241",
+        "ATOM-6F408701EE885BD26224",
+        "ATOM-4D896645A2258DEB511C"
+      ],
+      "source_documents": [
+        "Plans/MiscPlan.md"
+      ],
+      "source_unit_refs": [
+        "PLANUNIT:M-017",
+        "PLANUNIT:M-018",
+        "PLANUNIT:M-019",
+        "PLANUNIT:M-020",
+        "PLANUNIT:M-021",
+        "PLANUNIT:M-022",
+        "SEMANTIC:PLANUNIT:M-017",
+        "SEMANTIC:PLANUNIT:M-018",
+        "SEMANTIC:PLANUNIT:M-019",
+        "SEMANTIC:PLANUNIT:M-020",
+        "SEMANTIC:PLANUNIT:M-021",
+        "SEMANTIC:PLANUNIT:M-022",
+        "PLANUNIT:M-045",
+        "SEMANTIC:PLANUNIT:M-045",
+        "PLANUNIT:M-052",
+        "SEMANTIC:PLANUNIT:M-052",
+        "PLANUNIT:M-058",
+        "SEMANTIC:PLANUNIT:M-058",
+        "PLANUNIT:M-059",
+        "SEMANTIC:PLANUNIT:M-059",
+        "PLANUNIT:M-060",
+        "SEMANTIC:PLANUNIT:M-060",
+        "PLANUNIT:M-076",
+        "SEMANTIC:PLANUNIT:M-076",
+        "PLANUNIT:M-077",
+        "SEMANTIC:PLANUNIT:M-077",
+        "PLANUNIT:M-046",
+        "SEMANTIC:PLANUNIT:M-046"
+      ],
+      "risk_level": "high",
+      "spec_state": "under_specified",
+      "gap_summary": "Preserved gaps or unknowns: Evidence pruning races and cleanup-control placement remain underspecified; Evidence run-count retention remains unresolved; Evidence-pruning race has no guard protocol; Run lineage for evidence retention is undefined; All-worktrees deletion preview is optional; Cleanup races are explicitly unguarded; Recovery-lineage release condition is undefined; Cleanup lifecycle has states but no transition table; Manual-clean UX is not singular.",
+      "research_questions": [
+        "Which current external standards and proven implementations should define Evidence retention, pruning, and manual cleanup, with concrete attention to Evidence pruning races and cleanup-control placement remain underspecified; Evidence run-count retention remains unresolved; Evidence-pruning race has no guard protocol; Run lineage for evidence retention is undefined; All-worktrees deletion preview is optional; Cleanup races are explicitly unguarded; Recovery-lineage release condition is undefined; Cleanup lifecycle has states but no transition table; Manual-clean UX is not singular?"
+      ],
+      "scenario_requirements": [
+        "Inject the edge or failure state described by \"Evidence pruning races and cleanup-control placement remain underspecified\"; certification passes only if the resulting authority decision, state transition, durable evidence, recovery behavior, and user-visible outcome are deterministic and falsifiable."
+      ],
+      "cross_packet_terms": [
+        "retention race and gui threshold gap",
+        "retention unit undefined",
+        "active writer detection",
+        "retention lineage",
+        "optional destructive preview",
+        "concurrent cleanup race",
+        "cleanup eligibility transition",
+        "lifecycle transition table",
+        "gui placement and safety optional"
+      ],
+      "confidence": 0.84
+    },
+    {
+      "feature_id": "FLOCAL-0004",
+      "title": "Shortcut registry, conflicts, and import or export",
+      "summary": "Local normalized feature covering Shortcut contracts are rich but location, scope, and atomic import behavior remain open; Shortcut config recovery is explicit; Shortcut import validates before mutation; Shortcut conflict policy permits divergence. Distinct authority, lifecycle, consumers, and failure semantics are retained through its assigned atom partition.",
+      "feature_kind": "feature",
+      "owner_domain": "gui_ux_accessibility",
+      "secondary_domains": [],
+      "aliases": [],
+      "atom_ids": [
+        "ATOM-F059BEAEAF2A51EDC047",
+        "ATOM-FC5C0F23FA01FA1CC787",
+        "ATOM-FD6AF96ADF602EB0D4A8",
+        "ATOM-27B935CA1D10730F8490"
+      ],
+      "source_documents": [
+        "Plans/MiscPlan.md"
+      ],
+      "source_unit_refs": [
+        "PLANUNIT:M-023",
+        "PLANUNIT:M-024",
+        "PLANUNIT:M-025",
+        "PLANUNIT:M-026",
+        "PLANUNIT:M-027",
+        "PLANUNIT:M-028",
+        "SEMANTIC:PLANUNIT:M-023",
+        "SEMANTIC:PLANUNIT:M-024",
+        "SEMANTIC:PLANUNIT:M-025",
+        "SEMANTIC:PLANUNIT:M-026",
+        "SEMANTIC:PLANUNIT:M-027",
+        "SEMANTIC:PLANUNIT:M-028",
+        "PLANUNIT:M-047",
+        "SEMANTIC:PLANUNIT:M-047",
+        "PLANUNIT:M-049",
+        "SEMANTIC:PLANUNIT:M-049",
+        "PLANUNIT:M-066",
+        "SEMANTIC:PLANUNIT:M-066"
+      ],
+      "risk_level": "high",
+      "spec_state": "partially_specified",
+      "gap_summary": "Validated observations: Shortcut config recovery is explicit; Shortcut import validates before mutation. Preserved gaps or unknowns: Shortcut contracts are rich but location, scope, and atomic import behavior remain open; Shortcut conflict policy permits divergence.",
+      "research_questions": [
+        "Which current external standards and proven implementations should define Shortcut registry, conflicts, and import or export, with concrete attention to Shortcut contracts are rich but location, scope, and atomic import behavior remain open; Shortcut conflict policy permits divergence?"
+      ],
+      "scenario_requirements": [
+        "Inject the edge or failure state described by \"Shortcut contracts are rich but location, scope, and atomic import behavior remain open\"; certification passes only if the resulting authority decision, state transition, durable evidence, recovery behavior, and user-visible outcome are deterministic and falsifiable."
+      ],
+      "cross_packet_terms": [
+        "shortcut atomicity scope and location gap",
+        "conflict resolution discretion"
+      ],
+      "confidence": 0.84
+    },
+    {
+      "feature_id": "FLOCAL-0005",
+      "title": "Skills discovery, permissions, mutation, and delivery",
+      "summary": "Local normalized feature covering Skills core needs a total permission decision table and transactional mutation model; Advanced Skills flows need snapshot consistency, scale, and retry-state oracles; Read-only validate-all contract; Skill-delivery readiness remains substitutable; Runner skill listing is a helper without a contract; Concurrent skill-edit protocol is incomplete; CLI skill projection enablement is undefined; Provider skill delivery remains stubbed; Runner skill-injection authority is contradictory. Distinct authority, lifecycle, consumers, and failure semantics are retained through its assigned atom partition.",
+      "feature_kind": "system",
+      "owner_domain": "tools_integrations_mcp",
+      "secondary_domains": [],
+      "aliases": [],
+      "atom_ids": [
+        "ATOM-53B1D214626348135B7F",
+        "ATOM-5EB6AB88A8CE41C5908D",
+        "ATOM-540A4FBBCCB95ADDF873",
+        "ATOM-C5BACBEFC4276907CBD7",
+        "ATOM-B35D170DD3BB76619309",
+        "ATOM-84BA5692634EA3FD8739",
+        "ATOM-3FB1E982C48F96AF8AC8",
+        "ATOM-A2E44BC893D4DED3535E",
+        "ATOM-50C801BDB26A63EB5D9B"
+      ],
+      "source_documents": [
+        "Plans/MiscPlan.md"
+      ],
+      "source_unit_refs": [
+        "PLANUNIT:M-029",
+        "PLANUNIT:M-030",
+        "PLANUNIT:M-031",
+        "PLANUNIT:M-032",
+        "PLANUNIT:M-033",
+        "PLANUNIT:M-034",
+        "SEMANTIC:PLANUNIT:M-029",
+        "SEMANTIC:PLANUNIT:M-030",
+        "SEMANTIC:PLANUNIT:M-031",
+        "SEMANTIC:PLANUNIT:M-032",
+        "SEMANTIC:PLANUNIT:M-033",
+        "SEMANTIC:PLANUNIT:M-034",
+        "PLANUNIT:M-035",
+        "PLANUNIT:M-036",
+        "PLANUNIT:M-037",
+        "PLANUNIT:M-038",
+        "PLANUNIT:M-039",
+        "PLANUNIT:M-040",
+        "SEMANTIC:PLANUNIT:M-035",
+        "SEMANTIC:PLANUNIT:M-036",
+        "SEMANTIC:PLANUNIT:M-037",
+        "SEMANTIC:PLANUNIT:M-038",
+        "SEMANTIC:PLANUNIT:M-039",
+        "SEMANTIC:PLANUNIT:M-040",
+        "PLANUNIT:M-041",
+        "SEMANTIC:PLANUNIT:M-041",
+        "PLANUNIT:M-042",
+        "SEMANTIC:PLANUNIT:M-042",
+        "PLANUNIT:M-048",
+        "SEMANTIC:PLANUNIT:M-048",
+        "PLANUNIT:M-050",
+        "SEMANTIC:PLANUNIT:M-050",
+        "PLANUNIT:M-067",
+        "SEMANTIC:PLANUNIT:M-067",
+        "PLANUNIT:M-068",
+        "SEMANTIC:PLANUNIT:M-068",
+        "PLANUNIT:M-083",
+        "SEMANTIC:PLANUNIT:M-083"
+      ],
+      "risk_level": "critical",
+      "spec_state": "contradictory",
+      "gap_summary": "Validated observations: Read-only validate-all contract. Preserved gaps or unknowns: Skills core needs a total permission decision table and transactional mutation model; Advanced Skills flows need snapshot consistency, scale, and retry-state oracles; Skill-delivery readiness remains substitutable; Runner skill listing is a helper without a contract; Concurrent skill-edit protocol is incomplete; CLI skill projection enablement is undefined; Provider skill delivery remains stubbed; Runner skill-injection authority is contradictory.",
+      "research_questions": [
+        "Which current external standards and proven implementations should define Skills discovery, permissions, mutation, and delivery, with concrete attention to Skills core needs a total permission decision table and transactional mutation model; Advanced Skills flows need snapshot consistency, scale, and retry-state oracles; Skill-delivery readiness remains substitutable; Runner skill listing is a helper without a contract; Concurrent skill-edit protocol is incomplete; CLI skill projection enablement is undefined; Provider skill delivery remains stubbed; Runner skill-injection authority is contradictory?"
+      ],
+      "scenario_requirements": [
+        "Inject the edge or failure state described by \"Skills core needs a total permission decision table and transactional mutation model\"; certification passes only if the resulting authority decision, state transition, durable evidence, recovery behavior, and user-visible outcome are deterministic and falsifiable."
+      ],
+      "cross_packet_terms": [
+        "permission precedence and mutation transaction gap",
+        "stale view and retry state gap",
+        "substitutable contract",
+        "runner delivery contract",
+        "concurrent edit detection",
+        "compatibility enablement",
+        "stubbed provider delivery",
+        "contradictory active contract"
+      ],
+      "confidence": 0.84
+    },
+    {
+      "feature_id": "FLOCAL-0006",
+      "title": "Cleanup coordination and debug instrumentation lifecycle",
+      "summary": "Local normalized feature covering Pre-completion status record lacks a contract; Cleanup crew coordination lacks a protocol; Cleanup lifecycle is reference-only; Debug restore-point sufficiency is not testable; Instrumentation-first MVP behavior is ungrounded; Instrumentation overlap guard lacks concurrency mechanics; Secret handling and profiler recovery remain ambiguous. Distinct authority, lifecycle, consumers, and failure semantics are retained through its assigned atom partition.",
+      "feature_kind": "system",
+      "owner_domain": "observability_testing_evaluation",
+      "secondary_domains": [],
+      "aliases": [],
+      "atom_ids": [
+        "ATOM-10C9B7668D3DBA5EC913",
+        "ATOM-33250CB3BCFD23BCADC0",
+        "ATOM-D2FBD3FC9B18C9E23FCC",
+        "ATOM-433C8A418D99A15F570E",
+        "ATOM-8D221005066E9F07AA84",
+        "ATOM-A18DF72F5E6763D66A2E",
+        "ATOM-E08E2A16E1F8E0E2BADD"
+      ],
+      "source_documents": [
+        "Plans/MiscPlan.md"
+      ],
+      "source_unit_refs": [
+        "PLANUNIT:M-051",
+        "SEMANTIC:PLANUNIT:M-051",
+        "PLANUNIT:M-074",
+        "SEMANTIC:PLANUNIT:M-074",
+        "PLANUNIT:M-075",
+        "SEMANTIC:PLANUNIT:M-075",
+        "PLANUNIT:M-078",
+        "SEMANTIC:PLANUNIT:M-078",
+        "PLANUNIT:M-079",
+        "SEMANTIC:PLANUNIT:M-079",
+        "PLANUNIT:M-080",
+        "SEMANTIC:PLANUNIT:M-080",
+        "PLANUNIT:M-081",
+        "SEMANTIC:PLANUNIT:M-081"
+      ],
+      "risk_level": "critical",
+      "spec_state": "under_specified",
+      "gap_summary": "Preserved gaps or unknowns: Pre-completion status record lacks a contract; Cleanup crew coordination lacks a protocol; Cleanup lifecycle is reference-only; Debug restore-point sufficiency is not testable; Instrumentation-first MVP behavior is ungrounded; Instrumentation overlap guard lacks concurrency mechanics; Secret handling and profiler recovery remain ambiguous.",
+      "research_questions": [
+        "Which current external standards and proven implementations should define Cleanup coordination and debug instrumentation lifecycle, with concrete attention to Pre-completion status record lacks a contract; Cleanup crew coordination lacks a protocol; Cleanup lifecycle is reference-only; Debug restore-point sufficiency is not testable; Instrumentation-first MVP behavior is ungrounded; Instrumentation overlap guard lacks concurrency mechanics; Secret handling and profiler recovery remain ambiguous?"
+      ],
+      "scenario_requirements": [
+        "Inject the edge or failure state described by \"Pre-completion status record lacks a contract\"; certification passes only if the resulting authority decision, state transition, durable evidence, recovery behavior, and user-visible outcome are deterministic and falsifiable."
+      ],
+      "cross_packet_terms": [
+        "completion record undefined",
+        "coordination schema",
+        "referenced lifecycle only",
+        "restore point sufficiency",
+        "missing instrumentation pipeline contract",
+        "instrumentation exclusion",
+        "secret transform and detach state"
+      ],
+      "confidence": 0.84
+    },
+    {
+      "feature_id": "FLOCAL-0007",
+      "title": "Retired MiscPlan compatibility lineage",
+      "summary": "Local normalized feature covering Residual source-preserving bridge is retired; Section 9.1.20 receives explicit retirement. Distinct authority, lifecycle, consumers, and failure semantics are retained through its assigned atom partition.",
+      "feature_kind": "governance_control",
+      "owner_domain": "planning_specification_governance",
+      "secondary_domains": [],
+      "aliases": [],
+      "atom_ids": [
+        "ATOM-0418CABC889E4A8B9D4C",
+        "ATOM-F6BAAC7C5995741275DE"
+      ],
+      "source_documents": [
+        "Plans/MiscPlan.md"
+      ],
+      "source_unit_refs": [
+        "PLANUNIT:M-001",
+        "SEMANTIC:PLANUNIT:M-001",
+        "PLANUNIT:M-082",
+        "SEMANTIC:PLANUNIT:M-082"
+      ],
+      "risk_level": "low",
+      "spec_state": "well_specified",
+      "gap_summary": "Validated observations: Residual source-preserving bridge is retired; Section 9.1.20 receives explicit retirement. No gap is asserted by the assigned observations.",
+      "research_questions": [
+        "Which current external standards and proven implementations should define Retired MiscPlan compatibility lineage, with concrete attention to Residual source-preserving bridge is retired; Section 9.1.20 receives explicit retirement?"
+      ],
+      "scenario_requirements": [
+        "Reproduce \"Residual source-preserving bridge is retired\" with one conforming and one deliberately non-conforming implementation; certification passes only when the contract accepts the former and rejects the latter with observable evidence."
+      ],
+      "cross_packet_terms": [],
+      "confidence": 0.94
+    },
+    {
+      "feature_id": "FLOCAL-0008",
+      "title": "Cleanup events and user-facing explanations",
+      "summary": "Local normalized feature covering Cleanup event architecture is explicit but its payload and copy oracles are incomplete. Distinct authority, lifecycle, consumers, and failure semantics are retained through its assigned atom partition.",
+      "feature_kind": "data_model",
+      "owner_domain": "data_contracts_interchange",
+      "secondary_domains": [],
+      "aliases": [],
+      "atom_ids": [
+        "ATOM-4C8CB2D9E6901DF44778"
+      ],
+      "source_documents": [
+        "Plans/MiscPlan.md"
+      ],
+      "source_unit_refs": [
+        "PLANUNIT:M-002",
+        "PLANUNIT:M-003",
+        "PLANUNIT:M-004",
+        "SEMANTIC:PROLOGUE:Plans/MiscPlan.md:CONT-005",
+        "SEMANTIC:PLANUNIT:M-002",
+        "SEMANTIC:PLANUNIT:M-003",
+        "SEMANTIC:PLANUNIT:M-004"
+      ],
+      "risk_level": "medium",
+      "spec_state": "under_specified",
+      "gap_summary": "Preserved gaps or unknowns: Cleanup event architecture is explicit but its payload and copy oracles are incomplete.",
+      "research_questions": [
+        "Which current external standards and proven implementations should define Cleanup events and user-facing explanations, with concrete attention to Cleanup event architecture is explicit but its payload and copy oracles are incomplete?"
+      ],
+      "scenario_requirements": [
+        "Inject the edge or failure state described by \"Cleanup event architecture is explicit but its payload and copy oracles are incomplete\"; certification passes only if the resulting authority decision, state transition, durable evidence, recovery behavior, and user-visible outcome are deterministic and falsifiable."
+      ],
+      "cross_packet_terms": [
+        "acceptance and copy oracle gap"
+      ],
+      "confidence": 0.84
+    },
+    {
+      "feature_id": "FLOCAL-0009",
+      "title": "Model resolver identity, precedence, and acceptance",
+      "summary": "Local normalized feature covering Provider/model ownership and three-axis resolution are explicit; The document contains incompatible precedence chains; The owner resolver emit shape omits required effort and runtime-platform fields; selection_reason is an unversioned competing schema with noncanonical examples; MS-004 through MS-010 have no behavior-specific acceptance oracles; MS-005 misclassifies an active invariant as stale/retired; MS-004 through MS-010 preserve distinct owner concerns; MS-011 through MS-016 also lack behavior-specific acceptance oracles; MS-011 through MS-016 preserve useful presentation, identity, and option boundaries. Distinct authority, lifecycle, consumers, and failure semantics are retained through its assigned atom partition.",
+      "feature_kind": "system",
+      "owner_domain": "agents_models_providers",
+      "secondary_domains": [],
+      "aliases": [],
+      "atom_ids": [
+        "ATOM-8D21C2FDB6C65DD94A04",
+        "ATOM-3FFE8EB122829CC6E77A",
+        "ATOM-A569168EFD35FFD9DBE5",
+        "ATOM-F18AB49D1FFF2B55E9C6",
+        "ATOM-904658A3389C80331A6D",
+        "ATOM-0E0155D291AE10B09D6E",
+        "ATOM-C0F91968042A802B85BD",
+        "ATOM-13B1296FF72BFC8CA60B",
+        "ATOM-3AE2BC8D9387D76123ED"
+      ],
+      "source_documents": [
+        "Plans/Models_System.md"
+      ],
+      "source_unit_refs": [
+        "SEMANTIC:PROLOGUE:Plans/Models_System.md",
+        "PLANUNIT:MS-113",
+        "SEMANTIC:PLANUNIT:MS-113",
+        "PLANUNIT:MS-115",
+        "SEMANTIC:PLANUNIT:MS-115:CONT-002",
+        "SEMANTIC:PLANUNIT:MS-115:CONT-003",
+        "PLANUNIT:MS-004",
+        "PLANUNIT:MS-005",
+        "PLANUNIT:MS-006",
+        "PLANUNIT:MS-007",
+        "PLANUNIT:MS-008",
+        "PLANUNIT:MS-009",
+        "PLANUNIT:MS-010",
+        "SEMANTIC:PLANUNIT:MS-004",
+        "SEMANTIC:PLANUNIT:MS-005",
+        "SEMANTIC:PLANUNIT:MS-006",
+        "SEMANTIC:PLANUNIT:MS-007",
+        "SEMANTIC:PLANUNIT:MS-008",
+        "SEMANTIC:PLANUNIT:MS-009",
+        "SEMANTIC:PLANUNIT:MS-010",
+        "PLANUNIT:MS-011",
+        "PLANUNIT:MS-012",
+        "PLANUNIT:MS-013",
+        "PLANUNIT:MS-014",
+        "PLANUNIT:MS-015",
+        "PLANUNIT:MS-016",
+        "SEMANTIC:PLANUNIT:MS-011",
+        "SEMANTIC:PLANUNIT:MS-012",
+        "SEMANTIC:PLANUNIT:MS-013",
+        "SEMANTIC:PLANUNIT:MS-014",
+        "SEMANTIC:PLANUNIT:MS-015",
+        "SEMANTIC:PLANUNIT:MS-016"
+      ],
+      "risk_level": "high",
+      "spec_state": "contradictory",
+      "gap_summary": "Validated observations: Provider/model ownership and three-axis resolution are explicit; MS-004 through MS-010 preserve distinct owner concerns; MS-011 through MS-016 preserve useful presentation, identity, and option boundaries. Preserved gaps or unknowns: The document contains incompatible precedence chains; The owner resolver emit shape omits required effort and runtime-platform fields; selection_reason is an unversioned competing schema with noncanonical examples; MS-004 through MS-010 have no behavior-specific acceptance oracles; MS-005 misclassifies an active invariant as stale/retired; MS-011 through MS-016 also lack behavior-specific acceptance oracles.",
+      "research_questions": [
+        "Which current external standards and proven implementations should define Model resolver identity, precedence, and acceptance, with concrete attention to The document contains incompatible precedence chains; The owner resolver emit shape omits required effort and runtime-platform fields; selection_reason is an unversioned competing schema with noncanonical examples; MS-004 through MS-010 have no behavior-specific acceptance oracles; MS-005 misclassifies an active invariant as stale/retired; MS-011 through MS-016 also lack behavior-specific acceptance oracles?"
+      ],
+      "scenario_requirements": [
+        "Inject the edge or failure state described by \"The document contains incompatible precedence chains\"; certification passes only if the resulting authority decision, state transition, durable evidence, recovery behavior, and user-visible outcome are deterministic and falsifiable."
+      ],
+      "cross_packet_terms": [
+        "internal contradiction",
+        "incomplete output contract",
+        "competing audit schema",
+        "missing acceptance oracles",
+        "invalid semantic classification"
+      ],
+      "confidence": 0.84
+    },
+    {
+      "feature_id": "FLOCAL-0010",
+      "title": "Provider route matrix and sensitive provider data",
+      "summary": "Local normalized feature covering MS-114 promises a route matrix but does not specify most routes; Region and verification distinctions are not collapsed; Account, credential, and billing data lack security and lifecycle rules; Provider-surface and adapter rules lack operational and security closure. Distinct authority, lifecycle, consumers, and failure semantics are retained through its assigned atom partition.",
+      "feature_kind": "integration",
+      "owner_domain": "agents_models_providers",
+      "secondary_domains": [],
+      "aliases": [],
+      "atom_ids": [
+        "ATOM-C8500F986059E032E162",
+        "ATOM-955919C192B8AF938041",
+        "ATOM-FF7EFD043243227AF3D5",
+        "ATOM-1ED638AAF1C8324183DD"
+      ],
+      "source_documents": [
+        "Plans/Models_System.md"
+      ],
+      "source_unit_refs": [
+        "PLANUNIT:MS-114",
+        "SEMANTIC:PLANUNIT:MS-114",
+        "SEMANTIC:PROLOGUE:Plans/Models_System.md",
+        "PLANUNIT:MS-115",
+        "SEMANTIC:PLANUNIT:MS-115:CONT-001",
+        "SEMANTIC:PLANUNIT:MS-115:CONT-002",
+        "SEMANTIC:PLANUNIT:MS-115:CONT-003",
+        "PLANUNIT:MS-076",
+        "PLANUNIT:MS-077",
+        "PLANUNIT:MS-078",
+        "PLANUNIT:MS-079",
+        "PLANUNIT:MS-080",
+        "PLANUNIT:MS-081",
+        "SEMANTIC:PLANUNIT:MS-076",
+        "SEMANTIC:PLANUNIT:MS-077",
+        "SEMANTIC:PLANUNIT:MS-078",
+        "SEMANTIC:PLANUNIT:MS-079",
+        "SEMANTIC:PLANUNIT:MS-080",
+        "SEMANTIC:PLANUNIT:MS-081"
+      ],
+      "risk_level": "high",
+      "spec_state": "partially_specified",
+      "gap_summary": "Validated observations: Region and verification distinctions are not collapsed. Preserved gaps or unknowns: MS-114 promises a route matrix but does not specify most routes; Account, credential, and billing data lack security and lifecycle rules; Provider-surface and adapter rules lack operational and security closure.",
+      "research_questions": [
+        "Which current external standards and proven implementations should define Provider route matrix and sensitive provider data, with concrete attention to MS-114 promises a route matrix but does not specify most routes; Account, credential, and billing data lack security and lifecycle rules; Provider-surface and adapter rules lack operational and security closure?"
+      ],
+      "scenario_requirements": [
+        "Inject the edge or failure state described by \"MS-114 promises a route matrix but does not specify most routes\"; certification passes only if the resulting authority decision, state transition, durable evidence, recovery behavior, and user-visible outcome are deterministic and falsifiable."
+      ],
+      "cross_packet_terms": [
+        "missing route contract",
+        "missing security privacy contract",
+        "missing operations security and adapter oracles"
+      ],
+      "confidence": 0.84
+    },
+    {
+      "feature_id": "FLOCAL-0011",
+      "title": "Capability catalog, snapshots, and availability lifecycle",
+      "summary": "Local normalized feature covering Catalog presence and generated-media claims are correctly evidence-gated; MS-113 is marked non-GUI despite normative Settings behavior; Capability provenance and staleness are first-class; Context-limit field names diverge inside the owner contract; Model lifecycle states lack transition and recovery semantics; Model refresh has display states but no operational state machine; The canonical capability snapshot example omits mandatory provenance; GUI support states cannot represent the full runtime truth; Dynamic catalogs and fallback chains have no scale or resource limits; Capability matrix lacks refresh and race semantics; Selectable snapshots need version and replacement rules; Threshold metadata lacks validation invariants; Availability lifecycle omits legal transitions and dispatch races. Distinct authority, lifecycle, consumers, and failure semantics are retained through its assigned atom partition.",
+      "feature_kind": "data_model",
+      "owner_domain": "agents_models_providers",
+      "secondary_domains": [],
+      "aliases": [],
+      "atom_ids": [
+        "ATOM-1AF88F75E468A34F6CF4",
+        "ATOM-5BD593964B11507F8161",
+        "ATOM-3B7FDB64FFFC93657E6E",
+        "ATOM-8EABED37BD4367CB46EE",
+        "ATOM-37BB0547892B88A3F5E0",
+        "ATOM-50D8E4A46DABB16758EE",
+        "ATOM-99D0C30AB76C942E84CE",
+        "ATOM-B9CC3C93A79A6D502EA5",
+        "ATOM-D78E22A417500EEFAE71",
+        "ATOM-F0FDA8A97CC7628148DE",
+        "ATOM-90FBEBBF6FFB61BC8805",
+        "ATOM-5D49DA1D734F9CCE6EE9",
+        "ATOM-E92D2542B19F15994B73"
+      ],
+      "source_documents": [
+        "Plans/Models_System.md"
+      ],
+      "source_unit_refs": [
+        "PLANUNIT:MS-113",
+        "SEMANTIC:PLANUNIT:MS-113",
+        "PLANUNIT:MS-115",
+        "SEMANTIC:PLANUNIT:MS-115:CONT-001",
+        "SEMANTIC:PLANUNIT:MS-115:CONT-002",
+        "SEMANTIC:PLANUNIT:MS-115:CONT-003",
+        "PLANUNIT:MS-017",
+        "SEMANTIC:PLANUNIT:MS-017",
+        "PLANUNIT:MS-018",
+        "SEMANTIC:PLANUNIT:MS-018",
+        "PLANUNIT:MS-020",
+        "SEMANTIC:PLANUNIT:MS-020",
+        "PLANUNIT:MS-023",
+        "SEMANTIC:PLANUNIT:MS-023"
+      ],
+      "risk_level": "critical",
+      "spec_state": "contradictory",
+      "gap_summary": "Validated observations: Catalog presence and generated-media claims are correctly evidence-gated; Capability provenance and staleness are first-class. Preserved gaps or unknowns: MS-113 is marked non-GUI despite normative Settings behavior; Context-limit field names diverge inside the owner contract; Model lifecycle states lack transition and recovery semantics; Model refresh has display states but no operational state machine; The canonical capability snapshot example omits mandatory provenance; GUI support states cannot represent the full runtime truth; Dynamic catalogs and fallback chains have no scale or resource limits; Capability matrix lacks refresh and race semantics; Selectable snapshots need version and replacement rules; Threshold metadata lacks validation invariants; Availability lifecycle omits legal transitions and dispatch races.",
+      "research_questions": [
+        "Which current external standards and proven implementations should define Capability catalog, snapshots, and availability lifecycle, with concrete attention to MS-113 is marked non-GUI despite normative Settings behavior; Context-limit field names diverge inside the owner contract; Model lifecycle states lack transition and recovery semantics; Model refresh has display states but no operational state machine; The canonical capability snapshot example omits mandatory provenance; GUI support states cannot represent the full runtime truth; Dynamic catalogs and fallback chains have no scale or resource limits; Capability matrix lacks refresh and race semantics; Selectable snapshots need version and replacement rules; Threshold metadata lacks validation invariants; Availability lifecycle omits legal transitions and dispatch races?"
+      ],
+      "scenario_requirements": [
+        "Inject the edge or failure state described by \"MS-113 is marked non-GUI despite normative Settings behavior\"; certification passes only if the resulting authority decision, state transition, durable evidence, recovery behavior, and user-visible outcome are deterministic and falsifiable."
+      ],
+      "cross_packet_terms": [
+        "gui classification contradiction",
+        "field name contradiction",
+        "missing state machine",
+        "missing refresh state machine",
+        "schema example contradiction",
+        "incomplete gui state model",
+        "missing scale limits",
+        "underspecified refresh atomicity",
+        "snapshot lifecycle unspecified",
+        "threshold bounds unspecified",
+        "lifecycle transition protocol missing"
+      ],
+      "confidence": 0.84
+    },
+    {
+      "feature_id": "FLOCAL-0012",
+      "title": "Effort transforms and settlement receipts",
+      "summary": "Local normalized feature covering Effort transforms are prose, not an executable mapping contract; Effort capability is runtime-qualified; Unknown discovery and requested or effective effort stay distinct; Universal unsupported wording is superseded; Requested-versus-effective effort settlement; Effort settlement cannot be durably correlated. Distinct authority, lifecycle, consumers, and failure semantics are retained through its assigned atom partition.",
+      "feature_kind": "data_model",
+      "owner_domain": "agents_models_providers",
+      "secondary_domains": [],
+      "aliases": [],
+      "atom_ids": [
+        "ATOM-A26D0EF9BC13EDD774AB",
+        "ATOM-1D8ED9C74D1A50773E30",
+        "ATOM-CD5536C1A441CFBEC9E8",
+        "ATOM-1099A236C968A2D2FBDA",
+        "ATOM-7FBC9450346FE02CE008",
+        "ATOM-8C44B9A7EC4CBEA1543E"
+      ],
+      "source_documents": [
+        "Plans/Models_System.md"
+      ],
+      "source_unit_refs": [
+        "PLANUNIT:MS-115",
+        "SEMANTIC:PLANUNIT:MS-115:CONT-001",
+        "PLANUNIT:MS-059",
+        "SEMANTIC:PLANUNIT:MS-059",
+        "PLANUNIT:MS-060",
+        "SEMANTIC:PLANUNIT:MS-060",
+        "PLANUNIT:MS-061",
+        "SEMANTIC:PLANUNIT:MS-061",
+        "PLANUNIT:MS-126",
+        "SEMANTIC:PLANUNIT:MS-126"
+      ],
+      "risk_level": "high",
+      "spec_state": "partially_specified",
+      "gap_summary": "Validated observations: Effort capability is runtime-qualified; Unknown discovery and requested or effective effort stay distinct; Universal unsupported wording is superseded; Requested-versus-effective effort settlement. Preserved gaps or unknowns: Effort transforms are prose, not an executable mapping contract; Effort settlement cannot be durably correlated.",
+      "research_questions": [
+        "Which current external standards and proven implementations should define Effort transforms and settlement receipts, with concrete attention to Effort transforms are prose, not an executable mapping contract; Effort settlement cannot be durably correlated?"
+      ],
+      "scenario_requirements": [
+        "Inject the edge or failure state described by \"Effort transforms are prose, not an executable mapping contract\"; certification passes only if the resulting authority decision, state transition, durable evidence, recovery behavior, and user-visible outcome are deterministic and falsifiable."
+      ],
+      "cross_packet_terms": [
+        "underspecified transform matrix",
+        "settlement identity and idempotency missing"
+      ],
+      "confidence": 0.84
+    },
+    {
+      "feature_id": "FLOCAL-0013",
+      "title": "Variants, aliases, and quick-switch selection",
+      "summary": "Local normalized feature covering Variant ranking and user-selected variant precedence are underdefined; The canonical media alias table violates the canonical model-ID grammar; Alias normalization collisions and unsafe overrides have no resolution contract; Variants anchor defines the owner location; Variant concept is a named quick-switch preset; Built-in variant resolution lacks deterministic tie-breakers; Custom variant uniqueness scope and invalid-record handling are unclear; Disabling an active variant lacks transition semantics; Variant cycling lacks in-flight run concurrency rules; Session variant persistence needs multi-surface conflict rules; Persona default variant has a canonical schema field; Persona preselection preserves user session override; Alias normalization needs collision and ambiguity policy; User-overridable media aliases need target validation; GUI labels remain views over canonical IDs; Custom variant invalidity lacks a required terminal disposition. Distinct authority, lifecycle, consumers, and failure semantics are retained through its assigned atom partition.",
+      "feature_kind": "feature",
+      "owner_domain": "agents_models_providers",
+      "secondary_domains": [],
+      "aliases": [],
+      "atom_ids": [
+        "ATOM-5843BD8C63EBB073D7A1",
+        "ATOM-53CCCB8291D027D5D13A",
+        "ATOM-00AF205B777CF0CBD11F",
+        "ATOM-099E97C057E91AB3C928",
+        "ATOM-D1C949D2B9E7FC414CF7",
+        "ATOM-D400232768A8C18D8578",
+        "ATOM-C12627F635FEF897CAC0",
+        "ATOM-6AB78FDCC28F4C7D3139",
+        "ATOM-20BD441B832C0F2DFFB2",
+        "ATOM-497A946469AD5BE4775A",
+        "ATOM-308058A9C446AF454A42",
+        "ATOM-DCEEA0910F941977A9AB",
+        "ATOM-BC0B5792D139C0667C33",
+        "ATOM-DE7C8AD23ECAD7E6C7E1",
+        "ATOM-AC1518B7D51A94CFB438",
+        "ATOM-48E7468C706C66DB2C00"
+      ],
+      "source_documents": [
+        "Plans/Models_System.md"
+      ],
+      "source_unit_refs": [
+        "PLANUNIT:MS-115",
+        "SEMANTIC:PLANUNIT:MS-115:CONT-001",
+        "SEMANTIC:PROLOGUE:Plans/Models_System.md",
+        "SEMANTIC:PLANUNIT:MS-115:CONT-002",
+        "PLANUNIT:MS-043",
+        "SEMANTIC:PLANUNIT:MS-043",
+        "PLANUNIT:MS-044",
+        "SEMANTIC:PLANUNIT:MS-044",
+        "PLANUNIT:MS-045",
+        "SEMANTIC:PLANUNIT:MS-045",
+        "PLANUNIT:MS-046",
+        "SEMANTIC:PLANUNIT:MS-046",
+        "PLANUNIT:MS-047",
+        "SEMANTIC:PLANUNIT:MS-047",
+        "PLANUNIT:MS-048",
+        "SEMANTIC:PLANUNIT:MS-048",
+        "PLANUNIT:MS-049",
+        "SEMANTIC:PLANUNIT:MS-049",
+        "PLANUNIT:MS-050",
+        "SEMANTIC:PLANUNIT:MS-050",
+        "PLANUNIT:MS-051",
+        "SEMANTIC:PLANUNIT:MS-051",
+        "PLANUNIT:MS-052",
+        "SEMANTIC:PLANUNIT:MS-052",
+        "PLANUNIT:MS-053",
+        "SEMANTIC:PLANUNIT:MS-053",
+        "PLANUNIT:MS-054",
+        "SEMANTIC:PLANUNIT:MS-054",
+        "PLANUNIT:MS-069",
+        "SEMANTIC:PLANUNIT:MS-069"
+      ],
+      "risk_level": "high",
+      "spec_state": "contradictory",
+      "gap_summary": "Validated observations: Variants anchor defines the owner location; Variant concept is a named quick-switch preset; Persona default variant has a canonical schema field; Persona preselection preserves user session override; GUI labels remain views over canonical IDs. Preserved gaps or unknowns: Variant ranking and user-selected variant precedence are underdefined; The canonical media alias table violates the canonical model-ID grammar; Alias normalization collisions and unsafe overrides have no resolution contract; Built-in variant resolution lacks deterministic tie-breakers; Custom variant uniqueness scope and invalid-record handling are unclear; Disabling an active variant lacks transition semantics; Variant cycling lacks in-flight run concurrency rules; Session variant persistence needs multi-surface conflict rules; Alias normalization needs collision and ambiguity policy; User-overridable media aliases need target validation; Custom variant invalidity lacks a required terminal disposition.",
+      "research_questions": [
+        "Which current external standards and proven implementations should define Variants, aliases, and quick-switch selection, with concrete attention to Variant ranking and user-selected variant precedence are underdefined; The canonical media alias table violates the canonical model-ID grammar; Alias normalization collisions and unsafe overrides have no resolution contract; Built-in variant resolution lacks deterministic tie-breakers; Custom variant uniqueness scope and invalid-record handling are unclear; Disabling an active variant lacks transition semantics; Variant cycling lacks in-flight run concurrency rules; Session variant persistence needs multi-surface conflict rules; Alias normalization needs collision and ambiguity policy; User-overridable media aliases need target validation; Custom variant invalidity lacks a required terminal disposition?"
+      ],
+      "scenario_requirements": [
+        "Inject the edge or failure state described by \"Variant ranking and user-selected variant precedence are underdefined\"; certification passes only if the resulting authority decision, state transition, durable evidence, recovery behavior, and user-visible outcome are deterministic and falsifiable."
+      ],
+      "cross_packet_terms": [
+        "nondeterministic selection",
+        "identifier contract contradiction",
+        "untrusted input collision",
+        "variant ranking underspecified",
+        "custom variant validation underspecified",
+        "active variant disable transition missing",
+        "variant change concurrency missing",
+        "session persistence conflict missing",
+        "alias collision policy missing",
+        "media alias override validation missing",
+        "invalid custom variant disposition ambiguous"
+      ],
+      "confidence": 0.84
+    },
+    {
+      "feature_id": "FLOCAL-0014",
+      "title": "Model picker, Settings, and runtime inspector",
+      "summary": "Local normalized feature covering Model-selection GUI requirements omit accessibility and localization; Interview Gemini default lacks a deterministic candidate contract; Picker labels and indicators lack accessibility and localization rules; Settings distinguishes route-specific image capability and discovery state; Refresh actions lack cancellation and stale-result ordering; Inspector discloses exact runtime identity and provider effects; Puppet Master GUI deltas are explicit; Model capability confidence UI; Persona selection and picker contracts omit critical edge semantics. Distinct authority, lifecycle, consumers, and failure semantics are retained through its assigned atom partition.",
+      "feature_kind": "gui_surface",
+      "owner_domain": "gui_ux_accessibility",
+      "secondary_domains": [],
+      "aliases": [],
+      "atom_ids": [
+        "ATOM-13C1EB30CD3666B3FA61",
+        "ATOM-79BD85EEE8D54DC0684C",
+        "ATOM-E119CDA60A1E8655E4CD",
+        "ATOM-036267FD69C78D3BBB02",
+        "ATOM-09ADE1D56B1A1D693851",
+        "ATOM-405AD009356BDF033A62",
+        "ATOM-2B6B0EAB04BDC421AFA0",
+        "ATOM-C0AEFD706AD4F57AEF04",
+        "ATOM-BA5A8D1343BB9C79A233"
+      ],
+      "source_documents": [
+        "Plans/Models_System.md"
+      ],
+      "source_unit_refs": [
+        "PLANUNIT:MS-115",
+        "SEMANTIC:PLANUNIT:MS-115:CONT-002",
+        "PLANUNIT:MS-055",
+        "SEMANTIC:PLANUNIT:MS-055",
+        "PLANUNIT:MS-057",
+        "SEMANTIC:PLANUNIT:MS-057",
+        "PLANUNIT:MS-058",
+        "SEMANTIC:PLANUNIT:MS-058",
+        "PLANUNIT:MS-062",
+        "SEMANTIC:PLANUNIT:MS-062",
+        "PLANUNIT:MS-066",
+        "SEMANTIC:PLANUNIT:MS-066",
+        "PLANUNIT:MS-129",
+        "SEMANTIC:PLANUNIT:MS-129",
+        "PLANUNIT:MS-070",
+        "PLANUNIT:MS-071",
+        "PLANUNIT:MS-072",
+        "PLANUNIT:MS-073",
+        "PLANUNIT:MS-074",
+        "PLANUNIT:MS-075",
+        "SEMANTIC:PLANUNIT:MS-070",
+        "SEMANTIC:PLANUNIT:MS-071",
+        "SEMANTIC:PLANUNIT:MS-072",
+        "SEMANTIC:PLANUNIT:MS-073",
+        "SEMANTIC:PLANUNIT:MS-074",
+        "SEMANTIC:PLANUNIT:MS-075"
+      ],
+      "risk_level": "high",
+      "spec_state": "partially_specified",
+      "gap_summary": "Validated observations: Settings distinguishes route-specific image capability and discovery state; Inspector discloses exact runtime identity and provider effects; Puppet Master GUI deltas are explicit; Model capability confidence UI. Preserved gaps or unknowns: Model-selection GUI requirements omit accessibility and localization; Interview Gemini default lacks a deterministic candidate contract; Picker labels and indicators lack accessibility and localization rules; Refresh actions lack cancellation and stale-result ordering; Persona selection and picker contracts omit critical edge semantics.",
+      "research_questions": [
+        "Which current external standards and proven implementations should define Model picker, Settings, and runtime inspector, with concrete attention to Model-selection GUI requirements omit accessibility and localization; Interview Gemini default lacks a deterministic candidate contract; Picker labels and indicators lack accessibility and localization rules; Refresh actions lack cancellation and stale-result ordering; Persona selection and picker contracts omit critical edge semantics?"
+      ],
+      "scenario_requirements": [
+        "Inject the edge or failure state described by \"Model-selection GUI requirements omit accessibility and localization\"; certification passes only if the resulting authority decision, state transition, durable evidence, recovery behavior, and user-visible outcome are deterministic and falsifiable."
+      ],
+      "cross_packet_terms": [
+        "missing gui quality contract",
+        "underspecified surface default",
+        "picker presentation oracles missing",
+        "refresh concurrency protocol missing",
+        "underspecified validation conflict and gui failure semantics"
+      ],
+      "confidence": 0.84
+    },
+    {
+      "feature_id": "FLOCAL-0015",
+      "title": "Model role lanes, policies, and crew normalization",
+      "summary": "Local normalized feature covering Fallback, retry, and attempt identity are correctly separated; Copilot crew normalization is destructive without confirmation or rollback; Conservative, standard, and aggressive policies do not compose with canonical precedence; System role mapping is metadata-owned; Snapshot consumers, crew normalization, and scoped policy need edge-state contracts; Role-lane ownership is strong but default bindings and setting seams remain deferred. Distinct authority, lifecycle, consumers, and failure semantics are retained through its assigned atom partition.",
+      "feature_kind": "governance_control",
+      "owner_domain": "agents_models_providers",
+      "secondary_domains": [],
+      "aliases": [],
+      "atom_ids": [
+        "ATOM-8F4DB251609EB91DB30F",
+        "ATOM-35E01C2E72ECAF5A4D1F",
+        "ATOM-E7FB3DBF0B4BF7B69C5E",
+        "ATOM-B941FBC6F44341B67189",
+        "ATOM-0535E70C962E953AAD3B",
+        "ATOM-37213C42CE26BE371821"
+      ],
+      "source_documents": [
+        "Plans/Models_System.md"
+      ],
+      "source_unit_refs": [
+        "PLANUNIT:MS-115",
+        "SEMANTIC:PLANUNIT:MS-115:CONT-003",
+        "PLANUNIT:MS-019",
+        "SEMANTIC:PLANUNIT:MS-019",
+        "PLANUNIT:MS-095",
+        "PLANUNIT:MS-096",
+        "PLANUNIT:MS-097",
+        "PLANUNIT:MS-098",
+        "PLANUNIT:MS-099",
+        "PLANUNIT:MS-100",
+        "SEMANTIC:PLANUNIT:MS-095",
+        "SEMANTIC:PLANUNIT:MS-096",
+        "SEMANTIC:PLANUNIT:MS-097",
+        "SEMANTIC:PLANUNIT:MS-098",
+        "SEMANTIC:PLANUNIT:MS-099",
+        "SEMANTIC:PLANUNIT:MS-100",
+        "PLANUNIT:MS-001",
+        "PLANUNIT:MS-107",
+        "PLANUNIT:MS-108",
+        "PLANUNIT:MS-109",
+        "PLANUNIT:MS-110",
+        "SEMANTIC:PLANUNIT:MS-001",
+        "SEMANTIC:PLANUNIT:MS-107",
+        "SEMANTIC:PLANUNIT:MS-108",
+        "SEMANTIC:PLANUNIT:MS-109",
+        "SEMANTIC:PLANUNIT:MS-110"
+      ],
+      "risk_level": "high",
+      "spec_state": "partially_specified",
+      "gap_summary": "Validated observations: Fallback, retry, and attempt identity are correctly separated; System role mapping is metadata-owned. Preserved gaps or unknowns: Copilot crew normalization is destructive without confirmation or rollback; Conservative, standard, and aggressive policies do not compose with canonical precedence; Snapshot consumers, crew normalization, and scoped policy need edge-state contracts; Role-lane ownership is strong but default bindings and setting seams remain deferred.",
+      "research_questions": [
+        "Which current external standards and proven implementations should define Model role lanes, policies, and crew normalization, with concrete attention to Copilot crew normalization is destructive without confirmation or rollback; Conservative, standard, and aggressive policies do not compose with canonical precedence; Snapshot consumers, crew normalization, and scoped policy need edge-state contracts; Role-lane ownership is strong but default bindings and setting seams remain deferred?"
+      ],
+      "scenario_requirements": [
+        "Inject the edge or failure state described by \"Copilot crew normalization is destructive without confirmation or rollback\"; certification passes only if the resulting authority decision, state transition, durable evidence, recovery behavior, and user-visible outcome are deterministic and falsifiable."
+      ],
+      "cross_packet_terms": [
+        "unsafe destructive transition",
+        "policy composition ambiguity",
+        "missing consumer corruption destructive action and scope migration semantics",
+        "deferred default binding and cross document setting precedence"
+      ],
+      "confidence": 0.84
+    },
+    {
+      "feature_id": "FLOCAL-0016",
+      "title": "Model-system governance, baseline deltas, and retired authorities",
+      "summary": "Local normalized feature covering MS-002 and MS-003 contain unrelated Antigravity media constraints; MS-014 preserves gemini_cli without marking it retired; MS-016 claims option-field ownership without depending on MS-017; Gemini heading is only a structural anchor; Baseline-deltas heading is only a reference anchor; OpenCode baseline behavior is preserved for comparison; Puppet Master non-GUI deltas are explicit; Capability authority and platform_specs retirement; Residual provider schema closure. Distinct authority, lifecycle, consumers, and failure semantics are retained through its assigned atom partition.",
+      "feature_kind": "governance_control",
+      "owner_domain": "planning_specification_governance",
+      "secondary_domains": [],
+      "aliases": [],
+      "atom_ids": [
+        "ATOM-20BAC707BB428D31DBC8",
+        "ATOM-C10876D088B415355553",
+        "ATOM-C26AE548E0E5D00CFDD0",
+        "ATOM-E220CEED03D40B7CBF22",
+        "ATOM-50429610C5E98C1386F3",
+        "ATOM-00AE5BE0B7634D82739E",
+        "ATOM-08FFB11D8D80E57E53B1",
+        "ATOM-83DDC16B220F0CC2D378",
+        "ATOM-EB4CBD2035EEAF7D3109"
+      ],
+      "source_documents": [
+        "Plans/Models_System.md"
+      ],
+      "source_unit_refs": [
+        "PLANUNIT:MS-002",
+        "SEMANTIC:PLANUNIT:MS-002",
+        "PLANUNIT:MS-003",
+        "SEMANTIC:PLANUNIT:MS-003",
+        "PLANUNIT:MS-014",
+        "SEMANTIC:PLANUNIT:MS-014",
+        "PLANUNIT:MS-016",
+        "SEMANTIC:PLANUNIT:MS-016",
+        "PLANUNIT:MS-031",
+        "SEMANTIC:PLANUNIT:MS-031",
+        "PLANUNIT:MS-063",
+        "SEMANTIC:PLANUNIT:MS-063",
+        "PLANUNIT:MS-064",
+        "SEMANTIC:PLANUNIT:MS-064",
+        "PLANUNIT:MS-065",
+        "SEMANTIC:PLANUNIT:MS-065",
+        "PLANUNIT:MS-134",
+        "SEMANTIC:PLANUNIT:MS-134",
+        "PLANUNIT:MS-135",
+        "SEMANTIC:PLANUNIT:MS-135"
+      ],
+      "risk_level": "medium",
+      "spec_state": "partially_specified",
+      "gap_summary": "Validated observations: Gemini heading is only a structural anchor; Baseline-deltas heading is only a reference anchor; OpenCode baseline behavior is preserved for comparison; Puppet Master non-GUI deltas are explicit; Capability authority and platform_specs retirement; Residual provider schema closure. Preserved gaps or unknowns: MS-002 and MS-003 contain unrelated Antigravity media constraints; MS-014 preserves gemini_cli without marking it retired; MS-016 claims option-field ownership without depending on MS-017.",
+      "research_questions": [
+        "Which current external standards and proven implementations should define Model-system governance, baseline deltas, and retired authorities, with concrete attention to MS-002 and MS-003 contain unrelated Antigravity media constraints; MS-014 preserves gemini_cli without marking it retired; MS-016 claims option-field ownership without depending on MS-017?"
+      ],
+      "scenario_requirements": [
+        "Inject the edge or failure state described by \"MS-002 and MS-003 contain unrelated Antigravity media constraints\"; certification passes only if the resulting authority decision, state transition, durable evidence, recovery behavior, and user-visible outcome are deterministic and falsifiable."
+      ],
+      "cross_packet_terms": [
+        "planunit scope incoherence",
+        "missing retired disposition",
+        "missing planunit dependency"
+      ],
+      "confidence": 0.84
+    },
+    {
+      "feature_id": "FLOCAL-0017",
+      "title": "Web-provider capability mirror and routes",
+      "summary": "Local normalized feature covering Web capability tier is correctly separated from routing posture; Mirrored web capability state needs drift detection; Native and composed websearch classes remain distinct; Best-effort DDG partial behavior lacks recovery disclosure; Firecrawl configuration needs explicit credential and URL validation; Firecrawl deployment switching is disclosed; Tavily heavy mode lacks budgets and cancellation policy; Web input mirror delegates validation across a seam. Distinct authority, lifecycle, consumers, and failure semantics are retained through its assigned atom partition.",
+      "feature_kind": "integration",
+      "owner_domain": "tools_integrations_mcp",
+      "secondary_domains": [],
+      "aliases": [],
+      "atom_ids": [
+        "ATOM-C03AFEA475C9EDB334D8",
+        "ATOM-06C7811587DBF2DEF9A0",
+        "ATOM-D51C267F40B14FFDF173",
+        "ATOM-4F7BAAD665DB0A7EA883",
+        "ATOM-8DD197BDEC81960F9E00",
+        "ATOM-EF4802086A7085B7A8A1",
+        "ATOM-B86C9453FF5F7F6E222E",
+        "ATOM-0A31BB053295DB050618"
+      ],
+      "source_documents": [
+        "Plans/Models_System.md"
+      ],
+      "source_unit_refs": [
+        "PLANUNIT:MS-115",
+        "SEMANTIC:PLANUNIT:MS-115:CONT-001",
+        "PLANUNIT:MS-032",
+        "SEMANTIC:PLANUNIT:MS-032",
+        "PLANUNIT:MS-033",
+        "SEMANTIC:PLANUNIT:MS-033",
+        "PLANUNIT:MS-034",
+        "SEMANTIC:PLANUNIT:MS-034",
+        "PLANUNIT:MS-035",
+        "SEMANTIC:PLANUNIT:MS-035",
+        "PLANUNIT:MS-036",
+        "SEMANTIC:PLANUNIT:MS-036",
+        "PLANUNIT:MS-037",
+        "SEMANTIC:PLANUNIT:MS-037",
+        "PLANUNIT:MS-038",
+        "SEMANTIC:PLANUNIT:MS-038"
+      ],
+      "risk_level": "high",
+      "spec_state": "partially_specified",
+      "gap_summary": "Validated observations: Web capability tier is correctly separated from routing posture; Native and composed websearch classes remain distinct; Firecrawl deployment switching is disclosed. Preserved gaps or unknowns: Mirrored web capability state needs drift detection; Best-effort DDG partial behavior lacks recovery disclosure; Firecrawl configuration needs explicit credential and URL validation; Tavily heavy mode lacks budgets and cancellation policy; Web input mirror delegates validation across a seam.",
+      "research_questions": [
+        "Which current external standards and proven implementations should define Web-provider capability mirror and routes, with concrete attention to Mirrored web capability state needs drift detection; Best-effort DDG partial behavior lacks recovery disclosure; Firecrawl configuration needs explicit credential and URL validation; Tavily heavy mode lacks budgets and cancellation policy; Web input mirror delegates validation across a seam?"
+      ],
+      "scenario_requirements": [
+        "Inject the edge or failure state described by \"Mirrored web capability state needs drift detection\"; certification passes only if the resulting authority decision, state transition, durable evidence, recovery behavior, and user-visible outcome are deterministic and falsifiable."
+      ],
+      "cross_packet_terms": [
+        "mirror consistency protocol missing",
+        "best effort failure semantics missing",
+        "provider config security rules missing",
+        "heavy mode resource policy missing",
+        "delegated validation binding missing"
+      ],
+      "confidence": 0.84
+    },
+    {
+      "feature_id": "FLOCAL-0018",
+      "title": "Runtime request routing and surface recovery",
+      "summary": "Local normalized feature covering Provider transforms need ordering and idempotence; Runtime request routing needs a deterministic decision table; Requested override lacks mid-run surface-loss recovery; Model identity and deterministic selection have acceptance oracles. Distinct authority, lifecycle, consumers, and failure semantics are retained through its assigned atom partition.",
+      "feature_kind": "system",
+      "owner_domain": "orchestration_runtime_execution",
+      "secondary_domains": [],
+      "aliases": [],
+      "atom_ids": [
+        "ATOM-4BBBD4E963D7EC58A2A0",
+        "ATOM-D0D3B64FF7920E1BC453",
+        "ATOM-0A2319E761F7EC820B46",
+        "ATOM-E0455441B02D8B5399EB"
+      ],
+      "source_documents": [
+        "Plans/Models_System.md"
+      ],
+      "source_unit_refs": [
+        "PLANUNIT:MS-021",
+        "SEMANTIC:PLANUNIT:MS-021",
+        "PLANUNIT:MS-022",
+        "SEMANTIC:PLANUNIT:MS-022",
+        "PLANUNIT:MS-056",
+        "SEMANTIC:PLANUNIT:MS-056",
+        "PLANUNIT:MS-067",
+        "SEMANTIC:PLANUNIT:MS-067"
+      ],
+      "risk_level": "high",
+      "spec_state": "partially_specified",
+      "gap_summary": "Validated observations: Model identity and deterministic selection have acceptance oracles. Preserved gaps or unknowns: Provider transforms need ordering and idempotence; Runtime request routing needs a deterministic decision table; Requested override lacks mid-run surface-loss recovery.",
+      "research_questions": [
+        "Which current external standards and proven implementations should define Runtime request routing and surface recovery, with concrete attention to Provider transforms need ordering and idempotence; Runtime request routing needs a deterministic decision table; Requested override lacks mid-run surface-loss recovery?"
+      ],
+      "scenario_requirements": [
+        "Inject the edge or failure state described by \"Provider transforms need ordering and idempotence\"; certification passes only if the resulting authority decision, state transition, durable evidence, recovery behavior, and user-visible outcome are deterministic and falsifiable."
+      ],
+      "cross_packet_terms": [
+        "transform pipeline unspecified",
+        "api family selection underspecified",
+        "selected surface loss unspecified"
+      ],
+      "confidence": 0.84
+    },
+    {
+      "feature_id": "FLOCAL-0019",
+      "title": "Pricing, billing identity, token counting, and context breakdown",
+      "summary": "Local normalized feature covering Pricing version and staleness rules are not operationally defined; Billing aliases need collision and migration rules; Free-tier billing provenance is preserved; OpenCode pricing remains non-authoritative; Token counting lacks adapter failure and reconciliation semantics; Context breakdown lacks unavailable-data and accessibility oracles; Selection gates and audit trail omit unknown-state, accounting, and lifecycle rules. Distinct authority, lifecycle, consumers, and failure semantics are retained through its assigned atom partition.",
+      "feature_kind": "system",
+      "owner_domain": "usage_costs_quotas",
+      "secondary_domains": [],
+      "aliases": [],
+      "atom_ids": [
+        "ATOM-1182E15ADD23DC7469D1",
+        "ATOM-83346696BD7361657E55",
+        "ATOM-79E30EC78D0C42BC7B1A",
+        "ATOM-D923E684BB279EA3D9A0",
+        "ATOM-52D6AE8EE76B4EB34F27",
+        "ATOM-363EEEE1890154ADB3BB",
+        "ATOM-FB3123039DF4465E3714"
+      ],
+      "source_documents": [
+        "Plans/Models_System.md"
+      ],
+      "source_unit_refs": [
+        "PLANUNIT:MS-024",
+        "SEMANTIC:PLANUNIT:MS-024",
+        "PLANUNIT:MS-025",
+        "SEMANTIC:PLANUNIT:MS-025",
+        "PLANUNIT:MS-026",
+        "SEMANTIC:PLANUNIT:MS-026",
+        "PLANUNIT:MS-027",
+        "SEMANTIC:PLANUNIT:MS-027",
+        "PLANUNIT:MS-028",
+        "SEMANTIC:PLANUNIT:MS-028",
+        "PLANUNIT:MS-029",
+        "SEMANTIC:PLANUNIT:MS-029",
+        "PLANUNIT:MS-101",
+        "PLANUNIT:MS-102",
+        "PLANUNIT:MS-103",
+        "PLANUNIT:MS-104",
+        "PLANUNIT:MS-105",
+        "PLANUNIT:MS-106",
+        "SEMANTIC:PLANUNIT:MS-101",
+        "SEMANTIC:PLANUNIT:MS-102",
+        "SEMANTIC:PLANUNIT:MS-103",
+        "SEMANTIC:PLANUNIT:MS-104",
+        "SEMANTIC:PLANUNIT:MS-105",
+        "SEMANTIC:PLANUNIT:MS-106"
+      ],
+      "risk_level": "critical",
+      "spec_state": "partially_specified",
+      "gap_summary": "Validated observations: Free-tier billing provenance is preserved; OpenCode pricing remains non-authoritative. Preserved gaps or unknowns: Pricing version and staleness rules are not operationally defined; Billing aliases need collision and migration rules; Token counting lacks adapter failure and reconciliation semantics; Context breakdown lacks unavailable-data and accessibility oracles; Selection gates and audit trail omit unknown-state, accounting, and lifecycle rules.",
+      "research_questions": [
+        "Which current external standards and proven implementations should define Pricing, billing identity, token counting, and context breakdown, with concrete attention to Pricing version and staleness rules are not operationally defined; Billing aliases need collision and migration rules; Token counting lacks adapter failure and reconciliation semantics; Context breakdown lacks unavailable-data and accessibility oracles; Selection gates and audit trail omit unknown-state, accounting, and lifecycle rules?"
+      ],
+      "scenario_requirements": [
+        "Inject the edge or failure state described by \"Pricing version and staleness rules are not operationally defined\"; certification passes only if the resulting authority decision, state transition, durable evidence, recovery behavior, and user-visible outcome are deterministic and falsifiable."
+      ],
+      "cross_packet_terms": [
+        "pricing version semantics missing",
+        "billing identity alias ambiguity",
+        "token count failure protocol missing",
+        "breakdown edge states unspecified",
+        "missing unknown input accounting and audit data lifecycle"
+      ],
+      "confidence": 0.84
+    },
+    {
+      "feature_id": "FLOCAL-0020",
+      "title": "Persona runtime controls and automation sessions",
+      "summary": "Local normalized feature covering Automation sessions need revoke, cancel, and recovery states; Persona runtime frontmatter needs strict validation and provenance; Persona fallback needs loop and duplicate-warning rules; Unsupported controls become explicit skipped state; Unavailable Persona models warn and fall through; Capability snapshot and Persona-control lifecycle is not fully specified. Distinct authority, lifecycle, consumers, and failure semantics are retained through its assigned atom partition.",
+      "feature_kind": "system",
+      "owner_domain": "agents_models_providers",
+      "secondary_domains": [],
+      "aliases": [],
+      "atom_ids": [
+        "ATOM-31BA9B66BD82329BAE1C",
+        "ATOM-196C8BCDA53CE8731AFD",
+        "ATOM-09F11AC94AB1A071CE47",
+        "ATOM-35B2F9053C351E041DD9",
+        "ATOM-BF157821B3101F3AE0C5",
+        "ATOM-AE4ADA4D8B1B0111FFD9"
+      ],
+      "source_documents": [
+        "Plans/Models_System.md"
+      ],
+      "source_unit_refs": [
+        "PLANUNIT:MS-039",
+        "SEMANTIC:PLANUNIT:MS-039",
+        "PLANUNIT:MS-040",
+        "SEMANTIC:PLANUNIT:MS-040",
+        "PLANUNIT:MS-041",
+        "SEMANTIC:PLANUNIT:MS-041",
+        "PLANUNIT:MS-042",
+        "SEMANTIC:PLANUNIT:MS-042",
+        "PLANUNIT:MS-068",
+        "SEMANTIC:PLANUNIT:MS-068",
+        "PLANUNIT:MS-082",
+        "PLANUNIT:MS-083",
+        "PLANUNIT:MS-084",
+        "PLANUNIT:MS-085",
+        "PLANUNIT:MS-086",
+        "PLANUNIT:MS-087",
+        "SEMANTIC:PLANUNIT:MS-082",
+        "SEMANTIC:PLANUNIT:MS-083",
+        "SEMANTIC:PLANUNIT:MS-084",
+        "SEMANTIC:PLANUNIT:MS-085",
+        "SEMANTIC:PLANUNIT:MS-086",
+        "SEMANTIC:PLANUNIT:MS-087"
+      ],
+      "risk_level": "critical",
+      "spec_state": "partially_specified",
+      "gap_summary": "Validated observations: Unsupported controls become explicit skipped state; Unavailable Persona models warn and fall through. Preserved gaps or unknowns: Automation sessions need revoke, cancel, and recovery states; Persona runtime frontmatter needs strict validation and provenance; Persona fallback needs loop and duplicate-warning rules; Capability snapshot and Persona-control lifecycle is not fully specified.",
+      "research_questions": [
+        "Which current external standards and proven implementations should define Persona runtime controls and automation sessions, with concrete attention to Automation sessions need revoke, cancel, and recovery states; Persona runtime frontmatter needs strict validation and provenance; Persona fallback needs loop and duplicate-warning rules; Capability snapshot and Persona-control lifecycle is not fully specified?"
+      ],
+      "scenario_requirements": [
+        "Inject the edge or failure state described by \"Automation sessions need revoke, cancel, and recovery states\"; certification passes only if the resulting authority decision, state transition, durable evidence, recovery behavior, and user-visible outcome are deterministic and falsifiable."
+      ],
+      "cross_packet_terms": [
+        "automation session lifecycle missing",
+        "persona input validation missing",
+        "fallback termination unspecified",
+        "missing snapshot atomicity state machine and accessible disclosure"
+      ],
+      "confidence": 0.84
+    },
+    {
+      "feature_id": "FLOCAL-0021",
+      "title": "Bedrock model-ID mapping",
+      "summary": "Local normalized feature covering Bedrock mapping rejects implicit unknown-region rewrites. Distinct authority, lifecycle, consumers, and failure semantics are retained through its assigned atom partition.",
+      "feature_kind": "integration",
+      "owner_domain": "agents_models_providers",
+      "secondary_domains": [],
+      "aliases": [],
+      "atom_ids": [
+        "ATOM-0DB5FD630D2A67788155"
+      ],
+      "source_documents": [
+        "Plans/Models_System.md"
+      ],
+      "source_unit_refs": [
+        "PLANUNIT:MS-030",
+        "SEMANTIC:PLANUNIT:MS-030"
+      ],
+      "risk_level": "low",
+      "spec_state": "well_specified",
+      "gap_summary": "Validated observations: Bedrock mapping rejects implicit unknown-region rewrites. No gap is asserted by the assigned observations.",
+      "research_questions": [
+        "Which current external standards and proven implementations should define Bedrock model-ID mapping, with concrete attention to Bedrock mapping rejects implicit unknown-region rewrites?"
+      ],
+      "scenario_requirements": [
+        "Reproduce \"Bedrock mapping rejects implicit unknown-region rewrites\" with one conforming and one deliberately non-conforming implementation; certification passes only when the contract accepts the former and rejects the latter with observable evidence."
+      ],
+      "cross_packet_terms": [],
+      "confidence": 0.94
+    },
+    {
+      "feature_id": "FLOCAL-0022",
+      "title": "Requested-effective retry snapshots",
+      "summary": "Local normalized feature covering Retry separation lacks durable failure and recovery mechanics. Distinct authority, lifecycle, consumers, and failure semantics are retained through its assigned atom partition.",
+      "feature_kind": "data_model",
+      "owner_domain": "orchestration_runtime_execution",
+      "secondary_domains": [],
+      "aliases": [],
+      "atom_ids": [
+        "ATOM-19A5D7B48E2DEAF80D53"
+      ],
+      "source_documents": [
+        "Plans/Models_System.md"
+      ],
+      "source_unit_refs": [
+        "PLANUNIT:MS-088",
+        "PLANUNIT:MS-089",
+        "PLANUNIT:MS-090",
+        "PLANUNIT:MS-091",
+        "PLANUNIT:MS-092",
+        "PLANUNIT:MS-093",
+        "PLANUNIT:MS-094",
+        "SEMANTIC:PLANUNIT:MS-088",
+        "SEMANTIC:PLANUNIT:MS-089",
+        "SEMANTIC:PLANUNIT:MS-090",
+        "SEMANTIC:PLANUNIT:MS-091",
+        "SEMANTIC:PLANUNIT:MS-092",
+        "SEMANTIC:PLANUNIT:MS-093",
+        "SEMANTIC:PLANUNIT:MS-094"
+      ],
+      "risk_level": "critical",
+      "spec_state": "under_specified",
+      "gap_summary": "Preserved gaps or unknowns: Retry separation lacks durable failure and recovery mechanics.",
+      "research_questions": [
+        "Which current external standards and proven implementations should define Requested-effective retry snapshots, with concrete attention to Retry separation lacks durable failure and recovery mechanics?"
+      ],
+      "scenario_requirements": [
+        "Inject the edge or failure state described by \"Retry separation lacks durable failure and recovery mechanics\"; certification passes only if the resulting authority decision, state transition, durable evidence, recovery behavior, and user-visible outcome are deterministic and falsifiable."
+      ],
+      "cross_packet_terms": [
+        "missing atomic retry snapshot and crash recovery contract"
+      ],
+      "confidence": 0.84
+    },
+    {
+      "feature_id": "FLOCAL-0023",
+      "title": "Vision bridge and Teacher model disclosure",
+      "summary": "Local normalized feature covering Routing receipts, vision fallback, and Teacher settings need transactional closure. Distinct authority, lifecycle, consumers, and failure semantics are retained through its assigned atom partition.",
+      "feature_kind": "system",
+      "owner_domain": "agents_models_providers",
+      "secondary_domains": [],
+      "aliases": [],
+      "atom_ids": [
+        "ATOM-493E7D5A837F0EE928A0"
+      ],
+      "source_documents": [
+        "Plans/Models_System.md"
+      ],
+      "source_unit_refs": [
+        "PLANUNIT:MS-111",
+        "PLANUNIT:MS-112",
+        "PLANUNIT:MS-116",
+        "PLANUNIT:MS-117",
+        "SEMANTIC:PLANUNIT:MS-111",
+        "SEMANTIC:PLANUNIT:MS-112",
+        "SEMANTIC:PLANUNIT:MS-116",
+        "SEMANTIC:PLANUNIT:MS-117"
+      ],
+      "risk_level": "critical",
+      "spec_state": "under_specified",
+      "gap_summary": "Preserved gaps or unknowns: Routing receipts, vision fallback, and Teacher settings need transactional closure.",
+      "research_questions": [
+        "Which current external standards and proven implementations should define Vision bridge and Teacher model disclosure, with concrete attention to Routing receipts, vision fallback, and Teacher settings need transactional closure?"
+      ],
+      "scenario_requirements": [
+        "Inject the edge or failure state described by \"Routing receipts, vision fallback, and Teacher settings need transactional closure\"; certification passes only if the resulting authority decision, state transition, durable evidence, recovery behavior, and user-visible outcome are deterministic and falsifiable."
+      ],
+      "cross_packet_terms": [
+        "missing transactional receipt permission and partial cost recovery"
+      ],
+      "confidence": 0.84
+    },
+    {
+      "feature_id": "FLOCAL-0024",
+      "title": "Free Models catalog identity",
+      "summary": "Local normalized feature covering Free Models preserves provider and route identity. Distinct authority, lifecycle, consumers, and failure semantics are retained through its assigned atom partition.",
+      "feature_kind": "feature",
+      "owner_domain": "agents_models_providers",
+      "secondary_domains": [],
+      "aliases": [],
+      "atom_ids": [
+        "ATOM-D7503D21AA601EB93230"
+      ],
+      "source_documents": [
+        "Plans/Models_System.md"
+      ],
+      "source_unit_refs": [
+        "PLANUNIT:MS-118",
+        "SEMANTIC:PLANUNIT:MS-118"
+      ],
+      "risk_level": "low",
+      "spec_state": "well_specified",
+      "gap_summary": "Validated observations: Free Models preserves provider and route identity. No gap is asserted by the assigned observations.",
+      "research_questions": [
+        "Which current external standards and proven implementations should define Free Models catalog identity, with concrete attention to Free Models preserves provider and route identity?"
+      ],
+      "scenario_requirements": [
+        "Reproduce \"Free Models preserves provider and route identity\" with one conforming and one deliberately non-conforming implementation; certification passes only when the contract accepts the former and rejects the latter with observable evidence."
+      ],
+      "cross_packet_terms": [],
+      "confidence": 0.94
+    },
+    {
+      "feature_id": "FLOCAL-0025",
+      "title": "Free Models Auto Apply",
+      "summary": "Local normalized feature covering Auto Apply is Free-Models-scoped and last-known-good; Auto Apply concurrency and crash recovery are unspecified. Distinct authority, lifecycle, consumers, and failure semantics are retained through its assigned atom partition.",
+      "feature_kind": "workflow",
+      "owner_domain": "installation_updates_recovery",
+      "secondary_domains": [],
+      "aliases": [],
+      "atom_ids": [
+        "ATOM-0AF2ADB3888CBF837A80",
+        "ATOM-DDAA1C6F689272444A97"
+      ],
+      "source_documents": [
+        "Plans/Models_System.md"
+      ],
+      "source_unit_refs": [
+        "PLANUNIT:MS-119",
+        "SEMANTIC:PLANUNIT:MS-119"
+      ],
+      "risk_level": "high",
+      "spec_state": "partially_specified",
+      "gap_summary": "Validated observations: Auto Apply is Free-Models-scoped and last-known-good. Preserved gaps or unknowns: Auto Apply concurrency and crash recovery are unspecified.",
+      "research_questions": [
+        "Which current external standards and proven implementations should define Free Models Auto Apply, with concrete attention to Auto Apply concurrency and crash recovery are unspecified?"
+      ],
+      "scenario_requirements": [
+        "Inject the edge or failure state described by \"Auto Apply concurrency and crash recovery are unspecified\"; certification passes only if the resulting authority decision, state transition, durable evidence, recovery behavior, and user-visible outcome are deterministic and falsifiable."
+      ],
+      "cross_packet_terms": [
+        "atomic activation and retry semantics missing"
+      ],
+      "confidence": 0.84
+    },
+    {
+      "feature_id": "FLOCAL-0026",
+      "title": "Capability-tier model selection router and top-ten ordering",
+      "summary": "Local normalized feature covering Global top-10 precedence and fallback boundary; Outside-top-10 fallback lacks a complete ordering oracle; Capability-tier model selection router; Model router lacks a reproducible scoring oracle. Distinct authority, lifecycle, consumers, and failure semantics are retained through its assigned atom partition.",
+      "feature_kind": "system",
+      "owner_domain": "agents_models_providers",
+      "secondary_domains": [],
+      "aliases": [],
+      "atom_ids": [
+        "ATOM-820954450479A1E314E4",
+        "ATOM-300A38485762710863AD",
+        "ATOM-F4035FB1BCB698C09078",
+        "ATOM-012D3421E534F850295B"
+      ],
+      "source_documents": [
+        "Plans/Models_System.md"
+      ],
+      "source_unit_refs": [
+        "PLANUNIT:MS-120",
+        "SEMANTIC:PLANUNIT:MS-120",
+        "PLANUNIT:MS-128",
+        "SEMANTIC:PLANUNIT:MS-128"
+      ],
+      "risk_level": "high",
+      "spec_state": "partially_specified",
+      "gap_summary": "Validated observations: Global top-10 precedence and fallback boundary; Capability-tier model selection router. Preserved gaps or unknowns: Outside-top-10 fallback lacks a complete ordering oracle; Model router lacks a reproducible scoring oracle.",
+      "research_questions": [
+        "Which current external standards and proven implementations should define Capability-tier model selection router and top-ten ordering, with concrete attention to Outside-top-10 fallback lacks a complete ordering oracle; Model router lacks a reproducible scoring oracle?"
+      ],
+      "scenario_requirements": [
+        "Inject the edge or failure state described by \"Outside-top-10 fallback lacks a complete ordering oracle\"; certification passes only if the resulting authority decision, state transition, durable evidence, recovery behavior, and user-visible outcome are deterministic and falsifiable."
+      ],
+      "cross_packet_terms": [
+        "deterministic total order not defined",
+        "scoring and snapshot oracle missing"
+      ],
+      "confidence": 0.84
+    },
+    {
+      "feature_id": "FLOCAL-0027",
+      "title": "Provider setup return and first-run readiness projection",
+      "summary": "Local normalized feature covering First-run sequencing avoids false Ready; Availability reason and delegated setup state model; Multiple issues conflicts with reason priority semantics; Free Models delegates credential authority and setup; Setup return and eligibility refresh lack failure semantics; First-run labels are readiness projections, not states; Onboarding return recovery remains conditional and underspecified. Distinct authority, lifecycle, consumers, and failure semantics are retained through its assigned atom partition.",
+      "feature_kind": "workflow",
+      "owner_domain": "gui_ux_accessibility",
+      "secondary_domains": [],
+      "aliases": [],
+      "atom_ids": [
+        "ATOM-30D00A888FBE97617308",
+        "ATOM-5AD4973F8EAEAAE0B985",
+        "ATOM-5251E8D260D5AFBDECD5",
+        "ATOM-4503EF28C742D7FA26A3",
+        "ATOM-BC9B6C72C2FFF353A32B",
+        "ATOM-3EF04FC2E2C2338A1012",
+        "ATOM-B19358F93AD01750A16A"
+      ],
+      "source_documents": [
+        "Plans/Models_System.md",
+        "Plans/Multi-Account.md"
+      ],
+      "source_unit_refs": [
+        "PLANUNIT:MS-122",
+        "SEMANTIC:PLANUNIT:MS-122",
+        "PLANUNIT:MS-121",
+        "SEMANTIC:PLANUNIT:MS-121",
+        "PLANUNIT:MA-064",
+        "SEMANTIC:PLANUNIT:MA-064",
+        "PLANUNIT:MA-066",
+        "SEMANTIC:PLANUNIT:MA-066"
+      ],
+      "risk_level": "high",
+      "spec_state": "partially_specified",
+      "gap_summary": "Validated observations: First-run sequencing avoids false Ready; Availability reason and delegated setup state model; Free Models delegates credential authority and setup; First-run labels are readiness projections, not states. Preserved gaps or unknowns: Multiple issues conflicts with reason priority semantics; Setup return and eligibility refresh lack failure semantics; Onboarding return recovery remains conditional and underspecified.",
+      "research_questions": [
+        "Which current external standards and proven implementations should define Provider setup return and first-run readiness projection, with concrete attention to Multiple issues conflicts with reason priority semantics; Setup return and eligibility refresh lack failure semantics; Onboarding return recovery remains conditional and underspecified?"
+      ],
+      "scenario_requirements": [
+        "Inject the edge or failure state described by \"Multiple issues conflicts with reason priority semantics\"; certification passes only if the resulting authority decision, state transition, durable evidence, recovery behavior, and user-visible outcome are deterministic and falsifiable."
+      ],
+      "cross_packet_terms": [
+        "reason dominance ambiguous",
+        "return context and refresh recovery gap",
+        "non falsifiable return recovery"
+      ],
+      "confidence": 0.84
+    },
+    {
+      "feature_id": "FLOCAL-0028",
+      "title": "Provider-native metadata replay and sanitation",
+      "summary": "Local normalized feature covering Provider-native metadata replay policy; Cross-provider reasoning replay matrix; Replay policy lacks fail-closed defaults and data lifecycle; Provider metadata replay boundary; Three replay policy names lack one ownership map. Distinct authority, lifecycle, consumers, and failure semantics are retained through its assigned atom partition.",
+      "feature_kind": "governance_control",
+      "owner_domain": "agents_models_providers",
+      "secondary_domains": [],
+      "aliases": [],
+      "atom_ids": [
+        "ATOM-3A18E96D7B9AD37F6CFF",
+        "ATOM-67D7C545FD412109EDAC",
+        "ATOM-2695FBAD935AB15BA7C8",
+        "ATOM-0498FD987769A981A78D",
+        "ATOM-206EB0025B5E63B9AA0C"
+      ],
+      "source_documents": [
+        "Plans/Models_System.md"
+      ],
+      "source_unit_refs": [
+        "PLANUNIT:MS-123",
+        "SEMANTIC:PLANUNIT:MS-123",
+        "PLANUNIT:MS-125",
+        "SEMANTIC:PLANUNIT:MS-125",
+        "PLANUNIT:MS-132",
+        "SEMANTIC:PLANUNIT:MS-132"
+      ],
+      "risk_level": "critical",
+      "spec_state": "partially_specified",
+      "gap_summary": "Validated observations: Provider-native metadata replay policy; Cross-provider reasoning replay matrix; Provider metadata replay boundary. Preserved gaps or unknowns: Replay policy lacks fail-closed defaults and data lifecycle; Three replay policy names lack one ownership map.",
+      "research_questions": [
+        "Which current external standards and proven implementations should define Provider-native metadata replay and sanitation, with concrete attention to Replay policy lacks fail-closed defaults and data lifecycle; Three replay policy names lack one ownership map?"
+      ],
+      "scenario_requirements": [
+        "Inject the edge or failure state described by \"Replay policy lacks fail-closed defaults and data lifecycle\"; certification passes only if the resulting authority decision, state transition, durable evidence, recovery behavior, and user-visible outcome are deterministic and falsifiable."
+      ],
+      "cross_packet_terms": [
+        "unknown policy default and payload lifecycle",
+        "overlapping replay contract ownership"
+      ],
+      "confidence": 0.84
+    },
+    {
+      "feature_id": "FLOCAL-0029",
+      "title": "Provider capability epochs",
+      "summary": "Local normalized feature covering Provider capability epoch and model-switch sanitizer; Route-specific capability epoch schema; Capability epoch publication and source precedence are incomplete; Provider capability replacement identity needs version semantics. Distinct authority, lifecycle, consumers, and failure semantics are retained through its assigned atom partition.",
+      "feature_kind": "data_model",
+      "owner_domain": "agents_models_providers",
+      "secondary_domains": [],
+      "aliases": [],
+      "atom_ids": [
+        "ATOM-2BA9D0A8E56A46418A23",
+        "ATOM-FFA69A214AC3BA6521B0",
+        "ATOM-61D134A29A0CDBBDAE68",
+        "ATOM-B4EF7D140C759754228E"
+      ],
+      "source_documents": [
+        "Plans/Models_System.md"
+      ],
+      "source_unit_refs": [
+        "PLANUNIT:MS-124",
+        "SEMANTIC:PLANUNIT:MS-124",
+        "PLANUNIT:MS-127",
+        "SEMANTIC:PLANUNIT:MS-127",
+        "PLANUNIT:MS-135",
+        "SEMANTIC:PLANUNIT:MS-135"
+      ],
+      "risk_level": "high",
+      "spec_state": "partially_specified",
+      "gap_summary": "Validated observations: Provider capability epoch and model-switch sanitizer; Route-specific capability epoch schema. Preserved gaps or unknowns: Capability epoch publication and source precedence are incomplete; Provider capability replacement identity needs version semantics.",
+      "research_questions": [
+        "Which current external standards and proven implementations should define Provider capability epochs, with concrete attention to Capability epoch publication and source precedence are incomplete; Provider capability replacement identity needs version semantics?"
+      ],
+      "scenario_requirements": [
+        "Inject the edge or failure state described by \"Capability epoch publication and source precedence are incomplete\"; certification passes only if the resulting authority decision, state transition, durable evidence, recovery behavior, and user-visible outcome are deterministic and falsifiable."
+      ],
+      "cross_packet_terms": [
+        "epoch precedence and invalidation transaction missing",
+        "epoch replacement key semantics ambiguous"
+      ],
+      "confidence": 0.84
+    },
+    {
+      "feature_id": "FLOCAL-0030",
+      "title": "Provider entitlement and quota settlement",
+      "summary": "Local normalized feature covering Provider entitlement and quota settlement; Quota settlement stops at classification. Distinct authority, lifecycle, consumers, and failure semantics are retained through its assigned atom partition.",
+      "feature_kind": "data_model",
+      "owner_domain": "usage_costs_quotas",
+      "secondary_domains": [],
+      "aliases": [],
+      "atom_ids": [
+        "ATOM-55143818FD2FE845B06A",
+        "ATOM-5DCE6143C40FEAEAE495"
+      ],
+      "source_documents": [
+        "Plans/Models_System.md"
+      ],
+      "source_unit_refs": [
+        "PLANUNIT:MS-130",
+        "SEMANTIC:PLANUNIT:MS-130"
+      ],
+      "risk_level": "high",
+      "spec_state": "partially_specified",
+      "gap_summary": "Validated observations: Provider entitlement and quota settlement. Preserved gaps or unknowns: Quota settlement stops at classification.",
+      "research_questions": [
+        "Which current external standards and proven implementations should define Provider entitlement and quota settlement, with concrete attention to Quota settlement stops at classification?"
+      ],
+      "scenario_requirements": [
+        "Inject the edge or failure state described by \"Quota settlement stops at classification\"; certification passes only if the resulting authority decision, state transition, durable evidence, recovery behavior, and user-visible outcome are deterministic and falsifiable."
+      ],
+      "cross_packet_terms": [
+        "settlement authority remediation and redaction missing"
+      ],
+      "confidence": 0.84
+    },
+    {
+      "feature_id": "FLOCAL-0031",
+      "title": "Provider policy ruleset",
+      "summary": "Local normalized feature covering Provider policy ownership; Provider policy precedence is asserted but not specified. Distinct authority, lifecycle, consumers, and failure semantics are retained through its assigned atom partition.",
+      "feature_kind": "governance_control",
+      "owner_domain": "agents_models_providers",
+      "secondary_domains": [],
+      "aliases": [],
+      "atom_ids": [
+        "ATOM-17FE79EC3AEA1092F004",
+        "ATOM-27CDF09DB9E0E15D9268"
+      ],
+      "source_documents": [
+        "Plans/Models_System.md"
+      ],
+      "source_unit_refs": [
+        "PLANUNIT:MS-131",
+        "SEMANTIC:PLANUNIT:MS-131"
+      ],
+      "risk_level": "critical",
+      "spec_state": "partially_specified",
+      "gap_summary": "Validated observations: Provider policy ownership. Preserved gaps or unknowns: Provider policy precedence is asserted but not specified.",
+      "research_questions": [
+        "Which current external standards and proven implementations should define Provider policy ruleset, with concrete attention to Provider policy precedence is asserted but not specified?"
+      ],
+      "scenario_requirements": [
+        "Inject the edge or failure state described by \"Provider policy precedence is asserted but not specified\"; certification passes only if the resulting authority decision, state transition, durable evidence, recovery behavior, and user-visible outcome are deterministic and falsifiable."
+      ],
+      "cross_packet_terms": [
+        "policy precedence schema absent"
+      ],
+      "confidence": 0.84
+    },
+    {
+      "feature_id": "FLOCAL-0032",
+      "title": "Provider error observability envelope",
+      "summary": "Local normalized feature covering Provider error observability envelope; Provider error envelope omits partial-stream recovery. Distinct authority, lifecycle, consumers, and failure semantics are retained through its assigned atom partition.",
+      "feature_kind": "data_model",
+      "owner_domain": "observability_testing_evaluation",
+      "secondary_domains": [],
+      "aliases": [],
+      "atom_ids": [
+        "ATOM-E73E8260344B38FE26FA",
+        "ATOM-C8EBAC031935AD461B2F"
+      ],
+      "source_documents": [
+        "Plans/Models_System.md"
+      ],
+      "source_unit_refs": [
+        "PLANUNIT:MS-133",
+        "SEMANTIC:PLANUNIT:MS-133"
+      ],
+      "risk_level": "high",
+      "spec_state": "partially_specified",
+      "gap_summary": "Validated observations: Provider error observability envelope. Preserved gaps or unknowns: Provider error envelope omits partial-stream recovery.",
+      "research_questions": [
+        "Which current external standards and proven implementations should define Provider error observability envelope, with concrete attention to Provider error envelope omits partial-stream recovery?"
+      ],
+      "scenario_requirements": [
+        "Inject the edge or failure state described by \"Provider error envelope omits partial-stream recovery\"; certification passes only if the resulting authority decision, state transition, durable evidence, recovery behavior, and user-visible outcome are deterministic and falsifiable."
+      ],
+      "cross_packet_terms": [
+        "streaming partial failure and redaction semantics missing"
+      ],
+      "confidence": 0.84
+    },
+    {
+      "feature_id": "FLOCAL-0033",
+      "title": "Evidence-bound model usage display",
+      "summary": "Local normalized feature covering Model usage signal display is evidence-bound; Usage display lacks conflict, privacy, and accessibility rules. Distinct authority, lifecycle, consumers, and failure semantics are retained through its assigned atom partition.",
+      "feature_kind": "gui_surface",
+      "owner_domain": "usage_costs_quotas",
+      "secondary_domains": [],
+      "aliases": [],
+      "atom_ids": [
+        "ATOM-E41A1276B66BBE41D0DC",
+        "ATOM-E545875927AD5704B573"
+      ],
+      "source_documents": [
+        "Plans/Models_System.md"
+      ],
+      "source_unit_refs": [
+        "PLANUNIT:MS-136",
+        "SEMANTIC:PLANUNIT:MS-136"
+      ],
+      "risk_level": "high",
+      "spec_state": "partially_specified",
+      "gap_summary": "Validated observations: Model usage signal display is evidence-bound. Preserved gaps or unknowns: Usage display lacks conflict, privacy, and accessibility rules.",
+      "research_questions": [
+        "Which current external standards and proven implementations should define Evidence-bound model usage display, with concrete attention to Usage display lacks conflict, privacy, and accessibility rules?"
+      ],
+      "scenario_requirements": [
+        "Inject the edge or failure state described by \"Usage display lacks conflict, privacy, and accessibility rules\"; certification passes only if the resulting authority decision, state transition, durable evidence, recovery behavior, and user-visible outcome are deterministic and falsifiable."
+      ],
+      "cross_packet_terms": [
+        "display source precedence privacy and a11y missing"
+      ],
+      "confidence": 0.84
+    },
+    {
+      "feature_id": "FLOCAL-0034",
+      "title": "Requested and effective account identity resolution",
+      "summary": "Local normalized feature covering Requested and effective identity envelope; Stable identity and secret-storage boundary; Boundary-scoped reason-coded rotation; Lifecycle status projection lacks precedence; Cross-actor account identity propagation; Canonical account identity envelope; Resolution envelope and switch-boundary contract; Resolver commit and history atomicity are unspecified. Distinct authority, lifecycle, consumers, and failure semantics are retained through its assigned atom partition.",
+      "feature_kind": "system",
+      "owner_domain": "agents_models_providers",
+      "secondary_domains": [],
+      "aliases": [],
+      "atom_ids": [
+        "ATOM-37A8C4516EF5DA1E0A58",
+        "ATOM-D8E951975EFD42F500EA",
+        "ATOM-22438631565A2CA5F2CB",
+        "ATOM-17BA3D86BE8E711DFC88",
+        "ATOM-608DCE3250D5AA84F301",
+        "ATOM-063D2CE9F5A48C5FAFB4",
+        "ATOM-2563D1E1A0803CF51CC5",
+        "ATOM-CC86D0719750B9C2F055"
+      ],
+      "source_documents": [
+        "Plans/Multi-Account.md"
+      ],
+      "source_unit_refs": [
+        "SEMANTIC:PROLOGUE:Plans/Multi-Account.md:CONT-001",
+        "PLANUNIT:MA-007",
+        "SEMANTIC:PLANUNIT:MA-007",
+        "PLANUNIT:MA-009",
+        "SEMANTIC:PLANUNIT:MA-009",
+        "PLANUNIT:MA-015",
+        "PLANUNIT:MA-016",
+        "PLANUNIT:MA-017",
+        "PLANUNIT:MA-018",
+        "PLANUNIT:MA-019",
+        "PLANUNIT:MA-020",
+        "SEMANTIC:PLANUNIT:MA-015",
+        "SEMANTIC:PLANUNIT:MA-016",
+        "SEMANTIC:PLANUNIT:MA-017",
+        "SEMANTIC:PLANUNIT:MA-018",
+        "SEMANTIC:PLANUNIT:MA-019",
+        "SEMANTIC:PLANUNIT:MA-020"
+      ],
+      "risk_level": "high",
+      "spec_state": "partially_specified",
+      "gap_summary": "Validated observations: Requested and effective identity envelope; Stable identity and secret-storage boundary; Boundary-scoped reason-coded rotation; Cross-actor account identity propagation; Canonical account identity envelope; Resolution envelope and switch-boundary contract. Preserved gaps or unknowns: Lifecycle status projection lacks precedence; Resolver commit and history atomicity are unspecified.",
+      "research_questions": [
+        "Which current external standards and proven implementations should define Requested and effective account identity resolution, with concrete attention to Lifecycle status projection lacks precedence; Resolver commit and history atomicity are unspecified?"
+      ],
+      "scenario_requirements": [
+        "Inject the edge or failure state described by \"Lifecycle status projection lacks precedence\"; certification passes only if the resulting authority decision, state transition, durable evidence, recovery behavior, and user-visible outcome are deterministic and falsifiable."
+      ],
+      "cross_packet_terms": [
+        "state projection mapping unspecified",
+        "resolver commit atomicity"
+      ],
+      "confidence": 0.84
+    },
+    {
+      "feature_id": "FLOCAL-0035",
+      "title": "Account failover and shared usage pressure",
+      "summary": "Local normalized feature covering Cooldown and hard-block fallback contradiction; Account pool consumes Usage-owned pressure; Shared pressure and bounded fallback contract; Shared pressure transitions are not concurrency-safe on paper. Distinct authority, lifecycle, consumers, and failure semantics are retained through its assigned atom partition.",
+      "feature_kind": "system",
+      "owner_domain": "usage_costs_quotas",
+      "secondary_domains": [],
+      "aliases": [],
+      "atom_ids": [
+        "ATOM-7247BA74F9823DA53725",
+        "ATOM-916F6AB693837FFCFF39",
+        "ATOM-3B6B72FA255687D73DFD",
+        "ATOM-BB0DBD1604CEE9CF50A5"
+      ],
+      "source_documents": [
+        "Plans/Multi-Account.md"
+      ],
+      "source_unit_refs": [
+        "SEMANTIC:PROLOGUE:Plans/Multi-Account.md:CONT-001",
+        "PLANUNIT:MA-005",
+        "SEMANTIC:PLANUNIT:MA-005",
+        "PLANUNIT:MA-065",
+        "SEMANTIC:PLANUNIT:MA-065"
+      ],
+      "risk_level": "high",
+      "spec_state": "contradictory",
+      "gap_summary": "Validated observations: Account pool consumes Usage-owned pressure; Shared pressure and bounded fallback contract. Preserved gaps or unknowns: Cooldown and hard-block fallback contradiction; Shared pressure transitions are not concurrency-safe on paper.",
+      "research_questions": [
+        "Which current external standards and proven implementations should define Account failover and shared usage pressure, with concrete attention to Cooldown and hard-block fallback contradiction; Shared pressure transitions are not concurrency-safe on paper?"
+      ],
+      "scenario_requirements": [
+        "Inject the edge or failure state described by \"Cooldown and hard-block fallback contradiction\"; certification passes only if the resulting authority decision, state transition, durable evidence, recovery behavior, and user-visible outcome are deterministic and falsifiable."
+      ],
+      "cross_packet_terms": [
+        "conflicting failover preconditions",
+        "concurrent pressure state transition gap"
+      ],
+      "confidence": 0.84
+    },
+    {
+      "feature_id": "FLOCAL-0036",
+      "title": "Provider account-root isolation and import",
+      "summary": "Local normalized feature covering CLI account-root isolation and deny-by-default sharing; Eligibility, provider matrix, and account-root contract; Cooldown revalidation and root import safety are incomplete; Provider isolation and sharing-boundary contract; Provider auth import lacks a transactional allowlist contract. Distinct authority, lifecycle, consumers, and failure semantics are retained through its assigned atom partition.",
+      "feature_kind": "system",
+      "owner_domain": "permissions_security_privacy",
+      "secondary_domains": [],
+      "aliases": [],
+      "atom_ids": [
+        "ATOM-6F60EFDF523726798C31",
+        "ATOM-8B3F95C8EC8F7EB1F5FE",
+        "ATOM-90DF27A07C4154C0CB1A",
+        "ATOM-7B86EA8E013527E2F8C4",
+        "ATOM-BFD9AB02718524AD9627"
+      ],
+      "source_documents": [
+        "Plans/Multi-Account.md"
+      ],
+      "source_unit_refs": [
+        "SEMANTIC:PROLOGUE:Plans/Multi-Account.md:CONT-002",
+        "PLANUNIT:MA-021",
+        "PLANUNIT:MA-022",
+        "PLANUNIT:MA-023",
+        "PLANUNIT:MA-024",
+        "PLANUNIT:MA-025",
+        "SEMANTIC:PLANUNIT:MA-021",
+        "SEMANTIC:PLANUNIT:MA-022",
+        "SEMANTIC:PLANUNIT:MA-023",
+        "SEMANTIC:PLANUNIT:MA-024",
+        "SEMANTIC:PLANUNIT:MA-025",
+        "PLANUNIT:MA-026",
+        "PLANUNIT:MA-027",
+        "PLANUNIT:MA-028",
+        "PLANUNIT:MA-029",
+        "PLANUNIT:MA-030",
+        "PLANUNIT:MA-031",
+        "SEMANTIC:PLANUNIT:MA-026",
+        "SEMANTIC:PLANUNIT:MA-027",
+        "SEMANTIC:PLANUNIT:MA-028",
+        "SEMANTIC:PLANUNIT:MA-029",
+        "SEMANTIC:PLANUNIT:MA-030",
+        "SEMANTIC:PLANUNIT:MA-031"
+      ],
+      "risk_level": "high",
+      "spec_state": "partially_specified",
+      "gap_summary": "Validated observations: CLI account-root isolation and deny-by-default sharing; Eligibility, provider matrix, and account-root contract; Provider isolation and sharing-boundary contract. Preserved gaps or unknowns: Cooldown revalidation and root import safety are incomplete; Provider auth import lacks a transactional allowlist contract.",
+      "research_questions": [
+        "Which current external standards and proven implementations should define Provider account-root isolation and import, with concrete attention to Cooldown revalidation and root import safety are incomplete; Provider auth import lacks a transactional allowlist contract?"
+      ],
+      "scenario_requirements": [
+        "Inject the edge or failure state described by \"Cooldown revalidation and root import safety are incomplete\"; certification passes only if the resulting authority decision, state transition, durable evidence, recovery behavior, and user-visible outcome are deterministic and falsifiable."
+      ],
+      "cross_packet_terms": [
+        "root import and revalidation safety",
+        "provider import allowlist and transaction"
+      ],
+      "confidence": 0.84
+    },
+    {
+      "feature_id": "FLOCAL-0037",
+      "title": "Agent-Config account readiness and effective runtime GUI",
+      "summary": "Local normalized feature covering Persistent effective-runtime disclosure; GUI accessibility and localization are unowned; Cross-actor selection, usage, and GUI contract; Selection freshness and deterministic tie-breaking are undefined; Pooling, readiness, and account-lifecycle GUI contract; Readiness state transitions and stale async results are unspecified. Distinct authority, lifecycle, consumers, and failure semantics are retained through its assigned atom partition.",
+      "feature_kind": "gui_surface",
+      "owner_domain": "gui_ux_accessibility",
+      "secondary_domains": [],
+      "aliases": [],
+      "atom_ids": [
+        "ATOM-C53B35E1EC6C050F03A0",
+        "ATOM-12803E6281473142F00A",
+        "ATOM-E6628B9079EDAC9FC393",
+        "ATOM-AF59F5948984D704B9D3",
+        "ATOM-AA5B50EC83AD21C8EAB9",
+        "ATOM-377E2E6AA8B3FD625E80"
+      ],
+      "source_documents": [
+        "Plans/Multi-Account.md"
+      ],
+      "source_unit_refs": [
+        "SEMANTIC:PROLOGUE:Plans/Multi-Account.md:CONT-002",
+        "PLANUNIT:MA-032",
+        "PLANUNIT:MA-033",
+        "PLANUNIT:MA-034",
+        "PLANUNIT:MA-035",
+        "PLANUNIT:MA-036",
+        "PLANUNIT:MA-037",
+        "SEMANTIC:PLANUNIT:MA-032",
+        "SEMANTIC:PLANUNIT:MA-033",
+        "SEMANTIC:PLANUNIT:MA-034",
+        "SEMANTIC:PLANUNIT:MA-035",
+        "SEMANTIC:PLANUNIT:MA-036",
+        "SEMANTIC:PLANUNIT:MA-037",
+        "PLANUNIT:MA-038",
+        "PLANUNIT:MA-039",
+        "PLANUNIT:MA-040",
+        "PLANUNIT:MA-041",
+        "PLANUNIT:MA-042",
+        "PLANUNIT:MA-043",
+        "SEMANTIC:PLANUNIT:MA-038",
+        "SEMANTIC:PLANUNIT:MA-039",
+        "SEMANTIC:PLANUNIT:MA-040",
+        "SEMANTIC:PLANUNIT:MA-041",
+        "SEMANTIC:PLANUNIT:MA-042",
+        "SEMANTIC:PLANUNIT:MA-043"
+      ],
+      "risk_level": "high",
+      "spec_state": "partially_specified",
+      "gap_summary": "Validated observations: Persistent effective-runtime disclosure; Cross-actor selection, usage, and GUI contract; Pooling, readiness, and account-lifecycle GUI contract. Preserved gaps or unknowns: GUI accessibility and localization are unowned; Selection freshness and deterministic tie-breaking are undefined; Readiness state transitions and stale async results are unspecified.",
+      "research_questions": [
+        "Which current external standards and proven implementations should define Agent-Config account readiness and effective runtime GUI, with concrete attention to GUI accessibility and localization are unowned; Selection freshness and deterministic tie-breaking are undefined; Readiness state transitions and stale async results are unspecified?"
+      ],
+      "scenario_requirements": [
+        "Inject the edge or failure state described by \"GUI accessibility and localization are unowned\"; certification passes only if the resulting authority decision, state transition, durable evidence, recovery behavior, and user-visible outcome are deterministic and falsifiable."
+      ],
+      "cross_packet_terms": [
+        "accessibility and localization contract missing",
+        "selection freshness and tiebreaking",
+        "readiness transition and async result ordering"
+      ],
+      "confidence": 0.84
+    },
+    {
+      "feature_id": "FLOCAL-0038",
+      "title": "Authentication setup, credential registration, and account removal",
+      "summary": "Local normalized feature covering Authentication and readiness are separate; Account removal lacks atomic recovery and data lifecycle; API-key registration oracle; Device-code polling lacks race and restart semantics; Auth setup, removal safety, and usage-visibility contract; Auth setup and removal compensation paths are incomplete. Distinct authority, lifecycle, consumers, and failure semantics are retained through its assigned atom partition.",
+      "feature_kind": "workflow",
+      "owner_domain": "permissions_security_privacy",
+      "secondary_domains": [],
+      "aliases": [],
+      "atom_ids": [
+        "ATOM-20F66D36AB90387F0E61",
+        "ATOM-FD09B8FC44DA83F6C5F9",
+        "ATOM-2445975B82EEA4BC5BF9",
+        "ATOM-D14F9159F335077570FA",
+        "ATOM-AE179BE83FB89FF1C342",
+        "ATOM-77690D0C0EF16B0AE564"
+      ],
+      "source_documents": [
+        "Plans/Multi-Account.md"
+      ],
+      "source_unit_refs": [
+        "SEMANTIC:PROLOGUE:Plans/Multi-Account.md:CONT-002",
+        "SEMANTIC:PROLOGUE:Plans/Multi-Account.md:CONT-003",
+        "PLANUNIT:MA-044",
+        "PLANUNIT:MA-045",
+        "PLANUNIT:MA-046",
+        "PLANUNIT:MA-047",
+        "PLANUNIT:MA-048",
+        "PLANUNIT:MA-049",
+        "SEMANTIC:PLANUNIT:MA-044",
+        "SEMANTIC:PLANUNIT:MA-045",
+        "SEMANTIC:PLANUNIT:MA-046",
+        "SEMANTIC:PLANUNIT:MA-047",
+        "SEMANTIC:PLANUNIT:MA-048",
+        "SEMANTIC:PLANUNIT:MA-049"
+      ],
+      "risk_level": "high",
+      "spec_state": "partially_specified",
+      "gap_summary": "Validated observations: Authentication and readiness are separate; API-key registration oracle; Auth setup, removal safety, and usage-visibility contract. Preserved gaps or unknowns: Account removal lacks atomic recovery and data lifecycle; Device-code polling lacks race and restart semantics; Auth setup and removal compensation paths are incomplete.",
+      "research_questions": [
+        "Which current external standards and proven implementations should define Authentication setup, credential registration, and account removal, with concrete attention to Account removal lacks atomic recovery and data lifecycle; Device-code polling lacks race and restart semantics; Auth setup and removal compensation paths are incomplete?"
+      ],
+      "scenario_requirements": [
+        "Inject the edge or failure state described by \"Account removal lacks atomic recovery and data lifecycle\"; certification passes only if the resulting authority decision, state transition, durable evidence, recovery behavior, and user-visible outcome are deterministic and falsifiable."
+      ],
+      "cross_packet_terms": [
+        "destructive transaction and retention unspecified",
+        "oauth polling protocol incomplete",
+        "auth and removal partial failure"
+      ],
+      "confidence": 0.84
+    },
+    {
+      "feature_id": "FLOCAL-0039",
+      "title": "Provider account profiles, routes, usage authority, and credential boundaries",
+      "summary": "Local normalized feature covering Route-specific provider profile separation; Provider-specific usage authority; Open-ended shared provider-runtime scope; Effective policy visibility and storage alignment; Recovery audit owner boundary; External evidence sufficiency can drift; Provider inventory canon correction; Rewrite-era storage and provider alignment; Provider-entry and coding-plan identity boundaries; Stable account-profile schema; Credential reference and auth-surface validation; Query-parameter credentials lack leak controls. Distinct authority, lifecycle, consumers, and failure semantics are retained through its assigned atom partition.",
+      "feature_kind": "data_model",
+      "owner_domain": "agents_models_providers",
+      "secondary_domains": [],
+      "aliases": [],
+      "atom_ids": [
+        "ATOM-DC106C2C209EE5EF8E04",
+        "ATOM-1DF09E65349DD3AECF2C",
+        "ATOM-BDA375B969C1A25C78AD",
+        "ATOM-A15741E681FCE00FA04D",
+        "ATOM-3ABA7EC6FF90EE010FEF",
+        "ATOM-48FBC0B23EDF777E73B6",
+        "ATOM-811BB2513A0454BB646E",
+        "ATOM-45F076D16DD65092E94D",
+        "ATOM-46502B1729B678C4B9DA",
+        "ATOM-395FD44FD72B1ED491C7",
+        "ATOM-2AB265C4D9FCEED82BED",
+        "ATOM-197AD8FB4683AE1A9071"
+      ],
+      "source_documents": [
+        "Plans/Multi-Account.md"
+      ],
+      "source_unit_refs": [
+        "PLANUNIT:MA-062",
+        "SEMANTIC:PLANUNIT:MA-062",
+        "PLANUNIT:MA-063",
+        "SEMANTIC:PLANUNIT:MA-063",
+        "PLANUNIT:MA-003",
+        "SEMANTIC:PLANUNIT:MA-003",
+        "PLANUNIT:MA-004",
+        "SEMANTIC:PLANUNIT:MA-004",
+        "PLANUNIT:MA-006",
+        "SEMANTIC:PLANUNIT:MA-006",
+        "PLANUNIT:MA-008",
+        "SEMANTIC:PLANUNIT:MA-008",
+        "PLANUNIT:MA-010",
+        "SEMANTIC:PLANUNIT:MA-010",
+        "PLANUNIT:MA-011",
+        "SEMANTIC:PLANUNIT:MA-011",
+        "PLANUNIT:MA-012",
+        "SEMANTIC:PLANUNIT:MA-012",
+        "PLANUNIT:MA-013",
+        "SEMANTIC:PLANUNIT:MA-013",
+        "PLANUNIT:MA-014",
+        "SEMANTIC:PLANUNIT:MA-014"
+      ],
+      "risk_level": "high",
+      "spec_state": "partially_specified",
+      "gap_summary": "Validated observations: Route-specific provider profile separation; Provider-specific usage authority; Open-ended shared provider-runtime scope; Effective policy visibility and storage alignment; Recovery audit owner boundary; Provider inventory canon correction; Rewrite-era storage and provider alignment; Provider-entry and coding-plan identity boundaries; Stable account-profile schema; Credential reference and auth-surface validation. Preserved gaps or unknowns: External evidence sufficiency can drift; Query-parameter credentials lack leak controls.",
+      "research_questions": [
+        "Which current external standards and proven implementations should define Provider account profiles, routes, usage authority, and credential boundaries, with concrete attention to External evidence sufficiency can drift; Query-parameter credentials lack leak controls?"
+      ],
+      "scenario_requirements": [
+        "Inject the edge or failure state described by \"External evidence sufficiency can drift\"; certification passes only if the resulting authority decision, state transition, durable evidence, recovery behavior, and user-visible outcome are deterministic and falsifiable."
+      ],
+      "cross_packet_terms": [
+        "evidence currentness oracle missing",
+        "query secret redaction contract missing"
+      ],
+      "confidence": 0.84
+    },
+    {
+      "feature_id": "FLOCAL-0040",
+      "title": "Multi-account planning lineage boundary",
+      "summary": "Local normalized feature covering MA-002 preserves the planning boundary. Distinct authority, lifecycle, consumers, and failure semantics are retained through its assigned atom partition.",
+      "feature_kind": "governance_control",
+      "owner_domain": "planning_specification_governance",
+      "secondary_domains": [],
+      "aliases": [],
+      "atom_ids": [
+        "ATOM-F80810CA0D63C3330644"
+      ],
+      "source_documents": [
+        "Plans/Multi-Account.md"
+      ],
+      "source_unit_refs": [
+        "PLANUNIT:MA-002",
+        "SEMANTIC:PLANUNIT:MA-002"
+      ],
+      "risk_level": "low",
+      "spec_state": "well_specified",
+      "gap_summary": "Validated observations: MA-002 preserves the planning boundary. No gap is asserted by the assigned observations.",
+      "research_questions": [
+        "Which current external standards and proven implementations should define Multi-account planning lineage boundary, with concrete attention to MA-002 preserves the planning boundary?"
+      ],
+      "scenario_requirements": [
+        "Reproduce \"MA-002 preserves the planning boundary\" with one conforming and one deliberately non-conforming implementation; certification passes only when the contract accepts the former and rejects the latter with observable evidence."
+      ],
+      "cross_packet_terms": [],
+      "confidence": 0.94
+    },
+    {
+      "feature_id": "FLOCAL-0041",
+      "title": "Credential-route epoch, native token store, and rotating fetch",
+      "summary": "Local normalized feature covering Projection governance and native-auth failover contract; Native-auth locking and cross-account retry semantics are unsafe by omission; Credential route epoch separates route truth from capability truth; CredentialRouteEpoch lacks its executable contract; Retry and token-store defaults are concretely assigned; Token-store atomic write lacks partial-failure semantics. Distinct authority, lifecycle, consumers, and failure semantics are retained through its assigned atom partition.",
+      "feature_kind": "system",
+      "owner_domain": "permissions_security_privacy",
+      "secondary_domains": [],
+      "aliases": [],
+      "atom_ids": [
+        "ATOM-EAA6A9FF0362FB856C17",
+        "ATOM-885579715DB0C1117C4B",
+        "ATOM-73F34FD5B13E768D98C8",
+        "ATOM-71BFF77116198A7C387E",
+        "ATOM-CA789F9996478DC2728F",
+        "ATOM-34B7AAB56E03EC1AEFAC"
+      ],
+      "source_documents": [
+        "Plans/Multi-Account.md"
+      ],
+      "source_unit_refs": [
+        "PLANUNIT:MA-050",
+        "PLANUNIT:MA-051",
+        "PLANUNIT:MA-052",
+        "PLANUNIT:MA-053",
+        "PLANUNIT:MA-054",
+        "PLANUNIT:MA-055",
+        "SEMANTIC:PLANUNIT:MA-050",
+        "SEMANTIC:PLANUNIT:MA-051",
+        "SEMANTIC:PLANUNIT:MA-052",
+        "SEMANTIC:PLANUNIT:MA-053",
+        "SEMANTIC:PLANUNIT:MA-054",
+        "SEMANTIC:PLANUNIT:MA-055",
+        "PLANUNIT:MA-067",
+        "SEMANTIC:PLANUNIT:MA-067",
+        "PLANUNIT:MA-068",
+        "SEMANTIC:PLANUNIT:MA-068"
+      ],
+      "risk_level": "critical",
+      "spec_state": "partially_specified",
+      "gap_summary": "Validated observations: Projection governance and native-auth failover contract; Credential route epoch separates route truth from capability truth; Retry and token-store defaults are concretely assigned. Preserved gaps or unknowns: Native-auth locking and cross-account retry semantics are unsafe by omission; CredentialRouteEpoch lacks its executable contract; Token-store atomic write lacks partial-failure semantics.",
+      "research_questions": [
+        "Which current external standards and proven implementations should define Credential-route epoch, native token store, and rotating fetch, with concrete attention to Native-auth locking and cross-account retry semantics are unsafe by omission; CredentialRouteEpoch lacks its executable contract; Token-store atomic write lacks partial-failure semantics?"
+      ],
+      "scenario_requirements": [
+        "Inject the edge or failure state described by \"Native-auth locking and cross-account retry semantics are unsafe by omission\"; certification passes only if the resulting authority decision, state transition, durable evidence, recovery behavior, and user-visible outcome are deterministic and falsifiable."
+      ],
+      "cross_packet_terms": [
+        "native auth locking and retry authority",
+        "credential route epoch schema and transition gap",
+        "token store partial failure and lock recovery gap"
+      ],
+      "confidence": 0.84
+    },
+    {
+      "feature_id": "FLOCAL-0042",
+      "title": "Operational identity and Goal Runtime authority propagation",
+      "summary": "Local normalized feature covering Request context and operational-identity authority contract; Async request context and role authority propagation are unspecified. Distinct authority, lifecycle, consumers, and failure semantics are retained through its assigned atom partition.",
+      "feature_kind": "cross_cutting_concern",
+      "owner_domain": "orchestration_runtime_execution",
+      "secondary_domains": [],
+      "aliases": [],
+      "atom_ids": [
+        "ATOM-C896C6C8D3092E488B75",
+        "ATOM-3A56A404106CE7A17567"
+      ],
+      "source_documents": [
+        "Plans/Multi-Account.md"
+      ],
+      "source_unit_refs": [
+        "PLANUNIT:MA-001",
+        "PLANUNIT:MA-056",
+        "PLANUNIT:MA-057",
+        "PLANUNIT:MA-058",
+        "PLANUNIT:MA-059",
+        "PLANUNIT:MA-060",
+        "SEMANTIC:PLANUNIT:MA-056",
+        "SEMANTIC:PLANUNIT:MA-057",
+        "SEMANTIC:PLANUNIT:MA-058",
+        "SEMANTIC:PLANUNIT:MA-059",
+        "SEMANTIC:PLANUNIT:MA-001",
+        "SEMANTIC:PLANUNIT:MA-060"
+      ],
+      "risk_level": "high",
+      "spec_state": "partially_specified",
+      "gap_summary": "Validated observations: Request context and operational-identity authority contract. Preserved gaps or unknowns: Async request context and role authority propagation are unspecified.",
+      "research_questions": [
+        "Which current external standards and proven implementations should define Operational identity and Goal Runtime authority propagation, with concrete attention to Async request context and role authority propagation are unspecified?"
+      ],
+      "scenario_requirements": [
+        "Inject the edge or failure state described by \"Async request context and role authority propagation are unspecified\"; certification passes only if the resulting authority decision, state transition, durable evidence, recovery behavior, and user-visible outcome are deterministic and falsifiable."
+      ],
+      "cross_packet_terms": [
+        "async context propagation and authority matrix"
+      ],
+      "confidence": 0.84
+    },
+    {
+      "feature_id": "FLOCAL-0043",
+      "title": "Testing policy inheritance and consumer snapshot",
+      "summary": "Local normalized feature covering Testing policy inheritance and consumer propagation; Effective policy snapshot semantics are not falsifiable. Distinct authority, lifecycle, consumers, and failure semantics are retained through its assigned atom partition.",
+      "feature_kind": "governance_control",
+      "owner_domain": "observability_testing_evaluation",
+      "secondary_domains": [],
+      "aliases": [],
+      "atom_ids": [
+        "ATOM-B5851E648186484CC5FA",
+        "ATOM-8F6C2290D27614BAD42E"
+      ],
+      "source_documents": [
+        "Plans/Multi-Account.md"
+      ],
+      "source_unit_refs": [
+        "PLANUNIT:MA-061",
+        "SEMANTIC:PLANUNIT:MA-061"
+      ],
+      "risk_level": "high",
+      "spec_state": "partially_specified",
+      "gap_summary": "Validated observations: Testing policy inheritance and consumer propagation. Preserved gaps or unknowns: Effective policy snapshot semantics are not falsifiable.",
+      "research_questions": [
+        "Which current external standards and proven implementations should define Testing policy inheritance and consumer snapshot, with concrete attention to Effective policy snapshot semantics are not falsifiable?"
+      ],
+      "scenario_requirements": [
+        "Inject the edge or failure state described by \"Effective policy snapshot semantics are not falsifiable\"; certification passes only if the resulting authority decision, state transition, durable evidence, recovery behavior, and user-visible outcome are deterministic and falsifiable."
+      ],
+      "cross_packet_terms": [
+        "underspecified policy snapshot contract"
+      ],
+      "confidence": 0.84
+    },
+    {
+      "feature_id": "FLOCAL-0044",
+      "title": "Provider usage settings projection",
+      "summary": "Local normalized feature covering Provider usage rows preserve normalized state and provenance; Usage projection conflicts and GUI transitions are unspecified. Distinct authority, lifecycle, consumers, and failure semantics are retained through its assigned atom partition.",
+      "feature_kind": "gui_surface",
+      "owner_domain": "usage_costs_quotas",
+      "secondary_domains": [],
+      "aliases": [],
+      "atom_ids": [
+        "ATOM-8E050FE0AD9A10E805E1",
+        "ATOM-9280235CCE392AC6D85A"
+      ],
+      "source_documents": [
+        "Plans/Multi-Account.md"
+      ],
+      "source_unit_refs": [
+        "PLANUNIT:MA-069",
+        "SEMANTIC:PLANUNIT:MA-069"
+      ],
+      "risk_level": "high",
+      "spec_state": "partially_specified",
+      "gap_summary": "Validated observations: Provider usage rows preserve normalized state and provenance. Preserved gaps or unknowns: Usage projection conflicts and GUI transitions are unspecified.",
+      "research_questions": [
+        "Which current external standards and proven implementations should define Provider usage settings projection, with concrete attention to Usage projection conflicts and GUI transitions are unspecified?"
+      ],
+      "scenario_requirements": [
+        "Inject the edge or failure state described by \"Usage projection conflicts and GUI transitions are unspecified\"; certification passes only if the resulting authority decision, state transition, durable evidence, recovery behavior, and user-visible outcome are deterministic and falsifiable."
+      ],
+      "cross_packet_terms": [
+        "projection conflict and gui state gap"
+      ],
+      "confidence": 0.84
+    },
+    {
+      "feature_id": "FLOCAL-0045",
+      "title": "OpenCode extraction governance and reproducible baseline",
+      "summary": "Local normalized feature covering Bounded extraction and single-owner adoption are explicit; The deterministic baseline is not immutably pinned; Owner routing and PM delta hooks are explicit; ODE-001 has a clear terminal compatibility disposition; Governance, baseline, and extraction scope are separately atomized; Token fidelity and evidence-only routing are guarded; Audit-lineage labels lack a terminal reconciliation oracle; Extraction inputs, procedure, outputs, and acceptance are atomized. Distinct authority, lifecycle, consumers, and failure semantics are retained through its assigned atom partition.",
+      "feature_kind": "workflow",
+      "owner_domain": "planning_specification_governance",
+      "secondary_domains": [],
+      "aliases": [],
+      "atom_ids": [
+        "ATOM-60500DCF098EDE31CC60",
+        "ATOM-347C20A016CF2265A911",
+        "ATOM-6E2D34695990D1AA8E8E",
+        "ATOM-0E05A32F43F32B5E1602",
+        "ATOM-394BD9A4504F67C3CF9F",
+        "ATOM-8F073B4E44314A5C8682",
+        "ATOM-58AD66881023835B58FC",
+        "ATOM-9F832D1686D0E3E13F62"
+      ],
+      "source_documents": [
+        "Plans/OpenCode_Deep_Extraction.md"
+      ],
+      "source_unit_refs": [
+        "SEMANTIC:PROLOGUE:Plans/OpenCode_Deep_Extraction.md:CONT-001",
+        "SEMANTIC:PROLOGUE:Plans/OpenCode_Deep_Extraction.md:CONT-002",
+        "PLANUNIT:ODE-001",
+        "SEMANTIC:PLANUNIT:ODE-001",
+        "PLANUNIT:ODE-002",
+        "PLANUNIT:ODE-003",
+        "PLANUNIT:ODE-004",
+        "SEMANTIC:PLANUNIT:ODE-002",
+        "SEMANTIC:PLANUNIT:ODE-003",
+        "SEMANTIC:PLANUNIT:ODE-004",
+        "PLANUNIT:ODE-006",
+        "PLANUNIT:ODE-007",
+        "PLANUNIT:ODE-008",
+        "SEMANTIC:PLANUNIT:ODE-006",
+        "SEMANTIC:PLANUNIT:ODE-007",
+        "SEMANTIC:PLANUNIT:ODE-008",
+        "PLANUNIT:ODE-009",
+        "PLANUNIT:ODE-010",
+        "PLANUNIT:ODE-011",
+        "PLANUNIT:ODE-012",
+        "SEMANTIC:PLANUNIT:ODE-009",
+        "SEMANTIC:PLANUNIT:ODE-010",
+        "SEMANTIC:PLANUNIT:ODE-011",
+        "SEMANTIC:PLANUNIT:ODE-012",
+        "PLANUNIT:ODE-013",
+        "PLANUNIT:ODE-014",
+        "PLANUNIT:ODE-015",
+        "PLANUNIT:ODE-016",
+        "SEMANTIC:PLANUNIT:ODE-013",
+        "SEMANTIC:PLANUNIT:ODE-014",
+        "SEMANTIC:PLANUNIT:ODE-015",
+        "SEMANTIC:PLANUNIT:ODE-016"
+      ],
+      "risk_level": "high",
+      "spec_state": "partially_specified",
+      "gap_summary": "Validated observations: Bounded extraction and single-owner adoption are explicit; Owner routing and PM delta hooks are explicit; ODE-001 has a clear terminal compatibility disposition; Governance, baseline, and extraction scope are separately atomized; Token fidelity and evidence-only routing are guarded; Extraction inputs, procedure, outputs, and acceptance are atomized. Preserved gaps or unknowns: The deterministic baseline is not immutably pinned; Audit-lineage labels lack a terminal reconciliation oracle.",
+      "research_questions": [
+        "Which current external standards and proven implementations should define OpenCode extraction governance and reproducible baseline, with concrete attention to The deterministic baseline is not immutably pinned; Audit-lineage labels lack a terminal reconciliation oracle?"
+      ],
+      "scenario_requirements": [
+        "Inject the edge or failure state described by \"The deterministic baseline is not immutably pinned\"; certification passes only if the resulting authority decision, state transition, durable evidence, recovery behavior, and user-visible outcome are deterministic and falsifiable."
+      ],
+      "cross_packet_terms": [
+        "unpinned external baseline",
+        "lineage labels without resolution contract"
+      ],
+      "confidence": 0.84
+    },
+    {
+      "feature_id": "FLOCAL-0046",
+      "title": "Command template provenance and execution trust",
+      "summary": "Local normalized feature covering Command template execution lacks an explicit trust boundary; Command discovery and override create an unbounded execution seam. Distinct authority, lifecycle, consumers, and failure semantics are retained through its assigned atom partition.",
+      "feature_kind": "tool",
+      "owner_domain": "tools_integrations_mcp",
+      "secondary_domains": [],
+      "aliases": [],
+      "atom_ids": [
+        "ATOM-7CEFD3F6EE40602657BB",
+        "ATOM-4DD9F525C8FBA35605B7"
+      ],
+      "source_documents": [
+        "Plans/OpenCode_Deep_Extraction.md"
+      ],
+      "source_unit_refs": [
+        "SEMANTIC:PROLOGUE:Plans/OpenCode_Deep_Extraction.md:CONT-001",
+        "PLANUNIT:ODE-032",
+        "PLANUNIT:ODE-033",
+        "PLANUNIT:ODE-034",
+        "PLANUNIT:ODE-035",
+        "SEMANTIC:PLANUNIT:ODE-032",
+        "SEMANTIC:PLANUNIT:ODE-033",
+        "SEMANTIC:PLANUNIT:ODE-034",
+        "SEMANTIC:PLANUNIT:ODE-035"
+      ],
+      "risk_level": "critical",
+      "spec_state": "under_specified",
+      "gap_summary": "Preserved gaps or unknowns: Command template execution lacks an explicit trust boundary; Command discovery and override create an unbounded execution seam.",
+      "research_questions": [
+        "Which current external standards and proven implementations should define Command template provenance and execution trust, with concrete attention to Command template execution lacks an explicit trust boundary; Command discovery and override create an unbounded execution seam?"
+      ],
+      "scenario_requirements": [
+        "Inject the edge or failure state described by \"Command template execution lacks an explicit trust boundary\"; certification passes only if the resulting authority decision, state transition, durable evidence, recovery behavior, and user-visible outcome are deterministic and falsifiable."
+      ],
+      "cross_packet_terms": [
+        "untrusted template execution boundary missing",
+        "command provenance and override authority missing"
+      ],
+      "confidence": 0.84
+    },
+    {
+      "feature_id": "FLOCAL-0047",
+      "title": "Permission matching and human approval lifecycle",
+      "summary": "Local normalized feature covering Approval requests have no complete recovery state machine; The preserved assistance floor lacks an exact authority matrix; Approval and agent metadata remain structurally under-constrained; Permission matching is syntactically clear but security semantics are incomplete; Permission UI lifecycle and secret-file protection remain incomplete. Distinct authority, lifecycle, consumers, and failure semantics are retained through its assigned atom partition.",
+      "feature_kind": "system",
+      "owner_domain": "permissions_security_privacy",
+      "secondary_domains": [],
+      "aliases": [],
+      "atom_ids": [
+        "ATOM-417DC105A8DF6E45F3A1",
+        "ATOM-EEF9C9D4190383D7D75D",
+        "ATOM-96C13F2B72A538ADB5F0",
+        "ATOM-4AB69AFDE4ECE6B6F451",
+        "ATOM-394F93898A7F043551C5"
+      ],
+      "source_documents": [
+        "Plans/OpenCode_Deep_Extraction.md"
+      ],
+      "source_unit_refs": [
+        "SEMANTIC:PROLOGUE:Plans/OpenCode_Deep_Extraction.md:CONT-001",
+        "PLANUNIT:ODE-005",
+        "SEMANTIC:PLANUNIT:ODE-005",
+        "PLANUNIT:ODE-019",
+        "PLANUNIT:ODE-020",
+        "SEMANTIC:PLANUNIT:ODE-019",
+        "SEMANTIC:PLANUNIT:ODE-020",
+        "PLANUNIT:ODE-026",
+        "PLANUNIT:ODE-027",
+        "PLANUNIT:ODE-028",
+        "SEMANTIC:PLANUNIT:ODE-026",
+        "SEMANTIC:PLANUNIT:ODE-027",
+        "SEMANTIC:PLANUNIT:ODE-028",
+        "PLANUNIT:ODE-029",
+        "PLANUNIT:ODE-030",
+        "PLANUNIT:ODE-031",
+        "SEMANTIC:PLANUNIT:ODE-029",
+        "SEMANTIC:PLANUNIT:ODE-030",
+        "SEMANTIC:PLANUNIT:ODE-031"
+      ],
+      "risk_level": "high",
+      "spec_state": "under_specified",
+      "gap_summary": "Preserved gaps or unknowns: Approval requests have no complete recovery state machine; The preserved assistance floor lacks an exact authority matrix; Approval and agent metadata remain structurally under-constrained; Permission matching is syntactically clear but security semantics are incomplete; Permission UI lifecycle and secret-file protection remain incomplete.",
+      "research_questions": [
+        "Which current external standards and proven implementations should define Permission matching and human approval lifecycle, with concrete attention to Approval requests have no complete recovery state machine; The preserved assistance floor lacks an exact authority matrix; Approval and agent metadata remain structurally under-constrained; Permission matching is syntactically clear but security semantics are incomplete; Permission UI lifecycle and secret-file protection remain incomplete?"
+      ],
+      "scenario_requirements": [
+        "Inject the edge or failure state described by \"Approval requests have no complete recovery state machine\"; certification passes only if the resulting authority decision, state transition, durable evidence, recovery behavior, and user-visible outcome are deterministic and falsifiable."
+      ],
+      "cross_packet_terms": [
+        "approval lifecycle incomplete",
+        "capability floor without permission matrix",
+        "interactive approval and agent schema incomplete",
+        "permission match canonicalization and atomicity missing",
+        "approval concurrency and secret scope incomplete"
+      ],
+      "confidence": 0.84
+    },
+    {
+      "feature_id": "FLOCAL-0048",
+      "title": "Remote skills and plugins supply chain",
+      "summary": "Local normalized feature covering Remote skills and plugins lack supply-chain controls. Distinct authority, lifecycle, consumers, and failure semantics are retained through its assigned atom partition.",
+      "feature_kind": "integration",
+      "owner_domain": "tools_integrations_mcp",
+      "secondary_domains": [],
+      "aliases": [],
+      "atom_ids": [
+        "ATOM-9627F9C5C7E14F955CFB"
+      ],
+      "source_documents": [
+        "Plans/OpenCode_Deep_Extraction.md"
+      ],
+      "source_unit_refs": [
+        "SEMANTIC:PROLOGUE:Plans/OpenCode_Deep_Extraction.md:CONT-002"
+      ],
+      "risk_level": "critical",
+      "spec_state": "under_specified",
+      "gap_summary": "Preserved gaps or unknowns: Remote skills and plugins lack supply-chain controls.",
+      "research_questions": [
+        "Which current external standards and proven implementations should define Remote skills and plugins supply chain, with concrete attention to Remote skills and plugins lack supply-chain controls?"
+      ],
+      "scenario_requirements": [
+        "Inject the edge or failure state described by \"Remote skills and plugins lack supply-chain controls\"; certification passes only if the resulting authority decision, state transition, durable evidence, recovery behavior, and user-visible outcome are deterministic and falsifiable."
+      ],
+      "cross_packet_terms": [
+        "extension supply chain contract missing"
+      ],
+      "confidence": 0.84
+    },
+    {
+      "feature_id": "FLOCAL-0049",
+      "title": "Formatter subprocess and edit-event recovery",
+      "summary": "Local normalized feature covering Formatter subprocess behavior is operationally under-specified; Automatic formatter triggering lacks concurrency and recovery semantics. Distinct authority, lifecycle, consumers, and failure semantics are retained through its assigned atom partition.",
+      "feature_kind": "workflow",
+      "owner_domain": "tools_integrations_mcp",
+      "secondary_domains": [],
+      "aliases": [],
+      "atom_ids": [
+        "ATOM-B8202579912DC01F335C",
+        "ATOM-95741C72A6ABB791414B"
+      ],
+      "source_documents": [
+        "Plans/OpenCode_Deep_Extraction.md"
+      ],
+      "source_unit_refs": [
+        "SEMANTIC:PROLOGUE:Plans/OpenCode_Deep_Extraction.md:CONT-002",
+        "PLANUNIT:ODE-036",
+        "SEMANTIC:PLANUNIT:ODE-036"
+      ],
+      "risk_level": "high",
+      "spec_state": "under_specified",
+      "gap_summary": "Preserved gaps or unknowns: Formatter subprocess behavior is operationally under-specified; Automatic formatter triggering lacks concurrency and recovery semantics.",
+      "research_questions": [
+        "Which current external standards and proven implementations should define Formatter subprocess and edit-event recovery, with concrete attention to Formatter subprocess behavior is operationally under-specified; Automatic formatter triggering lacks concurrency and recovery semantics?"
+      ],
+      "scenario_requirements": [
+        "Inject the edge or failure state described by \"Formatter subprocess behavior is operationally under-specified\"; certification passes only if the resulting authority decision, state transition, durable evidence, recovery behavior, and user-visible outcome are deterministic and falsifiable."
+      ],
+      "cross_packet_terms": [
+        "formatter execution oracle missing",
+        "formatter event state machine missing"
+      ],
+      "confidence": 0.84
+    },
+    {
+      "feature_id": "FLOCAL-0050",
+      "title": "Agent configuration and subagent invocation authority",
+      "summary": "Local normalized feature covering Agent configuration and subagent invocation are represented. Distinct authority, lifecycle, consumers, and failure semantics are retained through its assigned atom partition.",
+      "feature_kind": "system",
+      "owner_domain": "agents_models_providers",
+      "secondary_domains": [],
+      "aliases": [],
+      "atom_ids": [
+        "ATOM-70EED451A15A3977774B"
+      ],
+      "source_documents": [
+        "Plans/OpenCode_Deep_Extraction.md"
+      ],
+      "source_unit_refs": [
+        "PLANUNIT:ODE-021",
+        "PLANUNIT:ODE-022",
+        "SEMANTIC:PLANUNIT:ODE-021",
+        "SEMANTIC:PLANUNIT:ODE-022"
+      ],
+      "risk_level": "low",
+      "spec_state": "well_specified",
+      "gap_summary": "Validated observations: Agent configuration and subagent invocation are represented. No gap is asserted by the assigned observations.",
+      "research_questions": [
+        "Which current external standards and proven implementations should define Agent configuration and subagent invocation authority, with concrete attention to Agent configuration and subagent invocation are represented?"
+      ],
+      "scenario_requirements": [
+        "Reproduce \"Agent configuration and subagent invocation are represented\" with one conforming and one deliberately non-conforming implementation; certification passes only when the contract accepts the former and rejects the latter with observable evidence."
+      ],
+      "cross_packet_terms": [],
+      "confidence": 0.94
+    },
+    {
+      "feature_id": "FLOCAL-0051",
+      "title": "Prompt assembly and compaction integrity",
+      "summary": "Local normalized feature covering Read-only execution and prompt/compaction integrity are not enforced end to end. Distinct authority, lifecycle, consumers, and failure semantics are retained through its assigned atom partition.",
+      "feature_kind": "cross_cutting_concern",
+      "owner_domain": "orchestration_runtime_execution",
+      "secondary_domains": [],
+      "aliases": [],
+      "atom_ids": [
+        "ATOM-A6A544076CE94C487EAC"
+      ],
+      "source_documents": [
+        "Plans/OpenCode_Deep_Extraction.md"
+      ],
+      "source_unit_refs": [
+        "PLANUNIT:ODE-023",
+        "PLANUNIT:ODE-024",
+        "PLANUNIT:ODE-025",
+        "SEMANTIC:PLANUNIT:ODE-023",
+        "SEMANTIC:PLANUNIT:ODE-024",
+        "SEMANTIC:PLANUNIT:ODE-025"
+      ],
+      "risk_level": "critical",
+      "spec_state": "under_specified",
+      "gap_summary": "Preserved gaps or unknowns: Read-only execution and prompt/compaction integrity are not enforced end to end.",
+      "research_questions": [
+        "Which current external standards and proven implementations should define Prompt assembly and compaction integrity, with concrete attention to Read-only execution and prompt/compaction integrity are not enforced end to end?"
+      ],
+      "scenario_requirements": [
+        "Inject the edge or failure state described by \"Read-only execution and prompt/compaction integrity are not enforced end to end\"; certification passes only if the resulting authority decision, state transition, durable evidence, recovery behavior, and user-visible outcome are deterministic and falsifiable."
+      ],
+      "cross_packet_terms": [
+        "execution and context integrity boundary missing"
+      ],
+      "confidence": 0.84
+    },
+    {
+      "feature_id": "FLOCAL-0052",
+      "title": "Plan-to-build mode switching baseline",
+      "summary": "Local normalized feature covering Plan-to-build switching behavior is explicitly preserved. Distinct authority, lifecycle, consumers, and failure semantics are retained through its assigned atom partition.",
+      "feature_kind": "workflow",
+      "owner_domain": "orchestration_runtime_execution",
+      "secondary_domains": [],
+      "aliases": [],
+      "atom_ids": [
+        "ATOM-B22743BEF7B446C93F78"
+      ],
+      "source_documents": [
+        "Plans/OpenCode_Deep_Extraction.md"
+      ],
+      "source_unit_refs": [
+        "PLANUNIT:ODE-017",
+        "PLANUNIT:ODE-018",
+        "SEMANTIC:PLANUNIT:ODE-017",
+        "SEMANTIC:PLANUNIT:ODE-018"
+      ],
+      "risk_level": "low",
+      "spec_state": "well_specified",
+      "gap_summary": "Validated observations: Plan-to-build switching behavior is explicitly preserved. No gap is asserted by the assigned observations.",
+      "research_questions": [
+        "Which current external standards and proven implementations should define Plan-to-build mode switching baseline, with concrete attention to Plan-to-build switching behavior is explicitly preserved?"
+      ],
+      "scenario_requirements": [
+        "Reproduce \"Plan-to-build switching behavior is explicitly preserved\" with one conforming and one deliberately non-conforming implementation; certification passes only when the contract accepts the former and rejects the latter with observable evidence."
+      ],
+      "cross_packet_terms": [],
+      "confidence": 0.94
+    },
+    {
+      "feature_id": "FLOCAL-0053",
+      "title": "GUI-to-runtime cleanup configuration snapshot",
+      "summary": "A validated, immutable runtime snapshot projects GUI cleanup settings into a run and defines behavior when settings change after dispatch.",
+      "feature_kind": "data_model",
+      "owner_domain": "orchestration_runtime_execution",
+      "secondary_domains": [
+        "gui_ux_accessibility",
+        "source_control_workspace_code"
+      ],
+      "aliases": [],
+      "atom_ids": [
+        "ATOM-855A79CDCBF589BBBE90"
+      ],
+      "source_documents": [
+        "Plans/MiscPlan.md"
+      ],
+      "source_unit_refs": [
+        "PLANUNIT:M-065",
+        "SEMANTIC:PLANUNIT:M-065"
+      ],
+      "risk_level": "high",
+      "spec_state": "under_specified",
+      "gap_summary": "Preserved gaps or unknowns: GUI-to-runtime snapshot lacks wire detail.",
+      "research_questions": [
+        "Which versioned immutable configuration-snapshot patterns best bind GUI settings to long-running cleanup operations while exposing validation and mid-run change semantics?"
+      ],
+      "scenario_requirements": [
+        "Change cleanup settings after dispatch while the run is active; certification passes only if the run remains pinned to its validated snapshot, the next run receives the new version, and invalid projection data produces a typed visible error without partial cleanup."
+      ],
+      "cross_packet_terms": [
+        "runtime snapshot schema"
+      ],
+      "confidence": 0.84
+    }
+  ],
+  "relationships": [
+    {
+      "source_feature_id": "FLOCAL-0002",
+      "target_feature_id": "FLOCAL-0001",
+      "relationship_type": "depends_on",
+      "evidence_atom_ids": [
+        "ATOM-100DE98BEC0E83019649"
+      ],
+      "rationale": "Runner wrappers consume the centralized workspace cleanup policy."
+    },
+    {
+      "source_feature_id": "FLOCAL-0014",
+      "target_feature_id": "FLOCAL-0011",
+      "relationship_type": "is_surface_of",
+      "evidence_atom_ids": [
+        "ATOM-036267FD69C78D3BBB02"
+      ],
+      "rationale": "Model GUI truth is projected from canonical capability state."
+    },
+    {
+      "source_feature_id": "FLOCAL-0026",
+      "target_feature_id": "FLOCAL-0011",
+      "relationship_type": "depends_on",
+      "evidence_atom_ids": [
+        "ATOM-F4035FB1BCB698C09078"
+      ],
+      "rationale": "Selection scoring consumes a pinned capability catalog."
+    },
+    {
+      "source_feature_id": "FLOCAL-0034",
+      "target_feature_id": "FLOCAL-0039",
+      "relationship_type": "depends_on",
+      "evidence_atom_ids": [
+        "ATOM-063D2CE9F5A48C5FAFB4"
+      ],
+      "rationale": "Account resolution selects from stable provider account profiles."
+    },
+    {
+      "source_feature_id": "FLOCAL-0041",
+      "target_feature_id": "FLOCAL-0029",
+      "relationship_type": "interacts_with",
+      "evidence_atom_ids": [
+        "ATOM-73F34FD5B13E768D98C8"
+      ],
+      "rationale": "Credential-route truth is explicitly distinct from provider capability truth."
+    },
+    {
+      "source_feature_id": "FLOCAL-0047",
+      "target_feature_id": "FLOCAL-0046",
+      "relationship_type": "governs",
+      "evidence_atom_ids": [
+        "ATOM-7CEFD3F6EE40602657BB"
+      ],
+      "rationale": "Permission and approval decisions constrain command-template execution."
+    }
+  ],
+  "family_key_assignments": [
+    {
+      "family_key": "account-failover",
+      "feature_ids": [
+        "FLOCAL-0035"
+      ]
+    },
+    {
+      "family_key": "agent-config",
+      "feature_ids": [
+        "FLOCAL-0037"
+      ]
+    },
+    {
+      "family_key": "agent-subagent-authority",
+      "feature_ids": [
+        "FLOCAL-0050"
+      ]
+    },
+    {
+      "family_key": "agent_config_readiness",
+      "feature_ids": [
+        "FLOCAL-0037"
+      ]
+    },
+    {
+      "family_key": "authentication_lifecycle",
+      "feature_ids": [
+        "FLOCAL-0038"
+      ]
+    },
+    {
+      "family_key": "capability-catalog-and-runtime-routing",
+      "feature_ids": [
+        "FLOCAL-0011",
+        "FLOCAL-0018"
+      ]
+    },
+    {
+      "family_key": "cleanup-lifecycle-and-evidence",
+      "feature_ids": [
+        "FLOCAL-0001",
+        "FLOCAL-0002",
+        "FLOCAL-0003",
+        "FLOCAL-0008",
+        "FLOCAL-0053"
+      ]
+    },
+    {
+      "family_key": "command-template-trust",
+      "feature_ids": [
+        "FLOCAL-0046"
+      ]
+    },
+    {
+      "family_key": "credential-boundaries",
+      "feature_ids": [
+        "FLOCAL-0036",
+        "FLOCAL-0039",
+        "FLOCAL-0041"
+      ]
+    },
+    {
+      "family_key": "credential_route_epoch",
+      "feature_ids": [
+        "FLOCAL-0041"
+      ]
+    },
+    {
+      "family_key": "debug-instrumentation-lifecycle",
+      "feature_ids": [
+        "FLOCAL-0006"
+      ]
+    },
+    {
+      "family_key": "effort_settlement",
+      "feature_ids": [
+        "FLOCAL-0012"
+      ]
+    },
+    {
+      "family_key": "entitlement_quota_settlement",
+      "feature_ids": [
+        "FLOCAL-0030"
+      ]
+    },
+    {
+      "family_key": "evidence-retention",
+      "feature_ids": [
+        "FLOCAL-0003"
+      ]
+    },
+    {
+      "family_key": "extraction-owner-routing",
+      "feature_ids": [
+        "FLOCAL-0045"
+      ]
+    },
+    {
+      "family_key": "first_run_account_readiness_projection",
+      "feature_ids": [
+        "FLOCAL-0027"
+      ]
+    },
+    {
+      "family_key": "formatter-event-recovery",
+      "feature_ids": [
+        "FLOCAL-0049"
+      ]
+    },
+    {
+      "family_key": "free_models_account_setup_delegation",
+      "feature_ids": [
+        "FLOCAL-0027"
+      ]
+    },
+    {
+      "family_key": "free_models_auto_apply",
+      "feature_ids": [
+        "FLOCAL-0025"
+      ]
+    },
+    {
+      "family_key": "free_models_catalog_identity",
+      "feature_ids": [
+        "FLOCAL-0024"
+      ]
+    },
+    {
+      "family_key": "migration-lineage-reconciliation",
+      "feature_ids": [
+        "FLOCAL-0007",
+        "FLOCAL-0016",
+        "FLOCAL-0040",
+        "FLOCAL-0045"
+      ]
+    },
+    {
+      "family_key": "model-resolution-acceptance",
+      "feature_ids": [
+        "FLOCAL-0009",
+        "FLOCAL-0018"
+      ]
+    },
+    {
+      "family_key": "model-role-and-capability-lane-routing",
+      "feature_ids": [
+        "FLOCAL-0015"
+      ]
+    },
+    {
+      "family_key": "model-settings-and-inspector-gui",
+      "feature_ids": [
+        "FLOCAL-0014"
+      ]
+    },
+    {
+      "family_key": "model_capability_confidence_ui",
+      "feature_ids": [
+        "FLOCAL-0014"
+      ]
+    },
+    {
+      "family_key": "model_precedence_and_availability",
+      "feature_ids": [
+        "FLOCAL-0009",
+        "FLOCAL-0011",
+        "FLOCAL-0026"
+      ]
+    },
+    {
+      "family_key": "model_selection_router",
+      "feature_ids": [
+        "FLOCAL-0026"
+      ]
+    },
+    {
+      "family_key": "model_usage_signal_display",
+      "feature_ids": [
+        "FLOCAL-0033"
+      ]
+    },
+    {
+      "family_key": "multi-account-routing",
+      "feature_ids": [
+        "FLOCAL-0034",
+        "FLOCAL-0035"
+      ]
+    },
+    {
+      "family_key": "multi_account_resolution",
+      "feature_ids": [
+        "FLOCAL-0034"
+      ]
+    },
+    {
+      "family_key": "opencode-baseline-reproducibility",
+      "feature_ids": [
+        "FLOCAL-0045"
+      ]
+    },
+    {
+      "family_key": "operational_identity_and_goal_runtime",
+      "feature_ids": [
+        "FLOCAL-0042"
+      ]
+    },
+    {
+      "family_key": "orchestrator-runner-wrappers",
+      "feature_ids": [
+        "FLOCAL-0002"
+      ]
+    },
+    {
+      "family_key": "permission-and-hitl-lifecycle",
+      "feature_ids": [
+        "FLOCAL-0047"
+      ]
+    },
+    {
+      "family_key": "persona-runtime-controls-and-capability-snapshot",
+      "feature_ids": [
+        "FLOCAL-0020"
+      ]
+    },
+    {
+      "family_key": "persona-runtime-preferences",
+      "feature_ids": [
+        "FLOCAL-0020"
+      ]
+    },
+    {
+      "family_key": "platform_specs_retirement",
+      "feature_ids": [
+        "FLOCAL-0016",
+        "FLOCAL-0029"
+      ]
+    },
+    {
+      "family_key": "pricing-billing-and-token-usage",
+      "feature_ids": [
+        "FLOCAL-0019"
+      ]
+    },
+    {
+      "family_key": "projection_and_native_auth",
+      "feature_ids": [
+        "FLOCAL-0041"
+      ]
+    },
+    {
+      "family_key": "prompt-compaction-integrity",
+      "feature_ids": [
+        "FLOCAL-0051"
+      ]
+    },
+    {
+      "family_key": "provider-account-profiles",
+      "feature_ids": [
+        "FLOCAL-0039"
+      ]
+    },
+    {
+      "family_key": "provider-model-selection-and-precedence",
+      "feature_ids": [
+        "FLOCAL-0009",
+        "FLOCAL-0010"
+      ]
+    },
+    {
+      "family_key": "provider_account_isolation",
+      "feature_ids": [
+        "FLOCAL-0036"
+      ]
+    },
+    {
+      "family_key": "provider_capability_epochs",
+      "feature_ids": [
+        "FLOCAL-0029"
+      ]
+    },
+    {
+      "family_key": "provider_error_observability",
+      "feature_ids": [
+        "FLOCAL-0032"
+      ]
+    },
+    {
+      "family_key": "provider_native_metadata_replay",
+      "feature_ids": [
+        "FLOCAL-0028"
+      ]
+    },
+    {
+      "family_key": "provider_policy",
+      "feature_ids": [
+        "FLOCAL-0031"
+      ]
+    },
+    {
+      "family_key": "provider_usage_settings_projection",
+      "feature_ids": [
+        "FLOCAL-0044"
+      ]
+    },
+    {
+      "family_key": "requested-effective-identity",
+      "feature_ids": [
+        "FLOCAL-0034"
+      ]
+    },
+    {
+      "family_key": "requested-effective-identity-and-retry-snapshots",
+      "feature_ids": [
+        "FLOCAL-0009",
+        "FLOCAL-0022"
+      ]
+    },
+    {
+      "family_key": "retry_budget_token_store",
+      "feature_ids": [
+        "FLOCAL-0041"
+      ]
+    },
+    {
+      "family_key": "shared_pressure_bounded_fallback",
+      "feature_ids": [
+        "FLOCAL-0035"
+      ]
+    },
+    {
+      "family_key": "shortcut-registry-and-management",
+      "feature_ids": [
+        "FLOCAL-0004"
+      ]
+    },
+    {
+      "family_key": "skills-and-shortcuts",
+      "feature_ids": [
+        "FLOCAL-0004",
+        "FLOCAL-0005"
+      ]
+    },
+    {
+      "family_key": "skills-discovery-permissions-runtime-and-gui",
+      "feature_ids": [
+        "FLOCAL-0005"
+      ]
+    },
+    {
+      "family_key": "skills-plugins-supply-chain",
+      "feature_ids": [
+        "FLOCAL-0048"
+      ]
+    },
+    {
+      "family_key": "testing_policy_inheritance",
+      "feature_ids": [
+        "FLOCAL-0043"
+      ]
+    },
+    {
+      "family_key": "usage-pressure",
+      "feature_ids": [
+        "FLOCAL-0035"
+      ]
+    },
+    {
+      "family_key": "usage_pressure_and_selection",
+      "feature_ids": [
+        "FLOCAL-0035"
+      ]
+    },
+    {
+      "family_key": "variants-aliases-and-selection",
+      "feature_ids": [
+        "FLOCAL-0013"
+      ]
+    },
+    {
+      "family_key": "vision-bridge-and-teacher-model-disclosure",
+      "feature_ids": [
+        "FLOCAL-0023"
+      ]
+    },
+    {
+      "family_key": "web-provider-capability-mirror",
+      "feature_ids": [
+        "FLOCAL-0017"
+      ]
+    },
+    {
+      "family_key": "workspace-cleanup",
+      "feature_ids": [
+        "FLOCAL-0001",
+        "FLOCAL-0002",
+        "FLOCAL-0003",
+        "FLOCAL-0006",
+        "FLOCAL-0053"
+      ]
+    }
+  ],
+  "self_attestation": {
+    "all_atoms_partitioned_once": true,
+    "all_family_keys_mapped": true,
+    "distinct_features_not_collapsed": true,
+    "gaps_and_non_gaps_preserved": true,
+    "research_deferred_not_omitted": true,
+    "no_peer_or_external_inputs_used": true
+  }
+}

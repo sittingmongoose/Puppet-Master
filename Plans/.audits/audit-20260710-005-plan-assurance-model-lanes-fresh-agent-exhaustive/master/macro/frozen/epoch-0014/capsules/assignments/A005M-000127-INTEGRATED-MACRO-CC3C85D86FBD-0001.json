@@ -1,0 +1,146 @@
+{
+  "assignment_id": "A005M-000127-INTEGRATED-MACRO-CC3C85D86FBD-0001",
+  "attempt_id": "attempt-0014",
+  "audit_id": "audit-20260710-005-plan-assurance-model-lanes-fresh-agent-exhaustive",
+  "blindness": {
+    "external_research": "deferred_to_feature_research_phase",
+    "peer_results": "forbidden",
+    "prior_audits": "forbidden",
+    "unrelated_sources": "forbidden"
+  },
+  "bundle_core_range": [
+    1,
+    1248
+  ],
+  "bundle_id": "MACRO-CC3C85D86FBD-0001",
+  "context_ranges": [
+    [
+      1249,
+      1260
+    ]
+  ],
+  "document_path": "Plans/UI_Command_Catalog.md",
+  "micro_window_ids": [
+    "WIN-CC3C85D86FBD-0001",
+    "WIN-CC3C85D86FBD-0002",
+    "WIN-CC3C85D86FBD-0003",
+    "WIN-CC3C85D86FBD-0004"
+  ],
+  "phase": "blind_macro_window_review",
+  "required_dimensions": [
+    "behavior",
+    "capabilities",
+    "inputs_outputs",
+    "contracts",
+    "states_transitions",
+    "authority",
+    "ownership",
+    "consumers",
+    "gui_truth",
+    "failures_recovery",
+    "security_privacy",
+    "propagation",
+    "operations",
+    "scale_performance",
+    "compatibility_migration",
+    "acceptance_oracles",
+    "builder_discretion",
+    "ambiguity_unknowns",
+    "missing_callers_consumers",
+    "invalid_states_transitions",
+    "concurrency_races",
+    "partial_failure",
+    "recovery_rollback",
+    "authority_boundaries",
+    "privacy_data_lifecycle",
+    "untrusted_inputs",
+    "gui_misleading_states",
+    "offline_network_loss",
+    "scale_limits",
+    "accessibility",
+    "localization",
+    "observability_support",
+    "destructive_actions",
+    "cross_document_seams",
+    "test_falsifiability",
+    "unknown_unknowns"
+  ],
+  "result_schema_ref": "schemas/macro_review_result.schema.json",
+  "review_instructions": "Read every assigned core line and account for every required_source_unit_ref. Apply both exact-behavior and adversarial-negative-space lenses across every required dimension. Extract concise feature, behavior, contract, state, authority, consumer, GUI, failure/recovery, oracle, gap, unknown, and explicit-non-gap items with exact source evidence. Do not merely paraphrase headings or copy unit refs. Each segment must name its complete required_source_unit_refs list and at least one item. Write exactly one regular JSON payload inside the assigned output directory; result.json is recommended but the filename is not semantic. Do not write a terminal seal. Return PMR1 only after the JSON payload is fully written.",
+  "schema_version": "macro-context-capsule-v1",
+  "segments": [
+    {
+      "core_range": [
+        1,
+        344
+      ],
+      "core_sha256": "77b4f8d2bb26ae8506e369f7ef4e3d15ad2744e754733597b9158d8d7b051ef0",
+      "plan_unit_ids": [],
+      "required_source_unit_refs": [
+        "SEMANTIC:PROLOGUE:Plans/UI_Command_Catalog.md:CONT-001"
+      ],
+      "semantic_block_ids": [
+        "PROLOGUE:Plans/UI_Command_Catalog.md:CONT-001"
+      ],
+      "structural_paths": [],
+      "token_estimate": 11873,
+      "window_id": "WIN-CC3C85D86FBD-0001"
+    },
+    {
+      "core_range": [
+        345,
+        624
+      ],
+      "core_sha256": "5c67304daed1e88e9f278b823feb424f39ec5f0b526c683b52d614c191391db1",
+      "plan_unit_ids": [],
+      "required_source_unit_refs": [
+        "SEMANTIC:PROLOGUE:Plans/UI_Command_Catalog.md:CONT-002"
+      ],
+      "semantic_block_ids": [
+        "PROLOGUE:Plans/UI_Command_Catalog.md:CONT-002"
+      ],
+      "structural_paths": [],
+      "token_estimate": 10436,
+      "window_id": "WIN-CC3C85D86FBD-0002"
+    },
+    {
+      "core_range": [
+        625,
+        884
+      ],
+      "core_sha256": "68b71ff3134e30e83d903b2601d5471400067ad3f72640786a4dda7f297578b1",
+      "plan_unit_ids": [],
+      "required_source_unit_refs": [
+        "SEMANTIC:PROLOGUE:Plans/UI_Command_Catalog.md:CONT-003"
+      ],
+      "semantic_block_ids": [
+        "PROLOGUE:Plans/UI_Command_Catalog.md:CONT-003"
+      ],
+      "structural_paths": [],
+      "token_estimate": 11229,
+      "window_id": "WIN-CC3C85D86FBD-0003"
+    },
+    {
+      "core_range": [
+        885,
+        1248
+      ],
+      "core_sha256": "8eb331b9dcecf6f2995a593b8950b939ed2cd872a6170518e465e17909650dd5",
+      "plan_unit_ids": [],
+      "required_source_unit_refs": [
+        "SEMANTIC:PROLOGUE:Plans/UI_Command_Catalog.md:CONT-004"
+      ],
+      "semantic_block_ids": [
+        "PROLOGUE:Plans/UI_Command_Catalog.md:CONT-004"
+      ],
+      "structural_paths": [],
+      "token_estimate": 10322,
+      "window_id": "WIN-CC3C85D86FBD-0004"
+    }
+  ],
+  "source_excerpt_line_format": "L######## followed by a tab and exact canonical source text",
+  "source_excerpt_ref": "capsules/source/ac/ac60c48542a0cb8f2ffefcc2b4996765e582f5eb524f1c4322d7c8924f0d2b0f.txt",
+  "source_excerpt_sha256": "ac60c48542a0cb8f2ffefcc2b4996765e582f5eb524f1c4322d7c8924f0d2b0f",
+  "source_sha256": "23bf28ecc5cc3aab5bf8b9c4154d63c3762c27d7eeb85f98dd10331298d372a7",
+  "token_estimate": 43860
+}

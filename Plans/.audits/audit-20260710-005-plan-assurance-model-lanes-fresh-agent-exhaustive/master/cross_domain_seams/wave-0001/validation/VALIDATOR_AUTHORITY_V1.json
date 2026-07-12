@@ -1,0 +1,23 @@
+{
+  "authority_sha256": "e871f745f01c83d50e322f6087230e7419849befe1e0959b905013303199550d",
+  "independent_luna_postrun_required_before_any_credit": true,
+  "independent_luna_prelaunch_required": true,
+  "launch_seal_sha256": "c0f62edda230f58187a6c97a8f18188e7ed2f447842eb51c391229ff51920267",
+  "manifest_sha256": "68fe7b5ecfee5475874817b1658c24509de470e722e72e98ba2275bd98dde732",
+  "normalized_edge_ledger_sha256": "6ebfdbd97df06dc4060421f8845d32de4fc3edc81d57a1765144986193a2925b",
+  "packet_registry_sha256": "18481a97a18e950f7c79b8a6022bda3c367f4577d69deccb1c58f12a9a43b0bf",
+  "postrun_candidate_credit_only": true,
+  "prelaunch_requires_zero_state": true,
+  "result_schema_sha256": "0ecbfbc20de90e76db977284c42fe6d8e7bbe7dad0882dbff5e466f8ae22fb90",
+  "schema_engine": "jsonschema.Draft202012Validator 4.26.0 from sealed offline dependency bundle",
+  "schema_version": "cross-domain-seam-validator-authority-v1",
+  "source_inventory_sha256": "f28db2680cde7985d4ca09405e4bc5923e3f587677d67d0140bccd0a42e9d0b0",
+  "status": "candidate_only",
+  "tool_hashes": {
+    "activation_generator": "8a651ddec0face83ed7dbb125b37968d1c61ef52efaeda85322787b7c9435691",
+    "postrun_validator": "0168816efc0f609f00c5fdbe72d7e8d426bd7b8215c1a734feda9e0224d4674f",
+    "prelaunch_verifier": "0e1bc58384c4748af197ab2530882732997f629624796af1261a36af22b7f651",
+    "preparation": "cabe1d93c4312939444e9d00cebc7552e4b3f5de630f90dcc02c725b31f5435d",
+    "test_harness": "a2fca36ab95561c5f5ebaec005028294b416c502232e3d7e979538a987529692"
+  }
+}

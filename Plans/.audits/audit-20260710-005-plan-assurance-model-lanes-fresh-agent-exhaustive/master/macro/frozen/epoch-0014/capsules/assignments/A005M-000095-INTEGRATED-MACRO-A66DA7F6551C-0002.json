@@ -1,0 +1,173 @@
+{
+  "assignment_id": "A005M-000095-INTEGRATED-MACRO-A66DA7F6551C-0002",
+  "attempt_id": "attempt-0014",
+  "audit_id": "audit-20260710-005-plan-assurance-model-lanes-fresh-agent-exhaustive",
+  "blindness": {
+    "external_research": "deferred_to_feature_research_phase",
+    "peer_results": "forbidden",
+    "prior_audits": "forbidden",
+    "unrelated_sources": "forbidden"
+  },
+  "bundle_core_range": [
+    2661,
+    3465
+  ],
+  "bundle_id": "MACRO-A66DA7F6551C-0002",
+  "context_ranges": [
+    [
+      2649,
+      2660
+    ]
+  ],
+  "document_path": "Plans/Personas.md",
+  "micro_window_ids": [
+    "WIN-A66DA7F6551C-0008",
+    "WIN-A66DA7F6551C-0009",
+    "WIN-A66DA7F6551C-0010"
+  ],
+  "phase": "blind_macro_window_review",
+  "required_dimensions": [
+    "behavior",
+    "capabilities",
+    "inputs_outputs",
+    "contracts",
+    "states_transitions",
+    "authority",
+    "ownership",
+    "consumers",
+    "gui_truth",
+    "failures_recovery",
+    "security_privacy",
+    "propagation",
+    "operations",
+    "scale_performance",
+    "compatibility_migration",
+    "acceptance_oracles",
+    "builder_discretion",
+    "ambiguity_unknowns",
+    "missing_callers_consumers",
+    "invalid_states_transitions",
+    "concurrency_races",
+    "partial_failure",
+    "recovery_rollback",
+    "authority_boundaries",
+    "privacy_data_lifecycle",
+    "untrusted_inputs",
+    "gui_misleading_states",
+    "offline_network_loss",
+    "scale_limits",
+    "accessibility",
+    "localization",
+    "observability_support",
+    "destructive_actions",
+    "cross_document_seams",
+    "test_falsifiability",
+    "unknown_unknowns"
+  ],
+  "result_schema_ref": "schemas/macro_review_result.schema.json",
+  "review_instructions": "Read every assigned core line and account for every required_source_unit_ref. Apply both exact-behavior and adversarial-negative-space lenses across every required dimension. Extract concise feature, behavior, contract, state, authority, consumer, GUI, failure/recovery, oracle, gap, unknown, and explicit-non-gap items with exact source evidence. Do not merely paraphrase headings or copy unit refs. Each segment must name its complete required_source_unit_refs list and at least one item. Write exactly one regular JSON payload inside the assigned output directory; result.json is recommended but the filename is not semantic. Do not write a terminal seal. Return PMR1 only after the JSON payload is fully written.",
+  "schema_version": "macro-context-capsule-v1",
+  "segments": [
+    {
+      "core_range": [
+        2661,
+        3031
+      ],
+      "core_sha256": "f52bf34fbd2353f8d2ca14dcf38b0ae981d44a8b4f55717ce34176c1fc123bef",
+      "plan_unit_ids": [
+        "P-044",
+        "P-045",
+        "P-046",
+        "P-047",
+        "P-048",
+        "P-049",
+        "P-050",
+        "P-051"
+      ],
+      "required_source_unit_refs": [
+        "PLANUNIT:P-044",
+        "PLANUNIT:P-045",
+        "PLANUNIT:P-046",
+        "PLANUNIT:P-047",
+        "PLANUNIT:P-048",
+        "PLANUNIT:P-049",
+        "PLANUNIT:P-050",
+        "PLANUNIT:P-051",
+        "SEMANTIC:PLANUNIT:P-044",
+        "SEMANTIC:PLANUNIT:P-045",
+        "SEMANTIC:PLANUNIT:P-046",
+        "SEMANTIC:PLANUNIT:P-047",
+        "SEMANTIC:PLANUNIT:P-048",
+        "SEMANTIC:PLANUNIT:P-049",
+        "SEMANTIC:PLANUNIT:P-050",
+        "SEMANTIC:PLANUNIT:P-051"
+      ],
+      "semantic_block_ids": [
+        "PLANUNIT:P-044",
+        "PLANUNIT:P-045",
+        "PLANUNIT:P-046",
+        "PLANUNIT:P-047",
+        "PLANUNIT:P-048",
+        "PLANUNIT:P-049",
+        "PLANUNIT:P-050",
+        "PLANUNIT:P-051"
+      ],
+      "structural_paths": [],
+      "token_estimate": 5350,
+      "window_id": "WIN-A66DA7F6551C-0008"
+    },
+    {
+      "core_range": [
+        3032,
+        3317
+      ],
+      "core_sha256": "f27f9c2578ac03a6b35a00533a44feab01ee11265452b3f572cdb6cf734b8ec8",
+      "plan_unit_ids": [
+        "P-052",
+        "P-053",
+        "P-054"
+      ],
+      "required_source_unit_refs": [
+        "PLANUNIT:P-052",
+        "PLANUNIT:P-053",
+        "PLANUNIT:P-054",
+        "SEMANTIC:PLANUNIT:P-052",
+        "SEMANTIC:PLANUNIT:P-053",
+        "SEMANTIC:PLANUNIT:P-054"
+      ],
+      "semantic_block_ids": [
+        "PLANUNIT:P-052",
+        "PLANUNIT:P-053",
+        "PLANUNIT:P-054"
+      ],
+      "structural_paths": [],
+      "token_estimate": 4308,
+      "window_id": "WIN-A66DA7F6551C-0009"
+    },
+    {
+      "core_range": [
+        3318,
+        3465
+      ],
+      "core_sha256": "61a21bca30f156e0adaa9f74a22dc6b021926a5b453d91111c82d03e1dacc0b3",
+      "plan_unit_ids": [
+        "P-055"
+      ],
+      "required_source_unit_refs": [
+        "PLANUNIT:P-055",
+        "SEMANTIC:PLANUNIT:P-055"
+      ],
+      "semantic_block_ids": [
+        "PLANUNIT:P-055"
+      ],
+      "structural_paths": [],
+      "token_estimate": 2216,
+      "window_id": "WIN-A66DA7F6551C-0010"
+    }
+  ],
+  "source_excerpt_line_format": "L######## followed by a tab and exact canonical source text",
+  "source_excerpt_ref": "capsules/source/b8/b8daff25f7a708e236f3567e2924413b74c87cec9b20592ce0accf44e4895f67.txt",
+  "source_excerpt_sha256": "b8daff25f7a708e236f3567e2924413b74c87cec9b20592ce0accf44e4895f67",
+  "source_sha256": "435cc1de310cbdca24e7e092cdaf51c3be06f2dde1cbae0d42df448609bfb0db",
+  "token_estimate": 11874
+}

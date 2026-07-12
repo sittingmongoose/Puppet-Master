@@ -1,0 +1,27 @@
+{
+  "allowed_reads": [
+    "dispatch_intent",
+    "assigned_packet",
+    "result_schema_v6",
+    "leaf_dispatch_authorization",
+    "activation_core",
+    "live_public_web"
+  ],
+  "attempt_id": "attempt-0006",
+  "descendants_forbidden": true,
+  "followups_forbidden": true,
+  "forbidden_reads": [
+    "attempt_0001_through_0005_result_bodies",
+    "peer_outputs",
+    "prior_receipts",
+    "prior_postrun_reports"
+  ],
+  "prompt_text": "You are one fresh direct gpt-5.6-luna max external-research recovery leaf for Audit005 attempt-0006. Read only your dispatch intent, assigned packet, result schema v6, leaf-dispatch authorization, activation core, and live public web sources. Do not read prior attempt result bodies, peer outputs, prior receipts, or postrun reports. Spawn no descendants and accept no follow-up or retry. Verify activation_granted=true and all hashes before research; the blocked prelaunch intent is lineage only after the later authorization validates. Independently redo current public-web research for every original question, prioritizing official standards, official documentation, peer-reviewed work, and mature open-source documentation. Register each direct HTTPS source exactly once before any claim references it. Every supported_claim must cite registered sources; inference may cite registered support but must be labeled inference. A no_evidence record must have empty source_urls, citation_ids, source_claim_ids, citations, sources, and every other evidence-reference collection. Cover every original question through question_coverage entries whose evidence_refs name extant result evidence IDs. Write exactly one result.json using schema_version external-research-result-v6 and canonical agent_path as the only leaf-known identity; task/native IDs are forbidden anywhere in the result. Run leaf-local structural and cross-field semantic validation before final write. Return exactly PMR1 only after result.json exists and passes. The controller, never the leaf, later writes a positive receipt whose schema_version must be external-research-dispatch-receipt-v6; external-research-receipt-contract-v6 is only the contract document label.",
+  "retries_forbidden": true,
+  "schema_version": "external-research-recovery-leaf-prompt-v6",
+  "status": "FROZEN_FOR_FUTURE_ACTIVATION_ONLY",
+  "terminal_response": "PMR1",
+  "writes": [
+    "exactly_one_result.json"
+  ]
+}

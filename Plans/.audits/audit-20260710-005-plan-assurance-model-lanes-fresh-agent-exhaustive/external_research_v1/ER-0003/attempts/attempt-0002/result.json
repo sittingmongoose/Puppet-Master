@@ -1,0 +1,478 @@
+{
+  "audit_id": "audit-20260710-005-plan-assurance-model-lanes-fresh-agent-exhaustive",
+  "schema_version": "external-research-result-v2",
+  "phase": "external_research_current_web_research",
+  "assignment_id": "ER-0003",
+  "attempt_id": "attempt-0002",
+  "controller_thread_id": "019f5078-6501-7223-b52f-2251010bdc41",
+  "task_thread_id": "1BA96693-DBE4-4615-BC9A-0F919BA069FA",
+  "agent_path": "/root/a005_external_research_sprint_0001_attempt_0004_terminal",
+  "model": "gpt-5.6-luna",
+  "reasoning_effort": "max",
+  "status": "completed",
+  "topic": "Versioned file-revert operation contracts versus whole-turn or conversation rewind",
+  "owner_domains": [
+    "source_control_workspace_code",
+    "orchestration_runtime_execution"
+  ],
+  "feature_refs": [
+    "OPF::A005OM-0018::PF-0071",
+    "OPF::A005OM-0019::PF-0066"
+  ],
+  "research_questions": [
+    "What contracts make a versioned file-revert operation safe, previewable, atomic, auditable, and distinguishable from whole-turn or conversation rewind?",
+    "How do Git, IDE, and agent coding systems bind identity, snapshots, workspace state, and rollback scope?",
+    "Which race, partial-write, stale-base, conflict, and recovery failure modes require explicit handling?",
+    "Which patterns should Puppet Master adopt or reject for file-level versus turn-level recovery?"
+  ],
+  "source_availability": "available",
+  "unavailable_evidence": [],
+  "sources": [
+    {
+      "url": "https://git-scm.com/docs/git-restore",
+      "title": "git-restore Documentation",
+      "publisher": "Git Project",
+      "published_date": "2026-06-29",
+      "access_date": "2026-07-11",
+      "source_tier": "official",
+      "material_relevance": "Defines path-scoped restore from a selected tree and separately targets the working tree, index, or both; also documents interactive hunks, deletions, pathspecs, and submodule behavior."
+    },
+    {
+      "url": "https://git-scm.com/docs/git-apply",
+      "title": "git-apply Documentation",
+      "publisher": "Git Project",
+      "published_date": "2026-06-29",
+      "access_date": "2026-07-11",
+      "source_tier": "official",
+      "material_relevance": "Documents dry-run applicability checks, index/worktree coupling, blob-identity-aware three-way application, and conflict outcomes for patch-based change or revert."
+    },
+    {
+      "url": "https://git-scm.com/docs/api-lockfile",
+      "title": "api-lockfile Documentation",
+      "publisher": "Git Project",
+      "published_date": "2015-09-04",
+      "access_date": "2026-07-11",
+      "source_tier": "official",
+      "material_relevance": "Specifies exclusive lock creation, write-then-rename commit, cleanup on failure, and the old-or-new visibility guarantee that avoids torn reads."
+    },
+    {
+      "url": "https://git-scm.com/docs/git-reflog",
+      "title": "git-reflog Documentation",
+      "publisher": "Git Project",
+      "published_date": "2025-10-15",
+      "access_date": "2026-07-11",
+      "source_tier": "official",
+      "material_relevance": "Defines local reference logs for branch and HEAD movement, supplying recoverable reference identity but not a general file-content transaction journal."
+    },
+    {
+      "url": "https://git-scm.com/docs/git-worktree",
+      "title": "git-worktree Documentation",
+      "publisher": "Git Project",
+      "published_date": "2026-04-20",
+      "access_date": "2026-07-11",
+      "source_tier": "official",
+      "material_relevance": "Documents multiple linked worktrees, per-worktree HEAD and index state, detached experimental worktrees, locking, pruning, and repair."
+    },
+    {
+      "url": "https://git-scm.com/docs/git-stash",
+      "title": "git-stash Documentation",
+      "publisher": "Git Project",
+      "published_date": "2026-06-29",
+      "access_date": "2026-07-11",
+      "source_tier": "official",
+      "material_relevance": "Shows that working-directory and index snapshots can be represented as commits, scoped by path, inspected, reapplied, and retained when pop encounters conflicts."
+    },
+    {
+      "url": "https://www.rfc-editor.org/rfc/rfc5789",
+      "title": "RFC 5789: PATCH Method for HTTP",
+      "publisher": "IETF / RFC Editor",
+      "published_date": "2010-03",
+      "access_date": "2026-07-11",
+      "source_tier": "standard",
+      "material_relevance": "Provides a normative partial-update contract: conditional known-base requests, all-or-none application, no partial representation visibility, and conflict/precondition error handling."
+    },
+    {
+      "url": "https://www.rfc-editor.org/rfc/rfc6902",
+      "title": "RFC 6902: JavaScript Object Notation (JSON) Patch",
+      "publisher": "IETF / RFC Editor",
+      "published_date": "2013-04",
+      "access_date": "2026-07-11",
+      "source_tier": "standard",
+      "material_relevance": "Defines ordered patch operations, the test guard, failure termination, and the requirement that an unsuccessful patch not be treated as successfully applied."
+    },
+    {
+      "url": "https://www.rfc-editor.org/rfc/rfc9110#section-13.1.1",
+      "title": "RFC 9110: HTTP Semantics",
+      "publisher": "IETF / RFC Editor",
+      "published_date": "2022-06",
+      "access_date": "2026-07-11",
+      "source_tier": "standard",
+      "material_relevance": "Defines strong If-Match validation before state-changing methods, the lost-update protection purpose, and 412 handling for a failed precondition."
+    },
+    {
+      "url": "https://code.visualstudio.com/docs/chat/review-code-edits",
+      "title": "Review AI-generated code edits",
+      "publisher": "Microsoft Visual Studio Code",
+      "published_date": null,
+      "access_date": "2026-07-11",
+      "source_tier": "official",
+      "material_relevance": "Documents agent-edit review at file, individual-change, and all-files granularity, pending-edit identity, discard/keep actions, sensitive-file approval, and pre-commit review."
+    },
+    {
+      "url": "https://code.visualstudio.com/docs/chat/chat-checkpoints",
+      "title": "Revert changes with checkpoints and editing requests",
+      "publisher": "Microsoft Visual Studio Code",
+      "published_date": null,
+      "access_date": "2026-07-11",
+      "source_tier": "official",
+      "material_relevance": "Separates per-edit review from request checkpoints, snapshots affected files before a chat request, restores all later file changes, supports redo, and can show per-request file change counts."
+    },
+    {
+      "url": "https://code.visualstudio.com/docs/editing/userinterface",
+      "title": "User interface",
+      "publisher": "Microsoft Visual Studio Code",
+      "published_date": null,
+      "access_date": "2026-07-11",
+      "source_tier": "official",
+      "material_relevance": "Documents file Timeline and local history entries containing full saved file contents, compare/restore actions, deletion recovery, and bounded size, count, exclusion, and merge-window settings."
+    }
+  ],
+  "findings": [
+    {
+      "finding_id": "F-001",
+      "claim": "Git models file revert as an explicit path-scoped operation whose source and destination layers are named: a selected tree can restore the working tree, the index, or both, and interactive hunks can narrow the change.",
+      "evidence_class": "supported_claim",
+      "source_urls": ["https://git-scm.com/docs/git-restore"],
+      "confidence": 0.99,
+      "notes": "The documented pathspec and --staged/--worktree controls make the affected scope materially different from a whole-turn rollback."
+    },
+    {
+      "finding_id": "F-002",
+      "claim": "Git supplies a preview and compatibility gate for patch application: --check detects whether a patch applies, --index checks both index and worktree consistency, and --3way uses recorded blob identity when available.",
+      "evidence_class": "supported_claim",
+      "source_urls": ["https://git-scm.com/docs/git-apply"],
+      "confidence": 0.98,
+      "notes": "A safe revert can therefore separate plan/preview from mutation and can surface a conflict instead of silently overwriting a changed base."
+    },
+    {
+      "finding_id": "F-003",
+      "claim": "Git's lockfile contract prevents torn file publication by exclusively creating a sidecar lock, writing the new contents there, and atomically renaming it into place; readers are not blocked but see old or new contents when the filesystem rename is atomic.",
+      "evidence_class": "supported_claim",
+      "source_urls": ["https://git-scm.com/docs/api-lockfile"],
+      "confidence": 0.99,
+      "notes": "The same contract also distinguishes writer mutual exclusion from reader consistency, which should be explicit in an operation contract."
+    },
+    {
+      "finding_id": "F-004",
+      "claim": "Git reflogs record updates to local references and HEAD movement, while stash entries provide commit-backed working-directory and index snapshots that can be inspected and reapplied.",
+      "evidence_class": "supported_claim",
+      "source_urls": ["https://git-scm.com/docs/git-reflog", "https://git-scm.com/docs/git-stash"],
+      "confidence": 0.98,
+      "notes": "Reference history and working-state snapshots are separate recovery surfaces; neither should be conflated with conversation history."
+    },
+    {
+      "finding_id": "F-005",
+      "claim": "Git worktrees bind checkout context to a distinct worktree with its own HEAD and index while sharing repository objects, and support lock, prune, and repair operations for lifecycle control.",
+      "evidence_class": "supported_claim",
+      "source_urls": ["https://git-scm.com/docs/git-worktree"],
+      "confidence": 0.98,
+      "notes": "This is an isolation pattern for agent attempts or previews, not a request-level rewind mechanism."
+    },
+    {
+      "finding_id": "F-006",
+      "claim": "The PATCH standard requires the entire change set to apply atomically, prohibits exposing a partially modified representation, and recommends conditional requests when a patch depends on a known base.",
+      "evidence_class": "supported_claim",
+      "source_urls": ["https://www.rfc-editor.org/rfc/rfc5789"],
+      "confidence": 0.99,
+      "notes": "RFC 5789 explicitly covers multiple directly affected files and identifies 409 or 412 classes for conflicting state or failed preconditions."
+    },
+    {
+      "finding_id": "F-007",
+      "claim": "JSON Patch provides an in-document test guard and says evaluation should terminate when an operation is unsuccessful; an unsuccessful patch is not deemed successfully applied.",
+      "evidence_class": "supported_claim",
+      "source_urls": ["https://www.rfc-editor.org/rfc/rfc6902"],
+      "confidence": 0.98,
+      "notes": "A revert payload can use an expected-preimage test as an additional stale-base check, provided the executor preserves all-or-none semantics."
+    },
+    {
+      "finding_id": "F-008",
+      "claim": "HTTP If-Match uses strong entity-tag comparison before a state-changing method and can fail with 412 when the selected representation has changed, directly addressing lost updates.",
+      "evidence_class": "supported_claim",
+      "source_urls": ["https://www.rfc-editor.org/rfc/rfc9110#section-13.1.1"],
+      "confidence": 0.99,
+      "notes": "The identity primitive is transferable to local file operations as a content or workspace hash plus a precondition check."
+    },
+    {
+      "finding_id": "F-009",
+      "claim": "VS Code's agent-edit review keeps changes attributable and reversible at multiple granularities: individual inline edits, files, or all files, with explicit Keep/Undo and Discard actions and sensitive-file approval controls.",
+      "evidence_class": "supported_claim",
+      "source_urls": ["https://code.visualstudio.com/docs/chat/review-code-edits"],
+      "confidence": 0.98,
+      "notes": "The product also warns that auto-accepted edits should be reviewed before source-control commit, making approval state part of safety."
+    },
+    {
+      "finding_id": "F-010",
+      "claim": "VS Code separates request-level checkpoints from per-edit review: it snapshots affected files before a chat request, can restore all file changes after that point, can redo the restore, and can show per-request file change counts.",
+      "evidence_class": "supported_claim",
+      "source_urls": ["https://code.visualstudio.com/docs/chat/chat-checkpoints"],
+      "confidence": 0.99,
+      "notes": "The documentation explicitly treats checkpoints as a batch/session aid that complements individual edit review."
+    },
+    {
+      "finding_id": "F-011",
+      "claim": "VS Code local history is file-oriented: each save can create a full-content entry that supports compare and restore, including recovery of deleted files, while limits bound file size, entry count, exclusions, and merge windows.",
+      "evidence_class": "supported_claim",
+      "source_urls": ["https://code.visualstudio.com/docs/editing/userinterface"],
+      "confidence": 0.98,
+      "notes": "This is distinct from Git commit history and from chat checkpoints because its unit is a saved file entry with configurable retention bounds."
+    },
+    {
+      "finding_id": "F-012",
+      "claim": "No reviewed source defines a single cross-tool identity contract that binds agent task, request or turn, workspace snapshot, per-file preimage, postimage, actor, and rollback scope in one durable record.",
+      "evidence_class": "no_evidence",
+      "source_urls": [],
+      "confidence": 0.86,
+      "notes": "This is a bounded absence finding from the 12 reviewed direct sources, not evidence that such a contract cannot be designed."
+    }
+  ],
+  "competitor_standard_patterns": [
+    {
+      "pattern_id": "P-001",
+      "pattern": "Use an explicit scope ladder: hunk or inline edit, file, selected path set, request checkpoint, then broader conversation or workspace rollback.",
+      "evidence_class": "supported_claim",
+      "source_urls": ["https://git-scm.com/docs/git-restore", "https://code.visualstudio.com/docs/chat/review-code-edits", "https://code.visualstudio.com/docs/chat/chat-checkpoints"],
+      "implication": "Puppet Master should make scope visible and require an explicit operation type for every level rather than treating file revert and turn rewind as aliases."
+    },
+    {
+      "pattern_id": "P-002",
+      "pattern": "Preview before mutation with a diff or applicability check, then expose accept, reject, discard, or conflict outcomes.",
+      "evidence_class": "supported_claim",
+      "source_urls": ["https://git-scm.com/docs/git-apply", "https://git-scm.com/docs/git-restore", "https://code.visualstudio.com/docs/chat/review-code-edits"],
+      "implication": "A revert request should have a non-mutating preview that names paths, deletions, source revision, and expected result before commit."
+    },
+    {
+      "pattern_id": "P-003",
+      "pattern": "Bind writes to an expected base using content identity and fail closed on a mismatch.",
+      "evidence_class": "supported_claim",
+      "source_urls": ["https://www.rfc-editor.org/rfc/rfc5789", "https://www.rfc-editor.org/rfc/rfc9110#section-13.1.1", "https://git-scm.com/docs/git-apply"],
+      "implication": "A local executor can use a strong preimage hash or blob identity and return a conflict that requires refresh or explicit force, rather than applying a stale revert."
+    },
+    {
+      "pattern_id": "P-004",
+      "pattern": "Represent recoverable state as a named snapshot that can be inspected and reapplied, with conflicts preserving the recovery artifact.",
+      "evidence_class": "supported_claim",
+      "source_urls": ["https://git-scm.com/docs/git-stash", "https://git-scm.com/docs/git-reflog"],
+      "implication": "Puppet Master should retain a pre-revert recovery capsule until post-apply validation succeeds, rather than deleting it at the first write."
+    },
+    {
+      "pattern_id": "P-005",
+      "pattern": "File-level review and turn-level checkpointing are complementary controls with different user intent and different affected-state boundaries.",
+      "evidence_class": "inference",
+      "source_urls": ["https://code.visualstudio.com/docs/chat/review-code-edits", "https://code.visualstudio.com/docs/chat/chat-checkpoints", "https://git-scm.com/docs/git-restore"],
+      "implication": "The product model should preserve the distinction in names, receipts, permissions, and recovery UX."
+    },
+    {
+      "pattern_id": "P-006",
+      "pattern": "No reviewed source documents a universal identity schema spanning IDE edits, Git state, agent requests, and conversation lineage.",
+      "evidence_class": "no_evidence",
+      "source_urls": [],
+      "implication": "Puppet Master must define this governance contract itself if cross-layer auditability is required; it should not assume an external convention exists."
+    }
+  ],
+  "failure_modes": [
+    {
+      "failure_id": "FM-001",
+      "failure_mode": "A stale base or concurrent writer causes a patch or revert to apply against the wrong contents, producing a lost update or corruption.",
+      "evidence_class": "supported_claim",
+      "source_urls": ["https://www.rfc-editor.org/rfc/rfc5789", "https://www.rfc-editor.org/rfc/rfc9110#section-13.1.1", "https://git-scm.com/docs/git-apply"],
+      "mitigation_or_gap": "Capture a strong preimage identity, check it immediately before mutation, and return a conflict or precondition failure without writing when it differs."
+    },
+    {
+      "failure_id": "FM-002",
+      "failure_mode": "Direct in-place writes expose a partially written file or allow competing writers to interleave during revert.",
+      "evidence_class": "supported_claim",
+      "source_urls": ["https://git-scm.com/docs/api-lockfile", "https://www.rfc-editor.org/rfc/rfc5789"],
+      "mitigation_or_gap": "Use exclusive intent, write to a same-filesystem temporary object, atomically publish, and define the multi-file transaction boundary; note that readers do not block on Git-style locks."
+    },
+    {
+      "failure_id": "FM-003",
+      "failure_mode": "An overly broad or misbound restore silently removes tracked paths absent from the source or overwrites unrelated local edits.",
+      "evidence_class": "supported_claim",
+      "source_urls": ["https://git-scm.com/docs/git-restore", "https://code.visualstudio.com/docs/chat/chat-checkpoints"],
+      "mitigation_or_gap": "Require explicit path selection, show deletion and overwrite counts in preview, and keep file-level revert separate from request or checkpoint rewind."
+    },
+    {
+      "failure_id": "FM-004",
+      "failure_mode": "Reapplying a snapshot on a changed working state produces conflicts or an incomplete merge.",
+      "evidence_class": "supported_claim",
+      "source_urls": ["https://git-scm.com/docs/git-stash", "https://git-scm.com/docs/git-apply"],
+      "mitigation_or_gap": "Preserve the snapshot on conflict, report affected paths and base identity, and require explicit conflict resolution or a new preview."
+    },
+    {
+      "failure_id": "FM-005",
+      "failure_mode": "A local-history or checkpoint artifact expires, is size-limited, or excludes the target file, making an expected recovery unavailable.",
+      "evidence_class": "supported_claim",
+      "source_urls": ["https://code.visualstudio.com/docs/editing/userinterface", "https://code.visualstudio.com/docs/chat/chat-checkpoints"],
+      "mitigation_or_gap": "Declare retention and durability in the operation contract; use a durable named snapshot for auditable recovery rather than relying only on bounded IDE history."
+    },
+    {
+      "failure_id": "FM-006",
+      "failure_mode": "Automatic acceptance or source-control staging turns pending agent edits into accepted changes before a human or validator reviews them.",
+      "evidence_class": "supported_claim",
+      "source_urls": ["https://code.visualstudio.com/docs/chat/review-code-edits"],
+      "mitigation_or_gap": "Make acceptance state explicit, preserve a diff, and require review or executable validation before durable commit."
+    },
+    {
+      "failure_id": "FM-007",
+      "failure_mode": "A byte-atomic multi-file revert can still leave a semantically inconsistent project if related files are restored to mismatched revisions.",
+      "evidence_class": "inference",
+      "source_urls": ["https://www.rfc-editor.org/rfc/rfc5789", "https://git-scm.com/docs/git-restore"],
+      "mitigation_or_gap": "Treat atomic publication as necessary but insufficient; bind a source snapshot across the selected paths and run project-specific validation before closing the operation."
+    },
+    {
+      "failure_id": "FM-008",
+      "failure_mode": "No reviewed source establishes a universal recovery journal that spans file state, agent request state, and conversation state with one identity and retention policy.",
+      "evidence_class": "no_evidence",
+      "source_urls": [],
+      "mitigation_or_gap": "Define an explicit Puppet Master journal or document that the layers are intentionally independent; do not infer cross-layer rollback from a file snapshot."
+    }
+  ],
+  "implications": [
+    {
+      "implication_id": "I-001",
+      "implication": "A file-revert operation should name exact target paths, source snapshot or revision, destination layer, expected preimage identity, and preview result before any mutation.",
+      "evidence_class": "supported_claim",
+      "source_urls": ["https://git-scm.com/docs/git-restore", "https://git-scm.com/docs/git-apply", "https://code.visualstudio.com/docs/chat/review-code-edits"],
+      "rationale": "These sources consistently expose scope, source, diff or applicability, and review state as distinct controls."
+    },
+    {
+      "implication_id": "I-002",
+      "implication": "The receipt should capture operation identity, actor or agent identity, request or attempt identity, worktree or workspace identity, selected paths, preimage and postimage hashes, source snapshot, outcome, and conflict reason.",
+      "evidence_class": "inference",
+      "source_urls": ["https://git-scm.com/docs/git-reflog", "https://git-scm.com/docs/git-stash", "https://code.visualstudio.com/docs/chat/review-code-edits", "https://www.rfc-editor.org/rfc/rfc9110#section-13.1.1"],
+      "rationale": "The sources provide separate examples of reference identity, snapshot identity, pending-edit attribution, and strong content preconditions; combining them is a Puppet Master design inference."
+    },
+    {
+      "implication_id": "I-003",
+      "implication": "Apply only when the current base matches the captured identity; otherwise stop with a typed conflict and leave the target unchanged.",
+      "evidence_class": "supported_claim",
+      "source_urls": ["https://www.rfc-editor.org/rfc/rfc5789", "https://www.rfc-editor.org/rfc/rfc9110#section-13.1.1", "https://git-scm.com/docs/git-apply"],
+      "rationale": "Conditional PATCH, If-Match, and Git applicability checks all make stale-base rejection an explicit safety boundary."
+    },
+    {
+      "implication_id": "I-004",
+      "implication": "Publish a successful revert atomically and retain the pre-revert recovery artifact until post-apply verification completes.",
+      "evidence_class": "supported_claim",
+      "source_urls": ["https://git-scm.com/docs/api-lockfile", "https://www.rfc-editor.org/rfc/rfc5789", "https://git-scm.com/docs/git-stash"],
+      "rationale": "Atomic publication protects visibility, while commit-backed stash behavior demonstrates why an inspectable recovery artifact should survive conflicts or uncertain outcomes."
+    },
+    {
+      "implication_id": "I-005",
+      "implication": "Implement file revert and whole-turn or conversation rewind as separate operation types with separate confirmation, permissions, receipts, and recovery semantics.",
+      "evidence_class": "inference",
+      "source_urls": ["https://code.visualstudio.com/docs/chat/review-code-edits", "https://code.visualstudio.com/docs/chat/chat-checkpoints", "https://git-scm.com/docs/git-restore"],
+      "rationale": "The reviewed IDE explicitly separates individual edit review from request checkpoints, while Git exposes path-scoped restore; the boundary is a direct product-design inference."
+    },
+    {
+      "implication_id": "I-006",
+      "implication": "Use isolated worktree or workspace identities for agent attempts and previews when rollback must not disturb a user's active checkout.",
+      "evidence_class": "inference",
+      "source_urls": ["https://git-scm.com/docs/git-worktree"],
+      "rationale": "Git's linked worktree model shows a mature way to isolate HEAD and index state while sharing repository objects; applying it to agent attempts is an inferred Puppet Master pattern."
+    },
+    {
+      "implication_id": "I-007",
+      "implication": "No reviewed source decides whether Puppet Master should rewind prompts or transcripts, so file-state recovery must not imply conversation-state mutation.",
+      "evidence_class": "no_evidence",
+      "source_urls": [],
+      "rationale": "The public sources document workspace and file rollback but do not define Puppet Master's desired transcript governance policy."
+    }
+  ],
+  "novel_ideas": [
+    {
+      "idea_id": "N-001",
+      "idea": "Add a Revert Preview Capsule that freezes the selected paths, source snapshot, base hashes, expected deletions, diffstat, conflict policy, and validation plan before execution.",
+      "evidence_class": "inference",
+      "source_urls": ["https://git-scm.com/docs/git-restore", "https://git-scm.com/docs/git-apply", "https://code.visualstudio.com/docs/chat/review-code-edits"],
+      "rationale": "It combines Git's path and applicability controls with VS Code's visible review surface into one auditable pre-mutation object."
+    },
+    {
+      "idea_id": "N-002",
+      "idea": "Use a two-tier Recoverability Envelope: short-lived request checkpoints for rapid experimentation and durable named content snapshots for file-level undo and audit.",
+      "evidence_class": "inference",
+      "source_urls": ["https://code.visualstudio.com/docs/chat/chat-checkpoints", "https://code.visualstudio.com/docs/editing/userinterface", "https://git-scm.com/docs/git-stash", "https://git-scm.com/docs/git-reflog"],
+      "rationale": "The sources show complementary transient IDE history and commit-backed Git recovery; separating their guarantees avoids promising IDE retention as durable governance evidence."
+    },
+    {
+      "idea_id": "N-003",
+      "idea": "Record a monotonic revert journal with operation id, agent task id, request id, workspace or worktree id, preimage, postimage, atomic-commit marker, and validator result.",
+      "evidence_class": "inference",
+      "source_urls": ["https://git-scm.com/docs/api-lockfile", "https://git-scm.com/docs/git-reflog", "https://www.rfc-editor.org/rfc/rfc9110#section-13.1.1"],
+      "rationale": "This extends Git's commit and reference identity plus HTTP preconditions into a durable cross-layer receipt; the exact schema is not prescribed externally."
+    },
+    {
+      "idea_id": "N-004",
+      "idea": "Represent rollback scope as a lattice from hunk to file to selected paths to request checkpoint to conversation, and reject an upward scope jump unless the user explicitly selects it.",
+      "evidence_class": "inference",
+      "source_urls": ["https://git-scm.com/docs/git-restore", "https://code.visualstudio.com/docs/chat/review-code-edits", "https://code.visualstudio.com/docs/chat/chat-checkpoints"],
+      "rationale": "The lattice makes the scope difference visible and gives the executor a policy hook for preventing accidental whole-turn rewinds from a file-level command."
+    },
+    {
+      "idea_id": "N-005",
+      "idea": "No reviewed tool document provides a standard API for proving that a revert did not alter excluded paths.",
+      "evidence_class": "no_evidence",
+      "source_urls": [],
+      "rationale": "Puppet Master could add an excluded-path hash set or workspace-wide before/after manifest as a novel integrity check, but its necessity and cost remain product decisions."
+    }
+  ],
+  "unresolved_questions": [
+    {
+      "question_id": "Q-001",
+      "question": "What is the authoritative revert source for untracked, ignored, newly created, or deleted files, and how is that source retained?",
+      "evidence_class": "supported_claim",
+      "source_urls": ["https://git-scm.com/docs/git-restore", "https://git-scm.com/docs/git-stash", "https://code.visualstudio.com/docs/editing/userinterface"]
+    },
+    {
+      "question_id": "Q-002",
+      "question": "Which file metadata must participate in identity and rollback: symlink target, mode bits, submodule commit, encoding, permissions, and extended attributes?",
+      "evidence_class": "supported_claim",
+      "source_urls": ["https://git-scm.com/docs/git-restore", "https://git-scm.com/docs/git-apply"]
+    },
+    {
+      "question_id": "Q-003",
+      "question": "What retention, durability, and garbage-collection guarantees distinguish a quick chat checkpoint from a governance-grade file recovery snapshot?",
+      "evidence_class": "supported_claim",
+      "source_urls": ["https://code.visualstudio.com/docs/chat/chat-checkpoints", "https://code.visualstudio.com/docs/editing/userinterface", "https://git-scm.com/docs/git-stash", "https://git-scm.com/docs/git-reflog"]
+    },
+    {
+      "question_id": "Q-004",
+      "question": "How should Puppet Master prove semantic validity after a byte-atomic multi-file revert, rather than treating atomic publication as sufficient?",
+      "evidence_class": "inference",
+      "source_urls": ["https://www.rfc-editor.org/rfc/rfc5789", "https://git-scm.com/docs/git-restore"]
+    },
+    {
+      "question_id": "Q-005",
+      "question": "Which immutable identity schema binds a file-revert operation to the agent task, turn or request, workspace or worktree, selected paths, and source snapshot?",
+      "evidence_class": "no_evidence",
+      "source_urls": []
+    },
+    {
+      "question_id": "Q-006",
+      "question": "Should whole-turn rewind alter conversation history, create a new branch of history, or preserve the transcript while changing only workspace state?",
+      "evidence_class": "inference",
+      "source_urls": ["https://code.visualstudio.com/docs/chat/chat-checkpoints"]
+    }
+  ],
+  "self_attestation": {
+    "current_web_research_performed": true,
+    "official_or_primary_sources_first": true,
+    "direct_urls_only": true,
+    "source_count_contract_checked": true,
+    "supported_inference_no_evidence_labels_present": true,
+    "no_fabricated_claims": true,
+    "no_long_quotations": true,
+    "topic_and_refs_binding_verified": true,
+    "exact_attempt_id_verified": true,
+    "fresh_direct_terminal_contract_acknowledged": true
+  }
+}

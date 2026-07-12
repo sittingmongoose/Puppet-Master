@@ -1,0 +1,246 @@
+{
+  "assignment_id": "A005M-000083-INTEGRATED-MACRO-A27048DCD484-0007",
+  "attempt_id": "attempt-0014",
+  "audit_id": "audit-20260710-005-plan-assurance-model-lanes-fresh-agent-exhaustive",
+  "blindness": {
+    "external_research": "deferred_to_feature_research_phase",
+    "peer_results": "forbidden",
+    "prior_audits": "forbidden",
+    "unrelated_sources": "forbidden"
+  },
+  "bundle_core_range": [
+    18140,
+    21230
+  ],
+  "bundle_id": "MACRO-A27048DCD484-0007",
+  "context_ranges": [
+    [
+      18128,
+      18139
+    ],
+    [
+      21231,
+      21242
+    ]
+  ],
+  "document_path": "Plans/PMConcept_Control_Reconciliation.json",
+  "micro_window_ids": [
+    "WIN-A27048DCD484-0049",
+    "WIN-A27048DCD484-0050",
+    "WIN-A27048DCD484-0051",
+    "WIN-A27048DCD484-0052",
+    "WIN-A27048DCD484-0053",
+    "WIN-A27048DCD484-0054",
+    "WIN-A27048DCD484-0055",
+    "WIN-A27048DCD484-0056"
+  ],
+  "phase": "blind_macro_window_review",
+  "required_dimensions": [
+    "behavior",
+    "capabilities",
+    "inputs_outputs",
+    "contracts",
+    "states_transitions",
+    "authority",
+    "ownership",
+    "consumers",
+    "gui_truth",
+    "failures_recovery",
+    "security_privacy",
+    "propagation",
+    "operations",
+    "scale_performance",
+    "compatibility_migration",
+    "acceptance_oracles",
+    "builder_discretion",
+    "ambiguity_unknowns",
+    "missing_callers_consumers",
+    "invalid_states_transitions",
+    "concurrency_races",
+    "partial_failure",
+    "recovery_rollback",
+    "authority_boundaries",
+    "privacy_data_lifecycle",
+    "untrusted_inputs",
+    "gui_misleading_states",
+    "offline_network_loss",
+    "scale_limits",
+    "accessibility",
+    "localization",
+    "observability_support",
+    "destructive_actions",
+    "cross_document_seams",
+    "test_falsifiability",
+    "unknown_unknowns"
+  ],
+  "result_schema_ref": "schemas/macro_review_result.schema.json",
+  "review_instructions": "Read every assigned core line and account for every required_source_unit_ref. Apply both exact-behavior and adversarial-negative-space lenses across every required dimension. Extract concise feature, behavior, contract, state, authority, consumer, GUI, failure/recovery, oracle, gap, unknown, and explicit-non-gap items with exact source evidence. Do not merely paraphrase headings or copy unit refs. Each segment must name its complete required_source_unit_refs list and at least one item. Write exactly one regular JSON payload inside the assigned output directory; result.json is recommended but the filename is not semantic. Do not write a terminal seal. Return PMR1 only after the JSON payload is fully written.",
+  "schema_version": "macro-context-capsule-v1",
+  "segments": [
+    {
+      "core_range": [
+        18140,
+        18518
+      ],
+      "core_sha256": "817b80d278673fa5b13fcf4aa6524fc58eaaec161145db3a4ab873289af60580",
+      "plan_unit_ids": [],
+      "required_source_unit_refs": [
+        "SEMANTIC:JSON_FIELD:Plans/PMConcept_Control_Reconciliation.json:controls:CONT-048",
+        "STRUCTURAL:$.controls"
+      ],
+      "semantic_block_ids": [
+        "JSON_FIELD:Plans/PMConcept_Control_Reconciliation.json:controls:CONT-048"
+      ],
+      "structural_paths": [
+        "$.controls"
+      ],
+      "token_estimate": 5024,
+      "window_id": "WIN-A27048DCD484-0049"
+    },
+    {
+      "core_range": [
+        18519,
+        18894
+      ],
+      "core_sha256": "13869cbd97ded2651e2efc000b2f526692776cdd2ba06773ec51a8a437b81fd6",
+      "plan_unit_ids": [],
+      "required_source_unit_refs": [
+        "SEMANTIC:JSON_FIELD:Plans/PMConcept_Control_Reconciliation.json:controls:CONT-049",
+        "STRUCTURAL:$.controls"
+      ],
+      "semantic_block_ids": [
+        "JSON_FIELD:Plans/PMConcept_Control_Reconciliation.json:controls:CONT-049"
+      ],
+      "structural_paths": [
+        "$.controls"
+      ],
+      "token_estimate": 4750,
+      "window_id": "WIN-A27048DCD484-0050"
+    },
+    {
+      "core_range": [
+        18895,
+        19268
+      ],
+      "core_sha256": "be9ab76f5912e39fe95adfe5b20c7039cf10e66520d58a49726051aae7a65443",
+      "plan_unit_ids": [],
+      "required_source_unit_refs": [
+        "SEMANTIC:JSON_FIELD:Plans/PMConcept_Control_Reconciliation.json:controls:CONT-050",
+        "STRUCTURAL:$.controls"
+      ],
+      "semantic_block_ids": [
+        "JSON_FIELD:Plans/PMConcept_Control_Reconciliation.json:controls:CONT-050"
+      ],
+      "structural_paths": [
+        "$.controls"
+      ],
+      "token_estimate": 4737,
+      "window_id": "WIN-A27048DCD484-0051"
+    },
+    {
+      "core_range": [
+        19269,
+        19662
+      ],
+      "core_sha256": "d24db19f86e4cee47bd5a9049d052488596b8159e1e81a5ce196f787b52d4d91",
+      "plan_unit_ids": [],
+      "required_source_unit_refs": [
+        "SEMANTIC:JSON_FIELD:Plans/PMConcept_Control_Reconciliation.json:controls:CONT-051",
+        "STRUCTURAL:$.controls"
+      ],
+      "semantic_block_ids": [
+        "JSON_FIELD:Plans/PMConcept_Control_Reconciliation.json:controls:CONT-051"
+      ],
+      "structural_paths": [
+        "$.controls"
+      ],
+      "token_estimate": 5050,
+      "window_id": "WIN-A27048DCD484-0052"
+    },
+    {
+      "core_range": [
+        19663,
+        20056
+      ],
+      "core_sha256": "3d5d301deb838cd6ecb85a0cf6a80af6dd90493a6dd541a8a8f2358a6d2cc5c7",
+      "plan_unit_ids": [],
+      "required_source_unit_refs": [
+        "SEMANTIC:JSON_FIELD:Plans/PMConcept_Control_Reconciliation.json:controls:CONT-052",
+        "STRUCTURAL:$.controls"
+      ],
+      "semantic_block_ids": [
+        "JSON_FIELD:Plans/PMConcept_Control_Reconciliation.json:controls:CONT-052"
+      ],
+      "structural_paths": [
+        "$.controls"
+      ],
+      "token_estimate": 5035,
+      "window_id": "WIN-A27048DCD484-0053"
+    },
+    {
+      "core_range": [
+        20057,
+        20442
+      ],
+      "core_sha256": "c2978ede30b297a16565b2b19fd872cb41e62484a725606e070e29883ecf0b00",
+      "plan_unit_ids": [],
+      "required_source_unit_refs": [
+        "SEMANTIC:JSON_FIELD:Plans/PMConcept_Control_Reconciliation.json:controls:CONT-053",
+        "STRUCTURAL:$.controls"
+      ],
+      "semantic_block_ids": [
+        "JSON_FIELD:Plans/PMConcept_Control_Reconciliation.json:controls:CONT-053"
+      ],
+      "structural_paths": [
+        "$.controls"
+      ],
+      "token_estimate": 5077,
+      "window_id": "WIN-A27048DCD484-0054"
+    },
+    {
+      "core_range": [
+        20443,
+        20831
+      ],
+      "core_sha256": "8e331b7861ebd4169227b1304ece38383fef2a47f18490d08e637ee69a919309",
+      "plan_unit_ids": [],
+      "required_source_unit_refs": [
+        "SEMANTIC:JSON_FIELD:Plans/PMConcept_Control_Reconciliation.json:controls:CONT-054",
+        "STRUCTURAL:$.controls"
+      ],
+      "semantic_block_ids": [
+        "JSON_FIELD:Plans/PMConcept_Control_Reconciliation.json:controls:CONT-054"
+      ],
+      "structural_paths": [
+        "$.controls"
+      ],
+      "token_estimate": 4920,
+      "window_id": "WIN-A27048DCD484-0055"
+    },
+    {
+      "core_range": [
+        20832,
+        21230
+      ],
+      "core_sha256": "cda544d7b717ed3d880d1a0d140c5929947a445b791c542a81e567b94991c1a9",
+      "plan_unit_ids": [],
+      "required_source_unit_refs": [
+        "SEMANTIC:JSON_FIELD:Plans/PMConcept_Control_Reconciliation.json:controls:CONT-055",
+        "STRUCTURAL:$.controls"
+      ],
+      "semantic_block_ids": [
+        "JSON_FIELD:Plans/PMConcept_Control_Reconciliation.json:controls:CONT-055"
+      ],
+      "structural_paths": [
+        "$.controls"
+      ],
+      "token_estimate": 4867,
+      "window_id": "WIN-A27048DCD484-0056"
+    }
+  ],
+  "source_excerpt_line_format": "L######## followed by a tab and exact canonical source text",
+  "source_excerpt_ref": "capsules/source/ff/ff24ee6a2baa6775d06a3296567249364a240b9a359627bbca38ee3209e1a06d.txt",
+  "source_excerpt_sha256": "ff24ee6a2baa6775d06a3296567249364a240b9a359627bbca38ee3209e1a06d",
+  "source_sha256": "cc3485b335e4bba3ed3192b1e15f8163d4b1c10f193c4ad74500b484e5f0dfc2",
+  "token_estimate": 39460
+}

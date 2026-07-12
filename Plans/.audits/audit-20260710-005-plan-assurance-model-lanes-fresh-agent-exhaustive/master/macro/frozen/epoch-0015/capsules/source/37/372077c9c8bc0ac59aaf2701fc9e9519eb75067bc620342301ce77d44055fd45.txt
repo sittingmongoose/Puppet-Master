@@ -1,0 +1,1072 @@
+L00000001	# Interview Feature Subagent Integration -- Implementation Plan
+L00000002	
+L00000003	
+L00000004	## Canonical owner-section requirements
+L00000005	
+L00000006	These requirements are canonical live specification text for this owner document and preserve the required product, runtime, storage, UI, and governance details in owner-section form.
+L00000007	
+L00000008	### Shared conversational/runtime boundary
+L00000009	> **Compliance:** This document follows `Plans/DRY_Rules.md` and references SSOT contracts in `Plans/Contracts_V0.md`. Naming: “Puppet Master” only. No open questions; deterministic defaults per `Plans/Decision_Policy.md`.
+L00000010	
+L00000011	
+L00000012	## Change Summary
+L00000013	
+L00000014	- 2026-02-26: Added capability introspection and media-generation gating requirements: Interview agent MUST call `capabilities.get` when offering media options and honor enabled/disabled gating; may propose media generation but only execute when enabled. SSOT: `Plans/Media_Generation_and_Capabilities.md`. ContractRef: ToolID:capabilities.get, ContractName:Plans/Media_Generation_and_Capabilities.md#CAPABILITY-SYSTEM
+L00000015	- 2026-02-24: Added UI wiring artifacts (`ui/wiring_matrix.json`, `ui/ui_command_catalog.json`) to interview outputs for GUI projects; updated Phase 3 (Product/UX) subagent responsibilities, §5.2 wiring/completeness requirements, and Contract Layer outputs. SSOT: `Plans/UI_Wiring_Rules.md`, `Plans/Wiring_Matrix.schema.json`.
+L00000016	- 2026-02-24: Updated the user-project Contract Layer outputs so the Interviewer/Wizard emits a **sharded-only plan graph** under `.puppet-master/project/plan_graph/` (canonical; persisted canonically in seglog). `plan_graph/exports/plan_graph.monolithic.json` is an optional derived export only. (SSOT: `Plans/Project_Output_Artifacts.md`, `Plans/orchestrator-subagent-integration.md`.)
+L00000017	- 2026-02-24: Added `requirements-quality-reviewer` cross-phase subagent persona (Quality Review category in Cross-Phase Subagents); added §5.5 Requirements Quality Reviewer Trigger Rule with deterministic two-trigger invocation order, 2-iteration autofill loop cap, and Autofill-First Rule; added quality gate bullet to §2) Contract Layer output generation specifying how `verdict` from the quality report gates the Contract Unification Pass. ContractRef: `Plans/chain-wizard-flexibility.md`, `SchemaID:pm.requirements_quality_report.schema.v1`.
+L00000018	- 2026-02-23: Added a cross-plan alignment section making the Interview phase manager responsible for (1) intent-driven adaptive phase selection (phase plan) and (2) producing Contract Layer outputs via contract fragments + a deterministic Contract Unification Pass (SSOT: `Plans/chain-wizard-flexibility.md` §6 and `Plans/Project_Output_Artifacts.md`).
+L00000019	
+L00000020	## Interview runtime boundary and handoff lineage
+L00000021	
+L00000022	Interview-phase launches share the runtime identity packet with Orchestrator while preserving interview-specific actor identity and launched-run lineage.
+L00000023	
+L00000024	### Shared runtime boundary
+L00000025	- Assistant/chat/interview/builder actors share provider/runtime identity semantics with Orchestrator.
+L00000026	- They remain distinct actor/run kinds rather than package/seam/node execution objects.
+L00000027	- Shared runtime packets preserve requested/effective runtime identity, requested/effective account identity, `execution_role`, `operational_identity`, and the launched child-run reference without relabeling the interview actor as a graph node or worktree lane.
+L00000028	
+L00000029	### Question system alignment
+L00000030	- Interview clarification and questionnaire flows consume the shared `question` / `/questionnaire` contract and the `QuestionItem` item shape instead of defining an interview-local prompt schema. Interview consumers preserve `question_id`, `question`, `options[]`, `required`, `multi_select`, `allow_freeform`, and `default_values`, and they keep per-question display text in `question` while reserving `prompt` for envelope or header copy.
+L00000031	- Required interview questions gate submit through the shared question-card flow. Draft, pause, resume, and submitted outcomes use PM-managed `draft_value`, response, and validation state rather than interview-only status names.
+L00000032	
+L00000033	### Runtime identity visibility
+L00000034	- Interview question cards, validation reports, and handoff packets display the same requested/effective runtime identity fields as the shared runtime boundary: requested/effective runtime identity, requested/effective account identity, `execution_role`, `operational_identity`, and the launched child-run reference.
+L00000035	- Interview surfaces may summarize those fields for display, but persisted records and downstream handoffs preserve the canonical field names so question handling, validation, and execution launch all reconcile to the same runtime identity packet.
+L00000036	
+L00000037	### Requested/effective Interview contract
+L00000038	- Interview-specific runtime packets align requested values, effective values, and launched-run lineage before execution starts. The interview actor remains a distinct actor/run kind, but any execution-affecting handoff carries the requested/effective runtime and account fields needed by Orchestrator, storage, permissions, and usage consumers.
+L00000039	- Question answers, validation artifacts, and generated handoff bundles must retain that requested/effective alignment when they reference `QuestionItem` entries, so consumer docs can retire local question/runtime variants without losing interview lineage.
+L00000040	- Deterministic Contract Unification requires explicit conflict-resolution authority and `/rules` for contradictory upstream phase outputs. When those rules cannot resolve a contradiction, the interview handoff records an unresolved conflict instead of silently choosing one phase output.
+L00000041	
+L00000042	### Wizard and interview handoff packet
+L00000043	- Extend wizard/interview handoff with project/thread/wizard/runtime identity and execution_role.
+L00000044	- The canonical handoff packet carries `project_id`, `thread_id`, `wizard_id`, `interview_session_id`, requested/effective runtime identity, requested/effective account identity, `execution_role`, and an explicit `launched_run_id` / `launched_run_ref` bridge.
+L00000045	- Example handoff payloads MUST NOT normalize missing thread linkage as `thread_id: None`; that value is a concrete drift signal, not an acceptable omitted-detail placeholder. If no thread exists, record a typed absence reason without letting `thread_id` masquerade as a nullable placeholder.
+L00000046	- Provider-native delegation syntax, provider-native exports/imports, and `/imports` remain interoperability-only; the same direct-provider and child-run canon applies, and the canonical `/handoff` is the Puppet Master child-run packet.
+L00000047	- Interview reviewer-cap limits consume the Orchestrator concurrency SSOT; the requirements-quality-reviewer autofill cap is reviewer-only and MUST NOT redefine global spawn, nesting, shell-isolation, or child timeout ceilings.
+L00000048	
+L00000049	### auditor_cycle_report bridge
+L00000050	- Extend `auditor_cycle_report` with planning/governance lineage and an explicit bridge into the launched run. Legacy `validation_pass_report` mirrors may expose the same bridge only with `compatibility_only: true` and `cycle_report_ref`.
+L00000051	- Validation/governance lineage preserves `phase_plan_ref`, `requirements_quality_report_ref`, `workflow_run_id`, `pass_verdict`, `wizard_snapshot_ref`, and `launched_run_id` / `launched_run_ref`.
+L00000052	- Preview, validation, review, and resume surfaces reuse that bridge instead of reconstructing joins from filenames, timestamps, or provider-native traces.
+L00000053	
+L00000054	ContractRef: ContractName:Plans/Prompt_Pipeline.md, ContractName:Plans/Contracts_V0.md, ContractName:Plans/Orchestrator_Page.md
+L00000055	
+L00000056	## Owner / Consumer Map
+L00000057	
+L00000058	This source-preserving standardization keeps the owner and consumer boundaries stated in the original document body. During this batch, `Plans/interview-subagent-integration.md` remains the owner doc for the behavior described by its preserved sections, while cross-doc ownership follows the ContractRefs and boundary notes already present in the original text.
+L00000059	
+L00000060	ContractRef: ContractName:Plans/Plan_Document_System.md, ContractName:Plans/Bootstrap_Planning_Migration.md
+L00000061	
+L00000062	## PlanUnits
+L00000063	
+L00000064	### ISI-002 - Media Capability Gating
+L00000065	
+L00000066	```yaml
+L00000067	plan_unit_id: ISI-002
+L00000068	unit_type: requirement
+L00000069	status: accepted
+L00000070	owner_doc: Plans/interview-subagent-integration.md
+L00000071	canonical_text: When offering media options, the Interview agent must call capabilities.get, honor enabled/disabled media-generation gating, and may propose media generation but only execute it when enabled by the Media Generation and Capabilities SSOT.
+L00000072	gui_related: true
+L00000073	gui_classification_reason: This unit governs interview UI, question cards, GUI project wiring, media option affordances, or visible runtime identity.
+L00000074	split_recommended: true
+L00000075	depends_on: []
+L00000076	unblocks: []
+L00000077	acceptance_criteria:
+L00000078	- The covered source span remains losslessly available for exact-text audit.
+L00000079	- This behavior is addressable through ISI-002 instead of broad ISI-001 source-preserving coverage.
+L00000080	- ContractRefs, aliases, exact tokens, examples, negative constraints, compatibility notes, stale/retired dispositions, owner boundaries, and source lineage remain traceable.
+L00000081	- No WorkNodes, NodeSeeds, executable queues, final node manifests, or production build tasks are created.
+L00000082	validation_surfaces:
+L00000083	- python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits
+L00000084	- python3 scripts/pm-plan-index.py validate
+L00000085	risk_class: interview_runtime_drift
+L00000086	reasoning_tier: standard
+L00000087	context_scope: interview_subagent_integration_standardization
+L00000088	implementation_surfaces:
+L00000089	- Plans/interview-subagent-integration.md
+L00000090	node_compile_hint:
+L00000091	  mode: media_capability_gating
+L00000092	  create_worknodes: false
+L00000093	source_lineage:
+L00000094	- Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:interview-subagent-integration-S0004
+L00000095	preserved_exact_tokens:
+L00000096	- capabilities.get
+L00000097	- enabled/disabled gating
+L00000098	- may propose media generation but only execute when enabled
+L00000099	- Plans/Media_Generation_and_Capabilities.md#CAPABILITY-SYSTEM
+L00000100	negative_constraints:
+L00000101	- The Interview agent may not execute media generation when the capability is disabled.
+L00000102	compatibility_only_notes: []
+L00000103	stale_retired_dispositions: []
+L00000104	owner_boundary_notes:
+L00000105	- Plans/interview-subagent-integration.md owns interview integration behavior while referenced SSOT documents retain implementation ownership.
+L00000106	owner_hints:
+L00000107	- Plans/interview-subagent-integration.md
+L00000108	preserved_contractrefs:
+L00000109	- 'ContractRef: ToolID:capabilities.get, ContractName:Plans/Media_Generation_and_Capabilities.md#CAPABILITY-SYSTEM'
+L00000110	split_recommendation_reason: The source span contains multiple separable interview integration concerns; repeated source lineage preserves exact source provenance without inventing subspans.
+L00000111	```
+L00000112	
+L00000113	### ISI-003 - GUI Project Wiring Artifacts
+L00000114	
+L00000115	```yaml
+L00000116	plan_unit_id: ISI-003
+L00000117	unit_type: requirement
+L00000118	status: accepted
+L00000119	owner_doc: Plans/interview-subagent-integration.md
+L00000120	canonical_text: For GUI projects, Interview outputs include UI wiring artifacts ui/wiring_matrix.json and ui/ui_command_catalog.json, update Phase 3 Product/UX subagent responsibilities, preserve section 5.2 wiring/completeness requirements, and feed Contract Layer outputs under the UI wiring SSOTs.
+L00000121	gui_related: true
+L00000122	gui_classification_reason: This unit governs interview UI, question cards, GUI project wiring, media option affordances, or visible runtime identity.
+L00000123	split_recommended: true
+L00000124	depends_on: []
+L00000125	unblocks: []
+L00000126	acceptance_criteria:
+L00000127	- The covered source span remains losslessly available for exact-text audit.
+L00000128	- This behavior is addressable through ISI-003 instead of broad ISI-001 source-preserving coverage.
+L00000129	- ContractRefs, aliases, exact tokens, examples, negative constraints, compatibility notes, stale/retired dispositions, owner boundaries, and source lineage remain traceable.
+L00000130	- No WorkNodes, NodeSeeds, executable queues, final node manifests, or production build tasks are created.
+L00000131	validation_surfaces:
+L00000132	- python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits
+L00000133	- python3 scripts/pm-plan-index.py validate
+L00000134	risk_class: interview_runtime_drift
+L00000135	reasoning_tier: standard
+L00000136	context_scope: interview_subagent_integration_standardization
+L00000137	implementation_surfaces:
+L00000138	- Plans/interview-subagent-integration.md
+L00000139	node_compile_hint:
+L00000140	  mode: gui_project_wiring_artifacts
+L00000141	  create_worknodes: false
+L00000142	source_lineage:
+L00000143	- Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:interview-subagent-integration-S0004
+L00000144	preserved_exact_tokens:
+L00000145	- ui/wiring_matrix.json
+L00000146	- ui/ui_command_catalog.json
+L00000147	- GUI projects
+L00000148	- Phase 3 (Product/UX)
+L00000149	- §5.2
+L00000150	- Contract Layer outputs
+L00000151	- Plans/UI_Wiring_Rules.md
+L00000152	- Plans/Wiring_Matrix.schema.json
+L00000153	negative_constraints: []
+L00000154	compatibility_only_notes: []
+L00000155	stale_retired_dispositions: []
+L00000156	owner_boundary_notes:
+L00000157	- Plans/UI_Wiring_Rules.md and Plans/Wiring_Matrix.schema.json own wiring schema semantics; this document owns interview output obligations.
+L00000158	owner_hints:
+L00000159	- Plans/interview-subagent-integration.md
+L00000160	split_recommendation_reason: The source span contains multiple separable interview integration concerns; repeated source lineage preserves exact source provenance without inventing subspans.
+L00000161	```
+L00000162	
+L00000163	### ISI-004 - Sharded-Only Plan Graph Output
+L00000164	
+L00000165	```yaml
+L00000166	plan_unit_id: ISI-004
+L00000167	unit_type: requirement
+L00000168	status: accepted
+L00000169	owner_doc: Plans/interview-subagent-integration.md
+L00000170	canonical_text: The Interviewer/Wizard emits a sharded-only plan graph under .puppet-master/project/plan_graph as canonical output persisted canonically in seglog; plan_graph/exports/plan_graph.monolithic.json is an optional derived export only.
+L00000171	gui_related: false
+L00000172	gui_classification_reason: This unit defines interview runtime, handoff, contract, or governance semantics rather than GUI presentation.
+L00000173	split_recommended: true
+L00000174	depends_on: []
+L00000175	unblocks: []
+L00000176	acceptance_criteria:
+L00000177	- The covered source span remains losslessly available for exact-text audit.
+L00000178	- This behavior is addressable through ISI-004 instead of broad ISI-001 source-preserving coverage.
+L00000179	- ContractRefs, aliases, exact tokens, examples, negative constraints, compatibility notes, stale/retired dispositions, owner boundaries, and source lineage remain traceable.
+L00000180	- No WorkNodes, NodeSeeds, executable queues, final node manifests, or production build tasks are created.
+L00000181	validation_surfaces:
+L00000182	- python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits
+L00000183	- python3 scripts/pm-plan-index.py validate
+L00000184	risk_class: interview_runtime_drift
+L00000185	reasoning_tier: standard
+L00000186	context_scope: interview_subagent_integration_standardization
+L00000187	implementation_surfaces:
+L00000188	- Plans/interview-subagent-integration.md
+L00000189	node_compile_hint:
+L00000190	  mode: sharded_only_plan_graph_output
+L00000191	  create_worknodes: false
+L00000192	source_lineage:
+L00000193	- Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:interview-subagent-integration-S0004
+L00000194	preserved_exact_tokens:
+L00000195	- '**sharded-only plan graph**'
+L00000196	- .puppet-master/project/plan_graph/
+L00000197	- canonical
+L00000198	- seglog
+L00000199	- plan_graph/exports/plan_graph.monolithic.json
+L00000200	- optional derived export
+L00000201	negative_constraints:
+L00000202	- The monolithic plan graph export is optional and derived only, not canonical.
+L00000203	compatibility_only_notes: []
+L00000204	stale_retired_dispositions: []
+L00000205	owner_boundary_notes:
+L00000206	- Plans/Project_Output_Artifacts.md and Plans/orchestrator-subagent-integration.md own project output artifact and orchestrator integration details.
+L00000207	owner_hints:
+L00000208	- Plans/interview-subagent-integration.md
+L00000209	split_recommendation_reason: The source span contains multiple separable interview integration concerns; repeated source lineage preserves exact source provenance without inventing subspans.
+L00000210	```
+L00000211	
+L00000212	### ISI-005 - Requirements Quality Reviewer Gate
+L00000213	
+L00000214	```yaml
+L00000215	plan_unit_id: ISI-005
+L00000216	unit_type: requirement
+L00000217	status: accepted
+L00000218	owner_doc: Plans/interview-subagent-integration.md
+L00000219	canonical_text: The requirements-quality-reviewer persona belongs to the Quality Review category, uses deterministic two-trigger invocation order, a two-iteration autofill loop cap, and the Autofill-First Rule, and its quality report verdict gates the Contract Unification Pass.
+L00000220	gui_related: false
+L00000221	gui_classification_reason: This unit defines interview runtime, handoff, contract, or governance semantics rather than GUI presentation.
+L00000222	split_recommended: true
+L00000223	depends_on: []
+L00000224	unblocks: []
+L00000225	acceptance_criteria:
+L00000226	- The covered source span remains losslessly available for exact-text audit.
+L00000227	- This behavior is addressable through ISI-005 instead of broad ISI-001 source-preserving coverage.
+L00000228	- ContractRefs, aliases, exact tokens, examples, negative constraints, compatibility notes, stale/retired dispositions, owner boundaries, and source lineage remain traceable.
+L00000229	- No WorkNodes, NodeSeeds, executable queues, final node manifests, or production build tasks are created.
+L00000230	validation_surfaces:
+L00000231	- python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits
+L00000232	- python3 scripts/pm-plan-index.py validate
+L00000233	risk_class: interview_runtime_drift
+L00000234	reasoning_tier: standard
+L00000235	context_scope: interview_subagent_integration_standardization
+L00000236	implementation_surfaces:
+L00000237	- Plans/interview-subagent-integration.md
+L00000238	node_compile_hint:
+L00000239	  mode: requirements_quality_reviewer_gate
+L00000240	  create_worknodes: false
+L00000241	source_lineage:
+L00000242	- Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:interview-subagent-integration-S0004
+L00000243	preserved_exact_tokens:
+L00000244	- requirements-quality-reviewer
+L00000245	- Quality Review category
+L00000246	- deterministic two-trigger invocation order
+L00000247	- 2-iteration autofill loop cap
+L00000248	- Autofill-First Rule
+L00000249	- verdict
+L00000250	- Contract Unification Pass
+L00000251	- SchemaID:pm.requirements_quality_report.schema.v1
+L00000252	negative_constraints: []
+L00000253	compatibility_only_notes: []
+L00000254	stale_retired_dispositions: []
+L00000255	owner_boundary_notes:
+L00000256	- Plans/interview-subagent-integration.md owns interview integration behavior while referenced SSOT documents retain implementation ownership.
+L00000257	owner_hints:
+L00000258	- Plans/interview-subagent-integration.md
+L00000259	preserved_contractrefs:
+L00000260	- 'ContractRef: `Plans/chain-wizard-flexibility.md`, `SchemaID:pm.requirements_quality_report.schema.v1`.'
+L00000261	split_recommendation_reason: The source span contains multiple separable interview integration concerns; repeated source lineage preserves exact source provenance without inventing subspans.
+L00000262	```
+L00000263	
+L00000264	### ISI-006 - Phase Plan And Contract Unification
+L00000265	
+L00000266	```yaml
+L00000267	plan_unit_id: ISI-006
+L00000268	unit_type: requirement
+L00000269	status: accepted
+L00000270	owner_doc: Plans/interview-subagent-integration.md
+L00000271	canonical_text: The Interview phase manager is responsible for intent-driven adaptive phase selection through a phase plan and for producing Contract Layer outputs via contract fragments plus a deterministic Contract Unification Pass.
+L00000272	gui_related: false
+L00000273	gui_classification_reason: This unit defines interview runtime, handoff, contract, or governance semantics rather than GUI presentation.
+L00000274	split_recommended: true
+L00000275	depends_on: []
+L00000276	unblocks: []
+L00000277	acceptance_criteria:
+L00000278	- The covered source span remains losslessly available for exact-text audit.
+L00000279	- This behavior is addressable through ISI-006 instead of broad ISI-001 source-preserving coverage.
+L00000280	- ContractRefs, aliases, exact tokens, examples, negative constraints, compatibility notes, stale/retired dispositions, owner boundaries, and source lineage remain traceable.
+L00000281	- No WorkNodes, NodeSeeds, executable queues, final node manifests, or production build tasks are created.
+L00000282	validation_surfaces:
+L00000283	- python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits
+L00000284	- python3 scripts/pm-plan-index.py validate
+L00000285	risk_class: interview_runtime_drift
+L00000286	reasoning_tier: standard
+L00000287	context_scope: interview_subagent_integration_standardization
+L00000288	implementation_surfaces:
+L00000289	- Plans/interview-subagent-integration.md
+L00000290	node_compile_hint:
+L00000291	  mode: phase_plan_and_contract_unification
+L00000292	  create_worknodes: false
+L00000293	source_lineage:
+L00000294	- Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:interview-subagent-integration-S0004
+L00000295	preserved_exact_tokens:
+L00000296	- intent-driven adaptive phase selection
+L00000297	- phase plan
+L00000298	- Contract Layer outputs
+L00000299	- contract fragments
+L00000300	- deterministic Contract Unification Pass
+L00000301	- Plans/chain-wizard-flexibility.md
+L00000302	- Plans/Project_Output_Artifacts.md
+L00000303	negative_constraints: []
+L00000304	compatibility_only_notes: []
+L00000305	stale_retired_dispositions: []
+L00000306	owner_boundary_notes:
+L00000307	- Plans/chain-wizard-flexibility.md and Plans/Project_Output_Artifacts.md remain SSOTs for phase planning and output artifacts.
+L00000308	owner_hints:
+L00000309	- Plans/interview-subagent-integration.md
+L00000310	split_recommendation_reason: The source span contains multiple separable interview integration concerns; repeated source lineage preserves exact source provenance without inventing subspans.
+L00000311	```
+L00000312	
+L00000313	### ISI-007 - Shared Runtime Identity Packet
+L00000314	
+L00000315	```yaml
+L00000316	plan_unit_id: ISI-007
+L00000317	unit_type: requirement
+L00000318	status: accepted
+L00000319	owner_doc: Plans/interview-subagent-integration.md
+L00000320	canonical_text: Interview-phase launches share the runtime identity packet with Orchestrator and preserve requested/effective runtime identity, requested/effective account identity, execution_role, operational_identity, and launched child-run reference.
+L00000321	gui_related: false
+L00000322	gui_classification_reason: This unit defines interview runtime, handoff, contract, or governance semantics rather than GUI presentation.
+L00000323	split_recommended: true
+L00000324	depends_on: []
+L00000325	unblocks: []
+L00000326	acceptance_criteria:
+L00000327	- The covered source span remains losslessly available for exact-text audit.
+L00000328	- This behavior is addressable through ISI-007 instead of broad ISI-001 source-preserving coverage.
+L00000329	- ContractRefs, aliases, exact tokens, examples, negative constraints, compatibility notes, stale/retired dispositions, owner boundaries, and source lineage remain traceable.
+L00000330	- No WorkNodes, NodeSeeds, executable queues, final node manifests, or production build tasks are created.
+L00000331	validation_surfaces:
+L00000332	- python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits
+L00000333	- python3 scripts/pm-plan-index.py validate
+L00000334	risk_class: interview_runtime_drift
+L00000335	reasoning_tier: standard
+L00000336	context_scope: interview_subagent_integration_standardization
+L00000337	implementation_surfaces:
+L00000338	- Plans/interview-subagent-integration.md
+L00000339	node_compile_hint:
+L00000340	  mode: shared_runtime_identity_packet
+L00000341	  create_worknodes: false
+L00000342	source_lineage:
+L00000343	- Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:interview-subagent-integration-S0005
+L00000344	- Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:interview-subagent-integration-S0006
+L00000345	preserved_exact_tokens:
+L00000346	- Interview runtime boundary and handoff lineage
+L00000347	- Shared runtime boundary
+L00000348	- requested/effective runtime identity
+L00000349	- requested/effective account identity
+L00000350	- execution_role
+L00000351	- operational_identity
+L00000352	- launched child-run reference
+L00000353	negative_constraints: []
+L00000354	compatibility_only_notes: []
+L00000355	stale_retired_dispositions: []
+L00000356	owner_boundary_notes:
+L00000357	- Plans/interview-subagent-integration.md owns interview integration behavior while referenced SSOT documents retain implementation ownership.
+L00000358	owner_hints:
+L00000359	- Plans/interview-subagent-integration.md
+L00000360	split_recommendation_reason: The source span contains multiple separable interview integration concerns; repeated source lineage preserves exact source provenance without inventing subspans.
+L00000361	```
+L00000362	
+L00000363	### ISI-008 - Actor Kind Boundary
+L00000364	
+L00000365	```yaml
+L00000366	plan_unit_id: ISI-008
+L00000367	unit_type: requirement
+L00000368	status: accepted
+L00000369	owner_doc: Plans/interview-subagent-integration.md
+L00000370	canonical_text: Assistant, chat, interview, and builder actors share provider/runtime identity semantics with Orchestrator while remaining distinct actor/run kinds rather than package, seam, or node execution objects, and shared packets must not relabel the interview actor as a graph node or worktree lane.
+L00000371	gui_related: false
+L00000372	gui_classification_reason: This unit defines interview runtime, handoff, contract, or governance semantics rather than GUI presentation.
+L00000373	split_recommended: true
+L00000374	depends_on: []
+L00000375	unblocks: []
+L00000376	acceptance_criteria:
+L00000377	- The covered source span remains losslessly available for exact-text audit.
+L00000378	- This behavior is addressable through ISI-008 instead of broad ISI-001 source-preserving coverage.
+L00000379	- ContractRefs, aliases, exact tokens, examples, negative constraints, compatibility notes, stale/retired dispositions, owner boundaries, and source lineage remain traceable.
+L00000380	- No WorkNodes, NodeSeeds, executable queues, final node manifests, or production build tasks are created.
+L00000381	validation_surfaces:
+L00000382	- python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits
+L00000383	- python3 scripts/pm-plan-index.py validate
+L00000384	risk_class: interview_runtime_drift
+L00000385	reasoning_tier: standard
+L00000386	context_scope: interview_subagent_integration_standardization
+L00000387	implementation_surfaces:
+L00000388	- Plans/interview-subagent-integration.md
+L00000389	node_compile_hint:
+L00000390	  mode: actor_kind_boundary
+L00000391	  create_worknodes: false
+L00000392	source_lineage:
+L00000393	- Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:interview-subagent-integration-S0005
+L00000394	- Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:interview-subagent-integration-S0006
+L00000395	preserved_exact_tokens:
+L00000396	- Assistant/chat/interview/builder actors
+L00000397	- provider/runtime identity semantics
+L00000398	- distinct actor/run kinds
+L00000399	- package/seam/node execution objects
+L00000400	- graph node
+L00000401	- worktree lane
+L00000402	negative_constraints:
+L00000403	- Interview actors must not be relabeled as graph nodes or worktree lanes.
+L00000404	compatibility_only_notes: []
+L00000405	stale_retired_dispositions: []
+L00000406	owner_boundary_notes:
+L00000407	- Plans/interview-subagent-integration.md owns interview integration behavior while referenced SSOT documents retain implementation ownership.
+L00000408	owner_hints:
+L00000409	- Plans/interview-subagent-integration.md
+L00000410	split_recommendation_reason: The source span contains multiple separable interview integration concerns; repeated source lineage preserves exact source provenance without inventing subspans.
+L00000411	```
+L00000412	
+L00000413	### ISI-009 - Shared Question Contract Consumption
+L00000414	
+L00000415	```yaml
+L00000416	plan_unit_id: ISI-009
+L00000417	unit_type: requirement
+L00000418	status: accepted
+L00000419	owner_doc: Plans/interview-subagent-integration.md
+L00000420	canonical_text: Interview clarification and questionnaire flows consume the shared question/questionnaire contract and QuestionItem shape, preserving question_id, question, options, required, multi_select, allow_freeform, default_values, and per-question display text in question while reserving prompt for envelope or header copy.
+L00000421	gui_related: false
+L00000422	gui_classification_reason: This unit defines interview runtime, handoff, contract, or governance semantics rather than GUI presentation.
+L00000423	split_recommended: true
+L00000424	depends_on: []
+L00000425	unblocks: []
+L00000426	acceptance_criteria:
+L00000427	- The covered source span remains losslessly available for exact-text audit.
+L00000428	- This behavior is addressable through ISI-009 instead of broad ISI-001 source-preserving coverage.
+L00000429	- ContractRefs, aliases, exact tokens, examples, negative constraints, compatibility notes, stale/retired dispositions, owner boundaries, and source lineage remain traceable.
+L00000430	- No WorkNodes, NodeSeeds, executable queues, final node manifests, or production build tasks are created.
+L00000431	validation_surfaces:
+L00000432	- python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits
+L00000433	- python3 scripts/pm-plan-index.py validate
+L00000434	risk_class: interview_runtime_drift
+L00000435	reasoning_tier: standard
+L00000436	context_scope: interview_subagent_integration_standardization
+L00000437	implementation_surfaces:
+L00000438	- Plans/interview-subagent-integration.md
+L00000439	node_compile_hint:
+L00000440	  mode: shared_question_contract_consumption
+L00000441	  create_worknodes: false
+L00000442	source_lineage:
+L00000443	- Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:interview-subagent-integration-S0007
+L00000444	preserved_exact_tokens:
+L00000445	- question
+L00000446	- /questionnaire
+L00000447	- QuestionItem
+L00000448	- question_id
+L00000449	- options[]
+L00000450	- required
+L00000451	- multi_select
+L00000452	- allow_freeform
+L00000453	- default_values
+L00000454	- prompt
+L00000455	negative_constraints:
+L00000456	- Interview flows must not define an interview-local prompt schema.
+L00000457	compatibility_only_notes: []
+L00000458	stale_retired_dispositions: []
+L00000459	owner_boundary_notes:
+L00000460	- Plans/interview-subagent-integration.md owns interview integration behavior while referenced SSOT documents retain implementation ownership.
+L00000461	owner_hints:
+L00000462	- Plans/interview-subagent-integration.md
+L00000463	split_recommendation_reason: The source span contains multiple separable interview integration concerns; repeated source lineage preserves exact source provenance without inventing subspans.
+L00000464	```
+L00000465	
+L00000466	### ISI-010 - Required Question Submit And Draft State
+L00000467	
+L00000468	```yaml
+L00000469	plan_unit_id: ISI-010
+L00000470	unit_type: requirement
+L00000471	status: accepted
+L00000472	owner_doc: Plans/interview-subagent-integration.md
+L00000473	canonical_text: Required interview questions gate submit through the shared question-card flow, and draft, pause, resume, and submitted outcomes use PM-managed draft_value, response, and validation state rather than interview-only status names.
+L00000474	gui_related: true
+L00000475	gui_classification_reason: This unit governs interview UI, question cards, GUI project wiring, media option affordances, or visible runtime identity.
+L00000476	split_recommended: true
+L00000477	depends_on: []
+L00000478	unblocks: []
+L00000479	acceptance_criteria:
+L00000480	- The covered source span remains losslessly available for exact-text audit.
+L00000481	- This behavior is addressable through ISI-010 instead of broad ISI-001 source-preserving coverage.
+L00000482	- ContractRefs, aliases, exact tokens, examples, negative constraints, compatibility notes, stale/retired dispositions, owner boundaries, and source lineage remain traceable.
+L00000483	- No WorkNodes, NodeSeeds, executable queues, final node manifests, or production build tasks are created.
+L00000484	validation_surfaces:
+L00000485	- python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits
+L00000486	- python3 scripts/pm-plan-index.py validate
+L00000487	risk_class: interview_runtime_drift
+L00000488	reasoning_tier: standard
+L00000489	context_scope: interview_subagent_integration_standardization
+L00000490	implementation_surfaces:
+L00000491	- Plans/interview-subagent-integration.md
+L00000492	node_compile_hint:
+L00000493	  mode: required_question_submit_and_draft_state
+L00000494	  create_worknodes: false
+L00000495	source_lineage:
+L00000496	- Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:interview-subagent-integration-S0007
+L00000497	preserved_exact_tokens:
+L00000498	- Required interview questions
+L00000499	- shared question-card flow
+L00000500	- submit
+L00000501	- draft
+L00000502	- pause
+L00000503	- resume
+L00000504	- submitted
+L00000505	- draft_value
+L00000506	- response
+L00000507	- validation state
+L00000508	- interview-only status names
+L00000509	negative_constraints:
+L00000510	- Required interview questions must not use interview-only status names for shared draft/response/validation state.
+L00000511	compatibility_only_notes: []
+L00000512	stale_retired_dispositions: []
+L00000513	owner_boundary_notes:
+L00000514	- Plans/interview-subagent-integration.md owns interview integration behavior while referenced SSOT documents retain implementation ownership.
+L00000515	owner_hints:
+L00000516	- Plans/interview-subagent-integration.md
+L00000517	split_recommendation_reason: The source span contains multiple separable interview integration concerns; repeated source lineage preserves exact source provenance without inventing subspans.
+L00000518	```
+L00000519	
+L00000520	### ISI-011 - Runtime Identity Visibility
+L00000521	
+L00000522	```yaml
+L00000523	plan_unit_id: ISI-011
+L00000524	unit_type: requirement
+L00000525	status: accepted
+L00000526	owner_doc: Plans/interview-subagent-integration.md
+L00000527	canonical_text: Interview question cards, validation reports, and handoff packets display the same requested/effective runtime and account identity fields as the shared runtime boundary, may summarize those fields for display, and preserve canonical field names in persisted records and downstream handoffs.
+L00000528	gui_related: true
+L00000529	gui_classification_reason: This unit governs interview UI, question cards, GUI project wiring, media option affordances, or visible runtime identity.
+L00000530	split_recommended: false
+L00000531	depends_on: []
+L00000532	unblocks: []
+L00000533	acceptance_criteria:
+L00000534	- The covered source span remains losslessly available for exact-text audit.
+L00000535	- This behavior is addressable through ISI-011 instead of broad ISI-001 source-preserving coverage.
+L00000536	- ContractRefs, aliases, exact tokens, examples, negative constraints, compatibility notes, stale/retired dispositions, owner boundaries, and source lineage remain traceable.
+L00000537	- No WorkNodes, NodeSeeds, executable queues, final node manifests, or production build tasks are created.
+L00000538	validation_surfaces:
+L00000539	- python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits
+L00000540	- python3 scripts/pm-plan-index.py validate
+L00000541	risk_class: interview_runtime_drift
+L00000542	reasoning_tier: standard
+L00000543	context_scope: interview_subagent_integration_standardization
+L00000544	implementation_surfaces:
+L00000545	- Plans/interview-subagent-integration.md
+L00000546	node_compile_hint:
+L00000547	  mode: runtime_identity_visibility
+L00000548	  create_worknodes: false
+L00000549	source_lineage:
+L00000550	- Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:interview-subagent-integration-S0008
+L00000551	preserved_exact_tokens:
+L00000552	- Interview question cards
+L00000553	- validation reports
+L00000554	- handoff packets
+L00000555	- requested/effective runtime identity
+L00000556	- requested/effective account identity
+L00000557	- execution_role
+L00000558	- operational_identity
+L00000559	- launched child-run reference
+L00000560	- canonical field names
+L00000561	negative_constraints:
+L00000562	- Persisted records and downstream handoffs must preserve canonical field names.
+L00000563	compatibility_only_notes: []
+L00000564	stale_retired_dispositions: []
+L00000565	owner_boundary_notes:
+L00000566	- Plans/interview-subagent-integration.md owns interview integration behavior while referenced SSOT documents retain implementation ownership.
+L00000567	owner_hints:
+L00000568	- Plans/interview-subagent-integration.md
+L00000569	```
+L00000570	
+L00000571	### ISI-012 - Requested/Effective Interview Alignment
+L00000572	
+L00000573	```yaml
+L00000574	plan_unit_id: ISI-012
+L00000575	unit_type: requirement
+L00000576	status: accepted
+L00000577	owner_doc: Plans/interview-subagent-integration.md
+L00000578	canonical_text: Interview-specific runtime packets align requested values, effective values, and launched-run lineage before execution starts, and execution-affecting handoffs carry the requested/effective runtime and account fields needed by Orchestrator, storage, permissions, and usage consumers.
+L00000579	gui_related: false
+L00000580	gui_classification_reason: This unit defines interview runtime, handoff, contract, or governance semantics rather than GUI presentation.
+L00000581	split_recommended: true
+L00000582	depends_on: []
+L00000583	unblocks: []
+L00000584	acceptance_criteria:
+L00000585	- The covered source span remains losslessly available for exact-text audit.
+L00000586	- This behavior is addressable through ISI-012 instead of broad ISI-001 source-preserving coverage.
+L00000587	- ContractRefs, aliases, exact tokens, examples, negative constraints, compatibility notes, stale/retired dispositions, owner boundaries, and source lineage remain traceable.
+L00000588	- No WorkNodes, NodeSeeds, executable queues, final node manifests, or production build tasks are created.
+L00000589	validation_surfaces:
+L00000590	- python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits
+L00000591	- python3 scripts/pm-plan-index.py validate
+L00000592	risk_class: interview_runtime_drift
+L00000593	reasoning_tier: standard
+L00000594	context_scope: interview_subagent_integration_standardization
+L00000595	implementation_surfaces:
+L00000596	- Plans/interview-subagent-integration.md
+L00000597	node_compile_hint:
+L00000598	  mode: requested_effective_interview_alignment
+L00000599	  create_worknodes: false
+L00000600	source_lineage:
+L00000601	- Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:interview-subagent-integration-S0009
+L00000602	preserved_exact_tokens:
+L00000603	- Requested/effective Interview contract
+L00000604	- requested values
+L00000605	- effective values
+L00000606	- launched-run lineage
+L00000607	- Orchestrator
+L00000608	- storage
+L00000609	- permissions
+L00000610	- usage consumers
+L00000611	- QuestionItem
+L00000612	negative_constraints: []
+L00000613	compatibility_only_notes: []
+L00000614	stale_retired_dispositions: []
+L00000615	owner_boundary_notes:
+L00000616	- Plans/interview-subagent-integration.md owns interview integration behavior while referenced SSOT documents retain implementation ownership.
+L00000617	owner_hints:
+L00000618	- Plans/interview-subagent-integration.md
+L00000619	split_recommendation_reason: The source span contains multiple separable interview integration concerns; repeated source lineage preserves exact source provenance without inventing subspans.
+L00000620	```
+L00000621	
+L00000622	### ISI-013 - Contract Unification Conflict Rules
+L00000623	
+L00000624	```yaml
+L00000625	plan_unit_id: ISI-013
+L00000626	unit_type: requirement
+L00000627	status: accepted
+L00000628	owner_doc: Plans/interview-subagent-integration.md
+L00000629	canonical_text: Deterministic Contract Unification requires explicit conflict-resolution authority and rules for contradictory upstream phase outputs; when rules cannot resolve a contradiction, the interview handoff records an unresolved conflict instead of silently choosing one phase output.
+L00000630	gui_related: false
+L00000631	gui_classification_reason: This unit defines interview runtime, handoff, contract, or governance semantics rather than GUI presentation.
+L00000632	split_recommended: true
+L00000633	depends_on: []
+L00000634	unblocks: []
+L00000635	acceptance_criteria:
+L00000636	- The covered source span remains losslessly available for exact-text audit.
+L00000637	- This behavior is addressable through ISI-013 instead of broad ISI-001 source-preserving coverage.
+L00000638	- ContractRefs, aliases, exact tokens, examples, negative constraints, compatibility notes, stale/retired dispositions, owner boundaries, and source lineage remain traceable.
+L00000639	- No WorkNodes, NodeSeeds, executable queues, final node manifests, or production build tasks are created.
+L00000640	validation_surfaces:
+L00000641	- python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits
+L00000642	- python3 scripts/pm-plan-index.py validate
+L00000643	risk_class: interview_runtime_drift
+L00000644	reasoning_tier: standard
+L00000645	context_scope: interview_subagent_integration_standardization
+L00000646	implementation_surfaces:
+L00000647	- Plans/interview-subagent-integration.md
+L00000648	node_compile_hint:
+L00000649	  mode: contract_unification_conflict_rules
+L00000650	  create_worknodes: false
+L00000651	source_lineage:
+L00000652	- Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:interview-subagent-integration-S0009
+L00000653	preserved_exact_tokens:
+L00000654	- Deterministic Contract Unification
+L00000655	- conflict-resolution authority
+L00000656	- /rules
+L00000657	- contradictory upstream phase outputs
+L00000658	- unresolved conflict
+L00000659	- silently choosing one phase output
+L00000660	negative_constraints:
+L00000661	- The interview handoff must record an unresolved conflict instead of silently choosing one phase output when rules cannot resolve a contradiction.
+L00000662	compatibility_only_notes: []
+L00000663	stale_retired_dispositions: []
+L00000664	owner_boundary_notes:
+L00000665	- Plans/interview-subagent-integration.md owns interview integration behavior while referenced SSOT documents retain implementation ownership.
+L00000666	owner_hints:
+L00000667	- Plans/interview-subagent-integration.md
+L00000668	split_recommendation_reason: The source span contains multiple separable interview integration concerns; repeated source lineage preserves exact source provenance without inventing subspans.
+L00000669	```
+L00000670	
+L00000671	### ISI-014 - Wizard/Interview Handoff Packet Fields
+L00000672	
+L00000673	```yaml
+L00000674	plan_unit_id: ISI-014
+L00000675	unit_type: requirement
+L00000676	status: accepted
+L00000677	owner_doc: Plans/interview-subagent-integration.md
+L00000678	canonical_text: The canonical wizard/interview handoff packet carries project_id, thread_id, wizard_id, interview_session_id, requested/effective runtime identity, requested/effective account identity, execution_role, and explicit launched_run_id/launched_run_ref bridge fields.
+L00000679	gui_related: false
+L00000680	gui_classification_reason: This unit defines interview runtime, handoff, contract, or governance semantics rather than GUI presentation.
+L00000681	split_recommended: true
+L00000682	depends_on: []
+L00000683	unblocks: []
+L00000684	acceptance_criteria:
+L00000685	- The covered source span remains losslessly available for exact-text audit.
+L00000686	- This behavior is addressable through ISI-014 instead of broad ISI-001 source-preserving coverage.
+L00000687	- ContractRefs, aliases, exact tokens, examples, negative constraints, compatibility notes, stale/retired dispositions, owner boundaries, and source lineage remain traceable.
+L00000688	- No WorkNodes, NodeSeeds, executable queues, final node manifests, or production build tasks are created.
+L00000689	validation_surfaces:
+L00000690	- python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits
+L00000691	- python3 scripts/pm-plan-index.py validate
+L00000692	risk_class: interview_runtime_drift
+L00000693	reasoning_tier: standard
+L00000694	context_scope: interview_subagent_integration_standardization
+L00000695	implementation_surfaces:
+L00000696	- Plans/interview-subagent-integration.md
+L00000697	node_compile_hint:
+L00000698	  mode: wizard_interview_handoff_packet_fields
+L00000699	  create_worknodes: false
+L00000700	source_lineage:
+L00000701	- Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:interview-subagent-integration-S0010
+L00000702	preserved_exact_tokens:
+L00000703	- project_id
+L00000704	- thread_id
+L00000705	- wizard_id
+L00000706	- interview_session_id
+L00000707	- requested/effective runtime identity
+L00000708	- requested/effective account identity
+L00000709	- execution_role
+L00000710	- launched_run_id
+L00000711	- launched_run_ref
+L00000712	negative_constraints: []
+L00000713	compatibility_only_notes: []
+L00000714	stale_retired_dispositions: []
+L00000715	owner_boundary_notes:
+L00000716	- Plans/interview-subagent-integration.md owns interview integration behavior while referenced SSOT documents retain implementation ownership.
+L00000717	owner_hints:
+L00000718	- Plans/interview-subagent-integration.md
+L00000719	split_recommendation_reason: The source span contains multiple separable interview integration concerns; repeated source lineage preserves exact source provenance without inventing subspans.
+L00000720	```
+L00000721	
+L00000722	### ISI-015 - Missing Thread Typed Absence
+L00000723	
+L00000724	```yaml
+L00000725	plan_unit_id: ISI-015
+L00000726	unit_type: requirement
+L00000727	status: accepted
+L00000728	owner_doc: Plans/interview-subagent-integration.md
+L00000729	canonical_text: 'Example handoff payloads must not normalize missing thread linkage as thread_id: None; that value is a concrete drift signal, and if no thread exists the packet records a typed absence reason without letting thread_id masquerade as a nullable placeholder.'
+L00000730	gui_related: false
+L00000731	gui_classification_reason: This unit defines interview runtime, handoff, contract, or governance semantics rather than GUI presentation.
+L00000732	split_recommended: true
+L00000733	depends_on: []
+L00000734	unblocks: []
+L00000735	acceptance_criteria:
+L00000736	- The covered source span remains losslessly available for exact-text audit.
+L00000737	- This behavior is addressable through ISI-015 instead of broad ISI-001 source-preserving coverage.
+L00000738	- ContractRefs, aliases, exact tokens, examples, negative constraints, compatibility notes, stale/retired dispositions, owner boundaries, and source lineage remain traceable.
+L00000739	- No WorkNodes, NodeSeeds, executable queues, final node manifests, or production build tasks are created.
+L00000740	validation_surfaces:
+L00000741	- python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits
+L00000742	- python3 scripts/pm-plan-index.py validate
+L00000743	risk_class: interview_runtime_drift
+L00000744	reasoning_tier: standard
+L00000745	context_scope: interview_subagent_integration_standardization
+L00000746	implementation_surfaces:
+L00000747	- Plans/interview-subagent-integration.md
+L00000748	node_compile_hint:
+L00000749	  mode: missing_thread_typed_absence
+L00000750	  create_worknodes: false
+L00000751	source_lineage:
+L00000752	- Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:interview-subagent-integration-S0010
+L00000753	preserved_exact_tokens:
+L00000754	- 'thread_id: None'
+L00000755	- concrete drift signal
+L00000756	- typed absence reason
+L00000757	- nullable placeholder
+L00000758	negative_constraints:
+L00000759	- 'Example handoff payloads MUST NOT normalize missing thread linkage as thread_id: None.'
+L00000760	compatibility_only_notes: []
+L00000761	stale_retired_dispositions: []
+L00000762	owner_boundary_notes:
+L00000763	- Plans/interview-subagent-integration.md owns interview integration behavior while referenced SSOT documents retain implementation ownership.
+L00000764	owner_hints:
+L00000765	- Plans/interview-subagent-integration.md
+L00000766	split_recommendation_reason: The source span contains multiple separable interview integration concerns; repeated source lineage preserves exact source provenance without inventing subspans.
+L00000767	```
+L00000768	
+L00000769	### ISI-016 - Provider-Native Delegation Boundary
+L00000770	
+L00000771	```yaml
+L00000772	plan_unit_id: ISI-016
+L00000773	unit_type: requirement
+L00000774	status: accepted
+L00000775	owner_doc: Plans/interview-subagent-integration.md
+L00000776	canonical_text: Provider-native delegation syntax, provider-native exports/imports, and /imports remain interoperability-only; direct-provider and child-run canon still apply, and the canonical handoff is the Puppet Master child-run packet.
+L00000777	gui_related: false
+L00000778	gui_classification_reason: This unit defines interview runtime, handoff, contract, or governance semantics rather than GUI presentation.
+L00000779	split_recommended: true
+L00000780	depends_on: []
+L00000781	unblocks: []
+L00000782	acceptance_criteria:
+L00000783	- The covered source span remains losslessly available for exact-text audit.
+L00000784	- This behavior is addressable through ISI-016 instead of broad ISI-001 source-preserving coverage.
+L00000785	- ContractRefs, aliases, exact tokens, examples, negative constraints, compatibility notes, stale/retired dispositions, owner boundaries, and source lineage remain traceable.
+L00000786	- No WorkNodes, NodeSeeds, executable queues, final node manifests, or production build tasks are created.
+L00000787	validation_surfaces:
+L00000788	- python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits
+L00000789	- python3 scripts/pm-plan-index.py validate
+L00000790	risk_class: interview_runtime_drift
+L00000791	reasoning_tier: standard
+L00000792	context_scope: interview_subagent_integration_standardization
+L00000793	implementation_surfaces:
+L00000794	- Plans/interview-subagent-integration.md
+L00000795	node_compile_hint:
+L00000796	  mode: provider_native_delegation_boundary
+L00000797	  create_worknodes: false
+L00000798	source_lineage:
+L00000799	- Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:interview-subagent-integration-S0010
+L00000800	preserved_exact_tokens:
+L00000801	- Provider-native delegation syntax
+L00000802	- provider-native exports/imports
+L00000803	- /imports
+L00000804	- interoperability-only
+L00000805	- direct-provider
+L00000806	- child-run canon
+L00000807	- canonical /handoff
+L00000808	- Puppet Master child-run packet
+L00000809	negative_constraints: []
+L00000810	compatibility_only_notes: []
+L00000811	stale_retired_dispositions: []
+L00000812	owner_boundary_notes:
+L00000813	- Plans/interview-subagent-integration.md owns interview integration behavior while referenced SSOT documents retain implementation ownership.
+L00000814	owner_hints:
+L00000815	- Plans/interview-subagent-integration.md
+L00000816	split_recommendation_reason: The source span contains multiple separable interview integration concerns; repeated source lineage preserves exact source provenance without inventing subspans.
+L00000817	```
+L00000818	
+L00000819	### ISI-017 - Reviewer Cap Boundary
+L00000820	
+L00000821	```yaml
+L00000822	plan_unit_id: ISI-017
+L00000823	unit_type: requirement
+L00000824	status: accepted
+L00000825	owner_doc: Plans/interview-subagent-integration.md
+L00000826	canonical_text: Interview reviewer-cap limits consume the Orchestrator concurrency SSOT, and the requirements-quality-reviewer autofill cap is reviewer-only and must not redefine global spawn, nesting, shell-isolation, or child timeout ceilings.
+L00000827	gui_related: false
+L00000828	gui_classification_reason: This unit defines interview runtime, handoff, contract, or governance semantics rather than GUI presentation.
+L00000829	split_recommended: true
+L00000830	depends_on: []
+L00000831	unblocks: []
+L00000832	acceptance_criteria:
+L00000833	- The covered source span remains losslessly available for exact-text audit.
+L00000834	- This behavior is addressable through ISI-017 instead of broad ISI-001 source-preserving coverage.
+L00000835	- ContractRefs, aliases, exact tokens, examples, negative constraints, compatibility notes, stale/retired dispositions, owner boundaries, and source lineage remain traceable.
+L00000836	- No WorkNodes, NodeSeeds, executable queues, final node manifests, or production build tasks are created.
+L00000837	validation_surfaces:
+L00000838	- python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits
+L00000839	- python3 scripts/pm-plan-index.py validate
+L00000840	risk_class: interview_runtime_drift
+L00000841	reasoning_tier: standard
+L00000842	context_scope: interview_subagent_integration_standardization
+L00000843	implementation_surfaces:
+L00000844	- Plans/interview-subagent-integration.md
+L00000845	node_compile_hint:
+L00000846	  mode: reviewer_cap_boundary
+L00000847	  create_worknodes: false
+L00000848	source_lineage:
+L00000849	- Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:interview-subagent-integration-S0010
+L00000850	preserved_exact_tokens:
+L00000851	- Interview reviewer-cap limits
+L00000852	- Orchestrator concurrency SSOT
+L00000853	- requirements-quality-reviewer autofill cap
+L00000854	- reviewer-only
+L00000855	- global spawn
+L00000856	- nesting
+L00000857	- shell-isolation
+L00000858	- child timeout ceilings
+L00000859	negative_constraints:
+L00000860	- The requirements-quality-reviewer autofill cap MUST NOT redefine global spawn, nesting, shell-isolation, or child timeout ceilings.
+L00000861	compatibility_only_notes: []
+L00000862	stale_retired_dispositions: []
+L00000863	owner_boundary_notes:
+L00000864	- Plans/interview-subagent-integration.md owns interview integration behavior while referenced SSOT documents retain implementation ownership.
+L00000865	owner_hints:
+L00000866	- Plans/interview-subagent-integration.md
+L00000867	split_recommendation_reason: The source span contains multiple separable interview integration concerns; repeated source lineage preserves exact source provenance without inventing subspans.
+L00000868	```
+L00000869	
+L00000870	### ISI-018 - Auditor Cycle Report Bridge
+L00000871	
+L00000872	```yaml
+L00000873	plan_unit_id: ISI-018
+L00000874	unit_type: requirement
+L00000875	status: accepted
+L00000876	owner_doc: Plans/interview-subagent-integration.md
+L00000877	canonical_text: auditor_cycle_report includes planning/governance lineage and an explicit launched-run bridge with phase_plan_ref, requirements_quality_report_ref, workflow_run_id, pass_verdict, wizard_snapshot_ref, launched_run_id, and launched_run_ref, and preview, validation, review, and resume surfaces reuse that bridge instead of reconstructing joins from filenames, timestamps, or provider-native traces. Legacy validation_pass_report mirrors may expose the same bridge only with compatibility_only true and cycle_report_ref.
+L00000878	gui_related: false
+L00000879	gui_classification_reason: This unit defines interview runtime, handoff, contract, or governance semantics rather than GUI presentation.
+L00000880	split_recommended: false
+L00000881	depends_on: []
+L00000882	unblocks: []
+L00000883	acceptance_criteria:
+L00000884	- The covered source span remains losslessly available for exact-text audit.
+L00000885	- This behavior is addressable through ISI-018 instead of broad ISI-001 source-preserving coverage.
+L00000886	- ContractRefs, aliases, exact tokens, examples, negative constraints, compatibility notes, stale/retired dispositions, owner boundaries, and source lineage remain traceable.
+L00000887	- No WorkNodes, NodeSeeds, executable queues, final node manifests, or production build tasks are created.
+L00000888	validation_surfaces:
+L00000889	- python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits
+L00000890	- python3 scripts/pm-plan-index.py validate
+L00000891	risk_class: interview_runtime_drift
+L00000892	reasoning_tier: standard
+L00000893	context_scope: interview_subagent_integration_standardization
+L00000894	implementation_surfaces:
+L00000895	- Plans/interview-subagent-integration.md
+L00000896	node_compile_hint:
+L00000897	  mode: auditor_cycle_report_bridge
+L00000898	  create_worknodes: false
+L00000899	source_lineage:
+L00000900	- Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:interview-subagent-integration-S0011
+L00000901	preserved_exact_tokens:
+L00000902	- auditor_cycle_report
+L00000903	- validation_pass_report
+L00000904	- cycle_report_ref
+L00000905	- compatibility_only
+L00000906	- phase_plan_ref
+L00000907	- requirements_quality_report_ref
+L00000908	- workflow_run_id
+L00000909	- pass_verdict
+L00000910	- wizard_snapshot_ref
+L00000911	- launched_run_id
+L00000912	- launched_run_ref
+L00000913	- filenames
+L00000914	- timestamps
+L00000915	- provider-native traces
+L00000916	negative_constraints:
+L00000917	- Preview, validation, review, and resume surfaces must not reconstruct joins from filenames, timestamps, or provider-native traces.
+L00000918	compatibility_only_notes: []
+L00000919	stale_retired_dispositions: []
+L00000920	owner_boundary_notes:
+L00000921	- Plans/interview-subagent-integration.md owns interview integration behavior while referenced SSOT documents retain implementation ownership.
+L00000922	owner_hints:
+L00000923	- Plans/interview-subagent-integration.md
+L00000924	preserved_contractrefs:
+L00000925	- 'ContractRef: ContractName:Plans/Prompt_Pipeline.md, ContractName:Plans/Contracts_V0.md, ContractName:Plans/Orchestrator_Page.md'
+L00000926	```
+L00000927	
+L00000928	### ISI-001 - Interview Feature Subagent Integration Retired Source-Preserving Bridge
+L00000929	
+L00000930	```yaml
+L00000931	plan_unit_id: ISI-001
+L00000932	unit_type: compatibility_disposition
+L00000933	status: accepted
+L00000934	owner_doc: Plans/interview-subagent-integration.md
+L00000935	canonical_text: The former interview-subagent-integration doc-level source-preserving bridge is retired after Phase 2B atomized interview-subagent-integration-S0004 through S0011 into ISI-002 through ISI-018 and structurally dispositioned S0001, S0002, S0003, S0012, S0013, and S0015. ISI-001 remains only as migration lineage for interview-subagent-integration-S0014 and must not re-own atomized source coverage or use source_preserving_planunit compile mode.
+L00000936	gui_related: false
+L00000937	gui_classification_reason: This retired bridge records migration lineage only; product GUI coverage is owned by fine-grained ISI PlanUnits where applicable.
+L00000938	split_recommended: false
+L00000939	depends_on: []
+L00000940	unblocks: []
+L00000941	acceptance_criteria:
+L00000942	- ISI-001 no longer uses source_preserving_planunit compile mode.
+L00000943	- ISI-002 through ISI-018 own product coverage for atomized interview-subagent-integration spans.
+L00000944	- Structural spans are explicit coverage dispositions, not product coverage owned by ISI-001.
+L00000945	- The retired bridge does not create WorkNodes, NodeSeeds, executable queues, final node manifests, or production build tasks.
+L00000946	validation_surfaces:
+L00000947	- python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits
+L00000948	- python3 scripts/pm-plan-index.py validate
+L00000949	risk_class: migration_lineage
+L00000950	reasoning_tier: standard
+L00000951	context_scope: residual_plan_standardization
+L00000952	implementation_surfaces:
+L00000953	- Plans/interview-subagent-integration.md
+L00000954	node_compile_hint:
+L00000955	  mode: source_preserving_bridge_retired
+L00000956	  create_worknodes: false
+L00000957	source_lineage:
+L00000958	- Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:interview-subagent-integration-S0014
+L00000959	preserved_exact_tokens:
+L00000960	- ISI-001
+L00000961	- source_preserving_planunit
+L00000962	- source_preserving_bridge_retired
+L00000963	- Interview Feature Subagent Integration -- Implementation Plan
+L00000964	- interview-subagent-integration-S0014
+L00000965	- Owner / Consumer Map
+L00000966	- PlanUnits
+L00000967	- Migration Coverage
+L00000968	negative_constraints:
+L00000969	- ISI-001 must not re-own atomized interview-subagent-integration product coverage.
+L00000970	- ISI-001 must not use node_compile_hint.mode=source_preserving_planunit.
+L00000971	- Do not treat the retired bridge as implementation-ready product coverage.
+L00000972	- Do not create WorkNodes, NodeSeeds, executable queues, final node manifests, or production build tasks from this retired bridge.
+L00000973	compatibility_only_notes:
+L00000974	- ISI-001 remains only as a retired source-preserving bridge audit record for migration lineage.
+L00000975	- The token source_preserving_planunit is preserved for audit compatibility only and is not the node compile mode.
+L00000976	stale_retired_dispositions:
+L00000977	- The former ISI-001 source-preserving bridge is retired by Phase 2B batch 083.
+L00000978	owner_boundary_notes:
+L00000979	- ISI-002 through ISI-018 own atomized interview-subagent-integration product coverage.
+L00000980	- interview-subagent-integration-S0014 is migration-lineage coverage only after bridge retirement.
+L00000981	owner_hints:
+L00000982	- Plans/interview-subagent-integration.md
+L00000983	```
+L00000984	
+L00000985	## Migration Coverage
+L00000986	
+L00000987	Original hash: `faeb6f2c9d9ee2a62871930314b90fbe5278b503f32f1d84f77a85f32e15a2c6`.
+L00000988	
+L00000989	Run-scoped proof artifacts:
+L00000990	- `Plans/.plan_migration/pds-20260611-002-atomize-planunits/original_hashes.json`
+L00000991	- `Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl`
+L00000992	- `Plans/.plan_migration/pds-20260611-002-atomize-planunits/coverage_map.jsonl`
+L00000993	- `Plans/.plan_migration/pds-20260611-002-atomize-planunits/anchor_aliases.json`
+L00000994	
+L00000995	Phase 2B batch 083 atomized `interview-subagent-integration-S0004` through `interview-subagent-integration-S0011` into `ISI-002` through `ISI-018`, with dense change-summary, runtime-boundary, question, requested/effective, and handoff spans split where safe. `interview-subagent-integration-S0001`, `interview-subagent-integration-S0002`, `interview-subagent-integration-S0003`, `interview-subagent-integration-S0012`, `interview-subagent-integration-S0013`, and `interview-subagent-integration-S0015` are structural or reference dispositions. `ISI-001` is retired as migration-lineage compatibility coverage for `interview-subagent-integration-S0014`; `Plans/interview-subagent-integration.md` has no residual source-preserving product coverage. This batch did not update Spec Lock, generated shards, evidence bundles, auto_decisions, or plan_graph, and did not create WorkNodes, NodeSeeds, executable queues, final node manifests, or production build tasks.
+L00000996	
+L00000997	## Ledger Compile Addendum - pldg-20260627-001-feature-intake
+L00000998	
+L00000999	This addendum compiles source-lineage obligations from bootstrap ledger `pldg-20260627-001-feature-intake` into Interview Subagent Integration owner canon. It does not create WorkNodes, NodeSeeds, executable queues, GoalRuns, implementation files, generated governance artifacts, or production build tasks.
+L00001000	
+L00001001	### ISI-019 - Interview Prompt Route DRY Consumer
+L00001002	
+L00001003	```yaml
+L00001004	plan_unit_id: ISI-019
+L00001005	unit_type: requirement
+L00001006	status: accepted
+L00001007	owner_doc: Plans/interview-subagent-integration.md
+L00001008	canonical_text: >-
+L00001009	  Interview prompt routes consume the shared DRY Method Instruction Bundle route from Prompt Pipeline and Agent Rules
+L00001010	  Context. Interview does not define a separate DRY prompt model, local DRY prose, or route-local effective-state enum.
+L00001011	  Interview clarification, handoff, and question flows preserve DRY receipt fields through the shared CV-299 contract
+L00001012	  when DRY applies, degrades, is disabled, blocks, or caveats the route.
+L00001013	gui_related: false
+L00001014	gui_classification_reason: Defines Interview prompt-route behavior and receipt fields rather than visual presentation.
+L00001015	depends_on: [ARC-036, PP-057, CV-299, DR-036, DP-063]
+L00001016	unblocks: [ATS-018]
+L00001017	acceptance_criteria:
+L00001018	  - Interview consumes the shared DRY Instruction Bundle route.
+L00001019	  - Interview does not fork DRY prose or effective-state enums.
+L00001020	  - DRY receipt state remains available across Interview clarification, question, and handoff paths.
+L00001021	validation_surfaces:
+L00001022	  - python3 scripts/pm-plan-index.py validate
+L00001023	  - Interview DRY route conformance fixtures
+L00001024	risk_class: interview_dry_shadow_route
+L00001025	reasoning_tier: high
+L00001026	context_scope: interview_dry_method_consumer
+L00001027	implementation_surfaces:
+L00001028	  - Plans/interview-subagent-integration.md
+L00001029	  - future Interview prompt routes
+L00001030	node_compile_hint:
+L00001031	  mode: interview_dry_consumer
+L00001032	  create_worknodes: false
+L00001033	  create_nodeseeds: false
+L00001034	source_lineage:
+L00001035	  - Plans/ledgers/v2/pldg-20260627-001-feature-intake/state/dry_method_compile_readiness_matrix.json:dry-prompt-route-static-conformance
+L00001036	  - Plans/ledgers/v2/pldg-20260627-001-feature-intake/records/design_atoms.jsonl:atom-0076
+L00001037	  - Plans/ledgers/v2/pldg-20260627-001-feature-intake/records/design_atoms.jsonl:atom-0083
+L00001038	source_atom_ids: [atom-0076, atom-0083]
+L00001039	preserved_exact_tokens:
+L00001040	  - "Interview"
+L00001041	  - "Instruction Bundle"
+L00001042	  - "DRY Method"
+L00001043	  - "question flows"
+L00001044	  - "handoff"
+L00001045	  - "dry_method_effective_state"
+L00001046	negative_constraints:
+L00001047	  - Do not define a separate Interview DRY prompt model.
+L00001048	  - Do not create route-local DRY enums that diverge from CV-299.
+L00001049	owner_hints:
+L00001050	  - Plans/interview-subagent-integration.md
+L00001051	  - Plans/Prompt_Pipeline.md
+L00001052	  - Plans/agent-rules-context.md
+L00001053	```
+L00001054	
+L00001055	<!-- FABLE_REMAINING_ACTION_PLAN_REPAIR_20260708_BEGIN -->
+L00001056	## FABLE Remaining Action Plan Audit-Lineage Notes (2026-07-08)
+L00001057	
+L00001058	These rows are preserved as audit-lineage notes only. They do not prove repair by themselves; repaired status requires concrete canonical prose/schema/enum/command/algorithm evidence in this owner doc or an explicit non-repair disposition in `Plans/.audits/fable-20260706/owner_note_closure_fidelity_after.jsonl`. This note creates no WorkNodes, NodeSeeds, queues, runtime artifacts, implementation files, production build tasks, final manifests, or PNC-019 receipts, and it does not mark `buildability_gate_passed` true.
+L00001059	
+L00001060	- `registry_line 149` (explicitly_deferred; source line 622; `sfk-969d105f50df34b7f72f242c`): Explicitly deferred: closing this row requires a dedicated owner-doc/schema/detail lane beyond safe non-runtime hygiene; no buildability or runtime proof is claimed here. Source summary: - [HIGH] L5002-5298: `interview.scope_probe.max_questions` config keys referenced but not found in interview-subagent-integration.md via grep; GUI-inventory elicitation algorithm for UI wiring fragments during interview undefined.
+L00001061	- `registry_line 367` (explicitly_deferred; source line 1234; `sfk-381230f21baee92304ac31b8`): Explicitly deferred: closing this row requires a dedicated owner-doc/schema/detail lane beyond safe non-runtime hygiene; no buildability or runtime proof is claimed here. Source summary: - [CRITICAL] whole doc: every requirement is YAML metadata (owner/tokens/acceptance criteria referencing other units) rather than an implementable spec no request/response payload examples, no error codes, no retry values anywhere.
+L00001062	- `registry_line 369` (explicitly_deferred; source line 1236; `sfk-9d06c1271836fdaa1923df72`): Explicitly deferred: closing this row requires a dedicated owner-doc/schema/detail lane beyond safe non-runtime hygiene; no buildability or runtime proof is claimed here. Source summary: - [HIGH] confirmed via grep: `scope_probe`/`max_questions` also never appear anywhere in this file the interview question-count limit is entirely unresolved here too.
+L00001063	
+L00001064	## FABLE Deferred Action Concrete Repair Addendum - 2026-07-08
+L00001065	
+L00001066	This addendum repairs non-runtime interview rows without creating WorkNodes, implementation files, runtime artifacts, or PNC-019 evidence.
+L00001067	
+L00001068	- Repairs `sfk-969d105f50df34b7f72f242c` and `sfk-9d06c1271836fdaa1923df72`: canonical config key `interview.scope_probe.max_questions` limits scope-probe clarification questions. Default is `4`, minimum `0`, maximum `8`. GUI-inventory elicitation asks for surface name, owner doc, visible control, command id if known, and missing evidence reason.
+L00001069	- Repairs `sfk-973c4b99a2e3f9e5ad705e53`: canonical config key `interview.max_subagents_spawn` limits interview-time helper agents. Default is `3`, maximum `6`, and value `0` disables subagent spawning for interview probing.
+L00001070	- Repairs `sfk-381230f21baee92304ac31b8`: `InterviewRequest` fields are `request_id`, `topic_id`, `question_text`, `context_refs[]`, `max_questions`, `max_subagents_spawn`, and `created_at_utc`. `InterviewResponse` fields are `response_id`, `request_id`, `answer_text`, `accepted`, `followup_required`, `error_code?`, and `created_at_utc`. Error codes are `out_of_scope`, `needs_user_decision`, `budget_exhausted`, `redacted`, and `unavailable`.
+L00001071	
+L00001072	<!-- FABLE_REMAINING_ACTION_PLAN_REPAIR_20260708_END -->

@@ -1,0 +1,817 @@
+{
+  "assignment_id": "A005M15-000010-INTEGRATED-MACRO15-6F4A920A9252-0001",
+  "attempt_id": "attempt-0015",
+  "audit_id": "audit-20260710-005-plan-assurance-model-lanes-fresh-agent-exhaustive",
+  "coverage": {
+    "all_micro_windows_reviewed": true,
+    "all_source_lines_reviewed": true,
+    "all_source_units_accounted": true,
+    "both_exact_and_adversarial_lenses_applied": true,
+    "dimensions_checked": [
+      "behavior",
+      "capabilities",
+      "inputs_outputs",
+      "contracts",
+      "states_transitions",
+      "authority",
+      "ownership",
+      "consumers",
+      "gui_truth",
+      "failures_recovery",
+      "security_privacy",
+      "propagation",
+      "operations",
+      "scale_performance",
+      "compatibility_migration",
+      "acceptance_oracles",
+      "builder_discretion",
+      "ambiguity_unknowns",
+      "missing_callers_consumers",
+      "invalid_states_transitions",
+      "concurrency_races",
+      "partial_failure",
+      "recovery_rollback",
+      "authority_boundaries",
+      "privacy_data_lifecycle",
+      "untrusted_inputs",
+      "gui_misleading_states",
+      "offline_network_loss",
+      "scale_limits",
+      "accessibility",
+      "localization",
+      "observability_support",
+      "destructive_actions",
+      "cross_document_seams",
+      "test_falsifiability",
+      "unknown_unknowns"
+    ]
+  },
+  "items": [
+    {
+      "builder_discretion": true,
+      "confidence": 0.95,
+      "dimensions": ["contracts", "states_transitions", "privacy_data_lifecycle", "observability_support", "ambiguity_unknowns"],
+      "evidence": [
+        {
+          "exact_quote": "Pre-admission discovery, static provider health, or configuration diagnostics that are not attached to a runtime dispatch MUST set `attempt_id` to `pre_attempt` and include the concrete provider/account/config identity in `provider_attempt_ref?` or `correlation_id?`. Runtime retries, remediation reruns, prerequisite resumes, and restore-before-reruns create a new PM `attempt_id`; reconnect or observe-only flows for the same runtime attempt keep the same `attempt_id` and update only provider continuity fields. Provider/session/task IDs MUST NOT replace PM runtime attempt identity.",
+          "line_end": 57,
+          "line_start": 57,
+          "path": "Plans/CLI_Bridged_Providers.md",
+          "source_sha256": "6338c16cdf5330860d80a33ddb5a125a0918d121a634853d0f623f3de034fae9"
+        }
+      ],
+      "gap_kind": "diagnostic_identity_lifecycle_underspecified",
+      "impact": "Implementations can disagree on retention, redaction, ordering when sequence is absent, and collision handling for pre_attempt diagnostics, weakening privacy and replay support.",
+      "item_id": "A005M15-001",
+      "item_type": "gap",
+      "severity": "medium",
+      "source_unit_refs": ["SEMANTIC:PROLOGUE:Plans/CLI_Bridged_Providers.md"],
+      "statement": "The prologue defines runtime versus pre-attempt identity and retry/reconnect continuity, but leaves diagnostic lifecycle, optional-sequence ordering fallback, and sensitive actor/account/trust reference handling to builder discretion.",
+      "title": "Diagnostic identity is explicit but lifecycle and ordering fallback are open"
+    },
+    {
+      "builder_discretion": true,
+      "confidence": 0.93,
+      "dimensions": ["authority", "failures_recovery", "states_transitions", "propagation", "test_falsifiability"],
+      "evidence": [
+        {
+          "exact_quote": "  - Host unavailable, blocked, disabled, stale, or degraded states become normalized provider/tool blocker outcomes rather than silent fallback.",
+          "line_end": 121,
+          "line_start": 121,
+          "path": "Plans/CLI_Bridged_Providers.md",
+          "source_sha256": "6338c16cdf5330860d80a33ddb5a125a0918d121a634853d0f623f3de034fae9"
+        }
+      ],
+      "gap_kind": "host_blocker_outcome_schema_missing",
+      "impact": "Adapters can emit incompatible blocker payloads or make different resume decisions, preventing deterministic consumer behavior and fixture assertions.",
+      "item_id": "A005M15-002",
+      "item_type": "gap",
+      "severity": "high",
+      "source_unit_refs": ["PLANUNIT:CBP-023", "SEMANTIC:PLANUNIT:CBP-023"],
+      "statement": "CBP-023 correctly denies host authority and forbids silent fallback, but it does not define the normalized blocker outcome fields, state transition, retryability, or receipt linkage for unavailable, blocked, disabled, stale, and degraded host states.",
+      "title": "Host capability blockers lack a normalized transition contract"
+    },
+    {
+      "builder_discretion": false,
+      "confidence": 0.99,
+      "dimensions": ["compatibility_migration", "authority", "acceptance_oracles"],
+      "evidence": [
+        {
+          "exact_quote": "  only as migration lineage for the retired bridge span and must not re-own",
+          "line_end": 252,
+          "line_start": 252,
+          "path": "Plans/CLI_Bridged_Providers.md",
+          "source_sha256": "6338c16cdf5330860d80a33ddb5a125a0918d121a634853d0f623f3de034fae9"
+        }
+      ],
+      "gap_kind": "none_retired_lineage_boundary_explicit",
+      "impact": "The explicit disposition prevents historical CBP-001 coverage from being mistaken for live implementation authority.",
+      "item_id": "A005M15-003",
+      "item_type": "explicit_non_gap",
+      "severity": "info",
+      "source_unit_refs": ["PLANUNIT:CBP-001", "SEMANTIC:PLANUNIT:CBP-001"],
+      "statement": "CBP-001 is unambiguously retained only for migration lineage and is barred from re-owning atomized product coverage.",
+      "title": "Retired source-preserving bridge has a clear non-ownership boundary"
+    },
+    {
+      "builder_discretion": true,
+      "confidence": 0.91,
+      "dimensions": ["authority", "ownership", "gui_truth", "cross_document_seams", "acceptance_oracles"],
+      "evidence": [
+        {
+          "exact_quote": "  - The document remains the canonical live owner-section specification for CLI-bridged provider facade behavior.",
+          "line_end": 310,
+          "line_start": 310,
+          "path": "Plans/CLI_Bridged_Providers.md",
+          "source_sha256": "6338c16cdf5330860d80a33ddb5a125a0918d121a634853d0f623f3de034fae9"
+        }
+      ],
+      "gap_kind": "ui_ownership_claim_without_ui_oracle",
+      "impact": "The unit can validate as canonical while offering no falsifiable test for the UI details it claims to preserve.",
+      "item_id": "A005M15-004",
+      "item_type": "gap",
+      "severity": "medium",
+      "source_unit_refs": ["PLANUNIT:CBP-002", "SEMANTIC:PLANUNIT:CBP-002"],
+      "statement": "CBP-002 declares this document authoritative for product, runtime, storage, UI, and governance details, yet its acceptance criteria only test authority, vocabulary, naming, and references; no concrete UI state or UI acceptance oracle is named.",
+      "title": "Facade authority includes UI without a concrete UI oracle"
+    },
+    {
+      "builder_discretion": false,
+      "confidence": 0.98,
+      "dimensions": ["behavior", "consumers", "gui_truth", "failures_recovery", "authority_boundaries"],
+      "evidence": [
+        {
+          "exact_quote": "  - Stream resilience includes bounded retry, replay safety, and circuit breaking.",
+          "line_end": 365,
+          "line_start": 365,
+          "path": "Plans/CLI_Bridged_Providers.md",
+          "source_sha256": "6338c16cdf5330860d80a33ddb5a125a0918d121a634853d0f623f3de034fae9"
+        }
+      ],
+      "gap_kind": "none_facade_scope_and_consumers_explicit",
+      "impact": "The transport facade has a coherent feature boundary and clearly excludes internal child orchestration ownership.",
+      "item_id": "A005M15-005",
+      "item_type": "feature",
+      "severity": "info",
+      "source_unit_refs": ["PLANUNIT:CBP-003", "SEMANTIC:PLANUNIT:CBP-003"],
+      "statement": "CBP-003 specifies replayable envelopes, one normalized stream consumer, tool-call reconciliation, auth/UX-state detection, and bounded stream resilience while preserving the orchestration ownership boundary.",
+      "title": "Provider facade scope and primary consumers are explicit"
+    },
+    {
+      "builder_discretion": false,
+      "confidence": 0.99,
+      "dimensions": ["authority", "compatibility_migration", "cross_document_seams"],
+      "evidence": [
+        {
+          "exact_quote": "  - A2A mapping is not approval to move PM-internal orchestration or child-run control onto A2A semantics.",
+          "line_end": 417,
+          "line_start": 417,
+          "path": "Plans/CLI_Bridged_Providers.md",
+          "source_sha256": "6338c16cdf5330860d80a33ddb5a125a0918d121a634853d0f623f3de034fae9"
+        }
+      ],
+      "gap_kind": "none_external_reference_authority_boundary_explicit",
+      "impact": "A2A interoperability guidance cannot silently become PM orchestration authority.",
+      "item_id": "A005M15-006",
+      "item_type": "authority",
+      "severity": "info",
+      "source_unit_refs": ["PLANUNIT:CBP-004", "SEMANTIC:PLANUNIT:CBP-004"],
+      "statement": "CBP-004 provides a strong negative authority boundary and conditions future actor/account/trust semantics on explicit migration and versioning guidance.",
+      "title": "A2A remains external-reference only"
+    },
+    {
+      "builder_discretion": true,
+      "confidence": 0.96,
+      "dimensions": ["inputs_outputs", "contracts", "security_privacy", "test_falsifiability", "ambiguity_unknowns"],
+      "evidence": [
+        {
+          "exact_quote": "  - ProviderRequestEnvelope includes run/thread/parent/child lineage, attempt identity when present, execution role, requested/effective runtime/provider/model/account descriptors, permission/tool-policy snapshot refs, working-directory or worktree identity, prompt parts, and retry/approval context.",
+          "line_end": 468,
+          "line_start": 468,
+          "path": "Plans/CLI_Bridged_Providers.md",
+          "source_sha256": "6338c16cdf5330860d80a33ddb5a125a0918d121a634853d0f623f3de034fae9"
+        }
+      ],
+      "gap_kind": "canonical_envelope_schema_not_defined",
+      "impact": "Provider projections may be called derivable while disagreeing on field names, requiredness, versioning, redaction, and validation semantics.",
+      "item_id": "A005M15-007",
+      "item_type": "gap",
+      "severity": "high",
+      "source_unit_refs": ["PLANUNIT:CBP-005", "SEMANTIC:PLANUNIT:CBP-005"],
+      "statement": "CBP-005 lists the semantic contents of ProviderRequestEnvelope and a typed BRIDGE_INVOKE_OPTIONS projection, but never supplies the canonical envelope's field-level schema, version discriminator, requiredness rules, or serialization oracle.",
+      "title": "ProviderRequestEnvelope is canonical in prose but not schema-complete"
+    },
+    {
+      "builder_discretion": true,
+      "confidence": 0.94,
+      "dimensions": ["security_privacy", "concurrency_races", "invalid_states_transitions", "operations"],
+      "evidence": [
+        {
+          "exact_quote": "  - MCP tools and CLI-bridged launches receive the frozen execution-context working_directory.",
+          "line_end": 520,
+          "line_start": 520,
+          "path": "Plans/CLI_Bridged_Providers.md",
+          "source_sha256": "6338c16cdf5330860d80a33ddb5a125a0918d121a634853d0f623f3de034fae9"
+        }
+      ],
+      "gap_kind": "worktree_path_binding_validation_missing",
+      "impact": "A stale, moved, symlink-swapped, or no-longer-authorized path can be launched despite the claim that execution context is frozen.",
+      "item_id": "A005M15-008",
+      "item_type": "gap",
+      "severity": "high",
+      "source_unit_refs": ["PLANUNIT:CBP-006", "SEMANTIC:PLANUNIT:CBP-006"],
+      "statement": "CBP-006 defines cwd passthrough but does not define admission-time path canonicalization, binding identity checks, symlink policy, or behavior when the frozen worktree disappears or changes between binding and launch.",
+      "title": "Frozen worktree cwd lacks race and staleness guards"
+    },
+    {
+      "builder_discretion": true,
+      "confidence": 0.9,
+      "dimensions": ["propagation", "consumers", "privacy_data_lifecycle", "scale_performance", "partial_failure"],
+      "evidence": [
+        {
+          "exact_quote": "  truncation markers, ordering/repair evidence, usage/cost observations, and",
+          "line_end": 557,
+          "line_start": 557,
+          "path": "Plans/CLI_Bridged_Providers.md",
+          "source_sha256": "6338c16cdf5330860d80a33ddb5a125a0918d121a634853d0f623f3de034fae9"
+        }
+      ],
+      "gap_kind": "preservation_retention_and_overflow_policy_missing",
+      "impact": "UI, storage, and retry consumers can receive divergent records when streams are large, persistence partially fails, or sensitive output is redacted.",
+      "item_id": "A005M15-009",
+      "item_type": "gap",
+      "severity": "medium",
+      "source_unit_refs": ["PLANUNIT:CBP-007", "SEMANTIC:PLANUNIT:CBP-007"],
+      "statement": "CBP-007 enumerates fields that must survive normalization, but does not define retention duration, overflow behavior, redaction provenance, or atomicity between normalized delivery and storage/retry consumers.",
+      "title": "Normalized preservation has no lifecycle or partial-write contract"
+    },
+    {
+      "builder_discretion": true,
+      "confidence": 0.95,
+      "dimensions": ["untrusted_inputs", "failures_recovery", "states_transitions", "security_privacy", "acceptance_oracles"],
+      "evidence": [
+        {
+          "exact_quote": "  - Preflight validates schema shape, required identifiers, tool-call JSON, stream framing, usage/cost observations, and retry/correlation metadata.",
+          "line_end": 616,
+          "line_start": 616,
+          "path": "Plans/CLI_Bridged_Providers.md",
+          "source_sha256": "6338c16cdf5330860d80a33ddb5a125a0918d121a634853d0f623f3de034fae9"
+        }
+      ],
+      "gap_kind": "preflight_rejection_contract_missing",
+      "impact": "Invalid or hostile payloads can be classified, logged, retried, and surfaced inconsistently across adapters.",
+      "item_id": "A005M15-010",
+      "item_type": "gap",
+      "severity": "high",
+      "source_unit_refs": ["PLANUNIT:CBP-008", "SEMANTIC:PLANUNIT:CBP-008"],
+      "statement": "CBP-008 requires broad preflight validation and safe redaction, but does not define a rejection event schema, size/depth limits, retryability classification, or whether rejected payload evidence is retained and for how long.",
+      "title": "Payload preflight lacks deterministic rejection semantics"
+    },
+    {
+      "builder_discretion": false,
+      "confidence": 0.98,
+      "dimensions": ["untrusted_inputs", "partial_failure", "failures_recovery", "test_falsifiability"],
+      "evidence": [
+        {
+          "exact_quote": "  - Bridges accumulate partial UTF-8 and line-delimited fragments until a complete JSON value is available.",
+          "line_end": 667,
+          "line_start": 667,
+          "path": "Plans/CLI_Bridged_Providers.md",
+          "source_sha256": "6338c16cdf5330860d80a33ddb5a125a0918d121a634853d0f623f3de034fae9"
+        }
+      ],
+      "gap_kind": "none_incremental_parser_failure_path_explicit",
+      "impact": "Chunk boundaries and incomplete fragments have a falsifiable, fail-closed behavior rather than being silently repaired into invented calls.",
+      "item_id": "A005M15-011",
+      "item_type": "failure_recovery",
+      "severity": "info",
+      "source_unit_refs": ["PLANUNIT:CBP-009", "SEMANTIC:PLANUNIT:CBP-009"],
+      "statement": "CBP-009 explicitly requires incremental UTF-8/JSONL parsing and structured error events for malformed or incomplete fragments; later CBP-026 supplies concrete buffer ceilings.",
+      "title": "Incremental parser behavior is fail-closed and later bounded"
+    },
+    {
+      "builder_discretion": true,
+      "confidence": 0.94,
+      "dimensions": ["offline_network_loss", "concurrency_races", "partial_failure", "recovery_rollback", "states_transitions"],
+      "evidence": [
+        {
+          "exact_quote": "  - Retry uses exponential backoff 1s -> 2s -> 4s with +/-25% jitter.",
+          "line_end": 717,
+          "line_start": 717,
+          "path": "Plans/CLI_Bridged_Providers.md",
+          "source_sha256": "6338c16cdf5330860d80a33ddb5a125a0918d121a634853d0f623f3de034fae9"
+        }
+      ],
+      "gap_kind": "retry_replay_idempotency_contract_missing",
+      "impact": "Reconnects can duplicate output or tool effects, and concurrent attempts can disagree on breaker state despite matching timing constants.",
+      "item_id": "A005M15-012",
+      "item_type": "gap",
+      "severity": "high",
+      "source_unit_refs": ["PLANUNIT:CBP-010", "SEMANTIC:PLANUNIT:CBP-010"],
+      "statement": "CBP-010 fixes retry counts, timing, jitter, and breaker thresholds, but does not specify idempotency keys, replay deduplication, breaker scope, concurrent half-open probe arbitration, or handling of partial output before reconnect.",
+      "title": "Stream resilience constants omit replay and concurrency semantics"
+    },
+    {
+      "builder_discretion": false,
+      "confidence": 0.99,
+      "dimensions": ["capabilities", "ambiguity_unknowns", "authority", "gui_misleading_states"],
+      "evidence": [
+        {
+          "exact_quote": "  - Unobservable provider facts are marked unsupported, opaque, inferred, or stale.",
+          "line_end": 767,
+          "line_start": 767,
+          "path": "Plans/CLI_Bridged_Providers.md",
+          "source_sha256": "6338c16cdf5330860d80a33ddb5a125a0918d121a634853d0f623f3de034fae9"
+        }
+      ],
+      "gap_kind": "none_unknown_capability_states_explicit",
+      "impact": "Bridged providers cannot inherit false direct-provider confidence from invoke options or absent observations.",
+      "item_id": "A005M15-013",
+      "item_type": "explicit_non_gap",
+      "severity": "info",
+      "source_unit_refs": ["PLANUNIT:CBP-011", "SEMANTIC:PLANUNIT:CBP-011"],
+      "statement": "CBP-011 defines explicit unknown fact states and requires resolver acceptance before carrying selected request fields, which closes a major misleading-capability path.",
+      "title": "Unobservable capability facts fail closed"
+    },
+    {
+      "builder_discretion": true,
+      "confidence": 0.97,
+      "dimensions": ["behavior", "states_transitions", "offline_network_loss", "scale_limits", "test_falsifiability"],
+      "evidence": [
+        {
+          "exact_quote": "  - Filtering removes providers currently rate-limited from a known recent 429.",
+          "line_end": 818,
+          "line_start": 818,
+          "path": "Plans/CLI_Bridged_Providers.md",
+          "source_sha256": "6338c16cdf5330860d80a33ddb5a125a0918d121a634853d0f623f3de034fae9"
+        }
+      ],
+      "gap_kind": "eligibility_freshness_and_scope_undefined",
+      "impact": "Different adapters can exclude providers for different durations or let one account's failure suppress all accounts, making selection non-deterministic.",
+      "item_id": "A005M15-014",
+      "item_type": "gap",
+      "severity": "high",
+      "source_unit_refs": ["PLANUNIT:CBP-012", "SEMANTIC:PLANUNIT:CBP-012"],
+      "statement": "CBP-012 correctly returns no_eligible_adapter instead of unrelated fallback, but 'known recent' 429/5xx evidence has no TTL, account/model scope, reset rule, or conflict resolution with fresh health evidence.",
+      "title": "Eligibility filtering leaves recent-failure freshness undefined"
+    },
+    {
+      "builder_discretion": true,
+      "confidence": 0.93,
+      "dimensions": ["gui_truth", "authority", "consumers", "accessibility", "localization"],
+      "evidence": [
+        {
+          "exact_quote": "  - Bridged providers declare bridged multi-account support, /switch behavior, switch attribution, and account-routing limits in parity with Multi-Account.md.",
+          "line_end": 868,
+          "line_start": 868,
+          "path": "Plans/CLI_Bridged_Providers.md",
+          "source_sha256": "6338c16cdf5330860d80a33ddb5a125a0918d121a634853d0f623f3de034fae9"
+        }
+      ],
+      "gap_kind": "switch_disclosure_presentation_contract_missing",
+      "impact": "A switch can be technically attributed yet remain misleading or inaccessible to users if disclosure placement, persistence, and assistive semantics differ by consumer.",
+      "item_id": "A005M15-015",
+      "item_type": "gap",
+      "severity": "medium",
+      "source_unit_refs": ["PLANUNIT:CBP-013", "SEMANTIC:PLANUNIT:CBP-013"],
+      "statement": "CBP-013 owns switch-reason disclosure and conversational-actor routing but supplies no user-visible presentation, timing, persistence, accessibility, or localization oracle for that disclosure.",
+      "title": "Account switch attribution has no GUI disclosure contract"
+    },
+    {
+      "builder_discretion": true,
+      "confidence": 0.95,
+      "dimensions": ["security_privacy", "concurrency_races", "partial_failure", "recovery_rollback", "states_transitions"],
+      "evidence": [
+        {
+          "exact_quote": "  - Credential refresh changing effective token/client requires client /reconfigure before reuse.",
+          "line_end": 920,
+          "line_start": 920,
+          "path": "Plans/CLI_Bridged_Providers.md",
+          "source_sha256": "6338c16cdf5330860d80a33ddb5a125a0918d121a634853d0f623f3de034fae9"
+        }
+      ],
+      "gap_kind": "auth_reconfigure_atomicity_missing",
+      "impact": "Concurrent requests can reuse an old client or observe a half-reconfigured client, and a failed reconfigure has no defined rollback or forced-logout result.",
+      "item_id": "A005M15-016",
+      "item_type": "gap",
+      "severity": "high",
+      "source_unit_refs": ["PLANUNIT:CBP-014", "SEMANTIC:PLANUNIT:CBP-014"],
+      "statement": "CBP-014 requires refresh-before-expiry and client reconfigure after credential change but does not define synchronization, in-flight request handling, failed-reconfigure rollback, or cache invalidation completion criteria.",
+      "title": "Credential refresh and client reconfigure are not atomic"
+    },
+    {
+      "builder_discretion": false,
+      "confidence": 0.99,
+      "dimensions": ["behavior", "invalid_states_transitions", "untrusted_inputs", "failures_recovery", "acceptance_oracles"],
+      "evidence": [
+        {
+          "exact_quote": "  - The bridge emits tool_result(ok=false, error=truncated_by_length) for downstream tool policy.",
+          "line_end": 969,
+          "line_start": 969,
+          "path": "Plans/CLI_Bridged_Providers.md",
+          "source_sha256": "6338c16cdf5330860d80a33ddb5a125a0918d121a634853d0f623f3de034fae9"
+        }
+      ],
+      "gap_kind": "none_truncated_tool_no_dispatch_oracle_explicit",
+      "impact": "Incomplete tool calls are recorded without synthesizing arguments or reaching execution.",
+      "item_id": "A005M15-017",
+      "item_type": "acceptance_oracle",
+      "severity": "info",
+      "source_unit_refs": ["PLANUNIT:CBP-015", "SEMANTIC:PLANUNIT:CBP-015"],
+      "statement": "CBP-015 gives a concrete no-dispatch outcome for finishReason=length, stable provider-call identity, structured retry classification, and required-schema guards.",
+      "title": "Truncated tool calls have a concrete fail-closed oracle"
+    },
+    {
+      "builder_discretion": true,
+      "confidence": 0.92,
+      "dimensions": ["propagation", "consumers", "concurrency_races", "observability_support", "recovery_rollback"],
+      "evidence": [
+        {
+          "exact_quote": "  - Buffering/retry/resume records whether downstream consumers see original order, replay order, or repaired order.",
+          "line_end": 1023,
+          "line_start": 1023,
+          "path": "Plans/CLI_Bridged_Providers.md",
+          "source_sha256": "6338c16cdf5330860d80a33ddb5a125a0918d121a634853d0f623f3de034fae9"
+        }
+      ],
+      "gap_kind": "repaired_order_algorithm_and_conflict_policy_missing",
+      "impact": "Two adapters can both label a stream repaired while producing different event sequences, complicating replay, cancellation, and support diagnosis.",
+      "item_id": "A005M15-018",
+      "item_type": "gap",
+      "severity": "medium",
+      "source_unit_refs": ["PLANUNIT:CBP-016", "SEMANTIC:PLANUNIT:CBP-016"],
+      "statement": "CBP-016 requires order-boundary disclosure but does not define sequence comparison, duplicate suppression, conflicting replay resolution, or an oracle for repaired ordering.",
+      "title": "Ordering disclosure is explicit but repair semantics are not"
+    },
+    {
+      "builder_discretion": false,
+      "confidence": 0.99,
+      "dimensions": ["compatibility_migration", "authority", "destructive_actions"],
+      "evidence": [
+        {
+          "exact_quote": "  - Gemini CLI is not an active CLI-bridged provider route.",
+          "line_end": 1075,
+          "line_start": 1075,
+          "path": "Plans/CLI_Bridged_Providers.md",
+          "source_sha256": "6338c16cdf5330860d80a33ddb5a125a0918d121a634853d0f623f3de034fae9"
+        }
+      ],
+      "gap_kind": "none_retired_provider_route_explicit",
+      "impact": "Legacy Gemini CLI vocabulary cannot be treated as authorization to provision an active route or reuse its account root.",
+      "item_id": "A005M15-019",
+      "item_type": "explicit_non_gap",
+      "severity": "info",
+      "source_unit_refs": ["PLANUNIT:CBP-017", "SEMANTIC:PLANUNIT:CBP-017"],
+      "statement": "CBP-017 clearly retires Gemini CLI account-root behavior and separates Gemini Direct from the active Antigravity CLI lane.",
+      "title": "Gemini CLI lineage cannot resurrect an active route"
+    },
+    {
+      "builder_discretion": false,
+      "confidence": 0.99,
+      "dimensions": ["capabilities", "compatibility_migration", "authority_boundaries"],
+      "evidence": [
+        {
+          "exact_quote": "  - Cursor ACP support supersedes stale assumptions in rewrite-tie-in-memo that Cursor cannot expose ACP.",
+          "line_end": 1129,
+          "line_start": 1129,
+          "path": "Plans/CLI_Bridged_Providers.md",
+          "source_sha256": "6338c16cdf5330860d80a33ddb5a125a0918d121a634853d0f623f3de034fae9"
+        }
+      ],
+      "gap_kind": "none_stale_capability_assumption_retired",
+      "impact": "Cursor ACP capability is recognized without changing PM provider ontology or orchestration ownership.",
+      "item_id": "A005M15-020",
+      "item_type": "capability",
+      "severity": "info",
+      "source_unit_refs": ["PLANUNIT:CBP-018", "SEMANTIC:PLANUNIT:CBP-018"],
+      "statement": "CBP-018 replaces a stale no-ACP assumption while explicitly preserving transport, account-root, and orchestration boundaries.",
+      "title": "Cursor ACP capability is narrowly promoted"
+    },
+    {
+      "builder_discretion": false,
+      "confidence": 0.99,
+      "dimensions": ["compatibility_migration", "authority", "cross_document_seams", "acceptance_oracles"],
+      "evidence": [
+        {
+          "exact_quote": "  - Active PM provider support contains no Gemini CLI bridge route.",
+          "line_end": 1189,
+          "line_start": 1189,
+          "path": "Plans/CLI_Bridged_Providers.md",
+          "source_sha256": "6338c16cdf5330860d80a33ddb5a125a0918d121a634853d0f623f3de034fae9"
+        }
+      ],
+      "gap_kind": "none_provider_replacement_boundary_explicit",
+      "impact": "Implementation can test absence of Gemini CLI while retaining Gemini Direct and introducing Antigravity as a distinct provider identity.",
+      "item_id": "A005M15-021",
+      "item_type": "acceptance_oracle",
+      "severity": "info",
+      "source_unit_refs": ["PLANUNIT:CBP-019", "SEMANTIC:PLANUNIT:CBP-019"],
+      "statement": "CBP-019 defines a falsifiable route-retirement boundary and prevents aliasing either account roots or provider IDs during Antigravity replacement.",
+      "title": "Gemini CLI retirement has a falsifiable absence oracle"
+    },
+    {
+      "builder_discretion": true,
+      "confidence": 0.9,
+      "dimensions": ["operations", "compatibility_migration", "acceptance_oracles", "ambiguity_unknowns", "scale_limits"],
+      "evidence": [
+        {
+          "exact_quote": "  - Model listing and prompt execution are output-level verified before a row is green.",
+          "line_end": 1233,
+          "line_start": 1233,
+          "path": "Plans/CLI_Bridged_Providers.md",
+          "source_sha256": "6338c16cdf5330860d80a33ddb5a125a0918d121a634853d0f623f3de034fae9"
+        }
+      ],
+      "gap_kind": "runtime_proof_freshness_policy_missing",
+      "impact": "A previously green model or command row can remain green after the CLI version, catalog, auth surface, or fallback behavior changes.",
+      "item_id": "A005M15-022",
+      "item_type": "gap",
+      "severity": "high",
+      "source_unit_refs": ["PLANUNIT:CBP-020", "SEMANTIC:PLANUNIT:CBP-020"],
+      "statement": "CBP-020 requires version-gated discovery and output-level proof, but does not specify proof expiry, invalidation triggers, supported version ranges, or how route readiness degrades when later probes disagree with stored evidence.",
+      "title": "Antigravity runtime proof has no freshness or invalidation rule"
+    },
+    {
+      "builder_discretion": false,
+      "confidence": 0.99,
+      "dimensions": ["contracts", "capabilities", "authority_boundaries", "test_falsifiability"],
+      "evidence": [
+        {
+          "exact_quote": "  - Cursor ACP is treated as JSON-RPC stdio, separate from print-mode execution.",
+          "line_end": 1278,
+          "line_start": 1278,
+          "path": "Plans/CLI_Bridged_Providers.md",
+          "source_sha256": "6338c16cdf5330860d80a33ddb5a125a0918d121a634853d0f623f3de034fae9"
+        }
+      ],
+      "gap_kind": "none_cli_protocol_routes_separated",
+      "impact": "Automation cannot substitute print-mode command behavior for ACP or use a generic readiness probe across incompatible routes.",
+      "item_id": "A005M15-023",
+      "item_type": "contract",
+      "severity": "info",
+      "source_unit_refs": ["PLANUNIT:CBP-021", "SEMANTIC:PLANUNIT:CBP-021"],
+      "statement": "CBP-021 clearly separates Claude print-mode readiness, Cursor print mode, Cursor ACP JSON-RPC stdio, native direct routes, and non-primary opencode-cursor lineage.",
+      "title": "Claude and Cursor runtime protocols are not conflated"
+    },
+    {
+      "builder_discretion": false,
+      "confidence": 0.98,
+      "dimensions": ["authority", "compatibility_migration", "acceptance_oracles", "cross_document_seams"],
+      "evidence": [
+        {
+          "exact_quote": "  - OpenCode-server-routed providers are not direct-provider closure evidence.",
+          "line_end": 1321,
+          "line_start": 1321,
+          "path": "Plans/CLI_Bridged_Providers.md",
+          "source_sha256": "6338c16cdf5330860d80a33ddb5a125a0918d121a634853d0f623f3de034fae9"
+        }
+      ],
+      "gap_kind": "none_direct_route_evidence_boundary_explicit",
+      "impact": "Optional local CLIs and OpenCode-routed probes cannot falsely close direct-provider readiness.",
+      "item_id": "A005M15-024",
+      "item_type": "explicit_non_gap",
+      "severity": "info",
+      "source_unit_refs": ["PLANUNIT:CBP-022", "SEMANTIC:PLANUNIT:CBP-022"],
+      "statement": "CBP-022 explicitly distinguishes CLI installation or lineage evidence from authenticated end-to-end direct-route closure evidence.",
+      "title": "Direct-provider closure requires direct-route proof"
+    },
+    {
+      "builder_discretion": true,
+      "confidence": 0.96,
+      "dimensions": ["contracts", "states_transitions", "security_privacy", "recovery_rollback", "test_falsifiability"],
+      "evidence": [
+        {
+          "exact_quote": "- Version mismatch blocks before raw protocol noise hits terminal.",
+          "line_end": 1365,
+          "line_start": 1365,
+          "path": "Plans/CLI_Bridged_Providers.md",
+          "source_sha256": "6338c16cdf5330860d80a33ddb5a125a0918d121a634853d0f623f3de034fae9"
+        }
+      ],
+      "gap_kind": "handshake_receipt_schema_and_trust_missing",
+      "impact": "A bridge can claim a successful handshake without a canonical encoding, binary-hash verification rule, receipt authenticity boundary, timeout transition, or persistence oracle.",
+      "item_id": "A005M15-025",
+      "item_type": "gap",
+      "severity": "high",
+      "source_unit_refs": ["PLANUNIT:CBP-024", "SEMANTIC:PLANUNIT:CBP-024"],
+      "statement": "CBP-024 names BridgeHandshakeReceipt fields and recovery outcomes but does not define field types, requiredness, protocol negotiation states, binary-hash verification authority, receipt storage, or behavior when terminal restoration itself fails.",
+      "title": "Bridge handshake intent lacks a complete receipt and failure schema"
+    },
+    {
+      "builder_discretion": false,
+      "confidence": 0.98,
+      "dimensions": ["gui_truth", "inputs_outputs", "ambiguity_unknowns", "security_privacy", "acceptance_oracles"],
+      "evidence": [
+        {
+          "exact_quote": "  - \"`/usage` and `/quota` output can update UsageRecord only when field names, timestamps, route/account/model identity, and source payload refs are captured.\"",
+          "line_end": 1449,
+          "line_start": 1449,
+          "path": "Plans/CLI_Bridged_Providers.md",
+          "source_sha256": "6338c16cdf5330860d80a33ddb5a125a0918d121a634853d0f623f3de034fae9"
+        }
+      ],
+      "gap_kind": "none_usage_unknown_and_credit_separation_explicit",
+      "impact": "The UI cannot fabricate token/cost totals, quota progress, countdowns, or zero usage from absent, broken, disabled, or credit-only evidence.",
+      "item_id": "A005M15-026",
+      "item_type": "gui_truth",
+      "severity": "info",
+      "source_unit_refs": ["PLANUNIT:CBP-027", "SEMANTIC:PLANUNIT:CBP-027"],
+      "statement": "CBP-027 provides a strong fail-closed usage and quota contract with explicit source identity, payload references, unknown states, disabled rendering, and separation of G1 credits from token and cost counters.",
+      "title": "Antigravity usage and quota UI truth fails closed"
+    },
+    {
+      "builder_discretion": true,
+      "confidence": 0.94,
+      "dimensions": ["destructive_actions", "concurrency_races", "partial_failure", "recovery_rollback", "observability_support"],
+      "evidence": [
+        {
+          "exact_quote": "  - Timeout or cancellation sends terminate to the process group, waits kill_grace_ms = 3000, then kills and records child_pids_reaped and orphan_detected.",
+          "line_end": 1541,
+          "line_start": 1541,
+          "path": "Plans/CLI_Bridged_Providers.md",
+          "source_sha256": "6338c16cdf5330860d80a33ddb5a125a0918d121a634853d0f623f3de034fae9"
+        }
+      ],
+      "gap_kind": "process_group_kill_race_and_receipt_failure_missing",
+      "impact": "PID/process-group reuse or a receipt persistence failure can kill unrelated processes or leave cleanup state unverifiable.",
+      "item_id": "A005M15-027",
+      "item_type": "gap",
+      "severity": "critical",
+      "source_unit_refs": ["PLANUNIT:CBP-026", "SEMANTIC:PLANUNIT:CBP-026"],
+      "statement": "CBP-026 defines deterministic invocation, bounded streams, normalized exits, and terminate-then-kill behavior, but does not require revalidation that the process group still belongs to the invocation, specify concurrent timeout/cancel arbitration, or define what happens when cleanup receipts cannot be written.",
+      "title": "Process-group cleanup lacks identity revalidation and receipt-failure recovery"
+    },
+    {
+      "builder_discretion": true,
+      "confidence": 0.96,
+      "dimensions": ["gui_truth", "authority_boundaries", "consumers", "accessibility", "cross_document_seams"],
+      "evidence": [
+        {
+          "exact_quote": "  CLI/server/stdout/unix-socket/HTTP transport lessons must remain adapter/provider bridge implementation details underneath PM envelopes. ProviderRequestEnvelope remains canonical above command-line or HTTP encodings, and no user workflow may require an opaque PM CLI-only state.",
+          "line_end": 1592,
+          "line_start": 1592,
+          "path": "Plans/CLI_Bridged_Providers.md",
+          "source_sha256": "6338c16cdf5330860d80a33ddb5a125a0918d121a634853d0f623f3de034fae9"
+        }
+      ],
+      "gap_kind": "gui_classification_conflicts_with_user_workflow_constraint",
+      "impact": "A plan compiler may exclude this unit from GUI assurance even though satisfying its core negative constraint requires a user-visible non-opaque workflow and accessible state representation.",
+      "item_id": "A005M15-028",
+      "item_type": "gap",
+      "severity": "medium",
+      "source_unit_refs": ["PLANUNIT:CBP-025", "SEMANTIC:PLANUNIT:CBP-025"],
+      "statement": "CBP-025 is classified gui_related false, yet its canonical constraint directly governs user workflow visibility by forbidding opaque CLI-only state; no consumer or UI oracle shows how that state becomes non-opaque.",
+      "title": "Opaque-state prohibition is GUI-relevant despite false classification"
+    }
+  ],
+  "model": "gpt-5.6-sol",
+  "phase": "blind_macro_window_review",
+  "reasoning_effort": "xhigh",
+  "schema_version": "macro-review-result-v1",
+  "segments": [
+    {
+      "core_range": [1, 396],
+      "covered_source_unit_refs": [
+        "PLANUNIT:CBP-001",
+        "PLANUNIT:CBP-002",
+        "PLANUNIT:CBP-003",
+        "PLANUNIT:CBP-023",
+        "SEMANTIC:PROLOGUE:Plans/CLI_Bridged_Providers.md",
+        "SEMANTIC:PLANUNIT:CBP-023",
+        "SEMANTIC:PLANUNIT:CBP-001",
+        "SEMANTIC:PLANUNIT:CBP-002",
+        "SEMANTIC:PLANUNIT:CBP-003"
+      ],
+      "item_ids": ["A005M15-001", "A005M15-002", "A005M15-003", "A005M15-004", "A005M15-005"],
+      "reviewed": true,
+      "summary": "Reviewed the prologue and CBP-023/001/002/003 for diagnostic identity, host-authority blockers, migration-lineage retirement, owner authority, facade behavior, consumers, UI claims, and resilience boundaries; found missing lifecycle, blocker-schema, and UI-oracle detail.",
+      "window_id": "WIN-6F4A920A9252-0001"
+    },
+    {
+      "core_range": [397, 747],
+      "covered_source_unit_refs": [
+        "PLANUNIT:CBP-004",
+        "PLANUNIT:CBP-005",
+        "PLANUNIT:CBP-006",
+        "PLANUNIT:CBP-007",
+        "PLANUNIT:CBP-008",
+        "PLANUNIT:CBP-009",
+        "PLANUNIT:CBP-010",
+        "SEMANTIC:PLANUNIT:CBP-004",
+        "SEMANTIC:PLANUNIT:CBP-005",
+        "SEMANTIC:PLANUNIT:CBP-006",
+        "SEMANTIC:PLANUNIT:CBP-007",
+        "SEMANTIC:PLANUNIT:CBP-008",
+        "SEMANTIC:PLANUNIT:CBP-009",
+        "SEMANTIC:PLANUNIT:CBP-010"
+      ],
+      "item_ids": ["A005M15-006", "A005M15-007", "A005M15-008", "A005M15-009", "A005M15-010", "A005M15-011", "A005M15-012"],
+      "reviewed": true,
+      "summary": "Reviewed CBP-004 through CBP-010 across A2A authority, envelope projection, worktree cwd, normalized preservation, hostile-input preflight, incremental parsing, and stream resilience; identified schema, race, lifecycle, rejection, and replay gaps while confirming fail-closed parser behavior.",
+      "window_id": "WIN-6F4A920A9252-0002"
+    },
+    {
+      "core_range": [748, 1109],
+      "covered_source_unit_refs": [
+        "PLANUNIT:CBP-011",
+        "PLANUNIT:CBP-012",
+        "PLANUNIT:CBP-013",
+        "PLANUNIT:CBP-014",
+        "PLANUNIT:CBP-015",
+        "PLANUNIT:CBP-016",
+        "PLANUNIT:CBP-017",
+        "SEMANTIC:PLANUNIT:CBP-011",
+        "SEMANTIC:PLANUNIT:CBP-012",
+        "SEMANTIC:PLANUNIT:CBP-013",
+        "SEMANTIC:PLANUNIT:CBP-014",
+        "SEMANTIC:PLANUNIT:CBP-015",
+        "SEMANTIC:PLANUNIT:CBP-016",
+        "SEMANTIC:PLANUNIT:CBP-017"
+      ],
+      "item_ids": ["A005M15-013", "A005M15-014", "A005M15-015", "A005M15-016", "A005M15-017", "A005M15-018", "A005M15-019"],
+      "reviewed": true,
+      "summary": "Reviewed CBP-011 through CBP-017 for unknown capability states, eligibility filtering, account switching, auth refresh, finish/tool guards, ordering/cancellation, and retired Gemini lineage; found freshness, GUI disclosure, reconfigure atomicity, and ordering-repair gaps.",
+      "window_id": "WIN-6F4A920A9252-0003"
+    },
+    {
+      "core_range": [1110, 1432],
+      "covered_source_unit_refs": [
+        "PLANUNIT:CBP-018",
+        "PLANUNIT:CBP-019",
+        "PLANUNIT:CBP-020",
+        "PLANUNIT:CBP-021",
+        "PLANUNIT:CBP-022",
+        "PLANUNIT:CBP-024",
+        "SEMANTIC:PLANUNIT:CBP-018",
+        "SEMANTIC:PLANUNIT:CBP-019",
+        "SEMANTIC:PLANUNIT:CBP-020",
+        "SEMANTIC:PLANUNIT:CBP-021",
+        "SEMANTIC:PLANUNIT:CBP-022",
+        "SEMANTIC:PLANUNIT:CBP-024"
+      ],
+      "item_ids": ["A005M15-020", "A005M15-021", "A005M15-022", "A005M15-023", "A005M15-024", "A005M15-025"],
+      "reviewed": true,
+      "summary": "Reviewed CBP-018 through CBP-022 and CBP-024 for ACP retirement, Gemini-to-Antigravity replacement, local runtime proof, Claude/Cursor route separation, direct-provider evidence, and bridge handshake recovery; found proof-freshness and handshake-schema gaps.",
+      "window_id": "WIN-6F4A920A9252-0004"
+    },
+    {
+      "core_range": [1433, 1630],
+      "covered_source_unit_refs": [
+        "PLANUNIT:CBP-025",
+        "PLANUNIT:CBP-026",
+        "PLANUNIT:CBP-027",
+        "SEMANTIC:PLANUNIT:CBP-027",
+        "SEMANTIC:PLANUNIT:CBP-026",
+        "SEMANTIC:PLANUNIT:CBP-025"
+      ],
+      "item_ids": ["A005M15-026", "A005M15-027", "A005M15-028"],
+      "reviewed": true,
+      "summary": "Reviewed CBP-027/026/025 for usage and quota truth, deterministic invocation and stream receipts, destructive process cleanup, and the non-opaque workflow boundary; confirmed fail-closed quota semantics and found cleanup-race plus GUI-classification gaps.",
+      "window_id": "WIN-6F4A920A9252-0005"
+    }
+  ],
+  "self_attestation": {
+    "no_canonical_writes": true,
+    "no_external_research_during_blind_review": true,
+    "no_peer_result_access": true,
+    "no_prior_audit_access": true,
+    "no_unrelated_source_access": true,
+    "terminal_after_submission": true
+  },
+  "source_binding": {
+    "bundle_id": "MACRO15-6F4A920A9252-0001",
+    "document_path": "Plans/CLI_Bridged_Providers.md",
+    "micro_window_ids": [
+      "WIN-6F4A920A9252-0001",
+      "WIN-6F4A920A9252-0002",
+      "WIN-6F4A920A9252-0003",
+      "WIN-6F4A920A9252-0004",
+      "WIN-6F4A920A9252-0005"
+    ],
+    "source_sha256": "6338c16cdf5330860d80a33ddb5a125a0918d121a634853d0f623f3de034fae9"
+  },
+  "status": "completed",
+  "synthesis": {
+    "cross_document_questions": [
+      "Which owner defines the versioned ProviderRequestEnvelope schema and projection conformance oracle used by Contracts_V0 and Executor_Protocol?",
+      "Do Multi-Account and the GUI owner define accessible, localized, persistent switch-reason disclosure for bridged-provider account changes?",
+      "Which runtime contract owns process-group identity revalidation, cleanup-receipt write failure, and concurrent timeout/cancellation arbitration?",
+      "Do usage-feature and runtime artifact schemas preserve Antigravity source payload refs and unknown/disabled/credit-only states without coercion?"
+    ],
+    "feature_family_keys": [
+      "provider_facade_envelopes_and_diagnostics",
+      "bridge_preflight_streaming_and_replay",
+      "bridged_account_capability_and_auth",
+      "cli_runtime_route_identity_and_verification",
+      "bridge_handshake_invocation_and_process_cleanup",
+      "antigravity_usage_quota_and_gui_truth"
+    ],
+    "research_queries": [
+      "Provider CLI process-group termination PID reuse race mitigation and portable child reaping receipts",
+      "Versioned capability handshake downgrade prevention and binary hash attestation for local CLI bridges",
+      "Retry replay deduplication patterns for streaming LLM tool-call events with partial output",
+      "Accessible account-switch disclosure and quota unknown-state presentation patterns"
+    ]
+  },
+  "task_thread_id": "/root/a005m15_b3_000010_attempt_0015_terminal"
+}

@@ -39,14 +39,14 @@
       "worktree_id": null
     },
     "approved_plan_pack": {
-      "acceptance_unit_index_hash": "sha256:a97cb11784c54cae7e47459bd76dbe51219921d0e1013ae39afc20203cfec98f",
+      "acceptance_unit_index_hash": "sha256:6dccfcf163e1f4cff2c6edc9fee9dc81e20d1053efcaee23e94c13293eeb4485",
       "approved_plan_pack_id": "app-pnc019-0001",
       "created_at_utc": "2026-07-06T00:00:00Z",
       "created_by_actor_ref": "actor:pnc019-certifier",
       "final_audit_closure_hash": "sha256:final-audit-pnc019",
       "pack_hash": "sha256:04d7fdbe74084dad0e309e7b0b76255b4123fd928e90b5b2f03b585210760eb4",
       "pack_version": 1,
-      "plan_unit_index_hash": "sha256:baf572492da59f563f2a9203594d7c3c49d7789db9c8730ad5944f1c67489356",
+      "plan_unit_index_hash": "sha256:68895ff03ad551886d8d05662db9875b46730784f0630aaa62f0d234b66990c0",
       "planning_run_id": "planning-run-pnc019",
       "planning_run_revision": 7,
       "project_context_snapshot_hash": "sha256:project-context-pnc019",
@@ -243,7 +243,7 @@
       "thread_id": "thread-pnc019"
     },
     "plan_compile_run": {
-      "acceptance_unit_index_hash": "sha256:a97cb11784c54cae7e47459bd76dbe51219921d0e1013ae39afc20203cfec98f",
+      "acceptance_unit_index_hash": "sha256:6dccfcf163e1f4cff2c6edc9fee9dc81e20d1053efcaee23e94c13293eeb4485",
       "approved_plan_pack_id": "app-pnc019-0001",
       "artifacts": [
         "Plans/.implementation_readiness/pnc019_certification_receipt.json"
@@ -276,10 +276,10 @@
       "schema_id": "pm.storage_value.plan_compile_run.v1",
       "schema_version": "1.0.0",
       "source_hashes": {
-        "acceptance_units": "sha256:a97cb11784c54cae7e47459bd76dbe51219921d0e1013ae39afc20203cfec98f",
-        "plan_units": "sha256:baf572492da59f563f2a9203594d7c3c49d7789db9c8730ad5944f1c67489356"
+        "acceptance_units": "sha256:6dccfcf163e1f4cff2c6edc9fee9dc81e20d1053efcaee23e94c13293eeb4485",
+        "plan_units": "sha256:68895ff03ad551886d8d05662db9875b46730784f0630aaa62f0d234b66990c0"
       },
-      "source_plan_index_hash": "sha256:baf572492da59f563f2a9203594d7c3c49d7789db9c8730ad5944f1c67489356",
+      "source_plan_index_hash": "sha256:68895ff03ad551886d8d05662db9875b46730784f0630aaa62f0d234b66990c0",
       "status": "ready_for_bootstrap_validation",
       "updated_at_utc": "2026-07-06T00:00:00Z"
     },
@@ -1017,7 +1017,7 @@
     "Plans/Goal_Runtime_System.md": "93074bc367a76d2b977006d394c063fd7ce21bd1bdcae4138bd6944bebb72785",
     "Plans/Orchestrator_Page.md": "0c6d1ada4d9b06aad07ece508a27891ce1095685fb890b946181a1f5b3be97f7",
     "Plans/Plan_To_Node_Compilation.md": "196e062d4fb5dd38b28bbed93d6370e3c9205a29169533116b28d46d2c3cc8e2",
-    "Plans/Planning_Wizard.md": "a4f61959f82a4fcde5872a40f7d92b8172fd609257017496f8c3945dcc992686",
+    "Plans/Planning_Wizard.md": "fee6e23abff2aafb251f978165fdf014bcfe9a9beba3d805857ddf4212000ec0",
     "Plans/Progression_Gates.md": "8f884b510c35f1f7bceb11f6f55804f46405d0a8b5c37870a464e2adf399fb33",
     "Plans/event_record.schema.json": "ef5cff5b64eccf95726947654e4ee56913824987245f54aa289b4b2f237e5c6d",
     "Plans/execution_unit_context.schema.json": "95f1b6cfe5d5df747c972f8544acfeb131fca5d404b38844c3c32adaea498b25",

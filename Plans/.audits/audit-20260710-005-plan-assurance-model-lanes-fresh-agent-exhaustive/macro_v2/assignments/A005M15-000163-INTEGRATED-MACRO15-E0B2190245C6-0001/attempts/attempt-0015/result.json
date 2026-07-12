@@ -1,0 +1,561 @@
+{
+  "assignment_id": "A005M15-000163-INTEGRATED-MACRO15-E0B2190245C6-0001",
+  "attempt_id": "attempt-0015",
+  "audit_id": "audit-20260710-005-plan-assurance-model-lanes-fresh-agent-exhaustive",
+  "coverage": {
+    "all_micro_windows_reviewed": true,
+    "all_source_lines_reviewed": true,
+    "all_source_units_accounted": true,
+    "both_exact_and_adversarial_lenses_applied": true,
+    "dimensions_checked": [
+      "behavior",
+      "capabilities",
+      "inputs_outputs",
+      "contracts",
+      "states_transitions",
+      "authority",
+      "ownership",
+      "consumers",
+      "gui_truth",
+      "failures_recovery",
+      "security_privacy",
+      "propagation",
+      "operations",
+      "scale_performance",
+      "compatibility_migration",
+      "acceptance_oracles",
+      "builder_discretion",
+      "ambiguity_unknowns",
+      "missing_callers_consumers",
+      "invalid_states_transitions",
+      "concurrency_races",
+      "partial_failure",
+      "recovery_rollback",
+      "authority_boundaries",
+      "privacy_data_lifecycle",
+      "untrusted_inputs",
+      "gui_misleading_states",
+      "offline_network_loss",
+      "scale_limits",
+      "accessibility",
+      "localization",
+      "observability_support",
+      "destructive_actions",
+      "cross_document_seams",
+      "test_falsifiability",
+      "unknown_unknowns"
+    ]
+  },
+  "items": [
+    {
+      "builder_discretion": false,
+      "confidence": 0.99,
+      "dimensions": ["behavior", "contracts", "states_transitions", "authority", "ownership", "consumers", "failures_recovery", "compatibility_migration", "acceptance_oracles"],
+      "evidence": [
+        {
+          "exact_quote": "The canonical human-in-the-loop contract remains a blocked-runtime overlay.",
+          "line_end": 40,
+          "line_start": 40,
+          "path": "Plans/human-in-the-loop.md",
+          "source_sha256": "67c98fa13cd8e2aaf485c8441d2da07bfd1349927930ecc7e3675e2a43028237"
+        }
+      ],
+      "gap_kind": "none_explicit_contract",
+      "impact": "Establishes one runtime-native approval identity and action model for all HITL consumers.",
+      "item_id": "A005M15-I001",
+      "item_type": "contract",
+      "severity": "info",
+      "source_unit_refs": ["SEMANTIC:PROLOGUE:Plans/human-in-the-loop.md:CONT-001"],
+      "statement": "The prologue makes blocked episodes, ordered runtime actions, package/seam gates, replayable events, and explicit compatibility retirement the canonical HITL model.",
+      "title": "Blocked-runtime HITL model is canonical"
+    },
+    {
+      "builder_discretion": true,
+      "confidence": 0.95,
+      "dimensions": ["states_transitions", "failures_recovery", "operations", "ambiguity_unknowns", "concurrency_races", "partial_failure", "recovery_rollback", "offline_network_loss", "test_falsifiability"],
+      "evidence": [
+        {
+          "exact_quote": "Runtime HITL persistence is keyed by blocked episode identity first. `checkpoints.hitl.{run_id}` and `checkpoints.hitl` are compatibility paths only; `/runtime/storage` records must distinguish concurrent pending-HITL episodes in the same run by `run_id`, `node_id`, `blocked_sequence`, `attempt_id?`, `approval_scope_key`, actor/account/lane context, and approver identity. The event family must support a three-way join among the blocked episode, approval-identity record, and tool-level or /tool-definition request that triggered the wait.",
+          "line_end": 61,
+          "line_start": 61,
+          "path": "Plans/human-in-the-loop.md",
+          "source_sha256": "67c98fa13cd8e2aaf485c8441d2da07bfd1349927930ecc7e3675e2a43028237"
+        }
+      ],
+      "gap_kind": "concurrent_resolution_atomicity_unspecified",
+      "impact": "Two surfaces can resolve the same episode, or approval can race with abort, expiry, restart, or stale projection, without a defined winner, idempotency key, rejection result, or rollback rule.",
+      "item_id": "A005M15-I002",
+      "item_type": "gap",
+      "severity": "high",
+      "source_unit_refs": ["SEMANTIC:PROLOGUE:Plans/human-in-the-loop.md:CONT-001"],
+      "statement": "The source requires identity separation and freshness binding but does not define atomic compare-and-set semantics, duplicate-command idempotency, event ordering, or user-visible conflict outcomes for concurrent resolution commands.",
+      "title": "Concurrent blocked-episode resolution lacks an atomicity contract"
+    },
+    {
+      "builder_discretion": true,
+      "confidence": 0.94,
+      "dimensions": ["security_privacy", "operations", "authority_boundaries", "privacy_data_lifecycle", "observability_support", "cross_document_seams", "test_falsifiability"],
+      "evidence": [
+        {
+          "exact_quote": "HITL is the approval consumer for shared-runtime, multi-lane execution. Assistant chat, validation-pass output, wizard-handoff payloads, DAE side-effect interception, and tool-event records must preserve `effective_account_id`, `requested_account`, `requested_account_id`, `execution_role`, permission posture, actor identity, lane identity, and `attempt_id` so a later reviewer can tell who asked, who approved, under which `/account/role`, on which `/package/lane/attempt`, and whether an `/always` policy was scoped safely. Any rewrite-alignment or post-hoc explanation that omits these fields is under-attributed and lane-unsafe.",
+          "line_end": 59,
+          "line_start": 59,
+          "path": "Plans/human-in-the-loop.md",
+          "source_sha256": "67c98fa13cd8e2aaf485c8441d2da07bfd1349927930ecc7e3675e2a43028237"
+        }
+      ],
+      "gap_kind": "approval_provenance_data_lifecycle_unspecified",
+      "impact": "Durable multi-actor and account provenance can expose sensitive identities or outlive its purpose without clear read authority, redaction, retention, export, and deletion rules.",
+      "item_id": "A005M15-I003",
+      "item_type": "gap",
+      "severity": "high",
+      "source_unit_refs": ["SEMANTIC:PROLOGUE:Plans/human-in-the-loop.md:CONT-001"],
+      "statement": "The plan requires extensive durable attribution but does not specify minimization, encryption, access control, retention, redaction, deletion, or support-export handling for approval provenance.",
+      "title": "Approval provenance has no privacy lifecycle"
+    },
+    {
+      "builder_discretion": false,
+      "confidence": 0.99,
+      "dimensions": ["behavior", "capabilities", "inputs_outputs", "contracts", "states_transitions", "authority", "ownership", "consumers", "failures_recovery", "compatibility_migration", "acceptance_oracles"],
+      "evidence": [
+        {
+          "exact_quote": "canonical_text: The canonical HITL contract remains a blocked-runtime overlay with run_id, node_id, blocked_sequence, optional attempt_id, blocked_reason_code, ordered allowed_action_ids, approval_scope_key, optional detail_ref, and optional approver_identity; blocked_sequence is the canonical approval anchor and action_available rows derive from the same blocked-runtime action set.",
+          "line_end": 540,
+          "line_start": 540,
+          "path": "Plans/human-in-the-loop.md",
+          "source_sha256": "67c98fa13cd8e2aaf485c8441d2da07bfd1349927930ecc7e3675e2a43028237"
+        }
+      ],
+      "gap_kind": "none_planunit_contracts",
+      "impact": "Provides addressable PlanUnits for document authority, replayable events, request fields, attribution, persistence, and compatibility separation.",
+      "item_id": "A005M15-I004",
+      "item_type": "feature",
+      "severity": "info",
+      "source_unit_refs": ["PLANUNIT:HITL-002", "PLANUNIT:HITL-003", "PLANUNIT:HITL-004", "PLANUNIT:HITL-005", "PLANUNIT:HITL-006", "PLANUNIT:HITL-007", "SEMANTIC:PROLOGUE:Plans/human-in-the-loop.md:CONT-002", "SEMANTIC:PLANUNIT:HITL-002", "SEMANTIC:PLANUNIT:HITL-003", "SEMANTIC:PLANUNIT:HITL-004", "SEMANTIC:PLANUNIT:HITL-005", "SEMANTIC:PLANUNIT:HITL-006", "SEMANTIC:PLANUNIT:HITL-007"],
+      "statement": "HITL-002 through HITL-007 convert the prologue into explicit owner, event, request, provenance, persistence, and compatibility contracts.",
+      "title": "Core HITL authority and identity PlanUnits are explicit"
+    },
+    {
+      "builder_discretion": true,
+      "confidence": 0.96,
+      "dimensions": ["contracts", "states_transitions", "failures_recovery", "operations", "ambiguity_unknowns", "concurrency_races", "partial_failure", "recovery_rollback", "observability_support", "test_falsifiability"],
+      "evidence": [
+        {
+          "exact_quote": "canonical_text: Runtime HITL persistence is keyed by blocked episode identity first; checkpoints.hitl.{run_id} and checkpoints.hitl are compatibility paths only, and runtime storage must distinguish concurrent pending HITL episodes by run_id, node_id, blocked_sequence, optional attempt_id, approval_scope_key, actor/account/lane context, and approver identity while supporting a three-way join among the blocked episode, approval identity record, and triggering tool request.",
+          "line_end": 651,
+          "line_start": 651,
+          "path": "Plans/human-in-the-loop.md",
+          "source_sha256": "67c98fa13cd8e2aaf485c8441d2da07bfd1349927930ecc7e3675e2a43028237"
+        }
+      ],
+      "gap_kind": "three_way_join_consistency_unspecified",
+      "impact": "Partial persistence of the episode, identity record, or triggering request can produce an unresolvable approval or an audit record that cannot prove its authority.",
+      "item_id": "A005M15-I005",
+      "item_type": "gap",
+      "severity": "high",
+      "source_unit_refs": ["PLANUNIT:HITL-006", "SEMANTIC:PLANUNIT:HITL-006"],
+      "statement": "HITL-006 requires a three-way join but does not define transaction boundaries, orphan repair, uniqueness constraints, startup reconciliation, or acceptance oracles for partially written join participants.",
+      "title": "Three-way approval join lacks consistency and repair semantics"
+    },
+    {
+      "builder_discretion": true,
+      "confidence": 0.91,
+      "dimensions": ["contracts", "consumers", "compatibility_migration", "ambiguity_unknowns", "missing_callers_consumers", "cross_document_seams", "test_falsifiability"],
+      "evidence": [
+        {
+          "exact_quote": "canonical_text: The historical HITLRequest request-era contract is a compatibility bridge subordinate to the runtime blocked episode; request_id, tier_id, tier_type, request_kind=tier_boundary_approval, allowed_actions, allowed_actions[], tier/request_kind/allowed_actions, and hitl.approval_requested must not become a second action family, and HITL classification keeps source, request, and execution/result axes separate.",
+          "line_end": 707,
+          "line_start": 707,
+          "path": "Plans/human-in-the-loop.md",
+          "source_sha256": "67c98fa13cd8e2aaf485c8441d2da07bfd1349927930ecc7e3675e2a43028237"
+        }
+      ],
+      "gap_kind": "compatibility_bridge_exit_criteria_unspecified",
+      "impact": "Legacy producers or consumers may silently preserve a second action ontology indefinitely or fail ambiguously when aliases disappear.",
+      "item_id": "A005M15-I006",
+      "item_type": "gap",
+      "severity": "medium",
+      "source_unit_refs": ["PLANUNIT:HITL-007", "SEMANTIC:PLANUNIT:HITL-007"],
+      "statement": "The compatibility bridge names retired fields but has no version negotiation, telemetry, deprecation deadline, rejection behavior, or migration oracle proving every caller resolves through blocked_sequence.",
+      "title": "Request-era bridge has no measurable retirement path"
+    },
+    {
+      "builder_discretion": false,
+      "confidence": 0.98,
+      "dimensions": ["behavior", "capabilities", "inputs_outputs", "contracts", "authority", "ownership", "consumers", "gui_truth", "failures_recovery", "security_privacy", "operations", "compatibility_migration", "acceptance_oracles", "authority_boundaries"],
+      "evidence": [
+        {
+          "exact_quote": "canonical_text: Clarification questions and blocked-resolution flows use node-effective execution metadata, palette-friendly copy, and detail pivots without losing runtime truth; UI and storage routes must not cross-wire governance approvals with tool approvals, and hitl.* event rows carry config, run.started, usage.event, actor projections, meta links, action-family normalization, and current blocked-episode mutation binding.",
+          "line_end": 824,
+          "line_start": 824,
+          "path": "Plans/human-in-the-loop.md",
+          "source_sha256": "67c98fa13cd8e2aaf485c8441d2da07bfd1349927930ecc7e3675e2a43028237"
+        }
+      ],
+      "gap_kind": "none_boundary_and_surface_contracts",
+      "impact": "Defines automation-first boundaries, truthful surface routing, runtime-native shims, normalized recovery labels, narrow tray behavior, and debug grant scope.",
+      "item_id": "A005M15-I007",
+      "item_type": "feature",
+      "severity": "info",
+      "source_unit_refs": ["PLANUNIT:HITL-008", "PLANUNIT:HITL-009", "PLANUNIT:HITL-010", "PLANUNIT:HITL-011", "PLANUNIT:HITL-012", "PLANUNIT:HITL-013", "SEMANTIC:PLANUNIT:HITL-008", "SEMANTIC:PLANUNIT:HITL-009", "SEMANTIC:PLANUNIT:HITL-010", "SEMANTIC:PLANUNIT:HITL-011", "SEMANTIC:PLANUNIT:HITL-012", "SEMANTIC:PLANUNIT:HITL-013"],
+      "statement": "HITL-008 through HITL-013 cover boundary unification, execution metadata, event-to-surface routing, compatibility shims, transition reports, tray/correlation rules, and bounded debug grants.",
+      "title": "Boundary, surface, and debug-grant semantics are addressable"
+    },
+    {
+      "builder_discretion": true,
+      "confidence": 0.94,
+      "dimensions": ["states_transitions", "authority", "failures_recovery", "security_privacy", "operations", "scale_performance", "ambiguity_unknowns", "partial_failure", "recovery_rollback", "authority_boundaries", "privacy_data_lifecycle", "offline_network_loss", "observability_support", "test_falsifiability"],
+      "evidence": [
+        {
+          "exact_quote": "canonical_text: Debug Mode may request a run-scoped front-door grant for repeated low-risk investigation actions, but the grant remains represented through the canonical blocked-runtime overlay, is anchored by the blocked episode and investigation identity, does not create a separate approval transport, preserves degraded/blocked continuation when declined, limits scope to low-risk evidence reads and declared temporary instrumentation, and is revoked on grant revocation or investigation finish.",
+          "line_end": 1068,
+          "line_start": 1068,
+          "path": "Plans/human-in-the-loop.md",
+          "source_sha256": "67c98fa13cd8e2aaf485c8441d2da07bfd1349927930ecc7e3675e2a43028237"
+        }
+      ],
+      "gap_kind": "debug_grant_lifecycle_incomplete",
+      "impact": "A crashed, disconnected, or long-running investigation may retain temporary instrumentation authority or leave ambiguous cleanup and degraded-state recovery.",
+      "item_id": "A005M15-I008",
+      "item_type": "gap",
+      "severity": "high",
+      "source_unit_refs": ["PLANUNIT:HITL-013", "SEMANTIC:PLANUNIT:HITL-013"],
+      "statement": "The grant is bounded by purpose and revocation but lacks an expiry, action budget, restart behavior, disconnect behavior, atomic revocation rule, cleanup receipt, and oracle proving temporary instrumentation was removed.",
+      "title": "Debug front-door grant lacks crash-safe lifecycle controls"
+    },
+    {
+      "builder_discretion": true,
+      "confidence": 0.9,
+      "dimensions": ["gui_truth", "builder_discretion", "ambiguity_unknowns", "gui_misleading_states", "accessibility", "localization", "cross_document_seams", "test_falsifiability"],
+      "evidence": [
+        {
+          "exact_quote": "canonical_text: Consequential approval and recovery transitions use a shared transition report with from/to state, target object, actor/source, reason, prerequisite evidence, review or corroboration references, and downstream obligations; recovery labels distinguish true Undo from Restore, Rollback, Retry from Safe Point, Reopen, Start fresh attempt, and compensating_action_only behavior.",
+          "line_end": 950,
+          "line_start": 950,
+          "path": "Plans/human-in-the-loop.md",
+          "source_sha256": "67c98fa13cd8e2aaf485c8441d2da07bfd1349927930ecc7e3675e2a43028237"
+        }
+      ],
+      "gap_kind": "recovery_surface_accessibility_and_localization_unspecified",
+      "impact": "Dense state reports and action distinctions may be inaccessible to keyboard, screen-reader, low-vision, or non-English users and may be mistranslated into misleading recovery promises.",
+      "item_id": "A005M15-I009",
+      "item_type": "gap",
+      "severity": "medium",
+      "source_unit_refs": ["PLANUNIT:HITL-011", "SEMANTIC:PLANUNIT:HITL-011"],
+      "statement": "The visible recovery vocabulary is exacting, but the PlanUnit provides no accessible-name, focus order, announcement, non-color state, localization-key, terminology-lock, or text-expansion acceptance criteria.",
+      "title": "Recovery reports have no accessibility or localization contract"
+    },
+    {
+      "builder_discretion": false,
+      "confidence": 0.99,
+      "dimensions": ["behavior", "capabilities", "inputs_outputs", "contracts", "states_transitions", "authority", "ownership", "consumers", "gui_truth", "failures_recovery", "propagation", "operations", "compatibility_migration", "acceptance_oracles", "recovery_rollback", "destructive_actions"],
+      "evidence": [
+        {
+          "exact_quote": "canonical_text: HITL is configured in the GUI and persisted in one canonical execution-affecting config block shaped as hitl.phase, hitl.task, and hitl.subtask; the structure lives inside GuiConfig, persists in redb at config:gui.hitl, GUI controls read and write the exact structure, Option B runtime config construction copies it unchanged into the run snapshot at run start, and no second backend-only HITL key family exists.",
+          "line_end": 1339,
+          "line_start": 1339,
+          "path": "Plans/human-in-the-loop.md",
+          "source_sha256": "67c98fa13cd8e2aaf485c8441d2da07bfd1349927930ecc7e3675e2a43028237"
+        }
+      ],
+      "gap_kind": "none_optional_ux_gate_and_control_contracts",
+      "impact": "Defines optional autonomy-safe UX, canonical gates, one persisted config, blocked-episode pauses, and runtime-derived controls.",
+      "item_id": "A005M15-I010",
+      "item_type": "feature",
+      "severity": "info",
+      "source_unit_refs": ["PLANUNIT:HITL-014", "PLANUNIT:HITL-015", "PLANUNIT:HITL-016", "PLANUNIT:HITL-017", "PLANUNIT:HITL-018", "PLANUNIT:HITL-019", "PLANUNIT:HITL-020", "SEMANTIC:PLANUNIT:HITL-014", "SEMANTIC:PLANUNIT:HITL-015", "SEMANTIC:PLANUNIT:HITL-016", "SEMANTIC:PLANUNIT:HITL-017", "SEMANTIC:PLANUNIT:HITL-018", "SEMANTIC:PLANUNIT:HITL-019", "SEMANTIC:PLANUNIT:HITL-020"],
+      "statement": "HITL-014 through HITL-020 define optional autonomy behavior, derived grouping, package/seam gates, independent toggles, GUI persistence, pause integration, and runtime control labels.",
+      "title": "Optional UX, gate, config, and action contracts are explicit"
+    },
+    {
+      "builder_discretion": true,
+      "confidence": 0.95,
+      "dimensions": ["inputs_outputs", "contracts", "states_transitions", "failures_recovery", "propagation", "operations", "compatibility_migration", "ambiguity_unknowns", "concurrency_races", "partial_failure", "offline_network_loss", "observability_support", "test_falsifiability"],
+      "evidence": [
+        {
+          "exact_quote": "canonical_text: HITL is configured in the GUI and persisted in one canonical execution-affecting config block shaped as hitl.phase, hitl.task, and hitl.subtask; the structure lives inside GuiConfig, persists in redb at config:gui.hitl, GUI controls read and write the exact structure, Option B runtime config construction copies it unchanged into the run snapshot at run start, and no second backend-only HITL key family exists.",
+          "line_end": 1339,
+          "line_start": 1339,
+          "path": "Plans/human-in-the-loop.md",
+          "source_sha256": "67c98fa13cd8e2aaf485c8441d2da07bfd1349927930ecc7e3675e2a43028237"
+        }
+      ],
+      "gap_kind": "config_versioning_and_write_conflicts_unspecified",
+      "impact": "Concurrent GUI writes, failed persistence, schema upgrades, or run-start races can make displayed toggles disagree with the durable config or captured run snapshot.",
+      "item_id": "A005M15-I011",
+      "item_type": "gap",
+      "severity": "high",
+      "source_unit_refs": ["PLANUNIT:HITL-018", "SEMANTIC:PLANUNIT:HITL-018"],
+      "statement": "The exact config shape and copy point are fixed, but revisioning, compare-and-set behavior, durable-write acknowledgement, migration defaults, corruption recovery, and the linearization point between edits and run snapshot creation are absent.",
+      "title": "HITL config lacks versioning and run-start race semantics"
+    },
+    {
+      "builder_discretion": true,
+      "confidence": 0.93,
+      "dimensions": ["behavior", "contracts", "states_transitions", "gui_truth", "propagation", "builder_discretion", "ambiguity_unknowns", "invalid_states_transitions", "gui_misleading_states", "cross_document_seams", "test_falsifiability"],
+      "evidence": [
+        {
+          "exact_quote": "canonical_text: HITL exposes three independent user-facing grouping toggles for phase, task, and subtask, all defaulting off; toggles request approval at the corresponding package/seam gate decision point before the next grouping begins and must not redefine approval_scope_key, blocked identity, recovery semantics, persistence ownership, or package/seam gate ownership.",
+          "line_end": 1283,
+          "line_start": 1283,
+          "path": "Plans/human-in-the-loop.md",
+          "source_sha256": "67c98fa13cd8e2aaf485c8441d2da07bfd1349927930ecc7e3675e2a43028237"
+        }
+      ],
+      "gap_kind": "grouping_to_gate_mapping_ambiguous",
+      "impact": "Different implementations may pause at different package or seam decisions for the same phase/task/subtask setting, producing unexpected extra, missing, or duplicate approvals.",
+      "item_id": "A005M15-I012",
+      "item_type": "gap",
+      "severity": "high",
+      "source_unit_refs": ["PLANUNIT:HITL-017", "PLANUNIT:HITL-019", "SEMANTIC:PLANUNIT:HITL-017", "SEMANTIC:PLANUNIT:HITL-019"],
+      "statement": "The source refers to the corresponding package/seam gate but does not define the mapping algorithm, precedence when multiple toggles match one gate, deduplication, or behavior when grouping boundaries and graph gates do not align one-to-one.",
+      "title": "Phase/task/subtask toggles lack deterministic gate mapping"
+    },
+    {
+      "builder_discretion": false,
+      "confidence": 0.98,
+      "dimensions": ["behavior", "capabilities", "inputs_outputs", "contracts", "states_transitions", "authority", "ownership", "consumers", "gui_truth", "failures_recovery", "security_privacy", "propagation", "operations", "compatibility_migration", "acceptance_oracles", "recovery_rollback", "authority_boundaries", "destructive_actions"],
+      "evidence": [
+        {
+          "exact_quote": "canonical_text: Canonical blocked classification uses concern_reason with optional detail_ref for additional structured metadata; ordered allowed_action_ids is the only canonical action enumeration for Runtime, Dashboard, Assistant, and APIs; canonical approval resolution uses approval_outcome and approval_recorded_at scoped by approval_scope_key, and durable approver_identity records who approved or declined.",
+          "line_end": 1787,
+          "line_start": 1787,
+          "path": "Plans/human-in-the-loop.md",
+          "source_sha256": "67c98fa13cd8e2aaf485c8441d2da07bfd1349927930ecc7e3675e2a43028237"
+        }
+      ],
+      "gap_kind": "none_surface_persistence_and_identity_contracts",
+      "impact": "Connects Dashboard and Assistant UX to one blocked identity, one config, durable recovery, retired tier payloads, and canonical approval outcomes.",
+      "item_id": "A005M15-I013",
+      "item_type": "feature",
+      "severity": "info",
+      "source_unit_refs": ["PLANUNIT:HITL-021", "PLANUNIT:HITL-022", "PLANUNIT:HITL-023", "PLANUNIT:HITL-024", "PLANUNIT:HITL-025", "PLANUNIT:HITL-026", "PLANUNIT:HITL-027", "SEMANTIC:PLANUNIT:HITL-021", "SEMANTIC:PLANUNIT:HITL-022", "SEMANTIC:PLANUNIT:HITL-023", "SEMANTIC:PLANUNIT:HITL-024", "SEMANTIC:PLANUNIT:HITL-025", "SEMANTIC:PLANUNIT:HITL-026", "SEMANTIC:PLANUNIT:HITL-027"],
+      "statement": "HITL-021 through HITL-027 define CtA addressability, pause separation, implementation hooks, restart correlation, tier retirement, canonical resolution fields, and recovery attachment.",
+      "title": "Dashboard, persistence, and recovery identity are unified"
+    },
+    {
+      "builder_discretion": true,
+      "confidence": 0.96,
+      "dimensions": ["contracts", "states_transitions", "authority", "consumers", "gui_truth", "failures_recovery", "operations", "ambiguity_unknowns", "invalid_states_transitions", "concurrency_races", "partial_failure", "authority_boundaries", "gui_misleading_states", "offline_network_loss", "observability_support", "destructive_actions", "test_falsifiability"],
+      "evidence": [
+        {
+          "exact_quote": "canonical_text: When Orchestrator pauses for HITL, Dashboard surfaces the state as a warning or Call to Action, and HITL prompts are addressable through the chat Assistant or direct Dashboard controls while remaining a single concept owned by Dashboard warning/CtA and Assistant integration.",
+          "line_end": 1513,
+          "line_start": 1513,
+          "path": "Plans/human-in-the-loop.md",
+          "source_sha256": "67c98fa13cd8e2aaf485c8441d2da07bfd1349927930ecc7e3675e2a43028237"
+        },
+        {
+          "exact_quote": "canonical_text: Implementation planning hooks require shared runtime config for approval/blocking policy, transition into canonical blocked episode flow rather than tier-local pause flags, persistence and restore of the same blocked episode so restart, retry, skip, abort, and recovery actions stay attached to original runtime identity, and Dashboard/Assistant surfacing without rewriting identity or action set.",
+          "line_end": 1616,
+          "line_start": 1616,
+          "path": "Plans/human-in-the-loop.md",
+          "source_sha256": "67c98fa13cd8e2aaf485c8441d2da07bfd1349927930ecc7e3675e2a43028237"
+        }
+      ],
+      "gap_kind": "multi_surface_command_race_unspecified",
+      "impact": "Assistant and direct controls can submit conflicting or duplicate destructive resolutions, while stale surfaces may continue presenting an already-consumed action set.",
+      "item_id": "A005M15-I014",
+      "item_type": "gap",
+      "severity": "critical",
+      "source_unit_refs": ["PLANUNIT:HITL-021", "PLANUNIT:HITL-023", "PLANUNIT:HITL-026", "SEMANTIC:PLANUNIT:HITL-021", "SEMANTIC:PLANUNIT:HITL-023", "SEMANTIC:PLANUNIT:HITL-026"],
+      "statement": "Cross-surface addressability is specified, but command deduplication, stale-action disablement, conflict results, optimistic UI rollback, offline submission, and reconciliation after one surface wins are not.",
+      "title": "Dashboard and Assistant can race to resolve one episode"
+    },
+    {
+      "builder_discretion": true,
+      "confidence": 0.94,
+      "dimensions": ["authority", "ownership", "security_privacy", "operations", "authority_boundaries", "privacy_data_lifecycle", "observability_support", "cross_document_seams", "test_falsifiability"],
+      "evidence": [
+        {
+          "exact_quote": "canonical_text: Acceptance carry-through transfers execution_role, requested_account_id, operational_identity, account switch and pressure ownership, blocked_sequence minting, startup recovery handshake, and DAE jail/approval policy into owner and consumer docs; approval_scope_key is the durable blocked-episode scope key across actor, lane, run, node, and account context, reused across permissions, HITL, doom-loop handling, and session approval caching, while provider-native correlation lives in dedicated fields and approver identity persists durably.",
+          "line_end": 1672,
+          "line_start": 1672,
+          "path": "Plans/human-in-the-loop.md",
+          "source_sha256": "67c98fa13cd8e2aaf485c8441d2da07bfd1349927930ecc7e3675e2a43028237"
+        }
+      ],
+      "gap_kind": "cross_context_scope_key_privacy_controls_unspecified",
+      "impact": "Reusing one durable scope key across permissions, HITL, doom-loop, and session caches can create correlation and privilege bleed if visibility, cache partitioning, and lifecycle differ.",
+      "item_id": "A005M15-I015",
+      "item_type": "gap",
+      "severity": "high",
+      "source_unit_refs": ["PLANUNIT:HITL-024", "PLANUNIT:HITL-026", "SEMANTIC:PLANUNIT:HITL-024", "SEMANTIC:PLANUNIT:HITL-026"],
+      "statement": "The durable key's reuse is required, but namespace partitioning, least-privilege readers, rotation, retention, redaction, cache eviction, and prevention of cross-account/session correlation are not defined.",
+      "title": "Approval scope reuse lacks privacy and isolation controls"
+    },
+    {
+      "builder_discretion": false,
+      "confidence": 0.99,
+      "dimensions": ["behavior", "capabilities", "inputs_outputs", "contracts", "states_transitions", "authority", "ownership", "consumers", "gui_truth", "failures_recovery", "propagation", "operations", "compatibility_migration", "acceptance_oracles", "recovery_rollback", "authority_boundaries", "destructive_actions"],
+      "evidence": [
+        {
+          "exact_quote": "canonical_text: 'HITL approval/rejection resolution is a primary scheduler wake trigger: hitl.approved and hitl.rejected cause immediate queue reevaluation while unrelated runnable work continues; approval waits consume the shared temporal taxonomy as approval_wait and possibly long_governance_wait, known timers must not render generic deadlock/stall or auto-pause unrelated runnable work, and user_visible_wait_timer_expiry keeps the same blocked episode identity.'",
+          "line_end": 1899,
+          "line_start": 1899,
+          "path": "Plans/human-in-the-loop.md",
+          "source_sha256": "67c98fa13cd8e2aaf485c8441d2da07bfd1349927930ecc7e3675e2a43028237"
+        }
+      ],
+      "gap_kind": "none_timer_recovery_action_and_permission_contracts",
+      "impact": "Defines scheduling wakeups, wait classification, explicit rerun/skip/abort semantics, canonical recovery actions and labels, plus shared permission-ladder consumption.",
+      "item_id": "A005M15-I016",
+      "item_type": "feature",
+      "severity": "info",
+      "source_unit_refs": ["PLANUNIT:HITL-028", "PLANUNIT:HITL-029", "PLANUNIT:HITL-030", "PLANUNIT:HITL-031", "PLANUNIT:HITL-032", "PLANUNIT:HITL-033", "PLANUNIT:HITL-034", "SEMANTIC:PLANUNIT:HITL-028", "SEMANTIC:PLANUNIT:HITL-029", "SEMANTIC:PLANUNIT:HITL-030", "SEMANTIC:PLANUNIT:HITL-031", "SEMANTIC:PLANUNIT:HITL-032", "SEMANTIC:PLANUNIT:HITL-033", "SEMANTIC:PLANUNIT:HITL-034"],
+      "statement": "HITL-028 through HITL-034 standardize scheduler wake, waits, recovery paths, action gating, visible labels, and shared approval-ladder consumption.",
+      "title": "Wait, recovery, and permission contracts are addressable"
+    },
+    {
+      "builder_discretion": true,
+      "confidence": 0.97,
+      "dimensions": ["states_transitions", "failures_recovery", "operations", "scale_performance", "ambiguity_unknowns", "invalid_states_transitions", "concurrency_races", "partial_failure", "recovery_rollback", "offline_network_loss", "observability_support", "test_falsifiability"],
+      "evidence": [
+        {
+          "exact_quote": "canonical_text: 'HITL approval/rejection resolution is a primary scheduler wake trigger: hitl.approved and hitl.rejected cause immediate queue reevaluation while unrelated runnable work continues; approval waits consume the shared temporal taxonomy as approval_wait and possibly long_governance_wait, known timers must not render generic deadlock/stall or auto-pause unrelated runnable work, and user_visible_wait_timer_expiry keeps the same blocked episode identity.'",
+          "line_end": 1899,
+          "line_start": 1899,
+          "path": "Plans/human-in-the-loop.md",
+          "source_sha256": "67c98fa13cd8e2aaf485c8441d2da07bfd1349927930ecc7e3675e2a43028237"
+        }
+      ],
+      "gap_kind": "approval_expiry_resolution_race_unspecified",
+      "impact": "An approval arriving at the countdown boundary can race expiry, restart recovery, or scheduler wake and create double transitions, lost approval, or inconsistent UI and queue state.",
+      "item_id": "A005M15-I017",
+      "item_type": "gap",
+      "severity": "critical",
+      "source_unit_refs": ["PLANUNIT:HITL-028", "SEMANTIC:PLANUNIT:HITL-028"],
+      "statement": "The timer taxonomy and retained identity are explicit, but authoritative clock, deadline inclusivity, cancellation, event ordering, exactly-once scheduler wake, restart catch-up, and approval-versus-expiry winner rules are absent.",
+      "title": "Approval expiry can race resolution and scheduler wake"
+    },
+    {
+      "builder_discretion": true,
+      "confidence": 0.95,
+      "dimensions": ["behavior", "contracts", "authority", "consumers", "gui_truth", "security_privacy", "builder_discretion", "ambiguity_unknowns", "authority_boundaries", "untrusted_inputs", "gui_misleading_states", "cross_document_seams", "test_falsifiability"],
+      "evidence": [
+        {
+          "exact_quote": "canonical_text: HITL-specific affordances consume the shared permission ladder instead of defining a shorter local approval menu; approval choices are deny, once, for session, and always, batch web review may present one domain-grouped approval surface, question defaults to allow only when HITL is available and otherwise remains ask-gated, and HITL surfaces do not create a competing approval vocabulary.",
+          "line_end": 2230,
+          "line_start": 2230,
+          "path": "Plans/human-in-the-loop.md",
+          "source_sha256": "67c98fa13cd8e2aaf485c8441d2da07bfd1349927930ecc7e3675e2a43028237"
+        }
+      ],
+      "gap_kind": "permission_ladder_to_runtime_action_mapping_unspecified",
+      "impact": "Surfaces can conflate permission scope choices with runtime resolution actions, incorrectly interpret deny versus decline, or expose always beyond the intended account/lane/tool scope.",
+      "item_id": "A005M15-I018",
+      "item_type": "gap",
+      "severity": "critical",
+      "source_unit_refs": ["PLANUNIT:HITL-030", "PLANUNIT:HITL-031", "PLANUNIT:HITL-034", "SEMANTIC:PLANUNIT:HITL-030", "SEMANTIC:PLANUNIT:HITL-031", "SEMANTIC:PLANUNIT:HITL-034"],
+      "statement": "The plan defines runtime action families and a separate shared permission ladder but does not define their typed composition, label mapping, allowed combinations, scope-key derivation, or the precise meaning and security preconditions of HITL availability for question defaulting.",
+      "title": "Permission scopes and runtime actions lack a typed mapping"
+    },
+    {
+      "builder_discretion": true,
+      "confidence": 0.92,
+      "dimensions": ["gui_truth", "builder_discretion", "ambiguity_unknowns", "gui_misleading_states", "accessibility", "localization", "observability_support", "cross_document_seams", "test_falsifiability"],
+      "evidence": [
+        {
+          "exact_quote": "canonical_text: HITL surfaces use canonical visible labels Approve, Decline, Retry from safe point, Start fresh attempt, Resume after prerequisite, Replan, Skip node, and Abort run; Reject, Deny, and other variants map back to canonical action families, and after decline/reject the surface chooses among safe-point retry, fresh attempt, Replan, Skip node only when permitted, or debug verification rerun in the active isolated automation session unless corrupted state requires a fresh isolated session.",
+          "line_end": 2174,
+          "line_start": 2174,
+          "path": "Plans/human-in-the-loop.md",
+          "source_sha256": "67c98fa13cd8e2aaf485c8441d2da07bfd1349927930ecc7e3675e2a43028237"
+        }
+      ],
+      "gap_kind": "action_surface_accessibility_localization_unspecified",
+      "impact": "Users may choose a destructive or irreversible action from ambiguous focus, truncated translations, inaccessible status changes, or localized labels that break canonical action-family mapping.",
+      "item_id": "A005M15-I019",
+      "item_type": "gap",
+      "severity": "high",
+      "source_unit_refs": ["PLANUNIT:HITL-031", "PLANUNIT:HITL-033", "SEMANTIC:PLANUNIT:HITL-031", "SEMANTIC:PLANUNIT:HITL-033"],
+      "statement": "Canonical labels and enablement are defined, but destructive-action confirmation, keyboard/focus behavior, screen-reader announcements, disabled-reason exposure, localization keys, text expansion, and locale-safe alias mapping have no acceptance oracles.",
+      "title": "Canonical action labels lack accessible and localized interaction rules"
+    }
+  ],
+  "model": "gpt-5.6-sol",
+  "phase": "blind_macro_window_review",
+  "reasoning_effort": "xhigh",
+  "schema_version": "macro-review-result-v1",
+  "segments": [
+    {
+      "core_range": [1, 399],
+      "covered_source_unit_refs": ["SEMANTIC:PROLOGUE:Plans/human-in-the-loop.md:CONT-001"],
+      "item_ids": ["A005M15-I001", "A005M15-I002", "A005M15-I003"],
+      "reviewed": true,
+      "summary": "Reviewed the complete prologue for canonical blocked-runtime behavior, event replay, provenance, storage, gate, UI, recovery, debug-grant, settings, and adversarial lifecycle/race gaps.",
+      "window_id": "WIN-E0B2190245C6-0001"
+    },
+    {
+      "core_range": [400, 758],
+      "covered_source_unit_refs": ["PLANUNIT:HITL-002", "PLANUNIT:HITL-003", "PLANUNIT:HITL-004", "PLANUNIT:HITL-005", "PLANUNIT:HITL-006", "PLANUNIT:HITL-007", "SEMANTIC:PROLOGUE:Plans/human-in-the-loop.md:CONT-002", "SEMANTIC:PLANUNIT:HITL-002", "SEMANTIC:PLANUNIT:HITL-003", "SEMANTIC:PLANUNIT:HITL-004", "SEMANTIC:PLANUNIT:HITL-005", "SEMANTIC:PLANUNIT:HITL-006", "SEMANTIC:PLANUNIT:HITL-007"],
+      "item_ids": ["A005M15-I004", "A005M15-I005", "A005M15-I006"],
+      "reviewed": true,
+      "summary": "Reviewed shared approval-ladder continuation and HITL-002 through HITL-007 for authority, event, request, provenance, persistence, compatibility, join-repair, and retirement completeness.",
+      "window_id": "WIN-E0B2190245C6-0002"
+    },
+    {
+      "core_range": [759, 1116],
+      "covered_source_unit_refs": ["PLANUNIT:HITL-008", "PLANUNIT:HITL-009", "PLANUNIT:HITL-010", "PLANUNIT:HITL-011", "PLANUNIT:HITL-012", "PLANUNIT:HITL-013", "SEMANTIC:PLANUNIT:HITL-008", "SEMANTIC:PLANUNIT:HITL-009", "SEMANTIC:PLANUNIT:HITL-010", "SEMANTIC:PLANUNIT:HITL-011", "SEMANTIC:PLANUNIT:HITL-012", "SEMANTIC:PLANUNIT:HITL-013"],
+      "item_ids": ["A005M15-I007", "A005M15-I008", "A005M15-I009"],
+      "reviewed": true,
+      "summary": "Reviewed HITL-008 through HITL-013 for boundary, routing, compatibility, recovery labels, tray/correlation, debug grants, and adversarial lifecycle and accessible-display behavior.",
+      "window_id": "WIN-E0B2190245C6-0003"
+    },
+    {
+      "core_range": [1117, 1505],
+      "covered_source_unit_refs": ["PLANUNIT:HITL-014", "PLANUNIT:HITL-015", "PLANUNIT:HITL-016", "PLANUNIT:HITL-017", "PLANUNIT:HITL-018", "PLANUNIT:HITL-019", "PLANUNIT:HITL-020", "SEMANTIC:PLANUNIT:HITL-014", "SEMANTIC:PLANUNIT:HITL-015", "SEMANTIC:PLANUNIT:HITL-016", "SEMANTIC:PLANUNIT:HITL-017", "SEMANTIC:PLANUNIT:HITL-018", "SEMANTIC:PLANUNIT:HITL-019", "SEMANTIC:PLANUNIT:HITL-020"],
+      "item_ids": ["A005M15-I010", "A005M15-I011", "A005M15-I012"],
+      "reviewed": true,
+      "summary": "Reviewed HITL-014 through HITL-020 for optional autonomy, grouping/gate behavior, config persistence, run snapshots, pause actions, and adversarial mapping and write-race gaps.",
+      "window_id": "WIN-E0B2190245C6-0004"
+    },
+    {
+      "core_range": [1506, 1891],
+      "covered_source_unit_refs": ["PLANUNIT:HITL-021", "PLANUNIT:HITL-022", "PLANUNIT:HITL-023", "PLANUNIT:HITL-024", "PLANUNIT:HITL-025", "PLANUNIT:HITL-026", "PLANUNIT:HITL-027", "SEMANTIC:PLANUNIT:HITL-021", "SEMANTIC:PLANUNIT:HITL-022", "SEMANTIC:PLANUNIT:HITL-023", "SEMANTIC:PLANUNIT:HITL-024", "SEMANTIC:PLANUNIT:HITL-025", "SEMANTIC:PLANUNIT:HITL-026", "SEMANTIC:PLANUNIT:HITL-027"],
+      "item_ids": ["A005M15-I013", "A005M15-I014", "A005M15-I015"],
+      "reviewed": true,
+      "summary": "Reviewed HITL-021 through HITL-027 for Dashboard/Assistant addressability, pause separation, persistence, recovery identity, tier retirement, action derivation, and adversarial cross-surface and privacy isolation gaps.",
+      "window_id": "WIN-E0B2190245C6-0005"
+    },
+    {
+      "core_range": [1892, 2285],
+      "covered_source_unit_refs": ["PLANUNIT:HITL-028", "PLANUNIT:HITL-029", "PLANUNIT:HITL-030", "PLANUNIT:HITL-031", "PLANUNIT:HITL-032", "PLANUNIT:HITL-033", "PLANUNIT:HITL-034", "SEMANTIC:PLANUNIT:HITL-028", "SEMANTIC:PLANUNIT:HITL-029", "SEMANTIC:PLANUNIT:HITL-030", "SEMANTIC:PLANUNIT:HITL-031", "SEMANTIC:PLANUNIT:HITL-032", "SEMANTIC:PLANUNIT:HITL-033", "SEMANTIC:PLANUNIT:HITL-034"],
+      "item_ids": ["A005M15-I016", "A005M15-I017", "A005M15-I018", "A005M15-I019"],
+      "reviewed": true,
+      "summary": "Reviewed HITL-028 through HITL-034 for scheduler wake, wait timers, rerun/skip/abort, action families, gating, labels, permission-ladder consumption, and adversarial timer, mapping, accessibility, and localization gaps.",
+      "window_id": "WIN-E0B2190245C6-0006"
+    }
+  ],
+  "self_attestation": {
+    "no_canonical_writes": true,
+    "no_external_research_during_blind_review": true,
+    "no_peer_result_access": true,
+    "no_prior_audit_access": true,
+    "no_unrelated_source_access": true,
+    "terminal_after_submission": true
+  },
+  "source_binding": {
+    "bundle_id": "MACRO15-E0B2190245C6-0001",
+    "document_path": "Plans/human-in-the-loop.md",
+    "micro_window_ids": ["WIN-E0B2190245C6-0001", "WIN-E0B2190245C6-0002", "WIN-E0B2190245C6-0003", "WIN-E0B2190245C6-0004", "WIN-E0B2190245C6-0005", "WIN-E0B2190245C6-0006"],
+    "source_sha256": "67c98fa13cd8e2aaf485c8441d2da07bfd1349927930ecc7e3675e2a43028237"
+  },
+  "status": "completed",
+  "synthesis": {
+    "cross_document_questions": [
+      "Which runtime contract owns atomic compare-and-set, idempotency, and conflict results when Dashboard, Assistant, timer expiry, abort, and restart recovery race to resolve one blocked episode?",
+      "How do Permissions_System and Tools type and map deny/once/for session/always permission scopes onto approve/decline/recovery runtime actions without cross-account or cross-lane scope bleed?",
+      "Which storage and privacy contracts own retention, redaction, access control, rotation, and deletion of approval_scope_key, approver_identity, actor, account, lane, and provider correlation data?",
+      "Which GUI contract owns keyboard, focus, announcement, localization-key, text-expansion, disabled-reason, and destructive-confirmation behavior for canonical HITL actions?"
+    ],
+    "feature_family_keys": ["hitl.blocked_episode", "hitl.approval_identity", "hitl.package_seam_gates", "hitl.runtime_actions", "hitl.gui_config", "hitl.dashboard_assistant", "hitl.scheduler_waits", "hitl.permission_ladder", "hitl.recovery", "hitl.debug_grants"],
+    "research_queries": [
+      "human approval workflow idempotency compare-and-set stale command conflict patterns",
+      "durable approval audit identity privacy retention and redaction practices",
+      "accessible localized destructive action and recovery workflow design",
+      "distributed timer expiry versus user approval race semantics"
+    ]
+  },
+  "task_thread_id": "/root/a005m15_b8_000163_attempt_0015_terminal"
+}

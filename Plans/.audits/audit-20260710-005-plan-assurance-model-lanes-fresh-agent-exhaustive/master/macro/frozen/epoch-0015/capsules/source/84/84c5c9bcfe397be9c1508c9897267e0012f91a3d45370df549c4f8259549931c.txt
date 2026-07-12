@@ -1,0 +1,2997 @@
+L00028299	negative_constraints:
+L00028300	- Next steps are not executable queues or production build tasks.
+L00028301	compatibility_only_notes:
+L00028302	- Checklist remains source-lineage planning evidence only.
+L00028303	stale_retired_dispositions: []
+L00028304	owner_boundary_notes:
+L00028305	- Provider/platform owners decide whether checklist evidence becomes owner-doc canon.
+L00028306	owner_hints:
+L00028307	- Plans/orchestrator-subagent-integration.md
+L00028308	preserved_contractrefs: []
+L00028309	```
+L00028310	
+L00028311	### OSI-379 - Autonomous QA Reference Adoption Boundary
+L00028312	
+L00028313	```yaml
+L00028314	plan_unit_id: OSI-379
+L00028315	unit_type: requirement
+L00028316	status: accepted
+L00028317	owner_doc: Plans/orchestrator-subagent-integration.md
+L00028318	canonical_text: >-
+L00028319	  The autonomous QA loop pattern is an external reference input for quality-gate ideas and must not override PM-native
+L00028320	  orchestrator, subagent, and verification contracts.
+L00028321	gui_related: false
+L00028322	gui_classification_reason: This unit covers external reference/adoption boundary, not GUI presentation.
+L00028323	split_recommended: false
+L00028324	depends_on:
+L00028325	- OSI-098
+L00028326	- OSI-107
+L00028327	- OSI-116
+L00028328	unblocks: []
+L00028329	acceptance_criteria:
+L00028330	- Covered Autonomous QA Loop Pattern Integration and Overview text remains losslessly available for exact-text audit.
+L00028331	- External VS Code Copilot pattern material remains reference input only.
+L00028332	- No WorkNodes, NodeSeeds, executable queues, final node manifests, or production build tasks are created.
+L00028333	validation_surfaces:
+L00028334	- >-
+L00028335	  python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits
+L00028336	- python3 scripts/pm-plan-index.py validate
+L00028337	reasoning_tier: standard
+L00028338	context_scope: orchestrator_subagent_standardization
+L00028339	implementation_surfaces:
+L00028340	- Plans/orchestrator-subagent-integration.md
+L00028341	risk_class: autonomous_qa_reference_adoption_boundary
+L00028342	node_compile_hint:
+L00028343	  mode: autonomous_qa_reference_adoption_boundary
+L00028344	  create_worknodes: false
+L00028345	source_lineage:
+L00028346	- >-
+L00028347	  Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:orchestrator-subagent-integration-S0177
+L00028348	- >-
+L00028349	  Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:orchestrator-subagent-integration-S0178
+L00028350	preserved_exact_tokens:
+L00028351	- 'https://gist.github.com/gsemet/1ef024fc426cfc75f946302033a69812'
+L00028352	- autonomous QA loop pattern
+L00028353	- VS Code Copilot
+L00028354	- quality gates
+L00028355	negative_constraints:
+L00028356	- External pattern material must not override PM-native orchestration contracts.
+L00028357	compatibility_only_notes:
+L00028358	- External pattern is reference input only.
+L00028359	stale_retired_dispositions: []
+L00028360	owner_boundary_notes:
+L00028361	- PM-native orchestrator and verification contracts retain authority.
+L00028362	owner_hints:
+L00028363	- Plans/orchestrator-subagent-integration.md
+L00028364	preserved_contractrefs: []
+L00028365	```
+L00028366	
+L00028367	### OSI-380 - Autonomous QA Backend Concept Catalog
+L00028368	
+L00028369	```yaml
+L00028370	plan_unit_id: OSI-380
+L00028371	unit_type: requirement
+L00028372	status: accepted
+L00028373	owner_doc: Plans/orchestrator-subagent-integration.md
+L00028374	canonical_text: >-
+L00028375	  Backend autonomous QA concepts preserve orchestrator/subagent separation, three-tier QA naming, phase-aware execution,
+L00028376	  PAUSE.md halting, and rework commit strategy as source-lineage concepts.
+L00028377	gui_related: false
+L00028378	gui_classification_reason: This unit covers backend orchestration concepts, not visual presentation.
+L00028379	split_recommended: false
+L00028380	depends_on:
+L00028381	- OSI-098
+L00028382	- OSI-107
+L00028383	- OSI-137
+L00028384	unblocks: []
+L00028385	acceptance_criteria:
+L00028386	- Covered backend concept bullets remain losslessly available for exact-text audit.
+L00028387	- Concept bullets remain plan evidence and do not create executable queues.
+L00028388	- No WorkNodes, NodeSeeds, executable queues, final node manifests, or production build tasks are created.
+L00028389	validation_surfaces:
+L00028390	- >-
+L00028391	  python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits
+L00028392	- python3 scripts/pm-plan-index.py validate
+L00028393	reasoning_tier: standard
+L00028394	context_scope: orchestrator_subagent_standardization
+L00028395	implementation_surfaces:
+L00028396	- Plans/orchestrator-subagent-integration.md
+L00028397	risk_class: autonomous_qa_backend_concept_catalog
+L00028398	node_compile_hint:
+L00028399	  mode: autonomous_qa_backend_concept_catalog
+L00028400	  create_worknodes: false
+L00028401	source_lineage:
+L00028402	- >-
+L00028403	  Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:orchestrator-subagent-integration-S0179
+L00028404	preserved_exact_tokens:
+L00028405	- Orchestrator/Subagent Separation
+L00028406	- Three-Tier QA System
+L00028407	- Phase-Aware Execution
+L00028408	- PAUSE.md
+L00028409	- Commit Strategy
+L00028410	negative_constraints:
+L00028411	- Backend concept bullets are not executable work queues.
+L00028412	compatibility_only_notes: []
+L00028413	stale_retired_dispositions: []
+L00028414	owner_boundary_notes:
+L00028415	- Orchestrator and verification owners decide whether concepts become canonical behavior.
+L00028416	owner_hints:
+L00028417	- Plans/orchestrator-subagent-integration.md
+L00028418	preserved_contractrefs: []
+L00028419	```
+L00028420	
+L00028421	### OSI-381 - Autonomous QA Visual Status Symbols
+L00028422	
+L00028423	```yaml
+L00028424	plan_unit_id: OSI-381
+L00028425	unit_type: requirement
+L00028426	status: accepted
+L00028427	owner_doc: Plans/orchestrator-subagent-integration.md
+L00028428	canonical_text: >-
+L00028429	  Autonomous QA visual status concepts preserve the exact visual symbols for progress and incomplete-task prioritization
+L00028430	  as GUI-consumer evidence separate from backend orchestration semantics.
+L00028431	gui_related: true
+L00028432	gui_classification_reason: This unit preserves user-visible status symbols and incomplete-task visual markers.
+L00028433	split_recommended: false
+L00028434	depends_on:
+L00028435	- OSI-380
+L00028436	unblocks: []
+L00028437	acceptance_criteria:
+L00028438	- Covered visual status symbol bullets remain losslessly available for exact-text audit.
+L00028439	- GUI status presentation remains a consumer projection and does not own backend orchestration semantics.
+L00028440	- No WorkNodes, NodeSeeds, executable queues, final node manifests, or production build tasks are created.
+L00028441	validation_surfaces:
+L00028442	- >-
+L00028443	  python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits
+L00028444	- python3 scripts/pm-plan-index.py validate
+L00028445	reasoning_tier: standard
+L00028446	context_scope: orchestrator_subagent_standardization
+L00028447	implementation_surfaces:
+L00028448	- Plans/orchestrator-subagent-integration.md
+L00028449	risk_class: autonomous_qa_visual_status_symbols
+L00028450	node_compile_hint:
+L00028451	  mode: autonomous_qa_visual_status_symbols
+L00028452	  create_worknodes: false
+L00028453	source_lineage:
+L00028454	- >-
+L00028455	  Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:orchestrator-subagent-integration-S0179
+L00028456	preserved_exact_tokens:
+L00028457	- Visual status symbols
+L00028458	- '⬜ 🔄 ✅ 🔴'
+L00028459	- 'Incomplete tasks (🔴)'
+L00028460	negative_constraints:
+L00028461	- Visual symbols do not own backend orchestration state.
+L00028462	compatibility_only_notes:
+L00028463	- Symbols are GUI-consumer evidence until presentation owners accept them.
+L00028464	stale_retired_dispositions: []
+L00028465	owner_boundary_notes:
+L00028466	- Final GUI owns user-visible presentation; orchestrator owns status semantics.
+L00028467	owner_hints:
+L00028468	- Plans/orchestrator-subagent-integration.md
+L00028469	preserved_contractrefs: []
+L00028470	```
+L00028471	
+L00028472	### OSI-382 - Progress Tracking Visual Status Model
+L00028473	
+L00028474	```yaml
+L00028475	plan_unit_id: OSI-382
+L00028476	unit_type: requirement
+L00028477	status: accepted
+L00028478	owner_doc: Plans/orchestrator-subagent-integration.md
+L00028479	canonical_text: >-
+L00028480	  Progress tracking visual status model evidence preserves TaskStatus values and exact status symbols for user-visible
+L00028481	  progress presentation while keeping presentation separate from runtime state authority.
+L00028482	gui_related: true
+L00028483	gui_classification_reason: This unit preserves visible progress status symbols and labels.
+L00028484	split_recommended: false
+L00028485	depends_on:
+L00028486	- OSI-381
+L00028487	unblocks: []
+L00028488	acceptance_criteria:
+L00028489	- Covered progress tracking visual status lines remain losslessly available for exact-text audit.
+L00028490	- Visual TaskStatus examples do not redefine canonical runtime status enums.
+L00028491	- No WorkNodes, NodeSeeds, executable queues, final node manifests, or production build tasks are created.
+L00028492	validation_surfaces:
+L00028493	- >-
+L00028494	  python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits
+L00028495	- python3 scripts/pm-plan-index.py validate
+L00028496	reasoning_tier: standard
+L00028497	context_scope: orchestrator_subagent_standardization
+L00028498	implementation_surfaces:
+L00028499	- Plans/orchestrator-subagent-integration.md
+L00028500	risk_class: progress_tracking_visual_status_model
+L00028501	node_compile_hint:
+L00028502	  mode: progress_tracking_visual_status_model
+L00028503	  create_worknodes: false
+L00028504	source_lineage:
+L00028505	- >-
+L00028506	  Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:orchestrator-subagent-integration-S0180
+L00028507	- >-
+L00028508	  Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:orchestrator-subagent-integration-S0181
+L00028509	preserved_exact_tokens:
+L00028510	- Enhanced Progress Tracking
+L00028511	- TaskStatus
+L00028512	- NotStarted
+L00028513	- InProgress
+L00028514	- Completed
+L00028515	- Incomplete
+L00028516	- Skipped
+L00028517	- '⬜'
+L00028518	- '🔄'
+L00028519	- '✅'
+L00028520	- '🔴'
+L00028521	- '⏸️'
+L00028522	negative_constraints:
+L00028523	- Visual TaskStatus examples do not redefine canonical runtime status enums.
+L00028524	compatibility_only_notes:
+L00028525	- Integration Opportunities heading is attached coverage for S0181-S0187 units.
+L00028526	stale_retired_dispositions: []
+L00028527	owner_boundary_notes:
+L00028528	- Runtime contracts own canonical status enums; GUI consumes display projection.
+L00028529	owner_hints:
+L00028530	- Plans/orchestrator-subagent-integration.md
+L00028531	preserved_contractrefs: []
+L00028532	```
+L00028533	
+L00028534	### OSI-383 - ProgressTracker State And Next-Task Selection
+L00028535	
+L00028536	```yaml
+L00028537	plan_unit_id: OSI-383
+L00028538	unit_type: requirement
+L00028539	status: accepted
+L00028540	owner_doc: Plans/orchestrator-subagent-integration.md
+L00028541	canonical_text: >-
+L00028542	  ProgressTracker source evidence preserves task progress fields, current-phase tracking, and next-task selection that
+L00028543	  prioritizes incomplete current-phase tasks before not-started current-phase tasks.
+L00028544	gui_related: false
+L00028545	gui_classification_reason: This unit covers backend progress tracking and selection behavior, not GUI presentation.
+L00028546	split_recommended: false
+L00028547	depends_on:
+L00028548	- OSI-380
+L00028549	- OSI-382
+L00028550	unblocks: []
+L00028551	acceptance_criteria:
+L00028552	- Covered ProgressTracker Rust snippet remains losslessly available for exact-text audit.
+L00028553	- Snippet remains plan evidence and does not create executable scheduling work.
+L00028554	- No WorkNodes, NodeSeeds, executable queues, final node manifests, or production build tasks are created.
+L00028555	validation_surfaces:
+L00028556	- >-
+L00028557	  python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits
+L00028558	- python3 scripts/pm-plan-index.py validate
+L00028559	reasoning_tier: standard
+L00028560	context_scope: orchestrator_subagent_standardization
+L00028561	implementation_surfaces:
+L00028562	- Plans/orchestrator-subagent-integration.md
+L00028563	risk_class: progress_tracker_state_next_task_selection
+L00028564	node_compile_hint:
+L00028565	  mode: progress_tracker_state_next_task_selection
+L00028566	  create_worknodes: false
+L00028567	source_lineage:
+L00028568	- >-
+L00028569	  Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:orchestrator-subagent-integration-S0181
+L00028570	preserved_exact_tokens:
+L00028571	- TaskProgress
+L00028572	- ProgressTracker
+L00028573	- current_phase
+L00028574	- get_next_task
+L00028575	- incomplete tasks in current phase
+L00028576	- not started tasks in current phase
+L00028577	negative_constraints:
+L00028578	- ProgressTracker snippet is not an executable scheduler manifest.
+L00028579	compatibility_only_notes:
+L00028580	- Rust snippet is source-lineage evidence only.
+L00028581	stale_retired_dispositions: []
+L00028582	owner_boundary_notes:
+L00028583	- Orchestrator scheduling owners adjudicate concrete next-task policy.
+L00028584	owner_hints:
+L00028585	- Plans/orchestrator-subagent-integration.md
+L00028586	preserved_contractrefs: []
+L00028587	```
+L00028588	
+L00028589	### OSI-384 - Three-Tier QA System Interfaces
+L00028590	
+L00028591	```yaml
+L00028592	plan_unit_id: OSI-384
+L00028593	unit_type: requirement
+L00028594	status: accepted
+L00028595	owner_doc: Plans/orchestrator-subagent-integration.md
+L00028596	canonical_text: >-
+L00028597	  Three-tier QA system evidence preserves preflight, task-inspector, and phase-inspector interfaces plus complete/incomplete
+L00028598	  feedback classification as source-lineage quality-gate concepts.
+L00028599	gui_related: false
+L00028600	gui_classification_reason: This unit covers backend QA interfaces, not GUI presentation.
+L00028601	split_recommended: false
+L00028602	depends_on:
+L00028603	- OSI-098
+L00028604	- OSI-116
+L00028605	- OSI-124
+L00028606	- OSI-221
+L00028607	unblocks: []
+L00028608	acceptance_criteria:
+L00028609	- Covered QASystem Rust snippet remains losslessly available for exact-text audit.
+L00028610	- QA interface example does not create executable inspector work.
+L00028611	- No WorkNodes, NodeSeeds, executable queues, final node manifests, or production build tasks are created.
+L00028612	validation_surfaces:
+L00028613	- >-
+L00028614	  python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits
+L00028615	- python3 scripts/pm-plan-index.py validate
+L00028616	reasoning_tier: standard
+L00028617	context_scope: orchestrator_subagent_standardization
+L00028618	implementation_surfaces:
+L00028619	- Plans/orchestrator-subagent-integration.md
+L00028620	risk_class: three_tier_qa_system_interfaces
+L00028621	node_compile_hint:
+L00028622	  mode: three_tier_qa_system_interfaces
+L00028623	  create_worknodes: false
+L00028624	source_lineage:
+L00028625	- >-
+L00028626	  Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:orchestrator-subagent-integration-S0182
+L00028627	preserved_exact_tokens:
+L00028628	- QASystem
+L00028629	- PreflightRunner
+L00028630	- TaskInspector
+L00028631	- PhaseInspector
+L00028632	- run_preflight
+L00028633	- inspect_task
+L00028634	- inspect_phase
+L00028635	- Complete or Incomplete with feedback
+L00028636	negative_constraints:
+L00028637	- QA interface example does not create executable inspector work.
+L00028638	compatibility_only_notes:
+L00028639	- Rust snippet is source-lineage evidence only.
+L00028640	stale_retired_dispositions: []
+L00028641	owner_boundary_notes:
+L00028642	- Verification/quality-gate owners adjudicate promoted inspector interfaces.
+L00028643	owner_hints:
+L00028644	- Plans/orchestrator-subagent-integration.md
+L00028645	preserved_contractrefs: []
+L00028646	```
+L00028647	
+L00028648	### OSI-385 - Task Inspector Subtask Feedback Integration
+L00028649	
+L00028650	```yaml
+L00028651	plan_unit_id: OSI-385
+L00028652	unit_type: requirement
+L00028653	status: accepted
+L00028654	owner_doc: Plans/orchestrator-subagent-integration.md
+L00028655	canonical_text: >-
+L00028656	  Task inspector integration evidence preserves post-subagent inspection for subtasks, completed/incomplete marking, and
+L00028657	  feedback prepending for the next iteration.
+L00028658	gui_related: false
+L00028659	gui_classification_reason: This unit covers backend task inspection flow, not GUI presentation.
+L00028660	split_recommended: false
+L00028661	depends_on:
+L00028662	- OSI-120
+L00028663	- OSI-121
+L00028664	- OSI-137
+L00028665	- OSI-384
+L00028666	unblocks: []
+L00028667	acceptance_criteria:
+L00028668	- Covered task inspector integration snippet remains losslessly available for exact-text audit.
+L00028669	- Feedback integration remains source evidence and does not create executable remediation work.
+L00028670	- No WorkNodes, NodeSeeds, executable queues, final node manifests, or production build tasks are created.
+L00028671	validation_surfaces:
+L00028672	- >-
+L00028673	  python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits
+L00028674	- python3 scripts/pm-plan-index.py validate
+L00028675	reasoning_tier: standard
+L00028676	context_scope: orchestrator_subagent_standardization
+L00028677	implementation_surfaces:
+L00028678	- Plans/orchestrator-subagent-integration.md
+L00028679	risk_class: task_inspector_subtask_feedback_integration
+L00028680	node_compile_hint:
+L00028681	  mode: task_inspector_subtask_feedback_integration
+L00028682	  create_worknodes: false
+L00028683	source_lineage:
+L00028684	- >-
+L00028685	  Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:orchestrator-subagent-integration-S0183
+L00028686	preserved_exact_tokens:
+L00028687	- execute_tier_with_subagents
+L00028688	- 'TierType::Subtask'
+L00028689	- 'InspectionStatus::Complete'
+L00028690	- mark_completed
+L00028691	- 'InspectionStatus::Incomplete'
+L00028692	- mark_incomplete
+L00028693	- prepend_task_feedback
+L00028694	negative_constraints:
+L00028695	- Task inspector feedback snippet is not executable remediation work.
+L00028696	compatibility_only_notes:
+L00028697	- Rust snippet is source-lineage evidence only.
+L00028698	stale_retired_dispositions: []
+L00028699	owner_boundary_notes:
+L00028700	- Orchestrator remediation/inspection owners adjudicate concrete feedback routing.
+L00028701	owner_hints:
+L00028702	- Plans/orchestrator-subagent-integration.md
+L00028703	preserved_contractrefs: []
+L00028704	```
+L00028705	
+L00028706	### OSI-386 - Phase Inspector Completion Gate
+L00028707	
+L00028708	```yaml
+L00028709	plan_unit_id: OSI-386
+L00028710	unit_type: requirement
+L00028711	status: accepted
+L00028712	owner_doc: Plans/orchestrator-subagent-integration.md
+L00028713	canonical_text: >-
+L00028714	  Phase inspector evidence preserves phase completion checking, phase-level inspection, phase task lookup, and phase
+L00028715	  advancement after all tasks complete.
+L00028716	gui_related: false
+L00028717	gui_classification_reason: This unit covers backend phase inspection flow, not GUI presentation.
+L00028718	split_recommended: false
+L00028719	depends_on:
+L00028720	- OSI-107
+L00028721	- OSI-221
+L00028722	- OSI-384
+L00028723	unblocks: []
+L00028724	acceptance_criteria:
+L00028725	- Covered phase inspector snippet remains losslessly available for exact-text audit.
+L00028726	- Phase inspector snippet is plan evidence and not an executable scheduler manifest.
+L00028727	- No WorkNodes, NodeSeeds, executable queues, final node manifests, or production build tasks are created.
+L00028728	validation_surfaces:
+L00028729	- >-
+L00028730	  python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits
+L00028731	- python3 scripts/pm-plan-index.py validate
+L00028732	reasoning_tier: standard
+L00028733	context_scope: orchestrator_subagent_standardization
+L00028734	implementation_surfaces:
+L00028735	- Plans/orchestrator-subagent-integration.md
+L00028736	risk_class: phase_inspector_completion_gate
+L00028737	node_compile_hint:
+L00028738	  mode: phase_inspector_completion_gate
+L00028739	  create_worknodes: false
+L00028740	source_lineage:
+L00028741	- >-
+L00028742	  Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:orchestrator-subagent-integration-S0184
+L00028743	preserved_exact_tokens:
+L00028744	- check_phase_completion
+L00028745	- phase_tasks_complete
+L00028746	- inspect_phase
+L00028747	- get_phase_tasks
+L00028748	- advance_phase
+L00028749	negative_constraints:
+L00028750	- Phase inspector snippet is not an executable scheduler manifest.
+L00028751	compatibility_only_notes:
+L00028752	- Rust snippet is source-lineage evidence only.
+L00028753	stale_retired_dispositions: []
+L00028754	owner_boundary_notes:
+L00028755	- Orchestrator/verification owners adjudicate concrete phase inspection behavior.
+L00028756	owner_hints:
+L00028757	- Plans/orchestrator-subagent-integration.md
+L00028758	preserved_contractrefs: []
+L00028759	```
+L00028760	
+L00028761	### OSI-387 - Pause Gate File Check
+L00028762	
+L00028763	```yaml
+L00028764	plan_unit_id: OSI-387
+L00028765	unit_type: requirement
+L00028766	status: accepted
+L00028767	owner_doc: Plans/orchestrator-subagent-integration.md
+L00028768	canonical_text: >-
+L00028769	  Pause gate evidence preserves checking .puppet-master/PAUSE.md before each loop iteration, logging the active pause gate,
+L00028770	  returning a halted result, and waiting for resume.
+L00028771	gui_related: false
+L00028772	gui_classification_reason: This unit covers backend pause detection, not GUI presentation.
+L00028773	split_recommended: false
+L00028774	depends_on:
+L00028775	- OSI-107
+L00028776	- OSI-137
+L00028777	unblocks: []
+L00028778	acceptance_criteria:
+L00028779	- Covered pause gate file-check snippet remains losslessly available for exact-text audit.
+L00028780	- Pause detection example remains plan evidence and does not create executable runtime work.
+L00028781	- No WorkNodes, NodeSeeds, executable queues, final node manifests, or production build tasks are created.
+L00028782	validation_surfaces:
+L00028783	- >-
+L00028784	  python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits
+L00028785	- python3 scripts/pm-plan-index.py validate
+L00028786	reasoning_tier: standard
+L00028787	context_scope: orchestrator_subagent_standardization
+L00028788	implementation_surfaces:
+L00028789	- Plans/orchestrator-subagent-integration.md
+L00028790	risk_class: pause_gate_file_check
+L00028791	node_compile_hint:
+L00028792	  mode: pause_gate_file_check
+L00028793	  create_worknodes: false
+L00028794	source_lineage:
+L00028795	- >-
+L00028796	  Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:orchestrator-subagent-integration-S0185
+L00028797	preserved_exact_tokens:
+L00028798	- check_pause_gate
+L00028799	- .puppet-master
+L00028800	- PAUSE.md
+L00028801	- Pause gate active - orchestrator halted
+L00028802	- return Ok(true)
+L00028803	- Exit loop, wait for resume
+L00028804	negative_constraints:
+L00028805	- Pause gate example is not executable runtime work.
+L00028806	compatibility_only_notes:
+L00028807	- Rust snippet is source-lineage evidence only.
+L00028808	stale_retired_dispositions: []
+L00028809	owner_boundary_notes:
+L00028810	- Runtime/orchestrator owners adjudicate concrete pause semantics.
+L00028811	owner_hints:
+L00028812	- Plans/orchestrator-subagent-integration.md
+L00028813	preserved_contractrefs: []
+L00028814	```
+L00028815	
+L00028816	### OSI-388 - Pause Gate GUI Event Projection
+L00028817	
+L00028818	```yaml
+L00028819	plan_unit_id: OSI-388
+L00028820	unit_type: requirement
+L00028821	status: accepted
+L00028822	owner_doc: Plans/orchestrator-subagent-integration.md
+L00028823	canonical_text: Pause gate evidence preserves a GUI event projection for pause-gate activation as a consumer-facing runtime signal.
+L00028824	gui_related: true
+L00028825	gui_classification_reason: This unit covers a user-visible GUI event projection for pause state.
+L00028826	split_recommended: false
+L00028827	depends_on:
+L00028828	- OSI-387
+L00028829	unblocks: []
+L00028830	acceptance_criteria:
+L00028831	- Covered GUI event comment remains losslessly available for exact-text audit.
+L00028832	- GUI/runtime views consume the pause event; OSI owns pause detection semantics only.
+L00028833	- No WorkNodes, NodeSeeds, executable queues, final node manifests, or production build tasks are created.
+L00028834	validation_surfaces:
+L00028835	- >-
+L00028836	  python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits
+L00028837	- python3 scripts/pm-plan-index.py validate
+L00028838	reasoning_tier: standard
+L00028839	context_scope: orchestrator_subagent_standardization
+L00028840	implementation_surfaces:
+L00028841	- Plans/orchestrator-subagent-integration.md
+L00028842	risk_class: pause_gate_gui_event_projection
+L00028843	node_compile_hint:
+L00028844	  mode: pause_gate_gui_event_projection
+L00028845	  create_worknodes: false
+L00028846	source_lineage:
+L00028847	- >-
+L00028848	  Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:orchestrator-subagent-integration-S0185
+L00028849	preserved_exact_tokens:
+L00028850	- Emit event for GUI
+L00028851	negative_constraints:
+L00028852	- GUI event projection does not own pause detection semantics.
+L00028853	compatibility_only_notes:
+L00028854	- GUI event comment is source-lineage evidence only.
+L00028855	stale_retired_dispositions: []
+L00028856	owner_boundary_notes:
+L00028857	- Final GUI/runtime views consume the event; orchestrator owns pause detection.
+L00028858	owner_hints:
+L00028859	- Plans/orchestrator-subagent-integration.md
+L00028860	preserved_contractrefs: []
+L00028861	```
+L00028862	
+L00028863	### OSI-389 - Rework Commit Strategy Example
+L00028864	
+L00028865	```yaml
+L00028866	plan_unit_id: OSI-389
+L00028867	unit_type: requirement
+L00028868	status: accepted
+L00028869	owner_doc: Plans/orchestrator-subagent-integration.md
+L00028870	canonical_text: >-
+L00028871	  Rework commit strategy evidence preserves the example distinction between amended commits for rework and new commits for
+L00028872	  non-rework progress without authorizing history mutation during migration.
+L00028873	gui_related: false
+L00028874	gui_classification_reason: This unit covers backend SCM/commit strategy evidence, not GUI presentation.
+L00028875	split_recommended: false
+L00028876	depends_on:
+L00028877	- OSI-137
+L00028878	- OSI-168
+L00028879	- OSI-172
+L00028880	unblocks: []
+L00028881	acceptance_criteria:
+L00028882	- Covered commit strategy snippet remains losslessly available for exact-text audit.
+L00028883	- Commit amend example is not an instruction to amend repository history during this migration.
+L00028884	- No WorkNodes, NodeSeeds, executable queues, final node manifests, or production build tasks are created.
+L00028885	validation_surfaces:
+L00028886	- >-
+L00028887	  python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits
+L00028888	- python3 scripts/pm-plan-index.py validate
+L00028889	reasoning_tier: standard
+L00028890	context_scope: orchestrator_subagent_standardization
+L00028891	implementation_surfaces:
+L00028892	- Plans/orchestrator-subagent-integration.md
+L00028893	risk_class: rework_commit_strategy_example
+L00028894	node_compile_hint:
+L00028895	  mode: rework_commit_strategy_example
+L00028896	  create_worknodes: false
+L00028897	source_lineage:
+L00028898	- >-
+L00028899	  Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:orchestrator-subagent-integration-S0186
+L00028900	preserved_exact_tokens:
+L00028901	- commit_tier_progress
+L00028902	- is_rework
+L00028903	- 'node: {} iteration {} (after review)'
+L00028904	- 'node: {} iteration {} complete'
+L00028905	- commit_amend
+L00028906	- commit
+L00028907	negative_constraints:
+L00028908	- Commit amend example is not an instruction to amend repository history during migration.
+L00028909	compatibility_only_notes:
+L00028910	- Rust snippet is source-lineage evidence only.
+L00028911	stale_retired_dispositions: []
+L00028912	owner_boundary_notes:
+L00028913	- SCM and runtime owners adjudicate concrete commit policy.
+L00028914	owner_hints:
+L00028915	- Plans/orchestrator-subagent-integration.md
+L00028916	preserved_contractrefs: []
+L00028917	```
+L00028918	
+L00028919	### OSI-390 - Enhanced Loop Pause And Progress Selection
+L00028920	
+L00028921	```yaml
+L00028922	plan_unit_id: OSI-390
+L00028923	unit_type: requirement
+L00028924	status: accepted
+L00028925	owner_doc: Plans/orchestrator-subagent-integration.md
+L00028926	canonical_text: >-
+L00028927	  Enhanced loop evidence preserves pause-gate checking, progress reads, next-task selection that prioritizes incomplete
+L00028928	  work, and all-tasks-complete termination.
+L00028929	gui_related: false
+L00028930	gui_classification_reason: This unit covers backend loop control, not GUI presentation.
+L00028931	split_recommended: false
+L00028932	depends_on:
+L00028933	- OSI-383
+L00028934	- OSI-387
+L00028935	unblocks: []
+L00028936	acceptance_criteria:
+L00028937	- Covered enhanced loop pause/progress selection lines remain losslessly available for exact-text audit.
+L00028938	- Loop example is not an executable work queue.
+L00028939	- No WorkNodes, NodeSeeds, executable queues, final node manifests, or production build tasks are created.
+L00028940	validation_surfaces:
+L00028941	- >-
+L00028942	  python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits
+L00028943	- python3 scripts/pm-plan-index.py validate
+L00028944	reasoning_tier: standard
+L00028945	context_scope: orchestrator_subagent_standardization
+L00028946	implementation_surfaces:
+L00028947	- Plans/orchestrator-subagent-integration.md
+L00028948	risk_class: enhanced_loop_pause_progress_selection
+L00028949	node_compile_hint:
+L00028950	  mode: enhanced_loop_pause_progress_selection
+L00028951	  create_worknodes: false
+L00028952	source_lineage:
+L00028953	- >-
+L00028954	  Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:orchestrator-subagent-integration-S0187
+L00028955	preserved_exact_tokens:
+L00028956	- run_enhanced_loop
+L00028957	- 'Step 0: Check pause gate'
+L00028958	- 'Step 1: Read progress'
+L00028959	- 'Step 2: Get next task'
+L00028960	- All tasks complete
+L00028961	negative_constraints:
+L00028962	- Loop example is not an executable work queue.
+L00028963	compatibility_only_notes:
+L00028964	- Rust snippet is source-lineage evidence only.
+L00028965	stale_retired_dispositions: []
+L00028966	owner_boundary_notes:
+L00028967	- Orchestrator/runtime owners adjudicate concrete loop behavior.
+L00028968	owner_hints:
+L00028969	- Plans/orchestrator-subagent-integration.md
+L00028970	preserved_contractrefs: []
+L00028971	```
+L00028972	
+L00028973	### OSI-391 - Enhanced Loop DRY Selection And Invocation
+L00028974	
+L00028975	```yaml
+L00028976	plan_unit_id: OSI-391
+L00028977	unit_type: requirement
+L00028978	status: accepted
+L00028979	owner_doc: Plans/orchestrator-subagent-integration.md
+L00028980	canonical_text: >-
+L00028981	  Enhanced loop selection and invocation evidence preserves DRY requirements that subagent selection uses subagent_selector,
+L00028982	  subagent_registry validation, platform_specs invocation, and execute_with_subagents under DRY and Executor Protocol contracts.
+L00028983	gui_related: false
+L00028984	gui_classification_reason: This unit covers backend selector/invocation requirements, not GUI presentation.
+L00028985	split_recommended: false
+L00028986	depends_on:
+L00028987	- OSI-239
+L00028988	- OSI-240
+L00028989	- OSI-375
+L00028990	unblocks: []
+L00028991	acceptance_criteria:
+L00028992	- Covered DRY selection and invocation lines plus inline ContractRef remain losslessly available for exact-text audit.
+L00028993	- Subagent and platform invocation must not be hardcoded outside selector/registry/platform_specs contracts.
+L00028994	- No WorkNodes, NodeSeeds, executable queues, final node manifests, or production build tasks are created.
+L00028995	validation_surfaces:
+L00028996	- >-
+L00028997	  python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits
+L00028998	- python3 scripts/pm-plan-index.py validate
+L00028999	reasoning_tier: standard
+L00029000	context_scope: orchestrator_subagent_standardization
+L00029001	implementation_surfaces:
+L00029002	- Plans/orchestrator-subagent-integration.md
+L00029003	risk_class: enhanced_loop_dry_selection_invocation
+L00029004	node_compile_hint:
+L00029005	  mode: enhanced_loop_dry_selection_invocation
+L00029006	  create_worknodes: false
+L00029007	source_lineage:
+L00029008	- >-
+L00029009	  Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:orchestrator-subagent-integration-S0187
+L00029010	preserved_exact_tokens:
+L00029011	- subagent_selector
+L00029012	- subagent_registry
+L00029013	- 'subagent_registry::is_valid_subagent_name()'
+L00029014	- platform_specs
+L00029015	- execute_with_subagents
+L00029016	negative_constraints:
+L00029017	- No hardcoded subagent or platform invocation outside selector/registry/platform_specs contracts.
+L00029018	compatibility_only_notes:
+L00029019	- Inline ContractRef appears inside the Rust fence and remains source-lineage evidence.
+L00029020	stale_retired_dispositions: []
+L00029021	owner_boundary_notes:
+L00029022	- DRY and Executor Protocol contracts own selector/invocation reuse requirements.
+L00029023	owner_hints:
+L00029024	- Plans/orchestrator-subagent-integration.md
+L00029025	preserved_contractrefs:
+L00029026	- 'ContractRef: ContractName:Plans/DRY_Rules.md#7, ContractName:Plans/Executor_Protocol.md'
+L00029027	```
+L00029028	
+L00029029	### OSI-392 - Enhanced Loop Preflight Failure Handling
+L00029030	
+L00029031	```yaml
+L00029032	plan_unit_id: OSI-392
+L00029033	unit_type: requirement
+L00029034	status: accepted
+L00029035	owner_doc: Plans/orchestrator-subagent-integration.md
+L00029036	canonical_text: >-
+L00029037	  Enhanced loop preflight evidence preserves Tier 1 QA execution, failed-preflight incomplete marking, error formatting,
+L00029038	  and loop continuation for remediation.
+L00029039	gui_related: false
+L00029040	gui_classification_reason: This unit covers backend preflight failure handling, not GUI presentation.
+L00029041	split_recommended: false
+L00029042	depends_on:
+L00029043	- OSI-108
+L00029044	- OSI-384
+L00029045	unblocks: []
+L00029046	acceptance_criteria:
+L00029047	- Covered preflight failure handling lines remain losslessly available for exact-text audit.
+L00029048	- Preflight snippet is plan evidence and not executable remediation work.
+L00029049	- No WorkNodes, NodeSeeds, executable queues, final node manifests, or production build tasks are created.
+L00029050	validation_surfaces:
+L00029051	- >-
+L00029052	  python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits
+L00029053	- python3 scripts/pm-plan-index.py validate
+L00029054	reasoning_tier: standard
+L00029055	context_scope: orchestrator_subagent_standardization
+L00029056	implementation_surfaces:
+L00029057	- Plans/orchestrator-subagent-integration.md
+L00029058	risk_class: enhanced_loop_preflight_failure_handling
+L00029059	node_compile_hint:
+L00029060	  mode: enhanced_loop_preflight_failure_handling
+L00029061	  create_worknodes: false
+L00029062	source_lineage:
+L00029063	- >-
+L00029064	  Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:orchestrator-subagent-integration-S0187
+L00029065	preserved_exact_tokens:
+L00029066	- run_preflight
+L00029067	- preflight_result.passed
+L00029068	- mark_incomplete
+L00029069	- Preflight failed
+L00029070	- continue
+L00029071	negative_constraints:
+L00029072	- Preflight snippet is not executable remediation work.
+L00029073	compatibility_only_notes:
+L00029074	- Rust snippet is source-lineage evidence only.
+L00029075	stale_retired_dispositions: []
+L00029076	owner_boundary_notes:
+L00029077	- Verification/remediation owners adjudicate concrete preflight failure behavior.
+L00029078	owner_hints:
+L00029079	- Plans/orchestrator-subagent-integration.md
+L00029080	preserved_contractrefs: []
+L00029081	```
+L00029082	
+L00029083	### OSI-393 - Enhanced Loop Task Inspection Feedback
+L00029084	
+L00029085	```yaml
+L00029086	plan_unit_id: OSI-393
+L00029087	unit_type: requirement
+L00029088	status: accepted
+L00029089	owner_doc: Plans/orchestrator-subagent-integration.md
+L00029090	canonical_text: >-
+L00029091	  Enhanced loop task inspection evidence preserves task inspection against commit results, completed/incomplete marking,
+L00029092	  feedback cloning, feedback prepending, and re-looping to fix incomplete tasks.
+L00029093	gui_related: false
+L00029094	gui_classification_reason: This unit covers backend inspection feedback behavior, not GUI presentation.
+L00029095	split_recommended: false
+L00029096	depends_on:
+L00029097	- OSI-385
+L00029098	- OSI-137
+L00029099	unblocks: []
+L00029100	acceptance_criteria:
+L00029101	- Covered task inspection feedback lines remain losslessly available for exact-text audit.
+L00029102	- Feedback loop snippet is plan evidence and not an executable work queue.
+L00029103	- No WorkNodes, NodeSeeds, executable queues, final node manifests, or production build tasks are created.
+L00029104	validation_surfaces:
+L00029105	- >-
+L00029106	  python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits
+L00029107	- python3 scripts/pm-plan-index.py validate
+L00029108	reasoning_tier: standard
+L00029109	context_scope: orchestrator_subagent_standardization
+L00029110	implementation_surfaces:
+L00029111	- Plans/orchestrator-subagent-integration.md
+L00029112	risk_class: enhanced_loop_task_inspection_feedback
+L00029113	node_compile_hint:
+L00029114	  mode: enhanced_loop_task_inspection_feedback
+L00029115	  create_worknodes: false
+L00029116	source_lineage:
+L00029117	- >-
+L00029118	  Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:orchestrator-subagent-integration-S0187
+L00029119	preserved_exact_tokens:
+L00029120	- inspect_task
+L00029121	- result.commit_hash
+L00029122	- mark_completed
+L00029123	- feedback.clone()
+L00029124	- prepend_task_feedback
+L00029125	- Re-loop to fix incomplete task
+L00029126	negative_constraints:
+L00029127	- Feedback loop snippet is not an executable work queue.
+L00029128	compatibility_only_notes:
+L00029129	- Rust snippet is source-lineage evidence only.
+L00029130	stale_retired_dispositions: []
+L00029131	owner_boundary_notes:
+L00029132	- Orchestrator/inspection owners adjudicate concrete feedback loop behavior.
+L00029133	owner_hints:
+L00029134	- Plans/orchestrator-subagent-integration.md
+L00029135	preserved_contractrefs: []
+L00029136	```
+L00029137	
+L00029138	### OSI-394 - Enhanced Loop Phase Inspection Advancement
+L00029139	
+L00029140	```yaml
+L00029141	plan_unit_id: OSI-394
+L00029142	unit_type: requirement
+L00029143	status: accepted
+L00029144	owner_doc: Plans/orchestrator-subagent-integration.md
+L00029145	canonical_text: >-
+L00029146	  Enhanced loop phase inspection evidence preserves phase completion checks, phase inspection, phase task lookup, phase
+L00029147	  advancement, and the closing DRY ContractRef.
+L00029148	gui_related: false
+L00029149	gui_classification_reason: This unit covers backend phase inspection and loop advancement, not GUI presentation.
+L00029150	split_recommended: false
+L00029151	depends_on:
+L00029152	- OSI-386
+L00029153	unblocks: []
+L00029154	acceptance_criteria:
+L00029155	- Covered phase inspection advancement lines and closing ContractRef remain losslessly available for exact-text audit.
+L00029156	- Phase inspection snippet is plan evidence and not an executable scheduler manifest.
+L00029157	- No WorkNodes, NodeSeeds, executable queues, final node manifests, or production build tasks are created.
+L00029158	validation_surfaces:
+L00029159	- >-
+L00029160	  python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits
+L00029161	- python3 scripts/pm-plan-index.py validate
+L00029162	reasoning_tier: standard
+L00029163	context_scope: orchestrator_subagent_standardization
+L00029164	implementation_surfaces:
+L00029165	- Plans/orchestrator-subagent-integration.md
+L00029166	risk_class: enhanced_loop_phase_inspection_advancement
+L00029167	node_compile_hint:
+L00029168	  mode: enhanced_loop_phase_inspection_advancement
+L00029169	  create_worknodes: false
+L00029170	source_lineage:
+L00029171	- >-
+L00029172	  Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:orchestrator-subagent-integration-S0187
+L00029173	preserved_exact_tokens:
+L00029174	- phase_complete
+L00029175	- inspect_phase
+L00029176	- get_phase_tasks
+L00029177	- advance_phase
+L00029178	negative_constraints:
+L00029179	- Phase inspection snippet is not an executable scheduler manifest.
+L00029180	compatibility_only_notes:
+L00029181	- Rust snippet is source-lineage evidence only.
+L00029182	stale_retired_dispositions: []
+L00029183	owner_boundary_notes:
+L00029184	- Orchestrator/verification owners adjudicate concrete phase advancement behavior.
+L00029185	owner_hints:
+L00029186	- Plans/orchestrator-subagent-integration.md
+L00029187	preserved_contractrefs:
+L00029188	- 'ContractRef: Primitive:DRYRules, ContractName:Plans/DRY_Rules.md#7'
+L00029189	```
+L00029190	
+L00029191	### OSI-395 - Autonomous QA Benefits Backend Evidence
+L00029192	
+L00029193	```yaml
+L00029194	plan_unit_id: OSI-395
+L00029195	unit_type: requirement
+L00029196	status: accepted
+L00029197	owner_doc: Plans/orchestrator-subagent-integration.md
+L00029198	canonical_text: >-
+L00029199	  Autonomous QA loop backend benefits preserve quality-assurance, rework-prioritization, safe-pausing, commit-history, and
+L00029200	  phase-discipline evidence without creating tasks or repository-history actions.
+L00029201	gui_related: false
+L00029202	gui_classification_reason: This unit covers backend orchestration benefit evidence, not GUI presentation.
+L00029203	split_recommended: false
+L00029204	depends_on:
+L00029205	- OSI-379
+L00029206	- OSI-380
+L00029207	- OSI-383
+L00029208	- OSI-387
+L00029209	- OSI-389
+L00029210	- OSI-394
+L00029211	unblocks: []
+L00029212	acceptance_criteria:
+L00029213	- Covered autonomous QA backend benefit bullets remain losslessly available for exact-text audit.
+L00029214	- Benefit evidence does not create executable tasks or repository-history actions.
+L00029215	- No WorkNodes, NodeSeeds, executable queues, final node manifests, or production build tasks are created.
+L00029216	validation_surfaces:
+L00029217	- >-
+L00029218	  python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits
+L00029219	- python3 scripts/pm-plan-index.py validate
+L00029220	reasoning_tier: standard
+L00029221	context_scope: orchestrator_subagent_standardization
+L00029222	implementation_surfaces:
+L00029223	- Plans/orchestrator-subagent-integration.md
+L00029224	risk_class: autonomous_qa_benefits_backend_evidence
+L00029225	node_compile_hint:
+L00029226	  mode: autonomous_qa_benefits_backend_evidence
+L00029227	  create_worknodes: false
+L00029228	source_lineage:
+L00029229	- >-
+L00029230	  Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:orchestrator-subagent-integration-S0188
+L00029231	preserved_exact_tokens:
+L00029232	- Better Quality Assurance
+L00029233	- Rework Prioritization
+L00029234	- Safe Pausing
+L00029235	- PAUSE.md
+L00029236	- Better Commit History
+L00029237	- Phase Discipline
+L00029238	negative_constraints:
+L00029239	- Benefit evidence is not executable work and does not authorize repository-history mutation.
+L00029240	compatibility_only_notes:
+L00029241	- Autonomous QA benefits remain source-lineage evidence only.
+L00029242	stale_retired_dispositions: []
+L00029243	owner_boundary_notes:
+L00029244	- Orchestrator and SCM owners adjudicate any promoted runtime or commit behavior.
+L00029245	owner_hints:
+L00029246	- Plans/orchestrator-subagent-integration.md
+L00029247	preserved_contractrefs: []
+L00029248	```
+L00029249	
+L00029250	### OSI-396 - Autonomous QA Clear Progress Visibility Evidence
+L00029251	
+L00029252	```yaml
+L00029253	plan_unit_id: OSI-396
+L00029254	unit_type: requirement
+L00029255	status: accepted
+L00029256	owner_doc: Plans/orchestrator-subagent-integration.md
+L00029257	canonical_text: Clear progress visibility evidence preserves visual status symbols as GUI-consumer presentation evidence.
+L00029258	gui_related: true
+L00029259	gui_classification_reason: This unit covers user-visible progress/status presentation.
+L00029260	split_recommended: false
+L00029261	depends_on:
+L00029262	- OSI-381
+L00029263	- OSI-382
+L00029264	unblocks: []
+L00029265	acceptance_criteria:
+L00029266	- Covered clear-progress visibility bullet remains losslessly available for exact-text audit.
+L00029267	- GUI progress presentation remains a consumer projection and does not own backend orchestration semantics.
+L00029268	- No WorkNodes, NodeSeeds, executable queues, final node manifests, or production build tasks are created.
+L00029269	validation_surfaces:
+L00029270	- >-
+L00029271	  python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits
+L00029272	- python3 scripts/pm-plan-index.py validate
+L00029273	reasoning_tier: standard
+L00029274	context_scope: orchestrator_subagent_standardization
+L00029275	implementation_surfaces:
+L00029276	- Plans/orchestrator-subagent-integration.md
+L00029277	risk_class: autonomous_qa_clear_progress_visibility
+L00029278	node_compile_hint:
+L00029279	  mode: autonomous_qa_clear_progress_visibility
+L00029280	  create_worknodes: false
+L00029281	source_lineage:
+L00029282	- >-
+L00029283	  Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:orchestrator-subagent-integration-S0188
+L00029284	preserved_exact_tokens:
+L00029285	- Clear Progress Visibility
+L00029286	- Visual status symbols make progress obvious
+L00029287	negative_constraints:
+L00029288	- Visual status symbols do not own backend orchestration state.
+L00029289	compatibility_only_notes:
+L00029290	- Visual status evidence remains GUI-consumer source-lineage material.
+L00029291	stale_retired_dispositions: []
+L00029292	owner_boundary_notes:
+L00029293	- Final GUI owns presentation; orchestrator owns runtime status semantics.
+L00029294	owner_hints:
+L00029295	- Plans/orchestrator-subagent-integration.md
+L00029296	preserved_contractrefs: []
+L00029297	```
+L00029298	
+L00029299	### OSI-397 - Autonomous QA Implementation Considerations Evidence
+L00029300	
+L00029301	```yaml
+L00029302	plan_unit_id: OSI-397
+L00029303	unit_type: requirement
+L00029304	status: accepted
+L00029305	owner_doc: Plans/orchestrator-subagent-integration.md
+L00029306	canonical_text: >-
+L00029307	  Autonomous QA implementation considerations preserve progress-file, inspector feedback, pause-file, commit-amending, and
+L00029308	  inspector-subagent examples as compatibility/source-lineage evidence.
+L00029309	gui_related: false
+L00029310	gui_classification_reason: This unit covers backend implementation-consideration evidence, not GUI presentation.
+L00029311	split_recommended: false
+L00029312	depends_on:
+L00029313	- OSI-380
+L00029314	- OSI-383
+L00029315	- OSI-384
+L00029316	- OSI-385
+L00029317	- OSI-387
+L00029318	- OSI-389
+L00029319	unblocks: []
+L00029320	acceptance_criteria:
+L00029321	- Covered autonomous QA implementation-considerations list remains losslessly available for exact-text audit.
+L00029322	- Inspector and commit examples remain source evidence and do not create implementation work.
+L00029323	- No WorkNodes, NodeSeeds, executable queues, final node manifests, or production build tasks are created.
+L00029324	validation_surfaces:
+L00029325	- >-
+L00029326	  python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits
+L00029327	- python3 scripts/pm-plan-index.py validate
+L00029328	reasoning_tier: standard
+L00029329	context_scope: orchestrator_subagent_standardization
+L00029330	implementation_surfaces:
+L00029331	- Plans/orchestrator-subagent-integration.md
+L00029332	risk_class: autonomous_qa_implementation_considerations
+L00029333	node_compile_hint:
+L00029334	  mode: autonomous_qa_implementation_considerations
+L00029335	  create_worknodes: false
+L00029336	source_lineage:
+L00029337	- >-
+L00029338	  Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:orchestrator-subagent-integration-S0189
+L00029339	preserved_exact_tokens:
+L00029340	- Progress File Format
+L00029341	- Inspector Feedback
+L00029342	- Pause File Location
+L00029343	- .puppet-master/PAUSE.md
+L00029344	- Commit Amending
+L00029345	- Inspector Subagents
+L00029346	- code-reviewer
+L00029347	- qa-expert
+L00029348	negative_constraints:
+L00029349	- Inspector and commit examples are not executable tasks.
+L00029350	compatibility_only_notes:
+L00029351	- Considerations remain compatibility/source-lineage evidence only.
+L00029352	stale_retired_dispositions: []
+L00029353	owner_boundary_notes:
+L00029354	- Orchestrator, SCM, and Persona/subagent owners adjudicate promoted behavior.
+L00029355	owner_hints:
+L00029356	- Plans/orchestrator-subagent-integration.md
+L00029357	preserved_contractrefs: []
+L00029358	```
+L00029359	
+L00029360	### OSI-398 - Autonomous QA Config Example Backend Knobs
+L00029361	
+L00029362	```yaml
+L00029363	plan_unit_id: OSI-398
+L00029364	unit_type: requirement
+L00029365	status: accepted
+L00029366	owner_doc: Plans/orchestrator-subagent-integration.md
+L00029367	canonical_text: >-
+L00029368	  Autonomous QA config example backend knobs preserve enablement, QA-system, inspector-feedback, feedback-prepending,
+L00029369	  rework-amend, and conventional-format settings as source evidence only.
+L00029370	gui_related: false
+L00029371	gui_classification_reason: This unit covers backend configuration example fields, not GUI presentation.
+L00029372	split_recommended: false
+L00029373	depends_on:
+L00029374	- OSI-380
+L00029375	- OSI-384
+L00029376	- OSI-389
+L00029377	unblocks: []
+L00029378	acceptance_criteria:
+L00029379	- Covered configuration example backend knobs remain losslessly available for exact-text audit.
+L00029380	- The YAML example is not an instruction to create or modify a runtime config file.
+L00029381	- No WorkNodes, NodeSeeds, executable queues, final node manifests, or production build tasks are created.
+L00029382	validation_surfaces:
+L00029383	- >-
+L00029384	  python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits
+L00029385	- python3 scripts/pm-plan-index.py validate
+L00029386	reasoning_tier: standard
+L00029387	context_scope: orchestrator_subagent_standardization
+L00029388	implementation_surfaces:
+L00029389	- Plans/orchestrator-subagent-integration.md
+L00029390	risk_class: autonomous_qa_config_backend_knobs
+L00029391	node_compile_hint:
+L00029392	  mode: autonomous_qa_config_backend_knobs
+L00029393	  create_worknodes: false
+L00029394	source_lineage:
+L00029395	- >-
+L00029396	  Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:orchestrator-subagent-integration-S0190
+L00029397	preserved_exact_tokens:
+L00029398	- .puppet-master/config.yaml
+L00029399	- enableAutonomousQaLoopPatterns
+L00029400	- qaSystem
+L00029401	- trackInspectorFeedback
+L00029402	- prependFeedbackToTasks
+L00029403	- amendForRework
+L00029404	- conventionalFormat
+L00029405	negative_constraints:
+L00029406	- Config example must not create runtime files or executable tasks.
+L00029407	compatibility_only_notes:
+L00029408	- YAML snippet is source-lineage evidence only.
+L00029409	stale_retired_dispositions: []
+L00029410	owner_boundary_notes:
+L00029411	- Configuration owners adjudicate any promoted runtime keys.
+L00029412	owner_hints:
+L00029413	- Plans/orchestrator-subagent-integration.md
+L00029414	preserved_contractrefs: []
+L00029415	```
+L00029416	
+L00029417	### OSI-399 - Autonomous QA Visual Status Config Knob
+L00029418	
+L00029419	```yaml
+L00029420	plan_unit_id: OSI-399
+L00029421	unit_type: requirement
+L00029422	status: accepted
+L00029423	owner_doc: Plans/orchestrator-subagent-integration.md
+L00029424	canonical_text: Preserve the visual-status configuration example as GUI/status evidence only.
+L00029425	gui_related: true
+L00029426	gui_classification_reason: This unit covers user-visible status-symbol configuration evidence.
+L00029427	split_recommended: false
+L00029428	depends_on:
+L00029429	- OSI-381
+L00029430	- OSI-382
+L00029431	- OSI-396
+L00029432	unblocks: []
+L00029433	acceptance_criteria:
+L00029434	- Covered visual status config line remains losslessly available for exact-text audit.
+L00029435	- Visual status config evidence does not own backend status semantics.
+L00029436	- No WorkNodes, NodeSeeds, executable queues, final node manifests, or production build tasks are created.
+L00029437	validation_surfaces:
+L00029438	- >-
+L00029439	  python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits
+L00029440	- python3 scripts/pm-plan-index.py validate
+L00029441	reasoning_tier: standard
+L00029442	context_scope: orchestrator_subagent_standardization
+L00029443	implementation_surfaces:
+L00029444	- Plans/orchestrator-subagent-integration.md
+L00029445	risk_class: autonomous_qa_visual_status_config_knob
+L00029446	node_compile_hint:
+L00029447	  mode: autonomous_qa_visual_status_config_knob
+L00029448	  create_worknodes: false
+L00029449	source_lineage:
+L00029450	- >-
+L00029451	  Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:orchestrator-subagent-integration-S0190
+L00029452	preserved_exact_tokens:
+L00029453	- 'useVisualStatus: true  # ⬜ 🔄 ✅ 🔴'
+L00029454	negative_constraints:
+L00029455	- Visual status config evidence does not own backend status semantics.
+L00029456	compatibility_only_notes:
+L00029457	- YAML line is GUI/status source-lineage evidence only.
+L00029458	stale_retired_dispositions: []
+L00029459	owner_boundary_notes:
+L00029460	- Final GUI owns presentation; configuration/runtime owners own accepted settings.
+L00029461	owner_hints:
+L00029462	- Plans/orchestrator-subagent-integration.md
+L00029463	preserved_contractrefs: []
+L00029464	```
+L00029465	
+L00029466	### OSI-400 - Media Capability Gating Change Summary
+L00029467	
+L00029468	```yaml
+L00029469	plan_unit_id: OSI-400
+L00029470	unit_type: requirement
+L00029471	status: accepted
+L00029472	owner_doc: Plans/orchestrator-subagent-integration.md
+L00029473	canonical_text: >-
+L00029474	  Media capability gating change-summary evidence preserves that Orchestrator must call capabilities.get before dispatching
+L00029475	  media.generate and must gate execution on real-time capability state under the media capability owner.
+L00029476	gui_related: false
+L00029477	gui_classification_reason: This unit covers backend capability gating, not GUI presentation.
+L00029478	split_recommended: false
+L00029479	depends_on:
+L00029480	- OSI-181
+L00029481	- OSI-373
+L00029482	unblocks: []
+L00029483	acceptance_criteria:
+L00029484	- Covered media capability gating change-summary line and ContractRef remain losslessly available for exact-text audit.
+L00029485	- Media capability owner retains SSOT authority.
+L00029486	- No WorkNodes, NodeSeeds, executable queues, final node manifests, or production build tasks are created.
+L00029487	validation_surfaces:
+L00029488	- >-
+L00029489	  python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits
+L00029490	- python3 scripts/pm-plan-index.py validate
+L00029491	reasoning_tier: standard
+L00029492	context_scope: orchestrator_subagent_standardization
+L00029493	implementation_surfaces:
+L00029494	- Plans/orchestrator-subagent-integration.md
+L00029495	risk_class: media_capability_gating_change_summary
+L00029496	node_compile_hint:
+L00029497	  mode: media_capability_gating_change_summary
+L00029498	  create_worknodes: false
+L00029499	source_lineage:
+L00029500	- >-
+L00029501	  Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:orchestrator-subagent-integration-S0191
+L00029502	preserved_exact_tokens:
+L00029503	- capabilities.get
+L00029504	- media.generate
+L00029505	- real-time capability state
+L00029506	- SSOT
+L00029507	negative_constraints:
+L00029508	- Orchestrator evidence must not replace Media Generation and Capabilities ownership.
+L00029509	compatibility_only_notes:
+L00029510	- Change-summary row is source-lineage evidence.
+L00029511	stale_retired_dispositions: []
+L00029512	owner_boundary_notes:
+L00029513	- Plans/Media_Generation_and_Capabilities.md retains capability-system SSOT.
+L00029514	owner_hints:
+L00029515	- Plans/orchestrator-subagent-integration.md
+L00029516	preserved_contractrefs:
+L00029517	- 'ContractRef: ToolID:capabilities.get, ToolID:media.generate, ContractName:Plans/Media_Generation_and_Capabilities.md#CAPABILITY-SYSTEM'
+L00029518	```
+L00029519	
+L00029520	### OSI-401 - Sharded User Project Plan Graph Consumption
+L00029521	
+L00029522	```yaml
+L00029523	plan_unit_id: OSI-401
+L00029524	unit_type: requirement
+L00029525	status: accepted
+L00029526	owner_doc: Plans/orchestrator-subagent-integration.md
+L00029527	canonical_text: >-
+L00029528	  User-project plan graph consumption evidence preserves sharded-only plan graph execution from project index and node
+L00029529	  shards, rejects a canonical monolithic graph file, and keeps derived monolithic export as noncanonical.
+L00029530	gui_related: false
+L00029531	gui_classification_reason: This unit covers graph/storage consumption, not GUI presentation.
+L00029532	split_recommended: false
+L00029533	depends_on:
+L00029534	- OSI-018
+L00029535	unblocks: []
+L00029536	acceptance_criteria:
+L00029537	- Covered sharded plan graph change-summary rows remain losslessly available for exact-text audit.
+L00029538	- Monolithic plan_graph.json must not become canonical project graph storage.
+L00029539	- No WorkNodes, NodeSeeds, executable queues, final node manifests, or production build tasks are created.
+L00029540	validation_surfaces:
+L00029541	- >-
+L00029542	  python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits
+L00029543	- python3 scripts/pm-plan-index.py validate
+L00029544	reasoning_tier: standard
+L00029545	context_scope: orchestrator_subagent_standardization
+L00029546	implementation_surfaces:
+L00029547	- Plans/orchestrator-subagent-integration.md
+L00029548	risk_class: sharded_user_project_plan_graph_consumption
+L00029549	node_compile_hint:
+L00029550	  mode: sharded_user_project_plan_graph_consumption
+L00029551	  create_worknodes: false
+L00029552	source_lineage:
+L00029553	- >-
+L00029554	  Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:orchestrator-subagent-integration-S0191
+L00029555	preserved_exact_tokens:
+L00029556	- SHARDED-ONLY
+L00029557	- .puppet-master/project/plan_graph/index.json
+L00029558	- nodes/<node_id>.json
+L00029559	- .puppet-master/project/plan_graph.json
+L00029560	- exports/plan_graph.monolithic.json
+L00029561	- deterministic node_id
+L00029562	- edges.json
+L00029563	negative_constraints:
+L00029564	- There is no canonical .puppet-master/project/plan_graph.json.
+L00029565	compatibility_only_notes:
+L00029566	- Monolithic export may exist only as a derived export.
+L00029567	stale_retired_dispositions:
+L00029568	- Monolithic project graph storage is retired as canonical storage.
+L00029569	owner_boundary_notes:
+L00029570	- Graph/storage owners retain schema authority.
+L00029571	owner_hints:
+L00029572	- Plans/orchestrator-subagent-integration.md
+L00029573	preserved_contractrefs: []
+L00029574	```
+L00029575	
+L00029576	### OSI-402 - Persona Tier Label Compatibility And Frame Switching
+L00029577	
+L00029578	```yaml
+L00029579	plan_unit_id: OSI-402
+L00029580	unit_type: compatibility_disposition
+L00029581	status: accepted
+L00029582	owner_doc: Plans/orchestrator-subagent-integration.md
+L00029583	canonical_text: >-
+L00029584	  Persona Phase, Task, Subtask, and Iteration labels are retired tier-era compatibility/defaulting labels, not live runtime
+L00029585	  canon; Persona switching uses operation frame and requested/effective Persona runtime records without adding tiers or
+L00029586	  restoring Phase/Task/Subtask/Iteration as execution authority.
+L00029587	gui_related: false
+L00029588	gui_classification_reason: This unit covers backend Persona/tier behavior, not GUI presentation.
+L00029589	split_recommended: false
+L00029590	depends_on:
+L00029591	- OSI-019
+L00029592	- OSI-084
+L00029593	unblocks: []
+L00029594	acceptance_criteria:
+L00029595	- Covered Persona addendum heading, tier reminder, tier defaults, and planning/execution switching sections remain losslessly available as compatibility lineage.
+L00029596	- Persona switching must not add tiers or restore Phase/Task/Subtask/Iteration as live runtime canon.
+L00029597	- No WorkNodes, NodeSeeds, executable queues, final node manifests, or production build tasks are created.
+L00029598	validation_surfaces:
+L00029599	- >-
+L00029600	  python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits
+L00029601	- python3 scripts/pm-plan-index.py validate
+L00029602	reasoning_tier: standard
+L00029603	context_scope: orchestrator_subagent_standardization
+L00029604	implementation_surfaces:
+L00029605	- Plans/orchestrator-subagent-integration.md
+L00029606	risk_class: persona_tier_compatibility_drift
+L00029607	node_compile_hint:
+L00029608	  mode: persona_tier_label_compatibility_frame_switching
+L00029609	  create_worknodes: false
+L00029610	source_lineage:
+L00029611	- >-
+L00029612	  Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:orchestrator-subagent-integration-S0192
+L00029613	- >-
+L00029614	  Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:orchestrator-subagent-integration-S0193
+L00029615	- >-
+L00029616	  Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:orchestrator-subagent-integration-S0194
+L00029617	- >-
+L00029618	  Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:orchestrator-subagent-integration-S0196
+L00029619	- Plans/ledgers/v2/pldg-20260613-001-cleanup-fable-audit/records/design_atoms.jsonl:7
+L00029620	- Plans/ledgers/v2/pldg-20260613-001-cleanup-fable-audit/records/decisions.jsonl:7
+L00029621	- Plans/ledgers/v2/pldg-20260613-001-cleanup-fable-audit/source_shards/section-a-conflicting-canon.md:10
+L00029622	preserved_exact_tokens:
+L00029623	- Phase
+L00029624	- Task
+L00029625	- Subtask
+L00029626	- Iteration
+L00029627	- The orchestrator tier model remains
+L00029628	- node/package/seam graph
+L00029629	- tier_personas
+L00029630	- operation frame
+L00029631	- planning/discussion
+L00029632	- execution
+L00029633	- review/verification
+L00029634	negative_constraints:
+L00029635	- Persona switching must not introduce new tiers.
+L00029636	- Persona Phase/Task/Subtask/Iteration labels must not reassert tier runtime canon.
+L00029637	- Leaving a tier unset does not create an implicit overseer Persona or provider-native agent-file default.
+L00029638	compatibility_only_notes:
+L00029639	- Phase, Task, Subtask, and Iteration survive only as legacy Persona defaulting labels.
+L00029640	stale_retired_dispositions:
+L00029641	- The earlier assertion that the orchestrator tier model remains Phase, Task, Subtask, Iteration is retired for runtime canon.
+L00029642	owner_boundary_notes:
+L00029643	- Persona owner docs retain Persona registry and defaulting authority.
+L00029644	owner_hints:
+L00029645	- Plans/orchestrator-subagent-integration.md
+L00029646	preserved_contractrefs: []
+L00029647	```
+L00029648	
+L00029649	### OSI-403 - Orchestrator Persona Resolution Config Contract
+L00029650	
+L00029651	```yaml
+L00029652	plan_unit_id: OSI-403
+L00029653	unit_type: requirement
+L00029654	status: accepted
+L00029655	owner_doc: Plans/orchestrator-subagent-integration.md
+L00029656	canonical_text: >-
+L00029657	  Orchestrator consumes a canonical Persona-resolution config object separate from delegated-subagent registry data,
+L00029658	  validates Persona IDs against persona_registry, and keeps delegated child-run validation with subagent_registry.
+L00029659	gui_related: false
+L00029660	gui_classification_reason: This unit covers backend Persona config and validation behavior, not GUI presentation.
+L00029661	split_recommended: false
+L00029662	depends_on:
+L00029663	- OSI-019
+L00029664	- OSI-079
+L00029665	- OSI-084
+L00029666	- OSI-095
+L00029667	unblocks: []
+L00029668	acceptance_criteria:
+L00029669	- Covered Persona config contract section and ContractRefs remain losslessly available for exact-text audit.
+L00029670	- Persona registry/storage ownership remains with Personas and storage plans.
+L00029671	- No WorkNodes, NodeSeeds, executable queues, final node manifests, or production build tasks are created.
+L00029672	validation_surfaces:
+L00029673	- >-
+L00029674	  python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits
+L00029675	- python3 scripts/pm-plan-index.py validate
+L00029676	reasoning_tier: standard
+L00029677	context_scope: orchestrator_subagent_standardization
+L00029678	implementation_surfaces:
+L00029679	- Plans/orchestrator-subagent-integration.md
+L00029680	risk_class: persona_resolution_config_contract
+L00029681	node_compile_hint:
+L00029682	  mode: persona_resolution_config_contract
+L00029683	  create_worknodes: false
+L00029684	source_lineage:
+L00029685	- >-
+L00029686	  Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:orchestrator-subagent-integration-S0195
+L00029687	preserved_exact_tokens:
+L00029688	- 'manual | auto | hybrid'
+L00029689	- tier_personas
+L00029690	- operation_frame_personas
+L00029691	- requested_persona
+L00029692	- requested_platform
+L00029693	- requested_model
+L00029694	- expires_after_run_start
+L00029695	- persona_registry
+L00029696	- subagent_registry
+L00029697	negative_constraints:
+L00029698	- Persona IDs must validate against persona_registry, not only subagent_registry.
+L00029699	compatibility_only_notes: []
+L00029700	stale_retired_dispositions: []
+L00029701	owner_boundary_notes:
+L00029702	- Personas owns registry/storage; OSI consumes for runtime selection.
+L00029703	owner_hints:
+L00029704	- Plans/orchestrator-subagent-integration.md
+L00029705	preserved_contractrefs:
+L00029706	- 'ContractRef: ContractName:Plans/storage-plan.md, ContractName:Plans/Personas.md'
+L00029707	- 'ContractRef: ContractName:Plans/Personas.md'
+L00029708	```
+L00029709	
+L00029710	### OSI-404 - Requested Effective Persona Runtime Record
+L00029711	
+L00029712	```yaml
+L00029713	plan_unit_id: OSI-404
+L00029714	unit_type: requirement
+L00029715	status: accepted
+L00029716	owner_doc: Plans/orchestrator-subagent-integration.md
+L00029717	canonical_text: >-
+L00029718	  Every orchestrator tier run must record requested/effective Persona, selection source and reason, requested/effective
+L00029719	  platform/model/variant, and applied/skipped Persona controls.
+L00029720	gui_related: false
+L00029721	gui_classification_reason: This unit covers backend runtime state recording, not GUI presentation.
+L00029722	split_recommended: false
+L00029723	depends_on:
+L00029724	- OSI-019
+L00029725	- OSI-036
+L00029726	- OSI-403
+L00029727	unblocks: []
+L00029728	acceptance_criteria:
+L00029729	- Covered requested/effective runtime state fields remain losslessly available for exact-text audit.
+L00029730	- Persona runtime records do not add tiers or override Persona registry ownership.
+L00029731	- No WorkNodes, NodeSeeds, executable queues, final node manifests, or production build tasks are created.
+L00029732	validation_surfaces:
+L00029733	- >-
+L00029734	  python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits
+L00029735	- python3 scripts/pm-plan-index.py validate
+L00029736	reasoning_tier: standard
+L00029737	context_scope: orchestrator_subagent_standardization
+L00029738	implementation_surfaces:
+L00029739	- Plans/orchestrator-subagent-integration.md
+L00029740	risk_class: requested_effective_persona_runtime_record
+L00029741	node_compile_hint:
+L00029742	  mode: requested_effective_persona_runtime_record
+L00029743	  create_worknodes: false
+L00029744	source_lineage:
+L00029745	- >-
+L00029746	  Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:orchestrator-subagent-integration-S0197
+L00029747	preserved_exact_tokens:
+L00029748	- requested Persona
+L00029749	- effective Persona
+L00029750	- selection source
+L00029751	- selection reason
+L00029752	- requested/effective platform/model/variant
+L00029753	- applied Persona controls
+L00029754	- skipped Persona controls
+L00029755	negative_constraints:
+L00029756	- Persona runtime recording must not add tiers.
+L00029757	compatibility_only_notes: []
+L00029758	stale_retired_dispositions: []
+L00029759	owner_boundary_notes:
+L00029760	- Runtime and Persona contracts own durable state semantics.
+L00029761	owner_hints:
+L00029762	- Plans/orchestrator-subagent-integration.md
+L00029763	preserved_contractrefs: []
+L00029764	```
+L00029765	
+L00029766	### OSI-405 - Persona Runtime State UI Event Availability
+L00029767	
+L00029768	```yaml
+L00029769	plan_unit_id: OSI-405
+L00029770	unit_type: requirement
+L00029771	status: accepted
+L00029772	owner_doc: Plans/orchestrator-subagent-integration.md
+L00029773	canonical_text: Persona runtime state must be available to event stream consumers and UI surfaces as consumer projections.
+L00029774	gui_related: true
+L00029775	gui_classification_reason: This unit covers user-visible UI/event availability for Persona runtime state.
+L00029776	split_recommended: false
+L00029777	depends_on:
+L00029778	- OSI-404
+L00029779	unblocks: []
+L00029780	acceptance_criteria:
+L00029781	- Covered UI/event availability line remains losslessly available for exact-text audit.
+L00029782	- UI surfaces consume runtime state and do not own the runtime record.
+L00029783	- No WorkNodes, NodeSeeds, executable queues, final node manifests, or production build tasks are created.
+L00029784	validation_surfaces:
+L00029785	- >-
+L00029786	  python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits
+L00029787	- python3 scripts/pm-plan-index.py validate
+L00029788	reasoning_tier: standard
+L00029789	context_scope: orchestrator_subagent_standardization
+L00029790	implementation_surfaces:
+L00029791	- Plans/orchestrator-subagent-integration.md
+L00029792	risk_class: persona_runtime_state_ui_event_availability
+L00029793	node_compile_hint:
+L00029794	  mode: persona_runtime_state_ui_event_availability
+L00029795	  create_worknodes: false
+L00029796	source_lineage:
+L00029797	- >-
+L00029798	  Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:orchestrator-subagent-integration-S0197
+L00029799	preserved_exact_tokens:
+L00029800	- event stream consumers
+L00029801	- UI surfaces
+L00029802	negative_constraints:
+L00029803	- UI surfaces do not own Persona runtime records.
+L00029804	compatibility_only_notes: []
+L00029805	stale_retired_dispositions: []
+L00029806	owner_boundary_notes:
+L00029807	- Runtime emits Persona state; UI consumes and displays it.
+L00029808	owner_hints:
+L00029809	- Plans/orchestrator-subagent-integration.md
+L00029810	preserved_contractrefs: []
+L00029811	```
+L00029812	
+L00029813	### OSI-406 - Auto Persona Resolution Inputs And Examples
+L00029814	
+L00029815	```yaml
+L00029816	plan_unit_id: OSI-406
+L00029817	unit_type: requirement
+L00029818	status: accepted
+L00029819	owner_doc: Plans/orchestrator-subagent-integration.md
+L00029820	canonical_text: >-
+L00029821	  Auto Persona resolution consumes tier, task, repo, operation, PRD/plan, and config override signals; example Personas
+L00029822	  remain illustrative, and future sre remains unpromoted until explicit promotion.
+L00029823	gui_related: false
+L00029824	gui_classification_reason: This unit covers backend Persona selection inputs, not GUI presentation.
+L00029825	split_recommended: false
+L00029826	depends_on:
+L00029827	- OSI-084
+L00029828	- OSI-196
+L00029829	- OSI-403
+L00029830	unblocks: []
+L00029831	acceptance_criteria:
+L00029832	- Covered auto Persona resolution inputs and examples remain losslessly available for exact-text audit.
+L00029833	- Future sre remains unpromoted unless a later canonical owner explicitly promotes it.
+L00029834	- No WorkNodes, NodeSeeds, executable queues, final node manifests, or production build tasks are created.
+L00029835	validation_surfaces:
+L00029836	- >-
+L00029837	  python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits
+L00029838	- python3 scripts/pm-plan-index.py validate
+L00029839	reasoning_tier: standard
+L00029840	context_scope: orchestrator_subagent_standardization
+L00029841	implementation_surfaces:
+L00029842	- Plans/orchestrator-subagent-integration.md
+L00029843	risk_class: auto_persona_resolution_inputs_examples
+L00029844	node_compile_hint:
+L00029845	  mode: auto_persona_resolution_inputs_examples
+L00029846	  create_worknodes: false
+L00029847	source_lineage:
+L00029848	- >-
+L00029849	  Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:orchestrator-subagent-integration-S0198
+L00029850	preserved_exact_tokens:
+L00029851	- tier level
+L00029852	- task type
+L00029853	- repo language/framework
+L00029854	- PRD/plan recommendations
+L00029855	- rust-engineer
+L00029856	- collaborator
+L00029857	- explorer
+L00029858	- devops-engineer
+L00029859	- performance-engineer
+L00029860	- sre
+L00029861	negative_constraints:
+L00029862	- Future sre Persona is not promoted by this example.
+L00029863	compatibility_only_notes:
+L00029864	- Persona examples are illustrative source evidence.
+L00029865	stale_retired_dispositions: []
+L00029866	owner_boundary_notes:
+L00029867	- Persona registry owner controls promoted Persona IDs.
+L00029868	owner_hints:
+L00029869	- Plans/orchestrator-subagent-integration.md
+L00029870	preserved_contractrefs: []
+L00029871	```
+L00029872	
+L00029873	### OSI-407 - Persona Registry Normalization And Provider Seed Boundary
+L00029874	
+L00029875	```yaml
+L00029876	plan_unit_id: OSI-407
+L00029877	unit_type: requirement
+L00029878	status: accepted
+L00029879	owner_doc: Plans/orchestrator-subagent-integration.md
+L00029880	canonical_text: >-
+L00029881	  Persona registry language normalizes stale explore references to explorer and treats provider-native directories as
+L00029882	  seed/import sources only, with Puppet Master Persona storage as the sole canonical source after import.
+L00029883	gui_related: false
+L00029884	gui_classification_reason: This unit covers backend registry normalization and storage ownership, not GUI presentation.
+L00029885	split_recommended: false
+L00029886	depends_on:
+L00029887	- OSI-083
+L00029888	- OSI-084
+L00029889	unblocks: []
+L00029890	acceptance_criteria:
+L00029891	- Covered registry normalization and provider seed boundary sections remain losslessly available for exact-text audit.
+L00029892	- Provider-native directories are not canonical Persona storage after import.
+L00029893	- No WorkNodes, NodeSeeds, executable queues, final node manifests, or production build tasks are created.
+L00029894	validation_surfaces:
+L00029895	- >-
+L00029896	  python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits
+L00029897	- python3 scripts/pm-plan-index.py validate
+L00029898	reasoning_tier: standard
+L00029899	context_scope: orchestrator_subagent_standardization
+L00029900	implementation_surfaces:
+L00029901	- Plans/orchestrator-subagent-integration.md
+L00029902	risk_class: persona_registry_normalization_provider_seed_boundary
+L00029903	node_compile_hint:
+L00029904	  mode: persona_registry_normalization_provider_seed_boundary
+L00029905	  create_worknodes: false
+L00029906	source_lineage:
+L00029907	- >-
+L00029908	  Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:orchestrator-subagent-integration-S0199
+L00029909	- >-
+L00029910	  Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:orchestrator-subagent-integration-S0200
+L00029911	preserved_exact_tokens:
+L00029912	- explore
+L00029913	- explorer
+L00029914	- .claude/agents
+L00029915	- provider-native directories
+L00029916	- seed/import sources only
+L00029917	- Puppet Master Persona storage
+L00029918	- sole canonical source after import
+L00029919	negative_constraints:
+L00029920	- Provider-native directories are not canonical Persona storage after import.
+L00029921	compatibility_only_notes:
+L00029922	- explore is stale vocabulary normalized to explorer.
+L00029923	stale_retired_dispositions:
+L00029924	- Legacy explore references are stale and must normalize to explorer.
+L00029925	owner_boundary_notes:
+L00029926	- Persona storage owner retains canonical registry/storage authority.
+L00029927	owner_hints:
+L00029928	- Plans/orchestrator-subagent-integration.md
+L00029929	preserved_contractrefs: []
+L00029930	```
+L00029931	
+L00029932	### OSI-408 - Persona Acceptance Criteria Addendum
+L00029933	
+L00029934	```yaml
+L00029935	plan_unit_id: OSI-408
+L00029936	unit_type: requirement
+L00029937	status: accepted
+L00029938	owner_doc: Plans/orchestrator-subagent-integration.md
+L00029939	canonical_text: >-
+L00029940	  Persona acceptance criteria preserve defaults/auto selection by canonical execution scope: node, package, seam, lane, and phase.
+L00029941	  Legacy Phase/Task/Subtask/Iteration labels, including "Iteration remains the lowest tier," are compatibility/search aliases
+L00029942	  only and must not drive live runtime routing, Persona selection, or completion authority. Effective Persona/model/platform
+L00029943	  state emission and registry language standardized on explorer rather than explore remain required.
+L00029944	gui_related: false
+L00029945	gui_classification_reason: This unit covers backend Persona acceptance criteria, not GUI presentation.
+L00029946	split_recommended: false
+L00029947	depends_on:
+L00029948	- OSI-402
+L00029949	- OSI-403
+L00029950	- OSI-404
+L00029951	- OSI-406
+L00029952	- OSI-407
+L00029953	unblocks: []
+L00029954	acceptance_criteria:
+L00029955	- Covered Persona acceptance criteria remain losslessly available for exact-text audit.
+L00029956	- Persona switching must not add live runtime tiers or use legacy task/subtask/iteration labels for runtime authority.
+L00029957	- Legacy Phase/Task/Subtask/Iteration labels are retained only as compatibility/search aliases.
+L00029958	- No WorkNodes, NodeSeeds, executable queues, final node manifests, or production build tasks are created.
+L00029959	validation_surfaces:
+L00029960	- >-
+L00029961	  python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits
+L00029962	- python3 scripts/pm-plan-index.py validate
+L00029963	reasoning_tier: standard
+L00029964	context_scope: orchestrator_subagent_standardization
+L00029965	implementation_surfaces:
+L00029966	- Plans/orchestrator-subagent-integration.md
+L00029967	risk_class: persona_acceptance_criteria_addendum
+L00029968	node_compile_hint:
+L00029969	  mode: persona_acceptance_criteria_addendum
+L00029970	  create_worknodes: false
+L00029971	source_lineage:
+L00029972	- >-
+L00029973	  Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:orchestrator-subagent-integration-S0201
+L00029974	preserved_exact_tokens:
+L00029975	- Persona defaults/auto selection per tier
+L00029976	- Iteration remains the lowest tier
+L00029977	- effective Persona/model/platform state
+L00029978	- explorer
+L00029979	- explore
+L00029980	negative_constraints:
+L00029981	- Iteration remains the lowest tier; Persona switching must not add tiers.
+L00029982	compatibility_only_notes:
+L00029983	- explore is compatibility/stale vocabulary only.
+L00029984	stale_retired_dispositions:
+L00029985	- Registry and plan language must standardize on explorer, not explore.
+L00029986	owner_boundary_notes:
+L00029987	- Persona owner docs retain registry and tier-default ownership.
+L00029988	owner_hints:
+L00029989	- Plans/orchestrator-subagent-integration.md
+L00029990	preserved_contractrefs: []
+L00029991	```
+L00029992	
+L00029993	### OSI-409 - Scored Ready Set Scheduler And Parallel Dispatch
+L00029994	
+L00029995	```yaml
+L00029996	plan_unit_id: OSI-409
+L00029997	unit_type: requirement
+L00029998	status: accepted
+L00029999	owner_doc: Plans/orchestrator-subagent-integration.md
+L00030000	canonical_text: >-
+L00030001	  Orchestrator scheduling consumes the executor scored ready-set model, global ready set, canonical score tuple, available
+L00030002	  capacity, queue-analysis observability, DAG readiness, isolation, blocked/backoff states, and remediation lanes.
+L00030003	gui_related: false
+L00030004	gui_classification_reason: This unit covers backend scheduler behavior, not GUI presentation.
+L00030005	split_recommended: false
+L00030006	depends_on:
+L00030007	- OSI-018
+L00030008	- OSI-030
+L00030009	- OSI-352
+L00030010	- OSI-357
+L00030011	unblocks: []
+L00030012	acceptance_criteria:
+L00030013	- Covered scheduler model, parallel execution contract, runtime addendum heading, and relevant acceptance bullets remain losslessly available.
+L00030014	- Scheduler evidence does not create WorkNodes or executable queues.
+L00030015	- No WorkNodes, NodeSeeds, executable queues, final node manifests, or production build tasks are created.
+L00030016	validation_surfaces:
+L00030017	- >-
+L00030018	  python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits
+L00030019	- python3 scripts/pm-plan-index.py validate
+L00030020	reasoning_tier: standard
+L00030021	context_scope: orchestrator_subagent_standardization
+L00030022	implementation_surfaces:
+L00030023	- Plans/orchestrator-subagent-integration.md
+L00030024	risk_class: scored_ready_set_scheduler_parallel_dispatch
+L00030025	node_compile_hint:
+L00030026	  mode: scored_ready_set_scheduler_parallel_dispatch
+L00030027	  create_worknodes: false
+L00030028	source_lineage:
+L00030029	- >-
+L00030030	  Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:orchestrator-subagent-integration-S0202
+L00030031	- >-
+L00030032	  Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:orchestrator-subagent-integration-S0203
+L00030033	- >-
+L00030034	  Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:orchestrator-subagent-integration-S0204
+L00030035	- >-
+L00030036	  Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:orchestrator-subagent-integration-S0213
+L00030037	preserved_exact_tokens:
+L00030038	- global ready set
+L00030039	- canonical score tuple
+L00030040	- available capacity
+L00030041	- queue-analysis observability
+L00030042	- canonical DAG readiness
+L00030043	- worktree/runtime isolation
+L00030044	- blocked/backoff states
+L00030045	- remediation lane handling
+L00030046	negative_constraints:
+L00030047	- Scheduler evidence does not create executable queues or WorkNodes.
+L00030048	compatibility_only_notes: []
+L00030049	stale_retired_dispositions: []
+L00030050	owner_boundary_notes:
+L00030051	- Executor, runtime, and storage contracts own scheduler fields and scoring semantics.
+L00030052	owner_hints:
+L00030053	- Plans/orchestrator-subagent-integration.md
+L00030054	preserved_contractrefs:
+L00030055	- 'ContractRef: ContractName:Plans/Executor_Protocol.md, ContractName:Plans/Contracts_V0.md, ContractName:Plans/storage-plan.md'
+L00030056	```
+L00030057	
+L00030058	### OSI-410 - Worktree Native Conflict Control Observability
+L00030059	
+L00030060	```yaml
+L00030061	plan_unit_id: OSI-410
+L00030062	unit_type: requirement
+L00030063	status: accepted
+L00030064	owner_doc: Plans/orchestrator-subagent-integration.md
+L00030065	canonical_text: >-
+L00030066	  Parallel safety preserves worktree-native isolation, declared touch-set recording, merge/conflict risk observability,
+L00030067	  blocked or capacity_deferred classification, and backoff/yield policy without introducing file-lease orchestration.
+L00030068	gui_related: false
+L00030069	gui_classification_reason: This unit covers backend worktree/conflict behavior, not GUI presentation.
+L00030070	split_recommended: false
+L00030071	depends_on:
+L00030072	- OSI-020
+L00030073	- OSI-354
+L00030074	- OSI-357
+L00030075	unblocks: []
+L00030076	acceptance_criteria:
+L00030077	- Covered worktree-native conflict control section and relevant acceptance bullet remain losslessly available.
+L00030078	- This packet does not introduce a file-lease system.
+L00030079	- No WorkNodes, NodeSeeds, executable queues, final node manifests, or production build tasks are created.
+L00030080	validation_surfaces:
+L00030081	- >-
+L00030082	  python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits
+L00030083	- python3 scripts/pm-plan-index.py validate
+L00030084	reasoning_tier: standard
+L00030085	context_scope: orchestrator_subagent_standardization
+L00030086	implementation_surfaces:
+L00030087	- Plans/orchestrator-subagent-integration.md
+L00030088	risk_class: worktree_native_conflict_control_observability
+L00030089	node_compile_hint:
+L00030090	  mode: worktree_native_conflict_control_observability
+L00030091	  create_worknodes: false
+L00030092	source_lineage:
+L00030093	- >-
+L00030094	  Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:orchestrator-subagent-integration-S0205
+L00030095	- >-
+L00030096	  Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:orchestrator-subagent-integration-S0213
+L00030097	preserved_exact_tokens:
+L00030098	- worktree-native isolation
+L00030099	- file-lease orchestration
+L00030100	- declared touch sets
+L00030101	- merge/conflict risk
+L00030102	- blocked
+L00030103	- capacity_deferred
+L00030104	- backoff/yield policies
+L00030105	negative_constraints:
+L00030106	- This packet does not introduce a file-lease system.
+L00030107	compatibility_only_notes: []
+L00030108	stale_retired_dispositions: []
+L00030109	owner_boundary_notes:
+L00030110	- WorktreeGitImprovement, Decision Policy, and storage plans own accepted conflict-control semantics.
+L00030111	owner_hints:
+L00030112	- Plans/orchestrator-subagent-integration.md
+L00030113	preserved_contractrefs:
+L00030114	- 'ContractRef: ContractName:Plans/WorktreeGitImprovement.md, ContractName:Plans/Decision_Policy.md, ContractName:Plans/storage-plan.md'
+L00030115	```
+L00030116	
+L00030117	### OSI-411 - Wake Reason Cascade Semantics
+L00030118	
+L00030119	```yaml
+L00030120	plan_unit_id: OSI-411
+L00030121	unit_type: requirement
+L00030122	status: accepted
+L00030123	owner_doc: Plans/orchestrator-subagent-integration.md
+L00030124	canonical_text: >-
+L00030125	  Orchestrator consumes event-driven wakeups, preserves the required wake_reason values, reevaluates direct dependents
+L00030126	  immediately, and makes newly ready nodes eligible in the same wake cycle.
+L00030127	gui_related: false
+L00030128	gui_classification_reason: This unit covers backend wake/cascade behavior, not GUI presentation.
+L00030129	split_recommended: false
+L00030130	depends_on:
+L00030131	- OSI-018
+L00030132	- OSI-031
+L00030133	- OSI-409
+L00030134	unblocks: []
+L00030135	acceptance_criteria:
+L00030136	- Covered wakeup/cascade semantics and wake_reason list remain losslessly available for exact-text audit.
+L00030137	- Wakeup evidence does not create executable queues.
+L00030138	- No WorkNodes, NodeSeeds, executable queues, final node manifests, or production build tasks are created.
+L00030139	validation_surfaces:
+L00030140	- >-
+L00030141	  python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits
+L00030142	- python3 scripts/pm-plan-index.py validate
+L00030143	reasoning_tier: standard
+L00030144	context_scope: orchestrator_subagent_standardization
+L00030145	implementation_surfaces:
+L00030146	- Plans/orchestrator-subagent-integration.md
+L00030147	risk_class: wake_reason_cascade_semantics
+L00030148	node_compile_hint:
+L00030149	  mode: wake_reason_cascade_semantics
+L00030150	  create_worknodes: false
+L00030151	source_lineage:
+L00030152	- >-
+L00030153	  Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:orchestrator-subagent-integration-S0206
+L00030154	preserved_exact_tokens:
+L00030155	- wake_reason
+L00030156	- node_finished
+L00030157	- prerequisite_resolved
+L00030158	- verification_finished
+L00030159	- approval_resolved
+L00030160	- clarification_resolved
+L00030161	- remediation_finished
+L00030162	- backoff_expired
+L00030163	- capacity_changed
+L00030164	- restore_recovery_finished
+L00030165	- replan_patch_applied
+L00030166	- auth_recovered
+L00030167	- startup_recovered
+L00030168	- watchdog_recheck
+L00030169	negative_constraints:
+L00030170	- Newly ready nodes must not be deferred to a later sweep when eligible in the same wake cycle.
+L00030171	compatibility_only_notes: []
+L00030172	stale_retired_dispositions: []
+L00030173	owner_boundary_notes:
+L00030174	- Executor/runtime contracts own canonical wake events.
+L00030175	owner_hints:
+L00030176	- Plans/orchestrator-subagent-integration.md
+L00030177	preserved_contractrefs: []
+L00030178	```
+L00030179	
+L00030180	### OSI-412 - Temporal Wait And Timeout Scheduler Semantics
+L00030181	
+L00030182	```yaml
+L00030183	plan_unit_id: OSI-412
+L00030184	unit_type: requirement
+L00030185	status: accepted
+L00030186	owner_doc: Plans/orchestrator-subagent-integration.md
+L00030187	canonical_text: >-
+L00030188	  Orchestrator treats scheduled observations, wait timers, and governance waits as explicit scheduler inputs and must not
+L00030189	  infer skipped/failed, stall, pause, or blocked outcomes before the governing timestamp or timer expires.
+L00030190	gui_related: false
+L00030191	gui_classification_reason: This unit covers backend wait/timeout semantics, not GUI presentation.
+L00030192	split_recommended: false
+L00030193	depends_on:
+L00030194	- OSI-411
+L00030195	- OSI-017
+L00030196	unblocks: []
+L00030197	acceptance_criteria:
+L00030198	- Covered temporal observation and wait scheduling section remains losslessly available for exact-text audit.
+L00030199	- Orchestrator must not infer stale-observation failure before governing timestamp or timer expiry.
+L00030200	- No WorkNodes, NodeSeeds, executable queues, final node manifests, or production build tasks are created.
+L00030201	validation_surfaces:
+L00030202	- >-
+L00030203	  python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits
+L00030204	- python3 scripts/pm-plan-index.py validate
+L00030205	reasoning_tier: standard
+L00030206	context_scope: orchestrator_subagent_standardization
+L00030207	implementation_surfaces:
+L00030208	- Plans/orchestrator-subagent-integration.md
+L00030209	risk_class: temporal_wait_timeout_scheduler_semantics
+L00030210	node_compile_hint:
+L00030211	  mode: temporal_wait_timeout_scheduler_semantics
+L00030212	  create_worknodes: false
+L00030213	source_lineage:
+L00030214	- >-
+L00030215	  Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:orchestrator-subagent-integration-S0207
+L00030216	preserved_exact_tokens:
+L00030217	- scheduled_workflow_observation_gap
+L00030218	- skipped/failed
+L00030219	- environment_wait_timer
+L00030220	- approval_wait
+L00030221	- queue_wait
+L00030222	- deadlock/stall
+L00030223	- /stall
+L00030224	- timeout_class?
+L00030225	- wait_state_class?
+L00030226	- hard execution timeout
+L00030227	- inactivity timeout
+L00030228	- polling timeout
+L00030229	- reconnect timeout
+L00030230	- user-visible wait timer expiry
+L00030231	negative_constraints:
+L00030232	- Orchestrator/receipts MUST NOT assume skipped/failed merely because no fresh observation arrived.
+L00030233	- Known future-timestamp waits MUST NOT trigger deadlock/stall escalation before expiry.
+L00030234	compatibility_only_notes:
+L00030235	- Receipt timeout/wait fields preserve stale-observation recovery context.
+L00030236	stale_retired_dispositions:
+L00030237	- Stale observation alone is not failure evidence before timer expiry.
+L00030238	owner_boundary_notes:
+L00030239	- Runtime taxonomy owns timeout and wait-state classes.
+L00030240	owner_hints:
+L00030241	- Plans/orchestrator-subagent-integration.md
+L00030242	preserved_contractrefs: []
+L00030243	```
+L00030244	
+L00030245	### OSI-413 - Runtime Projection Fields Surfaced By Orchestrator
+L00030246	
+L00030247	```yaml
+L00030248	plan_unit_id: OSI-413
+L00030249	unit_type: requirement
+L00030250	status: accepted
+L00030251	owner_doc: Plans/orchestrator-subagent-integration.md
+L00030252	canonical_text: Orchestrator runtime projections must be able to surface the listed attempt, retry, wake, scheduler, backoff,
+L00030253	  safe-point, remediation, and replan fields from owner runtime/storage contracts.
+L00030254	gui_related: false
+L00030255	gui_classification_reason: This unit covers backend runtime projection fields, not GUI presentation.
+L00030256	split_recommended: false
+L00030257	depends_on:
+L00030258	- OSI-017
+L00030259	- OSI-018
+L00030260	- OSI-019
+L00030261	- OSI-020
+L00030262	unblocks: []
+L00030263	acceptance_criteria:
+L00030264	- Covered runtime field list and ContractRefs remain losslessly available for exact-text audit.
+L00030265	- Orchestrator surfaces fields as a consumer and does not redefine storage/runtime contracts.
+L00030266	- No WorkNodes, NodeSeeds, executable queues, final node manifests, or production build tasks are created.
+L00030267	validation_surfaces:
+L00030268	- >-
+L00030269	  python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits
+L00030270	- python3 scripts/pm-plan-index.py validate
+L00030271	reasoning_tier: standard
+L00030272	context_scope: orchestrator_subagent_standardization
+L00030273	implementation_surfaces:
+L00030274	- Plans/orchestrator-subagent-integration.md
+L00030275	risk_class: runtime_projection_fields_surfaced_by_orchestrator
+L00030276	node_compile_hint:
+L00030277	  mode: runtime_projection_fields_surfaced_by_orchestrator
+L00030278	  create_worknodes: false
+L00030279	source_lineage:
+L00030280	- >-
+L00030281	  Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:orchestrator-subagent-integration-S0208
+L00030282	preserved_exact_tokens:
+L00030283	- attempt_count
+L00030284	- retry_count
+L00030285	- failure_class
+L00030286	- blocked_reason_code
+L00030287	- wake_reason
+L00030288	- scheduler_lane
+L00030289	- scheduler_score_breakdown
+L00030290	- ready_since_utc
+L00030291	- selected_at_utc
+L00030292	- backoff_until_utc
+L00030293	- safe_point_id
+L00030294	- remediation_root_id
+L00030295	- remediation_parent_attempt_id
+L00030296	- replan_generation
+L00030297	negative_constraints:
+L00030298	- Orchestrator must not redefine storage/runtime contracts for these fields.
+L00030299	compatibility_only_notes: []
+L00030300	stale_retired_dispositions: []
+L00030301	owner_boundary_notes:
+L00030302	- storage-plan, Run Graph View, and Orchestrator Page own referenced projection surfaces.
+L00030303	owner_hints:
+L00030304	- Plans/orchestrator-subagent-integration.md
+L00030305	preserved_contractrefs:
+L00030306	- 'ContractRef: ContractName:Plans/storage-plan.md, ContractName:Plans/Run_Graph_View.md, ContractName:Plans/Orchestrator_Page.md'
+L00030307	```
+L00030308	
+L00030309	### OSI-414 - Remediation Child Lineage Flow
+L00030310	
+L00030311	```yaml
+L00030312	plan_unit_id: OSI-414
+L00030313	unit_type: requirement
+L00030314	status: accepted
+L00030315	owner_doc: Plans/orchestrator-subagent-integration.md
+L00030316	canonical_text: >-
+L00030317	  Remediation flow preserves structured finding classification, remediation child lineage, canonical context plus finding
+L00030318	  set, retry/safe-point behavior, remediation ceilings, and explicit recovery options.
+L00030319	gui_related: false
+L00030320	gui_classification_reason: This unit covers backend remediation lineage flow, not GUI presentation.
+L00030321	split_recommended: false
+L00030322	depends_on:
+L00030323	- OSI-166
+L00030324	- OSI-169
+L00030325	- OSI-172
+L00030326	- OSI-197
+L00030327	- OSI-231
+L00030328	unblocks: []
+L00030329	acceptance_criteria:
+L00030330	- Covered remediation flow and relevant acceptance bullet remain losslessly available for exact-text audit.
+L00030331	- Remediation evidence does not create executable remediation tasks.
+L00030332	- No WorkNodes, NodeSeeds, executable queues, final node manifests, or production build tasks are created.
+L00030333	validation_surfaces:
+L00030334	- >-
+L00030335	  python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits
+L00030336	- python3 scripts/pm-plan-index.py validate
+L00030337	reasoning_tier: standard
+L00030338	context_scope: orchestrator_subagent_standardization
+L00030339	implementation_surfaces:
+L00030340	- Plans/orchestrator-subagent-integration.md
+L00030341	risk_class: remediation_child_lineage_flow
+L00030342	node_compile_hint:
+L00030343	  mode: remediation_child_lineage_flow
+L00030344	  create_worknodes: false
+L00030345	source_lineage:
+L00030346	- >-
+L00030347	  Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:orchestrator-subagent-integration-S0209
+L00030348	- >-
+L00030349	  Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:orchestrator-subagent-integration-S0213
+L00030350	preserved_exact_tokens:
+L00030351	- Canonical remediation flow
+L00030352	- remediation child
+L00030353	- same canonical context plus finding set
+L00030354	- retry ceiling
+L00030355	- remediation ceiling
+L00030356	- exact recovery options
+L00030357	negative_constraints:
+L00030358	- Remediation flow evidence does not create executable remediation tasks.
+L00030359	compatibility_only_notes: []
+L00030360	stale_retired_dispositions: []
+L00030361	owner_boundary_notes:
+L00030362	- Executor/runtime contracts own remediation execution and retry policy.
+L00030363	owner_hints:
+L00030364	- Plans/orchestrator-subagent-integration.md
+L00030365	preserved_contractrefs: []
+L00030366	```
+L00030367	
+L00030368	### OSI-415 - Retry Backoff Classifier Matrix
+L00030369	
+L00030370	```yaml
+L00030371	plan_unit_id: OSI-415
+L00030372	unit_type: requirement
+L00030373	status: accepted
+L00030374	owner_doc: Plans/orchestrator-subagent-integration.md
+L00030375	canonical_text: >-
+L00030376	  Retry/backoff classifier behavior preserves executor classifier families, auto-retry/backoff/safe-point/remediation
+L00030377	  matrix entries, and the rule that blocked reasons must not be coerced into failure_class.
+L00030378	gui_related: false
+L00030379	gui_classification_reason: This unit covers backend retry/backoff classification, not GUI presentation.
+L00030380	split_recommended: false
+L00030381	depends_on:
+L00030382	- OSI-017
+L00030383	- OSI-413
+L00030384	- OSI-414
+L00030385	unblocks: []
+L00030386	acceptance_criteria:
+L00030387	- Covered retry/backoff matrix and relevant acceptance bullet remain losslessly available for exact-text audit.
+L00030388	- Orchestrator must preserve classifier family and must not coerce blocked reasons into failure_class.
+L00030389	- No WorkNodes, NodeSeeds, executable queues, final node manifests, or production build tasks are created.
+L00030390	validation_surfaces:
+L00030391	- >-
+L00030392	  python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits
+L00030393	- python3 scripts/pm-plan-index.py validate
+L00030394	reasoning_tier: standard
+L00030395	context_scope: orchestrator_subagent_standardization
+L00030396	implementation_surfaces:
+L00030397	- Plans/orchestrator-subagent-integration.md
+L00030398	risk_class: retry_backoff_classifier_matrix
+L00030399	node_compile_hint:
+L00030400	  mode: retry_backoff_classifier_matrix
+L00030401	  create_worknodes: false
+L00030402	source_lineage:
+L00030403	- >-
+L00030404	  Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:orchestrator-subagent-integration-S0210
+L00030405	- >-
+L00030406	  Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:orchestrator-subagent-integration-S0213
+L00030407	preserved_exact_tokens:
+L00030408	- failure_class
+L00030409	- blocked_reason_code
+L00030410	- provider_transient
+L00030411	- structured_output_invalid
+L00030412	- verification_failed
+L00030413	- reviewer_findings
+L00030414	- permission_denied
+L00030415	- filesafe_blocked
+L00030416	- external_side_effect_blocked
+L00030417	- auth_expired
+L00030418	- graph_integrity
+L00030419	- replan_required
+L00030420	negative_constraints:
+L00030421	- Preserve classifier family; do not coerce blocked reasons into failure_class.
+L00030422	compatibility_only_notes: []
+L00030423	stale_retired_dispositions: []
+L00030424	owner_boundary_notes:
+L00030425	- Executor Protocol, Decision Policy, and Run Modes own classifier taxonomy.
+L00030426	owner_hints:
+L00030427	- Plans/orchestrator-subagent-integration.md
+L00030428	preserved_contractrefs:
+L00030429	- 'ContractRef: ContractName:Plans/Executor_Protocol.md, ContractName:Plans/Decision_Policy.md, ContractName:Plans/Run_Modes.md'
+L00030430	```
+L00030431	
+L00030432	### OSI-416 - Decomposition Degradation Boundary
+L00030433	
+L00030434	```yaml
+L00030435	plan_unit_id: OSI-416
+L00030436	unit_type: requirement
+L00030437	status: accepted
+L00030438	owner_doc: Plans/orchestrator-subagent-integration.md
+L00030439	canonical_text: >-
+L00030440	  Decomposition fallback may flatten only during draft planning before canonical graph lock; after graph lock, invalid graph
+L00030441	  structure is an integrity failure rather than a fallback case.
+L00030442	gui_related: false
+L00030443	gui_classification_reason: This unit covers backend decomposition/graph boundary behavior, not GUI presentation.
+L00030444	split_recommended: false
+L00030445	depends_on:
+L00030446	- OSI-018
+L00030447	unblocks: []
+L00030448	acceptance_criteria:
+L00030449	- Covered decomposition degradation and draft fallback sections remain losslessly available for exact-text audit.
+L00030450	- After graph lock, invalid graph structure is an integrity failure, not a fallback case.
+L00030451	- No WorkNodes, NodeSeeds, executable queues, final node manifests, or production build tasks are created.
+L00030452	validation_surfaces:
+L00030453	- >-
+L00030454	  python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits
+L00030455	- python3 scripts/pm-plan-index.py validate
+L00030456	reasoning_tier: standard
+L00030457	context_scope: orchestrator_subagent_standardization
+L00030458	implementation_surfaces:
+L00030459	- Plans/orchestrator-subagent-integration.md
+L00030460	risk_class: decomposition_degradation_boundary
+L00030461	node_compile_hint:
+L00030462	  mode: decomposition_degradation_boundary
+L00030463	  create_worknodes: false
+L00030464	source_lineage:
+L00030465	- >-
+L00030466	  Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:orchestrator-subagent-integration-S0211
+L00030467	- >-
+L00030468	  Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:orchestrator-subagent-integration-S0219
+L00030469	preserved_exact_tokens:
+L00030470	- draft planning/decomposition before canonical graph lock
+L00030471	- canonical orchestrator execution after graph lock
+L00030472	- degraded flat draft plan
+L00030473	- invalid graph structure
+L00030474	- integrity failure
+L00030475	negative_constraints:
+L00030476	- After graph lock, invalid graph structure is an integrity failure, not a fallback case.
+L00030477	compatibility_only_notes:
+L00030478	- Draft fallback applies only before graph lock.
+L00030479	stale_retired_dispositions: []
+L00030480	owner_boundary_notes:
+L00030481	- Chain wizard, interview, progression gate, executor, and decision policy owners retain graph-lock semantics.
+L00030482	owner_hints:
+L00030483	- Plans/orchestrator-subagent-integration.md
+L00030484	preserved_contractrefs:
+L00030485	- 'ContractRef: ContractName:Plans/chain-wizard-flexibility.md, ContractName:Plans/interview-subagent-integration.md, ContractName:Plans/Progression_Gates.md'
+L00030486	- 'ContractRef: ContractName:Plans/Executor_Protocol.md, ContractName:Plans/Decision_Policy.md, ContractName:Plans/chain-wizard-flexibility.md'
+L00030487	- 'ContractRef: ContractName:Plans/chain-wizard-flexibility.md, ContractName:Plans/interview-subagent-integration.md, ContractName:Plans/Executor_Protocol.md'
+L00030488	```
+L00030489	
+L00030490	### OSI-417 - Event Driven GUI Projection Alignment
+L00030491	
+L00030492	```yaml
+L00030493	plan_unit_id: OSI-417
+L00030494	unit_type: requirement
+L00030495	status: accepted
+L00030496	owner_doc: Plans/orchestrator-subagent-integration.md
+L00030497	canonical_text: >-
+L00030498	  Queue and remediation UI projections update from event/projection streams; steady-state polling is not authoritative,
+L00030499	  though debug/watchdog or non-authoritative background refresh polling may remain.
+L00030500	gui_related: true
+L00030501	gui_classification_reason: This unit covers queue/remediation UI projection behavior.
+L00030502	split_recommended: false
+L00030503	depends_on:
+L00030504	- OSI-409
+L00030505	- OSI-411
+L00030506	- OSI-414
+L00030507	unblocks: []
+L00030508	acceptance_criteria:
+L00030509	- Covered event-driven GUI alignment section and UI acceptance bullet remain losslessly available for exact-text audit.
+L00030510	- UI queue/remediation updates must come from event/projection streams rather than authoritative polling loops.
+L00030511	- No WorkNodes, NodeSeeds, executable queues, final node manifests, or production build tasks are created.
+L00030512	validation_surfaces:
+L00030513	- >-
+L00030514	  python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits
+L00030515	- python3 scripts/pm-plan-index.py validate
+L00030516	reasoning_tier: standard
+L00030517	context_scope: orchestrator_subagent_standardization
+L00030518	implementation_surfaces:
+L00030519	- Plans/orchestrator-subagent-integration.md
+L00030520	risk_class: event_driven_gui_projection_alignment
+L00030521	node_compile_hint:
+L00030522	  mode: event_driven_gui_projection_alignment
+L00030523	  create_worknodes: false
+L00030524	source_lineage:
+L00030525	- >-
+L00030526	  Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:orchestrator-subagent-integration-S0212
+L00030527	- >-
+L00030528	  Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:orchestrator-subagent-integration-S0213
+L00030529	preserved_exact_tokens:
+L00030530	- event-driven projection updates
+L00030531	- Polling may remain only for debug/watchdog or non-authoritative background refresh
+L00030532	- Queue and remediation UI
+L00030533	- event/projection streams
+L00030534	negative_constraints:
+L00030535	- Queue and remediation UI must not depend on authoritative polling loops for correctness.
+L00030536	compatibility_only_notes:
+L00030537	- Debug/watchdog and non-authoritative background refresh polling remain compatibility use cases.
+L00030538	stale_retired_dispositions: []
+L00030539	owner_boundary_notes:
+L00030540	- Runtime/projection streams own canonical updates; UI consumes projections.
+L00030541	owner_hints:
+L00030542	- Plans/orchestrator-subagent-integration.md
+L00030543	preserved_contractrefs: []
+L00030544	```
+L00030545	
+L00030546	### OSI-418 - Runtime Scheduler Consumer Alignment And Required Fields
+L00030547	
+L00030548	```yaml
+L00030549	plan_unit_id: OSI-418
+L00030550	unit_type: requirement
+L00030551	status: accepted
+L00030552	owner_doc: Plans/orchestrator-subagent-integration.md
+L00030553	canonical_text: >-
+L00030554	  Orchestrator consumes the runtime scheduler contract and must retain queue analysis, attempt identity, remediation lineage,
+L00030555	  blocked outcomes, and required per-runnable-unit fields including permission/model snapshot identifiers.
+L00030556	gui_related: false
+L00030557	gui_classification_reason: This unit covers backend scheduler consumer fields, not GUI presentation.
+L00030558	split_recommended: false
+L00030559	depends_on:
+L00030560	- OSI-017
+L00030561	- OSI-018
+L00030562	- OSI-409
+L00030563	- OSI-413
+L00030564	unblocks: []
+L00030565	acceptance_criteria:
+L00030566	- Covered scheduler consumer alignment and required fields sections remain losslessly available for exact-text audit.
+L00030567	- Orchestrator remains a consumer of runtime scheduler fields and must not redefine them locally.
+L00030568	- No WorkNodes, NodeSeeds, executable queues, final node manifests, or production build tasks are created.
+L00030569	validation_surfaces:
+L00030570	- >-
+L00030571	  python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits
+L00030572	- python3 scripts/pm-plan-index.py validate
+L00030573	reasoning_tier: standard
+L00030574	context_scope: orchestrator_subagent_standardization
+L00030575	implementation_surfaces:
+L00030576	- Plans/orchestrator-subagent-integration.md
+L00030577	risk_class: runtime_scheduler_consumer_alignment_fields
+L00030578	node_compile_hint:
+L00030579	  mode: runtime_scheduler_consumer_alignment_fields
+L00030580	  create_worknodes: false
+L00030581	source_lineage:
+L00030582	- >-
+L00030583	  Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:orchestrator-subagent-integration-S0214
+L00030584	- >-
+L00030585	  Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:orchestrator-subagent-integration-S0215
+L00030586	preserved_exact_tokens:
+L00030587	- run_id
+L00030588	- thread_id
+L00030589	- node_id
+L00030590	- attempt_id
+L00030591	- replan_generation
+L00030592	- scheduler_lane
+L00030593	- manual_priority
+L00030594	- transitive_unblock_count
+L00030595	- ready_since_utc
+L00030596	- permission / model snapshot identifiers
+L00030597	negative_constraints:
+L00030598	- Orchestrator must not redefine runtime scheduler fields locally.
+L00030599	compatibility_only_notes: []
+L00030600	stale_retired_dispositions: []
+L00030601	owner_boundary_notes:
+L00030602	- Executor Protocol, Contracts V0, Run Graph View, and storage-plan own required runtime fields.
+L00030603	owner_hints:
+L00030604	- Plans/orchestrator-subagent-integration.md
+L00030605	preserved_contractrefs:
+L00030606	- 'ContractRef: ContractName:Plans/Executor_Protocol.md, ContractName:Plans/Contracts_V0.md, ContractName:Plans/Run_Graph_View.md'
+L00030607	- 'ContractRef: ContractName:Plans/Contracts_V0.md, ContractName:Plans/storage-plan.md, ContractName:Plans/Run_Graph_View.md'
+L00030608	```
+L00030609	
+L00030610	### OSI-419 - Parent Child Attempt Lineage And Blocked Outcomes
+L00030611	
+L00030612	```yaml
+L00030613	plan_unit_id: OSI-419
+L00030614	unit_type: requirement
+L00030615	status: accepted
+L00030616	owner_doc: Plans/orchestrator-subagent-integration.md
+L00030617	canonical_text: >-
+L00030618	  Subagents and remediation children preserve parent-child lineage across spawn, result ingestion, verification, and retry;
+L00030619	  blocked outcomes preserve local work, exact blocked_reason_code, allowed recovery actions, and no hidden retry/fallback paths.
+L00030620	gui_related: false
+L00030621	gui_classification_reason: This unit covers backend lineage and blocked outcome behavior, not GUI presentation.
+L00030622	split_recommended: false
+L00030623	depends_on:
+L00030624	- OSI-008
+L00030625	- OSI-009
+L00030626	- OSI-414
+L00030627	- OSI-415
+L00030628	unblocks: []
+L00030629	acceptance_criteria:
+L00030630	- Covered parent-child lineage and blocked outcome sections remain losslessly available for exact-text audit.
+L00030631	- Hidden retries and hidden fallback paths are forbidden for blocked outcomes.
+L00030632	- No WorkNodes, NodeSeeds, executable queues, final node manifests, or production build tasks are created.
+L00030633	validation_surfaces:
+L00030634	- >-
+L00030635	  python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits
+L00030636	- python3 scripts/pm-plan-index.py validate
+L00030637	reasoning_tier: standard
+L00030638	context_scope: orchestrator_subagent_standardization
+L00030639	implementation_surfaces:
+L00030640	- Plans/orchestrator-subagent-integration.md
+L00030641	risk_class: parent_child_attempt_lineage_blocked_outcomes
+L00030642	node_compile_hint:
+L00030643	  mode: parent_child_attempt_lineage_blocked_outcomes
+L00030644	  create_worknodes: false
+L00030645	source_lineage:
+L00030646	- >-
+L00030647	  Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:orchestrator-subagent-integration-S0216
+L00030648	- >-
+L00030649	  Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:orchestrator-subagent-integration-S0217
+L00030650	preserved_exact_tokens:
+L00030651	- not free-floating tasks
+L00030652	- parent-child lineage
+L00030653	- own attempt_id
+L00030654	- blocked_reason_code
+L00030655	- preserve completed local work
+L00030656	- allowed recovery actions
+L00030657	- avoid hidden retries
+L00030658	- hidden fallback paths
+L00030659	negative_constraints:
+L00030660	- Hidden retries and hidden fallback paths are forbidden for blocked outcomes.
+L00030661	compatibility_only_notes: []
+L00030662	stale_retired_dispositions: []
+L00030663	owner_boundary_notes:
+L00030664	- Executor, Permissions, FileSafe, and Project Output Artifacts own canonical lineage and blocked outcome contracts.
+L00030665	owner_hints:
+L00030666	- Plans/orchestrator-subagent-integration.md
+L00030667	preserved_contractrefs:
+L00030668	- 'ContractRef: ContractName:Plans/Executor_Protocol.md, ContractName:Plans/Contracts_V0.md, ContractName:Plans/Project_Output_Artifacts.md'
+L00030669	- 'ContractRef: ContractName:Plans/Permissions_System.md, ContractName:Plans/FileSafe.md, ContractName:Plans/Executor_Protocol.md'
+L00030670	```
+L00030671	
+L00030672	### OSI-420 - Immediate Wake Consumer Behavior
+L00030673	
+L00030674	```yaml
+L00030675	plan_unit_id: OSI-420
+L00030676	unit_type: requirement
+L00030677	status: accepted
+L00030678	owner_doc: Plans/orchestrator-subagent-integration.md
+L00030679	canonical_text: >-
+L00030680	  Orchestrator projections must update immediately on runtime wakeups so newly unblocked work can be reconsidered in the
+L00030681	  same event cycle rather than waiting for a periodic sweep.
+L00030682	gui_related: false
+L00030683	gui_classification_reason: This unit covers backend wake-consumer behavior, not GUI presentation.
+L00030684	split_recommended: false
+L00030685	depends_on:
+L00030686	- OSI-411
+L00030687	unblocks: []
+L00030688	acceptance_criteria:
+L00030689	- Covered wake-consumer behavior section remains losslessly available for exact-text audit.
+L00030690	- Orchestrator MUST NOT wait for a periodic sweep to discover runnable work.
+L00030691	- No WorkNodes, NodeSeeds, executable queues, final node manifests, or production build tasks are created.
+L00030692	validation_surfaces:
+L00030693	- >-
+L00030694	  python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits
+L00030695	- python3 scripts/pm-plan-index.py validate
+L00030696	reasoning_tier: standard
+L00030697	context_scope: orchestrator_subagent_standardization
+L00030698	implementation_surfaces:
+L00030699	- Plans/orchestrator-subagent-integration.md
+L00030700	risk_class: immediate_wake_consumer_behavior
+L00030701	node_compile_hint:
+L00030702	  mode: immediate_wake_consumer_behavior
+L00030703	  create_worknodes: false
+L00030704	source_lineage:
+L00030705	- >-
+L00030706	  Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:orchestrator-subagent-integration-S0218
+L00030707	preserved_exact_tokens:
+L00030708	- runtime wakeups
+L00030709	- newly-unblocked work
+L00030710	- same event cycle
+L00030711	- periodic sweep
+L00030712	negative_constraints:
+L00030713	- Orchestrator projections MUST NOT wait for a periodic sweep to discover runnable work.
+L00030714	compatibility_only_notes: []
+L00030715	stale_retired_dispositions: []
+L00030716	owner_boundary_notes:
+L00030717	- Runtime wake events and projection owners control canonical wake behavior.
+L00030718	owner_hints:
+L00030719	- Plans/orchestrator-subagent-integration.md
+L00030720	preserved_contractrefs:
+L00030721	- 'ContractRef: ContractName:Plans/Run_Graph_View.md, ContractName:Plans/Orchestrator_Page.md, ContractName:Plans/Executor_Protocol.md'
+L00030722	```
+L00030723	
+L00030724	### OSI-421 - Runtime Consumption Rules And Capacity Deferred Boundary
+L00030725	
+L00030726	```yaml
+L00030727	plan_unit_id: OSI-421
+L00030728	unit_type: requirement
+L00030729	status: accepted
+L00030730	owner_doc: Plans/orchestrator-subagent-integration.md
+L00030731	canonical_text: >-
+L00030732	  Runtime consumption preserves canonical event names and identities, same-cycle prerequisite reevaluation, capacity_deferred
+L00030733	  as the slot-shortage non-selection reason, allowed_action_ids, completed local work for blocked outcomes, and no hidden retries.
+L00030734	gui_related: false
+L00030735	gui_classification_reason: This unit covers backend runtime-consumption rules, not GUI presentation.
+L00030736	split_recommended: false
+L00030737	depends_on:
+L00030738	- OSI-017
+L00030739	- OSI-409
+L00030740	- OSI-415
+L00030741	- OSI-419
+L00030742	unblocks: []
+L00030743	acceptance_criteria:
+L00030744	- Covered runtime consumption rules remain losslessly available for exact-text audit.
+L00030745	- Slot shortage is capacity_deferred, not a blocked outcome.
+L00030746	- No WorkNodes, NodeSeeds, executable queues, final node manifests, or production build tasks are created.
+L00030747	validation_surfaces:
+L00030748	- >-
+L00030749	  python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits
+L00030750	- python3 scripts/pm-plan-index.py validate
+L00030751	reasoning_tier: standard
+L00030752	context_scope: orchestrator_subagent_standardization
+L00030753	implementation_surfaces:
+L00030754	- Plans/orchestrator-subagent-integration.md
+L00030755	risk_class: runtime_consumption_rules_capacity_deferred_boundary
+L00030756	node_compile_hint:
+L00030757	  mode: runtime_consumption_rules_capacity_deferred_boundary
+L00030758	  create_worknodes: false
+L00030759	source_lineage:
+L00030760	- >-
+L00030761	  Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:orchestrator-subagent-integration-S0220
+L00030762	- >-
+L00030763	  Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:orchestrator-subagent-integration-S0221
+L00030764	preserved_exact_tokens:
+L00030765	- canonical event names and identities
+L00030766	- node.prerequisite_resolved
+L00030767	- non_selected_reason = capacity_deferred
+L00030768	- allowed_action_ids[]
+L00030769	- completed local work
+L00030770	- hidden retries
+L00030771	- fallback loops
+L00030772	- provider-local resubmission
+L00030773	negative_constraints:
+L00030774	- Treat shortage of slots as non_selected_reason = capacity_deferred, not as a blocked outcome.
+L00030775	- Do not hide retries, fallback loops, or provider-local resubmission inside orchestrator code paths.
+L00030776	compatibility_only_notes: []
+L00030777	stale_retired_dispositions: []
+L00030778	owner_boundary_notes:
+L00030779	- Contracts V0 and runtime scheduler contracts own canonical events, identities, and allowed actions.
+L00030780	owner_hints:
+L00030781	- Plans/orchestrator-subagent-integration.md
+L00030782	preserved_contractrefs: []
+L00030783	```
+L00030784	
+L00030785	### OSI-422 - Remediation Child Attempt Visibility And Replan Boundary
+L00030786	
+L00030787	```yaml
+L00030788	plan_unit_id: OSI-422
+L00030789	unit_type: requirement
+L00030790	status: accepted
+L00030791	owner_doc: Plans/orchestrator-subagent-integration.md
+L00030792	canonical_text: >-
+L00030793	  Remediation child attempts receive their own attempt_id, inherit parent correlation, remain visible to queue/run graph/orchestrator/artifact
+L00030794	  consumers without becoming canonical graph nodes, block parent dispatch while active, and require accepted/applied replans before new canonical graph work.
+L00030795	gui_related: false
+L00030796	gui_classification_reason: This unit covers backend remediation child attempt behavior, not GUI presentation.
+L00030797	split_recommended: false
+L00030798	depends_on:
+L00030799	- OSI-414
+L00030800	- OSI-419
+L00030801	unblocks: []
+L00030802	acceptance_criteria:
+L00030803	- Covered remediation execution model section remains losslessly available for exact-text audit.
+L00030804	- Remediation children are visible consumers but are not canonical graph nodes.
+L00030805	- No WorkNodes, NodeSeeds, executable queues, final node manifests, or production build tasks are created.
+L00030806	validation_surfaces:
+L00030807	- >-
+L00030808	  python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits
+L00030809	- python3 scripts/pm-plan-index.py validate
+L00030810	reasoning_tier: standard
+L00030811	context_scope: orchestrator_subagent_standardization
+L00030812	implementation_surfaces:
+L00030813	- Plans/orchestrator-subagent-integration.md
+L00030814	risk_class: remediation_child_attempt_visibility_replan_boundary
+L00030815	node_compile_hint:
+L00030816	  mode: remediation_child_attempt_visibility_replan_boundary
+L00030817	  create_worknodes: false
+L00030818	source_lineage:
+L00030819	- >-
+L00030820	  Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:orchestrator-subagent-integration-S0222
+L00030821	preserved_exact_tokens:
+L00030822	- attempt_id
+L00030823	- remediation_root_id
+L00030824	- parent_attempt_id
+L00030825	- remediation_generation
+L00030826	- queue analysis
+L00030827	- run graph
+L00030828	- orchestrator lists
+L00030829	- artifact navigation
+L00030830	- not canonical graph nodes
+L00030831	- replan accepted/applied
+L00030832	negative_constraints:
+L00030833	- Remediation children are visible to consumers but are not canonical graph nodes.
+L00030834	- The parent node is not dispatchable while remediation child execution is active.
+L00030835	compatibility_only_notes: []
+L00030836	stale_retired_dispositions: []
+L00030837	owner_boundary_notes:
+L00030838	- Runtime creates new canonical graph work only after accepted/applied replan.
+L00030839	owner_hints:
+L00030840	- Plans/orchestrator-subagent-integration.md
+L00030841	preserved_contractrefs: []
+L00030842	```
+L00030843	
+L00030844	### OSI-423 - Same-Cycle Scheduling For Unblocked And Remediation Work
+L00030845	
+L00030846	```yaml
+L00030847	plan_unit_id: OSI-423
+L00030848	unit_type: requirement
+L00030849	status: accepted
+L00030850	owner_doc: Plans/orchestrator-subagent-integration.md
+L00030851	canonical_text: >-
+L00030852	  Newly unblocked canonical nodes and remediation children that become runnable in a wake cycle must be considered before
+L00030853	  that wake cycle ends, with projections updated from committed runtime events/projections rather than timer polling.
+L00030854	gui_related: false
+L00030855	gui_classification_reason: This unit covers backend scheduling behavior, not GUI presentation.
+L00030856	split_recommended: false
+L00030857	depends_on:
+L00030858	- OSI-411
+L00030859	- OSI-420
+L00030860	- OSI-422
+L00030861	unblocks: []
+L00030862	acceptance_criteria:
+L00030863	- Covered same-cycle scheduling section and ContractRef remain losslessly available for exact-text audit.
+L00030864	- Same-cycle consideration uses committed events/projections rather than timer polling.
+L00030865	- No WorkNodes, NodeSeeds, executable queues, final node manifests, or production build tasks are created.
+L00030866	validation_surfaces:
+L00030867	- >-
+L00030868	  python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits
+L00030869	- python3 scripts/pm-plan-index.py validate
+L00030870	reasoning_tier: standard
+L00030871	context_scope: orchestrator_subagent_standardization
+L00030872	implementation_surfaces:
+L00030873	- Plans/orchestrator-subagent-integration.md
+L00030874	risk_class: same_cycle_scheduling_unblocked_remediation_work
+L00030875	node_compile_hint:
+L00030876	  mode: same_cycle_scheduling_unblocked_remediation_work
+L00030877	  create_worknodes: false
+L00030878	source_lineage:
+L00030879	- >-
+L00030880	  Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:orchestrator-subagent-integration-S0223
+L00030881	preserved_exact_tokens:
+L00030882	- Newly unblocked canonical nodes
+L00030883	- remediation children
+L00030884	- wake cycle
+L00030885	- committed runtime events/projections
+L00030886	- timer polling
+L00030887	negative_constraints:
+L00030888	- Orchestrator projections must update from committed runtime events/projections rather than timer polling.
+L00030889	compatibility_only_notes: []
+L00030890	stale_retired_dispositions: []
+L00030891	owner_boundary_notes:
+L00030892	- Executor, Contracts V0, and Orchestrator Page own referenced wake/projection contracts.
+L00030893	owner_hints:
+L00030894	- Plans/orchestrator-subagent-integration.md
+L00030895	preserved_contractrefs:
+L00030896	- 'ContractRef: ContractName:Plans/Executor_Protocol.md, ContractName:Plans/Contracts_V0.md, ContractName:Plans/Orchestrator_Page.md'
+L00030897	```
+L00030898	
+L00030899	### OSI-424 - Runtime Enum And Counter Family Alignment
+L00030900	
+L00030901	```yaml
+L00030902	plan_unit_id: OSI-424
+L00030903	unit_type: requirement
+L00030904	status: accepted
+L00030905	owner_doc: Plans/orchestrator-subagent-integration.md
+L00030906	canonical_text: >-
+L00030907	  Runtime enum and counter alignment preserves orchestrator as a consumer of canonical runtime contracts, classified
+L00030908	  failure_class, blocked_reason_code, ordered allowed_action_ids, capacity_deferred slot shortage, new attempt_id creation,
+L00030909	  independent counter families, and retry_count as display-only.
+L00030910	gui_related: false
+L00030911	gui_classification_reason: This unit covers backend runtime enum/counter alignment, not GUI presentation.
+L00030912	split_recommended: true
+L00030913	depends_on:
+L00030914	- OSI-017
+L00030915	- OSI-413
+L00030916	- OSI-415
+L00030917	- OSI-421
+L00030918	- OSI-422
+L00030919	- OSI-423
+L00030920	unblocks: []
+L00030921	acceptance_criteria:
+L00030922	- S0224 source lines 6414-6426 remain losslessly available for exact-text audit under OSI-424.
+L00030923	- S0224 source line 6427 remains residual blank boundary coverage for the next structural disposition batch.
+L00030924	- Orchestrator must not redefine canonical runtime contracts locally.
+L00030925	- No WorkNodes, NodeSeeds, executable queues, final node manifests, or production build tasks are created.
+L00030926	validation_surfaces:
+L00030927	- >-
+L00030928	  python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits
+L00030929	- python3 scripts/pm-plan-index.py validate
+L00030930	reasoning_tier: standard
+L00030931	context_scope: orchestrator_subagent_standardization
+L00030932	implementation_surfaces:
+L00030933	- Plans/orchestrator-subagent-integration.md
+L00030934	risk_class: runtime_enum_counter_family_alignment
+L00030935	node_compile_hint:
+L00030936	  mode: runtime_enum_counter_family_alignment
+L00030937	  create_worknodes: false
+L00030938	source_lineage:
+L00030939	- >-
+L00030940	  Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:orchestrator-subagent-integration-S0224
+L00030941	preserved_exact_tokens:
+L00030942	- failure_class
+L00030943	- blocked_reason_code
+L00030944	- allowed_action_ids[]
+L00030945	- capacity_deferred
+L00030946	- attempt_id
+L00030947	- independent counter-family model
+L00030948	- retry_count
+L00030949	- display-only
+L00030950	negative_constraints:
+L00030951	- The orchestrator is a consumer of canonical runtime contracts and MUST NOT redefine them locally.
+L00030952	- Treat slot shortage as capacity_deferred, not blocked.
+L00030953	compatibility_only_notes:
+L00030954	- retry_count is display-only.
+L00030955	stale_retired_dispositions: []
+L00030956	owner_boundary_notes:
+L00030957	- Contracts V0, Decision Policy, and Executor Protocol own canonical runtime enums and counters.
+L00030958	owner_hints:
+L00030959	- Plans/orchestrator-subagent-integration.md
+L00030960	preserved_contractrefs:
+L00030961	- 'ContractRef: ContractName:Plans/Contracts_V0.md, ContractName:Plans/Decision_Policy.md, ContractName:Plans/Executor_Protocol.md'
+L00030962	```
+L00030963	
+L00030964	## Migration Coverage
+L00030965	
+L00030966	Original hash: `a29fb722e82fd1f89823b9be4c7a2aaa3b75418b6d3659c9b6657c0b15971241`.
+L00030967	
+L00030968	Run-scoped proof artifacts:
+L00030969	- `Plans/.plan_migration/pds-20260611-002-atomize-planunits/original_hashes.json`
+L00030970	- `Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl`
+L00030971	- `Plans/.plan_migration/pds-20260611-002-atomize-planunits/coverage_map.jsonl`
+L00030972	- `Plans/.plan_migration/pds-20260611-002-atomize-planunits/anchor_aliases.json`
+L00030973	
+L00030974	Phase 2B batch 118 atomized `orchestrator-subagent-integration-S0001` through `orchestrator-subagent-integration-S0021` into fine-grained PlanUnits `OSI-002` through `OSI-040`. Phase 2B batch 119 atomized `orchestrator-subagent-integration-S0022` into fine-grained PlanUnits `OSI-041` through `OSI-049`, preserving the trailing `Configuration` / `Subagent Configuration` opening fence as coverage-only boundary material. Phase 2B batch 120 atomized `orchestrator-subagent-integration-S0023` through `orchestrator-subagent-integration-S0040` into fine-grained PlanUnits `OSI-050` through `OSI-074`, including split GUI projection coverage for execution-unit UI inspection and SCM snapshot consumers. Phase 2B batch 121 atomized `orchestrator-subagent-integration-S0041` through `orchestrator-subagent-integration-S0088` into fine-grained PlanUnits `OSI-075` through `OSI-098`, preserving section/checklist boundary spans as attached coverage rather than standalone implementation tasks. Phase 2B batch 122 atomized `orchestrator-subagent-integration-S0089` through `orchestrator-subagent-integration-S0096` into fine-grained PlanUnits `OSI-099` through `OSI-114`, preserving start-verification Rust snippets as plan examples only. Phase 2B batch 123 atomized `orchestrator-subagent-integration-S0097` into fine-grained PlanUnits `OSI-115` through `OSI-127`, preserving end-verification Rust snippets as plan examples only and retaining Document Packaging / DRY gate references. Phase 2B batch 124 atomized `orchestrator-subagent-integration-S0098` through `orchestrator-subagent-integration-S0109` into fine-grained PlanUnits `OSI-128` through `OSI-147`, preserving the HookRegistry Rust snippets as plan examples only and attaching `S0099` as normative setup for `OSI-129`. Phase 2B batch 125 partially atomized `orchestrator-subagent-integration-S0110` source lines 2249-2639 into fine-grained PlanUnits `OSI-148` through `OSI-158`, preserving handoff-validation Rust snippets as plan examples only and treating lines 2573-2585 and 2639 as non-standalone coverage-only example material. Phase 2B batch 126 completed `orchestrator-subagent-integration-S0110` source lines 2640-2822 into fine-grained PlanUnits `OSI-159` through `OSI-165`, preserving Claude/Gemini/Copilot parser snippets, hook validation snippets, ParsedOutput integration, and benefit-summary lines as plan examples or attached coverage only. Phase 2B batch 127 atomized `orchestrator-subagent-integration-S0111` through `orchestrator-subagent-integration-S0118` and `orchestrator-subagent-integration-S0119` source lines 3153-3220 into fine-grained PlanUnits `OSI-166` through `OSI-190`, preserving remediation Rust snippets, continuity/storage negative constraints, platform tables, YAML snippets, and lifecycle-gap compatibility notes as plan evidence or attached coverage only. Phase 2B batch 128 completed `orchestrator-subagent-integration-S0119` source lines 3221-3315 into fine-grained PlanUnits `OSI-191` through `OSI-199`, preserving validation fallback, performance, permission, prompt-injection, hook-adapter, memory extraction, remediation context, and parser strictness gap mitigations as plan evidence or compatibility notes. Phase 2B batch 129 atomized duplicate source spans `orchestrator-subagent-integration-S0120` through `orchestrator-subagent-integration-S0125` into fine-grained PlanUnits `OSI-200` through `OSI-208`, preserving implementation placement, selector guardrails, and platform capability next-step checklist tokens as duplicate-aware compatibility/source-lineage coverage only. Phase 2B batch 130 atomized `orchestrator-subagent-integration-S0126` through `orchestrator-subagent-integration-S0136`, source lines 3370-3428, into fine-grained PlanUnits `OSI-209` through `OSI-234`, preserving implementation placement, config-wiring, verification, coordination, hook, handoff, continuity, remediation, and subagent-availability tokens while recording the prior batch-plan line-end mismatch as a span-map correction. Phase 2B batch 131 atomized `orchestrator-subagent-integration-S0137` through `orchestrator-subagent-integration-S0141` plus partial `orchestrator-subagent-integration-S0142` source lines 3574-3828 into fine-grained PlanUnits `OSI-235` through `OSI-259`, preserving parallel execution, selector DRY, dependency context, crew message-board, routing, throttling, lifecycle, projection, prompt-injection, scenario, platform-field, data-model, registration, and partial status-update API tokens as plan evidence or source-lineage coverage. Phase 2B batch 132 completed `orchestrator-subagent-integration-S0142` source lines 3829-4042 into fine-grained PlanUnits `OSI-260` through `OSI-278`, preserving status mutation, unregister, coordination context, file aggregation, stale projection pruning, serialization, duration helper, pre-execution registration, prompt injection, execution lifecycle, provider coordination, hook enrichment, cadence, event extraction, cross-platform examples, runner contract, and implementation placement tokens as plan evidence only. Phase 2B batch 133 atomized duplicate crew-rule spans `orchestrator-subagent-integration-S0143` through `orchestrator-subagent-integration-S0152` plus partial `orchestrator-subagent-integration-S0153` source lines 4160-4436 into fine-grained PlanUnits `OSI-279` through `OSI-308`, preserving crew rules, retired gap-era notes, executionLimits caps, GUI consumer boundaries, future Assistant guardrails, template/metrics/learning/scheduling enhancements, PRD/interview crew gap notes, research coverage caveats, comparison evidence, message-board examples, routing examples, message examples, orchestrator monitoring, GUI insight projection, and the prompt-injection introduction as plan evidence only. `orchestrator-subagent-integration-S0153` source line 4437 through `orchestrator-subagent-integration-S0224` remain temporary residual source-preserving coverage under `OSI-001`; next cursor is `orchestrator-subagent-integration-S0153` at source line 4437 so the Rust fence is inspected intact. These batches did not update Spec Lock, generated shards, evidence bundles, auto_decisions, or plan_graph, and they did not create WorkNodes, NodeSeeds, executable queues, final node manifests, or production build tasks.
+L00030975	Phase 2B batch 134 supersedes the immediately preceding residual sentence: batch 134 completed `orchestrator-subagent-integration-S0153` source lines 4437-4724 and partially atomized `orchestrator-subagent-integration-S0154` source lines 4725-4836 into fine-grained PlanUnits `OSI-309` through `OSI-327`, preserving the intact prompt-injection Rust fence, message relevance filters, threading, lifecycle/retention caveats, `AgentCommunicator` placement, DRY validation, platform display ContractRefs, command parsing example, orchestrator insights, benefits and mitigation evidence, GUI visualization consumer projection, concurrent-write/atomicity gap, fail-open stale-lock disposition, locking examples, platform process placeholder, and Gap #29 opening as plan evidence only. `orchestrator-subagent-integration-S0154` source line 4837 through `orchestrator-subagent-integration-S0224` remain temporary residual source-preserving coverage under `OSI-001`; next cursor is `orchestrator-subagent-integration-S0154` at source line 4837.
+L00030976	Phase 2B batch 135 supersedes the batch 134 residual sentence for S0154: batch 135 completed `orchestrator-subagent-integration-S0154` source lines 4837-5226 into fine-grained PlanUnits `OSI-328` through `OSI-345`, preserving corruption recovery, backup recovery snippets, schema/timestamp validation, stale-agent cleanup compatibility evidence, five-minute prune examples, file-operation extraction reliability, extractor snippets, size and prompt limits, filtered coordination context, conflict resolution and file-locking compatibility evidence, path normalization, event-ingestion fallback, metrics/logging visibility, GUI monitoring consumer projection, and analytics evidence. `orchestrator-subagent-integration-S0155` through `orchestrator-subagent-integration-S0224` remain temporary residual source-preserving coverage under `OSI-001`; next cursor is `orchestrator-subagent-integration-S0155` at source line 5227.
+L00030977	Phase 2B batch 136 supersedes the batch 135 residual sentence for S0155 through S0172: batch 136 atomized `orchestrator-subagent-integration-S0155` through `orchestrator-subagent-integration-S0172` and partial `orchestrator-subagent-integration-S0173` source lines 5623-5626 into fine-grained PlanUnits `OSI-346` through `OSI-374`, preserving coordination query/filtering, backup and schema-versioning examples, parallel worktree execution, conflict-detection examples, concurrency cap ownership, multi-language backend/frontend execution examples, platform capability surfaces, hook/MCP strategies, stale all-CLI transport disposition, capability snapshot rules, and the enhanced invoker fence opening as plan evidence only. `orchestrator-subagent-integration-S0173` source line 5627 through `orchestrator-subagent-integration-S0224` remain temporary residual source-preserving coverage under `OSI-001`; next cursor is `orchestrator-subagent-integration-S0173` at source line 5627.
+L00030978	Phase 2B batch 137 supersedes the batch 136 residual sentence for S0173 through S0187: batch 137 completed `orchestrator-subagent-integration-S0173` source lines 5627-5653 and atomized `orchestrator-subagent-integration-S0174` through `orchestrator-subagent-integration-S0187` into fine-grained PlanUnits `OSI-375` through `OSI-394`, preserving enhanced invoker dispatch, platform capability benefits and operational notes, capability follow-up checklist evidence, autonomous QA reference boundaries, exact visual status symbols, ProgressTracker examples, QA inspector interfaces, task/phase inspector snippets, pause-gate GUI projection, rework commit strategy example, and enhanced loop DRY/Executor ContractRefs as plan evidence only. `orchestrator-subagent-integration-S0188` source line 6027 through `orchestrator-subagent-integration-S0224` remain temporary residual source-preserving coverage under `OSI-001`; next cursor is `orchestrator-subagent-integration-S0188` at source line 6027.
+L00030979	Phase 2B batch 138 supersedes the batch 137 residual sentence for S0188 through S0223 and partial S0224: batch 138 atomized `orchestrator-subagent-integration-S0188` through `orchestrator-subagent-integration-S0223` and `orchestrator-subagent-integration-S0224` source lines 6414-6426 into fine-grained PlanUnits `OSI-395` through `OSI-424`, preserving autonomous QA benefits/config evidence, media capability gating change summary, sharded graph consumption, Persona runtime/config boundaries, stale `explore` to `explorer` normalization, scored ready-set scheduling, worktree-native conflict control, wake/cascade semantics, temporal wait rules, runtime projection fields, remediation lineage, retry/backoff matrix, decomposition degradation boundary, event-driven GUI projection alignment, runtime scheduler consumer fields, blocked outcome handling, same-cycle scheduling, and runtime enum/counter alignment as plan evidence only. `orchestrator-subagent-integration-S0224` source line 6427 plus generated owner, PlanUnit, and migration-coverage audit spans remain temporary residual source-preserving coverage under `OSI-001`; next cursor is `orchestrator-subagent-integration-S0224` at source line 6427.
+L00030980	Phase 2B batch 139 supersedes the batch 138 residual sentence for S0224 through S0227: batch 139 structurally dispositioned the residual `orchestrator-subagent-integration-S0224` blank boundary line 6427, generated `orchestrator-subagent-integration-S0225` Owner / Consumer Map, generated `orchestrator-subagent-integration-S0226` PlanUnits heading, and generated `orchestrator-subagent-integration-S0227` OSI-001 bridge/audit material without adding product PlanUnits. `orchestrator-subagent-integration-S0228` source lines 6817-6827 remain temporary residual source-preserving generated Migration Coverage audit/reporting material under `OSI-001`; next cursor is `orchestrator-subagent-integration-S0228` at source line 6817.
+L00030981	
+L00030982	
+L00030983	## Ledger Compile Addendum - pldg-20260614-001
+L00030984	
+L00030985	### OSI-425 - Persona-Aware Subagent Configuration Recovery
+L00030986	
+L00030987	```yaml
+L00030988	plan_unit_id: OSI-425
+L00030989	unit_type: requirement
+L00030990	status: accepted
+L00030991	owner_doc: Plans/orchestrator-subagent-integration.md
+L00030992	canonical_text: >-
+L00030993	  The recovered Subagent Configuration block is a compatibility import/export
+L00030994	  surface for routing/config, not Persona storage and not active runtime
+L00030995	  vocabulary. SubagentGuiConfig serializes subagentConfig with
+L00030996	  enable_tier_subagents, tier_overrides, disabled_subagents, required_subagents,
+L00030997	  advanced_raw_registry_controls, and canonical subagentPolicy. Runtime
+L00030998	  admission reads SubagentPolicy (`schema_id: pm.subagent_policy.v1`) with defaults, units, hard limits, retry
+L00030999	  policy, fanout thresholds, max parallel subagents, max cost per wave, and
+L00031000	  compatibility aliases; old tier override keys remain search/import aliases
+L00031001	  only.
+L00031002	gui_related: true
+L00031003	gui_classification_reason: The configuration is exposed through user-visible Agent Config and Settings controls even though the persisted record is runtime config.
+L00031004	depends_on: [P-053, OSI-081, OSI-082, OSI-084, OSI-402, OSI-403]
+L00031005	unblocks: []
+L00031006	acceptance_criteria:
+L00031007	  - The Subagent Configuration YAML fence contains actual YAML and closes before unrelated markdown sections.
+L00031008	  - Simple v1 tier override lists remain compatibility aliases and normalize through SubagentPolicy before runtime admission.
+L00031009	  - SubagentPolicy defines numeric defaults, units, hard limits, retry policy, fanout thresholds, max parallel subagents, max cost per wave, and compatibility aliases.
+L00031010	  - Advanced raw subagent registry controls are available only for advanced/internal use and never replace the Simple v1 flow.
+L00031011	validation_surfaces:
+L00031012	  - python3 scripts/pm-plan-index.py validate
+L00031013	  - markdown fence balance review for Plans/orchestrator-subagent-integration.md
+L00031014	risk_class: subagent_config_loss
+L00031015	reasoning_tier: standard
+L00031016	context_scope: orchestrator_subagent_config
+L00031017	implementation_surfaces: [Plans/orchestrator-subagent-integration.md, Plans/Personas.md, Plans/FinalGUISpec.md]
+L00031018	node_compile_hint: {mode: subagent_config_recovery, create_worknodes: false}
+L00031019	source_lineage:
+L00031020	  - pldg-20260614-001-part-2-cleanup-fable-audit:atom-0014
+L00031021	  - pldg-20260614-001-part-2-cleanup-fable-audit:atom-0025
+L00031022	  - pldg-20260614-001-part-2-cleanup-fable-audit:atom-0026
+L00031023	  - pldg-20260614-001-part-2-cleanup-fable-audit:atom-0027
+L00031024	  - pldg-20260614-001-part-2-cleanup-fable-audit:atom-0028
+L00031025	  - pldg-20260614-001-part-2-cleanup-fable-audit:atom-0029
+L00031026	  - pldg-20260614-001-part-2-cleanup-fable-audit:atom-0033
+L00031027	  - source_ref:chat:subagent-config-recovery-accepted
+L00031028	  - source_ref:local:sed-orchestrator-subagent-configuration
+L00031029	preserved_exact_tokens: ["Subagent Configuration", "subagentConfig", "SubagentGuiConfig", "enable_tier_subagents", "tier_overrides", "disabled_subagents", "required_subagents", "Simple", "Full", "advanced", "phase", "task", "subtask", "iteration"]
+L00031030	negative_constraints:
+L00031031	  - Do not keep unrelated markdown inside the Subagent Configuration YAML fence.
+L00031032	  - Do not store Persona prompt bodies or canonical Persona descriptions in SubagentGuiConfig.
+L00031033	  - Do not expose full contextual override keys as the default v1 user flow.
+L00031034	  - Do not treat tier_overrides or enable_tier_subagents as active runtime vocabulary after SubagentPolicy normalization.
+L00031035	owner_hints: [Plans/orchestrator-subagent-integration.md, Plans/Personas.md, Plans/FinalGUISpec.md]
+L00031036	```
+L00031037	
+L00031038	### OSI-426 - Canonical Subagent Registry Name Recovery
+L00031039	
+L00031040	```yaml
+L00031041	plan_unit_id: OSI-426
+L00031042	unit_type: requirement
+L00031043	status: accepted
+L00031044	owner_doc: Plans/orchestrator-subagent-integration.md
+L00031045	canonical_text: >-
+L00031046	  The canonical list of subagent names is the subagent_registry entry set. The registry names runnable delegated-subagent
+L00031047	  roles and validates launch requests; each entry resolves to Persona identity through persona_registry and records requested
+L00031048	  versus effective Persona state at runtime. Fixed counts such as 42 subagent types are compatibility/source-lineage only unless
+L00031049	  regenerated registry evidence proves them current.
+L00031050	gui_related: false
+L00031051	gui_classification_reason: Registry identity and launch validation are runtime/config contracts, not visual presentation.
+L00031052	depends_on: [P-053, OSI-091, OSI-212, OSI-403]
+L00031053	unblocks: []
+L00031054	acceptance_criteria:
+L00031055	  - Launch validation uses subagent_registry names, not provider-native /subagent, /agent, /fleet, or /delegate syntax.
+L00031056	  - Every subagent registry entry resolves to a Persona or fails validation with a clear requested/effective identity record.
+L00031057	  - Count-based references such as 42 subagent types remain lineage until generated registry evidence exists.
+L00031058	validation_surfaces:
+L00031059	  - python3 scripts/pm-plan-index.py validate
+L00031060	  - python3 scripts/pm-bootstrap-ledger-validate.py Plans/ledgers/v2/pldg-20260614-001-part-2-cleanup-fable-audit
+L00031061	risk_class: registry_identity_drift
+L00031062	reasoning_tier: standard
+L00031063	context_scope: delegated_subagent_registry
+L00031064	implementation_surfaces: [Plans/orchestrator-subagent-integration.md, Plans/Tools.md, Plans/Commands_System.md]
+L00031065	node_compile_hint: {mode: registry_name_contract, create_worknodes: false}
+L00031066	source_lineage:
+L00031067	  - pldg-20260614-001-part-2-cleanup-fable-audit:atom-0014
+L00031068	  - pldg-20260614-001-part-2-cleanup-fable-audit:atom-0024
+L00031069	  - pldg-20260614-001-part-2-cleanup-fable-audit:atom-0034
+L00031070	  - source_ref:chat:subagent-registry-list-recovery-accepted
+L00031071	  - source_ref:Plans/orchestrator-subagent-integration.md:962
+L00031072	preserved_exact_tokens: ["Canonical list of subagent names", "subagent_registry", "persona_registry", "42 subagent types", "provider-native", "/subagent", "/agent", "/fleet", "/delegate"]
+L00031073	negative_constraints:
+L00031074	  - Do not promote a stale inline subagent-name list or count as the registry SSOT.
+L00031075	  - Do not let provider-native delegation syntax become normative PM runtime behavior.
+L00031076	owner_hints: [Plans/orchestrator-subagent-integration.md, Plans/Tools.md, Plans/DRY_Rules.md]
+L00031077	```
+L00031078	
+L00031079	## Ledger Compile Addendum - pldg-20260614-002
+L00031080	
+L00031081	### OSI-427 - Cross Run Knowledge Continuity Contract
+L00031082	
+L00031083	```yaml
+L00031084	plan_unit_id: OSI-427
+L00031085	unit_type: requirement
+L00031086	status: accepted
+L00031087	owner_doc: Plans/orchestrator-subagent-integration.md
+L00031088	canonical_text: >-
+L00031089	  Orchestrator/subagent integration consumes the shared runtime continuity contract for cross-run
+L00031090	  knowledge continuity. Subagent extraction and handoff flows must emit continuity records with
+L00031091	  actor/runtime_identity, project/run/account scope, extraction source, trigger reason, provenance,
+L00031092	  redaction/retention policy, replay/reconnect behavior, conflict/staleness handling, and storage refs
+L00031093	  owned by the canonical runtime storage path. `.puppet-master/memory` is rejected as an active storage
+L00031094	  target for this continuity path.
+L00031095	gui_related: false
+L00031096	gui_classification_reason: Cross-run continuity extraction, storage, and handoff records are orchestration/runtime contracts, not visual presentation.
+L00031097	depends_on: [CV-282, OSI-426]
+L00031098	unblocks: []
+L00031099	acceptance_criteria:
+L00031100	  - Subagent handoffs and extraction records use the shared continuity schema and storage keys.
+L00031101	  - Continuity provenance, redaction, retention, replay, reconnect, conflict, and staleness handling are explicit.
+L00031102	  - "`.puppet-master/memory` is not used as active runtime continuity storage."
+L00031103	validation_surfaces:
+L00031104	  - python3 scripts/pm-plan-index.py validate
+L00031105	  - python3 scripts/pm-bootstrap-ledger-validate.py Plans/ledgers/v2/pldg-20260614-002-part-3-fable-cleanup
+L00031106	risk_class: cross_run_continuity_gap
+L00031107	reasoning_tier: high
+L00031108	context_scope: orchestrator_subagent_cross_run_continuity
+L00031109	implementation_surfaces: [Plans/orchestrator-subagent-integration.md, Plans/Contracts_V0.md, Plans/storage-plan.md]
+L00031110	node_compile_hint: {mode: orchestrator_cross_run_continuity, create_worknodes: false}
+L00031111	source_lineage:
+L00031112	  - pldg-20260614-002-part-3-fable-cleanup:atom-0100
+L00031113	  - pldg-20260614-002-part-3-fable-cleanup:atom-0101
+L00031114	preserved_exact_tokens: ["Cross-run knowledge continuity", "orchestrator-subagent-integration §4", "no schema, no event family, no storage keys", ".puppet-master/memory"]
+L00031115	negative_constraints:
+L00031116	  - Do not use `.puppet-master/memory` as active continuity storage.
+L00031117	  - Do not treat extraction alternatives as canonical behavior without the shared continuity schema.
+L00031118	owner_hints: [Plans/orchestrator-subagent-integration.md, Plans/Contracts_V0.md, Plans/storage-plan.md]
+L00031119	```
+L00031120	
+L00031121	## Ledger Compile Addendum - pldg-20260616-002
+L00031122	
+L00031123	### OSI-428 - Bounded Extensive Subagent Waves
+L00031124	
+L00031125	```yaml
+L00031126	plan_unit_id: OSI-428
+L00031127	unit_type: requirement
+L00031128	status: accepted
+L00031129	owner_doc: Plans/orchestrator-subagent-integration.md
+L00031130	canonical_text: >-
+L00031131	  Subagents remain extensive in Orchestrator GoalRuns, but each SubagentWave is bounded, cost-aware, auditable, and parent-supervised. The rewritten vocabulary uses child_goal, subagent_wave, bounded_work_unit, capability_lane, agent_role, write_policy, parent_synthesis, verification_cycle, receipt, write_mode, and certification_tier instead of old tier-era wording; controller, planner, executor, reviewer, verifier, adjudicator, certifier, root_cause, and replan roles remain distinct in subagent routing and certification authority. Old fixed-hierarchy and tier-era labels may remain only as compatibility/search aliases for search or import; canonical runtime prose uses GoalRun, WorkGraph, WorkNode, capability_lane, agent_role, SubagentWave, VerificationCycle, and Receipt, and stale tier labels are not active canonical runtime semantics. Contracts_V0 owns shared schema/envelope references for these runtime records and storage-plan owns their persistence/projection boundaries. Low-end subagents may execute one bounded WorkNode, inspect one file/window, map evidence, review one diff, run one acceptance-check group, classify one blocker, diagnose one test/failure, check source lineage, or check stale evidence/spans; they must not make final routing, final certification, broad architecture, authority/scope, governance unlock, user/product tradeoff, or parent completion decisions. SubagentPolicy governs fanout thresholds, max parallel subagents, max cost per wave, bounded input limits, retry policy, and mandatory-subagent rules with default limits of 4 parallel children, 8 children per wave, 3 waves per GoalRun, 2000000 microusd per wave, 16000 estimated tokens per wave, 900000 wall-clock ms per child, 2 retry attempts per child, 1 retry attempt per wave, and 30000 ms retry backoff for provider_transient, rate_limit, tool_timeout, or coordination_conflict only.
+L00031132	gui_related: false
+L00031133	gui_classification_reason: Subagent task boundaries, capability lanes, and certification authority are runtime/orchestration behavior, not visual presentation.
+L00031134	depends_on: [GRS-026, GRS-027, OSI-426, EP-098, MS-109, PS-115, W-071]
+L00031135	unblocks: [OP-022, F3-394]
+L00031136	acceptance_criteria:
+L00031137	  - Subagent fanout remains central to Orchestrator design rather than collapsing into one smart agent.
+L00031138	  - Each SubagentWave records task boundaries, assigned inputs, capability lane, cost/budget policy, outputs, failures, and evidence refs.
+L00031139	  - Each bounded_work_unit records child_goal or parent WorkNode context, capability_lane, agent_role, write_policy, parent_synthesis expectation, verification_cycle expectation, receipt expectation, write_mode, and certification_tier when applicable.
+L00031140	  - Subagent policy records fanout thresholds, max parallel subagents, max cost per wave, bounded input limits, retry policy, and mandatory subagent rules.
+L00031141	  - SubagentPolicy receipts record evaluated thresholds, selected child count, parallelism cap, cost ceiling, retry budget, capability lanes, write policy, and compatibility aliases consumed.
+L00031142	  - Default limits are measurable in children, waves, microusd, estimated tokens, bytes, refs, write targets, wall-clock ms, and tool rounds; hard-limit exceedance blocks the wave rather than silently widening scope.
+L00031143	  - SubagentPolicy limits cannot exceed the parent Run_Modes run-envelope budget or remaining budget.
+L00031144	  - Low-end subagents cannot certify parent GoalRun completion or approve governance unlocks.
+L00031145	  - Parent synthesis and high-end certification remain required for meaningful completion.
+L00031146	  - Old fixed-hierarchy and tier-era labels remain compatibility/search aliases only; they do not replace GoalRun, WorkGraph, WorkNode, capability_lane, agent_role, SubagentWave, VerificationCycle, or Receipt terminology in active runtime prose.
+L00031147	  - Old tier/config-era code samples are not implemented literally as canonical runtime semantics.
+L00031148	validation_surfaces:
+L00031149	  - python3 scripts/pm-plan-index.py validate
+L00031150	  - future Orchestrator subagent wave runtime review
+L00031151	risk_class: subagent_authority_drift
+L00031152	reasoning_tier: high
+L00031153	context_scope: orchestrator_subagent_waves
+L00031154	implementation_surfaces: [Plans/orchestrator-subagent-integration.md, Plans/Goal_Runtime_System.md, Plans/Models_System.md, Plans/Permissions_System.md, Plans/WorktreeGitImprovement.md, Plans/Contracts_V0.md, Plans/storage-plan.md, Plans/FinalGUISpec.md, Plans/Glossary.md]
+L00031155	node_compile_hint: {mode: bounded_subagent_wave_contract, create_worknodes: false}
+L00031156	source_lineage:
+L00031157	  - pldg-20260616-002-orchestrator-goal-runtime-flow:atom-0018
+L00031158	  - pldg-20260616-002-orchestrator-goal-runtime-flow:atom-0014
+L00031159	  - pldg-20260616-002-orchestrator-goal-runtime-flow:atom-0027
+L00031160	  - pldg-20260616-002-orchestrator-goal-runtime-flow:atom-0028
+L00031161	  - pldg-20260616-002-orchestrator-goal-runtime-flow:atom-0029
+L00031162	  - pldg-20260616-002-orchestrator-goal-runtime-flow:atom-0030
+L00031163	  - pldg-20260616-002-orchestrator-goal-runtime-flow:atom-0031
+L00031164	  - pldg-20260616-002-orchestrator-goal-runtime-flow:atom-0032
+L00031165	  - pldg-20260616-002-orchestrator-goal-runtime-flow:atom-0033
+L00031166	  - pldg-20260616-002-orchestrator-goal-runtime-flow:atom-0034
+L00031167	  - pldg-20260616-002-orchestrator-goal-runtime-flow:atom-0035
+L00031168	  - pldg-20260616-002-orchestrator-goal-runtime-flow:atom-0036
+L00031169	  - pldg-20260616-002-orchestrator-goal-runtime-flow:atom-0037
+L00031170	  - pldg-20260616-002-orchestrator-goal-runtime-flow:atom-0064
+L00031171	  - pldg-20260616-002-orchestrator-goal-runtime-flow:atom-0075
+L00031172	  - pldg-20260616-002-orchestrator-goal-runtime-flow:atom-0087
+L00031173	  - pldg-20260616-002-orchestrator-goal-runtime-flow:atom-0088
+L00031174	  - pldg-20260616-002-orchestrator-goal-runtime-flow:corr-0002
+L00031175	  - pldg-20260616-002-orchestrator-goal-runtime-flow:corr-0003
+L00031176	preserved_exact_tokens:
+L00031177	  - "subagents are used extensively"
+L00031178	  - "bounded"
+L00031179	  - "cost per wave"
+L00031180	  - "low end agents"
+L00031181	  - "higher end agents"
+L00031182	  - "SubagentWave"
+L00031183	  - "child_goal"
+L00031184	  - "subagent_wave"
+L00031185	  - "bounded_work_unit"
+L00031186	  - "capability_lane"
+L00031187	  - "agent_role"
+L00031188	  - "write_policy"
+L00031189	  - "parent_synthesis"
+L00031190	  - "verification_cycle"
+L00031191	  - "receipt"
+L00031192	  - "write_mode"
+L00031193	  - "certification_tier"
+L00031194	  - "controller"
+L00031195	  - "planner"
+L00031196	  - "executor"
+L00031197	  - "reviewer"
+L00031198	  - "verifier"
+L00031199	  - "adjudicator"
+L00031200	  - "certifier"
+L00031201	  - "root_cause"
+L00031202	  - "replan"
+L00031203	  - "one WorkNode execution"
+L00031204	  - "one file/window analysis"
+L00031205	  - "parent completion"
+L00031206	  - "subagent policy"
+L00031207	  - "fanout thresholds"
+L00031208	  - "max parallel subagents"
+L00031209	  - "max cost per wave"
+L00031210	  - "bounded input limits"
+L00031211	  - "retry policy"
+L00031212	  - "mandatory"
+L00031213	  - "compatibility/search aliases"
+L00031214	  - "tier-era wording"
+L00031215	  - "GoalRun"
+L00031216	  - "WorkGraph"
+L00031217	  - "VerificationCycle"
+L00031218	  - "Receipt"
+L00031219	negative_constraints:
+L00031220	  - Do not convert Orchestrator into one smart agent doing everything.
+L00031221	  - Do not run broad unbounded expensive subagent sweeps unless explicitly justified.
+L00031222	  - Do not let low-end subagents certify parent completion.
+L00031223	  - Do not let subagents write overlapping live surfaces concurrently.
+L00031224	  - Do not implement old tier/config-era code samples literally.
+L00031225	  - Do not preserve old tier-era wording as the canonical execution model.
+L00031226	  - Do not keep stale tier labels as active canonical runtime semantics.
+L00031227	owner_hints: [Plans/orchestrator-subagent-integration.md, Plans/Goal_Runtime_System.md, Plans/Models_System.md, Plans/Permissions_System.md, Plans/WorktreeGitImprovement.md, Plans/Contracts_V0.md, Plans/storage-plan.md, Plans/FinalGUISpec.md, Plans/Glossary.md]
+L00031228	```
+L00031229	
+L00031230	## Ledger Compile Addendum - pldg-20260622-001-fff
+L00031231	
+L00031232	### OSI-429 - Ambient Orchestrator Discovery For Agent Context
+L00031233	
+L00031234	```yaml
+L00031235	plan_unit_id: OSI-429
+L00031236	unit_type: requirement
+L00031237	status: accepted
+L00031238	owner_doc: Plans/orchestrator-subagent-integration.md
+L00031239	canonical_text: >-
+L00031240	  Orchestrator agent context acquisition routes no-exact-path bug fixes, ambiguous module ownership, read/search misses, broad repo scan avoidance, remote or SSH project orientation, and planning/source context assembly through discover_paths when locating repo code is materially needed. Orchestrator uses ranked candidates to guide reads and delegation, records fallback and selected candidates, and requires exact verification before root-cause claims, Executor handoff, or edits. It skips discovery for pure chat, already verified exact paths, user-forbidden discovery, policy-blocked context, disabled or kill-switch states, unsupported surfaces, or over-budget/backpressure states where existing exact tools are safer.
+L00031241	gui_related: false
+L00031242	gui_classification_reason: This is agent orchestration/tool-selection behavior, not GUI presentation.
+L00031243	depends_on: [T-160, T-161, T-162, CV-291]
+L00031244	unblocks: [EP-106, ATS-011]
+L00031245	acceptance_criteria:
+L00031246	  - Orchestrator uses discover_paths for materially needed repo/source orientation without broad ad hoc scans.
+L00031247	  - Discovery receipts link to exact verification before root-cause claims, Executor handoff, or edits.
+L00031248	  - Ambient discovery is bounded by explicit trigger and skip rules.
+L00031249	validation_surfaces:
+L00031250	  - python3 scripts/pm-plan-index.py validate
+L00031251	  - Future orchestrated no-path bug-fix test.
+L00031252	  - Future SSH-backed project context discovery test.
+L00031253	  - Future ambient trigger/skip rule tests.
+L00031254	risk_class: ambient_agent_overreach
+L00031255	reasoning_tier: standard
+L00031256	context_scope: orchestrator_agent_context
+L00031257	implementation_surfaces: [Plans/orchestrator-subagent-integration.md, future Orchestrator discovery routing]
+L00031258	node_compile_hint: {mode: orchestrator_discovery_consumer, create_worknodes: false, create_nodeseeds: false}
+L00031259	source_lineage:
+L00031260	  - pldg-20260622-001-fff:atom-0012
+L00031261	  - pldg-20260622-001-fff:atom-0027
+L00031262	  - pldg-20260622-001-fff:atom-0030
+L00031263	  - pldg-20260622-001-fff:atom-0037
+L00031264	  - pldg-20260622-001-fff:atom-0032
+L00031265	  - pldg-20260622-001-fff:atom-0043
+L00031266	  - pldg-20260622-001-fff:atom-0058
+L00031267	  - pldg-20260622-001-fff:atom-0059
+L00031268	  - pldg-20260622-001-fff:atom-0092
+L00031269	  - pldg-20260622-001-fff:atom-0094
+L00031270	  - pldg-20260622-001-fff:state/consumer_conformance_matrix.json#orchestrator_agent_context
+L00031271	source_atom_ids: [atom-0012, atom-0027, atom-0030, atom-0032, atom-0037, atom-0043, atom-0058, atom-0059, atom-0092, atom-0094]
+L00031272	preserved_exact_tokens: ["no-exact-path bug fixes", "ambiguous module ownership", "read/search misses", "broad repo scan avoidance", "discover_paths", "exact verification", "pure chat tasks", "already verified exact paths", "user-forbidden discovery", "over-budget/backpressure"]
+L00031273	negative_constraints:
+L00031274	  - Do not interpret ambient discovery as search-everything-every-turn behavior.
+L00031275	  - Do not silently bypass shared discovery with broad local scans when discovery should apply.
+L00031276	  - Do not bypass user or policy denial with discovery fallbacks.
+L00031277	owner_hints: [Plans/orchestrator-subagent-integration.md, Plans/Tools.md, Plans/Executor_Protocol.md]
+L00031278	```
+L00031279	
+L00031280	## Ledger Compile Addendum - pldg-20260627-001-feature-intake
+L00031281	
+L00031282	This addendum compiles source-lineage obligations from bootstrap ledger `pldg-20260627-001-feature-intake` into Orchestrator/Subagent Integration owner canon. It does not create WorkNodes, NodeSeeds, executable queues, GoalRuns, implementation files, generated governance artifacts, or production build tasks.
+L00031283	
+L00031284	### OSI-430 - Orchestrator DRY Consumer Retarget
+L00031285	
+L00031286	```yaml
+L00031287	plan_unit_id: OSI-430
+L00031288	unit_type: requirement
+L00031289	status: accepted
+L00031290	owner_doc: Plans/orchestrator-subagent-integration.md
+L00031291	canonical_text: >-
+L00031292	  Orchestrator consumes the shared DRY Method Instruction Bundle route from Prompt Pipeline and Agent Rules Context.
+L00031293	  Any stale Orchestrator-local DRY Method or widget-catalog prose is compatibility/source-lineage only and must not
+L00031294	  become an active owner. Orchestrator delegated child-runs record DRY effective state and receipt fields through the
+L00031295	  shared contract rather than route-local enums or local prompt copies.

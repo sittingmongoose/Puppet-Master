@@ -1,0 +1,3087 @@
+L00014524	  create_worknodes: false
+L00014525	source_lineage:
+L00014526	  - Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:assistant-chat-design-S0110
+L00014527	preserved_exact_tokens:
+L00014528	  - "Thought stream (expand)"
+L00014529	  - "Ran: cargo test"
+L00014530	negative_constraints: []
+L00014531	owner_hints:
+L00014532	  - Plans/assistant-chat-design.md
+L00014533	  - Plans/storage-plan.md
+L00014534	```
+L00014535	
+L00014536	### ACD-242 - Load Older Optional
+L00014537	
+L00014538	```yaml
+L00014539	plan_unit_id: ACD-242
+L00014540	unit_type: requirement
+L00014541	status: accepted
+L00014542	owner_doc: Plans/assistant-chat-design.md
+L00014543	canonical_text: Optional load-older pagination may bound extreme thread display while preserving full history in storage.
+L00014544	gui_related: true
+L00014545	gui_classification_reason: Load older pagination is visible long-thread UI behavior.
+L00014546	depends_on: [ACD-236]
+L00014547	unblocks: [ACD-250]
+L00014548	acceptance_criteria:
+L00014549	  - Load older pagination is available as an optional enhancement if virtualization alone is insufficient.
+L00014550	  - Full history remains in storage.
+L00014551	  - UI can fetch older slices on demand.
+L00014552	validation_surfaces:
+L00014553	  - python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits
+L00014554	  - python3 scripts/pm-plan-index.py validate
+L00014555	risk_class: performance
+L00014556	reasoning_tier: standard
+L00014557	context_scope: gui
+L00014558	implementation_surfaces:
+L00014559	  - Plans/assistant-chat-design.md
+L00014560	  - Plans/storage-plan.md
+L00014561	node_compile_hint:
+L00014562	  mode: load_older_optional
+L00014563	  create_worknodes: false
+L00014564	source_lineage:
+L00014565	  - Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:assistant-chat-design-S0110
+L00014566	preserved_exact_tokens:
+L00014567	  - "Load 50 older"
+L00014568	  - "optional"
+L00014569	  - "Full history remains in storage"
+L00014570	negative_constraints: []
+L00014571	owner_hints:
+L00014572	  - Plans/assistant-chat-design.md
+L00014573	  - Plans/storage-plan.md
+L00014574	```
+L00014575	
+L00014576	### ACD-243 - Thread Hot Memory Cap
+L00014577	
+L00014578	```yaml
+L00014579	plan_unit_id: ACD-243
+L00014580	unit_type: constraint
+L00014581	status: accepted
+L00014582	owner_doc: Plans/assistant-chat-design.md
+L00014583	canonical_text: Current-thread hot memory is capped at the last 200 messages or 8 MB, paging older message content from storage on demand.
+L00014584	gui_related: false
+L00014585	gui_classification_reason: Hot memory cap and paging are storage/runtime performance behavior.
+L00014586	depends_on: [ACD-236]
+L00014587	unblocks: []
+L00014588	acceptance_criteria:
+L00014589	  - Hot memory caps to last 200 messages or 8 MB.
+L00014590	  - Older message content is paged from storage on demand.
+L00014591	  - Full thread persistence is not reduced by hot memory caps.
+L00014592	validation_surfaces:
+L00014593	  - python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits
+L00014594	  - python3 scripts/pm-plan-index.py validate
+L00014595	risk_class: performance
+L00014596	reasoning_tier: high
+L00014597	context_scope: storage
+L00014598	implementation_surfaces:
+L00014599	  - Plans/assistant-chat-design.md
+L00014600	  - Plans/storage-plan.md
+L00014601	node_compile_hint:
+L00014602	  mode: thread_hot_memory_cap
+L00014603	  create_worknodes: false
+L00014604	source_lineage:
+L00014605	  - Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:assistant-chat-design-S0110
+L00014606	preserved_exact_tokens:
+L00014607	  - "ui.chat.in_memory_cap_messages"
+L00014608	  - "200"
+L00014609	  - "ui.chat.in_memory_cap_bytes"
+L00014610	  - "8388608"
+L00014611	negative_constraints: []
+L00014612	owner_hints:
+L00014613	  - Plans/assistant-chat-design.md
+L00014614	  - Plans/storage-plan.md
+L00014615	```
+L00014616	
+L00014617	### ACD-244 - Performance Enhancement Integration
+L00014618	
+L00014619	```yaml
+L00014620	plan_unit_id: ACD-244
+L00014621	unit_type: requirement
+L00014622	status: accepted
+L00014623	owner_doc: Plans/assistant-chat-design.md
+L00014624	canonical_text: MVP performance enhancements must integrate with virtualization and flicker avoidance.
+L00014625	gui_related: true
+L00014626	gui_classification_reason: Performance enhancements are visible chat UI loading, scrolling, and search behavior.
+L00014627	depends_on: [ACD-236, ACD-238]
+L00014628	unblocks: [ACD-245, ACD-246, ACD-247]
+L00014629	acceptance_criteria:
+L00014630	  - Skeleton placeholders integrate with virtualization.
+L00014631	  - Jump-to-message integrates with virtualization.
+L00014632	  - Search-in-thread highlights integrate with virtualization and flicker avoidance.
+L00014633	validation_surfaces:
+L00014634	  - python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits
+L00014635	  - python3 scripts/pm-plan-index.py validate
+L00014636	risk_class: performance
+L00014637	reasoning_tier: high
+L00014638	context_scope: gui
+L00014639	implementation_surfaces:
+L00014640	  - Plans/assistant-chat-design.md
+L00014641	  - Plans/FinalGUISpec.md
+L00014642	node_compile_hint:
+L00014643	  mode: performance_enhancement_integration
+L00014644	  create_worknodes: false
+L00014645	source_lineage:
+L00014646	  - Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:assistant-chat-design-S0111
+L00014647	preserved_exact_tokens:
+L00014648	  - "MVP"
+L00014649	  - "virtualization"
+L00014650	  - "flicker avoidance"
+L00014651	negative_constraints: []
+L00014652	owner_hints:
+L00014653	  - Plans/assistant-chat-design.md
+L00014654	```
+L00014655	
+L00014656	### ACD-245 - Skeleton Placeholders
+L00014657	
+L00014658	```yaml
+L00014659	plan_unit_id: ACD-245
+L00014660	unit_type: requirement
+L00014661	status: accepted
+L00014662	owner_doc: Plans/assistant-chat-design.md
+L00014663	canonical_text: Skeleton placeholders show 8 theme-aware rows on thread load or fast scroll, replace in place, and fail to an error placeholder plus Retry.
+L00014664	gui_related: true
+L00014665	gui_classification_reason: Skeleton rows, error placeholders, and Retry are visible loading UI.
+L00014666	depends_on: [ACD-244]
+L00014667	unblocks: []
+L00014668	acceptance_criteria:
+L00014669	  - Thread load shows 8 skeleton rows until first slice loads.
+L00014670	  - Skeletons replace in place when content arrives.
+L00014671	  - Load failure shows error placeholder and Retry.
+L00014672	validation_surfaces:
+L00014673	  - python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits
+L00014674	  - python3 scripts/pm-plan-index.py validate
+L00014675	risk_class: performance
+L00014676	reasoning_tier: standard
+L00014677	context_scope: gui
+L00014678	implementation_surfaces:
+L00014679	  - Plans/assistant-chat-design.md
+L00014680	  - Plans/FinalGUISpec.md
+L00014681	node_compile_hint:
+L00014682	  mode: skeleton_placeholders
+L00014683	  create_worknodes: false
+L00014684	source_lineage:
+L00014685	  - Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:assistant-chat-design-S0111
+L00014686	preserved_exact_tokens:
+L00014687	  - "ui.chat.skeleton_row_count"
+L00014688	  - "8"
+L00014689	  - "Retry"
+L00014690	negative_constraints:
+L00014691	  - "Do not leave skeletons indefinitely."
+L00014692	owner_hints:
+L00014693	  - Plans/assistant-chat-design.md
+L00014694	```
+L00014695	
+L00014696	### ACD-246 - Jump To Message
+L00014697	
+L00014698	```yaml
+L00014699	plan_unit_id: ACD-246
+L00014700	unit_type: requirement
+L00014701	status: accepted
+L00014702	owner_doc: Plans/assistant-chat-design.md
+L00014703	canonical_text: >-
+L00014704	  Jump to message resolves stable ID or index, loads the target slice with
+L00014705	  overscan, scrolls the target into view, highlights or focuses it briefly, and
+L00014706	  handles missing or deleted targets.
+L00014707	gui_related: true
+L00014708	gui_classification_reason: Jump to message is visible navigation and highlighting UI.
+L00014709	depends_on: [ACD-244]
+L00014710	unblocks: []
+L00014711	acceptance_criteria:
+L00014712	  - Search results, shared links, or command palette can jump to a message.
+L00014713	  - Target slice loads with overscan.
+L00014714	  - Missing or deleted target shows Message not found.
+L00014715	validation_surfaces:
+L00014716	  - python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits
+L00014717	  - python3 scripts/pm-plan-index.py validate
+L00014718	risk_class: performance
+L00014719	reasoning_tier: standard
+L00014720	context_scope: gui
+L00014721	implementation_surfaces:
+L00014722	  - Plans/assistant-chat-design.md
+L00014723	  - Plans/FinalGUISpec.md
+L00014724	node_compile_hint:
+L00014725	  mode: jump_to_message
+L00014726	  create_worknodes: false
+L00014727	source_lineage:
+L00014728	  - Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:assistant-chat-design-S0111
+L00014729	preserved_exact_tokens:
+L00014730	  - "Go to message"
+L00014731	  - "target_index +/- overscan"
+L00014732	  - "Message not found"
+L00014733	negative_constraints: []
+L00014734	owner_hints:
+L00014735	  - Plans/assistant-chat-design.md
+L00014736	```
+L00014737	
+L00014738	### ACD-247 - Search Thread Highlights
+L00014739	
+L00014740	```yaml
+L00014741	plan_unit_id: ACD-247
+L00014742	unit_type: requirement
+L00014743	status: accepted
+L00014744	owner_doc: Plans/assistant-chat-design.md
+L00014745	canonical_text: >-
+L00014746	  Search-in-thread highlights visible matches with cached ranges per
+L00014747	  message/query, caps matches per message, escapes regex or special characters,
+L00014748	  and clears on empty query or thread change.
+L00014749	gui_related: true
+L00014750	gui_classification_reason: Search highlights and next/previous navigation are visible chat UI.
+L00014751	depends_on: [ACD-244]
+L00014752	unblocks: []
+L00014753	acceptance_criteria:
+L00014754	  - Only visible items need highlight computation under virtualization.
+L00014755	  - Match ranges are cached by message and query.
+L00014756	  - Matches per message are capped and empty query clears highlights.
+L00014757	validation_surfaces:
+L00014758	  - python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits
+L00014759	  - python3 scripts/pm-plan-index.py validate
+L00014760	risk_class: performance
+L00014761	reasoning_tier: high
+L00014762	context_scope: search
+L00014763	implementation_surfaces:
+L00014764	  - Plans/assistant-chat-design.md
+L00014765	  - Plans/FinalGUISpec.md
+L00014766	node_compile_hint:
+L00014767	  mode: search_thread_highlights
+L00014768	  create_worknodes: false
+L00014769	source_lineage:
+L00014770	  - Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:assistant-chat-design-S0111
+L00014771	preserved_exact_tokens:
+L00014772	  - "Highlight all in thread"
+L00014773	  - "Next/Previous"
+L00014774	  - "(message_id, query)"
+L00014775	  - "50"
+L00014776	negative_constraints: []
+L00014777	owner_hints:
+L00014778	  - Plans/assistant-chat-design.md
+L00014779	```
+L00014780	
+L00014781	### ACD-248 - Overscan Height Mitigation
+L00014782	
+L00014783	```yaml
+L00014784	plan_unit_id: ACD-248
+L00014785	unit_type: requirement
+L00014786	status: accepted
+L00014787	owner_doc: Plans/assistant-chat-design.md
+L00014788	canonical_text: Overscan remains 10, and item height estimation uses per-type estimates or measured-height cache keyed by stable ID.
+L00014789	gui_related: true
+L00014790	gui_classification_reason: Overscan and height estimation affect visible virtual list scroll behavior.
+L00014791	depends_on: [ACD-236]
+L00014792	unblocks: []
+L00014793	acceptance_criteria:
+L00014794	  - Overscan remains 10 items.
+L00014795	  - Item heights use per-type estimates or measured cache keyed by stable ID.
+L00014796	  - Scrollbar updates as measured heights become known.
+L00014797	validation_surfaces:
+L00014798	  - python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits
+L00014799	  - python3 scripts/pm-plan-index.py validate
+L00014800	risk_class: performance
+L00014801	reasoning_tier: standard
+L00014802	context_scope: gui
+L00014803	implementation_surfaces:
+L00014804	  - Plans/assistant-chat-design.md
+L00014805	  - Plans/FinalGUISpec.md
+L00014806	node_compile_hint:
+L00014807	  mode: overscan_height_mitigation
+L00014808	  create_worknodes: false
+L00014809	source_lineage:
+L00014810	  - Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:assistant-chat-design-S0112
+L00014811	preserved_exact_tokens:
+L00014812	  - "Overscan: 10"
+L00014813	  - "message ~80px"
+L00014814	  - "diff ~200px"
+L00014815	negative_constraints: []
+L00014816	owner_hints:
+L00014817	  - Plans/assistant-chat-design.md
+L00014818	```
+L00014819	
+L00014820	### ACD-249 - Scroll Restore Mitigation
+L00014821	
+L00014822	```yaml
+L00014823	plan_unit_id: ACD-249
+L00014824	unit_type: requirement
+L00014825	status: accepted
+L00014826	owner_doc: Plans/assistant-chat-design.md
+L00014827	canonical_text: Expand/collapse and scroll restore preserve anchors, last visible message, or offset and recompute visible slices without arbitrary jumps.
+L00014828	gui_related: true
+L00014829	gui_classification_reason: Expand/collapse and restored scroll position are visible chat UI behavior.
+L00014830	depends_on: [ACD-239]
+L00014831	unblocks: []
+L00014832	acceptance_criteria:
+L00014833	  - Expand/collapse preserves a stable scroll anchor.
+L00014834	  - Thread reopen restores scroll position by last visible message id or offset.
+L00014835	  - Visible slice recomputation avoids arbitrary jumps.
+L00014836	validation_surfaces:
+L00014837	  - python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits
+L00014838	  - python3 scripts/pm-plan-index.py validate
+L00014839	risk_class: performance
+L00014840	reasoning_tier: high
+L00014841	context_scope: gui
+L00014842	implementation_surfaces:
+L00014843	  - Plans/assistant-chat-design.md
+L00014844	  - Plans/storage-plan.md
+L00014845	node_compile_hint:
+L00014846	  mode: scroll_restore_mitigation
+L00014847	  create_worknodes: false
+L00014848	source_lineage:
+L00014849	  - Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:assistant-chat-design-S0112
+L00014850	preserved_exact_tokens:
+L00014851	  - "first visible item id"
+L00014852	  - "last visible message id"
+L00014853	negative_constraints: []
+L00014854	owner_hints:
+L00014855	  - Plans/assistant-chat-design.md
+L00014856	```
+L00014857	
+L00014858	### ACD-250 - Streaming Tail Display Limit
+L00014859	
+L00014860	```yaml
+L00014861	plan_unit_id: ACD-250
+L00014862	unit_type: requirement
+L00014863	status: accepted
+L00014864	owner_doc: Plans/assistant-chat-design.md
+L00014865	canonical_text: >-
+L00014866	  Streaming tail remains visible only when the user is already at bottom;
+L00014867	  persistence has no hard limit while display relies on virtualization and
+L00014868	  optional load-older for 10k+ message threads.
+L00014869	gui_related: true
+L00014870	gui_classification_reason: Streaming tail behavior and long-thread display limits are visible chat UI behavior.
+L00014871	depends_on: [ACD-242]
+L00014872	unblocks: []
+L00014873	acceptance_criteria:
+L00014874	  - Streaming auto-scrolls only when already at bottom.
+L00014875	  - User scroll-up during stream is respected.
+L00014876	  - Persistence has no hard thread length limit.
+L00014877	  - Display uses virtualization and optional load-older for very long threads.
+L00014878	validation_surfaces:
+L00014879	  - python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits
+L00014880	  - python3 scripts/pm-plan-index.py validate
+L00014881	risk_class: performance
+L00014882	reasoning_tier: high
+L00014883	context_scope: gui
+L00014884	implementation_surfaces:
+L00014885	  - Plans/assistant-chat-design.md
+L00014886	  - Plans/storage-plan.md
+L00014887	node_compile_hint:
+L00014888	  mode: streaming_tail_display_limit
+L00014889	  create_worknodes: false
+L00014890	source_lineage:
+L00014891	  - Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:assistant-chat-design-S0112
+L00014892	preserved_exact_tokens:
+L00014893	  - "do not auto-scroll"
+L00014894	  - "No hard limit for persistence"
+L00014895	  - "10k+ messages"
+L00014896	negative_constraints:
+L00014897	  - "When user has scrolled up during stream, do not auto-scroll."
+L00014898	owner_hints:
+L00014899	  - Plans/assistant-chat-design.md
+L00014900	```
+L00014901	
+L00014902	### ACD-251 - Context Circle Owner Deferral
+L00014903	
+L00014904	```yaml
+L00014905	plan_unit_id: ACD-251
+L00014906	unit_type: constraint
+L00014907	status: accepted
+L00014908	owner_doc: Plans/assistant-chat-design.md
+L00014909	canonical_text: >-
+L00014910	  Context Circle addendum defers canonical thread-usage behavior to section 12
+L00014911	  and usage-feature, and compact-now remains valid only through canonical
+L00014912	  compaction commands.
+L00014913	gui_related: false
+L00014914	gui_classification_reason: Context Circle owner deferral is compatibility/source ownership behavior.
+L00014915	depends_on: []
+L00014916	unblocks: [ACD-252]
+L00014917	acceptance_criteria:
+L00014918	  - Thread-usage behavior is owned by section 12 and usage-feature.
+L00014919	  - Compact-now behavior remains valid only when backed by canonical compaction commands.
+L00014920	validation_surfaces:
+L00014921	  - python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits
+L00014922	  - python3 scripts/pm-plan-index.py validate
+L00014923	risk_class: context_usage
+L00014924	reasoning_tier: high
+L00014925	context_scope: compat
+L00014926	implementation_surfaces:
+L00014927	  - Plans/assistant-chat-design.md
+L00014928	  - Plans/usage-feature.md
+L00014929	node_compile_hint:
+L00014930	  mode: context_circle_owner_deferral
+L00014931	  create_worknodes: false
+L00014932	source_lineage:
+L00014933	  - Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:assistant-chat-design-S0113
+L00014934	preserved_exact_tokens:
+L00014935	  - "## 12. Context usage display"
+L00014936	  - "Plans/usage-feature.md"
+L00014937	  - "compact-now"
+L00014938	negative_constraints: []
+L00014939	owner_hints:
+L00014940	  - Plans/assistant-chat-design.md
+L00014941	  - Plans/usage-feature.md
+L00014942	```
+L00014943	
+L00014944	### ACD-252 - Context Popout Retired
+L00014945	
+L00014946	```yaml
+L00014947	plan_unit_id: ACD-252
+L00014948	unit_type: compatibility_disposition
+L00014949	status: accepted
+L00014950	owner_doc: Plans/assistant-chat-design.md
+L00014951	canonical_text: >-
+L00014952	  Detached usage pop-out model, old command IDs, and persistence keys are
+L00014953	  retired or superseded by the canonical thread-scoped Context Detail
+L00014954	  Pane/editor-tab model and its stable command IDs.
+L00014955	gui_related: true
+L00014956	gui_classification_reason: Detached usage pop-out and Context Detail Pane are user-visible context/usage UI models.
+L00014957	depends_on: [ACD-251]
+L00014958	unblocks: []
+L00014959	acceptance_criteria:
+L00014960	  - Detached usage pop-out is no longer canonical.
+L00014961	  - Old command IDs and persistence keys for the pop-out model are superseded.
+L00014962	  - Thread-scoped Context Detail Pane/editor-tab model remains canonical.
+L00014963	validation_surfaces:
+L00014964	  - python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits
+L00014965	  - python3 scripts/pm-plan-index.py validate
+L00014966	risk_class: context_usage
+L00014967	reasoning_tier: high
+L00014968	context_scope: stale_retired
+L00014969	implementation_surfaces:
+L00014970	  - Plans/assistant-chat-design.md
+L00014971	  - Plans/usage-feature.md
+L00014972	  - Plans/UI_Command_Catalog.md
+L00014973	node_compile_hint:
+L00014974	  mode: context_popout_retired
+L00014975	  create_worknodes: false
+L00014976	source_lineage:
+L00014977	  - Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:assistant-chat-design-S0113
+L00014978	preserved_exact_tokens:
+L00014979	  - "detached usage pop-out is no longer canonical"
+L00014980	  - "superseded"
+L00014981	negative_constraints:
+L00014982	  - "Detached usage pop-out is no longer canonical."
+L00014983	owner_hints:
+L00014984	  - Plans/assistant-chat-design.md
+L00014985	  - Plans/usage-feature.md
+L00014986	```
+L00014987	
+L00014988	### ACD-253 - Validation Settings Context
+L00014989	
+L00014990	```yaml
+L00014991	plan_unit_id: ACD-253
+L00014992	unit_type: requirement
+L00014993	status: accepted
+L00014994	owner_doc: Plans/assistant-chat-design.md
+L00014995	canonical_text: One Auditor validation-loop setting exposes provider/model choices for the Auditor invariant loop after interview/wizard project-plan generation; per-pass settings are retired compatibility lineage.
+L00014996	gui_related: true
+L00014997	gui_classification_reason: Auditor validation provider/model settings are visible Settings UI.
+L00014998	depends_on: []
+L00014999	unblocks: [ACD-254]
+L00015000	acceptance_criteria:
+L00015001	  - Auditor invariant loop is exposed through one provider/model settings row.
+L00015002	  - Settings apply after interview/wizard project-plan generation cycles.
+L00015003	validation_surfaces:
+L00015004	  - python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits
+L00015005	  - python3 scripts/pm-plan-index.py validate
+L00015006	risk_class: validation_settings
+L00015007	reasoning_tier: high
+L00015008	context_scope: gui
+L00015009	implementation_surfaces:
+L00015010	  - Plans/assistant-chat-design.md
+L00015011	  - Plans/chain-wizard-flexibility.md
+L00015012	node_compile_hint:
+L00015013	  mode: validation_settings_context
+L00015014	  create_worknodes: false
+L00015015	source_lineage:
+L00015016	  - Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:assistant-chat-design-S0114
+L00015017	  - Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:assistant-chat-design-S0115
+L00015018	preserved_exact_tokens:
+L00015019	  - "Three-Pass Canonical Validation Workflow"
+L00015020	  - "provider + model selection"
+L00015021	negative_constraints:
+L00015022	  - "Do not expose per-pass provider/model settings."
+L00015023	owner_hints:
+L00015024	  - Plans/assistant-chat-design.md
+L00015025	  - Plans/chain-wizard-flexibility.md
+L00015026	```
+L00015027	
+L00015028	### ACD-254 - Validation Settings Location
+L00015029	
+L00015030	```yaml
+L00015031	plan_unit_id: ACD-254
+L00015032	unit_type: requirement
+L00015033	status: accepted
+L00015034	owner_doc: Plans/assistant-chat-design.md
+L00015035	canonical_text: Auditor validation loop provider/model selection lives in Settings -> Interview / Planning Wizard -> Auditor Validation, not the chat UI.
+L00015036	gui_related: true
+L00015037	gui_classification_reason: Settings navigation and non-chat placement are visible configuration UI.
+L00015038	depends_on: [ACD-253]
+L00015039	unblocks: [ACD-255, ACD-261]
+L00015040	acceptance_criteria:
+L00015041	  - Auditor Validation settings group exists under Interview / Planning Wizard settings.
+L00015042	  - Auditor loop selection is not placed in chat UI.
+L00015043	  - Validation settings remain co-located with interview/wizard settings.
+L00015044	validation_surfaces:
+L00015045	  - python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits
+L00015046	  - python3 scripts/pm-plan-index.py validate
+L00015047	risk_class: validation_settings
+L00015048	reasoning_tier: standard
+L00015049	context_scope: gui
+L00015050	implementation_surfaces:
+L00015051	  - Plans/assistant-chat-design.md
+L00015052	  - Plans/FinalGUISpec.md
+L00015053	  - Plans/chain-wizard-flexibility.md
+L00015054	node_compile_hint:
+L00015055	  mode: auditor_validation_settings_location
+L00015056	  create_worknodes: false
+L00015057	source_lineage:
+L00015058	  - Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:assistant-chat-design-S0116
+L00015059	preserved_exact_tokens:
+L00015060	  - "Auditor Validation"
+L00015061	  - "Settings -> Interview / Planning Wizard -> Auditor Validation"
+L00015062	negative_constraints:
+L00015063	  - "Fixed Pass 1 / Pass 2 / Pass 3 provider and model selections are retired."
+L00015064	owner_hints:
+L00015065	  - Plans/assistant-chat-design.md
+L00015066	  - Plans/FinalGUISpec.md
+L00015067	```
+L00015068	
+L00015069	### ACD-255 - Validation Pass Controls
+L00015070	
+L00015071	```yaml
+L00015072	plan_unit_id: ACD-255
+L00015073	unit_type: requirement
+L00015074	status: accepted
+L00015075	owner_doc: Plans/assistant-chat-design.md
+L00015076	canonical_text: >-
+L00015077	  Auditor Validation settings expose one row for the Auditor validation loop
+L00015078	  with label, default provider, default model, and Provider and Model dropdowns
+L00015079	  sourced from the Provider -> models registry and Models_System capability
+L00015080	  resolver.
+L00015081	gui_related: true
+L00015082	gui_classification_reason: Auditor validation loop row and provider/model dropdowns are visible Settings UI.
+L00015083	depends_on: [ACD-254]
+L00015084	unblocks: [ACD-256, ACD-262]
+L00015085	acceptance_criteria:
+L00015086	  - Auditor Validation has one settings row for the whole validation loop.
+L00015087	  - Provider dropdown lists enabled provider entries from the account-bound Provider -> models registry.
+L00015088	  - Model dropdown lists provider models and falls back through the Models_System `fallback_chain[]` contract.
+L00015089	  - Legacy `platform_specs::fallback_model_ids(platform)` is not an active fallback source.
+L00015090	validation_surfaces:
+L00015091	  - python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits
+L00015092	  - python3 scripts/pm-plan-index.py validate
+L00015093	risk_class: validation_settings
+L00015094	reasoning_tier: high
+L00015095	context_scope: gui
+L00015096	implementation_surfaces:
+L00015097	  - Plans/assistant-chat-design.md
+L00015098	  - Plans/Contracts_V0.md
+L00015099	  - Plans/FinalGUISpec.md
+L00015100	  - Plans/Models_System.md
+L00015101	node_compile_hint:
+L00015102	  mode: auditor_validation_controls
+L00015103	  create_worknodes: false
+L00015104	source_lineage:
+L00015105	  - Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:assistant-chat-design-S0117
+L00015106	preserved_exact_tokens:
+L00015107	  - "Document Creation"
+L00015108	  - "Docs + Canonical Alignment"
+L00015109	  - "Canonical Systems Only"
+L00015110	  - "Auditor Validation"
+L00015111	  - "Provider"
+L00015112	  - "Model"
+L00015113	  - "fallback_chain[]"
+L00015114	negative_constraints:
+L00015115	  - "Do not expose independent Pass 1 / Pass 2 / Pass 3 provider/model rows."
+L00015116	  - "Do not use legacy `platform_specs` or `platform_specs::fallback_model_ids(platform)` as the active Auditor Validation dropdown source."
+L00015117	compatibility_only_notes:
+L00015118	  - "`platform_specs::fallback_model_ids(platform)` is retired source-lineage only."
+L00015119	owner_hints:
+L00015120	  - Plans/assistant-chat-design.md
+L00015121	  - Plans/Contracts_V0.md
+L00015122	  - Plans/Models_System.md
+L00015123	```
+L00015124	
+L00015125	### ACD-256 - No Effort Control Widget Tag
+L00015126	
+L00015127	```yaml
+L00015128	plan_unit_id: ACD-256
+L00015129	unit_type: constraint
+L00015130	status: accepted
+L00015131	owner_doc: Plans/assistant-chat-design.md
+L00015132	canonical_text: Auditor Validation settings show no reasoning/effort control and tag reusable wrappers with `// DRY:WIDGET:auditor-validation-provider-model-selector`.
+L00015133	gui_related: true
+L00015134	gui_classification_reason: The omitted effort control and reusable widget tag govern visible Auditor Validation settings controls.
+L00015135	depends_on: [ACD-255]
+L00015136	unblocks: [ACD-263]
+L00015137	acceptance_criteria:
+L00015138	  - Reasoning/effort control is not shown in Auditor Validation settings.
+L00015139	  - Auditor validation provider/model selector wrappers use the DRY widget tag.
+L00015140	validation_surfaces:
+L00015141	  - python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits
+L00015142	  - python3 scripts/pm-plan-index.py validate
+L00015143	risk_class: validation_settings
+L00015144	reasoning_tier: high
+L00015145	context_scope: dry
+L00015146	implementation_surfaces:
+L00015147	  - Plans/assistant-chat-design.md
+L00015148	  - Plans/DRY_Rules.md
+L00015149	  - Plans/FinalGUISpec.md
+L00015150	node_compile_hint:
+L00015151	  mode: auditor_no_effort_control_widget_tag
+L00015152	  create_worknodes: false
+L00015153	source_lineage:
+L00015154	  - Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:assistant-chat-design-S0117
+L00015155	preserved_exact_tokens:
+L00015156	  - "// DRY:WIDGET:auditor-validation-provider-model-selector"
+L00015157	negative_constraints:
+L00015158	  - "No reasoning/effort control is shown in this settings group."
+L00015159	owner_hints:
+L00015160	  - Plans/assistant-chat-design.md
+L00015161	  - Plans/DRY_Rules.md
+L00015162	```
+L00015163	
+L00015164	### ACD-257 - Validation Default Chain
+L00015165	
+L00015166	```yaml
+L00015167	plan_unit_id: ACD-257
+L00015168	unit_type: requirement
+L00015169	status: accepted
+L00015170	owner_doc: Plans/assistant-chat-design.md
+L00015171	canonical_text: Default provider/model resolution uses the explicit Auditor loop stored value, then Auditor Model role default, then primary chat provider/model, then first available provider entry plus the first eligible Models_System fallback-chain entry.
+L00015172	gui_related: false
+L00015173	gui_classification_reason: Default resolution priority is settings/config behavior.
+L00015174	depends_on: [ACD-253]
+L00015175	unblocks: [ACD-258, ACD-259]
+L00015176	acceptance_criteria:
+L00015177	  - Stored model_roles.auditor provider/model values take priority.
+L00015178	  - Auditor Model role default is second priority.
+L00015179	  - Primary chat platform/model is third priority.
+L00015180	  - First available provider entry plus the first eligible fallback-chain entry is final fallback.
+L00015181	validation_surfaces:
+L00015182	  - python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits
+L00015183	  - python3 scripts/pm-plan-index.py validate
+L00015184	risk_class: validation_settings
+L00015185	reasoning_tier: high
+L00015186	context_scope: defaults
+L00015187	implementation_surfaces:
+L00015188	  - Plans/assistant-chat-design.md
+L00015189	  - Plans/Contracts_V0.md
+L00015190	node_compile_hint:
+L00015191	  mode: validation_default_chain
+L00015192	  create_worknodes: false
+L00015193	source_lineage:
+L00015194	  - Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:assistant-chat-design-S0118
+L00015195	preserved_exact_tokens:
+L00015196	  - "model_roles.auditor.provider"
+L00015197	  - "model_roles.auditor.model"
+L00015198	  - "fallback_chain"
+L00015199	negative_constraints:
+L00015200	  - "Do not resolve Auditor defaults through legacy `platform_specs::fallback_model_ids(platform)`."
+L00015201	compatibility_only_notes:
+L00015202	  - "`platform_specs::fallback_model_ids(platform)` is retired source-lineage only."
+L00015203	owner_hints:
+L00015204	  - Plans/assistant-chat-design.md
+L00015205	  - Plans/Contracts_V0.md
+L00015206	  - Plans/Models_System.md
+L00015207	```
+L00015208	
+L00015209	### ACD-258 - Validation Default Invariants
+L00015210	
+L00015211	```yaml
+L00015212	plan_unit_id: ACD-258
+L00015213	unit_type: constraint
+L00015214	status: accepted
+L00015215	owner_doc: Plans/assistant-chat-design.md
+L00015216	canonical_text: Validation defaults are deterministic for the same app settings and resolved defaults are written on first explicit save for reproducible reads.
+L00015217	gui_related: false
+L00015218	gui_classification_reason: Default invariants are deterministic settings behavior.
+L00015219	depends_on: [ACD-257]
+L00015220	unblocks: [ACD-259]
+L00015221	acceptance_criteria:
+L00015222	  - Same app settings state resolves the same provider/model.
+L00015223	  - First explicit save writes resolved default to app settings.
+L00015224	  - Resolution avoids randomness and environment-dependent branching.
+L00015225	validation_surfaces:
+L00015226	  - python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits
+L00015227	  - python3 scripts/pm-plan-index.py validate
+L00015228	risk_class: validation_settings
+L00015229	reasoning_tier: high
+L00015230	context_scope: defaults
+L00015231	implementation_surfaces:
+L00015232	  - Plans/assistant-chat-design.md
+L00015233	  - Plans/Contracts_V0.md
+L00015234	node_compile_hint:
+L00015235	  mode: validation_default_invariants
+L00015236	  create_worknodes: false
+L00015237	source_lineage:
+L00015238	  - Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:assistant-chat-design-S0118
+L00015239	preserved_exact_tokens:
+L00015240	  - "no randomness, no environment-dependent branching"
+L00015241	negative_constraints:
+L00015242	  - "Default resolution uses no randomness and no environment-dependent branching."
+L00015243	owner_hints:
+L00015244	  - Plans/assistant-chat-design.md
+L00015245	  - Plans/Contracts_V0.md
+L00015246	```
+L00015247	
+L00015248	### ACD-259 - Validation App Settings Only
+L00015249	
+L00015250	```yaml
+L00015251	plan_unit_id: ACD-259
+L00015252	unit_type: constraint
+L00015253	status: accepted
+L00015254	owner_doc: Plans/assistant-chat-design.md
+L00015255	canonical_text: Auditor validation loop selections are app settings only, not project artifacts, not emitted to seglog as project data, and not included in project exports.
+L00015256	gui_related: false
+L00015257	gui_classification_reason: Auditor validation settings storage scope is persistence/config behavior.
+L00015258	depends_on: [ACD-257]
+L00015259	unblocks: [ACD-260]
+L00015260	acceptance_criteria:
+L00015261	  - Auditor validation loop selections are stored in app settings only.
+L00015262	  - Auditor validation loop selections are not project artifacts.
+L00015263	  - Auditor validation loop selections are not emitted to seglog as project data or included in exports.
+L00015264	validation_surfaces:
+L00015265	  - python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits
+L00015266	  - python3 scripts/pm-plan-index.py validate
+L00015267	risk_class: validation_storage
+L00015268	reasoning_tier: high
+L00015269	context_scope: settings
+L00015270	implementation_surfaces:
+L00015271	  - Plans/assistant-chat-design.md
+L00015272	  - Plans/Project_Output_Artifacts.md
+L00015273	node_compile_hint:
+L00015274	  mode: app_settings_only
+L00015275	  create_worknodes: false
+L00015276	source_lineage:
+L00015277	  - Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:assistant-chat-design-S0119
+L00015278	preserved_exact_tokens:
+L00015279	  - "not stored in project artifacts"
+L00015280	  - "not emitted to seglog as project data"
+L00015281	  - "not included in project exports"
+L00015282	negative_constraints:
+L00015283	  - "Auditor validation loop selections are app settings only."
+L00015284	owner_hints:
+L00015285	  - Plans/assistant-chat-design.md
+L00015286	```
+L00015287	
+L00015288	### ACD-260 - Validation Storage Keys
+L00015289	
+L00015290	```yaml
+L00015291	plan_unit_id: ACD-260
+L00015292	unit_type: requirement
+L00015293	status: accepted
+L00015294	owner_doc: Plans/assistant-chat-design.md
+L00015295	canonical_text: >-
+L00015296	  Each Auditor cycle report records the resolved Auditor validation loop
+L00015297	  provider/model in `auditor_cycle_report` payload fields and uses normative
+L00015298	  `model_roles.auditor.{provider,model}` storage keys. Legacy
+L00015299	  `validation_pass_report` mirrors may copy those values only with
+L00015300	  compatibility_only true and cycle_report_ref.
+L00015301	gui_related: false
+L00015302	gui_classification_reason: Validation storage keys and audit payload fields are persistence behavior.
+L00015303	depends_on: [ACD-259]
+L00015304	unblocks: []
+L00015305	acceptance_criteria:
+L00015306	  - auditor_cycle_report records resolved Auditor loop provider and model.
+L00015307	  - validation_pass_report mirrors resolved Auditor loop provider and model only as a compatibility mirror with compatibility_only true and cycle_report_ref.
+L00015308	  - Normative model_roles.auditor provider/model keys are used.
+L00015309	  - Settings keys themselves are not stored as project artifacts.
+L00015310	validation_surfaces:
+L00015311	  - python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits
+L00015312	  - python3 scripts/pm-plan-index.py validate
+L00015313	risk_class: validation_storage
+L00015314	reasoning_tier: high
+L00015315	context_scope: audit
+L00015316	implementation_surfaces:
+L00015317	  - Plans/assistant-chat-design.md
+L00015318	  - Plans/Project_Output_Artifacts.md
+L00015319	node_compile_hint:
+L00015320	  mode: validation_storage_keys
+L00015321	  create_worknodes: false
+L00015322	source_lineage:
+L00015323	  - Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:assistant-chat-design-S0119
+L00015324	preserved_exact_tokens:
+L00015325	  - "auditor_cycle_report"
+L00015326	  - "validation_pass_report"
+L00015327	  - "cycle_report_ref"
+L00015328	  - "compatibility_only"
+L00015329	  - "provider"
+L00015330	  - "model"
+L00015331	  - "model_roles.auditor.provider"
+L00015332	  - "model_roles.auditor.model"
+L00015333	negative_constraints: []
+L00015334	owner_hints:
+L00015335	  - Plans/assistant-chat-design.md
+L00015336	```
+L00015337	
+L00015338	### ACD-261 - Validation UX Copy
+L00015339	
+L00015340	```yaml
+L00015341	plan_unit_id: ACD-261
+L00015342	unit_type: requirement
+L00015343	status: accepted
+L00015344	owner_doc: Plans/assistant-chat-design.md
+L00015345	canonical_text: Auditor Validation UX copy uses the specified section header, loop description, and `(Default)` indicator.
+L00015346	gui_related: true
+L00015347	gui_classification_reason: Auditor Validation labels and descriptions are visible Settings copy.
+L00015348	depends_on: [ACD-254]
+L00015349	unblocks: []
+L00015350	acceptance_criteria:
+L00015351	  - Section header is "Auditor Validation".
+L00015352	  - Section description and loop description match the specified copy.
+L00015353	  - Default indicator shows "(Default)" for automatically resolved provider/model values.
+L00015354	validation_surfaces:
+L00015355	  - python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits
+L00015356	  - python3 scripts/pm-plan-index.py validate
+L00015357	risk_class: validation_settings
+L00015358	reasoning_tier: standard
+L00015359	context_scope: copy
+L00015360	implementation_surfaces:
+L00015361	  - Plans/assistant-chat-design.md
+L00015362	  - Plans/FinalGUISpec.md
+L00015363	node_compile_hint:
+L00015364	  mode: auditor_validation_ux_copy
+L00015365	  create_worknodes: false
+L00015366	source_lineage:
+L00015367	  - Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:assistant-chat-design-S0120
+L00015368	preserved_exact_tokens:
+L00015369	  - "Auditor Validation"
+L00015370	  - "Puppet Master runs the canonical validation sweep with the Auditor Model. Choose the provider and model for the whole audit loop."
+L00015371	  - "Audit / Repair / Audit"
+L00015372	  - "Document Creation"
+L00015373	  - "Canonical Alignment"
+L00015374	  - "Canonical Systems Only"
+L00015375	  - "(Default)"
+L00015376	negative_constraints: []
+L00015377	owner_hints:
+L00015378	  - Plans/assistant-chat-design.md
+L00015379	  - Plans/FinalGUISpec.md
+L00015380	```
+L00015381	
+L00015382	### ACD-262 - Provider Models Registry Only
+L00015383	
+L00015384	```yaml
+L00015385	plan_unit_id: ACD-262
+L00015386	unit_type: constraint
+L00015387	status: accepted
+L00015388	owner_doc: Plans/assistant-chat-design.md
+L00015389	canonical_text: Provider and model lists must come from the account-bound Provider -> models registry and shared capability resolver; hardcoded provider names or model lists are not allowed, and legacy platform_specs is source-lineage only.
+L00015390	gui_related: false
+L00015391	gui_classification_reason: Provider/model source-of-truth is DRY/config behavior.
+L00015392	depends_on: [ACD-255]
+L00015393	unblocks: [ACD-263]
+L00015394	acceptance_criteria:
+L00015395	  - Provider lists source from the account-bound Provider -> models registry.
+L00015396	  - Model lists source from the shared provider/model registry and capability resolver.
+L00015397	  - Hardcoded provider names and model lists are prohibited.
+L00015398	validation_surfaces:
+L00015399	  - python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits
+L00015400	  - python3 scripts/pm-plan-index.py validate
+L00015401	risk_class: validation_settings
+L00015402	reasoning_tier: high
+L00015403	context_scope: dry
+L00015404	implementation_surfaces:
+L00015405	  - Plans/assistant-chat-design.md
+L00015406	  - Plans/DRY_Rules.md
+L00015407	  - Plans/Contracts_V0.md
+L00015408	node_compile_hint:
+L00015409	  mode: provider_models_registry_only
+L00015410	  create_worknodes: false
+L00015411	source_lineage:
+L00015412	  - Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:assistant-chat-design-S0121
+L00015413	preserved_exact_tokens:
+L00015414	  - "platform_specs"
+L00015415	  - "No hardcoded provider names or model lists"
+L00015416	negative_constraints:
+L00015417	  - "Provider and model lists MUST NOT be sourced from legacy platform_specs."
+L00015418	  - "No hardcoded provider names or model lists anywhere in this feature."
+L00015419	compatibility_only_notes:
+L00015420	  - "platform_specs is preserved only as a retired source-lineage token."
+L00015421	owner_hints:
+L00015422	  - Plans/assistant-chat-design.md
+L00015423	  - Plans/DRY_Rules.md
+L00015424	```
+L00015425	
+L00015426	### ACD-263 - Validation Dropdown Reuse
+L00015427	
+L00015428	```yaml
+L00015429	plan_unit_id: ACD-263
+L00015430	unit_type: requirement
+L00015431	status: accepted
+L00015432	owner_doc: Plans/assistant-chat-design.md
+L00015433	canonical_text: Auditor Validation reuses the same provider and model dropdown widgets as chat controls and applies the auditor-validation DRY widget tag.
+L00015434	gui_related: true
+L00015435	gui_classification_reason: Provider/model dropdown reuse affects visible Auditor Validation settings controls.
+L00015436	depends_on: [ACD-256, ACD-262]
+L00015437	unblocks: []
+L00015438	acceptance_criteria:
+L00015439	  - Auditor Validation uses the same provider dropdown widget as chat controls.
+L00015440	  - Auditor Validation uses the same model dropdown widget as chat controls.
+L00015441	  - Reusable settings wrappers carry the auditor-validation DRY widget tag.
+L00015442	validation_surfaces:
+L00015443	  - python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits
+L00015444	  - python3 scripts/pm-plan-index.py validate
+L00015445	risk_class: validation_settings
+L00015446	reasoning_tier: high
+L00015447	context_scope: dry
+L00015448	implementation_surfaces:
+L00015449	  - Plans/assistant-chat-design.md
+L00015450	  - Plans/DRY_Rules.md
+L00015451	  - Plans/FinalGUISpec.md
+L00015452	node_compile_hint:
+L00015453	  mode: auditor_validation_dropdown_reuse
+L00015454	  create_worknodes: false
+L00015455	source_lineage:
+L00015456	  - Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:assistant-chat-design-S0121
+L00015457	preserved_exact_tokens:
+L00015458	  - "§1.1 chat controls"
+L00015459	  - "// DRY:WIDGET:auditor-validation-provider-model-selector"
+L00015460	negative_constraints: []
+L00015461	owner_hints:
+L00015462	  - Plans/assistant-chat-design.md
+L00015463	  - Plans/DRY_Rules.md
+L00015464	```
+L00015465	
+L00015466	### ACD-264 - Validation Next Sweep Application
+L00015467	
+L00015468	```yaml
+L00015469	plan_unit_id: ACD-264
+L00015470	unit_type: requirement
+L00015471	status: accepted
+L00015472	owner_doc: Plans/assistant-chat-design.md
+L00015473	canonical_text: >-
+L00015474	  Validation settings changes take effect only on the next validation sweep run;
+L00015475	  an in-progress sweep continues with the provider/model active when it started.
+L00015476	gui_related: false
+L00015477	gui_classification_reason: Validation sweep timing is lifecycle behavior rather than GUI implementation.
+L00015478	depends_on: [ACD-253, ACD-257]
+L00015479	unblocks: []
+L00015480	acceptance_criteria:
+L00015481	  - Settings changes apply on the next validation sweep run.
+L00015482	  - A validation sweep in progress does not change provider/model mid-sweep.
+L00015483	validation_surfaces:
+L00015484	  - python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits
+L00015485	  - python3 scripts/pm-plan-index.py validate
+L00015486	risk_class: validation_lifecycle
+L00015487	reasoning_tier: high
+L00015488	context_scope: validation_settings
+L00015489	implementation_surfaces:
+L00015490	  - Plans/assistant-chat-design.md
+L00015491	  - Plans/chain-wizard-flexibility.md
+L00015492	node_compile_hint:
+L00015493	  mode: validation_next_sweep_application
+L00015494	  create_worknodes: false
+L00015495	source_lineage:
+L00015496	  - Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:assistant-chat-design-S0122
+L00015497	preserved_exact_tokens:
+L00015498	  - "next"
+L00015499	  - "not mid-sweep"
+L00015500	negative_constraints:
+L00015501	  - "Settings changes must not mutate provider/model selection for a validation sweep already in progress."
+L00015502	owner_hints:
+L00015503	  - Plans/assistant-chat-design.md
+L00015504	```
+L00015505	
+L00015506	### ACD-265 - Validation Unavailable Provider Warning
+L00015507	
+L00015508	```yaml
+L00015509	plan_unit_id: ACD-265
+L00015510	unit_type: requirement
+L00015511	status: accepted
+L00015512	owner_doc: Plans/assistant-chat-design.md
+L00015513	canonical_text: >-
+L00015514	  When a saved validation provider is unavailable, Puppet Master falls back to
+L00015515	  the deterministic default and displays the warning "Auditor validation provider
+L00015516	  [name] is unavailable; using Auditor Model default."
+L00015517	gui_related: true
+L00015518	gui_classification_reason: The unavailable-provider warning is visible user-facing settings feedback.
+L00015519	depends_on: [ACD-257]
+L00015520	unblocks: []
+L00015521	acceptance_criteria:
+L00015522	  - Unavailable saved validation providers fall back to the deterministic default.
+L00015523	  - The fallback displays the specified warning text.
+L00015524	validation_surfaces:
+L00015525	  - python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits
+L00015526	  - python3 scripts/pm-plan-index.py validate
+L00015527	risk_class: silent_fallback
+L00015528	reasoning_tier: high
+L00015529	context_scope: validation_settings
+L00015530	implementation_surfaces:
+L00015531	  - Plans/assistant-chat-design.md
+L00015532	  - Plans/Decision_Policy.md
+L00015533	  - Plans/FinalGUISpec.md
+L00015534	node_compile_hint:
+L00015535	  mode: validation_unavailable_provider_warning
+L00015536	  create_worknodes: false
+L00015537	source_lineage:
+L00015538	  - Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:assistant-chat-design-S0122
+L00015539	preserved_exact_tokens:
+L00015540	  - "Auditor validation provider [name] is unavailable; using Auditor Model default."
+L00015541	negative_constraints:
+L00015542	  - "Unavailable saved validation providers must not fail silently."
+L00015543	owner_hints:
+L00015544	  - Plans/assistant-chat-design.md
+L00015545	  - Plans/FinalGUISpec.md
+L00015546	```
+L00015547	
+L00015548	### ACD-266 - Validation Pass Persistence And Independence
+L00015549	
+L00015550	```yaml
+L00015551	plan_unit_id: ACD-266
+L00015552	unit_type: requirement
+L00015553	status: accepted
+L00015554	owner_doc: Plans/assistant-chat-design.md
+L00015555	canonical_text: Auditor validation provider/model settings persist across app restarts, and Pass 1, Pass 2, and Pass 3 are compatibility aliases only, not independently configurable model settings or active stages.
+L00015556	gui_related: false
+L00015557	gui_classification_reason: Restart persistence and one-loop Auditor validation settings are configuration behavior.
+L00015558	depends_on: [ACD-253, ACD-260]
+L00015559	unblocks: []
+L00015560	acceptance_criteria:
+L00015561	  - Auditor validation settings are preserved across app restarts.
+L00015562	  - Auditor cycle reports use the same resolved Auditor validation loop provider/model.
+L00015563	  - Legacy Pass 1, Pass 2, and Pass 3 report mirrors are compatibility aliases only.
+L00015564	validation_surfaces:
+L00015565	  - python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits
+L00015566	  - python3 scripts/pm-plan-index.py validate
+L00015567	risk_class: validation_settings
+L00015568	reasoning_tier: standard
+L00015569	context_scope: validation_storage
+L00015570	implementation_surfaces:
+L00015571	  - Plans/assistant-chat-design.md
+L00015572	  - Plans/Project_Output_Artifacts.md
+L00015573	node_compile_hint:
+L00015574	  mode: auditor_validation_persistence_no_pass_independence
+L00015575	  create_worknodes: false
+L00015576	source_lineage:
+L00015577	  - Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:assistant-chat-design-S0122
+L00015578	preserved_exact_tokens:
+L00015579	  - "Pass 1"
+L00015580	  - "Pass 2"
+L00015581	  - "Pass 3"
+L00015582	negative_constraints:
+L00015583	  - "Pass 1, Pass 2, and Pass 3 are not independently configurable model settings."
+L00015584	owner_hints:
+L00015585	  - Plans/assistant-chat-design.md
+L00015586	```
+L00015587	
+L00015588	### ACD-267 - Validation Default Indicator Lifecycle
+L00015589	
+L00015590	```yaml
+L00015591	plan_unit_id: ACD-267
+L00015592	unit_type: requirement
+L00015593	status: accepted
+L00015594	owner_doc: Plans/assistant-chat-design.md
+L00015595	canonical_text: The `(Default)` indicator is visible until an explicit Auditor validation loop provider/model selection is saved, then disappears.
+L00015596	gui_related: true
+L00015597	gui_classification_reason: The default indicator is visible settings UI.
+L00015598	depends_on: [ACD-254, ACD-261]
+L00015599	unblocks: []
+L00015600	acceptance_criteria:
+L00015601	  - The `(Default)` indicator appears when no explicit Auditor validation loop selection is saved.
+L00015602	  - The `(Default)` indicator disappears after the user saves an explicit Auditor validation loop selection.
+L00015603	validation_surfaces:
+L00015604	  - python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits
+L00015605	  - python3 scripts/pm-plan-index.py validate
+L00015606	risk_class: validation_settings
+L00015607	reasoning_tier: standard
+L00015608	context_scope: gui
+L00015609	implementation_surfaces:
+L00015610	  - Plans/assistant-chat-design.md
+L00015611	  - Plans/FinalGUISpec.md
+L00015612	node_compile_hint:
+L00015613	  mode: auditor_validation_default_indicator_lifecycle
+L00015614	  create_worknodes: false
+L00015615	source_lineage:
+L00015616	  - Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:assistant-chat-design-S0122
+L00015617	preserved_exact_tokens:
+L00015618	  - "(Default)"
+L00015619	negative_constraints: []
+L00015620	owner_hints:
+L00015621	  - Plans/assistant-chat-design.md
+L00015622	  - Plans/FinalGUISpec.md
+L00015623	```
+L00015624	
+L00015625	### ACD-268 - Validation Dropdown And Report Parity
+L00015626	
+L00015627	```yaml
+L00015628	plan_unit_id: ACD-268
+L00015629	unit_type: requirement
+L00015630	status: accepted
+L00015631	owner_doc: Plans/assistant-chat-design.md
+L00015632	canonical_text: >-
+L00015633	  Auditor validation provider/model dropdowns draw from the account-bound Provider -> models registry and shared capability resolver, and
+L00015634	  each Auditor cycle report emits provider and model values matching the
+L00015635	  resolved Auditor validation loop provider/model; legacy
+L00015636	  `validation_pass_report.provider` and `.model` values mirror them for
+L00015637	  compatibility.
+L00015638	gui_related: false
+L00015639	gui_classification_reason: Dropdown data-source and emitted report parity are contract/config behavior.
+L00015640	depends_on: [ACD-260, ACD-262, ACD-263]
+L00015641	unblocks: []
+L00015642	acceptance_criteria:
+L00015643	  - Auditor validation dropdowns use the same Provider -> models and capability resolver source as chat controls.
+L00015644	  - Each emitted Auditor cycle report provider/model matches the resolved Auditor validation loop settings.
+L00015645	  - Legacy validation pass report provider/model values mirror the Auditor cycle report values only with compatibility_only true and cycle_report_ref.
+L00015646	validation_surfaces:
+L00015647	  - python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits
+L00015648	  - python3 scripts/pm-plan-index.py validate
+L00015649	risk_class: validation_storage
+L00015650	reasoning_tier: high
+L00015651	context_scope: validation_report
+L00015652	implementation_surfaces:
+L00015653	  - Plans/assistant-chat-design.md
+L00015654	  - Plans/Contracts_V0.md
+L00015655	  - Plans/Project_Output_Artifacts.md
+L00015656	node_compile_hint:
+L00015657	  mode: auditor_validation_dropdown_report_parity
+L00015658	  create_worknodes: false
+L00015659	source_lineage:
+L00015660	  - Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:assistant-chat-design-S0122
+L00015661	preserved_exact_tokens:
+L00015662	  - "platform_specs"
+L00015663	  - "validation_pass_report.provider"
+L00015664	  - ".model"
+L00015665	  - "model_roles.auditor.provider"
+L00015666	  - "model_roles.auditor.model"
+L00015667	negative_constraints:
+L00015668	  - "Do not use legacy platform_specs as the active Auditor validation dropdown source."
+L00015669	compatibility_only_notes:
+L00015670	  - "platform_specs remains preserved only as a retired source-lineage token."
+L00015671	owner_hints:
+L00015672	  - Plans/assistant-chat-design.md
+L00015673	  - Plans/Contracts_V0.md
+L00015674	```
+L00015675	
+L00015676	### ACD-269 - Validation Section Reference Boundary
+L00015677	
+L00015678	```yaml
+L00015679	plan_unit_id: ACD-269
+L00015680	unit_type: constraint
+L00015681	status: accepted
+L00015682	owner_doc: Plans/assistant-chat-design.md
+L00015683	canonical_text: >-
+L00015684	  Section 26 consumes `Plans/chain-wizard-flexibility.md §12`,
+L00015685	  `Plans/Project_Output_Artifacts.md §10.2`, `Plans/Decision_Policy.md §2`,
+L00015686	  `Plans/DRY_Rules.md`, `Plans/Contracts_V0.md`, and Section 1.1 chat
+L00015687	  controls without re-owning those contracts.
+L00015688	gui_related: false
+L00015689	gui_classification_reason: Reference ownership and contract boundary are documentation/governance behavior.
+L00015690	depends_on: [ACD-253]
+L00015691	unblocks: []
+L00015692	acceptance_criteria:
+L00015693	  - Section 26 references preserve the linked owner documents.
+L00015694	  - Assistant chat does not re-own the validation workflow, output artifact, decision policy, DRY, or provider/model capability contracts.
+L00015695	validation_surfaces:
+L00015696	  - python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits
+L00015697	  - python3 scripts/pm-plan-index.py validate
+L00015698	risk_class: owner_boundary
+L00015699	reasoning_tier: high
+L00015700	context_scope: validation_references
+L00015701	implementation_surfaces:
+L00015702	  - Plans/assistant-chat-design.md
+L00015703	  - Plans/chain-wizard-flexibility.md
+L00015704	  - Plans/Project_Output_Artifacts.md
+L00015705	  - Plans/Decision_Policy.md
+L00015706	  - Plans/DRY_Rules.md
+L00015707	  - Plans/Contracts_V0.md
+L00015708	node_compile_hint:
+L00015709	  mode: validation_section_reference_boundary
+L00015710	  create_worknodes: false
+L00015711	source_lineage:
+L00015712	  - Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:assistant-chat-design-S0123
+L00015713	preserved_exact_tokens:
+L00015714	  - "ContractName:Plans/chain-wizard-flexibility.md§12"
+L00015715	  - "ContractName:Plans/Project_Output_Artifacts.md"
+L00015716	  - "PolicyRule:Decision_Policy.md§2"
+L00015717	negative_constraints: []
+L00015718	owner_hints:
+L00015719	  - Plans/assistant-chat-design.md
+L00015720	  - Plans/chain-wizard-flexibility.md
+L00015721	```
+L00015722	
+L00015723	### ACD-270 - Persona Control Scope
+L00015724	
+L00015725	```yaml
+L00015726	plan_unit_id: ACD-270
+L00015727	unit_type: requirement
+L00015728	status: accepted
+L00015729	owner_doc: Plans/assistant-chat-design.md
+L00015730	canonical_text: Persona Control defines Persona behavior for the Assistant chat surface.
+L00015731	gui_related: false
+L00015732	gui_classification_reason: The Persona Control scope statement defines behavior ownership, not a GUI element by itself.
+L00015733	depends_on: []
+L00015734	unblocks: [ACD-271]
+L00015735	acceptance_criteria:
+L00015736	  - Persona behavior for Assistant chat is explicitly scoped in this document.
+L00015737	validation_surfaces:
+L00015738	  - python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits
+L00015739	  - python3 scripts/pm-plan-index.py validate
+L00015740	risk_class: persona_scope
+L00015741	reasoning_tier: standard
+L00015742	context_scope: persona
+L00015743	implementation_surfaces:
+L00015744	  - Plans/assistant-chat-design.md
+L00015745	node_compile_hint:
+L00015746	  mode: persona_control_scope
+L00015747	  create_worknodes: false
+L00015748	source_lineage:
+L00015749	  - Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:assistant-chat-design-S0124
+L00015750	preserved_exact_tokens:
+L00015751	  - "Persona Control in Assistant Chat"
+L00015752	negative_constraints: []
+L00015753	owner_hints:
+L00015754	  - Plans/assistant-chat-design.md
+L00015755	```
+L00015756	
+L00015757	### ACD-271 - Persona Modes
+L00015758	
+L00015759	```yaml
+L00015760	plan_unit_id: ACD-271
+L00015761	unit_type: requirement
+L00015762	status: accepted
+L00015763	owner_doc: Plans/assistant-chat-design.md
+L00015764	canonical_text: Assistant chat supports Persona modes `manual`, `auto`, and `hybrid`, with `manual` user-selected, `auto` context-resolved, and `hybrid` auto-by-default with temporary or persistent override.
+L00015765	gui_related: false
+L00015766	gui_classification_reason: Persona mode semantics are resolver behavior, while specific controls are covered by separate GUI units.
+L00015767	depends_on: [ACD-270]
+L00015768	unblocks: [ACD-272, ACD-283]
+L00015769	acceptance_criteria:
+L00015770	  - Assistant chat supports manual, auto, and hybrid Persona modes.
+L00015771	  - Manual, auto, and hybrid mode definitions match the canonical semantics.
+L00015772	validation_surfaces:
+L00015773	  - python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits
+L00015774	  - python3 scripts/pm-plan-index.py validate
+L00015775	risk_class: persona_resolution
+L00015776	reasoning_tier: standard
+L00015777	context_scope: persona
+L00015778	implementation_surfaces:
+L00015779	  - Plans/assistant-chat-design.md
+L00015780	  - Plans/Personas.md
+L00015781	node_compile_hint:
+L00015782	  mode: persona_modes
+L00015783	  create_worknodes: false
+L00015784	source_lineage:
+L00015785	  - Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:assistant-chat-design-S0125
+L00015786	preserved_exact_tokens:
+L00015787	  - "manual"
+L00015788	  - "auto"
+L00015789	  - "hybrid"
+L00015790	negative_constraints: []
+L00015791	owner_hints:
+L00015792	  - Plans/assistant-chat-design.md
+L00015793	  - Plans/Personas.md
+L00015794	```
+L00015795	
+L00015796	### ACD-272 - Persona Eligibility Boundary
+L00015797	
+L00015798	```yaml
+L00015799	plan_unit_id: ACD-272
+L00015800	unit_type: constraint
+L00015801	status: accepted
+L00015802	owner_doc: Plans/assistant-chat-design.md
+L00015803	canonical_text: >-
+L00015804	  Chat selection consumes `Plans/Personas.md`: `assistant` is the default
+L00015805	  direct-chat Persona; `explorer` and `bash` are subagent-only; `teacher` is
+L00015806	  direct-chat eligible but not a subagent Persona.
+L00015807	gui_related: false
+L00015808	gui_classification_reason: Persona eligibility is owned by Personas and consumed by Assistant Chat.
+L00015809	depends_on: [ACD-271]
+L00015810	unblocks: [ACD-275, ACD-278, ACD-284]
+L00015811	acceptance_criteria:
+L00015812	  - Assistant chat consumes Persona eligibility from `Plans/Personas.md`.
+L00015813	  - Subagent-only Personas are not selectable as direct chat Personas.
+L00015814	validation_surfaces:
+L00015815	  - python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits
+L00015816	  - python3 scripts/pm-plan-index.py validate
+L00015817	risk_class: owner_boundary
+L00015818	reasoning_tier: high
+L00015819	context_scope: persona
+L00015820	implementation_surfaces:
+L00015821	  - Plans/assistant-chat-design.md
+L00015822	  - Plans/Personas.md
+L00015823	node_compile_hint:
+L00015824	  mode: persona_eligibility_boundary
+L00015825	  create_worknodes: false
+L00015826	source_lineage:
+L00015827	  - Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:assistant-chat-design-S0125
+L00015828	preserved_exact_tokens:
+L00015829	  - "assistant"
+L00015830	  - "explorer"
+L00015831	  - "bash"
+L00015832	  - "teacher"
+L00015833	negative_constraints:
+L00015834	  - "`explorer` and `bash` cannot be selected as the direct chat Persona."
+L00015835	owner_hints:
+L00015836	  - Plans/assistant-chat-design.md
+L00015837	  - Plans/Personas.md
+L00015838	```
+L00015839	
+L00015840	### ACD-273 - Persona Runtime Identity Normalization
+L00015841	
+L00015842	```yaml
+L00015843	plan_unit_id: ACD-273
+L00015844	unit_type: constraint
+L00015845	status: accepted
+L00015846	owner_doc: Plans/assistant-chat-design.md
+L00015847	canonical_text: >-
+L00015848	  Chat must normalize assistant-local runtime identity substitutes to canonical
+L00015849	  requested/effective Persona, effective model, account fields,
+L00015850	  `execution_role`, runtime snapshot, projection freshness/health, and
+L00015851	  adapter/account switch reason fields.
+L00015852	gui_related: false
+L00015853	gui_classification_reason: Runtime identity normalization is data-contract behavior.
+L00015854	depends_on: [ACD-270]
+L00015855	unblocks: [ACD-274]
+L00015856	acceptance_criteria:
+L00015857	  - Assistant-local `_id` substitute fields normalize to canonical runtime identity fields.
+L00015858	  - Model, account, execution role, runtime snapshot, projection, and reason fields use their canonical names.
+L00015859	validation_surfaces:
+L00015860	  - python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits
+L00015861	  - python3 scripts/pm-plan-index.py validate
+L00015862	risk_class: runtime_identity
+L00015863	reasoning_tier: high
+L00015864	context_scope: persona_runtime
+L00015865	implementation_surfaces:
+L00015866	  - Plans/assistant-chat-design.md
+L00015867	  - Plans/Models_System.md
+L00015868	  - Plans/Provider_OpenCode.md
+L00015869	node_compile_hint:
+L00015870	  mode: persona_runtime_identity_normalization
+L00015871	  create_worknodes: false
+L00015872	source_lineage:
+L00015873	  - Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:assistant-chat-design-S0126
+L00015874	preserved_exact_tokens:
+L00015875	  - "requested_persona_id"
+L00015876	  - "effective_persona_id"
+L00015877	  - "active_model"
+L00015878	  - "actual_model"
+L00015879	  - "projection_trust"
+L00015880	negative_constraints:
+L00015881	  - "Chat MUST NOT invent assistant-local substitutes."
+L00015882	owner_hints:
+L00015883	  - Plans/assistant-chat-design.md
+L00015884	```
+L00015885	
+L00015886	### ACD-274 - Current Persona Display Fields
+L00015887	
+L00015888	```yaml
+L00015889	plan_unit_id: ACD-274
+L00015890	unit_type: requirement
+L00015891	status: accepted
+L00015892	owner_doc: Plans/assistant-chat-design.md
+L00015893	canonical_text: >-
+L00015894	  Current Persona display exposes the canonical requested/effective Persona,
+L00015895	  effective account label, effective model, execution role, projection
+L00015896	  freshness/health, and selection/account-switch reason fields when applicable.
+L00015897	gui_related: true
+L00015898	gui_classification_reason: Current Persona display fields are visible Assistant Chat identity UI.
+L00015899	depends_on: [ACD-273]
+L00015900	unblocks: [ACD-277, ACD-283, ACD-284, ACD-285]
+L00015901	acceptance_criteria:
+L00015902	  - Current Persona display shows requested and effective Persona fields.
+L00015903	  - Current Persona display surfaces effective account, model, execution role, projection, and selection reason fields when applicable.
+L00015904	validation_surfaces:
+L00015905	  - python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits
+L00015906	  - python3 scripts/pm-plan-index.py validate
+L00015907	risk_class: persona_display
+L00015908	reasoning_tier: standard
+L00015909	context_scope: gui
+L00015910	implementation_surfaces:
+L00015911	  - Plans/assistant-chat-design.md
+L00015912	  - Plans/FinalGUISpec.md
+L00015913	node_compile_hint:
+L00015914	  mode: current_persona_display_fields
+L00015915	  create_worknodes: false
+L00015916	source_lineage:
+L00015917	  - Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:assistant-chat-design-S0126
+L00015918	preserved_exact_tokens:
+L00015919	  - "requested_persona"
+L00015920	  - "effective_persona"
+L00015921	  - "effective_account_label"
+L00015922	  - "effective_model"
+L00015923	  - "execution_role"
+L00015924	  - "projection_freshness"
+L00015925	  - "projection_health"
+L00015926	negative_constraints: []
+L00015927	owner_hints:
+L00015928	  - Plans/assistant-chat-design.md
+L00015929	  - Plans/FinalGUISpec.md
+L00015930	```
+L00015931	
+L00015932	### ACD-275 - Natural Language Persona Invocation
+L00015933	
+L00015934	```yaml
+L00015935	plan_unit_id: ACD-275
+L00015936	unit_type: requirement
+L00015937	status: accepted
+L00015938	owner_doc: Plans/assistant-chat-design.md
+L00015939	canonical_text: >-
+L00015940	  Assistant supports natural-language Persona invocation for requests such as
+L00015941	  `Use Collaborator`, `Be a Rust engineer`, `Answer as a technical writer`,
+L00015942	  `Switch to security auditor`, `Ask Explorer to inspect the repo`, and `Run
+L00015943	  that with Bash`.
+L00015944	gui_related: false
+L00015945	gui_classification_reason: Natural-language Persona invocation is resolver behavior.
+L00015946	depends_on: [ACD-271, ACD-272]
+L00015947	unblocks: [ACD-276, ACD-278]
+L00015948	acceptance_criteria:
+L00015949	  - Natural-language Persona examples resolve through the Persona invocation path.
+L00015950	  - Subagent Persona requests are distinguished from direct-chat Persona requests.
+L00015951	validation_surfaces:
+L00015952	  - python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits
+L00015953	  - python3 scripts/pm-plan-index.py validate
+L00015954	risk_class: persona_resolution
+L00015955	reasoning_tier: standard
+L00015956	context_scope: persona_invocation
+L00015957	implementation_surfaces:
+L00015958	  - Plans/assistant-chat-design.md
+L00015959	  - Plans/Personas.md
+L00015960	node_compile_hint:
+L00015961	  mode: natural_language_persona_invocation
+L00015962	  create_worknodes: false
+L00015963	source_lineage:
+L00015964	  - Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:assistant-chat-design-S0127
+L00015965	preserved_exact_tokens:
+L00015966	  - "Use Collaborator"
+L00015967	  - "Be a Rust engineer"
+L00015968	  - "Answer as a technical writer"
+L00015969	  - "Switch to security auditor"
+L00015970	  - "Ask Explorer to inspect the repo"
+L00015971	  - "Run that with Bash"
+L00015972	negative_constraints: []
+L00015973	owner_hints:
+L00015974	  - Plans/assistant-chat-design.md
+L00015975	  - Plans/Personas.md
+L00015976	```
+L00015977	
+L00015978	### ACD-276 - Persona Override Scope Semantics
+L00015979	
+L00015980	```yaml
+L00015981	plan_unit_id: ACD-276
+L00015982	unit_type: requirement
+L00015983	status: accepted
+L00015984	owner_doc: Plans/assistant-chat-design.md
+L00015985	canonical_text: >-
+L00015986	  Persona override scope maps `for this`, `for this answer`, and `right now` to
+L00015987	  turn scope, while `from now on`, `in this chat`, and `for this session` map
+L00015988	  to session scope.
+L00015989	gui_related: false
+L00015990	gui_classification_reason: Persona override scope mapping is command interpretation behavior.
+L00015991	depends_on: [ACD-275]
+L00015992	unblocks: [ACD-277]
+L00015993	acceptance_criteria:
+L00015994	  - Turn-scope phrases resolve to turn-scoped Persona overrides.
+L00015995	  - Session-scope phrases resolve to session-scoped Persona overrides.
+L00015996	validation_surfaces:
+L00015997	  - python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits
+L00015998	  - python3 scripts/pm-plan-index.py validate
+L00015999	risk_class: persona_scope
+L00016000	reasoning_tier: standard
+L00016001	context_scope: persona_invocation
+L00016002	implementation_surfaces:
+L00016003	  - Plans/assistant-chat-design.md
+L00016004	node_compile_hint:
+L00016005	  mode: persona_override_scope_semantics
+L00016006	  create_worknodes: false
+L00016007	source_lineage:
+L00016008	  - Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:assistant-chat-design-S0128
+L00016009	preserved_exact_tokens:
+L00016010	  - "for this"
+L00016011	  - "for this answer"
+L00016012	  - "right now"
+L00016013	  - "from now on"
+L00016014	  - "in this chat"
+L00016015	  - "for this session"
+L00016016	negative_constraints: []
+L00016017	owner_hints:
+L00016018	  - Plans/assistant-chat-design.md
+L00016019	```
+L00016020	
+L00016021	### ACD-277 - Persona Override Display
+L00016022	
+L00016023	```yaml
+L00016024	plan_unit_id: ACD-277
+L00016025	unit_type: requirement
+L00016026	status: accepted
+L00016027	owner_doc: Plans/assistant-chat-design.md
+L00016028	canonical_text: UI shows active natural-language Persona overrides and returns to auto display when the override expires.
+L00016029	gui_related: true
+L00016030	gui_classification_reason: Active Persona override display is visible Assistant Chat UI.
+L00016031	depends_on: [ACD-276, ACD-274]
+L00016032	unblocks: []
+L00016033	acceptance_criteria:
+L00016034	  - Active natural-language Persona override state is visible in chat.
+L00016035	  - Expired overrides return the UI to auto Persona display.
+L00016036	validation_surfaces:
+L00016037	  - python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits
+L00016038	  - python3 scripts/pm-plan-index.py validate
+L00016039	risk_class: persona_display
+L00016040	reasoning_tier: standard
+L00016041	context_scope: gui
+L00016042	implementation_surfaces:
+L00016043	  - Plans/assistant-chat-design.md
+L00016044	  - Plans/FinalGUISpec.md
+L00016045	node_compile_hint:
+L00016046	  mode: persona_override_display
+L00016047	  create_worknodes: false
+L00016048	source_lineage:
+L00016049	  - Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:assistant-chat-design-S0128
+L00016050	preserved_exact_tokens:
+L00016051	  - "Persona: Collaborator (User requested)"
+L00016052	  - "Persona: Researcher (User requested, session lock)"
+L00016053	  - "Persona: Rust Engineer (Auto: Rust repo + code task)"
+L00016054	negative_constraints: []
+L00016055	owner_hints:
+L00016056	  - Plans/assistant-chat-design.md
+L00016057	  - Plans/FinalGUISpec.md
+L00016058	```
+L00016059	
+L00016060	### ACD-278 - Subagent Persona Invocation Boundary
+L00016061	
+L00016062	```yaml
+L00016063	plan_unit_id: ACD-278
+L00016064	unit_type: constraint
+L00016065	status: accepted
+L00016066	owner_doc: Plans/assistant-chat-design.md
+L00016067	canonical_text: >-
+L00016068	  Subagent-only Persona requests route or create child runs when delegation is
+L00016069	  allowed; they do not switch the direct chat Persona, and invalid direct-chat
+L00016070	  requests explain the eligibility constraint with the closest valid route.
+L00016071	gui_related: false
+L00016072	gui_classification_reason: Subagent-only Persona routing is workflow behavior rather than visual presentation.
+L00016073	depends_on: [ACD-272, ACD-275]
+L00016074	unblocks: []
+L00016075	acceptance_criteria:
+L00016076	  - Subagent-only Persona requests do not switch the direct chat Persona.
+L00016077	  - Invalid direct-chat Persona requests explain the eligibility constraint and offer a valid route.
+L00016078	validation_surfaces:
+L00016079	  - python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits
+L00016080	  - python3 scripts/pm-plan-index.py validate
+L00016081	risk_class: persona_boundary
+L00016082	reasoning_tier: high
+L00016083	context_scope: subagents
+L00016084	implementation_surfaces:
+L00016085	  - Plans/assistant-chat-design.md
+L00016086	  - Plans/Personas.md
+L00016087	  - Plans/interview-subagent-integration.md
+L00016088	node_compile_hint:
+L00016089	  mode: subagent_persona_invocation_boundary
+L00016090	  create_worknodes: false
+L00016091	source_lineage:
+L00016092	  - Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:assistant-chat-design-S0128
+L00016093	preserved_exact_tokens:
+L00016094	  - "Ask Explorer"
+L00016095	  - "Run that with Bash"
+L00016096	negative_constraints:
+L00016097	  - "Subagent-only Personas do not become direct chat Personas."
+L00016098	owner_hints:
+L00016099	  - Plans/assistant-chat-design.md
+L00016100	  - Plans/Personas.md
+L00016101	```
+L00016102	
+L00016103	### ACD-279 - Persona Alias Resolution
+L00016104	
+L00016105	```yaml
+L00016106	plan_unit_id: ACD-279
+L00016107	unit_type: requirement
+L00016108	status: accepted
+L00016109	owner_doc: Plans/assistant-chat-design.md
+L00016110	canonical_text: >-
+L00016111	  Persona invocation resolves through canonical Persona IDs, display names,
+L00016112	  aliases, and normalized natural-language forms, including `rust engineer ->
+L00016113	  rust-engineer`, `tech writer -> technical-writer`, and `collaborator ->
+L00016114	  collaborator`.
+L00016115	gui_related: false
+L00016116	gui_classification_reason: Alias and fuzzy matching are resolver behavior.
+L00016117	depends_on: [ACD-271]
+L00016118	unblocks: [ACD-280, ACD-281, ACD-282, ACD-283]
+L00016119	acceptance_criteria:
+L00016120	  - Persona invocation resolves canonical IDs, display names, aliases, and normalized natural-language forms.
+L00016121	  - The specified example aliases resolve to the expected Persona IDs.
+L00016122	validation_surfaces:
+L00016123	  - python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits
+L00016124	  - python3 scripts/pm-plan-index.py validate
+L00016125	risk_class: persona_resolution
+L00016126	reasoning_tier: standard
+L00016127	context_scope: persona_aliases
+L00016128	implementation_surfaces:
+L00016129	  - Plans/assistant-chat-design.md
+L00016130	  - Plans/Personas.md
+L00016131	node_compile_hint:
+L00016132	  mode: persona_alias_resolution
+L00016133	  create_worknodes: false
+L00016134	source_lineage:
+L00016135	  - Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:assistant-chat-design-S0129
+L00016136	preserved_exact_tokens:
+L00016137	  - "canonical Persona IDs"
+L00016138	  - "display names"
+L00016139	  - "aliases"
+L00016140	  - "rust engineer -> rust-engineer"
+L00016141	  - "tech writer -> technical-writer"
+L00016142	  - "collaborator -> collaborator"
+L00016143	negative_constraints: []
+L00016144	owner_hints:
+L00016145	  - Plans/assistant-chat-design.md
+L00016146	  - Plans/Personas.md
+L00016147	```
+L00016148	
+L00016149	### ACD-280 - Persona Clarification On Ambiguity
+L00016150	
+L00016151	```yaml
+L00016152	plan_unit_id: ACD-280
+L00016153	unit_type: requirement
+L00016154	status: accepted
+L00016155	owner_doc: Plans/assistant-chat-design.md
+L00016156	canonical_text: Ambiguous Persona matches may request clarification; no-match natural-language requests must ask for clarification before starting a run.
+L00016157	gui_related: false
+L00016158	gui_classification_reason: Ambiguous and missing Persona resolution behavior is command/resolver logic.
+L00016159	depends_on: [ACD-279]
+L00016160	unblocks: [ACD-289]
+L00016161	acceptance_criteria:
+L00016162	  - Multiple possible Persona matches may produce clarification.
+L00016163	  - No-match natural-language requests ask for clarification before a run starts.
+L00016164	validation_surfaces:
+L00016165	  - python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits
+L00016166	  - python3 scripts/pm-plan-index.py validate
+L00016167	risk_class: persona_resolution
+L00016168	reasoning_tier: standard
+L00016169	context_scope: persona_aliases
+L00016170	implementation_surfaces:
+L00016171	  - Plans/assistant-chat-design.md
+L00016172	  - Plans/Personas.md
+L00016173	node_compile_hint:
+L00016174	  mode: persona_clarification_on_ambiguity
+L00016175	  create_worknodes: false
+L00016176	source_lineage:
+L00016177	  - Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:assistant-chat-design-S0129
+L00016178	preserved_exact_tokens:
+L00016179	  - "If multiple Personas match"
+L00016180	  - "If no Persona matches"
+L00016181	negative_constraints:
+L00016182	  - "Chat must not silently pretend a Persona request resolved when it did not."
+L00016183	owner_hints:
+L00016184	  - Plans/assistant-chat-design.md
+L00016185	```
+L00016186	
+L00016187	### ACD-281 - Manual Persona Picker Validation
+L00016188	
+L00016189	```yaml
+L00016190	plan_unit_id: ACD-281
+L00016191	unit_type: requirement
+L00016192	status: accepted
+L00016193	owner_doc: Plans/assistant-chat-design.md
+L00016194	canonical_text: Manual Persona picker rejects unresolved submissions with inline `Persona not found` validation.
+L00016195	gui_related: true
+L00016196	gui_classification_reason: Manual Persona picker validation is visible GUI behavior.
+L00016197	depends_on: [ACD-279, ACD-283]
+L00016198	unblocks: [ACD-289]
+L00016199	acceptance_criteria:
+L00016200	  - Manual Persona picker rejects unresolved Persona submissions.
+L00016201	  - The inline validation state displays `Persona not found`.
+L00016202	validation_surfaces:
+L00016203	  - python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits
+L00016204	  - python3 scripts/pm-plan-index.py validate
+L00016205	risk_class: persona_display
+L00016206	reasoning_tier: standard
+L00016207	context_scope: gui
+L00016208	implementation_surfaces:
+L00016209	  - Plans/assistant-chat-design.md
+L00016210	  - Plans/FinalGUISpec.md
+L00016211	node_compile_hint:
+L00016212	  mode: manual_persona_picker_validation
+L00016213	  create_worknodes: false
+L00016214	source_lineage:
+L00016215	  - Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:assistant-chat-design-S0129
+L00016216	preserved_exact_tokens:
+L00016217	  - "Persona not found"
+L00016218	negative_constraints: []
+L00016219	owner_hints:
+L00016220	  - Plans/assistant-chat-design.md
+L00016221	  - Plans/FinalGUISpec.md
+L00016222	```
+L00016223	
+L00016224	### ACD-282 - Persona Unresolved Reference Fallback
+L00016225	
+L00016226	```yaml
+L00016227	plan_unit_id: ACD-282
+L00016228	unit_type: requirement
+L00016229	status: accepted
+L00016230	owner_doc: Plans/assistant-chat-design.md
+L00016231	canonical_text: Persisted unresolved Persona references follow `Plans/Personas.md §2.3`, and chat surfaces that the run proceeds without Persona context.
+L00016232	gui_related: false
+L00016233	gui_classification_reason: Persisted unresolved reference fallback is runtime behavior; the visible disclosure is covered by acceptance.
+L00016234	depends_on: [ACD-279]
+L00016235	unblocks: [ACD-289]
+L00016236	acceptance_criteria:
+L00016237	  - Persisted unresolved Persona references use the `Plans/Personas.md §2.3` fallback contract.
+L00016238	  - Chat surfaces that the run is proceeding without Persona context.
+L00016239	validation_surfaces:
+L00016240	  - python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits
+L00016241	  - python3 scripts/pm-plan-index.py validate
+L00016242	risk_class: persona_fallback
+L00016243	reasoning_tier: high
+L00016244	context_scope: persona_runtime
+L00016245	implementation_surfaces:
+L00016246	  - Plans/assistant-chat-design.md
+L00016247	  - Plans/Personas.md
+L00016248	node_compile_hint:
+L00016249	  mode: persona_unresolved_reference_fallback
+L00016250	  create_worknodes: false
+L00016251	source_lineage:
+L00016252	  - Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:assistant-chat-design-S0129
+L00016253	preserved_exact_tokens:
+L00016254	  - "Plans/Personas.md"
+L00016255	  - "§2.3"
+L00016256	  - "without Persona context"
+L00016257	negative_constraints: []
+L00016258	owner_hints:
+L00016259	  - Plans/assistant-chat-design.md
+L00016260	  - Plans/Personas.md
+L00016261	```
+L00016262	
+L00016263	### ACD-283 - Chat Persona Controls
+L00016264	
+L00016265	```yaml
+L00016266	plan_unit_id: ACD-283
+L00016267	unit_type: requirement
+L00016268	status: accepted
+L00016269	owner_doc: Plans/assistant-chat-design.md
+L00016270	canonical_text: Chat includes Persona mode selector, effective Persona pill/badge, optional manual Persona picker, selection-reason tooltip or sublabel, effective talkativeness details, and lock/unlock control.
+L00016271	gui_related: true
+L00016272	gui_classification_reason: Persona selectors, badges, picker, tooltip/sublabel, details, and lock controls are visible chat UI.
+L00016273	depends_on: [ACD-271, ACD-274, ACD-279]
+L00016274	unblocks: [ACD-281]
+L00016275	acceptance_criteria:
+L00016276	  - Chat includes Persona mode selector and effective Persona pill/badge.
+L00016277	  - Chat supports optional manual Persona picker and lock/unlock control.
+L00016278	  - Persona details expose selection reason and effective talkativeness when relevant.
+L00016279	validation_surfaces:
+L00016280	  - python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits
+L00016281	  - python3 scripts/pm-plan-index.py validate
+L00016282	risk_class: persona_display
+L00016283	reasoning_tier: standard
+L00016284	context_scope: gui
+L00016285	implementation_surfaces:
+L00016286	  - Plans/assistant-chat-design.md
+L00016287	  - Plans/FinalGUISpec.md
+L00016288	node_compile_hint:
+L00016289	  mode: chat_persona_controls
+L00016290	  create_worknodes: false
+L00016291	source_lineage:
+L00016292	  - Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:assistant-chat-design-S0130
+L00016293	preserved_exact_tokens:
+L00016294	  - "Auto"
+L00016295	  - "Manual"
+L00016296	  - "Hybrid"
+L00016297	  - "effective Persona pill/badge"
+L00016298	  - "effective talkativeness"
+L00016299	negative_constraints: []
+L00016300	owner_hints:
+L00016301	  - Plans/assistant-chat-design.md
+L00016302	  - Plans/FinalGUISpec.md
+L00016303	```
+L00016304	
+L00016305	### ACD-284 - Subagent Persona Display
+L00016306	
+L00016307	```yaml
+L00016308	plan_unit_id: ACD-284
+L00016309	unit_type: requirement
+L00016310	status: accepted
+L00016311	owner_doc: Plans/assistant-chat-design.md
+L00016312	canonical_text: Inline subagent/child-run blocks show effective Persona name, task label, meaningful selection reason, effective platform, effective model, elapsed time, and skipped unsupported Persona controls when relevant.
+L00016313	gui_related: true
+L00016314	gui_classification_reason: Inline subagent/child-run blocks are visible chat UI.
+L00016315	depends_on: [ACD-272, ACD-274]
+L00016316	unblocks: [ACD-286, ACD-289]
+L00016317	acceptance_criteria:
+L00016318	  - Inline child-run blocks show effective Persona, platform, model, task label, and elapsed time.
+L00016319	  - Inline child-run blocks disclose meaningful selection reasons and skipped unsupported Persona controls when relevant.
+L00016320	validation_surfaces:
+L00016321	  - python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits
+L00016322	  - python3 scripts/pm-plan-index.py validate
+L00016323	risk_class: subagent_display
+L00016324	reasoning_tier: standard
+L00016325	context_scope: gui
+L00016326	implementation_surfaces:
+L00016327	  - Plans/assistant-chat-design.md
+L00016328	  - Plans/FinalGUISpec.md
+L00016329	  - Plans/interview-subagent-integration.md
+L00016330	node_compile_hint:
+L00016331	  mode: subagent_persona_display
+L00016332	  create_worknodes: false
+L00016333	source_lineage:
+L00016334	  - Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:assistant-chat-design-S0131
+L00016335	preserved_exact_tokens:
+L00016336	  - "effective Persona name"
+L00016337	  - "task label"
+L00016338	  - "effective platform"
+L00016339	  - "effective model"
+L00016340	  - "elapsed time"
+L00016341	negative_constraints: []
+L00016342	owner_hints:
+L00016343	  - Plans/assistant-chat-design.md
+L00016344	  - Plans/FinalGUISpec.md
+L00016345	```
+L00016346	
+L00016347	### ACD-285 - Requested Effective Runtime Disclosure
+L00016348	
+L00016349	```yaml
+L00016350	plan_unit_id: ACD-285
+L00016351	unit_type: requirement
+L00016352	status: accepted
+L00016353	owner_doc: Plans/assistant-chat-design.md
+L00016354	canonical_text: Chat discloses requested versus effective runtime choice when that distinction affects trust or behavior.
+L00016355	gui_related: true
+L00016356	gui_classification_reason: Requested/effective runtime disclosure is visible chat and child-run UI.
+L00016357	depends_on: [ACD-274]
+L00016358	unblocks: [ACD-286, ACD-287, ACD-288]
+L00016359	acceptance_criteria:
+L00016360	  - Requested versus effective runtime choices are disclosed when they matter to user trust or behavior.
+L00016361	  - Disclosure consumes model/provider owner contracts rather than redefining them.
+L00016362	validation_surfaces:
+L00016363	  - python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits
+L00016364	  - python3 scripts/pm-plan-index.py validate
+L00016365	risk_class: runtime_disclosure
+L00016366	reasoning_tier: high
+L00016367	context_scope: gui
+L00016368	implementation_surfaces:
+L00016369	  - Plans/assistant-chat-design.md
+L00016370	  - Plans/Models_System.md
+L00016371	  - Plans/CLI_Bridged_Providers.md
+L00016372	  - Plans/Provider_OpenCode.md
+L00016373	node_compile_hint:
+L00016374	  mode: requested_effective_runtime_disclosure
+L00016375	  create_worknodes: false
+L00016376	source_lineage:
+L00016377	  - Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:assistant-chat-design-S0132
+L00016378	preserved_exact_tokens:
+L00016379	  - "requested versus effective runtime choice"
+L00016380	  - "ContractName:Plans/Models_System.md"
+L00016381	  - "ContractName:Plans/CLI_Bridged_Providers.md"
+L00016382	  - "ContractName:Plans/Provider_OpenCode.md"
+L00016383	negative_constraints: []
+L00016384	owner_hints:
+L00016385	  - Plans/assistant-chat-design.md
+L00016386	  - Plans/Models_System.md
+L00016387	```
+L00016388	
+L00016389	### ACD-286 - Child Run Runtime Disclosure
+L00016390	
+L00016391	```yaml
+L00016392	plan_unit_id: ACD-286
+L00016393	unit_type: requirement
+L00016394	status: accepted
+L00016395	owner_doc: Plans/assistant-chat-design.md
+L00016396	canonical_text: Child-run cards disclose provider/model on hover when collapsed, and expanded panels may show requested/effective runtime surface, effective effort, and fallback reason after remap.
+L00016397	gui_related: true
+L00016398	gui_classification_reason: Hover disclosure and expanded child panels are visible chat UI.
+L00016399	depends_on: [ACD-285, ACD-284]
+L00016400	unblocks: []
+L00016401	acceptance_criteria:
+L00016402	  - Collapsed child-run cards expose provider/model on hover.
+L00016403	  - Expanded child panels may show requested/effective runtime surface, effective effort, and fallback reason when remapped.
+L00016404	validation_surfaces:
+L00016405	  - python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits
+L00016406	  - python3 scripts/pm-plan-index.py validate
+L00016407	risk_class: runtime_disclosure
+L00016408	reasoning_tier: standard
+L00016409	context_scope: gui
+L00016410	implementation_surfaces:
+L00016411	  - Plans/assistant-chat-design.md
+L00016412	  - Plans/FinalGUISpec.md
+L00016413	node_compile_hint:
+L00016414	  mode: child_run_runtime_disclosure
+L00016415	  create_worknodes: false
+L00016416	source_lineage:
+L00016417	  - Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:assistant-chat-design-S0132
+L00016418	preserved_exact_tokens:
+L00016419	  - "provider/model"
+L00016420	  - "requested versus effective runtime surface"
+L00016421	  - "effective effort"
+L00016422	  - "fallback reason"
+L00016423	negative_constraints: []
+L00016424	owner_hints:
+L00016425	  - Plans/assistant-chat-design.md
+L00016426	  - Plans/FinalGUISpec.md
+L00016427	```
+L00016428	
+L00016429	### ACD-287 - Runtime Fallback Disclosure Constraint
+L00016430	
+L00016431	```yaml
+L00016432	plan_unit_id: ACD-287
+L00016433	unit_type: constraint
+L00016434	status: accepted
+L00016435	owner_doc: Plans/assistant-chat-design.md
+L00016436	canonical_text: Explicit user-chosen runtime surfaces must not silently fallback, and Copilot-native routing restrictions surface as incompatibility or denial rather than a degraded execution path.
+L00016437	gui_related: true
+L00016438	gui_classification_reason: Fallback, incompatibility, and denial disclosure are user-visible trust UI.
+L00016439	depends_on: [ACD-285]
+L00016440	unblocks: []
+L00016441	acceptance_criteria:
+L00016442	  - Explicit user-chosen runtime surfaces disclose fallback instead of silently remapping.
+L00016443	  - Copilot-native routing restrictions surface as incompatibility or denial.
+L00016444	validation_surfaces:
+L00016445	  - python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits
+L00016446	  - python3 scripts/pm-plan-index.py validate
+L00016447	risk_class: silent_fallback
+L00016448	reasoning_tier: high
+L00016449	context_scope: runtime
+L00016450	implementation_surfaces:
+L00016451	  - Plans/assistant-chat-design.md
+L00016452	  - Plans/CLI_Bridged_Providers.md
+L00016453	  - Plans/Provider_OpenCode.md
+L00016454	node_compile_hint:
+L00016455	  mode: runtime_fallback_disclosure_constraint
+L00016456	  create_worknodes: false
+L00016457	source_lineage:
+L00016458	  - Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:assistant-chat-design-S0132
+L00016459	preserved_exact_tokens:
+L00016460	  - "explicit user-chosen runtime surfaces"
+L00016461	  - "Copilot-native routing restrictions"
+L00016462	negative_constraints:
+L00016463	  - "Explicit user-chosen runtime surfaces must not silently fallback without disclosure."
+L00016464	  - "Copilot-native routing restrictions must not silently degrade into a different execution path."
+L00016465	owner_hints:
+L00016466	  - Plans/assistant-chat-design.md
+L00016467	  - Plans/CLI_Bridged_Providers.md
+L00016468	```
+L00016469	
+L00016470	### ACD-288 - Crew Runtime Surface Disclosure
+L00016471	
+L00016472	```yaml
+L00016473	plan_unit_id: ACD-288
+L00016474	unit_type: requirement
+L00016475	status: accepted
+L00016476	owner_doc: Plans/assistant-chat-design.md
+L00016477	canonical_text: >-
+L00016478	  Crew confirmation shows each member as `model -> provider/runtime surface`;
+L00016479	  the crew editor may expose per-member selectors for non-Copilot surfaces,
+L00016480	  while Copilot normalizes the whole crew to a crew-level provider constraint
+L00016481	  with explanation.
+L00016482	gui_related: true
+L00016483	gui_classification_reason: Crew confirmation and crew editor selectors are visible UI.
+L00016484	depends_on: [ACD-285]
+L00016485	unblocks: []
+L00016486	acceptance_criteria:
+L00016487	  - Crew confirmation shows each member as `model -> provider/runtime surface`.
+L00016488	  - Non-Copilot crew surfaces may expose per-member runtime selectors.
+L00016489	  - Selecting Copilot for any member normalizes the whole crew to a crew-level provider constraint with explanation.
+L00016490	validation_surfaces:
+L00016491	  - python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits
+L00016492	  - python3 scripts/pm-plan-index.py validate
+L00016493	risk_class: crew_runtime_disclosure
+L00016494	reasoning_tier: high
+L00016495	context_scope: crew
+L00016496	implementation_surfaces:
+L00016497	  - Plans/assistant-chat-design.md
+L00016498	  - Plans/FinalGUISpec.md
+L00016499	  - Plans/Models_System.md
+L00016500	node_compile_hint:
+L00016501	  mode: crew_runtime_surface_disclosure
+L00016502	  create_worknodes: false
+L00016503	source_lineage:
+L00016504	  - Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:assistant-chat-design-S0132
+L00016505	preserved_exact_tokens:
+L00016506	  - "model -> provider/runtime surface"
+L00016507	  - "per-member model selectors"
+L00016508	  - "per-member provider/runtime surface selectors"
+L00016509	  - "Copilot"
+L00016510	negative_constraints:
+L00016511	  - "`Copilot` is not a per-member freely mixed provider in the default crew editor."
+L00016512	owner_hints:
+L00016513	  - Plans/assistant-chat-design.md
+L00016514	  - Plans/FinalGUISpec.md
+L00016515	```
+L00016516	
+L00016517	### ACD-289 - Persona Acceptance Addendum
+L00016518	
+L00016519	```yaml
+L00016520	plan_unit_id: ACD-289
+L00016521	unit_type: requirement
+L00016522	status: accepted
+L00016523	owner_doc: Plans/assistant-chat-design.md
+L00016524	canonical_text: >-
+L00016525	  Persona acceptance requires natural-language invocation, auto resolution
+L00016526	  disclosure, current Persona/model/platform visibility, non-default
+L00016527	  `talkativeness` exposure, subagent effective identity display, unresolved
+L00016528	  manual blocking, and clarification/fallback disclosure instead of silent
+L00016529	  wrong-Persona resolution.
+L00016530	gui_related: true
+L00016531	gui_classification_reason: Persona acceptance criteria cover visible chat controls and disclosures.
+L00016532	depends_on: [ACD-274, ACD-275, ACD-280, ACD-281, ACD-282, ACD-283, ACD-284]
+L00016533	unblocks: []
+L00016534	acceptance_criteria:
+L00016535	  - Assistant chat supports explicit natural-language Persona invocation.
+L00016536	  - Auto Persona mode discloses the resolved Persona and reason.
+L00016537	  - Current effective Persona/model/platform is visible in chat.
+L00016538	  - Non-default `talkativeness` and subagent effective identity are displayed.
+L00016539	  - Unresolved manual or natural-language Persona requests block or clarify instead of silently choosing the wrong Persona.
+L00016540	validation_surfaces:
+L00016541	  - python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits
+L00016542	  - python3 scripts/pm-plan-index.py validate
+L00016543	risk_class: persona_acceptance
+L00016544	reasoning_tier: high
+L00016545	context_scope: gui
+L00016546	implementation_surfaces:
+L00016547	  - Plans/assistant-chat-design.md
+L00016548	  - Plans/FinalGUISpec.md
+L00016549	  - Plans/Personas.md
+L00016550	node_compile_hint:
+L00016551	  mode: persona_acceptance_addendum
+L00016552	  create_worknodes: false
+L00016553	source_lineage:
+L00016554	  - Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:assistant-chat-design-S0133
+L00016555	preserved_exact_tokens:
+L00016556	  - "talkativeness"
+L00016557	  - "not a silent wrong-Persona resolution"
+L00016558	negative_constraints:
+L00016559	  - "Natural-language Persona requests that do not resolve to a single reliable match must not produce silent wrong-Persona resolution."
+L00016560	owner_hints:
+L00016561	  - Plans/assistant-chat-design.md
+L00016562	```
+L00016563	
+L00016564	### ACD-290 - Mermaid Inline Visualizer Split
+L00016565	
+L00016566	```yaml
+L00016567	plan_unit_id: ACD-290
+L00016568	unit_type: requirement
+L00016569	status: accepted
+L00016570	owner_doc: Plans/assistant-chat-design.md
+L00016571	canonical_text: Chat and planning surfaces support both Mermaid and the broader inline visualizer as distinct contracts.
+L00016572	gui_related: true
+L00016573	gui_classification_reason: Mermaid and inline visualizer rendering are user-visible chat and planning surfaces.
+L00016574	depends_on: []
+L00016575	unblocks: [ACD-291]
+L00016576	acceptance_criteria:
+L00016577	  - Chat and planning surfaces support Mermaid rendering.
+L00016578	  - Chat and planning surfaces support inline visualizer rendering as a distinct contract.
+L00016579	validation_surfaces:
+L00016580	  - python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits
+L00016581	  - python3 scripts/pm-plan-index.py validate
+L00016582	risk_class: visualizer_boundary
+L00016583	reasoning_tier: standard
+L00016584	context_scope: rendering
+L00016585	implementation_surfaces:
+L00016586	  - Plans/assistant-chat-design.md
+L00016587	  - Plans/FinalGUISpec.md
+L00016588	  - Plans/storage-plan.md
+L00016589	node_compile_hint:
+L00016590	  mode: mermaid_inline_visualizer_split
+L00016591	  create_worknodes: false
+L00016592	source_lineage:
+L00016593	  - Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:assistant-chat-design-S0134
+L00016594	preserved_exact_tokens:
+L00016595	  - "Mermaid"
+L00016596	  - "inline visualizer"
+L00016597	negative_constraints: []
+L00016598	owner_hints:
+L00016599	  - Plans/assistant-chat-design.md
+L00016600	  - Plans/FinalGUISpec.md
+L00016601	```
+L00016602	
+L00016603	### ACD-291 - Visualizer Widget Taxonomy
+L00016604	
+L00016605	```yaml
+L00016606	plan_unit_id: ACD-291
+L00016607	unit_type: constraint
+L00016608	status: accepted
+L00016609	owner_doc: Plans/assistant-chat-design.md
+L00016610	canonical_text: >-
+L00016611	  Mermaid remains the fenced-diagram path; inline visualizer is a separate
+L00016612	  sandboxed HTML/SVG module; neither path owns hidden mutable state; message
+L00016613	  widget taxonomy keeps code blocks, diff/operation cards, Mermaid/native
+L00016614	  diagram cards, question cards, and `inline visual module` distinct.
+L00016615	gui_related: true
+L00016616	gui_classification_reason: Message widget taxonomy and renderer split are visible surface behavior.
+L00016617	depends_on: [ACD-290]
+L00016618	unblocks: [ACD-292, ACD-294]
+L00016619	acceptance_criteria:
+L00016620	  - Mermaid and inline visualizer rendering paths remain distinct.
+L00016621	  - Neither rendering path owns hidden mutable state outside durable source or metadata refs.
+L00016622	  - The inline visual module remains distinct from code blocks, diff cards, Mermaid/native diagram cards, and question cards.
+L00016623	validation_surfaces:
+L00016624	  - python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits
+L00016625	  - python3 scripts/pm-plan-index.py validate
+L00016626	risk_class: renderer_taxonomy
+L00016627	reasoning_tier: high
+L00016628	context_scope: rendering
+L00016629	implementation_surfaces:
+L00016630	  - Plans/assistant-chat-design.md
+L00016631	  - Plans/FinalGUISpec.md
+L00016632	node_compile_hint:
+L00016633	  mode: visualizer_widget_taxonomy
+L00016634	  create_worknodes: false
+L00016635	source_lineage:
+L00016636	  - Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:assistant-chat-design-S0135
+L00016637	preserved_exact_tokens:
+L00016638	  - "plain code blocks"
+L00016639	  - "diff/operation cards"
+L00016640	  - "Mermaid/native diagram cards"
+L00016641	  - "question cards"
+L00016642	  - "inline visual module"
+L00016643	negative_constraints:
+L00016644	  - "The inline visual module is not a Mermaid/native diagram card, not a plain code block, and not a diff/operation card."
+L00016645	owner_hints:
+L00016646	  - Plans/assistant-chat-design.md
+L00016647	  - Plans/FinalGUISpec.md
+L00016648	```
+L00016649	
+L00016650	### ACD-292 - Inline Visual Module Iframe Path
+L00016651	
+L00016652	```yaml
+L00016653	plan_unit_id: ACD-292
+L00016654	unit_type: requirement
+L00016655	status: accepted
+L00016656	owner_doc: Plans/assistant-chat-design.md
+L00016657	canonical_text: >-
+L00016658	  The Inline HTML/JS Visual Module is a sandboxed iframe rendering path for
+L00016659	  agent-generated HTML/JS/CSS used for data visualizations, interactive
+L00016660	  diagrams, and custom UI beyond Mermaid/code-block capabilities.
+L00016661	gui_related: true
+L00016662	gui_classification_reason: Inline visual modules render user-visible visual artifacts.
+L00016663	depends_on: [ACD-291]
+L00016664	unblocks: [ACD-293, ACD-295, ACD-296, ACD-298, ACD-299]
+L00016665	acceptance_criteria:
+L00016666	  - Inline HTML/JS Visual Module renders inside a sandboxed iframe.
+L00016667	  - The module supports visualizations and interactive artifacts that exceed Mermaid/code-block capabilities.
+L00016668	validation_surfaces:
+L00016669	  - python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits
+L00016670	  - python3 scripts/pm-plan-index.py validate
+L00016671	risk_class: visualizer_security
+L00016672	reasoning_tier: high
+L00016673	context_scope: rendering
+L00016674	implementation_surfaces:
+L00016675	  - Plans/assistant-chat-design.md
+L00016676	  - Plans/FinalGUISpec.md
+L00016677	node_compile_hint:
+L00016678	  mode: inline_visual_module_iframe_path
+L00016679	  create_worknodes: false
+L00016680	source_lineage:
+L00016681	  - Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:assistant-chat-design-S0136
+L00016682	preserved_exact_tokens:
+L00016683	  - "Inline HTML/JS Visual Module"
+L00016684	  - "sandboxed iframe"
+L00016685	  - "agent-generated HTML/JS/CSS"
+L00016686	  - "Plans/FinalGUISpec.md#15.6 Mermaid and inline visualizer widgets"
+L00016687	negative_constraints: []
+L00016688	owner_hints:
+L00016689	  - Plans/assistant-chat-design.md
+L00016690	  - Plans/FinalGUISpec.md
+L00016691	```
+L00016692	
+L00016693	### ACD-293 - Inline Visualizer Sandbox Policy
+L00016694	
+L00016695	```yaml
+L00016696	plan_unit_id: ACD-293
+L00016697	unit_type: constraint
+L00016698	status: accepted
+L00016699	owner_doc: Plans/assistant-chat-design.md
+L00016700	canonical_text: >-
+L00016701	  Inline visualizer iframes use explicit sandbox policy closed by default: MVP
+L00016702	  minimum is `sandbox='allow-scripts'`; `allow-same-origin`, `allow-forms`,
+L00016703	  `allow-popups`, and `allow-top-navigation` are denied; `postMessage` is the
+L00016704	  only cross-boundary bridge.
+L00016705	gui_related: false
+L00016706	gui_classification_reason: Sandbox policy is a security/runtime constraint.
+L00016707	depends_on: [ACD-292]
+L00016708	unblocks: [ACD-295, ACD-300]
+L00016709	acceptance_criteria:
+L00016710	  - Inline visualizer iframes set an explicit sandbox token set.
+L00016711	  - MVP sandbox minimum is `sandbox='allow-scripts'`.
+L00016712	  - Denied sandbox tokens remain denied.
+L00016713	  - Cross-boundary communication uses `postMessage` only.
+L00016714	validation_surfaces:
+L00016715	  - python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits
+L00016716	  - python3 scripts/pm-plan-index.py validate
+L00016717	risk_class: visualizer_security
+L00016718	reasoning_tier: high
+L00016719	context_scope: sandbox
+L00016720	implementation_surfaces:
+L00016721	  - Plans/assistant-chat-design.md
+L00016722	  - Plans/FinalGUISpec.md
+L00016723	node_compile_hint:
+L00016724	  mode: inline_visualizer_sandbox_policy
+L00016725	  create_worknodes: false
+L00016726	source_lineage:
+L00016727	  - Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:assistant-chat-design-S0136
+L00016728	preserved_exact_tokens:
+L00016729	  - "sandbox=\"allow-scripts\""
+L00016730	  - "sandbox='allow-scripts'"
+L00016731	  - "allow-same-origin"
+L00016732	  - "allow-forms"
+L00016733	  - "allow-popups"
+L00016734	  - "allow-top-navigation"
+L00016735	  - "postMessage"
+L00016736	negative_constraints:
+L00016737	  - "`allow-same-origin`, `allow-forms`, `allow-popups`, and `allow-top-navigation` are explicitly DENIED."
+L00016738	owner_hints:
+L00016739	  - Plans/assistant-chat-design.md
+L00016740	  - Plans/FinalGUISpec.md
+L00016741	```
+L00016742	
+L00016743	### ACD-294 - Message Flow Sanitizer Boundary
+L00016744	
+L00016745	```yaml
+L00016746	plan_unit_id: ACD-294
+L00016747	unit_type: constraint
+L00016748	status: accepted
+L00016749	owner_doc: Plans/assistant-chat-design.md
+L00016750	canonical_text: >-
+L00016751	  Non-iframe Markdown, Mermaid, HTML, and SVG rendering uses the current
+L00016752	  rendering contract until a dedicated `Plans/security-sanitization.md` owner
+L00016753	  exists, with DOMPurify `DEFAULT_ALLOWED_TAGS` safe subset and approved URL
+L00016754	  attributes only.
+L00016755	gui_related: false
+L00016756	gui_classification_reason: Sanitizer ownership and allowlist behavior are security/runtime constraints.
+L00016757	depends_on: [ACD-291]
+L00016758	unblocks: []
+L00016759	acceptance_criteria:
+L00016760	  - Non-iframe rendering uses the current rendering contract until a dedicated sanitizer owner exists.
+L00016761	  - Message-flow rendering uses DOMPurify `DEFAULT_ALLOWED_TAGS` plus approved URL-bearing attributes only.
+L00016762	validation_surfaces:
+L00016763	  - python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits
+L00016764	  - python3 scripts/pm-plan-index.py validate
+L00016765	risk_class: sanitization
+L00016766	reasoning_tier: high
+L00016767	context_scope: rendering_security
+L00016768	implementation_surfaces:
+L00016769	  - Plans/assistant-chat-design.md
+L00016770	  - Plans/FinalGUISpec.md
+L00016771	node_compile_hint:
+L00016772	  mode: message_flow_sanitizer_boundary
+L00016773	  create_worknodes: false
+L00016774	source_lineage:
+L00016775	  - Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:assistant-chat-design-S0136
+L00016776	preserved_exact_tokens:
+L00016777	  - "Plans/security-sanitization.md"
+L00016778	  - "DOMPurify"
+L00016779	  - "DEFAULT_ALLOWED_TAGS"
+L00016780	negative_constraints:
+L00016781	  - "Raw `<script>`, `<iframe>`, `<object>`, `<embed>`, and `<style>` with external URL references are denied in message-flow rendering."
+L00016782	owner_hints:
+L00016783	  - Plans/assistant-chat-design.md
+L00016784	  - Plans/FinalGUISpec.md
+L00016785	```
+L00016786	
+L00016787	### ACD-295 - Visualizer Host Bridge Surface
+L00016788	
+L00016789	```yaml
+L00016790	plan_unit_id: ACD-295
+L00016791	unit_type: requirement
+L00016792	status: accepted
+L00016793	owner_doc: Plans/assistant-chat-design.md
+L00016794	canonical_text: Visualizer host bridge exposes only async-safe `sendPrompt`, `openLink`, `copyToClipboard`, and `requestResize`; question-flow visuals omit `sendPrompt` and use the narrowed PM-managed question-draft bridge.
+L00016795	gui_related: false
+L00016796	gui_classification_reason: Host bridge method surface is runtime/API behavior.
+L00016797	depends_on: [ACD-292, ACD-293]
+L00016798	unblocks: [ACD-297, ACD-299]
+L00016799	acceptance_criteria:
+L00016800	  - Visualizer host bridge exposes only the specified async-safe calls.
+L00016801	  - Question-flow embedded visuals do not receive `sendPrompt`.
+L00016802	  - Question-flow embedded visuals write draft answers only through the narrowed question bridge.
+L00016803	validation_surfaces:
+L00016804	  - python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits
+L00016805	  - python3 scripts/pm-plan-index.py validate
+L00016806	risk_class: visualizer_bridge
+L00016807	reasoning_tier: high
+L00016808	context_scope: bridge
+L00016809	implementation_surfaces:
+L00016810	  - Plans/assistant-chat-design.md
+L00016811	  - Plans/FinalGUISpec.md
+L00016812	node_compile_hint:
+L00016813	  mode: visualizer_host_bridge_surface
+L00016814	  create_worknodes: false
+L00016815	source_lineage:
+L00016816	  - Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:assistant-chat-design-S0136
+L00016817	preserved_exact_tokens:
+L00016818	  - "sendPrompt(text: string): void"
+L00016819	  - "openLink(url: string, target?: \"_blank\" | \"_self\"): void"
+L00016820	  - "copyToClipboard(text: string): Promise<boolean>"
+L00016821	  - "requestResize(width?: number, height?: number): void"
+L00016822	negative_constraints:
+L00016823	  - "Question-flow embedded visual modules omit `sendPrompt` from the bridge."
+L00016824	owner_hints:
+L00016825	  - Plans/assistant-chat-design.md
+L00016826	  - Plans/FinalGUISpec.md
+L00016827	```
+L00016828	
+L00016829	### ACD-296 - Visualizer Theme Token Injection
+L00016830	
+L00016831	```yaml
+L00016832	plan_unit_id: ACD-296
+L00016833	unit_type: constraint
+L00016834	status: accepted
+L00016835	owner_doc: Plans/assistant-chat-design.md
+L00016836	canonical_text: >-
+L00016837	  Visualizer theme-token injection is locked to CSS custom properties injected
+L00016838	  through inline `style`, with MVP tokens `--pm-viz-bg`, `--pm-viz-fg`,
+L00016839	  `--pm-viz-accent`, `--pm-viz-border`, `--pm-viz-font-family`, and
+L00016840	  `--pm-viz-font-size`.
+L00016841	gui_related: true
+L00016842	gui_classification_reason: Theme-token injection controls visible visualizer styling.
+L00016843	depends_on: [ACD-292]
+L00016844	unblocks: [ACD-297]
+L00016845	acceptance_criteria:
+L00016846	  - Visualizer theme tokens are injected as CSS custom properties through inline `style`.
+L00016847	  - Visualizer fragments consume the MVP token set.
+L00016848	validation_surfaces:
+L00016849	  - python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits
+L00016850	  - python3 scripts/pm-plan-index.py validate
+L00016851	risk_class: visualizer_theme
+L00016852	reasoning_tier: high
+L00016853	context_scope: gui
+L00016854	implementation_surfaces:
+L00016855	  - Plans/assistant-chat-design.md
+L00016856	  - Plans/FinalGUISpec.md
+L00016857	node_compile_hint:
+L00016858	  mode: visualizer_theme_token_injection
+L00016859	  create_worknodes: false
+L00016860	source_lineage:
+L00016861	  - Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:assistant-chat-design-S0136
+L00016862	preserved_exact_tokens:
+L00016863	  - "Decision #10"
+L00016864	  - "--pm-viz-bg"
+L00016865	  - "--pm-viz-fg"
+L00016866	  - "--pm-viz-accent"
+L00016867	  - "--pm-viz-border"
+L00016868	  - "--pm-viz-font-family"
+L00016869	  - "--pm-viz-font-size"
+L00016870	negative_constraints:
+L00016871	  - "Visualizer fragments must not hardcode replacement colors."
+L00016872	owner_hints:
+L00016873	  - Plans/assistant-chat-design.md
+L00016874	  - Plans/FinalGUISpec.md
+L00016875	```
+L00016876	
+L00016877	### ACD-297 - Visualizer Bridge Host Semantics
+L00016878	
+L00016879	```yaml
+L00016880	plan_unit_id: ACD-297
+L00016881	unit_type: requirement
+L00016882	status: accepted
+L00016883	owner_doc: Plans/assistant-chat-design.md
+L00016884	canonical_text: >-
+L00016885	  Bridge calls preserve host semantics for `sendPrompt`, dual-context question
+L00016886	  routing, `openLink` routing through `cmd.browser.open_detached_preview` or
+L00016887	  system browser, theme updates on mount/change, and resize telemetry `{ height:
+L00016888	  px }`.
+L00016889	gui_related: false
+L00016890	gui_classification_reason: Bridge host semantics are integration/runtime behavior.
+L00016891	depends_on: [ACD-295, ACD-296]
+L00016892	unblocks: []
+L00016893	acceptance_criteria:
+L00016894	  - "`sendPrompt(text)` routes to active thread composer outside question-flow contexts."
+L00016895	  - Questionnaire-active `sendPrompt` calls route as question answers.
+L00016896	  - "`openLink(url)` routes through detached preview or system browser according to target."
+L00016897	  - Theme and resize bridge behavior follows host semantics.
+L00016898	validation_surfaces:
+L00016899	  - python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits
+L00016900	  - python3 scripts/pm-plan-index.py validate
+L00016901	risk_class: visualizer_bridge
+L00016902	reasoning_tier: high
+L00016903	context_scope: bridge
+L00016904	implementation_surfaces:
+L00016905	  - Plans/assistant-chat-design.md
+L00016906	  - Plans/FinalGUISpec.md
+L00016907	node_compile_hint:
+L00016908	  mode: visualizer_bridge_host_semantics
+L00016909	  create_worknodes: false
+L00016910	source_lineage:
+L00016911	  - Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:assistant-chat-design-S0136
+L00016912	preserved_exact_tokens:
+L00016913	  - "sendPrompt(text)"
+L00016914	  - "cmd.browser.open_detached_preview"
+L00016915	  - "{ height: px }"
+L00016916	negative_constraints:
+L00016917	  - "Question-flow visuals cannot bypass PM draft state by queueing chat messages."
+L00016918	owner_hints:
+L00016919	  - Plans/assistant-chat-design.md
+L00016920	  - Plans/FinalGUISpec.md
+L00016921	```
+L00016922	
+L00016923	### ACD-298 - Open Webui Visualizer Lineage Disposition
+L00016924	
+L00016925	```yaml
+L00016926	plan_unit_id: ACD-298
+L00016927	unit_type: compatibility_disposition
+L00016928	status: accepted
+L00016929	owner_doc: Plans/assistant-chat-design.md
+L00016930	canonical_text: >-
+L00016931	  `Classic298/open-webui-plugins` and `/open-webui-plugins` remain
+L00016932	  reference-only lineage; PM names the live surface inline visual module and
+L00016933	  treats `/catalog`, folder-based `SKILL.md`, `/discovery/runtime`, and
+L00016934	  `/preview/editor` as owner-consumed import/editor concepts, not visualizer
+L00016935	  authority.
+L00016936	gui_related: false
+L00016937	gui_classification_reason: The open-webui references are source-lineage and authority disposition.
+L00016938	depends_on: [ACD-292]
+L00016939	unblocks: []
+L00016940	acceptance_criteria:
+L00016941	  - Open-webui plugin references remain lineage only.
+L00016942	  - PM names the live surface inline visual module.
+L00016943	  - Catalog, skill, discovery, and preview/editor concepts are owner-consumed imports rather than visualizer authority.
+L00016944	validation_surfaces:
+L00016945	  - python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits
+L00016946	  - python3 scripts/pm-plan-index.py validate
+L00016947	risk_class: stale_lineage
+L00016948	reasoning_tier: high
+L00016949	context_scope: compatibility
+L00016950	implementation_surfaces:
+L00016951	  - Plans/assistant-chat-design.md
+L00016952	  - Plans/FinalGUISpec.md
+L00016953	node_compile_hint:
+L00016954	  mode: open_webui_visualizer_lineage_disposition
+L00016955	  create_worknodes: false
+L00016956	source_lineage:
+L00016957	  - Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:assistant-chat-design-S0136
+L00016958	preserved_exact_tokens:
+L00016959	  - "Classic298/open-webui-plugins"
+L00016960	  - "/open-webui-plugins"
+L00016961	  - "/catalog"
+L00016962	  - "SKILL.md"
+L00016963	  - "/discovery/runtime"
+L00016964	  - "/preview/editor"
+L00016965	negative_constraints:
+L00016966	  - "Reference-only lineage must not become visualizer authority."
+L00016967	owner_hints:
+L00016968	  - Plans/assistant-chat-design.md
+L00016969	  - Plans/FinalGUISpec.md
+L00016970	```
+L00016971	
+L00016972	### ACD-299 - Inline Visual Module Controls And Source
+L00016973	
+L00016974	```yaml
+L00016975	plan_unit_id: ACD-299
+L00016976	unit_type: requirement
+L00016977	status: accepted
+L00016978	owner_doc: Plans/assistant-chat-design.md
+L00016979	canonical_text: >-
+L00016980	  Inline visual modules support interactive `/controls`, local visual-state
+L00016981	  `/queues`, `/diagrams/explainers`, host-mediated `/auto-resize`, and
+L00016982	  source/copy/export metadata behind the visual-module contract.
+L00016983	gui_related: true
+L00016984	gui_classification_reason: Inline visual module controls, diagrams, resize, and source actions are user-visible artifact UI.
+L00016985	depends_on: [ACD-292, ACD-295]
+L00016986	unblocks: []
+L00016987	acceptance_criteria:
+L00016988	  - Inline visual modules support interactive controls, local visual queues, diagram explainers, and host-mediated auto-resize.
+L00016989	  - Source, copy, export, and generated-asset metadata stay behind the visual-module contract.
+L00016990	validation_surfaces:
+L00016991	  - python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits
+L00016992	  - python3 scripts/pm-plan-index.py validate
+L00016993	risk_class: visualizer_controls
+L00016994	reasoning_tier: standard
+L00016995	context_scope: gui
+L00016996	implementation_surfaces:
+L00016997	  - Plans/assistant-chat-design.md
+L00016998	  - Plans/FinalGUISpec.md
+L00016999	node_compile_hint:
+L00017000	  mode: inline_visual_module_controls_source
+L00017001	  create_worknodes: false
+L00017002	source_lineage:
+L00017003	  - Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:assistant-chat-design-S0136
+L00017004	preserved_exact_tokens:
+L00017005	  - "/controls"
+L00017006	  - "/queues"
+L00017007	  - "/diagrams/explainers"
+L00017008	  - "/auto-resize"
+L00017009	  - "Copy source"
+L00017010	  - "Open in editor"
+L00017011	  - "Open detached preview"
+L00017012	  - "Export diagram"
+L00017013	negative_constraints:
+L00017014	  - "Visualizer source handling must not inject raw controls into the main chat DOM."
+L00017015	owner_hints:
+L00017016	  - Plans/assistant-chat-design.md
+L00017017	  - Plans/FinalGUISpec.md
+L00017018	```
+L00017019	
+L00017020	### ACD-300 - Visualizer Library Network Constraint
+L00017021	
+L00017022	```yaml
+L00017023	plan_unit_id: ACD-300
+L00017024	unit_type: constraint
+L00017025	status: accepted
+L00017026	owner_doc: Plans/assistant-chat-design.md
+L00017027	canonical_text: >-
+L00017028	  Visualizer third-party `/library` code is allowed only when policy allows and
+L00017029	  must be bundled, version-pinned, and integrity-recorded; arbitrary external
+L00017030	  network loads are denied; the visualizer is not limited to `/questions` and
+L00017031	  is not accessibility-only fallback.
+L00017032	gui_related: false
+L00017033	gui_classification_reason: Third-party library and network policy are security/runtime constraints.
+L00017034	depends_on: [ACD-293]
+L00017035	unblocks: []
+L00017036	acceptance_criteria:
+L00017037	  - Third-party visualizer library code is allowed only when policy allows it.
+L00017038	  - Allowed third-party code is bundled, version-pinned, and integrity-recorded.
+L00017039	  - Arbitrary external network loads are denied.
+L00017040	validation_surfaces:
+L00017041	  - python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits
+L00017042	  - python3 scripts/pm-plan-index.py validate
+L00017043	risk_class: visualizer_security
+L00017044	reasoning_tier: high
+L00017045	context_scope: sandbox
+L00017046	implementation_surfaces:
+L00017047	  - Plans/assistant-chat-design.md
+L00017048	  - Plans/FinalGUISpec.md
+L00017049	node_compile_hint:
+L00017050	  mode: visualizer_library_network_constraint
+L00017051	  create_worknodes: false
+L00017052	source_lineage:
+L00017053	  - Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:assistant-chat-design-S0136
+L00017054	preserved_exact_tokens:
+L00017055	  - "/library"
+L00017056	  - "/questions"
+L00017057	  - "Arbitrary external network loads are denied"
+L00017058	negative_constraints:
+L00017059	  - "Arbitrary external network loads are denied."
+L00017060	  - "The visualizer is not limited to `/questions`, and it is not an accessibility-only fallback path."
+L00017061	owner_hints:
+L00017062	  - Plans/assistant-chat-design.md
+L00017063	  - Plans/FinalGUISpec.md
+L00017064	```
+L00017065	
+L00017066	### ACD-301 - Natural Language Mode And Wizard Escalation Scope
+L00017067	
+L00017068	```yaml
+L00017069	plan_unit_id: ACD-301
+L00017070	unit_type: requirement
+L00017071	status: accepted
+L00017072	owner_doc: Plans/assistant-chat-design.md
+L00017073	canonical_text: Natural-language mode invocation and wizard escalation define how chat resolves workflow identity, runtime posture, and Planning Wizard escalation.
+L00017074	gui_related: false
+L00017075	gui_classification_reason: This scope statement defines behavior and escalation ownership.
+L00017076	depends_on: []
+L00017077	unblocks: [ACD-302, ACD-306, ACD-308]
+L00017078	acceptance_criteria:
+L00017079	  - Natural-language mode invocation resolves workflow identity and runtime posture separately.
+L00017080	  - Wizard escalation behavior is defined for Assistant Chat and Deep Plan.
+L00017081	validation_surfaces:
+L00017082	  - python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits
+L00017083	  - python3 scripts/pm-plan-index.py validate
+L00017084	risk_class: mode_invocation
+L00017085	reasoning_tier: standard
+L00017086	context_scope: modes
+L00017087	implementation_surfaces:
+L00017088	  - Plans/assistant-chat-design.md
+L00017089	node_compile_hint:
+L00017090	  mode: natural_language_mode_wizard_escalation_scope
+L00017091	  create_worknodes: false
+L00017092	source_lineage:
+L00017093	  - Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:assistant-chat-design-S0137
+L00017094	preserved_exact_tokens:
+L00017095	  - "Natural-language mode invocation"
+L00017096	  - "Wizard Escalation"
+L00017097	negative_constraints: []
+L00017098	owner_hints:
+L00017099	  - Plans/assistant-chat-design.md
+L00017100	```
+L00017101	
+L00017102	### ACD-302 - Mode Invocation Runtime Fields
+L00017103	
+L00017104	```yaml
+L00017105	plan_unit_id: ACD-302
+L00017106	unit_type: requirement
+L00017107	status: accepted
+L00017108	owner_doc: Plans/assistant-chat-design.md
+L00017109	canonical_text: Natural-language mode invocation records requested/effective overlay, requested/effective runtime mode, requested/effective plan thoroughness, selection source/reason, and override scope.
+L00017110	gui_related: false
+L00017111	gui_classification_reason: Mode invocation field records are runtime data-contract behavior.
+L00017112	depends_on: [ACD-301]
+L00017113	unblocks: [ACD-303, ACD-314]
+L00017114	acceptance_criteria:
+L00017115	  - Mode invocation records requested and effective mode overlay fields.
+L00017116	  - Mode invocation records requested and effective runtime mode and Plan Thoroughness fields.
+L00017117	  - Selection source, selection reason, and override scope are preserved.
+L00017118	validation_surfaces:
+L00017119	  - python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits
+L00017120	  - python3 scripts/pm-plan-index.py validate
+L00017121	risk_class: mode_invocation
+L00017122	reasoning_tier: high
+L00017123	context_scope: modes
+L00017124	implementation_surfaces:
+L00017125	  - Plans/assistant-chat-design.md
+L00017126	  - Plans/Prompt_Pipeline.md
+L00017127	  - Plans/Contracts_V0.md
+L00017128	  - Plans/Run_Modes.md
+L00017129	node_compile_hint:
+L00017130	  mode: mode_invocation_runtime_fields
+L00017131	  create_worknodes: false
+L00017132	source_lineage:
+L00017133	  - Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:assistant-chat-design-S0138
+L00017134	preserved_exact_tokens:
+L00017135	  - "requested_mode_overlay"
+L00017136	  - "effective_mode_overlay"
+L00017137	  - "requested_runtime_mode"
+L00017138	  - "effective_runtime_mode"
+L00017139	  - "requested_plan_thoroughness"
+L00017140	  - "effective_plan_thoroughness"
+L00017141	  - "selection_source"
+L00017142	  - "selection_reason"
+L00017143	  - "override_scope"
+L00017144	negative_constraints: []
+L00017145	owner_hints:
+L00017146	  - Plans/assistant-chat-design.md
+L00017147	  - Plans/Prompt_Pipeline.md
+L00017148	```
+L00017149	
+L00017150	### ACD-303 - Mode Overlay Enum Closure
+L00017151	
+L00017152	```yaml
+L00017153	plan_unit_id: ACD-303
+L00017154	unit_type: constraint
+L00017155	status: accepted
+L00017156	owner_doc: Plans/assistant-chat-design.md
+L00017157	canonical_text: >-
+L00017158	  Mode overlays are closed to `none`, `plan`, `deep_plan`, `debug`,
+L00017159	  `interview`, `brainstorm`, and `crew`; runtime mode is closed by
+L00017160	  `Plans/Run_Modes.md`; `deep_plan` survives normalization through overlay
+L00017161	  fields.
+L00017162	gui_related: false
+L00017163	gui_classification_reason: Enum closure and normalization are runtime contract constraints.
+L00017164	depends_on: [ACD-302]
+L00017165	unblocks: [ACD-304]
+L00017166	acceptance_criteria:
+L00017167	  - Mode overlay values are limited to the canonical closed enum.
+L00017168	  - Runtime mode values are limited to `Plans/Run_Modes.md` postures.
+L00017169	  - "`deep_plan` survives normalization through overlay fields."
+L00017170	validation_surfaces:
+L00017171	  - python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits
+L00017172	  - python3 scripts/pm-plan-index.py validate
+L00017173	risk_class: mode_invocation
+L00017174	reasoning_tier: high
+L00017175	context_scope: modes
+L00017176	implementation_surfaces:
+L00017177	  - Plans/assistant-chat-design.md
+L00017178	  - Plans/Run_Modes.md
+L00017179	  - Plans/Prompt_Pipeline.md
+L00017180	  - Plans/storage-plan.md
+L00017181	node_compile_hint:
+L00017182	  mode: mode_overlay_enum_closure
+L00017183	  create_worknodes: false
+L00017184	source_lineage:
+L00017185	  - Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:assistant-chat-design-S0138
+L00017186	preserved_exact_tokens:
+L00017187	  - "none"
+L00017188	  - "plan"
+L00017189	  - "deep_plan"
+L00017190	  - "debug"
+L00017191	  - "interview"
+L00017192	  - "brainstorm"
+L00017193	  - "crew"
+L00017194	negative_constraints:
+L00017195	  - "`deep_plan` MUST survive normalization through the overlay fields and MUST NOT be discarded from historical/runtime records simply because the runtime posture is planning."
+L00017196	owner_hints:
+L00017197	  - Plans/assistant-chat-design.md
+L00017198	  - Plans/Run_Modes.md
+L00017199	```
+L00017200	
+L00017201	### ACD-304 - Natural Language Mode Resolution
+L00017202	
+L00017203	```yaml
+L00017204	plan_unit_id: ACD-304
+L00017205	unit_type: requirement
+L00017206	status: accepted
+L00017207	owner_doc: Plans/assistant-chat-design.md
+L00017208	canonical_text: >-
+L00017209	  Natural-language requests resolve deterministically: ask/read-only phrases map
+L00017210	  to overlay `none` plus runtime `ask`; plan phrases map to overlay `plan` plus
+L00017211	  runtime `plan`; deep-plan phrases map to overlay `deep_plan` plus runtime
+L00017212	  `plan`; agent phrases clear planning overlays and preserve explicit permission
+L00017213	  posture.
+L00017214	gui_related: false
+L00017215	gui_classification_reason: Natural-language mode resolution is command/resolver behavior.
+L00017216	depends_on: [ACD-303]
+L00017217	unblocks: [ACD-305, ACD-314]
+L00017218	acceptance_criteria:
+L00017219	  - Ask/read-only phrases resolve to overlay `none` and runtime `ask`.
+L00017220	  - Plan phrases resolve to overlay `plan` and runtime `plan`.
+L00017221	  - Deep Plan phrases resolve to overlay `deep_plan` and runtime `plan`.
+L00017222	  - Agent mode requests clear planning overlays and preserve explicit permission posture.
+L00017223	validation_surfaces:
+L00017224	  - python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits
+L00017225	  - python3 scripts/pm-plan-index.py validate
+L00017226	risk_class: mode_invocation
+L00017227	reasoning_tier: high
+L00017228	context_scope: modes
+L00017229	implementation_surfaces:
+L00017230	  - Plans/assistant-chat-design.md
+L00017231	  - Plans/Prompt_Pipeline.md
+L00017232	  - Plans/FinalGUISpec.md
+L00017233	node_compile_hint:
+L00017234	  mode: natural_language_mode_resolution
+L00017235	  create_worknodes: false
+L00017236	source_lineage:
+L00017237	  - Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:assistant-chat-design-S0138
+L00017238	preserved_exact_tokens:
+L00017239	  - "use ask mode"
+L00017240	  - "don't edit"
+L00017241	  - "just inspect"
+L00017242	  - "use plan mode"
+L00017243	  - "use deep plan"
+L00017244	  - "use agent mode"
+L00017245	  - "regular"
+L00017246	  - "yolo"
+L00017247	negative_constraints: []
+L00017248	owner_hints:
+L00017249	  - Plans/assistant-chat-design.md
+L00017250	  - Plans/Prompt_Pipeline.md
+L00017251	```
+L00017252	
+L00017253	### ACD-305 - Mode Compact Display Labels
+L00017254	
+L00017255	```yaml
+L00017256	plan_unit_id: ACD-305
+L00017257	unit_type: requirement
+L00017258	status: accepted
+L00017259	owner_doc: Plans/assistant-chat-design.md
+L00017260	canonical_text: Compact visible labels derive from effective overlay plus runtime posture so labels may remain `Ask`, `Agent`, `Plan`, or `Deep Plan`.
+L00017261	gui_related: true
+L00017262	gui_classification_reason: Compact mode labels are visible Assistant Chat UI.
+L00017263	depends_on: [ACD-304]
+L00017264	unblocks: []
+L00017265	acceptance_criteria:
+L00017266	  - Compact display labels derive from effective overlay plus runtime posture.
+L00017267	  - Visible labels may be Ask, Agent, Plan, or Deep Plan.
+L00017268	validation_surfaces:
+L00017269	  - python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits
+L00017270	  - python3 scripts/pm-plan-index.py validate
+L00017271	risk_class: mode_display
+L00017272	reasoning_tier: standard
+L00017273	context_scope: gui
+L00017274	implementation_surfaces:
+L00017275	  - Plans/assistant-chat-design.md
+L00017276	  - Plans/FinalGUISpec.md
+L00017277	node_compile_hint:
+L00017278	  mode: mode_compact_display_labels
+L00017279	  create_worknodes: false
+L00017280	source_lineage:
+L00017281	  - Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:assistant-chat-design-S0138
+L00017282	preserved_exact_tokens:
+L00017283	  - "Ask"
+L00017284	  - "Agent"
+L00017285	  - "Plan"
+L00017286	  - "Deep Plan"
+L00017287	negative_constraints: []
+L00017288	owner_hints:
+L00017289	  - Plans/assistant-chat-design.md
+L00017290	  - Plans/FinalGUISpec.md
+L00017291	```
+L00017292	
+L00017293	### ACD-306 - Assistant Planning Wizard Recommendation
+L00017294	
+L00017295	```yaml
+L00017296	plan_unit_id: ACD-306
+L00017297	unit_type: requirement
+L00017298	status: accepted
+L00017299	owner_doc: Plans/assistant-chat-design.md
+L00017300	canonical_text: Assistant chat recommends Planning Wizard when feature, substantial enhancement, major refactor/change, broad scope, open questions, or Deep Plan output suggests planning-workspace scoping and orchestrator follow-through would help.
+L00017301	gui_related: false
+L00017302	gui_classification_reason: Recommendation trigger detection is workflow behavior; CTA display is covered separately.
+L00017303	depends_on: [ACD-301]
+L00017304	unblocks: [ACD-307, ACD-308, ACD-314]
+L00017305	acceptance_criteria:
+L00017306	  - Assistant chat detects feature, enhancement, major change, and major refactor requests as Planning Wizard recommendation candidates.
+L00017307	  - Broad scope, many open questions, or large plan size may trigger recommendation.
+L00017308	  - Deep Plan output may trigger recommendation when interview scoping or orchestrator follow-through would help.
+L00017309	validation_surfaces:
+L00017310	  - python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits
+L00017311	  - python3 scripts/pm-plan-index.py validate
+L00017312	risk_class: wizard_escalation
+L00017313	reasoning_tier: standard
+L00017314	context_scope: wizard_handoff
+L00017315	implementation_surfaces:
+L00017316	  - Plans/assistant-chat-design.md
+L00017317	  - Plans/chain-wizard-flexibility.md
+L00017318	node_compile_hint:
+L00017319	  mode: assistant_planning_wizard_recommendation
+L00017320	  create_worknodes: false
+L00017321	source_lineage:
+L00017322	  - Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:assistant-chat-design-S0139
+L00017323	preserved_exact_tokens:
+L00017324	  - "add a feature"
+L00017325	  - "major enhancement"
+L00017326	  - "big change"
+L00017327	  - "large refactor"
+L00017328	negative_constraints: []
+L00017329	owner_hints:
+L00017330	  - Plans/assistant-chat-design.md
+L00017331	  - Plans/chain-wizard-flexibility.md
+L00017332	```
+L00017333	
+L00017334	### ACD-307 - Planning Wizard Recommendation CTA
+L00017335	
+L00017336	```yaml
+L00017337	plan_unit_id: ACD-307
+L00017338	unit_type: requirement
+L00017339	status: accepted
+L00017340	owner_doc: Plans/assistant-chat-design.md
+L00017341	canonical_text: Planning Wizard recommendation is a CTA, not an automatic redirect; the user may accept or decline, and declining keeps the user in chat with no hidden workflow switch.
+L00017342	gui_related: true
+L00017343	gui_classification_reason: Recommendation CTA and accept/decline behavior are visible user-facing flow.
+L00017344	depends_on: [ACD-306]
+L00017345	unblocks: [ACD-309]
+L00017346	acceptance_criteria:
+L00017347	  - Planning Wizard recommendation appears as a CTA.
+L00017348	  - The user may accept or decline the recommendation.
+L00017349	  - Declining keeps the user in chat without a hidden workflow switch.
+L00017350	validation_surfaces:
+L00017351	  - python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits
+L00017352	  - python3 scripts/pm-plan-index.py validate
+L00017353	risk_class: wizard_escalation
+L00017354	reasoning_tier: standard
+L00017355	context_scope: gui
+L00017356	implementation_surfaces:
+L00017357	  - Plans/assistant-chat-design.md
+L00017358	  - Plans/FinalGUISpec.md
+L00017359	  - Plans/chain-wizard-flexibility.md
+L00017360	node_compile_hint:
+L00017361	  mode: planning_wizard_recommendation_cta
+L00017362	  create_worknodes: false
+L00017363	source_lineage:
+L00017364	  - Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:assistant-chat-design-S0139
+L00017365	preserved_exact_tokens:
+L00017366	  - "CTA"
+L00017367	  - "not an automatic redirect"
+L00017368	negative_constraints:
+L00017369	  - "Declining keeps the user in chat with no hidden workflow switch."
+L00017370	owner_hints:
+L00017371	  - Plans/assistant-chat-design.md
+L00017372	  - Plans/FinalGUISpec.md
+L00017373	```
+L00017374	
+L00017375	### ACD-308 - Deep Planning Wizard Escalation Evaluation
+L00017376	
+L00017377	```yaml
+L00017378	plan_unit_id: ACD-308
+L00017379	unit_type: requirement
+L00017380	status: accepted
+L00017381	owner_doc: Plans/assistant-chat-design.md
+L00017382	canonical_text: >-
+L00017383	  Deep Plan performs a final wizard-escalation evaluation before defaulting to
+L00017384	  chat execution and recommends Planning Wizard when work spans several domains,
+L00017385	  has unresolved material questions, reads like a feature spec, or should
+L00017386	  produce orchestrator-ready artifacts.
+L00017387	gui_related: false
+L00017388	gui_classification_reason: Deep Plan escalation evaluation is planning workflow behavior.
+L00017389	depends_on: [ACD-301, ACD-306]
+L00017390	unblocks: [ACD-309, ACD-314]
+L00017391	acceptance_criteria:
+L00017392	  - Deep Plan performs a final wizard-escalation evaluation before chat execution.
+L00017393	  - Deep Plan recommends Planning Wizard for multi-domain, unresolved, spec-like, or artifact-producing work.
+L00017394	validation_surfaces:
+L00017395	  - python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits
+L00017396	  - python3 scripts/pm-plan-index.py validate
+L00017397	risk_class: wizard_escalation
+L00017398	reasoning_tier: high
+L00017399	context_scope: deep_plan
+L00017400	implementation_surfaces:
+L00017401	  - Plans/assistant-chat-design.md
+L00017402	  - Plans/chain-wizard-flexibility.md
+L00017403	node_compile_hint:
+L00017404	  mode: deep_planning_wizard_escalation_evaluation
+L00017405	  create_worknodes: false
+L00017406	source_lineage:
+L00017407	  - Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:assistant-chat-design-S0140
+L00017408	preserved_exact_tokens:
+L00017409	  - "Deep Plan MUST perform"
+L00017410	  - "orchestrator-ready project artifacts"
+L00017411	negative_constraints: []
+L00017412	owner_hints:
+L00017413	  - Plans/assistant-chat-design.md
+L00017414	  - Plans/chain-wizard-flexibility.md
+L00017415	```
+L00017416	
+L00017417	### ACD-309 - Planning Wizard Handoff Bundle
+L00017418	
+L00017419	```yaml
+L00017420	plan_unit_id: ACD-309
+L00017421	unit_type: requirement
+L00017422	status: accepted
+L00017423	owner_doc: Plans/assistant-chat-design.md
+L00017424	canonical_text: >-
+L00017425	  Accepting a recommendation launches Planning Wizard / Interview with a structured
+L00017426	  handoff bundle containing source, reason, origin IDs, project context,
+L00017427	  `default_intent = EnhanceRewriteAdd`, user goal, summaries, GUI hint, plan
+L00017428	  refs, todos, open questions, assumptions, and `chat_excerpt_refs[]`.
+L00017429	gui_related: false
+L00017430	gui_classification_reason: Handoff bundle schema is integration data behavior.
+L00017431	depends_on: [ACD-307, ACD-308]
+L00017432	unblocks: [ACD-310, ACD-311, ACD-312]
+L00017433	acceptance_criteria:
+L00017434	  - Accepting a recommendation launches Planning Wizard / Interview with a structured handoff bundle.
+L00017435	  - The handoff bundle carries source, reason, origin, project, goal, summary, GUI hint, plan, TODO, question, assumption, and excerpt references.
+L00017436	validation_surfaces:
+L00017437	  - python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits
+L00017438	  - python3 scripts/pm-plan-index.py validate
+L00017439	risk_class: wizard_handoff
+L00017440	reasoning_tier: high
+L00017441	context_scope: handoff
+L00017442	implementation_surfaces:
+L00017443	  - Plans/assistant-chat-design.md
+L00017444	  - Plans/chain-wizard-flexibility.md
+L00017445	  - Plans/interview-subagent-integration.md
+L00017446	node_compile_hint:
+L00017447	  mode: planning_wizard_handoff_bundle
+L00017448	  create_worknodes: false
+L00017449	source_lineage:
+L00017450	  - Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:assistant-chat-design-S0141
+L00017451	preserved_exact_tokens:
+L00017452	  - "handoff_source"
+L00017453	  - "handoff_reason"
+L00017454	  - "origin_thread_id"
+L00017455	  - "origin_message_id"
+L00017456	  - "default_intent = EnhanceRewriteAdd"
+L00017457	  - "has_gui_hint"
+L00017458	  - "chat_excerpt_refs[]"
+L00017459	negative_constraints: []
+L00017460	owner_hints:
+L00017461	  - Plans/assistant-chat-design.md
+L00017462	  - Plans/chain-wizard-flexibility.md
+L00017463	```
+L00017464	
+L00017465	### ACD-310 - Chat Excerpt Reference Lineage
+L00017466	
+L00017467	```yaml
+L00017468	plan_unit_id: ACD-310
+L00017469	unit_type: requirement
+L00017470	status: accepted
+L00017471	owner_doc: Plans/assistant-chat-design.md
+L00017472	canonical_text: >-
+L00017473	  `chat_excerpt_refs[]` are bounded lineage pointers with `thread_id`,
+L00017474	  `message_id`, optional `range_ref`, `excerpt_role`, and `redaction_state`;
+L00017475	  they are not copied transcript authority and resolve through canonical
+L00017476	  thread/message storage.
+L00017477	gui_related: false
+L00017478	gui_classification_reason: Chat excerpt references are lineage and storage behavior.
+L00017479	depends_on: [ACD-309]
+L00017480	unblocks: [ACD-311]
+L00017481	acceptance_criteria:
+L00017482	  - "`chat_excerpt_refs[]` identify bounded source excerpts by canonical pointer fields."
+L00017483	  - Excerpt references are lineage pointers, not copied transcript authority.
+L00017484	  - Wizard resolves excerpt references through canonical thread/message storage.
+L00017485	validation_surfaces:
+L00017486	  - python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits
+L00017487	  - python3 scripts/pm-plan-index.py validate
+L00017488	risk_class: handoff_lineage
+L00017489	reasoning_tier: high
+L00017490	context_scope: handoff
+L00017491	implementation_surfaces:
+L00017492	  - Plans/assistant-chat-design.md
+L00017493	  - Plans/storage-plan.md
+L00017494	  - Plans/chain-wizard-flexibility.md
+L00017495	node_compile_hint:
+L00017496	  mode: chat_excerpt_reference_lineage
+L00017497	  create_worknodes: false
+L00017498	source_lineage:
+L00017499	  - Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:assistant-chat-design-S0141
+L00017500	preserved_exact_tokens:
+L00017501	  - "chat_excerpt_refs[]"
+L00017502	  - "thread_id"
+L00017503	  - "message_id"
+L00017504	  - "range_ref"
+L00017505	  - "excerpt_role"
+L00017506	  - "redaction_state"
+L00017507	negative_constraints:
+L00017508	  - "`chat_excerpt_refs[]` entries are lineage pointers, not copied transcript authority."
+L00017509	owner_hints:
+L00017510	  - Plans/assistant-chat-design.md
+L00017511	  - Plans/storage-plan.md
+L00017512	```
+L00017513	
+L00017514	### ACD-311 - Wizard Handoff Visibility And Audit
+L00017515	
+L00017516	```yaml
+L00017517	plan_unit_id: ACD-311
+L00017518	unit_type: constraint
+L00017519	status: accepted
+L00017520	owner_doc: Plans/assistant-chat-design.md
+L00017521	canonical_text: Imported handoff context remains visible and auditable; imported plans become wizard/interviewer context rather than immediate executable artifacts, and the launch audit trail is preserved.
+L00017522	gui_related: true
+L00017523	gui_classification_reason: Imported context visibility and audit trail are user-facing handoff behavior.
+L00017524	depends_on: [ACD-309, ACD-310]
+L00017525	unblocks: [ACD-314]
+L00017526	acceptance_criteria:
+L00017527	  - Imported handoff context is visible to the user.
+L00017528	  - Imported plans become wizard/interviewer context rather than immediate executable artifacts.
+L00017529	  - Handoff preserves an audit trail from Assistant Chat / Deep Plan.
+L00017530	validation_surfaces:
+L00017531	  - python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits
+L00017532	  - python3 scripts/pm-plan-index.py validate
+L00017533	risk_class: handoff_visibility
+L00017534	reasoning_tier: high
+L00017535	context_scope: gui
+L00017536	implementation_surfaces:
+L00017537	  - Plans/assistant-chat-design.md
+L00017538	  - Plans/FinalGUISpec.md
+L00017539	  - Plans/chain-wizard-flexibility.md
+L00017540	node_compile_hint:
+L00017541	  mode: wizard_handoff_visibility_audit
+L00017542	  create_worknodes: false
+L00017543	source_lineage:
+L00017544	  - Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:assistant-chat-design-S0141
+L00017545	preserved_exact_tokens:
+L00017546	  - "imported context"
+L00017547	  - "visible"
+L00017548	  - "audit trail"
+L00017549	negative_constraints:
+L00017550	  - "Imported context must be visible to the user; it must not be hidden system state."
+L00017551	  - "The imported plan is not an immediate executable artifact."
+L00017552	owner_hints:
+L00017553	  - Plans/assistant-chat-design.md
+L00017554	  - Plans/FinalGUISpec.md
+L00017555	```
+L00017556	
+L00017557	### ACD-312 - Wizard Launch Context Routing
+L00017558	
+L00017559	```yaml
+L00017560	plan_unit_id: ACD-312
+L00017561	unit_type: requirement
+L00017562	status: accepted
+L00017563	owner_doc: Plans/assistant-chat-design.md
+L00017564	canonical_text: >-
+L00017565	  Wizard launch opens preloaded `EnhanceRewriteAdd` when project/path context
+L00017566	  exists, or preserves imported context and lands on project-setup review first
+L00017567	  when required project context is missing.
+L00017568	gui_related: true
+L00017569	gui_classification_reason: Wizard launch path and project-setup review landing are visible workflow UI.
+L00017570	depends_on: [ACD-309]
+L00017571	unblocks: [ACD-313, ACD-314]
+L00017572	acceptance_criteria:
+L00017573	  - Threads with active project/path open the preloaded `EnhanceRewriteAdd` flow.
+L00017574	  - Threads missing required project context preserve imported context and land on project-setup review first.
+L00017575	validation_surfaces:
+L00017576	  - python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits
+L00017577	  - python3 scripts/pm-plan-index.py validate
+L00017578	risk_class: wizard_launch
+L00017579	reasoning_tier: standard
+L00017580	context_scope: gui
+L00017581	implementation_surfaces:
+L00017582	  - Plans/assistant-chat-design.md
+L00017583	  - Plans/FinalGUISpec.md
+L00017584	  - Plans/chain-wizard-flexibility.md
+L00017585	node_compile_hint:
+L00017586	  mode: wizard_launch_context_routing
+L00017587	  create_worknodes: false
+L00017588	source_lineage:
+L00017589	  - Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:assistant-chat-design-S0142
+L00017590	preserved_exact_tokens:
+L00017591	  - "EnhanceRewriteAdd"
+L00017592	  - "project-setup review path"
+L00017593	negative_constraints: []
+L00017594	owner_hints:
+L00017595	  - Plans/assistant-chat-design.md
+L00017596	  - Plans/FinalGUISpec.md
+L00017597	```
+L00017598	
+L00017599	### ACD-313 - Wizard Imported Context Before Interview
+L00017600	
+L00017601	```yaml
+L00017602	plan_unit_id: ACD-313
+L00017603	unit_type: constraint
+L00017604	status: accepted
+L00017605	owner_doc: Plans/assistant-chat-design.md
+L00017606	canonical_text: >-
+L00017607	  The interviewer must not start cold: imported context is available before the
+L00017608	  first question, imported plan context may be opened, and the mandatory scope
+L00017609	  probe still runs without bypassing phase 0.
+L00017610	gui_related: false

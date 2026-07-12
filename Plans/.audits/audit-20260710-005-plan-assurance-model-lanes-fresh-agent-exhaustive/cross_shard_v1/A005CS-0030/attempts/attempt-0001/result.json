@@ -1,0 +1,892 @@
+{
+  "audit_id": "audit-20260710-005-plan-assurance-model-lanes-fresh-agent-exhaustive",
+  "schema_version": "cross-shard-result-v1",
+  "phase": "cross_shard_same_owner_candidate_discovery",
+  "assignment_id": "A005CS-0030",
+  "attempt_id": "attempt-0001",
+  "task_thread_id": "/root/a005_cross_shard_0030_attempt_0001_terminal",
+  "model": "gpt-5.6-sol",
+  "reasoning_effort": "xhigh",
+  "status": "completed",
+  "input_binding": {
+    "packet_id": "CSPKT-0030",
+    "packet_sha256": "181cef4938d46140fdd49d6e8928786c24d258c8e121ed5b2081ea21075375c8",
+    "anchor_refs_digest": "0152d81a3025e5a4c35453c144dc7d261d5cdffd3a63b694d45a4fedb51b02e8",
+    "comparator_refs_digest": "57482ba0d7f288ab2fe5f8974ad507d02b560e6cced59d60cedbb6cbb8b421ee"
+  },
+  "coverage": {
+    "anchor_count": 55,
+    "anchor_refs": [
+      "OPF::A005OM-0021::PF-0001",
+      "OPF::A005OM-0021::PF-0002",
+      "OPF::A005OM-0021::PF-0003",
+      "OPF::A005OM-0021::PF-0004",
+      "OPF::A005OM-0021::PF-0005",
+      "OPF::A005OM-0021::PF-0006",
+      "OPF::A005OM-0021::PF-0007",
+      "OPF::A005OM-0021::PF-0008",
+      "OPF::A005OM-0021::PF-0009",
+      "OPF::A005OM-0021::PF-0010",
+      "OPF::A005OM-0021::PF-0011",
+      "OPF::A005OM-0021::PF-0012",
+      "OPF::A005OM-0021::PF-0013",
+      "OPF::A005OM-0021::PF-0014",
+      "OPF::A005OM-0021::PF-0015",
+      "OPF::A005OM-0021::PF-0016",
+      "OPF::A005OM-0021::PF-0017",
+      "OPF::A005OM-0021::PF-0018",
+      "OPF::A005OM-0021::PF-0019",
+      "OPF::A005OM-0021::PF-0020",
+      "OPF::A005OM-0021::PF-0021",
+      "OPF::A005OM-0021::PF-0022",
+      "OPF::A005OM-0021::PF-0023",
+      "OPF::A005OM-0021::PF-0024",
+      "OPF::A005OM-0021::PF-0025",
+      "OPF::A005OM-0021::PF-0026",
+      "OPF::A005OM-0021::PF-0027",
+      "OPF::A005OM-0021::PF-0028",
+      "OPF::A005OM-0021::PF-0029",
+      "OPF::A005OM-0021::PF-0030",
+      "OPF::A005OM-0021::PF-0031",
+      "OPF::A005OM-0021::PF-0032",
+      "OPF::A005OM-0021::PF-0033",
+      "OPF::A005OM-0021::PF-0034",
+      "OPF::A005OM-0021::PF-0035",
+      "OPF::A005OM-0021::PF-0036",
+      "OPF::A005OM-0021::PF-0037",
+      "OPF::A005OM-0021::PF-0038",
+      "OPF::A005OM-0021::PF-0039",
+      "OPF::A005OM-0021::PF-0040",
+      "OPF::A005OM-0021::PF-0041",
+      "OPF::A005OM-0021::PF-0042",
+      "OPF::A005OM-0021::PF-0043",
+      "OPF::A005OM-0021::PF-0044",
+      "OPF::A005OM-0021::PF-0045",
+      "OPF::A005OM-0021::PF-0046",
+      "OPF::A005OM-0021::PF-0047",
+      "OPF::A005OM-0021::PF-0048",
+      "OPF::A005OM-0021::PF-0049",
+      "OPF::A005OM-0021::PF-0050",
+      "OPF::A005OM-0021::PF-0051",
+      "OPF::A005OM-0021::PF-0052",
+      "OPF::A005OM-0021::PF-0053",
+      "OPF::A005OM-0021::PF-0054",
+      "OPF::A005OM-0021::PF-0055"
+    ],
+    "comparator_count": 162,
+    "comparator_refs": [
+      "OPF::A005OM-0022::PF-0001",
+      "OPF::A005OM-0022::PF-0002",
+      "OPF::A005OM-0022::PF-0003",
+      "OPF::A005OM-0022::PF-0004",
+      "OPF::A005OM-0022::PF-0005",
+      "OPF::A005OM-0022::PF-0006",
+      "OPF::A005OM-0022::PF-0007",
+      "OPF::A005OM-0022::PF-0008",
+      "OPF::A005OM-0022::PF-0009",
+      "OPF::A005OM-0022::PF-0010",
+      "OPF::A005OM-0022::PF-0011",
+      "OPF::A005OM-0022::PF-0012",
+      "OPF::A005OM-0022::PF-0013",
+      "OPF::A005OM-0022::PF-0014",
+      "OPF::A005OM-0022::PF-0015",
+      "OPF::A005OM-0022::PF-0016",
+      "OPF::A005OM-0022::PF-0017",
+      "OPF::A005OM-0022::PF-0018",
+      "OPF::A005OM-0022::PF-0019",
+      "OPF::A005OM-0022::PF-0020",
+      "OPF::A005OM-0022::PF-0021",
+      "OPF::A005OM-0022::PF-0022",
+      "OPF::A005OM-0022::PF-0023",
+      "OPF::A005OM-0022::PF-0024",
+      "OPF::A005OM-0022::PF-0025",
+      "OPF::A005OM-0022::PF-0026",
+      "OPF::A005OM-0022::PF-0027",
+      "OPF::A005OM-0022::PF-0028",
+      "OPF::A005OM-0022::PF-0029",
+      "OPF::A005OM-0022::PF-0030",
+      "OPF::A005OM-0022::PF-0031",
+      "OPF::A005OM-0022::PF-0032",
+      "OPF::A005OM-0022::PF-0033",
+      "OPF::A005OM-0022::PF-0034",
+      "OPF::A005OM-0022::PF-0035",
+      "OPF::A005OM-0022::PF-0036",
+      "OPF::A005OM-0022::PF-0037",
+      "OPF::A005OM-0022::PF-0038",
+      "OPF::A005OM-0022::PF-0039",
+      "OPF::A005OM-0022::PF-0040",
+      "OPF::A005OM-0022::PF-0041",
+      "OPF::A005OM-0022::PF-0042",
+      "OPF::A005OM-0022::PF-0043",
+      "OPF::A005OM-0022::PF-0044",
+      "OPF::A005OM-0022::PF-0045",
+      "OPF::A005OM-0022::PF-0046",
+      "OPF::A005OM-0022::PF-0047",
+      "OPF::A005OM-0022::PF-0048",
+      "OPF::A005OM-0022::PF-0049",
+      "OPF::A005OM-0022::PF-0050",
+      "OPF::A005OM-0022::PF-0051",
+      "OPF::A005OM-0022::PF-0052",
+      "OPF::A005OM-0022::PF-0053",
+      "OPF::A005OM-0022::PF-0054",
+      "OPF::A005OM-0022::PF-0055",
+      "OPF::A005OM-0022::PF-0056",
+      "OPF::A005OM-0022::PF-0057",
+      "OPF::A005OM-0022::PF-0058",
+      "OPF::A005OM-0022::PF-0059",
+      "OPF::A005OM-0022::PF-0060",
+      "OPF::A005OM-0022::PF-0061",
+      "OPF::A005OM-0022::PF-0062",
+      "OPF::A005OM-0022::PF-0063",
+      "OPF::A005OM-0022::PF-0064",
+      "OPF::A005OM-0022::PF-0065",
+      "OPF::A005OM-0022::PF-0066",
+      "OPF::A005OM-0022::PF-0067",
+      "OPF::A005OM-0022::PF-0068",
+      "OPF::A005OM-0022::PF-0069",
+      "OPF::A005OM-0022::PF-0070",
+      "OPF::A005OM-0022::PF-0071",
+      "OPF::A005OM-0022::PF-0072",
+      "OPF::A005OM-0022::PF-0073",
+      "OPF::A005OM-0022::PF-0074",
+      "OPF::A005OM-0022::PF-0075",
+      "OPF::A005OM-0022::PF-0076",
+      "OPF::A005OM-0022::PF-0077",
+      "OPF::A005OM-0022::PF-0078",
+      "OPF::A005OM-0022::PF-0079",
+      "OPF::A005OM-0022::PF-0080",
+      "OPF::A005OM-0022::PF-0081",
+      "OPF::A005OM-0022::PF-0082",
+      "OPF::A005OM-0022::PF-0083",
+      "OPF::A005OM-0022::PF-0084",
+      "OPF::A005OM-0022::PF-0085",
+      "OPF::A005OM-0022::PF-0086",
+      "OPF::A005OM-0022::PF-0087",
+      "OPF::A005OM-0022::PF-0088",
+      "OPF::A005OM-0022::PF-0089",
+      "OPF::A005OM-0022::PF-0090",
+      "OPF::A005OM-0022::PF-0091",
+      "OPF::A005OM-0022::PF-0092",
+      "OPF::A005OM-0022::PF-0093",
+      "OPF::A005OM-0022::PF-0094",
+      "OPF::A005OM-0022::PF-0095",
+      "OPF::A005OM-0022::PF-0096",
+      "OPF::A005OM-0022::PF-0097",
+      "OPF::A005OM-0022::PF-0098",
+      "OPF::A005OM-0022::PF-0099",
+      "OPF::A005OM-0022::PF-0100",
+      "OPF::A005OM-0022::PF-0101",
+      "OPF::A005OM-0022::PF-0102",
+      "OPF::A005OM-0022::PF-0103",
+      "OPF::A005OM-0022::PF-0104",
+      "OPF::A005OM-0022::PF-0105",
+      "OPF::A005OM-0022::PF-0106",
+      "OPF::A005OM-0022::PF-0107",
+      "OPF::A005OM-0022::PF-0108",
+      "OPF::A005OM-0022::PF-0109",
+      "OPF::A005OM-0022::PF-0110",
+      "OPF::A005OM-0022::PF-0111",
+      "OPF::A005OM-0022::PF-0112",
+      "OPF::A005OM-0022::PF-0113",
+      "OPF::A005OM-0022::PF-0114",
+      "OPF::A005OM-0022::PF-0115",
+      "OPF::A005OM-0022::PF-0116",
+      "OPF::A005OM-0022::PF-0117",
+      "OPF::A005OM-0022::PF-0118",
+      "OPF::A005OM-0022::PF-0119",
+      "OPF::A005OM-0022::PF-0120",
+      "OPF::A005OM-0022::PF-0121",
+      "OPF::A005OM-0022::PF-0122",
+      "OPF::A005OM-0022::PF-0123",
+      "OPF::A005OM-0022::PF-0124",
+      "OPF::A005OM-0022::PF-0125",
+      "OPF::A005OM-0022::PF-0126",
+      "OPF::A005OM-0022::PF-0127",
+      "OPF::A005OM-0022::PF-0128",
+      "OPF::A005OM-0022::PF-0129",
+      "OPF::A005OM-0022::PF-0130",
+      "OPF::A005OM-0022::PF-0131",
+      "OPF::A005OM-0022::PF-0132",
+      "OPF::A005OM-0022::PF-0133",
+      "OPF::A005OM-0022::PF-0134",
+      "OPF::A005OM-0022::PF-0135",
+      "OPF::A005OM-0022::PF-0136",
+      "OPF::A005OM-0022::PF-0137",
+      "OPF::A005OM-0022::PF-0138",
+      "OPF::A005OM-0022::PF-0139",
+      "OPF::A005OM-0022::PF-0140",
+      "OPF::A005OM-0022::PF-0141",
+      "OPF::A005OM-0022::PF-0142",
+      "OPF::A005OM-0022::PF-0143",
+      "OPF::A005OM-0022::PF-0144",
+      "OPF::A005OM-0022::PF-0145",
+      "OPF::A005OM-0022::PF-0146",
+      "OPF::A005OM-0022::PF-0147",
+      "OPF::A005OM-0022::PF-0148",
+      "OPF::A005OM-0022::PF-0149",
+      "OPF::A005OM-0022::PF-0150",
+      "OPF::A005OM-0022::PF-0151",
+      "OPF::A005OM-0022::PF-0152",
+      "OPF::A005OM-0022::PF-0153",
+      "OPF::A005OM-0022::PF-0154",
+      "OPF::A005OM-0022::PF-0155",
+      "OPF::A005OM-0022::PF-0156",
+      "OPF::A005OM-0022::PF-0157",
+      "OPF::A005OM-0022::PF-0158",
+      "OPF::A005OM-0022::PF-0159",
+      "OPF::A005OM-0022::PF-0160",
+      "OPF::A005OM-0022::PF-0161",
+      "OPF::A005OM-0022::PF-0162"
+    ]
+  },
+  "decisions": [
+    {
+      "anchor_provisional_feature_ref": "OPF::A005OM-0021::PF-0001",
+      "compared_against_count": 162,
+      "merge_candidate_refs": [],
+      "related_but_distinct_refs": [
+        "OPF::A005OM-0022::PF-0041",
+        "OPF::A005OM-0022::PF-0120"
+      ],
+      "rationale": "All 162 comparators were evaluated. None reproduces Correlation and route migration lack invalid-state behavior under the same authority and lifecycle; the listed near-neighbors are related but remain distinct because their authority, consumer, lifecycle, failure contract, security boundary, or visible promise differs.",
+      "confidence": 0.9
+    },
+    {
+      "anchor_provisional_feature_ref": "OPF::A005OM-0021::PF-0002",
+      "compared_against_count": 162,
+      "merge_candidate_refs": [],
+      "related_but_distinct_refs": [
+        "OPF::A005OM-0022::PF-0064",
+        "OPF::A005OM-0022::PF-0072",
+        "OPF::A005OM-0022::PF-0092"
+      ],
+      "rationale": "All 162 comparators were evaluated. None reproduces Firecrawl reconciliation is anchor-exact under the same authority and lifecycle; the listed near-neighbors are related but remain distinct because their authority, consumer, lifecycle, failure contract, security boundary, or visible promise differs.",
+      "confidence": 0.9
+    },
+    {
+      "anchor_provisional_feature_ref": "OPF::A005OM-0021::PF-0003",
+      "compared_against_count": 162,
+      "merge_candidate_refs": [],
+      "related_but_distinct_refs": [
+        "OPF::A005OM-0022::PF-0065",
+        "OPF::A005OM-0022::PF-0072",
+        "OPF::A005OM-0022::PF-0076"
+      ],
+      "rationale": "All 162 comparators were evaluated. None reproduces Firecrawl owner set is broad but edge-light under the same authority and lifecycle; the listed near-neighbors are related but remain distinct because their authority, consumer, lifecycle, failure contract, security boundary, or visible promise differs.",
+      "confidence": 0.9
+    },
+    {
+      "anchor_provisional_feature_ref": "OPF::A005OM-0021::PF-0004",
+      "compared_against_count": 162,
+      "merge_candidate_refs": [],
+      "related_but_distinct_refs": [
+        "OPF::A005OM-0022::PF-0071",
+        "OPF::A005OM-0022::PF-0098"
+      ],
+      "rationale": "All 162 comparators were evaluated. None reproduces Firecrawl obligation routing lacks closure state under the same authority and lifecycle; the listed near-neighbors are related but remain distinct because their authority, consumer, lifecycle, failure contract, security boundary, or visible promise differs.",
+      "confidence": 0.9
+    },
+    {
+      "anchor_provisional_feature_ref": "OPF::A005OM-0021::PF-0005",
+      "compared_against_count": 162,
+      "merge_candidate_refs": [],
+      "related_but_distinct_refs": [
+        "OPF::A005OM-0022::PF-0064",
+        "OPF::A005OM-0022::PF-0076"
+      ],
+      "rationale": "All 162 comparators were evaluated. None reproduces 0PI-001 names migration and Plan index validators under the same authority and lifecycle; the listed near-neighbors are related but remain distinct because their authority, consumer, lifecycle, failure contract, security boundary, or visible promise differs.",
+      "confidence": 0.9
+    },
+    {
+      "anchor_provisional_feature_ref": "OPF::A005OM-0021::PF-0006",
+      "compared_against_count": 162,
+      "merge_candidate_refs": [],
+      "related_but_distinct_refs": [
+        "OPF::A005OM-0022::PF-0013",
+        "OPF::A005OM-0022::PF-0020",
+        "OPF::A005OM-0022::PF-0076",
+        "OPF::A005OM-0022::PF-0132"
+      ],
+      "rationale": "All 162 comparators were evaluated. None reproduces Retired source-preserving bridge has a clear non-ownership boundary under the same authority and lifecycle; the listed near-neighbors are related but remain distinct because their authority, consumer, lifecycle, failure contract, security boundary, or visible promise differs.",
+      "confidence": 0.9
+    },
+    {
+      "anchor_provisional_feature_ref": "OPF::A005OM-0021::PF-0007",
+      "compared_against_count": 162,
+      "merge_candidate_refs": [
+        "OPF::A005OM-0022::PF-0113"
+      ],
+      "related_but_distinct_refs": [
+        "OPF::A005OM-0022::PF-0001",
+        "OPF::A005OM-0022::PF-0006",
+        "OPF::A005OM-0022::PF-0087",
+        "OPF::A005OM-0022::PF-0108"
+      ],
+      "rationale": "All 162 comparators were evaluated. Registry promotion transaction and replay safety matches Docker image and registry operations as the same product feature under the same authority and lifecycle. The related references remain separate because they have a different consumer, state machine, security boundary, or user-visible promise.",
+      "confidence": 0.93
+    },
+    {
+      "anchor_provisional_feature_ref": "OPF::A005OM-0021::PF-0008",
+      "compared_against_count": 162,
+      "merge_candidate_refs": [],
+      "related_but_distinct_refs": [
+        "OPF::A005OM-0022::PF-0114",
+        "OPF::A005OM-0022::PF-0115",
+        "OPF::A005OM-0022::PF-0117"
+      ],
+      "rationale": "All 162 comparators were evaluated. None reproduces Kubernetes mutation recovery is navigation-only under the same authority and lifecycle; the listed near-neighbors are related but remain distinct because their authority, consumer, lifecycle, failure contract, security boundary, or visible promise differs.",
+      "confidence": 0.9
+    },
+    {
+      "anchor_provisional_feature_ref": "OPF::A005OM-0021::PF-0009",
+      "compared_against_count": 162,
+      "merge_candidate_refs": [],
+      "related_but_distinct_refs": [
+        "OPF::A005OM-0022::PF-0076",
+        "OPF::A005OM-0022::PF-0090",
+        "OPF::A005OM-0022::PF-0120",
+        "OPF::A005OM-0022::PF-0132"
+      ],
+      "rationale": "All 162 comparators were evaluated. None reproduces Compatibility labels do not revive retired ownership under the same authority and lifecycle; the listed near-neighbors are related but remain distinct because their authority, consumer, lifecycle, failure contract, security boundary, or visible promise differs.",
+      "confidence": 0.9
+    },
+    {
+      "anchor_provisional_feature_ref": "OPF::A005OM-0021::PF-0010",
+      "compared_against_count": 162,
+      "merge_candidate_refs": [],
+      "related_but_distinct_refs": [
+        "OPF::A005OM-0022::PF-0108",
+        "OPF::A005OM-0022::PF-0110",
+        "OPF::A005OM-0022::PF-0112"
+      ],
+      "rationale": "All 162 comparators were evaluated. None reproduces Preview action concurrency is not defined under the same authority and lifecycle; the listed near-neighbors are related but remain distinct because their authority, consumer, lifecycle, failure contract, security boundary, or visible promise differs.",
+      "confidence": 0.9
+    },
+    {
+      "anchor_provisional_feature_ref": "OPF::A005OM-0021::PF-0011",
+      "compared_against_count": 162,
+      "merge_candidate_refs": [],
+      "related_but_distinct_refs": [
+        "OPF::A005OM-0022::PF-0006",
+        "OPF::A005OM-0022::PF-0113",
+        "OPF::A005OM-0022::PF-0114",
+        "OPF::A005OM-0022::PF-0125"
+      ],
+      "rationale": "All 162 comparators were evaluated. None reproduces Named Docker operation anchors lack executable contracts under the same authority and lifecycle; the listed near-neighbors are related but remain distinct because their authority, consumer, lifecycle, failure contract, security boundary, or visible promise differs.",
+      "confidence": 0.9
+    },
+    {
+      "anchor_provisional_feature_ref": "OPF::A005OM-0021::PF-0012",
+      "compared_against_count": 162,
+      "merge_candidate_refs": [],
+      "related_but_distinct_refs": [
+        "OPF::A005OM-0022::PF-0111",
+        "OPF::A005OM-0022::PF-0113"
+      ],
+      "rationale": "All 162 comparators were evaluated. None reproduces Tag sanitization omits length and terminal validity rules under the same authority and lifecycle; the listed near-neighbors are related but remain distinct because their authority, consumer, lifecycle, failure contract, security boundary, or visible promise differs.",
+      "confidence": 0.9
+    },
+    {
+      "anchor_provisional_feature_ref": "OPF::A005OM-0021::PF-0013",
+      "compared_against_count": 162,
+      "merge_candidate_refs": [],
+      "related_but_distinct_refs": [
+        "OPF::A005OM-0022::PF-0001",
+        "OPF::A005OM-0022::PF-0006",
+        "OPF::A005OM-0022::PF-0087",
+        "OPF::A005OM-0022::PF-0113"
+      ],
+      "rationale": "All 162 comparators were evaluated. None reproduces Unraid follow-on sequencing preserves opt-in remote push under the same authority and lifecycle; the listed near-neighbors are related but remain distinct because their authority, consumer, lifecycle, failure contract, security boundary, or visible promise differs.",
+      "confidence": 0.9
+    },
+    {
+      "anchor_provisional_feature_ref": "OPF::A005OM-0021::PF-0014",
+      "compared_against_count": 162,
+      "merge_candidate_refs": [],
+      "related_but_distinct_refs": [
+        "OPF::A005OM-0022::PF-0001",
+        "OPF::A005OM-0022::PF-0006"
+      ],
+      "rationale": "All 162 comparators were evaluated. None reproduces Known XML field registry lacks concrete profile mappings under the same authority and lifecycle; the listed near-neighbors are related but remain distinct because their authority, consumer, lifecycle, failure contract, security boundary, or visible promise differs.",
+      "confidence": 0.9
+    },
+    {
+      "anchor_provisional_feature_ref": "OPF::A005OM-0021::PF-0015",
+      "compared_against_count": 162,
+      "merge_candidate_refs": [],
+      "related_but_distinct_refs": [
+        "OPF::A005OM-0022::PF-0016",
+        "OPF::A005OM-0022::PF-0040",
+        "OPF::A005OM-0022::PF-0146"
+      ],
+      "rationale": "All 162 comparators were evaluated. None reproduces Goal event registry lacks ordering, transition, and duplicate-conflict semantics under the same authority and lifecycle; the listed near-neighbors are related but remain distinct because their authority, consumer, lifecycle, failure contract, security boundary, or visible promise differs.",
+      "confidence": 0.9
+    },
+    {
+      "anchor_provisional_feature_ref": "OPF::A005OM-0021::PF-0016",
+      "compared_against_count": 162,
+      "merge_candidate_refs": [
+        "OPF::A005OM-0022::PF-0077"
+      ],
+      "related_but_distinct_refs": [
+        "OPF::A005OM-0022::PF-0092",
+        "OPF::A005OM-0022::PF-0107",
+        "OPF::A005OM-0022::PF-0144",
+        "OPF::A005OM-0022::PF-0146",
+        "OPF::A005OM-0022::PF-0153"
+      ],
+      "rationale": "All 162 comparators were evaluated. Batch web partial-failure event semantics are incomplete matches Batch web operation execution lifecycle as the same product feature under the same authority and lifecycle. The related references remain separate because they have a different consumer, state machine, security boundary, or user-visible promise.",
+      "confidence": 0.93
+    },
+    {
+      "anchor_provisional_feature_ref": "OPF::A005OM-0021::PF-0017",
+      "compared_against_count": 162,
+      "merge_candidate_refs": [],
+      "related_but_distinct_refs": [],
+      "rationale": "All 162 comparators were evaluated. None addresses Debug Target Import Boundary under the same authority and lifecycle, and no plausible near-neighbor survived the distinct-boundary test.",
+      "confidence": 0.95
+    },
+    {
+      "anchor_provisional_feature_ref": "OPF::A005OM-0021::PF-0018",
+      "compared_against_count": 162,
+      "merge_candidate_refs": [],
+      "related_but_distinct_refs": [
+        "OPF::A005OM-0022::PF-0016",
+        "OPF::A005OM-0022::PF-0040",
+        "OPF::A005OM-0022::PF-0041"
+      ],
+      "rationale": "All 162 comparators were evaluated. None reproduces Tool Event Envelope under the same authority and lifecycle; the listed near-neighbors are related but remain distinct because their authority, consumer, lifecycle, failure contract, security boundary, or visible promise differs.",
+      "confidence": 0.9
+    },
+    {
+      "anchor_provisional_feature_ref": "OPF::A005OM-0021::PF-0019",
+      "compared_against_count": 162,
+      "merge_candidate_refs": [],
+      "related_but_distinct_refs": [
+        "OPF::A005OM-0022::PF-0107",
+        "OPF::A005OM-0022::PF-0144",
+        "OPF::A005OM-0022::PF-0145",
+        "OPF::A005OM-0022::PF-0146",
+        "OPF::A005OM-0022::PF-0147"
+      ],
+      "rationale": "All 162 comparators were evaluated. None reproduces Web Tool Payloads under the same authority and lifecycle; the listed near-neighbors are related but remain distinct because their authority, consumer, lifecycle, failure contract, security boundary, or visible promise differs.",
+      "confidence": 0.9
+    },
+    {
+      "anchor_provisional_feature_ref": "OPF::A005OM-0021::PF-0020",
+      "compared_against_count": 162,
+      "merge_candidate_refs": [],
+      "related_but_distinct_refs": [
+        "OPF::A005OM-0022::PF-0016",
+        "OPF::A005OM-0022::PF-0077",
+        "OPF::A005OM-0022::PF-0146",
+        "OPF::A005OM-0022::PF-0153"
+      ],
+      "rationale": "All 162 comparators were evaluated. None reproduces Web Operation Events under the same authority and lifecycle; the listed near-neighbors are related but remain distinct because their authority, consumer, lifecycle, failure contract, security boundary, or visible promise differs.",
+      "confidence": 0.9
+    },
+    {
+      "anchor_provisional_feature_ref": "OPF::A005OM-0021::PF-0021",
+      "compared_against_count": 162,
+      "merge_candidate_refs": [],
+      "related_but_distinct_refs": [
+        "OPF::A005OM-0022::PF-0080",
+        "OPF::A005OM-0022::PF-0091",
+        "OPF::A005OM-0022::PF-0146"
+      ],
+      "rationale": "All 162 comparators were evaluated. None reproduces Web Error Taxonomy under the same authority and lifecycle; the listed near-neighbors are related but remain distinct because their authority, consumer, lifecycle, failure contract, security boundary, or visible promise differs.",
+      "confidence": 0.9
+    },
+    {
+      "anchor_provisional_feature_ref": "OPF::A005OM-0021::PF-0022",
+      "compared_against_count": 162,
+      "merge_candidate_refs": [],
+      "related_but_distinct_refs": [
+        "OPF::A005OM-0022::PF-0080",
+        "OPF::A005OM-0022::PF-0091"
+      ],
+      "rationale": "All 162 comparators were evaluated. None reproduces Fallback reasons lose exact enum coverage under the same authority and lifecycle; the listed near-neighbors are related but remain distinct because their authority, consumer, lifecycle, failure contract, security boundary, or visible promise differs.",
+      "confidence": 0.9
+    },
+    {
+      "anchor_provisional_feature_ref": "OPF::A005OM-0021::PF-0023",
+      "compared_against_count": 162,
+      "merge_candidate_refs": [],
+      "related_but_distinct_refs": [
+        "OPF::A005OM-0022::PF-0016",
+        "OPF::A005OM-0022::PF-0040",
+        "OPF::A005OM-0022::PF-0141"
+      ],
+      "rationale": "All 162 comparators were evaluated. None reproduces Doom-loop terminal event conflicts with EP-035 under the same authority and lifecycle; the listed near-neighbors are related but remain distinct because their authority, consumer, lifecycle, failure contract, security boundary, or visible promise differs.",
+      "confidence": 0.9
+    },
+    {
+      "anchor_provisional_feature_ref": "OPF::A005OM-0021::PF-0024",
+      "compared_against_count": 162,
+      "merge_candidate_refs": [
+        "OPF::A005OM-0022::PF-0105"
+      ],
+      "related_but_distinct_refs": [
+        "OPF::A005OM-0022::PF-0053",
+        "OPF::A005OM-0022::PF-0056",
+        "OPF::A005OM-0022::PF-0060",
+        "OPF::A005OM-0022::PF-0150",
+        "OPF::A005OM-0022::PF-0152",
+        "OPF::A005OM-0022::PF-0157"
+      ],
+      "rationale": "All 162 comparators were evaluated. Isolated browser pause/resume lacks session-lifecycle rules matches Browser session lifecycle and preview recovery as the same product feature under the same authority and lifecycle. The related references remain separate because they have a different consumer, state machine, security boundary, or user-visible promise.",
+      "confidence": 0.93
+    },
+    {
+      "anchor_provisional_feature_ref": "OPF::A005OM-0021::PF-0025",
+      "compared_against_count": 162,
+      "merge_candidate_refs": [],
+      "related_but_distinct_refs": [],
+      "rationale": "All 162 comparators were evaluated. None addresses Run-level rule omits the no-work terminal branch under the same authority and lifecycle, and no plausible near-neighbor survived the distinct-boundary test.",
+      "confidence": 0.95
+    },
+    {
+      "anchor_provisional_feature_ref": "OPF::A005OM-0021::PF-0026",
+      "compared_against_count": 162,
+      "merge_candidate_refs": [],
+      "related_but_distinct_refs": [],
+      "rationale": "All 162 comparators were evaluated. None addresses Recurrence comparison is not canonicalized under the same authority and lifecycle, and no plausible near-neighbor survived the distinct-boundary test.",
+      "confidence": 0.95
+    },
+    {
+      "anchor_provisional_feature_ref": "OPF::A005OM-0021::PF-0027",
+      "compared_against_count": 162,
+      "merge_candidate_refs": [],
+      "related_but_distinct_refs": [
+        "OPF::A005OM-0022::PF-0118",
+        "OPF::A005OM-0022::PF-0125"
+      ],
+      "rationale": "All 162 comparators were evaluated. None reproduces Open targets and adjacent runtime owners are sharply bounded under the same authority and lifecycle; the listed near-neighbors are related but remain distinct because their authority, consumer, lifecycle, failure contract, security boundary, or visible promise differs.",
+      "confidence": 0.9
+    },
+    {
+      "anchor_provisional_feature_ref": "OPF::A005OM-0021::PF-0028",
+      "compared_against_count": 162,
+      "merge_candidate_refs": [],
+      "related_but_distinct_refs": [
+        "OPF::A005OM-0022::PF-0112",
+        "OPF::A005OM-0022::PF-0128"
+      ],
+      "rationale": "All 162 comparators were evaluated. None reproduces Docker/Hosts responsive acceptance is not falsifiable under the same authority and lifecycle; the listed near-neighbors are related but remain distinct because their authority, consumer, lifecycle, failure contract, security boundary, or visible promise differs.",
+      "confidence": 0.9
+    },
+    {
+      "anchor_provisional_feature_ref": "OPF::A005OM-0021::PF-0029",
+      "compared_against_count": 162,
+      "merge_candidate_refs": [],
+      "related_but_distinct_refs": [
+        "OPF::A005OM-0022::PF-0006",
+        "OPF::A005OM-0022::PF-0112",
+        "OPF::A005OM-0022::PF-0125",
+        "OPF::A005OM-0022::PF-0128"
+      ],
+      "rationale": "All 162 comparators were evaluated. None reproduces Docker/Hosts routed lab preserves Docker Manager ownership under the same authority and lifecycle; the listed near-neighbors are related but remain distinct because their authority, consumer, lifecycle, failure contract, security boundary, or visible promise differs.",
+      "confidence": 0.9
+    },
+    {
+      "anchor_provisional_feature_ref": "OPF::A005OM-0021::PF-0030",
+      "compared_against_count": 162,
+      "merge_candidate_refs": [
+        "OPF::A005OM-0022::PF-0112"
+      ],
+      "related_but_distinct_refs": [
+        "OPF::A005OM-0022::PF-0128",
+        "OPF::A005OM-0022::PF-0155"
+      ],
+      "rationale": "All 162 comparators were evaluated. Docker/Hosts state lists are not a lifecycle state machine matches Docker host lifecycle, profiles, retention, and sessions as the same product feature under the same authority and lifecycle. The related references remain separate because they have a different consumer, state machine, security boundary, or user-visible promise.",
+      "confidence": 0.93
+    },
+    {
+      "anchor_provisional_feature_ref": "OPF::A005OM-0021::PF-0031",
+      "compared_against_count": 162,
+      "merge_candidate_refs": [],
+      "related_but_distinct_refs": [
+        "OPF::A005OM-0022::PF-0054",
+        "OPF::A005OM-0022::PF-0137"
+      ],
+      "rationale": "All 162 comparators were evaluated. None reproduces Locked shell technology baseline under the same authority and lifecycle; the listed near-neighbors are related but remain distinct because their authority, consumer, lifecycle, failure contract, security boundary, or visible promise differs.",
+      "confidence": 0.9
+    },
+    {
+      "anchor_provisional_feature_ref": "OPF::A005OM-0021::PF-0032",
+      "compared_against_count": 162,
+      "merge_candidate_refs": [],
+      "related_but_distinct_refs": [
+        "OPF::A005OM-0022::PF-0105",
+        "OPF::A005OM-0022::PF-0106",
+        "OPF::A005OM-0022::PF-0137"
+      ],
+      "rationale": "All 162 comparators were evaluated. None reproduces Promoted browser and debugger contract under the same authority and lifecycle; the listed near-neighbors are related but remain distinct because their authority, consumer, lifecycle, failure contract, security boundary, or visible promise differs.",
+      "confidence": 0.9
+    },
+    {
+      "anchor_provisional_feature_ref": "OPF::A005OM-0021::PF-0033",
+      "compared_against_count": 162,
+      "merge_candidate_refs": [],
+      "related_but_distinct_refs": [
+        "OPF::A005OM-0022::PF-0127",
+        "OPF::A005OM-0022::PF-0154"
+      ],
+      "rationale": "All 162 comparators were evaluated. None reproduces SSH credential custody is explicit under the same authority and lifecycle; the listed near-neighbors are related but remain distinct because their authority, consumer, lifecycle, failure contract, security boundary, or visible promise differs.",
+      "confidence": 0.9
+    },
+    {
+      "anchor_provisional_feature_ref": "OPF::A005OM-0021::PF-0034",
+      "compared_against_count": 162,
+      "merge_candidate_refs": [],
+      "related_but_distinct_refs": [
+        "OPF::A005OM-0022::PF-0048",
+        "OPF::A005OM-0022::PF-0104",
+        "OPF::A005OM-0022::PF-0106",
+        "OPF::A005OM-0022::PF-0150"
+      ],
+      "rationale": "All 162 comparators were evaluated. None reproduces Shared rendering trust-boundary gap under the same authority and lifecycle; the listed near-neighbors are related but remain distinct because their authority, consumer, lifecycle, failure contract, security boundary, or visible promise differs.",
+      "confidence": 0.9
+    },
+    {
+      "anchor_provisional_feature_ref": "OPF::A005OM-0021::PF-0035",
+      "compared_against_count": 162,
+      "merge_candidate_refs": [
+        "OPF::A005OM-0022::PF-0057"
+      ],
+      "related_but_distinct_refs": [
+        "OPF::A005OM-0022::PF-0104",
+        "OPF::A005OM-0022::PF-0152"
+      ],
+      "rationale": "All 162 comparators were evaluated. Capture-chip revoke/send race matches Browser context sharing authority as the same product feature under the same authority and lifecycle. The related references remain separate because they have a different consumer, state machine, security boundary, or user-visible promise.",
+      "confidence": 0.93
+    },
+    {
+      "anchor_provisional_feature_ref": "OPF::A005OM-0021::PF-0036",
+      "compared_against_count": 162,
+      "merge_candidate_refs": [],
+      "related_but_distinct_refs": [
+        "OPF::A005OM-0022::PF-0048",
+        "OPF::A005OM-0022::PF-0105",
+        "OPF::A005OM-0022::PF-0106",
+        "OPF::A005OM-0022::PF-0137"
+      ],
+      "rationale": "All 162 comparators were evaluated. None reproduces Browser debugging UX owner boundary under the same authority and lifecycle; the listed near-neighbors are related but remain distinct because their authority, consumer, lifecycle, failure contract, security boundary, or visible promise differs.",
+      "confidence": 0.9
+    },
+    {
+      "anchor_provisional_feature_ref": "OPF::A005OM-0021::PF-0037",
+      "compared_against_count": 162,
+      "merge_candidate_refs": [
+        "OPF::A005OM-0022::PF-0104"
+      ],
+      "related_but_distinct_refs": [
+        "OPF::A005OM-0022::PF-0150",
+        "OPF::A005OM-0022::PF-0152"
+      ],
+      "rationale": "All 162 comparators were evaluated. Browser evidence data-lifecycle gap matches Browser context capture and screenshot artifacts as the same product feature under the same authority and lifecycle. The related references remain separate because they have a different consumer, state machine, security boundary, or user-visible promise.",
+      "confidence": 0.84
+    },
+    {
+      "anchor_provisional_feature_ref": "OPF::A005OM-0021::PF-0038",
+      "compared_against_count": 162,
+      "merge_candidate_refs": [],
+      "related_but_distinct_refs": [
+        "OPF::A005OM-0022::PF-0056",
+        "OPF::A005OM-0022::PF-0105",
+        "OPF::A005OM-0022::PF-0150"
+      ],
+      "rationale": "All 162 comparators were evaluated. None reproduces URL-to-workspace binding transition gap under the same authority and lifecycle; the listed near-neighbors are related but remain distinct because their authority, consumer, lifecycle, failure contract, security boundary, or visible promise differs.",
+      "confidence": 0.9
+    },
+    {
+      "anchor_provisional_feature_ref": "OPF::A005OM-0021::PF-0039",
+      "compared_against_count": 162,
+      "merge_candidate_refs": [
+        "OPF::A005OM-0022::PF-0106"
+      ],
+      "related_but_distinct_refs": [
+        "OPF::A005OM-0022::PF-0105"
+      ],
+      "rationale": "All 162 comparators were evaluated. Browser host and DevTools placement matches Browser developer-tools capability as the same product feature under the same authority and lifecycle. The related references remain separate because they have a different consumer, state machine, security boundary, or user-visible promise.",
+      "confidence": 0.93
+    },
+    {
+      "anchor_provisional_feature_ref": "OPF::A005OM-0021::PF-0040",
+      "compared_against_count": 162,
+      "merge_candidate_refs": [],
+      "related_but_distinct_refs": [
+        "OPF::A005OM-0022::PF-0060",
+        "OPF::A005OM-0022::PF-0078",
+        "OPF::A005OM-0022::PF-0105",
+        "OPF::A005OM-0022::PF-0157"
+      ],
+      "rationale": "All 162 comparators were evaluated. None reproduces Hidden automation session lifecycle gap under the same authority and lifecycle; the listed near-neighbors are related but remain distinct because their authority, consumer, lifecycle, failure contract, security boundary, or visible promise differs.",
+      "confidence": 0.9
+    },
+    {
+      "anchor_provisional_feature_ref": "OPF::A005OM-0021::PF-0041",
+      "compared_against_count": 162,
+      "merge_candidate_refs": [],
+      "related_but_distinct_refs": [],
+      "rationale": "All 162 comparators were evaluated. None addresses Mermaid untrusted-content boundary gap under the same authority and lifecycle, and no plausible near-neighbor survived the distinct-boundary test.",
+      "confidence": 0.95
+    },
+    {
+      "anchor_provisional_feature_ref": "OPF::A005OM-0021::PF-0042",
+      "compared_against_count": 162,
+      "merge_candidate_refs": [],
+      "related_but_distinct_refs": [
+        "OPF::A005OM-0022::PF-0048",
+        "OPF::A005OM-0022::PF-0107"
+      ],
+      "rationale": "All 162 comparators were evaluated. None reproduces Chat HTML execution prohibition under the same authority and lifecycle; the listed near-neighbors are related but remain distinct because their authority, consumer, lifecycle, failure contract, security boundary, or visible promise differs.",
+      "confidence": 0.9
+    },
+    {
+      "anchor_provisional_feature_ref": "OPF::A005OM-0021::PF-0043",
+      "compared_against_count": 162,
+      "merge_candidate_refs": [],
+      "related_but_distinct_refs": [],
+      "rationale": "All 162 comparators were evaluated. None addresses Context Lens mode-composition gap under the same authority and lifecycle, and no plausible near-neighbor survived the distinct-boundary test.",
+      "confidence": 0.95
+    },
+    {
+      "anchor_provisional_feature_ref": "OPF::A005OM-0021::PF-0044",
+      "compared_against_count": 162,
+      "merge_candidate_refs": [],
+      "related_but_distinct_refs": [
+        "OPF::A005OM-0022::PF-0123"
+      ],
+      "rationale": "All 162 comparators were evaluated. None reproduces File Editor shared-buffer render race under the same authority and lifecycle; the listed near-neighbors are related but remain distinct because their authority, consumer, lifecycle, failure contract, security boundary, or visible promise differs.",
+      "confidence": 0.9
+    },
+    {
+      "anchor_provisional_feature_ref": "OPF::A005OM-0021::PF-0045",
+      "compared_against_count": 162,
+      "merge_candidate_refs": [],
+      "related_but_distinct_refs": [
+        "OPF::A005OM-0022::PF-0123"
+      ],
+      "rationale": "All 162 comparators were evaluated. None reproduces Canonical File Editor buffer authority under the same authority and lifecycle; the listed near-neighbors are related but remain distinct because their authority, consumer, lifecycle, failure contract, security boundary, or visible promise differs.",
+      "confidence": 0.9
+    },
+    {
+      "anchor_provisional_feature_ref": "OPF::A005OM-0021::PF-0046",
+      "compared_against_count": 162,
+      "merge_candidate_refs": [],
+      "related_but_distinct_refs": [
+        "OPF::A005OM-0022::PF-0048",
+        "OPF::A005OM-0022::PF-0118",
+        "OPF::A005OM-0022::PF-0125"
+      ],
+      "rationale": "All 162 comparators were evaluated. None reproduces Local HTML open routing under the same authority and lifecycle; the listed near-neighbors are related but remain distinct because their authority, consumer, lifecycle, failure contract, security boundary, or visible promise differs.",
+      "confidence": 0.9
+    },
+    {
+      "anchor_provisional_feature_ref": "OPF::A005OM-0021::PF-0047",
+      "compared_against_count": 162,
+      "merge_candidate_refs": [],
+      "related_but_distinct_refs": [],
+      "rationale": "All 162 comparators were evaluated. None addresses Embedded Document Pane renderer reuse under the same authority and lifecycle, and no plausible near-neighbor survived the distinct-boundary test.",
+      "confidence": 0.95
+    },
+    {
+      "anchor_provisional_feature_ref": "OPF::A005OM-0021::PF-0048",
+      "compared_against_count": 162,
+      "merge_candidate_refs": [],
+      "related_but_distinct_refs": [
+        "OPF::A005OM-0022::PF-0070",
+        "OPF::A005OM-0022::PF-0106"
+      ],
+      "rationale": "All 162 comparators were evaluated. None reproduces Bottom-panel browser-adjacent scope under the same authority and lifecycle; the listed near-neighbors are related but remain distinct because their authority, consumer, lifecycle, failure contract, security boundary, or visible promise differs.",
+      "confidence": 0.9
+    },
+    {
+      "anchor_provisional_feature_ref": "OPF::A005OM-0021::PF-0049",
+      "compared_against_count": 162,
+      "merge_candidate_refs": [],
+      "related_but_distinct_refs": [
+        "OPF::A005OM-0022::PF-0070",
+        "OPF::A005OM-0022::PF-0125"
+      ],
+      "rationale": "All 162 comparators were evaluated. None reproduces Bottom-panel action ownership under the same authority and lifecycle; the listed near-neighbors are related but remain distinct because their authority, consumer, lifecycle, failure contract, security boundary, or visible promise differs.",
+      "confidence": 0.9
+    },
+    {
+      "anchor_provisional_feature_ref": "OPF::A005OM-0021::PF-0050",
+      "compared_against_count": 162,
+      "merge_candidate_refs": [],
+      "related_but_distinct_refs": [
+        "OPF::A005OM-0022::PF-0054",
+        "OPF::A005OM-0022::PF-0060",
+        "OPF::A005OM-0022::PF-0105"
+      ],
+      "rationale": "All 162 comparators were evaluated. None reproduces Browser runtime and windowing baseline under the same authority and lifecycle; the listed near-neighbors are related but remain distinct because their authority, consumer, lifecycle, failure contract, security boundary, or visible promise differs.",
+      "confidence": 0.9
+    },
+    {
+      "anchor_provisional_feature_ref": "OPF::A005OM-0021::PF-0051",
+      "compared_against_count": 162,
+      "merge_candidate_refs": [
+        "OPF::A005OM-0022::PF-0054"
+      ],
+      "related_but_distinct_refs": [
+        "OPF::A005OM-0022::PF-0050",
+        "OPF::A005OM-0022::PF-0137"
+      ],
+      "rationale": "All 162 comparators were evaluated. CEF runtime lifecycle and update recovery matches Browser runtime packaging, distribution, and health as the same product feature under the same authority and lifecycle. The related references remain separate because they have a different consumer, state machine, security boundary, or user-visible promise.",
+      "confidence": 0.93
+    },
+    {
+      "anchor_provisional_feature_ref": "OPF::A005OM-0021::PF-0052",
+      "compared_against_count": 162,
+      "merge_candidate_refs": [],
+      "related_but_distinct_refs": [],
+      "rationale": "All 162 comparators were evaluated. None addresses Rendered-surface performance oracle missing under the same authority and lifecycle, and no plausible near-neighbor survived the distinct-boundary test.",
+      "confidence": 0.95
+    },
+    {
+      "anchor_provisional_feature_ref": "OPF::A005OM-0021::PF-0053",
+      "compared_against_count": 162,
+      "merge_candidate_refs": [],
+      "related_but_distinct_refs": [],
+      "rationale": "All 162 comparators were evaluated. None addresses Preview accessibility coverage gap under the same authority and lifecycle, and no plausible near-neighbor survived the distinct-boundary test.",
+      "confidence": 0.95
+    },
+    {
+      "anchor_provisional_feature_ref": "OPF::A005OM-0021::PF-0054",
+      "compared_against_count": 162,
+      "merge_candidate_refs": [],
+      "related_but_distinct_refs": [
+        "OPF::A005OM-0022::PF-0048",
+        "OPF::A005OM-0022::PF-0050",
+        "OPF::A005OM-0022::PF-0052",
+        "OPF::A005OM-0022::PF-0105",
+        "OPF::A005OM-0022::PF-0106"
+      ],
+      "rationale": "All 162 comparators were evaluated. None reproduces Browser control is least-privilege and visible under the same authority and lifecycle; the listed near-neighbors are related but remain distinct because their authority, consumer, lifecycle, failure contract, security boundary, or visible promise differs.",
+      "confidence": 0.9
+    },
+    {
+      "anchor_provisional_feature_ref": "OPF::A005OM-0021::PF-0055",
+      "compared_against_count": 162,
+      "merge_candidate_refs": [],
+      "related_but_distinct_refs": [
+        "OPF::A005OM-0022::PF-0049",
+        "OPF::A005OM-0022::PF-0063",
+        "OPF::A005OM-0022::PF-0158"
+      ],
+      "rationale": "All 162 comparators were evaluated. None reproduces Canonical identity and effective-state computation leave deterministic edge cases open under the same authority and lifecycle; the listed near-neighbors are related but remain distinct because their authority, consumer, lifecycle, failure contract, security boundary, or visible promise differs.",
+      "confidence": 0.9
+    }
+  ],
+  "self_attestation": {
+    "every_anchor_decided_once": true,
+    "every_comparator_considered_for_each_anchor": true,
+    "merge_candidates_require_same_authority_and_lifecycle": true,
+    "distinct_boundaries_preserved": true,
+    "same_owner_domain_only": true,
+    "no_external_or_peer_inputs_used": true
+  }
+}

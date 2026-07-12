@@ -1,0 +1,1955 @@
+{
+  "assignment_id": "A005M15-000215-INTEGRATED-MACRO15-510B3DE676A3-0003",
+  "attempt_id": "attempt-0015",
+  "audit_id": "audit-20260710-005-plan-assurance-model-lanes-fresh-agent-exhaustive",
+  "coverage": {
+    "all_micro_windows_reviewed": true,
+    "all_source_lines_reviewed": true,
+    "all_source_units_accounted": true,
+    "both_exact_and_adversarial_lenses_applied": true,
+    "dimensions_checked": [
+      "behavior",
+      "capabilities",
+      "inputs_outputs",
+      "contracts",
+      "states_transitions",
+      "authority",
+      "ownership",
+      "consumers",
+      "gui_truth",
+      "failures_recovery",
+      "security_privacy",
+      "propagation",
+      "operations",
+      "scale_performance",
+      "compatibility_migration",
+      "acceptance_oracles",
+      "builder_discretion",
+      "ambiguity_unknowns",
+      "missing_callers_consumers",
+      "invalid_states_transitions",
+      "concurrency_races",
+      "partial_failure",
+      "recovery_rollback",
+      "authority_boundaries",
+      "privacy_data_lifecycle",
+      "untrusted_inputs",
+      "gui_misleading_states",
+      "offline_network_loss",
+      "scale_limits",
+      "accessibility",
+      "localization",
+      "observability_support",
+      "destructive_actions",
+      "cross_document_seams",
+      "test_falsifiability",
+      "unknown_unknowns"
+    ]
+  },
+  "items": [
+    {
+      "builder_discretion": true,
+      "confidence": 0.96,
+      "dimensions": [
+        "inputs_outputs",
+        "contracts",
+        "compatibility_migration",
+        "test_falsifiability"
+      ],
+      "evidence": [
+        {
+          "exact_quote": "canonical_text: File command receipt payloads store exact workspace-node intent and typed payload vocabulary before UI localization for cmd.file.* operations, root_kind, target_dir, image_viewer, diff_review, workspace_preview, and detached_preview.",
+          "line_end": 7218,
+          "line_start": 7218,
+          "path": "Plans/storage-plan.md",
+          "source_sha256": "66d19f8d241e488ca19a0f824c24ad28d6bdd89a72abd83bb949b77c234775a1"
+        }
+      ],
+      "gap_kind": "payload_schema_and_receipt_outcome",
+      "impact": "Builders could emit incompatible receipts or lose replay fidelity across command variants.",
+      "item_id": "A005M15-SP-086",
+      "item_type": "contract",
+      "severity": "medium",
+      "source_unit_refs": [
+        "PLANUNIT:SP-086",
+        "SEMANTIC:PLANUNIT:SP-086"
+      ],
+      "statement": "The vocabulary is explicit, but required versus optional fields, validation rules, result/error payloads, idempotency, and version evolution remain unspecified.",
+      "title": "File Command Receipt Payload Vocabulary"
+    },
+    {
+      "builder_discretion": true,
+      "confidence": 0.98,
+      "dimensions": [
+        "states_transitions",
+        "gui_truth",
+        "failures_recovery",
+        "concurrency_races",
+        "gui_misleading_states",
+        "test_falsifiability"
+      ],
+      "evidence": [
+        {
+          "exact_quote": "canonical_text: Effective account changes hard-refresh or invalidate account-bound projections for source_control, github_actions, docker_manager, kubernetes, receipts, blocked_state, and requested_effective while preserving historical focus refs in the event ledger.",
+          "line_end": 7278,
+          "line_start": 7278,
+          "path": "Plans/storage-plan.md",
+          "source_sha256": "66d19f8d241e488ca19a0f824c24ad28d6bdd89a72abd83bb949b77c234775a1"
+        }
+      ],
+      "gap_kind": "atomic_cutover_and_failure_ordering",
+      "impact": "A race can repopulate old-account rows or enable mutation against the wrong effective account.",
+      "item_id": "A005M15-SP-087",
+      "item_type": "gap",
+      "severity": "high",
+      "source_unit_refs": [
+        "PLANUNIT:SP-087",
+        "SEMANTIC:PLANUNIT:SP-087"
+      ],
+      "statement": "Account-bound projections must invalidate on effective-account change, but the atomic cutover point, concurrent refresh ordering, failure recovery, and stale-write rejection oracle are not defined.",
+      "title": "Account-Switch Projection Invalidation"
+    },
+    {
+      "builder_discretion": true,
+      "confidence": 0.96,
+      "dimensions": [
+        "gui_truth",
+        "accessibility",
+        "localization",
+        "gui_misleading_states",
+        "test_falsifiability"
+      ],
+      "evidence": [
+        {
+          "exact_quote": "canonical_text: Help, copy, empty states, disabled-state explainers, first-use disclosure, expert variants, eli5 variants, and worktree-native SCM teaching use authored namespaces for source_control, github_actions, docker_manager, kubernetes, receipts, blocked_state, and requested_effective.",
+          "line_end": 7334,
+          "line_start": 7334,
+          "path": "Plans/storage-plan.md",
+          "source_sha256": "66d19f8d241e488ca19a0f824c24ad28d6bdd89a72abd83bb949b77c234775a1"
+        }
+      ],
+      "gap_kind": "localization_accessibility_and_fallback",
+      "impact": "Incomplete bundles can expose blank, inconsistent, or inaccessible safety guidance.",
+      "item_id": "A005M15-SP-088",
+      "item_type": "gap",
+      "severity": "medium",
+      "source_unit_refs": [
+        "PLANUNIT:SP-088",
+        "SEMANTIC:PLANUNIT:SP-088"
+      ],
+      "statement": "Authored namespaces are required, but locale fallback, missing-key behavior, accessibility wording, versioning, and expert/eli5 selection precedence are unspecified.",
+      "title": "Authored Help Copy And First-Use Namespaces"
+    },
+    {
+      "builder_discretion": true,
+      "confidence": 0.99,
+      "dimensions": [
+        "gui_truth",
+        "failures_recovery",
+        "authority",
+        "gui_misleading_states",
+        "offline_network_loss",
+        "test_falsifiability"
+      ],
+      "evidence": [
+        {
+          "exact_quote": "canonical_text: Hosted and runtime-backed panel projections persist freshness, cache/live, partial, and last-known fields; mutating stale runtime projections must record refresh-first or explicit last-known warning posture before execution.",
+          "line_end": 7390,
+          "line_start": 7390,
+          "path": "Plans/storage-plan.md",
+          "source_sha256": "66d19f8d241e488ca19a0f824c24ad28d6bdd89a72abd83bb949b77c234775a1"
+        }
+      ],
+      "gap_kind": "freshness_threshold_and_stale_mutation_authority",
+      "impact": "Panels can present inconsistent trust or execute a destructive action on obsolete runtime state.",
+      "item_id": "A005M15-SP-089",
+      "item_type": "gap",
+      "severity": "high",
+      "source_unit_refs": [
+        "PLANUNIT:SP-089",
+        "SEMANTIC:PLANUNIT:SP-089"
+      ],
+      "statement": "Freshness fields and warning posture are explicit, but staleness thresholds, clock source, refresh timeout, override authority, and whether warning-only mutation is permitted are not.",
+      "title": "Runtime-Backed Panel Freshness Warnings"
+    },
+    {
+      "builder_discretion": true,
+      "confidence": 0.98,
+      "dimensions": [
+        "contracts",
+        "failures_recovery",
+        "privacy_data_lifecycle",
+        "scale_limits",
+        "destructive_actions",
+        "acceptance_oracles"
+      ],
+      "evidence": [
+        {
+          "exact_quote": "canonical_text: Receipt and storage retention classes distinguish durable state, bounded cache, and discardable state, mapping retention preference to explicit class, policy, and anchor fields without erasing canonical receipts or state transitions.",
+          "line_end": 7444,
+          "line_start": 7444,
+          "path": "Plans/storage-plan.md",
+          "source_sha256": "66d19f8d241e488ca19a0f824c24ad28d6bdd89a72abd83bb949b77c234775a1"
+        }
+      ],
+      "gap_kind": "concrete_retention_bounds_and_exceptions",
+      "impact": "Cleanup may grow without bound or erase recoverable state while claiming policy compliance.",
+      "item_id": "A005M15-SP-090",
+      "item_type": "gap",
+      "severity": "high",
+      "source_unit_refs": [
+        "PLANUNIT:SP-090",
+        "SEMANTIC:PLANUNIT:SP-090"
+      ],
+      "statement": "The durable/cache/discardable taxonomy is clear, but per-family TTL/cardinality, legal-hold behavior, deletion scheduling, crash recovery, and verification receipts are not defined here.",
+      "title": "Receipt And Storage Retention Classes"
+    },
+    {
+      "builder_discretion": true,
+      "confidence": 0.95,
+      "dimensions": [
+        "capabilities",
+        "contracts",
+        "ownership",
+        "consumers",
+        "cross_document_seams",
+        "test_falsifiability"
+      ],
+      "evidence": [
+        {
+          "exact_quote": "canonical_text: The promoted provider/runtime rewrite and updated terminal/editor model require durable record and projection families for concrete runtime surfaces, account/profile identity, entitlement attribution, and terminal layout continuity.",
+          "line_end": 7500,
+          "line_start": 7500,
+          "path": "Plans/storage-plan.md",
+          "source_sha256": "66d19f8d241e488ca19a0f824c24ad28d6bdd89a72abd83bb949b77c234775a1"
+        }
+      ],
+      "gap_kind": "record_schemas_and_authoritative_owners",
+      "impact": "Parallel subsystems can create competing provider/runtime identities and projections.",
+      "item_id": "A005M15-SP-091",
+      "item_type": "gap",
+      "severity": "medium",
+      "source_unit_refs": [
+        "PLANUNIT:SP-091",
+        "SEMANTIC:PLANUNIT:SP-091"
+      ],
+      "statement": "The purpose and domains are named, but record keys, field minima, authoritative writer, consumers, migration, and recovery behavior are not established by this unit.",
+      "title": "Provider Runtime Record Family Purpose"
+    },
+    {
+      "builder_discretion": true,
+      "confidence": 0.98,
+      "dimensions": [
+        "inputs_outputs",
+        "contracts",
+        "ownership",
+        "privacy_data_lifecycle",
+        "compatibility_migration",
+        "test_falsifiability"
+      ],
+      "evidence": [
+        {
+          "exact_quote": "canonical_text: Core runtime storage includes attempt, blocked, artifact, lane, worktree, concern, project, attention, provider account, entitlement, server profile, pressure, and account-switch record families with their exact v1 key templates.",
+          "line_end": 7551,
+          "line_start": 7551,
+          "path": "Plans/storage-plan.md",
+          "source_sha256": "66d19f8d241e488ca19a0f824c24ad28d6bdd89a72abd83bb949b77c234775a1"
+        }
+      ],
+      "gap_kind": "family_field_and_lifecycle_contracts",
+      "impact": "Stable keys alone do not prevent incompatible values, orphaned joins, or unsafe cleanup.",
+      "item_id": "A005M15-SP-092",
+      "item_type": "gap",
+      "severity": "medium",
+      "source_unit_refs": [
+        "PLANUNIT:SP-092",
+        "SEMANTIC:PLANUNIT:SP-092"
+      ],
+      "statement": "Exact key templates are preserved, but value schemas, referential integrity, ownership, retention, tombstones, and migration rules are not jointly specified here.",
+      "title": "Core Runtime Project Provider Families"
+    },
+    {
+      "builder_discretion": true,
+      "confidence": 0.98,
+      "dimensions": [
+        "contracts",
+        "states_transitions",
+        "gui_truth",
+        "concurrency_races",
+        "partial_failure",
+        "recovery_rollback"
+      ],
+      "evidence": [
+        {
+          "exact_quote": "canonical_text: Terminal and dev-session record families preserve workspace tab, section, tab, pane, leaf-pane, workgroup, panel, session, command-block, and dev-session identity without collapsing terminal restore into one bottom-panel blob.",
+          "line_end": 7609,
+          "line_start": 7609,
+          "path": "Plans/storage-plan.md",
+          "source_sha256": "66d19f8d241e488ca19a0f824c24ad28d6bdd89a72abd83bb949b77c234775a1"
+        }
+      ],
+      "gap_kind": "restore_conflict_and_concurrency_semantics",
+      "impact": "A restore can attach the wrong session, duplicate panes, or flatten state despite preserving keys.",
+      "item_id": "A005M15-SP-093",
+      "item_type": "gap",
+      "severity": "high",
+      "source_unit_refs": [
+        "PLANUNIT:SP-093",
+        "SEMANTIC:PLANUNIT:SP-093"
+      ],
+      "statement": "The identity decomposition is explicit, but restore ordering, concurrent tab/pane edits, crash consistency, missing-child handling, and conflict resolution are unspecified.",
+      "title": "Terminal And Dev Session Families"
+    },
+    {
+      "builder_discretion": true,
+      "confidence": 0.97,
+      "dimensions": [
+        "capabilities",
+        "states_transitions",
+        "consumers",
+        "security_privacy",
+        "offline_network_loss",
+        "test_falsifiability"
+      ],
+      "evidence": [
+        {
+          "exact_quote": "canonical_text: MCP and skill runtime readiness storage preserves server, runtime availability, tool, skill, and skill runtime readiness records with exact v1 key templates.",
+          "line_end": 7664,
+          "line_start": 7664,
+          "path": "Plans/storage-plan.md",
+          "source_sha256": "66d19f8d241e488ca19a0f824c24ad28d6bdd89a72abd83bb949b77c234775a1"
+        }
+      ],
+      "gap_kind": "readiness_state_machine_and_expiry",
+      "impact": "Stale readiness may advertise tools or skills that cannot safely execute.",
+      "item_id": "A005M15-SP-094",
+      "item_type": "gap",
+      "severity": "medium",
+      "source_unit_refs": [
+        "PLANUNIT:SP-094",
+        "SEMANTIC:PLANUNIT:SP-094"
+      ],
+      "statement": "Record families and keys are explicit, but readiness states, transition triggers, TTL, authentication revocation, error precedence, and consumers are not.",
+      "title": "MCP And Skill Runtime Readiness Families"
+    },
+    {
+      "builder_discretion": true,
+      "confidence": 0.98,
+      "dimensions": [
+        "capabilities",
+        "security_privacy",
+        "propagation",
+        "partial_failure",
+        "privacy_data_lifecycle",
+        "cross_document_seams"
+      ],
+      "evidence": [
+        {
+          "exact_quote": "canonical_text: Debug, GitHub Actions, bundle/note/revision/composer, preview, browser session, and browser profile state families remain durable storage families with exact v1 key templates.",
+          "line_end": 7712,
+          "line_start": 7712,
+          "path": "Plans/storage-plan.md",
+          "source_sha256": "66d19f8d241e488ca19a0f824c24ad28d6bdd89a72abd83bb949b77c234775a1"
+        }
+      ],
+      "gap_kind": "cross_family_privacy_retention_and_recovery",
+      "impact": "Browser, debug, or workflow data may persist too long, leak across identity changes, or restore inconsistently.",
+      "item_id": "A005M15-SP-095",
+      "item_type": "gap",
+      "severity": "high",
+      "source_unit_refs": [
+        "PLANUNIT:SP-095",
+        "SEMANTIC:PLANUNIT:SP-095"
+      ],
+      "statement": "The durable families are listed, but their sensitivity classes, retention bounds, cross-family referential integrity, deletion propagation, and partial-restore behavior are not unified.",
+      "title": "Debug GHA Bundle Preview Browser Families"
+    },
+    {
+      "builder_discretion": true,
+      "confidence": 0.97,
+      "dimensions": [
+        "contracts",
+        "authority",
+        "ownership",
+        "compatibility_migration",
+        "partial_failure",
+        "cross_document_seams"
+      ],
+      "evidence": [
+        {
+          "exact_quote": "canonical_text: Investigation bundle records use schema_id pm.investigation_bundle.schema.v1 plus bundle_id and schema_version for registry identity and lookup keys, while the Runtime Artifacts panel owns the full manifest field set.",
+          "line_end": 7765,
+          "line_start": 7765,
+          "path": "Plans/storage-plan.md",
+          "source_sha256": "66d19f8d241e488ca19a0f824c24ad28d6bdd89a72abd83bb949b77c234775a1"
+        }
+      ],
+      "gap_kind": "manifest_join_version_and_migration",
+      "impact": "Registry lookups can resolve an identity whose manifest is unreadable or semantically incompatible.",
+      "item_id": "A005M15-SP-096",
+      "item_type": "authority",
+      "severity": "medium",
+      "source_unit_refs": [
+        "PLANUNIT:SP-096",
+        "SEMANTIC:PLANUNIT:SP-096"
+      ],
+      "statement": "Registry identity ownership is bounded, but the join to the panel-owned manifest, missing-manifest behavior, schema-version compatibility, and migration failure recovery are unspecified.",
+      "title": "Investigation Bundle Registry Identity Boundary"
+    },
+    {
+      "builder_discretion": true,
+      "confidence": 0.99,
+      "dimensions": [
+        "authority",
+        "security_privacy",
+        "authority_boundaries",
+        "untrusted_inputs",
+        "privacy_data_lifecycle",
+        "test_falsifiability"
+      ],
+      "evidence": [
+        {
+          "exact_quote": "canonical_text: Debug investigation records persist target binding and instrumentation_manifest lineage, but arbitrary external targets may store evidence and suggestions only and must not become durable workspace mutation authority without workspace binding.",
+          "line_end": 7815,
+          "line_start": 7815,
+          "path": "Plans/storage-plan.md",
+          "source_sha256": "66d19f8d241e488ca19a0f824c24ad28d6bdd89a72abd83bb949b77c234775a1"
+        }
+      ],
+      "gap_kind": "workspace_binding_lifecycle_and_revocation",
+      "impact": "Stale or forged bindings can turn external evidence into durable mutation authority.",
+      "item_id": "A005M15-SP-097",
+      "item_type": "authority",
+      "severity": "high",
+      "source_unit_refs": [
+        "PLANUNIT:SP-097",
+        "SEMANTIC:PLANUNIT:SP-097"
+      ],
+      "statement": "The no-authority-without-binding boundary is strong, but binding creation, validation, revocation, expiry, and cleanup after workspace deletion are not specified.",
+      "title": "Debug Instrumentation Lineage And Durable Authority"
+    },
+    {
+      "builder_discretion": true,
+      "confidence": 0.98,
+      "dimensions": [
+        "states_transitions",
+        "gui_truth",
+        "failures_recovery",
+        "invalid_states_transitions",
+        "recovery_rollback",
+        "gui_misleading_states"
+      ],
+      "evidence": [
+        {
+          "exact_quote": "canonical_text: Investigation records persist cross-surface identity links, overlay state, visible Investigation Context refs, last restore/reopen outcome, and relaunch or attach target context without flattening DAP, browser, dev-session, and runtime-artifact identities.",
+          "line_end": 7870,
+          "line_start": 7870,
+          "path": "Plans/storage-plan.md",
+          "source_sha256": "66d19f8d241e488ca19a0f824c24ad28d6bdd89a72abd83bb949b77c234775a1"
+        }
+      ],
+      "gap_kind": "identity_mismatch_and_restore_recovery",
+      "impact": "Restore can silently rebind to the wrong target or present an apparently valid but unsafe debug context.",
+      "item_id": "A005M15-SP-098",
+      "item_type": "gap",
+      "severity": "high",
+      "source_unit_refs": [
+        "PLANUNIT:SP-098",
+        "SEMANTIC:PLANUNIT:SP-098"
+      ],
+      "statement": "Multiple identities must not be flattened, but precedence when refs disagree, validation before attach, missing-target recovery, and user-visible degraded states are unspecified.",
+      "title": "Debug Restore Identity Overlay And Relaunch Context"
+    },
+    {
+      "builder_discretion": true,
+      "confidence": 0.99,
+      "dimensions": [
+        "contracts",
+        "compatibility_migration",
+        "partial_failure",
+        "recovery_rollback",
+        "acceptance_oracles"
+      ],
+      "evidence": [
+        {
+          "exact_quote": "canonical_text: Canonical attempt and blocked projection keys supersede older variants; older run-scoped or three-component forms are migration-read aliases only, and future redb key/value shape changes require explicit family/version or migration notes before writes begin.",
+          "line_end": 7928,
+          "line_start": 7928,
+          "path": "Plans/storage-plan.md",
+          "source_sha256": "66d19f8d241e488ca19a0f824c24ad28d6bdd89a72abd83bb949b77c234775a1"
+        }
+      ],
+      "gap_kind": "alias_expiry_and_interrupted_migration",
+      "impact": "Old and canonical forms can diverge indefinitely or lose the newest blocked state during migration.",
+      "item_id": "A005M15-SP-099",
+      "item_type": "explicit_non_gap",
+      "severity": "medium",
+      "source_unit_refs": [
+        "PLANUNIT:SP-099",
+        "SEMANTIC:PLANUNIT:SP-099"
+      ],
+      "statement": "The sole write target and migration-read status are explicit; remaining negative space is alias retirement timing, interrupted migration recovery, collision detection, and rollback policy.",
+      "title": "Canonical Attempt And Blocked Projection Key Migration"
+    },
+    {
+      "builder_discretion": true,
+      "confidence": 0.97,
+      "dimensions": [
+        "inputs_outputs",
+        "contracts",
+        "states_transitions",
+        "propagation",
+        "compatibility_migration",
+        "test_falsifiability"
+      ],
+      "evidence": [
+        {
+          "exact_quote": "canonical_text: Canonical field-level minima preserve attempt, terminal workspace/section/tab/pane/workgroup/session/command-block, and dev_session records, including SCM refs, terminal layout/focus/transcript anchors, and dev workflow continuity without replacing exact PTY reuse identity.",
+          "line_end": 7987,
+          "line_start": 7987,
+          "path": "Plans/storage-plan.md",
+          "source_sha256": "66d19f8d241e488ca19a0f824c24ad28d6bdd89a72abd83bb949b77c234775a1"
+        }
+      ],
+      "gap_kind": "field_requiredness_and_referential_integrity",
+      "impact": "A record may pass superficial shape checks yet restore the wrong PTY or retain dangling terminal joins.",
+      "item_id": "A005M15-SP-100",
+      "item_type": "gap",
+      "severity": "high",
+      "source_unit_refs": [
+        "PLANUNIT:SP-100",
+        "SEMANTIC:PLANUNIT:SP-100"
+      ],
+      "statement": "The covered field domains are named, but requiredness, nullability, version compatibility, referential integrity, deletion propagation, and exact PTY identity validation are incomplete.",
+      "title": "Canonical Field Minima For Attempt Terminal Dev Records"
+    },
+    {
+      "builder_discretion": true,
+      "confidence": 0.99,
+      "dimensions": [
+        "gui_truth",
+        "states_transitions",
+        "concurrency_races",
+        "offline_network_loss",
+        "gui_misleading_states",
+        "observability_support"
+      ],
+      "evidence": [
+        {
+          "exact_quote": "canonical_text: GitHub Actions panel state preserves gha_panel_state.v1:{project_id}, workflow pins, filters, refresh interval default, collapsed sections, last run focus, notification preferences, and account-sensitive invalidation semantics.",
+          "line_end": 8048,
+          "line_start": 8048,
+          "path": "Plans/storage-plan.md",
+          "source_sha256": "66d19f8d241e488ca19a0f824c24ad28d6bdd89a72abd83bb949b77c234775a1"
+        }
+      ],
+      "gap_kind": "account_invalidation_race_and_notification_semantics",
+      "impact": "The UI can show or notify against the wrong account after a switch or reconnect.",
+      "item_id": "A005M15-SP-101",
+      "item_type": "gap",
+      "severity": "high",
+      "source_unit_refs": [
+        "PLANUNIT:SP-101",
+        "SEMANTIC:PLANUNIT:SP-101"
+      ],
+      "statement": "Payload fields and defaults are explicit, but concurrent refresh/account-switch ordering, notification deduplication, permission loss, offline behavior, and stale-run focus recovery are not.",
+      "title": "GitHub Actions Panel State Payload"
+    },
+    {
+      "builder_discretion": true,
+      "confidence": 0.97,
+      "dimensions": [
+        "contracts",
+        "ownership",
+        "compatibility_migration",
+        "destructive_actions",
+        "cross_document_seams"
+      ],
+      "evidence": [
+        {
+          "exact_quote": "canonical_text: Embedded-document bundle and annotation persistence extends the existing note model under stable notes, note, revision_run, and note_reply_index key names rather than a net-new storage subsystem or scattered GUI state.",
+          "line_end": 8106,
+          "line_start": 8106,
+          "path": "Plans/storage-plan.md",
+          "source_sha256": "66d19f8d241e488ca19a0f824c24ad28d6bdd89a72abd83bb949b77c234775a1"
+        }
+      ],
+      "gap_kind": "legacy_key_conflict_and_cleanup",
+      "impact": "Two stores can retain conflicting note or revision state during migration.",
+      "item_id": "A005M15-SP-102",
+      "item_type": "explicit_non_gap",
+      "severity": "low",
+      "source_unit_refs": [
+        "PLANUNIT:SP-102",
+        "SEMANTIC:PLANUNIT:SP-102"
+      ],
+      "statement": "Stable lineage and the ban on scattered GUI state are clear, but duplicate legacy/canonical key reconciliation and cleanup ownership are not stated.",
+      "title": "Bundle Annotation Storage Key Lineage"
+    },
+    {
+      "builder_discretion": true,
+      "confidence": 0.99,
+      "dimensions": [
+        "contracts",
+        "states_transitions",
+        "authority",
+        "concurrency_races",
+        "invalid_states_transitions",
+        "test_falsifiability"
+      ],
+      "evidence": [
+        {
+          "exact_quote": "canonical_text: bundle_registry.v1:{project_id}:{bundle_id} preserves bundle identity, project identity, created_at, status enum, files, review gate approvals, auto_merge, and note records.",
+          "line_end": 8160,
+          "line_start": 8160,
+          "path": "Plans/storage-plan.md",
+          "source_sha256": "66d19f8d241e488ca19a0f824c24ad28d6bdd89a72abd83bb949b77c234775a1"
+        }
+      ],
+      "gap_kind": "status_transition_and_approval_concurrency",
+      "impact": "A bundle can reach merged without a valid approval quorum or diverge under concurrent review.",
+      "item_id": "A005M15-SP-103",
+      "item_type": "gap",
+      "severity": "high",
+      "source_unit_refs": [
+        "PLANUNIT:SP-103",
+        "SEMANTIC:PLANUNIT:SP-103"
+      ],
+      "statement": "Fields and status values are specified, but legal transitions, approval identity/uniqueness, concurrent approvals, auto-merge preconditions, rejection recovery, and file-list mutation rules are not.",
+      "title": "Bundle Registry Payload"
+    },
+    {
+      "builder_discretion": true,
+      "confidence": 0.99,
+      "dimensions": [
+        "behavior",
+        "states_transitions",
+        "security_privacy",
+        "untrusted_inputs",
+        "concurrency_races",
+        "recovery_rollback"
+      ],
+      "evidence": [
+        {
+          "exact_quote": "canonical_text: note_record.v1 remains annotation compatibility lineage while preserving operation intent, source surface, provenance, anchor text_position/text_quote, selected_text_excerpt, last_revision_id, last_reanchor_result, and updated_anchor for targeted revision and open behavior.",
+          "line_end": 8218,
+          "line_start": 8218,
+          "path": "Plans/storage-plan.md",
+          "source_sha256": "66d19f8d241e488ca19a0f824c24ad28d6bdd89a72abd83bb949b77c234775a1"
+        }
+      ],
+      "gap_kind": "reanchor_conflict_and_provenance_validation",
+      "impact": "A targeted edit can land on the wrong text while retaining apparently valid provenance.",
+      "item_id": "A005M15-SP-104",
+      "item_type": "gap",
+      "severity": "high",
+      "source_unit_refs": [
+        "PLANUNIT:SP-104",
+        "SEMANTIC:PLANUNIT:SP-104"
+      ],
+      "statement": "Anchor and provenance preservation is explicit, but ambiguous matches, concurrent document edits, stale revisions, malicious excerpts, reanchor failure states, and manual recovery are not defined.",
+      "title": "Note Record Annotation Payload And Reanchor Compatibility"
+    },
+    {
+      "builder_discretion": true,
+      "confidence": 0.99,
+      "dimensions": [
+        "states_transitions",
+        "failures_recovery",
+        "partial_failure",
+        "recovery_rollback",
+        "invalid_states_transitions",
+        "test_falsifiability"
+      ],
+      "evidence": [
+        {
+          "exact_quote": "canonical_text: 'revision_run.v1:{bundle_id}:{revision_id} persists targeted revision identity, trigger, note_reply_index, status, requested/effective revision capability, annotation_ids, changes: FileChange[], and created_at: ISO8601.'",
+          "line_end": 8277,
+          "line_start": 8277,
+          "path": "Plans/storage-plan.md",
+          "source_sha256": "66d19f8d241e488ca19a0f824c24ad28d6bdd89a72abd83bb949b77c234775a1"
+        }
+      ],
+      "gap_kind": "retry_idempotency_and_partial_file_change",
+      "impact": "A retried revision can duplicate edits or report completed after only some files changed.",
+      "item_id": "A005M15-SP-105",
+      "item_type": "gap",
+      "severity": "high",
+      "source_unit_refs": [
+        "PLANUNIT:SP-105",
+        "SEMANTIC:PLANUNIT:SP-105"
+      ],
+      "statement": "Revision states and payloads are explicit, but retry identity, idempotency, per-file partial failure, cancellation, rollback, and terminal-state transition legality are unspecified.",
+      "title": "Targeted Revision Run Persistence"
+    },
+    {
+      "builder_discretion": true,
+      "confidence": 0.98,
+      "dimensions": [
+        "states_transitions",
+        "security_privacy",
+        "concurrency_races",
+        "partial_failure",
+        "privacy_data_lifecycle",
+        "gui_misleading_states"
+      ],
+      "evidence": [
+        {
+          "exact_quote": "canonical_text: composer_prep_state.v1:{thread_id} preserves chat-side draft text, attachments, mode overlay, requested/effective persona, selection source, override owner, and saved_at for handoff continuity.",
+          "line_end": 8340,
+          "line_start": 8340,
+          "path": "Plans/storage-plan.md",
+          "source_sha256": "66d19f8d241e488ca19a0f824c24ad28d6bdd89a72abd83bb949b77c234775a1"
+        }
+      ],
+      "gap_kind": "concurrent_draft_and_attachment_lifecycle",
+      "impact": "A stale window can overwrite a newer draft or leave sensitive attachments durably orphaned.",
+      "item_id": "A005M15-SP-106",
+      "item_type": "gap",
+      "severity": "medium",
+      "source_unit_refs": [
+        "PLANUNIT:SP-106",
+        "SEMANTIC:PLANUNIT:SP-106"
+      ],
+      "statement": "Draft handoff fields are explicit, but multi-window write arbitration, autosave ordering, attachment retention/deletion, sensitivity handling, and failed-save recovery are not.",
+      "title": "Composer Prep State Record"
+    },
+    {
+      "builder_discretion": true,
+      "confidence": 0.99,
+      "dimensions": [
+        "inputs_outputs",
+        "security_privacy",
+        "untrusted_inputs",
+        "privacy_data_lifecycle",
+        "offline_network_loss",
+        "scale_limits"
+      ],
+      "evidence": [
+        {
+          "exact_quote": "canonical_text: Document selection and browser context capture write pending composer chips into composer_prep_state.v1:{thread_id} with typed browser selection or element attachment identity, bounded context, provenance, requested/effective target, sensitivity, capture, and failure status.",
+          "line_end": 8392,
+          "line_start": 8392,
+          "path": "Plans/storage-plan.md",
+          "source_sha256": "66d19f8d241e488ca19a0f824c24ad28d6bdd89a72abd83bb949b77c234775a1"
+        }
+      ],
+      "gap_kind": "capture_redaction_bounds_and_failure_states",
+      "impact": "Untrusted or sensitive page content can be persisted or forwarded beyond the user's intended scope.",
+      "item_id": "A005M15-SP-107",
+      "item_type": "gap",
+      "severity": "high",
+      "source_unit_refs": [
+        "PLANUNIT:SP-107",
+        "SEMANTIC:PLANUNIT:SP-107"
+      ],
+      "statement": "Typed capture identity and status are required, but maximum capture size, redaction, origin trust, consent, cross-account isolation, expiration, offline capture, and retry semantics are unspecified.",
+      "title": "Selection And Browser Capture Chip Persistence"
+    },
+    {
+      "builder_discretion": true,
+      "confidence": 0.98,
+      "dimensions": [
+        "contracts",
+        "propagation",
+        "operations",
+        "concurrency_races",
+        "partial_failure",
+        "observability_support"
+      ],
+      "evidence": [
+        {
+          "exact_quote": "canonical_text: Bundle annotation and revision audit events record note creation, status changes, revision lifecycle, selection-to-chat handoff, and blocked forwarding with durable ids, provenance, requested/effective capability, and visible reasons.",
+          "line_end": 8450,
+          "line_start": 8450,
+          "path": "Plans/storage-plan.md",
+          "source_sha256": "66d19f8d241e488ca19a0f824c24ad28d6bdd89a72abd83bb949b77c234775a1"
+        }
+      ],
+      "gap_kind": "event_schema_ordering_and_idempotency",
+      "impact": "Audit replay can duplicate transitions, hide blocked reasons, or attribute a revision to the wrong capability.",
+      "item_id": "A005M15-SP-108",
+      "item_type": "gap",
+      "severity": "high",
+      "source_unit_refs": [
+        "PLANUNIT:SP-108",
+        "SEMANTIC:PLANUNIT:SP-108"
+      ],
+      "statement": "Event names and durable identity goals are explicit, but payload schemas, ordering key, deduplication, append failure, replay semantics, and visibility authorization are not.",
+      "title": "Bundle Annotation And Revision Audit Events"
+    },
+    {
+      "builder_discretion": true,
+      "confidence": 0.99,
+      "dimensions": [
+        "authority",
+        "security_privacy",
+        "privacy_data_lifecycle",
+        "authority_boundaries",
+        "offline_network_loss",
+        "destructive_actions"
+      ],
+      "evidence": [
+        {
+          "exact_quote": "canonical_text: Legacy browser_state single-blob shapes are retired; preview, browser session, and browser profile persistence split runtime capability, permission tier, profile scope, restore policy, visible session class, viewport, scroll, zoom, dev tools, cookies, localStorage, and saveChanges writeback state.",
+          "line_end": 8510,
+          "line_start": 8510,
+          "path": "Plans/storage-plan.md",
+          "source_sha256": "66d19f8d241e488ca19a0f824c24ad28d6bdd89a72abd83bb949b77c234775a1"
+        }
+      ],
+      "gap_kind": "browser_secret_lifecycle_permission_and_restore",
+      "impact": "Browser credentials or writeback authority can leak across profiles, projects, or restored sessions.",
+      "item_id": "A005M15-SP-109",
+      "item_type": "gap",
+      "severity": "critical",
+      "source_unit_refs": [
+        "PLANUNIT:SP-109",
+        "SEMANTIC:PLANUNIT:SP-109"
+      ],
+      "statement": "The split and requested/effective vocabulary are explicit, but cookie/localStorage encryption, origin partitioning, permission expiry, takeover revocation, sensitive-data deletion, and crash-safe restore are not.",
+      "title": "Preview Browser Persistence Split"
+    },
+    {
+      "builder_discretion": true,
+      "confidence": 0.99,
+      "dimensions": [
+        "contracts",
+        "states_transitions",
+        "operations",
+        "concurrency_races",
+        "partial_failure",
+        "recovery_rollback"
+      ],
+      "evidence": [
+        {
+          "exact_quote": "canonical_text: Runtime artifact index storage defines artifacts_project_state.v1 and projector.checkpoint.runtime_artifacts with artifact identity refs, projection_freshness, and projection_health for runtime artifact projection authority.",
+          "line_end": 8581,
+          "line_start": 8581,
+          "path": "Plans/storage-plan.md",
+          "source_sha256": "66d19f8d241e488ca19a0f824c24ad28d6bdd89a72abd83bb949b77c234775a1"
+        }
+      ],
+      "gap_kind": "checkpoint_consistency_replay_and_corruption",
+      "impact": "A checkpoint can advance past durable index state and permanently hide artifacts.",
+      "item_id": "A005M15-SP-110",
+      "item_type": "gap",
+      "severity": "high",
+      "source_unit_refs": [
+        "PLANUNIT:SP-110",
+        "SEMANTIC:PLANUNIT:SP-110"
+      ],
+      "statement": "Index and checkpoint authority fields are named, but transaction boundaries, replay offset, checksum/corruption handling, rebuild behavior, concurrent projector exclusion, and stale-to-current oracle are not.",
+      "title": "Runtime Artifact Project Index"
+    },
+    {
+      "builder_discretion": true,
+      "confidence": 0.98,
+      "dimensions": [
+        "authority",
+        "ownership",
+        "propagation",
+        "concurrency_races",
+        "destructive_actions",
+        "recovery_rollback"
+      ],
+      "evidence": [
+        {
+          "exact_quote": "canonical_text: Worktree and lane authoritative records and projections preserve project, worktree, lane, owner thread, repo, path, branch, baseline, projection_freshness, and projection_health fields under worktree and lane v1 key families.",
+          "line_end": 8648,
+          "line_start": 8648,
+          "path": "Plans/storage-plan.md",
+          "source_sha256": "66d19f8d241e488ca19a0f824c24ad28d6bdd89a72abd83bb949b77c234775a1"
+        }
+      ],
+      "gap_kind": "authority_conflict_deletion_and_projection_rebuild",
+      "impact": "Concurrent worktree changes can yield stale lane projections or resurrect deleted identities.",
+      "item_id": "A005M15-SP-111",
+      "item_type": "gap",
+      "severity": "high",
+      "source_unit_refs": [
+        "PLANUNIT:SP-111",
+        "SEMANTIC:PLANUNIT:SP-111"
+      ],
+      "statement": "Authoritative records and projections are identified, but writer authority, version/CAS rules, deletion/tombstone propagation, projection rebuild, and repo/path validation are not.",
+      "title": "Worktree And Lane Storage Records"
+    },
+    {
+      "builder_discretion": true,
+      "confidence": 0.97,
+      "dimensions": [
+        "contracts",
+        "states_transitions",
+        "consumers",
+        "concurrency_races",
+        "partial_failure",
+        "observability_support"
+      ],
+      "evidence": [
+        {
+          "exact_quote": "canonical_text: Preview and browser session storage events preserve preview start/stop/refresh, browser navigation/resize, and browser.context_captured as related runtime event families.",
+          "line_end": 8706,
+          "line_start": 8706,
+          "path": "Plans/storage-plan.md",
+          "source_sha256": "66d19f8d241e488ca19a0f824c24ad28d6bdd89a72abd83bb949b77c234775a1"
+        }
+      ],
+      "gap_kind": "event_ordering_dedup_and_failed_operation_events",
+      "impact": "Consumers cannot reliably distinguish duplicated navigation from failed or interrupted actions.",
+      "item_id": "A005M15-SP-112",
+      "item_type": "gap",
+      "severity": "medium",
+      "source_unit_refs": [
+        "PLANUNIT:SP-112",
+        "SEMANTIC:PLANUNIT:SP-112"
+      ],
+      "statement": "The event set is explicit, but causality/order, idempotency, failed/blocked variants, payload minima, and session teardown behavior are not.",
+      "title": "Preview Browser Event Set"
+    },
+    {
+      "builder_discretion": true,
+      "confidence": 0.99,
+      "dimensions": [
+        "inputs_outputs",
+        "contracts",
+        "authority",
+        "ambiguity_unknowns",
+        "invalid_states_transitions",
+        "test_falsifiability"
+      ],
+      "evidence": [
+        {
+          "exact_quote": "canonical_text: Runtime-linked record families carry required identity and attribution fields from project/run/node/attempt through provider/model/account/runtime health, pressure, instruction, skill, reason, transport, account-switch, provider-attempt, and usage references.",
+          "line_end": 8755,
+          "line_start": 8755,
+          "path": "Plans/storage-plan.md",
+          "source_sha256": "66d19f8d241e488ca19a0f824c24ad28d6bdd89a72abd83bb949b77c234775a1"
+        }
+      ],
+      "gap_kind": "optional_identity_invariants_and_join_validation",
+      "impact": "Records can be structurally valid yet ambiguously attributed across provider, account, runtime, or attempt.",
+      "item_id": "A005M15-SP-113",
+      "item_type": "gap",
+      "severity": "high",
+      "source_unit_refs": [
+        "PLANUNIT:SP-113",
+        "SEMANTIC:PLANUNIT:SP-113"
+      ],
+      "statement": "The identity surface is broad, but combinations of optional fields, cardinality, referential integrity, immutable versus mutable fields, and reason-code precedence are not specified.",
+      "title": "Runtime Linked Core Identity Minima"
+    },
+    {
+      "builder_discretion": true,
+      "confidence": 0.98,
+      "dimensions": [
+        "contracts",
+        "states_transitions",
+        "propagation",
+        "invalid_states_transitions",
+        "destructive_actions",
+        "test_falsifiability"
+      ],
+      "evidence": [
+        {
+          "exact_quote": "canonical_text: Runtime-linked workspace, terminal, and dev-session identity fields stay explicit for workspace tabs, terminal sections/tabs/panes/leaf panes/workgroups/panels/sessions, and dev sessions.",
+          "line_end": 8845,
+          "line_start": 8845,
+          "path": "Plans/storage-plan.md",
+          "source_sha256": "66d19f8d241e488ca19a0f824c24ad28d6bdd89a72abd83bb949b77c234775a1"
+        }
+      ],
+      "gap_kind": "join_cardinality_and_tombstone_propagation",
+      "impact": "Restores can create dangling panes or attach one session to incompatible workspace structures.",
+      "item_id": "A005M15-SP-114",
+      "item_type": "gap",
+      "severity": "medium",
+      "source_unit_refs": [
+        "PLANUNIT:SP-114",
+        "SEMANTIC:PLANUNIT:SP-114"
+      ],
+      "statement": "Explicit identities are preserved, but parent-child cardinality, reparenting legality, missing-parent handling, tombstones, and cascading cleanup are not.",
+      "title": "Workspace Terminal Dev Session Identity Minima"
+    },
+    {
+      "builder_discretion": true,
+      "confidence": 0.98,
+      "dimensions": [
+        "authority",
+        "security_privacy",
+        "privacy_data_lifecycle",
+        "observability_support",
+        "cross_document_seams",
+        "test_falsifiability"
+      ],
+      "evidence": [
+        {
+          "exact_quote": "canonical_text: Provider/runtime identity storage stores selectable-unit snapshots, keeps lower-level provider-session ids out of base event history, uses direct_api/acp/stream_json/headless_json backend vocabulary, reuses transport_class and ProviderTransport values, and preserves requested/effective runtime snapshots.",
+          "line_end": 8897,
+          "line_start": 8897,
+          "path": "Plans/storage-plan.md",
+          "source_sha256": "66d19f8d241e488ca19a0f824c24ad28d6bdd89a72abd83bb949b77c234775a1"
+        }
+      ],
+      "gap_kind": "traceability_without_base_history_identity",
+      "impact": "Excluding provider-session ids can either protect privacy or erase the only support path unless a bounded trace contract exists.",
+      "item_id": "A005M15-SP-115",
+      "item_type": "gap",
+      "severity": "high",
+      "source_unit_refs": [
+        "PLANUNIT:SP-115",
+        "SEMANTIC:PLANUNIT:SP-115"
+      ],
+      "statement": "The base-history privacy boundary and vocabularies are explicit, but authorized debug linkage, trace retention, redaction, provider-session rotation, and incident reconstruction are unspecified.",
+      "title": "Provider Runtime Identity Storage Rules"
+    },
+    {
+      "builder_discretion": true,
+      "confidence": 0.99,
+      "dimensions": [
+        "behavior",
+        "states_transitions",
+        "authority",
+        "invalid_states_transitions",
+        "offline_network_loss",
+        "acceptance_oracles"
+      ],
+      "evidence": [
+        {
+          "exact_quote": "canonical_text: Model discovery, provider-native drift, entitlement attribution, and resolver output records preserve model_key = model_provider_id/model_id_raw, /model_id_raw, drift-state, drift-check, effective_entitlement_class = chatgpt_plan | api_billed, and reason_codes[] semantics.",
+          "line_end": 8966,
+          "line_start": 8966,
+          "path": "Plans/storage-plan.md",
+          "source_sha256": "66d19f8d241e488ca19a0f824c24ad28d6bdd89a72abd83bb949b77c234775a1"
+        }
+      ],
+      "gap_kind": "resolver_precedence_and_drift_state_machine",
+      "impact": "The resolver can silently choose a billed or incapable model when snapshots disagree.",
+      "item_id": "A005M15-SP-116",
+      "item_type": "gap",
+      "severity": "high",
+      "source_unit_refs": [
+        "PLANUNIT:SP-116",
+        "SEMANTIC:PLANUNIT:SP-116"
+      ],
+      "statement": "Identity vocabulary is explicit, but discovery source precedence, drift transitions, check cadence, entitlement conflict resolution, fallback ordering, and reason-code completeness are not.",
+      "title": "Model Discovery Drift Entitlement Resolver Records"
+    },
+    {
+      "builder_discretion": true,
+      "confidence": 0.99,
+      "dimensions": [
+        "states_transitions",
+        "gui_truth",
+        "invalid_states_transitions",
+        "gui_misleading_states",
+        "acceptance_oracles"
+      ],
+      "evidence": [
+        {
+          "exact_quote": "canonical_text: Projection-state families expose both projection_freshness and projection_health, keep stale and degraded distinct, keep account-backed and server-profile-backed runtime records distinct, and exclude scheduler-only debug internals unless a concrete debug/audit use case proves otherwise.",
+          "line_end": 9023,
+          "line_start": 9023,
+          "path": "Plans/storage-plan.md",
+          "source_sha256": "66d19f8d241e488ca19a0f824c24ad28d6bdd89a72abd83bb949b77c234775a1"
+        }
+      ],
+      "gap_kind": "transition_and_display_oracles",
+      "impact": "Consumers may still collapse or misinterpret stale versus degraded even when both fields exist.",
+      "item_id": "A005M15-SP-117",
+      "item_type": "explicit_non_gap",
+      "severity": "medium",
+      "source_unit_refs": [
+        "PLANUNIT:SP-117",
+        "SEMANTIC:PLANUNIT:SP-117"
+      ],
+      "statement": "Freshness and health are explicitly orthogonal, but transition triggers, precedence, aggregation, recovery timers, and consumer display/action oracles are not.",
+      "title": "Projection Freshness Health Runtime Boundaries"
+    },
+    {
+      "builder_discretion": true,
+      "confidence": 0.98,
+      "dimensions": [
+        "ownership",
+        "gui_truth",
+        "failures_recovery",
+        "recovery_rollback",
+        "gui_misleading_states",
+        "compatibility_migration"
+      ],
+      "evidence": [
+        {
+          "exact_quote": "canonical_text: terminal_state:v1 may remain a GUI-facing projection name, but canonical ownership stays with terminal workspace, section, workgroup, tab, leaf-pane, panel, session, and command-block records, and route restoration resolves through canonical record identity.",
+          "line_end": 9080,
+          "line_start": 9080,
+          "path": "Plans/storage-plan.md",
+          "source_sha256": "66d19f8d241e488ca19a0f824c24ad28d6bdd89a72abd83bb949b77c234775a1"
+        }
+      ],
+      "gap_kind": "missing_identity_and_projection_drift_recovery",
+      "impact": "A route can strand the user or reopen stale content when the projection and canonical records diverge.",
+      "item_id": "A005M15-SP-118",
+      "item_type": "explicit_non_gap",
+      "severity": "medium",
+      "source_unit_refs": [
+        "PLANUNIT:SP-118",
+        "SEMANTIC:PLANUNIT:SP-118"
+      ],
+      "statement": "Canonical ownership and ID-based routing are explicit, but missing/deleted ID behavior, projection rebuild, version mismatch, and user-visible recovery are not.",
+      "title": "Terminal Projection And Route Restoration Ownership"
+    },
+    {
+      "builder_discretion": true,
+      "confidence": 0.99,
+      "dimensions": [
+        "authority",
+        "propagation",
+        "operations",
+        "partial_failure",
+        "authority_boundaries",
+        "acceptance_oracles"
+      ],
+      "evidence": [
+        {
+          "exact_quote": "canonical_text: PM-generated CLI adapter config/projection files, prompt injected-context artifacts, provider-facing instruction projections, and prompt/cache affinity are derived runtime inputs with source refs, projection state, and lineage; Compact Now alone does not force a new cache lineage unless it also changes logical run lineage.",
+          "line_end": 9136,
+          "line_start": 9136,
+          "path": "Plans/storage-plan.md",
+          "source_sha256": "66d19f8d241e488ca19a0f824c24ad28d6bdd89a72abd83bb949b77c234775a1"
+        }
+      ],
+      "gap_kind": "projection_invalidation_and_atomic_publication",
+      "impact": "A provider can execute stale instructions while the canonical sources have already changed.",
+      "item_id": "A005M15-SP-119",
+      "item_type": "explicit_non_gap",
+      "severity": "high",
+      "source_unit_refs": [
+        "PLANUNIT:SP-119",
+        "SEMANTIC:PLANUNIT:SP-119"
+      ],
+      "statement": "Derived artifacts are correctly denied canonical authority, but source-change invalidation, atomic publication, partial adapter failure, cache-key computation, and stale projection detection are unspecified.",
+      "title": "Derived Adapter Instruction Projection And Cache Lineage"
+    },
+    {
+      "builder_discretion": true,
+      "confidence": 0.99,
+      "dimensions": [
+        "authority",
+        "gui_truth",
+        "security_privacy",
+        "untrusted_inputs",
+        "failures_recovery",
+        "authority_boundaries"
+      ],
+      "evidence": [
+        {
+          "exact_quote": "canonical_text: 'Storage restores generated or staged content subject-first: persisted doc:<document_id> and artifact:<artifact_id> subjects remain durable identity, while resume_url and route payloads restore navigation context around that subject, and any tier_runtime_record remains only a compatibility/current-view overlay.'",
+          "line_end": 9203,
+          "line_start": 9203,
+          "path": "Plans/storage-plan.md",
+          "source_sha256": "66d19f8d241e488ca19a0f824c24ad28d6bdd89a72abd83bb949b77c234775a1"
+        }
+      ],
+      "gap_kind": "missing_subject_and_route_tampering_recovery",
+      "impact": "A crafted or stale resume route can expose the wrong artifact or leave recovery dependent on a non-authoritative overlay.",
+      "item_id": "A005M15-SP-120",
+      "item_type": "explicit_non_gap",
+      "severity": "high",
+      "source_unit_refs": [
+        "PLANUNIT:SP-120",
+        "SEMANTIC:PLANUNIT:SP-120"
+      ],
+      "statement": "Subject-first authority is explicit, but subject-not-found handling, authorization, route-payload validation, tamper resistance, and compatibility overlay disagreement are not.",
+      "title": "Runtime Artifact Subject-First Restore Identity"
+    },
+    {
+      "builder_discretion": true,
+      "confidence": 0.98,
+      "dimensions": [
+        "ownership",
+        "contracts",
+        "propagation",
+        "operations",
+        "partial_failure",
+        "recovery_rollback"
+      ],
+      "evidence": [
+        {
+          "exact_quote": "canonical_text: Runtime-artifact indexing, durable worktree/lane identity, projection state, and projector checkpoints are storage-owned families with required artifact, repo, path, branch, and baseline fields rather than panel-owned leftovers.",
+          "line_end": 9258,
+          "line_start": 9258,
+          "path": "Plans/storage-plan.md",
+          "source_sha256": "66d19f8d241e488ca19a0f824c24ad28d6bdd89a72abd83bb949b77c234775a1"
+        }
+      ],
+      "gap_kind": "projection_transaction_and_rebuild_contract",
+      "impact": "Panel state may look current while artifact/worktree/lane indexes are partially rebuilt.",
+      "item_id": "A005M15-SP-121",
+      "item_type": "explicit_non_gap",
+      "severity": "high",
+      "source_unit_refs": [
+        "PLANUNIT:SP-121",
+        "SEMANTIC:PLANUNIT:SP-121"
+      ],
+      "statement": "Storage ownership is explicit, but projection transaction boundaries, checkpoint ordering, rebuild source, deletion propagation, and consistency validation are not.",
+      "title": "Runtime Artifact Projection And Worktree Lane Index Scope"
+    },
+    {
+      "builder_discretion": true,
+      "confidence": 0.99,
+      "dimensions": [
+        "contracts",
+        "ownership",
+        "compatibility_migration",
+        "concurrency_races",
+        "cross_document_seams",
+        "test_falsifiability"
+      ],
+      "evidence": [
+        {
+          "exact_quote": "canonical_text: Storage-plan is the canonical source for decomposed terminal persistence key families from terminal_session.v1 through terminal_color.v1:global, with terminal_state:v1 retained only as a FinalGUISpec subset alias.",
+          "line_end": 9316,
+          "line_start": 9316,
+          "path": "Plans/storage-plan.md",
+          "source_sha256": "66d19f8d241e488ca19a0f824c24ad28d6bdd89a72abd83bb949b77c234775a1"
+        }
+      ],
+      "gap_kind": "alias_mapping_version_and_migration",
+      "impact": "The GUI alias can drift from decomposed canonical records or become an accidental second writer.",
+      "item_id": "A005M15-SP-122",
+      "item_type": "gap",
+      "severity": "high",
+      "source_unit_refs": [
+        "PLANUNIT:SP-122",
+        "SEMANTIC:PLANUNIT:SP-122"
+      ],
+      "statement": "Canonical families and subset alias status are stated, but field-by-field alias mapping, read precedence, dual-write prohibition, version migration, and retirement oracle are not.",
+      "title": "Canonical Terminal Persistence Key Families"
+    },
+    {
+      "builder_discretion": true,
+      "confidence": 0.98,
+      "dimensions": [
+        "gui_truth",
+        "states_transitions",
+        "invalid_states_transitions",
+        "concurrency_races",
+        "accessibility",
+        "test_falsifiability"
+      ],
+      "evidence": [
+        {
+          "exact_quote": "canonical_text: Terminal project, section, and tab records preserve project settings, restore flags, dock state/zone, detached bounds, tab order, labels, active state, layout_style, and review_only state.",
+          "line_end": 9373,
+          "line_start": 9373,
+          "path": "Plans/storage-plan.md",
+          "source_sha256": "66d19f8d241e488ca19a0f824c24ad28d6bdd89a72abd83bb949b77c234775a1"
+        }
+      ],
+      "gap_kind": "layout_bounds_focus_and_invalid_state_rules",
+      "impact": "Malformed or racing state can restore invisible windows, multiple active tabs, or editable review-only sessions.",
+      "item_id": "A005M15-SP-123",
+      "item_type": "gap",
+      "severity": "medium",
+      "source_unit_refs": [
+        "PLANUNIT:SP-123",
+        "SEMANTIC:PLANUNIT:SP-123"
+      ],
+      "statement": "Persisted layout fields are named, but coordinate bounds, dock/detach exclusivity, active-tab invariants, review-only transition rules, and multi-window focus arbitration are not.",
+      "title": "Terminal Project Section And Tab Records"
+    },
+    {
+      "builder_discretion": true,
+      "confidence": 0.99,
+      "dimensions": [
+        "states_transitions",
+        "gui_truth",
+        "concurrency_races",
+        "partial_failure",
+        "recovery_rollback",
+        "gui_misleading_states"
+      ],
+      "evidence": [
+        {
+          "exact_quote": "canonical_text: Terminal pane, session, and command-block records keep pane/session attachment, shell profile, cwd_snapshot, runtime/restore state, command-block metadata, and the section/tab/pane/session identity split; durable restore reconstructs layout and bindings before runtime liveness validation.",
+          "line_end": 9433,
+          "line_start": 9433,
+          "path": "Plans/storage-plan.md",
+          "source_sha256": "66d19f8d241e488ca19a0f824c24ad28d6bdd89a72abd83bb949b77c234775a1"
+        }
+      ],
+      "gap_kind": "restore_order_and_liveness_failure_state",
+      "impact": "A pane can remain visibly attached to a dead or wrong session after partial restore.",
+      "item_id": "A005M15-SP-124",
+      "item_type": "gap",
+      "severity": "high",
+      "source_unit_refs": [
+        "PLANUNIT:SP-124",
+        "SEMANTIC:PLANUNIT:SP-124"
+      ],
+      "statement": "Layout-before-liveness is explicit, but transactional restore order, duplicate attachments, missing sessions, failed liveness validation, cancellation, and rollback are not.",
+      "title": "Terminal Pane Session And Restore Identity Split"
+    },
+    {
+      "builder_discretion": true,
+      "confidence": 0.99,
+      "dimensions": [
+        "gui_truth",
+        "failures_recovery",
+        "gui_misleading_states",
+        "offline_network_loss",
+        "accessibility",
+        "acceptance_oracles"
+      ],
+      "evidence": [
+        {
+          "exact_quote": "canonical_text: Terminal restore records carry an explicit transcript-vs-command-block boundary; restored panes may be historical, review-limited, or history-unavailable, and storage must not mark them live unless terminal runtime liveness is revalidated.",
+          "line_end": 9490,
+          "line_start": 9490,
+          "path": "Plans/storage-plan.md",
+          "source_sha256": "66d19f8d241e488ca19a0f824c24ad28d6bdd89a72abd83bb949b77c234775a1"
+        }
+      ],
+      "gap_kind": "user_visible_state_and_revalidation_retry",
+      "impact": "A historical pane can still look actionable or remain indefinitely ambiguous after failed validation.",
+      "item_id": "A005M15-SP-125",
+      "item_type": "explicit_non_gap",
+      "severity": "high",
+      "source_unit_refs": [
+        "PLANUNIT:SP-125",
+        "SEMANTIC:PLANUNIT:SP-125"
+      ],
+      "statement": "The no-fake-liveness rule is strong, but exact UI state mapping, revalidation timeout/retry, transcript availability errors, and command enablement gates are not.",
+      "title": "Terminal Transcript Boundary And No-Fake-Liveness Rule"
+    },
+    {
+      "builder_discretion": true,
+      "confidence": 0.99,
+      "dimensions": [
+        "authority",
+        "security_privacy",
+        "untrusted_inputs",
+        "failures_recovery",
+        "authority_boundaries",
+        "test_falsifiability"
+      ],
+      "evidence": [
+        {
+          "exact_quote": "canonical_text: Storage owns durable joins for tab/pane/session and tab/pane/session/dev-session lookups; routing and open selectors persist terminal and optional dev_session_id refs and recover by those refs rather than labels, titles, or legacy cmd.dev.* hidden-gap assumptions.",
+          "line_end": 9547,
+          "line_start": 9547,
+          "path": "Plans/storage-plan.md",
+          "source_sha256": "66d19f8d241e488ca19a0f824c24ad28d6bdd89a72abd83bb949b77c234775a1"
+        }
+      ],
+      "gap_kind": "dangling_identity_and_deleted_subject_recovery",
+      "impact": "A crafted or dangling route can cross project boundaries or fail without a safe repair path.",
+      "item_id": "A005M15-SP-126",
+      "item_type": "explicit_non_gap",
+      "severity": "medium",
+      "source_unit_refs": [
+        "PLANUNIT:SP-126",
+        "SEMANTIC:PLANUNIT:SP-126"
+      ],
+      "statement": "ID-based lookup authority is explicit, but stale/deleted refs, cross-project injection, authorization, ambiguous historical aliases, and user recovery are not.",
+      "title": "Terminal Route Open Identity Refs And Dev-Session Lookups"
+    },
+    {
+      "builder_discretion": true,
+      "confidence": 0.98,
+      "dimensions": [
+        "ownership",
+        "gui_truth",
+        "states_transitions",
+        "concurrency_races",
+        "compatibility_migration",
+        "accessibility"
+      ],
+      "evidence": [
+        {
+          "exact_quote": "canonical_text: 'Terminal GUI persistence settings are separate from live PTY state: storage owns durable keys and migration behavior, FinalGUISpec owns Settings > Terminal GUI grouping, theming discoverability, shortcuts, and labels, and terminal terminology cross-refs stay explicit.'",
+          "line_end": 9605,
+          "line_start": 9605,
+          "path": "Plans/storage-plan.md",
+          "source_sha256": "66d19f8d241e488ca19a0f824c24ad28d6bdd89a72abd83bb949b77c234775a1"
+        }
+      ],
+      "gap_kind": "settings_precedence_and_migration_conflict",
+      "impact": "Users can see settings that do not match effective terminal behavior after restore or migration.",
+      "item_id": "A005M15-SP-127",
+      "item_type": "gap",
+      "severity": "medium",
+      "source_unit_refs": [
+        "PLANUNIT:SP-127",
+        "SEMANTIC:PLANUNIT:SP-127"
+      ],
+      "statement": "Ownership is split cleanly, but global/project/tab precedence, validation ranges, concurrent edits, migration conflict handling, and fallback when theme/font refs disappear are unspecified.",
+      "title": "Terminal GUI Settings Persistence And Terminology Boundary"
+    },
+    {
+      "builder_discretion": true,
+      "confidence": 0.99,
+      "dimensions": [
+        "compatibility_migration",
+        "partial_failure",
+        "recovery_rollback",
+        "destructive_actions",
+        "cross_document_seams",
+        "test_falsifiability"
+      ],
+      "evidence": [
+        {
+          "exact_quote": "canonical_text: 'Terminal/storage key migrations are forward-only and monotonic: new fields are additive first, destructive renames require same-section migration notes, stable semantic names are preserved, and owner docs must define terminology mappings rather than overloading shared fields.'",
+          "line_end": 9669,
+          "line_start": 9669,
+          "path": "Plans/storage-plan.md",
+          "source_sha256": "66d19f8d241e488ca19a0f824c24ad28d6bdd89a72abd83bb949b77c234775a1"
+        }
+      ],
+      "gap_kind": "partial_migration_rollback_and_compatibility_window",
+      "impact": "A partial migration can strand data in a shape readable by neither old nor new code.",
+      "item_id": "A005M15-SP-128",
+      "item_type": "gap",
+      "severity": "high",
+      "source_unit_refs": [
+        "PLANUNIT:SP-128",
+        "SEMANTIC:PLANUNIT:SP-128"
+      ],
+      "statement": "Forward-only/additive rules are explicit, but multi-step transactionality, crash resume, backup restore, mixed-version readers, validation gates, and destructive rename rollback are not.",
+      "title": "Terminal Storage Key Naming And Forward-Only Migration"
+    },
+    {
+      "builder_discretion": true,
+      "confidence": 0.99,
+      "dimensions": [
+        "failures_recovery",
+        "operations",
+        "concurrency_races",
+        "recovery_rollback",
+        "offline_network_loss",
+        "acceptance_oracles"
+      ],
+      "evidence": [
+        {
+          "exact_quote": "canonical_text: 'Storage owns lock-path derivation: active pm.lock is root-derived from logical-root or safe-local fallback-derived durable-store path, legacy hardcoded lock strings are migration evidence only, and failed lock acquisition opens read-only viewer mode without creating a second project-local lock.'",
+          "line_end": 9734,
+          "line_start": 9734,
+          "path": "Plans/storage-plan.md",
+          "source_sha256": "66d19f8d241e488ca19a0f824c24ad28d6bdd89a72abd83bb949b77c234775a1"
+        }
+      ],
+      "gap_kind": "stale_lock_crash_and_lock_stealing",
+      "impact": "A crash can permanently force read-only mode or unsafe takeover can enable concurrent writers.",
+      "item_id": "A005M15-SP-129",
+      "item_type": "explicit_non_gap",
+      "severity": "high",
+      "source_unit_refs": [
+        "PLANUNIT:SP-129",
+        "SEMANTIC:PLANUNIT:SP-129"
+      ],
+      "statement": "Owner-derived single-lock and read-only fallback behavior are explicit, but stale-lock detection, process identity, lease/heartbeat, crash cleanup, lock stealing, and network-filesystem behavior are not.",
+      "title": "Owner-Derived Lock Path And Read-Only Fallback"
+    },
+    {
+      "builder_discretion": true,
+      "confidence": 0.98,
+      "dimensions": [
+        "contracts",
+        "consumers",
+        "privacy_data_lifecycle",
+        "scale_limits",
+        "gui_misleading_states",
+        "acceptance_oracles"
+      ],
+      "evidence": [
+        {
+          "exact_quote": "canonical_text: Storage owns run.completed.usage as an optional bounded run-completion usage snapshot derived from canonical usage.event records, not as a replacement for the usage event ledger.",
+          "line_end": 9793,
+          "line_start": 9793,
+          "path": "Plans/storage-plan.md",
+          "source_sha256": "66d19f8d241e488ca19a0f824c24ad28d6bdd89a72abd83bb949b77c234775a1"
+        }
+      ],
+      "gap_kind": "snapshot_bound_and_consistency_metadata",
+      "impact": "Consumers may treat an incomplete or stale bounded snapshot as full usage truth.",
+      "item_id": "A005M15-SP-130",
+      "item_type": "explicit_non_gap",
+      "severity": "medium",
+      "source_unit_refs": [
+        "PLANUNIT:SP-130",
+        "SEMANTIC:PLANUNIT:SP-130"
+      ],
+      "statement": "The snapshot-versus-ledger boundary is explicit, but byte/event bounds, selection rule, ledger offset, lag/completeness marker, redaction, and retention are unspecified.",
+      "title": "Run Completed Usage Snapshot Boundary"
+    },
+    {
+      "builder_discretion": true,
+      "confidence": 0.99,
+      "dimensions": [
+        "failures_recovery",
+        "operations",
+        "partial_failure",
+        "recovery_rollback",
+        "destructive_actions",
+        "test_falsifiability"
+      ],
+      "evidence": [
+        {
+          "exact_quote": "canonical_text: All non-append durable-store rewrites use same-directory temporary files, fsync, and rename/promote; append-only seglog writers remain subject to durable flush and corruption detection, and replacement-write failures are hard errors without direct-overwrite fallback.",
+          "line_end": 9843,
+          "line_start": 9843,
+          "path": "Plans/storage-plan.md",
+          "source_sha256": "66d19f8d241e488ca19a0f824c24ad28d6bdd89a72abd83bb949b77c234775a1"
+        }
+      ],
+      "gap_kind": "directory_durability_and_crash_window_oracle",
+      "impact": "A rename can appear successful yet disappear after power loss, or cleanup can remove the only recoverable temp.",
+      "item_id": "A005M15-SP-131",
+      "item_type": "explicit_non_gap",
+      "severity": "critical",
+      "source_unit_refs": [
+        "PLANUNIT:SP-131",
+        "SEMANTIC:PLANUNIT:SP-131"
+      ],
+      "statement": "Same-directory temp, fsync, and promote rules are strong, but parent-directory fsync, existing-target replacement semantics, crash-point testing, stale-temp cleanup ownership, and platform-specific guarantees are not explicit.",
+      "title": "Same-Directory Atomic Durable-Store Rewrite"
+    },
+    {
+      "builder_discretion": true,
+      "confidence": 0.99,
+      "dimensions": [
+        "authority",
+        "security_privacy",
+        "untrusted_inputs",
+        "offline_network_loss",
+        "authority_boundaries",
+        "destructive_actions"
+      ],
+      "evidence": [
+        {
+          "exact_quote": "canonical_text: Storage-root selection prefers explicit configured roots, valid PUPPET_MASTER_DATA_DIR overrides, project-scoped durable roots, app-level durable roots, and session temp roots only for temporary data; durable state survives process restart unless the owning contract says otherwise.",
+          "line_end": 9900,
+          "line_start": 9900,
+          "path": "Plans/storage-plan.md",
+          "source_sha256": "66d19f8d241e488ca19a0f824c24ad28d6bdd89a72abd83bb949b77c234775a1"
+        }
+      ],
+      "gap_kind": "override_validation_path_security_and_failover",
+      "impact": "A hostile or malformed environment override can redirect durable state outside the intended authority boundary.",
+      "item_id": "A005M15-SP-132",
+      "item_type": "gap",
+      "severity": "critical",
+      "source_unit_refs": [
+        "PLANUNIT:SP-132",
+        "SEMANTIC:PLANUNIT:SP-132"
+      ],
+      "statement": "Root precedence is explicit, but override validation, symlink/path traversal defense, permissions/ownership checks, free-space handling, failover atomicity, and remote-root identity are not.",
+      "title": "Storage Root Selection And Durable Authority"
+    },
+    {
+      "builder_discretion": true,
+      "confidence": 0.99,
+      "dimensions": [
+        "failures_recovery",
+        "security_privacy",
+        "partial_failure",
+        "recovery_rollback",
+        "privacy_data_lifecycle",
+        "destructive_actions"
+      ],
+      "evidence": [
+        {
+          "exact_quote": "canonical_text: Durable-store safety detects unsafe-filesystem classes, fails closed or enters read-only mode when needed, preserves safe-local fallback lineage, and requires backup-before-any-migration-step before validation, schema rewrite, file promotion, destructive cleanup, or rollback-sensitive repair.",
+          "line_end": 9956,
+          "line_start": 9956,
+          "path": "Plans/storage-plan.md",
+          "source_sha256": "66d19f8d241e488ca19a0f824c24ad28d6bdd89a72abd83bb949b77c234775a1"
+        }
+      ],
+      "gap_kind": "unsafe_classification_backup_integrity_and_restore",
+      "impact": "Migration can proceed with an unusable backup or expose sensitive durable state in unmanaged copies.",
+      "item_id": "A005M15-SP-133",
+      "item_type": "gap",
+      "severity": "critical",
+      "source_unit_refs": [
+        "PLANUNIT:SP-133",
+        "SEMANTIC:PLANUNIT:SP-133"
+      ],
+      "statement": "Fail-closed/read-only and backup-before-migration rules are explicit, but filesystem capability detection, false-positive handling, backup atomicity/checksum, encryption, retention, restore drill, and failed-backup behavior are not.",
+      "title": "Durable-Store Safety Unsafe Filesystem And Migration Backups"
+    },
+    {
+      "builder_discretion": true,
+      "confidence": 0.99,
+      "dimensions": [
+        "contracts",
+        "operations",
+        "concurrency_races",
+        "recovery_rollback",
+        "offline_network_loss",
+        "test_falsifiability"
+      ],
+      "evidence": [
+        {
+          "exact_quote": "canonical_text: The active durable-store lock is keyed by storage_root, authority_scope, and store_family; session or run ids are insufficient lock identities, and store families with independent recovery or retention policies must not share a lock merely because they live under the same root.",
+          "line_end": 10021,
+          "line_start": 10021,
+          "path": "Plans/storage-plan.md",
+          "source_sha256": "66d19f8d241e488ca19a0f824c24ad28d6bdd89a72abd83bb949b77c234775a1"
+        }
+      ],
+      "gap_kind": "acquisition_order_stale_lock_and_deadlock",
+      "impact": "Independent store operations can deadlock or two processes can both believe they own the same durable authority.",
+      "item_id": "A005M15-SP-134",
+      "item_type": "gap",
+      "severity": "critical",
+      "source_unit_refs": [
+        "PLANUNIT:SP-134",
+        "SEMANTIC:PLANUNIT:SP-134"
+      ],
+      "statement": "Lock identity components are explicit, but acquisition ordering across families, stale-lock recovery, reentrancy, upgrade/downgrade, lease semantics, timeout, and deadlock detection are not.",
+      "title": "Active Durable-Store Lock Identity"
+    },
+    {
+      "builder_discretion": true,
+      "confidence": 0.99,
+      "dimensions": [
+        "operations",
+        "scale_performance",
+        "privacy_data_lifecycle",
+        "scale_limits",
+        "observability_support",
+        "test_falsifiability"
+      ],
+      "evidence": [
+        {
+          "exact_quote": "canonical_text: Live storage-managed collections must declare TTL, max-cardinality, or both; bounded-collections canon is satisfied when owner sections name family, bound type/source, and retention/eviction notes for active maps, auth caches, LSP maps, queues, event records, safe points, temp artifacts, and stale rewrite remnants.",
+          "line_end": 10073,
+          "line_start": 10073,
+          "path": "Plans/storage-plan.md",
+          "source_sha256": "66d19f8d241e488ca19a0f824c24ad28d6bdd89a72abd83bb949b77c234775a1"
+        }
+      ],
+      "gap_kind": "concrete_numeric_bounds_and_eviction_oracles",
+      "impact": "Collections can remain nominally bounded while exceeding safe memory/disk limits or evicting protected evidence.",
+      "item_id": "A005M15-SP-135",
+      "item_type": "gap",
+      "severity": "high",
+      "source_unit_refs": [
+        "PLANUNIT:SP-135",
+        "SEMANTIC:PLANUNIT:SP-135"
+      ],
+      "statement": "The contract requires TTL or cardinality, but this unit does not supply concrete values, measurement units, eviction ordering, pressure behavior, legal-hold precedence, or verification metrics for the named families.",
+      "title": "Bounded Collection Retention Contracts"
+    }
+  ],
+  "model": "gpt-5.6-sol",
+  "phase": "blind_macro_window_review",
+  "reasoning_effort": "xhigh",
+  "schema_version": "macro-review-result-v1",
+  "segments": [
+    {
+      "core_range": [
+        7211,
+        7601
+      ],
+      "covered_source_unit_refs": [
+        "PLANUNIT:SP-086",
+        "PLANUNIT:SP-087",
+        "PLANUNIT:SP-088",
+        "PLANUNIT:SP-089",
+        "PLANUNIT:SP-090",
+        "PLANUNIT:SP-091",
+        "PLANUNIT:SP-092",
+        "SEMANTIC:PLANUNIT:SP-086",
+        "SEMANTIC:PLANUNIT:SP-087",
+        "SEMANTIC:PLANUNIT:SP-088",
+        "SEMANTIC:PLANUNIT:SP-089",
+        "SEMANTIC:PLANUNIT:SP-090",
+        "SEMANTIC:PLANUNIT:SP-091",
+        "SEMANTIC:PLANUNIT:SP-092"
+      ],
+      "item_ids": [
+        "A005M15-SP-086",
+        "A005M15-SP-087",
+        "A005M15-SP-088",
+        "A005M15-SP-089",
+        "A005M15-SP-090",
+        "A005M15-SP-091",
+        "A005M15-SP-092"
+      ],
+      "reviewed": true,
+      "summary": "Reviewed SP-086 through SP-092 exactly and adversarially; payload, account invalidation, authored copy, freshness, retention, and provider/runtime family contracts expose schema, atomicity, localization, lifecycle, and ownership gaps.",
+      "window_id": "WIN-510B3DE676A3-0021"
+    },
+    {
+      "core_range": [
+        7602,
+        7979
+      ],
+      "covered_source_unit_refs": [
+        "PLANUNIT:SP-093",
+        "PLANUNIT:SP-094",
+        "PLANUNIT:SP-095",
+        "PLANUNIT:SP-096",
+        "PLANUNIT:SP-097",
+        "PLANUNIT:SP-098",
+        "PLANUNIT:SP-099",
+        "SEMANTIC:PLANUNIT:SP-093",
+        "SEMANTIC:PLANUNIT:SP-094",
+        "SEMANTIC:PLANUNIT:SP-095",
+        "SEMANTIC:PLANUNIT:SP-096",
+        "SEMANTIC:PLANUNIT:SP-097",
+        "SEMANTIC:PLANUNIT:SP-098",
+        "SEMANTIC:PLANUNIT:SP-099"
+      ],
+      "item_ids": [
+        "A005M15-SP-093",
+        "A005M15-SP-094",
+        "A005M15-SP-095",
+        "A005M15-SP-096",
+        "A005M15-SP-097",
+        "A005M15-SP-098",
+        "A005M15-SP-099"
+      ],
+      "reviewed": true,
+      "summary": "Reviewed SP-093 through SP-099 exactly and adversarially; decomposed session families and debug/bundle migration boundaries are explicit, while restore concurrency, privacy, readiness, binding lifecycle, and interrupted migration remain underspecified.",
+      "window_id": "WIN-510B3DE676A3-0022"
+    },
+    {
+      "core_range": [
+        7980,
+        8332
+      ],
+      "covered_source_unit_refs": [
+        "PLANUNIT:SP-100",
+        "PLANUNIT:SP-101",
+        "PLANUNIT:SP-102",
+        "PLANUNIT:SP-103",
+        "PLANUNIT:SP-104",
+        "PLANUNIT:SP-105",
+        "SEMANTIC:PLANUNIT:SP-100",
+        "SEMANTIC:PLANUNIT:SP-101",
+        "SEMANTIC:PLANUNIT:SP-102",
+        "SEMANTIC:PLANUNIT:SP-103",
+        "SEMANTIC:PLANUNIT:SP-104",
+        "SEMANTIC:PLANUNIT:SP-105"
+      ],
+      "item_ids": [
+        "A005M15-SP-100",
+        "A005M15-SP-101",
+        "A005M15-SP-102",
+        "A005M15-SP-103",
+        "A005M15-SP-104",
+        "A005M15-SP-105"
+      ],
+      "reviewed": true,
+      "summary": "Reviewed SP-100 through SP-105 exactly and adversarially; field minima, GHA state, annotation lineage, registry approvals, reanchoring, and revision runs need stronger invariants, concurrency, idempotency, and recovery oracles.",
+      "window_id": "WIN-510B3DE676A3-0023"
+    },
+    {
+      "core_range": [
+        8333,
+        8698
+      ],
+      "covered_source_unit_refs": [
+        "PLANUNIT:SP-106",
+        "PLANUNIT:SP-107",
+        "PLANUNIT:SP-108",
+        "PLANUNIT:SP-109",
+        "PLANUNIT:SP-110",
+        "PLANUNIT:SP-111",
+        "SEMANTIC:PLANUNIT:SP-106",
+        "SEMANTIC:PLANUNIT:SP-107",
+        "SEMANTIC:PLANUNIT:SP-108",
+        "SEMANTIC:PLANUNIT:SP-109",
+        "SEMANTIC:PLANUNIT:SP-110",
+        "SEMANTIC:PLANUNIT:SP-111"
+      ],
+      "item_ids": [
+        "A005M15-SP-106",
+        "A005M15-SP-107",
+        "A005M15-SP-108",
+        "A005M15-SP-109",
+        "A005M15-SP-110",
+        "A005M15-SP-111"
+      ],
+      "reviewed": true,
+      "summary": "Reviewed SP-106 through SP-111 exactly and adversarially; composer/capture, audit events, browser persistence, artifact checkpoints, and worktree/lane projections have material privacy, concurrency, checkpoint, and deletion-propagation gaps.",
+      "window_id": "WIN-510B3DE676A3-0024"
+    },
+    {
+      "core_range": [
+        8699,
+        9072
+      ],
+      "covered_source_unit_refs": [
+        "PLANUNIT:SP-112",
+        "PLANUNIT:SP-113",
+        "PLANUNIT:SP-114",
+        "PLANUNIT:SP-115",
+        "PLANUNIT:SP-116",
+        "PLANUNIT:SP-117",
+        "SEMANTIC:PLANUNIT:SP-112",
+        "SEMANTIC:PLANUNIT:SP-113",
+        "SEMANTIC:PLANUNIT:SP-114",
+        "SEMANTIC:PLANUNIT:SP-115",
+        "SEMANTIC:PLANUNIT:SP-116",
+        "SEMANTIC:PLANUNIT:SP-117"
+      ],
+      "item_ids": [
+        "A005M15-SP-112",
+        "A005M15-SP-113",
+        "A005M15-SP-114",
+        "A005M15-SP-115",
+        "A005M15-SP-116",
+        "A005M15-SP-117"
+      ],
+      "reviewed": true,
+      "summary": "Reviewed SP-112 through SP-117 exactly and adversarially; event sets and identity minima are broad, but ordering, optional-field invariants, join lifecycle, traceability, resolver precedence, and state-transition oracles remain incomplete.",
+      "window_id": "WIN-510B3DE676A3-0025"
+    },
+    {
+      "core_range": [
+        9073,
+        9425
+      ],
+      "covered_source_unit_refs": [
+        "PLANUNIT:SP-118",
+        "PLANUNIT:SP-119",
+        "PLANUNIT:SP-120",
+        "PLANUNIT:SP-121",
+        "PLANUNIT:SP-122",
+        "PLANUNIT:SP-123",
+        "SEMANTIC:PLANUNIT:SP-118",
+        "SEMANTIC:PLANUNIT:SP-119",
+        "SEMANTIC:PLANUNIT:SP-120",
+        "SEMANTIC:PLANUNIT:SP-121",
+        "SEMANTIC:PLANUNIT:SP-122",
+        "SEMANTIC:PLANUNIT:SP-123"
+      ],
+      "item_ids": [
+        "A005M15-SP-118",
+        "A005M15-SP-119",
+        "A005M15-SP-120",
+        "A005M15-SP-121",
+        "A005M15-SP-122",
+        "A005M15-SP-123"
+      ],
+      "reviewed": true,
+      "summary": "Reviewed SP-118 through SP-123 exactly and adversarially; canonical ownership is generally strong, while missing-identity recovery, derived projection publication, route trust, alias migration, and terminal layout invalid-state rules need closure.",
+      "window_id": "WIN-510B3DE676A3-0026"
+    },
+    {
+      "core_range": [
+        9426,
+        9785
+      ],
+      "covered_source_unit_refs": [
+        "PLANUNIT:SP-124",
+        "PLANUNIT:SP-125",
+        "PLANUNIT:SP-126",
+        "PLANUNIT:SP-127",
+        "PLANUNIT:SP-128",
+        "PLANUNIT:SP-129",
+        "SEMANTIC:PLANUNIT:SP-124",
+        "SEMANTIC:PLANUNIT:SP-125",
+        "SEMANTIC:PLANUNIT:SP-126",
+        "SEMANTIC:PLANUNIT:SP-127",
+        "SEMANTIC:PLANUNIT:SP-128",
+        "SEMANTIC:PLANUNIT:SP-129"
+      ],
+      "item_ids": [
+        "A005M15-SP-124",
+        "A005M15-SP-125",
+        "A005M15-SP-126",
+        "A005M15-SP-127",
+        "A005M15-SP-128",
+        "A005M15-SP-129"
+      ],
+      "reviewed": true,
+      "summary": "Reviewed SP-124 through SP-129 exactly and adversarially; restore identity and no-fake-liveness rules are strong, while partial restore, dangling refs, settings precedence, migration crash recovery, and stale-lock handling remain open.",
+      "window_id": "WIN-510B3DE676A3-0027"
+    },
+    {
+      "core_range": [
+        9786,
+        10130
+      ],
+      "covered_source_unit_refs": [
+        "PLANUNIT:SP-130",
+        "PLANUNIT:SP-131",
+        "PLANUNIT:SP-132",
+        "PLANUNIT:SP-133",
+        "PLANUNIT:SP-134",
+        "PLANUNIT:SP-135",
+        "SEMANTIC:PLANUNIT:SP-130",
+        "SEMANTIC:PLANUNIT:SP-131",
+        "SEMANTIC:PLANUNIT:SP-132",
+        "SEMANTIC:PLANUNIT:SP-133",
+        "SEMANTIC:PLANUNIT:SP-134",
+        "SEMANTIC:PLANUNIT:SP-135"
+      ],
+      "item_ids": [
+        "A005M15-SP-130",
+        "A005M15-SP-131",
+        "A005M15-SP-132",
+        "A005M15-SP-133",
+        "A005M15-SP-134",
+        "A005M15-SP-135"
+      ],
+      "reviewed": true,
+      "summary": "Reviewed SP-130 through SP-135 exactly and adversarially; ledger boundaries and atomic rewrite intent are strong, but snapshot bounds, directory durability, root validation, backup integrity, lock lifecycle, and numeric retention limits remain high-risk gaps.",
+      "window_id": "WIN-510B3DE676A3-0028"
+    }
+  ],
+  "self_attestation": {
+    "no_canonical_writes": true,
+    "no_external_research_during_blind_review": true,
+    "no_peer_result_access": true,
+    "no_prior_audit_access": true,
+    "no_unrelated_source_access": true,
+    "terminal_after_submission": true
+  },
+  "source_binding": {
+    "bundle_id": "MACRO15-510B3DE676A3-0003",
+    "document_path": "Plans/storage-plan.md",
+    "micro_window_ids": [
+      "WIN-510B3DE676A3-0021",
+      "WIN-510B3DE676A3-0022",
+      "WIN-510B3DE676A3-0023",
+      "WIN-510B3DE676A3-0024",
+      "WIN-510B3DE676A3-0025",
+      "WIN-510B3DE676A3-0026",
+      "WIN-510B3DE676A3-0027",
+      "WIN-510B3DE676A3-0028"
+    ],
+    "source_sha256": "66d19f8d241e488ca19a0f824c24ad28d6bdd89a72abd83bb949b77c234775a1"
+  },
+  "status": "completed",
+  "synthesis": {
+    "cross_document_questions": [
+      "Which owner contracts define lifecycle and failure semantics for the storage families that this window names but does not fully specify?",
+      "How do FinalGUISpec, Contracts_V0, Runtime_Artifacts_Panel, and terminal runtime contracts prove that GUI projections cannot become competing durable authorities?",
+      "Which migration and FileSafe contracts provide executable crash-point, backup-restore, stale-lock, and unsafe-filesystem acceptance oracles?"
+    ],
+    "feature_family_keys": [
+      "storage-command-receipts",
+      "account-bound-projections",
+      "terminal-dev-session-persistence",
+      "debug-and-bundle-lineage",
+      "browser-preview-persistence",
+      "runtime-artifact-projections",
+      "provider-runtime-identity",
+      "durable-store-safety",
+      "bounded-retention"
+    ],
+    "research_queries": [
+      "Crash-consistent same-directory atomic replacement requirements across macOS Linux and Windows",
+      "Safe multi-process durable-store lock identity stale-lock recovery and deadlock prevention",
+      "Privacy-preserving browser session cookie and localStorage persistence lifecycle",
+      "Projection checkpoint transaction replay and rebuild invariants",
+      "Terminal session restore models separating durable layout from live PTY validation"
+    ]
+  },
+  "task_thread_id": "/root/a005m15_b10_000215_attempt_0015_terminal"
+}

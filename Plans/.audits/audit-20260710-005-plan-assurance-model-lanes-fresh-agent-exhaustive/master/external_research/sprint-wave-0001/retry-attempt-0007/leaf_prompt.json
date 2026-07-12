@@ -1,0 +1,29 @@
+{
+  "allowed_reads": [
+    "own dispatch intent",
+    "own packet",
+    "result schema v7",
+    "own later authorization",
+    "activation core",
+    "live public web sources"
+  ],
+  "attempt_id": "attempt-0007",
+  "descendants_forbidden": true,
+  "followups_forbidden": true,
+  "forbidden_reads": [
+    "attempts 0001 through 0006 result bodies",
+    "peer outputs",
+    "canonical Plans",
+    "unbound audit artifacts"
+  ],
+  "leaf_writes_receipt": false,
+  "prompt_text": "Audit005 retry-attempt-0007 leaf. Read only your dispatch intent, assigned packet, result schema, leaf-dispatch authorization, activation core, and live public web sources. Verify activation_granted=true and every hash before work; the blocked prelaunch intent is immutable lineage and cannot veto a valid later authorization. Independently redo current public-web research for every original question. Do not read any prior result body or peer output. Prefer official/primary sources and register every direct HTTPS URL exactly once before any finding, failure, idea, implication, or unresolved question references it. evidence_class=no_evidence requires zero citation, URL, source-claim, or evidence references recursively; cited evidence requires supported_claim or inference. Use only canonical agent_path in the result and never write task/native thread or turn IDs. Validate the complete Draft 2020-12 result schema and cross-field source/question closure locally. Write exactly one result.json, then return exactly PMR1 only after the result exists. Do not write a receipt; only the sealed controller receipt writer may do that. Spawn no descendants; accept no followups or retries.",
+  "result_required_before_pmr1": true,
+  "retries_forbidden": true,
+  "schema_version": "external-research-recovery-leaf-prompt-v7",
+  "status": "FROZEN_FOR_FUTURE_ACTIVATION_ONLY",
+  "terminal_response": "PMR1",
+  "writes": [
+    "exactly one result.json in assigned attempt-0007 output directory"
+  ]
+}

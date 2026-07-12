@@ -1,0 +1,558 @@
+{
+  "assignment_id": "A005M15-000004-INTEGRATED-MACRO15-3EEBF9277C57-0001",
+  "attempt_id": "attempt-0015",
+  "audit_id": "audit-20260710-005-plan-assurance-model-lanes-fresh-agent-exhaustive",
+  "blindness": {
+    "external_research": "deferred_to_feature_research_phase",
+    "peer_results": "forbidden",
+    "prior_audits": "forbidden",
+    "unrelated_sources": "forbidden"
+  },
+  "bundle_core_range": [
+    1008,
+    3962
+  ],
+  "bundle_id": "MACRO15-3EEBF9277C57-0001",
+  "context_ranges": [
+    [
+      996,
+      1007
+    ],
+    [
+      3963,
+      3974
+    ]
+  ],
+  "document_path": "Plans/00-plans-index.md",
+  "micro_window_ids": [
+    "WIN-3EEBF9277C57-0006",
+    "WIN-3EEBF9277C57-0007",
+    "WIN-3EEBF9277C57-0008",
+    "WIN-3EEBF9277C57-0009",
+    "WIN-3EEBF9277C57-0010",
+    "WIN-3EEBF9277C57-0011",
+    "WIN-3EEBF9277C57-0012",
+    "WIN-3EEBF9277C57-0013"
+  ],
+  "phase": "blind_macro_window_review",
+  "required_dimensions": [
+    "behavior",
+    "capabilities",
+    "inputs_outputs",
+    "contracts",
+    "states_transitions",
+    "authority",
+    "ownership",
+    "consumers",
+    "gui_truth",
+    "failures_recovery",
+    "security_privacy",
+    "propagation",
+    "operations",
+    "scale_performance",
+    "compatibility_migration",
+    "acceptance_oracles",
+    "builder_discretion",
+    "ambiguity_unknowns",
+    "missing_callers_consumers",
+    "invalid_states_transitions",
+    "concurrency_races",
+    "partial_failure",
+    "recovery_rollback",
+    "authority_boundaries",
+    "privacy_data_lifecycle",
+    "untrusted_inputs",
+    "gui_misleading_states",
+    "offline_network_loss",
+    "scale_limits",
+    "accessibility",
+    "localization",
+    "observability_support",
+    "destructive_actions",
+    "cross_document_seams",
+    "test_falsifiability",
+    "unknown_unknowns"
+  ],
+  "result_contract": {
+    "attestation_keys": [
+      "no_canonical_writes",
+      "no_external_research_during_blind_review",
+      "no_peer_result_access",
+      "no_prior_audit_access",
+      "no_unrelated_source_access",
+      "terminal_after_submission"
+    ],
+    "builder_discretion_type": "boolean",
+    "confidence_type": "number_0_to_1",
+    "coverage_keys": [
+      "all_micro_windows_reviewed",
+      "all_source_lines_reviewed",
+      "all_source_units_accounted",
+      "both_exact_and_adversarial_lenses_applied",
+      "dimensions_checked"
+    ],
+    "evidence_keys": [
+      "exact_quote",
+      "line_end",
+      "line_start",
+      "path",
+      "source_sha256"
+    ],
+    "item_keys": [
+      "builder_discretion",
+      "confidence",
+      "dimensions",
+      "evidence",
+      "gap_kind",
+      "impact",
+      "item_id",
+      "item_type",
+      "severity",
+      "source_unit_refs",
+      "statement",
+      "title"
+    ],
+    "item_source_unit_union_must_equal_assigned_refs": true,
+    "item_type_enum": [
+      "acceptance_oracle",
+      "authority",
+      "behavior",
+      "capability",
+      "consumer",
+      "contract",
+      "explicit_non_gap",
+      "failure_recovery",
+      "feature",
+      "gap",
+      "gui_truth",
+      "state_transition",
+      "unknown"
+    ],
+    "no_unlisted_keys_at_any_object_level": true,
+    "required_dimensions_exact_order": [
+      "behavior",
+      "capabilities",
+      "inputs_outputs",
+      "contracts",
+      "states_transitions",
+      "authority",
+      "ownership",
+      "consumers",
+      "gui_truth",
+      "failures_recovery",
+      "security_privacy",
+      "propagation",
+      "operations",
+      "scale_performance",
+      "compatibility_migration",
+      "acceptance_oracles",
+      "builder_discretion",
+      "ambiguity_unknowns",
+      "missing_callers_consumers",
+      "invalid_states_transitions",
+      "concurrency_races",
+      "partial_failure",
+      "recovery_rollback",
+      "authority_boundaries",
+      "privacy_data_lifecycle",
+      "untrusted_inputs",
+      "gui_misleading_states",
+      "offline_network_loss",
+      "scale_limits",
+      "accessibility",
+      "localization",
+      "observability_support",
+      "destructive_actions",
+      "cross_document_seams",
+      "test_falsifiability",
+      "unknown_unknowns"
+    ],
+    "schema_version": "macro-review-result-v1",
+    "segment_item_union_must_equal_item_ids": true,
+    "segment_keys": [
+      "core_range",
+      "covered_source_unit_refs",
+      "item_ids",
+      "reviewed",
+      "summary",
+      "window_id"
+    ],
+    "severity_enum": [
+      "info",
+      "low",
+      "medium",
+      "high",
+      "critical"
+    ],
+    "source_binding_keys": [
+      "bundle_id",
+      "document_path",
+      "micro_window_ids",
+      "source_sha256"
+    ],
+    "synthesis_keys": [
+      "cross_document_questions",
+      "feature_family_keys",
+      "research_queries"
+    ],
+    "top_keys": [
+      "assignment_id",
+      "attempt_id",
+      "audit_id",
+      "coverage",
+      "items",
+      "model",
+      "phase",
+      "reasoning_effort",
+      "schema_version",
+      "segments",
+      "self_attestation",
+      "source_binding",
+      "status",
+      "synthesis",
+      "task_thread_id"
+    ]
+  },
+  "result_schema_ref": "schemas/macro_review_result.schema.json",
+  "review_instructions": "Read every assigned core line and account for every required_source_unit_ref. Apply both exact-behavior and adversarial-negative-space lenses across every required dimension. Extract concise feature, behavior, contract, state, authority, consumer, GUI, failure/recovery, oracle, gap, unknown, and explicit-non-gap items with exact source evidence. Do not merely paraphrase headings or copy unit refs. Each segment must name its complete required_source_unit_refs list and at least one item. Write exactly one regular JSON payload inside the assigned output directory; result.json is recommended but the filename is not semantic. Do not write a terminal seal. Return PMR1 only after the JSON payload is fully written.",
+  "schema_version": "macro-context-capsule-v2",
+  "segments": [
+    {
+      "core_range": [
+        1008,
+        1373
+      ],
+      "core_sha256": "ec059ca1c84244c3ef18ada2176a3182d3c9599026f6c597f8bd865bb1c4058f",
+      "plan_unit_ids": [
+        "0PI-005",
+        "0PI-006",
+        "0PI-007",
+        "0PI-008",
+        "0PI-009",
+        "0PI-010",
+        "0PI-011"
+      ],
+      "required_source_unit_refs": [
+        "PLANUNIT:0PI-005",
+        "PLANUNIT:0PI-006",
+        "PLANUNIT:0PI-007",
+        "PLANUNIT:0PI-008",
+        "PLANUNIT:0PI-009",
+        "PLANUNIT:0PI-010",
+        "PLANUNIT:0PI-011",
+        "SEMANTIC:PLANUNIT:0PI-005",
+        "SEMANTIC:PLANUNIT:0PI-006",
+        "SEMANTIC:PLANUNIT:0PI-007",
+        "SEMANTIC:PLANUNIT:0PI-008",
+        "SEMANTIC:PLANUNIT:0PI-009",
+        "SEMANTIC:PLANUNIT:0PI-010",
+        "SEMANTIC:PLANUNIT:0PI-011"
+      ],
+      "semantic_block_ids": [
+        "PLANUNIT:0PI-005",
+        "PLANUNIT:0PI-006",
+        "PLANUNIT:0PI-007",
+        "PLANUNIT:0PI-008",
+        "PLANUNIT:0PI-009",
+        "PLANUNIT:0PI-010",
+        "PLANUNIT:0PI-011"
+      ],
+      "structural_paths": [],
+      "token_estimate": 5405,
+      "window_id": "WIN-3EEBF9277C57-0006"
+    },
+    {
+      "core_range": [
+        1374,
+        1731
+      ],
+      "core_sha256": "f200add6d5f3ac6d11fe29c8f532a7458b3de2597c606539c6638550518cd8ab",
+      "plan_unit_ids": [
+        "0PI-012",
+        "0PI-013",
+        "0PI-014",
+        "0PI-015",
+        "0PI-016",
+        "0PI-017",
+        "0PI-018"
+      ],
+      "required_source_unit_refs": [
+        "PLANUNIT:0PI-012",
+        "PLANUNIT:0PI-013",
+        "PLANUNIT:0PI-014",
+        "PLANUNIT:0PI-015",
+        "PLANUNIT:0PI-016",
+        "PLANUNIT:0PI-017",
+        "PLANUNIT:0PI-018",
+        "SEMANTIC:PLANUNIT:0PI-012",
+        "SEMANTIC:PLANUNIT:0PI-013",
+        "SEMANTIC:PLANUNIT:0PI-014",
+        "SEMANTIC:PLANUNIT:0PI-015",
+        "SEMANTIC:PLANUNIT:0PI-016",
+        "SEMANTIC:PLANUNIT:0PI-017",
+        "SEMANTIC:PLANUNIT:0PI-018"
+      ],
+      "semantic_block_ids": [
+        "PLANUNIT:0PI-012",
+        "PLANUNIT:0PI-013",
+        "PLANUNIT:0PI-014",
+        "PLANUNIT:0PI-015",
+        "PLANUNIT:0PI-016",
+        "PLANUNIT:0PI-017",
+        "PLANUNIT:0PI-018"
+      ],
+      "structural_paths": [],
+      "token_estimate": 5308,
+      "window_id": "WIN-3EEBF9277C57-0007"
+    },
+    {
+      "core_range": [
+        1732,
+        2094
+      ],
+      "core_sha256": "c958aa5833f0818c5cc3a267a08b77b3afe17d9675b29a6a8b50aea5c405cc91",
+      "plan_unit_ids": [
+        "0PI-019",
+        "0PI-020",
+        "0PI-021",
+        "0PI-022",
+        "0PI-023",
+        "0PI-024",
+        "0PI-025"
+      ],
+      "required_source_unit_refs": [
+        "PLANUNIT:0PI-019",
+        "PLANUNIT:0PI-020",
+        "PLANUNIT:0PI-021",
+        "PLANUNIT:0PI-022",
+        "PLANUNIT:0PI-023",
+        "PLANUNIT:0PI-024",
+        "PLANUNIT:0PI-025",
+        "SEMANTIC:PLANUNIT:0PI-019",
+        "SEMANTIC:PLANUNIT:0PI-020",
+        "SEMANTIC:PLANUNIT:0PI-021",
+        "SEMANTIC:PLANUNIT:0PI-022",
+        "SEMANTIC:PLANUNIT:0PI-023",
+        "SEMANTIC:PLANUNIT:0PI-024",
+        "SEMANTIC:PLANUNIT:0PI-025"
+      ],
+      "semantic_block_ids": [
+        "PLANUNIT:0PI-019",
+        "PLANUNIT:0PI-020",
+        "PLANUNIT:0PI-021",
+        "PLANUNIT:0PI-022",
+        "PLANUNIT:0PI-023",
+        "PLANUNIT:0PI-024",
+        "PLANUNIT:0PI-025"
+      ],
+      "structural_paths": [],
+      "token_estimate": 5403,
+      "window_id": "WIN-3EEBF9277C57-0008"
+    },
+    {
+      "core_range": [
+        2095,
+        2475
+      ],
+      "core_sha256": "43a1981e87ce050f6486ad27190b37faef9d1db442751f6a078ad2b398b9ef5c",
+      "plan_unit_ids": [
+        "0PI-026",
+        "0PI-027",
+        "0PI-028",
+        "0PI-029",
+        "0PI-030",
+        "0PI-031",
+        "0PI-032"
+      ],
+      "required_source_unit_refs": [
+        "PLANUNIT:0PI-026",
+        "PLANUNIT:0PI-027",
+        "PLANUNIT:0PI-028",
+        "PLANUNIT:0PI-029",
+        "PLANUNIT:0PI-030",
+        "PLANUNIT:0PI-031",
+        "PLANUNIT:0PI-032",
+        "SEMANTIC:PLANUNIT:0PI-026",
+        "SEMANTIC:PLANUNIT:0PI-027",
+        "SEMANTIC:PLANUNIT:0PI-028",
+        "SEMANTIC:PLANUNIT:0PI-029",
+        "SEMANTIC:PLANUNIT:0PI-030",
+        "SEMANTIC:PLANUNIT:0PI-031",
+        "SEMANTIC:PLANUNIT:0PI-032"
+      ],
+      "semantic_block_ids": [
+        "PLANUNIT:0PI-026",
+        "PLANUNIT:0PI-027",
+        "PLANUNIT:0PI-028",
+        "PLANUNIT:0PI-029",
+        "PLANUNIT:0PI-030",
+        "PLANUNIT:0PI-031",
+        "PLANUNIT:0PI-032"
+      ],
+      "structural_paths": [],
+      "token_estimate": 5463,
+      "window_id": "WIN-3EEBF9277C57-0009"
+    },
+    {
+      "core_range": [
+        2476,
+        2858
+      ],
+      "core_sha256": "22cd95d2b6640bc7288084606d597cc2b359d99203b078152bc7cf193fdbda57",
+      "plan_unit_ids": [
+        "0PI-033",
+        "0PI-034",
+        "0PI-035",
+        "0PI-036",
+        "0PI-037",
+        "0PI-038",
+        "0PI-039"
+      ],
+      "required_source_unit_refs": [
+        "PLANUNIT:0PI-033",
+        "PLANUNIT:0PI-034",
+        "PLANUNIT:0PI-035",
+        "PLANUNIT:0PI-036",
+        "PLANUNIT:0PI-037",
+        "PLANUNIT:0PI-038",
+        "PLANUNIT:0PI-039",
+        "SEMANTIC:PLANUNIT:0PI-033",
+        "SEMANTIC:PLANUNIT:0PI-034",
+        "SEMANTIC:PLANUNIT:0PI-035",
+        "SEMANTIC:PLANUNIT:0PI-036",
+        "SEMANTIC:PLANUNIT:0PI-037",
+        "SEMANTIC:PLANUNIT:0PI-038",
+        "SEMANTIC:PLANUNIT:0PI-039"
+      ],
+      "semantic_block_ids": [
+        "PLANUNIT:0PI-033",
+        "PLANUNIT:0PI-034",
+        "PLANUNIT:0PI-035",
+        "PLANUNIT:0PI-036",
+        "PLANUNIT:0PI-037",
+        "PLANUNIT:0PI-038",
+        "PLANUNIT:0PI-039"
+      ],
+      "structural_paths": [],
+      "token_estimate": 5523,
+      "window_id": "WIN-3EEBF9277C57-0010"
+    },
+    {
+      "core_range": [
+        2859,
+        3258
+      ],
+      "core_sha256": "ec15676cafd3bfb8d9b499fba254fef21560eaef9021c3821ef76392f32dd359",
+      "plan_unit_ids": [
+        "0PI-040",
+        "0PI-041",
+        "0PI-042",
+        "0PI-043",
+        "0PI-044",
+        "0PI-045"
+      ],
+      "required_source_unit_refs": [
+        "PLANUNIT:0PI-040",
+        "PLANUNIT:0PI-041",
+        "PLANUNIT:0PI-042",
+        "PLANUNIT:0PI-043",
+        "PLANUNIT:0PI-044",
+        "PLANUNIT:0PI-045",
+        "SEMANTIC:PLANUNIT:0PI-040",
+        "SEMANTIC:PLANUNIT:0PI-041",
+        "SEMANTIC:PLANUNIT:0PI-042",
+        "SEMANTIC:PLANUNIT:0PI-043",
+        "SEMANTIC:PLANUNIT:0PI-044",
+        "SEMANTIC:PLANUNIT:0PI-045"
+      ],
+      "semantic_block_ids": [
+        "PLANUNIT:0PI-040",
+        "PLANUNIT:0PI-041",
+        "PLANUNIT:0PI-042",
+        "PLANUNIT:0PI-043",
+        "PLANUNIT:0PI-044",
+        "PLANUNIT:0PI-045"
+      ],
+      "structural_paths": [],
+      "token_estimate": 5155,
+      "window_id": "WIN-3EEBF9277C57-0011"
+    },
+    {
+      "core_range": [
+        3259,
+        3600
+      ],
+      "core_sha256": "a35d56ae81b3556b9b6310cb626b1d901f49bb77df4f0d5b9fdbf5d85f5710af",
+      "plan_unit_ids": [
+        "0PI-046",
+        "0PI-047",
+        "0PI-048",
+        "0PI-049",
+        "0PI-050"
+      ],
+      "required_source_unit_refs": [
+        "PLANUNIT:0PI-046",
+        "PLANUNIT:0PI-047",
+        "PLANUNIT:0PI-048",
+        "PLANUNIT:0PI-049",
+        "PLANUNIT:0PI-050",
+        "SEMANTIC:PLANUNIT:0PI-046",
+        "SEMANTIC:PLANUNIT:0PI-047",
+        "SEMANTIC:PLANUNIT:0PI-048",
+        "SEMANTIC:PLANUNIT:0PI-049",
+        "SEMANTIC:PLANUNIT:0PI-050"
+      ],
+      "semantic_block_ids": [
+        "PLANUNIT:0PI-046",
+        "PLANUNIT:0PI-047",
+        "PLANUNIT:0PI-048",
+        "PLANUNIT:0PI-049",
+        "PLANUNIT:0PI-050"
+      ],
+      "structural_paths": [],
+      "token_estimate": 4560,
+      "window_id": "WIN-3EEBF9277C57-0012"
+    },
+    {
+      "core_range": [
+        3601,
+        3962
+      ],
+      "core_sha256": "e888df2ce6935ca4c90c07862bfe53cce401125504997f3968cbd4e528c88797",
+      "plan_unit_ids": [
+        "0PI-051",
+        "0PI-052",
+        "0PI-053",
+        "0PI-054",
+        "0PI-055"
+      ],
+      "required_source_unit_refs": [
+        "PLANUNIT:0PI-051",
+        "PLANUNIT:0PI-052",
+        "PLANUNIT:0PI-053",
+        "PLANUNIT:0PI-054",
+        "PLANUNIT:0PI-055",
+        "SEMANTIC:PLANUNIT:0PI-051",
+        "SEMANTIC:PLANUNIT:0PI-052",
+        "SEMANTIC:PLANUNIT:0PI-053",
+        "SEMANTIC:PLANUNIT:0PI-054",
+        "SEMANTIC:PLANUNIT:0PI-055"
+      ],
+      "semantic_block_ids": [
+        "PLANUNIT:0PI-051",
+        "PLANUNIT:0PI-052",
+        "PLANUNIT:0PI-053",
+        "PLANUNIT:0PI-054",
+        "PLANUNIT:0PI-055"
+      ],
+      "structural_paths": [],
+      "token_estimate": 5366,
+      "window_id": "WIN-3EEBF9277C57-0013"
+    }
+  ],
+  "source_excerpt_line_format": "L######## followed by a tab and exact canonical source text",
+  "source_excerpt_ref": "capsules/source/7c/7c4d19920f769eb58168c4472b62c3a15cf7e31dab58ae5501698816c1606179.txt",
+  "source_excerpt_sha256": "7c4d19920f769eb58168c4472b62c3a15cf7e31dab58ae5501698816c1606179",
+  "source_sha256": "4eefdf9546cfd489c71e58fb020fe39e5df1fff2aeb0941d6eb77d43f26c9c9e",
+  "token_estimate": 42183
+}

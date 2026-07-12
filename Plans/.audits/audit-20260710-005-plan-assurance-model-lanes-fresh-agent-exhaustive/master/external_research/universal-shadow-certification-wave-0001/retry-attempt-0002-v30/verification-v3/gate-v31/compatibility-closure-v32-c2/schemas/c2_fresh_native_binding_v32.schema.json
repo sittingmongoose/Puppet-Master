@@ -1,0 +1,144 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "urn:a005:c2:fresh-native-binding:v32",
+  "title": "Audit005 C2 fresh Luna native binding",
+  "type": "object",
+  "additionalProperties": false,
+  "required": ["schema_version", "status", "slot_id", "capture_authority", "identity_authority", "spawn_marker", "task_name", "controller_native", "reviewer_native", "closure", "report_binding", "source_binding", "scope"],
+  "properties": {
+    "schema_version": {"const": "a005-c2-fresh-luna-native-binding-v32-v1"},
+    "status": {"const": "PASS_FRESH_REVIEWER_TERMINAL_CAPTURE_PENDING"},
+    "slot_id": {"const": "c2-atomic8-prelaunch"},
+    "capture_authority": {"const": "controller_parent_and_child_native_session_records"},
+    "identity_authority": {"const": "native_session_not_report_self_attestation"},
+    "spawn_marker": {"const": "A005-ERSC-GATE-V31-C2-ATOMIC8-PRELAUNCH"},
+    "task_name": {"const": "a005_ersc_v31_c2_atomic8_prelaunch_luna_max"},
+    "controller_native": {"$ref": "#/$defs/controller"},
+    "reviewer_native": {"$ref": "#/$defs/reviewer"},
+    "closure": {"$ref": "#/$defs/closure"},
+    "report_binding": {"$ref": "#/$defs/report"},
+    "source_binding": {"$ref": "#/$defs/source"},
+    "scope": {"$ref": "#/$defs/scope"}
+  },
+  "$defs": {
+    "sha256": {"type": "string", "pattern": "^[0-9a-f]{64}$"},
+    "uuid7": {"type": "string", "pattern": "^[0-9a-f]{8}-[0-9a-f]{4}-7[0-9a-f]{3}-[89ab][0-9a-f]{3}-[0-9a-f]{12}$"},
+    "controller": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["native_thread_id", "native_turn_id", "session_path", "session_prefix_line_count", "session_prefix_sha256", "turn_start_line", "turn_end_line", "turn_segment_sha256", "turn_context_line", "turn_context_record_sha256", "spawn_call_line", "spawn_call_id", "spawn_record_sha256", "spawn_result_line", "spawn_result_record_sha256", "terminal_record_line", "terminal_record_sha256", "task_complete_record_sha256", "actual_model", "actual_reasoning_effort"],
+      "properties": {
+        "native_thread_id": {"const": "019f553d-af6e-7c91-a43f-d81e06d100fd"},
+        "native_turn_id": {"$ref": "#/$defs/uuid7"},
+        "session_path": {"type": "string", "minLength": 1},
+        "session_prefix_line_count": {"type": "integer", "minimum": 8},
+        "session_prefix_sha256": {"$ref": "#/$defs/sha256"},
+        "turn_start_line": {"type": "integer", "minimum": 1},
+        "turn_end_line": {"type": "integer", "minimum": 1},
+        "turn_segment_sha256": {"$ref": "#/$defs/sha256"},
+        "turn_context_line": {"type": "integer", "minimum": 1},
+        "turn_context_record_sha256": {"$ref": "#/$defs/sha256"},
+        "spawn_call_line": {"type": "integer", "minimum": 1},
+        "spawn_call_id": {"type": "string", "minLength": 1},
+        "spawn_record_sha256": {"$ref": "#/$defs/sha256"},
+        "spawn_result_line": {"type": "integer", "minimum": 1},
+        "spawn_result_record_sha256": {"$ref": "#/$defs/sha256"},
+        "terminal_record_line": {"type": "integer", "minimum": 1},
+        "terminal_record_sha256": {"$ref": "#/$defs/sha256"},
+        "task_complete_record_sha256": {"$ref": "#/$defs/sha256"},
+        "actual_model": {"const": "gpt-5.6-luna"},
+        "actual_reasoning_effort": {"const": "max"}
+      }
+    },
+    "reviewer": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["native_thread_id", "native_turn_id", "parent_thread_id", "session_path", "session_sha256", "session_line_count", "session_meta_line", "session_meta_record_sha256", "task_started_line", "task_started_record_sha256", "turn_context_line", "turn_context_record_sha256", "task_complete_line", "task_complete_record_sha256", "task_complete_is_last_line", "actual_model", "actual_reasoning_effort", "collaboration_model", "collaboration_reasoning_effort", "fork_context", "fork_turns", "forked_from_id", "terminal_status", "terminal_report_sha256"],
+      "properties": {
+        "native_thread_id": {"$ref": "#/$defs/uuid7"},
+        "native_turn_id": {"$ref": "#/$defs/uuid7"},
+        "parent_thread_id": {"const": "019f553d-af6e-7c91-a43f-d81e06d100fd"},
+        "session_path": {"type": "string", "minLength": 1},
+        "session_sha256": {"$ref": "#/$defs/sha256"},
+        "session_line_count": {"type": "integer", "minimum": 4},
+        "session_meta_line": {"type": "integer", "minimum": 1},
+        "session_meta_record_sha256": {"$ref": "#/$defs/sha256"},
+        "task_started_line": {"type": "integer", "minimum": 1},
+        "task_started_record_sha256": {"$ref": "#/$defs/sha256"},
+        "turn_context_line": {"type": "integer", "minimum": 1},
+        "turn_context_record_sha256": {"$ref": "#/$defs/sha256"},
+        "task_complete_line": {"type": "integer", "minimum": 1},
+        "task_complete_record_sha256": {"$ref": "#/$defs/sha256"},
+        "task_complete_is_last_line": {"const": true},
+        "actual_model": {"const": "gpt-5.6-luna"},
+        "actual_reasoning_effort": {"const": "max"},
+        "collaboration_model": {"const": "gpt-5.6-luna"},
+        "collaboration_reasoning_effort": {"const": "max"},
+        "fork_context": {"const": false},
+        "fork_turns": {"const": "none"},
+        "forked_from_id": {"type": "null"},
+        "terminal_status": {"const": "completed"},
+        "terminal_report_sha256": {"const": "a916e52e5b8994cce2000df919c899718ce41b2f7abc15f9f5be71b7adc3619d"}
+      }
+    },
+    "closure": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["matching_spawn_count", "reviewer_count", "followup_task_count", "send_message_count", "interrupt_count", "retry_count", "descendant_spawn_count", "post_terminal_reuse_actions"],
+      "properties": {
+        "matching_spawn_count": {"const": 1},
+        "reviewer_count": {"const": 1},
+        "followup_task_count": {"const": 0},
+        "send_message_count": {"const": 0},
+        "interrupt_count": {"const": 0},
+        "retry_count": {"const": 0},
+        "descendant_spawn_count": {"const": 0},
+        "post_terminal_reuse_actions": {"type": "array", "maxItems": 0}
+      }
+    },
+    "report": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["relative_path", "raw_sha256", "byte_count", "semantic_status", "identity_fields_authoritative"],
+      "properties": {
+        "relative_path": {"const": "master/external_research/universal-shadow-certification-wave-0001/retry-attempt-0002-v30/verification-v3/gate-v31/reports/c2-atomic8-prelaunch.json"},
+        "raw_sha256": {"const": "a916e52e5b8994cce2000df919c899718ce41b2f7abc15f9f5be71b7adc3619d"},
+        "byte_count": {"const": 1509},
+        "semantic_status": {"const": "PASS"},
+        "identity_fields_authoritative": {"const": false}
+      }
+    },
+    "source": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["cohort_authority_sha256", "cohort_manifest_sha256", "result_schema_sha256", "prompt_sha256", "source_transaction_digest", "primary_postrun_sha256", "primary_rejected_set_report_sha256", "prior_postrun_native_capture_sha256", "prior_postrun_native_checkpoint_sha256"],
+      "properties": {
+        "cohort_authority_sha256": {"const": "8ae8d50bbdba720b2d867849f7b86213b541669454dec7e34bdff679ddf75d2e"},
+        "cohort_manifest_sha256": {"const": "71b26c04bab690a3d638ea13f177298474ac68d95172f8a57ba42edf590751b8"},
+        "result_schema_sha256": {"const": "2d5ccd16dfa2ba7542c7b40924fbf5274c1c96d17286f2ad149947b29db66908"},
+        "prompt_sha256": {"const": "4896869ec5824b742213b99286b85117c098f599cca4a6523f7d2d2a54aa2c2f"},
+        "source_transaction_digest": {"const": "c4ce218e0aa044d850b1b026fe10b98766138748b585e2680916fb80964cc70f"},
+        "primary_postrun_sha256": {"const": "c756c049c3ae93c518b155d69c64b595e05c2ae04b62f82226c4dd7d89c60454"},
+        "primary_rejected_set_report_sha256": {"const": "0b414ed2b896c6da66007ffd2215643b979dd7f9b8de32791eb7eff61b5f857f"},
+        "prior_postrun_native_capture_sha256": {"const": "9e1bfede92341bf4e42f39a305fd39a6fa1c54d7c5c22566f23258b12130c92d"},
+        "prior_postrun_native_checkpoint_sha256": {"const": "9a0b17c263a317e7e5b53fa721b049e0ba355b161d2703c24df7c9347eb49cd7"}
+      }
+    },
+    "scope": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["activation_authorized", "launch_authorized", "spawn", "spawn_count", "result_count", "receipt_count", "runtime_native_capture_rows", "activation_transactions", "credit"],
+      "properties": {
+        "activation_authorized": {"const": false},
+        "launch_authorized": {"const": false},
+        "spawn": {"const": "none"},
+        "spawn_count": {"const": 0},
+        "result_count": {"const": 0},
+        "receipt_count": {"const": 0},
+        "runtime_native_capture_rows": {"const": 0},
+        "activation_transactions": {"const": 0},
+        "credit": {"const": 0}
+      }
+    }
+  }
+}

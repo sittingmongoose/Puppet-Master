@@ -1,0 +1,95 @@
+{
+  "activation": {
+    "authorized": false,
+    "enabled": false,
+    "future_policy_required": "CONCURRENCY_POLICY_V32.json",
+    "parent_native_capture_required": true
+  },
+  "assignment_id": "A005SA-0013",
+  "attempt_id": "attempt-0002",
+  "audit_id": "audit-20260710-005-plan-assurance-model-lanes-fresh-agent-exhaustive",
+  "cohort_id": "cohort-0002",
+  "contracts": {
+    "base_schema_sha256": "190a5e612bdbe7b2de4f3659fdbe7b9f2621ee2f194a25051f2bf39df4ac3db8",
+    "base_semantic_validator_sha256": "6852290f7d9cf1df502a4618d72880e38f1a2e9b3d94f3a763ff9ac5d785bfc7",
+    "prompt": {
+      "byte_count": 1414,
+      "canonical_sha256": "99023529b3dd9d1e38b654e2250cf69160dda07b1c221b918a4aa7b78bf13a68",
+      "path": "/Users/jaredsmacbookair/Documents/PuppetMaster/Plans/.audits/audit-20260710-005-plan-assurance-model-lanes-fresh-agent-exhaustive/master/scenario_adversarial/wave-0001/cohorts/cohort-0002/semantic-repair-attempt-0002-gate-v31/leaf_prompt.json",
+      "raw_sha256": "f218d13e51951ee7e9ecbfd38ce03a475579672defe324c746a654c595ed7c85"
+    },
+    "schema": {
+      "byte_count": 16792,
+      "canonical_sha256": "fb216fca96b803c187aa740ca4d925292d878d7c25c281ecbfe5c1867fff667b",
+      "path": "/Users/jaredsmacbookair/Documents/PuppetMaster/Plans/.audits/audit-20260710-005-plan-assurance-model-lanes-fresh-agent-exhaustive/master/scenario_adversarial/wave-0001/cohorts/cohort-0002/semantic-repair-attempt-0002-gate-v31/schema/result.schema.json",
+      "raw_sha256": "da13752427a3ade2339bbefddf660b4f72aba3bb158a85a2fe413b8b28ad76d2"
+    },
+    "schema_checks_removed": 0,
+    "semantic_checks_removed": 0
+  },
+  "credit": 0,
+  "future_activation_policy": {
+    "activation_granted": false,
+    "path": "/Users/jaredsmacbookair/Documents/PuppetMaster/Plans/.audits/audit-20260710-005-plan-assurance-model-lanes-fresh-agent-exhaustive/master/coordination/CONCURRENCY_POLICY_V32.json",
+    "sha256": "4826ade4c38db47ee184b34e5d7b7bd5ba6cabeecc9baa686cb9d99eeff8a3ed"
+  },
+  "live_research_contract": {
+    "claim_support_mapping_required": true,
+    "concrete_overall_and_blocked_dimension_deltas_required": true,
+    "https_only": true,
+    "live_public_web_required": true,
+    "minimum_distinct_authority_ids_for_certified": 2,
+    "minimum_distinct_registrable_domains_for_certified": 2,
+    "no_evidence_minimum_distinct_attempts": 2,
+    "placeholder_private_ip_sources_forbidden": true,
+    "source_registry_required": true
+  },
+  "luna_confirmation": {
+    "identity_fields_authoritative": false,
+    "path": "/Users/jaredsmacbookair/Documents/PuppetMaster/Plans/.audits/audit-20260710-005-plan-assurance-model-lanes-fresh-agent-exhaustive/master/scenario_adversarial/wave-0001/postrun-validator-v29-ultra/independent-execution/cohort-0002-luna-postrun.json",
+    "read_by_leaf": false,
+    "sha256": "bd0a749e597fcb74c5347c85865c552c3f4a99a88543d754cf94ef7624fdd932"
+  },
+  "output": {
+    "directory": "/Users/jaredsmacbookair/Documents/PuppetMaster/Plans/.audits/audit-20260710-005-plan-assurance-model-lanes-fresh-agent-exhaustive/master/scenario_adversarial/wave-0001/cohorts/cohort-0002/semantic-repair-attempt-0002-gate-v31/outputs/A005SA-0013/attempt-0002",
+    "future_result_name": "result.json",
+    "must_be_empty_prelaunch": true,
+    "prelaunch_inventory_sha256": "4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945"
+  },
+  "packet": {
+    "feature_count": 92,
+    "feature_refs_digest": "9a4a7add98cbd8e9f4ef451427c0d9faeca556b4be03815d9dff1e8d416e434b",
+    "packet_id": "SAPKT-0013",
+    "path": "/Users/jaredsmacbookair/Documents/PuppetMaster/Plans/.audits/audit-20260710-005-plan-assurance-model-lanes-fresh-agent-exhaustive/master/scenario_adversarial/wave-0001/packets/SAPKT-0013.json",
+    "sha256": "56b1585c6600ed950756214710ba11a90d7f121eabe1ced268465cac1c8b873a"
+  },
+  "read_policy": {
+    "attempt1_result_body_forbidden": true,
+    "canonical_plans_prose_forbidden": true,
+    "live_public_web_allowed": true,
+    "peer_results_forbidden": true
+  },
+  "runtime": {
+    "descendants_forbidden": true,
+    "followups_forbidden": true,
+    "fork_turns": "none",
+    "fresh_identity_path": "/root/sol_controller_v29/a005_scenario_adversarial_0013_semantic_repair_attempt_0002_ultra_v31",
+    "fresh_identity_state": "reserved_unallocated",
+    "model": "gpt-5.6-sol",
+    "native_child_thread_id": null,
+    "reasoning_effort": "ultra"
+  },
+  "schema_version": "scenario-adversarial-semantic-repair-intent-v31-v1",
+  "source_attempt_id": "attempt-0001",
+  "source_preparation": {
+    "authority_sha256": "7d396839a5036dfdf9f2f50e49b00f3a9238a1ad0045f2591f701226ca155867",
+    "mutation_authorized": false,
+    "path": "/Users/jaredsmacbookair/Documents/PuppetMaster/Plans/.audits/audit-20260710-005-plan-assurance-model-lanes-fresh-agent-exhaustive/master/scenario_adversarial/wave-0001/cohorts/cohort-0002/semantic-repair-attempt-0002-preparation-v30"
+  },
+  "source_primary_report": {
+    "path": "/Users/jaredsmacbookair/Documents/PuppetMaster/Plans/.audits/audit-20260710-005-plan-assurance-model-lanes-fresh-agent-exhaustive/master/scenario_adversarial/wave-0001/postrun-validator-v29-ultra/primary-execution/cohort-0002-primary-postrun.json",
+    "read_by_leaf": false,
+    "sha256": "a3d998309ba2b5be3127329dcbf7168c04fad8dd860246cbe5e11a2f064c87f8"
+  },
+  "wave_id": "wave-0001"
+}

@@ -1,0 +1,99 @@
+{
+  "schema_version": "external-research-native-capture-v6",
+  "audit_id": "audit-20260710-005-plan-assurance-model-lanes-fresh-agent-exhaustive",
+  "sprint_id": "sprint-wave-0001",
+  "retry_namespace": "retry-attempt-0006",
+  "attempt_id": "attempt-0006",
+  "assignment_count": 2,
+  "leaves": [
+    {
+      "assignment_id": "ER-0003",
+      "agent_path": "/root/a005_external_research_recovery_er_0003_attempt_0006_terminal",
+      "native_child_thread_id": "019f5394-968f-73f3-a81e-33e74dda7e9f",
+      "native_child_turn_id": "019f5394-9741-7971-9434-ce77ad3c8d6b",
+      "native_child_turn_status": "completed",
+      "terminal_response_exact": "PMR1",
+      "result_present_before_pmr1": true,
+      "result_sha256": "ace2ea30e08196d3febeb1b979bb64d15b0d8b8146b4e92da2f9cc449503e6c7",
+      "receipt_sha256": "d5f997c10678cc43ba62a829269cbcdb42e2934119374a88b89f3deb036ce23c"
+    },
+    {
+      "assignment_id": "ER-0008",
+      "agent_path": "/root/a005_external_research_recovery_er_0008_attempt_0006_terminal",
+      "native_child_thread_id": "019f5394-974a-7623-ad0d-f340b8c520ef",
+      "native_child_turn_id": "019f5394-985f-7603-9a68-e40761fa96ef",
+      "native_child_turn_status": "completed",
+      "terminal_response_exact": "PMR1",
+      "result_present_before_pmr1": true,
+      "result_sha256": "41900f06989412901481b947b0914a78f6b2403e8d5d9f4ae0da8aa063d76031",
+      "receipt_sha256": "e9e0fedc51c6148fcb044aa2e82e9524ed7b60828d16ad1e279dd8d7f86cdd3e"
+    }
+  ],
+  "activation_transaction": {
+    "activation_transaction_id": "A005-ER6-1929c7554722a0dc365396f7",
+    "activation_core_sha256": "8da5c171485bb636310d1a1cfc4f8978fee6f57fd4b46273e0b2ac9b1e10d602",
+    "activation_core_file_sha256": "358be8e7f781413a64b90985da1947aef56f0dfae6cde1d942174331e5bb261f",
+    "authorization_sha256": {
+      "ER-0003": "b01d873131f76784176dd1239ee4a533109edf3f27f6490793ae8d30a25b9a46",
+      "ER-0008": "c0322d48abc1f8ef02298800040d3fff067ae86ddeeb5415d133d5414f154eb2"
+    },
+    "authorization_file_sha256": {
+      "ER-0003": "d48f0feafd9e139e9520965502e7cef962f3264cbd6d164c6b9b0cd297ca6fc3",
+      "ER-0008": "49be98f20b8f2eaa6d437e379a276431b24556600017b8c8429a85f6ee1af476"
+    },
+    "activation_envelope_sha256": "f2d280a9ec8be67cad7070923e4e81dcfdaaa90c0f98ea4cde0162d32bdd4d5c",
+    "activation_envelope_file_sha256": "01e58ddf40fbaf6128355ac9188a8143e19eed9db4d0b6321b81b9374260e812"
+  },
+  "bound_terminal_artifacts": {
+    "prelaunch_report_path": "/Users/jaredsmacbookair/Documents/PuppetMaster/Plans/.audits/audit-20260710-005-plan-assurance-model-lanes-fresh-agent-exhaustive/master/external_research/sprint-wave-0001/retry-attempt-0006/validation/luna-independent-prelaunch.json",
+    "prelaunch_report_sha256": "dae5858c97202d1bf64192dabe6d93eda651b27b4cbc601e81a87fcbdfb7079e",
+    "result_paths": {
+      "ER-0003": "/Users/jaredsmacbookair/Documents/PuppetMaster/Plans/.audits/audit-20260710-005-plan-assurance-model-lanes-fresh-agent-exhaustive/external_research_v1/ER-0003/attempts/attempt-0006/result.json",
+      "ER-0008": "/Users/jaredsmacbookair/Documents/PuppetMaster/Plans/.audits/audit-20260710-005-plan-assurance-model-lanes-fresh-agent-exhaustive/external_research_v1/ER-0008/attempts/attempt-0006/result.json"
+    },
+    "receipt_paths": {
+      "ER-0003": "/Users/jaredsmacbookair/Documents/PuppetMaster/Plans/.audits/audit-20260710-005-plan-assurance-model-lanes-fresh-agent-exhaustive/master/external_research/sprint-wave-0001/retry-attempt-0006/dispatch/ER-0003/attempt-0006/dispatch_receipt.json",
+      "ER-0008": "/Users/jaredsmacbookair/Documents/PuppetMaster/Plans/.audits/audit-20260710-005-plan-assurance-model-lanes-fresh-agent-exhaustive/master/external_research/sprint-wave-0001/retry-attempt-0006/dispatch/ER-0008/attempt-0006/dispatch_receipt.json"
+    }
+  },
+  "identity_nonreuse": {
+    "attempts_checked": ["attempt-0001", "attempt-0002", "attempt-0003", "attempt-0004", "attempt-0005", "attempt-0006"],
+    "prior_non_result_json_files_scanned": 129,
+    "prior_native_identity_count": 50,
+    "prior_canonical_path_count": 19,
+    "prior_identity_digest": "5e04cdfee00ccc1207307a96f8804653d481ca30408a97b4951a5387acead341",
+    "prior_path_digest": "66abb5304c78bebd4c80fa79d8a1972233aa0f43c92cd01c8de57033d89d57a2",
+    "current_native_identities": [
+      "019f5394-968f-73f3-a81e-33e74dda7e9f",
+      "019f5394-9741-7971-9434-ce77ad3c8d6b",
+      "019f5394-974a-7623-ad0d-f340b8c520ef",
+      "019f5394-985f-7603-9a68-e40761fa96ef"
+    ],
+    "current_agent_paths": [
+      "/root/a005_external_research_recovery_er_0003_attempt_0006_terminal",
+      "/root/a005_external_research_recovery_er_0008_attempt_0006_terminal"
+    ],
+    "reused_native_identities": [],
+    "reused_prior_agent_paths": [],
+    "pass": true
+  },
+  "terminal_rules_verified": {
+    "all_results_present_before_pmr1": true,
+    "all_terminal_responses_exact_pmr1": true,
+    "all_turns_completed": true,
+    "result_bodies_parsed_before_capture": false
+  },
+  "toctou": {
+    "captured_file_count": 22,
+    "captured_bytes_total": 157704,
+    "initial_binding_root_sha256": "53e0ebe693faee02fa0820f88b34cc3b97c3c95cdba739dcd7fc6a1a7371775e",
+    "closing_binding_root_sha256": "53e0ebe693faee02fa0820f88b34cc3b97c3c95cdba739dcd7fc6a1a7371775e",
+    "full_buffer_sha256": true,
+    "stable": true
+  },
+  "coverage_credit": 0,
+  "research_credit": 0,
+  "promotion_credit": 0,
+  "spec_credit": 0,
+  "merge_credit": 0
+}

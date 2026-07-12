@@ -1,0 +1,1080 @@
+{
+  "assignment_id": "A005M15-000046-INTEGRATED-MACRO15-AC612DBB4EFE-0009",
+  "attempt_id": "attempt-0015",
+  "audit_id": "audit-20260710-005-plan-assurance-model-lanes-fresh-agent-exhaustive",
+  "coverage": {
+    "all_micro_windows_reviewed": true,
+    "all_source_lines_reviewed": true,
+    "all_source_units_accounted": true,
+    "both_exact_and_adversarial_lenses_applied": true,
+    "dimensions_checked": [
+      "behavior",
+      "capabilities",
+      "inputs_outputs",
+      "contracts",
+      "states_transitions",
+      "authority",
+      "ownership",
+      "consumers",
+      "gui_truth",
+      "failures_recovery",
+      "security_privacy",
+      "propagation",
+      "operations",
+      "scale_performance",
+      "compatibility_migration",
+      "acceptance_oracles",
+      "builder_discretion",
+      "ambiguity_unknowns",
+      "missing_callers_consumers",
+      "invalid_states_transitions",
+      "concurrency_races",
+      "partial_failure",
+      "recovery_rollback",
+      "authority_boundaries",
+      "privacy_data_lifecycle",
+      "untrusted_inputs",
+      "gui_misleading_states",
+      "offline_network_loss",
+      "scale_limits",
+      "accessibility",
+      "localization",
+      "observability_support",
+      "destructive_actions",
+      "cross_document_seams",
+      "test_falsifiability",
+      "unknown_unknowns"
+    ]
+  },
+  "items": [
+    {
+      "builder_discretion": false,
+      "confidence": 0.95,
+      "dimensions": [
+        "behavior",
+        "contracts",
+        "states_transitions",
+        "ownership",
+        "gui_truth",
+        "failures_recovery",
+        "acceptance_oracles",
+        "ambiguity_unknowns",
+        "concurrency_races",
+        "accessibility",
+        "test_falsifiability"
+      ],
+      "evidence": [
+        {
+          "exact_quote": "  Planning recommendation UI must not copy external GUI layout from OpenCode, Cursor, VSCode,",
+          "line_end": 21125,
+          "line_start": 21125,
+          "path": "Plans/FinalGUISpec.md",
+          "source_sha256": "2ffdc9eb454f3c3bdda9d76c2c1e073e4bbb4e1cc401fd9eb91106f07301aeb5"
+        },
+        {
+          "exact_quote": "  The Dashboard distinguishes wizard_attention_required, wizard_blocked, HITL blocked actions,",
+          "line_end": 21176,
+          "line_start": 21176,
+          "path": "Plans/FinalGUISpec.md",
+          "source_sha256": "2ffdc9eb454f3c3bdda9d76c2c1e073e4bbb4e1cc401fd9eb91106f07301aeb5"
+        },
+        {
+          "exact_quote": "  Each thread row displays a worktree icon only when a thread has an active worktree binding;",
+          "line_end": 21241,
+          "line_start": 21241,
+          "path": "Plans/FinalGUISpec.md",
+          "source_sha256": "2ffdc9eb454f3c3bdda9d76c2c1e073e4bbb4e1cc401fd9eb91106f07301aeb5"
+        },
+        {
+          "exact_quote": "  Thread-selector worktree icons show tooltip lines for branch name, status pill text, and",
+          "line_end": 21294,
+          "line_start": 21294,
+          "path": "Plans/FinalGUISpec.md",
+          "source_sha256": "2ffdc9eb454f3c3bdda9d76c2c1e073e4bbb4e1cc401fd9eb91106f07301aeb5"
+        },
+        {
+          "exact_quote": "  Thread and session navigation uses a persistent sidebar or equivalent persistent region",
+          "line_end": 21353,
+          "line_start": 21353,
+          "path": "Plans/FinalGUISpec.md",
+          "source_sha256": "2ffdc9eb454f3c3bdda9d76c2c1e073e4bbb4e1cc401fd9eb91106f07301aeb5"
+        },
+        {
+          "exact_quote": "  Run Graph and Orchestrator surfaces expose wake reason, ready/blocked/backoff/remediation",
+          "line_end": 21410,
+          "line_start": 21410,
+          "path": "Plans/FinalGUISpec.md",
+          "source_sha256": "2ffdc9eb454f3c3bdda9d76c2c1e073e4bbb4e1cc401fd9eb91106f07301aeb5"
+        },
+        {
+          "exact_quote": "  When a remote side effect or guard prevents execution, the GUI presents the outcome as",
+          "line_end": 21462,
+          "line_start": 21462,
+          "path": "Plans/FinalGUISpec.md",
+          "source_sha256": "2ffdc9eb454f3c3bdda9d76c2c1e073e4bbb4e1cc401fd9eb91106f07301aeb5"
+        }
+      ],
+      "gap_kind": "missing_behavioral_oracles_and_projection_race_rules",
+      "impact": "The exact contracts establish non-goals, blocked-card priority, worktree visibility and accessibility, persistent navigation, scheduler diagnostics, and blocked-not-failed copy. Adversarially, they do not define executable GUI oracles for stale-to-fresh races, simultaneous badge changes, auto-dismiss timing, or preservation of completed local work, so materially misleading states can still satisfy the listed migration and index validators.",
+      "item_id": "A005M15-I001",
+      "item_type": "gap",
+      "severity": "high",
+      "source_unit_refs": [
+        "PLANUNIT:F3-326",
+        "PLANUNIT:F3-327",
+        "PLANUNIT:F3-328",
+        "PLANUNIT:F3-329",
+        "PLANUNIT:F3-330",
+        "PLANUNIT:F3-331",
+        "PLANUNIT:F3-332",
+        "SEMANTIC:PLANUNIT:F3-326",
+        "SEMANTIC:PLANUNIT:F3-327",
+        "SEMANTIC:PLANUNIT:F3-328",
+        "SEMANTIC:PLANUNIT:F3-329",
+        "SEMANTIC:PLANUNIT:F3-330",
+        "SEMANTIC:PLANUNIT:F3-331",
+        "SEMANTIC:PLANUNIT:F3-332"
+      ],
+      "statement": "The segment precisely constrains visible planning, worktree, navigation, scheduler, and blocked-outcome behavior, but leaves the event-order, freshness, dismissal, and executable acceptance semantics needed to prove those surfaces remain truthful under concurrent runtime changes unspecified.",
+      "title": "Planning, worktree, navigation, and blocked-state truth lack race-level GUI oracles"
+    },
+    {
+      "builder_discretion": false,
+      "confidence": 0.96,
+      "dimensions": [
+        "behavior",
+        "contracts",
+        "states_transitions",
+        "gui_truth",
+        "failures_recovery",
+        "propagation",
+        "acceptance_oracles",
+        "ambiguity_unknowns",
+        "invalid_states_transitions",
+        "concurrency_races",
+        "partial_failure",
+        "recovery_rollback",
+        "offline_network_loss",
+        "observability_support",
+        "test_falsifiability"
+      ],
+      "evidence": [
+        {
+          "exact_quote": "  Scheduler, blocked, remediation, and all-nodes-blocked UI updates follow runtime events or",
+          "line_end": 21510,
+          "line_start": 21510,
+          "path": "Plans/FinalGUISpec.md",
+          "source_sha256": "2ffdc9eb454f3c3bdda9d76c2c1e073e4bbb4e1cc401fd9eb91106f07301aeb5"
+        },
+        {
+          "exact_quote": "  Runtime-state GUI surfaces expose queue-analysis summary with last wake reason,",
+          "line_end": 21565,
+          "line_start": 21565,
+          "path": "Plans/FinalGUISpec.md",
+          "source_sha256": "2ffdc9eb454f3c3bdda9d76c2c1e073e4bbb4e1cc401fd9eb91106f07301aeb5"
+        },
+        {
+          "exact_quote": "  If the GUI cannot perform a required action in the current mode, it states why, points to",
+          "line_end": 21623,
+          "line_start": 21623,
+          "path": "Plans/FinalGUISpec.md",
+          "source_sha256": "2ffdc9eb454f3c3bdda9d76c2c1e073e4bbb4e1cc401fd9eb91106f07301aeb5"
+        },
+        {
+          "exact_quote": "  Thread and run status surfaces include distinct presentations for attention_required,",
+          "line_end": 21674,
+          "line_start": 21674,
+          "path": "Plans/FinalGUISpec.md",
+          "source_sha256": "2ffdc9eb454f3c3bdda9d76c2c1e073e4bbb4e1cc401fd9eb91106f07301aeb5"
+        },
+        {
+          "exact_quote": "  A FileSafe block renders as a persistent blocked episode until the underlying runtime block",
+          "line_end": 21733,
+          "line_start": 21733,
+          "path": "Plans/FinalGUISpec.md",
+          "source_sha256": "2ffdc9eb454f3c3bdda9d76c2c1e073e4bbb4e1cc401fd9eb91106f07301aeb5"
+        },
+        {
+          "exact_quote": "  Decomposition degradation is a pre-lock planning state only; GUI copy must not imply silent",
+          "line_end": 21782,
+          "line_start": 21782,
+          "path": "Plans/FinalGUISpec.md",
+          "source_sha256": "2ffdc9eb454f3c3bdda9d76c2c1e073e4bbb4e1cc401fd9eb91106f07301aeb5"
+        },
+        {
+          "exact_quote": "  Before owner runtime contracts define dedicated all-blocked events, GUI surfaces may derive",
+          "line_end": 21839,
+          "line_start": 21839,
+          "path": "Plans/FinalGUISpec.md",
+          "source_sha256": "2ffdc9eb454f3c3bdda9d76c2c1e073e4bbb4e1cc401fd9eb91106f07301aeb5"
+        }
+      ],
+      "gap_kind": "undefined_event_projection_reconciliation",
+      "impact": "The GUI may receive duplicate, delayed, reordered, stale, or disconnected event and projection inputs while the requirements demand immediate persistent correctness. Without precedence, deduplication, reconnect, staleness, and measurable immediacy rules, FileSafe and all-nodes-blocked episodes can disappear, regress, or misclassify even when no timer polling is used.",
+      "item_id": "A005M15-I002",
+      "item_type": "gap",
+      "severity": "high",
+      "source_unit_refs": [
+        "PLANUNIT:F3-333",
+        "PLANUNIT:F3-334",
+        "PLANUNIT:F3-335",
+        "PLANUNIT:F3-336",
+        "PLANUNIT:F3-337",
+        "PLANUNIT:F3-338",
+        "PLANUNIT:F3-339",
+        "SEMANTIC:PLANUNIT:F3-333",
+        "SEMANTIC:PLANUNIT:F3-334",
+        "SEMANTIC:PLANUNIT:F3-335",
+        "SEMANTIC:PLANUNIT:F3-336",
+        "SEMANTIC:PLANUNIT:F3-337",
+        "SEMANTIC:PLANUNIT:F3-338",
+        "SEMANTIC:PLANUNIT:F3-339"
+      ],
+      "statement": "The segment locks event-driven blocked-state rendering, visible taxonomy, disabled-action explanations, persistent FileSafe episodes, draft-only degradation, and the provisional all-blocked boundary, yet does not define how events and projections reconcile under reordering, duplication, staleness, reconnect, or partial loss.",
+      "title": "Blocked and remediation UI has no event-projection reconciliation contract"
+    },
+    {
+      "builder_discretion": false,
+      "confidence": 0.95,
+      "dimensions": [
+        "behavior",
+        "inputs_outputs",
+        "contracts",
+        "states_transitions",
+        "authority",
+        "consumers",
+        "gui_truth",
+        "failures_recovery",
+        "acceptance_oracles",
+        "ambiguity_unknowns",
+        "invalid_states_transitions",
+        "concurrency_races",
+        "authority_boundaries",
+        "accessibility",
+        "destructive_actions",
+        "cross_document_seams",
+        "test_falsifiability"
+      ],
+      "evidence": [
+        {
+          "exact_quote": "  The Canonical Blocked/Recovery Behavior section is the canonical GUI summary for blocked and",
+          "line_end": 21893,
+          "line_start": 21893,
+          "path": "Plans/FinalGUISpec.md",
+          "source_sha256": "2ffdc9eb454f3c3bdda9d76c2c1e073e4bbb4e1cc401fd9eb91106f07301aeb5"
+        },
+        {
+          "exact_quote": "  Blocked and recovery UI binds to canonical blocked projections and HITL records; blocked",
+          "line_end": 21941,
+          "line_start": 21941,
+          "path": "Plans/FinalGUISpec.md",
+          "source_sha256": "2ffdc9eb454f3c3bdda9d76c2c1e073e4bbb4e1cc401fd9eb91106f07301aeb5"
+        },
+        {
+          "exact_quote": "  The GUI does not synthesize alternate blocked schemas, alternate action arrays, or alternate",
+          "line_end": 21997,
+          "line_start": 21997,
+          "path": "Plans/FinalGUISpec.md",
+          "source_sha256": "2ffdc9eb454f3c3bdda9d76c2c1e073e4bbb4e1cc401fd9eb91106f07301aeb5"
+        },
+        {
+          "exact_quote": "  Blocked episodes are visually distinct from ordinary paused or idle states; multiple",
+          "line_end": 22049,
+          "line_start": 22049,
+          "path": "Plans/FinalGUISpec.md",
+          "source_sha256": "2ffdc9eb454f3c3bdda9d76c2c1e073e4bbb4e1cc401fd9eb91106f07301aeb5"
+        },
+        {
+          "exact_quote": "  Safe points are runtime recovery anchors and must not be presented as user-facing restore",
+          "line_end": 22102,
+          "line_start": 22102,
+          "path": "Plans/FinalGUISpec.md",
+          "source_sha256": "2ffdc9eb454f3c3bdda9d76c2c1e073e4bbb4e1cc401fd9eb91106f07301aeb5"
+        },
+        {
+          "exact_quote": "  Seam review outputs show a review verdict, failure classes with severity, evidence bundle or",
+          "line_end": 22154,
+          "line_start": 22154,
+          "path": "Plans/FinalGUISpec.md",
+          "source_sha256": "2ffdc9eb454f3c3bdda9d76c2c1e073e4bbb4e1cc401fd9eb91106f07301aeb5"
+        },
+        {
+          "exact_quote": "  Dashboard cards, thread badges, and Run Graph View node badges use the canonical visual",
+          "line_end": 22206,
+          "line_start": 22206,
+          "path": "Plans/FinalGUISpec.md",
+          "source_sha256": "2ffdc9eb454f3c3bdda9d76c2c1e073e4bbb4e1cc401fd9eb91106f07301aeb5"
+        }
+      ],
+      "gap_kind": "undefined_action_resolution_and_recovery_mapping",
+      "impact": "Ordered action IDs, shared command binding, distinct episodes, safe-point language, seam-review output, and badge mapping are explicit, but unknown, unsupported, unauthorized, stale, or empty action catalogs have no defined GUI outcome. A surface can therefore expose a label with no safe command, collapse an unavailable action without explanation, or disagree about recovery eligibility.",
+      "item_id": "A005M15-I003",
+      "item_type": "gap",
+      "severity": "high",
+      "source_unit_refs": [
+        "PLANUNIT:F3-340",
+        "PLANUNIT:F3-341",
+        "PLANUNIT:F3-342",
+        "PLANUNIT:F3-343",
+        "PLANUNIT:F3-344",
+        "PLANUNIT:F3-345",
+        "PLANUNIT:F3-346",
+        "SEMANTIC:PLANUNIT:F3-340",
+        "SEMANTIC:PLANUNIT:F3-341",
+        "SEMANTIC:PLANUNIT:F3-342",
+        "SEMANTIC:PLANUNIT:F3-343",
+        "SEMANTIC:PLANUNIT:F3-344",
+        "SEMANTIC:PLANUNIT:F3-345",
+        "SEMANTIC:PLANUNIT:F3-346"
+      ],
+      "statement": "The blocked/recovery GUI canon preserves shared schemas, actor identities, per-episode controls, safe-point language, seam-review evidence, and cross-surface badge meaning, but omits deterministic rendering and recovery behavior when command-catalog resolution or authorization fails.",
+      "title": "Shared blocked action IDs lack failure-safe command resolution semantics"
+    },
+    {
+      "builder_discretion": false,
+      "confidence": 0.94,
+      "dimensions": [
+        "behavior",
+        "inputs_outputs",
+        "contracts",
+        "states_transitions",
+        "ownership",
+        "gui_truth",
+        "failures_recovery",
+        "operations",
+        "scale_performance",
+        "acceptance_oracles",
+        "ambiguity_unknowns",
+        "concurrency_races",
+        "partial_failure",
+        "offline_network_loss",
+        "scale_limits",
+        "accessibility",
+        "localization",
+        "observability_support",
+        "test_falsifiability"
+      ],
+      "evidence": [
+        {
+          "exact_quote": "  When multiple nodes are blocked simultaneously, the dashboard shows a blocked count badge,",
+          "line_end": 22263,
+          "line_start": 22263,
+          "path": "Plans/FinalGUISpec.md",
+          "source_sha256": "2ffdc9eb454f3c3bdda9d76c2c1e073e4bbb4e1cc401fd9eb91106f07301aeb5"
+        },
+        {
+          "exact_quote": "  When remediation generation reaches the ceiling, the node transitions to blocked with",
+          "line_end": 22319,
+          "line_start": 22319,
+          "path": "Plans/FinalGUISpec.md",
+          "source_sha256": "2ffdc9eb454f3c3bdda9d76c2c1e073e4bbb4e1cc401fd9eb91106f07301aeb5"
+        },
+        {
+          "exact_quote": "  Polling intervals are acceptable only for external systems without push delivery, such as",
+          "line_end": 22376,
+          "line_start": 22376,
+          "path": "Plans/FinalGUISpec.md",
+          "source_sha256": "2ffdc9eb454f3c3bdda9d76c2c1e073e4bbb4e1cc401fd9eb91106f07301aeb5"
+        },
+        {
+          "exact_quote": "  The promoted widget catalog mirrors shared runtime contracts, replaces older mixed status",
+          "line_end": 22428,
+          "line_start": 22428,
+          "path": "Plans/FinalGUISpec.md",
+          "source_sha256": "2ffdc9eb454f3c3bdda9d76c2c1e073e4bbb4e1cc401fd9eb91106f07301aeb5"
+        },
+        {
+          "exact_quote": "  The 2026-04-06 packet-alignment register is historical context only; live widget text",
+          "line_end": 22482,
+          "line_start": 22482,
+          "path": "Plans/FinalGUISpec.md",
+          "source_sha256": "2ffdc9eb454f3c3bdda9d76c2c1e073e4bbb4e1cc401fd9eb91106f07301aeb5"
+        },
+        {
+          "exact_quote": "  Web and diff cards consume changeTracking or its explicit retirement from the Tools owner,",
+          "line_end": 22533,
+          "line_start": 22533,
+          "path": "Plans/FinalGUISpec.md",
+          "source_sha256": "2ffdc9eb454f3c3bdda9d76c2c1e073e4bbb4e1cc401fd9eb91106f07301aeb5"
+        },
+        {
+          "exact_quote": "  Web progress widgets carry progress_event fields tool_use_id, operation, phase, detail,",
+          "line_end": 22592,
+          "line_start": 22592,
+          "path": "Plans/FinalGUISpec.md",
+          "source_sha256": "2ffdc9eb454f3c3bdda9d76c2c1e073e4bbb4e1cc401fd9eb91106f07301aeb5"
+        }
+      ],
+      "gap_kind": "missing_scale_freshness_and_partial_progress_presentation",
+      "impact": "Concurrent blocked lists, remediation ceilings, external polling, owner-current widgets, change tracking, and progress payloads are specified, but there are no bounds or deterministic UI rules for large blocked sets, equal or changing sequence values, stale external status, unknown totals, regressing counters, cancellation, or partially completed results. These cases can produce inaccessible lists, misleading progress, and unstable ordering.",
+      "item_id": "A005M15-I004",
+      "item_type": "gap",
+      "severity": "high",
+      "source_unit_refs": [
+        "PLANUNIT:F3-347",
+        "PLANUNIT:F3-348",
+        "PLANUNIT:F3-349",
+        "PLANUNIT:F3-350",
+        "PLANUNIT:F3-351",
+        "PLANUNIT:F3-352",
+        "PLANUNIT:F3-353",
+        "SEMANTIC:PLANUNIT:F3-347",
+        "SEMANTIC:PLANUNIT:F3-348",
+        "SEMANTIC:PLANUNIT:F3-349",
+        "SEMANTIC:PLANUNIT:F3-350",
+        "SEMANTIC:PLANUNIT:F3-351",
+        "SEMANTIC:PLANUNIT:F3-352",
+        "SEMANTIC:PLANUNIT:F3-353"
+      ],
+      "statement": "The segment defines rich concurrent-block, remediation, polling, widget-currentness, provenance, and web-progress behavior, while leaving scale limits, ordering tie-breakers, freshness thresholds, unknown-total handling, counter monotonicity, and partial/cancelled result presentation unresolved.",
+      "title": "Concurrent blocked lists and web progress lack scale and partial-state rules"
+    },
+    {
+      "builder_discretion": false,
+      "confidence": 0.94,
+      "dimensions": [
+        "behavior",
+        "inputs_outputs",
+        "contracts",
+        "states_transitions",
+        "authority",
+        "ownership",
+        "consumers",
+        "gui_truth",
+        "failures_recovery",
+        "security_privacy",
+        "compatibility_migration",
+        "acceptance_oracles",
+        "ambiguity_unknowns",
+        "concurrency_races",
+        "recovery_rollback",
+        "authority_boundaries",
+        "privacy_data_lifecycle",
+        "accessibility",
+        "cross_document_seams",
+        "test_falsifiability"
+      ],
+      "evidence": [
+        {
+          "exact_quote": "  Planning widgets consume todowrite statuses and notes plus todoread active thread/run scope,",
+          "line_end": 22648,
+          "line_start": 22648,
+          "path": "Plans/FinalGUISpec.md",
+          "source_sha256": "2ffdc9eb454f3c3bdda9d76c2c1e073e4bbb4e1cc401fd9eb91106f07301aeb5"
+        },
+        {
+          "exact_quote": "  Question cards preserve response_kind and validation_state, and the compatibility rule that",
+          "line_end": 22700,
+          "line_start": 22700,
+          "path": "Plans/FinalGUISpec.md",
+          "source_sha256": "2ffdc9eb454f3c3bdda9d76c2c1e073e4bbb4e1cc401fd9eb91106f07301aeb5"
+        },
+        {
+          "exact_quote": "  Queue semantics stay transient, stale chat_state:v1 restore residue must not rehydrate",
+          "line_end": 22755,
+          "line_start": 22755,
+          "path": "Plans/FinalGUISpec.md",
+          "source_sha256": "2ffdc9eb454f3c3bdda9d76c2c1e073e4bbb4e1cc401fd9eb91106f07301aeb5"
+        },
+        {
+          "exact_quote": "  Chat-panel carry-through into promoted widgets includes activity-card rendering,",
+          "line_end": 22816,
+          "line_start": 22816,
+          "path": "Plans/FinalGUISpec.md",
+          "source_sha256": "2ffdc9eb454f3c3bdda9d76c2c1e073e4bbb4e1cc401fd9eb91106f07301aeb5"
+        },
+        {
+          "exact_quote": "  Operation cards preserve the three-way rendering distinction across terminal, search, and",
+          "line_end": 22872,
+          "line_start": 22872,
+          "path": "Plans/FinalGUISpec.md",
+          "source_sha256": "2ffdc9eb454f3c3bdda9d76c2c1e073e4bbb4e1cc401fd9eb91106f07301aeb5"
+        },
+        {
+          "exact_quote": "  Interactive or long-running terminal work binds to a stable terminal session; chat retains",
+          "line_end": 22925,
+          "line_start": 22925,
+          "path": "Plans/FinalGUISpec.md",
+          "source_sha256": "2ffdc9eb454f3c3bdda9d76c2c1e073e4bbb4e1cc401fd9eb91106f07301aeb5"
+        },
+        {
+          "exact_quote": "  Terminal cards expose distinct Open in Terminal, Show Terminal, Rerun in Terminal, and",
+          "line_end": 22978,
+          "line_start": 22978,
+          "path": "Plans/FinalGUISpec.md",
+          "source_sha256": "2ffdc9eb454f3c3bdda9d76c2c1e073e4bbb4e1cc401fd9eb91106f07301aeb5"
+        }
+      ],
+      "gap_kind": "missing_identity_privacy_and_multi_surface_session_arbitration",
+      "impact": "TODO ownership, question compatibility, transient queues, requested/effective identities, promoted widget scope, and terminal session handoff are all visible. The segment does not define redaction or disclosure policy for account, provider, project, path, command, and session identity, nor arbitration when multiple cards or windows focus, detach, re-dock, or rerun the same session. This risks privacy leakage and split-brain terminal controls.",
+      "item_id": "A005M15-I005",
+      "item_type": "gap",
+      "severity": "high",
+      "source_unit_refs": [
+        "PLANUNIT:F3-354",
+        "PLANUNIT:F3-355",
+        "PLANUNIT:F3-356",
+        "PLANUNIT:F3-357",
+        "PLANUNIT:F3-358",
+        "PLANUNIT:F3-359",
+        "PLANUNIT:F3-360",
+        "SEMANTIC:PLANUNIT:F3-354",
+        "SEMANTIC:PLANUNIT:F3-355",
+        "SEMANTIC:PLANUNIT:F3-356",
+        "SEMANTIC:PLANUNIT:F3-357",
+        "SEMANTIC:PLANUNIT:F3-358",
+        "SEMANTIC:PLANUNIT:F3-359",
+        "SEMANTIC:PLANUNIT:F3-360"
+      ],
+      "statement": "The exact contracts preserve TODO and question ownership, queue transience, runtime identity carry-through, operation-card distinctions, and stable terminal-session actions, but they leave sensitive identity display and multi-surface terminal-session arbitration unspecified.",
+      "title": "Runtime identity and terminal-session handoff lack privacy and arbitration rules"
+    },
+    {
+      "builder_discretion": false,
+      "confidence": 0.97,
+      "dimensions": [
+        "behavior",
+        "inputs_outputs",
+        "contracts",
+        "states_transitions",
+        "ownership",
+        "consumers",
+        "gui_truth",
+        "failures_recovery",
+        "compatibility_migration",
+        "acceptance_oracles",
+        "ambiguity_unknowns",
+        "invalid_states_transitions",
+        "concurrency_races",
+        "partial_failure",
+        "recovery_rollback",
+        "offline_network_loss",
+        "cross_document_seams",
+        "test_falsifiability"
+      ],
+      "evidence": [
+        {
+          "exact_quote": "  Terminal preview cards use collapsed 5-line and expanded 15-line previews, persist after",
+          "line_end": 23034,
+          "line_start": 23034,
+          "path": "Plans/FinalGUISpec.md",
+          "source_sha256": "2ffdc9eb454f3c3bdda9d76c2c1e073e4bbb4e1cc401fd9eb91106f07301aeb5"
+        },
+        {
+          "exact_quote": "  Search result cards preserve search-then-read answer construction: final citations come from",
+          "line_end": 23094,
+          "line_start": 23094,
+          "path": "Plans/FinalGUISpec.md",
+          "source_sha256": "2ffdc9eb454f3c3bdda9d76c2c1e073e4bbb4e1cc401fd9eb91106f07301aeb5"
+        },
+        {
+          "exact_quote": "  The Firecrawl websearch mapping preserves provider-specific search behavior and option",
+          "line_end": 23144,
+          "line_start": 23144,
+          "path": "Plans/FinalGUISpec.md",
+          "source_sha256": "2ffdc9eb454f3c3bdda9d76c2c1e073e4bbb4e1cc401fd9eb91106f07301aeb5"
+        },
+        {
+          "exact_quote": "  Web operation cards include a capability-unavailable terminal branch with clear setup",
+          "line_end": 23195,
+          "line_start": 23195,
+          "path": "Plans/FinalGUISpec.md",
+          "source_sha256": "2ffdc9eb454f3c3bdda9d76c2c1e073e4bbb4e1cc401fd9eb91106f07301aeb5"
+        },
+        {
+          "exact_quote": "  Firecrawl webresearch preserves provider-native no-URL natural-language research behavior,",
+          "line_end": 23250,
+          "line_start": 23250,
+          "path": "Plans/FinalGUISpec.md",
+          "source_sha256": "2ffdc9eb454f3c3bdda9d76c2c1e073e4bbb4e1cc401fd9eb91106f07301aeb5"
+        },
+        {
+          "exact_quote": "  Long-running web operation cards preserve structured progress_event payloads and",
+          "line_end": 23303,
+          "line_start": 23303,
+          "path": "Plans/FinalGUISpec.md",
+          "source_sha256": "2ffdc9eb454f3c3bdda9d76c2c1e073e4bbb4e1cc401fd9eb91106f07301aeb5"
+        },
+        {
+          "exact_quote": "  Operation cards are restricted to stateful, time-bounded lifecycle-bearing operations,",
+          "line_end": 23360,
+          "line_start": 23360,
+          "path": "Plans/FinalGUISpec.md",
+          "source_sha256": "2ffdc9eb454f3c3bdda9d76c2c1e073e4bbb4e1cc401fd9eb91106f07301aeb5"
+        }
+      ],
+      "gap_kind": "unmapped_card_state_taxonomies_and_partial_failure_transitions",
+      "impact": "This segment spans terminal attach recovery, citation provenance, provider ownership, capability unavailability, Firecrawl first-failure semantics, cancellation with partial results, and a broad card-state set. The nearby card taxonomy elsewhere in the assigned excerpt uses idle, running, success, error, and timeout, while this unit lists pending, completed, failed, cancelled, blocked, disconnected, restoring, and other states. No explicit mapping or transition table resolves those names, making completion, cancellation, timeout, background, disconnect, and restore rendering non-falsifiable.",
+      "item_id": "A005M15-I006",
+      "item_type": "gap",
+      "severity": "critical",
+      "source_unit_refs": [
+        "PLANUNIT:F3-361",
+        "PLANUNIT:F3-362",
+        "PLANUNIT:F3-363",
+        "PLANUNIT:F3-364",
+        "PLANUNIT:F3-365",
+        "PLANUNIT:F3-366",
+        "PLANUNIT:F3-367",
+        "SEMANTIC:PLANUNIT:F3-361",
+        "SEMANTIC:PLANUNIT:F3-362",
+        "SEMANTIC:PLANUNIT:F3-363",
+        "SEMANTIC:PLANUNIT:F3-364",
+        "SEMANTIC:PLANUNIT:F3-365",
+        "SEMANTIC:PLANUNIT:F3-366",
+        "SEMANTIC:PLANUNIT:F3-367"
+      ],
+      "statement": "The segment preserves terminal preview recovery, read-backed citations, provider boundaries, capability-unavailable behavior, Firecrawl failure semantics, partial cancellation, and operation-card lifecycles, but does not provide the cross-taxonomy state mapping and transition oracles necessary for consistent cards.",
+      "title": "Operation-card lifecycle vocabularies lack a canonical cross-owner mapping"
+    },
+    {
+      "builder_discretion": false,
+      "confidence": 0.95,
+      "dimensions": [
+        "behavior",
+        "inputs_outputs",
+        "contracts",
+        "states_transitions",
+        "authority",
+        "ownership",
+        "gui_truth",
+        "failures_recovery",
+        "security_privacy",
+        "operations",
+        "scale_performance",
+        "compatibility_migration",
+        "acceptance_oracles",
+        "ambiguity_unknowns",
+        "partial_failure",
+        "authority_boundaries",
+        "privacy_data_lifecycle",
+        "untrusted_inputs",
+        "gui_misleading_states",
+        "offline_network_loss",
+        "scale_limits",
+        "accessibility",
+        "localization",
+        "observability_support",
+        "destructive_actions",
+        "test_falsifiability"
+      ],
+      "evidence": [
+        {
+          "exact_quote": "  Message controls attach Stop, Edit, and Resend only to the most recent user-sent message,",
+          "line_end": 23423,
+          "line_start": 23423,
+          "path": "Plans/FinalGUISpec.md",
+          "source_sha256": "2ffdc9eb454f3c3bdda9d76c2c1e073e4bbb4e1cc401fd9eb91106f07301aeb5"
+        },
+        {
+          "exact_quote": "  Web activity details display provider identity, routing reason, timing, cache status,",
+          "line_end": 23483,
+          "line_start": 23483,
+          "path": "Plans/FinalGUISpec.md",
+          "source_sha256": "2ffdc9eb454f3c3bdda9d76c2c1e073e4bbb4e1cc401fd9eb91106f07301aeb5"
+        },
+        {
+          "exact_quote": "  Web/search/diff cards preserve distinct card anatomy, narrative order, completed-content",
+          "line_end": 23547,
+          "line_start": 23547,
+          "path": "Plans/FinalGUISpec.md",
+          "source_sha256": "2ffdc9eb454f3c3bdda9d76c2c1e073e4bbb4e1cc401fd9eb91106f07301aeb5"
+        },
+        {
+          "exact_quote": "  Web/provider GUI cards expose structured operation_input as canonical operation input while",
+          "line_end": 23604,
+          "line_start": 23604,
+          "path": "Plans/FinalGUISpec.md",
+          "source_sha256": "2ffdc9eb454f3c3bdda9d76c2c1e073e4bbb4e1cc401fd9eb91106f07301aeb5"
+        },
+        {
+          "exact_quote": "  Legacy /operation-card references normalize to the operation-card widget family while",
+          "line_end": 23664,
+          "line_start": 23664,
+          "path": "Plans/FinalGUISpec.md",
+          "source_sha256": "2ffdc9eb454f3c3bdda9d76c2c1e073e4bbb4e1cc401fd9eb91106f07301aeb5"
+        },
+        {
+          "exact_quote": "  Blocked or unavailable web/provider cards surface machine-actionable blocked responses",
+          "line_end": 23720,
+          "line_start": 23720,
+          "path": "Plans/FinalGUISpec.md",
+          "source_sha256": "2ffdc9eb454f3c3bdda9d76c2c1e073e4bbb4e1cc401fd9eb91106f07301aeb5"
+        }
+      ],
+      "gap_kind": "missing_sensitive_field_display_and_untrusted_text_rules",
+      "impact": "The visible schemas include provider identity, project and adapter routing, errors, warnings, URLs, queries, fallback summaries, and recovery actions. There are no masking, truncation, escaping, bidi, localization, retention, or copy-policy rules for these untrusted or sensitive values, and no confirmation classification for destructive recovery actions. Long or hostile content can mislead, overflow, disclose secrets, or create unsafe action affordances.",
+      "item_id": "A005M15-I007",
+      "item_type": "gap",
+      "severity": "critical",
+      "source_unit_refs": [
+        "PLANUNIT:F3-368",
+        "PLANUNIT:F3-369",
+        "PLANUNIT:F3-370",
+        "PLANUNIT:F3-371",
+        "PLANUNIT:F3-372",
+        "PLANUNIT:F3-373",
+        "SEMANTIC:PLANUNIT:F3-368",
+        "SEMANTIC:PLANUNIT:F3-369",
+        "SEMANTIC:PLANUNIT:F3-370",
+        "SEMANTIC:PLANUNIT:F3-371",
+        "SEMANTIC:PLANUNIT:F3-372",
+        "SEMANTIC:PLANUNIT:F3-373"
+      ],
+      "statement": "Message, web activity, provider identity, narrative labels, compatibility-normalized cards, and blocked recovery behavior expose numerous dynamic values and actions without specifying how sensitive or untrusted display content is masked, bounded, escaped, localized, retained, or safely confirmed.",
+      "title": "Web and provider cards lack untrusted-content and sensitive-display policy"
+    },
+    {
+      "builder_discretion": false,
+      "confidence": 0.97,
+      "dimensions": [
+        "behavior",
+        "inputs_outputs",
+        "contracts",
+        "states_transitions",
+        "authority",
+        "ownership",
+        "consumers",
+        "gui_truth",
+        "failures_recovery",
+        "security_privacy",
+        "propagation",
+        "operations",
+        "scale_performance",
+        "compatibility_migration",
+        "acceptance_oracles",
+        "ambiguity_unknowns",
+        "invalid_states_transitions",
+        "concurrency_races",
+        "partial_failure",
+        "recovery_rollback",
+        "authority_boundaries",
+        "privacy_data_lifecycle",
+        "untrusted_inputs",
+        "gui_misleading_states",
+        "offline_network_loss",
+        "scale_limits",
+        "accessibility",
+        "localization",
+        "observability_support",
+        "destructive_actions",
+        "cross_document_seams",
+        "test_falsifiability",
+        "unknown_unknowns"
+      ],
+      "evidence": [
+        {
+          "exact_quote": "  Plan and Deep Plan both project to a normalized TODO list; the sticky Plan panel is per",
+          "line_end": 23781,
+          "line_start": 23781,
+          "path": "Plans/FinalGUISpec.md",
+          "source_sha256": "2ffdc9eb454f3c3bdda9d76c2c1e073e4bbb4e1cc401fd9eb91106f07301aeb5"
+        },
+        {
+          "exact_quote": "  Before approval, the Plan panel exposes structural editing controls for TODO items; after",
+          "line_end": 23837,
+          "line_start": 23837,
+          "path": "Plans/FinalGUISpec.md",
+          "source_sha256": "2ffdc9eb454f3c3bdda9d76c2c1e073e4bbb4e1cc401fd9eb91106f07301aeb5"
+        },
+        {
+          "exact_quote": "  Legacy optional spellings notes? and order_index? normalize to canonical notes and",
+          "line_end": 23893,
+          "line_start": 23893,
+          "path": "Plans/FinalGUISpec.md",
+          "source_sha256": "2ffdc9eb454f3c3bdda9d76c2c1e073e4bbb4e1cc401fd9eb91106f07301aeb5"
+        },
+        {
+          "exact_quote": "  Question cards are reusable Assistant/Interviewer/requirements-builder components that",
+          "line_end": 23948,
+          "line_start": 23948,
+          "path": "Plans/FinalGUISpec.md",
+          "source_sha256": "2ffdc9eb454f3c3bdda9d76c2c1e073e4bbb4e1cc401fd9eb91106f07301aeb5"
+        },
+        {
+          "exact_quote": "  Question cards show required visible options plus a freeform path, represent Single-choice +",
+          "line_end": 24006,
+          "line_start": 24006,
+          "path": "Plans/FinalGUISpec.md",
+          "source_sha256": "2ffdc9eb454f3c3bdda9d76c2c1e073e4bbb4e1cc401fd9eb91106f07301aeb5"
+        },
+        {
+          "exact_quote": "  Headless or HITL-unavailable question paths return status unavailable rather than fabricated",
+          "line_end": 24061,
+          "line_start": 24061,
+          "path": "Plans/FinalGUISpec.md",
+          "source_sha256": "2ffdc9eb454f3c3bdda9d76c2c1e073e4bbb4e1cc401fd9eb91106f07301aeb5"
+        },
+        {
+          "exact_quote": "  Mermaid and inline visualizer behavior uses native card rendering, explicit error and",
+          "line_end": 24117,
+          "line_start": 24117,
+          "path": "Plans/FinalGUISpec.md",
+          "source_sha256": "2ffdc9eb454f3c3bdda9d76c2c1e073e4bbb4e1cc401fd9eb91106f07301aeb5"
+        }
+      ],
+      "gap_kind": "missing_draft_conflict_lifecycle_and_visualizer_bridge_security",
+      "impact": "The plan panel and question flow carry durable, editable, auto-saved state across mode and navigation changes, while visual modules accept sandboxed script execution and postMessage communication. The segment does not define concurrent-edit conflict resolution, draft versioning, retention or deletion, offline replay, submission idempotency, visual bridge origin/source validation, message schemas, quotas, timeout behavior, or sanitizer-failure fallback. These omissions can lose or duplicate user answers and allow confused-deputy or denial-of-service behavior across the host bridge.",
+      "item_id": "A005M15-I008",
+      "item_type": "gap",
+      "severity": "critical",
+      "source_unit_refs": [
+        "PLANUNIT:F3-374",
+        "PLANUNIT:F3-375",
+        "PLANUNIT:F3-376",
+        "PLANUNIT:F3-377",
+        "PLANUNIT:F3-378",
+        "PLANUNIT:F3-379",
+        "PLANUNIT:F3-380",
+        "SEMANTIC:PLANUNIT:F3-374",
+        "SEMANTIC:PLANUNIT:F3-375",
+        "SEMANTIC:PLANUNIT:F3-376",
+        "SEMANTIC:PLANUNIT:F3-377",
+        "SEMANTIC:PLANUNIT:F3-378",
+        "SEMANTIC:PLANUNIT:F3-379",
+        "SEMANTIC:PLANUNIT:F3-380"
+      ],
+      "statement": "The segment defines authoritative TODO tracking, approval-sensitive editing, compatibility normalization, durable question drafts, visual answer bridging, unavailable and dismissed behavior, and sandboxed visual rendering, but omits the concurrency, persistence, idempotency, and host-message security contracts required for those features to compose safely.",
+      "title": "Plan and question draft durability is not reconciled with visualizer bridge security"
+    }
+  ],
+  "model": "gpt-5.6-sol",
+  "phase": "blind_macro_window_review",
+  "reasoning_effort": "xhigh",
+  "schema_version": "macro-review-result-v1",
+  "segments": [
+    {
+      "core_range": [21117, 21501],
+      "covered_source_unit_refs": [
+        "PLANUNIT:F3-326",
+        "PLANUNIT:F3-327",
+        "PLANUNIT:F3-328",
+        "PLANUNIT:F3-329",
+        "PLANUNIT:F3-330",
+        "PLANUNIT:F3-331",
+        "PLANUNIT:F3-332",
+        "SEMANTIC:PLANUNIT:F3-326",
+        "SEMANTIC:PLANUNIT:F3-327",
+        "SEMANTIC:PLANUNIT:F3-328",
+        "SEMANTIC:PLANUNIT:F3-329",
+        "SEMANTIC:PLANUNIT:F3-330",
+        "SEMANTIC:PLANUNIT:F3-331",
+        "SEMANTIC:PLANUNIT:F3-332"
+      ],
+      "item_ids": ["A005M15-I001"],
+      "reviewed": true,
+      "summary": "Reviewed F3-326 through F3-332 for exact planning non-goals, blocked cards, worktree presentation, persistent navigation, scheduler diagnostics, and blocked copy, plus adversarial freshness, race, accessibility, and oracle gaps.",
+      "window_id": "WIN-AC612DBB4EFE-0059"
+    },
+    {
+      "core_range": [21502, 21884],
+      "covered_source_unit_refs": [
+        "PLANUNIT:F3-333",
+        "PLANUNIT:F3-334",
+        "PLANUNIT:F3-335",
+        "PLANUNIT:F3-336",
+        "PLANUNIT:F3-337",
+        "PLANUNIT:F3-338",
+        "PLANUNIT:F3-339",
+        "SEMANTIC:PLANUNIT:F3-333",
+        "SEMANTIC:PLANUNIT:F3-334",
+        "SEMANTIC:PLANUNIT:F3-335",
+        "SEMANTIC:PLANUNIT:F3-336",
+        "SEMANTIC:PLANUNIT:F3-337",
+        "SEMANTIC:PLANUNIT:F3-338",
+        "SEMANTIC:PLANUNIT:F3-339"
+      ],
+      "item_ids": ["A005M15-I002"],
+      "reviewed": true,
+      "summary": "Reviewed F3-333 through F3-339 for event-driven correctness, visible runtime state, safe disabled controls, scheduler taxonomy, persistent FileSafe blocks, draft degradation, and all-blocked behavior, including event-projection failure modes.",
+      "window_id": "WIN-AC612DBB4EFE-0060"
+    },
+    {
+      "core_range": [21885, 22254],
+      "covered_source_unit_refs": [
+        "PLANUNIT:F3-340",
+        "PLANUNIT:F3-341",
+        "PLANUNIT:F3-342",
+        "PLANUNIT:F3-343",
+        "PLANUNIT:F3-344",
+        "PLANUNIT:F3-345",
+        "PLANUNIT:F3-346",
+        "SEMANTIC:PLANUNIT:F3-340",
+        "SEMANTIC:PLANUNIT:F3-341",
+        "SEMANTIC:PLANUNIT:F3-342",
+        "SEMANTIC:PLANUNIT:F3-343",
+        "SEMANTIC:PLANUNIT:F3-344",
+        "SEMANTIC:PLANUNIT:F3-345",
+        "SEMANTIC:PLANUNIT:F3-346"
+      ],
+      "item_ids": ["A005M15-I003"],
+      "reviewed": true,
+      "summary": "Reviewed F3-340 through F3-346 for blocked/recovery authority, shared payloads, actor identity, per-episode controls, safe-point language, seam output, and badge mapping, including unresolved action-catalog failure behavior.",
+      "window_id": "WIN-AC612DBB4EFE-0061"
+    },
+    {
+      "core_range": [22255, 22639],
+      "covered_source_unit_refs": [
+        "PLANUNIT:F3-347",
+        "PLANUNIT:F3-348",
+        "PLANUNIT:F3-349",
+        "PLANUNIT:F3-350",
+        "PLANUNIT:F3-351",
+        "PLANUNIT:F3-352",
+        "PLANUNIT:F3-353",
+        "SEMANTIC:PLANUNIT:F3-347",
+        "SEMANTIC:PLANUNIT:F3-348",
+        "SEMANTIC:PLANUNIT:F3-349",
+        "SEMANTIC:PLANUNIT:F3-350",
+        "SEMANTIC:PLANUNIT:F3-351",
+        "SEMANTIC:PLANUNIT:F3-352",
+        "SEMANTIC:PLANUNIT:F3-353"
+      ],
+      "item_ids": ["A005M15-I004"],
+      "reviewed": true,
+      "summary": "Reviewed F3-347 through F3-353 for concurrent blocked lists, remediation ceilings, external polling boundaries, widget ownership, historical packet exclusions, web/diff fidelity, and progress payloads, including scale and partial-state gaps.",
+      "window_id": "WIN-AC612DBB4EFE-0062"
+    },
+    {
+      "core_range": [22640, 23025],
+      "covered_source_unit_refs": [
+        "PLANUNIT:F3-354",
+        "PLANUNIT:F3-355",
+        "PLANUNIT:F3-356",
+        "PLANUNIT:F3-357",
+        "PLANUNIT:F3-358",
+        "PLANUNIT:F3-359",
+        "PLANUNIT:F3-360",
+        "SEMANTIC:PLANUNIT:F3-354",
+        "SEMANTIC:PLANUNIT:F3-355",
+        "SEMANTIC:PLANUNIT:F3-356",
+        "SEMANTIC:PLANUNIT:F3-357",
+        "SEMANTIC:PLANUNIT:F3-358",
+        "SEMANTIC:PLANUNIT:F3-359",
+        "SEMANTIC:PLANUNIT:F3-360"
+      ],
+      "item_ids": ["A005M15-I005"],
+      "reviewed": true,
+      "summary": "Reviewed F3-354 through F3-360 for TODO and question ownership, queue and identity carry-through, promoted widgets, operation-card boundaries, stable terminal sessions, and terminal actions, including privacy and arbitration gaps.",
+      "window_id": "WIN-AC612DBB4EFE-0063"
+    },
+    {
+      "core_range": [23026, 23414],
+      "covered_source_unit_refs": [
+        "PLANUNIT:F3-361",
+        "PLANUNIT:F3-362",
+        "PLANUNIT:F3-363",
+        "PLANUNIT:F3-364",
+        "PLANUNIT:F3-365",
+        "PLANUNIT:F3-366",
+        "PLANUNIT:F3-367",
+        "SEMANTIC:PLANUNIT:F3-361",
+        "SEMANTIC:PLANUNIT:F3-362",
+        "SEMANTIC:PLANUNIT:F3-363",
+        "SEMANTIC:PLANUNIT:F3-364",
+        "SEMANTIC:PLANUNIT:F3-365",
+        "SEMANTIC:PLANUNIT:F3-366",
+        "SEMANTIC:PLANUNIT:F3-367"
+      ],
+      "item_ids": ["A005M15-I006"],
+      "reviewed": true,
+      "summary": "Reviewed F3-361 through F3-367 for terminal preview recovery, search provenance, provider boundaries, unavailable web behavior, Firecrawl research and batch semantics, progress cancellation, and card lifecycles, including taxonomy conflicts.",
+      "window_id": "WIN-AC612DBB4EFE-0064"
+    },
+    {
+      "core_range": [23415, 23772],
+      "covered_source_unit_refs": [
+        "PLANUNIT:F3-368",
+        "PLANUNIT:F3-369",
+        "PLANUNIT:F3-370",
+        "PLANUNIT:F3-371",
+        "PLANUNIT:F3-372",
+        "PLANUNIT:F3-373",
+        "SEMANTIC:PLANUNIT:F3-368",
+        "SEMANTIC:PLANUNIT:F3-369",
+        "SEMANTIC:PLANUNIT:F3-370",
+        "SEMANTIC:PLANUNIT:F3-371",
+        "SEMANTIC:PLANUNIT:F3-372",
+        "SEMANTIC:PLANUNIT:F3-373"
+      ],
+      "item_ids": ["A005M15-I007"],
+      "reviewed": true,
+      "summary": "Reviewed F3-368 through F3-373 for message controls, web payload display, card labels and narrative order, provider identity, compatibility boundaries, and blocked recovery, including sensitive and untrusted display risks.",
+      "window_id": "WIN-AC612DBB4EFE-0065"
+    },
+    {
+      "core_range": [23773, 24171],
+      "covered_source_unit_refs": [
+        "PLANUNIT:F3-374",
+        "PLANUNIT:F3-375",
+        "PLANUNIT:F3-376",
+        "PLANUNIT:F3-377",
+        "PLANUNIT:F3-378",
+        "PLANUNIT:F3-379",
+        "PLANUNIT:F3-380",
+        "SEMANTIC:PLANUNIT:F3-374",
+        "SEMANTIC:PLANUNIT:F3-375",
+        "SEMANTIC:PLANUNIT:F3-376",
+        "SEMANTIC:PLANUNIT:F3-377",
+        "SEMANTIC:PLANUNIT:F3-378",
+        "SEMANTIC:PLANUNIT:F3-379",
+        "SEMANTIC:PLANUNIT:F3-380"
+      ],
+      "item_ids": ["A005M15-I008"],
+      "reviewed": true,
+      "summary": "Reviewed F3-374 through F3-380 for authoritative Plan TODOs, approval editing, compatibility normalization, durable question drafts, visual answers, unavailable and dismissed behavior, and Mermaid/visualizer sandboxing, including conflict and bridge-security gaps.",
+      "window_id": "WIN-AC612DBB4EFE-0066"
+    }
+  ],
+  "self_attestation": {
+    "no_canonical_writes": true,
+    "no_external_research_during_blind_review": true,
+    "no_peer_result_access": true,
+    "no_prior_audit_access": true,
+    "no_unrelated_source_access": true,
+    "terminal_after_submission": true
+  },
+  "source_binding": {
+    "bundle_id": "MACRO15-AC612DBB4EFE-0009",
+    "document_path": "Plans/FinalGUISpec.md",
+    "micro_window_ids": [
+      "WIN-AC612DBB4EFE-0059",
+      "WIN-AC612DBB4EFE-0060",
+      "WIN-AC612DBB4EFE-0061",
+      "WIN-AC612DBB4EFE-0062",
+      "WIN-AC612DBB4EFE-0063",
+      "WIN-AC612DBB4EFE-0064",
+      "WIN-AC612DBB4EFE-0065",
+      "WIN-AC612DBB4EFE-0066"
+    ],
+    "source_sha256": "2ffdc9eb454f3c3bdda9d76c2c1e073e4bbb4e1cc401fd9eb91106f07301aeb5"
+  },
+  "status": "completed",
+  "synthesis": {
+    "cross_document_questions": [
+      "Which runtime owner contract defines event-versus-projection precedence, deduplication, freshness, reconnect replay, and dismissal eligibility for blocked and remediation GUI episodes?",
+      "Where is the canonical mapping between operation-card display states and the richer terminal, agent, provider, web, and process lifecycle taxonomies made executable?",
+      "Which owner contract defines authorization failure and unknown or empty allowed_action_ids[] behavior across blocked, remediation, and unavailable cards?",
+      "Which storage and privacy owner defines masking, retention, deletion, and copy policy for provider identity, project identity, paths, commands, URLs, errors, question drafts, and visual-module state?",
+      "Which host-bridge contract validates postMessage origin, source, payload schema, capability scope, rate limits, and lifecycle for sandboxed visual modules and the narrowed question-draft bridge?"
+    ],
+    "feature_family_keys": [
+      "planning-worktree-navigation-blocked-truth",
+      "event-driven-blocked-remediation-projections",
+      "blocked-actions-safe-points-and-badges",
+      "concurrent-blocks-web-progress-and-currentness",
+      "todo-question-identity-and-terminal-handoff",
+      "terminal-web-provenance-and-card-lifecycles",
+      "message-web-provider-and-recovery-cards",
+      "plan-question-drafts-and-visualizer-sandbox"
+    ],
+    "research_queries": [
+      "event sourced UI projection reconciliation duplicate out of order stale reconnect testing patterns",
+      "accessible concurrent incident list sorting live region count update large list UX",
+      "terminal session detach reattach multi window ownership race state machine",
+      "secure sandboxed iframe postMessage origin source validation capability bridge quotas",
+      "autosaved questionnaire draft conflict resolution offline replay idempotent submit retention privacy"
+    ]
+  },
+  "task_thread_id": "/root/a005m15_b4_000046_attempt_0015_terminal"
+}

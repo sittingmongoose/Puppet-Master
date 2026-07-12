@@ -1,0 +1,52 @@
+{
+  "schema_version": "audit005-jsonschema-draft202012-dependency-authority-v1",
+  "audit_id": "audit-20260710-005-plan-assurance-model-lanes-fresh-agent-exhaustive",
+  "status": "ISOLATED_OFFLINE_BUNDLE",
+  "bundle_version": "jsonschema-draft202012-v1",
+  "runtime": {
+    "python_executable": "/Users/jaredsmacbookair/.cache/codex-runtimes/codex-primary-runtime/dependencies/python/bin/python3",
+    "python_version": "3.12.13",
+    "implementation": "CPython",
+    "platform": "macosx-11.0-arm64",
+    "site_packages": "site-packages",
+    "isolation_invocation": "PYTHONNOUSERSITE=1 PYTHONPATH=<bundle>/site-packages <bundled-python> -S -B"
+  },
+  "selection": {
+    "root_distribution": "jsonschema==4.26.0",
+    "runtime_distributions": ["attrs==26.1.0", "jsonschema-specifications==2025.9.1", "referencing==0.37.0", "rpds-py==2026.6.3", "typing-extensions==4.16.0"],
+    "prerelease_excluded": true,
+    "format_extras_excluded": true,
+    "rationale": "These are the current stable PyPI releases compatible with CPython 3.12 on macOS arm64, with only the base jsonschema runtime dependency closure installed."
+  },
+  "official_sources": "source_registry.json",
+  "wheel_manifest": "wheel_manifest.jsonl",
+  "requirements_lock": "requirements.lock",
+  "offline_install": {
+    "required": true,
+    "no_index": true,
+    "require_hashes": true,
+    "find_links": "wheels",
+    "target": "site-packages",
+    "global_install_forbidden": true
+  },
+  "validator_contract": {
+    "distribution": "jsonschema",
+    "validator_class": "jsonschema.Draft202012Validator",
+    "format_checker": "jsonschema.FormatChecker",
+    "meta_schema_id": "https://json-schema.org/draft/2020-12/schema",
+    "immutable_result_schema_ref": "master/external_research/universal-shadow-certification-wave-0001/schemas/result.schema.json",
+    "immutable_result_schema_sha256": "d0aad92e52ece20c3164535b2a9fa7a780e57f49343cd7a1ba9ad96d28eec0b1",
+    "independent_fail_report_ref": "master/external_research/universal-shadow-certification-wave-0001/validation/sol-fresh-independent-prelaunch.json",
+    "independent_fail_report_sha256": "7a5c0302d37af6e5901f59dbf0fb561049fc70d16a06751996580a5b47a264bf",
+    "bypass_count": 12
+  },
+  "certification_effect": {
+    "validator_candidate_activation_unchanged": true,
+    "activation_authorized": false,
+    "launch_authorized": false,
+    "certification_credit": 0
+  },
+  "source_registry_restricted_to_official": true,
+  "mutable_existing_artifacts": [],
+  "bundle_write_namespace_only": true
+}

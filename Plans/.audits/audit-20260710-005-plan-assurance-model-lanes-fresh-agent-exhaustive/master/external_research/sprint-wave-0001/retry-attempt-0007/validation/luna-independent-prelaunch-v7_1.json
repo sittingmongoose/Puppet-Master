@@ -1,0 +1,332 @@
+{
+  "checker": "external_research_luna_receipt_closure_prelaunch_v7_1",
+  "audit_id": "audit-20260710-005-plan-assurance-model-lanes-fresh-agent-exhaustive",
+  "attempt_id": "attempt-0007",
+  "controller_thread_id": "019f5078-6501-7223-b52f-2251010bdc41",
+  "model": "gpt-5.6-luna",
+  "reasoning_effort": "max",
+  "status": "pass",
+  "errors": [],
+  "scope": {
+    "frozen_attempt_root": "/Users/jaredsmacbookair/Documents/PuppetMaster/Plans/.audits/audit-20260710-005-plan-assurance-model-lanes-fresh-agent-exhaustive/master/external_research/sprint-wave-0001/retry-attempt-0007",
+    "research_semantics_read": false,
+    "canonical_plans_read": false,
+    "unrelated_audit_phases_read": false,
+    "fork_turns": "none",
+    "fresh_direct_luna_reviewer": true,
+    "descendants_launched_by_reviewer": false,
+    "followups_launched_by_reviewer": false,
+    "retries_launched_by_reviewer": false,
+    "v7_1_receipt_writer_invoked": false,
+    "v7_1_capture_writer_invoked": false,
+    "only_report_write": true
+  },
+  "input_hashes": {
+    "v14_policy": "6d64c47798f97cba4e2c30d9d3c6d3d1bedc1c974ba6033b6fce20efe0ff6375",
+    "terminal_preparation_report_v7_1": "e860585f7d5a296e39dffd3192d7982a46c903d7f411b83c4ba59f90efc14689",
+    "authority_v7_1": "a6d9a82c7532fb188f927bb2cfafde124c80dd14f21a1e761331a5ccf35767a7",
+    "launch_binding_v7_1": "66d679d369d3d04adb159e2d04fbdcb83b6934af0107e52c7af2731c1a4dd9ff",
+    "receipt_writer_v7_1": "8346ed8f3c70314c16b1d153255297941d4154fb1c41a61570bcbd79dae277bc",
+    "capture_writer_v7_1": "16537de59cec2b31fc76dff22abcfc54a90db33b00fb99d7bdfd31d9f1cb3285",
+    "receipt_schema_v7_1": "252cb100faf8a555f156ee99e93b78b336ec4f1c52d91923a952246a8fada37d",
+    "capture_schema_v7_1": "5924e7bb318f76f3fcf78407c69f9bbfb85460d78d38f6d7f241816d0b6461b1",
+    "verifier_v7_1": "a0d4ad12e8c2676c4c7685c1f3e4a2b1043c1051e606f7ee000833da6f859ccf",
+    "tests_v7_1": "4fc5fe4f9f2a1bf71e1324d968938a5bb954d939882c8f6a3d293fd5f1eb4d10",
+    "attempt_0007_manifest": "0653671397d64fb798b22c8ddb2796d5df0012ca8ff3c2706ca61d684ff3ef72",
+    "attempt_0007_authority_v7": "6ee33c5229ae78e4fd0e54ca5233b696863db38764f8598f6a55cec32c2549c6",
+    "attempt_0007_launch_seal_v7": "cec6a7eb3dedaf5cc4f3180e60149372ff2c51c237757f4ae16c3b0750ec9baf",
+    "attempt_0007_generator": "2517ff0b88fad3a217dcb2ddc6f7a7d9cfff83d04b637339896b95f45a94cf46",
+    "attempt_0007_v7_receipt_writer": "405fc385086c89f6bf72a5872556dac9cbfd7b5afff83933371d1b1533d34992",
+    "attempt_0007_v7_capture_writer": "891abed02abe6361a2f096fe2f63aed99ddd18b1a15ccf103dfe5ce872d47d70",
+    "activation_core_current_file": "043488cb83d6064068a887d484f22d19d6c158a2bc1d424798ed9611c9f58c83",
+    "authorization_ER_0003_current_file": "a0cf53b81fe654c3cc460682da7ae6ae28dc6cca90d8e0f338258d596bc4e5c8",
+    "authorization_ER_0008_current_file": "34b9261297844b43aba855bed802a56f06f68596f81fc51295322a6bfd9e31f1",
+    "activation_envelope_current_file": "3dab3e76f915889be2c65710477ab1c860f42d57d34d836a3311bd93255ab406",
+    "dispatch_intent_ER_0003": "8d1fbfbe802259f3f387bdfb03e468473494ddc37d1f8e8299ecfec46475c246",
+    "dispatch_intent_ER_0008": "a68b493bd7b587c9a35f439c954534022379a465154038c82e6324054d25bb02",
+    "terminal_proof_ER_0003": "f02f9e2a9b1f3db3d32f0c364a99323c921f1d4cacb058698ff4f0e989991995",
+    "terminal_proof_ER_0008": "f5ff884acfd41b2d4eb69907d96a9cc6b6e432b79892381bfb662df1e79a1047",
+    "native_session_ER_0003": "c945379cbde5543fcba3b82ccd983a4d918140d9457c5ae06374ae27ae27ee4b",
+    "native_session_ER_0008": "7d2c6cefe7b57e85e1a8421c09463d1658478c6a4b8d695aa725588ded0d0189",
+    "result_ER_0003": "5065a9b0d2588adbc4a1e3e60f0dee02a334d8024f48f232f53c39805779d9b4",
+    "result_ER_0008": "93a80931e26bc25f97c4de87e12b8c2eb7576ef85c5be6ab72ecc1d59eb73d51",
+    "prior_v7_prelaunch": "589bdf8958325ee6b844e310cba5eedc155824cc75d02ea6271ce1bfb019b3f3",
+    "prior_local_prelaunch_candidate": "f75c167af805cbe2a615bcf34c6985e3e90699c14ff2919c1d1c7bf51358c295",
+    "prior_attempt_0006_control_inventory": "a0beebddaed9142b0f8db16fd3ef1cf52571892b2c0de5272435cea108ac4ac1",
+    "prior_attempt_0006_dispatch_receipt_ER_0003": "d5f997c10678cc43ba62a829269cbcdb42e2934119374a88b89f3deb036ce23c",
+    "prior_attempt_0006_dispatch_receipt_ER_0008": "e9e0fedc51c6148fcb044aa2e82e9524ed7b60828d16ad1e279dd8d7f86cdd3e",
+    "prior_attempt_0006_native_capture": "3ca11e7678e2af2ebc6c604d2429142cc734e43ce825c0138fa69b7a4c416b05",
+    "prior_attempt_0006_primary_cumulative_postrun": "c05e08ff7e726d352ab57eaa26e9de9039512d00f4f7f3be2680394d86bcea7c",
+    "prior_attempt_0006_terminal_sol_preparation": "809bb781836a63879c5544bd8a58cac510c038c9628f9c0a4671e8f66ab15e36"
+  },
+  "activation_digest_closure": {
+    "actual_file_sha256": {
+      "core": "043488cb83d6064068a887d484f22d19d6c158a2bc1d424798ed9611c9f58c83",
+      "ER-0003": "a0cf53b81fe654c3cc460682da7ae6ae28dc6cca90d8e0f338258d596bc4e5c8",
+      "ER-0008": "34b9261297844b43aba855bed802a56f06f68596f81fc51295322a6bfd9e31f1",
+      "envelope": "3dab3e76f915889be2c65710477ab1c860f42d57d34d836a3311bd93255ab406"
+    },
+    "historical_embedded_pre_final_canonical_sha256": {
+      "core": "a12b9b867532f5ed887fe44fbdabfd530a603cdef2ddae1a53cb74f8e99b0b88",
+      "ER-0003": "455b640d680f85b0d0d23622f87ca79ecfa34d49b8728bf549656b80a52f833b",
+      "ER-0008": "d8d8a035f4f8f6b0951993de39aa0511396e412ec15932f46defeec6c54bce40"
+    },
+    "recomputed_canonical_object_sha256": {
+      "core": "a12b9b867532f5ed887fe44fbdabfd530a603cdef2ddae1a53cb74f8e99b0b88",
+      "ER-0003": "455b640d680f85b0d0d23622f87ca79ecfa34d49b8728bf549656b80a52f833b",
+      "ER-0008": "d8d8a035f4f8f6b0951993de39aa0511396e412ec15932f46defeec6c54bce40",
+      "envelope": "c60f6b3c51fdc9661f782f81667a8a570ea8f9e808ea0f7c20846f24537ad4f5"
+    },
+    "actual_raw_map_matches_pins": true,
+    "historical_map_matches_recomputed_canonical_values": true,
+    "activation_bytes_unchanged_since_child_launch": true,
+    "activation_restamped": false,
+    "assignments": {
+      "ER-0003": {
+        "actual_authorization_file_sha256": "a0cf53b81fe654c3cc460682da7ae6ae28dc6cca90d8e0f338258d596bc4e5c8",
+        "task_bound_authorization_file_sha256": "a0cf53b81fe654c3cc460682da7ae6ae28dc6cca90d8e0f338258d596bc4e5c8",
+        "historical_embedded_authorization_canonical_sha256": "455b640d680f85b0d0d23622f87ca79ecfa34d49b8728bf549656b80a52f833b",
+        "envelope_authorization_entry_sha256": "455b640d680f85b0d0d23622f87ca79ecfa34d49b8728bf549656b80a52f833b",
+        "actual_core_file_sha256": "043488cb83d6064068a887d484f22d19d6c158a2bc1d424798ed9611c9f58c83",
+        "task_bound_core_file_sha256": "043488cb83d6064068a887d484f22d19d6c158a2bc1d424798ed9611c9f58c83",
+        "historical_embedded_core_canonical_sha256": "a12b9b867532f5ed887fe44fbdabfd530a603cdef2ddae1a53cb74f8e99b0b88",
+        "authorization_embedded_core_sha256": "a12b9b867532f5ed887fe44fbdabfd530a603cdef2ddae1a53cb74f8e99b0b88",
+        "envelope_embedded_core_sha256": "a12b9b867532f5ed887fe44fbdabfd530a603cdef2ddae1a53cb74f8e99b0b88",
+        "actual_raw_binding_closed": true,
+        "historical_digest_typed_separately": true
+      },
+      "ER-0008": {
+        "actual_authorization_file_sha256": "34b9261297844b43aba855bed802a56f06f68596f81fc51295322a6bfd9e31f1",
+        "task_bound_authorization_file_sha256": "34b9261297844b43aba855bed802a56f06f68596f81fc51295322a6bfd9e31f1",
+        "historical_embedded_authorization_canonical_sha256": "d8d8a035f4f8f6b0951993de39aa0511396e412ec15932f46defeec6c54bce40",
+        "envelope_authorization_entry_sha256": "d8d8a035f4f8f6b0951993de39aa0511396e412ec15932f46defeec6c54bce40",
+        "actual_core_file_sha256": "043488cb83d6064068a887d484f22d19d6c158a2bc1d424798ed9611c9f58c83",
+        "task_bound_core_file_sha256": "043488cb83d6064068a887d484f22d19d6c158a2bc1d424798ed9611c9f58c83",
+        "historical_embedded_core_canonical_sha256": "a12b9b867532f5ed887fe44fbdabfd530a603cdef2ddae1a53cb74f8e99b0b88",
+        "authorization_embedded_core_sha256": "a12b9b867532f5ed887fe44fbdabfd530a603cdef2ddae1a53cb74f8e99b0b88",
+        "envelope_embedded_core_sha256": "a12b9b867532f5ed887fe44fbdabfd530a603cdef2ddae1a53cb74f8e99b0b88",
+        "actual_raw_binding_closed": true,
+        "historical_digest_typed_separately": true
+      }
+    }
+  },
+  "generator_phase_order_and_root_cause": {
+    "generator_source": "tools/generate_activation_transaction.py",
+    "generator_sha256": "2517ff0b88fad3a217dcb2ddc6f7a7d9cfff83d04b637339896b95f45a94cf46",
+    "phase_order": [
+      "validate the exact independent prelaunch report and zero state",
+      "load the manifest and construct the core object, including its transaction seed",
+      "compute the core canonical-object digest in memory",
+      "construct ER-0003 and ER-0008 authorization objects embedding that core canonical digest",
+      "compute each authorization canonical-object digest while constructing the final envelope",
+      "construct the final envelope in memory",
+      "serialize exclusively in raw order: core, ER-0003 authorization, ER-0008 authorization, envelope"
+    ],
+    "digest_dependency_edges": [
+      "core canonical digest -> authorization activation_core_sha256",
+      "core canonical digest -> envelope activation_core_sha256",
+      "authorization canonical digests -> envelope authorization_files[].sha256"
+    ],
+    "no_circular_hash_dependency": true,
+    "self_referential_root_cause_localization": "The apparent self-reference is a one-way core-to-authorization-to-envelope dependency, not a cycle. The generator computed canonical JSON object digests before pretty raw serialization, while the prior closure typed those embedded canonical values as exact raw file SHA-256 values.",
+    "v7_1_reconciliation": "Raw-file SHA-256 fields and historical embedded canonical-object SHA-256 fields are separate, and the activation transaction is not restamped."
+  },
+  "prior_failed_writer_evidence": {
+    "source_attempt": "retry-attempt-0006",
+    "status": "fail_closed",
+    "attempt_level_veto": true,
+    "localized_failure": "positive receipt result hash binding",
+    "receipt_used_raw_result_hash_instead_of_required_canonical_digest": true,
+    "assignments": {
+      "ER-0003": {
+        "raw_result_file_sha256": "ace2ea30e08196d3febeb1b979bb64d15b0d8b8146b4e92da2f9cc449503e6c7",
+        "receipt_result_sha256": "ace2ea30e08196d3febeb1b979bb64d15b0d8b8146b4e92da2f9cc449503e6c7",
+        "receipt_output_sha256": "ace2ea30e08196d3febeb1b979bb64d15b0d8b8146b4e92da2f9cc449503e6c7",
+        "required_canonical_result_digest": "d2eeceeb712ad5a5c0f0b67825ff0f78769e2e83275b28de4a87137b71ba27dc",
+        "localized_errors": ["ER-0003:receipt:result_sha256", "ER-0003:receipt:output_sha256"]
+      },
+      "ER-0008": {
+        "raw_result_file_sha256": "41900f06989412901481b947b0914a78f6b2403e8d5d9f4ae0da8aa063d76031",
+        "receipt_result_sha256": "41900f06989412901481b947b0914a78f6b2403e8d5d9f4ae0da8aa063d76031",
+        "receipt_output_sha256": "41900f06989412901481b947b0914a78f6b2403e8d5d9f4ae0da8aa063d76031",
+        "required_canonical_result_digest": "d2079f27bd8d8c10a7a1eb2d48917a5d67d69153b372c68a5096ce16a8a0612c",
+        "localized_errors": ["ER-0008:receipt:result_sha256", "ER-0008:receipt:output_sha256"]
+      }
+    },
+    "other_prior_checks_preserved": [
+      "Draft 2020-12 result schema",
+      "bound result semantics",
+      "native capture join",
+      "output confinement",
+      "result identity binding",
+      "question coverage and source registry closure",
+      "prior identity and agent-path non-reuse"
+    ],
+    "prior_identity_or_result_reuse": false,
+    "prior_credits": {
+      "coverage": 0,
+      "research": 0,
+      "promotion": 0,
+      "spec": 0,
+      "merge": 0
+    }
+  },
+  "native_identity_session_evidence": {
+    "controller": {
+      "controller_thread_id": "019f5078-6501-7223-b52f-2251010bdc41",
+      "model": "gpt-5.6-luna",
+      "reasoning_effort": "max",
+      "fork_turns": "none",
+      "fresh_direct_leaves": 2,
+      "extra_controllers_authorized": 0,
+      "parent_spawn_capture_required": true
+    },
+    "leaves": {
+      "ER-0003": {
+        "canonical_agent_path": "/root/a005_external_research_recovery_er_0003_attempt_0007_terminal",
+        "native_child_thread_id": "019f53ea-7843-7891-b314-3f7f7b35dae4",
+        "native_child_turn_id": "019f53ea-78f3-7f73-a370-620ddb3df3f1",
+        "session_path": "/Users/jaredsmacbookair/.codex/sessions/2026/07/11/rollout-2026-07-11T21-21-43-019f53ea-7843-7891-b314-3f7f7b35dae4.jsonl",
+        "session_sha256": "c945379cbde5543fcba3b82ccd983a4d918140d9457c5ae06374ae27ae27ee4b",
+        "parent_thread_id": "019f5078-6501-7223-b52f-2251010bdc41",
+        "spawn_depth": 1,
+        "task_bound_activation_core_file_sha256": "043488cb83d6064068a887d484f22d19d6c158a2bc1d424798ed9611c9f58c83",
+        "task_bound_authorization_file_sha256": "a0cf53b81fe654c3cc460682da7ae6ae28dc6cca90d8e0f338258d596bc4e5c8",
+        "terminal_proof_sha256": "f02f9e2a9b1f3db3d32f0c364a99323c921f1d4cacb058698ff4f0e989991995",
+        "terminal_turn_status": "completed",
+        "terminal_response_exact": "PMR1",
+        "result_present_before_pmr1": true,
+        "descendants_spawned": 0,
+        "followup_messages_sent": 0,
+        "retries_spawned": 0,
+        "fork_turns": "none"
+      },
+      "ER-0008": {
+        "canonical_agent_path": "/root/a005_external_research_recovery_er_0008_attempt_0007_terminal",
+        "native_child_thread_id": "019f53ea-793e-7082-ba04-af9929b21485",
+        "native_child_turn_id": "019f53ea-7a93-7c71-b72a-4e3a779bb0b1",
+        "session_path": "/Users/jaredsmacbookair/.codex/sessions/2026/07/11/rollout-2026-07-11T21-21-43-019f53ea-793e-7082-ba04-af9929b21485.jsonl",
+        "session_sha256": "7d2c6cefe7b57e85e1a8421c09463d1658478c6a4b8d695aa725588ded0d0189",
+        "parent_thread_id": "019f5078-6501-7223-b52f-2251010bdc41",
+        "spawn_depth": 1,
+        "task_bound_activation_core_file_sha256": "043488cb83d6064068a887d484f22d19d6c158a2bc1d424798ed9611c9f58c83",
+        "task_bound_authorization_file_sha256": "34b9261297844b43aba855bed802a56f06f68596f81fc51295322a6bfd9e31f1",
+        "terminal_proof_sha256": "f5ff884acfd41b2d4eb69907d96a9cc6b6e432b79892381bfb662df1e79a1047",
+        "terminal_turn_status": "completed",
+        "terminal_response_exact": "PMR1",
+        "result_present_before_pmr1": true,
+        "descendants_spawned": 0,
+        "followup_messages_sent": 0,
+        "retries_spawned": 0,
+        "fork_turns": "none"
+      }
+    },
+    "identity_uniqueness": {
+      "agent_paths_unique": true,
+      "native_child_threads_unique": true,
+      "native_child_turns_unique": true,
+      "result_identity_path_reuse": false,
+      "result_task_thread_id_fields": null,
+      "result_native_child_identity_fields": null
+    },
+    "all_leaf_and_controller_invariants_pass": true
+  },
+  "result_closure": {
+    "assignment_count": 2,
+    "result_count": 2,
+    "exactly_one_result_per_assignment": true,
+    "extra_output_files": [],
+    "output_files": {
+      "ER-0003": ["result.json"],
+      "ER-0008": ["result.json"]
+    },
+    "result_paths": {
+      "ER-0003": "/Users/jaredsmacbookair/Documents/PuppetMaster/Plans/.audits/audit-20260710-005-plan-assurance-model-lanes-fresh-agent-exhaustive/external_research_v1/ER-0003/attempts/attempt-0007/result.json",
+      "ER-0008": "/Users/jaredsmacbookair/Documents/PuppetMaster/Plans/.audits/audit-20260710-005-plan-assurance-model-lanes-fresh-agent-exhaustive/external_research_v1/ER-0008/attempts/attempt-0007/result.json"
+    },
+    "result_file_sha256": {
+      "ER-0003": "5065a9b0d2588adbc4a1e3e60f0dee02a334d8024f48f232f53c39805779d9b4",
+      "ER-0008": "93a80931e26bc25f97c4de87e12b8c2eb7576ef85c5be6ab72ecc1d59eb73d51"
+    },
+    "output_tree_exact": true,
+    "result_raw_hashes_stable": true,
+    "identity_and_path_reuse": false
+  },
+  "v7_1_conformance": {
+    "required_pins_match_exactly": true,
+    "authority_status": "READY_FOR_FRESH_LUNA_RECEIPT_CLOSURE_V7_1",
+    "activation_restamped": false,
+    "receipt_schema_draft": "2020-12",
+    "capture_schema_draft": "2020-12",
+    "receipt_schema_id": "urn:a005:external-research-dispatch-receipt-v7",
+    "receipt_required_field_count": 66,
+    "capture_required_field_count": 13,
+    "raw_and_canonical_digest_semantics_explicit": true,
+    "phase_order_mismatch_reconciled_without_restamp": true,
+    "verifier": {
+      "status": "pass",
+      "exit_code": 0,
+      "errors": [],
+      "receipts": 0,
+      "capture_rows": 0,
+      "credits": 0
+    },
+    "tests": {
+      "passed": 768,
+      "total": 768,
+      "failed": 0,
+      "digest": "36f59b319c2a70636e14e564cc2b3f132ad4c7015b2bc50cc7c8ca4fab4cf2dc",
+      "exit_code": 0
+    },
+    "writers_invoked": {
+      "receipt_v7_1": false,
+      "capture_v7_1": false
+    }
+  },
+  "zero_state": {
+    "receipts_written_before_gate": 0,
+    "capture_rows_written_before_gate": 0,
+    "receipt_paths_present": [],
+    "capture_paths_present": [],
+    "credits": {
+      "coverage": 0,
+      "research": 0,
+      "promotion": 0,
+      "spec": 0,
+      "merge": 0
+    },
+    "zero_credit": true,
+    "activation_transaction_restamped": false,
+    "report_target_preexisting": false
+  },
+  "closing_rehashes": {
+    "pass_count": 2,
+    "identical": true,
+    "activation_raw_file_sha256": {
+      "core": "043488cb83d6064068a887d484f22d19d6c158a2bc1d424798ed9611c9f58c83",
+      "ER-0003": "a0cf53b81fe654c3cc460682da7ae6ae28dc6cca90d8e0f338258d596bc4e5c8",
+      "ER-0008": "34b9261297844b43aba855bed802a56f06f68596f81fc51295322a6bfd9e31f1",
+      "envelope": "3dab3e76f915889be2c65710477ab1c860f42d57d34d836a3311bd93255ab406"
+    },
+    "canonical_object_sha256": {
+      "core": "a12b9b867532f5ed887fe44fbdabfd530a603cdef2ddae1a53cb74f8e99b0b88",
+      "ER-0003": "455b640d680f85b0d0d23622f87ca79ecfa34d49b8728bf549656b80a52f833b",
+      "ER-0008": "d8d8a035f4f8f6b0951993de39aa0511396e412ec15932f46defeec6c54bce40",
+      "envelope": "c60f6b3c51fdc9661f782f81667a8a570ea8f9e808ea0f7c20846f24537ad4f5"
+    },
+    "session_sha256": {
+      "ER-0003": "c945379cbde5543fcba3b82ccd983a4d918140d9457c5ae06374ae27ae27ee4b",
+      "ER-0008": "7d2c6cefe7b57e85e1a8421c09463d1658478c6a4b8d695aa725588ded0d0189"
+    },
+    "terminal_proof_sha256": {
+      "ER-0003": "f02f9e2a9b1f3db3d32f0c364a99323c921f1d4cacb058698ff4f0e989991995",
+      "ER-0008": "f5ff884acfd41b2d4eb69907d96a9cc6b6e432b79892381bfb662df1e79a1047"
+    },
+    "result_file_sha256": {
+      "ER-0003": "5065a9b0d2588adbc4a1e3e60f0dee02a334d8024f48f232f53c39805779d9b4",
+      "ER-0008": "93a80931e26bc25f97c4de87e12b8c2eb7576ef85c5be6ab72ecc1d59eb73d51"
+    },
+    "no_toctou_drift_across_closing_rehashes": true
+  },
+  "sole_next_action": "fresh Luna receipt closure may invoke the sealed v7.1 receipt writer once per assignment and then the sealed v7.1 capture writer"
+}

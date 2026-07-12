@@ -1,0 +1,179 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "urn:puppetmaster:audit005:governance-command-independent-luna-authorization:v1",
+  "title": "Independent Luna authorization for one Audit005 governance receipt run",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "schema_version",
+    "decision",
+    "audit_id",
+    "namespace",
+    "run_id",
+    "authority_sha256",
+    "bound_artifact_hashes",
+    "reviewer",
+    "verification",
+    "execution_constraints"
+  ],
+  "properties": {
+    "schema_version": {
+      "const": "audit005-governance-command-independent-luna-authorization-v1"
+    },
+    "decision": {
+      "const": "AUTHORIZE_ONE_TERMINAL_RUN"
+    },
+    "audit_id": {
+      "const": "audit-20260710-005-plan-assurance-model-lanes-fresh-agent-exhaustive"
+    },
+    "namespace": {
+      "const": "/Users/jaredsmacbookair/Documents/PuppetMaster/Plans/.audits/audit-20260710-005-plan-assurance-model-lanes-fresh-agent-exhaustive/master/governance_command_receipt_harness_v31"
+    },
+    "run_id": {
+      "type": "string",
+      "pattern": "^GCRH-[0-9]{8}T[0-9]{6}Z-[A-F0-9]{8}$"
+    },
+    "authority_sha256": {
+      "$ref": "#/$defs/sha256"
+    },
+    "bound_artifact_hashes": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "runner_sha256",
+        "verifier_sha256",
+        "tests_sha256",
+        "receipt_schema_sha256",
+        "inventory_contract_sha256"
+      ],
+      "properties": {
+        "runner_sha256": {
+          "$ref": "#/$defs/sha256"
+        },
+        "verifier_sha256": {
+          "$ref": "#/$defs/sha256"
+        },
+        "tests_sha256": {
+          "$ref": "#/$defs/sha256"
+        },
+        "receipt_schema_sha256": {
+          "$ref": "#/$defs/sha256"
+        },
+        "inventory_contract_sha256": {
+          "$ref": "#/$defs/sha256"
+        }
+      }
+    },
+    "reviewer": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "lane",
+        "task_thread_id",
+        "fresh_identity",
+        "independent_of_preparer",
+        "independent_of_controller",
+        "reviewed_at_utc"
+      ],
+      "properties": {
+        "lane": {
+          "const": "independent_luna_max"
+        },
+        "task_thread_id": {
+          "type": "string",
+          "minLength": 1
+        },
+        "fresh_identity": {
+          "const": true
+        },
+        "independent_of_preparer": {
+          "const": true
+        },
+        "independent_of_controller": {
+          "const": true
+        },
+        "reviewed_at_utc": {
+          "type": "string",
+          "format": "date-time"
+        }
+      }
+    },
+    "verification": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "static_verifier_exit_code",
+        "tests_exit_code",
+        "static_verifier_stdout_sha256",
+        "tests_stdout_sha256",
+        "observed_zero_execution_state",
+        "observed_zero_credit",
+        "governed_commands_executed_during_review"
+      ],
+      "properties": {
+        "static_verifier_exit_code": {
+          "const": 0
+        },
+        "tests_exit_code": {
+          "const": 0
+        },
+        "static_verifier_stdout_sha256": {
+          "$ref": "#/$defs/sha256"
+        },
+        "tests_stdout_sha256": {
+          "$ref": "#/$defs/sha256"
+        },
+        "observed_zero_execution_state": {
+          "const": true
+        },
+        "observed_zero_credit": {
+          "const": true
+        },
+        "governed_commands_executed_during_review": {
+          "const": false
+        }
+      }
+    },
+    "execution_constraints": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "command_ids_in_order",
+        "maximum_terminal_runs",
+        "retries",
+        "descendants",
+        "followups",
+        "credit"
+      ],
+      "properties": {
+        "command_ids_in_order": {
+          "const": [
+            "plans-run-gates",
+            "shards-check"
+          ]
+        },
+        "maximum_terminal_runs": {
+          "const": 1
+        },
+        "retries": {
+          "const": 0
+        },
+        "descendants": {
+          "const": 0
+        },
+        "followups": {
+          "const": 0
+        },
+        "credit": {
+          "const": 0
+        }
+      }
+    }
+  },
+  "$defs": {
+    "sha256": {
+      "type": "string",
+      "pattern": "^[0-9a-f]{64}$"
+    }
+  }
+}

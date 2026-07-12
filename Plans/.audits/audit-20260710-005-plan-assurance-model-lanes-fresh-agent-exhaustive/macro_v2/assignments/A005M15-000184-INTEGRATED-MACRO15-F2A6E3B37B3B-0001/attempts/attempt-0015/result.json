@@ -1,0 +1,953 @@
+{
+  "assignment_id": "A005M15-000184-INTEGRATED-MACRO15-F2A6E3B37B3B-0001",
+  "attempt_id": "attempt-0015",
+  "audit_id": "audit-20260710-005-plan-assurance-model-lanes-fresh-agent-exhaustive",
+  "coverage": {
+    "all_micro_windows_reviewed": true,
+    "all_source_lines_reviewed": true,
+    "all_source_units_accounted": true,
+    "both_exact_and_adversarial_lenses_applied": true,
+    "dimensions_checked": [
+      "behavior",
+      "capabilities",
+      "inputs_outputs",
+      "contracts",
+      "states_transitions",
+      "authority",
+      "ownership",
+      "consumers",
+      "gui_truth",
+      "failures_recovery",
+      "security_privacy",
+      "propagation",
+      "operations",
+      "scale_performance",
+      "compatibility_migration",
+      "acceptance_oracles",
+      "builder_discretion",
+      "ambiguity_unknowns",
+      "missing_callers_consumers",
+      "invalid_states_transitions",
+      "concurrency_races",
+      "partial_failure",
+      "recovery_rollback",
+      "authority_boundaries",
+      "privacy_data_lifecycle",
+      "untrusted_inputs",
+      "gui_misleading_states",
+      "offline_network_loss",
+      "scale_limits",
+      "accessibility",
+      "localization",
+      "observability_support",
+      "destructive_actions",
+      "cross_document_seams",
+      "test_falsifiability",
+      "unknown_unknowns"
+    ]
+  },
+  "items": [
+    {
+      "builder_discretion": true,
+      "confidence": 0.99,
+      "dimensions": [
+        "inputs_outputs",
+        "contracts",
+        "consumers",
+        "propagation",
+        "acceptance_oracles",
+        "builder_discretion",
+        "ambiguity_unknowns",
+        "missing_callers_consumers",
+        "untrusted_inputs",
+        "cross_document_seams",
+        "test_falsifiability"
+      ],
+      "evidence": [
+        {
+          "exact_quote": "    \"payload\": {",
+          "line_end": 16,
+          "line_start": 16,
+          "path": "Plans/plans_to_code_handoff.schema.json",
+          "source_sha256": "1b1cff7b32b90f22734e90f025c020a05f9145fbea82ce156cb2224611ce8d4d"
+        },
+        {
+          "exact_quote": "      \"type\": \"object\"",
+          "line_end": 17,
+          "line_start": 17,
+          "path": "Plans/plans_to_code_handoff.schema.json",
+          "source_sha256": "1b1cff7b32b90f22734e90f025c020a05f9145fbea82ce156cb2224611ce8d4d"
+        }
+      ],
+      "gap_kind": "artifact_kind_payload_binding_missing",
+      "impact": "A document may claim any allowed artifact_kind while carrying any object payload, including an empty object, because the root never selects the matching definition. Producers, consumers, and validators therefore cannot rely on artifact_kind to identify the payload contract.",
+      "item_id": "M15-001",
+      "item_type": "gap",
+      "severity": "critical",
+      "source_unit_refs": [
+        "SEMANTIC:JSON_PREFIX:Plans/plans_to_code_handoff.schema.json",
+        "SEMANTIC:JSON_FIELD:Plans/plans_to_code_handoff.schema.json:$schema",
+        "SEMANTIC:JSON_FIELD:Plans/plans_to_code_handoff.schema.json:$id",
+        "SEMANTIC:JSON_FIELD:Plans/plans_to_code_handoff.schema.json:title",
+        "SEMANTIC:JSON_FIELD:Plans/plans_to_code_handoff.schema.json:description",
+        "SEMANTIC:JSON_FIELD:Plans/plans_to_code_handoff.schema.json:type",
+        "SEMANTIC:JSON_FIELD:Plans/plans_to_code_handoff.schema.json:additionalProperties",
+        "SEMANTIC:JSON_FIELD:Plans/plans_to_code_handoff.schema.json:properties",
+        "SEMANTIC:JSON_FIELD:Plans/plans_to_code_handoff.schema.json:required",
+        "SEMANTIC:JSON_FIELD:Plans/plans_to_code_handoff.schema.json:$defs:CONT-001",
+        "STRUCTURAL:$",
+        "STRUCTURAL:$.$defs",
+        "STRUCTURAL:$.$id",
+        "STRUCTURAL:$.$schema",
+        "STRUCTURAL:$.additionalProperties",
+        "STRUCTURAL:$.description",
+        "STRUCTURAL:$.properties",
+        "STRUCTURAL:$.required",
+        "STRUCTURAL:$.title",
+        "STRUCTURAL:$.type"
+      ],
+      "statement": "The root schema enumerates artifact kinds and defines strict payload shapes, but payload is validated only as a generic object and is not conditionally bound to artifact_kind.",
+      "title": "Artifact identity does not select a payload schema"
+    },
+    {
+      "builder_discretion": false,
+      "confidence": 1.0,
+      "dimensions": [
+        "contracts",
+        "security_privacy",
+        "untrusted_inputs",
+        "test_falsifiability"
+      ],
+      "evidence": [
+        {
+          "exact_quote": "  \"additionalProperties\": false,",
+          "line_end": 7,
+          "line_start": 7,
+          "path": "Plans/plans_to_code_handoff.schema.json",
+          "source_sha256": "1b1cff7b32b90f22734e90f025c020a05f9145fbea82ce156cb2224611ce8d4d"
+        }
+      ],
+      "gap_kind": "none_explicit_root_closure",
+      "impact": "Unknown top-level keys are rejected, so root-level extension behavior is deterministic even though payload selection remains defective.",
+      "item_id": "M15-002",
+      "item_type": "explicit_non_gap",
+      "severity": "info",
+      "source_unit_refs": [
+        "SEMANTIC:JSON_FIELD:Plans/plans_to_code_handoff.schema.json:additionalProperties",
+        "STRUCTURAL:$.additionalProperties"
+      ],
+      "statement": "The shared handoff document is explicitly closed to unlisted top-level properties.",
+      "title": "Top-level property closure is explicit"
+    },
+    {
+      "builder_discretion": true,
+      "confidence": 0.98,
+      "dimensions": [
+        "contracts",
+        "states_transitions",
+        "failures_recovery",
+        "builder_discretion",
+        "ambiguity_unknowns",
+        "invalid_states_transitions",
+        "partial_failure",
+        "recovery_rollback",
+        "test_falsifiability"
+      ],
+      "evidence": [
+        {
+          "exact_quote": "        \"retry_route\": {",
+          "line_end": 523,
+          "line_start": 523,
+          "path": "Plans/plans_to_code_handoff.schema.json",
+          "source_sha256": "1b1cff7b32b90f22734e90f025c020a05f9145fbea82ce156cb2224611ce8d4d"
+        },
+        {
+          "exact_quote": "          \"type\": \"string\"",
+          "line_end": 527,
+          "line_start": 527,
+          "path": "Plans/plans_to_code_handoff.schema.json",
+          "source_sha256": "1b1cff7b32b90f22734e90f025c020a05f9145fbea82ce156cb2224611ce8d4d"
+        }
+      ],
+      "gap_kind": "handoff_recovery_routes_untyped",
+      "impact": "A handoff row can name arbitrary, empty, nonexistent, or mutually inconsistent retry and rollback routes, preventing validators and schedulers from proving a recoverable transition.",
+      "item_id": "M15-003",
+      "item_type": "gap",
+      "severity": "high",
+      "source_unit_refs": [
+        "SEMANTIC:JSON_FIELD:Plans/plans_to_code_handoff.schema.json:$defs:CONT-002",
+        "STRUCTURAL:$.$defs"
+      ],
+      "statement": "Although route objects exist elsewhere, handoff_row models retry_route and rollback_route as unconstrained strings with no minimum length or target validation.",
+      "title": "Handoff retry and rollback routes are not machine-checkable"
+    },
+    {
+      "builder_discretion": true,
+      "confidence": 0.97,
+      "dimensions": [
+        "contracts",
+        "scale_performance",
+        "compatibility_migration",
+        "acceptance_oracles",
+        "builder_discretion",
+        "ambiguity_unknowns",
+        "scale_limits",
+        "test_falsifiability"
+      ],
+      "evidence": [
+        {
+          "exact_quote": "          \"minItems\": 18,",
+          "line_end": 563,
+          "line_start": 563,
+          "path": "Plans/plans_to_code_handoff.schema.json",
+          "source_sha256": "1b1cff7b32b90f22734e90f025c020a05f9145fbea82ce156cb2224611ce8d4d"
+        },
+        {
+          "exact_quote": "          \"maxItems\": 18,",
+          "line_end": 564,
+          "line_start": 564,
+          "path": "Plans/plans_to_code_handoff.schema.json",
+          "source_sha256": "1b1cff7b32b90f22734e90f025c020a05f9145fbea82ce156cb2224611ce8d4d"
+        }
+      ],
+      "gap_kind": "matrix_cardinality_without_identity_or_uniqueness",
+      "impact": "A matrix containing the same row eighteen times validates, while any future addition or retirement of a transition fails schema validation. Exact count is enforced without enforcing the intended eighteen distinct transition identities.",
+      "item_id": "M15-004",
+      "item_type": "gap",
+      "severity": "high",
+      "source_unit_refs": [
+        "SEMANTIC:JSON_FIELD:Plans/plans_to_code_handoff.schema.json:$defs:CONT-002",
+        "STRUCTURAL:$.$defs"
+      ],
+      "statement": "handoff_matrix fixes rows to exactly eighteen but does not require unique row_id values or enumerate the required row identities.",
+      "title": "Eighteen rows are counted but not identified"
+    },
+    {
+      "builder_discretion": true,
+      "confidence": 0.99,
+      "dimensions": [
+        "behavior",
+        "contracts",
+        "states_transitions",
+        "failures_recovery",
+        "operations",
+        "acceptance_oracles",
+        "builder_discretion",
+        "ambiguity_unknowns",
+        "invalid_states_transitions",
+        "partial_failure",
+        "recovery_rollback",
+        "observability_support",
+        "test_falsifiability"
+      ],
+      "evidence": [
+        {
+          "exact_quote": "        \"status\": {",
+          "line_end": 663,
+          "line_start": 663,
+          "path": "Plans/plans_to_code_handoff.schema.json",
+          "source_sha256": "1b1cff7b32b90f22734e90f025c020a05f9145fbea82ce156cb2224611ce8d4d"
+        },
+        {
+          "exact_quote": "        \"current_state\": {",
+          "line_end": 724,
+          "line_start": 724,
+          "path": "Plans/plans_to_code_handoff.schema.json",
+          "source_sha256": "1b1cff7b32b90f22734e90f025c020a05f9145fbea82ce156cb2224611ce8d4d"
+        }
+      ],
+      "gap_kind": "compile_status_state_transition_matrix_incomplete",
+      "impact": "Preflight, running, ready-for-intake, cancelled, and design-only-disabled records can carry contradictory current_state, stage, cursor, blockers, and next-stage values. Consumers must invent precedence rules and may launch or resume invalid work.",
+      "item_id": "M15-005",
+      "item_type": "gap",
+      "severity": "high",
+      "source_unit_refs": [
+        "SEMANTIC:JSON_FIELD:Plans/plans_to_code_handoff.schema.json:$defs:CONT-003",
+        "STRUCTURAL:$.$defs"
+      ],
+      "statement": "plan_compile_run constrains complete and blocked combinations, but does not define consistent field combinations for its other status and current_state values.",
+      "title": "Most compile-run states permit contradictory projections"
+    },
+    {
+      "builder_discretion": false,
+      "confidence": 1.0,
+      "dimensions": [
+        "behavior",
+        "contracts",
+        "states_transitions",
+        "authority",
+        "compatibility_migration",
+        "authority_boundaries",
+        "cross_document_seams",
+        "test_falsifiability"
+      ],
+      "evidence": [
+        {
+          "exact_quote": "                \"const\": \"native_runtime\"",
+          "line_end": 795,
+          "line_start": 795,
+          "path": "Plans/plans_to_code_handoff.schema.json",
+          "source_sha256": "1b1cff7b32b90f22734e90f025c020a05f9145fbea82ce156cb2224611ce8d4d"
+        },
+        {
+          "exact_quote": "                \"$ref\": \"#/$defs/ref\"",
+          "line_end": 814,
+          "line_start": 814,
+          "path": "Plans/plans_to_code_handoff.schema.json",
+          "source_sha256": "1b1cff7b32b90f22734e90f025c020a05f9145fbea82ce156cb2224611ce8d4d"
+        }
+      ],
+      "gap_kind": "none_runtime_enablement_branch_explicit",
+      "impact": "A native-runtime record cannot omit runtime enablement and policy snapshot references, and design-only records are held disabled by explicit constants.",
+      "item_id": "M15-006",
+      "item_type": "explicit_non_gap",
+      "severity": "info",
+      "source_unit_refs": [
+        "SEMANTIC:JSON_FIELD:Plans/plans_to_code_handoff.schema.json:$defs:CONT-003",
+        "STRUCTURAL:$.$defs"
+      ],
+      "statement": "The contract_mode branches explicitly separate disabled bootstrap records from native-runtime records and require runtime evidence references for the latter.",
+      "title": "Runtime enablement boundary is explicitly encoded"
+    },
+    {
+      "builder_discretion": true,
+      "confidence": 0.99,
+      "dimensions": [
+        "inputs_outputs",
+        "contracts",
+        "states_transitions",
+        "consumers",
+        "operations",
+        "acceptance_oracles",
+        "builder_discretion",
+        "ambiguity_unknowns",
+        "invalid_states_transitions",
+        "authority_boundaries",
+        "test_falsifiability"
+      ],
+      "evidence": [
+        {
+          "exact_quote": "        \"acceptance_criteria\": {",
+          "line_end": 1019,
+          "line_start": 1019,
+          "path": "Plans/plans_to_code_handoff.schema.json",
+          "source_sha256": "1b1cff7b32b90f22734e90f025c020a05f9145fbea82ce156cb2224611ce8d4d"
+        },
+        {
+          "exact_quote": "        \"validator_candidates\": {",
+          "line_end": 1025,
+          "line_start": 1025,
+          "path": "Plans/plans_to_code_handoff.schema.json",
+          "source_sha256": "1b1cff7b32b90f22734e90f025c020a05f9145fbea82ce156cb2224611ce8d4d"
+        }
+      ],
+      "gap_kind": "approved_work_can_lack_executable_acceptance",
+      "impact": "Candidates can be approved and WorkNode requests can be accepted with empty acceptance criteria, validator candidates, implementation surfaces, read sets, write sets, or dependencies. The handoff can therefore advance work that cannot be implemented or falsified.",
+      "item_id": "M15-007",
+      "item_type": "gap",
+      "severity": "critical",
+      "source_unit_refs": [
+        "SEMANTIC:JSON_FIELD:Plans/plans_to_code_handoff.schema.json:$defs:CONT-004",
+        "STRUCTURAL:$.$defs"
+      ],
+      "statement": "NodeSeed and WorkNode lifecycle statuses are not conditioned on non-empty executable inputs, acceptance criteria, or validators.",
+      "title": "Approval can occur without executable acceptance content"
+    },
+    {
+      "builder_discretion": true,
+      "confidence": 0.98,
+      "dimensions": [
+        "behavior",
+        "contracts",
+        "states_transitions",
+        "failures_recovery",
+        "operations",
+        "builder_discretion",
+        "ambiguity_unknowns",
+        "partial_failure",
+        "observability_support",
+        "test_falsifiability"
+      ],
+      "evidence": [
+        {
+          "exact_quote": "        \"fallback_used\": {",
+          "line_end": 1347,
+          "line_start": 1347,
+          "path": "Plans/plans_to_code_handoff.schema.json",
+          "source_sha256": "1b1cff7b32b90f22734e90f025c020a05f9145fbea82ce156cb2224611ce8d4d"
+        },
+        {
+          "exact_quote": "        \"fallback_reason\": {",
+          "line_end": 1350,
+          "line_start": 1350,
+          "path": "Plans/plans_to_code_handoff.schema.json",
+          "source_sha256": "1b1cff7b32b90f22734e90f025c020a05f9145fbea82ce156cb2224611ce8d4d"
+        }
+      ],
+      "gap_kind": "model_fallback_provenance_not_conditional",
+      "impact": "A fallback can be reported without a reason, or a reason can accompany fallback_used=false, obscuring routing degradation and preventing reliable operational audits.",
+      "item_id": "M15-008",
+      "item_type": "gap",
+      "severity": "medium",
+      "source_unit_refs": [
+        "SEMANTIC:JSON_FIELD:Plans/plans_to_code_handoff.schema.json:$defs:CONT-004",
+        "STRUCTURAL:$.$defs"
+      ],
+      "statement": "model_resolution_receipt requires fallback_used but neither requires fallback_reason nor conditions it on the boolean value.",
+      "title": "Model fallback reason is not bound to fallback use"
+    },
+    {
+      "builder_discretion": true,
+      "confidence": 0.99,
+      "dimensions": [
+        "behavior",
+        "inputs_outputs",
+        "contracts",
+        "states_transitions",
+        "consumers",
+        "failures_recovery",
+        "operations",
+        "acceptance_oracles",
+        "builder_discretion",
+        "ambiguity_unknowns",
+        "partial_failure",
+        "observability_support",
+        "test_falsifiability"
+      ],
+      "evidence": [
+        {
+          "exact_quote": "            \"skipped\"",
+          "line_end": 1573,
+          "line_start": 1573,
+          "path": "Plans/plans_to_code_handoff.schema.json",
+          "source_sha256": "1b1cff7b32b90f22734e90f025c020a05f9145fbea82ce156cb2224611ce8d4d"
+        }
+      ],
+      "gap_kind": "nonpass_test_disposition_missing",
+      "impact": "A skipped, blocked, or failed receipt can omit why execution did not pass, who authorized a disposition, and what recovery is required. Empty evidence and visual-evidence lists remain valid, so downstream completion cannot distinguish an explained exception from absent proof.",
+      "item_id": "M15-009",
+      "item_type": "gap",
+      "severity": "high",
+      "source_unit_refs": [
+        "SEMANTIC:JSON_FIELD:Plans/plans_to_code_handoff.schema.json:$defs:CONT-005",
+        "STRUCTURAL:$.$defs"
+      ],
+      "statement": "test_run_receipt permits fail, blocked, and skipped results without a required failure reason, skip disposition, recovery route, or non-empty evidence.",
+      "title": "Non-passing tests have no mandatory disposition record"
+    },
+    {
+      "builder_discretion": false,
+      "confidence": 1.0,
+      "dimensions": [
+        "contracts",
+        "acceptance_oracles",
+        "authority_boundaries",
+        "test_falsifiability"
+      ],
+      "evidence": [
+        {
+          "exact_quote": "          \"const\": true",
+          "line_end": 1419,
+          "line_start": 1419,
+          "path": "Plans/plans_to_code_handoff.schema.json",
+          "source_sha256": "1b1cff7b32b90f22734e90f025c020a05f9145fbea82ce156cb2224611ce8d4d"
+        }
+      ],
+      "gap_kind": "none_manual_only_acceptance_forbidden",
+      "impact": "Test bindings and run receipts must affirm that manual-only acceptance is not allowed, preserving a machine-verifiable policy signal.",
+      "item_id": "M15-010",
+      "item_type": "explicit_non_gap",
+      "severity": "info",
+      "source_unit_refs": [
+        "SEMANTIC:JSON_FIELD:Plans/plans_to_code_handoff.schema.json:$defs:CONT-005",
+        "STRUCTURAL:$.$defs"
+      ],
+      "statement": "The testing contract explicitly requires manual_only_acceptance_not_allowed to be true.",
+      "title": "Manual-only acceptance is explicitly disallowed"
+    },
+    {
+      "builder_discretion": true,
+      "confidence": 0.99,
+      "dimensions": [
+        "behavior",
+        "contracts",
+        "states_transitions",
+        "authority",
+        "consumers",
+        "failures_recovery",
+        "propagation",
+        "operations",
+        "acceptance_oracles",
+        "builder_discretion",
+        "ambiguity_unknowns",
+        "invalid_states_transitions",
+        "partial_failure",
+        "recovery_rollback",
+        "authority_boundaries",
+        "observability_support",
+        "destructive_actions",
+        "test_falsifiability"
+      ],
+      "evidence": [
+        {
+          "exact_quote": "        \"all_worknodes_terminal\": {",
+          "line_end": 1748,
+          "line_start": 1748,
+          "path": "Plans/plans_to_code_handoff.schema.json",
+          "source_sha256": "1b1cff7b32b90f22734e90f025c020a05f9145fbea82ce156cb2224611ce8d4d"
+        },
+        {
+          "exact_quote": "            \"certified\",",
+          "line_end": 1785,
+          "line_start": 1785,
+          "path": "Plans/plans_to_code_handoff.schema.json",
+          "source_sha256": "1b1cff7b32b90f22734e90f025c020a05f9145fbea82ce156cb2224611ce8d4d"
+        }
+      ],
+      "gap_kind": "certification_not_conditioned_on_completion_invariants",
+      "impact": "A goal can validate as certified while worknodes are nonterminal, tests or source-control receipts are invalid, blockers remain, rollback or safe-point requirements fail, currentness mismatches exist, final source state is blocked, or unresolved risks remain.",
+      "item_id": "M15-011",
+      "item_type": "gap",
+      "severity": "critical",
+      "source_unit_refs": [
+        "SEMANTIC:JSON_FIELD:Plans/plans_to_code_handoff.schema.json:$defs:CONT-006",
+        "STRUCTURAL:$.$defs"
+      ],
+      "statement": "goal_completion_receipt lists completion booleans and a certifier decision but has no conditional that makes the invariants true when final_certifier_decision is certified.",
+      "title": "Certified goals may violate every completion invariant"
+    },
+    {
+      "builder_discretion": true,
+      "confidence": 0.98,
+      "dimensions": [
+        "behavior",
+        "contracts",
+        "states_transitions",
+        "authority",
+        "failures_recovery",
+        "builder_discretion",
+        "ambiguity_unknowns",
+        "invalid_states_transitions",
+        "authority_boundaries",
+        "test_falsifiability"
+      ],
+      "evidence": [
+        {
+          "exact_quote": "        \"review_status\": {",
+          "line_end": 2027,
+          "line_start": 2027,
+          "path": "Plans/plans_to_code_handoff.schema.json",
+          "source_sha256": "1b1cff7b32b90f22734e90f025c020a05f9145fbea82ce156cb2224611ce8d4d"
+        },
+        {
+          "exact_quote": "        \"decision\": {",
+          "line_end": 2042,
+          "line_start": 2042,
+          "path": "Plans/plans_to_code_handoff.schema.json",
+          "source_sha256": "1b1cff7b32b90f22734e90f025c020a05f9145fbea82ce156cb2224611ce8d4d"
+        }
+      ],
+      "gap_kind": "review_status_decision_matrix_missing",
+      "impact": "A review may be status approved with a reject or changes-required decision, or status rejected with approve_candidate. required_changes is also optional for changes_required, leaving downstream authority and repair routing ambiguous.",
+      "item_id": "M15-012",
+      "item_type": "gap",
+      "severity": "high",
+      "source_unit_refs": [
+        "SEMANTIC:JSON_FIELD:Plans/plans_to_code_handoff.schema.json:$defs:CONT-006",
+        "STRUCTURAL:$.$defs"
+      ],
+      "statement": "node_seed_review does not bind review_status to decision or require required_changes for a changes-required outcome.",
+      "title": "NodeSeed review outcome fields can contradict each other"
+    },
+    {
+      "builder_discretion": true,
+      "confidence": 0.99,
+      "dimensions": [
+        "behavior",
+        "inputs_outputs",
+        "contracts",
+        "states_transitions",
+        "consumers",
+        "gui_truth",
+        "operations",
+        "acceptance_oracles",
+        "builder_discretion",
+        "ambiguity_unknowns",
+        "invalid_states_transitions",
+        "gui_misleading_states",
+        "accessibility",
+        "localization",
+        "cross_document_seams",
+        "test_falsifiability"
+      ],
+      "evidence": [
+        {
+          "exact_quote": "        \"gui_related\": {",
+          "line_end": 2165,
+          "line_start": 2165,
+          "path": "Plans/plans_to_code_handoff.schema.json",
+          "source_sha256": "1b1cff7b32b90f22734e90f025c020a05f9145fbea82ce156cb2224611ce8d4d"
+        },
+        {
+          "exact_quote": "        \"acceptance_criteria\": {",
+          "line_end": 2180,
+          "line_start": 2180,
+          "path": "Plans/plans_to_code_handoff.schema.json",
+          "source_sha256": "1b1cff7b32b90f22734e90f025c020a05f9145fbea82ce156cb2224611ce8d4d"
+        }
+      ],
+      "gap_kind": "gui_request_ready_state_not_conditioned_on_gui_contract",
+      "impact": "An external GUI request can be ready, sent, or complete while both GUI flags are false and target surfaces, prompt, and acceptance criteria are empty. A user-facing status can therefore imply delivered GUI work without a defined or testable GUI outcome.",
+      "item_id": "M15-013",
+      "item_type": "gui_truth",
+      "severity": "high",
+      "source_unit_refs": [
+        "SEMANTIC:JSON_FIELD:Plans/plans_to_code_handoff.schema.json:$defs:CONT-007",
+        "STRUCTURAL:$.$defs"
+      ],
+      "statement": "codex_external_gui_agent_request has no conditional requirements tying lifecycle status to GUI classification, non-empty targets, a non-empty prompt, or acceptance criteria.",
+      "title": "GUI request status can claim progress without a GUI contract"
+    },
+    {
+      "builder_discretion": true,
+      "confidence": 0.98,
+      "dimensions": [
+        "inputs_outputs",
+        "contracts",
+        "consumers",
+        "gui_truth",
+        "operations",
+        "acceptance_oracles",
+        "builder_discretion",
+        "ambiguity_unknowns",
+        "gui_misleading_states",
+        "observability_support",
+        "test_falsifiability"
+      ],
+      "evidence": [
+        {
+          "exact_quote": "        \"inspection_status\": {",
+          "line_end": 2432,
+          "line_start": 2432,
+          "path": "Plans/plans_to_code_handoff.schema.json",
+          "source_sha256": "1b1cff7b32b90f22734e90f025c020a05f9145fbea82ce156cb2224611ce8d4d"
+        }
+      ],
+      "gap_kind": "visual_evidence_status_and_artifacts_not_falsifiable",
+      "impact": "A visual-evidence record may use any status text, carry no artifact refs, and provide an empty note, so consumers cannot distinguish inspected proof from missing, failed, or stale evidence.",
+      "item_id": "M15-014",
+      "item_type": "gap",
+      "severity": "high",
+      "source_unit_refs": [
+        "SEMANTIC:JSON_FIELD:Plans/plans_to_code_handoff.schema.json:$defs:CONT-007",
+        "STRUCTURAL:$.$defs"
+      ],
+      "statement": "visual_evidence uses an unconstrained inspection_status string and allows empty artifact_refs and notes.",
+      "title": "Visual evidence records need not contain visual proof"
+    },
+    {
+      "builder_discretion": true,
+      "confidence": 0.99,
+      "dimensions": [
+        "behavior",
+        "inputs_outputs",
+        "contracts",
+        "states_transitions",
+        "authority",
+        "consumers",
+        "failures_recovery",
+        "propagation",
+        "operations",
+        "acceptance_oracles",
+        "builder_discretion",
+        "ambiguity_unknowns",
+        "invalid_states_transitions",
+        "partial_failure",
+        "recovery_rollback",
+        "authority_boundaries",
+        "observability_support",
+        "destructive_actions",
+        "test_falsifiability"
+      ],
+      "evidence": [
+        {
+          "exact_quote": "        \"terminal_status\": {",
+          "line_end": 2735,
+          "line_start": 2735,
+          "path": "Plans/plans_to_code_handoff.schema.json",
+          "source_sha256": "1b1cff7b32b90f22734e90f025c020a05f9145fbea82ce156cb2224611ce8d4d"
+        },
+        {
+          "exact_quote": "        \"unresolved_findings\": {",
+          "line_end": 2755,
+          "line_start": 2755,
+          "path": "Plans/plans_to_code_handoff.schema.json",
+          "source_sha256": "1b1cff7b32b90f22734e90f025c020a05f9145fbea82ce156cb2224611ce8d4d"
+        }
+      ],
+      "gap_kind": "terminal_completion_not_conditioned_on_receipts_or_findings",
+      "impact": "A WorkNode can validate as complete with no change receipts, no test runs, no source-control receipts, and unresolved audit findings. Parent completion and promotion consumers may treat unverified or unsafe work as terminally successful.",
+      "item_id": "M15-015",
+      "item_type": "gap",
+      "severity": "critical",
+      "source_unit_refs": [
+        "SEMANTIC:JSON_FIELD:Plans/plans_to_code_handoff.schema.json:$defs:CONT-008",
+        "STRUCTURAL:$.$defs"
+      ],
+      "statement": "worknode_completion_receipt does not condition terminal_status=complete on non-empty change, test, and source-control receipts or on unresolved_findings being empty.",
+      "title": "WorkNodes may complete without proof and with unresolved findings"
+    },
+    {
+      "builder_discretion": true,
+      "confidence": 0.98,
+      "dimensions": [
+        "contracts",
+        "states_transitions",
+        "authority",
+        "failures_recovery",
+        "operations",
+        "builder_discretion",
+        "ambiguity_unknowns",
+        "invalid_states_transitions",
+        "partial_failure",
+        "recovery_rollback",
+        "authority_boundaries",
+        "destructive_actions",
+        "test_falsifiability"
+      ],
+      "evidence": [
+        {
+          "exact_quote": "        \"rollback_available\": {",
+          "line_end": 2510,
+          "line_start": 2510,
+          "path": "Plans/plans_to_code_handoff.schema.json",
+          "source_sha256": "1b1cff7b32b90f22734e90f025c020a05f9145fbea82ce156cb2224611ce8d4d"
+        },
+        {
+          "exact_quote": "        \"restore_command_or_action\": {",
+          "line_end": 2513,
+          "line_start": 2513,
+          "path": "Plans/plans_to_code_handoff.schema.json",
+          "source_sha256": "1b1cff7b32b90f22734e90f025c020a05f9145fbea82ce156cb2224611ce8d4d"
+        }
+      ],
+      "gap_kind": "rollback_capability_and_restore_action_not_consistent",
+      "impact": "A receipt may claim rollback is unavailable while supplying a restore action, or claim it is available with an empty action. Safe-point and preflight consumers cannot determine whether destructive work is actually reversible.",
+      "item_id": "M15-016",
+      "item_type": "gap",
+      "severity": "high",
+      "source_unit_refs": [
+        "SEMANTIC:JSON_FIELD:Plans/plans_to_code_handoff.schema.json:$defs:CONT-008",
+        "STRUCTURAL:$.$defs"
+      ],
+      "statement": "Source-control and safe-point receipts require rollback_available and restore_command_or_action but do not bind the boolean to a non-empty, usable action.",
+      "title": "Rollback claims can contradict restore instructions"
+    }
+  ],
+  "model": "gpt-5.6-sol",
+  "phase": "blind_macro_window_review",
+  "reasoning_effort": "xhigh",
+  "schema_version": "macro-review-result-v1",
+  "segments": [
+    {
+      "core_range": [
+        1,
+        355
+      ],
+      "covered_source_unit_refs": [
+        "SEMANTIC:JSON_PREFIX:Plans/plans_to_code_handoff.schema.json",
+        "SEMANTIC:JSON_FIELD:Plans/plans_to_code_handoff.schema.json:$schema",
+        "SEMANTIC:JSON_FIELD:Plans/plans_to_code_handoff.schema.json:$id",
+        "SEMANTIC:JSON_FIELD:Plans/plans_to_code_handoff.schema.json:title",
+        "SEMANTIC:JSON_FIELD:Plans/plans_to_code_handoff.schema.json:description",
+        "SEMANTIC:JSON_FIELD:Plans/plans_to_code_handoff.schema.json:type",
+        "SEMANTIC:JSON_FIELD:Plans/plans_to_code_handoff.schema.json:additionalProperties",
+        "SEMANTIC:JSON_FIELD:Plans/plans_to_code_handoff.schema.json:properties",
+        "SEMANTIC:JSON_FIELD:Plans/plans_to_code_handoff.schema.json:required",
+        "SEMANTIC:JSON_FIELD:Plans/plans_to_code_handoff.schema.json:$defs:CONT-001",
+        "STRUCTURAL:$",
+        "STRUCTURAL:$.$defs",
+        "STRUCTURAL:$.$id",
+        "STRUCTURAL:$.$schema",
+        "STRUCTURAL:$.additionalProperties",
+        "STRUCTURAL:$.description",
+        "STRUCTURAL:$.properties",
+        "STRUCTURAL:$.required",
+        "STRUCTURAL:$.title",
+        "STRUCTURAL:$.type"
+      ],
+      "item_ids": [
+        "M15-001",
+        "M15-002"
+      ],
+      "reviewed": true,
+      "summary": "Reviewed root identity, strictness, artifact enumeration, reference helpers, and success, blocked, and retry route contracts. Root closure is explicit, but the generic payload severs artifact identity from all strict definitions.",
+      "window_id": "WIN-F2A6E3B37B3B-0001"
+    },
+    {
+      "core_range": [
+        356,
+        580
+      ],
+      "covered_source_unit_refs": [
+        "SEMANTIC:JSON_FIELD:Plans/plans_to_code_handoff.schema.json:$defs:CONT-002",
+        "STRUCTURAL:$.$defs"
+      ],
+      "item_ids": [
+        "M15-003",
+        "M15-004"
+      ],
+      "reviewed": true,
+      "summary": "Reviewed blocked routing, NodeSeed review enums, handoff rows, and matrix constraints. Recovery routes remain free-form and exact matrix cardinality does not establish distinct transition identity.",
+      "window_id": "WIN-F2A6E3B37B3B-0002"
+    },
+    {
+      "core_range": [
+        581,
+        969
+      ],
+      "covered_source_unit_refs": [
+        "SEMANTIC:JSON_FIELD:Plans/plans_to_code_handoff.schema.json:$defs:CONT-003",
+        "STRUCTURAL:$.$defs"
+      ],
+      "item_ids": [
+        "M15-005",
+        "M15-006"
+      ],
+      "reviewed": true,
+      "summary": "Reviewed PlanCompileRun fields, design-only and native-runtime branches, terminal and blocked conditions, and stage-card routing. Runtime enablement is explicit, while most status and current-state combinations remain unconstrained.",
+      "window_id": "WIN-F2A6E3B37B3B-0003"
+    },
+    {
+      "core_range": [
+        970,
+        1366
+      ],
+      "covered_source_unit_refs": [
+        "SEMANTIC:JSON_FIELD:Plans/plans_to_code_handoff.schema.json:$defs:CONT-004",
+        "STRUCTURAL:$.$defs"
+      ],
+      "item_ids": [
+        "M15-007",
+        "M15-008"
+      ],
+      "reviewed": true,
+      "summary": "Reviewed NodeSeed candidates, WorkGraph drafts, WorkNode requests, ordering, and model-resolution receipts. Lifecycle approval lacks non-empty executable gates, and model fallback provenance is not conditionally required.",
+      "window_id": "WIN-F2A6E3B37B3B-0004"
+    },
+    {
+      "core_range": [
+        1367,
+        1713
+      ],
+      "covered_source_unit_refs": [
+        "SEMANTIC:JSON_FIELD:Plans/plans_to_code_handoff.schema.json:$defs:CONT-005",
+        "STRUCTURAL:$.$defs"
+      ],
+      "item_ids": [
+        "M15-009",
+        "M15-010"
+      ],
+      "reviewed": true,
+      "summary": "Reviewed test bindings, capability reports, run receipts, and source-control receipt fields. Manual-only acceptance is forbidden, but non-passing outcomes lack mandatory disposition and recovery evidence.",
+      "window_id": "WIN-F2A6E3B37B3B-0005"
+    },
+    {
+      "core_range": [
+        1714,
+        2096
+      ],
+      "covered_source_unit_refs": [
+        "SEMANTIC:JSON_FIELD:Plans/plans_to_code_handoff.schema.json:$defs:CONT-006",
+        "STRUCTURAL:$.$defs"
+      ],
+      "item_ids": [
+        "M15-011",
+        "M15-012"
+      ],
+      "reviewed": true,
+      "summary": "Reviewed goal completion, evidence layers, compile worklists, parallel completion gates, NodeSeed reviews, and compiler routing. Certification and review decisions can contradict their accompanying invariant and status fields.",
+      "window_id": "WIN-F2A6E3B37B3B-0006"
+    },
+    {
+      "core_range": [
+        2097,
+        2439
+      ],
+      "covered_source_unit_refs": [
+        "SEMANTIC:JSON_FIELD:Plans/plans_to_code_handoff.schema.json:$defs:CONT-007",
+        "STRUCTURAL:$.$defs"
+      ],
+      "item_ids": [
+        "M15-013",
+        "M15-014"
+      ],
+      "reviewed": true,
+      "summary": "Reviewed Codex work packages, external GUI requests, compile and harness receipts, test strategies and cases, and visual evidence. GUI lifecycle states and visual-proof records can validate without testable GUI content or artifacts.",
+      "window_id": "WIN-F2A6E3B37B3B-0007"
+    },
+    {
+      "core_range": [
+        2440,
+        2771
+      ],
+      "covered_source_unit_refs": [
+        "SEMANTIC:JSON_FIELD:Plans/plans_to_code_handoff.schema.json:$defs:CONT-008",
+        "STRUCTURAL:$.$defs"
+      ],
+      "item_ids": [
+        "M15-015",
+        "M15-016"
+      ],
+      "reviewed": true,
+      "summary": "Reviewed source-control preflight, safe points, dispatch, change, and WorkNode completion receipts. Terminal completion lacks proof gates, and rollback availability is not made consistent with restore instructions.",
+      "window_id": "WIN-F2A6E3B37B3B-0008"
+    }
+  ],
+  "self_attestation": {
+    "no_canonical_writes": true,
+    "no_external_research_during_blind_review": true,
+    "no_peer_result_access": true,
+    "no_prior_audit_access": true,
+    "no_unrelated_source_access": true,
+    "terminal_after_submission": true
+  },
+  "source_binding": {
+    "bundle_id": "MACRO15-F2A6E3B37B3B-0001",
+    "document_path": "Plans/plans_to_code_handoff.schema.json",
+    "micro_window_ids": [
+      "WIN-F2A6E3B37B3B-0001",
+      "WIN-F2A6E3B37B3B-0002",
+      "WIN-F2A6E3B37B3B-0003",
+      "WIN-F2A6E3B37B3B-0004",
+      "WIN-F2A6E3B37B3B-0005",
+      "WIN-F2A6E3B37B3B-0006",
+      "WIN-F2A6E3B37B3B-0007",
+      "WIN-F2A6E3B37B3B-0008"
+    ],
+    "source_sha256": "1b1cff7b32b90f22734e90f025c020a05f9145fbea82ce156cb2224611ce8d4d"
+  },
+  "status": "completed",
+  "synthesis": {
+    "cross_document_questions": [
+      "Which canonical contract binds each artifact_kind to its corresponding payload definition, if that binding is intentionally external to this schema?",
+      "Which runtime authority defines legal retry, rollback, review, and compile state-transition matrices that this schema leaves open?",
+      "Which completion policy prevents certified goals and completed WorkNodes from carrying false invariants, empty receipts, or unresolved findings?",
+      "Which GUI acceptance contract requires non-empty target surfaces, accessibility and localization criteria, and inspected visual artifacts before a GUI request is complete?"
+    ],
+    "feature_family_keys": [
+      "plans-to-code-handoff",
+      "runtime-aware-plan-compilation",
+      "nodeseed-workgraph-worknode",
+      "testing-and-visual-evidence",
+      "source-control-and-completion-receipts"
+    ],
+    "research_queries": [
+      "JSON Schema 2020-12 discriminator patterns for binding artifact kind to payload schema",
+      "JSON Schema modeling of finite state machines and cross-field terminal invariants",
+      "machine-verifiable software supply-chain completion receipts rollback and test evidence",
+      "GUI delivery evidence contracts accessibility localization and visual regression oracles"
+    ]
+  },
+  "task_thread_id": "/root/a005m15_b9_000184_attempt_0015_terminal"
+}

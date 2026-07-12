@@ -1,0 +1,33 @@
+{
+  "constants": {
+    "audit_id": "audit-20260710-005-plan-assurance-model-lanes-fresh-agent-exhaustive",
+    "batch_id": "macro-batch-0006",
+    "controller_thread_id": "019f4f5e-96c6-7893-8c94-ce2c1b760d6c",
+    "epoch_id": "epoch-0015",
+    "fork_turns": "none",
+    "fresh_child": true,
+    "model": "gpt-5.6-sol",
+    "reasoning_effort": "xhigh",
+    "schema_version": "macro-dispatch-receipt-v1"
+  },
+  "identity_rule": "agent_path equals task_thread_id equals the fresh child's canonical agent path",
+  "required_keys": [
+    "audit_id",
+    "schema_version",
+    "epoch_id",
+    "batch_id",
+    "assignment_id",
+    "attempt_id",
+    "controller_thread_id",
+    "agent_path",
+    "task_thread_id",
+    "model",
+    "reasoning_effort",
+    "fresh_child",
+    "fork_turns",
+    "dispatch_intent_sha256",
+    "capsule_sha256",
+    "output_directory"
+  ],
+  "schema_version": "macro-dispatch-receipt-contract-v1"
+}

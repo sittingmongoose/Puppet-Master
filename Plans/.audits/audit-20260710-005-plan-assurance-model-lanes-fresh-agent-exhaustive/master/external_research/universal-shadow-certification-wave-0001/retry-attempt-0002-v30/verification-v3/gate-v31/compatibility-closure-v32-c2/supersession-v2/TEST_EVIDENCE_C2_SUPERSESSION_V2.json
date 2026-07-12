@@ -1,0 +1,102 @@
+{
+  "grand_total": {
+    "failed": 0,
+    "passed": 2085,
+    "total": 2085
+  },
+  "invocations": {
+    "activations": 0,
+    "capture_writers": 0,
+    "controllers": 0,
+    "generators": 0,
+    "launches": 0,
+    "reviewers": 0,
+    "semantic_children": 0
+  },
+  "local_preseal_replay": {
+    "new_c2_suite_run": true,
+    "preserved_v30_suite_run": true,
+    "runtime_errors": [],
+    "status": "PASS"
+  },
+  "new_c2_suite": {
+    "all_cases_start_from_real_valid_synthetic_files": true,
+    "failed": 0,
+    "passed": 1260,
+    "stdout_sha256": "3a6807140a20a9de2f16eb4f6803f98afd4bcd838e8327c56ecc3b9f44524569",
+    "test_name_digest": "d5ec225908952df8bf0069a9aa3d381211856084da301c9bb6ba716307a5005b",
+    "test_path_relative_to_v1": "tools/test_c2_compatibility_v32.py",
+    "test_sha256": "4ce93a3d90521021f32f14ded52616306538df22c4350552dff144deb49d05ef",
+    "total": 1260
+  },
+  "preserved_v30_suite": {
+    "failed": 0,
+    "passed": 825,
+    "stdout_sha256": "2533adc1664f4b1a9d3680626351cb1e6ea339dd7654ea3a373837821de4a343",
+    "test_path_relative_to_audit": "master/external_research/universal-shadow-certification-wave-0001/retry-attempt-0002-v30/verification-v2/test_retry_attempt_0002_v30_v3.py",
+    "test_sha256": "849cf07ccedaf868f43e28cf79a50ad9a1007b35d14575bc802eeae1e2784350",
+    "total": 825
+  },
+  "production_zero": {
+    "capture_present": false,
+    "checkpoint_present": false,
+    "future_capture_authority_present": false,
+    "future_native_binding_present": false,
+    "future_reviewer_authority_present": false,
+    "report_present": false
+  },
+  "root_read_only_replay_contract": {
+    "PYTHONHASHSEED": "0",
+    "full_verifier_flags": [
+      "--run-tests",
+      "--run-baseline"
+    ],
+    "must_run_after_terminal_bytes_frozen": true,
+    "persistent_receipt_written_by_v2": false
+  },
+  "runtime": {
+    "LC_ALL": "C",
+    "PYTHONDONTWRITEBYTECODE": "1",
+    "PYTHONHASHSEED": "0",
+    "PYTHONNOUSERSITE": "1",
+    "TZ": "UTC",
+    "flags": [
+      "-S",
+      "-B"
+    ],
+    "jsonschema_record_sha256": "82af429e01d10b4c19118aeb1ae1462db5074c62564a7f355c4a68a3a910b1c8",
+    "jsonschema_version": "4.26.0",
+    "python_path": "/Users/jaredsmacbookair/.cache/codex-runtimes/codex-primary-runtime/dependencies/python/bin/python3",
+    "python_sha256": "eb9d74b9c7cfdfb2c9b91614edb2c3607360ba46c5aa7fc4557b3a4a23e97cff",
+    "python_version": "3.12.13"
+  },
+  "schema_version": "a005-c2-compatibility-supersession-v2-test-evidence-v1",
+  "scope": {
+    "activation_authorized": false,
+    "activation_transactions": 0,
+    "credit": 0,
+    "launch_authorized": false,
+    "receipt_count": 0,
+    "result_count": 0,
+    "runtime_native_capture_rows": 0,
+    "spawn": "none",
+    "spawn_count": 0
+  },
+  "status": "PASS_PRESEAL_TESTS_PRODUCTION_ZERO_ROOT_READ_ONLY_REPLAY_CONTRACT_PINNED",
+  "zero_state": {
+    "activations": 0,
+    "canonical_reads": 0,
+    "canonical_writes": 0,
+    "captures": 0,
+    "checkpoints": 0,
+    "controllers": 0,
+    "credit": 0,
+    "generator_invocations": 0,
+    "launches": 0,
+    "promotion": 0,
+    "receipts": 0,
+    "results": 0,
+    "reviewers": 0,
+    "semantic_children": 0
+  }
+}

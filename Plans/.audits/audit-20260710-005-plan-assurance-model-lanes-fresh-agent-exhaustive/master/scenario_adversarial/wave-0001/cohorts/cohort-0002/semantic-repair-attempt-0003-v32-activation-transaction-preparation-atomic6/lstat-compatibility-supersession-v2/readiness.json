@@ -1,0 +1,70 @@
+{
+  "schema_version": "scenario-c2-attempt3-lstat-compatibility-supersession-v2-readiness-v1",
+  "status": "READY_FOR_FRESH_LUNA_LSTAT_SUPERSESSION_GATE",
+  "errors": [],
+  "scope": "lstat_compatibility_supersession_preparation_only",
+  "bindings": {
+    "authority": {
+      "path": "/Users/jaredsmacbookair/Documents/PuppetMaster/Plans/.audits/audit-20260710-005-plan-assurance-model-lanes-fresh-agent-exhaustive/master/scenario_adversarial/wave-0001/cohorts/cohort-0002/semantic-repair-attempt-0003-v32-activation-transaction-preparation-atomic6/lstat-compatibility-supersession-v2/IMMUTABLE_AUTHORITY.json",
+      "byte_count": 9825,
+      "raw_sha256": "2baafb68d16b1f9f22b64892a401317405c2008edc82ba4ff7be702f1a5497ae"
+    },
+    "source_seal": {
+      "path": "/Users/jaredsmacbookair/Documents/PuppetMaster/Plans/.audits/audit-20260710-005-plan-assurance-model-lanes-fresh-agent-exhaustive/master/scenario_adversarial/wave-0001/cohorts/cohort-0002/semantic-repair-attempt-0003-v32-activation-transaction-preparation-atomic6/lstat-compatibility-supersession-v2/SOURCE_SEAL.json",
+      "byte_count": 4083,
+      "raw_sha256": "094e420e4b67a11ad0dfe3ca4caf53afd3a7d744ec910b819303bdd49be70eb2"
+    },
+    "test_report": {
+      "path": "/Users/jaredsmacbookair/Documents/PuppetMaster/Plans/.audits/audit-20260710-005-plan-assurance-model-lanes-fresh-agent-exhaustive/master/scenario_adversarial/wave-0001/cohorts/cohort-0002/semantic-repair-attempt-0003-v32-activation-transaction-preparation-atomic6/lstat-compatibility-supersession-v2/validation/test-report.json",
+      "byte_count": 2900,
+      "raw_sha256": "60a98e1e324423887e1bc738cfd399433beda561e3ef201ba7dee8f81fbf0b3a"
+    },
+    "terminal": {
+      "path": "/Users/jaredsmacbookair/Documents/PuppetMaster/Plans/.audits/audit-20260710-005-plan-assurance-model-lanes-fresh-agent-exhaustive/master/scenario_adversarial/wave-0001/cohorts/cohort-0002/semantic-repair-attempt-0003-v32-activation-transaction-preparation-atomic6/lstat-compatibility-supersession-v2/validation/terminal-preparation-report.json",
+      "byte_count": 9322,
+      "raw_sha256": "648554466ae3e3688ef58384b6fc65aaa871db9ce1faa5d677333c6731dcb294"
+    },
+    "verifier": {
+      "path": "/Users/jaredsmacbookair/Documents/PuppetMaster/Plans/.audits/audit-20260710-005-plan-assurance-model-lanes-fresh-agent-exhaustive/master/scenario_adversarial/wave-0001/cohorts/cohort-0002/semantic-repair-attempt-0003-v32-activation-transaction-preparation-atomic6/lstat-compatibility-supersession-v2/verify_lstat_supersession_v2.py",
+      "byte_count": 34819,
+      "raw_sha256": "f7a7b765dc99bd0195d58e6c748a6adc06647b59b473683133c0dc0d395ca189"
+    }
+  },
+  "full_replay_stdout_sha256": "b4ee6526cf226237952c550c8944a4491f04a47e414d87316e0ae2fc7da96138",
+  "suite_closure": {
+    "attempt3": {"passed": 1024, "total": 1024, "failed": 0, "exit_status": 0},
+    "branch_b_v1_raw": {"passed": 898, "total": 900, "failed": 2, "exit_status": 1},
+    "branch_b_v1_effective": {"passed": 900, "total": 900, "failed": 0, "semantic_weakening": false},
+    "supersession_lightweight": {"passed": 512, "total": 512, "failed": 0}
+  },
+  "inventory_closure": {
+    "attempt3": {"status": "pass", "errors": [], "current_atime_deltas": [], "member_count": 57, "regular_count": 37, "directory_count": 20, "membership_sha256": "ae37acfbaddd8a0b3cdb3b7498adbf44ef8b2526a8611f75c2282ddf3ede2054", "content_sha256": "c8876b43c8fd162211a607c9663365a44c306aad6afe502593e018d580f7bed9", "observed_rich_sha256": "6d8b8ba7928d56310346c10651df33cc52380bf4188f4c85d618a1bb8a3a2133", "stable_identity_sha256": "8ca5f155ca7d73995a3cfa3690d5592f82e2cb59dad4384d2654f50bb33c3c73"},
+    "branch_b_original_base": {"status": "pass", "errors": [], "current_atime_deltas": [], "member_count": 9, "regular_count": 8, "directory_count": 1, "membership_sha256": "6fce882cde9b241a6a102b4b400dd42c70eec742dbf281502db053949c3fcbd1", "content_sha256": "ad3524582a7afd843a6b8c08d396b852a558daf6f0edf507064bbcda7a4ae38d", "observed_rich_sha256": "33b2ebcaa2643f5c77c6564a6d6debb69e865705b2347515d0e5633887cb9f4f", "stable_identity_sha256": "a4a5a1cad5d885d044a639823477b368335d530a6371b4da6c85b3fce374c06d"},
+    "historical_attempt3_atime_evidence": {"authority_json_pointer": "/historical_atime_only_replay", "exact_delta_count": 16, "all_non_atime_fields_exact": true, "raw_sha256_exact": true}
+  },
+  "dedup": {"status": "pass", "target_state": "absent", "allowed_rejected_lineage_inputs": 2, "foreign_references": [], "scan_errors": [], "semantic_weakening": false, "credit": 0},
+  "zero_state": {
+    "production": 0,
+    "activation": false,
+    "launch": false,
+    "generator_present": false,
+    "generator_invoked": false,
+    "reviewer_children": 0,
+    "semantic_children": 0,
+    "results": 0,
+    "receipts": 0,
+    "capture_rows": 0,
+    "credit": 0,
+    "tool_executions": 0
+  },
+  "production": 0,
+  "activation": false,
+  "launch": false,
+  "generator_invoked": false,
+  "reviewer_children": 0,
+  "semantic_children": 0,
+  "results": 0,
+  "receipts": 0,
+  "capture_rows": 0,
+  "credit": 0
+}

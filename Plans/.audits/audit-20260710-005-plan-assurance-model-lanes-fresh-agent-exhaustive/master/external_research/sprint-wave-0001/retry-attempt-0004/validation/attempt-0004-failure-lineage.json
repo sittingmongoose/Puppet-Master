@@ -1,0 +1,63 @@
+{
+  "audit_id": "audit-20260710-005-plan-assurance-model-lanes-fresh-agent-exhaustive",
+  "schema_version": "external-research-attempt-0004-failure-lineage-v1",
+  "sprint_id": "sprint-wave-0001",
+  "retry_namespace": "retry-attempt-0004",
+  "attempt_id": "attempt-0004",
+  "status": "TERMINAL_ZERO_CREDIT",
+  "activation_sha256": "1a3b430d41d6b8507615fbb229df972bb5aa07dcd7ee5937a344df29f4e31301",
+  "controller_thread_id": "019f5078-6501-7223-b52f-2251010bdc41",
+  "controller_turn_id": "019f52d5-3eb0-7f60-a50f-c91b605d07e0",
+  "assignments": [
+    {
+      "assignment_id": "ER-0003",
+      "agent_path": "/root/a005_external_research_recovery_er_0003_attempt_0004_terminal",
+      "native_child_thread_id": "019f52d6-615c-7250-9c58-bfc7f812f6a4",
+      "native_child_turn_id": "019f52d6-6208-79a0-bd65-2e1ef054b9df",
+      "terminal_turn_status": "completed",
+      "terminal_response_prefix": "PMR1",
+      "result_present": false,
+      "receipt_present": false,
+      "coverage_credit": 0,
+      "research_credit": 0
+    },
+    {
+      "assignment_id": "ER-0008",
+      "agent_path": "/root/a005_external_research_recovery_er_0008_attempt_0004_terminal",
+      "native_child_thread_id": "019f52d6-6216-7b11-95da-fe0f6307a78d",
+      "native_child_turn_id": "019f52d6-6326-7940-a134-987a44707346",
+      "terminal_turn_status": "completed",
+      "terminal_response_prefix": "PMR1",
+      "result_present": false,
+      "receipt_present": false,
+      "coverage_credit": 0,
+      "research_credit": 0
+    }
+  ],
+  "root_cause": {
+    "classification": "leaf_visible_activation_contract_contradiction",
+    "dispatch_intents_remained_prelaunch": true,
+    "dispatch_intent_activation_granted": false,
+    "dispatch_intent_launch_state": "BLOCKED_AWAITING_LUNA_ATTEMPT_0003_POSTRUN",
+    "later_activation_was_not_leaf_readable": true,
+    "frozen_leaf_read_scope": [
+      "dispatch intent",
+      "bound packet",
+      "result schema",
+      "live public web sources"
+    ],
+    "effect": "Both leaves inferred that the required exact activation was not visible, performed no research or write, and returned PMR1 without result.json."
+  },
+  "recovery_requirements": [
+    "Preserve attempt-0004 identities, empty outputs, and zero credit.",
+    "Use a fresh attempt and fresh identities.",
+    "Provide each leaf an immutable leaf-readable dispatch authorization that binds the final activation path and SHA and states activation_granted true.",
+    "Require the leaf to read and positively verify that authorization before work.",
+    "Treat PMR1 without result.json as terminal failure."
+  ],
+  "cumulative_research_credit": 0,
+  "coverage_credit": 0,
+  "promotion_credit": 0,
+  "spec_credit": 0,
+  "merge_credit": 0
+}

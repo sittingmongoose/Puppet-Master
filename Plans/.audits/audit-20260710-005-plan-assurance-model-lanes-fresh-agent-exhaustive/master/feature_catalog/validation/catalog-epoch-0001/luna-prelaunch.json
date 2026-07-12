@@ -1,0 +1,56 @@
+{
+  "audit_id": "audit-20260710-005-plan-assurance-model-lanes-fresh-agent-exhaustive",
+  "checker": "feature_catalog_luna_controller_v1",
+  "controller_thread_id": "019f4d26-0582-7f71-8aa9-57bcfc354488",
+  "model": "gpt-5.6-luna",
+  "reasoning_effort": "max",
+  "epoch_id": "catalog-epoch-0001",
+  "status": "pass",
+  "errors": [],
+  "counts": {
+    "credited_results": 256,
+    "atoms": 6091,
+    "raw_family_key_mentions": 1661,
+    "unique_family_keys": 1625,
+    "assignments": 23,
+    "assignment_wave_max": 24,
+    "packet_bytes_max": 199545,
+    "packet_bytes_cap": 200000,
+    "covered_micro_windows": 1269,
+    "pending_micro_windows": 0,
+    "macro_transaction_count": 12
+  },
+  "macro_coverage_sha256": "200d4f9ce29f35a4c29c45d056f8541e91a9cbcdd2a84e294330489981ee93f4",
+  "atom_ids_digest": "0f82fb226c7fbfdc2186509494040b27788c71a14a7025b37db2ddede01c50f9",
+  "authority_sha256": "2a25709a5c16f5d97e209564dd9154c751a5364e334e921e9220ae92c50e7b5a",
+  "launch_seal_sha256": "1f16b5e2a8009067fb1da9d54bb46b734eb9cc3563b24a844ffb81bf312a4e5e",
+  "canonical_source_root_sha256": "5405af6270bd0c708484685f368462de1cd91fb6e48e224a69214472c2db0ccf",
+  "roots": {
+    "authority_payload_root_sha256": "3c8a067df03b6ee4ff8bfd6f24318d9124f713c0c59b54d013f477550628899c",
+    "sealed_payload_root_sha256": "8330340f34a211f3a0a622c8c2bd3d458e0c9d55d2decf551deba12ef452bacd",
+    "lineage_file_sha256": "8e15489fee79b2caee4fe26b01efad21a0887253b362aeea290bc64bc99d5b23",
+    "active_pointer_sha256": "a2b2365d16f5dc7c53f1a87a8a515010a25bd5cc52b7ed548f9ec9c67bc007dc",
+    "coverage_file_sha256": "200d4f9ce29f35a4c29c45d056f8541e91a9cbcdd2a84e294330489981ee93f4",
+    "published_schema_sha256": "b16807d06367107afcab24d5541ca9adeb186c943d838a91607b6273b116a4d3",
+    "schema_matches_executable": true
+  },
+  "closure": {
+    "exact_atom_partition_no_overlap": true,
+    "compact_records_match_result_bytes": true,
+    "atom_ledger_matches_result_bytes": true,
+    "family_key_source_ledger_exact": true,
+    "output_directories_empty": true,
+    "dispatch_result_receipt_files": 0,
+    "prelaunch_credit": 0,
+    "document_count_across_packets": 129
+  },
+  "strict_tests": {
+    "valid_synthetic_passed": true,
+    "extra_nested_key_rejected": true,
+    "invalid_owner_domain_rejected": true,
+    "missing_research_question_rejected": true,
+    "omitted_atom_rejected": true,
+    "duplicate_atom_across_features_rejected": true,
+    "omitted_family_key_mapping_rejected": true
+  }
+}

@@ -1,0 +1,667 @@
+{
+  "assignment_id": "A005M15-000069-INTEGRATED-MACRO15-A27048DCD484-0002",
+  "attempt_id": "attempt-0015",
+  "audit_id": "audit-20260710-005-plan-assurance-model-lanes-fresh-agent-exhaustive",
+  "coverage": {
+    "all_micro_windows_reviewed": true,
+    "all_source_lines_reviewed": true,
+    "all_source_units_accounted": true,
+    "both_exact_and_adversarial_lenses_applied": true,
+    "dimensions_checked": [
+      "behavior",
+      "capabilities",
+      "inputs_outputs",
+      "contracts",
+      "states_transitions",
+      "authority",
+      "ownership",
+      "consumers",
+      "gui_truth",
+      "failures_recovery",
+      "security_privacy",
+      "propagation",
+      "operations",
+      "scale_performance",
+      "compatibility_migration",
+      "acceptance_oracles",
+      "builder_discretion",
+      "ambiguity_unknowns",
+      "missing_callers_consumers",
+      "invalid_states_transitions",
+      "concurrency_races",
+      "partial_failure",
+      "recovery_rollback",
+      "authority_boundaries",
+      "privacy_data_lifecycle",
+      "untrusted_inputs",
+      "gui_misleading_states",
+      "offline_network_loss",
+      "scale_limits",
+      "accessibility",
+      "localization",
+      "observability_support",
+      "destructive_actions",
+      "cross_document_seams",
+      "test_falsifiability",
+      "unknown_unknowns"
+    ]
+  },
+  "items": [
+    {
+      "builder_discretion": false,
+      "confidence": 0.98,
+      "dimensions": [
+        "contracts",
+        "authority",
+        "failures_recovery",
+        "partial_failure",
+        "recovery_rollback",
+        "destructive_actions",
+        "test_falsifiability"
+      ],
+      "evidence": [
+        {
+          "exact_quote": "        \"command_id\": \"cmd.git.discard_hunks\",",
+          "line_end": 2739,
+          "line_start": 2739,
+          "path": "Plans/PMConcept_Control_Reconciliation.json",
+          "source_sha256": "cc3485b335e4bba3ed3192b1e15f8163d4b1c10f193c4ad74500b484e5f0dfc2"
+        },
+        {
+          "exact_quote": "        \"test_evidence\": \"production render/control, dispatcher, disabled-reason, receipt/event, accessibility, and regression evidence required before implementation certification\"",
+          "line_end": 2744,
+          "line_start": 2744,
+          "path": "Plans/PMConcept_Control_Reconciliation.json",
+          "source_sha256": "cc3485b335e4bba3ed3192b1e15f8163d4b1c10f193c4ad74500b484e5f0dfc2"
+        }
+      ],
+      "gap_kind": "destructive_action_guard_and_recovery_undefined",
+      "impact": "A production dispatcher can satisfy the listed generic evidence while still discarding hunks without a confirmation boundary, scoped payload, concurrency precondition, durable audit detail, or recovery/undo oracle.",
+      "item_id": "A005M15-000069-I001",
+      "item_type": "gap",
+      "severity": "high",
+      "source_unit_refs": [
+        "SEMANTIC:JSON_FIELD:Plans/PMConcept_Control_Reconciliation.json:controls:CONT-008",
+        "STRUCTURAL:$.controls"
+      ],
+      "statement": "The wired discard-hunks control names command, handler, enabled state, disabled reason, event, and generic tests, but the assigned text does not define destructive confirmation, exact hunk/revision preconditions, conflict handling, idempotency, rollback, or a falsifiable no-data-loss oracle.",
+      "title": "Discard-hunks wiring lacks destructive safety semantics"
+    },
+    {
+      "builder_discretion": false,
+      "confidence": 0.99,
+      "dimensions": [
+        "ownership",
+        "gui_truth",
+        "compatibility_migration",
+        "acceptance_oracles",
+        "builder_discretion",
+        "cross_document_seams"
+      ],
+      "evidence": [
+        {
+          "exact_quote": "      \"owner_rationale\": \"Owner-adjudicated as concept/source-lineage only. This control is not production evidence and is not promoted until a canonical owner doc accepts the behavior and a production wiring row supplies command/state/receipt/test evidence.\"",
+          "line_end": 2903,
+          "line_start": 2903,
+          "path": "Plans/PMConcept_Control_Reconciliation.json",
+          "source_sha256": "cc3485b335e4bba3ed3192b1e15f8163d4b1c10f193c4ad74500b484e5f0dfc2"
+        }
+      ],
+      "gap_kind": "explicit_non_gap_concept_lineage_boundary",
+      "impact": "The commit-message fixture and similar controls cannot be mistaken for certified production behavior; promotion requires an owner decision and concrete wiring evidence.",
+      "item_id": "A005M15-000069-I002",
+      "item_type": "explicit_non_gap",
+      "severity": "info",
+      "source_unit_refs": [
+        "SEMANTIC:JSON_FIELD:Plans/PMConcept_Control_Reconciliation.json:controls:CONT-008",
+        "STRUCTURAL:$.controls"
+      ],
+      "statement": "The source explicitly demotes owner-adjudicated concept controls from production evidence and prohibits implicit promotion without canonical ownership plus command/state/receipt/test evidence.",
+      "title": "Concept-only ownership boundary is explicit"
+    },
+    {
+      "builder_discretion": false,
+      "confidence": 0.97,
+      "dimensions": [
+        "behavior",
+        "states_transitions",
+        "failures_recovery",
+        "concurrency_races",
+        "partial_failure",
+        "offline_network_loss",
+        "observability_support"
+      ],
+      "evidence": [
+        {
+          "exact_quote": "        \"onclick\": \"toast('cmd.remote.reconnect \\u2192 one bounded auto-retry...')\"",
+          "line_end": 3230,
+          "line_start": 3230,
+          "path": "Plans/PMConcept_Control_Reconciliation.json",
+          "source_sha256": "cc3485b335e4bba3ed3192b1e15f8163d4b1c10f193c4ad74500b484e5f0dfc2"
+        },
+        {
+          "exact_quote": "        \"receipt_or_event_effect\": \"remote.reconnect.requested\",",
+          "line_end": 3256,
+          "line_start": 3256,
+          "path": "Plans/PMConcept_Control_Reconciliation.json",
+          "source_sha256": "cc3485b335e4bba3ed3192b1e15f8163d4b1c10f193c4ad74500b484e5f0dfc2"
+        }
+      ],
+      "gap_kind": "retry_state_machine_and_outcomes_missing",
+      "impact": "The GUI can promise a bounded automatic retry while implementations disagree about attempt counting, overlapping reconnect requests, timeout/cancel behavior, terminal failure, stale state, and what support evidence proves the outcome.",
+      "item_id": "A005M15-000069-I003",
+      "item_type": "gap",
+      "severity": "high",
+      "source_unit_refs": [
+        "SEMANTIC:JSON_FIELD:Plans/PMConcept_Control_Reconciliation.json:controls:CONT-009",
+        "STRUCTURAL:$.controls"
+      ],
+      "statement": "Reconnect exposes a requested event and GUI copy promising one bounded auto-retry, but no retry state machine, attempt identity, deduplication rule, timeout, cancellation, offline terminal state, or success/failure receipt is specified.",
+      "title": "Reconnect promise lacks a falsifiable retry contract"
+    },
+    {
+      "builder_discretion": false,
+      "confidence": 0.99,
+      "dimensions": [
+        "capabilities",
+        "authority",
+        "ownership",
+        "gui_truth",
+        "accessibility",
+        "destructive_actions",
+        "missing_callers_consumers"
+      ],
+      "evidence": [
+        {
+          "exact_quote": "      \"owner_rationale\": \"Owner-adjudicated as concept/source-lineage only. This control is not production evidence and is not promoted until a canonical owner doc accepts the behavior and a production wiring row supplies command/state/receipt/test evidence.\"",
+          "line_end": 3815,
+          "line_start": 3815,
+          "path": "Plans/PMConcept_Control_Reconciliation.json",
+          "source_sha256": "cc3485b335e4bba3ed3192b1e15f8163d4b1c10f193c4ad74500b484e5f0dfc2"
+        }
+      ],
+      "gap_kind": "production_ownership_and_command_contract_absent",
+      "impact": "Branch switching and stash application appear interactive, yet no production caller, authorization boundary, dirty-worktree policy, conflict outcome, accessible semantics, receipt, or recovery behavior can be implemented from this text.",
+      "item_id": "A005M15-000069-I004",
+      "item_type": "gap",
+      "severity": "high",
+      "source_unit_refs": [
+        "SEMANTIC:JSON_FIELD:Plans/PMConcept_Control_Reconciliation.json:controls:CONT-010",
+        "STRUCTURAL:$.controls"
+      ],
+      "statement": "Interactive branch and stash fixtures are correctly labeled concept-only, but their production authority, caller/consumer, dirty-state preconditions, destructive/conflict semantics, accessibility, receipts, and rollback behavior remain unresolved owner work.",
+      "title": "Branch and stash actions remain unresolved concept lineage"
+    },
+    {
+      "builder_discretion": false,
+      "confidence": 0.99,
+      "dimensions": [
+        "inputs_outputs",
+        "authority",
+        "security_privacy",
+        "privacy_data_lifecycle",
+        "untrusted_inputs",
+        "destructive_actions",
+        "cross_document_seams"
+      ],
+      "evidence": [
+        {
+          "exact_quote": "      \"owner_rationale\": \"Owner-adjudicated as concept/source-lineage only. This control is not production evidence and is not promoted until a canonical owner doc accepts the behavior and a production wiring row supplies command/state/receipt/test evidence.\"",
+          "line_end": 4057,
+          "line_start": 4057,
+          "path": "Plans/PMConcept_Control_Reconciliation.json",
+          "source_sha256": "cc3485b335e4bba3ed3192b1e15f8163d4b1c10f193c4ad74500b484e5f0dfc2"
+        },
+        {
+          "exact_quote": "        \"Label is stale or conflicts with canonical PRD Builder, Planning Wizard, Approve And Build, or Plan Compile naming.\"",
+          "line_end": 4147,
+          "line_start": 4147,
+          "path": "Plans/PMConcept_Control_Reconciliation.json",
+          "source_sha256": "cc3485b335e4bba3ed3192b1e15f8163d4b1c10f193c4ad74500b484e5f0dfc2"
+        }
+      ],
+      "gap_kind": "sensitive_and_destructive_devops_contracts_unowned",
+      "impact": "Implementing the visible secrets, workflow dispatch, image build/push, XML publish, or template-sync affordances directly could leak credentials, execute untrusted inputs, or mutate remote systems without canonical authority and lifecycle rules.",
+      "item_id": "A005M15-000069-I005",
+      "item_type": "gap",
+      "severity": "critical",
+      "source_unit_refs": [
+        "SEMANTIC:JSON_FIELD:Plans/PMConcept_Control_Reconciliation.json:controls:CONT-011",
+        "STRUCTURAL:$.controls"
+      ],
+      "statement": "Secrets, workflow dispatch, image build/publish, XML push, and managed publishing remain concept-only, while the conflicting BUILD / BAKE heading is explicitly retired or rescoped; no production authorization, secret-handling, validation, provenance, or rollback contract is present in the assigned unit.",
+      "title": "DevOps and secrets controls have no production authority contract"
+    },
+    {
+      "builder_discretion": false,
+      "confidence": 0.99,
+      "dimensions": [
+        "contracts",
+        "states_transitions",
+        "consumers",
+        "gui_truth",
+        "invalid_states_transitions",
+        "accessibility",
+        "compatibility_migration"
+      ],
+      "evidence": [
+        {
+          "exact_quote": "        \"title\": \"FileManager \\u00a79C: distinct route kinds \\u2014 never collapse editor, browser, and terminal into one generic tab model\"",
+          "line_end": 4322,
+          "line_start": 4322,
+          "path": "Plans/PMConcept_Control_Reconciliation.json",
+          "source_sha256": "cc3485b335e4bba3ed3192b1e15f8163d4b1c10f193c4ad74500b484e5f0dfc2"
+        },
+        {
+          "exact_quote": "        \"click_handler_without_keyboard_parity\"",
+          "line_end": 4454,
+          "line_start": 4454,
+          "path": "Plans/PMConcept_Control_Reconciliation.json",
+          "source_sha256": "cc3485b335e4bba3ed3192b1e15f8163d4b1c10f193c4ad74500b484e5f0dfc2"
+        }
+      ],
+      "gap_kind": "tab_semantics_and_accessible_state_contract_missing",
+      "impact": "The anti-collapse constraint protects route identity, but builders still lack production tab roles, selection/focus behavior, close/dirty-state transitions, keyboard model, and consumer routing for the visible editor/browser tabs.",
+      "item_id": "A005M15-000069-I006",
+      "item_type": "gap",
+      "severity": "high",
+      "source_unit_refs": [
+        "SEMANTIC:JSON_FIELD:Plans/PMConcept_Control_Reconciliation.json:controls:CONT-012",
+        "STRUCTURAL:$.controls"
+      ],
+      "statement": "The source explicitly preserves distinct editor, workspace-browser, runtime-terminal, and bottom-browser route kinds, yet the custom tab fixtures remain concept-only and record missing role and keyboard parity without a production tab state/interaction contract.",
+      "title": "Distinct tab kinds are preserved but production semantics are absent"
+    },
+    {
+      "builder_discretion": false,
+      "confidence": 0.99,
+      "dimensions": [
+        "behavior",
+        "authority",
+        "security_privacy",
+        "propagation",
+        "privacy_data_lifecycle",
+        "untrusted_inputs",
+        "gui_misleading_states",
+        "observability_support"
+      ],
+      "evidence": [
+        {
+          "exact_quote": "        \"Production-looking control needs a concrete UICommand or explicit retirement before implementation.\",",
+          "line_end": 4812,
+          "line_start": 4812,
+          "path": "Plans/PMConcept_Control_Reconciliation.json",
+          "source_sha256": "cc3485b335e4bba3ed3192b1e15f8163d4b1c10f193c4ad74500b484e5f0dfc2"
+        },
+        {
+          "exact_quote": "      \"label\": \"Pause Agent\",",
+          "line_end": 4941,
+          "line_start": 4941,
+          "path": "Plans/PMConcept_Control_Reconciliation.json",
+          "source_sha256": "cc3485b335e4bba3ed3192b1e15f8163d4b1c10f193c4ad74500b484e5f0dfc2"
+        }
+      ],
+      "gap_kind": "browser_agent_data_and_control_authority_undefined",
+      "impact": "Element picks, selections, screenshots, permissions, browser sharing, and agent pause/takeover can expose page data or alter agent execution without specified consent, data minimization, redaction, authorization, propagation, receipt, or support evidence.",
+      "item_id": "A005M15-000069-I007",
+      "item_type": "gap",
+      "severity": "critical",
+      "source_unit_refs": [
+        "SEMANTIC:JSON_FIELD:Plans/PMConcept_Control_Reconciliation.json:controls:CONT-013",
+        "STRUCTURAL:$.controls"
+      ],
+      "statement": "Browser-to-chat capture, permission toggles, sharing, and agent takeover are production-looking but explicitly unwired concept lineage; their data lifecycle, trust boundary, consent, execution authority, propagation, and receipts are not defined.",
+      "title": "Browser-to-agent controls lack privacy and authority boundaries"
+    },
+    {
+      "builder_discretion": false,
+      "confidence": 0.98,
+      "dimensions": [
+        "inputs_outputs",
+        "authority",
+        "security_privacy",
+        "failures_recovery",
+        "privacy_data_lifecycle",
+        "localization",
+        "accessibility",
+        "unknown_unknowns"
+      ],
+      "evidence": [
+        {
+          "exact_quote": "      \"owner_rationale\": \"Owner-adjudicated as concept/source-lineage only. This control is not production evidence and is not promoted until a canonical owner doc accepts the behavior and a production wiring row supplies command/state/receipt/test evidence.\"",
+          "line_end": 5200,
+          "line_start": 5200,
+          "path": "Plans/PMConcept_Control_Reconciliation.json",
+          "source_sha256": "cc3485b335e4bba3ed3192b1e15f8163d4b1c10f193c4ad74500b484e5f0dfc2"
+        },
+        {
+          "exact_quote": "      \"label\": \"Privacy\",",
+          "line_end": 5265,
+          "line_start": 5265,
+          "path": "Plans/PMConcept_Control_Reconciliation.json",
+          "source_sha256": "cc3485b335e4bba3ed3192b1e15f8163d4b1c10f193c4ad74500b484e5f0dfc2"
+        }
+      ],
+      "gap_kind": "authentication_and_privacy_flow_contract_absent",
+      "impact": "A builder cannot safely infer credential submission, validation, storage, transport, error/recovery, rate limiting, account lifecycle, privacy-link routing, localization, or accessible form semantics from visual fixtures alone.",
+      "item_id": "A005M15-000069-I008",
+      "item_type": "gap",
+      "severity": "critical",
+      "source_unit_refs": [
+        "SEMANTIC:JSON_FIELD:Plans/PMConcept_Control_Reconciliation.json:controls:CONT-014",
+        "STRUCTURAL:$.controls"
+      ],
+      "statement": "Email, password, sign-in, sign-up, Privacy, and Terms controls are explicitly concept-only and supply no production authentication, credential, error, abuse-prevention, account-state, privacy-lifecycle, routing, accessibility, or localization contract.",
+      "title": "Login and privacy surfaces are visual fixtures only"
+    },
+    {
+      "builder_discretion": false,
+      "confidence": 0.99,
+      "dimensions": [
+        "capabilities",
+        "inputs_outputs",
+        "contracts",
+        "states_transitions",
+        "consumers",
+        "propagation",
+        "acceptance_oracles",
+        "observability_support"
+      ],
+      "evidence": [
+        {
+          "exact_quote": "        \"disabled_reason_selector\": \"state.cmd_orchestrator_switch_tab.disabled_reason including missing/stale PlanCompileRun or unavailable Orchestrator tab route\",",
+          "line_end": 5518,
+          "line_start": 5518,
+          "path": "Plans/PMConcept_Control_Reconciliation.json",
+          "source_sha256": "cc3485b335e4bba3ed3192b1e15f8163d4b1c10f193c4ad74500b484e5f0dfc2"
+        },
+        {
+          "exact_quote": "        \"route_payload_contract\": \"target_surface=orchestrator, page_tab=plan_compile, planning_run_id?, plan_compile_run_id?, source_surface, correlation_id\"",
+          "line_end": 5521,
+          "line_start": 5521,
+          "path": "Plans/PMConcept_Control_Reconciliation.json",
+          "source_sha256": "cc3485b335e4bba3ed3192b1e15f8163d4b1c10f193c4ad74500b484e5f0dfc2"
+        }
+      ],
+      "gap_kind": "explicit_non_gap_route_contract",
+      "impact": "Builders and tests can distinguish a valid route-only effect from an unavailable or stale Plan Compile target and can correlate the transition without treating navigation as build authority.",
+      "item_id": "A005M15-000069-I009",
+      "item_type": "explicit_non_gap",
+      "severity": "info",
+      "source_unit_refs": [
+        "SEMANTIC:JSON_FIELD:Plans/PMConcept_Control_Reconciliation.json:controls:CONT-015",
+        "STRUCTURAL:$.controls"
+      ],
+      "statement": "Open Plan Compile has a concrete target route, disabled reasons for missing/stale run or unavailable tab, a route/projection receipt, and a payload carrying target identity, source surface, and correlation id.",
+      "title": "Plan Compile navigation is bounded and testable"
+    },
+    {
+      "builder_discretion": false,
+      "confidence": 0.99,
+      "dimensions": [
+        "behavior",
+        "contracts",
+        "states_transitions",
+        "authority",
+        "gui_truth",
+        "acceptance_oracles",
+        "invalid_states_transitions",
+        "authority_boundaries"
+      ],
+      "evidence": [
+        {
+          "exact_quote": "        \"state_selector\": \"state.cmd_plan_compile_open_build.enabled only after durable BuildStarted/result identity exists\",",
+          "line_end": 5683,
+          "line_start": 5683,
+          "path": "Plans/PMConcept_Control_Reconciliation.json",
+          "source_sha256": "cc3485b335e4bba3ed3192b1e15f8163d4b1c10f193c4ad74500b484e5f0dfc2"
+        },
+        {
+          "exact_quote": "        \"receipt_or_event_effect\": \"plan_compile.command_applied only when it routes to an existing build identity; no new build/run/work task may be created by Open Build\",",
+          "line_end": 5685,
+          "line_start": 5685,
+          "path": "Plans/PMConcept_Control_Reconciliation.json",
+          "source_sha256": "cc3485b335e4bba3ed3192b1e15f8163d4b1c10f193c4ad74500b484e5f0dfc2"
+        }
+      ],
+      "gap_kind": "explicit_non_gap_existing_identity_only",
+      "impact": "The control cannot silently become launch authority: it is disabled until durable build identity exists and can only route to that identity.",
+      "item_id": "A005M15-000069-I010",
+      "item_type": "explicit_non_gap",
+      "severity": "info",
+      "source_unit_refs": [
+        "SEMANTIC:JSON_FIELD:Plans/PMConcept_Control_Reconciliation.json:controls:CONT-015",
+        "STRUCTURAL:$.controls"
+      ],
+      "statement": "Open Build is explicitly existing-identity-only, with durable BuildStarted/result preconditions, enumerated disabled reasons, a payload binding run and build identity, and a prohibition on creating any new build, run, or work task.",
+      "title": "Open Build is not launch authority"
+    },
+    {
+      "builder_discretion": false,
+      "confidence": 0.99,
+      "dimensions": [
+        "states_transitions",
+        "authority",
+        "failures_recovery",
+        "concurrency_races",
+        "recovery_rollback",
+        "gui_misleading_states",
+        "destructive_actions",
+        "test_falsifiability"
+      ],
+      "evidence": [
+        {
+          "exact_quote": "      \"label\": \"STOP\",",
+          "line_end": 5581,
+          "line_start": 5581,
+          "path": "Plans/PMConcept_Control_Reconciliation.json",
+          "source_sha256": "cc3485b335e4bba3ed3192b1e15f8163d4b1c10f193c4ad74500b484e5f0dfc2"
+        },
+        {
+          "exact_quote": "      \"disposition\": \"concept_only_owner_adjudicated\",",
+          "line_end": 5589,
+          "line_start": 5589,
+          "path": "Plans/PMConcept_Control_Reconciliation.json",
+          "source_sha256": "cc3485b335e4bba3ed3192b1e15f8163d4b1c10f193c4ad74500b484e5f0dfc2"
+        }
+      ],
+      "gap_kind": "runtime_lifecycle_controls_unwired",
+      "impact": "Production-looking PAUSE, RESUME, STOP, RESET, PREVIEW, and Kill controls could be misread as executable lifecycle authority even though no transition legality, race handling, partial-failure behavior, confirmation, recovery, receipt, or acceptance oracle exists here.",
+      "item_id": "A005M15-000069-I011",
+      "item_type": "gap",
+      "severity": "critical",
+      "source_unit_refs": [
+        "SEMANTIC:JSON_FIELD:Plans/PMConcept_Control_Reconciliation.json:controls:CONT-015",
+        "STRUCTURAL:$.controls"
+      ],
+      "statement": "The adjacent lifecycle controls remain owner-adjudicated concept-only and must not be implemented as runtime authority until a canonical owner supplies legal transitions, concurrency and partial-failure rules, destructive confirmation, receipts, recovery, and falsifiable tests.",
+      "title": "Runtime lifecycle buttons remain unsafe concept lineage"
+    }
+  ],
+  "model": "gpt-5.6-sol",
+  "phase": "blind_macro_window_review",
+  "reasoning_effort": "xhigh",
+  "schema_version": "macro-review-result-v1",
+  "segments": [
+    {
+      "core_range": [
+        2663,
+        3037
+      ],
+      "covered_source_unit_refs": [
+        "SEMANTIC:JSON_FIELD:Plans/PMConcept_Control_Reconciliation.json:controls:CONT-008",
+        "STRUCTURAL:$.controls"
+      ],
+      "item_ids": [
+        "A005M15-000069-I001",
+        "A005M15-000069-I002"
+      ],
+      "reviewed": true,
+      "summary": "Reviewed source-control staging, discard, diff search, commit, and conflict controls; identified missing destructive-safety semantics while confirming explicit concept-lineage demotion.",
+      "window_id": "WIN-A27048DCD484-0009"
+    },
+    {
+      "core_range": [
+        3038,
+        3426
+      ],
+      "covered_source_unit_refs": [
+        "SEMANTIC:JSON_FIELD:Plans/PMConcept_Control_Reconciliation.json:controls:CONT-009",
+        "STRUCTURAL:$.controls"
+      ],
+      "item_ids": [
+        "A005M15-000069-I003"
+      ],
+      "reviewed": true,
+      "summary": "Reviewed conflict resolution, remote projection badges, reconnect, and source-control history controls; the reconnect GUI promise lacks an executable retry/outcome model.",
+      "window_id": "WIN-A27048DCD484-0010"
+    },
+    {
+      "core_range": [
+        3427,
+        3816
+      ],
+      "covered_source_unit_refs": [
+        "SEMANTIC:JSON_FIELD:Plans/PMConcept_Control_Reconciliation.json:controls:CONT-010",
+        "STRUCTURAL:$.controls"
+      ],
+      "item_ids": [
+        "A005M15-000069-I004"
+      ],
+      "reviewed": true,
+      "summary": "Reviewed compare-target, graph, branch, and stash controls; branch/stash interaction remains intentionally non-production but unresolved for authority, accessibility, conflict, and recovery semantics.",
+      "window_id": "WIN-A27048DCD484-0011"
+    },
+    {
+      "core_range": [
+        3817,
+        4195
+      ],
+      "covered_source_unit_refs": [
+        "SEMANTIC:JSON_FIELD:Plans/PMConcept_Control_Reconciliation.json:controls:CONT-011",
+        "STRUCTURAL:$.controls"
+      ],
+      "item_ids": [
+        "A005M15-000069-I005"
+      ],
+      "reviewed": true,
+      "summary": "Reviewed stash, run/workflow, secrets, container, image, and publishing controls; sensitive and destructive DevOps affordances remain unowned concept lineage, with stale BUILD / BAKE naming explicitly rejected.",
+      "window_id": "WIN-A27048DCD484-0012"
+    },
+    {
+      "core_range": [
+        4196,
+        4587
+      ],
+      "covered_source_unit_refs": [
+        "SEMANTIC:JSON_FIELD:Plans/PMConcept_Control_Reconciliation.json:controls:CONT-012",
+        "STRUCTURAL:$.controls"
+      ],
+      "item_ids": [
+        "A005M15-000069-I006"
+      ],
+      "reviewed": true,
+      "summary": "Reviewed publishing, artifact, route-kind, editor-tab, and browser-preview controls; route-type separation is explicit, but production tab semantics and accessibility remain absent.",
+      "window_id": "WIN-A27048DCD484-0013"
+    },
+    {
+      "core_range": [
+        4588,
+        4960
+      ],
+      "covered_source_unit_refs": [
+        "SEMANTIC:JSON_FIELD:Plans/PMConcept_Control_Reconciliation.json:controls:CONT-013",
+        "STRUCTURAL:$.controls"
+      ],
+      "item_ids": [
+        "A005M15-000069-I007"
+      ],
+      "reviewed": true,
+      "summary": "Reviewed automation/browser tabs, navigation, capture-to-chat, permissions, sharing, and agent takeover; privacy, consent, data lifecycle, propagation, and execution authority are unresolved.",
+      "window_id": "WIN-A27048DCD484-0014"
+    },
+    {
+      "core_range": [
+        4961,
+        5335
+      ],
+      "covered_source_unit_refs": [
+        "SEMANTIC:JSON_FIELD:Plans/PMConcept_Control_Reconciliation.json:controls:CONT-014",
+        "STRUCTURAL:$.controls"
+      ],
+      "item_ids": [
+        "A005M15-000069-I008"
+      ],
+      "reviewed": true,
+      "summary": "Reviewed agent takeover continuation/stop, sample-site navigation, login inputs/actions, policy links, and context-pane controls; authentication and privacy behavior is visual lineage only.",
+      "window_id": "WIN-A27048DCD484-0015"
+    },
+    {
+      "core_range": [
+        5336,
+        5712
+      ],
+      "covered_source_unit_refs": [
+        "SEMANTIC:JSON_FIELD:Plans/PMConcept_Control_Reconciliation.json:controls:CONT-015",
+        "STRUCTURAL:$.controls"
+      ],
+      "item_ids": [
+        "A005M15-000069-I009",
+        "A005M15-000069-I010",
+        "A005M15-000069-I011"
+      ],
+      "reviewed": true,
+      "summary": "Reviewed context detail, Plan Compile routing, runtime lifecycle buttons, and Open Build; the two route controls are bounded and testable, while adjacent lifecycle authority remains concept-only and unsafe to infer.",
+      "window_id": "WIN-A27048DCD484-0016"
+    }
+  ],
+  "self_attestation": {
+    "no_canonical_writes": true,
+    "no_external_research_during_blind_review": true,
+    "no_peer_result_access": true,
+    "no_prior_audit_access": true,
+    "no_unrelated_source_access": true,
+    "terminal_after_submission": true
+  },
+  "source_binding": {
+    "bundle_id": "MACRO15-A27048DCD484-0002",
+    "document_path": "Plans/PMConcept_Control_Reconciliation.json",
+    "micro_window_ids": [
+      "WIN-A27048DCD484-0009",
+      "WIN-A27048DCD484-0010",
+      "WIN-A27048DCD484-0011",
+      "WIN-A27048DCD484-0012",
+      "WIN-A27048DCD484-0013",
+      "WIN-A27048DCD484-0014",
+      "WIN-A27048DCD484-0015",
+      "WIN-A27048DCD484-0016"
+    ],
+    "source_sha256": "cc3485b335e4bba3ed3192b1e15f8163d4b1c10f193c4ad74500b484e5f0dfc2"
+  },
+  "status": "completed",
+  "synthesis": {
+    "cross_document_questions": [
+      "Which canonical owner documents, if any, promote branch/stash, DevOps publishing, browser-agent sharing, authentication, and runtime lifecycle controls into production commands?",
+      "Where are destructive confirmations, optimistic concurrency preconditions, rollback semantics, and no-data-loss acceptance oracles defined for source-control and runtime-stop actions?",
+      "Where are browser-to-chat capture consent, redaction, retention, agent-sharing authority, and support/audit receipts defined?"
+    ],
+    "feature_family_keys": [
+      "source-control-actions",
+      "remote-reconnect-state",
+      "branch-stash-controls",
+      "devops-secrets-publishing",
+      "editor-browser-tab-model",
+      "browser-agent-bridge",
+      "authentication-privacy-surfaces",
+      "plan-compile-build-routing",
+      "runtime-lifecycle-controls"
+    ],
+    "research_queries": [
+      "Accessible desktop tab patterns for mixed editor browser and terminal route models",
+      "Safe UX and concurrency contracts for discard stash reset stop and kill operations",
+      "Privacy threat models for browser screenshot DOM selection and agent sharing workflows",
+      "Bounded reconnect retry state machines with offline cancellation and support observability"
+    ]
+  },
+  "task_thread_id": "/root/a005m15_b5_000069_attempt_0015_terminal"
+}

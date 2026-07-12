@@ -1,0 +1,1104 @@
+{
+  "assignment_id": "A005M15-000051-INTEGRATED-MACRO15-34C3EA3D3753-0001",
+  "attempt_id": "attempt-0015",
+  "audit_id": "audit-20260710-005-plan-assurance-model-lanes-fresh-agent-exhaustive",
+  "coverage": {
+    "all_micro_windows_reviewed": true,
+    "all_source_lines_reviewed": true,
+    "all_source_units_accounted": true,
+    "both_exact_and_adversarial_lenses_applied": true,
+    "dimensions_checked": [
+      "behavior",
+      "capabilities",
+      "inputs_outputs",
+      "contracts",
+      "states_transitions",
+      "authority",
+      "ownership",
+      "consumers",
+      "gui_truth",
+      "failures_recovery",
+      "security_privacy",
+      "propagation",
+      "operations",
+      "scale_performance",
+      "compatibility_migration",
+      "acceptance_oracles",
+      "builder_discretion",
+      "ambiguity_unknowns",
+      "missing_callers_consumers",
+      "invalid_states_transitions",
+      "concurrency_races",
+      "partial_failure",
+      "recovery_rollback",
+      "authority_boundaries",
+      "privacy_data_lifecycle",
+      "untrusted_inputs",
+      "gui_misleading_states",
+      "offline_network_loss",
+      "scale_limits",
+      "accessibility",
+      "localization",
+      "observability_support",
+      "destructive_actions",
+      "cross_document_seams",
+      "test_falsifiability",
+      "unknown_unknowns"
+    ]
+  },
+  "items": [
+    {
+      "builder_discretion": false,
+      "confidence": 0.99,
+      "dimensions": [
+        "contracts",
+        "authority",
+        "security_privacy",
+        "compatibility_migration"
+      ],
+      "evidence": [
+        {
+          "exact_quote": "The following canonical documents govern this spec. This document MUST NOT redefine schemas or contracts owned by those sources; it adds the IDE UX layer on top of them.",
+          "line_end": 45,
+          "line_start": 45,
+          "path": "Plans/GitHub_Integration.md",
+          "source_sha256": "4a94261aec0d756e5d6bf7d0c1cddfd3ad73d13a8b19d4ef1ee41cc2675cffd8"
+        }
+      ],
+      "gap_kind": "none",
+      "impact": "Prevents GitHub Integration from forking auth, storage, command, and secret-handling contracts.",
+      "item_id": "M15-001",
+      "item_type": "contract",
+      "severity": "info",
+      "source_unit_refs": [
+        "SEMANTIC:PROLOGUE:Plans/GitHub_Integration.md:CONT-001"
+      ],
+      "statement": "The prologue locks the GitHub API-only/auth realm, OS credential-store, local-git, remote-SSH, UICommand, and imported-SSOT boundaries; these are explicit non-discretionary constraints.",
+      "title": "Locked SSOT and secret boundary"
+    },
+    {
+      "builder_discretion": false,
+      "confidence": 0.98,
+      "dimensions": [
+        "ownership",
+        "consumers",
+        "security_privacy",
+        "propagation"
+      ],
+      "evidence": [
+        {
+          "exact_quote": "`Plans/GitHub_Integration.md` remains the owner doc for Source Control and GitHub Actions user-facing integration, hosted workflow/admin/runtime surfaces, Source Control worktree UI, GitHub route/open propagation, remote GitHub transport disclosure, and GitHub consumer safety carry-through. Cross-doc consumers must preserve the owner boundaries in the source body and ContractRefs rather than recreating GitHub-local auth, status, storage, FileSafe, model, or command contracts.",
+          "line_end": 231,
+          "line_start": 231,
+          "path": "Plans/GitHub_Integration.md",
+          "source_sha256": "4a94261aec0d756e5d6bf7d0c1cddfd3ad73d13a8b19d4ef1ee41cc2675cffd8"
+        }
+      ],
+      "gap_kind": "none",
+      "impact": "Provides an explicit owner/consumer split and forbids local redefinition of imported runtime contracts.",
+      "item_id": "M15-002",
+      "item_type": "authority",
+      "severity": "info",
+      "source_unit_refs": [
+        "SEMANTIC:PROLOGUE:Plans/GitHub_Integration.md:CONT-002"
+      ],
+      "statement": "The continuation explicitly owns the user-facing Source Control and Actions surfaces while consuming auth, runtime-status, storage, FileSafe, model, route/open, approval, and remote-search authorities.",
+      "title": "Owner and consumer reconciliation"
+    },
+    {
+      "builder_discretion": false,
+      "confidence": 0.97,
+      "dimensions": [
+        "behavior",
+        "capabilities",
+        "contracts",
+        "gui_truth",
+        "accessibility",
+        "compatibility_migration"
+      ],
+      "evidence": [
+        {
+          "exact_quote": "canonical_text: GitHub Integration preserves canonical owner-section requirements, stable account identity, SSOT references, anti-drift compliance, github_api realm separation, no-secret storage, local git and SSH subprocess decisions, and UICommand dispatch boundaries while refusing to redefine contracts owned by GitHub API auth, Contracts, storage, or UI command catalogs.",
+          "line_end": 244,
+          "line_start": 244,
+          "path": "Plans/GitHub_Integration.md",
+          "source_sha256": "4a94261aec0d756e5d6bf7d0c1cddfd3ad73d13a8b19d4ef1ee41cc2675cffd8"
+        },
+        {
+          "exact_quote": "canonical_text: 'GitHub Integration separates Source Control, GitHub Actions, GitHub Copilot, and GitHub API: Source Control owns Git-first repo/worktree GUI behavior, GitHub Actions owns hosted workflow/admin/runtime GUI behavior, GitHub API remains internal plumbing, and legacy Git (GitHub) labels cannot collapse hosted behavior into Source Control.'",
+          "line_end": 300,
+          "line_start": 300,
+          "path": "Plans/GitHub_Integration.md",
+          "source_sha256": "4a94261aec0d756e5d6bf7d0c1cddfd3ad73d13a8b19d4ef1ee41cc2675cffd8"
+        },
+        {
+          "exact_quote": "canonical_text: Source Control exposes Changes, History, Graph, Worktrees, Branches/Stash, diff preview, staging, commit, sync, stash, branch, incoming/outgoing, conflict, and multi-SCM provider behavior; accordion headers are accessible buttons and compare defaults are deterministic by origin.",
+          "line_end": 351,
+          "line_start": 351,
+          "path": "Plans/GitHub_Integration.md",
+          "source_sha256": "4a94261aec0d756e5d6bf7d0c1cddfd3ad73d13a8b19d4ef1ee41cc2675cffd8"
+        }
+      ],
+      "gap_kind": "none",
+      "impact": "Locks the primary surface separation, interaction catalog, accessibility role, and compare-origin defaults.",
+      "item_id": "M15-003",
+      "item_type": "gui_truth",
+      "severity": "info",
+      "source_unit_refs": [
+        "PLANUNIT:GI-002",
+        "SEMANTIC:PLANUNIT:GI-002",
+        "PLANUNIT:GI-003",
+        "SEMANTIC:PLANUNIT:GI-003",
+        "PLANUNIT:GI-004",
+        "SEMANTIC:PLANUNIT:GI-004"
+      ],
+      "statement": "GI-002 through GI-004 define a coherent non-secret SSOT boundary and separate Git-first Source Control from hosted GitHub Actions, with deterministic compare defaults and accessible accordion controls.",
+      "title": "Source Control and Actions surface contract"
+    },
+    {
+      "builder_discretion": false,
+      "confidence": 0.96,
+      "dimensions": [
+        "inputs_outputs",
+        "states_transitions",
+        "authority",
+        "gui_truth",
+        "failures_recovery",
+        "authority_boundaries"
+      ],
+      "evidence": [
+        {
+          "exact_quote": "canonical_text: GitHub compare/open pivots carry closed compare_origin identity, project/repo/worktree/run refs, account scoping, multi-lane context, and active repo/worktree/run binding instead of reconstructing targets from local UI state or flattening multiple contexts into a single branch.",
+          "line_end": 404,
+          "line_start": 404,
+          "path": "Plans/GitHub_Integration.md",
+          "source_sha256": "4a94261aec0d756e5d6bf7d0c1cddfd3ad73d13a8b19d4ef1ee41cc2675cffd8"
+        },
+        {
+          "exact_quote": "canonical_text: GitHub auth, admin, readiness, history, Source Control, Actions subviews, run history, compare/review, and recovery surfaces disclose requested and effective execution identity by consuming runtime identity fields and storing only resource, capability, readiness, and route/open refs needed for the same audit snapshot.",
+          "line_end": 459,
+          "line_start": 459,
+          "path": "Plans/GitHub_Integration.md",
+          "source_sha256": "4a94261aec0d756e5d6bf7d0c1cddfd3ad73d13a8b19d4ef1ee41cc2675cffd8"
+        }
+      ],
+      "gap_kind": "none",
+      "impact": "Prevents cross-repo, cross-worktree, and cross-account target substitution during compare, review, and recovery.",
+      "item_id": "M15-004",
+      "item_type": "authority",
+      "severity": "info",
+      "source_unit_refs": [
+        "PLANUNIT:GI-005",
+        "SEMANTIC:PLANUNIT:GI-005",
+        "PLANUNIT:GI-006",
+        "SEMANTIC:PLANUNIT:GI-006"
+      ],
+      "statement": "GI-005 and GI-006 require canonical compare-origin identity plus requested/effective account disclosure rather than reconstruction from mutable UI state.",
+      "title": "Compare and account identity binding"
+    },
+    {
+      "builder_discretion": false,
+      "confidence": 0.96,
+      "dimensions": [
+        "behavior",
+        "states_transitions",
+        "gui_truth",
+        "failures_recovery",
+        "destructive_actions"
+      ],
+      "evidence": [
+        {
+          "exact_quote": "canonical_text: Search routing preserves focused_run_id, safe-point retry opens an explicit restore/retry confirmation with repo, worktree, branch, baseline/head, safe_point_id, affected files, owner run/node/attempt, and follow-up action, and run-aware compare-origin forwarding preserves identity and refs into review/conflict/safe-point contexts.",
+          "line_end": 511,
+          "line_start": 511,
+          "path": "Plans/GitHub_Integration.md",
+          "source_sha256": "4a94261aec0d756e5d6bf7d0c1cddfd3ad73d13a8b19d4ef1ee41cc2675cffd8"
+        }
+      ],
+      "gap_kind": "none",
+      "impact": "Avoids silent focus changes and destructive retry against an unvalidated worktree or baseline.",
+      "item_id": "M15-005",
+      "item_type": "failure_recovery",
+      "severity": "info",
+      "source_unit_refs": [
+        "PLANUNIT:GI-007",
+        "SEMANTIC:PLANUNIT:GI-007"
+      ],
+      "statement": "GI-007 specifies focus preservation and an explicit, identity-rich safe-point restore/retry confirmation, including a no-change outcome when declined.",
+      "title": "Focus-safe restore and retry"
+    },
+    {
+      "builder_discretion": false,
+      "confidence": 0.95,
+      "dimensions": [
+        "capabilities",
+        "contracts",
+        "ownership",
+        "gui_truth",
+        "failures_recovery",
+        "compatibility_migration"
+      ],
+      "evidence": [
+        {
+          "exact_quote": "canonical_text: GitHub Actions has Current Branch, Workflows, and Settings as stable subviews, routes compatibility entrypoints to the correct owner surface, and owns only GitHub-specific Settings, readiness, workflow, admin, and source-control ConfigKey schema details while importing shared storage rules.",
+          "line_end": 563,
+          "line_start": 563,
+          "path": "Plans/GitHub_Integration.md",
+          "source_sha256": "4a94261aec0d756e5d6bf7d0c1cddfd3ad73d13a8b19d4ef1ee41cc2675cffd8"
+        },
+        {
+          "exact_quote": "canonical_text: Pinned critical workflows are owned by GitHub Actions > Workflows, use canonical pin/unpin commands and compatibility aliases, store workflow/repo/branch/worktree/badge/preference/provenance records, and expose stale or renamed workflow state without hiding historical receipts.",
+          "line_end": 616,
+          "line_start": 616,
+          "path": "Plans/GitHub_Integration.md",
+          "source_sha256": "4a94261aec0d756e5d6bf7d0c1cddfd3ad73d13a8b19d4ef1ee41cc2675cffd8"
+        },
+        {
+          "exact_quote": "canonical_text: Replay from last known good belongs to GitHub Actions failure triage/history, compares failed runs against same-workflow same-branch successes, records baseline and comparison metadata, exposes compare options, and never implies rerun tests latest branch head unless a new dispatch occurs.",
+          "line_end": 667,
+          "line_start": 667,
+          "path": "Plans/GitHub_Integration.md",
+          "source_sha256": "4a94261aec0d756e5d6bf7d0c1cddfd3ad73d13a8b19d4ef1ee41cc2675cffd8"
+        }
+      ],
+      "gap_kind": "none",
+      "impact": "Maintains hosted-surface ownership, durable pin provenance, and truthful last-known-good replay semantics.",
+      "item_id": "M15-006",
+      "item_type": "feature",
+      "severity": "info",
+      "source_unit_refs": [
+        "PLANUNIT:GI-008",
+        "SEMANTIC:PLANUNIT:GI-008",
+        "PLANUNIT:GI-009",
+        "SEMANTIC:PLANUNIT:GI-009",
+        "PLANUNIT:GI-010",
+        "SEMANTIC:PLANUNIT:GI-010"
+      ],
+      "statement": "GI-008 through GI-010 establish the Actions information architecture, pinned-workflow lifecycle, and same-branch replay semantics with compatibility routing that cannot change ownership.",
+      "title": "Actions IA, pins, and replay"
+    },
+    {
+      "builder_discretion": false,
+      "confidence": 0.96,
+      "dimensions": [
+        "behavior",
+        "states_transitions",
+        "authority",
+        "gui_truth",
+        "failures_recovery",
+        "offline_network_loss",
+        "observability_support"
+      ],
+      "evidence": [
+        {
+          "exact_quote": "canonical_text: Current Branch shows active branch/worktree binding, background run status, Actions readiness, admin/runtime scopes, rate-limit/repo linkage, capability, environment-gated wait/blocked states, and recovery CTAs while live GitHub Actions Settings remains source of truth for hosted admin state.",
+          "line_end": 716,
+          "line_start": 716,
+          "path": "Plans/GitHub_Integration.md",
+          "source_sha256": "4a94261aec0d756e5d6bf7d0c1cddfd3ad73d13a8b19d4ef1ee41cc2675cffd8"
+        },
+        {
+          "exact_quote": "canonical_text: Actions readiness is event-driven plus bounded refresh on project, branch/worktree, workflow-file, panel, dispatch-form, and admin CRUD events; stale readiness cannot authorize mutation, dispatchability is validated without persisting secrets, and capability disclosure shows scope/value limits honestly.",
+          "line_end": 766,
+          "line_start": 766,
+          "path": "Plans/GitHub_Integration.md",
+          "source_sha256": "4a94261aec0d756e5d6bf7d0c1cddfd3ad73d13a8b19d4ef1ee41cc2675cffd8"
+        }
+      ],
+      "gap_kind": "none",
+      "impact": "Prevents stale readiness or template defaults from authorizing hosted mutation and keeps background context visible without stealing focus.",
+      "item_id": "M15-007",
+      "item_type": "state_transition",
+      "severity": "info",
+      "source_unit_refs": [
+        "PLANUNIT:GI-011",
+        "SEMANTIC:PLANUNIT:GI-011",
+        "PLANUNIT:GI-012",
+        "SEMANTIC:PLANUNIT:GI-012"
+      ],
+      "statement": "GI-011 and GI-012 define live-admin precedence, event-driven readiness refresh, stale-state mutation denial, and explicit capability limits.",
+      "title": "Readiness lifecycle and mutation gate"
+    },
+    {
+      "builder_discretion": true,
+      "confidence": 0.94,
+      "dimensions": [
+        "inputs_outputs",
+        "gui_truth",
+        "scale_performance",
+        "acceptance_oracles",
+        "builder_discretion",
+        "ambiguity_unknowns",
+        "gui_misleading_states",
+        "scale_limits",
+        "test_falsifiability"
+      ],
+      "evidence": [
+        {
+          "exact_quote": "canonical_text: Actions-to-code correlation links runs, jobs, steps, failed checks, command pivots, commit ranges, changed files, branch/worktree refs, and related diffs/worktrees as a remediation bridge while labeling heuristic uncertainty and preserving candidate choices.",
+          "line_end": 819,
+          "line_start": 819,
+          "path": "Plans/GitHub_Integration.md",
+          "source_sha256": "4a94261aec0d756e5d6bf7d0c1cddfd3ad73d13a8b19d4ef1ee41cc2675cffd8"
+        },
+        {
+          "exact_quote": "canonical_text: Run impact mapping belongs to GitHub Actions run detail and Orchestrator receipts, shows branch/commit/PR, worktree, deploy chain, publish, and readiness implications, and marks incomplete evidence as partial rather than complete truth.",
+          "line_end": 870,
+          "line_start": 870,
+          "path": "Plans/GitHub_Integration.md",
+          "source_sha256": "4a94261aec0d756e5d6bf7d0c1cddfd3ad73d13a8b19d4ef1ee41cc2675cffd8"
+        }
+      ],
+      "gap_kind": "underspecified_heuristic_and_scale_oracles",
+      "impact": "Different implementations can choose incompatible confidence thresholds, candidate ordering, retention bounds, and large-monorepo behavior while still satisfying the prose.",
+      "item_id": "M15-008",
+      "item_type": "gap",
+      "severity": "high",
+      "source_unit_refs": [
+        "PLANUNIT:GI-013",
+        "SEMANTIC:PLANUNIT:GI-013",
+        "PLANUNIT:GI-014",
+        "SEMANTIC:PLANUNIT:GI-014"
+      ],
+      "statement": "GI-013 and GI-014 correctly label heuristic and partial evidence, but do not define the confidence threshold value, deterministic candidate tie-break, impact-map retention limits, pagination/cardinality limits, or executable false-positive and false-negative oracles.",
+      "title": "Correlation and impact-map algorithms remain discretionary"
+    },
+    {
+      "builder_discretion": true,
+      "confidence": 0.91,
+      "dimensions": [
+        "behavior",
+        "inputs_outputs",
+        "failures_recovery",
+        "operations",
+        "acceptance_oracles",
+        "builder_discretion",
+        "partial_failure",
+        "recovery_rollback",
+        "test_falsifiability"
+      ],
+      "evidence": [
+        {
+          "exact_quote": "canonical_text: Failure triage view compresses failed runs into failing job/step, logs, changed files, likely next action, metadata, log access/fallback state, tiered fetching, and stored refs while GitHub Actions repro loops follow Debug investigation budget reset rules.",
+          "line_end": 920,
+          "line_start": 920,
+          "path": "Plans/GitHub_Integration.md",
+          "source_sha256": "4a94261aec0d756e5d6bf7d0c1cddfd3ad73d13a8b19d4ef1ee41cc2675cffd8"
+        },
+        {
+          "exact_quote": "canonical_text: Workflow authoring assistance is a GitHub Actions Settings/workflow-editor capability with language-service validation, completion, docs, remote-repo disclosure, proxy mediation, generation links, and preview/apply behavior that stores metadata only before accepted edits.",
+          "line_end": 973,
+          "line_start": 973,
+          "path": "Plans/GitHub_Integration.md",
+          "source_sha256": "4a94261aec0d756e5d6bf7d0c1cddfd3ad73d13a8b19d4ef1ee41cc2675cffd8"
+        }
+      ],
+      "gap_kind": "missing_failure_and_apply_oracles",
+      "impact": "Builders must invent log truncation thresholds, fetch-tier sizes, proxy failure behavior, apply atomicity, and rollback outcomes.",
+      "item_id": "M15-009",
+      "item_type": "gap",
+      "severity": "medium",
+      "source_unit_refs": [
+        "PLANUNIT:GI-015",
+        "SEMANTIC:PLANUNIT:GI-015",
+        "PLANUNIT:GI-016",
+        "SEMANTIC:PLANUNIT:GI-016"
+      ],
+      "statement": "GI-015 and GI-016 define failure-triage and authoring boundaries, but leave quantitative log tiers, truncation/download integrity, proxy retry semantics, preview-to-apply concurrency, partial-write handling, and rollback acceptance tests unspecified.",
+      "title": "Failure triage and workflow apply need executable boundaries"
+    },
+    {
+      "builder_discretion": false,
+      "confidence": 0.95,
+      "dimensions": [
+        "states_transitions",
+        "contracts",
+        "authority",
+        "gui_truth",
+        "failures_recovery",
+        "observability_support"
+      ],
+      "evidence": [
+        {
+          "exact_quote": "canonical_text: Actions readiness blocked-state taxonomy uses canonical actions_* reason details layered onto shared blocked metadata, maps auth expiration to shared failure class, exposes ordered allowed actions and active repo/branch context, and keeps attention_required distinct from blocked.",
+          "line_end": 1022,
+          "line_start": 1022,
+          "path": "Plans/GitHub_Integration.md",
+          "source_sha256": "4a94261aec0d756e5d6bf7d0c1cddfd3ad73d13a8b19d4ef1ee41cc2675cffd8"
+        },
+        {
+          "exact_quote": "canonical_text: Hosted Git governance blockers use policy-specific reasons and receipts for protected branch, force-push, required PR/merge queue/status/signed commit/tag, actor bypass, lifecycle, fallback, and mutation outcome instead of generic branch-rule mismatch.",
+          "line_end": 1082,
+          "line_start": 1082,
+          "path": "Plans/GitHub_Integration.md",
+          "source_sha256": "4a94261aec0d756e5d6bf7d0c1cddfd3ad73d13a8b19d4ef1ee41cc2675cffd8"
+        }
+      ],
+      "gap_kind": "none",
+      "impact": "Enables deterministic UI recovery and audit receipts for distinct hosted policy denials.",
+      "item_id": "M15-010",
+      "item_type": "state_transition",
+      "severity": "info",
+      "source_unit_refs": [
+        "PLANUNIT:GI-017",
+        "SEMANTIC:PLANUNIT:GI-017",
+        "PLANUNIT:GI-018",
+        "SEMANTIC:PLANUNIT:GI-018"
+      ],
+      "statement": "GI-017 and GI-018 preserve distinct attention, blocked, auth, policy, and fallback states rather than collapsing them into generic failure.",
+      "title": "Blocked and governance state taxonomy"
+    },
+    {
+      "builder_discretion": true,
+      "confidence": 0.92,
+      "dimensions": [
+        "capabilities",
+        "states_transitions",
+        "ownership",
+        "gui_truth",
+        "failures_recovery",
+        "scale_performance",
+        "accessibility",
+        "destructive_actions"
+      ],
+      "evidence": [
+        {
+          "exact_quote": "canonical_text: Source Control remains worktree-native with compare/lineage/recovery pivots, topology ownership over branch lineage, ownership badges, worktree safety warnings, run lifecycle claims/releases, restart recovery unknown ownership, and strong-action confirmations.",
+          "line_end": 1133,
+          "line_start": 1133,
+          "path": "Plans/GitHub_Integration.md",
+          "source_sha256": "4a94261aec0d756e5d6bf7d0c1cddfd3ad73d13a8b19d4ef1ee41cc2675cffd8"
+        },
+        {
+          "exact_quote": "canonical_text: Worktrees rows are first-class Source Control objects with narrow-pane single-column expandable rows, row labels, actions, per-project All/Threads/Orchestrator/Manual filter persistence, and two-level accordion scroll behavior.",
+          "line_end": 1186,
+          "line_start": 1186,
+          "path": "Plans/GitHub_Integration.md",
+          "source_sha256": "4a94261aec0d756e5d6bf7d0c1cddfd3ad73d13a8b19d4ef1ee41cc2675cffd8"
+        },
+        {
+          "exact_quote": "canonical_text: Hosted-repo, remote, and workflow lifecycle states are first-class, archived/deleted/historical-only states disable mutation deterministically, receipts retain immutable identifiers and refs, deep links reopen only through safe validated refs, and capability disclosure separates hosted-only mutation boundaries from local editing.",
+          "line_end": 1237,
+          "line_start": 1237,
+          "path": "Plans/GitHub_Integration.md",
+          "source_sha256": "4a94261aec0d756e5d6bf7d0c1cddfd3ad73d13a8b19d4ef1ee41cc2675cffd8"
+        }
+      ],
+      "gap_kind": "missing_topology_scale_and_keyboard_oracles",
+      "impact": "Large repositories and keyboard-only users could receive inconsistent virtualization, focus, scroll, and destructive-confirmation behavior.",
+      "item_id": "M15-011",
+      "item_type": "gap",
+      "severity": "medium",
+      "source_unit_refs": [
+        "PLANUNIT:GI-019",
+        "SEMANTIC:PLANUNIT:GI-019",
+        "PLANUNIT:GI-020",
+        "SEMANTIC:PLANUNIT:GI-020",
+        "PLANUNIT:GI-021",
+        "SEMANTIC:PLANUNIT:GI-021"
+      ],
+      "statement": "GI-019 through GI-021 give strong lifecycle and destructive-action semantics, but do not set topology size limits, virtualization/loading behavior, keyboard navigation and focus order for expandable rows, or deterministic handling of concurrent ownership changes during confirmation.",
+      "title": "Worktree UI is semantically strong but operationally incomplete"
+    },
+    {
+      "builder_discretion": false,
+      "confidence": 0.95,
+      "dimensions": [
+        "contracts",
+        "ownership",
+        "consumers",
+        "propagation",
+        "operations",
+        "compatibility_migration",
+        "cross_document_seams"
+      ],
+      "evidence": [
+        {
+          "exact_quote": "canonical_text: GitHub Integration consumes runtime status, bridge classification, tool dispatch, FileSafe, and storage startup contracts via explicit cross-ref anchors, displays canonical runtime outcomes, and treats legacy stop.* wording only as stale or compatibility input when it conflicts with kill.* and done.* families.",
+          "line_end": 1290,
+          "line_start": 1290,
+          "path": "Plans/GitHub_Integration.md",
+          "source_sha256": "4a94261aec0d756e5d6bf7d0c1cddfd3ad73d13a8b19d4ef1ee41cc2675cffd8"
+        },
+        {
+          "exact_quote": "canonical_text: Hosted mutation dispatch, rerun, cancel, admin mutation, and Source Control hosted actions respect Tools listener, OAuth/listener failure semantics, FileSafe path checks, storage logical roots/startup locks/read-only degradation, and usage/cost display rules owned by FinalGUISpec.",
+          "line_end": 1343,
+          "line_start": 1343,
+          "path": "Plans/GitHub_Integration.md",
+          "source_sha256": "4a94261aec0d756e5d6bf7d0c1cddfd3ad73d13a8b19d4ef1ee41cc2675cffd8"
+        },
+        {
+          "exact_quote": "canonical_text: GitHub Integration consumes route_target and OpenSubject semantics, resolves github:// resources and concerns into active routes and orchestrator concern records, preserves stable object identity for /jump/search-result routes, and treats Orchestrator references as supersession pointers rather than override evidence.",
+          "line_end": 1395,
+          "line_start": 1395,
+          "path": "Plans/GitHub_Integration.md",
+          "source_sha256": "4a94261aec0d756e5d6bf7d0c1cddfd3ad73d13a8b19d4ef1ee41cc2675cffd8"
+        }
+      ],
+      "gap_kind": "none",
+      "impact": "Prevents local status forks, unsafe mutation during degraded startup, and identity loss across GitHub route/open pivots.",
+      "item_id": "M15-012",
+      "item_type": "contract",
+      "severity": "info",
+      "source_unit_refs": [
+        "PLANUNIT:GI-022",
+        "SEMANTIC:PLANUNIT:GI-022",
+        "PLANUNIT:GI-023",
+        "SEMANTIC:PLANUNIT:GI-023",
+        "PLANUNIT:GI-024",
+        "SEMANTIC:PLANUNIT:GI-024"
+      ],
+      "statement": "GI-022 through GI-024 consistently consume canonical runtime/status, mutation-gate, usage-display, and object-routing contracts.",
+      "title": "Runtime, mutation, and routing seams"
+    },
+    {
+      "builder_discretion": true,
+      "confidence": 0.94,
+      "dimensions": [
+        "inputs_outputs",
+        "states_transitions",
+        "authority",
+        "failures_recovery",
+        "acceptance_oracles",
+        "builder_discretion",
+        "invalid_states_transitions",
+        "concurrency_races",
+        "partial_failure",
+        "recovery_rollback",
+        "authority_boundaries",
+        "test_falsifiability"
+      ],
+      "evidence": [
+        {
+          "exact_quote": "canonical_text: Graph patch flows use explicit graph_patch_request and graph_patch_result records carrying patch point, concern refs, structural change summary, affected generation, and requester identity before GitHub Integration exposes review or apply actions.",
+          "line_end": 1445,
+          "line_start": 1445,
+          "path": "Plans/GitHub_Integration.md",
+          "source_sha256": "4a94261aec0d756e5d6bf7d0c1cddfd3ad73d13a8b19d4ef1ee41cc2675cffd8"
+        },
+        {
+          "exact_quote": "canonical_text: GitHub workflow approval and observation consumers preserve approval_scope, approval_id, PR review ID, execution_unit_id, compatibility HITL/tier-boundary inputs, blocked runtime overlays, and wait/timeout timestamps while scheduled workflows remain stale or unknown until concrete hosted observation exists.",
+          "line_end": 1493,
+          "line_start": 1493,
+          "path": "Plans/GitHub_Integration.md",
+          "source_sha256": "4a94261aec0d756e5d6bf7d0c1cddfd3ad73d13a8b19d4ef1ee41cc2675cffd8"
+        }
+      ],
+      "gap_kind": "missing_mutation_concurrency_and_recovery_contract",
+      "impact": "A stale or duplicate graph-patch apply can race approval or generation changes without a defined rejection, idempotency, compensating action, or recovery receipt.",
+      "item_id": "M15-013",
+      "item_type": "gap",
+      "severity": "high",
+      "source_unit_refs": [
+        "PLANUNIT:GI-025",
+        "SEMANTIC:PLANUNIT:GI-025",
+        "PLANUNIT:GI-026",
+        "SEMANTIC:PLANUNIT:GI-026"
+      ],
+      "statement": "GI-025 and GI-026 bind graph patches and approvals to identities, generations, and observations, but do not define apply authority, optimistic-concurrency preconditions, idempotency keys, duplicate delivery handling, partial-apply rollback, cancellation races, or executable transition oracles.",
+      "title": "Graph patch and approval concurrency is unspecified"
+    },
+    {
+      "builder_discretion": true,
+      "confidence": 0.93,
+      "dimensions": [
+        "behavior",
+        "security_privacy",
+        "operations",
+        "builder_discretion",
+        "partial_failure",
+        "recovery_rollback",
+        "untrusted_inputs",
+        "offline_network_loss",
+        "test_falsifiability"
+      ],
+      "evidence": [
+        {
+          "exact_quote": "canonical_text: GitHub remote, SSH, Actions, and repository operations carry FileSafe, permission, credential, redaction, projection-trust, hard_gate, remote path guard, SSH keepalive/reconnect, and storage-owned remote-search authority instead of bypassing gates or defining alternate remote search behavior locally.",
+          "line_end": 1545,
+          "line_start": 1545,
+          "path": "Plans/GitHub_Integration.md",
+          "source_sha256": "4a94261aec0d756e5d6bf7d0c1cddfd3ad73d13a8b19d4ef1ee41cc2675cffd8"
+        },
+        {
+          "exact_quote": "canonical_text: Remote Git/non-Git search acceleration is remote-admin/user-visible transport; GitHub Integration owns remote cache/admin disclosure, consumes storage-owned staging/verification/re-anchor/remote-admin contracts, and keeps no-silent-local-fallback mandatory.",
+          "line_end": 1600,
+          "line_start": 1600,
+          "path": "Plans/GitHub_Integration.md",
+          "source_sha256": "4a94261aec0d756e5d6bf7d0c1cddfd3ad73d13a8b19d4ef1ee41cc2675cffd8"
+        }
+      ],
+      "gap_kind": "missing_adversarial_path_and_reconnect_oracles",
+      "impact": "Symlink, case-folding, TOCTOU, reconnect-during-write, and partially verified cache cases can produce security or truth-substitution failures if delegated contracts do not supply exact tests.",
+      "item_id": "M15-014",
+      "item_type": "gap",
+      "severity": "high",
+      "source_unit_refs": [
+        "PLANUNIT:GI-027",
+        "SEMANTIC:PLANUNIT:GI-027",
+        "PLANUNIT:GI-028",
+        "SEMANTIC:PLANUNIT:GI-028"
+      ],
+      "statement": "GI-027 and GI-028 establish the correct security and no-local-fallback boundary, but this document does not bind canonicalization to symlink resolution and case rules, define TOCTOU resistance, specify in-flight mutation fate on disconnect, or provide adversarial remote-cache verification oracles.",
+      "title": "Remote path and reconnect edge cases remain open"
+    },
+    {
+      "builder_discretion": true,
+      "confidence": 0.91,
+      "dimensions": [
+        "behavior",
+        "security_privacy",
+        "operations",
+        "builder_discretion",
+        "concurrency_races",
+        "partial_failure",
+        "untrusted_inputs",
+        "offline_network_loss"
+      ],
+      "evidence": [
+        {
+          "exact_quote": "canonical_text: Remote tool/provider execution uses GitHub remote context, remote SSH/reconnect budget, path guard, and storage verification anchors before mutating or reporting search/cache state.",
+          "line_end": 1646,
+          "line_start": 1646,
+          "path": "Plans/GitHub_Integration.md",
+          "source_sha256": "4a94261aec0d756e5d6bf7d0c1cddfd3ad73d13a8b19d4ef1ee41cc2675cffd8"
+        }
+      ],
+      "gap_kind": "missing_remote_mutation_transaction_boundary",
+      "impact": "Remote disconnect or verification-anchor change during a mutation has no locally stated commit, abort, quarantine, or retry contract.",
+      "item_id": "M15-015",
+      "item_type": "gap",
+      "severity": "high",
+      "source_unit_refs": [
+        "PLANUNIT:GI-029",
+        "SEMANTIC:PLANUNIT:GI-029"
+      ],
+      "statement": "GI-029 correctly gates remote mutation on context, reconnect budget, path guard, and verification anchors, but leaves the atomicity and stale-anchor behavior of in-flight remote tool mutations discretionary.",
+      "title": "Remote execution transaction semantics"
+    },
+    {
+      "builder_discretion": true,
+      "confidence": 0.93,
+      "dimensions": [
+        "inputs_outputs",
+        "authority",
+        "security_privacy",
+        "acceptance_oracles",
+        "builder_discretion",
+        "authority_boundaries",
+        "privacy_data_lifecycle",
+        "cross_document_seams"
+      ],
+      "evidence": [
+        {
+          "exact_quote": "canonical_text: GitHub Integration consumes GitHub_AuthContext, includes effective_account_id in API calls, uses runtime identity resolution for cross-account capability checks, and follows scoped provider/model settings tied to Persona and execution_unit_type rather than repository or organization.",
+          "line_end": 1693,
+          "line_start": 1693,
+          "path": "Plans/GitHub_Integration.md",
+          "source_sha256": "4a94261aec0d756e5d6bf7d0c1cddfd3ad73d13a8b19d4ef1ee41cc2675cffd8"
+        }
+      ],
+      "gap_kind": "missing_account_switch_and_audit_oracles",
+      "impact": "A capability or account change between check and API dispatch can make the audit identity stale or authorize the wrong account.",
+      "item_id": "M15-016",
+      "item_type": "gap",
+      "severity": "high",
+      "source_unit_refs": [
+        "PLANUNIT:GI-030",
+        "SEMANTIC:PLANUNIT:GI-030"
+      ],
+      "statement": "GI-030 defines effective-account attribution and cross-account checks, but not token/account snapshot freshness, check-to-use race handling, per-request revalidation, audit behavior for failed preflight, or retention/redaction rules for account identity in receipts.",
+      "title": "Effective-account check has a TOCTOU seam"
+    },
+    {
+      "builder_discretion": false,
+      "confidence": 0.99,
+      "dimensions": [
+        "ownership",
+        "compatibility_migration",
+        "builder_discretion"
+      ],
+      "evidence": [
+        {
+          "exact_quote": "canonical_text: The former GitHub_Integration doc-level source-preserving bridge is retired after Phase 2B atomized GitHub_Integration-S0002, S0004, S0006, and S0008 through S0012 into GI-002 through GI-030 and structurally dispositioned S0001, S0003, S0005, S0007, S0013, S0014, and S0016. GI-001 remains only as migration lineage for GitHub_Integration-S0015 and must not re-own atomized source coverage or use source_preserving_planunit compile mode.",
+          "line_end": 1746,
+          "line_start": 1746,
+          "path": "Plans/GitHub_Integration.md",
+          "source_sha256": "4a94261aec0d756e5d6bf7d0c1cddfd3ad73d13a8b19d4ef1ee41cc2675cffd8"
+        }
+      ],
+      "gap_kind": "none",
+      "impact": "Prevents retired migration lineage from regaining product authority or generating executable work.",
+      "item_id": "M15-017",
+      "item_type": "explicit_non_gap",
+      "severity": "info",
+      "source_unit_refs": [
+        "PLANUNIT:GI-001",
+        "SEMANTIC:PLANUNIT:GI-001"
+      ],
+      "statement": "GI-001 is explicitly retired to lineage-only status and cannot re-own atomized product coverage or use the retired source-preserving compile mode.",
+      "title": "Retired bridge is unambiguous"
+    },
+    {
+      "builder_discretion": true,
+      "confidence": 0.9,
+      "dimensions": [
+        "capabilities",
+        "contracts",
+        "authority",
+        "consumers",
+        "failures_recovery",
+        "builder_discretion",
+        "missing_callers_consumers",
+        "authority_boundaries",
+        "cross_document_seams"
+      ],
+      "evidence": [
+        {
+          "exact_quote": "  GitHub optional promotion records PR and GitHub Actions evidence only when configured.",
+          "line_end": 1818,
+          "line_start": 1818,
+          "path": "Plans/GitHub_Integration.md",
+          "source_sha256": "4a94261aec0d756e5d6bf7d0c1cddfd3ad73d13a8b19d4ef1ee41cc2675cffd8"
+        },
+        {
+          "exact_quote": "- Do not block local-only planning or build completion solely because GitHub is unavailable.",
+          "line_end": 1937,
+          "line_start": 1937,
+          "path": "Plans/GitHub_Integration.md",
+          "source_sha256": "4a94261aec0d756e5d6bf7d0c1cddfd3ad73d13a8b19d4ef1ee41cc2675cffd8"
+        },
+        {
+          "exact_quote": "  - GitHub Integration does not become the discovery behavior, search, or ranking owner.",
+          "line_end": 1964,
+          "line_start": 1964,
+          "path": "Plans/GitHub_Integration.md",
+          "source_sha256": "4a94261aec0d756e5d6bf7d0c1cddfd3ad73d13a8b19d4ef1ee41cc2675cffd8"
+        }
+      ],
+      "gap_kind": "missing_handoff_failure_and_receipt_contract",
+      "impact": "Promotion, repository attachment, and remote discovery span several owners without a complete failure matrix or a single typed receipt/handoff contract in this owner doc.",
+      "item_id": "M15-018",
+      "item_type": "gap",
+      "severity": "medium",
+      "source_unit_refs": [
+        "PLANUNIT:GI-031",
+        "SEMANTIC:PLANUNIT:GI-031",
+        "PLANUNIT:GI-032",
+        "SEMANTIC:PLANUNIT:GI-032",
+        "PLANUNIT:GI-033",
+        "SEMANTIC:PLANUNIT:GI-033"
+      ],
+      "statement": "GI-031 through GI-033 preserve GitHub-optional local truth and discovery ownership, but do not fully define caller initiation, cancellation and retry ownership, partial push/PR/check outcomes, duplicate promotion requests, repository-attachment rollback, or typed cross-owner receipt reconciliation.",
+      "title": "Optional promotion and discovery handoffs need closure"
+    },
+    {
+      "builder_discretion": true,
+      "confidence": 0.98,
+      "dimensions": [
+        "behavior",
+        "capabilities",
+        "inputs_outputs",
+        "states_transitions",
+        "failures_recovery",
+        "operations",
+        "scale_performance",
+        "builder_discretion",
+        "ambiguity_unknowns",
+        "concurrency_races",
+        "partial_failure",
+        "recovery_rollback",
+        "offline_network_loss",
+        "scale_limits"
+      ],
+      "evidence": [
+        {
+          "exact_quote": "  github_update_workflow (P1) is compiled as canonical Puppet Master intent for github_update_workflow: Add GitHubUpdateCurrentness and ReleaseTagVerifier The preserved PM gap/delta is: Need rate-limit-safe updater and release/action tag currentness guard The observed external-repo signal remains source-lineage evidence: OpenCode upgrade GitHub API 403 and stale github@latest action issues",
+          "line_end": 2003,
+          "line_start": 2003,
+          "path": "Plans/GitHub_Integration.md",
+          "source_sha256": "4a94261aec0d756e5d6bf7d0c1cddfd3ad73d13a8b19d4ef1ee41cc2675cffd8"
+        }
+      ],
+      "gap_kind": "feature_intent_without_runtime_contract",
+      "impact": "The P1 supply-chain control can be implemented with incompatible endpoints, cache rules, rate-limit behavior, version semantics, and rollback policy, including unsafe failure-open behavior.",
+      "item_id": "M15-019",
+      "item_type": "gap",
+      "severity": "high",
+      "source_unit_refs": [
+        "PLANUNIT:GI-034"
+      ],
+      "statement": "GI-034 names GitHubUpdateCurrentness and ReleaseTagVerifier but does not define their inputs/outputs, caller and consumer, persisted state, authenticated-versus-unauthenticated selection, conditional request/cache behavior, rate-limit budget and backoff, release/tag comparison semantics, concurrency, offline posture, or recovery/rollback states.",
+      "title": "GitHub update workflow lacks an implementable contract"
+    },
+    {
+      "builder_discretion": true,
+      "confidence": 0.99,
+      "dimensions": [
+        "acceptance_oracles",
+        "builder_discretion",
+        "ambiguity_unknowns",
+        "test_falsifiability",
+        "unknown_unknowns"
+      ],
+      "evidence": [
+        {
+          "exact_quote": "- Unauthenticated/authenticated API fallback tests",
+          "line_end": 2011,
+          "line_start": 2011,
+          "path": "Plans/GitHub_Integration.md",
+          "source_sha256": "4a94261aec0d756e5d6bf7d0c1cddfd3ad73d13a8b19d4ef1ee41cc2675cffd8"
+        },
+        {
+          "exact_quote": "- stale tag detection",
+          "line_end": 2012,
+          "line_start": 2012,
+          "path": "Plans/GitHub_Integration.md",
+          "source_sha256": "4a94261aec0d756e5d6bf7d0c1cddfd3ad73d13a8b19d4ef1ee41cc2675cffd8"
+        }
+      ],
+      "gap_kind": "non_falsifiable_acceptance_criteria",
+      "impact": "Passing tests can exercise different cases and expected outcomes, so the plan cannot certify rate-limit safety or release/action tag currentness consistently.",
+      "item_id": "M15-020",
+      "item_type": "acceptance_oracle",
+      "severity": "high",
+      "source_unit_refs": [
+        "SEMANTIC:PLANUNIT:GI-034"
+      ],
+      "statement": "GI-034 acceptance criteria are labels rather than executable oracles: they omit fixtures, endpoint/status matrices, Retry-After and reset handling, version/tag ordering rules, stale/current/unknown expected states, failure-open versus failure-closed policy, and receipt assertions.",
+      "title": "GI-034 acceptance criteria are not test-complete"
+    }
+  ],
+  "model": "gpt-5.6-sol",
+  "phase": "blind_macro_window_review",
+  "reasoning_effort": "xhigh",
+  "schema_version": "macro-review-result-v1",
+  "segments": [
+    {
+      "core_range": [
+        1,
+        200
+      ],
+      "covered_source_unit_refs": [
+        "SEMANTIC:PROLOGUE:Plans/GitHub_Integration.md:CONT-001"
+      ],
+      "item_ids": [
+        "M15-001"
+      ],
+      "reviewed": true,
+      "summary": "Reviewed the complete prologue for locked GitHub, auth, secret, local-git, remote-SSH, UICommand, SSOT, surface, identity, readiness, worktree, lifecycle, runtime-status, route/open, approval, and security constraints.",
+      "window_id": "WIN-34C3EA3D3753-0001"
+    },
+    {
+      "core_range": [
+        201,
+        555
+      ],
+      "covered_source_unit_refs": [
+        "PLANUNIT:GI-002",
+        "PLANUNIT:GI-003",
+        "PLANUNIT:GI-004",
+        "PLANUNIT:GI-005",
+        "PLANUNIT:GI-006",
+        "PLANUNIT:GI-007",
+        "SEMANTIC:PROLOGUE:Plans/GitHub_Integration.md:CONT-002",
+        "SEMANTIC:PLANUNIT:GI-002",
+        "SEMANTIC:PLANUNIT:GI-003",
+        "SEMANTIC:PLANUNIT:GI-004",
+        "SEMANTIC:PLANUNIT:GI-005",
+        "SEMANTIC:PLANUNIT:GI-006",
+        "SEMANTIC:PLANUNIT:GI-007"
+      ],
+      "item_ids": [
+        "M15-002",
+        "M15-003",
+        "M15-004",
+        "M15-005"
+      ],
+      "reviewed": true,
+      "summary": "Reviewed owner reconciliation and GI-002 through GI-007 for SSOT, surface ownership, accessibility, compare identity, requested/effective identity, focus preservation, and safe-point recovery.",
+      "window_id": "WIN-34C3EA3D3753-0002"
+    },
+    {
+      "core_range": [
+        556,
+        912
+      ],
+      "covered_source_unit_refs": [
+        "PLANUNIT:GI-008",
+        "PLANUNIT:GI-009",
+        "PLANUNIT:GI-010",
+        "PLANUNIT:GI-011",
+        "PLANUNIT:GI-012",
+        "PLANUNIT:GI-013",
+        "PLANUNIT:GI-014",
+        "SEMANTIC:PLANUNIT:GI-008",
+        "SEMANTIC:PLANUNIT:GI-009",
+        "SEMANTIC:PLANUNIT:GI-010",
+        "SEMANTIC:PLANUNIT:GI-011",
+        "SEMANTIC:PLANUNIT:GI-012",
+        "SEMANTIC:PLANUNIT:GI-013",
+        "SEMANTIC:PLANUNIT:GI-014"
+      ],
+      "item_ids": [
+        "M15-006",
+        "M15-007",
+        "M15-008"
+      ],
+      "reviewed": true,
+      "summary": "Reviewed GI-008 through GI-014 for Actions IA, pins, replay, readiness, live-admin precedence, dispatch capability, actions-to-code correlation, and impact mapping; quantitative heuristic and scale oracles remain incomplete.",
+      "window_id": "WIN-34C3EA3D3753-0003"
+    },
+    {
+      "core_range": [
+        913,
+        1282
+      ],
+      "covered_source_unit_refs": [
+        "PLANUNIT:GI-015",
+        "PLANUNIT:GI-016",
+        "PLANUNIT:GI-017",
+        "PLANUNIT:GI-018",
+        "PLANUNIT:GI-019",
+        "PLANUNIT:GI-020",
+        "PLANUNIT:GI-021",
+        "SEMANTIC:PLANUNIT:GI-015",
+        "SEMANTIC:PLANUNIT:GI-016",
+        "SEMANTIC:PLANUNIT:GI-017",
+        "SEMANTIC:PLANUNIT:GI-018",
+        "SEMANTIC:PLANUNIT:GI-019",
+        "SEMANTIC:PLANUNIT:GI-020",
+        "SEMANTIC:PLANUNIT:GI-021"
+      ],
+      "item_ids": [
+        "M15-009",
+        "M15-010",
+        "M15-011"
+      ],
+      "reviewed": true,
+      "summary": "Reviewed GI-015 through GI-021 for triage, authoring, blocked and governance taxonomies, worktree ownership/layout, destructive actions, and hosted lifecycle; operational, accessibility, and concurrency oracles are incomplete.",
+      "window_id": "WIN-34C3EA3D3753-0004"
+    },
+    {
+      "core_range": [
+        1283,
+        1638
+      ],
+      "covered_source_unit_refs": [
+        "PLANUNIT:GI-022",
+        "PLANUNIT:GI-023",
+        "PLANUNIT:GI-024",
+        "PLANUNIT:GI-025",
+        "PLANUNIT:GI-026",
+        "PLANUNIT:GI-027",
+        "PLANUNIT:GI-028",
+        "SEMANTIC:PLANUNIT:GI-022",
+        "SEMANTIC:PLANUNIT:GI-023",
+        "SEMANTIC:PLANUNIT:GI-024",
+        "SEMANTIC:PLANUNIT:GI-025",
+        "SEMANTIC:PLANUNIT:GI-026",
+        "SEMANTIC:PLANUNIT:GI-027",
+        "SEMANTIC:PLANUNIT:GI-028"
+      ],
+      "item_ids": [
+        "M15-012",
+        "M15-013",
+        "M15-014"
+      ],
+      "reviewed": true,
+      "summary": "Reviewed GI-022 through GI-028 for runtime/status imports, mutation gates, object routing, graph patches, approvals, observation freshness, remote path security, reconnect, and no-local-fallback; concurrency and adversarial recovery contracts remain underspecified.",
+      "window_id": "WIN-34C3EA3D3753-0005"
+    },
+    {
+      "core_range": [
+        1639,
+        1994
+      ],
+      "covered_source_unit_refs": [
+        "PLANUNIT:GI-001",
+        "PLANUNIT:GI-029",
+        "PLANUNIT:GI-030",
+        "PLANUNIT:GI-031",
+        "PLANUNIT:GI-032",
+        "PLANUNIT:GI-033",
+        "SEMANTIC:PLANUNIT:GI-029",
+        "SEMANTIC:PLANUNIT:GI-030",
+        "SEMANTIC:PLANUNIT:GI-001",
+        "SEMANTIC:PLANUNIT:GI-031",
+        "SEMANTIC:PLANUNIT:GI-032",
+        "SEMANTIC:PLANUNIT:GI-033"
+      ],
+      "item_ids": [
+        "M15-015",
+        "M15-016",
+        "M15-017",
+        "M15-018"
+      ],
+      "reviewed": true,
+      "summary": "Reviewed GI-029, GI-030, retired GI-001, and GI-031 through GI-033 for remote execution, effective account identity, migration retirement, optional promotion, repository attachment, and remote discovery handoffs.",
+      "window_id": "WIN-34C3EA3D3753-0006"
+    },
+    {
+      "core_range": [
+        1995,
+        2116
+      ],
+      "covered_source_unit_refs": [
+        "PLANUNIT:GI-034",
+        "SEMANTIC:PLANUNIT:GI-034"
+      ],
+      "item_ids": [
+        "M15-019",
+        "M15-020"
+      ],
+      "reviewed": true,
+      "summary": "Reviewed GI-034 and the following concrete FABLE addendum lines. The update-currentness and release-tag intent remains non-implementable and its acceptance labels remain non-falsifiable despite adjacent Actions transport and reason-table detail.",
+      "window_id": "WIN-34C3EA3D3753-0007"
+    }
+  ],
+  "self_attestation": {
+    "no_canonical_writes": true,
+    "no_external_research_during_blind_review": true,
+    "no_peer_result_access": true,
+    "no_prior_audit_access": true,
+    "no_unrelated_source_access": true,
+    "terminal_after_submission": true
+  },
+  "source_binding": {
+    "bundle_id": "MACRO15-34C3EA3D3753-0001",
+    "document_path": "Plans/GitHub_Integration.md",
+    "micro_window_ids": [
+      "WIN-34C3EA3D3753-0001",
+      "WIN-34C3EA3D3753-0002",
+      "WIN-34C3EA3D3753-0003",
+      "WIN-34C3EA3D3753-0004",
+      "WIN-34C3EA3D3753-0005",
+      "WIN-34C3EA3D3753-0006",
+      "WIN-34C3EA3D3753-0007"
+    ],
+    "source_sha256": "4a94261aec0d756e5d6bf7d0c1cddfd3ad73d13a8b19d4ef1ee41cc2675cffd8"
+  },
+  "status": "completed",
+  "synthesis": {
+    "cross_document_questions": [
+      "Which owner defines the typed GitHubUpdateCurrentness and ReleaseTagVerifier request, result, cache, receipt, and state-transition contracts consumed by GitHub Integration, BinaryLocator, and FinalGUISpec?",
+      "Which owner resolves graph-patch apply authority, generation concurrency, idempotency, partial-apply rollback, and approval cancellation races?",
+      "Which owner supplies executable remote path canonicalization, reconnect-during-mutation, and remote-cache verification oracles for GitHub Integration?"
+    ],
+    "feature_family_keys": [
+      "github.actions.readiness-and-admin",
+      "github.actions.correlation-and-impact",
+      "github.source-control-worktrees",
+      "github.remote-security-and-reconnect",
+      "github.optional-promotion-and-discovery",
+      "github.update-currentness-and-release-tag-verification"
+    ],
+    "research_queries": [
+      "GitHub REST API conditional requests ETag rate limit Retry-After X-RateLimit-Reset release tags semantics",
+      "GitHub Actions reusable action tag currentness immutable SHA pin release verification supply chain",
+      "GitHub API unauthenticated authenticated fallback caching offline currentness design"
+    ]
+  },
+  "task_thread_id": "/root/a005m15_b4_000051_attempt_0015_terminal"
+}
+

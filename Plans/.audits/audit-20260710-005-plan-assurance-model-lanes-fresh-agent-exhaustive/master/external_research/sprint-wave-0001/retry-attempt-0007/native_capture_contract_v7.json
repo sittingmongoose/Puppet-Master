@@ -1,0 +1,49 @@
+{
+  "assignment_ids": [
+    "ER-0003",
+    "ER-0008"
+  ],
+  "attempt_id": "attempt-0007",
+  "canonicalization_algorithm_id": "a005-canonical-json-decimal-v1",
+  "capture_schema_path": "/Users/jaredsmacbookair/Documents/PuppetMaster/Plans/.audits/audit-20260710-005-plan-assurance-model-lanes-fresh-agent-exhaustive/master/external_research/sprint-wave-0001/retry-attempt-0007/schema/external_research_native_capture_v7.schema.json",
+  "capture_schema_sha256": "ab495e17496469a32b7cf59200915443ac92f9f936d6be1151f4748ba0fb3d3d",
+  "credits": {
+    "coverage": 0,
+    "merge": 0,
+    "promotion": 0,
+    "research": 0,
+    "spec": 0
+  },
+  "distinct_digests": [
+    "result_file_sha256",
+    "result_canonical_sha256",
+    "output_tree_sha256",
+    "receipt_file_sha256",
+    "receipt_canonical_sha256"
+  ],
+  "identity_separation": "result owns canonical agent_path only; receipt and native capture own thread/turn identity",
+  "required_row_count": 2,
+  "required_row_fields": [
+    "assignment_id",
+    "agent_path",
+    "native_child_thread_id",
+    "native_child_turn_id",
+    "native_child_turn_status",
+    "terminal_response_exact",
+    "result_present_before_pmr1",
+    "result_path",
+    "result_file_sha256",
+    "result_canonical_sha256",
+    "output_tree_sha256",
+    "receipt_path",
+    "receipt_file_sha256",
+    "receipt_canonical_sha256",
+    "canonicalization_algorithm_id",
+    "parent_spawn_call_sha256",
+    "parent_spawn_result_sha256"
+  ],
+  "schema_version": "external-research-native-capture-contract-v7",
+  "sealed_capture_writer_path": "/Users/jaredsmacbookair/Documents/PuppetMaster/Plans/.audits/audit-20260710-005-plan-assurance-model-lanes-fresh-agent-exhaustive/master/external_research/sprint-wave-0001/retry-attempt-0007/tools/write_native_capture.py",
+  "sealed_capture_writer_sha256": "891abed02abe6361a2f096fe2f63aed99ddd18b1a15ccf103dfe5ce872d47d70",
+  "status": "BLOCKED_AWAITING_FRESH_INDEPENDENT_LUNA_PRELAUNCH_V7"
+}

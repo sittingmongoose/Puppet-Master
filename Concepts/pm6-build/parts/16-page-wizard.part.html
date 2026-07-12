@@ -30,7 +30,6 @@
                       <span class="pm6-wiz-mchip warn">3 open questions carried over</span>
                     </div>
                   </div>
-                  <button class="pm6-wiz-ghostbtn" data-demo-action="wizard.viewThread" type="button">View thread</button>
                 </div>
 
                 <div class="pm6-wiz-sect-label pm-enter-up">Where does this project live?</div>
@@ -98,40 +97,77 @@
                   <span class="pm6-wiz-mchip ok">Assistant Chat handoff seed <span class="pm6-wiz-glyph">&#10003;</span></span>
                 </div>
 
-                <div class="pm6-wiz-reqs-grid pm-enter-up">
-                  <div class="pm6-wiz-reqs-pane pm6-wiz-reqs-docs">
-                    <div class="pm6-wiz-col-head">
-                      <span class="pm6-wiz-col-title">Attach requirement docs</span>
-                      <span class="pm6-wiz-col-meta">optional &middot; originals preserved</span>
-                    </div>
-                    <button class="pm6-wiz-drop" id="pm6WizReqDrop" type="button" data-demo-action="wizard.upload_doc">
-                      <span class="pm6-ico" data-pm6-icon="folder"></span>
-                      <span class="pm6-wiz-drop-title">Drop requirement docs here</span>
-                      <span class="pm6-wiz-drop-sub">Originals are preserved byte-for-byte with stable source IDs and hashes.</span>
-                    </button>
-                    <div class="pm6-wiz-samplerow" id="pm6WizReqSamples">
-                      <span class="pm6-wiz-samplerow-label">Demo files:</span>
-                      <button class="pm6-wiz-ghostbtn pm6-wiz-sampledoc" type="button" data-demo-action="wizard.upload_doc" data-demo-arg="d1">media-pipeline-brief.docx &middot; 184 KB</button>
-                      <button class="pm6-wiz-ghostbtn pm6-wiz-sampledoc" type="button" data-demo-action="wizard.upload_doc" data-demo-arg="d2">import-hardening-notes.md &middot; 12 KB</button>
-                      <button class="pm6-wiz-ghostbtn pm6-wiz-sampledoc" type="button" data-demo-action="wizard.upload_doc" data-demo-arg="d3">storage-vendor-quotes.pdf &middot; 631 KB</button>
-                    </div>
-                    <div class="pm6-wiz-docrows" id="pm6WizReqDocs"></div>
-                  </div>
-                  <div class="pm6-wiz-reqs-pane pm6-wiz-reqs-prd">
-                    <div class="pm6-wiz-col-head">
-                      <span class="pm6-wiz-col-title">PRD Builder</span>
-                      <span class="pm6-wiz-col-meta">3 quick turns</span>
-                    </div>
-                    <div class="pm6-wiz-prd-chat" id="pm6WizPrdChat"></div>
-                    <div class="pm6-wiz-col-head">
-                      <span class="pm6-wiz-col-title">Live PRD outline</span>
-                      <span class="pm6-wiz-col-meta">PRD ledger &middot; updated every turn</span>
-                    </div>
-                    <div class="pm6-wiz-prd-outline" id="pm6WizPrdOutline"></div>
-                  </div>
+                <div class="pm6-wiz-choice-grid pm-stagger">
+                  <button class="pm6-wiz-choice-card pm-sheen pm-enter-up" style="--i:0" type="button" data-demo-action="wizard.req_choice" data-demo-arg="upload">
+                    <span class="pm6-ico pm-hover-icon" data-pm6-icon="folder"></span>
+                    <span class="pm6-wiz-choice-name">Upload existing requirement docs</span>
+                    <span class="pm6-wiz-choice-desc">Drop PRDs, notes, specs, tickets &mdash; parsed, reconciled and normalized into one PRD ledger.</span>
+                  </button>
+                  <button class="pm6-wiz-choice-card pm-sheen pm-enter-up" style="--i:1" type="button" data-demo-action="wizard.req_choice" data-demo-arg="builder">
+                    <span class="pm6-ico pm-hover-icon" data-pm6-icon="wand"></span>
+                    <span class="pm6-wiz-choice-name">Build them with the PRD Builder</span>
+                    <span class="pm6-wiz-choice-desc">Answer discovery questions &mdash; the PRD writes itself every turn.</span>
+                  </button>
                 </div>
 
-                <div class="pm6-wiz-reqfoot pm-enter-up" id="pm6WizReqFoot"></div>
+                <button class="pm6-wiz-choice-hybrid pm-enter-up" type="button" data-demo-action="wizard.req_choice" data-demo-arg="hybrid">
+                  <span class="pm6-ico" data-pm6-icon="layers"></span>
+                  <span class="pm6-wiz-choice-hybrid-t">Mix both &mdash; upload docs and chat in one workspace</span>
+                  <span class="pm6-wiz-glyph">&#8594;</span>
+                </button>
+
+                <div class="pm6-wiz-choice-foot pm-enter-up">
+                  <span class="pm6-ico" data-pm6-icon="info"></span>
+                  <span>Either path lands in the same PRD Builder workspace &mdash; mix uploads and conversation at any time.</span>
+                </div>
+              </div>
+            </section>
+
+            <!-- STAGE 2b: PRD BUILDER WORKSPACE (outline + docs rail / chat /
+                 live PRD projection) — entered from either choice card ------->
+            <section class="pm6-wiz-stage pm6-wiz-stage-prd" id="pm6WizStagePrd" data-wiz-stage="prd_builder">
+              <div class="pm6-wiz-prdhead">
+                <div class="pm6-wiz-prdhead-main">
+                  <div class="pm6-wiz-kicker">PRD Builder</div>
+                  <h2 class="pm6-wiz-prdhead-title">Tastebook v1.2 &mdash; PRD</h2>
+                </div>
+                <div class="pm6-wiz-prdhead-state" id="pm6WizPrdReady"></div>
+              </div>
+              <div class="pm6-wiz-prdgrid">
+                <aside class="pm6-wiz-prdrail" id="pm6WizPrdRail">
+                  <div class="pm6-wiz-col-head">
+                    <span class="pm6-wiz-col-title">PRD outline</span>
+                    <span class="pm6-wiz-col-meta">PRD ledger &middot; updated every turn</span>
+                  </div>
+                  <div class="pm6-wiz-prd-outline" id="pm6WizPrdOutline"></div>
+                  <div class="pm6-wiz-col-head">
+                    <span class="pm6-wiz-col-title">Source documents</span>
+                    <span class="pm6-wiz-col-meta">optional &middot; originals preserved</span>
+                  </div>
+                  <button class="pm6-wiz-drop" id="pm6WizReqDrop" type="button" data-demo-action="wizard.upload_doc">
+                    <span class="pm6-ico" data-pm6-icon="folder"></span>
+                    <span class="pm6-wiz-drop-title">Drop requirement docs here</span>
+                    <span class="pm6-wiz-drop-sub">Originals are preserved byte-for-byte with stable source IDs and hashes.</span>
+                  </button>
+                  <div class="pm6-wiz-samplerow" id="pm6WizReqSamples">
+                    <span class="pm6-wiz-samplerow-label">Demo files:</span>
+                    <button class="pm6-wiz-ghostbtn pm6-wiz-sampledoc" type="button" data-demo-action="wizard.upload_doc" data-demo-arg="d1">media-pipeline-brief.docx &middot; 184 KB</button>
+                    <button class="pm6-wiz-ghostbtn pm6-wiz-sampledoc" type="button" data-demo-action="wizard.upload_doc" data-demo-arg="d2">import-hardening-notes.md &middot; 12 KB</button>
+                    <button class="pm6-wiz-ghostbtn pm6-wiz-sampledoc" type="button" data-demo-action="wizard.upload_doc" data-demo-arg="d3">storage-vendor-quotes.pdf &middot; 631 KB</button>
+                  </div>
+                  <div class="pm6-wiz-docrows" id="pm6WizReqDocs"></div>
+                </aside>
+                <main class="pm6-wiz-prdchat-wrap">
+                  <div class="pm6-wiz-prd-chat" id="pm6WizPrdChat"></div>
+                </main>
+                <aside class="pm6-wiz-prdpreview">
+                  <div class="pm6-wiz-col-head">
+                    <span class="pm6-wiz-col-title">PRD &mdash; live projection</span>
+                    <button class="pm6-wiz-expandbtn" type="button" data-demo-action="wizard.doc_expand" data-demo-arg="prd" title="Expand the PRD projection" aria-label="Expand the PRD projection"><span class="pm6-ico" data-pm6-icon="expand"></span></button>
+                  </div>
+                  <div class="pm6-wiz-doc pm6-wiz-doc-readable" id="pm6WizPrdDoc" data-doc-scope="prd"></div>
+                  <div class="pm6-wiz-reqfoot" id="pm6WizReqFoot"></div>
+                </aside>
               </div>
             </section>
 
@@ -158,19 +194,10 @@
             <section class="pm6-wiz-stage pm6-wiz-stage-work" id="pm6WizStageWork" data-wiz-stage="workspace">
 
               <header class="pm6-wiz-runhead" id="pm6WizRunHead">
-                <button class="pm6-wiz-runhead-collapse" type="button" data-demo-action="wizard.toggleHeader" aria-label="Collapse workspace header">
-                  <span class="pm6-wiz-glyph pm6-wiz-runhead-chev">&#9662;</span>
-                </button>
                 <div class="pm6-wiz-runhead-main">
                   <div class="pm6-wiz-runhead-titlerow">
                     <span class="pm6-wiz-runhead-title">Tastebook</span>
-                    <span class="pm6-wiz-runhead-run">PlanningRun pr-2026-0708 &middot; revision <span id="pm6WizRevision">12</span></span>
-                  </div>
-                  <div class="pm6-wiz-runhead-chips" id="pm6WizRunChips">
-                    <span class="pm6-wiz-mchip"><span class="pm6-ico" data-pm6-icon="globe"></span> jared/tastebook &middot; main</span>
-                    <span class="pm6-wiz-mchip">topic map <span id="pm6WizMapVersion">v9</span></span>
-                    <span class="pm6-wiz-mchip">SvelteKit &middot; Axum &middot; Postgres</span>
-                    <span class="pm6-wiz-mchip ok">imported from Assistant Chat</span>
+                    <span class="pm6-wiz-runhead-run">PlanningRun pr-2026-0708 &middot; revision <span id="pm6WizRevision">12</span> &middot; map v9 &middot; jared/tastebook @ main &middot; seed: Assistant Chat handoff</span>
                     <span class="pm6-wiz-mchip ok" id="pm6WizPrdChip" hidden style="display:none">Approved PRD Pack v1 <span class="pm6-wiz-glyph">&#10003;</span></span>
                   </div>
                 </div>
@@ -194,16 +221,31 @@
                 <aside class="pm6-wiz-right">
                   <div class="pm6-wiz-preview">
                     <div class="pm6-wiz-col-head">
-                      <span class="pm6-wiz-col-title">Live plan preview</span>
+                      <span class="pm6-wiz-col-title" id="pm6WizDocTitle">Live plan preview</span>
                       <span class="pm6-wiz-col-meta" id="pm6WizDocMeta"></span>
+                      <button class="pm6-wiz-expandbtn" type="button" data-demo-action="wizard.doc_expand" data-demo-arg="topic" title="Expand the plan preview" aria-label="Expand the plan preview"><span class="pm6-ico" data-pm6-icon="expand"></span></button>
                     </div>
-                    <div class="pm6-wiz-doc" id="pm6WizDoc"></div>
+                    <div class="pm6-wiz-doc pm6-wiz-doc-readable" id="pm6WizDoc"></div>
                   </div>
                   <div class="pm6-wiz-rail" id="pm6WizRail"></div>
                 </aside>
 
               </div>
             </section>
+
+            <!-- Document expand overlay — shared by the PRD projection (stage 2b)
+                 and the Topic Plan Draft preview (stage 4); lives outside the
+                 stage sections so it can front either one. ------------------- -->
+            <div class="pm6-wiz-doc-overlay" id="pm6WizDocOverlay" hidden style="display:none">
+              <div class="pm6-wiz-doc-overlay-scrim" data-demo-action="wizard.doc_close"></div>
+              <div class="pm6-wiz-doc-overlay-panel" role="dialog" aria-label="Expanded document view">
+                <div class="pm6-wiz-doc-overlay-head">
+                  <div class="pm6-wiz-doc-overlay-title" id="pm6WizDocOverlayHead"></div>
+                  <button class="pm6-wiz-ghostbtn pm6-wiz-doc-overlay-close" type="button" data-demo-action="wizard.doc_close">Close</button>
+                </div>
+                <div class="pm6-wiz-doc pm6-wiz-doc-readable pm6-wiz-doc-overlay-body" id="pm6WizDocOverlayBody"></div>
+              </div>
+            </div>
 
             <!-- Legacy contract hooks (inert, hidden). Frozen scripts in parts
                  24-26 still query these ids/classes; keep them present exactly

@@ -1,0 +1,39 @@
+{
+  "schema_version": "final-live-head-delta-source-scope-binding-receipt-v1",
+  "receipt_kind": "independent_non_activation_binding_receipt",
+  "audit_id": "audit-20260710-005-plan-assurance-model-lanes-fresh-agent-exhaustive",
+  "transaction_id": "final-live-head-delta-0002",
+  "status": "BLOCKED_AWAITING_FRESH_INDEPENDENT_LUNA_DELTA_PRELAUNCH",
+  "binding_ref": "Plans/.audits/audit-20260710-005-plan-assurance-model-lanes-fresh-agent-exhaustive/master/final_live_head_delta/final-live-head-delta-0002/source_scope_binding.json",
+  "binding_sha256": "8484922e0f96633378af3fc32dfc973dbaffd6812acbb0f5aed2d25bcd60e00e",
+  "observed_source_scope_sha256": "963911b952c3909c9012ed25a35151719b4f3f18b173cc6fffc8bbc1036e4e46",
+  "observed_source_scope_bytes": 81724,
+  "observed_source_scope_rows": 135,
+  "stable_copy_count": 17,
+  "old_failure_preserved": true,
+  "unsupported_expected_literal": "25027060861687c5a8e45024844d9de9e6c0a38f68a9470f2a84cb1774b86015",
+  "logic_sha256": {
+    "verifier": "85c4216fa39ccc5092f3850dd9a4f4c1a88a7353868de628df592e3d797983e5",
+    "tests": "9ba2cfb49f5e2946aa1f63891b8d9ac2ac11982ca50b0a1fb15eb98060126a96"
+  },
+  "controller_live_pin_observation": {
+    "observed_at_utc": "2026-07-12T07:41:53Z",
+    "matching_live_pins": 15,
+    "total_live_pins": 15,
+    "role": "non_authoritative_observation_only",
+    "mtime_binding": false
+  },
+  "launch_authorized": false,
+  "activation_receipt": false,
+  "semantic_packet_receipt": false,
+  "zero_state": {
+    "activation": 0,
+    "results": 0,
+    "receipts": 0,
+    "capture": 0,
+    "credit": 0,
+    "semantic_packets": 0,
+    "launches": 0
+  },
+  "mtime_role": "observational_only_not_bound"
+}

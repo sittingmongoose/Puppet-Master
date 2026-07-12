@@ -1,0 +1,962 @@
+{
+  "audit_id": "audit-20260710-005-plan-assurance-model-lanes-fresh-agent-exhaustive",
+  "schema_version": "cross-shard-shadow-result-v1",
+  "phase": "cross_shard_reverse_orientation_shadow_candidate_discovery",
+  "assignment_id": "A005CSS-0011",
+  "attempt_id": "attempt-0001",
+  "task_thread_id": "/root/a005_cross_shard_shadow_0011_attempt_0001_terminal",
+  "model": "gpt-5.6-sol",
+  "reasoning_effort": "xhigh",
+  "status": "completed",
+  "input_binding": {
+    "packet_id": "CSSPKT-0011",
+    "packet_sha256": "0815f240dbb7bdf616e56edbdc1dcd4cb46e1a264d8396e964378dfbc8dada6c",
+    "anchor_refs_digest": "2b7b34ccf166211aa28d6416d0c23b4456a229a8353b11ecaf77291c21506382",
+    "comparator_refs_digest": "9d45a5d4c0b29397c2f5ec22fb037b1dd0caaa100ed7d66d481bd56d8ec6936d",
+    "orientation": "primary_right_as_shadow_anchor",
+    "anchor_owner_assignment_id": "A005OM-0013",
+    "comparator_owner_assignment_id": "A005OM-0012"
+  },
+  "coverage": {
+    "anchor_count": 53,
+    "anchor_refs": [
+      "OPF::A005OM-0013::PF-0107",
+      "OPF::A005OM-0013::PF-0108",
+      "OPF::A005OM-0013::PF-0109",
+      "OPF::A005OM-0013::PF-0110",
+      "OPF::A005OM-0013::PF-0111",
+      "OPF::A005OM-0013::PF-0112",
+      "OPF::A005OM-0013::PF-0113",
+      "OPF::A005OM-0013::PF-0114",
+      "OPF::A005OM-0013::PF-0115",
+      "OPF::A005OM-0013::PF-0116",
+      "OPF::A005OM-0013::PF-0117",
+      "OPF::A005OM-0013::PF-0118",
+      "OPF::A005OM-0013::PF-0119",
+      "OPF::A005OM-0013::PF-0120",
+      "OPF::A005OM-0013::PF-0121",
+      "OPF::A005OM-0013::PF-0122",
+      "OPF::A005OM-0013::PF-0123",
+      "OPF::A005OM-0013::PF-0124",
+      "OPF::A005OM-0013::PF-0125",
+      "OPF::A005OM-0013::PF-0126",
+      "OPF::A005OM-0013::PF-0127",
+      "OPF::A005OM-0013::PF-0128",
+      "OPF::A005OM-0013::PF-0129",
+      "OPF::A005OM-0013::PF-0130",
+      "OPF::A005OM-0013::PF-0131",
+      "OPF::A005OM-0013::PF-0132",
+      "OPF::A005OM-0013::PF-0133",
+      "OPF::A005OM-0013::PF-0134",
+      "OPF::A005OM-0013::PF-0135",
+      "OPF::A005OM-0013::PF-0136",
+      "OPF::A005OM-0013::PF-0137",
+      "OPF::A005OM-0013::PF-0138",
+      "OPF::A005OM-0013::PF-0139",
+      "OPF::A005OM-0013::PF-0140",
+      "OPF::A005OM-0013::PF-0141",
+      "OPF::A005OM-0013::PF-0142",
+      "OPF::A005OM-0013::PF-0143",
+      "OPF::A005OM-0013::PF-0144",
+      "OPF::A005OM-0013::PF-0145",
+      "OPF::A005OM-0013::PF-0146",
+      "OPF::A005OM-0013::PF-0147",
+      "OPF::A005OM-0013::PF-0148",
+      "OPF::A005OM-0013::PF-0149",
+      "OPF::A005OM-0013::PF-0150",
+      "OPF::A005OM-0013::PF-0151",
+      "OPF::A005OM-0013::PF-0152",
+      "OPF::A005OM-0013::PF-0153",
+      "OPF::A005OM-0013::PF-0154",
+      "OPF::A005OM-0013::PF-0155",
+      "OPF::A005OM-0013::PF-0156",
+      "OPF::A005OM-0013::PF-0157",
+      "OPF::A005OM-0013::PF-0158",
+      "OPF::A005OM-0013::PF-0159"
+    ],
+    "comparator_count": 219,
+    "comparator_refs": [
+      "OPF::A005OM-0012::PF-0001",
+      "OPF::A005OM-0012::PF-0002",
+      "OPF::A005OM-0012::PF-0003",
+      "OPF::A005OM-0012::PF-0004",
+      "OPF::A005OM-0012::PF-0005",
+      "OPF::A005OM-0012::PF-0006",
+      "OPF::A005OM-0012::PF-0007",
+      "OPF::A005OM-0012::PF-0008",
+      "OPF::A005OM-0012::PF-0009",
+      "OPF::A005OM-0012::PF-0010",
+      "OPF::A005OM-0012::PF-0011",
+      "OPF::A005OM-0012::PF-0012",
+      "OPF::A005OM-0012::PF-0013",
+      "OPF::A005OM-0012::PF-0014",
+      "OPF::A005OM-0012::PF-0015",
+      "OPF::A005OM-0012::PF-0016",
+      "OPF::A005OM-0012::PF-0017",
+      "OPF::A005OM-0012::PF-0018",
+      "OPF::A005OM-0012::PF-0019",
+      "OPF::A005OM-0012::PF-0020",
+      "OPF::A005OM-0012::PF-0021",
+      "OPF::A005OM-0012::PF-0022",
+      "OPF::A005OM-0012::PF-0023",
+      "OPF::A005OM-0012::PF-0024",
+      "OPF::A005OM-0012::PF-0025",
+      "OPF::A005OM-0012::PF-0026",
+      "OPF::A005OM-0012::PF-0027",
+      "OPF::A005OM-0012::PF-0028",
+      "OPF::A005OM-0012::PF-0029",
+      "OPF::A005OM-0012::PF-0030",
+      "OPF::A005OM-0012::PF-0031",
+      "OPF::A005OM-0012::PF-0032",
+      "OPF::A005OM-0012::PF-0033",
+      "OPF::A005OM-0012::PF-0034",
+      "OPF::A005OM-0012::PF-0035",
+      "OPF::A005OM-0012::PF-0036",
+      "OPF::A005OM-0012::PF-0037",
+      "OPF::A005OM-0012::PF-0038",
+      "OPF::A005OM-0012::PF-0039",
+      "OPF::A005OM-0012::PF-0040",
+      "OPF::A005OM-0012::PF-0041",
+      "OPF::A005OM-0012::PF-0042",
+      "OPF::A005OM-0012::PF-0043",
+      "OPF::A005OM-0012::PF-0044",
+      "OPF::A005OM-0012::PF-0045",
+      "OPF::A005OM-0012::PF-0046",
+      "OPF::A005OM-0012::PF-0047",
+      "OPF::A005OM-0012::PF-0048",
+      "OPF::A005OM-0012::PF-0049",
+      "OPF::A005OM-0012::PF-0050",
+      "OPF::A005OM-0012::PF-0051",
+      "OPF::A005OM-0012::PF-0052",
+      "OPF::A005OM-0012::PF-0053",
+      "OPF::A005OM-0012::PF-0054",
+      "OPF::A005OM-0012::PF-0055",
+      "OPF::A005OM-0012::PF-0056",
+      "OPF::A005OM-0012::PF-0057",
+      "OPF::A005OM-0012::PF-0058",
+      "OPF::A005OM-0012::PF-0059",
+      "OPF::A005OM-0012::PF-0060",
+      "OPF::A005OM-0012::PF-0061",
+      "OPF::A005OM-0012::PF-0062",
+      "OPF::A005OM-0012::PF-0063",
+      "OPF::A005OM-0012::PF-0064",
+      "OPF::A005OM-0012::PF-0065",
+      "OPF::A005OM-0012::PF-0066",
+      "OPF::A005OM-0012::PF-0067",
+      "OPF::A005OM-0012::PF-0068",
+      "OPF::A005OM-0012::PF-0069",
+      "OPF::A005OM-0012::PF-0070",
+      "OPF::A005OM-0012::PF-0071",
+      "OPF::A005OM-0012::PF-0072",
+      "OPF::A005OM-0012::PF-0073",
+      "OPF::A005OM-0012::PF-0074",
+      "OPF::A005OM-0012::PF-0075",
+      "OPF::A005OM-0012::PF-0076",
+      "OPF::A005OM-0012::PF-0077",
+      "OPF::A005OM-0012::PF-0078",
+      "OPF::A005OM-0012::PF-0079",
+      "OPF::A005OM-0012::PF-0080",
+      "OPF::A005OM-0012::PF-0081",
+      "OPF::A005OM-0012::PF-0082",
+      "OPF::A005OM-0012::PF-0083",
+      "OPF::A005OM-0012::PF-0084",
+      "OPF::A005OM-0012::PF-0085",
+      "OPF::A005OM-0012::PF-0086",
+      "OPF::A005OM-0012::PF-0087",
+      "OPF::A005OM-0012::PF-0088",
+      "OPF::A005OM-0012::PF-0089",
+      "OPF::A005OM-0012::PF-0090",
+      "OPF::A005OM-0012::PF-0091",
+      "OPF::A005OM-0012::PF-0092",
+      "OPF::A005OM-0012::PF-0093",
+      "OPF::A005OM-0012::PF-0094",
+      "OPF::A005OM-0012::PF-0095",
+      "OPF::A005OM-0012::PF-0096",
+      "OPF::A005OM-0012::PF-0097",
+      "OPF::A005OM-0012::PF-0098",
+      "OPF::A005OM-0012::PF-0099",
+      "OPF::A005OM-0012::PF-0100",
+      "OPF::A005OM-0012::PF-0101",
+      "OPF::A005OM-0012::PF-0102",
+      "OPF::A005OM-0012::PF-0103",
+      "OPF::A005OM-0012::PF-0104",
+      "OPF::A005OM-0012::PF-0105",
+      "OPF::A005OM-0012::PF-0106",
+      "OPF::A005OM-0012::PF-0107",
+      "OPF::A005OM-0012::PF-0108",
+      "OPF::A005OM-0012::PF-0109",
+      "OPF::A005OM-0012::PF-0110",
+      "OPF::A005OM-0012::PF-0111",
+      "OPF::A005OM-0012::PF-0112",
+      "OPF::A005OM-0012::PF-0113",
+      "OPF::A005OM-0012::PF-0114",
+      "OPF::A005OM-0012::PF-0115",
+      "OPF::A005OM-0012::PF-0116",
+      "OPF::A005OM-0012::PF-0117",
+      "OPF::A005OM-0012::PF-0118",
+      "OPF::A005OM-0012::PF-0119",
+      "OPF::A005OM-0012::PF-0120",
+      "OPF::A005OM-0012::PF-0121",
+      "OPF::A005OM-0012::PF-0122",
+      "OPF::A005OM-0012::PF-0123",
+      "OPF::A005OM-0012::PF-0124",
+      "OPF::A005OM-0012::PF-0125",
+      "OPF::A005OM-0012::PF-0126",
+      "OPF::A005OM-0012::PF-0127",
+      "OPF::A005OM-0012::PF-0128",
+      "OPF::A005OM-0012::PF-0129",
+      "OPF::A005OM-0012::PF-0130",
+      "OPF::A005OM-0012::PF-0131",
+      "OPF::A005OM-0012::PF-0132",
+      "OPF::A005OM-0012::PF-0133",
+      "OPF::A005OM-0012::PF-0134",
+      "OPF::A005OM-0012::PF-0135",
+      "OPF::A005OM-0012::PF-0136",
+      "OPF::A005OM-0012::PF-0137",
+      "OPF::A005OM-0012::PF-0138",
+      "OPF::A005OM-0012::PF-0139",
+      "OPF::A005OM-0012::PF-0140",
+      "OPF::A005OM-0012::PF-0141",
+      "OPF::A005OM-0012::PF-0142",
+      "OPF::A005OM-0012::PF-0143",
+      "OPF::A005OM-0012::PF-0144",
+      "OPF::A005OM-0012::PF-0145",
+      "OPF::A005OM-0012::PF-0146",
+      "OPF::A005OM-0012::PF-0147",
+      "OPF::A005OM-0012::PF-0148",
+      "OPF::A005OM-0012::PF-0149",
+      "OPF::A005OM-0012::PF-0150",
+      "OPF::A005OM-0012::PF-0151",
+      "OPF::A005OM-0012::PF-0152",
+      "OPF::A005OM-0012::PF-0153",
+      "OPF::A005OM-0012::PF-0154",
+      "OPF::A005OM-0012::PF-0155",
+      "OPF::A005OM-0012::PF-0156",
+      "OPF::A005OM-0012::PF-0157",
+      "OPF::A005OM-0012::PF-0158",
+      "OPF::A005OM-0012::PF-0159",
+      "OPF::A005OM-0012::PF-0160",
+      "OPF::A005OM-0012::PF-0161",
+      "OPF::A005OM-0012::PF-0162",
+      "OPF::A005OM-0012::PF-0163",
+      "OPF::A005OM-0012::PF-0164",
+      "OPF::A005OM-0012::PF-0165",
+      "OPF::A005OM-0012::PF-0166",
+      "OPF::A005OM-0012::PF-0167",
+      "OPF::A005OM-0012::PF-0168",
+      "OPF::A005OM-0012::PF-0169",
+      "OPF::A005OM-0012::PF-0170",
+      "OPF::A005OM-0012::PF-0171",
+      "OPF::A005OM-0012::PF-0172",
+      "OPF::A005OM-0012::PF-0173",
+      "OPF::A005OM-0012::PF-0174",
+      "OPF::A005OM-0012::PF-0175",
+      "OPF::A005OM-0012::PF-0176",
+      "OPF::A005OM-0012::PF-0177",
+      "OPF::A005OM-0012::PF-0178",
+      "OPF::A005OM-0012::PF-0179",
+      "OPF::A005OM-0012::PF-0180",
+      "OPF::A005OM-0012::PF-0181",
+      "OPF::A005OM-0012::PF-0182",
+      "OPF::A005OM-0012::PF-0183",
+      "OPF::A005OM-0012::PF-0184",
+      "OPF::A005OM-0012::PF-0185",
+      "OPF::A005OM-0012::PF-0186",
+      "OPF::A005OM-0012::PF-0187",
+      "OPF::A005OM-0012::PF-0188",
+      "OPF::A005OM-0012::PF-0189",
+      "OPF::A005OM-0012::PF-0190",
+      "OPF::A005OM-0012::PF-0191",
+      "OPF::A005OM-0012::PF-0192",
+      "OPF::A005OM-0012::PF-0193",
+      "OPF::A005OM-0012::PF-0194",
+      "OPF::A005OM-0012::PF-0195",
+      "OPF::A005OM-0012::PF-0196",
+      "OPF::A005OM-0012::PF-0197",
+      "OPF::A005OM-0012::PF-0198",
+      "OPF::A005OM-0012::PF-0199",
+      "OPF::A005OM-0012::PF-0200",
+      "OPF::A005OM-0012::PF-0201",
+      "OPF::A005OM-0012::PF-0202",
+      "OPF::A005OM-0012::PF-0203",
+      "OPF::A005OM-0012::PF-0204",
+      "OPF::A005OM-0012::PF-0205",
+      "OPF::A005OM-0012::PF-0206",
+      "OPF::A005OM-0012::PF-0207",
+      "OPF::A005OM-0012::PF-0208",
+      "OPF::A005OM-0012::PF-0209",
+      "OPF::A005OM-0012::PF-0210",
+      "OPF::A005OM-0012::PF-0211",
+      "OPF::A005OM-0012::PF-0212",
+      "OPF::A005OM-0012::PF-0213",
+      "OPF::A005OM-0012::PF-0214",
+      "OPF::A005OM-0012::PF-0215",
+      "OPF::A005OM-0012::PF-0216",
+      "OPF::A005OM-0012::PF-0217",
+      "OPF::A005OM-0012::PF-0218",
+      "OPF::A005OM-0012::PF-0219"
+    ]
+  },
+  "decisions": [
+    {
+      "anchor_provisional_feature_ref": "OPF::A005OM-0013::PF-0107",
+      "compared_against_count": 219,
+      "merge_candidate_refs": [
+        "OPF::A005OM-0012::PF-0189"
+      ],
+      "related_but_distinct_refs": [
+        "OPF::A005OM-0012::PF-0018",
+        "OPF::A005OM-0012::PF-0075",
+        "OPF::A005OM-0012::PF-0076",
+        "OPF::A005OM-0012::PF-0196",
+        "OPF::A005OM-0012::PF-0217"
+      ],
+      "rationale": "After exhaustive comparison against all 219 comparators, PF-0189 is merge-equivalent: both observations govern the same sensitive local debug-capture evidence exception, its authorization and redaction boundary, retention/deletion/export lifecycle, user privacy outcome, persisted-evidence state boundary, and fail-safe behavior. The related refs address neighboring privacy or evidence contracts with different records, consumers, or lifecycle boundaries.",
+      "confidence": 0.96
+    },
+    {
+      "anchor_provisional_feature_ref": "OPF::A005OM-0013::PF-0108",
+      "compared_against_count": 219,
+      "merge_candidate_refs": [],
+      "related_but_distinct_refs": [
+        "OPF::A005OM-0012::PF-0019",
+        "OPF::A005OM-0012::PF-0148",
+        "OPF::A005OM-0012::PF-0203"
+      ],
+      "rationale": "After exhaustive comparison against all 219 comparators, no comparator shares the same product authority, lifecycle, user outcome, state boundary, and failure semantics as \"Verification-gate prompt exception is overly broad\". The listed refs are plausible neighbors only; each differs by owning contract, governed object, lifecycle stage, consumer surface, or failure boundary and is therefore related but distinct.",
+      "confidence": 0.92
+    },
+    {
+      "anchor_provisional_feature_ref": "OPF::A005OM-0013::PF-0109",
+      "compared_against_count": 219,
+      "merge_candidate_refs": [],
+      "related_but_distinct_refs": [
+        "OPF::A005OM-0012::PF-0002",
+        "OPF::A005OM-0012::PF-0039"
+      ],
+      "rationale": "After exhaustive comparison against all 219 comparators, no comparator shares the same product authority, lifecycle, user outcome, state boundary, and failure semantics as \"Rust and Slint portability boundary is explicit\". The listed refs are plausible neighbors only; each differs by owning contract, governed object, lifecycle stage, consumer surface, or failure boundary and is therefore related but distinct.",
+      "confidence": 0.92
+    },
+    {
+      "anchor_provisional_feature_ref": "OPF::A005OM-0013::PF-0110",
+      "compared_against_count": 219,
+      "merge_candidate_refs": [],
+      "related_but_distinct_refs": [
+        "OPF::A005OM-0012::PF-0143",
+        "OPF::A005OM-0012::PF-0171",
+        "OPF::A005OM-0012::PF-0182",
+        "OPF::A005OM-0012::PF-0183"
+      ],
+      "rationale": "After exhaustive comparison against all 219 comparators, no comparator shares the same product authority, lifecycle, user outcome, state boundary, and failure semantics as \"Route input normalization is owner-derived\". The listed refs are plausible neighbors only; each differs by owning contract, governed object, lifecycle stage, consumer surface, or failure boundary and is therefore related but distinct.",
+      "confidence": 0.92
+    },
+    {
+      "anchor_provisional_feature_ref": "OPF::A005OM-0013::PF-0111",
+      "compared_against_count": 219,
+      "merge_candidate_refs": [],
+      "related_but_distinct_refs": [
+        "OPF::A005OM-0012::PF-0019",
+        "OPF::A005OM-0012::PF-0093",
+        "OPF::A005OM-0012::PF-0148",
+        "OPF::A005OM-0012::PF-0203"
+      ],
+      "rationale": "After exhaustive comparison against all 219 comparators, no comparator shares the same product authority, lifecycle, user outcome, state boundary, and failure semantics as \"Disabled state requires deliberate authenticated authority\". The listed refs are plausible neighbors only; each differs by owning contract, governed object, lifecycle stage, consumer surface, or failure boundary and is therefore related but distinct.",
+      "confidence": 0.92
+    },
+    {
+      "anchor_provisional_feature_ref": "OPF::A005OM-0013::PF-0112",
+      "compared_against_count": 219,
+      "merge_candidate_refs": [],
+      "related_but_distinct_refs": [
+        "OPF::A005OM-0012::PF-0021",
+        "OPF::A005OM-0012::PF-0079",
+        "OPF::A005OM-0012::PF-0155"
+      ],
+      "rationale": "After exhaustive comparison against all 219 comparators, no comparator shares the same product authority, lifecycle, user outcome, state boundary, and failure semantics as \"Documentation false-positive oracle missing\". The listed refs are plausible neighbors only; each differs by owning contract, governed object, lifecycle stage, consumer surface, or failure boundary and is therefore related but distinct.",
+      "confidence": 0.92
+    },
+    {
+      "anchor_provisional_feature_ref": "OPF::A005OM-0013::PF-0113",
+      "compared_against_count": 219,
+      "merge_candidate_refs": [],
+      "related_but_distinct_refs": [
+        "OPF::A005OM-0012::PF-0123",
+        "OPF::A005OM-0012::PF-0126",
+        "OPF::A005OM-0012::PF-0206"
+      ],
+      "rationale": "After exhaustive comparison against all 219 comparators, no comparator shares the same product authority, lifecycle, user outcome, state boundary, and failure semantics as \"Worktree cleanup exemption is under-specified\". The listed refs are plausible neighbors only; each differs by owning contract, governed object, lifecycle stage, consumer surface, or failure boundary and is therefore related but distinct.",
+      "confidence": 0.92
+    },
+    {
+      "anchor_provisional_feature_ref": "OPF::A005OM-0013::PF-0114",
+      "compared_against_count": 219,
+      "merge_candidate_refs": [],
+      "related_but_distinct_refs": [
+        "OPF::A005OM-0012::PF-0123",
+        "OPF::A005OM-0012::PF-0126",
+        "OPF::A005OM-0012::PF-0127",
+        "OPF::A005OM-0012::PF-0219"
+      ],
+      "rationale": "After exhaustive comparison against all 219 comparators, no comparator shares the same product authority, lifecycle, user outcome, state boundary, and failure semantics as \"Planning setup authority and non-Git rollback need sharper boundaries\". The listed refs are plausible neighbors only; each differs by owning contract, governed object, lifecycle stage, consumer surface, or failure boundary and is therefore related but distinct.",
+      "confidence": 0.92
+    },
+    {
+      "anchor_provisional_feature_ref": "OPF::A005OM-0013::PF-0115",
+      "compared_against_count": 219,
+      "merge_candidate_refs": [],
+      "related_but_distinct_refs": [
+        "OPF::A005OM-0012::PF-0082",
+        "OPF::A005OM-0012::PF-0148",
+        "OPF::A005OM-0012::PF-0205",
+        "OPF::A005OM-0012::PF-0207"
+      ],
+      "rationale": "After exhaustive comparison against all 219 comparators, no comparator shares the same product authority, lifecycle, user outcome, state boundary, and failure semantics as \"Exploratory write override lacks boundary\". The listed refs are plausible neighbors only; each differs by owning contract, governed object, lifecycle stage, consumer surface, or failure boundary and is therefore related but distinct.",
+      "confidence": 0.92
+    },
+    {
+      "anchor_provisional_feature_ref": "OPF::A005OM-0013::PF-0116",
+      "compared_against_count": 219,
+      "merge_candidate_refs": [],
+      "related_but_distinct_refs": [
+        "OPF::A005OM-0012::PF-0019",
+        "OPF::A005OM-0012::PF-0199",
+        "OPF::A005OM-0012::PF-0203"
+      ],
+      "rationale": "After exhaustive comparison against all 219 comparators, no comparator shares the same product authority, lifecycle, user outcome, state boundary, and failure semantics as \"Authenticated GUI enforcement controls\". The listed refs are plausible neighbors only; each differs by owning contract, governed object, lifecycle stage, consumer surface, or failure boundary and is therefore related but distinct.",
+      "confidence": 0.92
+    },
+    {
+      "anchor_provisional_feature_ref": "OPF::A005OM-0013::PF-0117",
+      "compared_against_count": 219,
+      "merge_candidate_refs": [],
+      "related_but_distinct_refs": [
+        "OPF::A005OM-0012::PF-0073",
+        "OPF::A005OM-0012::PF-0088",
+        "OPF::A005OM-0012::PF-0125",
+        "OPF::A005OM-0012::PF-0219"
+      ],
+      "rationale": "After exhaustive comparison against all 219 comparators, no comparator shares the same product authority, lifecycle, user outcome, state boundary, and failure semantics as \"Worktree path gap closed\". The listed refs are plausible neighbors only; each differs by owning contract, governed object, lifecycle stage, consumer surface, or failure boundary and is therefore related but distinct.",
+      "confidence": 0.92
+    },
+    {
+      "anchor_provisional_feature_ref": "OPF::A005OM-0013::PF-0118",
+      "compared_against_count": 219,
+      "merge_candidate_refs": [],
+      "related_but_distinct_refs": [
+        "OPF::A005OM-0012::PF-0023",
+        "OPF::A005OM-0012::PF-0029",
+        "OPF::A005OM-0012::PF-0035"
+      ],
+      "rationale": "After exhaustive comparison against all 219 comparators, no comparator shares the same product authority, lifecycle, user outcome, state boundary, and failure semantics as \"Core guard sequence is clearly non-executable\". The listed refs are plausible neighbors only; each differs by owning contract, governed object, lifecycle stage, consumer surface, or failure boundary and is therefore related but distinct.",
+      "confidence": 0.92
+    },
+    {
+      "anchor_provisional_feature_ref": "OPF::A005OM-0013::PF-0119",
+      "compared_against_count": 219,
+      "merge_candidate_refs": [],
+      "related_but_distinct_refs": [
+        "OPF::A005OM-0012::PF-0091",
+        "OPF::A005OM-0012::PF-0160"
+      ],
+      "rationale": "After exhaustive comparison against all 219 comparators, no comparator shares the same product authority, lifecycle, user outcome, state boundary, and failure semantics as \"Pattern sources have ordered resolution and fail-closed fallback\". The listed refs are plausible neighbors only; each differs by owning contract, governed object, lifecycle stage, consumer surface, or failure boundary and is therefore related but distinct.",
+      "confidence": 0.92
+    },
+    {
+      "anchor_provisional_feature_ref": "OPF::A005OM-0013::PF-0120",
+      "compared_against_count": 219,
+      "merge_candidate_refs": [],
+      "related_but_distinct_refs": [
+        "OPF::A005OM-0012::PF-0066",
+        "OPF::A005OM-0012::PF-0192",
+        "OPF::A005OM-0012::PF-0207"
+      ],
+      "rationale": "After exhaustive comparison against all 219 comparators, no comparator shares the same product authority, lifecycle, user outcome, state boundary, and failure semantics as \"Conflicting write-scope identities have no precedence rule\". The listed refs are plausible neighbors only; each differs by owning contract, governed object, lifecycle stage, consumer surface, or failure boundary and is therefore related but distinct.",
+      "confidence": 0.92
+    },
+    {
+      "anchor_provisional_feature_ref": "OPF::A005OM-0013::PF-0121",
+      "compared_against_count": 219,
+      "merge_candidate_refs": [],
+      "related_but_distinct_refs": [
+        "OPF::A005OM-0012::PF-0019",
+        "OPF::A005OM-0012::PF-0148",
+        "OPF::A005OM-0012::PF-0205"
+      ],
+      "rationale": "After exhaustive comparison against all 219 comparators, no comparator shares the same product authority, lifecycle, user outcome, state boundary, and failure semantics as \"False-positive override underspecified\". The listed refs are plausible neighbors only; each differs by owning contract, governed object, lifecycle stage, consumer surface, or failure boundary and is therefore related but distinct.",
+      "confidence": 0.92
+    },
+    {
+      "anchor_provisional_feature_ref": "OPF::A005OM-0013::PF-0122",
+      "compared_against_count": 219,
+      "merge_candidate_refs": [],
+      "related_but_distinct_refs": [
+        "OPF::A005OM-0012::PF-0152",
+        "OPF::A005OM-0012::PF-0176",
+        "OPF::A005OM-0012::PF-0196",
+        "OPF::A005OM-0012::PF-0208"
+      ],
+      "rationale": "After exhaustive comparison against all 219 comparators, no comparator shares the same product authority, lifecycle, user outcome, state boundary, and failure semantics as \"Attachment storage minimization\". The listed refs are plausible neighbors only; each differs by owning contract, governed object, lifecycle stage, consumer surface, or failure boundary and is therefore related but distinct.",
+      "confidence": 0.92
+    },
+    {
+      "anchor_provisional_feature_ref": "OPF::A005OM-0013::PF-0123",
+      "compared_against_count": 219,
+      "merge_candidate_refs": [],
+      "related_but_distinct_refs": [
+        "OPF::A005OM-0012::PF-0082",
+        "OPF::A005OM-0012::PF-0088",
+        "OPF::A005OM-0012::PF-0207"
+      ],
+      "rationale": "After exhaustive comparison against all 219 comparators, no comparator shares the same product authority, lifecycle, user outcome, state boundary, and failure semantics as \"Allowed-files env contract\". The listed refs are plausible neighbors only; each differs by owning contract, governed object, lifecycle stage, consumer surface, or failure boundary and is therefore related but distinct.",
+      "confidence": 0.92
+    },
+    {
+      "anchor_provisional_feature_ref": "OPF::A005OM-0013::PF-0124",
+      "compared_against_count": 219,
+      "merge_candidate_refs": [
+        "OPF::A005OM-0012::PF-0186"
+      ],
+      "related_but_distinct_refs": [
+        "OPF::A005OM-0012::PF-0038",
+        "OPF::A005OM-0012::PF-0117",
+        "OPF::A005OM-0012::PF-0131",
+        "OPF::A005OM-0012::PF-0168",
+        "OPF::A005OM-0012::PF-0217"
+      ],
+      "rationale": "After exhaustive comparison against all 219 comparators, PF-0186 is merge-equivalent: both observations describe the canonical FileSafe security-event authority and its emission, persistence, diagnostic, consumer, and failure-reporting lifecycle. The related refs concern the shared event envelope, event registration, projections, or diagnostic privacy and therefore remain distinct owner/consumer seams.",
+      "confidence": 0.96
+    },
+    {
+      "anchor_provisional_feature_ref": "OPF::A005OM-0013::PF-0125",
+      "compared_against_count": 219,
+      "merge_candidate_refs": [],
+      "related_but_distinct_refs": [
+        "OPF::A005OM-0012::PF-0018",
+        "OPF::A005OM-0012::PF-0129",
+        "OPF::A005OM-0012::PF-0173",
+        "OPF::A005OM-0012::PF-0218"
+      ],
+      "rationale": "After exhaustive comparison against all 219 comparators, no comparator shares the same product authority, lifecycle, user outcome, state boundary, and failure semantics as \"Concrete identity surfaces lack privacy and retention rules\". The listed refs are plausible neighbors only; each differs by owning contract, governed object, lifecycle stage, consumer surface, or failure boundary and is therefore related but distinct.",
+      "confidence": 0.92
+    },
+    {
+      "anchor_provisional_feature_ref": "OPF::A005OM-0013::PF-0126",
+      "compared_against_count": 219,
+      "merge_candidate_refs": [],
+      "related_but_distinct_refs": [
+        "OPF::A005OM-0012::PF-0012",
+        "OPF::A005OM-0012::PF-0097"
+      ],
+      "rationale": "After exhaustive comparison against all 219 comparators, no comparator shares the same product authority, lifecycle, user outcome, state boundary, and failure semantics as \"Disabled-on-failure snippets are explicitly retired\". The listed refs are plausible neighbors only; each differs by owning contract, governed object, lifecycle stage, consumer surface, or failure boundary and is therefore related but distinct.",
+      "confidence": 0.92
+    },
+    {
+      "anchor_provisional_feature_ref": "OPF::A005OM-0013::PF-0127",
+      "compared_against_count": 219,
+      "merge_candidate_refs": [],
+      "related_but_distinct_refs": [
+        "OPF::A005OM-0012::PF-0030",
+        "OPF::A005OM-0012::PF-0131",
+        "OPF::A005OM-0012::PF-0170"
+      ],
+      "rationale": "After exhaustive comparison against all 219 comparators, no comparator shares the same product authority, lifecycle, user outcome, state boundary, and failure semantics as \"YOLO FileSafe indicator can be present yet misleading\". The listed refs are plausible neighbors only; each differs by owning contract, governed object, lifecycle stage, consumer surface, or failure boundary and is therefore related but distinct.",
+      "confidence": 0.92
+    },
+    {
+      "anchor_provisional_feature_ref": "OPF::A005OM-0013::PF-0128",
+      "compared_against_count": 219,
+      "merge_candidate_refs": [],
+      "related_but_distinct_refs": [
+        "OPF::A005OM-0012::PF-0019",
+        "OPF::A005OM-0012::PF-0148",
+        "OPF::A005OM-0012::PF-0203"
+      ],
+      "rationale": "After exhaustive comparison against all 219 comparators, no comparator shares the same product authority, lifecycle, user outcome, state boundary, and failure semantics as \"System flow still treats gate identity as authority\". The listed refs are plausible neighbors only; each differs by owning contract, governed object, lifecycle stage, consumer surface, or failure boundary and is therefore related but distinct.",
+      "confidence": 0.92
+    },
+    {
+      "anchor_provisional_feature_ref": "OPF::A005OM-0013::PF-0129",
+      "compared_against_count": 219,
+      "merge_candidate_refs": [],
+      "related_but_distinct_refs": [
+        "OPF::A005OM-0012::PF-0038",
+        "OPF::A005OM-0012::PF-0092",
+        "OPF::A005OM-0012::PF-0168"
+      ],
+      "rationale": "After exhaustive comparison against all 219 comparators, no comparator shares the same product authority, lifecycle, user outcome, state boundary, and failure semantics as \"FileSafe event persistence failure is dropped\". The listed refs are plausible neighbors only; each differs by owning contract, governed object, lifecycle stage, consumer surface, or failure boundary and is therefore related but distinct.",
+      "confidence": 0.92
+    },
+    {
+      "anchor_provisional_feature_ref": "OPF::A005OM-0013::PF-0130",
+      "compared_against_count": 219,
+      "merge_candidate_refs": [],
+      "related_but_distinct_refs": [
+        "OPF::A005OM-0012::PF-0021",
+        "OPF::A005OM-0012::PF-0167"
+      ],
+      "rationale": "After exhaustive comparison against all 219 comparators, no comparator shares the same product authority, lifecycle, user outcome, state boundary, and failure semantics as \"Pattern performance oracle absent\". The listed refs are plausible neighbors only; each differs by owning contract, governed object, lifecycle stage, consumer surface, or failure boundary and is therefore related but distinct.",
+      "confidence": 0.92
+    },
+    {
+      "anchor_provisional_feature_ref": "OPF::A005OM-0013::PF-0131",
+      "compared_against_count": 219,
+      "merge_candidate_refs": [],
+      "related_but_distinct_refs": [
+        "OPF::A005OM-0012::PF-0126",
+        "OPF::A005OM-0012::PF-0127",
+        "OPF::A005OM-0012::PF-0219"
+      ],
+      "rationale": "After exhaustive comparison against all 219 comparators, no comparator shares the same product authority, lifecycle, user outcome, state boundary, and failure semantics as \"Cleanup allowlist coordination\". The listed refs are plausible neighbors only; each differs by owning contract, governed object, lifecycle stage, consumer surface, or failure boundary and is therefore related but distinct.",
+      "confidence": 0.92
+    },
+    {
+      "anchor_provisional_feature_ref": "OPF::A005OM-0013::PF-0132",
+      "compared_against_count": 219,
+      "merge_candidate_refs": [],
+      "related_but_distinct_refs": [
+        "OPF::A005OM-0012::PF-0081",
+        "OPF::A005OM-0012::PF-0083"
+      ],
+      "rationale": "After exhaustive comparison against all 219 comparators, no comparator shares the same product authority, lifecycle, user outcome, state boundary, and failure semantics as \"Command guard checks a lossy reconstruction\". The listed refs are plausible neighbors only; each differs by owning contract, governed object, lifecycle stage, consumer surface, or failure boundary and is therefore related but distinct.",
+      "confidence": 0.92
+    },
+    {
+      "anchor_provisional_feature_ref": "OPF::A005OM-0013::PF-0133",
+      "compared_against_count": 219,
+      "merge_candidate_refs": [],
+      "related_but_distinct_refs": [
+        "OPF::A005OM-0012::PF-0076",
+        "OPF::A005OM-0012::PF-0196",
+        "OPF::A005OM-0012::PF-0208"
+      ],
+      "rationale": "After exhaustive comparison against all 219 comparators, no comparator shares the same product authority, lifecycle, user outcome, state boundary, and failure semantics as \"Sensitive-path and compiled-prompt enforcement\". The listed refs are plausible neighbors only; each differs by owning contract, governed object, lifecycle stage, consumer surface, or failure boundary and is therefore related but distinct.",
+      "confidence": 0.92
+    },
+    {
+      "anchor_provisional_feature_ref": "OPF::A005OM-0013::PF-0134",
+      "compared_against_count": 219,
+      "merge_candidate_refs": [],
+      "related_but_distinct_refs": [
+        "OPF::A005OM-0012::PF-0151",
+        "OPF::A005OM-0012::PF-0170",
+        "OPF::A005OM-0012::PF-0183",
+        "OPF::A005OM-0012::PF-0198"
+      ],
+      "rationale": "After exhaustive comparison against all 219 comparators, no comparator shares the same product authority, lifecycle, user outcome, state boundary, and failure semantics as \"Projection trust does not deterministically select an action gate\". The listed refs are plausible neighbors only; each differs by owning contract, governed object, lifecycle stage, consumer surface, or failure boundary and is therefore related but distinct.",
+      "confidence": 0.92
+    },
+    {
+      "anchor_provisional_feature_ref": "OPF::A005OM-0013::PF-0135",
+      "compared_against_count": 219,
+      "merge_candidate_refs": [],
+      "related_but_distinct_refs": [
+        "OPF::A005OM-0012::PF-0018",
+        "OPF::A005OM-0012::PF-0217"
+      ],
+      "rationale": "After exhaustive comparison against all 219 comparators, no comparator shares the same product authority, lifecycle, user outcome, state boundary, and failure semantics as \"Recovery analytics payload needs privacy and scale oracles\". The listed refs are plausible neighbors only; each differs by owning contract, governed object, lifecycle stage, consumer surface, or failure boundary and is therefore related but distinct.",
+      "confidence": 0.92
+    },
+    {
+      "anchor_provisional_feature_ref": "OPF::A005OM-0013::PF-0136",
+      "compared_against_count": 219,
+      "merge_candidate_refs": [],
+      "related_but_distinct_refs": [
+        "OPF::A005OM-0012::PF-0028",
+        "OPF::A005OM-0012::PF-0182"
+      ],
+      "rationale": "After exhaustive comparison against all 219 comparators, no comparator shares the same product authority, lifecycle, user outcome, state boundary, and failure semantics as \"Cross-plan FileSafe primacy and YOLO consumer boundary\". The listed refs are plausible neighbors only; each differs by owning contract, governed object, lifecycle stage, consumer surface, or failure boundary and is therefore related but distinct.",
+      "confidence": 0.92
+    },
+    {
+      "anchor_provisional_feature_ref": "OPF::A005OM-0013::PF-0137",
+      "compared_against_count": 219,
+      "merge_candidate_refs": [],
+      "related_but_distinct_refs": [
+        "OPF::A005OM-0012::PF-0087",
+        "OPF::A005OM-0012::PF-0132",
+        "OPF::A005OM-0012::PF-0209"
+      ],
+      "rationale": "After exhaustive comparison against all 219 comparators, no comparator shares the same product authority, lifecycle, user outcome, state boundary, and failure semantics as \"Tests do not falsify critical bypass paths\". The listed refs are plausible neighbors only; each differs by owning contract, governed object, lifecycle stage, consumer surface, or failure boundary and is therefore related but distinct.",
+      "confidence": 0.92
+    },
+    {
+      "anchor_provisional_feature_ref": "OPF::A005OM-0013::PF-0138",
+      "compared_against_count": 219,
+      "merge_candidate_refs": [],
+      "related_but_distinct_refs": [
+        "OPF::A005OM-0012::PF-0073",
+        "OPF::A005OM-0012::PF-0123",
+        "OPF::A005OM-0012::PF-0127",
+        "OPF::A005OM-0012::PF-0219"
+      ],
+      "rationale": "After exhaustive comparison against all 219 comparators, no comparator shares the same product authority, lifecycle, user outcome, state boundary, and failure semantics as \"Sensitive cleanup edge cases unspecified\". The listed refs are plausible neighbors only; each differs by owning contract, governed object, lifecycle stage, consumer surface, or failure boundary and is therefore related but distinct.",
+      "confidence": 0.92
+    },
+    {
+      "anchor_provisional_feature_ref": "OPF::A005OM-0013::PF-0139",
+      "compared_against_count": 219,
+      "merge_candidate_refs": [],
+      "related_but_distinct_refs": [
+        "OPF::A005OM-0012::PF-0085",
+        "OPF::A005OM-0012::PF-0186"
+      ],
+      "rationale": "After exhaustive comparison against all 219 comparators, no comparator shares the same product authority, lifecycle, user outcome, state boundary, and failure semantics as \"Locked implementation checklist and runner integration\". The listed refs are plausible neighbors only; each differs by owning contract, governed object, lifecycle stage, consumer surface, or failure boundary and is therefore related but distinct.",
+      "confidence": 0.92
+    },
+    {
+      "anchor_provisional_feature_ref": "OPF::A005OM-0013::PF-0140",
+      "compared_against_count": 219,
+      "merge_candidate_refs": [],
+      "related_but_distinct_refs": [
+        "OPF::A005OM-0012::PF-0146",
+        "OPF::A005OM-0012::PF-0199",
+        "OPF::A005OM-0012::PF-0201",
+        "OPF::A005OM-0012::PF-0203"
+      ],
+      "rationale": "After exhaustive comparison against all 219 comparators, no comparator shares the same product authority, lifecycle, user outcome, state boundary, and failure semantics as \"Advanced card override contract\". The listed refs are plausible neighbors only; each differs by owning contract, governed object, lifecycle stage, consumer surface, or failure boundary and is therefore related but distinct.",
+      "confidence": 0.92
+    },
+    {
+      "anchor_provisional_feature_ref": "OPF::A005OM-0013::PF-0141",
+      "compared_against_count": 219,
+      "merge_candidate_refs": [],
+      "related_but_distinct_refs": [
+        "OPF::A005OM-0012::PF-0081",
+        "OPF::A005OM-0012::PF-0083",
+        "OPF::A005OM-0012::PF-0085",
+        "OPF::A005OM-0012::PF-0093"
+      ],
+      "rationale": "After exhaustive comparison against all 219 comparators, no comparator shares the same product authority, lifecycle, user outcome, state boundary, and failure semantics as \"Destructive Git pattern coverage\". The listed refs are plausible neighbors only; each differs by owning contract, governed object, lifecycle stage, consumer surface, or failure boundary and is therefore related but distinct.",
+      "confidence": 0.92
+    },
+    {
+      "anchor_provisional_feature_ref": "OPF::A005OM-0013::PF-0142",
+      "compared_against_count": 219,
+      "merge_candidate_refs": [],
+      "related_but_distinct_refs": [
+        "OPF::A005OM-0012::PF-0019",
+        "OPF::A005OM-0012::PF-0115",
+        "OPF::A005OM-0012::PF-0148",
+        "OPF::A005OM-0012::PF-0205"
+      ],
+      "rationale": "After exhaustive comparison against all 219 comparators, no comparator shares the same product authority, lifecycle, user outcome, state boundary, and failure semantics as \"Manual Override toggle is not sufficient authorization\". The listed refs are plausible neighbors only; each differs by owning contract, governed object, lifecycle stage, consumer surface, or failure boundary and is therefore related but distinct.",
+      "confidence": 0.92
+    },
+    {
+      "anchor_provisional_feature_ref": "OPF::A005OM-0013::PF-0143",
+      "compared_against_count": 219,
+      "merge_candidate_refs": [],
+      "related_but_distinct_refs": [
+        "OPF::A005OM-0012::PF-0071",
+        "OPF::A005OM-0012::PF-0091"
+      ],
+      "rationale": "After exhaustive comparison against all 219 comparators, no comparator shares the same product authority, lifecycle, user outcome, state boundary, and failure semantics as \"Bundled lookup covers development and installed layouts\". The listed refs are plausible neighbors only; each differs by owning contract, governed object, lifecycle stage, consumer surface, or failure boundary and is therefore related but distinct.",
+      "confidence": 0.92
+    },
+    {
+      "anchor_provisional_feature_ref": "OPF::A005OM-0013::PF-0144",
+      "compared_against_count": 219,
+      "merge_candidate_refs": [],
+      "related_but_distinct_refs": [
+        "OPF::A005OM-0012::PF-0012",
+        "OPF::A005OM-0012::PF-0094",
+        "OPF::A005OM-0012::PF-0095",
+        "OPF::A005OM-0012::PF-0097"
+      ],
+      "rationale": "After exhaustive comparison against all 219 comparators, no comparator shares the same product authority, lifecycle, user outcome, state boundary, and failure semantics as \"Legacy pre-spawn hook is fenced as a reference\". The listed refs are plausible neighbors only; each differs by owning contract, governed object, lifecycle stage, consumer surface, or failure boundary and is therefore related but distinct.",
+      "confidence": 0.92
+    },
+    {
+      "anchor_provisional_feature_ref": "OPF::A005OM-0013::PF-0145",
+      "compared_against_count": 219,
+      "merge_candidate_refs": [],
+      "related_but_distinct_refs": [
+        "OPF::A005OM-0012::PF-0073",
+        "OPF::A005OM-0012::PF-0088",
+        "OPF::A005OM-0012::PF-0127",
+        "OPF::A005OM-0012::PF-0219"
+      ],
+      "rationale": "After exhaustive comparison against all 219 comparators, no comparator shares the same product authority, lifecycle, user outcome, state boundary, and failure semantics as \"Request-local worktree scope\". The listed refs are plausible neighbors only; each differs by owning contract, governed object, lifecycle stage, consumer surface, or failure boundary and is therefore related but distinct.",
+      "confidence": 0.92
+    },
+    {
+      "anchor_provisional_feature_ref": "OPF::A005OM-0013::PF-0146",
+      "compared_against_count": 219,
+      "merge_candidate_refs": [],
+      "related_but_distinct_refs": [
+        "OPF::A005OM-0012::PF-0073",
+        "OPF::A005OM-0012::PF-0125",
+        "OPF::A005OM-0012::PF-0127",
+        "OPF::A005OM-0012::PF-0219"
+      ],
+      "rationale": "After exhaustive comparison against all 219 comparators, no comparator shares the same product authority, lifecycle, user outcome, state boundary, and failure semantics as \"Case-sensitivity probe failure is not fail closed\". The listed refs are plausible neighbors only; each differs by owning contract, governed object, lifecycle stage, consumer surface, or failure boundary and is therefore related but distinct.",
+      "confidence": 0.92
+    },
+    {
+      "anchor_provisional_feature_ref": "OPF::A005OM-0013::PF-0147",
+      "compared_against_count": 219,
+      "merge_candidate_refs": [],
+      "related_but_distinct_refs": [
+        "OPF::A005OM-0012::PF-0047",
+        "OPF::A005OM-0012::PF-0067"
+      ],
+      "rationale": "After exhaustive comparison against all 219 comparators, no comparator shares the same product authority, lifecycle, user outcome, state boundary, and failure semantics as \"Multi-platform parser matrix missing\". The listed refs are plausible neighbors only; each differs by owning contract, governed object, lifecycle stage, consumer surface, or failure boundary and is therefore related but distinct.",
+      "confidence": 0.92
+    },
+    {
+      "anchor_provisional_feature_ref": "OPF::A005OM-0013::PF-0148",
+      "compared_against_count": 219,
+      "merge_candidate_refs": [],
+      "related_but_distinct_refs": [
+        "OPF::A005OM-0012::PF-0021",
+        "OPF::A005OM-0012::PF-0167"
+      ],
+      "rationale": "After exhaustive comparison against all 219 comparators, no comparator shares the same product authority, lifecycle, user outcome, state boundary, and failure semantics as \"Guard rate limiter lacks state contract\". The listed refs are plausible neighbors only; each differs by owning contract, governed object, lifecycle stage, consumer surface, or failure boundary and is therefore related but distinct.",
+      "confidence": 0.92
+    },
+    {
+      "anchor_provisional_feature_ref": "OPF::A005OM-0013::PF-0149",
+      "compared_against_count": 219,
+      "merge_candidate_refs": [],
+      "related_but_distinct_refs": [
+        "OPF::A005OM-0012::PF-0006",
+        "OPF::A005OM-0012::PF-0047",
+        "OPF::A005OM-0012::PF-0067",
+        "OPF::A005OM-0012::PF-0175"
+      ],
+      "rationale": "After exhaustive comparison against all 219 comparators, no comparator shares the same product authority, lifecycle, user outcome, state boundary, and failure semantics as \"Provider coverage has no adapter-level conformance oracle\". The listed refs are plausible neighbors only; each differs by owning contract, governed object, lifecycle stage, consumer surface, or failure boundary and is therefore related but distinct.",
+      "confidence": 0.92
+    },
+    {
+      "anchor_provisional_feature_ref": "OPF::A005OM-0013::PF-0150",
+      "compared_against_count": 219,
+      "merge_candidate_refs": [],
+      "related_but_distinct_refs": [
+        "OPF::A005OM-0012::PF-0028",
+        "OPF::A005OM-0012::PF-0182"
+      ],
+      "rationale": "After exhaustive comparison against all 219 comparators, no comparator shares the same product authority, lifecycle, user outcome, state boundary, and failure semantics as \"FileSafe owner boundary is explicit\". The listed refs are plausible neighbors only; each differs by owning contract, governed object, lifecycle stage, consumer surface, or failure boundary and is therefore related but distinct.",
+      "confidence": 0.92
+    },
+    {
+      "anchor_provisional_feature_ref": "OPF::A005OM-0013::PF-0151",
+      "compared_against_count": 219,
+      "merge_candidate_refs": [],
+      "related_but_distinct_refs": [
+        "OPF::A005OM-0012::PF-0044",
+        "OPF::A005OM-0012::PF-0186"
+      ],
+      "rationale": "After exhaustive comparison against all 219 comparators, no comparator shares the same product authority, lifecycle, user outcome, state boundary, and failure semantics as \"Guard state and error families are enumerated\". The listed refs are plausible neighbors only; each differs by owning contract, governed object, lifecycle stage, consumer surface, or failure boundary and is therefore related but distinct.",
+      "confidence": 0.92
+    },
+    {
+      "anchor_provisional_feature_ref": "OPF::A005OM-0013::PF-0152",
+      "compared_against_count": 219,
+      "merge_candidate_refs": [],
+      "related_but_distinct_refs": [
+        "OPF::A005OM-0012::PF-0078"
+      ],
+      "rationale": "After exhaustive comparison against all 219 comparators, no comparator shares the same product authority, lifecycle, user outcome, state boundary, and failure semantics as \"Compatibility keys and user labels are separated\". The listed refs are plausible neighbors only; each differs by owning contract, governed object, lifecycle stage, consumer surface, or failure boundary and is therefore related but distinct.",
+      "confidence": 0.92
+    },
+    {
+      "anchor_provisional_feature_ref": "OPF::A005OM-0013::PF-0153",
+      "compared_against_count": 219,
+      "merge_candidate_refs": [],
+      "related_but_distinct_refs": [
+        "OPF::A005OM-0012::PF-0014",
+        "OPF::A005OM-0012::PF-0202",
+        "OPF::A005OM-0012::PF-0216"
+      ],
+      "rationale": "After exhaustive comparison against all 219 comparators, no comparator shares the same product authority, lifecycle, user outcome, state boundary, and failure semantics as \"Effective request guard ordering\". The listed refs are plausible neighbors only; each differs by owning contract, governed object, lifecycle stage, consumer surface, or failure boundary and is therefore related but distinct.",
+      "confidence": 0.92
+    },
+    {
+      "anchor_provisional_feature_ref": "OPF::A005OM-0013::PF-0154",
+      "compared_against_count": 219,
+      "merge_candidate_refs": [],
+      "related_but_distinct_refs": [
+        "OPF::A005OM-0012::PF-0019",
+        "OPF::A005OM-0012::PF-0151",
+        "OPF::A005OM-0012::PF-0183",
+        "OPF::A005OM-0012::PF-0199",
+        "OPF::A005OM-0012::PF-0215"
+      ],
+      "rationale": "After exhaustive comparison against all 219 comparators, no comparator shares the same product authority, lifecycle, user outcome, state boundary, and failure semantics as \"Blocked action mapping lacks eligibility and persistence rules\". The listed refs are plausible neighbors only; each differs by owning contract, governed object, lifecycle stage, consumer surface, or failure boundary and is therefore related but distinct.",
+      "confidence": 0.92
+    },
+    {
+      "anchor_provisional_feature_ref": "OPF::A005OM-0013::PF-0155",
+      "compared_against_count": 219,
+      "merge_candidate_refs": [],
+      "related_but_distinct_refs": [
+        "OPF::A005OM-0012::PF-0172",
+        "OPF::A005OM-0012::PF-0212",
+        "OPF::A005OM-0012::PF-0215"
+      ],
+      "rationale": "After exhaustive comparison against all 219 comparators, no comparator shares the same product authority, lifecycle, user outcome, state boundary, and failure semantics as \"Assistant Chat and Settings recovery controls need a state machine\". The listed refs are plausible neighbors only; each differs by owning contract, governed object, lifecycle stage, consumer surface, or failure boundary and is therefore related but distinct.",
+      "confidence": 0.92
+    },
+    {
+      "anchor_provisional_feature_ref": "OPF::A005OM-0013::PF-0156",
+      "compared_against_count": 219,
+      "merge_candidate_refs": [],
+      "related_but_distinct_refs": [
+        "OPF::A005OM-0012::PF-0038",
+        "OPF::A005OM-0012::PF-0168",
+        "OPF::A005OM-0012::PF-0186"
+      ],
+      "rationale": "After exhaustive comparison against all 219 comparators, no comparator shares the same product authority, lifecycle, user outcome, state boundary, and failure semantics as \"Blocked-command event helper\". The listed refs are plausible neighbors only; each differs by owning contract, governed object, lifecycle stage, consumer surface, or failure boundary and is therefore related but distinct.",
+      "confidence": 0.92
+    },
+    {
+      "anchor_provisional_feature_ref": "OPF::A005OM-0013::PF-0157",
+      "compared_against_count": 219,
+      "merge_candidate_refs": [],
+      "related_but_distinct_refs": [
+        "OPF::A005OM-0012::PF-0019",
+        "OPF::A005OM-0012::PF-0093",
+        "OPF::A005OM-0012::PF-0201",
+        "OPF::A005OM-0012::PF-0203",
+        "OPF::A005OM-0012::PF-0205"
+      ],
+      "rationale": "After exhaustive comparison against all 219 comparators, no comparator shares the same product authority, lifecycle, user outcome, state boundary, and failure semantics as \"Override authority is fully enumerated\". The listed refs are plausible neighbors only; each differs by owning contract, governed object, lifecycle stage, consumer surface, or failure boundary and is therefore related but distinct.",
+      "confidence": 0.92
+    },
+    {
+      "anchor_provisional_feature_ref": "OPF::A005OM-0013::PF-0158",
+      "compared_against_count": 219,
+      "merge_candidate_refs": [],
+      "related_but_distinct_refs": [
+        "OPF::A005OM-0012::PF-0046",
+        "OPF::A005OM-0012::PF-0047",
+        "OPF::A005OM-0012::PF-0103",
+        "OPF::A005OM-0012::PF-0175",
+        "OPF::A005OM-0012::PF-0216"
+      ],
+      "rationale": "After exhaustive comparison against all 219 comparators, no comparator shares the same product authority, lifecycle, user outcome, state boundary, and failure semantics as \"Transport paths remain subject to canonical scope and recovery\". The listed refs are plausible neighbors only; each differs by owning contract, governed object, lifecycle stage, consumer surface, or failure boundary and is therefore related but distinct.",
+      "confidence": 0.92
+    },
+    {
+      "anchor_provisional_feature_ref": "OPF::A005OM-0013::PF-0159",
+      "compared_against_count": 219,
+      "merge_candidate_refs": [],
+      "related_but_distinct_refs": [
+        "OPF::A005OM-0012::PF-0019",
+        "OPF::A005OM-0012::PF-0199",
+        "OPF::A005OM-0012::PF-0205"
+      ],
+      "rationale": "After exhaustive comparison against all 219 comparators, no comparator shares the same product authority, lifecycle, user outcome, state boundary, and failure semantics as \"Approved-command UX boundary\". The listed refs are plausible neighbors only; each differs by owning contract, governed object, lifecycle stage, consumer surface, or failure boundary and is therefore related but distinct.",
+      "confidence": 0.92
+    }
+  ],
+  "self_attestation": {
+    "every_anchor_decided_once": true,
+    "every_comparator_considered_for_each_anchor": true,
+    "strict_merge_equivalence_applied": true,
+    "umbrella_member_and_adjacency_kept_distinct": true,
+    "reverse_orientation_verified": true,
+    "same_owner_domain_only": true,
+    "no_external_or_peer_inputs_used": true
+  }
+}

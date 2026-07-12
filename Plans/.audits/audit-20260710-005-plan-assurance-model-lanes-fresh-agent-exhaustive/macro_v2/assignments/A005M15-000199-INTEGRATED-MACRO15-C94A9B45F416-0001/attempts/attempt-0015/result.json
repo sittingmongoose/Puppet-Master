@@ -1,0 +1,1043 @@
+{
+  "assignment_id": "A005M15-000199-INTEGRATED-MACRO15-C94A9B45F416-0001",
+  "attempt_id": "attempt-0015",
+  "audit_id": "audit-20260710-005-plan-assurance-model-lanes-fresh-agent-exhaustive",
+  "coverage": {
+    "all_micro_windows_reviewed": true,
+    "all_source_lines_reviewed": true,
+    "all_source_units_accounted": true,
+    "both_exact_and_adversarial_lenses_applied": true,
+    "dimensions_checked": [
+      "behavior",
+      "capabilities",
+      "inputs_outputs",
+      "contracts",
+      "states_transitions",
+      "authority",
+      "ownership",
+      "consumers",
+      "gui_truth",
+      "failures_recovery",
+      "security_privacy",
+      "propagation",
+      "operations",
+      "scale_performance",
+      "compatibility_migration",
+      "acceptance_oracles",
+      "builder_discretion",
+      "ambiguity_unknowns",
+      "missing_callers_consumers",
+      "invalid_states_transitions",
+      "concurrency_races",
+      "partial_failure",
+      "recovery_rollback",
+      "authority_boundaries",
+      "privacy_data_lifecycle",
+      "untrusted_inputs",
+      "gui_misleading_states",
+      "offline_network_loss",
+      "scale_limits",
+      "accessibility",
+      "localization",
+      "observability_support",
+      "destructive_actions",
+      "cross_document_seams",
+      "test_falsifiability",
+      "unknown_unknowns"
+    ]
+  },
+  "items": [
+    {
+      "builder_discretion": false,
+      "confidence": 1.0,
+      "dimensions": [
+        "contracts",
+        "compatibility_migration",
+        "acceptance_oracles"
+      ],
+      "evidence": [
+        {
+          "exact_quote": "  \"$schema\": \"https://json-schema.org/draft/2020-12/schema\",",
+          "line_end": 2,
+          "line_start": 2,
+          "path": "Plans/runtime_artifact_cost_usage.schema.json",
+          "source_sha256": "76c1fdd601af0be88eb951d06985e1165ef2cdea3d331f2e3ca8ea63288d4f94"
+        },
+        {
+          "exact_quote": "  \"$id\": \"pm.runtime_artifact.cost_usage.schema.v1\",",
+          "line_end": 3,
+          "line_start": 3,
+          "path": "Plans/runtime_artifact_cost_usage.schema.json",
+          "source_sha256": "76c1fdd601af0be88eb951d06985e1165ef2cdea3d331f2e3ca8ea63288d4f94"
+        },
+        {
+          "exact_quote": "  \"additionalProperties\": false,",
+          "line_end": 6,
+          "line_start": 6,
+          "path": "Plans/runtime_artifact_cost_usage.schema.json",
+          "source_sha256": "76c1fdd601af0be88eb951d06985e1165ef2cdea3d331f2e3ca8ea63288d4f94"
+        }
+      ],
+      "gap_kind": "none_explicit_root_contract",
+      "impact": "Validators can bind to a stable Draft 2020-12 schema identity and reject undeclared root properties.",
+      "item_id": "M15-001",
+      "item_type": "contract",
+      "severity": "info",
+      "source_unit_refs": [
+        "SEMANTIC:JSON_PREFIX:Plans/runtime_artifact_cost_usage.schema.json",
+        "SEMANTIC:JSON_FIELD:Plans/runtime_artifact_cost_usage.schema.json:$schema",
+        "SEMANTIC:JSON_FIELD:Plans/runtime_artifact_cost_usage.schema.json:$id",
+        "SEMANTIC:JSON_FIELD:Plans/runtime_artifact_cost_usage.schema.json:title",
+        "SEMANTIC:JSON_FIELD:Plans/runtime_artifact_cost_usage.schema.json:type",
+        "SEMANTIC:JSON_FIELD:Plans/runtime_artifact_cost_usage.schema.json:additionalProperties",
+        "STRUCTURAL:$",
+        "STRUCTURAL:$.$id",
+        "STRUCTURAL:$.$schema",
+        "STRUCTURAL:$.additionalProperties",
+        "STRUCTURAL:$.title",
+        "STRUCTURAL:$.type"
+      ],
+      "statement": "The artifact is a closed root object with a fixed Draft 2020-12 schema identity and cost_usage title/type surface.",
+      "title": "Stable closed root schema contract"
+    },
+    {
+      "builder_discretion": false,
+      "confidence": 1.0,
+      "dimensions": [
+        "inputs_outputs",
+        "contracts",
+        "ownership",
+        "propagation"
+      ],
+      "evidence": [
+        {
+          "exact_quote": "    \"schema_id\",",
+          "line_end": 8,
+          "line_start": 8,
+          "path": "Plans/runtime_artifact_cost_usage.schema.json",
+          "source_sha256": "76c1fdd601af0be88eb951d06985e1165ef2cdea3d331f2e3ca8ea63288d4f94"
+        },
+        {
+          "exact_quote": "    \"usage_event_ref\",",
+          "line_end": 14,
+          "line_start": 14,
+          "path": "Plans/runtime_artifact_cost_usage.schema.json",
+          "source_sha256": "76c1fdd601af0be88eb951d06985e1165ef2cdea3d331f2e3ca8ea63288d4f94"
+        },
+        {
+          "exact_quote": "    \"created_at_utc\",",
+          "line_end": 16,
+          "line_start": 16,
+          "path": "Plans/runtime_artifact_cost_usage.schema.json",
+          "source_sha256": "76c1fdd601af0be88eb951d06985e1165ef2cdea3d331f2e3ca8ea63288d4f94"
+        },
+        {
+          "exact_quote": "    \"type_payload\"",
+          "line_end": 21,
+          "line_start": 21,
+          "path": "Plans/runtime_artifact_cost_usage.schema.json",
+          "source_sha256": "76c1fdd601af0be88eb951d06985e1165ef2cdea3d331f2e3ca8ea63288d4f94"
+        }
+      ],
+      "gap_kind": "none_required_envelope",
+      "impact": "Every valid artifact carries identity, execution lineage, usage lineage, creation/projection metadata, routing, and a typed payload.",
+      "item_id": "M15-002",
+      "item_type": "feature",
+      "severity": "info",
+      "source_unit_refs": [
+        "SEMANTIC:JSON_FIELD:Plans/runtime_artifact_cost_usage.schema.json:required",
+        "STRUCTURAL:$.required"
+      ],
+      "statement": "The root required set establishes the minimum persisted artifact envelope, including schema and artifact identity, project/run/attempt lineage, usage references, UTC creation metadata, projection state, retention, routing, and type_payload.",
+      "title": "Required runtime-artifact envelope"
+    },
+    {
+      "builder_discretion": false,
+      "confidence": 0.99,
+      "dimensions": [
+        "behavior",
+        "capabilities",
+        "inputs_outputs",
+        "contracts",
+        "states_transitions",
+        "compatibility_migration"
+      ],
+      "evidence": [
+        {
+          "exact_quote": "    \"tokenBuckets\": {",
+          "line_end": 48,
+          "line_start": 48,
+          "path": "Plans/runtime_artifact_cost_usage.schema.json",
+          "source_sha256": "76c1fdd601af0be88eb951d06985e1165ef2cdea3d331f2e3ca8ea63288d4f94"
+        },
+        {
+          "exact_quote": "          \"description\": \"Runtime artifact JSON wire alias for the UF-085 reasoning/thoughts bucket; interpreted only through counting_semantics and not an independent UsageEvent accounting field.\"",
+          "line_end": 101,
+          "line_start": 101,
+          "path": "Plans/runtime_artifact_cost_usage.schema.json",
+          "source_sha256": "76c1fdd601af0be88eb951d06985e1165ef2cdea3d331f2e3ca8ea63288d4f94"
+        },
+        {
+          "exact_quote": "        \"counting_semantics\": {",
+          "line_end": 125,
+          "line_start": 125,
+          "path": "Plans/runtime_artifact_cost_usage.schema.json",
+          "source_sha256": "76c1fdd601af0be88eb951d06985e1165ef2cdea3d331f2e3ca8ea63288d4f94"
+        }
+      ],
+      "gap_kind": "none_explicit_accounting_model",
+      "impact": "Consumers can distinguish raw token buckets from interpretation metadata and avoid treating the reasoning alias as a second accounting total.",
+      "item_id": "M15-003",
+      "item_type": "behavior",
+      "severity": "info",
+      "source_unit_refs": [
+        "SEMANTIC:JSON_FIELD:Plans/runtime_artifact_cost_usage.schema.json:$defs:CONT-001",
+        "STRUCTURAL:$.$defs"
+      ],
+      "statement": "The first definitions block models nullable nonnegative token buckets, provider identity, cost, and quota, with explicit counting semantics and reporting-state vocabularies.",
+      "title": "Token accounting and interpretation model"
+    },
+    {
+      "builder_discretion": true,
+      "confidence": 0.98,
+      "dimensions": [
+        "contracts",
+        "states_transitions",
+        "ambiguity_unknowns",
+        "partial_failure",
+        "cross_document_seams",
+        "test_falsifiability"
+      ],
+      "evidence": [
+        {
+          "exact_quote": "        \"cache_write_1h\",",
+          "line_end": 56,
+          "line_start": 56,
+          "path": "Plans/runtime_artifact_cost_usage.schema.json",
+          "source_sha256": "76c1fdd601af0be88eb951d06985e1165ef2cdea3d331f2e3ca8ea63288d4f94"
+        },
+        {
+          "exact_quote": "        \"cache_write_breakdown_state\": {",
+          "line_end": 84,
+          "line_start": 84,
+          "path": "Plans/runtime_artifact_cost_usage.schema.json",
+          "source_sha256": "76c1fdd601af0be88eb951d06985e1165ef2cdea3d331f2e3ca8ea63288d4f94"
+        }
+      ],
+      "gap_kind": "optional_explanation_for_required_bucket",
+      "impact": "A record may require cache_write_1h while omitting the state that explains whether the breakdown was reported, inferred, unavailable, or unknown, leaving downstream interpretation non-falsifiable.",
+      "item_id": "M15-004",
+      "item_type": "gap",
+      "severity": "medium",
+      "source_unit_refs": [
+        "SEMANTIC:JSON_FIELD:Plans/runtime_artifact_cost_usage.schema.json:$defs:CONT-001",
+        "STRUCTURAL:$.$defs"
+      ],
+      "statement": "cache_write_1h is required in tokenBuckets, but cache_write_breakdown_state and cache_write_ttl are optional and are not conditionally tied to the bucket value.",
+      "title": "Cache-write breakdown can lack interpretation state"
+    },
+    {
+      "builder_discretion": true,
+      "confidence": 0.99,
+      "dimensions": [
+        "contracts",
+        "states_transitions",
+        "authority",
+        "failures_recovery",
+        "invalid_states_transitions",
+        "partial_failure",
+        "test_falsifiability"
+      ],
+      "evidence": [
+        {
+          "exact_quote": "        \"cost_status\": {",
+          "line_end": 219,
+          "line_start": 219,
+          "path": "Plans/runtime_artifact_cost_usage.schema.json",
+          "source_sha256": "76c1fdd601af0be88eb951d06985e1165ef2cdea3d331f2e3ca8ea63288d4f94"
+        },
+        {
+          "exact_quote": "        \"cost_microdollars\": {",
+          "line_end": 230,
+          "line_start": 230,
+          "path": "Plans/runtime_artifact_cost_usage.schema.json",
+          "source_sha256": "76c1fdd601af0be88eb951d06985e1165ef2cdea3d331f2e3ca8ea63288d4f94"
+        },
+        {
+          "exact_quote": "          \"$ref\": \"#/$defs/nonNegativeIntegerOrNull\"",
+          "line_end": 231,
+          "line_start": 231,
+          "path": "Plans/runtime_artifact_cost_usage.schema.json",
+          "source_sha256": "76c1fdd601af0be88eb951d06985e1165ef2cdea3d331f2e3ca8ea63288d4f94"
+        }
+      ],
+      "gap_kind": "missing_cross_field_cost_invariants",
+      "impact": "Shape-valid artifacts can claim priced or provider-reported status with null price facts, or hidden/unknown status with populated costs, so cost display and settlement decisions can disagree across consumers.",
+      "item_id": "M15-005",
+      "item_type": "gap",
+      "severity": "high",
+      "source_unit_refs": [
+        "SEMANTIC:JSON_FIELD:Plans/runtime_artifact_cost_usage.schema.json:$defs:CONT-001",
+        "STRUCTURAL:$.$defs"
+      ],
+      "statement": "costFields requires status and pricing fields, but nullable monetary and pricing values have no conditional invariants keyed by cost_status.",
+      "title": "Cost status does not constrain price evidence"
+    },
+    {
+      "builder_discretion": true,
+      "confidence": 0.99,
+      "dimensions": [
+        "states_transitions",
+        "failures_recovery",
+        "operations",
+        "invalid_states_transitions",
+        "partial_failure",
+        "recovery_rollback",
+        "offline_network_loss",
+        "test_falsifiability"
+      ],
+      "evidence": [
+        {
+          "exact_quote": "        \"quota_status\": {",
+          "line_end": 294,
+          "line_start": 294,
+          "path": "Plans/runtime_artifact_cost_usage.schema.json",
+          "source_sha256": "76c1fdd601af0be88eb951d06985e1165ef2cdea3d331f2e3ca8ea63288d4f94"
+        },
+        {
+          "exact_quote": "        \"reset_at\": {",
+          "line_end": 316,
+          "line_start": 316,
+          "path": "Plans/runtime_artifact_cost_usage.schema.json",
+          "source_sha256": "76c1fdd601af0be88eb951d06985e1165ef2cdea3d331f2e3ca8ea63288d4f94"
+        },
+        {
+          "exact_quote": "        \"quota_remaining\": {",
+          "line_end": 322,
+          "line_start": 322,
+          "path": "Plans/runtime_artifact_cost_usage.schema.json",
+          "source_sha256": "76c1fdd601af0be88eb951d06985e1165ef2cdea3d331f2e3ca8ea63288d4f94"
+        },
+        {
+          "exact_quote": "        \"quota_limit\": {",
+          "line_end": 328,
+          "line_start": 328,
+          "path": "Plans/runtime_artifact_cost_usage.schema.json",
+          "source_sha256": "76c1fdd601af0be88eb951d06985e1165ef2cdea3d331f2e3ca8ea63288d4f94"
+        }
+      ],
+      "gap_kind": "missing_quota_arithmetic_and_time_invariants",
+      "impact": "Consumers can receive internally inconsistent remaining/used/limit values and status/reset/cooldown combinations without a schema failure, making throttling, retry, and offline-staleness behavior unsafe to infer.",
+      "item_id": "M15-006",
+      "item_type": "gap",
+      "severity": "high",
+      "source_unit_refs": [
+        "SEMANTIC:JSON_FIELD:Plans/runtime_artifact_cost_usage.schema.json:$defs:CONT-001",
+        "STRUCTURAL:$.$defs"
+      ],
+      "statement": "quotaFields exposes window, status, reset/cooldown, remaining, used, and limit facts but does not constrain arithmetic relationships, time ordering, or status-dependent nullability.",
+      "title": "Quota states admit contradictory arithmetic and timing"
+    },
+    {
+      "builder_discretion": true,
+      "confidence": 0.98,
+      "dimensions": [
+        "inputs_outputs",
+        "contracts",
+        "scale_performance",
+        "builder_discretion",
+        "ambiguity_unknowns",
+        "untrusted_inputs",
+        "scale_limits"
+      ],
+      "evidence": [
+        {
+          "exact_quote": "        \"delta\": {",
+          "line_end": 113,
+          "line_start": 113,
+          "path": "Plans/runtime_artifact_cost_usage.schema.json",
+          "source_sha256": "76c1fdd601af0be88eb951d06985e1165ef2cdea3d331f2e3ca8ea63288d4f94"
+        },
+        {
+          "exact_quote": "          \"additionalProperties\": {",
+          "line_end": 115,
+          "line_start": 115,
+          "path": "Plans/runtime_artifact_cost_usage.schema.json",
+          "source_sha256": "76c1fdd601af0be88eb951d06985e1165ef2cdea3d331f2e3ca8ea63288d4f94"
+        },
+        {
+          "exact_quote": "            \"$ref\": \"#/$defs/nonNegativeIntegerOrNull\"",
+          "line_end": 116,
+          "line_start": 116,
+          "path": "Plans/runtime_artifact_cost_usage.schema.json",
+          "source_sha256": "76c1fdd601af0be88eb951d06985e1165ef2cdea3d331f2e3ca8ea63288d4f94"
+        }
+      ],
+      "gap_kind": "unbounded_dynamic_bucket_names",
+      "impact": "Producers may emit arbitrary, empty, or extremely large metric maps with incompatible naming, and consumers have no schema-level reconciliation rule between delta, cumulative, and named totals.",
+      "item_id": "M15-007",
+      "item_type": "gap",
+      "severity": "medium",
+      "source_unit_refs": [
+        "SEMANTIC:JSON_FIELD:Plans/runtime_artifact_cost_usage.schema.json:$defs:CONT-001",
+        "STRUCTURAL:$.$defs"
+      ],
+      "statement": "delta and cumulative accept arbitrary property names with nullable nonnegative values and impose neither key vocabulary nor size or reconciliation constraints.",
+      "title": "Dynamic token maps are unbounded and unreconciled"
+    },
+    {
+      "builder_discretion": false,
+      "confidence": 1.0,
+      "dimensions": [
+        "states_transitions",
+        "authority",
+        "operations",
+        "observability_support"
+      ],
+      "evidence": [
+        {
+          "exact_quote": "    \"authorityFields\": {",
+          "line_end": 345,
+          "line_start": 345,
+          "path": "Plans/runtime_artifact_cost_usage.schema.json",
+          "source_sha256": "76c1fdd601af0be88eb951d06985e1165ef2cdea3d331f2e3ca8ea63288d4f94"
+        },
+        {
+          "exact_quote": "        \"settlement_status\": {",
+          "line_end": 381,
+          "line_start": 381,
+          "path": "Plans/runtime_artifact_cost_usage.schema.json",
+          "source_sha256": "76c1fdd601af0be88eb951d06985e1165ef2cdea3d331f2e3ca8ea63288d4f94"
+        },
+        {
+          "exact_quote": "        \"provider_payload_hash\": {",
+          "line_end": 419,
+          "line_start": 419,
+          "path": "Plans/runtime_artifact_cost_usage.schema.json",
+          "source_sha256": "76c1fdd601af0be88eb951d06985e1165ef2cdea3d331f2e3ca8ea63288d4f94"
+        }
+      ],
+      "gap_kind": "none_explicit_authority_model",
+      "impact": "Artifacts can report provenance class, confidence, named authority, settlement lifecycle, redaction state, and a provider-payload hash for operational inspection.",
+      "item_id": "M15-008",
+      "item_type": "authority",
+      "severity": "info",
+      "source_unit_refs": [
+        "SEMANTIC:JSON_FIELD:Plans/runtime_artifact_cost_usage.schema.json:$defs:CONT-002",
+        "STRUCTURAL:$.$defs"
+      ],
+      "statement": "authorityFields defines the artifact's provenance and settlement vocabulary and includes optional observation/settlement/adjustment/failure details plus raw-payload and redaction metadata.",
+      "title": "Provenance and settlement authority surface"
+    },
+    {
+      "builder_discretion": true,
+      "confidence": 0.99,
+      "dimensions": [
+        "states_transitions",
+        "authority",
+        "failures_recovery",
+        "security_privacy",
+        "invalid_states_transitions",
+        "partial_failure",
+        "authority_boundaries",
+        "privacy_data_lifecycle",
+        "test_falsifiability"
+      ],
+      "evidence": [
+        {
+          "exact_quote": "        \"observed_at_utc\": {",
+          "line_end": 392,
+          "line_start": 392,
+          "path": "Plans/runtime_artifact_cost_usage.schema.json",
+          "source_sha256": "76c1fdd601af0be88eb951d06985e1165ef2cdea3d331f2e3ca8ea63288d4f94"
+        },
+        {
+          "exact_quote": "        \"raw_payload_ref\": {",
+          "line_end": 407,
+          "line_start": 407,
+          "path": "Plans/runtime_artifact_cost_usage.schema.json",
+          "source_sha256": "76c1fdd601af0be88eb951d06985e1165ef2cdea3d331f2e3ca8ea63288d4f94"
+        },
+        {
+          "exact_quote": "        \"redaction_status\": {",
+          "line_end": 410,
+          "line_start": 410,
+          "path": "Plans/runtime_artifact_cost_usage.schema.json",
+          "source_sha256": "76c1fdd601af0be88eb951d06985e1165ef2cdea3d331f2e3ca8ea63288d4f94"
+        }
+      ],
+      "gap_kind": "missing_authority_lifecycle_invariants",
+      "impact": "A shape-valid artifact may claim settlement, adjustment, failure, or redaction states without the corresponding timestamp, failure detail, payload reference, or hash, weakening auditability and privacy lifecycle enforcement.",
+      "item_id": "M15-009",
+      "item_type": "gap",
+      "severity": "high",
+      "source_unit_refs": [
+        "SEMANTIC:JSON_FIELD:Plans/runtime_artifact_cost_usage.schema.json:$defs:CONT-002",
+        "STRUCTURAL:$.$defs"
+      ],
+      "statement": "Settlement and redaction enums are not conditionally linked to their timestamps, failure fields, raw_payload_ref, or provider_payload_hash.",
+      "title": "Authority lifecycle states lack required evidence"
+    },
+    {
+      "builder_discretion": false,
+      "confidence": 1.0,
+      "dimensions": [
+        "capabilities",
+        "inputs_outputs",
+        "contracts",
+        "propagation",
+        "compatibility_migration"
+      ],
+      "evidence": [
+        {
+          "exact_quote": "  \"properties\": {",
+          "line_end": 425,
+          "line_start": 425,
+          "path": "Plans/runtime_artifact_cost_usage.schema.json",
+          "source_sha256": "76c1fdd601af0be88eb951d06985e1165ef2cdea3d331f2e3ca8ea63288d4f94"
+        },
+        {
+          "exact_quote": "      \"const\": \"pm.runtime_artifact.cost_usage.schema.v1\"",
+          "line_end": 428,
+          "line_start": 428,
+          "path": "Plans/runtime_artifact_cost_usage.schema.json",
+          "source_sha256": "76c1fdd601af0be88eb951d06985e1165ef2cdea3d331f2e3ca8ea63288d4f94"
+        },
+        {
+          "exact_quote": "      \"const\": \"cost_usage\"",
+          "line_end": 436,
+          "line_start": 436,
+          "path": "Plans/runtime_artifact_cost_usage.schema.json",
+          "source_sha256": "76c1fdd601af0be88eb951d06985e1165ef2cdea3d331f2e3ca8ea63288d4f94"
+        },
+        {
+          "exact_quote": "    \"type_payload\": {",
+          "line_end": 513,
+          "line_start": 513,
+          "path": "Plans/runtime_artifact_cost_usage.schema.json",
+          "source_sha256": "76c1fdd601af0be88eb951d06985e1165ef2cdea3d331f2e3ca8ea63288d4f94"
+        }
+      ],
+      "gap_kind": "none_explicit_payload_contract",
+      "impact": "Consumers can discriminate the artifact kind and locate provider, usage, cost, quota, authority, refs, flags, and optional stream/compatibility data in a closed type payload.",
+      "item_id": "M15-010",
+      "item_type": "feature",
+      "severity": "info",
+      "source_unit_refs": [
+        "SEMANTIC:JSON_FIELD:Plans/runtime_artifact_cost_usage.schema.json:properties",
+        "STRUCTURAL:$",
+        "STRUCTURAL:$.properties"
+      ],
+      "statement": "The properties block fixes schema_id and artifact_type constants, defines the runtime envelope, and places the usage model under a closed type_payload object.",
+      "title": "Typed cost_usage artifact payload"
+    },
+    {
+      "builder_discretion": true,
+      "confidence": 1.0,
+      "dimensions": [
+        "inputs_outputs",
+        "contracts",
+        "propagation",
+        "invalid_states_transitions",
+        "cross_document_seams",
+        "test_falsifiability"
+      ],
+      "evidence": [
+        {
+          "exact_quote": "    \"usage_event_ref\": {",
+          "line_end": 459,
+          "line_start": 459,
+          "path": "Plans/runtime_artifact_cost_usage.schema.json",
+          "source_sha256": "76c1fdd601af0be88eb951d06985e1165ef2cdea3d331f2e3ca8ea63288d4f94"
+        },
+        {
+          "exact_quote": "        \"usage_event_ref\": {",
+          "line_end": 529,
+          "line_start": 529,
+          "path": "Plans/runtime_artifact_cost_usage.schema.json",
+          "source_sha256": "76c1fdd601af0be88eb951d06985e1165ef2cdea3d331f2e3ca8ea63288d4f94"
+        },
+        {
+          "exact_quote": "        \"reasoning_tokens\": {",
+          "line_end": 537,
+          "line_start": 537,
+          "path": "Plans/runtime_artifact_cost_usage.schema.json",
+          "source_sha256": "76c1fdd601af0be88eb951d06985e1165ef2cdea3d331f2e3ca8ea63288d4f94"
+        },
+        {
+          "exact_quote": "          \"description\": \"Compatibility/wire alias mirrored from usage.reasoning_tokens for UF-085 reasoning/thoughts drill-through; not source authority or an extra total.\"",
+          "line_end": 540,
+          "line_start": 540,
+          "path": "Plans/runtime_artifact_cost_usage.schema.json",
+          "source_sha256": "76c1fdd601af0be88eb951d06985e1165ef2cdea3d331f2e3ca8ea63288d4f94"
+        }
+      ],
+      "gap_kind": "unenforced_mirrored_field_equality",
+      "impact": "The same artifact can validate with conflicting top-level, payload, refs, and usage identities or different reasoning-token aliases, causing drill-through, joins, and totals to select different facts.",
+      "item_id": "M15-011",
+      "item_type": "gap",
+      "severity": "high",
+      "source_unit_refs": [
+        "SEMANTIC:JSON_FIELD:Plans/runtime_artifact_cost_usage.schema.json:properties",
+        "STRUCTURAL:$.properties"
+      ],
+      "statement": "Repeated usage_event_ref and usage_record_id values, plus the documented reasoning_tokens mirror, are independently validated and have no schema-level equality constraint.",
+      "title": "Mirrored identities and token aliases can diverge"
+    },
+    {
+      "builder_discretion": true,
+      "confidence": 1.0,
+      "dimensions": [
+        "contracts",
+        "states_transitions",
+        "failures_recovery",
+        "operations",
+        "builder_discretion",
+        "ambiguity_unknowns",
+        "offline_network_loss",
+        "localization",
+        "observability_support"
+      ],
+      "evidence": [
+        {
+          "exact_quote": "    \"created_at_utc\": {",
+          "line_end": 480,
+          "line_start": 480,
+          "path": "Plans/runtime_artifact_cost_usage.schema.json",
+          "source_sha256": "76c1fdd601af0be88eb951d06985e1165ef2cdea3d331f2e3ca8ea63288d4f94"
+        },
+        {
+          "exact_quote": "      \"type\": \"string\",",
+          "line_end": 481,
+          "line_start": 481,
+          "path": "Plans/runtime_artifact_cost_usage.schema.json",
+          "source_sha256": "76c1fdd601af0be88eb951d06985e1165ef2cdea3d331f2e3ca8ea63288d4f94"
+        },
+        {
+          "exact_quote": "    \"projection_freshness\": {",
+          "line_end": 496,
+          "line_start": 496,
+          "path": "Plans/runtime_artifact_cost_usage.schema.json",
+          "source_sha256": "76c1fdd601af0be88eb951d06985e1165ef2cdea3d331f2e3ca8ea63288d4f94"
+        },
+        {
+          "exact_quote": "    \"retention_class\": {",
+          "line_end": 502,
+          "line_start": 502,
+          "path": "Plans/runtime_artifact_cost_usage.schema.json",
+          "source_sha256": "76c1fdd601af0be88eb951d06985e1165ef2cdea3d331f2e3ca8ea63288d4f94"
+        }
+      ],
+      "gap_kind": "unconstrained_time_and_state_strings",
+      "impact": "Malformed or non-UTC timestamps and incompatible freshness, health, retention, and source labels remain shape-valid, so stale/offline and retention behavior cannot be reliably localized, ordered, or tested.",
+      "item_id": "M15-012",
+      "item_type": "gap",
+      "severity": "high",
+      "source_unit_refs": [
+        "SEMANTIC:JSON_FIELD:Plans/runtime_artifact_cost_usage.schema.json:properties",
+        "STRUCTURAL:$.properties"
+      ],
+      "statement": "created_at_utc is only a nonempty string, while projection_freshness, projection_health, retention_class, and source_surface are unrestricted strings without formats or enumerated semantics.",
+      "title": "Time, freshness, and retention vocabularies are unconstrained"
+    },
+    {
+      "builder_discretion": true,
+      "confidence": 0.99,
+      "dimensions": [
+        "contracts",
+        "propagation",
+        "operations",
+        "scale_performance",
+        "concurrency_races",
+        "partial_failure",
+        "recovery_rollback",
+        "scale_limits",
+        "observability_support",
+        "test_falsifiability"
+      ],
+      "evidence": [
+        {
+          "exact_quote": "            \"parent_usage_record_id\": {",
+          "line_end": 596,
+          "line_start": 596,
+          "path": "Plans/runtime_artifact_cost_usage.schema.json",
+          "source_sha256": "76c1fdd601af0be88eb951d06985e1165ef2cdea3d331f2e3ca8ea63288d4f94"
+        },
+        {
+          "exact_quote": "            \"dedupe_key\": {",
+          "line_end": 599,
+          "line_start": 599,
+          "path": "Plans/runtime_artifact_cost_usage.schema.json",
+          "source_sha256": "76c1fdd601af0be88eb951d06985e1165ef2cdea3d331f2e3ca8ea63288d4f94"
+        },
+        {
+          "exact_quote": "              \"$ref\": \"#/$defs/stringOrNull\"",
+          "line_end": 600,
+          "line_start": 600,
+          "path": "Plans/runtime_artifact_cost_usage.schema.json",
+          "source_sha256": "76c1fdd601af0be88eb951d06985e1165ef2cdea3d331f2e3ca8ea63288d4f94"
+        }
+      ],
+      "gap_kind": "optional_unscoped_idempotency_and_lineage",
+      "impact": "Concurrent retries, partial streams, and parent/child aggregation can emit duplicate or cyclic lineage that validates, and arrays have no uniqueness or cardinality limits to bound fan-out.",
+      "item_id": "M15-013",
+      "item_type": "gap",
+      "severity": "high",
+      "source_unit_refs": [
+        "SEMANTIC:JSON_FIELD:Plans/runtime_artifact_cost_usage.schema.json:properties",
+        "STRUCTURAL:$.properties"
+      ],
+      "statement": "refs exposes optional nullable parent and dedupe identifiers and unbounded receipt/child-reference arrays, but defines no uniqueness, acyclicity, idempotency scope, or retry reconciliation rule.",
+      "title": "Dedupe and lineage do not constrain concurrent retries"
+    },
+    {
+      "builder_discretion": true,
+      "confidence": 1.0,
+      "dimensions": [
+        "states_transitions",
+        "authority",
+        "gui_truth",
+        "failures_recovery",
+        "invalid_states_transitions",
+        "authority_boundaries",
+        "gui_misleading_states",
+        "test_falsifiability"
+      ],
+      "evidence": [
+        {
+          "exact_quote": "        \"flags\": {",
+          "line_end": 621,
+          "line_start": 621,
+          "path": "Plans/runtime_artifact_cost_usage.schema.json",
+          "source_sha256": "76c1fdd601af0be88eb951d06985e1165ef2cdea3d331f2e3ca8ea63288d4f94"
+        },
+        {
+          "exact_quote": "          \"required\": [",
+          "line_end": 624,
+          "line_start": 624,
+          "path": "Plans/runtime_artifact_cost_usage.schema.json",
+          "source_sha256": "76c1fdd601af0be88eb951d06985e1165ef2cdea3d331f2e3ca8ea63288d4f94"
+        },
+        {
+          "exact_quote": "            \"display_cost_policy\": {",
+          "line_end": 655,
+          "line_start": 655,
+          "path": "Plans/runtime_artifact_cost_usage.schema.json",
+          "source_sha256": "76c1fdd601af0be88eb951d06985e1165ef2cdea3d331f2e3ca8ea63288d4f94"
+        }
+      ],
+      "gap_kind": "independent_flags_without_consistency_matrix",
+      "impact": "A UI or policy consumer may show or hide cost from mutually inconsistent status and boolean combinations, and unknown_reason may be null even when facts are unknown.",
+      "item_id": "M15-014",
+      "item_type": "gui_truth",
+      "severity": "high",
+      "source_unit_refs": [
+        "SEMANTIC:JSON_FIELD:Plans/runtime_artifact_cost_usage.schema.json:properties",
+        "STRUCTURAL:$.properties"
+      ],
+      "statement": "Required source/cost booleans and optional display_cost_policy are independently validated and are not constrained against cost_status, source_class, quota_status, or unknown_reason.",
+      "title": "Display and authority flags can contradict source truth"
+    },
+    {
+      "builder_discretion": true,
+      "confidence": 1.0,
+      "dimensions": [
+        "states_transitions",
+        "failures_recovery",
+        "invalid_states_transitions",
+        "partial_failure",
+        "recovery_rollback",
+        "offline_network_loss",
+        "observability_support"
+      ],
+      "evidence": [
+        {
+          "exact_quote": "        \"stream\": {",
+          "line_end": 666,
+          "line_start": 666,
+          "path": "Plans/runtime_artifact_cost_usage.schema.json",
+          "source_sha256": "76c1fdd601af0be88eb951d06985e1165ef2cdea3d331f2e3ca8ea63288d4f94"
+        },
+        {
+          "exact_quote": "            \"abort_requested\": {",
+          "line_end": 673,
+          "line_start": 673,
+          "path": "Plans/runtime_artifact_cost_usage.schema.json",
+          "source_sha256": "76c1fdd601af0be88eb951d06985e1165ef2cdea3d331f2e3ca8ea63288d4f94"
+        },
+        {
+          "exact_quote": "            \"usage_observed_before_abort\": {",
+          "line_end": 676,
+          "line_start": 676,
+          "path": "Plans/runtime_artifact_cost_usage.schema.json",
+          "source_sha256": "76c1fdd601af0be88eb951d06985e1165ef2cdea3d331f2e3ca8ea63288d4f94"
+        }
+      ],
+      "gap_kind": "missing_stream_transition_invariants",
+      "impact": "Records can validate with impossible or uninterpretable abort combinations, no end source, and no relation to partial/final reporting or settlement status, weakening recovery and rollback accounting.",
+      "item_id": "M15-015",
+      "item_type": "gap",
+      "severity": "high",
+      "source_unit_refs": [
+        "SEMANTIC:JSON_SUFFIX:Plans/runtime_artifact_cost_usage.schema.json"
+      ],
+      "statement": "The optional stream object has no required fields and no conditional relationship among stop_reason, abort_requested, usage_observed_before_abort, stream_end_source, usage_reporting_state, and settlement_status.",
+      "title": "Stream abort facts do not define a valid lifecycle"
+    },
+    {
+      "builder_discretion": true,
+      "confidence": 1.0,
+      "dimensions": [
+        "security_privacy",
+        "scale_performance",
+        "compatibility_migration",
+        "builder_discretion",
+        "ambiguity_unknowns",
+        "privacy_data_lifecycle",
+        "untrusted_inputs",
+        "scale_limits",
+        "unknown_unknowns"
+      ],
+      "evidence": [
+        {
+          "exact_quote": "        \"overflow_evidence\": {",
+          "line_end": 684,
+          "line_start": 684,
+          "path": "Plans/runtime_artifact_cost_usage.schema.json",
+          "source_sha256": "76c1fdd601af0be88eb951d06985e1165ef2cdea3d331f2e3ca8ea63288d4f94"
+        },
+        {
+          "exact_quote": "          \"additionalProperties\": true",
+          "line_end": 686,
+          "line_start": 686,
+          "path": "Plans/runtime_artifact_cost_usage.schema.json",
+          "source_sha256": "76c1fdd601af0be88eb951d06985e1165ef2cdea3d331f2e3ca8ea63288d4f94"
+        },
+        {
+          "exact_quote": "        \"provider_compat\": {",
+          "line_end": 688,
+          "line_start": 688,
+          "path": "Plans/runtime_artifact_cost_usage.schema.json",
+          "source_sha256": "76c1fdd601af0be88eb951d06985e1165ef2cdea3d331f2e3ca8ea63288d4f94"
+        },
+        {
+          "exact_quote": "          \"additionalProperties\": true",
+          "line_end": 690,
+          "line_start": 690,
+          "path": "Plans/runtime_artifact_cost_usage.schema.json",
+          "source_sha256": "76c1fdd601af0be88eb951d06985e1165ef2cdea3d331f2e3ca8ea63288d4f94"
+        }
+      ],
+      "gap_kind": "unbounded_untyped_extension_payloads",
+      "impact": "Arbitrary nested values, sensitive provider data, huge payloads, or incompatible extension shapes may pass validation without size, redaction, provenance, or migration controls.",
+      "item_id": "M15-016",
+      "item_type": "gap",
+      "severity": "high",
+      "source_unit_refs": [
+        "SEMANTIC:JSON_SUFFIX:Plans/runtime_artifact_cost_usage.schema.json"
+      ],
+      "statement": "overflow_evidence and provider_compat are unrestricted objects with additionalProperties true and no declared value schema or bounds.",
+      "title": "Compatibility escape hatches accept untrusted arbitrary data"
+    },
+    {
+      "builder_discretion": true,
+      "confidence": 0.98,
+      "dimensions": [
+        "ownership",
+        "consumers",
+        "gui_truth",
+        "missing_callers_consumers",
+        "gui_misleading_states",
+        "accessibility",
+        "localization",
+        "destructive_actions",
+        "cross_document_seams"
+      ],
+      "evidence": [
+        {
+          "exact_quote": "    \"producer_ref\": {",
+          "line_end": 474,
+          "line_start": 474,
+          "path": "Plans/runtime_artifact_cost_usage.schema.json",
+          "source_sha256": "76c1fdd601af0be88eb951d06985e1165ef2cdea3d331f2e3ca8ea63288d4f94"
+        },
+        {
+          "exact_quote": "    \"summary\": {",
+          "line_end": 484,
+          "line_start": 484,
+          "path": "Plans/runtime_artifact_cost_usage.schema.json",
+          "source_sha256": "76c1fdd601af0be88eb951d06985e1165ef2cdea3d331f2e3ca8ea63288d4f94"
+        },
+        {
+          "exact_quote": "    \"source_surface\": {",
+          "line_end": 493,
+          "line_start": 493,
+          "path": "Plans/runtime_artifact_cost_usage.schema.json",
+          "source_sha256": "76c1fdd601af0be88eb951d06985e1165ef2cdea3d331f2e3ca8ea63288d4f94"
+        }
+      ],
+      "gap_kind": "consumer_and_presentation_contract_absent",
+      "impact": "Caller ownership, authorization, destructive-action semantics, display precedence, accessibility labeling, and localization remain external and can diverge across GUI and non-GUI consumers.",
+      "item_id": "M15-017",
+      "item_type": "consumer",
+      "severity": "medium",
+      "source_unit_refs": [
+        "SEMANTIC:JSON_FIELD:Plans/runtime_artifact_cost_usage.schema.json:properties",
+        "STRUCTURAL:$.properties"
+      ],
+      "statement": "The schema permits free-form producer_ref, summary, and source_surface metadata but does not identify required callers/consumers or specify GUI rendering, accessibility, localization, or destructive behavior.",
+      "title": "Consumer ownership and GUI truth are outside the contract"
+    },
+    {
+      "builder_discretion": true,
+      "confidence": 0.99,
+      "dimensions": [
+        "contracts",
+        "acceptance_oracles",
+        "invalid_states_transitions",
+        "authority_boundaries",
+        "cross_document_seams",
+        "test_falsifiability",
+        "unknown_unknowns"
+      ],
+      "evidence": [
+        {
+          "exact_quote": "      \"additionalProperties\": false,",
+          "line_end": 515,
+          "line_start": 515,
+          "path": "Plans/runtime_artifact_cost_usage.schema.json",
+          "source_sha256": "76c1fdd601af0be88eb951d06985e1165ef2cdea3d331f2e3ca8ea63288d4f94"
+        },
+        {
+          "exact_quote": "          \"additionalProperties\": true",
+          "line_end": 690,
+          "line_start": 690,
+          "path": "Plans/runtime_artifact_cost_usage.schema.json",
+          "source_sha256": "76c1fdd601af0be88eb951d06985e1165ef2cdea3d331f2e3ca8ea63288d4f94"
+        }
+      ],
+      "gap_kind": "structural_oracle_without_semantic_oracle",
+      "impact": "A validator can prove key presence and primitive shape but cannot falsify contradictory authority, accounting, display, quota, stream, lineage, or extension semantics.",
+      "item_id": "M15-018",
+      "item_type": "acceptance_oracle",
+      "severity": "high",
+      "source_unit_refs": [
+        "SEMANTIC:JSON_FIELD:Plans/runtime_artifact_cost_usage.schema.json:properties",
+        "SEMANTIC:JSON_SUFFIX:Plans/runtime_artifact_cost_usage.schema.json",
+        "STRUCTURAL:$.properties"
+      ],
+      "statement": "The schema is a strong structural oracle for closed declared objects but supplies no cross-field semantic oracle and explicitly leaves two extension objects open.",
+      "title": "Validation proves shape, not semantic coherence"
+    }
+  ],
+  "model": "gpt-5.6-sol",
+  "phase": "blind_macro_window_review",
+  "reasoning_effort": "xhigh",
+  "schema_version": "macro-review-result-v1",
+  "segments": [
+    {
+      "core_range": [
+        1,
+        344
+      ],
+      "covered_source_unit_refs": [
+        "SEMANTIC:JSON_PREFIX:Plans/runtime_artifact_cost_usage.schema.json",
+        "SEMANTIC:JSON_FIELD:Plans/runtime_artifact_cost_usage.schema.json:$schema",
+        "SEMANTIC:JSON_FIELD:Plans/runtime_artifact_cost_usage.schema.json:$id",
+        "SEMANTIC:JSON_FIELD:Plans/runtime_artifact_cost_usage.schema.json:title",
+        "SEMANTIC:JSON_FIELD:Plans/runtime_artifact_cost_usage.schema.json:type",
+        "SEMANTIC:JSON_FIELD:Plans/runtime_artifact_cost_usage.schema.json:additionalProperties",
+        "SEMANTIC:JSON_FIELD:Plans/runtime_artifact_cost_usage.schema.json:required",
+        "SEMANTIC:JSON_FIELD:Plans/runtime_artifact_cost_usage.schema.json:$defs:CONT-001",
+        "STRUCTURAL:$",
+        "STRUCTURAL:$.$defs",
+        "STRUCTURAL:$.$id",
+        "STRUCTURAL:$.$schema",
+        "STRUCTURAL:$.additionalProperties",
+        "STRUCTURAL:$.required",
+        "STRUCTURAL:$.title",
+        "STRUCTURAL:$.type"
+      ],
+      "item_ids": [
+        "M15-001",
+        "M15-002",
+        "M15-003",
+        "M15-004",
+        "M15-005",
+        "M15-006",
+        "M15-007"
+      ],
+      "reviewed": true,
+      "summary": "Reviewed all root-prefix and first-definition lines. The schema establishes a stable closed envelope and rich token/provider/cost/quota shapes, but cache interpretation, cost/status coherence, quota arithmetic/timing, and dynamic token-map bounds are not semantically enforced.",
+      "window_id": "WIN-C94A9B45F416-0001"
+    },
+    {
+      "core_range": [
+        345,
+        695
+      ],
+      "covered_source_unit_refs": [
+        "SEMANTIC:JSON_FIELD:Plans/runtime_artifact_cost_usage.schema.json:$defs:CONT-002",
+        "SEMANTIC:JSON_FIELD:Plans/runtime_artifact_cost_usage.schema.json:properties",
+        "SEMANTIC:JSON_SUFFIX:Plans/runtime_artifact_cost_usage.schema.json",
+        "STRUCTURAL:$",
+        "STRUCTURAL:$.$defs",
+        "STRUCTURAL:$.properties"
+      ],
+      "item_ids": [
+        "M15-008",
+        "M15-009",
+        "M15-010",
+        "M15-011",
+        "M15-012",
+        "M15-013",
+        "M15-014",
+        "M15-015",
+        "M15-016",
+        "M15-017",
+        "M15-018"
+      ],
+      "reviewed": true,
+      "summary": "Reviewed the authority definition, complete root properties block, and suffix. Provenance, typed payload, flags, lineage, stream, and compatibility surfaces are present; adversarial review found unenforced mirror equality, temporal and authority lifecycle gaps, retry/stream contradictions, GUI/consumer ambiguity, and unrestricted extension payloads.",
+      "window_id": "WIN-C94A9B45F416-0002"
+    }
+  ],
+  "self_attestation": {
+    "no_canonical_writes": true,
+    "no_external_research_during_blind_review": true,
+    "no_peer_result_access": true,
+    "no_prior_audit_access": true,
+    "no_unrelated_source_access": true,
+    "terminal_after_submission": true
+  },
+  "source_binding": {
+    "bundle_id": "MACRO15-C94A9B45F416-0001",
+    "document_path": "Plans/runtime_artifact_cost_usage.schema.json",
+    "micro_window_ids": [
+      "WIN-C94A9B45F416-0001",
+      "WIN-C94A9B45F416-0002"
+    ],
+    "source_sha256": "76c1fdd601af0be88eb951d06985e1165ef2cdea3d331f2e3ca8ea63288d4f94"
+  },
+  "status": "completed",
+  "synthesis": {
+    "cross_document_questions": [
+      "Which canonical producer and consumer contracts enforce equality among root, type_payload, refs, and usage mirror fields?",
+      "Where are the cost-status, quota-arithmetic, settlement-lifecycle, stream-transition, display-precedence, and retry-idempotency invariants defined and executable?",
+      "Which retention, redaction, size-limit, and compatibility-migration rules govern raw payload references and the open overflow_evidence/provider_compat objects?"
+    ],
+    "feature_family_keys": [
+      "runtime_artifact_cost_usage",
+      "provider_token_accounting",
+      "cost_and_quota_projection",
+      "usage_authority_and_settlement",
+      "usage_lineage_and_stream_recovery"
+    ],
+    "research_queries": [
+      "JSON Schema 2020-12 patterns for cross-field equality and conditional status invariants in accounting records",
+      "Robust idempotency, lineage, and partial-stream accounting contracts for provider usage events",
+      "Safe bounded extension-object and redaction patterns for provider compatibility payloads"
+    ]
+  },
+  "task_thread_id": "/root/a005m15_b10_000199_attempt_0015_terminal"
+}

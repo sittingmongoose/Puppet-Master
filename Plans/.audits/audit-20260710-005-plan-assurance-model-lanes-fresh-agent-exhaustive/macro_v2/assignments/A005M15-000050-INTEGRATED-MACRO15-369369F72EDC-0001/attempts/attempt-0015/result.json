@@ -1,0 +1,826 @@
+{
+  "assignment_id": "A005M15-000050-INTEGRATED-MACRO15-369369F72EDC-0001",
+  "attempt_id": "attempt-0015",
+  "audit_id": "audit-20260710-005-plan-assurance-model-lanes-fresh-agent-exhaustive",
+  "coverage": {
+    "all_micro_windows_reviewed": true,
+    "all_source_lines_reviewed": true,
+    "all_source_units_accounted": true,
+    "both_exact_and_adversarial_lenses_applied": true,
+    "dimensions_checked": [
+      "behavior",
+      "capabilities",
+      "inputs_outputs",
+      "contracts",
+      "states_transitions",
+      "authority",
+      "ownership",
+      "consumers",
+      "gui_truth",
+      "failures_recovery",
+      "security_privacy",
+      "propagation",
+      "operations",
+      "scale_performance",
+      "compatibility_migration",
+      "acceptance_oracles",
+      "builder_discretion",
+      "ambiguity_unknowns",
+      "missing_callers_consumers",
+      "invalid_states_transitions",
+      "concurrency_races",
+      "partial_failure",
+      "recovery_rollback",
+      "authority_boundaries",
+      "privacy_data_lifecycle",
+      "untrusted_inputs",
+      "gui_misleading_states",
+      "offline_network_loss",
+      "scale_limits",
+      "accessibility",
+      "localization",
+      "observability_support",
+      "destructive_actions",
+      "cross_document_seams",
+      "test_falsifiability",
+      "unknown_unknowns"
+    ]
+  },
+  "items": [
+    {
+      "builder_discretion": false,
+      "confidence": 0.99,
+      "dimensions": [
+        "behavior",
+        "capabilities",
+        "inputs_outputs",
+        "contracts",
+        "authority",
+        "ownership",
+        "consumers",
+        "security_privacy",
+        "propagation",
+        "cross_document_seams",
+        "test_falsifiability"
+      ],
+      "evidence": [
+        {
+          "exact_quote": "`Plans/GitHub_API_Auth_and_Flows.md` remains the owner doc for GitHub API auth realm, credential secrecy, local Git versus GitHub hosting boundaries, callback binding policy, host policy, stable account identity, mutation recovery context, runtime identity transfer, and browser/debug auth handoff. Cross-doc consumers must preserve the owner routing in the source body rather than recreating GitHub-local auth, disabled-state, worktree, permission, or command-routing rules.",
+          "line_end": 158,
+          "line_start": 158,
+          "path": "Plans/GitHub_API_Auth_and_Flows.md",
+          "source_sha256": "bb36d0e03f358c2b87d6c8b91d33f7da5f62c36c45524c34dedaff8146caffd4"
+        }
+      ],
+      "gap_kind": "none",
+      "impact": "The prologue establishes a coherent owner boundary that prevents consumer surfaces from inventing competing GitHub auth, routing, and disabled-state rules.",
+      "item_id": "A005M15-I001",
+      "item_type": "contract",
+      "severity": "info",
+      "source_unit_refs": [
+        "SEMANTIC:PROLOGUE:Plans/GitHub_API_Auth_and_Flows.md"
+      ],
+      "statement": "GitHub_API_Auth_and_Flows is explicitly authoritative for the GitHub API auth realm and names the consumer obligations that must remain routed to other owners.",
+      "title": "GitHub auth owner boundary is explicit"
+    },
+    {
+      "builder_discretion": true,
+      "confidence": 0.94,
+      "dimensions": [
+        "contracts",
+        "failures_recovery",
+        "security_privacy",
+        "operations",
+        "compatibility_migration",
+        "acceptance_oracles",
+        "builder_discretion",
+        "ambiguity_unknowns",
+        "partial_failure",
+        "recovery_rollback",
+        "privacy_data_lifecycle",
+        "offline_network_loss",
+        "observability_support",
+        "test_falsifiability"
+      ],
+      "evidence": [
+        {
+          "exact_quote": "- PM uses the platform OS credential store through the Rust `keyring` crate abstraction: macOS Keychain, Windows Credential Manager, and Linux Secret Service/libsecret where available.",
+          "line_end": 86,
+          "line_start": 86,
+          "path": "Plans/GitHub_API_Auth_and_Flows.md",
+          "source_sha256": "bb36d0e03f358c2b87d6c8b91d33f7da5f62c36c45524c34dedaff8146caffd4"
+        }
+      ],
+      "gap_kind": "credential_store_unavailability_recovery_unspecified",
+      "impact": "A missing, locked, denied, or temporarily unavailable credential-store backend can strand authentication or tempt an unsafe fallback because fail-closed behavior, retry routing, user recovery, and support observability are not defined.",
+      "item_id": "A005M15-I002",
+      "item_type": "gap",
+      "severity": "high",
+      "source_unit_refs": [
+        "PLANUNIT:GAAAF-002",
+        "SEMANTIC:PLANUNIT:GAAAF-002"
+      ],
+      "statement": "The OS-only secret boundary is strong, but the contract does not specify behavior or acceptance oracles when the platform credential store is absent, locked, permission-denied, corrupted, or intermittently unavailable.",
+      "title": "Credential-store outage behavior is undefined"
+    },
+    {
+      "builder_discretion": false,
+      "confidence": 0.99,
+      "dimensions": [
+        "behavior",
+        "capabilities",
+        "contracts",
+        "authority",
+        "ownership",
+        "consumers",
+        "security_privacy",
+        "propagation",
+        "authority_boundaries",
+        "cross_document_seams",
+        "test_falsifiability"
+      ],
+      "evidence": [
+        {
+          "exact_quote": "canonical_text: Local Git operations remain performed by the local git binary while GitHub hosting operations use the GitHub HTTPS API; GitHub Copilot auth does not authorize repository/platform mutations, github_api tokens never transfer to SSH remotes or local Git credential helpers, and GitHub_Integration remote surfaces consume FileSafe mutation-safety, write-scope, and durability contracts.",
+          "line_end": 225,
+          "line_start": 225,
+          "path": "Plans/GitHub_API_Auth_and_Flows.md",
+          "source_sha256": "bb36d0e03f358c2b87d6c8b91d33f7da5f62c36c45524c34dedaff8146caffd4"
+        }
+      ],
+      "gap_kind": "none",
+      "impact": "The boundary prevents credential-domain confusion and routes remote mutations through FileSafe rather than allowing a hosting integration to bypass filesystem safety and durability ownership.",
+      "item_id": "A005M15-I003",
+      "item_type": "authority",
+      "severity": "info",
+      "source_unit_refs": [
+        "PLANUNIT:GAAAF-003",
+        "SEMANTIC:PLANUNIT:GAAAF-003"
+      ],
+      "statement": "Local Git, GitHub hosting, Copilot authorization, SSH transport credentials, and FileSafe mutation authority are deliberately separated.",
+      "title": "Git and GitHub authority domains are separated"
+    },
+    {
+      "builder_discretion": true,
+      "confidence": 0.9,
+      "dimensions": [
+        "behavior",
+        "inputs_outputs",
+        "contracts",
+        "states_transitions",
+        "failures_recovery",
+        "security_privacy",
+        "operations",
+        "acceptance_oracles",
+        "builder_discretion",
+        "ambiguity_unknowns",
+        "invalid_states_transitions",
+        "concurrency_races",
+        "partial_failure",
+        "untrusted_inputs",
+        "observability_support",
+        "test_falsifiability",
+        "unknown_unknowns"
+      ],
+      "evidence": [
+        {
+          "exact_quote": "GitHub API OAuth callback listeners are loopback-only: they bind only to the configured loopback `bind-address` / `bind-host` for the active local, WSL, container, or remote-dev context, and wildcard/public-interface callback binds are invalid.",
+          "line_end": 103,
+          "line_start": 103,
+          "path": "Plans/GitHub_API_Auth_and_Flows.md",
+          "source_sha256": "bb36d0e03f358c2b87d6c8b91d33f7da5f62c36c45524c34dedaff8146caffd4"
+        }
+      ],
+      "gap_kind": "oauth_callback_validation_and_lifecycle_unspecified",
+      "impact": "Loopback binding alone does not define request correlation, replay rejection, single-use lifecycle, timeout, port collision handling, hostile local-process traffic, or cleanup after partial startup, leaving security-sensitive implementation choices unconstrained.",
+      "item_id": "A005M15-I004",
+      "item_type": "gap",
+      "severity": "high",
+      "source_unit_refs": [
+        "PLANUNIT:GAAAF-004",
+        "SEMANTIC:PLANUNIT:GAAAF-004"
+      ],
+      "statement": "The callback contract constrains network binding but does not define callback authenticity, correlation, replay defense, listener lifecycle, or failure recovery.",
+      "title": "OAuth callback security stops at loopback binding"
+    },
+    {
+      "builder_discretion": true,
+      "confidence": 0.99,
+      "dimensions": [
+        "behavior",
+        "capabilities",
+        "states_transitions",
+        "gui_truth",
+        "failures_recovery",
+        "operations",
+        "compatibility_migration",
+        "acceptance_oracles",
+        "builder_discretion",
+        "ambiguity_unknowns",
+        "gui_misleading_states",
+        "offline_network_loss",
+        "cross_document_seams",
+        "test_falsifiability"
+      ],
+      "evidence": [
+        {
+          "exact_quote": "`github_host_policy` distinguishes at least `github.com_only` and `enterprise_allowed`. If the MVP remains `github.com_only`, GHES repositories and GitHub Enterprise Server URLs receive deterministic disabled-state UX rather than hidden fallback or accidental downgraded behavior.",
+          "line_end": 107,
+          "line_start": 107,
+          "path": "Plans/GitHub_API_Auth_and_Flows.md",
+          "source_sha256": "bb36d0e03f358c2b87d6c8b91d33f7da5f62c36c45524c34dedaff8146caffd4"
+        }
+      ],
+      "gap_kind": "host_policy_default_unresolved",
+      "impact": "Builders cannot deterministically decide whether GHES is supported, disabled, or configurable, and tests cannot assert the correct discovery and disabled-state behavior without a selected default and transition contract.",
+      "item_id": "A005M15-I005",
+      "item_type": "unknown",
+      "severity": "high",
+      "source_unit_refs": [
+        "PLANUNIT:GAAAF-005",
+        "SEMANTIC:PLANUNIT:GAAAF-005"
+      ],
+      "statement": "The host-policy states are named, but the operative MVP policy remains conditional and the phrase 'at least' leaves the closed state set undefined.",
+      "title": "GitHub host policy is not actually selected"
+    },
+    {
+      "builder_discretion": true,
+      "confidence": 0.96,
+      "dimensions": [
+        "inputs_outputs",
+        "contracts",
+        "states_transitions",
+        "authority",
+        "ownership",
+        "security_privacy",
+        "propagation",
+        "compatibility_migration",
+        "acceptance_oracles",
+        "builder_discretion",
+        "ambiguity_unknowns",
+        "invalid_states_transitions",
+        "concurrency_races",
+        "recovery_rollback",
+        "authority_boundaries",
+        "privacy_data_lifecycle",
+        "cross_document_seams",
+        "test_falsifiability"
+      ],
+      "evidence": [
+        {
+          "exact_quote": "canonical_text: 'GitHub identity is account-keyed rather than login-keyed: stable account_id is the durable join key, credential_ref points to the credential-store entry that authorizes the account, and runtime/mutation envelopes carry requested/effective account identity, account metadata, execution role, operational identity, and account_switch_lineage.'",
+          "line_end": 385,
+          "line_start": 385,
+          "path": "Plans/GitHub_API_Auth_and_Flows.md",
+          "source_sha256": "bb36d0e03f358c2b87d6c8b91d33f7da5f62c36c45524c34dedaff8146caffd4"
+        }
+      ],
+      "gap_kind": "account_identity_lifecycle_unspecified",
+      "impact": "Account deletion, credential rotation, host migration, relink, duplicate discovery, or provider-side rename can produce dangling or aliased durable joins unless identity creation, uniqueness, tombstoning, and rebinding rules are canonical.",
+      "item_id": "A005M15-I006",
+      "item_type": "gap",
+      "severity": "high",
+      "source_unit_refs": [
+        "PLANUNIT:GAAAF-006",
+        "SEMANTIC:PLANUNIT:GAAAF-006"
+      ],
+      "statement": "Stable account_id and credential_ref roles are clear, but their creation, uniqueness domain, rotation, revocation, deletion, merge, and tombstone transitions are not specified.",
+      "title": "Stable identity lacks lifecycle rules"
+    },
+    {
+      "builder_discretion": true,
+      "confidence": 0.94,
+      "dimensions": [
+        "inputs_outputs",
+        "contracts",
+        "states_transitions",
+        "gui_truth",
+        "failures_recovery",
+        "acceptance_oracles",
+        "builder_discretion",
+        "ambiguity_unknowns",
+        "gui_misleading_states",
+        "accessibility",
+        "localization",
+        "observability_support",
+        "test_falsifiability"
+      ],
+      "evidence": [
+        {
+          "exact_quote": "canonical_text: Requested-vs-effective admin capability UI displays stable account_id, effective account, and switch reason, while blocked-state copy explains why a requested account was skipped, clamped, or fell through.",
+          "line_end": 439,
+          "line_start": 439,
+          "path": "Plans/GitHub_API_Auth_and_Flows.md",
+          "source_sha256": "bb36d0e03f358c2b87d6c8b91d33f7da5f62c36c45524c34dedaff8146caffd4"
+        }
+      ],
+      "gap_kind": "account_disclosure_ui_oracles_missing",
+      "impact": "Different surfaces can expose inconsistent or misleading reasons and raw internal identifiers, while accessibility and localization failures cannot be falsified by the generic lossless-source acceptance criteria.",
+      "item_id": "A005M15-I007",
+      "item_type": "gap",
+      "severity": "medium",
+      "source_unit_refs": [
+        "PLANUNIT:GAAAF-007",
+        "SEMANTIC:PLANUNIT:GAAAF-007"
+      ],
+      "statement": "The visible fields and reason categories are named, but redaction, reason-code-to-copy mapping, loading/error states, accessibility semantics, localization constraints, and UI-specific acceptance oracles are absent.",
+      "title": "Account-switch disclosure has no testable UI contract"
+    },
+    {
+      "builder_discretion": true,
+      "confidence": 0.98,
+      "dimensions": [
+        "behavior",
+        "inputs_outputs",
+        "contracts",
+        "states_transitions",
+        "consumers",
+        "gui_truth",
+        "failures_recovery",
+        "propagation",
+        "operations",
+        "acceptance_oracles",
+        "builder_discretion",
+        "ambiguity_unknowns",
+        "invalid_states_transitions",
+        "concurrency_races",
+        "partial_failure",
+        "recovery_rollback",
+        "gui_misleading_states",
+        "offline_network_loss",
+        "observability_support",
+        "destructive_actions",
+        "cross_document_seams",
+        "test_falsifiability"
+      ],
+      "evidence": [
+        {
+          "exact_quote": "canonical_text: GitHub command surfaces normalize through cmd.runtime and cmd.orchestrator.open_in_* bindings, allow only low-risk presentation/navigation in weakened projection states, require current or direct canonical-runtime validation before mutation/recovery/retry/cleanup, and display contextual help, projection-health, trust-state, historical-run, idle, and degraded-mode state before mutation-capable actions are enabled.",
+          "line_end": 489,
+          "line_start": 489,
+          "path": "Plans/GitHub_API_Auth_and_Flows.md",
+          "source_sha256": "bb36d0e03f358c2b87d6c8b91d33f7da5f62c36c45524c34dedaff8146caffd4"
+        }
+      ],
+      "gap_kind": "projection_state_decision_table_and_atomicity_missing",
+      "impact": "Surfaces may disagree on which actions are safe, enable a mutation from a stale view, or race a projection downgrade between validation and dispatch because weakened-state policy is not closed or atomically bound to execution.",
+      "item_id": "A005M15-I008",
+      "item_type": "gap",
+      "severity": "high",
+      "source_unit_refs": [
+        "PLANUNIT:GAAAF-008",
+        "SEMANTIC:PLANUNIT:GAAAF-008"
+      ],
+      "statement": "The gating intent is clear, but 'low-risk,' 'weakened,' 'sometimes degraded,' valid deep-link identity, freshness thresholds, state precedence, and validation-to-dispatch atomicity lack a canonical decision table.",
+      "title": "Projection gating remains non-deterministic under races"
+    },
+    {
+      "builder_discretion": true,
+      "confidence": 0.98,
+      "dimensions": [
+        "behavior",
+        "inputs_outputs",
+        "contracts",
+        "states_transitions",
+        "authority",
+        "failures_recovery",
+        "security_privacy",
+        "propagation",
+        "operations",
+        "acceptance_oracles",
+        "builder_discretion",
+        "ambiguity_unknowns",
+        "invalid_states_transitions",
+        "concurrency_races",
+        "partial_failure",
+        "recovery_rollback",
+        "authority_boundaries",
+        "untrusted_inputs",
+        "observability_support",
+        "destructive_actions",
+        "test_falsifiability"
+      ],
+      "evidence": [
+        {
+          "exact_quote": "canonical_text: GitHub mutation and recovery payloads consume execution_unit_context and recovery_context with blocked sequence, blocked episode, recovery handshake, trust state, degraded state, optional approval, and DAE jail posture; mutations proceed only after startup recovery rebinds the current blocked episode, trust_state is writable, degraded_state is false, and approval or DAE jail gates are cleared.",
+          "line_end": 542,
+          "line_start": 542,
+          "path": "Plans/GitHub_API_Auth_and_Flows.md",
+          "source_sha256": "bb36d0e03f358c2b87d6c8b91d33f7da5f62c36c45524c34dedaff8146caffd4"
+        }
+      ],
+      "gap_kind": "mutation_precondition_toctou_binding_missing",
+      "impact": "A blocked episode, approval, trust state, or jail posture can change after the checks pass but before the GitHub request is accepted, enabling a stale-authority mutation or duplicate retry without a versioned compare-and-act contract.",
+      "item_id": "A005M15-I009",
+      "item_type": "gap",
+      "severity": "high",
+      "source_unit_refs": [
+        "PLANUNIT:GAAAF-009",
+        "SEMANTIC:PLANUNIT:GAAAF-009"
+      ],
+      "statement": "Mutation prerequisites are enumerated, but the contract does not atomically bind their evaluated versions to dispatch, remote idempotency, or post-response reconciliation.",
+      "title": "Mutation gates have a time-of-check race"
+    },
+    {
+      "builder_discretion": true,
+      "confidence": 0.95,
+      "dimensions": [
+        "capabilities",
+        "inputs_outputs",
+        "contracts",
+        "authority",
+        "ownership",
+        "consumers",
+        "propagation",
+        "operations",
+        "acceptance_oracles",
+        "builder_discretion",
+        "ambiguity_unknowns",
+        "missing_callers_consumers",
+        "authority_boundaries",
+        "observability_support",
+        "cross_document_seams",
+        "test_falsifiability"
+      ],
+      "evidence": [
+        {
+          "exact_quote": "canonical_text: Multi-account GitHub and widget data sourcing, GitHub/integration pivots, mutation/recovery audits, HITL/policy recovery, skills/formatters/DAE/tool reachability, and Orchestrator/Source Control routing preserve lane, package, runtime, degraded-trust, workspace, provider-attempt, node attempt, and current blocked-sequence ownership instead of falling back to pre-rewrite, single-account, GitHub-local auth, or graph-authority shortcuts.",
+          "line_end": 594,
+          "line_start": 594,
+          "path": "Plans/GitHub_API_Auth_and_Flows.md",
+          "source_sha256": "bb36d0e03f358c2b87d6c8b91d33f7da5f62c36c45524c34dedaff8146caffd4"
+        }
+      ],
+      "gap_kind": "cross_surface_envelope_and_consumer_matrix_missing",
+      "impact": "Broad ownership prose cannot prove that every caller emits, every dispatcher validates, and every consumer preserves the required anchors, so seams can silently omit fields while still appearing compliant.",
+      "item_id": "A005M15-I010",
+      "item_type": "gap",
+      "severity": "high",
+      "source_unit_refs": [
+        "PLANUNIT:GAAAF-010",
+        "SEMANTIC:PLANUNIT:GAAAF-010"
+      ],
+      "statement": "The cross-surface invariants are extensive, but no concrete envelope schema, complete caller/consumer matrix, required-field propagation map, or seam oracle is defined in this unit.",
+      "title": "Cross-surface attribution is not mechanically closed"
+    },
+    {
+      "builder_discretion": true,
+      "confidence": 0.95,
+      "dimensions": [
+        "inputs_outputs",
+        "contracts",
+        "ownership",
+        "consumers",
+        "security_privacy",
+        "propagation",
+        "operations",
+        "acceptance_oracles",
+        "builder_discretion",
+        "ambiguity_unknowns",
+        "privacy_data_lifecycle",
+        "observability_support",
+        "cross_document_seams",
+        "test_falsifiability"
+      ],
+      "evidence": [
+        {
+          "exact_quote": "canonical_text: GitHub write attempts transfer execution_role, requested_account_id, operational_identity, account-switch and pressure ownership, blocked_sequence minting, startup recovery handshake, DAE jail, approval policy, usage switch-history, and usage execution-role follow-through into owner and consumer docs, and usage/audit rows record the identities and credential reference that actually executed the call.",
+          "line_end": 654,
+          "line_start": 654,
+          "path": "Plans/GitHub_API_Auth_and_Flows.md",
+          "source_sha256": "bb36d0e03f358c2b87d6c8b91d33f7da5f62c36c45524c34dedaff8146caffd4"
+        }
+      ],
+      "gap_kind": "audit_identity_data_lifecycle_unspecified",
+      "impact": "Usage and audit records can retain account and switching metadata indefinitely or disclose more identity detail than support and governance require, with no deterministic deletion, export, or redaction behavior.",
+      "item_id": "A005M15-I011",
+      "item_type": "gap",
+      "severity": "medium",
+      "source_unit_refs": [
+        "PLANUNIT:GAAAF-011",
+        "SEMANTIC:PLANUNIT:GAAAF-011"
+      ],
+      "statement": "The fields that reach usage and audit rows are specified, but retention, minimization, redaction, access control, account deletion, credential_ref tombstoning, and support-export policy are not.",
+      "title": "Audit identity records lack a data lifecycle"
+    },
+    {
+      "builder_discretion": true,
+      "confidence": 0.96,
+      "dimensions": [
+        "behavior",
+        "inputs_outputs",
+        "contracts",
+        "states_transitions",
+        "authority",
+        "failures_recovery",
+        "security_privacy",
+        "operations",
+        "acceptance_oracles",
+        "builder_discretion",
+        "ambiguity_unknowns",
+        "invalid_states_transitions",
+        "partial_failure",
+        "recovery_rollback",
+        "authority_boundaries",
+        "privacy_data_lifecycle",
+        "untrusted_inputs",
+        "offline_network_loss",
+        "observability_support",
+        "destructive_actions",
+        "test_falsifiability"
+      ],
+      "evidence": [
+        {
+          "exact_quote": "canonical_text: Browser session-shaping actions remain explicit_confirmation operations when they mutate cookies, storage, storage export/import state, offline mock routing, or promotion into normal browsing; app-debug login handoff normally remains in the same isolated automation session, while PM-owned provider device-login flows may use a dedicated auth_session.",
+          "line_end": 707,
+          "line_start": 707,
+          "path": "Plans/GitHub_API_Auth_and_Flows.md",
+          "source_sha256": "bb36d0e03f358c2b87d6c8b91d33f7da5f62c36c45524c34dedaff8146caffd4"
+        }
+      ],
+      "gap_kind": "browser_session_mutation_transaction_and_rollback_missing",
+      "impact": "A failed import, partial cookie/storage mutation, mock-route promotion, cancellation, or crashed handoff can leave mixed authentication state with no required snapshot, rollback, isolation, or cleanup semantics.",
+      "item_id": "A005M15-I012",
+      "item_type": "gap",
+      "severity": "high",
+      "source_unit_refs": [
+        "PLANUNIT:GAAAF-012",
+        "SEMANTIC:PLANUNIT:GAAAF-012"
+      ],
+      "statement": "Explicit confirmation is required, but the mutation transaction boundary, preview, cancellation point, atomicity, rollback, provenance validation, and failure-state recovery are unspecified.",
+      "title": "Browser auth handoff lacks rollback semantics"
+    },
+    {
+      "builder_discretion": false,
+      "confidence": 1,
+      "dimensions": [
+        "contracts",
+        "ownership",
+        "compatibility_migration",
+        "acceptance_oracles",
+        "authority_boundaries",
+        "cross_document_seams",
+        "test_falsifiability"
+      ],
+      "evidence": [
+        {
+          "exact_quote": "canonical_text: The former GitHub_API_Auth_and_Flows doc-level source-preserving bridge is retired after Phase 2B atomized GitHub_API_Auth_and_Flows-S0001 and S0003 through S0011 into GAAAF-002 through GAAAF-012 and structurally dispositioned S0002, S0006, S0007, S0012, S0013, and S0015. GAAAF-001 remains only as migration lineage for GitHub_API_Auth_and_Flows-S0014 and must not re-own atomized source coverage or use source_preserving_planunit compile mode.",
+          "line_end": 758,
+          "line_start": 758,
+          "path": "Plans/GitHub_API_Auth_and_Flows.md",
+          "source_sha256": "bb36d0e03f358c2b87d6c8b91d33f7da5f62c36c45524c34dedaff8146caffd4"
+        }
+      ],
+      "gap_kind": "none",
+      "impact": "The retired bridge cannot duplicate product ownership or accidentally compile executable work, preserving one authoritative atomized ownership path.",
+      "item_id": "A005M15-I013",
+      "item_type": "explicit_non_gap",
+      "severity": "info",
+      "source_unit_refs": [
+        "PLANUNIT:GAAAF-001",
+        "SEMANTIC:PLANUNIT:GAAAF-001"
+      ],
+      "statement": "GAAAF-001 is unambiguously limited to migration lineage, with product coverage and forbidden compile behavior explicitly dispositioned.",
+      "title": "Retired bridge ownership is closed"
+    },
+    {
+      "builder_discretion": true,
+      "confidence": 0.97,
+      "dimensions": [
+        "behavior",
+        "capabilities",
+        "inputs_outputs",
+        "contracts",
+        "states_transitions",
+        "authority",
+        "ownership",
+        "consumers",
+        "failures_recovery",
+        "propagation",
+        "operations",
+        "acceptance_oracles",
+        "builder_discretion",
+        "ambiguity_unknowns",
+        "missing_callers_consumers",
+        "invalid_states_transitions",
+        "concurrency_races",
+        "partial_failure",
+        "recovery_rollback",
+        "authority_boundaries",
+        "offline_network_loss",
+        "observability_support",
+        "destructive_actions",
+        "cross_document_seams",
+        "test_falsifiability"
+      ],
+      "evidence": [
+        {
+          "exact_quote": "canonical_text: 'GitHub is optional for repository creation, fork, push, and PR workflows; local or remote Git and FileSafe remain valid without GitHub credentials, and repository/worktree state is execution truth. For an SSH project, discovery, FileSafe, Git, worktrees, commands, testing, path authority, safe points, and execution occur on the remote host through the authorized adapter, with no silent local fallback.'",
+          "line_end": 831,
+          "line_start": 831,
+          "path": "Plans/GitHub_API_Auth_and_Flows.md",
+          "source_sha256": "bb36d0e03f358c2b87d6c8b91d33f7da5f62c36c45524c34dedaff8146caffd4"
+        }
+      ],
+      "gap_kind": "remote_adapter_loss_and_reconnect_state_machine_missing",
+      "impact": "Network loss or adapter restart can leave remote work uncertain; without operation identity, resumption, reconciliation, and safe-point rules, the no-local-fallback constraint can become either data loss or an indefinite blocked state.",
+      "item_id": "A005M15-I014",
+      "item_type": "gap",
+      "severity": "high",
+      "source_unit_refs": [
+        "PLANUNIT:GAAAF-013",
+        "SEMANTIC:PLANUNIT:GAAAF-013"
+      ],
+      "statement": "Remote execution authority and the prohibition on silent local fallback are explicit, but remote adapter disconnect, reconnect, in-flight ambiguity, safe retry, and authoritative resynchronization are not specified.",
+      "title": "Remote-only execution lacks disconnect recovery"
+    },
+    {
+      "builder_discretion": true,
+      "confidence": 0.99,
+      "dimensions": [
+        "behavior",
+        "inputs_outputs",
+        "contracts",
+        "states_transitions",
+        "gui_truth",
+        "failures_recovery",
+        "security_privacy",
+        "operations",
+        "scale_performance",
+        "acceptance_oracles",
+        "builder_discretion",
+        "ambiguity_unknowns",
+        "invalid_states_transitions",
+        "concurrency_races",
+        "partial_failure",
+        "recovery_rollback",
+        "privacy_data_lifecycle",
+        "untrusted_inputs",
+        "gui_misleading_states",
+        "offline_network_loss",
+        "scale_limits",
+        "observability_support",
+        "destructive_actions",
+        "test_falsifiability"
+      ],
+      "evidence": [
+        {
+          "exact_quote": "  - Polling handles authorization_pending, slow_down, expired_token, unsupported_grant_type, incorrect_client_credentials, incorrect_device_code, access_denied, and network_or_rate_limited.",
+          "line_end": 906,
+          "line_start": 906,
+          "path": "Plans/GitHub_API_Auth_and_Flows.md",
+          "source_sha256": "bb36d0e03f358c2b87d6c8b91d33f7da5f62c36c45524c34dedaff8146caffd4"
+        }
+      ],
+      "gap_kind": "network_rate_limit_polling_transition_unspecified",
+      "impact": "Implementations can retry indefinitely, exceed provider limits, ignore Retry-After, outlive expiry, or surface inconsistent recovery actions; restarts and concurrent pollers can also duplicate traffic without a lease or idempotent state transition.",
+      "item_id": "A005M15-I015",
+      "item_type": "gap",
+      "severity": "high",
+      "source_unit_refs": [
+        "PLANUNIT:GAAAF-014",
+        "SEMANTIC:PLANUNIT:GAAAF-014"
+      ],
+      "statement": "The polling error set is closed, but network_or_rate_limited has no prescribed backoff, jitter, Retry-After handling, retry budget, expiry interaction, cancellation, restart lease, terminal transition, or user-visible recovery contract.",
+      "title": "Network and rate-limit polling behavior is not closed"
+    }
+  ],
+  "model": "gpt-5.6-sol",
+  "phase": "blind_macro_window_review",
+  "reasoning_effort": "xhigh",
+  "schema_version": "macro-review-result-v1",
+  "segments": [
+    {
+      "core_range": [
+        1,
+        377
+      ],
+      "covered_source_unit_refs": [
+        "PLANUNIT:GAAAF-002",
+        "PLANUNIT:GAAAF-003",
+        "PLANUNIT:GAAAF-004",
+        "PLANUNIT:GAAAF-005",
+        "SEMANTIC:PROLOGUE:Plans/GitHub_API_Auth_and_Flows.md",
+        "SEMANTIC:PLANUNIT:GAAAF-002",
+        "SEMANTIC:PLANUNIT:GAAAF-003",
+        "SEMANTIC:PLANUNIT:GAAAF-004",
+        "SEMANTIC:PLANUNIT:GAAAF-005"
+      ],
+      "item_ids": [
+        "A005M15-I001",
+        "A005M15-I002",
+        "A005M15-I003",
+        "A005M15-I004",
+        "A005M15-I005"
+      ],
+      "reviewed": true,
+      "summary": "Reviewed the complete prologue and GAAAF-002 through GAAAF-005. The owner and credential-domain boundaries are strong; unresolved risks are credential-store outage recovery, callback authenticity/lifecycle, and the conditional host-policy default.",
+      "window_id": "WIN-369369F72EDC-0001"
+    },
+    {
+      "core_range": [
+        378,
+        750
+      ],
+      "covered_source_unit_refs": [
+        "PLANUNIT:GAAAF-006",
+        "PLANUNIT:GAAAF-007",
+        "PLANUNIT:GAAAF-008",
+        "PLANUNIT:GAAAF-009",
+        "PLANUNIT:GAAAF-010",
+        "PLANUNIT:GAAAF-011",
+        "PLANUNIT:GAAAF-012",
+        "SEMANTIC:PLANUNIT:GAAAF-006",
+        "SEMANTIC:PLANUNIT:GAAAF-007",
+        "SEMANTIC:PLANUNIT:GAAAF-008",
+        "SEMANTIC:PLANUNIT:GAAAF-009",
+        "SEMANTIC:PLANUNIT:GAAAF-010",
+        "SEMANTIC:PLANUNIT:GAAAF-011",
+        "SEMANTIC:PLANUNIT:GAAAF-012"
+      ],
+      "item_ids": [
+        "A005M15-I006",
+        "A005M15-I007",
+        "A005M15-I008",
+        "A005M15-I009",
+        "A005M15-I010",
+        "A005M15-I011",
+        "A005M15-I012"
+      ],
+      "reviewed": true,
+      "summary": "Reviewed GAAAF-006 through GAAAF-012 across identity, disclosure UI, projection gating, recovery mutation gates, cross-surface attribution, audit propagation, and browser session shaping. The dominant adversarial risks are lifecycle gaps, non-atomic state checks, mechanically unclosed seams, privacy retention, and missing rollback.",
+      "window_id": "WIN-369369F72EDC-0002"
+    },
+    {
+      "core_range": [
+        751,
+        952
+      ],
+      "covered_source_unit_refs": [
+        "PLANUNIT:GAAAF-001",
+        "PLANUNIT:GAAAF-013",
+        "PLANUNIT:GAAAF-014",
+        "SEMANTIC:PLANUNIT:GAAAF-001",
+        "SEMANTIC:PLANUNIT:GAAAF-013",
+        "SEMANTIC:PLANUNIT:GAAAF-014"
+      ],
+      "item_ids": [
+        "A005M15-I013",
+        "A005M15-I014",
+        "A005M15-I015"
+      ],
+      "reviewed": true,
+      "summary": "Reviewed the retired bridge, migration coverage, planning-context addendum, and residual OAuth contract. Retirement is explicitly closed; remote-adapter disconnect recovery and network/rate-limited device polling remain under-specified.",
+      "window_id": "WIN-369369F72EDC-0003"
+    }
+  ],
+  "self_attestation": {
+    "no_canonical_writes": true,
+    "no_external_research_during_blind_review": true,
+    "no_peer_result_access": true,
+    "no_prior_audit_access": true,
+    "no_unrelated_source_access": true,
+    "terminal_after_submission": true
+  },
+  "source_binding": {
+    "bundle_id": "MACRO15-369369F72EDC-0001",
+    "document_path": "Plans/GitHub_API_Auth_and_Flows.md",
+    "micro_window_ids": [
+      "WIN-369369F72EDC-0001",
+      "WIN-369369F72EDC-0002",
+      "WIN-369369F72EDC-0003"
+    ],
+    "source_sha256": "bb36d0e03f358c2b87d6c8b91d33f7da5f62c36c45524c34dedaff8146caffd4"
+  },
+  "status": "completed",
+  "synthesis": {
+    "cross_document_questions": [
+      "Which canonical owner selects github_host_policy for MVP and defines the closed policy state set consumed by discovery and disabled-state UX?",
+      "Where is the versioned mutation envelope that atomically binds projection health, blocked episode, approval, DAE jail posture, account identity, and allowed action to GitHub dispatch?",
+      "Which owner defines account_id and credential_ref lifecycle transitions, including rotation, revocation, deletion, tombstoning, relink, duplicate discovery, and enterprise-host migration?",
+      "Which owner provides the exhaustive caller-to-consumer propagation matrix for GitHub recovery and attribution anchors?",
+      "Where are remote-adapter disconnect, in-flight ambiguity, authoritative resynchronization, and no-silent-local-fallback recovery semantics defined?"
+    ],
+    "feature_family_keys": [
+      "github_api_auth_realm",
+      "oauth_device_flow",
+      "credential_store_secrecy",
+      "github_host_policy",
+      "stable_account_identity",
+      "projection_trust_gating",
+      "mutation_recovery_context",
+      "cross_surface_attribution",
+      "browser_auth_session_shaping",
+      "remote_git_execution_authority",
+      "planunit_migration_lineage"
+    ],
+    "research_queries": [
+      "GitHub OAuth device flow official polling slow_down network rate limit Retry-After expiry behavior",
+      "GitHub OAuth loopback callback security state correlation replay one-time listener guidance",
+      "Rust keyring platform backend unavailable locked permission denied recovery behavior macOS Windows Linux",
+      "GitHub Enterprise Server OAuth device flow availability and host policy compatibility",
+      "OAuth device flow concurrent polling restart lease idempotency security best practices"
+    ]
+  },
+  "task_thread_id": "/root/a005m15_b4_000050_attempt_0015_terminal"
+}

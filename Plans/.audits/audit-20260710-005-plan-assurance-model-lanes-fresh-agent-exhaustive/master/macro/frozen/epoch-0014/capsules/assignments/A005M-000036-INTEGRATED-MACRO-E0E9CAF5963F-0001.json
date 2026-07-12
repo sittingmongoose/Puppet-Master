@@ -1,0 +1,284 @@
+{
+  "assignment_id": "A005M-000036-INTEGRATED-MACRO-E0E9CAF5963F-0001",
+  "attempt_id": "attempt-0014",
+  "audit_id": "audit-20260710-005-plan-assurance-model-lanes-fresh-agent-exhaustive",
+  "blindness": {
+    "external_research": "deferred_to_feature_research_phase",
+    "peer_results": "forbidden",
+    "prior_audits": "forbidden",
+    "unrelated_sources": "forbidden"
+  },
+  "bundle_core_range": [
+    1,
+    1983
+  ],
+  "bundle_id": "MACRO-E0E9CAF5963F-0001",
+  "context_ranges": [
+    [
+      1984,
+      1995
+    ]
+  ],
+  "document_path": "Plans/FileManager.md",
+  "micro_window_ids": [
+    "WIN-E0E9CAF5963F-0001",
+    "WIN-E0E9CAF5963F-0002",
+    "WIN-E0E9CAF5963F-0003",
+    "WIN-E0E9CAF5963F-0004",
+    "WIN-E0E9CAF5963F-0005",
+    "WIN-E0E9CAF5963F-0006"
+  ],
+  "phase": "blind_macro_window_review",
+  "required_dimensions": [
+    "behavior",
+    "capabilities",
+    "inputs_outputs",
+    "contracts",
+    "states_transitions",
+    "authority",
+    "ownership",
+    "consumers",
+    "gui_truth",
+    "failures_recovery",
+    "security_privacy",
+    "propagation",
+    "operations",
+    "scale_performance",
+    "compatibility_migration",
+    "acceptance_oracles",
+    "builder_discretion",
+    "ambiguity_unknowns",
+    "missing_callers_consumers",
+    "invalid_states_transitions",
+    "concurrency_races",
+    "partial_failure",
+    "recovery_rollback",
+    "authority_boundaries",
+    "privacy_data_lifecycle",
+    "untrusted_inputs",
+    "gui_misleading_states",
+    "offline_network_loss",
+    "scale_limits",
+    "accessibility",
+    "localization",
+    "observability_support",
+    "destructive_actions",
+    "cross_document_seams",
+    "test_falsifiability",
+    "unknown_unknowns"
+  ],
+  "result_schema_ref": "schemas/macro_review_result.schema.json",
+  "review_instructions": "Read every assigned core line and account for every required_source_unit_ref. Apply both exact-behavior and adversarial-negative-space lenses across every required dimension. Extract concise feature, behavior, contract, state, authority, consumer, GUI, failure/recovery, oracle, gap, unknown, and explicit-non-gap items with exact source evidence. Do not merely paraphrase headings or copy unit refs. Each segment must name its complete required_source_unit_refs list and at least one item. Write exactly one regular JSON payload inside the assigned output directory; result.json is recommended but the filename is not semantic. Do not write a terminal seal. Return PMR1 only after the JSON payload is fully written.",
+  "schema_version": "macro-context-capsule-v1",
+  "segments": [
+    {
+      "core_range": [
+        1,
+        216
+      ],
+      "core_sha256": "bbb582a463672db833a39b0e79bea25e1d6a382cc6f140176ccac8e963558eea",
+      "plan_unit_ids": [],
+      "required_source_unit_refs": [
+        "SEMANTIC:PROLOGUE:Plans/FileManager.md:CONT-001"
+      ],
+      "semantic_block_ids": [
+        "PROLOGUE:Plans/FileManager.md:CONT-001"
+      ],
+      "structural_paths": [],
+      "token_estimate": 11868,
+      "window_id": "WIN-E0E9CAF5963F-0001"
+    },
+    {
+      "core_range": [
+        217,
+        480
+      ],
+      "core_sha256": "6198419591203137ed841e42bbb469ad85d61ed761a50a49d37ca60d527a6400",
+      "plan_unit_ids": [],
+      "required_source_unit_refs": [
+        "SEMANTIC:PROLOGUE:Plans/FileManager.md:CONT-002"
+      ],
+      "semantic_block_ids": [
+        "PROLOGUE:Plans/FileManager.md:CONT-002"
+      ],
+      "structural_paths": [],
+      "token_estimate": 11923,
+      "window_id": "WIN-E0E9CAF5963F-0002"
+    },
+    {
+      "core_range": [
+        481,
+        854
+      ],
+      "core_sha256": "c3994a80102705aca7e7f37e1fef859af8990d2742c7daf77bada3f206cdf5a1",
+      "plan_unit_ids": [
+        "F-002",
+        "F-003",
+        "F-004",
+        "F-005",
+        "F-006"
+      ],
+      "required_source_unit_refs": [
+        "PLANUNIT:F-002",
+        "PLANUNIT:F-003",
+        "PLANUNIT:F-004",
+        "PLANUNIT:F-005",
+        "PLANUNIT:F-006",
+        "SEMANTIC:PROLOGUE:Plans/FileManager.md:CONT-003",
+        "SEMANTIC:PLANUNIT:F-002",
+        "SEMANTIC:PLANUNIT:F-003",
+        "SEMANTIC:PLANUNIT:F-004",
+        "SEMANTIC:PLANUNIT:F-005",
+        "SEMANTIC:PLANUNIT:F-006"
+      ],
+      "semantic_block_ids": [
+        "PROLOGUE:Plans/FileManager.md:CONT-003",
+        "PLANUNIT:F-002",
+        "PLANUNIT:F-003",
+        "PLANUNIT:F-004",
+        "PLANUNIT:F-005",
+        "PLANUNIT:F-006"
+      ],
+      "structural_paths": [],
+      "token_estimate": 8368,
+      "window_id": "WIN-E0E9CAF5963F-0003"
+    },
+    {
+      "core_range": [
+        855,
+        1244
+      ],
+      "core_sha256": "c20fa8337c09a40ce2cbc38097982e5df7a0619d5a69b278a8afa9a1ca07e390",
+      "plan_unit_ids": [
+        "F-007",
+        "F-008",
+        "F-009",
+        "F-010",
+        "F-011",
+        "F-012",
+        "F-013"
+      ],
+      "required_source_unit_refs": [
+        "PLANUNIT:F-007",
+        "PLANUNIT:F-008",
+        "PLANUNIT:F-009",
+        "PLANUNIT:F-010",
+        "PLANUNIT:F-011",
+        "PLANUNIT:F-012",
+        "PLANUNIT:F-013",
+        "SEMANTIC:PLANUNIT:F-007",
+        "SEMANTIC:PLANUNIT:F-008",
+        "SEMANTIC:PLANUNIT:F-009",
+        "SEMANTIC:PLANUNIT:F-010",
+        "SEMANTIC:PLANUNIT:F-011",
+        "SEMANTIC:PLANUNIT:F-012",
+        "SEMANTIC:PLANUNIT:F-013"
+      ],
+      "semantic_block_ids": [
+        "PLANUNIT:F-007",
+        "PLANUNIT:F-008",
+        "PLANUNIT:F-009",
+        "PLANUNIT:F-010",
+        "PLANUNIT:F-011",
+        "PLANUNIT:F-012",
+        "PLANUNIT:F-013"
+      ],
+      "structural_paths": [],
+      "token_estimate": 5517,
+      "window_id": "WIN-E0E9CAF5963F-0004"
+    },
+    {
+      "core_range": [
+        1245,
+        1607
+      ],
+      "core_sha256": "f3295aafa54af08708f0c43f7fb79d2b77500f5493ddce22b53dbf9e26f80e52",
+      "plan_unit_ids": [
+        "F-014",
+        "F-015",
+        "F-016",
+        "F-017",
+        "F-018",
+        "F-019",
+        "F-020"
+      ],
+      "required_source_unit_refs": [
+        "PLANUNIT:F-014",
+        "PLANUNIT:F-015",
+        "PLANUNIT:F-016",
+        "PLANUNIT:F-017",
+        "PLANUNIT:F-018",
+        "PLANUNIT:F-019",
+        "PLANUNIT:F-020",
+        "SEMANTIC:PLANUNIT:F-014",
+        "SEMANTIC:PLANUNIT:F-015",
+        "SEMANTIC:PLANUNIT:F-016",
+        "SEMANTIC:PLANUNIT:F-017",
+        "SEMANTIC:PLANUNIT:F-018",
+        "SEMANTIC:PLANUNIT:F-019",
+        "SEMANTIC:PLANUNIT:F-020"
+      ],
+      "semantic_block_ids": [
+        "PLANUNIT:F-014",
+        "PLANUNIT:F-015",
+        "PLANUNIT:F-016",
+        "PLANUNIT:F-017",
+        "PLANUNIT:F-018",
+        "PLANUNIT:F-019",
+        "PLANUNIT:F-020"
+      ],
+      "structural_paths": [],
+      "token_estimate": 5047,
+      "window_id": "WIN-E0E9CAF5963F-0005"
+    },
+    {
+      "core_range": [
+        1608,
+        1983
+      ],
+      "core_sha256": "2f3b898641ab97557ea70d78d6770064a7c74b1dbda5b7174efc567d20554b08",
+      "plan_unit_ids": [
+        "F-021",
+        "F-022",
+        "F-023",
+        "F-024",
+        "F-025",
+        "F-026",
+        "F-027"
+      ],
+      "required_source_unit_refs": [
+        "PLANUNIT:F-021",
+        "PLANUNIT:F-022",
+        "PLANUNIT:F-023",
+        "PLANUNIT:F-024",
+        "PLANUNIT:F-025",
+        "PLANUNIT:F-026",
+        "PLANUNIT:F-027",
+        "SEMANTIC:PLANUNIT:F-021",
+        "SEMANTIC:PLANUNIT:F-022",
+        "SEMANTIC:PLANUNIT:F-023",
+        "SEMANTIC:PLANUNIT:F-024",
+        "SEMANTIC:PLANUNIT:F-025",
+        "SEMANTIC:PLANUNIT:F-026",
+        "SEMANTIC:PLANUNIT:F-027"
+      ],
+      "semantic_block_ids": [
+        "PLANUNIT:F-021",
+        "PLANUNIT:F-022",
+        "PLANUNIT:F-023",
+        "PLANUNIT:F-024",
+        "PLANUNIT:F-025",
+        "PLANUNIT:F-026",
+        "PLANUNIT:F-027"
+      ],
+      "structural_paths": [],
+      "token_estimate": 5217,
+      "window_id": "WIN-E0E9CAF5963F-0006"
+    }
+  ],
+  "source_excerpt_line_format": "L######## followed by a tab and exact canonical source text",
+  "source_excerpt_ref": "capsules/source/2d/2d5c7b7782b134bbb1a96281943ff2c17184046e2a89ccbf0ec59cfbd56397bc.txt",
+  "source_excerpt_sha256": "2d5c7b7782b134bbb1a96281943ff2c17184046e2a89ccbf0ec59cfbd56397bc",
+  "source_sha256": "eba865c52fd3ce123ed9ec45af477b915c42c6acafd17b83da4c7e8725b0bf80",
+  "token_estimate": 47940
+}

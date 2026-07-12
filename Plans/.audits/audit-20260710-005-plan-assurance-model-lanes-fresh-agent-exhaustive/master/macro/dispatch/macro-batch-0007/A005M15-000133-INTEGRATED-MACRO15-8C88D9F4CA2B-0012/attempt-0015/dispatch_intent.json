@@ -1,0 +1,23 @@
+{
+  "assignment_id": "A005M15-000133-INTEGRATED-MACRO15-8C88D9F4CA2B-0012",
+  "assignment_record_sha256": "ea9a272f6a94a669c46122775e61ec0b6f16a7c58abbb67c8a4c7b330f808d54",
+  "attempt_id": "attempt-0015",
+  "audit_id": "audit-20260710-005-plan-assurance-model-lanes-fresh-agent-exhaustive",
+  "batch_id": "macro-batch-0007",
+  "capsule_ref": "/Users/jaredsmacbookair/Documents/PuppetMaster/Plans/.audits/audit-20260710-005-plan-assurance-model-lanes-fresh-agent-exhaustive/master/macro/frozen/epoch-0015/capsules/assignments/A005M15-000133-INTEGRATED-MACRO15-8C88D9F4CA2B-0012.json",
+  "capsule_sha256": "2c90edf28e3646b76242e776166bb70af8c3499185f3b4cc1525100ae4c36da6",
+  "coverage_credit_before_validation": 0,
+  "epoch_id": "epoch-0015",
+  "followup_messages_forbidden": true,
+  "fork_turns": "none",
+  "fresh_child_required": true,
+  "model": "gpt-5.6-sol",
+  "nested_contract": "copy every exact object key/type from capsule.result_contract and the strict JSON Schema; no unlisted nested keys; segment item-id union must equal item ids; item source-unit-ref union must equal all assigned required refs",
+  "output_directory": "/Users/jaredsmacbookair/Documents/PuppetMaster/Plans/.audits/audit-20260710-005-plan-assurance-model-lanes-fresh-agent-exhaustive/macro_v2/assignments/A005M15-000133-INTEGRATED-MACRO15-8C88D9F4CA2B-0012/attempts/attempt-0015",
+  "reasoning_effort": "xhigh",
+  "receipt_ref": "/Users/jaredsmacbookair/Documents/PuppetMaster/Plans/.audits/audit-20260710-005-plan-assurance-model-lanes-fresh-agent-exhaustive/master/macro/dispatch/macro-batch-0007/A005M15-000133-INTEGRATED-MACRO15-8C88D9F4CA2B-0012/attempt-0015/dispatch_receipt.json",
+  "result_contract": "write exactly one regular JSON file in output_directory; result.json recommended",
+  "result_schema_ref": "/Users/jaredsmacbookair/Documents/PuppetMaster/Plans/.audits/audit-20260710-005-plan-assurance-model-lanes-fresh-agent-exhaustive/master/macro/frozen/epoch-0015/schemas/macro_review_result.schema.json",
+  "schema_version": "macro-dispatch-intent-v1",
+  "terminal_contract": "return PMR1 after payload; do not write terminal seal"
+}

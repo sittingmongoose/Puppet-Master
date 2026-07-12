@@ -1,0 +1,90 @@
+{
+  "schema_version": "universal-shadow-certification-controller-native-gate-v31-terminal-preparation-v1",
+  "status": "PASS_PREPARATION_ONLY_BLOCKED_AWAITING_TWO_FRESH_ATOMIC8_PRELAUNCH_REVIEWERS",
+  "audit_id": "audit-20260710-005-plan-assurance-model-lanes-fresh-agent-exhaustive",
+  "wave_id": "universal-shadow-certification-wave-0001",
+  "attempt_id": "attempt-0002",
+  "authority_v31_sha256": "120f2a69f470253829b5b66125f5d75fe51d4da8602579acd8b6cd481821472d",
+  "tool_seal_sha256": "59b96e25d0b51cff6d6528efb613d14b74030013df57409dbda1d936db73444d",
+  "verifier_sha256": "7aa7c8a143641a5a4205010d718d64a5988c42c7a57345988523d6bf5c3a726a",
+  "test_sha256": "b8d8962bd9b91c0f1e588112d707013f1037db8f79a6de33b66f84400c5b07a7",
+  "capture_writer_sha256": "973632d3a275d5b42f5cadad182d098c40132b5d39378b113bdeaac7f29dc5d7",
+  "preparation_verifier_stdout_sha256": "d5ff9ca2004e1e9c42bac6e6d0c824dc8d0fc2353610991970abfbcd5a9294e6",
+  "preparation_verifier_status": "pass_preparation_only_blocked_future_atomic8_prelaunch",
+  "prelaunch_negative_stdout_sha256": "4bce91a61e9c94f3dd5e25ecc3b0a4055ba12bc84cd3aff7777629f54c68fe80",
+  "prelaunch_negative_exit_nonzero": true,
+  "prelaunch_negative_blockers": [
+    "c1-atomic8-prelaunch:atomic8-report-missing",
+    "c2-atomic8-prelaunch:atomic8-report-missing",
+    "capture-set:slot-cardinality"
+  ],
+  "test_stdout_sha256": "866549a6825089da4fdbf9d7d4feacd1a21aa4318184b5b9cc8841efd2bedc46",
+  "tests": {
+    "passed": 967,
+    "failed": 0,
+    "total": 967,
+    "preserved_v30_cases": 825,
+    "added_v31_cases": 142,
+    "new_native_identity_negative_cases": 131,
+    "test_name_digest": "1a66cde00f92612a813f64a911e5a3c4c937b8a2da9b1df62fed1d525d3525e5"
+  },
+  "protected_v30": {
+    "file_count": 54,
+    "sorted_file_hash_manifest_sha256": "58fe13a32e662533db3d85bc003e6ce558a59d311162a4563731c5761ac268d5",
+    "baseline_test_sha256": "849cf07ccedaf868f43e28cf79a50ad9a1007b35d14575bc802eeae1e2784350",
+    "baseline_stdout_sha256": "2533adc1664f4b1a9d3680626351cb1e6ea339dd7654ea3a373837821de4a343",
+    "baseline_passed": 825,
+    "baseline_failed": 0
+  },
+  "postrun_native_captures": {
+    "c1-primary-rejected-set-postrun": {
+      "report_sha256": "7fb68216b4c4271864fad7f564d9124f1a992b0069929e2e2a6f7867ed87fc4c",
+      "transient_nonauthoritative_sha256": "d9c4a7e63e68b53a85a8cb35ae1329ade4dc03a8a81c93792ecfa1c1655e2472",
+      "native_thread_id": "019f556b-7f84-7d83-8dcf-3ae33ea15516",
+      "native_turn_id": "019f556b-7ff7-7a62-bcb3-0908e7475930",
+      "child_session_sha256": "e5f61358578126858e272b99afe3d67ca6ffb52fa61339266d9f536a061415b3",
+      "capture_sha256": "d90564771bec2e7d6f569807dcb98176824015d1cad370ba61935862b6a6b6b1",
+      "checkpoint_sha256": "e304e536e77c037e00fd05116ecc82b1ea5494d925be120a6a87f2d4c90206a6"
+    },
+    "c2-primary-rejected-set-postrun": {
+      "report_sha256": "0b414ed2b896c6da66007ffd2215643b979dd7f9b8de32791eb7eff61b5f857f",
+      "native_thread_id": "019f556b-8004-7eb2-b4dc-b92f6f03f835",
+      "native_turn_id": "019f556b-8112-75d3-95c2-d9e1a718b7c9",
+      "child_session_sha256": "7411a7c1807e016756e164390b6bccfaac4e476b07f147ba5215227de20bdf09",
+      "capture_sha256": "9e1bfede92341bf4e42f39a305fd39a6fa1c54d7c5c22566f23258b12130c92d",
+      "checkpoint_sha256": "9a0b17c263a317e7e5b53fa721b049e0ba355b161d2703c24df7c9347eb49cd7"
+    }
+  },
+  "pending_required_slots": [
+    "c1-atomic8-prelaunch",
+    "c2-atomic8-prelaunch"
+  ],
+  "next_action_status": "READY_FOR_FRESH_C1_ATOMIC8_LUNA_PRELAUNCH",
+  "c2_next_action_status": "SERIALIZED_BLOCKED_UNTIL_C1_PRELAUNCH_REVIEW_TERMINATES_AND_V32_REMAINS_STABLE",
+  "required_final_identity_cardinality": {
+    "unique_native_thread_ids": 4,
+    "unique_native_turn_ids": 4,
+    "unique_child_session_sha256": 4
+  },
+  "policy_bindings": {
+    "v31_sha256": "95de3fd798c857751cc6b031d62a4a7a40abe931f9fa1e49590cff0fec6257b5",
+    "v32_prospective_sha256": "4826ade4c38db47ee184b34e5d7b7bd5ba6cabeecc9baa686cb9d99eeff8a3ed",
+    "maximum_concurrent_atomic8": 1,
+    "maximum_concurrent_fresh_luna_max_reviewers": 1,
+    "scenario_and_certification_overlap_forbidden": true
+  },
+  "zero_state": {
+    "empty_attempt_0002_output_directories": 16,
+    "results": 0,
+    "receipts": 0,
+    "runtime_native_capture_rows": 0,
+    "activation_transactions": 0,
+    "launches": 0,
+    "credit": 0
+  },
+  "activation_authorized": false,
+  "launch_authorized": false,
+  "spawn": "none",
+  "spawn_count": 0,
+  "credit": 0
+}

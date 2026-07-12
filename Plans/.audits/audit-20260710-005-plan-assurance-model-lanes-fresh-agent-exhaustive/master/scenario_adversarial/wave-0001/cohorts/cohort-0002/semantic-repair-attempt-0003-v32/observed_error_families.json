@@ -1,0 +1,337 @@
+{
+  "aggregate": {
+    "assignment_specific_error_count": 525,
+    "assignment_specific_family_count": 10,
+    "error_count": 15831,
+    "family_count": 51,
+    "shared_error_count": 15306,
+    "shared_family_count": 41
+  },
+  "assignment_partition": {
+    "A005SA-0009": {
+      "assignment_specific": 55,
+      "shared": 2879
+    },
+    "A005SA-0010": {
+      "assignment_specific": 90,
+      "shared": 2817
+    },
+    "A005SA-0012": {
+      "assignment_specific": 291,
+      "shared": 2055
+    },
+    "A005SA-0013": {
+      "assignment_specific": 68,
+      "shared": 2044
+    },
+    "A005SA-0014": {
+      "assignment_specific": 9,
+      "shared": 3263
+    },
+    "A005SA-0016": {
+      "assignment_specific": 12,
+      "shared": 2248
+    }
+  },
+  "assignment_specific": [
+    {
+      "assignments": [
+        "A005SA-0012",
+        "A005SA-0016"
+      ],
+      "count": 2,
+      "family": "base:input-binding:feature_refs_digest"
+    },
+    {
+      "assignments": [
+        "A005SA-0012",
+        "A005SA-0016"
+      ],
+      "count": 2,
+      "family": "base:schema:input_binding:missing:feature_refs_digest"
+    },
+    {
+      "assignments": [
+        "A005SA-0012",
+        "A005SA-0016"
+      ],
+      "count": 2,
+      "family": "base:input-binding:packet_id"
+    },
+    {
+      "assignments": [
+        "A005SA-0012",
+        "A005SA-0016"
+      ],
+      "count": 2,
+      "family": "base:schema:input_binding:missing:packet_id"
+    },
+    {
+      "by_assignment": {
+        "A005SA-0012": 92
+      },
+      "count": 92,
+      "family": "feature:<feature>:base-claim-projection"
+    },
+    {
+      "by_assignment": {
+        "A005SA-0012": 11
+      },
+      "count": 11,
+      "family": "feature:<feature>:certified-below-live-independent-authority-threshold"
+    },
+    {
+      "by_assignment": {
+        "A005SA-0012": 1,
+        "A005SA-0014": 9,
+        "A005SA-0016": 8
+      },
+      "count": 18,
+      "family": "feature:<feature>:duplicate-authority-id"
+    },
+    {
+      "by_assignment": {
+        "A005SA-0010": 2,
+        "A005SA-0012": 91
+      },
+      "count": 93,
+      "family": "feature:<feature>:insufficient-evidence-must-block"
+    },
+    {
+      "by_assignment": {
+        "A005SA-0009": 53,
+        "A005SA-0010": 88,
+        "A005SA-0012": 92,
+        "A005SA-0013": 68
+      },
+      "count": 301,
+      "family": "feature:<feature>:missing-concrete-blocked-dimension"
+    },
+    {
+      "by_assignment": {
+        "A005SA-0009": 2
+      },
+      "count": 2,
+      "family": "feature:<feature>:source:<source>:registrable-domain"
+    }
+  ],
+  "assignment_totals": {
+    "A005SA-0009": {
+      "count": 2934,
+      "digest": "3a71337d23a22b7732892c3facf32f886ddc62d4b78695e73d94404c35fe8d87"
+    },
+    "A005SA-0010": {
+      "count": 2907,
+      "digest": "bccb234db430edc91f23aad817aab5ef82568791b389fd3a8d8bed26a2e48aa1"
+    },
+    "A005SA-0012": {
+      "count": 2346,
+      "digest": "25fc89465c27456c76b4ca4629c722a9e12db928f09acde29b6cfa570da09605"
+    },
+    "A005SA-0013": {
+      "count": 2112,
+      "digest": "30d0dd04054e95d5740a02e4ae9be3d1aa011ac5f93d1cab9f8e94eb26ccc168"
+    },
+    "A005SA-0014": {
+      "count": 3272,
+      "digest": "26463fc483a410b449ed9ca29fee9c94c98fbc55c75cfb00283ca485f27ac395"
+    },
+    "A005SA-0016": {
+      "count": 2260,
+      "digest": "efb5b7dc66bfa889fd964987b4fb4c93759bbbc2c8ca90423e7425d44b2e0d33"
+    }
+  },
+  "complete_localization": {
+    "aggregate_assignment_tab_error_digest_sha256": "6707a06175c83330fadc64f1505b0b26805ab20f20863bc5eac34fca0d16bac3",
+    "path": "/Users/jaredsmacbookair/Documents/PuppetMaster/Plans/.audits/audit-20260710-005-plan-assurance-model-lanes-fresh-agent-exhaustive/master/scenario_adversarial/wave-0001/cohorts/cohort-0002/semantic-repair-attempt-0003-v32/observed_error_localization.jsonl",
+    "row_count": 15831
+  },
+  "normalization": "feature and source indexes stripped; compact semantic families only",
+  "schema_version": "scenario-adversarial-attempt3-observed-error-families-v32-v1",
+  "shared": [
+    {
+      "count": 6,
+      "family": "base:coverage"
+    },
+    {
+      "count": 687,
+      "family": "base:feature:<feature>:insufficient-question-scenario-coverage"
+    },
+    {
+      "count": 687,
+      "family": "base:feature:<feature>:missing-dimension:normal_happy_path"
+    },
+    {
+      "count": 687,
+      "family": "base:feature:<feature>:missing-dimension:boundary_invalid_input"
+    },
+    {
+      "count": 687,
+      "family": "base:feature:<feature>:missing-dimension:failure_partial_failure"
+    },
+    {
+      "count": 687,
+      "family": "base:feature:<feature>:missing-dimension:cancellation_retry_idempotency_stale_recovery"
+    },
+    {
+      "count": 687,
+      "family": "base:feature:<feature>:missing-dimension:concurrency_race_ordering"
+    },
+    {
+      "count": 687,
+      "family": "base:feature:<feature>:missing-dimension:permission_security_privacy_credentials"
+    },
+    {
+      "count": 687,
+      "family": "base:feature:<feature>:missing-dimension:persistence_restart_offline_upgrade_migration"
+    },
+    {
+      "count": 687,
+      "family": "base:feature:<feature>:missing-dimension:scale_quota_backpressure_observability"
+    },
+    {
+      "count": 687,
+      "family": "base:feature:<feature>:missing-dimension:accessibility_i18n_user_comprehension"
+    },
+    {
+      "count": 687,
+      "family": "base:feature:<feature>:missing-dimension:cross_component_authority_ownership_integration"
+    },
+    {
+      "count": 6,
+      "family": "base:input-binding:candidate_evidence_label"
+    },
+    {
+      "count": 6,
+      "family": "base:input-binding:packet_sha256"
+    },
+    {
+      "count": 6,
+      "family": "base:schema:coverage:missing:feature_count"
+    },
+    {
+      "count": 6,
+      "family": "base:schema:coverage:missing:feature_refs"
+    },
+    {
+      "count": 6,
+      "family": "base:schema:coverage:additional-properties"
+    },
+    {
+      "count": 687,
+      "family": "base:schema:feature:<feature>:dimensions:missing:normal_happy_path"
+    },
+    {
+      "count": 687,
+      "family": "base:schema:feature:<feature>:dimensions:missing:boundary_invalid_input"
+    },
+    {
+      "count": 687,
+      "family": "base:schema:feature:<feature>:dimensions:missing:failure_partial_failure"
+    },
+    {
+      "count": 687,
+      "family": "base:schema:feature:<feature>:dimensions:missing:cancellation_retry_idempotency_stale_recovery"
+    },
+    {
+      "count": 687,
+      "family": "base:schema:feature:<feature>:dimensions:missing:concurrency_race_ordering"
+    },
+    {
+      "count": 687,
+      "family": "base:schema:feature:<feature>:dimensions:missing:permission_security_privacy_credentials"
+    },
+    {
+      "count": 687,
+      "family": "base:schema:feature:<feature>:dimensions:missing:persistence_restart_offline_upgrade_migration"
+    },
+    {
+      "count": 687,
+      "family": "base:schema:feature:<feature>:dimensions:missing:scale_quota_backpressure_observability"
+    },
+    {
+      "count": 687,
+      "family": "base:schema:feature:<feature>:dimensions:missing:accessibility_i18n_user_comprehension"
+    },
+    {
+      "count": 687,
+      "family": "base:schema:feature:<feature>:dimensions:missing:cross_component_authority_ownership_integration"
+    },
+    {
+      "count": 687,
+      "family": "base:schema:feature:<feature>:dimensions:additional-properties"
+    },
+    {
+      "count": 6,
+      "family": "base:schema:input_binding:missing:candidate_evidence_label"
+    },
+    {
+      "count": 6,
+      "family": "base:schema:input_binding:missing:packet_sha256"
+    },
+    {
+      "count": 6,
+      "family": "base:schema:input_binding:additional-properties"
+    },
+    {
+      "count": 6,
+      "family": "base:schema:self_attestation:missing:independent_reasoning_completed"
+    },
+    {
+      "count": 6,
+      "family": "base:schema:self_attestation:missing:candidate_research_not_treated_as_proof"
+    },
+    {
+      "count": 6,
+      "family": "base:schema:self_attestation:missing:every_feature_certified_once"
+    },
+    {
+      "count": 6,
+      "family": "base:schema:self_attestation:missing:every_dimension_completed"
+    },
+    {
+      "count": 6,
+      "family": "base:schema:self_attestation:missing:all_claims_source_mapped"
+    },
+    {
+      "count": 6,
+      "family": "base:schema:self_attestation:missing:plans_not_edited"
+    },
+    {
+      "count": 6,
+      "family": "base:schema:self_attestation:missing:no_descendants_or_followups"
+    },
+    {
+      "count": 6,
+      "family": "base:schema:self_attestation:additional-properties"
+    },
+    {
+      "by_assignment": {
+        "A005SA-0009": 23,
+        "A005SA-0010": 2,
+        "A005SA-0012": 4,
+        "A005SA-0013": 2,
+        "A005SA-0014": 9,
+        "A005SA-0016": 14
+      },
+      "count": 54,
+      "family": "feature:<feature>:duplicate-registrable-domain"
+    },
+    {
+      "by_assignment": {
+        "A005SA-0009": 1,
+        "A005SA-0010": 4,
+        "A005SA-0012": 10,
+        "A005SA-0013": 1,
+        "A005SA-0014": 3,
+        "A005SA-0016": 17
+      },
+      "count": 36,
+      "family": "feature:<feature>:source:<source>:canonical-url"
+    }
+  ],
+  "source_primary_report": {
+    "path": "/Users/jaredsmacbookair/Documents/PuppetMaster/Plans/.audits/audit-20260710-005-plan-assurance-model-lanes-fresh-agent-exhaustive/master/scenario_adversarial/wave-0001/cohorts/cohort-0002/semantic-repair-attempt-0002-activation-v32-exact6/validation/primary-postrun-v32.json",
+    "raw_sha256": "b44f7748b5092b190b41340c6094b7c3670b0c3d06d9aabdfdc9df65ca1b221b"
+  }
+}

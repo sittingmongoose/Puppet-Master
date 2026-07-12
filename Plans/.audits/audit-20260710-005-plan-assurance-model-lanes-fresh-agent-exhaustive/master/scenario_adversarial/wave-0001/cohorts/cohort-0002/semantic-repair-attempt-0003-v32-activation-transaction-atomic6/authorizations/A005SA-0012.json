@@ -1,0 +1,101 @@
+{
+  "schema_version": "audit005-scenario-c2-attempt3-leaf-launch-authorization-v1",
+  "activation_id": "SCENARIO-C2-ATTEMPT3-V32-ACTIVATION-ATOMIC6",
+  "authorization_id": "SCENARIO-C2-ATTEMPT3-V32-LEAF-A005SA-0012",
+  "assignment_id": "A005SA-0012",
+  "sequence": 3,
+  "activation_core": {
+    "path": "/Users/jaredsmacbookair/Documents/PuppetMaster/Plans/.audits/audit-20260710-005-plan-assurance-model-lanes-fresh-agent-exhaustive/master/scenario_adversarial/wave-0001/cohorts/cohort-0002/semantic-repair-attempt-0003-v32-activation-transaction-atomic6/ACTIVATION_CORE.json",
+    "raw_sha256": "f6568cc20742dd5ec88fb07ed6b89e5ccf41a77d0edaf90a1a0ce5fcb308f41e"
+  },
+  "cohort_binding": {
+    "exact_assignment_count": 6,
+    "exact_feature_count": 687,
+    "exact_question_obligation_count": 713,
+    "all_or_nothing": true
+  },
+  "leaf_binding": {
+    "feature_count": 92,
+    "question_obligation_count": 92,
+    "canonical_agent_path": "/root/sol_controller_v29/a005_scenario_adversarial_0012_semantic_repair_attempt_0003_ultra_v32",
+    "identity": {
+      "model": "gpt-5.6-sol",
+      "reasoning_effort": "ultra",
+      "fork_turns": "none",
+      "fresh_direct_required": true,
+      "native_child_thread_id": null,
+      "descendants": 0,
+      "followups": 0,
+      "retries": 0,
+      "state": "reserved_unallocated"
+    },
+    "intent": {
+      "path": "/Users/jaredsmacbookair/Documents/PuppetMaster/Plans/.audits/audit-20260710-005-plan-assurance-model-lanes-fresh-agent-exhaustive/master/scenario_adversarial/wave-0001/cohorts/cohort-0002/semantic-repair-attempt-0003-v32/intents/A005SA-0012.json",
+      "raw_sha256": "8dafc6a5cd5368727d448859c8a17b5fe2d4ca43741c3b12687bcfaf7224819e"
+    },
+    "obligation_packet": {
+      "path": "/Users/jaredsmacbookair/Documents/PuppetMaster/Plans/.audits/audit-20260710-005-plan-assurance-model-lanes-fresh-agent-exhaustive/master/scenario_adversarial/wave-0001/cohorts/cohort-0002/semantic-repair-attempt-0003-v32/packets/A005SA-0012.json",
+      "raw_sha256": "ee4d01052d3516433424d4325120bf74114e34bc28c3369e69e1c6179c794bb9"
+    },
+    "validation_only_fixture_binding": {
+      "path": "/Users/jaredsmacbookair/Documents/PuppetMaster/Plans/.audits/audit-20260710-005-plan-assurance-model-lanes-fresh-agent-exhaustive/master/scenario_adversarial/wave-0001/cohorts/cohort-0002/semantic-repair-attempt-0003-v32/fixtures/validator-clean/A005SA-0012.json",
+      "raw_sha256": "9bbdc5f5ce336feda8f8ab7f87a2c102df103eb51e67fa064074a8d28d710213",
+      "validation_only_forbidden_leaf_input": true
+    },
+    "source_packet": {
+      "path": "/Users/jaredsmacbookair/Documents/PuppetMaster/Plans/.audits/audit-20260710-005-plan-assurance-model-lanes-fresh-agent-exhaustive/master/scenario_adversarial/wave-0001/packets/SAPKT-0012.json",
+      "raw_sha256": "9c5c9ac2071b2c08916bbcd1afca705b2f1f25fe83c97942784c9eafffa6f4a5"
+    },
+    "output_directory": {
+      "path": "/Users/jaredsmacbookair/Documents/PuppetMaster/Plans/.audits/audit-20260710-005-plan-assurance-model-lanes-fresh-agent-exhaustive/master/scenario_adversarial/wave-0001/cohorts/cohort-0002/semantic-repair-attempt-0003-v32/outputs/A005SA-0012/attempt-0003",
+      "required_prelaunch_state": "empty_real_directory",
+      "empty_inventory_sha256": "4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945"
+    },
+    "result_path": "/Users/jaredsmacbookair/Documents/PuppetMaster/Plans/.audits/audit-20260710-005-plan-assurance-model-lanes-fresh-agent-exhaustive/master/scenario_adversarial/wave-0001/cohorts/cohort-0002/semantic-repair-attempt-0003-v32/outputs/A005SA-0012/attempt-0003/result.json",
+    "terminal_receipt_path": "/Users/jaredsmacbookair/Documents/PuppetMaster/Plans/.audits/audit-20260710-005-plan-assurance-model-lanes-fresh-agent-exhaustive/master/scenario_adversarial/wave-0001/cohorts/cohort-0002/semantic-repair-attempt-0003-v32/outputs/A005SA-0012/attempt-0003/terminal_receipt.json"
+  },
+  "leaf_read_scope": {
+    "allowed_paths": [
+      "/Users/jaredsmacbookair/Documents/PuppetMaster/Plans/.audits/audit-20260710-005-plan-assurance-model-lanes-fresh-agent-exhaustive/master/scenario_adversarial/wave-0001/cohorts/cohort-0002/semantic-repair-attempt-0003-v32/intents/A005SA-0012.json",
+      "/Users/jaredsmacbookair/Documents/PuppetMaster/Plans/.audits/audit-20260710-005-plan-assurance-model-lanes-fresh-agent-exhaustive/master/scenario_adversarial/wave-0001/cohorts/cohort-0002/semantic-repair-attempt-0003-v32/packets/A005SA-0012.json",
+      "/Users/jaredsmacbookair/Documents/PuppetMaster/Plans/.audits/audit-20260710-005-plan-assurance-model-lanes-fresh-agent-exhaustive/master/scenario_adversarial/wave-0001/packets/SAPKT-0012.json",
+      "/Users/jaredsmacbookair/Documents/PuppetMaster/Plans/.audits/audit-20260710-005-plan-assurance-model-lanes-fresh-agent-exhaustive/master/scenario_adversarial/wave-0001/cohorts/cohort-0002/semantic-repair-attempt-0003-v32/schema/result.schema.json",
+      "/Users/jaredsmacbookair/Documents/PuppetMaster/Plans/.audits/audit-20260710-005-plan-assurance-model-lanes-fresh-agent-exhaustive/master/scenario_adversarial/wave-0001/cohorts/cohort-0002/semantic-repair-attempt-0003-v32/leaf_prompt.json",
+      "/Users/jaredsmacbookair/Documents/PuppetMaster/Plans/.audits/audit-20260710-005-plan-assurance-model-lanes-fresh-agent-exhaustive/master/scenario_adversarial/wave-0001/cohorts/cohort-0002/semantic-repair-attempt-0003-v32/templates/feature-certification.template.json",
+      "/Users/jaredsmacbookair/Documents/PuppetMaster/Plans/.audits/audit-20260710-005-plan-assurance-model-lanes-fresh-agent-exhaustive/master/scenario_adversarial/wave-0001/cohorts/cohort-0002/semantic-repair-attempt-0003-v32/preflight_attempt3_v32.py",
+      "/Users/jaredsmacbookair/Documents/PuppetMaster/Plans/.audits/audit-20260710-005-plan-assurance-model-lanes-fresh-agent-exhaustive/master/scenario_adversarial/wave-0001/cohorts/cohort-0002/semantic-repair-attempt-0003-v32-activation-transaction-atomic6/authorizations/A005SA-0012.json",
+      "/Users/jaredsmacbookair/Documents/PuppetMaster/Plans/.audits/audit-20260710-005-plan-assurance-model-lanes-fresh-agent-exhaustive/master/scenario_adversarial/wave-0001/cohorts/cohort-0002/semantic-repair-attempt-0003-v32-activation-transaction-atomic6/ACTIVATION_CORE.json",
+      "/Users/jaredsmacbookair/Documents/PuppetMaster/Plans/.audits/audit-20260710-005-plan-assurance-model-lanes-fresh-agent-exhaustive/master/scenario_adversarial/wave-0001/cohorts/cohort-0002/semantic-repair-attempt-0003-v32-activation-transaction-atomic6/dispatch_manifest.jsonl",
+      "/Users/jaredsmacbookair/Documents/PuppetMaster/Plans/.audits/audit-20260710-005-plan-assurance-model-lanes-fresh-agent-exhaustive/master/scenario_adversarial/wave-0001/cohorts/cohort-0002/semantic-repair-attempt-0003-v32-activation-transaction-atomic6/DISPATCH_ENVELOPE.json"
+    ],
+    "forbidden_classes": [
+      "validator_clean_fixtures",
+      "peer_intents_or_packets",
+      "prior_results_or_receipts",
+      "canonical_plans",
+      "other_audit_evidence"
+    ],
+    "fixture_binding_is_verifier_only": true
+  },
+  "authorization": {
+    "activation_authorized": true,
+    "launch_authorized": true,
+    "launch_transaction_count_authorized": 1,
+    "leaf_launch_count_authorized": 1,
+    "single_use_state": "unconsumed",
+    "launch_executed": false,
+    "partial_dispatch_forbidden": true,
+    "standalone_leaf_dispatch_forbidden": true,
+    "descendants_forbidden": true,
+    "followups_forbidden": true,
+    "retries_forbidden": true,
+    "credit": 0
+  },
+  "zero_state": {
+    "launch": false,
+    "result": false,
+    "terminal_receipt": false,
+    "native_identity_captured": false,
+    "credit": 0
+  }
+}

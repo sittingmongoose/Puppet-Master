@@ -1,0 +1,1200 @@
+{
+  "audit_id": "audit-20260710-005-plan-assurance-model-lanes-fresh-agent-exhaustive",
+  "schema_version": "cross-shard-result-v1",
+  "phase": "cross_shard_same_owner_candidate_discovery",
+  "assignment_id": "A005CS-0023",
+  "attempt_id": "attempt-0001",
+  "task_thread_id": "/root/a005_cross_shard_0023_attempt_0001_terminal",
+  "model": "gpt-5.6-sol",
+  "reasoning_effort": "xhigh",
+  "status": "completed",
+  "input_binding": {
+    "packet_id": "CSPKT-0023",
+    "packet_sha256": "2794a5e7adeabf436a32c83d41f404ea560d3b6aa8ea9125cec0cc4dc670e4de",
+    "anchor_refs_digest": "2e4382f34e1d959c46fd237edc034dd26ecd4db26d4aa915bd8f68c3558e2e1e",
+    "comparator_refs_digest": "332b2d5cd8b78815ae10d6bbf3e64496060f30e13349b1b0362ee1f25515f7c0"
+  },
+  "coverage": {
+    "anchor_count": 74,
+    "anchor_refs": [
+      "OPF::A005OM-0014::PF-0075",
+      "OPF::A005OM-0014::PF-0076",
+      "OPF::A005OM-0014::PF-0077",
+      "OPF::A005OM-0014::PF-0078",
+      "OPF::A005OM-0014::PF-0079",
+      "OPF::A005OM-0014::PF-0080",
+      "OPF::A005OM-0014::PF-0081",
+      "OPF::A005OM-0014::PF-0082",
+      "OPF::A005OM-0014::PF-0083",
+      "OPF::A005OM-0014::PF-0084",
+      "OPF::A005OM-0014::PF-0085",
+      "OPF::A005OM-0014::PF-0086",
+      "OPF::A005OM-0014::PF-0087",
+      "OPF::A005OM-0014::PF-0088",
+      "OPF::A005OM-0014::PF-0089",
+      "OPF::A005OM-0014::PF-0090",
+      "OPF::A005OM-0014::PF-0091",
+      "OPF::A005OM-0014::PF-0092",
+      "OPF::A005OM-0014::PF-0093",
+      "OPF::A005OM-0014::PF-0094",
+      "OPF::A005OM-0014::PF-0095",
+      "OPF::A005OM-0014::PF-0096",
+      "OPF::A005OM-0014::PF-0097",
+      "OPF::A005OM-0014::PF-0098",
+      "OPF::A005OM-0014::PF-0099",
+      "OPF::A005OM-0014::PF-0100",
+      "OPF::A005OM-0014::PF-0101",
+      "OPF::A005OM-0014::PF-0102",
+      "OPF::A005OM-0014::PF-0103",
+      "OPF::A005OM-0014::PF-0104",
+      "OPF::A005OM-0014::PF-0105",
+      "OPF::A005OM-0014::PF-0106",
+      "OPF::A005OM-0014::PF-0107",
+      "OPF::A005OM-0014::PF-0108",
+      "OPF::A005OM-0014::PF-0109",
+      "OPF::A005OM-0014::PF-0110",
+      "OPF::A005OM-0014::PF-0111",
+      "OPF::A005OM-0014::PF-0112",
+      "OPF::A005OM-0014::PF-0113",
+      "OPF::A005OM-0014::PF-0114",
+      "OPF::A005OM-0014::PF-0115",
+      "OPF::A005OM-0014::PF-0116",
+      "OPF::A005OM-0014::PF-0117",
+      "OPF::A005OM-0014::PF-0118",
+      "OPF::A005OM-0014::PF-0119",
+      "OPF::A005OM-0014::PF-0120",
+      "OPF::A005OM-0014::PF-0121",
+      "OPF::A005OM-0014::PF-0122",
+      "OPF::A005OM-0014::PF-0123",
+      "OPF::A005OM-0014::PF-0124",
+      "OPF::A005OM-0014::PF-0125",
+      "OPF::A005OM-0014::PF-0126",
+      "OPF::A005OM-0014::PF-0127",
+      "OPF::A005OM-0014::PF-0128",
+      "OPF::A005OM-0014::PF-0129",
+      "OPF::A005OM-0014::PF-0130",
+      "OPF::A005OM-0014::PF-0131",
+      "OPF::A005OM-0014::PF-0132",
+      "OPF::A005OM-0014::PF-0133",
+      "OPF::A005OM-0014::PF-0134",
+      "OPF::A005OM-0014::PF-0135",
+      "OPF::A005OM-0014::PF-0136",
+      "OPF::A005OM-0014::PF-0137",
+      "OPF::A005OM-0014::PF-0138",
+      "OPF::A005OM-0014::PF-0139",
+      "OPF::A005OM-0014::PF-0140",
+      "OPF::A005OM-0014::PF-0141",
+      "OPF::A005OM-0014::PF-0142",
+      "OPF::A005OM-0014::PF-0143",
+      "OPF::A005OM-0014::PF-0144",
+      "OPF::A005OM-0014::PF-0145",
+      "OPF::A005OM-0014::PF-0146",
+      "OPF::A005OM-0014::PF-0147",
+      "OPF::A005OM-0014::PF-0148"
+    ],
+    "comparator_count": 202,
+    "comparator_refs": [
+      "OPF::A005OM-0015::PF-0001",
+      "OPF::A005OM-0015::PF-0002",
+      "OPF::A005OM-0015::PF-0003",
+      "OPF::A005OM-0015::PF-0004",
+      "OPF::A005OM-0015::PF-0005",
+      "OPF::A005OM-0015::PF-0006",
+      "OPF::A005OM-0015::PF-0007",
+      "OPF::A005OM-0015::PF-0008",
+      "OPF::A005OM-0015::PF-0009",
+      "OPF::A005OM-0015::PF-0010",
+      "OPF::A005OM-0015::PF-0011",
+      "OPF::A005OM-0015::PF-0012",
+      "OPF::A005OM-0015::PF-0013",
+      "OPF::A005OM-0015::PF-0014",
+      "OPF::A005OM-0015::PF-0015",
+      "OPF::A005OM-0015::PF-0016",
+      "OPF::A005OM-0015::PF-0017",
+      "OPF::A005OM-0015::PF-0018",
+      "OPF::A005OM-0015::PF-0019",
+      "OPF::A005OM-0015::PF-0020",
+      "OPF::A005OM-0015::PF-0021",
+      "OPF::A005OM-0015::PF-0022",
+      "OPF::A005OM-0015::PF-0023",
+      "OPF::A005OM-0015::PF-0024",
+      "OPF::A005OM-0015::PF-0025",
+      "OPF::A005OM-0015::PF-0026",
+      "OPF::A005OM-0015::PF-0027",
+      "OPF::A005OM-0015::PF-0028",
+      "OPF::A005OM-0015::PF-0029",
+      "OPF::A005OM-0015::PF-0030",
+      "OPF::A005OM-0015::PF-0031",
+      "OPF::A005OM-0015::PF-0032",
+      "OPF::A005OM-0015::PF-0033",
+      "OPF::A005OM-0015::PF-0034",
+      "OPF::A005OM-0015::PF-0035",
+      "OPF::A005OM-0015::PF-0036",
+      "OPF::A005OM-0015::PF-0037",
+      "OPF::A005OM-0015::PF-0038",
+      "OPF::A005OM-0015::PF-0039",
+      "OPF::A005OM-0015::PF-0040",
+      "OPF::A005OM-0015::PF-0041",
+      "OPF::A005OM-0015::PF-0042",
+      "OPF::A005OM-0015::PF-0043",
+      "OPF::A005OM-0015::PF-0044",
+      "OPF::A005OM-0015::PF-0045",
+      "OPF::A005OM-0015::PF-0046",
+      "OPF::A005OM-0015::PF-0047",
+      "OPF::A005OM-0015::PF-0048",
+      "OPF::A005OM-0015::PF-0049",
+      "OPF::A005OM-0015::PF-0050",
+      "OPF::A005OM-0015::PF-0051",
+      "OPF::A005OM-0015::PF-0052",
+      "OPF::A005OM-0015::PF-0053",
+      "OPF::A005OM-0015::PF-0054",
+      "OPF::A005OM-0015::PF-0055",
+      "OPF::A005OM-0015::PF-0056",
+      "OPF::A005OM-0015::PF-0057",
+      "OPF::A005OM-0015::PF-0058",
+      "OPF::A005OM-0015::PF-0059",
+      "OPF::A005OM-0015::PF-0060",
+      "OPF::A005OM-0015::PF-0061",
+      "OPF::A005OM-0015::PF-0062",
+      "OPF::A005OM-0015::PF-0063",
+      "OPF::A005OM-0015::PF-0064",
+      "OPF::A005OM-0015::PF-0065",
+      "OPF::A005OM-0015::PF-0066",
+      "OPF::A005OM-0015::PF-0067",
+      "OPF::A005OM-0015::PF-0068",
+      "OPF::A005OM-0015::PF-0069",
+      "OPF::A005OM-0015::PF-0070",
+      "OPF::A005OM-0015::PF-0071",
+      "OPF::A005OM-0015::PF-0072",
+      "OPF::A005OM-0015::PF-0073",
+      "OPF::A005OM-0015::PF-0074",
+      "OPF::A005OM-0015::PF-0075",
+      "OPF::A005OM-0015::PF-0076",
+      "OPF::A005OM-0015::PF-0077",
+      "OPF::A005OM-0015::PF-0078",
+      "OPF::A005OM-0015::PF-0079",
+      "OPF::A005OM-0015::PF-0080",
+      "OPF::A005OM-0015::PF-0081",
+      "OPF::A005OM-0015::PF-0082",
+      "OPF::A005OM-0015::PF-0083",
+      "OPF::A005OM-0015::PF-0084",
+      "OPF::A005OM-0015::PF-0085",
+      "OPF::A005OM-0015::PF-0086",
+      "OPF::A005OM-0015::PF-0087",
+      "OPF::A005OM-0015::PF-0088",
+      "OPF::A005OM-0015::PF-0089",
+      "OPF::A005OM-0015::PF-0090",
+      "OPF::A005OM-0015::PF-0091",
+      "OPF::A005OM-0015::PF-0092",
+      "OPF::A005OM-0015::PF-0093",
+      "OPF::A005OM-0015::PF-0094",
+      "OPF::A005OM-0015::PF-0095",
+      "OPF::A005OM-0015::PF-0096",
+      "OPF::A005OM-0015::PF-0097",
+      "OPF::A005OM-0015::PF-0098",
+      "OPF::A005OM-0015::PF-0099",
+      "OPF::A005OM-0015::PF-0100",
+      "OPF::A005OM-0015::PF-0101",
+      "OPF::A005OM-0015::PF-0102",
+      "OPF::A005OM-0015::PF-0103",
+      "OPF::A005OM-0015::PF-0104",
+      "OPF::A005OM-0015::PF-0105",
+      "OPF::A005OM-0015::PF-0106",
+      "OPF::A005OM-0015::PF-0107",
+      "OPF::A005OM-0015::PF-0108",
+      "OPF::A005OM-0015::PF-0109",
+      "OPF::A005OM-0015::PF-0110",
+      "OPF::A005OM-0015::PF-0111",
+      "OPF::A005OM-0015::PF-0112",
+      "OPF::A005OM-0015::PF-0113",
+      "OPF::A005OM-0015::PF-0114",
+      "OPF::A005OM-0015::PF-0115",
+      "OPF::A005OM-0015::PF-0116",
+      "OPF::A005OM-0015::PF-0117",
+      "OPF::A005OM-0015::PF-0118",
+      "OPF::A005OM-0015::PF-0119",
+      "OPF::A005OM-0015::PF-0120",
+      "OPF::A005OM-0015::PF-0121",
+      "OPF::A005OM-0015::PF-0122",
+      "OPF::A005OM-0015::PF-0123",
+      "OPF::A005OM-0015::PF-0124",
+      "OPF::A005OM-0015::PF-0125",
+      "OPF::A005OM-0015::PF-0126",
+      "OPF::A005OM-0015::PF-0127",
+      "OPF::A005OM-0015::PF-0128",
+      "OPF::A005OM-0015::PF-0129",
+      "OPF::A005OM-0015::PF-0130",
+      "OPF::A005OM-0015::PF-0131",
+      "OPF::A005OM-0015::PF-0132",
+      "OPF::A005OM-0015::PF-0133",
+      "OPF::A005OM-0015::PF-0134",
+      "OPF::A005OM-0015::PF-0135",
+      "OPF::A005OM-0015::PF-0136",
+      "OPF::A005OM-0015::PF-0137",
+      "OPF::A005OM-0015::PF-0138",
+      "OPF::A005OM-0015::PF-0139",
+      "OPF::A005OM-0015::PF-0140",
+      "OPF::A005OM-0015::PF-0141",
+      "OPF::A005OM-0015::PF-0142",
+      "OPF::A005OM-0015::PF-0143",
+      "OPF::A005OM-0015::PF-0144",
+      "OPF::A005OM-0015::PF-0145",
+      "OPF::A005OM-0015::PF-0146",
+      "OPF::A005OM-0015::PF-0147",
+      "OPF::A005OM-0015::PF-0148",
+      "OPF::A005OM-0015::PF-0149",
+      "OPF::A005OM-0015::PF-0150",
+      "OPF::A005OM-0015::PF-0151",
+      "OPF::A005OM-0015::PF-0152",
+      "OPF::A005OM-0015::PF-0153",
+      "OPF::A005OM-0015::PF-0154",
+      "OPF::A005OM-0015::PF-0155",
+      "OPF::A005OM-0015::PF-0156",
+      "OPF::A005OM-0015::PF-0157",
+      "OPF::A005OM-0015::PF-0158",
+      "OPF::A005OM-0015::PF-0159",
+      "OPF::A005OM-0015::PF-0160",
+      "OPF::A005OM-0015::PF-0161",
+      "OPF::A005OM-0015::PF-0162",
+      "OPF::A005OM-0015::PF-0163",
+      "OPF::A005OM-0015::PF-0164",
+      "OPF::A005OM-0015::PF-0165",
+      "OPF::A005OM-0015::PF-0166",
+      "OPF::A005OM-0015::PF-0167",
+      "OPF::A005OM-0015::PF-0168",
+      "OPF::A005OM-0015::PF-0169",
+      "OPF::A005OM-0015::PF-0170",
+      "OPF::A005OM-0015::PF-0171",
+      "OPF::A005OM-0015::PF-0172",
+      "OPF::A005OM-0015::PF-0173",
+      "OPF::A005OM-0015::PF-0174",
+      "OPF::A005OM-0015::PF-0175",
+      "OPF::A005OM-0015::PF-0176",
+      "OPF::A005OM-0015::PF-0177",
+      "OPF::A005OM-0015::PF-0178",
+      "OPF::A005OM-0015::PF-0179",
+      "OPF::A005OM-0015::PF-0180",
+      "OPF::A005OM-0015::PF-0181",
+      "OPF::A005OM-0015::PF-0182",
+      "OPF::A005OM-0015::PF-0183",
+      "OPF::A005OM-0015::PF-0184",
+      "OPF::A005OM-0015::PF-0185",
+      "OPF::A005OM-0015::PF-0186",
+      "OPF::A005OM-0015::PF-0187",
+      "OPF::A005OM-0015::PF-0188",
+      "OPF::A005OM-0015::PF-0189",
+      "OPF::A005OM-0015::PF-0190",
+      "OPF::A005OM-0015::PF-0191",
+      "OPF::A005OM-0015::PF-0192",
+      "OPF::A005OM-0015::PF-0193",
+      "OPF::A005OM-0015::PF-0194",
+      "OPF::A005OM-0015::PF-0195",
+      "OPF::A005OM-0015::PF-0196",
+      "OPF::A005OM-0015::PF-0197",
+      "OPF::A005OM-0015::PF-0198",
+      "OPF::A005OM-0015::PF-0199",
+      "OPF::A005OM-0015::PF-0200",
+      "OPF::A005OM-0015::PF-0201",
+      "OPF::A005OM-0015::PF-0202"
+    ]
+  },
+  "decisions": [
+    {
+      "anchor_provisional_feature_ref": "OPF::A005OM-0014::PF-0075",
+      "compared_against_count": 202,
+      "merge_candidate_refs": [],
+      "related_but_distinct_refs": [
+        "OPF::A005OM-0015::PF-0009",
+        "OPF::A005OM-0015::PF-0021",
+        "OPF::A005OM-0015::PF-0110",
+        "OPF::A005OM-0015::PF-0138"
+      ],
+      "rationale": "All 202 comparators were examined. No comparator represents the same product feature under the same authority and lifecycle; the listed near-neighbors retain distinct consumers, state machines, failure or recovery contracts, security boundaries, or user-visible promises.",
+      "confidence": 0.9
+    },
+    {
+      "anchor_provisional_feature_ref": "OPF::A005OM-0014::PF-0076",
+      "compared_against_count": 202,
+      "merge_candidate_refs": [],
+      "related_but_distinct_refs": [
+        "OPF::A005OM-0015::PF-0021",
+        "OPF::A005OM-0015::PF-0106"
+      ],
+      "rationale": "All 202 comparators were examined. No comparator represents the same product feature under the same authority and lifecycle; the listed near-neighbors retain distinct consumers, state machines, failure or recovery contracts, security boundaries, or user-visible promises.",
+      "confidence": 0.9
+    },
+    {
+      "anchor_provisional_feature_ref": "OPF::A005OM-0014::PF-0077",
+      "compared_against_count": 202,
+      "merge_candidate_refs": [],
+      "related_but_distinct_refs": [
+        "OPF::A005OM-0015::PF-0060",
+        "OPF::A005OM-0015::PF-0110",
+        "OPF::A005OM-0015::PF-0139",
+        "OPF::A005OM-0015::PF-0141"
+      ],
+      "rationale": "All 202 comparators were examined. No comparator represents the same product feature under the same authority and lifecycle; the listed near-neighbors retain distinct consumers, state machines, failure or recovery contracts, security boundaries, or user-visible promises.",
+      "confidence": 0.9
+    },
+    {
+      "anchor_provisional_feature_ref": "OPF::A005OM-0014::PF-0078",
+      "compared_against_count": 202,
+      "merge_candidate_refs": [],
+      "related_but_distinct_refs": [
+        "OPF::A005OM-0015::PF-0200",
+        "OPF::A005OM-0015::PF-0201"
+      ],
+      "rationale": "All 202 comparators were examined. No comparator represents the same product feature under the same authority and lifecycle; the listed near-neighbors retain distinct consumers, state machines, failure or recovery contracts, security boundaries, or user-visible promises.",
+      "confidence": 0.9
+    },
+    {
+      "anchor_provisional_feature_ref": "OPF::A005OM-0014::PF-0079",
+      "compared_against_count": 202,
+      "merge_candidate_refs": [],
+      "related_but_distinct_refs": [
+        "OPF::A005OM-0015::PF-0063"
+      ],
+      "rationale": "All 202 comparators were examined. No comparator represents the same product feature under the same authority and lifecycle; the listed near-neighbors retain distinct consumers, state machines, failure or recovery contracts, security boundaries, or user-visible promises.",
+      "confidence": 0.9
+    },
+    {
+      "anchor_provisional_feature_ref": "OPF::A005OM-0014::PF-0080",
+      "compared_against_count": 202,
+      "merge_candidate_refs": [],
+      "related_but_distinct_refs": [
+        "OPF::A005OM-0015::PF-0063",
+        "OPF::A005OM-0015::PF-0067",
+        "OPF::A005OM-0015::PF-0109",
+        "OPF::A005OM-0015::PF-0154"
+      ],
+      "rationale": "All 202 comparators were examined. No comparator represents the same product feature under the same authority and lifecycle; the listed near-neighbors retain distinct consumers, state machines, failure or recovery contracts, security boundaries, or user-visible promises.",
+      "confidence": 0.9
+    },
+    {
+      "anchor_provisional_feature_ref": "OPF::A005OM-0014::PF-0081",
+      "compared_against_count": 202,
+      "merge_candidate_refs": [],
+      "related_but_distinct_refs": [
+        "OPF::A005OM-0015::PF-0075",
+        "OPF::A005OM-0015::PF-0145"
+      ],
+      "rationale": "All 202 comparators were examined. No comparator represents the same product feature under the same authority and lifecycle; the listed near-neighbors retain distinct consumers, state machines, failure or recovery contracts, security boundaries, or user-visible promises.",
+      "confidence": 0.9
+    },
+    {
+      "anchor_provisional_feature_ref": "OPF::A005OM-0014::PF-0082",
+      "compared_against_count": 202,
+      "merge_candidate_refs": [],
+      "related_but_distinct_refs": [
+        "OPF::A005OM-0015::PF-0017",
+        "OPF::A005OM-0015::PF-0154"
+      ],
+      "rationale": "All 202 comparators were examined. No comparator represents the same product feature under the same authority and lifecycle; the listed near-neighbors retain distinct consumers, state machines, failure or recovery contracts, security boundaries, or user-visible promises.",
+      "confidence": 0.9
+    },
+    {
+      "anchor_provisional_feature_ref": "OPF::A005OM-0014::PF-0083",
+      "compared_against_count": 202,
+      "merge_candidate_refs": [],
+      "related_but_distinct_refs": [
+        "OPF::A005OM-0015::PF-0011",
+        "OPF::A005OM-0015::PF-0114",
+        "OPF::A005OM-0015::PF-0145"
+      ],
+      "rationale": "All 202 comparators were examined. No comparator represents the same product feature under the same authority and lifecycle; the listed near-neighbors retain distinct consumers, state machines, failure or recovery contracts, security boundaries, or user-visible promises.",
+      "confidence": 0.9
+    },
+    {
+      "anchor_provisional_feature_ref": "OPF::A005OM-0014::PF-0084",
+      "compared_against_count": 202,
+      "merge_candidate_refs": [],
+      "related_but_distinct_refs": [
+        "OPF::A005OM-0015::PF-0032",
+        "OPF::A005OM-0015::PF-0060",
+        "OPF::A005OM-0015::PF-0079",
+        "OPF::A005OM-0015::PF-0141"
+      ],
+      "rationale": "All 202 comparators were examined. No comparator represents the same product feature under the same authority and lifecycle; the listed near-neighbors retain distinct consumers, state machines, failure or recovery contracts, security boundaries, or user-visible promises.",
+      "confidence": 0.9
+    },
+    {
+      "anchor_provisional_feature_ref": "OPF::A005OM-0014::PF-0085",
+      "compared_against_count": 202,
+      "merge_candidate_refs": [],
+      "related_but_distinct_refs": [
+        "OPF::A005OM-0015::PF-0075",
+        "OPF::A005OM-0015::PF-0152",
+        "OPF::A005OM-0015::PF-0186"
+      ],
+      "rationale": "All 202 comparators were examined. No comparator represents the same product feature under the same authority and lifecycle; the listed near-neighbors retain distinct consumers, state machines, failure or recovery contracts, security boundaries, or user-visible promises.",
+      "confidence": 0.9
+    },
+    {
+      "anchor_provisional_feature_ref": "OPF::A005OM-0014::PF-0086",
+      "compared_against_count": 202,
+      "merge_candidate_refs": [],
+      "related_but_distinct_refs": [
+        "OPF::A005OM-0015::PF-0156",
+        "OPF::A005OM-0015::PF-0159"
+      ],
+      "rationale": "All 202 comparators were examined. No comparator represents the same product feature under the same authority and lifecycle; the listed near-neighbors retain distinct consumers, state machines, failure or recovery contracts, security boundaries, or user-visible promises.",
+      "confidence": 0.9
+    },
+    {
+      "anchor_provisional_feature_ref": "OPF::A005OM-0014::PF-0087",
+      "compared_against_count": 202,
+      "merge_candidate_refs": [
+        "OPF::A005OM-0015::PF-0020"
+      ],
+      "related_but_distinct_refs": [
+        "OPF::A005OM-0015::PF-0004",
+        "OPF::A005OM-0015::PF-0170"
+      ],
+      "rationale": "All 202 comparators were examined. The merge candidate represents the same product feature under the same authority and lifecycle; related references remain separate because they are validation surfaces, consumers, or adjacent controls with distinct contracts.",
+      "confidence": 0.93
+    },
+    {
+      "anchor_provisional_feature_ref": "OPF::A005OM-0014::PF-0088",
+      "compared_against_count": 202,
+      "merge_candidate_refs": [],
+      "related_but_distinct_refs": [
+        "OPF::A005OM-0015::PF-0011",
+        "OPF::A005OM-0015::PF-0060",
+        "OPF::A005OM-0015::PF-0110",
+        "OPF::A005OM-0015::PF-0141"
+      ],
+      "rationale": "All 202 comparators were examined. No comparator represents the same product feature under the same authority and lifecycle; the listed near-neighbors retain distinct consumers, state machines, failure or recovery contracts, security boundaries, or user-visible promises.",
+      "confidence": 0.9
+    },
+    {
+      "anchor_provisional_feature_ref": "OPF::A005OM-0014::PF-0089",
+      "compared_against_count": 202,
+      "merge_candidate_refs": [],
+      "related_but_distinct_refs": [
+        "OPF::A005OM-0015::PF-0032",
+        "OPF::A005OM-0015::PF-0138"
+      ],
+      "rationale": "All 202 comparators were examined. No comparator represents the same product feature under the same authority and lifecycle; the listed near-neighbors retain distinct consumers, state machines, failure or recovery contracts, security boundaries, or user-visible promises.",
+      "confidence": 0.9
+    },
+    {
+      "anchor_provisional_feature_ref": "OPF::A005OM-0014::PF-0090",
+      "compared_against_count": 202,
+      "merge_candidate_refs": [],
+      "related_but_distinct_refs": [
+        "OPF::A005OM-0015::PF-0057",
+        "OPF::A005OM-0015::PF-0125",
+        "OPF::A005OM-0015::PF-0140",
+        "OPF::A005OM-0015::PF-0171"
+      ],
+      "rationale": "All 202 comparators were examined. No comparator represents the same product feature under the same authority and lifecycle; the listed near-neighbors retain distinct consumers, state machines, failure or recovery contracts, security boundaries, or user-visible promises.",
+      "confidence": 0.9
+    },
+    {
+      "anchor_provisional_feature_ref": "OPF::A005OM-0014::PF-0091",
+      "compared_against_count": 202,
+      "merge_candidate_refs": [],
+      "related_but_distinct_refs": [
+        "OPF::A005OM-0015::PF-0061",
+        "OPF::A005OM-0015::PF-0136",
+        "OPF::A005OM-0015::PF-0139",
+        "OPF::A005OM-0015::PF-0140"
+      ],
+      "rationale": "All 202 comparators were examined. No comparator represents the same product feature under the same authority and lifecycle; the listed near-neighbors retain distinct consumers, state machines, failure or recovery contracts, security boundaries, or user-visible promises.",
+      "confidence": 0.9
+    },
+    {
+      "anchor_provisional_feature_ref": "OPF::A005OM-0014::PF-0092",
+      "compared_against_count": 202,
+      "merge_candidate_refs": [],
+      "related_but_distinct_refs": [
+        "OPF::A005OM-0015::PF-0042",
+        "OPF::A005OM-0015::PF-0125",
+        "OPF::A005OM-0015::PF-0140",
+        "OPF::A005OM-0015::PF-0171"
+      ],
+      "rationale": "All 202 comparators were examined. No comparator represents the same product feature under the same authority and lifecycle; the listed near-neighbors retain distinct consumers, state machines, failure or recovery contracts, security boundaries, or user-visible promises.",
+      "confidence": 0.9
+    },
+    {
+      "anchor_provisional_feature_ref": "OPF::A005OM-0014::PF-0093",
+      "compared_against_count": 202,
+      "merge_candidate_refs": [],
+      "related_but_distinct_refs": [
+        "OPF::A005OM-0015::PF-0111",
+        "OPF::A005OM-0015::PF-0132"
+      ],
+      "rationale": "All 202 comparators were examined. No comparator represents the same product feature under the same authority and lifecycle; the listed near-neighbors retain distinct consumers, state machines, failure or recovery contracts, security boundaries, or user-visible promises.",
+      "confidence": 0.9
+    },
+    {
+      "anchor_provisional_feature_ref": "OPF::A005OM-0014::PF-0094",
+      "compared_against_count": 202,
+      "merge_candidate_refs": [],
+      "related_but_distinct_refs": [
+        "OPF::A005OM-0015::PF-0028",
+        "OPF::A005OM-0015::PF-0032",
+        "OPF::A005OM-0015::PF-0056"
+      ],
+      "rationale": "All 202 comparators were examined. No comparator represents the same product feature under the same authority and lifecycle; the listed near-neighbors retain distinct consumers, state machines, failure or recovery contracts, security boundaries, or user-visible promises.",
+      "confidence": 0.9
+    },
+    {
+      "anchor_provisional_feature_ref": "OPF::A005OM-0014::PF-0095",
+      "compared_against_count": 202,
+      "merge_candidate_refs": [],
+      "related_but_distinct_refs": [
+        "OPF::A005OM-0015::PF-0024",
+        "OPF::A005OM-0015::PF-0025",
+        "OPF::A005OM-0015::PF-0030",
+        "OPF::A005OM-0015::PF-0108"
+      ],
+      "rationale": "All 202 comparators were examined. No comparator represents the same product feature under the same authority and lifecycle; the listed near-neighbors retain distinct consumers, state machines, failure or recovery contracts, security boundaries, or user-visible promises.",
+      "confidence": 0.9
+    },
+    {
+      "anchor_provisional_feature_ref": "OPF::A005OM-0014::PF-0096",
+      "compared_against_count": 202,
+      "merge_candidate_refs": [],
+      "related_but_distinct_refs": [
+        "OPF::A005OM-0015::PF-0005",
+        "OPF::A005OM-0015::PF-0007",
+        "OPF::A005OM-0015::PF-0031",
+        "OPF::A005OM-0015::PF-0096",
+        "OPF::A005OM-0015::PF-0140"
+      ],
+      "rationale": "All 202 comparators were examined. No comparator represents the same product feature under the same authority and lifecycle; the listed near-neighbors retain distinct consumers, state machines, failure or recovery contracts, security boundaries, or user-visible promises.",
+      "confidence": 0.9
+    },
+    {
+      "anchor_provisional_feature_ref": "OPF::A005OM-0014::PF-0097",
+      "compared_against_count": 202,
+      "merge_candidate_refs": [],
+      "related_but_distinct_refs": [
+        "OPF::A005OM-0015::PF-0021",
+        "OPF::A005OM-0015::PF-0060",
+        "OPF::A005OM-0015::PF-0070",
+        "OPF::A005OM-0015::PF-0141"
+      ],
+      "rationale": "All 202 comparators were examined. No comparator represents the same product feature under the same authority and lifecycle; the listed near-neighbors retain distinct consumers, state machines, failure or recovery contracts, security boundaries, or user-visible promises.",
+      "confidence": 0.9
+    },
+    {
+      "anchor_provisional_feature_ref": "OPF::A005OM-0014::PF-0098",
+      "compared_against_count": 202,
+      "merge_candidate_refs": [],
+      "related_but_distinct_refs": [
+        "OPF::A005OM-0015::PF-0019",
+        "OPF::A005OM-0015::PF-0154"
+      ],
+      "rationale": "All 202 comparators were examined. No comparator represents the same product feature under the same authority and lifecycle; the listed near-neighbors retain distinct consumers, state machines, failure or recovery contracts, security boundaries, or user-visible promises.",
+      "confidence": 0.9
+    },
+    {
+      "anchor_provisional_feature_ref": "OPF::A005OM-0014::PF-0099",
+      "compared_against_count": 202,
+      "merge_candidate_refs": [
+        "OPF::A005OM-0015::PF-0019"
+      ],
+      "related_but_distinct_refs": [],
+      "rationale": "All 202 comparators were examined. The merge candidate represents the same product feature under the same authority and lifecycle; related references remain separate because they are validation surfaces, consumers, or adjacent controls with distinct contracts.",
+      "confidence": 0.93
+    },
+    {
+      "anchor_provisional_feature_ref": "OPF::A005OM-0014::PF-0100",
+      "compared_against_count": 202,
+      "merge_candidate_refs": [],
+      "related_but_distinct_refs": [
+        "OPF::A005OM-0015::PF-0017",
+        "OPF::A005OM-0015::PF-0110"
+      ],
+      "rationale": "All 202 comparators were examined. No comparator represents the same product feature under the same authority and lifecycle; the listed near-neighbors retain distinct consumers, state machines, failure or recovery contracts, security boundaries, or user-visible promises.",
+      "confidence": 0.9
+    },
+    {
+      "anchor_provisional_feature_ref": "OPF::A005OM-0014::PF-0101",
+      "compared_against_count": 202,
+      "merge_candidate_refs": [],
+      "related_but_distinct_refs": [
+        "OPF::A005OM-0015::PF-0074",
+        "OPF::A005OM-0015::PF-0102",
+        "OPF::A005OM-0015::PF-0110"
+      ],
+      "rationale": "All 202 comparators were examined. No comparator represents the same product feature under the same authority and lifecycle; the listed near-neighbors retain distinct consumers, state machines, failure or recovery contracts, security boundaries, or user-visible promises.",
+      "confidence": 0.9
+    },
+    {
+      "anchor_provisional_feature_ref": "OPF::A005OM-0014::PF-0102",
+      "compared_against_count": 202,
+      "merge_candidate_refs": [],
+      "related_but_distinct_refs": [
+        "OPF::A005OM-0015::PF-0104",
+        "OPF::A005OM-0015::PF-0195",
+        "OPF::A005OM-0015::PF-0197"
+      ],
+      "rationale": "All 202 comparators were examined. No comparator represents the same product feature under the same authority and lifecycle; the listed near-neighbors retain distinct consumers, state machines, failure or recovery contracts, security boundaries, or user-visible promises.",
+      "confidence": 0.9
+    },
+    {
+      "anchor_provisional_feature_ref": "OPF::A005OM-0014::PF-0103",
+      "compared_against_count": 202,
+      "merge_candidate_refs": [],
+      "related_but_distinct_refs": [
+        "OPF::A005OM-0015::PF-0058",
+        "OPF::A005OM-0015::PF-0135",
+        "OPF::A005OM-0015::PF-0158"
+      ],
+      "rationale": "All 202 comparators were examined. No comparator represents the same product feature under the same authority and lifecycle; the listed near-neighbors retain distinct consumers, state machines, failure or recovery contracts, security boundaries, or user-visible promises.",
+      "confidence": 0.9
+    },
+    {
+      "anchor_provisional_feature_ref": "OPF::A005OM-0014::PF-0104",
+      "compared_against_count": 202,
+      "merge_candidate_refs": [],
+      "related_but_distinct_refs": [
+        "OPF::A005OM-0015::PF-0054",
+        "OPF::A005OM-0015::PF-0119"
+      ],
+      "rationale": "All 202 comparators were examined. No comparator represents the same product feature under the same authority and lifecycle; the listed near-neighbors retain distinct consumers, state machines, failure or recovery contracts, security boundaries, or user-visible promises.",
+      "confidence": 0.9
+    },
+    {
+      "anchor_provisional_feature_ref": "OPF::A005OM-0014::PF-0105",
+      "compared_against_count": 202,
+      "merge_candidate_refs": [],
+      "related_but_distinct_refs": [
+        "OPF::A005OM-0015::PF-0011",
+        "OPF::A005OM-0015::PF-0047",
+        "OPF::A005OM-0015::PF-0138",
+        "OPF::A005OM-0015::PF-0141"
+      ],
+      "rationale": "All 202 comparators were examined. No comparator represents the same product feature under the same authority and lifecycle; the listed near-neighbors retain distinct consumers, state machines, failure or recovery contracts, security boundaries, or user-visible promises.",
+      "confidence": 0.9
+    },
+    {
+      "anchor_provisional_feature_ref": "OPF::A005OM-0014::PF-0106",
+      "compared_against_count": 202,
+      "merge_candidate_refs": [],
+      "related_but_distinct_refs": [
+        "OPF::A005OM-0015::PF-0117",
+        "OPF::A005OM-0015::PF-0119",
+        "OPF::A005OM-0015::PF-0123"
+      ],
+      "rationale": "All 202 comparators were examined. No comparator represents the same product feature under the same authority and lifecycle; the listed near-neighbors retain distinct consumers, state machines, failure or recovery contracts, security boundaries, or user-visible promises.",
+      "confidence": 0.9
+    },
+    {
+      "anchor_provisional_feature_ref": "OPF::A005OM-0014::PF-0107",
+      "compared_against_count": 202,
+      "merge_candidate_refs": [],
+      "related_but_distinct_refs": [
+        "OPF::A005OM-0015::PF-0060",
+        "OPF::A005OM-0015::PF-0067",
+        "OPF::A005OM-0015::PF-0110",
+        "OPF::A005OM-0015::PF-0138"
+      ],
+      "rationale": "All 202 comparators were examined. No comparator represents the same product feature under the same authority and lifecycle; the listed near-neighbors retain distinct consumers, state machines, failure or recovery contracts, security boundaries, or user-visible promises.",
+      "confidence": 0.9
+    },
+    {
+      "anchor_provisional_feature_ref": "OPF::A005OM-0014::PF-0108",
+      "compared_against_count": 202,
+      "merge_candidate_refs": [],
+      "related_but_distinct_refs": [
+        "OPF::A005OM-0015::PF-0069",
+        "OPF::A005OM-0015::PF-0152",
+        "OPF::A005OM-0015::PF-0154",
+        "OPF::A005OM-0015::PF-0170"
+      ],
+      "rationale": "All 202 comparators were examined. No comparator represents the same product feature under the same authority and lifecycle; the listed near-neighbors retain distinct consumers, state machines, failure or recovery contracts, security boundaries, or user-visible promises.",
+      "confidence": 0.9
+    },
+    {
+      "anchor_provisional_feature_ref": "OPF::A005OM-0014::PF-0109",
+      "compared_against_count": 202,
+      "merge_candidate_refs": [],
+      "related_but_distinct_refs": [
+        "OPF::A005OM-0015::PF-0047",
+        "OPF::A005OM-0015::PF-0138",
+        "OPF::A005OM-0015::PF-0177"
+      ],
+      "rationale": "All 202 comparators were examined. No comparator represents the same product feature under the same authority and lifecycle; the listed near-neighbors retain distinct consumers, state machines, failure or recovery contracts, security boundaries, or user-visible promises.",
+      "confidence": 0.9
+    },
+    {
+      "anchor_provisional_feature_ref": "OPF::A005OM-0014::PF-0110",
+      "compared_against_count": 202,
+      "merge_candidate_refs": [
+        "OPF::A005OM-0015::PF-0169"
+      ],
+      "related_but_distinct_refs": [
+        "OPF::A005OM-0015::PF-0179",
+        "OPF::A005OM-0015::PF-0191",
+        "OPF::A005OM-0015::PF-0193"
+      ],
+      "rationale": "All 202 comparators were examined. The merge candidate represents the same product feature under the same authority and lifecycle; related references remain separate because they are validation surfaces, consumers, or adjacent controls with distinct contracts.",
+      "confidence": 0.93
+    },
+    {
+      "anchor_provisional_feature_ref": "OPF::A005OM-0014::PF-0111",
+      "compared_against_count": 202,
+      "merge_candidate_refs": [
+        "OPF::A005OM-0015::PF-0169"
+      ],
+      "related_but_distinct_refs": [
+        "OPF::A005OM-0015::PF-0155",
+        "OPF::A005OM-0015::PF-0161",
+        "OPF::A005OM-0015::PF-0179"
+      ],
+      "rationale": "All 202 comparators were examined. The merge candidate represents the same product feature under the same authority and lifecycle; related references remain separate because they are validation surfaces, consumers, or adjacent controls with distinct contracts.",
+      "confidence": 0.93
+    },
+    {
+      "anchor_provisional_feature_ref": "OPF::A005OM-0014::PF-0112",
+      "compared_against_count": 202,
+      "merge_candidate_refs": [
+        "OPF::A005OM-0015::PF-0009"
+      ],
+      "related_but_distinct_refs": [
+        "OPF::A005OM-0015::PF-0021"
+      ],
+      "rationale": "All 202 comparators were examined. The merge candidate represents the same product feature under the same authority and lifecycle; related references remain separate because they are validation surfaces, consumers, or adjacent controls with distinct contracts.",
+      "confidence": 0.93
+    },
+    {
+      "anchor_provisional_feature_ref": "OPF::A005OM-0014::PF-0113",
+      "compared_against_count": 202,
+      "merge_candidate_refs": [
+        "OPF::A005OM-0015::PF-0009"
+      ],
+      "related_but_distinct_refs": [
+        "OPF::A005OM-0015::PF-0021"
+      ],
+      "rationale": "All 202 comparators were examined. The merge candidate represents the same product feature under the same authority and lifecycle; related references remain separate because they are validation surfaces, consumers, or adjacent controls with distinct contracts.",
+      "confidence": 0.93
+    },
+    {
+      "anchor_provisional_feature_ref": "OPF::A005OM-0014::PF-0114",
+      "compared_against_count": 202,
+      "merge_candidate_refs": [],
+      "related_but_distinct_refs": [
+        "OPF::A005OM-0015::PF-0009",
+        "OPF::A005OM-0015::PF-0017"
+      ],
+      "rationale": "All 202 comparators were examined. No comparator represents the same product feature under the same authority and lifecycle; the listed near-neighbors retain distinct consumers, state machines, failure or recovery contracts, security boundaries, or user-visible promises.",
+      "confidence": 0.9
+    },
+    {
+      "anchor_provisional_feature_ref": "OPF::A005OM-0014::PF-0115",
+      "compared_against_count": 202,
+      "merge_candidate_refs": [],
+      "related_but_distinct_refs": [
+        "OPF::A005OM-0015::PF-0009"
+      ],
+      "rationale": "All 202 comparators were examined. No comparator represents the same product feature under the same authority and lifecycle; the listed near-neighbors retain distinct consumers, state machines, failure or recovery contracts, security boundaries, or user-visible promises.",
+      "confidence": 0.9
+    },
+    {
+      "anchor_provisional_feature_ref": "OPF::A005OM-0014::PF-0116",
+      "compared_against_count": 202,
+      "merge_candidate_refs": [],
+      "related_but_distinct_refs": [
+        "OPF::A005OM-0015::PF-0108",
+        "OPF::A005OM-0015::PF-0110"
+      ],
+      "rationale": "All 202 comparators were examined. No comparator represents the same product feature under the same authority and lifecycle; the listed near-neighbors retain distinct consumers, state machines, failure or recovery contracts, security boundaries, or user-visible promises.",
+      "confidence": 0.9
+    },
+    {
+      "anchor_provisional_feature_ref": "OPF::A005OM-0014::PF-0117",
+      "compared_against_count": 202,
+      "merge_candidate_refs": [],
+      "related_but_distinct_refs": [],
+      "rationale": "All 202 comparators were examined. No comparator represents the same product feature under the same authority and lifecycle, and no plausible near-neighbor remains after preserving distinct boundaries.",
+      "confidence": 0.96
+    },
+    {
+      "anchor_provisional_feature_ref": "OPF::A005OM-0014::PF-0118",
+      "compared_against_count": 202,
+      "merge_candidate_refs": [],
+      "related_but_distinct_refs": [
+        "OPF::A005OM-0015::PF-0153",
+        "OPF::A005OM-0015::PF-0157",
+        "OPF::A005OM-0015::PF-0183"
+      ],
+      "rationale": "All 202 comparators were examined. No comparator represents the same product feature under the same authority and lifecycle; the listed near-neighbors retain distinct consumers, state machines, failure or recovery contracts, security boundaries, or user-visible promises.",
+      "confidence": 0.9
+    },
+    {
+      "anchor_provisional_feature_ref": "OPF::A005OM-0014::PF-0119",
+      "compared_against_count": 202,
+      "merge_candidate_refs": [],
+      "related_but_distinct_refs": [
+        "OPF::A005OM-0015::PF-0136",
+        "OPF::A005OM-0015::PF-0142",
+        "OPF::A005OM-0015::PF-0144"
+      ],
+      "rationale": "All 202 comparators were examined. No comparator represents the same product feature under the same authority and lifecycle; the listed near-neighbors retain distinct consumers, state machines, failure or recovery contracts, security boundaries, or user-visible promises.",
+      "confidence": 0.9
+    },
+    {
+      "anchor_provisional_feature_ref": "OPF::A005OM-0014::PF-0120",
+      "compared_against_count": 202,
+      "merge_candidate_refs": [],
+      "related_but_distinct_refs": [
+        "OPF::A005OM-0015::PF-0017",
+        "OPF::A005OM-0015::PF-0061",
+        "OPF::A005OM-0015::PF-0140"
+      ],
+      "rationale": "All 202 comparators were examined. No comparator represents the same product feature under the same authority and lifecycle; the listed near-neighbors retain distinct consumers, state machines, failure or recovery contracts, security boundaries, or user-visible promises.",
+      "confidence": 0.9
+    },
+    {
+      "anchor_provisional_feature_ref": "OPF::A005OM-0014::PF-0121",
+      "compared_against_count": 202,
+      "merge_candidate_refs": [],
+      "related_but_distinct_refs": [
+        "OPF::A005OM-0015::PF-0003",
+        "OPF::A005OM-0015::PF-0068",
+        "OPF::A005OM-0015::PF-0154",
+        "OPF::A005OM-0015::PF-0181"
+      ],
+      "rationale": "All 202 comparators were examined. No comparator represents the same product feature under the same authority and lifecycle; the listed near-neighbors retain distinct consumers, state machines, failure or recovery contracts, security boundaries, or user-visible promises.",
+      "confidence": 0.9
+    },
+    {
+      "anchor_provisional_feature_ref": "OPF::A005OM-0014::PF-0122",
+      "compared_against_count": 202,
+      "merge_candidate_refs": [],
+      "related_but_distinct_refs": [
+        "OPF::A005OM-0015::PF-0151",
+        "OPF::A005OM-0015::PF-0165"
+      ],
+      "rationale": "All 202 comparators were examined. No comparator represents the same product feature under the same authority and lifecycle; the listed near-neighbors retain distinct consumers, state machines, failure or recovery contracts, security boundaries, or user-visible promises.",
+      "confidence": 0.9
+    },
+    {
+      "anchor_provisional_feature_ref": "OPF::A005OM-0014::PF-0123",
+      "compared_against_count": 202,
+      "merge_candidate_refs": [],
+      "related_but_distinct_refs": [
+        "OPF::A005OM-0015::PF-0152",
+        "OPF::A005OM-0015::PF-0154",
+        "OPF::A005OM-0015::PF-0164",
+        "OPF::A005OM-0015::PF-0170"
+      ],
+      "rationale": "All 202 comparators were examined. No comparator represents the same product feature under the same authority and lifecycle; the listed near-neighbors retain distinct consumers, state machines, failure or recovery contracts, security boundaries, or user-visible promises.",
+      "confidence": 0.9
+    },
+    {
+      "anchor_provisional_feature_ref": "OPF::A005OM-0014::PF-0124",
+      "compared_against_count": 202,
+      "merge_candidate_refs": [
+        "OPF::A005OM-0015::PF-0171"
+      ],
+      "related_but_distinct_refs": [
+        "OPF::A005OM-0015::PF-0195",
+        "OPF::A005OM-0015::PF-0196",
+        "OPF::A005OM-0015::PF-0197"
+      ],
+      "rationale": "All 202 comparators were examined. The merge candidate represents the same product feature under the same authority and lifecycle; related references remain separate because they are validation surfaces, consumers, or adjacent controls with distinct contracts.",
+      "confidence": 0.93
+    },
+    {
+      "anchor_provisional_feature_ref": "OPF::A005OM-0014::PF-0125",
+      "compared_against_count": 202,
+      "merge_candidate_refs": [],
+      "related_but_distinct_refs": [
+        "OPF::A005OM-0015::PF-0075",
+        "OPF::A005OM-0015::PF-0145",
+        "OPF::A005OM-0015::PF-0152"
+      ],
+      "rationale": "All 202 comparators were examined. No comparator represents the same product feature under the same authority and lifecycle; the listed near-neighbors retain distinct consumers, state machines, failure or recovery contracts, security boundaries, or user-visible promises.",
+      "confidence": 0.9
+    },
+    {
+      "anchor_provisional_feature_ref": "OPF::A005OM-0014::PF-0126",
+      "compared_against_count": 202,
+      "merge_candidate_refs": [],
+      "related_but_distinct_refs": [
+        "OPF::A005OM-0015::PF-0075",
+        "OPF::A005OM-0015::PF-0145"
+      ],
+      "rationale": "All 202 comparators were examined. No comparator represents the same product feature under the same authority and lifecycle; the listed near-neighbors retain distinct consumers, state machines, failure or recovery contracts, security boundaries, or user-visible promises.",
+      "confidence": 0.9
+    },
+    {
+      "anchor_provisional_feature_ref": "OPF::A005OM-0014::PF-0127",
+      "compared_against_count": 202,
+      "merge_candidate_refs": [],
+      "related_but_distinct_refs": [
+        "OPF::A005OM-0015::PF-0005",
+        "OPF::A005OM-0015::PF-0096",
+        "OPF::A005OM-0015::PF-0136"
+      ],
+      "rationale": "All 202 comparators were examined. No comparator represents the same product feature under the same authority and lifecycle; the listed near-neighbors retain distinct consumers, state machines, failure or recovery contracts, security boundaries, or user-visible promises.",
+      "confidence": 0.9
+    },
+    {
+      "anchor_provisional_feature_ref": "OPF::A005OM-0014::PF-0128",
+      "compared_against_count": 202,
+      "merge_candidate_refs": [],
+      "related_but_distinct_refs": [
+        "OPF::A005OM-0015::PF-0018",
+        "OPF::A005OM-0015::PF-0065",
+        "OPF::A005OM-0015::PF-0185"
+      ],
+      "rationale": "All 202 comparators were examined. No comparator represents the same product feature under the same authority and lifecycle; the listed near-neighbors retain distinct consumers, state machines, failure or recovery contracts, security boundaries, or user-visible promises.",
+      "confidence": 0.9
+    },
+    {
+      "anchor_provisional_feature_ref": "OPF::A005OM-0014::PF-0129",
+      "compared_against_count": 202,
+      "merge_candidate_refs": [],
+      "related_but_distinct_refs": [
+        "OPF::A005OM-0015::PF-0149",
+        "OPF::A005OM-0015::PF-0163",
+        "OPF::A005OM-0015::PF-0164"
+      ],
+      "rationale": "All 202 comparators were examined. No comparator represents the same product feature under the same authority and lifecycle; the listed near-neighbors retain distinct consumers, state machines, failure or recovery contracts, security boundaries, or user-visible promises.",
+      "confidence": 0.9
+    },
+    {
+      "anchor_provisional_feature_ref": "OPF::A005OM-0014::PF-0130",
+      "compared_against_count": 202,
+      "merge_candidate_refs": [],
+      "related_but_distinct_refs": [
+        "OPF::A005OM-0015::PF-0013",
+        "OPF::A005OM-0015::PF-0058",
+        "OPF::A005OM-0015::PF-0106"
+      ],
+      "rationale": "All 202 comparators were examined. No comparator represents the same product feature under the same authority and lifecycle; the listed near-neighbors retain distinct consumers, state machines, failure or recovery contracts, security boundaries, or user-visible promises.",
+      "confidence": 0.9
+    },
+    {
+      "anchor_provisional_feature_ref": "OPF::A005OM-0014::PF-0131",
+      "compared_against_count": 202,
+      "merge_candidate_refs": [],
+      "related_but_distinct_refs": [
+        "OPF::A005OM-0015::PF-0011",
+        "OPF::A005OM-0015::PF-0032",
+        "OPF::A005OM-0015::PF-0094"
+      ],
+      "rationale": "All 202 comparators were examined. No comparator represents the same product feature under the same authority and lifecycle; the listed near-neighbors retain distinct consumers, state machines, failure or recovery contracts, security boundaries, or user-visible promises.",
+      "confidence": 0.9
+    },
+    {
+      "anchor_provisional_feature_ref": "OPF::A005OM-0014::PF-0132",
+      "compared_against_count": 202,
+      "merge_candidate_refs": [],
+      "related_but_distinct_refs": [
+        "OPF::A005OM-0015::PF-0135",
+        "OPF::A005OM-0015::PF-0136",
+        "OPF::A005OM-0015::PF-0144"
+      ],
+      "rationale": "All 202 comparators were examined. No comparator represents the same product feature under the same authority and lifecycle; the listed near-neighbors retain distinct consumers, state machines, failure or recovery contracts, security boundaries, or user-visible promises.",
+      "confidence": 0.9
+    },
+    {
+      "anchor_provisional_feature_ref": "OPF::A005OM-0014::PF-0133",
+      "compared_against_count": 202,
+      "merge_candidate_refs": [],
+      "related_but_distinct_refs": [
+        "OPF::A005OM-0015::PF-0093",
+        "OPF::A005OM-0015::PF-0104",
+        "OPF::A005OM-0015::PF-0196",
+        "OPF::A005OM-0015::PF-0201"
+      ],
+      "rationale": "All 202 comparators were examined. No comparator represents the same product feature under the same authority and lifecycle; the listed near-neighbors retain distinct consumers, state machines, failure or recovery contracts, security boundaries, or user-visible promises.",
+      "confidence": 0.9
+    },
+    {
+      "anchor_provisional_feature_ref": "OPF::A005OM-0014::PF-0134",
+      "compared_against_count": 202,
+      "merge_candidate_refs": [],
+      "related_but_distinct_refs": [
+        "OPF::A005OM-0015::PF-0011",
+        "OPF::A005OM-0015::PF-0060",
+        "OPF::A005OM-0015::PF-0073",
+        "OPF::A005OM-0015::PF-0141"
+      ],
+      "rationale": "All 202 comparators were examined. No comparator represents the same product feature under the same authority and lifecycle; the listed near-neighbors retain distinct consumers, state machines, failure or recovery contracts, security boundaries, or user-visible promises.",
+      "confidence": 0.9
+    },
+    {
+      "anchor_provisional_feature_ref": "OPF::A005OM-0014::PF-0135",
+      "compared_against_count": 202,
+      "merge_candidate_refs": [],
+      "related_but_distinct_refs": [
+        "OPF::A005OM-0015::PF-0117",
+        "OPF::A005OM-0015::PF-0123"
+      ],
+      "rationale": "All 202 comparators were examined. No comparator represents the same product feature under the same authority and lifecycle; the listed near-neighbors retain distinct consumers, state machines, failure or recovery contracts, security boundaries, or user-visible promises.",
+      "confidence": 0.9
+    },
+    {
+      "anchor_provisional_feature_ref": "OPF::A005OM-0014::PF-0136",
+      "compared_against_count": 202,
+      "merge_candidate_refs": [],
+      "related_but_distinct_refs": [
+        "OPF::A005OM-0015::PF-0119",
+        "OPF::A005OM-0015::PF-0148",
+        "OPF::A005OM-0015::PF-0177"
+      ],
+      "rationale": "All 202 comparators were examined. No comparator represents the same product feature under the same authority and lifecycle; the listed near-neighbors retain distinct consumers, state machines, failure or recovery contracts, security boundaries, or user-visible promises.",
+      "confidence": 0.9
+    },
+    {
+      "anchor_provisional_feature_ref": "OPF::A005OM-0014::PF-0137",
+      "compared_against_count": 202,
+      "merge_candidate_refs": [],
+      "related_but_distinct_refs": [
+        "OPF::A005OM-0015::PF-0047",
+        "OPF::A005OM-0015::PF-0117",
+        "OPF::A005OM-0015::PF-0119"
+      ],
+      "rationale": "All 202 comparators were examined. No comparator represents the same product feature under the same authority and lifecycle; the listed near-neighbors retain distinct consumers, state machines, failure or recovery contracts, security boundaries, or user-visible promises.",
+      "confidence": 0.9
+    },
+    {
+      "anchor_provisional_feature_ref": "OPF::A005OM-0014::PF-0138",
+      "compared_against_count": 202,
+      "merge_candidate_refs": [
+        "OPF::A005OM-0015::PF-0057"
+      ],
+      "related_but_distinct_refs": [
+        "OPF::A005OM-0015::PF-0012",
+        "OPF::A005OM-0015::PF-0096",
+        "OPF::A005OM-0015::PF-0131",
+        "OPF::A005OM-0015::PF-0182"
+      ],
+      "rationale": "All 202 comparators were examined. The merge candidate represents the same product feature under the same authority and lifecycle; related references remain separate because they are validation surfaces, consumers, or adjacent controls with distinct contracts.",
+      "confidence": 0.93
+    },
+    {
+      "anchor_provisional_feature_ref": "OPF::A005OM-0014::PF-0139",
+      "compared_against_count": 202,
+      "merge_candidate_refs": [],
+      "related_but_distinct_refs": [],
+      "rationale": "All 202 comparators were examined. No comparator represents the same product feature under the same authority and lifecycle, and no plausible near-neighbor remains after preserving distinct boundaries.",
+      "confidence": 0.96
+    },
+    {
+      "anchor_provisional_feature_ref": "OPF::A005OM-0014::PF-0140",
+      "compared_against_count": 202,
+      "merge_candidate_refs": [],
+      "related_but_distinct_refs": [
+        "OPF::A005OM-0015::PF-0022",
+        "OPF::A005OM-0015::PF-0032",
+        "OPF::A005OM-0015::PF-0074",
+        "OPF::A005OM-0015::PF-0173"
+      ],
+      "rationale": "All 202 comparators were examined. No comparator represents the same product feature under the same authority and lifecycle; the listed near-neighbors retain distinct consumers, state machines, failure or recovery contracts, security boundaries, or user-visible promises.",
+      "confidence": 0.9
+    },
+    {
+      "anchor_provisional_feature_ref": "OPF::A005OM-0014::PF-0141",
+      "compared_against_count": 202,
+      "merge_candidate_refs": [
+        "OPF::A005OM-0015::PF-0136"
+      ],
+      "related_but_distinct_refs": [
+        "OPF::A005OM-0015::PF-0061",
+        "OPF::A005OM-0015::PF-0139",
+        "OPF::A005OM-0015::PF-0140"
+      ],
+      "rationale": "All 202 comparators were examined. The merge candidate represents the same product feature under the same authority and lifecycle; related references remain separate because they are validation surfaces, consumers, or adjacent controls with distinct contracts.",
+      "confidence": 0.93
+    },
+    {
+      "anchor_provisional_feature_ref": "OPF::A005OM-0014::PF-0142",
+      "compared_against_count": 202,
+      "merge_candidate_refs": [],
+      "related_but_distinct_refs": [
+        "OPF::A005OM-0015::PF-0157",
+        "OPF::A005OM-0015::PF-0202"
+      ],
+      "rationale": "All 202 comparators were examined. No comparator represents the same product feature under the same authority and lifecycle; the listed near-neighbors retain distinct consumers, state machines, failure or recovery contracts, security boundaries, or user-visible promises.",
+      "confidence": 0.9
+    },
+    {
+      "anchor_provisional_feature_ref": "OPF::A005OM-0014::PF-0143",
+      "compared_against_count": 202,
+      "merge_candidate_refs": [],
+      "related_but_distinct_refs": [
+        "OPF::A005OM-0015::PF-0068",
+        "OPF::A005OM-0015::PF-0117",
+        "OPF::A005OM-0015::PF-0119"
+      ],
+      "rationale": "All 202 comparators were examined. No comparator represents the same product feature under the same authority and lifecycle; the listed near-neighbors retain distinct consumers, state machines, failure or recovery contracts, security boundaries, or user-visible promises.",
+      "confidence": 0.9
+    },
+    {
+      "anchor_provisional_feature_ref": "OPF::A005OM-0014::PF-0144",
+      "compared_against_count": 202,
+      "merge_candidate_refs": [],
+      "related_but_distinct_refs": [
+        "OPF::A005OM-0015::PF-0136",
+        "OPF::A005OM-0015::PF-0142",
+        "OPF::A005OM-0015::PF-0144"
+      ],
+      "rationale": "All 202 comparators were examined. No comparator represents the same product feature under the same authority and lifecycle; the listed near-neighbors retain distinct consumers, state machines, failure or recovery contracts, security boundaries, or user-visible promises.",
+      "confidence": 0.9
+    },
+    {
+      "anchor_provisional_feature_ref": "OPF::A005OM-0014::PF-0145",
+      "compared_against_count": 202,
+      "merge_candidate_refs": [],
+      "related_but_distinct_refs": [
+        "OPF::A005OM-0015::PF-0123"
+      ],
+      "rationale": "All 202 comparators were examined. No comparator represents the same product feature under the same authority and lifecycle; the listed near-neighbors retain distinct consumers, state machines, failure or recovery contracts, security boundaries, or user-visible promises.",
+      "confidence": 0.9
+    },
+    {
+      "anchor_provisional_feature_ref": "OPF::A005OM-0014::PF-0146",
+      "compared_against_count": 202,
+      "merge_candidate_refs": [],
+      "related_but_distinct_refs": [
+        "OPF::A005OM-0015::PF-0022",
+        "OPF::A005OM-0015::PF-0032",
+        "OPF::A005OM-0015::PF-0120"
+      ],
+      "rationale": "All 202 comparators were examined. No comparator represents the same product feature under the same authority and lifecycle; the listed near-neighbors retain distinct consumers, state machines, failure or recovery contracts, security boundaries, or user-visible promises.",
+      "confidence": 0.9
+    },
+    {
+      "anchor_provisional_feature_ref": "OPF::A005OM-0014::PF-0147",
+      "compared_against_count": 202,
+      "merge_candidate_refs": [],
+      "related_but_distinct_refs": [
+        "OPF::A005OM-0015::PF-0105",
+        "OPF::A005OM-0015::PF-0136",
+        "OPF::A005OM-0015::PF-0139",
+        "OPF::A005OM-0015::PF-0140"
+      ],
+      "rationale": "All 202 comparators were examined. No comparator represents the same product feature under the same authority and lifecycle; the listed near-neighbors retain distinct consumers, state machines, failure or recovery contracts, security boundaries, or user-visible promises.",
+      "confidence": 0.9
+    },
+    {
+      "anchor_provisional_feature_ref": "OPF::A005OM-0014::PF-0148",
+      "compared_against_count": 202,
+      "merge_candidate_refs": [],
+      "related_but_distinct_refs": [
+        "OPF::A005OM-0015::PF-0158",
+        "OPF::A005OM-0015::PF-0183"
+      ],
+      "rationale": "All 202 comparators were examined. No comparator represents the same product feature under the same authority and lifecycle; the listed near-neighbors retain distinct consumers, state machines, failure or recovery contracts, security boundaries, or user-visible promises.",
+      "confidence": 0.9
+    }
+  ],
+  "self_attestation": {
+    "every_anchor_decided_once": true,
+    "every_comparator_considered_for_each_anchor": true,
+    "merge_candidates_require_same_authority_and_lifecycle": true,
+    "distinct_boundaries_preserved": true,
+    "same_owner_domain_only": true,
+    "no_external_or_peer_inputs_used": true
+  }
+}
+

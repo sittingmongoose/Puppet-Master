@@ -1,0 +1,22 @@
+{
+  "audit_id": "audit-20260710-005-plan-assurance-model-lanes-fresh-agent-exhaustive",
+  "canonical_plan_writes_authorized": false,
+  "canonical_source_root_sha256": "5405af6270bd0c708484685f368462de1cd91fb6e48e224a69214472c2db0ccf",
+  "coverage_seed_active_pointer_sha256": "e13087420a4b6e1e71e66c7a08e2629004b7e7fc5561ac16785109c028e3bf0c",
+  "coverage_seed_ref": "master/macro/frozen/epoch-0016/lineage/coverage_seed.json",
+  "coverage_seed_sha256": "da606256c4657b00c3bf0b6215d802cfcf1285cd8d2943649582e2e214787de4",
+  "coverage_seed_source_ref": "master/macro/transactions/macro-batch-0011/coverage.snapshot-0011.json",
+  "coverage_seed_source_sha256": "acc9256d3bfcda89aa155093a6d9c349b06048caa09e352be3a29ada8ee732be",
+  "epoch_id": "epoch-0016",
+  "macro_assignment_count": 2,
+  "micro_window_total": 1269,
+  "old_assignment_credits_preserved": 63,
+  "old_lineage_mutated": false,
+  "payload_root_sha256": "51325cae18fad259e29c1b6a47b9b643d2029a98733999667d74c8c0e261d2dc",
+  "pilot_assignment_count": 2,
+  "remaining_micro_window_count": 13,
+  "schema_version": "macro-epoch-authority-v2",
+  "seeded_micro_window_count": 1256,
+  "source_structural_epoch": "epoch-0013",
+  "status": "CANDIDATE_PENDING_INDEPENDENT_VALIDATION"
+}

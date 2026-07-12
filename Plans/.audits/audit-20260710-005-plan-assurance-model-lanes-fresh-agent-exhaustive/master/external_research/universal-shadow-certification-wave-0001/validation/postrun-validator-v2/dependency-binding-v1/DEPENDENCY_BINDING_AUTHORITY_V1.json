@@ -1,0 +1,86 @@
+{
+  "schema_version": "universal-shadow-certification-validator-v2-dependency-binding-authority-v1",
+  "audit_id": "audit-20260710-005-plan-assurance-model-lanes-fresh-agent-exhaustive",
+  "wave_id": "universal-shadow-certification-wave-0001",
+  "status": "READY_FOR_FRESH_INDEPENDENT_PRELAUNCH_V2_BINDING",
+  "binding_scope": "append-only isolated jsonschema Draft 2020-12 runtime binding for sealed validator-v2",
+  "dependency_bundle": {
+    "namespace": "master/dependencies/jsonschema-draft202012-v1",
+    "authority_sha256": "89d86715ed9760a2f9469733bf43cb6099784710b97bccf1b656e9520d0d3afb",
+    "install_receipt_sha256": "f36f64777e31a3d993a3e1fc03ed4d46182b77667d20f81bba6eb5ffc56462f8",
+    "source_registry_sha256": "23ca01e5f0117b8f8637168c883dc99cd459387920629f6ee34be7985b9e9005",
+    "wheel_manifest_sha256": "c662aa4821ea4980210c248711d76afd25c6e296b9367458467f19f1a7665f40",
+    "requirements_lock_sha256": "a70d91fb9e7a4efbdded91709cb942d65be08c94f7ea58e473b3f0b1c190996d",
+    "verifier_sha256": "5d1e1042a91cae9751e02fe162381c5bf88fd4bfaa11ae9452dc3e790828a7af",
+    "tests_sha256": "df8f330e29a6b72b8dc9c551f9653fbbd9d81dff0484200058f0d5fa5025a2ee",
+    "known_good_fixture_sha256": "56bd9ea8beb1d1134398bff30c96f92c4ef3cd652b0670b061b92561e4d45885",
+    "bundle_tree_sha256": "c6443f668a744e37689ddcbdab5ffa8bee957ff18df2bf41863e8e4dc49d82bb",
+    "bundle_tree_file_count": 167,
+    "site_tree_sha256": "f117d8770a942f1760a6555f7544e697d5fdfc2a06a8af608f300e94ac75ee95",
+    "site_tree_file_count": 152,
+    "wheel_hashes": {
+      "attrs-26.1.0-py3-none-any.whl": "c647aa4a12dfbad9333ca4e71fe62ddc36f4e63b2d260a37a8b83d2f043ac309",
+      "jsonschema-4.26.0-py3-none-any.whl": "d489f15263b8d200f8387e64b4c3a75f06629559fb73deb8fdfb525f2dab50ce",
+      "jsonschema_specifications-2025.9.1-py3-none-any.whl": "98802fee3a11ee76ecaca44429fda8a41bff98b00a0f2838151b113f210cc6fe",
+      "referencing-0.37.0-py3-none-any.whl": "381329a9f99628c9069361716891d34ad94af76e461dcb0335825aecc7692231",
+      "rpds_py-2026.6.3-cp312-cp312-macosx_11_0_arm64.whl": "538949e262e46caa31ac01bdb3c1e8f642622922cacbabbae6a8445d9dc33eaf",
+      "typing_extensions-4.16.0-py3-none-any.whl": "481caa481374e813c1b176ada14e97f1f67a4539ce9cfeb3f350d78d6370c2e8"
+    }
+  },
+  "runtime": {
+    "python_executable": "/Users/jaredsmacbookair/.cache/codex-runtimes/codex-primary-runtime/dependencies/python/bin/python3",
+    "python_executable_sha256": "eb9d74b9c7cfdfb2c9b91614edb2c3607360ba46c5aa7fc4557b3a4a23e97cff",
+    "python_version": "3.12.13",
+    "implementation": "CPython",
+    "machine": "arm64",
+    "sysconfig_platform": "macosx-11.0-arm64",
+    "pythonpath": "master/dependencies/jsonschema-draft202012-v1/site-packages",
+    "isolated_flags": ["-S", "-B"],
+    "jsonschema_version": "4.26.0",
+    "validator_class": "jsonschema.Draft202012Validator",
+    "format_checker": "jsonschema.FormatChecker",
+    "meta_schema_id": "https://json-schema.org/draft/2020-12/schema",
+    "global_install": false,
+    "network_required_after_bundle_creation": false
+  },
+  "sealed_validator_v2": {
+    "validator_sha256": "789bca95c1dbd8ef89a5db06c041c23c67ef330324552ebb1e3602fd24cfa254",
+    "tests_sha256": "f42b563c1c13010695f2ab3cab37eef4d763738928c48655f59a5a746ce79961",
+    "authority_sha256": "9eec930af0efebee5734892d2d0d9e5836a2bb79928c817492cd73a1ea7d4b97",
+    "activation_contract_v2_sha256": "c06a674aabe43c3f4732e1c51043c082dcf13a07757b0260380b2904030e2048",
+    "activation_generator_v2_sha256": "6d3dfd17c25a1d7ec63b3be50f5912f5800a801260f53525fa230b7137a450bf",
+    "independent_v1_fail_report_sha256": "7a5c0302d37af6e5901f59dbf0fb561049fc70d16a06751996580a5b47a264bf",
+    "result_schema_sha256": "d0aad92e52ece20c3164535b2a9fa7a780e57f49343cd7a1ba9ad96d28eec0b1"
+  },
+  "binding_implementation": {
+    "wrapper_sha256": "9c3a896444f3b4d67facb9ec8581709d2a6b6022a2ce7decb30dbcc965fd26ad",
+    "tests_sha256": "c3644630402b906866bda0702ca8eb3fb125fa9a4ac80a2e4cebd7c8019c77a9",
+    "tests_passed": 115,
+    "tests_total": 115,
+    "test_digest": "591694517db22b5845260235e9da4ff3fb4b61ed7285c2a2cd9eb4ad8e9ee112"
+  },
+  "validated_contract": {
+    "real_engine_executed": true,
+    "validator_v2_tests_passed": 437,
+    "validator_v2_tests_total": 437,
+    "independent_bypasses_rejected": 12,
+    "independent_bypasses_total": 12,
+    "schema_fuzz_rejected": 100,
+    "schema_fuzz_total": 100,
+    "assignment_count": 16,
+    "feature_count": 3888,
+    "unique_feature_count": 3888,
+    "results": 0,
+    "receipts": 0,
+    "native_capture_rows": 0,
+    "live_activation_files": 0,
+    "certification_credit": 0
+  },
+  "authorization_effect": {
+    "fresh_independent_prelaunch_v2_still_required": true,
+    "activation_authorized": false,
+    "launch_authorized": false,
+    "activation_generator_invoked": false,
+    "credit_granted": 0
+  }
+}

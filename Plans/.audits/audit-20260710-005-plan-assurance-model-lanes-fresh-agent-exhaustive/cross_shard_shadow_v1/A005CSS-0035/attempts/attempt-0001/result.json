@@ -1,0 +1,956 @@
+{
+  "audit_id": "audit-20260710-005-plan-assurance-model-lanes-fresh-agent-exhaustive",
+  "schema_version": "cross-shard-shadow-result-v1",
+  "phase": "cross_shard_reverse_orientation_shadow_candidate_discovery",
+  "assignment_id": "A005CSS-0035",
+  "attempt_id": "attempt-0001",
+  "task_thread_id": "/root/a005_cross_shard_shadow_0035_attempt_0001_terminal",
+  "model": "gpt-5.6-sol",
+  "reasoning_effort": "xhigh",
+  "status": "completed",
+  "input_binding": {
+    "packet_id": "CSSPKT-0035",
+    "packet_sha256": "06d361c2bbb117c2e69913408a24d73d7e583ce7f43a09662f5accc3a5d96509",
+    "anchor_refs_digest": "6a6961bc928069753b0674a3165d7f7f616fd7a7e2637296ab421dbe2efc7e6a",
+    "comparator_refs_digest": "76dbf447a6f8f33e006f17e30749261ef6ff2754936572f21c96deb490da1232",
+    "orientation": "primary_right_as_shadow_anchor",
+    "anchor_owner_assignment_id": "A005OM-0022",
+    "comparator_owner_assignment_id": "A005OM-0021"
+  },
+  "coverage": {
+    "anchor_count": 54,
+    "anchor_refs": [
+      "OPF::A005OM-0022::PF-0001",
+      "OPF::A005OM-0022::PF-0002",
+      "OPF::A005OM-0022::PF-0003",
+      "OPF::A005OM-0022::PF-0004",
+      "OPF::A005OM-0022::PF-0005",
+      "OPF::A005OM-0022::PF-0006",
+      "OPF::A005OM-0022::PF-0007",
+      "OPF::A005OM-0022::PF-0008",
+      "OPF::A005OM-0022::PF-0009",
+      "OPF::A005OM-0022::PF-0010",
+      "OPF::A005OM-0022::PF-0011",
+      "OPF::A005OM-0022::PF-0012",
+      "OPF::A005OM-0022::PF-0013",
+      "OPF::A005OM-0022::PF-0014",
+      "OPF::A005OM-0022::PF-0015",
+      "OPF::A005OM-0022::PF-0016",
+      "OPF::A005OM-0022::PF-0017",
+      "OPF::A005OM-0022::PF-0018",
+      "OPF::A005OM-0022::PF-0019",
+      "OPF::A005OM-0022::PF-0020",
+      "OPF::A005OM-0022::PF-0021",
+      "OPF::A005OM-0022::PF-0022",
+      "OPF::A005OM-0022::PF-0023",
+      "OPF::A005OM-0022::PF-0024",
+      "OPF::A005OM-0022::PF-0025",
+      "OPF::A005OM-0022::PF-0026",
+      "OPF::A005OM-0022::PF-0027",
+      "OPF::A005OM-0022::PF-0028",
+      "OPF::A005OM-0022::PF-0029",
+      "OPF::A005OM-0022::PF-0030",
+      "OPF::A005OM-0022::PF-0031",
+      "OPF::A005OM-0022::PF-0032",
+      "OPF::A005OM-0022::PF-0033",
+      "OPF::A005OM-0022::PF-0034",
+      "OPF::A005OM-0022::PF-0035",
+      "OPF::A005OM-0022::PF-0036",
+      "OPF::A005OM-0022::PF-0037",
+      "OPF::A005OM-0022::PF-0038",
+      "OPF::A005OM-0022::PF-0039",
+      "OPF::A005OM-0022::PF-0040",
+      "OPF::A005OM-0022::PF-0041",
+      "OPF::A005OM-0022::PF-0042",
+      "OPF::A005OM-0022::PF-0043",
+      "OPF::A005OM-0022::PF-0044",
+      "OPF::A005OM-0022::PF-0045",
+      "OPF::A005OM-0022::PF-0046",
+      "OPF::A005OM-0022::PF-0047",
+      "OPF::A005OM-0022::PF-0048",
+      "OPF::A005OM-0022::PF-0049",
+      "OPF::A005OM-0022::PF-0050",
+      "OPF::A005OM-0022::PF-0051",
+      "OPF::A005OM-0022::PF-0052",
+      "OPF::A005OM-0022::PF-0053",
+      "OPF::A005OM-0022::PF-0054"
+    ],
+    "comparator_count": 164,
+    "comparator_refs": [
+      "OPF::A005OM-0021::PF-0001",
+      "OPF::A005OM-0021::PF-0002",
+      "OPF::A005OM-0021::PF-0003",
+      "OPF::A005OM-0021::PF-0004",
+      "OPF::A005OM-0021::PF-0005",
+      "OPF::A005OM-0021::PF-0006",
+      "OPF::A005OM-0021::PF-0007",
+      "OPF::A005OM-0021::PF-0008",
+      "OPF::A005OM-0021::PF-0009",
+      "OPF::A005OM-0021::PF-0010",
+      "OPF::A005OM-0021::PF-0011",
+      "OPF::A005OM-0021::PF-0012",
+      "OPF::A005OM-0021::PF-0013",
+      "OPF::A005OM-0021::PF-0014",
+      "OPF::A005OM-0021::PF-0015",
+      "OPF::A005OM-0021::PF-0016",
+      "OPF::A005OM-0021::PF-0017",
+      "OPF::A005OM-0021::PF-0018",
+      "OPF::A005OM-0021::PF-0019",
+      "OPF::A005OM-0021::PF-0020",
+      "OPF::A005OM-0021::PF-0021",
+      "OPF::A005OM-0021::PF-0022",
+      "OPF::A005OM-0021::PF-0023",
+      "OPF::A005OM-0021::PF-0024",
+      "OPF::A005OM-0021::PF-0025",
+      "OPF::A005OM-0021::PF-0026",
+      "OPF::A005OM-0021::PF-0027",
+      "OPF::A005OM-0021::PF-0028",
+      "OPF::A005OM-0021::PF-0029",
+      "OPF::A005OM-0021::PF-0030",
+      "OPF::A005OM-0021::PF-0031",
+      "OPF::A005OM-0021::PF-0032",
+      "OPF::A005OM-0021::PF-0033",
+      "OPF::A005OM-0021::PF-0034",
+      "OPF::A005OM-0021::PF-0035",
+      "OPF::A005OM-0021::PF-0036",
+      "OPF::A005OM-0021::PF-0037",
+      "OPF::A005OM-0021::PF-0038",
+      "OPF::A005OM-0021::PF-0039",
+      "OPF::A005OM-0021::PF-0040",
+      "OPF::A005OM-0021::PF-0041",
+      "OPF::A005OM-0021::PF-0042",
+      "OPF::A005OM-0021::PF-0043",
+      "OPF::A005OM-0021::PF-0044",
+      "OPF::A005OM-0021::PF-0045",
+      "OPF::A005OM-0021::PF-0046",
+      "OPF::A005OM-0021::PF-0047",
+      "OPF::A005OM-0021::PF-0048",
+      "OPF::A005OM-0021::PF-0049",
+      "OPF::A005OM-0021::PF-0050",
+      "OPF::A005OM-0021::PF-0051",
+      "OPF::A005OM-0021::PF-0052",
+      "OPF::A005OM-0021::PF-0053",
+      "OPF::A005OM-0021::PF-0054",
+      "OPF::A005OM-0021::PF-0055",
+      "OPF::A005OM-0021::PF-0056",
+      "OPF::A005OM-0021::PF-0057",
+      "OPF::A005OM-0021::PF-0058",
+      "OPF::A005OM-0021::PF-0059",
+      "OPF::A005OM-0021::PF-0060",
+      "OPF::A005OM-0021::PF-0061",
+      "OPF::A005OM-0021::PF-0062",
+      "OPF::A005OM-0021::PF-0063",
+      "OPF::A005OM-0021::PF-0064",
+      "OPF::A005OM-0021::PF-0065",
+      "OPF::A005OM-0021::PF-0066",
+      "OPF::A005OM-0021::PF-0067",
+      "OPF::A005OM-0021::PF-0068",
+      "OPF::A005OM-0021::PF-0069",
+      "OPF::A005OM-0021::PF-0070",
+      "OPF::A005OM-0021::PF-0071",
+      "OPF::A005OM-0021::PF-0072",
+      "OPF::A005OM-0021::PF-0073",
+      "OPF::A005OM-0021::PF-0074",
+      "OPF::A005OM-0021::PF-0075",
+      "OPF::A005OM-0021::PF-0076",
+      "OPF::A005OM-0021::PF-0077",
+      "OPF::A005OM-0021::PF-0078",
+      "OPF::A005OM-0021::PF-0079",
+      "OPF::A005OM-0021::PF-0080",
+      "OPF::A005OM-0021::PF-0081",
+      "OPF::A005OM-0021::PF-0082",
+      "OPF::A005OM-0021::PF-0083",
+      "OPF::A005OM-0021::PF-0084",
+      "OPF::A005OM-0021::PF-0085",
+      "OPF::A005OM-0021::PF-0086",
+      "OPF::A005OM-0021::PF-0087",
+      "OPF::A005OM-0021::PF-0088",
+      "OPF::A005OM-0021::PF-0089",
+      "OPF::A005OM-0021::PF-0090",
+      "OPF::A005OM-0021::PF-0091",
+      "OPF::A005OM-0021::PF-0092",
+      "OPF::A005OM-0021::PF-0093",
+      "OPF::A005OM-0021::PF-0094",
+      "OPF::A005OM-0021::PF-0095",
+      "OPF::A005OM-0021::PF-0096",
+      "OPF::A005OM-0021::PF-0097",
+      "OPF::A005OM-0021::PF-0098",
+      "OPF::A005OM-0021::PF-0099",
+      "OPF::A005OM-0021::PF-0100",
+      "OPF::A005OM-0021::PF-0101",
+      "OPF::A005OM-0021::PF-0102",
+      "OPF::A005OM-0021::PF-0103",
+      "OPF::A005OM-0021::PF-0104",
+      "OPF::A005OM-0021::PF-0105",
+      "OPF::A005OM-0021::PF-0106",
+      "OPF::A005OM-0021::PF-0107",
+      "OPF::A005OM-0021::PF-0108",
+      "OPF::A005OM-0021::PF-0109",
+      "OPF::A005OM-0021::PF-0110",
+      "OPF::A005OM-0021::PF-0111",
+      "OPF::A005OM-0021::PF-0112",
+      "OPF::A005OM-0021::PF-0113",
+      "OPF::A005OM-0021::PF-0114",
+      "OPF::A005OM-0021::PF-0115",
+      "OPF::A005OM-0021::PF-0116",
+      "OPF::A005OM-0021::PF-0117",
+      "OPF::A005OM-0021::PF-0118",
+      "OPF::A005OM-0021::PF-0119",
+      "OPF::A005OM-0021::PF-0120",
+      "OPF::A005OM-0021::PF-0121",
+      "OPF::A005OM-0021::PF-0122",
+      "OPF::A005OM-0021::PF-0123",
+      "OPF::A005OM-0021::PF-0124",
+      "OPF::A005OM-0021::PF-0125",
+      "OPF::A005OM-0021::PF-0126",
+      "OPF::A005OM-0021::PF-0127",
+      "OPF::A005OM-0021::PF-0128",
+      "OPF::A005OM-0021::PF-0129",
+      "OPF::A005OM-0021::PF-0130",
+      "OPF::A005OM-0021::PF-0131",
+      "OPF::A005OM-0021::PF-0132",
+      "OPF::A005OM-0021::PF-0133",
+      "OPF::A005OM-0021::PF-0134",
+      "OPF::A005OM-0021::PF-0135",
+      "OPF::A005OM-0021::PF-0136",
+      "OPF::A005OM-0021::PF-0137",
+      "OPF::A005OM-0021::PF-0138",
+      "OPF::A005OM-0021::PF-0139",
+      "OPF::A005OM-0021::PF-0140",
+      "OPF::A005OM-0021::PF-0141",
+      "OPF::A005OM-0021::PF-0142",
+      "OPF::A005OM-0021::PF-0143",
+      "OPF::A005OM-0021::PF-0144",
+      "OPF::A005OM-0021::PF-0145",
+      "OPF::A005OM-0021::PF-0146",
+      "OPF::A005OM-0021::PF-0147",
+      "OPF::A005OM-0021::PF-0148",
+      "OPF::A005OM-0021::PF-0149",
+      "OPF::A005OM-0021::PF-0150",
+      "OPF::A005OM-0021::PF-0151",
+      "OPF::A005OM-0021::PF-0152",
+      "OPF::A005OM-0021::PF-0153",
+      "OPF::A005OM-0021::PF-0154",
+      "OPF::A005OM-0021::PF-0155",
+      "OPF::A005OM-0021::PF-0156",
+      "OPF::A005OM-0021::PF-0157",
+      "OPF::A005OM-0021::PF-0158",
+      "OPF::A005OM-0021::PF-0159",
+      "OPF::A005OM-0021::PF-0160",
+      "OPF::A005OM-0021::PF-0161",
+      "OPF::A005OM-0021::PF-0162",
+      "OPF::A005OM-0021::PF-0163",
+      "OPF::A005OM-0021::PF-0164"
+    ]
+  },
+  "decisions": [
+    {
+      "anchor_provisional_feature_ref": "OPF::A005OM-0022::PF-0001",
+      "compared_against_count": 164,
+      "merge_candidate_refs": [],
+      "related_but_distinct_refs": [
+        "OPF::A005OM-0021::PF-0007",
+        "OPF::A005OM-0021::PF-0011",
+        "OPF::A005OM-0021::PF-0013",
+        "OPF::A005OM-0021::PF-0014"
+      ],
+      "rationale": "Exhaustive comparison found no merge-equivalent comparator. The listed references are plausible neighbors but differ in authority, lifecycle, state boundary, user outcome, or failure semantics.",
+      "confidence": 0.9
+    },
+    {
+      "anchor_provisional_feature_ref": "OPF::A005OM-0022::PF-0002",
+      "compared_against_count": 164,
+      "merge_candidate_refs": [],
+      "related_but_distinct_refs": [
+        "OPF::A005OM-0021::PF-0024",
+        "OPF::A005OM-0021::PF-0034",
+        "OPF::A005OM-0021::PF-0035",
+        "OPF::A005OM-0021::PF-0037",
+        "OPF::A005OM-0021::PF-0054"
+      ],
+      "rationale": "Exhaustive comparison found no merge-equivalent comparator. The listed references are plausible neighbors but differ in authority, lifecycle, state boundary, user outcome, or failure semantics.",
+      "confidence": 0.9
+    },
+    {
+      "anchor_provisional_feature_ref": "OPF::A005OM-0022::PF-0003",
+      "compared_against_count": 164,
+      "merge_candidate_refs": [],
+      "related_but_distinct_refs": [
+        "OPF::A005OM-0021::PF-0055",
+        "OPF::A005OM-0021::PF-0057",
+        "OPF::A005OM-0021::PF-0060",
+        "OPF::A005OM-0021::PF-0061",
+        "OPF::A005OM-0021::PF-0064",
+        "OPF::A005OM-0021::PF-0071",
+        "OPF::A005OM-0021::PF-0100"
+      ],
+      "rationale": "Exhaustive comparison found no merge-equivalent comparator. The listed references are plausible neighbors but differ in authority, lifecycle, state boundary, user outcome, or failure semantics.",
+      "confidence": 0.9
+    },
+    {
+      "anchor_provisional_feature_ref": "OPF::A005OM-0022::PF-0004",
+      "compared_against_count": 164,
+      "merge_candidate_refs": [],
+      "related_but_distinct_refs": [
+        "OPF::A005OM-0021::PF-0051",
+        "OPF::A005OM-0021::PF-0061",
+        "OPF::A005OM-0021::PF-0064",
+        "OPF::A005OM-0021::PF-0071"
+      ],
+      "rationale": "Exhaustive comparison found no merge-equivalent comparator. The listed references are plausible neighbors but differ in authority, lifecycle, state boundary, user outcome, or failure semantics.",
+      "confidence": 0.9
+    },
+    {
+      "anchor_provisional_feature_ref": "OPF::A005OM-0022::PF-0005",
+      "compared_against_count": 164,
+      "merge_candidate_refs": [],
+      "related_but_distinct_refs": [
+        "OPF::A005OM-0021::PF-0011",
+        "OPF::A005OM-0021::PF-0030"
+      ],
+      "rationale": "Exhaustive comparison found no merge-equivalent comparator. The listed references are plausible neighbors but differ in authority, lifecycle, state boundary, user outcome, or failure semantics.",
+      "confidence": 0.9
+    },
+    {
+      "anchor_provisional_feature_ref": "OPF::A005OM-0022::PF-0006",
+      "compared_against_count": 164,
+      "merge_candidate_refs": [],
+      "related_but_distinct_refs": [
+        "OPF::A005OM-0021::PF-0007",
+        "OPF::A005OM-0021::PF-0011",
+        "OPF::A005OM-0021::PF-0013",
+        "OPF::A005OM-0021::PF-0014",
+        "OPF::A005OM-0021::PF-0029"
+      ],
+      "rationale": "Exhaustive comparison found no merge-equivalent comparator. The listed references are plausible neighbors but differ in authority, lifecycle, state boundary, user outcome, or failure semantics.",
+      "confidence": 0.9
+    },
+    {
+      "anchor_provisional_feature_ref": "OPF::A005OM-0022::PF-0007",
+      "compared_against_count": 164,
+      "merge_candidate_refs": [],
+      "related_but_distinct_refs": [
+        "OPF::A005OM-0021::PF-0064",
+        "OPF::A005OM-0021::PF-0143",
+        "OPF::A005OM-0021::PF-0151",
+        "OPF::A005OM-0021::PF-0153"
+      ],
+      "rationale": "Exhaustive comparison found no merge-equivalent comparator. The listed references are plausible neighbors but differ in authority, lifecycle, state boundary, user outcome, or failure semantics.",
+      "confidence": 0.9
+    },
+    {
+      "anchor_provisional_feature_ref": "OPF::A005OM-0022::PF-0008",
+      "compared_against_count": 164,
+      "merge_candidate_refs": [],
+      "related_but_distinct_refs": [
+        "OPF::A005OM-0021::PF-0058",
+        "OPF::A005OM-0021::PF-0059",
+        "OPF::A005OM-0021::PF-0065",
+        "OPF::A005OM-0021::PF-0070"
+      ],
+      "rationale": "Exhaustive comparison found no merge-equivalent comparator. The listed references are plausible neighbors but differ in authority, lifecycle, state boundary, user outcome, or failure semantics.",
+      "confidence": 0.9
+    },
+    {
+      "anchor_provisional_feature_ref": "OPF::A005OM-0022::PF-0009",
+      "compared_against_count": 164,
+      "merge_candidate_refs": [],
+      "related_but_distinct_refs": [
+        "OPF::A005OM-0021::PF-0006",
+        "OPF::A005OM-0021::PF-0009",
+        "OPF::A005OM-0021::PF-0062",
+        "OPF::A005OM-0021::PF-0066",
+        "OPF::A005OM-0021::PF-0136",
+        "OPF::A005OM-0021::PF-0158",
+        "OPF::A005OM-0021::PF-0164"
+      ],
+      "rationale": "Exhaustive comparison found no merge-equivalent comparator. The listed references are plausible neighbors but differ in authority, lifecycle, state boundary, user outcome, or failure semantics.",
+      "confidence": 0.9
+    },
+    {
+      "anchor_provisional_feature_ref": "OPF::A005OM-0022::PF-0010",
+      "compared_against_count": 164,
+      "merge_candidate_refs": [],
+      "related_but_distinct_refs": [
+        "OPF::A005OM-0021::PF-0147",
+        "OPF::A005OM-0021::PF-0148"
+      ],
+      "rationale": "Exhaustive comparison found no merge-equivalent comparator. The listed references are plausible neighbors but differ in authority, lifecycle, state boundary, user outcome, or failure semantics.",
+      "confidence": 0.9
+    },
+    {
+      "anchor_provisional_feature_ref": "OPF::A005OM-0022::PF-0011",
+      "compared_against_count": 164,
+      "merge_candidate_refs": [],
+      "related_but_distinct_refs": [
+        "OPF::A005OM-0021::PF-0147",
+        "OPF::A005OM-0021::PF-0148"
+      ],
+      "rationale": "Exhaustive comparison found no merge-equivalent comparator. The listed references are plausible neighbors but differ in authority, lifecycle, state boundary, user outcome, or failure semantics.",
+      "confidence": 0.9
+    },
+    {
+      "anchor_provisional_feature_ref": "OPF::A005OM-0022::PF-0012",
+      "compared_against_count": 164,
+      "merge_candidate_refs": [],
+      "related_but_distinct_refs": [],
+      "rationale": "Exhaustive comparison found no merge-equivalent or plausibly related comparator under the strict equivalence test.",
+      "confidence": 0.92
+    },
+    {
+      "anchor_provisional_feature_ref": "OPF::A005OM-0022::PF-0013",
+      "compared_against_count": 164,
+      "merge_candidate_refs": [],
+      "related_but_distinct_refs": [
+        "OPF::A005OM-0021::PF-0018",
+        "OPF::A005OM-0021::PF-0020",
+        "OPF::A005OM-0021::PF-0021"
+      ],
+      "rationale": "Exhaustive comparison found no merge-equivalent comparator. The listed references are plausible neighbors but differ in authority, lifecycle, state boundary, user outcome, or failure semantics.",
+      "confidence": 0.9
+    },
+    {
+      "anchor_provisional_feature_ref": "OPF::A005OM-0022::PF-0014",
+      "compared_against_count": 164,
+      "merge_candidate_refs": [],
+      "related_but_distinct_refs": [
+        "OPF::A005OM-0021::PF-0007",
+        "OPF::A005OM-0021::PF-0146",
+        "OPF::A005OM-0021::PF-0153",
+        "OPF::A005OM-0021::PF-0155"
+      ],
+      "rationale": "Exhaustive comparison found no merge-equivalent comparator. The listed references are plausible neighbors but differ in authority, lifecycle, state boundary, user outcome, or failure semantics.",
+      "confidence": 0.9
+    },
+    {
+      "anchor_provisional_feature_ref": "OPF::A005OM-0022::PF-0015",
+      "compared_against_count": 164,
+      "merge_candidate_refs": [],
+      "related_but_distinct_refs": [
+        "OPF::A005OM-0021::PF-0018",
+        "OPF::A005OM-0021::PF-0145",
+        "OPF::A005OM-0021::PF-0156"
+      ],
+      "rationale": "Exhaustive comparison found no merge-equivalent comparator. The listed references are plausible neighbors but differ in authority, lifecycle, state boundary, user outcome, or failure semantics.",
+      "confidence": 0.9
+    },
+    {
+      "anchor_provisional_feature_ref": "OPF::A005OM-0022::PF-0016",
+      "compared_against_count": 164,
+      "merge_candidate_refs": [],
+      "related_but_distinct_refs": [
+        "OPF::A005OM-0021::PF-0015",
+        "OPF::A005OM-0021::PF-0018",
+        "OPF::A005OM-0021::PF-0020",
+        "OPF::A005OM-0021::PF-0021"
+      ],
+      "rationale": "Exhaustive comparison found no merge-equivalent comparator. The listed references are plausible neighbors but differ in authority, lifecycle, state boundary, user outcome, or failure semantics.",
+      "confidence": 0.9
+    },
+    {
+      "anchor_provisional_feature_ref": "OPF::A005OM-0022::PF-0017",
+      "compared_against_count": 164,
+      "merge_candidate_refs": [],
+      "related_but_distinct_refs": [
+        "OPF::A005OM-0021::PF-0022",
+        "OPF::A005OM-0021::PF-0023",
+        "OPF::A005OM-0021::PF-0025",
+        "OPF::A005OM-0021::PF-0026"
+      ],
+      "rationale": "Exhaustive comparison found no merge-equivalent comparator. The listed references are plausible neighbors but differ in authority, lifecycle, state boundary, user outcome, or failure semantics.",
+      "confidence": 0.9
+    },
+    {
+      "anchor_provisional_feature_ref": "OPF::A005OM-0022::PF-0018",
+      "compared_against_count": 164,
+      "merge_candidate_refs": [],
+      "related_but_distinct_refs": [
+        "OPF::A005OM-0021::PF-0075",
+        "OPF::A005OM-0021::PF-0079",
+        "OPF::A005OM-0021::PF-0100",
+        "OPF::A005OM-0021::PF-0107",
+        "OPF::A005OM-0021::PF-0137"
+      ],
+      "rationale": "Exhaustive comparison found no merge-equivalent comparator. The listed references are plausible neighbors but differ in authority, lifecycle, state boundary, user outcome, or failure semantics.",
+      "confidence": 0.9
+    },
+    {
+      "anchor_provisional_feature_ref": "OPF::A005OM-0022::PF-0019",
+      "compared_against_count": 164,
+      "merge_candidate_refs": [],
+      "related_but_distinct_refs": [
+        "OPF::A005OM-0021::PF-0015",
+        "OPF::A005OM-0021::PF-0018",
+        "OPF::A005OM-0021::PF-0020",
+        "OPF::A005OM-0021::PF-0021",
+        "OPF::A005OM-0021::PF-0041"
+      ],
+      "rationale": "Exhaustive comparison found no merge-equivalent comparator. The listed references are plausible neighbors but differ in authority, lifecycle, state boundary, user outcome, or failure semantics.",
+      "confidence": 0.9
+    },
+    {
+      "anchor_provisional_feature_ref": "OPF::A005OM-0022::PF-0020",
+      "compared_against_count": 164,
+      "merge_candidate_refs": [],
+      "related_but_distinct_refs": [
+        "OPF::A005OM-0021::PF-0062",
+        "OPF::A005OM-0021::PF-0066",
+        "OPF::A005OM-0021::PF-0136",
+        "OPF::A005OM-0021::PF-0164"
+      ],
+      "rationale": "Exhaustive comparison found no merge-equivalent comparator. The listed references are plausible neighbors but differ in authority, lifecycle, state boundary, user outcome, or failure semantics.",
+      "confidence": 0.9
+    },
+    {
+      "anchor_provisional_feature_ref": "OPF::A005OM-0022::PF-0021",
+      "compared_against_count": 164,
+      "merge_candidate_refs": [],
+      "related_but_distinct_refs": [
+        "OPF::A005OM-0021::PF-0069",
+        "OPF::A005OM-0021::PF-0072",
+        "OPF::A005OM-0021::PF-0081",
+        "OPF::A005OM-0021::PF-0107"
+      ],
+      "rationale": "Exhaustive comparison found no merge-equivalent comparator. The listed references are plausible neighbors but differ in authority, lifecycle, state boundary, user outcome, or failure semantics.",
+      "confidence": 0.9
+    },
+    {
+      "anchor_provisional_feature_ref": "OPF::A005OM-0022::PF-0022",
+      "compared_against_count": 164,
+      "merge_candidate_refs": [],
+      "related_but_distinct_refs": [
+        "OPF::A005OM-0021::PF-0033",
+        "OPF::A005OM-0021::PF-0058",
+        "OPF::A005OM-0021::PF-0059",
+        "OPF::A005OM-0021::PF-0065",
+        "OPF::A005OM-0021::PF-0067"
+      ],
+      "rationale": "Exhaustive comparison found no merge-equivalent comparator. The listed references are plausible neighbors but differ in authority, lifecycle, state boundary, user outcome, or failure semantics.",
+      "confidence": 0.9
+    },
+    {
+      "anchor_provisional_feature_ref": "OPF::A005OM-0022::PF-0023",
+      "compared_against_count": 164,
+      "merge_candidate_refs": [],
+      "related_but_distinct_refs": [
+        "OPF::A005OM-0021::PF-0001",
+        "OPF::A005OM-0021::PF-0026",
+        "OPF::A005OM-0021::PF-0061",
+        "OPF::A005OM-0021::PF-0071",
+        "OPF::A005OM-0021::PF-0085",
+        "OPF::A005OM-0021::PF-0107"
+      ],
+      "rationale": "Exhaustive comparison found no merge-equivalent comparator. The listed references are plausible neighbors but differ in authority, lifecycle, state boundary, user outcome, or failure semantics.",
+      "confidence": 0.9
+    },
+    {
+      "anchor_provisional_feature_ref": "OPF::A005OM-0022::PF-0024",
+      "compared_against_count": 164,
+      "merge_candidate_refs": [],
+      "related_but_distinct_refs": [
+        "OPF::A005OM-0021::PF-0001",
+        "OPF::A005OM-0021::PF-0015",
+        "OPF::A005OM-0021::PF-0084"
+      ],
+      "rationale": "Exhaustive comparison found no merge-equivalent comparator. The listed references are plausible neighbors but differ in authority, lifecycle, state boundary, user outcome, or failure semantics.",
+      "confidence": 0.9
+    },
+    {
+      "anchor_provisional_feature_ref": "OPF::A005OM-0022::PF-0025",
+      "compared_against_count": 164,
+      "merge_candidate_refs": [],
+      "related_but_distinct_refs": [
+        "OPF::A005OM-0021::PF-0051",
+        "OPF::A005OM-0021::PF-0061",
+        "OPF::A005OM-0021::PF-0071",
+        "OPF::A005OM-0021::PF-0085"
+      ],
+      "rationale": "Exhaustive comparison found no merge-equivalent comparator. The listed references are plausible neighbors but differ in authority, lifecycle, state boundary, user outcome, or failure semantics.",
+      "confidence": 0.9
+    },
+    {
+      "anchor_provisional_feature_ref": "OPF::A005OM-0022::PF-0026",
+      "compared_against_count": 164,
+      "merge_candidate_refs": [],
+      "related_but_distinct_refs": [
+        "OPF::A005OM-0021::PF-0024",
+        "OPF::A005OM-0021::PF-0040",
+        "OPF::A005OM-0021::PF-0061",
+        "OPF::A005OM-0021::PF-0085"
+      ],
+      "rationale": "Exhaustive comparison found no merge-equivalent comparator. The listed references are plausible neighbors but differ in authority, lifecycle, state boundary, user outcome, or failure semantics.",
+      "confidence": 0.9
+    },
+    {
+      "anchor_provisional_feature_ref": "OPF::A005OM-0022::PF-0027",
+      "compared_against_count": 164,
+      "merge_candidate_refs": [],
+      "related_but_distinct_refs": [
+        "OPF::A005OM-0021::PF-0001",
+        "OPF::A005OM-0021::PF-0061",
+        "OPF::A005OM-0021::PF-0071",
+        "OPF::A005OM-0021::PF-0085",
+        "OPF::A005OM-0021::PF-0107"
+      ],
+      "rationale": "Exhaustive comparison found no merge-equivalent comparator. The listed references are plausible neighbors but differ in authority, lifecycle, state boundary, user outcome, or failure semantics.",
+      "confidence": 0.9
+    },
+    {
+      "anchor_provisional_feature_ref": "OPF::A005OM-0022::PF-0028",
+      "compared_against_count": 164,
+      "merge_candidate_refs": [],
+      "related_but_distinct_refs": [
+        "OPF::A005OM-0021::PF-0062",
+        "OPF::A005OM-0021::PF-0164"
+      ],
+      "rationale": "Exhaustive comparison found no merge-equivalent comparator. The listed references are plausible neighbors but differ in authority, lifecycle, state boundary, user outcome, or failure semantics.",
+      "confidence": 0.9
+    },
+    {
+      "anchor_provisional_feature_ref": "OPF::A005OM-0022::PF-0029",
+      "compared_against_count": 164,
+      "merge_candidate_refs": [],
+      "related_but_distinct_refs": [
+        "OPF::A005OM-0021::PF-0022",
+        "OPF::A005OM-0021::PF-0025",
+        "OPF::A005OM-0021::PF-0155"
+      ],
+      "rationale": "Exhaustive comparison found no merge-equivalent comparator. The listed references are plausible neighbors but differ in authority, lifecycle, state boundary, user outcome, or failure semantics.",
+      "confidence": 0.9
+    },
+    {
+      "anchor_provisional_feature_ref": "OPF::A005OM-0022::PF-0030",
+      "compared_against_count": 164,
+      "merge_candidate_refs": [],
+      "related_but_distinct_refs": [
+        "OPF::A005OM-0021::PF-0143",
+        "OPF::A005OM-0021::PF-0150",
+        "OPF::A005OM-0021::PF-0156",
+        "OPF::A005OM-0021::PF-0162"
+      ],
+      "rationale": "Exhaustive comparison found no merge-equivalent comparator. The listed references are plausible neighbors but differ in authority, lifecycle, state boundary, user outcome, or failure semantics.",
+      "confidence": 0.9
+    },
+    {
+      "anchor_provisional_feature_ref": "OPF::A005OM-0022::PF-0031",
+      "compared_against_count": 164,
+      "merge_candidate_refs": [],
+      "related_but_distinct_refs": [
+        "OPF::A005OM-0021::PF-0064",
+        "OPF::A005OM-0021::PF-0153",
+        "OPF::A005OM-0021::PF-0156"
+      ],
+      "rationale": "Exhaustive comparison found no merge-equivalent comparator. The listed references are plausible neighbors but differ in authority, lifecycle, state boundary, user outcome, or failure semantics.",
+      "confidence": 0.9
+    },
+    {
+      "anchor_provisional_feature_ref": "OPF::A005OM-0022::PF-0032",
+      "compared_against_count": 164,
+      "merge_candidate_refs": [
+        "OPF::A005OM-0021::PF-0153"
+      ],
+      "related_but_distinct_refs": [
+        "OPF::A005OM-0021::PF-0146",
+        "OPF::A005OM-0021::PF-0154",
+        "OPF::A005OM-0021::PF-0155",
+        "OPF::A005OM-0021::PF-0156",
+        "OPF::A005OM-0021::PF-0163"
+      ],
+      "rationale": "Exhaustive comparison found the listed comparator to match the same product authority, lifecycle, user outcome, state boundary, and failure semantics; all other topical overlaps were kept distinct.",
+      "confidence": 0.93
+    },
+    {
+      "anchor_provisional_feature_ref": "OPF::A005OM-0022::PF-0033",
+      "compared_against_count": 164,
+      "merge_candidate_refs": [],
+      "related_but_distinct_refs": [
+        "OPF::A005OM-0021::PF-0154",
+        "OPF::A005OM-0021::PF-0156",
+        "OPF::A005OM-0021::PF-0158",
+        "OPF::A005OM-0021::PF-0159"
+      ],
+      "rationale": "Exhaustive comparison found no merge-equivalent comparator. The listed references are plausible neighbors but differ in authority, lifecycle, state boundary, user outcome, or failure semantics.",
+      "confidence": 0.9
+    },
+    {
+      "anchor_provisional_feature_ref": "OPF::A005OM-0022::PF-0034",
+      "compared_against_count": 164,
+      "merge_candidate_refs": [],
+      "related_but_distinct_refs": [],
+      "rationale": "Exhaustive comparison found no merge-equivalent or plausibly related comparator under the strict equivalence test.",
+      "confidence": 0.92
+    },
+    {
+      "anchor_provisional_feature_ref": "OPF::A005OM-0022::PF-0035",
+      "compared_against_count": 164,
+      "merge_candidate_refs": [],
+      "related_but_distinct_refs": [
+        "OPF::A005OM-0021::PF-0146",
+        "OPF::A005OM-0021::PF-0153",
+        "OPF::A005OM-0021::PF-0154",
+        "OPF::A005OM-0021::PF-0163"
+      ],
+      "rationale": "Exhaustive comparison found no merge-equivalent comparator. The listed references are plausible neighbors but differ in authority, lifecycle, state boundary, user outcome, or failure semantics.",
+      "confidence": 0.9
+    },
+    {
+      "anchor_provisional_feature_ref": "OPF::A005OM-0022::PF-0036",
+      "compared_against_count": 164,
+      "merge_candidate_refs": [],
+      "related_but_distinct_refs": [
+        "OPF::A005OM-0021::PF-0154",
+        "OPF::A005OM-0021::PF-0155",
+        "OPF::A005OM-0021::PF-0156"
+      ],
+      "rationale": "Exhaustive comparison found no merge-equivalent comparator. The listed references are plausible neighbors but differ in authority, lifecycle, state boundary, user outcome, or failure semantics.",
+      "confidence": 0.9
+    },
+    {
+      "anchor_provisional_feature_ref": "OPF::A005OM-0022::PF-0037",
+      "compared_against_count": 164,
+      "merge_candidate_refs": [],
+      "related_but_distinct_refs": [
+        "OPF::A005OM-0021::PF-0018",
+        "OPF::A005OM-0021::PF-0108",
+        "OPF::A005OM-0021::PF-0159"
+      ],
+      "rationale": "Exhaustive comparison found no merge-equivalent comparator. The listed references are plausible neighbors but differ in authority, lifecycle, state boundary, user outcome, or failure semantics.",
+      "confidence": 0.9
+    },
+    {
+      "anchor_provisional_feature_ref": "OPF::A005OM-0022::PF-0038",
+      "compared_against_count": 164,
+      "merge_candidate_refs": [
+        "OPF::A005OM-0021::PF-0163"
+      ],
+      "related_but_distinct_refs": [
+        "OPF::A005OM-0021::PF-0153",
+        "OPF::A005OM-0021::PF-0154",
+        "OPF::A005OM-0021::PF-0155"
+      ],
+      "rationale": "Exhaustive comparison found the listed comparator to match the same product authority, lifecycle, user outcome, state boundary, and failure semantics; all other topical overlaps were kept distinct.",
+      "confidence": 0.93
+    },
+    {
+      "anchor_provisional_feature_ref": "OPF::A005OM-0022::PF-0039",
+      "compared_against_count": 164,
+      "merge_candidate_refs": [],
+      "related_but_distinct_refs": [
+        "OPF::A005OM-0021::PF-0064",
+        "OPF::A005OM-0021::PF-0099",
+        "OPF::A005OM-0021::PF-0151"
+      ],
+      "rationale": "Exhaustive comparison found no merge-equivalent comparator. The listed references are plausible neighbors but differ in authority, lifecycle, state boundary, user outcome, or failure semantics.",
+      "confidence": 0.9
+    },
+    {
+      "anchor_provisional_feature_ref": "OPF::A005OM-0022::PF-0040",
+      "compared_against_count": 164,
+      "merge_candidate_refs": [],
+      "related_but_distinct_refs": [
+        "OPF::A005OM-0021::PF-0015",
+        "OPF::A005OM-0021::PF-0018",
+        "OPF::A005OM-0021::PF-0020",
+        "OPF::A005OM-0021::PF-0021",
+        "OPF::A005OM-0021::PF-0041",
+        "OPF::A005OM-0021::PF-0085"
+      ],
+      "rationale": "Exhaustive comparison found no merge-equivalent comparator. The listed references are plausible neighbors but differ in authority, lifecycle, state boundary, user outcome, or failure semantics.",
+      "confidence": 0.9
+    },
+    {
+      "anchor_provisional_feature_ref": "OPF::A005OM-0022::PF-0041",
+      "compared_against_count": 164,
+      "merge_candidate_refs": [],
+      "related_but_distinct_refs": [
+        "OPF::A005OM-0021::PF-0001",
+        "OPF::A005OM-0021::PF-0015",
+        "OPF::A005OM-0021::PF-0018",
+        "OPF::A005OM-0021::PF-0020"
+      ],
+      "rationale": "Exhaustive comparison found no merge-equivalent comparator. The listed references are plausible neighbors but differ in authority, lifecycle, state boundary, user outcome, or failure semantics.",
+      "confidence": 0.9
+    },
+    {
+      "anchor_provisional_feature_ref": "OPF::A005OM-0022::PF-0042",
+      "compared_against_count": 164,
+      "merge_candidate_refs": [],
+      "related_but_distinct_refs": [],
+      "rationale": "Exhaustive comparison found no merge-equivalent or plausibly related comparator under the strict equivalence test.",
+      "confidence": 0.92
+    },
+    {
+      "anchor_provisional_feature_ref": "OPF::A005OM-0022::PF-0043",
+      "compared_against_count": 164,
+      "merge_candidate_refs": [],
+      "related_but_distinct_refs": [
+        "OPF::A005OM-0021::PF-0089",
+        "OPF::A005OM-0021::PF-0139",
+        "OPF::A005OM-0021::PF-0140",
+        "OPF::A005OM-0021::PF-0141"
+      ],
+      "rationale": "Exhaustive comparison found no merge-equivalent comparator. The listed references are plausible neighbors but differ in authority, lifecycle, state boundary, user outcome, or failure semantics.",
+      "confidence": 0.9
+    },
+    {
+      "anchor_provisional_feature_ref": "OPF::A005OM-0022::PF-0044",
+      "compared_against_count": 164,
+      "merge_candidate_refs": [],
+      "related_but_distinct_refs": [
+        "OPF::A005OM-0021::PF-0143",
+        "OPF::A005OM-0021::PF-0149",
+        "OPF::A005OM-0021::PF-0150",
+        "OPF::A005OM-0021::PF-0162"
+      ],
+      "rationale": "Exhaustive comparison found no merge-equivalent comparator. The listed references are plausible neighbors but differ in authority, lifecycle, state boundary, user outcome, or failure semantics.",
+      "confidence": 0.9
+    },
+    {
+      "anchor_provisional_feature_ref": "OPF::A005OM-0022::PF-0045",
+      "compared_against_count": 164,
+      "merge_candidate_refs": [],
+      "related_but_distinct_refs": [
+        "OPF::A005OM-0021::PF-0020",
+        "OPF::A005OM-0021::PF-0097",
+        "OPF::A005OM-0021::PF-0107",
+        "OPF::A005OM-0021::PF-0144"
+      ],
+      "rationale": "Exhaustive comparison found no merge-equivalent comparator. The listed references are plausible neighbors but differ in authority, lifecycle, state boundary, user outcome, or failure semantics.",
+      "confidence": 0.9
+    },
+    {
+      "anchor_provisional_feature_ref": "OPF::A005OM-0022::PF-0046",
+      "compared_against_count": 164,
+      "merge_candidate_refs": [],
+      "related_but_distinct_refs": [
+        "OPF::A005OM-0021::PF-0145",
+        "OPF::A005OM-0021::PF-0160"
+      ],
+      "rationale": "Exhaustive comparison found no merge-equivalent comparator. The listed references are plausible neighbors but differ in authority, lifecycle, state boundary, user outcome, or failure semantics.",
+      "confidence": 0.9
+    },
+    {
+      "anchor_provisional_feature_ref": "OPF::A005OM-0022::PF-0047",
+      "compared_against_count": 164,
+      "merge_candidate_refs": [],
+      "related_but_distinct_refs": [
+        "OPF::A005OM-0021::PF-0143",
+        "OPF::A005OM-0021::PF-0149",
+        "OPF::A005OM-0021::PF-0150",
+        "OPF::A005OM-0021::PF-0151",
+        "OPF::A005OM-0021::PF-0162"
+      ],
+      "rationale": "Exhaustive comparison found no merge-equivalent comparator. The listed references are plausible neighbors but differ in authority, lifecycle, state boundary, user outcome, or failure semantics.",
+      "confidence": 0.9
+    },
+    {
+      "anchor_provisional_feature_ref": "OPF::A005OM-0022::PF-0048",
+      "compared_against_count": 164,
+      "merge_candidate_refs": [],
+      "related_but_distinct_refs": [
+        "OPF::A005OM-0021::PF-0032",
+        "OPF::A005OM-0021::PF-0036",
+        "OPF::A005OM-0021::PF-0050",
+        "OPF::A005OM-0021::PF-0054"
+      ],
+      "rationale": "Exhaustive comparison found no merge-equivalent comparator. The listed references are plausible neighbors but differ in authority, lifecycle, state boundary, user outcome, or failure semantics.",
+      "confidence": 0.9
+    },
+    {
+      "anchor_provisional_feature_ref": "OPF::A005OM-0022::PF-0049",
+      "compared_against_count": 164,
+      "merge_candidate_refs": [],
+      "related_but_distinct_refs": [
+        "OPF::A005OM-0021::PF-0055",
+        "OPF::A005OM-0021::PF-0057",
+        "OPF::A005OM-0021::PF-0060",
+        "OPF::A005OM-0021::PF-0061",
+        "OPF::A005OM-0021::PF-0064",
+        "OPF::A005OM-0021::PF-0071"
+      ],
+      "rationale": "Exhaustive comparison found no merge-equivalent comparator. The listed references are plausible neighbors but differ in authority, lifecycle, state boundary, user outcome, or failure semantics.",
+      "confidence": 0.9
+    },
+    {
+      "anchor_provisional_feature_ref": "OPF::A005OM-0022::PF-0050",
+      "compared_against_count": 164,
+      "merge_candidate_refs": [],
+      "related_but_distinct_refs": [
+        "OPF::A005OM-0021::PF-0054",
+        "OPF::A005OM-0021::PF-0075",
+        "OPF::A005OM-0021::PF-0097",
+        "OPF::A005OM-0021::PF-0100",
+        "OPF::A005OM-0021::PF-0107",
+        "OPF::A005OM-0021::PF-0137"
+      ],
+      "rationale": "Exhaustive comparison found no merge-equivalent comparator. The listed references are plausible neighbors but differ in authority, lifecycle, state boundary, user outcome, or failure semantics.",
+      "confidence": 0.9
+    },
+    {
+      "anchor_provisional_feature_ref": "OPF::A005OM-0022::PF-0051",
+      "compared_against_count": 164,
+      "merge_candidate_refs": [],
+      "related_but_distinct_refs": [
+        "OPF::A005OM-0021::PF-0017",
+        "OPF::A005OM-0021::PF-0067",
+        "OPF::A005OM-0021::PF-0143",
+        "OPF::A005OM-0021::PF-0146",
+        "OPF::A005OM-0021::PF-0149",
+        "OPF::A005OM-0021::PF-0150",
+        "OPF::A005OM-0021::PF-0153"
+      ],
+      "rationale": "Exhaustive comparison found no merge-equivalent comparator. The listed references are plausible neighbors but differ in authority, lifecycle, state boundary, user outcome, or failure semantics.",
+      "confidence": 0.9
+    },
+    {
+      "anchor_provisional_feature_ref": "OPF::A005OM-0022::PF-0052",
+      "compared_against_count": 164,
+      "merge_candidate_refs": [],
+      "related_but_distinct_refs": [
+        "OPF::A005OM-0021::PF-0002",
+        "OPF::A005OM-0021::PF-0003",
+        "OPF::A005OM-0021::PF-0004",
+        "OPF::A005OM-0021::PF-0032",
+        "OPF::A005OM-0021::PF-0036",
+        "OPF::A005OM-0021::PF-0050",
+        "OPF::A005OM-0021::PF-0144"
+      ],
+      "rationale": "Exhaustive comparison found no merge-equivalent comparator. The listed references are plausible neighbors but differ in authority, lifecycle, state boundary, user outcome, or failure semantics.",
+      "confidence": 0.9
+    },
+    {
+      "anchor_provisional_feature_ref": "OPF::A005OM-0022::PF-0053",
+      "compared_against_count": 164,
+      "merge_candidate_refs": [],
+      "related_but_distinct_refs": [
+        "OPF::A005OM-0021::PF-0038",
+        "OPF::A005OM-0021::PF-0050"
+      ],
+      "rationale": "Exhaustive comparison found no merge-equivalent comparator. The listed references are plausible neighbors but differ in authority, lifecycle, state boundary, user outcome, or failure semantics.",
+      "confidence": 0.9
+    },
+    {
+      "anchor_provisional_feature_ref": "OPF::A005OM-0022::PF-0054",
+      "compared_against_count": 164,
+      "merge_candidate_refs": [
+        "OPF::A005OM-0021::PF-0051"
+      ],
+      "related_but_distinct_refs": [
+        "OPF::A005OM-0021::PF-0050",
+        "OPF::A005OM-0021::PF-0052",
+        "OPF::A005OM-0021::PF-0054"
+      ],
+      "rationale": "Exhaustive comparison found the listed comparator to match the same product authority, lifecycle, user outcome, state boundary, and failure semantics; all other topical overlaps were kept distinct.",
+      "confidence": 0.93
+    }
+  ],
+  "self_attestation": {
+    "every_anchor_decided_once": true,
+    "every_comparator_considered_for_each_anchor": true,
+    "strict_merge_equivalence_applied": true,
+    "umbrella_member_and_adjacency_kept_distinct": true,
+    "reverse_orientation_verified": true,
+    "same_owner_domain_only": true,
+    "no_external_or_peer_inputs_used": true
+  }
+}

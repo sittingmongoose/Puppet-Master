@@ -1,0 +1,28 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "urn:a005:c2:future-capture-authority:v32",
+  "type": "object",
+  "additionalProperties": false,
+  "required": ["schema_version", "status", "slot_id", "preparation_terminal_sha256", "capture_tool_sha256", "reviewer_authority_sha256", "report_sha256", "native_binding_sha256", "reviewer_native_thread_id", "capture_relative_path", "checkpoint_relative_path", "capture_writer_invocation_limit", "activation_authorized", "launch_authorized", "credit"],
+  "properties": {
+    "schema_version": {"const": "a005-c2-future-capture-closure-authority-v32-v1"},
+    "status": {"const": "AUTHORIZE_C2_NATIVE_CAPTURE_CLOSURE_ONLY"},
+    "slot_id": {"const": "c2-atomic8-prelaunch"},
+    "preparation_terminal_sha256": {"$ref": "#/$defs/sha256"},
+    "capture_tool_sha256": {"$ref": "#/$defs/sha256"},
+    "reviewer_authority_sha256": {"$ref": "#/$defs/sha256"},
+    "report_sha256": {"const": "a916e52e5b8994cce2000df919c899718ce41b2f7abc15f9f5be71b7adc3619d"},
+    "native_binding_sha256": {"$ref": "#/$defs/sha256"},
+    "reviewer_native_thread_id": {"$ref": "#/$defs/uuid7"},
+    "capture_relative_path": {"const": "controller-native-captures/c2-atomic8-prelaunch.json"},
+    "checkpoint_relative_path": {"const": "controller-native-checkpoints/c2-atomic8-prelaunch.jsonl"},
+    "capture_writer_invocation_limit": {"const": 1},
+    "activation_authorized": {"const": false},
+    "launch_authorized": {"const": false},
+    "credit": {"const": 0}
+  },
+  "$defs": {
+    "sha256": {"type": "string", "pattern": "^[0-9a-f]{64}$"},
+    "uuid7": {"type": "string", "pattern": "^[0-9a-f]{8}-[0-9a-f]{4}-7[0-9a-f]{3}-[89ab][0-9a-f]{3}-[0-9a-f]{12}$"}
+  }
+}

@@ -1,0 +1,123 @@
+{
+  "schema_version": "final-live-head-delta-source-scope-binding-v2",
+  "audit_id": "audit-20260710-005-plan-assurance-model-lanes-fresh-agent-exhaustive",
+  "transaction_id": "final-live-head-delta-0002",
+  "authority_role": "append_only_exact_binding_supersession",
+  "status": "BLOCKED_AWAITING_FRESH_INDEPENDENT_LUNA_DELTA_PRELAUNCH",
+  "supersedes_binding_only": {
+    "predecessor_transaction_id": "final-live-head-delta-0001",
+    "old_prepare_ref": "Plans/.audits/audit-20260710-005-plan-assurance-model-lanes-fresh-agent-exhaustive/master/final_live_head_delta/final-live-head-delta-0001/prepare_final_live_head_delta_0001.py",
+    "old_prepare_sha256": "8cc057cdb4b7a187fde315e72aee10e565459e7fd6911d2d10db67dd13fc904b",
+    "unsupported_expected_literal": "25027060861687c5a8e45024844d9de9e6c0a38f68a9470f2a84cb1774b86015",
+    "preserved_failure": "source-scope-drift",
+    "old_prepare_modified": false,
+    "old_prepare_executed": false,
+    "predecessor_artifacts_modified": false,
+    "predecessor_failure_reclassified": false
+  },
+  "source_scope": {
+    "ref": "Plans/.audits/audit-20260710-005-plan-assurance-model-lanes-fresh-agent-exhaustive/master/macro/frozen/epoch-0016/manifests/source_scope.jsonl",
+    "raw_sha256": "963911b952c3909c9012ed25a35151719b4f3f18b173cc6fffc8bbc1036e4e46",
+    "canonical_lines_sha256": "963911b952c3909c9012ed25a35151719b4f3f18b173cc6fffc8bbc1036e4e46",
+    "canonical_lines_equal_raw": true,
+    "byte_count": 81724,
+    "row_count": 135,
+    "unique_path_count": 135,
+    "unique_source_id_count": 135,
+    "duplicate_path_count": 0,
+    "duplicate_source_id_count": 0,
+    "terminal_lf": true,
+    "carriage_return_count": 0,
+    "path_sorted_rows_sha256": "2022f9fc0ca1d037f0d1ca0ba869a63a3867ecb8a8ad7690111aa6f69cbee798",
+    "path_plus_row_sha256_digest": "1b9c9eaee9eeed160c5592feb071c0ca034f2815db09e4b390934332a7199655",
+    "path_plus_row_digest_encoding": "sorted(path) + NUL + sha256(canonical_row_with_LF).hexdigest() + LF"
+  },
+  "stable_copy_refs": [
+    "Plans/.audits/audit-20260710-005-plan-assurance-model-lanes-fresh-agent-exhaustive/master/failed_staging/epoch-0006-attempt-0001-stale-concurrency-policy/manifests/source_scope.jsonl",
+    "Plans/.audits/audit-20260710-005-plan-assurance-model-lanes-fresh-agent-exhaustive/master/frozen/epoch-0001/manifests/source_scope.jsonl",
+    "Plans/.audits/audit-20260710-005-plan-assurance-model-lanes-fresh-agent-exhaustive/master/frozen/epoch-0002/manifests/source_scope.jsonl",
+    "Plans/.audits/audit-20260710-005-plan-assurance-model-lanes-fresh-agent-exhaustive/master/frozen/epoch-0003/manifests/source_scope.jsonl",
+    "Plans/.audits/audit-20260710-005-plan-assurance-model-lanes-fresh-agent-exhaustive/master/frozen/epoch-0004/manifests/source_scope.jsonl",
+    "Plans/.audits/audit-20260710-005-plan-assurance-model-lanes-fresh-agent-exhaustive/master/frozen/epoch-0005/manifests/source_scope.jsonl",
+    "Plans/.audits/audit-20260710-005-plan-assurance-model-lanes-fresh-agent-exhaustive/master/frozen/epoch-0006/manifests/source_scope.jsonl",
+    "Plans/.audits/audit-20260710-005-plan-assurance-model-lanes-fresh-agent-exhaustive/master/frozen/epoch-0007/manifests/source_scope.jsonl",
+    "Plans/.audits/audit-20260710-005-plan-assurance-model-lanes-fresh-agent-exhaustive/master/frozen/epoch-0008/manifests/source_scope.jsonl",
+    "Plans/.audits/audit-20260710-005-plan-assurance-model-lanes-fresh-agent-exhaustive/master/frozen/epoch-0009/manifests/source_scope.jsonl",
+    "Plans/.audits/audit-20260710-005-plan-assurance-model-lanes-fresh-agent-exhaustive/master/frozen/epoch-0010/manifests/source_scope.jsonl",
+    "Plans/.audits/audit-20260710-005-plan-assurance-model-lanes-fresh-agent-exhaustive/master/frozen/epoch-0011/manifests/source_scope.jsonl",
+    "Plans/.audits/audit-20260710-005-plan-assurance-model-lanes-fresh-agent-exhaustive/master/frozen/epoch-0012/manifests/source_scope.jsonl",
+    "Plans/.audits/audit-20260710-005-plan-assurance-model-lanes-fresh-agent-exhaustive/master/frozen/epoch-0013/manifests/source_scope.jsonl",
+    "Plans/.audits/audit-20260710-005-plan-assurance-model-lanes-fresh-agent-exhaustive/master/macro/frozen/epoch-0014/manifests/source_scope.jsonl",
+    "Plans/.audits/audit-20260710-005-plan-assurance-model-lanes-fresh-agent-exhaustive/master/macro/frozen/epoch-0015/manifests/source_scope.jsonl",
+    "Plans/.audits/audit-20260710-005-plan-assurance-model-lanes-fresh-agent-exhaustive/master/macro/frozen/epoch-0016/manifests/source_scope.jsonl"
+  ],
+  "stable_copy_count": 17,
+  "unsupported_literal_copy_count": 0,
+  "epoch_0013_equality": {
+    "ref": "Plans/.audits/audit-20260710-005-plan-assurance-model-lanes-fresh-agent-exhaustive/master/frozen/epoch-0013/manifests/source_scope.jsonl",
+    "raw_sha256": "963911b952c3909c9012ed25a35151719b4f3f18b173cc6fffc8bbc1036e4e46",
+    "byte_count": 81724,
+    "row_count": 135,
+    "raw_bytes_equal_epoch_0016": true
+  },
+  "baseline_rows": [
+    {
+      "ordinal": 1,
+      "path": "Plans/.implementation_readiness/non_executable_closure_evidence.schema.json",
+      "source_id": "DOC-2964A398D6F3",
+      "source_sha256": "20aac6a406871a78ca9c191c999d64fd82b84f1aba3a722b05ae08df110e3428",
+      "canonical_row_with_lf_sha256": "db8f88278c588265a614eb79271b510e78633565bd383f91bfeec2d6b6f3a3f3"
+    },
+    {
+      "ordinal": 2,
+      "path": "Plans/.implementation_readiness/pnc019_certification_receipt.schema.json",
+      "source_id": "DOC-5ED6D90287B2",
+      "source_sha256": "060eccb4993dd9185abdf8b567f893322fd2e0ef6dc2e1fa4c29268e6422ba62",
+      "canonical_row_with_lf_sha256": "ed0c3ecb383d63f18cbf897f1afa80b012091a3ca1c2ebc84e742646954d8a42"
+    },
+    {
+      "ordinal": 3,
+      "path": "Plans/.implementation_readiness/readiness_matrix.json",
+      "source_id": "DOC-2CB2DD64DED4",
+      "source_sha256": "9e11e8eb128c1f6e53743bffac1fcee242be2bb43ae276ff61352c4316df7897",
+      "canonical_row_with_lf_sha256": "5dd760bf5a3e8c5871985e4bed4d2d53a4b5e5f2e98aafd7dc9cbc8983bddeca"
+    }
+  ],
+  "protected_parent_files": {
+    "Plans/.audits/audit-20260710-005-plan-assurance-model-lanes-fresh-agent-exhaustive/master/final_live_head_delta/final-live-head-delta-0001/prepare_final_live_head_delta_0001.py": "8cc057cdb4b7a187fde315e72aee10e565459e7fd6911d2d10db67dd13fc904b",
+    "Plans/.audits/audit-20260710-005-plan-assurance-model-lanes-fresh-agent-exhaustive/master/final_live_head_delta/final-live-head-delta-0001/verify_final_live_head_delta_0001.py": "7eac2c39af6b06b51ffba79aaf866ba9a1094ed54388b24c73c213a2cdf382ff",
+    "Plans/.audits/audit-20260710-005-plan-assurance-model-lanes-fresh-agent-exhaustive/master/final_live_head_delta/final-live-head-delta-0001/test_final_live_head_delta_0001.py": "84b25cb05341faf84f8aa2257b42c0f521fcb02052de577a0df0d43da98180dd"
+  },
+  "logic_files": {
+    "Plans/.audits/audit-20260710-005-plan-assurance-model-lanes-fresh-agent-exhaustive/master/final_live_head_delta/final-live-head-delta-0002/verify_source_scope_binding.py": "85c4216fa39ccc5092f3850dd9a4f4c1a88a7353868de628df592e3d797983e5",
+    "Plans/.audits/audit-20260710-005-plan-assurance-model-lanes-fresh-agent-exhaustive/master/final_live_head_delta/final-live-head-delta-0002/test_source_scope_binding.py": "9ba2cfb49f5e2946aa1f63891b8d9ac2ac11982ca50b0a1fb15eb98060126a96"
+  },
+  "read_policy": {
+    "scope": "exact_declared_audit_artifacts_only",
+    "canonical_prose_access_authorized": false,
+    "canonical_prose_access_count": 0,
+    "outside_audit_access_authorized": false
+  },
+  "future_preparation": {
+    "mode": "future_only_prewrite_guard",
+    "mkdir_authorized": false,
+    "write_authorized": false,
+    "semantic_packet_generation_authorized": false,
+    "launch_authorized": false,
+    "activation_authorized": false,
+    "result_acceptance_authorized": false,
+    "dispatch_receipt_acceptance_authorized": false,
+    "capture_authorized": false,
+    "credit_authorized": false
+  },
+  "zero_state": {
+    "activation": 0,
+    "results": 0,
+    "receipts": 0,
+    "capture": 0,
+    "credit": 0,
+    "semantic_packets": 0,
+    "launches": 0
+  },
+  "mtime_role": "observational_only_not_bound"
+}

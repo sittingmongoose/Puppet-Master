@@ -1,0 +1,351 @@
+{
+  "assignment_id": "A005M15-000176-INTEGRATED-MACRO15-1BF0967E88A5-0007",
+  "attempt_id": "attempt-0015",
+  "audit_id": "audit-20260710-005-plan-assurance-model-lanes-fresh-agent-exhaustive",
+  "coverage": {
+    "all_micro_windows_reviewed": true,
+    "all_source_lines_reviewed": true,
+    "all_source_units_accounted": true,
+    "both_exact_and_adversarial_lenses_applied": true,
+    "dimensions_checked": [
+      "behavior",
+      "capabilities",
+      "inputs_outputs",
+      "contracts",
+      "states_transitions",
+      "authority",
+      "ownership",
+      "consumers",
+      "gui_truth",
+      "failures_recovery",
+      "security_privacy",
+      "propagation",
+      "operations",
+      "scale_performance",
+      "compatibility_migration",
+      "acceptance_oracles",
+      "builder_discretion",
+      "ambiguity_unknowns",
+      "missing_callers_consumers",
+      "invalid_states_transitions",
+      "concurrency_races",
+      "partial_failure",
+      "recovery_rollback",
+      "authority_boundaries",
+      "privacy_data_lifecycle",
+      "untrusted_inputs",
+      "gui_misleading_states",
+      "offline_network_loss",
+      "scale_limits",
+      "accessibility",
+      "localization",
+      "observability_support",
+      "destructive_actions",
+      "cross_document_seams",
+      "test_falsifiability",
+      "unknown_unknowns"
+    ]
+  },
+  "items": [
+    {
+      "builder_discretion": false,
+      "confidence": 0.98,
+      "dimensions": ["behavior", "capabilities", "inputs_outputs", "contracts", "ownership", "consumers", "operations", "compatibility_migration", "acceptance_oracles"],
+      "evidence": [{"exact_quote": "  Project context detection implements ProjectContext, DetectedLanguage, workspace-path scanning for Cargo.toml,", "line_end": 19053, "line_start": 19053, "path": "Plans/orchestrator-subagent-integration.md", "source_sha256": "2bde7668eabbbcef6d6f10401afba7c7b841e220af3ef0db6fef035d11e6844a"}],
+      "gap_kind": "explicit_contract",
+      "impact": "The selector has a bounded context source, shared registry ownership, pure selection boundary, and deterministic tier-config merge inputs.",
+      "item_id": "A005M15-000176-I001",
+      "item_type": "contract",
+      "severity": "info",
+      "source_unit_refs": ["PLANUNIT:OSI-211", "SEMANTIC:PLANUNIT:OSI-211", "PLANUNIT:OSI-212", "SEMANTIC:PLANUNIT:OSI-212", "PLANUNIT:OSI-213", "SEMANTIC:PLANUNIT:OSI-213", "PLANUNIT:OSI-214", "SEMANTIC:PLANUNIT:OSI-214"],
+      "statement": "OSI-211 through OSI-214 specify cached project-context detection, registry-owned subagent names, a pure selector API, and tier-config-driven override, disable, and required-subagent merging.",
+      "title": "Detection and selection pipeline is explicitly bounded"
+    },
+    {
+      "builder_discretion": false,
+      "confidence": 0.93,
+      "dimensions": ["states_transitions", "failures_recovery", "security_privacy", "concurrency_races", "partial_failure", "recovery_rollback", "untrusted_inputs", "scale_limits", "observability_support", "test_falsifiability", "unknown_unknowns"],
+      "evidence": [
+        {"exact_quote": "  Orchestrator subagent execution registers the agent in coordination state before execution, gets coordination context for", "line_end": 19334, "line_start": 19334, "path": "Plans/orchestrator-subagent-integration.md", "source_sha256": "2bde7668eabbbcef6d6f10401afba7c7b841e220af3ef0db6fef035d11e6844a"},
+        {"exact_quote": "  Error pattern detection parses iteration output in the orchestrator or a small stdout/stderr helper, updates", "line_end": 19389, "line_start": 19389, "path": "Plans/orchestrator-subagent-integration.md", "source_sha256": "2bde7668eabbbcef6d6f10401afba7c7b841e220af3ef0db6fef035d11e6844a"}
+      ],
+      "gap_kind": "underspecified_execution_failure_and_detection_bounds",
+      "impact": "Cancellation, timeout, runner failure, or oversized/adversarial output can leave coordination state stale or produce false selection signals without a specified cleanup and bounded-parsing oracle.",
+      "item_id": "A005M15-000176-I002",
+      "item_type": "gap",
+      "severity": "high",
+      "source_unit_refs": ["PLANUNIT:OSI-215", "SEMANTIC:PLANUNIT:OSI-215", "PLANUNIT:OSI-216", "SEMANTIC:PLANUNIT:OSI-216", "PLANUNIT:OSI-217", "SEMANTIC:PLANUNIT:OSI-217"],
+      "statement": "The runner, coordination lifecycle, and error-pattern feed are named, but this window does not define guaranteed unregister behavior for every abnormal exit or parsing limits and false-positive handling for untrusted stdout/stderr.",
+      "title": "Abnormal execution cleanup and output parsing are incomplete"
+    },
+    {
+      "builder_discretion": true,
+      "confidence": 0.97,
+      "dimensions": ["behavior", "contracts", "states_transitions", "authority", "ownership", "operations", "compatibility_migration", "builder_discretion"],
+      "evidence": [{"exact_quote": "  Config-wiring validation may live in src/core/config_wiring.rs, src/verification/config_wiring.rs, or split", "line_end": 19501, "line_start": 19501, "path": "Plans/orchestrator-subagent-integration.md", "source_sha256": "2bde7668eabbbcef6d6f10401afba7c7b841e220af3ef0db6fef035d11e6844a"}],
+      "gap_kind": "explicit_placement_discretion",
+      "impact": "V1 can proceed without a distinct manager while preserving separate main/interview validators, mandatory pre-spawn wiring checks, and start/end verification around acceptance.",
+      "item_id": "A005M15-000176-I003",
+      "item_type": "explicit_non_gap",
+      "severity": "info",
+      "source_unit_refs": ["PLANUNIT:OSI-218", "SEMANTIC:PLANUNIT:OSI-218", "PLANUNIT:OSI-219", "SEMANTIC:PLANUNIT:OSI-219", "PLANUNIT:OSI-220", "SEMANTIC:PLANUNIT:OSI-220", "PLANUNIT:OSI-221", "SEMANTIC:PLANUNIT:OSI-221"],
+      "statement": "OSI-218 through OSI-221 deliberately allow module-placement discretion, make SubagentManager optional for v1, preserve distinct validator callers, forbid ungated fast-path skips, and order tier verification around acceptance.",
+      "title": "Validation placement is discretionary but lifecycle timing is normative"
+    },
+    {
+      "builder_discretion": false,
+      "confidence": 0.95,
+      "dimensions": ["gui_truth", "failures_recovery", "acceptance_oracles", "ambiguity_unknowns", "gui_misleading_states", "accessibility", "observability_support", "cross_document_seams", "test_falsifiability"],
+      "evidence": [
+        {"exact_quote": "  Start verification includes GUI updated? as a readiness checklist criterion for user-visible readiness, while this unit", "line_end": 19674, "line_start": 19674, "path": "Plans/orchestrator-subagent-integration.md", "source_sha256": "2bde7668eabbbcef6d6f10401afba7c7b841e220af3ef0db6fef035d11e6844a"},
+        {"exact_quote": "  Quality verification requires a code-reviewer subagent at end-of-tier, on retry, and when the gate fails, plus gate criteria", "line_end": 19724, "line_start": 19724, "path": "Plans/orchestrator-subagent-integration.md", "source_sha256": "2bde7668eabbbcef6d6f10401afba7c7b841e220af3ef0db6fef035d11e6844a"}
+      ],
+      "gap_kind": "non_falsifiable_readiness_and_failure_policy",
+      "impact": "A builder cannot consistently decide what counts as GUI readiness, when a failed review may retry, or how hook failures affect verification without importing unstated policy from owner documents.",
+      "item_id": "A005M15-000176-I004",
+      "item_type": "gap",
+      "severity": "high",
+      "source_unit_refs": ["PLANUNIT:OSI-222", "SEMANTIC:PLANUNIT:OSI-222", "PLANUNIT:OSI-223", "SEMANTIC:PLANUNIT:OSI-223", "PLANUNIT:OSI-224", "SEMANTIC:PLANUNIT:OSI-224"],
+      "statement": "The literal `GUI updated?` criterion has no measurable oracle for visual truth or accessibility, and the review/retry and BeforeUnit/AfterUnit ordering rules do not state the result when a hook or reviewer itself fails.",
+      "title": "GUI readiness and verification failure outcomes are not falsifiable"
+    },
+    {
+      "builder_discretion": false,
+      "confidence": 0.99,
+      "dimensions": ["behavior", "contracts", "states_transitions", "authority", "ownership", "propagation", "operations", "compatibility_migration", "acceptance_oracles", "authority_boundaries"],
+      "evidence": [{"exact_quote": "  Agent coordination is placed in src/core/agent_coordination.rs around an AgentCoordinator over child-run state, lineage,", "line_end": 19842, "line_start": 19842, "path": "Plans/orchestrator-subagent-integration.md", "source_sha256": "2bde7668eabbbcef6d6f10401afba7c7b841e220af3ef0db6fef035d11e6844a"}],
+      "gap_kind": "explicit_authority_boundary",
+      "impact": "Canonical state is protected from debug-mirror ownership and the lifecycle, prompt-conflict, hook, and storage responsibilities are separated.",
+      "item_id": "A005M15-000176-I005",
+      "item_type": "authority",
+      "severity": "info",
+      "source_unit_refs": ["PLANUNIT:OSI-225", "SEMANTIC:PLANUNIT:OSI-225", "PLANUNIT:OSI-226", "SEMANTIC:PLANUNIT:OSI-226", "PLANUNIT:OSI-227", "SEMANTIC:PLANUNIT:OSI-227", "PLANUNIT:OSI-228", "SEMANTIC:PLANUNIT:OSI-228"],
+      "statement": "OSI-225 through OSI-228 consistently make seglog/redb-derived records and projections authoritative, keep JSON debug mirrors non-canonical, and connect lifecycle status, conflict context, hooks, output types, and remediation placement.",
+      "title": "Coordination authority is canonical-record based"
+    },
+    {
+      "builder_discretion": false,
+      "confidence": 0.94,
+      "dimensions": ["contracts", "failures_recovery", "security_privacy", "partial_failure", "recovery_rollback", "untrusted_inputs", "offline_network_loss", "observability_support", "test_falsifiability", "unknown_unknowns"],
+      "evidence": [
+        {"exact_quote": "  output before failing safe.", "line_end": 20126, "line_start": 20126, "path": "Plans/orchestrator-subagent-integration.md", "source_sha256": "2bde7668eabbbcef6d6f10401afba7c7b841e220af3ef0db6fef035d11e6844a"},
+        {"exact_quote": "  resolved or max retries, and escalates to the parent tier when max retries are reached.", "line_end": 20184, "line_start": 20184, "path": "Plans/orchestrator-subagent-integration.md", "source_sha256": "2bde7668eabbbcef6d6f10401afba7c7b841e220af3ef0db6fef035d11e6844a"}
+      ],
+      "gap_kind": "undefined_fail_safe_retry_and_escalation_terminality",
+      "impact": "Malformed or hostile output and persistent Critical/Major findings can yield inconsistent completion, data exposure, or retry storms because terminal states, retry budgets, backoff, and escalation acknowledgement are not defined here.",
+      "item_id": "A005M15-000176-I006",
+      "item_type": "gap",
+      "severity": "high",
+      "source_unit_refs": ["PLANUNIT:OSI-229", "SEMANTIC:PLANUNIT:OSI-229", "PLANUNIT:OSI-230", "SEMANTIC:PLANUNIT:OSI-230", "PLANUNIT:OSI-231", "SEMANTIC:PLANUNIT:OSI-231"],
+      "statement": "Platform hook adapters, structured parsers, retry-on-malformed-output, fail-safe handling, remediation reruns, and parent escalation are required, but fail-safe output/state, parser resource bounds, retry count/backoff, and escalation completion semantics remain undefined.",
+      "title": "Handoff and remediation terminal semantics are underspecified"
+    },
+    {
+      "builder_discretion": false,
+      "confidence": 0.98,
+      "dimensions": ["behavior", "contracts", "states_transitions", "ownership", "failures_recovery", "propagation", "compatibility_migration", "acceptance_oracles"],
+      "evidence": [{"exact_quote": "  Cross-run continuity persists architectural decisions, patterns, and tech choices as canonical outputs/projections at Phase", "line_end": 20238, "line_start": 20238, "path": "Plans/orchestrator-subagent-integration.md", "source_sha256": "2bde7668eabbbcef6d6f10401afba7c7b841e220af3ef0db6fef035d11e6844a"}],
+      "gap_kind": "explicit_continuity_and_optional_compatibility",
+      "impact": "Continuity avoids child-memory authority, hook errors remain structured, and optional availability checks do not incorrectly become a platform-native file contract.",
+      "item_id": "A005M15-000176-I007",
+      "item_type": "explicit_non_gap",
+      "severity": "info",
+      "source_unit_refs": ["PLANUNIT:OSI-232", "SEMANTIC:PLANUNIT:OSI-232", "PLANUNIT:OSI-233", "SEMANTIC:PLANUNIT:OSI-233", "PLANUNIT:OSI-234", "SEMANTIC:PLANUNIT:OSI-234"],
+      "statement": "OSI-232 through OSI-234 define canonical continuity reload, structured hook failure output with lazy verification state, and optional v1 subagent-file existence checking with explicit late platform-CLI failure compatibility.",
+      "title": "Continuity and v1 availability boundaries are explicit"
+    },
+    {
+      "builder_discretion": false,
+      "confidence": 0.96,
+      "dimensions": ["behavior", "states_transitions", "failures_recovery", "scale_performance", "concurrency_races", "partial_failure", "recovery_rollback", "destructive_actions", "gui_truth", "test_falsifiability", "unknown_unknowns"],
+      "evidence": [
+        {"exact_quote": "  The orchestrator baseline supports dependency-level parallel execution of subtasks using DependencyAnalyzer with Kahn's", "line_end": 20409, "line_start": 20409, "path": "Plans/orchestrator-subagent-integration.md", "source_sha256": "2bde7668eabbbcef6d6f10401afba7c7b841e220af3ef0db6fef035d11e6844a"},
+        {"exact_quote": "  concurrently through join_all while groups themselves execute sequentially by dependency order.", "line_end": 20464, "line_start": 20464, "path": "Plans/orchestrator-subagent-integration.md", "source_sha256": "2bde7668eabbbcef6d6f10401afba7c7b841e220af3ef0db6fef035d11e6844a"}
+      ],
+      "gap_kind": "parallel_cycle_partial_failure_and_resource_policy_missing",
+      "impact": "A dependency cycle, one failed worker, merge conflict, exhausted provider quota, or worktree cleanup failure has no specified group state, cancellation policy, rollback boundary, or completion oracle.",
+      "item_id": "A005M15-000176-I008",
+      "item_type": "gap",
+      "severity": "critical",
+      "source_unit_refs": ["PLANUNIT:OSI-235", "SEMANTIC:PLANUNIT:OSI-235", "PLANUNIT:OSI-236", "SEMANTIC:PLANUNIT:OSI-236", "PLANUNIT:OSI-237", "SEMANTIC:PLANUNIT:OSI-237", "PLANUNIT:OSI-238", "SEMANTIC:PLANUNIT:OSI-238"],
+      "statement": "The dependency-level worktree execution and independent per-subtask selection baseline is clear, including that the React UI example is evidence only, but cycle rejection, bounded concurrency, per-group partial failure, cancellation, worktree merge/cleanup, and rollback behavior are absent.",
+      "title": "Parallel worktree execution lacks failure and rollback contracts"
+    },
+    {
+      "builder_discretion": false,
+      "confidence": 0.99,
+      "dimensions": ["behavior", "inputs_outputs", "contracts", "authority", "ownership", "consumers", "compatibility_migration", "authority_boundaries", "test_falsifiability"],
+      "evidence": [{"exact_quote": "  Subagent selection in parallel subtasks must use subagent_selector backed by subagent_registry and validate selected names", "line_end": 20619, "line_start": 20619, "path": "Plans/orchestrator-subagent-integration.md", "source_sha256": "2bde7668eabbbcef6d6f10401afba7c7b841e220af3ef0db6fef035d11e6844a"}],
+      "gap_kind": "explicit_registry_and_invocation_contract",
+      "impact": "Selection and invocation cannot silently fork name/language mappings or platform command construction into local implementations.",
+      "item_id": "A005M15-000176-I009",
+      "item_type": "contract",
+      "severity": "info",
+      "source_unit_refs": ["PLANUNIT:OSI-239", "SEMANTIC:PLANUNIT:OSI-239", "PLANUNIT:OSI-240", "SEMANTIC:PLANUNIT:OSI-240", "PLANUNIT:OSI-241", "SEMANTIC:PLANUNIT:OSI-241", "PLANUNIT:OSI-242", "SEMANTIC:PLANUNIT:OSI-242"],
+      "statement": "OSI-239 through OSI-242 require registry validation, platform_specs invocation, dependency-aware selection inputs, and registry-backed inherited-language priority without hardcoded names or mappings.",
+      "title": "Registry and platform owners are enforced in selection"
+    },
+    {
+      "builder_discretion": false,
+      "confidence": 0.91,
+      "dimensions": ["states_transitions", "authority", "ownership", "security_privacy", "ambiguity_unknowns", "concurrency_races", "privacy_data_lifecycle", "untrusted_inputs", "cross_document_seams", "test_falsifiability"],
+      "evidence": [
+        {"exact_quote": "  Dependency domain may be inherited from completed dependencies when the current execution context domain is", "line_end": 20827, "line_start": 20827, "path": "Plans/orchestrator-subagent-integration.md", "source_sha256": "2bde7668eabbbcef6d6f10401afba7c7b841e220af3ef0db6fef035d11e6844a"},
+        {"exact_quote": "  crew-board coordination that cannot be reduced to live status projection alone; `.puppet-master/state/agent-messages.json`", "line_end": 20932, "line_start": 20932, "path": "Plans/orchestrator-subagent-integration.md", "source_sha256": "2bde7668eabbbcef6d6f10401afba7c7b841e220af3ef0db6fef035d11e6844a"}
+      ],
+      "gap_kind": "conflict_resolution_and_durable_message_governance_missing",
+      "impact": "Multiple completed dependencies can supply incompatible domains, while durable questions and decisions can persist without a local retention, redaction, sender-authentication, or deletion contract.",
+      "item_id": "A005M15-000176-I010",
+      "item_type": "gap",
+      "severity": "high",
+      "source_unit_refs": ["PLANUNIT:OSI-243", "SEMANTIC:PLANUNIT:OSI-243", "PLANUNIT:OSI-244", "SEMANTIC:PLANUNIT:OSI-244", "PLANUNIT:OSI-245", "SEMANTIC:PLANUNIT:OSI-245"],
+      "statement": "Unknown-domain inheritance does not define precedence or conflict handling across multiple dependencies, and the durable attributable crew-board boundary delegates but does not state message authenticity, retention, privacy, redaction, and deletion rules in this window.",
+      "title": "Inherited-domain conflicts and durable-message governance remain open"
+    },
+    {
+      "builder_discretion": false,
+      "confidence": 0.98,
+      "dimensions": ["behavior", "inputs_outputs", "contracts", "authority", "ownership", "consumers", "states_transitions", "propagation", "acceptance_oracles"],
+      "evidence": [{"exact_quote": "  Active-agent state answers who is active, what files are in flight, and which operations are running, while the message", "line_end": 20990, "line_start": 20990, "path": "Plans/orchestrator-subagent-integration.md", "source_sha256": "2bde7668eabbbcef6d6f10401afba7c7b841e220af3ef0db6fef035d11e6844a"}],
+      "gap_kind": "explicit_projection_message_and_schema_split",
+      "impact": "Implementers can distinguish ephemeral work status from attributable durable exchanges and have a concrete routing/schema surface.",
+      "item_id": "A005M15-000176-I011",
+      "item_type": "feature",
+      "severity": "info",
+      "source_unit_refs": ["PLANUNIT:OSI-246", "SEMANTIC:PLANUNIT:OSI-246", "PLANUNIT:OSI-247", "SEMANTIC:PLANUNIT:OSI-247"],
+      "statement": "OSI-246 and OSI-247 separate active-work projection from durable exchanges and enumerate identity, sender/platform, targets, type, priority, content, execution context, threading, timestamps, read tracking, and resolution fields.",
+      "title": "Projection and durable message records have distinct responsibilities"
+    },
+    {
+      "builder_discretion": false,
+      "confidence": 0.95,
+      "dimensions": ["authority", "consumers", "failures_recovery", "security_privacy", "scale_performance", "ambiguity_unknowns", "invalid_states_transitions", "concurrency_races", "partial_failure", "authority_boundaries", "privacy_data_lifecycle", "offline_network_loss", "scale_limits", "observability_support", "test_falsifiability"],
+      "evidence": [
+        {"exact_quote": "  and agent-local views are filtered to messages relevant to that agent's direct, role, node, lane, broadcast, or active-file", "line_end": 21099, "line_start": 21099, "path": "Plans/orchestrator-subagent-integration.md", "source_sha256": "2bde7668eabbbcef6d6f10401afba7c7b841e220af3ef0db6fef035d11e6844a"},
+        {"exact_quote": "  each agent is capped at 10 messages per minute, and throttling emits structured diagnostics requiring senders to coalesce", "line_end": 21154, "line_start": 21154, "path": "Plans/orchestrator-subagent-integration.md", "source_sha256": "2bde7668eabbbcef6d6f10401afba7c7b841e220af3ef0db6fef035d11e6844a"}
+      ],
+      "gap_kind": "routing_authorization_distributed_throttle_and_state_machine_missing",
+      "impact": "Active-file relevance can leak message content, concurrent workers can bypass or race per-agent quotas, urgent traffic can starve normal traffic, and lifecycle transitions can diverge across offline replicas.",
+      "item_id": "A005M15-000176-I012",
+      "item_type": "gap",
+      "severity": "critical",
+      "source_unit_refs": ["PLANUNIT:OSI-248", "SEMANTIC:PLANUNIT:OSI-248", "PLANUNIT:OSI-249", "SEMANTIC:PLANUNIT:OSI-249", "PLANUNIT:OSI-250", "SEMANTIC:PLANUNIT:OSI-250", "PLANUNIT:OSI-251", "SEMANTIC:PLANUNIT:OSI-251", "PLANUNIT:OSI-252", "SEMANTIC:PLANUNIT:OSI-252"],
+      "statement": "Routing visibility, a 10-per-minute cap, threaded lifecycle, canonical projections, and a common provider bridge are specified, but authorization versus relevance, atomic distributed rate limiting, fairness, legal state transitions, expiry timing, offline reconciliation, and provider-delivery failure semantics are not.",
+      "title": "Crew routing and lifecycle need security and distributed-state rules"
+    },
+    {
+      "builder_discretion": false,
+      "confidence": 0.97,
+      "dimensions": ["behavior", "contracts", "states_transitions", "authority", "propagation", "operations", "compatibility_migration", "acceptance_oracles"],
+      "evidence": [{"exact_quote": "  Agents running in separate worktrees read shared main-repo state, read the projected active-agent state, write their own", "line_end": 21380, "line_start": 21380, "path": "Plans/orchestrator-subagent-integration.md", "source_sha256": "2bde7668eabbbcef6d6f10401afba7c7b841e220af3ef0db6fef035d11e6844a"}],
+      "gap_kind": "explicit_cross_worktree_projection_contract",
+      "impact": "Cross-platform workers have a shared coordination path and platform-attributed status, while scenario JSON and prompt prose remain non-authoritative evidence.",
+      "item_id": "A005M15-000176-I013",
+      "item_type": "behavior",
+      "severity": "info",
+      "source_unit_refs": ["PLANUNIT:OSI-253", "SEMANTIC:PLANUNIT:OSI-253", "PLANUNIT:OSI-254", "SEMANTIC:PLANUNIT:OSI-254", "PLANUNIT:OSI-255", "SEMANTIC:PLANUNIT:OSI-255", "PLANUNIT:OSI-256", "SEMANTIC:PLANUNIT:OSI-256"],
+      "statement": "OSI-253 through OSI-256 define cross-worktree projection reads/writes, coordination prompt content, a cross-platform scenario, and the active-agent platform field while keeping prompt and JSON examples evidentiary.",
+      "title": "Cross-worktree coordination behavior is explicit"
+    },
+    {
+      "builder_discretion": false,
+      "confidence": 0.96,
+      "dimensions": ["contracts", "states_transitions", "failures_recovery", "security_privacy", "compatibility_migration", "ambiguity_unknowns", "concurrency_races", "partial_failure", "recovery_rollback", "privacy_data_lifecycle", "untrusted_inputs", "cross_document_seams", "test_falsifiability"],
+      "evidence": [
+        {"exact_quote": "  projections rather than a JSON state file.", "line_end": 21596, "line_start": 21596, "path": "Plans/orchestrator-subagent-integration.md", "source_sha256": "2bde7668eabbbcef6d6f10401afba7c7b841e220af3ef0db6fef035d11e6844a"},
+        {"exact_quote": "  mirror location, while canonical `register_agent` behavior appends `coordination.agent_registered`, projects by", "line_end": 21653, "line_start": 21653, "path": "Plans/orchestrator-subagent-integration.md", "source_sha256": "2bde7668eabbbcef6d6f10401afba7c7b841e220af3ef0db6fef035d11e6844a"}
+      ],
+      "gap_kind": "registration_idempotency_schema_evolution_and_partial_api",
+      "impact": "Duplicate registration or replay can produce conflicting identities, evolving record fields lack a migration/version oracle, and consumers cannot treat the partial status API as independently buildable.",
+      "item_id": "A005M15-000176-I014",
+      "item_type": "gap",
+      "severity": "high",
+      "source_unit_refs": ["PLANUNIT:OSI-257", "SEMANTIC:PLANUNIT:OSI-257", "PLANUNIT:OSI-258", "SEMANTIC:PLANUNIT:OSI-258", "PLANUNIT:OSI-259", "SEMANTIC:PLANUNIT:OSI-259"],
+      "statement": "The canonical record/projection data model and register event are clear, and OSI-259 correctly declares its API opening incomplete, but duplicate-agent idempotency, registration replay/conflict recovery, record schema versioning/migration, and sensitive field retention are not specified.",
+      "title": "Registration and coordination schema evolution remain incomplete"
+    },
+    {
+      "builder_discretion": false,
+      "confidence": 0.99,
+      "dimensions": ["behavior", "inputs_outputs", "contracts", "states_transitions", "authority", "failures_recovery", "concurrency_races", "partial_failure", "recovery_rollback", "observability_support", "acceptance_oracles"],
+      "evidence": [{"exact_quote": "  events with CAS on agent revision/last-applied event id, then projecting files_being_edited, current_operation, and", "line_end": 21772, "line_start": 21772, "path": "Plans/orchestrator-subagent-integration.md", "source_sha256": "2bde7668eabbbcef6d6f10401afba7c7b841e220af3ef0db6fef035d11e6844a"}],
+      "gap_kind": "explicit_atomic_mutation_and_cleanup_contract",
+      "impact": "Status changes are guarded against lost updates, missing agents fail explicitly, completion/crash/abort cleanup is event-sourced, and prompt file aggregation has a deduplication oracle.",
+      "item_id": "A005M15-000176-I015",
+      "item_type": "state_transition",
+      "severity": "info",
+      "source_unit_refs": ["PLANUNIT:OSI-260", "SEMANTIC:PLANUNIT:OSI-260", "PLANUNIT:OSI-261", "SEMANTIC:PLANUNIT:OSI-261", "PLANUNIT:OSI-262", "SEMANTIC:PLANUNIT:OSI-262", "PLANUNIT:OSI-263", "SEMANTIC:PLANUNIT:OSI-263"],
+      "statement": "OSI-260 through OSI-263 define CAS-protected status events and projection, explicit missing-agent failure, transactional terminal cleanup events, registry-owned platform display names, and sorted/deduplicated active-file prompt aggregation.",
+      "title": "Status mutation and terminal cleanup are transactionally bounded"
+    },
+    {
+      "builder_discretion": false,
+      "confidence": 0.99,
+      "dimensions": ["states_transitions", "failures_recovery", "operations", "compatibility_migration", "ambiguity_unknowns", "invalid_states_transitions", "concurrency_races", "partial_failure", "recovery_rollback", "offline_network_loss", "localization", "observability_support", "cross_document_seams", "test_falsifiability"],
+      "evidence": [
+        {"exact_quote": "  creates verification state on first write, and prunes stale state older than 2 hours in the BeforeUnit hook.", "line_end": 20300, "line_start": 20300, "path": "Plans/orchestrator-subagent-integration.md", "source_sha256": "2bde7668eabbbcef6d6f10401afba7c7b841e220af3ef0db6fef035d11e6844a"},
+        {"exact_quote": "- Prune stale agents (no update in last hour)", "line_end": 22031, "line_start": 22031, "path": "Plans/orchestrator-subagent-integration.md", "source_sha256": "2bde7668eabbbcef6d6f10401afba7c7b841e220af3ef0db6fef035d11e6844a"}
+      ],
+      "gap_kind": "inconsistent_stale_threshold_and_expiry_oracle",
+      "impact": "A worker between one and two hours old can be active or terminal depending on which rule executes, risking destructive false cleanup during offline/network loss; duration strings also lack clock-skew and localization behavior.",
+      "item_id": "A005M15-000176-I016",
+      "item_type": "gap",
+      "severity": "critical",
+      "source_unit_refs": ["PLANUNIT:OSI-264", "SEMANTIC:PLANUNIT:OSI-264", "PLANUNIT:OSI-265", "SEMANTIC:PLANUNIT:OSI-265", "PLANUNIT:OSI-266", "SEMANTIC:PLANUNIT:OSI-266"],
+      "statement": "OSI-264's preserved one-hour stale-agent token conflicts with OSI-233's normative two-hour pruning rule; the window also lacks an authoritative expiry/heartbeat oracle that distinguishes crash from temporary disconnection, negative clock age handling, and localized duration formatting.",
+      "title": "Stale-agent timing is internally inconsistent"
+    }
+  ],
+  "model": "gpt-5.6-sol",
+  "phase": "blind_macro_window_review",
+  "reasoning_effort": "xhigh",
+  "schema_version": "macro-review-result-v1",
+  "segments": [
+    {"core_range": [19045, 19436], "covered_source_unit_refs": ["PLANUNIT:OSI-211", "PLANUNIT:OSI-212", "PLANUNIT:OSI-213", "PLANUNIT:OSI-214", "PLANUNIT:OSI-215", "PLANUNIT:OSI-216", "PLANUNIT:OSI-217", "SEMANTIC:PLANUNIT:OSI-211", "SEMANTIC:PLANUNIT:OSI-212", "SEMANTIC:PLANUNIT:OSI-213", "SEMANTIC:PLANUNIT:OSI-214", "SEMANTIC:PLANUNIT:OSI-215", "SEMANTIC:PLANUNIT:OSI-216", "SEMANTIC:PLANUNIT:OSI-217"], "item_ids": ["A005M15-000176-I001", "A005M15-000176-I002"], "reviewed": true, "summary": "Project detection, registry selector, tier merge, runner, coordination lifecycle, and error feed reviewed; abnormal cleanup and parsing bounds are the principal gap.", "window_id": "WIN-1BF0967E88A5-0052"},
+    {"core_range": [19437, 19833], "covered_source_unit_refs": ["PLANUNIT:OSI-218", "PLANUNIT:OSI-219", "PLANUNIT:OSI-220", "PLANUNIT:OSI-221", "PLANUNIT:OSI-222", "PLANUNIT:OSI-223", "PLANUNIT:OSI-224", "SEMANTIC:PLANUNIT:OSI-218", "SEMANTIC:PLANUNIT:OSI-219", "SEMANTIC:PLANUNIT:OSI-220", "SEMANTIC:PLANUNIT:OSI-221", "SEMANTIC:PLANUNIT:OSI-222", "SEMANTIC:PLANUNIT:OSI-223", "SEMANTIC:PLANUNIT:OSI-224"], "item_ids": ["A005M15-000176-I003", "A005M15-000176-I004"], "reviewed": true, "summary": "Optional manager, validator placement/timing, tier checks, GUI readiness, quality review, and hook ordering reviewed; readiness and failure oracles are incomplete.", "window_id": "WIN-1BF0967E88A5-0053"},
+    {"core_range": [19834, 20229], "covered_source_unit_refs": ["PLANUNIT:OSI-225", "PLANUNIT:OSI-226", "PLANUNIT:OSI-227", "PLANUNIT:OSI-228", "PLANUNIT:OSI-229", "PLANUNIT:OSI-230", "PLANUNIT:OSI-231", "SEMANTIC:PLANUNIT:OSI-225", "SEMANTIC:PLANUNIT:OSI-226", "SEMANTIC:PLANUNIT:OSI-227", "SEMANTIC:PLANUNIT:OSI-228", "SEMANTIC:PLANUNIT:OSI-229", "SEMANTIC:PLANUNIT:OSI-230", "SEMANTIC:PLANUNIT:OSI-231"], "item_ids": ["A005M15-000176-I005", "A005M15-000176-I006"], "reviewed": true, "summary": "Canonical coordination projection, lifecycle, hooks, adapters, handoff parsing, and remediation reviewed; fail-safe and retry terminal semantics remain open.", "window_id": "WIN-1BF0967E88A5-0054"},
+    {"core_range": [20230, 20610], "covered_source_unit_refs": ["PLANUNIT:OSI-232", "PLANUNIT:OSI-233", "PLANUNIT:OSI-234", "PLANUNIT:OSI-235", "PLANUNIT:OSI-236", "PLANUNIT:OSI-237", "PLANUNIT:OSI-238", "SEMANTIC:PLANUNIT:OSI-232", "SEMANTIC:PLANUNIT:OSI-233", "SEMANTIC:PLANUNIT:OSI-234", "SEMANTIC:PLANUNIT:OSI-235", "SEMANTIC:PLANUNIT:OSI-236", "SEMANTIC:PLANUNIT:OSI-237", "SEMANTIC:PLANUNIT:OSI-238"], "item_ids": ["A005M15-000176-I007", "A005M15-000176-I008"], "reviewed": true, "summary": "Continuity, safe hooks, availability, parallel dependency groups, worktrees, selection, and UI example evidence reviewed; partial failure and rollback are absent.", "window_id": "WIN-1BF0967E88A5-0055"},
+    {"core_range": [20611, 20981], "covered_source_unit_refs": ["PLANUNIT:OSI-239", "PLANUNIT:OSI-240", "PLANUNIT:OSI-241", "PLANUNIT:OSI-242", "PLANUNIT:OSI-243", "PLANUNIT:OSI-244", "PLANUNIT:OSI-245", "SEMANTIC:PLANUNIT:OSI-239", "SEMANTIC:PLANUNIT:OSI-240", "SEMANTIC:PLANUNIT:OSI-241", "SEMANTIC:PLANUNIT:OSI-242", "SEMANTIC:PLANUNIT:OSI-243", "SEMANTIC:PLANUNIT:OSI-244", "SEMANTIC:PLANUNIT:OSI-245"], "item_ids": ["A005M15-000176-I009", "A005M15-000176-I010"], "reviewed": true, "summary": "Registry validation, invocation, dependency inheritance, coordination ownership, and durable crew-board boundaries reviewed; conflicts and durable-message governance are incomplete.", "window_id": "WIN-1BF0967E88A5-0056"},
+    {"core_range": [20982, 21371], "covered_source_unit_refs": ["PLANUNIT:OSI-246", "PLANUNIT:OSI-247", "PLANUNIT:OSI-248", "PLANUNIT:OSI-249", "PLANUNIT:OSI-250", "PLANUNIT:OSI-251", "PLANUNIT:OSI-252", "SEMANTIC:PLANUNIT:OSI-246", "SEMANTIC:PLANUNIT:OSI-247", "SEMANTIC:PLANUNIT:OSI-248", "SEMANTIC:PLANUNIT:OSI-249", "SEMANTIC:PLANUNIT:OSI-250", "SEMANTIC:PLANUNIT:OSI-251", "SEMANTIC:PLANUNIT:OSI-252"], "item_ids": ["A005M15-000176-I011", "A005M15-000176-I012"], "reviewed": true, "summary": "Projection/message split, schema, routing, rate limits, lifecycle, canonical mechanisms, and provider bridge reviewed; authorization and distributed-state rules are missing.", "window_id": "WIN-1BF0967E88A5-0057"},
+    {"core_range": [21372, 21762], "covered_source_unit_refs": ["PLANUNIT:OSI-253", "PLANUNIT:OSI-254", "PLANUNIT:OSI-255", "PLANUNIT:OSI-256", "PLANUNIT:OSI-257", "PLANUNIT:OSI-258", "PLANUNIT:OSI-259", "SEMANTIC:PLANUNIT:OSI-253", "SEMANTIC:PLANUNIT:OSI-254", "SEMANTIC:PLANUNIT:OSI-255", "SEMANTIC:PLANUNIT:OSI-256", "SEMANTIC:PLANUNIT:OSI-257", "SEMANTIC:PLANUNIT:OSI-258", "SEMANTIC:PLANUNIT:OSI-259"], "item_ids": ["A005M15-000176-I013", "A005M15-000176-I014"], "reviewed": true, "summary": "Cross-worktree awareness, prompt/scenario evidence, platform projection, data model, registration, and partial status API reviewed; idempotency and schema evolution are open.", "window_id": "WIN-1BF0967E88A5-0058"},
+    {"core_range": [21763, 22153], "covered_source_unit_refs": ["PLANUNIT:OSI-260", "PLANUNIT:OSI-261", "PLANUNIT:OSI-262", "PLANUNIT:OSI-263", "PLANUNIT:OSI-264", "PLANUNIT:OSI-265", "PLANUNIT:OSI-266", "SEMANTIC:PLANUNIT:OSI-260", "SEMANTIC:PLANUNIT:OSI-261", "SEMANTIC:PLANUNIT:OSI-262", "SEMANTIC:PLANUNIT:OSI-263", "SEMANTIC:PLANUNIT:OSI-264", "SEMANTIC:PLANUNIT:OSI-265", "SEMANTIC:PLANUNIT:OSI-266"], "item_ids": ["A005M15-000176-I015", "A005M15-000176-I016"], "reviewed": true, "summary": "CAS status mutation, terminal cleanup, prompt aggregation, stale pruning, mirror save, and duration formatting reviewed; one-hour versus two-hour staleness is contradictory.", "window_id": "WIN-1BF0967E88A5-0059"}
+  ],
+  "self_attestation": {
+    "no_canonical_writes": true,
+    "no_external_research_during_blind_review": true,
+    "no_peer_result_access": true,
+    "no_prior_audit_access": true,
+    "no_unrelated_source_access": true,
+    "terminal_after_submission": true
+  },
+  "source_binding": {
+    "bundle_id": "MACRO15-1BF0967E88A5-0007",
+    "document_path": "Plans/orchestrator-subagent-integration.md",
+    "micro_window_ids": ["WIN-1BF0967E88A5-0052", "WIN-1BF0967E88A5-0053", "WIN-1BF0967E88A5-0054", "WIN-1BF0967E88A5-0055", "WIN-1BF0967E88A5-0056", "WIN-1BF0967E88A5-0057", "WIN-1BF0967E88A5-0058", "WIN-1BF0967E88A5-0059"],
+    "source_sha256": "2bde7668eabbbcef6d6f10401afba7c7b841e220af3ef0db6fef035d11e6844a"
+  },
+  "status": "completed",
+  "synthesis": {
+    "cross_document_questions": [
+      "Which canonical owner defines crew-message authentication, authorization, retention, redaction, deletion, and offline reconciliation?",
+      "Which runtime contract resolves the one-hour versus two-hour stale-agent threshold and defines the heartbeat/expiry oracle?",
+      "Which executor or worktree owner defines dependency-cycle rejection, group cancellation, merge conflicts, cleanup, and rollback after partial parallel failure?",
+      "Which GUI owner supplies a falsifiable replacement for the `GUI updated?` readiness criterion, including accessibility and misleading-state checks?"
+    ],
+    "feature_family_keys": [
+      "project_context_and_subagent_selection",
+      "tier_wiring_verification_and_quality_gates",
+      "canonical_agent_coordination_and_handoffs",
+      "parallel_dependency_worktree_execution",
+      "durable_crew_board_routing_and_lifecycle",
+      "cross_worktree_projection_and_status_mutation"
+    ],
+    "research_queries": [
+      "event-sourced distributed rate limiting fairness idempotency offline reconciliation agent messaging",
+      "secure prompt construction escaping untrusted file paths agent identifiers terminal output",
+      "parallel git worktree orchestration partial failure cancellation rollback merge conflict recovery",
+      "heartbeat lease expiry clock skew crash detection distributed workers"
+    ]
+  },
+  "task_thread_id": "/root/a005m15_b9_000176_attempt_0015_terminal"
+}

@@ -1,0 +1,456 @@
+{
+  "assignment_id": "A005M15-000167-INTEGRATED-MACRO15-9C773F6116D6-0001",
+  "attempt_id": "attempt-0015",
+  "audit_id": "audit-20260710-005-plan-assurance-model-lanes-fresh-agent-exhaustive",
+  "coverage": {
+    "all_micro_windows_reviewed": true,
+    "all_source_lines_reviewed": true,
+    "all_source_units_accounted": true,
+    "both_exact_and_adversarial_lenses_applied": true,
+    "dimensions_checked": [
+      "behavior",
+      "capabilities",
+      "inputs_outputs",
+      "contracts",
+      "states_transitions",
+      "authority",
+      "ownership",
+      "consumers",
+      "gui_truth",
+      "failures_recovery",
+      "security_privacy",
+      "propagation",
+      "operations",
+      "scale_performance",
+      "compatibility_migration",
+      "acceptance_oracles",
+      "builder_discretion",
+      "ambiguity_unknowns",
+      "missing_callers_consumers",
+      "invalid_states_transitions",
+      "concurrency_races",
+      "partial_failure",
+      "recovery_rollback",
+      "authority_boundaries",
+      "privacy_data_lifecycle",
+      "untrusted_inputs",
+      "gui_misleading_states",
+      "offline_network_loss",
+      "scale_limits",
+      "accessibility",
+      "localization",
+      "observability_support",
+      "destructive_actions",
+      "cross_document_seams",
+      "test_falsifiability",
+      "unknown_unknowns"
+    ]
+  },
+  "items": [
+    {
+      "builder_discretion": false,
+      "confidence": 0.98,
+      "dimensions": ["behavior", "capabilities", "contracts", "authority", "consumers", "gui_truth", "compatibility_migration"],
+      "evidence": [
+        {"exact_quote": "canonical_text: newtools extends interview and test strategy without replacing them. New settings wire through InterviewOrchestratorConfig, gui_config.interview, interview completion, test strategy generation, and orchestrator-loaded node criteria.", "line_end": 1879, "line_start": 1879, "path": "Plans/newtools.md", "source_sha256": "d484d6afecf59d42b70295ecb421962ddb740f85f1682fdc920384be9d4d67a6"},
+        {"exact_quote": "canonical_text: Interview toggles live in the Interview tab and gui_config.interview, use the same Option B run-config build, keep worktree evidence under the run workspace, preserve .puppet-master/evidence/ cleanup allowlisting, and add no run_with_cleanup call sites.", "line_end": 1925, "line_start": 1925, "path": "Plans/newtools.md", "source_sha256": "d484d6afecf59d42b70295ecb421962ddb740f85f1682fdc920384be9d4d67a6"},
+        {"exact_quote": "canonical_text: The current Playwright-as-default interviewer path leaves native/framework GUIs without reliable smoke tests or GUI-level verification, and does not yet treat PM built-in browser automation as the primary native web test path.", "line_end": 1970, "line_start": 1970, "path": "Plans/newtools.md", "source_sha256": "d484d6afecf59d42b70295ecb421962ddb740f85f1682fdc920384be9d4d67a6"},
+        {"exact_quote": "canonical_text: Goals preserve one-catalog discovery of framework tools and user options to select existing tools, custom headless tool planning/building, or both.", "line_end": 2014, "line_start": 2014, "path": "Plans/newtools.md", "source_sha256": "d484d6afecf59d42b70295ecb421962ddb740f85f1682fdc920384be9d4d67a6"}
+      ],
+      "gap_kind": "none",
+      "impact": "Establishes the additive integration, configuration ownership, native-GUI deficiency, and user-choice surface that downstream generation must preserve.",
+      "item_id": "M15-W06-I1",
+      "item_type": "feature",
+      "severity": "info",
+      "source_unit_refs": ["PLANUNIT:N2-014", "SEMANTIC:PLANUNIT:N2-014", "PLANUNIT:N2-015", "SEMANTIC:PLANUNIT:N2-015", "PLANUNIT:N2-016", "SEMANTIC:PLANUNIT:N2-016", "PLANUNIT:N2-017", "SEMANTIC:PLANUNIT:N2-017"],
+      "statement": "The plan defines an additive interview/orchestrator extension, locates its toggles and evidence boundary, identifies the native-GUI testing gap, and preserves explicit existing/custom/both choices.",
+      "title": "Additive interview and tool-choice contract"
+    },
+    {
+      "builder_discretion": true,
+      "confidence": 0.93,
+      "dimensions": ["inputs_outputs", "states_transitions", "failures_recovery", "propagation", "acceptance_oracles", "partial_failure", "recovery_rollback", "test_falsifiability"],
+      "evidence": [
+        {"exact_quote": "canonical_text: When chosen, execution plans include a project-specific tool that supports headless GUI navigation and emits a full debug log after runs so agents can verify behavior and debug failures.", "line_end": 2060, "line_start": 2060, "path": "Plans/newtools.md", "source_sha256": "d484d6afecf59d42b70295ecb421962ddb740f85f1682fdc920384be9d4d67a6"},
+        {"exact_quote": "canonical_text: Selected tools and custom headless instructions appear in test strategy, PRD/execution plan language, and agent instructions while framework/tool data stays in one catalog and existing interview, generator, and prompt/context flows are reused.", "line_end": 2104, "line_start": 2104, "path": "Plans/newtools.md", "source_sha256": "d484d6afecf59d42b70295ecb421962ddb740f85f1682fdc920384be9d4d67a6"},
+        {"exact_quote": "canonical_text: The design flow derives GUI type/framework, looks up available tools in the catalog, presents Testing-phase options, persists choices, and writes setup/build/testing instructions at interview completion.", "line_end": 2151, "line_start": 2151, "path": "Plans/newtools.md", "source_sha256": "d484d6afecf59d42b70295ecb421962ddb740f85f1682fdc920384be9d4d67a6"},
+        {"exact_quote": "canonical_text: Interview state/config persists use_playwright (the optional/fallback/project-native web test path, not the primary web path), use_framework_tools, plan_custom_headless_tool, and selected_framework_tools. Completion writes tasks for existing tool setup, custom headless build/adoption, and testing instructions with debug-log paths.", "line_end": 2197, "line_start": 2197, "path": "Plans/newtools.md", "source_sha256": "d484d6afecf59d42b70295ecb421962ddb740f85f1682fdc920384be9d4d67a6"}
+      ],
+      "gap_kind": "atomic_completion_and_recovery_unspecified",
+      "impact": "A crash or write failure during completion can leave interview state, test strategy, PRD tasks, agent instructions, and debug-log paths mutually inconsistent with no defined detection or rollback oracle.",
+      "item_id": "M15-W06-I2",
+      "item_type": "gap",
+      "severity": "high",
+      "source_unit_refs": ["PLANUNIT:N2-018", "SEMANTIC:PLANUNIT:N2-018", "PLANUNIT:N2-019", "SEMANTIC:PLANUNIT:N2-019", "PLANUNIT:N2-020", "SEMANTIC:PLANUNIT:N2-020", "PLANUNIT:N2-021", "SEMANTIC:PLANUNIT:N2-021"],
+      "statement": "The outputs and propagation destinations are named, but no transaction boundary, idempotency rule, partial-write state, retry behavior, rollback behavior, or cross-artifact consistency oracle is specified for interview completion.",
+      "title": "Interview completion has no atomicity or recovery contract"
+    },
+    {
+      "builder_discretion": true,
+      "confidence": 0.94,
+      "dimensions": ["contracts", "states_transitions", "security_privacy", "concurrency_races", "partial_failure", "recovery_rollback", "untrusted_inputs", "scale_limits"],
+      "evidence": [
+        {"exact_quote": "canonical_text: The required GuiToolCatalog location is puppet-master-rs/src/interview/gui_tool_catalog.rs and it is tagged as // DRY:DATA:GuiToolCatalog.", "line_end": 2242, "line_start": 2242, "path": "Plans/newtools.md", "source_sha256": "d484d6afecf59d42b70295ecb421962ddb740f85f1682fdc920384be9d4d67a6"},
+        {"exact_quote": "canonical_text: GuiToolCatalog combines a shipped base catalog with a non-secret redb settings overlay editable via UI and JSON import/export. Overlay wins by framework_id and tool_id, and research-populated entries are written to overlay only.", "line_end": 2285, "line_start": 2285, "path": "Plans/newtools.md", "source_sha256": "d484d6afecf59d42b70295ecb421962ddb740f85f1682fdc920384be9d4d67a6"},
+        {"exact_quote": "canonical_text: Catalog content preserves framework IDs web, iced, dioxus, qt, flutter, tauri, electron, detection hints, existing tool entries, custom headless default, and the compatibility-only Spectron legacy seed row.", "line_end": 2334, "line_start": 2334, "path": "Plans/newtools.md", "source_sha256": "d484d6afecf59d42b70295ecb421962ddb740f85f1682fdc920384be9d4d67a6"},
+        {"exact_quote": "canonical_text: The catalog is extensible without changing interviewer flow logic and provides DRY helpers for lookup by framework, listing tools for a framework, and deciding whether to suggest custom headless.", "line_end": 2383, "line_start": 2383, "path": "Plans/newtools.md", "source_sha256": "d484d6afecf59d42b70295ecb421962ddb740f85f1682fdc920384be9d4d67a6"}
+      ],
+      "gap_kind": "overlay_import_and_concurrency_contract_missing",
+      "impact": "Malformed, oversized, stale, or concurrently edited overlay data can silently replace shipped entries, exhaust resources, or leave operators without a recoverable last-known-good catalog.",
+      "item_id": "M15-W07-I1",
+      "item_type": "gap",
+      "severity": "high",
+      "source_unit_refs": ["PLANUNIT:N2-022", "SEMANTIC:PLANUNIT:N2-022", "PLANUNIT:N2-023", "SEMANTIC:PLANUNIT:N2-023", "PLANUNIT:N2-024", "SEMANTIC:PLANUNIT:N2-024", "PLANUNIT:N2-025", "SEMANTIC:PLANUNIT:N2-025"],
+      "statement": "Location, precedence, seed vocabulary, and helper behavior are clear, but the UI/JSON import path lacks size limits, schema-version handling, duplicate/conflict rules, concurrent-edit semantics, atomic commit, last-known-good retention, and rollback behavior.",
+      "title": "Mutable catalog overlay lacks hostile-input and recovery semantics"
+    },
+    {
+      "builder_discretion": true,
+      "confidence": 0.91,
+      "dimensions": ["behavior", "authority", "ownership", "consumers", "security_privacy", "offline_network_loss", "observability_support", "cross_document_seams"],
+      "evidence": [
+        {"exact_quote": "canonical_text: Context7 MCP and web search may inform catalog population or build plans but must not be presented as standalone research-only outcomes; unknown frameworks still get catalog-backed options and/or the full-featured custom-headless option.", "line_end": 2427, "line_start": 2427, "path": "Plans/newtools.md", "source_sha256": "d484d6afecf59d42b70295ecb421962ddb740f85f1682fdc920384be9d4d67a6"},
+        {"exact_quote": "canonical_text: MCP-backed tools are supported and configurable for Cursor, Claude Code, OpenCode, Codex, GitHub Copilot, and Gemini through Puppet Master owned configuration; per-platform files are derived adapters only where required.", "line_end": 2473, "line_start": 2473, "path": "Plans/newtools.md", "source_sha256": "d484d6afecf59d42b70295ecb421962ddb740f85f1682fdc920384be9d4d67a6"},
+        {"exact_quote": "canonical_text: Implementation configures and verifies MCP servers and API-key enablement so platform CLIs see selected tools at run time through config files, env vars, flags, or runtime adapters as appropriate.", "line_end": 2521, "line_start": 2521, "path": "Plans/newtools.md", "source_sha256": "d484d6afecf59d42b70295ecb421962ddb740f85f1682fdc920384be9d4d67a6"},
+        {"exact_quote": "canonical_text: Catalog tools expose requires_mcp and mcp_servers so UI, run config, and prompt builder can disclose and enable required MCP servers when selected.", "line_end": 2567, "line_start": 2567, "path": "Plans/newtools.md", "source_sha256": "d484d6afecf59d42b70295ecb421962ddb740f85f1682fdc920384be9d4d67a6"}
+      ],
+      "gap_kind": "mcp_degradation_and_enablement_outcome_unspecified",
+      "impact": "Users and agents can receive a selected-tool plan that cannot run, while the UI has no specified stale, offline, permission-denied, or partially configured state and support lacks a required failure payload.",
+      "item_id": "M15-W07-I2",
+      "item_type": "gap",
+      "severity": "high",
+      "source_unit_refs": ["PLANUNIT:N2-026", "SEMANTIC:PLANUNIT:N2-026", "PLANUNIT:N2-027", "SEMANTIC:PLANUNIT:N2-027", "PLANUNIT:N2-028", "SEMANTIC:PLANUNIT:N2-028", "PLANUNIT:N2-029", "SEMANTIC:PLANUNIT:N2-029"],
+      "statement": "The plan forbids research-only outcomes and assigns central MCP ownership, but does not define timeout, offline, authentication-failure, partial-provider, user-denied-enablement, or runtime-adapter failure states and their UI/prompt/run-config consequences.",
+      "title": "MCP selection has no complete degradation contract"
+    },
+    {
+      "builder_discretion": true,
+      "confidence": 0.92,
+      "dimensions": ["inputs_outputs", "states_transitions", "gui_truth", "invalid_states_transitions", "gui_misleading_states", "accessibility", "localization", "test_falsifiability"],
+      "evidence": [
+        {"exact_quote": "canonical_text: 'Architecture, UX, and project dependency inputs produce detected_gui_frameworks: Vec<String> for subsequent GUI testing tool flow.'", "line_end": 2614, "line_start": 2614, "path": "Plans/newtools.md", "source_sha256": "d484d6afecf59d42b70295ecb421962ddb740f85f1682fdc920384be9d4d67a6"},
+        {"exact_quote": "canonical_text: Testing & Verification looks up detected GUI frameworks in GuiToolCatalog, optionally research-populates sparse catalog entries, and offers the PM built-in browser (primary for web), Playwright (optional/fallback/project-native for web), framework tools, and custom headless options.", "line_end": 2658, "line_start": 2658, "path": "Plans/newtools.md", "source_sha256": "d484d6afecf59d42b70295ecb421962ddb740f85f1682fdc920384be9d4d67a6"},
+        {"exact_quote": "canonical_text: selected_framework_tools and plan_custom_headless_tool persist in interview config/state, and completion writes or removes the Doctor-readable project config projection tools.custom_headless.", "line_end": 2703, "line_start": 2703, "path": "Plans/newtools.md", "source_sha256": "d484d6afecf59d42b70295ecb421962ddb740f85f1682fdc920384be9d4d67a6"},
+        {"exact_quote": "canonical_text: The tool-selection UI reuses existing widgets and accessible toggles, checkboxes, or multi-select controls for Playwright (optional/fallback/project-native for web), per-framework existing tools, and the custom-headless option with tooltips and no one-off UI patterns; the PM built-in browser remains the primary web test path.", "line_end": 2747, "line_start": 2747, "path": "Plans/newtools.md", "source_sha256": "d484d6afecf59d42b70295ecb421962ddb740f85f1682fdc920384be9d4d67a6"}
+      ],
+      "gap_kind": "detection_and_selection_state_machine_incomplete",
+      "impact": "False positives, conflicting detections, research-in-progress data, removed catalog tools, or a stale persisted selection can be presented as valid without a defined correction path or testable UI truth.",
+      "item_id": "M15-W08-I1",
+      "item_type": "gap",
+      "severity": "high",
+      "source_unit_refs": ["PLANUNIT:N2-030", "SEMANTIC:PLANUNIT:N2-030", "PLANUNIT:N2-031", "SEMANTIC:PLANUNIT:N2-031", "PLANUNIT:N2-032", "SEMANTIC:PLANUNIT:N2-032", "PLANUNIT:N2-033", "SEMANTIC:PLANUNIT:N2-033"],
+      "statement": "The happy-path detection, offering, persistence, and accessible-control flow is named, but conflict, empty, stale, invalidated-selection, research-loading, and write/remove-failure states are absent; localization and concrete accessibility oracles are also unspecified.",
+      "title": "GUI detection and selection omit invalid and stale states"
+    },
+    {
+      "builder_discretion": false,
+      "confidence": 0.97,
+      "dimensions": ["contracts", "authority", "ownership", "consumers", "compatibility_migration", "authority_boundaries", "cross_document_seams"],
+      "evidence": [
+        {"exact_quote": "canonical_text: Section 8 is consumer guidance only. Plans/MCP_Integration.md is the current MCP SSOT and owns naming, availability, credential binding, config schema, and supported flows.", "line_end": 2794, "line_start": 2794, "path": "Plans/newtools.md", "source_sha256": "d484d6afecf59d42b70295ecb421962ddb740f85f1682fdc920384be9d4d67a6"},
+        {"exact_quote": "canonical_text: GUI/settings alignment mirrors Plans/Tools.md and Plans/MCP_Integration.md. The global provider stack is user-changeable, per-operation priority reordering is not MVP, global MVP provider priority is not immutable policy, and row-level health/error disclosure remains visible.", "line_end": 2840, "line_start": 2840, "path": "Plans/newtools.md", "source_sha256": "d484d6afecf59d42b70295ecb421962ddb740f85f1682fdc920384be9d4d67a6"},
+        {"exact_quote": "canonical_text: Settings guidance preserves authenticated/expired/not_authenticated, connected/disabled/needs_auth/needs_client_registration/failed, LoggedIn/LoggedOut/AuthExpired/AuthFailed, {server_slug}_{tool_name}, provider ID firecrawl, display Firecrawl, priority below Exa/Tavily and above DDG, and default disabled.", "line_end": 2887, "line_start": 2887, "path": "Plans/newtools.md", "source_sha256": "d484d6afecf59d42b70295ecb421962ddb740f85f1682fdc920384be9d4d67a6"},
+        {"exact_quote": "canonical_text: Cited-search wording is non-normative consumer guidance. Legacy aliases resolve here for cross-reference compatibility only and do not replace provider capability, routing, provenance, or billing canon.", "line_end": 2945, "line_start": 2945, "path": "Plans/newtools.md", "source_sha256": "d484d6afecf59d42b70295ecb421962ddb740f85f1682fdc920384be9d4d67a6"}
+      ],
+      "gap_kind": "none",
+      "impact": "Prevents this consumer document from becoming a competing MCP or provider canon while retaining exact UI vocabulary and compatibility aliases.",
+      "item_id": "M15-W08-I2",
+      "item_type": "authority",
+      "severity": "info",
+      "source_unit_refs": ["PLANUNIT:N2-034", "SEMANTIC:PLANUNIT:N2-034", "PLANUNIT:N2-035", "SEMANTIC:PLANUNIT:N2-035", "PLANUNIT:N2-036", "SEMANTIC:PLANUNIT:N2-036", "PLANUNIT:N2-037", "SEMANTIC:PLANUNIT:N2-037"],
+      "statement": "The plan explicitly subordinates MCP and provider behavior to their owner documents, fixes the mirrored UI/status vocabulary, and confines cited-search aliases to compatibility guidance.",
+      "title": "MCP and provider authority boundary is explicit"
+    },
+    {
+      "builder_discretion": true,
+      "confidence": 0.95,
+      "dimensions": ["behavior", "inputs_outputs", "failures_recovery", "security_privacy", "operations", "scale_performance", "partial_failure", "privacy_data_lifecycle", "observability_support"],
+      "evidence": [
+        {"exact_quote": "canonical_text: Web-tool consumer guidance preserves user-facing activities Searching Web, Reading Site, and Site Reader; hosted/free-tier Exa-style search; agent search-then-read expectations; DDG fallback/compatibility status; and Site Reader v1 full browser interaction.", "line_end": 2993, "line_start": 2993, "path": "Plans/newtools.md", "source_sha256": "d484d6afecf59d42b70295ecb421962ddb740f85f1682fdc920384be9d4d67a6"},
+        {"exact_quote": "canonical_text: Research-session behavior references the shared research_session contract in Plans/Section15_MVP_Promoted_Features_Spec.md; MCP settings do not redefine it.", "line_end": 3042, "line_start": 3042, "path": "Plans/newtools.md", "source_sha256": "d484d6afecf59d42b70295ecb421962ddb740f85f1682fdc920384be9d4d67a6"},
+        {"exact_quote": "canonical_text: Chosen custom headless GUI tools run without display in CI-friendly mode and provide a reusable action catalog or scenario set for smoke and regression flows rather than one-off scripts.", "line_end": 3085, "line_start": 3085, "path": "Plans/newtools.md", "source_sha256": "d484d6afecf59d42b70295ecb421962ddb740f85f1682fdc920384be9d4d67a6"},
+        {"exact_quote": "canonical_text: Each custom headless run emits Timeline timeline.jsonl, Summary summary.md, artifacts such as screenshots or state dumps per step, the canonical manifest described in Section 13, and evidence under .puppet-master/evidence/gui-automation/<run_id>/.", "line_end": 3132, "line_start": 3132, "path": "Plans/newtools.md", "source_sha256": "d484d6afecf59d42b70295ecb421962ddb740f85f1682fdc920384be9d4d67a6"}
+      ],
+      "gap_kind": "evidence_lifecycle_and_partial_run_semantics_missing",
+      "impact": "Screenshots, state dumps, timelines, and summaries may contain sensitive data, grow without bound, or disagree after interruption; consumers cannot reliably distinguish a complete passing run from a partial or corrupted one.",
+      "item_id": "M15-W09-I1",
+      "item_type": "gap",
+      "severity": "high",
+      "source_unit_refs": ["PLANUNIT:N2-038", "SEMANTIC:PLANUNIT:N2-038", "PLANUNIT:N2-039", "SEMANTIC:PLANUNIT:N2-039", "PLANUNIT:N2-040", "SEMANTIC:PLANUNIT:N2-040", "PLANUNIT:N2-041", "SEMANTIC:PLANUNIT:N2-041"],
+      "statement": "The browser/research and headless-evidence outputs are specified, but retention, redaction, access, quota, truncation, crash consistency, manifest finalization, and partial-run status are not defined in this feature contract.",
+      "title": "Headless evidence has no lifecycle or interrupted-run contract"
+    },
+    {
+      "builder_discretion": true,
+      "confidence": 0.9,
+      "dimensions": ["capabilities", "contracts", "consumers", "propagation", "acceptance_oracles", "builder_discretion", "missing_callers_consumers", "test_falsifiability"],
+      "evidence": [
+        {"exact_quote": "canonical_text: Generated plans document setup/use of selected existing tools, design and implementation of full-featured custom headless tools, or combined coverage using existing tools where they fit and custom tooling for full coverage and evidence.", "line_end": 3181, "line_start": 3181, "path": "Plans/newtools.md", "source_sha256": "d484d6afecf59d42b70295ecb421962ddb740f85f1682fdc920384be9d4d67a6"},
+        {"exact_quote": "canonical_text: Puppet Master src/automation/ headless runner and action catalog are the reference implementation for Iced projects and analogous framework automation systems.", "line_end": 3227, "line_start": 3227, "path": "Plans/newtools.md", "source_sha256": "d484d6afecf59d42b70295ecb421962ddb740f85f1682fdc920384be9d4d67a6"},
+        {"exact_quote": "canonical_text: test-strategy.md and .puppet-master/interview/test-strategy.json include selected framework tool IDs, custom headless evidence instructions, debug-log paths, and usage notes for agents.", "line_end": 3272, "line_start": 3272, "path": "Plans/newtools.md", "source_sha256": "d484d6afecf59d42b70295ecb421962ddb740f85f1682fdc920384be9d4d67a6"},
+        {"exact_quote": "canonical_text: Test strategy generation adds or reuses headless_gui and framework_tool test types through the same interview state and generator, without duplicating tool-selection logic in views and generators.", "line_end": 3317, "line_start": 3317, "path": "Plans/newtools.md", "source_sha256": "d484d6afecf59d42b70295ecb421962ddb740f85f1682fdc920384be9d4d67a6"}
+      ],
+      "gap_kind": "framework_neutral_acceptance_oracle_missing",
+      "impact": "Builders can produce materially different systems that all claim to be full-featured, and generated consumers lack a stable cross-framework test for action coverage, determinism, exit status, or evidence completeness.",
+      "item_id": "M15-W09-I2",
+      "item_type": "gap",
+      "severity": "medium",
+      "source_unit_refs": ["PLANUNIT:N2-042", "SEMANTIC:PLANUNIT:N2-042", "PLANUNIT:N2-043", "SEMANTIC:PLANUNIT:N2-043", "PLANUNIT:N2-044", "SEMANTIC:PLANUNIT:N2-044", "PLANUNIT:N2-045", "SEMANTIC:PLANUNIT:N2-045"],
+      "statement": "Plan and test-strategy propagation is explicit, but the Iced reference is not converted into a framework-neutral minimum capability and falsifiable oracle for custom tools or combined coverage.",
+      "title": "Custom-tool reference lacks portable acceptance criteria"
+    },
+    {
+      "builder_discretion": true,
+      "confidence": 0.97,
+      "dimensions": ["acceptance_oracles", "builder_discretion", "ambiguity_unknowns", "cross_document_seams", "test_falsifiability", "unknown_unknowns"],
+      "evidence": [
+        {"exact_quote": "canonical_text: PRD or execution plans include obtain/setup tasks for selected tools and custom-headless design/build tasks when selected. Acceptance criteria require the PM built-in browser (primary, if web) and/or Playwright (optional/fallback/project-native, if web), selected framework tools, and custom headless runs plus debug-log checks as applicable.", "line_end": 3362, "line_start": 3362, "path": "Plans/newtools.md", "source_sha256": "d484d6afecf59d42b70295ecb421962ddb740f85f1682fdc920384be9d4d67a6"},
+        {"exact_quote": "canonical_text: Prompt builder includes framework tools, custom headless instructions, debug-log paths, and other new test strategy content in the loaded test strategy excerpt so agents know when and how to use each tool.", "line_end": 3408, "line_start": 3408, "path": "Plans/newtools.md", "source_sha256": "d484d6afecf59d42b70295ecb421962ddb740f85f1682fdc920384be9d4d67a6"},
+        {"exact_quote": "canonical_text: Lines 386-400 of the implementation checklist mirror covered requirements for GuiToolCatalog, research input-only, MCP invocation, GUI stack detection, Testing-phase options, tool-selection UI, MCP settings, custom headless, test strategy, PRD/execution plans, prompt context, and the custom-headless Doctor check. This checklist mirror is not WorkNode or task-manifest creation.", "line_end": 3452, "line_start": 3452, "path": "Plans/newtools.md", "source_sha256": "d484d6afecf59d42b70295ecb421962ddb740f85f1682fdc920384be9d4d67a6"},
+        {"exact_quote": "canonical_text: Lines 401-405 of the implementation checklist require Doctor platform version reporting, an MCP Doctor check, catalog version/overlay last_updated, DRY-only catalog data with no hardcoded tool lists, and closure of the listed Section 12.6 gaps. This is checklist mirror coverage only and creates no WorkNodes, NodeSeeds, executable queues, final node manifests, or production build tasks.", "line_end": 3508, "line_start": 3508, "path": "Plans/newtools.md", "source_sha256": "d484d6afecf59d42b70295ecb421962ddb740f85f1682fdc920384be9d4d67a6"}
+      ],
+      "gap_kind": "acceptance_criteria_are_presence_checks",
+      "impact": "A build can satisfy artifact presence, generic migration/index validation, or checklist mirroring while selected tools remain unusable, generated instructions are wrong, or the actual GUI behavior is unverified.",
+      "item_id": "M15-W10-I1",
+      "item_type": "gap",
+      "severity": "critical",
+      "source_unit_refs": ["PLANUNIT:N2-046", "SEMANTIC:PLANUNIT:N2-046", "PLANUNIT:N2-047", "SEMANTIC:PLANUNIT:N2-047", "PLANUNIT:N2-048", "SEMANTIC:PLANUNIT:N2-048", "PLANUNIT:N2-049", "SEMANTIC:PLANUNIT:N2-049"],
+      "statement": "The PlanUnits describe propagation and checklist mirrors, but their listed acceptance criteria validate source preservation and indexing rather than executable tool setup, prompt correctness, Doctor behavior, or successful evidence-producing GUI runs.",
+      "title": "Checklist mirrors do not falsify runtime behavior"
+    },
+    {
+      "builder_discretion": true,
+      "confidence": 0.94,
+      "dimensions": ["capabilities", "contracts", "operations", "scale_performance", "acceptance_oracles", "accessibility", "destructive_actions", "test_falsifiability"],
+      "evidence": [
+        {"exact_quote": "canonical_text: Tool catalog maintenance stays centralized in one file or module. Unknown frameworks still offer the option to plan/build the full-featured custom headless tool; research may populate the catalog or inform that plan, but there is no research-only user outcome.", "line_end": 3554, "line_start": 3554, "path": "Plans/newtools.md", "source_sha256": "d484d6afecf59d42b70295ecb421962ddb740f85f1682fdc920384be9d4d67a6"},
+        {"exact_quote": "canonical_text: Custom headless GUI tools are substantial, full-featured systems with headless runner, action catalog, timeline, summary, and artifacts. Puppet Master automation is the reference for Iced; other frameworks need analogous evidence depth, and the deliverable must not be framed as a minimal smoke harness.", "line_end": 3597, "line_start": 3597, "path": "Plans/newtools.md", "source_sha256": "d484d6afecf59d42b70295ecb421962ddb740f85f1682fdc920384be9d4d67a6"},
+        {"exact_quote": "canonical_text: New interview UI uses docs/gui-widget-catalog.md and src/widgets/ and tags widgets with // DRY:WIDGET:... .", "line_end": 3647, "line_start": 3647, "path": "Plans/newtools.md", "source_sha256": "d484d6afecf59d42b70295ecb421962ddb740f85f1682fdc920384be9d4d67a6"},
+        {"exact_quote": "canonical_text: Framework/tool data lives only in GuiToolCatalog or equivalent, test strategy behavior extends existing generator/types instead of duplicating tool-use rules, and pre-completion requires cargo check, cargo test, DRY checks, no hardcoded tool lists, and scope respected.", "line_end": 3690, "line_start": 3690, "path": "Plans/newtools.md", "source_sha256": "d484d6afecf59d42b70295ecb421962ddb740f85f1682fdc920384be9d4d67a6"}
+      ],
+      "gap_kind": "full_featured_scope_has_no_bounded_minimum",
+      "impact": "The term full-featured can expand without bound or be satisfied superficially; cost, timeouts, action coverage, deterministic exit semantics, destructive-action controls, accessibility coverage, and framework-specific exceptions remain discretionary.",
+      "item_id": "M15-W10-I2",
+      "item_type": "gap",
+      "severity": "high",
+      "source_unit_refs": ["PLANUNIT:N2-050", "SEMANTIC:PLANUNIT:N2-050", "PLANUNIT:N2-051", "SEMANTIC:PLANUNIT:N2-051", "PLANUNIT:N2-052", "SEMANTIC:PLANUNIT:N2-052", "PLANUNIT:N2-053", "SEMANTIC:PLANUNIT:N2-053"],
+      "statement": "Centralized data, reusable widgets, and DRY gates constrain structure, but the full-featured custom-tool requirement has no bounded cross-framework minimum, operational envelope, or behavioral acceptance suite.",
+      "title": "Full-featured custom automation remains unbounded"
+    },
+    {
+      "builder_discretion": true,
+      "confidence": 0.95,
+      "dimensions": ["states_transitions", "propagation", "builder_discretion", "ambiguity_unknowns", "partial_failure", "recovery_rollback", "missing_callers_consumers", "test_falsifiability"],
+      "evidence": [
+        {"exact_quote": "canonical_text: The interview plan Testing phase already uses qa-expert and test-automator; newtools adds tool discovery and selection as part of that phase, with config wiring following orchestrator config wiring.", "line_end": 3737, "line_start": 3737, "path": "Plans/newtools.md", "source_sha256": "d484d6afecf59d42b70295ecb421962ddb740f85f1682fdc920384be9d4d67a6"},
+        {"exact_quote": "canonical_text: Orchestrator test strategy loading and node-criteria merging must include new tool instructions and debug-log paths in the merged context.", "line_end": 3781, "line_start": 3781, "path": "Plans/newtools.md", "source_sha256": "d484d6afecf59d42b70295ecb421962ddb740f85f1682fdc920384be9d4d67a6"},
+        {"exact_quote": "canonical_text: Implementation must add a dedicated GUI framework detection step from Architecture/UX output, project files, or catalog detection hints, or extend TechnologyExtractor with GUI-framework patterns and derive detected_gui_frameworks; the chosen approach must be documented in implementation evidence.", "line_end": 3825, "line_start": 3825, "path": "Plans/newtools.md", "source_sha256": "d484d6afecf59d42b70295ecb421962ddb740f85f1682fdc920384be9d4d67a6"},
+        {"exact_quote": "canonical_text: Tasks for obtaining selected tools and building custom headless tooling must be injected through the PRD generator, requirements document fallback, or separate .puppet-master/interview/gui-testing-plan.md only if PRD cannot be amended; the implementation must document the chosen path and must not leave tasks unwired.", "line_end": 3870, "line_start": 3870, "path": "Plans/newtools.md", "source_sha256": "d484d6afecf59d42b70295ecb421962ddb740f85f1682fdc920384be9d4d67a6"}
+      ],
+      "gap_kind": "alternative_paths_lack_selection_and_equivalence_rules",
+      "impact": "Different builders may choose incompatible detection and task-output paths, and the fallback artifact may not reach the same consumers or preserve the same acceptance criteria as an amended PRD.",
+      "item_id": "M15-W11-I1",
+      "item_type": "gap",
+      "severity": "high",
+      "source_unit_refs": ["PLANUNIT:N2-054", "SEMANTIC:PLANUNIT:N2-054", "PLANUNIT:N2-055", "SEMANTIC:PLANUNIT:N2-055", "PLANUNIT:N2-056", "SEMANTIC:PLANUNIT:N2-056", "PLANUNIT:N2-057", "SEMANTIC:PLANUNIT:N2-057"],
+      "statement": "Two detection implementations and three task-injection destinations are allowed, but selection criteria, precedence, behavioral equivalence, consumer discovery, duplicate prevention, and fallback recovery are not defined.",
+      "title": "Alternative integration paths are not normatively adjudicated"
+    },
+    {
+      "builder_discretion": true,
+      "confidence": 0.95,
+      "dimensions": ["inputs_outputs", "contracts", "states_transitions", "concurrency_races", "partial_failure", "recovery_rollback", "untrusted_inputs", "compatibility_migration"],
+      "evidence": [
+        {"exact_quote": "canonical_text: 'InterviewState gains detected_gui_frameworks: Vec<String>, while InterviewGuiConfig and InterviewOrchestratorConfig gain selected_framework_tools: Vec<FrameworkToolChoice> and plan_custom_headless_tool: bool; app.rs and interview completion wire those values into test strategy and PRD/execution-plan generation.'", "line_end": 3915, "line_start": 3915, "path": "Plans/newtools.md", "source_sha256": "d484d6afecf59d42b70295ecb421962ddb740f85f1682fdc920384be9d4d67a6"},
+        {"exact_quote": "canonical_text: NodeTree::load_test_strategy and Plans/test_strategy.schema.json extend additively for headless_gui, framework_tool, and optional tool metadata while preserving backward compatibility for existing files and requiring no migration of old files.", "line_end": 3963, "line_start": 3963, "path": "Plans/newtools.md", "source_sha256": "d484d6afecf59d42b70295ecb421962ddb740f85f1682fdc920384be9d4d67a6"},
+        {"exact_quote": "canonical_text: The test strategy generator emits a deterministic convention-based command when the project follows documented naming, or an EXAMPLE-only command with criterion-based instructions when the executable command is project-specific.", "line_end": 4011, "line_start": 4011, "path": "Plans/newtools.md", "source_sha256": "d484d6afecf59d42b70295ecb421962ddb740f85f1682fdc920384be9d4d67a6"},
+        {"exact_quote": "canonical_text: The base catalog is code-shipped defaults; the overlay is stored in non-secret app settings, is editable/importable/exportable, overrides base entries by stable IDs, carries source and last_updated, and all updates pass structured validation.", "line_end": 4056, "line_start": 4056, "path": "Plans/newtools.md", "source_sha256": "d484d6afecf59d42b70295ecb421962ddb740f85f1682fdc920384be9d4d67a6"}
+      ],
+      "gap_kind": "data_shapes_and_update_semantics_underdefined",
+      "impact": "Additive compatibility can still fail on unknown metadata or malformed choices, concurrent overlay edits can lose data, and an EXAMPLE-only command can be mistaken for executable truth without a machine-readable non-executable state.",
+      "item_id": "M15-W11-I2",
+      "item_type": "gap",
+      "severity": "high",
+      "source_unit_refs": ["PLANUNIT:N2-058", "SEMANTIC:PLANUNIT:N2-058", "PLANUNIT:N2-059", "SEMANTIC:PLANUNIT:N2-059", "PLANUNIT:N2-060", "SEMANTIC:PLANUNIT:N2-060", "PLANUNIT:N2-061", "SEMANTIC:PLANUNIT:N2-061"],
+      "statement": "Field names and broad compatibility behavior are specified, but FrameworkToolChoice/tool-metadata schemas, unknown-field behavior, overlay revision/concurrency rules, atomic update semantics, and machine-readable EXAMPLE-only command status are absent.",
+      "title": "Persisted choices, commands, and overlay updates lack complete contracts"
+    },
+    {
+      "builder_discretion": false,
+      "confidence": 0.98,
+      "dimensions": ["authority", "ownership", "operations", "failures_recovery", "propagation", "destructive_actions", "authority_boundaries", "observability_support"],
+      "evidence": [
+        {"exact_quote": "canonical_text: The catalog must live in src/interview/gui_tool_catalog.rs; automation stays focused on running tests, and any later framework branching depends on interview or shared config rather than duplicating catalog data.", "line_end": 4101, "line_start": 4101, "path": "Plans/newtools.md", "source_sha256": "d484d6afecf59d42b70295ecb421962ddb740f85f1682fdc920384be9d4d67a6"},
+        {"exact_quote": "canonical_text: .puppet-master/evidence/gui-automation/ must be documented in STATE_FILES.md and added to the cleanup allowlist so generated evidence is never removed by prepare/cleanup.", "line_end": 4147, "line_start": 4147, "path": "Plans/newtools.md", "source_sha256": "d484d6afecf59d42b70295ecb421962ddb740f85f1682fdc920384be9d4d67a6"},
+        {"exact_quote": "canonical_text: Doctor conditionally verifies that the custom headless tool exists and runs when plan_custom_headless_tool was true, using the Section 12.6 detection contract as input.", "line_end": 4191, "line_start": 4191, "path": "Plans/newtools.md", "source_sha256": "d484d6afecf59d42b70295ecb421962ddb740f85f1682fdc920384be9d4d67a6"},
+        {"exact_quote": "canonical_text: GUI config, YAML config, and InterviewOrchestratorConfig use the same field names detected_gui_frameworks, selected_framework_tools, and plan_custom_headless_tool, serialized through the Option B run-config shape.", "line_end": 4235, "line_start": 4235, "path": "Plans/newtools.md", "source_sha256": "d484d6afecf59d42b70295ecb421962ddb740f85f1682fdc920384be9d4d67a6"}
+      ],
+      "gap_kind": "none",
+      "impact": "Clarifies catalog ownership, protects evidence from cleanup, conditions Doctor behavior on the persisted choice, and prevents field-name drift across configuration surfaces.",
+      "item_id": "M15-W12-I1",
+      "item_type": "contract",
+      "severity": "info",
+      "source_unit_refs": ["PLANUNIT:N2-062", "SEMANTIC:PLANUNIT:N2-062", "PLANUNIT:N2-063", "SEMANTIC:PLANUNIT:N2-063", "PLANUNIT:N2-064", "SEMANTIC:PLANUNIT:N2-064", "PLANUNIT:N2-065", "SEMANTIC:PLANUNIT:N2-065"],
+      "statement": "The plan establishes a clear catalog/automation owner split, an evidence cleanup protection, a conditional Doctor consumer, and identical configuration field names through Option B.",
+      "title": "Ownership, cleanup, Doctor, and config boundaries align"
+    },
+    {
+      "builder_discretion": true,
+      "confidence": 0.96,
+      "dimensions": ["security_privacy", "concurrency_races", "partial_failure", "authority_boundaries", "privacy_data_lifecycle", "untrusted_inputs", "offline_network_loss", "test_falsifiability"],
+      "evidence": [
+        {"exact_quote": "canonical_text: Interview completion writes .puppet-master/config.json with tools.custom_headless only when plan_custom_headless_tool == true; Doctor reads that key, validates string/object shape and executable path, registers CustomHeadlessTool only when valid, warns and skips invalid values, skips cleanly when absent, and emits doctor.custom_headless.checked.", "line_end": 4280, "line_start": 4280, "path": "Plans/newtools.md", "source_sha256": "d484d6afecf59d42b70295ecb421962ddb740f85f1682fdc920384be9d4d67a6"},
+        {"exact_quote": "canonical_text: .puppet-master/interview/test-strategy.json has top-level project, generatedAt, coverageLevel, and items[]; Plans/test_strategy.schema.json remains canonical schema pm.test_strategy.schema.v1; interview writes it, orchestrator reads it, and newtools extends it additively.", "line_end": 4326, "line_start": 4326, "path": "Plans/newtools.md", "source_sha256": "d484d6afecf59d42b70295ecb421962ddb740f85f1682fdc920384be9d4d67a6"},
+        {"exact_quote": "canonical_text: CliBridge provider MCP adapter config is derived from the central registry and generated before CLI start in the actual spawn cwd, preferably at spawn time so worktree runs see correct project-local files; DirectApi providers do not use provider-side MCP config files.", "line_end": 4373, "line_start": 4373, "path": "Plans/newtools.md", "source_sha256": "d484d6afecf59d42b70295ecb421962ddb740f85f1682fdc920384be9d4d67a6"},
+        {"exact_quote": "canonical_text: Secrets must not be written to seglog, redb, Tantivy, YAML config, .puppet-master/config.json, logs, evidence bundles, or state files. Allowed persistence is OS credential store only, with environment variables first and credential-store SecretId second, and UI shows only key stored/missing.", "line_end": 4419, "line_start": 4419, "path": "Plans/newtools.md", "source_sha256": "d484d6afecf59d42b70295ecb421962ddb740f85f1682fdc920384be9d4d67a6"}
+      ],
+      "gap_kind": "executable_and_spawn_path_trust_boundary_missing",
+      "impact": "A malicious or replaced executable, symlinked worktree path, or spawn-time cwd/config race could execute unintended code or inject MCP configuration; environment-first secrets can also leak to child processes unless inheritance and redaction are constrained.",
+      "item_id": "M15-W12-I2",
+      "item_type": "gap",
+      "severity": "critical",
+      "source_unit_refs": ["PLANUNIT:N2-066", "SEMANTIC:PLANUNIT:N2-066", "PLANUNIT:N2-067", "SEMANTIC:PLANUNIT:N2-067", "PLANUNIT:N2-068", "SEMANTIC:PLANUNIT:N2-068", "PLANUNIT:N2-069", "SEMANTIC:PLANUNIT:N2-069"],
+      "statement": "Shape/path validation and secret persistence prohibitions are strong, but executable provenance and permissions, symlink/path traversal, TOCTOU between Doctor and execution, atomic adapter generation in the spawn cwd, child environment inheritance, and secret redaction or rotation are unspecified.",
+      "title": "Executable, worktree, and child-process trust boundaries remain open"
+    },
+    {
+      "builder_discretion": true,
+      "confidence": 0.93,
+      "dimensions": ["behavior", "contracts", "operations", "compatibility_migration", "concurrency_races", "offline_network_loss", "scale_limits", "observability_support"],
+      "evidence": [
+        {"exact_quote": "canonical_text: Catalog detection rules must reliably set detected_gui_frameworks; for Iced, preferred detection checks Cargo.toml for iced or scans for src/automation/headless_runner or src/automation/action_catalog.rs, and must not miss Puppet Master automation pattern.", "line_end": 4468, "line_start": 4468, "path": "Plans/newtools.md", "source_sha256": "d484d6afecf59d42b70295ecb421962ddb740f85f1682fdc920384be9d4d67a6"},
+        {"exact_quote": "canonical_text: write_test_strategy, TestStrategyConfig, InterviewOrchestratorConfig, and app.rs must pass selected_framework_tools and plan_custom_headless_tool through interview completion so markdown and JSON include framework tools and custom headless sections/items.", "line_end": 4514, "line_start": 4514, "path": "Plans/newtools.md", "source_sha256": "d484d6afecf59d42b70295ecb421962ddb740f85f1682fdc920384be9d4d67a6"},
+        {"exact_quote": "canonical_text: The generator and agents share documented command conventions in AGENTS.md or STATE_FILES.md, emitting stable commands when conventions are followed and EXAMPLE markers plus criterion-based instructions otherwise.", "line_end": 4561, "line_start": 4561, "path": "Plans/newtools.md", "source_sha256": "d484d6afecf59d42b70295ecb421962ddb740f85f1682fdc920384be9d4d67a6"},
+        {"exact_quote": "canonical_text: Doctor or a small platform config report records CLI version per platform, such as agent --version or codex --version, so support can correlate behavior with platform churn.", "line_end": 4605, "line_start": 4605, "path": "Plans/newtools.md", "source_sha256": "d484d6afecf59d42b70295ecb421962ddb740f85f1682fdc920384be9d4d67a6"}
+      ],
+      "gap_kind": "detection_and_version_probe_oracles_incomplete",
+      "impact": "String-only detection can false-positive on comments or stale files, version probes can hang or emit unparseable output, and support cannot distinguish missing, timed-out, incompatible, or concurrently upgraded CLIs.",
+      "item_id": "M15-W13-I1",
+      "item_type": "gap",
+      "severity": "medium",
+      "source_unit_refs": ["PLANUNIT:N2-070", "SEMANTIC:PLANUNIT:N2-070", "PLANUNIT:N2-071", "SEMANTIC:PLANUNIT:N2-071", "PLANUNIT:N2-072", "SEMANTIC:PLANUNIT:N2-072", "PLANUNIT:N2-073", "SEMANTIC:PLANUNIT:N2-073"],
+      "statement": "Iced detection, strategy propagation, command conventions, and version reporting are named, but positive/negative fixtures, conflict rules, probe timeout/exit parsing, incompatible-version states, and upgrade-race handling are not specified.",
+      "title": "Detection and platform-version checks lack adversarial oracles"
+    },
+    {
+      "builder_discretion": true,
+      "confidence": 0.94,
+      "dimensions": ["compatibility_migration", "failures_recovery", "operations", "concurrency_races", "partial_failure", "recovery_rollback", "offline_network_loss", "observability_support"],
+      "evidence": [
+        {"exact_quote": "canonical_text: Existing pre-newtools test-strategy.md and test-strategy.json continue to work; loader and prompt builder tolerate missing headless_gui and framework_tool items and optional tool metadata, with verification by tests or manual pre-newtools fixture.", "line_end": 4649, "line_start": 4649, "path": "Plans/newtools.md", "source_sha256": "d484d6afecf59d42b70295ecb421962ddb740f85f1682fdc920384be9d4d67a6"},
+        {"exact_quote": "canonical_text: Doctor verifies configured MCP servers such as Context7 are reachable or can list tools per selected platform, complementing the headless-tool check.", "line_end": 4695, "line_start": 4695, "path": "Plans/newtools.md", "source_sha256": "d484d6afecf59d42b70295ecb421962ddb740f85f1682fdc920384be9d4d67a6"},
+        {"exact_quote": "canonical_text: The catalog exposes a base CATALOG_VERSION and overlay last_updated metadata so agents and docs can reference catalog freshness while debugging tool availability.", "line_end": 4739, "line_start": 4739, "path": "Plans/newtools.md", "source_sha256": "d484d6afecf59d42b70295ecb421962ddb740f85f1682fdc920384be9d4d67a6"},
+        {"exact_quote": "canonical_text: Tool-discovery crews follow PM child-run behavior, communicate through an attributable crew board when enabled, persist findings through canonical event/storage structures rather than .puppet-master/memory/*, and disclose degradation to independent child runs or a single child when crew coordination is unavailable.", "line_end": 4783, "line_start": 4783, "path": "Plans/newtools.md", "source_sha256": "d484d6afecf59d42b70295ecb421962ddb740f85f1682fdc920384be9d4d67a6"}
+      ],
+      "gap_kind": "health_and_crew_failure_semantics_incomplete",
+      "impact": "Transient MCP outages can be reported as durable failure, stale overlays can appear fresh, and concurrent or degraded discovery crews can duplicate or overwrite findings without a replay, deduplication, or reconciliation contract.",
+      "item_id": "M15-W13-I2",
+      "item_type": "gap",
+      "severity": "high",
+      "source_unit_refs": ["PLANUNIT:N2-074", "SEMANTIC:PLANUNIT:N2-074", "PLANUNIT:N2-075", "SEMANTIC:PLANUNIT:N2-075", "PLANUNIT:N2-076", "SEMANTIC:PLANUNIT:N2-076", "PLANUNIT:N2-077", "SEMANTIC:PLANUNIT:N2-077"],
+      "statement": "Backward compatibility, reachability, freshness metadata, attribution, canonical persistence, and degradation are stated, but MCP timeout/retry classification, freshness threshold/clock semantics, crew event ordering, idempotency, duplicate resolution, crash replay, and degraded-run reconciliation are absent.",
+      "title": "MCP health and discovery-crew recovery are underspecified"
+    }
+  ],
+  "model": "gpt-5.6-sol",
+  "phase": "blind_macro_window_review",
+  "reasoning_effort": "xhigh",
+  "schema_version": "macro-review-result-v1",
+  "segments": [
+    {
+      "core_range": [1872, 2234],
+      "covered_source_unit_refs": ["PLANUNIT:N2-014", "PLANUNIT:N2-015", "PLANUNIT:N2-016", "PLANUNIT:N2-017", "PLANUNIT:N2-018", "PLANUNIT:N2-019", "PLANUNIT:N2-020", "PLANUNIT:N2-021", "SEMANTIC:PLANUNIT:N2-014", "SEMANTIC:PLANUNIT:N2-015", "SEMANTIC:PLANUNIT:N2-016", "SEMANTIC:PLANUNIT:N2-017", "SEMANTIC:PLANUNIT:N2-018", "SEMANTIC:PLANUNIT:N2-019", "SEMANTIC:PLANUNIT:N2-020", "SEMANTIC:PLANUNIT:N2-021"],
+      "item_ids": ["M15-W06-I1", "M15-W06-I2"],
+      "reviewed": true,
+      "summary": "Reviewed additive interview/orchestrator integration, tool choices, persistence, completion outputs, and the missing atomicity and recovery contract.",
+      "window_id": "WIN-9C773F6116D6-0006"
+    },
+    {
+      "core_range": [2235, 2606],
+      "covered_source_unit_refs": ["PLANUNIT:N2-022", "PLANUNIT:N2-023", "PLANUNIT:N2-024", "PLANUNIT:N2-025", "PLANUNIT:N2-026", "PLANUNIT:N2-027", "PLANUNIT:N2-028", "PLANUNIT:N2-029", "SEMANTIC:PLANUNIT:N2-022", "SEMANTIC:PLANUNIT:N2-023", "SEMANTIC:PLANUNIT:N2-024", "SEMANTIC:PLANUNIT:N2-025", "SEMANTIC:PLANUNIT:N2-026", "SEMANTIC:PLANUNIT:N2-027", "SEMANTIC:PLANUNIT:N2-028", "SEMANTIC:PLANUNIT:N2-029"],
+      "item_ids": ["M15-W07-I1", "M15-W07-I2"],
+      "reviewed": true,
+      "summary": "Reviewed catalog location, overlay precedence and extensibility, research constraints, MCP ownership/setup, and missing hostile-input, concurrency, and degradation semantics.",
+      "window_id": "WIN-9C773F6116D6-0007"
+    },
+    {
+      "core_range": [2607, 2985],
+      "covered_source_unit_refs": ["PLANUNIT:N2-030", "PLANUNIT:N2-031", "PLANUNIT:N2-032", "PLANUNIT:N2-033", "PLANUNIT:N2-034", "PLANUNIT:N2-035", "PLANUNIT:N2-036", "PLANUNIT:N2-037", "SEMANTIC:PLANUNIT:N2-030", "SEMANTIC:PLANUNIT:N2-031", "SEMANTIC:PLANUNIT:N2-032", "SEMANTIC:PLANUNIT:N2-033", "SEMANTIC:PLANUNIT:N2-034", "SEMANTIC:PLANUNIT:N2-035", "SEMANTIC:PLANUNIT:N2-036", "SEMANTIC:PLANUNIT:N2-037"],
+      "item_ids": ["M15-W08-I1", "M15-W08-I2"],
+      "reviewed": true,
+      "summary": "Reviewed GUI detection, selection and persistence states plus MCP/provider SSOT boundaries, exact status vocabulary, and compatibility-only aliases.",
+      "window_id": "WIN-9C773F6116D6-0008"
+    },
+    {
+      "core_range": [2986, 3354],
+      "covered_source_unit_refs": ["PLANUNIT:N2-038", "PLANUNIT:N2-039", "PLANUNIT:N2-040", "PLANUNIT:N2-041", "PLANUNIT:N2-042", "PLANUNIT:N2-043", "PLANUNIT:N2-044", "PLANUNIT:N2-045", "SEMANTIC:PLANUNIT:N2-038", "SEMANTIC:PLANUNIT:N2-039", "SEMANTIC:PLANUNIT:N2-040", "SEMANTIC:PLANUNIT:N2-041", "SEMANTIC:PLANUNIT:N2-042", "SEMANTIC:PLANUNIT:N2-043", "SEMANTIC:PLANUNIT:N2-044", "SEMANTIC:PLANUNIT:N2-045"],
+      "item_ids": ["M15-W09-I1", "M15-W09-I2"],
+      "reviewed": true,
+      "summary": "Reviewed web research behavior, headless action/evidence outputs, plan/test-strategy propagation, DRY generation, and missing evidence-lifecycle and portable-oracle contracts.",
+      "window_id": "WIN-9C773F6116D6-0009"
+    },
+    {
+      "core_range": [3355, 3729],
+      "covered_source_unit_refs": ["PLANUNIT:N2-046", "PLANUNIT:N2-047", "PLANUNIT:N2-048", "PLANUNIT:N2-049", "PLANUNIT:N2-050", "PLANUNIT:N2-051", "PLANUNIT:N2-052", "PLANUNIT:N2-053", "SEMANTIC:PLANUNIT:N2-046", "SEMANTIC:PLANUNIT:N2-047", "SEMANTIC:PLANUNIT:N2-048", "SEMANTIC:PLANUNIT:N2-049", "SEMANTIC:PLANUNIT:N2-050", "SEMANTIC:PLANUNIT:N2-051", "SEMANTIC:PLANUNIT:N2-052", "SEMANTIC:PLANUNIT:N2-053"],
+      "item_ids": ["M15-W10-I1", "M15-W10-I2"],
+      "reviewed": true,
+      "summary": "Reviewed PRD/prompt/checklist propagation, catalog and widget reuse, full-featured scope, DRY gates, and the absence of executable acceptance or bounded capability oracles.",
+      "window_id": "WIN-9C773F6116D6-0010"
+    },
+    {
+      "core_range": [3730, 4093],
+      "covered_source_unit_refs": ["PLANUNIT:N2-054", "PLANUNIT:N2-055", "PLANUNIT:N2-056", "PLANUNIT:N2-057", "PLANUNIT:N2-058", "PLANUNIT:N2-059", "PLANUNIT:N2-060", "PLANUNIT:N2-061", "SEMANTIC:PLANUNIT:N2-054", "SEMANTIC:PLANUNIT:N2-055", "SEMANTIC:PLANUNIT:N2-056", "SEMANTIC:PLANUNIT:N2-057", "SEMANTIC:PLANUNIT:N2-058", "SEMANTIC:PLANUNIT:N2-059", "SEMANTIC:PLANUNIT:N2-060", "SEMANTIC:PLANUNIT:N2-061"],
+      "item_ids": ["M15-W11-I1", "M15-W11-I2"],
+      "reviewed": true,
+      "summary": "Reviewed testing-phase integration, detection and PRD alternatives, persisted field/schema wiring, command conventions, overlay validation, and unresolved selection/equivalence/update semantics.",
+      "window_id": "WIN-9C773F6116D6-0011"
+    },
+    {
+      "core_range": [4094, 4460],
+      "covered_source_unit_refs": ["PLANUNIT:N2-062", "PLANUNIT:N2-063", "PLANUNIT:N2-064", "PLANUNIT:N2-065", "PLANUNIT:N2-066", "PLANUNIT:N2-067", "PLANUNIT:N2-068", "PLANUNIT:N2-069", "SEMANTIC:PLANUNIT:N2-062", "SEMANTIC:PLANUNIT:N2-063", "SEMANTIC:PLANUNIT:N2-064", "SEMANTIC:PLANUNIT:N2-065", "SEMANTIC:PLANUNIT:N2-066", "SEMANTIC:PLANUNIT:N2-067", "SEMANTIC:PLANUNIT:N2-068", "SEMANTIC:PLANUNIT:N2-069"],
+      "item_ids": ["M15-W12-I1", "M15-W12-I2"],
+      "reviewed": true,
+      "summary": "Reviewed ownership, cleanup safety, Doctor/config/schema contracts, spawn-cwd MCP adapters, secret storage, and open executable/worktree/child-process trust boundaries.",
+      "window_id": "WIN-9C773F6116D6-0012"
+    },
+    {
+      "core_range": [4461, 4822],
+      "covered_source_unit_refs": ["PLANUNIT:N2-070", "PLANUNIT:N2-071", "PLANUNIT:N2-072", "PLANUNIT:N2-073", "PLANUNIT:N2-074", "PLANUNIT:N2-075", "PLANUNIT:N2-076", "PLANUNIT:N2-077", "SEMANTIC:PLANUNIT:N2-070", "SEMANTIC:PLANUNIT:N2-071", "SEMANTIC:PLANUNIT:N2-072", "SEMANTIC:PLANUNIT:N2-073", "SEMANTIC:PLANUNIT:N2-074", "SEMANTIC:PLANUNIT:N2-075", "SEMANTIC:PLANUNIT:N2-076", "SEMANTIC:PLANUNIT:N2-077"],
+      "item_ids": ["M15-W13-I1", "M15-W13-I2"],
+      "reviewed": true,
+      "summary": "Reviewed Iced detection, strategy and command wiring, CLI versions, backward compatibility, MCP health, catalog freshness, crew communication, and missing health/concurrency/recovery oracles.",
+      "window_id": "WIN-9C773F6116D6-0013"
+    }
+  ],
+  "self_attestation": {
+    "no_canonical_writes": true,
+    "no_external_research_during_blind_review": true,
+    "no_peer_result_access": true,
+    "no_prior_audit_access": true,
+    "no_unrelated_source_access": true,
+    "terminal_after_submission": true
+  },
+  "source_binding": {
+    "bundle_id": "MACRO15-9C773F6116D6-0001",
+    "document_path": "Plans/newtools.md",
+    "micro_window_ids": ["WIN-9C773F6116D6-0006", "WIN-9C773F6116D6-0007", "WIN-9C773F6116D6-0008", "WIN-9C773F6116D6-0009", "WIN-9C773F6116D6-0010", "WIN-9C773F6116D6-0011", "WIN-9C773F6116D6-0012", "WIN-9C773F6116D6-0013"],
+    "source_sha256": "d484d6afecf59d42b70295ecb421962ddb740f85f1682fdc920384be9d4d67a6"
+  },
+  "status": "completed",
+  "synthesis": {
+    "cross_document_questions": [
+      "Do Plans/MCP_Integration.md and Plans/Tools.md define timeout, retry, partial-provider, user-denied enablement, and stale-health UI states consumed here?",
+      "Does the canonical evidence contract define redaction, retention, quota, crash finalization, and partial-run status for GUI automation artifacts?",
+      "Do the interview and orchestrator owner documents define an atomic, idempotent completion transaction across config, test strategy, PRD tasks, and prompt context?",
+      "Does the runtime or worktree canon constrain executable provenance, symlink handling, spawn-cwd adapter races, and child-process secret inheritance?"
+    ],
+    "feature_family_keys": ["gui-tool-catalog", "interview-tool-selection", "custom-headless-gui-automation", "test-strategy-propagation", "mcp-provider-enablement", "doctor-tool-verification", "tool-discovery-crews"],
+    "research_queries": [
+      "Threat models and safe validation patterns for project-local executable paths and symlink-resistant process spawning",
+      "Atomic versioned overlay import and conflict-resolution patterns for embedded application settings",
+      "Crash-consistent evidence manifests and privacy lifecycle controls for GUI screenshots and state dumps",
+      "Deterministic framework-neutral acceptance suites for headless GUI action catalogs"
+    ]
+  },
+  "task_thread_id": "/root/a005m15_b9_000167_attempt_0015_terminal"
+}

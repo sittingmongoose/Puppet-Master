@@ -1,0 +1,1923 @@
+{
+  "assignment_id": "A005M15-000090-INTEGRATED-MACRO15-278DC60D0D8B-0001",
+  "attempt_id": "attempt-0015",
+  "audit_id": "audit-20260710-005-plan-assurance-model-lanes-fresh-agent-exhaustive",
+  "coverage": {
+    "all_micro_windows_reviewed": true,
+    "all_source_lines_reviewed": true,
+    "all_source_units_accounted": true,
+    "both_exact_and_adversarial_lenses_applied": true,
+    "dimensions_checked": [
+      "behavior",
+      "capabilities",
+      "inputs_outputs",
+      "contracts",
+      "states_transitions",
+      "authority",
+      "ownership",
+      "consumers",
+      "gui_truth",
+      "failures_recovery",
+      "security_privacy",
+      "propagation",
+      "operations",
+      "scale_performance",
+      "compatibility_migration",
+      "acceptance_oracles",
+      "builder_discretion",
+      "ambiguity_unknowns",
+      "missing_callers_consumers",
+      "invalid_states_transitions",
+      "concurrency_races",
+      "partial_failure",
+      "recovery_rollback",
+      "authority_boundaries",
+      "privacy_data_lifecycle",
+      "untrusted_inputs",
+      "gui_misleading_states",
+      "offline_network_loss",
+      "scale_limits",
+      "accessibility",
+      "localization",
+      "observability_support",
+      "destructive_actions",
+      "cross_document_seams",
+      "test_falsifiability",
+      "unknown_unknowns"
+    ]
+  },
+  "items": [
+    {
+      "builder_discretion": false,
+      "confidence": 0.99,
+      "dimensions": [
+        "behavior",
+        "contracts",
+        "states_transitions",
+        "authority",
+        "security_privacy",
+        "acceptance_oracles"
+      ],
+      "evidence": [
+        {
+          "exact_quote": "Plugins are discovered from three sources in strict order:",
+          "line_end": 60,
+          "line_start": 60,
+          "path": "Plans/Plugins_System.md",
+          "source_sha256": "0f9df5bcaca21ff016c4ac11d0f72ec384aa253bc22ef6e87def358355af6cc7"
+        },
+        {
+          "exact_quote": "PM MUST NOT auto-load executable plugin code from config without explicit user approval. This is the plugin no-auto-load executable-code rule.",
+          "line_end": 109,
+          "line_start": 109,
+          "path": "Plans/Plugins_System.md",
+          "source_sha256": "0f9df5bcaca21ff016c4ac11d0f72ec384aa253bc22ef6e87def358355af6cc7"
+        },
+        {
+          "exact_quote": "Rule: Given the same set of plugins on disk and in config, the load order MUST be identical across runs.",
+          "line_end": 124,
+          "line_start": 124,
+          "path": "Plans/Plugins_System.md",
+          "source_sha256": "0f9df5bcaca21ff016c4ac11d0f72ec384aa253bc22ef6e87def358355af6cc7"
+        }
+      ],
+      "gap_kind": "none",
+      "impact": "Establishes deterministic discovery and an explicit executable-code trust gate before plugin activation.",
+      "item_id": "W1-01",
+      "item_type": "contract",
+      "severity": "info",
+      "source_unit_refs": [
+        "SEMANTIC:PROLOGUE:Plans/Plugins_System.md:CONT-001"
+      ],
+      "statement": "Discovery priority, first-load approval, and deterministic ordering are explicit and mutually compatible; later duplicates are skipped rather than silently replacing higher-priority code.",
+      "title": "Deterministic discovery and approval baseline"
+    },
+    {
+      "builder_discretion": true,
+      "confidence": 0.96,
+      "dimensions": [
+        "behavior",
+        "authority",
+        "failures_recovery",
+        "security_privacy",
+        "builder_discretion",
+        "authority_boundaries",
+        "untrusted_inputs",
+        "test_falsifiability"
+      ],
+      "evidence": [
+        {
+          "exact_quote": "| **Returns** | `Continue` (present ask UI), `Allow` (auto-approve), or `Deny(reason)`. |",
+          "line_end": 237,
+          "line_start": 237,
+          "path": "Plans/Plugins_System.md",
+          "source_sha256": "0f9df5bcaca21ff016c4ac11d0f72ec384aa253bc22ef6e87def358355af6cc7"
+        },
+        {
+          "exact_quote": "Plugins that declare arg-touching hooks require a higher-trust approval posture (signed or explicitly `/approved` elevated approval) than read-only hooks.",
+          "line_end": 195,
+          "line_start": 195,
+          "path": "Plans/Plugins_System.md",
+          "source_sha256": "0f9df5bcaca21ff016c4ac11d0f72ec384aa253bc22ef6e87def358355af6cc7"
+        }
+      ],
+      "gap_kind": "permission_override_trust_gap",
+      "impact": "A plugin approved for a non-arg-touching capability could become a permission-decision authority without a specified elevated trust class, scope ceiling, or negative test preventing privilege escalation.",
+      "item_id": "W1-02",
+      "item_type": "gap",
+      "severity": "critical",
+      "source_unit_refs": [
+        "SEMANTIC:PROLOGUE:Plans/Plugins_System.md:CONT-001"
+      ],
+      "statement": "The document allows `permission.ask` hooks to return `Allow`, but the higher-trust rule is defined only for arg-touching hooks; no equivalent approval class, per-tool ceiling, or non-bypass oracle is stated for auto-approval hooks.",
+      "title": "Permission auto-approval lacks an explicit authority ceiling"
+    },
+    {
+      "builder_discretion": true,
+      "confidence": 0.95,
+      "dimensions": [
+        "behavior",
+        "states_transitions",
+        "failures_recovery",
+        "security_privacy",
+        "operations",
+        "builder_discretion",
+        "partial_failure",
+        "recovery_rollback",
+        "authority_boundaries",
+        "observability_support",
+        "test_falsifiability"
+      ],
+      "evidence": [
+        {
+          "exact_quote": "Rule: If a hook raises an unhandled error (panic, timeout), it is treated as `Continue` and a warning is logged. Default hook timeout: 5 seconds (configurable via `config.plugins.hook_timeout_ms`, default `5000`).",
+          "line_end": 337,
+          "line_start": 337,
+          "path": "Plans/Plugins_System.md",
+          "source_sha256": "0f9df5bcaca21ff016c4ac11d0f72ec384aa253bc22ef6e87def358355af6cc7"
+        }
+      ],
+      "gap_kind": "universal_fail_open_gap",
+      "impact": "Fail-open behavior for enforcement or approval hooks can dispatch work that the failed hook would have denied, while a warning alone does not specify a safe degraded state or recovery path.",
+      "item_id": "W1-03",
+      "item_type": "gap",
+      "severity": "critical",
+      "source_unit_refs": [
+        "SEMANTIC:PROLOGUE:Plans/Plugins_System.md:CONT-001"
+      ],
+      "statement": "The global panic/timeout rule treats every hook as `Continue` and does not distinguish observation hooks from security- or permission-enforcement hooks, define circuit breaking, or specify whether repeated failures disable the plugin.",
+      "title": "Security-sensitive hook failures are universally fail-open"
+    },
+    {
+      "builder_discretion": true,
+      "confidence": 0.97,
+      "dimensions": [
+        "behavior",
+        "inputs_outputs",
+        "contracts",
+        "authority",
+        "security_privacy",
+        "builder_discretion",
+        "authority_boundaries",
+        "privacy_data_lifecycle",
+        "untrusted_inputs",
+        "test_falsifiability"
+      ],
+      "evidence": [
+        {
+          "exact_quote": "| **Returns** | `Continue` or `Continue(modified_env)`. |",
+          "line_end": 307,
+          "line_start": 307,
+          "path": "Plans/Plugins_System.md",
+          "source_sha256": "0f9df5bcaca21ff016c4ac11d0f72ec384aa253bc22ef6e87def358355af6cc7"
+        },
+        {
+          "exact_quote": "| **Returns** | `Continue` or `Continue(modified_parts)`. |",
+          "line_end": 317,
+          "line_start": 317,
+          "path": "Plans/Plugins_System.md",
+          "source_sha256": "0f9df5bcaca21ff016c4ac11d0f72ec384aa253bc22ef6e87def358355af6cc7"
+        },
+        {
+          "exact_quote": "If a plugin hook modifies tool arguments, the modified arguments MUST be re-run through permission and validation checks before dispatch. Hooks may not widen permissions after the original check has passed.",
+          "line_end": 183,
+          "line_start": 183,
+          "path": "Plans/Plugins_System.md",
+          "source_sha256": "0f9df5bcaca21ff016c4ac11d0f72ec384aa253bc22ef6e87def358355af6cc7"
+        }
+      ],
+      "gap_kind": "mutation_revalidation_scope_gap",
+      "impact": "Environment and system-prompt mutation can inject credentials, alter executable resolution, or weaken instruction boundaries after upstream assembly without a specified revalidation and provenance step.",
+      "item_id": "W1-04",
+      "item_type": "gap",
+      "severity": "high",
+      "source_unit_refs": [
+        "SEMANTIC:PROLOGUE:Plans/Plugins_System.md:CONT-001"
+      ],
+      "statement": "The re-check invariant explicitly covers modified tool arguments, but `shell.env` and `system.prompt.transform` may mutate other security-sensitive dispatch inputs without a corresponding validation, secret-lifecycle, trust, or lineage contract.",
+      "title": "Non-argument mutations lack revalidation and provenance"
+    },
+    {
+      "builder_discretion": true,
+      "confidence": 0.93,
+      "dimensions": [
+        "states_transitions",
+        "failures_recovery",
+        "operations",
+        "builder_discretion",
+        "invalid_states_transitions",
+        "concurrency_races",
+        "partial_failure",
+        "recovery_rollback",
+        "observability_support",
+        "test_falsifiability"
+      ],
+      "evidence": [
+        {
+          "exact_quote": "5. **Teardown:** On session end, a `session.end` event fires; plugins perform cleanup. Puppet Master then unloads plugins.",
+          "line_end": 134,
+          "line_start": 134,
+          "path": "Plans/Plugins_System.md",
+          "source_sha256": "0f9df5bcaca21ff016c4ac11d0f72ec384aa253bc22ef6e87def358355af6cc7"
+        },
+        {
+          "exact_quote": "4. **Active:** Hooks are invoked throughout the session.",
+          "line_end": 133,
+          "line_start": 133,
+          "path": "Plans/Plugins_System.md",
+          "source_sha256": "0f9df5bcaca21ff016c4ac11d0f72ec384aa253bc22ef6e87def358355af6cc7"
+        }
+      ],
+      "gap_kind": "lifecycle_failure_state_gap",
+      "impact": "A hung or crashing teardown, reload during an in-flight hook, or partially initialized plugin has no canonical state, ordering rule, timeout, rollback, or oracle, leaving resource ownership and hook visibility implementation-defined.",
+      "item_id": "W1-05",
+      "item_type": "gap",
+      "severity": "high",
+      "source_unit_refs": [
+        "SEMANTIC:PROLOGUE:Plans/Plugins_System.md:CONT-001"
+      ],
+      "statement": "The lifecycle names Discover, Validate, Initialize, Active, and Teardown but does not define intermediate failure states, atomic registration, concurrent dispatch versus unload/reload, or cleanup failure handling.",
+      "title": "Plugin lifecycle omits partial and concurrent failure semantics"
+    },
+    {
+      "builder_discretion": false,
+      "confidence": 0.98,
+      "dimensions": [
+        "behavior",
+        "contracts",
+        "authority",
+        "ownership",
+        "security_privacy",
+        "propagation",
+        "compatibility_migration",
+        "acceptance_oracles",
+        "authority_boundaries"
+      ],
+      "evidence": [
+        {
+          "exact_quote": "Rule: When a plugin registers a tool whose name collides with a built-in tool, the **built-in tool takes precedence** by default. The plugin tool is registered under a namespaced alias: `<plugin_id>.<tool_name>` (e.g., `my-plugin.read`).",
+          "line_end": 364,
+          "line_start": 364,
+          "path": "Plans/Plugins_System.md",
+          "source_sha256": "0f9df5bcaca21ff016c4ac11d0f72ec384aa253bc22ef6e87def358355af6cc7"
+        },
+        {
+          "exact_quote": "All plugin-registered tools are added to the central tool registry (`Plans/Tools.md`). They are subject to the same permission policy engine (`Plans/Permissions_System.md`). Unknown tools default to `ask` permission.",
+          "line_end": 372,
+          "line_start": 372,
+          "path": "Plans/Plugins_System.md",
+          "source_sha256": "0f9df5bcaca21ff016c4ac11d0f72ec384aa253bc22ef6e87def358355af6cc7"
+        }
+      ],
+      "gap_kind": "none",
+      "impact": "Prevents silent built-in replacement by default and retains central permission ownership for plugin tools.",
+      "item_id": "W1-06",
+      "item_type": "explicit_non_gap",
+      "severity": "info",
+      "source_unit_refs": [
+        "SEMANTIC:PROLOGUE:Plans/Plugins_System.md:CONT-001"
+      ],
+      "statement": "Custom tool collision behavior and central registry routing are explicit, with a default-safe built-in precedence rule and unknown-tool `ask` fallback.",
+      "title": "Custom tools retain central registry and permission ownership"
+    },
+    {
+      "builder_discretion": true,
+      "confidence": 0.99,
+      "dimensions": [
+        "behavior",
+        "contracts",
+        "states_transitions",
+        "failures_recovery",
+        "builder_discretion",
+        "ambiguity_unknowns",
+        "invalid_states_transitions",
+        "cross_document_seams",
+        "test_falsifiability"
+      ],
+      "evidence": [
+        {
+          "exact_quote": "Rule: Every hook event MUST be listed in this table. New events require an update to this document.",
+          "line_end": 175,
+          "line_start": 175,
+          "path": "Plans/Plugins_System.md",
+          "source_sha256": "0f9df5bcaca21ff016c4ac11d0f72ec384aa253bc22ef6e87def358355af6cc7"
+        },
+        {
+          "exact_quote": "Only execution-flow hooks may trigger `plugin_hook_blocked`:",
+          "line_end": 619,
+          "line_start": 619,
+          "path": "Plans/Plugins_System.md",
+          "source_sha256": "0f9df5bcaca21ff016c4ac11d0f72ec384aa253bc22ef6e87def358355af6cc7"
+        },
+        {
+          "exact_quote": "- `pre_tool_invoke`",
+          "line_end": 620,
+          "line_start": 620,
+          "path": "Plans/Plugins_System.md",
+          "source_sha256": "0f9df5bcaca21ff016c4ac11d0f72ec384aa253bc22ef6e87def358355af6cc7"
+        },
+        {
+          "exact_quote": "- `pre_attempt_start`",
+          "line_end": 621,
+          "line_start": 621,
+          "path": "Plans/Plugins_System.md",
+          "source_sha256": "0f9df5bcaca21ff016c4ac11d0f72ec384aa253bc22ef6e87def358355af6cc7"
+        },
+        {
+          "exact_quote": "- `pre_node_dispatch`",
+          "line_end": 622,
+          "line_start": 622,
+          "path": "Plans/Plugins_System.md",
+          "source_sha256": "0f9df5bcaca21ff016c4ac11d0f72ec384aa253bc22ef6e87def358355af6cc7"
+        }
+      ],
+      "gap_kind": "internal_hook_registry_conflict",
+      "impact": "Builders cannot determine whether the addendum names are aliases, scheduler-only events, or unregistered plugin hooks; block eligibility and conformance tests will diverge.",
+      "item_id": "W2-01",
+      "item_type": "gap",
+      "severity": "critical",
+      "source_unit_refs": [
+        "SEMANTIC:PROLOGUE:Plans/Plugins_System.md:CONT-002"
+      ],
+      "statement": "The canonical registry requires every event to be listed, but the blocked-hook addendum authorizes `pre_tool_invoke`, `pre_attempt_start`, and `pre_node_dispatch`, none of which appears in the registry table or has an input/return signature.",
+      "title": "Blocked-hook addendum uses unregistered hook names"
+    },
+    {
+      "builder_discretion": false,
+      "confidence": 0.99,
+      "dimensions": [
+        "contracts",
+        "ownership",
+        "propagation",
+        "compatibility_migration",
+        "acceptance_oracles",
+        "cross_document_seams"
+      ],
+      "evidence": [
+        {
+          "exact_quote": "canonical_text: \"Plugins_System is the single canonical source of truth for plugin discovery, loading, hook lifecycle, custom tool registration, and structured logging; other plan documents must anchor-link here rather than restating plugin definitions, hook signatures, or load-order rules.\"",
+          "line_end": 653,
+          "line_start": 653,
+          "path": "Plans/Plugins_System.md",
+          "source_sha256": "0f9df5bcaca21ff016c4ac11d0f72ec384aa253bc22ef6e87def358355af6cc7"
+        }
+      ],
+      "gap_kind": "none",
+      "impact": "Preserves a single owner for core plugin semantics and constrains downstream restatement drift.",
+      "item_id": "W2-02",
+      "item_type": "contract",
+      "severity": "info",
+      "source_unit_refs": [
+        "PLANUNIT:PLUG-002",
+        "SEMANTIC:PLANUNIT:PLUG-002"
+      ],
+      "statement": "PLUG-002 clearly assigns Plugins_System ownership and requires anchor-based reuse by consumers.",
+      "title": "Plugin system SSOT ownership is explicit"
+    },
+    {
+      "builder_discretion": false,
+      "confidence": 0.98,
+      "dimensions": [
+        "contracts",
+        "ownership",
+        "consumers",
+        "gui_truth",
+        "propagation",
+        "cross_document_seams"
+      ],
+      "evidence": [
+        {
+          "exact_quote": "canonical_text: \"The Plugins SSOT reference map preserves the governing references for locked decisions, contracts, DRY, glossary terms, deterministic ambiguity handling, tools, permissions, personas, OpenCode baseline plugins, formatters, models, and GUI specification.\"",
+          "line_end": 707,
+          "line_start": 707,
+          "path": "Plans/Plugins_System.md",
+          "source_sha256": "0f9df5bcaca21ff016c4ac11d0f72ec384aa253bc22ef6e87def358355af6cc7"
+        }
+      ],
+      "gap_kind": "none",
+      "impact": "Provides owner routing across policy, runtime, persona, model, and GUI consumers.",
+      "item_id": "W2-03",
+      "item_type": "contract",
+      "severity": "info",
+      "source_unit_refs": [
+        "PLANUNIT:PLUG-003",
+        "SEMANTIC:PLANUNIT:PLUG-003"
+      ],
+      "statement": "PLUG-003 preserves the cross-document owner map and correctly prevents the map from superseding owner sections.",
+      "title": "Plugin reference routing is preserved"
+    },
+    {
+      "builder_discretion": true,
+      "confidence": 0.94,
+      "dimensions": [
+        "states_transitions",
+        "gui_truth",
+        "failures_recovery",
+        "operations",
+        "builder_discretion",
+        "ambiguity_unknowns",
+        "partial_failure",
+        "recovery_rollback",
+        "gui_misleading_states",
+        "observability_support",
+        "test_falsifiability"
+      ],
+      "evidence": [
+        {
+          "exact_quote": "- active plugin updates may require reload, deferred apply, or explicit disable-before-remove behavior depending on the plugin state",
+          "line_end": 511,
+          "line_start": 511,
+          "path": "Plans/Plugins_System.md",
+          "source_sha256": "0f9df5bcaca21ff016c4ac11d0f72ec384aa253bc22ef6e87def358355af6cc7"
+        },
+        {
+          "exact_quote": "- install/update/remove actions must surface whether the target plugin is currently enabled, loaded, or referenced by Persona settings",
+          "line_end": 510,
+          "line_start": 510,
+          "path": "Plans/Plugins_System.md",
+          "source_sha256": "0f9df5bcaca21ff016c4ac11d0f72ec384aa253bc22ef6e87def358355af6cc7"
+        }
+      ],
+      "gap_kind": "catalog_lifecycle_state_gap",
+      "impact": "The GUI can present contradictory enabled/loaded states or lose configuration during update/removal because transition selection, failure outcomes, and rollback ownership are unspecified.",
+      "item_id": "W2-04",
+      "item_type": "gap",
+      "severity": "high",
+      "source_unit_refs": [
+        "SEMANTIC:PROLOGUE:Plans/Plugins_System.md:CONT-002"
+      ],
+      "statement": "Catalog lifecycle prose lists reload, deferred apply, and disable-before-remove as alternatives but does not define the state machine, decision conditions, atomicity, recovery behavior, or acceptance oracle for any path.",
+      "title": "Catalog plugin lifecycle alternatives are not operationalized"
+    },
+    {
+      "builder_discretion": true,
+      "confidence": 0.92,
+      "dimensions": [
+        "gui_truth",
+        "builder_discretion",
+        "ambiguity_unknowns",
+        "accessibility",
+        "localization",
+        "test_falsifiability"
+      ],
+      "evidence": [
+        {
+          "exact_quote": "A dedicated **Plugins** tab in Settings MUST provide:",
+          "line_end": 481,
+          "line_start": 481,
+          "path": "Plans/Plugins_System.md",
+          "source_sha256": "0f9df5bcaca21ff016c4ac11d0f72ec384aa253bc22ef6e87def358355af6cc7"
+        },
+        {
+          "exact_quote": "Plugin UI elements follow the app-level Interaction Mode (Expert/ELI5) toggle per `Plans/FinalGUISpec.md` §7.4.0. Tooltip keys: `tooltip.plugins.*` prefix.",
+          "line_end": 500,
+          "line_start": 500,
+          "path": "Plans/Plugins_System.md",
+          "source_sha256": "0f9df5bcaca21ff016c4ac11d0f72ec384aa253bc22ef6e87def358355af6cc7"
+        }
+      ],
+      "gap_kind": "gui_accessibility_localization_gap",
+      "impact": "Plugin management includes dense tables, disclosure rows, toggles, file selection, warnings, and destructive confirmation without local keyboard, focus, assistive-name, overflow, or translation acceptance criteria.",
+      "item_id": "W2-05",
+      "item_type": "gap",
+      "severity": "medium",
+      "source_unit_refs": [
+        "SEMANTIC:PROLOGUE:Plans/Plugins_System.md:CONT-002"
+      ],
+      "statement": "The GUI inventory and mode-copy requirements are detailed functionally, but this excerpt does not specify accessibility or localization behavior for plugin-specific controls and dynamic states.",
+      "title": "Plugin GUI lacks plugin-specific accessibility and localization oracles"
+    },
+    {
+      "builder_discretion": false,
+      "confidence": 0.98,
+      "dimensions": [
+        "contracts",
+        "ownership",
+        "consumers",
+        "gui_truth",
+        "propagation",
+        "cross_document_seams"
+      ],
+      "evidence": [
+        {
+          "exact_quote": "canonical_text: \"Plugin-owned Persona and model references route through Glossary, plans index, Personas, and Models owner docs rather than defining duplicate terminology.\"",
+          "line_end": 765,
+          "line_start": 765,
+          "path": "Plans/Plugins_System.md",
+          "source_sha256": "0f9df5bcaca21ff016c4ac11d0f72ec384aa253bc22ef6e87def358355af6cc7"
+        },
+        {
+          "exact_quote": "canonical_text: \"Plugin UI and runtime references use canonical Persona and model metadata owners when presenting plugin-facing Persona or model metadata.\"",
+          "line_end": 819,
+          "line_start": 819,
+          "path": "Plans/Plugins_System.md",
+          "source_sha256": "0f9df5bcaca21ff016c4ac11d0f72ec384aa253bc22ef6e87def358355af6cc7"
+        }
+      ],
+      "gap_kind": "none",
+      "impact": "Prevents plugin-private Persona/model vocabulary from misleading UI or runtime consumers.",
+      "item_id": "W3-01",
+      "item_type": "contract",
+      "severity": "info",
+      "source_unit_refs": [
+        "PLANUNIT:PLUG-004",
+        "SEMANTIC:PLANUNIT:PLUG-004",
+        "PLANUNIT:PLUG-005",
+        "SEMANTIC:PLANUNIT:PLUG-005"
+      ],
+      "statement": "PLUG-004 and PLUG-005 consistently route terminology and presented metadata to their canonical owners.",
+      "title": "Persona and model metadata ownership is bounded"
+    },
+    {
+      "builder_discretion": true,
+      "confidence": 0.94,
+      "dimensions": [
+        "behavior",
+        "contracts",
+        "authority",
+        "ownership",
+        "builder_discretion",
+        "ambiguity_unknowns",
+        "authority_boundaries",
+        "cross_document_seams",
+        "test_falsifiability"
+      ],
+      "evidence": [
+        {
+          "exact_quote": "canonical_text: \"Tooling enforcement boundaries are central policy rather than plugin-private behavior, and hook integration points for package, seam, corroboration, and concern remain subject to the plugin lifecycle and permission model.\"",
+          "line_end": 869,
+          "line_start": 869,
+          "path": "Plans/Plugins_System.md",
+          "source_sha256": "0f9df5bcaca21ff016c4ac11d0f72ec384aa253bc22ef6e87def358355af6cc7"
+        },
+        {
+          "exact_quote": "- \"PLUG-006 remains addressable as a fine-grained Plugins System PlanUnit with source-span coverage.\"",
+          "line_end": 877,
+          "line_start": 877,
+          "path": "Plans/Plugins_System.md",
+          "source_sha256": "0f9df5bcaca21ff016c4ac11d0f72ec384aa253bc22ef6e87def358355af6cc7"
+        }
+      ],
+      "gap_kind": "non_operational_policy_boundary",
+      "impact": "The large central-policy boundary can be implemented inconsistently because no concrete inputs, outputs, deny path, caller responsibilities, or behavior-specific conformance oracle is stated.",
+      "item_id": "W3-02",
+      "item_type": "gap",
+      "severity": "high",
+      "source_unit_refs": [
+        "PLANUNIT:PLUG-006",
+        "SEMANTIC:PLANUNIT:PLUG-006"
+      ],
+      "statement": "PLUG-006 asserts that many enforcement seams rejoin central policy, but its acceptance criteria validate addressability and preservation rather than observable enforcement behavior.",
+      "title": "Central policy boundary lacks an executable contract"
+    },
+    {
+      "builder_discretion": false,
+      "confidence": 0.98,
+      "dimensions": [
+        "behavior",
+        "capabilities",
+        "contracts",
+        "states_transitions",
+        "ownership",
+        "compatibility_migration",
+        "acceptance_oracles"
+      ],
+      "evidence": [
+        {
+          "exact_quote": "canonical_text: \"Plugins are self-contained extension modules loaded for a session, and Hooks are named callbacks for lifecycle events that receive typed context and return continue, modify, or block results in deterministic order.\"",
+          "line_end": 933,
+          "line_start": 933,
+          "path": "Plans/Plugins_System.md",
+          "source_sha256": "0f9df5bcaca21ff016c4ac11d0f72ec384aa253bc22ef6e87def358355af6cc7"
+        },
+        {
+          "exact_quote": "canonical_text: \"Plugin discovery walks internal plugins, project-local plugins, global plugins, and config package list entries in strict priority order.\"",
+          "line_end": 988,
+          "line_start": 988,
+          "path": "Plans/Plugins_System.md",
+          "source_sha256": "0f9df5bcaca21ff016c4ac11d0f72ec384aa253bc22ef6e87def358355af6cc7"
+        },
+        {
+          "exact_quote": "canonical_text: \"When the same plugin id appears in multiple discovery sources, the first-discovered instance wins by priority order and later duplicates are skipped with a warning.\"",
+          "line_end": 1097,
+          "line_start": 1097,
+          "path": "Plans/Plugins_System.md",
+          "source_sha256": "0f9df5bcaca21ff016c4ac11d0f72ec384aa253bc22ef6e87def358355af6cc7"
+        }
+      ],
+      "gap_kind": "none",
+      "impact": "Provides coherent definitions, discovery precedence, and deterministic duplicate resolution.",
+      "item_id": "W3-03",
+      "item_type": "feature",
+      "severity": "info",
+      "source_unit_refs": [
+        "PLANUNIT:PLUG-007",
+        "SEMANTIC:PLANUNIT:PLUG-007",
+        "PLANUNIT:PLUG-008",
+        "SEMANTIC:PLANUNIT:PLUG-008",
+        "PLANUNIT:PLUG-010",
+        "SEMANTIC:PLANUNIT:PLUG-010"
+      ],
+      "statement": "PLUG-007, PLUG-008, and PLUG-010 preserve the core extension definitions and deterministic discovery/deduplication contract without an internal conflict.",
+      "title": "Core plugin discovery semantics are coherent"
+    },
+    {
+      "builder_discretion": false,
+      "confidence": 0.99,
+      "dimensions": [
+        "inputs_outputs",
+        "contracts",
+        "compatibility_migration",
+        "ambiguity_unknowns",
+        "cross_document_seams",
+        "test_falsifiability"
+      ],
+      "evidence": [
+        {
+          "exact_quote": "| `entry` | **Required** | `string` | Relative path to the plugin entry point (WASM module, subprocess-based entry, or dynamic library). JavaScript/TypeScript/Bun entries are OpenCode compatibility evidence only and are not a Puppet Master runtime dependency. |",
+          "line_end": 95,
+          "line_start": 95,
+          "path": "Plans/Plugins_System.md",
+          "source_sha256": "0f9df5bcaca21ff016c4ac11d0f72ec384aa253bc22ef6e87def358355af6cc7"
+        },
+        {
+          "exact_quote": "- \"WASM module\"",
+          "line_end": 1077,
+          "line_start": 1077,
+          "path": "Plans/Plugins_System.md",
+          "source_sha256": "0f9df5bcaca21ff016c4ac11d0f72ec384aa253bc22ef6e87def358355af6cc7"
+        },
+        {
+          "exact_quote": "- \"script\"",
+          "line_end": 1078,
+          "line_start": 1078,
+          "path": "Plans/Plugins_System.md",
+          "source_sha256": "0f9df5bcaca21ff016c4ac11d0f72ec384aa253bc22ef6e87def358355af6cc7"
+        },
+        {
+          "exact_quote": "- \"subprocess binary\"",
+          "line_end": 1079,
+          "line_start": 1079,
+          "path": "Plans/Plugins_System.md",
+          "source_sha256": "0f9df5bcaca21ff016c4ac11d0f72ec384aa253bc22ef6e87def358355af6cc7"
+        }
+      ],
+      "gap_kind": "manifest_entry_token_drift",
+      "impact": "A builder or validator preserving the PlanUnit token `script` can admit an entry type the canonical manifest prose does not authorize, undermining platform and security expectations.",
+      "item_id": "W3-04",
+      "item_type": "gap",
+      "severity": "high",
+      "source_unit_refs": [
+        "PLANUNIT:PLUG-009",
+        "SEMANTIC:PLANUNIT:PLUG-009"
+      ],
+      "statement": "PLUG-009 preserves `script` and `subprocess binary` tokens even though the canonical manifest field authorizes WASM, subprocess-based entry, or dynamic library and explicitly demotes JavaScript/TypeScript/Bun to compatibility evidence.",
+      "title": "Manifest entry formats drift between prose and PlanUnit lineage"
+    },
+    {
+      "builder_discretion": false,
+      "confidence": 0.98,
+      "dimensions": [
+        "behavior",
+        "contracts",
+        "states_transitions",
+        "authority",
+        "gui_truth",
+        "security_privacy",
+        "compatibility_migration",
+        "acceptance_oracles"
+      ],
+      "evidence": [
+        {
+          "exact_quote": "canonical_text: \"Puppet Master must not auto-load executable plugin code from config without explicit user approval; config-only discovery does not imply execution approval.\"",
+          "line_end": 1143,
+          "line_start": 1143,
+          "path": "Plans/Plugins_System.md",
+          "source_sha256": "0f9df5bcaca21ff016c4ac11d0f72ec384aa253bc22ef6e87def358355af6cc7"
+        },
+        {
+          "exact_quote": "canonical_text: \"First-time plugin load shows source, declared hooks, requested capabilities, and trust implications, and approval is version/hash-sensitive so source change requires new approval.\"",
+          "line_end": 1194,
+          "line_start": 1194,
+          "path": "Plans/Plugins_System.md",
+          "source_sha256": "0f9df5bcaca21ff016c4ac11d0f72ec384aa253bc22ef6e87def358355af6cc7"
+        },
+        {
+          "exact_quote": "canonical_text: \"Plugins load in strict discovery-priority order and lexicographic id order within a source, producing identical load order across runs for the same plugin set.\"",
+          "line_end": 1245,
+          "line_start": 1245,
+          "path": "Plans/Plugins_System.md",
+          "source_sha256": "0f9df5bcaca21ff016c4ac11d0f72ec384aa253bc22ef6e87def358355af6cc7"
+        }
+      ],
+      "gap_kind": "none",
+      "impact": "Establishes a stable, version-sensitive approval gate and deterministic ordering before activation.",
+      "item_id": "W4-01",
+      "item_type": "contract",
+      "severity": "info",
+      "source_unit_refs": [
+        "PLANUNIT:PLUG-011",
+        "SEMANTIC:PLANUNIT:PLUG-011",
+        "PLANUNIT:PLUG-012",
+        "SEMANTIC:PLANUNIT:PLUG-012",
+        "PLANUNIT:PLUG-013",
+        "SEMANTIC:PLANUNIT:PLUG-013"
+      ],
+      "statement": "PLUG-011 through PLUG-013 form a coherent discovery-to-approval-to-load sequence.",
+      "title": "Approval and load ordering are explicit"
+    },
+    {
+      "builder_discretion": true,
+      "confidence": 0.96,
+      "dimensions": [
+        "states_transitions",
+        "failures_recovery",
+        "operations",
+        "builder_discretion",
+        "invalid_states_transitions",
+        "concurrency_races",
+        "partial_failure",
+        "recovery_rollback",
+        "observability_support",
+        "test_falsifiability"
+      ],
+      "evidence": [
+        {
+          "exact_quote": "canonical_text: \"The plugin lifecycle discovers manifests, validates plugin.json, initializes the entry module with PluginContext, keeps hooks active during the session, and tears down on session.end before unloading.\"",
+          "line_end": 1293,
+          "line_start": 1293,
+          "path": "Plans/Plugins_System.md",
+          "source_sha256": "0f9df5bcaca21ff016c4ac11d0f72ec384aa253bc22ef6e87def358355af6cc7"
+        },
+        {
+          "exact_quote": "- \"PLUG-014 remains addressable as a fine-grained Plugins System PlanUnit with source-span coverage.\"",
+          "line_end": 1302,
+          "line_start": 1302,
+          "path": "Plans/Plugins_System.md",
+          "source_sha256": "0f9df5bcaca21ff016c4ac11d0f72ec384aa253bc22ef6e87def358355af6cc7"
+        }
+      ],
+      "gap_kind": "lifecycle_oracle_gap",
+      "impact": "Initialization that registers some hooks before failing, session termination during an in-flight hook, or teardown failure can leave leaked resources and indeterminate registration state.",
+      "item_id": "W4-02",
+      "item_type": "gap",
+      "severity": "high",
+      "source_unit_refs": [
+        "PLANUNIT:PLUG-014",
+        "SEMANTIC:PLANUNIT:PLUG-014"
+      ],
+      "statement": "PLUG-014 enumerates lifecycle phases but provides only migration-preservation acceptance criteria; atomic initialization, cancellation, unload concurrency, teardown timeout, and rollback outcomes are not falsifiable.",
+      "title": "Plugin lifecycle has no failure-state acceptance oracle"
+    },
+    {
+      "builder_discretion": false,
+      "confidence": 0.97,
+      "dimensions": [
+        "behavior",
+        "inputs_outputs",
+        "contracts",
+        "states_transitions",
+        "authority",
+        "ownership",
+        "acceptance_oracles",
+        "authority_boundaries"
+      ],
+      "evidence": [
+        {
+          "exact_quote": "canonical_text: \"Hook execution order is deterministic: hooks execute in plugin load order, and multiple handlers for the same event within one plugin execute in registration order.\"",
+          "line_end": 1343,
+          "line_start": 1343,
+          "path": "Plans/Plugins_System.md",
+          "source_sha256": "0f9df5bcaca21ff016c4ac11d0f72ec384aa253bc22ef6e87def358355af6cc7"
+        },
+        {
+          "exact_quote": "canonical_text: \"Plugins initialize with PluginContext as the sole API surface for project root, global config, plugin data directory, hook registration, tool registration, and structured logging, and must not access Puppet Master internals outside it.\"",
+          "line_end": 1394,
+          "line_start": 1394,
+          "path": "Plans/Plugins_System.md",
+          "source_sha256": "0f9df5bcaca21ff016c4ac11d0f72ec384aa253bc22ef6e87def358355af6cc7"
+        }
+      ],
+      "gap_kind": "none",
+      "impact": "Bounds ordering and the supported plugin-to-host API surface.",
+      "item_id": "W4-03",
+      "item_type": "contract",
+      "severity": "info",
+      "source_unit_refs": [
+        "PLANUNIT:PLUG-015",
+        "SEMANTIC:PLANUNIT:PLUG-015",
+        "PLANUNIT:PLUG-016",
+        "SEMANTIC:PLANUNIT:PLUG-016"
+      ],
+      "statement": "PLUG-015 and PLUG-016 clearly specify deterministic handler order and PluginContext as the exclusive host API.",
+      "title": "Hook order and PluginContext authority are bounded"
+    },
+    {
+      "builder_discretion": true,
+      "confidence": 0.99,
+      "dimensions": [
+        "behavior",
+        "contracts",
+        "states_transitions",
+        "failures_recovery",
+        "builder_discretion",
+        "ambiguity_unknowns",
+        "invalid_states_transitions",
+        "cross_document_seams",
+        "test_falsifiability"
+      ],
+      "evidence": [
+        {
+          "exact_quote": "canonical_text: \"Every hook event is defined in the Plugins System hook-event registry with input shape and allowed return actions; adding a new event requires updating this document.\"",
+          "line_end": 1447,
+          "line_start": 1447,
+          "path": "Plans/Plugins_System.md",
+          "source_sha256": "0f9df5bcaca21ff016c4ac11d0f72ec384aa253bc22ef6e87def358355af6cc7"
+        },
+        {
+          "exact_quote": "canonical_text: \"The tool execution hook family boundary groups the before-tool and after-tool hook signatures under the canonical hook event registry.\"",
+          "line_end": 1497,
+          "line_start": 1497,
+          "path": "Plans/Plugins_System.md",
+          "source_sha256": "0f9df5bcaca21ff016c4ac11d0f72ec384aa253bc22ef6e87def358355af6cc7"
+        },
+        {
+          "exact_quote": "- `pre_node_dispatch`",
+          "line_end": 622,
+          "line_start": 622,
+          "path": "Plans/Plugins_System.md",
+          "source_sha256": "0f9df5bcaca21ff016c4ac11d0f72ec384aa253bc22ef6e87def358355af6cc7"
+        }
+      ],
+      "gap_kind": "hook_identity_conflict",
+      "impact": "A runtime cannot prove that all block-capable hooks use canonical inputs and returns while the addendum authorizes names outside the registry.",
+      "item_id": "W4-04",
+      "item_type": "gap",
+      "severity": "critical",
+      "source_unit_refs": [
+        "PLANUNIT:PLUG-017",
+        "SEMANTIC:PLANUNIT:PLUG-017",
+        "PLANUNIT:PLUG-018",
+        "SEMANTIC:PLANUNIT:PLUG-018"
+      ],
+      "statement": "PLUG-017 and PLUG-018 require registry completeness, yet the same source later uses unregistered `pre_*` execution-hook identities without alias or signature definitions.",
+      "title": "PlanUnit registry completeness conflicts with the blocked-hook addendum"
+    },
+    {
+      "builder_discretion": false,
+      "confidence": 0.98,
+      "dimensions": [
+        "behavior",
+        "inputs_outputs",
+        "contracts",
+        "states_transitions",
+        "authority",
+        "security_privacy",
+        "acceptance_oracles",
+        "authority_boundaries"
+      ],
+      "evidence": [
+        {
+          "exact_quote": "canonical_text: \"If a plugin hook modifies tool arguments, the modified arguments must be re-run through permission and validation checks before dispatch, and hooks may not widen permissions after the original check passed.\"",
+          "line_end": 1542,
+          "line_start": 1542,
+          "path": "Plans/Plugins_System.md",
+          "source_sha256": "0f9df5bcaca21ff016c4ac11d0f72ec384aa253bc22ef6e87def358355af6cc7"
+        },
+        {
+          "exact_quote": "canonical_text: \"Plugins that declare arg-touching hooks require signed verification or explicitly /approved elevated approval at a higher trust posture than read-only hooks because they can inject malicious arguments after permission checks.\"",
+          "line_end": 1597,
+          "line_start": 1597,
+          "path": "Plans/Plugins_System.md",
+          "source_sha256": "0f9df5bcaca21ff016c4ac11d0f72ec384aa253bc22ef6e87def358355af6cc7"
+        },
+        {
+          "exact_quote": "canonical_text: \"tool.execute.before fires before a tool invocation after permission check passes, receives tool_name, args, and invocation_id, and returns Continue, Continue(modified_args), or Block(reason).\"",
+          "line_end": 1650,
+          "line_start": 1650,
+          "path": "Plans/Plugins_System.md",
+          "source_sha256": "0f9df5bcaca21ff016c4ac11d0f72ec384aa253bc22ef6e87def358355af6cc7"
+        }
+      ],
+      "gap_kind": "none",
+      "impact": "Closes the post-check argument injection path with revalidation and elevated trust.",
+      "item_id": "W5-01",
+      "item_type": "contract",
+      "severity": "info",
+      "source_unit_refs": [
+        "PLANUNIT:PLUG-019",
+        "SEMANTIC:PLANUNIT:PLUG-019",
+        "PLANUNIT:PLUG-020",
+        "SEMANTIC:PLANUNIT:PLUG-020",
+        "PLANUNIT:PLUG-021",
+        "SEMANTIC:PLANUNIT:PLUG-021"
+      ],
+      "statement": "PLUG-019 through PLUG-021 form a coherent pre-dispatch mutation contract: approved hooks may modify arguments, but modified values must pass permission and validation again.",
+      "title": "Argument-touching hooks have a revalidation gate"
+    },
+    {
+      "builder_discretion": false,
+      "confidence": 0.97,
+      "dimensions": [
+        "behavior",
+        "inputs_outputs",
+        "contracts",
+        "states_transitions",
+        "consumers",
+        "operations",
+        "acceptance_oracles"
+      ],
+      "evidence": [
+        {
+          "exact_quote": "canonical_text: \"tool.execute.after fires after tool completion, receives tool_name, args, result, invocation_id, and duration_ms, and returns Continue or Continue(modified_result).\"",
+          "line_end": 1700,
+          "line_start": 1700,
+          "path": "Plans/Plugins_System.md",
+          "source_sha256": "0f9df5bcaca21ff016c4ac11d0f72ec384aa253bc22ef6e87def358355af6cc7"
+        },
+        {
+          "exact_quote": "canonical_text: \"session.start fires after plugin initialization before the first user message, and session.end fires before plugin teardown after the last interaction; both return Continue only.\"",
+          "line_end": 1803,
+          "line_start": 1803,
+          "path": "Plans/Plugins_System.md",
+          "source_sha256": "0f9df5bcaca21ff016c4ac11d0f72ec384aa253bc22ef6e87def358355af6cc7"
+        },
+        {
+          "exact_quote": "canonical_text: \"chat.message fires before prompt assembly with message_text and session_id, and chat.params fires before provider send with temperature, top_p, max_tokens, and model; both may Continue with modified payloads.\"",
+          "line_end": 1855,
+          "line_start": 1855,
+          "path": "Plans/Plugins_System.md",
+          "source_sha256": "0f9df5bcaca21ff016c4ac11d0f72ec384aa253bc22ef6e87def358355af6cc7"
+        }
+      ],
+      "gap_kind": "none",
+      "impact": "Defines event timing, typed inputs, and allowed return families for after-tool, session, and message hooks.",
+      "item_id": "W5-02",
+      "item_type": "contract",
+      "severity": "info",
+      "source_unit_refs": [
+        "PLANUNIT:PLUG-022",
+        "SEMANTIC:PLANUNIT:PLUG-022",
+        "PLANUNIT:PLUG-024",
+        "SEMANTIC:PLANUNIT:PLUG-024",
+        "PLANUNIT:PLUG-025",
+        "SEMANTIC:PLANUNIT:PLUG-025"
+      ],
+      "statement": "PLUG-022, PLUG-024, and PLUG-025 preserve concrete hook signatures and event positions.",
+      "title": "After-tool, session, and message signatures are explicit"
+    },
+    {
+      "builder_discretion": true,
+      "confidence": 0.98,
+      "dimensions": [
+        "behavior",
+        "authority",
+        "gui_truth",
+        "security_privacy",
+        "builder_discretion",
+        "authority_boundaries",
+        "untrusted_inputs",
+        "gui_misleading_states",
+        "observability_support",
+        "test_falsifiability"
+      ],
+      "evidence": [
+        {
+          "exact_quote": "canonical_text: \"permission.ask fires when the permission engine resolves a tool invocation to ask before presenting UI, can Continue to present ask UI, Allow, or Deny(reason), and plugin permission overrides are logged as plugin.permission.override events.\"",
+          "line_end": 1751,
+          "line_start": 1751,
+          "path": "Plans/Plugins_System.md",
+          "source_sha256": "0f9df5bcaca21ff016c4ac11d0f72ec384aa253bc22ef6e87def358355af6cc7"
+        },
+        {
+          "exact_quote": "canonical_text: \"Plugins that declare arg-touching hooks require signed verification or explicitly /approved elevated approval at a higher trust posture than read-only hooks because they can inject malicious arguments after permission checks.\"",
+          "line_end": 1597,
+          "line_start": 1597,
+          "path": "Plans/Plugins_System.md",
+          "source_sha256": "0f9df5bcaca21ff016c4ac11d0f72ec384aa253bc22ef6e87def358355af6cc7"
+        }
+      ],
+      "gap_kind": "permission_override_authority_gap",
+      "impact": "A plugin can suppress the user-facing ask and grant a tool invocation without a stated per-tool scope, approval tier, non-escalation ceiling, or UI indication beyond ledger logging.",
+      "item_id": "W5-03",
+      "item_type": "gap",
+      "severity": "critical",
+      "source_unit_refs": [
+        "PLANUNIT:PLUG-020",
+        "SEMANTIC:PLANUNIT:PLUG-020",
+        "PLANUNIT:PLUG-023",
+        "SEMANTIC:PLANUNIT:PLUG-023"
+      ],
+      "statement": "PLUG-023 grants `Allow` authority to permission hooks, while PLUG-020 elevates only arg-touching hooks; the source does not define equivalent trust and scope requirements for permission overrides.",
+      "title": "Permission hooks can auto-allow without a defined trust tier"
+    },
+    {
+      "builder_discretion": true,
+      "confidence": 0.94,
+      "dimensions": [
+        "inputs_outputs",
+        "contracts",
+        "consumers",
+        "security_privacy",
+        "propagation",
+        "builder_discretion",
+        "ambiguity_unknowns",
+        "privacy_data_lifecycle",
+        "untrusted_inputs",
+        "observability_support",
+        "test_falsifiability"
+      ],
+      "evidence": [
+        {
+          "exact_quote": "canonical_text: \"tool.execute.after fires after tool completion, receives tool_name, args, result, invocation_id, and duration_ms, and returns Continue or Continue(modified_result).\"",
+          "line_end": 1700,
+          "line_start": 1700,
+          "path": "Plans/Plugins_System.md",
+          "source_sha256": "0f9df5bcaca21ff016c4ac11d0f72ec384aa253bc22ef6e87def358355af6cc7"
+        },
+        {
+          "exact_quote": "canonical_text: \"chat.message fires before prompt assembly with message_text and session_id, and chat.params fires before provider send with temperature, top_p, max_tokens, and model; both may Continue with modified payloads.\"",
+          "line_end": 1855,
+          "line_start": 1855,
+          "path": "Plans/Plugins_System.md",
+          "source_sha256": "0f9df5bcaca21ff016c4ac11d0f72ec384aa253bc22ef6e87def358355af6cc7"
+        }
+      ],
+      "gap_kind": "modified_payload_lineage_gap",
+      "impact": "Consumers cannot distinguish original from plugin-modified messages, provider parameters, or tool results, hampering incident diagnosis and allowing untrusted content transformations to lose attribution.",
+      "item_id": "W5-04",
+      "item_type": "gap",
+      "severity": "high",
+      "source_unit_refs": [
+        "PLANUNIT:PLUG-022",
+        "SEMANTIC:PLANUNIT:PLUG-022",
+        "PLANUNIT:PLUG-025",
+        "SEMANTIC:PLANUNIT:PLUG-025"
+      ],
+      "statement": "The signatures permit modified results, text, and provider parameters but do not require original-value retention, responsible plugin identity, validation of the modified shape, or downstream provenance markers.",
+      "title": "Modified hook payloads lack provenance and validation requirements"
+    },
+    {
+      "builder_discretion": true,
+      "confidence": 0.99,
+      "dimensions": [
+        "behavior",
+        "inputs_outputs",
+        "contracts",
+        "states_transitions",
+        "builder_discretion",
+        "ambiguity_unknowns",
+        "invalid_states_transitions",
+        "partial_failure",
+        "test_falsifiability"
+      ],
+      "evidence": [
+        {
+          "exact_quote": "canonical_text: \"session.compacting fires when auto-compaction is triggered and may Continue, InjectContext, or ReplacePrompt; only one plugin may ReplacePrompt, with first-by-load-order winning and later replacements downgraded to InjectContext with a warning.\"",
+          "line_end": 1909,
+          "line_start": 1909,
+          "path": "Plans/Plugins_System.md",
+          "source_sha256": "0f9df5bcaca21ff016c4ac11d0f72ec384aa253bc22ef6e87def358355af6cc7"
+        }
+      ],
+      "gap_kind": "replaceprompt_downgrade_type_gap",
+      "impact": "Implementations may inject the losing prompt as text, a context item, or discard it, producing divergent compaction state and potentially leaking instructions into the wrong channel.",
+      "item_id": "W6-01",
+      "item_type": "gap",
+      "severity": "high",
+      "source_unit_refs": [
+        "PLANUNIT:PLUG-026",
+        "SEMANTIC:PLANUNIT:PLUG-026"
+      ],
+      "statement": "PLUG-026 says later `ReplacePrompt` returns are downgraded to `InjectContext`, but it does not define how a prompt string becomes `Vec<ContextItem>`, its role/metadata, ordering, size limit, or failure behavior.",
+      "title": "ReplacePrompt downgrade has no type-safe conversion contract"
+    },
+    {
+      "builder_discretion": true,
+      "confidence": 0.98,
+      "dimensions": [
+        "behavior",
+        "inputs_outputs",
+        "contracts",
+        "authority",
+        "security_privacy",
+        "builder_discretion",
+        "authority_boundaries",
+        "privacy_data_lifecycle",
+        "untrusted_inputs",
+        "observability_support",
+        "test_falsifiability"
+      ],
+      "evidence": [
+        {
+          "exact_quote": "canonical_text: \"shell.env fires before a bash or shell tool invocation after environment assembly and can Continue or Continue(modified_env).\"",
+          "line_end": 1963,
+          "line_start": 1963,
+          "path": "Plans/Plugins_System.md",
+          "source_sha256": "0f9df5bcaca21ff016c4ac11d0f72ec384aa253bc22ef6e87def358355af6cc7"
+        },
+        {
+          "exact_quote": "canonical_text: \"system.prompt.transform fires after system prompt assembly and before provider send, receives system_parts, and can Continue or Continue(modified_parts).\"",
+          "line_end": 2010,
+          "line_start": 2010,
+          "path": "Plans/Plugins_System.md",
+          "source_sha256": "0f9df5bcaca21ff016c4ac11d0f72ec384aa253bc22ef6e87def358355af6cc7"
+        }
+      ],
+      "gap_kind": "privileged_mutation_boundary_gap",
+      "impact": "A plugin can inject or exfiltrate environment values and alter top-level instructions without stated capability scoping, secret redaction, revalidation, or user-visible provenance.",
+      "item_id": "W6-02",
+      "item_type": "gap",
+      "severity": "critical",
+      "source_unit_refs": [
+        "PLANUNIT:PLUG-027",
+        "SEMANTIC:PLANUNIT:PLUG-027",
+        "PLANUNIT:PLUG-028",
+        "SEMANTIC:PLANUNIT:PLUG-028"
+      ],
+      "statement": "PLUG-027 and PLUG-028 expose security-sensitive mutation points but specify neither elevated trust classes nor mutation restrictions, protected-key handling, validation, or audit payloads that preserve before/after provenance.",
+      "title": "Environment and system-prompt hooks lack privileged-mutation controls"
+    },
+    {
+      "builder_discretion": true,
+      "confidence": 0.98,
+      "dimensions": [
+        "behavior",
+        "states_transitions",
+        "failures_recovery",
+        "security_privacy",
+        "operations",
+        "builder_discretion",
+        "partial_failure",
+        "recovery_rollback",
+        "authority_boundaries",
+        "observability_support",
+        "test_falsifiability"
+      ],
+      "evidence": [
+        {
+          "exact_quote": "canonical_text: \"Hook return semantics canonicalize Continue, Continue(modified), Block(reason), Allow, Deny(reason), InjectContext(items), and ReplacePrompt(prompt); unhandled error, panic, or timeout is treated as Continue with a warning, defaulting to 5 seconds unless configured.\"",
+          "line_end": 2058,
+          "line_start": 2058,
+          "path": "Plans/Plugins_System.md",
+          "source_sha256": "0f9df5bcaca21ff016c4ac11d0f72ec384aa253bc22ef6e87def358355af6cc7"
+        }
+      ],
+      "gap_kind": "fail_open_policy_gap",
+      "impact": "A timed-out permission or policy hook may permit dispatch and repeated failures can recur indefinitely, undermining the hook's enforcement purpose.",
+      "item_id": "W6-03",
+      "item_type": "gap",
+      "severity": "critical",
+      "source_unit_refs": [
+        "PLANUNIT:PLUG-029",
+        "SEMANTIC:PLANUNIT:PLUG-029"
+      ],
+      "statement": "PLUG-029 makes `Continue` the universal error fallback without defining hook-class-specific fail-closed behavior, retry/circuit-breaker limits, plugin quarantine, or an operator recovery action.",
+      "title": "Hook failures have a single fail-open policy"
+    },
+    {
+      "builder_discretion": false,
+      "confidence": 0.98,
+      "dimensions": [
+        "capabilities",
+        "inputs_outputs",
+        "contracts",
+        "authority",
+        "ownership",
+        "security_privacy",
+        "propagation",
+        "compatibility_migration",
+        "acceptance_oracles"
+      ],
+      "evidence": [
+        {
+          "exact_quote": "canonical_text: \"Plugins may register custom tools through PluginContext.register_tool with ToolDefinition name, description, input_schema JSON Schema, and execute handler returning ToolResult.\"",
+          "line_end": 2113,
+          "line_start": 2113,
+          "path": "Plans/Plugins_System.md",
+          "source_sha256": "0f9df5bcaca21ff016c4ac11d0f72ec384aa253bc22ef6e87def358355af6cc7"
+        },
+        {
+          "exact_quote": "canonical_text: \"When a plugin registers a tool colliding with a built-in tool, the built-in tool wins by default and the plugin tool is registered under a namespaced alias unless config.plugins.allow_tool_override is true.\"",
+          "line_end": 2166,
+          "line_start": 2166,
+          "path": "Plans/Plugins_System.md",
+          "source_sha256": "0f9df5bcaca21ff016c4ac11d0f72ec384aa253bc22ef6e87def358355af6cc7"
+        },
+        {
+          "exact_quote": "canonical_text: \"Plugin-registered tools are added to the central tool registry and subject to the same permission policy engine, with unknown tools defaulting to ask permission.\"",
+          "line_end": 2216,
+          "line_start": 2216,
+          "path": "Plans/Plugins_System.md",
+          "source_sha256": "0f9df5bcaca21ff016c4ac11d0f72ec384aa253bc22ef6e87def358355af6cc7"
+        }
+      ],
+      "gap_kind": "none",
+      "impact": "Keeps custom tools inside the canonical registry and permission engine while preventing silent built-in replacement by default.",
+      "item_id": "W6-04",
+      "item_type": "explicit_non_gap",
+      "severity": "info",
+      "source_unit_refs": [
+        "PLANUNIT:PLUG-030",
+        "SEMANTIC:PLANUNIT:PLUG-030",
+        "PLANUNIT:PLUG-031",
+        "SEMANTIC:PLANUNIT:PLUG-031",
+        "PLANUNIT:PLUG-032",
+        "SEMANTIC:PLANUNIT:PLUG-032"
+      ],
+      "statement": "PLUG-030 through PLUG-032 define a coherent registration shape, deterministic collision rule, and central permission routing.",
+      "title": "Custom tools preserve central authority by default"
+    },
+    {
+      "builder_discretion": false,
+      "confidence": 0.98,
+      "dimensions": [
+        "behavior",
+        "inputs_outputs",
+        "contracts",
+        "authority",
+        "ownership",
+        "gui_truth",
+        "security_privacy",
+        "propagation",
+        "authority_boundaries",
+        "untrusted_inputs",
+        "cross_document_seams"
+      ],
+      "evidence": [
+        {
+          "exact_quote": "canonical_text: \"Plugin-added subviews, cards, and actions may extend core surfaces but must not replace reserved surface IDs, panel routes, command-family meaning, or deep-link target meaning, and navigation into core surfaces must use target-surface canonical context payloads.\"",
+          "line_end": 2266,
+          "line_start": 2266,
+          "path": "Plans/Plugins_System.md",
+          "source_sha256": "0f9df5bcaca21ff016c4ac11d0f72ec384aa253bc22ef6e87def358355af6cc7"
+        },
+        {
+          "exact_quote": "canonical_text: \"Plugin-added tools, hooks, MCP bridges, and other /extensibility capabilities that contact external hosts, registry hosts, or Kubernetes clusters must declare contacted domains and hosts and inherit registry_hosts[], k8s_host_policy, /network/trust, proxy, and permission policy checks.\"",
+          "line_end": 2317,
+          "line_start": 2317,
+          "path": "Plans/Plugins_System.md",
+          "source_sha256": "0f9df5bcaca21ff016c4ac11d0f72ec384aa253bc22ef6e87def358355af6cc7"
+        },
+        {
+          "exact_quote": "canonical_text: \"Hooks must not silently rewrite protected routing fields, including remote host, base URL, registry host, kube context, namespace, and receipt identity keys; protected-field changes trigger permission revalidation and may be blocked with canonical /denied outcomes.\"",
+          "line_end": 2372,
+          "line_start": 2372,
+          "path": "Plans/Plugins_System.md",
+          "source_sha256": "0f9df5bcaca21ff016c4ac11d0f72ec384aa253bc22ef6e87def358355af6cc7"
+        }
+      ],
+      "gap_kind": "none",
+      "impact": "Protects core navigation identity, external-host policy, and sensitive routing fields from plugin-private replacement.",
+      "item_id": "W7-01",
+      "item_type": "contract",
+      "severity": "info",
+      "source_unit_refs": [
+        "PLANUNIT:PLUG-033",
+        "SEMANTIC:PLANUNIT:PLUG-033",
+        "PLANUNIT:PLUG-034",
+        "SEMANTIC:PLANUNIT:PLUG-034",
+        "PLANUNIT:PLUG-035",
+        "SEMANTIC:PLANUNIT:PLUG-035"
+      ],
+      "statement": "PLUG-033 through PLUG-035 establish strong host-policy inheritance and protected-routing revalidation boundaries for extensibility.",
+      "title": "Core-surface and host-policy boundaries are explicit"
+    },
+    {
+      "builder_discretion": false,
+      "confidence": 0.96,
+      "dimensions": [
+        "contracts",
+        "states_transitions",
+        "ownership",
+        "operations",
+        "compatibility_migration",
+        "acceptance_oracles"
+      ],
+      "evidence": [
+        {
+          "exact_quote": "canonical_text: \"The Plugin configuration section boundary preserves the PLUGIN-CONFIG anchor and marks that concrete configuration schema behavior begins after the first batch window.\"",
+          "line_end": 2425,
+          "line_start": 2425,
+          "path": "Plans/Plugins_System.md",
+          "source_sha256": "0f9df5bcaca21ff016c4ac11d0f72ec384aa253bc22ef6e87def358355af6cc7"
+        },
+        {
+          "exact_quote": "canonical_text: \"Individual plugins can be disabled by config.plugins.disabled.<plugin_id> = true, causing disabled plugins not to load and preserving that disable state across sessions.\"",
+          "line_end": 2526,
+          "line_start": 2526,
+          "path": "Plans/Plugins_System.md",
+          "source_sha256": "0f9df5bcaca21ff016c4ac11d0f72ec384aa253bc22ef6e87def358355af6cc7"
+        }
+      ],
+      "gap_kind": "none",
+      "impact": "Preserves the section boundary without pretending it is complete behavior and defines persisted disabled-state semantics.",
+      "item_id": "W7-02",
+      "item_type": "explicit_non_gap",
+      "severity": "info",
+      "source_unit_refs": [
+        "PLANUNIT:PLUG-036",
+        "SEMANTIC:PLANUNIT:PLUG-036",
+        "PLANUNIT:PLUG-038",
+        "SEMANTIC:PLANUNIT:PLUG-038"
+      ],
+      "statement": "PLUG-036 explicitly warns that it is only a boundary unit, while PLUG-038 provides the actual durable disable behavior.",
+      "title": "Configuration boundary and disable persistence are distinguishable"
+    },
+    {
+      "builder_discretion": false,
+      "confidence": 0.99,
+      "dimensions": [
+        "inputs_outputs",
+        "contracts",
+        "operations",
+        "compatibility_migration",
+        "ambiguity_unknowns",
+        "cross_document_seams",
+        "test_falsifiability"
+      ],
+      "evidence": [
+        {
+          "exact_quote": "| 4 (last) | **Config package list** | `config.plugins[]` — package specifiers or `file://` local paths. |",
+          "line_end": 67,
+          "line_start": 67,
+          "path": "Plans/Plugins_System.md",
+          "source_sha256": "0f9df5bcaca21ff016c4ac11d0f72ec384aa253bc22ef6e87def358355af6cc7"
+        },
+        {
+          "exact_quote": "canonical_text: \"Plugin configuration schema preserves TOML [plugins] fields for hook_timeout_ms, allow_tool_override, config-sourced packages, and per-plugin disabled state.\"",
+          "line_end": 2471,
+          "line_start": 2471,
+          "path": "Plans/Plugins_System.md",
+          "source_sha256": "0f9df5bcaca21ff016c4ac11d0f72ec384aa253bc22ef6e87def358355af6cc7"
+        },
+        {
+          "exact_quote": "- \"packages\"",
+          "line_end": 2503,
+          "line_start": 2503,
+          "path": "Plans/Plugins_System.md",
+          "source_sha256": "0f9df5bcaca21ff016c4ac11d0f72ec384aa253bc22ef6e87def358355af6cc7"
+        }
+      ],
+      "gap_kind": "config_key_identity_drift",
+      "impact": "Parsers, UI writers, and migration tests can target different keys, causing configured packages to disappear from discovery or creating duplicate config representations.",
+      "item_id": "W7-03",
+      "item_type": "gap",
+      "severity": "high",
+      "source_unit_refs": [
+        "PLANUNIT:PLUG-037",
+        "SEMANTIC:PLANUNIT:PLUG-037"
+      ],
+      "statement": "The discovery table names `config.plugins[]`, while the concrete TOML and PLUG-037 preserve `[plugins].packages`; no alias, migration, rejection, or canonical-key statement resolves the difference.",
+      "title": "Config package key is inconsistent"
+    },
+    {
+      "builder_discretion": true,
+      "confidence": 0.97,
+      "dimensions": [
+        "states_transitions",
+        "consumers",
+        "gui_truth",
+        "failures_recovery",
+        "propagation",
+        "operations",
+        "builder_discretion",
+        "ambiguity_unknowns",
+        "missing_callers_consumers",
+        "gui_misleading_states",
+        "observability_support",
+        "test_falsifiability"
+      ],
+      "evidence": [
+        {
+          "exact_quote": "canonical_text: \"Child runs inherit plugin and MCP effects only as an effective compatible subset, never as a blind copy of the parent environment or a backdoor that widens child permissions or tool authority; requested versus effective dropped capability details remain visible for debugging.\"",
+          "line_end": 2573,
+          "line_start": 2573,
+          "path": "Plans/Plugins_System.md",
+          "source_sha256": "0f9df5bcaca21ff016c4ac11d0f72ec384aa253bc22ef6e87def358355af6cc7"
+        }
+      ],
+      "gap_kind": "effective_capability_visibility_gap",
+      "impact": "Dropped capability information can be computed but effectively invisible, leaving child failures unexplained and GUI/runtime state misleading.",
+      "item_id": "W7-04",
+      "item_type": "gap",
+      "severity": "high",
+      "source_unit_refs": [
+        "PLANUNIT:PLUG-039",
+        "SEMANTIC:PLANUNIT:PLUG-039"
+      ],
+      "statement": "PLUG-039 requires requested-versus-effective dropped details to remain visible for debugging but does not name the record shape, persistence owner, event type, GUI/CLI consumer, ordering, or acceptance oracle.",
+      "title": "Child capability drops have no specified consumer or record"
+    },
+    {
+      "builder_discretion": false,
+      "confidence": 0.97,
+      "dimensions": [
+        "behavior",
+        "contracts",
+        "states_transitions",
+        "authority",
+        "ownership",
+        "consumers",
+        "operations",
+        "observability_support",
+        "cross_document_seams"
+      ],
+      "evidence": [
+        {
+          "exact_quote": "canonical_text: \"Persona plugin overrides use the disabled_plugins field in PERSONA.md frontmatter, and when a Persona is active, matching plugin ids are skipped during hook dispatch without unloading the plugin.\"",
+          "line_end": 2637,
+          "line_start": 2637,
+          "path": "Plans/Plugins_System.md",
+          "source_sha256": "0f9df5bcaca21ff016c4ac11d0f72ec384aa253bc22ef6e87def358355af6cc7"
+        },
+        {
+          "exact_quote": "canonical_text: \"All plugin activity logs to the Puppet Master event ledger using the canonical EventRecord envelope owned by Contracts_V0; Plugins_System owns plugin.* event semantics and plugin-owned payload content such as plugin_id, hook names, durations, resolution details, and structured plugin payload, while legacy timestamp/plugin_id/event_type/payload/source tuple notation is source-lineage shorthand only.\"",
+          "line_end": 2689,
+          "line_start": 2689,
+          "path": "Plans/Plugins_System.md",
+          "source_sha256": "0f9df5bcaca21ff016c4ac11d0f72ec384aa253bc22ef6e87def358355af6cc7"
+        },
+        {
+          "exact_quote": "canonical_text: \"Plugin log event taxonomy includes loaded, load_failed, hook invoked, hook error, hook blocked, permission override, tool registered, and tool collision event types with their required emission conditions.\"",
+          "line_end": 2745,
+          "line_start": 2745,
+          "path": "Plans/Plugins_System.md",
+          "source_sha256": "0f9df5bcaca21ff016c4ac11d0f72ec384aa253bc22ef6e87def358355af6cc7"
+        }
+      ],
+      "gap_kind": "none",
+      "impact": "Defines Persona-scoped silencing without unload and routes plugin observability through the canonical event envelope and taxonomy.",
+      "item_id": "W8-01",
+      "item_type": "contract",
+      "severity": "info",
+      "source_unit_refs": [
+        "PLANUNIT:PLUG-040",
+        "SEMANTIC:PLANUNIT:PLUG-040",
+        "PLANUNIT:PLUG-041",
+        "SEMANTIC:PLANUNIT:PLUG-041",
+        "PLANUNIT:PLUG-042",
+        "SEMANTIC:PLANUNIT:PLUG-042"
+      ],
+      "statement": "PLUG-040 through PLUG-042 preserve a coherent Persona dispatch override and structured logging ownership model.",
+      "title": "Persona silencing and plugin event ownership are explicit"
+    },
+    {
+      "builder_discretion": false,
+      "confidence": 0.97,
+      "dimensions": [
+        "capabilities",
+        "inputs_outputs",
+        "contracts",
+        "consumers",
+        "gui_truth",
+        "propagation",
+        "acceptance_oracles"
+      ],
+      "evidence": [
+        {
+          "exact_quote": "canonical_text: \"The Plugins settings screen is a tab in the unified Settings page and is governed by the GUI plugins anchor and FinalGUISpec/DRY references.\"",
+          "line_end": 2798,
+          "line_start": 2798,
+          "path": "Plans/Plugins_System.md",
+          "source_sha256": "0f9df5bcaca21ff016c4ac11d0f72ec384aa253bc22ef6e87def358355af6cc7"
+        },
+        {
+          "exact_quote": "canonical_text: \"The Plugins tab lists discovered plugins with Name, ID, Version, Source, Status, Hook count, and Tool count columns, shows internal plugins with locked badges, provides enable/disable toggles except for internal plugins, and expands rows for description, hooks, custom tools, entry path, and plugin data directory path.\"",
+          "line_end": 2849,
+          "line_start": 2849,
+          "path": "Plans/Plugins_System.md",
+          "source_sha256": "0f9df5bcaca21ff016c4ac11d0f72ec384aa253bc22ef6e87def358355af6cc7"
+        }
+      ],
+      "gap_kind": "none",
+      "impact": "Gives builders a concrete inventory surface and prevents internal plugins from appearing user-disableable.",
+      "item_id": "W8-02",
+      "item_type": "gui_truth",
+      "severity": "info",
+      "source_unit_refs": [
+        "PLANUNIT:PLUG-043",
+        "SEMANTIC:PLANUNIT:PLUG-043",
+        "PLANUNIT:PLUG-044",
+        "SEMANTIC:PLANUNIT:PLUG-044"
+      ],
+      "statement": "PLUG-043 and PLUG-044 define placement, inventory columns, locked internal state, toggles, and detail disclosure.",
+      "title": "Plugin inventory GUI content is concrete"
+    },
+    {
+      "builder_discretion": true,
+      "confidence": 0.98,
+      "dimensions": [
+        "behavior",
+        "states_transitions",
+        "authority",
+        "gui_truth",
+        "failures_recovery",
+        "operations",
+        "builder_discretion",
+        "invalid_states_transitions",
+        "partial_failure",
+        "recovery_rollback",
+        "destructive_actions",
+        "test_falsifiability"
+      ],
+      "evidence": [
+        {
+          "exact_quote": "canonical_text: \"The Plugins tab supports Add plugin flows for package specifiers and local directories containing plugin.json, updates config.plugins.packages, triggers reload, and distinguishes config-sourced removal from project/global delete-from-disk with confirmation.\"",
+          "line_end": 2910,
+          "line_start": 2910,
+          "path": "Plans/Plugins_System.md",
+          "source_sha256": "0f9df5bcaca21ff016c4ac11d0f72ec384aa253bc22ef6e87def358355af6cc7"
+        }
+      ],
+      "gap_kind": "destructive_lifecycle_gap",
+      "impact": "A failed reload after config mutation or a partial delete can leave disk, configuration, active hooks, and visible status inconsistent; confirmation alone does not define authorization or recovery.",
+      "item_id": "W8-03",
+      "item_type": "gap",
+      "severity": "critical",
+      "source_unit_refs": [
+        "PLANUNIT:PLUG-045",
+        "SEMANTIC:PLANUNIT:PLUG-045"
+      ],
+      "statement": "PLUG-045 combines configuration mutation, reload, and delete-from-disk but does not define preconditions, transactional ordering, in-use handling, cancellation, failure states, rollback, preserved-local-work behavior, or post-action receipt/oracle.",
+      "title": "Plugin add/remove flows lack transactional recovery semantics"
+    },
+    {
+      "builder_discretion": true,
+      "confidence": 0.96,
+      "dimensions": [
+        "states_transitions",
+        "gui_truth",
+        "failures_recovery",
+        "operations",
+        "builder_discretion",
+        "ambiguity_unknowns",
+        "partial_failure",
+        "gui_misleading_states",
+        "observability_support",
+        "test_falsifiability"
+      ],
+      "evidence": [
+        {
+          "exact_quote": "canonical_text: \"Plugin config overrides expose hook_timeout_ms as a spinner with range 1000-30000 and default 5000, and allow_tool_override as a default-off toggle with warning label when enabled.\"",
+          "line_end": 2967,
+          "line_start": 2967,
+          "path": "Plans/Plugins_System.md",
+          "source_sha256": "0f9df5bcaca21ff016c4ac11d0f72ec384aa253bc22ef6e87def358355af6cc7"
+        }
+      ],
+      "gap_kind": "config_apply_state_gap",
+      "impact": "Users may believe a timeout or override change is active immediately when the runtime still uses an old value, and save/reload failure has no specified visible outcome.",
+      "item_id": "W8-04",
+      "item_type": "gap",
+      "severity": "high",
+      "source_unit_refs": [
+        "PLANUNIT:PLUG-046",
+        "SEMANTIC:PLANUNIT:PLUG-046"
+      ],
+      "statement": "PLUG-046 defines controls and ranges but not validation error copy, persistence timing, reload requirements, dirty/saving/applied/error states, concurrent edits, or proof that the effective runtime value changed.",
+      "title": "Config override controls lack effective-state semantics"
+    },
+    {
+      "builder_discretion": true,
+      "confidence": 0.95,
+      "dimensions": [
+        "gui_truth",
+        "security_privacy",
+        "builder_discretion",
+        "privacy_data_lifecycle",
+        "gui_misleading_states",
+        "accessibility",
+        "localization",
+        "test_falsifiability"
+      ],
+      "evidence": [
+        {
+          "exact_quote": "canonical_text: \"The Plugins tab lists discovered plugins with Name, ID, Version, Source, Status, Hook count, and Tool count columns, shows internal plugins with locked badges, provides enable/disable toggles except for internal plugins, and expands rows for description, hooks, custom tools, entry path, and plugin data directory path.\"",
+          "line_end": 2849,
+          "line_start": 2849,
+          "path": "Plans/Plugins_System.md",
+          "source_sha256": "0f9df5bcaca21ff016c4ac11d0f72ec384aa253bc22ef6e87def358355af6cc7"
+        }
+      ],
+      "gap_kind": "gui_privacy_accessibility_gap",
+      "impact": "Full local paths can disclose usernames or project layout, and non-text badge/toggle semantics can be inaccessible; long translated labels and paths may also break the table.",
+      "item_id": "W8-05",
+      "item_type": "gap",
+      "severity": "medium",
+      "source_unit_refs": [
+        "PLANUNIT:PLUG-044",
+        "SEMANTIC:PLANUNIT:PLUG-044"
+      ],
+      "statement": "PLUG-044 exposes entry and plugin-data paths but does not specify redaction/copy policy, assistive labels, keyboard/focus behavior, non-color locked/status semantics, or overflow/localization handling.",
+      "title": "Plugin inventory omits privacy and accessibility rules"
+    }
+  ],
+  "model": "gpt-5.6-sol",
+  "phase": "blind_macro_window_review",
+  "reasoning_effort": "xhigh",
+  "schema_version": "macro-review-result-v1",
+  "segments": [
+    {
+      "core_range": [
+        1,
+        398
+      ],
+      "covered_source_unit_refs": [
+        "SEMANTIC:PROLOGUE:Plans/Plugins_System.md:CONT-001"
+      ],
+      "item_ids": [
+        "W1-01",
+        "W1-02",
+        "W1-03",
+        "W1-04",
+        "W1-05",
+        "W1-06"
+      ],
+      "reviewed": true,
+      "summary": "Reviewed discovery, manifests, lifecycle, hook registry/signatures, mutation paths, return semantics, and custom-tool routing. Strong deterministic and central-policy baselines coexist with critical permission-override, fail-open, privileged-mutation, and lifecycle gaps.",
+      "window_id": "WIN-278DC60D0D8B-0001"
+    },
+    {
+      "core_range": [
+        399,
+        757
+      ],
+      "covered_source_unit_refs": [
+        "PLANUNIT:PLUG-002",
+        "PLANUNIT:PLUG-003",
+        "SEMANTIC:PROLOGUE:Plans/Plugins_System.md:CONT-002",
+        "SEMANTIC:PLANUNIT:PLUG-002",
+        "SEMANTIC:PLANUNIT:PLUG-003"
+      ],
+      "item_ids": [
+        "W2-01",
+        "W2-02",
+        "W2-03",
+        "W2-04",
+        "W2-05"
+      ],
+      "reviewed": true,
+      "summary": "Reviewed configuration, Persona/child inheritance, event logging, GUI, baseline deltas, acceptance criteria, blocked-hook addenda, owner map, and PLUG-002/003. Found an internal hook-name conflict and underspecified catalog and GUI edge behavior.",
+      "window_id": "WIN-278DC60D0D8B-0002"
+    },
+    {
+      "core_range": [
+        758,
+        1135
+      ],
+      "covered_source_unit_refs": [
+        "PLANUNIT:PLUG-004",
+        "PLANUNIT:PLUG-005",
+        "PLANUNIT:PLUG-006",
+        "PLANUNIT:PLUG-007",
+        "PLANUNIT:PLUG-008",
+        "PLANUNIT:PLUG-009",
+        "PLANUNIT:PLUG-010",
+        "SEMANTIC:PLANUNIT:PLUG-004",
+        "SEMANTIC:PLANUNIT:PLUG-005",
+        "SEMANTIC:PLANUNIT:PLUG-006",
+        "SEMANTIC:PLANUNIT:PLUG-007",
+        "SEMANTIC:PLANUNIT:PLUG-008",
+        "SEMANTIC:PLANUNIT:PLUG-009",
+        "SEMANTIC:PLANUNIT:PLUG-010"
+      ],
+      "item_ids": [
+        "W3-01",
+        "W3-02",
+        "W3-03",
+        "W3-04"
+      ],
+      "reviewed": true,
+      "summary": "Reviewed terminology routing, central policy boundaries, definitions, discovery, manifest, and deduplication units. Core ordering is coherent; PLUG-006 lacks operational oracles and PLUG-009 preserves conflicting entry-format tokens.",
+      "window_id": "WIN-278DC60D0D8B-0003"
+    },
+    {
+      "core_range": [
+        1136,
+        1534
+      ],
+      "covered_source_unit_refs": [
+        "PLANUNIT:PLUG-011",
+        "PLANUNIT:PLUG-012",
+        "PLANUNIT:PLUG-013",
+        "PLANUNIT:PLUG-014",
+        "PLANUNIT:PLUG-015",
+        "PLANUNIT:PLUG-016",
+        "PLANUNIT:PLUG-017",
+        "PLANUNIT:PLUG-018",
+        "SEMANTIC:PLANUNIT:PLUG-011",
+        "SEMANTIC:PLANUNIT:PLUG-012",
+        "SEMANTIC:PLANUNIT:PLUG-013",
+        "SEMANTIC:PLANUNIT:PLUG-014",
+        "SEMANTIC:PLANUNIT:PLUG-015",
+        "SEMANTIC:PLANUNIT:PLUG-016",
+        "SEMANTIC:PLANUNIT:PLUG-017",
+        "SEMANTIC:PLANUNIT:PLUG-018"
+      ],
+      "item_ids": [
+        "W4-01",
+        "W4-02",
+        "W4-03",
+        "W4-04"
+      ],
+      "reviewed": true,
+      "summary": "Reviewed approval, load order, lifecycle, hook ordering, PluginContext, registry, and tool-hook grouping. Approval and API boundaries are strong; lifecycle failure semantics and registry consistency remain build-blocking gaps.",
+      "window_id": "WIN-278DC60D0D8B-0004"
+    },
+    {
+      "core_range": [
+        1535,
+        1901
+      ],
+      "covered_source_unit_refs": [
+        "PLANUNIT:PLUG-019",
+        "PLANUNIT:PLUG-020",
+        "PLANUNIT:PLUG-021",
+        "PLANUNIT:PLUG-022",
+        "PLANUNIT:PLUG-023",
+        "PLANUNIT:PLUG-024",
+        "PLANUNIT:PLUG-025",
+        "SEMANTIC:PLANUNIT:PLUG-019",
+        "SEMANTIC:PLANUNIT:PLUG-020",
+        "SEMANTIC:PLANUNIT:PLUG-021",
+        "SEMANTIC:PLANUNIT:PLUG-022",
+        "SEMANTIC:PLANUNIT:PLUG-023",
+        "SEMANTIC:PLANUNIT:PLUG-024",
+        "SEMANTIC:PLANUNIT:PLUG-025"
+      ],
+      "item_ids": [
+        "W5-01",
+        "W5-02",
+        "W5-03",
+        "W5-04"
+      ],
+      "reviewed": true,
+      "summary": "Reviewed argument recheck, trust approval, before/after tool hooks, permission ask, session, and message hooks. Argument mutation is guarded, but permission auto-allow and modified-payload provenance lack comparable controls.",
+      "window_id": "WIN-278DC60D0D8B-0005"
+    },
+    {
+      "core_range": [
+        1902,
+        2258
+      ],
+      "covered_source_unit_refs": [
+        "PLANUNIT:PLUG-026",
+        "PLANUNIT:PLUG-027",
+        "PLANUNIT:PLUG-028",
+        "PLANUNIT:PLUG-029",
+        "PLANUNIT:PLUG-030",
+        "PLANUNIT:PLUG-031",
+        "PLANUNIT:PLUG-032",
+        "SEMANTIC:PLANUNIT:PLUG-026",
+        "SEMANTIC:PLANUNIT:PLUG-027",
+        "SEMANTIC:PLANUNIT:PLUG-028",
+        "SEMANTIC:PLANUNIT:PLUG-029",
+        "SEMANTIC:PLANUNIT:PLUG-030",
+        "SEMANTIC:PLANUNIT:PLUG-031",
+        "SEMANTIC:PLANUNIT:PLUG-032"
+      ],
+      "item_ids": [
+        "W6-01",
+        "W6-02",
+        "W6-03",
+        "W6-04"
+      ],
+      "reviewed": true,
+      "summary": "Reviewed compaction, environment, prompt, return, registration, collision, and registry units. Central tool routing is safe by default; compaction conversion, privileged mutation, and universal fail-open semantics are unresolved.",
+      "window_id": "WIN-278DC60D0D8B-0006"
+    },
+    {
+      "core_range": [
+        2259,
+        2629
+      ],
+      "covered_source_unit_refs": [
+        "PLANUNIT:PLUG-033",
+        "PLANUNIT:PLUG-034",
+        "PLANUNIT:PLUG-035",
+        "PLANUNIT:PLUG-036",
+        "PLANUNIT:PLUG-037",
+        "PLANUNIT:PLUG-038",
+        "PLANUNIT:PLUG-039",
+        "SEMANTIC:PLANUNIT:PLUG-033",
+        "SEMANTIC:PLANUNIT:PLUG-034",
+        "SEMANTIC:PLANUNIT:PLUG-035",
+        "SEMANTIC:PLANUNIT:PLUG-036",
+        "SEMANTIC:PLANUNIT:PLUG-037",
+        "SEMANTIC:PLANUNIT:PLUG-038",
+        "SEMANTIC:PLANUNIT:PLUG-039"
+      ],
+      "item_ids": [
+        "W7-01",
+        "W7-02",
+        "W7-03",
+        "W7-04"
+      ],
+      "reviewed": true,
+      "summary": "Reviewed core-surface, host-policy, routing, config boundary/shape, disable persistence, and child compatibility units. Host boundaries are explicit; config-key identity and child dropped-capability visibility are underspecified.",
+      "window_id": "WIN-278DC60D0D8B-0007"
+    },
+    {
+      "core_range": [
+        2630,
+        3014
+      ],
+      "covered_source_unit_refs": [
+        "PLANUNIT:PLUG-040",
+        "PLANUNIT:PLUG-041",
+        "PLANUNIT:PLUG-042",
+        "PLANUNIT:PLUG-043",
+        "PLANUNIT:PLUG-044",
+        "PLANUNIT:PLUG-045",
+        "PLANUNIT:PLUG-046",
+        "SEMANTIC:PLANUNIT:PLUG-040",
+        "SEMANTIC:PLANUNIT:PLUG-041",
+        "SEMANTIC:PLANUNIT:PLUG-042",
+        "SEMANTIC:PLANUNIT:PLUG-043",
+        "SEMANTIC:PLANUNIT:PLUG-044",
+        "SEMANTIC:PLANUNIT:PLUG-045",
+        "SEMANTIC:PLANUNIT:PLUG-046"
+      ],
+      "item_ids": [
+        "W8-01",
+        "W8-02",
+        "W8-03",
+        "W8-04",
+        "W8-05"
+      ],
+      "reviewed": true,
+      "summary": "Reviewed Persona silencing, event envelope/taxonomy, settings placement, inventory, add/remove, and config controls. Logging and inventory are concrete; destructive transactions, effective config state, privacy, and accessibility need closure.",
+      "window_id": "WIN-278DC60D0D8B-0008"
+    }
+  ],
+  "self_attestation": {
+    "no_canonical_writes": true,
+    "no_external_research_during_blind_review": true,
+    "no_peer_result_access": true,
+    "no_prior_audit_access": true,
+    "no_unrelated_source_access": true,
+    "terminal_after_submission": true
+  },
+  "source_binding": {
+    "bundle_id": "MACRO15-278DC60D0D8B-0001",
+    "document_path": "Plans/Plugins_System.md",
+    "micro_window_ids": [
+      "WIN-278DC60D0D8B-0001",
+      "WIN-278DC60D0D8B-0002",
+      "WIN-278DC60D0D8B-0003",
+      "WIN-278DC60D0D8B-0004",
+      "WIN-278DC60D0D8B-0005",
+      "WIN-278DC60D0D8B-0006",
+      "WIN-278DC60D0D8B-0007",
+      "WIN-278DC60D0D8B-0008"
+    ],
+    "source_sha256": "0f9df5bcaca21ff016c4ac11d0f72ec384aa253bc22ef6e87def358355af6cc7"
+  },
+  "status": "completed",
+  "synthesis": {
+    "cross_document_questions": [
+      "Which owner canonically defines the trust tier and authority ceiling for a permission.ask hook that returns Allow?",
+      "Are pre_tool_invoke, pre_attempt_start, and pre_node_dispatch aliases for registered hook events, scheduler-only callbacks, or stale names?",
+      "Which runtime and GUI records own requested-versus-effective child plugin and MCP capability drops?",
+      "Which configuration key is canonical for package discovery: config.plugins[] or plugins.packages?"
+    ],
+    "feature_family_keys": [
+      "plugin-discovery-and-trust",
+      "hook-registry-and-lifecycle",
+      "plugin-mutation-and-permission-boundaries",
+      "custom-tool-registration",
+      "plugin-host-policy",
+      "plugin-configuration",
+      "plugin-observability",
+      "plugin-settings-gui"
+    ],
+    "research_queries": [
+      "WASM and subprocess plugin sandbox capability models for environment, prompt, and permission hooks",
+      "fail-open versus fail-closed policies for extensibility hooks in security-sensitive dispatch pipelines",
+      "transactional install update remove state machines for desktop plugin managers",
+      "accessible virtualized plugin inventory tables with destructive controls and path privacy"
+    ]
+  },
+  "task_thread_id": "/root/a005m15_000090_attempt_0015_terminal"
+}

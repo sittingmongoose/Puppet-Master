@@ -1,0 +1,61 @@
+{
+  "schema_version": "scenario-adversarial-branch-b-preparation-test-report-v1",
+  "status": "pass",
+  "passed": 900,
+  "total": 900,
+  "failed": 0,
+  "positive": 20,
+  "negative": 880,
+  "case_id_digest": "86ba5165ab7797198293438801665a1503c40a0dc3afc93a9bbf747f8f8f6db7",
+  "category_counts": {
+    "live_positive": {"positive": 20, "negative": 0, "total": 20},
+    "upstream_pin_mutations": {"positive": 0, "negative": 320, "total": 320},
+    "atomic6_set_mutations": {"positive": 0, "negative": 150, "total": 150},
+    "feature_obligation_count_mutations": {"positive": 0, "negative": 100, "total": 100},
+    "prerequisite_identity_mutations": {"positive": 0, "negative": 110, "total": 110},
+    "runtime_drift_mutations": {"positive": 0, "negative": 80, "total": 80},
+    "filesystem_symlink_toctou": {"positive": 0, "negative": 40, "total": 40},
+    "foreign_equivalent_dedup": {"positive": 0, "negative": 30, "total": 30},
+    "authority_credit_leakage": {"positive": 0, "negative": 50, "total": 50}
+  },
+  "covered_dimensions": [
+    "all_attempt3_upstream_pins",
+    "exact_atomic6_assignment_set_and_count",
+    "687_features_and_713_question_obligations",
+    "six_empty_attempt3_outputs",
+    "fresh_luna_and_controller_prelaunch_capture_absence",
+    "reserved_unallocated_sol_slots_with_native_child_ids_null",
+    "actual_sol_native_ids_deferred_until_later_activation_runtime_capture",
+    "runtime_drift",
+    "symlink_hardlink_toctou_and_nonregular_entries",
+    "precreation_dedup_zero_and_foreign_equivalent_rejection",
+    "authority_tool_execution_and_credit_leakage"
+  ],
+  "pre_creation_dedup_result": {
+    "search_scope": "/Users/jaredsmacbookair/Documents/PuppetMaster/Plans/.audits/audit-20260710-005-plan-assurance-model-lanes-fresh-agent-exhaustive/master/scenario_adversarial/wave-0001/cohorts/cohort-0002",
+    "scope_kind": "audit_metadata_only",
+    "exact_target_namespace": "/Users/jaredsmacbookair/Documents/PuppetMaster/Plans/.audits/audit-20260710-005-plan-assurance-model-lanes-fresh-agent-exhaustive/master/scenario_adversarial/wave-0001/cohorts/cohort-0002/semantic-repair-attempt-0003-v32-activation-transaction-atomic6",
+    "exact_target_namespace_count": 0,
+    "equivalent_terminal_or_activation_prep_namespace_count": 0,
+    "matches": []
+  },
+  "runtime": {
+    "python": "/Users/jaredsmacbookair/.cache/codex-runtimes/codex-primary-runtime/dependencies/python/bin/python3",
+    "python_version": "3.12.13",
+    "pythonpath": "/Users/jaredsmacbookair/Documents/PuppetMaster/Plans/.audits/audit-20260710-005-plan-assurance-model-lanes-fresh-agent-exhaustive/master/dependencies/jsonschema-draft202012-v1/site-packages",
+    "jsonschema_version": "4.26.0",
+    "validator_class": "jsonschema.validators.Draft202012Validator",
+    "no_site": true,
+    "no_user_site": true,
+    "dont_write_bytecode": true
+  },
+  "bindings": {
+    "authority_sha256": "2ab26c988e6a059d72c44045d3748734cbfcb8774060a59891feb8cc33c80b41",
+    "tool_seal_sha256": "9ec550dcda4823df6b66af7080e7bcd82631da3a5a001507ab7040f4c4919d35",
+    "test_source_sha256": "a5a56d331fe78a80a60a13f25e39291ad269511712ce149e33160e507e759551",
+    "verifier_source_sha256": "631e30cd34c87cbf66b5804acaf4aff8d661ee36d9ed366471c18229f1b0c2a0",
+    "test_matrix_sha256": "66c9865abdcd6141c3bb0b1cb7ec45cc134a5522509cfa996f5411046ee8e30e"
+  },
+  "command": "PYTHONNOUSERSITE=1 PYTHONDONTWRITEBYTECODE=1 PYTHONPATH=/Users/jaredsmacbookair/Documents/PuppetMaster/Plans/.audits/audit-20260710-005-plan-assurance-model-lanes-fresh-agent-exhaustive/master/dependencies/jsonschema-draft202012-v1/site-packages /Users/jaredsmacbookair/.cache/codex-runtimes/codex-primary-runtime/dependencies/python/bin/python3 -S -B /Users/jaredsmacbookair/Documents/PuppetMaster/Plans/.audits/audit-20260710-005-plan-assurance-model-lanes-fresh-agent-exhaustive/master/scenario_adversarial/wave-0001/cohorts/cohort-0002/semantic-repair-attempt-0003-v32-activation-transaction-preparation-atomic6/test_branch_b_preparation.py",
+  "failures": []
+}

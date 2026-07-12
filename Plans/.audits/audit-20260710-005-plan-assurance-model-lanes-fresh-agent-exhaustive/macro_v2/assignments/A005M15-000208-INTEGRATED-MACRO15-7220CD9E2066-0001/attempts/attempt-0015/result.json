@@ -1,0 +1,474 @@
+{
+  "assignment_id": "A005M15-000208-INTEGRATED-MACRO15-7220CD9E2066-0001",
+  "attempt_id": "attempt-0015",
+  "audit_id": "audit-20260710-005-plan-assurance-model-lanes-fresh-agent-exhaustive",
+  "coverage": {
+    "all_micro_windows_reviewed": true,
+    "all_source_lines_reviewed": true,
+    "all_source_units_accounted": true,
+    "both_exact_and_adversarial_lenses_applied": true,
+    "dimensions_checked": [
+      "behavior",
+      "capabilities",
+      "inputs_outputs",
+      "contracts",
+      "states_transitions",
+      "authority",
+      "ownership",
+      "consumers",
+      "gui_truth",
+      "failures_recovery",
+      "security_privacy",
+      "propagation",
+      "operations",
+      "scale_performance",
+      "compatibility_migration",
+      "acceptance_oracles",
+      "builder_discretion",
+      "ambiguity_unknowns",
+      "missing_callers_consumers",
+      "invalid_states_transitions",
+      "concurrency_races",
+      "partial_failure",
+      "recovery_rollback",
+      "authority_boundaries",
+      "privacy_data_lifecycle",
+      "untrusted_inputs",
+      "gui_misleading_states",
+      "offline_network_loss",
+      "scale_limits",
+      "accessibility",
+      "localization",
+      "observability_support",
+      "destructive_actions",
+      "cross_document_seams",
+      "test_falsifiability",
+      "unknown_unknowns"
+    ]
+  },
+  "items": [
+    {
+      "builder_discretion": false,
+      "confidence": 0.99,
+      "dimensions": [
+        "behavior",
+        "capabilities",
+        "contracts",
+        "acceptance_oracles"
+      ],
+      "evidence": [
+        {
+          "exact_quote": "\"schema_id\":{\"type\":\"string\",\"const\":\"pm.runtime_artifact.screenshot.schema.v1\"}",
+          "line_end": 1,
+          "line_start": 1,
+          "path": "Plans/runtime_artifact_screenshot.schema.json",
+          "source_sha256": "d2856a81c5de509b47f8c8ee205dee44436d67d43566e7793b6177d256f6c6b6"
+        },
+        {
+          "exact_quote": "\"artifact_type\":{\"type\":\"string\",\"const\":\"screenshot\"}",
+          "line_end": 1,
+          "line_start": 1,
+          "path": "Plans/runtime_artifact_screenshot.schema.json",
+          "source_sha256": "d2856a81c5de509b47f8c8ee205dee44436d67d43566e7793b6177d256f6c6b6"
+        }
+      ],
+      "gap_kind": "none",
+      "impact": "Validators can unambiguously identify the schema version and reject artifacts whose discriminator is not screenshot.",
+      "item_id": "M15-000208-I001",
+      "item_type": "explicit_non_gap",
+      "severity": "info",
+      "source_unit_refs": [
+        "SEMANTIC:JSON_ROOT:Plans/runtime_artifact_screenshot.schema.json",
+        "STRUCTURAL:$"
+      ],
+      "statement": "The root contract fixes both schema_id and artifact_type to screenshot-specific constants.",
+      "title": "Screenshot discriminators are exact constants"
+    },
+    {
+      "builder_discretion": false,
+      "confidence": 0.99,
+      "dimensions": [
+        "inputs_outputs",
+        "contracts",
+        "ownership",
+        "propagation",
+        "operations"
+      ],
+      "evidence": [
+        {
+          "exact_quote": "\"required\":[\"schema_id\",\"artifact_id\",\"artifact_type\",\"project_id\",\"run_id\",\"attempt_id\",\"created_at_utc\",\"projection_freshness\",\"projection_health\",\"retention_class\",\"routing_refs\",\"type_payload\"]",
+          "line_end": 1,
+          "line_start": 1,
+          "path": "Plans/runtime_artifact_screenshot.schema.json",
+          "source_sha256": "d2856a81c5de509b47f8c8ee205dee44436d67d43566e7793b6177d256f6c6b6"
+        }
+      ],
+      "gap_kind": "none",
+      "impact": "Every valid artifact carries core identity, run lineage, projection status, retention, routing, and type payload fields.",
+      "item_id": "M15-000208-I002",
+      "item_type": "contract",
+      "severity": "info",
+      "source_unit_refs": [
+        "SEMANTIC:JSON_ROOT:Plans/runtime_artifact_screenshot.schema.json",
+        "STRUCTURAL:$"
+      ],
+      "statement": "The root requires twelve named fields spanning identity, execution lineage, lifecycle projection, routing, and screenshot payload.",
+      "title": "Core artifact envelope is required"
+    },
+    {
+      "builder_discretion": false,
+      "confidence": 0.99,
+      "dimensions": [
+        "contracts",
+        "compatibility_migration",
+        "acceptance_oracles",
+        "untrusted_inputs"
+      ],
+      "evidence": [
+        {
+          "exact_quote": "\"type\":\"object\",\"additionalProperties\":false",
+          "line_end": 1,
+          "line_start": 1,
+          "path": "Plans/runtime_artifact_screenshot.schema.json",
+          "source_sha256": "d2856a81c5de509b47f8c8ee205dee44436d67d43566e7793b6177d256f6c6b6"
+        }
+      ],
+      "gap_kind": "none",
+      "impact": "Unknown top-level fields are rejected, making envelope evolution deliberate and testable.",
+      "item_id": "M15-000208-I003",
+      "item_type": "explicit_non_gap",
+      "severity": "info",
+      "source_unit_refs": [
+        "SEMANTIC:JSON_ROOT:Plans/runtime_artifact_screenshot.schema.json",
+        "STRUCTURAL:$"
+      ],
+      "statement": "The screenshot artifact is a closed top-level object.",
+      "title": "Top-level extension is closed"
+    },
+    {
+      "builder_discretion": true,
+      "confidence": 0.99,
+      "dimensions": [
+        "inputs_outputs",
+        "contracts",
+        "gui_truth",
+        "security_privacy",
+        "scale_performance",
+        "builder_discretion",
+        "untrusted_inputs",
+        "gui_misleading_states",
+        "scale_limits",
+        "test_falsifiability"
+      ],
+      "evidence": [
+        {
+          "exact_quote": "\"type_payload\":{\"type\":\"object\",\"minProperties\":1}",
+          "line_end": 1,
+          "line_start": 1,
+          "path": "Plans/runtime_artifact_screenshot.schema.json",
+          "source_sha256": "d2856a81c5de509b47f8c8ee205dee44436d67d43566e7793b6177d256f6c6b6"
+        }
+      ],
+      "gap_kind": "underspecified_payload",
+      "impact": "Any nonempty object satisfies the screenshot payload, so producers can emit incompatible shapes and consumers cannot validate image location, encoding, dimensions, integrity, or size limits.",
+      "item_id": "M15-000208-I004",
+      "item_type": "gap",
+      "severity": "high",
+      "source_unit_refs": [
+        "SEMANTIC:JSON_ROOT:Plans/runtime_artifact_screenshot.schema.json",
+        "STRUCTURAL:$"
+      ],
+      "statement": "The required type_payload has no screenshot-specific properties or closed shape beyond being a nonempty object.",
+      "title": "Screenshot payload is structurally unconstrained"
+    },
+    {
+      "builder_discretion": true,
+      "confidence": 0.99,
+      "dimensions": [
+        "capabilities",
+        "inputs_outputs",
+        "consumers",
+        "gui_truth",
+        "failures_recovery",
+        "partial_failure",
+        "gui_misleading_states",
+        "offline_network_loss",
+        "observability_support",
+        "test_falsifiability"
+      ],
+      "evidence": [
+        {
+          "exact_quote": "\"content_ref\":{\"type\":\"string\"},\"source_surface\":{\"type\":\"string\"}",
+          "line_end": 1,
+          "line_start": 1,
+          "path": "Plans/runtime_artifact_screenshot.schema.json",
+          "source_sha256": "d2856a81c5de509b47f8c8ee205dee44436d67d43566e7793b6177d256f6c6b6"
+        }
+      ],
+      "gap_kind": "missing_content_contract",
+      "impact": "A schema-valid screenshot can omit content_ref entirely or provide an empty value, leaving viewers and support tooling with no guaranteed retrievable screenshot and no defined unavailable-content state.",
+      "item_id": "M15-000208-I005",
+      "item_type": "gap",
+      "severity": "high",
+      "source_unit_refs": [
+        "SEMANTIC:JSON_ROOT:Plans/runtime_artifact_screenshot.schema.json",
+        "STRUCTURAL:$"
+      ],
+      "statement": "The optional content_ref and source_surface strings are neither required nor constrained to be nonempty.",
+      "title": "Valid artifacts need not identify screenshot content"
+    },
+    {
+      "builder_discretion": true,
+      "confidence": 0.99,
+      "dimensions": [
+        "states_transitions",
+        "gui_truth",
+        "failures_recovery",
+        "operations",
+        "builder_discretion",
+        "ambiguity_unknowns",
+        "invalid_states_transitions",
+        "recovery_rollback",
+        "privacy_data_lifecycle",
+        "gui_misleading_states",
+        "destructive_actions",
+        "test_falsifiability"
+      ],
+      "evidence": [
+        {
+          "exact_quote": "\"projection_freshness\":{\"type\":\"string\"},\"projection_health\":{\"type\":\"string\"},\"retention_class\":{\"type\":\"string\"}",
+          "line_end": 1,
+          "line_start": 1,
+          "path": "Plans/runtime_artifact_screenshot.schema.json",
+          "source_sha256": "d2856a81c5de509b47f8c8ee205dee44436d67d43566e7793b6177d256f6c6b6"
+        }
+      ],
+      "gap_kind": "unbounded_state_vocabulary",
+      "impact": "Empty, misspelled, or contradictory lifecycle labels validate, so UI status, recovery decisions, and retention or deletion behavior can diverge between producers and consumers.",
+      "item_id": "M15-000208-I006",
+      "item_type": "gap",
+      "severity": "high",
+      "source_unit_refs": [
+        "SEMANTIC:JSON_ROOT:Plans/runtime_artifact_screenshot.schema.json",
+        "STRUCTURAL:$"
+      ],
+      "statement": "Projection freshness, projection health, and retention class are required but accept any string, including the empty string.",
+      "title": "Lifecycle and projection states lack controlled values"
+    },
+    {
+      "builder_discretion": true,
+      "confidence": 0.99,
+      "dimensions": [
+        "inputs_outputs",
+        "contracts",
+        "operations",
+        "compatibility_migration",
+        "ambiguity_unknowns",
+        "recovery_rollback",
+        "localization",
+        "observability_support",
+        "test_falsifiability"
+      ],
+      "evidence": [
+        {
+          "exact_quote": "\"created_at_utc\":{\"type\":\"string\",\"minLength\":1}",
+          "line_end": 1,
+          "line_start": 1,
+          "path": "Plans/runtime_artifact_screenshot.schema.json",
+          "source_sha256": "d2856a81c5de509b47f8c8ee205dee44436d67d43566e7793b6177d256f6c6b6"
+        }
+      ],
+      "gap_kind": "timestamp_format_missing",
+      "impact": "Malformed or non-UTC timestamps validate, undermining ordering, freshness calculations, retention decisions, and deterministic tests across locale and timezone boundaries.",
+      "item_id": "M15-000208-I007",
+      "item_type": "gap",
+      "severity": "medium",
+      "source_unit_refs": [
+        "SEMANTIC:JSON_ROOT:Plans/runtime_artifact_screenshot.schema.json",
+        "STRUCTURAL:$"
+      ],
+      "statement": "created_at_utc requires only a nonempty string and does not enforce a date-time format or UTC offset.",
+      "title": "UTC creation time is not syntactically enforced"
+    },
+    {
+      "builder_discretion": true,
+      "confidence": 0.98,
+      "dimensions": [
+        "authority",
+        "ownership",
+        "consumers",
+        "security_privacy",
+        "propagation",
+        "ambiguity_unknowns",
+        "missing_callers_consumers",
+        "authority_boundaries",
+        "privacy_data_lifecycle",
+        "cross_document_seams",
+        "unknown_unknowns"
+      ],
+      "evidence": [
+        {
+          "exact_quote": "\"producer_ref\":{\"type\":\"string\"},\"actor_ref\":{\"type\":\"string\"}",
+          "line_end": 1,
+          "line_start": 1,
+          "path": "Plans/runtime_artifact_screenshot.schema.json",
+          "source_sha256": "d2856a81c5de509b47f8c8ee205dee44436d67d43566e7793b6177d256f6c6b6"
+        }
+      ],
+      "gap_kind": "authority_and_ownership_unspecified",
+      "impact": "The artifact cannot prove who was authorized to capture or access the screenshot, who owns it, or which consumer is permitted to resolve its content, creating privacy and audit ambiguity.",
+      "item_id": "M15-000208-I008",
+      "item_type": "gap",
+      "severity": "high",
+      "source_unit_refs": [
+        "SEMANTIC:JSON_ROOT:Plans/runtime_artifact_screenshot.schema.json",
+        "STRUCTURAL:$"
+      ],
+      "statement": "Producer and actor references are optional unconstrained strings, and the root defines no access-authority or consumer contract.",
+      "title": "Capture authority and consumer access are not represented"
+    },
+    {
+      "builder_discretion": true,
+      "confidence": 0.99,
+      "dimensions": [
+        "inputs_outputs",
+        "contracts",
+        "propagation",
+        "scale_performance",
+        "concurrency_races",
+        "partial_failure",
+        "scale_limits",
+        "observability_support",
+        "test_falsifiability"
+      ],
+      "evidence": [
+        {
+          "exact_quote": "\"receipt_refs\":{\"type\":\"array\",\"items\":{\"type\":\"string\",\"minLength\":1}}",
+          "line_end": 1,
+          "line_start": 1,
+          "path": "Plans/runtime_artifact_screenshot.schema.json",
+          "source_sha256": "d2856a81c5de509b47f8c8ee205dee44436d67d43566e7793b6177d256f6c6b6"
+        },
+        {
+          "exact_quote": "\"routing_refs\":{\"type\":\"array\",\"minItems\":1,\"items\":{\"type\":\"string\",\"minLength\":1}}",
+          "line_end": 1,
+          "line_start": 1,
+          "path": "Plans/runtime_artifact_screenshot.schema.json",
+          "source_sha256": "d2856a81c5de509b47f8c8ee205dee44436d67d43566e7793b6177d256f6c6b6"
+        }
+      ],
+      "gap_kind": "reference_collection_bounds_missing",
+      "impact": "Duplicate references and arbitrarily large arrays validate, allowing repeated routing or receipt processing and unbounded validation, storage, and fan-out costs; receipt_refs may also be present but empty.",
+      "item_id": "M15-000208-I009",
+      "item_type": "gap",
+      "severity": "medium",
+      "source_unit_refs": [
+        "SEMANTIC:JSON_ROOT:Plans/runtime_artifact_screenshot.schema.json",
+        "STRUCTURAL:$"
+      ],
+      "statement": "Receipt and routing reference arrays have no uniqueness or maximum-size constraints, and receipt_refs has no minimum cardinality.",
+      "title": "Reference arrays permit duplication and unbounded growth"
+    },
+    {
+      "builder_discretion": true,
+      "confidence": 0.99,
+      "dimensions": [
+        "inputs_outputs",
+        "states_transitions",
+        "propagation",
+        "compatibility_migration",
+        "ambiguity_unknowns",
+        "invalid_states_transitions",
+        "concurrency_races",
+        "cross_document_seams",
+        "test_falsifiability"
+      ],
+      "evidence": [
+        {
+          "exact_quote": "\"thread_id\":{\"type\":\"string\"},\"node_id\":{\"type\":\"string\"},\"provider_attempt_ref\":{\"type\":\"string\"},\"usage_event_ref\":{\"type\":\"string\"}",
+          "line_end": 1,
+          "line_start": 1,
+          "path": "Plans/runtime_artifact_screenshot.schema.json",
+          "source_sha256": "d2856a81c5de509b47f8c8ee205dee44436d67d43566e7793b6177d256f6c6b6"
+        }
+      ],
+      "gap_kind": "lineage_consistency_missing",
+      "impact": "Empty or mutually inconsistent lineage references validate, so concurrent attempts or migrations can associate a screenshot with the wrong thread, node, provider attempt, or usage event without schema rejection.",
+      "item_id": "M15-000208-I010",
+      "item_type": "gap",
+      "severity": "medium",
+      "source_unit_refs": [
+        "SEMANTIC:JSON_ROOT:Plans/runtime_artifact_screenshot.schema.json",
+        "STRUCTURAL:$"
+      ],
+      "statement": "Optional lineage references are unconstrained strings and have no cross-field consistency rules with required run_id and attempt_id.",
+      "title": "Execution lineage is not cross-validated"
+    }
+  ],
+  "model": "gpt-5.6-sol",
+  "phase": "blind_macro_window_review",
+  "reasoning_effort": "xhigh",
+  "schema_version": "macro-review-result-v1",
+  "segments": [
+    {
+      "core_range": [
+        1,
+        1
+      ],
+      "covered_source_unit_refs": [
+        "SEMANTIC:JSON_ROOT:Plans/runtime_artifact_screenshot.schema.json",
+        "STRUCTURAL:$"
+      ],
+      "item_ids": [
+        "M15-000208-I001",
+        "M15-000208-I002",
+        "M15-000208-I003",
+        "M15-000208-I004",
+        "M15-000208-I005",
+        "M15-000208-I006",
+        "M15-000208-I007",
+        "M15-000208-I008",
+        "M15-000208-I009",
+        "M15-000208-I010"
+      ],
+      "reviewed": true,
+      "summary": "Reviewed the complete screenshot artifact JSON root with exact-contract and adversarial-negative-space lenses; the envelope is closed and discriminated, while screenshot payload, content availability, lifecycle vocabularies, authority, lineage consistency, and collection bounds remain underconstrained.",
+      "window_id": "WIN-7220CD9E2066-0001"
+    }
+  ],
+  "self_attestation": {
+    "no_canonical_writes": true,
+    "no_external_research_during_blind_review": true,
+    "no_peer_result_access": true,
+    "no_prior_audit_access": true,
+    "no_unrelated_source_access": true,
+    "terminal_after_submission": true
+  },
+  "source_binding": {
+    "bundle_id": "MACRO15-7220CD9E2066-0001",
+    "document_path": "Plans/runtime_artifact_screenshot.schema.json",
+    "micro_window_ids": [
+      "WIN-7220CD9E2066-0001"
+    ],
+    "source_sha256": "d2856a81c5de509b47f8c8ee205dee44436d67d43566e7793b6177d256f6c6b6"
+  },
+  "status": "completed",
+  "synthesis": {
+    "cross_document_questions": [
+      "Does a shared runtime-artifact contract define canonical projection_freshness, projection_health, and retention_class values and their transitions?",
+      "Which owner schema defines the screenshot type_payload, content retrieval contract, integrity metadata, and unavailable-content recovery state?",
+      "Which authority contract governs screenshot capture, access, redaction, retention, and deletion across project, run, and attempt boundaries?"
+    ],
+    "feature_family_keys": [
+      "runtime-artifact-screenshot",
+      "runtime-artifact-projection-lifecycle",
+      "runtime-artifact-routing-retention"
+    ],
+    "research_queries": [
+      "JSON Schema 2020-12 patterns for closed discriminated screenshot payloads and bounded reference arrays",
+      "Screenshot artifact metadata standards for dimensions media type integrity redaction retention and access control",
+      "Reliable lifecycle state vocabularies for asynchronously stored artifacts under offline and partial-failure conditions"
+    ]
+  },
+  "task_thread_id": "/root/a005m15_b10_000208_attempt_0015_terminal"
+}

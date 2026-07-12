@@ -1,0 +1,83 @@
+{
+  "audit_id": "audit-20260710-005-plan-assurance-model-lanes-fresh-agent-exhaustive",
+  "schema_version": "audit-concurrency-policy-v20",
+  "status": "PROSPECTIVE_CONDITIONAL_V7_3_INDEPENDENT_GATE_AND_PRODUCTION_CLOSURE",
+  "effective_date": "2026-07-11",
+  "supersedes_prospectively": "master/coordination/CONCURRENCY_POLICY_V19.json",
+  "prior_policies_mutated": false,
+  "activation_condition": {
+    "v7_3_terminal_report_path": "master/external_research/sprint-wave-0001/retry-attempt-0007/receipt-closure-v7_3/terminal-preparation-report-v7_3.json",
+    "report_must_exist_and_be_hash_stable": true,
+    "report_status_must_be_ready_for_fresh_luna_prelaunch": true,
+    "minimum_tests_passed": 800,
+    "production_zero_state_required": true,
+    "work_before_condition": "WAIT_ONLY"
+  },
+  "quota_control": {
+    "latest_remaining_percent": 65,
+    "recent_burn_points_per_hour": 15.0250417362,
+    "maximum_active_semantic_leaves": 16,
+    "preferred_active_range": [8, 12],
+    "atomic_transaction_cap": 8,
+    "concurrency_change": "none"
+  },
+  "independent_gate": {
+    "controller": "019f5078-6501-7223-b52f-2251010bdc41",
+    "controller_model": "gpt-5.6-luna",
+    "controller_reasoning_effort": "max",
+    "fresh_reviewer_count": 1,
+    "fork_turns": "none",
+    "descendants_followups_retries": 0,
+    "report_path": "master/external_research/sprint-wave-0001/retry-attempt-0007/receipt-closure-v7_3/validation/luna-independent-prelaunch-v7_3.json",
+    "required_runtime": {
+      "python_executable": "/Users/jaredsmacbookair/.cache/codex-runtimes/codex-primary-runtime/dependencies/python/bin/python3",
+      "python_version": "3.12.13",
+      "dependency_site_packages": "master/dependencies/jsonschema-draft202012-v1/site-packages",
+      "flags": ["-S", "-B"],
+      "jsonschema": "4.26.0",
+      "rpds": "macOS arm64 CPython 3.12 extension"
+    },
+    "must_reconstruct_not_trust_primary": true,
+    "must_run_every_v7_3_test": true,
+    "must_execute_temporary_exact_two_receipt_and_two_row_capture_fixture": true,
+    "must_reject_all_v18_localized_defects": true,
+    "production_writes_during_review": false
+  },
+  "conditional_production_closure": {
+    "only_after_unqualified_independent_pass": true,
+    "invoke_receipt_writer_once_per_assignment": ["ER-0003", "ER-0008"],
+    "invoke_capture_writer_once": true,
+    "expected_receipts": 2,
+    "expected_capture_rows": 2,
+    "leaf_reruns": 0,
+    "result_or_activation_mutation": false,
+    "verify_raw_canonical_tree_native_result_identity_joins": true,
+    "verify_unique_terminal_native_identity_and_one_result_each": true,
+    "send_stable_paths_and_hashes_to_sol_primary_controller": true,
+    "checkpoint_or_credit_at_this_stage": 0
+  },
+  "downstream": {
+    "sol_primary_only_after_production_closure": true,
+    "fresh_luna_cumulative_reviewer_only_after_sol_primary_exact_eight_of_eight": true,
+    "scenario_activation_only_after_independent_cumulative_eight_of_eight": true
+  },
+  "durable_artifacts_to_preserve": {
+    "v18_fail_report_sha256": "89013c7334367dc69dfbeeedea221a2f013a318a4aa8a9de44f1d0ba84748e7c",
+    "seam_checkpoint_sha256": "72bfdc5519bb3b25f723a6a107320357a9176c67db8990f444193274cf27c910",
+    "certification_v6_report_sha256": "fb1b1ccfb6ef11f1e99164cc8196d73043a9374cedd0e3f5c293a61bc5d97435",
+    "scenario_readiness_v16_report_sha256": "131d91ee8679132f8b806cab517350393105b43f86cc87342ac6987c75f12c02",
+    "seam_repair_attempt_0002_report_sha256": "385cc8d1423859087f047e9ea1b25f4b5f927142f3af0c8fd1528be8b8a9b901"
+  },
+  "controller_threads": {
+    "sol": "019f4f5e-96c6-7893-8c94-ce2c1b760d6c",
+    "luna": "019f5078-6501-7223-b52f-2251010bdc41",
+    "extra_controllers_authorized": 0
+  },
+  "quality_invariants": {
+    "semantic_scope_reduced": false,
+    "independent_validation_reduced": false,
+    "external_research_requirement_reduced": false,
+    "canonical_plan_writes_authorized": false,
+    "immutable_lineage_mutation_authorized": false
+  }
+}

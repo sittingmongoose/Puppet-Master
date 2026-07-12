@@ -1,0 +1,36 @@
+{
+  "schema_version": "universal-shadow-certification-retry-verifier-supersession-v30-attempt-0002-v2",
+  "status": "APPEND_ONLY_HARNESS_SUPERSESSION_PREPARATION_ONLY",
+  "audit_id": "audit-20260710-005-plan-assurance-model-lanes-fresh-agent-exhaustive",
+  "wave_id": "universal-shadow-certification-wave-0001",
+  "attempt_id": "attempt-0002",
+  "payload_authority_sha256": "b8c9f5a21b4dce2163c6eb91194da43c5391718e64b275322f19d960fd236fc0",
+  "payloads_or_cohort_authorities_mutated": false,
+  "v1_verifier_sha256": "2e454ede9e830b2fbcd32c99aa13d340d2c68cdad8daf129fe02146fd886b4be",
+  "v1_first_isolated_report_stdout_sha256": "791d7022d5d0da87311e67c8614b391939aec66f83f715ee7f490ed45b193e84",
+  "v1_first_isolated_failure_count": 18,
+  "v1_harness_failures_preserved": {
+    "manifest_summary_rows_mistakenly_required_to_duplicate_authoritative_intent_authorization_launch_and_spawn_fields": 16,
+    "date_negative_used_shape_valid_2026_99_99_instead_of_malformed_date": 2
+  },
+  "v2_verifier_sha256": "0c6c2c9ad2a5f79c371d80ed329480dd7b2637742e1300eccfb586d900017b77",
+  "v2_test_sha256": "0405bfdcd34bf1cf49e78be5d6c2404a738f94bf0f69662a8a553e8c5d114e8d",
+  "v2_corrections": [
+    "verify activation_authorized false on each manifest row and verify launch_authorized false plus spawn none and spawn_count zero on each authoritative intent and prospective authorization",
+    "verify manifest top-level activation false launch false spawn none",
+    "use not-a-date for the Draft202012 invalid accessed_date negative",
+    "execute the retained v1 verifier only through isolated CPython 3.12.13 with jsonschema 4.26.0"
+  ],
+  "complete_v8_suite_retained": true,
+  "v8_substantive_cases_retained": 437,
+  "v8_bypass_reproductions_retained": 12,
+  "v8_schema_fuzz_cases_retained": 100,
+  "schema_checks_removed": 0,
+  "semantic_checks_removed": 0,
+  "activation_authorized": false,
+  "launch_authorized": false,
+  "spawn": "none",
+  "spawn_count": 0,
+  "credit": 0,
+  "fresh_luna_validation_required": true
+}

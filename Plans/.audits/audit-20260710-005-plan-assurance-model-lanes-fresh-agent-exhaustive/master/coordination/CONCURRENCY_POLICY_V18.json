@@ -1,0 +1,76 @@
+{
+  "audit_id": "audit-20260710-005-plan-assurance-model-lanes-fresh-agent-exhaustive",
+  "schema_version": "audit-concurrency-policy-v18",
+  "status": "ACTIVE_RUNTIME_PINNED_RECOVERY",
+  "effective_date": "2026-07-11",
+  "supersedes_prospectively": "master/coordination/CONCURRENCY_POLICY_V17.json",
+  "prior_policies_mutated": false,
+  "reason": "the V17 replacement reviewer selected a non-authoritative Python 3.9 emulation after incorrectly reporting that the pinned CPython 3.12 runtime was unavailable",
+  "quota_control": {
+    "latest_remaining_percent": 65,
+    "recent_burn_points_per_hour": 15.0250417362,
+    "maximum_active_semantic_leaves": 16,
+    "preferred_active_range": [8, 12],
+    "atomic_transaction_cap": 8,
+    "concurrency_change": "none"
+  },
+  "runtime_fact": {
+    "python_executable": "/Users/jaredsmacbookair/.cache/codex-runtimes/codex-primary-runtime/dependencies/python/bin/python3",
+    "python_symlink_target": "python3.12",
+    "python_version": "3.12.13",
+    "dependency_site_packages": "master/dependencies/jsonschema-draft202012-v1/site-packages",
+    "required_environment": {
+      "PYTHONNOUSERSITE": "1",
+      "PYTHONDONTWRITEBYTECODE": "1",
+      "PYTHONPATH": "<audit-root>/master/dependencies/jsonschema-draft202012-v1/site-packages"
+    },
+    "required_flags": ["-S", "-B"],
+    "verified_imports": {
+      "jsonschema": "4.26.0",
+      "rpds": "macOS arm64 CPython 3.12 extension"
+    },
+    "authoritative_sources": [
+      "master/dependencies/jsonschema-draft202012-v1/dependency_authority.json",
+      "master/dependencies/jsonschema-draft202012-v1/install_receipt.json",
+      "master/dependencies/jsonschema-draft202012-v1/cache-reconciliation-v2/CACHE_RECONCILIATION_AUTHORITY_V2.json"
+    ]
+  },
+  "invalid_reviewer_lineage": {
+    "interrupted_predecessor": "019f546a-e7bc-7990-8cf5-e422d7753736",
+    "runtime_noncompliant_replacement": "019f5473-c7f4-7111-949f-2f6664916819",
+    "both_credit": 0,
+    "production_writes_authorized": false,
+    "python_3_9_preload_or_in_process_emulation_accepted": false,
+    "followup_for_pass_forbidden": true
+  },
+  "one_final_runtime_pinned_reviewer": {
+    "authorized": true,
+    "spawn_only_after_runtime_noncompliant_replacement_is_terminal": true,
+    "fresh_luna_max_identity_required": true,
+    "fork_turns": "none",
+    "descendants_followups_retries": 0,
+    "task_must_include_exact_runtime_command": true,
+    "must_execute_unchanged_sealed_subprocess_path": true,
+    "python_3_9_or_python_3_14_execution_forbidden": true,
+    "same_frozen_v7_2_terminal_inputs": true,
+    "production_writers_only_after_unqualified_pass": true
+  },
+  "durable_artifacts_to_preserve": {
+    "seam_checkpoint_sha256": "72bfdc5519bb3b25f723a6a107320357a9176c67db8990f444193274cf27c910",
+    "certification_v6_report_sha256": "fb1b1ccfb6ef11f1e99164cc8196d73043a9374cedd0e3f5c293a61bc5d97435",
+    "scenario_readiness_v16_report_sha256": "131d91ee8679132f8b806cab517350393105b43f86cc87342ac6987c75f12c02",
+    "seam_repair_attempt_0002_report_sha256": "385cc8d1423859087f047e9ea1b25f4b5f927142f3af0c8fd1528be8b8a9b901"
+  },
+  "controller_threads": {
+    "sol": "019f4f5e-96c6-7893-8c94-ce2c1b760d6c",
+    "luna": "019f5078-6501-7223-b52f-2251010bdc41",
+    "extra_controllers_authorized": 0
+  },
+  "quality_invariants": {
+    "semantic_scope_reduced": false,
+    "independent_validation_reduced": false,
+    "external_research_requirement_reduced": false,
+    "canonical_plan_writes_authorized": false,
+    "immutable_lineage_mutation_authorized": false
+  }
+}

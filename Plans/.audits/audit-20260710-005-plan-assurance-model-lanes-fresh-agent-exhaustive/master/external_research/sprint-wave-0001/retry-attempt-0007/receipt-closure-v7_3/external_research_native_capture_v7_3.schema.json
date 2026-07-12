@@ -1,0 +1,75 @@
+{
+  "$id": "urn:a005:external-research-native-capture-v7.3",
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "additionalProperties": false,
+  "$defs": {
+    "leafBase": {
+      "additionalProperties": false,
+      "patternProperties": {
+        ".*": {},
+        ".*_sha256$": {"pattern": "^[0-9a-f]{64}$", "type": "string"}
+      },
+      "properties": {
+        "agent_path": {"minLength": 1, "type": "string"},
+        "native_child_thread_id": {"pattern": "^[0-9a-f-]{36}$", "type": "string"},
+        "native_child_turn_id": {"pattern": "^[0-9a-f-]{36}$", "type": "string"},
+        "terminal_response_exact": {"const": "PMR1"}
+      },
+      "propertyNames": {
+        "enum": [
+          "assignment_id", "agent_path", "native_child_thread_id", "native_child_turn_id", "terminal_response_exact",
+          "result_file_sha256", "result_object_canonical_sha256", "receipt_file_sha256",
+          "receipt_object_canonical_sha256", "output_tree_sha256", "activation_core_file_sha256",
+          "activation_core_object_canonical_sha256", "leaf_dispatch_authorization_file_sha256",
+          "leaf_dispatch_authorization_object_canonical_sha256"
+        ]
+      },
+      "required": [
+        "assignment_id", "agent_path", "native_child_thread_id", "native_child_turn_id", "terminal_response_exact",
+        "result_file_sha256", "result_object_canonical_sha256", "receipt_file_sha256",
+        "receipt_object_canonical_sha256", "output_tree_sha256", "activation_core_file_sha256",
+        "activation_core_object_canonical_sha256", "leaf_dispatch_authorization_file_sha256",
+        "leaf_dispatch_authorization_object_canonical_sha256"
+      ],
+      "type": "object"
+    }
+  },
+  "properties": {
+    "schema_version": {"const": "external-research-native-capture-v7.3"},
+    "attempt_id": {"const": "attempt-0007"},
+    "controller_thread_id": {"const": "019f5078-6501-7223-b52f-2251010bdc41"},
+    "assignment_count": {"const": 2},
+    "native_state_path": {"minLength": 1, "type": "string"},
+    "native_state_file_sha256": {"pattern": "^[0-9a-f]{64}$", "type": "string"},
+    "digest_semantics_version": {"const": "raw-file-and-canonical-object-explicit-v7.3"},
+    "leaves": {
+      "items": false,
+      "maxItems": 2,
+      "minItems": 2,
+      "prefixItems": [
+        {"allOf": [{"$ref": "#/$defs/leafBase"}, {"properties": {"assignment_id": {"const": "ER-0003"}, "result_file_sha256": {"const": "5065a9b0d2588adbc4a1e3e60f0dee02a334d8024f48f232f53c39805779d9b4"}}}]},
+        {"allOf": [{"$ref": "#/$defs/leafBase"}, {"properties": {"assignment_id": {"const": "ER-0008"}, "result_file_sha256": {"const": "93a80931e26bc25f97c4de87e12b8c2eb7576ef85c5be6ab72ecc1d59eb73d51"}}}]}
+      ],
+      "type": "array"
+    },
+    "native_identity_uniqueness_verified": {"const": true},
+    "receipt_result_tree_joins_verified": {"const": true},
+    "single_buffers_used": {"const": true},
+    "toctou_recheck_passed_before_write": {"const": true},
+    "toctou_recheck_passed_after_write": {"const": true},
+    "atomic_exclusive_write": {"const": true},
+    "coverage_credit": {"const": 0},
+    "research_credit": {"const": 0},
+    "promotion_credit": {"const": 0},
+    "spec_credit": {"const": 0},
+    "merge_credit": {"const": 0}
+  },
+  "required": [
+    "schema_version", "attempt_id", "controller_thread_id", "assignment_count", "native_state_path",
+    "native_state_file_sha256", "digest_semantics_version", "leaves", "native_identity_uniqueness_verified",
+    "receipt_result_tree_joins_verified", "single_buffers_used", "toctou_recheck_passed_before_write",
+    "toctou_recheck_passed_after_write", "atomic_exclusive_write", "coverage_credit", "research_credit",
+    "promotion_credit", "spec_credit", "merge_credit"
+  ],
+  "type": "object"
+}

@@ -1,0 +1,460 @@
+{
+  "assignment_id": "A005M15-000012-INTEGRATED-MACRO15-BCDD1AE883C0-0001",
+  "attempt_id": "attempt-0015",
+  "audit_id": "audit-20260710-005-plan-assurance-model-lanes-fresh-agent-exhaustive",
+  "coverage": {
+    "all_micro_windows_reviewed": true,
+    "all_source_lines_reviewed": true,
+    "all_source_units_accounted": true,
+    "both_exact_and_adversarial_lenses_applied": true,
+    "dimensions_checked": [
+      "behavior",
+      "capabilities",
+      "inputs_outputs",
+      "contracts",
+      "states_transitions",
+      "authority",
+      "ownership",
+      "consumers",
+      "gui_truth",
+      "failures_recovery",
+      "security_privacy",
+      "propagation",
+      "operations",
+      "scale_performance",
+      "compatibility_migration",
+      "acceptance_oracles",
+      "builder_discretion",
+      "ambiguity_unknowns",
+      "missing_callers_consumers",
+      "invalid_states_transitions",
+      "concurrency_races",
+      "partial_failure",
+      "recovery_rollback",
+      "authority_boundaries",
+      "privacy_data_lifecycle",
+      "untrusted_inputs",
+      "gui_misleading_states",
+      "offline_network_loss",
+      "scale_limits",
+      "accessibility",
+      "localization",
+      "observability_support",
+      "destructive_actions",
+      "cross_document_seams",
+      "test_falsifiability",
+      "unknown_unknowns"
+    ]
+  },
+  "items": [
+    {
+      "builder_discretion": true,
+      "confidence": 0.97,
+      "dimensions": ["contracts", "states_transitions", "failures_recovery", "concurrency_races", "partial_failure", "recovery_rollback", "test_falsifiability"],
+      "evidence": [{
+        "exact_quote": "Chain stitching must survive retries and partial reruns, and follow-ons plus auto-open behavior must open the exact broken chain step rather than a generic `Publish / Unraid` page.",
+        "line_end": 152,
+        "line_start": 152,
+        "path": "Plans/Containers_Registry_and_Unraid.md",
+        "source_sha256": "2ff2c1c3c77b3bf336b1d850e592224678e440f82c74e59596393707ac79272b"
+      }],
+      "gap_kind": "missing_idempotency_and_concurrent_resume_contract",
+      "impact": "Retries, partial reruns, auto-open follow-ons, and simultaneous operator actions can duplicate remote side effects or attach state to the wrong chain node without a correlation key, replay rule, or conflict-resolution oracle.",
+      "item_id": "A005M15-I001",
+      "item_type": "gap",
+      "severity": "high",
+      "source_unit_refs": ["SEMANTIC:PROLOGUE:Plans/Containers_Registry_and_Unraid.md:CONT-001"],
+      "statement": "The operational cockpit requires publish-chain stitching to survive retries and partial reruns but does not define idempotency keys, duplicate-command behavior, or concurrency arbitration across surfaces.",
+      "title": "Publish-chain replay and concurrency semantics are unspecified"
+    },
+    {
+      "builder_discretion": true,
+      "confidence": 0.98,
+      "dimensions": ["states_transitions", "failures_recovery", "scale_performance", "concurrency_races", "recovery_rollback", "offline_network_loss", "observability_support", "test_falsifiability"],
+      "evidence": [{
+        "exact_quote": "- While awaiting completion, Puppet Master MUST emit `docker.auth.browser_login.polling` every 5 seconds until a terminal outcome occurs.",
+        "line_end": 283,
+        "line_start": 283,
+        "path": "Plans/Containers_Registry_and_Unraid.md",
+        "source_sha256": "2ff2c1c3c77b3bf336b1d850e592224678e440f82c74e59596393707ac79272b"
+      }],
+      "gap_kind": "auth_polling_backoff_and_restart_gap",
+      "impact": "A fixed polling loop has no defined handling for network loss, provider throttling, application restart, duplicated login attempts, or late terminal responses, so implementations can diverge and overload the provider.",
+      "item_id": "A005M15-I002",
+      "item_type": "gap",
+      "severity": "medium",
+      "source_unit_refs": ["SEMANTIC:PROLOGUE:Plans/Containers_Registry_and_Unraid.md:CONT-002"],
+      "statement": "The browser/device-login contract fixes a five-second polling interval and terminal events but omits backoff, retry budgets, offline behavior, restart recovery, and duplicate-flow reconciliation.",
+      "title": "Browser-login polling lacks resilience semantics"
+    },
+    {
+      "builder_discretion": true,
+      "confidence": 0.99,
+      "dimensions": ["inputs_outputs", "contracts", "failures_recovery", "security_privacy", "recovery_rollback", "privacy_data_lifecycle", "untrusted_inputs", "test_falsifiability"],
+      "evidence": [{
+        "exact_quote": "- Unknown or currently unmodeled content MUST remain editable through the advanced raw XML surface.",
+        "line_end": 608,
+        "line_start": 608,
+        "path": "Plans/Containers_Registry_and_Unraid.md",
+        "source_sha256": "2ff2c1c3c77b3bf336b1d850e592224678e440f82c74e59596393707ac79272b"
+      }],
+      "gap_kind": "untrusted_xml_processing_contract_absent",
+      "impact": "Raw XML parsing and editing can expose entity-expansion, external-entity, oversized-input, malformed-document, unsafe-URL, and path-traversal risks; without fail-closed rules, save and auto-commit behavior is unsafe and non-falsifiable.",
+      "item_id": "A005M15-I003",
+      "item_type": "gap",
+      "severity": "high",
+      "source_unit_refs": ["SEMANTIC:PROLOGUE:Plans/Containers_Registry_and_Unraid.md:CONT-003"],
+      "statement": "The two-layer XML editor mandates editing and verbatim preservation of unknown content but does not constrain parser features, document size, URL schemes, asset paths, malformed input, or safe-save rollback.",
+      "title": "Raw XML round-trip lacks an untrusted-input security contract"
+    },
+    {
+      "builder_discretion": true,
+      "confidence": 0.96,
+      "dimensions": ["ownership", "consumers", "propagation", "acceptance_oracles", "missing_callers_consumers", "cross_document_seams", "test_falsifiability"],
+      "evidence": [{
+        "exact_quote": "  - Plans/newtools.md, Plans/FinalGUISpec.md, and Plans/Orchestrator_Page.md reference this plan for detailed DockerHub, Docker Manager, and Unraid behavior without re-owning those contracts.",
+        "line_end": 1018,
+        "line_start": 1018,
+        "path": "Plans/Containers_Registry_and_Unraid.md",
+        "source_sha256": "2ff2c1c3c77b3bf336b1d850e592224678e440f82c74e59596393707ac79272b"
+      }],
+      "gap_kind": "cross_document_reference_oracle_missing",
+      "impact": "Owner and consumer documents can silently drift or omit the required references while the listed migration/index validators still pass.",
+      "item_id": "A005M15-I004",
+      "item_type": "gap",
+      "severity": "high",
+      "source_unit_refs": ["PLANUNIT:CRAU-002", "SEMANTIC:PLANUNIT:CRAU-002"],
+      "statement": "CRAU-002 requires three consumer documents to reference this owner contract, but its validation surfaces do not state an exact backlink, ownership, or semantic-equivalence check.",
+      "title": "Owner-boundary propagation is not directly validated"
+    },
+    {
+      "builder_discretion": true,
+      "confidence": 0.98,
+      "dimensions": ["contracts", "security_privacy", "acceptance_oracles", "privacy_data_lifecycle", "observability_support", "test_falsifiability"],
+      "evidence": [{
+        "exact_quote": "  - Secrets are not written to redb, project files, or evidence logs.",
+        "line_end": 1076,
+        "line_start": 1076,
+        "path": "Plans/Containers_Registry_and_Unraid.md",
+        "source_sha256": "2ff2c1c3c77b3bf336b1d850e592224678e440f82c74e59596393707ac79272b"
+      }],
+      "gap_kind": "secret_non_persistence_oracle_missing",
+      "impact": "A builder can satisfy plan-shape validation while credentials still leak through logs, evidence, crash dumps, project state, or redb serialization.",
+      "item_id": "A005M15-I005",
+      "item_type": "gap",
+      "severity": "critical",
+      "source_unit_refs": ["PLANUNIT:CRAU-003", "SEMANTIC:PLANUNIT:CRAU-003"],
+      "statement": "CRAU-003 makes secret non-persistence an acceptance criterion but supplies only plan migration and index validation, with no executable redaction, storage, or negative-leak oracle.",
+      "title": "Secret-exclusion acceptance is not executable"
+    },
+    {
+      "builder_discretion": true,
+      "confidence": 0.95,
+      "dimensions": ["inputs_outputs", "contracts", "failures_recovery", "builder_discretion", "ambiguity_unknowns", "untrusted_inputs", "offline_network_loss", "test_falsifiability"],
+      "evidence": [{
+        "exact_quote": "  - Docker binary path override, compose defaults, build context path, Dockerfile path, optional target stage, target platforms, and Buildx readiness remain individually addressable.",
+        "line_end": 1127,
+        "line_start": 1127,
+        "path": "Plans/Containers_Registry_and_Unraid.md",
+        "source_sha256": "2ff2c1c3c77b3bf336b1d850e592224678e440f82c74e59596393707ac79272b"
+      }],
+      "gap_kind": "settings_validation_and_error_contract_missing",
+      "impact": "Invalid, remote-only, unreadable, or mutually inconsistent paths and platform selections can produce different UI states and execution behavior across builders.",
+      "item_id": "A005M15-I006",
+      "item_type": "gap",
+      "severity": "medium",
+      "source_unit_refs": ["PLANUNIT:CRAU-004", "SEMANTIC:PLANUNIT:CRAU-004"],
+      "statement": "CRAU-004 enumerates runtime settings but does not define normalization, host scope, validation timing, invalid-value states, or recovery behavior for paths, target stages, platforms, and Buildx readiness.",
+      "title": "Runtime settings lack validation and failure semantics"
+    },
+    {
+      "builder_discretion": true,
+      "confidence": 0.97,
+      "dimensions": ["contracts", "states_transitions", "failures_recovery", "security_privacy", "acceptance_oracles", "partial_failure", "recovery_rollback", "privacy_data_lifecycle"],
+      "evidence": [{
+        "exact_quote": "  - Browser-login and PAT entry controls both remain present.",
+        "line_end": 1179,
+        "line_start": 1179,
+        "path": "Plans/Containers_Registry_and_Unraid.md",
+        "source_sha256": "2ff2c1c3c77b3bf336b1d850e592224678e440f82c74e59596393707ac79272b"
+      }],
+      "gap_kind": "auth_execution_and_clear_semantics_compressed_out",
+      "impact": "The PlanUnit can pass while omitting terminal browser-login outcomes, credential-store precedence, capability gating, and atomic or partial clearing behavior that determine security and recovery correctness.",
+      "item_id": "A005M15-I007",
+      "item_type": "gap",
+      "severity": "high",
+      "source_unit_refs": ["PLANUNIT:CRAU-005", "SEMANTIC:PLANUNIT:CRAU-005"],
+      "statement": "CRAU-005 preserves visible controls and defaults but does not carry executable acceptance for the auth state machine, credential-source precedence, capability enum, or clearing one versus both credential sources.",
+      "title": "DockerHub auth PlanUnit omits critical lifecycle semantics"
+    },
+    {
+      "builder_discretion": true,
+      "confidence": 0.97,
+      "dimensions": ["contracts", "gui_truth", "failures_recovery", "security_privacy", "acceptance_oracles", "untrusted_inputs", "accessibility", "test_falsifiability"],
+      "evidence": [{
+        "exact_quote": "  - ca_profile.xml supports shared cross-project default, per-project override, all fields, upload/select or URL image handling, and generated-needs-review notice.",
+        "line_end": 1248,
+        "line_start": 1248,
+        "path": "Plans/Containers_Registry_and_Unraid.md",
+        "source_sha256": "2ff2c1c3c77b3bf336b1d850e592224678e440f82c74e59596393707ac79272b"
+      }],
+      "gap_kind": "all_fields_editability_oracle_incomplete",
+      "impact": "A UI may claim full editability while dropping unknown XML, mishandling malformed content, accepting unsafe assets or URLs, or making the raw editor inaccessible.",
+      "item_id": "A005M15-I008",
+      "item_type": "gap",
+      "severity": "high",
+      "source_unit_refs": ["PLANUNIT:CRAU-006", "SEMANTIC:PLANUNIT:CRAU-006"],
+      "statement": "CRAU-006 requires all profile fields and image modes but does not test raw-editor availability, unknown-content round-trip, malformed XML, URL/asset safety, or accessible editing and error recovery.",
+      "title": "Maintainer-profile editability remains under-falsified"
+    },
+    {
+      "builder_discretion": true,
+      "confidence": 0.95,
+      "dimensions": ["contracts", "gui_truth", "propagation", "compatibility_migration", "acceptance_oracles", "cross_document_seams", "test_falsifiability"],
+      "evidence": [{
+        "exact_quote": "  - All stable subviews and advanced foldouts remain named and routeable.",
+        "line_end": 1302,
+        "line_start": 1302,
+        "path": "Plans/Containers_Registry_and_Unraid.md",
+        "source_sha256": "2ff2c1c3c77b3bf336b1d850e592224678e440f82c74e59596393707ac79272b"
+      }],
+      "gap_kind": "route_identity_and_alias_migration_oracle_missing",
+      "impact": "Different route IDs or alias-normalization behavior can fragment persisted navigation, deep links, and command consumers while preserving the visible labels.",
+      "item_id": "A005M15-I009",
+      "item_type": "gap",
+      "severity": "medium",
+      "source_unit_refs": ["PLANUNIT:CRAU-007", "SEMANTIC:PLANUNIT:CRAU-007"],
+      "statement": "CRAU-007 declares subviews routeable and normalizes a legacy label, but it does not bind stable route or command identities, persisted-state migration, collision handling, or direct route tests.",
+      "title": "Docker Manager routeability is label-defined, not identity-defined"
+    },
+    {
+      "builder_discretion": true,
+      "confidence": 0.94,
+      "dimensions": ["contracts", "compatibility_migration", "acceptance_oracles", "builder_discretion", "ambiguity_unknowns", "cross_document_seams", "test_falsifiability", "unknown_unknowns"],
+      "evidence": [{
+        "exact_quote": "  - microsoft/vscode-containers is the richer day-to-day management baseline and docker/vscode-extension is the Docker DX/build-debugging reference.",
+        "line_end": 1373,
+        "line_start": 1373,
+        "path": "Plans/Containers_Registry_and_Unraid.md",
+        "source_sha256": "2ff2c1c3c77b3bf336b1d850e592224678e440f82c74e59596393707ac79272b"
+      }],
+      "gap_kind": "external_baseline_version_and_extraction_undefined",
+      "impact": "An evolving external repository can change the inferred requirements over time, producing non-reproducible implementations and audits.",
+      "item_id": "A005M15-I010",
+      "item_type": "unknown",
+      "severity": "medium",
+      "source_unit_refs": ["PLANUNIT:CRAU-008", "SEMANTIC:PLANUNIT:CRAU-008"],
+      "statement": "CRAU-008 names external management and DX baselines but does not pin versions, identify extracted behaviors, or define how conflicts with canonical Puppet Master contracts are adjudicated.",
+      "title": "External management baselines are not reproducibly bound"
+    },
+    {
+      "builder_discretion": true,
+      "confidence": 0.98,
+      "dimensions": ["states_transitions", "gui_truth", "failures_recovery", "operations", "builder_discretion", "gui_misleading_states", "offline_network_loss", "observability_support", "test_falsifiability"],
+      "evidence": [{
+        "exact_quote": "  - Runtime-unavailable state renders cached /last-known state with a stale marker and read-only posture.",
+        "line_end": 1426,
+        "line_start": 1426,
+        "path": "Plans/Containers_Registry_and_Unraid.md",
+        "source_sha256": "2ff2c1c3c77b3bf336b1d850e592224678e440f82c74e59596393707ac79272b"
+      }],
+      "gap_kind": "cached_freshness_semantics_missing",
+      "impact": "Users can mistake materially obsolete runtime state for actionable current state, and builders can choose incompatible refresh, expiry, and recovery behavior.",
+      "item_id": "A005M15-I011",
+      "item_type": "gap",
+      "severity": "high",
+      "source_unit_refs": ["PLANUNIT:CRAU-009", "SEMANTIC:PLANUNIT:CRAU-009"],
+      "statement": "CRAU-009 requires stale read-only rendering but does not define age disclosure, freshness classes or thresholds, last refresh error, manual refresh semantics, or when cached actions become unusable.",
+      "title": "Last-known state lacks measurable freshness rules"
+    },
+    {
+      "builder_discretion": true,
+      "confidence": 0.96,
+      "dimensions": ["contracts", "ownership", "failures_recovery", "operations", "acceptance_oracles", "privacy_data_lifecycle", "observability_support", "cross_document_seams"],
+      "evidence": [{
+        "exact_quote": "  - Runtime projection store remains the owner for transient runtime observations.",
+        "line_end": 1478,
+        "line_start": 1478,
+        "path": "Plans/Containers_Registry_and_Unraid.md",
+        "source_sha256": "2ff2c1c3c77b3bf336b1d850e592224678e440f82c74e59596393707ac79272b"
+      }],
+      "gap_kind": "runtime_projection_lifecycle_contract_missing",
+      "impact": "Transient observations may be retained too long, evicted too early, orphaned from receipts, or promoted accidentally into product truth without a concrete schema and lifecycle contract.",
+      "item_id": "A005M15-I012",
+      "item_type": "gap",
+      "severity": "medium",
+      "source_unit_refs": ["PLANUNIT:CRAU-010", "SEMANTIC:PLANUNIT:CRAU-010"],
+      "statement": "CRAU-010 establishes the storage owner boundary but omits projection keys, retention and eviction, privacy classification, crash recovery, receipt joins, and promotion-to-durable-state rules.",
+      "title": "Runtime projection ownership lacks lifecycle detail"
+    },
+    {
+      "builder_discretion": true,
+      "confidence": 0.97,
+      "dimensions": ["inputs_outputs", "contracts", "failures_recovery", "security_privacy", "concurrency_races", "privacy_data_lifecycle", "untrusted_inputs", "test_falsifiability"],
+      "evidence": [{
+        "exact_quote": "  - Compose scenarios persist named service subsets, profiles, env files, port mappings, detached/log-follow defaults, ports, and validation state.",
+        "line_end": 1530,
+        "line_start": 1530,
+        "path": "Plans/Containers_Registry_and_Unraid.md",
+        "source_sha256": "2ff2c1c3c77b3bf336b1d850e592224678e440f82c74e59596393707ac79272b"
+      }],
+      "gap_kind": "compose_scenario_secret_and_mutation_safety_missing",
+      "impact": "Scenario persistence can leak secrets or machine-specific values, and concurrent compose-file edits can make validation stale between check and execution.",
+      "item_id": "A005M15-I013",
+      "item_type": "gap",
+      "severity": "high",
+      "source_unit_refs": ["PLANUNIT:CRAU-011", "SEMANTIC:PLANUNIT:CRAU-011"],
+      "statement": "CRAU-011 persists env-file combinations and run settings without specifying secret-value exclusion, path portability, import validation, concurrent-edit detection, or revalidation immediately before scenario execution.",
+      "title": "Compose scenarios lack secret and race safeguards"
+    },
+    {
+      "builder_discretion": true,
+      "confidence": 0.97,
+      "dimensions": ["contracts", "states_transitions", "failures_recovery", "propagation", "concurrency_races", "partial_failure", "recovery_rollback", "test_falsifiability"],
+      "evidence": [{
+        "exact_quote": "  - Promotion receipts capture moved digest, tag, source namespace/repository, destination namespace/repository, actor, approval source, and result id before downstream deployment references update.",
+        "line_end": 1587,
+        "line_start": 1587,
+        "path": "Plans/Containers_Registry_and_Unraid.md",
+        "source_sha256": "2ff2c1c3c77b3bf336b1d850e592224678e440f82c74e59596393707ac79272b"
+      }],
+      "gap_kind": "promotion_idempotency_and_atomic_propagation_missing",
+      "impact": "Lost acknowledgements, retries, or simultaneous promotions can create duplicate tags or conflicting downstream references, with no prescribed reconciliation result.",
+      "item_id": "A005M15-I014",
+      "item_type": "gap",
+      "severity": "high",
+      "source_unit_refs": ["PLANUNIT:CRAU-012", "SEMANTIC:PLANUNIT:CRAU-012"],
+      "statement": "CRAU-012 orders receipt capture before downstream updates but does not define idempotency keys, atomicity boundaries, duplicate-result reconciliation, or concurrent promotion conflict handling.",
+      "title": "Registry promotion lineage is ordered but not replay-safe"
+    },
+    {
+      "builder_discretion": true,
+      "confidence": 0.99,
+      "dimensions": ["states_transitions", "failures_recovery", "operations", "concurrency_races", "partial_failure", "recovery_rollback", "destructive_actions", "test_falsifiability"],
+      "evidence": [{
+        "exact_quote": "  - Destructive cleanup remains guarded by shared blocked-state rules.",
+        "line_end": 1651,
+        "line_start": 1651,
+        "path": "Plans/Containers_Registry_and_Unraid.md",
+        "source_sha256": "2ff2c1c3c77b3bf336b1d850e592224678e440f82c74e59596393707ac79272b"
+      }],
+      "gap_kind": "cleanup_toctou_and_partial_delete_contract_missing",
+      "impact": "An asset can become referenced after analysis but before deletion, or a multi-asset cleanup can partially succeed, causing active-preview breakage or ambiguous recovery despite the advisory safeguards.",
+      "item_id": "A005M15-I015",
+      "item_type": "gap",
+      "severity": "critical",
+      "source_unit_refs": ["PLANUNIT:CRAU-013", "SEMANTIC:PLANUNIT:CRAU-013"],
+      "statement": "CRAU-013 guards destructive cleanup conceptually but does not require an execution-time reference recheck, ownership lock, deletion ordering, partial-success receipt, compensation path, or retry semantics.",
+      "title": "Cleanup safeguards do not close execution-time races"
+    },
+    {
+      "builder_discretion": true,
+      "confidence": 0.98,
+      "dimensions": ["contracts", "states_transitions", "failures_recovery", "authority", "partial_failure", "recovery_rollback", "authority_boundaries", "test_falsifiability"],
+      "evidence": [{
+        "exact_quote": "  - Deploy, rollout/apply, apply/rollout, log, exec, port_forward, Helm, and troubleshoot failures open directly to project-relevant workload status, logs, or diff.",
+        "line_end": 1708,
+        "line_start": 1708,
+        "path": "Plans/Containers_Registry_and_Unraid.md",
+        "source_sha256": "2ff2c1c3c77b3bf336b1d850e592224678e440f82c74e59596393707ac79272b"
+      }],
+      "gap_kind": "kubernetes_partial_mutation_and_rollback_missing",
+      "impact": "Multi-object apply or Helm operations can leave mixed cluster state, yet the PlanUnit only prescribes where failures open, not how accepted objects, denied objects, rollback, retry, and changed authority are represented or recovered.",
+      "item_id": "A005M15-I016",
+      "item_type": "gap",
+      "severity": "high",
+      "source_unit_refs": ["PLANUNIT:CRAU-014", "SEMANTIC:PLANUNIT:CRAU-014"],
+      "statement": "CRAU-014 covers failure navigation but omits an operation-level contract for partial apply or Helm success, compensation or rollback, retry after policy drift, and revalidation of context, namespace, UID, and allowed verbs.",
+      "title": "Kubernetes mutation recovery is navigation-only"
+    }
+  ],
+  "model": "gpt-5.6-sol",
+  "phase": "blind_macro_window_review",
+  "reasoning_effort": "xhigh",
+  "schema_version": "macro-review-result-v1",
+  "segments": [
+    {
+      "core_range": [1, 206],
+      "covered_source_unit_refs": ["SEMANTIC:PROLOGUE:Plans/Containers_Registry_and_Unraid.md:CONT-001"],
+      "item_ids": ["A005M15-I001"],
+      "reviewed": true,
+      "summary": "Reviewed the complete Docker Manager scope, operational cockpit, runtime identity, routing, receipts, blocked-state, and governance core; the principal unresolved risk is replay and concurrency behavior across retryable publish chains.",
+      "window_id": "WIN-BCDD1AE883C0-0001"
+    },
+    {
+      "core_range": [207, 604],
+      "covered_source_unit_refs": ["SEMANTIC:PROLOGUE:Plans/Containers_Registry_and_Unraid.md:CONT-002"],
+      "item_ids": ["A005M15-I002"],
+      "reviewed": true,
+      "summary": "Reviewed lifecycle detection, authentication, repository creation, build/run, preflight, publish, tag resolution, and Unraid artifact contracts; browser-login polling lacks explicit offline, throttling, restart, and duplicate-flow semantics.",
+      "window_id": "WIN-BCDD1AE883C0-0002"
+    },
+    {
+      "core_range": [605, 995],
+      "covered_source_unit_refs": ["SEMANTIC:PROLOGUE:Plans/Containers_Registry_and_Unraid.md:CONT-003"],
+      "item_ids": ["A005M15-I003"],
+      "reviewed": true,
+      "summary": "Reviewed XML round-trip, validation, managed and unmanaged distribution, template-repo state transitions, dirty-repo safety, profile scope, blocked payload normalization, non-goals, and acceptance; raw XML remains insufficiently constrained as untrusted input.",
+      "window_id": "WIN-BCDD1AE883C0-0003"
+    },
+    {
+      "core_range": [996, 1343],
+      "covered_source_unit_refs": ["PLANUNIT:CRAU-002", "PLANUNIT:CRAU-003", "PLANUNIT:CRAU-004", "PLANUNIT:CRAU-005", "PLANUNIT:CRAU-006", "PLANUNIT:CRAU-007", "SEMANTIC:PLANUNIT:CRAU-002", "SEMANTIC:PLANUNIT:CRAU-003", "SEMANTIC:PLANUNIT:CRAU-004", "SEMANTIC:PLANUNIT:CRAU-005", "SEMANTIC:PLANUNIT:CRAU-006", "SEMANTIC:PLANUNIT:CRAU-007"],
+      "item_ids": ["A005M15-I004", "A005M15-I005", "A005M15-I006", "A005M15-I007", "A005M15-I008", "A005M15-I009"],
+      "reviewed": true,
+      "summary": "Reviewed CRAU-002 through CRAU-007 and both required identity forms for each; the units preserve scope and GUI intent but leave material cross-document, security, validation, lifecycle, and route-identity oracles under-specified.",
+      "window_id": "WIN-BCDD1AE883C0-0004"
+    },
+    {
+      "core_range": [1344, 1739],
+      "covered_source_unit_refs": ["PLANUNIT:CRAU-008", "PLANUNIT:CRAU-009", "PLANUNIT:CRAU-010", "PLANUNIT:CRAU-011", "PLANUNIT:CRAU-012", "PLANUNIT:CRAU-013", "PLANUNIT:CRAU-014", "SEMANTIC:PLANUNIT:CRAU-008", "SEMANTIC:PLANUNIT:CRAU-009", "SEMANTIC:PLANUNIT:CRAU-010", "SEMANTIC:PLANUNIT:CRAU-011", "SEMANTIC:PLANUNIT:CRAU-012", "SEMANTIC:PLANUNIT:CRAU-013", "SEMANTIC:PLANUNIT:CRAU-014"],
+      "item_ids": ["A005M15-I010", "A005M15-I011", "A005M15-I012", "A005M15-I013", "A005M15-I014", "A005M15-I015", "A005M15-I016"],
+      "reviewed": true,
+      "summary": "Reviewed CRAU-008 through CRAU-014 and both required identity forms for each; unresolved seams center on reproducible external baselines, stale-state freshness, projection lifecycle, secret-bearing scenarios, remote replay, destructive TOCTOU, and partial Kubernetes recovery.",
+      "window_id": "WIN-BCDD1AE883C0-0005"
+    }
+  ],
+  "self_attestation": {
+    "no_canonical_writes": true,
+    "no_external_research_during_blind_review": true,
+    "no_peer_result_access": true,
+    "no_prior_audit_access": true,
+    "no_unrelated_source_access": true,
+    "terminal_after_submission": true
+  },
+  "source_binding": {
+    "bundle_id": "MACRO15-BCDD1AE883C0-0001",
+    "document_path": "Plans/Containers_Registry_and_Unraid.md",
+    "micro_window_ids": ["WIN-BCDD1AE883C0-0001", "WIN-BCDD1AE883C0-0002", "WIN-BCDD1AE883C0-0003", "WIN-BCDD1AE883C0-0004", "WIN-BCDD1AE883C0-0005"],
+    "source_sha256": "2ff2c1c3c77b3bf336b1d850e592224678e440f82c74e59596393707ac79272b"
+  },
+  "status": "completed",
+  "synthesis": {
+    "cross_document_questions": [
+      "Which exact validators prove the required owner-to-consumer references and semantic alignment across newtools, FinalGUISpec, Orchestrator_Page, UI_Command_Catalog, Contracts_V0, and storage-plan?",
+      "Where are idempotency keys, operation correlation, partial-success receipts, and resume arbitration canonically owned for registry, publish, cleanup, and Kubernetes mutations?",
+      "Which owner defines runtime projection retention, eviction, privacy classification, receipt joins, and promotion to durable state?",
+      "Which security contract owns safe XML parsing, raw-editor validation, external URL policy, uploaded-asset constraints, and Compose env-file secret handling?"
+    ],
+    "feature_family_keys": [
+      "docker-manager",
+      "dockerhub-auth",
+      "registry-promotion",
+      "publish-chain",
+      "unraid-template-repository",
+      "xml-round-trip",
+      "compose-scenarios",
+      "runtime-projections",
+      "cleanup-advisor",
+      "project-focused-kubernetes"
+    ],
+    "research_queries": [
+      "Docker device authorization polling interval backoff rate limits restart recovery",
+      "secure XML parser configuration XXE entity expansion desktop application raw editor",
+      "Docker registry push promotion idempotency digest reconciliation lost acknowledgement",
+      "Kubernetes server-side apply partial failure rollback multi-object operation receipts",
+      "Docker prune TOCTOU active container image reference revalidation"
+    ]
+  },
+  "task_thread_id": "/root/a005m15_b3_000012_attempt_0015_terminal"
+}

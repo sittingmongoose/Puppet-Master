@@ -1,0 +1,803 @@
+{
+  "assignment_id": "A005M15-000154-INTEGRATED-MACRO15-9866429FE205-0001",
+  "attempt_id": "attempt-0015",
+  "audit_id": "audit-20260710-005-plan-assurance-model-lanes-fresh-agent-exhaustive",
+  "coverage": {
+    "all_micro_windows_reviewed": true,
+    "all_source_lines_reviewed": true,
+    "all_source_units_accounted": true,
+    "both_exact_and_adversarial_lenses_applied": true,
+    "dimensions_checked": [
+      "behavior",
+      "capabilities",
+      "inputs_outputs",
+      "contracts",
+      "states_transitions",
+      "authority",
+      "ownership",
+      "consumers",
+      "gui_truth",
+      "failures_recovery",
+      "security_privacy",
+      "propagation",
+      "operations",
+      "scale_performance",
+      "compatibility_migration",
+      "acceptance_oracles",
+      "builder_discretion",
+      "ambiguity_unknowns",
+      "missing_callers_consumers",
+      "invalid_states_transitions",
+      "concurrency_races",
+      "partial_failure",
+      "recovery_rollback",
+      "authority_boundaries",
+      "privacy_data_lifecycle",
+      "untrusted_inputs",
+      "gui_misleading_states",
+      "offline_network_loss",
+      "scale_limits",
+      "accessibility",
+      "localization",
+      "observability_support",
+      "destructive_actions",
+      "cross_document_seams",
+      "test_falsifiability",
+      "unknown_unknowns"
+    ]
+  },
+  "items": [
+    {
+      "builder_discretion": false,
+      "confidence": 0.99,
+      "dimensions": ["inputs_outputs", "contracts", "scale_limits", "acceptance_oracles"],
+      "evidence": [{
+        "exact_quote": "All `/goal` prompts must stay under 4,000 characters. Replace placeholders before use.",
+        "line_end": 3,
+        "line_start": 3,
+        "path": "Plans/bootstrap/Codex_Prompts.md",
+        "source_sha256": "c5c7619bf49ce3a96d2eea94e0c6d2a1f861461239760a67e4877448828f3793"
+      }],
+      "gap_kind": "missing_enforcement_oracle",
+      "impact": "Users are told the hard size constraint, but no check proves a substituted prompt remains below the limit; long feature names, ledger ids, or localized text can silently make a prompt invalid.",
+      "item_id": "A005M15-I001",
+      "item_type": "gap",
+      "severity": "medium",
+      "source_unit_refs": ["SEMANTIC:DOCUMENT:Plans/bootstrap/Codex_Prompts.md"],
+      "statement": "The prompt catalog establishes a 4,000-character ceiling and placeholder substitution duty without defining a measurable post-substitution validation step or failure response.",
+      "title": "Prompt length limit lacks an executable oracle"
+    },
+    {
+      "builder_discretion": false,
+      "confidence": 0.99,
+      "dimensions": ["capabilities", "contracts", "states_transitions", "ownership"],
+      "evidence": [{
+        "exact_quote": "Create a new v2 ledger under Plans/ledgers/v2/ with ledger_id pldg-YYYYMMDD-NNN-<slug>. Register it in Plans/ledgers/v2/ledger_registry.json.",
+        "line_end": 12,
+        "line_start": 12,
+        "path": "Plans/bootstrap/Codex_Prompts.md",
+        "source_sha256": "c5c7619bf49ce3a96d2eea94e0c6d2a1f861461239760a67e4877448828f3793"
+      }],
+      "gap_kind": "none",
+      "impact": "A new conversational feature has an explicit storage location, identifier pattern, and registry side effect.",
+      "item_id": "A005M15-I002",
+      "item_type": "feature",
+      "severity": "info",
+      "source_unit_refs": ["SEMANTIC:DOCUMENT:Plans/bootstrap/Codex_Prompts.md"],
+      "statement": "The start prompt creates and registers a v2 ledger before conversational design proceeds.",
+      "title": "Conversational ledger creation is explicitly routed"
+    },
+    {
+      "builder_discretion": false,
+      "confidence": 0.98,
+      "dimensions": ["authority", "authority_boundaries", "states_transitions", "destructive_actions"],
+      "evidence": [{
+        "exact_quote": "This is a conversational design/spec thread, not a Goal run. Do not write canonical Plans yet. Use the $pm-bootstrap-planning-ledger skill if available.",
+        "line_end": 14,
+        "line_start": 14,
+        "path": "Plans/bootstrap/Codex_Prompts.md",
+        "source_sha256": "c5c7619bf49ce3a96d2eea94e0c6d2a1f861461239760a67e4877448828f3793"
+      }],
+      "gap_kind": "none",
+      "impact": "Ordinary specification conversation cannot mutate canonical product Plans, keeping planning memory and canon separated.",
+      "item_id": "A005M15-I003",
+      "item_type": "explicit_non_gap",
+      "severity": "info",
+      "source_unit_refs": ["SEMANTIC:DOCUMENT:Plans/bootstrap/Codex_Prompts.md"],
+      "statement": "The document clearly denies canonical-write authority to the conversational start lane.",
+      "title": "Conversational and canonical write authority are separated"
+    },
+    {
+      "builder_discretion": true,
+      "confidence": 0.96,
+      "dimensions": ["states_transitions", "propagation", "concurrency_races", "partial_failure", "recovery_rollback"],
+      "evidence": [{
+        "exact_quote": "After each substantive turn, update events.jsonl, touched records/*.jsonl, and state/current.json, state/handoff.json, state/open_items.json, state/compile_queue.json.",
+        "line_end": 21,
+        "line_start": 21,
+        "path": "Plans/bootstrap/Codex_Prompts.md",
+        "source_sha256": "c5c7619bf49ce3a96d2eea94e0c6d2a1f861461239760a67e4877448828f3793"
+      }],
+      "gap_kind": "multi_file_commit_semantics_unspecified",
+      "impact": "A crash or competing writer between updates can leave event history, records, and projections mutually inconsistent, with no prescribed repair, transaction boundary, lock, or idempotent replay rule.",
+      "item_id": "A005M15-I004",
+      "item_type": "gap",
+      "severity": "high",
+      "source_unit_refs": ["SEMANTIC:DOCUMENT:Plans/bootstrap/Codex_Prompts.md"],
+      "statement": "The start workflow requires a coordinated multi-file state transition but does not define update ordering, atomicity, concurrency control, failure recovery, or rollback.",
+      "title": "Ledger projection updates have no atomicity contract"
+    },
+    {
+      "builder_discretion": false,
+      "confidence": 0.98,
+      "dimensions": ["behavior", "compatibility_migration", "untrusted_inputs", "privacy_data_lifecycle"],
+      "evidence": [{
+        "exact_quote": "Preserve exact tokens, examples, negative constraints, stale/retired terms, compatibility-only notes, owner hints, and user corrections. Keep open questions explicit.",
+        "line_end": 23,
+        "line_start": 23,
+        "path": "Plans/bootstrap/Codex_Prompts.md",
+        "source_sha256": "c5c7619bf49ce3a96d2eea94e0c6d2a1f861461239760a67e4877448828f3793"
+      }],
+      "gap_kind": "untrusted_sensitive_content_policy_missing",
+      "impact": "Exact preservation can propagate secrets, personal data, hostile instructions, or unsafe payloads from user-provided content into durable ledger and later canonical artifacts because no quarantine, classification, escaping, or redaction boundary is defined.",
+      "item_id": "A005M15-I005",
+      "item_type": "gap",
+      "severity": "high",
+      "source_unit_refs": ["SEMANTIC:DOCUMENT:Plans/bootstrap/Codex_Prompts.md"],
+      "statement": "Lossless preservation is strong for semantic fidelity but lacks a safety and data-lifecycle policy for untrusted or sensitive tokens.",
+      "title": "Exact-token preservation lacks trust and privacy controls"
+    },
+    {
+      "builder_discretion": false,
+      "confidence": 0.99,
+      "dimensions": ["gui_truth", "behavior", "contracts"],
+      "evidence": [{
+        "exact_quote": "Automatically classify every design atom as gui_related true or false. Mark true for GUI/UI/screens/pages/panels/forms/layout/styling/components/icons/SVGs/images/screenshots/user-visible visual presentation. The user does not need to label GUI work.",
+        "line_end": 25,
+        "line_start": 25,
+        "path": "Plans/bootstrap/Codex_Prompts.md",
+        "source_sha256": "c5c7619bf49ce3a96d2eea94e0c6d2a1f861461239760a67e4877448828f3793"
+      }],
+      "gap_kind": "none",
+      "impact": "Every atom carries an explicit machine-usable GUI classification and the system, not the user, owns the classification burden.",
+      "item_id": "A005M15-I006",
+      "item_type": "gui_truth",
+      "severity": "info",
+      "source_unit_refs": ["SEMANTIC:DOCUMENT:Plans/bootstrap/Codex_Prompts.md"],
+      "statement": "The start prompt defines a binary GUI-truth field and enumerates visible presentation categories that require true.",
+      "title": "GUI-related classification is mandatory and inferred"
+    },
+    {
+      "builder_discretion": false,
+      "confidence": 0.98,
+      "dimensions": ["inputs_outputs", "operations", "scale_performance"],
+      "evidence": [{
+        "exact_quote": "Do not read full events.jsonl, source shards, or legacy working_ledger.md unless a state file points to a specific source_ref that must be inspected.",
+        "line_end": 42,
+        "line_start": 42,
+        "path": "Plans/bootstrap/Codex_Prompts.md",
+        "source_sha256": "c5c7619bf49ce3a96d2eea94e0c6d2a1f861461239760a67e4877448828f3793"
+      }],
+      "gap_kind": "none",
+      "impact": "Resume work is bounded to compact state and only expands to detailed lineage on a concrete reference, controlling context size and avoiding indiscriminate legacy reads.",
+      "item_id": "A005M15-I007",
+      "item_type": "explicit_non_gap",
+      "severity": "info",
+      "source_unit_refs": ["SEMANTIC:DOCUMENT:Plans/bootstrap/Codex_Prompts.md"],
+      "statement": "The continue prompt imposes a compact-state-first read boundary with explicit source-ref escalation.",
+      "title": "Continuation uses bounded compact-state intake"
+    },
+    {
+      "builder_discretion": true,
+      "confidence": 0.95,
+      "dimensions": ["states_transitions", "invalid_states_transitions", "failures_recovery", "ambiguity_unknowns"],
+      "evidence": [{
+        "exact_quote": "Continue from the cursor. After each substantive turn, update the ledger and handoff state. Infer gui_related true/false for every new or changed design atom; do not ask me to label GUI work.",
+        "line_end": 44,
+        "line_start": 44,
+        "path": "Plans/bootstrap/Codex_Prompts.md",
+        "source_sha256": "c5c7619bf49ce3a96d2eea94e0c6d2a1f861461239760a67e4877448828f3793"
+      }],
+      "gap_kind": "resume_state_validation_missing",
+      "impact": "A missing, stale, conflicting, or invalid cursor can cause replay, omission, or continuation from the wrong state because precedence, validation, and repair behavior are not defined.",
+      "item_id": "A005M15-I008",
+      "item_type": "gap",
+      "severity": "medium",
+      "source_unit_refs": ["SEMANTIC:DOCUMENT:Plans/bootstrap/Codex_Prompts.md"],
+      "statement": "Continuation assumes a usable cursor without specifying its identity, allowed states, consistency check against registry/current/handoff, or failure path.",
+      "title": "Cursor resume semantics are underspecified"
+    },
+    {
+      "builder_discretion": false,
+      "confidence": 0.99,
+      "dimensions": ["authority", "ownership", "contracts", "builder_discretion"],
+      "evidence": [{
+        "exact_quote": "- Ledger is source/planning memory, not canon.",
+        "line_end": 63,
+        "line_start": 63,
+        "path": "Plans/bootstrap/Codex_Prompts.md",
+        "source_sha256": "c5c7619bf49ce3a96d2eea94e0c6d2a1f861461239760a67e4877448828f3793"
+      }],
+      "gap_kind": "none",
+      "impact": "Builders have no discretion to treat ledger prose as canonical product truth; accepted content must be compiled into owner docs.",
+      "item_id": "A005M15-I009",
+      "item_type": "authority",
+      "severity": "info",
+      "source_unit_refs": ["SEMANTIC:DOCUMENT:Plans/bootstrap/Codex_Prompts.md"],
+      "statement": "The compilation lane explicitly assigns source-memory status to the ledger and canonical authority to live Plans.",
+      "title": "Ledger authority is explicitly non-canonical"
+    },
+    {
+      "builder_discretion": false,
+      "confidence": 0.99,
+      "dimensions": ["compatibility_migration", "contracts", "cross_document_seams"],
+      "evidence": [{
+        "exact_quote": "- Never use source_preserving_planunit for new feature content or new owner-doc creation; that mode is only for lossless legacy Plan conversion.",
+        "line_end": 68,
+        "line_start": 68,
+        "path": "Plans/bootstrap/Codex_Prompts.md",
+        "source_sha256": "c5c7619bf49ce3a96d2eea94e0c6d2a1f861461239760a67e4877448828f3793"
+      }],
+      "gap_kind": "none",
+      "impact": "Legacy-lossless representation cannot leak into newly authored feature canon or owner-doc creation.",
+      "item_id": "A005M15-I010",
+      "item_type": "contract",
+      "severity": "info",
+      "source_unit_refs": ["SEMANTIC:DOCUMENT:Plans/bootstrap/Codex_Prompts.md"],
+      "statement": "The source-preserving profile has an explicit compatibility-only scope.",
+      "title": "Legacy conversion mode is barred from new content"
+    },
+    {
+      "builder_discretion": true,
+      "confidence": 0.96,
+      "dimensions": ["ownership", "builder_discretion", "acceptance_oracles", "ambiguity_unknowns"],
+      "evidence": [{
+        "exact_quote": "- If owner placement is ambiguous, record candidate owners and adjudication evidence; do not ask row-by-row.",
+        "line_end": 70,
+        "line_start": 70,
+        "path": "Plans/bootstrap/Codex_Prompts.md",
+        "source_sha256": "c5c7619bf49ce3a96d2eea94e0c6d2a1f861461239760a67e4877448828f3793"
+      }],
+      "gap_kind": "ownership_adjudication_terminal_rule_missing",
+      "impact": "Candidate recording prevents interruption but does not say who decides, what evidence is sufficient, or whether unresolved ownership blocks compilation, allowing inconsistent routing across builders.",
+      "item_id": "A005M15-I011",
+      "item_type": "gap",
+      "severity": "medium",
+      "source_unit_refs": ["SEMANTIC:DOCUMENT:Plans/bootstrap/Codex_Prompts.md"],
+      "statement": "Ambiguous owner placement has a recording rule but no deterministic adjudicator, completion oracle, or escalation threshold.",
+      "title": "Owner ambiguity has no closure contract"
+    },
+    {
+      "builder_discretion": false,
+      "confidence": 0.99,
+      "dimensions": ["authority_boundaries", "capabilities", "states_transitions"],
+      "evidence": [{
+        "exact_quote": "- Do not create WorkNodes or executable build tasks.",
+        "line_end": 71,
+        "line_start": 71,
+        "path": "Plans/bootstrap/Codex_Prompts.md",
+        "source_sha256": "c5c7619bf49ce3a96d2eea94e0c6d2a1f861461239760a67e4877448828f3793"
+      }],
+      "gap_kind": "none",
+      "impact": "Compilation cannot cross into executable planning or runtime work generation.",
+      "item_id": "A005M15-I012",
+      "item_type": "explicit_non_gap",
+      "severity": "info",
+      "source_unit_refs": ["SEMANTIC:DOCUMENT:Plans/bootstrap/Codex_Prompts.md"],
+      "statement": "The ledger-to-Plans compiler lane has a clear non-executable boundary.",
+      "title": "Plan compilation cannot emit build work"
+    },
+    {
+      "builder_discretion": false,
+      "confidence": 0.98,
+      "dimensions": ["compatibility_migration", "acceptance_oracles", "destructive_actions", "propagation"],
+      "evidence": [{
+        "exact_quote": "3. Build a coverage map proving every original span maps to a standardized section, PlanUnit, preserved appendix/source block, or explicit disposition.",
+        "line_end": 89,
+        "line_start": 89,
+        "path": "Plans/bootstrap/Codex_Prompts.md",
+        "source_sha256": "c5c7619bf49ce3a96d2eea94e0c6d2a1f861461239760a67e4877448828f3793"
+      }],
+      "gap_kind": "none",
+      "impact": "Every original span must have an explicit destination or disposition, making omission detectable during migration.",
+      "item_id": "A005M15-I013",
+      "item_type": "acceptance_oracle",
+      "severity": "info",
+      "source_unit_refs": ["SEMANTIC:DOCUMENT:Plans/bootstrap/Codex_Prompts.md"],
+      "statement": "Lossless standardization requires a complete span-level coverage proof before broad conversion.",
+      "title": "Migration fidelity has a span-coverage oracle"
+    },
+    {
+      "builder_discretion": true,
+      "confidence": 0.95,
+      "dimensions": ["operations", "scale_performance", "partial_failure", "recovery_rollback", "destructive_actions"],
+      "evidence": [{
+        "exact_quote": "6. Continue in controlled batches only after pilot passes.",
+        "line_end": 92,
+        "line_start": 92,
+        "path": "Plans/bootstrap/Codex_Prompts.md",
+        "source_sha256": "c5c7619bf49ce3a96d2eea94e0c6d2a1f861461239760a67e4877448828f3793"
+      }],
+      "gap_kind": "batch_and_rollback_policy_unspecified",
+      "impact": "Large migrations can proceed with inconsistent batch sizes and no prescribed checkpoint, rollback, retry, or recovery behavior after a later batch partially fails.",
+      "item_id": "A005M15-I014",
+      "item_type": "gap",
+      "severity": "medium",
+      "source_unit_refs": ["SEMANTIC:DOCUMENT:Plans/bootstrap/Codex_Prompts.md"],
+      "statement": "Pilot gating is explicit, but controlled batch sizing and post-pilot failure recovery remain undefined.",
+      "title": "Controlled migration batches lack operational semantics"
+    },
+    {
+      "builder_discretion": false,
+      "confidence": 0.99,
+      "dimensions": ["gui_truth", "compatibility_migration", "builder_discretion"],
+      "evidence": [{
+        "exact_quote": "Assign gui_related true/false to every PlanUnit by inference. Split mixed GUI/backend units when safe; otherwise mark gui_related=true and note split_recommended.",
+        "line_end": 96,
+        "line_start": 96,
+        "path": "Plans/bootstrap/Codex_Prompts.md",
+        "source_sha256": "c5c7619bf49ce3a96d2eea94e0c6d2a1f861461239760a67e4877448828f3793"
+      }],
+      "gap_kind": "none",
+      "impact": "Mixed units cannot be falsely classified as backend-only; unsafe splits preserve GUI visibility and surface future normalization work.",
+      "item_id": "A005M15-I015",
+      "item_type": "gui_truth",
+      "severity": "info",
+      "source_unit_refs": ["SEMANTIC:DOCUMENT:Plans/bootstrap/Codex_Prompts.md"],
+      "statement": "The migration prompt defines conservative GUI classification for inseparable mixed units.",
+      "title": "Mixed GUI units fail safe to gui_related true"
+    },
+    {
+      "builder_discretion": false,
+      "confidence": 0.99,
+      "dimensions": ["states_transitions", "authority_boundaries", "acceptance_oracles", "gui_misleading_states"],
+      "evidence": [{
+        "exact_quote": "- Approve And Build remains disabled unless Plans/.implementation_readiness/buildability_gate_report.json reports buildability_gate_passed=true.",
+        "line_end": 129,
+        "line_start": 129,
+        "path": "Plans/bootstrap/Codex_Prompts.md",
+        "source_sha256": "c5c7619bf49ce3a96d2eea94e0c6d2a1f861461239760a67e4877448828f3793"
+      }],
+      "gap_kind": "none",
+      "impact": "The visible build action cannot be enabled by mere plan capture, indexing, schemas, semantic closure, or passing validators.",
+      "item_id": "A005M15-I016",
+      "item_type": "state_transition",
+      "severity": "info",
+      "source_unit_refs": ["SEMANTIC:DOCUMENT:Plans/bootstrap/Codex_Prompts.md"],
+      "statement": "Approve And Build has a single explicit enabling oracle tied to the implementation-readiness report.",
+      "title": "Build enablement is fail-closed on the readiness gate"
+    },
+    {
+      "builder_discretion": true,
+      "confidence": 0.96,
+      "dimensions": ["consumers", "missing_callers_consumers", "contracts", "cross_document_seams"],
+      "evidence": [{
+        "exact_quote": "Produce generated outputs under Plans/.plan_index/:",
+        "line_end": 111,
+        "line_start": 111,
+        "path": "Plans/bootstrap/Codex_Prompts.md",
+        "source_sha256": "c5c7619bf49ce3a96d2eea94e0c6d2a1f861461239760a67e4877448828f3793"
+      }],
+      "gap_kind": "generated_artifact_consumer_contract_missing",
+      "impact": "The output filenames are enumerated, but producer schemas, versioning, atomic publication, and downstream consumers are not identified here, so incompatible or partially updated indexes may still appear complete.",
+      "item_id": "A005M15-I017",
+      "item_type": "gap",
+      "severity": "medium",
+      "source_unit_refs": ["SEMANTIC:DOCUMENT:Plans/bootstrap/Codex_Prompts.md"],
+      "statement": "The index prompt names artifacts without specifying their caller/consumer bindings or publication compatibility contract.",
+      "title": "Plan index outputs lack consumer and publication contracts"
+    },
+    {
+      "builder_discretion": true,
+      "confidence": 0.96,
+      "dimensions": ["authority", "builder_discretion", "destructive_actions", "test_falsifiability"],
+      "evidence": [{
+        "exact_quote": "Read AGENTS.md, Plans/Plan_Document_System.md, Plans/Plan_To_Node_Compilation.md, and live Plans docs. Do not alter canonical prose unless a small repair is required and clearly validated.",
+        "line_end": 109,
+        "line_start": 109,
+        "path": "Plans/bootstrap/Codex_Prompts.md",
+        "source_sha256": "c5c7619bf49ce3a96d2eea94e0c6d2a1f861461239760a67e4877448828f3793"
+      }],
+      "gap_kind": "canonical_repair_authority_ambiguous",
+      "impact": "A generator can modify canonical prose based on subjective judgments about size and validation, expanding a generated-index task into an uncontrolled authoring lane.",
+      "item_id": "A005M15-I018",
+      "item_type": "gap",
+      "severity": "high",
+      "source_unit_refs": ["SEMANTIC:DOCUMENT:Plans/bootstrap/Codex_Prompts.md"],
+      "statement": "The index lane grants conditional canonical-write authority without a bound on repair scope, authorized files, evidence, approval, or rollback.",
+      "title": "Small canonical repairs are not objectively bounded"
+    },
+    {
+      "builder_discretion": true,
+      "confidence": 0.95,
+      "dimensions": ["states_transitions", "invalid_states_transitions", "ambiguity_unknowns", "gui_misleading_states"],
+      "evidence": [{
+        "exact_quote": "- If Plans are incomplete, set node_readiness_report.status = blocked_plans_incomplete.",
+        "line_end": 133,
+        "line_start": 133,
+        "path": "Plans/bootstrap/Codex_Prompts.md",
+        "source_sha256": "c5c7619bf49ce3a96d2eea94e0c6d2a1f861461239760a67e4877448828f3793"
+      }],
+      "gap_kind": "status_precedence_unspecified",
+      "impact": "When Plans are incomplete and runtime is disabled simultaneously, different builders may emit different single statuses and users may see a misleading primary reason.",
+      "item_id": "A005M15-I019",
+      "item_type": "gap",
+      "severity": "medium",
+      "source_unit_refs": ["SEMANTIC:DOCUMENT:Plans/bootstrap/Codex_Prompts.md"],
+      "statement": "The readiness report defines blocked_plans_incomplete and runtime_disabled conditions but no precedence or multi-condition representation.",
+      "title": "Node-readiness status conflicts have no resolution rule"
+    },
+    {
+      "builder_discretion": false,
+      "confidence": 0.98,
+      "dimensions": ["operations", "observability_support", "acceptance_oracles"],
+      "evidence": [{
+        "exact_quote": "6. Produce final certification with changed files, validators, blockers, and unresolved risks.",
+        "line_end": 157,
+        "line_start": 157,
+        "path": "Plans/bootstrap/Codex_Prompts.md",
+        "source_sha256": "c5c7619bf49ce3a96d2eea94e0c6d2a1f861461239760a67e4877448828f3793"
+      }],
+      "gap_kind": "none",
+      "impact": "Operators receive a bounded record of mutations, checks, blockers, and residual risk after governance sealing.",
+      "item_id": "A005M15-I020",
+      "item_type": "acceptance_oracle",
+      "severity": "info",
+      "source_unit_refs": ["SEMANTIC:DOCUMENT:Plans/bootstrap/Codex_Prompts.md"],
+      "statement": "Governance seal completion includes an explicit operational certification surface.",
+      "title": "Governance sealing requires observable certification"
+    },
+    {
+      "builder_discretion": true,
+      "confidence": 0.97,
+      "dimensions": ["partial_failure", "recovery_rollback", "failures_recovery", "operations"],
+      "evidence": [{
+        "exact_quote": "2. Regenerate generated shards/evidence/plan graph artifacts using repo scripts.",
+        "line_end": 151,
+        "line_start": 151,
+        "path": "Plans/bootstrap/Codex_Prompts.md",
+        "source_sha256": "c5c7619bf49ce3a96d2eea94e0c6d2a1f861461239760a67e4877448828f3793"
+      }],
+      "gap_kind": "seal_transaction_recovery_missing",
+      "impact": "Failure between regeneration, Spec Lock refresh, decision updates, and full gates can leave a mixed governance generation with no mandated cleanup, rollback, or resumable checkpoint.",
+      "item_id": "A005M15-I021",
+      "item_type": "gap",
+      "severity": "high",
+      "source_unit_refs": ["SEMANTIC:DOCUMENT:Plans/bootstrap/Codex_Prompts.md"],
+      "statement": "Governance sealing is a multi-stage mutation pipeline without atomic publication or partial-failure recovery semantics.",
+      "title": "Governance seal lacks transactional recovery"
+    },
+    {
+      "builder_discretion": false,
+      "confidence": 0.99,
+      "dimensions": ["authority_boundaries", "operations", "acceptance_oracles", "cross_document_seams"],
+      "evidence": [{
+        "exact_quote": "Input: ledger_id=infer_latest. Audit-only. Do not edit Plans, ledgers, .plan_index, governance, code, WorkNodes, NodeSeeds, queues, manifests, implementation files, or build tasks. Write only Plans/.audits/<audit_id>/*.",
+        "line_end": 191,
+        "line_start": 191,
+        "path": "Plans/bootstrap/Codex_Prompts.md",
+        "source_sha256": "c5c7619bf49ce3a96d2eea94e0c6d2a1f861461239760a67e4877448828f3793"
+      }],
+      "gap_kind": "none",
+      "impact": "Closed-world auditing cannot alter the subject, generated index, governance, runtime artifacts, or implementation; evidence is isolated to the audit directory.",
+      "item_id": "A005M15-I022",
+      "item_type": "explicit_non_gap",
+      "severity": "info",
+      "source_unit_refs": ["SEMANTIC:DOCUMENT:Plans/bootstrap/Codex_Prompts.md"],
+      "statement": "The semantic audit lane has a comprehensive read-only subject boundary and a single output namespace.",
+      "title": "Closed-world audit writes are tightly isolated"
+    },
+    {
+      "builder_discretion": false,
+      "confidence": 0.99,
+      "dimensions": ["acceptance_oracles", "test_falsifiability", "propagation", "cross_document_seams"],
+      "evidence": [{
+        "exact_quote": "Before semantic review, build audit_scope_manifest.jsonl with deterministic chk check_id rows for every compiled atom detail, compile target, added/changed PlanUnit claim, reciprocal source_lineage claim, owner/consumer route, schema/contract identity, depends_on/unblocks edge, ledger projection field, index/governance check, and forbidden-artifact check. Rows carry refs, source_atom_ids, plan_unit_ids, owner_docs, detail_keys, exact_tokens, covered_artifacts, classification, repair_required, and finding_level. Completion requires 100% classified rows.",
+        "line_end": 199,
+        "line_start": 199,
+        "path": "Plans/bootstrap/Codex_Prompts.md",
+        "source_sha256": "c5c7619bf49ce3a96d2eea94e0c6d2a1f861461239760a67e4877448828f3793"
+      }],
+      "gap_kind": "none",
+      "impact": "Semantic completion is falsifiable against an exhaustive, deterministic scope inventory rather than inferred from a small set of findings or validator success.",
+      "item_id": "A005M15-I023",
+      "item_type": "acceptance_oracle",
+      "severity": "info",
+      "source_unit_refs": ["SEMANTIC:DOCUMENT:Plans/bootstrap/Codex_Prompts.md"],
+      "statement": "The audit requires deterministic check rows across atom, PlanUnit, lineage, routing, contract, graph, projection, governance, and forbidden-artifact surfaces, with total classification.",
+      "title": "Closed-world scope has an exhaustive classification oracle"
+    },
+    {
+      "builder_discretion": false,
+      "confidence": 0.98,
+      "dimensions": ["states_transitions", "recovery_rollback", "authority", "operations"],
+      "evidence": [{
+        "exact_quote": "Read registry before emitting risks. If a finding is closed and hashes/evidence match, classify previously_closed with repair_required=false and write closure_reuse.jsonl, not a new semantic risk. Reopen only on changed source/PlanUnit/owner/closure hashes or blocked/reopened status.",
+        "line_end": 203,
+        "line_start": 203,
+        "path": "Plans/bootstrap/Codex_Prompts.md",
+        "source_sha256": "c5c7619bf49ce3a96d2eea94e0c6d2a1f861461239760a67e4877448828f3793"
+      }],
+      "gap_kind": "none",
+      "impact": "Stable closed evidence is reused without generating duplicate risks, while defined hash or status changes permit reopening.",
+      "item_id": "A005M15-I024",
+      "item_type": "state_transition",
+      "severity": "info",
+      "source_unit_refs": ["SEMANTIC:DOCUMENT:Plans/bootstrap/Codex_Prompts.md"],
+      "statement": "Finding lifecycle transitions are gated by closure evidence identity and explicit changed-hash or status conditions.",
+      "title": "Closure reuse and reopen transitions are explicit"
+    },
+    {
+      "builder_discretion": true,
+      "confidence": 0.95,
+      "dimensions": ["ambiguity_unknowns", "concurrency_races", "invalid_states_transitions", "operations"],
+      "evidence": [{
+        "exact_quote": "Infer observation_ref=HEAD. Infer subject_ref as latest substantive commit touching live Plans, target-ledger governing state, .plan_index, governance, or process scripts; exclude Plans/.audits/**, closure-registry-only commits, and hygiene-only report edits. Infer ledger_id from latest non-background registry/recent commits, audit_id=next audit-YYYYMMDD-NNN-<slug>, and baseline_ref from the parent of the earliest contiguous subject cycle commit.",
+        "line_end": 197,
+        "line_start": 197,
+        "path": "Plans/bootstrap/Codex_Prompts.md",
+        "source_sha256": "c5c7619bf49ce3a96d2eea94e0c6d2a1f861461239760a67e4877448828f3793"
+      }],
+      "gap_kind": "inference_tie_break_and_snapshot_missing",
+      "impact": "Concurrent commits or multiple recent ledgers can change HEAD during the audit and make latest, substantive, non-background, contiguous, or next ambiguous, yielding non-repeatable refs or audit-id collisions.",
+      "item_id": "A005M15-I025",
+      "item_type": "gap",
+      "severity": "high",
+      "source_unit_refs": ["SEMANTIC:DOCUMENT:Plans/bootstrap/Codex_Prompts.md"],
+      "statement": "Audit ref and identity inference lacks a frozen-snapshot step, deterministic tie-breakers, and collision handling.",
+      "title": "Latest-cycle inference is vulnerable to races and ambiguity"
+    },
+    {
+      "builder_discretion": false,
+      "confidence": 0.99,
+      "dimensions": ["states_transitions", "acceptance_oracles", "failures_recovery", "gui_misleading_states"],
+      "evidence": [{
+        "exact_quote": "BLOCKED only when repair_required=true, a validator fails/mutates state, forbidden artifacts exist, or a user decision is required. PASS_WITH_WARNINGS is terminal when all findings are repair_required=false. PASS means no findings.",
+        "line_end": 207,
+        "line_start": 207,
+        "path": "Plans/bootstrap/Codex_Prompts.md",
+        "source_sha256": "c5c7619bf49ce3a96d2eea94e0c6d2a1f861461239760a67e4877448828f3793"
+      }],
+      "gap_kind": "none",
+      "impact": "Status cannot be inflated to PASS or incorrectly blocked by non-actionable observations; validator mutation is explicitly treated as failure.",
+      "item_id": "A005M15-I026",
+      "item_type": "contract",
+      "severity": "info",
+      "source_unit_refs": ["SEMANTIC:DOCUMENT:Plans/bootstrap/Codex_Prompts.md"],
+      "statement": "The audit defines mutually meaningful terminal statuses from actionable findings, validator behavior, forbidden artifacts, and user decisions.",
+      "title": "Audit terminal status semantics are explicit"
+    },
+    {
+      "builder_discretion": false,
+      "confidence": 0.99,
+      "dimensions": ["behavior", "states_transitions", "destructive_actions", "authority_boundaries"],
+      "evidence": [{
+        "exact_quote": "Scan audit artifacts for repair_required=true. If count is zero, no-op: do not edit Plans, ledgers, governance, registry, repair_closure_matrix.jsonl, repair_impact_matrix.jsonl, or prior audit artifacts; report PASS_WITH_WARNINGS terminal or PASS terminal from the audit.",
+        "line_end": 228,
+        "line_start": 228,
+        "path": "Plans/bootstrap/Codex_Prompts.md",
+        "source_sha256": "c5c7619bf49ce3a96d2eea94e0c6d2a1f861461239760a67e4877448828f3793"
+      }],
+      "gap_kind": "none",
+      "impact": "A repair request with no actionable rows cannot churn canonical, governance, registry, closure, impact, or historical audit artifacts.",
+      "item_id": "A005M15-I027",
+      "item_type": "failure_recovery",
+      "severity": "info",
+      "source_unit_refs": ["SEMANTIC:DOCUMENT:Plans/bootstrap/Codex_Prompts.md"],
+      "statement": "The repair lane has an explicit no-op terminal transition when actionable finding count is zero.",
+      "title": "Zero-action repair is safely terminal and mutation-free"
+    },
+    {
+      "builder_discretion": false,
+      "confidence": 0.99,
+      "dimensions": ["propagation", "acceptance_oracles", "cross_document_seams", "failures_recovery"],
+      "evidence": [{
+        "exact_quote": "Before editing, write repair_impact_matrix.jsonl. Map every actionable finding to files, PlanUnits, schemas, dependency_edges, owner_refs, ledger_projection_fields, index_artifacts, governance_artifacts, scope_check_ids, and post_repair_semantic_audit placeholder. Then repair only mapped impact surfaces. Do not revalidate previously_closed, exact_present, equivalent_with_evidence, ordinary validator warnings, audit-artifact wording, or repair_required=false observations. Audit-only observation/hygiene repairs do not stale/restamp ledger latest_audit_*.",
+        "line_end": 230,
+        "line_start": 230,
+        "path": "Plans/bootstrap/Codex_Prompts.md",
+        "source_sha256": "c5c7619bf49ce3a96d2eea94e0c6d2a1f861461239760a67e4877448828f3793"
+      }],
+      "gap_kind": "none",
+      "impact": "Repairs cannot silently broaden to unmapped files, graph edges, projections, index, governance, or non-actionable observations.",
+      "item_id": "A005M15-I028",
+      "item_type": "contract",
+      "severity": "info",
+      "source_unit_refs": ["SEMANTIC:DOCUMENT:Plans/bootstrap/Codex_Prompts.md"],
+      "statement": "Every actionable repair must have a pre-edit impact map across direct and propagated surfaces, and edits are limited to that map.",
+      "title": "Repair propagation is bounded by an impact matrix"
+    },
+    {
+      "builder_discretion": false,
+      "confidence": 0.99,
+      "dimensions": ["acceptance_oracles", "test_falsifiability", "states_transitions", "recovery_rollback"],
+      "evidence": [{
+        "exact_quote": "Run an internal post-repair semantic audit over the original audit_scope_manifest.jsonl plus every impact row. If new repair_required findings appear, add them to the same scope/impact set and repair/adjudicate in this Goal. Iterate until repair_required_count=0 or a true user decision blocks. Passing validators alone are insufficient.",
+        "line_end": 234,
+        "line_start": 234,
+        "path": "Plans/bootstrap/Codex_Prompts.md",
+        "source_sha256": "c5c7619bf49ce3a96d2eea94e0c6d2a1f861461239760a67e4877448828f3793"
+      }],
+      "gap_kind": "none",
+      "impact": "Repair closure is tested against original and propagated scope and cannot be claimed merely from green validators.",
+      "item_id": "A005M15-I029",
+      "item_type": "acceptance_oracle",
+      "severity": "info",
+      "source_unit_refs": ["SEMANTIC:DOCUMENT:Plans/bootstrap/Codex_Prompts.md"],
+      "statement": "The repair lane requires iterative semantic closure to zero actionable findings or a genuine user-decision block.",
+      "title": "Post-repair semantic closure is mandatory"
+    },
+    {
+      "builder_discretion": true,
+      "confidence": 0.97,
+      "dimensions": ["scale_performance", "operations", "concurrency_races", "partial_failure", "observability_support"],
+      "evidence": [{
+        "exact_quote": "For compile, audit, and repair prompts, use bounded read-only subagents when atom, owner-doc, or document-size thresholds are exceeded; require assignment/result evidence and keep the main agent as sole writer. Deep audit must cover atom fidelity, reciprocal lineage, owner routing, changed-doc fidelity, ledger consistency, index/governance status, forbidden artifacts, and validator mutability. Repair must write closure rows only for repair_required=true findings, no-op when none exist, and must not treat passing validators alone as semantic closure when actionable rows remain. PlanUnit indexing remains non-executable, and governance seal validates the target ledger only after Plans and indexes are stable.",
+        "line_end": 241,
+        "line_start": 241,
+        "path": "Plans/bootstrap/Codex_Prompts.md",
+        "source_sha256": "c5c7619bf49ce3a96d2eea94e0c6d2a1f861461239760a67e4877448828f3793"
+      }],
+      "gap_kind": "delegation_threshold_and_failure_protocol_missing",
+      "impact": "Agents cannot determine consistently when to shard, how many workers are bounded, how to prevent overlapping assignments, or what to do with missing, conflicting, stale, or malformed result evidence; the sole writer can become a throughput and recovery bottleneck.",
+      "item_id": "A005M15-I030",
+      "item_type": "gap",
+      "severity": "high",
+      "source_unit_refs": ["SEMANTIC:DOCUMENT:Plans/bootstrap/Codex_Prompts.md"],
+      "statement": "The hardening addendum mandates read-only delegation with evidence and a sole writer, but leaves thresholds, partition identity, concurrency limits, retry, conflict detection, and partial-result recovery unspecified.",
+      "title": "Subagent scaling lacks dispatch and recovery contracts"
+    },
+    {
+      "builder_discretion": true,
+      "confidence": 0.98,
+      "dimensions": ["accessibility", "localization", "gui_truth", "unknown_unknowns"],
+      "evidence": [{
+        "exact_quote": "- Every indexed PlanUnit must include gui_related true/false.",
+        "line_end": 126,
+        "line_start": 126,
+        "path": "Plans/bootstrap/Codex_Prompts.md",
+        "source_sha256": "c5c7619bf49ce3a96d2eea94e0c6d2a1f861461239760a67e4877448828f3793"
+      }],
+      "gap_kind": "gui_quality_dimensions_unrepresented",
+      "impact": "A unit can be correctly labeled GUI-related while omitting accessibility and localization requirements entirely; downstream index and readiness consumers cannot distinguish that omission from completed GUI truth.",
+      "item_id": "A005M15-I031",
+      "item_type": "gap",
+      "severity": "high",
+      "source_unit_refs": ["SEMANTIC:DOCUMENT:Plans/bootstrap/Codex_Prompts.md"],
+      "statement": "The binary gui_related field provides routing truth but the prompt catalog contains no accessibility or localization capture, validation, or readiness contract for those units.",
+      "title": "GUI classification does not cover accessibility or localization"
+    },
+    {
+      "builder_discretion": true,
+      "confidence": 0.95,
+      "dimensions": ["offline_network_loss", "failures_recovery", "operations", "unknown_unknowns"],
+      "evidence": [{
+        "exact_quote": "- Run safe plan validators before claiming success.",
+        "line_end": 73,
+        "line_start": 73,
+        "path": "Plans/bootstrap/Codex_Prompts.md",
+        "source_sha256": "c5c7619bf49ce3a96d2eea94e0c6d2a1f861461239760a67e4877448828f3793"
+      }],
+      "gap_kind": "environment_and_dependency_failure_semantics_missing",
+      "impact": "Validator or workflow dependency failures caused by offline state, missing tools, permissions, or transient I/O can be confused with plan defects or ignored, because classification, retry, and degraded-mode behavior are absent.",
+      "item_id": "A005M15-I032",
+      "item_type": "gap",
+      "severity": "medium",
+      "source_unit_refs": ["SEMANTIC:DOCUMENT:Plans/bootstrap/Codex_Prompts.md"],
+      "statement": "The prompts require safe validation but do not define behavior when required tooling or external/environmental dependencies are unavailable.",
+      "title": "Offline and environment failure handling is unspecified"
+    },
+    {
+      "builder_discretion": false,
+      "confidence": 0.98,
+      "dimensions": ["security_privacy", "untrusted_inputs", "authority_boundaries"],
+      "evidence": [{
+        "exact_quote": "Audit latest PM Bootstrap Ledger-to-Plans cycle for closed-world semantic fidelity and terminal state.",
+        "line_end": 189,
+        "line_start": 189,
+        "path": "Plans/bootstrap/Codex_Prompts.md",
+        "source_sha256": "c5c7619bf49ce3a96d2eea94e0c6d2a1f861461239760a67e4877448828f3793"
+      }],
+      "gap_kind": "none",
+      "impact": "The audit is deliberately scoped to repository-contained semantic evidence rather than allowing external material to silently redefine canonical truth.",
+      "item_id": "A005M15-I033",
+      "item_type": "explicit_non_gap",
+      "severity": "info",
+      "source_unit_refs": ["SEMANTIC:DOCUMENT:Plans/bootstrap/Codex_Prompts.md"],
+      "statement": "Closed-world fidelity is an explicit audit property; lack of external research in this lane is intentional, not an accidental omission.",
+      "title": "Semantic audit intentionally uses a closed world"
+    }
+  ],
+  "model": "gpt-5.6-sol",
+  "phase": "blind_macro_window_review",
+  "reasoning_effort": "xhigh",
+  "schema_version": "macro-review-result-v1",
+  "segments": [
+    {
+      "core_range": [1, 241],
+      "covered_source_unit_refs": ["SEMANTIC:DOCUMENT:Plans/bootstrap/Codex_Prompts.md"],
+      "item_ids": [
+        "A005M15-I001",
+        "A005M15-I002",
+        "A005M15-I003",
+        "A005M15-I004",
+        "A005M15-I005",
+        "A005M15-I006",
+        "A005M15-I007",
+        "A005M15-I008",
+        "A005M15-I009",
+        "A005M15-I010",
+        "A005M15-I011",
+        "A005M15-I012",
+        "A005M15-I013",
+        "A005M15-I014",
+        "A005M15-I015",
+        "A005M15-I016",
+        "A005M15-I017",
+        "A005M15-I018",
+        "A005M15-I019",
+        "A005M15-I020",
+        "A005M15-I021",
+        "A005M15-I022",
+        "A005M15-I023",
+        "A005M15-I024",
+        "A005M15-I025",
+        "A005M15-I026",
+        "A005M15-I027",
+        "A005M15-I028",
+        "A005M15-I029",
+        "A005M15-I030",
+        "A005M15-I031",
+        "A005M15-I032",
+        "A005M15-I033"
+      ],
+      "reviewed": true,
+      "summary": "Reviewed all 241 lines defining the PM Bootstrap prompt lifecycle from conversational ledger creation and continuation through compilation, lossless standardization, PlanUnit indexing, governance sealing, restart audit, closed-world semantic audit, bounded repair, and the compile-hardening addendum. Exact strengths include explicit authority boundaries, GUI classification, lossless coverage, fail-closed build readiness, exhaustive semantic scope, closure reuse, terminal status semantics, no-op repair, impact mapping, and semantic post-repair closure. Adversarial gaps center on multi-file atomicity, untrusted-content handling, resume validation, ownership adjudication, batch rollback, generated-artifact consumers, canonical-repair authority, status precedence, seal recovery, latest-cycle races, subagent dispatch recovery, accessibility/localization, and offline/tool failure behavior.",
+      "window_id": "WIN-9866429FE205-0001"
+    }
+  ],
+  "self_attestation": {
+    "no_canonical_writes": true,
+    "no_external_research_during_blind_review": true,
+    "no_peer_result_access": true,
+    "no_prior_audit_access": true,
+    "no_unrelated_source_access": true,
+    "terminal_after_submission": true
+  },
+  "source_binding": {
+    "bundle_id": "MACRO15-9866429FE205-0001",
+    "document_path": "Plans/bootstrap/Codex_Prompts.md",
+    "micro_window_ids": ["WIN-9866429FE205-0001"],
+    "source_sha256": "c5c7619bf49ce3a96d2eea94e0c6d2a1f861461239760a67e4877448828f3793"
+  },
+  "status": "completed",
+  "synthesis": {
+    "cross_document_questions": [
+      "Which canonical owner defines atomic multi-file ledger projection updates, cursor validation, writer locking, and replay or rollback after partial failure?",
+      "Where are schemas, versioning, atomic publication rules, and downstream consumers defined for every Plans/.plan_index and implementation-readiness artifact?",
+      "Which owner defines deterministic precedence when blocked_plans_incomplete and runtime_disabled are simultaneously true?",
+      "Which canonical contracts define governance-seal checkpoints, rollback, validator mutation handling, and safe resume after partial regeneration?",
+      "Where are the objective delegation thresholds, disjoint assignment identity, concurrency limits, evidence validation, retry, and conflict handling defined for bounded read-only subagents?",
+      "Which owner makes accessibility and localization requirements mandatory and readiness-testable for gui_related PlanUnits?",
+      "Where is the policy for secrets, personal data, prompt injection, and other untrusted exact tokens before they are durably preserved or compiled?"
+    ],
+    "feature_family_keys": [
+      "pm-bootstrap-conversational-ledger-lifecycle",
+      "ledger-to-plans-compilation",
+      "lossless-plan-standardization",
+      "planunit-index-and-readiness",
+      "governance-seal",
+      "closed-world-semantic-audit",
+      "bounded-audit-repair-and-certification",
+      "read-only-subagent-hardening"
+    ],
+    "research_queries": [
+      "atomic crash-consistent multi-file projection patterns for append-only event ledgers",
+      "deterministic work sharding and result attestation protocols for read-only audit agents",
+      "safe exact-token preservation policies for secrets personal data and prompt injection",
+      "transactional publication and rollback for generated governance artifact sets",
+      "accessibility and localization readiness criteria for UI-linked planning units"
+    ]
+  },
+  "task_thread_id": "/root/a005m15_b8_000154_attempt_0015_terminal"
+}

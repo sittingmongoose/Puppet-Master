@@ -4950,9 +4950,9 @@
       "all_planunits_have_gui_related": true,
       "gui_related_counts": {
         "False": 35,
-        "True": 383
+        "True": 386
       },
-      "heading_count": 700,
+      "heading_count": 704,
       "implementation_surfaces": [
         "Plans/00-plans-index.md",
         "Plans/Automated_Testing_System.md",
@@ -5005,9 +5005,9 @@
         "future run control UI",
         "scripts/pm-gui-asset-policy.py"
       ],
-      "line_count": 27344,
+      "line_count": 27515,
       "path": "Plans/FinalGUISpec.md",
-      "plan_unit_count": 418,
+      "plan_unit_count": 421,
       "plan_unit_ids": [
         "F3-410",
         "F3-400",
@@ -5426,7 +5426,10 @@
         "F3-415",
         "F3-416",
         "F3-417",
-        "F3-418"
+        "F3-418",
+        "F3-419",
+        "F3-420",
+        "F3-421"
       ],
       "reasoning_tiers": [
         "high",
@@ -5472,10 +5475,10 @@
         "user_visible_config_drift",
         "visualizer_script_policy_drift"
       ],
-      "sha256": "2ffdc9eb454f3c3bdda9d76c2c1e073e4bbb4e1cc401fd9eb91106f07301aeb5",
+      "sha256": "0c52e700714839fefab1f760a7aca55bbb0e19ab2792961fca22bdb4996286ed",
       "source_preserving_unit_ids": [],
       "status_counts": {
-        "accepted": 417,
+        "accepted": 420,
         "retired": 1
       },
       "title": "Puppet Master GUI Specification -- Slint Rewrite",
@@ -5483,7 +5486,7 @@
         "compatibility_disposition": 3,
         "constraint": 70,
         "decision": 5,
-        "requirement": 339,
+        "requirement": 342,
         "validation_rule": 1
       },
       "validation_surfaces": [
@@ -10091,9 +10094,9 @@
       "all_planunits_have_gui_related": true,
       "gui_related_counts": {
         "False": 5,
-        "True": 13
+        "True": 14
       },
-      "heading_count": 35,
+      "heading_count": 37,
       "implementation_surfaces": [
         "Plans/.implementation_readiness/buildability_gate_report.json",
         "Plans/.implementation_readiness/readiness_blockers.jsonl",
@@ -10128,9 +10131,9 @@
         "future Planning Wizard output records",
         "future Planning Wizard source picker"
       ],
-      "line_count": 1552,
+      "line_count": 1609,
       "path": "Plans/Planning_Wizard.md",
-      "plan_unit_count": 18,
+      "plan_unit_count": 19,
       "plan_unit_ids": [
         "PWIZ-001",
         "PWIZ-002",
@@ -10149,7 +10152,8 @@
         "PWIZ-015",
         "PWIZ-016",
         "PWIZ-017",
-        "PWIZ-018"
+        "PWIZ-018",
+        "PWIZ-019"
       ],
       "reasoning_tiers": [
         "high",
@@ -10165,14 +10169,14 @@
         "stale_approval_build_race",
         "stale_or_forbidden_behavior"
       ],
-      "sha256": "a4f61959f82a4fcde5872a40f7d92b8172fd609257017496f8c3945dcc992686",
+      "sha256": "fee6e23abff2aafb251f978165fdf014bcfe9a9beba3d805857ddf4212000ec0",
       "source_preserving_unit_ids": [],
       "status_counts": {
-        "accepted": 18
+        "accepted": 19
       },
       "title": "Planning Wizard",
       "unit_type_counts": {
-        "requirement": 18
+        "requirement": 19
       },
       "validation_surfaces": [
         "Future Planning Wizard source pick local/SSH tests.",
@@ -10185,7 +10189,8 @@
         "python3 scripts/pm-implementation-readiness.py validate",
         "python3 scripts/pm-plan-index.py validate",
         "python3 scripts/pm-plans-verify.py validate-implementation-readiness",
-        "python3 scripts/pm-plans-verify.py validate-prd-planning-runtime-contracts"
+        "python3 scripts/pm-plans-verify.py validate-prd-planning-runtime-contracts",
+        "python3 scripts/pm-shard-plans.py --check"
       ]
     },
     {
@@ -10362,7 +10367,7 @@
         "stale_or_forbidden_behavior",
         "untrusted_source_security_bypass"
       ],
-      "sha256": "743f16817fd9079fc6d3d39bf8691ef331aa512661ef9a68eb932d725484b2a2",
+      "sha256": "27dacbbe7a1bcad074c650e89c8411bf044858dcacfeb0236b7b9492a590cbda",
       "source_preserving_unit_ids": [],
       "status_counts": {
         "accepted": 11
@@ -13552,7 +13557,7 @@
       ]
     }
   ],
-  "generated_at_utc": "2026-07-09T18:12:23Z",
+  "generated_at_utc": "2026-07-12T02:24:28Z",
   "schema_id": "pm.plan_index.doc_cards.v1",
   "source_scope": "top-level live Plans/*.md; excludes ledgers, generated shards, evidence, and pipeline artifacts",
   "summary": {
@@ -13561,12 +13566,12 @@
     "docs_without_plan_units": 0,
     "gui_related_counts": {
       "False": 3124,
-      "True": 2412
+      "True": 2416
     },
-    "plan_unit_count": 5536,
+    "plan_unit_count": 5540,
     "source_preserving_unit_count": 0,
     "status_counts": {
-      "accepted": 5358,
+      "accepted": 5362,
       "retired": 178
     },
     "unit_type_counts": {
@@ -13608,7 +13613,7 @@
       "provider_taxonomy": 1,
       "reference": 5,
       "reference_formula": 1,
-      "requirement": 4582,
+      "requirement": 4586,
       "risk": 2,
       "runtime_contract": 22,
       "runtime_disclosure": 2,

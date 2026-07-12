@@ -1,0 +1,78 @@
+{
+  "audit_id": "audit-20260710-005-plan-assurance-model-lanes-fresh-agent-exhaustive",
+  "schema_version": "audit-concurrency-policy-v19",
+  "status": "PROSPECTIVE_CONDITIONAL_LOCALIZED_RECEIPT_CLOSURE_REPAIR",
+  "effective_date": "2026-07-11",
+  "supersedes_prospectively": "master/coordination/CONCURRENCY_POLICY_V18.json",
+  "prior_policies_mutated": false,
+  "activation_condition": {
+    "runtime_pinned_v18_reviewer_terminal": true,
+    "runtime_pinned_report_path": "master/external_research/sprint-wave-0001/retry-attempt-0007/validation/luna-independent-prelaunch-v7_2-runtime-pinned.json",
+    "report_must_be_stable_and_fail_closed": true,
+    "report_must_localize_only_append_only_receipt_or_capture_closure_defects": true,
+    "work_before_condition": "WAIT_ONLY"
+  },
+  "quota_control": {
+    "latest_remaining_percent": 65,
+    "recent_burn_points_per_hour": 15.0250417362,
+    "maximum_active_semantic_leaves": 16,
+    "preferred_active_range": [8, 12],
+    "atomic_transaction_cap": 8,
+    "concurrency_change": "none"
+  },
+  "localized_repair_authority": {
+    "controller": "019f4f5e-96c6-7893-8c94-ce2c1b760d6c",
+    "controller_model": "gpt-5.6-sol",
+    "controller_reasoning_effort": "xhigh",
+    "namespace": "master/external_research/sprint-wave-0001/retry-attempt-0007/receipt-closure-v7_3",
+    "append_only": true,
+    "preserve_v7_2_bytes": true,
+    "production_receipts_or_capture_writes": false,
+    "leaf_reruns": 0,
+    "result_or_activation_mutation": false,
+    "minimum_tests": 800,
+    "required_runtime": {
+      "python_executable": "/Users/jaredsmacbookair/.cache/codex-runtimes/codex-primary-runtime/dependencies/python/bin/python3",
+      "python_version": "3.12.13",
+      "dependency_site_packages": "master/dependencies/jsonschema-draft202012-v1/site-packages",
+      "flags": ["-S", "-B"],
+      "jsonschema": "4.26.0",
+      "rpds": "macOS arm64 CPython 3.12 extension"
+    },
+    "required_closure": [
+      "Draft202012Validator.check_schema passes for every append-only schema",
+      "receipt required-field array has no duplicate entries",
+      "temporary exact-two receipt and exact-two-row capture execution passes",
+      "raw and canonical activation, authorization, result and tree digests remain distinct and correctly joined",
+      "native identity uniqueness and result cardinality are enforced",
+      "capture writer validates its bound schema and every receipt before emission",
+      "TOCTOU rehash immediately before atomic write",
+      "temporary fixture is cleaned",
+      "production zero-state remains unchanged"
+    ]
+  },
+  "next_gate": {
+    "fresh_luna_max_required": true,
+    "fork_turns": "none",
+    "descendants_followups_retries": 0,
+    "production_writers_only_after_unqualified_pass": true
+  },
+  "durable_artifacts_to_preserve": {
+    "seam_checkpoint_sha256": "72bfdc5519bb3b25f723a6a107320357a9176c67db8990f444193274cf27c910",
+    "certification_v6_report_sha256": "fb1b1ccfb6ef11f1e99164cc8196d73043a9374cedd0e3f5c293a61bc5d97435",
+    "scenario_readiness_v16_report_sha256": "131d91ee8679132f8b806cab517350393105b43f86cc87342ac6987c75f12c02",
+    "seam_repair_attempt_0002_report_sha256": "385cc8d1423859087f047e9ea1b25f4b5f927142f3af0c8fd1528be8b8a9b901"
+  },
+  "controller_threads": {
+    "sol": "019f4f5e-96c6-7893-8c94-ce2c1b760d6c",
+    "luna": "019f5078-6501-7223-b52f-2251010bdc41",
+    "extra_controllers_authorized": 0
+  },
+  "quality_invariants": {
+    "semantic_scope_reduced": false,
+    "independent_validation_reduced": false,
+    "external_research_requirement_reduced": false,
+    "canonical_plan_writes_authorized": false,
+    "immutable_lineage_mutation_authorized": false
+  }
+}

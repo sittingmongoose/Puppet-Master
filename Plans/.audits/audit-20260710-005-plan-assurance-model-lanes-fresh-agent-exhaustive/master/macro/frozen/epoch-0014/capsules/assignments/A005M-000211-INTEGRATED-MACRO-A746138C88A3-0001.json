@@ -1,0 +1,185 @@
+{
+  "assignment_id": "A005M-000211-INTEGRATED-MACRO-A746138C88A3-0001",
+  "attempt_id": "attempt-0014",
+  "audit_id": "audit-20260710-005-plan-assurance-model-lanes-fresh-agent-exhaustive",
+  "blindness": {
+    "external_research": "deferred_to_feature_research_phase",
+    "peer_results": "forbidden",
+    "prior_audits": "forbidden",
+    "unrelated_sources": "forbidden"
+  },
+  "bundle_core_range": [
+    1,
+    1045
+  ],
+  "bundle_id": "MACRO-A746138C88A3-0001",
+  "context_ranges": [],
+  "document_path": "Plans/runtime_artifact_api_web_call.schema.json",
+  "micro_window_ids": [
+    "WIN-A746138C88A3-0001",
+    "WIN-A746138C88A3-0002",
+    "WIN-A746138C88A3-0003",
+    "WIN-A746138C88A3-0004"
+  ],
+  "phase": "blind_macro_window_review",
+  "required_dimensions": [
+    "behavior",
+    "capabilities",
+    "inputs_outputs",
+    "contracts",
+    "states_transitions",
+    "authority",
+    "ownership",
+    "consumers",
+    "gui_truth",
+    "failures_recovery",
+    "security_privacy",
+    "propagation",
+    "operations",
+    "scale_performance",
+    "compatibility_migration",
+    "acceptance_oracles",
+    "builder_discretion",
+    "ambiguity_unknowns",
+    "missing_callers_consumers",
+    "invalid_states_transitions",
+    "concurrency_races",
+    "partial_failure",
+    "recovery_rollback",
+    "authority_boundaries",
+    "privacy_data_lifecycle",
+    "untrusted_inputs",
+    "gui_misleading_states",
+    "offline_network_loss",
+    "scale_limits",
+    "accessibility",
+    "localization",
+    "observability_support",
+    "destructive_actions",
+    "cross_document_seams",
+    "test_falsifiability",
+    "unknown_unknowns"
+  ],
+  "result_schema_ref": "schemas/macro_review_result.schema.json",
+  "review_instructions": "Read every assigned core line and account for every required_source_unit_ref. Apply both exact-behavior and adversarial-negative-space lenses across every required dimension. Extract concise feature, behavior, contract, state, authority, consumer, GUI, failure/recovery, oracle, gap, unknown, and explicit-non-gap items with exact source evidence. Do not merely paraphrase headings or copy unit refs. Each segment must name its complete required_source_unit_refs list and at least one item. Write exactly one regular JSON payload inside the assigned output directory; result.json is recommended but the filename is not semantic. Do not write a terminal seal. Return PMR1 only after the JSON payload is fully written.",
+  "schema_version": "macro-context-capsule-v1",
+  "segments": [
+    {
+      "core_range": [
+        1,
+        107
+      ],
+      "core_sha256": "ede601342a3d79ed2eb92b45e9d0eec841c83e3ea11b831a08e608e3e099d9dc",
+      "plan_unit_ids": [],
+      "required_source_unit_refs": [
+        "SEMANTIC:JSON_PREFIX:Plans/runtime_artifact_api_web_call.schema.json",
+        "SEMANTIC:JSON_FIELD:Plans/runtime_artifact_api_web_call.schema.json:$schema",
+        "SEMANTIC:JSON_FIELD:Plans/runtime_artifact_api_web_call.schema.json:$id",
+        "SEMANTIC:JSON_FIELD:Plans/runtime_artifact_api_web_call.schema.json:title",
+        "SEMANTIC:JSON_FIELD:Plans/runtime_artifact_api_web_call.schema.json:type",
+        "SEMANTIC:JSON_FIELD:Plans/runtime_artifact_api_web_call.schema.json:additionalProperties",
+        "SEMANTIC:JSON_FIELD:Plans/runtime_artifact_api_web_call.schema.json:required",
+        "SEMANTIC:JSON_FIELD:Plans/runtime_artifact_api_web_call.schema.json:properties",
+        "STRUCTURAL:$",
+        "STRUCTURAL:$.$id",
+        "STRUCTURAL:$.$schema",
+        "STRUCTURAL:$.additionalProperties",
+        "STRUCTURAL:$.properties",
+        "STRUCTURAL:$.required",
+        "STRUCTURAL:$.title",
+        "STRUCTURAL:$.type"
+      ],
+      "semantic_block_ids": [
+        "JSON_PREFIX:Plans/runtime_artifact_api_web_call.schema.json",
+        "JSON_FIELD:Plans/runtime_artifact_api_web_call.schema.json:$schema",
+        "JSON_FIELD:Plans/runtime_artifact_api_web_call.schema.json:$id",
+        "JSON_FIELD:Plans/runtime_artifact_api_web_call.schema.json:title",
+        "JSON_FIELD:Plans/runtime_artifact_api_web_call.schema.json:type",
+        "JSON_FIELD:Plans/runtime_artifact_api_web_call.schema.json:additionalProperties",
+        "JSON_FIELD:Plans/runtime_artifact_api_web_call.schema.json:required",
+        "JSON_FIELD:Plans/runtime_artifact_api_web_call.schema.json:properties"
+      ],
+      "structural_paths": [
+        "$",
+        "$.$id",
+        "$.$schema",
+        "$.additionalProperties",
+        "$.properties",
+        "$.required",
+        "$.title",
+        "$.type"
+      ],
+      "token_estimate": 696,
+      "window_id": "WIN-A746138C88A3-0001"
+    },
+    {
+      "core_range": [
+        108,
+        506
+      ],
+      "core_sha256": "69a1d0db2969bafb18f95ab29830d2f6bf8b3a36bb2bbbc7d70405c44c5bd201",
+      "plan_unit_ids": [],
+      "required_source_unit_refs": [
+        "SEMANTIC:JSON_FIELD:Plans/runtime_artifact_api_web_call.schema.json:$defs:CONT-001",
+        "STRUCTURAL:$.$defs"
+      ],
+      "semantic_block_ids": [
+        "JSON_FIELD:Plans/runtime_artifact_api_web_call.schema.json:$defs:CONT-001"
+      ],
+      "structural_paths": [
+        "$.$defs"
+      ],
+      "token_estimate": 2873,
+      "window_id": "WIN-A746138C88A3-0002"
+    },
+    {
+      "core_range": [
+        507,
+        717
+      ],
+      "core_sha256": "592dabec6825dd167a73757d9bbe91cee023656fc9c53058758ecaca7b2f765b",
+      "plan_unit_ids": [],
+      "required_source_unit_refs": [
+        "SEMANTIC:JSON_FIELD:Plans/runtime_artifact_api_web_call.schema.json:$defs:CONT-002",
+        "STRUCTURAL:$.$defs"
+      ],
+      "semantic_block_ids": [
+        "JSON_FIELD:Plans/runtime_artifact_api_web_call.schema.json:$defs:CONT-002"
+      ],
+      "structural_paths": [
+        "$.$defs"
+      ],
+      "token_estimate": 1881,
+      "window_id": "WIN-A746138C88A3-0003"
+    },
+    {
+      "core_range": [
+        718,
+        1045
+      ],
+      "core_sha256": "fa742803ae043b5bbaba5b22c1c340390d80837839bf4aa7913586ab4dcf6766",
+      "plan_unit_ids": [],
+      "required_source_unit_refs": [
+        "SEMANTIC:JSON_FIELD:Plans/runtime_artifact_api_web_call.schema.json:$defs:CONT-003",
+        "SEMANTIC:JSON_SUFFIX:Plans/runtime_artifact_api_web_call.schema.json",
+        "STRUCTURAL:$",
+        "STRUCTURAL:$.$defs"
+      ],
+      "semantic_block_ids": [
+        "JSON_FIELD:Plans/runtime_artifact_api_web_call.schema.json:$defs:CONT-003",
+        "JSON_SUFFIX:Plans/runtime_artifact_api_web_call.schema.json"
+      ],
+      "structural_paths": [
+        "$",
+        "$.$defs"
+      ],
+      "token_estimate": 3051,
+      "window_id": "WIN-A746138C88A3-0004"
+    }
+  ],
+  "source_excerpt_line_format": "L######## followed by a tab and exact canonical source text",
+  "source_excerpt_ref": "capsules/source/47/478f5b27b2d88c12c3b04846a41e38b1cf8cdd9d7c1a08b741c2a4b18d88605d.txt",
+  "source_excerpt_sha256": "478f5b27b2d88c12c3b04846a41e38b1cf8cdd9d7c1a08b741c2a4b18d88605d",
+  "source_sha256": "e392f1c390ff121808d810084ed9e016ca34ddac89c764aef5e493bfe904fed4",
+  "token_estimate": 8501
+}

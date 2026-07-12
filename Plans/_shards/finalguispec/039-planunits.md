@@ -4,7 +4,7 @@ Source: `Plans/FinalGUISpec.md`
 
 Source lines: L3761-L24613
 
-Source SHA256: `2ffdc9eb454f3c3bdda9d76c2c1e073e4bbb4e1cc401fd9eb91106f07301aeb5`
+Source SHA256: `0c52e700714839fefab1f760a7aca55bbb0e19ab2792961fca22bdb4996286ed`
 
 ---
 
@@ -16943,10 +16943,10 @@ unit_type: requirement
 status: accepted
 owner_doc: Plans/FinalGUISpec.md
 canonical_text: >-
-  Plan Thoroughness (PT) appears when either planning overlay is active as a segmented
-  control, dropdown, or compact selector with canonical labels Light, Balanced, and
-  Comprehensive, default Balanced, shared across Plan and Deep Plan, and tooltip/help copy
-  explaining Deep Plan intensity.
+  Plan Thoroughness (PT) appears when either planning overlay is active as a compact selector
+  presented as a mode-dropdown flyout (superseding the standalone segmented control
+  presentation), with canonical labels Light, Balanced, and Comprehensive, default Balanced,
+  shared across Plan and Deep Plan, and tooltip/help copy explaining Deep Plan intensity.
 gui_related: true
 gui_classification_reason: >-
   This unit defines visible Plan Thoroughness controls.

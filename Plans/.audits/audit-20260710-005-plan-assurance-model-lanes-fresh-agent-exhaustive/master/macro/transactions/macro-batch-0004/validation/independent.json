@@ -1,0 +1,281 @@
+{
+  "audit_id": "audit-20260710-005-plan-assurance-model-lanes-fresh-agent-exhaustive",
+  "batch_id": "macro-batch-0004",
+  "checker": "macro_batch_independent_v1",
+  "counts": {
+    "assignments": 24,
+    "eligible": 24,
+    "pending": 0,
+    "rejected": 0
+  },
+  "eligible_assignment_ids": [
+    "A005M15-000030-INTEGRATED-MACRO15-E36B3E5CECA0-0001",
+    "A005M15-000031-INTEGRATED-MACRO15-E36B3E5CECA0-0002",
+    "A005M15-000032-INTEGRATED-MACRO15-E0E9CAF5963F-0001",
+    "A005M15-000033-INTEGRATED-MACRO15-99739FEA68EE-0001",
+    "A005M15-000035-INTEGRATED-MACRO15-99739FEA68EE-0003",
+    "A005M15-000036-INTEGRATED-MACRO15-99739FEA68EE-0004",
+    "A005M15-000037-INTEGRATED-MACRO15-99739FEA68EE-0005",
+    "A005M15-000038-INTEGRATED-MACRO15-AC612DBB4EFE-0001",
+    "A005M15-000040-INTEGRATED-MACRO15-AC612DBB4EFE-0003",
+    "A005M15-000041-INTEGRATED-MACRO15-AC612DBB4EFE-0004",
+    "A005M15-000042-INTEGRATED-MACRO15-AC612DBB4EFE-0005",
+    "A005M15-000043-INTEGRATED-MACRO15-AC612DBB4EFE-0006",
+    "A005M15-000044-INTEGRATED-MACRO15-AC612DBB4EFE-0007",
+    "A005M15-000045-INTEGRATED-MACRO15-AC612DBB4EFE-0008",
+    "A005M15-000046-INTEGRATED-MACRO15-AC612DBB4EFE-0009",
+    "A005M15-000047-INTEGRATED-MACRO15-AC612DBB4EFE-0010",
+    "A005M15-000048-INTEGRATED-MACRO15-AC612DBB4EFE-0011",
+    "A005M15-000049-INTEGRATED-MACRO15-E54621C05CD7-0001",
+    "A005M15-000050-INTEGRATED-MACRO15-369369F72EDC-0001",
+    "A005M15-000051-INTEGRATED-MACRO15-34C3EA3D3753-0001",
+    "A005M15-000052-INTEGRATED-MACRO15-374364D6188B-0001",
+    "A005M15-000053-INTEGRATED-MACRO15-DF5F1BFBD3B7-0001",
+    "A005M15-000055-INTEGRATED-MACRO15-5F6016A27747-0001",
+    "A005M15-000056-INTEGRATED-MACRO15-5F6016A27747-0002"
+  ],
+  "epoch_id": "epoch-0015",
+  "results": [
+    {
+      "assignment_id": "A005M15-000030-INTEGRATED-MACRO15-E36B3E5CECA0-0001",
+      "issues": [],
+      "normalization_applied": false,
+      "result_bytes": 96665,
+      "result_path": "macro_v2/assignments/A005M15-000030-INTEGRATED-MACRO15-E36B3E5CECA0-0001/attempts/attempt-0015/result.json",
+      "result_sha256": "d94713c9e5f5f2a28508c4d332fbefd2be5874e8df3013b1d56255b72cb659e7",
+      "state": "eligible",
+      "task_thread_id": "/root/a005m15_b4_000030_attempt_0015_terminal"
+    },
+    {
+      "assignment_id": "A005M15-000031-INTEGRATED-MACRO15-E36B3E5CECA0-0002",
+      "issues": [],
+      "normalization_applied": false,
+      "result_bytes": 42148,
+      "result_path": "macro_v2/assignments/A005M15-000031-INTEGRATED-MACRO15-E36B3E5CECA0-0002/attempts/attempt-0015/result.json",
+      "result_sha256": "5ced02b7dcdf3deb5cce49b14731c18ed4ae7f6e620ccb8038318cab489d6b81",
+      "state": "eligible",
+      "task_thread_id": "/root/a005m15_b4_000031_attempt_0015_terminal"
+    },
+    {
+      "assignment_id": "A005M15-000032-INTEGRATED-MACRO15-E0E9CAF5963F-0001",
+      "issues": [],
+      "normalization_applied": false,
+      "result_bytes": 69375,
+      "result_path": "macro_v2/assignments/A005M15-000032-INTEGRATED-MACRO15-E0E9CAF5963F-0001/attempts/attempt-0015/result.json",
+      "result_sha256": "259a9b84c9a572839d469f2664752471610501b614abbc25c04d7c4ddbcd34d2",
+      "state": "eligible",
+      "task_thread_id": "/root/a005m15_b4_000032_attempt_0015_terminal"
+    },
+    {
+      "assignment_id": "A005M15-000033-INTEGRATED-MACRO15-99739FEA68EE-0001",
+      "issues": [],
+      "normalization_applied": false,
+      "result_bytes": 42026,
+      "result_path": "macro_v2/assignments/A005M15-000033-INTEGRATED-MACRO15-99739FEA68EE-0001/attempts/attempt-0015/result.json",
+      "result_sha256": "2d5a8eebcce858990d8aff0c2ee796ecf8006d55445b639b339d882c78cc1596",
+      "state": "eligible",
+      "task_thread_id": "/root/a005m15_b4_000033_attempt_0015_terminal"
+    },
+    {
+      "assignment_id": "A005M15-000035-INTEGRATED-MACRO15-99739FEA68EE-0003",
+      "issues": [],
+      "normalization_applied": false,
+      "result_bytes": 48141,
+      "result_path": "macro_v2/assignments/A005M15-000035-INTEGRATED-MACRO15-99739FEA68EE-0003/attempts/attempt-0015/result.json",
+      "result_sha256": "58a0eedfdbb68040297bb0319f7e768bb431b42074a7e88f7c6b433822944058",
+      "state": "eligible",
+      "task_thread_id": "/root/a005m15_b4_000035_attempt_0015_terminal"
+    },
+    {
+      "assignment_id": "A005M15-000036-INTEGRATED-MACRO15-99739FEA68EE-0004",
+      "issues": [],
+      "normalization_applied": false,
+      "result_bytes": 60377,
+      "result_path": "macro_v2/assignments/A005M15-000036-INTEGRATED-MACRO15-99739FEA68EE-0004/attempts/attempt-0015/result.json",
+      "result_sha256": "9386c698cc9de17fa1df7f272433c9969e4188632c68f508aa5141c22588d27a",
+      "state": "eligible",
+      "task_thread_id": "/root/a005m15_b4_000036_attempt_0015_terminal"
+    },
+    {
+      "assignment_id": "A005M15-000037-INTEGRATED-MACRO15-99739FEA68EE-0005",
+      "issues": [],
+      "normalization_applied": false,
+      "result_bytes": 48452,
+      "result_path": "macro_v2/assignments/A005M15-000037-INTEGRATED-MACRO15-99739FEA68EE-0005/attempts/attempt-0015/result.json",
+      "result_sha256": "fd12ad52c61fc918772e250ca373e2fc6196ef09a22c2c9a02a3fde1e4f33bfc",
+      "state": "eligible",
+      "task_thread_id": "/root/a005m15_b4_000037_attempt_0015_terminal"
+    },
+    {
+      "assignment_id": "A005M15-000038-INTEGRATED-MACRO15-AC612DBB4EFE-0001",
+      "issues": [],
+      "normalization_applied": false,
+      "result_bytes": 52604,
+      "result_path": "macro_v2/assignments/A005M15-000038-INTEGRATED-MACRO15-AC612DBB4EFE-0001/attempts/attempt-0015/result.json",
+      "result_sha256": "b31a82050c966b2b7ca0f95ba455ff96ba1fb18d5d34bfba8671a03b046c6810",
+      "state": "eligible",
+      "task_thread_id": "/root/a005m15_b4_000038_attempt_0015_terminal"
+    },
+    {
+      "assignment_id": "A005M15-000040-INTEGRATED-MACRO15-AC612DBB4EFE-0003",
+      "issues": [],
+      "normalization_applied": false,
+      "result_bytes": 30638,
+      "result_path": "macro_v2/assignments/A005M15-000040-INTEGRATED-MACRO15-AC612DBB4EFE-0003/attempts/attempt-0015/result.json",
+      "result_sha256": "6677d8b24eabc1bb787bbf0e6d9a4fa9a8288d1b3fe4c40b26df186ee4dcd38a",
+      "state": "eligible",
+      "task_thread_id": "/root/a005m15_b4_000040_attempt_0015_terminal"
+    },
+    {
+      "assignment_id": "A005M15-000041-INTEGRATED-MACRO15-AC612DBB4EFE-0004",
+      "issues": [],
+      "normalization_applied": false,
+      "result_bytes": 84831,
+      "result_path": "macro_v2/assignments/A005M15-000041-INTEGRATED-MACRO15-AC612DBB4EFE-0004/attempts/attempt-0015/result.json",
+      "result_sha256": "08a47e71cd1eed4a2599e0acb45dbd77035f757b90215c186a39db21713ffc25",
+      "state": "eligible",
+      "task_thread_id": "/root/a005m15_b4_000041_attempt_0015_terminal"
+    },
+    {
+      "assignment_id": "A005M15-000042-INTEGRATED-MACRO15-AC612DBB4EFE-0005",
+      "issues": [],
+      "normalization_applied": false,
+      "result_bytes": 38446,
+      "result_path": "macro_v2/assignments/A005M15-000042-INTEGRATED-MACRO15-AC612DBB4EFE-0005/attempts/attempt-0015/result.json",
+      "result_sha256": "e65b09c6a90434fa4a22f4df3c2e988693ef6766317b3ce56d663acd36d59b74",
+      "state": "eligible",
+      "task_thread_id": "/root/a005m15_b4_000042_attempt_0015_terminal"
+    },
+    {
+      "assignment_id": "A005M15-000043-INTEGRATED-MACRO15-AC612DBB4EFE-0006",
+      "issues": [],
+      "normalization_applied": false,
+      "result_bytes": 38813,
+      "result_path": "macro_v2/assignments/A005M15-000043-INTEGRATED-MACRO15-AC612DBB4EFE-0006/attempts/attempt-0015/result.json",
+      "result_sha256": "c5657ed61c9a2a48fc056acd7564fe619800ba47cbbd00926f1f6a8cd85bd0a1",
+      "state": "eligible",
+      "task_thread_id": "/root/a005m15_b4_000043_attempt_0015_terminal"
+    },
+    {
+      "assignment_id": "A005M15-000044-INTEGRATED-MACRO15-AC612DBB4EFE-0007",
+      "issues": [],
+      "normalization_applied": false,
+      "result_bytes": 106299,
+      "result_path": "macro_v2/assignments/A005M15-000044-INTEGRATED-MACRO15-AC612DBB4EFE-0007/attempts/attempt-0015/result.json",
+      "result_sha256": "15ed2eb327546faf3f7e05831a7268ceb16df84533f7db660b654bbc01e734ef",
+      "state": "eligible",
+      "task_thread_id": "/root/a005m15_b4_000044_attempt_0015_terminal"
+    },
+    {
+      "assignment_id": "A005M15-000045-INTEGRATED-MACRO15-AC612DBB4EFE-0008",
+      "issues": [],
+      "normalization_applied": false,
+      "result_bytes": 67375,
+      "result_path": "macro_v2/assignments/A005M15-000045-INTEGRATED-MACRO15-AC612DBB4EFE-0008/attempts/attempt-0015/result.json",
+      "result_sha256": "a2ea8fc7a1d88af9868d7f7de38144b1d2771d07551444db1c61c12c064378a4",
+      "state": "eligible",
+      "task_thread_id": "/root/a005m15_b4_000045_attempt_0015_terminal"
+    },
+    {
+      "assignment_id": "A005M15-000046-INTEGRATED-MACRO15-AC612DBB4EFE-0009",
+      "issues": [],
+      "normalization_applied": false,
+      "result_bytes": 47753,
+      "result_path": "macro_v2/assignments/A005M15-000046-INTEGRATED-MACRO15-AC612DBB4EFE-0009/attempts/attempt-0015/result.json",
+      "result_sha256": "d68371577a556b85377d22f1dffaab617ea7ef1121b3e74eec56ad9998a56e39",
+      "state": "eligible",
+      "task_thread_id": "/root/a005m15_b4_000046_attempt_0015_terminal"
+    },
+    {
+      "assignment_id": "A005M15-000047-INTEGRATED-MACRO15-AC612DBB4EFE-0010",
+      "issues": [],
+      "normalization_applied": false,
+      "result_bytes": 47181,
+      "result_path": "macro_v2/assignments/A005M15-000047-INTEGRATED-MACRO15-AC612DBB4EFE-0010/attempts/attempt-0015/result.json",
+      "result_sha256": "a6c2db120908b77068443636af87e7f100c82ef6834de45b12c7aacbff6521a8",
+      "state": "eligible",
+      "task_thread_id": "/root/a005m15_b4_000047_attempt_0015_terminal"
+    },
+    {
+      "assignment_id": "A005M15-000048-INTEGRATED-MACRO15-AC612DBB4EFE-0011",
+      "issues": [],
+      "normalization_applied": false,
+      "result_bytes": 39950,
+      "result_path": "macro_v2/assignments/A005M15-000048-INTEGRATED-MACRO15-AC612DBB4EFE-0011/attempts/attempt-0015/result.json",
+      "result_sha256": "ac93c5b7213e0b47f6b1e062a5c12a903321a66d519c40616396791ec55bda46",
+      "state": "eligible",
+      "task_thread_id": "/root/a005m15_b4_000048_attempt_0015_terminal"
+    },
+    {
+      "assignment_id": "A005M15-000049-INTEGRATED-MACRO15-E54621C05CD7-0001",
+      "issues": [],
+      "normalization_applied": false,
+      "result_bytes": 41918,
+      "result_path": "macro_v2/assignments/A005M15-000049-INTEGRATED-MACRO15-E54621C05CD7-0001/attempts/attempt-0015/result.json",
+      "result_sha256": "fb038a9ea660dacd8f7b9d8c434d42aecd4eeb4e7d45866802853bbf24ad1bea",
+      "state": "eligible",
+      "task_thread_id": "/root/a005m15_b4_000049_attempt_0015_terminal"
+    },
+    {
+      "assignment_id": "A005M15-000050-INTEGRATED-MACRO15-369369F72EDC-0001",
+      "issues": [],
+      "normalization_applied": false,
+      "result_bytes": 36366,
+      "result_path": "macro_v2/assignments/A005M15-000050-INTEGRATED-MACRO15-369369F72EDC-0001/attempts/attempt-0015/result.json",
+      "result_sha256": "451f2e66ed259d376328925261210e0dc4631574b59913781d27f31bda0f8bc1",
+      "state": "eligible",
+      "task_thread_id": "/root/a005m15_b4_000050_attempt_0015_terminal"
+    },
+    {
+      "assignment_id": "A005M15-000051-INTEGRATED-MACRO15-34C3EA3D3753-0001",
+      "issues": [],
+      "normalization_applied": false,
+      "result_bytes": 50758,
+      "result_path": "macro_v2/assignments/A005M15-000051-INTEGRATED-MACRO15-34C3EA3D3753-0001/attempts/attempt-0015/result.json",
+      "result_sha256": "ceba5203c7f762bc768e2ab5cfd0456894e45794ecc97cfb3c48d4761d6f7005",
+      "state": "eligible",
+      "task_thread_id": "/root/a005m15_b4_000051_attempt_0015_terminal"
+    },
+    {
+      "assignment_id": "A005M15-000052-INTEGRATED-MACRO15-374364D6188B-0001",
+      "issues": [],
+      "normalization_applied": false,
+      "result_bytes": 45042,
+      "result_path": "macro_v2/assignments/A005M15-000052-INTEGRATED-MACRO15-374364D6188B-0001/attempts/attempt-0015/result.json",
+      "result_sha256": "72186a3a021e4762346b78692b49a30a1a1394acebd82e6b73cb1227b1ef885c",
+      "state": "eligible",
+      "task_thread_id": "/root/a005m15_b4_000052_attempt_0015_terminal"
+    },
+    {
+      "assignment_id": "A005M15-000053-INTEGRATED-MACRO15-DF5F1BFBD3B7-0001",
+      "issues": [],
+      "normalization_applied": false,
+      "result_bytes": 29560,
+      "result_path": "macro_v2/assignments/A005M15-000053-INTEGRATED-MACRO15-DF5F1BFBD3B7-0001/attempts/attempt-0015/result.json",
+      "result_sha256": "dbab348327fee9791fa7c9e56ec714153f86100204b32997c7ed3d6a18addd97",
+      "state": "eligible",
+      "task_thread_id": "/root/a005m15_b4_000053_attempt_0015_terminal"
+    },
+    {
+      "assignment_id": "A005M15-000055-INTEGRATED-MACRO15-5F6016A27747-0001",
+      "issues": [],
+      "normalization_applied": false,
+      "result_bytes": 70521,
+      "result_path": "macro_v2/assignments/A005M15-000055-INTEGRATED-MACRO15-5F6016A27747-0001/attempts/attempt-0015/result.json",
+      "result_sha256": "d112485ed2b197a07d7eb800fe539af4589a44cc45efc7345bf56a2d19972d87",
+      "state": "eligible",
+      "task_thread_id": "/root/a005m15_b4_000055_attempt_0015_terminal"
+    },
+    {
+      "assignment_id": "A005M15-000056-INTEGRATED-MACRO15-5F6016A27747-0002",
+      "issues": [],
+      "normalization_applied": false,
+      "result_bytes": 35262,
+      "result_path": "macro_v2/assignments/A005M15-000056-INTEGRATED-MACRO15-5F6016A27747-0002/attempts/attempt-0015/result.json",
+      "result_sha256": "607a6a3d080af073fb16a9f85d8cb5c2e3a3cb2f01de68e98742126db44ef0aa",
+      "state": "eligible",
+      "task_thread_id": "/root/a005m15_b4_000056_attempt_0015_terminal"
+    }
+  ],
+  "status": "pass"
+}

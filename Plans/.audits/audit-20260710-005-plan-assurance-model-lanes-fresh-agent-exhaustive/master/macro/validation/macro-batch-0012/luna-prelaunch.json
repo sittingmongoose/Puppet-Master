@@ -1,0 +1,18 @@
+{
+  "audit_id": "audit-20260710-005-plan-assurance-model-lanes-fresh-agent-exhaustive",
+  "checker": "macro_batch_luna_controller_v2",
+  "controller_thread_id": "019f4d26-0582-7f71-8aa9-57bcfc354488",
+  "model": "gpt-5.6-luna",
+  "reasoning_effort": "max",
+  "batch_id": "macro-batch-0012",
+  "epoch_id": "epoch-0016",
+  "status": "pass",
+  "errors": [],
+  "assignment_count": 2,
+  "micro_window_count": 13,
+  "covered_micro_window_floor": 1256,
+  "batch_manifest_sha256": "7709922a357883073ef48f640184babea6b49826613d06bb1de3946eb62105ba",
+  "authority_sha256": "56f0d9fbc2b4db3e64e139024537d2b0dc7bf71e0b3905cc8aa39aa7026e82a8",
+  "activation_sha256": "1cbb48ee5379d7732dd381ebfc6b3364093ec2d0913ee05242695aa2489e6dad",
+  "strict_result_schema_sha256": "f58eace23545be3a40560b701c9c83fca89a54c27e4fdde4aba1ac682161b12c"
+}

@@ -1,0 +1,98 @@
+L00000001	{
+L00000002	  "$schema": "https://json-schema.org/draft/2020-12/schema",
+L00000003	  "$id": "pm.web_capability_findings_coverage.schema.v1",
+L00000004	  "title": "Puppet Master Web Capability Findings Coverage",
+L00000005	  "type": "object",
+L00000006	  "additionalProperties": false,
+L00000007	  "required": [
+L00000008	    "schema_id",
+L00000009	    "source_packet",
+L00000010	    "coverage_state",
+L00000011	    "negative_constraints",
+L00000012	    "required_validator_surfaces",
+L00000013	    "findings"
+L00000014	  ],
+L00000015	  "properties": {
+L00000016	    "schema_id": {"type": "string", "const": "pm.web_capability_findings_coverage.v1"},
+L00000017	    "source_packet": {
+L00000018	      "type": "object",
+L00000019	      "additionalProperties": false,
+L00000020	      "required": ["review", "matrix", "receipt"],
+L00000021	      "properties": {
+L00000022	        "review": {"type": "string", "minLength": 1},
+L00000023	        "matrix": {"type": "string", "minLength": 1},
+L00000024	        "receipt": {"type": "string", "minLength": 1}
+L00000025	      }
+L00000026	    },
+L00000027	    "coverage_state": {
+L00000028	      "type": "string",
+L00000029	      "enum": ["contracts_fixtures_validators_ready_governance_pending"]
+L00000030	    },
+L00000031	    "negative_constraints": {
+L00000032	      "type": "array",
+L00000033	      "minItems": 1,
+L00000034	      "items": {"type": "string", "minLength": 1}
+L00000035	    },
+L00000036	    "required_validator_surfaces": {
+L00000037	      "type": "array",
+L00000038	      "minItems": 1,
+L00000039	      "items": {"type": "string", "minLength": 1}
+L00000040	    },
+L00000041	    "findings": {
+L00000042	      "type": "array",
+L00000043	      "minItems": 19,
+L00000044	      "items": {"$ref": "#/$defs/FindingCoverage"}
+L00000045	    }
+L00000046	  },
+L00000047	  "$defs": {
+L00000048	    "FindingCoverage": {
+L00000049	      "type": "object",
+L00000050	      "additionalProperties": false,
+L00000051	      "required": ["finding_id", "status", "summary", "evidence_files", "validator_surfaces"],
+L00000052	      "properties": {
+L00000053	        "finding_id": {
+L00000054	          "type": "string",
+L00000055	          "enum": [
+L00000056	            "WGUI-001",
+L00000057	            "WGUI-002",
+L00000058	            "WGUI-003",
+L00000059	            "WSCH-001",
+L00000060	            "WSCH-002",
+L00000061	            "WPERM-001",
+L00000062	            "WGUI-004",
+L00000063	            "WBRO-001",
+L00000064	            "WBRO-002",
+L00000065	            "WPROV-001",
+L00000066	            "WRES-001",
+L00000067	            "WSEC-001",
+L00000068	            "WPLAN-001",
+L00000069	            "WROUTE-002",
+L00000070	            "WAGENT-001",
+L00000071	            "WAGENT-002",
+L00000072	            "WAGENT-003",
+L00000073	            "WAGENT-004",
+L00000074	            "WAGENT-005"
+L00000075	          ]
+L00000076	        },
+L00000077	        "status": {
+L00000078	          "type": "string",
+L00000079	          "enum": [
+L00000080	            "covered_by_contracts_and_validators",
+L00000081	            "fixture_projection_ready_live_projection_sync_pending"
+L00000082	          ]
+L00000083	        },
+L00000084	        "summary": {"type": "string", "minLength": 1},
+L00000085	        "evidence_files": {
+L00000086	          "type": "array",
+L00000087	          "minItems": 1,
+L00000088	          "items": {"type": "string", "minLength": 1}
+L00000089	        },
+L00000090	        "validator_surfaces": {
+L00000091	          "type": "array",
+L00000092	          "minItems": 1,
+L00000093	          "items": {"type": "string", "minLength": 1}
+L00000094	        }
+L00000095	      }
+L00000096	    }
+L00000097	  }
+L00000098	}

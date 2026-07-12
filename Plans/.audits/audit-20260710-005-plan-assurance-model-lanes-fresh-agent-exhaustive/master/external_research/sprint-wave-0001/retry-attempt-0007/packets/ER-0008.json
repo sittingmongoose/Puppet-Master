@@ -1,0 +1,53 @@
+{
+  "activation_granted": false,
+  "assignment_id": "ER-0008",
+  "attempt_0007_rules": [
+    "independently redo current live public-web research",
+    "do not read any prior result body or peer output",
+    "source registry completed before claim emission",
+    "no_evidence means zero references recursively",
+    "every original question has explicit question_coverage with extant evidence IDs",
+    "result uses canonical agent_path only and forbids native IDs",
+    "result passes Draft202012 and cross-field semantic checks before PMR1",
+    "leaf never writes a receipt; sealed controller writer only"
+  ],
+  "attempt_id": "attempt-0007",
+  "audit_id": "audit-20260710-005-plan-assurance-model-lanes-fresh-agent-exhaustive",
+  "candidate_status": "BLOCKED_AWAITING_FRESH_INDEPENDENT_LUNA_PRELAUNCH_V7",
+  "canonical_agent_path": "/root/a005_external_research_recovery_er_0008_attempt_0007_terminal",
+  "controller_thread_id": "019f5078-6501-7223-b52f-2251010bdc41",
+  "digest_contract": {
+    "output_tree_sha256": "deterministic tree",
+    "result_canonical_sha256": "canonical object",
+    "result_file_sha256": "raw bytes"
+  },
+  "feature_refs": [],
+  "fork_turns": "none",
+  "fresh_child": true,
+  "model": "gpt-5.6-luna",
+  "owner_domains": [
+    "orchestration_runtime_execution",
+    "planning_specification_governance"
+  ],
+  "packet_id": "ER7PKT-0002",
+  "prelaunch_intent_is_lineage_only_after_valid_authorization": true,
+  "prior_result_bodies_included": false,
+  "reasoning_effort": "max",
+  "research_questions": [
+    "How do mature agentic engineering and safety systems turn plans into executable preflight checks, scenario simulations, and adversarial certification?",
+    "Which acceptance-criteria, negative-space, evidence-gate, human-override, and regression-traceability patterns are documented by primary sources?",
+    "How should a plan-to-code gate expose blocked, uncertain, overridden, and certified outcomes without conflating them?",
+    "What evidence is necessary to claim that a plan remains safe and complete as implementation and dependencies change?"
+  ],
+  "retry_namespace": "retry-attempt-0007",
+  "schema_version": "external-research-recovery-packet-v7",
+  "source_policies": [
+    "redo current public-web research independently",
+    "prefer official and primary sources",
+    "read no prior result body or peer output",
+    "answer every original question",
+    "use direct HTTPS source registry and evidence labels"
+  ],
+  "sprint_id": "sprint-wave-0001",
+  "topic": "Agentic plan-to-code preflight and adversarial certification: executable acceptance criteria, simulation, negative-space review, evidence gates, human override, and regression traceability"
+}

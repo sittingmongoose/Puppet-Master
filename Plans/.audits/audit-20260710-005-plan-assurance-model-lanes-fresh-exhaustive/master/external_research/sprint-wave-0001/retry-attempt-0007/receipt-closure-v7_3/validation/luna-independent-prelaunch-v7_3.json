@@ -1,0 +1,343 @@
+{
+  "schema_version": "external-research-luna-independent-prelaunch-v7.3",
+  "checker": "external_research_luna_receipt_closure_prelaunch_v7_3",
+  "audit_id": "audit-20260710-005-plan-assurance-model-lanes-fresh-agent-exhaustive",
+  "sprint_id": "sprint-wave-0001",
+  "retry_namespace": "retry-attempt-0007",
+  "attempt_id": "attempt-0007",
+  "controller_thread_id": "019f5078-6501-7223-b52f-2251010bdc41",
+  "model": "gpt-5.6-luna",
+  "reasoning_effort": "max",
+  "fork_turns": "none",
+  "reviewer_scope": {
+    "fresh_direct_reviewers": 1,
+    "leaves_launched": 0,
+    "descendants_spawned": 0,
+    "followup_messages_sent": 0,
+    "retries_spawned": 0,
+    "additional_agents": 0,
+    "production_writers_invoked": 0,
+    "canonical_plans_edited": false,
+    "activation_result_lineage_mutated": false
+  },
+  "report_path": "Plans/.audits/audit-20260710-005-plan-assurance-model-lanes-fresh-exhaustive/master/external_research/sprint-wave-0001/retry-attempt-0007/receipt-closure-v7_3/validation/luna-independent-prelaunch-v7_3.json",
+  "status": "FAIL_CLOSED",
+  "errors": [
+    "requested_frozen_audit_root_missing",
+    "requested_root_does_not_match_bound_input_root"
+  ],
+  "root_binding": {
+    "requested_root": "Plans/.audits/audit-20260710-005-plan-assurance-model-lanes-fresh-exhaustive",
+    "requested_root_existed_before_report_write": false,
+    "requested_root_created_only_to_place_fail_closed_report": true,
+    "bound_input_root": "Plans/.audits/audit-20260710-005-plan-assurance-model-lanes-fresh-agent-exhaustive",
+    "bound_input_root_existed": true,
+    "bound_input_audit_id": "audit-20260710-005-plan-assurance-model-lanes-fresh-agent-exhaustive",
+    "silent_root_substitution_performed": false
+  },
+  "runtime": {
+    "command_contract": "env PYTHONNOUSERSITE=1 PYTHONDONTWRITEBYTECODE=1 PYTHONPATH=$SITE $PYTHON -S -B <unchanged v7_3 subprocess path>",
+    "python": "/Users/jaredsmacbookair/.cache/codex-runtimes/codex-primary-runtime/dependencies/python/bin/python3",
+    "site": "/Users/jaredsmacbookair/Documents/PuppetMaster/Plans/.audits/audit-20260710-005-plan-assurance-model-lanes-fresh-agent-exhaustive/master/dependencies/jsonschema-draft202012-v1/site-packages",
+    "environment": {
+      "PYTHONNOUSERSITE": "1",
+      "PYTHONDONTWRITEBYTECODE": "1",
+      "PYTHONPATH": "$SITE",
+      "flags": ["-S", "-B"]
+    },
+    "proof": {
+      "exit_code": 0,
+      "implementation": "cpython",
+      "python_version": "3.12.13",
+      "machine": "arm64",
+      "system": "Darwin",
+      "jsonschema": "4.26.0",
+      "validator": "Draft202012Validator",
+      "rpds_py": "2026.6.3",
+      "rpds_import": "pass",
+      "no_site": true,
+      "dont_write_bytecode": true,
+      "user_site_disabled": true,
+      "preload": false,
+      "sys_path_monkeypatch": false,
+      "in_process_emulation": false,
+      "unauthorized_python_versions_used": []
+    },
+    "sealed_subprocesses": [
+      {
+        "name": "test_v7_3",
+        "path": "/Users/jaredsmacbookair/Documents/PuppetMaster/Plans/.audits/audit-20260710-005-plan-assurance-model-lanes-fresh-agent-exhaustive/master/external_research/sprint-wave-0001/retry-attempt-0007/receipt-closure-v7_3/test_v7_3.py",
+        "exit_code": 0,
+        "status": "pass"
+      },
+      {
+        "name": "verify_v7_3",
+        "path": "/Users/jaredsmacbookair/Documents/PuppetMaster/Plans/.audits/audit-20260710-005-plan-assurance-model-lanes-fresh-agent-exhaustive/master/external_research/sprint-wave-0001/retry-attempt-0007/receipt-closure-v7_3/verify_v7_3.py",
+        "exit_code": 0,
+        "status": "pass"
+      }
+    ],
+    "fixture_child_subprocesses": {
+      "receipt_writers": 2,
+      "capture_writers": 1,
+      "all_used_fixture_root": true,
+      "production_paths_passed": false
+    }
+  },
+  "policy_binding": {
+    "path": "master/coordination/CONCURRENCY_POLICY_V20.json",
+    "sha256": "3c962aad3e2bdb0eff802fba56c9837be6e0f45ed3618a193d5abefcc70986c8",
+    "status": "PROSPECTIVE_CONDITIONAL_V7_3_INDEPENDENT_GATE_AND_PRODUCTION_CLOSURE",
+    "fresh_reviewer_count": 1,
+    "controller_model": "gpt-5.6-luna",
+    "controller_reasoning_effort": "max",
+    "descendants_followups_retries": 0,
+    "production_writes_during_review": false,
+    "only_after_unqualified_independent_pass": true
+  },
+  "v18_binding": {
+    "path": "master/external_research/sprint-wave-0001/retry-attempt-0007/validation/luna-independent-prelaunch-v7_2-runtime-pinned.json",
+    "sha256": "89013c7334367dc69dfbeeedea221a2f013a318a4aa8a9de44f1d0ba84748e7c",
+    "status": "FAIL_CLOSED",
+    "all_v18_defects_rejected": true,
+    "errors": [
+      "receipt_schema_v7_2_invalid_draft202012_required_array_has_duplicates",
+      "capture_schema_v7_2_accepts_duplicate_assignment_rows",
+      "capture_writer_v7_2_missing_result_receipt_raw_and_canonical_digest_join",
+      "capture_writer_v7_2_missing_receipt_output_tree_join",
+      "capture_writer_v7_2_missing_toctou_rechecks",
+      "capture_writer_v7_2_missing_native_state_shape_and_identity_uniqueness_validation",
+      "reviewer_probe_harness_error_uncredited_no_retry"
+    ]
+  },
+  "terminal_v7_3_binding": {
+    "preparation_report_path": "master/external_research/sprint-wave-0001/retry-attempt-0007/receipt-closure-v7_3/terminal-preparation-report-v7_3.json",
+    "preparation_report_sha256": "c6730b38b826bd084bc305f3b1538a288e307b90298c1027eb7de86b1063acea",
+    "preparation_status": "READY_FOR_FRESH_LUNA_PRELAUNCH_V7_3",
+    "tests_passed": 1032,
+    "tests_failed": 0,
+    "tests_total": 1032,
+    "test_digest": "4e10dc5deab06ada4821b9e00fbb84bd83d5c418e0dc500970ae30ae7b599cc0",
+    "terminal_authority_path": "master/external_research/sprint-wave-0001/retry-attempt-0007/receipt-closure-v7_3/authority-v7_3.json",
+    "terminal_authority_sha256": "3c700512471404a1dee3149ce84d8431b94d4e7d860658e8222294e144d49a72",
+    "terminal_authority_status": "READY_FOR_FRESH_LUNA_PRELAUNCH_V7_3"
+  },
+  "terminal_sealed_files": {
+    "verifier": {
+      "path": "master/external_research/sprint-wave-0001/retry-attempt-0007/receipt-closure-v7_3/verify_v7_3.py",
+      "sha256": "eb813e5021951947c17963c70e6d41e6ca02c893cc6a5a6d7783ff070c2a6c50"
+    },
+    "validator": {
+      "path": "master/external_research/sprint-wave-0001/retry-attempt-0007/receipt-closure-v7_3/closure_validator_v7_3.py",
+      "sha256": "c3b4a6b83c7f6728bcd3a01d9e9c84e50b0c935da96a90d3ee28e0974e6e4b9b"
+    },
+    "tests": {
+      "path": "master/external_research/sprint-wave-0001/retry-attempt-0007/receipt-closure-v7_3/test_v7_3.py",
+      "sha256": "87fe9db94a578bc583ba2b4f1255bca6e70e476f1d4a148b223d55515d782823"
+    },
+    "receipt_writer": {
+      "path": "master/external_research/sprint-wave-0001/retry-attempt-0007/receipt-closure-v7_3/write_positive_receipt_v7_3.py",
+      "sha256": "58978fbc116d2c641db1cd5d3d5c548343d262a5bb5dc35366a06f3eb3a335b9"
+    },
+    "capture_writer": {
+      "path": "master/external_research/sprint-wave-0001/retry-attempt-0007/receipt-closure-v7_3/write_native_capture_v7_3.py",
+      "sha256": "6bbc8fb491a7e322baba1355017172841f1add64c5282ff31dead1f92b6cdfe4"
+    },
+    "receipt_schema": {
+      "path": "master/external_research/sprint-wave-0001/retry-attempt-0007/receipt-closure-v7_3/external_research_dispatch_receipt_v7_3.schema.json",
+      "sha256": "2ae6389fc76e03892892d5b3d52afaa543df6dc7a6e4fdcb3f5a10591f02e573"
+    },
+    "capture_schema": {
+      "path": "master/external_research/sprint-wave-0001/retry-attempt-0007/receipt-closure-v7_3/external_research_native_capture_v7_3.schema.json",
+      "sha256": "8484780c0ff8b77ff470d5cfc4e2afad31a93b0bab541c4a10fadc429ff1d185"
+    }
+  },
+  "schema_validation": {
+    "draft": "2020-12",
+    "validator": "Draft202012Validator",
+    "v7_3_schemas": {
+      "external_research_dispatch_receipt_v7_3.schema.json": {
+        "check_schema": true,
+        "required_arrays_unique": true
+      },
+      "external_research_native_capture_v7_3.schema.json": {
+        "check_schema": true,
+        "required_arrays_unique": true
+      },
+      "external_research_result_v7.schema.json": {
+        "check_schema": true,
+        "required_arrays_unique": true
+      }
+    },
+    "v7_2_reproduction": {
+      "receipt_check_schema": "expected SchemaError",
+      "capture_check_schema": true,
+      "duplicate_required_array_rejected": true
+    }
+  },
+  "test_and_probe_evidence": {
+    "sealed_test_status": "pass",
+    "sealed_test_path": "master/external_research/sprint-wave-0001/retry-attempt-0007/receipt-closure-v7_3/test_v7_3.py",
+    "passed": 1032,
+    "failed": 0,
+    "total": 1032,
+    "test_digest": "4e10dc5deab06ada4821b9e00fbb84bd83d5c418e0dc500970ae30ae7b599cc0",
+    "sealed_verifier_status": "pass",
+    "sealed_verifier_fixture_receipts": 2,
+    "sealed_verifier_fixture_capture_rows": 2,
+    "runtime_proofs": 1,
+    "schema_probes": 3,
+    "v18_defect_probes": 7,
+    "receipt_negative_mutations": 600,
+    "capture_negative_mutations": 400,
+    "all_negative_mutations_rejected": true
+  },
+  "fixture_evidence": {
+    "fixture_root": "/Users/jaredsmacbookair/Documents/PuppetMaster/Plans/.audits/audit-20260710-005-plan-assurance-model-lanes-fresh-agent-exhaustive/master/external_research/sprint-wave-0001/retry-attempt-0007/receipt-closure-v7_3/fixture-sandbox/full-real",
+    "production_paths_used": false,
+    "receipt_count": 2,
+    "receipt_assignments": ["ER-0003", "ER-0008"],
+    "receipt_schema_checked_before_emission": true,
+    "receipt_writer_exit_codes": {
+      "ER-0003": 0,
+      "ER-0008": 0
+    },
+    "receipt_file_sha256": {
+      "ER-0003": "1a870c139e88b36612c21d1fb90923dac75fd7e199af7791492a1b9e5637ff23",
+      "ER-0008": "e64bc8776092920a8b88b2540c2150436f3d2d34083ef8c526e930a099018843"
+    },
+    "capture_rows": 2,
+    "capture_schema_checked_before_emission": true,
+    "capture_writer_exit_code": 0,
+    "native_capture_sha256": "e14729e59e9ce05ad687d74a63c028d8d3ae54a0b7af97f36aed5a34486c5f7b",
+    "raw_canonical_tree_native_result_joins": true,
+    "native_identity_uniqueness": true,
+    "result_cardinality": 2,
+    "toctou_rehash_immediately_before_atomic_write": true,
+    "toctou_rehash_after_atomic_write": true,
+    "atomic_exclusive_write": true,
+    "cleaned": true,
+    "fixture_root_present_after_test": false
+  },
+  "native_result_joins": {
+    "ER-0003": {
+      "result_file_sha256": "5065a9b0d2588adbc4a1e3e60f0dee02a334d8024f48f232f53c39805779d9b4",
+      "result_canonical_sha256": "9d35783a50d66f4ef9ef85d41f486f48f8ccca71cf894fc411f7c7cd48de4ec2",
+      "output_tree_sha256": "15d42ebbba867a762d801d633c045fbc13c4a3429f2fdffa5abcbaeed11efe86",
+      "output_tree_files": ["result.json"],
+      "result_cardinality": 1
+    },
+    "ER-0008": {
+      "result_file_sha256": "93a80931e26bc25f97c4de87e12b8c2eb7576ef85c5be6ab72ecc1d59eb73d51",
+      "result_canonical_sha256": "323ebee485559652c5c97d303631d87deb499cb58ff8499994084d744700e352",
+      "output_tree_sha256": "90906e04b40062017901af427aa6cbebe9a7640173a2271c5b7d56fb1669b5bc",
+      "output_tree_files": ["result.json"],
+      "result_cardinality": 1
+    },
+    "activation_core_raw_sha256": "043488cb83d6064068a887d484f22d19d6c158a2bc1d424798ed9611c9f58c83",
+    "activation_envelope_raw_sha256": "3dab3e76f915889be2c65710477ab1c860f42d57d34d836a3311bd93255ab406",
+    "native_identity": {
+      "cardinality": 2,
+      "assignment_order": ["ER-0003", "ER-0008"],
+      "agent_path_unique": true,
+      "native_child_thread_id_unique": true,
+      "native_child_turn_id_unique": true
+    }
+  },
+  "mechanical_closure": {
+    "raw_canonical_tree_native_result_joins": true,
+    "native_identity_uniqueness": true,
+    "result_cardinality": true,
+    "receipt_cardinality": 2,
+    "capture_cardinality": 2,
+    "toctou_prewrite": true,
+    "toctou_postwrite": true,
+    "atomic_exclusive_write": true,
+    "fixture_cleanup": true,
+    "activation_result_bytes_unchanged": true,
+    "lineage_bytes_unchanged": true,
+    "semantic_result_contents_inspected_beyond_required_mechanical_validation": false,
+    "production_receipt_writes": 0,
+    "production_capture_writes": 0
+  },
+  "production_zero_state": {
+    "activation_writes": 0,
+    "capture_rows": 0,
+    "coverage_credit": 0,
+    "merge_credit": 0,
+    "promotion_credit": 0,
+    "receipts": 0,
+    "research_credit": 0,
+    "result_writes": 0,
+    "reviewers": 0,
+    "semantic_leaves": 0,
+    "spec_credit": 0,
+    "production_receipt_paths_present": [],
+    "production_capture_present": false,
+    "fixture_sandbox_present": false,
+    "all_credits_zero": true,
+    "activation_core_sha256": "043488cb83d6064068a887d484f22d19d6c158a2bc1d424798ed9611c9f58c83",
+    "activation_envelope_sha256": "3dab3e76f915889be2c65710477ab1c860f42d57d34d836a3311bd93255ab406",
+    "activation_authorizations_sha256": {
+      "ER-0003": "a0cf53b81fe654c3cc460682da7ae6ae28dc6cca90d8e0f338258d596bc4e5c8",
+      "ER-0008": "34b9261297844b43aba855bed802a56f06f68596f81fc51295322a6bfd9e31f1"
+    }
+  },
+  "input_hashes": {
+    "external_research_v1/ER-0003/attempts/attempt-0007/result.json": "5065a9b0d2588adbc4a1e3e60f0dee02a334d8024f48f232f53c39805779d9b4",
+    "external_research_v1/ER-0008/attempts/attempt-0007/result.json": "93a80931e26bc25f97c4de87e12b8c2eb7576ef85c5be6ab72ecc1d59eb73d51",
+    "master/coordination/CONCURRENCY_POLICY_V19.json": "a4b2264a24e35c6c3a87c89f700b5aa9c1f9b30f32e7d82d066dbaa99ab537be",
+    "master/coordination/CONCURRENCY_POLICY_V20.json": "3c962aad3e2bdb0eff802fba56c9837be6e0f45ed3618a193d5abefcc70986c8",
+    "master/external_research/sprint-wave-0001/retry-attempt-0007/activation-transaction/activation-core.json": "043488cb83d6064068a887d484f22d19d6c158a2bc1d424798ed9611c9f58c83",
+    "master/external_research/sprint-wave-0001/retry-attempt-0007/activation-transaction/activation-envelope.json": "3dab3e76f915889be2c65710477ab1c860f42d57d34d836a3311bd93255ab406",
+    "master/external_research/sprint-wave-0001/retry-attempt-0007/activation-transaction/leaf-dispatch-authorizations/ER-0003.json": "a0cf53b81fe654c3cc460682da7ae6ae28dc6cca90d8e0f338258d596bc4e5c8",
+    "master/external_research/sprint-wave-0001/retry-attempt-0007/activation-transaction/leaf-dispatch-authorizations/ER-0008.json": "34b9261297844b43aba855bed802a56f06f68596f81fc51295322a6bfd9e31f1",
+    "master/external_research/sprint-wave-0001/retry-attempt-0007/dispatch/ER-0003/attempt-0007/dispatch_intent.json": "8d1fbfbe802259f3f387bdfb03e468473494ddc37d1f8e8299ecfec46475c246",
+    "master/external_research/sprint-wave-0001/retry-attempt-0007/dispatch/ER-0008/attempt-0007/dispatch_intent.json": "a68b493bd7b587c9a35f439c954534022379a465154038c82e6324054d25bb02",
+    "master/external_research/sprint-wave-0001/retry-attempt-0007/leaf_initial_task_contract.json": "90233009520d3489a7407a195c7db8f2c66f1e62eebaefd338d4e780e2b36e80",
+    "master/external_research/sprint-wave-0001/retry-attempt-0007/manifest.json": "0653671397d64fb798b22c8ddb2796d5df0012ca8ff3c2706ca61d684ff3ef72",
+    "master/external_research/sprint-wave-0001/retry-attempt-0007/native_capture_contract_v7.json": "3e90e94a5560478b68fe3bb18fb24a241bb34da1b28ae9b1313e34ea16a528a9",
+    "master/external_research/sprint-wave-0001/retry-attempt-0007/packets/ER-0003.json": "788b4767b23ebf472e5137da5c2dd7beb23c4fabfb5565231c2b42864fc6a617",
+    "master/external_research/sprint-wave-0001/retry-attempt-0007/packets/ER-0008.json": "6134d137bcaf1d533fb4750d5337078f64e12bc88d2e8c6ad38e69feb755e81f",
+    "master/external_research/sprint-wave-0001/retry-attempt-0007/receipt-closure-v7_3/authority-v7_3.json": "3c700512471404a1dee3149ce84d8431b94d4e7d860658e8222294e144d49a72",
+    "master/external_research/sprint-wave-0001/retry-attempt-0007/receipt-closure-v7_3/closure_validator_v7_3.py": "c3b4a6b83c7f6728bcd3a01d9e9c84e50b0c935da96a90d3ee28e0974e6e4b9b",
+    "master/external_research/sprint-wave-0001/retry-attempt-0007/receipt-closure-v7_3/external_research_dispatch_receipt_v7_3.schema.json": "2ae6389fc76e03892892d5b3d52afaa543df6dc7a6e4fdcb3f5a10591f02e573",
+    "master/external_research/sprint-wave-0001/retry-attempt-0007/receipt-closure-v7_3/external_research_native_capture_v7_3.schema.json": "8484780c0ff8b77ff470d5cfc4e2afad31a93b0bab541c4a10fadc429ff1d185",
+    "master/external_research/sprint-wave-0001/retry-attempt-0007/receipt-closure-v7_3/terminal-preparation-report-v7_3.json": "c6730b38b826bd084bc305f3b1538a288e307b90298c1027eb7de86b1063acea",
+    "master/external_research/sprint-wave-0001/retry-attempt-0007/receipt-closure-v7_3/test_v7_3.py": "87fe9db94a578bc583ba2b4f1255bca6e70e476f1d4a148b223d55515d782823",
+    "master/external_research/sprint-wave-0001/retry-attempt-0007/receipt-closure-v7_3/verify_v7_3.py": "eb813e5021951947c17963c70e6d41e6ca02c893cc6a5a6d7783ff070c2a6c50",
+    "master/external_research/sprint-wave-0001/retry-attempt-0007/receipt-closure-v7_3/write_native_capture_v7_3.py": "6bbc8fb491a7e322baba1355017172841f1add64c5282ff31dead1f92b6cdfe4",
+    "master/external_research/sprint-wave-0001/retry-attempt-0007/receipt-closure-v7_3/write_positive_receipt_v7_3.py": "58978fbc116d2c641db1cd5d3d5c548343d262a5bb5dc35366a06f3eb3a335b9",
+    "master/external_research/sprint-wave-0001/retry-attempt-0007/receipt_contract_v7.json": "6d87c0d0f0bada17f2edef8688be303a211e6dc2321a53fb96e5b009ea7a437d",
+    "master/external_research/sprint-wave-0001/retry-attempt-0007/runtime/native-state-v7_1.json": "c893c4d64004c4bc9d021f75238f832356afa353c4fd7de2eebea45b8b7a2cd5",
+    "master/external_research/sprint-wave-0001/retry-attempt-0007/runtime/terminal-proofs/ER-0003.json": "f02f9e2a9b1f3db3d32f0c364a99323c921f1d4cacb058698ff4f0e989991995",
+    "master/external_research/sprint-wave-0001/retry-attempt-0007/runtime/terminal-proofs/ER-0008.json": "f5ff884acfd41b2d4eb69907d96a9cc6b6e432b79892381bfb662df1e79a1047",
+    "master/external_research/sprint-wave-0001/retry-attempt-0007/schema/external_research_result_v7.schema.json": "f5a9c7cfd4aff0d2d6aff176518597d8a55b1233203e0659f1264531e14f8eeb",
+    "master/external_research/sprint-wave-0001/retry-attempt-0007/tools/canonical_json.py": "0c4b2badd3e4c21eb893d84b72bf9cdf7ced1315c838c289a91b27faa2ad97b4",
+    "master/external_research/sprint-wave-0001/retry-attempt-0007/tools/common.py": "2291c403e4214c5a4e5fb0039cc5e27cf740dd535ff4240aa467acc72801441b",
+    "master/external_research/sprint-wave-0001/retry-attempt-0007/validation/luna-independent-prelaunch-v7_2-runtime-pinned.json": "89013c7334367dc69dfbeeedea221a2f013a318a4aa8a9de44f1d0ba84748e7c",
+    "master/external_research/sprint-wave-0001/retry-attempt-0007/validation/receipt-closure-v7_2/external_research_dispatch_receipt_v7_2.schema.json": "a39987afa695c4a2576a8292d8bd0f2207e09288afeddbba8b5c10d9fbb3a5bb",
+    "master/external_research/sprint-wave-0001/retry-attempt-0007/validation/receipt-closure-v7_2/external_research_native_capture_v7_2.schema.json": "9758ef23d92f2eab80d2c1ccdd3a87b3ec867daf556fef49c1d20c318ee390be",
+    "master/external_research/sprint-wave-0001/retry-attempt-0007/validation/receipt-closure-v7_2/result_validator_v7_2.py": "c678f65ea3518a12415af57581818cb43399eb04432412447b69ae7f0774c84f",
+    "master/external_research/sprint-wave-0001/retry-attempt-0007/validation/receipt-closure-v7_2/write_native_capture_v7_2.py": "bf02818c247007f5d6c486e48f2c6b74d5086a9221f2d0734e028a9b922ad1d5",
+    "master/external_research/sprint-wave-0001/retry-attempt-0007/validation/receipt-closure-v7_2/write_positive_receipt_v7_2.py": "997e58260cf5342bee7d060e53a71278417ed253e834f3da1f1c6eda696e6d24"
+  },
+  "activation_result_lineage_bytes": {
+    "activation_core_unchanged": true,
+    "activation_envelope_unchanged": true,
+    "authorization_bytes_unchanged": true,
+    "result_bytes_unchanged": true,
+    "lineage_bytes_unchanged": true,
+    "activation_core_sha256": "043488cb83d6064068a887d484f22d19d6c158a2bc1d424798ed9611c9f58c83",
+    "activation_envelope_sha256": "3dab3e76f915889be2c65710477ab1c860f42d57d34d836a3311bd93255ab406",
+    "ER-0003_result_sha256": "5065a9b0d2588adbc4a1e3e60f0dee02a334d8024f48f232f53c39805779d9b4",
+    "ER-0008_result_sha256": "93a80931e26bc25f97c4de87e12b8c2eb7576ef85c5be6ab72ecc1d59eb73d51"
+  },
+  "authorization": {
+    "unqualified_pass": false,
+    "production_receipt_writers_authorized": false,
+    "production_capture_writer_authorized": false,
+    "parent_may_invoke_writers": false
+  },
+  "sole_next_action": "Resolve the requested-vs-frozen audit-root mismatch and rerun this exact one-reviewer gate; keep production receipt and capture writers forbidden until an unqualified PASS exists."
+}

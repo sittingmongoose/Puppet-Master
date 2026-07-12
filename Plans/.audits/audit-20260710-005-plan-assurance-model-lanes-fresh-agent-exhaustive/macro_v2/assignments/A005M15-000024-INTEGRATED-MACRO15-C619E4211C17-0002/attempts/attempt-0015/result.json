@@ -1,0 +1,563 @@
+{
+  "assignment_id": "A005M15-000024-INTEGRATED-MACRO15-C619E4211C17-0002",
+  "attempt_id": "attempt-0015",
+  "audit_id": "audit-20260710-005-plan-assurance-model-lanes-fresh-agent-exhaustive",
+  "coverage": {
+    "all_micro_windows_reviewed": true,
+    "all_source_lines_reviewed": true,
+    "all_source_units_accounted": true,
+    "both_exact_and_adversarial_lenses_applied": true,
+    "dimensions_checked": [
+      "behavior",
+      "capabilities",
+      "inputs_outputs",
+      "contracts",
+      "states_transitions",
+      "authority",
+      "ownership",
+      "consumers",
+      "gui_truth",
+      "failures_recovery",
+      "security_privacy",
+      "propagation",
+      "operations",
+      "scale_performance",
+      "compatibility_migration",
+      "acceptance_oracles",
+      "builder_discretion",
+      "ambiguity_unknowns",
+      "missing_callers_consumers",
+      "invalid_states_transitions",
+      "concurrency_races",
+      "partial_failure",
+      "recovery_rollback",
+      "authority_boundaries",
+      "privacy_data_lifecycle",
+      "untrusted_inputs",
+      "gui_misleading_states",
+      "offline_network_loss",
+      "scale_limits",
+      "accessibility",
+      "localization",
+      "observability_support",
+      "destructive_actions",
+      "cross_document_seams",
+      "test_falsifiability",
+      "unknown_unknowns"
+    ]
+  },
+  "items": [
+    {
+      "builder_discretion": true,
+      "confidence": 0.94,
+      "dimensions": ["behavior", "states_transitions", "failures_recovery", "concurrency_races", "partial_failure", "test_falsifiability"],
+      "evidence": [
+        {
+          "exact_quote": "  - \"Each input annotation records addressed, still_open, or cannot_apply with explanation and optional updated anchor.\"",
+          "line_end": 2264,
+          "line_start": 2264,
+          "path": "Plans/Crosswalk.md",
+          "source_sha256": "949f41619e742dc1379056123be88e87fa827dd4f1c39ef9835396d911590c80"
+        }
+      ],
+      "gap_kind": "partial_revision_transaction_semantics",
+      "impact": "Concurrent edits, duplicate submissions, or interruption between annotation outcomes can produce inconsistent bundle state because atomicity, idempotency, and retry behavior are not specified.",
+      "item_id": "A005M15-I001-C035",
+      "item_type": "gap",
+      "severity": "high",
+      "source_unit_refs": ["PLANUNIT:C-035", "SEMANTIC:PLANUNIT:C-035"],
+      "statement": "C-035 fixes deterministic input order and per-annotation outcomes but leaves the commit boundary, duplicate-submission handling, and recovery from a partially persisted revision pass to builder discretion.",
+      "title": "Targeted revision lacks transactional failure semantics"
+    },
+    {
+      "builder_discretion": true,
+      "confidence": 0.93,
+      "dimensions": ["contracts", "states_transitions", "gui_truth", "invalid_states_transitions", "concurrency_races", "test_falsifiability"],
+      "evidence": [
+        {
+          "exact_quote": "  - \"Multi-Pass Review is final-review only and requires approved/done bundle docs with no open durable annotations.\"",
+          "line_end": 2325,
+          "line_start": 2325,
+          "path": "Plans/Crosswalk.md",
+          "source_sha256": "949f41619e742dc1379056123be88e87fa827dd4f1c39ef9835396d911590c80"
+        }
+      ],
+      "gap_kind": "gate_snapshot_and_race_semantics",
+      "impact": "A document or annotation can change while review starts, yielding a misleading enabled gate or an invalid final decision without an authoritative snapshot or revalidation rule.",
+      "item_id": "A005M15-I002-C036",
+      "item_type": "gap",
+      "severity": "high",
+      "source_unit_refs": ["PLANUNIT:C-036", "SEMANTIC:PLANUNIT:C-036"],
+      "statement": "The final-review eligibility predicate is explicit, but C-036 does not define when it is evaluated, whether review binds to a bundle version, or how concurrent annotation/document changes invalidate an in-flight gate.",
+      "title": "Final review gate has no snapshot or invalidation rule"
+    },
+    {
+      "builder_discretion": false,
+      "confidence": 0.99,
+      "dimensions": ["contracts", "states_transitions", "gui_truth", "recovery_rollback", "compatibility_migration"],
+      "evidence": [
+        {
+          "exact_quote": "  - \"safe point, restore point, rollback, and worktree baseline remain distinct terms.\"",
+          "line_end": 2377,
+          "line_start": 2377,
+          "path": "Plans/Crosswalk.md",
+          "source_sha256": "949f41619e742dc1379056123be88e87fa827dd4f1c39ef9835396d911590c80"
+        }
+      ],
+      "gap_kind": "none_explicit_terminology_boundary",
+      "impact": "The explicit vocabulary prevents implementations and UI copy from conflating runtime remediation, user-visible history, confirmed restoration, and execution-root state.",
+      "item_id": "A005M15-I003-C037",
+      "item_type": "explicit_non_gap",
+      "severity": "info",
+      "source_unit_refs": ["PLANUNIT:C-037", "SEMANTIC:PLANUNIT:C-037"],
+      "statement": "C-037 provides a clear, testable terminology separation and explicitly requires both docs and UI copy to preserve it.",
+      "title": "Recovery vocabulary ownership is explicitly separated"
+    },
+    {
+      "builder_discretion": false,
+      "confidence": 0.98,
+      "dimensions": ["contracts", "authority", "ownership", "consumers", "propagation", "authority_boundaries", "cross_document_seams"],
+      "evidence": [
+        {
+          "exact_quote": "  - \"Executor_Protocol owns runtime lifecycle, scheduling, blocked_sequence minting, and restart-recovery to first scheduler.pass handoff from startup_recovered.\"",
+          "line_end": 2431,
+          "line_start": 2431,
+          "path": "Plans/Crosswalk.md",
+          "source_sha256": "949f41619e742dc1379056123be88e87fa827dd4f1c39ef9835396d911590c80"
+        }
+      ],
+      "gap_kind": "none_explicit_owner_precedence",
+      "impact": "The owner chain prevents consumer surfaces from becoming competing scheduler or recovery authorities and makes conflict resolution auditable.",
+      "item_id": "A005M15-I004-C038",
+      "item_type": "authority",
+      "severity": "info",
+      "source_unit_refs": ["PLANUNIT:C-038", "SEMANTIC:PLANUNIT:C-038"],
+      "statement": "C-038 explicitly assigns lifecycle and scheduling, contracts, persistence, recovery defaults, command IDs, wiring, and consumer roles, while declaring owner documents authoritative over consumers.",
+      "title": "Runtime scheduler and recovery authority is explicit"
+    },
+    {
+      "builder_discretion": false,
+      "confidence": 0.98,
+      "dimensions": ["capabilities", "authority", "ownership", "consumers", "compatibility_migration", "authority_boundaries"],
+      "evidence": [
+        {
+          "exact_quote": "  - \"Remote project mode consumers do not silently substitute local files, local git, or local shells.\"",
+          "line_end": 2502,
+          "line_start": 2502,
+          "path": "Plans/Crosswalk.md",
+          "source_sha256": "949f41619e742dc1379056123be88e87fa827dd4f1c39ef9835396d911590c80"
+        }
+      ],
+      "gap_kind": "none_explicit_source_control_boundary",
+      "impact": "The boundary prevents hosted GitHub administration and unsafe local fallbacks from silently changing Source Control semantics in remote projects.",
+      "item_id": "A005M15-I005-C039",
+      "item_type": "authority",
+      "severity": "info",
+      "source_unit_refs": ["PLANUNIT:C-039", "SEMANTIC:PLANUNIT:C-039"],
+      "statement": "C-039 clearly places local and remote repository operations under Source Control while excluding GitHub-hosted workflow/admin behavior and silent local substitution.",
+      "title": "Source Control capability and exclusion boundary is explicit"
+    },
+    {
+      "builder_discretion": true,
+      "confidence": 0.96,
+      "dimensions": ["states_transitions", "failures_recovery", "concurrency_races", "partial_failure", "recovery_rollback", "observability_support", "destructive_actions", "test_falsifiability"],
+      "evidence": [
+        {
+          "exact_quote": "  worktree_id, base-branch, and lifecycle semantics; cleanup/archive/prune/",
+          "line_end": 2547,
+          "line_start": 2547,
+          "path": "Plans/Crosswalk.md",
+          "source_sha256": "949f41619e742dc1379056123be88e87fa827dd4f1c39ef9835396d911590c80"
+        },
+        {
+          "exact_quote": "  - \"Blocked-emitter behavior routes through Contracts and runtime owner docs rather than being inferred from Source Control rows.\"",
+          "line_end": 2560,
+          "line_start": 2560,
+          "path": "Plans/Crosswalk.md",
+          "source_sha256": "949f41619e742dc1379056123be88e87fa827dd4f1c39ef9835396d911590c80"
+        }
+      ],
+      "gap_kind": "destructive_cleanup_decision_protocol",
+      "impact": "Cleanup can race with active runs, lineage updates, restore operations, or conflict inspection, risking data loss or stranded ownership without a single authoritative decision protocol and receipt.",
+      "item_id": "A005M15-I006-C040",
+      "item_type": "gap",
+      "severity": "high",
+      "source_unit_refs": ["PLANUNIT:C-040", "SEMANTIC:PLANUNIT:C-040"],
+      "statement": "C-040 names the conditions that gate cleanup, archive, prune, and removal, but does not define the atomic predicate, precedence among blockers, stale-check behavior, confirmation requirements, or rollback and audit receipt for these destructive actions.",
+      "title": "Worktree cleanup gates lack an executable safety protocol"
+    },
+    {
+      "builder_discretion": true,
+      "confidence": 0.91,
+      "dimensions": ["behavior", "contracts", "gui_truth", "failures_recovery", "partial_failure", "destructive_actions", "test_falsifiability"],
+      "evidence": [
+        {
+          "exact_quote": "  - \"Git/diff commands remain owned by GitHub_Integration.\"",
+          "line_end": 2618,
+          "line_start": 2618,
+          "path": "Plans/Crosswalk.md",
+          "source_sha256": "949f41619e742dc1379056123be88e87fa827dd4f1c39ef9835396d911590c80"
+        },
+        {
+          "exact_quote": "  - \"Chat rollback/recovery commands remain owned by UI_Command_Catalog.\"",
+          "line_end": 2619,
+          "line_start": 2619,
+          "path": "Plans/Crosswalk.md",
+          "source_sha256": "949f41619e742dc1379056123be88e87fa827dd4f1c39ef9835396d911590c80"
+        }
+      ],
+      "gap_kind": "command_precondition_and_failure_contract",
+      "impact": "Destructive discard or rollback commands may expose inconsistent enablement, confirmation, error, and retry behavior across Source Control and chat surfaces.",
+      "item_id": "A005M15-I007-C041",
+      "item_type": "gap",
+      "severity": "medium",
+      "source_unit_refs": ["PLANUNIT:C-041", "SEMANTIC:PLANUNIT:C-041"],
+      "statement": "C-041 settles command ownership but does not define command preconditions, confirmation policy, output receipts, idempotency, or failure recovery for stage, discard, rewind, and revert operations.",
+      "title": "Git and chat command ownership lacks execution semantics"
+    },
+    {
+      "builder_discretion": true,
+      "confidence": 0.97,
+      "dimensions": ["inputs_outputs", "contracts", "states_transitions", "authority", "gui_truth", "failures_recovery", "security_privacy", "untrusted_inputs", "gui_misleading_states", "offline_network_loss", "cross_document_seams", "test_falsifiability"],
+      "evidence": [
+        {
+          "exact_quote": "  - \"panel-switch navigation uses a shared panel-context envelope instead of panel-local ad hoc arguments.\"",
+          "line_end": 2678,
+          "line_start": 2678,
+          "path": "Plans/Crosswalk.md",
+          "source_sha256": "949f41619e742dc1379056123be88e87fa827dd4f1c39ef9835396d911590c80"
+        }
+      ],
+      "gap_kind": "panel_context_envelope_schema_and_failure_states",
+      "impact": "Malformed, unauthorized, stale, or unavailable destinations can navigate to misleading state or lose the originating blocked context without validation, versioning, and failure behavior.",
+      "item_id": "A005M15-I008-C042",
+      "item_type": "gap",
+      "severity": "high",
+      "source_unit_refs": ["PLANUNIT:C-042", "SEMANTIC:PLANUNIT:C-042"],
+      "statement": "C-042 names a shared panel-context envelope and identity references but does not specify required versus optional fields, schema versioning, authorization checks, stale identity handling, offline destination behavior, or a failed-navigation receipt.",
+      "title": "Cross-surface panel context is named but not fully contracted"
+    },
+    {
+      "builder_discretion": true,
+      "confidence": 0.95,
+      "dimensions": ["states_transitions", "authority", "gui_truth", "failures_recovery", "security_privacy", "authority_boundaries", "privacy_data_lifecycle", "gui_misleading_states", "offline_network_loss", "observability_support"],
+      "evidence": [
+        {
+          "exact_quote": "  - \"GitHub Actions uses GitHub API identity and capability rather than Git transport state.\"",
+          "line_end": 2742,
+          "line_start": 2742,
+          "path": "Plans/Crosswalk.md",
+          "source_sha256": "949f41619e742dc1379056123be88e87fa827dd4f1c39ef9835396d911590c80"
+        }
+      ],
+      "gap_kind": "hosted_identity_degradation_states",
+      "impact": "The Actions surface can misrepresent workflow availability or expose ambiguous errors when credentials expire, scopes are insufficient, the API is unavailable, or repository access changes.",
+      "item_id": "A005M15-I009-C043",
+      "item_type": "gap",
+      "severity": "high",
+      "source_unit_refs": ["PLANUNIT:C-043", "SEMANTIC:PLANUNIT:C-043"],
+      "statement": "C-043 correctly separates GitHub API identity from Git transport state, but does not enumerate auth-expired, insufficient-scope, revoked-access, rate-limited, offline, or partially loaded UI states and recovery actions.",
+      "title": "GitHub Actions identity boundary lacks degraded-state behavior"
+    },
+    {
+      "builder_discretion": false,
+      "confidence": 0.99,
+      "dimensions": ["capabilities", "ownership", "gui_truth", "gui_misleading_states", "cross_document_seams", "test_falsifiability"],
+      "evidence": [
+        {
+          "exact_quote": "gui_related: false",
+          "line_end": 2794,
+          "line_start": 2794,
+          "path": "Plans/Crosswalk.md",
+          "source_sha256": "949f41619e742dc1379056123be88e87fa827dd4f1c39ef9835396d911590c80"
+        },
+        {
+          "exact_quote": "  - \"Docker Manager is the canonical umbrella for Docker, Podman, registries, compose, build/bake, Publish/Unraid, and project-focused Kubernetes.\"",
+          "line_end": 2800,
+          "line_start": 2800,
+          "path": "Plans/Crosswalk.md",
+          "source_sha256": "949f41619e742dc1379056123be88e87fa827dd4f1c39ef9835396d911590c80"
+        }
+      ],
+      "gap_kind": "gui_classification_contradiction",
+      "impact": "A GUI-facing umbrella surface may be omitted from GUI assurance, wiring, accessibility, localization, and misleading-state validation because the PlanUnit is classified as non-GUI.",
+      "item_id": "A005M15-I010-C044",
+      "item_type": "gap",
+      "severity": "high",
+      "source_unit_refs": ["PLANUNIT:C-044", "SEMANTIC:PLANUNIT:C-044"],
+      "statement": "C-044 defines the canonical Docker Manager surface and top-level shell exclusions but marks gui_related false, contradicting the capsule rule that screens, panels, and user-visible surfaces are GUI-related.",
+      "title": "Docker Manager surface is incorrectly classified non-GUI"
+    },
+    {
+      "builder_discretion": false,
+      "confidence": 0.99,
+      "dimensions": ["authority", "ownership", "compatibility_migration", "authority_boundaries", "cross_document_seams"],
+      "evidence": [
+        {
+          "exact_quote": "  - \"External references do not become live product owners.\"",
+          "line_end": 2859,
+          "line_start": 2859,
+          "path": "Plans/Crosswalk.md",
+          "source_sha256": "949f41619e742dc1379056123be88e87fa827dd4f1c39ef9835396d911590c80"
+        }
+      ],
+      "gap_kind": "none_explicit_reference_non_ownership",
+      "impact": "External research can inform reconciliation without displacing canonical owner documents or silently importing third-party behavior as product truth.",
+      "item_id": "A005M15-I011-C045",
+      "item_type": "explicit_non_gap",
+      "severity": "info",
+      "source_unit_refs": ["PLANUNIT:C-045", "SEMANTIC:PLANUNIT:C-045"],
+      "statement": "C-045 explicitly limits external references to reconciliation input and retains canonical Plans as the live ownership authority.",
+      "title": "External reference evidence is explicitly non-authoritative"
+    },
+    {
+      "builder_discretion": true,
+      "confidence": 0.96,
+      "dimensions": ["inputs_outputs", "contracts", "states_transitions", "compatibility_migration", "invalid_states_transitions", "partial_failure", "cross_document_seams", "test_falsifiability"],
+      "evidence": [
+        {
+          "exact_quote": "  - \"Legacy allowed_actions[] is compatibility-only; canonical blocked and recovery payloads use ordered allowed_action_ids[].\"",
+          "line_end": 2925,
+          "line_start": 2925,
+          "path": "Plans/Crosswalk.md",
+          "source_sha256": "949f41619e742dc1379056123be88e87fa827dd4f1c39ef9835396d911590c80"
+        }
+      ],
+      "gap_kind": "compatibility_payload_translation",
+      "impact": "Mixed-version producers and consumers can lose action order, labels, availability semantics, or unknown actions unless the legacy-to-canonical translation and rejection behavior are normative.",
+      "item_id": "A005M15-I012-C046",
+      "item_type": "gap",
+      "severity": "high",
+      "source_unit_refs": ["PLANUNIT:C-046", "SEMANTIC:PLANUNIT:C-046"],
+      "statement": "C-046 selects ordered allowed_action_ids[] as canonical but does not define how legacy allowed_actions[] is translated, version-negotiated, validated, or rejected, nor how partial translation failures are surfaced.",
+      "title": "Allowed-action compatibility lacks a normative conversion contract"
+    },
+    {
+      "builder_discretion": true,
+      "confidence": 0.93,
+      "dimensions": ["inputs_outputs", "contracts", "authority", "compatibility_migration", "ambiguity_unknowns", "test_falsifiability"],
+      "evidence": [
+        {
+          "exact_quote": "  - \"Blocked/recovery payloads stay on canonical action-id and allowed_action_ids naming.\"",
+          "line_end": 2991,
+          "line_start": 2991,
+          "path": "Plans/Crosswalk.md",
+          "source_sha256": "949f41619e742dc1379056123be88e87fa827dd4f1c39ef9835396d911590c80"
+        }
+      ],
+      "gap_kind": "hitl_action_list_vocabulary_definition",
+      "impact": "Implementers can still invent divergent HITL field names or shapes while technically satisfying the phrase action-list vocabulary, undermining interoperability with blocked and recovery payloads.",
+      "item_id": "A005M15-I013-C047",
+      "item_type": "unknown",
+      "severity": "medium",
+      "source_unit_refs": ["PLANUNIT:C-047", "SEMANTIC:PLANUNIT:C-047"],
+      "statement": "C-047 reserves HITL action-list vocabulary to Contracts_V0-owned request shapes and preserves action-id naming elsewhere, but the exact allowed HITL fields and their relation to canonical action IDs are not stated in this unit.",
+      "title": "HITL action-list vocabulary remains underspecified"
+    },
+    {
+      "builder_discretion": true,
+      "confidence": 0.97,
+      "dimensions": ["contracts", "ownership", "consumers", "gui_truth", "propagation", "ambiguity_unknowns", "gui_misleading_states", "cross_document_seams", "test_falsifiability"],
+      "evidence": [
+        {
+          "exact_quote": "  - \"Underdefined UI-state contracts are resolved in named surface owner docs rather than by adding consumer-only state.\"",
+          "line_end": 3046,
+          "line_start": 3046,
+          "path": "Plans/Crosswalk.md",
+          "source_sha256": "949f41619e742dc1379056123be88e87fa827dd4f1c39ef9835396d911590c80"
+        }
+      ],
+      "gap_kind": "ui_state_owner_closure_oracle",
+      "impact": "The requirement can pass locally while owner documents still omit loading, empty, blocked, stale, unauthorized, error, and recovery states, leaving consumers to guess or remain misleading.",
+      "item_id": "A005M15-I014-C048",
+      "item_type": "gap",
+      "severity": "high",
+      "source_unit_refs": ["PLANUNIT:C-048", "SEMANTIC:PLANUNIT:C-048"],
+      "statement": "C-048 directs underdefined UI-state contracts to named surface owners but provides neither an exhaustive state checklist nor a cross-document oracle proving each named owner has closed the delegated state contract.",
+      "title": "Delegated UI-state cleanup has no closure test"
+    },
+    {
+      "builder_discretion": false,
+      "confidence": 0.99,
+      "dimensions": ["authority", "ownership", "compatibility_migration", "builder_discretion", "authority_boundaries"],
+      "evidence": [
+        {
+          "exact_quote": "- The retired bridge does not create WorkNodes, NodeSeeds, executable queues, final node manifests, or production build tasks.",
+          "line_end": 3108,
+          "line_start": 3108,
+          "path": "Plans/Crosswalk.md",
+          "source_sha256": "949f41619e742dc1379056123be88e87fa827dd4f1c39ef9835396d911590c80"
+        }
+      ],
+      "gap_kind": "none_explicit_retired_lineage_boundary",
+      "impact": "The retired bridge cannot be mistaken for implementation-ready coverage or remint work that belongs to atomized units.",
+      "item_id": "A005M15-I015-C001",
+      "item_type": "explicit_non_gap",
+      "severity": "info",
+      "source_unit_refs": ["PLANUNIT:C-001", "SEMANTIC:PLANUNIT:C-001"],
+      "statement": "C-001 is explicitly migration lineage only, cannot re-own atomized coverage, and cannot create executable implementation artifacts.",
+      "title": "Retired Crosswalk bridge is safely non-executable"
+    },
+    {
+      "builder_discretion": true,
+      "confidence": 0.92,
+      "dimensions": ["behavior", "contracts", "authority", "ownership", "failures_recovery", "missing_callers_consumers", "cross_document_seams", "test_falsifiability"],
+      "evidence": [
+        {
+          "exact_quote": "  - Base route/open primitives landed, but missing: is retired or converted to an owner pointer.",
+          "line_end": 3168,
+          "line_start": 3168,
+          "path": "Plans/Crosswalk.md",
+          "source_sha256": "949f41619e742dc1379056123be88e87fa827dd4f1c39ef9835396d911590c80"
+        }
+      ],
+      "gap_kind": "owner_pointer_target_and_fallback_closure",
+      "impact": "A stale or generic pointer can satisfy the Crosswalk edit while leaving route/open fallback behavior, recovery ownership, and caller-visible failure semantics unresolved in the actual owner documents.",
+      "item_id": "A005M15-I016-C049",
+      "item_type": "unknown",
+      "severity": "medium",
+      "source_unit_refs": ["PLANUNIT:C-049", "SEMANTIC:PLANUNIT:C-049"],
+      "statement": "C-049 correctly prevents Crosswalk from re-owning route/open and worktree behavior, but does not identify a per-stub authoritative target and executable oracle proving each fallback and recovery contract exists at that target.",
+      "title": "Boundary-stub owner-pointer recovery lacks per-pointer closure"
+    },
+    {
+      "builder_discretion": true,
+      "confidence": 0.98,
+      "dimensions": ["behavior", "contracts", "authority", "ownership", "consumers", "gui_truth", "propagation", "compatibility_migration", "acceptance_oracles", "ambiguity_unknowns", "missing_callers_consumers", "gui_misleading_states", "accessibility", "localization", "cross_document_seams", "test_falsifiability"],
+      "evidence": [
+        {
+          "exact_quote": "- Do not preserve Requirements Doc Builder as a current product feature name except in explicitly historical migration notes.",
+          "line_end": 3255,
+          "line_start": 3255,
+          "path": "Plans/Crosswalk.md",
+          "source_sha256": "949f41619e742dc1379056123be88e87fa827dd4f1c39ef9835396d911590c80"
+        },
+        {
+          "exact_quote": "- python3 scripts/pm-plan-index.py validate",
+          "line_end": 3211,
+          "line_start": 3211,
+          "path": "Plans/Crosswalk.md",
+          "source_sha256": "949f41619e742dc1379056123be88e87fa827dd4f1c39ef9835396d911590c80"
+        }
+      ],
+      "gap_kind": "closed_world_term_migration_oracle",
+      "impact": "Stale terms or obsolete workflow ownership can remain in any of the many named product surfaces while the listed index and ledger validators still pass, producing inconsistent UI, commands, events, contracts, and documentation.",
+      "item_id": "A005M15-I017-C050",
+      "item_type": "gap",
+      "severity": "high",
+      "source_unit_refs": ["PLANUNIT:C-050", "SEMANTIC:PLANUNIT:C-050"],
+      "statement": "C-050 mandates a broad naming and ownership migration but lists only plan-index and ledger validation; it does not provide a closed-world stale-term scan, per-surface owner matrix, or semantic oracle distinguishing valid historical mentions from active product prose.",
+      "title": "PRD Builder and Planning Wizard migration lacks a complete oracle"
+    }
+  ],
+  "model": "gpt-5.6-sol",
+  "phase": "blind_macro_window_review",
+  "reasoning_effort": "xhigh",
+  "schema_version": "macro-review-result-v1",
+  "segments": [
+    {
+      "core_range": [2243, 2597],
+      "covered_source_unit_refs": [
+        "PLANUNIT:C-035",
+        "PLANUNIT:C-036",
+        "PLANUNIT:C-037",
+        "PLANUNIT:C-038",
+        "PLANUNIT:C-039",
+        "PLANUNIT:C-040",
+        "SEMANTIC:PLANUNIT:C-035",
+        "SEMANTIC:PLANUNIT:C-036",
+        "SEMANTIC:PLANUNIT:C-037",
+        "SEMANTIC:PLANUNIT:C-038",
+        "SEMANTIC:PLANUNIT:C-039",
+        "SEMANTIC:PLANUNIT:C-040"
+      ],
+      "item_ids": ["A005M15-I001-C035", "A005M15-I002-C036", "A005M15-I003-C037", "A005M15-I004-C038", "A005M15-I005-C039", "A005M15-I006-C040"],
+      "reviewed": true,
+      "summary": "Reviewed C-035 through C-040: targeted revision and final-review semantics expose transaction and race gaps; recovery terminology, runtime ownership, and Source Control boundaries are explicit; destructive worktree cleanup lacks an executable safety protocol.",
+      "window_id": "WIN-C619E4211C17-0008"
+    },
+    {
+      "core_range": [2598, 2970],
+      "covered_source_unit_refs": [
+        "PLANUNIT:C-041",
+        "PLANUNIT:C-042",
+        "PLANUNIT:C-043",
+        "PLANUNIT:C-044",
+        "PLANUNIT:C-045",
+        "PLANUNIT:C-046",
+        "SEMANTIC:PLANUNIT:C-041",
+        "SEMANTIC:PLANUNIT:C-042",
+        "SEMANTIC:PLANUNIT:C-043",
+        "SEMANTIC:PLANUNIT:C-044",
+        "SEMANTIC:PLANUNIT:C-045",
+        "SEMANTIC:PLANUNIT:C-046"
+      ],
+      "item_ids": ["A005M15-I007-C041", "A005M15-I008-C042", "A005M15-I009-C043", "A005M15-I010-C044", "A005M15-I011-C045", "A005M15-I012-C046"],
+      "reviewed": true,
+      "summary": "Reviewed C-041 through C-046: command, panel-context, hosted identity, GUI classification, and compatibility translation gaps remain; external references are correctly constrained as non-owners.",
+      "window_id": "WIN-C619E4211C17-0009"
+    },
+    {
+      "core_range": [2971, 3271],
+      "covered_source_unit_refs": [
+        "PLANUNIT:C-001",
+        "PLANUNIT:C-047",
+        "PLANUNIT:C-048",
+        "PLANUNIT:C-049",
+        "PLANUNIT:C-050",
+        "SEMANTIC:PLANUNIT:C-047",
+        "SEMANTIC:PLANUNIT:C-048",
+        "SEMANTIC:PLANUNIT:C-001",
+        "SEMANTIC:PLANUNIT:C-049",
+        "SEMANTIC:PLANUNIT:C-050"
+      ],
+      "item_ids": ["A005M15-I013-C047", "A005M15-I014-C048", "A005M15-I015-C001", "A005M15-I016-C049", "A005M15-I017-C050"],
+      "reviewed": true,
+      "summary": "Reviewed C-047, C-048, retired C-001, C-049, and C-050: HITL vocabulary, delegated UI-state closure, owner-pointer closure, and naming migration oracles are incomplete; C-001 is explicitly and safely non-executable lineage.",
+      "window_id": "WIN-C619E4211C17-0010"
+    }
+  ],
+  "self_attestation": {
+    "no_canonical_writes": true,
+    "no_external_research_during_blind_review": true,
+    "no_peer_result_access": true,
+    "no_prior_audit_access": true,
+    "no_unrelated_source_access": true,
+    "terminal_after_submission": true
+  },
+  "source_binding": {
+    "bundle_id": "MACRO15-C619E4211C17-0002",
+    "document_path": "Plans/Crosswalk.md",
+    "micro_window_ids": ["WIN-C619E4211C17-0008", "WIN-C619E4211C17-0009", "WIN-C619E4211C17-0010"],
+    "source_sha256": "949f41619e742dc1379056123be88e87fa827dd4f1c39ef9835396d911590c80"
+  },
+  "status": "completed",
+  "synthesis": {
+    "cross_document_questions": [
+      "Which owner contract defines atomic commit, idempotency, and recovery for TargetedRevisionPass outcomes?",
+      "Which owner binds FinalReviewGate eligibility and decisions to a versioned bundle snapshot?",
+      "Where is the authoritative cleanup predicate and receipt contract for archive, prune, and remove across active-run, recovery, conflict, and lineage blockers?",
+      "Where is the versioned panel-context envelope schema, including authorization, stale identity, offline, and failed-navigation behavior?",
+      "Which owner enumerates GitHub Actions auth, permission, rate-limit, offline, partial-load, and recovery UI states?",
+      "How is legacy allowed_actions[] normatively translated to ordered allowed_action_ids[] across mixed-version producers and consumers?",
+      "What closed-world oracle proves delegated UI states and PRD Builder or Planning Wizard terminology are reconciled across every named owner and consumer?"
+    ],
+    "feature_family_keys": [
+      "targeted-revision-and-final-review",
+      "runtime-recovery-and-worktree-lifecycle",
+      "source-control-and-cross-surface-navigation",
+      "github-actions-and-docker-manager",
+      "hitl-blocked-action-compatibility",
+      "crosswalk-migration-and-planning-wizard-routing"
+    ],
+    "research_queries": [
+      "transactional annotation revision workflows idempotency partial failure concurrent document edits",
+      "safe destructive git worktree cleanup active process race confirmation audit receipt",
+      "deep link context envelope schema stale identity authorization offline navigation recovery",
+      "GitHub Actions UI authentication expiry insufficient scope rate limit offline state patterns",
+      "versioned API migration ordered action identifiers compatibility translation",
+      "closed world terminology migration validation active UI commands events contracts historical exceptions"
+    ]
+  },
+  "task_thread_id": "/root/a005m15_b3_000024_attempt_0015_terminal"
+}

@@ -1,0 +1,490 @@
+{
+  "coverage": [
+    "unlisted historical drift",
+    "disguised namespace injection",
+    "symlink and path escape",
+    "candidate mutation",
+    "cache/runtime binding",
+    "dependency substitution",
+    "historical replay",
+    "extra exclusions",
+    "nonempty outputs",
+    "activation replay"
+  ],
+  "failed": 117,
+  "failures": [
+    {
+      "error": "AssertionError: baseline",
+      "name": "valid_current_state"
+    },
+    {
+      "error": "AssertionError: mutation accepted",
+      "name": "historical_row_000_mutation_0"
+    },
+    {
+      "error": "AssertionError: mutation accepted",
+      "name": "historical_row_001_mutation_0"
+    },
+    {
+      "error": "AssertionError: mutation accepted",
+      "name": "historical_row_002_mutation_0"
+    },
+    {
+      "error": "AssertionError: mutation accepted",
+      "name": "historical_row_003_mutation_0"
+    },
+    {
+      "error": "AssertionError: mutation accepted",
+      "name": "historical_row_004_mutation_0"
+    },
+    {
+      "error": "AssertionError: mutation accepted",
+      "name": "historical_row_005_mutation_0"
+    },
+    {
+      "error": "AssertionError: mutation accepted",
+      "name": "historical_row_006_mutation_0"
+    },
+    {
+      "error": "AssertionError: mutation accepted",
+      "name": "historical_row_007_mutation_0"
+    },
+    {
+      "error": "AssertionError: mutation accepted",
+      "name": "historical_row_008_mutation_0"
+    },
+    {
+      "error": "AssertionError: mutation accepted",
+      "name": "historical_row_009_mutation_0"
+    },
+    {
+      "error": "AssertionError: mutation accepted",
+      "name": "historical_row_010_mutation_0"
+    },
+    {
+      "error": "AssertionError: mutation accepted",
+      "name": "historical_row_011_mutation_0"
+    },
+    {
+      "error": "AssertionError: mutation accepted",
+      "name": "historical_row_012_mutation_0"
+    },
+    {
+      "error": "AssertionError: mutation accepted",
+      "name": "historical_row_013_mutation_0"
+    },
+    {
+      "error": "AssertionError: mutation accepted",
+      "name": "historical_row_014_mutation_0"
+    },
+    {
+      "error": "AssertionError: mutation accepted",
+      "name": "historical_row_015_mutation_0"
+    },
+    {
+      "error": "AssertionError: mutation accepted",
+      "name": "historical_row_016_mutation_0"
+    },
+    {
+      "error": "AssertionError: mutation accepted",
+      "name": "historical_row_017_mutation_0"
+    },
+    {
+      "error": "AssertionError: mutation accepted",
+      "name": "historical_row_018_mutation_0"
+    },
+    {
+      "error": "AssertionError: mutation accepted",
+      "name": "historical_row_019_mutation_0"
+    },
+    {
+      "error": "AssertionError: mutation accepted",
+      "name": "historical_row_020_mutation_0"
+    },
+    {
+      "error": "AssertionError: mutation accepted",
+      "name": "historical_row_021_mutation_0"
+    },
+    {
+      "error": "AssertionError: mutation accepted",
+      "name": "historical_row_022_mutation_0"
+    },
+    {
+      "error": "AssertionError: mutation accepted",
+      "name": "historical_row_023_mutation_0"
+    },
+    {
+      "error": "AssertionError: mutation accepted",
+      "name": "historical_row_024_mutation_0"
+    },
+    {
+      "error": "AssertionError: mutation accepted",
+      "name": "historical_row_025_mutation_0"
+    },
+    {
+      "error": "AssertionError: mutation accepted",
+      "name": "historical_row_026_mutation_0"
+    },
+    {
+      "error": "AssertionError: mutation accepted",
+      "name": "historical_row_027_mutation_0"
+    },
+    {
+      "error": "AssertionError: mutation accepted",
+      "name": "historical_row_028_mutation_0"
+    },
+    {
+      "error": "AssertionError: mutation accepted",
+      "name": "historical_row_029_mutation_0"
+    },
+    {
+      "error": "AssertionError: mutation accepted",
+      "name": "historical_row_030_mutation_0"
+    },
+    {
+      "error": "AssertionError: mutation accepted",
+      "name": "historical_row_031_mutation_0"
+    },
+    {
+      "error": "AssertionError: mutation accepted",
+      "name": "historical_row_032_mutation_0"
+    },
+    {
+      "error": "AssertionError: mutation accepted",
+      "name": "historical_row_033_mutation_0"
+    },
+    {
+      "error": "AssertionError: mutation accepted",
+      "name": "historical_row_034_mutation_0"
+    },
+    {
+      "error": "AssertionError: mutation accepted",
+      "name": "historical_row_035_mutation_0"
+    },
+    {
+      "error": "AssertionError: mutation accepted",
+      "name": "historical_row_036_mutation_0"
+    },
+    {
+      "error": "AssertionError: mutation accepted",
+      "name": "historical_row_037_mutation_0"
+    },
+    {
+      "error": "AssertionError: mutation accepted",
+      "name": "historical_row_038_mutation_0"
+    },
+    {
+      "error": "AssertionError: mutation accepted",
+      "name": "historical_row_039_mutation_0"
+    },
+    {
+      "error": "AssertionError: mutation accepted",
+      "name": "historical_row_040_mutation_0"
+    },
+    {
+      "error": "AssertionError: mutation accepted",
+      "name": "historical_row_041_mutation_0"
+    },
+    {
+      "error": "AssertionError: mutation accepted",
+      "name": "historical_row_042_mutation_0"
+    },
+    {
+      "error": "AssertionError: mutation accepted",
+      "name": "historical_row_043_mutation_0"
+    },
+    {
+      "error": "AssertionError: mutation accepted",
+      "name": "historical_row_044_mutation_0"
+    },
+    {
+      "error": "AssertionError: mutation accepted",
+      "name": "historical_row_045_mutation_0"
+    },
+    {
+      "error": "AssertionError: mutation accepted",
+      "name": "historical_row_046_mutation_0"
+    },
+    {
+      "error": "AssertionError: mutation accepted",
+      "name": "historical_row_047_mutation_0"
+    },
+    {
+      "error": "AssertionError: mutation accepted",
+      "name": "historical_row_048_mutation_0"
+    },
+    {
+      "error": "AssertionError: mutation accepted",
+      "name": "historical_row_049_mutation_0"
+    },
+    {
+      "error": "AssertionError: mutation accepted",
+      "name": "historical_row_050_mutation_0"
+    },
+    {
+      "error": "AssertionError: mutation accepted",
+      "name": "historical_row_051_mutation_0"
+    },
+    {
+      "error": "AssertionError: mutation accepted",
+      "name": "historical_row_052_mutation_0"
+    },
+    {
+      "error": "AssertionError: mutation accepted",
+      "name": "candidate_row_000_mutation_0"
+    },
+    {
+      "error": "AssertionError: mutation accepted",
+      "name": "candidate_row_001_mutation_0"
+    },
+    {
+      "error": "AssertionError: mutation accepted",
+      "name": "candidate_row_002_mutation_0"
+    },
+    {
+      "error": "AssertionError: mutation accepted",
+      "name": "candidate_row_003_mutation_0"
+    },
+    {
+      "error": "AssertionError: mutation accepted",
+      "name": "candidate_row_004_mutation_0"
+    },
+    {
+      "error": "AssertionError: mutation accepted",
+      "name": "candidate_row_005_mutation_0"
+    },
+    {
+      "error": "AssertionError: mutation accepted",
+      "name": "candidate_row_006_mutation_0"
+    },
+    {
+      "error": "AssertionError: mutation accepted",
+      "name": "candidate_row_007_mutation_0"
+    },
+    {
+      "error": "AssertionError: mutation accepted",
+      "name": "candidate_row_008_mutation_0"
+    },
+    {
+      "error": "AssertionError: mutation accepted",
+      "name": "candidate_row_009_mutation_0"
+    },
+    {
+      "error": "AssertionError: mutation accepted",
+      "name": "candidate_row_010_mutation_0"
+    },
+    {
+      "error": "AssertionError: mutation accepted",
+      "name": "candidate_row_011_mutation_0"
+    },
+    {
+      "error": "AssertionError: mutation accepted",
+      "name": "candidate_row_012_mutation_0"
+    },
+    {
+      "error": "AssertionError: mutation accepted",
+      "name": "candidate_row_013_mutation_0"
+    },
+    {
+      "error": "AssertionError: mutation accepted",
+      "name": "candidate_row_014_mutation_0"
+    },
+    {
+      "error": "AssertionError: mutation accepted",
+      "name": "candidate_row_015_mutation_0"
+    },
+    {
+      "error": "AssertionError: mutation accepted",
+      "name": "candidate_row_016_mutation_0"
+    },
+    {
+      "error": "AssertionError: mutation accepted",
+      "name": "candidate_row_017_mutation_0"
+    },
+    {
+      "error": "AssertionError: mutation accepted",
+      "name": "candidate_row_018_mutation_0"
+    },
+    {
+      "error": "AssertionError: mutation accepted",
+      "name": "candidate_row_019_mutation_0"
+    },
+    {
+      "error": "AssertionError: mutation accepted",
+      "name": "candidate_row_020_mutation_0"
+    },
+    {
+      "error": "AssertionError: mutation accepted",
+      "name": "candidate_row_021_mutation_0"
+    },
+    {
+      "error": "AssertionError: mutation accepted",
+      "name": "candidate_row_022_mutation_0"
+    },
+    {
+      "error": "AssertionError: mutation accepted",
+      "name": "candidate_row_023_mutation_0"
+    },
+    {
+      "error": "AssertionError: mutation accepted",
+      "name": "candidate_row_024_mutation_0"
+    },
+    {
+      "error": "AssertionError: mutation accepted",
+      "name": "candidate_row_025_mutation_0"
+    },
+    {
+      "error": "AssertionError: mutation accepted",
+      "name": "candidate_row_026_mutation_0"
+    },
+    {
+      "error": "AssertionError: mutation accepted",
+      "name": "candidate_row_027_mutation_0"
+    },
+    {
+      "error": "AssertionError: mutation accepted",
+      "name": "candidate_row_028_mutation_0"
+    },
+    {
+      "error": "AssertionError: mutation accepted",
+      "name": "candidate_row_029_mutation_0"
+    },
+    {
+      "error": "AssertionError: mutation accepted",
+      "name": "candidate_row_030_mutation_0"
+    },
+    {
+      "error": "AssertionError: mutation accepted",
+      "name": "candidate_row_031_mutation_0"
+    },
+    {
+      "error": "AssertionError: mutation accepted",
+      "name": "candidate_row_032_mutation_0"
+    },
+    {
+      "error": "AssertionError: unsafe path accepted",
+      "name": "path_escape_004"
+    },
+    {
+      "error": "AssertionError: unsafe path accepted",
+      "name": "path_escape_005"
+    },
+    {
+      "error": "AssertionError: unsafe path accepted",
+      "name": "path_escape_012"
+    },
+    {
+      "error": "AssertionError: unsafe path accepted",
+      "name": "path_escape_013"
+    },
+    {
+      "error": "AssertionError: unsafe path accepted",
+      "name": "path_escape_020"
+    },
+    {
+      "error": "AssertionError: unsafe path accepted",
+      "name": "path_escape_021"
+    },
+    {
+      "error": "AssertionError: unsafe path accepted",
+      "name": "path_escape_028"
+    },
+    {
+      "error": "AssertionError: unsafe path accepted",
+      "name": "path_escape_029"
+    },
+    {
+      "error": "AssertionError: unsafe path accepted",
+      "name": "path_escape_036"
+    },
+    {
+      "error": "AssertionError: unsafe path accepted",
+      "name": "path_escape_037"
+    },
+    {
+      "error": "AssertionError: unsafe path accepted",
+      "name": "path_escape_044"
+    },
+    {
+      "error": "AssertionError: unsafe path accepted",
+      "name": "path_escape_045"
+    },
+    {
+      "error": "AssertionError: unsafe path accepted",
+      "name": "path_escape_052"
+    },
+    {
+      "error": "AssertionError: unsafe path accepted",
+      "name": "path_escape_053"
+    },
+    {
+      "error": "AssertionError: unsafe path accepted",
+      "name": "path_escape_060"
+    },
+    {
+      "error": "AssertionError: unsafe path accepted",
+      "name": "path_escape_061"
+    },
+    {
+      "error": "AssertionError: unsafe path accepted",
+      "name": "path_escape_068"
+    },
+    {
+      "error": "AssertionError: unsafe path accepted",
+      "name": "path_escape_069"
+    },
+    {
+      "error": "AssertionError: unsafe path accepted",
+      "name": "path_escape_076"
+    },
+    {
+      "error": "AssertionError: unsafe path accepted",
+      "name": "path_escape_077"
+    },
+    {
+      "error": "AssertionError: unsafe path accepted",
+      "name": "path_escape_084"
+    },
+    {
+      "error": "AssertionError: unsafe path accepted",
+      "name": "path_escape_085"
+    },
+    {
+      "error": "AssertionError: unsafe path accepted",
+      "name": "path_escape_092"
+    },
+    {
+      "error": "AssertionError: unsafe path accepted",
+      "name": "path_escape_093"
+    },
+    {
+      "error": "AssertionError: unsafe path accepted",
+      "name": "path_escape_100"
+    },
+    {
+      "error": "AssertionError: unsafe path accepted",
+      "name": "path_escape_101"
+    },
+    {
+      "error": "AssertionError: unsafe path accepted",
+      "name": "path_escape_108"
+    },
+    {
+      "error": "AssertionError: unsafe path accepted",
+      "name": "path_escape_109"
+    },
+    {
+      "error": "AssertionError: unsafe path accepted",
+      "name": "path_escape_116"
+    },
+    {
+      "error": "AssertionError: unsafe path accepted",
+      "name": "path_escape_117"
+    }
+  ],
+  "passed": 584,
+  "schema_version": "activation-binding-v5-test-report",
+  "status": "fail",
+  "test_digest": "623aa55c654d3f172fde828466e8a06ab4277c4bb0a1a90e7c2af1946f51134b",
+  "total": 701
+}

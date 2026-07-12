@@ -1,0 +1,124 @@
+{
+  "schema_version": "scenario-adversarial-branch-b-preparation-readiness-v1",
+  "status": "pass_blocked",
+  "errors": [],
+  "readiness_scope": "inert_future_atomic6_activation_transaction_preparation_only",
+  "future_atomic6_transaction_ready_to_launch": false,
+  "blocking_reasons": [
+    "fresh_luna_max_prelaunch_absent",
+    "controller_parent_prelaunch_capture_absent",
+    "separate_future_atomic6_transaction_absent",
+    "activation_false",
+    "launch_false"
+  ],
+  "bindings": {
+    "authority": {
+      "path": "/Users/jaredsmacbookair/Documents/PuppetMaster/Plans/.audits/audit-20260710-005-plan-assurance-model-lanes-fresh-agent-exhaustive/master/scenario_adversarial/wave-0001/cohorts/cohort-0002/semantic-repair-attempt-0003-v32-activation-transaction-preparation-atomic6/FUTURE_ATOMIC6_AUTHORITY.json",
+      "byte_count": 8859,
+      "raw_sha256": "2ab26c988e6a059d72c44045d3748734cbfcb8774060a59891feb8cc33c80b41"
+    },
+    "tool_seal": {
+      "path": "/Users/jaredsmacbookair/Documents/PuppetMaster/Plans/.audits/audit-20260710-005-plan-assurance-model-lanes-fresh-agent-exhaustive/master/scenario_adversarial/wave-0001/cohorts/cohort-0002/semantic-repair-attempt-0003-v32-activation-transaction-preparation-atomic6/FUTURE_TOOL_SEAL.json",
+      "byte_count": 5693,
+      "raw_sha256": "9ec550dcda4823df6b66af7080e7bcd82631da3a5a001507ab7040f4c4919d35"
+    },
+    "test_report": {
+      "path": "/Users/jaredsmacbookair/Documents/PuppetMaster/Plans/.audits/audit-20260710-005-plan-assurance-model-lanes-fresh-agent-exhaustive/master/scenario_adversarial/wave-0001/cohorts/cohort-0002/semantic-repair-attempt-0003-v32-activation-transaction-preparation-atomic6/validation/test-report.json",
+      "byte_count": 4028,
+      "raw_sha256": "d5751e7b3d9076471a539bef82480c114f7dd5b031d4332d38153055fd5a7396"
+    },
+    "terminal_evidence": {
+      "path": "/Users/jaredsmacbookair/Documents/PuppetMaster/Plans/.audits/audit-20260710-005-plan-assurance-model-lanes-fresh-agent-exhaustive/master/scenario_adversarial/wave-0001/cohorts/cohort-0002/semantic-repair-attempt-0003-v32-activation-transaction-preparation-atomic6/validation/terminal-evidence.json",
+      "byte_count": 6753,
+      "raw_sha256": "662ba73489df792dbe88a1a8dd91d7fa8475e0870194836d3f83a071078eadca"
+    },
+    "verifier": {
+      "path": "/Users/jaredsmacbookair/Documents/PuppetMaster/Plans/.audits/audit-20260710-005-plan-assurance-model-lanes-fresh-agent-exhaustive/master/scenario_adversarial/wave-0001/cohorts/cohort-0002/semantic-repair-attempt-0003-v32-activation-transaction-preparation-atomic6/verify_branch_b_preparation.py",
+      "byte_count": 30710,
+      "raw_sha256": "631e30cd34c87cbf66b5804acaf4aff8d661ee36d9ed366471c18229f1b0c2a0"
+    }
+  },
+  "counts": {
+    "assignments": 6,
+    "features": 687,
+    "question_obligations": 713,
+    "empty_outputs": 6,
+    "tests": 900,
+    "results": 0,
+    "receipts": 0,
+    "capture_rows": 0,
+    "credit": 0,
+    "children": 0,
+    "tool_executions": 0
+  },
+  "test_closure": {
+    "case_id_digest": "86ba5165ab7797198293438801665a1503c40a0dc3afc93a9bbf747f8f8f6db7",
+    "category_counts": {
+      "live_positive": {"positive": 20, "negative": 0, "total": 20},
+      "upstream_pin_mutations": {"positive": 0, "negative": 320, "total": 320},
+      "atomic6_set_mutations": {"positive": 0, "negative": 150, "total": 150},
+      "feature_obligation_count_mutations": {"positive": 0, "negative": 100, "total": 100},
+      "prerequisite_identity_mutations": {"positive": 0, "negative": 110, "total": 110},
+      "runtime_drift_mutations": {"positive": 0, "negative": 80, "total": 80},
+      "filesystem_symlink_toctou": {"positive": 0, "negative": 40, "total": 40},
+      "foreign_equivalent_dedup": {"positive": 0, "negative": 30, "total": 30},
+      "authority_credit_leakage": {"positive": 0, "negative": 50, "total": 50}
+    }
+  },
+  "pre_creation_dedup_result": {
+    "checkpoint": "parent_precreation_deduplicate_first",
+    "search_scope": "/Users/jaredsmacbookair/Documents/PuppetMaster/Plans/.audits/audit-20260710-005-plan-assurance-model-lanes-fresh-agent-exhaustive/master/scenario_adversarial/wave-0001/cohorts/cohort-0002",
+    "scope_kind": "audit_metadata_only",
+    "metadata_extensions": [".json", ".jsonl"],
+    "own_preparation_namespace_excluded": "/Users/jaredsmacbookair/Documents/PuppetMaster/Plans/.audits/audit-20260710-005-plan-assurance-model-lanes-fresh-agent-exhaustive/master/scenario_adversarial/wave-0001/cohorts/cohort-0002/semantic-repair-attempt-0003-v32-activation-transaction-preparation-atomic6",
+    "exact_target_namespace": "/Users/jaredsmacbookair/Documents/PuppetMaster/Plans/.audits/audit-20260710-005-plan-assurance-model-lanes-fresh-agent-exhaustive/master/scenario_adversarial/wave-0001/cohorts/cohort-0002/semantic-repair-attempt-0003-v32-activation-transaction-atomic6",
+    "exact_target_namespace_count": 0,
+    "equivalent_terminal_or_activation_prep_namespace_count": 0,
+    "matches": [],
+    "result": "no_foreign_equivalent_terminal_or_activation_prep_namespace",
+    "live_recheck_required": true
+  },
+  "terminal_live_dedup_recheck": {
+    "metadata_files_scanned": 123,
+    "metadata_bytes_scanned": 29694887,
+    "exact_target_namespace_count": 0,
+    "equivalent_terminal_or_activation_prep_namespace_count": 0,
+    "matches": [],
+    "scan_errors": []
+  },
+  "prelaunch_identity_ordering": {
+    "fresh_luna_native_identity_and_report_required": true,
+    "exact_six_reserved_unallocated_sol_slots_and_paths_required": true,
+    "reserved_sol_native_child_ids": null,
+    "actual_six_sol_native_ids_deferred_to_later_activation_runtime_capture": true
+  },
+  "zero_state": {
+    "activation": false,
+    "launch": false,
+    "results": 0,
+    "receipts": 0,
+    "capture_rows": 0,
+    "credit": 0,
+    "spawned_children": 0,
+    "tool_executions": 0
+  },
+  "runtime": {
+    "python": "/Users/jaredsmacbookair/.cache/codex-runtimes/codex-primary-runtime/dependencies/python/bin/python3",
+    "python_version": "3.12.13",
+    "pythonpath": "/Users/jaredsmacbookair/Documents/PuppetMaster/Plans/.audits/audit-20260710-005-plan-assurance-model-lanes-fresh-agent-exhaustive/master/dependencies/jsonschema-draft202012-v1/site-packages",
+    "jsonschema_version": "4.26.0",
+    "validator_class": "jsonschema.validators.Draft202012Validator",
+    "no_site": true,
+    "no_user_site": true,
+    "dont_write_bytecode": true
+  },
+  "activation": false,
+  "activation_authorized": false,
+  "launch": false,
+  "launch_authorized": false,
+  "generator_present": false,
+  "generator_invoked": false,
+  "target_transaction": "required_absent",
+  "fresh_luna_prelaunch": "required_absent",
+  "controller_parent_prelaunch_capture": "required_absent"
+}

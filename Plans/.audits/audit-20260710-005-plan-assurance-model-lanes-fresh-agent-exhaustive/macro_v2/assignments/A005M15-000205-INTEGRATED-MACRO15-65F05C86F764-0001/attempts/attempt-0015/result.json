@@ -1,0 +1,521 @@
+{
+  "assignment_id": "A005M15-000205-INTEGRATED-MACRO15-65F05C86F764-0001",
+  "attempt_id": "attempt-0015",
+  "audit_id": "audit-20260710-005-plan-assurance-model-lanes-fresh-agent-exhaustive",
+  "coverage": {
+    "all_micro_windows_reviewed": true,
+    "all_source_lines_reviewed": true,
+    "all_source_units_accounted": true,
+    "both_exact_and_adversarial_lenses_applied": true,
+    "dimensions_checked": [
+      "behavior",
+      "capabilities",
+      "inputs_outputs",
+      "contracts",
+      "states_transitions",
+      "authority",
+      "ownership",
+      "consumers",
+      "gui_truth",
+      "failures_recovery",
+      "security_privacy",
+      "propagation",
+      "operations",
+      "scale_performance",
+      "compatibility_migration",
+      "acceptance_oracles",
+      "builder_discretion",
+      "ambiguity_unknowns",
+      "missing_callers_consumers",
+      "invalid_states_transitions",
+      "concurrency_races",
+      "partial_failure",
+      "recovery_rollback",
+      "authority_boundaries",
+      "privacy_data_lifecycle",
+      "untrusted_inputs",
+      "gui_misleading_states",
+      "offline_network_loss",
+      "scale_limits",
+      "accessibility",
+      "localization",
+      "observability_support",
+      "destructive_actions",
+      "cross_document_seams",
+      "test_falsifiability",
+      "unknown_unknowns"
+    ]
+  },
+  "items": [
+    {
+      "builder_discretion": false,
+      "confidence": 1.0,
+      "dimensions": [
+        "behavior",
+        "capabilities",
+        "inputs_outputs",
+        "contracts",
+        "acceptance_oracles",
+        "test_falsifiability"
+      ],
+      "evidence": [
+        {
+          "exact_quote": "\"type\":\"object\",\"additionalProperties\":false,\"required\":[\"schema_id\",\"artifact_id\",\"artifact_type\",\"project_id\",\"run_id\",\"attempt_id\",\"created_at_utc\",\"projection_freshness\",\"projection_health\",\"retention_class\",\"routing_refs\",\"type_payload\"]",
+          "line_end": 1,
+          "line_start": 1,
+          "path": "Plans/runtime_artifact_implementation_plan.schema.json",
+          "source_sha256": "851a6a07771493d3d214e1a23c9e2c453e3c098ec4d980a7e03fbd6fa70f38d0"
+        },
+        {
+          "exact_quote": "\"schema_id\":{\"type\":\"string\",\"const\":\"pm.runtime_artifact.implementation_plan.schema.v1\"}",
+          "line_end": 1,
+          "line_start": 1,
+          "path": "Plans/runtime_artifact_implementation_plan.schema.json",
+          "source_sha256": "851a6a07771493d3d214e1a23c9e2c453e3c098ec4d980a7e03fbd6fa70f38d0"
+        }
+      ],
+      "gap_kind": "none",
+      "impact": "A validator can deterministically reject unknown root properties, missing required metadata, and incorrect schema or artifact discriminators.",
+      "item_id": "M15-01",
+      "item_type": "contract",
+      "severity": "info",
+      "source_unit_refs": [
+        "SEMANTIC:JSON_ROOT:Plans/runtime_artifact_implementation_plan.schema.json",
+        "STRUCTURAL:$"
+      ],
+      "statement": "The root is a closed object with twelve required properties, and schema_id plus artifact_type are fixed discriminators.",
+      "title": "Closed root and fixed artifact identity"
+    },
+    {
+      "builder_discretion": true,
+      "confidence": 1.0,
+      "dimensions": [
+        "inputs_outputs",
+        "contracts",
+        "builder_discretion",
+        "ambiguity_unknowns",
+        "untrusted_inputs",
+        "cross_document_seams",
+        "test_falsifiability",
+        "unknown_unknowns"
+      ],
+      "evidence": [
+        {
+          "exact_quote": "\"type_payload\":{\"type\":\"object\",\"minProperties\":1}",
+          "line_end": 1,
+          "line_start": 1,
+          "path": "Plans/runtime_artifact_implementation_plan.schema.json",
+          "source_sha256": "851a6a07771493d3d214e1a23c9e2c453e3c098ec4d980a7e03fbd6fa70f38d0"
+        }
+      ],
+      "gap_kind": "underspecified_payload_contract",
+      "impact": "Any nonempty object, including an irrelevant or meaningless property, satisfies the only implementation-plan-specific payload requirement; producers and consumers must invent the plan shape and cannot share a semantic acceptance oracle.",
+      "item_id": "M15-02",
+      "item_type": "gap",
+      "severity": "critical",
+      "source_unit_refs": [
+        "SEMANTIC:JSON_ROOT:Plans/runtime_artifact_implementation_plan.schema.json",
+        "STRUCTURAL:$"
+      ],
+      "statement": "type_payload has no defined properties, required members, closed-world rule, nested validation, or versioned payload discriminator beyond being a nonempty object.",
+      "title": "Implementation-plan payload is semantically unconstrained"
+    },
+    {
+      "builder_discretion": true,
+      "confidence": 1.0,
+      "dimensions": [
+        "states_transitions",
+        "gui_truth",
+        "failures_recovery",
+        "propagation",
+        "operations",
+        "acceptance_oracles",
+        "invalid_states_transitions",
+        "partial_failure",
+        "recovery_rollback",
+        "gui_misleading_states",
+        "offline_network_loss",
+        "observability_support",
+        "test_falsifiability"
+      ],
+      "evidence": [
+        {
+          "exact_quote": "\"projection_freshness\":{\"type\":\"string\"},\"projection_health\":{\"type\":\"string\"}",
+          "line_end": 1,
+          "line_start": 1,
+          "path": "Plans/runtime_artifact_implementation_plan.schema.json",
+          "source_sha256": "851a6a07771493d3d214e1a23c9e2c453e3c098ec4d980a7e03fbd6fa70f38d0"
+        }
+      ],
+      "gap_kind": "unbounded_projection_state",
+      "impact": "Empty, misspelled, contradictory, or producer-specific state labels validate, so consumers and GUIs cannot reliably distinguish healthy, stale, degraded, offline, partially failed, recovering, or terminal projections or determine allowed recovery transitions.",
+      "item_id": "M15-03",
+      "item_type": "state_transition",
+      "severity": "high",
+      "source_unit_refs": [
+        "SEMANTIC:JSON_ROOT:Plans/runtime_artifact_implementation_plan.schema.json",
+        "STRUCTURAL:$"
+      ],
+      "statement": "The required projection_freshness and projection_health fields are arbitrary strings with no nonempty constraint, vocabulary, relationship, transition model, or recovery semantics.",
+      "title": "Projection state vocabulary and transitions are undefined"
+    },
+    {
+      "builder_discretion": true,
+      "confidence": 1.0,
+      "dimensions": [
+        "inputs_outputs",
+        "contracts",
+        "consumers",
+        "failures_recovery",
+        "propagation",
+        "operations",
+        "scale_performance",
+        "acceptance_oracles",
+        "partial_failure",
+        "recovery_rollback",
+        "untrusted_inputs",
+        "offline_network_loss",
+        "scale_limits",
+        "observability_support",
+        "cross_document_seams",
+        "test_falsifiability"
+      ],
+      "evidence": [
+        {
+          "exact_quote": "\"receipt_refs\":{\"type\":\"array\",\"items\":{\"type\":\"string\",\"minLength\":1}}",
+          "line_end": 1,
+          "line_start": 1,
+          "path": "Plans/runtime_artifact_implementation_plan.schema.json",
+          "source_sha256": "851a6a07771493d3d214e1a23c9e2c453e3c098ec4d980a7e03fbd6fa70f38d0"
+        },
+        {
+          "exact_quote": "\"routing_refs\":{\"type\":\"array\",\"minItems\":1,\"items\":{\"type\":\"string\",\"minLength\":1}}",
+          "line_end": 1,
+          "line_start": 1,
+          "path": "Plans/runtime_artifact_implementation_plan.schema.json",
+          "source_sha256": "851a6a07771493d3d214e1a23c9e2c453e3c098ec4d980a7e03fbd6fa70f38d0"
+        }
+      ],
+      "gap_kind": "opaque_unbounded_references",
+      "impact": "Malformed, duplicate, dangling, cyclic, inaccessible, or arbitrarily large reference lists validate, and the schema does not tell consumers how to report, retry, or roll back partial resolution failures.",
+      "item_id": "M15-04",
+      "item_type": "gap",
+      "severity": "high",
+      "source_unit_refs": [
+        "SEMANTIC:JSON_ROOT:Plans/runtime_artifact_implementation_plan.schema.json",
+        "STRUCTURAL:$"
+      ],
+      "statement": "Receipt and routing references are nonempty strings but have no reference format, uniqueness, cardinality ceiling, resolvability rule, trust boundary, ordering semantics, or partial-resolution policy; receipt_refs may also be empty.",
+      "title": "Reference integrity and failure behavior are unspecified"
+    },
+    {
+      "builder_discretion": true,
+      "confidence": 0.99,
+      "dimensions": [
+        "authority",
+        "ownership",
+        "consumers",
+        "propagation",
+        "operations",
+        "missing_callers_consumers",
+        "authority_boundaries",
+        "observability_support",
+        "cross_document_seams"
+      ],
+      "evidence": [
+        {
+          "exact_quote": "\"producer_ref\":{\"type\":\"string\"},\"actor_ref\":{\"type\":\"string\"}",
+          "line_end": 1,
+          "line_start": 1,
+          "path": "Plans/runtime_artifact_implementation_plan.schema.json",
+          "source_sha256": "851a6a07771493d3d214e1a23c9e2c453e3c098ec4d980a7e03fbd6fa70f38d0"
+        },
+        {
+          "exact_quote": "\"project_id\":{\"type\":\"string\",\"minLength\":1},\"run_id\":{\"type\":\"string\",\"minLength\":1},\"attempt_id\":{\"type\":\"string\",\"minLength\":1}",
+          "line_end": 1,
+          "line_start": 1,
+          "path": "Plans/runtime_artifact_implementation_plan.schema.json",
+          "source_sha256": "851a6a07771493d3d214e1a23c9e2c453e3c098ec4d980a7e03fbd6fa70f38d0"
+        }
+      ],
+      "gap_kind": "authority_and_consumer_contract_absent",
+      "impact": "An artifact can validate without attributable producer or actor identity, with no way to prove authorization for the project/run/attempt scope, and no declared owner or consumer obligations for routing and support.",
+      "item_id": "M15-05",
+      "item_type": "authority",
+      "severity": "high",
+      "source_unit_refs": [
+        "SEMANTIC:JSON_ROOT:Plans/runtime_artifact_implementation_plan.schema.json",
+        "STRUCTURAL:$"
+      ],
+      "statement": "Project, run, and attempt identity are required, but producer_ref and actor_ref are optional unconstrained strings and the schema defines neither ownership, authorization relationships, intended consumers, nor caller obligations.",
+      "title": "Attribution and authority boundaries are not enforceable"
+    },
+    {
+      "builder_discretion": true,
+      "confidence": 1.0,
+      "dimensions": [
+        "contracts",
+        "failures_recovery",
+        "security_privacy",
+        "operations",
+        "acceptance_oracles",
+        "partial_failure",
+        "recovery_rollback",
+        "privacy_data_lifecycle",
+        "destructive_actions",
+        "test_falsifiability"
+      ],
+      "evidence": [
+        {
+          "exact_quote": "\"retention_class\":{\"type\":\"string\"}",
+          "line_end": 1,
+          "line_start": 1,
+          "path": "Plans/runtime_artifact_implementation_plan.schema.json",
+          "source_sha256": "851a6a07771493d3d214e1a23c9e2c453e3c098ec4d980a7e03fbd6fa70f38d0"
+        }
+      ],
+      "gap_kind": "undefined_retention_lifecycle",
+      "impact": "Empty or unknown retention labels validate, leaving storage duration, deletion authority, legal hold, archival, redaction, and failure recovery to implementers; destructive lifecycle actions cannot be tested from this contract.",
+      "item_id": "M15-06",
+      "item_type": "gap",
+      "severity": "high",
+      "source_unit_refs": [
+        "SEMANTIC:JSON_ROOT:Plans/runtime_artifact_implementation_plan.schema.json",
+        "STRUCTURAL:$"
+      ],
+      "statement": "retention_class is required but is an arbitrary string with no vocabulary or data-lifecycle semantics.",
+      "title": "Retention and privacy lifecycle are undefined"
+    },
+    {
+      "builder_discretion": true,
+      "confidence": 0.99,
+      "dimensions": [
+        "states_transitions",
+        "failures_recovery",
+        "operations",
+        "acceptance_oracles",
+        "invalid_states_transitions",
+        "concurrency_races",
+        "partial_failure",
+        "recovery_rollback",
+        "observability_support",
+        "test_falsifiability"
+      ],
+      "evidence": [
+        {
+          "exact_quote": "\"created_at_utc\":{\"type\":\"string\",\"minLength\":1}",
+          "line_end": 1,
+          "line_start": 1,
+          "path": "Plans/runtime_artifact_implementation_plan.schema.json",
+          "source_sha256": "851a6a07771493d3d214e1a23c9e2c453e3c098ec4d980a7e03fbd6fa70f38d0"
+        },
+        {
+          "exact_quote": "\"artifact_id\":{\"type\":\"string\",\"minLength\":1}",
+          "line_end": 1,
+          "line_start": 1,
+          "path": "Plans/runtime_artifact_implementation_plan.schema.json",
+          "source_sha256": "851a6a07771493d3d214e1a23c9e2c453e3c098ec4d980a7e03fbd6fa70f38d0"
+        }
+      ],
+      "gap_kind": "missing_temporal_and_concurrency_contract",
+      "impact": "Non-time strings validate as timestamps, while duplicate, stale, reordered, or concurrently rewritten artifact versions cannot be distinguished or reconciled by schema-level rules.",
+      "item_id": "M15-07",
+      "item_type": "gap",
+      "severity": "medium",
+      "source_unit_refs": [
+        "SEMANTIC:JSON_ROOT:Plans/runtime_artifact_implementation_plan.schema.json",
+        "STRUCTURAL:$"
+      ],
+      "statement": "created_at_utc has no date-time format, and the object has no revision, sequence, idempotency, supersession, or optimistic-concurrency field or invariant.",
+      "title": "Temporal validity and concurrent update semantics are absent"
+    },
+    {
+      "builder_discretion": true,
+      "confidence": 1.0,
+      "dimensions": [
+        "inputs_outputs",
+        "operations",
+        "scale_performance",
+        "builder_discretion",
+        "scale_limits",
+        "test_falsifiability"
+      ],
+      "evidence": [
+        {
+          "exact_quote": "\"receipt_refs\":{\"type\":\"array\",\"items\":{\"type\":\"string\",\"minLength\":1}}",
+          "line_end": 1,
+          "line_start": 1,
+          "path": "Plans/runtime_artifact_implementation_plan.schema.json",
+          "source_sha256": "851a6a07771493d3d214e1a23c9e2c453e3c098ec4d980a7e03fbd6fa70f38d0"
+        },
+        {
+          "exact_quote": "\"summary\":{\"type\":\"string\"}",
+          "line_end": 1,
+          "line_start": 1,
+          "path": "Plans/runtime_artifact_implementation_plan.schema.json",
+          "source_sha256": "851a6a07771493d3d214e1a23c9e2c453e3c098ec4d980a7e03fbd6fa70f38d0"
+        }
+      ],
+      "gap_kind": "unbounded_collection_and_text_sizes",
+      "impact": "Valid artifacts may carry arbitrarily many references or arbitrarily large text and payload values, preventing schema-derived resource budgets and boundary tests for parsing, storage, rendering, or transport.",
+      "item_id": "M15-08",
+      "item_type": "gap",
+      "severity": "medium",
+      "source_unit_refs": [
+        "SEMANTIC:JSON_ROOT:Plans/runtime_artifact_implementation_plan.schema.json",
+        "STRUCTURAL:$"
+      ],
+      "statement": "Arrays, free-form strings, and type_payload have no maximum cardinality, string length, nesting-depth, or total-size limits.",
+      "title": "No scale or resource limits are encoded"
+    },
+    {
+      "builder_discretion": true,
+      "confidence": 0.97,
+      "dimensions": [
+        "consumers",
+        "gui_truth",
+        "security_privacy",
+        "acceptance_oracles",
+        "ambiguity_unknowns",
+        "privacy_data_lifecycle",
+        "gui_misleading_states",
+        "accessibility",
+        "localization",
+        "cross_document_seams",
+        "unknown_unknowns"
+      ],
+      "evidence": [
+        {
+          "exact_quote": "\"summary\":{\"type\":\"string\"},\"detail_ref\":{\"type\":\"string\"},\"content_ref\":{\"type\":\"string\"},\"source_surface\":{\"type\":\"string\"}",
+          "line_end": 1,
+          "line_start": 1,
+          "path": "Plans/runtime_artifact_implementation_plan.schema.json",
+          "source_sha256": "851a6a07771493d3d214e1a23c9e2c453e3c098ec4d980a7e03fbd6fa70f38d0"
+        }
+      ],
+      "gap_kind": "presentation_semantics_not_declared",
+      "impact": "A user-facing consumer cannot know whether summary is safe, localized, accessible, complete, stale, or merely fallback text, nor how empty strings or unavailable detail/content references should be represented without misleading users.",
+      "item_id": "M15-09",
+      "item_type": "gui_truth",
+      "severity": "medium",
+      "source_unit_refs": [
+        "SEMANTIC:JSON_ROOT:Plans/runtime_artifact_implementation_plan.schema.json",
+        "STRUCTURAL:$"
+      ],
+      "statement": "Optional presentation-adjacent fields are unconstrained strings, and the schema defines no display priority, safe-rendering designation, locale, accessibility alternative, sensitivity marker, or missing-content GUI state.",
+      "title": "GUI-facing content and fallback truth are unspecified"
+    },
+    {
+      "builder_discretion": true,
+      "confidence": 0.99,
+      "dimensions": [
+        "contracts",
+        "operations",
+        "compatibility_migration",
+        "acceptance_oracles",
+        "builder_discretion",
+        "ambiguity_unknowns",
+        "recovery_rollback",
+        "cross_document_seams",
+        "test_falsifiability",
+        "unknown_unknowns"
+      ],
+      "evidence": [
+        {
+          "exact_quote": "\"$id\":\"pm.runtime_artifact.implementation_plan.schema.v1\"",
+          "line_end": 1,
+          "line_start": 1,
+          "path": "Plans/runtime_artifact_implementation_plan.schema.json",
+          "source_sha256": "851a6a07771493d3d214e1a23c9e2c453e3c098ec4d980a7e03fbd6fa70f38d0"
+        },
+        {
+          "exact_quote": "\"schema_id\":{\"type\":\"string\",\"const\":\"pm.runtime_artifact.implementation_plan.schema.v1\"}",
+          "line_end": 1,
+          "line_start": 1,
+          "path": "Plans/runtime_artifact_implementation_plan.schema.json",
+          "source_sha256": "851a6a07771493d3d214e1a23c9e2c453e3c098ec4d980a7e03fbd6fa70f38d0"
+        }
+      ],
+      "gap_kind": "migration_and_operational_contract_absent",
+      "impact": "The v1 identity is testable, but schema-only implementers cannot determine upgrade, downgrade, dual-read, deprecation, rollback, support, or compatibility behavior when another version appears.",
+      "item_id": "M15-10",
+      "item_type": "unknown",
+      "severity": "medium",
+      "source_unit_refs": [
+        "SEMANTIC:JSON_ROOT:Plans/runtime_artifact_implementation_plan.schema.json",
+        "STRUCTURAL:$"
+      ],
+      "statement": "The schema is explicitly versioned v1 but defines no version negotiation, migration metadata, compatibility window, unknown-version handling, or rollback rule.",
+      "title": "Version migration and compatibility behavior are not specified"
+    }
+  ],
+  "model": "gpt-5.6-sol",
+  "phase": "blind_macro_window_review",
+  "reasoning_effort": "xhigh",
+  "schema_version": "macro-review-result-v1",
+  "segments": [
+    {
+      "core_range": [
+        1,
+        1
+      ],
+      "covered_source_unit_refs": [
+        "SEMANTIC:JSON_ROOT:Plans/runtime_artifact_implementation_plan.schema.json",
+        "STRUCTURAL:$"
+      ],
+      "item_ids": [
+        "M15-01",
+        "M15-02",
+        "M15-03",
+        "M15-04",
+        "M15-05",
+        "M15-06",
+        "M15-07",
+        "M15-08",
+        "M15-09",
+        "M15-10"
+      ],
+      "reviewed": true,
+      "summary": "Reviewed the complete one-line JSON Schema root under exact and adversarial lenses. The strict root and fixed discriminators are useful, but implementation-plan payload semantics, projection states, reference integrity, authority, retention, concurrency, scale, presentation truth, and migration behavior remain materially underconstrained.",
+      "window_id": "WIN-65F05C86F764-0001"
+    }
+  ],
+  "self_attestation": {
+    "no_canonical_writes": true,
+    "no_external_research_during_blind_review": true,
+    "no_peer_result_access": true,
+    "no_prior_audit_access": true,
+    "no_unrelated_source_access": true,
+    "terminal_after_submission": true
+  },
+  "source_binding": {
+    "bundle_id": "MACRO15-65F05C86F764-0001",
+    "document_path": "Plans/runtime_artifact_implementation_plan.schema.json",
+    "micro_window_ids": [
+      "WIN-65F05C86F764-0001"
+    ],
+    "source_sha256": "851a6a07771493d3d214e1a23c9e2c453e3c098ec4d980a7e03fbd6fa70f38d0"
+  },
+  "status": "completed",
+  "synthesis": {
+    "cross_document_questions": [
+      "Which canonical contract defines the required implementation_plan type_payload properties and their semantic invariants?",
+      "Which runtime contract owns projection freshness and health vocabularies, transitions, and recovery behavior?",
+      "Which contracts define reference resolution, producer or actor authority, retention lifecycle, consumer display behavior, and version migration?"
+    ],
+    "feature_family_keys": [
+      "runtime-artifact-envelope",
+      "implementation-plan-payload",
+      "projection-state-contract",
+      "artifact-reference-integrity",
+      "artifact-authority-and-retention",
+      "artifact-version-migration"
+    ],
+    "research_queries": [
+      "JSON Schema patterns for versioned discriminated implementation-plan payloads",
+      "Runtime artifact projection health freshness state machine recovery semantics",
+      "Reference integrity retention lifecycle and concurrency contracts for persisted runtime artifacts"
+    ]
+  },
+  "task_thread_id": "/root/a005m15_b10_000205_attempt_0015_terminal"
+}

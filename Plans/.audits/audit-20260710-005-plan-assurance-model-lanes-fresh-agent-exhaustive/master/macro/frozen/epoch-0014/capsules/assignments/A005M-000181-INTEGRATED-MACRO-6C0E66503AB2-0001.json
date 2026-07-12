@@ -1,0 +1,198 @@
+{
+  "assignment_id": "A005M-000181-INTEGRATED-MACRO-6C0E66503AB2-0001",
+  "attempt_id": "attempt-0014",
+  "audit_id": "audit-20260710-005-plan-assurance-model-lanes-fresh-agent-exhaustive",
+  "blindness": {
+    "external_research": "deferred_to_feature_research_phase",
+    "peer_results": "forbidden",
+    "prior_audits": "forbidden",
+    "unrelated_sources": "forbidden"
+  },
+  "bundle_core_range": [
+    1,
+    1072
+  ],
+  "bundle_id": "MACRO-6C0E66503AB2-0001",
+  "context_ranges": [],
+  "document_path": "Plans/interview-subagent-integration.md",
+  "micro_window_ids": [
+    "WIN-6C0E66503AB2-0001",
+    "WIN-6C0E66503AB2-0002",
+    "WIN-6C0E66503AB2-0003"
+  ],
+  "phase": "blind_macro_window_review",
+  "required_dimensions": [
+    "behavior",
+    "capabilities",
+    "inputs_outputs",
+    "contracts",
+    "states_transitions",
+    "authority",
+    "ownership",
+    "consumers",
+    "gui_truth",
+    "failures_recovery",
+    "security_privacy",
+    "propagation",
+    "operations",
+    "scale_performance",
+    "compatibility_migration",
+    "acceptance_oracles",
+    "builder_discretion",
+    "ambiguity_unknowns",
+    "missing_callers_consumers",
+    "invalid_states_transitions",
+    "concurrency_races",
+    "partial_failure",
+    "recovery_rollback",
+    "authority_boundaries",
+    "privacy_data_lifecycle",
+    "untrusted_inputs",
+    "gui_misleading_states",
+    "offline_network_loss",
+    "scale_limits",
+    "accessibility",
+    "localization",
+    "observability_support",
+    "destructive_actions",
+    "cross_document_seams",
+    "test_falsifiability",
+    "unknown_unknowns"
+  ],
+  "result_schema_ref": "schemas/macro_review_result.schema.json",
+  "review_instructions": "Read every assigned core line and account for every required_source_unit_ref. Apply both exact-behavior and adversarial-negative-space lenses across every required dimension. Extract concise feature, behavior, contract, state, authority, consumer, GUI, failure/recovery, oracle, gap, unknown, and explicit-non-gap items with exact source evidence. Do not merely paraphrase headings or copy unit refs. Each segment must name its complete required_source_unit_refs list and at least one item. Write exactly one regular JSON payload inside the assigned output directory; result.json is recommended but the filename is not semantic. Do not write a terminal seal. Return PMR1 only after the JSON payload is fully written.",
+  "schema_version": "macro-context-capsule-v1",
+  "segments": [
+    {
+      "core_range": [
+        1,
+        362
+      ],
+      "core_sha256": "d0a0350179dd445cda8269541736c7a679bf6cfdbbcf2ea255fbc1f409a3648f",
+      "plan_unit_ids": [
+        "ISI-002",
+        "ISI-003",
+        "ISI-004",
+        "ISI-005",
+        "ISI-006",
+        "ISI-007"
+      ],
+      "required_source_unit_refs": [
+        "PLANUNIT:ISI-002",
+        "PLANUNIT:ISI-003",
+        "PLANUNIT:ISI-004",
+        "PLANUNIT:ISI-005",
+        "PLANUNIT:ISI-006",
+        "PLANUNIT:ISI-007",
+        "SEMANTIC:PROLOGUE:Plans/interview-subagent-integration.md",
+        "SEMANTIC:PLANUNIT:ISI-002",
+        "SEMANTIC:PLANUNIT:ISI-003",
+        "SEMANTIC:PLANUNIT:ISI-004",
+        "SEMANTIC:PLANUNIT:ISI-005",
+        "SEMANTIC:PLANUNIT:ISI-006",
+        "SEMANTIC:PLANUNIT:ISI-007"
+      ],
+      "semantic_block_ids": [
+        "PROLOGUE:Plans/interview-subagent-integration.md",
+        "PLANUNIT:ISI-002",
+        "PLANUNIT:ISI-003",
+        "PLANUNIT:ISI-004",
+        "PLANUNIT:ISI-005",
+        "PLANUNIT:ISI-006",
+        "PLANUNIT:ISI-007"
+      ],
+      "structural_paths": [],
+      "token_estimate": 7685,
+      "window_id": "WIN-6C0E66503AB2-0001"
+    },
+    {
+      "core_range": [
+        363,
+        721
+      ],
+      "core_sha256": "5da2fa35d0d4dd8c64bddb4b8e3d1836de1ea8a7146c1ebe722a58623d459aae",
+      "plan_unit_ids": [
+        "ISI-008",
+        "ISI-009",
+        "ISI-010",
+        "ISI-011",
+        "ISI-012",
+        "ISI-013",
+        "ISI-014"
+      ],
+      "required_source_unit_refs": [
+        "PLANUNIT:ISI-008",
+        "PLANUNIT:ISI-009",
+        "PLANUNIT:ISI-010",
+        "PLANUNIT:ISI-011",
+        "PLANUNIT:ISI-012",
+        "PLANUNIT:ISI-013",
+        "PLANUNIT:ISI-014",
+        "SEMANTIC:PLANUNIT:ISI-008",
+        "SEMANTIC:PLANUNIT:ISI-009",
+        "SEMANTIC:PLANUNIT:ISI-010",
+        "SEMANTIC:PLANUNIT:ISI-011",
+        "SEMANTIC:PLANUNIT:ISI-012",
+        "SEMANTIC:PLANUNIT:ISI-013",
+        "SEMANTIC:PLANUNIT:ISI-014"
+      ],
+      "semantic_block_ids": [
+        "PLANUNIT:ISI-008",
+        "PLANUNIT:ISI-009",
+        "PLANUNIT:ISI-010",
+        "PLANUNIT:ISI-011",
+        "PLANUNIT:ISI-012",
+        "PLANUNIT:ISI-013",
+        "PLANUNIT:ISI-014"
+      ],
+      "structural_paths": [],
+      "token_estimate": 5844,
+      "window_id": "WIN-6C0E66503AB2-0002"
+    },
+    {
+      "core_range": [
+        722,
+        1072
+      ],
+      "core_sha256": "1f5edd6ba7c2fc83f0357a632a7d1ba0822c449ab8d1a19a2f44605d04ea148e",
+      "plan_unit_ids": [
+        "ISI-001",
+        "ISI-015",
+        "ISI-016",
+        "ISI-017",
+        "ISI-018",
+        "ISI-019"
+      ],
+      "required_source_unit_refs": [
+        "PLANUNIT:ISI-001",
+        "PLANUNIT:ISI-015",
+        "PLANUNIT:ISI-016",
+        "PLANUNIT:ISI-017",
+        "PLANUNIT:ISI-018",
+        "PLANUNIT:ISI-019",
+        "SEMANTIC:PLANUNIT:ISI-015",
+        "SEMANTIC:PLANUNIT:ISI-016",
+        "SEMANTIC:PLANUNIT:ISI-017",
+        "SEMANTIC:PLANUNIT:ISI-018",
+        "SEMANTIC:PLANUNIT:ISI-001",
+        "SEMANTIC:PLANUNIT:ISI-019"
+      ],
+      "semantic_block_ids": [
+        "PLANUNIT:ISI-015",
+        "PLANUNIT:ISI-016",
+        "PLANUNIT:ISI-017",
+        "PLANUNIT:ISI-018",
+        "PLANUNIT:ISI-001",
+        "PLANUNIT:ISI-019"
+      ],
+      "structural_paths": [],
+      "token_estimate": 6942,
+      "window_id": "WIN-6C0E66503AB2-0003"
+    }
+  ],
+  "source_excerpt_line_format": "L######## followed by a tab and exact canonical source text",
+  "source_excerpt_ref": "capsules/source/37/372077c9c8bc0ac59aaf2701fc9e9519eb75067bc620342301ce77d44055fd45.txt",
+  "source_excerpt_sha256": "372077c9c8bc0ac59aaf2701fc9e9519eb75067bc620342301ce77d44055fd45",
+  "source_sha256": "4710bbe6b870afdf54d816fa9d13f83fe92722e1a2840ea8412de9d44f85966e",
+  "token_estimate": 20471
+}

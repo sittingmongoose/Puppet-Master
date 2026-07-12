@@ -478,6 +478,269 @@
     });
   }
 
+  /* ================= activity bar customization (reorder / hide / More tray) =================
+     Persistence: single key pm.activity_bar_order:v1 — one JSON array of
+     data-ab-id strings containing the "__more__" sentinel; ids after the
+     sentinel are the hidden (tray) set. This is FinalGUISpec's
+     "ordered list of activity bar item IDs + separator position" contract.
+     Hotkeys: the Ctrl+1..8 handler in wireActivityBar live-queries
+     '.activity-bar .icon[data-target]' per keydown, so DOM order == hotkey
+     order — hotkeys follow the VISUAL order automatically and hidden icons
+     drop out of the numbering; zero code needed here.
+     Boot flattens the decorative .pm6-ab-group wrappers (any future
+     group-scoped CSS goes inert — the separator rules in pm6-css-panels
+     already are). Icon nodes are MOVED, never cloned: the delegated
+     Chat/Dashboard title-matched handlers (js-terminal-demo) keep working. */
+  function initActivityBarCustomization() {
+    var LS_KEY = 'pm.activity_bar_order:v1';
+    var SENTINEL = '__more__';
+    var bar = byId('activityBar');
+    var moreBtn = byId('abMoreBtn');
+    if (!bar || !moreBtn) return;
+
+    function lsGet(k) { try { return window.localStorage.getItem(k); } catch (e) { return null; } }
+    function lsSet(k, v) { try { window.localStorage.setItem(k, v); } catch (e) {} }
+
+    var hidden = [];   /* [{ id, node }] — detached icon nodes, in tray order */
+    var drag = null;   /* active gesture state */
+
+    function visibleIcons() {
+      return $all('#activityBar > .icon[data-ab-id]').filter(function (i) { return i !== moreBtn; });
+    }
+    function syncMore() { moreBtn.setAttribute('data-empty', hidden.length ? '0' : '1'); }
+    function persist() {
+      var order = visibleIcons().map(function (i) { return i.getAttribute('data-ab-id'); });
+      order.push(SENTINEL);
+      hidden.forEach(function (h) { order.push(h.id); });
+      lsSet(LS_KEY, JSON.stringify(order));
+    }
+    function killTray() {
+      var t = document.querySelector('.pm-ab-tray');
+      if (t && t.parentNode) t.parentNode.removeChild(t);
+    }
+
+    /* ---- boot: flatten groups, apply persisted order, detach hidden ---- */
+    (function bootOrder() {
+      var domIcons = $all('.icon[data-ab-id]', bar).filter(function (i) { return i !== moreBtn; });
+      var map = {};
+      domIcons.forEach(function (i) { map[i.getAttribute('data-ab-id')] = i; });
+      var saved = null;
+      try { saved = JSON.parse(lsGet(LS_KEY) || 'null'); } catch (e) { saved = null; }
+      if (!saved || Object.prototype.toString.call(saved) !== '[object Array]') saved = null;
+      var visIds = [], hidIds = [], seen = {}, past = false;
+      (saved || []).forEach(function (id) {
+        if (id === SENTINEL) { past = true; return; }
+        if (!map[id] || seen[id]) return;          /* persisted id missing from DOM: dropped */
+        seen[id] = true;
+        (past ? hidIds : visIds).push(id);
+      });
+      domIcons.forEach(function (i) {              /* unknown new ids: visible, at the end */
+        var id = i.getAttribute('data-ab-id');
+        if (!seen[id]) { seen[id] = true; visIds.push(id); }
+      });
+      visIds.forEach(function (id) { bar.insertBefore(map[id], moreBtn); });   /* moved, not cloned */
+      hidIds.forEach(function (id) {
+        var n = map[id];
+        if (n.parentNode) n.parentNode.removeChild(n);
+        hidden.push({ id: id, node: n });
+      });
+      $all('.pm6-ab-group', bar).forEach(function (g) {                        /* remove emptied wrappers */
+        if (!g.querySelector('.icon') && g.parentNode) g.parentNode.removeChild(g);
+      });
+      syncMore();
+    })();
+
+    /* ---- shared pointer-drag engine (bar icons + tray rows) ---- */
+    function suppressNextClick() {
+      /* one-shot window-CAPTURE suppressor: it runs before the document
+         capture-stage page.go handler in wireActivityBar AND before the
+         legacy body-level bubble handler (js-terminal-demo), so a drop
+         never doubles as a click on either path. */
+      var fn = function (e) {
+        e.stopPropagation();
+        e.preventDefault();
+        window.removeEventListener('click', fn, true);
+      };
+      window.addEventListener('click', fn, true);
+      setTimeout(function () { window.removeEventListener('click', fn, true); }, 0);
+    }
+    function computeSlots() {
+      /* midpoints of the visible icons — pure vertical-list math, identical
+         at 36px collapsed and 72px expanded */
+      return visibleIcons().map(function (i) {
+        var r = i.getBoundingClientRect();
+        return { top: r.top, bottom: r.bottom, mid: r.top + r.height / 2 };
+      });
+    }
+    function armGesture(e, node, id, fromTray, captureEl) {
+      if (e.button !== 0) return;
+      drag = { node: node, id: id, fromTray: !!fromTray, started: false, sx: e.clientX, sy: e.clientY, pid: e.pointerId };
+      try { captureEl.setPointerCapture(e.pointerId); } catch (err) {}
+      window.addEventListener('pointermove', onPointerMove);
+      window.addEventListener('pointerup', onPointerUp);
+      window.addEventListener('pointercancel', onPointerCancel);
+    }
+    function beginDrag() {
+      drag.started = true;
+      document.body.classList.add('pm-ab-dragging');   /* shows the More target + disables jiggle/hover-scale */
+      killTray();
+      var g = drag.node.cloneNode(true);               /* ghost is a throwaway clone; the real node moves at drop */
+      g.classList.add('pm-ab-ghost');
+      g.classList.remove('active');
+      var w = drag.fromTray ? moreBtn.getBoundingClientRect().width : drag.node.getBoundingClientRect().width;
+      g.style.width = Math.max(32, Math.round(w)) + 'px';
+      document.body.appendChild(g);
+      drag.ghost = g;
+      if (!drag.fromTray) drag.node.classList.add('pm-ab-drag-src');
+      var ind = document.createElement('div');
+      ind.className = 'pm-ab-drop-indicator';
+      var br = bar.getBoundingClientRect();
+      ind.style.left = (br.left + 4) + 'px';
+      ind.style.width = (br.width - 8) + 'px';
+      ind.style.display = 'none';
+      document.body.appendChild(ind);
+      drag.indicator = ind;
+      drag.moreRect = moreBtn.getBoundingClientRect(); /* after the body class: More is visible now */
+      drag.slots = computeSlots();
+    }
+    function onPointerMove(e) {
+      if (!drag || e.pointerId !== drag.pid) return;
+      if (!drag.started) {
+        if (Math.abs(e.clientX - drag.sx) < 4 && Math.abs(e.clientY - drag.sy) < 4) return;   /* 4px threshold */
+        beginDrag();
+      }
+      drag.ghost.style.left = (e.clientX + 6) + 'px';
+      drag.ghost.style.top = (e.clientY - 12) + 'px';
+      var mr = drag.moreRect;
+      drag.overMore = !drag.fromTray &&
+        e.clientX >= mr.left && e.clientX <= mr.right && e.clientY >= mr.top && e.clientY <= mr.bottom;
+      moreBtn.classList.toggle('pm-ab-drop-hot', !!drag.overMore);
+      if (drag.overMore) { drag.indicator.style.display = 'none'; drag.insertAt = -1; return; }
+      var idx = drag.slots.length;
+      for (var i = 0; i < drag.slots.length; i++) {
+        if (e.clientY < drag.slots[i].mid) { idx = i; break; }
+      }
+      drag.insertAt = idx;
+      var y = idx < drag.slots.length
+        ? drag.slots[idx].top - 1
+        : (drag.slots.length ? drag.slots[drag.slots.length - 1].bottom + 1 : mr.top - 4);
+      drag.indicator.style.top = y + 'px';
+      drag.indicator.style.display = 'block';
+    }
+    function onPointerUp(e) { if (drag && e.pointerId === drag.pid) endDrag(false); }
+    function onPointerCancel(e) { if (drag && e.pointerId === drag.pid) endDrag(true); }
+    function endDrag(cancelled) {
+      var d = drag;
+      drag = null;
+      window.removeEventListener('pointermove', onPointerMove);
+      window.removeEventListener('pointerup', onPointerUp);
+      window.removeEventListener('pointercancel', onPointerCancel);
+      if (!d || !d.started) return;                    /* below threshold: plain click proceeds */
+      document.body.classList.remove('pm-ab-dragging');
+      moreBtn.classList.remove('pm-ab-drop-hot');
+      if (d.ghost && d.ghost.parentNode) d.ghost.parentNode.removeChild(d.ghost);
+      if (d.indicator && d.indicator.parentNode) d.indicator.parentNode.removeChild(d.indicator);
+      d.node.classList.remove('pm-ab-drag-src');
+      if (!cancelled) applyDrop(d);
+      suppressNextClick();
+    }
+    function applyDrop(d) {
+      if (!d.fromTray && d.overMore) {                 /* drop-to-hide */
+        if (d.node.parentNode) d.node.parentNode.removeChild(d.node);
+        hidden.push({ id: d.id, node: d.node });
+        syncMore();
+        persist();
+        return;
+      }
+      if (d.insertAt == null || d.insertAt < 0) return;
+      var vis = visibleIcons();
+      var ref = d.insertAt < vis.length ? vis[d.insertAt] : moreBtn;
+      if (ref === d.node) return;
+      if (d.fromTray) {
+        for (var i = 0; i < hidden.length; i++) {
+          if (hidden[i].id === d.id) { hidden.splice(i, 1); break; }
+        }
+        syncMore();
+      }
+      bar.insertBefore(d.node, ref);                   /* positioned restore / reorder */
+      persist();
+    }
+
+    bar.addEventListener('pointerdown', function (e) {
+      var icon = e.target && e.target.closest ? e.target.closest('#activityBar > .icon[data-ab-id]') : null;
+      if (!icon || icon === moreBtn) return;
+      armGesture(e, icon, icon.getAttribute('data-ab-id'), false, icon);
+    });
+
+    /* ---- More tray popover (cloned from the terminal overflow-menu
+       pattern: body-appended, outside-click close) ---- */
+    function restoreHidden(id, beforeNode) {
+      for (var i = 0; i < hidden.length; i++) {
+        if (hidden[i].id !== id) continue;
+        var h = hidden.splice(i, 1)[0];
+        bar.insertBefore(h.node, beforeNode || moreBtn);   /* default: end of the visible list */
+        syncMore();
+        persist();
+        return h;
+      }
+      return null;
+    }
+    function buildTrayRow(h) {
+      var row = document.createElement('button');
+      row.type = 'button';
+      row.className = 'pm-ab-tray-row';
+      row.setAttribute('data-ab-id', h.id);
+      var ico = document.createElement('span');
+      ico.className = 'pm-ab-tray-ico';
+      var svg = h.node.querySelector('svg');
+      if (svg) ico.appendChild(svg.cloneNode(true));   /* display clone only; the real node stays in the map */
+      row.appendChild(ico);
+      var label = document.createElement('span');
+      label.textContent = h.node.getAttribute('title') || h.id;
+      row.appendChild(label);
+      row.addEventListener('click', function (ev) {    /* click = restore to end of visible */
+        ev.stopPropagation();
+        restoreHidden(h.id, null);
+        refreshTray();
+      });
+      row.addEventListener('pointerdown', function (ev) {   /* drag back onto the bar = positioned restore */
+        armGesture(ev, h.node, h.id, true, row);
+      });
+      return row;
+    }
+    function refreshTray() {
+      var tray = document.querySelector('.pm-ab-tray');
+      if (!tray) return;
+      if (!hidden.length) { killTray(); return; }
+      while (tray.firstChild) tray.removeChild(tray.firstChild);
+      hidden.forEach(function (h) { tray.appendChild(buildTrayRow(h)); });
+    }
+    document.addEventListener('click', function (e) {
+      var btn = e.target && e.target.closest ? e.target.closest('#abMoreBtn') : null;
+      if (!btn) return;
+      e.stopPropagation();       /* keep the legacy .icon body handler from claiming More */
+      e.preventDefault();
+      var existing = document.querySelector('.pm-ab-tray');
+      if (existing) { killTray(); return; }
+      if (!hidden.length) return;
+      var m = document.createElement('div');
+      m.className = 'pm-ab-tray';
+      hidden.forEach(function (h) { m.appendChild(buildTrayRow(h)); });
+      document.body.appendChild(m);
+      var r = moreBtn.getBoundingClientRect();
+      m.style.left = (r.right + 8) + 'px';
+      m.style.top = Math.min(r.top, Math.max(8, window.innerHeight - m.offsetHeight - 8)) + 'px';
+      setTimeout(function () {
+        function close(ev) {
+          if (m.contains(ev.target)) return;
+          if (m.parentNode) m.parentNode.removeChild(m);
+          document.removeEventListener('click', close);
+        }
+        document.addEventListener('click', close);
+      }, 0);
+    }, true);
+  }
+
   /* ================= theme persistence + parallax ================= */
   function wireTheme() {
     var sel = byId('themeSelect');
@@ -588,6 +851,7 @@
       if (D && D.state && D.state.docker && D.state.docker.publishChain) renderChain(D.state.docker.publishChain);
     } catch (e) {}
     try { wireActivityBar(); } catch (e) {}
+    try { initActivityBarCustomization(); } catch (e) {}
     try { wireTheme(); } catch (e) {}
     try { wireParallax(); } catch (e) {}
     try { wireWorktreeRows(); } catch (e) {}

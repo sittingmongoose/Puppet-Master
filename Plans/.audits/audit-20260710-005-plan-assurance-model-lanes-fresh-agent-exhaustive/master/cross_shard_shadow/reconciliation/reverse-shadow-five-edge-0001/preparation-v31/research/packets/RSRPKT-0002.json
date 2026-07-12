@@ -1,0 +1,65 @@
+{
+  "schema_version": "reverse-shadow-targeted-research-packet-v31-v1",
+  "audit_id": "audit-20260710-005-plan-assurance-model-lanes-fresh-agent-exhaustive",
+  "reconciliation_id": "reverse-shadow-five-edge-0001",
+  "packet_id": "RSRPKT-0002",
+  "assignment_id": "A005RSR-0002",
+  "attempt_id": "attempt-0001",
+  "status": "PREPARED_BLOCKED_ZERO_LAUNCH",
+  "activation_granted": false,
+  "future_activation_policy": {"path":"master/coordination/CONCURRENCY_POLICY_V32.json","sha256":"4826ade4c38db47ee184b34e5d7b7bd5ba6cabeecc9baa686cb9d99eeff8a3ed","authorized_here":false},
+  "runtime": {
+    "model": "gpt-5.6-sol",
+    "reasoning_effort": "ultra",
+    "fork_turns": "none",
+    "fresh_identity_path": "/root/sol_controller_v29/a005_reverse_shadow_targeted_research_08044_ultra_v31",
+    "fresh_identity_state": "reserved_unallocated",
+    "descendants_forbidden": true,
+    "followups_forbidden": true,
+    "retries_forbidden": true
+  },
+  "input_binding": {
+    "protected_inputs_sha256": "40b69c6e9eb0a2f24ae1665fd776b2bf1937963b606e54df7149b4eef21773b6",
+    "edge_registry_sha256": "9847f005f57cb2ad58c67ba82c98c22b0f3b6ea41bc5cb75f2b6930b722916e8",
+    "feature_registry_sha256": "34684c71451434b94ae3e7df6e87b1e2c565825cd206a4e1e6d25ddf25de29fa",
+    "result_schema_sha256": "1712c96d77e9121bb69fd182c99a1cab0b53a3e7e71e3c91940fcb3f024f2704",
+    "leaf_prompt_sha256": "a00d2b44b53b85fc77f2df1a487e65de379d037540954ab579b364fa3a678ca9",
+    "five_edge_digest_sha256": "4073116b8855d02324e0d471130e36284779d6fa500853372fc3bbe055813796"
+  },
+  "target_edge": {
+    "edge_id": "RSQ-0005",
+    "normalized_edge_id": "A005CDS-EDGE-08044",
+    "normalized_edge_key": "OPF::A005OM-0016::PF-0199\u0000OPF::A005OM-0017::PF-0117",
+    "endpoint_refs": ["OPF::A005OM-0016::PF-0199", "OPF::A005OM-0017::PF-0117"],
+    "endpoint_titles": ["Exact preservation conflicts with safe data handling", "Exact-token preservation lacks trust and privacy controls"],
+    "missing_axes": ["user_outcome"]
+  },
+  "frozen_product_facts": [
+    {"ref":"OPF::A005OM-0016::PF-0199","fact":"Exact preservation lacks an exception, redaction, and provenance contract for secrets, personal data, or adversarial content.","source_units":["PLANUNIT:PLS-005","SEMANTIC:PLANUNIT:PLS-005"]},
+    {"ref":"OPF::A005OM-0017::PF-0117","fact":"Lossless preservation lacks a safety and data-lifecycle policy for untrusted or sensitive tokens.","source_units":["SEMANTIC:DOCUMENT:Plans/bootstrap/Codex_Prompts.md"]}
+  ],
+  "prior_candidate_evidence": {
+    "forward":{"assignment_id":"A005CS-0027","decision_ref":"CSDEC::A005CS-0027::0065","result_sha256":"ef4ddaa44c75c72e1d1de08b0820a7eb85dba39540150ea43d586023ca23e0ab","disposition":"merge_candidate"},
+    "reverse_shadow":{"assignment_id":"A005CSS-0030","decision_ref":"SHADOWDEC::A005CSS-0030::0052","result_sha256":"b93c416912097dffdc00ef40861c7d0a19c5b7903f7523271fe409a1b16f96b0","disposition":"uncertain","quarantine_reason":"Identical executable user outcome was not established."},
+    "seam":{"assignment_id":"A005CDSV2-0042","normalized_edge_id":"A005CDS-EDGE-08044","packet_sha256":"48bea45bf3af5d9a178f789725a91cb73c6a3745df2dc9273a11788a29e8d4fd","result_sha256":"9334eca92fd4d9ac58712a33fa6f3066152167758a25538cc872c71a8fdaada5","decision":"uncertain_requires_targeted_research","research_state":"insufficient_unresolved"}
+  },
+  "research_questions": [
+    {"question_id":"RSRQ-08044-OUTCOME","question":"What user-visible completion outcome do authoritative standards and mature implementations specify when lossless capture conflicts with secrets, personal data, or adversarial content?","axis_ids":["user_outcome"]},
+    {"question_id":"RSRQ-08044-CONTROL-BOUNDARY","question":"Are exact preservation and its safe-handling exception implemented as one lifecycle and state machine or as separately owned controls with distinct consumers and failure outcomes?","axis_ids":["authority_owner","lifecycle_transition","state_boundary","user_outcome","failure_semantics"]},
+    {"question_id":"RSRQ-08044-AUTHORITY-LIMIT","question":"Can external evidence establish one PuppetMaster product-feature identity here, or does it only define redaction, provenance, quarantine, fidelity-loss, and recovery criteria for internal adjudication?","axis_ids":["authority_owner","user_outcome","failure_semantics"]}
+  ],
+  "evidence_contract": {
+    "fresh_public_web_research_required": true,
+    "direct_https_registry_required": true,
+    "every_source_consumed_by_claim": true,
+    "every_claim_consumed_by_question_and_axis": true,
+    "decisive_axis_minimum_independent_publishers": 2,
+    "decisive_axis_primary_or_official_source_required": true,
+    "inference_must_be_labeled": true,
+    "no_authoritative_evidence_must_have_zero_claims": true,
+    "external_evidence_is_supplemental": true,
+    "canonical_product_authority_not_overridden": true,
+    "final_edge_disposition_forbidden": true
+  },
+  "zero_state": {"launches":0,"results":0,"receipts":0,"native_capture_rows":0,"promotion_actions":0,"spec_edits":0,"merge_actions":0,"credit":0}
+}

@@ -1,0 +1,103 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://puppetmaster.local/audit005/scenario/cohort-0002/semantic-repair-attempt-0002-v30.schema.json",
+  "title": "Audit005 scenario cohort-0002 semantic repair attempt-0002 V30 overlay",
+  "type": "object",
+  "additionalProperties": false,
+  "required": ["audit_id", "schema_version", "phase", "cohort_id", "assignment_id", "attempt_id", "task_thread_id", "model", "reasoning_effort", "status", "input_binding", "coverage", "feature_certifications", "self_attestation"],
+  "properties": {
+    "audit_id": {"const": "audit-20260710-005-plan-assurance-model-lanes-fresh-agent-exhaustive"},
+    "schema_version": {"const": "scenario-adversarial-semantic-repair-result-v30-v1"},
+    "phase": {"const": "scenario_adversarial_certification"},
+    "cohort_id": {"const": "cohort-0002"},
+    "assignment_id": {"enum": ["A005SA-0009", "A005SA-0010", "A005SA-0012", "A005SA-0013", "A005SA-0014", "A005SA-0016"]},
+    "attempt_id": {"const": "attempt-0002"},
+    "task_thread_id": {"type": "string", "pattern": "^/root/sol_controller_v29/a005_scenario_adversarial_(0009|0010|0012|0013|0014|0016)_semantic_repair_attempt_0002_ultra_v30$"},
+    "model": {"const": "gpt-5.6-sol"},
+    "reasoning_effort": {"const": "ultra"},
+    "status": {"const": "completed"},
+    "input_binding": {"type": "object"},
+    "coverage": {"type": "object"},
+    "feature_certifications": {
+      "type": "array",
+      "minItems": 1,
+      "items": {
+        "type": "object",
+        "required": ["provisional_feature_ref", "source_row_sha256", "research_result_file_sha256", "research_record_sha256", "certification_disposition", "disposition_rationale", "research_applicability", "dimensions", "overall_spec_deltas", "newly_discovered_candidates"],
+        "properties": {
+          "provisional_feature_ref": {"type": "string", "minLength": 1},
+          "source_row_sha256": {"type": "string", "pattern": "^[0-9a-f]{64}$"},
+          "research_result_file_sha256": {"type": "string", "pattern": "^[0-9a-f]{64}$"},
+          "research_record_sha256": {"type": "string", "pattern": "^[0-9a-f]{64}$"},
+          "certification_disposition": {"enum": ["certified", "gap_confirmed", "contradiction", "blocked_insufficient_evidence", "not_applicable_dimension"]},
+          "disposition_rationale": {"type": "string", "minLength": 24},
+          "research_applicability": {
+            "type": "object",
+            "additionalProperties": false,
+            "required": ["state", "rationale", "browsing_performed", "claims_used"],
+            "properties": {
+              "state": {"enum": ["applicable", "weak", "misapplied", "insufficient", "not_applicable"]},
+              "rationale": {"type": "string", "minLength": 1},
+              "browsing_performed": {"type": "boolean"},
+              "claims_used": {
+                "type": "array",
+                "items": {
+                  "type": "object",
+                  "additionalProperties": false,
+                  "required": ["claim_id", "claim", "source_urls", "evidence_label"],
+                  "properties": {
+                    "claim_id": {"type": "string", "minLength": 1},
+                    "claim": {"type": "string", "minLength": 1},
+                    "source_urls": {"type": "array", "minItems": 1, "uniqueItems": true, "items": {"type": "string", "pattern": "^https://[^\\s]+$"}},
+                    "evidence_label": {"type": "string", "minLength": 1}
+                  }
+                }
+              }
+            }
+          },
+          "dimensions": {"type": "object"},
+          "overall_spec_deltas": {"type": "array", "uniqueItems": true, "items": {"type": "string", "minLength": 12}},
+          "newly_discovered_candidates": {"type": "array"}
+        },
+        "allOf": [
+          {
+            "if": {"required": ["certification_disposition"], "properties": {"certification_disposition": {"const": "certified"}}},
+            "then": {"properties": {"research_applicability": {"required": ["state", "browsing_performed", "claims_used"], "properties": {"state": {"const": "applicable"}, "browsing_performed": {"const": true}, "claims_used": {"minItems": 1}}}}}
+          },
+          {
+            "if": {"required": ["research_applicability"], "properties": {"research_applicability": {"required": ["state"], "properties": {"state": {"enum": ["weak", "misapplied", "insufficient"]}}}}},
+            "then": {"properties": {"certification_disposition": {"const": "blocked_insufficient_evidence"}, "overall_spec_deltas": {"minItems": 1}}}
+          },
+          {
+            "if": {"required": ["research_applicability"], "properties": {"research_applicability": {"required": ["claims_used"], "properties": {"claims_used": {"maxItems": 0}}}}},
+            "then": {"properties": {"certification_disposition": {"const": "blocked_insufficient_evidence"}, "overall_spec_deltas": {"minItems": 1}}}
+          },
+          {
+            "if": {"required": ["certification_disposition"], "properties": {"certification_disposition": {"const": "blocked_insufficient_evidence"}}},
+            "then": {"properties": {"overall_spec_deltas": {"minItems": 1}}}
+          }
+        ]
+      }
+    },
+    "self_attestation": {"type": "object"}
+  },
+  "x-base-validation": {
+    "schema_path": "../../../../schemas/scenario_adversarial_result.schema.json",
+    "schema_sha256": "190a5e612bdbe7b2de4f3659fdbe7b9f2621ee2f194a25051f2bf39df4ac3db8",
+    "semantic_validator_path": "../../../../postrun-validator-v1/validate_scenario_postrun_v1.py",
+    "semantic_validator_sha256": "6852290f7d9cf1df502a4618d72880e38f1a2e9b3d94f3a763ff9ac5d785bfc7",
+    "projection_only": {"schema_version": "scenario-adversarial-result-v1", "attempt_id": "attempt-0001", "reasoning_effort": "xhigh"},
+    "schema_checks_removed": 0,
+    "semantic_checks_removed": 0
+  },
+  "x-evidence-strength-threshold": {
+    "required_for_certified": true,
+    "research_state": "applicable",
+    "browsing_performed": true,
+    "minimum_claims": 1,
+    "minimum_unique_direct_https_sources": 2,
+    "all_claims_require_evidence_labels": true,
+    "fail_closed_disposition": "blocked_insufficient_evidence",
+    "concrete_overall_and_dimension_deltas_required_when_threshold_not_met": true
+  }
+}

@@ -1,0 +1,181 @@
+{
+  "assignment_id": "A005M-000250-INTEGRATED-MACRO-47CF98A6FFA5-0001",
+  "attempt_id": "attempt-0014",
+  "audit_id": "audit-20260710-005-plan-assurance-model-lanes-fresh-agent-exhaustive",
+  "blindness": {
+    "external_research": "deferred_to_feature_research_phase",
+    "peer_results": "forbidden",
+    "prior_audits": "forbidden",
+    "unrelated_sources": "forbidden"
+  },
+  "bundle_core_range": [
+    1,
+    947
+  ],
+  "bundle_id": "MACRO-47CF98A6FFA5-0001",
+  "context_ranges": [],
+  "document_path": "Plans/web_operation_contracts.schema.json",
+  "micro_window_ids": [
+    "WIN-47CF98A6FFA5-0001",
+    "WIN-47CF98A6FFA5-0002",
+    "WIN-47CF98A6FFA5-0003",
+    "WIN-47CF98A6FFA5-0004"
+  ],
+  "phase": "blind_macro_window_review",
+  "required_dimensions": [
+    "behavior",
+    "capabilities",
+    "inputs_outputs",
+    "contracts",
+    "states_transitions",
+    "authority",
+    "ownership",
+    "consumers",
+    "gui_truth",
+    "failures_recovery",
+    "security_privacy",
+    "propagation",
+    "operations",
+    "scale_performance",
+    "compatibility_migration",
+    "acceptance_oracles",
+    "builder_discretion",
+    "ambiguity_unknowns",
+    "missing_callers_consumers",
+    "invalid_states_transitions",
+    "concurrency_races",
+    "partial_failure",
+    "recovery_rollback",
+    "authority_boundaries",
+    "privacy_data_lifecycle",
+    "untrusted_inputs",
+    "gui_misleading_states",
+    "offline_network_loss",
+    "scale_limits",
+    "accessibility",
+    "localization",
+    "observability_support",
+    "destructive_actions",
+    "cross_document_seams",
+    "test_falsifiability",
+    "unknown_unknowns"
+  ],
+  "result_schema_ref": "schemas/macro_review_result.schema.json",
+  "review_instructions": "Read every assigned core line and account for every required_source_unit_ref. Apply both exact-behavior and adversarial-negative-space lenses across every required dimension. Extract concise feature, behavior, contract, state, authority, consumer, GUI, failure/recovery, oracle, gap, unknown, and explicit-non-gap items with exact source evidence. Do not merely paraphrase headings or copy unit refs. Each segment must name its complete required_source_unit_refs list and at least one item. Write exactly one regular JSON payload inside the assigned output directory; result.json is recommended but the filename is not semantic. Do not write a terminal seal. Return PMR1 only after the JSON payload is fully written.",
+  "schema_version": "macro-context-capsule-v1",
+  "segments": [
+    {
+      "core_range": [
+        1,
+        12
+      ],
+      "core_sha256": "02911a413f8b035ef3bd5a4733f99d2972d9d56912904cb5cd57d554a6a73076",
+      "plan_unit_ids": [],
+      "required_source_unit_refs": [
+        "SEMANTIC:JSON_PREFIX:Plans/web_operation_contracts.schema.json",
+        "SEMANTIC:JSON_FIELD:Plans/web_operation_contracts.schema.json:$schema",
+        "SEMANTIC:JSON_FIELD:Plans/web_operation_contracts.schema.json:$id",
+        "SEMANTIC:JSON_FIELD:Plans/web_operation_contracts.schema.json:title",
+        "SEMANTIC:JSON_FIELD:Plans/web_operation_contracts.schema.json:type",
+        "SEMANTIC:JSON_FIELD:Plans/web_operation_contracts.schema.json:additionalProperties",
+        "SEMANTIC:JSON_FIELD:Plans/web_operation_contracts.schema.json:properties",
+        "STRUCTURAL:$",
+        "STRUCTURAL:$.$id",
+        "STRUCTURAL:$.$schema",
+        "STRUCTURAL:$.additionalProperties",
+        "STRUCTURAL:$.properties",
+        "STRUCTURAL:$.title",
+        "STRUCTURAL:$.type"
+      ],
+      "semantic_block_ids": [
+        "JSON_PREFIX:Plans/web_operation_contracts.schema.json",
+        "JSON_FIELD:Plans/web_operation_contracts.schema.json:$schema",
+        "JSON_FIELD:Plans/web_operation_contracts.schema.json:$id",
+        "JSON_FIELD:Plans/web_operation_contracts.schema.json:title",
+        "JSON_FIELD:Plans/web_operation_contracts.schema.json:type",
+        "JSON_FIELD:Plans/web_operation_contracts.schema.json:additionalProperties",
+        "JSON_FIELD:Plans/web_operation_contracts.schema.json:properties"
+      ],
+      "structural_paths": [
+        "$",
+        "$.$id",
+        "$.$schema",
+        "$.additionalProperties",
+        "$.properties",
+        "$.title",
+        "$.type"
+      ],
+      "token_estimate": 119,
+      "window_id": "WIN-47CF98A6FFA5-0001"
+    },
+    {
+      "core_range": [
+        13,
+        406
+      ],
+      "core_sha256": "92924ff3f8dca003b16cc6eb209619b7460ea75e30b2dc6020533035c92c56b9",
+      "plan_unit_ids": [],
+      "required_source_unit_refs": [
+        "SEMANTIC:JSON_FIELD:Plans/web_operation_contracts.schema.json:$defs:CONT-001",
+        "STRUCTURAL:$.$defs"
+      ],
+      "semantic_block_ids": [
+        "JSON_FIELD:Plans/web_operation_contracts.schema.json:$defs:CONT-001"
+      ],
+      "structural_paths": [
+        "$.$defs"
+      ],
+      "token_estimate": 5868,
+      "window_id": "WIN-47CF98A6FFA5-0002"
+    },
+    {
+      "core_range": [
+        407,
+        799
+      ],
+      "core_sha256": "7d2ad02864284bc199df18f0d5b45b7dd9241e57c71dea54e0180f622875f5cc",
+      "plan_unit_ids": [],
+      "required_source_unit_refs": [
+        "SEMANTIC:JSON_FIELD:Plans/web_operation_contracts.schema.json:$defs:CONT-002",
+        "STRUCTURAL:$.$defs"
+      ],
+      "semantic_block_ids": [
+        "JSON_FIELD:Plans/web_operation_contracts.schema.json:$defs:CONT-002"
+      ],
+      "structural_paths": [
+        "$.$defs"
+      ],
+      "token_estimate": 6430,
+      "window_id": "WIN-47CF98A6FFA5-0003"
+    },
+    {
+      "core_range": [
+        800,
+        947
+      ],
+      "core_sha256": "c87ed361f9da41db244e4f9d90fa5a23183db7f29b08991b98400babfa3221b5",
+      "plan_unit_ids": [],
+      "required_source_unit_refs": [
+        "SEMANTIC:JSON_FIELD:Plans/web_operation_contracts.schema.json:$defs:CONT-003",
+        "SEMANTIC:JSON_SUFFIX:Plans/web_operation_contracts.schema.json",
+        "STRUCTURAL:$",
+        "STRUCTURAL:$.$defs"
+      ],
+      "semantic_block_ids": [
+        "JSON_FIELD:Plans/web_operation_contracts.schema.json:$defs:CONT-003",
+        "JSON_SUFFIX:Plans/web_operation_contracts.schema.json"
+      ],
+      "structural_paths": [
+        "$",
+        "$.$defs"
+      ],
+      "token_estimate": 2361,
+      "window_id": "WIN-47CF98A6FFA5-0004"
+    }
+  ],
+  "source_excerpt_line_format": "L######## followed by a tab and exact canonical source text",
+  "source_excerpt_ref": "capsules/source/47/472d71fc73f1fe81c56e8bbcf1152a5dff7ce8781839c7dbfc278dce0525dde5.txt",
+  "source_excerpt_sha256": "472d71fc73f1fe81c56e8bbcf1152a5dff7ce8781839c7dbfc278dce0525dde5",
+  "source_sha256": "2bfb45758f60fc2ca373c935f88648f1b08901f1744a11e3792d6308af81773e",
+  "token_estimate": 14778
+}

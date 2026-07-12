@@ -1,0 +1,442 @@
+{
+  "assignment_id": "A005M15-000173-INTEGRATED-MACRO15-1BF0967E88A5-0004",
+  "attempt_id": "attempt-0015",
+  "audit_id": "audit-20260710-005-plan-assurance-model-lanes-fresh-agent-exhaustive",
+  "coverage": {
+    "all_micro_windows_reviewed": true,
+    "all_source_lines_reviewed": true,
+    "all_source_units_accounted": true,
+    "both_exact_and_adversarial_lenses_applied": true,
+    "dimensions_checked": [
+      "behavior",
+      "capabilities",
+      "inputs_outputs",
+      "contracts",
+      "states_transitions",
+      "authority",
+      "ownership",
+      "consumers",
+      "gui_truth",
+      "failures_recovery",
+      "security_privacy",
+      "propagation",
+      "operations",
+      "scale_performance",
+      "compatibility_migration",
+      "acceptance_oracles",
+      "builder_discretion",
+      "ambiguity_unknowns",
+      "missing_callers_consumers",
+      "invalid_states_transitions",
+      "concurrency_races",
+      "partial_failure",
+      "recovery_rollback",
+      "authority_boundaries",
+      "privacy_data_lifecycle",
+      "untrusted_inputs",
+      "gui_misleading_states",
+      "offline_network_loss",
+      "scale_limits",
+      "accessibility",
+      "localization",
+      "observability_support",
+      "destructive_actions",
+      "cross_document_seams",
+      "test_falsifiability",
+      "unknown_unknowns"
+    ]
+  },
+  "items": [
+    {
+      "builder_discretion": false,
+      "confidence": 0.98,
+      "dimensions": ["behavior", "capabilities", "inputs_outputs", "contracts", "states_transitions", "authority", "ownership", "gui_truth", "compatibility_migration", "acceptance_oracles"],
+      "evidence": [
+        {"exact_quote": "  The Cursor invocation builder example preserves DRY platform_specs usage for binary names and invocation format, subagent/task replacement tokens, optional model handling, current_dir workspace assignment, and the ignored cursor_subagent_invocation test.", "line_end": 10203, "line_start": 10203, "path": "Plans/orchestrator-subagent-integration.md", "source_sha256": "2bde7668eabbbcef6d6f10401afba7c7b841e220af3ef0db6fef035d11e6844a"},
+        {"exact_quote": "  Plan mode CLI verification confirms CLI-bridged Cursor CLI and Claude Code CLI accept and honor plan mode flags, while Direct providers are verified through PM runtime-policy and provider-integration tests, with RUN_PLAN_MODE_CLI_TESTS gating and ignored integration tests.", "line_end": 10260, "line_start": 10260, "path": "Plans/orchestrator-subagent-integration.md", "source_sha256": "2bde7668eabbbcef6d6f10401afba7c7b841e220af3ef0db6fef035d11e6844a"},
+        {"exact_quote": "  Plan mode CLI tests preserve exact per-platform command examples, success and non-empty/parseable-output assertions, command-line plan-mode flag checks, optional evidence capture, and relationship to smoke and subagent-invocation tests.", "line_end": 10313, "line_start": 10313, "path": "Plans/orchestrator-subagent-integration.md", "source_sha256": "2bde7668eabbbcef6d6f10401afba7c7b841e220af3ef0db6fef035d11e6844a"},
+        {"exact_quote": "  The Cursor plan mode example preserves binary lookup, ignored test gating, plan-mode args matching CursorRunner when request.plan_mode is true, PLAN_OK output checks, and optional no-file-writes assertion.", "line_end": 10365, "line_start": 10365, "path": "Plans/orchestrator-subagent-integration.md", "source_sha256": "2bde7668eabbbcef6d6f10401afba7c7b841e220af3ef0db6fef035d11e6844a"},
+        {"exact_quote": "  In ask and plan modes, delegated child runs may launch only for read-only research or analysis, required planning dependencies may still be read-only child runs, parent mode is a hard ceiling, and Plan remains read-only until execution with first-class clarifying questions and visible plan/TODO artifacts.", "line_end": 10418, "line_start": 10418, "path": "Plans/orchestrator-subagent-integration.md", "source_sha256": "2bde7668eabbbcef6d6f10401afba7c7b841e220af3ef0db6fef035d11e6844a"},
+        {"exact_quote": "  All previously optional or later plan-mode and subagent GUI/backend items are in scope now and must specify frontend and backend behavior so they work end-to-end; the implementation-checklist boundary is coverage material attached to this scope.", "line_end": 10530, "line_start": 10530, "path": "Plans/orchestrator-subagent-integration.md", "source_sha256": "2bde7668eabbbcef6d6f10401afba7c7b841e220af3ef0db6fef035d11e6844a"}
+      ],
+      "gap_kind": "none",
+      "impact": "Defines migration-safe invocation examples, plan-mode verification, a read-only parent authority ceiling, and immediate end-to-end GUI/backend scope without creating executable build tasks.",
+      "item_id": "M15-I01",
+      "item_type": "contract",
+      "severity": "info",
+      "source_unit_refs": ["PLANUNIT:OSI-069", "PLANUNIT:OSI-070", "PLANUNIT:OSI-071", "PLANUNIT:OSI-072", "PLANUNIT:OSI-073", "PLANUNIT:OSI-075", "SEMANTIC:PLANUNIT:OSI-069", "SEMANTIC:PLANUNIT:OSI-070", "SEMANTIC:PLANUNIT:OSI-071", "SEMANTIC:PLANUNIT:OSI-072", "SEMANTIC:PLANUNIT:OSI-073", "SEMANTIC:PLANUNIT:OSI-075"],
+      "statement": "The window establishes DRY Cursor invocation and plan-mode CLI test contracts, makes ask/plan delegated children read-only under the parent ceiling, and brings the GUI/backend plan-mode surface into current scope.",
+      "title": "Plan-mode invocation and authority contracts"
+    },
+    {
+      "builder_discretion": true,
+      "confidence": 0.93,
+      "dimensions": ["contracts", "states_transitions", "failures_recovery", "partial_failure", "ambiguity_unknowns", "test_falsifiability"],
+      "evidence": [
+        {"exact_quote": "  Planning children should be classified as required or optional so planning completion and summarization behave deterministically.", "line_end": 10478, "line_start": 10478, "path": "Plans/orchestrator-subagent-integration.md", "source_sha256": "2bde7668eabbbcef6d6f10401afba7c7b841e220af3ef0db6fef035d11e6844a"}
+      ],
+      "gap_kind": "required_optional_outcome_semantics",
+      "impact": "Different builders can disagree about whether optional failure, timeout, cancellation, or missing output permits planning completion and how each outcome affects summarization.",
+      "item_id": "M15-I02",
+      "item_type": "gap",
+      "severity": "medium",
+      "source_unit_refs": ["PLANUNIT:OSI-074", "SEMANTIC:PLANUNIT:OSI-074"],
+      "statement": "Required/optional classification is mandated, but the completion and summarization truth table for each child terminal outcome is not specified.",
+      "title": "Planning child terminal-outcome truth table missing"
+    },
+    {
+      "builder_discretion": false,
+      "confidence": 0.98,
+      "dimensions": ["behavior", "inputs_outputs", "contracts", "states_transitions", "authority", "ownership", "propagation", "operations", "compatibility_migration", "gui_truth"],
+      "evidence": [
+        {"exact_quote": "  Plan mode defaults remain migration-safe false across tier defaults and YAML unless explicitly overridden, while GuiConfig owns use_plan_mode_all_tiers, optional last_per_tier_plan_mode as HashMap<String, bool>, write-through tier syncing, redb persistence at config:gui.use_plan_mode_all_tiers, and no settings.json storage for this setting.", "line_end": 10582, "line_start": 10582, "path": "Plans/orchestrator-subagent-integration.md", "source_sha256": "2bde7668eabbbcef6d6f10401afba7c7b841e220af3ef0db6fef035d11e6844a"},
+        {"exact_quote": "  Config and Wizard surfaces provide plan-mode controls using existing widgets: a global Use plan mode for all tiers toggle, an Enable plan mode for all tiers button, tier plan_mode toggle disabling when global mode is on, Wizard tier config as run source of truth, and persistence/merge behavior that keeps saved config consistent.", "line_end": 10642, "line_start": 10642, "path": "Plans/orchestrator-subagent-integration.md", "source_sha256": "2bde7668eabbbcef6d6f10401afba7c7b841e220af3ef0db6fef035d11e6844a"},
+        {"exact_quote": "  Subagent invocation paths that build ExecutionRequest must propagate request.plan_mode from tier_config.plan_mode through TierConfig or IterationContext when enable_tier_subagents is active and subagent execution is not skipped.", "line_end": 10701, "line_start": 10701, "path": "Plans/orchestrator-subagent-integration.md", "source_sha256": "2bde7668eabbbcef6d6f10401afba7c7b841e220af3ef0db6fef035d11e6844a"},
+        {"exact_quote": "  Orchestrator launches PM child runs rather than provider-native ad hoc agent processes; each delegated launch creates a canonical child-run record, marks required or optional, resolves requested/effective Persona/runtime/model/effort, narrows capabilities, preserves lifecycle action distinctions, and keeps parent orchestration as projected rollups over canonical child records/events.", "line_end": 10759, "line_start": 10759, "path": "Plans/orchestrator-subagent-integration.md", "source_sha256": "2bde7668eabbbcef6d6f10401afba7c7b841e220af3ef0db6fef035d11e6844a"},
+        {"exact_quote": "  Delegated orchestration enters the same task tool child-run contract used elsewhere, uses aggressive specialist-fit/task-fit delegation defaults when checks pass, consumes task/question/todowrite/todoread contracts, preserves parent ceilings for permissions, scopes, runtime/account restrictions, and budget, and treats Gaps and Clarifications as boundary coverage for these resolved delegated defaults.", "line_end": 10818, "line_start": 10818, "path": "Plans/orchestrator-subagent-integration.md", "source_sha256": "2bde7668eabbbcef6d6f10401afba7c7b841e220af3ef0db6fef035d11e6844a"}
+      ],
+      "gap_kind": "none",
+      "impact": "Defines migration-safe plan-mode persistence and GUI controls, request propagation, canonical PM child records, projected parent rollups, and parent-ceiling enforcement.",
+      "item_id": "M15-I03",
+      "item_type": "feature",
+      "severity": "info",
+      "source_unit_refs": ["PLANUNIT:OSI-076", "PLANUNIT:OSI-077", "PLANUNIT:OSI-078", "PLANUNIT:OSI-079", "PLANUNIT:OSI-080", "SEMANTIC:PLANUNIT:OSI-076", "SEMANTIC:PLANUNIT:OSI-077", "SEMANTIC:PLANUNIT:OSI-078", "SEMANTIC:PLANUNIT:OSI-079", "SEMANTIC:PLANUNIT:OSI-080"],
+      "statement": "Plan mode is false by default, controlled and persisted by GuiConfig, propagated into ExecutionRequest, and executed through canonical PM child runs with narrowed capabilities and parent-owned ceilings.",
+      "title": "Plan-mode config propagation and canonical child runs"
+    },
+    {
+      "builder_discretion": true,
+      "confidence": 0.94,
+      "dimensions": ["contracts", "states_transitions", "authority", "failures_recovery", "gui_truth", "compatibility_migration", "ambiguity_unknowns"],
+      "evidence": [
+        {"exact_quote": "  GuiConfig owns subagent configuration through a top-level subagent SubagentGuiConfig serialized as subagentConfig or equivalent, including enable_tier_subagents, tier_overrides, disabled_subagents, and required_subagents; v1 overrides are per tier type, required wins over disabled, and missing or empty override lists use auto-selection.", "line_end": 10879, "line_start": 10879, "path": "Plans/orchestrator-subagent-integration.md", "source_sha256": "2bde7668eabbbcef6d6f10401afba7c7b841e220af3ef0db6fef035d11e6844a"}
+      ],
+      "gap_kind": "override_conflict_and_migration_semantics",
+      "impact": "Equivalent serialization names and conflicting required/disabled entries can be handled inconsistently, especially during migration or partial saves, without a canonical diagnostic and normalization rule.",
+      "item_id": "M15-I04",
+      "item_type": "gap",
+      "severity": "medium",
+      "source_unit_refs": ["PLANUNIT:OSI-081", "SEMANTIC:PLANUNIT:OSI-081"],
+      "statement": "The precedence result is stated, but canonical serialization naming, conflict diagnostics, normalization, and migration behavior for required-versus-disabled entries remain unspecified.",
+      "title": "Subagent override normalization is underspecified"
+    },
+    {
+      "builder_discretion": false,
+      "confidence": 0.98,
+      "dimensions": ["behavior", "capabilities", "inputs_outputs", "contracts", "authority", "ownership", "consumers", "gui_truth", "failures_recovery", "compatibility_migration"],
+      "evidence": [
+        {"exact_quote": "  The Config page exposes a Subagents section with enable toggle, tier override editors, disabled and required lists, registry-backed autocomplete or multi-select validation, clear inline errors for unknown names, save/apply rejection for invalid entries, backend fail-fast validation, and shared names from subagent_registry and persona_registry.", "line_end": 10944, "line_start": 10944, "path": "Plans/orchestrator-subagent-integration.md", "source_sha256": "2bde7668eabbbcef6d6f10401afba7c7b841e220af3ef0db6fef035d11e6844a"},
+        {"exact_quote": "  Persona storage layout, schema, validation, GUI management, and context-injection rules are owned by Plans/Personas.md; canonical Persona content persists in Puppet Master Persona storage only, provider-native directories are import/refresh sources only, SubagentGuiConfig is not a second runtime source, and orchestrator/interview share the same Persona resolution and injection logic.", "line_end": 11063, "line_start": 11063, "path": "Plans/orchestrator-subagent-integration.md", "source_sha256": "2bde7668eabbbcef6d6f10401afba7c7b841e220af3ef0db6fef035d11e6844a"},
+        {"exact_quote": "  Doctor and plan-mode validation for Google-family provider routes resolve the selected provider entry, auth mode, project context, and account readiness for active Gemini Direct and Antigravity routes, discover/load the same project GuiConfig inside run(), and skip or warn neutrally when config cannot be loaded rather than assuming a single API-key-only settings surface. Gemini CLI validation vocabulary is retired/source-lineage only.", "line_end": 11119, "line_start": 11119, "path": "Plans/orchestrator-subagent-integration.md", "source_sha256": "2bde7668eabbbcef6d6f10401afba7c7b841e220af3ef0db6fef035d11e6844a"},
+        {"exact_quote": "  Doctor UX exposes project-context fields, validation-required and onboarding-needed states where the resolved active provider route requires them, and setup copy names the resolved provider/auth mode rather than using \"Configure Gemini access\" as generic setup text or treating Gemini API key as the primary or only settings path.", "line_end": 11185, "line_start": 11185, "path": "Plans/orchestrator-subagent-integration.md", "source_sha256": "2bde7668eabbbcef6d6f10401afba7c7b841e220af3ef0db6fef035d11e6844a"},
+        {"exact_quote": "  Every new Config plan-mode and subagent message variant must be added to the Message enum and handled in App::update, including global plan-mode toggles and subagent enable/override/disabled/required list changes.", "line_end": 11243, "line_start": 11243, "path": "Plans/orchestrator-subagent-integration.md", "source_sha256": "2bde7668eabbbcef6d6f10401afba7c7b841e220af3ef0db6fef035d11e6844a"}
+      ],
+      "gap_kind": "none",
+      "impact": "Provides validated Subagent and provider-route UX, establishes Persona ownership, retires generic Gemini CLI/setup assumptions, and requires handlers for every Config interaction.",
+      "item_id": "M15-I05",
+      "item_type": "gui_truth",
+      "severity": "info",
+      "source_unit_refs": ["PLANUNIT:OSI-082", "PLANUNIT:OSI-084", "PLANUNIT:OSI-085", "PLANUNIT:OSI-086", "PLANUNIT:OSI-087", "SEMANTIC:PLANUNIT:OSI-082", "SEMANTIC:PLANUNIT:OSI-084", "SEMANTIC:PLANUNIT:OSI-085", "SEMANTIC:PLANUNIT:OSI-086", "SEMANTIC:PLANUNIT:OSI-087"],
+      "statement": "Config validation rejects unknown subagents, Persona runtime truth remains in PM storage, Google-family validation is route-aware, Doctor copy reflects the resolved auth route, and all Config messages require App handlers.",
+      "title": "Validated Config, Persona ownership, and provider-route UX"
+    },
+    {
+      "builder_discretion": true,
+      "confidence": 0.92,
+      "dimensions": ["security_privacy", "privacy_data_lifecycle", "untrusted_inputs", "destructive_actions", "compatibility_migration", "ambiguity_unknowns"],
+      "evidence": [
+        {"exact_quote": "  Agent Config > Personas provides UI for discovering/importing provider-native definitions as seed content, letting users add and delete mutable Personas, duplicating protected built-ins to non-reserved IDs, showing list metadata and prompt preview, and optionally trimming persona content to a smaller token footprint while preserving intent and provenance.", "line_end": 11006, "line_start": 11006, "path": "Plans/orchestrator-subagent-integration.md", "source_sha256": "2bde7668eabbbcef6d6f10401afba7c7b841e220af3ef0db6fef035d11e6844a"}
+      ],
+      "gap_kind": "untrusted_import_and_destructive_lifecycle",
+      "impact": "Imported prompt content may contain malicious instructions or secrets, while delete and trim actions can irreversibly remove content or provenance without specified preview, consent, quarantine, rollback, or redaction behavior.",
+      "item_id": "M15-I06",
+      "item_type": "gap",
+      "severity": "high",
+      "source_unit_refs": ["PLANUNIT:OSI-083", "SEMANTIC:PLANUNIT:OSI-083"],
+      "statement": "Persona discovery/import, deletion, and trimming are in scope, but trust boundaries, secret handling, confirmation, rollback, and provenance-preservation oracles are not defined.",
+      "title": "Persona import and destructive lifecycle safeguards missing"
+    },
+    {
+      "builder_discretion": false,
+      "confidence": 0.98,
+      "dimensions": ["behavior", "contracts", "states_transitions", "gui_truth", "operations", "compatibility_migration", "acceptance_oracles", "test_falsifiability"],
+      "evidence": [
+        {"exact_quote": "  Interview Config currently builds settings that are not all wired into interview execution: max_questions_per_phase, require_architecture_confirmation, and vision_provider are present in GUI/config but absent from InterviewOrchestratorConfig and interview runtime use; the detailed resolutions continue in the next source window.", "line_end": 11299, "line_start": 11299, "path": "Plans/orchestrator-subagent-integration.md", "source_sha256": "2bde7668eabbbcef6d6f10401afba7c7b841e220af3ef0db6fef035d11e6844a"},
+        {"exact_quote": "  Interview question limits replace the single max setting with min_questions_per_phase and max_questions_per_phase Option<u32>, accept phase completion only after the minimum, support None as unlimited, enforce a soft cap with max + 1 grace, force-complete runaway phases with phase.force_completed and max_questions_exceeded, and never reject a phase that already collected valid answers.", "line_end": 11357, "line_start": 11357, "path": "Plans/orchestrator-subagent-integration.md", "source_sha256": "2bde7668eabbbcef6d6f10401afba7c7b841e220af3ef0db6fef035d11e6844a"},
+        {"exact_quote": "  Interview min/max question limits must be wired through GUI types, execution config, PhaseManager, orchestrator logic, prompt templates, docs/tooltips, and tests, with the Interview tab replacing the single max control with Min and Max plus Unlimited and prompts injecting configured min/max instructions.", "line_end": 11413, "line_start": 11413, "path": "Plans/orchestrator-subagent-integration.md", "source_sha256": "2bde7668eabbbcef6d6f10401afba7c7b841e220af3ef0db6fef035d11e6844a"},
+        {"exact_quote": "  DRY method compliance requires platform_specs for platform CLI commands, binary names, models, auth, capabilities, and invocation formats; discover_platform_capabilities instead of match statements; subagent_registry for subagent language/framework/name mappings; and DRY:DATA:subagent_registry as the single source of truth.", "line_end": 11469, "line_start": 11469, "path": "Plans/orchestrator-subagent-integration.md", "source_sha256": "2bde7668eabbbcef6d6f10401afba7c7b841e220af3ef0db6fef035d11e6844a"},
+        {"exact_quote": "  Plan-mode and subagent GUI work must check docs/gui-widget-catalog.md before adding UI, reuse existing widgets and layout helpers where possible, tag reusable widgets/functions/data/helpers with DRY tags, document UI-DRY-EXCEPTION when bespoke UI is required, and run widget-catalog generation/check scripts after widget or catalog changes.", "line_end": 11530, "line_start": 11530, "path": "Plans/orchestrator-subagent-integration.md", "source_sha256": "2bde7668eabbbcef6d6f10401afba7c7b841e220af3ef0db6fef035d11e6844a"}
+      ],
+      "gap_kind": "none",
+      "impact": "Closes known Interview execution wiring, defines min/max phase semantics and UI, and establishes platform/registry and widget-catalog DRY enforcement.",
+      "item_id": "M15-I07",
+      "item_type": "contract",
+      "severity": "info",
+      "source_unit_refs": ["PLANUNIT:OSI-088", "PLANUNIT:OSI-089", "PLANUNIT:OSI-090", "PLANUNIT:OSI-091", "PLANUNIT:OSI-092", "SEMANTIC:PLANUNIT:OSI-088", "SEMANTIC:PLANUNIT:OSI-089", "SEMANTIC:PLANUNIT:OSI-090", "SEMANTIC:PLANUNIT:OSI-091", "SEMANTIC:PLANUNIT:OSI-092"],
+      "statement": "Interview question limits are wired end-to-end with explicit completion behavior, while platform/subagent data and GUI construction must use their DRY registries and widget catalog.",
+      "title": "Interview wiring and DRY enforcement"
+    },
+    {
+      "builder_discretion": true,
+      "confidence": 0.95,
+      "dimensions": ["failures_recovery", "security_privacy", "privacy_data_lifecycle", "untrusted_inputs", "observability_support", "recovery_rollback", "test_falsifiability"],
+      "evidence": [
+        {"exact_quote": "  Structured subagent handoff validation needs platform-specific parser and hook reliability: JSON parsers for Cursor/Claude/Gemini, JSONL/NDJSON aggregation for Codex, regex/text extraction for Copilot, parser.error seglog records with raw-output excerpts, generic fallback extraction, parser_fallback_used metadata, retry behavior, raw output preservation, and malformed/missing-field/edge-case integration tests.", "line_end": 11593, "line_start": 11593, "path": "Plans/orchestrator-subagent-integration.md", "source_sha256": "2bde7668eabbbcef6d6f10401afba7c7b841e220af3ef0db6fef035d11e6844a"}
+      ],
+      "gap_kind": "raw_output_privacy_and_retention",
+      "impact": "Raw provider output and log excerpts may contain secrets, personal data, or prompt content; unspecified redaction, access control, retention, and size bounds create privacy, support, and storage risks.",
+      "item_id": "M15-I08",
+      "item_type": "gap",
+      "severity": "high",
+      "source_unit_refs": ["PLANUNIT:OSI-093", "SEMANTIC:PLANUNIT:OSI-093"],
+      "statement": "Parser failures preserve raw output and excerpts, but the plan does not define redaction, authorization, retention, truncation safety, or lifecycle rules for that potentially sensitive data.",
+      "title": "Raw parser output data lifecycle is undefined"
+    },
+    {
+      "builder_discretion": false,
+      "confidence": 0.98,
+      "dimensions": ["behavior", "capabilities", "contracts", "states_transitions", "gui_truth", "failures_recovery", "operations", "acceptance_oracles", "test_falsifiability"],
+      "evidence": [
+        {"exact_quote": "  If platform-specific and generic parser fallback both fail after retry, the provider error is surfaced to the user with retry, skip, and raw-output viewing options rather than silently dropping output.", "line_end": 11653, "line_start": 11653, "path": "Plans/orchestrator-subagent-integration.md", "source_sha256": "2bde7668eabbbcef6d6f10401afba7c7b841e220af3ef0db6fef035d11e6844a"},
+        {"exact_quote": "  Platform runners adapt subagent persona prompts per provider: Cursor may use /subagent_name, Codex/Claude/Gemini/Copilot may use an As <subagent_name> prompt preamble or omit unsupported conventions, and subagent_prompt_prefix or platform_specs owns the per-platform adaptation point.", "line_end": 11704, "line_start": 11704, "path": "Plans/orchestrator-subagent-integration.md", "source_sha256": "2bde7668eabbbcef6d6f10401afba7c7b841e220af3ef0db6fef035d11e6844a"},
+        {"exact_quote": "  Config changes for global plan mode and subagent settings follow existing Config save behavior, mark dirty or prompt on leave as appropriate, and persist use_plan_mode_all_tiers, last_per_tier_plan_mode, and the full subagent block atomically through the same GuiConfig and gui_config::save_config call to the same YAML file.", "line_end": 11811, "line_start": 11811, "path": "Plans/orchestrator-subagent-integration.md", "source_sha256": "2bde7668eabbbcef6d6f10401afba7c7b841e220af3ef0db6fef035d11e6844a"},
+        {"exact_quote": "  Tier quality verification prioritizes quality over speed, scopes checks to changed files or tier artifacts where practical, defines a small canonical quality checklist per tier, requires reviewer subagent participation at end-of-tier, retry, and quality-gate failure, routes unrelated failures through parent-tier orchestration, and reuses existing gates rather than duplicating them.", "line_end": 11868, "line_start": 11868, "path": "Plans/orchestrator-subagent-integration.md", "source_sha256": "2bde7668eabbbcef6d6f10401afba7c7b841e220af3ef0db6fef035d11e6844a"},
+        {"exact_quote": "  Interview execution must wire require_architecture_confirmation into InterviewOrchestratorConfig from gui_config.interview in app.rs and require explicit architecture/tech-stack confirmation through a phase gate, dedicated phase, or prompt line before phase completion when enabled.", "line_end": 11926, "line_start": 11926, "path": "Plans/orchestrator-subagent-integration.md", "source_sha256": "2bde7668eabbbcef6d6f10401afba7c7b841e220af3ef0db6fef035d11e6844a"},
+        {"exact_quote": "  Interview and follow-up image or vision flows must wire vision_provider as a String into InterviewOrchestratorConfig, use it for screenshot/diagram or other vision-capable requests filtered by platform_specs vision capability, and document use-when-implemented behavior if no image flow exists yet.", "line_end": 11983, "line_start": 11983, "path": "Plans/orchestrator-subagent-integration.md", "source_sha256": "2bde7668eabbbcef6d6f10401afba7c7b841e220af3ef0db6fef035d11e6844a"}
+      ],
+      "gap_kind": "none",
+      "impact": "Defines visible parser recovery, provider-specific prompt adaptation, atomic Config persistence, mandatory quality review, architecture confirmation, and vision-provider routing.",
+      "item_id": "M15-I09",
+      "item_type": "feature",
+      "severity": "info",
+      "source_unit_refs": ["PLANUNIT:OSI-094", "PLANUNIT:OSI-095", "PLANUNIT:OSI-097", "PLANUNIT:OSI-098", "PLANUNIT:OSI-099", "PLANUNIT:OSI-100", "SEMANTIC:PLANUNIT:OSI-094", "SEMANTIC:PLANUNIT:OSI-095", "SEMANTIC:PLANUNIT:OSI-097", "SEMANTIC:PLANUNIT:OSI-098", "SEMANTIC:PLANUNIT:OSI-099", "SEMANTIC:PLANUNIT:OSI-100"],
+      "statement": "The window specifies recovery and adaptation for provider output, atomic persistence of plan/subagent settings, quality-review participation, explicit architecture confirmation, and capability-filtered vision routing.",
+      "title": "Recovery, persistence, and Interview execution gates"
+    },
+    {
+      "builder_discretion": true,
+      "confidence": 0.94,
+      "dimensions": ["states_transitions", "concurrency_races", "offline_network_loss", "scale_performance", "compatibility_migration", "ambiguity_unknowns", "test_falsifiability"],
+      "evidence": [
+        {"exact_quote": "  Project context, language, and framework detection should be cached by canonical workspace path, invalidated on config reload or workspace changes, exposed through get_project_context(workspace), and optionally TTL- or run-duration-scoped so long sessions do not hold stale data.", "line_end": 11757, "line_start": 11757, "path": "Plans/orchestrator-subagent-integration.md", "source_sha256": "2bde7668eabbbcef6d6f10401afba7c7b841e220af3ef0db6fef035d11e6844a"}
+      ],
+      "gap_kind": "cache_freshness_and_concurrency",
+      "impact": "Implementations can choose incompatible TTL/run scopes and race invalidation against reads, causing stale language/framework/provider decisions during long or multi-workspace runs.",
+      "item_id": "M15-I10",
+      "item_type": "gap",
+      "severity": "medium",
+      "source_unit_refs": ["PLANUNIT:OSI-096", "SEMANTIC:PLANUNIT:OSI-096"],
+      "statement": "The cache key and invalidation triggers are named, but TTL versus run-duration precedence, concurrent invalidation semantics, error caching, and freshness oracles remain discretionary.",
+      "title": "Project-context cache consistency is underspecified"
+    },
+    {
+      "builder_discretion": false,
+      "confidence": 0.98,
+      "dimensions": ["behavior", "contracts", "states_transitions", "ownership", "consumers", "gui_truth", "propagation", "operations", "acceptance_oracles", "cross_document_seams"],
+      "evidence": [
+        {"exact_quote": "  Main orchestrator run config must align with Config tab saves: the run loop uses ConfigManager::discover and get_config to load PuppetMasterConfig from disk, the Config tab saves GuiConfig to the same path, saved YAML must remain compatible for execution-affecting fields, and project-hinted runs should prefer discover_with_hint(project_path).", "line_end": 12038, "line_start": 12038, "path": "Plans/orchestrator-subagent-integration.md", "source_sha256": "2bde7668eabbbcef6d6f10401afba7c7b841e220af3ef0db6fef035d11e6844a"},
+        {"exact_quote": "  Every new execution-affecting config or feature must follow the built-but-not-wired checklist: add the field to the runtime execution config, set it during construction/load from the source of truth, use it in the execution path, document the checklist, and have reviewers verify that GUI/file settings have corresponding execution-config fields and runtime usage.", "line_end": 12093, "line_start": 12093, "path": "Plans/orchestrator-subagent-integration.md", "source_sha256": "2bde7668eabbbcef6d6f10401afba7c7b841e220af3ef0db6fef035d11e6844a"},
+        {"exact_quote": "  GUI projects enforce built-but-not-wired at the UI layer through wiring_matrix.json and ui_command_catalog.json: every interactive element must have a bound command and handler, orphan elements and orphan commands are validation failures, and tier-boundary validation includes a UI wiring check for UI-scoped nodes.", "line_end": 12151, "line_start": 12151, "path": "Plans/orchestrator-subagent-integration.md", "source_sha256": "2bde7668eabbbcef6d6f10401afba7c7b841e220af3ef0db6fef035d11e6844a"},
+        {"exact_quote": "  At each Phase, Task, Subtask, and Iteration boundary, a shared validation layer checks that tier config, plan_mode, interview config when relevant, subagent config, and ExecutionRequest construction are present and actually used for that tier, with a summary table defining what each tier checks.", "line_end": 12205, "line_start": 12205, "path": "Plans/orchestrator-subagent-integration.md", "source_sha256": "2bde7668eabbbcef6d6f10401afba7c7b841e220af3ef0db6fef035d11e6844a"},
+        {"exact_quote": "  Process checklist A and tier-boundary validation B are complementary: the mandatory wiring checklist reduces omissions, and validation catches remaining omissions so built-but-not-wired behavior does not reach users.", "line_end": 12321, "line_start": 12321, "path": "Plans/orchestrator-subagent-integration.md", "source_sha256": "2bde7668eabbbcef6d6f10401afba7c7b841e220af3ef0db6fef035d11e6844a"},
+        {"exact_quote": "  Tier verification defines broader start verification and end verification around Phase, Task, and Subtask boundaries, persists verification and QA-cycle results as canonical events/projections, treats waiting_approval, needs_review, and warning states as overlays rather than Executor node statuses, and keeps HITL pauses after end verification before advancing.", "line_end": 12374, "line_start": 12374, "path": "Plans/orchestrator-subagent-integration.md", "source_sha256": "2bde7668eabbbcef6d6f10401afba7c7b841e220af3ef0db6fef035d11e6844a"}
+      ],
+      "gap_kind": "none",
+      "impact": "Aligns saved and runtime config, mechanically detects UI and runtime wiring omissions, validates every tier boundary, and preserves verification/HITL state through canonical events and overlays.",
+      "item_id": "M15-I11",
+      "item_type": "contract",
+      "severity": "info",
+      "source_unit_refs": ["PLANUNIT:OSI-101", "PLANUNIT:OSI-102", "PLANUNIT:OSI-103", "PLANUNIT:OSI-104", "PLANUNIT:OSI-106", "PLANUNIT:OSI-107", "SEMANTIC:PLANUNIT:OSI-101", "SEMANTIC:PLANUNIT:OSI-102", "SEMANTIC:PLANUNIT:OSI-103", "SEMANTIC:PLANUNIT:OSI-104", "SEMANTIC:PLANUNIT:OSI-106", "SEMANTIC:PLANUNIT:OSI-107"],
+      "statement": "Config source alignment, mandatory wiring checklists, UI catalogs, tier-boundary checks, and canonical verification overlays collectively prevent built-but-not-wired behavior from advancing.",
+      "title": "End-to-end config and tier wiring assurance"
+    },
+    {
+      "builder_discretion": true,
+      "confidence": 0.94,
+      "dimensions": ["contracts", "states_transitions", "failures_recovery", "gui_misleading_states", "authority_boundaries", "ambiguity_unknowns", "test_falsifiability"],
+      "evidence": [
+        {"exact_quote": "  Config-wiring validation uses a single entry point such as validate_config_wiring_for_tier(tier_type, config_snapshot, context) -> Result<(), WiringError>, called at tier entry for main and interview orchestrators, with fail-fast behavior for missing required execution-affecting fields, warn/toast behavior for classic built-but-not-wired gaps, and unit/integration tests.", "line_end": 12267, "line_start": 12267, "path": "Plans/orchestrator-subagent-integration.md", "source_sha256": "2bde7668eabbbcef6d6f10401afba7c7b841e220af3ef0db6fef035d11e6844a"}
+      ],
+      "gap_kind": "validator_failure_classification",
+      "impact": "The same missing execution wiring can block or merely warn depending on builder interpretation, allowing misleading UI state or unsafe continuation.",
+      "item_id": "M15-I12",
+      "item_type": "gap",
+      "severity": "high",
+      "source_unit_refs": ["PLANUNIT:OSI-105", "SEMANTIC:PLANUNIT:OSI-105"],
+      "statement": "The validator distinguishes required-field failures from classic built-but-not-wired gaps, but no normative classification table identifies which concrete findings fail, warn, or permit continuation.",
+      "title": "Config-wiring failure severity map is missing"
+    },
+    {
+      "builder_discretion": false,
+      "confidence": 0.98,
+      "dimensions": ["behavior", "contracts", "states_transitions", "gui_truth", "failures_recovery", "operations", "observability_support", "acceptance_oracles"],
+      "evidence": [
+        {"exact_quote": "  When entering a Phase, Task, or Subtask, the orchestrator runs start verification before building execution context or spawning the agent, including config-wiring checks, GUI-to-backend and backend-to-GUI mapping checks, operation sequence validation, known-gap checks, and UI wiring checks for UI-scoped project nodes.", "line_end": 12433, "line_start": 12433, "path": "Plans/orchestrator-subagent-integration.md", "source_sha256": "2bde7668eabbbcef6d6f10401afba7c7b841e220af3ef0db6fef035d11e6844a"},
+        {"exact_quote": "  The orchestrator tier-entry example runs verify_tier_start before building execution context, handles VerificationStatus Pass/Fail/Warning through FailFast or WarnAndContinue policy, logs and persists results, and builds execution context only after pass or warn-and-continue.", "line_end": 12546, "line_start": 12546, "path": "Plans/orchestrator-subagent-integration.md", "source_sha256": "2bde7668eabbbcef6d6f10401afba7c7b841e220af3ef0db6fef035d11e6844a"},
+        {"exact_quote": "  Start verification result types preserve the example schema for StartVerificationResult, VerificationStatus, VerificationFinding, FindingCategory, and FindingSeverity, including pass/fail/warning states and ConfigWiring, GuiBackendMapping, BackendGuiMapping, OperationSequence, and KnownGaps categories.", "line_end": 12603, "line_start": 12603, "path": "Plans/orchestrator-subagent-integration.md", "source_sha256": "2bde7668eabbbcef6d6f10401afba7c7b841e220af3ef0db6fef035d11e6844a"},
+        {"exact_quote": "  verify_tier_start collects config wiring, GUI-backend mapping, backend-GUI mapping, operation sequence, and known-gap findings; maps severities to fail/warning/pass; and returns a StartVerificationResult with tier_type, node_id, findings, and Utc timestamp.", "line_end": 12665, "line_start": 12665, "path": "Plans/orchestrator-subagent-integration.md", "source_sha256": "2bde7668eabbbcef6d6f10401afba7c7b841e220af3ef0db6fef035d11e6844a"},
+        {"exact_quote": "  Tier-start helper boundaries separate config wiring validation, GUI-backend mapping loading, backend-GUI mapping loading, operation sequence validation, and known-gap loading into named helper functions returning typed result boundaries.", "line_end": 12723, "line_start": 12723, "path": "Plans/orchestrator-subagent-integration.md", "source_sha256": "2bde7668eabbbcef6d6f10401afba7c7b841e220af3ef0db6fef035d11e6844a"}
+      ],
+      "gap_kind": "none",
+      "impact": "Prevents agent spawn before start verification, defines typed findings and status mapping, and separates verification checks behind typed helpers.",
+      "item_id": "M15-I13",
+      "item_type": "state_transition",
+      "severity": "info",
+      "source_unit_refs": ["PLANUNIT:OSI-108", "PLANUNIT:OSI-110", "PLANUNIT:OSI-111", "PLANUNIT:OSI-112", "PLANUNIT:OSI-113", "SEMANTIC:PLANUNIT:OSI-108", "SEMANTIC:PLANUNIT:OSI-110", "SEMANTIC:PLANUNIT:OSI-111", "SEMANTIC:PLANUNIT:OSI-112", "SEMANTIC:PLANUNIT:OSI-113"],
+      "statement": "Tier entry is gated by typed start verification before context construction or spawn, with explicit finding categories, severity-to-status mapping, policy handling, and helper boundaries.",
+      "title": "Typed pre-spawn tier verification flow"
+    },
+    {
+      "builder_discretion": true,
+      "confidence": 0.92,
+      "dimensions": ["states_transitions", "concurrency_races", "partial_failure", "recovery_rollback", "observability_support", "ambiguity_unknowns", "test_falsifiability"],
+      "evidence": [
+        {"exact_quote": "  Tier-start verification separates BeforeTierStart, DuringTierStart, and AfterTierStart responsibilities, builds StartVerificationResult, logs/handles failures, emits canonical config.validation.passed|warning|failed events, updates redb projections and verification history, and defines src/verification/tier_start.rs with verify_tier_start.", "line_end": 12489, "line_start": 12489, "path": "Plans/orchestrator-subagent-integration.md", "source_sha256": "2bde7668eabbbcef6d6f10401afba7c7b841e220af3ef0db6fef035d11e6844a"}
+      ],
+      "gap_kind": "event_projection_idempotency",
+      "impact": "Retries or crashes between event append and projection/history update can duplicate events or leave contradictory verification state without specified idempotency keys, ordering, or replay rules.",
+      "item_id": "M15-I14",
+      "item_type": "gap",
+      "severity": "high",
+      "source_unit_refs": ["PLANUNIT:OSI-109", "SEMANTIC:PLANUNIT:OSI-109"],
+      "statement": "Canonical events and redb projections are required, but atomicity, idempotency, replay ordering, and crash recovery across event, projection, and history persistence are not defined.",
+      "title": "Verification event and projection consistency is unspecified"
+    },
+    {
+      "builder_discretion": false,
+      "confidence": 0.98,
+      "dimensions": ["behavior", "contracts", "states_transitions", "authority", "gui_truth", "failures_recovery", "operations", "acceptance_oracles", "cross_document_seams"],
+      "evidence": [
+        {"exact_quote": "  Tier-start error handling treats config loading failure as VerificationStatus::Fail with a Critical finding, mapping load failure as VerificationStatus::Warning with an Info finding, and gap-check failure as a logged warning while continuing because gaps are informational.", "line_end": 12779, "line_start": 12779, "path": "Plans/orchestrator-subagent-integration.md", "source_sha256": "2bde7668eabbbcef6d6f10401afba7c7b841e220af3ef0db6fef035d11e6844a"},
+        {"exact_quote": "  End-tier verification reruns wiring/readiness in completion context for Phase, Task, and Subtask completion, checks whether new or touched config/settings are wired across GUI, backend, and execution, and runs existing acceptance criteria as the spec-compliance check before tier completion.", "line_end": 12835, "line_start": 12835, "path": "Plans/orchestrator-subagent-integration.md", "source_sha256": "2bde7668eabbbcef6d6f10401afba7c7b841e220af3ef0db6fef035d11e6844a"},
+        {"exact_quote": "  End-tier quality verification requires agent-driven review of code or artifacts for maintainability, correctness, and project-standard alignment, including a dedicated reviewer subagent and required quality criteria in the gate, with no human-review path and no skip path.", "line_end": 12890, "line_start": 12890, "path": "Plans/orchestrator-subagent-integration.md", "source_sha256": "2bde7668eabbbcef6d6f10401afba7c7b841e220af3ef0db6fef035d11e6844a"},
+        {"exact_quote": "  End-of-run verification must enforce Plans/Document_Packaging_Policy.md for Markdown/text artifacts under .puppet-master/** that reached packaging triggers, and any packaging verification breach blocks tier completion where the Document Set audit applies.", "line_end": 12948, "line_start": 12948, "path": "Plans/orchestrator-subagent-integration.md", "source_sha256": "2bde7668eabbbcef6d6f10401afba7c7b841e220af3ef0db6fef035d11e6844a"},
+        {"exact_quote": "  BeforeTierEnd prepares verification context by collecting tier artifacts, computing git diff where applicable, loading tier context and execution history, and building a context with artifacts, diff, tier context, and config.", "line_end": 13065, "line_start": 13065, "path": "Plans/orchestrator-subagent-integration.md", "source_sha256": "2bde7668eabbbcef6d6f10401afba7c7b841e220af3ef0db6fef035d11e6844a"},
+        {"exact_quote": "  DuringTierEnd reruns wiring checks, acceptance criteria, quality verification via reviewer subagent and automated gate criteria, Document Set audit checks, collects results, and determines complete, incomplete, or complete-with-warnings tier status.", "line_end": 13118, "line_start": 13118, "path": "Plans/orchestrator-subagent-integration.md", "source_sha256": "2bde7668eabbbcef6d6f10401afba7c7b841e220af3ef0db6fef035d11e6844a"}
+      ],
+      "gap_kind": "none",
+      "impact": "Defines start failure severity and a non-skippable end-tier assurance pipeline covering wiring, acceptance, agent review, packaging, artifacts, diffs, and terminal tier status.",
+      "item_id": "M15-I15",
+      "item_type": "acceptance_oracle",
+      "severity": "info",
+      "source_unit_refs": ["PLANUNIT:OSI-114", "PLANUNIT:OSI-115", "PLANUNIT:OSI-116", "PLANUNIT:OSI-117", "PLANUNIT:OSI-119", "PLANUNIT:OSI-120", "SEMANTIC:PLANUNIT:OSI-114", "SEMANTIC:PLANUNIT:OSI-115", "SEMANTIC:PLANUNIT:OSI-116", "SEMANTIC:PLANUNIT:OSI-117", "SEMANTIC:PLANUNIT:OSI-119", "SEMANTIC:PLANUNIT:OSI-120"],
+      "statement": "Start verification has explicit error classes, while end-tier completion requires wiring and acceptance rechecks, agent-driven review, packaging enforcement, prepared evidence context, automated gates, and an explicit completion status.",
+      "title": "Non-skippable end-tier assurance and completion status"
+    },
+    {
+      "builder_discretion": true,
+      "confidence": 0.95,
+      "dimensions": ["authority", "authority_boundaries", "security_privacy", "failures_recovery", "builder_discretion", "ambiguity_unknowns", "test_falsifiability"],
+      "evidence": [
+        {"exact_quote": "  Quality gate severity defaults classify linter/test/build/type errors as fail-worthy critical checks, linter warnings, formatter violations, and coverage delta as advisory warnings, load thresholds from .puppet-master/quality.json when present, and allow per-check fail/warn overrides through quality.gate.{check_name}.action.", "line_end": 13002, "line_start": 13002, "path": "Plans/orchestrator-subagent-integration.md", "source_sha256": "2bde7668eabbbcef6d6f10401afba7c7b841e220af3ef0db6fef035d11e6844a"}
+      ],
+      "gap_kind": "quality_override_authority",
+      "impact": "An untrusted or insufficiently authorized project config could downgrade test, build, type, or security-adjacent failures from blocking to warning and allow a tier to complete with false assurance.",
+      "item_id": "M15-I16",
+      "item_type": "gap",
+      "severity": "critical",
+      "source_unit_refs": ["PLANUNIT:OSI-118", "SEMANTIC:PLANUNIT:OSI-118"],
+      "statement": "Per-check fail/warn overrides are allowed, but the authority permitted to downgrade critical defaults, protected non-overridable checks, validation of unknown actions, and audit trail for overrides are not specified.",
+      "title": "Quality-gate override authority is unbounded"
+    }
+  ],
+  "model": "gpt-5.6-sol",
+  "phase": "blind_macro_window_review",
+  "reasoning_effort": "xhigh",
+  "schema_version": "macro-review-result-v1",
+  "segments": [
+    {
+      "core_range": [10195, 10573],
+      "covered_source_unit_refs": ["PLANUNIT:OSI-069", "PLANUNIT:OSI-070", "PLANUNIT:OSI-071", "PLANUNIT:OSI-072", "PLANUNIT:OSI-073", "PLANUNIT:OSI-074", "PLANUNIT:OSI-075", "SEMANTIC:PLANUNIT:OSI-069", "SEMANTIC:PLANUNIT:OSI-070", "SEMANTIC:PLANUNIT:OSI-071", "SEMANTIC:PLANUNIT:OSI-072", "SEMANTIC:PLANUNIT:OSI-073", "SEMANTIC:PLANUNIT:OSI-074", "SEMANTIC:PLANUNIT:OSI-075"],
+      "item_ids": ["M15-I01", "M15-I02"],
+      "reviewed": true,
+      "summary": "Reviewed Cursor invocation and plan-mode CLI evidence, read-only child authority, required/optional classification, and newly current GUI/backend scope.",
+      "window_id": "WIN-1BF0967E88A5-0028"
+    },
+    {
+      "core_range": [10574, 10935],
+      "covered_source_unit_refs": ["PLANUNIT:OSI-076", "PLANUNIT:OSI-077", "PLANUNIT:OSI-078", "PLANUNIT:OSI-079", "PLANUNIT:OSI-080", "PLANUNIT:OSI-081", "SEMANTIC:PLANUNIT:OSI-076", "SEMANTIC:PLANUNIT:OSI-077", "SEMANTIC:PLANUNIT:OSI-078", "SEMANTIC:PLANUNIT:OSI-079", "SEMANTIC:PLANUNIT:OSI-080", "SEMANTIC:PLANUNIT:OSI-081"],
+      "item_ids": ["M15-I03", "M15-I04"],
+      "reviewed": true,
+      "summary": "Reviewed plan-mode persistence and UI controls, request propagation, canonical child-run rollups, delegated ceilings, and SubagentGuiConfig precedence.",
+      "window_id": "WIN-1BF0967E88A5-0029"
+    },
+    {
+      "core_range": [10936, 11290],
+      "covered_source_unit_refs": ["PLANUNIT:OSI-082", "PLANUNIT:OSI-083", "PLANUNIT:OSI-084", "PLANUNIT:OSI-085", "PLANUNIT:OSI-086", "PLANUNIT:OSI-087", "SEMANTIC:PLANUNIT:OSI-082", "SEMANTIC:PLANUNIT:OSI-083", "SEMANTIC:PLANUNIT:OSI-084", "SEMANTIC:PLANUNIT:OSI-085", "SEMANTIC:PLANUNIT:OSI-086", "SEMANTIC:PLANUNIT:OSI-087"],
+      "item_ids": ["M15-I05", "M15-I06"],
+      "reviewed": true,
+      "summary": "Reviewed Subagent Config validation, Persona import/storage boundaries, route-aware Google-family validation and Doctor copy, and Config handlers.",
+      "window_id": "WIN-1BF0967E88A5-0030"
+    },
+    {
+      "core_range": [11291, 11644],
+      "covered_source_unit_refs": ["PLANUNIT:OSI-088", "PLANUNIT:OSI-089", "PLANUNIT:OSI-090", "PLANUNIT:OSI-091", "PLANUNIT:OSI-092", "PLANUNIT:OSI-093", "SEMANTIC:PLANUNIT:OSI-088", "SEMANTIC:PLANUNIT:OSI-089", "SEMANTIC:PLANUNIT:OSI-090", "SEMANTIC:PLANUNIT:OSI-091", "SEMANTIC:PLANUNIT:OSI-092", "SEMANTIC:PLANUNIT:OSI-093"],
+      "item_ids": ["M15-I07", "M15-I08"],
+      "reviewed": true,
+      "summary": "Reviewed Interview wiring and question limits, platform and registry DRY rules, GUI widget reuse, and multi-provider parser reliability.",
+      "window_id": "WIN-1BF0967E88A5-0031"
+    },
+    {
+      "core_range": [11645, 12029],
+      "covered_source_unit_refs": ["PLANUNIT:OSI-094", "PLANUNIT:OSI-095", "PLANUNIT:OSI-096", "PLANUNIT:OSI-097", "PLANUNIT:OSI-098", "PLANUNIT:OSI-099", "PLANUNIT:OSI-100", "SEMANTIC:PLANUNIT:OSI-094", "SEMANTIC:PLANUNIT:OSI-095", "SEMANTIC:PLANUNIT:OSI-096", "SEMANTIC:PLANUNIT:OSI-097", "SEMANTIC:PLANUNIT:OSI-098", "SEMANTIC:PLANUNIT:OSI-099", "SEMANTIC:PLANUNIT:OSI-100"],
+      "item_ids": ["M15-I09", "M15-I10"],
+      "reviewed": true,
+      "summary": "Reviewed parser recovery UX, prompt adaptation, project-context caching, atomic Config persistence, tier quality review, and Interview architecture/vision settings.",
+      "window_id": "WIN-1BF0967E88A5-0032"
+    },
+    {
+      "core_range": [12030, 12424],
+      "covered_source_unit_refs": ["PLANUNIT:OSI-101", "PLANUNIT:OSI-102", "PLANUNIT:OSI-103", "PLANUNIT:OSI-104", "PLANUNIT:OSI-105", "PLANUNIT:OSI-106", "PLANUNIT:OSI-107", "SEMANTIC:PLANUNIT:OSI-101", "SEMANTIC:PLANUNIT:OSI-102", "SEMANTIC:PLANUNIT:OSI-103", "SEMANTIC:PLANUNIT:OSI-104", "SEMANTIC:PLANUNIT:OSI-105", "SEMANTIC:PLANUNIT:OSI-106", "SEMANTIC:PLANUNIT:OSI-107"],
+      "item_ids": ["M15-I11", "M15-I12"],
+      "reviewed": true,
+      "summary": "Reviewed config-source alignment, execution and UI wiring enforcement, tier validators, checklist complementarity, canonical verification projections, and HITL ordering.",
+      "window_id": "WIN-1BF0967E88A5-0033"
+    },
+    {
+      "core_range": [12425, 12770],
+      "covered_source_unit_refs": ["PLANUNIT:OSI-108", "PLANUNIT:OSI-109", "PLANUNIT:OSI-110", "PLANUNIT:OSI-111", "PLANUNIT:OSI-112", "PLANUNIT:OSI-113", "SEMANTIC:PLANUNIT:OSI-108", "SEMANTIC:PLANUNIT:OSI-109", "SEMANTIC:PLANUNIT:OSI-110", "SEMANTIC:PLANUNIT:OSI-111", "SEMANTIC:PLANUNIT:OSI-112", "SEMANTIC:PLANUNIT:OSI-113"],
+      "item_ids": ["M15-I13", "M15-I14"],
+      "reviewed": true,
+      "summary": "Reviewed pre-spawn checks, tier-start phases and persistence, orchestrator status policy, result types, algorithm, and helper boundaries.",
+      "window_id": "WIN-1BF0967E88A5-0034"
+    },
+    {
+      "core_range": [12771, 13169],
+      "covered_source_unit_refs": ["PLANUNIT:OSI-114", "PLANUNIT:OSI-115", "PLANUNIT:OSI-116", "PLANUNIT:OSI-117", "PLANUNIT:OSI-118", "PLANUNIT:OSI-119", "PLANUNIT:OSI-120", "SEMANTIC:PLANUNIT:OSI-114", "SEMANTIC:PLANUNIT:OSI-115", "SEMANTIC:PLANUNIT:OSI-116", "SEMANTIC:PLANUNIT:OSI-117", "SEMANTIC:PLANUNIT:OSI-118", "SEMANTIC:PLANUNIT:OSI-119", "SEMANTIC:PLANUNIT:OSI-120"],
+      "item_ids": ["M15-I15", "M15-I16"],
+      "reviewed": true,
+      "summary": "Reviewed start-error severity and end-tier wiring, quality, packaging, override, context-preparation, and completion-status gates.",
+      "window_id": "WIN-1BF0967E88A5-0035"
+    }
+  ],
+  "self_attestation": {
+    "no_canonical_writes": true,
+    "no_external_research_during_blind_review": true,
+    "no_peer_result_access": true,
+    "no_prior_audit_access": true,
+    "no_unrelated_source_access": true,
+    "terminal_after_submission": true
+  },
+  "source_binding": {
+    "bundle_id": "MACRO15-1BF0967E88A5-0004",
+    "document_path": "Plans/orchestrator-subagent-integration.md",
+    "micro_window_ids": ["WIN-1BF0967E88A5-0028", "WIN-1BF0967E88A5-0029", "WIN-1BF0967E88A5-0030", "WIN-1BF0967E88A5-0031", "WIN-1BF0967E88A5-0032", "WIN-1BF0967E88A5-0033", "WIN-1BF0967E88A5-0034", "WIN-1BF0967E88A5-0035"],
+    "source_sha256": "2bde7668eabbbcef6d6f10401afba7c7b841e220af3ef0db6fef035d11e6844a"
+  },
+  "status": "completed",
+  "synthesis": {
+    "cross_document_questions": [
+      "Which canonical owner defines planning-child terminal-outcome semantics for required versus optional children?",
+      "Which canonical owner defines Persona import trust, redaction, delete, rollback, and provenance guarantees?",
+      "Which canonical owner defines verification-event idempotency and quality-gate override authority?"
+    ],
+    "feature_family_keys": ["plan-mode-and-child-runs", "persona-and-provider-config", "interview-runtime-wiring", "tier-verification-and-quality-gates"],
+    "research_queries": [
+      "Secure import and redaction patterns for user-managed AI persona prompt files",
+      "Idempotent event projection patterns for crash-safe verification workflows",
+      "Policy models for non-downgradable CI and quality gates"
+    ]
+  },
+  "task_thread_id": "/root/a005m15_b9_000173_attempt_0015_terminal"
+}

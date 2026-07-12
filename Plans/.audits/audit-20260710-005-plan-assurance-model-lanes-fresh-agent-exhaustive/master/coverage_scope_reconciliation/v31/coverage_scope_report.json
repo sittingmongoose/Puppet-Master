@@ -1,0 +1,273 @@
+{
+  "schema_version": "audit005-coverage-scope-reconciliation-v31-report-v1",
+  "audit_id": "audit-20260710-005-plan-assurance-model-lanes-fresh-agent-exhaustive",
+  "reconciliation_id": "coverage-scope-reconciliation-v31-0001",
+  "status": "BLOCKED_AWAITING_SETTLED_FINAL_DELTA_AND_FRESH_INDEPENDENT_CHECKPOINT",
+  "append_only": true,
+  "prior_artifacts_mutated": false,
+  "policy_binding": {
+    "current_policy_ref": "master/coordination/CONCURRENCY_POLICY_V32.json",
+    "current_policy_sha256": "4826ade4c38db47ee184b34e5d7b7bd5ba6cabeecc9baa686cb9d99eeff8a3ed",
+    "current_policy_schema_version": "audit005-concurrency-policy-v32",
+    "prior_policy_ref": "master/coordination/CONCURRENCY_POLICY_V31.json",
+    "prior_policy_sha256": "95de3fd798c857751cc6b031d62a4a7a40abe931f9fa1e49590cff0fec6257b5",
+    "supersession_mode": "prospective_append_only",
+    "prior_policy_mutated": false,
+    "candidate_credit_zero_until_primary_and_fresh_independent_checkpoint": true,
+    "live_canonical_plan_edits_authorized": false
+  },
+  "shared_frozen_universe": {
+    "source_scope": {
+      "legacy_ref": "master/frozen/epoch-0013/manifests/source_scope.jsonl",
+      "macro_ref": "master/macro/frozen/epoch-0016/manifests/source_scope.jsonl",
+      "sha256": "963911b952c3909c9012ed25a35151719b4f3f18b173cc6fffc8bbc1036e4e46",
+      "row_count": 135,
+      "byte_count": 81724,
+      "stable_copy_count": 17
+    },
+    "window_universe": {
+      "legacy_manifest_ref": "master/frozen/epoch-0013/manifests/window_manifest.jsonl",
+      "macro_manifest_ref": "master/macro/frozen/epoch-0016/manifests/micro_window_manifest.jsonl",
+      "manifest_sha256": "90ee1d111f476141c1661c0077e65ab6127af3d07aca57f649eca78416782539",
+      "window_count": 1269,
+      "window_ids_digest": "b5cf028b0135d0d58e0b039b23e0f00b7da0a8ed606fc5e37d44148d3d5de4c3",
+      "window_ids_digest_encoding": "sha256(canonical_json(sorted(window_ids)))"
+    },
+    "canonical_source_root_sha256": "5405af6270bd0c708484685f368462de1cd91fb6e48e224a69214472c2db0ccf"
+  },
+  "scopes": [
+    {
+      "scope_type": "legacy_role_assignment_lineage",
+      "scope_id": "legacy-snapshot-0015",
+      "status": "VALIDATED_INCOMPLETE_PRESERVED_LINEAGE",
+      "authority_kind": "immutable_legacy_coverage_snapshot_reference",
+      "coverage_unit": "role_assignment",
+      "coverage_pointer": {
+        "kind": "legacy_coverage_snapshot_ref",
+        "ref": "master/live/coverage_state.snapshot-0015.json",
+        "sha256": "90de30e60f5314fb8db5eb66f3326138686021f1c06b321003700be10b0463ec"
+      },
+      "credited_registry": {
+        "ref": "master/live/credited_assignments.snapshot-0015.json",
+        "sha256": "eef8ebf279618c421691942b96abf5e647d12dc0e8bc99162f7146eaf4943304",
+        "credited_assignment_ids_digest": "c3d724a72f705f975181ab855b6ceb97aa306318af2b5d551b46af6a3a17ab3b"
+      },
+      "assignment_manifest": {
+        "ref": "master/frozen/epoch-0013/manifests/assignment_manifest.jsonl",
+        "sha256": "e8d9108221c59888c803d2c870d9d7eafd6dfe30bd2965ef58ad43f9b2267e68"
+      },
+      "validation": {
+        "primary_ref": "master/validation/live-coverage/snapshot-0015-primary.json",
+        "primary_sha256": "99e6fa77d22a168bb3805f0568208ba79866201ac8942bb5d1d244f6148e937f",
+        "status": "pass",
+        "verifier_expected_complete": false
+      },
+      "counts": {
+        "total_role_assignments": 2538,
+        "credited_role_assignments": 63,
+        "pending_role_assignments": 2475,
+        "blocked_role_assignments": 0,
+        "total_windows": 1269,
+        "credited_unique_windows": 32,
+        "fully_dual_reviewed_windows": 31,
+        "unpaired_credited_windows": 1
+      },
+      "roles": {
+        "exact_behavior": {
+          "total": 1269,
+          "credited": 32
+        },
+        "adversarial_negative_space": {
+          "total": 1269,
+          "credited": 31
+        }
+      },
+      "unpaired_credit": {
+        "assignment_id": "A005-001053-EXACT-WIN-74C788D8A63C-0004",
+        "window_id": "WIN-74C788D8A63C-0004",
+        "role": "exact_behavior",
+        "document_path": "Plans/Tools.md",
+        "seeded_into_macro_coverage": false
+      },
+      "macro_seed": {
+        "ref": "master/macro/frozen/epoch-0014/manifests/seeded_windows.jsonl",
+        "sha256": "15a69d717b2e86b058fd3dcdae24d175c9727685f5a2e41120035971c53584d3",
+        "basis": "dual_validated_epoch_0013_roles",
+        "seeded_window_count": 31
+      },
+      "completion": {
+        "producer_complete": false,
+        "verifier_expected_complete": false,
+        "reconciliation_complete": false,
+        "meaning": "the legacy role-assignment plan remains intentionally incomplete"
+      },
+      "new_activation_authorized": false,
+      "new_coverage_credit_granted": 0,
+      "canonical_plan_writes_authorized": false
+    },
+    {
+      "scope_type": "frozen_macro_micro_window_coverage",
+      "scope_id": "macro-active-batch-0012",
+      "status": "VALIDATED_COMPLETE_FROZEN_SCOPE_ONLY",
+      "authority_kind": "macro_active_transaction_pointer",
+      "coverage_unit": "canonical_structural_micro_window",
+      "migration": {
+        "ref": "master/macro/authorities/macro-v2-migration.json",
+        "sha256": "21d89827f26225a3c87320f80c5ac55c962890c7eb5e3a66ce7d062e3776ce45",
+        "status": "PRESERVE_OLD_LINEAGE_REBASE_FUTURE_COVERAGE",
+        "old_coverage_ref": "master/live/coverage_state.snapshot-0015.json",
+        "old_coverage_sha256": "90de30e60f5314fb8db5eb66f3326138686021f1c06b321003700be10b0463ec",
+        "old_assignment_credits_preserved": 63,
+        "old_fully_dual_reviewed_windows_seeded": 31
+      },
+      "active_pointer": {
+        "ref": "master/macro/live/ACTIVE.json",
+        "sha256": "a2b2365d16f5dc7c53f1a87a8a515010a25bd5cc52b7ed548f9ec9c67bc007dc",
+        "batch_id": "macro-batch-0012",
+        "snapshot_serial": "0012",
+        "coverage_ref": "master/macro/transactions/macro-batch-0012/coverage.snapshot-0012.json",
+        "coverage_sha256": "200d4f9ce29f35a4c29c45d056f8541e91a9cbcdd2a84e294330489981ee93f4",
+        "transaction_commit_sha256": "539fd17bbf0951e07628b74726e960c17dc8abdb4d533b29d2d0d7f765851406"
+      },
+      "prior_active_pointer_lineage": {
+        "ref": "master/macro/live/ACTIVE.json",
+        "historical_sha256": "e13087420a4b6e1e71e66c7a08e2629004b7e7fc5561ac16785109c028e3bf0c",
+        "coverage_seed_ref": "master/macro/frozen/epoch-0016/lineage/coverage_seed.json",
+        "coverage_seed_sha256": "da606256c4657b00c3bf0b6215d802cfcf1285cd8d2943649582e2e214787de4",
+        "historical_batch_id": "macro-batch-0011",
+        "hash_role": "historical_content_hash_not_current_file_hash"
+      },
+      "coverage": {
+        "complete": true,
+        "micro_window_total": 1269,
+        "covered_micro_windows": 1269,
+        "pending_micro_windows": 0,
+        "seeded_micro_windows": 31,
+        "macro_credited_micro_windows": 1238,
+        "macro_assignment_total": 256,
+        "credited_macro_assignments": 256,
+        "transaction_count": 12,
+        "quarantined_attempts": 6,
+        "covered_window_ids_digest": "b5cf028b0135d0d58e0b039b23e0f00b7da0a8ed606fc5e37d44148d3d5de4c3",
+        "credited_assignment_ids_digest": "ad778630157f7d56841c8f98c8cd90577ec0bf39f924ddae319a1e82e4b157ca",
+        "current_phase": "macro_v2_macro-batch-0012_checkpointed"
+      },
+      "independent_checkpoint": {
+        "ref": "master/macro/validation/macro-batch-0012/luna-postcheckpoint.json",
+        "sha256": "ec065ba2cae0f85867d8d7fe26f2bbe01f6a4481a4b348eb9b12105242feb311",
+        "status": "pass",
+        "checker": "macro_live_luna_controller_v2"
+      },
+      "quarantines": {
+        "count": 6,
+        "coverage_credit_each": 0,
+        "assignment_ids": [
+          "A005M-000015-INTEGRATED-MACRO-BCDD1AE883C0-0002",
+          "A005M-000044-INTEGRATED-MACRO-AC612DBB4EFE-0002",
+          "A005M-000064-INTEGRATED-MACRO-C45446C7AC96-0001",
+          "A005M-000210-INTEGRATED-MACRO-ECB10B16CAAF-0001",
+          "A005M15-000039-INTEGRATED-MACRO15-AC612DBB4EFE-0002",
+          "A005M15-000110-INTEGRATED-MACRO15-74C788D8A63C-0002"
+        ]
+      },
+      "completion": {
+        "complete": true,
+        "applies_only_to": "shared_frozen_1269_window_universe",
+        "propagates_to_current_live_head": false
+      },
+      "new_activation_authorized": false,
+      "new_coverage_credit_granted": 0,
+      "canonical_plan_writes_authorized": false
+    },
+    {
+      "scope_type": "current_live_head_delta",
+      "scope_id": "final-live-head-delta-pending",
+      "status": "BLOCKED_AWAITING_SETTLED_FINAL_DELTA_AND_FRESH_INDEPENDENT_CHECKPOINT",
+      "authority_kind": "blocked_append_only_future_delta",
+      "coverage_unit": "changed_or_new_semantic_window_and_affected_join",
+      "baseline_scope": "frozen_macro_micro_window_coverage",
+      "source_scope_binding": {
+        "source_scope_ref": "master/macro/frozen/epoch-0016/manifests/source_scope.jsonl",
+        "source_scope_sha256": "963911b952c3909c9012ed25a35151719b4f3f18b173cc6fffc8bbc1036e4e46",
+        "binding_ref": "master/final_live_head_delta/final-live-head-delta-0002/source_scope_binding.json",
+        "binding_sha256": "8484922e0f96633378af3fc32dfc973dbaffd6812acbb0f5aed2d25bcd60e00e",
+        "receipt_ref": "master/final_live_head_delta/final-live-head-delta-0002/source_scope_binding_receipt.json",
+        "receipt_sha256": "cf8e02f95c2cf3f495ba443bb7856609ef4a5573fee9bb70b3577a61ca9877a0",
+        "binding_status": "BLOCKED_AWAITING_FRESH_INDEPENDENT_LUNA_DELTA_PRELAUNCH"
+      },
+      "preserved_predecessor_failure": {
+        "prepare_ref": "master/final_live_head_delta/final-live-head-delta-0001/prepare_final_live_head_delta_0001.py",
+        "prepare_sha256": "8cc057cdb4b7a187fde315e72aee10e565459e7fd6911d2d10db67dd13fc904b",
+        "unsupported_expected_source_scope_sha256": "25027060861687c5a8e45024844d9de9e6c0a38f68a9470f2a84cb1774b86015",
+        "failure": "source-scope-drift",
+        "modified": false,
+        "executed": false
+      },
+      "candidate_scope": {
+        "modified_file_count": 15,
+        "semantic_files": [
+          "Plans/Planning_Wizard.md",
+          "Plans/PRD_Builder.md",
+          "Plans/FinalGUISpec.md"
+        ],
+        "derived_evidence_files": [
+          "Plans/.implementation_readiness/buildability_gate_report.json",
+          "Plans/.implementation_readiness/pnc019_certification_receipt.json",
+          "Plans/.plan_index/acceptance_units.jsonl",
+          "Plans/.plan_index/coverage_report.json",
+          "Plans/.plan_index/dependencies.json",
+          "Plans/.plan_index/doc_cards.json",
+          "Plans/.plan_index/node_readiness_report.json",
+          "Plans/.plan_index/plan_units.jsonl",
+          "Plans/.plan_migration/pds-20260611-002-atomize-planunits/batch_report.jsonl",
+          "Plans/.plan_migration/pds-20260611-002-atomize-planunits/final_validation_summary.json",
+          "Plans/Spec_Lock.json",
+          "Plans/auto_decisions.jsonl"
+        ],
+        "hash_binding_role": "non_authoritative_observation_in_unexecuted_predecessor",
+        "settled": false,
+        "settlement_authority_ref": null,
+        "settlement_authority_sha256": null,
+        "semantic_packet_manifest_ref": null,
+        "semantic_packet_manifest_sha256": null
+      },
+      "independent_gates": {
+        "fresh_luna_prelaunch_present": false,
+        "fresh_luna_prelaunch_ref": null,
+        "fresh_luna_prelaunch_sha256": null,
+        "independent_postrun_checkpoint_present": false,
+        "independent_postrun_checkpoint_ref": null,
+        "independent_postrun_checkpoint_sha256": null
+      },
+      "blockers": [
+        "settled_final_delta_manifest_missing",
+        "fresh_independent_luna_prelaunch_missing",
+        "independent_postrun_checkpoint_missing"
+      ],
+      "complete": false,
+      "new_activation_authorized": false,
+      "new_coverage_credit_granted": 0,
+      "canonical_plan_writes_authorized": false,
+      "zero_state": {
+        "activation": 0,
+        "semantic_packets": 0,
+        "launches": 0,
+        "results": 0,
+        "receipts": 0,
+        "capture": 0,
+        "credit": 0
+      }
+    }
+  ],
+  "guardrails": {
+    "all_scopes_complete": false,
+    "frozen_macro_complete": true,
+    "current_live_head_complete": false,
+    "macro_complete_propagates_to_current_live_head": false,
+    "frozen_macro_complete_does_not_certify_current_live_head": true,
+    "activation_authorized": false,
+    "coverage_credit_granted": 0,
+    "canonical_plan_writes_authorized": false,
+    "prior_pointers_mutated": false
+  }
+}

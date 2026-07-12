@@ -1,0 +1,120 @@
+{
+  "assignment_id": "A005M-000150-INTEGRATED-MACRO-8C88D9F4CA2B-0015",
+  "attempt_id": "attempt-0014",
+  "audit_id": "audit-20260710-005-plan-assurance-model-lanes-fresh-agent-exhaustive",
+  "blindness": {
+    "external_research": "deferred_to_feature_research_phase",
+    "peer_results": "forbidden",
+    "prior_audits": "forbidden",
+    "unrelated_sources": "forbidden"
+  },
+  "bundle_core_range": [
+    26228,
+    26893
+  ],
+  "bundle_id": "MACRO-8C88D9F4CA2B-0015",
+  "context_ranges": [
+    [
+      26216,
+      26227
+    ]
+  ],
+  "document_path": "Plans/Wiring_Matrix.production.json",
+  "micro_window_ids": [
+    "WIN-8C88D9F4CA2B-0070",
+    "WIN-8C88D9F4CA2B-0071"
+  ],
+  "phase": "blind_macro_window_review",
+  "required_dimensions": [
+    "behavior",
+    "capabilities",
+    "inputs_outputs",
+    "contracts",
+    "states_transitions",
+    "authority",
+    "ownership",
+    "consumers",
+    "gui_truth",
+    "failures_recovery",
+    "security_privacy",
+    "propagation",
+    "operations",
+    "scale_performance",
+    "compatibility_migration",
+    "acceptance_oracles",
+    "builder_discretion",
+    "ambiguity_unknowns",
+    "missing_callers_consumers",
+    "invalid_states_transitions",
+    "concurrency_races",
+    "partial_failure",
+    "recovery_rollback",
+    "authority_boundaries",
+    "privacy_data_lifecycle",
+    "untrusted_inputs",
+    "gui_misleading_states",
+    "offline_network_loss",
+    "scale_limits",
+    "accessibility",
+    "localization",
+    "observability_support",
+    "destructive_actions",
+    "cross_document_seams",
+    "test_falsifiability",
+    "unknown_unknowns"
+  ],
+  "result_schema_ref": "schemas/macro_review_result.schema.json",
+  "review_instructions": "Read every assigned core line and account for every required_source_unit_ref. Apply both exact-behavior and adversarial-negative-space lenses across every required dimension. Extract concise feature, behavior, contract, state, authority, consumer, GUI, failure/recovery, oracle, gap, unknown, and explicit-non-gap items with exact source evidence. Do not merely paraphrase headings or copy unit refs. Each segment must name its complete required_source_unit_refs list and at least one item. Write exactly one regular JSON payload inside the assigned output directory; result.json is recommended but the filename is not semantic. Do not write a terminal seal. Return PMR1 only after the JSON payload is fully written.",
+  "schema_version": "macro-context-capsule-v1",
+  "segments": [
+    {
+      "core_range": [
+        26228,
+        26581
+      ],
+      "core_sha256": "23dbffe3b54b16da6ba3ab773f063effff66bc39f92c3416f657520c485131bb",
+      "plan_unit_ids": [],
+      "required_source_unit_refs": [
+        "SEMANTIC:JSON_FIELD:Plans/Wiring_Matrix.production.json:entries:CONT-070",
+        "STRUCTURAL:$.entries"
+      ],
+      "semantic_block_ids": [
+        "JSON_FIELD:Plans/Wiring_Matrix.production.json:entries:CONT-070"
+      ],
+      "structural_paths": [
+        "$.entries"
+      ],
+      "token_estimate": 8943,
+      "window_id": "WIN-8C88D9F4CA2B-0070"
+    },
+    {
+      "core_range": [
+        26582,
+        26893
+      ],
+      "core_sha256": "d60b75672beee82cff349909ea49bc4929305e533811a4d906e132e403325283",
+      "plan_unit_ids": [],
+      "required_source_unit_refs": [
+        "SEMANTIC:JSON_FIELD:Plans/Wiring_Matrix.production.json:entries:CONT-071",
+        "SEMANTIC:JSON_SUFFIX:Plans/Wiring_Matrix.production.json",
+        "STRUCTURAL:$",
+        "STRUCTURAL:$.entries"
+      ],
+      "semantic_block_ids": [
+        "JSON_FIELD:Plans/Wiring_Matrix.production.json:entries:CONT-071",
+        "JSON_SUFFIX:Plans/Wiring_Matrix.production.json"
+      ],
+      "structural_paths": [
+        "$",
+        "$.entries"
+      ],
+      "token_estimate": 7028,
+      "window_id": "WIN-8C88D9F4CA2B-0071"
+    }
+  ],
+  "source_excerpt_line_format": "L######## followed by a tab and exact canonical source text",
+  "source_excerpt_ref": "capsules/source/f8/f8e22fac226ff12cb022601ba454fd1c01c0634828f7b9236a8b679968ec9c85.txt",
+  "source_excerpt_sha256": "f8e22fac226ff12cb022601ba454fd1c01c0634828f7b9236a8b679968ec9c85",
+  "source_sha256": "01b3f170ce11d2f53a01be423c14390354e6bea881fed5322807a0db7e65c36d",
+  "token_estimate": 15971
+}

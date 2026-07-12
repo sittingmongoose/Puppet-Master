@@ -4,7 +4,7 @@ Source: `Plans/Planning_Wizard.md`
 
 Source lines: L99-L1142
 
-Source SHA256: `a4f61959f82a4fcde5872a40f7d92b8172fd609257017496f8c3945dcc992686`
+Source SHA256: `fee6e23abff2aafb251f978165fdf014bcfe9a9beba3d805857ddf4212000ec0`
 
 ---
 
@@ -120,7 +120,7 @@ plan_unit_id: PWIZ-003
 unit_type: requirement
 status: accepted
 owner_doc: Plans/Planning_Wizard.md
-canonical_text: 'Planning Wizard derives an initial topic graph from the input pack, project/repository context, work intent, risk, and known defaults rather than enforcing a fixed list of sections. Possible topics include overview, product behavior, GUI or UX, backend, data, integrations, security, permissions, testing, deployment, migration, observability, and risks, but actual titles and scope are evidence-driven. The controller can add, split, merge, rename, defer, reopen, reorder, and mark topics impacted, recording the reason, source refs, dependencies, user-visible origin, and resulting invalidations. The GUI suggests a next topic and conversational sequence while the underlying topic map preserves dependencies and allows safe navigation, reopening, and parallel background work.'
+canonical_text: 'Planning Wizard derives an initial topic graph from the input pack, project/repository context, work intent, risk, and known defaults rather than enforcing a fixed list of sections. Possible topics include overview, product behavior, GUI or UX, backend, data, integrations, security, permissions, testing, deployment, migration, observability, and risks, but actual titles and scope are evidence-driven. The controller can add, split, merge, rename, defer, reopen, reorder, and mark topics impacted, recording the reason, source refs, dependencies, user-visible origin, and resulting invalidations. The GUI suggests a next topic and conversational sequence while the underlying topic map preserves dependencies and allows safe navigation, reopening, and parallel background work. Topic dependency gating derives a locked presentation for topics whose dependency topics are not yet resolved: a not_started topic with unmet depends_on topics is blocked from open and conversion, shows a visible gating affordance naming its unmet dependencies (Unlocks after the named dependency topics are Ready), remains view-only while locked, and unlocks in cascade as its dependencies become Ready.'
 gui_related: true
 gui_classification_reason: Includes user-visible GUI/workspace/command/projection behavior.
 depends_on: []
@@ -411,10 +411,10 @@ plan_unit_id: PWIZ-007
 unit_type: requirement
 status: accepted
 owner_doc: Plans/Planning_Wizard.md
-canonical_text: 'After required topics are Ready, a fresh Overseer agent reconciles topic drafts into a coherent Final Plan Pack, resolves duplicates and owner boundaries, and computes cross-topic dependencies, consistency, and compile readiness. Final planning review uses the shared live document preview, selection context menu, comments, source inspection, challenge, targeted revision, and annotation status system used by PRD Builder. Planning topics may accept uploaded reference images and generate wireframes, architecture diagrams, data-flow diagrams, state diagrams, or visual references through the existing image system, with artifact IDs, provenance, topic links, version, and status. Images are supporting references; any requirement, decision, constraint, flow, or acceptance implication introduced by an image must also be written into the planning ledger and canonical Plan text.'
+canonical_text: 'After required topics are Ready, a fresh Overseer agent reconciles topic drafts into a coherent Final Plan Pack, resolves duplicates and owner boundaries, and computes cross-topic dependencies, consistency, and compile readiness. Final planning review uses the shared live document preview, selection context menu, comments, source inspection, challenge, targeted revision, and annotation status system used by PRD Builder. Plan review also provides a per-topic live Topic Plan Draft preview scoped to the selected topic, with an expand overlay and selection-driven annotate, comment, and send-back actions that reuse the PRD Builder annotation status system at topic granularity; a topic-scope send-back injects a revision request into that topic''s embedded Assistant Chat instance, runs a bounded revision micro-track, and bumps the Topic Plan Draft version, while a PRD-scope send-back always records a durable revision request note in the ledger-backed projection. Planning topics may accept uploaded reference images and generate wireframes, architecture diagrams, data-flow diagrams, state diagrams, or visual references through the existing image system, with artifact IDs, provenance, topic links, version, and status. Images are supporting references; any requirement, decision, constraint, flow, or acceptance implication introduced by an image must also be written into the planning ledger and canonical Plan text.'
 gui_related: true
 gui_classification_reason: Includes user-visible GUI/workspace/command/projection behavior.
-depends_on: []
+depends_on: [F3-146, F3-322]
 unblocks: []
 acceptance_criteria:
 - The live owner doc preserves every source atom listed in source_atom_ids without treating the ledger as canonical product prose.
@@ -988,7 +988,7 @@ unit_type: requirement
 status: accepted
 owner_doc: Plans/Planning_Wizard.md
 canonical_text: 'Planning Wizard GUI shows a collapsible parent named for the plan or project with child topic threads, dynamically added topics, final integration, final review, and attached audit/repair activity. The user remains in one Planning Wizard workspace with topic map, active Assistant Chat panel, live plan preview, source/annotation/readiness panels, and bounded backend child threads loaded as selected. Topic cards represent not_started, active, ledger_syncing, ledger_synced, compiling, auditing, repairing, ready, impacted, reopened, deferred, and blocked, with clear dependency and origin badges. Long-running topic conversion, audit, repair, final integration, and final audit display active stage, progress counts, assignment counts, findings fixed, current pass, and user-relevant status so the interface never appears stalled. Audit and repair children are attached under their topic or final Plan Pack and summarized in activity/progress
-  views; detailed agent traces and evidence may be expanded without cluttering the default thread tree.'
+  views; detailed agent traces and evidence may be expanded without cluttering the default thread tree. The workspace additionally hosts per-topic plan preview and annotation panels and an embedded Assistant Chat instance slot per topic conversation as defined by PWIZ-019, while the separate Assistant Chat side panel remains available.'
 gui_related: true
 gui_classification_reason: Includes user-visible GUI/workspace/command/projection behavior.
 depends_on: []

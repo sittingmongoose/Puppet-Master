@@ -1,0 +1,264 @@
+{
+  "assignment_id": "A005M-000011-INTEGRATED-MACRO-6F4A920A9252-0001",
+  "attempt_id": "attempt-0014",
+  "audit_id": "audit-20260710-005-plan-assurance-model-lanes-fresh-agent-exhaustive",
+  "blindness": {
+    "external_research": "deferred_to_feature_research_phase",
+    "peer_results": "forbidden",
+    "prior_audits": "forbidden",
+    "unrelated_sources": "forbidden"
+  },
+  "bundle_core_range": [
+    1,
+    1630
+  ],
+  "bundle_id": "MACRO-6F4A920A9252-0001",
+  "context_ranges": [],
+  "document_path": "Plans/CLI_Bridged_Providers.md",
+  "micro_window_ids": [
+    "WIN-6F4A920A9252-0001",
+    "WIN-6F4A920A9252-0002",
+    "WIN-6F4A920A9252-0003",
+    "WIN-6F4A920A9252-0004",
+    "WIN-6F4A920A9252-0005"
+  ],
+  "phase": "blind_macro_window_review",
+  "required_dimensions": [
+    "behavior",
+    "capabilities",
+    "inputs_outputs",
+    "contracts",
+    "states_transitions",
+    "authority",
+    "ownership",
+    "consumers",
+    "gui_truth",
+    "failures_recovery",
+    "security_privacy",
+    "propagation",
+    "operations",
+    "scale_performance",
+    "compatibility_migration",
+    "acceptance_oracles",
+    "builder_discretion",
+    "ambiguity_unknowns",
+    "missing_callers_consumers",
+    "invalid_states_transitions",
+    "concurrency_races",
+    "partial_failure",
+    "recovery_rollback",
+    "authority_boundaries",
+    "privacy_data_lifecycle",
+    "untrusted_inputs",
+    "gui_misleading_states",
+    "offline_network_loss",
+    "scale_limits",
+    "accessibility",
+    "localization",
+    "observability_support",
+    "destructive_actions",
+    "cross_document_seams",
+    "test_falsifiability",
+    "unknown_unknowns"
+  ],
+  "result_schema_ref": "schemas/macro_review_result.schema.json",
+  "review_instructions": "Read every assigned core line and account for every required_source_unit_ref. Apply both exact-behavior and adversarial-negative-space lenses across every required dimension. Extract concise feature, behavior, contract, state, authority, consumer, GUI, failure/recovery, oracle, gap, unknown, and explicit-non-gap items with exact source evidence. Do not merely paraphrase headings or copy unit refs. Each segment must name its complete required_source_unit_refs list and at least one item. Write exactly one regular JSON payload inside the assigned output directory; result.json is recommended but the filename is not semantic. Do not write a terminal seal. Return PMR1 only after the JSON payload is fully written.",
+  "schema_version": "macro-context-capsule-v1",
+  "segments": [
+    {
+      "core_range": [
+        1,
+        396
+      ],
+      "core_sha256": "78fddaca35a4768f9e9e590f7bfa38e6cdbbc1c3f3ebfa8d5397a81909cf19f0",
+      "plan_unit_ids": [
+        "CBP-001",
+        "CBP-002",
+        "CBP-003",
+        "CBP-023"
+      ],
+      "required_source_unit_refs": [
+        "PLANUNIT:CBP-001",
+        "PLANUNIT:CBP-002",
+        "PLANUNIT:CBP-003",
+        "PLANUNIT:CBP-023",
+        "SEMANTIC:PROLOGUE:Plans/CLI_Bridged_Providers.md",
+        "SEMANTIC:PLANUNIT:CBP-023",
+        "SEMANTIC:PLANUNIT:CBP-001",
+        "SEMANTIC:PLANUNIT:CBP-002",
+        "SEMANTIC:PLANUNIT:CBP-003"
+      ],
+      "semantic_block_ids": [
+        "PROLOGUE:Plans/CLI_Bridged_Providers.md",
+        "PLANUNIT:CBP-023",
+        "PLANUNIT:CBP-001",
+        "PLANUNIT:CBP-002",
+        "PLANUNIT:CBP-003"
+      ],
+      "structural_paths": [],
+      "token_estimate": 10187,
+      "window_id": "WIN-6F4A920A9252-0001"
+    },
+    {
+      "core_range": [
+        397,
+        747
+      ],
+      "core_sha256": "a8dd68b43537a40863c55c899f1e8ac4f05d841c0080c8edc263f3ffbc6d084f",
+      "plan_unit_ids": [
+        "CBP-004",
+        "CBP-005",
+        "CBP-006",
+        "CBP-007",
+        "CBP-008",
+        "CBP-009",
+        "CBP-010"
+      ],
+      "required_source_unit_refs": [
+        "PLANUNIT:CBP-004",
+        "PLANUNIT:CBP-005",
+        "PLANUNIT:CBP-006",
+        "PLANUNIT:CBP-007",
+        "PLANUNIT:CBP-008",
+        "PLANUNIT:CBP-009",
+        "PLANUNIT:CBP-010",
+        "SEMANTIC:PLANUNIT:CBP-004",
+        "SEMANTIC:PLANUNIT:CBP-005",
+        "SEMANTIC:PLANUNIT:CBP-006",
+        "SEMANTIC:PLANUNIT:CBP-007",
+        "SEMANTIC:PLANUNIT:CBP-008",
+        "SEMANTIC:PLANUNIT:CBP-009",
+        "SEMANTIC:PLANUNIT:CBP-010"
+      ],
+      "semantic_block_ids": [
+        "PLANUNIT:CBP-004",
+        "PLANUNIT:CBP-005",
+        "PLANUNIT:CBP-006",
+        "PLANUNIT:CBP-007",
+        "PLANUNIT:CBP-008",
+        "PLANUNIT:CBP-009",
+        "PLANUNIT:CBP-010"
+      ],
+      "structural_paths": [],
+      "token_estimate": 5136,
+      "window_id": "WIN-6F4A920A9252-0002"
+    },
+    {
+      "core_range": [
+        748,
+        1109
+      ],
+      "core_sha256": "435fbc117418ffced87bae90b59dc61ca805962896e35e858839edeeb78d4bf9",
+      "plan_unit_ids": [
+        "CBP-011",
+        "CBP-012",
+        "CBP-013",
+        "CBP-014",
+        "CBP-015",
+        "CBP-016",
+        "CBP-017"
+      ],
+      "required_source_unit_refs": [
+        "PLANUNIT:CBP-011",
+        "PLANUNIT:CBP-012",
+        "PLANUNIT:CBP-013",
+        "PLANUNIT:CBP-014",
+        "PLANUNIT:CBP-015",
+        "PLANUNIT:CBP-016",
+        "PLANUNIT:CBP-017",
+        "SEMANTIC:PLANUNIT:CBP-011",
+        "SEMANTIC:PLANUNIT:CBP-012",
+        "SEMANTIC:PLANUNIT:CBP-013",
+        "SEMANTIC:PLANUNIT:CBP-014",
+        "SEMANTIC:PLANUNIT:CBP-015",
+        "SEMANTIC:PLANUNIT:CBP-016",
+        "SEMANTIC:PLANUNIT:CBP-017"
+      ],
+      "semantic_block_ids": [
+        "PLANUNIT:CBP-011",
+        "PLANUNIT:CBP-012",
+        "PLANUNIT:CBP-013",
+        "PLANUNIT:CBP-014",
+        "PLANUNIT:CBP-015",
+        "PLANUNIT:CBP-016",
+        "PLANUNIT:CBP-017"
+      ],
+      "structural_paths": [],
+      "token_estimate": 5344,
+      "window_id": "WIN-6F4A920A9252-0003"
+    },
+    {
+      "core_range": [
+        1110,
+        1432
+      ],
+      "core_sha256": "01a180816981603e4655d3b449440417f6d367328ebe7ecd32c730e6c0adb01e",
+      "plan_unit_ids": [
+        "CBP-018",
+        "CBP-019",
+        "CBP-020",
+        "CBP-021",
+        "CBP-022",
+        "CBP-024"
+      ],
+      "required_source_unit_refs": [
+        "PLANUNIT:CBP-018",
+        "PLANUNIT:CBP-019",
+        "PLANUNIT:CBP-020",
+        "PLANUNIT:CBP-021",
+        "PLANUNIT:CBP-022",
+        "PLANUNIT:CBP-024",
+        "SEMANTIC:PLANUNIT:CBP-018",
+        "SEMANTIC:PLANUNIT:CBP-019",
+        "SEMANTIC:PLANUNIT:CBP-020",
+        "SEMANTIC:PLANUNIT:CBP-021",
+        "SEMANTIC:PLANUNIT:CBP-022",
+        "SEMANTIC:PLANUNIT:CBP-024"
+      ],
+      "semantic_block_ids": [
+        "PLANUNIT:CBP-018",
+        "PLANUNIT:CBP-019",
+        "PLANUNIT:CBP-020",
+        "PLANUNIT:CBP-021",
+        "PLANUNIT:CBP-022",
+        "PLANUNIT:CBP-024"
+      ],
+      "structural_paths": [],
+      "token_estimate": 7273,
+      "window_id": "WIN-6F4A920A9252-0004"
+    },
+    {
+      "core_range": [
+        1433,
+        1630
+      ],
+      "core_sha256": "07a817d6ccbebe918c1d688de4043a3b048677b3416d6267378f871d8953aea2",
+      "plan_unit_ids": [
+        "CBP-025",
+        "CBP-026",
+        "CBP-027"
+      ],
+      "required_source_unit_refs": [
+        "PLANUNIT:CBP-025",
+        "PLANUNIT:CBP-026",
+        "PLANUNIT:CBP-027",
+        "SEMANTIC:PLANUNIT:CBP-027",
+        "SEMANTIC:PLANUNIT:CBP-026",
+        "SEMANTIC:PLANUNIT:CBP-025"
+      ],
+      "semantic_block_ids": [
+        "PLANUNIT:CBP-027",
+        "PLANUNIT:CBP-026",
+        "PLANUNIT:CBP-025"
+      ],
+      "structural_paths": [],
+      "token_estimate": 3872,
+      "window_id": "WIN-6F4A920A9252-0005"
+    }
+  ],
+  "source_excerpt_line_format": "L######## followed by a tab and exact canonical source text",
+  "source_excerpt_ref": "capsules/source/2f/2fbd8a38b04262bb667923e3bdda40f3f4ed7fc52efd9e0b0bc62685f7652760.txt",
+  "source_excerpt_sha256": "2fbd8a38b04262bb667923e3bdda40f3f4ed7fc52efd9e0b0bc62685f7652760",
+  "source_sha256": "6338c16cdf5330860d80a33ddb5a125a0918d121a634853d0f623f3de034fae9",
+  "token_estimate": 31812
+}

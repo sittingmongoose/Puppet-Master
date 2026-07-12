@@ -1,0 +1,2531 @@
+L00000001	# Wiring Matrix (Canonical)
+L00000002	
+L00000003	
+L00000004	## Canonical owner-section requirements
+L00000005	
+L00000006	These requirements are canonical live specification text for this owner document and preserve the required product, runtime, storage, UI, and governance details in owner-section form.
+L00000007	
+L00000008	### Route/open compatibility-only fallback marking
+L00000009	> **Compliance:** This document follows `Plans/DRY_Rules.md` and references SSOT contracts in `Plans/Contracts_V0.md`. Naming: “Puppet Master” only. No open questions; deterministic defaults per `Plans/Decision_Policy.md`.
+L00000010	
+L00000011	
+L00000012	<!--
+L00000013	PUPPET MASTER -- UI WIRING MATRIX SSOT
+L00000014	
+L00000015	ABSOLUTE NAMING RULE:
+L00000016	- Platform name is "Puppet Master" only.
+L00000017	- If older naming exists, refer to it only as "legacy naming" (do not quote it).
+L00000018	-->
+L00000019	
+L00000020	<a id="section-0"></a>
+L00000021	## 0. Scope
+L00000022	This file is the wiring matrix template and example entries.
+L00000023	Real project wiring matrices are generated/maintained as JSON validated against `Plans/Wiring_Matrix.schema.json`.
+L00000024	The current production GUI/PMConcept repair artifact is `Plans/Wiring_Matrix.production.json`; `Plans/Wiring_Matrix.production.exclusions.json` records generic, parser, glob, or compatibility-only command-family tokens that are not valid production wiring rows.
+L00000025	
+L00000026	ContractRef: SchemaID:Wiring_Matrix.schema.json, ContractName:Plans/UI_Wiring_Rules.md, Gate:GATE-010
+L00000027	
+L00000028	---
+L00000029	
+L00000030	<a id="section-1"></a>
+L00000031	## 1. Template
+L00000032	
+L00000033	Column definitions for wiring matrix entries:
+L00000034	
+L00000035	| Column | Description |
+L00000036	|---|---|
+L00000037	| `ui_element_id` | Stable DOM/widget ID of the triggering UI element (e.g., `btn.github.connect`). |
+L00000038	| `ui_location` | Human-readable surface path where the element appears (e.g., "Settings > GitHub/Auth"). |
+L00000039	| `ui_command_id` | The `cmd.*` ID from `UI_Command_Catalog.md` that this element dispatches. |
+L00000040	| `handler_location` | Canonical Rust module/function path (e.g., `handlers::github_auth::connect` or `crate::core::handlers::auth::connect`). |
+L00000041	| `expected_event_types` | Event types emitted on successful dispatch, or "(none — UI-only)" for view-state-only commands. |
+L00000042	| `acceptance_checks` | 2–3 checks that GATE-010 verification validates for this entry. |
+L00000043	| `evidence_required` | Evidence artifact or bundle required to satisfy the gate. |
+L00000044	
+L00000045	Machine-readable format note:
+L00000046	- `entries` in JSON is a map keyed by `ui_element_id` (not an array). This keying makes interactive-element IDs unique by construction.
+L00000047	
+L00000048	**Markdown table header:**
+L00000049	
+L00000050	| ui_element_id | ui_location | ui_command_id | handler_location | expected_event_types | acceptance_checks | evidence_required |
+L00000051	|---|---|---|---|---|---|---|
+L00000052	
+L00000053	ContractRef: Primitive:UICommand, ContractName:Plans/Contracts_V0.md#7-uicommand, Gate:GATE-010
+L00000054	
+L00000055	---
+L00000056	
+L00000057	<a id="section-2"></a>
+L00000058	## 2. Example Entries
+L00000059	
+L00000060	The following 10 rows are drawn from `Plans/UI_Command_Catalog.md`.
+L00000061	Each row is marked `(EXAMPLE)` — real entries live in JSON validated against `Plans/Wiring_Matrix.schema.json`.
+L00000062	
+L00000063	ContractRef: ContractName:Plans/UI_Command_Catalog.md, SchemaID:Wiring_Matrix.schema.json
+L00000064	
+L00000065	| ui_element_id | ui_location | ui_command_id | handler_location | expected_event_types | acceptance_checks | evidence_required |
+L00000066	|---|---|---|---|---|---|---|
+L00000067	| btn.github.connect | Settings > GitHub/Auth | cmd.github.connect | handlers::github_auth::connect | auth.github.device_code.issued, auth.github.token.polling, auth.github.authenticated, auth.github.failed | Handler registered in dispatcher; Dispatch emits expected events in order; UI element rendered in Settings > GitHub/Auth surface | (EXAMPLE) |
+L00000068	| btn.github.disconnect | Settings > GitHub/Auth | cmd.github.disconnect | handlers::github_auth::disconnect | auth.github.disconnected | Handler registered in dispatcher; Dispatch emits auth.github.disconnected; Token removed from credential store | (EXAMPLE) |
+L00000069	| menu.lsp.goto_def | File Editor context menu | cmd.lsp.goto_definition | handlers::lsp::goto_definition | tool.invoked | Handler registered in dispatcher; Dispatch emits tool.invoked with tool_name=lsp; Editor navigates to definition location | (EXAMPLE) |
+L00000070	| menu.lsp.find_refs | File Editor context menu | cmd.lsp.find_references | handlers::lsp::find_references | tool.invoked | Handler registered in dispatcher; Dispatch emits tool.invoked with tool_name=lsp; References panel populated | (EXAMPLE) |
+L00000071	| btn.widget.add | Dashboard widget picker | cmd.widget.add | handlers::widget_layout::add | (none — UI-only) | Handler registered in dispatcher; Widget instance added to layout state; Widget rendered in target page grid | (EXAMPLE) |
+L00000072	| btn.widget.remove | Dashboard widget header | cmd.widget.remove | handlers::widget_layout::remove | (none — UI-only) | Handler registered in dispatcher; Widget instance removed from layout state; Widget no longer rendered in grid | (EXAMPLE) |
+L00000073	| node.graph.select | Orchestrator > Node Graph Display | cmd.graph.select_node | handlers::run_graph::select_node | (none — UI-only) | Handler registered in dispatcher; Selection state updated to target node_id; Detail panel reflects selected node | (EXAMPLE) |
+L00000074	| btn.graph.retry | Orchestrator > Node Graph Display detail panel | cmd.graph.retry_node | handlers::run_graph::retry_node | tool.invoked, tool.denied | Handler registered in dispatcher; Dispatch emits tool.invoked or tool.denied; Node state transitions to retrying when invocation succeeds | (EXAMPLE) |
+L00000075	| tab.orchestrator.switch | Orchestrator page tab bar | cmd.orchestrator.switch_tab | handlers::orchestrator::switch_tab | (none — UI-only) | Handler registered in dispatcher; Active tab state updated to target tab_id; Tab content panel switches | (EXAMPLE) |
+L00000076	| btn.chat.new | Assistant chat input | cmd.chat.new | handlers::chat::new_thread | chat.thread.created | Handler registered in dispatcher; Dispatch emits chat.thread.created; New empty thread displayed in chat panel | (EXAMPLE) |
+L00000077	
+L00000078	ContractRef: UICommand:cmd.github.connect, UICommand:cmd.github.disconnect, UICommand:cmd.lsp.goto_definition, UICommand:cmd.lsp.find_references, UICommand:cmd.widget.add, UICommand:cmd.widget.remove, UICommand:cmd.graph.select_node, UICommand:cmd.graph.retry_node, UICommand:cmd.orchestrator.switch_tab, UICommand:cmd.chat.new
+L00000079	
+L00000080	---
+L00000081	
+L00000082	<a id="section-3"></a>
+L00000083	## 3. JSON Example
+L00000084	
+L00000085	A machine-readable wiring matrix conforms to `Plans/Wiring_Matrix.schema.json`.
+L00000086	Below are 3 representative entries illustrating the JSON format:
+L00000087	
+L00000088	```json
+L00000089	{
+L00000090	  "$schema": "https://json-schema.org/draft/2020-12/schema",
+L00000091	  "schema_id": "pm.wiring_matrix.v0",
+L00000092	  "generated_at": "2026-02-24T00:00:00Z",
+L00000093	  "entries": {
+L00000094	    "btn.github.connect": {
+L00000095	      "ui_element_id": "btn.github.connect",
+L00000096	      "ui_location": "Settings > GitHub/Auth",
+L00000097	      "ui_command_id": "cmd.github.connect",
+L00000098	      "handler_location": "handlers::github_auth::connect",
+L00000099	      "expected_event_types": [
+L00000100	        "auth.github.device_code.issued",
+L00000101	        "auth.github.token.polling",
+L00000102	        "auth.github.authenticated",
+L00000103	        "auth.github.failed"
+L00000104	      ],
+L00000105	      "acceptance_checks": [
+L00000106	        "Handler registered in dispatcher",
+L00000107	        "Dispatch emits expected events in order",
+L00000108	        "UI element rendered in Settings > GitHub/Auth surface"
+L00000109	      ],
+L00000110	      "evidence_required": "evidence/wiring/cmd.github.connect.json"
+L00000111	    },
+L00000112	    "menu.lsp.goto_def": {
+L00000113	      "ui_element_id": "menu.lsp.goto_def",
+L00000114	      "ui_location": "File Editor context menu",
+L00000115	      "ui_command_id": "cmd.lsp.goto_definition",
+L00000116	      "handler_location": "handlers::lsp::goto_definition",
+L00000117	      "expected_event_types": [
+L00000118	        "tool.invoked"
+L00000119	      ],
+L00000120	      "acceptance_checks": [
+L00000121	        "Handler registered in dispatcher",
+L00000122	        "Dispatch emits tool.invoked with tool_name=lsp",
+L00000123	        "Editor navigates to definition location"
+L00000124	      ],
+L00000125	      "evidence_required": "evidence/wiring/cmd.lsp.goto_definition.json"
+L00000126	    },
+L00000127	    "btn.widget.add": {
+L00000128	      "ui_element_id": "btn.widget.add",
+L00000129	      "ui_location": "Dashboard widget picker",
+L00000130	      "ui_command_id": "cmd.widget.add",
+L00000131	      "handler_location": "handlers::widget_layout::add",
+L00000132	      "expected_event_types": [],
+L00000133	      "acceptance_checks": [
+L00000134	        "Handler registered in dispatcher",
+L00000135	        "Widget instance added to layout state",
+L00000136	        "Widget rendered in target page grid"
+L00000137	      ],
+L00000138	      "evidence_required": "evidence/wiring/cmd.widget.add.json"
+L00000139	    }
+L00000140	  }
+L00000141	}
+L00000142	```
+L00000143	
+L00000144	## GUI / PMConcept production wiring repair addendum (2026-07-02)
+L00000145	
+L00000146	This addendum closes the GUI wiring defects from the PMConcept readiness report. It does not create WorkNodes, NodeSeeds, executable queues, implementation code, runtime dispatch, generated governance artifacts, or a governance seal.
+L00000147	
+L00000148	### Production JSON artifact
+L00000149	
+L00000150	`Plans/Wiring_Matrix.production.json` is the production wiring-matrix JSON artifact for the current GUI/PMConcept repair packet and validates against `Plans/Wiring_Matrix.schema.json`. It contains one map entry per schema-valid production command/control binding, keyed by `ui_element_id`, with `ui_command_id`, `handler_location`, expected event types, acceptance checks, required evidence, typed state selector, disabled-reason projection, effect contract, accessibility contract, and test evidence. `Plans/Wiring_Matrix.production.exclusions.json` records command-family roots, parser false positives, glob tokens, invalid historical aliases, and compatibility-only namespace roots that must not count as production coverage.
+L00000151	
+L00000152	The schema command pattern now allows underscores in every command segment so accepted namespaces such as `cmd.source_control.*`, `cmd.prd_builder.*`, `cmd.planning_wizard.*`, and `cmd.plan_compile.*` can be represented without inventing alternate command names.
+L00000153	
+L00000154	### PMConcept control reconciliation artifact
+L00000155	
+L00000156	`Plans/PMConcept_Control_Reconciliation.json` inventories PMConcept controls and dispositions. The current generated summary is:
+L00000157	
+L00000158	| Metric | Count |
+L00000159	|---|---:|
+L00000160	| Control-like nodes inventoried | 1284 |
+L00000161	| Inline-handler controls | 339 |
+L00000162	| Controls containing `cmd.*` tokens | 71 |
+L00000163	| Controls with accessibility gaps | 250 |
+L00000164	| Controls with local/demo markers | 13 |
+L00000165	| Concept fixture-only controls | 64 |
+L00000166	| Production wiring required | 44 |
+L00000167	| Production-intended controls missing a command | 0 |
+L00000168	| Concept-only controls already owner-adjudicated as source-lineage | 1175 |
+L00000169	| Concept-only controls pending owner adjudication before promotion | 0 |
+L00000170	| Production accessibility gaps | 0 |
+L00000171	| Production accessibility contracts added | 17 |
+L00000172	| Retired or re-scoped non-launch controls | 1 |
+L00000173	
+L00000174	Controls marked `concept_fixture_only` are source-lineage fixtures only and cannot satisfy acceptance evidence. Controls marked `concept_only_owner_adjudicated` are already adjudicated as concept/source-lineage only; they are not production evidence and are not promoted unless a canonical owner doc accepts the behavior and a production wiring row supplies command, state selector, disabled reason, handler, receipt/event effect, accessibility contract, and test evidence. `concept_only_pending_owner_adjudication` is currently 0. Controls marked `retired_or_rescoped_non_launch_authority` include stale `START`, `BUILD`, and `Approve & Continue` launch semantics.
+L00000175	
+L00000176	### Approve And Build wiring rule
+L00000177	
+L00000178	The production `Approve And Build` control maps to `cmd.planning_wizard.approve_and_build` and the high-risk row `planning.wizard.final_review.approve_and_build` in `Plans/Wiring_Matrix.production.json`. Acceptance evidence must prove:
+L00000179	
+L00000180	- final-review CAS fields match the displayed ApprovedPlanPack, PlanningRun revision, topic map version, project-context hash, PlanUnit index hash, acceptance-unit index hash, testing policy hash, and final audit/closure hash;
+L00000181	- stale CAS inputs fail closed with bounded revalidation or final-review refresh;
+L00000182	- success atomically writes `approval_cas_receipt`, `PlanApproved`, and `PlanCompileRun_created_or_bound`;
+L00000183	- duplicate idempotency key plus identical CAS inputs returns the same `PlanCompileRun`;
+L00000184	- Orchestrator Plan Compile opens as pending-launch or durable-run projection, not as a tab-switch-only success;
+L00000185	- no ordinary `START`, `BUILD`, or `Approve & Continue` control can create a second build launch from the same approval inputs.
+L00000186	
+L00000187	### Visible testing wiring rule
+L00000188	
+L00000189	The production matrix rows for `cmd.testing.capability_policy.set`, `cmd.testing.visibility_policy.set`, `cmd.testing.session.open`, `cmd.testing.session.watch`, `cmd.testing.session.background`, and `cmd.testing.session.redaction.inspect` are required for visible testing readiness. Evidence must cover global and per-project `Auto` / `On` / `Off`, inheritance/effective-policy projection, `show_when_possible`, `Open` / `Watch`, browser navigation/click/form/assertion/screenshot/console/network streams, native preview/simulator/emulator/device streams, redaction-before-display/persist, disabled reasons, and background continuation.
+L00000190	
+L00000191	### Accessibility evidence rule
+L00000192	
+L00000193	Every retained production control in PMConcept or Final GUI wiring evidence must prove:
+L00000194	
+L00000195	`ui_element_id -> accessible_name -> role -> keyboard_contract -> state_attributes -> disabled_reason_projection -> ui_command_id -> handler_location -> expected_event_types -> evidence_required`
+L00000196	
+L00000197	The acceptance bar is zero unnamed actionable controls, zero retained custom clickable elements without keyboard parity, correct tab/menu/disclosure state semantics, visible focus handling, and disabled reason projection for every disabled production action.
+L00000198	
+L00000199	ContractRef: SchemaID:Wiring_Matrix.schema.json, ContractName:Plans/Contracts_V0.md#EventRecord
+L00000200	
+L00000201	---
+L00000202	
+L00000203	<a id="section-4"></a>
+L00000204	## 4. Verification
+L00000205	
+L00000206	Wiring matrix entries are verified by **GATE-010** (see `Plans/Progression_Gates.md`) through `python3 scripts/pm-plans-verify.py validate-wiring-matrix`, `run-gates`, and `audit-governance`.
+L00000207	
+L00000208	### 4.1 Schema validation
+L00000209	All wiring matrix JSON artifacts MUST validate against `Plans/Wiring_Matrix.schema.json`.
+L00000210	GATE-010 runs JSON Schema validation as its first check and fails production rows that lack typed state selector, disabled-reason projection, effect contract, accessibility contract, test evidence, or event-test requirements.
+L00000211	
+L00000212	### 4.2 Coverage
+L00000213	Every `cmd.*` ID in `Plans/UI_Command_Catalog.md` MUST have at least one wiring matrix entry unless `Plans/Wiring_Matrix.production.exclusions.json` records the token as a parser false positive, glob token, invalid historical alias, generic family root, or compatibility-only namespace root.
+L00000214	GATE-010 extracts command IDs from the catalog, applies the exclusions, and verifies each remaining command has a corresponding production entry.
+L00000215	Research-session and web-tool wiring entries must use the canonical command identities from `Plans/UI_Command_Catalog.md` and tool payload owners from `Plans/Tools.md`; stale local command aliases for research-session, web-tool, or terminal command identity are verification failures, not compatibility shortcuts.
+L00000216	Terminal command-catalog coverage is not satisfied by `cmd.dev.start_session` and `cmd.dev.stop_session` alone; terminal action coverage includes reveal, show, rerun, split, close, clear, restart, terminate, kill, detach, reattach, and focus-session wiring rows with matching acceptance checks.
+L00000217	When route/subject-aware matrix cells are backfilled, the old work-item ledger `w-20260316-160450` lines 748-941 may be used only as source-lineage evidence for per-cell justification; it does not replace generated JSON entries, and each incorporated detail must land in explicit `ui_element_id`, `ui_command_id`, handler, event, acceptance-check, and evidence fields.
+L00000218	
+L00000219	### 4.2.1 One element, one command enforcement
+L00000220	Every `entries` key is a unique `ui_element_id`, so duplicates are invalid by structure.
+L00000221	GATE-010 also checks each row's `ui_element_id` value matches its key to prevent accidental drift.
+L00000222	
+L00000223	### 4.3 Handler resolution
+L00000224	Every `handler_location` in the wiring matrix MUST resolve to an existing module and function in the codebase.
+L00000225	GATE-010 parses module paths (e.g., `handlers::github_auth::connect`) and verifies the target exists in `puppet-master-rs/src/`.
+L00000226	The canonical format is `(crate::)?module(::submodule)+::function`, with the final segment naming the callable handler symbol. When resolution fails, GATE-010 evidence MUST record the owning `ui_element_id`, `ui_command_id`, unresolved `handler_location`, and the candidate files/modules inspected so the failure is actionable.
+L00000227	
+L00000228	### 4.4 Event tests
+L00000229	Every wiring matrix entry with non-empty `expected_event_types` MUST have a corresponding dispatch test that:
+L00000230	1. Invokes the command through the dispatcher.
+L00000231	2. Asserts that all declared event types are emitted in the expected order.
+L00000232	3. Asserts that no undeclared event types are emitted.
+L00000233	
+L00000234	GATE-010 checks that matching test functions exist and pass.
+L00000235	
+L00000236	ContractRef: Gate:GATE-010, Invariant:INV-011, Invariant:INV-012, SchemaID:Wiring_Matrix.schema.json
+L00000237	
+L00000238	### 4.5 Gate/schema limits and owner references
+L00000239	
+L00000240	Wiring_Matrix and UI_Wiring_Rules / `UI_Wiring_Rules.md` share the `/docs` and `/consumer` boundary for recovery wiring, but the matrix must still expose exact structural limits: `cmd.runtime` / `cmd.runtime.*` CTAs need dispatcher-level producer/consumer rows, stale-projection revalidation, `correlation_id` trace-through, `allowed_action_ids`, and `allowed_action_ids[]`. `Wiring_Matrix.schema.json`, `schema.json`, `/matrix/gate`, command-family coverage, and deprecated-vs-canonical command-family status are gate inputs until generated matrix rows can represent them directly.
+L00000241	
+L00000242	Extraction hazards are explicit gate failures, not real command IDs: regex-style scans must distinguish catalog IDs from filename-shaped `cmd.*.json`, generic `cmd.*` prose, command-family references, and `schema.json` evidence names. GUI side-panel targets such as Unraid and shell commands such as `cmd.panel.switch` require route/panel owner proof before `/evidence` can count them as wired.
+L00000243	
+L00000244	Route-aware gate evidence is shared with `Plans/Wiring_Matrix.md` / `/Wiring_Matrix.md`, `Plans/Progression_Gates.md` / `/Progression_Gates.md`, and `evidence.schema.json`; `/gate/evidence` records must show `GATE`, `GATE-010`, `/route`, route-aware checks, first-class `OpenSubject`, `cmd.nav` / `cmd.nav.*` alias handling, wrapper-to-canonical consistency, blocked-action admissibility, and projection-trust preconditions when those concepts are claimed.
+L00000245	
+L00000246	Runtime owner references remain split by contract: Contracts_V0 / `Contracts_V0.md` names `scheduler.pass`, `attempt.started`, `attempt.completed`, `node.blocked`, `safe_point`, and `safe_point.*`; Prompt_Pipeline / `Prompt_Pipeline.md` owns immutable attempt-start handoff context; storage-plan / `storage-plan.md` owns `attempt_record` and `blocked_projection`.
+L00000247	
+L00000248	Command/wiring ownership must keep `cmd.chat.run_user_command`, `/compact`, `/mode`, runtime-mode, slash-command, `IDs`, `GUI`, `{ mode }`, `/wiring`, command-owner, command-system, and reverse-coverage visible until the catalog, command-system, and matrix agree on canonical dispatch boundaries.
+L00000249	
+L00000250	`Wiring_Matrix` / `Wiring_Matrix.md` remains a wiring-row owner, not a general runtime schema: `/recovery` producer/consumer prose may require widened evidence, but `Wiring_Matrix.schema.json` and `schema.json` still validate matrix shape until a separate producer/consumer matrix is adopted.
+L00000251	
+L00000252	Route/open compatibility evidence references `Plans/Contracts_V0.md` / `/Contracts_V0.md` for `/open`, `tab_id`, `resume_url`, and `/prohibited` serialization classes. Runtime-artifact, chat, catalog, and file-open consumer references remain `Plans/Runtime_Artifacts_Panel.md` / `/Runtime_Artifacts_Panel.md`, `Plans/assistant-chat-design.md` / `/assistant-chat-design.md`, `Plans/UI_Command_Catalog.md` / `/UI_Command_Catalog.md`, and `Plans/FileManager.md` / `/FileManager.md`.
+L00000253	
+L00000254	---
+L00000255	
+L00000256	## References
+L00000257	- `Plans/UI_Wiring_Rules.md` — UI wiring rules and dispatcher boundary
+L00000258	- `Plans/Wiring_Matrix.schema.json` — JSON Schema for machine-readable wiring entries
+L00000259	- `Plans/UI_Command_Catalog.md` — Canonical command ID definitions
+L00000260	- `Plans/Contracts_V0.md` — Core contracts (UICommand, EventRecord)
+L00000261	- `Plans/Progression_Gates.md` — Gate definitions including GATE-010
+L00000262	
+L00000263	## Scheduler/Remediation/Event Wiring Addendum (2026-03-08)
+L00000264	
+L00000265	Compatibility/source-lineage disposition: this historical wiring addendum preserves exact producer, consumer, event, and projection tokens. It is a compatibility/source-lineage section; named wiring PlanUnits and Contracts_V0 event identities govern overlapping runtime wiring precedence.
+L00000266	
+L00000267	Add the following producer -> consumer paths to the wiring matrix.
+L00000268	
+L00000269	### 1. Scheduler analysis
+L00000270	
+L00000271	- canonical event: `scheduler.pass` (legacy alias: `run.scheduler_analysis`)
+L00000272	- producer: executor/orchestrator scheduler pass
+L00000273	- consumers: Run Graph View queue-analysis panel, storage `scheduler_pass_record` projection, usage/analytics dashboard
+L00000274	- storage projection: `scheduler_pass.{run_id}.{scheduler_pass_id}`
+L00000275	
+L00000276	### 2. Blocked/unblocked
+L00000277	
+L00000278	- canonical events: `node.blocked`, `node.unblocked`, `wizard.blocked`, `wizard.unblocked` (legacy aliases: `run.node_blocked`, `run.node_unblocked`)
+L00000279	- producer: executor/orchestrator blocked-state manager
+L00000280	- consumers: Run Graph View node badge/detail, assistant-chat blocked_notice, dashboard blocked-count badge, storage `blocked_projection`
+L00000281	- storage projection: `blocked_projection.{run_id}.{node_id}.{blocked_sequence}`
+L00000282	
+L00000283	### 3. Safe points
+L00000284	- producer: mutation-capable attempt dispatcher / retry controller
+L00000285	- canonical events: `safe_point.created`, `safe_point.restored`
+L00000286	- consumers: runtime recovery logic, Run Graph detail panel, audit/debug surfaces
+L00000287	
+L00000288	### 4. Remediation lineage
+L00000289	
+L00000290	- canonical events: `remediation.spawned`, `remediation.resolved` (legacy aliases: `run.remediation_started`, `run.remediation_completed`)
+L00000291	- producer: executor/orchestrator remediation manager
+L00000292	- consumers: Run Graph View remediation lineage tree, storage `remediation_lineage_record`, dashboard remediation badge
+L00000293	- storage projection: `remediation.{run_id}.{remediation_root_id}`
+L00000294	
+L00000295	### 5. Degradation evidence
+L00000296	- producer: draft decomposition/planning pipeline
+L00000297	- canonical event: `plan.decomposition_degraded`
+L00000298	- consumers: wizard/interview planning UI, storage projections, audit/debug surfaces
+L00000299	## Runtime recovery wiring requirements (2026-03-09)
+L00000300	
+L00000301	Compatibility/source-lineage disposition: this historical recovery-wiring section preserves minimum-row and UI-handler tokens. It remains source-lineage for WM-036 and must not be read as a separate peer wiring precedence layer.
+L00000302	
+L00000303	The wiring matrix MUST contain explicit producers, handlers, and projection consumers for the runtime packet.
+L00000304	
+L00000305	### Runtime recovery wiring minimum rows
+L00000306	- runtime event producers for `scheduler.pass`, `attempt.started`, `attempt.completed`, `node.blocked`, `safe_point.created`, `safe_point.restored`, `remediation.spawned`, and `remediation.resolved`
+L00000307	- projection consumers feeding run graph, orchestrator summaries, chat banners, and history/evidence tabs
+L00000308	- UI command handlers for queue-analysis open, attempt details open, blocked resume, retry, safe-point restore-and-retry, and remediation lineage open
+L00000309	
+L00000310	The matrix must make it possible to trace every new packet field from producer to UI consumer.
+L00000311	## Canonical Runtime Event Wiring Canonical Alignment (2026-03-09)
+L00000312	
+L00000313	Compatibility/source-lineage disposition: this historical event-wiring alignment preserves canonical event row tokens and handler-rule wording. Follow the named Wiring_Matrix PlanUnits and Contracts_V0 event identities rather than adjacent addendum order.
+L00000314	
+L00000315	The wiring matrix MUST use the canonical runtime names and identities from `Plans/Contracts_V0.md`.
+L00000316	
+L00000317	### Canonical runtime event minimum rows
+L00000318	- producer: scheduler/executor
+L00000319	  - canonical event: `scheduler.pass`
+L00000320	  - identity: `scheduler_pass_id`
+L00000321	  - consumers: storage pass projection, Run Graph, Orchestrator Page, analytics/debug surfaces
+L00000322	- producer: executor attempt dispatcher / retry controller
+L00000323	  - canonical events: `attempt.started`, `attempt.completed`
+L00000324	  - persisted record: `attempt_record`
+L00000325	  - consumers: storage attempt projection, Run Graph attempt detail, history/evidence tabs, scheduler retry logic, safe-point and remediation recovery flows
+L00000326	- producer: executor/orchestrator/auth/permissions/HITL/FileSafe/worktree/plugins
+L00000327	  - canonical events: `node.blocked`, `node.unblocked`, `node.prerequisite_resolved`
+L00000328	  - consumers: blocked projections, Run Graph, Orchestrator Page, assistant thread/banner surfaces
+L00000329	- producer: remediation controller
+L00000330	  - canonical events: `remediation.spawned`, `remediation.resolved`
+L00000331	  - consumers: remediation lineage storage, Run Graph, Orchestrator Page, artifacts/evidence views
+L00000332	- producer: graph builder / replan reconciler
+L00000333	  - canonical events: `run.graph_canonical_locked`, `run.graph_integrity_failed`
+L00000334	  - consumers: executor admission logic, progression gates, blocked/replan surfaces
+L00000335	
+L00000336	### UI command handler rule
+L00000337	Recovery UI handlers MUST be keyed by canonical `allowed_action_id` families and then bind any domain-specific command ids using the blocked payload metadata.
+L00000338	## Canonical Runtime Producer Consumer and Action Wiring Canonical Alignment (2026-03-09)
+L00000339	
+L00000340	Compatibility/source-lineage disposition: this historical producer/consumer/action section preserves command and action-binding tokens. It remains source-lineage for runtime wiring consolidation and does not create a new executable queue, WorkNode, or NodeSeed surface.
+L00000341	
+L00000342	### Context Lens minimum rows
+L00000343	
+L00000344	| Producer | Consumer | Payload / Contract | Notes |
+L00000345	| --- | --- | --- | --- |
+L00000346	| `cmd.chat.context_lens.toggle` | Assistant chat header controller | toggle request for the top-right Context Lens icon/dropdown | Opens or closes the Context Lens control to the right of the search bar. |
+L00000347	| `cmd.chat.context_lens.set_mode` | Assistant chat thread projection and selection overlay | mode = `mute` \| `focus` \| `subcompact` | Establishes one active Context Lens mode at a time. |
+L00000348	| `cmd.chat.context_lens.turn_off` | Assistant chat thread projection and selection overlay | clear active mode and clear transient selection state | Mirrors the `Turn Off` dropdown action in the PM concept. |
+L00000349	| `cmd.chat.context_lens.toggle_message_selection` | Thread-local context overlay store | message ids[] selection mutation under the current mode | Multi-select is supported in all Context Lens modes. |
+L00000350	| `cmd.chat.context_lens.clear_selection` | Thread-local context overlay store | clear current selection set for the current mode | Clears pending selection without changing persistent canonical history. |
+L00000351	| `cmd.chat.context_lens.apply_subcompact` | Subcompact summarizer and effective-context assembler | selected message ids[] -> local summary replacement in effective context | `Subcompact` is explicit-apply and remains distinct from automatic dynamic context shrinking. |
+L00000352	| `cmd.chat.context_lens.revert_subcompact` | Thread-local context overlay store and effective-context assembler | restore original selected message block into effective assembly | Rehydration uses canonical source messages rather than already-compressed derivatives. |
+L00000353	
+L00000354	ContractRef: Context Lens wiring MUST remain thread-local, must support multi-select in all modes, and must keep `Subcompact` as an explicit apply/revert path distinct from automatic dynamic context shrinking. [Source: assistant-chat-design.md#176-context-lens-mute--focus--subcompact; Prompt_Pipeline.md#dynamic-context-shrinking]
+L00000355	
+L00000356	The wiring above is part of the canonical chat control surface and must remain aligned with the command catalog, final GUI placement, and effective-context assembly rules.
+L00000357	ContractRef: Wiring rows for Context Lens MUST remain aligned with command IDs, chat placement, and overlay persistence semantics; a packet may not leave those elements split between unrelated addenda. [Source: UI_Command_Catalog.md#context-lens-command-set; FinalGUISpec.md#context-lens-placement-and-behavior]
+L00000358	
+L00000359	Add canonical rows for:
+L00000360	- `node.ready`
+L00000361	- `scheduler.pass`
+L00000362	- `node.blocked`
+L00000363	- `node.unblocked`
+L00000364	- `safe_point.created`
+L00000365	- `safe_point.restored`
+L00000366	- `remediation.spawned`
+L00000367	- `remediation.resolved`
+L00000368	
+L00000369	Each row MUST identify:
+L00000370	- producer
+L00000371	- persisted record
+L00000372	- UI consumers
+L00000373	- policy consumers
+L00000374	- replay/recovery expectations
+L00000375	- command surfaces that act on the resulting state
+L00000376	## Runtime Recovery Producer / Consumer Wiring
+L00000377	### Minimum required rows
+L00000378	The following rows are required for the promoted Section 15 feature set and the reconciled terminal/editor integration model.
+L00000379	
+L00000380	| UI element / surface | UICommand ID | Producer | Consumer / handler | Required effect |
+L00000381	|---|---|---|---|---|
+L00000382	| Project switcher result row | `cmd.project.switch_active_tab` | Projects view / command palette | shell state controller | Switch active workspace tab to target project and recalc effective state |
+L00000383	| Project switcher alternate action | `cmd.project.open_in_new_workspace_tab` | Projects view / command palette | shell state controller | Open target project in a new workspace tab |
+L00000384	| Thread context hover `More Details` | `cmd.chat.open_thread_context_details` | chat header hover module | chat layout / editor-tab controller | Open or focus the canonical thread Context Detail Pane |
+L00000385	| Thread context click `Compact Now` | `cmd.chat.compact_context` | chat header Compact Now action | chat runtime controller | Dispatch only after explicit user choice; emit started/completed/failed events and return started, already_running, cancelled, no_op, degraded, unavailable, retry_scheduled, completed, or failed status |
+L00000386	| Goal button/chip/icon or slash `/goal` | `cmd.chat.goal.start` | Assistant Chat composer / Goal chip / slash-command dispatcher | Goal Runtime controller | Start visible Goal Mode from the current thread using the Goal Runtime event envelope; concrete Goal event names and payload schemas remain owner-registered in Goal_Runtime_System, Contracts_V0, and storage-plan |
+L00000387	| Goal status update icon, `/goal again`, or natural-language update request | `cmd.chat.goal.update` | Assistant Chat status/menu / composer / slash-command dispatcher | Goal Runtime controller | Submit an active-goal update through the Goal Runtime event envelope without inventing concrete payload schemas in Wiring_Matrix |
+L00000388	| Restore-and-branch CTA | `cmd.chat.branch_from_restore` | History / restore UI | thread/session controller | Create new thread/session branch from restore point |
+L00000389	| Browser toolbar `Open in Browser` | `cmd.browser.open_workspace_preview` | file preview / command palette / open action | browser-session controller | Create or focus the canonical `workspace_preview` browser session |
+L00000390	| Browser toolbar `Open in Detached Browser` | `cmd.browser.open_detached_preview` | file preview / command palette / open action | browser-session controller | Create or focus the canonical `detached_preview` browser session |
+L00000391	| Browser toolbar `Focus Browser` | `cmd.browser.focus_browser_tab` | browser chrome / command palette | browser-session controller | Focus the owning canonical browser session |
+L00000392	| Browser toolbar `Detach Browser` | `cmd.browser.detach_browser_tab` | browser chrome | browser-session controller | Convert the owning normal browsing session into detached presentation without inventing a new logical browser subject |
+L00000393	| Browser toolbar `Open DevTools` | `cmd.browser.open_devtools` | browser chrome / command palette | browser-session controller / DevTools host | Open DevTools for the focused browser session |
+L00000394	| Browser toolbar `Toggle DevTools Dock` | `cmd.browser.toggle_devtools_dock` | browser chrome / DevTools chrome | DevTools host | Switch the focused browser DevTools between docked layouts |
+L00000395	| Browser toolbar share button | `cmd.browser.share_with_agent` | browser chrome | browser context controller | Mark current browser subject shared with active thread |
+L00000396	| Browser toolbar revoke button | `cmd.browser.revoke_share_with_agent` | browser chrome / attention center | browser context controller | Clear shared-with-agent state |
+L00000397	| Browser toolbar `Pick Element for Chat` | `cmd.browser.pick_element_for_chat` | browser chrome | browser context controller | Capture explicit `browser_element_context` into composer-prep state |
+L00000398	| Browser toolbar `Add Selection to Chat` | `cmd.browser.add_selection_to_chat` | browser chrome | browser context controller | Capture explicit `browser_selection_context` into composer-prep state |
+L00000399	| Browser toolbar `Add Selection + Screenshot` | `cmd.browser.add_selection_screenshot_to_chat` | browser chrome | browser context controller / runtime-artifact controller | Capture browser context and screenshot evidence for chat |
+L00000400	| Browser toolbar `Add Selection + Full Screenshot` | `cmd.browser.add_selection_full_screenshot_to_chat` | browser chrome | browser context controller / runtime-artifact controller | Capture browser context and full screenshot evidence for chat |
+L00000401	| Browser toolbar `Add Screenshot to Chat` | `cmd.browser.add_screenshot_to_chat` | browser chrome | runtime-artifact controller / chat prep controller | Capture screenshot artifact and stage it for chat |
+L00000402	| Browser toolbar `Add Full Screenshot to Chat` | `cmd.browser.add_full_screenshot_to_chat` | browser chrome | runtime-artifact controller / chat prep controller | Capture full screenshot artifact and stage it for chat |
+L00000403	| Browser takeover prompt default action | `cmd.browser.take_over` | live browser takeover prompt | browser-session controller / runtime controller | Pause the live automation browser and keep the visible session in focus |
+L00000404	| Browser action `Pause Agent` | `cmd.browser.pause_agent` | browser chrome / automation banner | runtime controller | Pause the live automation run without reclassifying the browser session |
+L00000405	| Browser action `Let agent continue` | `cmd.browser.let_agent_continue` | live browser takeover prompt | runtime controller | Dismiss takeover without interrupting live automation |
+L00000406	| Browser action `Stop agent and keep browser` | `cmd.browser.stop_agent_keep_browser` | live browser takeover prompt | runtime controller / browser-session controller | Stop automation work while preserving the visible browser session |
+L00000407	| Browser action `Promote to Normal Browsing` | `cmd.browser.promote_to_normal_browsing` | browser chrome / automation banner | browser-session controller / storage controller | Promote eligible state into a normal browsing session and update restore behavior |
+L00000408	| Browser recovery banner `Reopen` | `cmd.browser.reopen` | browser recovery banner / attention center | browser-session controller | Recreate a recoverable browser session after failure |
+L00000409	| Browser recovery banner `Retry` | `cmd.browser.retry` | browser recovery banner / attention center | browser-session controller / runtime controller | Retry the failed browser launch or action path |
+L00000410	| Browser recovery banner `Keep Closed` | `cmd.browser.keep_closed` | browser recovery banner / attention center | browser-session controller | Keep the failed browser session closed while preserving auditability |
+L00000411	| Chat command card `Open in Terminal` | `cmd.terminal.open` | assistant chat command card | terminal workspace controller | Reveal the exact existing session, workgroup, leaf pane, or historical receipt bound to the referenced terminal runtime |
+L00000412	| Chat command card `Show Terminal` | `cmd.terminal.show` | assistant chat command card / derived runtime surfaces | terminal workspace controller | Focus the same live or historical terminal session already bound to the card context |
+L00000413	| Chat command card `Rerun in Terminal` | `cmd.terminal.rerun` | assistant chat command card | terminal workspace controller / process-host controller | Replay the command through the terminal launch context without collapsing it into show/focus |
+L00000414	| Terminal command card `Detach/Pop-Out` | `cmd.terminal.detach` | assistant chat command card / terminal surfaces | terminal workspace controller | Detach the referenced terminal session or pane while preserving terminal identity |
+L00000415	| Command palette `New Terminal` | `cmd.terminal.new_tab` | command palette / terminal header | terminal workspace controller / process-host controller | Create a new workgroup or new root terminal tab in the chosen section |
+L00000416	| Terminal workgroup pill | `cmd.terminal.activate_workgroup` | bottom workgroup strip | terminal workspace controller | Activate the target terminal workgroup and reveal its subtabs |
+L00000417	| Terminal subtab chip | `cmd.terminal.activate_subtab` | subtab row | terminal workspace controller | Focus the target leaf pane within the active workgroup |
+L00000418	| Terminal workgroup drag-reorder | `cmd.terminal.reorder_workgroup` | workgroup strip | terminal workspace controller | Reorder workgroups without changing leaf pane identity |
+L00000419	| Terminal subtab drag-reorder | `cmd.terminal.reorder_subtab` | subtab row | terminal workspace controller | Swap or reorder leaf panes inside the same workgroup tree |
+L00000420	| Terminal pane chrome `Split` | `cmd.terminal.split_pane` | terminal pane chrome | terminal workspace controller / process-host controller | Create a new leaf pane and bound terminal session with deterministic split direction |
+L00000421	| Terminal strip `Add Pane` | `cmd.terminal.add_leaf` | bottom strip action cluster | terminal workspace controller / process-host controller | Add a new leaf pane to the active workgroup |
+L00000422	| Terminal editor drop target | `cmd.terminal.embed_in_editor` | editor drop host | terminal workspace controller | Add the dropped pane reference to the editor terminal panel stack |
+L00000423	| Editor terminal panel close | `cmd.terminal.remove_from_editor` | editor terminal panel chrome | terminal workspace controller | Remove the pane reference from the editor stack without destroying the underlying terminal session |
+L00000424	| Editor terminal stack `Undock All` | `cmd.terminal.undock_all_from_editor` | editor terminal stack chrome | terminal workspace controller | Clear all editor panel references for the current stack |
+L00000425	| Output or Problems or Ports `Show Terminal` link | `cmd.terminal.focus_session` | derived runtime surfaces | terminal workspace controller | Focus the owning terminal session without spawning a duplicate shell |
+L00000426	| Terminal tab context `Move to Other Section` | `cmd.terminal.move_tab_to_section` | terminal tab context menu | terminal workspace controller | Move the tab between sections while preserving tab and session identity |
+L00000427	| Terminal tab inline rename | `cmd.terminal.rename_tab` | terminal tab chrome | terminal workspace controller | Update visible tab label without changing session identity |
+L00000428	| Terminal tab pin toggle | `cmd.terminal.pin_tab` | terminal tab chrome | terminal workspace controller | Toggle pin state and update bulk-close behavior |
+L00000429	| Terminal pane close affordance | `cmd.terminal.close_pane` | terminal pane chrome | terminal workspace controller | Close the pane and apply explicit termination policy if a live session is attached |
+L00000430	| Terminal tab close affordance | `cmd.terminal.close_tab` | terminal tab chrome | terminal workspace controller | Close the tab and its pane tree with explicit termination behavior when needed |
+L00000431	| Terminal toolbar `Clear` | `cmd.terminal.clear_scrollback` | terminal toolbar / command palette | terminal session controller | Clear retained scrollback without minting a new runtime identity |
+L00000432	| Terminal toolbar `Restart` | `cmd.terminal.restart_session` | terminal toolbar / recovery banner | terminal session controller / process-host controller | Replace the runtime with a new terminal session bound to the chosen pane or tab |
+L00000433	| Terminal toolbar `Terminate` | `cmd.terminal.terminate_session` | terminal toolbar | terminal session controller / process-host controller | Request graceful shutdown for the selected live session |
+L00000434	| Terminal recovery action `Kill` | `cmd.terminal.kill_session` | terminal toolbar / recovery banner | terminal session controller / process-host controller | Force termination for the selected live session |
+L00000435	| Terminal section header `Detach` | `cmd.terminal.detach_section` | terminal section header / command palette | shell layout controller | Present the chosen terminal section in a detached window without changing section identity |
+L00000436	| Detached terminal window `Reattach` | `cmd.terminal.reattach_section` | detached terminal window chrome | shell layout controller | Return the section to docked layout with preserved tab and pane state |
+L00000437	| Chat live-tool action | `cmd.dev.start_session` | chat action / toolbar | dev-session controller | Start dev session and route output to linked shell panes |
+L00000438	| Dev stop button | `cmd.dev.stop_session` | toolbar / ports / terminal | dev-session controller | Stop active dev session deterministically |
+L00000439	| Dev restart button | `cmd.dev.restart_session` | toolbar / ports / terminal | dev-session controller | Restart the dev session and refresh linked shell surfaces |
+L00000440	| Dev status row `Show Output` | `cmd.dev.show_output` | chat status row / toolbar | runtime-surfaces controller | Reveal Output linked to the owning dev session |
+L00000441	| Dev status row `Show Problems` | `cmd.dev.show_problems` | chat status row / toolbar | runtime-surfaces controller | Reveal Problems linked to the owning dev session |
+L00000442	| Dev status row `Show Ports` | `cmd.dev.show_ports` | chat status row / toolbar | runtime-surfaces controller | Reveal Ports linked to the owning dev session |
+L00000443	| Catalog install button | `cmd.catalog.install_item` | catalog UI | catalog lifecycle controller | Install target item and propagate subsystem effects |
+L00000444	| Catalog remove button | `cmd.catalog.remove_item` | catalog UI | catalog lifecycle controller | Remove item using subsystem-specific active-item rules |
+L00000445	
+L00000446	Terminal wiring owner split: `Plans/Section15_MVP_Promoted_Features_Spec.md §3.14` owns terminal section/tab/pane/session identity, `/reveal` and focus behavior, interaction modes, shell-integration disclosure, lifecycle states, capability `/degradation`, and non-ship terminal-core rules; `storage-plan.md` owns `/runtime-queryable` persistence for `terminal_workspace_state`, `terminal_session_record`, `terminal_command_block`, `dev_session_record`, renderer state, shell-integration tier, capability degradations, restore outcome, and transcript-retention tier. `UI_Command_Catalog.md` and this Wiring Matrix expose the controller split between terminal workspace controller, terminal session controller, process-host controller, dev-session controller, and runtime-surfaces controller; restart or `/replacement` mints a new runtime identity only when the command says so.
+L00000447	
+L00000448	Terminal workspace-structure commands must distinguish content-only actions from destructive workspace mutations: `replace-with-new-terminal` keeps the pane slot and attaches a new live-session `terminal_session_id`, `/close` removes pane/tab/section workspace structure only after user-visible `/escalation` and `/cleanup` rules, `/disconnected/review-only` and other non-live panes can be replaced without pretending the old session remains live, and clear or `/reset` affects terminal content without implying restart.
+L00000449	
+L00000450	Terminal/editor wiring treats `Concepts/PMConcept.html` (`/PMConcept.html`) as GUI concept lineage only while preserving the command coverage implied by that concept. Wiring rows cover `/workgroup` activation, active-group `/subtab` focus, split-pane tree operations, editor-integrated multi-panel terminal stacks, pane/subtab/workgroup `/drop` payloads, `/center/right` strip regions, `/right` action clusters for split `/add/collapse`, visible gutters and `/resizers`, accent-led subtab focus, command-log removal, and the rule that split-parent opacity effects must not dim terminal grids during reorder or drag operations.
+L00000451	
+L00000452	### Browser session, capture, and recovery wiring invariants
+L00000453	
+L00000454	- `Plans/Wiring_Matrix.md` is the wiring SSOT for browser command producer/consumer rows; stale `Plans/newfeatures.md §15.18` and `/newfeatures.md` references are cross-reference cleanup lineage only, and the old `trust-tier`/`/trust-tier` matrix must not stand beside the current permission-layer `/capability-degradation` model.
+L00000455	- Browser runtime wiring assumes the CEF-class, tab-first, in-app `/browser` model: `workspace_preview` is the user-facing editor/browser session, `detached_preview` is the same subject in a detached-window when supported, `automation_session` is a visible `/watchable`, agent-driven, evidence-producing web-app/testing session, and `auth_session` is a separate visible `/device/browser` flow for site-specific auth with an isolated `/cookie` and storage boundary.
+L00000456	- `auth_session` is not general-purpose browsing state, is not auto-restored, must not auto-close or auto-complete on presumed success, and normal selection, `/copy/paste`, `/share`, and capture interactions remain available unless the normal permission-layer blocks them.
+L00000457	- Live `automation_session` direct user input routes through user-takeover wiring: prompt actions are `Take over and pause agent`, `Let agent continue`, and `Stop agent and keep browser`; default highlighted action is `Take over and pause agent`; user-takeover leaves no half-owned session, and `/stop/take-over` or `/stop/take` handling must pause, stop, or take over rather than silently auto-resume work.
+L00000458	- Browser capture is explicit, chip-based, share-to-chat, and non-auto-send: ordinary clicks do not inject `/context`; `/highlight/share-to-chat`, `/highlight/share`, `/highlighting`, `/highlight`, `/elements`, `/selection`, `/DOM`/DOM, URL, and source anchors create removable pending composer chips, allow multi-capture, and attach to an active `/thread` or open a new thread when needed.
+L00000459	- Browser capture commands include `Add Selection to Chat`, `Pick Element for Chat`, `Add Selection + Screenshot`, `Add Element + Screenshot`, standalone screenshots, and screenshot-with-selection variants; screenshot-with-selection defaults to clipped context while full viewport remains explicit; `/trace/video`, `/video/screenshot`, and `/download` artifacts route through Runtime Artifacts.
+L00000460	- DevTools is a concrete browser UX/tool contract: `Open DevTools` and `Toggle DevTools Dock` are user-visible wiring rows; `/tool` and advanced testing permissions allow when user explicitly opens DevTools or policy permits attach/open, and named actions remain first-class `/capability` paths instead of forcing arbitrary browser-code.
+L00000461	- Recovery wiring preserves URL, tabs, session class, `/originating` session identity, and completed trace/video/screenshot artifacts; `workspace_preview` can restore, eligible `detached_preview` follows its originating restored session, automation/auth never auto-resume active work, auth never auto-complete, attention-required recovery offers `Reopen`, `Retry`, or `Keep Closed`, and cross-platform CEF runtime `/install/update` failures surface `runtime_unavailable`/`/capability-degradation` rather than hidden fallback.
+L00000462	
+L00000463	ContractRef: ContractName:Plans/storage-plan.md, ContractName:Plans/assistant-chat-design.md, ContractName:Plans/Runtime_Artifacts_Panel.md, ContractName:Plans/Section15_MVP_Promoted_Features_Spec.md, ContractName:Plans/FinalGUISpec.md, ContractName:Plans/Permissions_System.md, ContractName:Plans/UI_Command_Catalog.md
+L00000464	
+L00000465	This section is normative and not an example/template section.
+L00000466	### Debug investigation minimum rows
+L00000467	
+L00000468	The following rows are additionally required for Debug Mode and Investigation Context wiring.
+L00000469	
+L00000470	| UI element / surface | UICommand ID | Producer | Consumer / handler | Required effect |
+L00000471	|---|---|---|---|---|
+L00000472	| Assistant mode strip `Debug` | `cmd.chat.mode` | chat header mode strip | session mode controller | switch the thread into Debug overlay and focus the active investigation or target picker |
+L00000473	| Slash command `/mode debug` | `cmd.chat.mode` | slash-command dispatcher | session mode controller | same canonical mode-switch behavior as the visible mode strip |
+L00000474	| Debug target picker button | `cmd.chat.open_debug_target_picker` | thread header / command palette | debug investigation controller | reveal canonical target discovery / rebinding flow |
+L00000475	| Investigation header `Export Bundle` | `cmd.chat.export_investigation_bundle` | Investigation Context card / Context Detail Pane | debug investigation controller / runtime-artifact controller | write bundle manifest and emit export event |
+L00000476	| Investigation item `Revoke` | `cmd.chat.revoke_investigation_item` | Investigation Context card / Context Detail Pane | debug investigation controller | mark the item revoked and exclude it from future prompt injection |
+L00000477	| Debug Automation banner `Approve` | `cmd.runtime.approve` | investigation banner / attention surface | runtime controller / permission controller | activate the requested run-scoped Debug Automation Profile |
+L00000478	| Debug Automation banner `Resume automation` | `cmd.runtime.resume_after_prerequisite` | investigation banner / attention surface | runtime controller / debug investigation controller | resume the current investigation automation from its paused step pointer after the prerequisite or handoff completes |
+L00000479	| Debug Automation banner `Retry this step` | `cmd.runtime.retry_now` | investigation banner / attention surface | runtime controller / debug investigation controller | retry the current paused investigation step or repro step without changing target, browser session, or investigation lineage |
+L00000480	| Debug Automation banner `Stop agent and keep browser` | `cmd.browser.stop_agent_keep_browser` | investigation banner / automation banner | runtime controller / browser-session controller | stop the agent automation while preserving the visible browser session for the current investigation |
+L00000481	| Debug Automation banner `Promote to normal browsing` | `cmd.browser.promote_to_normal_browsing` | investigation banner / automation banner | browser-session controller / storage controller / permission controller | promote eligible session state into normal browsing only after `explicit-confirmation`; do not silently promote the automation/auth session |
+L00000482	| Debug Automation banner `Cancel investigation` | `cmd.runtime.abort_run` | investigation banner / attention surface | runtime controller / debug investigation controller | cancel the current investigation run and record the investigation as `cancelled` with `stop_reason_code = investigation.cancelled_by_user` |
+L00000483	
+L00000484	ContractRef: ContractName:Plans/UI_Command_Catalog.md, ContractName:Plans/assistant-chat-design.md, ContractName:Plans/storage-plan.md
+L00000485	
+L00000486	## Source Control, GitHub Actions, and Docker Manager Wiring Addendum (2026-03-12)
+L00000487	
+L00000488	### Assistant Worktree Wiring Addendum
+L00000489	
+L00000490	Cross-component wiring for the assistant thread-to-worktree binding feature.
+L00000491	
+L00000492	ContractRef: ContractName:Plans/assistant-chat-design.md, ContractName:Plans/GitHub_Integration.md, ContractName:Plans/Contracts_V0.md
+L00000493	
+L00000494	**Chat ↔ WorktreeManager wiring:**
+L00000495	
+L00000496	| Source | Target | Trigger | Data flow |
+L00000497	|---|---|---|---|
+L00000498	| Chat header button `Create Worktree` | WorktreeManager `create_worktree` | User clicks header button or `cmd.chat.worktree.create` | thread_id, branch_name, base_ref → worktree_id, path |
+L00000499	| Chat dropdown `Remove Worktree` | WorktreeManager `remove_worktree` | User confirms removal | worktree_id → success/error |
+L00000500	| Chat dropdown `Bind Existing` | WorktreeManager `list_worktrees` | User opens bind dialog | → unbound worktree list |
+L00000501	| Chat merge dialog | WorktreeManager `merge_worktree` | User confirms merge | worktree_id, target_branch, strategy → result |
+L00000502	| Chat merge dialog | WorktreeManager `create_pr` | User clicks Create PR | worktree_id, branch, target → pr_url |
+L00000503	| Auto-create (thread creation) | WorktreeManager `create_worktree` | `branching.assistant_auto_worktree` is true | thread_id, auto-generated branch name |
+L00000504	
+L00000505	**Chat ↔ Source Control wiring:**
+L00000506	
+L00000507	| Source | Target | Trigger | Data flow |
+L00000508	|---|---|---|---|
+L00000509	| SC Worktrees accordion `Open Thread` | Chat panel navigation | User clicks Open Thread in worktree row | thread_id → scroll to thread |
+L00000510	| SC Worktrees accordion expanded-row `Merge` / `PR` | Chat merge dialog / PR panel | User clicks Merge or PR in a thread-owned expanded-row | worktree_id, thread_id → merge dialog or PR panel |
+L00000511	| SC filter control | redb filter key | User changes filter | filter enum → persisted key |
+L00000512	| Chat worktree bound/unbound events | SC worktree list refresh | Seglog event processed | worktree_id → refresh row |
+L00000513	
+L00000514	**Chat ↔ File Manager wiring:**
+L00000515	
+L00000516	| Source | Target | Trigger | Data flow |
+L00000517	|---|---|---|---|
+L00000518	| Thread switch (with worktree) | File manager root | Thread selected, `worktree_follow_thread` true | worktree_path → set FM root |
+L00000519	| Breadcrumb worktree toggle | File manager root | User clicks worktree crumb | toggle between worktree_path and project_root |
+L00000520	| Worktree unbound/removed | File manager root reset | Binding removed | → reset FM root to project_root |
+L00000521	| Chat `Open Worktree Files` | File manager panel | User clicks from header dropdown | worktree_path → open FM panel at path |
+L00000522	
+L00000523	**Chat ↔ LSP wiring:**
+L00000524	
+L00000525	| Source | Target | Trigger | Data flow |
+L00000526	|---|---|---|---|
+L00000527	| Thread switch (with worktree) | LSP root_identity | Thread selected | worktree_path → LSP session key (host_id, server_id, root_identity) |
+L00000528	| Worktree created | LSP warm-start | New worktree available | worktree_path → background indexing |
+L00000529	
+L00000530	**Chat ↔ Executor wiring:**
+L00000531	
+L00000532	| Source | Target | Trigger | Data flow |
+L00000533	|---|---|---|---|
+L00000534	| Thread with worktree enters Agent/Plan/Debug mode | Executor working_directory | Execution unit created | worktree_path → execution context |
+L00000535	| Pre-merge test | Executor | Merge dialog test phase | command, worktree_path → terminal execution |
+L00000536	
+L00000537	Execution context population is deterministic: when a thread has a binding, `execution_unit_context.worktree_id = binding.worktree_id` and `execution_unit_context.working_directory = binding.worktree_path`; when unbound, `worktree_id = null` and `working_directory = project_root`.
+L00000538	
+L00000539	Terminology for thread worktree binding, accordion layout, `working_directory`, merge lock, and pre-merge test gate stays in `Plans/Glossary.md` (`/Glossary.md` compatibility references); Wiring Matrix records producer/consumer edges only.
+L00000540	
+L00000541	ContractRef: ContractName:Plans/Executor_Protocol.md, ContractName:Plans/FileManager.md, ContractName:Plans/LSPSupport.md, ContractName:Plans/Run_Modes.md
+L00000542	
+L00000543	
+L00000544	This wiring addendum also covers Search, File Manager action handoff, chat restore/file-reference actions, and host-aware LSP/remote projections because those seams now share one shell slot and one cross-surface identity model.
+L00000545	
+L00000546	| Surface / flow | Canonical command / route | Owner doc | Downstream consumers / notes |
+L00000547	|---|---|---|---|
+L00000548	| Show Search panel | `cmd.search.show` | `Plans/FinalGUISpec.md` + `Plans/UI_Command_Catalog.md` | Right-hand side panel owner for find/replace-in-files |
+L00000549	| Run find/replace in files | `cmd.search.find_in_files`, `cmd.search.replace_in_files` | `Plans/UI_Command_Catalog.md` | Query-session state persists in `Plans/storage-plan.md`; remote execution rules live in `Plans/GitHub_Integration.md` |
+L00000550	| Open Search result | `cmd.search.open_result` | `Plans/UI_Command_Catalog.md` | Uses shared open-file contract from `Plans/FileManager.md` |
+L00000551	| File-tree actions | `cmd.file.*` | `Plans/FileManager.md` + `Plans/UI_Command_Catalog.md` | Reuse FileSafe-backed transfer/mutation path |
+L00000552	| Add file to chat | `cmd.chat.add_file_reference` | `Plans/assistant-chat-design.md` | Visible composer chips; file-only in MVP |
+L00000553	| Revert last agent edit | `cmd.chat.revert` | `Plans/assistant-chat-design.md` | Refreshes editors via canonical mutation pipeline |
+L00000554	| Rewind chat only | `cmd.chat.rewind` | `Plans/assistant-chat-design.md` | Must not restore files |
+L00000555	| Source Control subview switch | `cmd.source_control.switch_subview` | `Plans/GitHub_Integration.md` | Keeps Source Control in the right-hand side-panel slot |
+L00000556	| Source Control review, diff, and conflict actions | `cmd.source_control.open_review`, `cmd.source_control.set_compare_target`, `cmd.source_control.toggle_generated_filter`, `cmd.source_control.open_conflict`, `cmd.source_control.open_merge_editor`, `cmd.source_control.resolve_conflict_side`, `cmd.source_control.mark_conflict_resolved`; `cmd.git.diff_set_compare_target { target_kind: "head"\|"index"\|"merge_base"\|"branch"\|"commit"\|"parent", ref? }`, `cmd.git.diff_search { query, direction?: "next"\|"prev" }`, `cmd.git.stage_hunks { path, hunk_ids: string[] }`, `cmd.git.unstage_hunks { path, hunk_ids: string[] }`, `cmd.git.discard_hunks { path, hunk_ids: string[] }`, and `cmd.git.conflict_apply_resolution { path, conflict_id, resolution: "ours"\|"theirs"\|"both" }` remain lower-level diff operations | `Plans/UI_Command_Catalog.md` + `Plans/WorktreeGitImprovement.md` | Review mode and Conflict assistant stay Source Control owned; `cmd.git.*` rows are lower-level diff/git operations, not substitutes for `cmd.source_control.*` GUI entrypoints. Diff-local `local-search` belongs to the git diff/review surface and must not route through project-wide `cmd.search.find_in_files`; `/hunk/conflict/search-in-diff` affordances route through Source Control review and the git diff command family. |
+L00000557	| Host-aware LSP session projection | `(host_id, server_id, root_identity)` session key | `Plans/LSPSupport.md` | Consumed by editor, Problems, status, and persistence |
+L00000558	| Remote reconnect | `cmd.remote.reconnect` | `Plans/GitHub_Integration.md` | One bounded auto-retry precedes this explicit action |
+L00000559	
+L00000560	ContractRef: ContractName:Plans/FinalGUISpec.md, ContractName:Plans/FileManager.md, ContractName:Plans/GitHub_Integration.md
+L00000561	
+L00000562	
+L00000563	### Search Index Acceleration Wiring Addendum
+L00000564	
+L00000565	Cross-component wiring for the sparse n-gram regex index that transparently accelerates grep and Search-panel regex.
+L00000566	
+L00000567	Lifecycle, file-format, and remote-correctness canon remain owned by `Plans/storage-plan.md`, `Plans/GitHub_Integration.md`, and `Plans/Tools.md`. This addendum records cross-component edges only.
+L00000568	
+L00000569	ContractRef: ContractName:Plans/Tools.md, ContractName:Plans/storage-plan.md, ContractName:Plans/FinalGUISpec.md
+L00000570	
+L00000571	**Grep tool <-> Index Engine wiring:**
+L00000572	
+L00000573	| Source | Target | Trigger | Data flow |
+L00000574	|---|---|---|---|
+L00000575	| Agent/subagent `grep` call | IndexEngine `query` | Tool invocation | pattern, path/glob filters -> candidate file IDs |
+L00000576	| Search-panel regex query | IndexEngine `query` | User executes find-in-files with regex ON | pattern, scope -> candidate file IDs |
+L00000577	| IndexEngine candidates | ripgrep verification | Query returns candidate set | file IDs -> paths -> verification on authoritative content -> final matches |
+L00000578	| PM-mediated file write | DirtyLayer `insert` | Tool write returns | path -> generation-aware dirty entry before write success is surfaced |
+L00000579	| File watcher event | DirtyLayer `insert` | External file change detected | path -> dirty entry (backup/dedup for PM writes) |
+L00000580	| Remote Git re-anchor | IndexBuilder `build_incremental` | staged dirty content + fetched diff ready | staged paths + `old_anchor..new_HEAD` diff -> changed-file set |
+L00000581	
+L00000582	Freshness and dirty-layer wiring rules:
+L00000583	- PM-mediated writes insert into the dirty layer SYNCHRONOUSLY before returning success. This is the agent-write-then-grep CRITICAL FIX: agent tool writes, editor saves, and remote write relays add the written path before the caller can immediately grep, while file watchers remain backup/dedup for external changes.
+L00000584	- DirtyLayer storage is a `HashMap` with generation stamps, not a plain `HashSet`, so re-anchor clearing can distinguish entries created before and during a rebuild.
+L00000585	- On project open, background index build waits for the project-ready signal after file watcher, LSP, and Tantivy startup, then anchors to current Git `HEAD` / `SHA` or to a filesystem snapshot timestamp for non-Git projects.
+L00000586	- Crash recovery treats the dirty layer as in-memory cache state: if PM restarts and the anchor `SHA` / `HEAD` mismatch indicates movement, PM triggers automatic incremental rebuild. First grep after restart may use ripgrep fallback until rebuild completes, and there is no data loss because the index is only a cache.
+L00000587	- In MVP, remote cache refresh starts on project open, on a timer every 5 minutes after the previous fetch+build cycle completes, and on explicit pull or `/sync/refresh`; webhook or push notification remains aspirational. When fetch advances `HEAD`, PM immediately runs `git diff --name-only old_anchor..new_HEAD` (`name-only`) and inserts changed paths into the dirty layer BEFORE incremental rebuild. This closes the false-negative window between fetch and rebuild completion; generation-stamped entries are cleared only when the rebuild re-anchors safely.
+L00000588	
+L00000589	ContractRef: ContractName:Plans/GitHub_Integration.md, ContractName:Plans/UI_Command_Catalog.md, ContractName:Plans/storage-plan.md
+L00000590	
+L00000591	**Index build <-> Storage wiring:**
+L00000592	
+L00000593	| Source | Target | Trigger | Data flow |
+L00000594	|---|---|---|---|
+L00000595	| Project open | IndexBuilder `build_full` or `validate` | Project-ready signal | project_id + current anchor -> validation or full build |
+L00000596	| Git fetch (remote) | IndexBuilder `build_incremental` | New commits detected | `old_anchor..new_HEAD` diff -> dirty paths -> incremental rebuild |
+L00000597	| `cmd.search.rebuild_regex_index` | IndexBuilder `build_full` | User action or command | project_id -> full rebuild |
+L00000598	| Startup recovery | IndexSnapshot `load` | project open / app restart | highest valid generation -> checksum validation -> mmap / rebuild |
+L00000599	| IndexBuilder completion | ArcSwap publish | New generation ready | new `IndexSnapshot` -> atomic pointer swap through the `arc-swap` crate's production-proven, wait-free read-mostly `ArcSwap<T>` pattern used by tokio, hyper, and other production Rust projects |
+L00000600	| Status bar | IndexBuilder state | Build or refresh lasts >2s | build_state + progress -> `Indexing` / `Refreshing index` indicator |
+L00000601	| `cmd.search.evict_remote_cache` | RemoteCacheManager `evict_project` | User confirms per-project eviction | remove `r/{hash8}` cache root |
+L00000602	| `cmd.search.clear_all_remote_caches` | RemoteCacheManager `evict_all` | User confirms global clear | remove all remote cache roots |
+L00000603	
+L00000604	ContractRef: ContractName:Plans/FinalGUISpec.md, ContractName:Plans/storage-plan.md, ContractName:Plans/GitHub_Integration.md
+L00000605	## Route-aware wiring reconciliation
+L00000606	
+L00000607	### Route-aware navigation and open-contract rows
+L00000608	
+L00000609	<a id="wm-route-open-acceptance"></a>
+L00000610	#### Acceptance carry-through
+L00000611	- Carry selector precedence, reject rules, closed tab_id vocabulary, scoped resolver rules, route examples, ref-family split, and resume_url demotion into live route/open docs
+L00000612	- Carry Primitive:RouteTarget/OpenSubject and wrapper/canonical normalization into crosswalk and wiring docs
+L00000613	
+L00000614	### Verification evidence hooks
+L00000615	
+L00000616	<a id="wm-verification-evidence-acceptance"></a>
+L00000617	#### Acceptance carry-through
+L00000618	- Expand Wiring Matrix and GATE-010 to verify route args, wrapper normalization, stale revalidation, admissibility, and correlation passthrough
+L00000619	- Add structured gate-specific evidence details for route-aware verification
+L00000620	
+L00000621	### Compatibility-only fallback marking
+L00000622	
+L00000623	<a id="wm-compat-fallback-acceptance"></a>
+L00000624	#### Acceptance carry-through
+L00000625	- Mark timestamp/run/thread fallback logic as compatibility-only inside route/open contracts
+L00000626	- Keep ref-family split explicit when route/open normalization is transferred
+L00000627	
+L00000628	### Catalog-owned normalization metadata
+L00000629	
+L00000630	`Plans/UI_Command_Catalog.md` and `/UI_Command_Catalog.md` own command identity and alias metadata; Wiring Matrix rows consume that catalog ownership rather than duplicating route semantics. The matrix command-binding contract still exposes `ui_element_id`, `ui_command_id`, `handler_location`, and `expected_event_types`, but route-aware completeness requires each wrapper command to declare when it normalizes over canonical route/open semantics. This keeps `/open` meaning in the route contract while letting wiring/gates verify that the command row points at the catalog-owned normalization metadata.
+L00000631	
+L00000632	`GATE-010` completeness includes `GATE` coverage for route/subject-aware navigation, stale-projection revalidation, wrapper-to-canonical normalization, admissibility, and correlation passthrough. The clean rule for `/gates` is catalog-owned normalization metadata consumed by wiring/gates, not a second routing schema inside the matrix.
+L00000633	
+L00000634	Owner-level runtime records remain a demotion hazard for wiring. `tier_runtime_record`, tier-keyed `usage_record`, and tier-keyed `evidence_record` need owner-level demotion or replacement before generated wiring rows treat them as canonical producers or consumers.
+L00000635	
+L00000636	## Owner / Consumer Map
+L00000637	
+L00000638	This source-preserving standardization keeps the owner and consumer boundaries stated in the original document body. During this batch, `Plans/Wiring_Matrix.md` remains the owner doc for the behavior described by its preserved sections, while cross-doc ownership follows the ContractRefs and boundary notes already present in the original text.
+L00000639	
+L00000640	ContractRef: ContractName:Plans/Plan_Document_System.md, ContractName:Plans/Bootstrap_Planning_Migration.md
+L00000641	
+L00000642	## PlanUnits
+L00000643	
+L00000644	### WM-002 - Document Authority And Compatibility Naming Guard
+L00000645	
+L00000646	```yaml
+L00000647	plan_unit_id: WM-002
+L00000648	unit_type: constraint
+L00000649	status: accepted
+L00000650	owner_doc: Plans/Wiring_Matrix.md
+L00000651	canonical_text: 'Plans/Wiring_Matrix.md is the canonical wiring matrix owner document and preserves `PUPPET MASTER -- UI WIRING MATRIX SSOT`, the platform name `Puppet Master`, and older naming only as compatibility-only legacy naming.'
+L00000652	gui_related: true
+L00000653	gui_classification_reason: 'The span includes UI wiring matrix authority and naming rules for user-visible UI wiring docs.'
+L00000654	split_recommended: false
+L00000655	depends_on:
+L00000656	- PDS-003
+L00000657	- PDS-004
+L00000658	- PDS-005
+L00000659	- PNC-001
+L00000660	unblocks: []
+L00000661	acceptance_criteria:
+L00000662	- WM-002 remains addressable as a fine-grained Wiring Matrix PlanUnit with source-span coverage.
+L00000663	- ContractRefs, anchors or aliases, exact tokens, negative constraints, compatibility notes, stale/retired dispositions, owner boundaries, and source lineage from the source spans remain preserved.
+L00000664	- No WorkNodes, NodeSeeds, executable queues, final node manifests, production build tasks, implementation files, or source code are created by this PlanUnit.
+L00000665	validation_surfaces:
+L00000666	- python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits
+L00000667	- python3 scripts/pm-plan-index.py validate
+L00000668	risk_class: wiring_matrix_drift
+L00000669	reasoning_tier: standard
+L00000670	context_scope: wiring_matrix_batch_199
+L00000671	implementation_surfaces:
+L00000672	- Plans/Wiring_Matrix.md
+L00000673	node_compile_hint:
+L00000674	  mode: wiring_doc_authority
+L00000675	  create_worknodes: false
+L00000676	source_lineage:
+L00000677	- Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:Wiring_Matrix-S0001
+L00000678	- Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:Wiring_Matrix-S0002
+L00000679	- Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:Wiring_Matrix-S0003
+L00000680	preserved_exact_tokens:
+L00000681	- 'Wiring Matrix (Canonical)'
+L00000682	- 'Canonical owner-section requirements'
+L00000683	- 'Route/open compatibility-only fallback marking'
+L00000684	- 'PUPPET MASTER -- UI WIRING MATRIX SSOT'
+L00000685	- 'Puppet Master'
+L00000686	- 'legacy naming'
+L00000687	- 'do not quote it'
+L00000688	- 'Plans/DRY_Rules.md'
+L00000689	- 'Plans/Contracts_V0.md'
+L00000690	- 'Plans/Decision_Policy.md'
+L00000691	negative_constraints: []
+L00000692	preserved_contractrefs: []
+L00000693	compatibility_only_notes:
+L00000694	- 'Older naming exists only as legacy naming and must not be quoted as live platform naming.'
+L00000695	stale_retired_dispositions: []
+L00000696	owner_hints:
+L00000697	- 'Plans/Wiring_Matrix.md'
+L00000698	- 'Plans/DRY_Rules.md'
+L00000699	- 'Plans/Contracts_V0.md'
+L00000700	- 'Plans/Decision_Policy.md'
+L00000701	```
+L00000702	
+L00000703	### WM-003 - Wiring Matrix Scope And Schema Ownership
+L00000704	
+L00000705	```yaml
+L00000706	plan_unit_id: WM-003
+L00000707	unit_type: requirement
+L00000708	status: accepted
+L00000709	owner_doc: Plans/Wiring_Matrix.md
+L00000710	canonical_text: 'This document provides the wiring matrix template and examples, while real project wiring matrices are generated or maintained as JSON validated against `Plans/Wiring_Matrix.schema.json` and gated by `GATE-010`.'
+L00000711	gui_related: false
+L00000712	gui_classification_reason: 'The unit defines schema/gate ownership rather than visual presentation.'
+L00000713	split_recommended: false
+L00000714	depends_on:
+L00000715	- PDS-003
+L00000716	- PDS-004
+L00000717	- PDS-005
+L00000718	- PNC-001
+L00000719	- WM-002
+L00000720	unblocks: []
+L00000721	acceptance_criteria:
+L00000722	- WM-003 remains addressable as a fine-grained Wiring Matrix PlanUnit with source-span coverage.
+L00000723	- ContractRefs, anchors or aliases, exact tokens, negative constraints, compatibility notes, stale/retired dispositions, owner boundaries, and source lineage from the source spans remain preserved.
+L00000724	- No WorkNodes, NodeSeeds, executable queues, final node manifests, production build tasks, implementation files, or source code are created by this PlanUnit.
+L00000725	validation_surfaces:
+L00000726	- python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits
+L00000727	- python3 scripts/pm-plan-index.py validate
+L00000728	risk_class: wiring_matrix_drift
+L00000729	reasoning_tier: standard
+L00000730	context_scope: wiring_matrix_batch_199
+L00000731	implementation_surfaces:
+L00000732	- Plans/Wiring_Matrix.md
+L00000733	node_compile_hint:
+L00000734	  mode: wiring_matrix_scope
+L00000735	  create_worknodes: false
+L00000736	source_lineage:
+L00000737	- Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:Wiring_Matrix-S0004
+L00000738	preserved_exact_tokens:
+L00000739	- '0. Scope'
+L00000740	- 'wiring matrix template and example entries'
+L00000741	- 'generated/maintained as JSON'
+L00000742	- 'Plans/Wiring_Matrix.schema.json'
+L00000743	- 'GATE-010'
+L00000744	negative_constraints: []
+L00000745	preserved_contractrefs:
+L00000746	- 'ContractRef: SchemaID:Wiring_Matrix.schema.json, ContractName:Plans/UI_Wiring_Rules.md, Gate:GATE-010'
+L00000747	compatibility_only_notes: []
+L00000748	stale_retired_dispositions: []
+L00000749	owner_hints:
+L00000750	- 'Plans/Wiring_Matrix.md'
+L00000751	- 'Plans/UI_Wiring_Rules.md'
+L00000752	```
+L00000753	
+L00000754	### WM-004 - Entry Template Contract
+L00000755	
+L00000756	```yaml
+L00000757	plan_unit_id: WM-004
+L00000758	unit_type: requirement
+L00000759	status: accepted
+L00000760	owner_doc: Plans/Wiring_Matrix.md
+L00000761	canonical_text: 'Wiring matrix entries expose `ui_element_id`, `ui_location`, `ui_command_id`, `handler_location`, `expected_event_types`, `acceptance_checks`, and `evidence_required`, with JSON `entries` keyed by `ui_element_id` for unique interactive element IDs.'
+L00000762	gui_related: true
+L00000763	gui_classification_reason: 'The unit defines UI element and command wiring table fields for visible interactive elements.'
+L00000764	split_recommended: false
+L00000765	depends_on:
+L00000766	- PDS-003
+L00000767	- PDS-004
+L00000768	- PDS-005
+L00000769	- PNC-001
+L00000770	- WM-003
+L00000771	unblocks: []
+L00000772	acceptance_criteria:
+L00000773	- WM-004 remains addressable as a fine-grained Wiring Matrix PlanUnit with source-span coverage.
+L00000774	- ContractRefs, anchors or aliases, exact tokens, negative constraints, compatibility notes, stale/retired dispositions, owner boundaries, and source lineage from the source spans remain preserved.
+L00000775	- No WorkNodes, NodeSeeds, executable queues, final node manifests, production build tasks, implementation files, or source code are created by this PlanUnit.
+L00000776	validation_surfaces:
+L00000777	- python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits
+L00000778	- python3 scripts/pm-plan-index.py validate
+L00000779	risk_class: wiring_matrix_drift
+L00000780	reasoning_tier: standard
+L00000781	context_scope: wiring_matrix_batch_199
+L00000782	implementation_surfaces:
+L00000783	- Plans/Wiring_Matrix.md
+L00000784	node_compile_hint:
+L00000785	  mode: entry_template
+L00000786	  create_worknodes: false
+L00000787	source_lineage:
+L00000788	- Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:Wiring_Matrix-S0005
+L00000789	preserved_exact_tokens:
+L00000790	- 'ui_element_id'
+L00000791	- 'ui_location'
+L00000792	- 'ui_command_id'
+L00000793	- 'handler_location'
+L00000794	- 'expected_event_types'
+L00000795	- 'acceptance_checks'
+L00000796	- 'evidence_required'
+L00000797	- 'entries'
+L00000798	- 'map keyed by `ui_element_id`'
+L00000799	- 'btn.github.connect'
+L00000800	- 'Settings > GitHub/Auth'
+L00000801	- 'handlers::github_auth::connect'
+L00000802	- 'crate::core::handlers::auth::connect'
+L00000803	- '(none — UI-only)'
+L00000804	negative_constraints: []
+L00000805	preserved_contractrefs:
+L00000806	- 'ContractRef: Primitive:UICommand, ContractName:Plans/Contracts_V0.md#7-uicommand, Gate:GATE-010'
+L00000807	compatibility_only_notes: []
+L00000808	stale_retired_dispositions: []
+L00000809	owner_hints:
+L00000810	- 'Plans/Wiring_Matrix.md'
+L00000811	- 'Plans/Contracts_V0.md'
+L00000812	- 'Plans/UI_Command_Catalog.md'
+L00000813	```
+L00000814	
+L00000815	### WM-005 - Catalog Example Rows
+L00000816	
+L00000817	```yaml
+L00000818	plan_unit_id: WM-005
+L00000819	unit_type: requirement
+L00000820	status: accepted
+L00000821	owner_doc: Plans/Wiring_Matrix.md
+L00000822	canonical_text: 'The Markdown example rows remain `(EXAMPLE)` rows drawn from `Plans/UI_Command_Catalog.md`, preserving the listed command IDs for GitHub auth, LSP, widgets, graph selection/retry, orchestrator tab switching, and chat thread creation.'
+L00000823	gui_related: true
+L00000824	gui_classification_reason: 'The unit preserves user-visible UI element example wiring rows.'
+L00000825	split_recommended: false
+L00000826	depends_on:
+L00000827	- PDS-003
+L00000828	- PDS-004
+L00000829	- PDS-005
+L00000830	- PNC-001
+L00000831	- WM-004
+L00000832	unblocks: []
+L00000833	acceptance_criteria:
+L00000834	- WM-005 remains addressable as a fine-grained Wiring Matrix PlanUnit with source-span coverage.
+L00000835	- ContractRefs, anchors or aliases, exact tokens, negative constraints, compatibility notes, stale/retired dispositions, owner boundaries, and source lineage from the source spans remain preserved.
+L00000836	- No WorkNodes, NodeSeeds, executable queues, final node manifests, production build tasks, implementation files, or source code are created by this PlanUnit.
+L00000837	validation_surfaces:
+L00000838	- python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits
+L00000839	- python3 scripts/pm-plan-index.py validate
+L00000840	risk_class: wiring_matrix_drift
+L00000841	reasoning_tier: standard
+L00000842	context_scope: wiring_matrix_batch_199
+L00000843	implementation_surfaces:
+L00000844	- Plans/Wiring_Matrix.md
+L00000845	node_compile_hint:
+L00000846	  mode: example_rows
+L00000847	  create_worknodes: false
+L00000848	source_lineage:
+L00000849	- Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:Wiring_Matrix-S0006
+L00000850	preserved_exact_tokens:
+L00000851	- 'Example Entries'
+L00000852	- '(EXAMPLE)'
+L00000853	- 'btn.github.connect'
+L00000854	- 'btn.github.disconnect'
+L00000855	- 'menu.lsp.goto_def'
+L00000856	- 'menu.lsp.find_refs'
+L00000857	- 'btn.widget.add'
+L00000858	- 'btn.widget.remove'
+L00000859	- 'node.graph.select'
+L00000860	- 'btn.graph.retry'
+L00000861	- 'tab.orchestrator.switch'
+L00000862	- 'btn.chat.new'
+L00000863	- 'cmd.github.connect'
+L00000864	- 'cmd.github.disconnect'
+L00000865	- 'cmd.lsp.goto_definition'
+L00000866	- 'cmd.lsp.find_references'
+L00000867	- 'cmd.widget.add'
+L00000868	- 'cmd.widget.remove'
+L00000869	- 'cmd.graph.select_node'
+L00000870	- 'cmd.graph.retry_node'
+L00000871	- 'cmd.orchestrator.switch_tab'
+L00000872	- 'cmd.chat.new'
+L00000873	negative_constraints: []
+L00000874	preserved_contractrefs:
+L00000875	- 'ContractRef: ContractName:Plans/UI_Command_Catalog.md, SchemaID:Wiring_Matrix.schema.json'
+L00000876	- 'ContractRef: UICommand:cmd.github.connect, UICommand:cmd.github.disconnect, UICommand:cmd.lsp.goto_definition, UICommand:cmd.lsp.find_references, UICommand:cmd.widget.add, UICommand:cmd.widget.remove, UICommand:cmd.graph.select_node, UICommand:cmd.graph.retry_node, UICommand:cmd.orchestrator.switch_tab, UICommand:cmd.chat.new'
+L00000877	compatibility_only_notes: []
+L00000878	stale_retired_dispositions: []
+L00000879	owner_hints:
+L00000880	- 'Plans/Wiring_Matrix.md'
+L00000881	- 'Plans/UI_Command_Catalog.md'
+L00000882	```
+L00000883	
+L00000884	### WM-006 - Json Example Shape
+L00000885	
+L00000886	```yaml
+L00000887	plan_unit_id: WM-006
+L00000888	unit_type: requirement
+L00000889	status: accepted
+L00000890	owner_doc: Plans/Wiring_Matrix.md
+L00000891	canonical_text: 'The JSON example preserves `pm.wiring_matrix.v0`, representative keyed entries, schema linkage, expected events, acceptance checks, evidence paths, and EventRecord linkage.'
+L00000892	gui_related: true
+L00000893	gui_classification_reason: 'The JSON examples describe UI element records and their event wiring.'
+L00000894	split_recommended: false
+L00000895	depends_on:
+L00000896	- PDS-003
+L00000897	- PDS-004
+L00000898	- PDS-005
+L00000899	- PNC-001
+L00000900	- WM-004
+L00000901	unblocks: []
+L00000902	acceptance_criteria:
+L00000903	- WM-006 remains addressable as a fine-grained Wiring Matrix PlanUnit with source-span coverage.
+L00000904	- ContractRefs, anchors or aliases, exact tokens, negative constraints, compatibility notes, stale/retired dispositions, owner boundaries, and source lineage from the source spans remain preserved.
+L00000905	- No WorkNodes, NodeSeeds, executable queues, final node manifests, production build tasks, implementation files, or source code are created by this PlanUnit.
+L00000906	validation_surfaces:
+L00000907	- python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits
+L00000908	- python3 scripts/pm-plan-index.py validate
+L00000909	risk_class: wiring_matrix_drift
+L00000910	reasoning_tier: standard
+L00000911	context_scope: wiring_matrix_batch_199
+L00000912	implementation_surfaces:
+L00000913	- Plans/Wiring_Matrix.md
+L00000914	node_compile_hint:
+L00000915	  mode: json_example
+L00000916	  create_worknodes: false
+L00000917	source_lineage:
+L00000918	- Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:Wiring_Matrix-S0007
+L00000919	preserved_exact_tokens:
+L00000920	- 'JSON Example'
+L00000921	- 'pm.wiring_matrix.v0'
+L00000922	- 'generated_at'
+L00000923	- 'btn.github.connect'
+L00000924	- 'menu.lsp.goto_def'
+L00000925	- 'btn.widget.add'
+L00000926	- 'auth.github.device_code.issued'
+L00000927	- 'auth.github.token.polling'
+L00000928	- 'auth.github.authenticated'
+L00000929	- 'auth.github.failed'
+L00000930	- 'tool.invoked'
+L00000931	- 'evidence/wiring/cmd.github.connect.json'
+L00000932	- 'evidence/wiring/cmd.lsp.goto_definition.json'
+L00000933	- 'evidence/wiring/cmd.widget.add.json'
+L00000934	negative_constraints: []
+L00000935	preserved_contractrefs:
+L00000936	- 'ContractRef: SchemaID:Wiring_Matrix.schema.json, ContractName:Plans/Contracts_V0.md#EventRecord'
+L00000937	compatibility_only_notes: []
+L00000938	stale_retired_dispositions: []
+L00000939	owner_hints:
+L00000940	- 'Plans/Wiring_Matrix.md'
+L00000941	- 'Plans/Contracts_V0.md'
+L00000942	```
+L00000943	
+L00000944	### WM-007 - Gate 010 Schema Verification
+L00000945	
+L00000946	```yaml
+L00000947	plan_unit_id: WM-007
+L00000948	unit_type: constraint
+L00000949	status: accepted
+L00000950	owner_doc: Plans/Wiring_Matrix.md
+L00000951	canonical_text: 'GATE-010 verifies wiring matrix entries by running JSON Schema validation against `Plans/Wiring_Matrix.schema.json` before further wiring checks.'
+L00000952	gui_related: false
+L00000953	gui_classification_reason: 'The unit defines validation gate behavior rather than GUI presentation.'
+L00000954	split_recommended: false
+L00000955	depends_on:
+L00000956	- PDS-003
+L00000957	- PDS-004
+L00000958	- PDS-005
+L00000959	- PNC-001
+L00000960	- WM-003
+L00000961	unblocks: []
+L00000962	acceptance_criteria:
+L00000963	- WM-007 remains addressable as a fine-grained Wiring Matrix PlanUnit with source-span coverage.
+L00000964	- ContractRefs, anchors or aliases, exact tokens, negative constraints, compatibility notes, stale/retired dispositions, owner boundaries, and source lineage from the source spans remain preserved.
+L00000965	- No WorkNodes, NodeSeeds, executable queues, final node manifests, production build tasks, implementation files, or source code are created by this PlanUnit.
+L00000966	validation_surfaces:
+L00000967	- python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits
+L00000968	- python3 scripts/pm-plan-index.py validate
+L00000969	risk_class: wiring_matrix_drift
+L00000970	reasoning_tier: standard
+L00000971	context_scope: wiring_matrix_batch_199
+L00000972	implementation_surfaces:
+L00000973	- Plans/Wiring_Matrix.md
+L00000974	node_compile_hint:
+L00000975	  mode: gate010_schema
+L00000976	  create_worknodes: false
+L00000977	source_lineage:
+L00000978	- Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:Wiring_Matrix-S0008
+L00000979	- Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:Wiring_Matrix-S0009
+L00000980	preserved_exact_tokens:
+L00000981	- '4. Verification'
+L00000982	- 'GATE-010'
+L00000983	- 'Plans/Progression_Gates.md'
+L00000984	- '4.1 Schema validation'
+L00000985	- 'MUST validate'
+L00000986	- 'Plans/Wiring_Matrix.schema.json'
+L00000987	- 'first check'
+L00000988	negative_constraints: []
+L00000989	preserved_contractrefs: []
+L00000990	compatibility_only_notes: []
+L00000991	stale_retired_dispositions: []
+L00000992	owner_hints:
+L00000993	- 'Plans/Wiring_Matrix.md'
+L00000994	- 'Plans/Progression_Gates.md'
+L00000995	```
+L00000996	
+L00000997	### WM-008 - Gate 010 Coverage And Uniqueness
+L00000998	
+L00000999	```yaml
+L00001000	plan_unit_id: WM-008
+L00001001	unit_type: constraint
+L00001002	status: accepted
+L00001003	owner_doc: Plans/Wiring_Matrix.md
+L00001004	canonical_text: 'GATE-010 requires every catalog `cmd.*` ID to have at least one wiring entry, treats stale research-session, web-tool, or terminal aliases as failures, and enforces one unique `ui_element_id` key/value per entry.'
+L00001005	gui_related: false
+L00001006	gui_classification_reason: 'The unit defines gate coverage and uniqueness validation rather than GUI presentation.'
+L00001007	split_recommended: false
+L00001008	depends_on:
+L00001009	- PDS-003
+L00001010	- PDS-004
+L00001011	- PDS-005
+L00001012	- PNC-001
+L00001013	- WM-004
+L00001014	- WM-007
+L00001015	unblocks: []
+L00001016	acceptance_criteria:
+L00001017	- WM-008 remains addressable as a fine-grained Wiring Matrix PlanUnit with source-span coverage.
+L00001018	- ContractRefs, anchors or aliases, exact tokens, negative constraints, compatibility notes, stale/retired dispositions, owner boundaries, and source lineage from the source spans remain preserved.
+L00001019	- No WorkNodes, NodeSeeds, executable queues, final node manifests, production build tasks, implementation files, or source code are created by this PlanUnit.
+L00001020	validation_surfaces:
+L00001021	- python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits
+L00001022	- python3 scripts/pm-plan-index.py validate
+L00001023	risk_class: wiring_matrix_drift
+L00001024	reasoning_tier: standard
+L00001025	context_scope: wiring_matrix_batch_199
+L00001026	implementation_surfaces:
+L00001027	- Plans/Wiring_Matrix.md
+L00001028	node_compile_hint:
+L00001029	  mode: gate010_coverage
+L00001030	  create_worknodes: false
+L00001031	source_lineage:
+L00001032	- Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:Wiring_Matrix-S0010
+L00001033	- Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:Wiring_Matrix-S0011
+L00001034	preserved_exact_tokens:
+L00001035	- '4.2 Coverage'
+L00001036	- 'Every `cmd.*` ID'
+L00001037	- 'at least one wiring matrix entry'
+L00001038	- 'Research-session'
+L00001039	- 'web-tool'
+L00001040	- 'terminal command identity'
+L00001041	- 'stale local command aliases'
+L00001042	- 'verification failures'
+L00001043	- 'cmd.dev.start_session'
+L00001044	- 'cmd.dev.stop_session'
+L00001045	- 'reveal'
+L00001046	- 'show'
+L00001047	- 'rerun'
+L00001048	- 'split'
+L00001049	- 'close'
+L00001050	- 'clear'
+L00001051	- 'restart'
+L00001052	- 'terminate'
+L00001053	- 'kill'
+L00001054	- 'detach'
+L00001055	- 'reattach'
+L00001056	- 'focus-session'
+L00001057	- 'w-20260316-160450'
+L00001058	- '4.2.1 One element, one command enforcement'
+L00001059	- 'ui_element_id'
+L00001060	negative_constraints: []
+L00001061	preserved_contractrefs: []
+L00001062	compatibility_only_notes:
+L00001063	- 'Old work-item ledger `w-20260316-160450` lines 748-941 may be source-lineage evidence only and does not replace generated JSON entries.'
+L00001064	stale_retired_dispositions:
+L00001065	- 'Stale local command aliases for research-session, web-tool, or terminal command identity are verification failures, not compatibility shortcuts.'
+L00001066	owner_hints:
+L00001067	- 'Plans/Wiring_Matrix.md'
+L00001068	- 'Plans/UI_Command_Catalog.md'
+L00001069	- 'Plans/Tools.md'
+L00001070	```
+L00001071	
+L00001072	### WM-009 - Handler And Event Validation
+L00001073	
+L00001074	```yaml
+L00001075	plan_unit_id: WM-009
+L00001076	unit_type: constraint
+L00001077	status: accepted
+L00001078	owner_doc: Plans/Wiring_Matrix.md
+L00001079	canonical_text: 'GATE-010 requires each `handler_location` to resolve to an existing handler path and requires dispatch tests for non-empty `expected_event_types` that assert declared events in order and no undeclared events.'
+L00001080	gui_related: false
+L00001081	gui_classification_reason: 'The unit defines handler and event validation mechanics rather than GUI presentation.'
+L00001082	split_recommended: false
+L00001083	depends_on:
+L00001084	- PDS-003
+L00001085	- PDS-004
+L00001086	- PDS-005
+L00001087	- PNC-001
+L00001088	- WM-004
+L00001089	- WM-007
+L00001090	unblocks: []
+L00001091	acceptance_criteria:
+L00001092	- WM-009 remains addressable as a fine-grained Wiring Matrix PlanUnit with source-span coverage.
+L00001093	- ContractRefs, anchors or aliases, exact tokens, negative constraints, compatibility notes, stale/retired dispositions, owner boundaries, and source lineage from the source spans remain preserved.
+L00001094	- No WorkNodes, NodeSeeds, executable queues, final node manifests, production build tasks, implementation files, or source code are created by this PlanUnit.
+L00001095	validation_surfaces:
+L00001096	- python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits
+L00001097	- python3 scripts/pm-plan-index.py validate
+L00001098	risk_class: wiring_matrix_drift
+L00001099	reasoning_tier: standard
+L00001100	context_scope: wiring_matrix_batch_199
+L00001101	implementation_surfaces:
+L00001102	- Plans/Wiring_Matrix.md
+L00001103	node_compile_hint:
+L00001104	  mode: handler_event_validation
+L00001105	  create_worknodes: false
+L00001106	source_lineage:
+L00001107	- Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:Wiring_Matrix-S0012
+L00001108	- Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:Wiring_Matrix-S0013
+L00001109	preserved_exact_tokens:
+L00001110	- '4.3 Handler resolution'
+L00001111	- 'handler_location'
+L00001112	- 'MUST resolve'
+L00001113	- 'puppet-master-rs/src/'
+L00001114	- '(crate::)?module(::submodule)+::function'
+L00001115	- 'ui_element_id'
+L00001116	- 'ui_command_id'
+L00001117	- 'unresolved `handler_location`'
+L00001118	- 'candidate files/modules inspected'
+L00001119	- '4.4 Event tests'
+L00001120	- 'expected_event_types'
+L00001121	- 'declared event types'
+L00001122	- 'expected order'
+L00001123	- 'no undeclared event types'
+L00001124	negative_constraints: []
+L00001125	preserved_contractrefs:
+L00001126	- 'ContractRef: Gate:GATE-010, Invariant:INV-011, Invariant:INV-012, SchemaID:Wiring_Matrix.schema.json'
+L00001127	compatibility_only_notes: []
+L00001128	stale_retired_dispositions: []
+L00001129	owner_hints:
+L00001130	- 'Plans/Wiring_Matrix.md'
+L00001131	- 'Plans/Progression_Gates.md'
+L00001132	- 'Plans/Contracts_V0.md'
+L00001133	```
+L00001134	
+L00001135	### WM-010 - Gate Schema Owner Boundary
+L00001136	
+L00001137	```yaml
+L00001138	plan_unit_id: WM-010
+L00001139	unit_type: constraint
+L00001140	status: accepted
+L00001141	owner_doc: Plans/Wiring_Matrix.md
+L00001142	canonical_text: 'The wiring matrix preserves gate/schema and owner limits for `cmd.runtime.*`, `correlation_id`, `allowed_action_ids[]`, route-aware evidence, extraction hazards, runtime owner references, command/wiring ownership, and route/open compatibility references without becoming a general runtime schema.'
+L00001143	gui_related: true
+L00001144	gui_classification_reason: 'The unit includes GUI command IDs, route/open evidence, and UI/runtime wiring ownership boundaries.'
+L00001145	split_recommended: false
+L00001146	depends_on:
+L00001147	- PDS-003
+L00001148	- PDS-004
+L00001149	- PDS-005
+L00001150	- PNC-001
+L00001151	- WM-004
+L00001152	- WM-007
+L00001153	unblocks: []
+L00001154	acceptance_criteria:
+L00001155	- WM-010 remains addressable as a fine-grained Wiring Matrix PlanUnit with source-span coverage.
+L00001156	- ContractRefs, anchors or aliases, exact tokens, negative constraints, compatibility notes, stale/retired dispositions, owner boundaries, and source lineage from the source spans remain preserved.
+L00001157	- No WorkNodes, NodeSeeds, executable queues, final node manifests, production build tasks, implementation files, or source code are created by this PlanUnit.
+L00001158	validation_surfaces:
+L00001159	- python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits
+L00001160	- python3 scripts/pm-plan-index.py validate
+L00001161	risk_class: wiring_matrix_drift
+L00001162	reasoning_tier: standard
+L00001163	context_scope: wiring_matrix_batch_199
+L00001164	implementation_surfaces:
+L00001165	- Plans/Wiring_Matrix.md
+L00001166	node_compile_hint:
+L00001167	  mode: gate_owner_boundary
+L00001168	  create_worknodes: false
+L00001169	source_lineage:
+L00001170	- Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:Wiring_Matrix-S0014
+L00001171	preserved_exact_tokens:
+L00001172	- '4.5 Gate/schema limits and owner references'
+L00001173	- 'cmd.runtime'
+L00001174	- 'cmd.runtime.*'
+L00001175	- 'stale-projection revalidation'
+L00001176	- 'correlation_id'
+L00001177	- 'allowed_action_ids'
+L00001178	- 'allowed_action_ids[]'
+L00001179	- 'Wiring_Matrix.schema.json'
+L00001180	- 'schema.json'
+L00001181	- '/matrix/gate'
+L00001182	- 'deprecated-vs-canonical command-family status'
+L00001183	- 'regex-style scans'
+L00001184	- 'cmd.*.json'
+L00001185	- 'cmd.panel.switch'
+L00001186	- '/gate/evidence'
+L00001187	- 'GATE'
+L00001188	- 'GATE-010'
+L00001189	- '/route'
+L00001190	- 'OpenSubject'
+L00001191	- 'cmd.nav'
+L00001192	- 'cmd.nav.*'
+L00001193	- 'scheduler.pass'
+L00001194	- 'attempt.started'
+L00001195	- 'attempt.completed'
+L00001196	- 'node.blocked'
+L00001197	- 'safe_point'
+L00001198	- 'safe_point.*'
+L00001199	- 'attempt_record'
+L00001200	- 'blocked_projection'
+L00001201	- 'cmd.chat.run_user_command'
+L00001202	- '/compact'
+L00001203	- '/mode'
+L00001204	- 'runtime-mode'
+L00001205	- 'slash-command'
+L00001206	- 'IDs'
+L00001207	- 'GUI'
+L00001208	- '{ mode }'
+L00001209	- '/wiring'
+L00001210	- '/recovery'
+L00001211	- '/open'
+L00001212	- 'tab_id'
+L00001213	- 'resume_url'
+L00001214	- '/prohibited'
+L00001215	negative_constraints: []
+L00001216	preserved_contractrefs: []
+L00001217	compatibility_only_notes:
+L00001218	- 'Route/open compatibility evidence references Contracts_V0 for `/open`, `tab_id`, `resume_url`, and `/prohibited` serialization classes.'
+L00001219	stale_retired_dispositions:
+L00001220	- 'Extraction hazards and stale projection revalidation are gate failures rather than compatibility shortcuts.'
+L00001221	owner_hints:
+L00001222	- 'Plans/Wiring_Matrix.md'
+L00001223	- 'Plans/UI_Wiring_Rules.md'
+L00001224	- 'Plans/Contracts_V0.md'
+L00001225	- 'Plans/Progression_Gates.md'
+L00001226	- 'Plans/storage-plan.md'
+L00001227	- 'Plans/Prompt_Pipeline.md'
+L00001228	- 'Plans/Runtime_Artifacts_Panel.md'
+L00001229	- 'Plans/assistant-chat-design.md'
+L00001230	- 'Plans/UI_Command_Catalog.md'
+L00001231	- 'Plans/FileManager.md'
+L00001232	```
+L00001233	
+L00001234	### WM-011 - Scheduler Analysis Wiring Row
+L00001235	
+L00001236	```yaml
+L00001237	plan_unit_id: WM-011
+L00001238	unit_type: requirement
+L00001239	status: accepted
+L00001240	owner_doc: Plans/Wiring_Matrix.md
+L00001241	canonical_text: 'The scheduler analysis producer/consumer path wires canonical event `scheduler.pass` with legacy alias `run.scheduler_analysis` from executor/orchestrator scheduler pass to Run Graph queue-analysis, storage `scheduler_pass_record`, usage/analytics dashboard, and `scheduler_pass.{run_id}.{scheduler_pass_id}` projection.'
+L00001242	gui_related: true
+L00001243	gui_classification_reason: 'The unit links runtime scheduler events to user-visible Run Graph and dashboard consumers.'
+L00001244	split_recommended: false
+L00001245	depends_on:
+L00001246	- PDS-003
+L00001247	- PDS-004
+L00001248	- PDS-005
+L00001249	- PNC-001
+L00001250	- WM-004
+L00001251	- WM-007
+L00001252	unblocks: []
+L00001253	acceptance_criteria:
+L00001254	- WM-011 remains addressable as a fine-grained Wiring Matrix PlanUnit with source-span coverage.
+L00001255	- ContractRefs, anchors or aliases, exact tokens, negative constraints, compatibility notes, stale/retired dispositions, owner boundaries, and source lineage from the source spans remain preserved.
+L00001256	- No WorkNodes, NodeSeeds, executable queues, final node manifests, production build tasks, implementation files, or source code are created by this PlanUnit.
+L00001257	validation_surfaces:
+L00001258	- python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits
+L00001259	- python3 scripts/pm-plan-index.py validate
+L00001260	risk_class: wiring_matrix_drift
+L00001261	reasoning_tier: standard
+L00001262	context_scope: wiring_matrix_batch_199
+L00001263	implementation_surfaces:
+L00001264	- Plans/Wiring_Matrix.md
+L00001265	node_compile_hint:
+L00001266	  mode: runtime_event_wiring
+L00001267	  create_worknodes: false
+L00001268	source_lineage:
+L00001269	- Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:Wiring_Matrix-S0016
+L00001270	- Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:Wiring_Matrix-S0017
+L00001271	preserved_exact_tokens:
+L00001272	- 'Scheduler/Remediation/Event Wiring Addendum'
+L00001273	- 'producer -> consumer paths'
+L00001274	- 'scheduler.pass'
+L00001275	- 'run.scheduler_analysis'
+L00001276	- 'executor/orchestrator scheduler pass'
+L00001277	- 'Run Graph View queue-analysis panel'
+L00001278	- 'scheduler_pass_record'
+L00001279	- 'usage/analytics dashboard'
+L00001280	- 'scheduler_pass.{run_id}.{scheduler_pass_id}'
+L00001281	negative_constraints: []
+L00001282	preserved_contractrefs: []
+L00001283	compatibility_only_notes: []
+L00001284	stale_retired_dispositions: []
+L00001285	owner_hints:
+L00001286	- 'Plans/Wiring_Matrix.md'
+L00001287	- 'Plans/Run_Graph_View.md'
+L00001288	- 'Plans/storage-plan.md'
+L00001289	- 'Plans/usage-feature.md'
+L00001290	```
+L00001291	
+L00001292	### WM-012 - Blocked Unblocked Wiring Rows
+L00001293	
+L00001294	```yaml
+L00001295	plan_unit_id: WM-012
+L00001296	unit_type: requirement
+L00001297	status: accepted
+L00001298	owner_doc: Plans/Wiring_Matrix.md
+L00001299	canonical_text: 'Blocked/unblocked wiring rows cover `node.blocked`, `node.unblocked`, `wizard.blocked`, and `wizard.unblocked` with legacy aliases `run.node_blocked` and `run.node_unblocked`, producing blocked projections for Run Graph, assistant chat, dashboard counts, and storage.'
+L00001300	gui_related: true
+L00001301	gui_classification_reason: 'The unit routes blocked/unblocked events to visible Run Graph, chat, and dashboard consumers.'
+L00001302	split_recommended: false
+L00001303	depends_on:
+L00001304	- PDS-003
+L00001305	- PDS-004
+L00001306	- PDS-005
+L00001307	- PNC-001
+L00001308	- WM-004
+L00001309	- WM-007
+L00001310	unblocks: []
+L00001311	acceptance_criteria:
+L00001312	- WM-012 remains addressable as a fine-grained Wiring Matrix PlanUnit with source-span coverage.
+L00001313	- ContractRefs, anchors or aliases, exact tokens, negative constraints, compatibility notes, stale/retired dispositions, owner boundaries, and source lineage from the source spans remain preserved.
+L00001314	- No WorkNodes, NodeSeeds, executable queues, final node manifests, production build tasks, implementation files, or source code are created by this PlanUnit.
+L00001315	validation_surfaces:
+L00001316	- python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits
+L00001317	- python3 scripts/pm-plan-index.py validate
+L00001318	risk_class: wiring_matrix_drift
+L00001319	reasoning_tier: standard
+L00001320	context_scope: wiring_matrix_batch_199
+L00001321	implementation_surfaces:
+L00001322	- Plans/Wiring_Matrix.md
+L00001323	node_compile_hint:
+L00001324	  mode: runtime_event_wiring
+L00001325	  create_worknodes: false
+L00001326	source_lineage:
+L00001327	- Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:Wiring_Matrix-S0018
+L00001328	preserved_exact_tokens:
+L00001329	- 'Blocked/unblocked'
+L00001330	- 'node.blocked'
+L00001331	- 'node.unblocked'
+L00001332	- 'wizard.blocked'
+L00001333	- 'wizard.unblocked'
+L00001334	- 'run.node_blocked'
+L00001335	- 'run.node_unblocked'
+L00001336	- 'executor/orchestrator blocked-state manager'
+L00001337	- 'Run Graph View node badge/detail'
+L00001338	- 'assistant-chat blocked_notice'
+L00001339	- 'dashboard blocked-count badge'
+L00001340	- 'blocked_projection'
+L00001341	- 'blocked_projection.{run_id}.{node_id}.{blocked_sequence}'
+L00001342	negative_constraints: []
+L00001343	preserved_contractrefs: []
+L00001344	compatibility_only_notes:
+L00001345	- 'Legacy aliases `run.node_blocked` and `run.node_unblocked` are lineage only beside canonical blocked events.'
+L00001346	stale_retired_dispositions: []
+L00001347	owner_hints:
+L00001348	- 'Plans/Wiring_Matrix.md'
+L00001349	- 'Plans/Run_Graph_View.md'
+L00001350	- 'Plans/assistant-chat-design.md'
+L00001351	- 'Plans/storage-plan.md'
+L00001352	```
+L00001353	
+L00001354	### WM-013 - Safe Point Wiring Rows
+L00001355	
+L00001356	```yaml
+L00001357	plan_unit_id: WM-013
+L00001358	unit_type: requirement
+L00001359	status: accepted
+L00001360	owner_doc: Plans/Wiring_Matrix.md
+L00001361	canonical_text: 'Safe-point wiring rows cover mutation-capable attempt dispatcher or retry controller production of `safe_point.created` and `safe_point.restored` to runtime recovery logic, Run Graph detail, and audit/debug surfaces.'
+L00001362	gui_related: true
+L00001363	gui_classification_reason: 'The unit routes safe-point runtime events to user-visible Run Graph and audit/debug consumers.'
+L00001364	split_recommended: false
+L00001365	depends_on:
+L00001366	- PDS-003
+L00001367	- PDS-004
+L00001368	- PDS-005
+L00001369	- PNC-001
+L00001370	- WM-004
+L00001371	- WM-007
+L00001372	unblocks: []
+L00001373	acceptance_criteria:
+L00001374	- WM-013 remains addressable as a fine-grained Wiring Matrix PlanUnit with source-span coverage.
+L00001375	- ContractRefs, anchors or aliases, exact tokens, negative constraints, compatibility notes, stale/retired dispositions, owner boundaries, and source lineage from the source spans remain preserved.
+L00001376	- No WorkNodes, NodeSeeds, executable queues, final node manifests, production build tasks, implementation files, or source code are created by this PlanUnit.
+L00001377	validation_surfaces:
+L00001378	- python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits
+L00001379	- python3 scripts/pm-plan-index.py validate
+L00001380	risk_class: wiring_matrix_drift
+L00001381	reasoning_tier: standard
+L00001382	context_scope: wiring_matrix_batch_199
+L00001383	implementation_surfaces:
+L00001384	- Plans/Wiring_Matrix.md
+L00001385	node_compile_hint:
+L00001386	  mode: runtime_event_wiring
+L00001387	  create_worknodes: false
+L00001388	source_lineage:
+L00001389	- Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:Wiring_Matrix-S0019
+L00001390	preserved_exact_tokens:
+L00001391	- 'Safe points'
+L00001392	- 'mutation-capable attempt dispatcher'
+L00001393	- 'retry controller'
+L00001394	- 'safe_point.created'
+L00001395	- 'safe_point.restored'
+L00001396	- 'runtime recovery logic'
+L00001397	- 'Run Graph detail panel'
+L00001398	- 'audit/debug surfaces'
+L00001399	negative_constraints: []
+L00001400	preserved_contractrefs: []
+L00001401	compatibility_only_notes: []
+L00001402	stale_retired_dispositions: []
+L00001403	owner_hints:
+L00001404	- 'Plans/Wiring_Matrix.md'
+L00001405	- 'Plans/Run_Graph_View.md'
+L00001406	- 'Plans/Executor_Protocol.md'
+L00001407	```
+L00001408	
+L00001409	### WM-014 - Remediation And Degradation Wiring Rows
+L00001410	
+L00001411	```yaml
+L00001412	plan_unit_id: WM-014
+L00001413	unit_type: requirement
+L00001414	status: accepted
+L00001415	owner_doc: Plans/Wiring_Matrix.md
+L00001416	canonical_text: 'Remediation and degradation wiring rows cover `remediation.spawned`, `remediation.resolved`, and `plan.decomposition_degraded`, preserving remediation lineage storage, Run Graph, dashboard, wizard/interview planning UI, storage projections, and audit/debug consumers.'
+L00001417	gui_related: true
+L00001418	gui_classification_reason: 'The unit routes remediation/degradation events to visible Run Graph, dashboard, wizard/interview, and audit/debug consumers.'
+L00001419	split_recommended: false
+L00001420	depends_on:
+L00001421	- PDS-003
+L00001422	- PDS-004
+L00001423	- PDS-005
+L00001424	- PNC-001
+L00001425	- WM-004
+L00001426	- WM-007
+L00001427	unblocks: []
+L00001428	acceptance_criteria:
+L00001429	- WM-014 remains addressable as a fine-grained Wiring Matrix PlanUnit with source-span coverage.
+L00001430	- ContractRefs, anchors or aliases, exact tokens, negative constraints, compatibility notes, stale/retired dispositions, owner boundaries, and source lineage from the source spans remain preserved.
+L00001431	- No WorkNodes, NodeSeeds, executable queues, final node manifests, production build tasks, implementation files, or source code are created by this PlanUnit.
+L00001432	validation_surfaces:
+L00001433	- python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits
+L00001434	- python3 scripts/pm-plan-index.py validate
+L00001435	risk_class: wiring_matrix_drift
+L00001436	reasoning_tier: standard
+L00001437	context_scope: wiring_matrix_batch_199
+L00001438	implementation_surfaces:
+L00001439	- Plans/Wiring_Matrix.md
+L00001440	node_compile_hint:
+L00001441	  mode: runtime_event_wiring
+L00001442	  create_worknodes: false
+L00001443	source_lineage:
+L00001444	- Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:Wiring_Matrix-S0020
+L00001445	- Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:Wiring_Matrix-S0021
+L00001446	preserved_exact_tokens:
+L00001447	- 'Remediation lineage'
+L00001448	- 'remediation.spawned'
+L00001449	- 'remediation.resolved'
+L00001450	- 'run.remediation_started'
+L00001451	- 'run.remediation_completed'
+L00001452	- 'remediation manager'
+L00001453	- 'remediation_lineage_record'
+L00001454	- 'dashboard remediation badge'
+L00001455	- 'remediation.{run_id}.{remediation_root_id}'
+L00001456	- 'Degradation evidence'
+L00001457	- 'plan.decomposition_degraded'
+L00001458	- 'draft decomposition/planning pipeline'
+L00001459	- 'wizard/interview planning UI'
+L00001460	- 'storage projections'
+L00001461	- 'audit/debug surfaces'
+L00001462	negative_constraints: []
+L00001463	preserved_contractrefs: []
+L00001464	compatibility_only_notes:
+L00001465	- 'Legacy aliases `run.remediation_started` and `run.remediation_completed` are lineage only beside canonical remediation events.'
+L00001466	stale_retired_dispositions: []
+L00001467	owner_hints:
+L00001468	- 'Plans/Wiring_Matrix.md'
+L00001469	- 'Plans/Run_Graph_View.md'
+L00001470	- 'Plans/storage-plan.md'
+L00001471	- 'Plans/Orchestrator_Page.md'
+L00001472	```
+L00001473	
+L00001474	### WM-015 - Runtime Recovery Packet Wiring
+L00001475	
+L00001476	```yaml
+L00001477	plan_unit_id: WM-015
+L00001478	unit_type: requirement
+L00001479	status: accepted
+L00001480	owner_doc: Plans/Wiring_Matrix.md
+L00001481	canonical_text: 'Runtime recovery wiring requires explicit producers, handlers, projection consumers, UI command handlers, and packet-field traceability from runtime event producers through run graph, orchestrator summaries, chat banners, and history/evidence tabs.'
+L00001482	gui_related: true
+L00001483	gui_classification_reason: 'The unit wires runtime recovery data to multiple user-visible UI consumers.'
+L00001484	split_recommended: false
+L00001485	depends_on:
+L00001486	- PDS-003
+L00001487	- PDS-004
+L00001488	- PDS-005
+L00001489	- PNC-001
+L00001490	- WM-011
+L00001491	- WM-012
+L00001492	- WM-013
+L00001493	- WM-014
+L00001494	unblocks: []
+L00001495	acceptance_criteria:
+L00001496	- WM-015 remains addressable as a fine-grained Wiring Matrix PlanUnit with source-span coverage.
+L00001497	- ContractRefs, anchors or aliases, exact tokens, negative constraints, compatibility notes, stale/retired dispositions, owner boundaries, and source lineage from the source spans remain preserved.
+L00001498	- No WorkNodes, NodeSeeds, executable queues, final node manifests, production build tasks, implementation files, or source code are created by this PlanUnit.
+L00001499	validation_surfaces:
+L00001500	- python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits
+L00001501	- python3 scripts/pm-plan-index.py validate
+L00001502	risk_class: wiring_matrix_drift
+L00001503	reasoning_tier: standard
+L00001504	context_scope: wiring_matrix_batch_199
+L00001505	implementation_surfaces:
+L00001506	- Plans/Wiring_Matrix.md
+L00001507	node_compile_hint:
+L00001508	  mode: runtime_recovery_wiring
+L00001509	  create_worknodes: false
+L00001510	source_lineage:
+L00001511	- Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:Wiring_Matrix-S0022
+L00001512	- Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:Wiring_Matrix-S0023
+L00001513	preserved_exact_tokens:
+L00001514	- 'Runtime recovery wiring requirements'
+L00001515	- 'runtime packet'
+L00001516	- 'Runtime recovery wiring minimum rows'
+L00001517	- 'scheduler.pass'
+L00001518	- 'attempt.started'
+L00001519	- 'attempt.completed'
+L00001520	- 'node.blocked'
+L00001521	- 'safe_point.created'
+L00001522	- 'safe_point.restored'
+L00001523	- 'remediation.spawned'
+L00001524	- 'remediation.resolved'
+L00001525	- 'projection consumers'
+L00001526	- 'run graph'
+L00001527	- 'orchestrator summaries'
+L00001528	- 'chat banners'
+L00001529	- 'history/evidence tabs'
+L00001530	- 'queue-analysis open'
+L00001531	- 'attempt details open'
+L00001532	- 'blocked resume'
+L00001533	- 'retry'
+L00001534	- 'safe-point restore-and-retry'
+L00001535	- 'remediation lineage open'
+L00001536	- 'trace every new packet field'
+L00001537	negative_constraints: []
+L00001538	preserved_contractrefs: []
+L00001539	compatibility_only_notes: []
+L00001540	stale_retired_dispositions: []
+L00001541	owner_hints:
+L00001542	- 'Plans/Wiring_Matrix.md'
+L00001543	- 'Plans/Run_Graph_View.md'
+L00001544	- 'Plans/Orchestrator_Page.md'
+L00001545	- 'Plans/assistant-chat-design.md'
+L00001546	```
+L00001547	
+L00001548	### WM-016 - Canonical Runtime Event Rows
+L00001549	
+L00001550	```yaml
+L00001551	plan_unit_id: WM-016
+L00001552	unit_type: requirement
+L00001553	status: accepted
+L00001554	owner_doc: Plans/Wiring_Matrix.md
+L00001555	canonical_text: 'Canonical runtime event rows use `Plans/Contracts_V0.md` identities for scheduler, attempts, blocked/prerequisite, remediation, and graph lock/integrity events, including persisted `attempt_record` and consumers across storage, Run Graph, Orchestrator Page, history/evidence, scheduler, recovery, executor admission, progression gates, and blocked/replan surfaces.'
+L00001556	gui_related: true
+L00001557	gui_classification_reason: 'The unit routes canonical runtime event rows to user-visible and runtime consumers.'
+L00001558	split_recommended: false
+L00001559	depends_on:
+L00001560	- PDS-003
+L00001561	- PDS-004
+L00001562	- PDS-005
+L00001563	- PNC-001
+L00001564	- WM-015
+L00001565	unblocks: []
+L00001566	acceptance_criteria:
+L00001567	- WM-016 remains addressable as a fine-grained Wiring Matrix PlanUnit with source-span coverage.
+L00001568	- ContractRefs, anchors or aliases, exact tokens, negative constraints, compatibility notes, stale/retired dispositions, owner boundaries, and source lineage from the source spans remain preserved.
+L00001569	- No WorkNodes, NodeSeeds, executable queues, final node manifests, production build tasks, implementation files, or source code are created by this PlanUnit.
+L00001570	validation_surfaces:
+L00001571	- python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits
+L00001572	- python3 scripts/pm-plan-index.py validate
+L00001573	risk_class: wiring_matrix_drift
+L00001574	reasoning_tier: standard
+L00001575	context_scope: wiring_matrix_batch_199
+L00001576	implementation_surfaces:
+L00001577	- Plans/Wiring_Matrix.md
+L00001578	node_compile_hint:
+L00001579	  mode: canonical_runtime_events
+L00001580	  create_worknodes: false
+L00001581	source_lineage:
+L00001582	- Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:Wiring_Matrix-S0024
+L00001583	- Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:Wiring_Matrix-S0025
+L00001584	preserved_exact_tokens:
+L00001585	- 'Canonical Runtime Event Wiring Canonical Alignment'
+L00001586	- 'Plans/Contracts_V0.md'
+L00001587	- 'scheduler/executor'
+L00001588	- 'scheduler.pass'
+L00001589	- 'scheduler_pass_id'
+L00001590	- 'attempt.started'
+L00001591	- 'attempt.completed'
+L00001592	- 'attempt_record'
+L00001593	- 'node.blocked'
+L00001594	- 'node.unblocked'
+L00001595	- 'node.prerequisite_resolved'
+L00001596	- 'remediation.spawned'
+L00001597	- 'remediation.resolved'
+L00001598	- 'run.graph_canonical_locked'
+L00001599	- 'run.graph_integrity_failed'
+L00001600	- 'executor admission logic'
+L00001601	- 'progression gates'
+L00001602	- 'blocked/replan surfaces'
+L00001603	negative_constraints: []
+L00001604	preserved_contractrefs: []
+L00001605	compatibility_only_notes: []
+L00001606	stale_retired_dispositions: []
+L00001607	owner_hints:
+L00001608	- 'Plans/Wiring_Matrix.md'
+L00001609	- 'Plans/Contracts_V0.md'
+L00001610	- 'Plans/storage-plan.md'
+L00001611	- 'Plans/Run_Graph_View.md'
+L00001612	- 'Plans/Orchestrator_Page.md'
+L00001613	- 'Plans/Progression_Gates.md'
+L00001614	```
+L00001615	
+L00001616	### WM-017 - Recovery Ui Action Binding
+L00001617	
+L00001618	```yaml
+L00001619	plan_unit_id: WM-017
+L00001620	unit_type: requirement
+L00001621	status: accepted
+L00001622	owner_doc: Plans/Wiring_Matrix.md
+L00001623	canonical_text: 'Recovery UI handlers are keyed by canonical `allowed_action_id` families before binding domain-specific command IDs through blocked payload metadata.'
+L00001624	gui_related: true
+L00001625	gui_classification_reason: 'The unit defines user-visible recovery UI handler command binding.'
+L00001626	split_recommended: false
+L00001627	depends_on:
+L00001628	- PDS-003
+L00001629	- PDS-004
+L00001630	- PDS-005
+L00001631	- PNC-001
+L00001632	- WM-015
+L00001633	- WM-016
+L00001634	unblocks: []
+L00001635	acceptance_criteria:
+L00001636	- WM-017 remains addressable as a fine-grained Wiring Matrix PlanUnit with source-span coverage.
+L00001637	- ContractRefs, anchors or aliases, exact tokens, negative constraints, compatibility notes, stale/retired dispositions, owner boundaries, and source lineage from the source spans remain preserved.
+L00001638	- No WorkNodes, NodeSeeds, executable queues, final node manifests, production build tasks, implementation files, or source code are created by this PlanUnit.
+L00001639	validation_surfaces:
+L00001640	- python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits
+L00001641	- python3 scripts/pm-plan-index.py validate
+L00001642	risk_class: wiring_matrix_drift
+L00001643	reasoning_tier: standard
+L00001644	context_scope: wiring_matrix_batch_199
+L00001645	implementation_surfaces:
+L00001646	- Plans/Wiring_Matrix.md
+L00001647	node_compile_hint:
+L00001648	  mode: ui_action_binding
+L00001649	  create_worknodes: false
+L00001650	source_lineage:
+L00001651	- Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:Wiring_Matrix-S0026
+L00001652	preserved_exact_tokens:
+L00001653	- 'UI command handler rule'
+L00001654	- 'Recovery UI handlers'
+L00001655	- 'canonical `allowed_action_id` families'
+L00001656	- 'domain-specific command ids'
+L00001657	- 'blocked payload metadata'
+L00001658	negative_constraints: []
+L00001659	preserved_contractrefs: []
+L00001660	compatibility_only_notes: []
+L00001661	stale_retired_dispositions: []
+L00001662	owner_hints:
+L00001663	- 'Plans/Wiring_Matrix.md'
+L00001664	- 'Plans/UI_Command_Catalog.md'
+L00001665	- 'Plans/Contracts_V0.md'
+L00001666	```
+L00001667	
+L00001668	### WM-018 - Context Lens Wiring Rows
+L00001669	
+L00001670	```yaml
+L00001671	plan_unit_id: WM-018
+L00001672	unit_type: requirement
+L00001673	status: accepted
+L00001674	owner_doc: Plans/Wiring_Matrix.md
+L00001675	canonical_text: 'Context Lens wiring rows preserve thread-local multi-select in all modes and explicit `Subcompact` apply/revert semantics, including mode toggle, target selection, export/revoke, Debug Automation banner, browser takeover, and investigation cancellation commands.'
+L00001676	gui_related: true
+L00001677	gui_classification_reason: 'The unit defines user-visible Context Lens and Debug investigation command wiring rows.'
+L00001678	split_recommended: false
+L00001679	depends_on:
+L00001680	- PDS-003
+L00001681	- PDS-004
+L00001682	- PDS-005
+L00001683	- PNC-001
+L00001684	- WM-004
+L00001685	- WM-007
+L00001686	unblocks: []
+L00001687	acceptance_criteria:
+L00001688	- WM-018 remains addressable as a fine-grained Wiring Matrix PlanUnit with source-span coverage.
+L00001689	- ContractRefs, anchors or aliases, exact tokens, negative constraints, compatibility notes, stale/retired dispositions, owner boundaries, and source lineage from the source spans remain preserved.
+L00001690	- No WorkNodes, NodeSeeds, executable queues, final node manifests, production build tasks, implementation files, or source code are created by this PlanUnit.
+L00001691	validation_surfaces:
+L00001692	- python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits
+L00001693	- python3 scripts/pm-plan-index.py validate
+L00001694	risk_class: wiring_matrix_drift
+L00001695	reasoning_tier: standard
+L00001696	context_scope: wiring_matrix_batch_199
+L00001697	implementation_surfaces:
+L00001698	- Plans/Wiring_Matrix.md
+L00001699	node_compile_hint:
+L00001700	  mode: context_lens_wiring
+L00001701	  create_worknodes: false
+L00001702	source_lineage:
+L00001703	- Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:Wiring_Matrix-S0028
+L00001704	preserved_exact_tokens:
+L00001705	- 'Context Lens minimum rows'
+L00001706	- 'cmd.chat.context_lens.toggle'
+L00001707	- 'cmd.chat.context_lens.set_mode'
+L00001708	- 'cmd.chat.context_lens.turn_off'
+L00001709	- 'cmd.chat.context_lens.toggle_message_selection'
+L00001710	- 'cmd.chat.context_lens.clear_selection'
+L00001711	- 'cmd.chat.context_lens.apply_subcompact'
+L00001712	- 'cmd.chat.context_lens.revert_subcompact'
+L00001713	- 'mute'
+L00001714	- 'focus'
+L00001715	- 'subcompact'
+L00001716	- 'Subcompact'
+L00001717	- 'explicit-apply'
+L00001718	- 'automatic dynamic context shrinking'
+L00001719	- 'cmd.chat.mode'
+L00001720	- 'cmd.chat.open_debug_target_picker'
+L00001721	- 'cmd.chat.export_investigation_bundle'
+L00001722	- 'cmd.chat.revoke_investigation_item'
+L00001723	- 'cmd.runtime.approve'
+L00001724	- 'cmd.runtime.resume_after_prerequisite'
+L00001725	- 'cmd.runtime.retry_now'
+L00001726	- 'cmd.browser.stop_agent_keep_browser'
+L00001727	- 'cmd.browser.promote_to_normal_browsing'
+L00001728	- 'cmd.runtime.abort_run'
+L00001729	negative_constraints:
+L00001730	- 'Context Lens wiring must remain thread-local, support multi-select in all modes, and keep `Subcompact` as explicit apply/revert distinct from automatic dynamic context shrinking.'
+L00001731	preserved_contractrefs:
+L00001732	- 'ContractRef: Context Lens wiring MUST remain thread-local, must support multi-select in all modes, and must keep `Subcompact` as an explicit apply/revert path distinct from automatic dynamic context shrinking. [Source: assistant-chat-design.md#176-context-lens-mute--focus--subcompact; Prompt_Pipeline.md#dynamic-context-shrinking]'
+L00001733	- 'ContractRef: Wiring rows for Context Lens MUST remain aligned with command IDs, chat placement, and overlay persistence semantics; a packet may not leave those elements split between unrelated addenda. [Source: UI_Command_Catalog.md#context-lens-command-set; FinalGUISpec.md#context-lens-placement-and-behavior]'
+L00001734	compatibility_only_notes: []
+L00001735	stale_retired_dispositions: []
+L00001736	owner_hints:
+L00001737	- 'Plans/Wiring_Matrix.md'
+L00001738	- 'Plans/assistant-chat-design.md'
+L00001739	- 'Plans/Prompt_Pipeline.md'
+L00001740	- 'Plans/UI_Command_Catalog.md'
+L00001741	- 'Plans/FinalGUISpec.md'
+L00001742	- 'Plans/storage-plan.md'
+L00001743	```
+L00001744	
+L00001745	### WM-019 - Project Thread Minimum Rows
+L00001746	
+L00001747	```yaml
+L00001748	plan_unit_id: WM-019
+L00001749	unit_type: requirement
+L00001750	status: accepted
+L00001751	owner_doc: Plans/Wiring_Matrix.md
+L00001752	canonical_text: 'Minimum required rows cover project switcher, thread details, compaction, restore branch, and related shell/chat/history command wiring without losing canonical project/thread identity, including explicit Compact Now dispatch, context.compaction.failed or equivalent visible degraded-state wiring, and command-result statuses for already_running, cancelled, no_op, unavailable, retry_scheduled, completed, and failed.'
+L00001753	gui_related: true
+L00001754	gui_classification_reason: 'The unit defines user-visible project/thread command wiring rows.'
+L00001755	split_recommended: false
+L00001756	depends_on:
+L00001757	- PDS-003
+L00001758	- PDS-004
+L00001759	- PDS-005
+L00001760	- PNC-001
+L00001761	- WM-004
+L00001762	unblocks: []
+L00001763	acceptance_criteria:
+L00001764	- WM-019 remains addressable as a fine-grained Wiring Matrix PlanUnit with source-span coverage.
+L00001765	- ContractRefs, anchors or aliases, exact tokens, negative constraints, compatibility notes, stale/retired dispositions, owner boundaries, and source lineage from the source spans remain preserved.
+L00001766	- No WorkNodes, NodeSeeds, executable queues, final node manifests, production build tasks, implementation files, or source code are created by this PlanUnit.
+L00001767	validation_surfaces:
+L00001768	- python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits
+L00001769	- python3 scripts/pm-plan-index.py validate
+L00001770	risk_class: wiring_matrix_drift
+L00001771	reasoning_tier: standard
+L00001772	context_scope: wiring_matrix_batch_199
+L00001773	implementation_surfaces:
+L00001774	- Plans/Wiring_Matrix.md
+L00001775	node_compile_hint:
+L00001776	  mode: promoted_rows
+L00001777	  create_worknodes: false
+L00001778	source_lineage:
+L00001779	- Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:Wiring_Matrix-S0030
+L00001780	- Plans/ledgers/v2/pldg-20260627-001-feature-intake/state/compaction_compile_readiness_matrix.json:cmp-automated-testing-acceptance
+L00001781	- Plans/ledgers/v2/pldg-20260627-001-feature-intake/records/design_atoms.jsonl:atom-0094
+L00001782	preserved_exact_tokens:
+L00001783	- 'Minimum required rows'
+L00001784	- 'project switcher'
+L00001785	- 'thread details'
+L00001786	- 'compaction'
+L00001787	- 'Compact Now'
+L00001788	- 'context.compaction.failed'
+L00001789	- 'already_running'
+L00001790	- 'cancelled'
+L00001791	- 'no_op'
+L00001792	- 'retry_scheduled'
+L00001793	- 'restore branch'
+L00001794	- 'cmd.chat'
+L00001795	- 'cmd.project'
+L00001796	- 'cmd.history'
+L00001797	- 'thread'
+L00001798	- 'project'
+L00001799	- 'shell'
+L00001800	- 'history'
+L00001801	negative_constraints: []
+L00001802	preserved_contractrefs: []
+L00001803	compatibility_only_notes: []
+L00001804	stale_retired_dispositions: []
+L00001805	owner_hints:
+L00001806	- 'Plans/Wiring_Matrix.md'
+L00001807	- 'Plans/assistant-chat-design.md'
+L00001808	- 'Plans/FinalGUISpec.md'
+L00001809	```
+L00001810	
+L00001811	### WM-020 - Browser Command Rows
+L00001812	
+L00001813	```yaml
+L00001814	plan_unit_id: WM-020
+L00001815	unit_type: requirement
+L00001816	status: accepted
+L00001817	owner_doc: Plans/Wiring_Matrix.md
+L00001818	canonical_text: 'Browser command rows cover browser open/focus/detach, DevTools, share/capture, takeover, pause/continue/stop/promote, screenshot capture, and recovery commands while preserving browser-session identity.'
+L00001819	gui_related: true
+L00001820	gui_classification_reason: 'The unit defines user-visible browser command wiring rows.'
+L00001821	split_recommended: false
+L00001822	depends_on:
+L00001823	- PDS-003
+L00001824	- PDS-004
+L00001825	- PDS-005
+L00001826	- PNC-001
+L00001827	- WM-004
+L00001828	unblocks: []
+L00001829	acceptance_criteria:
+L00001830	- WM-020 remains addressable as a fine-grained Wiring Matrix PlanUnit with source-span coverage.
+L00001831	- ContractRefs, anchors or aliases, exact tokens, negative constraints, compatibility notes, stale/retired dispositions, owner boundaries, and source lineage from the source spans remain preserved.
+L00001832	- No WorkNodes, NodeSeeds, executable queues, final node manifests, production build tasks, implementation files, or source code are created by this PlanUnit.
+L00001833	validation_surfaces:
+L00001834	- python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits
+L00001835	- python3 scripts/pm-plan-index.py validate
+L00001836	risk_class: wiring_matrix_drift
+L00001837	reasoning_tier: standard
+L00001838	context_scope: wiring_matrix_batch_199
+L00001839	implementation_surfaces:
+L00001840	- Plans/Wiring_Matrix.md
+L00001841	node_compile_hint:
+L00001842	  mode: browser_rows
+L00001843	  create_worknodes: false
+L00001844	source_lineage:
+L00001845	- Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:Wiring_Matrix-S0030
+L00001846	preserved_exact_tokens:
+L00001847	- 'cmd.browser.focus_browser_tab'
+L00001848	- 'Focus Browser'
+L00001849	- 'cmd.browser.detach_browser_tab'
+L00001850	- 'Detach Browser'
+L00001851	- 'cmd.browser.open_devtools'
+L00001852	- 'Open DevTools'
+L00001853	- 'cmd.browser.toggle_devtools_dock'
+L00001854	- 'Toggle DevTools Dock'
+L00001855	- 'cmd.browser.share_with_agent'
+L00001856	- 'cmd.browser.revoke_share_with_agent'
+L00001857	- 'cmd.browser.pick_element_for_chat'
+L00001858	- 'cmd.browser.add_selection_to_chat'
+L00001859	- 'cmd.browser.add_selection_screenshot_to_chat'
+L00001860	- 'cmd.browser.add_selection_full_screenshot_to_chat'
+L00001861	- 'cmd.browser.add_screenshot_to_chat'
+L00001862	- 'cmd.browser.add_full_screenshot_to_chat'
+L00001863	- 'cmd.browser.take_over'
+L00001864	- 'Pause Agent'
+L00001865	- 'Let agent continue'
+L00001866	- 'Stop agent and keep browser'
+L00001867	- 'cmd.browser.promote_to_normal_browsing'
+L00001868	- 'cmd.browser.reopen'
+L00001869	- 'cmd.browser.retry'
+L00001870	- 'cmd.browser.keep_closed'
+L00001871	negative_constraints: []
+L00001872	preserved_contractrefs: []
+L00001873	compatibility_only_notes: []
+L00001874	stale_retired_dispositions: []
+L00001875	owner_hints:
+L00001876	- 'Plans/Wiring_Matrix.md'
+L00001877	- 'Plans/Section15_MVP_Promoted_Features_Spec.md'
+L00001878	- 'Plans/Runtime_Artifacts_Panel.md'
+L00001879	- 'Plans/FinalGUISpec.md'
+L00001880	```
+L00001881	
+L00001882	### WM-021 - Terminal Dev And Catalog Rows
+L00001883	
+L00001884	```yaml
+L00001885	plan_unit_id: WM-021
+L00001886	unit_type: requirement
+L00001887	status: accepted
+L00001888	owner_doc: Plans/Wiring_Matrix.md
+L00001889	canonical_text: 'Terminal, dev, and catalog wiring rows cover terminal reveal/show/rerun/detach/new/split/add/embed/focus/move/rename/pin/close/clear/restart/terminate/kill/reattach commands, dev session start/stop/restart/status commands, and catalog install/remove lifecycle commands.'
+L00001890	gui_related: true
+L00001891	gui_classification_reason: 'The unit defines user-visible terminal, dev, and catalog command wiring rows.'
+L00001892	split_recommended: false
+L00001893	depends_on:
+L00001894	- PDS-003
+L00001895	- PDS-004
+L00001896	- PDS-005
+L00001897	- PNC-001
+L00001898	- WM-004
+L00001899	unblocks: []
+L00001900	acceptance_criteria:
+L00001901	- WM-021 remains addressable as a fine-grained Wiring Matrix PlanUnit with source-span coverage.
+L00001902	- ContractRefs, anchors or aliases, exact tokens, negative constraints, compatibility notes, stale/retired dispositions, owner boundaries, and source lineage from the source spans remain preserved.
+L00001903	- No WorkNodes, NodeSeeds, executable queues, final node manifests, production build tasks, implementation files, or source code are created by this PlanUnit.
+L00001904	validation_surfaces:
+L00001905	- python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits
+L00001906	- python3 scripts/pm-plan-index.py validate
+L00001907	risk_class: wiring_matrix_drift
+L00001908	reasoning_tier: standard
+L00001909	context_scope: wiring_matrix_batch_199
+L00001910	implementation_surfaces:
+L00001911	- Plans/Wiring_Matrix.md
+L00001912	node_compile_hint:
+L00001913	  mode: terminal_dev_catalog_rows
+L00001914	  create_worknodes: false
+L00001915	source_lineage:
+L00001916	- Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:Wiring_Matrix-S0030
+L00001917	preserved_exact_tokens:
+L00001918	- 'cmd.terminal.open'
+L00001919	- 'cmd.terminal.show'
+L00001920	- 'cmd.terminal.rerun'
+L00001921	- 'cmd.terminal.detach'
+L00001922	- 'cmd.terminal.new_tab'
+L00001923	- 'cmd.terminal.activate_workgroup'
+L00001924	- 'cmd.terminal.activate_subtab'
+L00001925	- 'cmd.terminal.reorder_workgroup'
+L00001926	- 'cmd.terminal.reorder_subtab'
+L00001927	- 'cmd.terminal.split_pane'
+L00001928	- 'cmd.terminal.add_leaf'
+L00001929	- 'cmd.terminal.embed_in_editor'
+L00001930	- 'cmd.terminal.remove_from_editor'
+L00001931	- 'cmd.terminal.undock_all_from_editor'
+L00001932	- 'cmd.terminal.focus_session'
+L00001933	- 'cmd.terminal.move_tab_to_section'
+L00001934	- 'cmd.terminal.rename_tab'
+L00001935	- 'cmd.terminal.pin_tab'
+L00001936	- 'cmd.terminal.close_pane'
+L00001937	- 'cmd.terminal.close_tab'
+L00001938	- 'cmd.terminal.clear_scrollback'
+L00001939	- 'cmd.terminal.restart_session'
+L00001940	- 'cmd.terminal.terminate_session'
+L00001941	- 'cmd.terminal.kill_session'
+L00001942	- 'cmd.terminal.detach_section'
+L00001943	- 'cmd.terminal.reattach_section'
+L00001944	- 'cmd.dev.start_session'
+L00001945	- 'cmd.dev.stop_session'
+L00001946	- 'cmd.dev.restart_session'
+L00001947	- 'cmd.dev.show_output'
+L00001948	- 'cmd.dev.show_problems'
+L00001949	- 'cmd.dev.show_ports'
+L00001950	- 'cmd.catalog.install_item'
+L00001951	- 'cmd.catalog.remove_item'
+L00001952	negative_constraints: []
+L00001953	preserved_contractrefs: []
+L00001954	compatibility_only_notes: []
+L00001955	stale_retired_dispositions: []
+L00001956	owner_hints:
+L00001957	- 'Plans/Wiring_Matrix.md'
+L00001958	- 'Plans/Section15_MVP_Promoted_Features_Spec.md'
+L00001959	- 'Plans/storage-plan.md'
+L00001960	- 'Plans/UI_Command_Catalog.md'
+L00001961	```
+L00001962	
+L00001963	### WM-022 - Terminal Identity Constraints
+L00001964	
+L00001965	```yaml
+L00001966	plan_unit_id: WM-022
+L00001967	unit_type: constraint
+L00001968	status: accepted
+L00001969	owner_doc: Plans/Wiring_Matrix.md
+L00001970	canonical_text: 'Terminal wiring preserves terminal workspace/session identity, distinguishing content-only actions from destructive workspace mutations, preserving `/replacement`, `/close`, `/disconnected/review-only`, `Concepts/PMConcept.html` GUI lineage, drag/drop layout concepts, and the rule that split-parent opacity effects must not dim terminal grids.'
+L00001971	gui_related: true
+L00001972	gui_classification_reason: 'The unit preserves user-visible terminal identity, layout, and GUI concept lineage constraints.'
+L00001973	split_recommended: false
+L00001974	depends_on:
+L00001975	- PDS-003
+L00001976	- PDS-004
+L00001977	- PDS-005
+L00001978	- PNC-001
+L00001979	- WM-021
+L00001980	unblocks: []
+L00001981	acceptance_criteria:
+L00001982	- WM-022 remains addressable as a fine-grained Wiring Matrix PlanUnit with source-span coverage.
+L00001983	- ContractRefs, anchors or aliases, exact tokens, negative constraints, compatibility notes, stale/retired dispositions, owner boundaries, and source lineage from the source spans remain preserved.
+L00001984	- No WorkNodes, NodeSeeds, executable queues, final node manifests, production build tasks, implementation files, or source code are created by this PlanUnit.
+L00001985	validation_surfaces:
+L00001986	- python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits
+L00001987	- python3 scripts/pm-plan-index.py validate
+L00001988	risk_class: wiring_matrix_drift
+L00001989	reasoning_tier: standard
+L00001990	context_scope: wiring_matrix_batch_199
+L00001991	implementation_surfaces:
+L00001992	- Plans/Wiring_Matrix.md
+L00001993	node_compile_hint:
+L00001994	  mode: terminal_identity_constraints
+L00001995	  create_worknodes: false
+L00001996	source_lineage:
+L00001997	- Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:Wiring_Matrix-S0030
+L00001998	preserved_exact_tokens:
+L00001999	- 'Terminal wiring owner split'
+L00002000	- 'Section15_MVP_Promoted_Features_Spec.md §3.14'
+L00002001	- 'terminal_workspace_state'
+L00002002	- 'terminal_session_record'
+L00002003	- 'terminal_command_block'
+L00002004	- 'dev_session_record'
+L00002005	- 'restart'
+L00002006	- '/replacement'
+L00002007	- 'replace-with-new-terminal'
+L00002008	- '/close'
+L00002009	- '/disconnected/review-only'
+L00002010	- 'clear'
+L00002011	- '/reset'
+L00002012	- 'Concepts/PMConcept.html'
+L00002013	- '/workgroup'
+L00002014	- '/subtab'
+L00002015	- 'split-pane tree operations'
+L00002016	- 'multi-panel terminal stacks'
+L00002017	- '/drop'
+L00002018	- '/center/right'
+L00002019	- '/right'
+L00002020	- '/resizers'
+L00002021	- 'accent-led subtab focus'
+L00002022	- 'command-log removal'
+L00002023	- 'must not dim terminal grids'
+L00002024	negative_constraints:
+L00002025	- 'Split-parent opacity effects must not dim terminal grids during reorder or drag operations.'
+L00002026	preserved_contractrefs: []
+L00002027	compatibility_only_notes:
+L00002028	- 'Concepts/PMConcept.html is GUI concept lineage only while preserving implied command coverage.'
+L00002029	stale_retired_dispositions: []
+L00002030	owner_hints:
+L00002031	- 'Plans/Wiring_Matrix.md'
+L00002032	- 'Plans/Section15_MVP_Promoted_Features_Spec.md'
+L00002033	- 'Plans/storage-plan.md'
+L00002034	```
+L00002035	
+L00002036	### WM-023 - Browser Session Capture And Recovery Invariants
+L00002037	
+L00002038	```yaml
+L00002039	plan_unit_id: WM-023
+L00002040	unit_type: constraint
+L00002041	status: accepted
+L00002042	owner_doc: Plans/Wiring_Matrix.md
+L00002043	canonical_text: 'Browser wiring invariants preserve stale `newfeatures.md §15.18` cleanup, the CEF-class tab-first in-app `/browser` model, `auth_session` limits, explicit chip-based capture, DevTools contract, takeover behavior, and recovery behavior for workspace, detached, automation, and auth sessions.'
+L00002044	gui_related: true
+L00002045	gui_classification_reason: 'The unit defines user-visible browser session, capture, takeover, DevTools, and recovery invariants.'
+L00002046	split_recommended: false
+L00002047	depends_on:
+L00002048	- PDS-003
+L00002049	- PDS-004
+L00002050	- PDS-005
+L00002051	- PNC-001
+L00002052	- WM-020
+L00002053	unblocks: []
+L00002054	acceptance_criteria:
+L00002055	- WM-023 remains addressable as a fine-grained Wiring Matrix PlanUnit with source-span coverage.
+L00002056	- ContractRefs, anchors or aliases, exact tokens, negative constraints, compatibility notes, stale/retired dispositions, owner boundaries, and source lineage from the source spans remain preserved.
+L00002057	- No WorkNodes, NodeSeeds, executable queues, final node manifests, production build tasks, implementation files, or source code are created by this PlanUnit.
+L00002058	validation_surfaces:
+L00002059	- python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits
+L00002060	- python3 scripts/pm-plan-index.py validate
+L00002061	risk_class: wiring_matrix_drift
+L00002062	reasoning_tier: standard
+L00002063	context_scope: wiring_matrix_batch_199
+L00002064	implementation_surfaces:
+L00002065	- Plans/Wiring_Matrix.md
+L00002066	node_compile_hint:
+L00002067	  mode: browser_invariants
+L00002068	  create_worknodes: false
+L00002069	source_lineage:
+L00002070	- Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:Wiring_Matrix-S0031
+L00002071	preserved_exact_tokens:
+L00002072	- 'Browser session, capture, and recovery wiring invariants'
+L00002073	- 'newfeatures.md §15.18'
+L00002074	- 'trust-tier'
+L00002075	- '/trust-tier'
+L00002076	- 'permission-layer `/capability-degradation`'
+L00002077	- 'CEF-class, tab-first, in-app `/browser` model'
+L00002078	- 'workspace_preview'
+L00002079	- 'detached_preview'
+L00002080	- 'automation_session'
+L00002081	- 'auth_session'
+L00002082	- '/cookie'
+L00002083	- 'Take over and pause agent'
+L00002084	- 'Let agent continue'
+L00002085	- 'Stop agent and keep browser'
+L00002086	- '/stop/take-over'
+L00002087	- '/stop/take'
+L00002088	- 'chip-based'
+L00002089	- 'share-to-chat'
+L00002090	- 'non-auto-send'
+L00002091	- '/highlight/share-to-chat'
+L00002092	- '/elements'
+L00002093	- '/selection'
+L00002094	- '/DOM'
+L00002095	- 'Add Selection to Chat'
+L00002096	- 'Pick Element for Chat'
+L00002097	- 'Add Selection + Screenshot'
+L00002098	- 'Add Element + Screenshot'
+L00002099	- '/trace/video'
+L00002100	- 'Open DevTools'
+L00002101	- 'Toggle DevTools Dock'
+L00002102	- 'runtime_unavailable'
+L00002103	negative_constraints:
+L00002104	- 'auth_session is not general-purpose browsing state, is not auto-restored, must not auto-close or auto-complete on presumed success.'
+L00002105	- 'Ordinary clicks do not inject `/context`.'
+L00002106	- 'Automation/auth sessions never auto-resume active work, auth never auto-completes.'
+L00002107	preserved_contractrefs:
+L00002108	- 'ContractRef: ContractName:Plans/storage-plan.md, ContractName:Plans/assistant-chat-design.md, ContractName:Plans/Runtime_Artifacts_Panel.md, ContractName:Plans/Section15_MVP_Promoted_Features_Spec.md, ContractName:Plans/FinalGUISpec.md, ContractName:Plans/Permissions_System.md, ContractName:Plans/UI_Command_Catalog.md'
+L00002109	compatibility_only_notes:
+L00002110	- 'Stale `Plans/newfeatures.md §15.18` and `/newfeatures.md` references are cross-reference cleanup lineage only.'
+L00002111	stale_retired_dispositions: []
+L00002112	owner_hints:
+L00002113	- 'Plans/Wiring_Matrix.md'
+L00002114	- 'Plans/storage-plan.md'
+L00002115	- 'Plans/assistant-chat-design.md'
+L00002116	- 'Plans/Runtime_Artifacts_Panel.md'
+L00002117	- 'Plans/Section15_MVP_Promoted_Features_Spec.md'
+L00002118	- 'Plans/FinalGUISpec.md'
+L00002119	- 'Plans/Permissions_System.md'
+L00002120	- 'Plans/UI_Command_Catalog.md'
+L00002121	```
+L00002122	### WM-024 - Debug Investigation Minimum Rows
+L00002123	
+L00002124	```yaml
+L00002125	plan_unit_id: WM-024
+L00002126	unit_type: requirement
+L00002127	status: accepted
+L00002128	owner_doc: Plans/Wiring_Matrix.md
+L00002129	canonical_text: Debug Mode and Investigation Context wiring requires the listed cmd.chat.mode, cmd.chat.open_debug_target_picker, investigation export/revoke, cmd.runtime.* approval/resume/retry/abort rows, and browser stop/promote rows, including explicit-confirmation and stop_reason_code = investigation.cancelled_by_user.
+L00002130	gui_related: true
+L00002131	gui_classification_reason: The unit defines user-visible Debug Mode and Investigation Context command rows and attention-surface actions.
+L00002132	split_recommended: false
+L00002133	depends_on:
+L00002134	- PDS-003
+L00002135	- PDS-004
+L00002136	- PDS-005
+L00002137	- PNC-001
+L00002138	- WM-018
+L00002139	- WM-020
+L00002140	- WM-023
+L00002141	unblocks: []
+L00002142	acceptance_criteria:
+L00002143	- WM-024 remains addressable as a fine-grained Wiring Matrix PlanUnit with source-span coverage.
+L00002144	- ContractRefs, anchors or aliases, exact tokens, negative constraints, compatibility notes, stale/retired dispositions, owner boundaries, and source lineage from the source spans remain preserved.
+L00002145	- No WorkNodes, NodeSeeds, executable queues, final node manifests, production build tasks, implementation files, or source code are created by this PlanUnit.
+L00002146	validation_surfaces:
+L00002147	- python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits
+L00002148	- python3 scripts/pm-plan-index.py validate
+L00002149	risk_class: wiring_matrix_drift
+L00002150	reasoning_tier: standard
+L00002151	context_scope: wiring_matrix_batch_200
+L00002152	implementation_surfaces:
+L00002153	- Plans/Wiring_Matrix.md
+L00002154	node_compile_hint:
+L00002155	  mode: debug_investigation_rows
+L00002156	  create_worknodes: false
+L00002157	source_lineage:
+L00002158	- Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:Wiring_Matrix-S0032
+L00002159	preserved_exact_tokens:
+L00002160	- Debug investigation minimum rows
+L00002161	- cmd.chat.mode
+L00002162	- /mode debug
+L00002163	- cmd.chat.open_debug_target_picker
+L00002164	- cmd.chat.export_investigation_bundle
+L00002165	- cmd.chat.revoke_investigation_item
+L00002166	- cmd.runtime.approve
+L00002167	- cmd.runtime.resume_after_prerequisite
+L00002168	- cmd.runtime.retry_now
+L00002169	- cmd.browser.stop_agent_keep_browser
+L00002170	- cmd.browser.promote_to_normal_browsing
+L00002171	- explicit-confirmation
+L00002172	- cmd.runtime.abort_run
+L00002173	- stop_reason_code = investigation.cancelled_by_user
+L00002174	negative_constraints:
+L00002175	- Do not silently promote the automation/auth session.
+L00002176	preserved_contractrefs:
+L00002177	- 'ContractRef: ContractName:Plans/UI_Command_Catalog.md, ContractName:Plans/assistant-chat-design.md, ContractName:Plans/storage-plan.md'
+L00002178	compatibility_only_notes: []
+L00002179	stale_retired_dispositions: []
+L00002180	owner_hints:
+L00002181	- Plans/Wiring_Matrix.md
+L00002182	- Plans/UI_Command_Catalog.md
+L00002183	- Plans/assistant-chat-design.md
+L00002184	- Plans/storage-plan.md
+L00002185	```
+L00002186	
+L00002187	### WM-025 - Assistant Worktree Lifecycle Wiring
+L00002188	
+L00002189	```yaml
+L00002190	plan_unit_id: WM-025
+L00002191	unit_type: requirement
+L00002192	status: accepted
+L00002193	owner_doc: Plans/Wiring_Matrix.md
+L00002194	canonical_text: Chat-to-WorktreeManager wiring covers create/remove/bind/list/merge/create-pr flows, auto-create via branching.assistant_auto_worktree, and preservation of thread_id, branch/base refs, worktree_id, and path data flow.
+L00002195	gui_related: true
+L00002196	gui_classification_reason: The unit covers user-visible chat header, dropdown, merge dialog, PR, and Source Control worktree actions.
+L00002197	split_recommended: false
+L00002198	depends_on:
+L00002199	- PDS-003
+L00002200	- PDS-004
+L00002201	- PDS-005
+L00002202	- PNC-001
+L00002203	- WM-004
+L00002204	- WM-019
+L00002205	unblocks: []
+L00002206	acceptance_criteria:
+L00002207	- WM-025 remains addressable as a fine-grained Wiring Matrix PlanUnit with source-span coverage.
+L00002208	- ContractRefs, anchors or aliases, exact tokens, negative constraints, compatibility notes, stale/retired dispositions, owner boundaries, and source lineage from the source spans remain preserved.
+L00002209	- No WorkNodes, NodeSeeds, executable queues, final node manifests, production build tasks, implementation files, or source code are created by this PlanUnit.
+L00002210	validation_surfaces:
+L00002211	- python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits
+L00002212	- python3 scripts/pm-plan-index.py validate
+L00002213	risk_class: wiring_matrix_drift
+L00002214	reasoning_tier: standard
+L00002215	context_scope: wiring_matrix_batch_200
+L00002216	implementation_surfaces:
+L00002217	- Plans/Wiring_Matrix.md
+L00002218	node_compile_hint:
+L00002219	  mode: assistant_worktree_lifecycle
+L00002220	  create_worknodes: false
+L00002221	source_lineage:
+L00002222	- Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:Wiring_Matrix-S0033
+L00002223	- Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:Wiring_Matrix-S0034
+L00002224	preserved_exact_tokens:
+L00002225	- Source Control, GitHub Actions, and Docker Manager Wiring Addendum (2026-03-12)
+L00002226	- Assistant Worktree Wiring Addendum
+L00002227	- Chat ↔ WorktreeManager wiring
+L00002228	- Create Worktree
+L00002229	- cmd.chat.worktree.create
+L00002230	- remove_worktree
+L00002231	- list_worktrees
+L00002232	- merge_worktree
+L00002233	- create_pr
+L00002234	- branching.assistant_auto_worktree
+L00002235	- thread_id
+L00002236	- branch_name
+L00002237	- base_ref
+L00002238	- worktree_id
+L00002239	- path
+L00002240	negative_constraints: []
+L00002241	preserved_contractrefs:
+L00002242	- 'ContractRef: ContractName:Plans/assistant-chat-design.md, ContractName:Plans/GitHub_Integration.md, ContractName:Plans/Contracts_V0.md'
+L00002243	compatibility_only_notes: []
+L00002244	stale_retired_dispositions: []
+L00002245	owner_hints:
+L00002246	- Plans/Wiring_Matrix.md
+L00002247	- Plans/assistant-chat-design.md
+L00002248	- Plans/GitHub_Integration.md
+L00002249	- Plans/Contracts_V0.md
+L00002250	```
+L00002251	
+L00002252	### WM-026 - Worktree Cross-Surface Identity And Execution Context
+L00002253	
+L00002254	```yaml
+L00002255	plan_unit_id: WM-026
+L00002256	unit_type: requirement
+L00002257	status: accepted
+L00002258	owner_doc: Plans/Wiring_Matrix.md
+L00002259	canonical_text: Worktree binding wires Source Control, File Manager roots, LSP root_identity, and executor execution_unit_context.worktree_id / working_directory deterministically; Glossary keeps thread-worktree terminology as compatibility reference only while Wiring Matrix records producer/consumer edges.
+L00002260	gui_related: true
+L00002261	gui_classification_reason: The unit covers visible Source Control, File Manager, chat, LSP, and execution context switching behavior.
+L00002262	split_recommended: false
+L00002263	depends_on:
+L00002264	- PDS-003
+L00002265	- PDS-004
+L00002266	- PDS-005
+L00002267	- PNC-001
+L00002268	- WM-019
+L00002269	- WM-025
+L00002270	unblocks: []
+L00002271	acceptance_criteria:
+L00002272	- WM-026 remains addressable as a fine-grained Wiring Matrix PlanUnit with source-span coverage.
+L00002273	- ContractRefs, anchors or aliases, exact tokens, negative constraints, compatibility notes, stale/retired dispositions, owner boundaries, and source lineage from the source spans remain preserved.
+L00002274	- No WorkNodes, NodeSeeds, executable queues, final node manifests, production build tasks, implementation files, or source code are created by this PlanUnit.
+L00002275	validation_surfaces:
+L00002276	- python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits
+L00002277	- python3 scripts/pm-plan-index.py validate
+L00002278	risk_class: wiring_matrix_drift
+L00002279	reasoning_tier: standard
+L00002280	context_scope: wiring_matrix_batch_200
+L00002281	implementation_surfaces:
+L00002282	- Plans/Wiring_Matrix.md
+L00002283	node_compile_hint:
+L00002284	  mode: worktree_cross_surface_identity
+L00002285	  create_worknodes: false
+L00002286	source_lineage:
+L00002287	- Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:Wiring_Matrix-S0034
+L00002288	preserved_exact_tokens:
+L00002289	- Chat ↔ Source Control wiring
+L00002290	- Chat ↔ File Manager wiring
+L00002291	- Chat ↔ LSP wiring
+L00002292	- Chat ↔ Executor wiring
+L00002293	- worktree_follow_thread
+L00002294	- worktree_path
+L00002295	- project_root
+L00002296	- root_identity
+L00002297	- (host_id, server_id, root_identity)
+L00002298	- execution_unit_context.worktree_id
+L00002299	- execution_unit_context.working_directory
+L00002300	- working_directory
+L00002301	- Plans/Glossary.md
+L00002302	- /Glossary.md
+L00002303	negative_constraints: []
+L00002304	preserved_contractrefs:
+L00002305	- 'ContractRef: ContractName:Plans/Executor_Protocol.md, ContractName:Plans/FileManager.md, ContractName:Plans/LSPSupport.md, ContractName:Plans/Run_Modes.md'
+L00002306	compatibility_only_notes:
+L00002307	- Terminology for thread worktree binding, accordion layout, working_directory, merge lock, and pre-merge test gate stays in Plans/Glossary.md; Wiring Matrix records producer/consumer edges only.
+L00002308	stale_retired_dispositions: []
+L00002309	owner_hints:
+L00002310	- Plans/Wiring_Matrix.md
+L00002311	- Plans/FileManager.md
+L00002312	- Plans/LSPSupport.md
+L00002313	- Plans/Executor_Protocol.md
+L00002314	- Plans/Run_Modes.md
+L00002315	- Plans/Glossary.md
+L00002316	```
+L00002317	
+L00002318	### WM-027 - Search File And Source Control Command Handoff Rows
+L00002319	
+L00002320	```yaml
+L00002321	plan_unit_id: WM-027
+L00002322	unit_type: requirement
+L00002323	status: accepted
+L00002324	owner_doc: Plans/Wiring_Matrix.md
+L00002325	canonical_text: Search, file, chat restore/reference, Source Control review/conflict, host-aware LSP projection, and cmd.remote.reconnect handoffs share one shell slot and identity model; cmd.git.* rows stay lower-level, diff-local local-search must not route through project-wide search, and cmd.chat.rewind must not restore files.
+L00002326	gui_related: true
+L00002327	gui_classification_reason: The unit defines user-visible Search panel, File Manager, chat, Source Control review/conflict, and remote reconnect command routing.
+L00002328	split_recommended: false
+L00002329	depends_on:
+L00002330	- PDS-003
+L00002331	- PDS-004
+L00002332	- PDS-005
+L00002333	- PNC-001
+L00002334	- WM-025
+L00002335	- WM-026
+L00002336	unblocks: []
+L00002337	acceptance_criteria:
+L00002338	- WM-027 remains addressable as a fine-grained Wiring Matrix PlanUnit with source-span coverage.
+L00002339	- ContractRefs, anchors or aliases, exact tokens, negative constraints, compatibility notes, stale/retired dispositions, owner boundaries, and source lineage from the source spans remain preserved.
+L00002340	- No WorkNodes, NodeSeeds, executable queues, final node manifests, production build tasks, implementation files, or source code are created by this PlanUnit.
+L00002341	validation_surfaces:
+L00002342	- python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits
+L00002343	- python3 scripts/pm-plan-index.py validate
+L00002344	risk_class: wiring_matrix_drift
+L00002345	reasoning_tier: standard
+L00002346	context_scope: wiring_matrix_batch_200
+L00002347	implementation_surfaces:
+L00002348	- Plans/Wiring_Matrix.md
+L00002349	node_compile_hint:
+L00002350	  mode: side_panel_command_handoff
+L00002351	  create_worknodes: false
+L00002352	source_lineage:
+L00002353	- Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:Wiring_Matrix-S0034
+L00002354	preserved_exact_tokens:
+L00002355	- cmd.search.show
+L00002356	- cmd.search.find_in_files
+L00002357	- cmd.search.replace_in_files
+L00002358	- cmd.search.open_result
+L00002359	- cmd.file.*
+L00002360	- cmd.chat.add_file_reference
+L00002361	- cmd.chat.revert
+L00002362	- cmd.chat.rewind
+L00002363	- cmd.source_control.switch_subview
+L00002364	- cmd.source_control.open_review
+L00002365	- cmd.source_control.set_compare_target
+L00002366	- cmd.source_control.toggle_generated_filter
+L00002367	- cmd.source_control.open_conflict
+L00002368	- cmd.source_control.open_merge_editor
+L00002369	- cmd.source_control.resolve_conflict_side
+L00002370	- cmd.source_control.mark_conflict_resolved
+L00002371	- cmd.git.diff_set_compare_target
+L00002372	- cmd.git.diff_search
+L00002373	- cmd.git.stage_hunks
+L00002374	- cmd.git.unstage_hunks
+L00002375	- cmd.git.discard_hunks
+L00002376	- cmd.git.conflict_apply_resolution
+L00002377	- local-search
+L00002378	- /hunk/conflict/search-in-diff
+L00002379	- cmd.remote.reconnect
+L00002380	negative_constraints:
+L00002381	- cmd.git.* rows are lower-level diff/git operations, not substitutes for cmd.source_control.* GUI entrypoints.
+L00002382	- Diff-local local-search belongs to the git diff/review surface and must not route through project-wide cmd.search.find_in_files.
+L00002383	- cmd.chat.rewind must not restore files.
+L00002384	preserved_contractrefs:
+L00002385	- 'ContractRef: ContractName:Plans/FinalGUISpec.md, ContractName:Plans/FileManager.md, ContractName:Plans/GitHub_Integration.md'
+L00002386	compatibility_only_notes: []
+L00002387	stale_retired_dispositions: []
+L00002388	owner_hints:
+L00002389	- Plans/Wiring_Matrix.md
+L00002390	- Plans/FinalGUISpec.md
+L00002391	- Plans/FileManager.md
+L00002392	- Plans/GitHub_Integration.md
+L00002393	- Plans/UI_Command_Catalog.md
+L00002394	- Plans/WorktreeGitImprovement.md
+L00002395	- Plans/assistant-chat-design.md
+L00002396	- Plans/LSPSupport.md
+L00002397	```
+L00002398	
+L00002399	### WM-028 - Regex Index Query And Dirty Layer Wiring
+L00002400	
+L00002401	```yaml
+L00002402	plan_unit_id: WM-028
+L00002403	unit_type: requirement
+L00002404	status: accepted
+L00002405	owner_doc: Plans/Wiring_Matrix.md
+L00002406	canonical_text: Grep/index wiring routes agent grep calls and Search-panel regex queries through IndexEngine candidates and ripgrep verification, while PM-mediated writes, file watchers, and remote re-anchor insert generation-stamped DirtyLayer entries before callers can observe false-negative search results.
+L00002407	gui_related: false
+L00002408	gui_classification_reason: The unit defines backend index, verification, dirty-layer, and remote re-anchor wiring rather than visual presentation.
+L00002409	split_recommended: false
+L00002410	depends_on:
+L00002411	- PDS-003
+L00002412	- PDS-004
+L00002413	- PDS-005
+L00002414	- PNC-001
+L00002415	- WM-009
+L00002416	unblocks: []
+L00002417	acceptance_criteria:
+L00002418	- WM-028 remains addressable as a fine-grained Wiring Matrix PlanUnit with source-span coverage.
+L00002419	- ContractRefs, anchors or aliases, exact tokens, negative constraints, compatibility notes, stale/retired dispositions, owner boundaries, and source lineage from the source spans remain preserved.
+L00002420	- No WorkNodes, NodeSeeds, executable queues, final node manifests, production build tasks, implementation files, or source code are created by this PlanUnit.
+L00002421	validation_surfaces:
+L00002422	- python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits
+L00002423	- python3 scripts/pm-plan-index.py validate
+L00002424	risk_class: wiring_matrix_drift
+L00002425	reasoning_tier: standard
+L00002426	context_scope: wiring_matrix_batch_200
+L00002427	implementation_surfaces:
+L00002428	- Plans/Wiring_Matrix.md
+L00002429	node_compile_hint:
+L00002430	  mode: regex_index_dirty_layer
+L00002431	  create_worknodes: false
+L00002432	source_lineage:
+L00002433	- Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:Wiring_Matrix-S0035
+L00002434	preserved_exact_tokens:
+L00002435	- Search Index Acceleration Wiring Addendum
+L00002436	- sparse n-gram regex index
+L00002437	- Agent/subagent `grep` call
+L00002438	- IndexEngine `query`
+L00002439	- ripgrep verification
+L00002440	- DirtyLayer `insert`
+L00002441	- PM-mediated writes
+L00002442	- SYNCHRONOUSLY
+L00002443	- agent-write-then-grep CRITICAL FIX
+L00002444	- HashMap
+L00002445	- generation stamps
+L00002446	- old_anchor..new_HEAD
+L00002447	negative_constraints:
+L00002448	- DirtyLayer storage is a HashMap with generation stamps, not a plain HashSet.
+L00002449	preserved_contractrefs:
+L00002450	- 'ContractRef: ContractName:Plans/Tools.md, ContractName:Plans/storage-plan.md, ContractName:Plans/FinalGUISpec.md'
+L00002451	- 'ContractRef: ContractName:Plans/GitHub_Integration.md, ContractName:Plans/UI_Command_Catalog.md, ContractName:Plans/storage-plan.md'
+L00002452	compatibility_only_notes: []
+L00002453	stale_retired_dispositions: []
+L00002454	owner_hints:
+L00002455	- Plans/Wiring_Matrix.md
+L00002456	- Plans/Tools.md
+L00002457	- Plans/storage-plan.md
+L00002458	- Plans/GitHub_Integration.md
+L00002459	```
+L00002460	
+L00002461	### WM-029 - Search Panel Index UX And Cache Commands
+L00002462	
+L00002463	```yaml
+L00002464	plan_unit_id: WM-029
+L00002465	unit_type: requirement
+L00002466	status: accepted
+L00002467	owner_doc: Plans/Wiring_Matrix.md
+L00002468	canonical_text: Search-panel regex, status-bar Indexing / Refreshing index, cmd.search.rebuild_regex_index, cmd.search.evict_remote_cache, and cmd.search.clear_all_remote_caches expose index state and cache control without re-owning storage or remote correctness.
+L00002469	gui_related: true
+L00002470	gui_classification_reason: The unit covers user-visible Search panel regex behavior, status-bar indicators, and cache control commands.
+L00002471	split_recommended: false
+L00002472	depends_on:
+L00002473	- PDS-003
+L00002474	- PDS-004
+L00002475	- PDS-005
+L00002476	- PNC-001
+L00002477	- WM-027
+L00002478	- WM-028
+L00002479	unblocks: []
+L00002480	acceptance_criteria:
+L00002481	- WM-029 remains addressable as a fine-grained Wiring Matrix PlanUnit with source-span coverage.
+L00002482	- ContractRefs, anchors or aliases, exact tokens, negative constraints, compatibility notes, stale/retired dispositions, owner boundaries, and source lineage from the source spans remain preserved.
+L00002483	- No WorkNodes, NodeSeeds, executable queues, final node manifests, production build tasks, implementation files, or source code are created by this PlanUnit.
+L00002484	validation_surfaces:
+L00002485	- python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits
+L00002486	- python3 scripts/pm-plan-index.py validate
+L00002487	risk_class: wiring_matrix_drift
+L00002488	reasoning_tier: standard
+L00002489	context_scope: wiring_matrix_batch_200
+L00002490	implementation_surfaces:
+L00002491	- Plans/Wiring_Matrix.md
+L00002492	node_compile_hint:
+L00002493	  mode: search_index_user_commands
+L00002494	  create_worknodes: false
+L00002495	source_lineage:
+L00002496	- Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:Wiring_Matrix-S0035
+L00002497	preserved_exact_tokens:
+L00002498	- Search-panel regex query
+L00002499	- regex ON
+L00002500	- cmd.search.rebuild_regex_index
+L00002501	- Indexing
+L00002502	- Refreshing index
+L00002503	- cmd.search.evict_remote_cache
+L00002504	- cmd.search.clear_all_remote_caches
+L00002505	- RemoteCacheManager `evict_project`
+L00002506	- RemoteCacheManager `evict_all`
+L00002507	negative_constraints: []
+L00002508	preserved_contractrefs:
+L00002509	- 'ContractRef: ContractName:Plans/FinalGUISpec.md, ContractName:Plans/storage-plan.md, ContractName:Plans/GitHub_Integration.md'
+L00002510	compatibility_only_notes: []
+L00002511	stale_retired_dispositions: []
+L00002512	owner_hints:
+L00002513	- Plans/Wiring_Matrix.md
+L00002514	- Plans/FinalGUISpec.md
+L00002515	- Plans/UI_Command_Catalog.md
+L00002516	- Plans/storage-plan.md
+L00002517	- Plans/GitHub_Integration.md
+L00002518	```
+L00002519	
+L00002520	### WM-030 - Index Build Storage Publication And Recovery
+L00002521	
+L00002522	```yaml
+L00002523	plan_unit_id: WM-030
+L00002524	unit_type: requirement
+L00002525	status: accepted
+L00002526	owner_doc: Plans/Wiring_Matrix.md
+L00002527	canonical_text: Index build/storage wiring covers project-ready full or validation builds, Git incremental rebuilds, IndexSnapshot load, ArcSwap publication, crash recovery, remote fetch cadence, git diff --name-only old_anchor..new_HEAD, and cache-only no-data-loss behavior.
+L00002528	gui_related: false
+L00002529	gui_classification_reason: The unit defines backend index build, storage publication, recovery, and remote refresh wiring rather than GUI presentation.
+L00002530	split_recommended: false
+L00002531	depends_on:

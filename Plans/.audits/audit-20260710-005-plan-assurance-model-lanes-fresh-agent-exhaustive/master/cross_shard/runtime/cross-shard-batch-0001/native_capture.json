@@ -1,0 +1,334 @@
+{
+  "audit_id": "audit-20260710-005-plan-assurance-model-lanes-fresh-agent-exhaustive",
+  "schema_version": "cross-shard-native-capture-v1",
+  "epoch_id": "cross-shard-epoch-0001",
+  "batch_id": "cross-shard-batch-0001",
+  "capture_basis": "codex_app_read_thread_after_all_children_terminal",
+  "controller_thread_id": "019f4f5e-96c6-7893-8c94-ce2c1b760d6c",
+  "controller_thread_state": "idle",
+  "controller_turn_id": "019f518d-03e3-7c51-ad03-7795953d4b0f",
+  "controller_turn_status": "completed",
+  "controller_turn_error": null,
+  "leaves": [
+    {
+      "assignment_id": "A005CS-0001",
+      "native_child_thread_id": "019f518d-cb59-7f43-a44f-43405767dcef",
+      "native_child_turn_id": "019f518d-cbf8-7751-9daf-7f9a35d284c1",
+      "agent_path": "/root/a005_cross_shard_0001_attempt_0001_terminal",
+      "native_child_thread_state": "idle",
+      "native_child_turn_status": "completed",
+      "native_child_turn_error": null,
+      "terminal_response_prefix": "PMR1"
+    },
+    {
+      "assignment_id": "A005CS-0002",
+      "native_child_thread_id": "019f518d-f042-7773-9da4-c464233c34aa",
+      "native_child_turn_id": "019f518d-f0ae-7570-8c55-1189d93134d2",
+      "agent_path": "/root/a005_cross_shard_0002_attempt_0001_terminal",
+      "native_child_thread_state": "idle",
+      "native_child_turn_status": "completed",
+      "native_child_turn_error": null,
+      "terminal_response_prefix": "PMR1"
+    },
+    {
+      "assignment_id": "A005CS-0003",
+      "native_child_thread_id": "019f518e-168e-7242-a6a5-500df2d8ca5a",
+      "native_child_turn_id": "019f518e-1712-7451-9db3-bcf138c40f21",
+      "agent_path": "/root/a005_cross_shard_0003_attempt_0001_terminal",
+      "native_child_thread_state": "idle",
+      "native_child_turn_status": "completed",
+      "native_child_turn_error": null,
+      "terminal_response_prefix": "PMR1"
+    },
+    {
+      "assignment_id": "A005CS-0004",
+      "native_child_thread_id": "019f518e-3745-7800-bb47-af0143ba373a",
+      "native_child_turn_id": "019f518e-37c6-7481-baef-040672db2b53",
+      "agent_path": "/root/a005_cross_shard_0004_attempt_0001_terminal",
+      "native_child_thread_state": "idle",
+      "native_child_turn_status": "completed",
+      "native_child_turn_error": null,
+      "terminal_response_prefix": "PMR1"
+    },
+    {
+      "assignment_id": "A005CS-0005",
+      "native_child_thread_id": "019f518e-57bd-78e2-8511-e7e96c6c0764",
+      "native_child_turn_id": "019f518e-582a-7da2-8472-266e652995a3",
+      "agent_path": "/root/a005_cross_shard_0005_attempt_0001_terminal",
+      "native_child_thread_state": "idle",
+      "native_child_turn_status": "completed",
+      "native_child_turn_error": null,
+      "terminal_response_prefix": "PMR1"
+    },
+    {
+      "assignment_id": "A005CS-0006",
+      "native_child_thread_id": "019f518e-85c6-70a3-82c8-3da7d4dcea08",
+      "native_child_turn_id": "019f518e-8646-77c1-9a91-1befb8f5a8fd",
+      "agent_path": "/root/a005_cross_shard_0006_attempt_0001_terminal",
+      "native_child_thread_state": "idle",
+      "native_child_turn_status": "completed",
+      "native_child_turn_error": null,
+      "terminal_response_prefix": "PMR1"
+    },
+    {
+      "assignment_id": "A005CS-0007",
+      "native_child_thread_id": "019f518e-a730-7700-a090-497a6e764ae8",
+      "native_child_turn_id": "019f518e-a7ac-7d00-8c3f-b2cc0c50fbfd",
+      "agent_path": "/root/a005_cross_shard_0007_attempt_0001_terminal",
+      "native_child_thread_state": "idle",
+      "native_child_turn_status": "completed",
+      "native_child_turn_error": null,
+      "terminal_response_prefix": "PMR1"
+    },
+    {
+      "assignment_id": "A005CS-0008",
+      "native_child_thread_id": "019f518e-ca72-79e0-8567-4a234323e2f4",
+      "native_child_turn_id": "019f518e-caea-78b1-aaef-bf874a67c8a4",
+      "agent_path": "/root/a005_cross_shard_0008_attempt_0001_terminal",
+      "native_child_thread_state": "idle",
+      "native_child_turn_status": "completed",
+      "native_child_turn_error": null,
+      "terminal_response_prefix": "PMR1"
+    },
+    {
+      "assignment_id": "A005CS-0009",
+      "native_child_thread_id": "019f518e-ed42-7952-8606-8e8bc9b77f18",
+      "native_child_turn_id": "019f518e-edbd-7483-841c-b25d5ee918d3",
+      "agent_path": "/root/a005_cross_shard_0009_attempt_0001_terminal",
+      "native_child_thread_state": "idle",
+      "native_child_turn_status": "completed",
+      "native_child_turn_error": null,
+      "terminal_response_prefix": "PMR1"
+    },
+    {
+      "assignment_id": "A005CS-0010",
+      "native_child_thread_id": "019f518f-15bc-74c1-8837-1588d828ad17",
+      "native_child_turn_id": "019f518f-1647-7d43-a22f-7d753e82ab87",
+      "agent_path": "/root/a005_cross_shard_0010_attempt_0001_terminal",
+      "native_child_thread_state": "idle",
+      "native_child_turn_status": "completed",
+      "native_child_turn_error": null,
+      "terminal_response_prefix": "PMR1"
+    },
+    {
+      "assignment_id": "A005CS-0011",
+      "native_child_thread_id": "019f518f-3818-7e00-8ea9-ee4a1cb0aef1",
+      "native_child_turn_id": "019f518f-388e-7963-afe3-880c8cb9fdc9",
+      "agent_path": "/root/a005_cross_shard_0011_attempt_0001_terminal",
+      "native_child_thread_state": "idle",
+      "native_child_turn_status": "completed",
+      "native_child_turn_error": null,
+      "terminal_response_prefix": "PMR1"
+    },
+    {
+      "assignment_id": "A005CS-0012",
+      "native_child_thread_id": "019f518f-57ce-7b63-9432-bf6b590727fd",
+      "native_child_turn_id": "019f518f-5851-7923-af96-9942e54b5c63",
+      "agent_path": "/root/a005_cross_shard_0012_attempt_0001_terminal",
+      "native_child_thread_state": "idle",
+      "native_child_turn_status": "completed",
+      "native_child_turn_error": null,
+      "terminal_response_prefix": "PMR1"
+    },
+    {
+      "assignment_id": "A005CS-0013",
+      "native_child_thread_id": "019f518f-7992-7aa2-9cc9-c7bd6dca18c9",
+      "native_child_turn_id": "019f518f-7a0b-7230-8006-23e0ea84ac96",
+      "agent_path": "/root/a005_cross_shard_0013_attempt_0001_terminal",
+      "native_child_thread_state": "idle",
+      "native_child_turn_status": "completed",
+      "native_child_turn_error": null,
+      "terminal_response_prefix": "PMR1"
+    },
+    {
+      "assignment_id": "A005CS-0014",
+      "native_child_thread_id": "019f518f-a625-7bb0-acec-77d854ef2d2c",
+      "native_child_turn_id": "019f518f-a6af-7bb0-9647-a9a26146a218",
+      "agent_path": "/root/a005_cross_shard_0014_attempt_0001_terminal",
+      "native_child_thread_state": "idle",
+      "native_child_turn_status": "completed",
+      "native_child_turn_error": null,
+      "terminal_response_prefix": "PMR1"
+    },
+    {
+      "assignment_id": "A005CS-0015",
+      "native_child_thread_id": "019f518f-c6f0-7c41-95b9-824fcc38818d",
+      "native_child_turn_id": "019f518f-c778-7ed2-a69a-5e79ff3e7ad4",
+      "agent_path": "/root/a005_cross_shard_0015_attempt_0001_terminal",
+      "native_child_thread_state": "idle",
+      "native_child_turn_status": "completed",
+      "native_child_turn_error": null,
+      "terminal_response_prefix": "PMR1"
+    },
+    {
+      "assignment_id": "A005CS-0016",
+      "native_child_thread_id": "019f518f-e91c-7031-8f00-e3f45b1abe44",
+      "native_child_turn_id": "019f518f-e98b-7e50-b23d-64b86236f289",
+      "agent_path": "/root/a005_cross_shard_0016_attempt_0001_terminal",
+      "native_child_thread_state": "idle",
+      "native_child_turn_status": "completed",
+      "native_child_turn_error": null,
+      "terminal_response_prefix": "PMR1"
+    },
+    {
+      "assignment_id": "A005CS-0017",
+      "native_child_thread_id": "019f5190-0c74-79d2-aa7e-c723897d9934",
+      "native_child_turn_id": "019f5190-0ced-7c90-afea-e43fc9568008",
+      "agent_path": "/root/a005_cross_shard_0017_attempt_0001_terminal",
+      "native_child_thread_state": "idle",
+      "native_child_turn_status": "completed",
+      "native_child_turn_error": null,
+      "terminal_response_prefix": "PMR1"
+    },
+    {
+      "assignment_id": "A005CS-0018",
+      "native_child_thread_id": "019f5190-5443-7af0-9968-287841286b0e",
+      "native_child_turn_id": "019f5190-54ba-7fe0-a83c-66d7424d2682",
+      "agent_path": "/root/a005_cross_shard_0018_attempt_0001_terminal",
+      "native_child_thread_state": "idle",
+      "native_child_turn_status": "completed",
+      "native_child_turn_error": null,
+      "terminal_response_prefix": "PMR1"
+    },
+    {
+      "assignment_id": "A005CS-0019",
+      "native_child_thread_id": "019f5190-87be-73d1-89bc-5beecebeee46",
+      "native_child_turn_id": "019f5190-884e-7c53-8aea-49f3c78c4e3c",
+      "agent_path": "/root/a005_cross_shard_0019_attempt_0001_terminal",
+      "native_child_thread_state": "idle",
+      "native_child_turn_status": "completed",
+      "native_child_turn_error": null,
+      "terminal_response_prefix": "PMR1"
+    },
+    {
+      "assignment_id": "A005CS-0020",
+      "native_child_thread_id": "019f5190-bcfb-70a1-843f-341979e52dff",
+      "native_child_turn_id": "019f5190-bd79-7b52-98c4-13f591c8463c",
+      "agent_path": "/root/a005_cross_shard_0020_attempt_0001_terminal",
+      "native_child_thread_state": "idle",
+      "native_child_turn_status": "completed",
+      "native_child_turn_error": null,
+      "terminal_response_prefix": "PMR1"
+    },
+    {
+      "assignment_id": "A005CS-0021",
+      "native_child_thread_id": "019f5190-dfb8-7822-ba3d-05fc1a9ced9a",
+      "native_child_turn_id": "019f5190-e031-7521-8108-d9cb9571a590",
+      "agent_path": "/root/a005_cross_shard_0021_attempt_0001_terminal",
+      "native_child_thread_state": "idle",
+      "native_child_turn_status": "completed",
+      "native_child_turn_error": null,
+      "terminal_response_prefix": "PMR1"
+    },
+    {
+      "assignment_id": "A005CS-0022",
+      "native_child_thread_id": "019f5191-0f5a-7f00-a433-f2dd8ca1ad4f",
+      "native_child_turn_id": "019f5191-0fdb-7513-b903-5379689caabc",
+      "agent_path": "/root/a005_cross_shard_0022_attempt_0001_terminal",
+      "native_child_thread_state": "idle",
+      "native_child_turn_status": "completed",
+      "native_child_turn_error": null,
+      "terminal_response_prefix": "PMR1"
+    },
+    {
+      "assignment_id": "A005CS-0023",
+      "native_child_thread_id": "019f5191-3410-7d43-bcc0-b52af4521ba1",
+      "native_child_turn_id": "019f5191-3486-78b1-a138-c9f008a1c2a7",
+      "agent_path": "/root/a005_cross_shard_0023_attempt_0001_terminal",
+      "native_child_thread_state": "idle",
+      "native_child_turn_status": "completed",
+      "native_child_turn_error": null,
+      "terminal_response_prefix": "PMR1"
+    },
+    {
+      "assignment_id": "A005CS-0024",
+      "native_child_thread_id": "019f5191-565e-7620-8413-31688dcd93c4",
+      "native_child_turn_id": "019f5191-56df-7b72-adbe-26ce0e8308c2",
+      "agent_path": "/root/a005_cross_shard_0024_attempt_0001_terminal",
+      "native_child_thread_state": "idle",
+      "native_child_turn_status": "completed",
+      "native_child_turn_error": null,
+      "terminal_response_prefix": "PMR1"
+    },
+    {
+      "assignment_id": "A005CS-0025",
+      "native_child_thread_id": "019f5191-7edf-7fd0-a53f-824f48024043",
+      "native_child_turn_id": "019f5191-7f68-72f0-a99f-125048995dad",
+      "agent_path": "/root/a005_cross_shard_0025_attempt_0001_terminal",
+      "native_child_thread_state": "idle",
+      "native_child_turn_status": "completed",
+      "native_child_turn_error": null,
+      "terminal_response_prefix": "PMR1"
+    },
+    {
+      "assignment_id": "A005CS-0026",
+      "native_child_thread_id": "019f5191-a088-7153-b641-960081c3789d",
+      "native_child_turn_id": "019f5191-a10d-7f63-8d53-b8716eea38e1",
+      "agent_path": "/root/a005_cross_shard_0026_attempt_0001_terminal",
+      "native_child_thread_state": "idle",
+      "native_child_turn_status": "completed",
+      "native_child_turn_error": null,
+      "terminal_response_prefix": "PMR1"
+    },
+    {
+      "assignment_id": "A005CS-0027",
+      "native_child_thread_id": "019f5191-c398-71d0-8f17-dbe79c26055f",
+      "native_child_turn_id": "019f5191-c425-7bf3-ba3a-b73ce517358b",
+      "agent_path": "/root/a005_cross_shard_0027_attempt_0001_terminal",
+      "native_child_thread_state": "idle",
+      "native_child_turn_status": "completed",
+      "native_child_turn_error": null,
+      "terminal_response_prefix": "PMR1"
+    },
+    {
+      "assignment_id": "A005CS-0028",
+      "native_child_thread_id": "019f5191-f13d-76d0-a810-aad316a0c52a",
+      "native_child_turn_id": "019f5191-f1bc-7b22-8508-4de49ffb28cd",
+      "agent_path": "/root/a005_cross_shard_0028_attempt_0001_terminal",
+      "native_child_thread_state": "idle",
+      "native_child_turn_status": "completed",
+      "native_child_turn_error": null,
+      "terminal_response_prefix": "PMR1"
+    },
+    {
+      "assignment_id": "A005CS-0029",
+      "native_child_thread_id": "019f5192-140f-71e0-8ef5-b25b7fa18623",
+      "native_child_turn_id": "019f5192-1495-7e03-b4ef-d02531faced2",
+      "agent_path": "/root/a005_cross_shard_0029_attempt_0001_terminal",
+      "native_child_thread_state": "idle",
+      "native_child_turn_status": "completed",
+      "native_child_turn_error": null,
+      "terminal_response_prefix": "PMR1"
+    },
+    {
+      "assignment_id": "A005CS-0030",
+      "native_child_thread_id": "019f5192-37ed-7220-bf95-a902b1b9b437",
+      "native_child_turn_id": "019f5192-3885-78e3-8b1d-a620d774563a",
+      "agent_path": "/root/a005_cross_shard_0030_attempt_0001_terminal",
+      "native_child_thread_state": "idle",
+      "native_child_turn_status": "completed",
+      "native_child_turn_error": null,
+      "terminal_response_prefix": "PMR1"
+    },
+    {
+      "assignment_id": "A005CS-0031",
+      "native_child_thread_id": "019f5192-6a16-7be0-8fe6-e62cdcc9f585",
+      "native_child_turn_id": "019f5192-6a96-76e2-a14e-e94e4e9798b0",
+      "agent_path": "/root/a005_cross_shard_0031_attempt_0001_terminal",
+      "native_child_thread_state": "idle",
+      "native_child_turn_status": "completed",
+      "native_child_turn_error": null,
+      "terminal_response_prefix": "PMR1"
+    },
+    {
+      "assignment_id": "A005CS-0032",
+      "native_child_thread_id": "019f5192-8efa-73c0-a987-24a3ab22979b",
+      "native_child_turn_id": "019f5192-8f71-75f3-9600-7575ca04152a",
+      "agent_path": "/root/a005_cross_shard_0032_attempt_0001_terminal",
+      "native_child_thread_state": "idle",
+      "native_child_turn_status": "completed",
+      "native_child_turn_error": null,
+      "terminal_response_prefix": "PMR1"
+    }
+  ]
+}

@@ -1,0 +1,999 @@
+{
+  "audit_id": "audit-20260710-005-plan-assurance-model-lanes-fresh-agent-exhaustive",
+  "schema_version": "cross-shard-result-v1",
+  "phase": "cross_shard_same_owner_candidate_discovery",
+  "assignment_id": "A005CS-0021",
+  "attempt_id": "attempt-0001",
+  "task_thread_id": "/root/a005_cross_shard_0021_attempt_0001_terminal",
+  "model": "gpt-5.6-sol",
+  "reasoning_effort": "xhigh",
+  "status": "completed",
+  "input_binding": {
+    "packet_id": "CSPKT-0021",
+    "packet_sha256": "45b29913f738c3668c10375b70c275325f420471f8e1651c355f8f9c6669bca6",
+    "anchor_refs_digest": "0fb2947c39da3deae36e843d174b3065d5f77b2f369bde0305ec80a4708c2c5e",
+    "comparator_refs_digest": "332b2d5cd8b78815ae10d6bbf3e64496060f30e13349b1b0362ee1f25515f7c0"
+  },
+  "coverage": {
+    "anchor_count": 70,
+    "anchor_refs": [
+      "OPF::A005OM-0013::PF-0143",
+      "OPF::A005OM-0013::PF-0144",
+      "OPF::A005OM-0013::PF-0145",
+      "OPF::A005OM-0013::PF-0146",
+      "OPF::A005OM-0013::PF-0147",
+      "OPF::A005OM-0013::PF-0148",
+      "OPF::A005OM-0013::PF-0149",
+      "OPF::A005OM-0013::PF-0150",
+      "OPF::A005OM-0013::PF-0151",
+      "OPF::A005OM-0013::PF-0152",
+      "OPF::A005OM-0013::PF-0153",
+      "OPF::A005OM-0013::PF-0154",
+      "OPF::A005OM-0013::PF-0155",
+      "OPF::A005OM-0013::PF-0156",
+      "OPF::A005OM-0013::PF-0157",
+      "OPF::A005OM-0013::PF-0158",
+      "OPF::A005OM-0013::PF-0159",
+      "OPF::A005OM-0013::PF-0160",
+      "OPF::A005OM-0013::PF-0161",
+      "OPF::A005OM-0013::PF-0162",
+      "OPF::A005OM-0013::PF-0163",
+      "OPF::A005OM-0013::PF-0164",
+      "OPF::A005OM-0013::PF-0165",
+      "OPF::A005OM-0013::PF-0166",
+      "OPF::A005OM-0013::PF-0167",
+      "OPF::A005OM-0013::PF-0168",
+      "OPF::A005OM-0013::PF-0169",
+      "OPF::A005OM-0013::PF-0170",
+      "OPF::A005OM-0013::PF-0171",
+      "OPF::A005OM-0013::PF-0172",
+      "OPF::A005OM-0013::PF-0173",
+      "OPF::A005OM-0013::PF-0174",
+      "OPF::A005OM-0013::PF-0175",
+      "OPF::A005OM-0013::PF-0176",
+      "OPF::A005OM-0013::PF-0177",
+      "OPF::A005OM-0013::PF-0178",
+      "OPF::A005OM-0013::PF-0179",
+      "OPF::A005OM-0013::PF-0180",
+      "OPF::A005OM-0013::PF-0181",
+      "OPF::A005OM-0013::PF-0182",
+      "OPF::A005OM-0013::PF-0183",
+      "OPF::A005OM-0013::PF-0184",
+      "OPF::A005OM-0013::PF-0185",
+      "OPF::A005OM-0013::PF-0186",
+      "OPF::A005OM-0013::PF-0187",
+      "OPF::A005OM-0013::PF-0188",
+      "OPF::A005OM-0013::PF-0189",
+      "OPF::A005OM-0013::PF-0190",
+      "OPF::A005OM-0013::PF-0191",
+      "OPF::A005OM-0013::PF-0192",
+      "OPF::A005OM-0013::PF-0193",
+      "OPF::A005OM-0013::PF-0194",
+      "OPF::A005OM-0013::PF-0195",
+      "OPF::A005OM-0013::PF-0196",
+      "OPF::A005OM-0013::PF-0197",
+      "OPF::A005OM-0013::PF-0198",
+      "OPF::A005OM-0013::PF-0199",
+      "OPF::A005OM-0013::PF-0200",
+      "OPF::A005OM-0013::PF-0201",
+      "OPF::A005OM-0013::PF-0202",
+      "OPF::A005OM-0013::PF-0203",
+      "OPF::A005OM-0013::PF-0204",
+      "OPF::A005OM-0013::PF-0205",
+      "OPF::A005OM-0013::PF-0206",
+      "OPF::A005OM-0013::PF-0207",
+      "OPF::A005OM-0013::PF-0208",
+      "OPF::A005OM-0013::PF-0209",
+      "OPF::A005OM-0013::PF-0210",
+      "OPF::A005OM-0013::PF-0211",
+      "OPF::A005OM-0013::PF-0212"
+    ],
+    "comparator_count": 202,
+    "comparator_refs": [
+      "OPF::A005OM-0015::PF-0001",
+      "OPF::A005OM-0015::PF-0002",
+      "OPF::A005OM-0015::PF-0003",
+      "OPF::A005OM-0015::PF-0004",
+      "OPF::A005OM-0015::PF-0005",
+      "OPF::A005OM-0015::PF-0006",
+      "OPF::A005OM-0015::PF-0007",
+      "OPF::A005OM-0015::PF-0008",
+      "OPF::A005OM-0015::PF-0009",
+      "OPF::A005OM-0015::PF-0010",
+      "OPF::A005OM-0015::PF-0011",
+      "OPF::A005OM-0015::PF-0012",
+      "OPF::A005OM-0015::PF-0013",
+      "OPF::A005OM-0015::PF-0014",
+      "OPF::A005OM-0015::PF-0015",
+      "OPF::A005OM-0015::PF-0016",
+      "OPF::A005OM-0015::PF-0017",
+      "OPF::A005OM-0015::PF-0018",
+      "OPF::A005OM-0015::PF-0019",
+      "OPF::A005OM-0015::PF-0020",
+      "OPF::A005OM-0015::PF-0021",
+      "OPF::A005OM-0015::PF-0022",
+      "OPF::A005OM-0015::PF-0023",
+      "OPF::A005OM-0015::PF-0024",
+      "OPF::A005OM-0015::PF-0025",
+      "OPF::A005OM-0015::PF-0026",
+      "OPF::A005OM-0015::PF-0027",
+      "OPF::A005OM-0015::PF-0028",
+      "OPF::A005OM-0015::PF-0029",
+      "OPF::A005OM-0015::PF-0030",
+      "OPF::A005OM-0015::PF-0031",
+      "OPF::A005OM-0015::PF-0032",
+      "OPF::A005OM-0015::PF-0033",
+      "OPF::A005OM-0015::PF-0034",
+      "OPF::A005OM-0015::PF-0035",
+      "OPF::A005OM-0015::PF-0036",
+      "OPF::A005OM-0015::PF-0037",
+      "OPF::A005OM-0015::PF-0038",
+      "OPF::A005OM-0015::PF-0039",
+      "OPF::A005OM-0015::PF-0040",
+      "OPF::A005OM-0015::PF-0041",
+      "OPF::A005OM-0015::PF-0042",
+      "OPF::A005OM-0015::PF-0043",
+      "OPF::A005OM-0015::PF-0044",
+      "OPF::A005OM-0015::PF-0045",
+      "OPF::A005OM-0015::PF-0046",
+      "OPF::A005OM-0015::PF-0047",
+      "OPF::A005OM-0015::PF-0048",
+      "OPF::A005OM-0015::PF-0049",
+      "OPF::A005OM-0015::PF-0050",
+      "OPF::A005OM-0015::PF-0051",
+      "OPF::A005OM-0015::PF-0052",
+      "OPF::A005OM-0015::PF-0053",
+      "OPF::A005OM-0015::PF-0054",
+      "OPF::A005OM-0015::PF-0055",
+      "OPF::A005OM-0015::PF-0056",
+      "OPF::A005OM-0015::PF-0057",
+      "OPF::A005OM-0015::PF-0058",
+      "OPF::A005OM-0015::PF-0059",
+      "OPF::A005OM-0015::PF-0060",
+      "OPF::A005OM-0015::PF-0061",
+      "OPF::A005OM-0015::PF-0062",
+      "OPF::A005OM-0015::PF-0063",
+      "OPF::A005OM-0015::PF-0064",
+      "OPF::A005OM-0015::PF-0065",
+      "OPF::A005OM-0015::PF-0066",
+      "OPF::A005OM-0015::PF-0067",
+      "OPF::A005OM-0015::PF-0068",
+      "OPF::A005OM-0015::PF-0069",
+      "OPF::A005OM-0015::PF-0070",
+      "OPF::A005OM-0015::PF-0071",
+      "OPF::A005OM-0015::PF-0072",
+      "OPF::A005OM-0015::PF-0073",
+      "OPF::A005OM-0015::PF-0074",
+      "OPF::A005OM-0015::PF-0075",
+      "OPF::A005OM-0015::PF-0076",
+      "OPF::A005OM-0015::PF-0077",
+      "OPF::A005OM-0015::PF-0078",
+      "OPF::A005OM-0015::PF-0079",
+      "OPF::A005OM-0015::PF-0080",
+      "OPF::A005OM-0015::PF-0081",
+      "OPF::A005OM-0015::PF-0082",
+      "OPF::A005OM-0015::PF-0083",
+      "OPF::A005OM-0015::PF-0084",
+      "OPF::A005OM-0015::PF-0085",
+      "OPF::A005OM-0015::PF-0086",
+      "OPF::A005OM-0015::PF-0087",
+      "OPF::A005OM-0015::PF-0088",
+      "OPF::A005OM-0015::PF-0089",
+      "OPF::A005OM-0015::PF-0090",
+      "OPF::A005OM-0015::PF-0091",
+      "OPF::A005OM-0015::PF-0092",
+      "OPF::A005OM-0015::PF-0093",
+      "OPF::A005OM-0015::PF-0094",
+      "OPF::A005OM-0015::PF-0095",
+      "OPF::A005OM-0015::PF-0096",
+      "OPF::A005OM-0015::PF-0097",
+      "OPF::A005OM-0015::PF-0098",
+      "OPF::A005OM-0015::PF-0099",
+      "OPF::A005OM-0015::PF-0100",
+      "OPF::A005OM-0015::PF-0101",
+      "OPF::A005OM-0015::PF-0102",
+      "OPF::A005OM-0015::PF-0103",
+      "OPF::A005OM-0015::PF-0104",
+      "OPF::A005OM-0015::PF-0105",
+      "OPF::A005OM-0015::PF-0106",
+      "OPF::A005OM-0015::PF-0107",
+      "OPF::A005OM-0015::PF-0108",
+      "OPF::A005OM-0015::PF-0109",
+      "OPF::A005OM-0015::PF-0110",
+      "OPF::A005OM-0015::PF-0111",
+      "OPF::A005OM-0015::PF-0112",
+      "OPF::A005OM-0015::PF-0113",
+      "OPF::A005OM-0015::PF-0114",
+      "OPF::A005OM-0015::PF-0115",
+      "OPF::A005OM-0015::PF-0116",
+      "OPF::A005OM-0015::PF-0117",
+      "OPF::A005OM-0015::PF-0118",
+      "OPF::A005OM-0015::PF-0119",
+      "OPF::A005OM-0015::PF-0120",
+      "OPF::A005OM-0015::PF-0121",
+      "OPF::A005OM-0015::PF-0122",
+      "OPF::A005OM-0015::PF-0123",
+      "OPF::A005OM-0015::PF-0124",
+      "OPF::A005OM-0015::PF-0125",
+      "OPF::A005OM-0015::PF-0126",
+      "OPF::A005OM-0015::PF-0127",
+      "OPF::A005OM-0015::PF-0128",
+      "OPF::A005OM-0015::PF-0129",
+      "OPF::A005OM-0015::PF-0130",
+      "OPF::A005OM-0015::PF-0131",
+      "OPF::A005OM-0015::PF-0132",
+      "OPF::A005OM-0015::PF-0133",
+      "OPF::A005OM-0015::PF-0134",
+      "OPF::A005OM-0015::PF-0135",
+      "OPF::A005OM-0015::PF-0136",
+      "OPF::A005OM-0015::PF-0137",
+      "OPF::A005OM-0015::PF-0138",
+      "OPF::A005OM-0015::PF-0139",
+      "OPF::A005OM-0015::PF-0140",
+      "OPF::A005OM-0015::PF-0141",
+      "OPF::A005OM-0015::PF-0142",
+      "OPF::A005OM-0015::PF-0143",
+      "OPF::A005OM-0015::PF-0144",
+      "OPF::A005OM-0015::PF-0145",
+      "OPF::A005OM-0015::PF-0146",
+      "OPF::A005OM-0015::PF-0147",
+      "OPF::A005OM-0015::PF-0148",
+      "OPF::A005OM-0015::PF-0149",
+      "OPF::A005OM-0015::PF-0150",
+      "OPF::A005OM-0015::PF-0151",
+      "OPF::A005OM-0015::PF-0152",
+      "OPF::A005OM-0015::PF-0153",
+      "OPF::A005OM-0015::PF-0154",
+      "OPF::A005OM-0015::PF-0155",
+      "OPF::A005OM-0015::PF-0156",
+      "OPF::A005OM-0015::PF-0157",
+      "OPF::A005OM-0015::PF-0158",
+      "OPF::A005OM-0015::PF-0159",
+      "OPF::A005OM-0015::PF-0160",
+      "OPF::A005OM-0015::PF-0161",
+      "OPF::A005OM-0015::PF-0162",
+      "OPF::A005OM-0015::PF-0163",
+      "OPF::A005OM-0015::PF-0164",
+      "OPF::A005OM-0015::PF-0165",
+      "OPF::A005OM-0015::PF-0166",
+      "OPF::A005OM-0015::PF-0167",
+      "OPF::A005OM-0015::PF-0168",
+      "OPF::A005OM-0015::PF-0169",
+      "OPF::A005OM-0015::PF-0170",
+      "OPF::A005OM-0015::PF-0171",
+      "OPF::A005OM-0015::PF-0172",
+      "OPF::A005OM-0015::PF-0173",
+      "OPF::A005OM-0015::PF-0174",
+      "OPF::A005OM-0015::PF-0175",
+      "OPF::A005OM-0015::PF-0176",
+      "OPF::A005OM-0015::PF-0177",
+      "OPF::A005OM-0015::PF-0178",
+      "OPF::A005OM-0015::PF-0179",
+      "OPF::A005OM-0015::PF-0180",
+      "OPF::A005OM-0015::PF-0181",
+      "OPF::A005OM-0015::PF-0182",
+      "OPF::A005OM-0015::PF-0183",
+      "OPF::A005OM-0015::PF-0184",
+      "OPF::A005OM-0015::PF-0185",
+      "OPF::A005OM-0015::PF-0186",
+      "OPF::A005OM-0015::PF-0187",
+      "OPF::A005OM-0015::PF-0188",
+      "OPF::A005OM-0015::PF-0189",
+      "OPF::A005OM-0015::PF-0190",
+      "OPF::A005OM-0015::PF-0191",
+      "OPF::A005OM-0015::PF-0192",
+      "OPF::A005OM-0015::PF-0193",
+      "OPF::A005OM-0015::PF-0194",
+      "OPF::A005OM-0015::PF-0195",
+      "OPF::A005OM-0015::PF-0196",
+      "OPF::A005OM-0015::PF-0197",
+      "OPF::A005OM-0015::PF-0198",
+      "OPF::A005OM-0015::PF-0199",
+      "OPF::A005OM-0015::PF-0200",
+      "OPF::A005OM-0015::PF-0201",
+      "OPF::A005OM-0015::PF-0202"
+    ]
+  },
+  "decisions": [
+    {
+      "anchor_provisional_feature_ref": "OPF::A005OM-0013::PF-0143",
+      "compared_against_count": 202,
+      "merge_candidate_refs": [],
+      "related_but_distinct_refs": [],
+      "rationale": "Bundled resource discovery owns development and installed-layout lookup plus caller fallback; none of the 202 comparators has that authority or lookup lifecycle.",
+      "confidence": 0.99
+    },
+    {
+      "anchor_provisional_feature_ref": "OPF::A005OM-0013::PF-0144",
+      "compared_against_count": 202,
+      "merge_candidate_refs": [],
+      "related_but_distinct_refs": [
+        "OPF::A005OM-0015::PF-0130",
+        "OPF::A005OM-0015::PF-0119"
+      ],
+      "rationale": "The safe-hook envelope and child executable clamp are adjacent pre-dispatch controls, but they belong to orchestrator hook and child-authority lifecycles rather than the legacy FileSafe pre-spawn reference.",
+      "confidence": 0.97
+    },
+    {
+      "anchor_provisional_feature_ref": "OPF::A005OM-0013::PF-0145",
+      "compared_against_count": 202,
+      "merge_candidate_refs": [],
+      "related_but_distinct_refs": [
+        "OPF::A005OM-0015::PF-0013",
+        "OPF::A005OM-0015::PF-0117"
+      ],
+      "rationale": "Worktree path isolation and child authority clamping are plausible neighbors, but creation-path validation and child dispatch ceilings are distinct from immutable request-local FileGuard scope.",
+      "confidence": 0.97
+    },
+    {
+      "anchor_provisional_feature_ref": "OPF::A005OM-0013::PF-0146",
+      "compared_against_count": 202,
+      "merge_candidate_refs": [],
+      "related_but_distinct_refs": [
+        "OPF::A005OM-0015::PF-0013"
+      ],
+      "rationale": "Worktree path safety is adjacent to path canonicalization, but it does not own FileSafe case-sensitivity probe failure or its comparison-mode transition.",
+      "confidence": 0.98
+    },
+    {
+      "anchor_provisional_feature_ref": "OPF::A005OM-0013::PF-0147",
+      "compared_against_count": 202,
+      "merge_candidate_refs": [],
+      "related_but_distinct_refs": [],
+      "rationale": "All provider and fixture comparators were considered; none specifies the FileSafe multi-platform sensitive-context parser matrix under the same adapter authority and fallback lifecycle.",
+      "confidence": 0.98
+    },
+    {
+      "anchor_provisional_feature_ref": "OPF::A005OM-0013::PF-0148",
+      "compared_against_count": 202,
+      "merge_candidate_refs": [],
+      "related_but_distinct_refs": [],
+      "rationale": "No comparator owns the FileSafe guard rate limiter's identity, atomic update, persistence, expiry, and recovery lifecycle; generic concurrency controls are insufficient.",
+      "confidence": 0.99
+    },
+    {
+      "anchor_provisional_feature_ref": "OPF::A005OM-0013::PF-0149",
+      "compared_against_count": 202,
+      "merge_candidate_refs": [],
+      "related_but_distinct_refs": [
+        "OPF::A005OM-0015::PF-0171"
+      ],
+      "rationale": "Provider projection conformance is a plausible adapter-oracle neighbor, but it governs secret-safe configuration generation rather than compiled-prompt inspection across execution providers.",
+      "confidence": 0.97
+    },
+    {
+      "anchor_provisional_feature_ref": "OPF::A005OM-0013::PF-0150",
+      "compared_against_count": 202,
+      "merge_candidate_refs": [],
+      "related_but_distinct_refs": [],
+      "rationale": "No comparator represents FileSafe's safety-policy owner boundary; other owner-boundary statements govern different products and cannot merge on governance vocabulary alone.",
+      "confidence": 0.99
+    },
+    {
+      "anchor_provisional_feature_ref": "OPF::A005OM-0013::PF-0151",
+      "compared_against_count": 202,
+      "merge_candidate_refs": [],
+      "related_but_distinct_refs": [],
+      "rationale": "None of the 202 comparators enumerates the FileSafe guard state, exact approval, override receipt, and typed error families under the same guard lifecycle.",
+      "confidence": 0.99
+    },
+    {
+      "anchor_provisional_feature_ref": "OPF::A005OM-0013::PF-0152",
+      "compared_against_count": 202,
+      "merge_candidate_refs": [],
+      "related_but_distinct_refs": [
+        "OPF::A005OM-0015::PF-0004"
+      ],
+      "rationale": "Canonical capability aliases are related compatibility metadata, but they govern tool permission normalization rather than FileSafe's internal config keys and user-facing labels.",
+      "confidence": 0.97
+    },
+    {
+      "anchor_provisional_feature_ref": "OPF::A005OM-0013::PF-0153",
+      "compared_against_count": 202,
+      "merge_candidate_refs": [],
+      "related_but_distinct_refs": [],
+      "rationale": "No comparator owns the FileSafe effective-request compilation and guard-ordering invariant before CLI argument construction.",
+      "confidence": 0.99
+    },
+    {
+      "anchor_provisional_feature_ref": "OPF::A005OM-0013::PF-0154",
+      "compared_against_count": 202,
+      "merge_candidate_refs": [],
+      "related_but_distinct_refs": [
+        "OPF::A005OM-0015::PF-0020",
+        "OPF::A005OM-0015::PF-0060"
+      ],
+      "rationale": "Blocked-packet action validation and concurrent blocked-episode resolution are close neighbors, but Assistant Chat action consumption and HITL resolution state are distinct from FileSafe's persisted local/global action mapping and migration lifecycle.",
+      "confidence": 0.96
+    },
+    {
+      "anchor_provisional_feature_ref": "OPF::A005OM-0013::PF-0155",
+      "compared_against_count": 202,
+      "merge_candidate_refs": [],
+      "related_but_distinct_refs": [
+        "OPF::A005OM-0015::PF-0017",
+        "OPF::A005OM-0015::PF-0060",
+        "OPF::A005OM-0015::PF-0067",
+        "OPF::A005OM-0015::PF-0074"
+      ],
+      "rationale": "Approval scope, concurrent resolution, expiry races, and timeout recovery touch this surface, but each has a distinct HITL authority or state machine from FileSafe Settings and Assistant Chat recovery controls.",
+      "confidence": 0.96
+    },
+    {
+      "anchor_provisional_feature_ref": "OPF::A005OM-0013::PF-0156",
+      "compared_against_count": 202,
+      "merge_candidate_refs": [],
+      "related_but_distinct_refs": [
+        "OPF::A005OM-0015::PF-0006"
+      ],
+      "rationale": "Usage rollups consume policy-blocked demand and are therefore adjacent, but their aggregation projection is distinct from the FileSafe blocked-command event emission helper.",
+      "confidence": 0.98
+    },
+    {
+      "anchor_provisional_feature_ref": "OPF::A005OM-0013::PF-0157",
+      "compared_against_count": 202,
+      "merge_candidate_refs": [],
+      "related_but_distinct_refs": [
+        "OPF::A005OM-0015::PF-0141"
+      ],
+      "rationale": "Mutation lock override is a plausible receipted-override neighbor, but it governs storage mutation reconciliation rather than FileSafe destructive-command operator grants.",
+      "confidence": 0.98
+    },
+    {
+      "anchor_provisional_feature_ref": "OPF::A005OM-0013::PF-0158",
+      "compared_against_count": 202,
+      "merge_candidate_refs": [],
+      "related_but_distinct_refs": [
+        "OPF::A005OM-0015::PF-0119",
+        "OPF::A005OM-0015::PF-0164"
+      ],
+      "rationale": "Child host clamping and browser action authority are transport-specific neighbors, but their consumers and side-effect boundaries differ from FileSafe's cross-transport canonical scope and recovery enforcement.",
+      "confidence": 0.97
+    },
+    {
+      "anchor_provisional_feature_ref": "OPF::A005OM-0013::PF-0159",
+      "compared_against_count": 202,
+      "merge_candidate_refs": [],
+      "related_but_distinct_refs": [
+        "OPF::A005OM-0015::PF-0009",
+        "OPF::A005OM-0015::PF-0017"
+      ],
+      "rationale": "Exact command approval binding and general approval persistence are adjacent, but their tool/HITL authorities differ from FileSafe approve-once and approved-command-list UX with exact normalized matching.",
+      "confidence": 0.96
+    },
+    {
+      "anchor_provisional_feature_ref": "OPF::A005OM-0013::PF-0160",
+      "compared_against_count": 202,
+      "merge_candidate_refs": [],
+      "related_but_distinct_refs": [
+        "OPF::A005OM-0015::PF-0045"
+      ],
+      "rationale": "The execution-context envelope is a broader metadata neighbor, but it owns typed execution context rather than FileSafe's fixed operation classifications carried only through env_vars.",
+      "confidence": 0.98
+    },
+    {
+      "anchor_provisional_feature_ref": "OPF::A005OM-0013::PF-0161",
+      "compared_against_count": 202,
+      "merge_candidate_refs": [],
+      "related_but_distinct_refs": [
+        "OPF::A005OM-0015::PF-0006"
+      ],
+      "rationale": "Usage treatment of FileSafe-blocked calls is a direct metrics neighbor, but Usage aggregation is a separate consumer from the FileSafe dashboard's freshness, partial, error, and redaction projection states.",
+      "confidence": 0.97
+    },
+    {
+      "anchor_provisional_feature_ref": "OPF::A005OM-0013::PF-0162",
+      "compared_against_count": 202,
+      "merge_candidate_refs": [],
+      "related_but_distinct_refs": [
+        "OPF::A005OM-0015::PF-0062",
+        "OPF::A005OM-0015::PF-0069"
+      ],
+      "rationale": "Core HITL identity contracts and ask-flow consumption are adjacent to the delegated seam, but HITL retains its own owner and lifecycle while FileSafe merely binds canonical blocked identity and forbids competing decision authority.",
+      "confidence": 0.97
+    },
+    {
+      "anchor_provisional_feature_ref": "OPF::A005OM-0013::PF-0163",
+      "compared_against_count": 202,
+      "merge_candidate_refs": [],
+      "related_but_distinct_refs": [
+        "OPF::A005OM-0015::PF-0009",
+        "OPF::A005OM-0015::PF-0021"
+      ],
+      "rationale": "Execution-form approval binding and exact shell command trust are plausible command-identity neighbors, but neither owns FileSafe regex anchoring, multiline, and byte-boundary matching semantics.",
+      "confidence": 0.96
+    },
+    {
+      "anchor_provisional_feature_ref": "OPF::A005OM-0013::PF-0164",
+      "compared_against_count": 202,
+      "merge_candidate_refs": [],
+      "related_but_distinct_refs": [
+        "OPF::A005OM-0015::PF-0078",
+        "OPF::A005OM-0015::PF-0119"
+      ],
+      "rationale": "Prelaunch identity alignment and child executable enforcement are adjacent fail-closed checks, but they govern launch identity and child authority rather than FileSafe startup configuration and runner construction.",
+      "confidence": 0.98
+    },
+    {
+      "anchor_provisional_feature_ref": "OPF::A005OM-0013::PF-0165",
+      "compared_against_count": 202,
+      "merge_candidate_refs": [],
+      "related_but_distinct_refs": [],
+      "rationale": "No comparator owns bundled and local FileSafe pattern-file parsing, duplicate handling, atomic reload, or last-known-good versus fail-closed behavior.",
+      "confidence": 0.99
+    },
+    {
+      "anchor_provisional_feature_ref": "OPF::A005OM-0013::PF-0166",
+      "compared_against_count": 202,
+      "merge_candidate_refs": [],
+      "related_but_distinct_refs": [
+        "OPF::A005OM-0015::PF-0009",
+        "OPF::A005OM-0015::PF-0021"
+      ],
+      "rationale": "Exact shell trust and approval-to-execution binding share command identity concerns, but their approval authority differs from FileSafe's shell-aware destructive-pattern normalization.",
+      "confidence": 0.96
+    },
+    {
+      "anchor_provisional_feature_ref": "OPF::A005OM-0013::PF-0167",
+      "compared_against_count": 202,
+      "merge_candidate_refs": [],
+      "related_but_distinct_refs": [
+        "OPF::A005OM-0015::PF-0043",
+        "OPF::A005OM-0015::PF-0078"
+      ],
+      "rationale": "Authority-bearing account references and prelaunch identity alignment are neighbors, but they validate different envelopes and consumers from FileSafe operation classification carried in request environment metadata.",
+      "confidence": 0.97
+    },
+    {
+      "anchor_provisional_feature_ref": "OPF::A005OM-0013::PF-0168",
+      "compared_against_count": 202,
+      "merge_candidate_refs": [],
+      "related_but_distinct_refs": [],
+      "rationale": "No comparator represents FileSafe's misleading fallback enforcement attestation; generic fail-closed and truthful-projection items have different authorities and failure contracts.",
+      "confidence": 0.99
+    },
+    {
+      "anchor_provisional_feature_ref": "OPF::A005OM-0013::PF-0169",
+      "compared_against_count": 202,
+      "merge_candidate_refs": [],
+      "related_but_distinct_refs": [
+        "OPF::A005OM-0015::PF-0013",
+        "OPF::A005OM-0015::PF-0014"
+      ],
+      "rationale": "Worktree path isolation and source-control command gates are write-safety neighbors, but they govern creation paths and SCM actions rather than FileSafe's request allowlist derivation and empty-scope block.",
+      "confidence": 0.97
+    },
+    {
+      "anchor_provisional_feature_ref": "OPF::A005OM-0013::PF-0170",
+      "compared_against_count": 202,
+      "merge_candidate_refs": [],
+      "related_but_distinct_refs": [
+        "OPF::A005OM-0015::PF-0141"
+      ],
+      "rationale": "Auditable mutation override is adjacent, but its storage-selection lock authority is distinct from the retired FileSafe environment-variable override resurfacing in GUI guidance.",
+      "confidence": 0.98
+    },
+    {
+      "anchor_provisional_feature_ref": "OPF::A005OM-0013::PF-0171",
+      "compared_against_count": 202,
+      "merge_candidate_refs": [],
+      "related_but_distinct_refs": [
+        "OPF::A005OM-0015::PF-0013",
+        "OPF::A005OM-0015::PF-0065"
+      ],
+      "rationale": "Worktree isolation and approval-scope reuse expose related isolation risks, but their path-creation and approval lifecycles differ from shared FileSafe guard objects receiving per-request scope.",
+      "confidence": 0.97
+    },
+    {
+      "anchor_provisional_feature_ref": "OPF::A005OM-0013::PF-0172",
+      "compared_against_count": 202,
+      "merge_candidate_refs": [],
+      "related_but_distinct_refs": [
+        "OPF::A005OM-0015::PF-0071"
+      ],
+      "rationale": "PAUSE exception semantics are a related gate-control boundary, but they do not own the FileSafe verification-gate exemption or its override-receipt requirement.",
+      "confidence": 0.98
+    },
+    {
+      "anchor_provisional_feature_ref": "OPF::A005OM-0013::PF-0173",
+      "compared_against_count": 202,
+      "merge_candidate_refs": [],
+      "related_but_distinct_refs": [
+        "OPF::A005OM-0015::PF-0117"
+      ],
+      "rationale": "The child authority ceiling explicitly covers provider and model authority, but child dispatch clamping is distinct from Security Lane model-requirement matching, blocked recovery, and mid-run unavailability.",
+      "confidence": 0.97
+    },
+    {
+      "anchor_provisional_feature_ref": "OPF::A005OM-0013::PF-0174",
+      "compared_against_count": 202,
+      "merge_candidate_refs": [],
+      "related_but_distinct_refs": [
+        "OPF::A005OM-0015::PF-0143"
+      ],
+      "rationale": "Usage widget responsive edge states are a plausible layout neighbor, but they govern a widget grid and persistence rather than the canonical side-panel shell's reflow, DPI, zoom, and accessibility contract.",
+      "confidence": 0.98
+    },
+    {
+      "anchor_provisional_feature_ref": "OPF::A005OM-0013::PF-0175",
+      "compared_against_count": 202,
+      "merge_candidate_refs": [],
+      "related_but_distinct_refs": [],
+      "rationale": "No comparator owns FileSafe config save/apply/restart behavior together with seglog-backed GUI projection loading, stale, degraded, empty, and error states.",
+      "confidence": 0.99
+    },
+    {
+      "anchor_provisional_feature_ref": "OPF::A005OM-0013::PF-0176",
+      "compared_against_count": 202,
+      "merge_candidate_refs": [],
+      "related_but_distinct_refs": [
+        "OPF::A005OM-0015::PF-0073"
+      ],
+      "rationale": "Destructive runtime command safety is adjacent, but its command lifecycle differs from FileSafe guard initialization when the destructive-pattern baseline is empty.",
+      "confidence": 0.98
+    },
+    {
+      "anchor_provisional_feature_ref": "OPF::A005OM-0013::PF-0177",
+      "compared_against_count": 202,
+      "merge_candidate_refs": [],
+      "related_but_distinct_refs": [
+        "OPF::A005OM-0015::PF-0007",
+        "OPF::A005OM-0015::PF-0031"
+      ],
+      "rationale": "The Vision bridge typed contract and Assistant Chat vision permission lifecycle are close neighbors, but they have different routing/UI consumers and authority seams from FileSafe image-ingestion permission, redaction, and provider disclosure.",
+      "confidence": 0.95
+    },
+    {
+      "anchor_provisional_feature_ref": "OPF::A005OM-0013::PF-0178",
+      "compared_against_count": 202,
+      "merge_candidate_refs": [],
+      "related_but_distinct_refs": [],
+      "rationale": "No comparator is the retired FileSafe bridge or shares its migration-lineage-only lifecycle; other retired-authority observations concern different products.",
+      "confidence": 0.99
+    },
+    {
+      "anchor_provisional_feature_ref": "OPF::A005OM-0013::PF-0179",
+      "compared_against_count": 202,
+      "merge_candidate_refs": [],
+      "related_but_distinct_refs": [
+        "OPF::A005OM-0015::PF-0110"
+      ],
+      "rationale": "Stale authority crossing cleanup and side-effect boundaries is adjacent, but it governs remote cleanup authority rather than FileSafe cleanup precedence against write scope and privileged recovery evidence.",
+      "confidence": 0.97
+    },
+    {
+      "anchor_provisional_feature_ref": "OPF::A005OM-0013::PF-0180",
+      "compared_against_count": 202,
+      "merge_candidate_refs": [],
+      "related_but_distinct_refs": [
+        "OPF::A005OM-0015::PF-0009",
+        "OPF::A005OM-0015::PF-0119"
+      ],
+      "rationale": "Command execution binding and child executable enforcement are adjacent final-form checks, but their approval and child-dispatch authorities differ from FileSafe platform and BaseRunner guard ordering.",
+      "confidence": 0.97
+    },
+    {
+      "anchor_provisional_feature_ref": "OPF::A005OM-0013::PF-0181",
+      "compared_against_count": 202,
+      "merge_candidate_refs": [],
+      "related_but_distinct_refs": [],
+      "rationale": "No comparator represents preservation of GuiConfig.filesafe with its three guard configs and approved_commands vector under the same configuration schema.",
+      "confidence": 0.99
+    },
+    {
+      "anchor_provisional_feature_ref": "OPF::A005OM-0013::PF-0182",
+      "compared_against_count": 202,
+      "merge_candidate_refs": [],
+      "related_but_distinct_refs": [],
+      "rationale": "No comparator shares FileSafe document authority, exact-text lineage, fail-closed ownership, and exclusion of executable-node generation; generic owner boundaries are not the same feature.",
+      "confidence": 0.99
+    },
+    {
+      "anchor_provisional_feature_ref": "OPF::A005OM-0013::PF-0183",
+      "compared_against_count": 202,
+      "merge_candidate_refs": [],
+      "related_but_distinct_refs": [
+        "OPF::A005OM-0015::PF-0017",
+        "OPF::A005OM-0015::PF-0138"
+      ],
+      "rationale": "Approval lifecycle and immutable pre-dispatch snapshots are plausible neighbors, but neither combines the Final GUI approval, clipboard, and LSP safety boundary or its specific immutable-authority gaps.",
+      "confidence": 0.96
+    },
+    {
+      "anchor_provisional_feature_ref": "OPF::A005OM-0013::PF-0184",
+      "compared_against_count": 202,
+      "merge_candidate_refs": [],
+      "related_but_distinct_refs": [],
+      "rationale": "No comparator turns the concrete Final GUI module layout into the same security and lifecycle contract; module adjacency or implementation-surface overlap is insufficient.",
+      "confidence": 0.99
+    },
+    {
+      "anchor_provisional_feature_ref": "OPF::A005OM-0013::PF-0185",
+      "compared_against_count": 202,
+      "merge_candidate_refs": [],
+      "related_but_distinct_refs": [
+        "OPF::A005OM-0015::PF-0004"
+      ],
+      "rationale": "Approval-gated LSP rename compatibility is adjacent, but tool capability aliasing is a distinct operation and authority from the Final GUI LSP lifecycle risk.",
+      "confidence": 0.97
+    },
+    {
+      "anchor_provisional_feature_ref": "OPF::A005OM-0013::PF-0186",
+      "compared_against_count": 202,
+      "merge_candidate_refs": [],
+      "related_but_distinct_refs": [],
+      "rationale": "No comparator represents external drag-and-drop platform risk under the same ingestion authority, platform lifecycle, or failure contract.",
+      "confidence": 0.99
+    },
+    {
+      "anchor_provisional_feature_ref": "OPF::A005OM-0013::PF-0187",
+      "compared_against_count": 202,
+      "merge_candidate_refs": [],
+      "related_but_distinct_refs": [],
+      "rationale": "No comparator represents mid-stream steering under the same run-control authority and lifecycle; runtime and stream adjacency alone is insufficient.",
+      "confidence": 0.99
+    },
+    {
+      "anchor_provisional_feature_ref": "OPF::A005OM-0013::PF-0188",
+      "compared_against_count": 202,
+      "merge_candidate_refs": [],
+      "related_but_distinct_refs": [
+        "OPF::A005OM-0015::PF-0019"
+      ],
+      "rationale": "The inline visualizer iframe bridge is an embedded-content security neighbor, but its postMessage and sanitizer boundary differs from the Final GUI webview embedding conflict lifecycle.",
+      "confidence": 0.97
+    },
+    {
+      "anchor_provisional_feature_ref": "OPF::A005OM-0013::PF-0189",
+      "compared_against_count": 202,
+      "merge_candidate_refs": [],
+      "related_but_distinct_refs": [
+        "OPF::A005OM-0015::PF-0099",
+        "OPF::A005OM-0015::PF-0109"
+      ],
+      "rationale": "Authenticated debug sessions and debug attachment cleanup are plausible neighbors, but they govern trust and target attachment rather than DAP debugger reliability.",
+      "confidence": 0.97
+    },
+    {
+      "anchor_provisional_feature_ref": "OPF::A005OM-0013::PF-0190",
+      "compared_against_count": 202,
+      "merge_candidate_refs": [],
+      "related_but_distinct_refs": [
+        "OPF::A005OM-0015::PF-0024",
+        "OPF::A005OM-0015::PF-0025"
+      ],
+      "rationale": "Remote SSH host authority and its owner-consumer seam are direct neighbors, but host identity and presentation ownership are distinct from SSH connection stability and recovery.",
+      "confidence": 0.97
+    },
+    {
+      "anchor_provisional_feature_ref": "OPF::A005OM-0013::PF-0191",
+      "compared_against_count": 202,
+      "merge_candidate_refs": [],
+      "related_but_distinct_refs": [],
+      "rationale": "No comparator governs the same Final GUI catalog availability promise and recovery lifecycle; MCP and capability catalogs are different consumers and authorities.",
+      "confidence": 0.99
+    },
+    {
+      "anchor_provisional_feature_ref": "OPF::A005OM-0013::PF-0192",
+      "compared_against_count": 202,
+      "merge_candidate_refs": [],
+      "related_but_distinct_refs": [],
+      "rationale": "No comparator governs Final GUI sound-effects audio reliability under the same media authority and lifecycle.",
+      "confidence": 0.99
+    },
+    {
+      "anchor_provisional_feature_ref": "OPF::A005OM-0013::PF-0193",
+      "compared_against_count": 202,
+      "merge_candidate_refs": [],
+      "related_but_distinct_refs": [
+        "OPF::A005OM-0015::PF-0019"
+      ],
+      "rationale": "Safe visualizer theme injection is a plausible theme-security neighbor, but it is scoped to iframe content and sanitizer authority rather than Final GUI custom-theme validation.",
+      "confidence": 0.98
+    },
+    {
+      "anchor_provisional_feature_ref": "OPF::A005OM-0013::PF-0194",
+      "compared_against_count": 202,
+      "merge_candidate_refs": [],
+      "related_but_distinct_refs": [],
+      "rationale": "No comparator represents the Final GUI settings-tab count constraint or its navigation and scalability lifecycle.",
+      "confidence": 0.99
+    },
+    {
+      "anchor_provisional_feature_ref": "OPF::A005OM-0013::PF-0195",
+      "compared_against_count": 202,
+      "merge_candidate_refs": [],
+      "related_but_distinct_refs": [],
+      "rationale": "No comparator represents project-switch reload performance; account switching and cleanup are different state machines and user-visible promises.",
+      "confidence": 0.99
+    },
+    {
+      "anchor_provisional_feature_ref": "OPF::A005OM-0013::PF-0196",
+      "compared_against_count": 202,
+      "merge_candidate_refs": [],
+      "related_but_distinct_refs": [],
+      "rationale": "No comparator represents file-watcher resource management under the same watcher authority, resource lifecycle, and failure behavior.",
+      "confidence": 0.99
+    },
+    {
+      "anchor_provisional_feature_ref": "OPF::A005OM-0013::PF-0197",
+      "compared_against_count": 202,
+      "merge_candidate_refs": [],
+      "related_but_distinct_refs": [
+        "OPF::A005OM-0015::PF-0019"
+      ],
+      "rationale": "The inline visualizer sandbox bridge is the closest surface, but authentication, sanitization, and content security form a distinct failure and security contract from concurrency and backpressure.",
+      "confidence": 0.98
+    },
+    {
+      "anchor_provisional_feature_ref": "OPF::A005OM-0013::PF-0198",
+      "compared_against_count": 202,
+      "merge_candidate_refs": [],
+      "related_but_distinct_refs": [
+        "OPF::A005OM-0015::PF-0019"
+      ],
+      "rationale": "Visualizer safe theme injection is adjacent, but bridge content handling is distinct from the closed-by-default execution authority for themes and third-party libraries.",
+      "confidence": 0.98
+    },
+    {
+      "anchor_provisional_feature_ref": "OPF::A005OM-0013::PF-0199",
+      "compared_against_count": 202,
+      "merge_candidate_refs": [],
+      "related_but_distinct_refs": [
+        "OPF::A005OM-0015::PF-0019",
+        "OPF::A005OM-0015::PF-0156"
+      ],
+      "rationale": "Visualizer bridge security and general evidence-routing lifecycle are neighbors, but neither owns the Final GUI visualizer audit-metadata retention and lifecycle contract.",
+      "confidence": 0.97
+    },
+    {
+      "anchor_provisional_feature_ref": "OPF::A005OM-0013::PF-0200",
+      "compared_against_count": 202,
+      "merge_candidate_refs": [],
+      "related_but_distinct_refs": [
+        "OPF::A005OM-0015::PF-0027",
+        "OPF::A005OM-0015::PF-0151"
+      ],
+      "rationale": "Actor/account/lane approval isolation and the persona web-policy envelope are adjacent, but their scoped approvals and web projections remain distinct from the canonical permission-policy owner boundary.",
+      "confidence": 0.97
+    },
+    {
+      "anchor_provisional_feature_ref": "OPF::A005OM-0013::PF-0201",
+      "compared_against_count": 202,
+      "merge_candidate_refs": [
+        "OPF::A005OM-0015::PF-0184"
+      ],
+      "related_but_distinct_refs": [
+        "OPF::A005OM-0015::PF-0017",
+        "OPF::A005OM-0015::PF-0067",
+        "OPF::A005OM-0015::PF-0152",
+        "OPF::A005OM-0015::PF-0154"
+      ],
+      "rationale": "The web run-mode ask-card fixture and the Final GUI web-session approval observation describe the same web permission decision-card lifecycle and authority, including concurrent decisions and timeout/stale transitions. Generic approval scope, scheduler expiry, GUI truth, and broader permission state remain related but distinct.",
+      "confidence": 0.96
+    },
+    {
+      "anchor_provisional_feature_ref": "OPF::A005OM-0013::PF-0202",
+      "compared_against_count": 202,
+      "merge_candidate_refs": [],
+      "related_but_distinct_refs": [
+        "OPF::A005OM-0015::PF-0017",
+        "OPF::A005OM-0015::PF-0151"
+      ],
+      "rationale": "General approval persistence and persona web-policy projection are close neighbors, but their approval lifecycle and web consumer differ from the invariant that approval cards cannot mutate Persona profiles.",
+      "confidence": 0.97
+    },
+    {
+      "anchor_provisional_feature_ref": "OPF::A005OM-0013::PF-0203",
+      "compared_against_count": 202,
+      "merge_candidate_refs": [],
+      "related_but_distinct_refs": [
+        "OPF::A005OM-0015::PF-0151"
+      ],
+      "rationale": "The uniform persona web-policy envelope is adjacent, but web policy authority is distinct from the Final GUI progressive-disclosure presentation promise.",
+      "confidence": 0.98
+    },
+    {
+      "anchor_provisional_feature_ref": "OPF::A005OM-0013::PF-0204",
+      "compared_against_count": 202,
+      "merge_candidate_refs": [],
+      "related_but_distinct_refs": [
+        "OPF::A005OM-0015::PF-0019"
+      ],
+      "rationale": "Inline visualizer bridge security is adjacent, but iframe transport controls differ from curated-record authority and intake lifecycle for third-party visualizer libraries.",
+      "confidence": 0.98
+    },
+    {
+      "anchor_provisional_feature_ref": "OPF::A005OM-0013::PF-0205",
+      "compared_against_count": 202,
+      "merge_candidate_refs": [],
+      "related_but_distinct_refs": [
+        "OPF::A005OM-0015::PF-0019"
+      ],
+      "rationale": "Inline visualizer bridge security shares the surface, but authentication and content sanitization are distinct from user-visible feedback-state parity.",
+      "confidence": 0.98
+    },
+    {
+      "anchor_provisional_feature_ref": "OPF::A005OM-0013::PF-0206",
+      "compared_against_count": 202,
+      "merge_candidate_refs": [],
+      "related_but_distinct_refs": [
+        "OPF::A005OM-0015::PF-0025",
+        "OPF::A005OM-0015::PF-0108"
+      ],
+      "rationale": "The remote owner-consumer seam and GitHub Actions mutation guards are adjacent GitHub consumers, but remote presentation and mutation execution remain outside the GitHub API authentication realm.",
+      "confidence": 0.97
+    },
+    {
+      "anchor_provisional_feature_ref": "OPF::A005OM-0013::PF-0207",
+      "compared_against_count": 202,
+      "merge_candidate_refs": [],
+      "related_but_distinct_refs": [
+        "OPF::A005OM-0015::PF-0194"
+      ],
+      "rationale": "Provider credential and health recovery is a direct outage neighbor, but registry credential references differ from the OS credential-store authority and its locked, denied, corrupted, or intermittent states.",
+      "confidence": 0.97
+    },
+    {
+      "anchor_provisional_feature_ref": "OPF::A005OM-0013::PF-0208",
+      "compared_against_count": 202,
+      "merge_candidate_refs": [],
+      "related_but_distinct_refs": [
+        "OPF::A005OM-0015::PF-0024",
+        "OPF::A005OM-0015::PF-0025",
+        "OPF::A005OM-0015::PF-0108"
+      ],
+      "rationale": "Remote SSH authority, its consumer seam, and GitHub Actions mutations are adjacent domains, but each retains a separate host, presentation, or mutation lifecycle from the explicit Git/GitHub/auth separation.",
+      "confidence": 0.97
+    },
+    {
+      "anchor_provisional_feature_ref": "OPF::A005OM-0013::PF-0209",
+      "compared_against_count": 202,
+      "merge_candidate_refs": [],
+      "related_but_distinct_refs": [],
+      "rationale": "No comparator represents OAuth loopback callback correlation, authenticity, replay defense, listener lifecycle, and recovery under the GitHub auth authority.",
+      "confidence": 0.99
+    },
+    {
+      "anchor_provisional_feature_ref": "OPF::A005OM-0013::PF-0210",
+      "compared_against_count": 202,
+      "merge_candidate_refs": [],
+      "related_but_distinct_refs": [
+        "OPF::A005OM-0015::PF-0024",
+        "OPF::A005OM-0015::PF-0108"
+      ],
+      "rationale": "Remote SSH host authority and GitHub Actions mutations are host-related neighbors, but neither selects the GitHub API host-policy state set or owns its MVP policy decision.",
+      "confidence": 0.97
+    },
+    {
+      "anchor_provisional_feature_ref": "OPF::A005OM-0013::PF-0211",
+      "compared_against_count": 202,
+      "merge_candidate_refs": [],
+      "related_but_distinct_refs": [
+        "OPF::A005OM-0015::PF-0076",
+        "OPF::A005OM-0015::PF-0084"
+      ],
+      "rationale": "Shared identity privacy and provider-auth reconciliation are close identity neighbors, but they govern other identity packets and provider accounts rather than GitHub account_id and credential_ref creation, rotation, revocation, deletion, merge, and tombstones.",
+      "confidence": 0.96
+    },
+    {
+      "anchor_provisional_feature_ref": "OPF::A005OM-0013::PF-0212",
+      "compared_against_count": 202,
+      "merge_candidate_refs": [],
+      "related_but_distinct_refs": [
+        "OPF::A005OM-0015::PF-0086"
+      ],
+      "rationale": "Provider multi-account switching is a direct interaction neighbor, but it has a distinct provider-account runtime and state machine from GitHub account-switch disclosure copy, redaction, accessibility, and UI oracles.",
+      "confidence": 0.97
+    }
+  ],
+  "self_attestation": {
+    "every_anchor_decided_once": true,
+    "every_comparator_considered_for_each_anchor": true,
+    "merge_candidates_require_same_authority_and_lifecycle": true,
+    "distinct_boundaries_preserved": true,
+    "same_owner_domain_only": true,
+    "no_external_or_peer_inputs_used": true
+  }
+}
+

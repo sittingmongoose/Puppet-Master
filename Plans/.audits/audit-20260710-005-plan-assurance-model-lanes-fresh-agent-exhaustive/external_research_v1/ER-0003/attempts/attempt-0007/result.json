@@ -1,0 +1,582 @@
+{
+  "audit_id": "audit-20260710-005-plan-assurance-model-lanes-fresh-agent-exhaustive",
+  "schema_version": "external-research-result-v7",
+  "phase": "external_research_current_web_research",
+  "assignment_id": "ER-0003",
+  "attempt_id": "attempt-0007",
+  "controller_thread_id": "019f5078-6501-7223-b52f-2251010bdc41",
+  "agent_path": "/root/a005_external_research_recovery_er_0003_attempt_0007_terminal",
+  "model": "gpt-5.6-luna",
+  "reasoning_effort": "max",
+  "status": "completed",
+  "activation_transaction_id": "A005-ER7-91b3d68b74605d4866b49104",
+  "activation_core_sha256": "043488cb83d6064068a887d484f22d19d6c158a2bc1d424798ed9611c9f58c83",
+  "leaf_dispatch_authorization_sha256": "a0cf53b81fe654c3cc460682da7ae6ae28dc6cca90d8e0f338258d596bc4e5c8",
+  "topic": "Versioned file-revert operation contracts versus whole-turn or conversation rewind",
+  "owner_domains": [
+    "source_control_workspace_code",
+    "orchestration_runtime_execution"
+  ],
+  "feature_refs": [
+    "OPF::A005OM-0018::PF-0071",
+    "OPF::A005OM-0019::PF-0066"
+  ],
+  "research_questions": [
+    "What contracts make a versioned file-revert operation safe, previewable, atomic, auditable, and distinguishable from whole-turn or conversation rewind?",
+    "How do Git, IDE, and agent coding systems bind identity, snapshots, workspace state, and rollback scope?",
+    "Which race, partial-write, stale-base, conflict, and recovery failure modes require explicit handling?",
+    "Which patterns should Puppet Master adopt or reject for file-level versus turn-level recovery?"
+  ],
+  "question_coverage": [
+    {
+      "question_index": 0,
+      "question": "What contracts make a versioned file-revert operation safe, previewable, atomic, auditable, and distinguishable from whole-turn or conversation rewind?",
+      "coverage_state": "covered",
+      "evidence_refs": [
+        "F-001",
+        "F-002",
+        "F-006",
+        "CSP-001",
+        "CSP-002",
+        "I-001",
+        "I-002",
+        "I-005"
+      ]
+    },
+    {
+      "question_index": 1,
+      "question": "How do Git, IDE, and agent coding systems bind identity, snapshots, workspace state, and rollback scope?",
+      "coverage_state": "covered",
+      "evidence_refs": [
+        "F-003",
+        "F-004",
+        "F-005",
+        "F-006",
+        "F-007",
+        "F-008",
+        "F-012",
+        "CSP-002",
+        "CSP-004",
+        "I-004"
+      ]
+    },
+    {
+      "question_index": 2,
+      "question": "Which race, partial-write, stale-base, conflict, and recovery failure modes require explicit handling?",
+      "coverage_state": "covered",
+      "evidence_refs": [
+        "F-009",
+        "F-010",
+        "F-011",
+        "FM-001",
+        "FM-002",
+        "FM-003",
+        "FM-004",
+        "FM-005",
+        "FM-006",
+        "UQ-001"
+      ]
+    },
+    {
+      "question_index": 3,
+      "question": "Which patterns should Puppet Master adopt or reject for file-level versus turn-level recovery?",
+      "coverage_state": "covered",
+      "evidence_refs": [
+        "CSP-001",
+        "CSP-002",
+        "CSP-003",
+        "CSP-004",
+        "I-001",
+        "I-002",
+        "I-003",
+        "I-004",
+        "I-005",
+        "IDEA-001",
+        "IDEA-002",
+        "IDEA-003",
+        "IDEA-004"
+      ]
+    }
+  ],
+  "source_availability": "available",
+  "unavailable_evidence": [],
+  "sources": [
+    {
+      "url": "https://git-scm.com/docs/git-restore",
+      "title": "git-restore Documentation",
+      "publisher": "Git Project",
+      "published_date": null,
+      "access_date": "2026-07-11",
+      "source_tier": "official",
+      "material_relevance": "Defines source-tree, pathspec, index, worktree, patch, and conflict-aware file restoration scopes."
+    },
+    {
+      "url": "https://git-scm.com/docs/git-revert",
+      "title": "git-revert Documentation",
+      "publisher": "Git Project",
+      "published_date": null,
+      "access_date": "2026-07-11",
+      "source_tier": "official",
+      "material_relevance": "Distinguishes commit-reversing reverts from file restoration and documents clean-tree and sequencer behavior."
+    },
+    {
+      "url": "https://git-scm.com/docs/git-reflog",
+      "title": "git-reflog Documentation",
+      "publisher": "Git Project",
+      "published_date": null,
+      "access_date": "2026-07-11",
+      "source_tier": "official",
+      "material_relevance": "Documents local reference-update history, prior ref positions, and expiration of reflog entries."
+    },
+    {
+      "url": "https://git-scm.com/docs/git-update-ref.html",
+      "title": "git-update-ref Documentation",
+      "publisher": "Git Project",
+      "published_date": null,
+      "access_date": "2026-07-11",
+      "source_tier": "official",
+      "material_relevance": "Documents expected-old-value checks and prepare/commit/abort transactions for reference updates."
+    },
+    {
+      "url": "https://git-scm.com/docs/git-merge",
+      "title": "git-merge Documentation",
+      "publisher": "Git Project",
+      "published_date": null,
+      "access_date": "2026-07-11",
+      "source_tier": "official",
+      "material_relevance": "Documents conflicts, abort behavior, and limitations reconstructing dirty pre-operation state."
+    },
+    {
+      "url": "https://git-scm.com/docs/git-stash",
+      "title": "git-stash Documentation",
+      "publisher": "Git Project",
+      "published_date": null,
+      "access_date": "2026-07-11",
+      "source_tier": "official",
+      "material_relevance": "Defines snapshots of working-tree and index state and reapplication across workflow boundaries."
+    },
+    {
+      "url": "https://git-scm.com/docs/gitdatamodel.html",
+      "title": "Git Data Model",
+      "publisher": "Git Project",
+      "published_date": null,
+      "access_date": "2026-07-11",
+      "source_tier": "official",
+      "material_relevance": "Defines content-addressed object identity and reuse of unchanged file blobs in commits."
+    },
+    {
+      "url": "https://code.visualstudio.com/docs/editing/userinterface",
+      "title": "Visual Studio Code User Interface: Timeline and Local File History",
+      "publisher": "Microsoft",
+      "published_date": null,
+      "access_date": "2026-07-11",
+      "source_tier": "official",
+      "material_relevance": "Documents full-content local history entries, diff/restore actions, and bounded local-history settings."
+    },
+    {
+      "url": "https://code.visualstudio.com/docs/chat/chat-checkpoints",
+      "title": "Revert changes with checkpoints and editing requests",
+      "publisher": "Microsoft",
+      "published_date": null,
+      "access_date": "2026-07-11",
+      "source_tier": "official",
+      "material_relevance": "Documents per-chat-request snapshots, workspace restoration, prompt-history effects, and file-change previews."
+    },
+    {
+      "url": "https://www.jetbrains.com/help/idea/local-history.html",
+      "title": "Local History",
+      "publisher": "JetBrains",
+      "published_date": "2026-03-18",
+      "access_date": "2026-07-11",
+      "source_tier": "official",
+      "material_relevance": "Documents file, fragment, multi-file, and deleted-file recovery outside normal VCS commits plus local retention boundaries."
+    },
+    {
+      "url": "https://docs.github.com/en/copilot/how-tos/copilot-cli/use-copilot-cli/roll-back-changes",
+      "title": "Rolling back changes made during a GitHub Copilot CLI session",
+      "publisher": "GitHub",
+      "published_date": null,
+      "access_date": "2026-07-11",
+      "source_tier": "official",
+      "material_relevance": "Distinguishes Git-based whole-workspace rewind from tools-based conversation and file restoration, including newer-edit safeguards."
+    },
+    {
+      "url": "https://docs.github.com/en/copilot/how-tos/copilot-on-github/use-copilot-agents/manage-and-track-agents",
+      "title": "Managing agent sessions",
+      "publisher": "GitHub",
+      "published_date": null,
+      "access_date": "2026-07-11",
+      "source_tier": "official",
+      "material_relevance": "Documents links from agent commits to session logs, authorship/co-authorship, signatures, sharing, and audit traceability."
+    }
+  ],
+  "findings": [
+    {
+      "finding_id": "F-001",
+      "claim": "Git exposes file-level restoration with an explicit source tree, pathspec, and separate index and worktree targets; patch mode can select hunks.",
+      "evidence_class": "supported_claim",
+      "source_urls": [
+        "https://git-scm.com/docs/git-restore"
+      ],
+      "confidence": 0.99,
+      "notes": "The operation contract names both the source snapshot and the affected path set, and can distinguish index-only, worktree-only, or joint restoration."
+    },
+    {
+      "finding_id": "F-002",
+      "claim": "Git revert reverses changes introduced by commits by recording new commits, requires a clean working tree for the normal operation, and supports sequencer continue or abort after conflicts.",
+      "evidence_class": "supported_claim",
+      "source_urls": [
+        "https://git-scm.com/docs/git-revert"
+      ],
+      "confidence": 0.99,
+      "notes": "Commit-level reversal is therefore a different state transition from restoring selected file bytes in a working tree."
+    },
+    {
+      "finding_id": "F-003",
+      "claim": "Git reflogs record local updates to branch and other reference tips and allow prior ref positions to be addressed, but entries are subject to expiration.",
+      "evidence_class": "supported_claim",
+      "source_urls": [
+        "https://git-scm.com/docs/git-reflog"
+      ],
+      "confidence": 0.98,
+      "notes": "A reflog is useful recovery lineage, but it is not by itself an immutable, indefinitely retained audit ledger."
+    },
+    {
+      "finding_id": "F-004",
+      "claim": "Git stash represents working-tree and index state with commit-shaped objects tied to the HEAD commit, so uncommitted work can be set aside and reapplied later.",
+      "evidence_class": "supported_claim",
+      "source_urls": [
+        "https://git-scm.com/docs/git-stash"
+      ],
+      "confidence": 0.99,
+      "notes": "The snapshot includes more than a single file and explicitly separates working-tree and index state."
+    },
+    {
+      "finding_id": "F-005",
+      "claim": "VS Code local history stores full file contents for local saves, supports comparison and restoration, and exposes file-size, entry-count, exclusion, and merge-window limits.",
+      "evidence_class": "supported_claim",
+      "source_urls": [
+        "https://code.visualstudio.com/docs/editing/userinterface"
+      ],
+      "confidence": 0.98,
+      "notes": "IDE-local recovery is granular and previewable, but its retention policy must be treated as bounded availability rather than durable version control."
+    },
+    {
+      "finding_id": "F-006",
+      "claim": "VS Code chat checkpoints snapshot affected files before each chat request, restore the workspace to a checkpoint, remove the request from chat history, and can show the files and line counts changed by each request.",
+      "evidence_class": "supported_claim",
+      "source_urls": [
+        "https://code.visualstudio.com/docs/chat/chat-checkpoints"
+      ],
+      "confidence": 0.99,
+      "notes": "This is an explicit example of a file-state rollback coupled to conversation state, with a distinct edit-previous-request path."
+    },
+    {
+      "finding_id": "F-007",
+      "claim": "GitHub Copilot CLI distinguishes Git-based rewind of the entire workspace from tools-based rewind of conversation only or conversation plus agent-changed files; tools-based restoration can skip files changed after Copilot last touched them, while Git-based rewind removes later manual, shell, and new-file changes too.",
+      "evidence_class": "supported_claim",
+      "source_urls": [
+        "https://docs.github.com/en/copilot/how-tos/copilot-cli/use-copilot-cli/roll-back-changes"
+      ],
+      "confidence": 0.99,
+      "notes": "The two modes demonstrate why rollback scope and newer-edit policy must be explicit rather than inferred from a shared rewind label."
+    },
+    {
+      "finding_id": "F-008",
+      "claim": "GitHub Copilot cloud-agent commits carry agent authorship and starter co-authorship, link to session logs, and are signed and shown as Verified, providing an auditable identity path from change to session.",
+      "evidence_class": "supported_claim",
+      "source_urls": [
+        "https://docs.github.com/en/copilot/how-tos/copilot-on-github/use-copilot-agents/manage-and-track-agents"
+      ],
+      "confidence": 0.97,
+      "notes": "An operation record needs an identity anchor that survives the UI session and remains inspectable during review."
+    },
+    {
+      "finding_id": "F-009",
+      "claim": "Git update-ref supports expected-old-value checks and explicit prepare, commit, and abort transaction commands for reference updates.",
+      "evidence_class": "supported_claim",
+      "source_urls": [
+        "https://git-scm.com/docs/git-update-ref.html"
+      ],
+      "confidence": 0.99,
+      "notes": "This supplies a concrete compare-and-swap and transaction pattern for metadata or snapshot pointers, but it does not by itself make arbitrary working-tree file replacement atomic."
+    },
+    {
+      "finding_id": "F-010",
+      "claim": "Git merge documents that abort may be unable to reconstruct the original pre-merge changes when uncommitted work existed and was further modified, and it warns against non-trivial dirty merges.",
+      "evidence_class": "supported_claim",
+      "source_urls": [
+        "https://git-scm.com/docs/git-merge"
+      ],
+      "confidence": 0.98,
+      "notes": "Recovery must preserve the observed base and make inability to reconstruct a state a first-class outcome."
+    },
+    {
+      "finding_id": "F-011",
+      "claim": "JetBrains Local History can restore whole files, fragments, multiple files, and deleted files without requiring a VCS commit, while remaining a local recovery facility with bounded retention rather than a replacement for durable version control.",
+      "evidence_class": "supported_claim",
+      "source_urls": [
+        "https://www.jetbrains.com/help/idea/local-history.html"
+      ],
+      "confidence": 0.97,
+      "notes": "IDE recovery demonstrates useful granularity but also the need to surface availability and retention limits."
+    },
+    {
+      "finding_id": "F-012",
+      "claim": "Git identifies repository objects by a cryptographic hash of object type and contents, and commits can reuse unchanged file blobs.",
+      "evidence_class": "supported_claim",
+      "source_urls": [
+        "https://git-scm.com/docs/gitdatamodel.html"
+      ],
+      "confidence": 0.99,
+      "notes": "Content-addressed snapshot identities provide a stable basis for binding a revert request to exact bytes instead of only timestamps or UI positions."
+    }
+  ],
+  "competitor_standard_patterns": [
+    {
+      "pattern_id": "CSP-001",
+      "pattern": "Explicit target, source snapshot, scope, and preview or diff before mutation",
+      "evidence_class": "supported_claim",
+      "source_urls": [
+        "https://git-scm.com/docs/git-restore",
+        "https://code.visualstudio.com/docs/editing/userinterface",
+        "https://www.jetbrains.com/help/idea/local-history.html"
+      ],
+      "implication": "A file-revert request should carry an exact target manifest, source snapshot identity, path scope, and previewable diff before apply."
+    },
+    {
+      "pattern_id": "CSP-002",
+      "pattern": "Request or session checkpoints with a file-change ledger and an independently selectable conversation rewind",
+      "evidence_class": "supported_claim",
+      "source_urls": [
+        "https://code.visualstudio.com/docs/chat/chat-checkpoints",
+        "https://docs.github.com/en/copilot/how-tos/copilot-cli/use-copilot-cli/roll-back-changes"
+      ],
+      "implication": "File restoration and prompt or conversation rewinding should be separate actions linked by a checkpoint identity, not one implicit destructive operation."
+    },
+    {
+      "pattern_id": "CSP-003",
+      "pattern": "Optimistic concurrency using an expected base plus a preservation guard for newer edits",
+      "evidence_class": "supported_claim",
+      "source_urls": [
+        "https://git-scm.com/docs/git-update-ref.html",
+        "https://docs.github.com/en/copilot/how-tos/copilot-cli/use-copilot-cli/roll-back-changes"
+      ],
+      "implication": "A restore should reject, merge, or skip a target whose current bytes no longer match the expected base instead of silently overwriting newer work."
+    },
+    {
+      "pattern_id": "CSP-004",
+      "pattern": "An audit anchor linking operation, actor or session, snapshot, and resulting change",
+      "evidence_class": "supported_claim",
+      "source_urls": [
+        "https://git-scm.com/docs/git-reflog",
+        "https://git-scm.com/docs/git-revert",
+        "https://docs.github.com/en/copilot/how-tos/copilot-on-github/use-copilot-agents/manage-and-track-agents"
+      ],
+      "implication": "Every apply, skip, conflict, and abort should retain stable operation and identity references plus before and after evidence."
+    }
+  ],
+  "failure_modes": [
+    {
+      "failure_id": "FM-001",
+      "failure_mode": "Stale-base race between preview and apply allows another actor or tool to change a target after the preview.",
+      "evidence_class": "inference",
+      "source_urls": [
+        "https://git-scm.com/docs/git-update-ref.html",
+        "https://docs.github.com/en/copilot/how-tos/copilot-cli/use-copilot-cli/roll-back-changes"
+      ],
+      "mitigation_or_gap": "Record a content hash and relevant file identity at preview time, recheck immediately before apply, and require merge, skip, or explicit force when the expected base no longer matches."
+    },
+    {
+      "failure_id": "FM-002",
+      "failure_mode": "A crash, I/O error, or later failure during a multi-file write leaves only a subset of the requested files restored.",
+      "evidence_class": "inference",
+      "source_urls": [
+        "https://git-scm.com/docs/git-update-ref.html",
+        "https://code.visualstudio.com/docs/chat/chat-checkpoints",
+        "https://git-scm.com/docs/git-merge"
+      ],
+      "mitigation_or_gap": "Prepare all target bytes in a temporary snapshot, use per-file atomic replacement and durability steps where supported, journal the intended set, verify post-write hashes, and expose partial application as a recoverable state; do not treat a metadata transaction as a filesystem-wide transaction."
+    },
+    {
+      "failure_id": "FM-003",
+      "failure_mode": "The target has local edits, an unmerged state, or a conflict with the requested snapshot, so a blind restore destroys information or produces an ambiguous result.",
+      "evidence_class": "supported_claim",
+      "source_urls": [
+        "https://git-scm.com/docs/git-restore",
+        "https://git-scm.com/docs/git-merge"
+      ],
+      "mitigation_or_gap": "Compute a three-way diff against the captured base, preserve conflict markers or side copies, and require an explicit resolution policy before finalizing."
+    },
+    {
+      "failure_id": "FM-004",
+      "failure_mode": "A whole-workspace rewind removes unrelated manual edits, shell changes, or new files that were created after the checkpoint.",
+      "evidence_class": "supported_claim",
+      "source_urls": [
+        "https://docs.github.com/en/copilot/how-tos/copilot-cli/use-copilot-cli/roll-back-changes",
+        "https://code.visualstudio.com/docs/chat/chat-checkpoints"
+      ],
+      "mitigation_or_gap": "Default to an explicit path manifest and per-file preservation check for file-level recovery; require an independently confirmed workspace-scope action for turn-level rewind."
+    },
+    {
+      "failure_id": "FM-005",
+      "failure_mode": "Local history or checkpoints are unavailable because of size, entry, exclusion, cleanup, installation, or retention boundaries.",
+      "evidence_class": "supported_claim",
+      "source_urls": [
+        "https://code.visualstudio.com/docs/editing/userinterface",
+        "https://www.jetbrains.com/help/idea/local-history.html"
+      ],
+      "mitigation_or_gap": "Report snapshot availability before offering revert, retain immutable content-addressed snapshots for governed operations, and support explicit export or durable storage for audit-critical recovery."
+    },
+    {
+      "failure_id": "FM-006",
+      "failure_mode": "A snapshot is not bound to the workspace, actor, session, or resulting operation, so a later restore cannot prove what was reverted or why.",
+      "evidence_class": "inference",
+      "source_urls": [
+        "https://git-scm.com/docs/git-reflog",
+        "https://git-scm.com/docs/gitdatamodel.html",
+        "https://docs.github.com/en/copilot/how-tos/copilot-on-github/use-copilot-agents/manage-and-track-agents"
+      ],
+      "mitigation_or_gap": "Bind snapshot content hashes to workspace identity, operation identity, actor or agent identity, scope, and before or after manifests, then append the result and disposition to an auditable log."
+    }
+  ],
+  "implications": [
+    {
+      "implication_id": "I-001",
+      "implication": "Puppet Master should model file-revert as a first-class operation with a target manifest, source snapshot identity, expected current hashes, preview diff, apply or abort result, and audit linkage.",
+      "evidence_class": "inference",
+      "source_urls": [
+        "https://git-scm.com/docs/git-restore",
+        "https://git-scm.com/docs/git-update-ref.html",
+        "https://code.visualstudio.com/docs/chat/chat-checkpoints",
+        "https://docs.github.com/en/copilot/how-tos/copilot-on-github/use-copilot-agents/manage-and-track-agents"
+      ],
+      "rationale": "The reviewed systems make scope, snapshot, precondition, preview, and audit behavior visible in different layers; combining those bindings avoids a destructive operation whose identity exists only in a transient UI."
+    },
+    {
+      "implication_id": "I-002",
+      "implication": "Turn or conversation rewind should be a separate control-plane operation that may optionally invoke file restoration; neither operation should imply the other.",
+      "evidence_class": "inference",
+      "source_urls": [
+        "https://code.visualstudio.com/docs/chat/chat-checkpoints",
+        "https://docs.github.com/en/copilot/how-tos/copilot-cli/use-copilot-cli/roll-back-changes"
+      ],
+      "rationale": "VS Code and Copilot expose different combinations of prompt-history and file-state changes, showing that these dimensions can be coupled by choice but have different scopes and safety consequences."
+    },
+    {
+      "implication_id": "I-003",
+      "implication": "Puppet Master should use a compare-and-swap guard and preserve newer edits on mismatch rather than making blind overwrite the default.",
+      "evidence_class": "inference",
+      "source_urls": [
+        "https://git-scm.com/docs/git-update-ref.html",
+        "https://docs.github.com/en/copilot/how-tos/copilot-cli/use-copilot-cli/roll-back-changes",
+        "https://git-scm.com/docs/git-merge"
+      ],
+      "rationale": "Expected-old-value transactions, changed-after safeguards, and documented dirty-state conflict limits all favor an explicit precondition failure over silent data loss."
+    },
+    {
+      "implication_id": "I-004",
+      "implication": "Snapshot content should be immutable and content-addressed, while operation history should be append-only and retention or export policy should be explicit.",
+      "evidence_class": "inference",
+      "source_urls": [
+        "https://git-scm.com/docs/gitdatamodel.html",
+        "https://git-scm.com/docs/git-reflog",
+        "https://www.jetbrains.com/help/idea/local-history.html"
+      ],
+      "rationale": "Git supplies stable content identity and local ref lineage, while IDE documentation shows that convenience history can expire or disappear; governed recovery needs both identity and a stated durability boundary."
+    },
+    {
+      "implication_id": "I-005",
+      "implication": "Atomicity should be specified separately for metadata, per-file replacement, and multi-file application, with partial application and recovery states represented explicitly.",
+      "evidence_class": "inference",
+      "source_urls": [
+        "https://git-scm.com/docs/git-update-ref.html",
+        "https://code.visualstudio.com/docs/chat/chat-checkpoints",
+        "https://git-scm.com/docs/git-merge"
+      ],
+      "rationale": "Git documents transactions for refs but warns about reconstruction limits in dirty workflows; a product must not project metadata transaction semantics onto arbitrary workspace writes."
+    }
+  ],
+  "novel_ideas": [
+    {
+      "idea_id": "IDEA-001",
+      "idea": "Use a revert lease token containing the target manifest, base hashes, snapshot identity, and an expiry from preview through apply; require a new preview when the lease expires or the base changes.",
+      "evidence_class": "inference",
+      "source_urls": [
+        "https://git-scm.com/docs/git-update-ref.html",
+        "https://docs.github.com/en/copilot/how-tos/copilot-cli/use-copilot-cli/roll-back-changes"
+      ],
+      "rationale": "This turns the expected-base pattern into a visible short-lived authorization and makes a preview stale by construction instead of silently reusable."
+    },
+    {
+      "idea_id": "IDEA-002",
+      "idea": "Maintain a dual ledger: a content ledger of immutable file snapshots and hashes, and a conversation ledger of prompts and turn decisions, cross-linked but independently rewindable.",
+      "evidence_class": "inference",
+      "source_urls": [
+        "https://code.visualstudio.com/docs/chat/chat-checkpoints",
+        "https://docs.github.com/en/copilot/how-tos/copilot-cli/use-copilot-cli/roll-back-changes",
+        "https://git-scm.com/docs/gitdatamodel.html"
+      ],
+      "rationale": "The agent systems expose both file and conversation state but permit different rewind choices; independent ledgers preserve that distinction while retaining traceability."
+    },
+    {
+      "idea_id": "IDEA-003",
+      "idea": "Implement a recovery ladder of preview-only, exact file restore, three-way merge, checkpoint replay, and manual export, with a machine-readable reason for each escalation or stop.",
+      "evidence_class": "inference",
+      "source_urls": [
+        "https://git-scm.com/docs/git-restore",
+        "https://git-scm.com/docs/git-merge",
+        "https://www.jetbrains.com/help/idea/local-history.html",
+        "https://code.visualstudio.com/docs/chat/chat-checkpoints"
+      ],
+      "rationale": "The sources provide progressively broader recovery primitives; ordering them by destructiveness makes failure handling deterministic and reviewable."
+    },
+    {
+      "idea_id": "IDEA-004",
+      "idea": "Assign a scope budget to every restore, classifying tracked, untracked, manual, agent-authored, and newly created paths; require explicit confirmation when the operation would exceed its budget.",
+      "evidence_class": "inference",
+      "source_urls": [
+        "https://docs.github.com/en/copilot/how-tos/copilot-cli/use-copilot-cli/roll-back-changes",
+        "https://code.visualstudio.com/docs/chat/chat-checkpoints",
+        "https://git-scm.com/docs/git-restore"
+      ],
+      "rationale": "Whole-workspace rewind can affect changes outside the agent edit set, while file restore exposes path scope; a budget makes that difference visible before mutation."
+    }
+  ],
+  "unresolved_questions": [
+    {
+      "question_id": "UQ-001",
+      "question": "What crash-durability guarantee should a multi-file file-revert provide when the host filesystem or process fails between individual file replacements?",
+      "evidence_class": "inference",
+      "source_urls": [
+        "https://git-scm.com/docs/git-update-ref.html",
+        "https://code.visualstudio.com/docs/chat/chat-checkpoints",
+        "https://git-scm.com/docs/git-merge"
+      ]
+    }
+  ],
+  "self_attestation": {
+    "current_web_research_performed": true,
+    "official_or_primary_sources_first": true,
+    "direct_urls_only": true,
+    "source_count_contract_checked": true,
+    "supported_inference_no_evidence_labels_present": true,
+    "no_fabricated_claims": true,
+    "no_long_quotations": true,
+    "topic_and_refs_binding_verified": true,
+    "exact_attempt_id_verified": true,
+    "fresh_direct_terminal_contract_acknowledged": true,
+    "fresh_current_public_web_research_redone": true,
+    "canonical_agent_path_is_only_leaf_known_identity": true,
+    "native_identity_deferred_to_controller_receipt_and_capture": true,
+    "prior_attempt_result_bodies_and_peer_outputs_not_read": true,
+    "leaf_local_schema_conformance_check_passed_before_final_write": true,
+    "exact_schema_key_set_verified": true,
+    "source_registry_unique_and_complete": true,
+    "source_registry_completed_before_claim_emission": true,
+    "activation_core_and_authorization_verified": true,
+    "blocked_prelaunch_intent_treated_as_lineage_only": true,
+    "result_required_before_pmr1": true,
+    "pmr1_not_returned_before_result_write": true
+  }
+}

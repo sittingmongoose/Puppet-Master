@@ -1,0 +1,349 @@
+{
+  "schema_version": "external-research-recovery-primary-cumulative-postrun-v6",
+  "checker": "audit005_branch_a_primary_cumulative_postrun_reviewer",
+  "audit_id": "audit-20260710-005-plan-assurance-model-lanes-fresh-agent-exhaustive",
+  "sprint_id": "sprint-wave-0001",
+  "retry_namespace": "retry-attempt-0006",
+  "attempt_id": "attempt-0006",
+  "status": "fail_closed",
+  "attempt_level_veto": true,
+  "decision": "Attempt-0006 is ineligible because both positive receipts bind result_sha256 and output_sha256 to the raw result-file SHA-256 instead of the canonical result-object digest required by the immutable bound postrun validator. ER-0003 and ER-0008 are therefore both rejected, the immutable six-assignment floor remains intact, and cumulative eligibility remains 6/8 with zero attempt-level credit.",
+  "reviewer_contract": {
+    "branch": "A",
+    "role": "primary_cumulative_postrun_reviewer",
+    "model": "gpt-5.6-sol",
+    "reasoning_effort": "xhigh",
+    "fresh_direct_child": true,
+    "fork_turns": "none",
+    "descendants_used": 0,
+    "followups_used": 0,
+    "retries_used": 0,
+    "subagents_used": 0,
+    "checkpoint_created": false,
+    "activation_created": false
+  },
+  "assignment_ids": [
+    "ER-0003",
+    "ER-0008"
+  ],
+  "eligible_attempt_0006_ids": [],
+  "rejected_attempt_0006_ids": [
+    "ER-0003",
+    "ER-0008"
+  ],
+  "assignment_statuses": {
+    "ER-0003": {
+      "status": "fail_closed",
+      "eligible": false,
+      "localized_errors": [
+        "ER-0003:receipt:result_sha256",
+        "ER-0003:receipt:output_sha256"
+      ],
+      "error_detail": {
+        "required_canonical_result_digest": "d2eeceeb712ad5a5c0f0b67825ff0f78769e2e83275b28de4a87137b71ba27dc",
+        "receipt_result_sha256": "ace2ea30e08196d3febeb1b979bb64d15b0d8b8146b4e92da2f9cc449503e6c7",
+        "receipt_output_sha256": "ace2ea30e08196d3febeb1b979bb64d15b0d8b8146b4e92da2f9cc449503e6c7",
+        "raw_result_file_sha256": "ace2ea30e08196d3febeb1b979bb64d15b0d8b8146b4e92da2f9cc449503e6c7",
+        "receipt_used_raw_file_hash_instead_of_required_canonical_digest": true
+      },
+      "checks": {
+        "draft_2020_12_schema": "pass",
+        "bound_result_semantics": "pass",
+        "source_registry_and_claim_edges": "pass",
+        "question_coverage": "pass",
+        "no_evidence_zero_reference_semantics": "pass",
+        "current_source_availability_and_material_support": "pass",
+        "result_identity_binding": "pass",
+        "positive_receipt_label_and_exact_field_set": "pass",
+        "positive_receipt_result_hash_binding": "fail",
+        "native_capture_v6_join": "pass",
+        "output_confinement": "pass"
+      },
+      "counts": {
+        "result_files": 1,
+        "registered_sources": 12,
+        "unique_registered_sources": 12,
+        "evidence_rows": 35,
+        "supported_claim_rows": 20,
+        "inference_rows": 14,
+        "no_evidence_rows": 1,
+        "citation_edges": 80,
+        "original_questions": 4,
+        "question_coverage_rows": 4,
+        "question_evidence_edges": 37,
+        "receipt_fields": 46,
+        "required_receipt_fields": 46
+      },
+      "result_output_files": [
+        "result.json"
+      ],
+      "no_evidence_ids": [
+        "UQ-001"
+      ],
+      "unavailable_source_urls": [],
+      "unregistered_citation_edges": [],
+      "foreign_question_evidence_refs": [],
+      "forbidden_result_identity_fields": []
+    },
+    "ER-0008": {
+      "status": "fail_closed",
+      "eligible": false,
+      "localized_errors": [
+        "ER-0008:receipt:result_sha256",
+        "ER-0008:receipt:output_sha256"
+      ],
+      "error_detail": {
+        "required_canonical_result_digest": "d2079f27bd8d8c10a7a1eb2d48917a5d67d69153b372c68a5096ce16a8a0612c",
+        "receipt_result_sha256": "41900f06989412901481b947b0914a78f6b2403e8d5d9f4ae0da8aa063d76031",
+        "receipt_output_sha256": "41900f06989412901481b947b0914a78f6b2403e8d5d9f4ae0da8aa063d76031",
+        "raw_result_file_sha256": "41900f06989412901481b947b0914a78f6b2403e8d5d9f4ae0da8aa063d76031",
+        "receipt_used_raw_file_hash_instead_of_required_canonical_digest": true
+      },
+      "checks": {
+        "draft_2020_12_schema": "pass",
+        "bound_result_semantics": "pass",
+        "source_registry_and_claim_edges": "pass",
+        "question_coverage": "pass",
+        "no_evidence_zero_reference_semantics": "pass",
+        "current_source_availability_and_material_support": "pass",
+        "result_identity_binding": "pass",
+        "positive_receipt_label_and_exact_field_set": "pass",
+        "positive_receipt_result_hash_binding": "fail",
+        "native_capture_v6_join": "pass",
+        "output_confinement": "pass"
+      },
+      "counts": {
+        "result_files": 1,
+        "registered_sources": 12,
+        "unique_registered_sources": 12,
+        "evidence_rows": 49,
+        "supported_claim_rows": 28,
+        "inference_rows": 20,
+        "no_evidence_rows": 1,
+        "citation_edges": 114,
+        "original_questions": 4,
+        "question_coverage_rows": 4,
+        "question_evidence_edges": 32,
+        "receipt_fields": 46,
+        "required_receipt_fields": 46
+      },
+      "result_output_files": [
+        "result.json"
+      ],
+      "no_evidence_ids": [
+        "UQ-0001"
+      ],
+      "unavailable_source_urls": [],
+      "unregistered_citation_edges": [],
+      "foreign_question_evidence_refs": [],
+      "forbidden_result_identity_fields": []
+    }
+  },
+  "attempt_level_checks": {
+    "frozen_authority_manifest_packet_intent_binding": "pass",
+    "luna_prelaunch_exact_sha256_binding": "pass",
+    "activation_transaction": "pass",
+    "activation_emission_order": "pass",
+    "exact_required_assignment_set": "pass",
+    "exact_positive_receipt_schema_version": "pass",
+    "exact_positive_receipt_field_sets": "pass",
+    "receipt_result_hash_bindings": "fail",
+    "native_capture_v6_top_level_and_rows": "pass",
+    "result_receipt_capture_identity_joins": "pass",
+    "prior_identity_and_agent_path_nonreuse": "pass",
+    "result_output_confinement": "pass",
+    "all_original_questions_covered": "pass",
+    "all_source_registry_claim_citation_edges": "pass",
+    "all_no_evidence_zero_reference_semantics": "pass",
+    "current_direct_source_support": "pass",
+    "required_attempt_0006_eligibility_2_of_2": "fail",
+    "required_cumulative_eligibility_8_of_8": "fail",
+    "immutable_six_floor_preserved": "pass",
+    "canonical_plan_changes": "pass"
+  },
+  "global_errors": [
+    "attempt-level-veto:required-attempt-0006-eligibility-is-0-of-2",
+    "attempt-level-veto:required-cumulative-eligibility-is-6-of-8"
+  ],
+  "bound_validator": {
+    "path": "tools/validate_postrun.py",
+    "file_sha256": "ee9a6d160c65149adb2b0d21a07df7d892d205880ffb7192609422d5920e61ba",
+    "execution_status": "fail_closed",
+    "global_errors": [],
+    "per_assignment_errors": {
+      "ER-0003": [
+        "ER-0003:receipt:output_sha256",
+        "ER-0003:receipt:result_sha256"
+      ],
+      "ER-0008": [
+        "ER-0008:receipt:output_sha256",
+        "ER-0008:receipt:result_sha256"
+      ]
+    }
+  },
+  "draft_2020_12_validation": {
+    "schema_status": "pass",
+    "validator_class": "jsonschema.Draft202012Validator",
+    "format_checker": "jsonschema.FormatChecker",
+    "meta_schema_id": "https://json-schema.org/draft/2020-12/schema",
+    "isolated": true,
+    "frozen_prelaunch_engine_version": "4.26.0",
+    "independent_revalidation_engine_version": "4.25.1",
+    "exact_frozen_engine_version_available_from_bound_runtime": false,
+    "engine_version_note": "The frozen report binds jsonschema 4.26.0 but does not preserve an executable engine path or engine hash. Independent isolated Draft 2020-12 revalidation used the nearest locally obtainable jsonschema release, 4.25.1, and produced zero schema errors for both results. This does not cure or cause the receipt hash veto.",
+    "schema_file_sha256": "3b470b6f6b75fa5bdb914cb6b1cad49d430dab69744eb8fbe4ade52a29cf8980",
+    "result_error_counts": {
+      "ER-0003": 0,
+      "ER-0008": 0
+    }
+  },
+  "current_external_source_review": {
+    "status": "pass",
+    "registered_direct_urls": 24,
+    "urls_resolved_and_inspected": 24,
+    "raw_http_200": 23,
+    "browser_resolved_after_raw_http_access_denial": 1,
+    "browser_resolved_url": "https://openai.com/index/updating-our-preparedness-framework/",
+    "unavailable_urls": [],
+    "fabricated_sources": [],
+    "materially_misapplied_evidence": [],
+    "review_scope": "All registered URLs were checked for current reachability; material supported-claim and inference edges were independently compared with current primary or official source content. No source-content veto was found."
+  },
+  "identity_and_native_capture": {
+    "status": "pass",
+    "capture_schema_version": "external-research-native-capture-v6",
+    "capture_rows": 2,
+    "unique_native_child_threads": 2,
+    "unique_native_child_turns": 2,
+    "prior_non_result_json_files_scanned": 129,
+    "prior_identity_inventory_digest": "5e04cdfee00ccc1207307a96f8804653d481ca30408a97b4951a5387acead341",
+    "prior_path_inventory_digest": "66abb5304c78bebd4c80fa79d8a1972233aa0f43c92cd01c8de57033d89d57a2",
+    "reused_native_identities": [],
+    "reused_agent_paths": [],
+    "receipt_capture_join_errors": []
+  },
+  "counts": {
+    "assignments": 2,
+    "packets": 2,
+    "dispatch_intents": 2,
+    "activation_transaction_files": 4,
+    "results": 2,
+    "result_output_files": 2,
+    "positive_receipts": 2,
+    "native_capture_rows": 2,
+    "registered_sources": 24,
+    "evidence_rows": 84,
+    "supported_claim_rows": 48,
+    "inference_rows": 34,
+    "no_evidence_rows": 2,
+    "citation_edges": 194,
+    "original_questions": 8,
+    "question_coverage_rows": 8,
+    "question_evidence_edges": 69,
+    "eligible_attempt_0006": 0,
+    "rejected_attempt_0006": 2,
+    "preserved_floor": 6,
+    "cumulative_eligible": 6,
+    "required_cumulative_eligible": 8
+  },
+  "hashes": {
+    "authority.json": "b0cfe8e891d4dbd463575253c827fb341bd99208cf6efb620792df33b8d213f9",
+    "manifest.json": "cdc5acf261c8bff81790f0912b9527e9ce4ed2fb863c2c37284d89de36c88ac8",
+    "packets": {
+      "ER-0003": "2951e2b35f60ad3762d9c995fc3f306762b2d150dc7ae864b2322960ad795ead",
+      "ER-0008": "9930ce37cf3aae3253ebed745b80a562cff4ad68c68acfafa8f8dceddb883d58"
+    },
+    "dispatch_intents": {
+      "ER-0003": "349b1546931476b1364664591659569286a0ea10d5e91c0527e4984e8c48136b",
+      "ER-0008": "344825c7391aeb25832e43401ad33b681ca5fa9138d791225f4009da0e2656c1"
+    },
+    "schema/external_research_result_v6.schema.json": "3b470b6f6b75fa5bdb914cb6b1cad49d430dab69744eb8fbe4ade52a29cf8980",
+    "receipt_contract_v6.json": "f08c61e4473b82e633babdaff36e07dad79c40b317bdcae08200423e11230763",
+    "native_capture_contract_v6.json": "400090ca7d049f8cc9100c1581c831ff13bd9d19c571e18513211035440eeeef",
+    "validation/luna-independent-prelaunch.json": "dae5858c97202d1bf64192dabe6d93eda651b27b4cbc601e81a87fcbdfb7079e",
+    "activation_transaction": {
+      "activation_core_file_sha256": "358be8e7f781413a64b90985da1947aef56f0dfae6cde1d942174331e5bb261f",
+      "activation_core_canonical_digest": "8da5c171485bb636310d1a1cfc4f8978fee6f57fd4b46273e0b2ac9b1e10d602",
+      "authorization_file_sha256": {
+        "ER-0003": "d48f0feafd9e139e9520965502e7cef962f3264cbd6d164c6b9b0cd297ca6fc3",
+        "ER-0008": "49be98f20b8f2eaa6d437e379a276431b24556600017b8c8429a85f6ee1af476"
+      },
+      "authorization_canonical_digest": {
+        "ER-0003": "b01d873131f76784176dd1239ee4a533109edf3f27f6490793ae8d30a25b9a46",
+        "ER-0008": "c0322d48abc1f8ef02298800040d3fff067ae86ddeeb5415d133d5414f154eb2"
+      },
+      "activation_envelope_file_sha256": "01e58ddf40fbaf6128355ac9188a8143e19eed9db4d0b6321b81b9374260e812",
+      "activation_envelope_canonical_digest": "f2d280a9ec8be67cad7070923e4e81dcfdaaa90c0f98ea4cde0162d32bdd4d5c"
+    },
+    "results": {
+      "ER-0003": {
+        "file_sha256": "ace2ea30e08196d3febeb1b979bb64d15b0d8b8146b4e92da2f9cc449503e6c7",
+        "canonical_digest": "d2eeceeb712ad5a5c0f0b67825ff0f78769e2e83275b28de4a87137b71ba27dc"
+      },
+      "ER-0008": {
+        "file_sha256": "41900f06989412901481b947b0914a78f6b2403e8d5d9f4ae0da8aa063d76031",
+        "canonical_digest": "d2079f27bd8d8c10a7a1eb2d48917a5d67d69153b372c68a5096ce16a8a0612c"
+      }
+    },
+    "receipts": {
+      "ER-0003": "d5f997c10678cc43ba62a829269cbcdb42e2934119374a88b89f3deb036ce23c",
+      "ER-0008": "e9e0fedc51c6148fcb044aa2e82e9524ed7b60828d16ad1e279dd8d7f86cdd3e"
+    },
+    "runtime/native_capture.json": "3ca11e7678e2af2ebc6c604d2429142cc734e43ce825c0138fa69b7a4c416b05"
+  },
+  "floor_binding": {
+    "status": "preserved_immutable",
+    "preserved_floor_ids": [
+      "ER-0002",
+      "ER-0001",
+      "ER-0004",
+      "ER-0005",
+      "ER-0006",
+      "ER-0007"
+    ],
+    "preserved_floor_count": 6,
+    "preserved_floor_digest": "111135d1d44849d95577071398351634e899cf0689340919c6b855c239e859b6",
+    "attempt_0005_primary_cumulative_report_sha256": "3e5de5018a3e419fe3e3c85d0bf4598c2af92a8479c926dd0778bdf058a8a20d",
+    "attempt_0005_native_capture_sha256": "714463a7494e9cb0b97938f81ac1a1914166c3d84886d0172c1d1eb280164f99",
+    "unrelated_six_floor_suppressed": false,
+    "floor_reports_modified": false
+  },
+  "cumulative_eligibility": {
+    "eligible_ids": [
+      "ER-0002",
+      "ER-0001",
+      "ER-0004",
+      "ER-0005",
+      "ER-0006",
+      "ER-0007"
+    ],
+    "eligible_count": 6,
+    "eligible_digest": "111135d1d44849d95577071398351634e899cf0689340919c6b855c239e859b6",
+    "required_full_ids": [
+      "ER-0002",
+      "ER-0001",
+      "ER-0004",
+      "ER-0005",
+      "ER-0006",
+      "ER-0007",
+      "ER-0003",
+      "ER-0008"
+    ],
+    "required_full_count": 8,
+    "required_full_digest": "1cc90d280f540afc7ca98d6e349f1fbb5f14050986ce38c469b7dad203d5e19d",
+    "exact_8_of_8_achieved": false
+  },
+  "credits": {
+    "research": 0,
+    "coverage": 0,
+    "promotion": 0,
+    "spec": 0,
+    "merge": 0
+  },
+  "canonical_plan_changes": [],
+  "scenario_artifact_changes": [],
+  "unrelated_audit_phase_changes": [],
+  "written_files": [
+    "master/external_research/sprint-wave-0001/retry-attempt-0006/validation/primary-cumulative-postrun.json"
+  ]
+}

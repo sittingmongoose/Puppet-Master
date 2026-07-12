@@ -1,0 +1,30 @@
+{
+  "assignment_count": 8,
+  "candidate_related_conflicts": 178,
+  "decision_taxonomy": [
+    "same_feature_merge",
+    "shared_subsystem_distinct",
+    "dependency_or_interface_seam",
+    "conflict_requires_plan_revision",
+    "unsupported_candidate",
+    "uncertain_requires_targeted_research"
+  ],
+  "disposition_counts": {
+    "merge_candidate": 45,
+    "related_but_distinct": 9138,
+    "uncertain": 177,
+    "unsupported": 5
+  },
+  "edge_count": 9365,
+  "feature_count": 2495,
+  "no_promotion": true,
+  "normalization": "sorted exact provisional feature refs joined with NUL",
+  "packet_ceiling_bytes": 8000000,
+  "pair_count": 11,
+  "partitioning": "11 owner-shard pair groups assigned whole by deterministic LPT over serialized evidence bytes plus provenance/conflict complexity",
+  "primary_quarantine_count": 5,
+  "reverse_shadow_quarantine_count": 5,
+  "schema_version": "cross-domain-seam-architecture-v1",
+  "source_reconstruction": "Complete primary and reverse-shadow candidate/related decisions are normalized by unordered endpoint identity. No source subset is trusted.",
+  "wave_id": "cross-domain-seam-wave-0001"
+}

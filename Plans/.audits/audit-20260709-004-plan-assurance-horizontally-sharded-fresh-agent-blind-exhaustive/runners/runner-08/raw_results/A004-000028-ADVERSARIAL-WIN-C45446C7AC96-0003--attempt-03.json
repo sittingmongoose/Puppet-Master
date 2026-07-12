@@ -1,1 +1,9 @@
-I’ll perform the three-file blind review exactly as scoped, verify the supplied hashes and line mapping, and return only the protocol-v2 JSON result.
+{
+ "record_type": "bad_capture_preserved",
+ "assignment_id": "A004-000028-ADVERSARIAL-WIN-C45446C7AC96-0003",
+ "attempt_no": 3,
+ "note": "Original capture was intermediate agent commentary (non-JSON). Preserved verbatim in original_text during the 2026-07-11 json_syntax repair; the protocol result for this attempt lives in the sibling --attempt-03--final.json. See ingest_errors.jsonl bad-capture record.",
+ "original_text": "I’ll perform the three-file blind review exactly as scoped, verify the supplied hashes and line mapping, and return only the protocol-v2 JSON result.\n",
+ "original_sha256": "9bdf98a264834a23f7e179ddaa50b8d5009275774888ae6444fe2515eaad9c1c",
+ "original_bytes": 152
+}

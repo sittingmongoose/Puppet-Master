@@ -1,0 +1,51 @@
+{
+  "activation_transaction_files": 0,
+  "active_prospective_concurrency_policy_v11_sha256": "6717f715c8a32dea88d7e79e70fca87aeb4a0b637853da3742c5c6e6a0c9a086",
+  "agent_paths": [
+    "/root/a005_external_research_recovery_er_0003_attempt_0007_terminal",
+    "/root/a005_external_research_recovery_er_0008_attempt_0007_terminal"
+  ],
+  "assignment_count": 2,
+  "assignment_ids": [
+    "ER-0003",
+    "ER-0008"
+  ],
+  "audit_id": "audit-20260710-005-plan-assurance-model-lanes-fresh-agent-exhaustive",
+  "canonicalization_algorithm_id": "a005-canonical-json-decimal-v1",
+  "concurrency_policy_v10_sha256": "0fbaad08800f3f5e8e122e7638e2537382d9c6f6be5fc93afcd307a3a42098f1",
+  "coverage_credit": 0,
+  "errors": [],
+  "fork_turns": "none",
+  "fresh_direct_leaves": 2,
+  "gate_passed": true,
+  "merge_credit": 0,
+  "model": "gpt-5.6-luna",
+  "model_lane_routing_policy_v2_sha256": "9105752f30b42d482454e8df7782bda95992d94ae7b149977e280ac83df83544",
+  "native_capture_rows": 0,
+  "outputs_empty": true,
+  "parent_lane_spawn_capture_required": true,
+  "preserved_cumulative_floor_count": 6,
+  "preserved_cumulative_floor_digest": "111135d1d44849d95577071398351634e899cf0689340919c6b855c239e859b6",
+  "preserved_cumulative_floor_ids": [
+    "ER-0001",
+    "ER-0002",
+    "ER-0004",
+    "ER-0005",
+    "ER-0006",
+    "ER-0007"
+  ],
+  "promotion_credit": 0,
+  "reasoning_effort": "max",
+  "receipts": 0,
+  "research_credit": 0,
+  "required_positive_receipt_schema_version": "external-research-dispatch-receipt-v7",
+  "results": 0,
+  "retry_namespace": "retry-attempt-0007",
+  "sealed_capture_writer_verified": true,
+  "sealed_receipt_writer_verified": true,
+  "semantic_transaction_cap": 2,
+  "spec_credit": 0,
+  "sprint_id": "sprint-wave-0001",
+  "status": "pass",
+  "attempt_id": "attempt-0007"
+}

@@ -1,0 +1,57 @@
+{
+  "schema_version": "a005-c1-v32-compatibility-closure-tool-seal-v1",
+  "status": "SEALED_PREPARATION_ONLY_FUTURE_AUTHORITY_REQUIRED",
+  "audit_id": "audit-20260710-005-plan-assurance-model-lanes-fresh-agent-exhaustive",
+  "wave_id": "universal-shadow-certification-wave-0001",
+  "attempt_id": "attempt-0002",
+  "slot_id": "c1-atomic8-prelaunch",
+  "file_hashes": {
+    "AUTHORITY_COMPATIBILITY_V32.json": "85ba6aa150e56d2ebde41f38ae95e60f11e4ec367753b082700027c5efa9c7ac",
+    "FAILED_INVOCATION_LINEAGE_V32.json": "f37d5505997c0a3941c7ad2a0b72a22146a4faf812b37dffd7b6bb5d72a4ef5f",
+    "C1_NATIVE_BINDING_V32.json": "b1afef3408afdfc923fbb12286825df5aa4ea6f2a64a9c1d25a5c0733237f442",
+    "TEST_EVIDENCE_V32.json": "57185bf20a55f66d6c6de999e87df935b822f2efacb94c0e5d93864bdb4ed493",
+    "tools/closure_core_v32.py": "2955b57b3b12a920ee6c5625ed42b7af08748d0ca744d5fa6ade9646a0785502",
+    "tools/capture_controller_native_reviewer_v32_compat.py": "3f9f5478c72f04a153b048a59bdc2c38db1428a086ce165430abb43949dadefa",
+    "tools/test_compatibility_closure_v32.py": "a3f465f07efa879f46359cc31515fd06b4940c82ccfd83bb0a0d74336f0310bf",
+    "tools/verify_compatibility_preparation_v32.py": "d8f84951d9b4480d2d0ccea285f13fd8226852a2f5c21dd099660f7c5f34e63d"
+  },
+  "runtime": {
+    "python_path": "/Users/jaredsmacbookair/.cache/codex-runtimes/codex-primary-runtime/dependencies/python/bin/python3",
+    "python_version": "3.12.13",
+    "python_sha256": "eb9d74b9c7cfdfb2c9b91614edb2c3607360ba46c5aa7fc4557b3a4a23e97cff",
+    "path_inspection": "os.lstat plus O_NOFOLLOW",
+    "incompatible_path_stat_invocation_present_in_new_tools": false
+  },
+  "tests": {
+    "new_temporary_fixture_cases": 461,
+    "new_passed": 461,
+    "new_failed": 0,
+    "new_stdout_sha256": "5f3d853a83dc6e51dde8cfcd55f66fb306dc2ab7eee48ca7411a9fcd31224f13",
+    "preserved_v30_cases": 825,
+    "preserved_v30_passed": 825,
+    "preserved_v30_failed": 0,
+    "preserved_v30_stdout_sha256": "2533adc1664f4b1a9d3680626351cb1e6ea339dd7654ea3a373837821de4a343",
+    "grand_total_passed": 1286
+  },
+  "writer_policy": {
+    "live_invocation_during_preparation": false,
+    "future_authority_required": "CLOSURE_INVOCATION_AUTHORITY_V32.json",
+    "future_authority_present": false,
+    "fixed_output_exclusive_create": true,
+    "v31_output_schema_compatible": true,
+    "sealed_v31_writer_rerun": false,
+    "sealed_v31_writer_patch": false
+  },
+  "scope": {
+    "activation_authorized": false,
+    "launch_authorized": false,
+    "credit": 0,
+    "spawn": "none",
+    "spawn_count": 0,
+    "results": 0,
+    "receipts": 0,
+    "runtime_native_capture_rows": 0,
+    "activation_transactions": 0,
+    "launches": 0
+  }
+}

@@ -1,0 +1,797 @@
+{
+  "assignment_id": "A005M15-000225-INTEGRATED-MACRO15-209B8FF3D9BE-0001",
+  "attempt_id": "attempt-0015",
+  "audit_id": "audit-20260710-005-plan-assurance-model-lanes-fresh-agent-exhaustive",
+  "coverage": {
+    "all_micro_windows_reviewed": true,
+    "all_source_lines_reviewed": true,
+    "all_source_units_accounted": true,
+    "both_exact_and_adversarial_lenses_applied": true,
+    "dimensions_checked": [
+      "behavior",
+      "capabilities",
+      "inputs_outputs",
+      "contracts",
+      "states_transitions",
+      "authority",
+      "ownership",
+      "consumers",
+      "gui_truth",
+      "failures_recovery",
+      "security_privacy",
+      "propagation",
+      "operations",
+      "scale_performance",
+      "compatibility_migration",
+      "acceptance_oracles",
+      "builder_discretion",
+      "ambiguity_unknowns",
+      "missing_callers_consumers",
+      "invalid_states_transitions",
+      "concurrency_races",
+      "partial_failure",
+      "recovery_rollback",
+      "authority_boundaries",
+      "privacy_data_lifecycle",
+      "untrusted_inputs",
+      "gui_misleading_states",
+      "offline_network_loss",
+      "scale_limits",
+      "accessibility",
+      "localization",
+      "observability_support",
+      "destructive_actions",
+      "cross_document_seams",
+      "test_falsifiability",
+      "unknown_unknowns"
+    ]
+  },
+  "items": [
+    {
+      "builder_discretion": false,
+      "confidence": 1.0,
+      "dimensions": ["behavior", "contracts", "consumers", "compatibility_migration", "acceptance_oracles"],
+      "evidence": [
+        {
+          "exact_quote": "  \"schema_id\": \"pm.web_agent_policy_fixtures.v1\",",
+          "line_end": 2,
+          "line_start": 2,
+          "path": "Plans/web_agent_policy_fixtures.json",
+          "source_sha256": "07818eee0bcc1f3d92a00de0d073ee842c5cbe9a6b7b5257b8e4fe7d29434d39"
+        },
+        {
+          "exact_quote": "  \"purpose\": \"Validator-facing fixtures for autonomous web/browser capability policy across assistant, persona, Goal, PRD, Planning Wizard, Orchestrator, and subagent surfaces.\",",
+          "line_end": 3,
+          "line_start": 3,
+          "path": "Plans/web_agent_policy_fixtures.json",
+          "source_sha256": "07818eee0bcc1f3d92a00de0d073ee842c5cbe9a6b7b5257b8e4fe7d29434d39"
+        }
+      ],
+      "gap_kind": "none",
+      "impact": "The fixture has an explicit versioned identity and declares the validator scope that its root fields collectively exercise.",
+      "item_id": "A005M15-I001",
+      "item_type": "feature",
+      "severity": "info",
+      "source_unit_refs": [
+        "SEMANTIC:JSON_PREFIX:Plans/web_agent_policy_fixtures.json",
+        "SEMANTIC:JSON_FIELD:Plans/web_agent_policy_fixtures.json:schema_id",
+        "SEMANTIC:JSON_FIELD:Plans/web_agent_policy_fixtures.json:purpose",
+        "SEMANTIC:JSON_SUFFIX:Plans/web_agent_policy_fixtures.json",
+        "STRUCTURAL:$",
+        "STRUCTURAL:$.purpose",
+        "STRUCTURAL:$.schema_id"
+      ],
+      "statement": "The root fixture is versioned as pm.web_agent_policy_fixtures.v1 and defines validator-facing policy coverage for autonomous web and browser capability across the named assistant, planning, orchestration, Goal, persona, and subagent surfaces.",
+      "title": "Versioned cross-surface policy fixture"
+    },
+    {
+      "builder_discretion": false,
+      "confidence": 1.0,
+      "dimensions": ["behavior", "authority", "ownership", "consumers", "propagation", "operations", "authority_boundaries", "cross_document_seams"],
+      "evidence": [
+        {
+          "exact_quote": "  \"dispatcher\": \"PM WebOperation/BrowserAction dispatcher\",",
+          "line_end": 4,
+          "line_start": 4,
+          "path": "Plans/web_agent_policy_fixtures.json",
+          "source_sha256": "07818eee0bcc1f3d92a00de0d073ee842c5cbe9a6b7b5257b8e4fe7d29434d39"
+        }
+      ],
+      "gap_kind": "none",
+      "impact": "A single named dispatch boundary gives downstream surface policies a common authority and routing seam.",
+      "item_id": "A005M15-I002",
+      "item_type": "authority",
+      "severity": "info",
+      "source_unit_refs": [
+        "SEMANTIC:JSON_FIELD:Plans/web_agent_policy_fixtures.json:dispatcher",
+        "STRUCTURAL:$.dispatcher"
+      ],
+      "statement": "The fixture names PM WebOperation/BrowserAction dispatcher as the shared dispatcher, and each persona policy repeats that dispatcher binding.",
+      "title": "Shared PM dispatcher authority"
+    },
+    {
+      "builder_discretion": false,
+      "confidence": 1.0,
+      "dimensions": ["capabilities", "inputs_outputs", "contracts", "states_transitions", "operations", "compatibility_migration"],
+      "evidence": [
+        {
+          "exact_quote": "    \"injected_for_modes\": [\"ask\", \"plan\", \"deep_plan\", \"goal\", \"prd_builder\", \"planning_wizard\", \"orchestrator\"],",
+          "line_end": 7,
+          "line_start": 7,
+          "path": "Plans/web_agent_policy_fixtures.json",
+          "source_sha256": "07818eee0bcc1f3d92a00de0d073ee842c5cbe9a6b7b5257b8e4fe7d29434d39"
+        },
+        {
+          "exact_quote": "    \"operations\": [\"websearch\", \"webfetch\", \"webextract\", \"webresearch\", \"webcrawl\", \"webmap\", \"BrowserAction/Site Reader\"],",
+          "line_end": 8,
+          "line_start": 8,
+          "path": "Plans/web_agent_policy_fixtures.json",
+          "source_sha256": "07818eee0bcc1f3d92a00de0d073ee842c5cbe9a6b7b5257b8e4fe7d29434d39"
+        },
+        {
+          "exact_quote": "    \"native_browser_runtime\": \"pm_managed_native_browser\",",
+          "line_end": 11,
+          "line_start": 11,
+          "path": "Plans/web_agent_policy_fixtures.json",
+          "source_sha256": "07818eee0bcc1f3d92a00de0d073ee842c5cbe9a6b7b5257b8e4fe7d29434d39"
+        }
+      ],
+      "gap_kind": "none",
+      "impact": "Builders have explicit mode, operation, permission-state, provider-catalog, and primary-runtime constraints for prompt capability injection.",
+      "item_id": "A005M15-I003",
+      "item_type": "capability",
+      "severity": "info",
+      "source_unit_refs": [
+        "SEMANTIC:JSON_FIELD:Plans/web_agent_policy_fixtures.json:capability_affordance",
+        "STRUCTURAL:$.capability_affordance"
+      ],
+      "statement": "WebCapabilityAffordance enumerates the injected modes and seven allowed web/browser operations, requires permission state, uses a lazy registry summary, makes the PM-managed native browser primary, and relegates Playwright/CDP to fallback-reference status.",
+      "title": "Bounded web capability affordance"
+    },
+    {
+      "builder_discretion": false,
+      "confidence": 1.0,
+      "dimensions": ["contracts", "security_privacy", "builder_discretion", "privacy_data_lifecycle", "destructive_actions", "test_falsifiability"],
+      "evidence": [
+        {
+          "exact_quote": "    \"must_not_include\": [\"raw_secrets\", \"full_provider_config\", \"provider_private_prompt_files\"]",
+          "line_end": 13,
+          "line_start": 13,
+          "path": "Plans/web_agent_policy_fixtures.json",
+          "source_sha256": "07818eee0bcc1f3d92a00de0d073ee842c5cbe9a6b7b5257b8e4fe7d29434d39"
+        }
+      ],
+      "gap_kind": "none",
+      "impact": "The prompt affordance has a direct, falsifiable prohibition against three classes of provider-private data leakage.",
+      "item_id": "A005M15-I004",
+      "item_type": "explicit_non_gap",
+      "severity": "info",
+      "source_unit_refs": [
+        "SEMANTIC:JSON_FIELD:Plans/web_agent_policy_fixtures.json:capability_affordance",
+        "STRUCTURAL:$.capability_affordance"
+      ],
+      "statement": "Raw secrets, full provider configuration, and provider-private prompt files are explicitly excluded from WebCapabilityAffordance.",
+      "title": "Prompt affordance secret-minimization boundary"
+    },
+    {
+      "builder_discretion": false,
+      "confidence": 1.0,
+      "dimensions": ["behavior", "capabilities", "contracts", "authority", "consumers", "gui_truth", "failures_recovery", "acceptance_oracles", "authority_boundaries", "destructive_actions"],
+      "evidence": [
+        {
+          "exact_quote": "      \"agent_reason_required\": true,",
+          "line_end": 20,
+          "line_start": 20,
+          "path": "Plans/web_agent_policy_fixtures.json",
+          "source_sha256": "07818eee0bcc1f3d92a00de0d073ee842c5cbe9a6b7b5257b8e4fe7d29434d39"
+        },
+        {
+          "exact_quote": "      \"visible_card_required\": true,",
+          "line_end": 25,
+          "line_start": 25,
+          "path": "Plans/web_agent_policy_fixtures.json",
+          "source_sha256": "07818eee0bcc1f3d92a00de0d073ee842c5cbe9a6b7b5257b8e4fe7d29434d39"
+        },
+        {
+          "exact_quote": "      \"mutating_tools_denied\": true,",
+          "line_end": 27,
+          "line_start": 27,
+          "path": "Plans/web_agent_policy_fixtures.json",
+          "source_sha256": "07818eee0bcc1f3d92a00de0d073ee842c5cbe9a6b7b5257b8e4fe7d29434d39"
+        }
+      ],
+      "gap_kind": "none",
+      "impact": "Every listed persona/surface policy consistently requires a reason, permission gate, visible card, read-only default, mutation denial, and an evidence destination.",
+      "item_id": "A005M15-I005",
+      "item_type": "contract",
+      "severity": "info",
+      "source_unit_refs": [
+        "SEMANTIC:JSON_FIELD:Plans/web_agent_policy_fixtures.json:persona_policies",
+        "STRUCTURAL:$.persona_policies"
+      ],
+      "statement": "The nine persona policies bind self-initiation triggers and the common allowed-tool set to agent-reason, permission, visibility, read-only, mutation-denial, dispatcher, and evidence-routing requirements.",
+      "title": "Uniform persona web-policy envelope"
+    },
+    {
+      "builder_discretion": false,
+      "confidence": 1.0,
+      "dimensions": ["behavior", "authority", "ownership", "consumers", "propagation", "compatibility_migration", "acceptance_oracles", "authority_boundaries", "destructive_actions", "cross_document_seams"],
+      "evidence": [
+        {
+          "exact_quote": "      \"must_not_create\": [\"WorkNode\", \"NodeSeed\", \"runtime_queue\", \"build_task\"]",
+          "line_end": 99,
+          "line_start": 99,
+          "path": "Plans/web_agent_policy_fixtures.json",
+          "source_sha256": "07818eee0bcc1f3d92a00de0d073ee842c5cbe9a6b7b5257b8e4fe7d29434d39"
+        },
+        {
+          "exact_quote": "      \"must_not_create\": [\"WorkNode\", \"NodeSeed\", \"runtime_queue\", \"build_task\"]",
+          "line_end": 114,
+          "line_start": 114,
+          "path": "Plans/web_agent_policy_fixtures.json",
+          "source_sha256": "07818eee0bcc1f3d92a00de0d073ee842c5cbe9a6b7b5257b8e4fe7d29434d39"
+        }
+      ],
+      "gap_kind": "none",
+      "impact": "Research initiated from PRD Builder or Planning Wizard cannot silently cross from source evidence into executable work generation.",
+      "item_id": "A005M15-I006",
+      "item_type": "explicit_non_gap",
+      "severity": "info",
+      "source_unit_refs": [
+        "SEMANTIC:JSON_FIELD:Plans/web_agent_policy_fixtures.json:persona_policies",
+        "STRUCTURAL:$.persona_policies"
+      ],
+      "statement": "PRD Builder and Planning Wizard explicitly prohibit creating WorkNode, NodeSeed, runtime_queue, or build_task artifacts from their source-intake policies.",
+      "title": "Planning research stays inside source-evidence authority"
+    },
+    {
+      "builder_discretion": false,
+      "confidence": 1.0,
+      "dimensions": ["behavior", "contracts", "states_transitions", "gui_truth", "failures_recovery", "compatibility_migration", "acceptance_oracles", "invalid_states_transitions", "gui_misleading_states", "offline_network_loss", "test_falsifiability"],
+      "evidence": [
+        {
+          "exact_quote": "      \"effective_overlay\": \"deep_plan\",",
+          "line_end": 165,
+          "line_start": 165,
+          "path": "Plans/web_agent_policy_fixtures.json",
+          "source_sha256": "07818eee0bcc1f3d92a00de0d073ee842c5cbe9a6b7b5257b8e4fe7d29434d39"
+        },
+        {
+          "exact_quote": "      \"normalized_runtime_mode\": \"plan\",",
+          "line_end": 166,
+          "line_start": 166,
+          "path": "Plans/web_agent_policy_fixtures.json",
+          "source_sha256": "07818eee0bcc1f3d92a00de0d073ee842c5cbe9a6b7b5257b8e4fe7d29434d39"
+        },
+        {
+          "exact_quote": "      \"expected_reason\": \"network_blocked_by_policy\",",
+          "line_end": 178,
+          "line_start": 178,
+          "path": "Plans/web_agent_policy_fixtures.json",
+          "source_sha256": "07818eee0bcc1f3d92a00de0d073ee842c5cbe9a6b7b5257b8e4fe7d29434d39"
+        }
+      ],
+      "gap_kind": "none",
+      "impact": "The fixture makes deep-plan normalization and network-policy decisions observable and validator-testable.",
+      "item_id": "A005M15-I007",
+      "item_type": "state_transition",
+      "severity": "info",
+      "source_unit_refs": [
+        "SEMANTIC:JSON_FIELD:Plans/web_agent_policy_fixtures.json:run_mode_policy_assertions",
+        "STRUCTURAL:$.run_mode_policy_assertions"
+      ],
+      "statement": "Ask, plan, and deep-plan examples require visible ask decisions, deep_plan normalizes to plan, and a deny network policy yields a visible deny with network_blocked_by_policy.",
+      "title": "Visible run-mode permission decisions"
+    },
+    {
+      "builder_discretion": false,
+      "confidence": 1.0,
+      "dimensions": ["behavior", "gui_truth", "failures_recovery", "acceptance_oracles", "invalid_states_transitions", "gui_misleading_states", "test_falsifiability"],
+      "evidence": [
+        {
+          "exact_quote": "      \"forbidden_decision\": \"silent_deny\",",
+          "line_end": 260,
+          "line_start": 260,
+          "path": "Plans/web_agent_policy_fixtures.json",
+          "source_sha256": "07818eee0bcc1f3d92a00de0d073ee842c5cbe9a6b7b5257b8e4fe7d29434d39"
+        },
+        {
+          "exact_quote": "      \"expected_error\": \"missing_visible_permission_card\"",
+          "line_end": 261,
+          "line_start": 261,
+          "path": "Plans/web_agent_policy_fixtures.json",
+          "source_sha256": "07818eee0bcc1f3d92a00de0d073ee842c5cbe9a6b7b5257b8e4fe7d29434d39"
+        }
+      ],
+      "gap_kind": "none",
+      "impact": "A validator can reject a policy outcome that hides denial from the user.",
+      "item_id": "A005M15-I008",
+      "item_type": "acceptance_oracle",
+      "severity": "info",
+      "source_unit_refs": [
+        "SEMANTIC:JSON_FIELD:Plans/web_agent_policy_fixtures.json:run_mode_policy_assertions",
+        "STRUCTURAL:$.run_mode_policy_assertions",
+        "SEMANTIC:JSON_FIELD:Plans/web_agent_policy_fixtures.json:negative_cases",
+        "STRUCTURAL:$.negative_cases"
+      ],
+      "statement": "Silent denial in plan mode is explicitly forbidden and maps to missing_visible_permission_card.",
+      "title": "Silent network denial is a falsifiable failure"
+    },
+    {
+      "builder_discretion": false,
+      "confidence": 1.0,
+      "dimensions": ["capabilities", "authority", "ownership", "consumers", "propagation", "compatibility_migration", "acceptance_oracles", "authority_boundaries", "cross_document_seams", "test_falsifiability"],
+      "evidence": [
+        {
+          "exact_quote": "      \"owner_doc\": \"Plans/PRD_Builder.md\",",
+          "line_end": 185,
+          "line_start": 185,
+          "path": "Plans/web_agent_policy_fixtures.json",
+          "source_sha256": "07818eee0bcc1f3d92a00de0d073ee842c5cbe9a6b7b5257b8e4fe7d29434d39"
+        },
+        {
+          "exact_quote": "      \"required_owner_tokens\": [\"PM WebOperation/BrowserAction dispatcher\", \"websearch\", \"webfetch\", \"webextract\", \"webresearch\", \"webcrawl\", \"webmap\", \"BrowserAction/Site Reader\", \"invocation_source = goal\", \"agent_reason\", \"orchestrator_evidence_receipts\"]",
+          "line_end": 208,
+          "line_start": 208,
+          "path": "Plans/web_agent_policy_fixtures.json",
+          "source_sha256": "07818eee0bcc1f3d92a00de0d073ee842c5cbe9a6b7b5257b8e4fe7d29434d39"
+        },
+        {
+          "exact_quote": "      \"required_owner_tokens\": [\"closed runtime-mode enum is `ask|plan|regular|yolo`\", \"`Deep Plan` | `deep_plan` | `plan`\"]",
+          "line_end": 232,
+          "line_start": 232,
+          "path": "Plans/web_agent_policy_fixtures.json",
+          "source_sha256": "07818eee0bcc1f3d92a00de0d073ee842c5cbe9a6b7b5257b8e4fe7d29434d39"
+        }
+      ],
+      "gap_kind": "none",
+      "impact": "The fixture defines exact owner-document and token checks for seven cross-document policy surfaces.",
+      "item_id": "A005M15-I009",
+      "item_type": "contract",
+      "severity": "info",
+      "source_unit_refs": [
+        "SEMANTIC:JSON_FIELD:Plans/web_agent_policy_fixtures.json:surface_owner_policy_parity",
+        "STRUCTURAL:$.surface_owner_policy_parity"
+      ],
+      "statement": "PRD Builder, Planning Wizard, Orchestrator, subagents, personas, run modes, and prompt pipeline each bind to an owner document and required policy tokens, with policy IDs and evidence destinations where applicable.",
+      "title": "Cross-document owner-policy parity matrix"
+    },
+    {
+      "builder_discretion": false,
+      "confidence": 1.0,
+      "dimensions": ["behavior", "contracts", "failures_recovery", "security_privacy", "acceptance_oracles", "recovery_rollback", "authority_boundaries", "privacy_data_lifecycle", "untrusted_inputs", "gui_misleading_states", "destructive_actions", "test_falsifiability"],
+      "evidence": [
+        {
+          "exact_quote": "      \"expected_error\": \"capability_affordance_leaks_provider_private_data\"",
+          "line_end": 247,
+          "line_start": 247,
+          "path": "Plans/web_agent_policy_fixtures.json",
+          "source_sha256": "07818eee0bcc1f3d92a00de0d073ee842c5cbe9a6b7b5257b8e4fe7d29434d39"
+        },
+        {
+          "exact_quote": "      \"expected_error\": \"read_only_persona_mutation_attempt\"",
+          "line_end": 273,
+          "line_start": 273,
+          "path": "Plans/web_agent_policy_fixtures.json",
+          "source_sha256": "07818eee0bcc1f3d92a00de0d073ee842c5cbe9a6b7b5257b8e4fe7d29434d39"
+        },
+        {
+          "exact_quote": "      \"expected_error\": \"browser_runtime_not_pm_managed_native\"",
+          "line_end": 280,
+          "line_start": 280,
+          "path": "Plans/web_agent_policy_fixtures.json",
+          "source_sha256": "07818eee0bcc1f3d92a00de0d073ee842c5cbe9a6b7b5257b8e4fe7d29434d39"
+        }
+      ],
+      "gap_kind": "none",
+      "impact": "Seven named negative cases provide concrete failure tokens for privacy leakage, missing reasons, hidden denials, planning-boundary escape, mutation, browser-runtime substitution, and misleading help.",
+      "item_id": "A005M15-I010",
+      "item_type": "acceptance_oracle",
+      "severity": "info",
+      "source_unit_refs": [
+        "SEMANTIC:JSON_FIELD:Plans/web_agent_policy_fixtures.json:negative_cases",
+        "STRUCTURAL:$.negative_cases"
+      ],
+      "statement": "The negative suite defines explicit forbidden conditions and expected errors for the principal authority, privacy, visibility, planning-boundary, mutation, runtime, and capability-disclosure invariants represented in this fixture.",
+      "title": "Named negative-policy oracles"
+    },
+    {
+      "builder_discretion": true,
+      "confidence": 0.99,
+      "dimensions": ["states_transitions", "failures_recovery", "builder_discretion", "ambiguity_unknowns", "invalid_states_transitions", "concurrency_races", "recovery_rollback", "authority_boundaries", "offline_network_loss", "test_falsifiability"],
+      "evidence": [
+        {
+          "exact_quote": "    \"permission_state_required\": true,",
+          "line_end": 10,
+          "line_start": 10,
+          "path": "Plans/web_agent_policy_fixtures.json",
+          "source_sha256": "07818eee0bcc1f3d92a00de0d073ee842c5cbe9a6b7b5257b8e4fe7d29434d39"
+        },
+        {
+          "exact_quote": "      \"permission_gate\": \"required\",",
+          "line_end": 24,
+          "line_start": 24,
+          "path": "Plans/web_agent_policy_fixtures.json",
+          "source_sha256": "07818eee0bcc1f3d92a00de0d073ee842c5cbe9a6b7b5257b8e4fe7d29434d39"
+        }
+      ],
+      "gap_kind": "underspecified_permission_lifecycle",
+      "impact": "Implementations can diverge on whether permission is per action, tool, origin, session, surface, or run; concurrent prompts, revocation, expiry, stale grants, cancellation, and retry after denial have no fixture oracle.",
+      "item_id": "A005M15-I011",
+      "item_type": "gap",
+      "severity": "high",
+      "source_unit_refs": [
+        "SEMANTIC:JSON_FIELD:Plans/web_agent_policy_fixtures.json:capability_affordance",
+        "STRUCTURAL:$.capability_affordance",
+        "SEMANTIC:JSON_FIELD:Plans/web_agent_policy_fixtures.json:persona_policies",
+        "STRUCTURAL:$.persona_policies",
+        "SEMANTIC:JSON_FIELD:Plans/web_agent_policy_fixtures.json:run_mode_policy_assertions",
+        "STRUCTURAL:$.run_mode_policy_assertions"
+      ],
+      "statement": "The fixture requires permission state and a permission gate but does not define permission scope, grant/deny/revoke/expire transitions, persistence, concurrent-request behavior, cancellation, or recovery after a denied or interrupted decision.",
+      "title": "Permission state has no lifecycle contract"
+    },
+    {
+      "builder_discretion": true,
+      "confidence": 0.99,
+      "dimensions": ["inputs_outputs", "failures_recovery", "security_privacy", "partial_failure", "recovery_rollback", "authority_boundaries", "privacy_data_lifecycle", "untrusted_inputs", "offline_network_loss", "destructive_actions", "test_falsifiability", "unknown_unknowns"],
+      "evidence": [
+        {
+          "exact_quote": "      \"self_initiates_when\": [\"current_external_fact\", \"url_read\", \"official_docs\", \"issues_or_prs\", \"visual_dynamic_evidence\"],",
+          "line_end": 21,
+          "line_start": 21,
+          "path": "Plans/web_agent_policy_fixtures.json",
+          "source_sha256": "07818eee0bcc1f3d92a00de0d073ee842c5cbe9a6b7b5257b8e4fe7d29434d39"
+        },
+        {
+          "exact_quote": "      \"forbidden\": [\"raw_secrets\", \"full_provider_config\", \"provider_private_prompt_files\"],",
+          "line_end": 246,
+          "line_start": 246,
+          "path": "Plans/web_agent_policy_fixtures.json",
+          "source_sha256": "07818eee0bcc1f3d92a00de0d073ee842c5cbe9a6b7b5257b8e4fe7d29434d39"
+        }
+      ],
+      "gap_kind": "missing_untrusted_web_input_policy",
+      "impact": "A read-only tool can still reach local or private endpoints, disclose data through requests, ingest malicious instructions, download hostile content, or cross origins unless URL, redirect, content, and browser isolation policies are separately fixed and tested.",
+      "item_id": "A005M15-I012",
+      "item_type": "gap",
+      "severity": "critical",
+      "source_unit_refs": [
+        "SEMANTIC:JSON_FIELD:Plans/web_agent_policy_fixtures.json:capability_affordance",
+        "STRUCTURAL:$.capability_affordance",
+        "SEMANTIC:JSON_FIELD:Plans/web_agent_policy_fixtures.json:persona_policies",
+        "STRUCTURAL:$.persona_policies",
+        "SEMANTIC:JSON_FIELD:Plans/web_agent_policy_fixtures.json:negative_cases",
+        "STRUCTURAL:$.negative_cases"
+      ],
+      "statement": "The assigned fixture names URL reading and browser evidence but contains no validation or negative oracle for hostile URLs, redirects, DNS rebinding, local/private network targets, cross-origin navigation, prompt injection, malicious downloads, oversized content, or page-driven data exfiltration.",
+      "title": "Untrusted web and browser inputs are not bounded"
+    },
+    {
+      "builder_discretion": true,
+      "confidence": 0.99,
+      "dimensions": ["inputs_outputs", "failures_recovery", "operations", "scale_performance", "builder_discretion", "ambiguity_unknowns", "concurrency_races", "partial_failure", "recovery_rollback", "offline_network_loss", "scale_limits", "observability_support", "test_falsifiability"],
+      "evidence": [
+        {
+          "exact_quote": "    \"operations\": [\"websearch\", \"webfetch\", \"webextract\", \"webresearch\", \"webcrawl\", \"webmap\", \"BrowserAction/Site Reader\"],",
+          "line_end": 8,
+          "line_start": 8,
+          "path": "Plans/web_agent_policy_fixtures.json",
+          "source_sha256": "07818eee0bcc1f3d92a00de0d073ee842c5cbe9a6b7b5257b8e4fe7d29434d39"
+        },
+        {
+          "exact_quote": "      \"self_initiates_when\": [\"broad_source_coverage\", \"subquestion_decomposition\", \"high_stakes_currentness\", \"compare_research\", \"closure_check\"],",
+          "line_end": 63,
+          "line_start": 63,
+          "path": "Plans/web_agent_policy_fixtures.json",
+          "source_sha256": "07818eee0bcc1f3d92a00de0d073ee842c5cbe9a6b7b5257b8e4fe7d29434d39"
+        }
+      ],
+      "gap_kind": "missing_operational_failure_and_scale_contract",
+      "impact": "Crawl, map, research, fetch, extraction, and browser runs can hang, amplify work, return mixed-success evidence, or consume unbounded resources while different consumers report incompatible outcomes.",
+      "item_id": "A005M15-I013",
+      "item_type": "gap",
+      "severity": "high",
+      "source_unit_refs": [
+        "SEMANTIC:JSON_FIELD:Plans/web_agent_policy_fixtures.json:capability_affordance",
+        "STRUCTURAL:$.capability_affordance",
+        "SEMANTIC:JSON_FIELD:Plans/web_agent_policy_fixtures.json:persona_policies",
+        "STRUCTURAL:$.persona_policies",
+        "SEMANTIC:JSON_FIELD:Plans/web_agent_policy_fixtures.json:negative_cases",
+        "STRUCTURAL:$.negative_cases"
+      ],
+      "statement": "No fixture defines timeouts, retries, cancellation, idempotency, result-size or crawl-depth limits, concurrency or rate limits, partial-result semantics, fallback activation, rollback/cleanup, offline handling, or operational telemetry for the seven operations.",
+      "title": "Operations lack failure, recovery, and scale semantics"
+    },
+    {
+      "builder_discretion": true,
+      "confidence": 0.99,
+      "dimensions": ["states_transitions", "gui_truth", "failures_recovery", "acceptance_oracles", "builder_discretion", "ambiguity_unknowns", "invalid_states_transitions", "gui_misleading_states", "offline_network_loss", "accessibility", "localization", "observability_support", "test_falsifiability"],
+      "evidence": [
+        {
+          "exact_quote": "      \"must_show_card\": true",
+          "line_end": 152,
+          "line_start": 152,
+          "path": "Plans/web_agent_policy_fixtures.json",
+          "source_sha256": "07818eee0bcc1f3d92a00de0d073ee842c5cbe9a6b7b5257b8e4fe7d29434d39"
+        },
+        {
+          "exact_quote": "      \"must_show_card\": true",
+          "line_end": 179,
+          "line_start": 179,
+          "path": "Plans/web_agent_policy_fixtures.json",
+          "source_sha256": "07818eee0bcc1f3d92a00de0d073ee842c5cbe9a6b7b5257b8e4fe7d29434d39"
+        }
+      ],
+      "gap_kind": "underspecified_visible_card_truth",
+      "impact": "A card can technically exist while hiding the requesting surface, destination, scope, progress, denial, partial success, cancellation, retry, or final evidence status; accessibility and localization are untestable.",
+      "item_id": "A005M15-I014",
+      "item_type": "gap",
+      "severity": "medium",
+      "source_unit_refs": [
+        "SEMANTIC:JSON_FIELD:Plans/web_agent_policy_fixtures.json:persona_policies",
+        "STRUCTURAL:$.persona_policies",
+        "SEMANTIC:JSON_FIELD:Plans/web_agent_policy_fixtures.json:run_mode_policy_assertions",
+        "STRUCTURAL:$.run_mode_policy_assertions",
+        "SEMANTIC:JSON_FIELD:Plans/web_agent_policy_fixtures.json:negative_cases",
+        "STRUCTURAL:$.negative_cases"
+      ],
+      "statement": "The fixture requires a visible card but does not specify its content, lifecycle states, truthful progress and completion mapping, keyboard/focus behavior, assistive labels, reduced-motion behavior, localization, text expansion, or error/recovery presentation.",
+      "title": "Visible-card presence does not prove GUI truth"
+    },
+    {
+      "builder_discretion": true,
+      "confidence": 0.99,
+      "dimensions": ["inputs_outputs", "consumers", "failures_recovery", "security_privacy", "propagation", "operations", "builder_discretion", "ambiguity_unknowns", "missing_callers_consumers", "partial_failure", "recovery_rollback", "privacy_data_lifecycle", "observability_support", "cross_document_seams", "test_falsifiability"],
+      "evidence": [
+        {
+          "exact_quote": "      \"evidence_destination\": \"deep_research_receipts_synthesis_and_citations\"",
+          "line_end": 70,
+          "line_start": 70,
+          "path": "Plans/web_agent_policy_fixtures.json",
+          "source_sha256": "07818eee0bcc1f3d92a00de0d073ee842c5cbe9a6b7b5257b8e4fe7d29434d39"
+        },
+        {
+          "exact_quote": "      \"evidence_destination\": \"subagent_evidence_receipts\"",
+          "line_end": 142,
+          "line_start": 142,
+          "path": "Plans/web_agent_policy_fixtures.json",
+          "source_sha256": "07818eee0bcc1f3d92a00de0d073ee842c5cbe9a6b7b5257b8e4fe7d29434d39"
+        }
+      ],
+      "gap_kind": "missing_evidence_data_lifecycle",
+      "impact": "Evidence containing page content, URLs, account identifiers, screenshots, or browsing metadata may be retained, propagated, exposed, duplicated, or deleted inconsistently across destinations and downstream consumers.",
+      "item_id": "A005M15-I015",
+      "item_type": "gap",
+      "severity": "high",
+      "source_unit_refs": [
+        "SEMANTIC:JSON_FIELD:Plans/web_agent_policy_fixtures.json:persona_policies",
+        "STRUCTURAL:$.persona_policies",
+        "SEMANTIC:JSON_FIELD:Plans/web_agent_policy_fixtures.json:surface_owner_policy_parity",
+        "STRUCTURAL:$.surface_owner_policy_parity",
+        "SEMANTIC:JSON_FIELD:Plans/web_agent_policy_fixtures.json:negative_cases",
+        "STRUCTURAL:$.negative_cases"
+      ],
+      "statement": "Evidence destinations are named, but the fixture does not define payload schemas, provenance, redaction, classification, retention, deletion, access control, deduplication, partial-write recovery, consumer acknowledgement, or support/audit visibility.",
+      "title": "Evidence routing lacks privacy and lifecycle semantics"
+    },
+    {
+      "builder_discretion": true,
+      "confidence": 0.98,
+      "dimensions": ["authority", "ownership", "consumers", "propagation", "builder_discretion", "ambiguity_unknowns", "missing_callers_consumers", "authority_boundaries", "cross_document_seams", "test_falsifiability"],
+      "evidence": [
+        {
+          "exact_quote": "      \"surface\": \"assistant\",",
+          "line_end": 18,
+          "line_start": 18,
+          "path": "Plans/web_agent_policy_fixtures.json",
+          "source_sha256": "07818eee0bcc1f3d92a00de0d073ee842c5cbe9a6b7b5257b8e4fe7d29434d39"
+        },
+        {
+          "exact_quote": "      \"surface\": \"goal_runtime\",",
+          "line_end": 74,
+          "line_start": 74,
+          "path": "Plans/web_agent_policy_fixtures.json",
+          "source_sha256": "07818eee0bcc1f3d92a00de0d073ee842c5cbe9a6b7b5257b8e4fe7d29434d39"
+        },
+        {
+          "exact_quote": "      \"surface\": \"prompt_pipeline\",",
+          "line_end": 235,
+          "line_start": 235,
+          "path": "Plans/web_agent_policy_fixtures.json",
+          "source_sha256": "07818eee0bcc1f3d92a00de0d073ee842c5cbe9a6b7b5257b8e4fe7d29434d39"
+        }
+      ],
+      "gap_kind": "incomplete_owner_parity_coverage",
+      "impact": "The fixture can validate persona policy rows for assistant and Goal Runtime without proving that their canonical owner documents carry the same dispatcher, authority, permission, visibility, mutation, and evidence contracts.",
+      "item_id": "A005M15-I016",
+      "item_type": "gap",
+      "severity": "medium",
+      "source_unit_refs": [
+        "SEMANTIC:JSON_FIELD:Plans/web_agent_policy_fixtures.json:persona_policies",
+        "STRUCTURAL:$.persona_policies",
+        "SEMANTIC:JSON_FIELD:Plans/web_agent_policy_fixtures.json:surface_owner_policy_parity",
+        "STRUCTURAL:$.surface_owner_policy_parity"
+      ],
+      "statement": "The persona list includes assistant and goal_runtime, but the surface-owner parity matrix has no dedicated assistant or Goal Runtime owner row; collaborator is only indirectly grouped under Personas, and slash-help has no owner-parity row.",
+      "title": "Not every governed surface has an owner-parity oracle"
+    },
+    {
+      "builder_discretion": true,
+      "confidence": 0.99,
+      "dimensions": ["behavior", "capabilities", "contracts", "states_transitions", "compatibility_migration", "acceptance_oracles", "builder_discretion", "ambiguity_unknowns", "invalid_states_transitions", "cross_document_seams", "test_falsifiability"],
+      "evidence": [
+        {
+          "exact_quote": "    \"injected_for_modes\": [\"ask\", \"plan\", \"deep_plan\", \"goal\", \"prd_builder\", \"planning_wizard\", \"orchestrator\"],",
+          "line_end": 7,
+          "line_start": 7,
+          "path": "Plans/web_agent_policy_fixtures.json",
+          "source_sha256": "07818eee0bcc1f3d92a00de0d073ee842c5cbe9a6b7b5257b8e4fe7d29434d39"
+        },
+        {
+          "exact_quote": "      \"required_owner_tokens\": [\"closed runtime-mode enum is `ask|plan|regular|yolo`\", \"`Deep Plan` | `deep_plan` | `plan`\"]",
+          "line_end": 232,
+          "line_start": 232,
+          "path": "Plans/web_agent_policy_fixtures.json",
+          "source_sha256": "07818eee0bcc1f3d92a00de0d073ee842c5cbe9a6b7b5257b8e4fe7d29434d39"
+        }
+      ],
+      "gap_kind": "run_mode_coverage_ambiguity",
+      "impact": "Builders and validators can disagree whether regular and yolo should receive the affordance, deny it, inherit another policy, or be intentionally outside the feature; migrations across mode naming can silently change capability visibility.",
+      "item_id": "A005M15-I017",
+      "item_type": "unknown",
+      "severity": "high",
+      "source_unit_refs": [
+        "SEMANTIC:JSON_FIELD:Plans/web_agent_policy_fixtures.json:capability_affordance",
+        "STRUCTURAL:$.capability_affordance",
+        "SEMANTIC:JSON_FIELD:Plans/web_agent_policy_fixtures.json:run_mode_policy_assertions",
+        "STRUCTURAL:$.run_mode_policy_assertions",
+        "SEMANTIC:JSON_FIELD:Plans/web_agent_policy_fixtures.json:surface_owner_policy_parity",
+        "STRUCTURAL:$.surface_owner_policy_parity"
+      ],
+      "statement": "The owner-token oracle says the runtime enum is ask|plan|regular|yolo, while injected_for_modes includes ask and plan plus feature surfaces and deep_plan but omits regular and yolo; the fixture does not state whether those omissions are intentional denials or missing coverage.",
+      "title": "Regular and yolo affordance behavior is unresolved"
+    },
+    {
+      "builder_discretion": true,
+      "confidence": 0.99,
+      "dimensions": ["behavior", "capabilities", "contracts", "states_transitions", "authority", "consumers", "failures_recovery", "security_privacy", "acceptance_oracles", "ambiguity_unknowns", "missing_callers_consumers", "invalid_states_transitions", "concurrency_races", "partial_failure", "authority_boundaries", "privacy_data_lifecycle", "untrusted_inputs", "offline_network_loss", "scale_limits", "accessibility", "localization", "observability_support", "cross_document_seams", "test_falsifiability", "unknown_unknowns"],
+      "evidence": [
+        {
+          "exact_quote": "  \"run_mode_policy_assertions\": [",
+          "line_end": 145,
+          "line_start": 145,
+          "path": "Plans/web_agent_policy_fixtures.json",
+          "source_sha256": "07818eee0bcc1f3d92a00de0d073ee842c5cbe9a6b7b5257b8e4fe7d29434d39"
+        },
+        {
+          "exact_quote": "  \"negative_cases\": [",
+          "line_end": 242,
+          "line_start": 242,
+          "path": "Plans/web_agent_policy_fixtures.json",
+          "source_sha256": "07818eee0bcc1f3d92a00de0d073ee842c5cbe9a6b7b5257b8e4fe7d29434d39"
+        },
+        {
+          "exact_quote": "      \"must_show\": [\"nl_user\", \"agent_initiated\", \"goal\", \"prd\", \"planning_wizard\", \"subagent\"],",
+          "line_end": 286,
+          "line_start": 286,
+          "path": "Plans/web_agent_policy_fixtures.json",
+          "source_sha256": "07818eee0bcc1f3d92a00de0d073ee842c5cbe9a6b7b5257b8e4fe7d29434d39"
+        }
+      ],
+      "gap_kind": "non_exhaustive_cross_product_oracles",
+      "impact": "A validator may pass while defects remain in untested tools, personas, invocation sources, modes, permission outcomes, browser states, failure timing, lifecycle phases, or owner-document seams.",
+      "item_id": "A005M15-I018",
+      "item_type": "gap",
+      "severity": "high",
+      "source_unit_refs": [
+        "SEMANTIC:JSON_FIELD:Plans/web_agent_policy_fixtures.json:capability_affordance",
+        "STRUCTURAL:$.capability_affordance",
+        "SEMANTIC:JSON_FIELD:Plans/web_agent_policy_fixtures.json:persona_policies",
+        "STRUCTURAL:$.persona_policies",
+        "SEMANTIC:JSON_FIELD:Plans/web_agent_policy_fixtures.json:run_mode_policy_assertions",
+        "STRUCTURAL:$.run_mode_policy_assertions",
+        "SEMANTIC:JSON_FIELD:Plans/web_agent_policy_fixtures.json:surface_owner_policy_parity",
+        "STRUCTURAL:$.surface_owner_policy_parity",
+        "SEMANTIC:JSON_FIELD:Plans/web_agent_policy_fixtures.json:negative_cases",
+        "STRUCTURAL:$.negative_cases"
+      ],
+      "statement": "Four positive run-mode cases and seven negative cases do not form an exhaustive cross-product across seven tools, nine persona policies, the declared invocation sources, all runtime modes, permission outcomes, owner surfaces, hostile inputs, concurrent requests, partial failures, offline states, accessibility, localization, and lifecycle behavior.",
+      "title": "Policy assertions leave large cross-product gaps"
+    }
+  ],
+  "model": "gpt-5.6-sol",
+  "phase": "blind_macro_window_review",
+  "reasoning_effort": "xhigh",
+  "schema_version": "macro-review-result-v1",
+  "segments": [
+    {
+      "core_range": [1, 290],
+      "covered_source_unit_refs": [
+        "SEMANTIC:JSON_PREFIX:Plans/web_agent_policy_fixtures.json",
+        "SEMANTIC:JSON_FIELD:Plans/web_agent_policy_fixtures.json:schema_id",
+        "SEMANTIC:JSON_FIELD:Plans/web_agent_policy_fixtures.json:purpose",
+        "SEMANTIC:JSON_FIELD:Plans/web_agent_policy_fixtures.json:dispatcher",
+        "SEMANTIC:JSON_FIELD:Plans/web_agent_policy_fixtures.json:capability_affordance",
+        "SEMANTIC:JSON_FIELD:Plans/web_agent_policy_fixtures.json:persona_policies",
+        "SEMANTIC:JSON_FIELD:Plans/web_agent_policy_fixtures.json:run_mode_policy_assertions",
+        "SEMANTIC:JSON_FIELD:Plans/web_agent_policy_fixtures.json:surface_owner_policy_parity",
+        "SEMANTIC:JSON_FIELD:Plans/web_agent_policy_fixtures.json:negative_cases",
+        "SEMANTIC:JSON_SUFFIX:Plans/web_agent_policy_fixtures.json",
+        "STRUCTURAL:$",
+        "STRUCTURAL:$.capability_affordance",
+        "STRUCTURAL:$.dispatcher",
+        "STRUCTURAL:$.negative_cases",
+        "STRUCTURAL:$.persona_policies",
+        "STRUCTURAL:$.purpose",
+        "STRUCTURAL:$.run_mode_policy_assertions",
+        "STRUCTURAL:$.schema_id",
+        "STRUCTURAL:$.surface_owner_policy_parity"
+      ],
+      "item_ids": [
+        "A005M15-I001",
+        "A005M15-I002",
+        "A005M15-I003",
+        "A005M15-I004",
+        "A005M15-I005",
+        "A005M15-I006",
+        "A005M15-I007",
+        "A005M15-I008",
+        "A005M15-I009",
+        "A005M15-I010",
+        "A005M15-I011",
+        "A005M15-I012",
+        "A005M15-I013",
+        "A005M15-I014",
+        "A005M15-I015",
+        "A005M15-I016",
+        "A005M15-I017",
+        "A005M15-I018"
+      ],
+      "reviewed": true,
+      "summary": "Reviewed all 290 assigned lines and all 19 required source-unit refs. Exact policy strengths include a common dispatcher, bounded affordance, read-only persona envelope, planning artifact prohibition, visible decisions, owner-token parity, and named negative errors. Adversarial gaps remain in permission lifecycle, hostile input controls, operational recovery and limits, GUI truth, evidence privacy lifecycle, owner coverage, regular/yolo behavior, and test cross-product completeness.",
+      "window_id": "WIN-209B8FF3D9BE-0001"
+    }
+  ],
+  "self_attestation": {
+    "no_canonical_writes": true,
+    "no_external_research_during_blind_review": true,
+    "no_peer_result_access": true,
+    "no_prior_audit_access": true,
+    "no_unrelated_source_access": true,
+    "terminal_after_submission": true
+  },
+  "source_binding": {
+    "bundle_id": "MACRO15-209B8FF3D9BE-0001",
+    "document_path": "Plans/web_agent_policy_fixtures.json",
+    "micro_window_ids": ["WIN-209B8FF3D9BE-0001"],
+    "source_sha256": "07818eee0bcc1f3d92a00de0d073ee842c5cbe9a6b7b5257b8e4fe7d29434d39"
+  },
+  "status": "completed",
+  "synthesis": {
+    "cross_document_questions": [
+      "Which canonical owner documents define the permission grant, denial, revocation, expiry, concurrency, and cancellation lifecycle used by this fixture?",
+      "Where are URL, redirect, origin, private-network, prompt-injection, download, and browser-isolation controls canonically owned and made validator-visible?",
+      "Which documents own evidence payload schemas, redaction, retention, deletion, access control, provenance, and partial-write recovery for every named evidence destination?",
+      "Are regular and yolo intentionally excluded from WebCapabilityAffordance injection, and what exact decision should validators require for each?",
+      "Which owner documents and GUI contracts define the visible permission card states, content, accessibility, localization, progress, error, cancellation, and recovery truth?"
+    ],
+    "feature_family_keys": [
+      "web_agent_policy",
+      "web_capability_affordance",
+      "persona_autonomous_research",
+      "run_mode_network_permission",
+      "native_browser_authority",
+      "evidence_routing",
+      "surface_owner_policy_parity",
+      "web_policy_negative_oracles"
+    ],
+    "research_queries": [
+      "secure agentic browser SSRF DNS rebinding redirect origin isolation prompt injection mitigations",
+      "permission UX lifecycle grant deny revoke expire concurrent requests accessible status card",
+      "web crawl research agent timeout retry cancellation partial result rate limit observability",
+      "browser evidence privacy provenance redaction retention deletion access control schema"
+    ]
+  },
+  "task_thread_id": "/root/a005m15_b11_000225_attempt_0015_terminal"
+}

@@ -1,0 +1,87 @@
+{
+  "schema_version": "audit005-no-canonical-write-inventory-contract-v1",
+  "status": "PREPARATION_ONLY",
+  "audit_id": "audit-20260710-005-plan-assurance-model-lanes-fresh-agent-exhaustive",
+  "repository_root": "/Users/jaredsmacbookair/Documents/PuppetMaster",
+  "harness_namespace": "/Users/jaredsmacbookair/Documents/PuppetMaster/Plans/.audits/audit-20260710-005-plan-assurance-model-lanes-fresh-agent-exhaustive/master/governance_command_receipt_harness_v31",
+  "algorithm": {
+    "name": "sorted-lstat-sha256-inventory-v1",
+    "walk": "os.walk with followlinks=false",
+    "path_encoding": "repository-relative POSIX Unicode strings sorted by Python code-point order",
+    "entry_types": [
+      "directory",
+      "regular_file",
+      "symbolic_link"
+    ],
+    "directory_fields": [
+      "path",
+      "type",
+      "mode"
+    ],
+    "regular_file_fields": [
+      "path",
+      "type",
+      "mode",
+      "bytes",
+      "sha256"
+    ],
+    "symbolic_link_fields": [
+      "path",
+      "type",
+      "mode",
+      "target",
+      "target_sha256"
+    ],
+    "inventory_serialization": "UTF-8 JSON with sorted keys, compact separators, ensure_ascii=false, and one trailing LF",
+    "inventory_digest": "sha256(serialized entries array)",
+    "unsupported_entry_policy": "fail_closed"
+  },
+  "protected_repository_inventory": {
+    "root": "/Users/jaredsmacbookair/Documents/PuppetMaster",
+    "include": "every descendant entry except the two exact excluded subtrees",
+    "excluded_subtrees_repository_relative": [
+      ".git",
+      "Plans/.audits/audit-20260710-005-plan-assurance-model-lanes-fresh-agent-exhaustive/master/governance_command_receipt_harness_v31"
+    ],
+    "exclusion_expansion_forbidden": true,
+    "detects": [
+      "create",
+      "delete",
+      "content_change",
+      "mode_change",
+      "type_change",
+      "symlink_target_change",
+      "rename_as_delete_plus_create"
+    ]
+  },
+  "canonical_and_governance_plans_projection": {
+    "source": "protected_repository_inventory",
+    "include_prefix": "Plans/",
+    "excluded_prefixes": [
+      "Plans/.audits/",
+      "Plans/ledgers/"
+    ],
+    "purpose": "Bind canonical product prose and generated governance artifacts independently from audit and source-lineage memory.",
+    "projection_digest": "sha256(serialized projected entries array)"
+  },
+  "comparison_contract": {
+    "capture_before_each_governed_command": true,
+    "capture_after_each_governed_command": true,
+    "compare_repository_inventory": true,
+    "compare_canonical_projection": true,
+    "repository_digest_must_match": true,
+    "canonical_projection_digest_must_match": true,
+    "delta_count_must_equal": 0,
+    "on_any_delta": "FAIL_CLOSED_STOP_REMAINING_COMMANDS_ZERO_CREDIT",
+    "rollback_authorized": false,
+    "mutation_credit": 0
+  },
+  "future_receipt_output_contract": {
+    "authorized_root": "/Users/jaredsmacbookair/Documents/PuppetMaster/Plans/.audits/audit-20260710-005-plan-assurance-model-lanes-fresh-agent-exhaustive/master/governance_command_receipt_harness_v31/runs",
+    "append_only": true,
+    "exclusive_create_required": true,
+    "overwrites_forbidden": true,
+    "stdout_and_stderr_capture": "raw_bytes",
+    "receipt_capture_does_not_weaken_protected_inventory": true
+  }
+}

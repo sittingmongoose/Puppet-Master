@@ -1,0 +1,572 @@
+{
+  "assignment_id": "A005M15-000231-INTEGRATED-MACRO15-EFE53CA1622A-0001",
+  "attempt_id": "attempt-0015",
+  "audit_id": "audit-20260710-005-plan-assurance-model-lanes-fresh-agent-exhaustive",
+  "coverage": {
+    "all_micro_windows_reviewed": true,
+    "all_source_lines_reviewed": true,
+    "all_source_units_accounted": true,
+    "both_exact_and_adversarial_lenses_applied": true,
+    "dimensions_checked": [
+      "behavior",
+      "capabilities",
+      "inputs_outputs",
+      "contracts",
+      "states_transitions",
+      "authority",
+      "ownership",
+      "consumers",
+      "gui_truth",
+      "failures_recovery",
+      "security_privacy",
+      "propagation",
+      "operations",
+      "scale_performance",
+      "compatibility_migration",
+      "acceptance_oracles",
+      "builder_discretion",
+      "ambiguity_unknowns",
+      "missing_callers_consumers",
+      "invalid_states_transitions",
+      "concurrency_races",
+      "partial_failure",
+      "recovery_rollback",
+      "authority_boundaries",
+      "privacy_data_lifecycle",
+      "untrusted_inputs",
+      "gui_misleading_states",
+      "offline_network_loss",
+      "scale_limits",
+      "accessibility",
+      "localization",
+      "observability_support",
+      "destructive_actions",
+      "cross_document_seams",
+      "test_falsifiability",
+      "unknown_unknowns"
+    ]
+  },
+  "items": [
+    {
+      "builder_discretion": false,
+      "confidence": 1.0,
+      "dimensions": [
+        "contracts",
+        "ownership",
+        "compatibility_migration",
+        "cross_document_seams"
+      ],
+      "evidence": [
+        {
+          "exact_quote": "  \"schema_id\": \"pm.web_operation_job_fixtures.v1\",",
+          "line_end": 2,
+          "line_start": 2,
+          "path": "Plans/web_operation_job_fixtures.json",
+          "source_sha256": "2d32e33c5f3581094ee87c7d2831ad9a3ef6737164318c52d489c79c0dd1e221"
+        },
+        {
+          "exact_quote": "  \"owner_schema\": \"Plans/web_operation_contracts.schema.json#/$defs/WebOperationJob\",",
+          "line_end": 3,
+          "line_start": 3,
+          "path": "Plans/web_operation_job_fixtures.json",
+          "source_sha256": "2d32e33c5f3581094ee87c7d2831ad9a3ef6737164318c52d489c79c0dd1e221"
+        }
+      ],
+      "gap_kind": "none",
+      "impact": "Binds this versioned fixture collection to a named WebOperationJob schema definition and gives consumers an explicit validation owner.",
+      "item_id": "A005M15-000231-I001",
+      "item_type": "contract",
+      "severity": "info",
+      "source_unit_refs": [
+        "SEMANTIC:JSON_PREFIX:Plans/web_operation_job_fixtures.json",
+        "SEMANTIC:JSON_FIELD:Plans/web_operation_job_fixtures.json:schema_id",
+        "SEMANTIC:JSON_FIELD:Plans/web_operation_job_fixtures.json:owner_schema",
+        "STRUCTURAL:$",
+        "STRUCTURAL:$.owner_schema",
+        "STRUCTURAL:$.schema_id"
+      ],
+      "statement": "The root object identifies itself as fixture schema version v1 and delegates record validity to the WebOperationJob definition in the declared owner schema.",
+      "title": "Versioned fixture set has an explicit schema owner"
+    },
+    {
+      "builder_discretion": false,
+      "confidence": 0.99,
+      "dimensions": [
+        "behavior",
+        "capabilities",
+        "inputs_outputs",
+        "states_transitions",
+        "operations",
+        "observability_support"
+      ],
+      "evidence": [
+        {
+          "exact_quote": "      \"status\": \"polling\",",
+          "line_end": 16,
+          "line_start": 16,
+          "path": "Plans/web_operation_job_fixtures.json",
+          "source_sha256": "2d32e33c5f3581094ee87c7d2831ad9a3ef6737164318c52d489c79c0dd1e221"
+        },
+        {
+          "exact_quote": "      \"partial_result_ref\": \"partial:webcrawl-001\",",
+          "line_end": 20,
+          "line_start": 20,
+          "path": "Plans/web_operation_job_fixtures.json",
+          "source_sha256": "2d32e33c5f3581094ee87c7d2831ad9a3ef6737164318c52d489c79c0dd1e221"
+        }
+      ],
+      "gap_kind": "none",
+      "impact": "Establishes a positive oracle for representing an in-progress asynchronous crawl with provider polling, progress, partial-result, permission, cache, redaction, timeout, and timestamp metadata.",
+      "item_id": "A005M15-000231-I002",
+      "item_type": "state_transition",
+      "severity": "info",
+      "source_unit_refs": [
+        "SEMANTIC:JSON_FIELD:Plans/web_operation_job_fixtures.json:valid_jobs",
+        "STRUCTURAL:$.valid_jobs"
+      ],
+      "statement": "A valid agent-initiated crawl may be in polling state and carry provider and PM reference metadata for tracking its asynchronous progress and partial output.",
+      "title": "Polling crawl is a valid asynchronous job state"
+    },
+    {
+      "builder_discretion": false,
+      "confidence": 0.99,
+      "dimensions": [
+        "failures_recovery",
+        "partial_failure",
+        "offline_network_loss",
+        "acceptance_oracles",
+        "states_transitions"
+      ],
+      "evidence": [
+        {
+          "exact_quote": "      \"status\": \"timeout\",",
+          "line_end": 38,
+          "line_start": 38,
+          "path": "Plans/web_operation_job_fixtures.json",
+          "source_sha256": "2d32e33c5f3581094ee87c7d2831ad9a3ef6737164318c52d489c79c0dd1e221"
+        },
+        {
+          "exact_quote": "      \"failure_reason_code\": \"timeout\",",
+          "line_end": 48,
+          "line_start": 48,
+          "path": "Plans/web_operation_job_fixtures.json",
+          "source_sha256": "2d32e33c5f3581094ee87c7d2831ad9a3ef6737164318c52d489c79c0dd1e221"
+        }
+      ],
+      "gap_kind": "none",
+      "impact": "Makes a timed-out research operation with a retained partial result and explicit failure metadata testable as a valid terminal job representation.",
+      "item_id": "A005M15-000231-I003",
+      "item_type": "failure_recovery",
+      "severity": "info",
+      "source_unit_refs": [
+        "SEMANTIC:JSON_FIELD:Plans/web_operation_job_fixtures.json:valid_jobs",
+        "STRUCTURAL:$.valid_jobs"
+      ],
+      "statement": "A timeout can be a valid PM-composed terminal state, can retain a partial-result reference, and is distinguished from cancellation by cancelled=false.",
+      "title": "Timeout preserves partial-result lineage"
+    },
+    {
+      "builder_discretion": false,
+      "confidence": 1.0,
+      "dimensions": [
+        "contracts",
+        "authority",
+        "authority_boundaries",
+        "propagation",
+        "destructive_actions"
+      ],
+      "evidence": [
+        {
+          "exact_quote": "    \"WebOperationJob records async web status only and must not create WorkNodes, NodeSeeds, runtime queues, or build tasks.\",",
+          "line_end": 88,
+          "line_start": 88,
+          "path": "Plans/web_operation_job_fixtures.json",
+          "source_sha256": "2d32e33c5f3581094ee87c7d2831ad9a3ef6737164318c52d489c79c0dd1e221"
+        }
+      ],
+      "gap_kind": "none",
+      "impact": "Prevents an asynchronous web-status record from escalating into runtime scheduling or build authority.",
+      "item_id": "A005M15-000231-I004",
+      "item_type": "explicit_non_gap",
+      "severity": "info",
+      "source_unit_refs": [
+        "SEMANTIC:JSON_FIELD:Plans/web_operation_job_fixtures.json:negative_constraints",
+        "SEMANTIC:JSON_SUFFIX:Plans/web_operation_job_fixtures.json",
+        "STRUCTURAL:$.negative_constraints"
+      ],
+      "statement": "The fixture contract explicitly confines WebOperationJob to status recording and forbids creation of work nodes, node seeds, runtime queues, and build tasks.",
+      "title": "Async web status has no runtime-queue authority"
+    },
+    {
+      "builder_discretion": false,
+      "confidence": 1.0,
+      "dimensions": [
+        "authority",
+        "ownership",
+        "authority_boundaries",
+        "cross_document_seams"
+      ],
+      "evidence": [
+        {
+          "exact_quote": "    \"Provider job IDs are lineage/audit metadata and do not make provider config the PM registry source of truth.\"",
+          "line_end": 89,
+          "line_start": 89,
+          "path": "Plans/web_operation_job_fixtures.json",
+          "source_sha256": "2d32e33c5f3581094ee87c7d2831ad9a3ef6737164318c52d489c79c0dd1e221"
+        }
+      ],
+      "gap_kind": "none",
+      "impact": "Keeps provider identifiers usable for audit lineage without transferring registry ownership away from Puppet Master.",
+      "item_id": "A005M15-000231-I005",
+      "item_type": "authority",
+      "severity": "info",
+      "source_unit_refs": [
+        "SEMANTIC:JSON_FIELD:Plans/web_operation_job_fixtures.json:negative_constraints",
+        "STRUCTURAL:$.negative_constraints"
+      ],
+      "statement": "Provider job IDs are explicitly metadata, not evidence that provider configuration owns PM registry truth.",
+      "title": "Provider lineage does not confer registry ownership"
+    },
+    {
+      "builder_discretion": false,
+      "confidence": 0.99,
+      "dimensions": [
+        "contracts",
+        "failures_recovery",
+        "acceptance_oracles",
+        "test_falsifiability",
+        "invalid_states_transitions"
+      ],
+      "evidence": [
+        {
+          "exact_quote": "      \"expected_error\": \"missing_failure_reason_code\"",
+          "line_end": 69,
+          "line_start": 69,
+          "path": "Plans/web_operation_job_fixtures.json",
+          "source_sha256": "2d32e33c5f3581094ee87c7d2831ad9a3ef6737164318c52d489c79c0dd1e221"
+        }
+      ],
+      "gap_kind": "none",
+      "impact": "Supplies a falsifiable negative oracle that prevents failed jobs from losing machine-readable failure classification.",
+      "item_id": "A005M15-000231-I006",
+      "item_type": "acceptance_oracle",
+      "severity": "info",
+      "source_unit_refs": [
+        "SEMANTIC:JSON_FIELD:Plans/web_operation_job_fixtures.json:invalid_jobs",
+        "STRUCTURAL:$.invalid_jobs"
+      ],
+      "statement": "A job in failed state without failure_reason_code must be rejected with missing_failure_reason_code.",
+      "title": "Failed jobs require failure-reason metadata"
+    },
+    {
+      "builder_discretion": false,
+      "confidence": 0.99,
+      "dimensions": [
+        "contracts",
+        "authority_boundaries",
+        "acceptance_oracles",
+        "test_falsifiability"
+      ],
+      "evidence": [
+        {
+          "exact_quote": "      \"expected_error\": \"missing_not_runtime_queue\"",
+          "line_end": 84,
+          "line_start": 84,
+          "path": "Plans/web_operation_job_fixtures.json",
+          "source_sha256": "2d32e33c5f3581094ee87c7d2831ad9a3ef6737164318c52d489c79c0dd1e221"
+        }
+      ],
+      "gap_kind": "none",
+      "impact": "Makes the separation from runtime queues a validation requirement rather than an advisory convention.",
+      "item_id": "A005M15-000231-I007",
+      "item_type": "acceptance_oracle",
+      "severity": "info",
+      "source_unit_refs": [
+        "SEMANTIC:JSON_FIELD:Plans/web_operation_job_fixtures.json:invalid_jobs",
+        "STRUCTURAL:$.invalid_jobs"
+      ],
+      "statement": "An asynchronous web job that omits the non-queue marker must be rejected with missing_not_runtime_queue.",
+      "title": "Non-runtime-queue marker is mandatory"
+    },
+    {
+      "builder_discretion": true,
+      "confidence": 0.92,
+      "dimensions": [
+        "states_transitions",
+        "concurrency_races",
+        "acceptance_oracles",
+        "ambiguity_unknowns",
+        "test_falsifiability"
+      ],
+      "evidence": [
+        {
+          "exact_quote": "      \"updated_at_utc\": \"2026-07-09T00:00:15Z\",",
+          "line_end": 26,
+          "line_start": 26,
+          "path": "Plans/web_operation_job_fixtures.json",
+          "source_sha256": "2d32e33c5f3581094ee87c7d2831ad9a3ef6737164318c52d489c79c0dd1e221"
+        },
+        {
+          "exact_quote": "      \"finished_at_utc\": \"2026-07-09T00:02:00Z\",",
+          "line_end": 47,
+          "line_start": 47,
+          "path": "Plans/web_operation_job_fixtures.json",
+          "source_sha256": "2d32e33c5f3581094ee87c7d2831ad9a3ef6737164318c52d489c79c0dd1e221"
+        }
+      ],
+      "gap_kind": "missing_negative_oracle",
+      "impact": "A validator could accept regressing update times, a finish time before creation, or a terminal record whose timestamps disagree without this fixture collection detecting it.",
+      "item_id": "A005M15-000231-I008",
+      "item_type": "gap",
+      "severity": "medium",
+      "source_unit_refs": [
+        "SEMANTIC:JSON_FIELD:Plans/web_operation_job_fixtures.json:valid_jobs",
+        "SEMANTIC:JSON_FIELD:Plans/web_operation_job_fixtures.json:invalid_jobs",
+        "STRUCTURAL:$.valid_jobs",
+        "STRUCTURAL:$.invalid_jobs"
+      ],
+      "statement": "The fixtures demonstrate coherent timestamps but provide no invalid case for reversed, regressing, or status-inconsistent lifecycle timestamps.",
+      "title": "Timestamp ordering lacks an adversarial fixture"
+    },
+    {
+      "builder_discretion": true,
+      "confidence": 0.9,
+      "dimensions": [
+        "inputs_outputs",
+        "contracts",
+        "partial_failure",
+        "offline_network_loss",
+        "test_falsifiability"
+      ],
+      "evidence": [
+        {
+          "exact_quote": "      \"poll_ref\": \"poll:webcrawl-001\",",
+          "line_end": 18,
+          "line_start": 18,
+          "path": "Plans/web_operation_job_fixtures.json",
+          "source_sha256": "2d32e33c5f3581094ee87c7d2831ad9a3ef6737164318c52d489c79c0dd1e221"
+        },
+        {
+          "exact_quote": "      \"progress_ref\": \"progress:webcrawl-001\",",
+          "line_end": 19,
+          "line_start": 19,
+          "path": "Plans/web_operation_job_fixtures.json",
+          "source_sha256": "2d32e33c5f3581094ee87c7d2831ad9a3ef6737164318c52d489c79c0dd1e221"
+        }
+      ],
+      "gap_kind": "missing_negative_oracle",
+      "impact": "Fixture-driven validation cannot prove whether polling requires poll/progress references or whether malformed and cross-job reference identifiers are rejected.",
+      "item_id": "A005M15-000231-I009",
+      "item_type": "gap",
+      "severity": "medium",
+      "source_unit_refs": [
+        "SEMANTIC:JSON_FIELD:Plans/web_operation_job_fixtures.json:valid_jobs",
+        "SEMANTIC:JSON_FIELD:Plans/web_operation_job_fixtures.json:invalid_jobs",
+        "STRUCTURAL:$.valid_jobs",
+        "STRUCTURAL:$.invalid_jobs"
+      ],
+      "statement": "The positive polling case carries poll, progress, and partial-result references, but no negative fixture establishes which references are conditionally required or how their identity must bind to the job.",
+      "title": "Polling-reference invariants are not falsified"
+    },
+    {
+      "builder_discretion": true,
+      "confidence": 0.88,
+      "dimensions": [
+        "security_privacy",
+        "privacy_data_lifecycle",
+        "untrusted_inputs",
+        "authority_boundaries",
+        "ambiguity_unknowns"
+      ],
+      "evidence": [
+        {
+          "exact_quote": "      \"permission_snapshot_id\": \"perm:webcrawl.docs.example.com\",",
+          "line_end": 21,
+          "line_start": 21,
+          "path": "Plans/web_operation_job_fixtures.json",
+          "source_sha256": "2d32e33c5f3581094ee87c7d2831ad9a3ef6737164318c52d489c79c0dd1e221"
+        },
+        {
+          "exact_quote": "      \"redaction_profile_id\": \"redaction:web-default\",",
+          "line_end": 23,
+          "line_start": 23,
+          "path": "Plans/web_operation_job_fixtures.json",
+          "source_sha256": "2d32e33c5f3581094ee87c7d2831ad9a3ef6737164318c52d489c79c0dd1e221"
+        }
+      ],
+      "gap_kind": "missing_adversarial_security_fixture",
+      "impact": "The fixture set does not demonstrate rejection of absent, malformed, stale, or mismatched permission snapshots and redaction profiles, leaving security binding behavior untested here.",
+      "item_id": "A005M15-000231-I010",
+      "item_type": "gap",
+      "severity": "high",
+      "source_unit_refs": [
+        "SEMANTIC:JSON_FIELD:Plans/web_operation_job_fixtures.json:valid_jobs",
+        "SEMANTIC:JSON_FIELD:Plans/web_operation_job_fixtures.json:invalid_jobs",
+        "STRUCTURAL:$.valid_jobs",
+        "STRUCTURAL:$.invalid_jobs"
+      ],
+      "statement": "Valid jobs name permission-snapshot and redaction-profile identifiers, but the invalid set contains no adversarial security or privacy case for those bindings.",
+      "title": "Permission and redaction bindings lack negative coverage"
+    },
+    {
+      "builder_discretion": true,
+      "confidence": 0.94,
+      "dimensions": [
+        "failures_recovery",
+        "invalid_states_transitions",
+        "recovery_rollback",
+        "gui_misleading_states",
+        "acceptance_oracles",
+        "unknown_unknowns"
+      ],
+      "evidence": [
+        {
+          "exact_quote": "      \"cancelled\": false,",
+          "line_end": 49,
+          "line_start": 49,
+          "path": "Plans/web_operation_job_fixtures.json",
+          "source_sha256": "2d32e33c5f3581094ee87c7d2831ad9a3ef6737164318c52d489c79c0dd1e221"
+        },
+        {
+          "exact_quote": "        \"status\": \"failed\",",
+          "line_end": 64,
+          "line_start": 64,
+          "path": "Plans/web_operation_job_fixtures.json",
+          "source_sha256": "2d32e33c5f3581094ee87c7d2831ad9a3ef6737164318c52d489c79c0dd1e221"
+        }
+      ],
+      "gap_kind": "incomplete_state_matrix",
+      "impact": "Consumers and GUI surfaces could receive contradictory terminal-state combinations without this fixture suite proving their rejection, and recovery or retry semantics remain unexercised.",
+      "item_id": "A005M15-000231-I011",
+      "item_type": "gap",
+      "severity": "medium",
+      "source_unit_refs": [
+        "SEMANTIC:JSON_FIELD:Plans/web_operation_job_fixtures.json:valid_jobs",
+        "SEMANTIC:JSON_FIELD:Plans/web_operation_job_fixtures.json:invalid_jobs",
+        "STRUCTURAL:$.valid_jobs",
+        "STRUCTURAL:$.invalid_jobs"
+      ],
+      "statement": "The fixtures cover polling, timeout, and one malformed failed job, but do not exercise cancellation, success, retry/recovery, or contradictory terminal-state combinations.",
+      "title": "Terminal and recovery state matrix is incomplete"
+    },
+    {
+      "builder_discretion": true,
+      "confidence": 0.93,
+      "dimensions": [
+        "consumers",
+        "missing_callers_consumers",
+        "gui_truth",
+        "accessibility",
+        "localization",
+        "scale_limits"
+      ],
+      "evidence": [
+        {
+          "exact_quote": "  \"valid_jobs\": [",
+          "line_end": 4,
+          "line_start": 4,
+          "path": "Plans/web_operation_job_fixtures.json",
+          "source_sha256": "2d32e33c5f3581094ee87c7d2831ad9a3ef6737164318c52d489c79c0dd1e221"
+        },
+        {
+          "exact_quote": "  \"invalid_jobs\": [",
+          "line_end": 53,
+          "line_start": 53,
+          "path": "Plans/web_operation_job_fixtures.json",
+          "source_sha256": "2d32e33c5f3581094ee87c7d2831ad9a3ef6737164318c52d489c79c0dd1e221"
+        }
+      ],
+      "gap_kind": "fixture_scope_unknown",
+      "impact": "This artifact alone cannot establish which validator, runtime adapter, support tooling, or GUI state renderer consumes the fixtures, nor whether high-volume, localized, or accessibility-relevant presentation behavior is tested elsewhere.",
+      "item_id": "A005M15-000231-I012",
+      "item_type": "unknown",
+      "severity": "low",
+      "source_unit_refs": [
+        "SEMANTIC:JSON_FIELD:Plans/web_operation_job_fixtures.json:valid_jobs",
+        "SEMANTIC:JSON_FIELD:Plans/web_operation_job_fixtures.json:invalid_jobs",
+        "STRUCTURAL:$.valid_jobs",
+        "STRUCTURAL:$.invalid_jobs"
+      ],
+      "statement": "The fixture file defines valid and invalid data but does not identify its executable callers, downstream consumers, scale envelope, or any GUI presentation oracle.",
+      "title": "Fixture consumers and presentation coverage are not identified"
+    }
+  ],
+  "model": "gpt-5.6-sol",
+  "phase": "blind_macro_window_review",
+  "reasoning_effort": "xhigh",
+  "schema_version": "macro-review-result-v1",
+  "segments": [
+    {
+      "core_range": [
+        1,
+        91
+      ],
+      "covered_source_unit_refs": [
+        "SEMANTIC:JSON_PREFIX:Plans/web_operation_job_fixtures.json",
+        "SEMANTIC:JSON_FIELD:Plans/web_operation_job_fixtures.json:schema_id",
+        "SEMANTIC:JSON_FIELD:Plans/web_operation_job_fixtures.json:owner_schema",
+        "SEMANTIC:JSON_FIELD:Plans/web_operation_job_fixtures.json:valid_jobs",
+        "SEMANTIC:JSON_FIELD:Plans/web_operation_job_fixtures.json:invalid_jobs",
+        "SEMANTIC:JSON_FIELD:Plans/web_operation_job_fixtures.json:negative_constraints",
+        "SEMANTIC:JSON_SUFFIX:Plans/web_operation_job_fixtures.json",
+        "STRUCTURAL:$",
+        "STRUCTURAL:$.invalid_jobs",
+        "STRUCTURAL:$.negative_constraints",
+        "STRUCTURAL:$.owner_schema",
+        "STRUCTURAL:$.schema_id",
+        "STRUCTURAL:$.valid_jobs"
+      ],
+      "item_ids": [
+        "A005M15-000231-I001",
+        "A005M15-000231-I002",
+        "A005M15-000231-I003",
+        "A005M15-000231-I004",
+        "A005M15-000231-I005",
+        "A005M15-000231-I006",
+        "A005M15-000231-I007",
+        "A005M15-000231-I008",
+        "A005M15-000231-I009",
+        "A005M15-000231-I010",
+        "A005M15-000231-I011",
+        "A005M15-000231-I012"
+      ],
+      "reviewed": true,
+      "summary": "Reviewed all 91 canonical lines and all 13 assigned semantic and structural source units. Exact review found two valid asynchronous job exemplars, two precise invalid-job oracles, and explicit queue and registry authority boundaries. Adversarial review found missing negative coverage for temporal ordering, reference integrity, security bindings, wider terminal and recovery combinations, and unidentified executable and GUI consumers.",
+      "window_id": "WIN-EFE53CA1622A-0001"
+    }
+  ],
+  "self_attestation": {
+    "no_canonical_writes": true,
+    "no_external_research_during_blind_review": true,
+    "no_peer_result_access": true,
+    "no_prior_audit_access": true,
+    "no_unrelated_source_access": true,
+    "terminal_after_submission": true
+  },
+  "source_binding": {
+    "bundle_id": "MACRO15-EFE53CA1622A-0001",
+    "document_path": "Plans/web_operation_job_fixtures.json",
+    "micro_window_ids": [
+      "WIN-EFE53CA1622A-0001"
+    ],
+    "source_sha256": "2d32e33c5f3581094ee87c7d2831ad9a3ef6737164318c52d489c79c0dd1e221"
+  },
+  "status": "completed",
+  "synthesis": {
+    "cross_document_questions": [
+      "Does the owner WebOperationJob schema enforce timestamp ordering and status-specific required or forbidden fields for polling, timeout, failure, cancellation, and success?",
+      "Which validator consumes these fixtures and asserts the exact expected_error codes?",
+      "Which PM or GUI consumers render polling, partial, timeout, failed, and cancelled states without implying runtime-queue ownership?",
+      "Where are permission_snapshot_id and redaction_profile_id freshness, existence, authorization, and lifecycle constraints validated?"
+    ],
+    "feature_family_keys": [
+      "web-operation-job-fixtures",
+      "async-web-status",
+      "web-job-failure-oracles",
+      "runtime-queue-authority-boundary",
+      "provider-lineage-metadata"
+    ],
+    "research_queries": []
+  },
+  "task_thread_id": "/root/a005m15_b11_000231_attempt_0015_terminal"
+}

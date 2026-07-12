@@ -1,0 +1,565 @@
+{
+  "_meta": {
+    "authority_basis": {
+      "candidate_reconstructed_from_current_bytes": true,
+      "local_candidate_report_trusted_as_authority": false,
+      "peer_reports_trusted_as_authority": false,
+      "v1_fail_report_preserved_as_lineage_only": true,
+      "source_bytes": [
+        "batch_manifest.jsonl",
+        "packet_registry.jsonl",
+        "packets/ERSCPKT-0001.json through packets/ERSCPKT-0016.json",
+        "dispatch/A005ERSC-0001 through dispatch/A005ERSC-0016 attempt-0001 dispatch_intent.json",
+        "schemas/result.schema.json",
+        "batch_authority.json",
+        "launch_seal.json",
+        "architecture.json",
+        "leaf_prompt.json",
+        "receipt_contract.json",
+        "native_capture_contract.json",
+        "activation_contract.json",
+        "CONCURRENCY_POLICY_V9.json"
+      ],
+      "forbidden_inspection": [
+        "active attempt-0005 recovery result bodies",
+        "unrelated peer outputs"
+      ]
+    },
+    "bound_files": [
+      {
+        "path": "/Users/jaredsmacbookair/Documents/PuppetMaster/Plans/.audits/audit-20260710-005-plan-assurance-model-lanes-fresh-agent-exhaustive/master/external_research/universal-shadow-certification-wave-0001/validation/local_candidate_report.json",
+        "sha256": "a232e09fba1b6e162cc4713a4932309a4a26c641d1461cbb65123aef341f5297"
+      },
+      {
+        "path": "/Users/jaredsmacbookair/Documents/PuppetMaster/Plans/.audits/audit-20260710-005-plan-assurance-model-lanes-fresh-agent-exhaustive/master/external_research/universal-shadow-certification-wave-0001/validation/sol-fresh-independent-prelaunch.json",
+        "sha256": "7a5c0302d37af6e5901f59dbf0fb561049fc70d16a06751996580a5b47a264bf"
+      },
+      {
+        "path": "/Users/jaredsmacbookair/Documents/PuppetMaster/Plans/.audits/audit-20260710-005-plan-assurance-model-lanes-fresh-agent-exhaustive/master/external_research/universal-shadow-certification-wave-0001/validation/postrun-validator-v2/validate_universal_shadow_certification_postrun_v2.py",
+        "sha256": "789bca95c1dbd8ef89a5db06c041c23c67ef330324552ebb1e3602fd24cfa254"
+      },
+      {
+        "path": "/Users/jaredsmacbookair/Documents/PuppetMaster/Plans/.audits/audit-20260710-005-plan-assurance-model-lanes-fresh-agent-exhaustive/master/external_research/universal-shadow-certification-wave-0001/validation/postrun-validator-v2/test_universal_shadow_certification_postrun_v2.py",
+        "sha256": "f42b563c1c13010695f2ab3cab37eef4d763738928c48655f59a5a746ce79961"
+      },
+      {
+        "path": "/Users/jaredsmacbookair/Documents/PuppetMaster/Plans/.audits/audit-20260710-005-plan-assurance-model-lanes-fresh-agent-exhaustive/master/external_research/universal-shadow-certification-wave-0001/validation/postrun-validator-v2/VALIDATOR_AUTHORITY_V2.json",
+        "sha256": "9eec930af0efebee5734892d2d0d9e5836a2bb79928c817492cd73a1ea7d4b97"
+      },
+      {
+        "path": "/Users/jaredsmacbookair/Documents/PuppetMaster/Plans/.audits/audit-20260710-005-plan-assurance-model-lanes-fresh-agent-exhaustive/master/external_research/universal-shadow-certification-wave-0001/validation/postrun-validator-v2/activation-contract-supersession-v2.json",
+        "sha256": "c06a674aabe43c3f4732e1c51043c082dcf13a07757b0260380b2904030e2048"
+      },
+      {
+        "path": "/Users/jaredsmacbookair/Documents/PuppetMaster/Plans/.audits/audit-20260710-005-plan-assurance-model-lanes-fresh-agent-exhaustive/master/external_research/universal-shadow-certification-wave-0001/validation/postrun-validator-v2/activation-generator-v2.py",
+        "sha256": "6d3dfd17c25a1d7ec63b3be50f5912f5800a801260f53525fa230b7137a450bf"
+      },
+      {
+        "path": "/Users/jaredsmacbookair/Documents/PuppetMaster/Plans/.audits/audit-20260710-005-plan-assurance-model-lanes-fresh-agent-exhaustive/master/external_research/universal-shadow-certification-wave-0001/schemas/result.schema.json",
+        "sha256": "d0aad92e52ece20c3164535b2a9fa7a780e57f49343cd7a1ba9ad96d28eec0b1"
+      },
+      {
+        "path": "/Users/jaredsmacbookair/Documents/PuppetMaster/Plans/.audits/audit-20260710-005-plan-assurance-model-lanes-fresh-agent-exhaustive/master/coordination/CONCURRENCY_POLICY_V9.json",
+        "sha256": "0f9dae3c8406be8ab1159f610b6465120049d0057aa81031d6826fb9ba88b592"
+      },
+      {
+        "path": "/Users/jaredsmacbookair/Documents/PuppetMaster/Plans/.audits/audit-20260710-005-plan-assurance-model-lanes-fresh-agent-exhaustive/master/external_research/universal-shadow-certification-wave-0001/validation/postrun-validator-v2/dependency-binding-v1/terminal-independent-binding-report.json",
+        "sha256": "f5cb2e7cc0bb51153c606a37f2808df33a4f815270712cd1f92b427707347b37"
+      },
+      {
+        "path": "/Users/jaredsmacbookair/Documents/PuppetMaster/Plans/.audits/audit-20260710-005-plan-assurance-model-lanes-fresh-agent-exhaustive/master/external_research/universal-shadow-certification-wave-0001/validation/postrun-validator-v2/dependency-binding-v1/DEPENDENCY_BINDING_AUTHORITY_V1.json",
+        "sha256": "5fa8f8c44cba9c0968a771a880746fd9ddcbd6985409ac99633ecb5d282856ff"
+      },
+      {
+        "path": "/Users/jaredsmacbookair/Documents/PuppetMaster/Plans/.audits/audit-20260710-005-plan-assurance-model-lanes-fresh-agent-exhaustive/master/external_research/universal-shadow-certification-wave-0001/validation/postrun-validator-v2/dependency-binding-v1/run_validator_v2_isolated.py",
+        "sha256": "9c3a896444f3b4d67facb9ec8581709d2a6b6022a2ce7decb30dbcc965fd26ad"
+      },
+      {
+        "path": "/Users/jaredsmacbookair/Documents/PuppetMaster/Plans/.audits/audit-20260710-005-plan-assurance-model-lanes-fresh-agent-exhaustive/master/external_research/universal-shadow-certification-wave-0001/validation/postrun-validator-v2/dependency-binding-v1/test_dependency_binding_v1.py",
+        "sha256": "c3644630402b906866bda0702ca8eb3fb125fa9a4ac80a2e4cebd7c8019c77a9"
+      },
+      {
+        "path": "/Users/jaredsmacbookair/Documents/PuppetMaster/Plans/.audits/audit-20260710-005-plan-assurance-model-lanes-fresh-agent-exhaustive/master/dependencies/jsonschema-draft202012-v1/dependency_authority.json",
+        "sha256": "89d86715ed9760a2f9469733bf43cb6099784710b97bccf1b656e9520d0d3afb"
+      },
+      {
+        "path": "/Users/jaredsmacbookair/Documents/PuppetMaster/Plans/.audits/audit-20260710-005-plan-assurance-model-lanes-fresh-agent-exhaustive/master/dependencies/jsonschema-draft202012-v1/install_receipt.json",
+        "sha256": "f36f64777e31a3d993a3e1fc03ed4d46182b77667d20f81bba6eb5ffc56462f8"
+      },
+      {
+        "path": "/Users/jaredsmacbookair/Documents/PuppetMaster/Plans/.audits/audit-20260710-005-plan-assurance-model-lanes-fresh-agent-exhaustive/master/dependencies/jsonschema-draft202012-v1/source_registry.json",
+        "sha256": "23ca01e5f0117b8f8637168c883dc99cd459387920629f6ee34be7985b9e9005"
+      },
+      {
+        "path": "/Users/jaredsmacbookair/Documents/PuppetMaster/Plans/.audits/audit-20260710-005-plan-assurance-model-lanes-fresh-agent-exhaustive/master/dependencies/jsonschema-draft202012-v1/wheel_manifest.jsonl",
+        "sha256": "c662aa4821ea4980210c248711d76afd25c6e296b9367458467f19f1a7665f40"
+      },
+      {
+        "path": "/Users/jaredsmacbookair/Documents/PuppetMaster/Plans/.audits/audit-20260710-005-plan-assurance-model-lanes-fresh-agent-exhaustive/master/dependencies/jsonschema-draft202012-v1/requirements.lock",
+        "sha256": "a70d91fb9e7a4efbdded91709cb942d65be08c94f7ea58e473b3f0b1c190996d"
+      },
+      {
+        "path": "/Users/jaredsmacbookair/Documents/PuppetMaster/Plans/.audits/audit-20260710-005-plan-assurance-model-lanes-fresh-agent-exhaustive/master/dependencies/jsonschema-draft202012-v1/tools/verify_dependency.py",
+        "sha256": "5d1e1042a91cae9751e02fe162381c5bf88fd4bfaa11ae9452dc3e790828a7af"
+      },
+      {
+        "path": "/Users/jaredsmacbookair/Documents/PuppetMaster/Plans/.audits/audit-20260710-005-plan-assurance-model-lanes-fresh-agent-exhaustive/master/dependencies/jsonschema-draft202012-v1/tests/test_dependency_bundle.py",
+        "sha256": "df8f330e29a6b72b8dc9c551f9653fbbd9d81dff0484200058f0d5fa5025a2ee"
+      },
+      {
+        "path": "/Users/jaredsmacbookair/Documents/PuppetMaster/Plans/.audits/audit-20260710-005-plan-assurance-model-lanes-fresh-agent-exhaustive/master/dependencies/jsonschema-draft202012-v1/fixtures/known-good-result.json",
+        "sha256": "56bd9ea8beb1d1134398bff30c96f92c4ef3cd652b0670b061b92561e4d45885"
+      },
+      {
+        "path": "/Users/jaredsmacbookair/Documents/PuppetMaster/Plans/.audits/audit-20260710-005-plan-assurance-model-lanes-fresh-agent-exhaustive/master/dependencies/jsonschema-draft202012-v1/wheels/attrs-26.1.0-py3-none-any.whl",
+        "sha256": "c647aa4a12dfbad9333ca4e71fe62ddc36f4e63b2d260a37a8b83d2f043ac309"
+      },
+      {
+        "path": "/Users/jaredsmacbookair/Documents/PuppetMaster/Plans/.audits/audit-20260710-005-plan-assurance-model-lanes-fresh-agent-exhaustive/master/dependencies/jsonschema-draft202012-v1/wheels/jsonschema-4.26.0-py3-none-any.whl",
+        "sha256": "d489f15263b8d200f8387e64b4c3a75f06629559fb73deb8fdfb525f2dab50ce"
+      },
+      {
+        "path": "/Users/jaredsmacbookair/Documents/PuppetMaster/Plans/.audits/audit-20260710-005-plan-assurance-model-lanes-fresh-agent-exhaustive/master/dependencies/jsonschema-draft202012-v1/wheels/jsonschema_specifications-2025.9.1-py3-none-any.whl",
+        "sha256": "98802fee3a11ee76ecaca44429fda8a41bff98b00a0f2838151b113f210cc6fe"
+      },
+      {
+        "path": "/Users/jaredsmacbookair/Documents/PuppetMaster/Plans/.audits/audit-20260710-005-plan-assurance-model-lanes-fresh-agent-exhaustive/master/dependencies/jsonschema-draft202012-v1/wheels/referencing-0.37.0-py3-none-any.whl",
+        "sha256": "381329a9f99628c9069361716891d34ad94af76e461dcb0335825aecc7692231"
+      },
+      {
+        "path": "/Users/jaredsmacbookair/Documents/PuppetMaster/Plans/.audits/audit-20260710-005-plan-assurance-model-lanes-fresh-agent-exhaustive/master/dependencies/jsonschema-draft202012-v1/wheels/rpds_py-2026.6.3-cp312-cp312-macosx_11_0_arm64.whl",
+        "sha256": "538949e262e46caa31ac01bdb3c1e8f642622922cacbabbae6a8445d9dc33eaf"
+      },
+      {
+        "path": "/Users/jaredsmacbookair/Documents/PuppetMaster/Plans/.audits/audit-20260710-005-plan-assurance-model-lanes-fresh-agent-exhaustive/master/dependencies/jsonschema-draft202012-v1/wheels/typing_extensions-4.16.0-py3-none-any.whl",
+        "sha256": "481caa481374e813c1b176ada14e97f1f67a4539ce9cfeb3f350d78d6370c2e8"
+      },
+      {
+        "path": "/Users/jaredsmacbookair/.cache/codex-runtimes/codex-primary-runtime/dependencies/python/bin/python3",
+        "sha256": "eb9d74b9c7cfdfb2c9b91614edb2c3607360ba46c5aa7fc4557b3a4a23e97cff"
+      }
+    ],
+    "candidate_control_hashes": {
+      "architecture.json": "027ff81d0d73c9ea04a66557d1fd9270ece11816058808e5b60b1fb1bc1813f6",
+      "batch_authority.json": "fe18c2c3dfc80a6481701c4e79387d0221a95d81784949b354b89b7f736abe24",
+      "launch_seal.json": "7477cb53229aa72883296b87e9339db83b43b0c5208b3ae1be8d2d359e328ebb",
+      "batch_manifest.jsonl": "f41c967a3d2650031c0b8c74a83c410ca168aa8704131b6986c1c70309e68295",
+      "packet_registry.jsonl": "ec4df1ce8b250c76d0daba5e93a94c5318d8aea82942d55c7145eed43c200ba8",
+      "leaf_prompt.json": "18470ecb4a53a7f737b35e98debde8fef17f36ea31fe99ba73dc946cc72e8ef6",
+      "result.schema.json": "d0aad92e52ece20c3164535b2a9fa7a780e57f49343cd7a1ba9ad96d28eec0b1",
+      "receipt_contract.json": "9922535622d3e77cc818d40d0ba811bb5fa1bd90fe44af4315bda02a09692767",
+      "native_capture_contract.json": "42ae6690b34249eca9a617104f223f4c9e4b41278876254be0a1eec91215da93",
+      "activation_contract.json": "10c5f46b5ed4fd5c418aa2c4cd9c3323586547030c36e4ac86f29297d355ca87",
+      "local_candidate_report.json": "a232e09fba1b6e162cc4713a4932309a4a26c641d1461cbb65123aef341f5297"
+    },
+    "v2_control_hashes": {
+      "local-v2-candidate-report.json": "f3c612c5d3565f3b871a90ee2ae1620e692e2fcefa4722de23a21ce7cfd79f52",
+      "verify_universal_shadow_certification_v2.py": "fa8e69eeac0ec93d8e3a587251b8556d1e3fe7eba879db2fde65aff5cecea664"
+    },
+    "candidate_reconstruction": {
+      "assignment_count": 16,
+      "packet_count": 16,
+      "intent_count": 16,
+      "feature_count": 3888,
+      "unique_feature_count": 3888,
+      "features_per_assignment": [243],
+      "owner_domains_per_packet": [16],
+      "source_assignments_per_packet": [24],
+      "owner_domain_sets_all_equal": true,
+      "source_assignment_sets_all_equal": true,
+      "owner_domains": [
+        "agents_models_providers",
+        "automation_scheduling_notifications",
+        "collaboration_chat_communication",
+        "cross_cutting_platform",
+        "data_contracts_interchange",
+        "gui_ux_accessibility",
+        "installation_updates_recovery",
+        "observability_testing_evaluation",
+        "orchestration_runtime_execution",
+        "permissions_security_privacy",
+        "planning_specification_governance",
+        "source_control_workspace_code",
+        "storage_artifacts_history",
+        "tools_integrations_mcp",
+        "usage_costs_quotas",
+        "work_nodes_tasks_goals"
+      ],
+      "source_assignment_ids": [
+        "A005ERU-0001",
+        "A005ERU-0002",
+        "A005ERU-0003",
+        "A005ERU-0004",
+        "A005ERU-0005",
+        "A005ERU-0006",
+        "A005ERU-0007",
+        "A005ERU-0008",
+        "A005ERU-0009",
+        "A005ERU-0010",
+        "A005ERU-0011",
+        "A005ERU-0012",
+        "A005ERU-0013",
+        "A005ERU-0014",
+        "A005ERU-0015",
+        "A005ERU-0016",
+        "A005ERU-0017",
+        "A005ERU-0018",
+        "A005ERU-0019",
+        "A005ERU-0020",
+        "A005ERU-0021",
+        "A005ERU-0022",
+        "A005ERU-0023",
+        "A005ERU-0024"
+      ],
+      "packet_bytes": {
+        "min": 839210,
+        "max": 848799,
+        "total": 13494560,
+        "hard_ceiling": 900000
+      },
+      "coverage_digest": "91f8e13d91dc3615781c9592abade65072b45514a4b515471e96750409586ca3",
+      "packet_root_sha256": "2ef4c307455eae300ade6c487a2816469c2551e9e8afc76014c700c2a8e29926",
+      "intent_root_sha256": "e9e009c14c3e0fb9c1ced388a3300c030822c5d7984b86923e65661e85db42fe",
+      "manifest_sha256": "f41c967a3d2650031c0b8c74a83c410ca168aa8704131b6986c1c70309e68295",
+      "packet_registry_sha256": "ec4df1ce8b250c76d0daba5e93a94c5318d8aea82942d55c7145eed43c200ba8",
+      "result_schema_sha256": "d0aad92e52ece20c3164535b2a9fa7a780e57f49343cd7a1ba9ad96d28eec0b1",
+      "candidate_payload_root_sha256_pinned": "2a6f490a1901d9650209a10ae3b324f4a04de6068f9c10aae017b6fa103eafb8",
+      "candidate_payload_root_sha256_recomputed_before_report": "c6ffebeb6982c64244eb0720b2c1ca12b27951b13ba13fbc78708a518b67b9dc",
+      "packet_hashes": {
+        "A005ERSC-0001": "66b83cfb424874a8191330c1e20d7a0d2aeeaa2e1e98d7124d3dd5e91d0e566e",
+        "A005ERSC-0002": "ecf221e05e0e6ac38c8044c83b74f23987baab83039bb5c978bc7d3a64cada65",
+        "A005ERSC-0003": "85f612466589b85a4cfe0cdeb9487ac0b0c4400d7726d090dc68f82e11add398",
+        "A005ERSC-0004": "57fbe4b6a9e808945251780b9c5b8492d368c7d7f0de160ecd8ca73c1b675780",
+        "A005ERSC-0005": "fbc4c82540e5cfdded860c27d12c57b895da2159f603320da5a3046d88f94283",
+        "A005ERSC-0006": "7950d060991bfcab0f7e30a6c7841cab6b26925abf2c384d3d3818f8cbce7c55",
+        "A005ERSC-0007": "6a376c8757d74b7f1123247ecd99f5d889bbb3503527950573054407dde04258",
+        "A005ERSC-0008": "1ac62ef5135d7d6ccb2417cc8ce18d94b26646191a6d1db34e15876f2f3f41d2",
+        "A005ERSC-0009": "06db1991efc4e63111626ba127ffe07ebb32ef1470de173aa031f86f661a1d16",
+        "A005ERSC-0010": "bae026f85258c8a8990f0b946f2829f59ef674072b3d5677b72604cf04f0512d",
+        "A005ERSC-0011": "761a59ce6e00306b9d65b4f1fac8242bff5fb2c4482bb5f6cfd53ed7361dd4d5",
+        "A005ERSC-0012": "acdd4a260b5d7fc2614e0829efaeed38e04abf1e8f03928b82b60981741625a6",
+        "A005ERSC-0013": "0b52384bc6ba6e82f9e6ee03678ed6893d1aeed79a4706870766547690551dbf",
+        "A005ERSC-0014": "6785250564bdddab398290d56e0b7ecd165c08208bf9c1c3f9dc7c2947dc6e1d",
+        "A005ERSC-0015": "a916f88c5ccb9ca29349b937e0c243e57c3ecfc1eb3c4c98f1c8efc7ec617ee3",
+        "A005ERSC-0016": "7fd214d105b803a37336d70d9d19bcdc5ec31b7111f3869baac188d673aa30ab"
+      },
+      "intent_hashes": {
+        "A005ERSC-0001": "4aa828dde8c6053f7db9c3857ed2755316a7906eb6d41e44e94e451dc71ce9f5",
+        "A005ERSC-0002": "88b14031c7cd117a1ccf1a9f2a7fa0f6881cc6a259a752706f64f62e4d097033",
+        "A005ERSC-0003": "8afeaf0c4d6f2d229e41ca372a74be390e95c86bdd7ead1f27c51848f6e96f5a",
+        "A005ERSC-0004": "cea325ecbd6c2a11aea17777b00f1aeebfe74b40686b62cf33f5c5d42431b6d5",
+        "A005ERSC-0005": "e04aa5c74bf75c919c7d1965d919912a8dfedc7006506f89b42ecec8c3f97ad5",
+        "A005ERSC-0006": "a4f4ef6d6ae8b063a2d43b2f2f5d45c330e18a51657387efac477864bbe25507",
+        "A005ERSC-0007": "2773dae25b5827b7bdf08190fdbc5c0615cad4bafdb7ac011d96aeaa89487668",
+        "A005ERSC-0008": "7a496563f3d5279d64fed4b0cbedee4130b658e1465e60278d658b65a4a27570",
+        "A005ERSC-0009": "f34ac380bf8d85590105ac765fb9761616ba80f3e259142be50bd5834e717d61",
+        "A005ERSC-0010": "3a787170fcb0210ea11aae1ec738f357f14ec88ffb377ca01c3f3ce2d5ea998f",
+        "A005ERSC-0011": "ec58da3ab6758d8c1864b2d3fc4d0a576773c6ceeadf2c6397109bc30f3b6b75",
+        "A005ERSC-0012": "efd4f9a6c551afdaf4ca14d4acc39d56f321e551ef708e296ab2658158385d9d",
+        "A005ERSC-0013": "e58a66ba2decb07c8eb913a720636397e88cc527eafde37074fa3736e6a2e794",
+        "A005ERSC-0014": "cb743a6b128d2780d7a72a490fc30acb3fc945a48402c0877e767c28a1357a27",
+        "A005ERSC-0015": "7b362bc9b6fa26164f5682418fde1d86243a61abfcf51da241220dc720e1fa3b",
+        "A005ERSC-0016": "10a43da3d86c832b01d42fc28d8909b3aef72b743b3009ddde65c1a4d9a72b14"
+      },
+      "prospective_agent_paths": {
+        "A005ERSC-0001": "/root/a005_external_research_universal_shadow_certification_0001_attempt_0001_terminal",
+        "A005ERSC-0002": "/root/a005_external_research_universal_shadow_certification_0002_attempt_0001_terminal",
+        "A005ERSC-0003": "/root/a005_external_research_universal_shadow_certification_0003_attempt_0001_terminal",
+        "A005ERSC-0004": "/root/a005_external_research_universal_shadow_certification_0004_attempt_0001_terminal",
+        "A005ERSC-0005": "/root/a005_external_research_universal_shadow_certification_0005_attempt_0001_terminal",
+        "A005ERSC-0006": "/root/a005_external_research_universal_shadow_certification_0006_attempt_0001_terminal",
+        "A005ERSC-0007": "/root/a005_external_research_universal_shadow_certification_0007_attempt_0001_terminal",
+        "A005ERSC-0008": "/root/a005_external_research_universal_shadow_certification_0008_attempt_0001_terminal",
+        "A005ERSC-0009": "/root/a005_external_research_universal_shadow_certification_0009_attempt_0001_terminal",
+        "A005ERSC-0010": "/root/a005_external_research_universal_shadow_certification_0010_attempt_0001_terminal",
+        "A005ERSC-0011": "/root/a005_external_research_universal_shadow_certification_0011_attempt_0001_terminal",
+        "A005ERSC-0012": "/root/a005_external_research_universal_shadow_certification_0012_attempt_0001_terminal",
+        "A005ERSC-0013": "/root/a005_external_research_universal_shadow_certification_0013_attempt_0001_terminal",
+        "A005ERSC-0014": "/root/a005_external_research_universal_shadow_certification_0014_attempt_0001_terminal",
+        "A005ERSC-0015": "/root/a005_external_research_universal_shadow_certification_0015_attempt_0001_terminal",
+        "A005ERSC-0016": "/root/a005_external_research_universal_shadow_certification_0016_attempt_0001_terminal"
+      },
+      "output_directories": {
+        "A005ERSC-0001": "/Users/jaredsmacbookair/Documents/PuppetMaster/Plans/.audits/audit-20260710-005-plan-assurance-model-lanes-fresh-agent-exhaustive/external_research_universal_shadow_certification_v1/A005ERSC-0001/attempts/attempt-0001",
+        "A005ERSC-0002": "/Users/jaredsmacbookair/Documents/PuppetMaster/Plans/.audits/audit-20260710-005-plan-assurance-model-lanes-fresh-agent-exhaustive/external_research_universal_shadow_certification_v1/A005ERSC-0002/attempts/attempt-0001",
+        "A005ERSC-0003": "/Users/jaredsmacbookair/Documents/PuppetMaster/Plans/.audits/audit-20260710-005-plan-assurance-model-lanes-fresh-agent-exhaustive/external_research_universal_shadow_certification_v1/A005ERSC-0003/attempts/attempt-0001",
+        "A005ERSC-0004": "/Users/jaredsmacbookair/Documents/PuppetMaster/Plans/.audits/audit-20260710-005-plan-assurance-model-lanes-fresh-agent-exhaustive/external_research_universal_shadow_certification_v1/A005ERSC-0004/attempts/attempt-0001",
+        "A005ERSC-0005": "/Users/jaredsmacbookair/Documents/PuppetMaster/Plans/.audits/audit-20260710-005-plan-assurance-model-lanes-fresh-agent-exhaustive/external_research_universal_shadow_certification_v1/A005ERSC-0005/attempts/attempt-0001",
+        "A005ERSC-0006": "/Users/jaredsmacbookair/Documents/PuppetMaster/Plans/.audits/audit-20260710-005-plan-assurance-model-lanes-fresh-agent-exhaustive/external_research_universal_shadow_certification_v1/A005ERSC-0006/attempts/attempt-0001",
+        "A005ERSC-0007": "/Users/jaredsmacbookair/Documents/PuppetMaster/Plans/.audits/audit-20260710-005-plan-assurance-model-lanes-fresh-agent-exhaustive/external_research_universal_shadow_certification_v1/A005ERSC-0007/attempts/attempt-0001",
+        "A005ERSC-0008": "/Users/jaredsmacbookair/Documents/PuppetMaster/Plans/.audits/audit-20260710-005-plan-assurance-model-lanes-fresh-agent-exhaustive/external_research_universal_shadow_certification_v1/A005ERSC-0008/attempts/attempt-0001",
+        "A005ERSC-0009": "/Users/jaredsmacbookair/Documents/PuppetMaster/Plans/.audits/audit-20260710-005-plan-assurance-model-lanes-fresh-agent-exhaustive/external_research_universal_shadow_certification_v1/A005ERSC-0009/attempts/attempt-0001",
+        "A005ERSC-0010": "/Users/jaredsmacbookair/Documents/PuppetMaster/Plans/.audits/audit-20260710-005-plan-assurance-model-lanes-fresh-agent-exhaustive/external_research_universal_shadow_certification_v1/A005ERSC-0010/attempts/attempt-0001",
+        "A005ERSC-0011": "/Users/jaredsmacbookair/Documents/PuppetMaster/Plans/.audits/audit-20260710-005-plan-assurance-model-lanes-fresh-agent-exhaustive/external_research_universal_shadow_certification_v1/A005ERSC-0011/attempts/attempt-0001",
+        "A005ERSC-0012": "/Users/jaredsmacbookair/Documents/PuppetMaster/Plans/.audits/audit-20260710-005-plan-assurance-model-lanes-fresh-agent-exhaustive/external_research_universal_shadow_certification_v1/A005ERSC-0012/attempts/attempt-0001",
+        "A005ERSC-0013": "/Users/jaredsmacbookair/Documents/PuppetMaster/Plans/.audits/audit-20260710-005-plan-assurance-model-lanes-fresh-agent-exhaustive/external_research_universal_shadow_certification_v1/A005ERSC-0013/attempts/attempt-0001",
+        "A005ERSC-0014": "/Users/jaredsmacbookair/Documents/PuppetMaster/Plans/.audits/audit-20260710-005-plan-assurance-model-lanes-fresh-agent-exhaustive/external_research_universal_shadow_certification_v1/A005ERSC-0014/attempts/attempt-0001",
+        "A005ERSC-0015": "/Users/jaredsmacbookair/Documents/PuppetMaster/Plans/.audits/audit-20260710-005-plan-assurance-model-lanes-fresh-agent-exhaustive/external_research_universal_shadow_certification_v1/A005ERSC-0015/attempts/attempt-0001",
+        "A005ERSC-0016": "/Users/jaredsmacbookair/Documents/PuppetMaster/Plans/.audits/audit-20260710-005-plan-assurance-model-lanes-fresh-agent-exhaustive/external_research_universal_shadow_certification_v1/A005ERSC-0016/attempts/attempt-0001"
+      },
+      "binding_checks": {
+        "manifest_registry_packet_intent": "pass",
+        "packet_hashes_rehashed": {"count": 16, "all_match_manifest_and_registry": true},
+        "intent_hashes_rehashed": {"count": 16, "all_required_fields_match": true},
+        "result_schema_bound_by_all_intents": true,
+        "receipt_contract_sha256": "9922535622d3e77cc818d40d0ba811bb5fa1bd90fe44af4315bda02a09692767",
+        "receipts_present": 0,
+        "results_present": 0,
+        "output_directories_empty": 16,
+        "prospective_agent_paths_canonical_and_unique": true,
+        "prelaunch_intents_require_activation": true,
+        "prelaunch_intents_grant_activation": false,
+        "v1_activation_namespace_present": false,
+        "v2_activation_namespace_present": false
+      }
+    },
+    "dependency_binding_v1": {
+      "terminal_binding_report_sha256": "f5cb2e7cc0bb51153c606a37f2808df33a4f815270712cd1f92b427707347b37",
+      "binding_authority_sha256": "5fa8f8c44cba9c0968a771a880746fd9ddcbd6985409ac99633ecb5d282856ff",
+      "wrapper_sha256": "9c3a896444f3b4d67facb9ec8581709d2a6b6022a2ce7decb30dbcc965fd26ad",
+      "tests_sha256": "c3644630402b906866bda0702ca8eb3fb125fa9a4ac80a2e4cebd7c8019c77a9",
+      "status": "pass",
+      "binding_tests": {"status": "pass", "passed": 115, "total": 115, "failed": 0, "test_digest": "591694517db22b5845260235e9da4ff3fb4b61ed7285c2a2cd9eb4ad8e9ee112"},
+      "sealed_dependency_verifier": {"status": "READY_FOR_VALIDATOR_V2_BINDING", "errors": [], "strict_tests": {"status": "pass", "passed": 152, "total": 152, "failed": 0, "bypasses_rejected": 12, "bypasses_total": 12}, "real_engine": true, "network_required_after_install": false, "global_install_performed": false},
+      "isolated_wrapper_runs": {
+        "probe": {"status": "pass", "errors": [], "toctou_stable": true, "activation_generator_invoked": false},
+        "tests": {"status": "pass", "errors": [], "toctou_stable": true, "passed": 437, "total": 437, "failed": 0, "bypasses_rejected": 12, "schema_fuzz_rejected": 100},
+        "validator": {"status": "pass", "errors": [], "toctou_stable": true, "execution_status": "fail_closed", "execution_returncode": 1, "assignments": 16, "rejected": 16, "features": 3888, "unique_features": 3888, "results": 0, "receipts": 0, "native_capture_rows": 0, "certification_credit": 0}
+      },
+      "bundle": {
+        "authority_sha256": "89d86715ed9760a2f9469733bf43cb6099784710b97bccf1b656e9520d0d3afb",
+        "install_receipt_sha256": "f36f64777e31a3d993a3e1fc03ed4d46182b77667d20f81bba6eb5ffc56462f8",
+        "source_registry_sha256": "23ca01e5f0117b8f8637168c883dc99cd459387920629f6ee34be7985b9e9005",
+        "wheel_manifest_sha256": "c662aa4821ea4980210c248711d76afd25c6e296b9367458467f19f1a7665f40",
+        "requirements_lock_sha256": "a70d91fb9e7a4efbdded91709cb942d65be08c94f7ea58e473b3f0b1c190996d",
+        "bundle_tree_sha256": "c6443f668a744e37689ddcbdab5ffa8bee957ff18df2bf41863e8e4dc49d82bb",
+        "bundle_file_count": 167,
+        "site_tree_sha256": "f117d8770a942f1760a6555f7544e697d5fdfc2a06a8af608f300e94ac75ee95",
+        "site_file_count": 152,
+        "python_executable_sha256": "eb9d74b9c7cfdfb2c9b91614edb2c3607360ba46c5aa7fc4557b3a4a23e97cff",
+        "python_version": "3.12.13",
+        "implementation": "CPython",
+        "machine": "arm64",
+        "sysconfig_platform": "macosx-11.0-arm64",
+        "isolated_flags": ["-S", "-B"],
+        "pythonpath": "master/dependencies/jsonschema-draft202012-v1/site-packages",
+        "jsonschema_version": "4.26.0",
+        "validator_class": "jsonschema.Draft202012Validator",
+        "format_checker": "jsonschema.FormatChecker",
+        "meta_schema_id": "https://json-schema.org/draft/2020-12/schema",
+        "global_install": false,
+        "network_required_after_bundle_creation": false,
+        "wheel_hashes": {
+          "attrs-26.1.0-py3-none-any.whl": "c647aa4a12dfbad9333ca4e71fe62ddc36f4e63b2d260a37a8b83d2f043ac309",
+          "jsonschema-4.26.0-py3-none-any.whl": "d489f15263b8d200f8387e64b4c3a75f06629559fb73deb8fdfb525f2dab50ce",
+          "jsonschema_specifications-2025.9.1-py3-none-any.whl": "98802fee3a11ee76ecaca44429fda8a41bff98b00a0f2838151b113f210cc6fe",
+          "referencing-0.37.0-py3-none-any.whl": "381329a9f99628c9069361716891d34ad94af76e461dcb0335825aecc7692231",
+          "rpds_py-2026.6.3-cp312-cp312-macosx_11_0_arm64.whl": "538949e262e46caa31ac01bdb3c1e8f642622922cacbabbae6a8445d9dc33eaf",
+          "typing_extensions-4.16.0-py3-none-any.whl": "481caa481374e813c1b176ada14e97f1f67a4539ce9cfeb3f350d78d6370c2e8"
+        }
+      }
+    },
+    "validator_v2": {
+      "schema_engine": {"available": true, "distribution": "jsonschema", "library_version": "4.26.0", "validator_class": "jsonschema.Draft202012Validator", "format_checker": "jsonschema.FormatChecker", "meta_schema_id": "https://json-schema.org/draft/2020-12/schema"},
+      "tests": {"status": "pass_fail_closed", "passed": 437, "total": 437, "failed": 0, "new_v2_tests": 138, "inherited_suite_passed": 299, "inherited_suite_total": 299, "bypasses_rejected": 12, "bypasses_total": 12, "generic_schema_fuzz_rejected": 100, "generic_schema_fuzz_total": 100, "schema_specific_execution_available": true},
+      "postrun_zero_state": {"status": "fail_closed", "global_errors": ["native-capture-v2-missing"], "assignments": 16, "eligible": 0, "rejected": 16, "features": 3888, "unique_features": 3888, "results": 0, "receipts": 0, "native_capture_rows": 0, "certification_credit": 0}
+    },
+    "generator_compatibility": {
+      "decision": "fail_closed",
+      "positive_dependency_binding_v1": false,
+      "future_invocation_permitted": false,
+      "activation_generator_invoked": false,
+      "cli_required_arguments": ["--independent-report", "--independent-report-sha256", "--expected-jsonschema-version"],
+      "required_report_fields_source": {
+        "path": "/Users/jaredsmacbookair/Documents/PuppetMaster/Plans/.audits/audit-20260710-005-plan-assurance-model-lanes-fresh-agent-exhaustive/master/external_research/universal-shadow-certification-wave-0001/validation/postrun-validator-v2/activation-generator-v2.py",
+        "lines": "102-127",
+        "fields": ["audit_id", "wave_id", "status", "errors", "independent", "assignment_count", "feature_count", "features_per_assignment", "assignment_ids", "coverage_digest", "model", "reasoning_effort", "controller_thread_id", "v9_sha256", "validator_authority_v2_sha256", "activation_contract_v2_sha256", "validator_v2_sha256", "tests_v2_sha256", "independent_fail_report_sha256", "zero_state", "activation_authorized"]
+      },
+      "schema_engine_fields_checked": ["available", "distribution", "library_version", "validator_class", "meta_schema_id"],
+      "validator_v2_test_fields_checked": ["failed", "passed", "total", "bypasses_rejected"],
+      "dependency_binding_fields_checked": [],
+      "dependency_binding_artifacts_loaded_by_generator": [],
+      "isolated_engine_identity_checked_by_generator": false,
+      "report_meta_positive_binding": false,
+      "missing_positive_binding": [
+        "dependency-binding-v1 terminal-independent-binding-report.json SHA-256",
+        "dependency-binding-v1 DEPENDENCY_BINDING_AUTHORITY_V1.json SHA-256",
+        "dependency-binding-v1 run_validator_v2_isolated.py SHA-256",
+        "dependency-binding-v1 test_dependency_binding_v1.py SHA-256",
+        "dependency bundle authority/install receipt/source registry/wheel manifest/requirements lock hashes",
+        "dependency bundle tree hash and 167-file count",
+        "isolated site tree hash and 152-file count",
+        "six wheel hashes",
+        "bundled Python executable SHA-256 and isolated runtime identity"
+      ],
+      "source_evidence": [
+        "activation-generator-v2.py:82-85 defines exactly the three required CLI arguments",
+        "activation-generator-v2.py:89-97 loads only v2 authority, v2 contract, local-v2 candidate report, V9, and the submitted report before calling validator_v2.engine_status",
+        "activation-generator-v2.py:102-127 compares the required top-level report fields listed above",
+        "activation-generator-v2.py:128-130 checks only the report schema_engine self-attestation fields listed above",
+        "activation-generator-v2.py:131-133 checks only aggregate validator_v2_tests failed/passed/total/bypasses_rejected fields",
+        "AST/source inspection found no dependency-binding-v1 authority/report/wrapper/test/bundle/site-tree/python-executable field access or artifact path"
+      ]
+    },
+    "preparation_evidence": {
+      "independently_observed_inherited_preparation_checks": {"status": "pass", "passed": 299, "total": 299, "failed": 0},
+      "v1_prelaunch_verifier": {
+        "status": "fail",
+        "strict_tests": {"status": "pass", "passed": 299, "total": 299},
+        "mechanical_core": {"status": "pass", "assignments": 16, "packets": 16, "intents": 16, "features": 3888, "unique_features": 3888, "features_per_assignment": 243, "owner_domains_per_packet": 16, "source_assignments_per_packet": 24, "empty_outputs": 16, "receipts": 0, "results": 0, "activation_files": 0},
+        "errors": ["control-determinism:batch_authority.json", "control-determinism:launch_seal.json", "control-determinism:validation/local_candidate_report.json"]
+      },
+      "dynamic_control_recheck": {
+        "pinned_candidate_payload_root_sha256": "2a6f490a1901d9650209a10ae3b324f4a04de6068f9c10aae017b6fa103eafb8",
+        "recomputed_current_payload_root_sha256_before_report": "c6ffebeb6982c64244eb0720b2c1ca12b27951b13ba13fbc78708a518b67b9dc",
+        "recomputed_batch_authority_sha256": "8d6293649d39ec9125da0480c0036650a1a53ef20f61b91e0e94c7cb1b265700",
+        "recomputed_launch_seal_sha256": "9b4c1f91084b2b8c3f3174f83b27a1db3ab5d68eb03a86e7a457f64496c9455c",
+        "recomputed_local_candidate_report_sha256": "5e7dc7ce9e4bad4d2a40e7dcd056ed4fbb73eb35eec701b9dc9f566cd7f0d15f",
+        "difference_scope": "The current dynamic controls projection differs only through candidate_payload_root_sha256 and the dependent authority/seal/report hashes; packet, intent, manifest, registry, coverage, and zero-state bindings independently pass.",
+        "credit_effect": 0
+      }
+    },
+    "v1_fail_lineage": {
+      "path": "/Users/jaredsmacbookair/Documents/PuppetMaster/Plans/.audits/audit-20260710-005-plan-assurance-model-lanes-fresh-agent-exhaustive/master/external_research/universal-shadow-certification-wave-0001/validation/sol-fresh-independent-prelaunch.json",
+      "sha256": "7a5c0302d37af6e5901f59dbf0fb561049fc70d16a06751996580a5b47a264bf",
+      "status": "fail",
+      "independent": true,
+      "activation_authorized": false,
+      "certification_credit": 0,
+      "error_count": 12,
+      "used_as_authority": false,
+      "preserved_without_mutation": true
+    },
+    "v9_evidence": {
+      "path": "/Users/jaredsmacbookair/Documents/PuppetMaster/Plans/.audits/audit-20260710-005-plan-assurance-model-lanes-fresh-agent-exhaustive/master/coordination/CONCURRENCY_POLICY_V9.json",
+      "sha256": "0f9dae3c8406be8ab1159f610b6465120049d0057aa81031d6826fb9ba88b592",
+      "status": "ACTIVE_PROSPECTIVE_ROLLING_32",
+      "rolling_total_cap": 32,
+      "atomic_transaction_cap": 16,
+      "parallel_research_leaf_count": 16,
+      "single_atomic_32_launch_forbidden": true
+    },
+    "zero_state_and_scope": {
+      "activation_v2_json_present": false,
+      "activation_core_v2_json_present": false,
+      "activation_v2_authorizations_present": false,
+      "runtime_native_capture_v2_present": false,
+      "runtime_native_capture_v1_present": false,
+      "v1_activation_namespace_present": false,
+      "receipts": 0,
+      "results": 0,
+      "native_capture_rows": 0,
+      "leaves_launched": 0,
+      "activation_generator_invoked": false,
+      "canonical_plan_changes": [],
+      "canonical_plan_writes": 0,
+      "credit_granted": 0
+    },
+    "write_scope": {
+      "only_repository_write": "/Users/jaredsmacbookair/Documents/PuppetMaster/Plans/.audits/audit-20260710-005-plan-assurance-model-lanes-fresh-agent-exhaustive/master/external_research/universal-shadow-certification-wave-0001/validation/luna-fresh-independent-prelaunch-v2/independent-prelaunch.json",
+      "activation_generator_invoked": false,
+      "descendants_spawned": false,
+      "followups_sent": false,
+      "retries_performed": false
+    }
+  },
+  "activation_authorized": false,
+  "activation_contract_v2_sha256": "c06a674aabe43c3f4732e1c51043c082dcf13a07757b0260380b2904030e2048",
+  "assignment_count": 16,
+  "assignment_ids": [
+    "A005ERSC-0001",
+    "A005ERSC-0002",
+    "A005ERSC-0003",
+    "A005ERSC-0004",
+    "A005ERSC-0005",
+    "A005ERSC-0006",
+    "A005ERSC-0007",
+    "A005ERSC-0008",
+    "A005ERSC-0009",
+    "A005ERSC-0010",
+    "A005ERSC-0011",
+    "A005ERSC-0012",
+    "A005ERSC-0013",
+    "A005ERSC-0014",
+    "A005ERSC-0015",
+    "A005ERSC-0016"
+  ],
+  "audit_id": "audit-20260710-005-plan-assurance-model-lanes-fresh-agent-exhaustive",
+  "controller_thread_id": "019f4f5e-96c6-7893-8c94-ce2c1b760d6c",
+  "coverage_digest": "91f8e13d91dc3615781c9592abade65072b45514a4b515471e96750409586ca3",
+  "errors": [
+    "activation-generator-v2-does-not-positively-bind-dependency-binding-v1",
+    "activation-generator-v2-misses-dependency-binding-v1-authority-report-wrapper-tests-bundle-site-tree-and-python-identity",
+    "v1-preparation-control-recheck-detected-append-only-candidate-payload-root-drift"
+  ],
+  "feature_count": 3888,
+  "features_per_assignment": 243,
+  "independent": true,
+  "independent_fail_report_sha256": "7a5c0302d37af6e5901f59dbf0fb561049fc70d16a06751996580a5b47a264bf",
+  "model": "gpt-5.6-sol",
+  "reasoning_effort": "xhigh",
+  "reviewer": {
+    "role": "fresh direct Luna independent prelaunch reviewer",
+    "model": "gpt-5.6-luna",
+    "reasoning_effort": "max",
+    "fresh": true,
+    "direct": true,
+    "fork_turns": "none",
+    "descendants_spawned": false,
+    "followups_sent": false,
+    "retries_performed": false
+  },
+  "schema_engine": {
+    "available": true,
+    "distribution": "jsonschema",
+    "library_version": "4.26.0",
+    "validator_class": "jsonschema.Draft202012Validator",
+    "format_checker": "jsonschema.FormatChecker",
+    "meta_schema_id": "https://json-schema.org/draft/2020-12/schema",
+    "error": null
+  },
+  "schema_version": "external-research-universal-shadow-certification-luna-fresh-independent-prelaunch-v2",
+  "status": "fail",
+  "tests_v2_sha256": "f42b563c1c13010695f2ab3cab37eef4d763738928c48655f59a5a746ce79961",
+  "transaction": {
+    "wave_id": "universal-shadow-certification-wave-0001",
+    "attempt_id": "attempt-0001",
+    "assignment_count": 16,
+    "model": "gpt-5.6-sol",
+    "reasoning_effort": "xhigh",
+    "controller_thread_id": "019f4f5e-96c6-7893-8c94-ce2c1b760d6c",
+    "fork_turns": "none",
+    "fresh_children": true,
+    "descendants_forbidden": true,
+    "followups_forbidden": true,
+    "retries_forbidden": true,
+    "transaction_cap": 16,
+    "rolling_total_cap": 32
+  },
+  "v9_sha256": "0f9dae3c8406be8ab1159f610b6465120049d0057aa81031d6826fb9ba88b592",
+  "validator_authority_v2_sha256": "9eec930af0efebee5734892d2d0d9e5836a2bb79928c817492cd73a1ea7d4b97",
+  "validator_v2_sha256": "789bca95c1dbd8ef89a5db06c041c23c67ef330324552ebb1e3602fd24cfa254",
+  "validator_v2_tests": {
+    "status": "pass_fail_closed",
+    "passed": 437,
+    "total": 437,
+    "failed": 0,
+    "new_v2_tests": 138,
+    "inherited_suite_passed": 299,
+    "inherited_suite_total": 299,
+    "bypasses_rejected": 12,
+    "bypasses_total": 12,
+    "generic_schema_fuzz_rejected": 100,
+    "generic_schema_fuzz_total": 100,
+    "schema_specific_execution_available": true
+  },
+  "wave_id": "universal-shadow-certification-wave-0001",
+  "zero_state": {
+    "output_directories": 16,
+    "output_files": 0,
+    "results": 0,
+    "receipts": 0,
+    "native_capture_rows": 0,
+    "activation_files": 0
+  }
+}

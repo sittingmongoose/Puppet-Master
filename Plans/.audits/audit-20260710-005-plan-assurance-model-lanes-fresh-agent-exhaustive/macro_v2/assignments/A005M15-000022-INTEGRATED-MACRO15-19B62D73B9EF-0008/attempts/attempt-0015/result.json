@@ -1,0 +1,1069 @@
+{
+  "assignment_id": "A005M15-000022-INTEGRATED-MACRO15-19B62D73B9EF-0008",
+  "attempt_id": "attempt-0015",
+  "audit_id": "audit-20260710-005-plan-assurance-model-lanes-fresh-agent-exhaustive",
+  "coverage": {
+    "all_micro_windows_reviewed": true,
+    "all_source_lines_reviewed": true,
+    "all_source_units_accounted": true,
+    "both_exact_and_adversarial_lenses_applied": true,
+    "dimensions_checked": [
+      "behavior",
+      "capabilities",
+      "inputs_outputs",
+      "contracts",
+      "states_transitions",
+      "authority",
+      "ownership",
+      "consumers",
+      "gui_truth",
+      "failures_recovery",
+      "security_privacy",
+      "propagation",
+      "operations",
+      "scale_performance",
+      "compatibility_migration",
+      "acceptance_oracles",
+      "builder_discretion",
+      "ambiguity_unknowns",
+      "missing_callers_consumers",
+      "invalid_states_transitions",
+      "concurrency_races",
+      "partial_failure",
+      "recovery_rollback",
+      "authority_boundaries",
+      "privacy_data_lifecycle",
+      "untrusted_inputs",
+      "gui_misleading_states",
+      "offline_network_loss",
+      "scale_limits",
+      "accessibility",
+      "localization",
+      "observability_support",
+      "destructive_actions",
+      "cross_document_seams",
+      "test_falsifiability",
+      "unknown_unknowns"
+    ]
+  },
+  "items": [
+    {
+      "builder_discretion": false,
+      "confidence": 0.99,
+      "dimensions": [
+        "behavior",
+        "capabilities",
+        "inputs_outputs",
+        "contracts",
+        "authority",
+        "ownership",
+        "consumers",
+        "compatibility_migration"
+      ],
+      "evidence": [
+        {
+          "exact_quote": "  Contracts_V0 names the stable active-agent coordination EventRecord families consumed by Orchestrator and storage:",
+          "line_end": 19703,
+          "line_start": 19703,
+          "path": "Plans/Contracts_V0.md",
+          "source_sha256": "4237e1c14fbacb969e3ce54fb0ac2c5742967fe20f28cc6c0acabb7a1241d4a5"
+        },
+        {
+          "exact_quote": "  - Coordination consumers use redb projections and `projector.checkpoint.coordination:{project_id}` for authority.",
+          "line_end": 19718,
+          "line_start": 19718,
+          "path": "Plans/Contracts_V0.md",
+          "source_sha256": "4237e1c14fbacb969e3ce54fb0ac2c5742967fe20f28cc6c0acabb7a1241d4a5"
+        }
+      ],
+      "gap_kind": "none_explicit_contract",
+      "impact": "This establishes the coordination event namespace, redb projection authority, and the non-authoritative status of side-file mirrors, preventing compatibility exports from silently becoming scheduling canon.",
+      "item_id": "M15-001",
+      "item_type": "contract",
+      "severity": "info",
+      "source_unit_refs": [
+        "PLANUNIT:CV-310",
+        "SEMANTIC:PLANUNIT:CV-310"
+      ],
+      "statement": "Active-agent coordination uses named `coordination.*` EventRecord families, with redb coordination projections and their checkpoint as authority; JSON side files are compatibility, debug, or export mirrors only.",
+      "title": "Coordination event and projection authority is explicit"
+    },
+    {
+      "builder_discretion": false,
+      "confidence": 0.96,
+      "dimensions": [
+        "inputs_outputs",
+        "contracts",
+        "states_transitions",
+        "failures_recovery",
+        "scale_performance",
+        "acceptance_oracles",
+        "ambiguity_unknowns",
+        "concurrency_races",
+        "partial_failure",
+        "observability_support",
+        "test_falsifiability"
+      ],
+      "evidence": [
+        {
+          "exact_quote": "  - Stable `coordination.*` event rows list payload minima for registration, status, operation, file-activity, unregister, crash, abort, and debug mirror export.",
+          "line_end": 19715,
+          "line_start": 19715,
+          "path": "Plans/Contracts_V0.md",
+          "source_sha256": "4237e1c14fbacb969e3ce54fb0ac2c5742967fe20f28cc6c0acabb7a1241d4a5"
+        }
+      ],
+      "gap_kind": "payload_and_transition_minima_not_materialized",
+      "impact": "Producers and consumers can disagree on required fields, ordering, deduplication, revision conflict handling, crash-versus-unregister precedence, and replay behavior while still claiming conformance to the family names.",
+      "item_id": "M15-002",
+      "item_type": "gap",
+      "severity": "high",
+      "source_unit_refs": [
+        "PLANUNIT:CV-310",
+        "SEMANTIC:PLANUNIT:CV-310"
+      ],
+      "statement": "The unit requires payload minima but does not enumerate per-family field sets, closed status or operation states, legal transitions, event ordering, idempotency conflict behavior, or recovery from a projection checkpoint that advances across a partially applied coordination update.",
+      "title": "Coordination payload and race semantics remain underspecified"
+    },
+    {
+      "builder_discretion": false,
+      "confidence": 0.99,
+      "dimensions": [
+        "capabilities",
+        "inputs_outputs",
+        "contracts",
+        "authority",
+        "ownership",
+        "consumers",
+        "compatibility_migration"
+      ],
+      "evidence": [
+        {
+          "exact_quote": "  envelope with capability_snapshot_ref, requested_effective_snapshot_ref,",
+          "line_end": 19770,
+          "line_start": 19770,
+          "path": "Plans/Contracts_V0.md",
+          "source_sha256": "4237e1c14fbacb969e3ce54fb0ac2c5742967fe20f28cc6c0acabb7a1241d4a5"
+        },
+        {
+          "exact_quote": "  - Capability states use the closed state set supported, unsupported, capability_gated, clamped, inferred, opaque, stale, and unverified.",
+          "line_end": 19784,
+          "line_start": 19784,
+          "path": "Plans/Contracts_V0.md",
+          "source_sha256": "4237e1c14fbacb969e3ce54fb0ac2c5742967fe20f28cc6c0acabb7a1241d4a5"
+        }
+      ],
+      "gap_kind": "none_explicit_contract",
+      "impact": "Cross-surface payloads can share stable snapshot identity and capability-state vocabulary without copying provider capability tables or relying on retired platform specifications.",
+      "item_id": "M15-003",
+      "item_type": "contract",
+      "severity": "info",
+      "source_unit_refs": [
+        "PLANUNIT:CV-311",
+        "SEMANTIC:PLANUNIT:CV-311"
+      ],
+      "statement": "The provider/model capability envelope names its reference fields, assigns capability semantics to Models_System, closes the capability-state set, and rejects legacy `platform_specs` identities.",
+      "title": "Capability snapshot reference boundary is explicit"
+    },
+    {
+      "builder_discretion": false,
+      "confidence": 0.95,
+      "dimensions": [
+        "inputs_outputs",
+        "contracts",
+        "states_transitions",
+        "failures_recovery",
+        "security_privacy",
+        "propagation",
+        "compatibility_migration",
+        "ambiguity_unknowns",
+        "partial_failure",
+        "recovery_rollback",
+        "cross_document_seams",
+        "test_falsifiability"
+      ],
+      "evidence": [
+        {
+          "exact_quote": "  provider_entry_id, model_id, optional effective_model_id, context_budget_ref,",
+          "line_end": 19771,
+          "line_start": 19771,
+          "path": "Plans/Contracts_V0.md",
+          "source_sha256": "4237e1c14fbacb969e3ce54fb0ac2c5742967fe20f28cc6c0acabb7a1241d4a5"
+        },
+        {
+          "exact_quote": "  capability_state_reason. Models_System owns the capability field semantics,",
+          "line_end": 19773,
+          "line_start": 19773,
+          "path": "Plans/Contracts_V0.md",
+          "source_sha256": "4237e1c14fbacb969e3ce54fb0ac2c5742967fe20f28cc6c0acabb7a1241d4a5"
+        }
+      ],
+      "gap_kind": "reference_requiredness_and_lifecycle_unspecified",
+      "impact": "Callers cannot deterministically validate incomplete envelopes or decide whether to reject, refresh, clamp, or continue when requested and effective refs diverge, become stale, or cannot be resolved.",
+      "item_id": "M15-004",
+      "item_type": "gap",
+      "severity": "high",
+      "source_unit_refs": [
+        "PLANUNIT:CV-311",
+        "SEMANTIC:PLANUNIT:CV-311"
+      ],
+      "statement": "The field names and owner are present, but required-versus-optional rules are explicit for only `effective_model_id`; field types, snapshot immutability and expiry, provenance validation, stale-to-refreshed transitions, and failure behavior for missing or mismatched refs are not closed here.",
+      "title": "Snapshot reference lifecycle and validation are not closed"
+    },
+    {
+      "builder_discretion": false,
+      "confidence": 0.99,
+      "dimensions": [
+        "behavior",
+        "inputs_outputs",
+        "contracts",
+        "states_transitions",
+        "authority",
+        "failures_recovery",
+        "security_privacy",
+        "destructive_actions"
+      ],
+      "evidence": [
+        {
+          "exact_quote": "  filesafe.destructive_override_denied, and filesafe.policy_degraded. The payloads preserve",
+          "line_end": 19832,
+          "line_start": 19832,
+          "path": "Plans/Contracts_V0.md",
+          "source_sha256": "4237e1c14fbacb969e3ce54fb0ac2c5742967fe20f28cc6c0acabb7a1241d4a5"
+        },
+        {
+          "exact_quote": "  - policy_degraded is not used when authoritative allowlist, baseline, root, canonical path, or override authority is absent.",
+          "line_end": 19847,
+          "line_start": 19847,
+          "path": "Plans/Contracts_V0.md",
+          "source_sha256": "4237e1c14fbacb969e3ce54fb0ac2c5742967fe20f28cc6c0acabb7a1241d4a5"
+        }
+      ],
+      "gap_kind": "none_explicit_fail_closed_boundary",
+      "impact": "The contract prevents degraded-policy events from disguising missing enforcement authority and requires blocked execution plus auditable denial and override events.",
+      "item_id": "M15-005",
+      "item_type": "explicit_non_gap",
+      "severity": "info",
+      "source_unit_refs": [
+        "PLANUNIT:CV-312",
+        "SEMANTIC:PLANUNIT:CV-312"
+      ],
+      "statement": "FileSafe security events are explicitly fail closed, carry scoped and redacted diagnostic or override evidence, and reserve `policy_degraded` for advisory degradation where enforcement remains intact.",
+      "title": "FileSafe degradation cannot substitute for missing authority"
+    },
+    {
+      "builder_discretion": false,
+      "confidence": 0.96,
+      "dimensions": [
+        "contracts",
+        "states_transitions",
+        "authority",
+        "failures_recovery",
+        "security_privacy",
+        "operations",
+        "acceptance_oracles",
+        "invalid_states_transitions",
+        "concurrency_races",
+        "partial_failure",
+        "recovery_rollback",
+        "authority_boundaries",
+        "privacy_data_lifecycle",
+        "untrusted_inputs",
+        "destructive_actions",
+        "test_falsifiability"
+      ],
+      "evidence": [
+        {
+          "exact_quote": "  - Destructive override requires authenticated operator identity, auth realm, reason, scope, expiry, event refs, and receipt fields.",
+          "line_end": 19846,
+          "line_start": 19846,
+          "path": "Plans/Contracts_V0.md",
+          "source_sha256": "4237e1c14fbacb969e3ce54fb0ac2c5742967fe20f28cc6c0acabb7a1241d4a5"
+        },
+        {
+          "exact_quote": "  - Do not treat PUPPET_MASTER_ALLOW_DESTRUCTIVE as sufficient destructive override authority.",
+          "line_end": 19879,
+          "line_start": 19879,
+          "path": "Plans/Contracts_V0.md",
+          "source_sha256": "4237e1c14fbacb969e3ce54fb0ac2c5742967fe20f28cc6c0acabb7a1241d4a5"
+        }
+      ],
+      "gap_kind": "override_replay_revocation_and_atomicity_unspecified",
+      "impact": "A valid grant could be reused, raced against expiry or permission changes, or consumed after its scope changed unless one-time consumption, revocation, freshness checks, and atomic command binding are defined.",
+      "item_id": "M15-006",
+      "item_type": "gap",
+      "severity": "critical",
+      "source_unit_refs": [
+        "PLANUNIT:CV-312",
+        "SEMANTIC:PLANUNIT:CV-312"
+      ],
+      "statement": "The override payload minima do not close nonce or replay handling, grant revocation, clock and expiry semantics, concurrent grant or denial resolution, atomic binding to the normalized command and path at execution time, receipt persistence failure, or retention and deletion of operator evidence.",
+      "title": "Destructive override consumption semantics are missing"
+    },
+    {
+      "builder_discretion": false,
+      "confidence": 0.98,
+      "dimensions": [
+        "behavior",
+        "inputs_outputs",
+        "contracts",
+        "states_transitions",
+        "consumers",
+        "failures_recovery",
+        "compatibility_migration"
+      ],
+      "evidence": [
+        {
+          "exact_quote": "  Runtime payloads carry per-event payload schema_version in addition to the EventRecord envelope",
+          "line_end": 19898,
+          "line_start": 19898,
+          "path": "Plans/Contracts_V0.md",
+          "source_sha256": "4237e1c14fbacb969e3ce54fb0ac2c5742967fe20f28cc6c0acabb7a1241d4a5"
+        },
+        {
+          "exact_quote": "  - \"`package_id` is canonical and `work_package_id` remains import/export compatibility only.\"",
+          "line_end": 19916,
+          "line_start": 19916,
+          "path": "Plans/Contracts_V0.md",
+          "source_sha256": "4237e1c14fbacb969e3ce54fb0ac2c5742967fe20f28cc6c0acabb7a1241d4a5"
+        }
+      ],
+      "gap_kind": "none_explicit_schema_closure",
+      "impact": "Executor and Goal Runtime receive common schema-version and identity rules while compatibility aliases are prevented from becoming new canonical fields.",
+      "item_id": "M15-007",
+      "item_type": "contract",
+      "severity": "info",
+      "source_unit_refs": [
+        "PLANUNIT:CV-313",
+        "SEMANTIC:PLANUNIT:CV-313"
+      ],
+      "statement": "The FABLE runtime core contract requires payload-level schema versions, names closed machine-readable reason families, and makes `package_id` canonical with legacy names restricted to compatibility.",
+      "title": "Runtime core schema and alias authority are explicit"
+    },
+    {
+      "builder_discretion": false,
+      "confidence": 0.97,
+      "dimensions": [
+        "inputs_outputs",
+        "contracts",
+        "states_transitions",
+        "acceptance_oracles",
+        "ambiguity_unknowns",
+        "invalid_states_transitions",
+        "cross_document_seams",
+        "test_falsifiability"
+      ],
+      "evidence": [
+        {
+          "exact_quote": "  - \"`stop_reason_code`, `attention_required_reason_code`, and `budget_kind` are machine-readable closed fields on stop, user-attention, and budget-affecting payloads.\"",
+          "line_end": 19910,
+          "line_start": 19910,
+          "path": "Plans/Contracts_V0.md",
+          "source_sha256": "4237e1c14fbacb969e3ce54fb0ac2c5742967fe20f28cc6c0acabb7a1241d4a5"
+        },
+        {
+          "exact_quote": "  - \"`node.unblocked.resolution` and `conflict_reason_code` use closed value sets and do not preserve prose-only or ellipsis-based values.\"",
+          "line_end": 19911,
+          "line_start": 19911,
+          "path": "Plans/Contracts_V0.md",
+          "source_sha256": "4237e1c14fbacb969e3ce54fb0ac2c5742967fe20f28cc6c0acabb7a1241d4a5"
+        }
+      ],
+      "gap_kind": "claimed_closed_sets_not_enumerated",
+      "impact": "Independent builders can choose incompatible values while each considers the field closed, and validators cannot falsify prose-only or out-of-set values from this unit alone.",
+      "item_id": "M15-008",
+      "item_type": "gap",
+      "severity": "high",
+      "source_unit_refs": [
+        "PLANUNIT:CV-313",
+        "SEMANTIC:PLANUNIT:CV-313"
+      ],
+      "statement": "Unlike the enumerated `wake_reason` set, the unit does not enumerate the promised sets for `stop_reason_code`, `attention_required_reason_code`, `budget_kind`, `node.unblocked.resolution`, `conflict_reason_code`, or `UICommandResponse` errors.",
+      "title": "Several runtime fields are called closed without values"
+    },
+    {
+      "builder_discretion": false,
+      "confidence": 0.94,
+      "dimensions": [
+        "contracts",
+        "states_transitions",
+        "authority",
+        "consumers",
+        "gui_truth",
+        "failures_recovery",
+        "security_privacy",
+        "propagation",
+        "invalid_states_transitions",
+        "concurrency_races",
+        "partial_failure",
+        "recovery_rollback",
+        "authority_boundaries",
+        "privacy_data_lifecycle",
+        "gui_misleading_states",
+        "observability_support",
+        "cross_document_seams",
+        "test_falsifiability"
+      ],
+      "evidence": [
+        {
+          "exact_quote": "  - UI command dispatch returns `UICommandResponse` with ack/result status, closed error code, reason, event refs, and receipt ref.",
+          "line_end": 19914,
+          "line_start": 19914,
+          "path": "Plans/Contracts_V0.md",
+          "source_sha256": "4237e1c14fbacb969e3ce54fb0ac2c5742967fe20f28cc6c0acabb7a1241d4a5"
+        },
+        {
+          "exact_quote": "  - Concern and AuthEvent records expose their required identity, lifecycle, evidence, redaction, and recovery fields without storing raw secrets.",
+          "line_end": 19915,
+          "line_start": 19915,
+          "path": "Plans/Contracts_V0.md",
+          "source_sha256": "4237e1c14fbacb969e3ce54fb0ac2c5742967fe20f28cc6c0acabb7a1241d4a5"
+        }
+      ],
+      "gap_kind": "lifecycle_and_partial_failure_semantics_deferred",
+      "impact": "A command may be acknowledged without a durable result or receipt, safe-point and unblock events may race, and consumers may show success or recovery before authoritative evidence exists; auth and concern data lifecycle also remains implementation-dependent.",
+      "item_id": "M15-009",
+      "item_type": "gap",
+      "severity": "high",
+      "source_unit_refs": [
+        "PLANUNIT:CV-313",
+        "SEMANTIC:PLANUNIT:CV-313"
+      ],
+      "statement": "The summary names UI command, concern, auth, safe-point, block, and recovery records but does not close ack-to-result transitions, timeout and retry behavior, receipt-write failure, duplicate or out-of-order event handling, recovery authority, or retention and redaction lifecycles.",
+      "title": "Runtime response and recovery lifecycles remain open"
+    },
+    {
+      "builder_discretion": false,
+      "confidence": 0.99,
+      "dimensions": [
+        "behavior",
+        "capabilities",
+        "inputs_outputs",
+        "contracts",
+        "states_transitions",
+        "authority",
+        "failures_recovery",
+        "security_privacy",
+        "untrusted_inputs"
+      ],
+      "evidence": [
+        {
+          "exact_quote": "  Remote or tunneled WebSocket setup uses a proof-of-possession bearer session token bound to",
+          "line_end": 19976,
+          "line_start": 19976,
+          "path": "Plans/Contracts_V0.md",
+          "source_sha256": "4237e1c14fbacb969e3ce54fb0ac2c5742967fe20f28cc6c0acabb7a1241d4a5"
+        },
+        {
+          "exact_quote": "  - WebSocket rejections use closed error codes: missing_token, expired_token, invalid_signature, origin_mismatch, csrf_mismatch, runtime_id_mismatch, insufficient_scope, replay_detected, and protocol_version_unsupported.",
+          "line_end": 19989,
+          "line_start": 19989,
+          "path": "Plans/Contracts_V0.md",
+          "source_sha256": "4237e1c14fbacb969e3ce54fb0ac2c5742967fe20f28cc6c0acabb7a1241d4a5"
+        }
+      ],
+      "gap_kind": "none_explicit_auth_contract",
+      "impact": "Remote and tunneled sessions have a reject-before-initialize boundary with machine-readable failures and redacted receipts rather than an implicit trust path.",
+      "item_id": "M15-010",
+      "item_type": "authority",
+      "severity": "info",
+      "source_unit_refs": [
+        "PLANUNIT:CV-314",
+        "SEMANTIC:PLANUNIT:CV-314"
+      ],
+      "statement": "The WebSocket handshake binds proof of possession to runtime, project, session, origin, CSRF nonce, and permission snapshot identity and rejects missing, expired, mismatched, replayed, or origin-invalid requests before initialization.",
+      "title": "Remote WebSocket admission is fail closed"
+    },
+    {
+      "builder_discretion": false,
+      "confidence": 0.97,
+      "dimensions": [
+        "contracts",
+        "states_transitions",
+        "authority",
+        "failures_recovery",
+        "security_privacy",
+        "operations",
+        "scale_performance",
+        "invalid_states_transitions",
+        "concurrency_races",
+        "partial_failure",
+        "recovery_rollback",
+        "authority_boundaries",
+        "privacy_data_lifecycle",
+        "untrusted_inputs",
+        "observability_support",
+        "test_falsifiability"
+      ],
+      "evidence": [
+        {
+          "exact_quote": "  - WebSocket handshake requests carry runtime_id, project_id, session_id, origin, csrf_nonce, token_binding, permission_snapshot_id, requested_capabilities, protocol_version, and client_nonce.",
+          "line_end": 19988,
+          "line_start": 19988,
+          "path": "Plans/Contracts_V0.md",
+          "source_sha256": "4237e1c14fbacb969e3ce54fb0ac2c5742967fe20f28cc6c0acabb7a1241d4a5"
+        }
+      ],
+      "gap_kind": "session_token_and_replay_lifecycle_unspecified",
+      "impact": "Without issuance, expiry, revocation, rotation, nonce-consumption, and concurrent replay-store semantics, two servers or reconnects can disagree on whether the same token and nonce are admissible, and failures can strand or over-admit a session.",
+      "item_id": "M15-011",
+      "item_type": "gap",
+      "severity": "critical",
+      "source_unit_refs": [
+        "PLANUNIT:CV-314",
+        "SEMANTIC:PLANUNIT:CV-314"
+      ],
+      "statement": "The handshake fields and rejection codes do not define who issues and revokes tokens, token and nonce storage, clock skew, rotation and reconnect behavior, atomic replay detection across concurrent servers, requested-capability negotiation, or recovery when receipt persistence fails after rejection.",
+      "title": "WebSocket token and anti-replay lifecycle is incomplete"
+    },
+    {
+      "builder_discretion": false,
+      "confidence": 0.99,
+      "dimensions": [
+        "behavior",
+        "capabilities",
+        "inputs_outputs",
+        "contracts",
+        "states_transitions",
+        "consumers",
+        "gui_truth",
+        "failures_recovery",
+        "propagation"
+      ],
+      "evidence": [
+        {
+          "exact_quote": "  - Runtime-surface readiness results use state = not_ready, model_visible, ui_visible, roundtrip_ready, degraded, or failed, with reason_code, checked_at, evidence_refs, and retry_after_ms when applicable.",
+          "line_end": 19991,
+          "line_start": 19991,
+          "path": "Plans/Contracts_V0.md",
+          "source_sha256": "4237e1c14fbacb969e3ce54fb0ac2c5742967fe20f28cc6c0acabb7a1241d4a5"
+        },
+        {
+          "exact_quote": "  - Session-prompt inbox events include session_prompt.admitted, session_prompt.rejected, session_prompt.cancelled, and session_prompt.expired with prompt_id, target_thread_id, admission_state, idempotency_key, source_session_id, and redacted_prompt_ref.",
+          "line_end": 19992,
+          "line_start": 19992,
+          "path": "Plans/Contracts_V0.md",
+          "source_sha256": "4237e1c14fbacb969e3ce54fb0ac2c5742967fe20f28cc6c0acabb7a1241d4a5"
+        }
+      ],
+      "gap_kind": "none_explicit_typed_families",
+      "impact": "Runtime and chat consumers gain typed readiness evidence and idempotent session-prompt admission outcomes instead of inferring success from transport connectivity or raw prompt delivery.",
+      "item_id": "M15-012",
+      "item_type": "feature",
+      "severity": "info",
+      "source_unit_refs": [
+        "PLANUNIT:CV-314",
+        "SEMANTIC:PLANUNIT:CV-314"
+      ],
+      "statement": "CV-314 defines a six-state readiness result and a four-event session-prompt inbox family with scoped identifiers, evidence, retry hints, idempotency, and redacted prompt references.",
+      "title": "Readiness and prompt admission have typed contracts"
+    },
+    {
+      "builder_discretion": false,
+      "confidence": 0.96,
+      "dimensions": [
+        "states_transitions",
+        "consumers",
+        "gui_truth",
+        "failures_recovery",
+        "propagation",
+        "operations",
+        "acceptance_oracles",
+        "ambiguity_unknowns",
+        "invalid_states_transitions",
+        "concurrency_races",
+        "partial_failure",
+        "recovery_rollback",
+        "gui_misleading_states",
+        "offline_network_loss",
+        "observability_support",
+        "test_falsifiability"
+      ],
+      "evidence": [
+        {
+          "exact_quote": "  - Runtime-surface readiness probes use request fields probe_id, runtime_id, session_id, surface_id, requested_checks, timeout_ms, and trace_level.",
+          "line_end": 19990,
+          "line_start": 19990,
+          "path": "Plans/Contracts_V0.md",
+          "source_sha256": "4237e1c14fbacb969e3ce54fb0ac2c5742967fe20f28cc6c0acabb7a1241d4a5"
+        }
+      ],
+      "gap_kind": "readiness_transition_and_freshness_semantics_unspecified",
+      "impact": "Consumers can disagree whether `model_visible` or `ui_visible` is progress, terminal success, or stale evidence, and a GUI can present a ready state during network loss, timeout, superseded probes, or conflicting results.",
+      "item_id": "M15-013",
+      "item_type": "gap",
+      "severity": "high",
+      "source_unit_refs": [
+        "PLANUNIT:CV-314",
+        "SEMANTIC:PLANUNIT:CV-314"
+      ],
+      "statement": "The readiness contract lists result states but does not define legal transitions, terminality, result precedence, probe supersession, freshness and expiry, concurrent probe correlation, timeout versus late-result handling, cancellation, retry policy, or the GUI mapping for partial and offline states.",
+      "title": "Readiness state machine and GUI truth are not defined"
+    },
+    {
+      "builder_discretion": false,
+      "confidence": 0.96,
+      "dimensions": [
+        "states_transitions",
+        "authority",
+        "consumers",
+        "failures_recovery",
+        "security_privacy",
+        "operations",
+        "scale_performance",
+        "invalid_states_transitions",
+        "concurrency_races",
+        "partial_failure",
+        "recovery_rollback",
+        "privacy_data_lifecycle",
+        "untrusted_inputs",
+        "offline_network_loss",
+        "observability_support",
+        "test_falsifiability"
+      ],
+      "evidence": [
+        {
+          "exact_quote": "  session_id, prompt_id, target_thread_id, and normalized prompt hash.",
+          "line_end": 19981,
+          "line_start": 19981,
+          "path": "Plans/Contracts_V0.md",
+          "source_sha256": "4237e1c14fbacb969e3ce54fb0ac2c5742967fe20f28cc6c0acabb7a1241d4a5"
+        },
+        {
+          "exact_quote": "  - None of these records stores raw credentials, raw prompts beyond redacted refs, or runtime certification evidence.",
+          "line_end": 19993,
+          "line_start": 19993,
+          "path": "Plans/Contracts_V0.md",
+          "source_sha256": "4237e1c14fbacb969e3ce54fb0ac2c5742967fe20f28cc6c0acabb7a1241d4a5"
+        }
+      ],
+      "gap_kind": "prompt_inbox_race_and_data_lifecycle_unspecified",
+      "impact": "Cancel, expiry, retry, and admit operations can race to produce contradictory terminal events or duplicate execution, while redacted references and normalized prompt hashes may persist without a defined retention or deletion rule.",
+      "item_id": "M15-014",
+      "item_type": "gap",
+      "severity": "high",
+      "source_unit_refs": [
+        "PLANUNIT:CV-314",
+        "SEMANTIC:PLANUNIT:CV-314"
+      ],
+      "statement": "The session-prompt contract does not define legal admission transitions, cancellation and expiry precedence, exactly-once versus at-least-once consumption, retry after partial delivery, idempotency collision handling, target-thread disappearance, or retention and erasure of hashes and redacted refs.",
+      "title": "Prompt admission races and privacy lifecycle remain open"
+    },
+    {
+      "builder_discretion": false,
+      "confidence": 0.99,
+      "dimensions": [
+        "inputs_outputs",
+        "contracts",
+        "states_transitions",
+        "authority",
+        "ownership",
+        "consumers",
+        "failures_recovery",
+        "propagation",
+        "compatibility_migration"
+      ],
+      "evidence": [
+        {
+          "exact_quote": "The governance runtime record contract owns the minimum schemas and state machines for corroboration, promotion, graph patch, and projection trust. These records are contract/storage records only; they do not create WorkNodes, NodeSeeds, executable queues, implementation files, runtime launches, production build tasks, or PNC-019 evidence.",
+          "line_end": 20096,
+          "line_start": 20096,
+          "path": "Plans/Contracts_V0.md",
+          "source_sha256": "4237e1c14fbacb969e3ce54fb0ac2c5742967fe20f28cc6c0acabb7a1241d4a5"
+        },
+        {
+          "exact_quote": "  - Each family has closed states and allowed transitions.",
+          "line_end": 20147,
+          "line_start": 20147,
+          "path": "Plans/Contracts_V0.md",
+          "source_sha256": "4237e1c14fbacb969e3ce54fb0ac2c5742967fe20f28cc6c0acabb7a1241d4a5"
+        }
+      ],
+      "gap_kind": "none_explicit_state_machine_contract",
+      "impact": "Storage and consuming views receive a shared envelope, family payloads, closed states, and transition boundaries without treating the records as runtime certification or executable-node generation.",
+      "item_id": "M15-015",
+      "item_type": "state_transition",
+      "severity": "info",
+      "source_unit_refs": [
+        "PLANUNIT:CV-315",
+        "SEMANTIC:PLANUNIT:CV-315"
+      ],
+      "statement": "Governance runtime records cover corroboration, promotion, graph patch, and projection trust with a shared envelope, family-specific fields, closed states, explicit transitions, alias normalization, and a non-runtime-certification boundary.",
+      "title": "Governance record families and transitions are concrete"
+    },
+    {
+      "builder_discretion": false,
+      "confidence": 0.96,
+      "dimensions": [
+        "contracts",
+        "states_transitions",
+        "authority",
+        "ownership",
+        "consumers",
+        "failures_recovery",
+        "ambiguity_unknowns",
+        "invalid_states_transitions",
+        "concurrency_races",
+        "authority_boundaries",
+        "cross_document_seams",
+        "test_falsifiability"
+      ],
+      "evidence": [
+        {
+          "exact_quote": "| `corroboration` | `corroboration_id`, `claim_ref`, `policy_ref`, `required_reviewer_count`, `supporting_reviewer_refs[]`, `dissenting_reviewer_refs[]`, `verdict`, `confidence`, `concern_refs[]?` | `requested`, `collecting`, `confirmed`, `denied`, `downgraded`, `escalated`, `superseded` | `requested -> collecting -> confirmed|denied|downgraded|escalated`; any terminal state may move to `superseded` with lineage. |",
+          "line_end": 20120,
+          "line_start": 20120,
+          "path": "Plans/Contracts_V0.md",
+          "source_sha256": "4237e1c14fbacb969e3ce54fb0ac2c5742967fe20f28cc6c0acabb7a1241d4a5"
+        },
+        {
+          "exact_quote": "| `promotion` | `promotion_id`, `promotion_class`, `source_scope_ref`, `target_scope_ref`, `gate_verdict_ref`, `required_evidence_refs[]`, `hitl_required`, `promotion_receipt_ref?` | `draft`, `eligible`, `paused_hitl`, `approved`, `rejected`, `revoked`, `superseded` | `draft -> eligible -> approved|rejected|paused_hitl`; `paused_hitl -> approved|rejected`; approved records may move to `revoked` or `superseded` only by compensating record. |",
+          "line_end": 20121,
+          "line_start": 20121,
+          "path": "Plans/Contracts_V0.md",
+          "source_sha256": "4237e1c14fbacb969e3ce54fb0ac2c5742967fe20f28cc6c0acabb7a1241d4a5"
+        }
+      ],
+      "gap_kind": "decision_policy_and_compensation_authority_unspecified",
+      "impact": "Different consumers can derive different corroboration verdicts from the same reviewers, or revoke and supersede an approved promotion using incompatible compensating records and authority checks.",
+      "item_id": "M15-016",
+      "item_type": "gap",
+      "severity": "high",
+      "source_unit_refs": [
+        "PLANUNIT:CV-315",
+        "SEMANTIC:PLANUNIT:CV-315"
+      ],
+      "statement": "The state rows do not define how required reviewer count, dissent, confidence, concerns, and policy refs determine a corroboration verdict, nor the schema, linkage, authorization, and atomic application rules for a compensating promotion record.",
+      "title": "Governance decision and compensation rules are not closed"
+    },
+    {
+      "builder_discretion": false,
+      "confidence": 0.97,
+      "dimensions": [
+        "states_transitions",
+        "authority",
+        "consumers",
+        "gui_truth",
+        "failures_recovery",
+        "propagation",
+        "operations",
+        "scale_performance",
+        "invalid_states_transitions",
+        "concurrency_races",
+        "partial_failure",
+        "recovery_rollback",
+        "authority_boundaries",
+        "gui_misleading_states",
+        "offline_network_loss",
+        "observability_support",
+        "cross_document_seams",
+        "test_falsifiability"
+      ],
+      "evidence": [
+        {
+          "exact_quote": "| `graph_patch` | `graph_patch_id`, `graph_generation_id`, `patch_kind`, `requested_change_ref`, `affected_node_refs[]`, `decision_ref`, `state_transition_report_ref?`, `concern_refs[]?` | `requested`, `validated`, `applied`, `rejected`, `rolled_back`, `superseded` | `requested -> validated -> applied|rejected`; `applied -> rolled_back|superseded` only with a decision and transition report. |",
+          "line_end": 20122,
+          "line_start": 20122,
+          "path": "Plans/Contracts_V0.md",
+          "source_sha256": "4237e1c14fbacb969e3ce54fb0ac2c5742967fe20f28cc6c0acabb7a1241d4a5"
+        },
+        {
+          "exact_quote": "| `projection_trust` | `projection_id`, `projection_freshness`, `projection_health`, `generation_match`, `canonical_revalidation_required`, `last_revalidated_at_utc?`, `fallback_route_ref?` | `current`, `refreshing`, `stale`, `degraded`, `unavailable` | `current -> refreshing|stale|degraded|unavailable`; non-current states return to `current` only after canonical revalidation evidence. |",
+          "line_end": 20123,
+          "line_start": 20123,
+          "path": "Plans/Contracts_V0.md",
+          "source_sha256": "4237e1c14fbacb969e3ce54fb0ac2c5742967fe20f28cc6c0acabb7a1241d4a5"
+        }
+      ],
+      "gap_kind": "atomicity_generation_and_recovery_semantics_unspecified",
+      "impact": "A multi-node patch can be partially visible or rolled back against a newer generation, while competing refreshes can restore a stale projection to `current`; GUI and runtime consumers lack a deterministic fallback and user-visible truth rule during those failures.",
+      "item_id": "M15-017",
+      "item_type": "gap",
+      "severity": "critical",
+      "source_unit_refs": [
+        "PLANUNIT:CV-315",
+        "SEMANTIC:PLANUNIT:CV-315"
+      ],
+      "statement": "Graph-patch transitions do not define transactional scope, partial-apply detection, generation compare-and-swap, rollback failure, or supersession races; projection trust does not define generation ordering, concurrent refresh ownership, evidence freshness, fallback activation, or behavior when canonical revalidation is offline.",
+      "title": "Graph patch and projection recovery lack concurrency rules"
+    },
+    {
+      "builder_discretion": false,
+      "confidence": 0.99,
+      "dimensions": [
+        "behavior",
+        "inputs_outputs",
+        "contracts",
+        "authority",
+        "consumers",
+        "gui_truth",
+        "security_privacy",
+        "propagation"
+      ],
+      "evidence": [
+        {
+          "exact_quote": "  GUI Usage route/open payloads normalize every usage drill-through target into route_target.object_kind = usage_event and route_target.object_id = the canonical usage event id when usage_event_ref exists. OpenSubject carries the display subject, while usage_event_ref, usage_record_id, provider_attempt_ref, attempt_id, node_id, tool_call_id, trace_ref, receipt refs, raw_payload_ref, artifact_id, run_id, thread_id, source_class, source_confidence, source_authority, settlement_status, projection_freshness, and projection_health remain correlation and projection fields. Thread_id, tier_id, timestamp, and run_id can filter or scope a view but cannot replace UsageRecord identity. Raw/Curated consumers share the same redaction contract: Curated receives normalized fields and Raw receives redacted refs/hashes/omitted counts/permission state, not unredacted provider payloads.",
+          "line_end": 20196,
+          "line_start": 20196,
+          "path": "Plans/Contracts_V0.md",
+          "source_sha256": "4237e1c14fbacb969e3ce54fb0ac2c5742967fe20f28cc6c0acabb7a1241d4a5"
+        }
+      ],
+      "gap_kind": "none_explicit_route_identity_contract",
+      "impact": "Usage drill-throughs preserve canonical UsageRecord identity across GUI surfaces and prevent timestamps, runs, threads, tiers, or unredacted provider data from becoming the primary subject.",
+      "item_id": "M15-018",
+      "item_type": "gui_truth",
+      "severity": "info",
+      "source_unit_refs": [
+        "PLANUNIT:CV-316",
+        "SEMANTIC:PLANUNIT:CV-316"
+      ],
+      "statement": "When `usage_event_ref` exists, route/open payloads must normalize it to an object-first Usage event target, retain other identities as correlation fields, and apply the same redaction boundary to Raw and Curated consumers.",
+      "title": "Usage route identity and redaction are explicit"
+    },
+    {
+      "builder_discretion": false,
+      "confidence": 0.96,
+      "dimensions": [
+        "behavior",
+        "inputs_outputs",
+        "contracts",
+        "authority",
+        "consumers",
+        "propagation",
+        "compatibility_migration",
+        "ambiguity_unknowns",
+        "missing_callers_consumers",
+        "invalid_states_transitions",
+        "cross_document_seams",
+        "test_falsifiability"
+      ],
+      "evidence": [
+        {
+          "exact_quote": "  - Do not let usage_event_ref bypass object-first route normalization.",
+          "line_end": 20238,
+          "line_start": 20238,
+          "path": "Plans/Contracts_V0.md",
+          "source_sha256": "4237e1c14fbacb969e3ce54fb0ac2c5742967fe20f28cc6c0acabb7a1241d4a5"
+        },
+        {
+          "exact_quote": "  - Do not use timestamp, run_id, thread_id, or tier_id as primary Usage route identity when usage_event_ref exists.",
+          "line_end": 20239,
+          "line_start": 20239,
+          "path": "Plans/Contracts_V0.md",
+          "source_sha256": "4237e1c14fbacb969e3ce54fb0ac2c5742967fe20f28cc6c0acabb7a1241d4a5"
+        }
+      ],
+      "gap_kind": "fallback_route_precedence_unspecified",
+      "impact": "Routes without an event ref, routes with a stale or unresolved ref, and payloads containing conflicting identity fields can resolve differently across Usage, Ledger, chat, artifact, graph, and orchestrator consumers.",
+      "item_id": "M15-019",
+      "item_type": "gap",
+      "severity": "high",
+      "source_unit_refs": [
+        "PLANUNIT:CV-316",
+        "SEMANTIC:PLANUNIT:CV-316"
+      ],
+      "statement": "The contract closes routing when `usage_event_ref` exists but does not define selector precedence and fallback when it is absent, malformed, unauthorized, deleted, unresolved, or conflicts with `usage_record_id`, `artifact_id`, receipt refs, or an existing object target.",
+      "title": "Usage route fallback and conflict behavior are undefined"
+    },
+    {
+      "builder_discretion": false,
+      "confidence": 0.95,
+      "dimensions": [
+        "authority",
+        "consumers",
+        "gui_truth",
+        "failures_recovery",
+        "security_privacy",
+        "propagation",
+        "ambiguity_unknowns",
+        "partial_failure",
+        "authority_boundaries",
+        "privacy_data_lifecycle",
+        "gui_misleading_states",
+        "offline_network_loss",
+        "accessibility",
+        "localization",
+        "observability_support",
+        "cross_document_seams"
+      ],
+      "evidence": [
+        {
+          "exact_quote": "  - Raw/Curated fixtures prove redacted Raw refs and normalized Curated fields share the same UsageRecord identity.",
+          "line_end": 20205,
+          "line_start": 20205,
+          "path": "Plans/Contracts_V0.md",
+          "source_sha256": "4237e1c14fbacb969e3ce54fb0ac2c5742967fe20f28cc6c0acabb7a1241d4a5"
+        },
+        {
+          "exact_quote": "  - Do not expose unredacted Raw provider payloads through route/open payloads.",
+          "line_end": 20240,
+          "line_start": 20240,
+          "path": "Plans/Contracts_V0.md",
+          "source_sha256": "4237e1c14fbacb969e3ce54fb0ac2c5742967fe20f28cc6c0acabb7a1241d4a5"
+        }
+      ],
+      "gap_kind": "route_authorization_and_gui_failure_truth_unspecified",
+      "impact": "A route can preserve identity yet disclose the existence or metadata of unauthorized usage, retain sensitive refs too long, or present stale, degraded, or unavailable data as current without accessible and localized failure communication.",
+      "item_id": "M15-020",
+      "item_type": "gap",
+      "severity": "high",
+      "source_unit_refs": [
+        "PLANUNIT:CV-316",
+        "SEMANTIC:PLANUNIT:CV-316"
+      ],
+      "statement": "The route contract does not assign permission-check authority at open time, define non-disclosing unauthorized or missing states, close redaction and retention for refs and hashes, or specify GUI behavior for stale projection freshness and health, offline loss, partial field availability, accessibility, and localization.",
+      "title": "Usage route security and visible failure states are incomplete"
+    },
+    {
+      "builder_discretion": false,
+      "confidence": 0.99,
+      "dimensions": [
+        "operations",
+        "acceptance_oracles",
+        "ambiguity_unknowns",
+        "cross_document_seams",
+        "test_falsifiability"
+      ],
+      "evidence": [
+        {
+          "exact_quote": "  - future GUI-ROUTE-001 fixture suite",
+          "line_end": 20209,
+          "line_start": 20209,
+          "path": "Plans/Contracts_V0.md",
+          "source_sha256": "4237e1c14fbacb969e3ce54fb0ac2c5742967fe20f28cc6c0acabb7a1241d4a5"
+        }
+      ],
+      "gap_kind": "acceptance_oracle_deferred",
+      "impact": "The route identity and redaction claims lack a present, named executable fixture oracle in this unit, so cross-surface regressions can pass the currently listed plan and contract-reference validators.",
+      "item_id": "M15-021",
+      "item_type": "acceptance_oracle",
+      "severity": "medium",
+      "source_unit_refs": [
+        "PLANUNIT:CV-316",
+        "SEMANTIC:PLANUNIT:CV-316"
+      ],
+      "statement": "The only behavior-specific GUI route fixture surface is explicitly future work; the other listed validators do not, from this text, prove route normalization, selector rejection, redaction parity, or stale-state presentation.",
+      "title": "GUI route behavior has no current fixture oracle"
+    }
+  ],
+  "model": "gpt-5.6-sol",
+  "phase": "blind_macro_window_review",
+  "reasoning_effort": "xhigh",
+  "schema_version": "macro-review-result-v1",
+  "segments": [
+    {
+      "core_range": [
+        19695,
+        19965
+      ],
+      "covered_source_unit_refs": [
+        "PLANUNIT:CV-310",
+        "PLANUNIT:CV-311",
+        "PLANUNIT:CV-312",
+        "PLANUNIT:CV-313",
+        "SEMANTIC:PLANUNIT:CV-310",
+        "SEMANTIC:PLANUNIT:CV-311",
+        "SEMANTIC:PLANUNIT:CV-312",
+        "SEMANTIC:PLANUNIT:CV-313"
+      ],
+      "item_ids": [
+        "M15-001",
+        "M15-002",
+        "M15-003",
+        "M15-004",
+        "M15-005",
+        "M15-006",
+        "M15-007",
+        "M15-008",
+        "M15-009"
+      ],
+      "reviewed": true,
+      "summary": "Reviewed every core line for CV-310 through CV-313 and the residual-cleanup boundary using exact and adversarial lenses. The units establish strong event, projection, snapshot, FileSafe, and runtime-schema authority boundaries, but leave material payload, lifecycle, concurrency, partial-failure, security-consumption, and executable-oracle details unresolved.",
+      "window_id": "WIN-19B62D73B9EF-0056"
+    },
+    {
+      "core_range": [
+        19966,
+        20245
+      ],
+      "covered_source_unit_refs": [
+        "PLANUNIT:CV-314",
+        "PLANUNIT:CV-315",
+        "PLANUNIT:CV-316",
+        "SEMANTIC:PLANUNIT:CV-314",
+        "SEMANTIC:PLANUNIT:CV-315",
+        "SEMANTIC:PLANUNIT:CV-316"
+      ],
+      "item_ids": [
+        "M15-010",
+        "M15-011",
+        "M15-012",
+        "M15-013",
+        "M15-014",
+        "M15-015",
+        "M15-016",
+        "M15-017",
+        "M15-018",
+        "M15-019",
+        "M15-020",
+        "M15-021"
+      ],
+      "reviewed": true,
+      "summary": "Reviewed every core line spanning CV-314 through CV-316, including the intervening deferred-contract addendum for investigation attachments, scheduler field naming, usage adjustments, snapshot identifiers, route objects, and governance record details. The text provides concrete auth, readiness, prompt, governance-state, and Usage-route contracts, while leaving token lifecycle, inbox and probe races, graph-patch atomicity, projection recovery, fallback routing, GUI failure truth, privacy lifecycle, and present behavior fixtures open.",
+      "window_id": "WIN-19B62D73B9EF-0057"
+    }
+  ],
+  "self_attestation": {
+    "no_canonical_writes": true,
+    "no_external_research_during_blind_review": true,
+    "no_peer_result_access": true,
+    "no_prior_audit_access": true,
+    "no_unrelated_source_access": true,
+    "terminal_after_submission": true
+  },
+  "source_binding": {
+    "bundle_id": "MACRO15-19B62D73B9EF-0008",
+    "document_path": "Plans/Contracts_V0.md",
+    "micro_window_ids": [
+      "WIN-19B62D73B9EF-0056",
+      "WIN-19B62D73B9EF-0057"
+    ],
+    "source_sha256": "4237e1c14fbacb969e3ce54fb0ac2c5742967fe20f28cc6c0acabb7a1241d4a5"
+  },
+  "status": "completed",
+  "synthesis": {
+    "cross_document_questions": [
+      "Where are the per-family coordination payload schemas, ordering rules, and checkpoint recovery semantics made canonical for Orchestrator and storage consumers?",
+      "Which Models_System contract closes capability snapshot requiredness, expiry, refresh, provenance validation, and requested-versus-effective mismatch handling?",
+      "Which Permissions_System and FileSafe contracts own one-time destructive-override consumption, revocation, compare-at-execute freshness, and receipt failure recovery?",
+      "Where are the complete closed value sets and lifecycle transitions for runtime stop, attention, budget, unblock, conflict, UI command, ConcernRecord, and AuthEvent contracts?",
+      "Which owner defines WebSocket token issuance, rotation, revocation, nonce storage, multi-server replay prevention, and reconnect recovery?",
+      "How do runtime and GUI owners map readiness probe freshness, supersession, timeout, degraded, failed, and offline states without presenting stale success?",
+      "Which contract arbitrates concurrent session-prompt admit, reject, cancel, expire, retry, and target-thread disappearance outcomes?",
+      "What canonical transaction and generation protocol makes graph-patch apply and rollback atomic and prevents stale projection refreshes from returning to current?",
+      "Which shared route contract defines Usage selector fallback, conflicting identity precedence, open-time authorization, non-disclosing failures, and projection-health presentation?",
+      "How do the deferred InvestigationContextAttachment, scheduler alias, usage adjustment, snapshot identifier, and route-object contracts propagate to their named consumers and executable validators?"
+    ],
+    "feature_family_keys": [
+      "active-agent-coordination-events",
+      "provider-model-capability-snapshots",
+      "filesafe-fail-closed-security-events",
+      "runtime-core-schema-closure",
+      "websocket-proof-of-possession-admission",
+      "runtime-surface-readiness",
+      "session-prompt-admission-inbox",
+      "deferred-fable-wire-contracts",
+      "governance-runtime-records",
+      "usage-route-subject-identity"
+    ],
+    "research_queries": [
+      "distributed nonce replay cache atomic consumption websocket proof of possession reconnect",
+      "event projection checkpoint exactly once partial apply recovery patterns",
+      "transactional graph patch rollback generation compare and swap",
+      "secure deep link object authorization non-disclosing error UX",
+      "readiness probe state machine stale evidence offline degraded UI"
+    ]
+  },
+  "task_thread_id": "/root/a005m15_b3_000022_attempt_0015_terminal"
+}

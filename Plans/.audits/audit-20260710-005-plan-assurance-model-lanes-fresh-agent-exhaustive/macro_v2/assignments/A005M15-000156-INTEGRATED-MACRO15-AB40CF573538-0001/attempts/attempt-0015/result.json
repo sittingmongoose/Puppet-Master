@@ -1,0 +1,390 @@
+{
+  "assignment_id": "A005M15-000156-INTEGRATED-MACRO15-AB40CF573538-0001",
+  "attempt_id": "attempt-0015",
+  "audit_id": "audit-20260710-005-plan-assurance-model-lanes-fresh-agent-exhaustive",
+  "coverage": {
+    "all_micro_windows_reviewed": true,
+    "all_source_lines_reviewed": true,
+    "all_source_units_accounted": true,
+    "both_exact_and_adversarial_lenses_applied": true,
+    "dimensions_checked": [
+      "behavior",
+      "capabilities",
+      "inputs_outputs",
+      "contracts",
+      "states_transitions",
+      "authority",
+      "ownership",
+      "consumers",
+      "gui_truth",
+      "failures_recovery",
+      "security_privacy",
+      "propagation",
+      "operations",
+      "scale_performance",
+      "compatibility_migration",
+      "acceptance_oracles",
+      "builder_discretion",
+      "ambiguity_unknowns",
+      "missing_callers_consumers",
+      "invalid_states_transitions",
+      "concurrency_races",
+      "partial_failure",
+      "recovery_rollback",
+      "authority_boundaries",
+      "privacy_data_lifecycle",
+      "untrusted_inputs",
+      "gui_misleading_states",
+      "offline_network_loss",
+      "scale_limits",
+      "accessibility",
+      "localization",
+      "observability_support",
+      "destructive_actions",
+      "cross_document_seams",
+      "test_falsifiability",
+      "unknown_unknowns"
+    ]
+  },
+  "items": [
+    {
+      "builder_discretion": false,
+      "confidence": 1,
+      "dimensions": [
+        "contracts",
+        "inputs_outputs",
+        "acceptance_oracles"
+      ],
+      "evidence": [
+        {
+          "exact_quote": "{\n  \"$schema\": \"https://json-schema.org/draft/2020-12/schema\",\n  \"$id\": \"pm.project_contracts_index.schema.v1\",\n  \"title\": \"Puppet Master Project Contract Pack Index\",\n  \"type\": \"object\",\n  \"additionalProperties\": false,",
+          "line_end": 6,
+          "line_start": 1,
+          "path": "Plans/contracts_index.schema.json",
+          "source_sha256": "90e2cbf0ecd7e90abaa2935ca7091401f6767f3abb5be87a1732e44f36c8f2a7"
+        }
+      ],
+      "gap_kind": "none",
+      "impact": "Consumers can identify the schema by a stable id, validate it with JSON Schema draft 2020-12, and reject undeclared root keys.",
+      "item_id": "A005M15-000156-I001",
+      "item_type": "contract",
+      "severity": "info",
+      "source_unit_refs": [
+        "SEMANTIC:JSON_PREFIX:Plans/contracts_index.schema.json",
+        "SEMANTIC:JSON_FIELD:Plans/contracts_index.schema.json:$schema",
+        "SEMANTIC:JSON_FIELD:Plans/contracts_index.schema.json:$id",
+        "SEMANTIC:JSON_FIELD:Plans/contracts_index.schema.json:title",
+        "SEMANTIC:JSON_FIELD:Plans/contracts_index.schema.json:type",
+        "SEMANTIC:JSON_FIELD:Plans/contracts_index.schema.json:additionalProperties",
+        "STRUCTURAL:$",
+        "STRUCTURAL:$.$id",
+        "STRUCTURAL:$.$schema",
+        "STRUCTURAL:$.additionalProperties",
+        "STRUCTURAL:$.title",
+        "STRUCTURAL:$.type"
+      ],
+      "statement": "The document defines a closed root object schema named Puppet Master Project Contract Pack Index, with draft 2020-12 and schema id pm.project_contracts_index.schema.v1.",
+      "title": "Closed, versioned contract-index root"
+    },
+    {
+      "builder_discretion": false,
+      "confidence": 1,
+      "dimensions": [
+        "contracts",
+        "inputs_outputs",
+        "capabilities"
+      ],
+      "evidence": [
+        {
+          "exact_quote": "  \"required\": [\"schema_id\", \"generated_at_utc\", \"contracts\"],\n  \"properties\": {\n    \"schema_id\": {\"type\": \"string\", \"const\": \"pm.project_contracts_index.schema.v1\"},\n    \"generated_at_utc\": {\"type\": \"string\", \"minLength\": 1},\n    \"contracts\": {\n      \"type\": \"array\",\n      \"minItems\": 1,\n      \"items\": {\"$ref\": \"#/$defs/contract_entry\"}\n    }\n  },",
+          "line_end": 16,
+          "line_start": 7,
+          "path": "Plans/contracts_index.schema.json",
+          "source_sha256": "90e2cbf0ecd7e90abaa2935ca7091401f6767f3abb5be87a1732e44f36c8f2a7"
+        }
+      ],
+      "gap_kind": "none",
+      "impact": "A valid index must identify its schema, carry a nonempty generation marker, and enumerate at least one contract entry.",
+      "item_id": "A005M15-000156-I002",
+      "item_type": "contract",
+      "severity": "info",
+      "source_unit_refs": [
+        "SEMANTIC:JSON_FIELD:Plans/contracts_index.schema.json:required",
+        "SEMANTIC:JSON_FIELD:Plans/contracts_index.schema.json:properties",
+        "STRUCTURAL:$.properties",
+        "STRUCTURAL:$.required"
+      ],
+      "statement": "The root requires schema_id, generated_at_utc, and contracts; schema_id is constant and contracts is a nonempty array of contract_entry definitions.",
+      "title": "Required index payload"
+    },
+    {
+      "builder_discretion": false,
+      "confidence": 1,
+      "dimensions": [
+        "contracts",
+        "inputs_outputs",
+        "authority",
+        "ownership"
+      ],
+      "evidence": [
+        {
+          "exact_quote": "  \"$defs\": {\n    \"contract_entry\": {\n      \"type\": \"object\",\n      \"additionalProperties\": false,\n      \"required\": [\"contract_id\", \"kind\", \"path\", \"sha256\"],",
+          "line_end": 21,
+          "line_start": 17,
+          "path": "Plans/contracts_index.schema.json",
+          "source_sha256": "90e2cbf0ecd7e90abaa2935ca7091401f6767f3abb5be87a1732e44f36c8f2a7"
+        },
+        {
+          "exact_quote": "        \"contract_id\": {\n          \"type\": \"string\",\n          \"minLength\": 1,\n          \"pattern\": \"^ProjectContract:\"\n        },\n        \"kind\": {\"type\": \"string\", \"minLength\": 1},\n        \"path\": {\"type\": \"string\", \"minLength\": 1},\n        \"sha256\": {\"type\": \"string\", \"pattern\": \"^[a-fA-F0-9]{64}$\"},\n        \"description\": {\"type\": \"string\"},\n        \"anchors\": {\"type\": \"array\", \"items\": {\"type\": \"string\"}}\n      }\n    }\n  }\n}",
+          "line_end": 36,
+          "line_start": 23,
+          "path": "Plans/contracts_index.schema.json",
+          "source_sha256": "90e2cbf0ecd7e90abaa2935ca7091401f6767f3abb5be87a1732e44f36c8f2a7"
+        }
+      ],
+      "gap_kind": "none",
+      "impact": "Every listed contract has a typed identity, classification, location, and content digest; optional description and anchor metadata are permitted without undeclared entry fields.",
+      "item_id": "A005M15-000156-I003",
+      "item_type": "contract",
+      "severity": "info",
+      "source_unit_refs": [
+        "SEMANTIC:JSON_FIELD:Plans/contracts_index.schema.json:$defs",
+        "SEMANTIC:JSON_SUFFIX:Plans/contracts_index.schema.json",
+        "STRUCTURAL:$.$defs"
+      ],
+      "statement": "Each contract entry is a closed object requiring contract_id, kind, path, and sha256; contract_id must begin with ProjectContract:, and description and anchors are optional.",
+      "title": "Strict contract-entry shape"
+    },
+    {
+      "builder_discretion": true,
+      "confidence": 0.99,
+      "dimensions": [
+        "ambiguity_unknowns",
+        "acceptance_oracles",
+        "cross_document_seams",
+        "test_falsifiability"
+      ],
+      "evidence": [
+        {
+          "exact_quote": "    \"generated_at_utc\": {\"type\": \"string\", \"minLength\": 1},",
+          "line_end": 10,
+          "line_start": 10,
+          "path": "Plans/contracts_index.schema.json",
+          "source_sha256": "90e2cbf0ecd7e90abaa2935ca7091401f6767f3abb5be87a1732e44f36c8f2a7"
+        }
+      ],
+      "gap_kind": "underconstrained_format",
+      "impact": "Malformed, non-UTC, or non-time text can validate, so freshness ordering and reproducible generation checks require undocumented consumer policy.",
+      "item_id": "A005M15-000156-I004",
+      "item_type": "gap",
+      "severity": "medium",
+      "source_unit_refs": [
+        "SEMANTIC:JSON_FIELD:Plans/contracts_index.schema.json:properties",
+        "STRUCTURAL:$.properties"
+      ],
+      "statement": "generated_at_utc is constrained only to a nonempty string and has no date-time format or UTC-normalization oracle.",
+      "title": "Generation timestamp is not semantically validated"
+    },
+    {
+      "builder_discretion": true,
+      "confidence": 0.98,
+      "dimensions": [
+        "contracts",
+        "invalid_states_transitions",
+        "concurrency_races",
+        "propagation",
+        "scale_limits"
+      ],
+      "evidence": [
+        {
+          "exact_quote": "    \"contracts\": {\n      \"type\": \"array\",\n      \"minItems\": 1,\n      \"items\": {\"$ref\": \"#/$defs/contract_entry\"}\n    }",
+          "line_end": 15,
+          "line_start": 11,
+          "path": "Plans/contracts_index.schema.json",
+          "source_sha256": "90e2cbf0ecd7e90abaa2935ca7091401f6767f3abb5be87a1732e44f36c8f2a7"
+        }
+      ],
+      "gap_kind": "missing_collection_invariants",
+      "impact": "Duplicate or conflicting entries can validate, leaving selection precedence, concurrent generation conflicts, and maximum supported index size to consumers.",
+      "item_id": "A005M15-000156-I005",
+      "item_type": "gap",
+      "severity": "high",
+      "source_unit_refs": [
+        "SEMANTIC:JSON_FIELD:Plans/contracts_index.schema.json:properties",
+        "STRUCTURAL:$.properties"
+      ],
+      "statement": "The contracts array has a minimum count but no uniqueness, duplicate-identity, duplicate-path, ordering, or maximum-size constraint.",
+      "title": "Contract collection permits ambiguous duplicates"
+    },
+    {
+      "builder_discretion": true,
+      "confidence": 0.99,
+      "dimensions": [
+        "security_privacy",
+        "untrusted_inputs",
+        "authority_boundaries",
+        "operations"
+      ],
+      "evidence": [
+        {
+          "exact_quote": "        \"kind\": {\"type\": \"string\", \"minLength\": 1},\n        \"path\": {\"type\": \"string\", \"minLength\": 1},",
+          "line_end": 29,
+          "line_start": 28,
+          "path": "Plans/contracts_index.schema.json",
+          "source_sha256": "90e2cbf0ecd7e90abaa2935ca7091401f6767f3abb5be87a1732e44f36c8f2a7"
+        }
+      ],
+      "gap_kind": "untrusted_locator_constraints",
+      "impact": "Whitespace-only kinds, absolute paths, traversal segments, URI-like values, and platform-specific separators can validate; safe resolution and allowed namespaces remain consumer-defined.",
+      "item_id": "A005M15-000156-I006",
+      "item_type": "gap",
+      "severity": "high",
+      "source_unit_refs": [
+        "SEMANTIC:JSON_FIELD:Plans/contracts_index.schema.json:$defs",
+        "STRUCTURAL:$.$defs"
+      ],
+      "statement": "kind and path are only nonempty strings, with no vocabulary, normalization, relativity, containment, or traversal-safety contract.",
+      "title": "Kind and path trust boundaries are unspecified"
+    },
+    {
+      "builder_discretion": true,
+      "confidence": 0.99,
+      "dimensions": [
+        "compatibility_migration",
+        "acceptance_oracles",
+        "failures_recovery",
+        "recovery_rollback"
+      ],
+      "evidence": [
+        {
+          "exact_quote": "        \"sha256\": {\"type\": \"string\", \"pattern\": \"^[a-fA-F0-9]{64}$\"},",
+          "line_end": 30,
+          "line_start": 30,
+          "path": "Plans/contracts_index.schema.json",
+          "source_sha256": "90e2cbf0ecd7e90abaa2935ca7091401f6767f3abb5be87a1732e44f36c8f2a7"
+        }
+      ],
+      "gap_kind": "digest_semantics_unspecified",
+      "impact": "Validation proves only hexadecimal shape; producers and consumers can disagree on case normalization, source bytes, canonicalization, mismatch handling, and recovery behavior.",
+      "item_id": "A005M15-000156-I007",
+      "item_type": "gap",
+      "severity": "medium",
+      "source_unit_refs": [
+        "SEMANTIC:JSON_FIELD:Plans/contracts_index.schema.json:$defs",
+        "STRUCTURAL:$.$defs"
+      ],
+      "statement": "sha256 accepts any 64 hexadecimal characters, including uppercase, but does not define the hashed byte representation or the required response to a digest mismatch.",
+      "title": "Digest field lacks computation and failure semantics"
+    },
+    {
+      "builder_discretion": true,
+      "confidence": 0.98,
+      "dimensions": [
+        "ambiguity_unknowns",
+        "gui_truth",
+        "accessibility",
+        "localization",
+        "observability_support"
+      ],
+      "evidence": [
+        {
+          "exact_quote": "        \"description\": {\"type\": \"string\"},\n        \"anchors\": {\"type\": \"array\", \"items\": {\"type\": \"string\"}}",
+          "line_end": 32,
+          "line_start": 31,
+          "path": "Plans/contracts_index.schema.json",
+          "source_sha256": "90e2cbf0ecd7e90abaa2935ca7091401f6767f3abb5be87a1732e44f36c8f2a7"
+        }
+      ],
+      "gap_kind": "optional_metadata_underconstrained",
+      "impact": "Empty, duplicate, or malformed anchors and unbounded descriptions can validate, so navigation, support diagnostics, localized display, and accessible presentation cannot rely on stronger guarantees.",
+      "item_id": "A005M15-000156-I008",
+      "item_type": "gap",
+      "severity": "low",
+      "source_unit_refs": [
+        "SEMANTIC:JSON_FIELD:Plans/contracts_index.schema.json:$defs",
+        "SEMANTIC:JSON_SUFFIX:Plans/contracts_index.schema.json",
+        "STRUCTURAL:$.$defs"
+      ],
+      "statement": "Optional description and anchors fields have no nonempty, uniqueness, format, length, localization, or presentation constraints.",
+      "title": "Optional descriptive metadata has weak guarantees"
+    }
+  ],
+  "model": "gpt-5.6-sol",
+  "phase": "blind_macro_window_review",
+  "reasoning_effort": "xhigh",
+  "schema_version": "macro-review-result-v1",
+  "segments": [
+    {
+      "core_range": [
+        1,
+        37
+      ],
+      "covered_source_unit_refs": [
+        "SEMANTIC:JSON_PREFIX:Plans/contracts_index.schema.json",
+        "SEMANTIC:JSON_FIELD:Plans/contracts_index.schema.json:$schema",
+        "SEMANTIC:JSON_FIELD:Plans/contracts_index.schema.json:$id",
+        "SEMANTIC:JSON_FIELD:Plans/contracts_index.schema.json:title",
+        "SEMANTIC:JSON_FIELD:Plans/contracts_index.schema.json:type",
+        "SEMANTIC:JSON_FIELD:Plans/contracts_index.schema.json:additionalProperties",
+        "SEMANTIC:JSON_FIELD:Plans/contracts_index.schema.json:required",
+        "SEMANTIC:JSON_FIELD:Plans/contracts_index.schema.json:properties",
+        "SEMANTIC:JSON_FIELD:Plans/contracts_index.schema.json:$defs",
+        "SEMANTIC:JSON_SUFFIX:Plans/contracts_index.schema.json",
+        "STRUCTURAL:$",
+        "STRUCTURAL:$.$defs",
+        "STRUCTURAL:$.$id",
+        "STRUCTURAL:$.$schema",
+        "STRUCTURAL:$.additionalProperties",
+        "STRUCTURAL:$.properties",
+        "STRUCTURAL:$.required",
+        "STRUCTURAL:$.title",
+        "STRUCTURAL:$.type"
+      ],
+      "item_ids": [
+        "A005M15-000156-I001",
+        "A005M15-000156-I002",
+        "A005M15-000156-I003",
+        "A005M15-000156-I004",
+        "A005M15-000156-I005",
+        "A005M15-000156-I006",
+        "A005M15-000156-I007",
+        "A005M15-000156-I008"
+      ],
+      "reviewed": true,
+      "summary": "The schema strictly identifies and closes root and entry objects, requires a nonempty contract list, and establishes typed identity, locator, and digest fields. Adversarial review finds missing timestamp semantics, collection uniqueness and bounds, locator trust constraints, digest computation and recovery rules, and usable metadata constraints.",
+      "window_id": "WIN-AB40CF573538-0001"
+    }
+  ],
+  "self_attestation": {
+    "no_canonical_writes": true,
+    "no_external_research_during_blind_review": true,
+    "no_peer_result_access": true,
+    "no_prior_audit_access": true,
+    "no_unrelated_source_access": true,
+    "terminal_after_submission": true
+  },
+  "source_binding": {
+    "bundle_id": "MACRO15-AB40CF573538-0001",
+    "document_path": "Plans/contracts_index.schema.json",
+    "micro_window_ids": [
+      "WIN-AB40CF573538-0001"
+    ],
+    "source_sha256": "90e2cbf0ecd7e90abaa2935ca7091401f6767f3abb5be87a1732e44f36c8f2a7"
+  },
+  "status": "completed",
+  "synthesis": {
+    "cross_document_questions": [
+      "Which canonical contract defines path normalization, containment, and digest-mismatch behavior for consumers of this index?",
+      "Which producer contract guarantees unique contract_id and path values and a canonical generated_at_utc representation?"
+    ],
+    "feature_family_keys": [
+      "project-contract-pack-index",
+      "contract-integrity-and-discovery"
+    ],
+    "research_queries": [
+      "JSON Schema 2020-12 patterns for date-time validation and unique object identity in arrays",
+      "secure relative path validation and SHA-256 canonicalization for signed contract manifests"
+    ]
+  },
+  "task_thread_id": "/root/a005m15_b8_000156_attempt_0015_terminal"
+}

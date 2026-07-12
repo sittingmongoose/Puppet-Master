@@ -1,0 +1,1525 @@
+L00000001	# Assistant & Chat UI -- Design Plan
+L00000002	
+L00000003	
+L00000004	## Canonical owner-section requirements
+L00000005	
+L00000006	These requirements are canonical live specification text for this owner document and preserve the required product, runtime, storage, UI, and governance details in owner-section form.
+L00000007	
+L00000008	### Shared conversational/runtime boundary
+L00000009	### Canonical route payload
+L00000010	
+L00000011	
+L00000012	> **Compliance:** This document follows `Plans/DRY_Rules.md` and references SSOT contracts in `Plans/Contracts_V0.md`. Naming: “Puppet Master” only. No open questions; deterministic defaults per `Plans/Decision_Policy.md`.
+L00000013	
+L00000014	## Change Summary
+L00000015	
+L00000016	- 2026-02-26: Added media generation and capability introspection requirements (§7): image attachment nuance (all platforms accept image attachments; image *generation* is Cursor-native or Google-key-backed), `capabilities.get` introspection rule, natural-language model override semantics (per-message only), and media-generation invocation model. SSOT: `Plans/Media_Generation_and_Capabilities.md`.
+L00000017	- 2026-02-25: Remediation alignment with `Plans/GitHub_Integration.md §B.3` — `/actions` and `/actions logs` outputs now require the same run/log summary fields and failure-state parity as the Actions panel.
+L00000018	- 2026-06-18: Retired fixed Pass 1 / Pass 2 / Pass 3 validation model settings and active process stages in §26. Auditor cycle reports mirror the single Auditor validation loop provider/model resolved from the Auditor Model role; legacy pass_number and pass_name fields are compatibility aliases only.
+L00000019	- 2026-02-25: Added §5.3 Git & GitHub command boundary and §23.6 Git & GitHub parity note; cross-references Plans/GitHub_Integration.md.
+L00000020	- 2026-02-25: Added §26 Validation Model/Provider Settings UX for the invariant sweep. The original fixed per-pass selector model is retired by the 2026-06-18 Auditor loop update; stored app settings now resolve through the Auditor Model role rather than legacy pass-specific keys.
+L00000021	- 2026-02-24: Aligned Interview/Assistant output surfacing with **canonical sharded plan graphs** under `.puppet-master/project/plan_graph/` (**index + node shards**). Outputs are **persisted canonically in seglog** and projected into `.puppet-master/project/...` for file-based review; `.puppet-master/project/plan.md` remains the human-readable plan view.
+L00000022	- 2026-02-23: Added Interview chat UX cross-reference to Contract Layer outputs and required `.puppet-master/project/*` artifact pack so interview completion is maximally AI-executable and verifiable (SSOT: `Plans/Project_Output_Artifacts.md`, `Plans/chain-wizard-flexibility.md` §5.7/§11).
+L00000023	
+L00000024	**Date:** 2026-02-20
+L00000025	**Status:** Plan document only
+L00000026	**Cross-references:** Plans/FileManager.md (File Manager, IDE-style editor, click-to-open), Plans/storage-plan.md (seglog/redb/Tantivy, chat persistence and search), Plans/interview-subagent-integration.md, Plans/orchestrator-subagent-integration.md, AGENTS.md (DRY Method)
+L00000027	**SSOT references (DRY):** `Plans/Spec_Lock.json`, `Plans/Contracts_V0.md`, `Plans/DRY_Rules.md`, `Plans/Glossary.md`, `Plans/Decision_Policy.md`, `Plans/Progression_Gates.md`, `Plans/UI_Command_Catalog.md`.
+L00000028	
+L00000029	---
+L00000030	
+L00000031	## Rewrite alignment (2026-02-21)
+L00000032	This plan's **UX requirements** remain authoritative. Implementation should target the rewrite described in `Plans/rewrite-tie-in-memo.md` with the following reconciled assumptions:
+L00000033	
+L00000034	- **Core:** providers + unified event model + deterministic agent loop remain the base architecture.
+L00000035	- **Storage/search:** seglog/redb/Tantivy projections remain the persistence/search stack; JSONL mirror is derived only.
+L00000036	- **UI:** Rust + Slint remain the intended shell implementation.
+L00000037	- **Tooling:** tool registry, approvals, and results normalize through the unified event stream and shared permission/runtime contracts.
+L00000038	- **Auth/runtime taxonomy:** subscription-first remains the default posture. Gemini Direct (`gemini`) is the active direct API route; Antigravity CLI is the active Google-owned CLI-runtime route; Gemini CLI (`gemini_cli`) is retired/source-lineage only. Consumers MAY group related entries under a provider family, but chat/runtime surfaces MUST display the concrete requested/effective provider entry instead of collapsing them into a single generic provider badge.
+L00000039	- **Identity disclosure:** requested/effective runtime identity, account binding, and auth state are imported from the shared runtime contracts. Assistant Chat must not invent a parallel provider/auth field set.
+L00000040	- **Additive field placement:** Assistant Chat treats the additive field design from `Plans/Contracts_V0.md` as frozen for this surface; reconciliation may align wording and placement but must not reopen the shared field set.
+L00000041	
+L00000042	ContractRef: ContractName:Plans/rewrite-tie-in-memo.md, ContractName:Plans/Multi-Account.md, ContractName:Plans/Prompt_Pipeline.md#EFFECTIVE-RESOLUTION-RECORD, ContractName:Plans/Contracts_V0.md
+L00000043	
+L00000044	Any references in this plan to current UI widget implementation details should be treated as illustrative; the behavior and data contracts are what must remain stable.
+L00000045	
+L00000046	ContractRef: ContractName:Plans/storage-plan.md, ContractName:Plans/FinalGUISpec.md, ContractName:Plans/CLI_Bridged_Providers.md
+L00000047	## Executive Summary
+L00000048	
+L00000049	The **Assistant** is the third major surface alongside **Interview** and **Orchestrator**: a flexible chat for ask/plan/execute, teaching, **addressing dashboard warnings and Calls to Action (CtAs)** -- including HITL approval prompts -- and continuing work after the orchestrator completes. Chat UI is shared between Assistant and Interview with mode-specific presentation (Interview: phase-centric with thought stream and message strip; Assistant: message history, plan panel, thought stream). This plan defines modes, permissions, attachments, File Manager integration, Plan/Crew/BrainStorm behavior, and interview-phase UX. All design follows DRY: live provider/model capability data comes from `Plans/Models_System.md` capability snapshots and the shared resolver, subagent names come from `subagent_registry`, and reusable widgets come from the GUI/widget owner docs. Legacy `platform_specs` / `platform_specs.rs` references are source-lineage only and are never active Assistant data sources.
+L00000050	
+L00000051	---
+L00000052	
+L00000053	## Table of Contents
+L00000054	
+L00000055	1. [Modes Overview](#1-modes-overview)
+L00000056	2. [ELI5 Mode](#2-eli5-mode)
+L00000057	3. [Permissions: YOLO vs Regular](#3-permissions-yolo-vs-regular)
+L00000058	4. [Message submission (Steer vs Queue), queued editing, interrupt, and stop](#4-message-submission-steer-vs-queue-queued-editing-interrupt-and-stop)
+L00000059	   - [4.1 Chat footer, queue UI, and files touched -- implementation detail](#41-chat-footer-queue-ui-and-files-touched--implementation-detail)
+L00000060	5. [Commands (slash commands and custom commands)](#5-commands-slash-commands-and-custom-commands)
+L00000061	   - [5.3 Git & GitHub command boundary](#53-git--github-command-boundary)
+L00000062	6. [Teach](#6-teach)
+L00000063	7. [Attachments, Web Search, and Extensibility](#7-attachments-web-search-and-extensibility)
+L00000064	8. [Plan Mode Depth & Rules](#8-plan-mode-depth--rules)
+L00000065	9. [File Manager, IDE-style editor, and @ Mention](#9-file-manager-ide-style-editor-and--mention)
+L00000066	   - [9.1 LSP support in Chat (MVP)](#91-lsp-support-in-chat-mvp)
+L00000067	10. [Chat History Search](#10-chat-history-search)
+L00000068	11. [Threads and chat management](#11-threads-and-chat-management)
+L00000069	   - [11.1 Thread State: `attention_required`](#111-thread-state-attention_required)
+L00000070	   - [11.2 System Message Type: `clarification_request`](#112-system-message-type-clarification_request)
+L00000071	   - [11.3 Thread State Lifecycle: `attention_required`](#113-thread-state-lifecycle-attention_required)
+L00000072	12. [Context usage display](#12-context-usage-display)
+L00000073	13. [Activity transparency: search, bash, and file activity](#13-activity-transparency-search-bash-and-file-activity)
+L00000074	14. [Subagents & Crew](#14-subagents--crew)
+L00000075	   - [14.1 Subagent visibility in thread -- implementation detail](#141-subagent-visibility-in-thread--implementation-detail)
+L00000076	15. [Plan Mode + Crew Mode](#15-plan-mode--crew-mode)
+L00000077	16. [Interview Phase UX (Chat Surface)](#16-interview-phase-ux-chat-surface)
+L00000078	17. [Context & Truncation](#17-context--truncation)
+L00000079	18. [BrainStorm Mode](#18-brainstorm-mode)
+L00000080	19. [Documentation Audience (AI Overseer)](#19-documentation-audience-ai-overseer)
+L00000081	20. [References](#20-references)
+L00000082	21. [Dashboard Warnings and Calls to Action](#21-dashboard-warnings-and-calls-to-action)
+L00000083	22. [Live Testing Tools and Hot Reload](#22-live-testing-tools-and-hot-reload)
+L00000084	23. [Gaps, Competitive Comparison, and Enhancements](#23-gaps-competitive-comparison-and-enhancements)
+L00000085	24. [Chat thread performance, virtualization, and flicker avoidance](#24-chat-thread-performance-virtualization-and-flicker-avoidance)
+L00000086	25. [Context Circle Enhancements (Addendum -- 2026-02-23)](#25-context-circle-enhancements-addendum----2026-02-23)
+L00000087	26. [Auditor Validation Loop Model/Provider Settings (Invariant Sweep)](#26-auditor-validation-loop-modelprovider-settings-invariant-sweep)
+L00000088	
+L00000089	---
+L00000090	
+L00000091	## 1. Modes Overview
+L00000092	
+L00000093	### 1.0 Primary Assistant mode strip
+L00000094	
+L00000095	The primary Assistant mode strip exposes five stable choices: `Ask`, `Agent`, `Debug`, `Plan`, and `Deep Plan`.
+L00000096	
+L00000097	| Primary Assistant mode | Purpose | Canonical runtime posture | Default execution posture | Primary outputs | Default next step |
+L00000098	|---|---|---|---|---|---|
+L00000099	| **Ask** | Read-only explanation, inspection, and research | `ask` | no execution | answer, guidance, cited findings | stay read-only or switch modes |
+L00000100	| **Agent** | Standard execution workflow for implementation and iteration | `regular` by default, `yolo` only when explicitly chosen | execution-capable | edits, commands, artifacts, verification | continue normal execution |
+L00000101	| **Debug** | Evidence-first automated diagnosis, fix, verification, and cleanup | `regular` by default; `yolo` only by explicit opt-in | execution-capable investigation | Investigation Context, bounded evidence, fix attempts, verification, cleanup status | continue, export bundle, or close the investigation |
+L00000102	| **Plan** | Faster, lighter planning for medium-complexity asks | `plan` | read-only | lightweight plan artifact + normalized TODO list | user reviews, then executes or queues |
+L00000103	| **Deep Plan** | Heavier planning for larger, riskier, or high-uncertainty asks | `plan` | read-only | rich planning artifact + normalized TODO list | user reviews in editor/doc pane, then executes or queues |
+L00000104	
+L00000105	ContractRef: ContractName:Plans/Run_Modes.md, ContractName:Plans/FinalGUISpec.md, ContractName:Plans/UI_Command_Catalog.md
+L00000106	
+L00000107	Specialized workflows such as `Interview`, `BrainStorm`, and `Crew` remain supported, but they do not replace the primary Assistant mode strip. They are specialized overlays or routed flows that still normalize through the shared requested/effective runtime and overlay model.
+L00000108	
+L00000109	ContractRef: ContractName:Plans/interview-subagent-integration.md, ContractName:Plans/orchestrator-subagent-integration.md, ContractName:Plans/Run_Modes.md
+L00000110	
+L00000111	### 1.0A Planning workflow rules
+L00000112	
+L00000113	Planning-time rules for both `Plan` and `Deep Plan` remain:
+L00000114	- planning is read-only with respect to project files
+L00000115	- any planning artifact created during the planning run is a Puppet Master-controlled draft, not a normal repo file by default
+L00000116	- approval is required before the assistant can switch from planning into execution
+L00000117	- execution after approval reuses the approved plan/TODO state and runs under `regular` or `yolo`, never under `plan`
+L00000118	- queueing affects only post-approval execution, never the planning-time read-only run
+L00000119	
+L00000120	ContractRef: ContractName:Plans/Run_Modes.md, ContractName:Plans/Prompt_Pipeline.md, ContractName:Plans/storage-plan.md
+L00000121	
+L00000122	### 1.0B Debug Mode contract
+L00000123	Debug Mode is the explicit Assistant entrypoint for PM's automated, evidence-first debugging workflow.
+L00000124	
+L00000125	Required rules:
+L00000126	- Debug Mode is stronger than a behavioral hint. When selected, the assistant is expected to use debug-capable tools, bounded evidence capture, revalidation gates, and verification loops when policy and capabilities allow.
+L00000127	- Debug Mode is an Assistant-only workflow overlay, but the underlying debug-capable tools remain shared platform capabilities that Orchestrator, Interview, and delegated runs may use under the same contracts.
+L00000128	- Debug Mode remains execution-capable. There is no stable `Debug + ask` combination for automated investigations.
+L00000129	- Debug Mode persists `requested_mode_overlay = debug` and `effective_mode_overlay = debug`, while runtime mode and execution strategy continue to resolve through `Plans/Run_Modes.md`.
+L00000130	- `/mode debug` selects the Debug Mode workflow overlay and must preserve the requested/effective overlay fields through restore and resume.
+L00000131	- Debug transcript and status labeling must make investigations visually distinct from `/Agent/Plan` threads while preserving the same Assistant mode strip family.
+L00000132	
+L00000133	ContractRef: ContractName:Plans/Tools.md, ContractName:Plans/Run_Modes.md, ContractName:Plans/Permissions_System.md
+L00000134	
+L00000135	**Debug axis boundaries:**
+L00000136	- PM distinguishes Debug Mode's runtime-evidence pipeline from orthogonal assistant-diagnostics products. GitHub Copilot / VS Code Agent Debug Log and Chat Debug view may instrument the Copilot session, including tool calls, prompts, OTLP export, and `/troubleshoot`, but that is not the same as instrumenting the user's running app through injected logs. Reference URL: `https://code.visualstudio.com/docs/copilot/chat/chat-debug-view`.
+L00000137	- Windsurf Cascade Hooks are governance/audit hooks around assistant actions such as `pre_read_code`, `post_write_code`, and shell hooks; Download Diagnostics are support-style logs. They are not the Cursor-like local runtime-evidence pipeline PM needs for Debug Mode. Reference URL: `https://docs.windsurf.com/windsurf/cascade/hooks`.
+L00000138	- JetBrains AI Assistant Explain runtime error / console is reactive help over existing output and does not provide a bundled probe, collector, and cleanup workflow. Reference URL: `https://www.jetbrains.com/help/ai-assistant/explain-code-with-ai.html`.
+L00000139	- Amazon Q, Gemini Code Assist, Tabnine fix flows, and similar chat/diagnostics/suggest-logging products are useful OSS and IDE comparison points, but the materials reviewed did not show a first-party match for PM's integrated local log sink plus cleanup story.
+L00000140	- Devin-style bug-from-report workflows may use production/data-plane observability and MCP context, but `/data-plane` evidence is a different axis from PM's local runtime-evidence loop. Reference URL: `https://docs.devin.ai/use-cases/gallery/fix-bug-from-report`.
+L00000141	
+L00000142	ContractRef: ContractName:Plans/Architecture_Invariants.md, ContractName:Plans/Runtime_Artifacts_Panel.md, ContractName:Plans/Prompt_Pipeline.md
+L00000143	
+L00000144	**Closed debug phase model:**
+L00000145	1. `target_binding` — bind or confirm the exact debug target.
+L00000146	2. `baseline_capture` — capture starting state, reproduction preconditions, and relevant runtime identity.
+L00000147	3. `instrumentation` — add only the minimum temporary instrumentation required for diagnosis.
+L00000148	4. `reproduction` — reproduce or confirm the issue against the bound target.
+L00000149	5. `analysis` — reason over the bounded evidence set.
+L00000150	6. `repair` — apply the smallest viable fix or remediation step.
+L00000151	7. `verification` — verify whether the issue is resolved.
+L00000152	8. `cleanup` — remove temporary instrumentation, temporary env/config, and temporary debug-only runtime state.
+L00000153	
+L00000154	**Revalidation rules:**
+L00000155	- Before any mutation-capable step after `target_binding`, the assistant MUST revalidate the investigation when the target identity, bound worktree/branch, requested/effective runtime identity, auth/account binding, or instrumentation availability has drifted.
+L00000156	- The normal automated path covers target discovery and selection, browser or `/test/process` reproduction, evidence capture, tracer `/instrumentation` install or activation, analysis, tentative fix, automated verification, and cleanup or rollback.
+L00000157	- Revalidation is also mandatory after target restarts, debug adapter/session replacement, or evidence expiry that invalidates the current hypothesis.
+L00000158	- A revalidation gate surfaces an explicit reason in the Investigation Context; it MUST NOT silently continue as though the earlier target binding were still valid.
+L00000159	- `verification` is not optional. A fix attempt without a recorded verification result remains `attention_required` or `failed_cleanup`, not `resolved`.
+L00000160	- `cleanup` is the terminal mutation-capable phase for an otherwise successful investigation. Temporary instrumentation may persist only when the user explicitly preserves it or a preservation/hold rule says it must stay.
+L00000161	
+L00000162	ContractRef: ContractName:Plans/storage-plan.md, ContractName:Plans/Runtime_Artifacts_Panel.md, ContractName:Plans/GitHub_Integration.md
+L00000163	
+L00000164	### 1.0C Runtime mode normalization (canonical)
+L00000165	
+L00000166	The chat surface exposes both workflow overlays and runtime execution posture. Only the runtime posture normalizes into the canonical run-envelope `mode` used by `Plans/Run_Modes.md`.
+L00000167	
+L00000168	For Assistant display, message metadata, and context-detail filtering, the workflow-mode enum is closed to `ask | agent | debug | plan | deep_plan`. `debug` remains a workflow overlay that normalizes to `regular` by default or to `yolo` only by explicit opt-in; `deep_plan` remains a first-class workflow/display identity even though the underlying run-envelope runtime posture is still `plan`. Subordinate behavior/profile fields may describe investigation or planning depth, but they do not replace this workflow-mode enum.
+L00000169	
+L00000170	| UI/workflow state | Canonical runtime mode | Notes |
+L00000171	|---|---|---|
+L00000172	| Ask | `ask` | Always read-only. |
+L00000173	| Plan / Deep Plan (before execution) | `plan` | Always read-only; produces planning output only. |
+L00000174	| Agent with standard approvals | `regular` | Standard execute posture. |
+L00000175	| Debug with standard approvals | `regular` | Debug overlay stays visible; runtime stays execution-capable without minting a new enum. |
+L00000176	| Debug with explicit YOLO posture | `yolo` | Power-user opt-in only. |
+L00000177	| Interview / BrainStorm / Crew execution with standard approvals | `regular` | Specialized overlays do not create extra runtime-mode enum values. |
+L00000178	| Explicit YOLO execution outside Debug | `yolo` | Full-automation posture. |
+L00000179	
+L00000180	ContractRef: ContractName:Plans/Run_Modes.md, ContractName:Plans/Contracts_V0.md, ContractName:Plans/Prompt_Pipeline.md
+L00000181	
+L00000182	**Requires a project:** many assistant capabilities (for example `@` file mention, project-scoped commands, local browser targets, run/debug presets, and project-bound debugging) do not work when no project is selected. When no project is selected, only application-wide rules and non-project target kinds remain available.
+L00000183	
+L00000184	ContractRef: ContractName:Plans/FileManager.md, ContractName:Plans/GitHub_Integration.md, ContractName:Plans/FinalGUISpec.md
+L00000185	
+L00000186	### 1.1 Chat controls: platform, model, and reasoning/effort
+L00000187	
+L00000188	The chat window must allow the user to change platform, model, reasoning/effort, and worktree binding without leaving the chat.
+L00000189	
+L00000190	Required controls (placement: chat header strip, same area as the context indicator / mode controls):
+L00000191	
+L00000192	| Control | Requirement |
+L00000193	|---|---|
+L00000194	| **Provider** | Dropdown listing available provider entries from the account-bound Provider -> models registry. Selection applies to the current thread and the next turn. Data comes from Models/Multi-Account/Contracts capability snapshots; no hardcoding and no legacy `platform_specs` authority. |
+L00000195	| **Model** | Dropdown listing models for the currently selected provider entry. Models are dynamically discovered where supported, cached, and user-manageable via Settings or a manage-models entrypoint. Fallback model lists come from the shared provider/model registry and capability resolver, never `platform_specs::fallback_model_ids(platform)`. |
+L00000196	| **Reasoning / effort** | Shown only when the active platform supports it. Applies to the next turn rather than interrupting an in-flight response. |
+L00000197	| **Worktree** | Icon button (rightmost in header strip, after Reasoning/effort). Dropdown for per-thread worktree binding: create, unbind, merge, PR, remove. Visual states: unbound (dimmed glyph), bound-clean (lit glyph), bound-dirty (lit glyph + dot indicator), bound-conflict (lit glyph + warning triangle). Hidden when the active project has no git repository. Full specification in the "Worktrees in Assistant" section below. |
+L00000198	
+L00000199	ContractRef: ContractName:Plans/Models_System.md, ContractName:Plans/Prompt_Pipeline.md, ContractName:Plans/FinalGUISpec.md, ContractName:Plans/WorktreeGitImprovement.md
+L00000200	
+L00000201	A *turn* is one complete user -> agent exchange: one user message plus the full agent response, including tool calls and final result. Changing platform, model, effort, or worktree binding takes effect on the next turn. If the user changes settings while a response is streaming, the current response completes with the prior selection.
+L00000202	
+L00000203	ContractRef: ContractName:Plans/Prompt_Pipeline.md, ContractName:Plans/Run_Modes.md, ContractName:Plans/storage-plan.md
+L00000204	
+L00000205	## 2. ELI5 Mode
+L00000206	
+L00000207	There are **two separate ELI5 toggles**; they are independent and must not be conflated. The authoritative dual-copy checklist for in-scope strings is `Plans/FinalGUISpec.md` §7.4.0.
+L00000208	
+L00000209	### 2.1 Chat-level ELI5 (in chat only)
+L00000210	
+L00000211	- **What:** A toggle **in the chat UI** that, when **on**, instructs the Assistant to explain technical terms and steps in simpler terms and with more detail (ELI5 = "Explain Like I'm 5") in **that chat**.
+L00000212	- **Default:** **OFF** (Expert/default LLM behavior). By default, no extra "explain simply" instruction is added.
+L00000213	- **Scope:** Affects **Assistant chat behavior only** (explanations, follow-ups, teaching in the conversation).
+L00000214	- **Does NOT affect:** Interviewer **documentation writing style**. When the interview generates PRD, AGENTS.md, requirements, or other docs, chat ELI5 is **ignored**; generated docs remain technical and precise for agent consumption.
+L00000215	- **Implementation:** Chat ELI5 is a per-chat or per-session flag. When building the system prompt or instruction block for the Assistant, append an ELI5 instruction only for that session; do not pass it into interview document-generation prompts.
+L00000216	
+L00000217	### 2.2 Application-level ELI5 (app-wide)
+L00000218	
+L00000219	- **What:** A **separate** toggle at **application/settings level** labeled **Interaction Mode (Expert/ELI5)**. When ELI5 is active, **tooltips** and **interviewer responses** (in the Interview flow) are longer and simpler.
+L00000220	- **Default:** **ON** (ELI5). New users see simpler copy by default.
+L00000221	- **Scope:** Affects **tooltips** across the app (e.g. Config, Dashboard, Chat) and **interviewer Q&A responses** (the text the interview agent shows when asking questions or giving feedback). Does **not** change generated documentation (PRD, AGENTS.md, etc.).
+L00000222	- **Independent of chat ELI5:** A user can have app ELI5 on (simpler tooltips and interviewer text) and chat ELI5 off (technical Assistant answers in chat), or the reverse. The two toggles are stored and applied separately.
+L00000223	- **Dual-copy rule:** Every in-scope authored copy item in this plan (tooltips/help, interviewer Q&A copy, and chat style instruction copy) must define both **Expert** and **ELI5** variants. Track and audit against `Plans/FinalGUISpec.md` §7.4.0.
+L00000224	
+L00000225	Expert/ELI5 copy pairs must remain behaviorally equivalent: Expert text uses precise, compact system-model language, while ELI5 text uses plain-language explanation plus one concrete example. The dual-copy rule covers authored `/help` and tooltip text; it does not create a separate `concept-help` system or let concept explanations drift from the owner contract.
+L00000226	
+L00000227	---
+L00000228	
+L00000229	## 3. Permissions: YOLO vs Regular
+L00000230	
+L00000231	- **YOLO mode:** Chat runs with maximum permissions; no permission prompts. Agent can execute, edit, and run tools without asking. User accepts full automation for that session.
+L00000232	- **Regular mode:** Agent asks for permission before executing or editing. User-facing approval follows the canonical ladder: `deny`, `once`, `for session`, `always`.
+L00000233	- **Persistence:** Mode is a per-session or per-chat setting (configurable in chat UI or settings). `for session` does not persist across app restarts; durable approval/default behavior is owned by `Plans/Permissions_System.md`.
+L00000234	
+L00000235	---
+L00000236	
+L00000237	## 4. Message submission (Steer vs Queue), queued editing, interrupt, and stop
+L00000238	
+L00000239	This section defines the canonical contract for this surface.
+L00000240	
+L00000241	Core rules:
+L00000242	- Message controls are locked to most-recent-user scope, queued-message FIFO semantics, explicit rewind/discard behavior, always-visible code-block copy, mandatory subagent disclosure, and transient queue state that is not restored across reload or restart.
+L00000243	- Ordinary fenced code blocks render an always-visible copy button; the copy affordance/behavior may add emphasis or secondary controls on hover/focus, but copy availability must not depend on hover-only discovery.
+L00000244	- The message-stream control row keeps a thread-visible copy-icon on user and assistant messages, exposes `/submit`/stop morphing in the composer, and scopes `Stop`, `Edit`, and `Resend` to the most recent user-sent message only. `/edit/delete` is retired as a shorthand: edit and resend are supported, but no delete action is exposed. This is the message-control SSOT for most-recent-message controls.
+L00000245	- `/control` is a retired generic shorthand in this section; use `message-control` plus the concrete Stop/Edit/Resend, send-stop morph, copy-icon, and jump controls.
+L00000246	- The normalized message action labels are `Copy`, `Edit`, and `Resend`: `Copy` appears on every message, while `Edit` and `Resend` appear only on the most recent user-sent message. `Resend` replays that message and discards later generated history or work.
+L00000247	- Stop, Edit, and Resend render as icon buttons with accessible names rather than long text buttons in compact message-control rows.
+L00000248	- When the user is scrolled away from the bottom, chat shows a jump-to-latest / jump-to-bottom control with an unseen-count badge; auto-follow resumes when the user returns to the bottom.
+L00000249	- Message-control canon keeps `/steer` as the queue-area and interrupt path, not a message rewrite action. Only the most recent user message exposes Edit and `/resend`; resend replays as-is after rewinding later `/history`, stop cancels the active-run, `/steer/interrupt` remains distinct from stop, resend, `/follow`, and follow-up queuing, and controls expire after the next user message. `/follow` auto-follows only while the user is at the bottom and re-enables when the jump-to-latest action returns to bottom.
+L00000250	- Inline interactive visuals may be summoned by natural-language requests, but they render through the visual-module host contract and remain bounded thread content rather than arbitrary runtime heap state.
+L00000251	- Code-block actions include copy by default and may expose `/open-in-editor` only when a filename/path binding exists.
+L00000252	- The queued-message capacity is max 2 in FIFO order; when the queue is full, the composer must surface a queue full state and require the user to send, edit, or cancel an existing queued message before adding another.
+L00000253	
+L00000254	Rules:
+L00000255	- Stop/Edit/Resend attach ONLY to most recent user-sent message
+L00000256	- discards all later history/work
+L00000257	- FIFO, max 2 queued messages
+L00000258	- Stop does NOT clear the queue
+L00000259	- always-visible copy affordance on fenced code blocks
+L00000260	- always-visible copy-icon on message rows
+L00000261	- jump-to-latest with unseen-count
+L00000262	- chat-control /steer and /re-runs stay constrained to the most recent user-sent message.
+L00000263	- /open-in-editor requires a resolved path
+L00000264	- /composer is a retired shorthand label; composer behavior is represented by the send/stop morph and most-recent-message actions above.
+L00000265	- visible copy button on ordinary fenced code blocks
+L00000266	- queue state is transient and is not restored across reload or restart
+L00000267	- Stop becomes disabled when a run completes and no next message is queued
+L00000268	- Edit restores content into composer and discards later history/work
+L00000269	- Resend retries the most recent message and discards later history/work
+L00000270	- Stop first records `chat_run.cancel_requested`, sends cancel to the active model/tool/subagent leases, waits up to `cancel_grace_ms = 3000`, and then records `chat_run.cancelled` or `chat_run.cancel_timeout` before queued messages may advance.
+L00000271	- Edit and Resend perform a soft history mutation: later generated messages, tool cards, and draft operation cards are marked `superseded_by_message_id` and hidden from the active transcript, while audit/export views retain tombstones and source refs.
+L00000272	- Queue entries use `{queue_entry_id, thread_id, draft_message_id, enqueued_at, position, state, text_ref, attachment_refs[], source_composer_id}`; when the max-2 queue is full, the new draft remains in the composer and the send action is disabled with `queue_full` until the user removes or sends an existing entry.
+L00000273	
+L00000274	### Composer Behavior
+L00000275	
+L00000276	Composer behavior is the live owner surface for the send/stop morph, per-message stop scope, jump-to-bottom affordance, always-visible copy controls, and the no-delete message policy. These rules remain part of the message-control contract above rather than a separate command family or chat-local history mutation model.
+L00000277	
+L00000278	### 4.1 Chat footer, queue UI, and files touched -- implementation detail
+L00000279	
+L00000280	The chat footer owns the send/stop morph, queued-message affordance, and visible latest-message actions, while files-touched output stays a compact projection of edit/diff activity rather than a second transcript.
+L00000281	
+L00000282	Rules:
+L00000283	- Queue UI shows FIFO order, pending count, and stop/interrupt state without restoring transient queued text after reload or restart.
+L00000284	- Files touched entries show `Read:` / `Edited:` labels, diff counts, and click-to-open editor routes through the shared operation-card and editor target contracts.
+L00000285	- Footer controls, queue state, and files-touched summaries must remain synchronized with operation cards so command-card, web/search, terminal, and diff activity do not fork separate status models.
+L00000286	## 5. Commands (slash commands and custom commands)
+L00000287	
+L00000288	The reserved slash-command surface is canonical and non-overridable.
+L00000289	
+L00000290	### 5.1 Reserved built-ins
+L00000291	
+L00000292	This section consumes the linked owner contract and stays aligned with it.
+L00000293	
+L00000294	Labels and values:
+L00000295	- /new
+L00000296	- /model
+L00000297	- /effort
+L00000298	- /mode
+L00000299	- /export
+L00000300	- /compact
+L00000301	- /stop
+L00000302	- /resume
+L00000303	- /rewind
+L00000304	- /revert
+L00000305	- /share
+L00000306	- /settings
+L00000307	- /doctor
+L00000308	- /help
+L00000309	- /web
+L00000310	- /skill
+L00000311	- /cancel
+L00000312	- reserved built-ins
+L00000313	
+L00000314	Rules:
+L00000315	- /cancel resolves internally to cmd.chat.stop
+L00000316	- /web remains settings-visible and discoverable in catalog
+L00000317	- deprecated aliases shown distinctly from active commands
+L00000318	- reserved commands shown as non-editable in catalog
+L00000319	- /assistant-chat and /clear are retired legacy or compatibility aliases in this Assistant Chat SSOT. `/revert` is active only through the command-catalog-owned `cmd.chat.revert` file-mutation restore path; it is not a conversation rewind or thread-clear alias.
+L00000320	- Thread-management commands group resume, rewind, `/revert/share/archive`, settings, and `/help/doctor` help surfaces without turning every history operation into a separate local control family.
+L00000321	- Migration `/alias` and `/deprecation` handling keeps `/cancel` visibly deprecated toward `/stop` and keeps retired `/clear` behavior out of active command canon unless the command-catalog owner re-promotes it.
+L00000322	### 5.2 `/web` and `/skill`
+L00000323	
+L00000324	This section consumes the linked owner contract and stays aligned with it.
+L00000325	
+L00000326	Core rules:
+L00000327	- GUI/help canon must preserve row-level health/error disclosure, last-failure messaging, inline contextual help, and availability/support-tier visibility in Settings and /web help/autocomplete.
+L00000328	- The /web family is locked as one slash-command family with stable command IDs, bare /web help behavior, and no flattening into separate top-level families.
+L00000329	- Skill discovery and invocation are locked to three paths—GUI panel, /skill, and natural language—without an MVP subcommand family, all converging on the same invoke_skill contract.
+L00000330	- The now-locked `/web` direction keeps web research as a first-class Assistant, Interviewer, and doc-builder capability even in Plan or Deep Plan contexts; permission-mode/mode-override rules must not silently auto-deny web-research, websearch, webfetch, model-native, provider-native, or PM-composed research paths merely because the thread is planning.
+L00000331	- Settings and help surfaces disclose provider support through a compatibility-matrix style view for first-class web tools, including support tier, provider order/fallback, credential state, and unavailable/high-side-effect controls.
+L00000332	- `/skill`, GUI skill management, and natural-language skill invocation share the same invoke_skill dispatch path; built-in skill surfacing is user-visible but does not create a separate MVP subcommand family.
+L00000333	- Bare `/web` is /help-only autocomplete and dispatches `cmd.chat.web.help`; executable web intents must resolve to an explicit subcommand and must not create slash-only or search-only event families.
+L00000334	- Legacy `/what` lineage is compatibility/help-only and may surface usage or autocomplete guidance, but it does not bypass the explicit `/web` subcommand grammar.
+L00000335	- `/web` UI-command schemas mirror the normalized web inputs: search uses `{ query }`, fetch/extract use `{ url }`, research uses `{ task }`, and crawl/map use `{ root_url, max_pages?, max_depth?, same_origin_only? }` with `root_url`, `max_pages`, `max_depth`, and `same_origin_only` surfaced as command-help fields.
+L00000336	- Direct slash execution uses the concrete grammar `/web search <query>`, `/web fetch <url>`, `/web extract <url>`, `/web research <task>`, `/web crawl <url>`, and `/web map <url>`; `<query>` and `<task>` consume the remaining text verbatim, `<url>` / `URL` normalize to an absolute URL before dispatch, and parse failure shows usage help rather than guessing.
+L00000337	- Assistant Chat command-routing consumes `Plans/UI_Command_Catalog.md` for `/web`, `/skill`, reserved built-ins, and source obligation carry-through for `obl-037`, `obl-046`, `obl-047`, `obl-048`, and `obl-051`; stale local summaries are `/retire` lineage until the command-catalog owner promotes an active command ID.
+L00000338	
+L00000339	Fields:
+L00000340	- slash prototype
+L00000341	- stable command ID
+L00000342	- subcommand-required parsing
+L00000343	- /skill <skill_name> [args]
+L00000344	- /skill with no args lists available skills
+L00000345	- invoke_skill
+L00000346	- No subcommand family for MVP
+L00000347	- Skills panel
+L00000348	- Natural language
+L00000349	- doc-builder
+L00000350	- compatibility-matrix
+L00000351	- mode-override
+L00000352	- high-side-effect
+L00000353	
+L00000354	Labels and values:
+L00000355	- /skill
+L00000356	
+L00000357	Rules:
+L00000358	- row-level health/error disclosure
+L00000359	- last-failure messaging
+L00000360	- contextual help text
+L00000361	- availability plus support-tier visibility in Settings
+L00000362	- availability plus support-tier visibility in `/web` help/autocomplete
+L00000363	- /web search <query>
+L00000364	- /web extract <url>
+L00000365	- /web research <task>
+L00000366	- /web crawl <url>
+L00000367	- /web map <url>
+L00000368	- cmd.chat.web.search
+L00000369	- cmd.chat.web.extract
+L00000370	- cmd.chat.web.research
+L00000371	- /web fetch <url>
+L00000372	- cmd.chat.web.fetch
+L00000373	- cmd.chat.web.crawl
+L00000374	- cmd.chat.web.map
+L00000375	- cmd.chat.web.help
+L00000376	- bare /web shows help/autocomplete only
+L00000377	- do not flatten /web into separate slash families
+L00000378	- subcommand is required for execution
+L00000379	- URL normalization applies
+L00000380	- parse failure shows usage
+L00000381	- command-routing
+L00000382	- obl-037
+L00000383	- obl-046
+L00000384	- obl-047
+L00000385	- obl-048
+L00000386	- obl-051
+L00000387	- /retire
+L00000388	### 5.3 Git & GitHub command boundary
+L00000389	Git and GitHub prefixes remain reserved and route into the canonical source-control and GitHub command surfaces rather than to user-defined command overrides.
+L00000390	
+L00000391	Boundary rules:
+L00000392	- `/git ...` and natural-language requests for local repository work route to the Git/Source Control command family: status, diff, branch/worktree, commit, merge, revert, stash, and other local repository operations.
+L00000393	- `/github ...` and natural-language requests for PR, issue, Actions, workflow, review, comment, release, or hosted-repo administration route to the GitHub command family.
+L00000394	- The assistant MUST NOT silently reinterpret a Git request as a GitHub request, or vice versa, just because one path appears easier.
+L00000395	- When a user request spans both domains, the assistant must expose the boundary explicitly (for example: local compare first, then hosted PR creation) and preserve the handoff identity between the two stages.
+L00000396	- Requests that pivot into compare/review/open flows MUST preserve the canonical repo/worktree/compare identity fields rather than reconstructing targets from whatever branch happens to be active later.
+L00000397	
+L00000398	GitHub-local detail ownership remains in `Plans/GitHub_Integration.md`; chat owns only the dispatch boundary, routing expectations, and inline disclosure that a request is crossing from local Git to hosted GitHub behavior.
+L00000399	
+L00000400	ContractRef: ContractName:Plans/UI_Command_Catalog.md, ContractName:Plans/Commands_System.md, ContractName:Plans/GitHub_Integration.md, ContractName:Plans/Contracts_V0.md
+L00000401	
+L00000402	### 5.4 Custom command boundary
+L00000403	User Commands may complement built-ins, but they do not replace or suppress the canonical Assistant Chat command set. PM-native Ask and Plan behavior remains authoritative even when an upstream reference product handles modes or permissions differently.
+L00000404	
+L00000405	ContractRef: ContractName:Plans/Run_Modes.md, ContractName:Plans/Commands_System.md, ContractName:Plans/OpenCode_Deep_Extraction.md
+L00000406	### 5.5 Dispatcher parity
+L00000407	
+L00000408	This section defines the canonical contract for this surface.
+L00000409	
+L00000410	Core rules:
+L00000411	- Natural-language web intents must hit the same dispatcher as slash commands, and site or page reading intents must resolve to webfetch rather than websearch or provider extract.
+L00000412	- Reading phrases such as "read this site", "read this URL", and "fetch this page" resolve to `webfetch`; they do not route to `websearch` or provider `extract`.
+L00000413	
+L00000414	Fields:
+L00000415	- intent phrase
+L00000416	- resolved tool key
+L00000417	
+L00000418	Rules:
+L00000419	- NL intents and slash commands hit the same dispatcher
+L00000420	- "search the web for X" → `websearch`
+L00000421	- "extract this page" → `webextract`
+L00000422	- "read this URL" → `webfetch`
+L00000423	- "read this site" / "fetch this page" → `webfetch`
+L00000424	- "research topic" → `webresearch`
+L00000425	- Reading intents MUST resolve to `webfetch`, not `websearch`
+L00000426	ContractRef: ContractName:Plans/Tools.md#12. Web tool routing algorithm, ContractName:Plans/UI_Command_Catalog.md#2.7 Chat slash commands (reserved)
+L00000427	- site/page reading is not search
+L00000428	- dispatcher parity applies to slash and NL paths
+L00000429	- command tables and routing docs must mirror the same mappings
+L00000430	## 6. Teach
+L00000431	
+L00000432	Teach-owned durable behavior includes `user-locked` records: explicit user unlock, supersession, or revocation is required before automated memory cleanup, summarization, or profile migration can weaken or remove the stored behavior.
+L00000433	
+L00000434	
+L00000435	Teach defines how users deliberately teach Puppet Master durable codebase knowledge, preferences, and workflow constraints from within chat.
+L00000436	
+L00000437	ContractRef: ContractName:Plans/Prompt_Pipeline.md, ContractName:Plans/storage-plan.md, ContractName:Plans/Contracts_V0.md
+L00000438	
+L00000439	Teach trigger rules:
+L00000440	- Teach may be invoked explicitly via `/teach` or equivalent natural-language intent such as "remember that...", "for this repo always...", or "please prefer..."
+L00000441	- the assistant may recommend Teach when it detects reusable guidance, but persistence requires an explicit user-confirming action before the knowledge is stored
+L00000442	- Teach is a capture workflow, not a separate closed `mode_overlay`; execution posture remains controlled by the thread's current runtime/mode selection unless the user also changes modes
+L00000443	
+L00000444	What Teach stores:
+L00000445	- project conventions such as naming, testing, logging, formatting, architecture boundaries, and generated-file rules
+L00000446	- user preferences that materially affect future responses or edits
+L00000447	- recurring environment facts such as canonical commands, repository structure, or approval expectations
+L00000448	- negative constraints such as "never edit derived files" or "always plan before execution for risky tasks"
+L00000449	
+L00000450	Persistence scope:
+L00000451	- each taught item MUST declare a scope before commit: `thread`, `project`, or `user`
+L00000452	- `thread` scope persists only with the current thread and its descendants where lineage explicitly carries that memory
+L00000453	- `project` scope persists across future threads in the same project/workspace
+L00000454	- `user` scope persists as a user-level preference only when the content is not project-confidential
+L00000455	- persisted Teach records store at minimum `memory_id`, `scope`, `source_thread_id`, `author_message_id`, `captured_at`, and `normalized_fact`, plus optional `supersedes_memory_id` / `revoked_at`
+L00000456	
+L00000457	Effect on future responses:
+L00000458	- taught knowledge is retrieved into future prompt assembly as explicit memory/context rather than as undocumented hidden prompt mutation
+L00000459	- when a taught fact materially changes an answer, plan, or execution choice, the assistant should be able to disclose that the response was influenced by taught memory
+L00000460	- conflicting teachings do not silently overwrite prior knowledge; PM records supersession or revocation so the user can audit why a newer fact won
+L00000461	- taught knowledge may influence future responses, planning posture, tool-selection defaults, and code-generation choices only within its approved persistence scope
+L00000462	
+L00000463	Safety and audit rules:
+L00000464	- users can inspect, narrow, supersede, or revoke taught knowledge later
+L00000465	- Teach MUST NOT persist secrets, tokens, passwords, or other credentials
+L00000466	- ordinary one-off chat instructions do not become taught knowledge unless the user explicitly confirms persistence
+L00000467	
+L00000468	ContractRef: ContractName:Plans/Decision_Policy.md, ContractName:Plans/FinalGUISpec.md, ContractName:Plans/Tools.md
+L00000469	
+L00000470	## 7. Attachments, Web Search, and Extensibility
+L00000471	
+L00000472	Assistant chat accepts structured inputs beyond plain text and exposes external capability integrations without hiding provenance.
+L00000473	
+L00000474	ContractRef: ContractName:Plans/Media_Generation_and_Capabilities.md, ContractName:Plans/Tools.md, ContractName:Plans/storage-plan.md
+L00000475	
+L00000476	### 7.1 Attachment model
+L00000477	
+L00000478	Supported attachment families are:
+L00000479	- files
+L00000480	- images
+L00000481	- URLs
+L00000482	- inline code snippets
+L00000483	- browser capture chips (`browser_selection_context` and `browser_element_context`)
+L00000484	
+L00000485	Attachment rules:
+L00000486	- files may include project files, logs, documents, archives, and generated artifacts addressable through the file-manager/editor contracts
+L00000487	- images render with preview, filename or source label, and size metadata when known
+L00000488	- URLs render as normalized link chips/cards and may later resolve into fetched/extracted web-activity cards
+L00000489	- code snippets pasted into the composer preserve formatting and language hinting when detection is possible
+L00000490	- voice input is a composer input mode for Assistant chat: captured speech becomes a visible draft message or pending input transcript before send, never hidden context, and it follows the same edit/send/cancel, privacy, and provenance rules as typed composer text.
+L00000491	- browser click/highlight/share flows produce explicit visible chips from user-triggered selection or element-pick actions; ordinary browser capture never arrives as hidden automatic context injection
+L00000492	- browser capture chips stay pending, visible, and removable until the user sends; `cmd.browser.add_selection_to_chat` creates a `browser_selection_context` chip, `cmd.browser.pick_element_for_chat` creates a `browser_element_context` chip, and neither command auto-sends a chat message
+L00000493	- Assistant chat owns the visible `/primary` browser-to-agent capture lifecycle: click `/highlight` and share actions create pending chips, chip target resolution may use explicit `/new-thread` creation when no writable thread/composer exists, and the flow remains user-visible through selection/highlight mode, share scope, revoke timing, multi-selection, persistence, and screenshots with capture.
+L00000494	- The locked attachment taxonomy replaces any older two-type rendered-selection wording with three explicit paths: browser-element (`browser_element_context`), browser-text-selection (`browser_selection_context`), and native-document-selection (`document_selection_context`). Browser text capture must not stay half-modeled as native `document_selection_context`, because browser selections are browser-specific and not document-source selections; `Plans/Prompt_Pipeline.md` is the `/primary` normalization consumer, while stale `Plans/newfeatures.md` and `/newfeatures.md` browser references are cleanup lineage only.
+L00000495	- attachments persist as structured message payloads rather than being flattened into plain text only
+L00000496	
+L00000497	Minimum attachment fields:
+L00000498	- `attachment_id`
+L00000499	- `attachment_type`
+L00000500	- `display_name`
+L00000501	- `source_ref`
+L00000502	- `mime_type?`
+L00000503	- `size_bytes?`
+L00000504	- `preview_state`
+L00000505	
+L00000506	### 7.2 Web search integration
+L00000507	
+L00000508	Web search is a first-class chat capability, not a hidden side channel.
+L00000509	
+L00000510	Required rules:
+L00000511	- when the assistant uses web search, the thread shows explicit web activity cards and later source/citation disclosure in the related assistant turn
+L00000512	- web-derived results appear inline in chat as operation cards, source blocks, or citations tied to the turn that used them
+L00000513	- fetched/extracted content preserves provenance so users can distinguish search snippets, extracted page text, and synthesized conclusions
+L00000514	- if the active provider or policy cannot use web search, the assistant discloses that limitation rather than implying that the web was consulted
+L00000515	- user-supplied URLs and assistant-triggered web results share the same attachment/provenance system while preserving distinct origin labels
+L00000516	
+L00000517	### 7.3 Extensibility surface
+L00000518	
+L00000519	### 7.4 Question card and questionnaire system
+L00000520	
+L00000521	This section defines the canonical contract for this surface.
+L00000522	
+L00000523	Core rules:
+L00000524	- Question flows are locked to PM-managed draft state, required visible options plus a freeform path, resumable multi-question drafts, and explicit dismissed or paused behavior instead of fabricated answers.
+L00000525	- Question schema canonical names and enums are locked, including QuestionItem fields, canonical freeform and multi-select field names, and answer source metadata.
+L00000526	- The question tool contract is locked to a multi-question envelope, normalized output statuses, object-array options, included answer source, and top-level orchestrator ownership of user questioning.
+L00000527	- The multi-question lifecycle is `draft → incomplete → ready_to_submit → submitted → paused`: `draft → incomplete` when the user begins answering, `incomplete → ready_to_submit` when all `required` questions are answered, `ready_to_submit → submitted` when the user confirms submit, and `paused` when the user dismisses without submitting.
+L00000528	- Multi-select support is an MVP UX requirement where the schema sets `multi_select`: render options as a checkbox group, preserve selected option IDs in order, show required validation before submit, and keep freeform input additive when `allow_freeform` is true.
+L00000529	- Subagent question tool access follows default-denial and cannot address users directly unless explicitly re-enabled by run config; subagents escalate to the parent orchestrator, and the parent owns the `assistant-chat-design.md §15.2` user-question surface decision. Subagent-direct question flows are prohibited product behavior, not a configurable local default.
+L00000530	- `allow_freeform` is canonical. `allow_other` is a retired alias, and the historical `allow_freeform? / allow_other?` slash-ambiguity resolves to `allow_freeform`.
+L00000531	- `default_values` and `draft_value` are different concepts: `default_values` seeds option IDs, while `draft_value` stores the current freeform or draft answer text.
+L00000532	- `single_question` is legacy syntactic sugar over the questionnaire envelope with exactly one QuestionItem; it uses the same answer source, draft, dismissal, and submit lifecycle as `questionnaire`. Decision #9 resolves the earlier Future Fields / TBD annotation: `response_kind` is LOCKED to `"selection" | "freeform" | "mixed"` and `validation_state` is LOCKED to `"valid" | "invalid" | "pending"`; both fields are optional and omitted when not needed by the question type.
+L00000533	- Single-question callers emit `{ mode: 'single_question', questions: [item] }` and receive the same response envelope; the host may accept a simplified `{ question, options?, ... }` alias only by internally promoting it to the full envelope before processing.
+L00000534	- Legacy tool-shape aliases `header?: string`, `text: string`, and `options?: string[]` are accepted only at the compatibility boundary and normalize into the questionnaire envelope; legacy `answer: string` output normalizes into the canonical answer array with source metadata.
+L00000535	- Multi-question `questionnaire` and `/questionnaire` cards render selectable options from `options?: Array<{id, label, description?}>`; `string[]` remains backwards-compatible only for legacy `single_question` callers and must be normalized to object-array options before draft storage, validation, or final answer submission.
+L00000536	- The shared question-card applies across Assistant, Interviewer, `/Interviewer/requirements`, and `/document-builder` flows; it is not Interview-only and does not force strict one-question-at-a-time sequencing.
+L00000537	- Question-card inputs support `allow_other`, `allow_multi_select?: boolean`, `required?: boolean`, `placeholder?: string`, and legacy `default_value?: string | string[]` as compatibility aliases that normalize into canonical `allow_freeform`, `multi_select`, `required`, `placeholder`, and `default_values`.
+L00000538	- Shared question styling uses one consistent question-card `/flow` across Assistant, Interviewer, requirements, and `/document-builder` questions, so question visuals are not restyled ad hoc per surface and PM-owned draft state remains the answer owner.
+L00000539	- The minimum output compatibility shape is `status: "answered" | "submitted" | "dismissed" | "timed_out" | "unavailable"`, `answers: Array<{ question_id, value, source: "option" | "other" | "freeform" }>`, `submitted: boolean`, and `submitted_at?`; canonical storage may also expose `answers: Array<{question_id, values: string[]}>`.
+L00000540	- Dismissed and paused flows preserve submitted-vs-dismissed distinction: `status = "dismissed"` / dismissed state pauses the flow and must not fabricate partial submitted answers, auto-submit, or auto-cancel the broader thread. Paused is UI-only for a backgrounded/navigated-away widget and does not produce a tool output until resumed or dismissed.
+L00000541	- `/dismiss` is a retired shorthand for the same question-card exit path; canonical behavior is the dismissed/paused state transition above.
+L00000542	- The question-flow supports single-choice and multi-choice question-card layouts; `allow_other = true` keeps the `Other` freeform route visible for legacy /callers as well as new questionnaire callers.
+L00000543	- Question flows never perform auto-submitting or auto-cancelling when dismissed.
+L00000544	- `/submit` is the explicit user action that moves a ready question flow to submitted; it is separate from dismissal and is never invoked by an inline visual through `sendPrompt`.
+L00000545	
+L00000546	Fields:
+L00000547	- mode: "single_question" | "questionnaire"
+L00000548	- questions: Array<QuestionItem>
+L00000549	- status: "answered" | "submitted" | "dismissed" | "timed_out" | "unavailable"
+L00000550	- flow_state: "draft" | "incomplete" | "ready_to_submit" | "submitted" | "paused"
+L00000551	- answers: Array<{question_id, values: string[]}>
+L00000552	- answers: Array<{ question_id, value, source: "option" | "other" | "freeform" }>
+L00000553	- answer_text?
+L00000554	- source?: "option" | "other" | "freeform"
+L00000555	- options?: Array<{id, label, description?}>
+L00000556	- options[]
+L00000557	- allow_other
+L00000558	- allow_other = true
+L00000559	- allow_multi_select
+L00000560	- single-choice
+L00000561	- multi-choice
+L00000562	- required?: boolean
+L00000563	- placeholder?: string
+L00000564	- default_value?: string | string[]
+L00000565	- submitted: boolean
+L00000566	- submitted_at?
+L00000567	- Headless/HITL-unavailable = `status = "unavailable"`
+L00000568	- Subagent question tool access is DENIED by default
+L00000569	
+L00000570	Labels and values:
+L00000571	- questionnaire
+L00000572	- single_question
+L00000573	- unavailable
+L00000574	
+L00000575	Canonical questionnaire envelope shape:
+L00000576	
+L00000577	```typescript
+L00000578	type QuestionnaireEnvelope = {
+L00000579	  schema_version: "1.0.0";
+L00000580	  questionnaire_id: string;
+L00000581	  mode: "single_question" | "questionnaire";
+L00000582	  thread_id: string;
+L00000583	  source_ref?: string;
+L00000584	  flow_state: "draft" | "incomplete" | "ready_to_submit" | "submitted" | "paused" | "dismissed" | "timed_out" | "unavailable";
+L00000585	  autosave_debounce_ms: 300;
+L00000586	  paused_expires_after_ms: 604800000;
+L00000587	  questions: QuestionItem[];
+L00000588	  answers: QuestionAnswer[];
+L00000589	  created_at: string;
+L00000590	  updated_at: string;
+L00000591	  submitted_at?: string;
+L00000592	};
+L00000593	
+L00000594	type QuestionItem = {
+L00000595	  question_id: string;
+L00000596	  label: string;
+L00000597	  prompt: string;
+L00000598	  description?: string;
+L00000599	  response_kind: "selection" | "freeform" | "mixed";
+L00000600	  required: boolean;
+L00000601	  multi_select?: boolean;
+L00000602	  allow_freeform?: boolean;
+L00000603	  placeholder?: string;
+L00000604	  options?: Array<{id: string; label: string; description?: string}>;
+L00000605	  default_values?: string[];
+L00000606	  draft_value?: string | string[];
+L00000607	  validation_state?: "valid" | "invalid" | "pending";
+L00000608	};
+L00000609	
+L00000610	type QuestionAnswer = {
+L00000611	  question_id: string;
+L00000612	  values: string[];
+L00000613	  source: "option" | "other" | "freeform";
+L00000614	  answered_at: string;
+L00000615	};
+L00000616	```
+L00000617	
+L00000618	Question lifecycle command ids are `cmd.questionnaire.draft_update`, `cmd.questionnaire.submit`, `cmd.questionnaire.dismiss`, `cmd.questionnaire.resume`, `cmd.questionnaire.expire`, and `cmd.questionnaire.mark_unavailable`. `cmd.questionnaire.draft_update` is debounced by `autosave_debounce_ms = 300`; paused question flows expire after `paused_expires_after_ms = 604800000` unless the owning thread resumes first.
+L00000619	- dismissed
+L00000620	- incomplete
+L00000621	- ready_to_submit
+L00000622	- submitted
+L00000623	- paused
+L00000624	
+L00000625	Rules:
+L00000626	- NOT via `sendPrompt`
+L00000627	- Something else
+L00000628	- Always-visible options
+L00000629	- Drafts auto-save until submit
+L00000630	- Exiting/dismissing does NOT auto-submit
+L00000631	- Thread-scoped draft state
+L00000632	- status: 'dismissed'
+L00000633	- /submit
+L00000634	- draft
+L00000635	- question_id
+L00000636	- question
+L00000637	- allow_freeform
+L00000638	- allow_other (retired alias; use allow_freeform)
+L00000639	- multi_select
+L00000640	- default_values?: string[]
+L00000641	- draft_value?: string
+L00000642	- string[] backwards-compatible
+L00000643	- response_kind: "selection" | "freeform" | "mixed" (optional; LOCKED by Decision #9; earlier Future Fields / TBD note resolved)
+L00000644	- validation_state: "valid" | "invalid" | "pending" (optional; LOCKED by Decision #9; earlier Future Fields / TBD note resolved)
+L00000645	- default-denial
+L00000646	- slash-ambiguity
+L00000647	- drafts auto-save continuously
+L00000648	- required questions block final submit
+L00000649	- question cards may include a visual
+L00000650	- users can answer out of order and revise before submit
+L00000651	- dismissing pauses conversation until resume
+L00000652	- source-text-first visual context may be attached to the question-card, but PM still owns the draft and submit lifecycle.
+L00000653	- /callers
+L00000654	## 8. Plan Mode, Deep Plan Mode, and Plan Thoroughness (PT)
+L00000655	
+L00000656	### 8.1 Canonical planning model
+L00000657	
+L00000658	This section defines the canonical contract for this surface.
+L00000659	
+L00000660	ContractRef: Plans/FinalGUISpec.md#15.4 Planning panel widget (sticky sidebar)
+L00000661	
+L00000662	Core rules:
+L00000663	- Plan and Deep Plan must both project to a normalized TODO list, with a named Q&A loop before Deep Plan execution and a locked TODO item schema/status set.
+L00000664	- Plan/TODO persistence is locked to explicit revision states, structural-edit gating after approval, bounded revision history, and emission of `chat.plan_todo_updated` for durable TODO mutations.
+L00000665	- `chat.plan_todo_updated` must have an explicit owner-contract definition for durable normalized TODO mutation, and `todoread` must not survive as a `source_surface` mutation source.
+L00000666	- Visible plan/checklist review is checklist-forward execution-tracker behavior: Plan and Deep Plan show a reviewable plan artifact plus the normalized TODO/checklist projection before execution, keep live execution progress connected to that projection, and do not hide planning inside an opaque unified planning/execution loop.
+L00000667	- Plan/TODO review exposes `/add/remove/reorder` structural controls before approval; after approval, structural edits require a new revision while status-only execution progress remains thread-visible through the sticky panel and `chat.plan_todo_updated` history.
+L00000668	- User edits to a Deep Plan artifact reconcile through PM-extracted `/diffs`: TODO changes are normalized into the thread TODO list, emitted through `chat.plan_todo_updated`, and execution continues from the updated TODO projection rather than from a stale artifact copy.
+L00000669	- Thread `/run-level` plan state distinguishes draft, approved, executing, completed, blocked, and superseded states; `/replans` create explicit new draft/revision records instead of mutating prior plan history invisibly.
+L00000670	- Competitive rationale: Cursor is the closest comparator because it emphasizes explicit Plan mode, visible plan/checklist review, and live execution progress; Codex is weaker as a direct checklist-forward template because its planning/execution loop is more unified; Claude Code remains relevant for visible task/todo management patterns but does not become PM's primary planning template without stronger direct-doc evidence.
+L00000671	
+L00000672	Fields:
+L00000673	- Q&A loop
+L00000674	- todo_id
+L00000675	- title
+L00000676	- summary
+L00000677	- status
+L00000678	- dependencies[]
+L00000679	- owner_hint
+L00000680	- verification_hint
+L00000681	- pending | in_progress | completed | blocked | skipped
+L00000682	- superseded
+L00000683	- draft
+L00000684	- approved
+L00000685	- executing
+L00000686	- completed
+L00000687	- blocked
+L00000688	- Structural edits = adding / removing / reordering TODO items
+L00000689	- chat.plan_todo_updated
+L00000690	
+L00000691	Labels and values:
+L00000692	- Plan
+L00000693	- Deep Plan
+L00000694	### 8.2 Plan Thoroughness (PT)
+L00000695	
+L00000696	**Plan Thoroughness (PT)** replaces the old planning-depth control.
+L00000697	
+L00000698	PT is visible in the Assistant Chat GUI whenever **Plan** or **Deep Plan** is active.
+L00000699	
+L00000700	Canonical PT enum:
+L00000701	- `Light`
+L00000702	- `Balanced`
+L00000703	- `Comprehensive`
+L00000704	
+L00000705	Defaults:
+L00000706	- Plan default PT: `Balanced`
+L00000707	- Deep Plan default PT: `Balanced`
+L00000708	
+L00000709	PT controls:
+L00000710	- clarifying-question budget
+L00000711	- repo-research breadth
+L00000712	- whether cited web research is used by default vs only when clearly needed
+L00000713	- how explicitly the plan captures risks, alternatives, dependencies, and validation steps
+L00000714	- how detailed the normalized TODO list and execution ordering become
+L00000715	- Research continuation in the Assistant Chat GUI starts from the current work-item ledger for the active planning run, then narrows repo research to the most relevant GUI/planning docs for the feature areas under review instead of sweeping unrelated docs by default.
+L00000716	
+L00000717	**Interpretation rule:** PT is relative to the active planning mode. Deep Plan at a given PT is always more intensive than Plan at the same PT.
+L00000718	
+L00000719	### 8.3 PT budget matrix (deterministic baseline)
+L00000720	
+L00000721	These are deterministic first-implementation budgets. They are ceilings/defaults, not promises that every planning run must use the full budget.
+L00000722	
+L00000723	| Mode | PT | Clarifying-turn budget | Repo/codebase research | Web research default | Expected output detail |
+L00000724	|---|---|---:|---|---|---|
+L00000725	| Plan | Light | 2 | focused, nearby files only | off by default; only if user explicitly asks or current/external facts are required | concise plan + TODO list |
+L00000726	| Plan | Balanced | 4 | moderate, cross-file where needed | targeted cited web research when materially helpful | detailed plan + TODO list + affected areas |
+L00000727	| Plan | Comprehensive | 6 | broad local research over affected subsystems | limited cited web research across key external dependencies/capabilities | detailed plan + TODO list + risks + alternatives |
+L00000728	| Deep Plan | Light | 4 | broad local research with architectural context | targeted cited web research allowed by default | full markdown plan doc + TODO list |
+L00000729	| Deep Plan | Balanced | 6 | deep local research across relevant subsystems, constraints, and prior docs | multi-source cited web research when helpful | full markdown plan doc + TODO list + risks + alternatives + validation notes |
+L00000730	| Deep Plan | Comprehensive | 8 | deepest local research, including architecture seams and likely downstream impacts | strongest cited web research posture of any planning path | full markdown plan doc + TODO list + alternatives + rollout/validation + wizard-escalation check |
+L00000731	
+L00000732	Web-research rules:
+L00000733	- When web research is used, it must follow the cited web-search contract.
+L00000734	- Plan uses shorter web research than Deep Plan.
+L00000735	- Deep Plan should favor primary/official sources when researching platform capabilities, provider behavior, or current best practices.
+L00000736	
+L00000737	### 8.4 Standard Plan Mode
+L00000738	
+L00000739	**Intended use:** medium-complexity work that benefits from explicit planning but does not obviously require a spec-style document or assistant-to-wizard escalation.
+L00000740	
+L00000741	Required behavior:
+L00000742	- Clarifying questions are allowed and expected; they are not optional.
+L00000743	- The planning artifact is lightweight and execution-oriented.
+L00000744	- The plan panel remains visible in chat and shows the written plan plus the normalized TODO list.
+L00000745	- The user may open the plan artifact in the editor on demand, but automatic editor opening is not required for standard Plan.
+L00000746	- Plan may use parallel safe research/subagent work where allowed, but it remains a read-only planning run.
+L00000747	- Plan should prefer repo/codebase research first and use shorter web research than Deep Plan.
+L00000748	
+L00000749	Standard Plan artifact minimums:
+L00000750	- concise problem statement
+L00000751	- current-state summary when relevant
+L00000752	- proposed approach summary
+L00000753	- normalized TODO list for execution
+L00000754	- verification / validation notes
+L00000755	- unresolved questions when they remain
+L00000756	
+L00000757	### 8.5 Deep Plan Mode
+L00000758	
+L00000759	**Intended use:** larger features, substantial enhancements, major refactors, complex changes spanning several domains, or asks with high uncertainty.
+L00000760	
+L00000761	Required behavior:
+L00000762	- Deep Plan asks more questions than standard Plan at the same PT.
+L00000763	- Deep Plan performs materially broader repo research and web research than standard Plan at the same PT.
+L00000764	- LOCKED behavior: Deep Plan does materially more thinking, research, and clarifying-question work than standard Plan; the Plan vs Deep Plan difference is degree/intensity, not categorical.
+L00000765	- Deep Plan produces a richer markdown planning document and automatically opens it in a preview-capable editing surface.
+L00000766	- The default Deep Plan artifact class is `planning_draft` unless the user explicitly saves it to a workspace path.
+L00000767	- `open_source` for a non-persisted Deep Plan document opens a transient `generated://<artifact_id>` buffer.
+L00000768	- Deep Plan documents may include headings, tables, checklists, file paths, fenced code blocks, Mermaid diagrams, and explicit tradeoff sections.
+L00000769	- The planning document remains canonical as source markdown / Mermaid text even when richly rendered.
+L00000770	
+L00000771	Deep Plan document minimum sections:
+L00000772	- `Objective`
+L00000773	- `Scope`
+L00000774	- `Current State / Relevant Context`
+L00000775	- `Proposed Approach`
+L00000776	- `Open Questions / Assumptions`
+L00000777	- `Execution Plan / TODOs`
+L00000778	- `Validation / Acceptance`
+L00000779	
+L00000780	Optional but allowed sections:
+L00000781	- `Risks`
+L00000782	- `Alternatives Considered`
+L00000783	- `Mermaid Diagrams`
+L00000784	- `Code Snippets`
+L00000785	- `Affected Files / Areas`
+L00000786	- `Rollout / Migration Notes`
+L00000787	
+L00000788	### 8.6 Normalized TODO contract for planning outputs
+L00000789	
+L00000790	This section consumes the linked owner contract and stays aligned with it.
+L00000791	
+L00000792	Core rules:
+L00000793	- Plan and Deep Plan must both project to a normalized TODO list, with a named Q&A loop before Deep Plan execution and a locked TODO item schema/status set.
+L00000794	- TODO tool behavior is locked so todowrite and todoread use the normalized TODO schema, todowrite is not blanket auto-denied in ask/plan mode, and Deep Plan edits must resync the TODO projection before execution.
+L00000795	- `chat.plan_todo_updated` must have an explicit owner-contract definition for durable normalized TODO mutation, and `todoread` must not survive as a `source_surface` mutation source.
+L00000796	- TODO items include `order_index` and `notes`; `order_index` owns item-level ordering, while `notes` carry reviewer or execution context without changing status.
+L00000797	- Legacy optional spellings `notes?` and `order_index?` normalize to canonical `notes` and `order_index`; this intentionally retires the source `?` suffix rather than dropping notes or ordering.
+L00000798	- Structural edit means adding, removing, reordering, or replacing TODO items; status update means changing item execution state or notes without changing the item set.
+L00000799	- When the auto-use heuristic fires mid-conversation, on-trigger behavior may populate or refresh the TODO projection when a plan artifact changes, but it must emit `chat.plan_todo_updated` before execution observes the revised list and must keep the plan panel state reviewable.
+L00000800	- Outside Plan and Deep Plan, non-Plan execution may auto-use `todowrite` when the task is multi-step enough to benefit from visible tracking, including dependency-bearing work, multi-file or multi-subsystem work, delegated subagent or crew execution, or an explicit user request to track progress.
+L00000801	- `todowrite` auto-use on-trigger behavior emits a tool call with proposed TODO items. If auto-approved by the resolved permission preset, items are created silently and `chat.plan_todo_updated` records the mutation; if ask-mode, the user sees an approval prompt listing the proposed TODO items before creation.
+L00000802	- `Superseded TODO N/N` is a plan-level summary for superseded plan revisions, not an item-level TODO status; `superseded` stays out of the active TODO status enum.
+L00000803	- `verification_hint` may be item-level or plan-level, but the payload must label the scope instead of relying on position in the rendered panel.
+L00000804	- Legacy tool payloads `todos: Array<{ id?, content, status? }>` and `todos: Array<{ id, content, status }>` normalize into the Assistant TODO schema with `todo_id`, `title`, `summary`, `dependencies[]`, `owner_hint`, and `verification_hint`; `TODO` remains the visible checklist concept, not a second schema.
+L00000805	
+L00000806	Fields:
+L00000807	- Q&A loop
+L00000808	- todo_id
+L00000809	- title
+L00000810	- summary
+L00000811	- status
+L00000812	- dependencies[]
+L00000813	- order_index
+L00000814	- owner_hint
+L00000815	- verification_hint
+L00000816	- notes
+L00000817	- pending | in_progress | completed | blocked | skipped
+L00000818	- superseded (plan-level only)
+L00000819	- todowrite
+L00000820	- todoread
+L00000821	- todowrite can create, reorder, update statuses/notes
+L00000822	- todoread returns current normalized list for active thread/run
+L00000823	- todos: Array<{ id?, content, status? }>
+L00000824	- todos: Array<{ id, content, status }>
+L00000825	- TODO
+L00000826	- Remove `todowrite` from blanket `ask/plan` mode auto-deny
+L00000827	- editing Deep Plan markdown (the rich artifact) MUST update the normalized TODO projection BEFORE execution begins
+L00000828	- on-trigger
+L00000829	- item-level
+L00000830	- plan-level
+L00000831	- Superseded TODO N/N
+L00000832	ContractRef: ContractName:Plans/assistant-chat-design.md#8.1 Canonical planning model, ContractName:Plans/storage-plan.md#4.3 Plan and TODO state, ContractName:Plans/Contracts_V0.md#1.1 Assistant worktree seglog events
+L00000833	
+L00000834	Labels and values:
+L00000835	- Plan
+L00000836	- Deep Plan
+L00000837	- chat.plan_todo_updated
+L00000838	### 8.7 Review loop for planning artifacts
+L00000839	
+L00000840	Standard Plan review:
+L00000841	- user may continue the chat, request revisions, or open the plan in the editor
+L00000842	- follow-up chat responses may revise the planning artifact
+L00000843	
+L00000844	ContractRef: ContractName:Plans/FinalGUISpec.md, ContractName:Plans/Crosswalk.md
+L00000845	
+L00000846	Deep Plan review:
+L00000847	- the plan document opens automatically in the editor / preview-capable planning surface
+L00000848	- users may edit the markdown directly
+L00000849	- on source-backed or deterministically mapped selections, the review palette offers `Comment / Ask`, `Replace with...`, `Insert after...`, `Remove / Strike this`, and `Send selection to chat`
+L00000850	- durable actions create annotations on the existing `note_record.v1` lineage; `Send selection to chat` creates a visible pending `document_selection_context` chip on the owning thread and stays a separate ephemeral action, not a durable annotation
+L00000851	- if the owning thread is terminal-associated or `/non-writable`, `send-to-chat` defaults to a new thread in the same owning surface rather than reviving the old thread or cross-routing to an unrelated target
+L00000852	- v1 does not expose direct `patch-apply` behavior from document annotations; mutating annotations are applied only through targeted revision after validation
+L00000853	
+L00000854	ContractRef: ContractName:Plans/storage-plan.md, ContractName:Plans/Prompt_Pipeline.md, ContractName:Plans/FinalGUISpec.md
+L00000855	
+L00000856	Deep Plan targeted revision rules:
+L00000857	- `Resubmit with Annotations` launches a targeted revision pass over docs with open durable annotations, or a user-selected subset
+L00000858	- targeted revision may update the plan document and/or answer question/comment annotations
+L00000859	- targeted revision MUST NOT auto-run Multi-Pass Review
+L00000860	- conflicting or stale mutating annotations are excluded from automatic revision until the user resolves them
+L00000861	- requested/effective revision capability remains visible when a requested structured-revision path degrades to validated local output or `chat_handoff_only`
+L00000862	
+L00000863	ContractRef: ContractName:Plans/chain-wizard-flexibility.md, ContractName:Plans/interview-subagent-integration.md, ContractName:Plans/Crosswalk.md
+L00000864	
+L00000865	Deep Plan annotation-handling rules:
+L00000866	- preserve the annotation lifecycle `open -> addressed -> resolved`
+L00000867	- preserve deterministic position + quote selector re-anchoring
+L00000868	- if an anchor cannot be reattached, keep the annotation open and show an explicit warning rather than silently dropping it
+L00000869	- comment annotations may coexist with other annotations on the same span; overlapping mutating annotations conflict by default
+L00000870	- final review gates use `no open annotations`, not `no open notes`
+L00000871	- read-only / no-source-map renders such as plan-graph-like surfaces are `Send selection to chat` only in v1 unless a stable semantic-anchor contract is added later
+L00000872	
+L00000873	ContractRef: ContractName:Plans/storage-plan.md, ContractName:Plans/FileSafe.md, ContractName:Plans/Permissions_System.md
+L00000874	
+L00000875	Document selection and annotation handoff rules:
+L00000876	- `selection-to-chat` and `document-selection` always create chat-visible pending composer chips; they must not silently inject hidden messages or mutate a thread before the user sends.
+L00000877	- The composer prep tray is shared by `Context` and `Attachments`; `document-selection` chips live under `Context`, failed sends keep chips visible, successful sends clear chips for that turn, and tray contents persist per thread when switching threads.
+L00000878	- GUI defaults: the annotation drawer may `auto-open` only on the first durable annotation creation in a bundle/page context; after that, drawer state is sticky and must not force-open for every annotation. Hidden chat on `send-to-chat` does not auto-open by default: the surface adds the selection to pending composer chips, pulses or badges the chat launcher, and shows a lightweight `/snackbar` with `Selection added to Assistant chat` and an `Open chat` action so document-review flow and batching stay intact.
+L00000879	- The unified `pre-send` composer prep strip/tray groups typed chips by source, including `doc selection`, `browser context`, `Context Lens`, and attachments where applicable. Do not create a `document-selection-only` `/tray` or a separate document-only strip.
+L00000880	- Send-to-chat target resolution is isolated to the resolved owning thread or `/surface`: explicit user-selected target wins, then page-owned chat surface, then explicit `new-thread` creation when no writable target exists. Hidden chat panels still count as owning targets; no silent `cross-thread` fallback is allowed.
+L00000881	- Surface labels are `surface-dependent`: document review may expose `Send selection to chat`, `Send to Assistant`, or `Send to Interviewer`, but all labels normalize to the same typed handoff and requested/effective target audit fields.
+L00000882	- Selection forwarding obeys `/privacy` and sensitivity boundaries from FileSafe; blocked, expired, or scrubbed chips remain visible with `/statuses` and reason codes rather than pretending the send succeeded.
+L00000883	- Chat must not render `full-document` bodies inline for Builder or Interview handoff. It should keep `/document-pane` or editor pointers plus bounded excerpts, context summaries, and provenance instead of dumping the whole document into chat.
+L00000884	- V1 surface matrix: `/source-backed` editable text docs and deterministic markdown previews expose all five actions; read-only rendered views without stable source mapping may allow `quote-only` `Comment / Ask` and `Send selection to chat`; `Replace / Insert / Remove` stay disabled there; browser/HTML click-to-context surfaces do not inherit `document-annotation` semantics in v1.
+L00000885	- Conflict and stale outcomes are explicit: `overlaps`, `contradicts`, and `stale_after_edit` are later-phase conflict/status labels that can appear in audit or review UI, while current automatic revision still excludes conflicting mutating annotations until resolved.
+L00000886	- Re-anchoring outcomes are `position_match`, `quote_match`, and `anchor_not_found`; `position_match` or `quote_match` keeps the annotation eligible, while `anchor_not_found` leaves it `/unresolved` and open.
+L00000887	- Re-anchoring tries exact range identity first, then quote matching with normalized whitespace and case-sensitive text. A quote match is eligible only when similarity is at least 0.97, the matched span length differs by no more than 10 percent, and there is exactly one best match; ambiguous or lower-confidence matches become `anchor_not_found`.
+L00000888	- Mutating annotation actions never write a document directly from the palette. `Replace with...`, `Insert after...`, and `Remove / Strike this` create targeted-revision intents with annotation_id, operation_type, base_document_version, anchor_selector, proposed_text?, and permission_snapshot_id; the targeted revision runner validates FileSafe and patch applicability before writing.
+L00000889	- `/resubmit` may target all open annotations or a selected subset. Selected-subset resubmit, consistent rationale capture, and compact chat-side digesting for many sent selections are `later-phase` improvements, not current hard requirements.
+L00000890	- Recovery is anchored by `revision_run.{bundle_id}.{revision_id}`. Interrupted runs preserve `revision_id`, `resumed_from_revision_id?`, `interrupted_at`, safe-point metadata, and per-annotation history; already-validated annotation outcomes remain persisted through resume/retry.
+L00000891	- GUI impact stays first-class: the annotation action menu is a reusable `/palette`, not a one-off context-menu hack; drawer filters include `Open / Addressed / Resolved`, operation-type badges or filters, pre-send chip state, `/overlays`, and ghost-preview styling for pending or hover-only payload previews.
+L00000892	
+L00000893	### 8.8 Approval, queue, and execution handoff
+L00000894	
+L00000895	Approval rules:
+L00000896	- Planning output never auto-executes.
+L00000897	- The assistant must wait for explicit approval to execute.
+L00000898	- Approval to execute means the planning artifact/TODO state is frozen as the execution starting point.
+L00000899	- The user may still continue planning instead of executing.
+L00000900	
+L00000901	Required primary post-plan actions after Plan or Deep Plan produces a plan:
+L00000902	- `Accept the plan and build with Yolo`
+L00000903	- `Accept the plan and build on default permissions`
+L00000904	- `Exit plan`
+L00000905	- `Suggest plan changes`
+L00000906	
+L00000907	Post-plan action semantics:
+L00000908	- `Accept the plan and build with Yolo` freezes the planning artifact/TODO state, switches out of Plan/Deep Plan into the correct execution mode and effective execution Persona, requests the `yolo` runtime posture, and begins or queues execution from the accepted plan.
+L00000909	- `Accept the plan and build on default permissions` freezes the planning artifact/TODO state, switches out of Plan/Deep Plan into the correct execution mode and effective execution Persona, keeps normal/default permissions, and begins or queues execution from the accepted plan.
+L00000910	- `Exit plan` leaves Plan/Deep Plan and returns to normal prompting without beginning build execution.
+L00000911	- `Suggest plan changes` keeps the planning agent active, revises the plan from user feedback, re-proposes the updated plan, and shows the same four primary actions again.
+L00000912	
+L00000913	Secondary affordances may include `Open in Editor`, `Save As`, and, after an accept action, `Queue Execution` when another run is active in the same thread. Crew execution may be selected through execution configuration or a crew-specific flow, but it must not replace the four primary post-plan choices.
+L00000914	
+L00000915	Execution rules:
+L00000916	- If the thread is idle, an accept action starts execution immediately.
+L00000917	- If another run is active in the same thread, an accept action may place the approved plan behind the current run through `Queue Execution`.
+L00000918	- The follow-on execution run uses canonical runtime `regular` by default, or `yolo` only when the user explicitly selects `Accept the plan and build with Yolo`.
+L00000919	- Execution may be performed by a single agent, a crew, or an agent with subagents using the same approved plan/TODO state.
+L00000920	
+L00000921	### 8.9 Wizard-escalation check
+L00000922	
+L00000923	Both planning overlays may recommend the Planning Wizard when the work is better treated as feature/enhancement specification plus adaptive interview/orchestrator flow.
+L00000924	
+L00000925	Recommendation behavior:
+L00000926	- Standard Plan may recommend the Planning Wizard when signals are strong.
+L00000927	- Deep Plan MUST perform a wizard-escalation check before presenting final execute-first recommendations.
+L00000928	- Recommendation is a user-facing suggestion/CTA, not an automatic forced redirect.
+L00000929	
+L00000930	Escalation signals include:
+L00000931	- new feature or substantial enhancement language
+L00000932	- major refactor / broad architectural change language
+L00000933	- likely impact across UI + data + security + deployment or several of those domains
+L00000934	- many unresolved questions remaining after planning
+L00000935	- the plan reads more like a feature spec / project delta than a straightforward implementation checklist
+L00000936	
+L00000937	### 8.10 Acceptance criteria
+L00000938	
+L00000939	- Plan and Deep Plan both remain read-only with respect to project files while planning.
+L00000940	- PT appears in the Assistant Chat GUI for both planning overlays and uses the canonical enum `Light | Balanced | Comprehensive`.
+L00000941	- Deep Plan at a given PT performs more research and produces a richer artifact than Plan at the same PT.
+L00000942	- Both planning overlays emit a normalized TODO list suitable for later execution.
+L00000943	- Deep Plan documents open in an editor/preview-capable surface and support durable annotations plus targeted revision.
+L00000944	- Planning artifacts are not written into the project repo by default.
+L00000945	- Execution starts only after explicit approval and uses `regular` or `yolo`, never `plan`.
+L00000946	- Approved plans can execute immediately when idle or queue behind another active run in the same thread.
+L00000947	
+L00000948	## 9. File Manager, IDE-style editor, and @ Mention
+L00000949	
+L00000950	Chat consumes file context through explicit file-reference handoff and canonical editor/file-open contracts.
+L00000951	
+L00000952	Rules:
+L00000953	- `@` mention and picker flows may discover files and symbols, but actual file insertion into the composer is represented as visible chips
+L00000954	- `cmd.chat.add_file_reference { project_id, thread_id?, path, line_range? }` is the canonical file-reference insertion command
+L00000955	- File Manager `Add to Assistant Chat` uses that command to insert a visible canonical file reference into the active composer/thread context; it must not inline full file contents as a hidden side effect
+L00000956	- file references are file-only in MVP; folder insertion is out of scope
+L00000957	- clicking a file chip or file citation opens through the shared open-file contract rather than through chat-local navigation rules
+L00000958	
+L00000959	ContractRef: ContractName:Plans/FileManager.md, ContractName:Plans/UI_Command_Catalog.md, ContractName:Plans/FinalGUISpec.md
+L00000960	
+L00000961	Restore and review boundaries:
+L00000962	- `cmd.chat.revert` is the canonical entrypoint for `Revert last agent edit`
+L00000963	- omitted `target_message_id` resolves to the latest assistant turn in the current thread with persisted file mutations
+L00000964	- if that assistant turn touched multiple files, the revert applies to the whole turn across all affected files
+L00000965	- `cmd.chat.rewind` remains conversation-history rewind only
+L00000966	- Chat may preview or summarize diff/review context, but Source Control owns hunk actions, compare targets, conflict resolution, final stage / mark-resolved actions, and Git /unstage/discard mutations
+L00000967	- Chat-thread diff cards use a preview-vs-open-vs-rollback boundary: preview is a compact chat-thread summary, open routes to the owner file/diff surface, and rollback routes through restore/rollback history rather than hidden chat-local diff mutation.
+L00000968	- Worktree reverts use the absolute paths captured in the mutation log, so a deleted worktree example such as `/project/.puppet-master/worktrees/thread-abc/src/main.rs` fails with a file-not-found style inline error instead of recreating missing directories or resolving through the current `working_directory`.
+L00000969	
+L00000970	Assistant chat is a review-oriented GUI consumer of Source Control, not a replacement Source Control owner. When a run-produced or patch-first diff appears in chat, chat may summarize, annotate, or collect review-comments, but `Review mode`, `Open Review Mode`, `Source Control > History`, `Source Control > Changes`, `Source Control > Worktrees`, `Graph`, and `Worktrees` remain the owned destinations for compare, topology, conflict, and commit operations. Chat CTAs may call `cmd.source_control.open_review`, `cmd.source_control.set_compare_target`, `cmd.source_control.toggle_generated_filter`, `cmd.source_control.suggest_commit_groups`, `cmd.source_control.accept_commit_group`, `cmd.source_control.generate_commit_message`, `cmd.git.worktree.open`, and `cmd.git.worktree.open|compare|recover|prune|focus_lineage` through the command catalog; `/event/storage` records the route, selected compare target, and review handoff without persisting generated commit text as history before acceptance. `/tradeoffs`: AI commit batching can help users group changes, but false grouping can make misleading history, so the user remains the final approver.
+L00000971	
+L00000972	The files-touched strip is an aggregate chat preview: clicking a path under files-touched, `Read:`, or `Edited:` opens the canonical source file, while any diff-oriented affordance opens the canonical diff/review owner surface. Chat may preview diffs and edit counts, but it must not own hunk-level stage/unstage/discard controls, conflict-review state, or chat-local review mutations.
+L00000973	
+L00000974	Worktree and completed-work cards in chat show SCM context as a consumer projection: `/branch/worktree`, `/worktree/run`, multi-branch ownership, worktree-safe-point relation, safe-point/baseline restore target, compare target, merge target, preserved-local-work summary, and actions for `Open in Source Control` and `Compare run output`. Chat never treats tier-level, run-scoped, or completed-work SCM `/ownership` badges as canonical ownership; it deep-links to Source Control, Run Graph, Orchestrator `Seams`, `Node Graph`, `History`, and `Evidence` with exact context, while `Tiers` remains a compatibility/search alias only. Activity-bar copy is function-first: `GITHUB ACTIONS`, `ACTIONS`, and Source Control labels must reflect the function rather than a generic `Git` icon, and concept-only notes about the older `Git (GitHub)` framing are migration evidence, not live panel ownership.
+L00000975	
+L00000976	ContractRef: ContractName:Plans/FileSafe.md, ContractName:Plans/GitHub_Integration.md, ContractName:Plans/Wiring_Matrix.md
+L00000977	
+L00000978	Search boundary:
+L00000979	- chat search/history retrieval is chat-domain retrieval only
+L00000980	- project-wide find-in-files and replace-in-files remain Search side-panel owned
+L00000981	- semantic symbol/reference lookup remains editor/LSP owned even when chat launches it
+L00000982	
+L00000983	ContractRef: ContractName:Plans/LSPSupport.md, ContractName:Plans/FileManager.md, ContractName:Plans/storage-plan.md
+L00000984	
+L00000985	## 10. Chat History Search
+L00000986	
+L00000987	- **Human search:** Chat must support **search across chats / history** so **users** can find prior conversations and reuse context (e.g. search within current chat and, if applicable, across past chats or sessions). This is a first-class UI feature (search box, filters, results list). Implementation: Tantivy chat index fed by seglog projector (Plans/storage-plan.md).
+L00000988	- **Agent search:** **Agents** must also be able to **search through chat history** when answering or planning. Provide a way for the running agent (Assistant, Interview, or subagent) to query past messages or sessions -- e.g. via a tool/MCP, or by including a searchable index of chat history in the context pipeline -- so the agent can retrieve relevant prior decisions, explanations, or outcomes. Enables continuity (e.g. "last time we decided X") and avoids asking the user to re-paste old context. Implementation can share the same storage/index as human search (Tantivy) but must expose an agent-callable interface (tool, API, or injected context).
+L00000989	
+L00000990	### 10.1 Smart auto-retrieval (RAG) across project sources (NOT “always search everything”)
+L00000991	
+L00000992	
+L00000993	In addition to explicit human/agent search, the Assistant Chat context pipeline supports **smart auto-retrieval** that can pull **relevant slices** from **project chat history**, **project workspace code**, and **project logs** to keep long threads usable without overloading the context window.
+L00000994	
+L00000995	**Hard rules:**
+L00000996	- **Project-only by default:** Auto-retrieval searches **only within the current project** (project-scoped indices; see §10.3). It MUST NOT search other projects or external sources unless the user explicitly requests external navigation/import (§7.4).
+L00000997	- **Not always-on for everything:** Auto-retrieval MUST be **triggered and budgeted**, not “search everything every turn.”
+L00000998	- **Deterministic budget caps:** Auto-retrieval has strict per-source limits (queries/hits/bytes) so it cannot crowd out user/assistant messages.
+L00000999	
+L00001000	**Retrieval sources (project-only):**
+L00001001	- **Chat history retrieval:** Tantivy chat index; enables “what did we decide earlier / in another thread.”
+L00001002	- **Code retrieval:** Tantivy code index (MVP) + LSP symbol search + ripgrep fallback (Plans/Tools.md + Plans/storage-plan.md).
+L00001003	- **Logs retrieval:** Tantivy logs index (MVP) over log summaries + pointers to full payload (Plans/storage-plan.md).
+L00001004	
+L00001005	**Trigger heuristics (examples; implementation may add more, but must remain deterministic):**
+L00001006	- **Chat-history triggers:** user references earlier decisions (“last time”, “earlier thread”, “we decided”), asks to continue previous work, or asks “why did we do X.”
+L00001007	- **Code triggers:** user mentions file paths/symbol names, asks “where is X implemented,” references diagnostics (file:line), or requests edits that require locating code.
+L00001008	- **Logs triggers:** user references failures (“it crashed,” “why did this fail”), mentions run IDs/tool errors, or asks for the last output.
+L00001009	
+L00001010	**Modes and defaults (Settings-controlled; see FinalGUISpec.md):**
+L00001011	- For each retrieval source (chat/code/logs): `off` | `auto` | `always`.
+L00001012	- Default: **`auto`** for chat/code/logs.
+L00001013	- A thread-local override exists (Auto Retrieval chip; §12 addendum): **On/Off** for the current thread (does not change project defaults).
+L00001014	
+L00001015	**Context injection behavior:**
+L00001016	- Retrieval results are injected into the **Work bundle** as a dedicated **“Retrieved Context”** block with:
+L00001017	  - source type (chat/code/logs),
+L00001018	  - provenance (thread_id/message_id or path/line or run_id/event_id),
+L00001019	  - byte/token sizes per snippet,
+L00001020	  - truncation notes if caps were hit.
+L00001021	- Retrieved Context is **not** “memory” and must not be written into the Assistant memory store unless separately captured as a verified gist (Plans/assistant-memory-subsystem.md).
+L00001022	- Auto-retrieval MUST respect **Context Lens** overlays (§17): muted messages are excluded; focused messages are prioritized; subcompacted messages use the subcompact summary instead of raw messages.
+L00001023	
+L00001024	### 10.2 Agent-callable search tools (project-only)
+L00001025	
+L00001026	To support both explicit agent reasoning and smart retrieval, provide project-scoped agent-callable tools (or MCP equivalents) that query the project indices:
+L00001027	
+L00001028	- `chatsearch(query, filters={thread_id?, time_range?}, k)` -> hits with `thread_id`, `message_id`, `ts`, snippet, score.
+L00001029	- `codesearch(query, path?, mode={text|symbol}, k)` -> hits with `path`, line/range, snippet (symbol-aware when LSP is available).
+L00001030	- `logsearch(query, filters={time_range?, run_id?, thread_id?, tool_name?, level?}, k)` -> hits with `event_id` / `blob_ref`, `ts`, short summary or snippet.
+L00001031	- `logread(ref)` -> full payload (bounded by size caps; subject to stricter permission defaults).
+L00001032	- `grep(pattern, path?, glob?)` -> transparent regex search over project files. When the per-project sparse n-gram index can narrow the query, grep uses it without changing the interface, limit, timeout, or permission model. When the index is missing, disabled, corrupted, building without a valid snapshot, or skipped for query-specific reasons, grep falls back to raw ripgrep (`raw-ripgrep`) instead of preserving a stale raw-ripgrep-only assumption. Stale-but-valid snapshots remain usable, and dirty-layer freshness guarantees still apply.
+L00001033	
+L00001034	Dedicated GUI log surfaces expose `logsearch` / `logread` summary rows, drill-down, export, and on-demand deref without turning full payloads into default chat transcript content.
+L00001035	
+L00001036	The agent-facing `search-tool` summary in `Plans/assistant-chat-design.md` (`/assistant-chat-design.md`) preserves same-freshness guarantees: stale-index disclosure must say when a valid snapshot is serving results, when raw ripgrep fallback is active, and when dirty-layer freshness is still protected.
+L00001037	
+L00001038	Assistant-facing search summaries reference `Tools.md #### 3.5.A` for grep acceleration performance targets and the index-build priority mechanism; chat copy describes user-visible fallback and freshness outcomes rather than re-owning implementation details.
+L00001039	
+L00001040	ContractRef: ContractName:Plans/Tools.md, ContractName:Plans/Permissions_System.md, ContractName:Plans/storage-plan.md
+L00001041	
+L00001042	### 10.3 Scoping and performance: per-project indices (required)
+L00001043	
+L00001044	
+L00001045	To guarantee **project-only search** and keep performance stable as threads grow:
+L00001046	
+L00001047	- Tantivy indices for chat/code/logs MUST be stored **per project**:
+L00001048	  - `storage/tantivy/projects/{project_id}/chat`
+L00001049	  - `storage/tantivy/projects/{project_id}/code`
+L00001050	  - `storage/tantivy/projects/{project_id}/logs`
+L00001051	- This enables fast queries in long-lived projects, supports clean retention/cleanup per project, and does not block future cross-project search (future enhancement: query multiple project indices and merge top-K).
+L00001052	
+L00001053	ContractRef: ContractName:Plans/storage-plan.md
+L00001054	
+L00001055	---
+L00001056	## 11. Threads and chat management
+L00001057	
+L00001058	### Message type taxonomy
+L00001059	
+L00001060	Canonical chat records use the following message taxonomy.
+L00001061	
+L00001062	| message_type | sender | properties | rendering |
+L00001063	|---|---|---|---|
+L00001064	| `user` | human | `text`, `attachments[]`, `edit_history[]` | left-aligned bubble |
+L00001065	| `assistant` | model | `text`, `tool_calls[]`, `citations[]` | right-aligned bubble |
+L00001066	| `system` | runtime | `text`, `severity` | centered notice |
+L00001067	| `tool_result` | tool | `tool_id`, `output`, `exit_code` | collapsible card |
+L00001068	| `operation_card` | runtime | `operation_type`, `status`, `progress` | inline card |
+L00001069	| `blocked_notice` | runtime | `blocked_family`, `allowed_action_ids[]` | warning card |
+L00001070	| `subagent_card` | runtime | `agent_id`, `role`, `status`, `handoff_summary?` | inline card |
+L00001071	| `error` | runtime | `error_code`, `message` | error banner |
+L00001072	
+L00001073	Rules:
+L00001074	- the visible rendering vocabulary is closed to the taxonomy above unless a later SSOT contract extends it
+L00001075	- message taxonomy is independent of thread lifecycle state and runtime posture
+L00001076	- persisted transcript records MUST retain their canonical `message_type` so restore, export, and search do not infer type from presentation alone
+L00001077	
+L00001078	ContractRef: ContractName:Plans/storage-plan.md, ContractName:Plans/Contracts_V0.md, ContractName:Plans/FinalGUISpec.md
+L00001079	
+L00001080	### Thread Lifecycle State Machine
+L00001081	
+L00001082	
+L00001083	Thread lifecycle state is separate from operational status markers such as `attention_required`, `blocked`, `completed`, or `failed`.
+L00001084	
+L00001085	Canonical lifecycle path:
+L00001086	`creating -> active -> suspended -> archived -> deleted`
+L00001087	
+L00001088	Allowed transitions:
+L00001089	
+L00001090	| From | To | Command or trigger | Notes |
+L00001091	| --- | --- | --- | --- |
+L00001092	| `creating` | `active` | `cmd.chat.thread.commit_first_message` | Mints the durable thread id and commits the first user message. |
+L00001093	| `creating` | `deleted` | `cmd.chat.thread.discard_empty_draft` | Drops an unsent shell; no transcript tombstone is required. |
+L00001094	| `active` | `suspended` | `cmd.chat.thread.suspend` | User closes the thread or the session ends without archiving. |
+L00001095	| `suspended` | `active` | `cmd.chat.thread.restore` | Restores transcript, metadata, and restorable UI state; ephemeral stream/queue state is not restored. |
+L00001096	| `active` | `archived` | `cmd.chat.thread.archive` or retention policy | Preserves lineage and audit metadata while hiding from active lists. |
+L00001097	| `suspended` | `archived` | `cmd.chat.thread.archive` or retention policy | Allows archival of inactive threads without first making them active. |
+L00001098	| `archived` | `active` | `cmd.chat.thread.unarchive` | Restores to active navigation with the same thread id and lineage. |
+L00001099	| `active` | `deleted` | `cmd.chat.thread.delete` | Terminal for ordinary navigation. |
+L00001100	| `suspended` | `deleted` | `cmd.chat.thread.delete` | Terminal for ordinary navigation. |
+L00001101	| `archived` | `deleted` | `cmd.chat.thread.delete` or retention policy | Terminal for ordinary navigation. |
+L00001102	
+L00001103	No transition restores `deleted` to another lifecycle state. Compliance-only tombstones may remain outside ordinary chat navigation and must not be treated as restorable threads.
+L00001104	
+L00001105	Persistence behavior by state:
+L00001106	- `creating`: keep only lightweight draft shell metadata; no durable transcript is required until the first user message commits
+L00001107	- `active`: keep the full transcript, queue state, thread metadata, runtime references, and restorable UI state
+L00001108	- `suspended`: keep the durable transcript and metadata, but drop ephemeral auto-follow, focus, and non-restorable streaming affordances
+L00001109	- `archived`: keep transcript, lineage, citations, attachments, and audit metadata while pruning transient composer state, active queue state, and nonessential caches according to retention policy
+L00001110	- `deleted`: remove the thread from normal user-visible chat surfaces; only minimal tombstone or ledger records required for integrity, sync, or retention compliance may remain
+L00001111	
+L00001112	Rules:
+L00001113	- lifecycle transitions MUST be explicit and auditable
+L00001114	- archiving does not rewrite message ids, thread lineage, or worktree lineage
+L00001115	- deletion is terminal for ordinary user navigation even if compliance metadata is retained elsewhere
+L00001116	- restore commands must validate that retained attachments, worktree refs, and source-thread refs still belong to the same project or degrade with an inline restore error
+L00001117	
+L00001118	ContractRef: ContractName:Plans/storage-plan.md, ContractName:Plans/FinalGUISpec.md, ContractName:Plans/Decision_Policy.md
+L00001119	
+L00001120	### Thread Identity Model
+L00001121	
+L00001122	Thread identity is canonical and stable across reopen, restore, archive, and branch-aware history views.
+L00001123	
+L00001124	Required fields and relationships:
+L00001125	- `thread_id`: format `thr_{ulid}`; minted on the first user message; globally unique within the PM instance
+L00001126	- `dev_session_id`: optional reference to the originating development/runtime session; one dev session may span multiple threads
+L00001127	- `terminal_session_id`: optional lineage field when the thread was spawned from a terminal context
+L00001128	- thread metadata includes `created_at`, `updated_at`, `title`, `mode_overlay`, `requested_persona`, `effective_persona`, `persona_selection_source`, and `persona_override_owner_id`; `persona_id` remains registry/storage lineage only and is not a thread runtime Persona identity field
+L00001129	
+L00001130	Generation and lineage rules:
+L00001131	- the system MUST NOT mint a durable `thread_id` for an unsent empty draft
+L00001132	- `title` is auto-generated from the first user message and remains user-editable without changing identity
+L00001133	- `mode_overlay` stores the effective workflow overlay for the thread using the canonical closed overlay enum
+L00001134	- thread records reference their originating `dev_session_id` when present, but a single `dev_session_id` may relate to multiple branched or restored threads
+L00001135	- when terminal lineage exists, `terminal_session_id` remains attached for audit even if the terminal later exits
+L00001136	
+L00001137	Terminal-associated threads are ordinary chat threads with terminal lineage, not a second terminal-thread identity model. If a message, command card, restore target, or permission path describes the owning thread as `terminal or non-writable`, the surface MUST treat that thread as terminal-associated or read-only/non-writable for mutation purposes: chat may show bounded preview and audit state, but live terminal/output/ports `/surfaces` remain owned by the terminal or dev-session identity. The label `terminal-thread` is a compatibility/search label for this boundary, not a durable object type.
+L00001138	
+L00001139	ContractRef: ContractName:Plans/storage-plan.md, ContractName:Plans/Prompt_Pipeline.md, ContractName:Plans/Contracts_V0.md
+L00001140	
+L00001141	### 11.0A Debug investigation lifecycle and reopen semantics
+L00001142	
+L00001143	Threads may contain ordinary turns, historical investigations, and at most one active investigation at a time.
+L00001144	
+L00001145	**Closed investigation lifecycle:**
+L00001146	- `active` — the current mutation-capable or evidence-gathering investigation for the thread.
+L00001147	- `blocked` — waiting on a prerequisite such as approval, target availability, or revalidation.
+L00001148	- `attention_required` — user input or human review is needed before the investigation may continue.
+L00001149	- `verifying` — the investigation is in its verification stage and has not yet reached a terminal conclusion.
+L00001150	- `failed_cleanup` — the investigation found or fixed something, but cleanup could not be completed.
+L00001151	- `resolved` — verification passed and required cleanup completed (or was explicitly preserved under a documented hold).
+L00001152	- `cancelled` — the user or runtime stopped the investigation without resolving it.
+L00001153	- `superseded` — replaced by a newer investigation targeting a different subject or a newer branch of the same problem.
+L00001154	
+L00001155	Required lifecycle rules:
+L00001156	- A thread may hold multiple historical investigations, but only one investigation may be non-terminal (`active`, `blocked`, `attention_required`, `verifying`, or `failed_cleanup`) for prompt injection and mutation-capable automation at a time.
+L00001157	- Choosing a new debug target in a thread with a non-terminal investigation must default to continuing the current investigation. Switching to a materially different target requires an explicit supersede action that marks the older investigation `superseded`.
+L00001158	- `resolved`, `cancelled`, and `superseded` investigations reopen as historical views by default; they do not silently restart automation, instrumentation, or browser/dev sessions.
+L00001159	- Reopening a terminal investigation for new live work creates a new investigation lineage entry linked by `supersedes_investigation_id` unless the prior investigation is still in a resumable non-terminal state.
+L00001160	- `blocked`, `attention_required`, `verifying`, and `failed_cleanup` investigations reopen against the same `investigation_id` when the bound target, runtime identity, and worktree identity are still valid.
+L00001161	- Thread restore must rehydrate the visible Investigation Context header, linked artifacts, requested/effective debug posture, revalidation reason (if any), and frozen target bindings without silently rebinding to a different target; this no-silent-rebind rule applies at resume-time before any mutation-capable automation continues.
+L00001162	- `attention_required` investigations do not auto-resume execution; reopen restores the Investigation Context with the current `attention_required_reason_code` and allowed recovery actions.
+L00001163	- `failed_cleanup` investigations reopen directly into cleanup-recovery state; PM must not start a new mutation-capable debug loop against the same target until residue is resolved, rolled back, or explicitly promoted into the durable fix lane.
+L00001164	
+L00001165	**Revalidation reasons** that prevent silent resume include at minimum target replacement, auth/account switch, worktree or branch drift, HEAD drift for bound file/worktree targets, expired instrumentation, and stale safe-point or remediation lineage.
+L00001166	
+L00001167	**Deterministic final-state mapping:**
+L00001168	- `resolved` pairs with `stop_reason_code = investigation.resolved_verified` or `investigation.analysis_only_completed`.
+L00001169	- `attention_required` pairs with `stop_reason_code = investigation.attention_required` plus `attention_required_reason_code`.
+L00001170	- `blocked` pairs with `stop_reason_code = investigation.blocked` plus shared `blocked_reason_code`.
+L00001171	- `failed` pairs with `stop_reason_code = investigation.verification_failed`, `investigation.no_repro_observed`, `investigation.budget_exhausted`, `investigation.runtime_unavailable`, `investigation.target_unreachable`, or `investigation.adapter_unavailable`.
+L00001172	- `failed_cleanup` pairs with `stop_reason_code = investigation.cleanup_failed`.
+L00001173	- `cancelled` pairs with `stop_reason_code = investigation.cancelled_by_user`.
+L00001174	- `superseded` pairs with `stop_reason_code = investigation.superseded`.
+L00001175	
+L00001176	**Debug automation budget and attention defaults:**
+L00001177	- Initial automated browser/evidence loop ceilings are `max_browser_scenario_branches = 3` and `max_consecutive_no_new_evidence_loops = 2`.
+L00001178	- Temporary mutation and resume ceilings are `max_active_temporary_instrumentation_lanes = 1`, `max_cleanup_retries = 2`, and `max_attention_required_resume_cycles = 3`.
+L00001179	- The Debug-specific attention taxonomy includes `auth_handoff_required`, `manual_repro_required`, `manual_verification_required`, `external_app_start_required`, `session_reconnect_required`, `missing_credentials_or_secret`, `degraded_evidence_review_required`, `sensitive_capture_review_required`, `adapter_switch_recommended`, `target_selection_required`, `workspace_binding_required`, and `import_bundle_required`.
+L00001180	- Budget, blocked, and attention stops remain machine-readable through `stop_reason_code` values such as `investigation.verification_failed`, `investigation.no_repro_observed`, `investigation.budget_exhausted`, `investigation.attention_required`, `investigation.blocked`, and `investigation.runtime_unavailable`.
+L00001181	
+L00001182	ContractRef: ContractName:Plans/storage-plan.md, ContractName:Plans/Permissions_System.md, ContractName:Plans/Runtime_Artifacts_Panel.md, ContractName:Plans/UI_Command_Catalog.md
+L00001183	
+L00001184	### Canonical navigation model
+L00001185	
+L00001186	Assistant Chat consumes the shared navigation and runtime identity contracts rather than defining chat-local replacements.
+L00001187	
+L00001188	Rules:
+L00001189	- routed opens resolve through `route_target`
+L00001190	- source opens resolve through `OpenSubject` or `OpenFile`
+L00001191	- thread usage, artifact usage, ledger pivots, wizard resume, and object-focused opens use the same internal route model
+L00001192	- `resume_url` is serialized transport only and must not outgrow the canonical route contract
+L00001193	
+L00001194	ContractRef: ContractName:Plans/Contracts_V0.md, ContractName:Plans/FileManager.md, ContractName:Plans/FinalGUISpec.md
+L00001195	
+L00001196	Runtime identity display rules:
+L00001197	- chat may display requested/effective runtime identity and projection state
+L00001198	- chat must not define assistant-local replacements for the owner-doc field set
+L00001199	- historical thread/activity views use frozen requested/effective runtime snapshots captured for the execution
+L00001200	
+L00001201	ContractRef: ContractName:Plans/Prompt_Pipeline.md, ContractName:Plans/Multi-Account.md, ContractName:Plans/storage-plan.md
+L00001202	### Branching conversations
+L00001203	- restore-and-branch creates a new `thread_id` and `branch_id` linked to the source restore point and source thread
+L00001204	- branch labels are visible in history and thread navigation
+L00001205	- branching from a running or dirty thread requires confirmation that names the preserved source state and the new branch target
+L00001206	- branch lineage remains queryable for restore/history and usage attribution
+L00001207	
+L00001208	### Session browser interaction
+L00001209	- project/session browsing may open or focus a thread, but active-thread navigation remains local to the chat shell
+L00001210	- blocked, queued, and background states must remain visible through badges and attention surfaces even when the thread is not active
+L00001211	## 12. Context usage display
+L00001212	
+L00001213	### 12.0 Normal thread context usage
+L00001214	
+L00001215	Normal thread `context-usage` behavior is owned by this section and `Plans/usage-feature.md`: Assistant, Interview, BrainStorm, and Crew views route cross-doc open/focus actions to the canonical thread usage surface rather than redefining usage semantics locally.
+L00001216	
+L00001217	`Plans/assistant-chat-design.md` and `Plans/usage-feature.md` are the primary feature owners for context/usage display; command, storage, runtime-identity, and artifact-target docs remain required consumers so `/open` behavior resolves through canonical route/open to the editor-tab Context Detail Pane instead of a chat-local special case. Stale wording that sends this seam to a side-panel, artifact-local, or chat-local usage route is non-buildable until reconciled against those owners.
+L00001218	
+L00001219	
+L00001220	### 12.0 Context Detail Pane contract
+L00001221	
+L00001222	Every Assistant or Interview thread exposes a visible context-usage summary and a drill-down Context Detail Pane for the context actually consumed by that thread.
+L00001223	
+L00001224	ContractRef: ContractName:Plans/storage-plan.md, ContractName:Plans/usage-feature.md, ContractName:Plans/Prompt_Pipeline.md
+L00001225	
+L00001226	**Required visible thread-level signals:**
+L00001227	- current context usage against the effective model window
+L00001228	- the last compaction / truncation reason when compaction changed what remained in prompt
+L00001229	- whether displayed cost/token figures are provider-authoritative or estimated
+L00001230	- whether additional hidden/background usage contributed to the thread total
+L00001231	
+L00001232	ContractRef: ContractName:Plans/usage-feature.md, ContractName:Plans/FinalGUISpec.md, ContractName:Plans/Contracts_V0.md
+L00001233	
+L00001234	**Context Detail Pane information architecture:**
+L00001235	- the editor-tab pane has top-level `Curated` and `Raw` views
+L00001236	- `Curated` contains `Overview`, `Breakdown`, and `Messages`
+L00001237	- `Overview` shows thread/session title, message counts, headline provider/model/mode/persona summary (`/model/mode/persona`), effort/worker summary when relevant, and headline tokens/context/cost metrics (`/context/cost`)
+L00001238	- `Breakdown` shows the context usage bar, token buckets, and grouped breakdowns by role, tools, provider, and model when available
+L00001239	- `Messages` shows one expandable row per message with role, worker type, mode, model, time or duration, total tokens, and cost
+L00001240	- `Raw` shows an accordion list of messages; expanding a message exposes the full serialized payload for that message, plus related `tool-part` payloads, provider metadata blobs, and path/runtime data needed for debugging
+L00001241	
+L00001242	**Required Context Detail Pane breakdown:**
+L00001243	- system and instruction blocks
+L00001244	- user and assistant messages
+L00001245	- compiled context attachments and forwarded document selections
+L00001246	- tool-derived or activity-derived context when the thread uses it
+L00001247	- run-level or message-level usage snapshots derived from canonical `usage.event` and `run.completed.usage`
+L00001248	- debug-only Investigation Context items when the thread is an active debug-thread / debug thread
+L00001249	
+L00001250	ContractRef: ContractName:Plans/storage-plan.md, ContractName:Plans/Prompt_Pipeline.md, ContractName:Plans/Runtime_Artifacts_Panel.md
+L00001251	
+L00001252	Rules:
+L00001253	- the thread surface MUST derive usage from canonical runtime records; it MUST NOT invent a second chat-local cost model
+L00001254	- hidden/background helper calls MAY roll into thread totals, but their source class MUST remain inspectable in raw/detail views
+L00001255	- truncation, redaction, and context-serialization state remain visible per item; the UI MUST NOT silently present omitted context as if it were still serialized
+L00001256	
+L00001257	ContractRef: ContractName:Plans/usage-feature.md, ContractName:Plans/storage-plan.md, ContractName:Plans/Contracts_V0.md
+L00001258	
+L00001259	### 12.0A Investigation Context for Debug threads
+L00001260	
+L00001261	Debug threads expose a visible **Investigation Context** alongside the normal context-usage affordances.
+L00001262	
+L00001263	Investigation Context is the live, user-visible bundle of bounded evidence, target metadata, temporary instrumentation state, verification outcomes, and revalidation state that the assistant may use while an investigation is active.
+L00001264	
+L00001265	ContractRef: ContractName:Plans/storage-plan.md, ContractName:Plans/Prompt_Pipeline.md, ContractName:Plans/Runtime_Artifacts_Panel.md
+L00001266	
+L00001267	**Canonical header fields imported into chat:**
+L00001268	- `investigation_id`
+L00001269	- `target`
+L00001270	- `requested_target?`
+L00001271	- `effective_target?`
+L00001272	- `display_label?`
+L00001273	- `primary_target_summary`
+L00001274	- `debug_target_kind`
+L00001275	- `adapter_id?`
+L00001276	- `investigation_phase`
+L00001277	- `state`
+L00001278	- `verification_state?`
+L00001279	- `attention_reason_code?`
+L00001280	- `blocked_reason_code?`
+L00001281	- `revalidation_reason_code?`
+L00001282	- `active_instrumentation_count`
+L00001283	- `last_updated_at_utc`
+L00001284	
+L00001285	Chat-local aliases such as `primary_target` and `final_or_intermediate_state` are retired. Assistant Chat consumes the canonical field names above and may layer presentation labels on top, but it must not rename the durable data contract. This is the canonical Contracts_V0 §5.1A to assistant-chat-design §12.0A field-name boundary for Investigation Context.
+L00001286	
+L00001287	**Required per-item states:**
+L00001288	- `active`
+L00001289	- `redacted`
+L00001290	- `revoked`
+L00001291	- `blocked`
+L00001292	- `expired`
+L00001293	- `omitted`
+L00001294	
+L00001295	Only `active` and `redacted` items may be serialized into prompt context. `revoked`, `blocked`, `expired`, and `omitted` items remain visible for audit but must not be serialized as successful context.
+L00001296	
+L00001297	ContractRef: ContractName:Plans/Prompt_Pipeline.md, ContractName:Plans/Contracts_V0.md, ContractName:Plans/Permissions_System.md
+L00001298	
+L00001299	**Visibility rules:**
+L00001300	- Investigation Context is separate from ordinary browser/document composer chips.
+L00001301	- ordinary browser `/capture` remains explicit and user-triggered.
+L00001302	- Debug auto-ingestion is allowed only inside an active investigation and must create visible Investigation Context items rather than hidden messages.
+L00001303	- Agent-fed, agent-emitted in-scope evidence may auto-enter the visible Investigation Context only inside the active Debug investigation; it is a bounded debug-context item, not a hidden message or an exception to the normal browser-capture rule.
+L00001304	- Investigation Context may render as a card, `/chip/panel`, or equivalent compact surface, but attach, `/removal/revocation`, and `/revoke` behavior must remain explicit and user-visible.
+L00001305	- Command-surface actions for Investigation Context attach and revoke must reflect visible state changes rather than hidden injection.
+L00001306	- every Investigation Context item must expose provenance, timestamp, redaction/truncation state, and a revoke action.
+L00001307	- raw logs, traces, screenshots, recordings, and full transcript payloads remain owned by Runtime Artifacts; Investigation Context carries bounded summaries and stable refs rather than raw unbounded payloads.
+L00001308	- Investigation Context is summary-first, bounded, redacted by default, user-visible, and revocable: the chat surface shows the summary/ref/item state first, keeps raw artifacts in the shared runtime-artifact system, and lets users revoke individual items or the visible bundle without implying deletion of the underlying artifact record.
+L00001309	- Investigation Context filtering groups by `investigation_id` and may narrow by phase, item state, evidence role, cleanup state, restore state, instrumentation state, or verification state; cleanup, restore, and instrumentation visibility stays in the visible context surface while the raw manifest, artifact bytes, and export/import schema remain owned by Runtime Artifacts.
+L00001310	
+L00001311	**Required actions from the Investigation Context surface:**
+L00001312	- `Open target`
+L00001313	- `Open artifacts`
+L00001314	- `Export bundle`
+L00001315	- `Revalidate target`
+L00001316	- `Revoke item`
+L00001317	- `Show raw in Context Detail Pane`
+L00001318	
+L00001319	ContractRef: ContractName:Plans/Contracts_V0.md, ContractName:Plans/Permissions_System.md, ContractName:Plans/FinalGUISpec.md, ContractName:Plans/FileManager.md, ContractName:Plans/UI_Command_Catalog.md
+L00001320	## 13. Activity transparency: search, bash, and file activity
+L00001321	
+L00001322	Activity transparency uses a shared inline operation-card family rather than isolated one-off widgets.
+L00001323	
+L00001324	### 13.1 Operation-card family
+L00001325	
+L00001326	This section defines the canonical contract for this surface.
+L00001327	
+L00001328	Core rules:
+L00001329	- Assistant Chat, `Plans/UI_Command_Catalog.md`, and `Plans/FinalGUISpec.md` remain live propagation targets rather than verify-only notes for blocked-state, slash-routing, visualizer, provider-disclosure, question, planning, terminal, and audit-field canon. Interface-shape and behavioral-edge requirements must route to owner corrections plus consumer reconciliation instead of disappearing into cross-reference-only text.
+L00001330	- `Plans/assistant-chat-design.md` is the PRIMARY OWNER for chat modes, activity transparency, question system, TODO, operation cards, slash commands, `/auto-follow`, `/inline` visualizer and `/Mermaid` rendering, `/questionnaire`, the `/web` family, `/skill` helper behavior, `/cancel` deprecation, `/edit/resend` controls, plan-mode auto-use/auto-deny boundaries, and `/lsp/question/todo/web` carry-through; `Plans/FinalGUISpec.md` and `Plans/Permissions_System.md` consume the three-way operation-card and permission surfaces without replacing this owner.
+L00001331	- Batch semantics must preserve the explicit false branch for continue_on_error.
+L00001332	- Inline mini-terminal and operation cards are locked to bounded inline previews, persistent per-command cards, narrative-order placement, and shared card anatomy.
+L00001333	- Shell owns interactive state; chat owns preview+audit.
+L00001334	- Operation cards preserve the three-way rendering distinction across terminal, search, and diff/web cards; the card-family table below owns the terminal/command, web/search, and diff/edit anatomy for Assistant Chat.
+L00001335	- The term `inline operation card` names this shared card family when it appears in cross-document terminology.
+L00001336	- PM must not describe the unified operation-card model as a separate activity strip, external terminal pop-out, or non-unified card behavior.
+L00001337	- Operation cards are restricted to lifecycle-bearing operations, exclude other widget families, and use a locked card-level state machine reconciled against the 8-state agent/process taxonomy.
+L00001338	- The inline operation-card family explicitly EXCLUDES question cards, permission-request approval cards, the sticky plan-tracker panel, reasoning-transparency blocks, and delegated-task or subagent disclosure blocks; those are separate widget families and require an explicit design decision before becoming operation-card variants.
+L00001339	- A batch-card is an operation-card specialization only when it represents a lifecycle-bearing batch operation; it does not absorb the question, approval, TODO, reasoning, or delegated-task families.
+L00001340	- Task and subagent operation cards preserve `pending → running → completed | failed | cancelled | timed_out`; failure emits a `task.failed` event with error detail, regular child-operation timeouts default to `120s`, long-running child operations default to `300s`, retries remain parent-owned, and child access to `question` is denied unless parent orchestration grants it.
+L00001341	- The legacy compact badge shorthand `pending→running→completed|failed|cancelled` is only a base path; `running → blocked` and `blocked → running | cancelled` are explicit transitions triggered by recoverable waits such as permission denied, FileSafe held, or MCP unavailable.
+L00001342	- Permission canon must preserve the four-tier approval ladder, question default allow only when HITL is available, keep the six web tools independently visible and ask-gated in plan presets, allow strict read_only/no-network presets to deny them, and carry the blocked/unavailable payload fields through to permission-card consumers.
+L00001343	- Chat terminal-handoff rules are preserved: interactive, long-running, stdin/TTY, watch/server, or user-promoted operations bind to a terminal session while chat keeps the bounded preview, audit card, and stable `Open in Terminal` route.
+L00001344	
+L00001345	Fields:
+L00001346	- continue_on_error: false
+L00001347	- stop on the first failure
+L00001348	- return completed results plus failure detail
+L00001349	- status_badge_state
+L00001350	
+L00001351	Permission rules:
+L00001352	- deny
+L00001353	- once
+L00001354	- for session
+L00001355	- always
+L00001356	- /session/always/deny
+L00001357	- blocked_reason_code
+L00001358	- allowed_action_ids[]
+L00001359	- status: "unavailable"
+L00001360	
+L00001361	Rules:
+L00001362	- Collapsed preview: 5 lines
+L00001363	- Expanded preview: 15 lines
+L00001364	- Persists after completion
+L00001365	- status, cwd, command summary, elapsed time, exit code / truncation indicator, and exit `/truncation-style` details
+L00001366	- READ-ONLY and non-interactive
+L00001367	- One card per command `/instance`
+L00001368	- Retries create a new terminal and therefore a new mini terminal card
+L00001369	- Open in Terminal
+L00001370	- terminal-handoff
+L00001371	- pending
+L00001372	- running
+L00001373	- completed
+L00001374	- failed
+L00001375	- cancelled
+L00001376	- blocked
+L00001377	- starting
+L00001378	- exited
+L00001379	- denial_reason_code
+L00001380	- denial_source
+L00001381	- suggested_recovery_action
+L00001382	- projection_freshness
+L00001383	- projection_health
+L00001384	- adapter_id
+L00001385	- adapter_unavailable
+L00001386	- question default `allow` only when HITL is available
+L00001387	- read_only
+L00001388	- plan
+L00001389	- websearch
+L00001390	- webfetch
+L00001391	- webextract
+L00001392	- webresearch
+L00001393	- webcrawl
+L00001394	- webmap
+L00001395	- badge is always visible
+L00001396	- running output may promote out of inline comfort based on heuristic thresholds
+L00001397	- `blocked` is a card-level state entered from `running` and returned to `running` on unblock
+L00001398	- `disconnected` and `restoring` are agent-session states and surface as card-level `blocked` with `blocked_reason_code`
+L00001399	- simple read/grep/glob results remain inline text, not cards
+L00001400	- blocked responses must be machine-actionable through `allowed_action_ids[]`
+L00001401	- error naming aligns to `adapter_unavailable`
+L00001402	- batch-card
+L00001403	- question cards
+L00001404	- permission-request
+L00001405	- plan-tracker
+L00001406	- reasoning-transparency
+L00001407	- delegated-task
+L00001408	- EXCLUDES
+L00001409	
+L00001410	Inline operation card metadata table:
+L00001411	
+L00001412	Type-specific primary actions, card-specific divergence rules, and card-summary defaults are captured by the table below.
+L00001413	
+L00001414	| Card family | Collapsed summary | Primary action | Detail and payload behavior |
+L00001415	| --- | --- | --- | --- |
+L00001416	| command card | `Ran: <command>` or `Running: <command>` | `Open in Terminal` / focus owning session | May show bounded live tail while active; large output stores full data behind refs/blobs and completed verbose cards default collapsed. |
+L00001417	| web/search card | `<operation>: <query/url> — N sources` | open search results view or sources/results/browser detail surface | Shows source count or scope summary, support tier, fallback disclosure, and warning/error text; search and diff cards do not need live streaming behavior. |
+L00001418	| diff/edit card | `<path> +N −M` | editor diff open at relevant file/range | Remains a distinct operation-card subtype and does not silently inherit generic fenced-code copy behavior. |
+L00001419	
+L00001420	The files-touched strip is the compact aggregate view for diff/edit activity; each file entry shows diff counts such as `+N −M`, and `Read:` / `Edited:` / files-touched click-to-open routes through the shared editor diff/open-file target.
+L00001421	
+L00001422	Failed or blocked cards surface the key failure line in collapsed form without forcing expansion. All cards persist in thread history like other activity entries, and large payloads move through refs/blobs while cards show bounded previews.
+L00001423	Operation cards are not minimal-only captions: `/watch-mode` terminal work, search-result cards, and `/diff` edit cards share the richer metadata and bounded-preview anatomy unless a later owner contract specializes them.
+L00001424	Inline operation cards are the shared chat-history artifact for command/bash, search/web, and file edit/diff activity; they are non-final previews for operational work and remain separate from question cards, `/approval/plan` surfaces, sticky plan panels, thought-stream blocks, and subagent blocks.
+L00001425	Per-message activity transparency sections for bash/commands, web search, files explored, files changed, and code diffs are collapsible and default-collapsed; expansion reveals bounded details without turning the whole message into a raw log dump.
+L00001426	
+L00001427	### 13.2 Web activity and provenance
+L00001428	
+L00001429	This section consumes the linked owner contract and stays aligned with it.
+L00001430	
+L00001431	ContractRef: Plans/storage-plan.md#4.4 Activity transparency payloads, Plans/Contracts_V0.md#3.4 Tool-specific payload extensions, Plans/Section15_MVP_Promoted_Features_Spec.md#3.18 Built-in Browser and Click-to-Context, ContractName:Plans/storage-plan.md#4.4 Activity transparency payloads, ContractName:Plans/Contracts_V0.md#3.4 Tool-specific payload extensions, ContractName:Plans/Section15_MVP_Promoted_Features_Spec.md#3.18 Built-in Browser and Click-to-Context, Plans/Permissions_System.md#3.4A Web-operation permission-key derivation, Plans/Contracts_V0.md#3.4A Web error taxonomy and applicability
+L00001432	
+L00001433	Core rules:
+L00001434	- Preserve the Firecrawl-specific audit payload keys as exact contract-owned fields.
+L00001435	- The provider capability matrix must preserve capability tier separately from routing posture: Firecrawl, Tavily, and Exa retain real webfetch capability and must not be flattened to fallback-only merely because Site Reader is preferred.
+L00001436	- `webfetch = native Site Reader path by DEFAULT`: Site Reader is the PRIMARY architecture for PM-native site reading, provider-delegated fetch through Firecrawl scrape, Exa crawl, Tavily extract, or similar adapters is an ALTERNATIVE path, and the `Reading Site` activity label is RESERVED for the native Site Reader path.
+L00001437	- Anthropic and OpenAI websearch support must remain labeled native (model) / model-native, not pm-composed.
+L00001438	- The web routing algorithm must include a capability-unavailable terminal branch with clear setup guidance when no provider supports the requested operation.
+L00001439	- The global provider stack is user-changeable in Settings, but per-operation priority reordering is NOT MVP; consumers show the effective provider order and capability result rather than allowing hidden per-operation reshuffles.
+L00001440	- PM MUST NOT silently switch between self-hosted Firecrawl and hosted/cloud Firecrawl. When Firecrawl transport changes, the activity card and audit payload disclose the requested and effective Firecrawl route.
+L00001441	- Site Reader canon is native, detail-level, token-efficient, iframe-aware, and requires full browser interaction in v1; it reserves `Reading Site` for the PM-native Site Reader path and prevents provider-routed fetch from reusing that reserved identity.
+L00001442	- `Extracting Site` and `Reading Site` are different evidence paths and failure modes: `Extracting Site` uses provider-level extraction, while `Reading Site` uses PM's native Site Reader.
+L00001443	- Answer construction must preserve search-then-read behavior, final citations must come from the actual read path rather than raw search snippets alone, and web activity/provenance docs must use the exact storage/contracts/browser ContractRef targets instead of malformed generic anchors.
+L00001444	- The Firecrawl webresearch mapping must preserve provider-native no-URL research behavior, navigation/forms/pagination capability, and structured extraction during agent-led research.
+L00001445	- The Firecrawl websearch mapping must preserve provider-specific search behavior and option surface.
+L00001446	- The Firecrawl owner section must either preserve `changeTracking` with its structured output shape or explicitly retire it as out of scope; same URL change tracking requires a previous fetch in cache/storage and returns `change_status: "new" | "same" | "changed" | "removed"` in output rather than disappearing silently.
+L00001447	- Routing must remain cost-aware when multiple providers offer similar capability; static priority alone is insufficient, and the >100 credits warning plus 500 credits cap must remain aligned with routing.
+L00001448	- The Firecrawl owner section must preserve shared routing/audit disclosure for requested/effective provider selection, fallback visibility, denied-web projection, and canonical web error taxonomy linkage.
+L00001449	- Denied web-operation activity preserves `tool.denied.payload.meta` with `web_operation`, canonical `operation_input`, derived `operation_input_preview?`, `invocation_source`, optional `agent_reason`, source IDs when present, `denial_reason_code`, `denial_source` (`policy` | `permission` | `mode` | `user`), `suggested_recovery_action`, requested adapter/projection fields, `allowed_action_ids[]`, and `headless_denied` when present. Legacy `web_input` and `blocked_reason_code` child payload aliases normalize to `operation_input` and `denial_reason_code` before chat renders them.
+L00001450	- The per-contract web error applicability table remains required canon and must stay aligned with provider-to-PM error mapping.
+L00001451	- Retire stale cited-search ownership residue from reference sections; provider-capability and web-routing canon is owned by Plans/Tools.md sections 11-12, while Plans/newtools.md#8.2.1 is non-normative consumer guidance only.
+L00001452	- All web tools share a common output field set that includes provider identity, routing reason, timing, cache status, and standard error or warning fields.
+L00001453	- Batch webfetch canon includes exact batch inputs, concurrency limits, shared-host permission flow, and the locked batch timeout formula.
+L00001454	- Web/provider activity consumes tool-specific payload extensions through the `/tool/storage/runtime` bridge; owner contracts define payload shape while chat owns visible provenance, setup guidance, and runtime disclosure.
+L00001455	- History rows and `/inspector` details combine top-level requested/effective runtime fields with the web child payload and dereference `sources_ref`, `content_ref`, `map_ref`, and `answer_summary_ref` only on demand. `sources_ref` points to a normalized source-set or blob-ref with `URLs`, /titles/snippets/provenance badges, `content_ref` points to /read or extracted content, and `/url/task` previews remain bounded metadata rather than payload storage. `map_ref` points to site-map /topology data, and storage-key naming follows storage-plan blob-ref conventions with sensitive-data scrubbed before persistence.
+L00001456	- Provider-native web research carries source-lineage fields such as `enableWebSearch`; Firecrawl consumer copy may surface Fire Engine limits, and file-upload/webfetch summaries preserve the 5 MB default when that cap applies.
+L00001457	- Activity transparency payloads must preserve adapter-selection and projection fields used for routing and audit disclosure.
+L00001458	- `web_operation = "read"` is the semantic audit value for site/page reading while the underlying tool invocation remains `webfetch`; consumers must map between `read` and `webfetch` rather than treating them as separate operations.
+L00001459	- Expanded web activity-card details show operation input, requested/effective runtime delta when relevant, support tier, fallback disclosure when relevant, source count or scope summary, and warning or error text.
+L00001460	- Web operation cards include operation/progress, denied, partial, fallback, refs/sources, settings-health/cost/credentials, approval, session, and batch variants. Each card names the command/tool ID actually dispatched, shows slash/palette/NL/agent provenance when useful, and keeps autonomous agent capability visible even when the user did not type a slash command.
+L00001461	- Collapsed web activity labels use the specific operation label: `Searching Web: <query>`, `Fetching Site: <url> (via <provider>)`, `Reading Site: <url>`, `Extracting Site: <url>`, `Researching Web: <task>`, `Crawling Site: <url>`, and `Mapping Site: <url>`.
+L00001462	- `Reading Site: <url>` is reserved EXCLUSIVELY for the PM-native Site Reader path; provider-routed or provider-delegated fetch uses `Fetching Site: <url> (via <provider>)` and must not reuse the reserved native Site Reader identity.
+L00001463	- Provenance badges are locked to the concrete evidence family when known: `search snippet`, `site extract`, `site reader`, `research synthesis`, `crawl result`, or `map result`.
+L00001464	- Firecrawl audit payload keys preserve provider response lineage exactly: `firecrawl_credits_used?: number` is populated from response `creditsUsed`, and `firecrawl_cache_state?: "hit" | "miss"` is populated from response `metadata.cacheState`.
+L00001465	- Provider fallback on rate-limit or outage must fall to the next eligible provider in priority order that supports the same operation, and must be shown in BOTH the chat activity label and the audit log through `provider_fallback_summary`.
+L00001466	
+L00001467	Fields:
+L00001468	- firecrawl_credits_used
+L00001469	- firecrawl_cache_state
+L00001470	- firecrawl_scrape_id
+L00001471	- webresearch
+L00001472	- no-URL natural-language research
+L00001473	- navigation/forms/pagination capability
+L00001474	- structured extraction behavior during provider-native research
+L00001475	- Serper-backed Google-result behavior
+L00001476	- sources
+L00001477	- categories
+L00001478	- optional result scraping behavior in Firecrawl `websearch`
+L00001479	- changeTracking.status
+L00001480	- changeTracking.previous_content_ref
+L00001481	- changeTracking.diff_summary_ref
+L00001482	- changeTracking.checked_at_utc
+L00001483	- `tool_use_id`
+L00001484	- `adapter_id`
+L00001485	- `adapter_selection_reason`
+L00001486	- `duration_ms`
+L00001487	- `timestamp`
+L00001488	- `cached`
+L00001489	- `error_code?`
+L00001490	- `error_message?`
+L00001491	- `warnings?`
+L00001492	- `provenance_badge?`
+L00001493	- provenance_badge?: "search snippet" | "site extract" | "site reader" | "research synthesis" | "crawl result" | "map result"
+L00001494	- adapter_hint?: string
+L00001495	- depth_hint?: "fast" | "balanced" | "deep"
+L00001496	- change_tracking
+L00001497	- change_summary?: { new: number, changed: number, same: number, removed: number }
+L00001498	- requested_adapter_id
+L00001499	- effective_adapter_id
+L00001500	- adapter_selection_reason
+L00001501	- provider_fallback_summary
+L00001502	- warnings_count
+L00001503	- error_code
+L00001504	- projection_freshness
+L00001505	- projection_health
+L00001506	- tool.denied.payload.meta
+L00001507	- web_operation
+L00001508	- operation_input
+L00001509	- operation_input_preview
+L00001510	
+L00001511	Permission rules:
+L00001512	- single confirmation prompt showing all unique domains in the batch
+L00001513	- For Session grants all listed domains for that session
+L00001514	
+L00001515	Rules:
+L00001516	- Firecrawl `webfetch` capability is not erased by Site Reader primacy
+L00001517	- Tavily `webfetch` capability is not erased by Site Reader primacy
+L00001518	- Exa `webfetch` capability is not erased by Site Reader primacy
+L00001519	- fallback-only
+L00001520	- webfetch
+L00001521	- Anthropic/OpenAI `websearch` support is `native (model)` / model-native, not `pm-composed`
+L00001522	- native (model)
+L00001523	- pm-composed
+L00001524	- capability-unavailable terminal branch
+L00001525	- clear setup guidance when no provider supports the requested operation

@@ -1,0 +1,269 @@
+{
+  "assignment_id": "A005M-000113-INTEGRATED-MACRO-673E34012C23-0001",
+  "attempt_id": "attempt-0014",
+  "audit_id": "audit-20260710-005-plan-assurance-model-lanes-fresh-agent-exhaustive",
+  "blindness": {
+    "external_research": "deferred_to_feature_research_phase",
+    "peer_results": "forbidden",
+    "prior_audits": "forbidden",
+    "unrelated_sources": "forbidden"
+  },
+  "bundle_core_range": [
+    1,
+    915
+  ],
+  "bundle_id": "MACRO-673E34012C23-0001",
+  "context_ranges": [
+    [
+      916,
+      927
+    ]
+  ],
+  "document_path": "Plans/Run_Modes.md",
+  "micro_window_ids": [
+    "WIN-673E34012C23-0001",
+    "WIN-673E34012C23-0002",
+    "WIN-673E34012C23-0003",
+    "WIN-673E34012C23-0004"
+  ],
+  "phase": "blind_macro_window_review",
+  "required_dimensions": [
+    "behavior",
+    "capabilities",
+    "inputs_outputs",
+    "contracts",
+    "states_transitions",
+    "authority",
+    "ownership",
+    "consumers",
+    "gui_truth",
+    "failures_recovery",
+    "security_privacy",
+    "propagation",
+    "operations",
+    "scale_performance",
+    "compatibility_migration",
+    "acceptance_oracles",
+    "builder_discretion",
+    "ambiguity_unknowns",
+    "missing_callers_consumers",
+    "invalid_states_transitions",
+    "concurrency_races",
+    "partial_failure",
+    "recovery_rollback",
+    "authority_boundaries",
+    "privacy_data_lifecycle",
+    "untrusted_inputs",
+    "gui_misleading_states",
+    "offline_network_loss",
+    "scale_limits",
+    "accessibility",
+    "localization",
+    "observability_support",
+    "destructive_actions",
+    "cross_document_seams",
+    "test_falsifiability",
+    "unknown_unknowns"
+  ],
+  "result_schema_ref": "schemas/macro_review_result.schema.json",
+  "review_instructions": "Read every assigned core line and account for every required_source_unit_ref. Apply both exact-behavior and adversarial-negative-space lenses across every required dimension. Extract concise feature, behavior, contract, state, authority, consumer, GUI, failure/recovery, oracle, gap, unknown, and explicit-non-gap items with exact source evidence. Do not merely paraphrase headings or copy unit refs. Each segment must name its complete required_source_unit_refs list and at least one item. Write exactly one regular JSON payload inside the assigned output directory; result.json is recommended but the filename is not semantic. Do not write a terminal seal. Return PMR1 only after the JSON payload is fully written.",
+  "schema_version": "macro-context-capsule-v1",
+  "segments": [
+    {
+      "core_range": [
+        1,
+        399
+      ],
+      "core_sha256": "d17344628437c72bde66b0bef3f877d2a7b70d61e5117d4117b905ecefa01d6b",
+      "plan_unit_ids": [],
+      "required_source_unit_refs": [
+        "SEMANTIC:PROLOGUE:Plans/Run_Modes.md:CONT-001"
+      ],
+      "semantic_block_ids": [
+        "PROLOGUE:Plans/Run_Modes.md:CONT-001"
+      ],
+      "structural_paths": [],
+      "token_estimate": 10552,
+      "window_id": "WIN-673E34012C23-0001"
+    },
+    {
+      "core_range": [
+        400,
+        759
+      ],
+      "core_sha256": "17319c6e62a71d09864d1c1604292f2e946277ea00a55f67857ef7fa6b203a82",
+      "plan_unit_ids": [
+        "RM-002",
+        "RM-003",
+        "RM-004",
+        "RM-005",
+        "RM-006"
+      ],
+      "required_source_unit_refs": [
+        "PLANUNIT:RM-002",
+        "PLANUNIT:RM-003",
+        "PLANUNIT:RM-004",
+        "PLANUNIT:RM-005",
+        "PLANUNIT:RM-006",
+        "SEMANTIC:PROLOGUE:Plans/Run_Modes.md:CONT-002",
+        "SEMANTIC:PLANUNIT:RM-002",
+        "SEMANTIC:PLANUNIT:RM-003",
+        "SEMANTIC:PLANUNIT:RM-004",
+        "SEMANTIC:PLANUNIT:RM-005",
+        "SEMANTIC:PLANUNIT:RM-006"
+      ],
+      "semantic_block_ids": [
+        "PROLOGUE:Plans/Run_Modes.md:CONT-002",
+        "PLANUNIT:RM-002",
+        "PLANUNIT:RM-003",
+        "PLANUNIT:RM-004",
+        "PLANUNIT:RM-005",
+        "PLANUNIT:RM-006"
+      ],
+      "structural_paths": [],
+      "token_estimate": 11370,
+      "window_id": "WIN-673E34012C23-0002"
+    },
+    {
+      "core_range": [
+        760,
+        837
+      ],
+      "core_sha256": "2d19622f31c86e7dad8420e17a27fae5ad6b7637df2a1a0b2cc99667ebcbc231",
+      "plan_unit_ids": [
+        "RM-007",
+        "RM-008",
+        "RM-009",
+        "RM-010",
+        "RM-011",
+        "RM-012",
+        "RM-013",
+        "RM-014",
+        "RM-015",
+        "RM-016",
+        "RM-017",
+        "RM-018",
+        "RM-019"
+      ],
+      "required_source_unit_refs": [
+        "PLANUNIT:RM-007",
+        "PLANUNIT:RM-008",
+        "PLANUNIT:RM-009",
+        "PLANUNIT:RM-010",
+        "PLANUNIT:RM-011",
+        "PLANUNIT:RM-012",
+        "PLANUNIT:RM-013",
+        "PLANUNIT:RM-014",
+        "PLANUNIT:RM-015",
+        "PLANUNIT:RM-016",
+        "PLANUNIT:RM-017",
+        "PLANUNIT:RM-018",
+        "PLANUNIT:RM-019",
+        "SEMANTIC:PLANUNIT:RM-007",
+        "SEMANTIC:PLANUNIT:RM-008",
+        "SEMANTIC:PLANUNIT:RM-009",
+        "SEMANTIC:PLANUNIT:RM-010",
+        "SEMANTIC:PLANUNIT:RM-011",
+        "SEMANTIC:PLANUNIT:RM-012",
+        "SEMANTIC:PLANUNIT:RM-013",
+        "SEMANTIC:PLANUNIT:RM-014",
+        "SEMANTIC:PLANUNIT:RM-015",
+        "SEMANTIC:PLANUNIT:RM-016",
+        "SEMANTIC:PLANUNIT:RM-017",
+        "SEMANTIC:PLANUNIT:RM-018",
+        "SEMANTIC:PLANUNIT:RM-019"
+      ],
+      "semantic_block_ids": [
+        "PLANUNIT:RM-007",
+        "PLANUNIT:RM-008",
+        "PLANUNIT:RM-009",
+        "PLANUNIT:RM-010",
+        "PLANUNIT:RM-011",
+        "PLANUNIT:RM-012",
+        "PLANUNIT:RM-013",
+        "PLANUNIT:RM-014",
+        "PLANUNIT:RM-015",
+        "PLANUNIT:RM-016",
+        "PLANUNIT:RM-017",
+        "PLANUNIT:RM-018",
+        "PLANUNIT:RM-019"
+      ],
+      "structural_paths": [],
+      "token_estimate": 11727,
+      "window_id": "WIN-673E34012C23-0003"
+    },
+    {
+      "core_range": [
+        838,
+        915
+      ],
+      "core_sha256": "cbe7c9092b6f958fedad1ab4778badb15ab6c83a6aceb45c3b3cb5190bb9c3bd",
+      "plan_unit_ids": [
+        "RM-020",
+        "RM-021",
+        "RM-022",
+        "RM-023",
+        "RM-024",
+        "RM-025",
+        "RM-026",
+        "RM-027",
+        "RM-028",
+        "RM-029",
+        "RM-030",
+        "RM-031",
+        "RM-032"
+      ],
+      "required_source_unit_refs": [
+        "PLANUNIT:RM-020",
+        "PLANUNIT:RM-021",
+        "PLANUNIT:RM-022",
+        "PLANUNIT:RM-023",
+        "PLANUNIT:RM-024",
+        "PLANUNIT:RM-025",
+        "PLANUNIT:RM-026",
+        "PLANUNIT:RM-027",
+        "PLANUNIT:RM-028",
+        "PLANUNIT:RM-029",
+        "PLANUNIT:RM-030",
+        "PLANUNIT:RM-031",
+        "PLANUNIT:RM-032",
+        "SEMANTIC:PLANUNIT:RM-020",
+        "SEMANTIC:PLANUNIT:RM-021",
+        "SEMANTIC:PLANUNIT:RM-022",
+        "SEMANTIC:PLANUNIT:RM-023",
+        "SEMANTIC:PLANUNIT:RM-024",
+        "SEMANTIC:PLANUNIT:RM-025",
+        "SEMANTIC:PLANUNIT:RM-026",
+        "SEMANTIC:PLANUNIT:RM-027",
+        "SEMANTIC:PLANUNIT:RM-028",
+        "SEMANTIC:PLANUNIT:RM-029",
+        "SEMANTIC:PLANUNIT:RM-030",
+        "SEMANTIC:PLANUNIT:RM-031",
+        "SEMANTIC:PLANUNIT:RM-032"
+      ],
+      "semantic_block_ids": [
+        "PLANUNIT:RM-020",
+        "PLANUNIT:RM-021",
+        "PLANUNIT:RM-022",
+        "PLANUNIT:RM-023",
+        "PLANUNIT:RM-024",
+        "PLANUNIT:RM-025",
+        "PLANUNIT:RM-026",
+        "PLANUNIT:RM-027",
+        "PLANUNIT:RM-028",
+        "PLANUNIT:RM-029",
+        "PLANUNIT:RM-030",
+        "PLANUNIT:RM-031",
+        "PLANUNIT:RM-032"
+      ],
+      "structural_paths": [],
+      "token_estimate": 11977,
+      "window_id": "WIN-673E34012C23-0004"
+    }
+  ],
+  "source_excerpt_line_format": "L######## followed by a tab and exact canonical source text",
+  "source_excerpt_ref": "capsules/source/df/df72626f3ad1a0becd2d4d3ed70acc86119309f9c04fd8aa96709c6b4f34824a.txt",
+  "source_excerpt_sha256": "df72626f3ad1a0becd2d4d3ed70acc86119309f9c04fd8aa96709c6b4f34824a",
+  "source_sha256": "8fbb20f19c293128bb9f79d8e14be0b565e02aeaf0ee804723207fd778e0eb8e",
+  "token_estimate": 45626
+}

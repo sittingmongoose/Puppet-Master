@@ -1,0 +1,54 @@
+{
+  "assignment_id": "ER-0001",
+  "attempt_id": "attempt-0001",
+  "audit_id": "audit-20260710-005-plan-assurance-model-lanes-fresh-agent-exhaustive",
+  "feature_refs": [
+    "OPF::A005OM-0006::PF-0169",
+    "OPF::A005OM-0007::PF-0001",
+    "OPF::A005OM-0007::PF-0002"
+  ],
+  "feature_refs_digest": "c67054cc06d527a7e2b8934152d51c76015d511c388e90354d82756357099197",
+  "isolation_contract": {
+    "active_shadow_inputs_forbidden": true,
+    "canonical_plan_writes_forbidden": true,
+    "descendants_forbidden": true,
+    "followup_messages_forbidden": true,
+    "fork_turns": "none",
+    "fresh_direct_child_required": true,
+    "prior_audit_lineage_forbidden": true
+  },
+  "leaf_prompt_ref": "master/external_research/sprint-wave-0001/leaf_prompt.json",
+  "leaf_prompt_sha256": "8211ab8640b93312f7fcc10695cecfb607b721032c47450bc318955e4c1d72b8",
+  "output_contract": {
+    "exactly_one_result_file": "result.json",
+    "result_schema_ref": "master/external_research/sprint-wave-0001/schema/external_research_result.schema.json",
+    "return_terminal_token": "PMR1"
+  },
+  "output_directory": "external_research_v1/ER-0001/attempts/attempt-0001",
+  "owner_domains": [
+    "recovery_state_and_concurrency"
+  ],
+  "research_questions": [
+    "How should undo, revert, rewind, checkpoint, restore, and destructive recovery be distinguished by scope, identity, persistence, and user-visible state?",
+    "Which Git, IDE, chat, and agent products provide safe preview, confirmation, atomicity, and recovery UX for destructive or irreversible changes?",
+    "Which standards or mature implementations define auditability, partial-failure handling, and rollback boundaries for recovery operations?",
+    "What evidence-backed design implications and novel patterns should Puppet Master adopt without conflating file revert with conversation rewind?"
+  ],
+  "research_questions_digest": "778b4e66b910653156039d5844127a32ac69c2f0d34ac1efcdcb1f862b3c4781",
+  "result_schema_ref": "master/external_research/sprint-wave-0001/schema/external_research_result.schema.json",
+  "result_schema_sha256": "63377ebb7304340375ddcbd896b612e50bfa17382b7f61ce1ca21da773464da5",
+  "schema_version": "external-research-packet-v1",
+  "source_policy": {
+    "access_date_required": true,
+    "current_web_research_required": true,
+    "direct_urls_only": true,
+    "long_quotations_forbidden": true,
+    "maximum_sources": 12,
+    "minimum_sources_when_available": 8,
+    "official_or_primary_sources_first": true,
+    "search_result_urls_forbidden": true
+  },
+  "sprint_id": "sprint-wave-0001",
+  "topic": "Undo/revert/rewind separation and safe recovery UX"
+}
+

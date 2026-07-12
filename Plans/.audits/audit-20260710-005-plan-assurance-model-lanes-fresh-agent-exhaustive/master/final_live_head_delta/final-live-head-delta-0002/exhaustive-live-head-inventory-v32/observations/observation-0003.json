@@ -1,0 +1,43 @@
+{
+  "launch": false,
+  "observation_id": "observation-0003",
+  "observed_at_utc": "2026-07-12T09:29:08.909330Z",
+  "ordinal": 3,
+  "packet_generation": false,
+  "previous_observation_ref": "Plans/.audits/audit-20260710-005-plan-assurance-model-lanes-fresh-agent-exhaustive/master/final_live_head_delta/final-live-head-delta-0002/exhaustive-live-head-inventory-v32/observations/observation-0002.json",
+  "previous_observation_sha256": "b4797b74bc95fc067f8dcee94f85f384f2b531d89ce440dfdd837ead2a2cde8c",
+  "schema_version": "audit005-exhaustive-live-head-observation-v32",
+  "semantic_prose_reads": 0,
+  "stable_equal_expected": true,
+  "stable_equal_previous": true,
+  "state": {
+    "all_regular_single_link": true,
+    "branch": "codex/pm-audit-004-master",
+    "content_state_sha256": "cd988d47ef4c935baf4347d7199cfa293d508393363a2bf77b77336aad695a1f",
+    "digest_framing": "path-sort; XY + HT + path + HT + sha256(file_bytes).hexdigest() + LF",
+    "generated_bytes": 43728997,
+    "generated_content_state_sha256": "39720352e131ac2d867caa7d504b3c66c004511fd4d2702e85c47c271d752cc1",
+    "generated_count": 296,
+    "generated_path_set_sha256": "5601cfcb8abc481da3b30ed65b64094d6f2bea9e34f90cf0d98b7475fa5ea480",
+    "hash_only_file_reads": 299,
+    "head": "7f57ffda79c88878816fee922d85fbed29567f97",
+    "inventory_jsonl_sha256": "1dda90bcda254840520525b2c614e1f8c9df3f2faa2b037bf4e84f075ead0a3f",
+    "modified_tracked": 296,
+    "path_count": 299,
+    "path_set_sha256": "6af46a1fc6c3178d030b48ef757caeca4d00840dc824da3eab8948f0329619f4",
+    "pathspec": [
+      "Plans",
+      ":(exclude)Plans/.audits/**"
+    ],
+    "semantic_bytes": 1447239,
+    "semantic_content_state_sha256": "cebccebf8fa5def5a1137e09653f495ec52c7a8bd3d8757e3eb6393817437001",
+    "semantic_count": 3,
+    "semantic_path_set_sha256": "a013d03428f32da59aa5a835576601e78a67077da931275d4925fedff73866f2",
+    "semantic_prose_reads": 0,
+    "status_sha256": "cab64dacb1dedec2c8dd63c3a160e44700e5052e409fc46d45dcd581085812a6",
+    "status_z_sha256": "366a43b70b49c4f98748c2313f51e580ec03ae5ef5ce9fa7acec1a03e12b9256",
+    "total_bytes": 45176236,
+    "untracked": 3
+  },
+  "state_digest": "06a3dfb8158fee8ef402ce6adaa074560345ab25b958b884f004cebb1f71d5d4"
+}

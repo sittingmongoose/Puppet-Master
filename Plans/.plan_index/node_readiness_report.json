@@ -4,17 +4,17 @@
     "build_order_available": true,
     "build_order_blocked_node_count": 0,
     "cycle_blocker_count": 0,
-    "depends_on_edge_count": 11847,
+    "depends_on_edge_count": 11862,
     "downstream_blocked_node_count": 0,
-    "edge_count": 13912,
-    "node_count": 5536,
+    "edge_count": 13927,
+    "node_count": 5540,
     "true_cycle_component_count": 0,
     "unblocks_edge_count": 2065,
     "unresolved_reference_count": 0
   },
-  "generated_at_utc": "2026-07-09T18:12:23Z",
+  "generated_at_utc": "2026-07-12T02:24:28Z",
   "gui_related_units": {
-    "count": 2412,
+    "count": 2416,
     "units": [
       {
         "owner_doc": "Plans/00-plans-index.md",
@@ -12744,6 +12744,39 @@
         }
       },
       {
+        "owner_doc": "Plans/FinalGUISpec.md",
+        "plan_unit_id": "F3-419",
+        "source_location": {
+          "heading": "F3-419 - Activity Bar Reorder, Hide, And More Tray",
+          "heading_level": 3,
+          "heading_line": 27350,
+          "line": 27352,
+          "path": "Plans/FinalGUISpec.md"
+        }
+      },
+      {
+        "owner_doc": "Plans/FinalGUISpec.md",
+        "plan_unit_id": "F3-420",
+        "source_location": {
+          "heading": "F3-420 - Chat Component Unification And Embedded Chrome Flags",
+          "heading_level": 3,
+          "heading_line": 27404,
+          "line": 27406,
+          "path": "Plans/FinalGUISpec.md"
+        }
+      },
+      {
+        "owner_doc": "Plans/FinalGUISpec.md",
+        "plan_unit_id": "F3-421",
+        "source_location": {
+          "heading": "F3-421 - Editor Tab Close, Pane Close, And Tab Overflow",
+          "heading_level": 3,
+          "heading_line": 27464,
+          "line": 27466,
+          "path": "Plans/FinalGUISpec.md"
+        }
+      },
+      {
         "owner_doc": "Plans/feature-list.md",
         "plan_unit_id": "FL-008",
         "source_location": {
@@ -20488,6 +20521,17 @@
         }
       },
       {
+        "owner_doc": "Plans/Planning_Wizard.md",
+        "plan_unit_id": "PWIZ-019",
+        "source_location": {
+          "heading": "PWIZ-019 - Embedded Assistant Chat Instances In Wizard Workspace",
+          "heading_level": 3,
+          "heading_line": 1558,
+          "line": 1560,
+          "path": "Plans/Planning_Wizard.md"
+        }
+      },
+      {
         "owner_doc": "Plans/Runtime_Artifacts_Panel.md",
         "plan_unit_id": "RAP-002",
         "source_location": {
@@ -26556,12 +26600,12 @@
   "no_final_node_queues_created": true,
   "no_worknodes_created": true,
   "nodeseed_candidates_created": false,
-  "plan_unit_count": 5536,
+  "plan_unit_count": 5540,
   "risk_and_reasoning_summary": {
     "reasoning_tier_counts": {
       "high": 1208,
       "low": 5,
-      "standard": 4323
+      "standard": 4327
     },
     "risk_class_counts": {
       "a11y_regression": 1,
@@ -27556,7 +27600,7 @@
       "filesafe_safe_point_owner_split": 1,
       "filtered_coordination_context_example": 1,
       "final_review_gate_boundary_drift": 1,
-      "finalgui_drift": 339,
+      "finalgui_drift": 342,
       "finalgui_risk": 28,
       "finding_comparison_logging_example": 1,
       "finish_reason_tool_identity_retry_drift": 1,
@@ -28148,7 +28192,7 @@
       "owner_consumer_map_loss": 1,
       "owner_contract_bridge": 1,
       "owner_demotion_drift": 1,
-      "owner_drift": 45,
+      "owner_drift": 46,
       "owner_first_consumer_drift_blocking": 1,
       "owner_hint_effective_trigger_drift": 1,
       "owner_identity_drift": 2,
@@ -29512,7 +29556,7 @@
     "source_preserving_unit_count": 0,
     "source_preserving_units": [],
     "status_counts": {
-      "accepted": 5358,
+      "accepted": 5362,
       "retired": 178
     },
     "unit_type_counts": {
@@ -29554,7 +29598,7 @@
       "provider_taxonomy": 1,
       "reference": 5,
       "reference_formula": 1,
-      "requirement": 4582,
+      "requirement": 4586,
       "risk": 2,
       "runtime_contract": 22,
       "runtime_disclosure": 2,

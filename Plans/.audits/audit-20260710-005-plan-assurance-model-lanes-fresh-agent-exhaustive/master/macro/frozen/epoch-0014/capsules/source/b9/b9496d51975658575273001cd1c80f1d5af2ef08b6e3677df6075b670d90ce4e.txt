@@ -1,0 +1,106 @@
+L00000001	{
+L00000002	  "$schema": "https://json-schema.org/draft/2020-12/schema",
+L00000003	  "additionalProperties": false,
+L00000004	  "properties": {
+L00000005	    "classifications": {
+L00000006	      "items": {
+L00000007	        "additionalProperties": false,
+L00000008	        "properties": {
+L00000009	          "allowed_contexts": {
+L00000010	            "items": {
+L00000011	              "type": "string"
+L00000012	            },
+L00000013	            "minItems": 1,
+L00000014	            "type": "array"
+L00000015	          },
+L00000016	          "canonical_route": {
+L00000017	            "type": "string"
+L00000018	          },
+L00000019	          "classification": {
+L00000020	            "enum": [
+L00000021	              "live_target",
+L00000022	              "generated_process_artifact",
+L00000023	              "historical_source_lineage_ref",
+L00000024	              "schema_to_materialize",
+L00000025	              "typo",
+L00000026	              "allowed_exception"
+L00000027	            ],
+L00000028	            "type": "string"
+L00000029	          },
+L00000030	          "match_kind": {
+L00000031	            "enum": [
+L00000032	              "exact",
+L00000033	              "glob",
+L00000034	              "prefix",
+L00000035	              "doc_anchor"
+L00000036	            ],
+L00000037	            "type": "string"
+L00000038	          },
+L00000039	          "evidence_refs": {
+L00000040	            "items": {
+L00000041	              "type": "string"
+L00000042	            },
+L00000043	            "minItems": 1,
+L00000044	            "type": "array"
+L00000045	          },
+L00000046	          "materialization_pattern": {
+L00000047	            "type": "string"
+L00000048	          },
+L00000049	          "notes": {
+L00000050	            "type": "string"
+L00000051	          },
+L00000052	          "raw_ref": {
+L00000053	            "type": "string"
+L00000054	          },
+L00000055	          "replacement_ref": {
+L00000056	            "type": "string"
+L00000057	          },
+L00000058	          "surface_type": {
+L00000059	            "enum": [
+L00000060	              "concrete_path",
+L00000061	              "generated_family",
+L00000062	              "process_artifact",
+L00000063	              "schema_to_materialize",
+L00000064	              "future_artifact"
+L00000065	            ],
+L00000066	            "type": "string"
+L00000067	          },
+L00000068	          "validator_policy": {
+L00000069	            "enum": [
+L00000070	              "fail",
+L00000071	              "warn",
+L00000072	              "allow",
+L00000073	              "allow_until_materialized"
+L00000074	            ],
+L00000075	            "type": "string"
+L00000076	          }
+L00000077	        },
+L00000078	        "required": [
+L00000079	          "raw_ref",
+L00000080	          "classification",
+L00000081	          "surface_type",
+L00000082	          "match_kind",
+L00000083	          "canonical_route",
+L00000084	          "evidence_refs",
+L00000085	          "allowed_contexts",
+L00000086	          "validator_policy"
+L00000087	        ],
+L00000088	        "type": "object"
+L00000089	      },
+L00000090	      "type": "array"
+L00000091	    },
+L00000092	    "generated_at_utc": {
+L00000093	      "type": "string"
+L00000094	    },
+L00000095	    "schema_id": {
+L00000096	      "const": "pm.path_reference_registry.v1",
+L00000097	      "type": "string"
+L00000098	    }
+L00000099	  },
+L00000100	  "required": [
+L00000101	    "schema_id",
+L00000102	    "generated_at_utc",
+L00000103	    "classifications"
+L00000104	  ],
+L00000105	  "type": "object"
+L00000106	}

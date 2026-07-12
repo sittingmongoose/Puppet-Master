@@ -1,0 +1,102 @@
+{
+  "audit_id": "audit-20260710-005-plan-assurance-model-lanes-fresh-agent-exhaustive",
+  "schema_version": "external-research-sprint-native-capture-v1",
+  "sprint_id": "sprint-wave-0001",
+  "retry_namespace": "retry-attempt-0002",
+  "attempt_id": "attempt-0002",
+  "capture_basis": "codex_app_read_thread_after_all_children_and_controller_terminal",
+  "controller_thread_id": "019f5078-6501-7223-b52f-2251010bdc41",
+  "controller_thread_state": "idle",
+  "controller_turn_id": "019f5235-0c1e-7b81-8a0f-e80dbec9f03e",
+  "controller_turn_status": "completed",
+  "controller_turn_error": null,
+  "leaves": [
+    {
+      "assignment_id": "ER-0001",
+      "native_child_thread_id": "019f5239-09b8-7241-b02a-1243771430de",
+      "native_child_turn_id": "019f5239-0b19-72b1-b7eb-7d79230f9fb8",
+      "agent_path": "/root/a005_external_research_sprint_0001_attempt_0002_terminal",
+      "native_child_thread_state": "notLoaded",
+      "native_child_turn_status": "completed",
+      "native_child_turn_error": null,
+      "terminal_response_prefix": "PMR1"
+    },
+    {
+      "assignment_id": "ER-0002",
+      "native_child_thread_id": "019f5239-07c0-7990-8b10-fd2a18db9385",
+      "native_child_turn_id": "019f5239-086d-7242-ad56-872e081f4765",
+      "agent_path": "/root/a005_external_research_sprint_0001_attempt_0003_terminal",
+      "native_child_thread_state": "notLoaded",
+      "native_child_turn_status": "completed",
+      "native_child_turn_error": null,
+      "terminal_response_prefix": "PMR1"
+    },
+    {
+      "assignment_id": "ER-0003",
+      "native_child_thread_id": "019f5239-0873-7cc2-a157-907a7bb8212c",
+      "native_child_turn_id": "019f5239-09ab-73d1-9bb5-e2c425262ec8",
+      "agent_path": "/root/a005_external_research_sprint_0001_attempt_0004_terminal",
+      "native_child_thread_state": "notLoaded",
+      "native_child_turn_status": "completed",
+      "native_child_turn_error": null,
+      "terminal_response_prefix": "PMR1"
+    },
+    {
+      "assignment_id": "ER-0004",
+      "native_child_thread_id": "019f5239-0b29-7ab2-9359-3add39e61c73",
+      "native_child_turn_id": "019f5239-0d4a-7d42-a179-926c2fceaf3a",
+      "agent_path": "/root/a005_external_research_sprint_0001_attempt_0005_terminal",
+      "native_child_thread_state": "notLoaded",
+      "native_child_turn_status": "completed",
+      "native_child_turn_error": null,
+      "terminal_response_prefix": "PMR1"
+    },
+    {
+      "assignment_id": "ER-0005",
+      "native_child_thread_id": "019f5239-0d55-7df2-ab47-96c5f7847149",
+      "native_child_turn_id": "019f5239-0feb-7853-ace2-bd49f9eb069d",
+      "agent_path": "/root/a005_external_research_sprint_0001_attempt_0006_terminal",
+      "native_child_thread_state": "notLoaded",
+      "native_child_turn_status": "completed",
+      "native_child_turn_error": null,
+      "terminal_response_prefix": "PMR1"
+    },
+    {
+      "assignment_id": "ER-0006",
+      "native_child_thread_id": "019f5239-1083-7e82-b814-15fba34f6a6f",
+      "native_child_turn_id": "019f5239-2517-71b2-bfa9-ae94316a12ae",
+      "agent_path": "/root/a005_external_research_sprint_0001_attempt_0007_terminal",
+      "native_child_thread_state": "notLoaded",
+      "native_child_turn_status": "completed",
+      "native_child_turn_error": null,
+      "terminal_response_prefix": "PMR1"
+    },
+    {
+      "assignment_id": "ER-0007",
+      "native_child_thread_id": "019f5240-5bb3-7770-9b48-3e8172423c5f",
+      "native_child_turn_id": "019f5240-635e-7bc3-a013-b370fdf876f5",
+      "agent_path": "/root/a005_external_research_sprint_0001_attempt_0008_terminal",
+      "native_child_thread_state": "notLoaded",
+      "native_child_turn_status": "completed",
+      "native_child_turn_error": null,
+      "terminal_response_prefix": "PMR1"
+    },
+    {
+      "assignment_id": "ER-0008",
+      "native_child_thread_id": "019f5240-b845-7752-816b-5a22723ce5b9",
+      "native_child_turn_id": "019f5240-b947-7713-81bc-a2794772e125",
+      "agent_path": "/root/a005_external_research_sprint_0001_attempt_0009_terminal",
+      "native_child_thread_state": "notLoaded",
+      "native_child_turn_status": "completed",
+      "native_child_turn_error": null,
+      "terminal_response_prefix": "PMR1"
+    }
+  ],
+  "counts": {
+    "leaves": 8,
+    "unique_native_child_threads": 8,
+    "unique_native_child_turns": 8,
+    "completed_turns": 8,
+    "pmr1_terminals": 8
+  }
+}

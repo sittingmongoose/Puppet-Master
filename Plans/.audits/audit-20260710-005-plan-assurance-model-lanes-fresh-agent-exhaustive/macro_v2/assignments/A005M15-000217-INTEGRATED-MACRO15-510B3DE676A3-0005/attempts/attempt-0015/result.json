@@ -1,0 +1,1641 @@
+{
+  "assignment_id": "A005M15-000217-INTEGRATED-MACRO15-510B3DE676A3-0005",
+  "attempt_id": "attempt-0015",
+  "audit_id": "audit-20260710-005-plan-assurance-model-lanes-fresh-agent-exhaustive",
+  "coverage": {
+    "all_micro_windows_reviewed": true,
+    "all_source_lines_reviewed": true,
+    "all_source_units_accounted": true,
+    "both_exact_and_adversarial_lenses_applied": true,
+    "dimensions_checked": [
+      "behavior",
+      "capabilities",
+      "inputs_outputs",
+      "contracts",
+      "states_transitions",
+      "authority",
+      "ownership",
+      "consumers",
+      "gui_truth",
+      "failures_recovery",
+      "security_privacy",
+      "propagation",
+      "operations",
+      "scale_performance",
+      "compatibility_migration",
+      "acceptance_oracles",
+      "builder_discretion",
+      "ambiguity_unknowns",
+      "missing_callers_consumers",
+      "invalid_states_transitions",
+      "concurrency_races",
+      "partial_failure",
+      "recovery_rollback",
+      "authority_boundaries",
+      "privacy_data_lifecycle",
+      "untrusted_inputs",
+      "gui_misleading_states",
+      "offline_network_loss",
+      "scale_limits",
+      "accessibility",
+      "localization",
+      "observability_support",
+      "destructive_actions",
+      "cross_document_seams",
+      "test_falsifiability",
+      "unknown_unknowns"
+    ]
+  },
+  "items": [
+    {
+      "builder_discretion": true,
+      "confidence": 0.96,
+      "dimensions": [
+        "capabilities",
+        "contracts",
+        "failures_recovery",
+        "partial_failure",
+        "recovery_rollback",
+        "cross_document_seams"
+      ],
+      "evidence": [
+        {
+          "exact_quote": "canonical_text: Enhancement coverage preserves export from seglog or JSONL mirror, embedded redb read-replica non-applicability, per-project seglog default behavior, event schema registry ownership, and optional streaming projector correctness boundaries.",
+          "line_end": 13052,
+          "line_start": 13052,
+          "path": "Plans/storage-plan.md",
+          "source_sha256": "66d19f8d241e488ca19a0f824c24ad28d6bdd89a72abd83bb949b77c234775a1"
+        }
+      ],
+      "gap_kind": "missing_failure_recovery_contract",
+      "impact": "Implementations can disagree about duplicate export rows, replica staleness, and retry authority.",
+      "item_id": "A005M15-I001",
+      "item_type": "gap",
+      "severity": "medium",
+      "source_unit_refs": [
+        "PLANUNIT:SP-183",
+        "SEMANTIC:PLANUNIT:SP-183"
+      ],
+      "statement": "SP-183 preserves export from seglog or JSONL mirror, per-project seglog defaults, schema-registry ownership, and optional projector checkpoints, but it does not define idempotency, checkpoint recovery, or consistency when export and projection fail mid-stream.",
+      "title": "Export and replica flow lacks replay failure semantics"
+    },
+    {
+      "builder_discretion": false,
+      "confidence": 0.99,
+      "dimensions": [
+        "behavior",
+        "states_transitions",
+        "operations",
+        "compatibility_migration",
+        "acceptance_oracles"
+      ],
+      "evidence": [
+        {
+          "exact_quote": "canonical_text: The implementation order heading and phases 1-4 remain PlanUnit readiness metadata for seglog foundation, redb/schema, JSONL mirror, and Tantivy chat index build phases, with storage directories, namespaces, checkpoints, and exit criteria preserved without creating WorkNodes.",
+          "line_end": 13117,
+          "line_start": 13117,
+          "path": "Plans/storage-plan.md",
+          "source_sha256": "66d19f8d241e488ca19a0f824c24ad28d6bdd89a72abd83bb949b77c234775a1"
+        }
+      ],
+      "gap_kind": "none_explicit_contract",
+      "impact": "Builders have a stable dependency shape without confusing planning metadata for runtime tasks.",
+      "item_id": "A005M15-I002",
+      "item_type": "contract",
+      "severity": "info",
+      "source_unit_refs": [
+        "PLANUNIT:SP-184",
+        "SEMANTIC:PLANUNIT:SP-184"
+      ],
+      "statement": "SP-184 fixes the backend implementation sequence as seglog, redb/schema, JSONL projection, and Tantivy indexing and explicitly keeps that sequence as readiness metadata rather than executable work.",
+      "title": "Storage build phases are ordered readiness metadata"
+    },
+    {
+      "builder_discretion": true,
+      "confidence": 0.95,
+      "dimensions": [
+        "gui_truth",
+        "failures_recovery",
+        "gui_misleading_states",
+        "observability_support",
+        "test_falsifiability"
+      ],
+      "evidence": [
+        {
+          "exact_quote": "canonical_text: Phases 5-6 preserve analytics scan and rollups plus chat, editor, and Usage wiring expectations, including tool_usage, p50/p95/error_count, redb rollups, Usage/dashboard reads, usage.event, run.completed, and end-to-end visible flow.",
+          "line_end": 13192,
+          "line_start": 13192,
+          "path": "Plans/storage-plan.md",
+          "source_sha256": "66d19f8d241e488ca19a0f824c24ad28d6bdd89a72abd83bb949b77c234775a1"
+        }
+      ],
+      "gap_kind": "gui_degraded_state_unspecified",
+      "impact": "Usage can look current while projectors or scans are delayed, producing misleading GUI truth.",
+      "item_id": "A005M15-I003",
+      "item_type": "gap",
+      "severity": "medium",
+      "source_unit_refs": [
+        "PLANUNIT:SP-185",
+        "SEMANTIC:PLANUNIT:SP-185"
+      ],
+      "statement": "SP-185 requires analytics rollups and end-to-end Chat, editor, and Usage wiring, but it does not state how stale, partial, delayed, or failed rollups are represented to the user.",
+      "title": "Usage wiring omits visible degraded-state rules"
+    },
+    {
+      "builder_discretion": false,
+      "confidence": 0.99,
+      "dimensions": [
+        "contracts",
+        "states_transitions",
+        "invalid_states_transitions",
+        "operations",
+        "acceptance_oracles"
+      ],
+      "evidence": [
+        {
+          "exact_quote": "- Projectors must not start until redb is open and checkpoints namespace exists.",
+          "line_end": 13305,
+          "line_start": 13305,
+          "path": "Plans/storage-plan.md",
+          "source_sha256": "66d19f8d241e488ca19a0f824c24ad28d6bdd89a72abd83bb949b77c234775a1"
+        }
+      ],
+      "gap_kind": "none_explicit_contract",
+      "impact": "The ordering prevents invalid startup states and writes into unavailable namespaces.",
+      "item_id": "A005M15-I004",
+      "item_type": "contract",
+      "severity": "high",
+      "source_unit_refs": [
+        "PLANUNIT:SP-186",
+        "SEMANTIC:PLANUNIT:SP-186"
+      ],
+      "statement": "SP-186 prohibits projectors before redb and checkpoints exist and prohibits analytics scanning before rollups and its checkpoint key exist.",
+      "title": "Projector startup dependency gates are explicit"
+    },
+    {
+      "builder_discretion": true,
+      "confidence": 0.97,
+      "dimensions": [
+        "states_transitions",
+        "concurrency_races",
+        "partial_failure",
+        "recovery_rollback",
+        "authority_boundaries",
+        "offline_network_loss"
+      ],
+      "evidence": [
+        {
+          "exact_quote": "canonical_text: Startup order resolves app data root, probes durable-store safety including unsafe-filesystem/NFS posture, derives lock-path, acquires pm.lock before writers, enters read-only mode if held, opens stores and projectors in order, and routes fallback metadata to safe local storage while preserving logical-root lineage and diagnostics.",
+          "line_end": 13321,
+          "line_start": 13321,
+          "path": "Plans/storage-plan.md",
+          "source_sha256": "66d19f8d241e488ca19a0f824c24ad28d6bdd89a72abd83bb949b77c234775a1"
+        }
+      ],
+      "gap_kind": "fallback_transition_and_reconciliation_unspecified",
+      "impact": "A crash or filesystem recovery can leave divergent metadata, multiple perceived writers, or data stranded in fallback storage.",
+      "item_id": "A005M15-I005",
+      "item_type": "gap",
+      "severity": "high",
+      "source_unit_refs": [
+        "PLANUNIT:SP-187",
+        "SEMANTIC:PLANUNIT:SP-187"
+      ],
+      "statement": "SP-187 defines locking, read-only fallback, safe local fallback, and startup diagnostics, but it does not define atomic transitions, split-brain prevention, or reconciliation from fallback storage back to the logical root.",
+      "title": "Durable-store fallback lacks reconciliation protocol"
+    },
+    {
+      "builder_discretion": true,
+      "confidence": 0.98,
+      "dimensions": [
+        "failures_recovery",
+        "concurrency_races",
+        "recovery_rollback",
+        "destructive_actions",
+        "acceptance_oracles"
+      ],
+      "evidence": [
+        {
+          "exact_quote": "canonical_text: Regex-index startup recovery scans regex_index directories after project context, selects and validates gen-{N} candidates, verifies index_meta, checksums, lookup.bin and git anchors, creates IndexSnapshot when ready, serves raw ripgrep on no_index or corrupt snapshots, and deletes corrupt/orphaned generations during recovery.",
+          "line_end": 13388,
+          "line_start": 13388,
+          "path": "Plans/storage-plan.md",
+          "source_sha256": "66d19f8d241e488ca19a0f824c24ad28d6bdd89a72abd83bb949b77c234775a1"
+        }
+      ],
+      "gap_kind": "destructive_recovery_safety_unspecified",
+      "impact": "A recoverable or concurrently publishing generation could be destroyed, forcing unnecessary full rebuild or losing the last usable snapshot.",
+      "item_id": "A005M15-I006",
+      "item_type": "gap",
+      "severity": "high",
+      "source_unit_refs": [
+        "PLANUNIT:SP-188",
+        "SEMANTIC:PLANUNIT:SP-188"
+      ],
+      "statement": "SP-188 permits deletion of corrupt or orphaned generations during recovery but does not define a quarantine period, ownership check, concurrent-builder exclusion, or rollback proof before destructive cleanup.",
+      "title": "Regex recovery deletion has no quarantine or rollback oracle"
+    },
+    {
+      "builder_discretion": true,
+      "confidence": 0.98,
+      "dimensions": [
+        "states_transitions",
+        "concurrency_races",
+        "partial_failure",
+        "recovery_rollback",
+        "operations"
+      ],
+      "evidence": [
+        {
+          "exact_quote": "canonical_text: Shutdown signals projectors, cancels in-flight regex builds, flushes and closes seglog, closes redb, releases the active durable-store lock only after final writer flush, and leaves valid regex snapshots and reusable remote cache state in place.",
+          "line_end": 13451,
+          "line_start": 13451,
+          "path": "Plans/storage-plan.md",
+          "source_sha256": "66d19f8d241e488ca19a0f824c24ad28d6bdd89a72abd83bb949b77c234775a1"
+        }
+      ],
+      "gap_kind": "partial_shutdown_contract_missing",
+      "impact": "A failed shutdown can release or retain the lock incorrectly, lose acknowledged events, or leave recovery unable to distinguish clean from unclean close.",
+      "item_id": "A005M15-I007",
+      "item_type": "gap",
+      "severity": "high",
+      "source_unit_refs": [
+        "PLANUNIT:SP-189",
+        "SEMANTIC:PLANUNIT:SP-189"
+      ],
+      "statement": "SP-189 orders projector stop, build cancellation, seglog flush, redb close, and lock release, but it does not specify timeout, fsync durability, cancellation races, or what state is recorded when any close step fails.",
+      "title": "Shutdown has no timeout and partial-flush outcome contract"
+    },
+    {
+      "builder_discretion": true,
+      "confidence": 0.97,
+      "dimensions": [
+        "contracts",
+        "concurrency_races",
+        "partial_failure",
+        "recovery_rollback",
+        "authority"
+      ],
+      "evidence": [
+        {
+          "exact_quote": "canonical_text: Concurrency rules keep seglog a single-writer stream, regex-index publication single-writer per project with ArcSwap reader snapshots, and compatibility prompt/session files such as kv.json or prompt-history.jsonl protected against last-write-wins overwrite unless migrated or locked with lineage and conflict evidence.",
+          "line_end": 13507,
+          "line_start": 13507,
+          "path": "Plans/storage-plan.md",
+          "source_sha256": "66d19f8d241e488ca19a0f824c24ad28d6bdd89a72abd83bb949b77c234775a1"
+        }
+      ],
+      "gap_kind": "concurrency_lock_recovery_unspecified",
+      "impact": "Different builders can satisfy the prose with incompatible locking and recovery behavior, risking silent prompt or session history loss.",
+      "item_id": "A005M15-I008",
+      "item_type": "gap",
+      "severity": "high",
+      "source_unit_refs": [
+        "PLANUNIT:SP-190",
+        "SEMANTIC:PLANUNIT:SP-190"
+      ],
+      "statement": "SP-190 forbids last-write-wins compatibility state and requires migration or locking, but it leaves lock lease, stale-lock recovery, atomic-rename durability, and conflict-resolution authority unspecified.",
+      "title": "Multi-instance state protection lacks crash-lock semantics"
+    },
+    {
+      "builder_discretion": false,
+      "confidence": 0.99,
+      "dimensions": [
+        "behavior",
+        "states_transitions",
+        "failures_recovery",
+        "operations",
+        "acceptance_oracles"
+      ],
+      "evidence": [
+        {
+          "exact_quote": "canonical_text: First-run storage initialization creates missing storage directories, creates the first seglog segment on append, initializes redb schema_version/meta namespace, treats missing projector checkpoints as start-from-beginning, and leaves empty seglog projectors with no work.",
+          "line_end": 13569,
+          "line_start": 13569,
+          "path": "Plans/storage-plan.md",
+          "source_sha256": "66d19f8d241e488ca19a0f824c24ad28d6bdd89a72abd83bb949b77c234775a1"
+        }
+      ],
+      "gap_kind": "none_explicit_behavior",
+      "impact": "The contract avoids inventing data during empty-state startup and gives deterministic initial offsets.",
+      "item_id": "A005M15-I009",
+      "item_type": "behavior",
+      "severity": "low",
+      "source_unit_refs": [
+        "PLANUNIT:SP-191",
+        "SEMANTIC:PLANUNIT:SP-191"
+      ],
+      "statement": "SP-191 creates storage directories and redb metadata on first use, creates the first seglog segment on append, treats absent checkpoints as beginning-of-log, and performs no projector work for an empty log.",
+      "title": "First-run initialization is idempotent and lazy"
+    },
+    {
+      "builder_discretion": true,
+      "confidence": 0.99,
+      "dimensions": [
+        "inputs_outputs",
+        "contracts",
+        "concurrency_races",
+        "partial_failure",
+        "recovery_rollback",
+        "test_falsifiability"
+      ],
+      "evidence": [
+        {
+          "exact_quote": "canonical_text: When the analytics scan checkpoint is missing, storage scans from seq 0, paginates large seglogs in 1000-event batches, yields between batches, writes analytics:scan_checkpoint to last processed seq, resumes subsequent runs from the checkpoint, and preserves analytics.scan_batch_size default 1000.",
+          "line_end": 13628,
+          "line_start": 13628,
+          "path": "Plans/storage-plan.md",
+          "source_sha256": "66d19f8d241e488ca19a0f824c24ad28d6bdd89a72abd83bb949b77c234775a1"
+        }
+      ],
+      "gap_kind": "checkpoint_rollup_atomicity_missing",
+      "impact": "A crash between rollup writes and checkpoint advancement can double-count or skip usage on retry.",
+      "item_id": "A005M15-I010",
+      "item_type": "gap",
+      "severity": "high",
+      "source_unit_refs": [
+        "PLANUNIT:SP-192",
+        "SEMANTIC:PLANUNIT:SP-192"
+      ],
+      "statement": "SP-192 fixes scan origin, batch size, yielding, and resume position, but it does not say whether rollup writes and analytics:scan_checkpoint commit atomically or how partial batches are deduplicated.",
+      "title": "Analytics batch checkpoint atomicity is unspecified"
+    },
+    {
+      "builder_discretion": true,
+      "confidence": 0.96,
+      "dimensions": [
+        "acceptance_oracles",
+        "scale_performance",
+        "concurrency_races",
+        "partial_failure",
+        "test_falsifiability"
+      ],
+      "evidence": [
+        {
+          "exact_quote": "canonical_text: The testing strategy preserves phase-specific unit and integration verification for data root resolution, seglog append/readback, redb namespaces, JSONL mirror, Tantivy chat index, analytics rollups, and end-to-end chat/editor/Usage flow as PlanUnit validation metadata only.",
+          "line_end": 13683,
+          "line_start": 13683,
+          "path": "Plans/storage-plan.md",
+          "source_sha256": "66d19f8d241e488ca19a0f824c24ad28d6bdd89a72abd83bb949b77c234775a1"
+        }
+      ],
+      "gap_kind": "adversarial_acceptance_oracles_missing",
+      "impact": "A nominal test suite can pass while the most consequential recovery and concurrency contracts remain unfalsified.",
+      "item_id": "A005M15-I011",
+      "item_type": "gap",
+      "severity": "medium",
+      "source_unit_refs": [
+        "PLANUNIT:SP-193",
+        "SEMANTIC:PLANUNIT:SP-193"
+      ],
+      "statement": "SP-193 lists positive unit and integration surfaces for each phase, but does not require crash injection, duplicate delivery, corruption, lock contention, large-log performance, or degraded GUI assertions.",
+      "title": "Phase test inventory lacks failure and scale oracles"
+    },
+    {
+      "builder_discretion": false,
+      "confidence": 0.99,
+      "dimensions": [
+        "acceptance_oracles",
+        "test_falsifiability",
+        "inputs_outputs",
+        "states_transitions"
+      ],
+      "evidence": [
+        {
+          "exact_quote": "canonical_text: Backend acceptance criteria preserve phase 1-5 success conditions for storage dirs, seglog readback, redb schema/migrations, JSONL projector resume, Tantivy search, and analytics rollups readable from redb.",
+          "line_end": 13750,
+          "line_start": 13750,
+          "path": "Plans/storage-plan.md",
+          "source_sha256": "66d19f8d241e488ca19a0f824c24ad28d6bdd89a72abd83bb949b77c234775a1"
+        }
+      ],
+      "gap_kind": "none_positive_oracle",
+      "impact": "These conditions provide concrete positive end-state checks for phases 1 through 5.",
+      "item_id": "A005M15-I012",
+      "item_type": "acceptance_oracle",
+      "severity": "info",
+      "source_unit_refs": [
+        "PLANUNIT:SP-194",
+        "SEMANTIC:PLANUNIT:SP-194"
+      ],
+      "statement": "SP-194 requires ordered seglog readback, current redb schema, checkpointed JSONL projection without duplication or skips, searchable Tantivy content, and readable analytics rollups.",
+      "title": "Backend phase acceptance covers ordered persistence outcomes"
+    },
+    {
+      "builder_discretion": true,
+      "confidence": 0.96,
+      "dimensions": [
+        "gui_truth",
+        "failures_recovery",
+        "gui_misleading_states",
+        "offline_network_loss",
+        "acceptance_oracles"
+      ],
+      "evidence": [
+        {
+          "exact_quote": "canonical_text: Phase 6 acceptance preserves the visible end-to-end flow where Chat, editor, and Usage use seglog/redb and thread, message, projectors, search, Usage, and editor state work together.",
+          "line_end": 13814,
+          "line_start": 13814,
+          "path": "Plans/storage-plan.md",
+          "source_sha256": "66d19f8d241e488ca19a0f824c24ad28d6bdd89a72abd83bb949b77c234775a1"
+        }
+      ],
+      "gap_kind": "end_to_end_negative_oracles_missing",
+      "impact": "A broad happy-path test can pass while users receive silent partial results or enabled actions against stale state.",
+      "item_id": "A005M15-I013",
+      "item_type": "gap",
+      "severity": "medium",
+      "source_unit_refs": [
+        "PLANUNIT:SP-195",
+        "SEMANTIC:PLANUNIT:SP-195"
+      ],
+      "statement": "SP-195 asserts that Chat, editor, Usage, search, and projectors work together but does not define visible behavior when one projection is stale, unavailable, or rebuilding.",
+      "title": "End-to-end acceptance has no degraded-path GUI truth"
+    },
+    {
+      "builder_discretion": false,
+      "confidence": 0.98,
+      "dimensions": [
+        "compatibility_migration",
+        "authority",
+        "cross_document_seams"
+      ],
+      "evidence": [
+        {
+          "exact_quote": "canonical_text: Version history rows remain preserved source metadata, including 2026-02-20, 2026-02-22, validation-reference migration, implementation-ready pass details, extended event/redb key history, and original fleshed-out checklist/change notes.",
+          "line_end": 13863,
+          "line_start": 13863,
+          "path": "Plans/storage-plan.md",
+          "source_sha256": "66d19f8d241e488ca19a0f824c24ad28d6bdd89a72abd83bb949b77c234775a1"
+        }
+      ],
+      "gap_kind": "none_lineage_disposition",
+      "impact": "This prevents historical implementation notes from silently gaining present runtime authority.",
+      "item_id": "A005M15-I014",
+      "item_type": "explicit_non_gap",
+      "severity": "info",
+      "source_unit_refs": [
+        "PLANUNIT:SP-196",
+        "SEMANTIC:PLANUNIT:SP-196"
+      ],
+      "statement": "SP-196 classifies historical dates, migrations, checklists, and expanded event/key coverage as preserved source metadata rather than new executable behavior.",
+      "title": "Version history is explicitly lineage metadata"
+    },
+    {
+      "builder_discretion": false,
+      "confidence": 0.99,
+      "dimensions": [
+        "contracts",
+        "compatibility_migration",
+        "propagation",
+        "authority",
+        "acceptance_oracles"
+      ],
+      "evidence": [
+        {
+          "exact_quote": "canonical_text: Scheduler/runtime storage support ingests canonical scheduler, node blocked/unblocked, safe-point, and remediation events while accepting legacy aliases during migration, normalizing to canonical names before projections, and forbidding new legacy event emission.",
+          "line_end": 13933,
+          "line_start": 13933,
+          "path": "Plans/storage-plan.md",
+          "source_sha256": "66d19f8d241e488ca19a0f824c24ad28d6bdd89a72abd83bb949b77c234775a1"
+        }
+      ],
+      "gap_kind": "none_migration_contract",
+      "impact": "This establishes one canonical projection vocabulary while retaining read compatibility.",
+      "item_id": "A005M15-I015",
+      "item_type": "contract",
+      "severity": "high",
+      "source_unit_refs": [
+        "PLANUNIT:SP-197",
+        "SEMANTIC:PLANUNIT:SP-197"
+      ],
+      "statement": "SP-197 accepts both event families during migration, normalizes before projection, and forbids new legacy emission.",
+      "title": "Legacy scheduler events are ingest-only migration aliases"
+    },
+    {
+      "builder_discretion": true,
+      "confidence": 0.98,
+      "dimensions": [
+        "compatibility_migration",
+        "states_transitions",
+        "concurrency_races",
+        "propagation",
+        "cross_document_seams"
+      ],
+      "evidence": [
+        {
+          "exact_quote": "canonical_text: Scheduler runtime redb projections preserve scheduler_pass, blocked_projection, remediation, and safe_point key patterns, while blocked_projection run-scoped keys are superseded by canonical blocked_projection.v1:{project_id}:{node_id} values with blocked reason, family, approval scope, and allowed actions.",
+          "line_end": 14000,
+          "line_start": 14000,
+          "path": "Plans/storage-plan.md",
+          "source_sha256": "66d19f8d241e488ca19a0f824c24ad28d6bdd89a72abd83bb949b77c234775a1"
+        }
+      ],
+      "gap_kind": "projection_key_migration_protocol_missing",
+      "impact": "Restart and mixed-version deployments may surface the wrong blocked state or lose historical sequence information.",
+      "item_id": "A005M15-I016",
+      "item_type": "gap",
+      "severity": "high",
+      "source_unit_refs": [
+        "PLANUNIT:SP-198",
+        "SEMANTIC:PLANUNIT:SP-198"
+      ],
+      "statement": "SP-198 declares the run-scoped blocked key superseded by a project/node key, but it does not define dual-read precedence, backfill, collision handling across runs, or retirement criteria.",
+      "title": "Blocked-projection supersession lacks migration cutover rules"
+    },
+    {
+      "builder_discretion": false,
+      "confidence": 0.99,
+      "dimensions": [
+        "states_transitions",
+        "authority",
+        "compatibility_migration",
+        "recovery_rollback"
+      ],
+      "evidence": [
+        {
+          "exact_quote": "canonical_text: Runtime attempt, safe-point, and queue analysis projections persist scheduler/recovery state without SQLite, resolve run-graph/orchestrator projections by attempt_id, preserve latest blocked state after restart, preserve ready_since_utc during continuous readiness, and keep stale replan_generation attempts queryable but not resumable.",
+          "line_end": 14057,
+          "line_start": 14057,
+          "path": "Plans/storage-plan.md",
+          "source_sha256": "66d19f8d241e488ca19a0f824c24ad28d6bdd89a72abd83bb949b77c234775a1"
+        }
+      ],
+      "gap_kind": "none_state_authority_contract",
+      "impact": "Attempt lineage remains inspectable without allowing obsolete work to regain execution authority.",
+      "item_id": "A005M15-I017",
+      "item_type": "contract",
+      "severity": "high",
+      "source_unit_refs": [
+        "PLANUNIT:SP-199",
+        "SEMANTIC:PLANUNIT:SP-199"
+      ],
+      "statement": "SP-199 binds runtime projections to attempt_id, preserves blocked state across restart and ready_since_utc across continuous readiness, and keeps old-generation attempts queryable but not resumable.",
+      "title": "Attempt-aware projections preserve stale history without resumption"
+    },
+    {
+      "builder_discretion": true,
+      "confidence": 0.99,
+      "dimensions": [
+        "contracts",
+        "states_transitions",
+        "partial_failure",
+        "recovery_rollback",
+        "concurrency_races",
+        "test_falsifiability"
+      ],
+      "evidence": [
+        {
+          "exact_quote": "canonical_text: Persistence safety requires safe-point metadata before mutation-capable attempt execution, explicit local-work-preserved blocked outcomes, and append-only queue-analysis observability data whose canonical pass history remains reconstructable even if later projections summarize it.",
+          "line_end": 14117,
+          "line_start": 14117,
+          "path": "Plans/storage-plan.md",
+          "source_sha256": "66d19f8d241e488ca19a0f824c24ad28d6bdd89a72abd83bb949b77c234775a1"
+        }
+      ],
+      "gap_kind": "durability_barrier_and_idempotency_missing",
+      "impact": "A crash window can begin mutation without a recoverable safe point or append duplicate analysis passes.",
+      "item_id": "A005M15-I018",
+      "item_type": "gap",
+      "severity": "high",
+      "source_unit_refs": [
+        "PLANUNIT:SP-200",
+        "SEMANTIC:PLANUNIT:SP-200"
+      ],
+      "statement": "SP-200 requires safe-point metadata before mutation-capable execution and append-only queue-analysis history, but does not define the durable commit barrier, crash recovery, or idempotency linking execution start to the safe point.",
+      "title": "Safe-point persistence ordering lacks atomicity proof"
+    },
+    {
+      "builder_discretion": false,
+      "confidence": 0.99,
+      "dimensions": [
+        "contracts",
+        "states_transitions",
+        "authority",
+        "acceptance_oracles"
+      ],
+      "evidence": [
+        {
+          "exact_quote": "canonical_text: Attempt counter semantics preserve attempt_count as ground truth, retry_count as derived display data, additive sub-counter decomposition, immutable attempt snapshots for permission/auth/approval/safe-point/revalidation changes, and lineage joins through attempt_id and immutable snapshots.",
+          "line_end": 14172,
+          "line_start": 14172,
+          "path": "Plans/storage-plan.md",
+          "source_sha256": "66d19f8d241e488ca19a0f824c24ad28d6bdd89a72abd83bb949b77c234775a1"
+        }
+      ],
+      "gap_kind": "none_immutable_lineage_contract",
+      "impact": "Historical attempt accounting cannot be rewritten by later authority changes.",
+      "item_id": "A005M15-I019",
+      "item_type": "contract",
+      "severity": "high",
+      "source_unit_refs": [
+        "PLANUNIT:SP-201",
+        "SEMANTIC:PLANUNIT:SP-201"
+      ],
+      "statement": "SP-201 makes attempt_count ground truth, retry_count derived, sub-counters additive, and changed permission/auth/approval/safe-point/revalidation state a new immutable snapshot joined by attempt_id.",
+      "title": "Attempt counters and snapshots have immutable lineage"
+    },
+    {
+      "builder_discretion": false,
+      "confidence": 0.99,
+      "dimensions": [
+        "states_transitions",
+        "authority",
+        "consumers",
+        "compatibility_migration"
+      ],
+      "evidence": [
+        {
+          "exact_quote": "canonical_text: Runtime projection historical state requires run-graph/orchestrator projections to resolve by attempt_id, preserves blocked projections as historical after resolution, keeps ready_since_utc only while continuously ready, and labels older-generation attempts stale and never resumable.",
+          "line_end": 14237,
+          "line_start": 14237,
+          "path": "Plans/storage-plan.md",
+          "source_sha256": "66d19f8d241e488ca19a0f824c24ad28d6bdd89a72abd83bb949b77c234775a1"
+        }
+      ],
+      "gap_kind": "none_historical_state_contract",
+      "impact": "History remains truthful while active execution authority is constrained to current attempts.",
+      "item_id": "A005M15-I020",
+      "item_type": "contract",
+      "severity": "high",
+      "source_unit_refs": [
+        "PLANUNIT:SP-202",
+        "SEMANTIC:PLANUNIT:SP-202"
+      ],
+      "statement": "SP-202 retains blocked rows after resolution, limits ready_since_utc to continuous readiness, and makes old-generation attempts stale and never resumable.",
+      "title": "Historical blocked and stale attempt state remains distinct"
+    },
+    {
+      "builder_discretion": false,
+      "confidence": 0.99,
+      "dimensions": [
+        "gui_truth",
+        "authority_boundaries",
+        "gui_misleading_states",
+        "observability_support",
+        "failures_recovery"
+      ],
+      "evidence": [
+        {
+          "exact_quote": "canonical_text: Projection trust metadata exposes freshness, health, projection time, lag, degraded reason, fallback policy, runtime_artifact terms, labels, direct-record degradation, and action gating before mutation actions.",
+          "line_end": 14292,
+          "line_start": 14292,
+          "path": "Plans/storage-plan.md",
+          "source_sha256": "66d19f8d241e488ca19a0f824c24ad28d6bdd89a72abd83bb949b77c234775a1"
+        }
+      ],
+      "gap_kind": "none_gui_authority_contract",
+      "impact": "Users and consumers can distinguish readable stale data from authoritative actionable state.",
+      "item_id": "A005M15-I021",
+      "item_type": "gui_truth",
+      "severity": "high",
+      "source_unit_refs": [
+        "PLANUNIT:SP-203",
+        "SEMANTIC:PLANUNIT:SP-203"
+      ],
+      "statement": "SP-203 exposes freshness, health, lag, degradation, fallback, and direct-record fallback and requires mutation gating to respect projection trust.",
+      "title": "Projection trust is distinct from action authority"
+    },
+    {
+      "builder_discretion": false,
+      "confidence": 0.99,
+      "dimensions": [
+        "states_transitions",
+        "authority",
+        "recovery_rollback",
+        "contracts"
+      ],
+      "evidence": [
+        {
+          "exact_quote": "canonical_text: Snapshot refresh creates new attempt snapshots when permission, auth, approval, or replan resolution changes, and safe-point restore creates a new attempt record tied back by lineage rather than mutating the originating attempt.",
+          "line_end": 14357,
+          "line_start": 14357,
+          "path": "Plans/storage-plan.md",
+          "source_sha256": "66d19f8d241e488ca19a0f824c24ad28d6bdd89a72abd83bb949b77c234775a1"
+        }
+      ],
+      "gap_kind": "none_immutable_restore_contract",
+      "impact": "Recovery preserves the state that governed each historical attempt.",
+      "item_id": "A005M15-I022",
+      "item_type": "contract",
+      "severity": "high",
+      "source_unit_refs": [
+        "PLANUNIT:SP-204",
+        "SEMANTIC:PLANUNIT:SP-204"
+      ],
+      "statement": "SP-204 creates new attempt snapshots for authority or replan changes and creates a new attempt record for restore instead of mutating the origin.",
+      "title": "Snapshot refresh and safe-point restore append lineage"
+    },
+    {
+      "builder_discretion": true,
+      "confidence": 0.96,
+      "dimensions": [
+        "states_transitions",
+        "authority",
+        "privacy_data_lifecycle",
+        "destructive_actions",
+        "acceptance_oracles"
+      ],
+      "evidence": [
+        {
+          "exact_quote": "canonical_text: Runtime recovery restart history preserves historical, archived, removed, projection freshness/health, lineage refs, worktree/lane ids, owner ids, last seen time, and rules that keep historical/archived/removed distinct while missing worktrees or lanes remain historically inspectable.",
+          "line_end": 14409,
+          "line_start": 14409,
+          "path": "Plans/storage-plan.md",
+          "source_sha256": "66d19f8d241e488ca19a0f824c24ad28d6bdd89a72abd83bb949b77c234775a1"
+        }
+      ],
+      "gap_kind": "historical_record_lifecycle_unspecified",
+      "impact": "Cleanup implementations can erase lineage or expose removed records inconsistently across restart.",
+      "item_id": "A005M15-I023",
+      "item_type": "gap",
+      "severity": "medium",
+      "source_unit_refs": [
+        "PLANUNIT:SP-205",
+        "SEMANTIC:PLANUNIT:SP-205"
+      ],
+      "statement": "SP-205 keeps historical, archived, and removed distinct and inspectable after worktree/lane disappearance, but it does not define transition authority, retention duration, tombstone requirements, or restoration rules.",
+      "title": "Historical archived and removed transitions lack lifecycle oracle"
+    },
+    {
+      "builder_discretion": false,
+      "confidence": 0.99,
+      "dimensions": [
+        "authority",
+        "ownership",
+        "contracts",
+        "cross_document_seams",
+        "security_privacy"
+      ],
+      "evidence": [
+        {
+          "exact_quote": "canonical_text: Permission snapshot storage binds durable permission_snapshot_record keys to immutable attempt_record.permission_snapshot_id references while Permissions_System owns schema/enums/surfaces; storage may cache query fields but must not redefine nested snapshot schema locally.",
+          "line_end": 14472,
+          "line_start": 14472,
+          "path": "Plans/storage-plan.md",
+          "source_sha256": "66d19f8d241e488ca19a0f824c24ad28d6bdd89a72abd83bb949b77c234775a1"
+        }
+      ],
+      "gap_kind": "none_owner_boundary",
+      "impact": "This prevents schema forks and keeps authorization meaning with its canonical owner.",
+      "item_id": "A005M15-I024",
+      "item_type": "authority",
+      "severity": "high",
+      "source_unit_refs": [
+        "PLANUNIT:SP-206",
+        "SEMANTIC:PLANUNIT:SP-206"
+      ],
+      "statement": "SP-206 gives storage durable key/reference ownership but forbids it from redefining the Permissions_System snapshot schema.",
+      "title": "Permissions owns snapshot schema while storage owns binding"
+    },
+    {
+      "builder_discretion": false,
+      "confidence": 0.99,
+      "dimensions": [
+        "contracts",
+        "authority_boundaries",
+        "security_privacy",
+        "acceptance_oracles"
+      ],
+      "evidence": [
+        {
+          "exact_quote": "canonical_text: Safe points and restore points use distinct prefixes, with sp:{run_id}:{node_id}:{attempt_id}:{safe_point_id} for runtime-internal run/node/attempt scope and rp:{project_id}:{restore_point_id} for user-facing project scope; namespaces and queries must not overlap.",
+          "line_end": 14538,
+          "line_start": 14538,
+          "path": "Plans/storage-plan.md",
+          "source_sha256": "66d19f8d241e488ca19a0f824c24ad28d6bdd89a72abd83bb949b77c234775a1"
+        }
+      ],
+      "gap_kind": "none_namespace_contract",
+      "impact": "The rule prevents cross-scope lookup collisions and accidental exposure of internal recovery records as user restore points.",
+      "item_id": "A005M15-I025",
+      "item_type": "contract",
+      "severity": "high",
+      "source_unit_refs": [
+        "PLANUNIT:SP-207",
+        "SEMANTIC:PLANUNIT:SP-207"
+      ],
+      "statement": "SP-207 assigns distinct prefixes and scopes to internal safe points and user-facing restore points and requires query separation.",
+      "title": "Safe-point and restore-point namespaces cannot overlap"
+    },
+    {
+      "builder_discretion": false,
+      "confidence": 0.98,
+      "dimensions": [
+        "authority",
+        "ownership",
+        "consumers",
+        "cross_document_seams",
+        "compatibility_migration"
+      ],
+      "evidence": [
+        {
+          "exact_quote": "canonical_text: Assistant worktree binding storage preserves Source Control as the Git/worktree owner, references the live Orchestrator_Page Source Control boundary instead of a stale numbered anchor, and keeps worktree-binding persistence worktree-first when handing off to Source Control.",
+          "line_end": 14596,
+          "line_start": 14596,
+          "path": "Plans/storage-plan.md",
+          "source_sha256": "66d19f8d241e488ca19a0f824c24ad28d6bdd89a72abd83bb949b77c234775a1"
+        }
+      ],
+      "gap_kind": "none_owner_boundary",
+      "impact": "Storage cannot become a competing Git authority through stale anchors or binding records.",
+      "item_id": "A005M15-I026",
+      "item_type": "authority",
+      "severity": "medium",
+      "source_unit_refs": [
+        "PLANUNIT:SP-208",
+        "SEMANTIC:PLANUNIT:SP-208"
+      ],
+      "statement": "SP-208 makes storage a worktree-first persistence consumer and hands Git/worktree authority to the live Source Control boundary.",
+      "title": "Source Control owns Git and worktree operations"
+    },
+    {
+      "builder_discretion": true,
+      "confidence": 0.97,
+      "dimensions": [
+        "ownership",
+        "contracts",
+        "cross_document_seams",
+        "missing_callers_consumers",
+        "ambiguity_unknowns"
+      ],
+      "evidence": [
+        {
+          "exact_quote": "canonical_text: Web content cache persistence consumes the linked owner contract, preserving two-phase lookup, state vocabulary, per-project 500 MB cache sizing, action skip/read-time behavior, PM-cache precedence, Firecrawl latency-only role, and diff-reuse audit states.",
+          "line_end": 14647,
+          "line_start": 14647,
+          "path": "Plans/storage-plan.md",
+          "source_sha256": "66d19f8d241e488ca19a0f824c24ad28d6bdd89a72abd83bb949b77c234775a1"
+        }
+      ],
+      "gap_kind": "missing_owner_contract_reference",
+      "impact": "Cross-document changes can drift because builders cannot mechanically resolve the authoritative cache vocabulary and policy source from this unit.",
+      "item_id": "A005M15-I027",
+      "item_type": "gap",
+      "severity": "medium",
+      "source_unit_refs": [
+        "PLANUNIT:SP-209",
+        "SEMANTIC:PLANUNIT:SP-209"
+      ],
+      "statement": "SP-209 says storage consumes a linked owner contract and preserves routing, size, TTL, and audit states, but this unit has no preserved ContractRef identifying that owner contract.",
+      "title": "Web-cache owner contract is referenced but not bound"
+    },
+    {
+      "builder_discretion": true,
+      "confidence": 0.98,
+      "dimensions": [
+        "inputs_outputs",
+        "security_privacy",
+        "privacy_data_lifecycle",
+        "partial_failure",
+        "recovery_rollback",
+        "destructive_actions"
+      ],
+      "evidence": [
+        {
+          "exact_quote": "canonical_text: Web cache entries store cache_key, normalized URL, formats, adapter_id, content hash/ref pointer, metadata, fetched/expires/access fields, 500 MB budget, TTL, LRU, per-project/per-operation scope, cache key ordering, and change detection persistence without inlining cached content.",
+          "line_end": 14709,
+          "line_start": 14709,
+          "path": "Plans/storage-plan.md",
+          "source_sha256": "66d19f8d241e488ca19a0f824c24ad28d6bdd89a72abd83bb949b77c234775a1"
+        }
+      ],
+      "gap_kind": "content_ref_data_lifecycle_missing",
+      "impact": "Eviction or crashes can leave dangling refs, leaked content, or records that claim a cache hit without valid bytes.",
+      "item_id": "A005M15-I028",
+      "item_type": "gap",
+      "severity": "high",
+      "source_unit_refs": [
+        "PLANUNIT:SP-210",
+        "SEMANTIC:PLANUNIT:SP-210"
+      ],
+      "statement": "SP-210 defines metadata, budget, TTL, LRU, and a non-inline content_ref, but it does not define pointer integrity, atomic blob/record commit, encryption, orphan collection, corruption recovery, or deletion semantics.",
+      "title": "Web-cache content pointer lifecycle is underspecified"
+    },
+    {
+      "builder_discretion": false,
+      "confidence": 0.99,
+      "dimensions": [
+        "behavior",
+        "contracts",
+        "states_transitions",
+        "untrusted_inputs",
+        "compatibility_migration"
+      ],
+      "evidence": [
+        {
+          "exact_quote": "canonical_text: Web cache lookup is adapter-agnostic and action-free at read time, validates adapter_id after provider selection, always fresh-executes requests with actions while still allowing post-action store, records bypass when max_age_seconds is 0 or store is false, serves hit only within TTL and absent actions/adapter mismatch, and preserves exact cache_state enum values.",
+          "line_end": 14779,
+          "line_start": 14779,
+          "path": "Plans/storage-plan.md",
+          "source_sha256": "66d19f8d241e488ca19a0f824c24ad28d6bdd89a72abd83bb949b77c234775a1"
+        }
+      ],
+      "gap_kind": "none_routing_contract",
+      "impact": "Consumers can distinguish hit, miss, bypass, and expired-for-diff without letting provider caches override PM policy.",
+      "item_id": "A005M15-I029",
+      "item_type": "contract",
+      "severity": "high",
+      "source_unit_refs": [
+        "PLANUNIT:SP-211",
+        "SEMANTIC:PLANUNIT:SP-211"
+      ],
+      "statement": "SP-211 makes read lookup action-free and adapter-agnostic, validates adapter identity after selection, fresh-executes action requests, and constrains cache_state to four values.",
+      "title": "Web-cache lookup and action bypass rules are explicit"
+    },
+    {
+      "builder_discretion": false,
+      "confidence": 0.98,
+      "dimensions": [
+        "ownership",
+        "consumers",
+        "authority",
+        "cross_document_seams"
+      ],
+      "evidence": [
+        {
+          "exact_quote": "canonical_text: The owner/consumer map keeps storage-plan as the owner doc for preserved behavior while cross-doc ownership follows ContractRefs and boundary notes from original text and the Plan Document System/Bootstrap Planning Migration contracts.",
+          "line_end": 14842,
+          "line_start": 14842,
+          "path": "Plans/storage-plan.md",
+          "source_sha256": "66d19f8d241e488ca19a0f824c24ad28d6bdd89a72abd83bb949b77c234775a1"
+        }
+      ],
+      "gap_kind": "none_owner_map",
+      "impact": "The unit establishes where semantic adjudication must occur instead of duplicating owner prose.",
+      "item_id": "A005M15-I030",
+      "item_type": "authority",
+      "severity": "medium",
+      "source_unit_refs": [
+        "PLANUNIT:SP-212",
+        "SEMANTIC:PLANUNIT:SP-212"
+      ],
+      "statement": "SP-212 keeps preserved storage behavior in storage-plan while deferring cross-document ownership to ContractRefs and original boundary notes.",
+      "title": "Storage owner and cross-document consumer boundary is explicit"
+    },
+    {
+      "builder_discretion": false,
+      "confidence": 0.98,
+      "dimensions": [
+        "ownership",
+        "compatibility_migration",
+        "builder_discretion",
+        "cross_document_seams"
+      ],
+      "evidence": [
+        {
+          "exact_quote": "  ownership without inventing new storage record families.",
+          "line_end": 14969,
+          "line_start": 14969,
+          "path": "Plans/storage-plan.md",
+          "source_sha256": "66d19f8d241e488ca19a0f824c24ad28d6bdd89a72abd83bb949b77c234775a1"
+        }
+      ],
+      "gap_kind": "none_negative_constraint",
+      "impact": "Gap repair remains bounded to ownership recovery and cannot create shadow persistence schemas.",
+      "item_id": "A005M15-I031",
+      "item_type": "explicit_non_gap",
+      "severity": "medium",
+      "source_unit_refs": [
+        "PLANUNIT:SP-213",
+        "SEMANTIC:PLANUNIT:SP-213"
+      ],
+      "statement": "SP-213 recovers startup rehydration, artifact-index, lane-cleanup, and bridge precedence ownership from existing units while explicitly forbidding new storage families and retiring allowed_actions[] as a live contract.",
+      "title": "Owner-header recovery cannot invent record families"
+    },
+    {
+      "builder_discretion": true,
+      "confidence": 0.98,
+      "dimensions": [
+        "contracts",
+        "concurrency_races",
+        "partial_failure",
+        "recovery_rollback",
+        "authority",
+        "test_falsifiability"
+      ],
+      "evidence": [
+        {
+          "exact_quote": "  storage-plan owns persistence, replay, and projection boundaries for Goal Runtime durable state, append-only goal event log, completion/degraded/stopped/blocked receipts, child-goal state, recovery state, evidence refs, goal_revision/expected_goal_revision, and retention anchors. Canonical persisted goal events registered by Contracts_V0 are goal.created, goal.scheduled, goal.progressed, goal.tool_check_recorded, goal.updated, goal.replanned, goal.child_status_changed, goal.evidence_captured, goal.verification_decided, goal.receipt_recorded, goal.completed, goal.degraded, goal.stopped, goal.blocked, goal.cancelled, plus Orchestrator GoalRun events goal_run.started, goal_run.replanned, goal_run.blocked, goal_run.certified, goal_run.cancelled, and goal_run.stopped. Storage persists them in an append-only goal_event_log and rebuilds disposable projections goal_state.v1:{project_id}:{goal_id}, goal_receipt.v1:{project_id}:{receipt_id}, goal_blocked_projection.v1:{project_id}:{goal_id}, goal_child_index.v1:{project_id}:{parent_goal_id}, goal_evidence_index.v1:{project_id}:{goal_id}, and goal_run_projection.v1:{project_id}:{goal_run_id}. Goal_Runtime_System owns behavior semantics; Contracts_V0 owns event-name and payload-minimum registration.",
+          "line_end": 15009,
+          "line_start": 15009,
+          "path": "Plans/storage-plan.md",
+          "source_sha256": "66d19f8d241e488ca19a0f824c24ad28d6bdd89a72abd83bb949b77c234775a1"
+        }
+      ],
+      "gap_kind": "cas_conflict_protocol_missing",
+      "impact": "Concurrent goal updates can diverge across clients or be retried into duplicate events without a falsifiable recovery protocol.",
+      "item_id": "A005M15-I032",
+      "item_type": "gap",
+      "severity": "high",
+      "source_unit_refs": [
+        "PLANUNIT:SP-214",
+        "SEMANTIC:PLANUNIT:SP-214"
+      ],
+      "statement": "SP-214 makes goal events append-only and projections rebuildable and requires stale revision writes to be rejected or reconciled by compare-and-swap, but it does not define conflict response shape, retry limits, merge authority, or idempotency keys.",
+      "title": "Goal revision CAS recovery is not operationally defined"
+    },
+    {
+      "builder_discretion": true,
+      "confidence": 0.98,
+      "dimensions": [
+        "inputs_outputs",
+        "contracts",
+        "partial_failure",
+        "recovery_rollback",
+        "privacy_data_lifecycle",
+        "test_falsifiability"
+      ],
+      "evidence": [
+        {
+          "exact_quote": "  storage-plan owns persistence and projection boundaries for GoalRun, WorkGraph, SubagentWave, VerificationCycle, DefectBundle, RepairWorkNode, VerificationReceipt, WorkNodeReceipt, and GoalCompletionReceipt records. Stored VerificationCycle fields preserve verification_cycle_id, target_ref, attempt, status failed | passed | blocked only, typed VerificationFinding details, findings, defect_signatures, finding type, failing check, affected artifact/path/span, root_cause_key, repeated_signature_count, prior repair strategies, repair_strategy, and next_required_action alongside the broader GoalRun status projection. Stored records preserve goal_id, workgraph/worknode refs, GoalRun/WorkNode projection status values ready, running, provisional_success, verifying, failed_verification, repairing, certified, failed, blocked, cancelled, and stopped, defect signature, repair cycle, requested/effective provider/model/account refs, capability_lane, agent_role, write_mode, certification_tier, worktree lease refs, evidence refs, artifact refs, restart/model-switch lineage, and retention anchors. Stored VerificationReceipt fields include verifier identity, findings, defect signatures, passed/failed/skipped validator outputs, repair-cycle refs, and regression checks. Stored WorkNodeReceipt fields include executor identity, input refs, output refs, changed artifacts, validators run, evidence refs, and unresolved risks. Stored GoalCompletionReceipt fields include child receipts, WorkNode receipts, changed artifacts, validator outcomes, authority checks, and final certifier decision. Evidence refs distinguish acceptance criteria, live evidence, tests, diffs, validator outputs, canonical evidence, source evidence, process evidence, and governance evidence. GoalRun replay rebuilds projections from append-only goal_run.* events, goal receipt records, WorkNode receipts, safe-point/source-control receipts, and Executor/Auditor receipt chains; older replan_generation attempts and safe points remain queryable as historical records but are never resumable when superseded.",
+          "line_end": 15086,
+          "line_start": 15086,
+          "path": "Plans/storage-plan.md",
+          "source_sha256": "66d19f8d241e488ca19a0f824c24ad28d6bdd89a72abd83bb949b77c234775a1"
+        }
+      ],
+      "gap_kind": "receipt_chain_integrity_unspecified",
+      "impact": "Partial writes can certify a run with missing child evidence or leave receipt chains unreplayable and over-retained.",
+      "item_id": "A005M15-I033",
+      "item_type": "gap",
+      "severity": "high",
+      "source_unit_refs": [
+        "PLANUNIT:SP-215",
+        "SEMANTIC:PLANUNIT:SP-215"
+      ],
+      "statement": "SP-215 enumerates rich GoalRun, verification, work-node, completion, evidence, and stale-attempt data, but does not define canonical record keys, atomic commit ordering across linked receipts, referential integrity repair, or retention/redaction per evidence class.",
+      "title": "Receipt-chain persistence lacks atomic chain and retention rules"
+    },
+    {
+      "builder_discretion": true,
+      "confidence": 0.97,
+      "dimensions": [
+        "states_transitions",
+        "concurrency_races",
+        "partial_failure",
+        "recovery_rollback",
+        "authority_boundaries",
+        "cross_document_seams"
+      ],
+      "evidence": [
+        {
+          "exact_quote": "canonical_text: 'PlanningRun owns source pack identity, project and work-intent context, thread group, global planning ledger, dynamic topic map, topic threads, topic plan drafts, amendments, invalidations, audit cycles, final plan pack, status, hashes, and handoff events. Planning Wizard child-thread records persist thread_type planning_wizard, thread_role, and Planning Run membership so intake, topic, final_integration, audit_review, and final_review conversations stay one typed thread family rather than unrelated top-level thread types. PlanCompileRun persists stage, cursor, bounded worklists, assignment receipts, source hashes, currentness status, blockers, repairs, artifacts, retries, cancellation, supersession, and exact next action across context and process restarts. After Activation Decision accepts the certified graph, Executor materializes canonical WorkNodeRecord objects from accepted WorkNodeRequests and emits materialization receipts. WorkNodeRecord includes worknode_id, goal_run_id, workgraph_id and revision, source_request_id, source PlanUnit and acceptance refs, objective, surfaces, typed readiness predicates, lifecycle, attempts and retries, authority, model, tests, repository/worktree/safe-point",
+          "line_end": 15209,
+          "line_start": 15209,
+          "path": "Plans/storage-plan.md",
+          "source_sha256": "66d19f8d241e488ca19a0f824c24ad28d6bdd89a72abd83bb949b77c234775a1"
+        }
+      ],
+      "gap_kind": "planning_materialization_atomicity_missing",
+      "impact": "Restart or concurrent activation can produce duplicated WorkNodes, stale currentness, or a compile cursor that advances without durable receipts.",
+      "item_id": "A005M15-I034",
+      "item_type": "gap",
+      "severity": "high",
+      "source_unit_refs": [
+        "PLANUNIT:SP-216",
+        "SEMANTIC:PLANUNIT:SP-216"
+      ],
+      "statement": "SP-216 spans PlanningRun, compile cursor, audit findings, activation, WorkNode materialization, retries, cancellation, supersession, and restart currentness, but does not define which records commit together, how idempotency races resolve, or which owner repairs partial materialization.",
+      "title": "Planning runtime mega-record omits transactional boundaries"
+    },
+    {
+      "builder_discretion": true,
+      "confidence": 0.97,
+      "dimensions": [
+        "security_privacy",
+        "privacy_data_lifecycle",
+        "authority_boundaries",
+        "destructive_actions",
+        "cross_document_seams"
+      ],
+      "evidence": [
+        {
+          "exact_quote": "  storage-plan owns DiscoveryIndex persistence, cache identity, lifecycle state, and frecency/history boundaries for native DiscoveryService. Discovery indexes are scoped per project, worktree, and remote identity, with separate canonical_path_identity, identity_scope, display_path, normalization_profile, case_sensitivity, symlink_policy, cache_schema_version, ranking_policy_version, policy_hash, ignore_hash, identity_hash, source_manifest_generation, source_index_generation, and remote_identity when applicable. Warm, reindex, teardown, progress, health, stale, fallback, disabled, unsupported, over_budget, and backpressure states are persisted or projected without merging unrelated projects. Frecency/query/open history is on-device, user-scoped, and project/worktree-local by default; reset/disable controls stop future ranking use for the selected identity without deleting durable redacted discovery receipts by default.",
+          "line_end": 15305,
+          "line_start": 15305,
+          "path": "Plans/storage-plan.md",
+          "source_sha256": "66d19f8d241e488ca19a0f824c24ad28d6bdd89a72abd83bb949b77c234775a1"
+        }
+      ],
+      "gap_kind": "privacy_retention_policy_incomplete",
+      "impact": "A reset may not meet privacy expectations, while aggressive cleanup may destroy required support evidence.",
+      "item_id": "A005M15-I035",
+      "item_type": "gap",
+      "severity": "high",
+      "source_unit_refs": [
+        "PLANUNIT:SP-217",
+        "SEMANTIC:PLANUNIT:SP-217"
+      ],
+      "statement": "SP-217 keeps frecency local and user-scoped, lets users reset or disable ranking use, and retains redacted receipts by default, but it does not define retention duration, erasure exceptions, encryption, multi-user separation, or who can override receipt preservation.",
+      "title": "Discovery history reset has unresolved privacy-retention authority"
+    },
+    {
+      "builder_discretion": false,
+      "confidence": 0.99,
+      "dimensions": [
+        "authority",
+        "security_privacy",
+        "untrusted_inputs",
+        "offline_network_loss",
+        "compatibility_migration",
+        "test_falsifiability"
+      ],
+      "evidence": [
+        {
+          "exact_quote": "  Remote/cache/SSH discovery uses a local DiscoveryService plus SSH remote manifest adapter for MVP. The adapter uses Git-tracked file manifests such as git ls-files when available, or an allowed remote directory walk only inside the authorized remote project root, then normalizes, policy-filters, annotates, and indexes remote entries locally. Cache/index keys derive from normalized remote identity hashes including project_id, remote_kind, host alias or host fingerprint, user/account alias, remote_root, repo_id when available, branch/worktree ref, and index_generation, and must not include secrets or merge unrelated local paths. Exact verification for SSH results reads through the authorized remote identity/path or a provenance-equivalent remote cache entry; it must not verify an unrelated local checkout as if it were the SSH result.",
+          "line_end": 15355,
+          "line_start": 15355,
+          "path": "Plans/storage-plan.md",
+          "source_sha256": "66d19f8d241e488ca19a0f824c24ad28d6bdd89a72abd83bb949b77c234775a1"
+        }
+      ],
+      "gap_kind": "none_remote_authority_contract",
+      "impact": "The contract prevents a convenient local checkout from falsely certifying remote discovery truth.",
+      "item_id": "A005M15-I036",
+      "item_type": "contract",
+      "severity": "high",
+      "source_unit_refs": [
+        "PLANUNIT:SP-218",
+        "SEMANTIC:PLANUNIT:SP-218"
+      ],
+      "statement": "SP-218 constrains remote walking to the authorized root, keeps secrets out of keys, binds cache identity to remote provenance, and requires verification against the remote result or provenance-equivalent cache.",
+      "title": "SSH discovery preserves remote identity and forbids local substitution"
+    },
+    {
+      "builder_discretion": true,
+      "confidence": 0.98,
+      "dimensions": [
+        "concurrency_races",
+        "states_transitions",
+        "partial_failure",
+        "recovery_rollback",
+        "gui_misleading_states",
+        "test_falsifiability"
+      ],
+      "evidence": [
+        {
+          "exact_quote": "  Stale, corrupt, incomplete, or out-of-sync projection state is detected and surfaced; rebuild never rewrites immutable",
+          "line_end": 15408,
+          "line_start": 15408,
+          "path": "Plans/storage-plan.md",
+          "source_sha256": "66d19f8d241e488ca19a0f824c24ad28d6bdd89a72abd83bb949b77c234775a1"
+        }
+      ],
+      "gap_kind": "rebuild_concurrency_protocol_missing",
+      "impact": "A rebuild racing new events can report success while immediately missing rows or applying actions against a mixed-generation projection.",
+      "item_id": "A005M15-I037",
+      "item_type": "gap",
+      "severity": "high",
+      "source_unit_refs": [
+        "PLANUNIT:SP-219",
+        "SEMANTIC:PLANUNIT:SP-219"
+      ],
+      "statement": "SP-219 makes History rebuildable from immutable records, detects stale/corrupt state, and blocks mutable actions while stale, but does not define how rebuilds coordinate with concurrent save, archive, artifact, lineage, and run events.",
+      "title": "History rebuild lacks a concurrency snapshot protocol"
+    },
+    {
+      "builder_discretion": true,
+      "confidence": 0.98,
+      "dimensions": [
+        "security_privacy",
+        "privacy_data_lifecycle",
+        "untrusted_inputs",
+        "destructive_actions",
+        "propagation",
+        "cross_document_seams"
+      ],
+      "evidence": [
+        {
+          "exact_quote": "canonical_text: Teach memory capture is explicit and separate from one-off Teacher-guided instruction. Eligible\n  Teacher answers may offer Save as taught memory; durable records preserve normalized fact, scope selector thread/project/user,\n  source message/thread, secret-safety warning, conflict or supersession state, and user-locked record state. Users\n  can inspect, narrow, supersede, revoke, or unlock records; one-off guidance is not auto-saved and secrets must\n  not be persisted.",
+          "line_end": 15602,
+          "line_start": 15598,
+          "path": "Plans/storage-plan.md",
+          "source_sha256": "66d19f8d241e488ca19a0f824c24ad28d6bdd89a72abd83bb949b77c234775a1"
+        }
+      ],
+      "gap_kind": "taught_memory_data_lifecycle_missing",
+      "impact": "Sensitive instructions may survive revoke or appear in backups, indexes, or receipts despite the visible record being removed.",
+      "item_id": "A005M15-I038",
+      "item_type": "gap",
+      "severity": "high",
+      "source_unit_refs": [
+        "PLANUNIT:SP-220",
+        "SEMANTIC:PLANUNIT:SP-220"
+      ],
+      "statement": "SP-220 forbids auto-save and secret persistence and supports scope, locking, supersession, revocation, and unlock, but does not define secret-detection failure handling, encryption, retention, export, backup propagation, or hard-erasure semantics.",
+      "title": "Taught-memory storage lacks full secret and erasure lifecycle"
+    },
+    {
+      "builder_discretion": true,
+      "confidence": 0.98,
+      "dimensions": [
+        "scale_limits",
+        "partial_failure",
+        "recovery_rollback",
+        "privacy_data_lifecycle",
+        "untrusted_inputs",
+        "test_falsifiability"
+      ],
+      "evidence": [
+        {
+          "exact_quote": "  Inline visualizer v2 persists source fragment, title/type/version, render config, approved bridge metadata,\n  PM-managed state outputs, visible fallback or error state, and replay/re-render lineage scoped by project, thread,\n  message, and visualizer artifact. Reload re-renders from source/config when practical; screenshot or snapshot\n  fallback is stored only when re-render is impractical. PM-managed bridge state uses the namespace\n  `visualizer_state.v1:{project_id}:{thread_id}:{message_id}:{visualizer_artifact_id}`, stores only\n  JSON-serializable values under quota, records the bridge method and schema version that wrote the state, and exposes\n  replay, export, and purge boundaries. Runtime heap, same-origin storage, raw parent localStorage, secrets, and\n  diagnostic payload leaks are never persistence sources.",
+          "line_end": 15733,
+          "line_start": 15726,
+          "path": "Plans/storage-plan.md",
+          "source_sha256": "66d19f8d241e488ca19a0f824c24ad28d6bdd89a72abd83bb949b77c234775a1"
+        }
+      ],
+      "gap_kind": "visualizer_state_quota_migration_purge_unspecified",
+      "impact": "Large or incompatible state can fail nondeterministically on reload, while purge can leave replayable remnants.",
+      "item_id": "A005M15-I039",
+      "item_type": "gap",
+      "severity": "high",
+      "source_unit_refs": [
+        "PLANUNIT:SP-221",
+        "SEMANTIC:PLANUNIT:SP-221"
+      ],
+      "statement": "SP-221 requires scoped JSON state, replay/export/purge, and forbids heap, parent localStorage, and secrets, but it does not define quota values, eviction precedence, schema migration, transactional source/state updates, or purge completion across snapshots.",
+      "title": "Visualizer replay state lacks numeric quota and migration rules"
+    },
+    {
+      "builder_discretion": true,
+      "confidence": 0.98,
+      "dimensions": [
+        "security_privacy",
+        "privacy_data_lifecycle",
+        "states_transitions",
+        "partial_failure",
+        "recovery_rollback",
+        "destructive_actions"
+      ],
+      "evidence": [
+        {
+          "exact_quote": "  Notification storage separates non-secret settings, destination definitions, sound mappings, sound asset manifests,\n  uploaded/imported sound blobs, and delivery attempt receipts. Record keys include `notification_settings.v1:global`,\n  project-scoped settings, `notification_destination.v1:{scope}:{destination_id}`,\n  `notification_sound_mapping.v1:{scope}:{event_category}`, and `sound_asset_manifest.v1:{scope}:{sound_id}`.\n  Destination records include provider_kind, scope, enabled state, display_name, event_category allowlist, quiet/focus\n  policy, rate_limit_profile, idempotency profile, last_test_receipt_ref, and provider-specific profile payloads for\n  Slack, Discord, generic webhook, ntfy, Pushover, and Telegram as defined by CV-298. Webhook and push tokens are stored\n  only as OS credential references; receipts store redacted request and response digests, provider kind, destination id,\n  event id, event category, status class, HTTP status, provider request/message id when available, retry count, next\n  retry time, redaction profile, idempotency key, and secret refs only. Built-in sound manifests include sound_id,\n  built_in/user_uploaded/imported source_kind, display_name, source_url_or_package_ref, license_ref, attribution,\n  version, format, duration_ms, loudness_normalization, sha256, disabled/hidden state, and default event_category\n  mappings.",
+          "line_end": 15801,
+          "line_start": 15789,
+          "path": "Plans/storage-plan.md",
+          "source_sha256": "66d19f8d241e488ca19a0f824c24ad28d6bdd89a72abd83bb949b77c234775a1"
+        }
+      ],
+      "gap_kind": "notification_storage_lifecycle_incomplete",
+      "impact": "Long-lived delivery metadata can expose sensitive communication patterns, and retries or mappings can continue after credentials or sounds are revoked.",
+      "item_id": "A005M15-I040",
+      "item_type": "gap",
+      "severity": "high",
+      "source_unit_refs": [
+        "PLANUNIT:SP-222",
+        "SEMANTIC:PLANUNIT:SP-222"
+      ],
+      "statement": "SP-222 separates secrets into credential refs and specifies destination, receipt, and sound metadata, but it does not define receipt retention, encryption for provider profile payloads, credential-ref revocation propagation, retry terminal states, or transactional soft-delete of referenced sounds.",
+      "title": "Notification receipt retention and provider-payload encryption are unspecified"
+    },
+    {
+      "builder_discretion": true,
+      "confidence": 0.97,
+      "dimensions": [
+        "states_transitions",
+        "authority",
+        "compatibility_migration",
+        "observability_support",
+        "test_falsifiability"
+      ],
+      "evidence": [
+        {
+          "exact_quote": "  DRY Method storage preserves the application setting `app.agent_rules.dry_method_default_guard` as enabled or\n  disabled_by_user with default enabled, plus run/turn receipts carrying `instruction_bundle_ref`,\n  `rules_application_sha256`, `rules_project_sha256`, `dry_method_effective_state`, `dry_method_reason`, and\n  `dry_method_source_refs`. Turning DRY off disables only the default DRY guard and DRY-specific caveat/block behavior;\n  it does not delete receipt provenance or disable explicit instructions, safety, secrets, source authority,\n  governance phase boundaries, permissions, or source-control hygiene.",
+          "line_end": 15882,
+          "line_start": 15877,
+          "path": "Plans/storage-plan.md",
+          "source_sha256": "66d19f8d241e488ca19a0f824c24ad28d6bdd89a72abd83bb949b77c234775a1"
+        }
+      ],
+      "gap_kind": "setting_snapshot_and_migration_unspecified",
+      "impact": "Runs may disagree whether a toggle applies immediately or next turn, weakening reproducibility and support diagnosis.",
+      "item_id": "A005M15-I041",
+      "item_type": "gap",
+      "severity": "medium",
+      "source_unit_refs": [
+        "PLANUNIT:SP-223",
+        "SEMANTIC:PLANUNIT:SP-223"
+      ],
+      "statement": "SP-223 preserves exact enabled/disabled state and provenance hashes, but it does not define when the effective setting is snapshotted, how mid-run changes apply, schema/version migration, or how missing and corrupt receipts affect authority.",
+      "title": "DRY setting receipts lack snapshot timing and migration semantics"
+    },
+    {
+      "builder_discretion": true,
+      "confidence": 0.98,
+      "dimensions": [
+        "compatibility_migration",
+        "concurrency_races",
+        "partial_failure",
+        "recovery_rollback",
+        "states_transitions",
+        "test_falsifiability"
+      ],
+      "evidence": [
+        {
+          "exact_quote": "  PM persists Free Models trusted source state, source resolver outcomes, source refs, release/tag/commit/npm/changelog/source hashes, current and previous imported catalog snapshots, import disposition, check cadence/timestamps, stable internal imported ids, and alias/rename/provider-move mappings. Storage keeps underlying provider/account/model/source identity intact and stores secret material only as credential references, never raw secrets.",
+          "line_end": 15945,
+          "line_start": 15945,
+          "path": "Plans/storage-plan.md",
+          "source_sha256": "66d19f8d241e488ca19a0f824c24ad28d6bdd89a72abd83bb949b77c234775a1"
+        }
+      ],
+      "gap_kind": "import_snapshot_activation_protocol_missing",
+      "impact": "Upstream churn or interrupted imports can destabilize settings and Usage history despite stable internal IDs.",
+      "item_id": "A005M15-I042",
+      "item_type": "gap",
+      "severity": "high",
+      "source_unit_refs": [
+        "PLANUNIT:SP-224",
+        "SEMANTIC:PLANUNIT:SP-224"
+      ],
+      "statement": "SP-224 preserves current and previous catalog snapshots, aliases, source hashes, and credential refs, but it does not define atomic promotion, retention beyond one previous snapshot, alias collision resolution, rollback selection, or behavior when source identities disappear.",
+      "title": "Free-model snapshot retention and rollback selection are unspecified"
+    }
+  ],
+  "model": "gpt-5.6-sol",
+  "phase": "blind_macro_window_review",
+  "reasoning_effort": "xhigh",
+  "schema_version": "macro-review-result-v1",
+  "segments": [
+    {
+      "core_range": [
+        13045,
+        13443
+      ],
+      "covered_source_unit_refs": [
+        "PLANUNIT:SP-183",
+        "PLANUNIT:SP-184",
+        "PLANUNIT:SP-185",
+        "PLANUNIT:SP-186",
+        "PLANUNIT:SP-187",
+        "PLANUNIT:SP-188",
+        "SEMANTIC:PLANUNIT:SP-183",
+        "SEMANTIC:PLANUNIT:SP-184",
+        "SEMANTIC:PLANUNIT:SP-185",
+        "SEMANTIC:PLANUNIT:SP-186",
+        "SEMANTIC:PLANUNIT:SP-187",
+        "SEMANTIC:PLANUNIT:SP-188"
+      ],
+      "item_ids": [
+        "A005M15-I001",
+        "A005M15-I002",
+        "A005M15-I003",
+        "A005M15-I004",
+        "A005M15-I005",
+        "A005M15-I006"
+      ],
+      "reviewed": true,
+      "summary": "Reviewed every core line for SP-183 through SP-188 using exact-behavior and adversarial negative-space lenses; all assigned structural and semantic refs are represented.",
+      "window_id": "WIN-510B3DE676A3-0037"
+    },
+    {
+      "core_range": [
+        13444,
+        13806
+      ],
+      "covered_source_unit_refs": [
+        "PLANUNIT:SP-189",
+        "PLANUNIT:SP-190",
+        "PLANUNIT:SP-191",
+        "PLANUNIT:SP-192",
+        "PLANUNIT:SP-193",
+        "PLANUNIT:SP-194",
+        "SEMANTIC:PLANUNIT:SP-189",
+        "SEMANTIC:PLANUNIT:SP-190",
+        "SEMANTIC:PLANUNIT:SP-191",
+        "SEMANTIC:PLANUNIT:SP-192",
+        "SEMANTIC:PLANUNIT:SP-193",
+        "SEMANTIC:PLANUNIT:SP-194"
+      ],
+      "item_ids": [
+        "A005M15-I007",
+        "A005M15-I008",
+        "A005M15-I009",
+        "A005M15-I010",
+        "A005M15-I011",
+        "A005M15-I012"
+      ],
+      "reviewed": true,
+      "summary": "Reviewed every core line for SP-189 through SP-194 using exact-behavior and adversarial negative-space lenses; all assigned structural and semantic refs are represented.",
+      "window_id": "WIN-510B3DE676A3-0038"
+    },
+    {
+      "core_range": [
+        13807,
+        14164
+      ],
+      "covered_source_unit_refs": [
+        "PLANUNIT:SP-195",
+        "PLANUNIT:SP-196",
+        "PLANUNIT:SP-197",
+        "PLANUNIT:SP-198",
+        "PLANUNIT:SP-199",
+        "PLANUNIT:SP-200",
+        "SEMANTIC:PLANUNIT:SP-195",
+        "SEMANTIC:PLANUNIT:SP-196",
+        "SEMANTIC:PLANUNIT:SP-197",
+        "SEMANTIC:PLANUNIT:SP-198",
+        "SEMANTIC:PLANUNIT:SP-199",
+        "SEMANTIC:PLANUNIT:SP-200"
+      ],
+      "item_ids": [
+        "A005M15-I013",
+        "A005M15-I014",
+        "A005M15-I015",
+        "A005M15-I016",
+        "A005M15-I017",
+        "A005M15-I018"
+      ],
+      "reviewed": true,
+      "summary": "Reviewed every core line for SP-195 through SP-200 using exact-behavior and adversarial negative-space lenses; all assigned structural and semantic refs are represented.",
+      "window_id": "WIN-510B3DE676A3-0039"
+    },
+    {
+      "core_range": [
+        14165,
+        14530
+      ],
+      "covered_source_unit_refs": [
+        "PLANUNIT:SP-201",
+        "PLANUNIT:SP-202",
+        "PLANUNIT:SP-203",
+        "PLANUNIT:SP-204",
+        "PLANUNIT:SP-205",
+        "PLANUNIT:SP-206",
+        "SEMANTIC:PLANUNIT:SP-201",
+        "SEMANTIC:PLANUNIT:SP-202",
+        "SEMANTIC:PLANUNIT:SP-203",
+        "SEMANTIC:PLANUNIT:SP-204",
+        "SEMANTIC:PLANUNIT:SP-205",
+        "SEMANTIC:PLANUNIT:SP-206"
+      ],
+      "item_ids": [
+        "A005M15-I019",
+        "A005M15-I020",
+        "A005M15-I021",
+        "A005M15-I022",
+        "A005M15-I023",
+        "A005M15-I024"
+      ],
+      "reviewed": true,
+      "summary": "Reviewed every core line for SP-201 through SP-206 using exact-behavior and adversarial negative-space lenses; all assigned structural and semantic refs are represented.",
+      "window_id": "WIN-510B3DE676A3-0040"
+    },
+    {
+      "core_range": [
+        14531,
+        14834
+      ],
+      "covered_source_unit_refs": [
+        "PLANUNIT:SP-207",
+        "PLANUNIT:SP-208",
+        "PLANUNIT:SP-209",
+        "PLANUNIT:SP-210",
+        "PLANUNIT:SP-211",
+        "SEMANTIC:PLANUNIT:SP-207",
+        "SEMANTIC:PLANUNIT:SP-208",
+        "SEMANTIC:PLANUNIT:SP-209",
+        "SEMANTIC:PLANUNIT:SP-210",
+        "SEMANTIC:PLANUNIT:SP-211"
+      ],
+      "item_ids": [
+        "A005M15-I025",
+        "A005M15-I026",
+        "A005M15-I027",
+        "A005M15-I028",
+        "A005M15-I029"
+      ],
+      "reviewed": true,
+      "summary": "Reviewed every core line for SP-207 through SP-211 using exact-behavior and adversarial negative-space lenses; all assigned structural and semantic refs are represented.",
+      "window_id": "WIN-510B3DE676A3-0041"
+    },
+    {
+      "core_range": [
+        14835,
+        15201
+      ],
+      "covered_source_unit_refs": [
+        "PLANUNIT:SP-212",
+        "PLANUNIT:SP-213",
+        "PLANUNIT:SP-214",
+        "PLANUNIT:SP-215",
+        "SEMANTIC:PLANUNIT:SP-212",
+        "SEMANTIC:PLANUNIT:SP-213",
+        "SEMANTIC:PLANUNIT:SP-214",
+        "SEMANTIC:PLANUNIT:SP-215"
+      ],
+      "item_ids": [
+        "A005M15-I030",
+        "A005M15-I031",
+        "A005M15-I032",
+        "A005M15-I033"
+      ],
+      "reviewed": true,
+      "summary": "Reviewed every core line for SP-212 through SP-215 using exact-behavior and adversarial negative-space lenses; all assigned structural and semantic refs are represented.",
+      "window_id": "WIN-510B3DE676A3-0042"
+    },
+    {
+      "core_range": [
+        15202,
+        15590
+      ],
+      "covered_source_unit_refs": [
+        "PLANUNIT:SP-216",
+        "PLANUNIT:SP-217",
+        "PLANUNIT:SP-218",
+        "PLANUNIT:SP-219",
+        "SEMANTIC:PLANUNIT:SP-216",
+        "SEMANTIC:PLANUNIT:SP-217",
+        "SEMANTIC:PLANUNIT:SP-218",
+        "SEMANTIC:PLANUNIT:SP-219"
+      ],
+      "item_ids": [
+        "A005M15-I034",
+        "A005M15-I035",
+        "A005M15-I036",
+        "A005M15-I037"
+      ],
+      "reviewed": true,
+      "summary": "Reviewed every core line for SP-216 through SP-219 using exact-behavior and adversarial negative-space lenses; all assigned structural and semantic refs are represented.",
+      "window_id": "WIN-510B3DE676A3-0043"
+    },
+    {
+      "core_range": [
+        15591,
+        15988
+      ],
+      "covered_source_unit_refs": [
+        "PLANUNIT:SP-220",
+        "PLANUNIT:SP-221",
+        "PLANUNIT:SP-222",
+        "PLANUNIT:SP-223",
+        "PLANUNIT:SP-224",
+        "SEMANTIC:PLANUNIT:SP-220",
+        "SEMANTIC:PLANUNIT:SP-221",
+        "SEMANTIC:PLANUNIT:SP-222",
+        "SEMANTIC:PLANUNIT:SP-223",
+        "SEMANTIC:PLANUNIT:SP-224"
+      ],
+      "item_ids": [
+        "A005M15-I038",
+        "A005M15-I039",
+        "A005M15-I040",
+        "A005M15-I041",
+        "A005M15-I042"
+      ],
+      "reviewed": true,
+      "summary": "Reviewed every core line for SP-220 through SP-224 using exact-behavior and adversarial negative-space lenses; all assigned structural and semantic refs are represented.",
+      "window_id": "WIN-510B3DE676A3-0044"
+    }
+  ],
+  "self_attestation": {
+    "no_canonical_writes": true,
+    "no_external_research_during_blind_review": true,
+    "no_peer_result_access": true,
+    "no_prior_audit_access": true,
+    "no_unrelated_source_access": true,
+    "terminal_after_submission": true
+  },
+  "source_binding": {
+    "bundle_id": "MACRO15-510B3DE676A3-0005",
+    "document_path": "Plans/storage-plan.md",
+    "micro_window_ids": [
+      "WIN-510B3DE676A3-0037",
+      "WIN-510B3DE676A3-0038",
+      "WIN-510B3DE676A3-0039",
+      "WIN-510B3DE676A3-0040",
+      "WIN-510B3DE676A3-0041",
+      "WIN-510B3DE676A3-0042",
+      "WIN-510B3DE676A3-0043",
+      "WIN-510B3DE676A3-0044"
+    ],
+    "source_sha256": "66d19f8d241e488ca19a0f824c24ad28d6bdd89a72abd83bb949b77c234775a1"
+  },
+  "status": "completed",
+  "synthesis": {
+    "cross_document_questions": [
+      "Which owner contract is the authoritative source for the web-cache state vocabulary and policy consumed by SP-209?",
+      "What atomic commit and repair protocol joins GoalRun events, WorkNode receipts, verification receipts, completion receipts, and evidence refs across storage and runtime owners?",
+      "Which retention, erasure, encryption, backup, and export rules govern taught memory, discovery history, notification receipts, visualizer replay state, and cached content?",
+      "What single projection-generation or event-cursor protocol prevents History rebuilds and planning materialization from racing concurrent source events?"
+    ],
+    "feature_family_keys": [
+      "storage-phase-lifecycle",
+      "runtime-attempt-safe-point-projections",
+      "web-cache-persistence",
+      "goal-runtime-planning-receipts",
+      "discovery-remote-history",
+      "teach-visualizer-notifications-dry-free-models"
+    ],
+    "research_queries": [
+      "crash-consistent append-only log projector checkpoint atomicity patterns",
+      "transactional outbox receipt-chain integrity and idempotent materialization",
+      "privacy-preserving local memory retention revocation and backup erasure",
+      "generation-based projection rebuild concurrent event ingestion"
+    ]
+  },
+  "task_thread_id": "/root/a005m15_b11_000217_attempt_0015_terminal"
+}
+

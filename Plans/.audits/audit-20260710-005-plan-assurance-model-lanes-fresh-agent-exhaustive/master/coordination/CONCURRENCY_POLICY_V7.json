@@ -1,0 +1,79 @@
+{
+  "audit_id": "audit-20260710-005-plan-assurance-model-lanes-fresh-agent-exhaustive",
+  "schema_version": "audit-concurrency-policy-v7",
+  "status": "ACTIVE_PROSPECTIVE_NEAR_RESET_SPRINT",
+  "effective_date": "2026-07-11",
+  "supersedes_prospectively": "master/coordination/CONCURRENCY_POLICY_V6.json",
+  "prior_policies_mutated": false,
+  "user_authorization": "adjust pace after reporting 35 percent usage remaining late in the current five-hour window",
+  "quota_snapshot": {
+    "elapsed_minutes_since_reset_approx": 248,
+    "remaining_minutes_approx": 52,
+    "remaining_usage_percent": 35,
+    "used_usage_percent": 65,
+    "target_remaining_percent_at_window_end": 2,
+    "additional_usage_points_available_to_target": 33,
+    "target_average_usage_points_per_hour": 38.08,
+    "observed_previous_hour_usage_points_approx": 9,
+    "observed_to_target_rate_ratio": 0.24
+  },
+  "immediate_recovery": {
+    "assignment_count": 2,
+    "assignment_ids": [
+      "ER-0003",
+      "ER-0008"
+    ],
+    "semantic_leaf_cap": 2,
+    "prepared_lineage_policy": "CONCURRENCY_POLICY_V6 remains the immutable policy binding inside the already-started attempt-0005 preparation; V7 governs prospective live concurrency and scheduling only",
+    "launch_condition": "attempt-0005 preparation and independent Luna prelaunch pass the activation-core and per-leaf authorization transaction",
+    "result_required_before_pmr1": true,
+    "cumulative_research_checkpoint_required_after_terminal": true
+  },
+  "scenario_execution_after_research_checkpoint": {
+    "active_semantic_cap": 16,
+    "first_transaction": [
+      "cohort-0001",
+      "cohort-0002"
+    ],
+    "second_transaction": [
+      "cohort-0003",
+      "cohort-0004"
+    ],
+    "assignments_per_cohort": 8,
+    "requirements": [
+      "cumulative independent research checkpoint is exactly 8 of 8",
+      "each cohort has a separate immutable activation and independent gate",
+      "all semantic leaves are fresh direct Sol XHigh identities",
+      "no all-32 atomic activation or launch",
+      "maximum active semantic leaves remains exactly 16"
+    ]
+  },
+  "pipelined_validation": {
+    "no_discretionary_idle_gap": true,
+    "after_first_transaction_terminal": "Luna may independently validate cohort-0001 and cohort-0002 while Sol launches the separately gated cohort-0003 and cohort-0004 transaction",
+    "promotion_before_independent_validation": false,
+    "shared_namespace_writes_allowed": false,
+    "candidate_outputs_remain_zero_credit_until_independently_validated": true
+  },
+  "near_reset_safety": {
+    "completion_safety_reserve_percent": 2,
+    "minimum_estimated_margin_minutes_for_new_sixteen_leaf_transaction": 18,
+    "never_interrupt_in_flight_valid_work": true,
+    "never_launch_work_expected_to_cross_quota_exhaustion": true,
+    "if_margin_is_insufficient": "launch no new semantic transaction; finish deterministic checkpointing only"
+  },
+  "controller_threads": {
+    "sol": "019f4f5e-96c6-7893-8c94-ce2c1b760d6c",
+    "luna": "019f5078-6501-7223-b52f-2251010bdc41",
+    "extra_controllers_authorized": 0
+  },
+  "quality_invariants": {
+    "semantic_scope_reduced": false,
+    "assignment_count_reduced": false,
+    "external_research_requirement_reduced": false,
+    "independent_validation_reduced": false,
+    "identity_or_source_recovery_bypass_authorized": false,
+    "canonical_plan_writes_authorized": false,
+    "immutable_lineage_mutation_authorized": false
+  }
+}

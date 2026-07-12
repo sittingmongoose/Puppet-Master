@@ -1,0 +1,817 @@
+L00002649	  - "Document Writer"
+L00002650	  - "collaborator"
+L00002651	  - "assistant"
+L00002652	  - "general-purpose"
+L00002653	  - "draft workflow outputs"
+L00002654	negative_constraints:
+L00002655	  - "Do not create or require a dedicated core Document Writer handoff."
+L00002656	  - "Do not invent product facts when the supporting canon is incomplete."
+L00002657	owner_hints:
+L00002658	  - Plans/Personas.md
+L00002659	```
+L00002660	
+L00002661	### P-044 - Collaborator Core Persona
+L00002662	
+L00002663	```yaml
+L00002664	plan_unit_id: P-044
+L00002665	unit_type: requirement
+L00002666	status: accepted
+L00002667	owner_doc: Plans/Personas.md
+L00002668	canonical_text: >-
+L00002669	  collaborator is the user-facing planning, clarification, ideation, interview, scope-probe, specification-discovery, and co-shaping Persona for turning rough ideas into clear, complete, testable project intent before document generation, plan handoff, or build handoff.
+L00002670	gui_related: false
+L00002671	gui_classification_reason: This unit defines planning Persona behavior and workflow handoff policy rather than GUI presentation.
+L00002672	split_recommended: false
+L00002673	depends_on:
+L00002674	  - P-031
+L00002675	  - P-043
+L00002676	unblocks: []
+L00002677	acceptance_criteria:
+L00002678	  - collaborator asks targeted questions in digestible batches and keeps asking follow-ups over the flow.
+L00002679	  - collaborator challenges weak, risky, contradictory, or underspecified ideas directly but constructively.
+L00002680	  - explicit user or workflow confirmation is required before document generation, plan handoff, or build handoff.
+L00002681	validation_surfaces:
+L00002682	  - python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits
+L00002683	  - python3 scripts/pm-plan-index.py validate
+L00002684	risk_class: collaborator_persona_scope_drift
+L00002685	reasoning_tier: standard
+L00002686	context_scope: personas_core_catalog
+L00002687	implementation_surfaces:
+L00002688	  - Plans/Personas.md
+L00002689	node_compile_hint:
+L00002690	  mode: requirement
+L00002691	  create_worknodes: false
+L00002692	source_lineage:
+L00002693	  - Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:Personas-S0052
+L00002694	preserved_exact_tokens:
+L00002695	  - "collaborator"
+L00002696	  - "Chain Wizard"
+L00002697	  - "Requirements Doc Builder"
+L00002698	  - "section/thread ledger"
+L00002699	  - "document generation"
+L00002700	negative_constraints:
+L00002701	  - "Requirements drafting and section summaries are workflow outputs, not a handoff to a separate core Document Writer."
+L00002702	stale_retired_dispositions:
+L00002703	  - "Chain Wizard and Requirements Doc Builder are retained here only as legacy source tokens; current persona fit is PRD Builder and Planning Wizard topic/intake conversations."
+L00002704	owner_hints:
+L00002705	  - Plans/Personas.md
+L00002706	```
+L00002707	
+L00002708	### P-045 - Specialty Persona Catalog Scope
+L00002709	
+L00002710	```yaml
+L00002711	plan_unit_id: P-045
+L00002712	unit_type: requirement
+L00002713	status: accepted
+L00002714	owner_doc: Plans/Personas.md
+L00002715	canonical_text: >-
+L00002716	  Specialty Personas are the configurable layer and may be first-party bundled Personas, project-local Personas, global user Personas, imported seed Personas, or future optional template/catalog entries, but they are not protected core built-ins unless listed in the Reserved Personas section.
+L00002717	gui_related: false
+L00002718	gui_classification_reason: This unit defines catalog layering and mutability scope rather than visual presentation.
+L00002719	split_recommended: false
+L00002720	depends_on:
+L00002721	  - P-021
+L00002722	  - P-031
+L00002723	unblocks: []
+L00002724	acceptance_criteria:
+L00002725	  - The SPECIALTY-PERSONAS anchor remains preserved.
+L00002726	  - Specialty Personas remain configurable rather than protected core built-ins by default.
+L00002727	  - Protected core status is limited to entries listed in the Reserved Personas section.
+L00002728	validation_surfaces:
+L00002729	  - python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits
+L00002730	  - python3 scripts/pm-plan-index.py validate
+L00002731	risk_class: specialty_catalog_scope_drift
+L00002732	reasoning_tier: standard
+L00002733	context_scope: personas_specialty_catalog
+L00002734	implementation_surfaces:
+L00002735	  - Plans/Personas.md
+L00002736	node_compile_hint:
+L00002737	  mode: requirement
+L00002738	  create_worknodes: false
+L00002739	source_lineage:
+L00002740	  - Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:Personas-S0053
+L00002741	preserved_exact_tokens:
+L00002742	  - "SPECIALTY-PERSONAS"
+L00002743	  - "Specialty Personas"
+L00002744	  - "first-party bundled Personas"
+L00002745	  - "project-local Personas"
+L00002746	  - "global user Personas"
+L00002747	negative_constraints:
+L00002748	  - "Specialty Personas are not protected core built-ins unless listed in section 6."
+L00002749	owner_hints:
+L00002750	  - Plans/Personas.md
+L00002751	```
+L00002752	
+L00002753	### P-046 - Specialty Mutability And Provider-Native Source Rules
+L00002754	
+L00002755	```yaml
+L00002756	plan_unit_id: P-046
+L00002757	unit_type: constraint
+L00002758	status: accepted
+L00002759	owner_doc: Plans/Personas.md
+L00002760	canonical_text: >-
+L00002761	  First-party bundled specialty Personas may be modified, disabled, and restored to default; user-created and imported specialty Personas may be edited or deleted; provider-native files are seed/import material only, and provider-native tools lists, WebFetch, WebSearch, protocol JSON examples, context-manager steps, KPI/SLA guarantees, polished completion claims, and benchmark model recommendations are migration inputs rather than literal PM built-in guarantees.
+L00002762	gui_related: false
+L00002763	gui_classification_reason: This unit defines catalog mutability, import, provider-source, permissions, and model-boundary behavior rather than GUI presentation.
+L00002764	split_recommended: false
+L00002765	depends_on:
+L00002766	  - P-007
+L00002767	  - P-045
+L00002768	unblocks: []
+L00002769	acceptance_criteria:
+L00002770	  - Provider-native files under .claude/agents, .cursor/agents, .github, or other provider-native directories are seed/import material only.
+L00002771	  - PM adaptation translates provider-native tools lists into PM permission/tool-preference metadata.
+L00002772	  - Specialty model behavior defaults to Auto/inherit unless a PM-owned definition explicitly sets a provider/model preference.
+L00002773	validation_surfaces:
+L00002774	  - python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits
+L00002775	  - python3 scripts/pm-plan-index.py validate
+L00002776	risk_class: provider_native_specialty_source_drift
+L00002777	reasoning_tier: standard
+L00002778	context_scope: personas_specialty_catalog
+L00002779	implementation_surfaces:
+L00002780	  - Plans/Personas.md
+L00002781	node_compile_hint:
+L00002782	  mode: constraint
+L00002783	  create_worknodes: false
+L00002784	source_lineage:
+L00002785	  - Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:Personas-S0054
+L00002786	preserved_exact_tokens:
+L00002787	  - ".claude/agents"
+L00002788	  - ".cursor/agents"
+L00002789	  - ".github"
+L00002790	  - "WebFetch"
+L00002791	  - "WebSearch"
+L00002792	  - "context-manager"
+L00002793	  - "Auto"
+L00002794	negative_constraints:
+L00002795	  - "Provider-native guarantees and external benchmark model recommendations are not literal PM built-in guarantees."
+L00002796	preserved_contractrefs:
+L00002797	  - "ContractRef: ContractName:Plans/Permissions_System.md, ContractName:Plans/Models_System.md, ContractName:Plans/CLI_Bridged_Providers.md"
+L00002798	owner_hints:
+L00002799	  - Plans/Personas.md
+L00002800	```
+L00002801	
+L00002802	### P-047 - First-Party Specialty Browser Groups
+L00002803	
+L00002804	```yaml
+L00002805	plan_unit_id: P-047
+L00002806	unit_type: requirement
+L00002807	status: accepted
+L00002808	owner_doc: Plans/Personas.md
+L00002809	canonical_text: >-
+L00002810	  The first-party specialty browser groups Personas before individual stack/tool refinements, using Review/audit/verification, Design/research/documentation, Implementation generalists, Data/platform/operations/reliability, Language/framework specialists, and Prompt/LLM systems groups with the listed typical role IDs.
+L00002811	gui_related: true
+L00002812	gui_classification_reason: This unit defines the user-visible specialty browser grouping presentation.
+L00002813	split_recommended: false
+L00002814	depends_on:
+L00002815	  - P-045
+L00002816	unblocks: []
+L00002817	acceptance_criteria:
+L00002818	  - First-party specialty groups appear before individual stack/tool refinements.
+L00002819	  - Typical role IDs remain associated with their groups.
+L00002820	  - Prompt and LLM systems includes prompt-engineer.
+L00002821	validation_surfaces:
+L00002822	  - python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits
+L00002823	  - python3 scripts/pm-plan-index.py validate
+L00002824	risk_class: specialty_browser_grouping_drift
+L00002825	reasoning_tier: standard
+L00002826	context_scope: personas_specialty_catalog
+L00002827	implementation_surfaces:
+L00002828	  - Plans/Personas.md
+L00002829	node_compile_hint:
+L00002830	  mode: requirement
+L00002831	  create_worknodes: false
+L00002832	source_lineage:
+L00002833	  - Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:Personas-S0055
+L00002834	preserved_exact_tokens:
+L00002835	  - "Review, audit, and verification"
+L00002836	  - "Design, research, and documentation"
+L00002837	  - "Implementation generalists"
+L00002838	  - "Data, platform, operations, and reliability"
+L00002839	  - "Language and framework specialists"
+L00002840	  - "Prompt and LLM systems"
+L00002841	  - "prompt-engineer"
+L00002842	negative_constraints:
+L00002843	  - "No additional negative constraints beyond the canonical text."
+L00002844	owner_hints:
+L00002845	  - Plans/Personas.md
+L00002846	```
+L00002847	
+L00002848	### P-048 - Specialty Entry Exclusions And Document Writer Guard
+L00002849	
+L00002850	```yaml
+L00002851	plan_unit_id: P-048
+L00002852	unit_type: constraint
+L00002853	status: accepted
+L00002854	owner_doc: Plans/Personas.md
+L00002855	canonical_text: >-
+L00002856	  technical-writer is a specialty/template candidate only and must not recreate document-writer by another name, while project-manager, product-manager, and context-manager are not PM Persona catalog entries because delivery sequencing, product framing, and context/memory behavior belong to orchestration, interview, prompt pipeline, and memory systems.
+L00002857	gui_related: false
+L00002858	gui_classification_reason: This unit defines catalog exclusions and ownership boundaries rather than GUI presentation.
+L00002859	split_recommended: false
+L00002860	depends_on:
+L00002861	  - P-043
+L00002862	  - P-045
+L00002863	  - P-047
+L00002864	unblocks: []
+L00002865	acceptance_criteria:
+L00002866	  - technical-writer remains specialty/template candidate only.
+L00002867	  - document-writer is not recreated by another name.
+L00002868	  - project-manager, product-manager, and context-manager remain outside PM Persona catalog entries.
+L00002869	validation_surfaces:
+L00002870	  - python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits
+L00002871	  - python3 scripts/pm-plan-index.py validate
+L00002872	risk_class: specialty_exclusion_boundary_drift
+L00002873	reasoning_tier: standard
+L00002874	context_scope: personas_specialty_catalog
+L00002875	implementation_surfaces:
+L00002876	  - Plans/Personas.md
+L00002877	node_compile_hint:
+L00002878	  mode: constraint
+L00002879	  create_worknodes: false
+L00002880	source_lineage:
+L00002881	  - Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:Personas-S0055
+L00002882	preserved_exact_tokens:
+L00002883	  - "technical-writer"
+L00002884	  - "document-writer"
+L00002885	  - "project-manager"
+L00002886	  - "product-manager"
+L00002887	  - "context-manager"
+L00002888	negative_constraints:
+L00002889	  - "technical-writer MUST NOT be used to recreate document-writer by another name."
+L00002890	  - "project-manager, product-manager, and context-manager are not PM Persona catalog entries."
+L00002891	owner_hints:
+L00002892	  - Plans/Personas.md
+L00002893	```
+L00002894	
+L00002895	### P-049 - First-Wave Specialty Additions And Future Candidates
+L00002896	
+L00002897	```yaml
+L00002898	plan_unit_id: P-049
+L00002899	unit_type: decision
+L00002900	status: accepted
+L00002901	owner_doc: Plans/Personas.md
+L00002902	canonical_text: >-
+L00002903	  docker-expert, github-actions-expert, graphql-expert, openapi-expert, and postgres-expert are approved first-wave additions to the first-party specialty catalog, while benchmark-derived candidates such as design-system-architect, observability-engineer, threat-modeling-expert, error-detective, incident-responder, dx-optimizer, api-documenter, monorepo-architect, playwright-expert, kubernetes-expert, terraform-expert, prisma-expert, oauth-oidc-expert, jwt-expert, and rest-expert remain future catalog/template candidates until promoted by owner-doc changes.
+L00002904	gui_related: false
+L00002905	gui_classification_reason: This unit records catalog curation decisions rather than GUI presentation.
+L00002906	split_recommended: false
+L00002907	depends_on:
+L00002908	  - P-045
+L00002909	unblocks: []
+L00002910	acceptance_criteria:
+L00002911	  - Approved first-wave additions remain listed exactly.
+L00002912	  - Future candidates are not treated as approved first-party specialties until promoted by owner-doc changes.
+L00002913	  - First-wave additions map to common IDE tasks and clear stack/tool seams.
+L00002914	validation_surfaces:
+L00002915	  - python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits
+L00002916	  - python3 scripts/pm-plan-index.py validate
+L00002917	risk_class: specialty_catalog_promotion_drift
+L00002918	reasoning_tier: standard
+L00002919	context_scope: personas_specialty_catalog
+L00002920	implementation_surfaces:
+L00002921	  - Plans/Personas.md
+L00002922	node_compile_hint:
+L00002923	  mode: decision
+L00002924	  create_worknodes: false
+L00002925	source_lineage:
+L00002926	  - Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:Personas-S0056
+L00002927	preserved_exact_tokens:
+L00002928	  - "docker-expert"
+L00002929	  - "github-actions-expert"
+L00002930	  - "graphql-expert"
+L00002931	  - "openapi-expert"
+L00002932	  - "postgres-expert"
+L00002933	  - "playwright-expert"
+L00002934	  - "oauth-oidc-expert"
+L00002935	negative_constraints:
+L00002936	  - "Future catalog/template candidates are not approved first-wave additions until separately promoted by owner-doc changes."
+L00002937	owner_hints:
+L00002938	  - Plans/Personas.md
+L00002939	```
+L00002940	
+L00002941	### P-050 - Specialty Prompt Shape Normalization
+L00002942	
+L00002943	```yaml
+L00002944	plan_unit_id: P-050
+L00002945	unit_type: requirement
+L00002946	status: accepted
+L00002947	owner_doc: Plans/Personas.md
+L00002948	canonical_text: >-
+L00002949	  PM-native bundled specialty prompts should be small and sharp, with most specialties around 250-500 words, complex cross-stack or strategy specialties around 450-700 words, internal/helper or narrow stack specialties around 180-350 words, and bodies focused on mission, when to use, when not to use, operating posture, response approach, useful heuristics, boundaries, and handoff expectations.
+L00002950	gui_related: false
+L00002951	gui_classification_reason: This unit defines prompt content shape and metadata boundaries rather than visual presentation.
+L00002952	split_recommended: false
+L00002953	depends_on:
+L00002954	  - P-045
+L00002955	  - P-046
+L00002956	unblocks: []
+L00002957	acceptance_criteria:
+L00002958	  - Permission/tool posture belongs mostly in metadata.
+L00002959	  - Hard numeric goals, fake benchmark claims, vendor/version encyclopedias, generic tool lists, and raw JSON communication examples are avoided unless the role truly requires them.
+L00002960	  - Prompt bodies preserve mission, usage, posture, heuristics, boundaries, and handoff expectations.
+L00002961	validation_surfaces:
+L00002962	  - python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits
+L00002963	  - python3 scripts/pm-plan-index.py validate
+L00002964	risk_class: specialty_prompt_bloat_drift
+L00002965	reasoning_tier: standard
+L00002966	context_scope: personas_specialty_catalog
+L00002967	implementation_surfaces:
+L00002968	  - Plans/Personas.md
+L00002969	node_compile_hint:
+L00002970	  mode: requirement
+L00002971	  create_worknodes: false
+L00002972	source_lineage:
+L00002973	  - Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:Personas-S0057
+L00002974	preserved_exact_tokens:
+L00002975	  - "250-500 words"
+L00002976	  - "450-700 words"
+L00002977	  - "180-350 words"
+L00002978	  - "permission/tool posture"
+L00002979	  - "raw JSON communication examples"
+L00002980	negative_constraints:
+L00002981	  - "Do not copy long provider-native source files as PM-native bundled specialty prompts."
+L00002982	  - "Avoid fake benchmark claims and generic tool lists unless the role truly requires them."
+L00002983	owner_hints:
+L00002984	  - Plans/Personas.md
+L00002985	```
+L00002986	
+L00002987	### P-051 - Specialty Auto-Resolution Collision Rules
+L00002988	
+L00002989	```yaml
+L00002990	plan_unit_id: P-051
+L00002991	unit_type: constraint
+L00002992	status: accepted
+L00002993	owner_doc: Plans/Personas.md
+L00002994	canonical_text: >-
+L00002995	  Specialty auto-resolution must be predictable: role/function axis outranks stack axis, operation type outranks repository language hints, review/audit roles outrank implementation roles for validation/governance/review tasks, implementation roles outrank review roles for build/change tasks, framework/tool specialists refine broader roles, fullstack-developer loses to narrower backend/frontend or stack-specific matches when justified, and governance/review/corroboration Personas do not collapse into implementation Personas because repository language hints are strong.
+L00002996	gui_related: false
+L00002997	gui_classification_reason: This unit defines resolver and collision logic rather than GUI presentation.
+L00002998	split_recommended: false
+L00002999	depends_on:
+L00003000	  - P-030
+L00003001	  - P-045
+L00003002	unblocks: []
+L00003003	acceptance_criteria:
+L00003004	  - Role/function and operation axes outrank stack/language hints where specified.
+L00003005	  - Review, audit, validation, governance, build, and change tasks route predictably.
+L00003006	  - Framework/tool specialists refine broader roles and normally replace them only when explicitly requested or strongly matched.
+L00003007	validation_surfaces:
+L00003008	  - python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits
+L00003009	  - python3 scripts/pm-plan-index.py validate
+L00003010	risk_class: specialty_auto_resolution_collision_drift
+L00003011	reasoning_tier: high
+L00003012	context_scope: personas_specialty_resolution
+L00003013	implementation_surfaces:
+L00003014	  - Plans/Personas.md
+L00003015	node_compile_hint:
+L00003016	  mode: constraint
+L00003017	  create_worknodes: false
+L00003018	source_lineage:
+L00003019	  - Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:Personas-S0058
+L00003020	preserved_exact_tokens:
+L00003021	  - "role/function axis"
+L00003022	  - "stack axis"
+L00003023	  - "operation type"
+L00003024	  - "fullstack-developer"
+L00003025	  - "governance/review/corroboration Personas"
+L00003026	negative_constraints:
+L00003027	  - "Governance/review/corroboration Personas do not collapse into implementation Personas merely because repository language hints are strong."
+L00003028	owner_hints:
+L00003029	  - Plans/Personas.md
+L00003030	```
+L00003031	
+L00003032	### P-052 - Specialty Browser Resolution Presentation
+L00003033	
+L00003034	```yaml
+L00003035	plan_unit_id: P-052
+L00003036	unit_type: requirement
+L00003037	status: accepted
+L00003038	owner_doc: Plans/Personas.md
+L00003039	canonical_text: >-
+L00003040	  The specialty browser uses grouping and auto-resolution together: top-level group, specialty within group, optional stack/framework refinement, then project/global override.
+L00003041	gui_related: true
+L00003042	gui_classification_reason: This unit defines user-visible specialty browser ordering and presentation.
+L00003043	split_recommended: false
+L00003044	depends_on:
+L00003045	  - P-047
+L00003046	  - P-051
+L00003047	unblocks: []
+L00003048	acceptance_criteria:
+L00003049	  - Browser presentation starts at the top-level group.
+L00003050	  - Specialty within group and optional stack/framework refinement are represented before project/global override.
+L00003051	  - Browser grouping remains aligned with auto-resolution behavior.
+L00003052	validation_surfaces:
+L00003053	  - python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits
+L00003054	  - python3 scripts/pm-plan-index.py validate
+L00003055	risk_class: specialty_browser_resolution_drift
+L00003056	reasoning_tier: standard
+L00003057	context_scope: personas_specialty_resolution
+L00003058	implementation_surfaces:
+L00003059	  - Plans/Personas.md
+L00003060	node_compile_hint:
+L00003061	  mode: requirement
+L00003062	  create_worknodes: false
+L00003063	source_lineage:
+L00003064	  - Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:Personas-S0058
+L00003065	preserved_exact_tokens:
+L00003066	  - "top-level group"
+L00003067	  - "specialty within group"
+L00003068	  - "optional stack/framework refinement"
+L00003069	  - "project/global override"
+L00003070	negative_constraints:
+L00003071	  - "No additional negative constraints beyond the canonical text."
+L00003072	owner_hints:
+L00003073	  - Plans/Personas.md
+L00003074	```
+L00003075	
+L00003076	### P-001 - Personas Retired Source-Preserving Bridge
+L00003077	
+L00003078	```yaml
+L00003079	plan_unit_id: P-001
+L00003080	unit_type: compatibility_disposition
+L00003081	status: retired
+L00003082	owner_doc: Plans/Personas.md
+L00003083	canonical_text: >-
+L00003084	  P-001 is a retired source-preserving bridge for generated PDS Owner / Consumer Map, PlanUnits, and Migration Coverage audit material. Product prose from Personas-S0001 through Personas-S0058 is covered by fine-grained P-002 through P-052; Personas-S0059, Personas-S0060, and Personas-S0062 are generated structural/audit metadata, and Personas-S0061 is retired bridge lineage. No residual source_preserving_planunit product coverage remains for Plans/Personas.md.
+L00003085	gui_related: false
+L00003086	gui_classification_reason: The live retired bridge is migration/audit metadata only; the historical bridge span preserved GUI-related source tokens in span_map and coverage_map.
+L00003087	split_recommended: false
+L00003088	depends_on:
+L00003089	  - P-002
+L00003090	  - P-003
+L00003091	  - P-004
+L00003092	  - P-005
+L00003093	  - P-006
+L00003094	  - P-007
+L00003095	  - P-008
+L00003096	  - P-009
+L00003097	  - P-010
+L00003098	  - P-011
+L00003099	  - P-012
+L00003100	  - P-013
+L00003101	  - P-014
+L00003102	  - P-015
+L00003103	  - P-016
+L00003104	  - P-017
+L00003105	  - P-018
+L00003106	  - P-019
+L00003107	  - P-020
+L00003108	  - P-021
+L00003109	  - P-022
+L00003110	  - P-023
+L00003111	  - P-024
+L00003112	  - P-025
+L00003113	  - P-026
+L00003114	  - P-027
+L00003115	  - P-028
+L00003116	  - P-029
+L00003117	  - P-030
+L00003118	  - P-031
+L00003119	  - P-032
+L00003120	  - P-033
+L00003121	  - P-034
+L00003122	  - P-035
+L00003123	  - P-036
+L00003124	  - P-037
+L00003125	  - P-038
+L00003126	  - P-039
+L00003127	  - P-040
+L00003128	  - P-041
+L00003129	  - P-042
+L00003130	  - P-043
+L00003131	  - P-044
+L00003132	  - P-045
+L00003133	  - P-046
+L00003134	  - P-047
+L00003135	  - P-048
+L00003136	  - P-049
+L00003137	  - P-050
+L00003138	  - P-051
+L00003139	  - P-052
+L00003140	unblocks: []
+L00003141	acceptance_criteria:
+L00003142	  - P-001 does not override P-002 through P-052 for Personas-S0001 through Personas-S0058.
+L00003143	  - Retired generated bridge and Migration Coverage spans remain available for exact-text audit.
+L00003144	  - Plans/Personas.md has no residual source_preserving_planunit product coverage after this bridge retirement.
+L00003145	  - No WorkNodes, NodeSeeds, executable queues, final node manifests, or production build tasks are created by this disposition.
+L00003146	validation_surfaces:
+L00003147	  - python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits
+L00003148	  - python3 scripts/pm-plan-index.py validate
+L00003149	risk_class: residual_bridge_overreach
+L00003150	reasoning_tier: standard
+L00003151	context_scope: personas_residual_bridge
+L00003152	implementation_surfaces:
+L00003153	  - Plans/Personas.md
+L00003154	node_compile_hint:
+L00003155	  mode: retired_source_preserving_bridge
+L00003156	  create_worknodes: false
+L00003157	source_lineage:
+L00003158	  - Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:Personas-S0059
+L00003159	  - Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:Personas-S0060
+L00003160	  - Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:Personas-S0061
+L00003161	  - Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:Personas-S0062
+L00003162	preserved_exact_tokens:
+L00003163	  - "P-001"
+L00003164	  - "Personas (Canonical SSOT) Source-Preserving PlanUnit"
+L00003165	  - "source_preserving_planunit"
+L00003166	  - "retired_source_preserving_bridge"
+L00003167	  - "source_preserving_bridge_retired"
+L00003168	  - "source-preserving"
+L00003169	  - "Owner / Consumer Map"
+L00003170	  - "PlanUnits"
+L00003171	  - "Migration Coverage"
+L00003172	  - "P-002"
+L00003173	  - "P-052"
+L00003174	negative_constraints:
+L00003175	  - "P-001 must not be used as implementation-ready product coverage for spans now mapped to P-002 through P-052."
+L00003176	  - "Do not remap Personas-S0001 through Personas-S0058 back to P-001."
+L00003177	owner_hints:
+L00003178	  - Plans/Personas.md
+L00003179	```
+L00003180	
+L00003181	## Migration Coverage
+L00003182	
+L00003183	Original hash: `9dfc2723f4722146795000e263279f793663e43bd65205bfa071930aba45f9a5`.
+L00003184	
+L00003185	Run-scoped proof artifacts:
+L00003186	- `Plans/.plan_migration/pds-20260611-002-atomize-planunits/original_hashes.json`
+L00003187	- `Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl`
+L00003188	- `Plans/.plan_migration/pds-20260611-002-atomize-planunits/coverage_map.jsonl`
+L00003189	- `Plans/.plan_migration/pds-20260611-002-atomize-planunits/anchor_aliases.json`
+L00003190	
+L00003191	Original spans from `Personas-S0001` through `Personas-S0058` are preserved in place and atomized into fine-grained PlanUnits `P-002` through `P-052`. Generated structural/audit spans `Personas-S0059` through `Personas-S0062` are explicitly dispositioned; `P-001` is retired as bridge lineage and no residual `source_preserving_planunit` product coverage remains for `Plans/Personas.md`. This batch did not update Spec Lock, generated shards, evidence bundles, auto_decisions, or plan_graph, and it did not create WorkNodes, NodeSeeds, or executable build tasks.
+L00003192	
+L00003193	## Ledger Compile Addendum - pldg-20260614-001
+L00003194	
+L00003195	### P-053 - Persona Registry Mutability And Subagent Binding Compile Addendum
+L00003196	
+L00003197	```yaml
+L00003198	plan_unit_id: P-053
+L00003199	unit_type: requirement
+L00003200	status: accepted
+L00003201	owner_doc: Plans/Personas.md
+L00003202	canonical_text: >-
+L00003203	  Personas.md owns Persona identity, Persona body storage, persona_registry semantics, protected core Personas,
+L00003204	  tweakable built-in Personas, and user-created Personas. Subagent launch records may bind to Personas, but the
+L00003205	  subagent_registry is a runnable delegation registry and must not store canonical Persona prompt bodies. Protected
+L00003206	  platform Personas are locked for platform safety, tweakable built-ins preserve shipped defaults for upgrade and restore,
+L00003207	  and user-created Personas may be edited and bound to user-created subagent entries after validation.
+L00003208	gui_related: true
+L00003209	gui_classification_reason: Persona mutability includes user-visible Persona library/editor and protected/tweakable/user-created UI behavior.
+L00003210	depends_on: [P-005, P-009, P-013, P-021, P-022, P-023, P-046]
+L00003211	unblocks: [OSI-425, OSI-426, F3-388]
+L00003212	acceptance_criteria:
+L00003213	  - The protected v1 Persona list remains assistant, general-purpose, overseer, bash, teacher, collaborator, researcher, deep-researcher, and explorer.
+L00003214	  - Subagent configuration stores selection, visibility, and launch binding only; Persona body edits persist through Persona storage.
+L00003215	  - Tweakable built-ins keep a shipped default target so reset, upgrade merge, and conflict display remain deterministic.
+L00003216	validation_surfaces:
+L00003217	  - python3 scripts/pm-plan-index.py validate
+L00003218	  - python3 scripts/pm-bootstrap-ledger-validate.py Plans/ledgers/v2/pldg-20260614-001-part-2-cleanup-fable-audit
+L00003219	risk_class: persona_registry_drift
+L00003220	reasoning_tier: standard
+L00003221	context_scope: persona_to_subagent_boundary
+L00003222	implementation_surfaces: [Plans/Personas.md, Plans/orchestrator-subagent-integration.md, Plans/FinalGUISpec.md]
+L00003223	node_compile_hint: {mode: persona_registry_boundary, create_worknodes: false}
+L00003224	source_lineage:
+L00003225	  - pldg-20260614-001-part-2-cleanup-fable-audit:atom-0022
+L00003226	  - pldg-20260614-001-part-2-cleanup-fable-audit:atom-0023
+L00003227	  - pldg-20260614-001-part-2-cleanup-fable-audit:atom-0024
+L00003228	  - pldg-20260614-001-part-2-cleanup-fable-audit:atom-0030
+L00003229	  - pldg-20260614-001-part-2-cleanup-fable-audit:atom-0031
+L00003230	  - pldg-20260614-001-part-2-cleanup-fable-audit:atom-0032
+L00003231	  - source_ref:chat:start-subagent-persona-cluster
+L00003232	  - source_ref:chat:persona-simple-v1-advanced-mutability
+L00003233	  - source_ref:chat:protected-persona-list-complete
+L00003234	preserved_exact_tokens: ["Personas", "Persona", "persona_registry", "subagent_registry", "protected", "tweakable", "user-created", "assistant", "general-purpose", "overseer", "bash", "teacher", "collaborator", "researcher", "deep-researcher", "explorer"]
+L00003235	negative_constraints:
+L00003236	  - Do not store canonical Persona body overrides inside SubagentGuiConfig.
+L00003237	  - Do not allow raw subagent registry controls to mutate protected platform Personas.
+L00003238	  - Do not treat provider-native agent directories as canonical Persona storage.
+L00003239	owner_hints: [Plans/Personas.md, Plans/orchestrator-subagent-integration.md, Plans/FinalGUISpec.md]
+L00003240	```
+L00003241	
+L00003242	
+L00003243	## Ledger Compile Addendum - pldg-20260618-001-prd-planning-wizard
+L00003244	
+L00003245	This addendum compiles source-lineage obligations from bootstrap ledger `pldg-20260618-001-prd-planning-wizard` into this existing owner or consumer doc. It does not create WorkNodes, NodeSeeds, executable queues, GoalRuns, implementation files, generated governance artifacts, or production build tasks.
+L00003246	
+L00003247	### P-054 - Planning Product Collaborator Profiles And Specialist Roles
+L00003248	
+L00003249	```yaml
+L00003250	plan_unit_id: P-054
+L00003251	unit_type: requirement
+L00003252	status: accepted
+L00003253	owner_doc: Plans/Personas.md
+L00003254	canonical_text: 'PRD Builder uses the protected Collaborator Persona with workflow_behavior_profile prd_builder for discovery, source-aware clarification, conflict surfacing, and planning-intake document co-creation. Topic conversations use the Collaborator Persona with workflow_behavior_profile planning_wizard, asking topic-local implementation-readiness questions while preserving a cooperative, technically serious interaction style. Use Overseer for ledger-to-PRD, ledger-to-topic-plan, cross-topic integration, and compilation supervision; Auditor for audit, repair verification, and certification; High-Effort Worker for bounded difficult or repository-wide analysis; controller remains sole canonical writer.'
+L00003255	gui_related: false
+L00003256	gui_classification_reason: Backend, planning, contract, governance, or workflow behavior rather than visual presentation.
+L00003257	depends_on: []
+L00003258	unblocks: []
+L00003259	acceptance_criteria:
+L00003260	- The live owner doc preserves every source atom listed in source_atom_ids without treating the ledger as canonical product prose.
+L00003261	- Exact tokens, negative constraints, owner hints, and accepted corrections remain available to future audits through this PlanUnit.
+L00003262	- No WorkNodes, NodeSeeds, executable queues, GoalRuns, implementation files, generated governance artifacts, or production build tasks are created by this compile.
+L00003263	validation_surfaces:
+L00003264	- python3 scripts/pm-plan-index.py validate
+L00003265	- python3 scripts/pm-bootstrap-ledger-validate.py Plans/ledgers/v2/pldg-20260618-001-prd-planning-wizard
+L00003266	risk_class: owner_drift
+L00003267	reasoning_tier: standard
+L00003268	context_scope: ledger_to_plans_compile
+L00003269	implementation_surfaces:
+L00003270	- Plans/Personas.md
+L00003271	- Plans/PRD_Builder.md
+L00003272	- Plans/assistant-chat-design.md
+L00003273	- Plans/Planning_Wizard.md
+L00003274	- Plans/Models_System.md
+L00003275	- Plans/Plan_To_Node_Compilation.md
+L00003276	node_compile_hint:
+L00003277	  mode: canonical_planunit_from_bootstrap_ledger
+L00003278	  create_worknodes: false
+L00003279	  create_nodeseeds: false
+L00003280	source_lineage:
+L00003281	- pldg-20260618-001-prd-planning-wizard:atom-0013
+L00003282	- pldg-20260618-001-prd-planning-wizard:atom-0014
+L00003283	- pldg-20260618-001-prd-planning-wizard:atom-0015
+L00003284	- Plans/ledgers/v2/pldg-20260618-001-prd-planning-wizard/source_shards/02-prd-builder.md#SRC-PRD
+L00003285	- Plans/ledgers/v2/pldg-20260618-001-prd-planning-wizard/source_shards/03-planning-wizard.md#SRC-PLANNING
+L00003286	source_atom_ids:
+L00003287	- atom-0013
+L00003288	- atom-0014
+L00003289	- atom-0015
+L00003290	decision_refs:
+L00003291	- dec-0005
+L00003292	correction_refs: []
+L00003293	preserved_exact_tokens:
+L00003294	- Collaborator Persona
+L00003295	- 'workflow_behavior_profile: prd_builder'
+L00003296	- 'workflow_behavior_profile: planning_wizard'
+L00003297	- Overseer
+L00003298	- Auditor
+L00003299	- High-Effort Worker
+L00003300	- sole canonical writer
+L00003301	negative_constraints:
+L00003302	- Do not add an unnecessary protected PRDBuilder Persona when workflow behavior can specialize Collaborator.
+L00003303	- Do not let read-only subagents mutate canonical ledgers, PRDs, Plans, WorkGraphs, or runtime records.
+L00003304	owner_hints:
+L00003305	- Plans/Personas.md
+L00003306	- Plans/PRD_Builder.md
+L00003307	- Plans/assistant-chat-design.md
+L00003308	- Plans/Planning_Wizard.md
+L00003309	- Plans/Models_System.md
+L00003310	- Plans/Plan_To_Node_Compilation.md
+L00003311	```
+L00003312	
+L00003313	
+L00003314	## Ledger Compile Addendum - pldg-20260626-001-feature-name
+L00003315	
+L00003316	This addendum compiles accepted source-lineage obligations from bootstrap ledger `pldg-20260626-001-feature-name` into this existing owner/consumer doc. It creates canonical PlanUnits only; it does not create WorkNodes, NodeSeeds, executable queues, final node manifests, implementation files, generated governance artifacts, or production build tasks.
+L00003317	
+L00003318	### P-055 - Teacher Persona Teach Boundary
+L00003319	
+L00003320	```yaml
+L00003321	plan_unit_id: P-055
+L00003322	unit_type: requirement
+L00003323	status: accepted
+L00003324	owner_doc: Plans/Personas.md
+L00003325	canonical_text: Teacher is a protected Persona used by Teach, not a standalone feature. Teacher stays in teaching/help
+L00003326	  mode, explains PM concepts and workflows, cites source groups or missing coverage, avoids guessing, and hands
+L00003327	  off when the user asks for implementation/build work, high-reasoning architecture decisions, audit/repair, external
+L00003328	  research beyond available sources, direct execution, or specialty tooling. Handoff cards explain why, suggested
+L00003329	  destination Persona/mode, context to carry forward, and whether a stronger model is recommended.
+L00003330	gui_related: false
+L00003331	gui_classification_reason: Persona identity and scope are assistant behavior, not GUI layout.
+L00003332	depends_on: []
+L00003333	unblocks:
+L00003334	- PP-056
+L00003335	- ATS-014
+L00003336	acceptance_criteria:
+L00003337	- Live PlanUnit exists in the adjudicated owner doc with reciprocal ledger source_lineage.
+L00003338	- Exact source tokens, negative constraints, owner hints, and user corrections are preserved in PlanUnit metadata.
+L00003339	- No WorkNodes, NodeSeeds, executable queues, final node manifests, implementation files, or production build tasks
+L00003340	  are created by this compile.
+L00003341	validation_surfaces:
+L00003342	- python3 scripts/pm-bootstrap-ledger-validate.py Plans/ledgers/v2/pldg-20260626-001-feature-name
+L00003343	- python3 scripts/pm-plan-index.py validate
+L00003344	- git diff --check
+L00003345	risk_class: teacher_persona_scope_drift
+L00003346	reasoning_tier: standard
+L00003347	context_scope: teacher_persona
+L00003348	implementation_surfaces:
+L00003349	- Plans/Personas.md
+L00003350	- future Teacher persona routing
+L00003351	node_compile_hint:
+L00003352	  mode: teacher_persona_boundary
+L00003353	  create_worknodes: false
+L00003354	  create_nodeseeds: false
+L00003355	source_lineage:
+L00003356	- pldg-20260626-001-feature-name:atom-0090
+L00003357	- pldg-20260626-001-feature-name:atom-0121
+L00003358	- pldg-20260626-001-feature-name:atom-0147
+L00003359	- pldg-20260626-001-feature-name:atom-0149
+L00003360	- chat:teacher-feature-initial-framing
+L00003361	- chat:teach-teacher-correction
+L00003362	- Plans/Personas.md#RESERVED-PERSONAS
+L00003363	- Plans/Personas.md#CORE-PERSONA-CATALOG
+L00003364	- Plans/assistant-chat-design.md#6-Teach
+L00003365	- chat:teach-gap-fill-correction
+L00003366	- q-0028
+L00003367	- chat:teach-bundle-accepted-pmconcept-reference
+L00003368	- chat:work-through-teach-gaps
+L00003369	- Plans/Personas.md#11.8-teacher
+L00003370	- Plans/Personas.md#P-040-teacher-core-persona
+L00003371	source_atom_ids:
+L00003372	- atom-0090
+L00003373	- atom-0121
+L00003374	- atom-0147
+L00003375	- atom-0149
+L00003376	decision_refs:
+L00003377	- dec-0018
+L00003378	- dec-0020
+L00003379	- dec-0024
+L00003380	correction_refs:
+L00003381	- corr-0001
+L00003382	- corr-0003
+L00003383	preserved_exact_tokens:
+L00003384	- Teach feature
+L00003385	- Teacher persona
+L00003386	- Teacher is also a persona(used for the teacher feature)
+L00003387	- requested_persona
+L00003388	- effective_persona
+L00003389	- Teacher
+L00003390	- Persona
+L00003391	- low-end/fast default model
+L00003392	- effective model
+L00003393	- PM sources
+L00003394	- current context
+L00003395	- highlight
+L00003396	- open
+L00003397	- route UI surfaces
+L00003398	- hand off
+L00003399	- implementation/build work
+L00003400	- high-reasoning architecture decisions
+L00003401	- audit/repair
+L00003402	- external research
+L00003403	- direct execution
+L00003404	- specialty tooling
+L00003405	- suggested destination Persona
+L00003406	- stronger model
+L00003407	- PM knowledge pressure test
+L00003408	- PM concepts
+L00003409	- workflows
+L00003410	- settings
+L00003411	- models
+L00003412	- capabilities
+L00003413	- permissions
+L00003414	- history
+L00003415	- artifacts
+L00003416	- Personas
+L00003417	- skills/plugins
+L00003418	- Orchestrator behavior
+L00003419	- Teach memory
+L00003420	- missing coverage
+L00003421	- avoid guessing
+L00003422	- handoff
+L00003423	negative_constraints:
+L00003424	- Do not introduce `requested_persona_id` or `effective_persona_id` as canonical fields; those are stale aliases
+L00003425	  in Personas.md.
+L00003426	- Do not make Teacher a hidden subagent for this feature; existing Plans say `teacher` is user-facing and not subagent-only.
+L00003427	- Do not present Teacher as a separate feature detached from Teach.
+L00003428	- Do not let Teacher claim authority without visible source/context disclosure.
+L00003429	- Do not allow Teacher to perform unsafe mutations as teaching gestures.
+L00003430	- Do not let Teacher quietly become a builder or auditor.
+L00003431	- Do not silently switch Persona/model/tool path without disclosure.
+L00003432	- Do not discard Teacher context during handoff.
+L00003433	- Do not certify Teacher on a small happy-path chat only.
+L00003434	- Do not let Teacher answer capability or settings questions without live/source-backed state.
+L00003435	- Do not treat missing coverage as a passing answer unless it is visibly disclosed and routed.
+L00003436	owner_hints:
+L00003437	- Plans/assistant-chat-design.md
+L00003438	- Plans/Personas.md
+L00003439	- Plans/Prompt_Pipeline.md
+L00003440	- Plans/Contracts_V0.md
+L00003441	- Plans/Models_System.md
+L00003442	- Plans/FinalGUISpec.md
+L00003443	- Plans/Tools.md
+L00003444	- Plans/Media_Generation_and_Capabilities.md
+L00003445	- Plans/Runtime_Artifacts_Panel.md
+L00003446	- Plans/Automated_Testing_System.md
+L00003447	- Plans/Glossary.md
+L00003448	```
+L00003449	
+L00003450	## FABLE Deferred Action Concrete Repair Addendum - 2026-07-08
+L00003451	
+L00003452	This addendum repairs non-runtime persona rows without creating WorkNodes, implementation files, runtime artifacts, or PNC-019 evidence.
+L00003453	
+L00003454	- Repairs `sfk-bb3280798bd1706bc464fd91`: persona GUI command IDs are `cmd.persona.create`, `cmd.persona.edit`, `cmd.persona.disable`, `cmd.persona.restore`, `cmd.persona.delete`, `cmd.persona.save_as_override`, and `cmd.persona.validate_schema`.
+L00003455	- Repairs `sfk-5ebb077583e46703c74baa39`: `crew.roles` is a map from `role_id` to `{display_name, description, required_capabilities[], default_persona_id?, allowed_persona_ids[]}`. Role tag values are `planner`, `implementer`, `reviewer`, `tester`, `designer`, `security`, `release`, and `governance`.
+L00003456	- Repairs `sfk-a0b10c29e5616a01ecab3d13`: persona selection fields are `requested_persona`, `effective_persona`, `persona_selection_source`, `persona_policy_snapshot_id`, `fallback_reason_code?`, and `created_at_utc`. `persona_selection_source` values are `user_selected`, `project_default`, `role_default`, `policy_override`, and `fallback`.
+L00003457	
+L00003458	<!-- FABLE_REMAINING_ACTION_PLAN_REPAIR_20260708_BEGIN -->
+L00003459	## FABLE Remaining Action Plan Audit-Lineage Notes (2026-07-08)
+L00003460	
+L00003461	These rows are preserved as audit-lineage notes only. They do not prove repair by themselves; repaired status requires concrete canonical prose/schema/enum/command/algorithm evidence in this owner doc or an explicit non-repair disposition in `Plans/.audits/fable-20260706/owner_note_closure_fidelity_after.jsonl`. This note creates no WorkNodes, NodeSeeds, queues, runtime artifacts, implementation files, production build tasks, final manifests, or PNC-019 receipts, and it does not mark `buildability_gate_passed` true.
+L00003462	
+L00003463	- `registry_line 285` (explicitly_deferred; source line 990; `sfk-a0b10c29e5616a01ecab3d13`): Explicitly deferred: closing this row requires a dedicated owner-doc/schema/detail lane beyond safe non-runtime hygiene; no buildability or runtime proof is claimed here. Source summary: - [HIGH] L1963-2014: `requested_persona`/`effective_persona`/`persona_selection_source` etc. are field names only no types, enums, or persistence schema.
+L00003464	
+L00003465	<!-- FABLE_REMAINING_ACTION_PLAN_REPAIR_20260708_END -->

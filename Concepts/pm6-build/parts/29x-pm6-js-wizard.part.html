@@ -43,7 +43,7 @@
 
   /* ---------------- page-local UI state (render state only) -------- */
   var W = {
-    stage: 'intake',            /* intake | requirements | discovery | workspace */
+    stage: 'intake',            /* intake | requirements | prd_builder | discovery | workspace */
     attach: 'github',
     intent: 'feature',
     discovering: false,
@@ -55,19 +55,26 @@
     lastReqTurns: 0,            /* PRD builder: last seen turn count (typing detection) */
     theater: null,              /* step index while the integration sequence plays */
     theaterDone: false,
-    testing: 'full'
+    testing: 'full',
+    choice: null,               /* requirements entry choice: upload | builder | hybrid */
+    overlay: null,              /* expanded doc overlay: 'topic' | 'prd' | null */
+    _sel: null,                 /* selection snapshot: {scope, secId, excerpt} */
+    annFresh: null,             /* last annotation scope (render hint) */
+    _prdSeen: {},               /* prd projection blocks already rendered (fresh detection) */
+    _prdFresh: null             /* key of the newest satisfied projection block */
   };
 
-  /* static presentation metadata (icons, dependency/origin badges) */
+  /* static presentation metadata (icons only — dependency/origin info now
+     lives on the lock sub-line + state chips, not a badge row) */
   var TOPIC_META = {
-    t1: { icon: 'layers',  badges: ['core'] },
-    t2: { icon: 'shield',  badges: ['depends: data model'] },
-    t3: { icon: 'film',    badges: ['origin: chat import', 'depends: data model'] },
-    t4: { icon: 'search',  badges: ['depends: data model'] },
-    t5: { icon: 'star',    badges: ['depends: auth'] },
-    t6: { icon: 'globe',   badges: ['origin: chat import', 'depends: editor'] },
-    t7: { icon: 'bolt',    badges: ['depends: import-from-URL'] },
-    t8: { icon: 'rocket',  badges: ['depends: editor', 'credentials'] }
+    t1: { icon: 'layers' },
+    t2: { icon: 'shield' },
+    t3: { icon: 'film' },
+    t4: { icon: 'search' },
+    t5: { icon: 'star' },
+    t6: { icon: 'globe' },
+    t7: { icon: 'bolt' },
+    t8: { icon: 'rocket' }
   };
   var STATE_LABEL = {
     not_started: 'Not started', active: 'Active', ledger_syncing: 'Ledger syncing',
@@ -125,6 +132,26 @@
     return !!(t8 && t8.questions[0] && t8.questions[0].answer);
   }
 
+  /* ---------------- derived dependency locks (render mirror) --------
+     mirrors engine-b topicLocked(): a presentation of not_started with
+     unmet depends_on edges — never a persisted card state */
+  function lockedDeps(t) {
+    var s = WS();
+    if (!s) return [];
+    return (t.depends_on || []).filter(function (id) {
+      var dep = s.topics[id];
+      return dep && dep.state !== 'ready';
+    });
+  }
+  function isLocked(t) { return !!t && t.state === 'not_started' && lockedDeps(t).length > 0; }
+  function unlockLine(t) {
+    var s = WS();
+    var names = lockedDeps(t).map(function (id) { return s.topics[id].title; });
+    if (!names.length) return 'Unlocks after its dependencies are Ready';
+    return 'Unlocks after ' + names.join(' and ') + (names.length === 1 ? ' is' : ' are') + ' Ready';
+  }
+  function lockedCount() { return topics().filter(isLocked).length; }
+
   /* ---------------- stage switching ---------------- */
   function setStage(name) {
     W.stage = name;
@@ -166,27 +193,33 @@
       esc(REASON_LABEL[code] || 'Blocked') + '</span><span>' + esc(hint) + '</span></div>';
   }
 
-  /* ---------------- topic map ---------------- */
+  /* ---------------- topic map ----------------
+     card rows: 1 icon+name+chip · 2 summary (2-line clamp) ·
+     3 lock sub-line (dependency names) or progress text · 4 bar */
   function renderTopics() {
     var host = byId('pm6WizTopicList');
     if (!host) return;
     var s = WS();
     var open = s ? s.activeTopic : null;
     host.innerHTML = topics().map(function (t, i) {
-      var meta = TOPIC_META[t.id] || { icon: 'clipboard', badges: [] };
-      var pct = STATE_PCT[t.state] != null ? STATE_PCT[t.state] : 10;
-      var badges = meta.badges.map(function (b) {
-        return '<span class="pm6-wiz-tbadge">' + esc(b) + '</span>';
-      }).join('');
-      var prog = t.progress
-        ? '<span class="pm6-wiz-topic-sub">' + esc(t.progress) + '</span>' : '';
+      var meta = TOPIC_META[t.id] || { icon: 'clipboard' };
+      var locked = isLocked(t);
+      var pct = locked ? 0 : (STATE_PCT[t.state] != null ? STATE_PCT[t.state] : 10);
+      var chip = locked
+        ? '<span class="pm6-wiz-lockchip">' + ico('lock') + 'Locked</span>'
+        : schip(t.state);
+      var sub = '';
+      if (locked) {
+        sub = '<span class="pm6-wiz-topic-lockline">' + ico('lock') + '<span>' + esc(unlockLine(t)) + '</span></span>';
+      } else if (t.progress) {
+        sub = '<span class="pm6-wiz-topic-sub pm6-wiz-topic-progline">' + esc(t.progress) + '</span>';
+      }
       return '<button type="button" class="pm6-wiz-topic-card pm-sheen' + (open === t.id ? ' open' : '') + '"' +
-        ' data-tstate="' + esc(t.state) + '" style="--i:' + Math.min(i, 8) + '"' +
+        ' data-tstate="' + esc(t.state) + '"' + (locked ? ' data-tlocked="1"' : '') + ' style="--i:' + Math.min(i, 8) + '"' +
         ' data-demo-action="wizard.open_topic" data-demo-arg="' + esc(t.id) + '">' +
         '<span class="pm6-wiz-topic-toprow">' + ico(meta.icon, 'pm-hover-icon') +
-          '<span class="pm6-wiz-topic-name">' + t.num + ' · ' + esc(t.title) + '</span>' + schip(t.state) + '</span>' +
-        '<span class="pm6-wiz-topic-badges">' + badges + '</span>' +
-        '<span class="pm6-wiz-topic-sub">' + esc(t.summary) + '</span>' + prog +
+          '<span class="pm6-wiz-topic-name">' + t.num + ' · ' + esc(t.title) + '</span>' + chip + '</span>' +
+        '<span class="pm6-wiz-topic-sub">' + esc(t.summary) + '</span>' + sub +
         '<span class="pm6-wiz-topic-prog"><span class="pm6-wiz-topic-prog-fill" style="width:' + pct + '%"></span></span>' +
       '</button>';
     }).join('');
@@ -230,20 +263,41 @@
     host.innerHTML = '<span class="pm6-wiz-statepill' + cls + '">' + esc(text) + '</span>';
   }
 
-  /* ---------------- live plan preview ---------------- */
+  /* ---------------- live plan preview / Topic Plan Draft ---------------- */
   function hashRow(k, v) {
     return '<div class="pm6-wiz-hashrow"><span class="pm6-wiz-hash-k">' + esc(k) + '</span>' +
       '<span class="pm6-wiz-hash-v">' + esc(v) + ' <span class="pm6-wiz-glyph">✓</span></span></div>';
   }
-  function renderDoc() {
-    var host = byId('pm6WizDoc');
-    if (!host) return;
-    var s = WS();
-    if (!s) return;
-    var d = D();
-    var planName = (d && d.data && d.data.wizard && d.data.wizard.planName) || 'Tastebook v1.2';
+  /* shared annotation fragments (numbered dots on section heads + list) */
+  function annMarks(list, secId) {
+    var out = '';
+    (list || []).forEach(function (a, i) {
+      if (a.sec === secId) {
+        out += '<span class="pm6-wiz-ann-mark" title="' + esc((a.kind || 'annotation') + ': ' + a.excerpt) + '">' + (i + 1) + '</span>';
+      }
+    });
+    return out;
+  }
+  function annListHtml(list) {
+    if (!list || !list.length) return '';
+    var rows = list.map(function (a, i) {
+      return '<div class="pm6-wiz-doc-ann-row"><span class="pm6-wiz-ann-mark">' + (i + 1) + '</span>' +
+        '<span class="pm6-wiz-doc-ann-body">&ldquo;' + esc(a.excerpt) + '&rdquo;</span>' +
+        '<span class="pm6-wiz-tbadge">' + esc(a.kind || 'annotation') + '</span>' +
+        '<span class="pm6-wiz-tbadge">' + esc(a.status || 'open') + '</span></div>';
+    }).join('');
+    return '<div class="pm6-wiz-doc-anns"><div class="pm6-wiz-doc-anns-t">Annotations &amp; comments</div>' + rows + '</div>';
+  }
+  /* whole-pack rendering (final review) or condensed skeleton summary */
+  function packDocHtml(s, planName, condensed) {
     var html = '<div class="pm6-wiz-doc-h">' + esc(planName) + '</div>';
     topics().forEach(function (t) {
+      if (condensed) {
+        var glyph = t.state === 'ready' ? '✓' : (t.state === 'blocked' ? '⚠' : '●');
+        html += '<div class="pm6-wiz-doc-sec"><div class="pm6-wiz-doc-sec-t">' +
+          '<span class="pm6-wiz-glyph">' + glyph + '</span>' + t.num + '. ' + esc(t.title) + '</div></div>';
+        return;
+      }
       if (t.state === 'ready') {
         var decisions = t.questions.filter(function (q) { return q.answer; }).map(function (q) {
           return 'Decision: ' + q.answer;
@@ -271,9 +325,90 @@
         hashRow('Testing policy', s.hashes.testingPolicy + '…') +
         hashRow('Audit closure', s.hashes.auditClosure + '…') + '</div>';
     }
-    host.innerHTML = html;
+    return html;
+  }
+  /* one topic's Topic Plan Draft — readable sections, live Decision rows */
+  function draftDocHtml(t) {
+    var html = '<div class="pm6-wiz-doc-h">Topic Plan Draft — ' + t.num + ' · ' + esc(t.title) + '</div>';
+    if (isLocked(t)) {
+      html += '<div class="pm6-wiz-doc-sec"><div class="pm6-wiz-doc-sec-p"><em>' + esc(unlockLine(t)) + '.</em></div></div>';
+      return html;
+    }
+    var anns = t.annotations || [];
+    var secs = (t.draft && t.draft.sections) || [];
+    secs.forEach(function (sec) {
+      var fresh = !!(t.draft && t.draft.freshSec === sec.id);
+      var body = '';
+      if (sec.id === 'ds-dec') {
+        var dec = t.questions.filter(function (q) { return q.answer; });
+        body = dec.length
+          ? dec.map(function (q) {
+              return '<div class="pm6-wiz-doc-decision"><span class="pm6-wiz-glyph">✓</span>' +
+                '<span><strong>Decision:</strong> ' + esc(q.answer) + ' <em>— ' + esc(q.text) + '</em></span></div>';
+            }).join('')
+          : '<div class="pm6-wiz-doc-sec-p"><em>No decisions recorded yet — the interview fills this row live.</em></div>';
+      } else {
+        body = (sec.paras || []).map(function (p) {
+          return '<div class="pm6-wiz-doc-para">' + esc(p) + '</div>';
+        }).join('');
+      }
+      html += '<div class="pm6-wiz-doc-sec' + (fresh ? ' fresh' : '') + '" data-sec="' + esc(sec.id) + '">' +
+        '<div class="pm6-wiz-doc-sec-h">' + annMarks(anns, sec.id) + esc(sec.h) + '</div>' + body + '</div>';
+    });
+    if (BUSY_STATES[t.state]) {
+      html += '<div class="pm6-wiz-doc-sec"><div class="pm6-wiz-doc-sec-t">' +
+        '<span class="pm6-wiz-glyph" style="color:var(--accent-orange)">●</span>' + esc(t.progress || 'recompiling') + '</div>' +
+        '<div class="pm6-wiz-skel"><span class="pm6-wiz-skel-line" style="width:84%"></span>' +
+        '<span class="pm6-wiz-skel-line" style="width:58%"></span></div></div>';
+    }
+    html += annListHtml(anns);
+    return html;
+  }
+  /* what the right-hand preview shows right now */
+  function docView() {
+    var s = WS();
+    var d = D();
+    var planName = (d && d.data && d.data.wizard && d.data.wizard.planName) || 'Tastebook v1.2';
+    var metaStr = 'rev ' + s.hashes.planningRunRev + ' · map ' + s.hashes.topicMapVersion;
+    if (W.threadMode === 'review' || s.pack || s.approved) {
+      return { title: 'Live plan preview', meta: metaStr, scope: null, html: packDocHtml(s, planName, false) };
+    }
+    var t = s.activeTopic ? s.topics[s.activeTopic] : null;
+    if (t) {
+      var locked = isLocked(t);
+      return {
+        title: 'Topic Plan Draft — ' + t.num + ' · ' + t.title,
+        meta: (t.draft ? 'draft v' + t.draft.version + ' · ' : '') + (locked ? 'Locked' : (STATE_LABEL[t.state] || t.state)),
+        scope: locked ? null : t.id,
+        html: draftDocHtml(t)
+      };
+    }
+    return { title: 'Live plan preview', meta: metaStr, scope: null, html: packDocHtml(s, planName, true) };
+  }
+  function renderDoc() {
+    var s = WS();
+    if (!s) return;
+    var v = docView();
+    var host = byId('pm6WizDoc');
+    if (host) {
+      host.innerHTML = v.html;
+      if (v.scope) host.setAttribute('data-doc-scope', v.scope);
+      else host.removeAttribute('data-doc-scope');
+    }
+    var title = byId('pm6WizDocTitle');
+    if (title) title.textContent = v.title;
     var meta = byId('pm6WizDocMeta');
-    if (meta) meta.textContent = 'rev ' + s.hashes.planningRunRev + ' · map ' + s.hashes.topicMapVersion;
+    if (meta) meta.textContent = v.meta;
+    if (W.overlay === 'topic') {
+      var ob = byId('pm6WizDocOverlayBody');
+      var oh = byId('pm6WizDocOverlayHead');
+      if (ob) {
+        ob.innerHTML = v.html;
+        if (v.scope) ob.setAttribute('data-doc-scope', v.scope);
+        else ob.removeAttribute('data-doc-scope');
+      }
+      if (oh) oh.textContent = v.title + (v.meta ? ' · ' + v.meta : '');
+    }
   }
 
   /* ---------------- readiness rail ---------------- */
@@ -306,6 +441,7 @@
       '<div class="pm6-wiz-rail-title">Compile readiness — zero incomplete</div>' +
       gate(!!prd.approved, false, esc('Approved PRD Pack bound — ' + (prd.packId || 'prd-9c2e41') + ' ' + (prd.version || 'v1'))) +
       gate(nReady === n, nReady < n && nReady > 0, esc(nReady + ' of ' + n) + ' topics Ready') +
+      gate(lockedCount() === 0, false, 'Dependency locks cleared') +
       gate(storageAnswered(), false, 'Storage decision recorded (Topic 8)') +
       gate(!!s.pack, false, 'Final Plan Pack integrated') +
       gate(W.theaterDone || approved, !!s.pack && !W.theaterDone, 'Final audit closed — zero stubs, TODOs or placeholders') +
@@ -321,47 +457,25 @@
     return (d && d.data && d.data.wizard && d.data.wizard.reqs) ||
       { sampleDocs: [], builderTurns: [], outline: [], prd: {} };
   }
+  /* thin delegates — the unified chat renderer (PM6_CHAT_UI, embedded mode,
+     all chrome flags off) owns bubble/typing/composer markup + the
+     focus-preserving writer; signatures and call sites stay unchanged */
+  function chatUi() { return window.PM6_CHAT_UI || null; }
   function bubble(en) {
-    if (!en) return '';
-    if (en.role === 'note') {
-      return '<div class="pm6-wiz-thread-note pm6-wiz-msg-note"><span class="pm6-wiz-glyph">↳</span> ' + esc(en.text) + '</div>';
-    }
-    if (en.role === 'user') {
-      return '<div class="pm6-wiz-msg user"><span class="pm6-wiz-msg-body">' + esc(en.text) + '</span></div>';
-    }
-    return '<div class="pm6-wiz-msg agent">' + ico('wand', 'pm6-wiz-msg-av') +
-      '<span class="pm6-wiz-msg-body">' + esc(en.text) + '</span></div>';
+    var u = chatUi();
+    return u ? u.bubbleHtml(en) : '';
   }
   function typingBubble() {
-    return '<div class="pm6-wiz-msg agent">' + ico('wand', 'pm6-wiz-msg-av') +
-      '<span class="pm6-wiz-typing"><span></span><span></span><span></span></span></div>';
+    var u = chatUi();
+    return u ? u.typingHtml() : '';
   }
   function composerHtml(action, base, ph) {
-    return '<div class="pm6-wiz-composer">' +
-      '<textarea rows="1" data-pm6-wiz-input="' + esc(base) + '" placeholder="' + esc(ph) + '"></textarea>' +
-      '<button type="button" class="pm6-wiz-send" aria-disabled="true" data-demo-reason="blocked_by_gate"' +
-        ' data-demo-action="' + esc(action) + '" data-demo-arg="' + esc(base) + '|">Send</button>' +
-    '</div>';
+    var u = chatUi();
+    return u ? u.composerHtml({ action: action, base: base, placeholder: ph }) : '';
   }
-  /* focus-preserving chat write: while the user is typing in the composer,
-     only the log + quick chips above it re-render — the composer node stays. */
   function writeChat(host, key, bubbles, chips, composer) {
-    var ta = $('.pm6-wiz-composer textarea', host);
-    var keep = !!(composer && ta && document.activeElement === ta &&
-      host.getAttribute('data-pm6-wiz-key') === key);
-    if (keep) {
-      var b = $('[data-pm6-wiz-bubbles]', host);
-      var c = $('[data-pm6-wiz-chips]', host);
-      if (b) b.innerHTML = bubbles;
-      if (c) c.innerHTML = chips;
-    } else {
-      host.setAttribute('data-pm6-wiz-key', key);
-      host.innerHTML = '<div class="pm6-wiz-chat">' +
-        '<div class="pm6-wiz-chat-log" data-pm6-wiz-bubbles>' + bubbles + '</div>' +
-        '<div class="pm6-wiz-quickchips" data-pm6-wiz-chips>' + chips + '</div>' +
-        composer + '</div>';
-    }
-    hydrateIcons(host);
+    var u = chatUi();
+    if (u) u.writeEmbedded(host, key, bubbles, chips, composer);
   }
 
   function docStatusChip(doc) {
@@ -394,7 +508,7 @@
         '</div>';
       }).join('');
     }
-    $$('[data-demo-action="wizard.upload_doc"]', byId('pm6WizStageReqs')).forEach(function (btn) {
+    $$('[data-demo-action="wizard.upload_doc"]', byId('pm6WizStagePrd')).forEach(function (btn) {
       var id = btn.getAttribute('data-demo-arg');
       if (!id) return; /* drop zone stays live — it attaches the next un-attached doc */
       var attached = rq.docs.some(function (x) { return x.id === id; });
@@ -414,11 +528,23 @@
     }
     var pend = W.reqTurnPending;
     var shown = (pend != null && pend < entries.length) ? entries.slice(0, pend) : entries;
-    var bubbles = shown.map(bubble).join('');
+    /* PRDB-003 batching: a small divider marks each new question area */
+    var areaOf = {};
+    seed.builderTurns.forEach(function (t) { areaOf[t.id] = t.area || ''; });
+    var bubbles = '';
+    var lastArea = '';
+    shown.forEach(function (en) {
+      var a = en.turnId ? (areaOf[en.turnId] || '') : '';
+      if (a && a !== lastArea) {
+        bubbles += '<div class="pm6-wiz-area-div"><span>' + esc(a) + '</span></div>';
+        lastArea = a;
+      }
+      bubbles += bubble(en);
+    });
     if (pend != null) bubbles += typingBubble();
     var open = (cur && !rq.answers[cur.id] && pend == null) ? cur : null;
     if (!cur && pend == null) {
-      bubbles += '<div class="pm6-wiz-thread-note">Builder complete — the outline reflects the PRD ledger. Approve below when it looks right.</div>';
+      bubbles += '<div class="pm6-wiz-thread-note">Builder complete — the projection reflects the PRD ledger. Approve below when it looks right.</div>';
     }
     var chips = '';
     if (open) {
@@ -426,11 +552,91 @@
         return '<button type="button" class="pm6-wiz-opt" data-demo-action="wizard.prd_chat"' +
           ' data-demo-arg="' + esc(open.id + '|' + c) + '">' + esc(c) + '</button>';
       }).join('');
+      chips += '<button type="button" class="pm6-wiz-opt something" data-demo-action="wizard.prd_focus_docs">Attach a document instead</button>';
     }
     var composer = (open && open.freeform)
       ? composerHtml('wizard.prd_chat', open.id, 'Type your own answer — recorded straight into the PRD ledger')
       : '';
     writeChat(host, open ? String(open.id) : '', bubbles, chips, composer);
+  }
+  /* live PRD projection (C3 render rule): a block appears once its source is
+     captured — answers[src] recorded or doc src parsed; the newest block gets
+     .fresh + a ledger-note line, so the PRD visibly grows EVERY turn (PRDB-002).
+     P4: send-back fallbacks render durable "revision request recorded" lines. */
+  function blockSatisfied(rq, src) {
+    if (String(src).charAt(0) === 'b') return !!rq.answers[src];
+    return rq.docs.some(function (x) { return x.id === src && (x.status === 'parsed' || x.status === 'parsed_warn'); });
+  }
+  function prdDocHtml(rq, seed) {
+    var pd = seed.prdDoc || { title: 'PRD (draft)', sections: [] };
+    var seen = W._prdSeen;
+    var newest = null;
+    pd.sections.forEach(function (sec) {
+      (sec.blocks || []).forEach(function (b, bi) {
+        var key = sec.id + '|' + b.src + '|' + bi;
+        if (blockSatisfied(rq, b.src) && !seen[key]) { seen[key] = 1; newest = key; }
+      });
+    });
+    if (newest) W._prdFresh = newest;
+    var anns = rq.annotations || [];
+    var notes = rq.ledgerNotes || [];
+    var html = '<div class="pm6-wiz-doc-h">' + esc(pd.title) + '</div>';
+    pd.sections.forEach(function (sec) {
+      var rows = '';
+      (sec.blocks || []).forEach(function (b, bi) {
+        if (!blockSatisfied(rq, b.src)) return;
+        var key = sec.id + '|' + b.src + '|' + bi;
+        var txt = String(b.text).replace('{a}', rq.answers[b.src] || '');
+        var isFresh = key === W._prdFresh;
+        rows += '<div class="pm6-wiz-prd-block' + (isFresh ? ' fresh' : '') + '">' + esc(txt) + '</div>';
+        if (isFresh) {
+          rows += '<div class="pm6-wiz-doc-note"><span class="pm6-wiz-glyph">↳</span> PRD ledger updated · ' + esc(sec.label) + '</div>';
+        }
+      });
+      notes.forEach(function (n) {
+        if (n.sec === sec.id) {
+          rows += '<div class="pm6-wiz-doc-note ledger"><span class="pm6-wiz-glyph">↳</span> ' + esc(n.text) + '</div>';
+        }
+      });
+      html += '<div class="pm6-wiz-doc-sec" data-sec="' + esc(sec.id) + '">' +
+        '<div class="pm6-wiz-doc-sec-h">' + annMarks(anns, sec.id) + esc(sec.label) + '</div>' +
+        (rows || '<div class="pm6-wiz-skel"><span class="pm6-wiz-skel-line" style="width:88%"></span>' +
+          '<span class="pm6-wiz-skel-line" style="width:64%"></span></div>') +
+      '</div>';
+    });
+    notes.forEach(function (n) {
+      if (!n.sec) html += '<div class="pm6-wiz-doc-note ledger"><span class="pm6-wiz-glyph">↳</span> ' + esc(n.text) + '</div>';
+    });
+    html += annListHtml(anns);
+    return html;
+  }
+  function renderPrdDoc(rq, seed) {
+    var host = byId('pm6WizPrdDoc');
+    if (!host) return;
+    var html = prdDocHtml(rq, seed);
+    host.innerHTML = html;
+    if (W.overlay === 'prd') {
+      var ob = byId('pm6WizDocOverlayBody');
+      var oh = byId('pm6WizDocOverlayHead');
+      if (ob) { ob.innerHTML = html; ob.setAttribute('data-doc-scope', 'prd'); }
+      if (oh) oh.textContent = 'PRD — live projection';
+    }
+  }
+  /* readiness chip copy names its drivers (captures / open questions /
+     warnings) via the engine-computed readinessNote (P3) */
+  function readyChipHtml(rq) {
+    var map = {
+      blocked: ['blocked', 'Blocked'],
+      ready_with_warnings: ['warn', 'Ready with Warnings'],
+      ready: ['ok', 'Ready']
+    };
+    var rc = map[rq.readiness] || map.blocked;
+    var label = rc[1] + (rq.readinessNote ? ' — ' + rq.readinessNote : '');
+    return '<span class="pm6-wiz-readychip" data-ready="' + rc[0] + '">' + esc(label) + '</span>';
+  }
+  function renderPrdReady(rq) {
+    var host = byId('pm6WizPrdReady');
+    if (host) host.innerHTML = readyChipHtml(rq);
   }
   function renderPrdOutline(rq, seed) {
     var host = byId('pm6WizPrdOutline');
@@ -450,15 +656,9 @@
   function renderReqFoot(rq) {
     var host = byId('pm6WizReqFoot');
     if (!host) return;
-    var chipMap = {
-      blocked: ['blocked', 'Blocked — no requirements captured yet'],
-      ready_with_warnings: ['warn', 'Ready with Warnings — 1 open question carries into planning'],
-      ready: ['ok', 'Ready — every section grounded']
-    };
-    var rc = chipMap[rq.readiness] || chipMap.blocked;
     var approved = !!rq.prd.approved;
     var html = '<div class="pm6-wiz-reqfoot-status">' +
-      '<span class="pm6-wiz-readychip" data-ready="' + rc[0] + '">' + esc(rc[1]) + '</span>' +
+      readyChipHtml(rq) +
       (approved
         ? '<span class="pm6-wiz-prdpack-chip">' +
             esc('Approved PRD Pack ' + (rq.prd.version || 'v1') + ' · ' + (rq.prd.packId || 'prd-9c2e41')) +
@@ -480,7 +680,7 @@
     }
     host.innerHTML = html;
   }
-  function renderReqs() {
+  function renderPrd() {
     var s = WS();
     if (!s || !s.reqs) return;
     var rq = s.reqs;
@@ -488,13 +688,15 @@
     renderReqDocs(rq);
     renderPrdChat(rq, seed);
     renderPrdOutline(rq, seed);
+    renderPrdDoc(rq, seed);
     renderReqFoot(rq);
+    renderPrdReady(rq);
     var chip = byId('pm6WizPrdChip');
     if (chip) {
       chip.hidden = !rq.prd.approved;
       chip.style.display = rq.prd.approved ? '' : 'none';
     }
-    hydrateIcons(byId('pm6WizStageReqs'));
+    hydrateIcons(byId('pm6WizStagePrd'));
   }
 
   /* ---------------- center thread ---------------- */
@@ -510,7 +712,23 @@
     hydrateIcons(host);
   }
 
+  function suggestedNext() {
+    var list = topics();
+    for (var i = 0; i < list.length; i++) {
+      var t = list[i];
+      if (t.state === 'ready' || isLocked(t)) continue;
+      if (t.questions.some(function (q) { return !q.answer; })) return t;
+    }
+    return null;
+  }
   function renderOverview(host) {
+    var next = suggestedNext();
+    var cta = next
+      ? '<div class="pm6-wiz-thread-actions"><button type="button" class="pm6-wiz-btn primary"' +
+          ' data-demo-action="wizard.open_topic" data-demo-arg="' + esc(next.id) + '">' +
+          'Next: ' + next.num + ' · ' + esc(next.title) + ' <span class="pm6-wiz-glyph">→</span></button>' +
+        '<span class="pm6-wiz-thread-note">The wizard suggests the next topic with an open product call.</span></div>'
+      : '';
     host.innerHTML =
       '<div class="pm6-wiz-thread-head">' + ico('clipboard') +
         '<div class="pm6-wiz-thread-title">Topic threads</div></div>' +
@@ -518,6 +736,7 @@
         '<div class="pm6-wiz-thread-note">Pick a topic on the left to open its thread. Each topic runs its own interview: ' +
           'the wizard auto-resolves what the evidence already answers, records safe defaults as assumptions, and only asks you ' +
           'about genuine product direction — like Topic 8&rsquo;s storage decision.</div>' +
+        cta +
         evdCard('discovery') +
         '<div class="pm6-wiz-thread-note">Evidence cards are receipts only — they never create work on their own. ' +
           'Full payloads live in Runtime Artifacts.</div>' +
@@ -566,6 +785,28 @@
 
   function renderTopicThread(host, t) {
     var meta = TOPIC_META[t.id] || { icon: 'clipboard' };
+    /* locked topics get a view-only summary: lock banner + draft outline,
+       no chips, no composer, no accept (E2) */
+    if (isLocked(t)) {
+      var outline = ((t.draft && t.draft.sections) || []).map(function (sec) {
+        return '<div class="pm6-wiz-doc-note"><span class="pm6-wiz-glyph">▸</span> ' + esc(sec.h) + '</div>';
+      }).join('');
+      host.setAttribute('data-pm6-wiz-key', '');
+      host.innerHTML =
+        '<div class="pm6-wiz-thread-head">' + ico(meta.icon) +
+          '<div class="pm6-wiz-thread-title">' + t.num + ' · ' + esc(t.title) + '</div>' +
+          '<span class="pm6-wiz-lockchip">' + ico('lock') + 'Locked</span></div>' +
+        '<div class="pm6-wiz-thread-body">' +
+          '<div class="pm6-wiz-lockbar">' + ico('lock') +
+            '<span><strong>View-only while locked.</strong> ' + esc(unlockLine(t)) + '. ' +
+            'The wizard starts this interview the moment its dependencies land.</span></div>' +
+          reasonLine('blocked_by_gate', unlockLine(t) + '.') +
+          '<div class="pm6-wiz-thread-note">' + esc(t.summary) + '</div>' +
+          '<div class="pm6-wiz-doc-anns-t">Topic Plan Draft outline (view-only)</div>' + outline +
+        '</div>';
+      hydrateIcons(host);
+      return;
+    }
     var body = '';
     if (t.state === 'blocked') {
       body += '<div class="pm6-wiz-blockbar"><span class="pm6-wiz-reason-code">Blocked</span>' +
@@ -753,7 +994,7 @@
   /* ---------------- render everything ---------------- */
   function renderAll() {
     if (!WS()) return;
-    try { renderReqs(); } catch (e) {}
+    try { renderPrd(); } catch (e) {}
     try { renderTopics(); } catch (e) {}
     try { renderDock(); } catch (e) {}
     try { renderStatePill(); } catch (e) {}
@@ -874,12 +1115,18 @@
     W.theater = null;
     W.theaterDone = false;
     W.discovering = false;
+    W.choice = null;            /* choice screen comes back pristine */
+    W.annFresh = null;
+    W._prdSeen = {};
+    W._prdFresh = null;
+    closeOverlay();
+    hideSelMenu();
     setStage('intake');
     var foot = byId('pm6WizDiscFoot');
     if (foot) { foot.hidden = true; foot.style.display = 'none'; }
     var derive = byId('pm6WizDeriveRows');
     if (derive) derive.innerHTML = '';
-    try { renderReqs(); } catch (e) {} /* pristine requirements + re-hidden PRD chip */
+    try { renderPrd(); } catch (e) {} /* pristine requirements + re-hidden PRD chip */
     hydrateIcons();
     say('Rewound to intake — replay the planning flow from the start. Run #47 keeps running untouched.');
   }
@@ -906,8 +1153,117 @@
     } else if (W.stage === 'workspace') {
       renderAll();
     } else {
-      try { renderReqs(); } catch (e) {}
+      try { renderPrd(); } catch (e) {}
     }
+  }
+
+  /* ---------------- docs-rail pulse (choice: upload / attach-instead chip) -- */
+  function pulseDocsRail() {
+    var rail = byId('pm6WizPrdRail');
+    if (!rail) return;
+    rail.classList.remove('pm6-wiz-pulse');
+    void rail.offsetWidth; /* restart the keyframe */
+    rail.classList.add('pm6-wiz-pulse');
+    later(function () { rail.classList.remove('pm6-wiz-pulse'); }, 1600);
+  }
+
+  /* ---------------- expand overlay (D3) ---------------- */
+  function openOverlay(kind) {
+    W.overlay = kind === 'prd' ? 'prd' : 'topic';
+    var ov = byId('pm6WizDocOverlay');
+    if (!ov) return;
+    ov.hidden = false;
+    ov.style.display = '';
+    if (W.overlay === 'prd') { try { renderPrd(); } catch (e) {} }
+    else { try { renderDoc(); } catch (e) {} }
+  }
+  function closeOverlay() {
+    var kind = W.overlay;
+    W.overlay = null;
+    var ov = byId('pm6WizDocOverlay');
+    if (ov) { ov.hidden = true; ov.style.display = 'none'; }
+    if (!kind) return;
+    /* hand focus back to the expand button that opened it */
+    var btn = $('[data-demo-action="wizard.doc_expand"][data-demo-arg="' + kind + '"]', root());
+    if (btn) { try { btn.focus(); } catch (e) {} }
+  }
+
+  /* ---------------- selection context menu (D4) ----------------
+     one stage-level node — never inside a re-rendered doc host, so the
+     W._sel snapshot survives renderAll() (risk 4 mitigation) */
+  function selMenuEl() {
+    var m = byId('pm6WizSelMenu');
+    if (m) return m;
+    var r = root();
+    if (!r) return null;
+    m = document.createElement('div');
+    m.id = 'pm6WizSelMenu';
+    m.className = 'pm6-wiz-selmenu';
+    m.hidden = true;
+    m.style.display = 'none';
+    m.innerHTML =
+      '<button type="button" class="pm6-wiz-selmenu-btn" data-demo-action="wizard.doc_annotate">' + ico('pen') + 'Annotate</button>' +
+      '<button type="button" class="pm6-wiz-selmenu-btn" data-demo-action="wizard.doc_comment">' + ico('comment') + 'Comment</button>' +
+      '<button type="button" class="pm6-wiz-selmenu-btn" data-demo-action="wizard.doc_sendback">' + ico('bolt') + 'Send back to agent</button>';
+    r.appendChild(m);
+    return m;
+  }
+  function hideSelMenu() {
+    var m = byId('pm6WizSelMenu');
+    if (m) { m.hidden = true; m.style.display = 'none'; }
+    W._sel = null;
+  }
+  function showSelMenu(x, y) {
+    var m = selMenuEl();
+    if (!m) return;
+    m.hidden = false;
+    m.style.display = '';
+    m.style.left = '0px';
+    m.style.top = '0px';
+    var w = m.offsetWidth || 280;
+    var h = m.offsetHeight || 36;
+    var nx = Math.min(Math.max(8, x), window.innerWidth - w - 8);
+    var ny = Math.min(Math.max(8, y), window.innerHeight - h - 8);
+    m.style.left = nx + 'px';
+    m.style.top = ny + 'px';
+  }
+  function collapseSel() {
+    try {
+      var sel = window.getSelection();
+      if (sel) sel.removeAllRanges();
+    } catch (e) {}
+  }
+  function wireDocSelection() {
+    var r = root();
+    if (!r) return;
+    r.addEventListener('mouseup', function (e) {
+      /* releases on the menu itself must not clear the snapshot */
+      if (e.target && e.target.closest && e.target.closest('.pm6-wiz-selmenu')) return;
+      var sel = null;
+      try { sel = window.getSelection(); } catch (err) { sel = null; }
+      var text = sel ? String(sel.toString() || '').trim() : '';
+      if (!sel || sel.isCollapsed || !text) { hideSelMenu(); return; }
+      var node = sel.anchorNode;
+      var el = node && node.nodeType === 1 ? node : (node ? node.parentElement : null);
+      var doc = el && el.closest ? el.closest('.pm6-wiz-doc[data-doc-scope]') : null;
+      if (!doc) { hideSelMenu(); return; }
+      var secEl = el.closest('[data-sec]');
+      W._sel = {
+        scope: doc.getAttribute('data-doc-scope'),
+        secId: secEl ? secEl.getAttribute('data-sec') : null,
+        excerpt: text
+      };
+      var rect = null;
+      try { rect = sel.getRangeAt(0).getBoundingClientRect(); } catch (err) {}
+      showSelMenu(rect ? rect.right : e.clientX, (rect ? rect.bottom : e.clientY) + 6);
+    });
+    /* Esc closes the selection menu, then the overlay */
+    document.addEventListener('keydown', function (e) {
+      if (e.key !== 'Escape') return;
+      var m = byId('pm6WizSelMenu');
+      if (m && !m.hidden) { hideSelMenu(); return; }
+      if (W.overlay) closeOverlay();
+    });
   }
 
   /* ---------------- actions ---------------- */
@@ -932,18 +1288,60 @@
       });
       return { ok: true };
     });
-    reg('wizard.viewThread', function () {
-      /* open-only: same #chatPanel/.hidden contract as panels.open_chat —
-         never toggle-close a chat the user already has open */
-      var panel = byId('chatPanel');
-      var chatIcon = $('.activity-bar .icon[title="Chat"]');
-      if (chatIcon && (!panel || panel.classList.contains('hidden'))) { try { chatIcon.click(); } catch (e) {} }
-      return { toast: 'The imported goal lives in Assistant Chat — thread "Tastebook media pipeline".' };
-    });
     reg('wizard.to_requirements', function () {
-      setStage('requirements');
-      renderReqs();
+      setStage('requirements'); /* two-card choice screen (+ hybrid row) */
+      hydrateIcons(byId('pm6WizStageReqs'));
       return { ok: true };
+    });
+    reg('wizard.req_choice', function (ctx) {
+      var arg = String((ctx && ctx.arg) || 'builder');
+      W.choice = arg;
+      setStage('prd_builder');
+      renderPrd();
+      if (arg === 'upload' || arg === 'hybrid') pulseDocsRail();
+      return { ok: true };
+    });
+    reg('wizard.prd_focus_docs', function () {
+      pulseDocsRail();
+      return { toast: 'Drop a doc on the left — parsed sources reconcile into the same PRD ledger as your answers.' };
+    });
+    reg('wizard.doc_expand', function (ctx) {
+      openOverlay(String((ctx && ctx.arg) || 'topic'));
+      return { ok: true };
+    });
+    reg('wizard.doc_close', function () {
+      closeOverlay();
+      return { ok: true };
+    });
+    reg('wizard.doc_annotate', function () {
+      var snap = W._sel;
+      hideSelMenu();
+      collapseSel();
+      if (!snap) return { toast: 'Select some text in the document first.' };
+      W.annFresh = snap.scope;
+      var res = d.wizard.annotate(snap.scope, snap.secId, snap.excerpt, 'annotation');
+      if (res && (res.toast || res.disabled)) return res;
+      return { toast: 'Annotation recorded — visible to the topic agent.' };
+    });
+    reg('wizard.doc_comment', function () {
+      var snap = W._sel;
+      hideSelMenu();
+      collapseSel();
+      if (!snap) return { toast: 'Select some text in the document first.' };
+      W.annFresh = snap.scope;
+      var res = d.wizard.annotate(snap.scope, snap.secId, snap.excerpt, 'comment');
+      if (res && (res.toast || res.disabled)) return res;
+      return { toast: 'Comment recorded — pinned to this section for the next audit pass.' };
+    });
+    reg('wizard.doc_sendback', function () {
+      var snap = W._sel;
+      hideSelMenu();
+      collapseSel();
+      if (!snap) return { toast: 'Select the text to send back first.' };
+      /* engine facade drives the thread injection + revision micro-track;
+         PRD scope routes into the open builder turn or the P4 durable
+         ledger-note fallback (reqs.revisions increments either way) */
+      return d.wizard.sendBack(snap.scope, snap.secId, snap.excerpt);
     });
     reg('wizard.startDiscovery', function () {
       var s = WS();
@@ -953,11 +1351,6 @@
       W.discovering = true;
       setStage('discovery');
       runDiscovery();
-      return { ok: true };
-    });
-    reg('wizard.toggleHeader', function () {
-      var head = byId('pm6WizRunHead');
-      if (head) head.classList.toggle('collapsed');
       return { ok: true };
     });
     function sendReply(ctx) {
@@ -995,6 +1388,9 @@
     d.on('wizard.topic', function (p) {
       if (!p) return;
       if (p.opened) W.threadMode = 'topic';
+      if (p.unlocked && p.topic) {
+        say('"' + p.topic.title + '" unlocked — its dependencies are Ready.');
+      }
       if (p.answered && p.topic && !reduced() && p.topic.thread && p.topic.thread.length) {
         /* a reply just landed — show it (plus the ledger note), let typing dots
            cover the agent ack for a beat, then reveal the full transcript */
@@ -1023,11 +1419,11 @@
         if (lastUser >= 0 && lastUser >= W.lastReqTurns) {
           /* a builder reply just landed — typing dots cover the ack for a beat */
           W.reqTurnPending = lastUser + 1;
-          later(function () { W.reqTurnPending = null; try { renderReqs(); } catch (e) {} }, 800);
+          later(function () { W.reqTurnPending = null; try { renderPrd(); } catch (e) {} }, 800);
         }
       }
       W.lastReqTurns = turns.length;
-      try { renderReqs(); } catch (e) {}
+      try { renderPrd(); } catch (e) {}
       if (W.stage === 'workspace') { try { renderRail(); } catch (e) {} }
     });
     d.on('wizard.pack', function () {
@@ -1059,7 +1455,7 @@
     if (!r) return;
     function sendBtnFor(ta) {
       var wrap = ta.closest ? ta.closest('.pm6-wiz-composer') : null;
-      return wrap ? $('.pm6-wiz-send', wrap) : null;
+      return wrap ? $('.pm6-wiz-send, .pm6-chat-send-embed', wrap) : null;
     }
     /* composer typing: keep the Send button's arg + gate in sync without
        re-rendering the composer itself (the textarea keeps focus) */
@@ -1111,7 +1507,11 @@
         PM_PAGES.registerSubtab('wizard', function (sub) {
           if (!sub) return;
           if (sub === 'intake') { setStage('intake'); hydrateIcons(); return; }
-          if (sub === 'requirements') { setStage('requirements'); renderReqs(); return; }
+          if (sub === 'requirements' || sub === 'prd_builder') {
+            if (W.choice || sub === 'prd_builder') { setStage('prd_builder'); renderPrd(); }
+            else { setStage('requirements'); hydrateIcons(); }
+            return;
+          }
           if (sub === 'final_review' || sub === 'review') {
             ensureWorkspace();
             var s = WS();
@@ -1138,8 +1538,9 @@
     subscribe();
     wireInputs();
     wireDropZone();
+    wireDocSelection();
     registerSubtabs();
-    renderReqs(); /* requirements stage is ready before the user reaches it */
+    renderPrd(); /* PRD builder stage is ready before the user reaches it */
     resync(); /* if a chapter jump already approved the plan, land in review */
   }
   if (document.readyState === 'loading') document.addEventListener('DOMContentLoaded', boot);

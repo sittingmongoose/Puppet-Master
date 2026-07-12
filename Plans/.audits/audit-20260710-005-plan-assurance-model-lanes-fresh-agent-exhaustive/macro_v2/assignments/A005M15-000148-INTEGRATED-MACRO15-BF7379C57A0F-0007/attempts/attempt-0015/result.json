@@ -1,0 +1,2558 @@
+{
+  "assignment_id": "A005M15-000148-INTEGRATED-MACRO15-BF7379C57A0F-0007",
+  "attempt_id": "attempt-0015",
+  "audit_id": "audit-20260710-005-plan-assurance-model-lanes-fresh-agent-exhaustive",
+  "coverage": {
+    "all_micro_windows_reviewed": true,
+    "all_source_lines_reviewed": true,
+    "all_source_units_accounted": true,
+    "both_exact_and_adversarial_lenses_applied": true,
+    "dimensions_checked": [
+      "behavior",
+      "capabilities",
+      "inputs_outputs",
+      "contracts",
+      "states_transitions",
+      "authority",
+      "ownership",
+      "consumers",
+      "gui_truth",
+      "failures_recovery",
+      "security_privacy",
+      "propagation",
+      "operations",
+      "scale_performance",
+      "compatibility_migration",
+      "acceptance_oracles",
+      "builder_discretion",
+      "ambiguity_unknowns",
+      "missing_callers_consumers",
+      "invalid_states_transitions",
+      "concurrency_races",
+      "partial_failure",
+      "recovery_rollback",
+      "authority_boundaries",
+      "privacy_data_lifecycle",
+      "untrusted_inputs",
+      "gui_misleading_states",
+      "offline_network_loss",
+      "scale_limits",
+      "accessibility",
+      "localization",
+      "observability_support",
+      "destructive_actions",
+      "cross_document_seams",
+      "test_falsifiability",
+      "unknown_unknowns"
+    ]
+  },
+  "items": [
+    {
+      "builder_discretion": false,
+      "confidence": 0.97,
+      "dimensions": [
+        "behavior",
+        "states_transitions",
+        "acceptance_oracles"
+      ],
+      "evidence": [
+        {
+          "exact_quote": "  The interviewer must not start cold: imported context is available before the",
+          "line_end": 17607,
+          "line_start": 17607,
+          "path": "Plans/assistant-chat-design.md",
+          "source_sha256": "dbe013e75b0359ac3f4763abd6cc3756a3366b628c1ddb066c68e4ecc91e0f67"
+        }
+      ],
+      "gap_kind": "none",
+      "impact": "Preserves a deterministic interview start state while retaining mandatory scope discovery.",
+      "item_id": "A005M15-000148-I-ACD-313",
+      "item_type": "behavior",
+      "severity": "info",
+      "source_unit_refs": [
+        "PLANUNIT:ACD-313",
+        "SEMANTIC:PLANUNIT:ACD-313"
+      ],
+      "statement": "Imported context is available before the first question, but it cannot bypass the mandatory phase-0 scope probe.",
+      "title": "Wizard Imported Context Before Interview"
+    },
+    {
+      "builder_discretion": true,
+      "confidence": 0.9,
+      "dimensions": [
+        "contracts",
+        "gui_truth",
+        "failures_recovery",
+        "ambiguity_unknowns",
+        "partial_failure",
+        "observability_support",
+        "test_falsifiability"
+      ],
+      "evidence": [
+        {
+          "exact_quote": "  artifact handoff, visible/auditable handoff, and no silent repo-file creation.",
+          "line_end": 17653,
+          "line_start": 17653,
+          "path": "Plans/assistant-chat-design.md",
+          "source_sha256": "dbe013e75b0359ac3f4763abd6cc3756a3366b628c1ddb066c68e4ecc91e0f67"
+        }
+      ],
+      "gap_kind": "underspecified_audit_contract",
+      "impact": "Builders could implement incompatible or non-verifiable handoff audit behavior while satisfying the visible UI criteria.",
+      "item_id": "A005M15-000148-I-ACD-314",
+      "item_type": "gap",
+      "severity": "high",
+      "source_unit_refs": [
+        "PLANUNIT:ACD-314",
+        "SEMANTIC:PLANUNIT:ACD-314"
+      ],
+      "statement": "The handoff must be visible and auditable, but this unit does not define the audit record, required fields, persistence boundary, or failure behavior.",
+      "title": "Mode And Wizard Acceptance Audit Contract Gap"
+    },
+    {
+      "builder_discretion": false,
+      "confidence": 0.97,
+      "dimensions": [
+        "contracts",
+        "compatibility_migration",
+        "cross_document_seams"
+      ],
+      "evidence": [
+        {
+          "exact_quote": "  Canonical thread blocked surfaces reuse the shared blocked packet instead of",
+          "line_end": 17697,
+          "line_start": 17697,
+          "path": "Plans/assistant-chat-design.md",
+          "source_sha256": "dbe013e75b0359ac3f4763abd6cc3756a3366b628c1ddb066c68e4ecc91e0f67"
+        }
+      ],
+      "gap_kind": "none",
+      "impact": "Prevents duplicate blocked-state contracts and misapplication of retired guidance.",
+      "item_id": "A005M15-000148-I-ACD-315",
+      "item_type": "explicit_non_gap",
+      "severity": "info",
+      "source_unit_refs": [
+        "PLANUNIT:ACD-315",
+        "SEMANTIC:PLANUNIT:ACD-315"
+      ],
+      "statement": "The shared blocked packet is canonical, while overlapping local ask-flow tuples are historical transfer notes rather than peer recovery guidance.",
+      "title": "Blocked State Compatibility Disposition"
+    },
+    {
+      "builder_discretion": false,
+      "confidence": 0.97,
+      "dimensions": [
+        "inputs_outputs",
+        "contracts",
+        "acceptance_oracles"
+      ],
+      "evidence": [
+        {
+          "exact_quote": "canonical_text: The shared blocked packet required fields are `blocked_notice`, `blocked_sequence`, `approval_scope_key`, and `allowed_action_ids[]`.",
+          "line_end": 17738,
+          "line_start": 17738,
+          "path": "Plans/assistant-chat-design.md",
+          "source_sha256": "dbe013e75b0359ac3f4763abd6cc3756a3366b628c1ddb066c68e4ecc91e0f67"
+        }
+      ],
+      "gap_kind": "none",
+      "impact": "Provides a concrete minimum packet shape for blocked-state consumers.",
+      "item_id": "A005M15-000148-I-ACD-316",
+      "item_type": "contract",
+      "severity": "info",
+      "source_unit_refs": [
+        "PLANUNIT:ACD-316",
+        "SEMANTIC:PLANUNIT:ACD-316"
+      ],
+      "statement": "Every shared blocked packet requires `blocked_notice`, `blocked_sequence`, `approval_scope_key`, and ordered `allowed_action_ids[]`.",
+      "title": "Blocked Packet Required Fields"
+    },
+    {
+      "builder_discretion": true,
+      "confidence": 0.9,
+      "dimensions": [
+        "contracts",
+        "authority",
+        "gui_truth",
+        "failures_recovery",
+        "invalid_states_transitions",
+        "authority_boundaries",
+        "untrusted_inputs",
+        "gui_misleading_states"
+      ],
+      "evidence": [
+        {
+          "exact_quote": "  blocked taxonomy members; chat buttons render from ordered",
+          "line_end": 17781,
+          "line_start": 17781,
+          "path": "Plans/assistant-chat-design.md",
+          "source_sha256": "dbe013e75b0359ac3f4763abd6cc3756a3366b628c1ddb066c68e4ecc91e0f67"
+        }
+      ],
+      "gap_kind": "invalid_action_contract_missing",
+      "impact": "A malformed or stale blocked packet could expose misleading or unauthorized actions without deterministic rejection behavior.",
+      "item_id": "A005M15-000148-I-ACD-317",
+      "item_type": "gap",
+      "severity": "high",
+      "source_unit_refs": [
+        "PLANUNIT:ACD-317",
+        "SEMANTIC:PLANUNIT:ACD-317"
+      ],
+      "statement": "Buttons render from ordered `allowed_action_ids[]`, but behavior for unknown, stale, duplicated, or unauthorized action IDs is not specified.",
+      "title": "Blocked Action Validation And Authority Gap"
+    },
+    {
+      "builder_discretion": false,
+      "confidence": 0.97,
+      "dimensions": [
+        "capabilities",
+        "consumers",
+        "operations",
+        "cross_document_seams"
+      ],
+      "evidence": [
+        {
+          "exact_quote": "  Worktrees in Assistant covers the W.1-W.17 thread-level worktree binding",
+          "line_end": 17828,
+          "line_start": 17828,
+          "path": "Plans/assistant-chat-design.md",
+          "source_sha256": "dbe013e75b0359ac3f4763abd6cc3756a3366b628c1ddb066c68e4ecc91e0f67"
+        }
+      ],
+      "gap_kind": "none",
+      "impact": "Establishes the feature-family boundary and its dependent implementation surfaces.",
+      "item_id": "A005M15-000148-I-ACD-318",
+      "item_type": "feature",
+      "severity": "info",
+      "source_unit_refs": [
+        "PLANUNIT:ACD-318",
+        "SEMANTIC:PLANUNIT:ACD-318"
+      ],
+      "statement": "Assistant worktree scope covers the complete W.1-W.17 thread-binding feature across UI, lifecycle, commands, settings, events, and errors.",
+      "title": "Worktrees In Assistant Scope"
+    },
+    {
+      "builder_discretion": false,
+      "confidence": 0.97,
+      "dimensions": [
+        "authority",
+        "ownership",
+        "consumers",
+        "authority_boundaries",
+        "cross_document_seams"
+      ],
+      "evidence": [
+        {
+          "exact_quote": "canonical_text: Assistant chat deep-links into Source Control without owning accordion layout; Source Control owns the Worktrees row layout and filters Assistant links to.",
+          "line_end": 17875,
+          "line_start": 17875,
+          "path": "Plans/assistant-chat-design.md",
+          "source_sha256": "dbe013e75b0359ac3f4763abd6cc3756a3366b628c1ddb066c68e4ecc91e0f67"
+        }
+      ],
+      "gap_kind": "none",
+      "impact": "Prevents Assistant from becoming a competing Source Control UI owner.",
+      "item_id": "A005M15-000148-I-ACD-319",
+      "item_type": "authority",
+      "severity": "info",
+      "source_unit_refs": [
+        "PLANUNIT:ACD-319",
+        "SEMANTIC:PLANUNIT:ACD-319"
+      ],
+      "statement": "Assistant is a deep-linking consumer; Source Control owns accordion layout, Worktrees row layout, and filters.",
+      "title": "Source Control Worktree Ownership Boundary"
+    },
+    {
+      "builder_discretion": true,
+      "confidence": 0.9,
+      "dimensions": [
+        "contracts",
+        "states_transitions",
+        "failures_recovery",
+        "compatibility_migration",
+        "ambiguity_unknowns",
+        "recovery_rollback"
+      ],
+      "evidence": [
+        {
+          "exact_quote": "  Per-project Source Control accordion open/close state persists at",
+          "line_end": 17917,
+          "line_start": 17917,
+          "path": "Plans/assistant-chat-design.md",
+          "source_sha256": "dbe013e75b0359ac3f4763abd6cc3756a3366b628c1ddb066c68e4ecc91e0f67"
+        }
+      ],
+      "gap_kind": "persisted_state_evolution_missing",
+      "impact": "Corrupt or older persisted state could produce inconsistent section state across versions.",
+      "item_id": "A005M15-000148-I-ACD-320",
+      "item_type": "gap",
+      "severity": "medium",
+      "source_unit_refs": [
+        "PLANUNIT:ACD-320",
+        "SEMANTIC:PLANUNIT:ACD-320"
+      ],
+      "statement": "The per-project accordion object has a specified key and shape, but no schema version, malformed-value recovery, unknown-key policy, or migration rule.",
+      "title": "Accordion State Migration And Corruption Gap"
+    },
+    {
+      "builder_discretion": false,
+      "confidence": 0.97,
+      "dimensions": [
+        "behavior",
+        "states_transitions",
+        "gui_truth",
+        "compatibility_migration",
+        "acceptance_oracles"
+      ],
+      "evidence": [
+        {
+          "exact_quote": "  Worktrees filter is `All | Threads | Orchestrator | Manual`, persists as",
+          "line_end": 17964,
+          "line_start": 17964,
+          "path": "Plans/assistant-chat-design.md",
+          "source_sha256": "dbe013e75b0359ac3f4763abd6cc3756a3366b628c1ddb066c68e4ecc91e0f67"
+        }
+      ],
+      "gap_kind": "none",
+      "impact": "Provides deterministic visible ordering and project-scoped filter behavior.",
+      "item_id": "A005M15-000148-I-ACD-321",
+      "item_type": "gui_truth",
+      "severity": "info",
+      "source_unit_refs": [
+        "PLANUNIT:ACD-321",
+        "SEMANTIC:PLANUNIT:ACD-321"
+      ],
+      "statement": "Source Control has fixed section order, non-persisted scroll, project-isolated state, nested scrolling, and a persisted per-project Worktrees filter defaulting to `All`.",
+      "title": "Source Control Worktree Filter State"
+    },
+    {
+      "builder_discretion": false,
+      "confidence": 0.97,
+      "dimensions": [
+        "behavior",
+        "gui_truth",
+        "acceptance_oracles",
+        "gui_misleading_states"
+      ],
+      "evidence": [
+        {
+          "exact_quote": "  Chat header appends the Worktree button after Reasoning/effort; mode buttons",
+          "line_end": 18011,
+          "line_start": 18011,
+          "path": "Plans/assistant-chat-design.md",
+          "source_sha256": "dbe013e75b0359ac3f4763abd6cc3756a3366b628c1ddb066c68e4ecc91e0f67"
+        }
+      ],
+      "gap_kind": "none",
+      "impact": "Makes header placement and repository-dependent visibility testable.",
+      "item_id": "A005M15-000148-I-ACD-322",
+      "item_type": "gui_truth",
+      "severity": "info",
+      "source_unit_refs": [
+        "PLANUNIT:ACD-322",
+        "SEMANTIC:PLANUNIT:ACD-322"
+      ],
+      "statement": "The Worktree button follows Reasoning/effort, stays separate from mode buttons, spans all named modes, and disappears without an active Git repository.",
+      "title": "Worktree Header Button Placement"
+    },
+    {
+      "builder_discretion": true,
+      "confidence": 0.9,
+      "dimensions": [
+        "gui_truth",
+        "acceptance_oracles",
+        "builder_discretion",
+        "ambiguity_unknowns",
+        "accessibility",
+        "test_falsifiability"
+      ],
+      "evidence": [
+        {
+          "exact_quote": "  - Accessibility announcements and compact overflow behavior match the source span.",
+          "line_end": 18066,
+          "line_start": 18066,
+          "path": "Plans/assistant-chat-design.md",
+          "source_sha256": "dbe013e75b0359ac3f4763abd6cc3756a3366b628c1ddb066c68e4ecc91e0f67"
+        }
+      ],
+      "gap_kind": "accessibility_oracle_missing",
+      "impact": "Different implementations may announce conflicting information or fail to expose dirty/conflict transitions accessibly.",
+      "item_id": "A005M15-000148-I-ACD-323",
+      "item_type": "gap",
+      "severity": "medium",
+      "source_unit_refs": [
+        "PLANUNIT:ACD-323",
+        "SEMANTIC:PLANUNIT:ACD-323"
+      ],
+      "statement": "The unit references accessibility announcements and compact overflow behavior, but does not define announcement copy, state-change triggers, focus behavior, or assistive-technology oracle.",
+      "title": "Icon Accessibility Contract Gap"
+    },
+    {
+      "builder_discretion": true,
+      "confidence": 0.9,
+      "dimensions": [
+        "gui_truth",
+        "failures_recovery",
+        "ambiguity_unknowns",
+        "gui_misleading_states",
+        "accessibility",
+        "destructive_actions"
+      ],
+      "evidence": [
+        {
+          "exact_quote": "  Worktree dropdown rows differ for unbound and bound states, including `None`,",
+          "line_end": 18106,
+          "line_start": 18106,
+          "path": "Plans/assistant-chat-design.md",
+          "source_sha256": "dbe013e75b0359ac3f4763abd6cc3756a3366b628c1ddb066c68e4ecc91e0f67"
+        }
+      ],
+      "gap_kind": "destructive_confirmation_missing",
+      "impact": "A user could trigger irreversible cleanup from the header with weaker safeguards than the thread-delete path.",
+      "item_id": "A005M15-000148-I-ACD-324",
+      "item_type": "gap",
+      "severity": "high",
+      "source_unit_refs": [
+        "PLANUNIT:ACD-324",
+        "SEMANTIC:PLANUNIT:ACD-324"
+      ],
+      "statement": "The bound dropdown exposes destructive `Remove Worktree`, but this unit does not specify confirmation, dirty-state warning, keyboard default, or cancellation behavior for that entry path.",
+      "title": "Destructive Dropdown Confirmation Gap"
+    },
+    {
+      "builder_discretion": true,
+      "confidence": 0.9,
+      "dimensions": [
+        "states_transitions",
+        "failures_recovery",
+        "concurrency_races",
+        "partial_failure",
+        "authority_boundaries",
+        "destructive_actions"
+      ],
+      "evidence": [
+        {
+          "exact_quote": "  Binding changes apply to the next turn; in-flight turns make the dropdown",
+          "line_end": 18154,
+          "line_start": 18154,
+          "path": "Plans/assistant-chat-design.md",
+          "source_sha256": "dbe013e75b0359ac3f4763abd6cc3756a3366b628c1ddb066c68e4ecc91e0f67"
+        }
+      ],
+      "gap_kind": "remove_toctou_race",
+      "impact": "A run could start after the check and before removal, deleting a worktree that has active execution.",
+      "item_id": "A005M15-000148-I-ACD-325",
+      "item_type": "gap",
+      "severity": "critical",
+      "source_unit_refs": [
+        "PLANUNIT:ACD-325",
+        "SEMANTIC:PLANUNIT:ACD-325"
+      ],
+      "statement": "Removal is blocked for any active run, but the active-run check and destructive call are not specified as one atomic operation.",
+      "title": "Removal Check Atomicity Gap"
+    },
+    {
+      "builder_discretion": false,
+      "confidence": 0.97,
+      "dimensions": [
+        "inputs_outputs",
+        "contracts",
+        "states_transitions",
+        "compatibility_migration"
+      ],
+      "evidence": [
+        {
+          "exact_quote": "  Thread worktree binding persists at",
+          "line_end": 18198,
+          "line_start": 18198,
+          "path": "Plans/assistant-chat-design.md",
+          "source_sha256": "dbe013e75b0359ac3f4763abd6cc3756a3366b628c1ddb066c68e4ecc91e0f67"
+        }
+      ],
+      "gap_kind": "none",
+      "impact": "Defines stable persistence identity and separates display branch from internal temporary naming.",
+      "item_id": "A005M15-000148-I-ACD-326",
+      "item_type": "contract",
+      "severity": "info",
+      "source_unit_refs": [
+        "PLANUNIT:ACD-326",
+        "SEMANTIC:PLANUNIT:ACD-326"
+      ],
+      "statement": "Thread binding persists under a stable thread key with worktree, branch, path, timestamp, origin, and temporary-branch fields.",
+      "title": "Thread Worktree Binding Storage"
+    },
+    {
+      "builder_discretion": true,
+      "confidence": 0.9,
+      "dimensions": [
+        "contracts",
+        "states_transitions",
+        "concurrency_races",
+        "partial_failure",
+        "recovery_rollback"
+      ],
+      "evidence": [
+        {
+          "exact_quote": "canonical_text: Reverse lookup `worktree_binding_reverse:{worktree_id}` enforces one worktree per thread and one thread per worktree, with explicit error and deep link when already bound.",
+          "line_end": 18246,
+          "line_start": 18246,
+          "path": "Plans/assistant-chat-design.md",
+          "source_sha256": "dbe013e75b0359ac3f4763abd6cc3756a3366b628c1ddb066c68e4ecc91e0f67"
+        }
+      ],
+      "gap_kind": "binding_transaction_atomicity_missing",
+      "impact": "Concurrent binds or a partial write could violate the one-thread/one-worktree invariant.",
+      "item_id": "A005M15-000148-I-ACD-327",
+      "item_type": "gap",
+      "severity": "high",
+      "source_unit_refs": [
+        "PLANUNIT:ACD-327",
+        "SEMANTIC:PLANUNIT:ACD-327"
+      ],
+      "statement": "A reverse lookup enforces one-to-one binding, but the general bind path does not explicitly state that ownership check, forward write, and reverse write commit atomically.",
+      "title": "Reverse Binding Enforcement Atomicity Gap"
+    },
+    {
+      "builder_discretion": true,
+      "confidence": 0.9,
+      "dimensions": [
+        "states_transitions",
+        "failures_recovery",
+        "concurrency_races",
+        "partial_failure",
+        "recovery_rollback",
+        "observability_support"
+      ],
+      "evidence": [
+        {
+          "exact_quote": "  `git worktree list`, auto-unbinds missing paths, emits",
+          "line_end": 18289,
+          "line_start": 18289,
+          "path": "Plans/assistant-chat-design.md",
+          "source_sha256": "dbe013e75b0359ac3f4763abd6cc3756a3366b628c1ddb066c68e4ecc91e0f67"
+        }
+      ],
+      "gap_kind": "revalidation_error_taxonomy_missing",
+      "impact": "Transient inspection failures could be misclassified as path absence and destructively discard a valid binding.",
+      "item_id": "A005M15-000148-I-ACD-328",
+      "item_type": "gap",
+      "severity": "high",
+      "source_unit_refs": [
+        "PLANUNIT:ACD-328",
+        "SEMANTIC:PLANUNIT:ACD-328"
+      ],
+      "statement": "Startup validates membership in `git worktree list` and auto-unbinds missing paths, but does not distinguish missing paths from Git command failure, permission failure, transient filesystem failure, or concurrent removal.",
+      "title": "Startup Revalidation Failure Classification Gap"
+    },
+    {
+      "builder_discretion": false,
+      "confidence": 0.97,
+      "dimensions": [
+        "inputs_outputs",
+        "contracts",
+        "states_transitions",
+        "compatibility_migration",
+        "acceptance_oracles"
+      ],
+      "evidence": [
+        {
+          "exact_quote": "  File identity for chat/debug/Source Control/GitHub pivots is `{ repo_id,",
+          "line_end": 18334,
+          "line_start": 18334,
+          "path": "Plans/assistant-chat-design.md",
+          "source_sha256": "dbe013e75b0359ac3f4763abd6cc3756a3366b628c1ddb066c68e4ecc91e0f67"
+        }
+      ],
+      "gap_kind": "none",
+      "impact": "Prevents path-only ambiguity and historical evidence drift after binding changes.",
+      "item_id": "A005M15-000148-I-ACD-329",
+      "item_type": "contract",
+      "severity": "info",
+      "source_unit_refs": [
+        "PLANUNIT:ACD-329",
+        "SEMANTIC:PLANUNIT:ACD-329"
+      ],
+      "statement": "File pivots use repo, worktree, and relative path; turn start freezes worktree and working directory; historical evidence remains pinned.",
+      "title": "Worktree Aware File Identity"
+    },
+    {
+      "builder_discretion": false,
+      "confidence": 0.97,
+      "dimensions": [
+        "behavior",
+        "states_transitions",
+        "invalid_states_transitions",
+        "concurrency_races"
+      ],
+      "evidence": [
+        {
+          "exact_quote": "  Worktree binding is thread-level and orthogonal to Ask, Agent, Debug, Plan,",
+          "line_end": 18382,
+          "line_start": 18382,
+          "path": "Plans/assistant-chat-design.md",
+          "source_sha256": "dbe013e75b0359ac3f4763abd6cc3756a3366b628c1ddb066c68e4ecc91e0f67"
+        }
+      ],
+      "gap_kind": "none",
+      "impact": "Protects execution context from mid-turn mode transitions.",
+      "item_id": "A005M15-000148-I-ACD-330",
+      "item_type": "state_transition",
+      "severity": "info",
+      "source_unit_refs": [
+        "PLANUNIT:ACD-330",
+        "SEMANTIC:PLANUNIT:ACD-330"
+      ],
+      "statement": "Mode changes are orthogonal to thread binding and cannot mutate the frozen working directory of an in-flight turn.",
+      "title": "Mode Worktree Invariant"
+    },
+    {
+      "builder_discretion": false,
+      "confidence": 0.97,
+      "dimensions": [
+        "inputs_outputs",
+        "gui_truth",
+        "acceptance_oracles",
+        "accessibility"
+      ],
+      "evidence": [
+        {
+          "exact_quote": "canonical_text: Create Worktree dialog opens from `Create Worktree…`, with Branch name and Base ref fields, defaults, validation, and `Create`/`Cancel` buttons.",
+          "line_end": 18423,
+          "line_start": 18423,
+          "path": "Plans/assistant-chat-design.md",
+          "source_sha256": "dbe013e75b0359ac3f4763abd6cc3756a3366b628c1ddb066c68e4ecc91e0f67"
+        }
+      ],
+      "gap_kind": "none",
+      "impact": "Defines the visible creation entry surface and its primary controls.",
+      "item_id": "A005M15-000148-I-ACD-331",
+      "item_type": "gui_truth",
+      "severity": "info",
+      "source_unit_refs": [
+        "PLANUNIT:ACD-331",
+        "SEMANTIC:PLANUNIT:ACD-331"
+      ],
+      "statement": "Create Worktree opens a dialog with branch and base-ref inputs, defaults, validation, and Create/Cancel actions.",
+      "title": "Create Worktree Dialog Surface"
+    },
+    {
+      "builder_discretion": true,
+      "confidence": 0.9,
+      "dimensions": [
+        "contracts",
+        "states_transitions",
+        "failures_recovery",
+        "concurrency_races",
+        "partial_failure",
+        "recovery_rollback",
+        "observability_support"
+      ],
+      "evidence": [
+        {
+          "exact_quote": "  `WorktreeManager::create_worktree(branch_name, base_ref, worktree_path)`,",
+          "line_end": 18469,
+          "line_start": 18469,
+          "path": "Plans/assistant-chat-design.md",
+          "source_sha256": "dbe013e75b0359ac3f4763abd6cc3756a3366b628c1ddb066c68e4ecc91e0f67"
+        }
+      ],
+      "gap_kind": "multi_step_transaction_undefined",
+      "impact": "A crash or write/event failure can leave an orphan worktree, missing reverse binding, or projection state that disagrees with storage.",
+      "item_id": "A005M15-000148-I-ACD-332",
+      "item_type": "gap",
+      "severity": "critical",
+      "source_unit_refs": [
+        "PLANUNIT:ACD-332",
+        "SEMANTIC:PLANUNIT:ACD-332"
+      ],
+      "statement": "Creation calls the manager, writes a record, writes binding, and emits an event, but no transaction boundary, ordering guarantee, idempotency key, or rollback behavior is defined for failures between steps.",
+      "title": "Create Transaction Rollback Gap"
+    },
+    {
+      "builder_discretion": false,
+      "confidence": 0.97,
+      "dimensions": [
+        "states_transitions",
+        "gui_truth",
+        "failures_recovery",
+        "acceptance_oracles"
+      ],
+      "evidence": [
+        {
+          "exact_quote": "  Create dialog success closes and updates bound state/thread selector; failure",
+          "line_end": 18515,
+          "line_start": 18515,
+          "path": "Plans/assistant-chat-design.md",
+          "source_sha256": "dbe013e75b0359ac3f4763abd6cc3756a3366b628c1ddb066c68e4ecc91e0f67"
+        }
+      ],
+      "gap_kind": "none",
+      "impact": "Defines visible success, retryable failure, advisory collision, and loading transitions.",
+      "item_id": "A005M15-000148-I-ACD-333",
+      "item_type": "failure_recovery",
+      "severity": "info",
+      "source_unit_refs": [
+        "PLANUNIT:ACD-333",
+        "SEMANTIC:PLANUNIT:ACD-333"
+      ],
+      "statement": "Success closes and updates binding UI; failure remains retryable; collision is advisory; loading disables mutation controls and shows progress.",
+      "title": "Create Worktree Result States"
+    },
+    {
+      "builder_discretion": false,
+      "confidence": 0.97,
+      "dimensions": [
+        "authority",
+        "ownership",
+        "authority_boundaries",
+        "untrusted_inputs"
+      ],
+      "evidence": [
+        {
+          "exact_quote": "canonical_text: Worktree creation/removal entrypoints are user-initiated or system-initiated by auto-create; the AI agent never invokes worktree creation/removal as a direct tool call.",
+          "line_end": 18561,
+          "line_start": 18561,
+          "path": "Plans/assistant-chat-design.md",
+          "source_sha256": "dbe013e75b0359ac3f4763abd6cc3756a3366b628c1ddb066c68e4ecc91e0f67"
+        }
+      ],
+      "gap_kind": "none",
+      "impact": "Prevents autonomous agents from obtaining direct destructive worktree authority.",
+      "item_id": "A005M15-000148-I-ACD-334",
+      "item_type": "authority",
+      "severity": "info",
+      "source_unit_refs": [
+        "PLANUNIT:ACD-334",
+        "SEMANTIC:PLANUNIT:ACD-334"
+      ],
+      "statement": "Creation and removal are user/system entrypoints; the AI agent cannot invoke either as a direct tool call.",
+      "title": "Worktree Creation Tool Boundary"
+    },
+    {
+      "builder_discretion": false,
+      "confidence": 0.97,
+      "dimensions": [
+        "behavior",
+        "states_transitions",
+        "failures_recovery",
+        "acceptance_oracles",
+        "offline_network_loss"
+      ],
+      "evidence": [
+        {
+          "exact_quote": "canonical_text: When `branching.assistant_auto_worktree` is true, new thread creation synchronously creates a worktree before first turn dispatch; failure creates the thread without a worktree and warns the user.",
+          "line_end": 18602,
+          "line_start": 18602,
+          "path": "Plans/assistant-chat-design.md",
+          "source_sha256": "dbe013e75b0359ac3f4763abd6cc3756a3366b628c1ddb066c68e4ecc91e0f67"
+        }
+      ],
+      "gap_kind": "none",
+      "impact": "Ensures first-turn context is deterministic and failure remains non-fatal and visible.",
+      "item_id": "A005M15-000148-I-ACD-335",
+      "item_type": "failure_recovery",
+      "severity": "info",
+      "source_unit_refs": [
+        "PLANUNIT:ACD-335",
+        "SEMANTIC:PLANUNIT:ACD-335"
+      ],
+      "statement": "When enabled, new-thread creation synchronously attempts worktree creation before dispatch; failure preserves the thread at project root and warns the user.",
+      "title": "Assistant Auto Worktree Creation"
+    },
+    {
+      "builder_discretion": true,
+      "confidence": 0.9,
+      "dimensions": [
+        "states_transitions",
+        "failures_recovery",
+        "partial_failure",
+        "recovery_rollback",
+        "observability_support"
+      ],
+      "evidence": [
+        {
+          "exact_quote": "  Title rename flow sanitizes generated titles, targets",
+          "line_end": 18644,
+          "line_start": 18644,
+          "path": "Plans/assistant-chat-design.md",
+          "source_sha256": "dbe013e75b0359ac3f4763abd6cc3756a3366b628c1ddb066c68e4ecc91e0f67"
+        }
+      ],
+      "gap_kind": "rename_failure_observability_missing",
+      "impact": "A thread may remain indefinitely on a temporary branch with no discoverable cause or retry path.",
+      "item_id": "A005M15-000148-I-ACD-336",
+      "item_type": "gap",
+      "severity": "medium",
+      "source_unit_refs": [
+        "PLANUNIT:ACD-336",
+        "SEMANTIC:PLANUNIT:ACD-336"
+      ],
+      "statement": "Title-driven rename keeps the temporary branch on failure without user interruption, but does not require an event, log, retry state, or later remediation affordance.",
+      "title": "Silent Rename Failure Observability Gap"
+    },
+    {
+      "builder_discretion": false,
+      "confidence": 0.97,
+      "dimensions": [
+        "behavior",
+        "authority",
+        "ownership",
+        "concurrency_races",
+        "authority_boundaries"
+      ],
+      "evidence": [
+        {
+          "exact_quote": "  Chat runtime owns auto-create; Executor never invokes `WorktreeManager`",
+          "line_end": 18693,
+          "line_start": 18693,
+          "path": "Plans/assistant-chat-design.md",
+          "source_sha256": "dbe013e75b0359ac3f4763abd6cc3756a3366b628c1ddb066c68e4ecc91e0f67"
+        }
+      ],
+      "gap_kind": "none",
+      "impact": "Centralizes creation authority and defines bounded concurrency retry behavior.",
+      "item_id": "A005M15-000148-I-ACD-337",
+      "item_type": "contract",
+      "severity": "info",
+      "source_unit_refs": [
+        "PLANUNIT:ACD-337",
+        "SEMANTIC:PLANUNIT:ACD-337"
+      ],
+      "statement": "Chat runtime owns auto-create; project-level serialization and atomic reverse writes handle races; only race failures retry.",
+      "title": "Auto Worktree Runtime Ownership"
+    },
+    {
+      "builder_discretion": true,
+      "confidence": 0.9,
+      "dimensions": [
+        "inputs_outputs",
+        "contracts",
+        "gui_truth",
+        "compatibility_migration",
+        "cross_document_seams",
+        "test_falsifiability"
+      ],
+      "evidence": [
+        {
+          "exact_quote": "  Settings registry adds project-level worktree settings with exact keys, types,",
+          "line_end": 18738,
+          "line_start": 18738,
+          "path": "Plans/assistant-chat-design.md",
+          "source_sha256": "dbe013e75b0359ac3f4763abd6cc3756a3366b628c1ddb066c68e4ecc91e0f67"
+        }
+      ],
+      "gap_kind": "canonical_settings_matrix_missing",
+      "impact": "Builders and validators cannot reconstruct the promised exact settings registry from this canonical unit alone.",
+      "item_id": "A005M15-000148-I-ACD-338",
+      "item_type": "gap",
+      "severity": "high",
+      "source_unit_refs": [
+        "PLANUNIT:ACD-338",
+        "SEMANTIC:PLANUNIT:ACD-338"
+      ],
+      "statement": "The unit promises exact keys, types, defaults, labels, and descriptions, but the canonical unit does not enumerate the complete registry values and instead depends on external W.9 details.",
+      "title": "Settings Registry Canonical Detail Gap"
+    },
+    {
+      "builder_discretion": false,
+      "confidence": 0.97,
+      "dimensions": [
+        "consumers",
+        "gui_truth",
+        "acceptance_oracles"
+      ],
+      "evidence": [
+        {
+          "exact_quote": "canonical_text: Settings UI places Assistant Worktrees under Settings > Branching below existing branching controls, grouped as Creation, Merge & Testing, and Behavior.",
+          "line_end": 18788,
+          "line_start": 18788,
+          "path": "Plans/assistant-chat-design.md",
+          "source_sha256": "dbe013e75b0359ac3f4763abd6cc3756a3366b628c1ddb066c68e4ecc91e0f67"
+        }
+      ],
+      "gap_kind": "none",
+      "impact": "Defines discoverable placement and grouping for the settings family.",
+      "item_id": "A005M15-000148-I-ACD-339",
+      "item_type": "gui_truth",
+      "severity": "info",
+      "source_unit_refs": [
+        "PLANUNIT:ACD-339",
+        "SEMANTIC:PLANUNIT:ACD-339"
+      ],
+      "statement": "Assistant Worktrees settings live below existing Branching controls and are grouped into Creation, Merge & Testing, and Behavior.",
+      "title": "Assistant Worktrees Settings Placement"
+    },
+    {
+      "builder_discretion": true,
+      "confidence": 0.9,
+      "dimensions": [
+        "contracts",
+        "failures_recovery",
+        "compatibility_migration",
+        "ambiguity_unknowns",
+        "observability_support",
+        "test_falsifiability"
+      ],
+      "evidence": [
+        {
+          "exact_quote": "canonical_text: Namespace rules keep `file_manager.worktree_follow_thread` under `file_manager.*`; numeric settings clamp on load with warning using min/max/zero behavior.",
+          "line_end": 18828,
+          "line_start": 18828,
+          "path": "Plans/assistant-chat-design.md",
+          "source_sha256": "dbe013e75b0359ac3f4763abd6cc3756a3366b628c1ddb066c68e4ecc91e0f67"
+        }
+      ],
+      "gap_kind": "numeric_bounds_missing",
+      "impact": "Different components may clamp the same setting differently and repeatedly warn without converging persisted state.",
+      "item_id": "A005M15-000148-I-ACD-340",
+      "item_type": "gap",
+      "severity": "high",
+      "source_unit_refs": [
+        "PLANUNIT:ACD-340",
+        "SEMANTIC:PLANUNIT:ACD-340"
+      ],
+      "statement": "Numeric values clamp on load with warning, but exact minimums, maximums, zero semantics per key, persisted corrected value behavior, and user-facing recovery are not defined here.",
+      "title": "Numeric Clamp Bounds Gap"
+    },
+    {
+      "builder_discretion": false,
+      "confidence": 0.97,
+      "dimensions": [
+        "gui_truth",
+        "compatibility_migration",
+        "acceptance_oracles",
+        "accessibility"
+      ],
+      "evidence": [
+        {
+          "exact_quote": "canonical_text: Thread selector shows a theme-consistent branch/tree glyph, not emoji, in the left gutter; absent when unbound; compact rows use `wt_icon`, branch label, status/owner copy, and full tooltip lines.",
+          "line_end": 18870,
+          "line_start": 18870,
+          "path": "Plans/assistant-chat-design.md",
+          "source_sha256": "dbe013e75b0359ac3f4763abd6cc3756a3366b628c1ddb066c68e4ecc91e0f67"
+        }
+      ],
+      "gap_kind": "none",
+      "impact": "Keeps thread worktree state visible without violating the SVG/non-emoji presentation boundary.",
+      "item_id": "A005M15-000148-I-ACD-341",
+      "item_type": "gui_truth",
+      "severity": "info",
+      "source_unit_refs": [
+        "PLANUNIT:ACD-341",
+        "SEMANTIC:PLANUNIT:ACD-341"
+      ],
+      "statement": "Bound threads show a theme-consistent non-emoji branch glyph with branch, status, owner, and tooltip information; unbound rows show no placeholder.",
+      "title": "Thread Selector Worktree Icon"
+    },
+    {
+      "builder_discretion": true,
+      "confidence": 0.9,
+      "dimensions": [
+        "states_transitions",
+        "gui_truth",
+        "failures_recovery",
+        "ambiguity_unknowns",
+        "gui_misleading_states",
+        "observability_support"
+      ],
+      "evidence": [
+        {
+          "exact_quote": "  Status rendering preserves projection wording as compatibility lineage: icons",
+          "line_end": 18915,
+          "line_start": 18915,
+          "path": "Plans/assistant-chat-design.md",
+          "source_sha256": "dbe013e75b0359ac3f4763abd6cc3756a3366b628c1ddb066c68e4ecc91e0f67"
+        }
+      ],
+      "gap_kind": "projection_freshness_contract_missing",
+      "impact": "Users may see indefinitely stale or inconsistently refreshed dirty/conflict indicators.",
+      "item_id": "A005M15-000148-I-ACD-342",
+      "item_type": "gap",
+      "severity": "medium",
+      "source_unit_refs": [
+        "PLANUNIT:ACD-342",
+        "SEMANTIC:PLANUNIT:ACD-342"
+      ],
+      "statement": "Stale status has a defined degraded rendering, but no freshness threshold, refresh trigger, failure taxonomy, or transition back to fresh is specified.",
+      "title": "Projection Freshness Threshold Gap"
+    },
+    {
+      "builder_discretion": false,
+      "confidence": 0.97,
+      "dimensions": [
+        "behavior",
+        "states_transitions",
+        "failures_recovery",
+        "destructive_actions"
+      ],
+      "evidence": [
+        {
+          "exact_quote": "canonical_text: Cleanup choices belong to thread delete only; there is no automatic completed-thread cleanup; keep unbinds and leaves disk state, while remove unbinds and prunes after dirty/active-run safeguards.",
+          "line_end": 18962,
+          "line_start": 18962,
+          "path": "Plans/assistant-chat-design.md",
+          "source_sha256": "dbe013e75b0359ac3f4763abd6cc3756a3366b628c1ddb066c68e4ecc91e0f67"
+        }
+      ],
+      "gap_kind": "none",
+      "impact": "Defines cleanup lifecycle scope and separates retention from destructive pruning.",
+      "item_id": "A005M15-000148-I-ACD-343",
+      "item_type": "failure_recovery",
+      "severity": "info",
+      "source_unit_refs": [
+        "PLANUNIT:ACD-343",
+        "SEMANTIC:PLANUNIT:ACD-343"
+      ],
+      "statement": "Cleanup is confined to thread deletion; keep unbinds without disk deletion, while remove unbinds and prunes after dirty and active-run safeguards.",
+      "title": "Thread Delete Worktree Cleanup Scope"
+    },
+    {
+      "builder_discretion": false,
+      "confidence": 0.97,
+      "dimensions": [
+        "gui_truth",
+        "acceptance_oracles",
+        "accessibility",
+        "destructive_actions"
+      ],
+      "evidence": [
+        {
+          "exact_quote": "canonical_text: Existing delete confirmation extends with keep/remove choices, dirty warning, exact button labels, tertiary cancel default focus, and default choice from settings.",
+          "line_end": 19004,
+          "line_start": 19004,
+          "path": "Plans/assistant-chat-design.md",
+          "source_sha256": "dbe013e75b0359ac3f4763abd6cc3756a3366b628c1ddb066c68e4ecc91e0f67"
+        }
+      ],
+      "gap_kind": "none",
+      "impact": "Places destructive worktree cleanup inside the established deletion confirmation surface.",
+      "item_id": "A005M15-000148-I-ACD-344",
+      "item_type": "gui_truth",
+      "severity": "info",
+      "source_unit_refs": [
+        "PLANUNIT:ACD-344",
+        "SEMANTIC:PLANUNIT:ACD-344"
+      ],
+      "statement": "The existing delete confirmation carries keep/remove choices, dirty warning, exact labels, Cancel focus, and a settings-derived default.",
+      "title": "Thread Delete Worktree Confirmation UI"
+    },
+    {
+      "builder_discretion": false,
+      "confidence": 0.97,
+      "dimensions": [
+        "failures_recovery",
+        "compatibility_migration",
+        "destructive_actions"
+      ],
+      "evidence": [
+        {
+          "exact_quote": "canonical_text: Dirty destructive removal uses `git worktree remove --force <path>` plus `git branch -D <branch>` only after warning; unbind has no dedicated MVP undo.",
+          "line_end": 19047,
+          "line_start": 19047,
+          "path": "Plans/assistant-chat-design.md",
+          "source_sha256": "dbe013e75b0359ac3f4763abd6cc3756a3366b628c1ddb066c68e4ecc91e0f67"
+        }
+      ],
+      "gap_kind": "none",
+      "impact": "Makes the destructive command and absence of undo explicit rather than leaving them to builder discretion.",
+      "item_id": "A005M15-000148-I-ACD-345",
+      "item_type": "explicit_non_gap",
+      "severity": "high",
+      "source_unit_refs": [
+        "PLANUNIT:ACD-345",
+        "SEMANTIC:PLANUNIT:ACD-345"
+      ],
+      "statement": "Forced worktree and branch deletion occurs only after warning, and dedicated unbind undo is explicitly outside MVP.",
+      "title": "Dirty Worktree Removal Is Explicitly Irreversible"
+    },
+    {
+      "builder_discretion": true,
+      "confidence": 0.9,
+      "dimensions": [
+        "gui_truth",
+        "builder_discretion",
+        "ambiguity_unknowns",
+        "gui_misleading_states"
+      ],
+      "evidence": [
+        {
+          "exact_quote": "canonical_text: Completed or failed threads with bound worktrees do not auto-unbind or clean up; dirty completed/failed worktrees surface in Source Control and may toast merge/cleanup guidance.",
+          "line_end": 19087,
+          "line_start": 19087,
+          "path": "Plans/assistant-chat-design.md",
+          "source_sha256": "dbe013e75b0359ac3f4763abd6cc3756a3366b628c1ddb066c68e4ecc91e0f67"
+        }
+      ],
+      "gap_kind": "optional_notification_policy_missing",
+      "impact": "Implementations may produce inconsistent or noisy completion guidance.",
+      "item_id": "A005M15-000148-I-ACD-346",
+      "item_type": "gap",
+      "severity": "low",
+      "source_unit_refs": [
+        "PLANUNIT:ACD-346",
+        "SEMANTIC:PLANUNIT:ACD-346"
+      ],
+      "statement": "Completed/failed bindings are retained, but merge/cleanup guidance only \"may\" toast with no trigger, suppression, deduplication, or user preference rule.",
+      "title": "Optional Completion Toast Ambiguity"
+    },
+    {
+      "builder_discretion": false,
+      "confidence": 0.97,
+      "dimensions": [
+        "capabilities",
+        "consumers",
+        "gui_truth",
+        "propagation",
+        "acceptance_oracles"
+      ],
+      "evidence": [
+        {
+          "exact_quote": "canonical_text: Merge/PR access paths are equivalent across chat header dropdown, Source Control worktree section, slash commands, and natural language.",
+          "line_end": 19129,
+          "line_start": 19129,
+          "path": "Plans/assistant-chat-design.md",
+          "source_sha256": "dbe013e75b0359ac3f4763abd6cc3756a3366b628c1ddb066c68e4ecc91e0f67"
+        }
+      ],
+      "gap_kind": "none",
+      "impact": "Prevents entry-path-specific divergence in worktree mutation behavior.",
+      "item_id": "A005M15-000148-I-ACD-347",
+      "item_type": "capability",
+      "severity": "info",
+      "source_unit_refs": [
+        "PLANUNIT:ACD-347",
+        "SEMANTIC:PLANUNIT:ACD-347"
+      ],
+      "statement": "Header, Source Control, slash commands, and natural language are required to reach equivalent merge and PR outcomes.",
+      "title": "Worktree Merge PR Entry Paths"
+    },
+    {
+      "builder_discretion": false,
+      "confidence": 0.97,
+      "dimensions": [
+        "contracts",
+        "consumers",
+        "compatibility_migration",
+        "missing_callers_consumers"
+      ],
+      "evidence": [
+        {
+          "exact_quote": "canonical_text: Compare buttons open committed branch-to-branch review through `cmd.git.open_diff`; Source Control merge buttons route through `cmd.chat.worktree.merge` with `thread_id=null`, omitting thread-specific behaviors.",
+          "line_end": 19171,
+          "line_start": 19171,
+          "path": "Plans/assistant-chat-design.md",
+          "source_sha256": "dbe013e75b0359ac3f4763abd6cc3756a3366b628c1ddb066c68e4ecc91e0f67"
+        }
+      ],
+      "gap_kind": "none",
+      "impact": "Clarifies that omitted thread effects are deliberate for Source Control callers.",
+      "item_id": "A005M15-000148-I-ACD-348",
+      "item_type": "explicit_non_gap",
+      "severity": "info",
+      "source_unit_refs": [
+        "PLANUNIT:ACD-348",
+        "SEMANTIC:PLANUNIT:ACD-348"
+      ],
+      "statement": "Source Control merges call the shared command with `thread_id=null`, intentionally omitting thread unbind, status, and chat-notification behaviors.",
+      "title": "Null Thread Routing Is An Explicit Non Gap"
+    },
+    {
+      "builder_discretion": false,
+      "confidence": 0.97,
+      "dimensions": [
+        "inputs_outputs",
+        "states_transitions",
+        "gui_truth",
+        "acceptance_oracles"
+      ],
+      "evidence": [
+        {
+          "exact_quote": "canonical_text: Merge confirmation dialog has Strategy, Target branch, Commit message, defaults, buttons, and reactive message visibility for Squash/Merge/Rebase while preserving edits across strategy switches.",
+          "line_end": 19214,
+          "line_start": 19214,
+          "path": "Plans/assistant-chat-design.md",
+          "source_sha256": "dbe013e75b0359ac3f4763abd6cc3756a3366b628c1ddb066c68e4ecc91e0f67"
+        }
+      ],
+      "gap_kind": "none",
+      "impact": "Defines the interactive pre-mutation parameter surface.",
+      "item_id": "A005M15-000148-I-ACD-349",
+      "item_type": "gui_truth",
+      "severity": "info",
+      "source_unit_refs": [
+        "PLANUNIT:ACD-349",
+        "SEMANTIC:PLANUNIT:ACD-349"
+      ],
+      "statement": "The merge dialog provides strategy, target, conditional commit message, preserved edits, defaults, and confirmation controls.",
+      "title": "Merge Confirmation Dialog"
+    },
+    {
+      "builder_discretion": true,
+      "confidence": 0.9,
+      "dimensions": [
+        "states_transitions",
+        "gui_truth",
+        "failures_recovery",
+        "concurrency_races",
+        "partial_failure",
+        "recovery_rollback",
+        "destructive_actions"
+      ],
+      "evidence": [
+        {
+          "exact_quote": "canonical_text: After confirmation, dialog enters strategy-specific loading with disabled controls, read-only commit message when shown, loading spinner label, and Cancel still enabled.",
+          "line_end": 19255,
+          "line_start": 19255,
+          "path": "Plans/assistant-chat-design.md",
+          "source_sha256": "dbe013e75b0359ac3f4763abd6cc3756a3366b628c1ddb066c68e4ecc91e0f67"
+        }
+      ],
+      "gap_kind": "inflight_cancel_contract_missing",
+      "impact": "Cancel could leave a repository in a partial merge/rebase state or report cancellation after mutation completed.",
+      "item_id": "A005M15-000148-I-ACD-350",
+      "item_type": "gap",
+      "severity": "critical",
+      "source_unit_refs": [
+        "PLANUNIT:ACD-350",
+        "SEMANTIC:PLANUNIT:ACD-350"
+      ],
+      "statement": "Cancel remains enabled after merge execution starts, but cancellation authority, interruption points, cleanup sequence, late-success handling, and resulting dialog state are unspecified.",
+      "title": "Loading Cancel Semantics Gap"
+    },
+    {
+      "builder_discretion": false,
+      "confidence": 0.97,
+      "dimensions": [
+        "contracts",
+        "states_transitions",
+        "failures_recovery",
+        "acceptance_oracles",
+        "invalid_states_transitions"
+      ],
+      "evidence": [
+        {
+          "exact_quote": "canonical_text: Pre-merge guards block uncommitted changes, merge conflicts, active run, deleted target branch, detached HEAD, and dirty main repo for squash/merge with merged_result, preserving exact warning/error copy.",
+          "line_end": 19295,
+          "line_start": 19295,
+          "path": "Plans/assistant-chat-design.md",
+          "source_sha256": "dbe013e75b0359ac3f4763abd6cc3756a3366b628c1ddb066c68e4ecc91e0f67"
+        }
+      ],
+      "gap_kind": "none",
+      "impact": "Defines preconditions that prevent known unsafe merge states.",
+      "item_id": "A005M15-000148-I-ACD-351",
+      "item_type": "contract",
+      "severity": "info",
+      "source_unit_refs": [
+        "PLANUNIT:ACD-351",
+        "SEMANTIC:PLANUNIT:ACD-351"
+      ],
+      "statement": "The merge guard blocks dirty worktree, conflicts, active runs, missing target, detached HEAD, and relevant dirty-main-repo conditions with exact copy.",
+      "title": "Pre Merge Guard Matrix"
+    },
+    {
+      "builder_discretion": false,
+      "confidence": 0.97,
+      "dimensions": [
+        "failures_recovery",
+        "recovery_rollback",
+        "authority_boundaries"
+      ],
+      "evidence": [
+        {
+          "exact_quote": "canonical_text: Detached HEAD recovery is explicit via terminal checkout or unbind/re-create named-branch worktree through normal create flow.",
+          "line_end": 19336,
+          "line_start": 19336,
+          "path": "Plans/assistant-chat-design.md",
+          "source_sha256": "dbe013e75b0359ac3f4763abd6cc3756a3366b628c1ddb066c68e4ecc91e0f67"
+        }
+      ],
+      "gap_kind": "none",
+      "impact": "Prevents silent branch creation or implicit recovery mutations.",
+      "item_id": "A005M15-000148-I-ACD-352",
+      "item_type": "failure_recovery",
+      "severity": "info",
+      "source_unit_refs": [
+        "PLANUNIT:ACD-352",
+        "SEMANTIC:PLANUNIT:ACD-352"
+      ],
+      "statement": "Detached HEAD recovery requires explicit user action through terminal checkout or normal unbind/re-create flow.",
+      "title": "Detached Head Recovery"
+    },
+    {
+      "builder_discretion": false,
+      "confidence": 0.97,
+      "dimensions": [
+        "behavior",
+        "contracts",
+        "states_transitions",
+        "acceptance_oracles"
+      ],
+      "evidence": [
+        {
+          "exact_quote": "canonical_text: Merge executes in the main repo working tree, not inside the worktree; Rebase is the exception with worktree rebase then main repo fast-forward merge.",
+          "line_end": 19374,
+          "line_start": 19374,
+          "path": "Plans/assistant-chat-design.md",
+          "source_sha256": "dbe013e75b0359ac3f4763abd6cc3756a3366b628c1ddb066c68e4ecc91e0f67"
+        }
+      ],
+      "gap_kind": "none",
+      "impact": "Pins filesystem context for each strategy and avoids mutating the wrong working tree.",
+      "item_id": "A005M15-000148-I-ACD-353",
+      "item_type": "contract",
+      "severity": "info",
+      "source_unit_refs": [
+        "PLANUNIT:ACD-353",
+        "SEMANTIC:PLANUNIT:ACD-353"
+      ],
+      "statement": "Squash and merge execute in the main repo; rebase runs in the worktree and then fast-forwards the main repo.",
+      "title": "Merge Execution Context"
+    },
+    {
+      "builder_discretion": false,
+      "confidence": 0.97,
+      "dimensions": [
+        "contracts",
+        "states_transitions",
+        "acceptance_oracles",
+        "concurrency_races"
+      ],
+      "evidence": [
+        {
+          "exact_quote": "  `.git/pm-merge.lock` is acquired before guard checks, makes",
+          "line_end": 19416,
+          "line_start": 19416,
+          "path": "Plans/assistant-chat-design.md",
+          "source_sha256": "dbe013e75b0359ac3f4763abd6cc3756a3366b628c1ddb066c68e4ecc91e0f67"
+        }
+      ],
+      "gap_kind": "none",
+      "impact": "Serializes project merges and closes the ordinary guard-to-execution race window.",
+      "item_id": "A005M15-000148-I-ACD-354",
+      "item_type": "contract",
+      "severity": "info",
+      "source_unit_refs": [
+        "PLANUNIT:ACD-354",
+        "SEMANTIC:PLANUNIT:ACD-354"
+      ],
+      "statement": "The project lock is acquired before guards and spans guard checks, execution, UI disablement, and the complete rebase sequence with rechecks.",
+      "title": "Merge Lock Atomicity"
+    },
+    {
+      "builder_discretion": true,
+      "confidence": 0.9,
+      "dimensions": [
+        "states_transitions",
+        "failures_recovery",
+        "concurrency_races",
+        "partial_failure",
+        "recovery_rollback",
+        "destructive_actions"
+      ],
+      "evidence": [
+        {
+          "exact_quote": "  Stale lock recovery wording is preserved as compatibility disposition: lazy",
+          "line_end": 19460,
+          "line_start": 19460,
+          "path": "Plans/assistant-chat-design.md",
+          "source_sha256": "dbe013e75b0359ac3f4763abd6cc3756a3366b628c1ddb066c68e4ecc91e0f67"
+        }
+      ],
+      "gap_kind": "unsafe_stale_lock_predicate",
+      "impact": "A second merge could enter while a legitimate first merge or long test still owns the repository, defeating atomicity and corrupting Git state.",
+      "item_id": "A005M15-000148-I-ACD-355",
+      "item_type": "gap",
+      "severity": "critical",
+      "source_unit_refs": [
+        "PLANUNIT:ACD-355",
+        "SEMANTIC:PLANUNIT:ACD-355"
+      ],
+      "statement": "Stale recovery removes a lock when either PID is dead or age exceeds five minutes; the age-only branch can delete a valid lock held by a live long-running merge.",
+      "title": "Live Long Merge Can Be Mistaken For Stale"
+    },
+    {
+      "builder_discretion": false,
+      "confidence": 0.97,
+      "dimensions": [
+        "behavior",
+        "inputs_outputs",
+        "contracts",
+        "acceptance_oracles"
+      ],
+      "evidence": [
+        {
+          "exact_quote": "canonical_text: Strategy command templates preserve Squash, Merge, Rebase sequences and canonical `{worktree_branch}` aliases for source branch.",
+          "line_end": 19502,
+          "line_start": 19502,
+          "path": "Plans/assistant-chat-design.md",
+          "source_sha256": "dbe013e75b0359ac3f4763abd6cc3756a3366b628c1ddb066c68e4ecc91e0f67"
+        }
+      ],
+      "gap_kind": "none",
+      "impact": "Provides concrete backend commands for strategy conformance tests.",
+      "item_id": "A005M15-000148-I-ACD-356",
+      "item_type": "behavior",
+      "severity": "info",
+      "source_unit_refs": [
+        "PLANUNIT:ACD-356",
+        "SEMANTIC:PLANUNIT:ACD-356"
+      ],
+      "statement": "Squash, merge, and rebase retain canonical command sequences and use `{worktree_branch}` as the source-branch alias.",
+      "title": "Merge Strategy Command Templates"
+    },
+    {
+      "builder_discretion": false,
+      "confidence": 0.97,
+      "dimensions": [
+        "behavior",
+        "gui_truth",
+        "failures_recovery",
+        "offline_network_loss"
+      ],
+      "evidence": [
+        {
+          "exact_quote": "canonical_text: Auto-fetch runs `git fetch origin {target_branch}` before any merge; if no remote or offline, merge proceeds with local state and advisory toast.",
+          "line_end": 19541,
+          "line_start": 19541,
+          "path": "Plans/assistant-chat-design.md",
+          "source_sha256": "dbe013e75b0359ac3f4763abd6cc3756a3366b628c1ddb066c68e4ecc91e0f67"
+        }
+      ],
+      "gap_kind": "none",
+      "impact": "Makes the stale-remote tradeoff explicit and user-visible.",
+      "item_id": "A005M15-000148-I-ACD-357",
+      "item_type": "explicit_non_gap",
+      "severity": "medium",
+      "source_unit_refs": [
+        "PLANUNIT:ACD-357",
+        "SEMANTIC:PLANUNIT:ACD-357"
+      ],
+      "statement": "A failed pre-merge fetch caused by missing remote or offline state does not block merge and produces an advisory toast while local state is used.",
+      "title": "Offline Fetch Is Advisory"
+    },
+    {
+      "builder_discretion": false,
+      "confidence": 0.97,
+      "dimensions": [
+        "capabilities",
+        "authority",
+        "compatibility_migration",
+        "authority_boundaries"
+      ],
+      "evidence": [
+        {
+          "exact_quote": "canonical_text: Rebase is non-interactive only; interactive rebase, `-i`, pick/squash/fixup, and `/squash/fixup` workflows are terminal-only.",
+          "line_end": 19580,
+          "line_start": 19580,
+          "path": "Plans/assistant-chat-design.md",
+          "source_sha256": "dbe013e75b0359ac3f4763abd6cc3756a3366b628c1ddb066c68e4ecc91e0f67"
+        }
+      ],
+      "gap_kind": "none",
+      "impact": "Prevents the dialog from silently expanding into interactive history-rewrite authority.",
+      "item_id": "A005M15-000148-I-ACD-358",
+      "item_type": "authority",
+      "severity": "info",
+      "source_unit_refs": [
+        "PLANUNIT:ACD-358",
+        "SEMANTIC:PLANUNIT:ACD-358"
+      ],
+      "statement": "The product merge flow supports only non-interactive rebase; interactive history editing remains terminal-only.",
+      "title": "Interactive Rebase Authority Boundary"
+    },
+    {
+      "builder_discretion": true,
+      "confidence": 0.9,
+      "dimensions": [
+        "states_transitions",
+        "failures_recovery",
+        "partial_failure",
+        "recovery_rollback",
+        "destructive_actions",
+        "test_falsifiability"
+      ],
+      "evidence": [
+        {
+          "exact_quote": "canonical_text: Merge commit authorship uses user git identity with no AI co-author injection; hooks are not bypassed, hook failure is merge failure, and hooks run after pre-merge test pass as part of commit pipeline.",
+          "line_end": 19621,
+          "line_start": 19621,
+          "path": "Plans/assistant-chat-design.md",
+          "source_sha256": "dbe013e75b0359ac3f4763abd6cc3756a3366b628c1ddb066c68e4ecc91e0f67"
+        }
+      ],
+      "gap_kind": "hook_failure_recovery_missing",
+      "impact": "A failed hook can leave staged squash changes or an in-progress merge while Retry/Cancel behavior is undefined.",
+      "item_id": "A005M15-000148-I-ACD-359",
+      "item_type": "gap",
+      "severity": "critical",
+      "source_unit_refs": [
+        "PLANUNIT:ACD-359",
+        "SEMANTIC:PLANUNIT:ACD-359"
+      ],
+      "statement": "Hooks are mandatory and hook failure is merge failure, but strategy-specific repository state, retry idempotency, and cleanup after a hook rejects the commit are not specified.",
+      "title": "Hook Failure Cleanup Gap"
+    },
+    {
+      "builder_discretion": true,
+      "confidence": 0.9,
+      "dimensions": [
+        "states_transitions",
+        "gui_truth",
+        "builder_discretion",
+        "ambiguity_unknowns",
+        "gui_misleading_states"
+      ],
+      "evidence": [
+        {
+          "exact_quote": "canonical_text: Post-merge modal offers `Keep worktree`, `Remove worktree`, and `Cancel`, defaults from cleanup setting, and has no undo for completed merge.",
+          "line_end": 19664,
+          "line_start": 19664,
+          "path": "Plans/assistant-chat-design.md",
+          "source_sha256": "dbe013e75b0359ac3f4763abd6cc3756a3366b628c1ddb066c68e4ecc91e0f67"
+        }
+      ],
+      "gap_kind": "post_merge_cancel_semantics_missing",
+      "impact": "Users and builders cannot tell whether Cancel means keep bound, defer cleanup, close only, or trigger another state.",
+      "item_id": "A005M15-000148-I-ACD-360",
+      "item_type": "gap",
+      "severity": "medium",
+      "source_unit_refs": [
+        "PLANUNIT:ACD-360",
+        "SEMANTIC:PLANUNIT:ACD-360"
+      ],
+      "statement": "After merge completion the modal offers Cancel alongside keep/remove, but Cancel's binding, disk, focus, and repeated-prompt semantics are not defined.",
+      "title": "Post Merge Cancel Ambiguity"
+    },
+    {
+      "builder_discretion": false,
+      "confidence": 0.97,
+      "dimensions": [
+        "authority",
+        "ownership",
+        "consumers",
+        "gui_truth",
+        "authority_boundaries"
+      ],
+      "evidence": [
+        {
+          "exact_quote": "canonical_text: UI-initiated conflicts route to Source Control > Changes and `cmd.source_control.open_conflict`; lower-level `cmd.git.*` may support mechanics but is not the GUI entrypoint.",
+          "line_end": 19707,
+          "line_start": 19707,
+          "path": "Plans/assistant-chat-design.md",
+          "source_sha256": "dbe013e75b0359ac3f4763abd6cc3756a3366b628c1ddb066c68e4ecc91e0f67"
+        }
+      ],
+      "gap_kind": "none",
+      "impact": "Maintains one conflict-resolution UI owner.",
+      "item_id": "A005M15-000148-I-ACD-361",
+      "item_type": "authority",
+      "severity": "info",
+      "source_unit_refs": [
+        "PLANUNIT:ACD-361",
+        "SEMANTIC:PLANUNIT:ACD-361"
+      ],
+      "statement": "UI conflicts route to Source Control Changes through `cmd.source_control.open_conflict`; lower-level Git commands are mechanics, not GUI entrypoints.",
+      "title": "Source Control Conflict Routing"
+    },
+    {
+      "builder_discretion": false,
+      "confidence": 0.97,
+      "dimensions": [
+        "authority",
+        "gui_truth",
+        "security_privacy",
+        "authority_boundaries",
+        "untrusted_inputs"
+      ],
+      "evidence": [
+        {
+          "exact_quote": "canonical_text: Natural-language conflict assistance may explain and propose edits, but semantic resolution requires explicit user approval and follows Source Control Conflict assistant rules, including `/disabled`, `/settings`, and per-project preferences.",
+          "line_end": 19749,
+          "line_start": 19749,
+          "path": "Plans/assistant-chat-design.md",
+          "source_sha256": "dbe013e75b0359ac3f4763abd6cc3756a3366b628c1ddb066c68e4ecc91e0f67"
+        }
+      ],
+      "gap_kind": "none",
+      "impact": "Prevents chat assistance from applying conflict resolutions without user authority.",
+      "item_id": "A005M15-000148-I-ACD-362",
+      "item_type": "authority",
+      "severity": "info",
+      "source_unit_refs": [
+        "PLANUNIT:ACD-362",
+        "SEMANTIC:PLANUNIT:ACD-362"
+      ],
+      "statement": "Natural-language help may explain and propose, but semantic resolution requires explicit approval under Source Control preferences and disabled/settings rules.",
+      "title": "Semantic Conflict Resolution Requires Approval"
+    },
+    {
+      "builder_discretion": false,
+      "confidence": 0.97,
+      "dimensions": [
+        "states_transitions",
+        "gui_truth",
+        "failures_recovery",
+        "acceptance_oracles",
+        "recovery_rollback"
+      ],
+      "evidence": [
+        {
+          "exact_quote": "canonical_text: Rebase conflicts during `git rebase {target}` auto-abort, show dialog error, skip tests, and release lock.",
+          "line_end": 19794,
+          "line_start": 19794,
+          "path": "Plans/assistant-chat-design.md",
+          "source_sha256": "dbe013e75b0359ac3f4763abd6cc3756a3366b628c1ddb066c68e4ecc91e0f67"
+        }
+      ],
+      "gap_kind": "none",
+      "impact": "Provides a deterministic clean failure path for rebase conflicts.",
+      "item_id": "A005M15-000148-I-ACD-363",
+      "item_type": "failure_recovery",
+      "severity": "info",
+      "source_unit_refs": [
+        "PLANUNIT:ACD-363",
+        "SEMANTIC:PLANUNIT:ACD-363"
+      ],
+      "statement": "A rebase conflict auto-aborts, reports dialog failure, skips tests, and releases the merge lock.",
+      "title": "Rebase Conflict Abort Behavior"
+    },
+    {
+      "builder_discretion": false,
+      "confidence": 0.97,
+      "dimensions": [
+        "inputs_outputs",
+        "consumers",
+        "gui_truth",
+        "propagation",
+        "cross_document_seams"
+      ],
+      "evidence": [
+        {
+          "exact_quote": "canonical_text: Create PR opens the existing GitHub PR creation panel with title, body, target branch, and source branch prefilled from thread and commit data.",
+          "line_end": 19832,
+          "line_start": 19832,
+          "path": "Plans/assistant-chat-design.md",
+          "source_sha256": "dbe013e75b0359ac3f4763abd6cc3756a3366b628c1ddb066c68e4ecc91e0f67"
+        }
+      ],
+      "gap_kind": "none",
+      "impact": "Avoids a second PR UI and defines the data handed to the existing consumer.",
+      "item_id": "A005M15-000148-I-ACD-364",
+      "item_type": "consumer",
+      "severity": "info",
+      "source_unit_refs": [
+        "PLANUNIT:ACD-364",
+        "SEMANTIC:PLANUNIT:ACD-364"
+      ],
+      "statement": "Create PR reuses the existing GitHub panel and prefills title, body, target, and source from thread and commit context.",
+      "title": "GitHub PR Panel Consumer Handoff"
+    },
+    {
+      "builder_discretion": true,
+      "confidence": 0.9,
+      "dimensions": [
+        "states_transitions",
+        "consumers",
+        "gui_truth",
+        "failures_recovery",
+        "partial_failure",
+        "recovery_rollback",
+        "offline_network_loss",
+        "cross_document_seams"
+      ],
+      "evidence": [
+        {
+          "exact_quote": "canonical_text: PR flow auto-pushes `git push -u origin {branch}` before panel open; push/API failures prevent panel opening, show failure behavior, emit `chat.thread_worktree_pr_failed` with `phase=push` or `phase=api`, require GitHub remote, and keep worktree bound post-PR with no cleanup modal.",
+          "line_end": 19870,
+          "line_start": 19870,
+          "path": "Plans/assistant-chat-design.md",
+          "source_sha256": "dbe013e75b0359ac3f4763abd6cc3756a3366b628c1ddb066c68e4ecc91e0f67"
+        }
+      ],
+      "gap_kind": "pr_panel_api_sequence_undefined",
+      "impact": "Implementations may either call GitHub before user review or lose user-authored PR data after a submission failure.",
+      "item_id": "A005M15-000148-I-ACD-365",
+      "item_type": "gap",
+      "severity": "high",
+      "source_unit_refs": [
+        "PLANUNIT:ACD-365",
+        "SEMANTIC:PLANUNIT:ACD-365"
+      ],
+      "statement": "The contract says push and API failures both prevent panel opening, but does not define when the API call occurs relative to panel editing/submission or how edits survive API failure.",
+      "title": "PR API Failure Sequencing Gap"
+    },
+    {
+      "builder_discretion": false,
+      "confidence": 0.97,
+      "dimensions": [
+        "behavior",
+        "contracts",
+        "authority",
+        "gui_truth",
+        "authority_boundaries",
+        "untrusted_inputs"
+      ],
+      "evidence": [
+        {
+          "exact_quote": "canonical_text: Natural-language merge emits structured action `cmd.chat.worktree.merge` with strategy/target/message params, follows `cmd.chat.revert` pattern, never runs merge directly via bash, and always shows user-confirmed dialog even under yolo/auto-approve posture.",
+          "line_end": 19915,
+          "line_start": 19915,
+          "path": "Plans/assistant-chat-design.md",
+          "source_sha256": "dbe013e75b0359ac3f4763abd6cc3756a3366b628c1ddb066c68e4ecc91e0f67"
+        }
+      ],
+      "gap_kind": "none",
+      "impact": "Preserves a mandatory human confirmation boundary for natural-language mutation.",
+      "item_id": "A005M15-000148-I-ACD-366",
+      "item_type": "authority",
+      "severity": "info",
+      "source_unit_refs": [
+        "PLANUNIT:ACD-366",
+        "SEMANTIC:PLANUNIT:ACD-366"
+      ],
+      "statement": "Natural-language requests emit a structured merge command and always enter a user-confirmed dialog, even under auto-approve posture; the agent cannot merge through bash.",
+      "title": "Natural Language Merge Structured Action"
+    },
+    {
+      "builder_discretion": false,
+      "confidence": 0.97,
+      "dimensions": [
+        "behavior",
+        "inputs_outputs",
+        "contracts",
+        "authority_boundaries"
+      ],
+      "evidence": [
+        {
+          "exact_quote": "canonical_text: Before emitting merge action, agent may run `git status` through normal tools, auto-scoped to bound worktree via `working_directory` or `/cwd`.",
+          "line_end": 19958,
+          "line_start": 19958,
+          "path": "Plans/assistant-chat-design.md",
+          "source_sha256": "dbe013e75b0359ac3f4763abd6cc3756a3366b628c1ddb066c68e4ecc91e0f67"
+        }
+      ],
+      "gap_kind": "none",
+      "impact": "Prevents a preflight check from inspecting the project root or another worktree.",
+      "item_id": "A005M15-000148-I-ACD-367",
+      "item_type": "behavior",
+      "severity": "info",
+      "source_unit_refs": [
+        "PLANUNIT:ACD-367",
+        "SEMANTIC:PLANUNIT:ACD-367"
+      ],
+      "statement": "Preflight `git status` may run through normal tools and must be scoped to the bound worktree working directory.",
+      "title": "Natural Language Merge Tool Context"
+    },
+    {
+      "builder_discretion": true,
+      "confidence": 0.9,
+      "dimensions": [
+        "behavior",
+        "states_transitions",
+        "authority",
+        "gui_truth",
+        "partial_failure",
+        "authority_boundaries",
+        "destructive_actions"
+      ],
+      "evidence": [
+        {
+          "exact_quote": "canonical_text: Agent natural-language merge is rejected in `ask` or `plan` with exact error copy; UI clicks remain allowed; agent can chain commit, merge, cleanup in one conversational exchange.",
+          "line_end": 19998,
+          "line_start": 19998,
+          "path": "Plans/assistant-chat-design.md",
+          "source_sha256": "dbe013e75b0359ac3f4763abd6cc3756a3366b628c1ddb066c68e4ecc91e0f67"
+        }
+      ],
+      "gap_kind": "chained_destructive_approval_missing",
+      "impact": "An approved merge could be interpreted as approval to remove the worktree or branch without a separate informed decision.",
+      "item_id": "A005M15-000148-I-ACD-368",
+      "item_type": "gap",
+      "severity": "critical",
+      "source_unit_refs": [
+        "PLANUNIT:ACD-368",
+        "SEMANTIC:PLANUNIT:ACD-368"
+      ],
+      "statement": "A single exchange may chain commit, merge, and cleanup, but the contract only guarantees a merge dialog and does not state whether later destructive cleanup requires a second explicit confirmation.",
+      "title": "Chained Cleanup Confirmation Gap"
+    },
+    {
+      "builder_discretion": false,
+      "confidence": 0.97,
+      "dimensions": [
+        "behavior",
+        "inputs_outputs",
+        "contracts",
+        "acceptance_oracles"
+      ],
+      "evidence": [
+        {
+          "exact_quote": "canonical_text: Pre-merge test gate runs project tests before committing a merge to verify integration, controlled by the four settings listed in W.9.",
+          "line_end": 20038,
+          "line_start": 20038,
+          "path": "Plans/assistant-chat-design.md",
+          "source_sha256": "dbe013e75b0359ac3f4763abd6cc3756a3366b628c1ddb066c68e4ecc91e0f67"
+        }
+      ],
+      "gap_kind": "none",
+      "impact": "Defines the configurable purpose and control surface for test gating.",
+      "item_id": "A005M15-000148-I-ACD-369",
+      "item_type": "contract",
+      "severity": "info",
+      "source_unit_refs": [
+        "PLANUNIT:ACD-369",
+        "SEMANTIC:PLANUNIT:ACD-369"
+      ],
+      "statement": "The pre-merge gate verifies integration before commit and is controlled by enablement, command, timeout, and target settings.",
+      "title": "Pre Merge Test Gate Settings"
+    },
+    {
+      "builder_discretion": true,
+      "confidence": 0.9,
+      "dimensions": [
+        "inputs_outputs",
+        "contracts",
+        "security_privacy",
+        "authority_boundaries",
+        "privacy_data_lifecycle",
+        "untrusted_inputs",
+        "destructive_actions"
+      ],
+      "evidence": [
+        {
+          "exact_quote": "canonical_text: When `branching.assistant_worktree_pre_merge_cmd` is set, PM runs that exact command; when empty, PM auto-detects using rules in the next span.",
+          "line_end": 20079,
+          "line_start": 20079,
+          "path": "Plans/assistant-chat-design.md",
+          "source_sha256": "dbe013e75b0359ac3f4763abd6cc3756a3366b628c1ddb066c68e4ecc91e0f67"
+        }
+      ],
+      "gap_kind": "configured_command_trust_model_missing",
+      "impact": "A malicious or corrupted project setting can execute arbitrary shell commands with the user's environment during merge.",
+      "item_id": "A005M15-000148-I-ACD-370",
+      "item_type": "gap",
+      "severity": "critical",
+      "source_unit_refs": [
+        "PLANUNIT:ACD-370",
+        "SEMANTIC:PLANUNIT:ACD-370"
+      ],
+      "statement": "PM executes the configured command exactly, but validation, trust provenance, shell escaping, secret exposure, and confirmation policy for a changed command are not specified.",
+      "title": "Exact Shell Command Trust Boundary Gap"
+    },
+    {
+      "builder_discretion": true,
+      "confidence": 0.9,
+      "dimensions": [
+        "inputs_outputs",
+        "contracts",
+        "compatibility_migration",
+        "acceptance_oracles",
+        "cross_document_seams",
+        "test_falsifiability"
+      ],
+      "evidence": [
+        {
+          "exact_quote": "  - Detection matrix command and priority rows match the source span.",
+          "line_end": 20127,
+          "line_start": 20127,
+          "path": "Plans/assistant-chat-design.md",
+          "source_sha256": "dbe013e75b0359ac3f4763abd6cc3756a3366b628c1ddb066c68e4ecc91e0f67"
+        }
+      ],
+      "gap_kind": "canonical_detection_matrix_missing",
+      "impact": "Builders cannot independently implement or test exact auto-detection priority from canonical text alone.",
+      "item_id": "A005M15-000148-I-ACD-371",
+      "item_type": "gap",
+      "severity": "high",
+      "source_unit_refs": [
+        "PLANUNIT:ACD-371",
+        "SEMANTIC:PLANUNIT:ACD-371"
+      ],
+      "statement": "The unit requires command and priority rows to match a source span, but the canonical PlanUnit does not contain the detection matrix or file-presence exceptions it makes normative.",
+      "title": "Auto Detection Matrix Missing From Canonical Unit"
+    },
+    {
+      "builder_discretion": false,
+      "confidence": 0.97,
+      "dimensions": [
+        "behavior",
+        "states_transitions",
+        "compatibility_migration",
+        "acceptance_oracles"
+      ],
+      "evidence": [
+        {
+          "exact_quote": "canonical_text: Multiple auto-detect matches use highest priority; persisted command overrides detection; clearing the setting reruns detection.",
+          "line_end": 20165,
+          "line_start": 20165,
+          "path": "Plans/assistant-chat-design.md",
+          "source_sha256": "dbe013e75b0359ac3f4763abd6cc3756a3366b628c1ddb066c68e4ecc91e0f67"
+        }
+      ],
+      "gap_kind": "none",
+      "impact": "Defines deterministic precedence and reset behavior.",
+      "item_id": "A005M15-000148-I-ACD-372",
+      "item_type": "behavior",
+      "severity": "info",
+      "source_unit_refs": [
+        "PLANUNIT:ACD-372",
+        "SEMANTIC:PLANUNIT:ACD-372"
+      ],
+      "statement": "Highest-priority detection wins, persisted command overrides detection, and clearing the setting reruns detection.",
+      "title": "Pre Merge Test Detection Priority"
+    },
+    {
+      "builder_discretion": true,
+      "confidence": 0.9,
+      "dimensions": [
+        "states_transitions",
+        "gui_truth",
+        "failures_recovery",
+        "gui_misleading_states",
+        "observability_support",
+        "test_falsifiability"
+      ],
+      "evidence": [
+        {
+          "exact_quote": "canonical_text: First run shows auto-detected command prefilled with `Change`; no detection while enabled shows info row, Settings link, skips tests, and does not block merge.",
+          "line_end": 20205,
+          "line_start": 20205,
+          "path": "Plans/assistant-chat-design.md",
+          "source_sha256": "dbe013e75b0359ac3f4763abd6cc3756a3366b628c1ddb066c68e4ecc91e0f67"
+        }
+      ],
+      "gap_kind": "enabled_but_ungated_state_weakly_signaled",
+      "impact": "Users may believe merge safety is enforced even though the enabled test gate performed no test.",
+      "item_id": "A005M15-000148-I-ACD-373",
+      "item_type": "gap",
+      "severity": "high",
+      "source_unit_refs": [
+        "PLANUNIT:ACD-373",
+        "SEMANTIC:PLANUNIT:ACD-373"
+      ],
+      "statement": "When enabled but no command is detected, the UI shows an info row and skips tests without blocking merge; the contract does not require persistent warning, explicit acknowledgement, or audit distinction from a disabled gate.",
+      "title": "Enabled Gate Can Silently Skip Tests"
+    },
+    {
+      "builder_discretion": false,
+      "confidence": 0.97,
+      "dimensions": [
+        "behavior",
+        "contracts",
+        "states_transitions",
+        "acceptance_oracles",
+        "test_falsifiability"
+      ],
+      "evidence": [
+        {
+          "exact_quote": "canonical_text: \"`merged_result` test gate preserves Squash, Merge, and Rebase execution order and the no-commit invariant before committing.\"",
+          "line_end": 20247,
+          "line_start": 20247,
+          "path": "Plans/assistant-chat-design.md",
+          "source_sha256": "dbe013e75b0359ac3f4763abd6cc3756a3366b628c1ddb066c68e4ecc91e0f67"
+        }
+      ],
+      "gap_kind": "none",
+      "impact": "Makes the no-commit-before-pass invariant executable across all strategies.",
+      "item_id": "A005M15-000148-I-ACD-374",
+      "item_type": "contract",
+      "severity": "info",
+      "source_unit_refs": [
+        "PLANUNIT:ACD-374",
+        "SEMANTIC:PLANUNIT:ACD-374"
+      ],
+      "statement": "Each merged-result strategy produces an uncommitted integration state, runs tests, and commits only after success.",
+      "title": "Merged Result Test Gate Execution"
+    },
+    {
+      "builder_discretion": false,
+      "confidence": 0.97,
+      "dimensions": [
+        "behavior",
+        "contracts",
+        "states_transitions",
+        "acceptance_oracles"
+      ],
+      "evidence": [
+        {
+          "exact_quote": "canonical_text: \"`branch_only` tests run against the branch as-is before merge/rebase mutation; failure blocks merge with override.\"",
+          "line_end": 20293,
+          "line_start": 20293,
+          "path": "Plans/assistant-chat-design.md",
+          "source_sha256": "dbe013e75b0359ac3f4763abd6cc3756a3366b628c1ddb066c68e4ecc91e0f67"
+        }
+      ],
+      "gap_kind": "none",
+      "impact": "Ensures branch-only results are not contaminated by an integration mutation.",
+      "item_id": "A005M15-000148-I-ACD-375",
+      "item_type": "contract",
+      "severity": "info",
+      "source_unit_refs": [
+        "PLANUNIT:ACD-375",
+        "SEMANTIC:PLANUNIT:ACD-375"
+      ],
+      "statement": "Branch-only testing runs before any merge or rebase mutation and blocks merge on failure unless explicitly overridden.",
+      "title": "Branch Only Test Gate"
+    },
+    {
+      "builder_discretion": true,
+      "confidence": 0.9,
+      "dimensions": [
+        "states_transitions",
+        "gui_truth",
+        "failures_recovery",
+        "concurrency_races",
+        "partial_failure",
+        "recovery_rollback",
+        "offline_network_loss",
+        "observability_support"
+      ],
+      "evidence": [
+        {
+          "exact_quote": "canonical_text: Test dialog transitions in-place to read-only test phase with live output, cancel, pass auto-proceed, failure/timeout/process-error UI, `Merge Anyway`, and seglog override.",
+          "line_end": 20334,
+          "line_start": 20334,
+          "path": "Plans/assistant-chat-design.md",
+          "source_sha256": "dbe013e75b0359ac3f4763abd6cc3756a3366b628c1ddb066c68e4ecc91e0f67"
+        }
+      ],
+      "gap_kind": "test_cancellation_lifecycle_missing",
+      "impact": "Cancellation can orphan local or remote processes or release the merge lock before repository cleanup finishes.",
+      "item_id": "A005M15-000148-I-ACD-376",
+      "item_type": "gap",
+      "severity": "critical",
+      "source_unit_refs": [
+        "PLANUNIT:ACD-376",
+        "SEMANTIC:PLANUNIT:ACD-376"
+      ],
+      "statement": "The test phase offers Cancel with a live child process and mutable Git state, but does not define signal escalation, process-tree termination, remote cancellation, timeout race resolution, or the exact cleanup completion oracle.",
+      "title": "Test Dialog Cancel Contract Gap"
+    },
+    {
+      "builder_discretion": false,
+      "confidence": 0.97,
+      "dimensions": [
+        "states_transitions",
+        "failures_recovery",
+        "acceptance_oracles",
+        "recovery_rollback",
+        "destructive_actions"
+      ],
+      "evidence": [
+        {
+          "exact_quote": "canonical_text: Clean abort paths keep repos out of half-committed state using strategy-specific cleanup.",
+          "line_end": 20378,
+          "line_start": 20378,
+          "path": "Plans/assistant-chat-design.md",
+          "source_sha256": "dbe013e75b0359ac3f4763abd6cc3756a3366b628c1ddb066c68e4ecc91e0f67"
+        }
+      ],
+      "gap_kind": "none",
+      "impact": "Defines concrete cleanup commands for failure and cancellation paths.",
+      "item_id": "A005M15-000148-I-ACD-377",
+      "item_type": "failure_recovery",
+      "severity": "info",
+      "source_unit_refs": [
+        "PLANUNIT:ACD-377",
+        "SEMANTIC:PLANUNIT:ACD-377"
+      ],
+      "statement": "Squash, merge, and rebase have strategy-specific hard-reset or abort commands intended to prevent half-committed state.",
+      "title": "Pre Merge Test Clean Abort"
+    },
+    {
+      "builder_discretion": true,
+      "confidence": 0.9,
+      "dimensions": [
+        "inputs_outputs",
+        "security_privacy",
+        "operations",
+        "privacy_data_lifecycle",
+        "untrusted_inputs",
+        "observability_support"
+      ],
+      "evidence": [
+        {
+          "exact_quote": "canonical_text: Test execution environment uses strategy/target working directory, platform shell command, no PM environment injection, merged stdout/stderr, remote host execution, and output normalization/caps.",
+          "line_end": 20419,
+          "line_start": 20419,
+          "path": "Plans/assistant-chat-design.md",
+          "source_sha256": "dbe013e75b0359ac3f4763abd6cc3756a3366b628c1ddb066c68e4ecc91e0f67"
+        }
+      ],
+      "gap_kind": "test_output_data_lifecycle_missing",
+      "impact": "Commands can print credentials or personal data that may be rendered, logged, or retained without a defined protection boundary.",
+      "item_id": "A005M15-000148-I-ACD-378",
+      "item_type": "gap",
+      "severity": "critical",
+      "source_unit_refs": [
+        "PLANUNIT:ACD-378",
+        "SEMANTIC:PLANUNIT:ACD-378"
+      ],
+      "statement": "The test process merges and displays output with a size cap, but no secret redaction, access control, persistence duration, seglog inclusion rule, or remote-output privacy policy is defined.",
+      "title": "Test Output Privacy And Secret Lifecycle Gap"
+    },
+    {
+      "builder_discretion": true,
+      "confidence": 0.9,
+      "dimensions": [
+        "states_transitions",
+        "failures_recovery",
+        "concurrency_races",
+        "partial_failure",
+        "recovery_rollback",
+        "observability_support",
+        "destructive_actions"
+      ],
+      "evidence": [
+        {
+          "exact_quote": "canonical_text: Crash recovery handles orphaned test process and transitional repo state via WorktreeManager reconciliation; test gate does not apply to PR creation.",
+          "line_end": 20467,
+          "line_start": 20467,
+          "path": "Plans/assistant-chat-design.md",
+          "source_sha256": "dbe013e75b0359ac3f4763abd6cc3756a3366b628c1ddb066c68e4ecc91e0f67"
+        }
+      ],
+      "gap_kind": "crash_reconciliation_policy_missing",
+      "impact": "Startup recovery may destroy recoverable work, leave locks stuck, or race a surviving test process.",
+      "item_id": "A005M15-000148-I-ACD-379",
+      "item_type": "gap",
+      "severity": "critical",
+      "source_unit_refs": [
+        "PLANUNIT:ACD-379",
+        "SEMANTIC:PLANUNIT:ACD-379"
+      ],
+      "statement": "Reconciliation detects transitional merge/rebase state after a crash, but orphan-process handling, automatic-versus-user-directed cleanup, lock ordering, retry, and data-preservation rules are absent.",
+      "title": "Crash Reconciliation Policy Gap"
+    },
+    {
+      "builder_discretion": true,
+      "confidence": 0.9,
+      "dimensions": [
+        "inputs_outputs",
+        "contracts",
+        "propagation",
+        "compatibility_migration",
+        "observability_support",
+        "cross_document_seams",
+        "test_falsifiability"
+      ],
+      "evidence": [
+        {
+          "exact_quote": "canonical_text: Binding lifecycle seglog events preserve bound, unbound, renamed, and create-failed event schemas.",
+          "line_end": 20508,
+          "line_start": 20508,
+          "path": "Plans/assistant-chat-design.md",
+          "source_sha256": "dbe013e75b0359ac3f4763abd6cc3756a3366b628c1ddb066c68e4ecc91e0f67"
+        }
+      ],
+      "gap_kind": "event_schema_not_embedded",
+      "impact": "Producers and projectors can disagree on binding lifecycle payloads despite all using the named events.",
+      "item_id": "A005M15-000148-I-ACD-380",
+      "item_type": "gap",
+      "severity": "high",
+      "source_unit_refs": [
+        "PLANUNIT:ACD-380",
+        "SEMANTIC:PLANUNIT:ACD-380"
+      ],
+      "statement": "The unit says lifecycle schemas are preserved but provides neither required fields nor versioning, ordering, idempotency, privacy, or replay-failure rules.",
+      "title": "Binding Event Schemas Missing From Canonical Unit"
+    },
+    {
+      "builder_discretion": true,
+      "confidence": 0.9,
+      "dimensions": [
+        "inputs_outputs",
+        "contracts",
+        "security_privacy",
+        "propagation",
+        "compatibility_migration",
+        "privacy_data_lifecycle",
+        "observability_support",
+        "cross_document_seams",
+        "test_falsifiability"
+      ],
+      "evidence": [
+        {
+          "exact_quote": "canonical_text: Merge and PR seglog events preserve merged, merge failed, PR created, and PR failed schemas.",
+          "line_end": 20548,
+          "line_start": 20548,
+          "path": "Plans/assistant-chat-design.md",
+          "source_sha256": "dbe013e75b0359ac3f4763abd6cc3756a3366b628c1ddb066c68e4ecc91e0f67"
+        }
+      ],
+      "gap_kind": "event_schema_not_embedded",
+      "impact": "Audit consumers cannot reliably reconstruct merge and PR outcomes from canonical requirements alone.",
+      "item_id": "A005M15-000148-I-ACD-381",
+      "item_type": "gap",
+      "severity": "high",
+      "source_unit_refs": [
+        "PLANUNIT:ACD-381",
+        "SEMANTIC:PLANUNIT:ACD-381"
+      ],
+      "statement": "The unit names merged, merge-failed, PR-created, and PR-failed schemas but does not enumerate fields beyond phase values or define ordering, redaction, retries, and compatibility.",
+      "title": "Merge And PR Event Schemas Missing From Canonical Unit"
+    }
+  ],
+  "model": "gpt-5.6-sol",
+  "phase": "blind_macro_window_review",
+  "reasoning_effort": "xhigh",
+  "schema_version": "macro-review-result-v1",
+  "segments": [
+    {
+      "core_range": [
+        17599,
+        17952
+      ],
+      "covered_source_unit_refs": [
+        "PLANUNIT:ACD-313",
+        "PLANUNIT:ACD-314",
+        "PLANUNIT:ACD-315",
+        "PLANUNIT:ACD-316",
+        "PLANUNIT:ACD-317",
+        "PLANUNIT:ACD-318",
+        "PLANUNIT:ACD-319",
+        "PLANUNIT:ACD-320",
+        "SEMANTIC:PLANUNIT:ACD-313",
+        "SEMANTIC:PLANUNIT:ACD-314",
+        "SEMANTIC:PLANUNIT:ACD-315",
+        "SEMANTIC:PLANUNIT:ACD-316",
+        "SEMANTIC:PLANUNIT:ACD-317",
+        "SEMANTIC:PLANUNIT:ACD-318",
+        "SEMANTIC:PLANUNIT:ACD-319",
+        "SEMANTIC:PLANUNIT:ACD-320"
+      ],
+      "item_ids": [
+        "A005M15-000148-I-ACD-313",
+        "A005M15-000148-I-ACD-314",
+        "A005M15-000148-I-ACD-315",
+        "A005M15-000148-I-ACD-316",
+        "A005M15-000148-I-ACD-317",
+        "A005M15-000148-I-ACD-318",
+        "A005M15-000148-I-ACD-319",
+        "A005M15-000148-I-ACD-320"
+      ],
+      "reviewed": true,
+      "summary": "Interview handoff, blocked-state contracts, Assistant worktree scope, Source Control ownership, and accordion persistence were reviewed; gaps center on handoff auditability, blocked-action validation, and persisted-state recovery.",
+      "window_id": "WIN-BF7379C57A0F-0048"
+    },
+    {
+      "core_range": [
+        17953,
+        18325
+      ],
+      "covered_source_unit_refs": [
+        "PLANUNIT:ACD-321",
+        "PLANUNIT:ACD-322",
+        "PLANUNIT:ACD-323",
+        "PLANUNIT:ACD-324",
+        "PLANUNIT:ACD-325",
+        "PLANUNIT:ACD-326",
+        "PLANUNIT:ACD-327",
+        "PLANUNIT:ACD-328",
+        "SEMANTIC:PLANUNIT:ACD-321",
+        "SEMANTIC:PLANUNIT:ACD-322",
+        "SEMANTIC:PLANUNIT:ACD-323",
+        "SEMANTIC:PLANUNIT:ACD-324",
+        "SEMANTIC:PLANUNIT:ACD-325",
+        "SEMANTIC:PLANUNIT:ACD-326",
+        "SEMANTIC:PLANUNIT:ACD-327",
+        "SEMANTIC:PLANUNIT:ACD-328"
+      ],
+      "item_ids": [
+        "A005M15-000148-I-ACD-321",
+        "A005M15-000148-I-ACD-322",
+        "A005M15-000148-I-ACD-323",
+        "A005M15-000148-I-ACD-324",
+        "A005M15-000148-I-ACD-325",
+        "A005M15-000148-I-ACD-326",
+        "A005M15-000148-I-ACD-327",
+        "A005M15-000148-I-ACD-328"
+      ],
+      "reviewed": true,
+      "summary": "Source Control filter/header/dropdown/binding/storage behavior was reviewed; principal risks are destructive-action confirmation, active-run races, multi-record atomicity, and revalidation error classification.",
+      "window_id": "WIN-BF7379C57A0F-0049"
+    },
+    {
+      "core_range": [
+        18326,
+        18684
+      ],
+      "covered_source_unit_refs": [
+        "PLANUNIT:ACD-329",
+        "PLANUNIT:ACD-330",
+        "PLANUNIT:ACD-331",
+        "PLANUNIT:ACD-332",
+        "PLANUNIT:ACD-333",
+        "PLANUNIT:ACD-334",
+        "PLANUNIT:ACD-335",
+        "PLANUNIT:ACD-336",
+        "SEMANTIC:PLANUNIT:ACD-329",
+        "SEMANTIC:PLANUNIT:ACD-330",
+        "SEMANTIC:PLANUNIT:ACD-331",
+        "SEMANTIC:PLANUNIT:ACD-332",
+        "SEMANTIC:PLANUNIT:ACD-333",
+        "SEMANTIC:PLANUNIT:ACD-334",
+        "SEMANTIC:PLANUNIT:ACD-335",
+        "SEMANTIC:PLANUNIT:ACD-336"
+      ],
+      "item_ids": [
+        "A005M15-000148-I-ACD-329",
+        "A005M15-000148-I-ACD-330",
+        "A005M15-000148-I-ACD-331",
+        "A005M15-000148-I-ACD-332",
+        "A005M15-000148-I-ACD-333",
+        "A005M15-000148-I-ACD-334",
+        "A005M15-000148-I-ACD-335",
+        "A005M15-000148-I-ACD-336"
+      ],
+      "reviewed": true,
+      "summary": "Frozen file identity, mode invariants, create dialog/backend/results, authority boundary, auto-create, and rename behavior were reviewed; transaction rollback and silent rename failure remain underspecified.",
+      "window_id": "WIN-BF7379C57A0F-0050"
+    },
+    {
+      "core_range": [
+        18685,
+        19079
+      ],
+      "covered_source_unit_refs": [
+        "PLANUNIT:ACD-337",
+        "PLANUNIT:ACD-338",
+        "PLANUNIT:ACD-339",
+        "PLANUNIT:ACD-340",
+        "PLANUNIT:ACD-341",
+        "PLANUNIT:ACD-342",
+        "PLANUNIT:ACD-343",
+        "PLANUNIT:ACD-344",
+        "PLANUNIT:ACD-345",
+        "SEMANTIC:PLANUNIT:ACD-337",
+        "SEMANTIC:PLANUNIT:ACD-338",
+        "SEMANTIC:PLANUNIT:ACD-339",
+        "SEMANTIC:PLANUNIT:ACD-340",
+        "SEMANTIC:PLANUNIT:ACD-341",
+        "SEMANTIC:PLANUNIT:ACD-342",
+        "SEMANTIC:PLANUNIT:ACD-343",
+        "SEMANTIC:PLANUNIT:ACD-344",
+        "SEMANTIC:PLANUNIT:ACD-345"
+      ],
+      "item_ids": [
+        "A005M15-000148-I-ACD-337",
+        "A005M15-000148-I-ACD-338",
+        "A005M15-000148-I-ACD-339",
+        "A005M15-000148-I-ACD-340",
+        "A005M15-000148-I-ACD-341",
+        "A005M15-000148-I-ACD-342",
+        "A005M15-000148-I-ACD-343",
+        "A005M15-000148-I-ACD-344",
+        "A005M15-000148-I-ACD-345"
+      ],
+      "reviewed": true,
+      "summary": "Runtime ownership, settings, icons/projections, and cleanup were reviewed; canonical settings detail, clamp bounds, freshness transitions, and dropdown removal atomicity/safety are unresolved.",
+      "window_id": "WIN-BF7379C57A0F-0051"
+    },
+    {
+      "core_range": [
+        19080,
+        19451
+      ],
+      "covered_source_unit_refs": [
+        "PLANUNIT:ACD-346",
+        "PLANUNIT:ACD-347",
+        "PLANUNIT:ACD-348",
+        "PLANUNIT:ACD-349",
+        "PLANUNIT:ACD-350",
+        "PLANUNIT:ACD-351",
+        "PLANUNIT:ACD-352",
+        "PLANUNIT:ACD-353",
+        "PLANUNIT:ACD-354",
+        "SEMANTIC:PLANUNIT:ACD-346",
+        "SEMANTIC:PLANUNIT:ACD-347",
+        "SEMANTIC:PLANUNIT:ACD-348",
+        "SEMANTIC:PLANUNIT:ACD-349",
+        "SEMANTIC:PLANUNIT:ACD-350",
+        "SEMANTIC:PLANUNIT:ACD-351",
+        "SEMANTIC:PLANUNIT:ACD-352",
+        "SEMANTIC:PLANUNIT:ACD-353",
+        "SEMANTIC:PLANUNIT:ACD-354"
+      ],
+      "item_ids": [
+        "A005M15-000148-I-ACD-346",
+        "A005M15-000148-I-ACD-347",
+        "A005M15-000148-I-ACD-348",
+        "A005M15-000148-I-ACD-349",
+        "A005M15-000148-I-ACD-350",
+        "A005M15-000148-I-ACD-351",
+        "A005M15-000148-I-ACD-352",
+        "A005M15-000148-I-ACD-353",
+        "A005M15-000148-I-ACD-354"
+      ],
+      "reviewed": true,
+      "summary": "Retention, entry routing, merge dialog, guards, recovery, execution context, and locking were reviewed; in-flight Cancel lacks a safe lifecycle contract.",
+      "window_id": "WIN-BF7379C57A0F-0052"
+    },
+    {
+      "core_range": [
+        19452,
+        19824
+      ],
+      "covered_source_unit_refs": [
+        "PLANUNIT:ACD-355",
+        "PLANUNIT:ACD-356",
+        "PLANUNIT:ACD-357",
+        "PLANUNIT:ACD-358",
+        "PLANUNIT:ACD-359",
+        "PLANUNIT:ACD-360",
+        "PLANUNIT:ACD-361",
+        "PLANUNIT:ACD-362",
+        "PLANUNIT:ACD-363",
+        "SEMANTIC:PLANUNIT:ACD-355",
+        "SEMANTIC:PLANUNIT:ACD-356",
+        "SEMANTIC:PLANUNIT:ACD-357",
+        "SEMANTIC:PLANUNIT:ACD-358",
+        "SEMANTIC:PLANUNIT:ACD-359",
+        "SEMANTIC:PLANUNIT:ACD-360",
+        "SEMANTIC:PLANUNIT:ACD-361",
+        "SEMANTIC:PLANUNIT:ACD-362",
+        "SEMANTIC:PLANUNIT:ACD-363"
+      ],
+      "item_ids": [
+        "A005M15-000148-I-ACD-355",
+        "A005M15-000148-I-ACD-356",
+        "A005M15-000148-I-ACD-357",
+        "A005M15-000148-I-ACD-358",
+        "A005M15-000148-I-ACD-359",
+        "A005M15-000148-I-ACD-360",
+        "A005M15-000148-I-ACD-361",
+        "A005M15-000148-I-ACD-362",
+        "A005M15-000148-I-ACD-363"
+      ],
+      "reviewed": true,
+      "summary": "Stale-lock recovery, command strategies, offline fetch, rebase limits, hooks, post-merge behavior, and conflict routing were reviewed; the age-only stale predicate and hook/cancel recovery are critical gaps.",
+      "window_id": "WIN-BF7379C57A0F-0053"
+    },
+    {
+      "core_range": [
+        19825,
+        20197
+      ],
+      "covered_source_unit_refs": [
+        "PLANUNIT:ACD-364",
+        "PLANUNIT:ACD-365",
+        "PLANUNIT:ACD-366",
+        "PLANUNIT:ACD-367",
+        "PLANUNIT:ACD-368",
+        "PLANUNIT:ACD-369",
+        "PLANUNIT:ACD-370",
+        "PLANUNIT:ACD-371",
+        "PLANUNIT:ACD-372",
+        "SEMANTIC:PLANUNIT:ACD-364",
+        "SEMANTIC:PLANUNIT:ACD-365",
+        "SEMANTIC:PLANUNIT:ACD-366",
+        "SEMANTIC:PLANUNIT:ACD-367",
+        "SEMANTIC:PLANUNIT:ACD-368",
+        "SEMANTIC:PLANUNIT:ACD-369",
+        "SEMANTIC:PLANUNIT:ACD-370",
+        "SEMANTIC:PLANUNIT:ACD-371",
+        "SEMANTIC:PLANUNIT:ACD-372"
+      ],
+      "item_ids": [
+        "A005M15-000148-I-ACD-364",
+        "A005M15-000148-I-ACD-365",
+        "A005M15-000148-I-ACD-366",
+        "A005M15-000148-I-ACD-367",
+        "A005M15-000148-I-ACD-368",
+        "A005M15-000148-I-ACD-369",
+        "A005M15-000148-I-ACD-370",
+        "A005M15-000148-I-ACD-371",
+        "A005M15-000148-I-ACD-372"
+      ],
+      "reviewed": true,
+      "summary": "PR, natural-language merge, test settings, command trust, and auto-detection were reviewed; API/panel sequencing, chained cleanup approval, arbitrary-command trust, and missing detection matrix require closure.",
+      "window_id": "WIN-BF7379C57A0F-0054"
+    },
+    {
+      "core_range": [
+        20198,
+        20582
+      ],
+      "covered_source_unit_refs": [
+        "PLANUNIT:ACD-373",
+        "PLANUNIT:ACD-374",
+        "PLANUNIT:ACD-375",
+        "PLANUNIT:ACD-376",
+        "PLANUNIT:ACD-377",
+        "PLANUNIT:ACD-378",
+        "PLANUNIT:ACD-379",
+        "PLANUNIT:ACD-380",
+        "PLANUNIT:ACD-381",
+        "SEMANTIC:PLANUNIT:ACD-373",
+        "SEMANTIC:PLANUNIT:ACD-374",
+        "SEMANTIC:PLANUNIT:ACD-375",
+        "SEMANTIC:PLANUNIT:ACD-376",
+        "SEMANTIC:PLANUNIT:ACD-377",
+        "SEMANTIC:PLANUNIT:ACD-378",
+        "SEMANTIC:PLANUNIT:ACD-379",
+        "SEMANTIC:PLANUNIT:ACD-380",
+        "SEMANTIC:PLANUNIT:ACD-381"
+      ],
+      "item_ids": [
+        "A005M15-000148-I-ACD-373",
+        "A005M15-000148-I-ACD-374",
+        "A005M15-000148-I-ACD-375",
+        "A005M15-000148-I-ACD-376",
+        "A005M15-000148-I-ACD-377",
+        "A005M15-000148-I-ACD-378",
+        "A005M15-000148-I-ACD-379",
+        "A005M15-000148-I-ACD-380",
+        "A005M15-000148-I-ACD-381"
+      ],
+      "reviewed": true,
+      "summary": "First-run gating, strategy test order, dialog execution, abort, environment, crash recovery, and seglog events were reviewed; misleading skipped gates, cancellation, output privacy, recovery, and missing event schemas are material gaps.",
+      "window_id": "WIN-BF7379C57A0F-0055"
+    }
+  ],
+  "self_attestation": {
+    "no_canonical_writes": true,
+    "no_external_research_during_blind_review": true,
+    "no_peer_result_access": true,
+    "no_prior_audit_access": true,
+    "no_unrelated_source_access": true,
+    "terminal_after_submission": true
+  },
+  "source_binding": {
+    "bundle_id": "MACRO15-BF7379C57A0F-0007",
+    "document_path": "Plans/assistant-chat-design.md",
+    "micro_window_ids": [
+      "WIN-BF7379C57A0F-0048",
+      "WIN-BF7379C57A0F-0049",
+      "WIN-BF7379C57A0F-0050",
+      "WIN-BF7379C57A0F-0051",
+      "WIN-BF7379C57A0F-0052",
+      "WIN-BF7379C57A0F-0053",
+      "WIN-BF7379C57A0F-0054",
+      "WIN-BF7379C57A0F-0055"
+    ],
+    "source_sha256": "dbe013e75b0359ac3f4763abd6cc3756a3366b628c1ddb066c68e4ecc91e0f67"
+  },
+  "status": "completed",
+  "synthesis": {
+    "cross_document_questions": [
+      "Which canonical owner embeds the complete Assistant Worktrees settings matrix and numeric bounds promised by ACD-338 and ACD-340?",
+      "Which canonical owner defines atomic bind/create/remove transactions and recovery across thread binding, reverse lookup, worktree record, seglog, and projections?",
+      "Which canonical owner defines merge/test cancellation, hook-failure cleanup, stale-lock safety, and crash reconciliation as one executable lifecycle?",
+      "Which canonical owner defines versioned binding, merge, PR, and test seglog payload schemas with redaction and replay semantics?"
+    ],
+    "feature_family_keys": [
+      "assistant-wizard-handoff",
+      "blocked-packet-ui",
+      "assistant-thread-worktrees",
+      "source-control-worktree-consumer",
+      "worktree-create-bind-cleanup",
+      "worktree-merge-conflict-pr",
+      "pre-merge-test-gate",
+      "worktree-seglog-projections"
+    ],
+    "research_queries": []
+  },
+  "task_thread_id": "/root/a005m15_b8_000148_attempt_0015_terminal"
+}

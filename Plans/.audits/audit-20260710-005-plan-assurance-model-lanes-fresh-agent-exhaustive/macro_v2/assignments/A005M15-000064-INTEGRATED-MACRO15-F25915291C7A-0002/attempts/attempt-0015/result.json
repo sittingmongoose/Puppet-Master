@@ -1,0 +1,1461 @@
+{
+  "assignment_id": "A005M15-000064-INTEGRATED-MACRO15-F25915291C7A-0002",
+  "attempt_id": "attempt-0015",
+  "audit_id": "audit-20260710-005-plan-assurance-model-lanes-fresh-agent-exhaustive",
+  "coverage": {
+    "all_micro_windows_reviewed": true,
+    "all_source_lines_reviewed": true,
+    "all_source_units_accounted": true,
+    "both_exact_and_adversarial_lenses_applied": true,
+    "dimensions_checked": [
+      "behavior",
+      "capabilities",
+      "inputs_outputs",
+      "contracts",
+      "states_transitions",
+      "authority",
+      "ownership",
+      "consumers",
+      "gui_truth",
+      "failures_recovery",
+      "security_privacy",
+      "propagation",
+      "operations",
+      "scale_performance",
+      "compatibility_migration",
+      "acceptance_oracles",
+      "builder_discretion",
+      "ambiguity_unknowns",
+      "missing_callers_consumers",
+      "invalid_states_transitions",
+      "concurrency_races",
+      "partial_failure",
+      "recovery_rollback",
+      "authority_boundaries",
+      "privacy_data_lifecycle",
+      "untrusted_inputs",
+      "gui_misleading_states",
+      "offline_network_loss",
+      "scale_limits",
+      "accessibility",
+      "localization",
+      "observability_support",
+      "destructive_actions",
+      "cross_document_seams",
+      "test_falsifiability",
+      "unknown_unknowns"
+    ]
+  },
+  "items": [
+    {
+      "builder_discretion": false,
+      "confidence": 0.98,
+      "dimensions": [
+        "behavior",
+        "inputs_outputs",
+        "contracts",
+        "states_transitions",
+        "authority",
+        "consumers",
+        "gui_truth",
+        "failures_recovery",
+        "security_privacy",
+        "propagation",
+        "compatibility_migration",
+        "acceptance_oracles"
+      ],
+      "evidence": [
+        {
+          "exact_quote": "  Selectable unit and runtime resolution preserve the canonical account-profile row schema with non-secret credential",
+          "line_end": 1728,
+          "line_start": 1728,
+          "path": "Plans/Multi-Account.md",
+          "source_sha256": "da9e013f1ea114359b0f5f0680d5bbc25479d9b16fc679a04d51f31ea2ffb848"
+        },
+        {
+          "exact_quote": "  selectable_unit is the runtime candidate PM can choose for an attempt. unit_id is stable within the provider registry,",
+          "line_end": 1795,
+          "line_start": 1795,
+          "path": "Plans/Multi-Account.md",
+          "source_sha256": "da9e013f1ea114359b0f5f0680d5bbc25479d9b16fc679a04d51f31ea2ffb848"
+        },
+        {
+          "exact_quote": "  Runtime resolution preserves canonical terms and values for requested_account_id, requested_account_binding,",
+          "line_end": 1868,
+          "line_start": 1868,
+          "path": "Plans/Multi-Account.md",
+          "source_sha256": "da9e013f1ea114359b0f5f0680d5bbc25479d9b16fc679a04d51f31ea2ffb848"
+        },
+        {
+          "exact_quote": "canonical_text: Multi-account switching happens only at attempt/message boundaries, never mid-attempt. Completed attempts",
+          "line_end": 1939,
+          "line_start": 1939,
+          "path": "Plans/Multi-Account.md",
+          "source_sha256": "da9e013f1ea114359b0f5f0680d5bbc25479d9b16fc679a04d51f31ea2ffb848"
+        },
+        {
+          "exact_quote": "canonical_text: Scheduler switch records persist normalized PM reason codes rather than UI-only text, while GUI and runtime",
+          "line_end": 1993,
+          "line_start": 1993,
+          "path": "Plans/Multi-Account.md",
+          "source_sha256": "da9e013f1ea114359b0f5f0680d5bbc25479d9b16fc679a04d51f31ea2ffb848"
+        },
+        {
+          "exact_quote": "canonical_text: PM owns final selectable-unit resolution, requested/effective disclosure, and cross-provider switching policy.",
+          "line_end": 2061,
+          "line_start": 2061,
+          "path": "Plans/Multi-Account.md",
+          "source_sha256": "da9e013f1ea114359b0f5f0680d5bbc25479d9b16fc679a04d51f31ea2ffb848"
+        }
+      ],
+      "gap_kind": "none",
+      "impact": "Provides a coherent non-secret requested/effective resolution envelope, stable selectable-unit identity, attempt-boundary switching, normalized reasons, permission disclosure, and a hard no-fallback authority boundary.",
+      "item_id": "I-0001",
+      "item_type": "contract",
+      "severity": "info",
+      "source_unit_refs": [
+        "PLANUNIT:MA-015",
+        "PLANUNIT:MA-016",
+        "PLANUNIT:MA-017",
+        "PLANUNIT:MA-018",
+        "PLANUNIT:MA-019",
+        "PLANUNIT:MA-020",
+        "SEMANTIC:PLANUNIT:MA-015",
+        "SEMANTIC:PLANUNIT:MA-016",
+        "SEMANTIC:PLANUNIT:MA-017",
+        "SEMANTIC:PLANUNIT:MA-018",
+        "SEMANTIC:PLANUNIT:MA-019",
+        "SEMANTIC:PLANUNIT:MA-020"
+      ],
+      "statement": "Exact lens: MA-015 through MA-020 define the runtime resolution envelope, registry boundary, visible requested/effective identity, attempt stickiness, distinct state dimensions, and PM resolver ownership without silently crossing hard account boundaries.",
+      "title": "Resolution envelope and switch-boundary contract"
+    },
+    {
+      "builder_discretion": true,
+      "confidence": 0.94,
+      "dimensions": [
+        "states_transitions",
+        "failures_recovery",
+        "propagation",
+        "acceptance_oracles",
+        "ambiguity_unknowns",
+        "invalid_states_transitions",
+        "concurrency_races",
+        "partial_failure",
+        "recovery_rollback",
+        "observability_support",
+        "test_falsifiability"
+      ],
+      "evidence": [
+        {
+          "exact_quote": "canonical_text: Multi-account switching happens only at attempt/message boundaries, never mid-attempt. Completed attempts",
+          "line_end": 1939,
+          "line_start": 1939,
+          "path": "Plans/Multi-Account.md",
+          "source_sha256": "da9e013f1ea114359b0f5f0680d5bbc25479d9b16fc679a04d51f31ea2ffb848"
+        },
+        {
+          "exact_quote": "  Provider-auth account operations mutate metadata while preserving requested/effective history. The hard no-fallback rule",
+          "line_end": 2062,
+          "line_start": 2062,
+          "path": "Plans/Multi-Account.md",
+          "source_sha256": "da9e013f1ea114359b0f5f0680d5bbc25479d9b16fc679a04d51f31ea2ffb848"
+        }
+      ],
+      "gap_kind": "resolver_commit_atomicity",
+      "impact": "Without a commit point and concurrency rule, account mutations, simultaneous attempt admission, failover, and history persistence can disagree about which account owned an attempt or whether fallback was legally blocked.",
+      "item_id": "I-0002",
+      "item_type": "gap",
+      "severity": "high",
+      "source_unit_refs": [
+        "PLANUNIT:MA-018",
+        "PLANUNIT:MA-020",
+        "SEMANTIC:PLANUNIT:MA-018",
+        "SEMANTIC:PLANUNIT:MA-020"
+      ],
+      "statement": "Adversarial lens: the text fixes the attempt boundary and historical outcome but does not define an atomic resolver commit, idempotency key, lock/version rule, or rollback behavior when selection races with set-active/delete/update or when evidence persistence fails after dispatch.",
+      "title": "Resolver commit and history atomicity are unspecified"
+    },
+    {
+      "builder_discretion": false,
+      "confidence": 0.98,
+      "dimensions": [
+        "behavior",
+        "capabilities",
+        "inputs_outputs",
+        "contracts",
+        "states_transitions",
+        "authority",
+        "ownership",
+        "gui_truth",
+        "failures_recovery",
+        "security_privacy",
+        "operations",
+        "compatibility_migration",
+        "acceptance_oracles"
+      ],
+      "evidence": [
+        {
+          "exact_quote": "canonical_text: Auto-switching is allowed only when policy permits and the account has hard exhaustion, projected quota below",
+          "line_end": 2118,
+          "line_start": 2118,
+          "path": "Plans/Multi-Account.md",
+          "source_sha256": "da9e013f1ea114359b0f5f0680d5bbc25479d9b16fc679a04d51f31ea2ffb848"
+        },
+        {
+          "exact_quote": "canonical_text: PM does not auto-switch when no eligible backup exists, policy forbids it, provider capability does not support",
+          "line_end": 2184,
+          "line_start": 2184,
+          "path": "Plans/Multi-Account.md",
+          "source_sha256": "da9e013f1ea114359b0f5f0680d5bbc25479d9b16fc679a04d51f31ea2ffb848"
+        },
+        {
+          "exact_quote": "  Provider-specific behavior preserves the provider-entry matrix for Gemini Direct, Antigravity CLI public `agy` rows, separate Antigravity OAuth/internal generated-image route rows, retired Gemini CLI lineage, Cursor CLI, Claude Code CLI, Codex/OpenAI, GitHub Copilot, OpenCode, and accepted coding-plan rows, including identity shape, usage/health signals, recovery and switching notes, and the rule that Codex plan-backed and API-billed usage/cooldowns must not be merged.",
+          "line_end": 2245,
+          "line_start": 2245,
+          "path": "Plans/Multi-Account.md",
+          "source_sha256": "da9e013f1ea114359b0f5f0680d5bbc25479d9b16fc679a04d51f31ea2ffb848"
+        },
+        {
+          "exact_quote": "canonical_text: Claude Code account handling preserves native auth evidence, CLAUDE_CONFIG_DIR profile switching, isolated",
+          "line_end": 2311,
+          "line_start": 2311,
+          "path": "Plans/Multi-Account.md",
+          "source_sha256": "da9e013f1ea114359b0f5f0680d5bbc25479d9b16fc679a04d51f31ea2ffb848"
+        },
+        {
+          "exact_quote": "canonical_text: PM-owned provider account roots are keyed by provider_entry_id with explicit Linux, macOS, Windows, and",
+          "line_end": 2382,
+          "line_start": 2382,
+          "path": "Plans/Multi-Account.md",
+          "source_sha256": "da9e013f1ea114359b0f5f0680d5bbc25479d9b16fc679a04d51f31ea2ffb848"
+        }
+      ],
+      "gap_kind": "none",
+      "impact": "Defines weighted eligibility evidence, explicit no-switch/cooldown behavior, provider-family separation, Claude account isolation, portable PM-owned roots, and retired Gemini CLI lineage.",
+      "item_id": "I-0003",
+      "item_type": "contract",
+      "severity": "info",
+      "source_unit_refs": [
+        "PLANUNIT:MA-021",
+        "PLANUNIT:MA-022",
+        "PLANUNIT:MA-023",
+        "PLANUNIT:MA-024",
+        "PLANUNIT:MA-025",
+        "SEMANTIC:PLANUNIT:MA-021",
+        "SEMANTIC:PLANUNIT:MA-022",
+        "SEMANTIC:PLANUNIT:MA-023",
+        "SEMANTIC:PLANUNIT:MA-024",
+        "SEMANTIC:PLANUNIT:MA-025"
+      ],
+      "statement": "Exact lens: MA-021 through MA-025 preserve authoritative switching signals, cooldown/manual controls, provider-specific identity matrices, Claude root/import boundaries, and cross-platform provider-root ownership.",
+      "title": "Eligibility, provider matrix, and account-root contract"
+    },
+    {
+      "builder_discretion": true,
+      "confidence": 0.92,
+      "dimensions": [
+        "inputs_outputs",
+        "states_transitions",
+        "failures_recovery",
+        "security_privacy",
+        "operations",
+        "scale_performance",
+        "acceptance_oracles",
+        "builder_discretion",
+        "ambiguity_unknowns",
+        "concurrency_races",
+        "partial_failure",
+        "recovery_rollback",
+        "privacy_data_lifecycle",
+        "untrusted_inputs",
+        "offline_network_loss",
+        "test_falsifiability"
+      ],
+      "evidence": [
+        {
+          "exact_quote": "- cooldown_until sets hard_block=true until revalidation after expiry.",
+          "line_end": 2198,
+          "line_start": 2198,
+          "path": "Plans/Multi-Account.md",
+          "source_sha256": "da9e013f1ea114359b0f5f0680d5bbc25479d9b16fc679a04d51f31ea2ffb848"
+        },
+        {
+          "exact_quote": "- Import Existing Claude Auth copies only auth-bearing state.",
+          "line_end": 2324,
+          "line_start": 2324,
+          "path": "Plans/Multi-Account.md",
+          "source_sha256": "da9e013f1ea114359b0f5f0680d5bbc25479d9b16fc679a04d51f31ea2ffb848"
+        },
+        {
+          "exact_quote": "- PM must not hand-wave filesystem ownership for CLI-backed providers.",
+          "line_end": 2434,
+          "line_start": 2434,
+          "path": "Plans/Multi-Account.md",
+          "source_sha256": "da9e013f1ea114359b0f5f0680d5bbc25479d9b16fc679a04d51f31ea2ffb848"
+        }
+      ],
+      "gap_kind": "root_import_and_revalidation_safety",
+      "impact": "Ambiguous import allowlists and missing path/cooldown recovery mechanics can copy unintended secrets or residue, escape owned roots through links, or leave accounts incorrectly blocked or eligible after clock changes and offline expiry.",
+      "item_id": "I-0004",
+      "item_type": "gap",
+      "severity": "high",
+      "source_unit_refs": [
+        "PLANUNIT:MA-021",
+        "PLANUNIT:MA-022",
+        "PLANUNIT:MA-024",
+        "PLANUNIT:MA-025",
+        "SEMANTIC:PLANUNIT:MA-021",
+        "SEMANTIC:PLANUNIT:MA-022",
+        "SEMANTIC:PLANUNIT:MA-024",
+        "SEMANTIC:PLANUNIT:MA-025"
+      ],
+      "statement": "Adversarial lens: authoritative threshold and cooldown concepts exist, but clock source, snapshot freshness, reset-window reconciliation, offline expiry, retry-budget atomicity, per-provider auth-bearing import allowlists, symlink traversal, permissions, and partial-copy rollback are not specified.",
+      "title": "Cooldown revalidation and root import safety are incomplete"
+    },
+    {
+      "builder_discretion": false,
+      "confidence": 0.98,
+      "dimensions": [
+        "behavior",
+        "capabilities",
+        "inputs_outputs",
+        "contracts",
+        "authority",
+        "ownership",
+        "gui_truth",
+        "failures_recovery",
+        "security_privacy",
+        "operations",
+        "compatibility_migration",
+        "acceptance_oracles"
+      ],
+      "evidence": [
+        {
+          "exact_quote": "canonical_text: Gemini auth states are richer than a binary logged-in flag. OAuth, API-key, and Vertex/Google credential",
+          "line_end": 2458,
+          "line_start": 2458,
+          "path": "Plans/Multi-Account.md",
+          "source_sha256": "da9e013f1ea114359b0f5f0680d5bbc25479d9b16fc679a04d51f31ea2ffb848"
+        },
+        {
+          "exact_quote": "canonical_text: Cursor account isolation is tied to PM-owned HOME and XDG roots for cursor-agent execution, login, status,",
+          "line_end": 2521,
+          "line_start": 2521,
+          "path": "Plans/Multi-Account.md",
+          "source_sha256": "da9e013f1ea114359b0f5f0680d5bbc25479d9b16fc679a04d51f31ea2ffb848"
+        },
+        {
+          "exact_quote": "canonical_text: Codex account roots are isolated with CODEX_HOME. Auth probes and authenticated structured execution validate",
+          "line_end": 2591,
+          "line_start": 2591,
+          "path": "Plans/Multi-Account.md",
+          "source_sha256": "da9e013f1ea114359b0f5f0680d5bbc25479d9b16fc679a04d51f31ea2ffb848"
+        },
+        {
+          "exact_quote": "canonical_text: Gemini Direct is an active direct API provider entry, retired Gemini CLI vocabulary is source-lineage only,",
+          "line_end": 2659,
+          "line_start": 2659,
+          "path": "Plans/Multi-Account.md",
+          "source_sha256": "da9e013f1ea114359b0f5f0680d5bbc25479d9b16fc679a04d51f31ea2ffb848"
+        },
+        {
+          "exact_quote": "  Provider-native advanced instruction surfaces, OpenCode evidence, and skill/MCP behavior remain bounded: Copilot advanced",
+          "line_end": 2727,
+          "line_start": 2727,
+          "path": "Plans/Multi-Account.md",
+          "source_sha256": "da9e013f1ea114359b0f5f0680d5bbc25479d9b16fc679a04d51f31ea2ffb848"
+        },
+        {
+          "exact_quote": "canonical_text: CLI-backed providers deny sharing for account-bearing state and runtime residue by default. PM-managed overlays",
+          "line_end": 2792,
+          "line_start": 2792,
+          "path": "Plans/Multi-Account.md",
+          "source_sha256": "da9e013f1ea114359b0f5f0680d5bbc25479d9b16fc679a04d51f31ea2ffb848"
+        }
+      ],
+      "gap_kind": "none",
+      "impact": "Separates auth, billing, quota, project, provider, root, instruction, and sharing planes while denying account-bearing state leakage by default.",
+      "item_id": "I-0005",
+      "item_type": "contract",
+      "severity": "info",
+      "source_unit_refs": [
+        "PLANUNIT:MA-026",
+        "PLANUNIT:MA-027",
+        "PLANUNIT:MA-028",
+        "PLANUNIT:MA-029",
+        "PLANUNIT:MA-030",
+        "PLANUNIT:MA-031",
+        "SEMANTIC:PLANUNIT:MA-026",
+        "SEMANTIC:PLANUNIT:MA-027",
+        "SEMANTIC:PLANUNIT:MA-028",
+        "SEMANTIC:PLANUNIT:MA-029",
+        "SEMANTIC:PLANUNIT:MA-030",
+        "SEMANTIC:PLANUNIT:MA-031"
+      ],
+      "statement": "Exact lens: MA-026 through MA-031 define distinct Gemini readiness planes, isolated Cursor and Codex roots, direct-provider identity boundaries, provider-native instruction limits, and deny-first CLI sharing policy.",
+      "title": "Provider isolation and sharing-boundary contract"
+    },
+    {
+      "builder_discretion": true,
+      "confidence": 0.96,
+      "dimensions": [
+        "inputs_outputs",
+        "contracts",
+        "failures_recovery",
+        "security_privacy",
+        "operations",
+        "acceptance_oracles",
+        "builder_discretion",
+        "ambiguity_unknowns",
+        "partial_failure",
+        "recovery_rollback",
+        "privacy_data_lifecycle",
+        "untrusted_inputs",
+        "destructive_actions",
+        "test_falsifiability"
+      ],
+      "evidence": [
+        {
+          "exact_quote": "- Import Existing Cursor Auth copies only narrow auth-bearing state.",
+          "line_end": 2534,
+          "line_start": 2534,
+          "path": "Plans/Multi-Account.md",
+          "source_sha256": "da9e013f1ea114359b0f5f0680d5bbc25479d9b16fc679a04d51f31ea2ffb848"
+        },
+        {
+          "exact_quote": "- Account-bearing state and residue do not leak between runnable profiles.",
+          "line_end": 2803,
+          "line_start": 2803,
+          "path": "Plans/Multi-Account.md",
+          "source_sha256": "da9e013f1ea114359b0f5f0680d5bbc25479d9b16fc679a04d51f31ea2ffb848"
+        },
+        {
+          "exact_quote": "- deny_classes[] wins for account-bearing state.",
+          "line_end": 2837,
+          "line_start": 2837,
+          "path": "Plans/Multi-Account.md",
+          "source_sha256": "da9e013f1ea114359b0f5f0680d5bbc25479d9b16fc679a04d51f31ea2ffb848"
+        }
+      ],
+      "gap_kind": "provider_import_allowlist_and_transaction",
+      "impact": "A failed or malicious import can leave a mixed account root, copy provider residue beyond intended credentials, or expose data across profiles despite the stated deny-first sharing rule.",
+      "item_id": "I-0006",
+      "item_type": "gap",
+      "severity": "high",
+      "source_unit_refs": [
+        "PLANUNIT:MA-027",
+        "PLANUNIT:MA-028",
+        "PLANUNIT:MA-031",
+        "SEMANTIC:PLANUNIT:MA-027",
+        "SEMANTIC:PLANUNIT:MA-028",
+        "SEMANTIC:PLANUNIT:MA-031"
+      ],
+      "statement": "Adversarial lens: narrow/minimum auth-bearing import is required, but the exact per-provider file/field allowlist, link and ownership checks, staging directory, atomic promotion, cleanup, audit record, and rollback oracle are not defined.",
+      "title": "Provider auth import lacks a transactional allowlist contract"
+    },
+    {
+      "builder_discretion": false,
+      "confidence": 0.98,
+      "dimensions": [
+        "behavior",
+        "inputs_outputs",
+        "contracts",
+        "states_transitions",
+        "authority",
+        "ownership",
+        "consumers",
+        "gui_truth",
+        "failures_recovery",
+        "propagation",
+        "operations",
+        "scale_performance",
+        "acceptance_oracles"
+      ],
+      "evidence": [
+        {
+          "exact_quote": "canonical_text: The multi-account contract applies across assistant, interviewer, builders, overseers, and node workers.",
+          "line_end": 2856,
+          "line_start": 2856,
+          "path": "Plans/Multi-Account.md",
+          "source_sha256": "da9e013f1ea114359b0f5f0680d5bbc25479d9b16fc679a04d51f31ea2ffb848"
+        },
+        {
+          "exact_quote": "canonical_text: Runtime-account consumers defer to Multi-Account for requested/effective account selection. requested_account_binding",
+          "line_end": 2914,
+          "line_start": 2914,
+          "path": "Plans/Multi-Account.md",
+          "source_sha256": "da9e013f1ea114359b0f5f0680d5bbc25479d9b16fc679a04d51f31ea2ffb848"
+        },
+        {
+          "exact_quote": "canonical_text: Usage/account pressure plugs into the shared Usage model rather than creating a parallel quota system.",
+          "line_end": 2979,
+          "line_start": 2979,
+          "path": "Plans/Multi-Account.md",
+          "source_sha256": "da9e013f1ea114359b0f5f0680d5bbc25479d9b16fc679a04d51f31ea2ffb848"
+        },
+        {
+          "exact_quote": "canonical_text: Gemini Direct usage/source expectations preserve source-qualified labels. API-key/local-only views use",
+          "line_end": 3039,
+          "line_start": 3039,
+          "path": "Plans/Multi-Account.md",
+          "source_sha256": "da9e013f1ea114359b0f5f0680d5bbc25479d9b16fc679a04d51f31ea2ffb848"
+        },
+        {
+          "exact_quote": "canonical_text: Priority, GUI ordering, and stickiness rules use lower numeric priority first, prefer the current effective",
+          "line_end": 3098,
+          "line_start": 3098,
+          "path": "Plans/Multi-Account.md",
+          "source_sha256": "da9e013f1ea114359b0f5f0680d5bbc25479d9b16fc679a04d51f31ea2ffb848"
+        },
+        {
+          "exact_quote": "canonical_text: Multi-account GUI requirements are UX requirements independent of implementation stack. Agent-Config is the",
+          "line_end": 3155,
+          "line_start": 3155,
+          "path": "Plans/Multi-Account.md",
+          "source_sha256": "da9e013f1ea114359b0f5f0680d5bbc25479d9b16fc679a04d51f31ea2ffb848"
+        }
+      ],
+      "gap_kind": "none",
+      "impact": "Carries one account contract across runtime actors, durable pressure history, Usage-owned evidence, source-qualified labels, priority/stickiness rules, and a canonical Agent-Config management flow.",
+      "item_id": "I-0007",
+      "item_type": "contract",
+      "severity": "info",
+      "source_unit_refs": [
+        "PLANUNIT:MA-032",
+        "PLANUNIT:MA-033",
+        "PLANUNIT:MA-034",
+        "PLANUNIT:MA-035",
+        "PLANUNIT:MA-036",
+        "PLANUNIT:MA-037",
+        "SEMANTIC:PLANUNIT:MA-032",
+        "SEMANTIC:PLANUNIT:MA-033",
+        "SEMANTIC:PLANUNIT:MA-034",
+        "SEMANTIC:PLANUNIT:MA-035",
+        "SEMANTIC:PLANUNIT:MA-036",
+        "SEMANTIC:PLANUNIT:MA-037"
+      ],
+      "statement": "Exact lens: MA-032 through MA-037 bind all provider-using actors to Multi-Account, preserve durable binding and pressure history, defer quota ownership to Usage, define confidence labels and priority selection, and expose ordered Agent-Config sections with Effective Runtime disclosure.",
+      "title": "Cross-actor selection, usage, and GUI contract"
+    },
+    {
+      "builder_discretion": true,
+      "confidence": 0.95,
+      "dimensions": [
+        "behavior",
+        "states_transitions",
+        "failures_recovery",
+        "propagation",
+        "scale_performance",
+        "acceptance_oracles",
+        "builder_discretion",
+        "ambiguity_unknowns",
+        "concurrency_races",
+        "partial_failure",
+        "gui_misleading_states",
+        "observability_support",
+        "test_falsifiability"
+      ],
+      "evidence": [
+        {
+          "exact_quote": "  Provider-using interactions may update account health, pick-best uses the strongest available account-health signals",
+          "line_end": 2980,
+          "line_start": 2980,
+          "path": "Plans/Multi-Account.md",
+          "source_sha256": "da9e013f1ea114359b0f5f0680d5bbc25479d9b16fc679a04d51f31ea2ffb848"
+        },
+        {
+          "exact_quote": "  account when healthy enough, otherwise choose the highest-priority eligible account inside the highest-ranked viable",
+          "line_end": 3099,
+          "line_start": 3099,
+          "path": "Plans/Multi-Account.md",
+          "source_sha256": "da9e013f1ea114359b0f5f0680d5bbc25479d9b16fc679a04d51f31ea2ffb848"
+        }
+      ],
+      "gap_kind": "selection_freshness_and_tiebreaking",
+      "impact": "Independent actors can make divergent choices from differently aged health data, and GUI order can appear deterministic while runtime selection depends on undefined health and auth-surface rankings.",
+      "item_id": "I-0008",
+      "item_type": "gap",
+      "severity": "high",
+      "source_unit_refs": [
+        "PLANUNIT:MA-032",
+        "PLANUNIT:MA-033",
+        "PLANUNIT:MA-034",
+        "PLANUNIT:MA-036",
+        "PLANUNIT:MA-037",
+        "SEMANTIC:PLANUNIT:MA-032",
+        "SEMANTIC:PLANUNIT:MA-033",
+        "SEMANTIC:PLANUNIT:MA-034",
+        "SEMANTIC:PLANUNIT:MA-036",
+        "SEMANTIC:PLANUNIT:MA-037"
+      ],
+      "statement": "Adversarial lens: strongest available, healthy enough, and highest-ranked viable are not accompanied by freshness bounds, deterministic equal-priority tie-breakers, actor-coordination/version semantics, or an oracle proving GUI order and effective runtime selection agree under concurrent health updates.",
+      "title": "Selection freshness and deterministic tie-breaking are undefined"
+    },
+    {
+      "builder_discretion": false,
+      "confidence": 0.98,
+      "dimensions": [
+        "behavior",
+        "capabilities",
+        "inputs_outputs",
+        "contracts",
+        "states_transitions",
+        "authority",
+        "ownership",
+        "consumers",
+        "gui_truth",
+        "failures_recovery",
+        "propagation",
+        "operations",
+        "compatibility_migration",
+        "acceptance_oracles"
+      ],
+      "evidence": [
+        {
+          "exact_quote": "  Agent-Config surfaces provider/family pooling where a provider entry participates in family-level pooling, preserves active Gemini Direct, Antigravity CLI public `agy` rows, and the separate Antigravity OAuth/internal `gemini-3.1-flash-image` generated-image route as real provider-entry/account rows where configured, treats Gemini CLI as retired source-lineage only, requires requested/effective disclosure when family pooling selects a different backend, capability-checks media/effort/tooling needs, and forbids fake OAuth/API-key pseudo-providers.",
+          "line_end": 3216,
+          "line_start": 3216,
+          "path": "Plans/Multi-Account.md",
+          "source_sha256": "da9e013f1ea114359b0f5f0680d5bbc25479d9b16fc679a04d51f31ea2ffb848"
+        },
+        {
+          "exact_quote": "canonical_text: Account/profile rows display dense scan-friendly identity, auth, configuration, availability, pressure,",
+          "line_end": 3286,
+          "line_start": 3286,
+          "path": "Plans/Multi-Account.md",
+          "source_sha256": "da9e013f1ea114359b0f5f0680d5bbc25479d9b16fc679a04d51f31ea2ffb848"
+        },
+        {
+          "exact_quote": "canonical_text: Provider/account setup flows distinguish authentication from readiness. Account/profile GUI state machines",
+          "line_end": 3351,
+          "line_start": 3351,
+          "path": "Plans/Multi-Account.md",
+          "source_sha256": "da9e013f1ea114359b0f5f0680d5bbc25479d9b16fc679a04d51f31ea2ffb848"
+        },
+        {
+          "exact_quote": "canonical_text: Provider-specific readiness branches preserve Copilot billing entity selection, Gemini Vertex/Google Cloud",
+          "line_end": 3415,
+          "line_start": 3415,
+          "path": "Plans/Multi-Account.md",
+          "source_sha256": "da9e013f1ea114359b0f5f0680d5bbc25479d9b16fc679a04d51f31ea2ffb848"
+        },
+        {
+          "exact_quote": "canonical_text: Provider settings expose account lifecycle controls in a consistent location while honoring provider-specific",
+          "line_end": 3480,
+          "line_start": 3480,
+          "path": "Plans/Multi-Account.md",
+          "source_sha256": "da9e013f1ea114359b0f5f0680d5bbc25479d9b16fc679a04d51f31ea2ffb848"
+        },
+        {
+          "exact_quote": "canonical_text: Provider-specific setup choices preserve Codex ChatGPT/API-key account entry labels and helper text, root-backed",
+          "line_end": 3537,
+          "line_start": 3537,
+          "path": "Plans/Multi-Account.md",
+          "source_sha256": "da9e013f1ea114359b0f5f0680d5bbc25479d9b16fc679a04d51f31ea2ffb848"
+        }
+      ],
+      "gap_kind": "none",
+      "impact": "Defines real provider-entry pooling, dense truthful account rows, distinct auth/readiness states, provider-specific readiness branches, stable registration lifecycle, and state-valid remediation actions.",
+      "item_id": "I-0009",
+      "item_type": "contract",
+      "severity": "info",
+      "source_unit_refs": [
+        "PLANUNIT:MA-038",
+        "PLANUNIT:MA-039",
+        "PLANUNIT:MA-040",
+        "PLANUNIT:MA-041",
+        "PLANUNIT:MA-042",
+        "PLANUNIT:MA-043",
+        "SEMANTIC:PLANUNIT:MA-038",
+        "SEMANTIC:PLANUNIT:MA-039",
+        "SEMANTIC:PLANUNIT:MA-040",
+        "SEMANTIC:PLANUNIT:MA-041",
+        "SEMANTIC:PLANUNIT:MA-042",
+        "SEMANTIC:PLANUNIT:MA-043"
+      ],
+      "statement": "Exact lens: MA-038 through MA-043 preserve concrete provider rows and disclosure, account/profile inspectors, a non-binary readiness model, provider-specific setup, stable lifecycle schema/defaults, and context-valid remediation actions.",
+      "title": "Pooling, readiness, and account-lifecycle GUI contract"
+    },
+    {
+      "builder_discretion": true,
+      "confidence": 0.97,
+      "dimensions": [
+        "states_transitions",
+        "gui_truth",
+        "failures_recovery",
+        "propagation",
+        "operations",
+        "acceptance_oracles",
+        "builder_discretion",
+        "ambiguity_unknowns",
+        "invalid_states_transitions",
+        "concurrency_races",
+        "partial_failure",
+        "recovery_rollback",
+        "gui_misleading_states",
+        "offline_network_loss",
+        "observability_support",
+        "destructive_actions",
+        "test_falsifiability"
+      ],
+      "evidence": [
+        {
+          "exact_quote": "canonical_text: Provider/account setup flows distinguish authentication from readiness. Account/profile GUI state machines",
+          "line_end": 3351,
+          "line_start": 3351,
+          "path": "Plans/Multi-Account.md",
+          "source_sha256": "da9e013f1ea114359b0f5f0680d5bbc25479d9b16fc679a04d51f31ea2ffb848"
+        },
+        {
+          "exact_quote": "- Credential rotation triggers re-auth or revalidation before returning to Ready.",
+          "line_end": 3492,
+          "line_start": 3492,
+          "path": "Plans/Multi-Account.md",
+          "source_sha256": "da9e013f1ea114359b0f5f0680d5bbc25479d9b16fc679a04d51f31ea2ffb848"
+        },
+        {
+          "exact_quote": "- Invalid remediation actions are hidden rather than generalized.",
+          "line_end": 3551,
+          "line_start": 3551,
+          "path": "Plans/Multi-Account.md",
+          "source_sha256": "da9e013f1ea114359b0f5f0680d5bbc25479d9b16fc679a04d51f31ea2ffb848"
+        }
+      ],
+      "gap_kind": "readiness_transition_and_async_result_ordering",
+      "impact": "Late validation responses or concurrent lifecycle/default changes can move a row to Ready after credentials changed, reveal stale actions, or present a default/effective account that no longer exists.",
+      "item_id": "I-0010",
+      "item_type": "gap",
+      "severity": "high",
+      "source_unit_refs": [
+        "PLANUNIT:MA-039",
+        "PLANUNIT:MA-040",
+        "PLANUNIT:MA-041",
+        "PLANUNIT:MA-042",
+        "PLANUNIT:MA-043",
+        "SEMANTIC:PLANUNIT:MA-039",
+        "SEMANTIC:PLANUNIT:MA-040",
+        "SEMANTIC:PLANUNIT:MA-041",
+        "SEMANTIC:PLANUNIT:MA-042",
+        "SEMANTIC:PLANUNIT:MA-043"
+      ],
+      "statement": "Adversarial lens: the readiness labels are enumerated, but legal transition edges, cancellation, request-generation/version checks, timeout/offline behavior, stale async response suppression, concurrent default edits, and state/action invariants are not specified.",
+      "title": "Readiness state transitions and stale async results are unspecified"
+    },
+    {
+      "builder_discretion": false,
+      "confidence": 0.98,
+      "dimensions": [
+        "behavior",
+        "inputs_outputs",
+        "contracts",
+        "states_transitions",
+        "authority",
+        "ownership",
+        "consumers",
+        "gui_truth",
+        "failures_recovery",
+        "security_privacy",
+        "operations",
+        "compatibility_migration",
+        "acceptance_oracles",
+        "destructive_actions"
+      ],
+      "evidence": [
+        {
+          "exact_quote": "canonical_text: Row-level setup actions use explicit in-progress and terminal label transitions. Account/profile removal preserves",
+          "line_end": 3603,
+          "line_start": 3603,
+          "path": "Plans/Multi-Account.md",
+          "source_sha256": "da9e013f1ea114359b0f5f0680d5bbc25479d9b16fc679a04d51f31ea2ffb848"
+        },
+        {
+          "exact_quote": "canonical_text: Authentication walkthroughs define PM-side orchestration around provider-native auth mechanisms. Every account",
+          "line_end": 3664,
+          "line_start": 3664,
+          "path": "Plans/Multi-Account.md",
+          "source_sha256": "da9e013f1ea114359b0f5f0680d5bbc25479d9b16fc679a04d51f31ea2ffb848"
+        },
+        {
+          "exact_quote": "canonical_text: API-key setup lets the user select API Key, enter the key in a secure input, validate it with a lightweight",
+          "line_end": 3721,
+          "line_start": 3721,
+          "path": "Plans/Multi-Account.md",
+          "source_sha256": "da9e013f1ea114359b0f5f0680d5bbc25479d9b16fc679a04d51f31ea2ffb848"
+        },
+        {
+          "exact_quote": "canonical_text: OAuth device-code setup requests a provider device code, shows the device code, verification URL, and QR code,",
+          "line_end": 3778,
+          "line_start": 3778,
+          "path": "Plans/Multi-Account.md",
+          "source_sha256": "da9e013f1ea114359b0f5f0680d5bbc25479d9b16fc679a04d51f31ea2ffb848"
+        },
+        {
+          "exact_quote": "canonical_text: Gemini CLI token setup/import vocabulary is retired and retained only as source-lineage. Active PM setup",
+          "line_end": 3834,
+          "line_start": 3834,
+          "path": "Plans/Multi-Account.md",
+          "source_sha256": "da9e013f1ea114359b0f5f0680d5bbc25479d9b16fc679a04d51f31ea2ffb848"
+        },
+        {
+          "exact_quote": "canonical_text: Usage and status surfaces show current effective account/profile, effective auth mode, billing/entity context,",
+          "line_end": 3893,
+          "line_start": 3893,
+          "path": "Plans/Multi-Account.md",
+          "source_sha256": "da9e013f1ea114359b0f5f0680d5bbc25479d9b16fc679a04d51f31ea2ffb848"
+        }
+      ],
+      "gap_kind": "none",
+      "impact": "Protects account removal and history, discloses auth ownership/recovery, securely validates and stores API keys, bounds device-code tokens, prevents retired Gemini CLI resurrection, and exposes truthful runtime usage context.",
+      "item_id": "I-0011",
+      "item_type": "contract",
+      "severity": "info",
+      "source_unit_refs": [
+        "PLANUNIT:MA-044",
+        "PLANUNIT:MA-045",
+        "PLANUNIT:MA-046",
+        "PLANUNIT:MA-047",
+        "PLANUNIT:MA-048",
+        "PLANUNIT:MA-049",
+        "SEMANTIC:PLANUNIT:MA-044",
+        "SEMANTIC:PLANUNIT:MA-045",
+        "SEMANTIC:PLANUNIT:MA-046",
+        "SEMANTIC:PLANUNIT:MA-047",
+        "SEMANTIC:PLANUNIT:MA-048",
+        "SEMANTIC:PLANUNIT:MA-049"
+      ],
+      "statement": "Exact lens: MA-044 through MA-049 specify button/removal safety, visible auth recovery, API-key and OAuth device-code flows, retired Gemini CLI prohibitions, and Usage consumption of effective runtime identity and confidence.",
+      "title": "Auth setup, removal safety, and usage-visibility contract"
+    },
+    {
+      "builder_discretion": true,
+      "confidence": 0.97,
+      "dimensions": [
+        "states_transitions",
+        "failures_recovery",
+        "security_privacy",
+        "propagation",
+        "operations",
+        "acceptance_oracles",
+        "ambiguity_unknowns",
+        "concurrency_races",
+        "partial_failure",
+        "recovery_rollback",
+        "privacy_data_lifecycle",
+        "untrusted_inputs",
+        "gui_misleading_states",
+        "offline_network_loss",
+        "observability_support",
+        "destructive_actions",
+        "test_falsifiability"
+      ],
+      "evidence": [
+        {
+          "exact_quote": "  requested/effective history, default-account removal atomically promotes an eligible account or leaves explicit no-default",
+          "line_end": 3604,
+          "line_start": 3604,
+          "path": "Plans/Multi-Account.md",
+          "source_sha256": "da9e013f1ea114359b0f5f0680d5bbc25479d9b16fc679a04d51f31ea2ffb848"
+        },
+        {
+          "exact_quote": "  provider call, store the key in the OS credential store on success, write the resulting credential_ref, mark the account",
+          "line_end": 3722,
+          "line_start": 3722,
+          "path": "Plans/Multi-Account.md",
+          "source_sha256": "da9e013f1ea114359b0f5f0680d5bbc25479d9b16fc679a04d51f31ea2ffb848"
+        },
+        {
+          "exact_quote": "  lets the user complete authorization outside PM, polls for the token every five seconds for up to five minutes, stores",
+          "line_end": 3779,
+          "line_start": 3779,
+          "path": "Plans/Multi-Account.md",
+          "source_sha256": "da9e013f1ea114359b0f5f0680d5bbc25479d9b16fc679a04d51f31ea2ffb848"
+        }
+      ],
+      "gap_kind": "auth_and_removal_partial_failure",
+      "impact": "Crash, cancellation, or delayed provider responses can orphan secrets, activate incomplete registrations, promote the wrong default, or accept a device token after the user has cancelled or removed the account.",
+      "item_id": "I-0012",
+      "item_type": "gap",
+      "severity": "high",
+      "source_unit_refs": [
+        "PLANUNIT:MA-044",
+        "PLANUNIT:MA-046",
+        "PLANUNIT:MA-047",
+        "SEMANTIC:PLANUNIT:MA-044",
+        "SEMANTIC:PLANUNIT:MA-046",
+        "SEMANTIC:PLANUNIT:MA-047"
+      ],
+      "statement": "Adversarial lens: atomic default promotion is asserted without transaction/rollback or in-flight attempt rules; API-key setup lacks compensation between credential-store write and account activation; device-code polling lacks cancellation, restart, late-token rejection, provider slow-down handling, and secret cleanup or revocation semantics.",
+      "title": "Auth setup and removal compensation paths are incomplete"
+    },
+    {
+      "builder_discretion": false,
+      "confidence": 0.98,
+      "dimensions": [
+        "behavior",
+        "capabilities",
+        "inputs_outputs",
+        "contracts",
+        "states_transitions",
+        "authority",
+        "ownership",
+        "consumers",
+        "gui_truth",
+        "failures_recovery",
+        "security_privacy",
+        "operations",
+        "compatibility_migration",
+        "acceptance_oracles"
+      ],
+      "evidence": [
+        {
+          "exact_quote": "canonical_text: Agent-Config exposes shared instruction panes sourced from PM AGENTS-layer intent, provider-native advanced",
+          "line_end": 3954,
+          "line_start": 3954,
+          "path": "Plans/Multi-Account.md",
+          "source_sha256": "da9e013f1ea114359b0f5f0680d5bbc25479d9b16fc679a04d51f31ea2ffb848"
+        },
+        {
+          "exact_quote": "canonical_text: Provider-native files under PM control expose drift states and repair/detach/diff actions. Projection records",
+          "line_end": 4011,
+          "line_start": 4011,
+          "path": "Plans/Multi-Account.md",
+          "source_sha256": "da9e013f1ea114359b0f5f0680d5bbc25479d9b16fc679a04d51f31ea2ffb848"
+        },
+        {
+          "exact_quote": "canonical_text: Projection conflict handling records conflict policy and drift detection mode. Repair may overwrite only",
+          "line_end": 4079,
+          "line_start": 4079,
+          "path": "Plans/Multi-Account.md",
+          "source_sha256": "da9e013f1ea114359b0f5f0680d5bbc25479d9b16fc679a04d51f31ea2ffb848"
+        },
+        {
+          "exact_quote": "canonical_text: Workspace projections, provider-local config, rules, instructions, agents, skill rows, MCP rows, provider entry",
+          "line_end": 4138,
+          "line_start": 4138,
+          "path": "Plans/Multi-Account.md",
+          "source_sha256": "da9e013f1ea114359b0f5f0680d5bbc25479d9b16fc679a04d51f31ea2ffb848"
+        },
+        {
+          "exact_quote": "  Native auth for Codex, Copilot, Gemini, and optionally Claude uses an in-process Rust token store shaped after OpenCode",
+          "line_end": 4220,
+          "line_start": 4220,
+          "path": "Plans/Multi-Account.md",
+          "source_sha256": "da9e013f1ea114359b0f5f0680d5bbc25479d9b16fc679a04d51f31ea2ffb848"
+        },
+        {
+          "exact_quote": "  Native auth HTTP calls use rotating fetch: get candidates active first and then order, filter by cooldown, and on 429,",
+          "line_end": 4280,
+          "line_start": 4280,
+          "path": "Plans/Multi-Account.md",
+          "source_sha256": "da9e013f1ea114359b0f5f0680d5bbc25479d9b16fc679a04d51f31ea2ffb848"
+        }
+      ],
+      "gap_kind": "none",
+      "impact": "Exposes PM-native instructions/skills/MCP, auditable projections and drift repair, minimal auth import, a locked native token-store shape, and ordered cooldown-aware failover.",
+      "item_id": "I-0013",
+      "item_type": "contract",
+      "severity": "info",
+      "source_unit_refs": [
+        "PLANUNIT:MA-050",
+        "PLANUNIT:MA-051",
+        "PLANUNIT:MA-052",
+        "PLANUNIT:MA-053",
+        "PLANUNIT:MA-054",
+        "PLANUNIT:MA-055",
+        "SEMANTIC:PLANUNIT:MA-050",
+        "SEMANTIC:PLANUNIT:MA-051",
+        "SEMANTIC:PLANUNIT:MA-052",
+        "SEMANTIC:PLANUNIT:MA-053",
+        "SEMANTIC:PLANUNIT:MA-054",
+        "SEMANTIC:PLANUNIT:MA-055"
+      ],
+      "statement": "Exact lens: MA-050 through MA-055 define Agent-Config exposure, projection audit records, manual-override repair boundaries, minimal import, native token-store locking, and rotating HTTP account failover.",
+      "title": "Projection governance and native-auth failover contract"
+    },
+    {
+      "builder_discretion": true,
+      "confidence": 0.96,
+      "dimensions": [
+        "contracts",
+        "states_transitions",
+        "authority",
+        "failures_recovery",
+        "security_privacy",
+        "propagation",
+        "operations",
+        "scale_performance",
+        "acceptance_oracles",
+        "builder_discretion",
+        "ambiguity_unknowns",
+        "concurrency_races",
+        "partial_failure",
+        "recovery_rollback",
+        "authority_boundaries",
+        "privacy_data_lifecycle",
+        "offline_network_loss",
+        "observability_support",
+        "test_falsifiability"
+      ],
+      "evidence": [
+        {
+          "exact_quote": "- File lock for writes and best-effort health updates remain preserved.",
+          "line_end": 4233,
+          "line_start": 4233,
+          "path": "Plans/Multi-Account.md",
+          "source_sha256": "da9e013f1ea114359b0f5f0680d5bbc25479d9b16fc679a04d51f31ea2ffb848"
+        },
+        {
+          "exact_quote": "  Native auth HTTP calls use rotating fetch: get candidates active first and then order, filter by cooldown, and on 429,",
+          "line_end": 4280,
+          "line_start": 4280,
+          "path": "Plans/Multi-Account.md",
+          "source_sha256": "da9e013f1ea114359b0f5f0680d5bbc25479d9b16fc679a04d51f31ea2ffb848"
+        },
+        {
+          "exact_quote": "- 429/401/403 responses apply cooldown, moveToBack, notify, and retry next account.",
+          "line_end": 4292,
+          "line_start": 4292,
+          "path": "Plans/Multi-Account.md",
+          "source_sha256": "da9e013f1ea114359b0f5f0680d5bbc25479d9b16fc679a04d51f31ea2ffb848"
+        }
+      ],
+      "gap_kind": "native_auth_locking_and_retry_authority",
+      "impact": "Crash-corrupted token state or indiscriminate cross-account retries can leak request intent across accounts, amplify unauthorized traffic, lock out multiple accounts, or make health/order diverge from durable state.",
+      "item_id": "I-0014",
+      "item_type": "gap",
+      "severity": "high",
+      "source_unit_refs": [
+        "PLANUNIT:MA-054",
+        "PLANUNIT:MA-055",
+        "SEMANTIC:PLANUNIT:MA-054",
+        "SEMANTIC:PLANUNIT:MA-055"
+      ],
+      "statement": "Adversarial lens: file locking does not define lock scope, reader consistency, atomic replacement, crash recovery, or health-update conflict handling; rotating fetch groups 401, 403, and 429 without specifying which failures are account-specific versus request/permission-specific, finite retry/exhaustion rules, idempotency, body replay safety, or cross-account authorization boundaries.",
+      "title": "Native-auth locking and cross-account retry semantics are unsafe by omission"
+    },
+    {
+      "builder_discretion": false,
+      "confidence": 0.98,
+      "dimensions": [
+        "behavior",
+        "inputs_outputs",
+        "contracts",
+        "states_transitions",
+        "authority",
+        "ownership",
+        "consumers",
+        "gui_truth",
+        "failures_recovery",
+        "propagation",
+        "operations",
+        "compatibility_migration",
+        "acceptance_oracles",
+        "builder_discretion",
+        "authority_boundaries"
+      ],
+      "evidence": [
+        {
+          "exact_quote": "canonical_text: Native auth current-account state is request-scoped through an explicit context struct or thread-local in",
+          "line_end": 4334,
+          "line_start": 4334,
+          "path": "Plans/Multi-Account.md",
+          "source_sha256": "da9e013f1ea114359b0f5f0680d5bbc25479d9b16fc679a04d51f31ea2ffb848"
+        },
+        {
+          "exact_quote": "canonical_text: The Multi-Account document has no remaining design-open questions for the Gemini auth/account model.",
+          "line_end": 4386,
+          "line_start": 4386,
+          "path": "Plans/Multi-Account.md",
+          "source_sha256": "da9e013f1ea114359b0f5f0680d5bbc25479d9b16fc679a04d51f31ea2ffb848"
+        },
+        {
+          "exact_quote": "canonical_text: Multi-Account distinguishes provider accounts from operational identities needed by GitHub Actions and Docker",
+          "line_end": 4444,
+          "line_start": 4444,
+          "path": "Plans/Multi-Account.md",
+          "source_sha256": "da9e013f1ea114359b0f5f0680d5bbc25479d9b16fc679a04d51f31ea2ffb848"
+        },
+        {
+          "exact_quote": "canonical_text: Operational identity state may be displayed alongside provider/account state, but it must not imply shared",
+          "line_end": 4502,
+          "line_start": 4502,
+          "path": "Plans/Multi-Account.md",
+          "source_sha256": "da9e013f1ea114359b0f5f0680d5bbc25479d9b16fc679a04d51f31ea2ffb848"
+        },
+        {
+          "exact_quote": "  MA-001 is retired to migration-lineage-only compatibility disposition after Phase 2B batch 102 because",
+          "line_end": 4558,
+          "line_start": 4558,
+          "path": "Plans/Multi-Account.md",
+          "source_sha256": "da9e013f1ea114359b0f5f0680d5bbc25479d9b16fc679a04d51f31ea2ffb848"
+        },
+        {
+          "exact_quote": "  Multi-Account owns requested/effective account identity for Goal Runtime worker, planner, evaluator, verifier, and adjudicator provider use. Goal Runtime consumes account identity and role scope, but does not redefine account stickiness, failover, quota pressure, or provider-account policy.",
+          "line_end": 4628,
+          "line_start": 4628,
+          "path": "Plans/Multi-Account.md",
+          "source_sha256": "da9e013f1ea114359b0f5f0680d5bbc25479d9b16fc679a04d51f31ea2ffb848"
+        }
+      ],
+      "gap_kind": "none",
+      "impact": "Makes current-account context request-scoped, limits implementer discretion, separates operational identities and token ownership, retires the source bridge, and binds Goal Runtime roles to Multi-Account policy ownership.",
+      "item_id": "I-0015",
+      "item_type": "contract",
+      "severity": "info",
+      "source_unit_refs": [
+        "PLANUNIT:MA-001",
+        "PLANUNIT:MA-056",
+        "PLANUNIT:MA-057",
+        "PLANUNIT:MA-058",
+        "PLANUNIT:MA-059",
+        "PLANUNIT:MA-060",
+        "SEMANTIC:PLANUNIT:MA-056",
+        "SEMANTIC:PLANUNIT:MA-057",
+        "SEMANTIC:PLANUNIT:MA-058",
+        "SEMANTIC:PLANUNIT:MA-059",
+        "SEMANTIC:PLANUNIT:MA-001",
+        "SEMANTIC:PLANUNIT:MA-060"
+      ],
+      "statement": "Exact lens: MA-056 through MA-060 plus retired MA-001 preserve request-scoped context, closed product decisions, operational-identity separation and partial-capability disclosure, migration-only bridge status, and Goal Runtime consumer boundaries.",
+      "title": "Request context and operational-identity authority contract"
+    },
+    {
+      "builder_discretion": true,
+      "confidence": 0.97,
+      "dimensions": [
+        "contracts",
+        "states_transitions",
+        "authority",
+        "failures_recovery",
+        "security_privacy",
+        "propagation",
+        "operations",
+        "scale_performance",
+        "acceptance_oracles",
+        "builder_discretion",
+        "ambiguity_unknowns",
+        "invalid_states_transitions",
+        "concurrency_races",
+        "partial_failure",
+        "recovery_rollback",
+        "authority_boundaries",
+        "privacy_data_lifecycle",
+        "observability_support",
+        "test_falsifiability"
+      ],
+      "evidence": [
+        {
+          "exact_quote": "canonical_text: Native auth current-account state is request-scoped through an explicit context struct or thread-local in",
+          "line_end": 4334,
+          "line_start": 4334,
+          "path": "Plans/Multi-Account.md",
+          "source_sha256": "da9e013f1ea114359b0f5f0680d5bbc25479d9b16fc679a04d51f31ea2ffb848"
+        },
+        {
+          "exact_quote": "- Native auth current-account propagation does not use AsyncLocalStorage in Rust.",
+          "line_end": 4368,
+          "line_start": 4368,
+          "path": "Plans/Multi-Account.md",
+          "source_sha256": "da9e013f1ea114359b0f5f0680d5bbc25479d9b16fc679a04d51f31ea2ffb848"
+        },
+        {
+          "exact_quote": "  Multi-Account owns requested/effective account identity for Goal Runtime worker, planner, evaluator, verifier, and adjudicator provider use. Goal Runtime consumes account identity and role scope, but does not redefine account stickiness, failover, quota pressure, or provider-account policy.",
+          "line_end": 4628,
+          "line_start": 4628,
+          "path": "Plans/Multi-Account.md",
+          "source_sha256": "da9e013f1ea114359b0f5f0680d5bbc25479d9b16fc679a04d51f31ea2ffb848"
+        }
+      ],
+      "gap_kind": "async_context_propagation_and_authority_matrix",
+      "impact": "A thread-local implementation in an asynchronous runtime can bleed identity between tasks or lose it across executor hops; role consumers can then act under the wrong effective account or operational identity.",
+      "item_id": "I-0016",
+      "item_type": "gap",
+      "severity": "high",
+      "source_unit_refs": [
+        "PLANUNIT:MA-056",
+        "PLANUNIT:MA-058",
+        "PLANUNIT:MA-059",
+        "PLANUNIT:MA-060",
+        "SEMANTIC:PLANUNIT:MA-056",
+        "SEMANTIC:PLANUNIT:MA-058",
+        "SEMANTIC:PLANUNIT:MA-059",
+        "SEMANTIC:PLANUNIT:MA-060"
+      ],
+      "statement": "Adversarial lens: explicit context struct and thread-local are both allowed without defining async task propagation, nested call inheritance, spawn boundaries, cancellation cleanup, executor-thread migration, or proof that operational identity and account identity cannot cross; the Goal Runtime consumer list also lacks a per-role authority/capability matrix and denial oracle.",
+      "title": "Async request context and role authority propagation are unspecified"
+    }
+  ],
+  "model": "gpt-5.6-sol",
+  "phase": "blind_macro_window_review",
+  "reasoning_effort": "xhigh",
+  "schema_version": "macro-review-result-v1",
+  "segments": [
+    {
+      "core_range": [
+        1720,
+        2110
+      ],
+      "covered_source_unit_refs": [
+        "PLANUNIT:MA-015",
+        "PLANUNIT:MA-016",
+        "PLANUNIT:MA-017",
+        "PLANUNIT:MA-018",
+        "PLANUNIT:MA-019",
+        "PLANUNIT:MA-020",
+        "SEMANTIC:PLANUNIT:MA-015",
+        "SEMANTIC:PLANUNIT:MA-016",
+        "SEMANTIC:PLANUNIT:MA-017",
+        "SEMANTIC:PLANUNIT:MA-018",
+        "SEMANTIC:PLANUNIT:MA-019",
+        "SEMANTIC:PLANUNIT:MA-020"
+      ],
+      "item_ids": [
+        "I-0001",
+        "I-0002"
+      ],
+      "reviewed": true,
+      "summary": "Reviewed MA-015 through MA-020 exactly and adversarially. The requested/effective envelope and no-fallback ownership are strong, but concurrent resolver commit, mutation, dispatch, and history persistence lack atomicity and rollback semantics.",
+      "window_id": "WIN-F25915291C7A-0006"
+    },
+    {
+      "core_range": [
+        2111,
+        2450
+      ],
+      "covered_source_unit_refs": [
+        "PLANUNIT:MA-021",
+        "PLANUNIT:MA-022",
+        "PLANUNIT:MA-023",
+        "PLANUNIT:MA-024",
+        "PLANUNIT:MA-025",
+        "SEMANTIC:PLANUNIT:MA-021",
+        "SEMANTIC:PLANUNIT:MA-022",
+        "SEMANTIC:PLANUNIT:MA-023",
+        "SEMANTIC:PLANUNIT:MA-024",
+        "SEMANTIC:PLANUNIT:MA-025"
+      ],
+      "item_ids": [
+        "I-0003",
+        "I-0004"
+      ],
+      "reviewed": true,
+      "summary": "Reviewed MA-021 through MA-025 exactly and adversarially. Eligibility, cooldown, provider separation, and root ownership are explicit; clock/freshness behavior and safe transactional auth import remain underspecified.",
+      "window_id": "WIN-F25915291C7A-0007"
+    },
+    {
+      "core_range": [
+        2451,
+        2848
+      ],
+      "covered_source_unit_refs": [
+        "PLANUNIT:MA-026",
+        "PLANUNIT:MA-027",
+        "PLANUNIT:MA-028",
+        "PLANUNIT:MA-029",
+        "PLANUNIT:MA-030",
+        "PLANUNIT:MA-031",
+        "SEMANTIC:PLANUNIT:MA-026",
+        "SEMANTIC:PLANUNIT:MA-027",
+        "SEMANTIC:PLANUNIT:MA-028",
+        "SEMANTIC:PLANUNIT:MA-029",
+        "SEMANTIC:PLANUNIT:MA-030",
+        "SEMANTIC:PLANUNIT:MA-031"
+      ],
+      "item_ids": [
+        "I-0005",
+        "I-0006"
+      ],
+      "reviewed": true,
+      "summary": "Reviewed MA-026 through MA-031 exactly and adversarially. Provider/auth/root/sharing boundaries are coherent, but minimum auth-bearing import lacks a concrete allowlist and partial-failure security contract.",
+      "window_id": "WIN-F25915291C7A-0008"
+    },
+    {
+      "core_range": [
+        2849,
+        3207
+      ],
+      "covered_source_unit_refs": [
+        "PLANUNIT:MA-032",
+        "PLANUNIT:MA-033",
+        "PLANUNIT:MA-034",
+        "PLANUNIT:MA-035",
+        "PLANUNIT:MA-036",
+        "PLANUNIT:MA-037",
+        "SEMANTIC:PLANUNIT:MA-032",
+        "SEMANTIC:PLANUNIT:MA-033",
+        "SEMANTIC:PLANUNIT:MA-034",
+        "SEMANTIC:PLANUNIT:MA-035",
+        "SEMANTIC:PLANUNIT:MA-036",
+        "SEMANTIC:PLANUNIT:MA-037"
+      ],
+      "item_ids": [
+        "I-0007",
+        "I-0008"
+      ],
+      "reviewed": true,
+      "summary": "Reviewed MA-032 through MA-037 exactly and adversarially. Cross-actor consumption, Usage ownership, source labels, priority, and GUI structure are explicit; signal freshness and deterministic concurrent selection are not.",
+      "window_id": "WIN-F25915291C7A-0009"
+    },
+    {
+      "core_range": [
+        3208,
+        3595
+      ],
+      "covered_source_unit_refs": [
+        "PLANUNIT:MA-038",
+        "PLANUNIT:MA-039",
+        "PLANUNIT:MA-040",
+        "PLANUNIT:MA-041",
+        "PLANUNIT:MA-042",
+        "PLANUNIT:MA-043",
+        "SEMANTIC:PLANUNIT:MA-038",
+        "SEMANTIC:PLANUNIT:MA-039",
+        "SEMANTIC:PLANUNIT:MA-040",
+        "SEMANTIC:PLANUNIT:MA-041",
+        "SEMANTIC:PLANUNIT:MA-042",
+        "SEMANTIC:PLANUNIT:MA-043"
+      ],
+      "item_ids": [
+        "I-0009",
+        "I-0010"
+      ],
+      "reviewed": true,
+      "summary": "Reviewed MA-038 through MA-043 exactly and adversarially. Pooling and GUI readiness truth are detailed, but legal transitions and stale asynchronous result suppression are absent.",
+      "window_id": "WIN-F25915291C7A-0010"
+    },
+    {
+      "core_range": [
+        3596,
+        3946
+      ],
+      "covered_source_unit_refs": [
+        "PLANUNIT:MA-044",
+        "PLANUNIT:MA-045",
+        "PLANUNIT:MA-046",
+        "PLANUNIT:MA-047",
+        "PLANUNIT:MA-048",
+        "PLANUNIT:MA-049",
+        "SEMANTIC:PLANUNIT:MA-044",
+        "SEMANTIC:PLANUNIT:MA-045",
+        "SEMANTIC:PLANUNIT:MA-046",
+        "SEMANTIC:PLANUNIT:MA-047",
+        "SEMANTIC:PLANUNIT:MA-048",
+        "SEMANTIC:PLANUNIT:MA-049"
+      ],
+      "item_ids": [
+        "I-0011",
+        "I-0012"
+      ],
+      "reviewed": true,
+      "summary": "Reviewed MA-044 through MA-049 exactly and adversarially. Removal, auth, credential, retired-flow, and Usage boundaries are explicit; multi-system compensation, cancellation, and late-result handling remain gaps.",
+      "window_id": "WIN-F25915291C7A-0011"
+    },
+    {
+      "core_range": [
+        3947,
+        4326
+      ],
+      "covered_source_unit_refs": [
+        "PLANUNIT:MA-050",
+        "PLANUNIT:MA-051",
+        "PLANUNIT:MA-052",
+        "PLANUNIT:MA-053",
+        "PLANUNIT:MA-054",
+        "PLANUNIT:MA-055",
+        "SEMANTIC:PLANUNIT:MA-050",
+        "SEMANTIC:PLANUNIT:MA-051",
+        "SEMANTIC:PLANUNIT:MA-052",
+        "SEMANTIC:PLANUNIT:MA-053",
+        "SEMANTIC:PLANUNIT:MA-054",
+        "SEMANTIC:PLANUNIT:MA-055"
+      ],
+      "item_ids": [
+        "I-0013",
+        "I-0014"
+      ],
+      "reviewed": true,
+      "summary": "Reviewed MA-050 through MA-055 exactly and adversarially. Projection governance and native-auth shapes are defined, but lock/crash behavior and the authority safety of 401/403/429 cross-account retry are unresolved.",
+      "window_id": "WIN-F25915291C7A-0012"
+    },
+    {
+      "core_range": [
+        4327,
+        4696
+      ],
+      "covered_source_unit_refs": [
+        "PLANUNIT:MA-001",
+        "PLANUNIT:MA-056",
+        "PLANUNIT:MA-057",
+        "PLANUNIT:MA-058",
+        "PLANUNIT:MA-059",
+        "PLANUNIT:MA-060",
+        "SEMANTIC:PLANUNIT:MA-056",
+        "SEMANTIC:PLANUNIT:MA-057",
+        "SEMANTIC:PLANUNIT:MA-058",
+        "SEMANTIC:PLANUNIT:MA-059",
+        "SEMANTIC:PLANUNIT:MA-001",
+        "SEMANTIC:PLANUNIT:MA-060"
+      ],
+      "item_ids": [
+        "I-0015",
+        "I-0016"
+      ],
+      "reviewed": true,
+      "summary": "Reviewed MA-056 through MA-060 and retired MA-001 exactly and adversarially. Ownership boundaries are preserved, but async task context propagation and role-specific authority denial semantics are unspecified.",
+      "window_id": "WIN-F25915291C7A-0013"
+    }
+  ],
+  "self_attestation": {
+    "no_canonical_writes": true,
+    "no_external_research_during_blind_review": true,
+    "no_peer_result_access": true,
+    "no_prior_audit_access": true,
+    "no_unrelated_source_access": true,
+    "terminal_after_submission": true
+  },
+  "source_binding": {
+    "bundle_id": "MACRO15-F25915291C7A-0002",
+    "document_path": "Plans/Multi-Account.md",
+    "micro_window_ids": [
+      "WIN-F25915291C7A-0006",
+      "WIN-F25915291C7A-0007",
+      "WIN-F25915291C7A-0008",
+      "WIN-F25915291C7A-0009",
+      "WIN-F25915291C7A-0010",
+      "WIN-F25915291C7A-0011",
+      "WIN-F25915291C7A-0012",
+      "WIN-F25915291C7A-0013"
+    ],
+    "source_sha256": "da9e013f1ea114359b0f5f0680d5bbc25479d9b16fc679a04d51f31ea2ffb848"
+  },
+  "status": "completed",
+  "synthesis": {
+    "cross_document_questions": [
+      "Which owner contract defines the atomic resolver commit and durable history transaction shared by Multi-Account, Prompt Pipeline, storage, and provider-auth mutations?",
+      "Which provider owner documents define exact auth-import allowlists, symlink and permission checks, and rollback receipts for Claude, Cursor, Codex, and future CLI roots?",
+      "Which Usage contract defines freshness, clock, reset-window reconciliation, and deterministic tie-breaking for account-health evidence?",
+      "Which setup/health lifecycle contract defines legal readiness transitions, async request generations, cancellation, timeout, offline, and stale-result suppression?",
+      "Which auth contract distinguishes retryable account-scoped 401/403/429 responses from request-scoped authorization failures and unsafe cross-account replay?",
+      "Which Goal Runtime or executor contract proves async task-local account context propagation and per-role operational-identity authority?"
+    ],
+    "feature_family_keys": [
+      "multi_account_resolution",
+      "provider_account_isolation",
+      "usage_pressure_and_selection",
+      "agent_config_readiness",
+      "authentication_lifecycle",
+      "projection_and_native_auth",
+      "operational_identity_and_goal_runtime"
+    ],
+    "research_queries": [
+      "Rust async task-local versus thread-local request identity propagation safety patterns",
+      "OAuth device authorization polling cancellation slow_down expiry and late-token handling",
+      "Transactional OS credential-store registration and rollback patterns",
+      "Safe cross-account HTTP retry classification for 401 403 and 429",
+      "Filesystem credential import allowlists symlink race prevention and atomic promotion"
+    ]
+  },
+  "task_thread_id": "/root/a005m15_b5_000064_attempt_0015_terminal"
+}
+

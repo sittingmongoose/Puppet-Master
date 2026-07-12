@@ -1,0 +1,55 @@
+{
+  "schema_version": "reverse-shadow-five-edge-protected-inputs-v31-v1",
+  "audit_id": "audit-20260710-005-plan-assurance-model-lanes-fresh-agent-exhaustive",
+  "reconciliation_id": "reverse-shadow-five-edge-0001",
+  "preparation_policy": {
+    "path": "master/coordination/CONCURRENCY_POLICY_V31.json",
+    "sha256": "95de3fd798c857751cc6b031d62a4a7a40abe931f9fa1e49590cff0fec6257b5"
+  },
+  "future_targeted_research_activation_policy": {
+    "path": "master/coordination/CONCURRENCY_POLICY_V32.json",
+    "sha256": "4826ade4c38db47ee184b34e5d7b7bd5ba6cabeecc9baa686cb9d99eeff8a3ed",
+    "activation_authorized_here": false
+  },
+  "five_edge_digest_sha256": "4073116b8855d02324e0d471130e36284779d6fa500853372fc3bbe055813796",
+  "bindings": [
+    {"label":"model_lane_routing_policy_v2","path":"master/coordination/MODEL_LANE_ROUTING_POLICY_V2.json","sha256":"9105752f30b42d482454e8df7782bda95992d94ae7b149977e280ac83df83544"},
+    {"label":"concurrent_canonical_change_policy_v1","path":"master/coordination/CONCURRENT_CANONICAL_CHANGE_POLICY_V1.json","sha256":"b227f14a04aae9ddce62440002af2c76528a1433c4e440df613490865f9f444e"},
+    {"label":"owner_active","path":"master/owner_merge/live/ACTIVE.json","sha256":"67ca453ab6145cbad08e66c63c00b58f620a05154a5e114208371d28f28be5c2"},
+    {"label":"owner_provisional_feature_ledger","path":"master/owner_merge/transactions/owner-merge-batch-0001/provisional_feature_ledger.jsonl","sha256":"a53e72afb5f52e7e95797f2179c7fd8da14ebf6e148efd544781614784113267"},
+    {"label":"forward_active","path":"master/cross_shard/live/ACTIVE.json","sha256":"07eda974157785b3b83e11ca685f0ff7a55813dd7f705c2cb8ce003d64195538"},
+    {"label":"forward_candidate_edge_ledger","path":"master/cross_shard/transactions/cross-shard-batch-0001/candidate_edge_ledger.jsonl","sha256":"49bbb5a1b51e0aa5c780b7cc1072cc57ffe4989a65d412eed5b9ca147edc4ead"},
+    {"label":"forward_primary_postrun","path":"master/cross_shard/validation/cross-shard-batch-0001/primary-postrun.json","sha256":"e6202b24fd37377478173e5c684b4bee5929537387d969d32182c6af7aeafc88"},
+    {"label":"reverse_shadow_primary_postrun","path":"master/cross_shard_shadow/validation/cross-shard-shadow-batch-0001/primary-postrun.json","sha256":"c3370ecaeacfdfb2437633f95e343a322e5e6249a057d2a14743b04c2ffc863d"},
+    {"label":"reverse_shadow_luna_postrun","path":"master/cross_shard_shadow/validation/cross-shard-shadow-batch-0001/luna-postrun.json","sha256":"8956c7a16b39d3c5fe4878dd64aff7b416ef3350c7f75e4fdb2c2fd85ab82c68"},
+    {"label":"reverse_shadow_luna_lifecycle","path":"master/cross_shard_shadow/validation/cross-shard-shadow-batch-0001/luna-lifecycle-v2.json","sha256":"9599c1f2af31f7a61540b1c3bedb461a7abe9226774dc8df3d1235183f844cac"},
+    {"label":"reverse_shadow_pair_registry","path":"master/cross_shard_shadow/frozen/cross-shard-shadow-epoch-0001/manifests/pair_registry.jsonl","sha256":"b1b7071ac8a2da7c34b9acbbd3f9db2ece6eafa34aa2856dda5d560e1ec54f80"},
+    {"label":"css_0002_packet","path":"master/cross_shard_shadow/frozen/cross-shard-shadow-epoch-0001/packets/CSSPKT-0002.json","sha256":"59f099757540044ee40da5382561b64bcf53bf1ca7ee7646b37a8cb99b6164d5"},
+    {"label":"css_0002_result","path":"cross_shard_shadow_v1/A005CSS-0002/attempts/attempt-0001/result.json","sha256":"987dff48501d40422e1c86f65b5103af8f061c2b8e74f58e032f4f44c73562ed"},
+    {"label":"css_0019_packet","path":"master/cross_shard_shadow/frozen/cross-shard-shadow-epoch-0001/packets/CSSPKT-0019.json","sha256":"665ad99f2f84638d4be25161caa890dd4bd2464df152446360aab7140016c62c"},
+    {"label":"css_0019_result","path":"cross_shard_shadow_v1/A005CSS-0019/attempts/attempt-0001/result.json","sha256":"019697ceebf5221bae49735e873536401cac6cc73e0ed62729760965a66eef14"},
+    {"label":"css_0030_packet","path":"master/cross_shard_shadow/frozen/cross-shard-shadow-epoch-0001/packets/CSSPKT-0030.json","sha256":"1cd857c013008f9156b668e44da887dd9a2ad80a0d341eafe50f26b91882d6cc"},
+    {"label":"css_0030_result","path":"cross_shard_shadow_v1/A005CSS-0030/attempts/attempt-0001/result.json","sha256":"b93c416912097dffdc00ef40861c7d0a19c5b7903f7523271fe409a1b16f96b0"},
+    {"label":"seam_normalized_edge_ledger","path":"master/cross_domain_seams/wave-0001/normalized_edge_ledger.jsonl","sha256":"6ebfdbd97df06dc4060421f8845d32de4fc3edc81d57a1765144986193a2925b"},
+    {"label":"seam_exact64_checkpoint","path":"master/cross_domain_seams/wave-0001/window-sharding-v2/validation/postrun-v1/aggregate-seam-checkpoint-after-repair-v2.json","sha256":"f6d3fd1087c8dec7e35cfae26374605d31b342df3b945603986194598f9ee809"},
+    {"label":"seam_repair_primary_postrun","path":"master/cross_domain_seams/wave-0001/window-sharding-v2/seam-repair-attempt-0002/validation/primary-repair-postrun.json","sha256":"bf051cae86936145cadeca3cdc084a268d0711719d46a808ef9cacdae4471674"},
+    {"label":"seam_repair_luna_postrun","path":"master/cross_domain_seams/wave-0001/window-sharding-v2/seam-repair-attempt-0002/validation/luna-independent-repair-postrun.json","sha256":"6318cf36f5b01b3c8b4918d6331e9b8b98bec569c2b0a9220b2aba0f4202a9d3"},
+    {"label":"seam_0064_packet","path":"master/cross_domain_seams/wave-0001/window-sharding-v2/packets/CDSV2PKT-0064.json","sha256":"9c9e18ea5377bad972b86f607540245040289c75f02394bbf84ea7f4b53e741c"},
+    {"label":"seam_0064_result","path":"cross_domain_seams_window_v2/A005CDSV2-0064/attempts/attempt-0001/result.json","sha256":"3c333cab10332a12226f90cf1c1bd85f73b9484a230f0a684ab27e961edf9b6b"},
+    {"label":"seam_0036_packet","path":"master/cross_domain_seams/wave-0001/window-sharding-v2/packets/CDSV2PKT-0036.json","sha256":"518b86fd519d6db84582799885f3a58cdb102d680d99c22f88c7594301f687de"},
+    {"label":"seam_0036_result","path":"cross_domain_seams_window_v2/A005CDSV2-0036/attempts/attempt-0001/result.json","sha256":"53c0a343bac76390dd7ff6f22805c08ab8c22329e3c33780b90951ebc6dc1ba9"},
+    {"label":"seam_0054_packet","path":"master/cross_domain_seams/wave-0001/window-sharding-v2/packets/CDSV2PKT-0054.json","sha256":"39f84cc19c0bcddb29df6cffaca24830e10a24abfe39b8e149cc9ca51dc70cfc"},
+    {"label":"seam_0054_result","path":"cross_domain_seams_window_v2/A005CDSV2-0054/attempts/attempt-0001/result.json","sha256":"0154d03ef610de7ffc9ca5b189f2102fba3c8c7f68b171a0f93dac4078414d23"},
+    {"label":"seam_0012_packet","path":"master/cross_domain_seams/wave-0001/window-sharding-v2/packets/CDSV2PKT-0012.json","sha256":"881df3e47dafb5299e8fb69205da33408e87dbc32ffb0ece687caeda8a624e17"},
+    {"label":"seam_0012_result","path":"cross_domain_seams_window_v2/A005CDSV2-0012/attempts/attempt-0001/result.json","sha256":"ca2186614eaac8d79c1a6db9c5ba89c8f3d11648ed987ea72fd506ea64f8a46c"},
+    {"label":"seam_0042_packet","path":"master/cross_domain_seams/wave-0001/window-sharding-v2/packets/CDSV2PKT-0042.json","sha256":"48bea45bf3af5d9a178f789725a91cb73c6a3745df2dc9273a11788a29e8d4fd"},
+    {"label":"seam_0042_result","path":"cross_domain_seams_window_v2/A005CDSV2-0042/attempts/attempt-0001/result.json","sha256":"9334eca92fd4d9ac58712a33fa6f3066152167758a25538cc872c71a8fdaada5"}
+  ],
+  "identity_namespaces": {
+    "reverse_shadow_sources": ["A005CSS-0002", "A005CSS-0019", "A005CSS-0030"],
+    "target_seam_assignments": ["A005CDSV2-0012", "A005CDSV2-0036", "A005CDSV2-0042", "A005CDSV2-0054", "A005CDSV2-0064"],
+    "seam_repair_assignments": ["A005CDSV2-0002", "A005CDSV2-0006", "A005CDSV2-0039"],
+    "full_identifier_prefixes_are_authoritative": true,
+    "numeric_suffix_equivalence_forbidden": true
+  }
+}

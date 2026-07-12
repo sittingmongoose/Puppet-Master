@@ -1,0 +1,727 @@
+{
+  "assignment_id": "A005M15-000065-INTEGRATED-MACRO15-F25915291C7A-0003",
+  "attempt_id": "attempt-0015",
+  "audit_id": "audit-20260710-005-plan-assurance-model-lanes-fresh-agent-exhaustive",
+  "coverage": {
+    "all_micro_windows_reviewed": true,
+    "all_source_lines_reviewed": true,
+    "all_source_units_accounted": true,
+    "both_exact_and_adversarial_lenses_applied": true,
+    "dimensions_checked": [
+      "behavior",
+      "capabilities",
+      "inputs_outputs",
+      "contracts",
+      "states_transitions",
+      "authority",
+      "ownership",
+      "consumers",
+      "gui_truth",
+      "failures_recovery",
+      "security_privacy",
+      "propagation",
+      "operations",
+      "scale_performance",
+      "compatibility_migration",
+      "acceptance_oracles",
+      "builder_discretion",
+      "ambiguity_unknowns",
+      "missing_callers_consumers",
+      "invalid_states_transitions",
+      "concurrency_races",
+      "partial_failure",
+      "recovery_rollback",
+      "authority_boundaries",
+      "privacy_data_lifecycle",
+      "untrusted_inputs",
+      "gui_misleading_states",
+      "offline_network_loss",
+      "scale_limits",
+      "accessibility",
+      "localization",
+      "observability_support",
+      "destructive_actions",
+      "cross_document_seams",
+      "test_falsifiability",
+      "unknown_unknowns"
+    ]
+  },
+  "items": [
+    {
+      "builder_discretion": false,
+      "confidence": 0.99,
+      "dimensions": [
+        "behavior",
+        "capabilities",
+        "inputs_outputs",
+        "contracts",
+        "states_transitions",
+        "authority",
+        "ownership",
+        "consumers",
+        "gui_truth",
+        "propagation",
+        "operations",
+        "compatibility_migration",
+        "acceptance_oracles"
+      ],
+      "evidence": [
+        {
+          "exact_quote": "canonical_text: 'Testing capability policy is configurable globally and per project, with project settings inheriting or overriding global values and the effective policy snapshot carried into Planning Wizard, Plan Compile, Executor, and Orchestrator.'",
+          "line_end": 4704,
+          "line_start": 4704,
+          "path": "Plans/Multi-Account.md",
+          "source_sha256": "da9e013f1ea114359b0f5f0680d5bbc25479d9b16fc679a04d51f31ea2ffb848"
+        }
+      ],
+      "gap_kind": "none",
+      "impact": "The effective testing-policy snapshot is explicitly propagated to four named consumers while preserving global and project configuration semantics.",
+      "item_id": "MA061-EXACT-001",
+      "item_type": "contract",
+      "severity": "info",
+      "source_unit_refs": [
+        "PLANUNIT:MA-061",
+        "SEMANTIC:PLANUNIT:MA-061"
+      ],
+      "statement": "MA-061 requires a configurable global testing policy, project-level inheritance or override, and delivery of the effective snapshot to Planning Wizard, Plan Compile, Executor, and Orchestrator.",
+      "title": "Testing policy inheritance and consumer propagation"
+    },
+    {
+      "builder_discretion": true,
+      "confidence": 0.96,
+      "dimensions": [
+        "contracts",
+        "states_transitions",
+        "authority",
+        "propagation",
+        "acceptance_oracles",
+        "builder_discretion",
+        "ambiguity_unknowns",
+        "authority_boundaries",
+        "cross_document_seams",
+        "test_falsifiability"
+      ],
+      "evidence": [
+        {
+          "exact_quote": "canonical_text: 'Testing capability policy is configurable globally and per project, with project settings inheriting or overriding global values and the effective policy snapshot carried into Planning Wizard, Plan Compile, Executor, and Orchestrator.'",
+          "line_end": 4704,
+          "line_start": 4704,
+          "path": "Plans/Multi-Account.md",
+          "source_sha256": "da9e013f1ea114359b0f5f0680d5bbc25479d9b16fc679a04d51f31ea2ffb848"
+        }
+      ],
+      "gap_kind": "underspecified_policy_snapshot_contract",
+      "impact": "Independent builders can choose incompatible override, versioning, invalidation, and proof rules, so the four consumers may execute under different effective policies while each appears locally compliant.",
+      "item_id": "MA061-GAP-001",
+      "item_type": "gap",
+      "severity": "high",
+      "source_unit_refs": [
+        "PLANUNIT:MA-061",
+        "SEMANTIC:PLANUNIT:MA-061"
+      ],
+      "statement": "MA-061 does not define field-level inheritance semantics, invalid or absent override handling, snapshot identity/version, mutation timing, invalidation, or an oracle proving that all named consumers used the same effective snapshot.",
+      "title": "Effective policy snapshot semantics are not falsifiable"
+    },
+    {
+      "builder_discretion": false,
+      "confidence": 0.99,
+      "dimensions": [
+        "behavior",
+        "capabilities",
+        "contracts",
+        "states_transitions",
+        "authority",
+        "ownership",
+        "consumers",
+        "gui_truth",
+        "failures_recovery",
+        "security_privacy",
+        "privacy_data_lifecycle",
+        "destructive_actions"
+      ],
+      "evidence": [
+        {
+          "exact_quote": "  Free Models entries use the underlying PM provider/account/profile credential owner for setup, auth, reconnect, billing, entitlement, org-policy, and pressure identity. Free Models must not collect, store, or own underlying provider credentials; setup launches the exact underlying provider/account setup surface and returns to the originating Free Models row/list with eligibility refreshed.",
+          "line_end": 4759,
+          "line_start": 4759,
+          "path": "Plans/Multi-Account.md",
+          "source_sha256": "da9e013f1ea114359b0f5f0680d5bbc25479d9b16fc679a04d51f31ea2ffb848"
+        }
+      ],
+      "gap_kind": "none",
+      "impact": "Credential custody remains with the underlying account owner and the wrapper cannot become a parallel secret store or setup authority.",
+      "item_id": "MA064-EXACT-001",
+      "item_type": "authority",
+      "severity": "info",
+      "source_unit_refs": [
+        "PLANUNIT:MA-064",
+        "SEMANTIC:PLANUNIT:MA-064"
+      ],
+      "statement": "MA-064 delegates Free Models setup and identity to the underlying provider/account/profile owner, forbids credential custody in Free Models, and requires return to the originating row or list with eligibility refreshed.",
+      "title": "Free Models delegates credential authority and setup"
+    },
+    {
+      "builder_discretion": true,
+      "confidence": 0.95,
+      "dimensions": [
+        "states_transitions",
+        "gui_truth",
+        "failures_recovery",
+        "propagation",
+        "invalid_states_transitions",
+        "concurrency_races",
+        "partial_failure",
+        "recovery_rollback",
+        "gui_misleading_states",
+        "offline_network_loss",
+        "observability_support",
+        "cross_document_seams",
+        "test_falsifiability"
+      ],
+      "evidence": [
+        {
+          "exact_quote": "  - Returning from setup refreshes affected Free Models eligibility/catalog state and keeps saved top-10 order unchanged.",
+          "line_end": 4767,
+          "line_start": 4767,
+          "path": "Plans/Multi-Account.md",
+          "source_sha256": "da9e013f1ea114359b0f5f0680d5bbc25479d9b16fc679a04d51f31ea2ffb848"
+        }
+      ],
+      "gap_kind": "return_context_and_refresh_recovery_gap",
+      "impact": "A setup return can refresh the wrong row, overwrite a concurrent catalog change, or leave stale eligibility with no deterministic recovery or support trace.",
+      "item_id": "MA064-GAP-001",
+      "item_type": "gap",
+      "severity": "high",
+      "source_unit_refs": [
+        "PLANUNIT:MA-064",
+        "SEMANTIC:PLANUNIT:MA-064"
+      ],
+      "statement": "MA-064 requires return and refresh but does not specify a durable correlation identity, idempotency, concurrent-change arbitration, timeout/offline behavior, partial refresh handling, or recovery when the originating row no longer exists.",
+      "title": "Setup return and eligibility refresh lack failure semantics"
+    },
+    {
+      "builder_discretion": false,
+      "confidence": 0.99,
+      "dimensions": [
+        "behavior",
+        "inputs_outputs",
+        "contracts",
+        "states_transitions",
+        "authority",
+        "consumers",
+        "gui_truth",
+        "failures_recovery",
+        "propagation",
+        "operations",
+        "scale_performance",
+        "acceptance_oracles"
+      ],
+      "evidence": [
+        {
+          "exact_quote": "  Free Models quota, rate-limit, exhaustion, cooldown, retry, and switch state is keyed by the underlying provider/account/model and counted in shared Usage/Multi-Account pressure. PM must not create a separate Free Models quota switcher. Unknown quota/reset signals use coarse pressure from failures/successes and conservative cooldowns without fabricated percentages or reset times. Automatic fallback is bounded by configurable global/section limits and defaults to the initial attempt plus `2` automatic fallback attempts per request.",
+          "line_end": 4816,
+          "line_start": 4816,
+          "path": "Plans/Multi-Account.md",
+          "source_sha256": "da9e013f1ea114359b0f5f0680d5bbc25479d9b16fc679a04d51f31ea2ffb848"
+        }
+      ],
+      "gap_kind": "none",
+      "impact": "Pressure is shared across the wrapper and underlying route, fabricated quota precision is forbidden, and request fan-out has a concrete default bound.",
+      "item_id": "MA065-EXACT-001",
+      "item_type": "failure_recovery",
+      "severity": "info",
+      "source_unit_refs": [
+        "PLANUNIT:MA-065",
+        "SEMANTIC:PLANUNIT:MA-065"
+      ],
+      "statement": "MA-065 keys quota and cooldown pressure by provider/account/model, shares it with Usage and Multi-Account, uses conservative unknown-signal handling, and defaults to one initial plus two automatic fallback attempts.",
+      "title": "Shared pressure and bounded fallback contract"
+    },
+    {
+      "builder_discretion": true,
+      "confidence": 0.96,
+      "dimensions": [
+        "contracts",
+        "states_transitions",
+        "failures_recovery",
+        "operations",
+        "scale_performance",
+        "acceptance_oracles",
+        "builder_discretion",
+        "ambiguity_unknowns",
+        "missing_callers_consumers",
+        "invalid_states_transitions",
+        "concurrency_races",
+        "partial_failure",
+        "recovery_rollback",
+        "offline_network_loss",
+        "scale_limits",
+        "observability_support",
+        "test_falsifiability",
+        "unknown_unknowns"
+      ],
+      "evidence": [
+        {
+          "exact_quote": "  - Cooldowned entries stay skipped until provider reset/cooldown expiry or explicit `Retry now`; successful manual retry clears cooldown and failed manual retry extends pressure conservatively.",
+          "line_end": 4825,
+          "line_start": 4825,
+          "path": "Plans/Multi-Account.md",
+          "source_sha256": "da9e013f1ea114359b0f5f0680d5bbc25479d9b16fc679a04d51f31ea2ffb848"
+        }
+      ],
+      "gap_kind": "concurrent_pressure_state_transition_gap",
+      "impact": "Concurrent requests or retries can double-spend fallback budget, clear or extend cooldown out of order, and produce receipts that disagree with provider calls.",
+      "item_id": "MA065-GAP-001",
+      "item_type": "gap",
+      "severity": "high",
+      "source_unit_refs": [
+        "PLANUNIT:MA-065",
+        "SEMANTIC:PLANUNIT:MA-065"
+      ],
+      "statement": "MA-065 does not specify atomic arbitration for shared pressure, ordering of simultaneous automatic and manual retries, precedence of global versus section limits, cooldown clock/reset authority, or recovery after a provider call succeeds while pressure persistence fails.",
+      "title": "Shared pressure transitions are not concurrency-safe on paper"
+    },
+    {
+      "builder_discretion": false,
+      "confidence": 0.99,
+      "dimensions": [
+        "behavior",
+        "capabilities",
+        "contracts",
+        "states_transitions",
+        "authority",
+        "consumers",
+        "gui_truth",
+        "failures_recovery",
+        "propagation",
+        "acceptance_oracles",
+        "compatibility_migration"
+      ],
+      "evidence": [
+        {
+          "exact_quote": "  - \"`Connected` is displayed only when the backing readiness projection is safe for that label and never replaces canonical readiness state.\"",
+          "line_end": 4890,
+          "line_start": 4890,
+          "path": "Plans/Multi-Account.md",
+          "source_sha256": "da9e013f1ea114359b0f5f0680d5bbc25479d9b16fc679a04d51f31ea2ffb848"
+        }
+      ],
+      "gap_kind": "none",
+      "impact": "The onboarding label remains a projection and cannot erase distinctions among logged-in, configured, entitled, and actually ready states.",
+      "item_id": "MA066-EXACT-001",
+      "item_type": "gui_truth",
+      "severity": "info",
+      "source_unit_refs": [
+        "PLANUNIT:MA-066",
+        "SEMANTIC:PLANUNIT:MA-066"
+      ],
+      "statement": "MA-066 binds friendly setup-row labels to canonical account readiness and explicitly prevents `Connected` from replacing the underlying readiness state.",
+      "title": "First-run labels are readiness projections, not states"
+    },
+    {
+      "builder_discretion": true,
+      "confidence": 0.97,
+      "dimensions": [
+        "states_transitions",
+        "gui_truth",
+        "failures_recovery",
+        "acceptance_oracles",
+        "ambiguity_unknowns",
+        "invalid_states_transitions",
+        "partial_failure",
+        "recovery_rollback",
+        "gui_misleading_states",
+        "offline_network_loss",
+        "accessibility",
+        "localization",
+        "observability_support",
+        "cross_document_seams",
+        "test_falsifiability"
+      ],
+      "evidence": [
+        {
+          "exact_quote": "  - Setup cancel, failed auth, or failed validation returns to the originating onboarding or Free Models context with a refreshed state when possible.",
+          "line_end": 4891,
+          "line_start": 4891,
+          "path": "Plans/Multi-Account.md",
+          "source_sha256": "da9e013f1ea114359b0f5f0680d5bbc25479d9b16fc679a04d51f31ea2ffb848"
+        }
+      ],
+      "gap_kind": "non_falsifiable_return_recovery",
+      "impact": "The phrase `when possible` permits silent stale state or lost context, and the UI can strand or mislead users after cancel, auth failure, validation failure, or network loss.",
+      "item_id": "MA066-GAP-001",
+      "item_type": "gap",
+      "severity": "high",
+      "source_unit_refs": [
+        "PLANUNIT:MA-066",
+        "SEMANTIC:PLANUNIT:MA-066"
+      ],
+      "statement": "MA-066 lacks a falsifiable fallback for failed refresh or lost return context and does not specify loading/error transitions, retry affordance, focus restoration, accessible status announcement, localization constraints, or support-visible correlation.",
+      "title": "Onboarding return recovery remains conditional and underspecified"
+    },
+    {
+      "builder_discretion": false,
+      "confidence": 0.99,
+      "dimensions": [
+        "behavior",
+        "contracts",
+        "states_transitions",
+        "authority",
+        "ownership",
+        "consumers",
+        "failures_recovery",
+        "security_privacy",
+        "propagation",
+        "operations",
+        "compatibility_migration",
+        "acceptance_oracles",
+        "authority_boundaries"
+      ],
+      "evidence": [
+        {
+          "exact_quote": "  P0-CREDENTIAL-ROUTE-EPOCH (P0) is compiled as canonical Puppet Master intent for Credential/account/entitlement route epoch: Imported external-repo finding extrepo-20260703-0091 / P0-CREDENTIAL-ROUTE-EPOCH (P0). The preserved PM gap/delta is: ProviderCapabilityEpoch needs a separate CredentialRouteEpoch for auth, route, proxy, quota, entitlement, refresh, and failure class. The observed external-repo signal remains source-lineage evidence: Credentialed route/proxy/config PRs; account entitlement mismatch issues; OAuth/provider/credits failures.",
+          "line_end": 4962,
+          "line_start": 4962,
+          "path": "Plans/Multi-Account.md",
+          "source_sha256": "da9e013f1ea114359b0f5f0680d5bbc25479d9b16fc679a04d51f31ea2ffb848"
+        }
+      ],
+      "gap_kind": "none",
+      "impact": "Capability support can be distinguished from credentialed route availability, preventing entitlement, quota, proxy, or authentication failures from masquerading as unsupported models.",
+      "item_id": "MA067-EXACT-001",
+      "item_type": "contract",
+      "severity": "info",
+      "source_unit_refs": [
+        "PLANUNIT:MA-067",
+        "SEMANTIC:PLANUNIT:MA-067"
+      ],
+      "statement": "MA-067 establishes CredentialRouteEpoch as distinct from ProviderCapabilityEpoch and assigns it auth, route, proxy, quota, entitlement, refresh, and failure-class change authority.",
+      "title": "Credential route epoch separates route truth from capability truth"
+    },
+    {
+      "builder_discretion": true,
+      "confidence": 0.98,
+      "dimensions": [
+        "inputs_outputs",
+        "contracts",
+        "states_transitions",
+        "authority",
+        "propagation",
+        "operations",
+        "acceptance_oracles",
+        "builder_discretion",
+        "ambiguity_unknowns",
+        "missing_callers_consumers",
+        "invalid_states_transitions",
+        "concurrency_races",
+        "partial_failure",
+        "recovery_rollback",
+        "authority_boundaries",
+        "observability_support",
+        "cross_document_seams",
+        "test_falsifiability",
+        "unknown_unknowns"
+      ],
+      "evidence": [
+        {
+          "exact_quote": "pm_gap_or_delta: ProviderCapabilityEpoch needs a separate CredentialRouteEpoch for auth, route, proxy, quota, entitlement, refresh, and failure class.",
+          "line_end": 5017,
+          "line_start": 5017,
+          "path": "Plans/Multi-Account.md",
+          "source_sha256": "da9e013f1ea114359b0f5f0680d5bbc25479d9b16fc679a04d51f31ea2ffb848"
+        }
+      ],
+      "gap_kind": "credential_route_epoch_schema_and_transition_gap",
+      "impact": "Caches and consumers can disagree about route validity, miss invalidation, or accept stale authorization because the epoch is named without a complete state and concurrency contract.",
+      "item_id": "MA067-GAP-001",
+      "item_type": "gap",
+      "severity": "critical",
+      "source_unit_refs": [
+        "PLANUNIT:MA-067",
+        "SEMANTIC:PLANUNIT:MA-067"
+      ],
+      "statement": "MA-067 does not define CredentialRouteEpoch identity, field schema, monotonicity and persistence scope, atomic mutation triggers for each owned class, invalidation fan-out, stale-reader behavior, or reconciliation after partial publication.",
+      "title": "CredentialRouteEpoch lacks its executable contract"
+    },
+    {
+      "builder_discretion": false,
+      "confidence": 0.99,
+      "dimensions": [
+        "behavior",
+        "inputs_outputs",
+        "contracts",
+        "states_transitions",
+        "authority",
+        "ownership",
+        "consumers",
+        "failures_recovery",
+        "security_privacy",
+        "operations",
+        "compatibility_migration",
+        "acceptance_oracles",
+        "privacy_data_lifecycle",
+        "destructive_actions"
+      ],
+      "evidence": [
+        {
+          "exact_quote": "  - Token-store writes use an exclusive lock, write temp encrypted blob, fsync, atomic rename, epoch increment, and stale-lock recovery after lock_expires_at_ms.",
+          "line_end": 5045,
+          "line_start": 5045,
+          "path": "Plans/Multi-Account.md",
+          "source_sha256": "da9e013f1ea114359b0f5f0680d5bbc25479d9b16fc679a04d51f31ea2ffb848"
+        }
+      ],
+      "gap_kind": "none",
+      "impact": "The token-store happy path has explicit locking, durability, replacement, epoch, and stale-lock steps instead of an unconstrained credential write.",
+      "item_id": "MA068-EXACT-001",
+      "item_type": "contract",
+      "severity": "info",
+      "source_unit_refs": [
+        "PLANUNIT:MA-068",
+        "SEMANTIC:PLANUNIT:MA-068"
+      ],
+      "statement": "MA-068 defines counted retry defaults, a TokenStoreRecord field set, and an exclusive-lock encrypted-write sequence ending in atomic replacement and credential-route epoch increment.",
+      "title": "Retry and token-store defaults are concretely assigned"
+    },
+    {
+      "builder_discretion": true,
+      "confidence": 0.98,
+      "dimensions": [
+        "contracts",
+        "states_transitions",
+        "failures_recovery",
+        "security_privacy",
+        "operations",
+        "acceptance_oracles",
+        "builder_discretion",
+        "ambiguity_unknowns",
+        "invalid_states_transitions",
+        "concurrency_races",
+        "partial_failure",
+        "recovery_rollback",
+        "privacy_data_lifecycle",
+        "untrusted_inputs",
+        "offline_network_loss",
+        "observability_support",
+        "destructive_actions",
+        "test_falsifiability",
+        "unknown_unknowns"
+      ],
+      "evidence": [
+        {
+          "exact_quote": "  - Token-store writes use an exclusive lock, write temp encrypted blob, fsync, atomic rename, epoch increment, and stale-lock recovery after lock_expires_at_ms.",
+          "line_end": 5045,
+          "line_start": 5045,
+          "path": "Plans/Multi-Account.md",
+          "source_sha256": "da9e013f1ea114359b0f5f0680d5bbc25479d9b16fc679a04d51f31ea2ffb848"
+        }
+      ],
+      "gap_kind": "token_store_partial_failure_and_lock_recovery_gap",
+      "impact": "Crash or I/O failure at different write stages can orphan encrypted blobs, advance the epoch without durable credentials, resurrect stale credentials, or let two writers recover the same lock.",
+      "item_id": "MA068-GAP-001",
+      "item_type": "gap",
+      "severity": "critical",
+      "source_unit_refs": [
+        "PLANUNIT:MA-068",
+        "SEMANTIC:PLANUNIT:MA-068"
+      ],
+      "statement": "MA-068 does not define lock acquisition timeout and fencing, crash recovery at each write stage, fsync or rename failure rollback, corrupted encrypted-blob handling, epoch/write atomicity, stale-lock clock authority, or the oracle for proving the old credential remains usable after failure.",
+      "title": "Token-store atomic write lacks partial-failure semantics"
+    },
+    {
+      "builder_discretion": false,
+      "confidence": 0.99,
+      "dimensions": [
+        "behavior",
+        "capabilities",
+        "inputs_outputs",
+        "contracts",
+        "states_transitions",
+        "authority",
+        "ownership",
+        "consumers",
+        "gui_truth",
+        "security_privacy",
+        "propagation",
+        "operations",
+        "compatibility_migration",
+        "acceptance_oracles",
+        "gui_misleading_states"
+      ],
+      "evidence": [
+        {
+          "exact_quote": "  Multi-Account provider and account rows display usage, quota, credits, billing visibility, and provider pressure only from normalized UsageRecord, CredentialRouteEpoch, and ProviderCapabilityEpoch projections. Rows expose source_class, source_confidence, source_authority, quota_state, credits_state, cost_status, pricing snapshot/custom price row refs when relevant, and stale/degraded/unknown reasons. Antigravity CLI remains a separate provider route with provider_id `antigravity_cli` and route `agy`; missing `/stats`, `/usage`, `/quota`, and `/credits` render stats unavailable, usage unknown, quota not exposed, and credits not exposed. Disabled Models & Quota buckets render disabled, and G1 credits remain credits only. BYOK and subscription/provider-plan cost display suppression preserves usage identity while avoiding fake token-cost display.",
+          "line_end": 5102,
+          "line_start": 5102,
+          "path": "Plans/Multi-Account.md",
+          "source_sha256": "da9e013f1ea114359b0f5f0680d5bbc25479d9b16fc679a04d51f31ea2ffb848"
+        }
+      ],
+      "gap_kind": "none",
+      "impact": "Settings rows must preserve provenance and distinguish unavailable, unknown, hidden, disabled, credits, quota, and cost states instead of fabricating zeroes or aliases.",
+      "item_id": "MA069-EXACT-001",
+      "item_type": "gui_truth",
+      "severity": "info",
+      "source_unit_refs": [
+        "PLANUNIT:MA-069",
+        "SEMANTIC:PLANUNIT:MA-069"
+      ],
+      "statement": "MA-069 binds provider/account usage displays to normalized projections, exposes provenance and state fields, preserves Antigravity route identity, and defines non-zero missing and suppressed display semantics.",
+      "title": "Provider usage rows preserve normalized state and provenance"
+    },
+    {
+      "builder_discretion": true,
+      "confidence": 0.97,
+      "dimensions": [
+        "contracts",
+        "states_transitions",
+        "consumers",
+        "gui_truth",
+        "failures_recovery",
+        "propagation",
+        "operations",
+        "scale_performance",
+        "acceptance_oracles",
+        "builder_discretion",
+        "ambiguity_unknowns",
+        "missing_callers_consumers",
+        "invalid_states_transitions",
+        "concurrency_races",
+        "partial_failure",
+        "recovery_rollback",
+        "gui_misleading_states",
+        "offline_network_loss",
+        "scale_limits",
+        "accessibility",
+        "localization",
+        "observability_support",
+        "cross_document_seams",
+        "test_falsifiability",
+        "unknown_unknowns"
+      ],
+      "evidence": [
+        {
+          "exact_quote": "  - Provider/account rows display source_class, source_confidence, source_authority, cost_status, quota_state, credits_state, projection_freshness, and degraded reason beside usage-adjacent values.",
+          "line_end": 5108,
+          "line_start": 5108,
+          "path": "Plans/Multi-Account.md",
+          "source_sha256": "da9e013f1ea114359b0f5f0680d5bbc25479d9b16fc679a04d51f31ea2ffb848"
+        }
+      ],
+      "gap_kind": "projection_conflict_and_gui_state_gap",
+      "impact": "Rows can show internally inconsistent or stale usage facts, overload users with unprioritized provenance, or become inaccessible when values update rapidly or explanations expand under localization.",
+      "item_id": "MA069-GAP-001",
+      "item_type": "gap",
+      "severity": "high",
+      "source_unit_refs": [
+        "PLANUNIT:MA-069",
+        "SEMANTIC:PLANUNIT:MA-069"
+      ],
+      "statement": "MA-069 does not define precedence and reconciliation when UsageRecord, CredentialRouteEpoch, and ProviderCapabilityEpoch disagree or have different freshness, nor loading/refresh/failure transitions, update-rate limits, accessible announcements, localized overflow behavior, or a support oracle for the rendered combination.",
+      "title": "Usage projection conflicts and GUI transitions are unspecified"
+    }
+  ],
+  "model": "gpt-5.6-sol",
+  "phase": "blind_macro_window_review",
+  "reasoning_effort": "xhigh",
+  "schema_version": "macro-review-result-v1",
+  "segments": [
+    {
+      "core_range": [
+        4697,
+        5093
+      ],
+      "covered_source_unit_refs": [
+        "PLANUNIT:MA-061",
+        "PLANUNIT:MA-064",
+        "PLANUNIT:MA-065",
+        "PLANUNIT:MA-066",
+        "PLANUNIT:MA-067",
+        "PLANUNIT:MA-068",
+        "SEMANTIC:PLANUNIT:MA-061",
+        "SEMANTIC:PLANUNIT:MA-064",
+        "SEMANTIC:PLANUNIT:MA-065",
+        "SEMANTIC:PLANUNIT:MA-066",
+        "SEMANTIC:PLANUNIT:MA-067",
+        "SEMANTIC:PLANUNIT:MA-068"
+      ],
+      "item_ids": [
+        "MA061-EXACT-001",
+        "MA061-GAP-001",
+        "MA064-EXACT-001",
+        "MA064-GAP-001",
+        "MA065-EXACT-001",
+        "MA065-GAP-001",
+        "MA066-EXACT-001",
+        "MA066-GAP-001",
+        "MA067-EXACT-001",
+        "MA067-GAP-001",
+        "MA068-EXACT-001",
+        "MA068-GAP-001"
+      ],
+      "reviewed": true,
+      "summary": "Reviewed every core line for MA-061 and MA-064 through MA-068 under exact and adversarial lenses; captured explicit policy propagation, credential custody, pressure/fallback, readiness projection, route-epoch, retry, and token-store contracts plus their unresolved snapshot, return, concurrency, epoch, and partial-failure semantics.",
+      "window_id": "WIN-F25915291C7A-0014"
+    },
+    {
+      "core_range": [
+        5094,
+        5159
+      ],
+      "covered_source_unit_refs": [
+        "PLANUNIT:MA-069",
+        "SEMANTIC:PLANUNIT:MA-069"
+      ],
+      "item_ids": [
+        "MA069-EXACT-001",
+        "MA069-GAP-001"
+      ],
+      "reviewed": true,
+      "summary": "Reviewed every MA-069 core line under exact and adversarial lenses; captured normalized usage and provenance display truth and identified unresolved projection conflict, transition, accessibility, localization, scale, and support-oracle behavior.",
+      "window_id": "WIN-F25915291C7A-0015"
+    }
+  ],
+  "self_attestation": {
+    "no_canonical_writes": true,
+    "no_external_research_during_blind_review": true,
+    "no_peer_result_access": true,
+    "no_prior_audit_access": true,
+    "no_unrelated_source_access": true,
+    "terminal_after_submission": true
+  },
+  "source_binding": {
+    "bundle_id": "MACRO15-F25915291C7A-0003",
+    "document_path": "Plans/Multi-Account.md",
+    "micro_window_ids": [
+      "WIN-F25915291C7A-0014",
+      "WIN-F25915291C7A-0015"
+    ],
+    "source_sha256": "da9e013f1ea114359b0f5f0680d5bbc25479d9b16fc679a04d51f31ea2ffb848"
+  },
+  "status": "completed",
+  "synthesis": {
+    "cross_document_questions": [
+      "Which canonical owner defines the serialized effective testing-policy snapshot and proves identical consumption by Planning Wizard, Plan Compile, Executor, and Orchestrator?",
+      "Which owner defines durable setup return-context identity and refresh reconciliation shared by Multi-Account, Models System, Permissions System, and Final GUI Spec?",
+      "Where are CredentialRouteEpoch schema, mutation, publication, cache invalidation, and stale-reader rules canonicalized across Multi-Account and provider consumers?",
+      "Which cross-document contract resolves freshness or authority disagreement among UsageRecord, CredentialRouteEpoch, and ProviderCapabilityEpoch before provider/account rows render?"
+    ],
+    "feature_family_keys": [
+      "testing_policy_inheritance",
+      "free_models_account_setup_delegation",
+      "shared_pressure_bounded_fallback",
+      "first_run_account_readiness_projection",
+      "credential_route_epoch",
+      "retry_budget_token_store",
+      "provider_usage_settings_projection"
+    ],
+    "research_queries": [
+      "versioned hierarchical policy snapshot precedence invalidation distributed consumers",
+      "durable UI return context idempotent refresh concurrent navigation failure recovery",
+      "credential epoch cache invalidation fencing stale reader distributed systems",
+      "encrypted token store atomic replacement crash recovery lock fencing",
+      "accessible localized rapidly updating quota usage provenance UI"
+    ]
+  },
+  "task_thread_id": "/root/a005m15_b5_000065_attempt_0015_terminal"
+}

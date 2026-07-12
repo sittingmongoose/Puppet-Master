@@ -1,0 +1,137 @@
+{
+  "assignment_id": "A005M-000111-INTEGRATED-MACRO-4D165ACE14E8-0001",
+  "attempt_id": "attempt-0014",
+  "audit_id": "audit-20260710-005-plan-assurance-model-lanes-fresh-agent-exhaustive",
+  "blindness": {
+    "external_research": "deferred_to_feature_research_phase",
+    "peer_results": "forbidden",
+    "prior_audits": "forbidden",
+    "unrelated_sources": "forbidden"
+  },
+  "bundle_core_range": [
+    1,
+    669
+  ],
+  "bundle_id": "MACRO-4D165ACE14E8-0001",
+  "context_ranges": [],
+  "document_path": "Plans/Release_Supply_Chain.md",
+  "micro_window_ids": [
+    "WIN-4D165ACE14E8-0001",
+    "WIN-4D165ACE14E8-0002"
+  ],
+  "phase": "blind_macro_window_review",
+  "required_dimensions": [
+    "behavior",
+    "capabilities",
+    "inputs_outputs",
+    "contracts",
+    "states_transitions",
+    "authority",
+    "ownership",
+    "consumers",
+    "gui_truth",
+    "failures_recovery",
+    "security_privacy",
+    "propagation",
+    "operations",
+    "scale_performance",
+    "compatibility_migration",
+    "acceptance_oracles",
+    "builder_discretion",
+    "ambiguity_unknowns",
+    "missing_callers_consumers",
+    "invalid_states_transitions",
+    "concurrency_races",
+    "partial_failure",
+    "recovery_rollback",
+    "authority_boundaries",
+    "privacy_data_lifecycle",
+    "untrusted_inputs",
+    "gui_misleading_states",
+    "offline_network_loss",
+    "scale_limits",
+    "accessibility",
+    "localization",
+    "observability_support",
+    "destructive_actions",
+    "cross_document_seams",
+    "test_falsifiability",
+    "unknown_unknowns"
+  ],
+  "result_schema_ref": "schemas/macro_review_result.schema.json",
+  "review_instructions": "Read every assigned core line and account for every required_source_unit_ref. Apply both exact-behavior and adversarial-negative-space lenses across every required dimension. Extract concise feature, behavior, contract, state, authority, consumer, GUI, failure/recovery, oracle, gap, unknown, and explicit-non-gap items with exact source evidence. Do not merely paraphrase headings or copy unit refs. Each segment must name its complete required_source_unit_refs list and at least one item. Write exactly one regular JSON payload inside the assigned output directory; result.json is recommended but the filename is not semantic. Do not write a terminal seal. Return PMR1 only after the JSON payload is fully written.",
+  "schema_version": "macro-context-capsule-v1",
+  "segments": [
+    {
+      "core_range": [
+        1,
+        343
+      ],
+      "core_sha256": "455f9bd567df176f83fc902a2a87a87adf61ed6fcc9c0c07e59e62aff7ae2ba1",
+      "plan_unit_ids": [
+        "RSC-001",
+        "RSC-002",
+        "RSC-003",
+        "RSC-004"
+      ],
+      "required_source_unit_refs": [
+        "PLANUNIT:RSC-001",
+        "PLANUNIT:RSC-002",
+        "PLANUNIT:RSC-003",
+        "PLANUNIT:RSC-004",
+        "SEMANTIC:PROLOGUE:Plans/Release_Supply_Chain.md",
+        "SEMANTIC:PLANUNIT:RSC-001",
+        "SEMANTIC:PLANUNIT:RSC-002",
+        "SEMANTIC:PLANUNIT:RSC-003",
+        "SEMANTIC:PLANUNIT:RSC-004"
+      ],
+      "semantic_block_ids": [
+        "PROLOGUE:Plans/Release_Supply_Chain.md",
+        "PLANUNIT:RSC-001",
+        "PLANUNIT:RSC-002",
+        "PLANUNIT:RSC-003",
+        "PLANUNIT:RSC-004"
+      ],
+      "structural_paths": [],
+      "token_estimate": 6549,
+      "window_id": "WIN-4D165ACE14E8-0001"
+    },
+    {
+      "core_range": [
+        344,
+        669
+      ],
+      "core_sha256": "4477afe2ae1e98ab3e2c1864042994af3c7d8f5cfc14294a06a8cf63560dcc02",
+      "plan_unit_ids": [
+        "RSC-005",
+        "RSC-006",
+        "RSC-007",
+        "RSC-008"
+      ],
+      "required_source_unit_refs": [
+        "PLANUNIT:RSC-005",
+        "PLANUNIT:RSC-006",
+        "PLANUNIT:RSC-007",
+        "PLANUNIT:RSC-008",
+        "SEMANTIC:PLANUNIT:RSC-005",
+        "SEMANTIC:PLANUNIT:RSC-006",
+        "SEMANTIC:PLANUNIT:RSC-007",
+        "SEMANTIC:PLANUNIT:RSC-008"
+      ],
+      "semantic_block_ids": [
+        "PLANUNIT:RSC-005",
+        "PLANUNIT:RSC-006",
+        "PLANUNIT:RSC-007",
+        "PLANUNIT:RSC-008"
+      ],
+      "structural_paths": [],
+      "token_estimate": 8145,
+      "window_id": "WIN-4D165ACE14E8-0002"
+    }
+  ],
+  "source_excerpt_line_format": "L######## followed by a tab and exact canonical source text",
+  "source_excerpt_ref": "capsules/source/1c/1c768f3253c82df37c23b0c4741c1e527807ce526b424dc9452ca9023b9a3f3c.txt",
+  "source_excerpt_sha256": "1c768f3253c82df37c23b0c4741c1e527807ce526b424dc9452ca9023b9a3f3c",
+  "source_sha256": "d4387d59a9c25be43d49f17370e4d8e639314635cda08dca193bc8ca21f2facf",
+  "token_estimate": 14694
+}

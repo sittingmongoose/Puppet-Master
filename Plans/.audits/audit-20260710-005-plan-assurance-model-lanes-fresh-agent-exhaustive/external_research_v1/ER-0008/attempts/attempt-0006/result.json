@@ -1,0 +1,767 @@
+{
+  "audit_id": "audit-20260710-005-plan-assurance-model-lanes-fresh-agent-exhaustive",
+  "schema_version": "external-research-result-v6",
+  "phase": "external_research_current_web_research",
+  "assignment_id": "ER-0008",
+  "attempt_id": "attempt-0006",
+  "controller_thread_id": "019f5078-6501-7223-b52f-2251010bdc41",
+  "agent_path": "/root/a005_external_research_recovery_er_0008_attempt_0006_terminal",
+  "model": "gpt-5.6-luna",
+  "reasoning_effort": "max",
+  "status": "completed",
+  "activation_transaction_id": "A005-ER6-1929c7554722a0dc365396f7",
+  "activation_core_sha256": "8da5c171485bb636310d1a1cfc4f8978fee6f57fd4b46273e0b2ac9b1e10d602",
+  "leaf_dispatch_authorization_sha256": "c0322d48abc1f8ef02298800040d3fff067ae86ddeeb5415d133d5414f154eb2",
+  "topic": "Agentic plan-to-code preflight and adversarial certification: executable acceptance criteria, simulation, negative-space review, evidence gates, human override, and regression traceability",
+  "owner_domains": [
+    "orchestration_runtime_execution",
+    "planning_specification_governance"
+  ],
+  "feature_refs": [],
+  "research_questions": [
+    "How do mature agentic engineering and safety systems turn plans into executable preflight checks, scenario simulations, and adversarial certification?",
+    "Which acceptance-criteria, negative-space, evidence-gate, human-override, and regression-traceability patterns are documented by primary sources?",
+    "How should a plan-to-code gate expose blocked, uncertain, overridden, and certified outcomes without conflating them?",
+    "What evidence is necessary to claim that a plan remains safe and complete as implementation and dependencies change?"
+  ],
+  "question_coverage": [
+    {
+      "question_index": 0,
+      "question": "How do mature agentic engineering and safety systems turn plans into executable preflight checks, scenario simulations, and adversarial certification?",
+      "coverage_state": "covered",
+      "evidence_refs": [
+        "F-0001",
+        "F-0002",
+        "F-0003",
+        "F-0004",
+        "F-0005",
+        "F-0006",
+        "P-0001"
+      ]
+    },
+    {
+      "question_index": 1,
+      "question": "Which acceptance-criteria, negative-space, evidence-gate, human-override, and regression-traceability patterns are documented by primary sources?",
+      "coverage_state": "covered",
+      "evidence_refs": [
+        "F-0007",
+        "F-0008",
+        "F-0009",
+        "F-0010",
+        "F-0011",
+        "F-0012",
+        "F-0013",
+        "P-0002",
+        "P-0004"
+      ]
+    },
+    {
+      "question_index": 2,
+      "question": "How should a plan-to-code gate expose blocked, uncertain, overridden, and certified outcomes without conflating them?",
+      "coverage_state": "covered",
+      "evidence_refs": [
+        "F-0014",
+        "F-0015",
+        "F-0016",
+        "F-0017",
+        "P-0002",
+        "P-0003",
+        "I-0002"
+      ]
+    },
+    {
+      "question_index": 3,
+      "question": "What evidence is necessary to claim that a plan remains safe and complete as implementation and dependencies change?",
+      "coverage_state": "covered",
+      "evidence_refs": [
+        "F-0018",
+        "F-0019",
+        "F-0020",
+        "F-0021",
+        "F-0022",
+        "F-0023",
+        "F-0024",
+        "P-0004",
+        "P-0005"
+      ]
+    }
+  ],
+  "source_availability": "available",
+  "unavailable_evidence": [
+    "Public sources do not provide PuppetMaster-specific numeric pass thresholds, risk weights, or change-impact budgets; those values require local calibration against the project's risk tolerance and release context."
+  ],
+  "sources": [
+    {
+      "url": "https://airc.nist.gov/airmf-resources/airmf/5-sec-core/",
+      "title": "AI RMF Core",
+      "publisher": "NIST AI Resource Center",
+      "published_date": "2023-01-26",
+      "access_date": "2026-07-11",
+      "source_tier": "standard",
+      "material_relevance": "Defines the Govern, Map, Measure, and Manage lifecycle, continuous risk management, risk tolerance, independent review, deployment-context testing, residual-risk decisions, and ongoing monitoring."
+    },
+    {
+      "url": "https://airc.nist.gov/docs/AI_RMF_Playbook.pdf",
+      "title": "NIST AI RMF Playbook",
+      "publisher": "NIST AI Resource Center",
+      "published_date": "2023-03-30",
+      "access_date": "2026-07-11",
+      "source_tier": "standard",
+      "material_relevance": "Provides operational questions and suggested actions for human oversight, adversarial and stress testing, documentation, override measurement, and authority to modify, limit, or stop use."
+    },
+    {
+      "url": "https://www.nist.gov/publications/artificial-intelligence-risk-management-framework-generative-artificial-intelligence",
+      "title": "Artificial Intelligence Risk Management Framework: Generative Artificial Intelligence Profile",
+      "publisher": "National Institute of Standards and Technology",
+      "published_date": "2024-07-26",
+      "access_date": "2026-07-11",
+      "source_tier": "standard",
+      "material_relevance": "Extends AI RMF lifecycle risk management to generative-AI-specific risks and evaluation considerations, including risks that can emerge after deployment."
+    },
+    {
+      "url": "https://csrc.nist.gov/pubs/sp/800/115/final",
+      "title": "SP 800-115, Technical Guide to Information Security Testing and Assessment",
+      "publisher": "NIST Computer Security Resource Center",
+      "published_date": "2008-09-30",
+      "access_date": "2026-07-11",
+      "source_tier": "standard",
+      "material_relevance": "Documents a repeatable assessment pattern for planning, conducting, analyzing, mitigating, and retesting technical security findings."
+    },
+    {
+      "url": "https://csrc.nist.gov/pubs/sp/800/218/final",
+      "title": "SP 800-218, Secure Software Development Framework (SSDF) Version 1.1",
+      "publisher": "NIST Computer Security Resource Center",
+      "published_date": "2022-02-03",
+      "access_date": "2026-07-11",
+      "source_tier": "standard",
+      "material_relevance": "Provides secure-SDLC practices for maintaining requirements, protecting development environments, handling third-party components, and preventing recurrence of undetected vulnerabilities."
+    },
+    {
+      "url": "https://slsa.dev/spec/v1.2/tracks",
+      "title": "SLSA v1.2 Tracks",
+      "publisher": "SLSA",
+      "published_date": null,
+      "access_date": "2026-07-11",
+      "source_tier": "standard",
+      "material_relevance": "Defines source and build provenance tracks, expected-versus-actual verification, and increasing guarantees against tampering and incomplete dependency/build traceability."
+    },
+    {
+      "url": "https://genai.owasp.org/resource/owasp-top-10-for-agentic-applications-for-2026/",
+      "title": "OWASP Top 10 for Agentic Applications for 2026",
+      "publisher": "OWASP GenAI Security Project",
+      "published_date": "2025-12-09",
+      "access_date": "2026-07-11",
+      "source_tier": "mature_open_source",
+      "material_relevance": "Supplies a peer-reviewed agentic threat vocabulary covering goal hijack, tool misuse, identity and privilege abuse, supply-chain vulnerabilities, code execution, and related autonomous-system risks."
+    },
+    {
+      "url": "https://openai.com/index/updating-our-preparedness-framework/",
+      "title": "Our updated Preparedness Framework",
+      "publisher": "OpenAI",
+      "published_date": "2025-04-15",
+      "access_date": "2026-07-11",
+      "source_tier": "official",
+      "material_relevance": "Documents capability thresholds, pre-deployment safeguards, capabilities and safeguards reports, automated evaluation at scale, expert deep dives, advisory review, and reassessment when new evidence appears."
+    },
+    {
+      "url": "https://www.anthropic.com/responsible-scaling-policy",
+      "title": "Anthropic's Responsible Scaling Policy",
+      "publisher": "Anthropic",
+      "published_date": null,
+      "access_date": "2026-07-11",
+      "source_tier": "official",
+      "material_relevance": "Documents capability thresholds, affirmative safety cases, risk reports, roadmap commitments, and the ability to pause development when appropriate."
+    },
+    {
+      "url": "https://www.saif.google/secure-ai-framework/controls",
+      "title": "Security Controls for Generative AI Systems - SAIF",
+      "publisher": "Google Secure AI Framework",
+      "published_date": null,
+      "access_date": "2026-07-11",
+      "source_tier": "official",
+      "material_relevance": "Provides controls for secure-by-default tooling, agent observability, red teaming, vulnerability/regression monitoring, product governance, and residual-risk governance."
+    },
+    {
+      "url": "https://inspect.aisi.org.uk/",
+      "title": "Inspect: An open-source framework for large language model evaluations",
+      "publisher": "UK AI Security Institute and Meridian Labs",
+      "published_date": "2024-05",
+      "access_date": "2026-07-11",
+      "source_tier": "mature_open_source",
+      "material_relevance": "Shows a reusable evaluation runtime composed from datasets, agents/tools, solvers, scorers, sandboxes, approvals, logging, and multi-agent execution."
+    },
+    {
+      "url": "https://www.swebench.com/original.html",
+      "title": "SWE-bench: Can Language Models Resolve Real-world Github Issues?",
+      "publisher": "SWE-bench Team",
+      "published_date": "2024",
+      "access_date": "2026-07-11",
+      "source_tier": "mature_open_source",
+      "material_relevance": "Demonstrates executable software-engineering acceptance via issue-to-patch tasks, containerized repository states, and fail-to-pass tests as the primary success signal."
+    }
+  ],
+  "findings": [
+    {
+      "finding_id": "F-0001",
+      "claim": "NIST's AI RMF makes a plan executable by binding intended purpose and risk context to documented test sets, metrics, deployment-like conditions, independent review, safety criteria, and a continuing measure/manage loop rather than treating a plan as a one-time checklist.",
+      "evidence_class": "supported_claim",
+      "source_urls": [
+        "https://airc.nist.gov/airmf-resources/airmf/5-sec-core/",
+        "https://airc.nist.gov/docs/AI_RMF_Playbook.pdf"
+      ],
+      "confidence": 0.96,
+      "notes": "The Core explicitly calls for testing before deployment and regularly in operation, documentation of methods and uncertainty, deployment-like conditions, independent review, fail-safe behavior, and tracking of existing, unanticipated, and emergent risk."
+    },
+    {
+      "finding_id": "F-0002",
+      "claim": "NIST SP 800-115 provides a mature executable assessment loop: define scope and objectives, plan and conduct tests, analyze findings, develop mitigations, and retest or verify the resulting state.",
+      "evidence_class": "supported_claim",
+      "source_urls": [
+        "https://csrc.nist.gov/pubs/sp/800/115/final"
+      ],
+      "confidence": 0.95,
+      "notes": "This is a general security-testing pattern rather than an agent-specific standard, but it is directly reusable for plan-to-code preflight and adversarial certification."
+    },
+    {
+      "finding_id": "F-0003",
+      "claim": "Inspect turns an evaluation plan into runnable scenarios through composable datasets, solvers or agent scaffolds, tools, scorers, sandboxes, approval policies, limits, and evaluation logs.",
+      "evidence_class": "supported_claim",
+      "source_urls": [
+        "https://inspect.aisi.org.uk/"
+      ],
+      "confidence": 0.97,
+      "notes": "The framework treats evaluations as reusable executable units and supports agentic tasks, external agents, tool calling, sandboxed untrusted code, monitoring, and visualization."
+    },
+    {
+      "finding_id": "F-0004",
+      "claim": "SWE-bench demonstrates a software-engineering acceptance pattern in which an issue is evaluated in a reproducible repository environment and the generated patch must make failing fail-to-pass tests pass.",
+      "evidence_class": "supported_claim",
+      "source_urls": [
+        "https://www.swebench.com/original.html"
+      ],
+      "confidence": 0.98,
+      "notes": "The benchmark separates the task statement from executable validation and uses a containerized repository state, making it a useful model for plan-to-code acceptance evidence."
+    },
+    {
+      "finding_id": "F-0005",
+      "claim": "OpenAI's Preparedness Framework combines capability thresholds, risk-specific safeguards, scalable automated evaluations, expert-led deep dives, dedicated capabilities and safeguards reports, and advisory review before a high-risk deployment or continued development.",
+      "evidence_class": "supported_claim",
+      "source_urls": [
+        "https://openai.com/index/updating-our-preparedness-framework/"
+      ],
+      "confidence": 0.95,
+      "notes": "This is a concrete public example of converting capability and safety plans into pre-deployment gates and escalation decisions."
+    },
+    {
+      "finding_id": "F-0006",
+      "claim": "The OWASP Agentic Applications framework treats agent security as a set of distinct failure surfaces involving goals, tools, identities, supply chains, execution, and other autonomous behavior, supporting deliberate negative-space scenario design.",
+      "evidence_class": "supported_claim",
+      "source_urls": [
+        "https://genai.owasp.org/resource/owasp-top-10-for-agentic-applications-for-2026/"
+      ],
+      "confidence": 0.92,
+      "notes": "The categories are a threat vocabulary, not a complete test suite; each applicable category should be converted into concrete scenarios and expected controls."
+    },
+    {
+      "finding_id": "F-0007",
+      "claim": "The AI RMF makes acceptance criteria risk-sensitive: organizations set risk tolerance, measure residual negative risk, document methods and outcomes, and decide whether development or deployment should proceed, be modified, mitigated, avoided, or stopped.",
+      "evidence_class": "supported_claim",
+      "source_urls": [
+        "https://airc.nist.gov/airmf-resources/airmf/5-sec-core/"
+      ],
+      "confidence": 0.96,
+      "notes": "This supports explicit hard gates and documented dispositions instead of a single undifferentiated pass bit."
+    },
+    {
+      "finding_id": "F-0008",
+      "claim": "The NIST Playbook explicitly calls for measuring override frequency and documenting whether responsible parties have authority to modify, limit, or stop an AI system when concerns arise.",
+      "evidence_class": "supported_claim",
+      "source_urls": [
+        "https://airc.nist.gov/docs/AI_RMF_Playbook.pdf"
+      ],
+      "confidence": 0.98,
+      "notes": "The public guidance provides a direct basis for treating human override as an auditable outcome and control, not as an invisible exception."
+    },
+    {
+      "finding_id": "F-0009",
+      "claim": "OpenAI separates High and Critical capability thresholds and maps them to different operational commitments: safeguards before deployment for High, safeguards during development for Critical, advisory review, final leadership decisions, and reassessment when new evidence emerges.",
+      "evidence_class": "supported_claim",
+      "source_urls": [
+        "https://openai.com/index/updating-our-preparedness-framework/"
+      ],
+      "confidence": 0.96,
+      "notes": "This is a documented threshold-to-action pattern for keeping evidence gates and decisions distinct."
+    },
+    {
+      "finding_id": "F-0010",
+      "claim": "Anthropic's current public RSP uses capability thresholds, affirmative safety cases, risk reports, roadmap goals, and an explicit ability to pause development when appropriate; it also notes that confidently ruling out thresholds can become subjective and therefore calls for additional reporting.",
+      "evidence_class": "supported_claim",
+      "source_urls": [
+        "https://www.anthropic.com/responsible-scaling-policy"
+      ],
+      "confidence": 0.94,
+      "notes": "The pattern separates an evidence-backed safety case from a residual uncertainty that should trigger more evaluation or reporting, not automatic certification."
+    },
+    {
+      "finding_id": "F-0011",
+      "claim": "Google's SAIF control set calls for agent observability, red teaming, proactive and continuous vulnerability/regression monitoring, product-governance validation, and residual-risk inventory and monitoring.",
+      "evidence_class": "supported_claim",
+      "source_urls": [
+        "https://www.saif.google/secure-ai-framework/controls"
+      ],
+      "confidence": 0.97,
+      "notes": "These controls connect runtime behavior, adversarial testing, change detection, and governance evidence into one assurance surface."
+    },
+    {
+      "finding_id": "F-0012",
+      "claim": "SLSA v1.2 defines an expectation-matching pattern in which consumers compare actual source/build provenance with the project's declared expectations and use increasing levels of provenance integrity to guard against tampering and incomplete traceability.",
+      "evidence_class": "supported_claim",
+      "source_urls": [
+        "https://slsa.dev/spec/v1.2/tracks"
+      ],
+      "confidence": 0.96,
+      "notes": "The same pattern can be applied to plan revisions, generated artifacts, dependencies, tool versions, and executable evidence."
+    },
+    {
+      "finding_id": "F-0013",
+      "claim": "SWE-bench makes an acceptance criterion auditable by recording the initial issue context and repository state, then requiring executable fail-to-pass tests to demonstrate that the proposed patch resolves the issue.",
+      "evidence_class": "supported_claim",
+      "source_urls": [
+        "https://www.swebench.com/original.html"
+      ],
+      "confidence": 0.98,
+      "notes": "The separation between a natural-language requirement and an executable test result is useful for avoiding plan-only certification."
+    },
+    {
+      "finding_id": "F-0014",
+      "claim": "Inference: a plan-to-code gate should expose a typed outcome state machine with at least blocked, uncertain, overridden, and certified states, because public assurance systems distinguish missing or failed evidence, unresolved measurement uncertainty, bounded human decisions, and completed evidence gates.",
+      "evidence_class": "inference",
+      "source_urls": [
+        "https://airc.nist.gov/airmf-resources/airmf/5-sec-core/",
+        "https://airc.nist.gov/docs/AI_RMF_Playbook.pdf",
+        "https://openai.com/index/updating-our-preparedness-framework/",
+        "https://www.anthropic.com/responsible-scaling-policy",
+        "https://www.saif.google/secure-ai-framework/controls"
+      ],
+      "confidence": 0.94,
+      "notes": "The state names are a proposed product-level representation synthesized from the sources; they are not a quoted standard taxonomy."
+    },
+    {
+      "finding_id": "F-0015",
+      "claim": "Inference: blocked should mean a hard prerequisite is missing or failed; uncertain should mean evidence is incomplete, non-transferable, or too subjective; overridden should require an authorized bounded exception with reason and residual-risk record; certified should require all hard gates and independent or adversarial evidence to pass.",
+      "evidence_class": "inference",
+      "source_urls": [
+        "https://airc.nist.gov/airmf-resources/airmf/5-sec-core/",
+        "https://airc.nist.gov/docs/AI_RMF_Playbook.pdf",
+        "https://openai.com/index/updating-our-preparedness-framework/",
+        "https://www.saif.google/secure-ai-framework/controls"
+      ],
+      "confidence": 0.93,
+      "notes": "The important design constraint is that an override or unresolved uncertainty cannot silently promote a result to certified."
+    },
+    {
+      "finding_id": "F-0016",
+      "claim": "Inspect provides a concrete implementation precedent for separating tool-call approval, sandbox policy, execution limits, sample errors, and scoring from the final evaluation result.",
+      "evidence_class": "supported_claim",
+      "source_urls": [
+        "https://inspect.aisi.org.uk/"
+      ],
+      "confidence": 0.93,
+      "notes": "A plan-to-code gate can adapt this separation so the UI exposes approval, execution, scoring, and certification as distinct evidence dimensions."
+    },
+    {
+      "finding_id": "F-0017",
+      "claim": "Inference: a gate result should carry an evidence ledger with gate identifier, expected condition, observed result, evaluator and version, environment or dependency provenance, timestamp, coverage, and disposition, rather than only a final status.",
+      "evidence_class": "inference",
+      "source_urls": [
+        "https://airc.nist.gov/airmf-resources/airmf/5-sec-core/",
+        "https://csrc.nist.gov/pubs/sp/800/218/final",
+        "https://slsa.dev/spec/v1.2/tracks",
+        "https://www.saif.google/secure-ai-framework/controls"
+      ],
+      "confidence": 0.95,
+      "notes": "The ledger fields are a synthesized implementation proposal grounded in documentation, provenance, and monitoring requirements."
+    },
+    {
+      "finding_id": "F-0018",
+      "claim": "NIST requires AI systems to be tested before deployment and regularly while in operation, with documented metrics, monitoring of behavior and components, safety evaluation, failure-safe behavior, and tracking of emergent risks.",
+      "evidence_class": "supported_claim",
+      "source_urls": [
+        "https://airc.nist.gov/airmf-resources/airmf/5-sec-core/",
+        "https://www.nist.gov/publications/artificial-intelligence-risk-management-framework-generative-artificial-intelligence"
+      ],
+      "confidence": 0.97,
+      "notes": "This makes continued safety a lifecycle claim supported by repeatable evidence, not a property inherited forever from the initial plan review."
+    },
+    {
+      "finding_id": "F-0019",
+      "claim": "NIST SSDF expects security requirements to be identified, documented, and maintained over time, integrated through the SDLC, and applied to open-source and third-party components to prevent vulnerabilities and their recurrence.",
+      "evidence_class": "supported_claim",
+      "source_urls": [
+        "https://csrc.nist.gov/pubs/sp/800/218/final"
+      ],
+      "confidence": 0.97,
+      "notes": "This directly supports re-evaluating plan completeness when implementation or dependency inputs change."
+    },
+    {
+      "finding_id": "F-0020",
+      "claim": "SLSA source and build provenance provide evidence of how a revision or artifact was created, what inputs were used, and whether the actual result matches the project's expectations.",
+      "evidence_class": "supported_claim",
+      "source_urls": [
+        "https://slsa.dev/spec/v1.2/tracks"
+      ],
+      "confidence": 0.96,
+      "notes": "For a plan-to-code system, analogous provenance should bind plan revision, implementation revision, toolchain, dependency graph, evaluator, and produced evidence."
+    },
+    {
+      "finding_id": "F-0021",
+      "claim": "SAIF calls for proactive and continual production testing and monitoring for security and privacy regressions, plus inventory and monitoring of residual AI risk.",
+      "evidence_class": "supported_claim",
+      "source_urls": [
+        "https://www.saif.google/secure-ai-framework/controls"
+      ],
+      "confidence": 0.97,
+      "notes": "This is a direct precedent for change-triggered and periodic recertification rather than one-time release evidence."
+    },
+    {
+      "finding_id": "F-0022",
+      "claim": "OpenAI's framework says safeguard requirements must be reassessed when new evidence changes the risk landscape and pairs scalable automated tests with expert deep dives to preserve measurement validity as release cadence increases.",
+      "evidence_class": "supported_claim",
+      "source_urls": [
+        "https://openai.com/index/updating-our-preparedness-framework/"
+      ],
+      "confidence": 0.95,
+      "notes": "The pattern combines continuous regression coverage with periodic human or expert review of whether the tests remain meaningful."
+    },
+    {
+      "finding_id": "F-0023",
+      "claim": "Inference: recertification should be triggered by plan changes, risk-sensitive implementation diffs, dependency/model/tool/version changes, evaluator or harness changes, incidents or near misses, and observed drift; the impacted subset should be rerun alongside a stable regression baseline.",
+      "evidence_class": "inference",
+      "source_urls": [
+        "https://airc.nist.gov/airmf-resources/airmf/5-sec-core/",
+        "https://csrc.nist.gov/pubs/sp/800/218/final",
+        "https://slsa.dev/spec/v1.2/tracks",
+        "https://openai.com/index/updating-our-preparedness-framework/",
+        "https://www.saif.google/secure-ai-framework/controls"
+      ],
+      "confidence": 0.94,
+      "notes": "The exact trigger thresholds and affected-test selection policy require local calibration."
+    },
+    {
+      "finding_id": "F-0024",
+      "claim": "Inference: negative-space review should maintain explicit rows for unintended use, misuse, adversarial inputs, tool and identity abuse, dependency and supply-chain failure, human override, monitoring failure, and not-evaluated conditions, so absence of evidence is visible rather than mistaken for safety.",
+      "evidence_class": "inference",
+      "source_urls": [
+        "https://www.nist.gov/publications/artificial-intelligence-risk-management-framework-generative-artificial-intelligence",
+        "https://genai.owasp.org/resource/owasp-top-10-for-agentic-applications-for-2026/",
+        "https://openai.com/index/updating-our-preparedness-framework/",
+        "https://www.saif.google/secure-ai-framework/controls"
+      ],
+      "confidence": 0.92,
+      "notes": "The sources provide the risk surfaces and lifecycle concepts; the explicit not-evaluated row is a proposed assurance affordance."
+    }
+  ],
+  "competitor_standard_patterns": [
+    {
+      "pattern_id": "P-0001",
+      "pattern": "Continuous lifecycle evidence loop: govern and map intent and risk, measure with documented TEVV, then manage residual risk and repeat as context changes.",
+      "evidence_class": "supported_claim",
+      "source_urls": [
+        "https://airc.nist.gov/airmf-resources/airmf/5-sec-core/",
+        "https://www.nist.gov/publications/artificial-intelligence-risk-management-framework-generative-artificial-intelligence"
+      ],
+      "implication": "Represent plan assurance as a lifecycle state machine with evidence refresh, not as a single compile-time boolean."
+    },
+    {
+      "pattern_id": "P-0002",
+      "pattern": "Threshold-to-action governance: named capability or risk thresholds map to safeguards, reports, review authority, and release or pause decisions.",
+      "evidence_class": "supported_claim",
+      "source_urls": [
+        "https://openai.com/index/updating-our-preparedness-framework/",
+        "https://www.anthropic.com/responsible-scaling-policy",
+        "https://airc.nist.gov/docs/AI_RMF_Playbook.pdf"
+      ],
+      "implication": "A gate should show the threshold reached, the required action, the authority that decided, and the evidence supporting the decision."
+    },
+    {
+      "pattern_id": "P-0003",
+      "pattern": "Composable executable evaluation: dataset or scenario set feeds a solver or agent with tools, execution policy, and sandbox, then a scorer produces a measured result.",
+      "evidence_class": "supported_claim",
+      "source_urls": [
+        "https://inspect.aisi.org.uk/"
+      ],
+      "implication": "PlanUnits can compile to reusable scenario definitions with explicit setup, action, observation, scoring, and failure handling."
+    },
+    {
+      "pattern_id": "P-0004",
+      "pattern": "Provenance expectation matching: declare how a revision or artifact is expected to be produced, record actual inputs and process, and verify the two before consumption.",
+      "evidence_class": "supported_claim",
+      "source_urls": [
+        "https://slsa.dev/spec/v1.2/tracks",
+        "https://csrc.nist.gov/pubs/sp/800/218/final",
+        "https://www.swebench.com/original.html"
+      ],
+      "implication": "Certification evidence should be bound to immutable plan, code, dependency, evaluator, and environment identities."
+    },
+    {
+      "pattern_id": "P-0005",
+      "pattern": "Defense-in-depth assurance: instrument agent actions, red-team the system, monitor production regressions, and govern residual risk rather than trusting any single test.",
+      "evidence_class": "supported_claim",
+      "source_urls": [
+        "https://www.saif.google/secure-ai-framework/controls",
+        "https://genai.owasp.org/resource/owasp-top-10-for-agentic-applications-for-2026/",
+        "https://openai.com/index/updating-our-preparedness-framework/"
+      ],
+      "implication": "The gate should require layered evidence and expose which layer is missing or degraded."
+    },
+    {
+      "pattern_id": "P-0006",
+      "pattern": "Executable issue acceptance: evaluate a generated implementation against a reproducible environment and tests that fail before the change and pass after it.",
+      "evidence_class": "supported_claim",
+      "source_urls": [
+        "https://www.swebench.com/original.html"
+      ],
+      "implication": "Natural-language acceptance criteria should compile to executable tests or explicit human-review evidence before certification."
+    }
+  ],
+  "failure_modes": [
+    {
+      "failure_id": "FM-0001",
+      "failure_mode": "false_green_static_proof",
+      "evidence_class": "inference",
+      "source_urls": [
+        "https://airc.nist.gov/airmf-resources/airmf/5-sec-core/",
+        "https://csrc.nist.gov/pubs/sp/800/115/final",
+        "https://openai.com/index/updating-our-preparedness-framework/",
+        "https://www.swebench.com/original.html"
+      ],
+      "mitigation_or_gap": "Require executable scenario, test, or adversarial evidence for every claim that can be mechanically evaluated; label prose-only assertions as unverified."
+    },
+    {
+      "failure_id": "FM-0002",
+      "failure_mode": "conflated_nonterminal_states",
+      "evidence_class": "inference",
+      "source_urls": [
+        "https://airc.nist.gov/airmf-resources/airmf/5-sec-core/",
+        "https://airc.nist.gov/docs/AI_RMF_Playbook.pdf",
+        "https://openai.com/index/updating-our-preparedness-framework/"
+      ],
+      "mitigation_or_gap": "Keep blocked, uncertain, overridden, and certified as mutually visible states with distinct transition rules and evidence requirements."
+    },
+    {
+      "failure_id": "FM-0003",
+      "failure_mode": "untracked_drift",
+      "evidence_class": "inference",
+      "source_urls": [
+        "https://airc.nist.gov/airmf-resources/airmf/5-sec-core/",
+        "https://csrc.nist.gov/pubs/sp/800/218/final",
+        "https://slsa.dev/spec/v1.2/tracks",
+        "https://www.saif.google/secure-ai-framework/controls"
+      ],
+      "mitigation_or_gap": "Bind certification to revision and dependency provenance, monitor for changes, and trigger delta plus baseline regression evaluations."
+    },
+    {
+      "failure_id": "FM-0004",
+      "failure_mode": "narrow_negative_space",
+      "evidence_class": "supported_claim",
+      "source_urls": [
+        "https://genai.owasp.org/resource/owasp-top-10-for-agentic-applications-for-2026/",
+        "https://www.saif.google/secure-ai-framework/controls"
+      ],
+      "mitigation_or_gap": "Map agent-specific threat categories and controls to adversarial, misuse, tool, identity, supply-chain, observability, and recovery scenarios."
+    },
+    {
+      "failure_id": "FM-0005",
+      "failure_mode": "unbounded_override",
+      "evidence_class": "inference",
+      "source_urls": [
+        "https://airc.nist.gov/docs/AI_RMF_Playbook.pdf",
+        "https://openai.com/index/updating-our-preparedness-framework/",
+        "https://www.anthropic.com/responsible-scaling-policy"
+      ],
+      "mitigation_or_gap": "Require an authorized actor, explicit reason, affected scope, expiry or review date, residual-risk statement, and follow-up evidence for every override."
+    },
+    {
+      "failure_id": "FM-0006",
+      "failure_mode": "weak_acceptance_tests",
+      "evidence_class": "supported_claim",
+      "source_urls": [
+        "https://www.swebench.com/original.html"
+      ],
+      "mitigation_or_gap": "Use tests that fail on the pre-change state and pass only when the stated behavior is actually implemented; review test adequacy for false positives."
+    },
+    {
+      "failure_id": "FM-0007",
+      "failure_mode": "non_reproducible_evaluation",
+      "evidence_class": "supported_claim",
+      "source_urls": [
+        "https://slsa.dev/spec/v1.2/tracks",
+        "https://inspect.aisi.org.uk/",
+        "https://www.swebench.com/original.html"
+      ],
+      "mitigation_or_gap": "Record environment, tool, model, dependency, dataset, evaluator, sandbox, and provenance details with the result and verify expected-versus-actual inputs."
+    }
+  ],
+  "implications": [
+    {
+      "implication_id": "I-0001",
+      "implication": "PlanUnits should carry an executable acceptance contract, including required scenarios, hard and soft gates, expected outcomes, evaluator version, evidence artifacts, and recertification triggers.",
+      "evidence_class": "inference",
+      "source_urls": [
+        "https://airc.nist.gov/airmf-resources/airmf/5-sec-core/",
+        "https://csrc.nist.gov/pubs/sp/800/115/final",
+        "https://inspect.aisi.org.uk/",
+        "https://www.swebench.com/original.html"
+      ],
+      "rationale": "The sources converge on documented objectives, executable evaluation, scoring, and repeatability; the contract is the proposed plan-to-code representation of that convergence."
+    },
+    {
+      "implication_id": "I-0002",
+      "implication": "The gate UI and machine result should show a state tuple rather than a single pass bit: lifecycle status, evidence completeness, risk disposition, override status, and certification status.",
+      "evidence_class": "inference",
+      "source_urls": [
+        "https://airc.nist.gov/airmf-resources/airmf/5-sec-core/",
+        "https://airc.nist.gov/docs/AI_RMF_Playbook.pdf",
+        "https://openai.com/index/updating-our-preparedness-framework/",
+        "https://www.saif.google/secure-ai-framework/controls"
+      ],
+      "rationale": "This prevents an uncertainty, exception, or pending review from being visually or semantically conflated with certification."
+    },
+    {
+      "implication_id": "I-0003",
+      "implication": "A preflight runner should emit deterministic evidence receipts for each scenario, including inputs, observed actions, test outputs, scorer results, tool approvals, and failure disposition.",
+      "evidence_class": "inference",
+      "source_urls": [
+        "https://csrc.nist.gov/pubs/sp/800/115/final",
+        "https://inspect.aisi.org.uk/",
+        "https://slsa.dev/spec/v1.2/tracks"
+      ],
+      "rationale": "Assessment, evaluation, and provenance sources all require enough context to reproduce or audit the result rather than merely trusting an aggregate score."
+    },
+    {
+      "implication_id": "I-0004",
+      "implication": "The assurance model should include a change-impact matrix that selects delta evaluations and a stable regression baseline whenever plan, code, dependencies, tools, models, environments, or tests change.",
+      "evidence_class": "inference",
+      "source_urls": [
+        "https://airc.nist.gov/airmf-resources/airmf/5-sec-core/",
+        "https://csrc.nist.gov/pubs/sp/800/218/final",
+        "https://slsa.dev/spec/v1.2/tracks",
+        "https://www.saif.google/secure-ai-framework/controls"
+      ],
+      "rationale": "Continuous monitoring, maintained requirements, provenance, and regression controls imply that changed inputs should invalidate or narrow prior evidence."
+    },
+    {
+      "implication_id": "I-0005",
+      "implication": "Human override should be modeled as a bounded exception with authority, scope, reason, residual risk, expiry, and required follow-up, never as an automatic promotion to certified.",
+      "evidence_class": "inference",
+      "source_urls": [
+        "https://airc.nist.gov/docs/AI_RMF_Playbook.pdf",
+        "https://openai.com/index/updating-our-preparedness-framework/",
+        "https://www.anthropic.com/responsible-scaling-policy"
+      ],
+      "rationale": "The sources distinguish oversight authority and threshold decisions from the underlying evidence and continuing risk."
+    },
+    {
+      "implication_id": "I-0006",
+      "implication": "Negative-space review should be a first-class plan artifact with explicit not-evaluated rows and a required disposition for each applicable agent threat surface.",
+      "evidence_class": "inference",
+      "source_urls": [
+        "https://www.nist.gov/publications/artificial-intelligence-risk-management-framework-generative-artificial-intelligence",
+        "https://genai.owasp.org/resource/owasp-top-10-for-agentic-applications-for-2026/",
+        "https://www.saif.google/secure-ai-framework/controls"
+      ],
+      "rationale": "A visible gap is safer than an implicit assumption when threats include misuse, tool abuse, supply chain, and emergent behavior."
+    },
+    {
+      "implication_id": "I-0007",
+      "implication": "Dependency and tool provenance should be part of the certification key so a plan cannot remain certified after an unreviewed model, package, tool, evaluator, or build-input substitution.",
+      "evidence_class": "inference",
+      "source_urls": [
+        "https://csrc.nist.gov/pubs/sp/800/218/final",
+        "https://slsa.dev/spec/v1.2/tracks",
+        "https://www.saif.google/secure-ai-framework/controls"
+      ],
+      "rationale": "SSDF, SLSA, and SAIF all treat supply-chain, tooling, integrity, or regression changes as assurance-relevant inputs."
+    }
+  ],
+  "novel_ideas": [
+    {
+      "idea_id": "NI-0001",
+      "idea": "Evidence-backed assurance state machine",
+      "evidence_class": "inference",
+      "source_urls": [
+        "https://airc.nist.gov/airmf-resources/airmf/5-sec-core/",
+        "https://airc.nist.gov/docs/AI_RMF_Playbook.pdf",
+        "https://openai.com/index/updating-our-preparedness-framework/"
+      ],
+      "rationale": "Compile every gate into typed transitions among blocked, uncertain, overridden, and certified, with the transition event and evidence IDs recorded."
+    },
+    {
+      "idea_id": "NI-0002",
+      "idea": "Negative-space coverage heatmap",
+      "evidence_class": "inference",
+      "source_urls": [
+        "https://genai.owasp.org/resource/owasp-top-10-for-agentic-applications-for-2026/",
+        "https://www.saif.google/secure-ai-framework/controls",
+        "https://www.nist.gov/publications/artificial-intelligence-risk-management-framework-generative-artificial-intelligence"
+      ],
+      "rationale": "Render each agent threat surface against intended use, misuse, adversarial scenario, control, test result, and residual-risk disposition, including an explicit not-evaluated color."
+    },
+    {
+      "idea_id": "NI-0003",
+      "idea": "Two-phase certification with local executable preflight and independent adversarial challenge",
+      "evidence_class": "inference",
+      "source_urls": [
+        "https://csrc.nist.gov/pubs/sp/800/115/final",
+        "https://inspect.aisi.org.uk/",
+        "https://openai.com/index/updating-our-preparedness-framework/",
+        "https://www.anthropic.com/responsible-scaling-policy"
+      ],
+      "rationale": "Use deterministic repository and scenario tests for ordinary acceptance, then require a separate adversarial or independent review lane before high-confidence certification."
+    },
+    {
+      "idea_id": "NI-0004",
+      "idea": "Drift-triggered delta certification",
+      "evidence_class": "inference",
+      "source_urls": [
+        "https://airc.nist.gov/airmf-resources/airmf/5-sec-core/",
+        "https://csrc.nist.gov/pubs/sp/800/218/final",
+        "https://slsa.dev/spec/v1.2/tracks",
+        "https://www.saif.google/secure-ai-framework/controls"
+      ],
+      "rationale": "Use provenance and change-impact analysis to run only the affected scenario slice plus a fixed regression sentinel set, while invalidating certification if required evidence is missing."
+    }
+  ],
+  "unresolved_questions": [
+    {
+      "question_id": "UQ-0001",
+      "question": "What numeric pass thresholds, risk weights, and change-impact budgets are appropriate for PuppetMaster's own plan-to-code assurance context?",
+      "evidence_class": "no_evidence",
+      "source_urls": []
+    }
+  ],
+  "self_attestation": {
+    "current_web_research_performed": true,
+    "official_or_primary_sources_first": true,
+    "direct_urls_only": true,
+    "source_count_contract_checked": true,
+    "supported_inference_no_evidence_labels_present": true,
+    "no_fabricated_claims": true,
+    "no_long_quotations": true,
+    "topic_and_refs_binding_verified": true,
+    "exact_attempt_id_verified": true,
+    "fresh_direct_terminal_contract_acknowledged": true,
+    "fresh_current_public_web_research_redone": true,
+    "canonical_agent_path_is_only_leaf_known_identity": true,
+    "native_identity_deferred_to_controller_receipt_and_capture": true,
+    "prior_attempt_result_bodies_and_peer_outputs_not_read": true,
+    "leaf_local_schema_conformance_check_passed_before_final_write": true,
+    "exact_schema_key_set_verified": true,
+    "source_registry_unique_and_complete": true,
+    "source_registry_completed_before_claim_emission": true,
+    "activation_core_and_authorization_verified": true,
+    "blocked_prelaunch_intent_treated_as_lineage_only": true,
+    "result_required_before_pmr1": true,
+    "pmr1_not_returned_before_result_write": true
+  }
+}

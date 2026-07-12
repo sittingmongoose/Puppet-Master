@@ -1,0 +1,1055 @@
+{
+  "assignment_id": "A005M15-000172-INTEGRATED-MACRO15-1BF0967E88A5-0003",
+  "attempt_id": "attempt-0015",
+  "audit_id": "audit-20260710-005-plan-assurance-model-lanes-fresh-agent-exhaustive",
+  "coverage": {
+    "all_micro_windows_reviewed": true,
+    "all_source_lines_reviewed": true,
+    "all_source_units_accounted": true,
+    "both_exact_and_adversarial_lenses_applied": true,
+    "dimensions_checked": [
+      "behavior",
+      "capabilities",
+      "inputs_outputs",
+      "contracts",
+      "states_transitions",
+      "authority",
+      "ownership",
+      "consumers",
+      "gui_truth",
+      "failures_recovery",
+      "security_privacy",
+      "propagation",
+      "operations",
+      "scale_performance",
+      "compatibility_migration",
+      "acceptance_oracles",
+      "builder_discretion",
+      "ambiguity_unknowns",
+      "missing_callers_consumers",
+      "invalid_states_transitions",
+      "concurrency_races",
+      "partial_failure",
+      "recovery_rollback",
+      "authority_boundaries",
+      "privacy_data_lifecycle",
+      "untrusted_inputs",
+      "gui_misleading_states",
+      "offline_network_loss",
+      "scale_limits",
+      "accessibility",
+      "localization",
+      "observability_support",
+      "destructive_actions",
+      "cross_document_seams",
+      "test_falsifiability",
+      "unknown_unknowns"
+    ]
+  },
+  "items": [
+    {
+      "builder_discretion": false,
+      "confidence": 0.96,
+      "dimensions": [
+        "contracts",
+        "states_transitions",
+        "authority",
+        "ownership",
+        "failures_recovery",
+        "scale_performance",
+        "acceptance_oracles",
+        "ambiguity_unknowns",
+        "concurrency_races",
+        "partial_failure",
+        "recovery_rollback",
+        "authority_boundaries",
+        "observability_support",
+        "cross_document_seams",
+        "test_falsifiability"
+      ],
+      "evidence": [
+        {
+          "exact_quote": "canonical_text: The crew message board is the normative subagent-collaboration surface; BrainStorm, Crew, and Assistant projections",
+          "line_end": 7231,
+          "line_start": 7231,
+          "path": "Plans/orchestrator-subagent-integration.md",
+          "source_sha256": "2bde7668eabbbcef6d6f10401afba7c7b841e220af3ef0db6fef035d11e6844a"
+        },
+        {
+          "exact_quote": "canonical_text: Orchestrator consumes canonical runtime fields and event names from shared contracts and must not revive PuppetMasterEvent::*,",
+          "line_end": 7289,
+          "line_start": 7289,
+          "path": "Plans/orchestrator-subagent-integration.md",
+          "source_sha256": "2bde7668eabbbcef6d6f10401afba7c7b841e220af3ef0db6fef035d11e6844a"
+        },
+        {
+          "exact_quote": "canonical_text: Scheduling is graph-native through runnable graph nodes, DAG readiness, scored ready-set selection, runtime-selection,",
+          "line_end": 7343,
+          "line_start": 7343,
+          "path": "Plans/orchestrator-subagent-integration.md",
+          "source_sha256": "2bde7668eabbbcef6d6f10401afba7c7b841e220af3ef0db6fef035d11e6844a"
+        },
+        {
+          "exact_quote": "canonical_text: Runtime identity carry-through preserves requested/effective account and role disclosure, tool_use_id, execution_unit_context,",
+          "line_end": 7412,
+          "line_start": 7412,
+          "path": "Plans/orchestrator-subagent-integration.md",
+          "source_sha256": "2bde7668eabbbcef6d6f10401afba7c7b841e220af3ef0db6fef035d11e6844a"
+        },
+        {
+          "exact_quote": "canonical_text: Worktree allocation and SCM behavior are package/seam/lane based with contamination quarantine, restore-before-reuse,",
+          "line_end": 7466,
+          "line_start": 7466,
+          "path": "Plans/orchestrator-subagent-integration.md",
+          "source_sha256": "2bde7668eabbbcef6d6f10401afba7c7b841e220af3ef0db6fef035d11e6844a"
+        },
+        {
+          "exact_quote": "canonical_text: Delegated work and memory loops remain parent-owned; fresh iteration loops may read plan, progress, reusable-pattern",
+          "line_end": 7523,
+          "line_start": 7523,
+          "path": "Plans/orchestrator-subagent-integration.md",
+          "source_sha256": "2bde7668eabbbcef6d6f10401afba7c7b841e220af3ef0db6fef035d11e6844a"
+        }
+      ],
+      "gap_kind": "underspecified_cross_surface_runtime_contract",
+      "impact": "Implementers cannot derive deterministic board routing, ready-set selection, scoped-override precedence and expiry, worktree quarantine recovery, or parent-memory retention behavior. Independent builders can therefore produce incompatible state machines, stale authority, races, or unrecoverable contaminated lanes while still satisfying the prose.",
+      "item_id": "A005M15-I001",
+      "item_type": "gap",
+      "severity": "high",
+      "source_unit_refs": [
+        "PLANUNIT:OSI-016",
+        "PLANUNIT:OSI-017",
+        "PLANUNIT:OSI-018",
+        "PLANUNIT:OSI-019",
+        "PLANUNIT:OSI-020",
+        "PLANUNIT:OSI-021",
+        "SEMANTIC:PLANUNIT:OSI-016",
+        "SEMANTIC:PLANUNIT:OSI-017",
+        "SEMANTIC:PLANUNIT:OSI-018",
+        "SEMANTIC:PLANUNIT:OSI-019",
+        "SEMANTIC:PLANUNIT:OSI-020",
+        "SEMANTIC:PLANUNIT:OSI-021"
+      ],
+      "statement": "The window assigns high-level ownership and names required runtime concepts, but it does not specify the schemas, ordering rules, override precedence and clearing transitions, scheduler tie-breaking/fairness, quarantine lease lifecycle, or bounded delegated-memory lifecycle needed to make those concepts executable and falsifiable.",
+      "title": "Core collaboration and runtime policies lack executable lifecycle semantics"
+    },
+    {
+      "builder_discretion": false,
+      "confidence": 0.95,
+      "dimensions": [
+        "inputs_outputs",
+        "contracts",
+        "states_transitions",
+        "authority",
+        "consumers",
+        "gui_truth",
+        "failures_recovery",
+        "security_privacy",
+        "acceptance_oracles",
+        "ambiguity_unknowns",
+        "invalid_states_transitions",
+        "partial_failure",
+        "authority_boundaries",
+        "untrusted_inputs",
+        "gui_misleading_states",
+        "destructive_actions",
+        "cross_document_seams",
+        "test_falsifiability"
+      ],
+      "evidence": [
+        {
+          "exact_quote": "canonical_text: 'Provider and permission boundaries stay explicit: A2A references are adapter-only, and permission consumers",
+          "line_end": 7579,
+          "line_start": 7579,
+          "path": "Plans/orchestrator-subagent-integration.md",
+          "source_sha256": "2bde7668eabbbcef6d6f10401afba7c7b841e220af3ef0db6fef035d11e6844a"
+        },
+        {
+          "exact_quote": "canonical_text: Packet artifacts are useful preflight planning state but are not faithful-emission-safe until packet-planning",
+          "line_end": 7638,
+          "line_start": 7638,
+          "path": "Plans/orchestrator-subagent-integration.md",
+          "source_sha256": "2bde7668eabbbcef6d6f10401afba7c7b841e220af3ef0db6fef035d11e6844a"
+        },
+        {
+          "exact_quote": "canonical_text: The six-pass owner-doc audit posture treats remaining issues as exact owner-doc structural mismatch and target-level",
+          "line_end": 7689,
+          "line_start": 7689,
+          "path": "Plans/orchestrator-subagent-integration.md",
+          "source_sha256": "2bde7668eabbbcef6d6f10401afba7c7b841e220af3ef0db6fef035d11e6844a"
+        },
+        {
+          "exact_quote": "canonical_text: non_reversible is the canonical destructive action taxonomy for durable /live mutation; FinalGUISpec, page-spec,",
+          "line_end": 7743,
+          "line_start": 7743,
+          "path": "Plans/orchestrator-subagent-integration.md",
+          "source_sha256": "2bde7668eabbbcef6d6f10401afba7c7b841e220af3ef0db6fef035d11e6844a"
+        },
+        {
+          "exact_quote": "canonical_text: ActiveAgent, crew structs, and coordination payloads key first on run/thread/parent-child/node/attempt/package/seam/lane",
+          "line_end": 7800,
+          "line_start": 7800,
+          "path": "Plans/orchestrator-subagent-integration.md",
+          "source_sha256": "2bde7668eabbbcef6d6f10401afba7c7b841e220af3ef0db6fef035d11e6844a"
+        },
+        {
+          "exact_quote": "canonical_text: Orchestrator action metadata is command-owner bound to UI_Command_Catalog, including palette-visible, shortcut-worthy,",
+          "line_end": 7851,
+          "line_start": 7851,
+          "path": "Plans/orchestrator-subagent-integration.md",
+          "source_sha256": "2bde7668eabbbcef6d6f10401afba7c7b841e220af3ef0db6fef035d11e6844a"
+        },
+        {
+          "exact_quote": "canonical_text: tier_type, tier_id, title/description, and optional parent labels are projection-only grouping helpers and",
+          "line_end": 7909,
+          "line_start": 7909,
+          "path": "Plans/orchestrator-subagent-integration.md",
+          "source_sha256": "2bde7668eabbbcef6d6f10401afba7c7b841e220af3ef0db6fef035d11e6844a"
+        }
+      ],
+      "gap_kind": "missing_projection_gate_and_destructive_action_oracles",
+      "impact": "Permission and packet consumers can disagree on blocked or ready state, identity collisions can route commands to the wrong target, and destructive bulk actions can be exposed without a deterministic confirmation, authorization, and failure contract. Projection-only labels may also appear authoritative when runtime identity is missing or stale.",
+      "item_id": "A005M15-I002",
+      "item_type": "gap",
+      "severity": "high",
+      "source_unit_refs": [
+        "PLANUNIT:OSI-022",
+        "PLANUNIT:OSI-023",
+        "PLANUNIT:OSI-024",
+        "PLANUNIT:OSI-025",
+        "PLANUNIT:OSI-026",
+        "PLANUNIT:OSI-027",
+        "PLANUNIT:OSI-028",
+        "SEMANTIC:PLANUNIT:OSI-022",
+        "SEMANTIC:PLANUNIT:OSI-023",
+        "SEMANTIC:PLANUNIT:OSI-024",
+        "SEMANTIC:PLANUNIT:OSI-025",
+        "SEMANTIC:PLANUNIT:OSI-026",
+        "SEMANTIC:PLANUNIT:OSI-027",
+        "SEMANTIC:PLANUNIT:OSI-028"
+      ],
+      "statement": "The window names permission projections, packet-fidelity gating, destructive-action vocabulary, coordination identity, command metadata, and tier-view boundaries without defining event payloads, gate transitions, conflict precedence, missing-identity behavior, bulk authorization composition, destructive confirmation, or UI stale-state treatment.",
+      "title": "Projection, gating, and destructive GUI policy remain behaviorally ambiguous"
+    },
+    {
+      "builder_discretion": false,
+      "confidence": 0.97,
+      "dimensions": [
+        "behavior",
+        "inputs_outputs",
+        "contracts",
+        "states_transitions",
+        "failures_recovery",
+        "security_privacy",
+        "propagation",
+        "operations",
+        "scale_performance",
+        "acceptance_oracles",
+        "ambiguity_unknowns",
+        "concurrency_races",
+        "partial_failure",
+        "recovery_rollback",
+        "privacy_data_lifecycle",
+        "untrusted_inputs",
+        "offline_network_loss",
+        "observability_support",
+        "test_falsifiability"
+      ],
+      "evidence": [
+        {
+          "exact_quote": "canonical_text: Each failed node attempt emits a structured-attempt-handoff receipt describing what happened, what changed,",
+          "line_end": 7963,
+          "line_start": 7963,
+          "path": "Plans/orchestrator-subagent-integration.md",
+          "source_sha256": "2bde7668eabbbcef6d6f10401afba7c7b841e220af3ef0db6fef035d11e6844a"
+        },
+        {
+          "exact_quote": "canonical_text: Parallelism uses package/seam lane-pool capacity; stale per-thread queues, per-provider caps, parallel subtasks,",
+          "line_end": 8017,
+          "line_start": 8017,
+          "path": "Plans/orchestrator-subagent-integration.md",
+          "source_sha256": "2bde7668eabbbcef6d6f10401afba7c7b841e220af3ef0db6fef035d11e6844a"
+        },
+        {
+          "exact_quote": "canonical_text: Rewrite alignment keeps Providers emitting normalized streaming events, centralizes tool gating in the tool",
+          "line_end": 8069,
+          "line_start": 8069,
+          "path": "Plans/orchestrator-subagent-integration.md",
+          "source_sha256": "2bde7668eabbbcef6d6f10401afba7c7b841e220af3ef0db6fef035d11e6844a"
+        },
+        {
+          "exact_quote": "canonical_text: Rewrite persistence emits canonical seglog events for tier start/end, iteration start/end, verification results,",
+          "line_end": 8122,
+          "line_start": 8122,
+          "path": "Plans/orchestrator-subagent-integration.md",
+          "source_sha256": "2bde7668eabbbcef6d6f10401afba7c7b841e220af3ef0db6fef035d11e6844a"
+        },
+        {
+          "exact_quote": "canonical_text: At run start the orchestrator builds execution config by merging GUI config defaults, interview output config,",
+          "line_end": 8178,
+          "line_start": 8178,
+          "path": "Plans/orchestrator-subagent-integration.md",
+          "source_sha256": "2bde7668eabbbcef6d6f10401afba7c7b841e220af3ef0db6fef035d11e6844a"
+        },
+        {
+          "exact_quote": "canonical_text: The orchestrator loads .puppet-master/interview/test-strategy.json when present, merges items[].criterion",
+          "line_end": 8232,
+          "line_start": 8232,
+          "path": "Plans/orchestrator-subagent-integration.md",
+          "source_sha256": "2bde7668eabbbcef6d6f10401afba7c7b841e220af3ef0db6fef035d11e6844a"
+        },
+        {
+          "exact_quote": "canonical_text: Canonical orchestration identity is Feature Seam, Work Package, Node, graph generation lineage, and lane/worktree",
+          "line_end": 8284,
+          "line_start": 8284,
+          "path": "Plans/orchestrator-subagent-integration.md",
+          "source_sha256": "2bde7668eabbbcef6d6f10401afba7c7b841e220af3ef0db6fef035d11e6844a"
+        }
+      ],
+      "gap_kind": "missing_transactionality_and_untrusted_configuration_contract",
+      "impact": "Retries can route inconsistently, lane capacity can oversubscribe or starve work, replay can duplicate effects, and seglog/redb can diverge after a partial write. WARN-only handling of invalid test-strategy input can silently remove acceptance coverage or inject untrusted prompt material without a required degraded-state signal.",
+      "item_id": "A005M15-I003",
+      "item_type": "gap",
+      "severity": "high",
+      "source_unit_refs": [
+        "PLANUNIT:OSI-029",
+        "PLANUNIT:OSI-030",
+        "PLANUNIT:OSI-031",
+        "PLANUNIT:OSI-032",
+        "PLANUNIT:OSI-033",
+        "PLANUNIT:OSI-034",
+        "PLANUNIT:OSI-035",
+        "SEMANTIC:PLANUNIT:OSI-029",
+        "SEMANTIC:PLANUNIT:OSI-030",
+        "SEMANTIC:PLANUNIT:OSI-031",
+        "SEMANTIC:PLANUNIT:OSI-032",
+        "SEMANTIC:PLANUNIT:OSI-033",
+        "SEMANTIC:PLANUNIT:OSI-034",
+        "SEMANTIC:PLANUNIT:OSI-035"
+      ],
+      "statement": "The attempt, capacity, replay, persistence, config-merge, test-strategy, and ontology requirements omit receipt schemas and idempotency, fairness and hard-limit composition, event ordering, seglog/redb atomicity and reconciliation, null/delete merge behavior, invalid-config outcomes, and untrusted-file sanitization.",
+      "title": "Retry, replay, persistence, and configuration flows lack transaction boundaries"
+    },
+    {
+      "builder_discretion": false,
+      "confidence": 0.94,
+      "dimensions": [
+        "capabilities",
+        "inputs_outputs",
+        "contracts",
+        "states_transitions",
+        "authority",
+        "ownership",
+        "failures_recovery",
+        "security_privacy",
+        "operations",
+        "compatibility_migration",
+        "acceptance_oracles",
+        "ambiguity_unknowns",
+        "invalid_states_transitions",
+        "concurrency_races",
+        "partial_failure",
+        "recovery_rollback",
+        "authority_boundaries",
+        "privacy_data_lifecycle",
+        "untrusted_inputs",
+        "offline_network_loss",
+        "cross_document_seams",
+        "test_falsifiability"
+      ],
+      "evidence": [
+        {
+          "exact_quote": "canonical_text: Worker strategy is graph-owned; node execution selects from provider-entry/account-or-profile models, freezes",
+          "line_end": 8344,
+          "line_start": 8344,
+          "path": "Plans/orchestrator-subagent-integration.md",
+          "source_sha256": "2bde7668eabbbcef6d6f10401afba7c7b841e220af3ef0db6fef035d11e6844a"
+        },
+        {
+          "exact_quote": "canonical_text: Orchestrator may launch shared investigations for build, test, environment setup, or runtime verification",
+          "line_end": 8401,
+          "line_start": 8401,
+          "path": "Plans/orchestrator-subagent-integration.md",
+          "source_sha256": "2bde7668eabbbcef6d6f10401afba7c7b841e220af3ef0db6fef035d11e6844a"
+        },
+        {
+          "exact_quote": "canonical_text: Project context detection preserves the example model tokens ProjectContext, DetectedLanguage, ProjectDomain,",
+          "line_end": 8454,
+          "line_start": 8454,
+          "path": "Plans/orchestrator-subagent-integration.md",
+          "source_sha256": "2bde7668eabbbcef6d6f10401afba7c7b841e220af3ef0db6fef035d11e6844a"
+        },
+        {
+          "exact_quote": "canonical_text: Subagent selection preserves requested_account_id, effective_account_id, requested_account_binding, requested_account_policy,",
+          "line_end": 8517,
+          "line_start": 8517,
+          "path": "Plans/orchestrator-subagent-integration.md",
+          "source_sha256": "2bde7668eabbbcef6d6f10401afba7c7b841e220af3ef0db6fef035d11e6844a"
+        },
+        {
+          "exact_quote": "canonical_text: Integration with Orchestrator preserves that the controlling AI role is Overseer, with canonical definition",
+          "line_end": 8572,
+          "line_start": 8572,
+          "path": "Plans/orchestrator-subagent-integration.md",
+          "source_sha256": "2bde7668eabbbcef6d6f10401afba7c7b841e220af3ef0db6fef035d11e6844a"
+        },
+        {
+          "exact_quote": "  Orchestrator initialization preserves selector and manager example wiring: subagent_selector and subagent_manager are initialized from detected project context and workspace paths, with SubagentManager lineage tied to the interview plan.",
+          "line_end": 8623,
+          "line_start": 8623,
+          "path": "Plans/orchestrator-subagent-integration.md",
+          "source_sha256": "2bde7668eabbbcef6d6f10401afba7c7b841e220af3ef0db6fef035d11e6844a"
+        },
+        {
+          "exact_quote": "  Tier execution and subagent selection consume an ExecutionUnitContext compatibility example built from the same frozen tier-start config snapshot used by validation and persistence, while normative execution_unit_context fields, nullability, enum values, and schema_version are owned by Plans/Executor_Protocol.md and Plans/execution_unit_context.schema.json.",
+          "line_end": 8678,
+          "line_start": 8678,
+          "path": "Plans/orchestrator-subagent-integration.md",
+          "source_sha256": "2bde7668eabbbcef6d6f10401afba7c7b841e220af3ef0db6fef035d11e6844a"
+        }
+      ],
+      "gap_kind": "missing_selection_fallback_lock_and_detection_trust_rules",
+      "impact": "Provider loss, invalid frozen snapshots, or detection uncertainty can select an unauthorized or unsuitable worker. Shared investigations can race mutations or leak evidence, and identity joins or initialization can fail without a defined blocked state, cleanup, recovery path, or user-visible disclosure.",
+      "item_id": "A005M15-I004",
+      "item_type": "gap",
+      "severity": "high",
+      "source_unit_refs": [
+        "PLANUNIT:OSI-036",
+        "PLANUNIT:OSI-037",
+        "PLANUNIT:OSI-038",
+        "PLANUNIT:OSI-039",
+        "PLANUNIT:OSI-040",
+        "PLANUNIT:OSI-041",
+        "PLANUNIT:OSI-042",
+        "SEMANTIC:PLANUNIT:OSI-036",
+        "SEMANTIC:PLANUNIT:OSI-037",
+        "SEMANTIC:PLANUNIT:OSI-038",
+        "SEMANTIC:PLANUNIT:OSI-039",
+        "SEMANTIC:PLANUNIT:OSI-040",
+        "SEMANTIC:PLANUNIT:OSI-041",
+        "SEMANTIC:PLANUNIT:OSI-042"
+      ],
+      "statement": "Graph ownership and shared-contract boundaries are stated, but the window does not define worker selection scoring and fallback, frozen-snapshot invalidation, mutation-investigation lease semantics, detection confidence and unknown handling, evidence redaction, identity-join failure, or selector/manager initialization recovery.",
+      "title": "Worker selection and investigation orchestration omit trust and recovery rules"
+    },
+    {
+      "builder_discretion": false,
+      "confidence": 0.98,
+      "dimensions": [
+        "behavior",
+        "inputs_outputs",
+        "contracts",
+        "states_transitions",
+        "failures_recovery",
+        "security_privacy",
+        "propagation",
+        "operations",
+        "scale_performance",
+        "acceptance_oracles",
+        "ambiguity_unknowns",
+        "invalid_states_transitions",
+        "concurrency_races",
+        "partial_failure",
+        "recovery_rollback",
+        "privacy_data_lifecycle",
+        "untrusted_inputs",
+        "observability_support",
+        "cross_document_seams",
+        "test_falsifiability"
+      ],
+      "evidence": [
+        {
+          "exact_quote": "  Subagent selection controls must use registry-backed selection and validation, including overrides, disabled lists, and required lists; subagent names must not be hardcoded and invalid override, disabled, or required entries must be rejected or filtered as specified by the source span.",
+          "line_end": 8744,
+          "line_start": 8744,
+          "path": "Plans/orchestrator-subagent-integration.md",
+          "source_sha256": "2bde7668eabbbcef6d6f10401afba7c7b841e220af3ef0db6fef035d11e6844a"
+        },
+        {
+          "exact_quote": "  Subagent execution must resolve platform and model for the tier, fetch coordination context, and register each selected agent in coordination state with identity, platform, node, worktree, file, operation, and timestamp fields before execution.",
+          "line_end": 8806,
+          "line_start": 8806,
+          "path": "Plans/orchestrator-subagent-integration.md",
+          "source_sha256": "2bde7668eabbbcef6d6f10401afba7c7b841e220af3ef0db6fef035d11e6844a"
+        },
+        {
+          "exact_quote": "  Subagent execution preserves both configured parallel and sequential lifecycle paths, including async dispatch, join_all result propagation, sequential execute_subagent calls, and post-execution unregister_agent cleanup.",
+          "line_end": 8865,
+          "line_start": 8865,
+          "path": "Plans/orchestrator-subagent-integration.md",
+          "source_sha256": "2bde7668eabbbcef6d6f10401afba7c7b841e220af3ef0db6fef035d11e6844a"
+        },
+        {
+          "exact_quote": "  Single-subagent execution builds the invocation, marks the agent operation active, executes through the platform runner with the selected subagent, extracts file operations from output, updates coordination files, and returns SubagentOutput.",
+          "line_end": 8919,
+          "line_start": 8919,
+          "path": "Plans/orchestrator-subagent-integration.md",
+          "source_sha256": "2bde7668eabbbcef6d6f10401afba7c7b841e220af3ef0db6fef035d11e6844a"
+        },
+        {
+          "exact_quote": "  Platform-specific subagent invocation formatting must be delegated to platform_specs::get_subagent_invocation_format, then filled with subagent, task, context, and coordination values without local platform match statements or duplicated format strings.",
+          "line_end": 8977,
+          "line_start": 8977,
+          "path": "Plans/orchestrator-subagent-integration.md",
+          "source_sha256": "2bde7668eabbbcef6d6f10401afba7c7b841e220af3ef0db6fef035d11e6844a"
+        },
+        {
+          "exact_quote": "  Subagent output evidence includes extracting file operations from findings file fields and from task_report, downstream_context, or findings text so coordination state can record files touched by a subagent.",
+          "line_end": 9037,
+          "line_start": 9037,
+          "path": "Plans/orchestrator-subagent-integration.md",
+          "source_sha256": "2bde7668eabbbcef6d6f10401afba7c7b841e220af3ef0db6fef035d11e6844a"
+        }
+      ],
+      "gap_kind": "missing_execution_cleanup_and_untrusted_output_normalization",
+      "impact": "A dispatch or update error can leave agents permanently registered or active, parallel failures can produce inconsistent cleanup, and unescaped invocation values can alter provider commands. Text-derived file paths can create false coordination conflicts, expose sensitive paths, or misreport mutation scope.",
+      "item_id": "A005M15-I005",
+      "item_type": "gap",
+      "severity": "high",
+      "source_unit_refs": [
+        "PLANUNIT:OSI-043",
+        "PLANUNIT:OSI-044",
+        "PLANUNIT:OSI-045",
+        "PLANUNIT:OSI-046",
+        "PLANUNIT:OSI-047",
+        "PLANUNIT:OSI-048",
+        "SEMANTIC:PLANUNIT:OSI-043",
+        "SEMANTIC:PLANUNIT:OSI-044",
+        "SEMANTIC:PLANUNIT:OSI-045",
+        "SEMANTIC:PLANUNIT:OSI-046",
+        "SEMANTIC:PLANUNIT:OSI-047",
+        "SEMANTIC:PLANUNIT:OSI-048"
+      ],
+      "statement": "Registry use and DRY formatting are explicit, but required-versus-disabled conflict resolution, empty selection behavior, registration idempotency, finally-style unregister semantics, cancellation and partial-result handling, placeholder escaping, output path normalization, and structured-over-text precedence are not defined.",
+      "title": "Subagent execution lifecycle can leak coordination state and trust parsed output"
+    },
+    {
+      "builder_discretion": false,
+      "confidence": 0.97,
+      "dimensions": [
+        "contracts",
+        "states_transitions",
+        "authority",
+        "ownership",
+        "consumers",
+        "gui_truth",
+        "failures_recovery",
+        "security_privacy",
+        "propagation",
+        "operations",
+        "acceptance_oracles",
+        "ambiguity_unknowns",
+        "invalid_states_transitions",
+        "concurrency_races",
+        "partial_failure",
+        "recovery_rollback",
+        "authority_boundaries",
+        "privacy_data_lifecycle",
+        "gui_misleading_states",
+        "observability_support",
+        "destructive_actions",
+        "cross_document_seams",
+        "test_falsifiability"
+      ],
+      "evidence": [
+        {
+          "exact_quote": "  Subagent orchestration failure handling preserves fallbacks and best-effort behavior: selection failures warn and fall back or skip, coordination registration/update failures warn and continue, and subagent execution failures log errors and continue with the next subagent or fail a critical tier.",
+          "line_end": 9091,
+          "line_start": 9091,
+          "path": "Plans/orchestrator-subagent-integration.md",
+          "source_sha256": "2bde7668eabbbcef6d6f10401afba7c7b841e220af3ef0db6fef035d11e6844a"
+        },
+        {
+          "exact_quote": "  Orchestrator consumes the Executor-owned execution_unit_context contract and schema for worker spawn, recovery, remediation, coordination, and related runtime inspection anchors; TierContext and tier_id remain derived or compatibility-only selection/decomposition vocabulary and are never canonical runtime state.",
+          "line_end": 9148,
+          "line_start": 9148,
+          "path": "Plans/orchestrator-subagent-integration.md",
+          "source_sha256": "2bde7668eabbbcef6d6f10401afba7c7b841e220af3ef0db6fef035d11e6844a"
+        },
+        {
+          "exact_quote": "  UI inspection anchors to execution_unit_context as a consumer of canonical runtime context rather than to TierContext or tier_id runtime canon.",
+          "line_end": 9214,
+          "line_start": 9214,
+          "path": "Plans/orchestrator-subagent-integration.md",
+          "source_sha256": "2bde7668eabbbcef6d6f10401afba7c7b841e220af3ef0db6fef035d11e6844a"
+        },
+        {
+          "exact_quote": "  Each execution_unit_context receives a lane-managed worktree lease; package or seam reuse is allowed only when lineage matches the lane assignment and no contamination guard is active, while contaminated worktrees are quarantined and cleanup waits for archive, receipt, and recovery checks instead of age alone.",
+          "line_end": 9264,
+          "line_start": 9264,
+          "path": "Plans/orchestrator-subagent-integration.md",
+          "source_sha256": "2bde7668eabbbcef6d6f10401afba7c7b841e220af3ef0db6fef035d11e6844a"
+        },
+        {
+          "exact_quote": "  scm_lineage_snapshot is a projector-owned Orchestrator consumer snapshot assembled from canonical runtime, storage, and Source Control records and preserving the full listed field set, including project/repo/worktree identity, worktree state, commit/compare fields, owner lineage, safe-point fields, active git operation, last commit summary, and pr_ref.",
+          "line_end": 9322,
+          "line_start": 9322,
+          "path": "Plans/orchestrator-subagent-integration.md",
+          "source_sha256": "2bde7668eabbbcef6d6f10401afba7c7b841e220af3ef0db6fef035d11e6844a"
+        },
+        {
+          "exact_quote": "  Progress surfaces, graph/detail views, History rows, blocked cards, and run receipts consume scm_lineage_snapshot projection data for explicit worktree status values while mutation authority, safe-point restore rules, compare target calculation, and persisted SCM evidence remain with their owner docs.",
+          "line_end": 9382,
+          "line_start": 9382,
+          "path": "Plans/orchestrator-subagent-integration.md",
+          "source_sha256": "2bde7668eabbbcef6d6f10401afba7c7b841e220af3ef0db6fef035d11e6844a"
+        }
+      ],
+      "gap_kind": "missing_degraded_state_lease_protocol_and_projection_freshness",
+      "impact": "Best-effort continuation can conceal loss of coordination, and an undefined criticality rule can produce inconsistent stop behavior. Lease races or crash recovery can allow reuse of contaminated worktrees, while stale or sensitive SCM snapshots can mislead users about mutation safety and expose local paths or repository details.",
+      "item_id": "A005M15-I006",
+      "item_type": "gap",
+      "severity": "high",
+      "source_unit_refs": [
+        "PLANUNIT:OSI-049",
+        "PLANUNIT:OSI-050",
+        "PLANUNIT:OSI-051",
+        "PLANUNIT:OSI-052",
+        "PLANUNIT:OSI-053",
+        "PLANUNIT:OSI-054",
+        "SEMANTIC:PLANUNIT:OSI-049",
+        "SEMANTIC:PLANUNIT:OSI-050",
+        "SEMANTIC:PLANUNIT:OSI-051",
+        "SEMANTIC:PLANUNIT:OSI-052",
+        "SEMANTIC:PLANUNIT:OSI-053",
+        "SEMANTIC:PLANUNIT:OSI-054"
+      ],
+      "statement": "Shared context ownership and secret exclusions are explicit, but fallback versus skip policy, criticality, degraded coordination visibility, lease acquire/renew/release and crash recovery, snapshot version/freshness/atomicity, UI redaction, and stale/unknown status presentation remain unspecified.",
+      "title": "Failure continuation, worktree leases, and SCM projections lack safe degraded states"
+    },
+    {
+      "builder_discretion": false,
+      "confidence": 0.96,
+      "dimensions": [
+        "behavior",
+        "capabilities",
+        "inputs_outputs",
+        "contracts",
+        "states_transitions",
+        "failures_recovery",
+        "propagation",
+        "operations",
+        "compatibility_migration",
+        "acceptance_oracles",
+        "ambiguity_unknowns",
+        "invalid_states_transitions",
+        "concurrency_races",
+        "partial_failure",
+        "recovery_rollback",
+        "offline_network_loss",
+        "observability_support",
+        "cross_document_seams",
+        "test_falsifiability",
+        "unknown_unknowns"
+      ],
+      "evidence": [
+        {
+          "exact_quote": "  TierContext, tier_id, TierType, Tiers, Phase-Task-Subtask runtime canon, allowed_actions[], reason_code, recovery_options[], and approve_continue are retirement targets; this subsection is retirement-only and leaves sibling runtime-context and worktree-allocation rules canonical.",
+          "line_end": 9443,
+          "line_start": 9443,
+          "path": "Plans/orchestrator-subagent-integration.md",
+          "source_sha256": "2bde7668eabbbcef6d6f10401afba7c7b841e220af3ef0db6fef035d11e6844a"
+        },
+        {
+          "exact_quote": "  Child timeout, budget, and /time supervision reuse the corrected Plans/Run_Modes.md kill/done /outcome taxonomy: pre-dispatch budget denial is kill.budget_exceeded, post-response overrun after durable usage recording is done.budget_exceeded, and child effective authority must not invent a local stop-state dialect.",
+          "line_end": 9503,
+          "line_start": 9503,
+          "path": "Plans/orchestrator-subagent-integration.md",
+          "source_sha256": "2bde7668eabbbcef6d6f10401afba7c7b841e220af3ef0db6fef035d11e6844a"
+        },
+        {
+          "exact_quote": "  The child timeout envelope carries timeout_ms, request identity, /response identity, parent remaining-budget snapshot, and the clamped child deadline; /propagation records child timeout clamping, and shell-isolation is contract-level behavior owned by each child execution boundary.",
+          "line_end": 9558,
+          "line_start": 9558,
+          "path": "Plans/orchestrator-subagent-integration.md",
+          "source_sha256": "2bde7668eabbbcef6d6f10401afba7c7b841e220af3ef0db6fef035d11e6844a"
+        },
+        {
+          "exact_quote": "  The subagent integration benefit intent is dynamic adaptation, language awareness, domain expertise, error handling, specialization, and inheritance across tier hierarchy, including source examples for Rust, Swift, backend/frontend domains, and debugger invocation on errors.",
+          "line_end": 9614,
+          "line_start": 9614,
+          "path": "Plans/orchestrator-subagent-integration.md",
+          "source_sha256": "2bde7668eabbbcef6d6f10401afba7c7b841e220af3ef0db6fef035d11e6844a"
+        },
+        {
+          "exact_quote": "  The implementation-phase source backlog preserves Phase 1 Project Context Detection work: ProjectContext detection, language detection from codebase files, framework detection, and domain inference from task descriptions.",
+          "line_end": 9668,
+          "line_start": 9668,
+          "path": "Plans/orchestrator-subagent-integration.md",
+          "source_sha256": "2bde7668eabbbcef6d6f10401afba7c7b841e220af3ef0db6fef035d11e6844a"
+        },
+        {
+          "exact_quote": "  The implementation-phase source backlog preserves Phase 2 Subagent Selector work: SubagentSelector, tier-level selection logic, language-to-subagent mapping, framework-to-subagent mapping, and domain-to-subagent mapping.",
+          "line_end": 9719,
+          "line_start": 9719,
+          "path": "Plans/orchestrator-subagent-integration.md",
+          "source_sha256": "2bde7668eabbbcef6d6f10401afba7c7b841e220af3ef0db6fef035d11e6844a"
+        },
+        {
+          "exact_quote": "  The implementation-phase source backlog preserves Phase 3 Orchestrator Integration work: adding subagent selection to orchestrator, building tier context from tier nodes, invoking subagents via platform runners, and handling subagent responses.",
+          "line_end": 9771,
+          "line_start": 9771,
+          "path": "Plans/orchestrator-subagent-integration.md",
+          "source_sha256": "2bde7668eabbbcef6d6f10401afba7c7b841e220af3ef0db6fef035d11e6844a"
+        }
+      ],
+      "gap_kind": "missing_migration_replacements_timeout_race_rules_and_measurable_backlog_oracles",
+      "impact": "Retired fields may disappear before consumers have replacement mappings, producing broken recovery and approval flows. Timeout races around late responses and durable usage can be classified differently or leak child processes, while accepted backlog units can be declared complete without observable functional evidence.",
+      "item_id": "A005M15-I007",
+      "item_type": "gap",
+      "severity": "high",
+      "source_unit_refs": [
+        "PLANUNIT:OSI-055",
+        "PLANUNIT:OSI-056",
+        "PLANUNIT:OSI-057",
+        "PLANUNIT:OSI-058",
+        "PLANUNIT:OSI-059",
+        "PLANUNIT:OSI-060",
+        "PLANUNIT:OSI-061",
+        "SEMANTIC:PLANUNIT:OSI-055",
+        "SEMANTIC:PLANUNIT:OSI-056",
+        "SEMANTIC:PLANUNIT:OSI-057",
+        "SEMANTIC:PLANUNIT:OSI-058",
+        "SEMANTIC:PLANUNIT:OSI-059",
+        "SEMANTIC:PLANUNIT:OSI-060",
+        "SEMANTIC:PLANUNIT:OSI-061"
+      ],
+      "statement": "The retirement list has no successor-field mapping or sunset oracle; timeout handling omits clock basis, clamp formula, cancellation acknowledgement, late-response and usage-write races, and shell teardown proof; benefit and Phase 1-3 backlog units provide lists of intent rather than falsifiable completion criteria aligned to the newer graph ontology.",
+      "title": "Retirement, timeout supervision, and implementation backlogs lack closure criteria"
+    },
+    {
+      "builder_discretion": false,
+      "confidence": 0.97,
+      "dimensions": [
+        "behavior",
+        "capabilities",
+        "inputs_outputs",
+        "contracts",
+        "states_transitions",
+        "authority",
+        "failures_recovery",
+        "security_privacy",
+        "operations",
+        "scale_performance",
+        "acceptance_oracles",
+        "ambiguity_unknowns",
+        "partial_failure",
+        "recovery_rollback",
+        "authority_boundaries",
+        "privacy_data_lifecycle",
+        "untrusted_inputs",
+        "offline_network_loss",
+        "scale_limits",
+        "observability_support",
+        "destructive_actions",
+        "cross_document_seams",
+        "test_falsifiability",
+        "unknown_unknowns"
+      ],
+      "evidence": [
+        {
+          "exact_quote": "  The implementation-phase source backlog preserves Phase 4 Error Pattern Detection work: detecting error patterns from iteration outputs, automatically invoking debugger/security-auditor/etc., and pattern-based subagent selection.",
+          "line_end": 9823,
+          "line_start": 9823,
+          "path": "Plans/orchestrator-subagent-integration.md",
+          "source_sha256": "2bde7668eabbbcef6d6f10401afba7c7b841e220af3ef0db6fef035d11e6844a"
+        },
+        {
+          "exact_quote": "  Phase 5 verification preserves multi-language selection checks plus provider connectivity smoke tests, subagent-invocation integration tests, and plan mode CLI verification as environment-gated or manual verification families.",
+          "line_end": 9874,
+          "line_start": 9874,
+          "path": "Plans/orchestrator-subagent-integration.md",
+          "source_sha256": "2bde7668eabbbcef6d6f10401afba7c7b841e220af3ef0db6fef035d11e6844a"
+        },
+        {
+          "exact_quote": "  Provider connectivity smoke tests validate invocation paths and basic behavior for CLI-bridged Cursor and Claude Code, Server-bridged OpenCode, and Direct providers Codex, GitHub Copilot, and Gemini through minimal non-destructive prompts, transport prerequisites, and explicit environment gates.",
+          "line_end": 9926,
+          "line_start": 9926,
+          "path": "Plans/orchestrator-subagent-integration.md",
+          "source_sha256": "2bde7668eabbbcef6d6f10401afba7c7b841e220af3ef0db6fef035d11e6844a"
+        },
+        {
+          "exact_quote": "  The provider probe matrix preserves per-platform smoke commands and assertions: Cursor and Claude CLI probes, OpenCode server handshake, Direct-provider Codex/Copilot/Gemini API probes, exit-success checks, non-empty output, and parseable JSON or expected response shape.",
+          "line_end": 9985,
+          "line_start": 9985,
+          "path": "Plans/orchestrator-subagent-integration.md",
+          "source_sha256": "2bde7668eabbbcef6d6f10401afba7c7b841e220af3ef0db6fef035d11e6844a"
+        },
+        {
+          "exact_quote": "  Provider smoke tests preserve the source example location and Cursor test sketch, including ignored test attributes, cargo ignored runner guidance, binary lookup for agent or cursor-agent, and SMOKE_OK output-shape checks.",
+          "line_end": 10040,
+          "line_start": 10040,
+          "path": "Plans/orchestrator-subagent-integration.md",
+          "source_sha256": "2bde7668eabbbcef6d6f10401afba7c7b841e220af3ef0db6fef035d11e6844a"
+        },
+        {
+          "exact_quote": "  Subagent-invocation integration tests must verify the exact command line built by the orchestrator for tier and subagent execution, use the same builder/code path instead of duplicating logic, and remain environment-gated with optional evidence logs.",
+          "line_end": 10095,
+          "line_start": 10095,
+          "path": "Plans/orchestrator-subagent-integration.md",
+          "source_sha256": "2bde7668eabbbcef6d6f10401afba7c7b841e220af3ef0db6fef035d11e6844a"
+        },
+        {
+          "exact_quote": "  The subagent invocation test matrix preserves the integration test file/name list and summary table expectations for platform CLI smoke, subagent-invocation integration, and plan mode CLI verification.",
+          "line_end": 10147,
+          "line_start": 10147,
+          "path": "Plans/orchestrator-subagent-integration.md",
+          "source_sha256": "2bde7668eabbbcef6d6f10401afba7c7b841e220af3ef0db6fef035d11e6844a"
+        }
+      ],
+      "gap_kind": "missing_external_probe_safety_and_semantic_verification_oracles",
+      "impact": "Untrusted iteration output can trigger privileged or costly workers without an authority gate, and environment-gated probes can send repository or credential-adjacent data externally, hang, or leave sensitive evidence. Exit code and output shape alone can pass semantically wrong provider behavior, while same-builder command tests can be tautological and miss quoting attacks.",
+      "item_id": "A005M15-I008",
+      "item_type": "gap",
+      "severity": "high",
+      "source_unit_refs": [
+        "PLANUNIT:OSI-062",
+        "PLANUNIT:OSI-063",
+        "PLANUNIT:OSI-064",
+        "PLANUNIT:OSI-065",
+        "PLANUNIT:OSI-066",
+        "PLANUNIT:OSI-067",
+        "PLANUNIT:OSI-068",
+        "SEMANTIC:PLANUNIT:OSI-062",
+        "SEMANTIC:PLANUNIT:OSI-063",
+        "SEMANTIC:PLANUNIT:OSI-064",
+        "SEMANTIC:PLANUNIT:OSI-065",
+        "SEMANTIC:PLANUNIT:OSI-066",
+        "SEMANTIC:PLANUNIT:OSI-067",
+        "SEMANTIC:PLANUNIT:OSI-068"
+      ],
+      "statement": "Automatic error-pattern invocation lacks confidence, authorization, deduplication, and false-positive rules; provider verification lacks required environment coverage, timeout/retry and credential controls, prompt/data minimization, response-semantic assertions, evidence redaction/retention, adversarial quoting cases, and exact matrix pass/fail criteria.",
+      "title": "Automatic specialist invocation and provider probes lack safety and semantic proof"
+    }
+  ],
+  "model": "gpt-5.6-sol",
+  "phase": "blind_macro_window_review",
+  "reasoning_effort": "xhigh",
+  "schema_version": "macro-review-result-v1",
+  "segments": [
+    {
+      "core_range": [7224, 7571],
+      "covered_source_unit_refs": [
+        "PLANUNIT:OSI-016",
+        "PLANUNIT:OSI-017",
+        "PLANUNIT:OSI-018",
+        "PLANUNIT:OSI-019",
+        "PLANUNIT:OSI-020",
+        "PLANUNIT:OSI-021",
+        "SEMANTIC:PLANUNIT:OSI-016",
+        "SEMANTIC:PLANUNIT:OSI-017",
+        "SEMANTIC:PLANUNIT:OSI-018",
+        "SEMANTIC:PLANUNIT:OSI-019",
+        "SEMANTIC:PLANUNIT:OSI-020",
+        "SEMANTIC:PLANUNIT:OSI-021"
+      ],
+      "item_ids": ["A005M15-I001"],
+      "reviewed": true,
+      "summary": "Reviewed collaboration surface ownership, runtime schema boundaries, graph scheduling, scoped identity overrides, worktree policy, and parent-owned delegated memory; found missing executable lifecycle and recovery semantics.",
+      "window_id": "WIN-1BF0967E88A5-0020"
+    },
+    {
+      "core_range": [7572, 7955],
+      "covered_source_unit_refs": [
+        "PLANUNIT:OSI-022",
+        "PLANUNIT:OSI-023",
+        "PLANUNIT:OSI-024",
+        "PLANUNIT:OSI-025",
+        "PLANUNIT:OSI-026",
+        "PLANUNIT:OSI-027",
+        "PLANUNIT:OSI-028",
+        "SEMANTIC:PLANUNIT:OSI-022",
+        "SEMANTIC:PLANUNIT:OSI-023",
+        "SEMANTIC:PLANUNIT:OSI-024",
+        "SEMANTIC:PLANUNIT:OSI-025",
+        "SEMANTIC:PLANUNIT:OSI-026",
+        "SEMANTIC:PLANUNIT:OSI-027",
+        "SEMANTIC:PLANUNIT:OSI-028"
+      ],
+      "item_ids": ["A005M15-I002"],
+      "reviewed": true,
+      "summary": "Reviewed provider and permission projection, packet emission gating, storage-gap posture, destructive taxonomy, coordination keys, command metadata, and tier projections; found missing schemas, gate oracles, and safe GUI state rules.",
+      "window_id": "WIN-1BF0967E88A5-0021"
+    },
+    {
+      "core_range": [7956, 8336],
+      "covered_source_unit_refs": [
+        "PLANUNIT:OSI-029",
+        "PLANUNIT:OSI-030",
+        "PLANUNIT:OSI-031",
+        "PLANUNIT:OSI-032",
+        "PLANUNIT:OSI-033",
+        "PLANUNIT:OSI-034",
+        "PLANUNIT:OSI-035",
+        "SEMANTIC:PLANUNIT:OSI-029",
+        "SEMANTIC:PLANUNIT:OSI-030",
+        "SEMANTIC:PLANUNIT:OSI-031",
+        "SEMANTIC:PLANUNIT:OSI-032",
+        "SEMANTIC:PLANUNIT:OSI-033",
+        "SEMANTIC:PLANUNIT:OSI-034",
+        "SEMANTIC:PLANUNIT:OSI-035"
+      ],
+      "item_ids": ["A005M15-I003"],
+      "reviewed": true,
+      "summary": "Reviewed attempt handoff, lane capacity, replay events, persistence, config wiring, test-strategy loading, and runtime ontology; found missing transaction, idempotency, and untrusted-input rules.",
+      "window_id": "WIN-1BF0967E88A5-0022"
+    },
+    {
+      "core_range": [8337, 8735],
+      "covered_source_unit_refs": [
+        "PLANUNIT:OSI-036",
+        "PLANUNIT:OSI-037",
+        "PLANUNIT:OSI-038",
+        "PLANUNIT:OSI-039",
+        "PLANUNIT:OSI-040",
+        "PLANUNIT:OSI-041",
+        "PLANUNIT:OSI-042",
+        "SEMANTIC:PLANUNIT:OSI-036",
+        "SEMANTIC:PLANUNIT:OSI-037",
+        "SEMANTIC:PLANUNIT:OSI-038",
+        "SEMANTIC:PLANUNIT:OSI-039",
+        "SEMANTIC:PLANUNIT:OSI-040",
+        "SEMANTIC:PLANUNIT:OSI-041",
+        "SEMANTIC:PLANUNIT:OSI-042"
+      ],
+      "item_ids": ["A005M15-I004"],
+      "reviewed": true,
+      "summary": "Reviewed graph-owned worker selection, shared investigations, project detection, identity carry-through, Overseer ownership, initialization, and frozen context construction; found missing fallback, locking, trust, and recovery contracts.",
+      "window_id": "WIN-1BF0967E88A5-0023"
+    },
+    {
+      "core_range": [8736, 9082],
+      "covered_source_unit_refs": [
+        "PLANUNIT:OSI-043",
+        "PLANUNIT:OSI-044",
+        "PLANUNIT:OSI-045",
+        "PLANUNIT:OSI-046",
+        "PLANUNIT:OSI-047",
+        "PLANUNIT:OSI-048",
+        "SEMANTIC:PLANUNIT:OSI-043",
+        "SEMANTIC:PLANUNIT:OSI-044",
+        "SEMANTIC:PLANUNIT:OSI-045",
+        "SEMANTIC:PLANUNIT:OSI-046",
+        "SEMANTIC:PLANUNIT:OSI-047",
+        "SEMANTIC:PLANUNIT:OSI-048"
+      ],
+      "item_ids": ["A005M15-I005"],
+      "reviewed": true,
+      "summary": "Reviewed registry controls, coordination registration, sequential and parallel execution, single invocation, platform formatting, and file-operation extraction; found cleanup, conflict, escaping, and output-trust gaps.",
+      "window_id": "WIN-1BF0967E88A5-0024"
+    },
+    {
+      "core_range": [9083, 9434],
+      "covered_source_unit_refs": [
+        "PLANUNIT:OSI-049",
+        "PLANUNIT:OSI-050",
+        "PLANUNIT:OSI-051",
+        "PLANUNIT:OSI-052",
+        "PLANUNIT:OSI-053",
+        "PLANUNIT:OSI-054",
+        "SEMANTIC:PLANUNIT:OSI-049",
+        "SEMANTIC:PLANUNIT:OSI-050",
+        "SEMANTIC:PLANUNIT:OSI-051",
+        "SEMANTIC:PLANUNIT:OSI-052",
+        "SEMANTIC:PLANUNIT:OSI-053",
+        "SEMANTIC:PLANUNIT:OSI-054"
+      ],
+      "item_ids": ["A005M15-I006"],
+      "reviewed": true,
+      "summary": "Reviewed failure fallback, execution context, UI inspection, worktree leases, SCM snapshot fields, and UI consumers; found degraded-state, lease lifecycle, freshness, redaction, and stale-projection gaps.",
+      "window_id": "WIN-1BF0967E88A5-0025"
+    },
+    {
+      "core_range": [9435, 9814],
+      "covered_source_unit_refs": [
+        "PLANUNIT:OSI-055",
+        "PLANUNIT:OSI-056",
+        "PLANUNIT:OSI-057",
+        "PLANUNIT:OSI-058",
+        "PLANUNIT:OSI-059",
+        "PLANUNIT:OSI-060",
+        "PLANUNIT:OSI-061",
+        "SEMANTIC:PLANUNIT:OSI-055",
+        "SEMANTIC:PLANUNIT:OSI-056",
+        "SEMANTIC:PLANUNIT:OSI-057",
+        "SEMANTIC:PLANUNIT:OSI-058",
+        "SEMANTIC:PLANUNIT:OSI-059",
+        "SEMANTIC:PLANUNIT:OSI-060",
+        "SEMANTIC:PLANUNIT:OSI-061"
+      ],
+      "item_ids": ["A005M15-I007"],
+      "reviewed": true,
+      "summary": "Reviewed compatibility retirement, child outcome taxonomy, timeout envelope, shell isolation, benefit intent, and Phase 1-3 backlogs; found missing migration, timeout-race, teardown, and measurable closure criteria.",
+      "window_id": "WIN-1BF0967E88A5-0026"
+    },
+    {
+      "core_range": [9815, 10194],
+      "covered_source_unit_refs": [
+        "PLANUNIT:OSI-062",
+        "PLANUNIT:OSI-063",
+        "PLANUNIT:OSI-064",
+        "PLANUNIT:OSI-065",
+        "PLANUNIT:OSI-066",
+        "PLANUNIT:OSI-067",
+        "PLANUNIT:OSI-068",
+        "SEMANTIC:PLANUNIT:OSI-062",
+        "SEMANTIC:PLANUNIT:OSI-063",
+        "SEMANTIC:PLANUNIT:OSI-064",
+        "SEMANTIC:PLANUNIT:OSI-065",
+        "SEMANTIC:PLANUNIT:OSI-066",
+        "SEMANTIC:PLANUNIT:OSI-067",
+        "SEMANTIC:PLANUNIT:OSI-068"
+      ],
+      "item_ids": ["A005M15-I008"],
+      "reviewed": true,
+      "summary": "Reviewed error-pattern invocation and provider verification families, scopes, probes, examples, DRY invocation tests, and matrix metadata; found authority, privacy, timeout, semantic-oracle, and evidence-lifecycle gaps.",
+      "window_id": "WIN-1BF0967E88A5-0027"
+    }
+  ],
+  "self_attestation": {
+    "no_canonical_writes": true,
+    "no_external_research_during_blind_review": true,
+    "no_peer_result_access": true,
+    "no_prior_audit_access": true,
+    "no_unrelated_source_access": true,
+    "terminal_after_submission": true
+  },
+  "source_binding": {
+    "bundle_id": "MACRO15-1BF0967E88A5-0003",
+    "document_path": "Plans/orchestrator-subagent-integration.md",
+    "micro_window_ids": [
+      "WIN-1BF0967E88A5-0020",
+      "WIN-1BF0967E88A5-0021",
+      "WIN-1BF0967E88A5-0022",
+      "WIN-1BF0967E88A5-0023",
+      "WIN-1BF0967E88A5-0024",
+      "WIN-1BF0967E88A5-0025",
+      "WIN-1BF0967E88A5-0026",
+      "WIN-1BF0967E88A5-0027"
+    ],
+    "source_sha256": "2bde7668eabbbcef6d6f10401afba7c7b841e220af3ef0db6fef035d11e6844a"
+  },
+  "status": "completed",
+  "synthesis": {
+    "cross_document_questions": [
+      "Which owner contract defines deterministic worker-selection fallback, identity mismatch handling, and degraded coordination state when provider, account, registry, or context validation fails?",
+      "Which owner contract defines atomicity and reconciliation across seglog, redb, coordination state, worktree leases, and scm_lineage_snapshot projections?",
+      "What successor fields and migration proof replace allowed_actions[], reason_code, recovery_options[], and approve_continue before retirement?",
+      "Which UI owner defines freshness, redaction, accessibility, localization, and non-authoritative rendering for execution_unit_context and SCM projection states?"
+    ],
+    "feature_family_keys": [
+      "orchestrator-subagent-runtime-selection",
+      "coordination-registration-and-cleanup",
+      "worktree-lease-and-scm-projection",
+      "child-timeout-and-budget-supervision",
+      "provider-and-subagent-verification"
+    ],
+    "research_queries": [
+      "idempotent async worker registration cleanup cancellation structured concurrency patterns",
+      "atomic event log database checkpoint reconciliation crash consistency",
+      "secure external AI provider smoke testing credential redaction prompt data minimization",
+      "lease fencing tokens worktree allocation crash recovery contamination quarantine"
+    ]
+  },
+  "task_thread_id": "/root/a005m15_b9_000172_attempt_0015_terminal"
+}

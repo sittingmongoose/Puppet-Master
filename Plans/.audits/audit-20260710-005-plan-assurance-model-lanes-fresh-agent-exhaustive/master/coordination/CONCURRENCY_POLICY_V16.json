@@ -1,0 +1,60 @@
+{
+  "audit_id": "audit-20260710-005-plan-assurance-model-lanes-fresh-agent-exhaustive",
+  "schema_version": "audit-concurrency-policy-v16",
+  "status": "ACTIVE_PIPELINED_16",
+  "effective_date": "2026-07-11",
+  "supersedes_prospectively": "master/coordination/CONCURRENCY_POLICY_V15.json",
+  "prior_policies_mutated": false,
+  "user_authorization": "speed up Audit 005 by removing unnecessary serial waits while retaining the sustainable quota ceiling",
+  "operating_target": {
+    "maximum_active_semantic_leaves": 16,
+    "preferred_active_range": [
+      8,
+      12
+    ],
+    "atomic_transaction_cap": 8,
+    "never_interrupt_valid_in_flight_work": true,
+    "no_unrelated_gate_serialization": true
+  },
+  "pipeline_rules": {
+    "independent_disjoint_reviewers_may_overlap": true,
+    "deterministic_preparation_may_overlap_semantic_review": true,
+    "localized_rejections_are_quarantined_not_global_blockers": true,
+    "passed_assignments_checkpoint_without_waiting_for_rejected_repair": true,
+    "retry_only_exact_rejected_set_with_fresh_identities": true,
+    "no_completed_batch_rerun": true,
+    "one_end_to_end_executable_fixture_required_before_repeating_a_mechanical_repair": true,
+    "candidate_outputs_zero_credit_until_independent_checkpoint": true
+  },
+  "immediate_parallel_frontier": {
+    "luna_v7_2_receipt_reviewer": "start now alongside the final seam cohort reviewer",
+    "sol_certification_binding_v6": "prepare deterministic localized repair now",
+    "sol_scenario_v15_activation_readiness": "prepare two separately gated cohorts of eight, blocked on future eight-of-eight research checkpoint",
+    "seam_checkpoint": "checkpoint independently passed assignments immediately after final cohort report; quarantine exact rejected assignments",
+    "seam_repair": "prepare only exact rejected assignments 0002, 0006 and 0039 with fresh identities",
+    "scenario_launch": "after research eight-of-eight, launch first eight immediately and second eight as a distinct transaction if capacity",
+    "certification_launch": "after v6 independent pass, launch as two distinct transactions of eight if capacity"
+  },
+  "quota_control": {
+    "latest_remaining_percent": 70,
+    "next_measurement_minutes": 30,
+    "target_remaining_percent_at_next_measurement_approximate": 62,
+    "never_raise_above_sixteen_without_new_user_data": true
+  },
+  "controller_threads": {
+    "sol": "019f4f5e-96c6-7893-8c94-ce2c1b760d6c",
+    "luna": "019f5078-6501-7223-b52f-2251010bdc41",
+    "extra_controllers_authorized": 0
+  },
+  "bound_policies": {
+    "concurrent_canonical_change_policy_sha256": "b227f14a04aae9ddce62440002af2c76528a1433c4e440df613490865f9f444e",
+    "model_lane_routing_policy_v2_sha256": "9105752f30b42d482454e8df7782bda95992d94ae7b149977e280ac83df83544"
+  },
+  "quality_invariants": {
+    "semantic_scope_reduced": false,
+    "external_research_requirement_reduced": false,
+    "independent_validation_reduced": false,
+    "canonical_plan_writes_authorized": false,
+    "immutable_lineage_mutation_authorized": false
+  }
+}

@@ -1,0 +1,110 @@
+{
+  "audit_id": "audit-20260710-005-plan-assurance-model-lanes-fresh-agent-exhaustive",
+  "schema_version": "audit-concurrency-policy-v12",
+  "status": "ACTIVE_PROSPECTIVE_ROLLING_64",
+  "effective_date": "2026-07-11",
+  "supersedes_prospectively": "master/coordination/CONCURRENCY_POLICY_V11.json",
+  "prior_policies_mutated": false,
+  "user_authorization": "42 percent usage remains with about eighty minutes in the five-hour window; increase useful audited concurrency while preserving a two-percent reserve and every independent gate",
+  "quota_snapshot": {
+    "remaining_percent": 42,
+    "elapsed_hours_approximate": 3.68,
+    "observed_used_percent_per_hour_approximate": 15.76,
+    "remaining_hours_approximate": 1.32,
+    "target_end_remaining_percent": 2,
+    "required_used_percent_per_hour_from_snapshot_approximate": 30.3
+  },
+  "operating_target": {
+    "maximum_active_semantic_leaves": 64,
+    "preferred_active_range": [
+      48,
+      64
+    ],
+    "atomic_transaction_cap": 16,
+    "composition": "only separately prepared, independently gated, activated, receipted and validated disjoint transactions of at most 16 leaves",
+    "single_atomic_32_40_48_or_64_launch_forbidden": true,
+    "never_interrupt_valid_in_flight_work": true,
+    "reset_pause": false
+  },
+  "critical_path_priority": [
+    "preserve capacity for exact two-leaf cross-cutting recovery attempt-0007 until cumulative research reaches eight of eight",
+    "launch a ready exact sixteen-leaf universal-research certification transaction",
+    "launch separately gated cross-domain seam cohorts in manifest order, each exactly sixteen",
+    "after cumulative research eight of eight, launch separately gated scenario cohorts of eight"
+  ],
+  "capacity_reservation": {
+    "reserve_for_attempt_0007_until_terminal": 2,
+    "whole_transaction_only": true,
+    "capacity_defer_is_not_failure": true,
+    "recompute_before_every_activation": true
+  },
+  "utilization_control": {
+    "five_hour_target_used_percent": 98,
+    "required_rate_from_latest_snapshot_percent_per_hour": 30.3,
+    "next_measurement_minutes": 20,
+    "target_remaining_percent_at_next_measurement_approximate": 32,
+    "if_next_remaining_percent_above_34": "maintain rolling 64 and eliminate discretionary idle gaps",
+    "if_next_remaining_percent_between_27_and_34": "maintain rolling 48 to 64",
+    "if_next_remaining_percent_below_25_or_capacity_failures_exceed_10_percent": "downshift only the next not-yet-activated transaction so total active semantic leaves do not exceed 48",
+    "never_raise_above_64_without_new_user_quota_data": true,
+    "never_launch_work_estimated_to_cross_reset_without_safe_completion_margin": true
+  },
+  "pipeline": {
+    "prepare_next_transaction_while_current_transaction_runs": true,
+    "independent_validation_may_overlap_disjoint_semantic_transactions": true,
+    "launch_ready_disjoint_transactions_without_discretionary_wait": true,
+    "candidate_outputs_remain_zero_credit_until_independently_validated": true,
+    "retry_only_invalid_or_unlaunched_assignments_with_fresh_identities": true,
+    "no_duplicate_assignment_or_result_namespace": true,
+    "no_synthetic_usage_work": true
+  },
+  "prospective_transactions": {
+    "cross_cutting_recovery_attempt_0007": {
+      "leaf_count": 2,
+      "assignment_ids": [
+        "ER-0003",
+        "ER-0008"
+      ],
+      "hard_gate": "fresh explicit Luna-max independent prelaunch-v7"
+    },
+    "cross_domain_seam_cohorts": {
+      "leaf_count": 64,
+      "atomic_transactions": [
+        16,
+        16,
+        16,
+        16
+      ],
+      "hard_gate": "terminal Luna seam readiness report a2913d9a26bc2ada12e72347b6bdf4d167e43644d713a5060f82b132f4bc3207 plus a fresh Sol-side activation check for each cohort"
+    },
+    "universal_research_certification": {
+      "leaf_count": 16,
+      "hard_gate": "terminal unqualified explicit Luna-max certification readiness report binding validator-v2, dependency-binding-v1 and cache reconciliation-v4"
+    },
+    "scenario_adversarial": {
+      "leaf_count": 16,
+      "atomic_transactions": [
+        8,
+        8
+      ],
+      "hard_gate": "independent cumulative cross-cutting research checkpoint is eight of eight"
+    }
+  },
+  "controller_threads": {
+    "sol": "019f4f5e-96c6-7893-8c94-ce2c1b760d6c",
+    "luna": "019f5078-6501-7223-b52f-2251010bdc41",
+    "extra_controllers_authorized": 0
+  },
+  "bound_policies": {
+    "concurrent_canonical_change_policy_sha256": "b227f14a04aae9ddce62440002af2c76528a1433c4e440df613490865f9f444e",
+    "model_lane_routing_policy_v2_sha256": "9105752f30b42d482454e8df7782bda95992d94ae7b149977e280ac83df83544"
+  },
+  "quality_invariants": {
+    "semantic_scope_reduced": false,
+    "external_research_requirement_reduced": false,
+    "independent_validation_reduced": false,
+    "dependency_bypass_authorized": false,
+    "canonical_plan_writes_authorized": false,
+    "immutable_lineage_mutation_authorized": false
+  }
+}

@@ -1,0 +1,1330 @@
+L00003951	  - Plans/FinalGUISpec.md
+L00003952	  - Plans/chain-wizard-flexibility.md
+L00003953	  - Plans/Contracts_V0.md
+L00003954	  - Plans/storage-plan.md
+L00003955	  - Plans/Permissions_System.md
+L00003956	  - Plans/Runtime_Artifacts_Panel.md
+L00003957	  - Plans/Project_Output_Artifacts.md
+L00003958	  - Plans/Models_System.md
+L00003959	  - Plans/Multi-Account.md
+L00003960	  - Plans/Provider_OpenCode.md
+L00003961	```
+L00003962	
+L00003963	### 0PI-056 - Orchestrator Goal Runtime Flow Owner Map
+L00003964	
+L00003965	```yaml
+L00003966	plan_unit_id: 0PI-056
+L00003967	unit_type: requirement
+L00003968	status: accepted
+L00003969	owner_doc: Plans/00-plans-index.md
+L00003970	canonical_text: >-
+L00003971	  Plans/00-plans-index.md registers the Orchestrator Goal Runtime Flow owner split. Goal_Runtime_System owns the shared Goal Runtime engine and repair-loop policy; Orchestrator_Page owns GoalRun control and projection; Executor_Protocol owns WorkNode readiness, backoff, capacity, dispatch, retries, and classification; orchestrator-subagent-integration owns bounded SubagentWave and parent/child supervision; Plan_To_Node_Compilation owns runtime-object and compiler-boundary readiness without creating WorkNodes; Contracts_V0, storage-plan, Permissions_System, Models_System, Multi-Account, provider-specific docs, Planning_Ledger_System, and Plan_Document_System own their contract, persistence, approval, model/account/provider, ledger, and PlanUnit/index boundaries. Run_Graph_View, FinalGUISpec, Assistant Chat, Chain Wizard, Runtime Artifacts, WorktreeGitImprovement, UI_Command_Catalog, Wiring_Matrix, usage-feature, and Glossary consume or mirror the flow through their owner surfaces, and consumer mirrors may retain old fixed-hierarchy labels only as compatibility/search aliases while owner docs keep active terminology on GoalRun, WorkGraph, WorkNode, capability_lane, agent_role, SubagentWave, VerificationCycle, and Receipt. Compile-readiness records may state accepted recommendations, no remaining open design questions, and live repo backlink audit requirements for ledger-to-Plans compile, but not direct implementation readiness. The pre-seal compile phase may regenerate allowed Plans/.plan_index outputs only; a later explicit governance seal may refresh Spec_Lock, generated shards, evidence bundles, plan_graph, and auto_decisions without creating NodeSeeds, WorkNodes, executable queues, final node manifests, final build tasks, production build tasks, or final node queues.
+L00003972	gui_related: false
+L00003973	gui_classification_reason: This unit records canonical owner routing metadata; GUI docs are referenced as consumers but not implemented here.
+L00003974	depends_on:
+L00003975	  - 0PI-055
+L00003976	  - GRS-026
+L00003977	  - OP-022
+L00003978	  - EP-098
+L00003979	  - PNC-009
+L00003980	  - PDS-006
+L00003981	unblocks: []
+L00003982	acceptance_criteria:
+L00003983	  - The index names the Orchestrator Goal Runtime Flow owner docs and consumer docs.
+L00003984	  - Executor scheduler truth remains separate from Orchestrator projection/control truth.
+L00003985	  - Capability lane, model, account/provider, permission, storage, receipt, GUI, chat, chain-wizard, runtime-artifact, ledger, PlanUnit, and compiler-boundary owner docs are recorded without taking over Goal Runtime behavior.
+L00003986	  - Consumer mirrors may retain old fixed-hierarchy labels only as compatibility/search aliases; they do not preserve stale tier labels as active canonical runtime semantics.
+L00003987	  - Compile-readiness records can preserve accepted recommendations, no remaining open design questions, and live repo backlink audit requirements without authorizing direct code implementation.
+L00003988	  - The index preserves the no-WorkNode, no-NodeSeed, no-executable-queue, no-final-node-manifest, no-final-build-task, no-production-build-task boundary across compile, indexing, and governance seal phases.
+L00003989	validation_surfaces:
+L00003990	  - python3 scripts/pm-plan-index.py validate
+L00003991	  - python3 scripts/pm-bootstrap-ledger-validate.py Plans/ledgers/v2/pldg-20260616-002-orchestrator-goal-runtime-flow
+L00003992	risk_class: orchestrator_goal_owner_map_drift
+L00003993	reasoning_tier: high
+L00003994	context_scope: plans_index_orchestrator_goal_runtime_flow
+L00003995	implementation_surfaces:
+L00003996	  - Plans/00-plans-index.md
+L00003997	  - Plans/Goal_Runtime_System.md
+L00003998	  - Plans/Orchestrator_Page.md
+L00003999	  - Plans/Executor_Protocol.md
+L00004000	  - Plans/orchestrator-subagent-integration.md
+L00004001	  - Plans/Plan_To_Node_Compilation.md
+L00004002	  - Plans/Run_Graph_View.md
+L00004003	  - Plans/FinalGUISpec.md
+L00004004	  - Plans/assistant-chat-design.md
+L00004005	  - Plans/chain-wizard.md
+L00004006	  - Plans/chain-wizard-flexibility.md
+L00004007	  - Plans/Runtime_Artifacts_Panel.md
+L00004008	  - Plans/WorktreeGitImprovement.md
+L00004009	  - Plans/Contracts_V0.md
+L00004010	  - Plans/Models_System.md
+L00004011	  - Plans/Multi-Account.md
+L00004012	  - Plans/Provider_OpenCode.md
+L00004013	  - Plans/Permissions_System.md
+L00004014	  - Plans/storage-plan.md
+L00004015	  - Plans/Planning_Ledger_System.md
+L00004016	  - Plans/Plan_Document_System.md
+L00004017	  - Plans/UI_Command_Catalog.md
+L00004018	  - Plans/Wiring_Matrix.md
+L00004019	  - Plans/usage-feature.md
+L00004020	  - Plans/Glossary.md
+L00004021	node_compile_hint:
+L00004022	  mode: orchestrator_goal_runtime_flow_owner_map
+L00004023	  create_worknodes: false
+L00004024	source_lineage:
+L00004025	  - pldg-20260616-002-orchestrator-goal-runtime-flow:atom-0010
+L00004026	  - pldg-20260616-002-orchestrator-goal-runtime-flow:atom-0070
+L00004027	  - pldg-20260616-002-orchestrator-goal-runtime-flow:atom-0078
+L00004028	  - pldg-20260616-002-orchestrator-goal-runtime-flow:atom-0080
+L00004029	  - pldg-20260616-002-orchestrator-goal-runtime-flow:atom-0081
+L00004030	  - pldg-20260616-002-orchestrator-goal-runtime-flow:atom-0082
+L00004031	  - pldg-20260616-002-orchestrator-goal-runtime-flow:atom-0083
+L00004032	  - pldg-20260616-002-orchestrator-goal-runtime-flow:atom-0084
+L00004033	  - pldg-20260616-002-orchestrator-goal-runtime-flow:atom-0085
+L00004034	  - pldg-20260616-002-orchestrator-goal-runtime-flow:atom-0086
+L00004035	  - pldg-20260616-002-orchestrator-goal-runtime-flow:atom-0088
+L00004036	  - pldg-20260616-002-orchestrator-goal-runtime-flow:atom-0097
+L00004037	  - pldg-20260616-002-orchestrator-goal-runtime-flow:atom-0098
+L00004038	  - pldg-20260616-002-orchestrator-goal-runtime-flow:atom-0099
+L00004039	  - pldg-20260616-002-orchestrator-goal-runtime-flow:atom-0104
+L00004040	  - pldg-20260616-002-orchestrator-goal-runtime-flow:dec-0016
+L00004041	  - pldg-20260616-002-orchestrator-goal-runtime-flow:dec-0027
+L00004042	  - pldg-20260616-002-orchestrator-goal-runtime-flow:dec-0029
+L00004043	preserved_exact_tokens:
+L00004044	  - "Orchestrator Goal Runtime Flow"
+L00004045	  - "GoalRun"
+L00004046	  - "WorkGraph"
+L00004047	  - "SubagentWave"
+L00004048	  - "VerificationCycle"
+L00004049	  - "WorkNode"
+L00004050	  - "agent_role"
+L00004051	  - "Receipt"
+L00004052	  - "compatibility/search aliases"
+L00004053	  - "ledger-to-Plans compile"
+L00004054	  - "accepted"
+L00004055	  - "no remaining open design questions"
+L00004056	  - "live repo backlink audit"
+L00004057	  - "capability_lane"
+L00004058	  - "write_mode"
+L00004059	  - "pending governance seal"
+L00004060	  - "Spec_Lock"
+L00004061	  - "WorkNodes"
+L00004062	  - "NodeSeeds"
+L00004063	  - "final build tasks"
+L00004064	negative_constraints:
+L00004065	  - Do not treat Plans/00-plans-index.md as the owner for runtime behavior.
+L00004066	  - Do not keep stale tier labels as active canonical runtime semantics.
+L00004067	  - Do not create WorkNodes, NodeSeeds, executable queues, final node manifests, final build tasks, or production build tasks during compile, indexing, or governance seal.
+L00004068	  - Do not conflate ledger compile, allowed PlanUnit indexing, and governance seal phases.
+L00004069	  - Do not treat plan-compile readiness as direct code implementation readiness.
+L00004070	owner_hints:
+L00004071	  - Plans/00-plans-index.md
+L00004072	  - Plans/Goal_Runtime_System.md
+L00004073	  - Plans/Orchestrator_Page.md
+L00004074	  - Plans/Executor_Protocol.md
+L00004075	  - Plans/orchestrator-subagent-integration.md
+L00004076	  - Plans/Plan_To_Node_Compilation.md
+L00004077	  - Plans/Run_Graph_View.md
+L00004078	  - Plans/FinalGUISpec.md
+L00004079	  - Plans/assistant-chat-design.md
+L00004080	  - Plans/chain-wizard.md
+L00004081	  - Plans/chain-wizard-flexibility.md
+L00004082	  - Plans/Runtime_Artifacts_Panel.md
+L00004083	  - Plans/WorktreeGitImprovement.md
+L00004084	  - Plans/Contracts_V0.md
+L00004085	  - Plans/Models_System.md
+L00004086	  - Plans/Multi-Account.md
+L00004087	  - Plans/Provider_OpenCode.md
+L00004088	  - Plans/Permissions_System.md
+L00004089	  - Plans/storage-plan.md
+L00004090	  - Plans/Planning_Ledger_System.md
+L00004091	  - Plans/Plan_Document_System.md
+L00004092	  - Plans/UI_Command_Catalog.md
+L00004093	  - Plans/Wiring_Matrix.md
+L00004094	  - Plans/usage-feature.md
+L00004095	  - Plans/Glossary.md
+L00004096	```
+L00004097	
+L00004098	### 0PI-057 - Semantic Audit Closure Owner Map
+L00004099	
+L00004100	```yaml
+L00004101	plan_unit_id: 0PI-057
+L00004102	unit_type: requirement
+L00004103	status: accepted
+L00004104	owner_doc: Plans/00-plans-index.md
+L00004105	canonical_text: >-
+L00004106	  Plans/00-plans-index.md records the semantic audit closure owner split
+L00004107	  without re-owning closure semantics. Planning_Ledger_System/PLS-012 owns the
+L00004108	  durable Plans/.audits/_semantic_closure_registry.jsonl row shape,
+L00004109	  audit_scope_manifest.jsonl, repair_impact_matrix.jsonl, previously_closed
+L00004110	  reuse, reopen policy, subject_ref/observation_ref, and latest_audit_*
+L00004111	  terminal-state rules. Plan_Document_System/PDS-014 owns deterministic
+L00004112	  finding_key and check_id construction, repair_required/finding_level,
+L00004113	  audit source artifact validation, cross-artifact ref checks,
+L00004114	  repair_closure_matrix.jsonl, scope/impact coverage, and validator-facing
+L00004115	  actionable-row coverage.
+L00004116	  Bootstrap_Planning_Workflow and
+L00004117	  Codex_Prompts consume those owner PlanUnits for workflow and reusable prompt
+L00004118	  text. scripts/pm-audit-closure.py, the global closure registry,
+L00004119	  audit_scope_manifest.jsonl, repair_impact_matrix.jsonl, and audit-scoped
+L00004120	  repair_closure_matrix.jsonl are support/governance surfaces, not product
+L00004121	  implementation files, WorkNodes, NodeSeeds, executable queues, final node
+L00004122	  manifests, or build tasks.
+L00004123	gui_related: false
+L00004124	gui_classification_reason: This unit records canonical owner routing for audit governance support; it does not implement user-visible GUI behavior.
+L00004125	depends_on:
+L00004126	  - PLS-012
+L00004127	  - PDS-014
+L00004128	unblocks: []
+L00004129	acceptance_criteria:
+L00004130	  - The index routes closure registry row shape and reopen policy to PLS-012.
+L00004131	  - The index routes audit_scope_manifest.jsonl and repair_impact_matrix.jsonl process behavior to PLS-012.
+L00004132	  - The index routes subject_ref, observation_ref, and latest_audit_* terminal-state rules to PLS-012.
+L00004133	  - The index routes deterministic finding_key/check_id, repair_required/finding_level, audit source validation, scope/impact coverage, and repair_closure_matrix validation to PDS-014.
+L00004134	  - Bootstrap workflow and prompt docs are recorded as consumers rather than schema owners.
+L00004135	  - Closure support artifacts and scripts are not product implementation, WorkNode, NodeSeed, executable queue, final node manifest, or build-task artifacts.
+L00004136	validation_surfaces:
+L00004137	  - python3 scripts/pm-plan-index.py validate
+L00004138	  - python3 scripts/pm-audit-closure.py validate
+L00004139	risk_class: owner_routing
+L00004140	reasoning_tier: high
+L00004141	context_scope: bootstrap_audit_repair
+L00004142	implementation_surfaces:
+L00004143	  - Plans/00-plans-index.md
+L00004144	  - Plans/Planning_Ledger_System.md
+L00004145	  - Plans/Plan_Document_System.md
+L00004146	  - Plans/bootstrap/Bootstrap_Planning_Workflow.md
+L00004147	  - Plans/bootstrap/Codex_Prompts.md
+L00004148	  - scripts/pm-audit-closure.py
+L00004149	  - Plans/.audits/_semantic_closure_registry.jsonl
+L00004150	  - Plans/.audits/audit-*/audit_scope_manifest.jsonl
+L00004151	  - Plans/.audits/audit-*/repair_impact_matrix.jsonl
+L00004152	  - Plans/.audits/audit-*/repair_closure_matrix.jsonl
+L00004153	node_compile_hint:
+L00004154	  mode: owner_routing_only
+L00004155	  create_worknodes: false
+L00004156	source_lineage:
+L00004157	  - source_ref:chat:2026-06-17-semantic-closure-registry-support
+L00004158	preserved_exact_tokens:
+L00004159	  - "Plans/.audits/_semantic_closure_registry.jsonl"
+L00004160	  - "repair_closure_matrix.jsonl"
+L00004161	  - "audit_scope_manifest.jsonl"
+L00004162	  - "repair_impact_matrix.jsonl"
+L00004163	  - "finding_key"
+L00004164	  - "check_id"
+L00004165	  - "previously_closed"
+L00004166	  - "repair_required"
+L00004167	  - "finding_level"
+L00004168	  - "subject_ref"
+L00004169	  - "observation_ref"
+L00004170	  - "scripts/pm-audit-closure.py"
+L00004171	  - "PLS-012"
+L00004172	  - "PDS-014"
+L00004173	negative_constraints:
+L00004174	  - Do not make Plans/00-plans-index.md the owner of closure registry schema or closure matrix validation.
+L00004175	  - Do not make Plans/00-plans-index.md the owner of scope-manifest or impact-matrix schema semantics.
+L00004176	  - Do not route repair_required=false warnings, previously_closed rows, audit-only observations, or hygiene-only runs into repair obligations.
+L00004177	  - Do not treat audit closure support scripts or audit JSONL artifacts as product implementation files.
+L00004178	  - Do not create WorkNodes, NodeSeeds, executable queues, final node manifests, or build tasks from closure registry state.
+L00004179	owner_hints:
+L00004180	  - Plans/00-plans-index.md
+L00004181	  - Plans/Planning_Ledger_System.md
+L00004182	  - Plans/Plan_Document_System.md
+L00004183	```
+L00004184	
+L00004185	ContractRef: ContractName:Plans/00-plans-index.md, ContractName:Plans/Planning_Ledger_System.md, ContractName:Plans/Plan_Document_System.md
+L00004186	
+L00004187	### 0PI-058 - Plans-To-Code Handoff Owner Map
+L00004188	
+L00004189	```yaml
+L00004190	plan_unit_id: 0PI-058
+L00004191	unit_type: requirement
+L00004192	status: accepted
+L00004193	owner_doc: Plans/00-plans-index.md
+L00004194	canonical_text: >-
+L00004195	  Plans/00-plans-index.md records the Plans-to-code handoff owner split without re-owning behavior. Plan_To_Node_Compilation owns design-only PlanCompileRun, stage cards, NodeSeed candidate, WorkGraph draft, WorkNode request, handoff matrix, and schema boundary. Automated_Testing_System owns automated test discovery, harness, strategy, binding, receipts, oracles, adapters, and test-gap blockers. Executor_Protocol owns intake, dispatch boundary, preflights, loop breakers, PlanChangeDetected handling, and execution receipts. Goal_Runtime_System owns future Planning Wizard trigger semantics after explicit enablement, autonomy/HITL boundary consumption, and GoalCompletionReceipt certification. Models_System owns six model settings and model resolution receipts. Orchestrator_Page and FinalGUISpec own the seven-tab Orchestrator shell, visible Plan Compile tab, and Settings projection. WorktreeGitImprovement, FileSafe, and GitHub_Integration own source-control execution contracts. Project_Output_Artifacts and Runtime_Artifacts_Panel own packaged receipt artifacts and evidence projection. Contracts_V0 owns shared envelopes and the design-only schema draft. Planning_Ledger_System and Plan_Document_System own matrix compile inputs and reference-scan gates.
+L00004196	  The index records backlinks, index docs, UI command docs, and crosswalks as reference-scan consumers, and preserves the boundary: Do not update only the obvious owner docs while leaving stale references in consumer/index/UI docs. It also preserves: Do not do an uncontrolled whole-repo rename as part of this compile; do not leave direct contradictions in touched sections.
+L00004197	gui_related: false
+L00004198	gui_classification_reason: This unit records owner routing in the canonical index; it does not implement the visible UI.
+L00004199	depends_on:
+L00004200	  - PNC-010
+L00004201	  - PNC-014
+L00004202	  - ATS-001
+L00004203	  - EP-099
+L00004204	  - EP-103
+L00004205	  - GRS-028
+L00004206	  - GRS-030
+L00004207	  - MS-110
+L00004208	  - OP-023
+L00004209	  - F3-397
+L00004210	  - W-072
+L00004211	  - F2-189
+L00004212	  - GI-031
+L00004213	  - POA-048
+L00004214	  - RAP-029
+L00004215	  - CV-289
+L00004216	  - PLS-013
+L00004217	  - PDS-015
+L00004218	unblocks: []
+L00004219	acceptance_criteria:
+L00004220	  - The index names the primary owners and consumer boundaries for the Plans-to-code handoff compile.
+L00004221	  - The index records Automated_Testing_System and plans_to_code_handoff.schema.json as canonical docs/schema drafts.
+L00004222	  - The index explicitly preserves the no-build boundary: PlanCompile disabled, no WorkNodes, no NodeSeeds, no executable queues, no implementation files, no dispatched GoalRuns, and governance registration remains metadata-only.
+L00004223	validation_surfaces:
+L00004224	  - python3 scripts/pm-plans-verify.py run-gates
+L00004225	  - python3 scripts/pm-shard-plans.py --check
+L00004226	risk_class: owner_routing
+L00004227	reasoning_tier: high
+L00004228	context_scope: plans_to_code_handoff_index
+L00004229	implementation_surfaces:
+L00004230	  - Plans/00-plans-index.md
+L00004231	  - Plans/Plan_To_Node_Compilation.md
+L00004232	  - Plans/Automated_Testing_System.md
+L00004233	  - Plans/Executor_Protocol.md
+L00004234	  - Plans/Goal_Runtime_System.md
+L00004235	  - Plans/Models_System.md
+L00004236	  - Plans/Orchestrator_Page.md
+L00004237	  - Plans/FinalGUISpec.md
+L00004238	  - Plans/WorktreeGitImprovement.md
+L00004239	  - Plans/FileSafe.md
+L00004240	  - Plans/GitHub_Integration.md
+L00004241	  - Plans/Project_Output_Artifacts.md
+L00004242	  - Plans/Runtime_Artifacts_Panel.md
+L00004243	  - Plans/Contracts_V0.md
+L00004244	  - Plans/Planning_Ledger_System.md
+L00004245	  - Plans/Plan_Document_System.md
+L00004246	  - Plans/plans_to_code_handoff.schema.json
+L00004247	node_compile_hint:
+L00004248	  mode: owner_routing_only
+L00004249	  create_worknodes: false
+L00004250	  create_nodeseeds: false
+L00004251	source_lineage:
+L00004252	  - pldg-20260617-001-plans-to-code-handoff:atom-0058
+L00004253	  - pldg-20260617-001-plans-to-code-handoff:atom-0061
+L00004254	  - pldg-20260617-001-plans-to-code-handoff:atom-0062
+L00004255	  - pldg-20260617-001-plans-to-code-handoff:atom-0063
+L00004256	  - pldg-20260617-001-plans-to-code-handoff:atom-0064
+L00004257	  - pldg-20260617-001-plans-to-code-handoff:dec-0024
+L00004258	  - pldg-20260617-001-plans-to-code-handoff:dec-0026
+L00004259	  - pldg-20260617-001-plans-to-code-handoff:dec-0027
+L00004260	  - pldg-20260617-001-plans-to-code-handoff:dec-0028
+L00004261	preserved_exact_tokens:
+L00004262	  - "Plan_To_Node_Compilation"
+L00004263	  - "Goal_Runtime_System"
+L00004264	  - "Orchestrator_Page"
+L00004265	  - "Executor_Protocol"
+L00004266	  - "Automated_Testing_System"
+L00004267	  - "implementation_readiness_matrix"
+L00004268	  - "doc_impact_matrix"
+L00004269	  - "owner docs"
+L00004270	  - "consumer docs"
+L00004271	  - "reference docs"
+L00004272	  - "no-update evidence"
+L00004273	negative_constraints:
+L00004274	  - Do not run PlanCompile or build WorkNodes from this index entry.
+L00004275	  - Do not update generated governance artifacts during ordinary ledger compile; refresh them only in explicit governance registration/seal scope.
+L00004276	compatibility_only_notes:
+L00004277	  - Pre-rename Plan Wizard tokens may remain in source_lineage, preserved_exact_tokens, historical migration notes, and compatibility aliases only.
+L00004278	stale_retired_dispositions:
+L00004279	  - Plan Wizard is retired as active product/runtime/compile terminology; current prose, PlanUnits, commands, events, prompts, and index rows use Planning Wizard.
+L00004280	owner_hints:
+L00004281	  - Plans/00-plans-index.md
+L00004282	  - Plans/Plan_To_Node_Compilation.md
+L00004283	  - Plans/Automated_Testing_System.md
+L00004284	  - Plans/Executor_Protocol.md
+L00004285	  - Plans/Goal_Runtime_System.md
+L00004286	```
+L00004287	
+L00004288	ContractRef: ContractName:Plans/00-plans-index.md, ContractName:Plans/Plan_To_Node_Compilation.md, ContractName:Plans/Automated_Testing_System.md, ContractName:Plans/Executor_Protocol.md, ContractName:Plans/Goal_Runtime_System.md
+L00004289	
+L00004290	
+L00004291	## Migration Coverage
+L00004292	
+L00004293	Original hash: `475b95ed4e8e89d86185b6089000b5eaecfe544af05c37b150e269696b4efebd`.
+L00004294	
+L00004295	Run-scoped proof artifacts:
+L00004296	- `Plans/.plan_migration/pds-20260611-002-atomize-planunits/original_hashes.json`
+L00004297	- `Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl`
+L00004298	- `Plans/.plan_migration/pds-20260611-002-atomize-planunits/coverage_map.jsonl`
+L00004299	- `Plans/.plan_migration/pds-20260611-002-atomize-planunits/anchor_aliases.json`
+L00004300	
+L00004301	Phase 2B batches 111 and 112 atomized source spans `00-plans-index-S0001` through `00-plans-index-S0024` into fine-grained PlanUnits `0PI-002` through `0PI-054`, except for structural heading/container dispositions. `00-plans-index-S0007` is the Plan map heading, `00-plans-index-S0025` is the PlanUnits heading/container, and `00-plans-index-S0027` is Migration Coverage metadata. `00-plans-index-S0026` is the retired `0PI-001` bridge disposition. `0PI-001` is retired to migration-lineage compatibility only and no longer uses `source_preserving_planunit` compile mode. These batches did not update Spec Lock, generated shards, evidence bundles, auto_decisions, or plan_graph, and they did not create WorkNodes, NodeSeeds, executable queues, final node manifests, or production build tasks.
+L00004302	
+L00004303	
+L00004304	## Ledger Compile Addendum - pldg-20260618-001-prd-planning-wizard
+L00004305	
+L00004306	This addendum compiles source-lineage obligations from bootstrap ledger `pldg-20260618-001-prd-planning-wizard` into this existing owner or consumer doc. It does not create WorkNodes, NodeSeeds, executable queues, GoalRuns, implementation files, generated governance artifacts, or production build tasks.
+L00004307	
+L00004308	### 0PI-059 - PRD Builder And Planning Wizard Owner Map
+L00004309	
+L00004310	```yaml
+L00004311	plan_unit_id: 0PI-059
+L00004312	unit_type: requirement
+L00004313	status: accepted
+L00004314	owner_doc: Plans/00-plans-index.md
+L00004315	canonical_text: 'Create Plans/PRD_Builder.md and Plans/Planning_Wizard.md using the New Plan Authoring Profile and make them authoritative owners for their respective finished-product workflows. Review, split, update, or retire Plans/chain-wizard.md and Plans/chain-wizard-flexibility.md into the new PRD Builder and Planning Wizard owners, preserving still-valid requirements and explicitly retiring stale workflow concepts. Run a doc-impact pass over Assistant Chat, Goal Runtime, Planning Ledger, Plan Document, Plan Compile, Automated Testing, Executor, Orchestrator, Personas, Models, FileSafe, Git/worktree, GitHub, permissions, contracts, commands, GUI, wiring, artifacts, indexes, and reference docs. After canonical owner and consumer docs are stable, regenerate allowed PlanUnit indexes, then shards, evidence, Spec Lock, plan graph, and governance decisions in the established separate phases. The finished-product feature formerly called
+L00004316	  Requirements Doc Builder is named PRD Builder everywhere in user-facing UI and canonical product documentation. The canonical product name is Planning Wizard; Chain Wizard and Plan Wizard are stale names that must be retired from active product prose, UI, commands, events, and contracts. PRD Builder captures and normalizes planning-intake product intent; Planning Wizard consumes an approved PRD Pack or normalized requirements input and resolves implementation-ready planning.'
+L00004317	gui_related: true
+L00004318	gui_classification_reason: Includes user-visible GUI/workspace/command/projection behavior.
+L00004319	depends_on: []
+L00004320	unblocks: []
+L00004321	acceptance_criteria:
+L00004322	- The live owner doc preserves every source atom listed in source_atom_ids without treating the ledger as canonical product prose.
+L00004323	- Exact tokens, negative constraints, owner hints, and accepted corrections remain available to future audits through this PlanUnit.
+L00004324	- No WorkNodes, NodeSeeds, executable queues, GoalRuns, implementation files, generated governance artifacts, or production build tasks are created by this compile.
+L00004325	validation_surfaces:
+L00004326	- python3 scripts/pm-plan-index.py validate
+L00004327	- python3 scripts/pm-bootstrap-ledger-validate.py Plans/ledgers/v2/pldg-20260618-001-prd-planning-wizard
+L00004328	risk_class: owner_drift
+L00004329	reasoning_tier: high
+L00004330	context_scope: ledger_to_plans_compile
+L00004331	implementation_surfaces:
+L00004332	- Plans/00-plans-index.md
+L00004333	- Plans/Plan_Document_System.md
+L00004334	- Plans/PRD_Builder.md
+L00004335	- Plans/Planning_Wizard.md
+L00004336	- Plans/Crosswalk.md
+L00004337	- Plans/Wiring_Matrix.md
+L00004338	- Plans/Planning_Ledger_System.md
+L00004339	- Plans/FinalGUISpec.md
+L00004340	node_compile_hint:
+L00004341	  mode: canonical_planunit_from_bootstrap_ledger
+L00004342	  create_worknodes: false
+L00004343	  create_nodeseeds: false
+L00004344	source_lineage:
+L00004345	- pldg-20260618-001-prd-planning-wizard:atom-0158
+L00004346	- pldg-20260618-001-prd-planning-wizard:atom-0159
+L00004347	- pldg-20260618-001-prd-planning-wizard:atom-0160
+L00004348	- pldg-20260618-001-prd-planning-wizard:atom-0161
+L00004349	- pldg-20260618-001-prd-planning-wizard:atom-0001
+L00004350	- pldg-20260618-001-prd-planning-wizard:atom-0002
+L00004351	- pldg-20260618-001-prd-planning-wizard:atom-0004
+L00004352	- Plans/ledgers/v2/pldg-20260618-001-prd-planning-wizard/source_shards/10-doc-and-contract-impact.md#SRC-IMPACT
+L00004353	- Plans/ledgers/v2/pldg-20260618-001-prd-planning-wizard/source_shards/01-naming-and-boundaries.md#SRC-NAMING
+L00004354	source_atom_ids:
+L00004355	- atom-0158
+L00004356	- atom-0159
+L00004357	- atom-0160
+L00004358	- atom-0161
+L00004359	- atom-0001
+L00004360	- atom-0002
+L00004361	- atom-0004
+L00004362	decision_refs:
+L00004363	- dec-0029
+L00004364	- dec-0001
+L00004365	- dec-0002
+L00004366	correction_refs:
+L00004367	- corr-0001
+L00004368	- corr-0002
+L00004369	preserved_exact_tokens:
+L00004370	- Plans/PRD_Builder.md
+L00004371	- Plans/Planning_Wizard.md
+L00004372	- PlanProfile
+L00004373	- Plans/chain-wizard.md
+L00004374	- Plans/chain-wizard-flexibility.md
+L00004375	- doc-impact pass
+L00004376	- PlanUnit index
+L00004377	- governance seal
+L00004378	- PRD Builder
+L00004379	- Requirements Doc Builder
+L00004380	- Planning Wizard
+L00004381	- Chain Wizard
+L00004382	- Plan Wizard
+L00004383	- planning-intake
+L00004384	- Approved PRD Pack
+L00004385	- implementation-ready planning
+L00004386	negative_constraints:
+L00004387	- Do not perform a blind filename or term replacement that preserves obsolete ownership and workflow.
+L00004388	- Do not hand-edit generated shards, evidence, Spec Lock, or plan graph during the conversational ledger phase.
+L00004389	- Do not preserve Requirements Doc Builder as a current product feature name except in explicitly historical migration notes.
+L00004390	- Do not use Chain Wizard or Plan Wizard as current terminology.
+L00004391	- Do not collapse PRD Builder and Planning Wizard into one indistinguishable interview.
+L00004392	compatibility_only_notes:
+L00004393	- Chain Wizard, Plan Wizard, Requirements Doc Builder, Run Chain Wizard later, and Start Chain are retained only for historical migration, source-lineage, and search compatibility.
+L00004394	- Current product prose must use PRD Builder, Planning Wizard, Approve PRD for Planning Wizard, and Approve And Build.
+L00004395	stale_retired_dispositions:
+L00004396	- Active Chain Wizard and Plan Wizard ownership is retired.
+L00004397	- Current owner routing is PRD Builder intake -> Planning Wizard planning -> Approve And Build -> Orchestrator Plan Compile.
+L00004398	owner_hints:
+L00004399	- Plans/Plan_Document_System.md
+L00004400	- Plans/00-plans-index.md
+L00004401	- Plans/PRD_Builder.md
+L00004402	- Plans/Planning_Wizard.md
+L00004403	- Plans/Crosswalk.md
+L00004404	- Plans/Wiring_Matrix.md
+L00004405	- Plans/Planning_Ledger_System.md
+L00004406	- Plans/FinalGUISpec.md
+L00004407	```
+L00004408	
+L00004409	### Native Discovery Owner Map (2026-06-22)
+L00004410	
+L00004411	The native fff-inspired discovery packet compiled from `pldg-20260622-001-fff` uses this owner split:
+L00004412	- `Plans/Tools.md` owns `DiscoveryService`, `discover_paths`, ranking/fallback/freshness behavior, ambient agent use, and the boundary between path/context discovery and content verification.
+L00004413	- `Plans/Contracts_V0.md` owns promoted shared discovery enum, event, and receipt envelope terms.
+L00004414	- `Plans/storage-plan.md`, `Plans/WorktreeGitImprovement.md`, `Plans/FileSafe.md`, and `Plans/Permissions_System.md` own persistence, remote/cache/SSH identity, no-leak filtering, permission snapshots, host trust, credential handles, and redaction.
+L00004415	- `Plans/FinalGUISpec.md`, `Plans/assistant-chat-design.md`, `Plans/UI_Command_Catalog.md`, `Plans/FileManager.md`, `Plans/Planning_Wizard.md`, and `Plans/PRD_Builder.md` consume discovery for user-visible pickers, type-ahead, Assistant Chat activity, and source selection.
+L00004416	- `Plans/orchestrator-subagent-integration.md`, `Plans/Executor_Protocol.md`, `Plans/Automated_Testing_System.md`, `Plans/Runtime_Artifacts_Panel.md`, and `Plans/Plan_To_Node_Compilation.md` consume discovery for agent orientation, verification handoff, conformance tests, receipt browsing, and future-boundary-only Plan-to-Node references.
+L00004417	
+L00004418	Cursor-style regex acceleration remains the Instant Grep / SparseNgramIndex content-search lane. Direct `fff` and OpenCode implementation details are lineage/reference/prototype-only unless Jared changes direction. Current product prose uses `PRD Builder` and `Planning Wizard`; `Chain Wizard`, `Plan Wizard`, `Requirements Doc Builder`, and `Start Chain` remain historical or compatibility-only terms.
+L00004419	
+L00004420	```yaml
+L00004421	plan_unit_id: 0PI-060
+L00004422	unit_type: owner_map
+L00004423	status: accepted
+L00004424	owner_doc: Plans/00-plans-index.md
+L00004425	canonical_text: >-
+L00004426	  Native PM-owned fff-inspired discovery is routed as one shared path/context discovery substrate. Tools owns DiscoveryService and discover_paths behavior; Contracts_V0 owns promoted shared enum/event/receipt envelopes; storage, worktree, FileSafe, and Permissions owners govern persistence, remote/cache/SSH identity, no-leak filtering, permission snapshots, host trust, credential handles, and redaction; GUI and agent docs consume the shared substrate without re-owning ranking or schema semantics. Instant Grep, grep, and codesearch remain the content regex and exact content verification owners. Direct fff and OpenCode details are source-lineage/reference/prototype-only, and this compile creates no WorkNodes, NodeSeeds, executable queues, final node manifests, implementation files, production build tasks, Spec_Lock, shards, evidence, plan_graph, or auto_decisions.
+L00004427	gui_related: false
+L00004428	gui_classification_reason: This is owner-map and governance routing for discovery behavior, not direct GUI implementation.
+L00004429	depends_on: [0PI-014, 0PI-029]
+L00004430	unblocks: [F3-399, ACD-422, OSI-429, ATS-011]
+L00004431	acceptance_criteria:
+L00004432	  - Owner routing points behavior to Tools and shared schema envelopes to Contracts_V0.
+L00004433	  - Cursor-style regex acceleration remains Instant Grep / SparseNgramIndex, not DiscoveryService.
+L00004434	  - fff and OpenCode are preserved only as source-lineage/reference/prototype evidence unless product direction changes.
+L00004435	  - Current product terms remain PRD Builder and Planning Wizard, with legacy wizard names compatibility-only.
+L00004436	  - CV-291, T-160, T-161, and T-162 are owner-routing references from this index map, not PlanUnit build-order prerequisites.
+L00004437	validation_surfaces:
+L00004438	  - python3 scripts/pm-plan-index.py validate
+L00004439	  - python3 scripts/pm-plans-verify.py run-gates
+L00004440	risk_class: owner_drift
+L00004441	reasoning_tier: standard
+L00004442	context_scope: cross_doc_owner_map
+L00004443	implementation_surfaces: [Plans/00-plans-index.md, Plans/Tools.md, Plans/Contracts_V0.md, Plans/storage-plan.md, Plans/FinalGUISpec.md]
+L00004444	node_compile_hint: {mode: owner_map_only, create_worknodes: false, create_nodeseeds: false}
+L00004445	source_lineage:
+L00004446	  - pldg-20260622-001-fff:atom-0007
+L00004447	  - pldg-20260622-001-fff:atom-0011
+L00004448	  - pldg-20260622-001-fff:atom-0014
+L00004449	  - pldg-20260622-001-fff:atom-0015
+L00004450	  - pldg-20260622-001-fff:atom-0016
+L00004451	  - pldg-20260622-001-fff:atom-0017
+L00004452	  - pldg-20260622-001-fff:atom-0018
+L00004453	  - pldg-20260622-001-fff:atom-0019
+L00004454	  - pldg-20260622-001-fff:atom-0020
+L00004455	  - pldg-20260622-001-fff:atom-0026
+L00004456	  - pldg-20260622-001-fff:atom-0031
+L00004457	  - pldg-20260622-001-fff:atom-0034
+L00004458	  - pldg-20260622-001-fff:atom-0035
+L00004459	  - pldg-20260622-001-fff:atom-0036
+L00004460	  - pldg-20260622-001-fff:atom-0046
+L00004461	  - pldg-20260622-001-fff:atom-0047
+L00004462	  - pldg-20260622-001-fff:atom-0048
+L00004463	  - pldg-20260622-001-fff:atom-0049
+L00004464	  - pldg-20260622-001-fff:atom-0050
+L00004465	  - pldg-20260622-001-fff:atom-0060
+L00004466	  - pldg-20260622-001-fff:atom-0063
+L00004467	  - pldg-20260622-001-fff:atom-0076
+L00004468	  - pldg-20260622-001-fff:atom-0088
+L00004469	  - pldg-20260622-001-fff:atom-0090
+L00004470	  - pldg-20260622-001-fff:atom-0091
+L00004471	  - pldg-20260622-001-fff:atom-0092
+L00004472	  - pldg-20260622-001-fff:atom-0093
+L00004473	  - pldg-20260622-001-fff:atom-0094
+L00004474	  - pldg-20260622-001-fff:atom-0095
+L00004475	  - pldg-20260622-001-fff:state/doc_impact_matrix.json#DIM-001
+L00004476	  - pldg-20260622-001-fff:state/subagent_compile_proposals.json#Helmholtz
+L00004477	source_atom_ids: [atom-0007, atom-0011, atom-0014, atom-0015, atom-0016, atom-0017, atom-0018, atom-0019, atom-0020, atom-0026, atom-0031, atom-0034, atom-0035, atom-0036, atom-0046, atom-0047, atom-0048, atom-0049, atom-0050, atom-0060, atom-0063, atom-0076, atom-0088, atom-0090, atom-0091, atom-0092, atom-0093, atom-0094, atom-0095]
+L00004478	preserved_exact_tokens:
+L00004479	  - "native fff-inspired file discovery"
+L00004480	  - "DiscoveryService"
+L00004481	  - "discover_paths"
+L00004482	  - "Instant Grep"
+L00004483	  - "SparseNgramIndex"
+L00004484	  - "direct fff"
+L00004485	  - "OpenCode"
+L00004486	  - "PRD Builder"
+L00004487	  - "Planning Wizard"
+L00004488	  - "Chain Wizard"
+L00004489	  - "Plan Wizard"
+L00004490	negative_constraints:
+L00004491	  - Do not compile OpenCode or fff prose as product authority.
+L00004492	  - Do not create a second regex/content-search canon beside Instant Grep, grep, or codesearch.
+L00004493	  - Do not revive Chain Wizard, Plan Wizard, Requirements Doc Builder, or Start Chain as current product terms.
+L00004494	  - Do not create WorkNodes, NodeSeeds, executable queues, final node manifests, implementation files, production build tasks, Spec_Lock, shards, evidence, plan_graph, or auto_decisions from this compile.
+L00004495	owner_hints: [Plans/00-plans-index.md, Plans/Tools.md, Plans/Contracts_V0.md, Plans/storage-plan.md, Plans/FinalGUISpec.md]
+L00004496	```
+L00004497	
+L00004498	## Ledger Compile Addendum - pldg-20260624-001-provider-updates
+L00004499	
+L00004500	This addendum compiles source-lineage obligations from bootstrap ledger `pldg-20260624-001-provider-updates` into this index. It registers owner routing only; detailed behavior remains owned by the referenced Plans docs. It does not create WorkNodes, NodeSeeds, executable queues, implementation files, generated governance artifacts, or production build tasks.
+L00004501	
+L00004502	### 0PI-061 - Provider Updates Owner Map And Retired Gemini CLI Anchor
+L00004503	
+L00004504	```yaml
+L00004505	plan_unit_id: 0PI-061
+L00004506	unit_type: requirement
+L00004507	status: accepted
+L00004508	owner_doc: Plans/00-plans-index.md
+L00004509	canonical_text: >-
+L00004510	  Provider updates from ledger pldg-20260624-001-provider-updates route to the existing provider owner docs instead of a new owner doc. Gemini CLI and gemini_cli are retired from active provider support and preserved only as compatibility/source-lineage tokens; Gemini Direct remains the API-key-backed direct provider; Antigravity CLI replaces Gemini CLI for the active CLI-backed Google/agent route. Provider support is now Provider -> models, with same-named models allowed under multiple provider entries, direct providers and CLI-backed providers kept separate, and coding-plan/provider-media rows marked green only from route-level E2E proof or explicit capability-gated/unverified status.
+L00004511	gui_related: false
+L00004512	gui_classification_reason: This is index owner routing and stale-anchor disposition, not visual presentation.
+L00004513	depends_on: [PLS-001, PDS-005]
+L00004514	unblocks: [MS-113, MA-062, CBP-019, MGAC-094, F3-400]
+L00004515	acceptance_criteria:
+L00004516	  - Gemini CLI appears only as retired/source-lineage/compatibility terminology after this compile.
+L00004517	  - Provider updates route to Models_System, Multi-Account, CLI_Bridged_Providers, Media_Generation_and_Capabilities, Contracts_V0, usage-feature, FinalGUISpec, Provider_OpenCode, BinaryLocator_Spec, Tools, Permissions_System, Runtime_Artifacts_Panel, and Project_Output_Artifacts as owners or consumers.
+L00004518	  - The index does not create WorkNodes, NodeSeeds, executable queues, implementation files, generated governance artifacts, or production build tasks.
+L00004519	validation_surfaces:
+L00004520	  - python3 scripts/pm-plan-index.py validate
+L00004521	  - python3 scripts/pm-bootstrap-ledger-validate.py Plans/ledgers/v2/pldg-20260624-001-provider-updates
+L00004522	risk_class: provider_owner_routing_drift
+L00004523	reasoning_tier: high
+L00004524	context_scope: provider_updates_owner_map
+L00004525	implementation_surfaces:
+L00004526	  - Plans/00-plans-index.md
+L00004527	  - Plans/Models_System.md
+L00004528	  - Plans/Multi-Account.md
+L00004529	  - Plans/CLI_Bridged_Providers.md
+L00004530	  - Plans/Media_Generation_and_Capabilities.md
+L00004531	  - Plans/Contracts_V0.md
+L00004532	  - Plans/usage-feature.md
+L00004533	node_compile_hint:
+L00004534	  mode: owner_map_only
+L00004535	  create_worknodes: false
+L00004536	  create_nodeseeds: false
+L00004537	source_lineage:
+L00004538	  - pldg-20260624-001-provider-updates:atom-0005
+L00004539	  - pldg-20260624-001-provider-updates:atom-0015
+L00004540	  - pldg-20260624-001-provider-updates:atom-0016
+L00004541	  - pldg-20260624-001-provider-updates:atom-0024
+L00004542	  - pldg-20260624-001-provider-updates:atom-0025
+L00004543	  - pldg-20260624-001-provider-updates:atom-0115
+L00004544	  - pldg-20260624-001-provider-updates:atom-0123
+L00004545	source_atom_ids: [atom-0005, atom-0015, atom-0016, atom-0024, atom-0025, atom-0115, atom-0123]
+L00004546	decision_refs: [dec-0002, dec-0004, dec-0005, dec-0008, dec-0034]
+L00004547	correction_refs: [corr-0001, corr-0003, corr-0012]
+L00004548	preserved_exact_tokens:
+L00004549	  - "Kill Gemini cli support"
+L00004550	  - "it’s being turned off, so no one can use it"
+L00004551	  - "It has to be replaced by antigravity"
+L00004552	  - "No, kill Gemini completely"
+L00004553	  - "Gemini direct provider via api is ok to keep"
+L00004554	  - "Provider -> models"
+L00004555	  - "gemini_cli"
+L00004556	  - "Gemini CLI"
+L00004557	  - "GEMINI_CLI_HOME"
+L00004558	  - "exactly 7 provider entries"
+L00004559	  - "platform_specs.rs"
+L00004560	  - "compatibility-only"
+L00004561	  - "retired-token"
+L00004562	negative_constraints:
+L00004563	  - Do not preserve Gemini CLI as active provider support.
+L00004564	  - Do not silently alias gemini_cli to antigravity_cli.
+L00004565	  - Do not collapse provider/model identity across providers that expose the same model name.
+L00004566	  - Do not rely on removed Rust/Iced or platform_specs.rs anchors as implementation authority.
+L00004567	owner_hints:
+L00004568	  - Plans/00-plans-index.md
+L00004569	  - Plans/CLI_Bridged_Providers.md
+L00004570	  - Plans/Multi-Account.md
+L00004571	  - Plans/Models_System.md
+L00004572	  - Plans/Contracts_V0.md
+L00004573	  - Plans/usage-feature.md
+L00004574	  - Plans/Media_Generation_and_Capabilities.md
+L00004575	```
+L00004576	
+L00004577	
+L00004578	## Ledger Compile Addendum - pldg-20260626-001-feature-name
+L00004579	
+L00004580	This addendum compiles accepted source-lineage obligations from bootstrap ledger `pldg-20260626-001-feature-name` into this existing owner/consumer doc. It creates canonical PlanUnits only; it does not create WorkNodes, NodeSeeds, executable queues, final node manifests, implementation files, generated governance artifacts, or production build tasks.
+L00004581	
+L00004582	### 0PI-062 - Miscellaneous History Vision Bridge Teach Owner Map
+L00004583	
+L00004584	```yaml
+L00004585	plan_unit_id: 0PI-062
+L00004586	unit_type: requirement
+L00004587	status: accepted
+L00004588	owner_doc: Plans/00-plans-index.md
+L00004589	canonical_text: The miscellaneous feature ledger pldg-20260626-001-feature-name compiles into existing owner docs
+L00004590	  rather than a new feature owner doc. Historical wizard-created PRD/Plan documents and historical Orchestrator
+L00004591	  runs route through Orchestrator History, history projection/storage, output/export, runtime artifact, permission,
+L00004592	  command, and testing owners. The PM-native vision_bridge / see_image capability routes through Tools, Prompt Pipeline,
+L00004593	  Models, Media Capabilities, Permissions, FileSafe, Runtime Artifacts, Assistant Chat, usage, OpenCode-provider
+L00004594	  lineage, and tests. Teach is the feature and Teacher is the Persona used by it; its threaded guidance, model setting,
+L00004595	  PM knowledge substrate, help/glossary content, guided GUI, command invocation, memory capture, handoff, and tests
+L00004596	  route to the existing chat/persona/model/prompt/GUI/command/storage/glossary/testing owners. PMConcept.html is
+L00004597	  source-lineage only and must not become final UI canon.
+L00004598	gui_related: false
+L00004599	gui_classification_reason: Owner routing and compile registration are index/governance metadata, not GUI implementation.
+L00004600	depends_on:
+L00004601	- PDS-005
+L00004602	- PLS-011
+L00004603	unblocks:
+L00004604	- OP-026
+L00004605	- T-165
+L00004606	- ACD-426
+L00004607	acceptance_criteria:
+L00004608	- Live PlanUnit exists in the adjudicated owner doc with reciprocal ledger source_lineage.
+L00004609	- Exact source tokens, negative constraints, owner hints, and user corrections are preserved in PlanUnit metadata.
+L00004610	- No WorkNodes, NodeSeeds, executable queues, final node manifests, implementation files, or production build tasks
+L00004611	  are created by this compile.
+L00004612	validation_surfaces:
+L00004613	- python3 scripts/pm-bootstrap-ledger-validate.py Plans/ledgers/v2/pldg-20260626-001-feature-name
+L00004614	- python3 scripts/pm-plan-index.py validate
+L00004615	- git diff --check
+L00004616	risk_class: owner_routing_drift
+L00004617	reasoning_tier: high
+L00004618	context_scope: misc_history_vision_teach_owner_map
+L00004619	implementation_surfaces:
+L00004620	- Plans/00-plans-index.md
+L00004621	node_compile_hint:
+L00004622	  mode: owner_map_only
+L00004623	  create_worknodes: false
+L00004624	  create_nodeseeds: false
+L00004625	source_lineage:
+L00004626	- pldg-20260626-001-feature-name:atom-0007
+L00004627	- pldg-20260626-001-feature-name:atom-0008
+L00004628	- pldg-20260626-001-feature-name:atom-0009
+L00004629	- pldg-20260626-001-feature-name:atom-0069
+L00004630	- pldg-20260626-001-feature-name:atom-0090
+L00004631	- pldg-20260626-001-feature-name:atom-0150
+L00004632	- pldg-20260626-001-feature-name:atom-0151
+L00004633	- pldg-20260626-001-feature-name:atom-0152
+L00004634	- pldg-20260626-001-feature-name:atom-0153
+L00004635	- pldg-20260626-001-feature-name:atom-0154
+L00004636	- chat:misc-history-scope
+L00004637	- Plans/PRD_Builder.md
+L00004638	- Plans/Planning_Wizard.md
+L00004639	- Plans/Project_Output_Artifacts.md
+L00004640	- Plans/Runtime_Artifacts_Panel.md
+L00004641	- Plans/Orchestrator_Page.md
+L00004642	- chat:opencode-see-image-request
+L00004643	- chat:teacher-feature-initial-framing
+L00004644	- chat:teach-teacher-correction
+L00004645	- Plans/Personas.md#RESERVED-PERSONAS
+L00004646	- Plans/Personas.md#CORE-PERSONA-CATALOG
+L00004647	- Plans/assistant-chat-design.md#6-Teach
+L00004648	- chat:teach-bundle-accepted-pmconcept-reference
+L00004649	- Concepts/PMConcept.html
+L00004650	- chat:assistant-chat-threads-modeled-in-concept
+L00004651	- Concepts/PMConcept.html#chat-panel
+L00004652	- Concepts/PMConcept.html#chat-thread-sidebar
+L00004653	- Concepts/PMConcept.html#switchToChatThread
+L00004654	- chat:pmconcept-gui-reference
+L00004655	- Concepts/PMConcept.html#orch-tab-history
+L00004656	- Concepts/PMConcept.html#orch-panel-history
+L00004657	- Concepts/PMConcept.html#Screenshot-to-Chat
+L00004658	- Concepts/PMConcept.html#composer-chip
+L00004659	- Concepts/PMConcept.html#activity-card
+L00004660	- Concepts/PMConcept.html#requested-effective-model
+L00004661	source_atom_ids:
+L00004662	- atom-0007
+L00004663	- atom-0008
+L00004664	- atom-0009
+L00004665	- atom-0069
+L00004666	- atom-0090
+L00004667	- atom-0150
+L00004668	- atom-0151
+L00004669	- atom-0152
+L00004670	- atom-0153
+L00004671	- atom-0154
+L00004672	decision_refs:
+L00004673	- dec-0002
+L00004674	- dec-0014
+L00004675	- dec-0018
+L00004676	- dec-0020
+L00004677	- dec-0024
+L00004678	correction_refs:
+L00004679	- corr-0001
+L00004680	preserved_exact_tokens:
+L00004681	- a bunch of miscellaneous things
+L00004682	- The fist one
+L00004683	- see historical documents that are made
+L00004684	- by documents I mean the plans and PRD docs that are created by the wizard
+L00004685	- plans and PRD docs
+L00004686	- created by the wizard
+L00004687	- historical orchestrator runs in PM
+L00004688	- historical orchestrator runs
+L00004689	- opencode-see-image
+L00004690	- see_image
+L00004691	- models models without vision
+L00004692	- adopt it to PM
+L00004693	- image
+L00004694	- screenshot
+L00004695	- Teach feature
+L00004696	- Teacher persona
+L00004697	- Teacher is also a persona(used for the teacher feature)
+L00004698	- requested_persona
+L00004699	- effective_persona
+L00004700	- For the Gui
+L00004701	- PMConcept.html
+L00004702	- That isnt the final form
+L00004703	- just a concept
+L00004704	- will give you an idea
+L00004705	- figure the gui out for these features
+L00004706	- The assistant chat window and threads are modeled in the concept too.
+L00004707	- Assistant Chat
+L00004708	- Teacher
+L00004709	- thread
+L00004710	- persona
+L00004711	- help icon
+L00004712	- new thread
+L00004713	- Orchestrator page
+L00004714	- History
+L00004715	- tab
+L00004716	- Progress
+L00004717	- Plan Compile
+L00004718	- Node Graph
+L00004719	- Evidence
+L00004720	- Ledger
+L00004721	- Screenshot to Chat
+L00004722	- composer-chip
+L00004723	- activity-card
+L00004724	- Requested Model
+L00004725	- Effective Model
+L00004726	- inspect/rerun
+L00004727	- provider/model disclosure
+L00004728	- dense workbench
+L00004729	- activity rail
+L00004730	- page tabs
+L00004731	- resizable chat panel
+L00004732	- floating chat
+L00004733	- compact chips
+L00004734	- role badges
+L00004735	- runtime popovers
+L00004736	- activity cards
+L00004737	negative_constraints:
+L00004738	- Do not treat later miscellaneous items as already specified by this first item.
+L00004739	- Do not collapse PRD Builder outputs, Planning Wizard outputs, Plan packs, and runtime artifacts into an anonymous
+L00004740	  flat document list.
+L00004741	- Do not treat mutable draft projections as the same thing as immutable approved packs or historical snapshots.
+L00004742	- Do not show historical runs as ambiguous text summaries without stable run identity.
+L00004743	- Do not lose links to artifacts, evidence, ledger records, usage, or receipts when a run becomes historical.
+L00004744	- Do not let non-vision models guess image contents when a bridge is available.
+L00004745	- Do not treat image input as image generation.
+L00004746	- Do not compile this requirement to canonical Plans without a future explicit compile request.
+L00004747	- Do not introduce `requested_persona_id` or `effective_persona_id` as canonical fields; those are stale aliases
+L00004748	  in Personas.md.
+L00004749	- Do not make Teacher a hidden subagent for this feature; existing Plans say `teacher` is user-facing and not subagent-only.
+L00004750	- Do not treat PMConcept.html as final or canonical UI truth.
+L00004751	- Do not copy the concept HTML/CSS directly into canonical Plans or implementation.
+L00004752	- Do not let the concept override accepted ledger decisions or canonical Plans owner docs during a future compile.
+L00004753	- Do not invent a separate Teach-only chat surface when the Assistant Chat thread model can carry Teacher.
+L00004754	- Do not lose Teacher persona/model/source/context disclosure when launching from a help icon or summon phrase.
+L00004755	- Do not hide thread state such as working, unread, blocked, degraded, draft, archived, or handoff state when relevant.
+L00004756	- Do not use PMConcept History table columns as the final complete schema when accepted ledger History atoms specify
+L00004757	  deeper document/run/package comparison.
+L00004758	- Do not let concept-only tab naming override future canonical owner placement.
+L00004759	- Do not make vision bridge artifacts feel like detached plugin output.
+L00004760	- Do not hide requested/effective model or fallback state when the bridge uses a separate vision-capable route.
+L00004761	- Do not replace accepted PM-owned permission/disclosure behavior with PMConcept demo-only controls.
+L00004762	- Do not freeze PMConcept colors, CSS, demo data, or HTML class names as canonical implementation details.
+L00004763	- Do not use PMConcept visual inspiration to skip responsive, accessibility, overflow, or actual Slint/Rust feasibility
+L00004764	  checks.
+L00004765	owner_hints:
+L00004766	- Plans/PRD_Builder.md
+L00004767	- Plans/Planning_Wizard.md
+L00004768	- Plans/Project_Output_Artifacts.md
+L00004769	- Plans/Runtime_Artifacts_Panel.md
+L00004770	- Plans/storage-plan.md
+L00004771	- Plans/Contracts_V0.md
+L00004772	- Plans/Orchestrator_Page.md
+L00004773	- Plans/Media_Generation_and_Capabilities.md
+L00004774	- Plans/Models_System.md
+L00004775	- Plans/Prompt_Pipeline.md
+L00004776	- Plans/Tools.md
+L00004777	- Plans/FinalGUISpec.md
+L00004778	- Plans/assistant-chat-design.md
+L00004779	- Plans/Personas.md
+L00004780	- Plans/UI_Command_Catalog.md
+L00004781	- Plans/Permissions_System.md
+L00004782	compatibility_only_notes:
+L00004783	- Concept/source-lineage references are preserved for routing and audit only; they do not make external plugins
+L00004784	  or PMConcept.html canonical implementation source.
+L00004785	```
+L00004786	
+L00004787	## Ledger Compile Addendum - pldg-20260627-001-feature-intake
+L00004788	
+L00004789	This addendum records the owner-map impact of compiling bootstrap ledger `pldg-20260627-001-feature-intake`. Product requirements remain in the owner docs listed by the PlanUnit index. This addendum does not create WorkNodes, NodeSeeds, executable queues, GoalRuns, implementation files, generated governance artifacts, or production build tasks.
+L00004790	
+L00004791	### 0PI-063 - Miscellaneous Feature Intake Compile Owner Map
+L00004792	
+L00004793	```yaml
+L00004794	plan_unit_id: 0PI-063
+L00004795	unit_type: owner_map
+L00004796	status: accepted
+L00004797	owner_doc: Plans/00-plans-index.md
+L00004798	canonical_text: >-
+L00004799	  Bootstrap ledger pldg-20260627-001-feature-intake compiled four miscellaneous feature lanes into canonical owner docs:
+L00004800	  inline visualizer v2, notifications/sounds, manual compaction readiness, and default-on user-disableable DRY Method.
+L00004801	  The live owner docs are assistant-chat-design, FinalGUISpec, storage-plan, Permissions_System, Runtime_Artifacts_Panel,
+L00004802	  Automated_Testing_System, Contracts_V0, UI_Command_Catalog, Wiring_Matrix, agent-rules-context, Prompt_Pipeline,
+L00004803	  DRY_Rules, Decision_Policy, orchestrator-subagent-integration, interview-subagent-integration, and usage-feature.
+L00004804	  Plans/newfeatures.md, PeonPing/OpenPeon references, and external provider docs remain source-lineage or compatibility
+L00004805	  references only unless a live owner PlanUnit says otherwise.
+L00004806	gui_related: false
+L00004807	gui_classification_reason: This index entry records owner routing and compile lineage; GUI behavior is owned by the referenced GUI PlanUnits.
+L00004808	depends_on: []
+L00004809	unblocks: []
+L00004810	acceptance_criteria:
+L00004811	  - The index identifies each compiled lane and the canonical owner-doc set.
+L00004812	  - Source-lineage-only materials are not treated as live product owners.
+L00004813	  - No WorkNodes, NodeSeeds, executable queues, GoalRuns, implementation files, generated governance artifacts, or production build tasks are created.
+L00004814	validation_surfaces:
+L00004815	  - python3 scripts/pm-plan-index.py validate
+L00004816	  - git diff --check
+L00004817	risk_class: owner_map_drift
+L00004818	reasoning_tier: standard
+L00004819	context_scope: miscellaneous_feature_intake_compile_owner_map
+L00004820	implementation_surfaces:
+L00004821	  - Plans/00-plans-index.md
+L00004822	node_compile_hint:
+L00004823	  mode: miscellaneous_feature_intake_owner_map
+L00004824	  create_worknodes: false
+L00004825	  create_nodeseeds: false
+L00004826	source_lineage:
+L00004827	  - Plans/ledgers/v2/pldg-20260627-001-feature-intake/state/source_compile_readiness_integration_matrix_20260628.json
+L00004828	  - Plans/ledgers/v2/pldg-20260627-001-feature-intake/state/implementation_readiness_fourth_recheck_20260628.json
+L00004829	  - Plans/ledgers/v2/pldg-20260627-001-feature-intake/state/current.json
+L00004830	preserved_exact_tokens:
+L00004831	  - "inline visualizer v2"
+L00004832	  - "notifications"
+L00004833	  - "toast"
+L00004834	  - "Slack"
+L00004835	  - "Discord"
+L00004836	  - "sound"
+L00004837	  - "ntfy"
+L00004838	  - "Pushover"
+L00004839	  - "Telegram"
+L00004840	  - "Compact Now"
+L00004841	  - "using the dry method"
+L00004842	  - "default"
+L00004843	  - "the user can turn it off"
+L00004844	  - "Plans/newfeatures.md"
+L00004845	  - "PeonPing"
+L00004846	  - "OpenPeon"
+L00004847	negative_constraints:
+L00004848	  - Do not treat Plans/newfeatures.md as a live owner for these compiled lanes.
+L00004849	  - Do not treat PeonPing/OpenPeon compatibility references as bundled assets or runtime imports.
+L00004850	  - Do not call this compile governance sealed until an explicit governance seal phase refreshes generated governance artifacts.
+L00004851	owner_hints:
+L00004852	  - Plans/00-plans-index.md
+L00004853	  - Plans/assistant-chat-design.md
+L00004854	  - Plans/FinalGUISpec.md
+L00004855	  - Plans/storage-plan.md
+L00004856	  - Plans/Permissions_System.md
+L00004857	  - Plans/Runtime_Artifacts_Panel.md
+L00004858	  - Plans/Automated_Testing_System.md
+L00004859	  - Plans/Contracts_V0.md
+L00004860	  - Plans/UI_Command_Catalog.md
+L00004861	  - Plans/Wiring_Matrix.md
+L00004862	  - Plans/agent-rules-context.md
+L00004863	  - Plans/Prompt_Pipeline.md
+L00004864	  - Plans/DRY_Rules.md
+L00004865	  - Plans/Decision_Policy.md
+L00004866	  - Plans/orchestrator-subagent-integration.md
+L00004867	  - Plans/interview-subagent-integration.md
+L00004868	  - Plans/usage-feature.md
+L00004869	```
+L00004870	
+L00004871	## Ledger Compile Addendum - pldg-20260629-001-feature-name
+L00004872	
+L00004873	This addendum registers the Free Models compile owner map. It does not create WorkNodes, NodeSeeds, executable queues, generated governance artifacts, or implementation files.
+L00004874	
+L00004875	### 0PI-064 - Free Models Compile Owner Map
+L00004876	
+L00004877	```yaml
+L00004878	plan_unit_id: 0PI-064
+L00004879	unit_type: owner_map
+L00004880	status: accepted
+L00004881	owner_doc: Plans/00-plans-index.md
+L00004882	canonical_text: >-
+L00004883	  The Free Models ledger compiles into existing owner docs rather than a new Free Models plan doc. Models_System owns provider/model wrapper identity, Auto Apply source/cadence/runtime-adapter policy, top-10 precedence, and availability reason semantics. Multi-Account owns underlying provider/account setup and shared pressure/cooldown. usage-feature owns paid/costed fallback gates, Usage receipts, and immutable request provenance. Contracts_V0 owns import, adapter, identity, and route eligibility contracts. storage-plan owns import snapshots, aliases, currentness, activation/quarantine/rollback, and diagnostics storage. Permissions_System owns source trust, credential custody, probe, and live-call authority. FileSafe owns upstream side-effect blocking. FinalGUISpec owns visible catalog/settings/top-10/setup/update UX. Runtime_Artifacts_Panel owns diagnostic and provenance projections. Executor_Protocol owns dispatch fallback, in-flight isolation, and adapter activation. Prompt_Pipeline owns requested/effective route snapshot handoff. Provider_OpenCode remains adjacent/reference-only unless a concrete OpenCode-specific Free Models hook is later accepted.
+L00004884	gui_related: false
+L00004885	gui_classification_reason: This index entry records owner routing and compile lineage; GUI behavior is owned by referenced GUI PlanUnits.
+L00004886	depends_on: []
+L00004887	unblocks: []
+L00004888	acceptance_criteria:
+L00004889	  - The index records the canonical owner-doc set for Free Models.
+L00004890	  - Provider_OpenCode is explicitly adjacent/reference-only for this compile.
+L00004891	  - No new Free Models owner doc, WorkNodes, NodeSeeds, executable queues, generated governance artifacts, or implementation files are created.
+L00004892	validation_surfaces:
+L00004893	  - python3 scripts/pm-plan-index.py validate
+L00004894	  - git diff --check
+L00004895	risk_class: owner_map_drift
+L00004896	reasoning_tier: standard
+L00004897	context_scope: free_models_compile_owner_map
+L00004898	implementation_surfaces:
+L00004899	  - Plans/00-plans-index.md
+L00004900	node_compile_hint:
+L00004901	  mode: free_models_owner_map
+L00004902	  create_worknodes: false
+L00004903	  create_nodeseeds: false
+L00004904	source_lineage:
+L00004905	  - Plans/ledgers/v2/pldg-20260629-001-feature-name/state/current.json
+L00004906	  - Plans/ledgers/v2/pldg-20260629-001-feature-name/state/handoff.json
+L00004907	  - Plans/ledgers/v2/pldg-20260629-001-feature-name/records/design_atoms.jsonl
+L00004908	  - Plans/ledgers/v2/pldg-20260629-001-feature-name/source_shards/free_coding_models_upstream_inspection_20260629.json
+L00004909	  - Plans/ledgers/v2/pldg-20260629-001-feature-name/source_shards/free_coding_models_temp_checkout_inspection_20260629.json
+L00004910	source_atom_ids: [atom-0268, atom-0272, atom-0273, atom-0274, atom-0297, atom-0298]
+L00004911	preserved_exact_tokens:
+L00004912	  - "Free Models"
+L00004913	  - "Provider_OpenCode adjacent/reference-only"
+L00004914	  - "Do not compile Free Models ownership into Provider_OpenCode by default"
+L00004915	  - "No canonical Plans, PlanUnit index, governance, WorkNode, NodeSeed, executable queue, runtime/build, or implementation artifacts were touched"
+L00004916	negative_constraints:
+L00004917	  - Do not compile Free Models ownership into Provider_OpenCode by default; keep Provider_OpenCode adjacent/reference-only unless a concrete hook is later accepted.
+L00004918	  - Do not call this compile governance sealed until an explicit governance seal phase refreshes generated governance artifacts.
+L00004919	owner_hints:
+L00004920	  - Plans/00-plans-index.md
+L00004921	  - Plans/Models_System.md
+L00004922	  - Plans/Multi-Account.md
+L00004923	  - Plans/usage-feature.md
+L00004924	  - Plans/Contracts_V0.md
+L00004925	  - Plans/storage-plan.md
+L00004926	  - Plans/Permissions_System.md
+L00004927	  - Plans/FinalGUISpec.md
+L00004928	  - Plans/Runtime_Artifacts_Panel.md
+L00004929	  - Plans/Executor_Protocol.md
+L00004930	  - Plans/Prompt_Pipeline.md
+L00004931	  - Plans/FileSafe.md
+L00004932	```
+L00004933	
+L00004934	## Ledger Compile Addendum - pldg-20260630-001-feature-intake
+L00004935	
+L00004936	This addendum registers the containerized-hosts compile owner map. It does not create WorkNodes, NodeSeeds, executable queues, generated governance artifacts, implementation files, runtime dispatch, production build tasks, or a governance seal.
+L00004937	
+L00004938	### 0PI-065 - Containerized Hosts Compile Owner Map
+L00004939	
+L00004940	```yaml
+L00004941	plan_unit_id: 0PI-065
+L00004942	unit_type: owner_map
+L00004943	status: accepted
+L00004944	owner_doc: Plans/00-plans-index.md
+L00004945	canonical_text: >-
+L00004946	  The containerized-hosts ledger compiles into existing owner docs rather than a new Coasts or Hosts plan doc.
+L00004947	  Containers_Registry_and_Unraid owns PM-native containerized-host capability, Docker Manager ownership, the
+L00004948	  RuntimeHostFamilyProfile whole-MVP matrix, and Docker/Hosts operational boundaries. Contracts_V0 owns
+L00004949	  host_capability_ref, host_profile_id, host instance/assignment/receipt/blocker envelopes, HostCapabilityCommand,
+L00004950	  and HostOperationRequest. storage-plan owns persisted host profile, instance, assignment, build artifact,
+L00004951	  port_access_record, receipt, projection, cleanup, and retention records. Permissions_System and FileSafe own host
+L00004952	  trust, approval, secret, mount, network, Docker socket, remote-side-effect, and FileSafe gates. Automated_Testing_System
+L00004953	  owns the containerized-host adapter, Compose-primary test path, and TestRunReceipt proof fields. Executor_Protocol,
+L00004954	  Run_Modes, Tools, orchestrator-subagent-integration, assistant-chat-design, Orchestrator_Page, Run_Graph_View,
+L00004955	  FinalGUISpec, UI_Command_Catalog, and Runtime_Artifacts_Panel consume those owner contracts for execution lanes,
+L00004956	  agent use, visible readiness, routed Docker/Hosts navigation, command envelopes, and evidence projection without
+L00004957	  becoming host mutation authorities.
+L00004958	gui_related: false
+L00004959	gui_classification_reason: This index entry records owner routing and compile lineage; GUI behavior is owned by referenced GUI PlanUnits.
+L00004960	depends_on: [PDS-003, PNC-001]
+L00004961	unblocks: []
+L00004962	acceptance_criteria:
+L00004963	  - Containerized-hosts ownership is registered without creating a separate Coasts website, a new Activity Bar slot, or a new owner doc.
+L00004964	  - "`Docker/Hosts` remains a routed primary-content page/lab opened from Docker Manager and cross-surface links while `docker_manager` remains the Activity Bar side-panel owner and command namespace."
+L00004965	  - Coasts and PMConcept.html remain source-lineage or directional evidence only.
+L00004966	  - No WorkNodes, NodeSeeds, executable queues, implementation files, production build tasks, generated governance artifacts, or governance seal outputs are created by this compile.
+L00004967	validation_surfaces:
+L00004968	  - python3 scripts/pm-plan-index.py validate
+L00004969	  - python3 scripts/pm-bootstrap-ledger-validate.py Plans/ledgers/v2/pldg-20260630-001-feature-intake
+L00004970	  - git diff --check
+L00004971	risk_class: owner_map_drift
+L00004972	reasoning_tier: standard
+L00004973	context_scope: containerized_hosts_compile_owner_map
+L00004974	implementation_surfaces:
+L00004975	  - Plans/00-plans-index.md
+L00004976	node_compile_hint:
+L00004977	  mode: containerized_hosts_owner_map
+L00004978	  create_worknodes: false
+L00004979	  create_nodeseeds: false
+L00004980	source_lineage:
+L00004981	  - Plans/ledgers/v2/pldg-20260630-001-feature-intake/state/current.json
+L00004982	  - Plans/ledgers/v2/pldg-20260630-001-feature-intake/state/handoff.json
+L00004983	  - Plans/ledgers/v2/pldg-20260630-001-feature-intake/records/design_atoms.jsonl
+L00004984	  - Plans/ledgers/v2/pldg-20260630-001-feature-intake/records/design_atoms.jsonl:atom-0006
+L00004985	  - Plans/ledgers/v2/pldg-20260630-001-feature-intake/records/design_atoms.jsonl:atom-0017
+L00004986	  - Plans/ledgers/v2/pldg-20260630-001-feature-intake/records/design_atoms.jsonl:atom-0051
+L00004987	  - Plans/ledgers/v2/pldg-20260630-001-feature-intake/records/design_atoms.jsonl:atom-0054
+L00004988	  - Plans/ledgers/v2/pldg-20260630-001-feature-intake/records/design_atoms.jsonl:atom-0055
+L00004989	  - Plans/ledgers/v2/pldg-20260630-001-feature-intake/records/design_atoms.jsonl:atom-0056
+L00004990	  - Plans/ledgers/v2/pldg-20260630-001-feature-intake/records/design_atoms.jsonl:atom-0076
+L00004991	  - Plans/ledgers/v2/pldg-20260630-001-feature-intake/records/design_atoms.jsonl:atom-0082
+L00004992	  - Plans/ledgers/v2/pldg-20260630-001-feature-intake/source_shards/implementation_readiness_hardening_20260701.json
+L00004993	  - Plans/ledgers/v2/pldg-20260630-001-feature-intake/source_shards/subagent_hardening_synthesis_20260701.json
+L00004994	source_atom_ids: [atom-0006, atom-0017, atom-0051, atom-0054, atom-0055, atom-0056, atom-0076, atom-0082]
+L00004995	decision_refs: [dec-0001, dec-0003, dec-0004, dec-0005, dec-0011, dec-0017, dec-0018, dec-0019, dec-0020]
+L00004996	preserved_exact_tokens:
+L00004997	  - "containerized hosts"
+L00004998	  - "Docker/Hosts"
+L00004999	  - "docker_manager"
+L00005000	  - "Activity Bar side-panel owner"
+L00005001	  - "routed primary-content page"
+L00005002	  - "Coasts source-lineage"
+L00005003	  - "PMConcept.html"
+L00005004	  - "whole thing for mvp"
+L00005005	  - "HostCapabilityCommand"
+L00005006	  - "RuntimeHostFamilyProfile"
+L00005007	negative_constraints:
+L00005008	  - Do not compile containerized-host ownership into a separate Coasts website, vendored Coasts daemon, new Hosts owner doc, new Activity Bar slot, or stale `newtools.md` owner bridge.
+L00005009	  - Do not promote Coasts runtime claims, PMConcept.html concept code, or ledger prose into product canon without PM-owned PlanUnits.
+L00005010	  - Do not call this compile governance sealed until an explicit governance seal phase refreshes generated governance artifacts.
+L00005011	owner_hints:
+L00005012	  - Plans/00-plans-index.md
+L00005013	  - Plans/Containers_Registry_and_Unraid.md
+L00005014	  - Plans/Contracts_V0.md
+L00005015	  - Plans/storage-plan.md
+L00005016	  - Plans/Permissions_System.md
+L00005017	  - Plans/FileSafe.md
+L00005018	  - Plans/Automated_Testing_System.md
+L00005019	  - Plans/Executor_Protocol.md
+L00005020	  - Plans/Run_Modes.md
+L00005021	  - Plans/Tools.md
+L00005022	  - Plans/orchestrator-subagent-integration.md
+L00005023	  - Plans/assistant-chat-design.md
+L00005024	  - Plans/Orchestrator_Page.md
+L00005025	  - Plans/Run_Graph_View.md
+L00005026	  - Plans/FinalGUISpec.md
+L00005027	  - Plans/UI_Command_Catalog.md
+L00005028	  - Plans/Runtime_Artifacts_Panel.md
+L00005029	```
+L00005030	
+L00005031	## Ledger Compile Addendum - pldg-20260703-001-feature-intake
+L00005032	
+L00005033	This addendum compiles source-lineage obligations from bootstrap ledger `pldg-20260703-001-feature-intake` into this owner doc. The ledger remains source/planning memory; these PlanUnits are the live canonical evidence. The ordinary compile did not create WorkNodes, NodeSeeds, executable queues, implementation files, production build tasks, generated governance artifacts, or a governance seal; the later explicit seal phase refreshed generated governance/provenance artifacts without creating runtime or build artifacts.
+L00005034	
+L00005035	### 0PI-066 - 0PI-066
+L00005036	
+L00005037	```yaml
+L00005038	plan_unit_id: 0PI-066
+L00005039	unit_type: requirement
+L00005040	status: accepted
+L00005041	owner_doc: Plans/00-plans-index.md
+L00005042	canonical_text: >-
+L00005043	  The external repo system-wide improvement import from pldg-20260703-001-feature-intake is routed to existing Puppet Master subsystem owners plus the new Release_Supply_Chain owner for release/install/provenance gaps. The compile preserves GUI-first/no-PM-CLI constraints, treats terminal/CLI lessons as GUI-native runtime/provider/tool/context/agent-control contracts, keeps imported rows source-lineage-backed rather than ledger-canonical, and creates no WorkNodes, NodeSeeds, executable queues, implementation files, or production build tasks during ordinary compile; the later explicit governance seal refreshes only generated governance/provenance artifacts.
+L00005044	gui_related: false
+L00005045	gui_classification_reason: Index owner-routing metadata, not direct GUI implementation.
+L00005046	depends_on:
+L00005047	- PDS-003
+L00005048	- PNC-001
+L00005049	unblocks: []
+L00005050	acceptance_criteria:
+L00005051	- All 113 imported external repo rows and 5 import guardrails have a compiled PlanUnit or existing PlanUnit disposition.
+L00005052	- The 12 rows that arrived with empty target_docs are owner-adjudicated without asking row-by-row.
+L00005053	- Terminal lessons remain GUI-terminal/runtime contracts, not a Puppet Master CLI product surface.
+L00005054	- Only live Plans docs and allowed Plans/.plan_index outputs are changed during ordinary compile; the later explicit governance seal refreshes generated governance/provenance artifacts only.
+L00005055	validation_surfaces:
+L00005056	- python3 scripts/pm-plan-index.py validate
+L00005057	- python3 scripts/pm-bootstrap-ledger-validate.py Plans/ledgers/v2/pldg-20260703-001-feature-intake
+L00005058	- git diff --check
+L00005059	risk_class: owner_map_drift
+L00005060	reasoning_tier: high
+L00005061	context_scope: external_repo_system_wide_compile_owner_map
+L00005062	implementation_surfaces:
+L00005063	- Plans/00-plans-index.md
+L00005064	- Plans/00-plans-index.md
+L00005065	- Plans/Automated_Testing_System.md
+L00005066	- Plans/BinaryLocator_Spec.md
+L00005067	- Plans/CLI_Bridged_Providers.md
+L00005068	- Plans/Contracts_V0.md
+L00005069	- Plans/Executor_Protocol.md
+L00005070	- Plans/FileSafe.md
+L00005071	- Plans/FinalGUISpec.md
+L00005072	- Plans/GitHub_Integration.md
+L00005073	- Plans/Goal_Runtime_System.md
+L00005074	- Plans/MCP_Integration.md
+L00005075	- Plans/Media_Generation_and_Capabilities.md
+L00005076	- Plans/Models_System.md
+L00005077	- Plans/Multi-Account.md
+L00005078	- Plans/Permissions_System.md
+L00005079	- Plans/Plan_Document_System.md
+L00005080	- Plans/Plan_To_Node_Compilation.md
+L00005081	- Plans/Planning_Ledger_System.md
+L00005082	- Plans/Plugins_System.md
+L00005083	- Plans/Prompt_Pipeline.md
+L00005084	- Plans/Provider_OpenCode.md
+L00005085	- Plans/Release_Supply_Chain.md
+L00005086	- Plans/Section15_MVP_Promoted_Features_Spec.md
+L00005087	- Plans/Tools.md
+L00005088	- Plans/assistant-chat-design.md
+L00005089	- Plans/assistant-memory-subsystem.md
+L00005090	- Plans/storage-plan.md
+L00005091	- Plans/usage-feature.md
+L00005092	node_compile_hint:
+L00005093	  mode: external_repo_system_wide_owner_map
+L00005094	  create_worknodes: false
+L00005095	  create_nodeseeds: false
+L00005096	source_lineage:
+L00005097	- Plans/ledgers/v2/pldg-20260703-001-feature-intake/state/current.json
+L00005098	- Plans/ledgers/v2/pldg-20260703-001-feature-intake/state/handoff.json
+L00005099	- Plans/ledgers/v2/pldg-20260703-001-feature-intake/records/design_atoms.jsonl
+L00005100	- Plans/ledgers/v2/pldg-20260703-001-feature-intake/source_shards/external_repo_import_20260703/02_LEDGER_READY_ATOMS.jsonl
+L00005101	- Plans/ledgers/v2/pldg-20260703-001-feature-intake/source_shards/external_repo_import_20260703/import_completion_recheck_20260703.json
+L00005102	source_atom_ids:
+L00005103	- atom-0001
+L00005104	- atom-0002
+L00005105	- atom-0003
+L00005106	- atom-0004
+L00005107	- atom-0005
+L00005108	- atom-0006
+L00005109	- atom-0007
+L00005110	- atom-0008
+L00005111	- atom-0009
+L00005112	- atom-0010
+L00005113	- atom-0011
+L00005114	- atom-0012
+L00005115	- atom-0013
+L00005116	- atom-0014
+L00005117	- atom-0015
+L00005118	- atom-0016
+L00005119	- atom-0017
+L00005120	- atom-0018
+L00005121	- atom-0019
+L00005122	- atom-0020
+L00005123	- atom-0021
+L00005124	- atom-0022
+L00005125	- atom-0023
+L00005126	- atom-0024
+L00005127	- atom-0025
+L00005128	- atom-0026
+L00005129	- atom-0027
+L00005130	- atom-0028
+L00005131	- atom-0029
+L00005132	- atom-0030
+L00005133	- atom-0031
+L00005134	- atom-0032
+L00005135	- atom-0033
+L00005136	- atom-0034
+L00005137	- atom-0035
+L00005138	- atom-0036
+L00005139	- atom-0037
+L00005140	- atom-0038
+L00005141	- atom-0039
+L00005142	- atom-0040
+L00005143	- atom-0041
+L00005144	- atom-0042
+L00005145	- atom-0043
+L00005146	- atom-0044
+L00005147	- atom-0045
+L00005148	- atom-0046
+L00005149	- atom-0047
+L00005150	- atom-0048
+L00005151	- atom-0049
+L00005152	- atom-0050
+L00005153	- atom-0051
+L00005154	- atom-0052
+L00005155	- atom-0053
+L00005156	- atom-0054
+L00005157	- atom-0055
+L00005158	- atom-0056
+L00005159	- atom-0057
+L00005160	- atom-0058
+L00005161	- atom-0059
+L00005162	- atom-0060
+L00005163	- atom-0061
+L00005164	- atom-0062
+L00005165	- atom-0063
+L00005166	- atom-0064
+L00005167	- atom-0065
+L00005168	- atom-0066
+L00005169	- atom-0067
+L00005170	- atom-0068
+L00005171	- atom-0069
+L00005172	- atom-0070
+L00005173	- atom-0071
+L00005174	- atom-0072
+L00005175	- atom-0073
+L00005176	- atom-0074
+L00005177	- atom-0075
+L00005178	- atom-0076
+L00005179	- atom-0077
+L00005180	- atom-0078
+L00005181	- atom-0079
+L00005182	- atom-0080
+L00005183	- atom-0081
+L00005184	- atom-0082
+L00005185	- atom-0083
+L00005186	- atom-0084
+L00005187	- atom-0085
+L00005188	- atom-0086
+L00005189	- atom-0087
+L00005190	- atom-0088
+L00005191	- atom-0089
+L00005192	- atom-0090
+L00005193	- atom-0091
+L00005194	- atom-0092
+L00005195	- atom-0093
+L00005196	- atom-0094
+L00005197	- atom-0095
+L00005198	- atom-0096
+L00005199	- atom-0097
+L00005200	- atom-0098
+L00005201	- atom-0099
+L00005202	- atom-0100
+L00005203	- atom-0101
+L00005204	- atom-0102
+L00005205	- atom-0103
+L00005206	- atom-0104
+L00005207	- atom-0105
+L00005208	- atom-0106
+L00005209	- atom-0107
+L00005210	- atom-0108
+L00005211	- atom-0109
+L00005212	- atom-0110
+L00005213	- atom-0111
+L00005214	- atom-0112
+L00005215	- atom-0113
+L00005216	- atom-0114
+L00005217	- atom-0115
+L00005218	- atom-0116
+L00005219	- atom-0117
+L00005220	- atom-0118
+L00005221	- atom-0119
+L00005222	- atom-0120
+L00005223	- atom-0121
+L00005224	- atom-0122
+L00005225	decision_refs:
+L00005226	- dec-0002
+L00005227	- dec-0003
+L00005228	- dec-0004
+L00005229	preserved_exact_tokens:
+L00005230	- OpenCode v1/dev/beta
+L00005231	- OpenCode v2 specs
+L00005232	- Cline
+L00005233	- Agent Zero
+L00005234	- Pi
+L00005235	- OpenAI Codex
+L00005236	- Ghostty
+L00005237	- Warp
+L00005238	- tmux
+L00005239	- GUI-first
+L00005240	- not building a CLI
+L00005241	- ContextEpoch
+L00005242	- ProviderCapabilityEpoch
+L00005243	- ToolTurnSettlement
+L00005244	- AgentControlEnvelope
+L00005245	- TerminalBackpressureState
+L00005246	- Command approval is a GUI-visible lease
+L00005247	negative_constraints:
+L00005248	- Do not translate terminal/CLI lessons into a Puppet Master CLI product shape.
+L00005249	- Do not collapse the 113 imported rows into a vague summary.
+L00005250	- Do not create WorkNodes, NodeSeeds, executable queues, implementation files, production build tasks, generated governance artifacts, or governance seal outputs during ordinary compile; refresh governance outputs only in an explicit seal phase.
+L00005251	owner_hints:
+L00005252	- Plans/00-plans-index.md
+L00005253	- Plans/Automated_Testing_System.md
+L00005254	- Plans/BinaryLocator_Spec.md
+L00005255	- Plans/CLI_Bridged_Providers.md
+L00005256	- Plans/Contracts_V0.md
+L00005257	- Plans/Executor_Protocol.md
+L00005258	- Plans/FileSafe.md
+L00005259	- Plans/FinalGUISpec.md
+L00005260	- Plans/GitHub_Integration.md
+L00005261	- Plans/Goal_Runtime_System.md
+L00005262	- Plans/MCP_Integration.md
+L00005263	- Plans/Media_Generation_and_Capabilities.md
+L00005264	- Plans/Models_System.md
+L00005265	- Plans/Multi-Account.md
+L00005266	- Plans/Permissions_System.md
+L00005267	- Plans/Plan_Document_System.md
+L00005268	- Plans/Plan_To_Node_Compilation.md
+L00005269	- Plans/Planning_Ledger_System.md
+L00005270	- Plans/Plugins_System.md
+L00005271	- Plans/Prompt_Pipeline.md
+L00005272	- Plans/Provider_OpenCode.md
+L00005273	- Plans/Release_Supply_Chain.md
+L00005274	- Plans/Section15_MVP_Promoted_Features_Spec.md
+L00005275	- Plans/Tools.md
+L00005276	- Plans/assistant-chat-design.md
+L00005277	- Plans/assistant-memory-subsystem.md
+L00005278	- Plans/storage-plan.md
+L00005279	- Plans/usage-feature.md
+L00005280	```

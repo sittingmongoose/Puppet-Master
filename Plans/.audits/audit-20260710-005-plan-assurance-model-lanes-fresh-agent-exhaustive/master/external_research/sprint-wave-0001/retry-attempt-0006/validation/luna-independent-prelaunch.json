@@ -1,0 +1,184 @@
+{
+  "schema_version": "external-research-recovery-independent-luna-prelaunch-v6",
+  "checker": "attempt_0006_luna_independent_prelaunch_v6",
+  "audit_id": "audit-20260710-005-plan-assurance-model-lanes-fresh-agent-exhaustive",
+  "sprint_id": "sprint-wave-0001",
+  "retry_namespace": "retry-attempt-0006",
+  "attempt_id": "attempt-0006",
+  "status": "pass",
+  "gate_passed": true,
+  "independent": true,
+  "activation_authorized": true,
+  "assignment_count": 2,
+  "assignment_ids": [
+    "ER-0003",
+    "ER-0008"
+  ],
+  "agent_paths": [
+    "/root/a005_external_research_recovery_er_0003_attempt_0006_terminal",
+    "/root/a005_external_research_recovery_er_0008_attempt_0006_terminal"
+  ],
+  "controller_thread_id": "019f5078-6501-7223-b52f-2251010bdc41",
+  "model": "gpt-5.6-luna",
+  "reasoning_effort": "max",
+  "fresh_direct_leaves": 2,
+  "fork_turns": "none",
+  "descendants_forbidden": true,
+  "followups_forbidden": true,
+  "retries_forbidden": true,
+  "semantic_transaction_cap": 2,
+  "concurrency_policy_v9_sha256": "0f9dae3c8406be8ab1159f610b6465120049d0057aa81031d6826fb9ba88b592",
+  "concurrency_policy_v10_sha256": "0fbaad08800f3f5e8e122e7638e2537382d9c6f6be5fc93afcd307a3a42098f1",
+  "preserved_cumulative_floor_ids": [
+    "ER-0002",
+    "ER-0001",
+    "ER-0004",
+    "ER-0005",
+    "ER-0006",
+    "ER-0007"
+  ],
+  "preserved_cumulative_floor_digest": "111135d1d44849d95577071398351634e899cf0689340919c6b855c239e859b6",
+  "preserved_cumulative_floor_count": 6,
+  "attempt_0005_primary_cumulative_report_sha256": "3e5de5018a3e419fe3e3c85d0bf4598c2af92a8479c926dd0778bdf058a8a20d",
+  "attempt_0005_native_capture_sha256": "714463a7494e9cb0b97938f81ac1a1914166c3d84886d0172c1d1eb280164f99",
+  "terminal_sol_preparation_report_sha256": "809bb781836a63879c5544bd8a58cac510c038c9628f9c0a4671e8f66ab15e36",
+  "local_candidate_report_sha256": "185712a4a6b0647c867de1f3f45a454e29d8099aee76b38f03a11b5371c204d3",
+  "outputs_empty": true,
+  "receipts": 0,
+  "results": 0,
+  "native_capture_rows": 0,
+  "activation_transaction_files": 0,
+  "required_positive_receipt_schema_version": "external-research-dispatch-receipt-v6",
+  "contract_document_schema_version": "external-research-receipt-contract-v6",
+  "receipt_label_confusion_rejected": true,
+  "no_evidence_zero_reference_semantics": true,
+  "receipt_contract_label_confusion": {
+    "attempt_0005_observed_contract_label": "external-research-receipt-contract-v5",
+    "attempt_0006_contract_document_label": "external-research-receipt-contract-v6",
+    "attempt_0006_positive_label": "external-research-dispatch-receipt-v6",
+    "labels_distinct": true,
+    "copied_contract_label_rejected": true
+  },
+  "no_evidence_reference_variants": {
+    "sections": [
+      "findings",
+      "competitor_standard_patterns",
+      "failure_modes",
+      "implications",
+      "novel_ideas",
+      "unresolved_questions"
+    ],
+    "reference_fields": [
+      "source_urls",
+      "citation_ids",
+      "source_claim_ids",
+      "citations",
+      "source_refs",
+      "claim_refs",
+      "evidence_refs"
+    ],
+    "variants_rejected": 42,
+    "attempt_0005_er8_contradiction_rejected": true
+  },
+  "schema_engine": {
+    "available": true,
+    "distribution": "jsonschema",
+    "library_version": "4.26.0",
+    "validator_class": "jsonschema.Draft202012Validator",
+    "format_checker": "jsonschema.FormatChecker",
+    "meta_schema_id": "https://json-schema.org/draft/2020-12/schema",
+    "isolated_bundle": true,
+    "network_required": false,
+    "global_install_performed": false
+  },
+  "validator_tests": {
+    "status": "pass",
+    "passed": 414,
+    "failed": 0,
+    "total": 414,
+    "test_digest": "bc46d305f005856422007896ed5adef30522b9f35ccfa6dca2d41441e0d52955"
+  },
+  "test_run": {
+    "status": "pass",
+    "passed": 414,
+    "failed": 0,
+    "total": 414,
+    "test_digest": "bc46d305f005856422007896ed5adef30522b9f35ccfa6dca2d41441e0d52955"
+  },
+  "independent_structural_checks": {
+    "status": "pass",
+    "count": 197,
+    "passed": 197,
+    "failed": 0,
+    "digest": "0709971860688ee8d33dc7276b41f7a63a5e0dd38123bd108bee3ec4a85710e5"
+  },
+  "independent_negative_checks": {
+    "status": "pass",
+    "count": 255,
+    "passed": 255,
+    "failed": 0,
+    "receipt_label_variants": 2,
+    "no_evidence_reference_variants": 43,
+    "cross_field_and_schema_variants": 210
+  },
+  "zero_state": {
+    "output_directories": 2,
+    "output_files": 0,
+    "results": 0,
+    "receipts": 0,
+    "native_capture_rows": 0,
+    "activation_transaction_files": 0,
+    "coverage_credit": 0,
+    "research_credit": 0,
+    "promotion_credit": 0,
+    "spec_credit": 0,
+    "merge_credit": 0
+  },
+  "payload_hashes": {
+    "authority.json": "b0cfe8e891d4dbd463575253c827fb341bd99208cf6efb620792df33b8d213f9",
+    "launch_seal.json": "60156261f79dfe67d2d9e95a3ac28f92c227a621518c298f7aef7d3c31819ae0",
+    "manifest.json": "cdc5acf261c8bff81790f0912b9527e9ce4ed2fb863c2c37284d89de36c88ac8",
+    "architecture.json": "e750d18ccca7b5b306f34183f12546a5870d7df93bbf2241c1c3425dcd7e7eff",
+    "lineage.json": "1b432869e5181da3c8803d94ef93991034638f31e7b4670cd77ae1eb8cc967d9",
+    "activation_transaction.template.json": "333b5524fd44196b437299ce020c6b95e8a139cc29353040656bc530952a8d8f",
+    "leaf_prompt.json": "66903b770b86f7c4e8c33cdb6f2c703f22814e798bdd640ffe886e95d2059078",
+    "leaf_initial_task_contract.json": "5c9ebbe8f79e9c622bbfe9732314c41a2af9b42e86fb052ae7c0207807cf2bbb",
+    "native_capture_contract_v6.json": "400090ca7d049f8cc9100c1581c831ff13bd9d19c571e18513211035440eeeef",
+    "receipt_contract_v6.json": "f08c61e4473b82e633babdaff36e07dad79c40b317bdcae08200423e11230763",
+    "schema/external_research_result_v6.schema.json": "3b470b6f6b75fa5bdb914cb6b1cad49d430dab69744eb8fbe4ade52a29cf8980",
+    "tools/common.py": "7e079c851f1b92b5cc90a48def047e30c004c81af333540e63f7079956b3a58b",
+    "tools/generate_activation_transaction.py": "f84c4ae5d37c44b9968670b6197f43b51b8c89bffe1d38ef51b4097d160344a3",
+    "tools/verify_prelaunch.py": "7c07fba9419f55f94fb9245b97b8e64704f32db614f006220ecbf4d2f47081ec",
+    "tools/validate_postrun.py": "ee9a6d160c65149adb2b0d21a07df7d892d205880ffb7192609422d5920e61ba",
+    "tools/test_attempt_0006.py": "a053c34ad70b7232a84343f10ea49ac72cd421a8b54b5244b0677ec5545d92be",
+    "validation/VALIDATOR_AUTHORITY_V6.json": "04ddef7ce736e02400eb987c99eb630c3b6be0fd60e945bcecb29b5a88929815",
+    "validation/local-prelaunch-candidate.json": "185712a4a6b0647c867de1f3f45a454e29d8099aee76b38f03a11b5371c204d3",
+    "packets": {
+      "ER-0003": "2951e2b35f60ad3762d9c995fc3f306762b2d150dc7ae864b2322960ad795ead",
+      "ER-0008": "9930ce37cf3aae3253ebed745b80a562cff4ad68c68acfafa8f8dceddb883d58"
+    },
+    "intents": {
+      "ER-0003": "349b1546931476b1364664591659569286a0ea10d5e91c0527e4984e8c48136b",
+      "ER-0008": "344825c7391aeb25832e43401ad33b681ca5fa9138d791225f4009da0e2656c1"
+    }
+  },
+  "errors": [],
+  "coverage_credit": 0,
+  "research_credit": 0,
+  "promotion_credit": 0,
+  "spec_credit": 0,
+  "merge_credit": 0,
+  "canonical_plan_changes": [],
+  "activation_conditions": {
+    "generator_must_be_invoked_once": true,
+    "activation_order": [
+      "activation-core.json",
+      "leaf-dispatch-authorizations/ER-0003.json",
+      "leaf-dispatch-authorizations/ER-0008.json",
+      "activation-envelope.json"
+    ],
+    "receipt_contract_document_label_forbidden": "external-research-receipt-contract-v6",
+    "positive_receipt_label_required": "external-research-dispatch-receipt-v6",
+    "result_before_pmr1_required": true
+  }
+}

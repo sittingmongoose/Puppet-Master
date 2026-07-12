@@ -1,0 +1,113 @@
+{
+  "schema_version": "a005-c2-prior-invocation-preservation-baseline-v1",
+  "status": "IMMUTABLE_PRIOR_FAILURE_AND_POSTRUN_PROOF_BOUND",
+  "audit_id": "audit-20260710-005-plan-assurance-model-lanes-fresh-agent-exhaustive",
+  "wave_id": "universal-shadow-certification-wave-0001",
+  "cohort_id": "cohort-0002",
+  "attempt_0001_lineage": {
+    "relative_path": "master/external_research/universal-shadow-certification-wave-0001/retry-attempt-0002-v30/lineage/attempt-0001-lineage.json",
+    "sha256": "3e06bcc41720a662df6593892458da6593043aa2074819c10fc4441b6d38b4e3",
+    "status": "IMMUTABLE_ATTEMPT_0001_FAILURE_PRESERVED_ZERO_CREDIT",
+    "outputs_receipts_captures_mutated": false,
+    "credit": 0
+  },
+  "attempt_0001_inventory": {
+    "relative_path": "master/external_research/universal-shadow-certification-wave-0001/retry-attempt-0002-v30/lineage/attempt-0001-artifact-inventory.jsonl",
+    "sha256": "4c650846faac64135731e2f221a8f91621588e5d9af970ed538de77f2232bd31",
+    "file_count": 78
+  },
+  "c2_prior_result_and_receipt_rows": {
+    "selection": "roles attempt_0001_result or attempt_0001_receipt and assignment A005ERSC-0009 through A005ERSC-0016",
+    "record_count": 16,
+    "byte_count": 8976749,
+    "canonical_jsonl_sha256": "56229a878060fe3e8de713da20e168e4bca8d9a0bca14867d463a6a47845a592"
+  },
+  "c2_v29_control_rows": {
+    "selection": "relative_path contains cohort-0002",
+    "record_count": 22,
+    "byte_count": 71427,
+    "canonical_jsonl_sha256": "6d61f44770d8e8a0e7eb077791991e59aea3a2c02ff27ee46f62adb2e43f55b5"
+  },
+  "primary_postrun": {
+    "relative_path": "master/external_research/universal-shadow-certification-wave-0001/validation/activation-binding-v8-validator-runtime-supersession/activation-transactions-v29-ultra/cohort-0002/postrun/primary_postrun.json",
+    "sha256": "c756c049c3ae93c518b155d69c64b595e05c2ae04b62f82226c4dd7d89c60454",
+    "status": "fail_closed",
+    "rejected_count": 8,
+    "eligible_count": 0
+  },
+  "independent_postrun": {
+    "relative_path": "master/external_research/universal-shadow-certification-wave-0001/validation/activation-binding-v8-validator-runtime-supersession/activation-transactions-v29-ultra/cohort-0002/postrun/luna_independent_postrun.json",
+    "sha256": "0b414ed2b896c6da66007ffd2215643b979dd7f9b8de32791eb7eff61b5f857f",
+    "byte_count": 33275,
+    "status": "fail_closed",
+    "rejected_count": 8,
+    "eligible_count": 0,
+    "source_transaction_digest": "c4ce218e0aa044d850b1b026fe10b98766138748b585e2680916fb80964cc70f"
+  },
+  "prior_postrun_native_capture": {
+    "relative_path_from_gate": "controller-native-captures/c2-primary-rejected-set-postrun.json",
+    "sha256": "9e1bfede92341bf4e42f39a305fd39a6fa1c54d7c5c22566f23258b12130c92d",
+    "controller_native": {
+      "native_thread_id": "019f553d-af6e-7c91-a43f-d81e06d100fd",
+      "native_turn_id": "019f553d-d9a9-74a2-b26b-9a5188ecc9b1",
+      "session_prefix_line_count": 1156,
+      "session_prefix_sha256": "bcef6538c5817d205666f7fc5a2af185cfeb84b8fd5a4b33ca72ef31a5a74323",
+      "turn_start_line": 377,
+      "turn_end_line": 1156,
+      "turn_segment_sha256": "c92d788e274cabd58f03543dc375fde446e69b74ef857bd72a42f378680ec8e5",
+      "spawn_call_line": 972,
+      "spawn_call_id": "call_j0JrGbF79vR1tNANuaas2dFP",
+      "spawn_record_sha256": "c60c352d209ed6c85bf0c4bfccdc4b72c85611d3b7fc66d460a2bba2546f782e",
+      "spawn_result_line": 973,
+      "spawn_result_record_sha256": "69e1a516e2f3a7cc29d35c3b254ab22a5ec9ca8266568a52705130f20f84e6ea",
+      "terminal_record_line": 1093,
+      "terminal_record_sha256": "409fc681cb350c68804e227bd58658d0aa2ce1e5f87e7fb068e26d6e9889b71d"
+    },
+    "reviewer_native": {
+      "native_thread_id": "019f556b-8004-7eb2-b4dc-b92f6f03f835",
+      "native_turn_id": "019f556b-8112-75d3-95c2-d9e1a718b7c9",
+      "parent_thread_id": "019f553d-af6e-7c91-a43f-d81e06d100fd",
+      "session_line_count": 280,
+      "session_sha256": "7411a7c1807e016756e164390b6bccfaac4e476b07f147ba5215227de20bdf09",
+      "session_meta_record_sha256": "58a45937ea71c26215c66e41ec6709de8821d1e82097e2bca86fffa4dde6d933",
+      "task_started_record_sha256": "929c0fb059358804e181104d9580e6cc5ca2176d012d3794dd2ba1709ef8c88b",
+      "turn_context_record_sha256": "833b6a694c717ddb95f17be49dd98980dd40242170ca05755d1a19f141796ba6",
+      "task_complete_record_sha256": "3d76d44330ceda91d60e0e068e7be2592b88293659f18c50e6be33e190dc0149",
+      "actual_model": "gpt-5.6-luna",
+      "actual_reasoning_effort": "max",
+      "fork_context": false,
+      "fork_turns": "none",
+      "descendant_spawn_count": 0,
+      "retry_count": 0
+    },
+    "report_binding": {
+      "relative_path": "master/external_research/universal-shadow-certification-wave-0001/validation/activation-binding-v8-validator-runtime-supersession/activation-transactions-v29-ultra/cohort-0002/postrun/luna_independent_postrun.json",
+      "sha256": "0b414ed2b896c6da66007ffd2215643b979dd7f9b8de32791eb7eff61b5f857f",
+      "byte_count": 33275,
+      "semantic_status": "fail_closed",
+      "identity_fields_authoritative": false
+    }
+  },
+  "prior_postrun_native_checkpoint": {
+    "relative_path_from_gate": "controller-native-checkpoints/c2-primary-rejected-set-postrun.jsonl",
+    "sha256": "9a0b17c263a317e7e5b53fa721b049e0ba355b161d2703c24df7c9347eb49cd7",
+    "record_count": 4
+  },
+  "c1_no_touch_guard": {
+    "relative_path_from_gate": "compatibility-closure-v32-preparation",
+    "file_count": 11,
+    "byte_count": 98937,
+    "canonical_sorted_path_byte_count_sha256_tree_digest": "3614fd312d01b5f16a1c21d2417128f4236256efb7bc80b8be09d83d80e3f2c9"
+  },
+  "scope": {
+    "activation_authorized": false,
+    "launch_authorized": false,
+    "credit": 0,
+    "prior_files_mutated": 0,
+    "new_invocations": 0,
+    "new_results": 0,
+    "new_receipts": 0,
+    "new_captures": 0,
+    "new_checkpoints": 0
+  }
+}

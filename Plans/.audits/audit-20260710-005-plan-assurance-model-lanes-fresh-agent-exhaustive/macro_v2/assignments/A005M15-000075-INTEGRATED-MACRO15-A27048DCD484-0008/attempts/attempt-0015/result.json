@@ -1,0 +1,661 @@
+{
+  "assignment_id": "A005M15-000075-INTEGRATED-MACRO15-A27048DCD484-0008",
+  "attempt_id": "attempt-0015",
+  "audit_id": "audit-20260710-005-plan-assurance-model-lanes-fresh-agent-exhaustive",
+  "coverage": {
+    "all_micro_windows_reviewed": true,
+    "all_source_lines_reviewed": true,
+    "all_source_units_accounted": true,
+    "both_exact_and_adversarial_lenses_applied": true,
+    "dimensions_checked": [
+      "behavior",
+      "capabilities",
+      "inputs_outputs",
+      "contracts",
+      "states_transitions",
+      "authority",
+      "ownership",
+      "consumers",
+      "gui_truth",
+      "failures_recovery",
+      "security_privacy",
+      "propagation",
+      "operations",
+      "scale_performance",
+      "compatibility_migration",
+      "acceptance_oracles",
+      "builder_discretion",
+      "ambiguity_unknowns",
+      "missing_callers_consumers",
+      "invalid_states_transitions",
+      "concurrency_races",
+      "partial_failure",
+      "recovery_rollback",
+      "authority_boundaries",
+      "privacy_data_lifecycle",
+      "untrusted_inputs",
+      "gui_misleading_states",
+      "offline_network_loss",
+      "scale_limits",
+      "accessibility",
+      "localization",
+      "observability_support",
+      "destructive_actions",
+      "cross_document_seams",
+      "test_falsifiability",
+      "unknown_unknowns"
+    ]
+  },
+  "items": [
+    {
+      "builder_discretion": false,
+      "confidence": 0.99,
+      "dimensions": [
+        "behavior",
+        "contracts",
+        "ownership",
+        "consumers",
+        "gui_truth",
+        "security_privacy",
+        "acceptance_oracles",
+        "missing_callers_consumers",
+        "authority_boundaries",
+        "test_falsifiability"
+      ],
+      "evidence": [
+        {
+          "exact_quote": "      \"label\": \"Validate/Clear Auth\",",
+          "line_end": 21438,
+          "line_start": 21438,
+          "path": "Plans/PMConcept_Control_Reconciliation.json",
+          "source_sha256": "cc3485b335e4bba3ed3192b1e15f8163d4b1c10f193c4ad74500b484e5f0dfc2"
+        },
+        {
+          "exact_quote": "      \"owner_rationale\": \"Owner-adjudicated as concept/source-lineage only. This control is not production evidence and is not promoted until a canonical owner doc accepts the behavior and a production wiring row supplies command/state/receipt/test evidence.\"",
+          "line_end": 21450,
+          "line_start": 21450,
+          "path": "Plans/PMConcept_Control_Reconciliation.json",
+          "source_sha256": "cc3485b335e4bba3ed3192b1e15f8163d4b1c10f193c4ad74500b484e5f0dfc2"
+        }
+      ],
+      "gap_kind": "production_binding_absent",
+      "impact": "Docker validation, registry authentication, repository, tagging, and Unraid-looking controls can be mistaken for implementable product behavior although no production command, state, handler, receipt, consumer, or test binding is supplied.",
+      "item_id": "A005M15-000075-I001",
+      "item_type": "gap",
+      "severity": "high",
+      "source_unit_refs": [
+        "SEMANTIC:JSON_FIELD:Plans/PMConcept_Control_Reconciliation.json:controls:CONT-056",
+        "STRUCTURAL:$.controls"
+      ],
+      "statement": "The control inventory explicitly keeps the Docker, registry/auth, and Unraid controls as concept lineage until an owner document and production wiring row provide executable evidence.",
+      "title": "Docker and registry controls have no production binding"
+    },
+    {
+      "builder_discretion": false,
+      "confidence": 0.98,
+      "dimensions": [
+        "inputs_outputs",
+        "contracts",
+        "states_transitions",
+        "ownership",
+        "gui_truth",
+        "ambiguity_unknowns",
+        "invalid_states_transitions",
+        "gui_misleading_states",
+        "accessibility",
+        "test_falsifiability"
+      ],
+      "evidence": [
+        {
+          "exact_quote": "      \"label\": \"input\",",
+          "line_end": 21634,
+          "line_start": 21634,
+          "path": "Plans/PMConcept_Control_Reconciliation.json",
+          "source_sha256": "cc3485b335e4bba3ed3192b1e15f8163d4b1c10f193c4ad74500b484e5f0dfc2"
+        },
+        {
+          "exact_quote": "      \"owner_rationale\": \"Owner-adjudicated as concept/source-lineage only. This control is not production evidence and is not promoted until a canonical owner doc accepts the behavior and a production wiring row supplies command/state/receipt/test evidence.\"",
+          "line_end": 21722,
+          "line_start": 21722,
+          "path": "Plans/PMConcept_Control_Reconciliation.json",
+          "source_sha256": "cc3485b335e4bba3ed3192b1e15f8163d4b1c10f193c4ad74500b484e5f0dfc2"
+        }
+      ],
+      "gap_kind": "opaque_control_semantics",
+      "impact": "Unidentified checkbox and text controls under orchestration and interview/review areas do not define what state they read or mutate, how values are validated, or how users and tests distinguish their effects.",
+      "item_id": "A005M15-000075-I002",
+      "item_type": "gap",
+      "severity": "medium",
+      "source_unit_refs": [
+        "SEMANTIC:JSON_FIELD:Plans/PMConcept_Control_Reconciliation.json:controls:CONT-057",
+        "STRUCTURAL:$.controls"
+      ],
+      "statement": "Several controls expose only the generic label 'input' while remaining concept-only, leaving their input, state-transition, accessibility, and oracle semantics unspecified.",
+      "title": "Orchestration and interview controls are semantically opaque"
+    },
+    {
+      "builder_discretion": false,
+      "confidence": 0.99,
+      "dimensions": [
+        "behavior",
+        "contracts",
+        "states_transitions",
+        "authority",
+        "ownership",
+        "gui_truth",
+        "failures_recovery",
+        "acceptance_oracles",
+        "invalid_states_transitions",
+        "authority_boundaries",
+        "gui_misleading_states",
+        "test_falsifiability"
+      ],
+      "evidence": [
+        {
+          "exact_quote": "      \"label\": \"ask always never\",",
+          "line_end": 22207,
+          "line_start": 22207,
+          "path": "Plans/PMConcept_Control_Reconciliation.json",
+          "source_sha256": "cc3485b335e4bba3ed3192b1e15f8163d4b1c10f193c4ad74500b484e5f0dfc2"
+        },
+        {
+          "exact_quote": "      \"owner_rationale\": \"Owner-adjudicated as concept/source-lineage only. This control is not production evidence and is not promoted until a canonical owner doc accepts the behavior and a production wiring row supplies command/state/receipt/test evidence.\"",
+          "line_end": 22219,
+          "line_start": 22219,
+          "path": "Plans/PMConcept_Control_Reconciliation.json",
+          "source_sha256": "cc3485b335e4bba3ed3192b1e15f8163d4b1c10f193c4ad74500b484e5f0dfc2"
+        }
+      ],
+      "gap_kind": "authority_policy_contract_absent",
+      "impact": "Ask/always/never choices can alter human-in-the-loop and verification authority, but the inventory does not bind them to named policies, defaults, precedence, invalid transitions, failure handling, or observable receipts.",
+      "item_id": "A005M15-000075-I003",
+      "item_type": "gap",
+      "severity": "high",
+      "source_unit_refs": [
+        "SEMANTIC:JSON_FIELD:Plans/PMConcept_Control_Reconciliation.json:controls:CONT-058",
+        "STRUCTURAL:$.controls"
+      ],
+      "statement": "Verification and HITL selectors present authority-bearing choices while explicitly lacking production command, state, receipt, and test evidence.",
+      "title": "Verification and HITL policy choices lack an authority contract"
+    },
+    {
+      "builder_discretion": false,
+      "confidence": 0.99,
+      "dimensions": [
+        "behavior",
+        "capabilities",
+        "contracts",
+        "states_transitions",
+        "authority",
+        "ownership",
+        "consumers",
+        "failures_recovery",
+        "security_privacy",
+        "operations",
+        "acceptance_oracles",
+        "partial_failure",
+        "recovery_rollback",
+        "privacy_data_lifecycle",
+        "observability_support",
+        "test_falsifiability"
+      ],
+      "evidence": [
+        {
+          "exact_quote": "      \"label\": \"Add Account\",",
+          "line_end": 22546,
+          "line_start": 22546,
+          "path": "Plans/PMConcept_Control_Reconciliation.json",
+          "source_sha256": "cc3485b335e4bba3ed3192b1e15f8163d4b1c10f193c4ad74500b484e5f0dfc2"
+        },
+        {
+          "exact_quote": "      \"label\": \"Logout GitHub\",",
+          "line_end": 22592,
+          "line_start": 22592,
+          "path": "Plans/PMConcept_Control_Reconciliation.json",
+          "source_sha256": "cc3485b335e4bba3ed3192b1e15f8163d4b1c10f193c4ad74500b484e5f0dfc2"
+        },
+        {
+          "exact_quote": "      \"owner_rationale\": \"Owner-adjudicated as concept/source-lineage only. This control is not production evidence and is not promoted until a canonical owner doc accepts the behavior and a production wiring row supplies command/state/receipt/test evidence.\"",
+          "line_end": 22604,
+          "line_start": 22604,
+          "path": "Plans/PMConcept_Control_Reconciliation.json",
+          "source_sha256": "cc3485b335e4bba3ed3192b1e15f8163d4b1c10f193c4ad74500b484e5f0dfc2"
+        }
+      ],
+      "gap_kind": "credential_lifecycle_unbound",
+      "impact": "Account creation, provider selection, OAuth/API-key mode, logout, account management, and diagnostic execution lack defined credential lifecycle, partial-failure, rollback, observability, and acceptance behavior.",
+      "item_id": "A005M15-000075-I004",
+      "item_type": "gap",
+      "severity": "high",
+      "source_unit_refs": [
+        "SEMANTIC:JSON_FIELD:Plans/PMConcept_Control_Reconciliation.json:controls:CONT-059",
+        "STRUCTURAL:$.controls"
+      ],
+      "statement": "Production-looking account, provider, and diagnostic operations remain concept-only and unbound to commands, state, handlers, receipts, or tests.",
+      "title": "Account and provider operations lack credential-lifecycle contracts"
+    },
+    {
+      "builder_discretion": false,
+      "confidence": 0.99,
+      "dimensions": [
+        "behavior",
+        "contracts",
+        "states_transitions",
+        "ownership",
+        "gui_truth",
+        "failures_recovery",
+        "operations",
+        "acceptance_oracles",
+        "invalid_states_transitions",
+        "partial_failure",
+        "recovery_rollback",
+        "gui_misleading_states",
+        "observability_support",
+        "destructive_actions",
+        "test_falsifiability"
+      ],
+      "evidence": [
+        {
+          "exact_quote": "      \"label\": \"Clean workspace now\",",
+          "line_end": 22949,
+          "line_start": 22949,
+          "path": "Plans/PMConcept_Control_Reconciliation.json",
+          "source_sha256": "cc3485b335e4bba3ed3192b1e15f8163d4b1c10f193c4ad74500b484e5f0dfc2"
+        },
+        {
+          "exact_quote": "      \"label\": \"Recover orphaned worktrees\",",
+          "line_end": 23072,
+          "line_start": 23072,
+          "path": "Plans/PMConcept_Control_Reconciliation.json",
+          "source_sha256": "cc3485b335e4bba3ed3192b1e15f8163d4b1c10f193c4ad74500b484e5f0dfc2"
+        },
+        {
+          "exact_quote": "      \"owner_rationale\": \"Owner-adjudicated as concept/source-lineage only. This control is not production evidence and is not promoted until a canonical owner doc accepts the behavior and a production wiring row supplies command/state/receipt/test evidence.\"",
+          "line_end": 23084,
+          "line_start": 23084,
+          "path": "Plans/PMConcept_Control_Reconciliation.json",
+          "source_sha256": "cc3485b335e4bba3ed3192b1e15f8163d4b1c10f193c4ad74500b484e5f0dfc2"
+        }
+      ],
+      "gap_kind": "destructive_action_contract_absent",
+      "impact": "Workspace cleanup can destroy local state and worktree recovery can mutate repository topology, yet neither action has a defined confirmation, eligibility, atomicity, partial-failure, rollback, receipt, or test oracle.",
+      "item_id": "A005M15-000075-I005",
+      "item_type": "gap",
+      "severity": "high",
+      "source_unit_refs": [
+        "SEMANTIC:JSON_FIELD:Plans/PMConcept_Control_Reconciliation.json:controls:CONT-060",
+        "STRUCTURAL:$.controls"
+      ],
+      "statement": "The cleanup and orphaned-worktree recovery controls are destructive or restorative operations but remain concept-only with no executable safety contract.",
+      "title": "Cleanup and worktree recovery lack safety and rollback semantics"
+    },
+    {
+      "builder_discretion": false,
+      "confidence": 0.99,
+      "dimensions": [
+        "behavior",
+        "contracts",
+        "states_transitions",
+        "authority",
+        "ownership",
+        "consumers",
+        "gui_truth",
+        "security_privacy",
+        "propagation",
+        "compatibility_migration",
+        "acceptance_oracles",
+        "invalid_states_transitions",
+        "authority_boundaries",
+        "privacy_data_lifecycle",
+        "untrusted_inputs",
+        "gui_misleading_states",
+        "cross_document_seams",
+        "test_falsifiability"
+      ],
+      "evidence": [
+        {
+          "exact_quote": "      \"label\": \"Read-only Plan mode Full\",",
+          "line_end": 23264,
+          "line_start": 23264,
+          "path": "Plans/PMConcept_Control_Reconciliation.json",
+          "source_sha256": "cc3485b335e4bba3ed3192b1e15f8163d4b1c10f193c4ad74500b484e5f0dfc2"
+        },
+        {
+          "exact_quote": "      \"label\": \"*.env, *.env.*\",",
+          "line_end": 23497,
+          "line_start": 23497,
+          "path": "Plans/PMConcept_Control_Reconciliation.json",
+          "source_sha256": "cc3485b335e4bba3ed3192b1e15f8163d4b1c10f193c4ad74500b484e5f0dfc2"
+        },
+        {
+          "exact_quote": "        \"Contains mock/demo/local fixture state and is excluded from acceptance evidence unless replaced by a real state contract.\"",
+          "line_end": 23538,
+          "line_start": 23538,
+          "path": "Plans/PMConcept_Control_Reconciliation.json",
+          "source_sha256": "cc3485b335e4bba3ed3192b1e15f8163d4b1c10f193c4ad74500b484e5f0dfc2"
+        }
+      ],
+      "gap_kind": "access_policy_semantics_absent",
+      "impact": "Global/project scope, allow/ask/deny, read-only/plan/full access levels, per-tool defaults, and path or secret-pattern rules cannot be enforced consistently without precedence, propagation, normalization, migration, validation, and denial-receipt contracts.",
+      "item_id": "A005M15-000075-I006",
+      "item_type": "gap",
+      "severity": "critical",
+      "source_unit_refs": [
+        "SEMANTIC:JSON_FIELD:Plans/PMConcept_Control_Reconciliation.json:controls:CONT-061",
+        "STRUCTURAL:$.controls"
+      ],
+      "statement": "Authority-bearing global rules, per-tool defaults, and access-control patterns are only concept lineage, and one path example is explicitly fixture state excluded from acceptance evidence.",
+      "title": "Access-control choices lack precedence and enforcement contracts"
+    },
+    {
+      "builder_discretion": false,
+      "confidence": 1.0,
+      "dimensions": [
+        "behavior",
+        "contracts",
+        "states_transitions",
+        "authority",
+        "ownership",
+        "consumers",
+        "gui_truth",
+        "failures_recovery",
+        "security_privacy",
+        "operations",
+        "compatibility_migration",
+        "acceptance_oracles",
+        "missing_callers_consumers",
+        "invalid_states_transitions",
+        "partial_failure",
+        "recovery_rollback",
+        "authority_boundaries",
+        "gui_misleading_states",
+        "offline_network_loss",
+        "observability_support",
+        "cross_document_seams",
+        "test_falsifiability"
+      ],
+      "evidence": [
+        {
+          "exact_quote": "        \"Production-looking control needs a concrete UICommand or explicit retirement before implementation.\",",
+          "line_end": 23583,
+          "line_start": 23583,
+          "path": "Plans/PMConcept_Control_Reconciliation.json",
+          "source_sha256": "cc3485b335e4bba3ed3192b1e15f8163d4b1c10f193c4ad74500b484e5f0dfc2"
+        },
+        {
+          "exact_quote": "        \"No production command is assigned in this repair; remains concept lineage until an owner doc promotes it and adds command/state/handler/receipt/test evidence.\",",
+          "line_end": 23584,
+          "line_start": 23584,
+          "path": "Plans/PMConcept_Control_Reconciliation.json",
+          "source_sha256": "cc3485b335e4bba3ed3192b1e15f8163d4b1c10f193c4ad74500b484e5f0dfc2"
+        },
+        {
+          "exact_quote": "      \"label\": \"Retry\",",
+          "line_end": 23845,
+          "line_start": 23845,
+          "path": "Plans/PMConcept_Control_Reconciliation.json",
+          "source_sha256": "cc3485b335e4bba3ed3192b1e15f8163d4b1c10f193c4ad74500b484e5f0dfc2"
+        }
+      ],
+      "gap_kind": "explicit_command_or_retirement_required",
+      "impact": "Browser permissions, restart policy, reopen/retry/keep-closed recovery, and persona creation can present authoritative or restorative UI without defined commands, state machines, offline behavior, receipts, or retirement, enabling misleading and untestable implementations.",
+      "item_id": "A005M15-000075-I007",
+      "item_type": "gap",
+      "severity": "critical",
+      "source_unit_refs": [
+        "SEMANTIC:JSON_FIELD:Plans/PMConcept_Control_Reconciliation.json:controls:CONT-062",
+        "STRUCTURAL:$.controls"
+      ],
+      "statement": "The source explicitly requires a concrete UICommand or retirement for Browser Permissions, while adjacent restart and recovery controls likewise remain concept-only and unwired.",
+      "title": "Browser permission and recovery controls require commands or retirement"
+    },
+    {
+      "builder_discretion": false,
+      "confidence": 0.99,
+      "dimensions": [
+        "behavior",
+        "capabilities",
+        "inputs_outputs",
+        "contracts",
+        "states_transitions",
+        "authority",
+        "ownership",
+        "consumers",
+        "gui_truth",
+        "failures_recovery",
+        "security_privacy",
+        "propagation",
+        "operations",
+        "scale_performance",
+        "compatibility_migration",
+        "acceptance_oracles",
+        "ambiguity_unknowns",
+        "authority_boundaries",
+        "untrusted_inputs",
+        "gui_misleading_states",
+        "scale_limits",
+        "localization",
+        "observability_support",
+        "cross_document_seams",
+        "test_falsifiability",
+        "unknown_unknowns"
+      ],
+      "evidence": [
+        {
+          "exact_quote": "      \"label\": \"regular ask agent debug plan deep-plan yolo\",",
+          "line_end": 24006,
+          "line_start": 24006,
+          "path": "Plans/PMConcept_Control_Reconciliation.json",
+          "source_sha256": "cc3485b335e4bba3ed3192b1e15f8163d4b1c10f193c4ad74500b484e5f0dfc2"
+        },
+        {
+          "exact_quote": "      \"label\": \"bash, edit\",",
+          "line_end": 24176,
+          "line_start": 24176,
+          "path": "Plans/PMConcept_Control_Reconciliation.json",
+          "source_sha256": "cc3485b335e4bba3ed3192b1e15f8163d4b1c10f193c4ad74500b484e5f0dfc2"
+        },
+        {
+          "exact_quote": "      \"owner_rationale\": \"Owner-adjudicated as concept/source-lineage only. This control is not production evidence and is not promoted until a canonical owner doc accepts the behavior and a production wiring row supplies command/state/receipt/test evidence.\"",
+          "line_end": 24337,
+          "line_start": 24337,
+          "path": "Plans/PMConcept_Control_Reconciliation.json",
+          "source_sha256": "cc3485b335e4bba3ed3192b1e15f8163d4b1c10f193c4ad74500b484e5f0dfc2"
+        }
+      ],
+      "gap_kind": "persona_tool_plugin_contract_absent",
+      "impact": "Persona modes, range defaults, reasoning and verbosity settings, allowed tools, plugin runtime and schedule, and registry endpoint can affect authority, cost, scale, network behavior, and security without defined schemas, bounds, inheritance, validation, consumers, receipts, or migration behavior.",
+      "item_id": "A005M15-000075-I008",
+      "item_type": "gap",
+      "severity": "high",
+      "source_unit_refs": [
+        "SEMANTIC:JSON_FIELD:Plans/PMConcept_Control_Reconciliation.json:controls:CONT-063",
+        "STRUCTURAL:$.controls"
+      ],
+      "statement": "Default persona, tools/skills, and plugin controls expose authority- and execution-bearing values but remain concept-only without production contracts or wiring evidence.",
+      "title": "Persona, tool, and plugin settings lack executable schemas and bounds"
+    }
+  ],
+  "model": "gpt-5.6-sol",
+  "phase": "blind_macro_window_review",
+  "reasoning_effort": "xhigh",
+  "schema_version": "macro-review-result-v1",
+  "segments": [
+    {
+      "core_range": [
+        21231,
+        21624
+      ],
+      "covered_source_unit_refs": [
+        "SEMANTIC:JSON_FIELD:Plans/PMConcept_Control_Reconciliation.json:controls:CONT-056",
+        "STRUCTURAL:$.controls"
+      ],
+      "item_ids": [
+        "A005M15-000075-I001"
+      ],
+      "reviewed": true,
+      "summary": "Reviewed every Docker, registry/auth, and Unraid control inventory line; the controls are consistently owner-adjudicated concept lineage without production wiring.",
+      "window_id": "WIN-A27048DCD484-0057"
+    },
+    {
+      "core_range": [
+        21625,
+        22023
+      ],
+      "covered_source_unit_refs": [
+        "SEMANTIC:JSON_FIELD:Plans/PMConcept_Control_Reconciliation.json:controls:CONT-057",
+        "STRUCTURAL:$.controls"
+      ],
+      "item_ids": [
+        "A005M15-000075-I002"
+      ],
+      "reviewed": true,
+      "summary": "Reviewed every Unraid tail, orchestrator-phase, and interview/review control line; generic labels and absent bindings leave control semantics opaque.",
+      "window_id": "WIN-A27048DCD484-0058"
+    },
+    {
+      "core_range": [
+        22024,
+        22413
+      ],
+      "covered_source_unit_refs": [
+        "SEMANTIC:JSON_FIELD:Plans/PMConcept_Control_Reconciliation.json:controls:CONT-058",
+        "STRUCTURAL:$.controls"
+      ],
+      "item_ids": [
+        "A005M15-000075-I003"
+      ],
+      "reviewed": true,
+      "summary": "Reviewed every interview numeric and Verification & HITL control line; authority-bearing selector semantics lack production policy and oracle contracts.",
+      "window_id": "WIN-A27048DCD484-0059"
+    },
+    {
+      "core_range": [
+        22414,
+        22791
+      ],
+      "covered_source_unit_refs": [
+        "SEMANTIC:JSON_FIELD:Plans/PMConcept_Control_Reconciliation.json:controls:CONT-059",
+        "STRUCTURAL:$.controls"
+      ],
+      "item_ids": [
+        "A005M15-000075-I004"
+      ],
+      "reviewed": true,
+      "summary": "Reviewed every Accounts, Providers, and Diagnostics control line; credential and operational lifecycle behavior is not production-bound.",
+      "window_id": "WIN-A27048DCD484-0060"
+    },
+    {
+      "core_range": [
+        22792,
+        23185
+      ],
+      "covered_source_unit_refs": [
+        "SEMANTIC:JSON_FIELD:Plans/PMConcept_Control_Reconciliation.json:controls:CONT-060",
+        "STRUCTURAL:$.controls"
+      ],
+      "item_ids": [
+        "A005M15-000075-I005"
+      ],
+      "reviewed": true,
+      "summary": "Reviewed every diagnostics tail, workspace cleanup, orphaned-worktree recovery, and storage/retention control line; destructive and restorative safety semantics are absent.",
+      "window_id": "WIN-A27048DCD484-0061"
+    },
+    {
+      "core_range": [
+        23186,
+        23563
+      ],
+      "covered_source_unit_refs": [
+        "SEMANTIC:JSON_FIELD:Plans/PMConcept_Control_Reconciliation.json:controls:CONT-061",
+        "STRUCTURAL:$.controls"
+      ],
+      "item_ids": [
+        "A005M15-000075-I006"
+      ],
+      "reviewed": true,
+      "summary": "Reviewed every Global Rules, Per-Tool Defaults, and Access Control line; authority precedence and enforcement remain unwired, and a local-path example is fixture-only.",
+      "window_id": "WIN-A27048DCD484-0062"
+    },
+    {
+      "core_range": [
+        23564,
+        23950
+      ],
+      "covered_source_unit_refs": [
+        "SEMANTIC:JSON_FIELD:Plans/PMConcept_Control_Reconciliation.json:controls:CONT-062",
+        "STRUCTURAL:$.controls"
+      ],
+      "item_ids": [
+        "A005M15-000075-I007"
+      ],
+      "reviewed": true,
+      "summary": "Reviewed every Browser Permissions, restart/recovery, and persona-management control line; the source expressly requires a command or retirement before implementation.",
+      "window_id": "WIN-A27048DCD484-0063"
+    },
+    {
+      "core_range": [
+        23951,
+        24338
+      ],
+      "covered_source_unit_refs": [
+        "SEMANTIC:JSON_FIELD:Plans/PMConcept_Control_Reconciliation.json:controls:CONT-063",
+        "STRUCTURAL:$.controls"
+      ],
+      "item_ids": [
+        "A005M15-000075-I008"
+      ],
+      "reviewed": true,
+      "summary": "Reviewed every default-persona, tools/skills, and plugin control line; execution-bearing values lack production schemas, bounds, consumers, and wiring evidence.",
+      "window_id": "WIN-A27048DCD484-0064"
+    }
+  ],
+  "self_attestation": {
+    "no_canonical_writes": true,
+    "no_external_research_during_blind_review": true,
+    "no_peer_result_access": true,
+    "no_prior_audit_access": true,
+    "no_unrelated_source_access": true,
+    "terminal_after_submission": true
+  },
+  "source_binding": {
+    "bundle_id": "MACRO15-A27048DCD484-0008",
+    "document_path": "Plans/PMConcept_Control_Reconciliation.json",
+    "micro_window_ids": [
+      "WIN-A27048DCD484-0057",
+      "WIN-A27048DCD484-0058",
+      "WIN-A27048DCD484-0059",
+      "WIN-A27048DCD484-0060",
+      "WIN-A27048DCD484-0061",
+      "WIN-A27048DCD484-0062",
+      "WIN-A27048DCD484-0063",
+      "WIN-A27048DCD484-0064"
+    ],
+    "source_sha256": "cc3485b335e4bba3ed3192b1e15f8163d4b1c10f193c4ad74500b484e5f0dfc2"
+  },
+  "status": "completed",
+  "synthesis": {
+    "cross_document_questions": [
+      "Which canonical owner documents, if any, accept each concept control and define its command, state, handler, receipt, and test evidence?",
+      "Where are precedence and propagation defined for global, project, persona, and per-tool authority settings?",
+      "Which owner defines credential, cleanup, recovery, browser-permission, and plugin lifecycle state machines and rollback behavior?"
+    ],
+    "feature_family_keys": [
+      "docker-registry-unraid-settings",
+      "orchestration-interview-verification-settings",
+      "accounts-providers-diagnostics",
+      "workspace-cleanup-storage-retention",
+      "global-tool-access-control",
+      "browser-permissions-recovery",
+      "persona-tools-plugins"
+    ],
+    "research_queries": [
+      "secure credential lifecycle and logout receipt patterns for multi-provider desktop applications",
+      "safe workspace cleanup and orphaned Git worktree recovery confirmation rollback design",
+      "permission precedence models across global project persona and tool scopes",
+      "browser automation permission profiles restart recovery and offline behavior",
+      "plugin registry trust validation update rollback and scheduled execution controls"
+    ]
+  },
+  "task_thread_id": "/root/a005m15_b5_000075_attempt_0015_terminal"
+}

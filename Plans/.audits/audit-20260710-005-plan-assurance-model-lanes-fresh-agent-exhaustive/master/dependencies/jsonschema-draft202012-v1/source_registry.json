@@ -1,0 +1,118 @@
+{
+  "schema_version": "audit005-jsonschema-draft202012-source-registry-v1",
+  "accessed_date": "2026-07-11",
+  "selection": {
+    "runtime_python": "3.12.13",
+    "runtime_platform": "macosx-11.0-arm64",
+    "selection_rule": "current stable non-prerelease PyPI release compatible with the bundled CPython runtime; base jsonschema install only, no format extras",
+    "root_distribution": "jsonschema==4.26.0",
+    "runtime_dependencies": [
+      "attrs==26.1.0",
+      "jsonschema-specifications==2025.9.1",
+      "referencing==0.37.0",
+      "rpds-py==2026.6.3",
+      "typing-extensions==4.16.0"
+    ],
+    "typing_extensions_reason": "referencing 0.37.0 declares typing-extensions>=4.4.0 for python_version < 3.13; the target runtime is Python 3.12"
+  },
+  "packages": [
+    {
+      "name": "attrs",
+      "version": "26.1.0",
+      "requires_python": ">=3.9",
+      "requires_dist": [],
+      "license_expression": "MIT",
+      "published": "2026-03-19T14:22:23.645947Z",
+      "pypi_project_url": "https://pypi.org/project/attrs/",
+      "pypi_json_url": "https://pypi.org/pypi/attrs/json",
+      "pypi_release_url": "https://pypi.org/project/attrs/26.1.0/",
+      "file_url": "https://files.pythonhosted.org/packages/64/b4/17d4b0b2a2dc85a6df63d1157e028ed19f90d4cd97c36717afef2bc2f395/attrs-26.1.0-py3-none-any.whl",
+      "documentation_url": "https://www.attrs.org/",
+      "source_url": "https://github.com/python-attrs/attrs",
+      "metadata_basis": "wheel METADATA License-Expression, Requires-Python, Requires-Dist and PyPI JSON release metadata"
+    },
+    {
+      "name": "jsonschema",
+      "version": "4.26.0",
+      "requires_python": ">=3.10",
+      "requires_dist": [
+        "attrs>=22.2.0",
+        "jsonschema-specifications>=2023.03.6",
+        "referencing>=0.28.4",
+        "rpds-py>=0.25.0"
+      ],
+      "license_expression": "MIT",
+      "published": "2026-01-07T13:41:05.306692Z",
+      "pypi_project_url": "https://pypi.org/project/jsonschema/",
+      "pypi_json_url": "https://pypi.org/pypi/jsonschema/json",
+      "pypi_release_url": "https://pypi.org/project/jsonschema/4.26.0/",
+      "file_url": "https://files.pythonhosted.org/packages/69/90/f63fb5873511e014207a475e2bb4e8b2e570d655b00ac19a9a0ca0a385ee/jsonschema-4.26.0-py3-none-any.whl",
+      "documentation_url": "https://python-jsonschema.readthedocs.io/",
+      "source_url": "https://github.com/python-jsonschema/jsonschema",
+      "metadata_basis": "wheel METADATA License-Expression, Requires-Python, Requires-Dist and PyPI JSON release metadata"
+    },
+    {
+      "name": "jsonschema-specifications",
+      "version": "2025.9.1",
+      "requires_python": ">=3.9",
+      "requires_dist": ["referencing>=0.31.0"],
+      "license_expression": "MIT",
+      "published": "2025-09-08T01:34:57.871954Z",
+      "pypi_project_url": "https://pypi.org/project/jsonschema-specifications/",
+      "pypi_json_url": "https://pypi.org/pypi/jsonschema-specifications/json",
+      "pypi_release_url": "https://pypi.org/project/jsonschema-specifications/2025.9.1/",
+      "file_url": "https://files.pythonhosted.org/packages/41/45/1a4ed80516f02155c51f51e8cedb3c1902296743db0bbc66608a0db2814f/jsonschema_specifications-2025.9.1-py3-none-any.whl",
+      "documentation_url": "https://jsonschema-specifications.readthedocs.io/",
+      "source_url": "https://github.com/python-jsonschema/jsonschema-specifications",
+      "metadata_basis": "wheel METADATA License-Expression, Requires-Python, Requires-Dist and PyPI JSON release metadata"
+    },
+    {
+      "name": "referencing",
+      "version": "0.37.0",
+      "requires_python": ">=3.10",
+      "requires_dist": ["attrs>=22.2.0", "rpds-py>=0.7.0", "typing-extensions>=4.4.0; python_version < '3.13'"],
+      "license_expression": "MIT",
+      "published": "2025-10-13T15:30:47.625937Z",
+      "pypi_project_url": "https://pypi.org/project/referencing/",
+      "pypi_json_url": "https://pypi.org/pypi/referencing/json",
+      "pypi_release_url": "https://pypi.org/project/referencing/0.37.0/",
+      "file_url": "https://files.pythonhosted.org/packages/2c/58/ca301544e1fa93ed4f80d724bf5b194f6e4b945841c5bfd555878eea9fcb/referencing-0.37.0-py3-none-any.whl",
+      "documentation_url": "https://referencing.readthedocs.io/",
+      "source_url": "https://github.com/python-jsonschema/referencing",
+      "metadata_basis": "wheel METADATA License-Expression, Requires-Python, Requires-Dist and PyPI JSON release metadata"
+    },
+    {
+      "name": "rpds-py",
+      "version": "2026.6.3",
+      "requires_python": ">=3.11",
+      "requires_dist": [],
+      "license_expression": "MIT",
+      "published": "2026-06-30T07:15:16.267430Z",
+      "pypi_project_url": "https://pypi.org/project/rpds-py/",
+      "pypi_json_url": "https://pypi.org/pypi/rpds-py/json",
+      "pypi_release_url": "https://pypi.org/project/rpds-py/2026.6.3/",
+      "file_url": "https://files.pythonhosted.org/packages/a4/73/319dfa745dd668efe89309141ded489126461fcecd2b8f3a3cda185129b6/rpds_py-2026.6.3-cp312-cp312-macosx_11_0_arm64.whl",
+      "documentation_url": "https://rpds.readthedocs.io/",
+      "source_url": "https://github.com/crate-py/rpds",
+      "upstream_url": "https://github.com/orium/rpds",
+      "metadata_basis": "wheel METADATA License-Expression, Requires-Python, Project-URL and PyPI JSON release metadata"
+    },
+    {
+      "name": "typing-extensions",
+      "version": "4.16.0",
+      "requires_python": ">=3.9",
+      "requires_dist": [],
+      "license_expression": "PSF-2.0",
+      "published": "2026-07-02T08:40:04.659120Z",
+      "pypi_project_url": "https://pypi.org/project/typing-extensions/",
+      "pypi_json_url": "https://pypi.org/pypi/typing-extensions/json",
+      "pypi_release_url": "https://pypi.org/project/typing-extensions/4.16.0/",
+      "file_url": "https://files.pythonhosted.org/packages/49/d3/b8441a820a491ddfc024b0b0cf0393375b75ea13866d9c66727e54c2fc80/typing_extensions-4.16.0-py3-none-any.whl",
+      "documentation_url": "https://typing-extensions.readthedocs.io/",
+      "source_url": "https://github.com/python/typing_extensions",
+      "metadata_basis": "wheel METADATA License-Expression, Requires-Python, Project-URL and PyPI JSON release metadata"
+    }
+  ],
+  "official_source_restriction": true,
+  "non_official_sources_used": []
+}

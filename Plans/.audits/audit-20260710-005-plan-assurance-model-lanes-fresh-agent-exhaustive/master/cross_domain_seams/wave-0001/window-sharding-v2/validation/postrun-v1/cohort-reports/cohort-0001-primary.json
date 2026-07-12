@@ -1,0 +1,135 @@
+{
+  "assignment_count": 16,
+  "assignment_reports": [
+    {
+      "assignment_id": "A005CDSV2-0001",
+      "eligible": true,
+      "errors": []
+    },
+    {
+      "assignment_id": "A005CDSV2-0002",
+      "eligible": false,
+      "errors": [
+        "resolved_has_unresolved:A005CDS-EDGE-07011",
+        "resolved_has_unresolved:A005CDS-EDGE-07228"
+      ]
+    },
+    {
+      "assignment_id": "A005CDSV2-0003",
+      "eligible": true,
+      "errors": []
+    },
+    {
+      "assignment_id": "A005CDSV2-0004",
+      "eligible": true,
+      "errors": []
+    },
+    {
+      "assignment_id": "A005CDSV2-0005",
+      "eligible": true,
+      "errors": []
+    },
+    {
+      "assignment_id": "A005CDSV2-0006",
+      "eligible": false,
+      "errors": [
+        "unregistered_claim_source:A005CDS-EDGE-04448",
+        "unregistered_claim_source:A005CDS-EDGE-04449",
+        "unregistered_claim_source:A005CDS-EDGE-04452",
+        "unregistered_claim_source:A005CDS-EDGE-04455",
+        "unregistered_claim_source:A005CDS-EDGE-05273",
+        "unregistered_claim_source:A005CDS-EDGE-05697",
+        "unregistered_claim_source:A005CDS-EDGE-06633",
+        "unregistered_claim_source:A005CDS-EDGE-06634",
+        "unregistered_claim_source:A005CDS-EDGE-06762",
+        "unregistered_claim_source:A005CDS-EDGE-06763",
+        "unregistered_claim_source:A005CDS-EDGE-06765",
+        "unregistered_claim_source:A005CDS-EDGE-06801",
+        "unregistered_claim_source:A005CDS-EDGE-06803",
+        "unregistered_claim_source:A005CDS-EDGE-06804",
+        "unregistered_claim_source:A005CDS-EDGE-06806",
+        "unregistered_claim_source:A005CDS-EDGE-06807",
+        "unregistered_claim_source:A005CDS-EDGE-06808",
+        "unregistered_claim_source:A005CDS-EDGE-06809"
+      ]
+    },
+    {
+      "assignment_id": "A005CDSV2-0007",
+      "eligible": true,
+      "errors": []
+    },
+    {
+      "assignment_id": "A005CDSV2-0008",
+      "eligible": true,
+      "errors": []
+    },
+    {
+      "assignment_id": "A005CDSV2-0009",
+      "eligible": true,
+      "errors": []
+    },
+    {
+      "assignment_id": "A005CDSV2-0010",
+      "eligible": true,
+      "errors": []
+    },
+    {
+      "assignment_id": "A005CDSV2-0011",
+      "eligible": true,
+      "errors": []
+    },
+    {
+      "assignment_id": "A005CDSV2-0012",
+      "eligible": true,
+      "errors": []
+    },
+    {
+      "assignment_id": "A005CDSV2-0013",
+      "eligible": true,
+      "errors": []
+    },
+    {
+      "assignment_id": "A005CDSV2-0014",
+      "eligible": true,
+      "errors": []
+    },
+    {
+      "assignment_id": "A005CDSV2-0015",
+      "eligible": true,
+      "errors": []
+    },
+    {
+      "assignment_id": "A005CDSV2-0016",
+      "eligible": true,
+      "errors": []
+    }
+  ],
+  "authority_sha256": "7bde3f9d0431b4064ea516c678b17b57fc37ffa030503d0a74470522ea068b1f",
+  "cohort_id": "cohort-0001",
+  "eligible_assignment_ids": [
+    "A005CDSV2-0001",
+    "A005CDSV2-0003",
+    "A005CDSV2-0004",
+    "A005CDSV2-0005",
+    "A005CDSV2-0007",
+    "A005CDSV2-0008",
+    "A005CDSV2-0009",
+    "A005CDSV2-0010",
+    "A005CDSV2-0011",
+    "A005CDSV2-0012",
+    "A005CDSV2-0013",
+    "A005CDSV2-0014",
+    "A005CDSV2-0015",
+    "A005CDSV2-0016"
+  ],
+  "promotion_credit": 0,
+  "receipt_root_sha256": "99d939ab68ec8db4f5d089b48b665619056af4e367e17dabf59a8a3d96294e18",
+  "rejected_assignment_ids": [
+    "A005CDSV2-0002",
+    "A005CDSV2-0006"
+  ],
+  "result_root_sha256": "c66af846ae42b8032f958ec7f1b3a1734671b04c61b501146bbd0e2700363840",
+  "schema_version": "cross-domain-seam-primary-cohort-report-v1",
+  "status": "fail_closed",
+  "validator_sha256": "53e68a8781c66271ba9b265f590cfeb23fd89bd4031d6b3b991f57ce107332a7"
+}

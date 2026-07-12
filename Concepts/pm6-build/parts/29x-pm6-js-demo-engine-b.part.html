@@ -26,17 +26,6 @@
     var ws = webOp('op-web-s1');
     if (ws) pushWebArtifact(ws, true);
   }
-  function chatSpawnGateThread(silent) {
-    if (S.chat.threads['th-gate']) return;
-    ensureThread('th-gate', {
-      id: 'th-gate', title: 'Approval: Package Gate', kind: 'gate',
-      messages: [
-        { role: 'blocked_notice', html: TEXT.chat.gateNotice, gateId: DATA.run.gate.id }
-      ]
-    });
-    emit('chat.card', { threadId: 'th-gate', card: { type: 'hitl', gateId: DATA.run.gate.id, label: DATA.run.gate.label } });
-    if (!silent) emit('chat.stream', { threadId: 'th-gate', type: 'notice' });
-  }
   function detectIntent(text) {
     var t = String(text).toLowerCase();
     if (/debug|error|fail|broken|bug|flake/.test(t)) return 'debug';
@@ -258,16 +247,61 @@
     });
   }
   function reqsReadiness() {
+    /* tri-state (PRDB-005, demo simplification) — the note names the drivers:
+       captures, open questions and parse warnings — so the chip can surface them */
     var rq = S.wizard.reqs;
-    var anyDoc = rq.docs.some(function (d) { return d.status === 'parsed' || d.status === 'parsed_warn'; });
-    var anyTurn = Object.keys(rq.answers).length > 0;
-    rq.readiness = (anyDoc || anyTurn) ? 'ready_with_warnings' : 'blocked';
+    var list = DATA.wizard.reqs.builderTurns;
+    var parsedDocs = rq.docs.filter(function (d) { return d.status === 'parsed' || d.status === 'parsed_warn'; });
+    var warnDocs = rq.docs.filter(function (d) { return d.status === 'parsed_warn'; });
+    var answered = 0;
+    list.forEach(function (t) { if (rq.answers[t.id]) answered++; });
+    var openTurns = list.length - answered;
+    var carried = (rq.answers.bt10 && rq.answers.bt10 !== 'Decide now') ? 1 : 0;
+    if (!parsedDocs.length && !answered) {
+      rq.readiness = 'blocked';
+      rq.readinessNote = 'no captures yet — attach a doc or answer the builder';
+    } else if (answered === list.length && !warnDocs.length && rq.answers.bt10 === 'Decide now') {
+      rq.readiness = 'ready';
+      rq.readinessNote = answered + ' captures · no open questions · no warnings';
+    } else {
+      rq.readiness = 'ready_with_warnings';
+      var bits = [(parsedDocs.length + answered) + ' capture' + (parsedDocs.length + answered === 1 ? '' : 's')];
+      var openN = openTurns + carried;
+      if (openN) bits.push(openN + ' open question' + (openN === 1 ? '' : 's'));
+      if (warnDocs.length) bits.push(warnDocs.length + ' parse warning' + (warnDocs.length === 1 ? '' : 's'));
+      rq.readinessNote = bits.join(' · ');
+    }
+  }
+  /* derived dependency locks — "locked" is a presentation of not_started with unmet
+     depends_on edges, never a persisted card state (PWIZ-013 vocabulary intact) */
+  function topicLocked(t) {
+    return !!t && t.state === 'not_started' && (t.depends_on || []).some(function (id) {
+      var dep = S.wizard.topics[id];
+      return dep && dep.state !== 'ready';
+    });
+  }
+  function evalUnlocks() {
+    Object.keys(S.wizard.topics).forEach(function (k) {
+      var t = S.wizard.topics[k];
+      if (topicLocked(t)) { t._wasLocked = true; return; }
+      if (t._wasLocked) {
+        t._wasLocked = false;
+        if (t.unlockedState && t.state === 'not_started') t.state = t.unlockedState;
+        emit('wizard.topic', { topic: t, unlocked: true });
+      }
+    });
   }
   var wizardFacade = {
     openTopic: function (id) {
       var t = S.wizard.topics[id];
       if (!t) return { toast: 'Unknown topic.' };
       S.wizard.activeTopic = id;
+      if (topicLocked(t)) {
+        /* view-only while locked: no promotion to active, no interview seeding */
+        logBeat('wizard.openTopic', { id: id, locked: true });
+        emit('wizard.topic', { topic: t, opened: true, locked: true });
+        return { ok: true };
+      }
       if (t.state === 'not_started') { t.state = 'active'; }
       if (t.thread && !t.thread.length && t.intro) {
         var firstOpen = null;
@@ -360,6 +394,7 @@
     },
     enterWorkspace: function () {
       S.wizard.stage = 'interview';
+      evalUnlocks(); /* re-derive locks on entry (chapter jumps, replays) */
       if (!S.wizard._ambient) {
         S.wizard._ambient = true;
         trackStart('wizard-ambient', WIZ_BEATS);
@@ -371,6 +406,7 @@
     answer: function (topicId, qId, value) {
       var t = S.wizard.topics[topicId];
       if (!t) return { toast: 'Unknown topic.' };
+      if (topicLocked(t)) return { disabled: true, reason: 'blocked_by_gate' };
       var q = null;
       t.questions.forEach(function (x) { if (q) return; if (qId ? x.id === qId : !x.answer) q = x; });
       if (!q) return { toast: 'No open question on that topic.' };
@@ -400,7 +436,7 @@
         [3500, { id: topicId, state: 'auditing', progress: 'audit pass 1 of 2 · 0 findings' }],
         [6000, { id: topicId, state: 'ready', progress: null }]
       ];
-      if (S.ffwd || reducedMotion()) { closing(); t.state = 'ready'; t.progress = null; emit('wizard.topic', { topic: t }); }
+      if (S.ffwd || reducedMotion()) { closing(); t.state = 'ready'; t.progress = null; emit('wizard.topic', { topic: t }); evalUnlocks(); }
       else steps.forEach(function (st) {
         setTimeout(function () {
           if (st[1].state === 'ready') closing();
@@ -419,8 +455,90 @@
       logBeat('wizard.acceptTopic', { id: id });
       return { ok: true };
     },
+    /* selection send-back — scope is a topic id or 'prd'. Topic scope injects a
+       revision request into the topic thread and replays the compile/audit
+       micro-track, bumping the Topic Plan Draft version. PRD scope routes into
+       the open builder turn when one exists; otherwise (P4 fallback) it bumps
+       reqs.revisions and records a durable ledger-note in the projection data. */
+    sendBack: function (scope, secId, excerpt) {
+      excerpt = String(excerpt == null ? '' : excerpt);
+      if (scope === 'prd') {
+        var rq = S.wizard.reqs;
+        var listT = DATA.wizard.reqs.builderTurns;
+        var cur = listT[rq.turnIdx];
+        rq.revisions = (rq.revisions || 0) + 1;
+        if (cur && !rq.answers[cur.id]) {
+          logBeat('wizard.sendBack', { topic: 'prd', sec: secId || null, routed: 'chat' });
+          return wizardFacade.prdChat(cur.id, 'Revise: "' + excerpt.slice(0, 90) + '" — tighten this and re-check acceptance.');
+        }
+        rq.ledgerNotes = rq.ledgerNotes || [];
+        rq.ledgerNotes.push({ id: 'rn-' + (rq.ledgerNotes.length + 1), sec: secId || null,
+          text: 'Revision request recorded — "' + excerpt.slice(0, 90) + '"' });
+        rq.annotations.push({ id: 'ann-' + (rq.annotations.length + 1), sec: secId || null,
+          kind: 'revision', excerpt: excerpt.slice(0, 120), status: 'open' });
+        logBeat('wizard.sendBack', { topic: 'prd', sec: secId || null, fallback: true });
+        reqsEmit();
+        return { ok: true, toast: 'Revision request recorded — pinned to the PRD ledger.' };
+      }
+      var t = S.wizard.topics[scope];
+      if (!t) return { toast: 'Unknown topic.' };
+      if (topicLocked(t)) return { disabled: true, reason: 'blocked_by_gate' };
+      if (t._revising) return { disabled: true, reason: 'busy' };
+      if (!t.thread) t.thread = [];
+      t.thread.push({ role: 'user', text: 'Revise: "' + excerpt.slice(0, 90) + '" — tighten this and re-check acceptance.' });
+      t.thread.push({ role: 'note', text: 'writing revision request to the planning ledger…' });
+      t.thread.push({ role: 'agent', text: 'Reworking that section — recompiling the Topic Plan Draft.' });
+      S.wizard.activeTopic = scope;
+      t._revising = true;
+      logBeat('wizard.sendBack', { topic: scope, sec: secId || null });
+      emit('wizard.topic', { topic: t, answered: { id: secId || null } }); /* reuses the typing-dots beat */
+      var finishRev = function () {
+        t.state = 'ready';
+        t.progress = null;
+        t._revising = false;
+        if (t.draft) { t.draft.version = (t.draft.version || 1) + 1; t.draft.freshSec = secId || null; }
+        t.thread.push({ role: 'agent', text: 'Draft revised — section updated.' });
+        emit('wizard.topic', { topic: t });
+        evalUnlocks();
+      };
+      if (S.ffwd || reducedMotion()) { finishRev(); return { ok: true }; }
+      var revSteps = [
+        [0, { state: 'compiling', progress: 'recompiling Topic Plan Draft' }],
+        [1800, { state: 'auditing', progress: 'audit pass 1 of 1 · revision scope only' }],
+        [3600, null] /* ready + version bump */
+      ];
+      revSteps.forEach(function (st) {
+        setTimeout(function () {
+          if (!st[1]) { finishRev(); return; }
+          t.state = st[1].state;
+          t.progress = st[1].progress;
+          emit('wizard.topic', { topic: t });
+        }, st[0] / (S.clock.speed || 1));
+      });
+      return { ok: true };
+    },
+    /* shared annotation system — scope: topic id | 'prd'; kind: 'annotation' | 'comment' */
+    annotate: function (scope, secId, excerpt, kind) {
+      var list = scope === 'prd' ? S.wizard.reqs.annotations : (S.wizard.topics[scope] || {}).annotations;
+      if (!list) return { toast: 'Nothing to annotate.' };
+      list.push({ id: 'ann-' + (list.length + 1), sec: secId || null, kind: kind || 'annotation',
+                  excerpt: String(excerpt == null ? '' : excerpt).slice(0, 120), status: 'open' });
+      logBeat('wizard.annotate', { scope: scope, sec: secId || null, kind: kind || 'annotation' });
+      if (scope === 'prd') reqsEmit();
+      else emit('wizard.topic', { topic: S.wizard.topics[scope] });
+      return { ok: true };
+    },
     integrate: function () {
       if (S.wizard.pack) return { disabled: true, reason: 'already_done' };
+      var lockedTs = Object.keys(S.wizard.topics).map(function (k) { return S.wizard.topics[k]; }).filter(topicLocked);
+      if (lockedTs.length) {
+        var lt = lockedTs[0];
+        var depTitles = (lt.depends_on || []).filter(function (id) {
+          var d0 = S.wizard.topics[id];
+          return d0 && d0.state !== 'ready';
+        }).map(function (id) { return S.wizard.topics[id].title; });
+        return { toast: '"' + lt.title + '" is still locked — finish ' + (depTitles.join(' and ') || 'its dependencies') + ' first.' };
+      }
       var notReady = Object.keys(S.wizard.topics).map(function (k) { return S.wizard.topics[k]; }).filter(function (t) { return t.state !== 'ready'; });
       if (notReady.length) {
         var t8 = notReady.find(function (t) { return t.id === 't8'; });
@@ -473,8 +591,7 @@
       S.wizard.stage = 'interview'; S.wizard.activeTopic = null;
       S.wizard.reqs = pristineReqs();
       S.wizard._ambient = false;
-      S.wizard.topics = {};
-      DATA.wizard.topics.forEach(function (t) { S.wizard.topics[t.id] = { id: t.id, num: t.num, title: t.title, state: t.state, progress: t.progress || null, summary: t.summary, intro: t.intro || null, thread: [], questions: JSON.parse(JSON.stringify(t.questions)), accepted: t.state === 'ready' }; });
+      seedWizardTopics(); /* single source: depends_on, drafts, annotations, _wasLocked all reseed */
       trackKill('wizard-ambient');
       logBeat('wizard.replay', {});
       emit('wizard.replay', { runId: S.run.id || 'pcr-47' });
@@ -754,21 +871,38 @@
       emit('files.open', { path: path, tabs: S.files.openTabs });
       /* best-effort render into editor pane 1 */
       try {
+        /* unhide: opening a file always re-shows pane1 (and the editor view);
+           the reopen helper also recomputes the split-resizer visibility */
+        if (window.pm6ReopenEditorPane) {
+          window.pm6ReopenEditorPane('editorPane1');
+        } else {
+          var edv = byId('editorView');
+          if (edv) edv.style.display = 'flex';
+          var ep1 = byId('editorPane1');
+          if (ep1) ep1.style.display = 'flex';
+        }
         var tabs = document.querySelector('#editorPane1 .editor-tabs');
         var gutter = byId('pane1Gutter'), code = byId('pane1Code');
         if (tabs && gutter && code) {
-          var base = fileBase(path);
-          var tab = tabs.querySelector('.tab[data-file="' + base + '"]');
-          if (!tab) {
-            tab = document.createElement('span');
-            tab.className = 'tab';
-            tab.setAttribute('data-file', base);
-            tab.textContent = base;
-            tab.onclick = function () { filesFacade.open(path); };
-            tabs.appendChild(tab);
+          if (window.PM6_RENDER_EDITOR_TABS) {
+            /* pm6-js-dashboard owns the pane1 strip (close X, overflow chip):
+               it rebuilds the tab DOM from S.files.openTabs / activeTab */
+            window.PM6_RENDER_EDITOR_TABS();
+          } else {
+            /* legacy inline tab build kept as fallback */
+            var base = fileBase(path);
+            var tab = tabs.querySelector('.tab[data-file="' + base + '"]');
+            if (!tab) {
+              tab = document.createElement('span');
+              tab.className = 'tab';
+              tab.setAttribute('data-file', base);
+              tab.textContent = base;
+              tab.onclick = function () { filesFacade.open(path); };
+              tabs.appendChild(tab);
+            }
+            tabs.querySelectorAll('.tab').forEach(function (t) { t.classList.remove('active'); });
+            tab.classList.add('active');
           }
-          tabs.querySelectorAll('.tab').forEach(function (t) { t.classList.remove('active'); });
-          tab.classList.add('active');
           /* rich shared renderer (pm6-js-dashboard) when present; inline fallback
              below handles BOTH data shapes: plain array or { lines, diffs } */
           var rendered = false;
@@ -798,6 +932,24 @@
           say('Opened ' + path);
         }
       } catch (e) { say('Opened ' + path); }
+      return { ok: true };
+    },
+    close: function (path) {
+      if (!path) return { toast: 'Pick a file.' };
+      /* pm6-js-dashboard owns tab bookkeeping + neighbor activation when
+         present (it emits files.close itself) */
+      if (window.PM6_CLOSE_EDITOR_TAB) {
+        var r = window.PM6_CLOSE_EDITOR_TAB(path);
+        if (r && r.ok) logBeat('files.close', { path: path });
+        return r;
+      }
+      /* fallback: state-only bookkeeping */
+      var i = S.files.openTabs.indexOf(path);
+      if (i === -1) return { disabled: true, reason: 'already_done' };
+      S.files.openTabs.splice(i, 1);
+      if (S.files.activeTab === path) S.files.activeTab = S.files.openTabs[i - 1] || S.files.openTabs[i] || null;
+      logBeat('files.close', { path: path });
+      emit('files.close', { path: path, tabs: S.files.openTabs });
       return { ok: true };
     }
   };
@@ -1018,6 +1170,7 @@
   reg('usage.export', function () { return usageFacade.export(); });
   reg('usage.configure_widget', function (ctx) { return usageFacade.configureWidget(argOf(ctx), {}); });
   reg('files.open', function (ctx) { return filesFacade.open(argOf(ctx)); });
+  reg('files.close', function (ctx) { return filesFacade.close(argOf(ctx)); });
   reg('dash.add_widget', function (ctx) { return dashFacade.addWidget(argOf(ctx)); });
   reg('web.run', function (ctx) {
     var a = argOf(ctx).split('|'); /* kind|input(|invocation_source) */

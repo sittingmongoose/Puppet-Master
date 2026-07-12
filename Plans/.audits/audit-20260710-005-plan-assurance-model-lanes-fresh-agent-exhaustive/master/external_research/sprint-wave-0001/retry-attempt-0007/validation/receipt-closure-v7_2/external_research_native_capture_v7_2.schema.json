@@ -1,0 +1,127 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "additionalProperties": false,
+  "properties": {
+    "assignment_count": {
+      "const": 2
+    },
+    "attempt_id": {
+      "const": "attempt-0007"
+    },
+    "controller_thread_id": {
+      "type": "string"
+    },
+    "coverage_credit": {
+      "const": 0
+    },
+    "digest_semantics_version": {
+      "const": "raw-file-and-canonical-object-explicit-v7.2"
+    },
+    "leaves": {
+      "items": {
+        "additionalProperties": false,
+        "properties": {
+          "activation_core_file_sha256": {
+            "type": "string"
+          },
+          "activation_core_object_canonical_sha256": {
+            "type": "string"
+          },
+          "agent_path": {
+            "type": "string"
+          },
+          "assignment_id": {
+            "type": "string"
+          },
+          "leaf_dispatch_authorization_file_sha256": {
+            "type": "string"
+          },
+          "leaf_dispatch_authorization_object_canonical_sha256": {
+            "type": "string"
+          },
+          "native_child_thread_id": {
+            "type": "string"
+          },
+          "native_child_turn_id": {
+            "type": "string"
+          },
+          "output_tree_sha256": {
+            "type": "string"
+          },
+          "receipt_file_sha256": {
+            "type": "string"
+          },
+          "receipt_object_canonical_sha256": {
+            "type": "string"
+          },
+          "result_file_sha256": {
+            "type": "string"
+          },
+          "result_object_canonical_sha256": {
+            "type": "string"
+          },
+          "terminal_response_exact": {
+            "type": "string"
+          }
+        },
+        "required": [
+          "assignment_id",
+          "agent_path",
+          "native_child_thread_id",
+          "native_child_turn_id",
+          "terminal_response_exact",
+          "result_file_sha256",
+          "result_object_canonical_sha256",
+          "receipt_file_sha256",
+          "receipt_object_canonical_sha256",
+          "output_tree_sha256",
+          "activation_core_file_sha256",
+          "activation_core_object_canonical_sha256",
+          "leaf_dispatch_authorization_file_sha256",
+          "leaf_dispatch_authorization_object_canonical_sha256"
+        ],
+        "type": "object"
+      },
+      "maxItems": 2,
+      "minItems": 2,
+      "type": "array"
+    },
+    "merge_credit": {
+      "const": 0
+    },
+    "native_state_file_sha256": {
+      "type": "string"
+    },
+    "native_state_path": {
+      "type": "string"
+    },
+    "promotion_credit": {
+      "const": 0
+    },
+    "research_credit": {
+      "const": 0
+    },
+    "schema_version": {
+      "const": "external-research-native-capture-v7.2"
+    },
+    "spec_credit": {
+      "const": 0
+    }
+  },
+  "required": [
+    "schema_version",
+    "attempt_id",
+    "controller_thread_id",
+    "assignment_count",
+    "native_state_path",
+    "native_state_file_sha256",
+    "digest_semantics_version",
+    "leaves",
+    "coverage_credit",
+    "research_credit",
+    "promotion_credit",
+    "spec_credit",
+    "merge_credit"
+  ],
+  "type": "object"
+}

@@ -1,0 +1,973 @@
+{
+  "action_constraints": {
+    "activation_writes": 0,
+    "additional_agents": 0,
+    "capture_writes": 0,
+    "descendants": 0,
+    "extra_files_written": 0,
+    "followups": 0,
+    "fork_turns": "none",
+    "launches": 0,
+    "promotion_writes": 0,
+    "receipt_writes": 0,
+    "report_writes": 1,
+    "retries": 0
+  },
+  "aggregate_reconstruction": {
+    "assignment_count": 64,
+    "eligible_assignment_ids": [
+      "A005CDSV2-0001",
+      "A005CDSV2-0003",
+      "A005CDSV2-0004",
+      "A005CDSV2-0005",
+      "A005CDSV2-0007",
+      "A005CDSV2-0008",
+      "A005CDSV2-0009",
+      "A005CDSV2-0010",
+      "A005CDSV2-0011",
+      "A005CDSV2-0012",
+      "A005CDSV2-0013",
+      "A005CDSV2-0014",
+      "A005CDSV2-0015",
+      "A005CDSV2-0016",
+      "A005CDSV2-0017",
+      "A005CDSV2-0018",
+      "A005CDSV2-0019",
+      "A005CDSV2-0020",
+      "A005CDSV2-0021",
+      "A005CDSV2-0022",
+      "A005CDSV2-0023",
+      "A005CDSV2-0024",
+      "A005CDSV2-0025",
+      "A005CDSV2-0026",
+      "A005CDSV2-0027",
+      "A005CDSV2-0028",
+      "A005CDSV2-0029",
+      "A005CDSV2-0030",
+      "A005CDSV2-0031",
+      "A005CDSV2-0032",
+      "A005CDSV2-0033",
+      "A005CDSV2-0034",
+      "A005CDSV2-0035",
+      "A005CDSV2-0036",
+      "A005CDSV2-0037",
+      "A005CDSV2-0038",
+      "A005CDSV2-0040",
+      "A005CDSV2-0041",
+      "A005CDSV2-0042",
+      "A005CDSV2-0043",
+      "A005CDSV2-0044",
+      "A005CDSV2-0045",
+      "A005CDSV2-0046",
+      "A005CDSV2-0047",
+      "A005CDSV2-0048",
+      "A005CDSV2-0049",
+      "A005CDSV2-0050",
+      "A005CDSV2-0051",
+      "A005CDSV2-0052",
+      "A005CDSV2-0053",
+      "A005CDSV2-0054",
+      "A005CDSV2-0055",
+      "A005CDSV2-0056",
+      "A005CDSV2-0057",
+      "A005CDSV2-0058",
+      "A005CDSV2-0059",
+      "A005CDSV2-0060",
+      "A005CDSV2-0061",
+      "A005CDSV2-0062",
+      "A005CDSV2-0063",
+      "A005CDSV2-0064"
+    ],
+    "eligible_count": 61,
+    "primary_aggregate_counts": {
+      "eligible": 61,
+      "rejected": 3
+    },
+    "rejected_assignment_ids": [
+      "A005CDSV2-0002",
+      "A005CDSV2-0006",
+      "A005CDSV2-0039"
+    ],
+    "rejected_count": 3,
+    "rejected_error_digest": "f75acbcc55f26535eefef4fbbeb1852ffe3fcc535f290ab1145a6ecf723d2090",
+    "rejected_errors": {
+      "A005CDSV2-0002": [
+        "resolved_has_unresolved:A005CDS-EDGE-07011",
+        "resolved_has_unresolved:A005CDS-EDGE-07228"
+      ],
+      "A005CDSV2-0006": [
+        "unregistered_claim_source:A005CDS-EDGE-04448",
+        "unregistered_claim_source:A005CDS-EDGE-04449",
+        "unregistered_claim_source:A005CDS-EDGE-04452",
+        "unregistered_claim_source:A005CDS-EDGE-04455",
+        "unregistered_claim_source:A005CDS-EDGE-05273",
+        "unregistered_claim_source:A005CDS-EDGE-05697",
+        "unregistered_claim_source:A005CDS-EDGE-06633",
+        "unregistered_claim_source:A005CDS-EDGE-06634",
+        "unregistered_claim_source:A005CDS-EDGE-06762",
+        "unregistered_claim_source:A005CDS-EDGE-06763",
+        "unregistered_claim_source:A005CDS-EDGE-06765",
+        "unregistered_claim_source:A005CDS-EDGE-06801",
+        "unregistered_claim_source:A005CDS-EDGE-06803",
+        "unregistered_claim_source:A005CDS-EDGE-06804",
+        "unregistered_claim_source:A005CDS-EDGE-06806",
+        "unregistered_claim_source:A005CDS-EDGE-06807",
+        "unregistered_claim_source:A005CDS-EDGE-06808",
+        "unregistered_claim_source:A005CDS-EDGE-06809"
+      ],
+      "A005CDSV2-0039": [
+        "resolved_has_unresolved:A005CDS-EDGE-08874"
+      ]
+    },
+    "status": "pass",
+    "unique_native_child_threads": 64,
+    "unique_native_turns": 64
+  },
+  "assignment_reports": [
+    {
+      "assignment_id": "A005CDSV2-0049",
+      "conflict_count": 6,
+      "edge_count": 139,
+      "edge_membership_digest": "44549bd092dfda0abe5bb63ad595a17588b5e95ecb84dedb91674a2c4e949271",
+      "eligible": true,
+      "errors": [],
+      "feature_count": 128,
+      "hashes": {
+        "cohort_activation_sha256": "c95e92244a1f5047213ccfef0359b6410f108a54f0242878ca942c1238799f23",
+        "dispatch_intent_sha256": "b6ead5aa77ca209d27ba4caa689830b0052f52edc53f98517ba876a2fba50601",
+        "native_session_sha256": "ecd3bc552370ce3565050530b4f67c0a8ac638e59a296fb06bf6e962ed76bae1",
+        "packet_sha256": "454e633a5ab079a59b008b0f2478166455cf0e3de0b177323f2dbecb4ad93788",
+        "receipt_sha256": "4f141ad644e939cd2b32fea9b7d190141c17379aea3cdc92d8a984ea4d30e155",
+        "result_sha256": "dfe4b2d213a101bc3725661710ff92d2d4cfd5a0bc7c74e1ed1877bc1bdbae6f"
+      },
+      "native": {
+        "agent_path": "/root/a005_cross_domain_seam_v2_0049_attempt_0001_terminal",
+        "native_child_thread_id": "019f542e-574b-7113-af1b-8d7c1eb212d4",
+        "native_turn_id": "019f542e-57ee-76c1-aae1-3376f70035af",
+        "terminal_response": "PMR1",
+        "terminal_status": "completed"
+      },
+      "packet_id": "CDSV2PKT-0049",
+      "quarantine_count": 0
+    },
+    {
+      "assignment_id": "A005CDSV2-0050",
+      "conflict_count": 3,
+      "edge_count": 141,
+      "edge_membership_digest": "b380c7269954ee722154fa06ecd18a99e679b223d28446e3b3521222bfc23b38",
+      "eligible": true,
+      "errors": [],
+      "feature_count": 136,
+      "hashes": {
+        "cohort_activation_sha256": "c95e92244a1f5047213ccfef0359b6410f108a54f0242878ca942c1238799f23",
+        "dispatch_intent_sha256": "2d5239e6f92fe717a4d67c745413acd3514f364a7dc167b240263c9ddb69baee",
+        "native_session_sha256": "087651a81e47597523703a5de503500cb85daba35cc0b1b158fd845d0207d39a",
+        "packet_sha256": "fca606a86abe605e0939d053e064580560f75f26b4f44edbf146035e2f780dd7",
+        "receipt_sha256": "187a70546070b6b15077c58cf4e4c1f0786f60324b576577f1c9b5a054821f63",
+        "result_sha256": "de29350712ad5bc68bb88fdb41f837eda4b2cc8e40e91f201886753687ad8f75"
+      },
+      "native": {
+        "agent_path": "/root/a005_cross_domain_seam_v2_0050_attempt_0001_terminal",
+        "native_child_thread_id": "019f542e-9ed4-7d11-99b1-0aa14960f945",
+        "native_turn_id": "019f542e-9f6b-7bc3-b54f-5b24cc2bf6de",
+        "terminal_response": "PMR1",
+        "terminal_status": "completed"
+      },
+      "packet_id": "CDSV2PKT-0050",
+      "quarantine_count": 0
+    },
+    {
+      "assignment_id": "A005CDSV2-0051",
+      "conflict_count": 4,
+      "edge_count": 139,
+      "edge_membership_digest": "4e193fc3c790fe75df7fb90e7c23d681e4f4ebfa0e16b6541c52789d57c60bd7",
+      "eligible": true,
+      "errors": [],
+      "feature_count": 130,
+      "hashes": {
+        "cohort_activation_sha256": "c95e92244a1f5047213ccfef0359b6410f108a54f0242878ca942c1238799f23",
+        "dispatch_intent_sha256": "a99ce07ae5f85228bacb1c08764fbdb41e7dd69c593678ccf118f01af7e5ddda",
+        "native_session_sha256": "1493b6caf21453fd2b9d053343a31ffe72365b998933644a20e4a937af4a53e4",
+        "packet_sha256": "ae81cf427c49efa1f61daf50561dee5480f339d0b42ea941cf8db85697cd5fb8",
+        "receipt_sha256": "0ad746911bca2a83cc5b88608d1f0358910fc99dc17d9bbe3c5857a6c6d4f0cd",
+        "result_sha256": "7a3b88c9567de1c00047dc579ad731336eccf47a7d363bf8b50be2a180baf024"
+      },
+      "native": {
+        "agent_path": "/root/a005_cross_domain_seam_v2_0051_attempt_0001_terminal",
+        "native_child_thread_id": "019f542e-c7c9-75e0-8e35-e665f1fa9a42",
+        "native_turn_id": "019f542e-c83f-7a92-aba8-236faa220a0a",
+        "terminal_response": "PMR1",
+        "terminal_status": "completed"
+      },
+      "packet_id": "CDSV2PKT-0051",
+      "quarantine_count": 0
+    },
+    {
+      "assignment_id": "A005CDSV2-0052",
+      "conflict_count": 6,
+      "edge_count": 138,
+      "edge_membership_digest": "0d854038be306cc266c91ca81c1969b9e1a2f7ec568de05ce9c4593662a1a9b8",
+      "eligible": true,
+      "errors": [],
+      "feature_count": 129,
+      "hashes": {
+        "cohort_activation_sha256": "c95e92244a1f5047213ccfef0359b6410f108a54f0242878ca942c1238799f23",
+        "dispatch_intent_sha256": "3401d0a6ff21503ba8f247dbf726ab3525e7bc6214bfbb18c57017744c5385ba",
+        "native_session_sha256": "764b9f556ee61069d18fb4809648f8ae7d210163fbae9824293bf23374467677",
+        "packet_sha256": "67735073bdda4f8355c9c692274c5c41d1e1ea960fa29be6b41315dc969b44e3",
+        "receipt_sha256": "9d3fe484dcf045a60f7772a900045613426868689c88dad2e629007fab9de995",
+        "result_sha256": "89f38426a9bbe1cf033055a17208ce8e1fe3ed9375f869da18071b490ca13974"
+      },
+      "native": {
+        "agent_path": "/root/a005_cross_domain_seam_v2_0052_attempt_0001_terminal",
+        "native_child_thread_id": "019f542e-e8a8-7c12-9a0e-6034d41fa1d9",
+        "native_turn_id": "019f542e-e922-7450-9d67-04b9442571d8",
+        "terminal_response": "PMR1",
+        "terminal_status": "completed"
+      },
+      "packet_id": "CDSV2PKT-0052",
+      "quarantine_count": 0
+    },
+    {
+      "assignment_id": "A005CDSV2-0053",
+      "conflict_count": 0,
+      "edge_count": 151,
+      "edge_membership_digest": "3a0353014798b512958acb6f6a3ecf4bc7d96d7d96ef5439c2a08a9f6e566a5e",
+      "eligible": true,
+      "errors": [],
+      "feature_count": 124,
+      "hashes": {
+        "cohort_activation_sha256": "c95e92244a1f5047213ccfef0359b6410f108a54f0242878ca942c1238799f23",
+        "dispatch_intent_sha256": "0afe2e2f3be3972db31cd38221a8efb5edd7b5d9b991893d70dc3d9a1d8cc4ed",
+        "native_session_sha256": "25e71d199fb9d018cbc2930cbe57abc54c1a7fdb5e86c3adc74a431cd48ac7cf",
+        "packet_sha256": "79e318ccc296abab164d0cf3400dfb59a6439605b72d833ad8b19aeff7b1bb7a",
+        "receipt_sha256": "fa610aa304720b18f92932a9332a40813071e69381e3a312506ef6e0c98b2198",
+        "result_sha256": "0c020ebb02d28322d212d6652fc86b1a985bf5b40eb2d3fcee5ed4f4d677d32a"
+      },
+      "native": {
+        "agent_path": "/root/a005_cross_domain_seam_v2_0053_attempt_0001_terminal",
+        "native_child_thread_id": "019f542f-3999-7013-99bc-e959bb92e65c",
+        "native_turn_id": "019f542f-3a0b-7963-9d6a-7009d748ad80",
+        "terminal_response": "PMR1",
+        "terminal_status": "completed"
+      },
+      "packet_id": "CDSV2PKT-0053",
+      "quarantine_count": 0
+    },
+    {
+      "assignment_id": "A005CDSV2-0054",
+      "conflict_count": 5,
+      "edge_count": 138,
+      "edge_membership_digest": "eab31c940223638fb8c750c6d04bccd45af6bf48636b2042edcd359b5775b15b",
+      "eligible": true,
+      "errors": [],
+      "feature_count": 132,
+      "hashes": {
+        "cohort_activation_sha256": "c95e92244a1f5047213ccfef0359b6410f108a54f0242878ca942c1238799f23",
+        "dispatch_intent_sha256": "29de195d0ee9ad60696cc2155df1433b73dd7deee0b80c900bd997bd1eaee17a",
+        "native_session_sha256": "92b9637925daeb6aa655cc9451145b443b52de0f549b849c6ea3b64c4dff8b00",
+        "packet_sha256": "39f84cc19c0bcddb29df6cffaca24830e10a24abfe39b8e149cc9ca51dc70cfc",
+        "receipt_sha256": "422061d4cbdaa9685705ac932fcae8c3b1afdfc43b6f1590598099105a309db1",
+        "result_sha256": "0154d03ef610de7ffc9ca5b189f2102fba3c8c7f68b171a0f93dac4078414d23"
+      },
+      "native": {
+        "agent_path": "/root/a005_cross_domain_seam_v2_0054_attempt_0001_terminal",
+        "native_child_thread_id": "019f542f-71b9-77b1-8682-9a816e0270eb",
+        "native_turn_id": "019f542f-7241-7552-ab73-738813e9e213",
+        "terminal_response": "PMR1",
+        "terminal_status": "completed"
+      },
+      "packet_id": "CDSV2PKT-0054",
+      "quarantine_count": 1
+    },
+    {
+      "assignment_id": "A005CDSV2-0055",
+      "conflict_count": 5,
+      "edge_count": 143,
+      "edge_membership_digest": "78307126928f870169a641bbe56615652e33bd3cb2275328c23e2658ddfc4b4a",
+      "eligible": true,
+      "errors": [],
+      "feature_count": 119,
+      "hashes": {
+        "cohort_activation_sha256": "c95e92244a1f5047213ccfef0359b6410f108a54f0242878ca942c1238799f23",
+        "dispatch_intent_sha256": "876f00046752019c28b9ffd20f634167bc6a90ccc1395504433861b0ed80df08",
+        "native_session_sha256": "8ef03a8ae39dbfc9e6558e70d0e831a6305c8e4c2c41694ceaaf8b5e5e13a79d",
+        "packet_sha256": "a5405cc2c78359259fdca564e2b244c1c153bd45c1d226a69394a4995808270d",
+        "receipt_sha256": "85e15e0ad19be232f126bbe2caf9d3200e3e973077ab9270e10dc65d0bcda8ec",
+        "result_sha256": "d3ba304f655ef90f0172ef0bc66ff68254ba01c62474ad0736f1a9498480ef3c"
+      },
+      "native": {
+        "agent_path": "/root/a005_cross_domain_seam_v2_0055_attempt_0001_terminal",
+        "native_child_thread_id": "019f542f-977c-7b72-adcd-12f14d97aaa4",
+        "native_turn_id": "019f542f-97f8-75d3-ace6-05f011508fa4",
+        "terminal_response": "PMR1",
+        "terminal_status": "completed"
+      },
+      "packet_id": "CDSV2PKT-0055",
+      "quarantine_count": 2
+    },
+    {
+      "assignment_id": "A005CDSV2-0056",
+      "conflict_count": 5,
+      "edge_count": 148,
+      "edge_membership_digest": "8d13bcd240d442d63553d3e95109c2046265f3e8ae3394df53b41e3437dacdd5",
+      "eligible": true,
+      "errors": [],
+      "feature_count": 115,
+      "hashes": {
+        "cohort_activation_sha256": "c95e92244a1f5047213ccfef0359b6410f108a54f0242878ca942c1238799f23",
+        "dispatch_intent_sha256": "ed24f757424b5ecbb0b1ad9ca4e680249c33ef05691c7540195a16e1b02baa7a",
+        "native_session_sha256": "1578d8bdf9523d1d20673f48ee0d8f3972f50fc5299331156391eef306c7d3c4",
+        "packet_sha256": "88e63968317f1eb7e8e3c76f95e53bddca46dcd189e676b8327b0666c879e9d0",
+        "receipt_sha256": "d6a001054a7b7c3af5c18fbf52a1dca5cfa0d93d1389faaff3510d6d4261ebb3",
+        "result_sha256": "d244f2b0d85f28ac734498e26bb5f716b6c793a5764ae02192423b154660541a"
+      },
+      "native": {
+        "agent_path": "/root/a005_cross_domain_seam_v2_0056_attempt_0001_terminal",
+        "native_child_thread_id": "019f542f-c81f-7642-bbf4-8560cc9eeb65",
+        "native_turn_id": "019f542f-c89e-7561-9e36-826a5008b20e",
+        "terminal_response": "PMR1",
+        "terminal_status": "completed"
+      },
+      "packet_id": "CDSV2PKT-0056",
+      "quarantine_count": 0
+    },
+    {
+      "assignment_id": "A005CDSV2-0057",
+      "conflict_count": 1,
+      "edge_count": 147,
+      "edge_membership_digest": "09bbbfa0e63bd31d9d43c17aec3fd310de241dec3c4eef8551a6f94306f5ca52",
+      "eligible": true,
+      "errors": [],
+      "feature_count": 134,
+      "hashes": {
+        "cohort_activation_sha256": "c95e92244a1f5047213ccfef0359b6410f108a54f0242878ca942c1238799f23",
+        "dispatch_intent_sha256": "bf49ca25e9ff6a18ee895a085927f3c9cfc9314951b5727147c40c9b1f5307f0",
+        "native_session_sha256": "6ac0e55100aeccf7c3265b0e571896d542abe1f76656615ba38fa3ee98515879",
+        "packet_sha256": "07297bfe98614c82bf705d814e51e45fa060ba8841432e223c78b5bf692887c1",
+        "receipt_sha256": "a4da2946fd7b586fce683c9d226d254797804e5021700cc895a5946765975a44",
+        "result_sha256": "43ae3377e1ecb00629aced68ce268b775cfd9a1ef3d787ec46d5b69a41406522"
+      },
+      "native": {
+        "agent_path": "/root/a005_cross_domain_seam_v2_0057_attempt_0001_terminal",
+        "native_child_thread_id": "019f542f-f510-7e42-87f3-3bc9fb715449",
+        "native_turn_id": "019f542f-f596-7762-b9c3-6db7ac32e1de",
+        "terminal_response": "PMR1",
+        "terminal_status": "completed"
+      },
+      "packet_id": "CDSV2PKT-0057",
+      "quarantine_count": 0
+    },
+    {
+      "assignment_id": "A005CDSV2-0058",
+      "conflict_count": 2,
+      "edge_count": 147,
+      "edge_membership_digest": "000d47987ae3f834dd3dae55c07c19821e97cf98374bb6a4bed72d3a68ab118b",
+      "eligible": true,
+      "errors": [],
+      "feature_count": 133,
+      "hashes": {
+        "cohort_activation_sha256": "c95e92244a1f5047213ccfef0359b6410f108a54f0242878ca942c1238799f23",
+        "dispatch_intent_sha256": "c2af138b9eb68c4da953f863045bc89a196d5ccac8246600f12abdb53c034081",
+        "native_session_sha256": "7f3855cb1f512bd486626d90563f706dd0260e4350acaedfbcd069fa694fafbb",
+        "packet_sha256": "e264212512b53f86a15f7d3963c8fc38383665de24a823ee940765fdc21bfb09",
+        "receipt_sha256": "337c3030b684ef8a138de1c5dc007ea2ffd01733e4714c09b7cd98a5cc177ac3",
+        "result_sha256": "a10567755d34fe13746c58c2846418e20ce40a25b3d3b84723dab5153573effb"
+      },
+      "native": {
+        "agent_path": "/root/a005_cross_domain_seam_v2_0058_attempt_0001_terminal",
+        "native_child_thread_id": "019f5430-188d-7740-a4dc-d1af8e2a958f",
+        "native_turn_id": "019f5430-1923-7343-a6ff-4143c06e643b",
+        "terminal_response": "PMR1",
+        "terminal_status": "completed"
+      },
+      "packet_id": "CDSV2PKT-0058",
+      "quarantine_count": 1
+    },
+    {
+      "assignment_id": "A005CDSV2-0059",
+      "conflict_count": 2,
+      "edge_count": 143,
+      "edge_membership_digest": "b2052f9da38699bab70709aa4d50461adaddb73a7c33b673a597e3acf7fa95d4",
+      "eligible": true,
+      "errors": [],
+      "feature_count": 135,
+      "hashes": {
+        "cohort_activation_sha256": "c95e92244a1f5047213ccfef0359b6410f108a54f0242878ca942c1238799f23",
+        "dispatch_intent_sha256": "ab7576d838bf520895d792e2a7462540181ce71a1f94cbd66f265e41dd39b6f3",
+        "native_session_sha256": "a674475df58c06646456699c516583a59217a92435709f52858cb2043f9e8e69",
+        "packet_sha256": "b7d0bc4fbe500b52ef80a93f86d339421bcc9716e93cedb33c646a74b32c84c5",
+        "receipt_sha256": "b5da8dda5afcfdc0aa8e3114ff66618b3627d93f2e749e6ba30854da00ded467",
+        "result_sha256": "d124d0f4dbf7847184aad44e3fc52495d30a1bdc43b7efe4fc53967f5daedfac"
+      },
+      "native": {
+        "agent_path": "/root/a005_cross_domain_seam_v2_0059_attempt_0001_terminal",
+        "native_child_thread_id": "019f5430-3fc5-7fd1-9cdf-b7129e15145e",
+        "native_turn_id": "019f5430-4046-7270-a046-8de1472191a7",
+        "terminal_response": "PMR1",
+        "terminal_status": "completed"
+      },
+      "packet_id": "CDSV2PKT-0059",
+      "quarantine_count": 0
+    },
+    {
+      "assignment_id": "A005CDSV2-0060",
+      "conflict_count": 7,
+      "edge_count": 140,
+      "edge_membership_digest": "6329fc63367167fa700bbdebf00acfd2e9654d8a414aefa8a696018d25923ef8",
+      "eligible": true,
+      "errors": [],
+      "feature_count": 127,
+      "hashes": {
+        "cohort_activation_sha256": "c95e92244a1f5047213ccfef0359b6410f108a54f0242878ca942c1238799f23",
+        "dispatch_intent_sha256": "b0445c5452ec389a066f1c96cc7b4e95aeea0bdc688ed9fb5c19509a8d6b9ce0",
+        "native_session_sha256": "bb17e9132d3b1e4e33387d1cc6d0cb0ee92f0d2a190c9d59da9f7789f424696b",
+        "packet_sha256": "70d0fa785f80f2ce8b73288370b03e6dba2c53405abdb3cb7395f2cb750e647b",
+        "receipt_sha256": "2eb329e277c1add2ce05dbb9a75b0b0a4785a63947c8ce31cb3026671a061ab7",
+        "result_sha256": "c174c99f6fac5230c35f066175085186af35af39eab1c7a32f172c79edbe4628"
+      },
+      "native": {
+        "agent_path": "/root/a005_cross_domain_seam_v2_0060_attempt_0001_terminal",
+        "native_child_thread_id": "019f5430-661b-7011-87d9-11410d88e877",
+        "native_turn_id": "019f5430-669e-7ed0-8531-551fb55d57f5",
+        "terminal_response": "PMR1",
+        "terminal_status": "completed"
+      },
+      "packet_id": "CDSV2PKT-0060",
+      "quarantine_count": 0
+    },
+    {
+      "assignment_id": "A005CDSV2-0061",
+      "conflict_count": 3,
+      "edge_count": 145,
+      "edge_membership_digest": "d64c133c2af58638a1ca888e6e3bb88003552c9c2ad917f4addbb02ef3a8cbca",
+      "eligible": true,
+      "errors": [],
+      "feature_count": 135,
+      "hashes": {
+        "cohort_activation_sha256": "c95e92244a1f5047213ccfef0359b6410f108a54f0242878ca942c1238799f23",
+        "dispatch_intent_sha256": "f70150b23839dc3da4ee9cfec606b039d17e3ad99b6c1cac83396fbee3976818",
+        "native_session_sha256": "c8012ff97f703add9e3f52579cf1896ab89f436842a618b7781c454af07ca712",
+        "packet_sha256": "c8757463fa06fedfe482d709906792ea04f238051792f090b7000a8b9d5e7037",
+        "receipt_sha256": "bfb5e853df0be216c5e802c49a98d4d02ac2b11da62135576dbab5f50edd270d",
+        "result_sha256": "92a06b01748dff9231de0a421f78d7e289586ac56ab3ff0baef5e5570aa36bb8"
+      },
+      "native": {
+        "agent_path": "/root/a005_cross_domain_seam_v2_0061_attempt_0001_terminal",
+        "native_child_thread_id": "019f5430-931d-7432-adc6-334f64c0f079",
+        "native_turn_id": "019f5430-9397-7032-aaa6-7e251c2d9544",
+        "terminal_response": "PMR1",
+        "terminal_status": "completed"
+      },
+      "packet_id": "CDSV2PKT-0061",
+      "quarantine_count": 0
+    },
+    {
+      "assignment_id": "A005CDSV2-0062",
+      "conflict_count": 3,
+      "edge_count": 150,
+      "edge_membership_digest": "3eddac451013d6ff14dfb295db61d5db33c1077a660c45da3e6fea5d69ca5ae0",
+      "eligible": true,
+      "errors": [],
+      "feature_count": 131,
+      "hashes": {
+        "cohort_activation_sha256": "c95e92244a1f5047213ccfef0359b6410f108a54f0242878ca942c1238799f23",
+        "dispatch_intent_sha256": "bca4a049d340bf5e200fb86530316ab7e3771839a1999b9733b5123e477b1fb9",
+        "native_session_sha256": "fbf2721e5d3160f4306f6ddc6a6d7687ec8e4fc954aab7c5d7cdb22191eda0af",
+        "packet_sha256": "07c0238a76361e3e670708efa4a1fcb1673ff2bf158c168acd69f1edd7a1830b",
+        "receipt_sha256": "bb545b02795d1db79073df3fa7a4ab48b7741bb4c8259f10cc965ae497378b66",
+        "result_sha256": "08868696a6164cb698e1dc372023b7d8e2b9502d0f49eb5480ce1dc871fb94d9"
+      },
+      "native": {
+        "agent_path": "/root/a005_cross_domain_seam_v2_0062_attempt_0001_terminal",
+        "native_child_thread_id": "019f5430-ba25-7c11-a3c7-1b6111a3ed37",
+        "native_turn_id": "019f5430-ba99-76f1-bf4a-eae36e3fb72c",
+        "terminal_response": "PMR1",
+        "terminal_status": "completed"
+      },
+      "packet_id": "CDSV2PKT-0062",
+      "quarantine_count": 0
+    },
+    {
+      "assignment_id": "A005CDSV2-0063",
+      "conflict_count": 2,
+      "edge_count": 155,
+      "edge_membership_digest": "17d3d37126409e28c9c24dfcb26621e85d2260cf21574cba5aef5e807a96bf84",
+      "eligible": true,
+      "errors": [],
+      "feature_count": 140,
+      "hashes": {
+        "cohort_activation_sha256": "c95e92244a1f5047213ccfef0359b6410f108a54f0242878ca942c1238799f23",
+        "dispatch_intent_sha256": "3c934318e26419554d6ddf1e77c5d3dcf50b7c0cebb532862826dd1a450b7897",
+        "native_session_sha256": "a5b1b3234bc3e709aacabf554979e935176c0210f1a80050f1c94c635d463993",
+        "packet_sha256": "512f62e14e95693d5b4e71df2e8572e59f619abfc0980263e758cde06301989e",
+        "receipt_sha256": "8e1c1970bc80195dcbf861e35712d5f2e374d0b4a03581d08c8e064b2c51836f",
+        "result_sha256": "6f0052eb8c5418cd3294e9d6788021a97c7f5392c82db29431f84f657d591dc3"
+      },
+      "native": {
+        "agent_path": "/root/a005_cross_domain_seam_v2_0063_attempt_0001_terminal",
+        "native_child_thread_id": "019f5430-e679-78b1-8286-82598b4015ef",
+        "native_turn_id": "019f5430-e704-76b0-ad98-984aee47b5d4",
+        "terminal_response": "PMR1",
+        "terminal_status": "completed"
+      },
+      "packet_id": "CDSV2PKT-0063",
+      "quarantine_count": 0
+    },
+    {
+      "assignment_id": "A005CDSV2-0064",
+      "conflict_count": 4,
+      "edge_count": 140,
+      "edge_membership_digest": "1c56509a9b089f27b92a811e0fbd046cadc3e938def3186e50788dc705d11a8a",
+      "eligible": true,
+      "errors": [],
+      "feature_count": 131,
+      "hashes": {
+        "cohort_activation_sha256": "c95e92244a1f5047213ccfef0359b6410f108a54f0242878ca942c1238799f23",
+        "dispatch_intent_sha256": "e04edb40866a288cbec0513a23d2f4b58b630f8b1173d235d82dfad70ebe15cc",
+        "native_session_sha256": "cadfa276a9e30824459ca37b80c6fd126a160c0ca1176dd495547eefb3b1b750",
+        "packet_sha256": "9c9e18ea5377bad972b86f607540245040289c75f02394bbf84ea7f4b53e741c",
+        "receipt_sha256": "72b9738d4fed8788f129a15ec2659dedb1c9b55f85a2cd2661ebd17298f44b46",
+        "result_sha256": "3c333cab10332a12226f90cf1c1bd85f73b9484a230f0a684ab27e961edf9b6b"
+      },
+      "native": {
+        "agent_path": "/root/a005_cross_domain_seam_v2_0064_attempt_0001_terminal",
+        "native_child_thread_id": "019f5431-0d06-72a0-9b91-497914c7e0e8",
+        "native_turn_id": "019f5431-0d86-7dd2-ba8c-61027e05a55a",
+        "terminal_response": "PMR1",
+        "terminal_status": "completed"
+      },
+      "packet_id": "CDSV2PKT-0064",
+      "quarantine_count": 1
+    }
+  ],
+  "audit_id": "audit-20260710-005-plan-assurance-model-lanes-fresh-agent-exhaustive",
+  "canonical_plan_changes": false,
+  "checker": "external_research_luna_seam_independent_postrun_v1",
+  "cohort_id": "cohort-0004",
+  "contracts_verified": {
+    "decision_membership_and_cardinality": true,
+    "direct_sol_xhigh": true,
+    "evidence_source_traceability": true,
+    "fork_turns_none": true,
+    "identity_uniqueness": true,
+    "no_descendants": true,
+    "no_followups": true,
+    "no_retries": true,
+    "output_confinement": true,
+    "quarantine_conflict_preservation": true,
+    "question_binding": true,
+    "related_distinct_separation": true,
+    "result_receipt_capture_cardinality": true,
+    "result_schema_draft_2020_12": true,
+    "strict_merge_boundary": true,
+    "v14_activation_and_postrun_authority": true
+  },
+  "counts": {
+    "assignments": 16,
+    "conflicts": 58,
+    "counterevidence_items": 2827,
+    "edges": 2304,
+    "eligible": 16,
+    "extra_output_files": 0,
+    "features_sum": 2079,
+    "native_capture_rows": 16,
+    "output_directories": 16,
+    "quarantines": 5,
+    "receipts": 16,
+    "rejected": 0,
+    "results": 16,
+    "retry_attempts": 0,
+    "supporting_evidence_items": 8462,
+    "unique_edges": 2304,
+    "unique_features": 1365
+  },
+  "coverage_credit": 0,
+  "decision_counts": {
+    "conflict_requires_plan_revision": 1,
+    "dependency_or_interface_seam": 1008,
+    "same_feature_merge": 14,
+    "shared_subsystem_distinct": 1264,
+    "uncertain_requires_targeted_research": 10,
+    "unsupported_candidate": 7
+  },
+  "digests": {
+    "activation_v4_sha256": "c95e92244a1f5047213ccfef0359b6410f108a54f0242878ca942c1238799f23",
+    "cohort_manifest_sha256": "3c9e4a6c6bf2ec7a67de6f2b3ebab3160cde8089d94e440cca0c2f608b9b8ff0",
+    "intent_root_sha256": "0199dcc3fef104be8a1c13f7f6e1952b3fe8a6059da6f4a724a0194c6b51b603",
+    "leaf_prompt_sha256": "93d293d17eea646b348a667392b01c4d634c16f58cf9ca9e8b02b0f10761564f",
+    "manifest_sha256": "4ae22745f484da426b2c933b9cf12b953a18ec70be4a676a02f9b85c96314d4b",
+    "native_capture_contract_sha256": "b9c30a5c64577187888cdac4415f8199bc7cb2d5768d5e7204174c0a7c770d0a",
+    "native_capture_sha256": "9e1da5f665eed80a2b9af23d11846053a7bda322aee5bd3c776c4b2131a41fef",
+    "native_session_root_sha256": "50e928c339bf6ef6fdaffe96eb20e88ed3a9a27f8de03f9d0405f78bc4c4b665",
+    "packet_registry_sha256": "4b7e97f2900df905e6badd4a42a4c50737bebe3121b81023db254e3eed31cf52",
+    "packet_root_sha256": "107d8e64ce600dce650ae8795684228f9476eb7428de5e78aa8c57eeae464997",
+    "postrun_authority_sha256": "7bde3f9d0431b4064ea516c678b17b57fc37ffa030503d0a74470522ea068b1f",
+    "primary_compatible_receipt_root_sha256": "f0bd65eb6dc90cce35228479869746adbaf375b61bbed14a6613e5078aac6216",
+    "primary_compatible_result_root_sha256": "29d98903c5bcdaf5eae006e00083ab087b2b3121c3e4415987cb5139ebafbb6e",
+    "receipt_contract_sha256": "aaa946cfd90f93bd5a998263eed08bbb3f925921a807108a727b52af85c5a3af",
+    "receipt_root_sha256": "3dbe046b9d07a02434ae4ae7787cc98be64bfda5cdc4ea674460292b991e57c6",
+    "result_root_sha256": "230d6a8d9e346873c254c645a4ffb497c4677d8d67d1d55d2bfe038adb9d1273",
+    "result_schema_sha256": "7fcc4172659c9d583d2f6bb5b54d6f4e7440f3091cbc0868cbf2f7fe76135cf4",
+    "source_capsule_sha256": "24ff5ef62eda716207e0a1d24a942f7488b36d9ce93c54de42da2540aeeb67a1",
+    "v14_sha256": "6d64c47798f97cba4e2c30d9d3c6d3d1bedc1c974ba6033b6fce20efe0ff6375",
+    "validator_authority_sha256": "a6bd3c15161939122c8d8b3c38b92ea3445605d39b4a9df5837bed8b4a679efd"
+  },
+  "eligible_assignment_ids": [
+    "A005CDSV2-0049",
+    "A005CDSV2-0050",
+    "A005CDSV2-0051",
+    "A005CDSV2-0052",
+    "A005CDSV2-0053",
+    "A005CDSV2-0054",
+    "A005CDSV2-0055",
+    "A005CDSV2-0056",
+    "A005CDSV2-0057",
+    "A005CDSV2-0058",
+    "A005CDSV2-0059",
+    "A005CDSV2-0060",
+    "A005CDSV2-0061",
+    "A005CDSV2-0062",
+    "A005CDSV2-0063",
+    "A005CDSV2-0064"
+  ],
+  "errors": [],
+  "findings": [
+    {
+      "finding_id": "A005-LUNA-001",
+      "result": "All 16 cohort-0004 assignments independently reconstruct as eligible with zero errors.",
+      "severity": "pass"
+    },
+    {
+      "finding_id": "A005-LUNA-002",
+      "result": "V14 activation v4 is active for exactly sixteen fresh Sol/xhigh leaves; every receipt binds the realized v4 activation hash and pinned V14 hash.",
+      "severity": "pass"
+    },
+    {
+      "finding_id": "A005-LUNA-003",
+      "result": "Immutable dispatch intents are preactivation blocked snapshots; this expected lineage is superseded by receipts binding active activation.v4.",
+      "severity": "pass"
+    },
+    {
+      "finding_id": "A005-LUNA-004",
+      "result": "All native sessions are direct depth-one children of the Sol controller, use Sol/xhigh, have one start and one terminal PMR1 completion, and have no identity reuse.",
+      "severity": "pass"
+    },
+    {
+      "finding_id": "A005-LUNA-005",
+      "result": "The independent 64-assignment reconstruction reproduces 61 eligible and rejects only 0002, 0006, and 0039 with the exact unresolved-reason and unregistered-claim-source errors.",
+      "severity": "pass"
+    },
+    {
+      "finding_id": "A005-LUNA-006",
+      "result": "This checker performed no launch, retry, follow-up, descendant, receipt, capture, activation, promotion, or canonical-plan write.",
+      "severity": "pass"
+    }
+  ],
+  "frozen_postrun_tests": {
+    "failed": 0,
+    "passed": 832,
+    "status": "pass",
+    "test_digest": "d41e2e9c55e5b96966a880e6b4cff47416360bc0b79e85173367eade3cabe07c",
+    "total": 832
+  },
+  "merge_credit": 0,
+  "native_evidence": {
+    "capture_path": "/Users/jaredsmacbookair/Documents/PuppetMaster/Plans/.audits/audit-20260710-005-plan-assurance-model-lanes-fresh-agent-exhaustive/master/cross_domain_seams/wave-0001/window-sharding-v2/cohorts/cohort-0004/runtime/native_capture.json",
+    "capture_sha256": "9e1da5f665eed80a2b9af23d11846053a7bda322aee5bd3c776c4b2131a41fef",
+    "controller_thread_id": "019f4f5e-96c6-7893-8c94-ce2c1b760d6c",
+    "descendants": 0,
+    "followups": 0,
+    "fork_turns_none": 16,
+    "fresh_direct_children": 16,
+    "model": "gpt-5.6-sol",
+    "reasoning_effort": "xhigh",
+    "retries": 0,
+    "row_count": 16,
+    "rows": [
+      {
+        "agent_path": "/root/a005_cross_domain_seam_v2_0049_attempt_0001_terminal",
+        "assignment_id": "A005CDSV2-0049",
+        "native_child_thread_id": "019f542e-574b-7113-af1b-8d7c1eb212d4",
+        "native_session_path": "/Users/jaredsmacbookair/.codex/sessions/2026/07/11/rollout-2026-07-11T22-35-51-019f542e-574b-7113-af1b-8d7c1eb212d4.jsonl",
+        "native_session_sha256": "ecd3bc552370ce3565050530b4f67c0a8ac638e59a296fb06bf6e962ed76bae1",
+        "native_turn_id": "019f542e-57ee-76c1-aae1-3376f70035af",
+        "terminal_response": "PMR1",
+        "terminal_status": "completed"
+      },
+      {
+        "agent_path": "/root/a005_cross_domain_seam_v2_0050_attempt_0001_terminal",
+        "assignment_id": "A005CDSV2-0050",
+        "native_child_thread_id": "019f542e-9ed4-7d11-99b1-0aa14960f945",
+        "native_session_path": "/Users/jaredsmacbookair/.codex/sessions/2026/07/11/rollout-2026-07-11T22-36-09-019f542e-9ed4-7d11-99b1-0aa14960f945.jsonl",
+        "native_session_sha256": "087651a81e47597523703a5de503500cb85daba35cc0b1b158fd845d0207d39a",
+        "native_turn_id": "019f542e-9f6b-7bc3-b54f-5b24cc2bf6de",
+        "terminal_response": "PMR1",
+        "terminal_status": "completed"
+      },
+      {
+        "agent_path": "/root/a005_cross_domain_seam_v2_0051_attempt_0001_terminal",
+        "assignment_id": "A005CDSV2-0051",
+        "native_child_thread_id": "019f542e-c7c9-75e0-8e35-e665f1fa9a42",
+        "native_session_path": "/Users/jaredsmacbookair/.codex/sessions/2026/07/11/rollout-2026-07-11T22-36-19-019f542e-c7c9-75e0-8e35-e665f1fa9a42.jsonl",
+        "native_session_sha256": "1493b6caf21453fd2b9d053343a31ffe72365b998933644a20e4a937af4a53e4",
+        "native_turn_id": "019f542e-c83f-7a92-aba8-236faa220a0a",
+        "terminal_response": "PMR1",
+        "terminal_status": "completed"
+      },
+      {
+        "agent_path": "/root/a005_cross_domain_seam_v2_0052_attempt_0001_terminal",
+        "assignment_id": "A005CDSV2-0052",
+        "native_child_thread_id": "019f542e-e8a8-7c12-9a0e-6034d41fa1d9",
+        "native_session_path": "/Users/jaredsmacbookair/.codex/sessions/2026/07/11/rollout-2026-07-11T22-36-28-019f542e-e8a8-7c12-9a0e-6034d41fa1d9.jsonl",
+        "native_session_sha256": "764b9f556ee61069d18fb4809648f8ae7d210163fbae9824293bf23374467677",
+        "native_turn_id": "019f542e-e922-7450-9d67-04b9442571d8",
+        "terminal_response": "PMR1",
+        "terminal_status": "completed"
+      },
+      {
+        "agent_path": "/root/a005_cross_domain_seam_v2_0053_attempt_0001_terminal",
+        "assignment_id": "A005CDSV2-0053",
+        "native_child_thread_id": "019f542f-3999-7013-99bc-e959bb92e65c",
+        "native_session_path": "/Users/jaredsmacbookair/.codex/sessions/2026/07/11/rollout-2026-07-11T22-36-48-019f542f-3999-7013-99bc-e959bb92e65c.jsonl",
+        "native_session_sha256": "25e71d199fb9d018cbc2930cbe57abc54c1a7fdb5e86c3adc74a431cd48ac7cf",
+        "native_turn_id": "019f542f-3a0b-7963-9d6a-7009d748ad80",
+        "terminal_response": "PMR1",
+        "terminal_status": "completed"
+      },
+      {
+        "agent_path": "/root/a005_cross_domain_seam_v2_0054_attempt_0001_terminal",
+        "assignment_id": "A005CDSV2-0054",
+        "native_child_thread_id": "019f542f-71b9-77b1-8682-9a816e0270eb",
+        "native_session_path": "/Users/jaredsmacbookair/.codex/sessions/2026/07/11/rollout-2026-07-11T22-37-03-019f542f-71b9-77b1-8682-9a816e0270eb.jsonl",
+        "native_session_sha256": "92b9637925daeb6aa655cc9451145b443b52de0f549b849c6ea3b64c4dff8b00",
+        "native_turn_id": "019f542f-7241-7552-ab73-738813e9e213",
+        "terminal_response": "PMR1",
+        "terminal_status": "completed"
+      },
+      {
+        "agent_path": "/root/a005_cross_domain_seam_v2_0055_attempt_0001_terminal",
+        "assignment_id": "A005CDSV2-0055",
+        "native_child_thread_id": "019f542f-977c-7b72-adcd-12f14d97aaa4",
+        "native_session_path": "/Users/jaredsmacbookair/.codex/sessions/2026/07/11/rollout-2026-07-11T22-37-12-019f542f-977c-7b72-adcd-12f14d97aaa4.jsonl",
+        "native_session_sha256": "8ef03a8ae39dbfc9e6558e70d0e831a6305c8e4c2c41694ceaaf8b5e5e13a79d",
+        "native_turn_id": "019f542f-97f8-75d3-ace6-05f011508fa4",
+        "terminal_response": "PMR1",
+        "terminal_status": "completed"
+      },
+      {
+        "agent_path": "/root/a005_cross_domain_seam_v2_0056_attempt_0001_terminal",
+        "assignment_id": "A005CDSV2-0056",
+        "native_child_thread_id": "019f542f-c81f-7642-bbf4-8560cc9eeb65",
+        "native_session_path": "/Users/jaredsmacbookair/.codex/sessions/2026/07/11/rollout-2026-07-11T22-37-25-019f542f-c81f-7642-bbf4-8560cc9eeb65.jsonl",
+        "native_session_sha256": "1578d8bdf9523d1d20673f48ee0d8f3972f50fc5299331156391eef306c7d3c4",
+        "native_turn_id": "019f542f-c89e-7561-9e36-826a5008b20e",
+        "terminal_response": "PMR1",
+        "terminal_status": "completed"
+      },
+      {
+        "agent_path": "/root/a005_cross_domain_seam_v2_0057_attempt_0001_terminal",
+        "assignment_id": "A005CDSV2-0057",
+        "native_child_thread_id": "019f542f-f510-7e42-87f3-3bc9fb715449",
+        "native_session_path": "/Users/jaredsmacbookair/.codex/sessions/2026/07/11/rollout-2026-07-11T22-37-36-019f542f-f510-7e42-87f3-3bc9fb715449.jsonl",
+        "native_session_sha256": "6ac0e55100aeccf7c3265b0e571896d542abe1f76656615ba38fa3ee98515879",
+        "native_turn_id": "019f542f-f596-7762-b9c3-6db7ac32e1de",
+        "terminal_response": "PMR1",
+        "terminal_status": "completed"
+      },
+      {
+        "agent_path": "/root/a005_cross_domain_seam_v2_0058_attempt_0001_terminal",
+        "assignment_id": "A005CDSV2-0058",
+        "native_child_thread_id": "019f5430-188d-7740-a4dc-d1af8e2a958f",
+        "native_session_path": "/Users/jaredsmacbookair/.codex/sessions/2026/07/11/rollout-2026-07-11T22-37-46-019f5430-188d-7740-a4dc-d1af8e2a958f.jsonl",
+        "native_session_sha256": "7f3855cb1f512bd486626d90563f706dd0260e4350acaedfbcd069fa694fafbb",
+        "native_turn_id": "019f5430-1923-7343-a6ff-4143c06e643b",
+        "terminal_response": "PMR1",
+        "terminal_status": "completed"
+      },
+      {
+        "agent_path": "/root/a005_cross_domain_seam_v2_0059_attempt_0001_terminal",
+        "assignment_id": "A005CDSV2-0059",
+        "native_child_thread_id": "019f5430-3fc5-7fd1-9cdf-b7129e15145e",
+        "native_session_path": "/Users/jaredsmacbookair/.codex/sessions/2026/07/11/rollout-2026-07-11T22-37-56-019f5430-3fc5-7fd1-9cdf-b7129e15145e.jsonl",
+        "native_session_sha256": "a674475df58c06646456699c516583a59217a92435709f52858cb2043f9e8e69",
+        "native_turn_id": "019f5430-4046-7270-a046-8de1472191a7",
+        "terminal_response": "PMR1",
+        "terminal_status": "completed"
+      },
+      {
+        "agent_path": "/root/a005_cross_domain_seam_v2_0060_attempt_0001_terminal",
+        "assignment_id": "A005CDSV2-0060",
+        "native_child_thread_id": "019f5430-661b-7011-87d9-11410d88e877",
+        "native_session_path": "/Users/jaredsmacbookair/.codex/sessions/2026/07/11/rollout-2026-07-11T22-38-05-019f5430-661b-7011-87d9-11410d88e877.jsonl",
+        "native_session_sha256": "bb17e9132d3b1e4e33387d1cc6d0cb0ee92f0d2a190c9d59da9f7789f424696b",
+        "native_turn_id": "019f5430-669e-7ed0-8531-551fb55d57f5",
+        "terminal_response": "PMR1",
+        "terminal_status": "completed"
+      },
+      {
+        "agent_path": "/root/a005_cross_domain_seam_v2_0061_attempt_0001_terminal",
+        "assignment_id": "A005CDSV2-0061",
+        "native_child_thread_id": "019f5430-931d-7432-adc6-334f64c0f079",
+        "native_session_path": "/Users/jaredsmacbookair/.codex/sessions/2026/07/11/rollout-2026-07-11T22-38-17-019f5430-931d-7432-adc6-334f64c0f079.jsonl",
+        "native_session_sha256": "c8012ff97f703add9e3f52579cf1896ab89f436842a618b7781c454af07ca712",
+        "native_turn_id": "019f5430-9397-7032-aaa6-7e251c2d9544",
+        "terminal_response": "PMR1",
+        "terminal_status": "completed"
+      },
+      {
+        "agent_path": "/root/a005_cross_domain_seam_v2_0062_attempt_0001_terminal",
+        "assignment_id": "A005CDSV2-0062",
+        "native_child_thread_id": "019f5430-ba25-7c11-a3c7-1b6111a3ed37",
+        "native_session_path": "/Users/jaredsmacbookair/.codex/sessions/2026/07/11/rollout-2026-07-11T22-38-27-019f5430-ba25-7c11-a3c7-1b6111a3ed37.jsonl",
+        "native_session_sha256": "fbf2721e5d3160f4306f6ddc6a6d7687ec8e4fc954aab7c5d7cdb22191eda0af",
+        "native_turn_id": "019f5430-ba99-76f1-bf4a-eae36e3fb72c",
+        "terminal_response": "PMR1",
+        "terminal_status": "completed"
+      },
+      {
+        "agent_path": "/root/a005_cross_domain_seam_v2_0063_attempt_0001_terminal",
+        "assignment_id": "A005CDSV2-0063",
+        "native_child_thread_id": "019f5430-e679-78b1-8286-82598b4015ef",
+        "native_session_path": "/Users/jaredsmacbookair/.codex/sessions/2026/07/11/rollout-2026-07-11T22-38-38-019f5430-e679-78b1-8286-82598b4015ef.jsonl",
+        "native_session_sha256": "a5b1b3234bc3e709aacabf554979e935176c0210f1a80050f1c94c635d463993",
+        "native_turn_id": "019f5430-e704-76b0-ad98-984aee47b5d4",
+        "terminal_response": "PMR1",
+        "terminal_status": "completed"
+      },
+      {
+        "agent_path": "/root/a005_cross_domain_seam_v2_0064_attempt_0001_terminal",
+        "assignment_id": "A005CDSV2-0064",
+        "native_child_thread_id": "019f5431-0d06-72a0-9b91-497914c7e0e8",
+        "native_session_path": "/Users/jaredsmacbookair/.codex/sessions/2026/07/11/rollout-2026-07-11T22-38-48-019f5431-0d06-72a0-9b91-497914c7e0e8.jsonl",
+        "native_session_sha256": "cadfa276a9e30824459ca37b80c6fd126a160c0ca1176dd495547eefb3b1b750",
+        "native_turn_id": "019f5431-0d86-7dd2-ba8c-61027e05a55a",
+        "terminal_response": "PMR1",
+        "terminal_status": "completed"
+      }
+    ],
+    "terminal_completed": 16,
+    "terminal_pmr1": 16,
+    "unique_agent_paths": 16,
+    "unique_assignment_ids": 16,
+    "unique_native_child_thread_ids": 16,
+    "unique_native_turn_ids": 16
+  },
+  "preserved_disposition_counts": {
+    "merge_candidate": 10,
+    "related_but_distinct": 2234,
+    "uncertain": 57,
+    "unsupported": 3
+  },
+  "primary_discrepancies": {
+    "aggregate": {
+      "comparison": {
+        "counts_match": true,
+        "discrepancies": [],
+        "eligible_ids_match": true,
+        "rejected_ids_match": true
+      },
+      "independent_eligible_count": 61,
+      "independent_rejected_assignment_ids": [
+        "A005CDSV2-0002",
+        "A005CDSV2-0006",
+        "A005CDSV2-0039"
+      ],
+      "independent_rejected_count": 3,
+      "primary_eligible_count": 61,
+      "primary_rejected_assignment_ids": [
+        "A005CDSV2-0002",
+        "A005CDSV2-0006",
+        "A005CDSV2-0039"
+      ],
+      "primary_rejected_count": 3,
+      "primary_report_sha256": "bf6bd68ac11b20ccc4f6461fa50b23e0c5e37955961e56da56eb98b912699c41",
+      "primary_status": "primary_complete_candidate_only",
+      "provided_primary_sha256": "bf6bd68ac11b20ccc4f6461fa50b23e0c5e37955961e56da56eb98b912699c41"
+    },
+    "cohort_0004": {
+      "comparison": {
+        "authority_hash_match": true,
+        "discrepancies": [],
+        "eligible_ids_match": true,
+        "receipt_root_match": true,
+        "rejected_ids_match": true,
+        "result_root_match": true
+      },
+      "independent_primary_compatible_receipt_root_sha256": "f0bd65eb6dc90cce35228479869746adbaf375b61bbed14a6613e5078aac6216",
+      "independent_primary_compatible_result_root_sha256": "29d98903c5bcdaf5eae006e00083ab087b2b3121c3e4415987cb5139ebafbb6e",
+      "primary_eligible_assignment_ids": [
+        "A005CDSV2-0049",
+        "A005CDSV2-0050",
+        "A005CDSV2-0051",
+        "A005CDSV2-0052",
+        "A005CDSV2-0053",
+        "A005CDSV2-0054",
+        "A005CDSV2-0055",
+        "A005CDSV2-0056",
+        "A005CDSV2-0057",
+        "A005CDSV2-0058",
+        "A005CDSV2-0059",
+        "A005CDSV2-0060",
+        "A005CDSV2-0061",
+        "A005CDSV2-0062",
+        "A005CDSV2-0063",
+        "A005CDSV2-0064"
+      ],
+      "primary_receipt_root_sha256": "f0bd65eb6dc90cce35228479869746adbaf375b61bbed14a6613e5078aac6216",
+      "primary_rejected_assignment_ids": [],
+      "primary_report_sha256": "89f38da11e32e7ef3561bb0500d65635447bfe9ab719167ba6656650eac695b0",
+      "primary_result_root_sha256": "29d98903c5bcdaf5eae006e00083ab087b2b3121c3e4415987cb5139ebafbb6e",
+      "primary_status": "pass_candidate_only",
+      "provided_primary_sha256": "89f38da11e32e7ef3561bb0500d65635447bfe9ab719167ba6656650eac695b0"
+    }
+  },
+  "promotion_credit": 0,
+  "rejected_assignment_ids": [],
+  "report_path": "/Users/jaredsmacbookair/Documents/PuppetMaster/Plans/.audits/audit-20260710-005-plan-assurance-model-lanes-fresh-agent-exhaustive/master/cross_domain_seams/wave-0001/window-sharding-v2/validation/postrun-v1/independent-cohort-reports/cohort-0004-luna.json",
+  "research_credit": 0,
+  "research_state_counts": {
+    "insufficient_unresolved": 10,
+    "sufficient_for_judgment": 2294
+  },
+  "reviewer": {
+    "controller_thread_id": "019f5078-6501-7223-b52f-2251010bdc41",
+    "descendants": 0,
+    "followups": 0,
+    "fork_turns": "none",
+    "fresh_direct": true,
+    "model": "gpt-5.6-luna",
+    "read_only": true,
+    "reasoning_effort": "max",
+    "retries": 0
+  },
+  "schema_version": "audit005-seam-independent-postrun-report-v1",
+  "scope": {
+    "activation_path": "/Users/jaredsmacbookair/Documents/PuppetMaster/Plans/.audits/audit-20260710-005-plan-assurance-model-lanes-fresh-agent-exhaustive/master/cross_domain_seams/wave-0001/window-sharding-v2/cohorts/cohort-0004/activation.v4.json",
+    "aggregate_primary_report_path": "/Users/jaredsmacbookair/Documents/PuppetMaster/Plans/.audits/audit-20260710-005-plan-assurance-model-lanes-fresh-agent-exhaustive/master/cross_domain_seams/wave-0001/window-sharding-v2/validation/postrun-v1/aggregate-primary-report.json",
+    "assignment_count": 16,
+    "assignment_ids": [
+      "A005CDSV2-0049",
+      "A005CDSV2-0050",
+      "A005CDSV2-0051",
+      "A005CDSV2-0052",
+      "A005CDSV2-0053",
+      "A005CDSV2-0054",
+      "A005CDSV2-0055",
+      "A005CDSV2-0056",
+      "A005CDSV2-0057",
+      "A005CDSV2-0058",
+      "A005CDSV2-0059",
+      "A005CDSV2-0060",
+      "A005CDSV2-0061",
+      "A005CDSV2-0062",
+      "A005CDSV2-0063",
+      "A005CDSV2-0064"
+    ],
+    "postrun_authority_path": "/Users/jaredsmacbookair/Documents/PuppetMaster/Plans/.audits/audit-20260710-005-plan-assurance-model-lanes-fresh-agent-exhaustive/master/cross_domain_seams/wave-0001/window-sharding-v2/validation/postrun-v1/authority.json",
+    "primary_cohort_report_path": "/Users/jaredsmacbookair/Documents/PuppetMaster/Plans/.audits/audit-20260710-005-plan-assurance-model-lanes-fresh-agent-exhaustive/master/cross_domain_seams/wave-0001/window-sharding-v2/validation/postrun-v1/cohort-reports/cohort-0004-primary.json"
+  },
+  "spec_credit": 0,
+  "status": "pass_candidate_only",
+  "wave_id": "cross-domain-seam-window-sharding-v2"
+}

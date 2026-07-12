@@ -1,0 +1,1406 @@
+{
+  "assignment_id": "A005M15-000055-INTEGRATED-MACRO15-5F6016A27747-0001",
+  "attempt_id": "attempt-0015",
+  "audit_id": "audit-20260710-005-plan-assurance-model-lanes-fresh-agent-exhaustive",
+  "coverage": {
+    "all_micro_windows_reviewed": true,
+    "all_source_lines_reviewed": true,
+    "all_source_units_accounted": true,
+    "both_exact_and_adversarial_lenses_applied": true,
+    "dimensions_checked": [
+      "behavior",
+      "capabilities",
+      "inputs_outputs",
+      "contracts",
+      "states_transitions",
+      "authority",
+      "ownership",
+      "consumers",
+      "gui_truth",
+      "failures_recovery",
+      "security_privacy",
+      "propagation",
+      "operations",
+      "scale_performance",
+      "compatibility_migration",
+      "acceptance_oracles",
+      "builder_discretion",
+      "ambiguity_unknowns",
+      "missing_callers_consumers",
+      "invalid_states_transitions",
+      "concurrency_races",
+      "partial_failure",
+      "recovery_rollback",
+      "authority_boundaries",
+      "privacy_data_lifecycle",
+      "untrusted_inputs",
+      "gui_misleading_states",
+      "offline_network_loss",
+      "scale_limits",
+      "accessibility",
+      "localization",
+      "observability_support",
+      "destructive_actions",
+      "cross_document_seams",
+      "test_falsifiability",
+      "unknown_unknowns"
+    ]
+  },
+  "items": [
+    {
+      "builder_discretion": false,
+      "confidence": 0.99,
+      "dimensions": [
+        "behavior",
+        "inputs_outputs",
+        "contracts",
+        "states_transitions",
+        "consumers",
+        "gui_truth",
+        "failures_recovery",
+        "security_privacy",
+        "concurrency_races",
+        "partial_failure",
+        "recovery_rollback",
+        "observability_support",
+        "test_falsifiability"
+      ],
+      "evidence": [
+        {
+          "exact_quote": "canonical_text: Successful media.generate responses include success, request_id, kind, an engine route identity object with provider_entry_id, media_route_id, and generated_media_route_id when output is matched, artifacts, canonical UsageRecord bridge usage, and error fields with artifact metadata, usage_event_ref, UsageRecord identity, source_class/source_confidence/source_authority, settlement and cost status, UF-085 token buckets, counting_semantics, cost_microdollars or provider minor-unit costs, and media-specific media_units that are not token totals.",
+          "line_end": 2505,
+          "line_start": 2505,
+          "path": "Plans/Media_Generation_and_Capabilities.md",
+          "source_sha256": "430a6b538379f7d9d0848ef4c9cec5d49aa8abbae3f791ac8088d67239f1cb0f"
+        },
+        {
+          "exact_quote": "canonical_text: Generated media artifacts are written to deterministic request directories with a durable manifest.json that includes schema_version, request_id, kind, engine, generated_at_utc, artifacts, and usage; implementations write artifact files first, hash final bytes, and only then write the manifest without inline data_uri returns.",
+          "line_end": 2596,
+          "line_start": 2596,
+          "path": "Plans/Media_Generation_and_Capabilities.md",
+          "source_sha256": "430a6b538379f7d9d0848ef4c9cec5d49aa8abbae3f791ac8088d67239f1cb0f"
+        },
+        {
+          "exact_quote": "canonical_text: When remediation or graph generation supersedes a media attempt, the result records old generation, new generation, invalidated paths, new paths, surviving rejoined paths, and concern, promotion/recovery, or recovery implications so final state is visible without diffing addenda.",
+          "line_end": 2655,
+          "line_start": 2655,
+          "path": "Plans/Media_Generation_and_Capabilities.md",
+          "source_sha256": "430a6b538379f7d9d0848ef4c9cec5d49aa8abbae3f791ac8088d67239f1cb0f"
+        },
+        {
+          "exact_quote": "canonical_text: Concurrent media.generate calls are allowed only when each uses its own request_id directory, no request appends into another request directory, and retry behavior allocates a new request_id rather than mutating a prior manifest.",
+          "line_end": 2709,
+          "line_start": 2709,
+          "path": "Plans/Media_Generation_and_Capabilities.md",
+          "source_sha256": "430a6b538379f7d9d0848ef4c9cec5d49aa8abbae3f791ac8088d67239f1cb0f"
+        },
+        {
+          "exact_quote": "canonical_text: Failure responses return success false with empty artifacts, null usage, and error code/message. Cursor generated-media output requires a verified generated-media route; Cursor image-input proof or other provider credentials do not make Cursor image generation available. Unsupported Cursor video, tts, and music return BACKEND_UNSUPPORTED or route-specific unavailable states.",
+          "line_end": 2760,
+          "line_start": 2760,
+          "path": "Plans/Media_Generation_and_Capabilities.md",
+          "source_sha256": "430a6b538379f7d9d0848ef4c9cec5d49aa8abbae3f791ac8088d67239f1cb0f"
+        },
+        {
+          "exact_quote": "canonical_text: media.generate error.code must be exactly one of the nine canonical stable codes and implementations must not invent ad-hoc code strings.",
+          "line_end": 2825,
+          "line_start": 2825,
+          "path": "Plans/Media_Generation_and_Capabilities.md",
+          "source_sha256": "430a6b538379f7d9d0848ef4c9cec5d49aa8abbae3f791ac8088d67239f1cb0f"
+        }
+      ],
+      "gap_kind": "none",
+      "impact": "Together these contracts establish the externally observable generation result, accounting bridge, persistence order, retry isolation, and stable failure surface used by runtime and GUI consumers.",
+      "item_id": "M15-01-EXACT",
+      "item_type": "feature",
+      "severity": "info",
+      "source_unit_refs": [
+        "PLANUNIT:MGAC-026",
+        "PLANUNIT:MGAC-027",
+        "PLANUNIT:MGAC-028",
+        "PLANUNIT:MGAC-029",
+        "PLANUNIT:MGAC-030",
+        "PLANUNIT:MGAC-031",
+        "SEMANTIC:PLANUNIT:MGAC-026",
+        "SEMANTIC:PLANUNIT:MGAC-027",
+        "SEMANTIC:PLANUNIT:MGAC-028",
+        "SEMANTIC:PLANUNIT:MGAC-029",
+        "SEMANTIC:PLANUNIT:MGAC-030",
+        "SEMANTIC:PLANUNIT:MGAC-031"
+      ],
+      "statement": "The assigned units define successful and failed media.generate envelopes, deterministic artifact manifests and write ordering, supersession visibility, isolated concurrent request directories, route-specific Cursor failures, and a stable nine-code error vocabulary.",
+      "title": "Media generation response, persistence, concurrency, and failure contracts"
+    },
+    {
+      "builder_discretion": false,
+      "confidence": 0.96,
+      "dimensions": [
+        "states_transitions",
+        "failures_recovery",
+        "concurrency_races",
+        "partial_failure",
+        "recovery_rollback",
+        "operations",
+        "observability_support",
+        "test_falsifiability"
+      ],
+      "evidence": [
+        {
+          "exact_quote": "canonical_text: Generated media artifacts are written to deterministic request directories with a durable manifest.json that includes schema_version, request_id, kind, engine, generated_at_utc, artifacts, and usage; implementations write artifact files first, hash final bytes, and only then write the manifest without inline data_uri returns.",
+          "line_end": 2596,
+          "line_start": 2596,
+          "path": "Plans/Media_Generation_and_Capabilities.md",
+          "source_sha256": "430a6b538379f7d9d0848ef4c9cec5d49aa8abbae3f791ac8088d67239f1cb0f"
+        },
+        {
+          "exact_quote": "canonical_text: When remediation or graph generation supersedes a media attempt, the result records old generation, new generation, invalidated paths, new paths, surviving rejoined paths, and concern, promotion/recovery, or recovery implications so final state is visible without diffing addenda.",
+          "line_end": 2655,
+          "line_start": 2655,
+          "path": "Plans/Media_Generation_and_Capabilities.md",
+          "source_sha256": "430a6b538379f7d9d0848ef4c9cec5d49aa8abbae3f791ac8088d67239f1cb0f"
+        },
+        {
+          "exact_quote": "canonical_text: Concurrent media.generate calls are allowed only when each uses its own request_id directory, no request appends into another request directory, and retry behavior allocates a new request_id rather than mutating a prior manifest.",
+          "line_end": 2709,
+          "line_start": 2709,
+          "path": "Plans/Media_Generation_and_Capabilities.md",
+          "source_sha256": "430a6b538379f7d9d0848ef4c9cec5d49aa8abbae3f791ac8088d67239f1cb0f"
+        }
+      ],
+      "gap_kind": "partial_failure_recovery_atomicity",
+      "impact": "Implementations can satisfy nominal ordering while diverging after process death or concurrent remediation, leaving orphaned bytes, duplicate generations, or conflicting final-state visibility.",
+      "item_id": "M15-01-GAP",
+      "item_type": "gap",
+      "severity": "high",
+      "source_unit_refs": [
+        "PLANUNIT:MGAC-027",
+        "SEMANTIC:PLANUNIT:MGAC-027",
+        "PLANUNIT:MGAC-028",
+        "SEMANTIC:PLANUNIT:MGAC-028",
+        "PLANUNIT:MGAC-029",
+        "SEMANTIC:PLANUNIT:MGAC-029"
+      ],
+      "statement": "The artifact rules require files before manifest and prohibit a false success manifest, but do not define atomic manifest publication, cleanup or tombstone behavior for orphaned files, crash recovery scanning, or how supersession and retry races are serialized.",
+      "title": "Crash-consistent artifact recovery is not fully specified"
+    },
+    {
+      "builder_discretion": false,
+      "confidence": 0.99,
+      "dimensions": [
+        "behavior",
+        "capabilities",
+        "inputs_outputs",
+        "contracts",
+        "states_transitions",
+        "failures_recovery",
+        "untrusted_inputs",
+        "localization",
+        "scale_performance",
+        "test_falsifiability"
+      ],
+      "evidence": [
+        {
+          "exact_quote": "canonical_text: The natural-language slot extraction grammar is a deterministic regex-based mini grammar that extracts structured parameters from user prompts before media.generate is called and produces the request envelope fields.",
+          "line_end": 2884,
+          "line_start": 2884,
+          "path": "Plans/Media_Generation_and_Capabilities.md",
+          "source_sha256": "430a6b538379f7d9d0848ef4c9cec5d49aa8abbae3f791ac8088d67239f1cb0f"
+        },
+        {
+          "exact_quote": "canonical_text: Slot pre-processing keeps both raw original user text and s_lower normalized lowercased copy before extraction.",
+          "line_end": 2934,
+          "line_start": 2934,
+          "path": "Plans/Media_Generation_and_Capabilities.md",
+          "source_sha256": "430a6b538379f7d9d0848ef4c9cec5d49aa8abbae3f791ac8088d67239f1cb0f"
+        },
+        {
+          "exact_quote": "canonical_text: When a trailing controls block ends the prompt with parentheses or brackets and contains at least one control token, extraction splits body and controls, parses controls first, and removes the block before creative-prompt cleaning.",
+          "line_end": 2981,
+          "line_start": 2981,
+          "path": "Plans/Media_Generation_and_Capabilities.md",
+          "source_sha256": "430a6b538379f7d9d0848ef4c9cec5d49aa8abbae3f791ac8088d67239f1cb0f"
+        },
+        {
+          "exact_quote": "canonical_text: Malformed trailing controls with unmatched delimiters, empty control values, or unsupported control names are ignored as malformed tokens rather than failing the full request, and the cleaned creative prompt still proceeds through deterministic extraction.",
+          "line_end": 3031,
+          "line_start": 3031,
+          "path": "Plans/Media_Generation_and_Capabilities.md",
+          "source_sha256": "430a6b538379f7d9d0848ef4c9cec5d49aa8abbae3f791ac8088d67239f1cb0f"
+        },
+        {
+          "exact_quote": "canonical_text: The controls-block regex is preserved exactly with named captures body, bracket, and controls and a 1-to-400 character controls capture limit.",
+          "line_end": 3082,
+          "line_start": 3082,
+          "path": "Plans/Media_Generation_and_Capabilities.md",
+          "source_sha256": "430a6b538379f7d9d0848ef4c9cec5d49aa8abbae3f791ac8088d67239f1cb0f"
+        },
+        {
+          "exact_quote": "canonical_text: The control token gate requires at least one recognized control token inside captured controls, using the preserved token vocabulary model, aspect, ratio, size, resolution, duration, voice, format, bpm, seed, negative, and quality.",
+          "line_end": 3131,
+          "line_start": 3131,
+          "path": "Plans/Media_Generation_and_Capabilities.md",
+          "source_sha256": "430a6b538379f7d9d0848ef4c9cec5d49aa8abbae3f791ac8088d67239f1cb0f"
+        },
+        {
+          "exact_quote": "canonical_text: Kind detection first uses prefix form at highest priority, preserving the image, video, tts, and music prefix regex.",
+          "line_end": 3189,
+          "line_start": 3189,
+          "path": "Plans/Media_Generation_and_Capabilities.md",
+          "source_sha256": "430a6b538379f7d9d0848ef4c9cec5d49aa8abbae3f791ac8088d67239f1cb0f"
+        }
+      ],
+      "gap_kind": "none",
+      "impact": "These rules bound the transformation from untrusted user text into a deterministic media.generate envelope while preserving creative text when control syntax is absent or malformed.",
+      "item_id": "M15-02-EXACT",
+      "item_type": "feature",
+      "severity": "info",
+      "source_unit_refs": [
+        "PLANUNIT:MGAC-032",
+        "PLANUNIT:MGAC-033",
+        "PLANUNIT:MGAC-034",
+        "PLANUNIT:MGAC-035",
+        "PLANUNIT:MGAC-036",
+        "PLANUNIT:MGAC-037",
+        "PLANUNIT:MGAC-038",
+        "SEMANTIC:PLANUNIT:MGAC-032",
+        "SEMANTIC:PLANUNIT:MGAC-033",
+        "SEMANTIC:PLANUNIT:MGAC-034",
+        "SEMANTIC:PLANUNIT:MGAC-035",
+        "SEMANTIC:PLANUNIT:MGAC-036",
+        "SEMANTIC:PLANUNIT:MGAC-037",
+        "SEMANTIC:PLANUNIT:MGAC-038"
+      ],
+      "statement": "The assigned units establish raw and normalized prompt copies, trailing controls detection and parse-first ordering, tolerance of malformed controls, exact bounded controls and token-gate regexes, and highest-priority prefix kind detection.",
+      "title": "Deterministic prompt preprocessing and kind-detection boundary"
+    },
+    {
+      "builder_discretion": false,
+      "confidence": 0.96,
+      "dimensions": [
+        "inputs_outputs",
+        "contracts",
+        "scale_performance",
+        "localization",
+        "untrusted_inputs",
+        "ambiguity_unknowns",
+        "test_falsifiability"
+      ],
+      "evidence": [
+        {
+          "exact_quote": "canonical_text: The natural-language slot extraction grammar is a deterministic regex-based mini grammar that extracts structured parameters from user prompts before media.generate is called and produces the request envelope fields.",
+          "line_end": 2884,
+          "line_start": 2884,
+          "path": "Plans/Media_Generation_and_Capabilities.md",
+          "source_sha256": "430a6b538379f7d9d0848ef4c9cec5d49aa8abbae3f791ac8088d67239f1cb0f"
+        },
+        {
+          "exact_quote": "canonical_text: Slot pre-processing keeps both raw original user text and s_lower normalized lowercased copy before extraction.",
+          "line_end": 2934,
+          "line_start": 2934,
+          "path": "Plans/Media_Generation_and_Capabilities.md",
+          "source_sha256": "430a6b538379f7d9d0848ef4c9cec5d49aa8abbae3f791ac8088d67239f1cb0f"
+        },
+        {
+          "exact_quote": "canonical_text: Malformed trailing controls with unmatched delimiters, empty control values, or unsupported control names are ignored as malformed tokens rather than failing the full request, and the cleaned creative prompt still proceeds through deterministic extraction.",
+          "line_end": 3031,
+          "line_start": 3031,
+          "path": "Plans/Media_Generation_and_Capabilities.md",
+          "source_sha256": "430a6b538379f7d9d0848ef4c9cec5d49aa8abbae3f791ac8088d67239f1cb0f"
+        },
+        {
+          "exact_quote": "canonical_text: The controls-block regex is preserved exactly with named captures body, bracket, and controls and a 1-to-400 character controls capture limit.",
+          "line_end": 3082,
+          "line_start": 3082,
+          "path": "Plans/Media_Generation_and_Capabilities.md",
+          "source_sha256": "430a6b538379f7d9d0848ef4c9cec5d49aa8abbae3f791ac8088d67239f1cb0f"
+        },
+        {
+          "exact_quote": "canonical_text: The control token gate requires at least one recognized control token inside captured controls, using the preserved token vocabulary model, aspect, ratio, size, resolution, duration, voice, format, bpm, seed, negative, and quality.",
+          "line_end": 3131,
+          "line_start": 3131,
+          "path": "Plans/Media_Generation_and_Capabilities.md",
+          "source_sha256": "430a6b538379f7d9d0848ef4c9cec5d49aa8abbae3f791ac8088d67239f1cb0f"
+        },
+        {
+          "exact_quote": "canonical_text: Kind detection first uses prefix form at highest priority, preserving the image, video, tts, and music prefix regex.",
+          "line_end": 3189,
+          "line_start": 3189,
+          "path": "Plans/Media_Generation_and_Capabilities.md",
+          "source_sha256": "430a6b538379f7d9d0848ef4c9cec5d49aa8abbae3f791ac8088d67239f1cb0f"
+        }
+      ],
+      "gap_kind": "untrusted_input_localization_scale",
+      "impact": "Equivalent prompts can parse differently across regex engines or locales, and adversarial input can create performance or ambiguity failures without a canonical rejection or diagnostic path.",
+      "item_id": "M15-02-GAP",
+      "item_type": "gap",
+      "severity": "high",
+      "source_unit_refs": [
+        "PLANUNIT:MGAC-032",
+        "SEMANTIC:PLANUNIT:MGAC-032",
+        "PLANUNIT:MGAC-033",
+        "SEMANTIC:PLANUNIT:MGAC-033",
+        "PLANUNIT:MGAC-035",
+        "SEMANTIC:PLANUNIT:MGAC-035",
+        "PLANUNIT:MGAC-036",
+        "SEMANTIC:PLANUNIT:MGAC-036",
+        "PLANUNIT:MGAC-037",
+        "SEMANTIC:PLANUNIT:MGAC-037",
+        "PLANUNIT:MGAC-038",
+        "SEMANTIC:PLANUNIT:MGAC-038"
+      ],
+      "statement": "The deterministic mini grammar fixes ASCII-oriented regex vocabulary and a 400-character controls capture, but does not define Unicode normalization, locale-sensitive lowercasing, multiline limits, regex time or memory budgets, or deterministic handling of mixed-script and conflicting kind tokens.",
+      "title": "Unicode, locale, and regex resource behavior are unspecified"
+    },
+    {
+      "builder_discretion": false,
+      "confidence": 0.99,
+      "dimensions": [
+        "behavior",
+        "inputs_outputs",
+        "contracts",
+        "states_transitions",
+        "authority",
+        "ownership",
+        "compatibility_migration",
+        "untrusted_inputs",
+        "invalid_states_transitions",
+        "cross_document_seams",
+        "test_falsifiability"
+      ],
+      "evidence": [
+        {
+          "exact_quote": "canonical_text: If no prefix match exists, keyword-based kind detection uses the canonical image, video, tts, and music regex families.",
+          "line_end": 3240,
+          "line_start": 3240,
+          "path": "Plans/Media_Generation_and_Capabilities.md",
+          "source_sha256": "430a6b538379f7d9d0848ef4c9cec5d49aa8abbae3f791ac8088d67239f1cb0f"
+        },
+        {
+          "exact_quote": "canonical_text: Verb fallback is allowed only when prefix and keyword detection are unambiguous with a single kind match.",
+          "line_end": 3289,
+          "line_start": 3289,
+          "path": "Plans/Media_Generation_and_Capabilities.md",
+          "source_sha256": "430a6b538379f7d9d0848ef4c9cec5d49aa8abbae3f791ac8088d67239f1cb0f"
+        },
+        {
+          "exact_quote": "canonical_text: Controls-block key/value pairs override every other extraction source before ordered slot extraction proceeds.",
+          "line_end": 3336,
+          "line_start": 3336,
+          "path": "Plans/Media_Generation_and_Capabilities.md",
+          "source_sha256": "430a6b538379f7d9d0848ef4c9cec5d49aa8abbae3f791ac8088d67239f1cb0f"
+        },
+        {
+          "exact_quote": "canonical_text: Slot extraction proceeds in the exact deterministic order model_override, count, aspect_ratio, size/resolution, duration, format, voice/style, quality, seed, bpm, and negative_prompt.",
+          "line_end": 3382,
+          "line_start": 3382,
+          "path": "Plans/Media_Generation_and_Capabilities.md",
+          "source_sha256": "430a6b538379f7d9d0848ef4c9cec5d49aa8abbae3f791ac8088d67239f1cb0f"
+        },
+        {
+          "exact_quote": "canonical_text: Model override candidate extraction preserves the keyword-form matcher and @ shorthand matcher for media.generate model tokens before normalization and resolution.",
+          "line_end": 3436,
+          "line_start": 3436,
+          "path": "Plans/Media_Generation_and_Capabilities.md",
+          "source_sha256": "430a6b538379f7d9d0848ef4c9cec5d49aa8abbae3f791ac8088d67239f1cb0f"
+        },
+        {
+          "exact_quote": "canonical_text: Model override resolution normalizes the model key by lowercasing and collapsing spaces, underscores, and hyphens, then resolves alias -> exact model id -> exact displayName -> else MODEL_UNAVAILABLE while leaving media model aliases owned by Models_System.",
+          "line_end": 3485,
+          "line_start": 3485,
+          "path": "Plans/Media_Generation_and_Capabilities.md",
+          "source_sha256": "430a6b538379f7d9d0848ef4c9cec5d49aa8abbae3f791ac8088d67239f1cb0f"
+        },
+        {
+          "exact_quote": "canonical_text: Count extraction preserves the digits pattern, optional one-through-ten word forms, safe max clamp default 8, and last-match-wins behavior.",
+          "line_end": 3541,
+          "line_start": 3541,
+          "path": "Plans/Media_Generation_and_Capabilities.md",
+          "source_sha256": "430a6b538379f7d9d0848ef4c9cec5d49aa8abbae3f791ac8088d67239f1cb0f"
+        },
+        {
+          "exact_quote": "canonical_text: Aspect ratio extraction preserves numeric and named forms and maps square to 1:1, portrait/vertical to 9:16, and landscape/horizontal/widescreen to 16:9.",
+          "line_end": 3590,
+          "line_start": 3590,
+          "path": "Plans/Media_Generation_and_Capabilities.md",
+          "source_sha256": "430a6b538379f7d9d0848ef4c9cec5d49aa8abbae3f791ac8088d67239f1cb0f"
+        }
+      ],
+      "gap_kind": "none",
+      "impact": "The rules make several central extraction decisions deterministic and preserve the Models_System ownership boundary for aliases.",
+      "item_id": "M15-03-EXACT",
+      "item_type": "feature",
+      "severity": "info",
+      "source_unit_refs": [
+        "PLANUNIT:MGAC-039",
+        "PLANUNIT:MGAC-040",
+        "PLANUNIT:MGAC-041",
+        "PLANUNIT:MGAC-042",
+        "PLANUNIT:MGAC-043",
+        "PLANUNIT:MGAC-044",
+        "PLANUNIT:MGAC-045",
+        "PLANUNIT:MGAC-046",
+        "SEMANTIC:PLANUNIT:MGAC-039",
+        "SEMANTIC:PLANUNIT:MGAC-040",
+        "SEMANTIC:PLANUNIT:MGAC-041",
+        "SEMANTIC:PLANUNIT:MGAC-042",
+        "SEMANTIC:PLANUNIT:MGAC-043",
+        "SEMANTIC:PLANUNIT:MGAC-044",
+        "SEMANTIC:PLANUNIT:MGAC-045",
+        "SEMANTIC:PLANUNIT:MGAC-046"
+      ],
+      "statement": "The assigned units define keyword kind families, an ambiguity gate for verb fallback, controls-over-all precedence, an exact slot order, model candidate extraction and resolution, count clamping with last-match wins, and numeric or named aspect mapping.",
+      "title": "Kind, precedence, model, count, and aspect extraction rules"
+    },
+    {
+      "builder_discretion": false,
+      "confidence": 0.96,
+      "dimensions": [
+        "inputs_outputs",
+        "contracts",
+        "invalid_states_transitions",
+        "ambiguity_unknowns",
+        "builder_discretion",
+        "test_falsifiability"
+      ],
+      "evidence": [
+        {
+          "exact_quote": "canonical_text: Verb fallback is allowed only when prefix and keyword detection are unambiguous with a single kind match.",
+          "line_end": 3289,
+          "line_start": 3289,
+          "path": "Plans/Media_Generation_and_Capabilities.md",
+          "source_sha256": "430a6b538379f7d9d0848ef4c9cec5d49aa8abbae3f791ac8088d67239f1cb0f"
+        },
+        {
+          "exact_quote": "canonical_text: Controls-block key/value pairs override every other extraction source before ordered slot extraction proceeds.",
+          "line_end": 3336,
+          "line_start": 3336,
+          "path": "Plans/Media_Generation_and_Capabilities.md",
+          "source_sha256": "430a6b538379f7d9d0848ef4c9cec5d49aa8abbae3f791ac8088d67239f1cb0f"
+        },
+        {
+          "exact_quote": "canonical_text: Slot extraction proceeds in the exact deterministic order model_override, count, aspect_ratio, size/resolution, duration, format, voice/style, quality, seed, bpm, and negative_prompt.",
+          "line_end": 3382,
+          "line_start": 3382,
+          "path": "Plans/Media_Generation_and_Capabilities.md",
+          "source_sha256": "430a6b538379f7d9d0848ef4c9cec5d49aa8abbae3f791ac8088d67239f1cb0f"
+        },
+        {
+          "exact_quote": "canonical_text: Model override candidate extraction preserves the keyword-form matcher and @ shorthand matcher for media.generate model tokens before normalization and resolution.",
+          "line_end": 3436,
+          "line_start": 3436,
+          "path": "Plans/Media_Generation_and_Capabilities.md",
+          "source_sha256": "430a6b538379f7d9d0848ef4c9cec5d49aa8abbae3f791ac8088d67239f1cb0f"
+        },
+        {
+          "exact_quote": "canonical_text: Model override resolution normalizes the model key by lowercasing and collapsing spaces, underscores, and hyphens, then resolves alias -> exact model id -> exact displayName -> else MODEL_UNAVAILABLE while leaving media model aliases owned by Models_System.",
+          "line_end": 3485,
+          "line_start": 3485,
+          "path": "Plans/Media_Generation_and_Capabilities.md",
+          "source_sha256": "430a6b538379f7d9d0848ef4c9cec5d49aa8abbae3f791ac8088d67239f1cb0f"
+        },
+        {
+          "exact_quote": "canonical_text: Count extraction preserves the digits pattern, optional one-through-ten word forms, safe max clamp default 8, and last-match-wins behavior.",
+          "line_end": 3541,
+          "line_start": 3541,
+          "path": "Plans/Media_Generation_and_Capabilities.md",
+          "source_sha256": "430a6b538379f7d9d0848ef4c9cec5d49aa8abbae3f791ac8088d67239f1cb0f"
+        },
+        {
+          "exact_quote": "canonical_text: Aspect ratio extraction preserves numeric and named forms and maps square to 1:1, portrait/vertical to 9:16, and landscape/horizontal/widescreen to 16:9.",
+          "line_end": 3590,
+          "line_start": 3590,
+          "path": "Plans/Media_Generation_and_Capabilities.md",
+          "source_sha256": "430a6b538379f7d9d0848ef4c9cec5d49aa8abbae3f791ac8088d67239f1cb0f"
+        }
+      ],
+      "gap_kind": "invalid_state_and_precedence_ambiguity",
+      "impact": "Different builders can accept, clamp, reject, or silently choose different values for the same prompt, making requests non-portable and acceptance tests non-falsifiable at edge cases.",
+      "item_id": "M15-03-GAP",
+      "item_type": "gap",
+      "severity": "high",
+      "source_unit_refs": [
+        "PLANUNIT:MGAC-040",
+        "SEMANTIC:PLANUNIT:MGAC-040",
+        "PLANUNIT:MGAC-041",
+        "SEMANTIC:PLANUNIT:MGAC-041",
+        "PLANUNIT:MGAC-042",
+        "SEMANTIC:PLANUNIT:MGAC-042",
+        "PLANUNIT:MGAC-043",
+        "SEMANTIC:PLANUNIT:MGAC-043",
+        "PLANUNIT:MGAC-044",
+        "SEMANTIC:PLANUNIT:MGAC-044",
+        "PLANUNIT:MGAC-045",
+        "SEMANTIC:PLANUNIT:MGAC-045",
+        "PLANUNIT:MGAC-046",
+        "SEMANTIC:PLANUNIT:MGAC-046"
+      ],
+      "statement": "The units specify precedence and selected happy-path mappings but do not define outcomes for zero or negative counts, zero-dimension or extreme numeric aspect ratios, duplicate conflicting controls, multiple model candidates, normalization collisions, or conflicts between last-match-wins and controls-over-all precedence.",
+      "title": "Invalid and conflicting extracted values lack a complete decision table"
+    },
+    {
+      "builder_discretion": false,
+      "confidence": 0.99,
+      "dimensions": [
+        "behavior",
+        "capabilities",
+        "inputs_outputs",
+        "contracts",
+        "states_transitions",
+        "untrusted_inputs",
+        "compatibility_migration",
+        "scale_limits",
+        "test_falsifiability"
+      ],
+      "evidence": [
+        {
+          "exact_quote": "canonical_text: Size and resolution candidate extraction preserves image pixel sizes, image k-form sizes, and video resolution tokens before deterministic envelope assignment.",
+          "line_end": 3640,
+          "line_start": 3640,
+          "path": "Plans/Media_Generation_and_Capabilities.md",
+          "source_sha256": "430a6b538379f7d9d0848ef4c9cec5d49aa8abbae3f791ac8088d67239f1cb0f"
+        },
+        {
+          "exact_quote": "canonical_text: Size and resolution assignment does not treat bare numbers as size except in controls or trailing comma controls, maps size_px to size, maps size_k to numeric size plus symbolic resolution, maps vres to video resolution, and prevents image creative-prose vres or vres from overriding image size_k-derived resolution.",
+          "line_end": 3691,
+          "line_start": 3691,
+          "path": "Plans/Media_Generation_and_Capabilities.md",
+          "source_sha256": "430a6b538379f7d9d0848ef4c9cec5d49aa8abbae3f791ac8088d67239f1cb0f"
+        },
+        {
+          "exact_quote": "canonical_text: Duration extraction applies only to video and music, preserving keyworded seconds matching and bare seconds matching only inside controls blocks or trailing controls.",
+          "line_end": 3744,
+          "line_start": 3744,
+          "path": "Plans/Media_Generation_and_Capabilities.md",
+          "source_sha256": "430a6b538379f7d9d0848ef4c9cec5d49aa8abbae3f791ac8088d67239f1cb0f"
+        },
+        {
+          "exact_quote": "canonical_text: Format extraction preserves the exact keyworded matcher and canonical output token set for image, video, and audio media outputs.",
+          "line_end": 3794,
+          "line_start": 3794,
+          "path": "Plans/Media_Generation_and_Capabilities.md",
+          "source_sha256": "430a6b538379f7d9d0848ef4c9cec5d49aa8abbae3f791ac8088d67239f1cb0f"
+        },
+        {
+          "exact_quote": "canonical_text: TTS voice extraction preserves the voice ID matcher and voice-style phrase matcher.",
+          "line_end": 3851,
+          "line_start": 3851,
+          "path": "Plans/Media_Generation_and_Capabilities.md",
+          "source_sha256": "430a6b538379f7d9d0848ef4c9cec5d49aa8abbae3f791ac8088d67239f1cb0f"
+        },
+        {
+          "exact_quote": "canonical_text: Quality extraction preserves draft/standard/high candidate matching and phrase mapping, but quality is set only from controls-block or quality-keyword phrases and never from plain descriptive adjectives in the creative prompt.",
+          "line_end": 3901,
+          "line_start": 3901,
+          "path": "Plans/Media_Generation_and_Capabilities.md",
+          "source_sha256": "430a6b538379f7d9d0848ef4c9cec5d49aa8abbae3f791ac8088d67239f1cb0f"
+        },
+        {
+          "exact_quote": "canonical_text: Seed extraction preserves the keyworded integer matcher for one-to-ten digit seed values.",
+          "line_end": 3955,
+          "line_start": 3955,
+          "path": "Plans/Media_Generation_and_Capabilities.md",
+          "source_sha256": "430a6b538379f7d9d0848ef4c9cec5d49aa8abbae3f791ac8088d67239f1cb0f"
+        }
+      ],
+      "gap_kind": "none",
+      "impact": "These contracts protect creative prose from accidental control interpretation and populate media-kind-specific request fields through explicit matchers.",
+      "item_id": "M15-04-EXACT",
+      "item_type": "feature",
+      "severity": "info",
+      "source_unit_refs": [
+        "PLANUNIT:MGAC-047",
+        "PLANUNIT:MGAC-048",
+        "PLANUNIT:MGAC-049",
+        "PLANUNIT:MGAC-050",
+        "PLANUNIT:MGAC-051",
+        "PLANUNIT:MGAC-052",
+        "PLANUNIT:MGAC-053",
+        "SEMANTIC:PLANUNIT:MGAC-047",
+        "SEMANTIC:PLANUNIT:MGAC-048",
+        "SEMANTIC:PLANUNIT:MGAC-049",
+        "SEMANTIC:PLANUNIT:MGAC-050",
+        "SEMANTIC:PLANUNIT:MGAC-051",
+        "SEMANTIC:PLANUNIT:MGAC-052",
+        "SEMANTIC:PLANUNIT:MGAC-053"
+      ],
+      "statement": "The assigned units define size and resolution candidates and kind guards, video or music duration extraction, canonical output formats, TTS voice extraction, guarded quality candidates, and bounded digit seed extraction.",
+      "title": "Media slot candidate extraction and guarded assignment"
+    },
+    {
+      "builder_discretion": false,
+      "confidence": 0.96,
+      "dimensions": [
+        "capabilities",
+        "contracts",
+        "invalid_states_transitions",
+        "failures_recovery",
+        "gui_misleading_states",
+        "cross_document_seams",
+        "test_falsifiability"
+      ],
+      "evidence": [
+        {
+          "exact_quote": "canonical_text: Size and resolution candidate extraction preserves image pixel sizes, image k-form sizes, and video resolution tokens before deterministic envelope assignment.",
+          "line_end": 3640,
+          "line_start": 3640,
+          "path": "Plans/Media_Generation_and_Capabilities.md",
+          "source_sha256": "430a6b538379f7d9d0848ef4c9cec5d49aa8abbae3f791ac8088d67239f1cb0f"
+        },
+        {
+          "exact_quote": "canonical_text: Size and resolution assignment does not treat bare numbers as size except in controls or trailing comma controls, maps size_px to size, maps size_k to numeric size plus symbolic resolution, maps vres to video resolution, and prevents image creative-prose vres or vres from overriding image size_k-derived resolution.",
+          "line_end": 3691,
+          "line_start": 3691,
+          "path": "Plans/Media_Generation_and_Capabilities.md",
+          "source_sha256": "430a6b538379f7d9d0848ef4c9cec5d49aa8abbae3f791ac8088d67239f1cb0f"
+        },
+        {
+          "exact_quote": "canonical_text: Duration extraction applies only to video and music, preserving keyworded seconds matching and bare seconds matching only inside controls blocks or trailing controls.",
+          "line_end": 3744,
+          "line_start": 3744,
+          "path": "Plans/Media_Generation_and_Capabilities.md",
+          "source_sha256": "430a6b538379f7d9d0848ef4c9cec5d49aa8abbae3f791ac8088d67239f1cb0f"
+        },
+        {
+          "exact_quote": "canonical_text: Format extraction preserves the exact keyworded matcher and canonical output token set for image, video, and audio media outputs.",
+          "line_end": 3794,
+          "line_start": 3794,
+          "path": "Plans/Media_Generation_and_Capabilities.md",
+          "source_sha256": "430a6b538379f7d9d0848ef4c9cec5d49aa8abbae3f791ac8088d67239f1cb0f"
+        },
+        {
+          "exact_quote": "canonical_text: TTS voice extraction preserves the voice ID matcher and voice-style phrase matcher.",
+          "line_end": 3851,
+          "line_start": 3851,
+          "path": "Plans/Media_Generation_and_Capabilities.md",
+          "source_sha256": "430a6b538379f7d9d0848ef4c9cec5d49aa8abbae3f791ac8088d67239f1cb0f"
+        },
+        {
+          "exact_quote": "canonical_text: Quality extraction preserves draft/standard/high candidate matching and phrase mapping, but quality is set only from controls-block or quality-keyword phrases and never from plain descriptive adjectives in the creative prompt.",
+          "line_end": 3901,
+          "line_start": 3901,
+          "path": "Plans/Media_Generation_and_Capabilities.md",
+          "source_sha256": "430a6b538379f7d9d0848ef4c9cec5d49aa8abbae3f791ac8088d67239f1cb0f"
+        },
+        {
+          "exact_quote": "canonical_text: Seed extraction preserves the keyworded integer matcher for one-to-ten digit seed values.",
+          "line_end": 3955,
+          "line_start": 3955,
+          "path": "Plans/Media_Generation_and_Capabilities.md",
+          "source_sha256": "430a6b538379f7d9d0848ef4c9cec5d49aa8abbae3f791ac8088d67239f1cb0f"
+        }
+      ],
+      "gap_kind": "capability_validation_and_fallback",
+      "impact": "The same extracted envelope can be rejected, mutated, or silently downgraded by different routes, obscuring requested-versus-effective values and producing misleading GUI or usage records.",
+      "item_id": "M15-04-GAP",
+      "item_type": "gap",
+      "severity": "high",
+      "source_unit_refs": [
+        "PLANUNIT:MGAC-047",
+        "SEMANTIC:PLANUNIT:MGAC-047",
+        "PLANUNIT:MGAC-048",
+        "SEMANTIC:PLANUNIT:MGAC-048",
+        "PLANUNIT:MGAC-049",
+        "SEMANTIC:PLANUNIT:MGAC-049",
+        "PLANUNIT:MGAC-050",
+        "SEMANTIC:PLANUNIT:MGAC-050",
+        "PLANUNIT:MGAC-051",
+        "SEMANTIC:PLANUNIT:MGAC-051",
+        "PLANUNIT:MGAC-052",
+        "SEMANTIC:PLANUNIT:MGAC-052",
+        "PLANUNIT:MGAC-053",
+        "SEMANTIC:PLANUNIT:MGAC-053"
+      ],
+      "statement": "Candidate extraction does not define canonical validation or failure behavior for unsupported kind-format pairs, provider-specific size and duration limits, invalid voice IDs, seed overflow after parsing, mutually incompatible resolution fields, or whether unavailable values fail, clamp, or fall back.",
+      "title": "Provider validation, numeric ranges, and unsupported combinations are unresolved"
+    },
+    {
+      "builder_discretion": false,
+      "confidence": 0.99,
+      "dimensions": [
+        "behavior",
+        "inputs_outputs",
+        "contracts",
+        "consumers",
+        "gui_truth",
+        "failures_recovery",
+        "accessibility",
+        "localization",
+        "gui_misleading_states",
+        "test_falsifiability"
+      ],
+      "evidence": [
+        {
+          "exact_quote": "canonical_text: BPM extraction preserves both number-before-bpm and bpm-keyed forms with bpm and bpm2 capture groups.",
+          "line_end": 4003,
+          "line_start": 4003,
+          "path": "Plans/Media_Generation_and_Capabilities.md",
+          "source_sha256": "430a6b538379f7d9d0848ef4c9cec5d49aa8abbae3f791ac8088d67239f1cb0f"
+        },
+        {
+          "exact_quote": "canonical_text: Negative prompt extraction preserves explicit negative prompt parsing, avoid-clause collection, and combined explicit-plus-avoid dedupe while preserving order.",
+          "line_end": 4051,
+          "line_start": 4051,
+          "path": "Plans/Media_Generation_and_Capabilities.md",
+          "source_sha256": "430a6b538379f7d9d0848ef4c9cec5d49aa8abbae3f791ac8088d67239f1cb0f"
+        },
+        {
+          "exact_quote": "canonical_text: Prompt cleaning removes a detected controls block and only matched spans introduced by control keywords while preserving all remaining creative prompt text.",
+          "line_end": 4101,
+          "line_start": 4101,
+          "path": "Plans/Media_Generation_and_Capabilities.md",
+          "source_sha256": "430a6b538379f7d9d0848ef4c9cec5d49aa8abbae3f791ac8088d67239f1cb0f"
+        },
+        {
+          "exact_quote": "canonical_text: The composer capability picker dropdown exposes Image, Video, TTS, and Music rows mapped respectively to media.image, media.video, media.tts, and media.music.",
+          "line_end": 4177,
+          "line_start": 4177,
+          "path": "Plans/Media_Generation_and_Capabilities.md",
+          "source_sha256": "430a6b538379f7d9d0848ef4c9cec5d49aa8abbae3f791ac8088d67239f1cb0f"
+        },
+        {
+          "exact_quote": "canonical_text: Disabled capabilities remain visible, greyed out, keyboard-focusable, and expose the same disabled reason through hover, focus, and assistive-technology description channels using listbox/option semantics rather than color alone.",
+          "line_end": 4234,
+          "line_start": 4234,
+          "path": "Plans/Media_Generation_and_Capabilities.md",
+          "source_sha256": "430a6b538379f7d9d0848ef4c9cec5d49aa8abbae3f791ac8088d67239f1cb0f"
+        },
+        {
+          "exact_quote": "canonical_text: When visible media capabilities are disabled because no eligible media generation provider route is configured, the dropdown footer shows route-specific setup copy and helper links without implying Gemini or AI Studio is the default media source. The old Gemini-access copy remains preserved only as source-lineage.",
+          "line_end": 4290,
+          "line_start": 4290,
+          "path": "Plans/Media_Generation_and_Capabilities.md",
+          "source_sha256": "430a6b538379f7d9d0848ef4c9cec5d49aa8abbae3f791ac8088d67239f1cb0f"
+        },
+        {
+          "exact_quote": "canonical_text: When multiple visible capabilities share the missing-configuration disabled reason, the dropdown shows the footer banner once, keeps it pinned at the bottom while the list scrolls, and still preserves per-item disabled reasons on hover/focus.",
+          "line_end": 4345,
+          "line_start": 4345,
+          "path": "Plans/Media_Generation_and_Capabilities.md",
+          "source_sha256": "430a6b538379f7d9d0848ef4c9cec5d49aa8abbae3f791ac8088d67239f1cb0f"
+        }
+      ],
+      "gap_kind": "none",
+      "impact": "The combined behavior preserves creative intent and makes unavailable media capabilities visible, explainable, focusable, and actionable without relying on color alone.",
+      "item_id": "M15-05-EXACT",
+      "item_type": "feature",
+      "severity": "info",
+      "source_unit_refs": [
+        "PLANUNIT:MGAC-054",
+        "PLANUNIT:MGAC-055",
+        "PLANUNIT:MGAC-056",
+        "PLANUNIT:MGAC-057",
+        "PLANUNIT:MGAC-058",
+        "PLANUNIT:MGAC-059",
+        "PLANUNIT:MGAC-060",
+        "SEMANTIC:PLANUNIT:MGAC-054",
+        "SEMANTIC:PLANUNIT:MGAC-055",
+        "SEMANTIC:PLANUNIT:MGAC-056",
+        "SEMANTIC:PLANUNIT:MGAC-057",
+        "SEMANTIC:PLANUNIT:MGAC-058",
+        "SEMANTIC:PLANUNIT:MGAC-059",
+        "SEMANTIC:PLANUNIT:MGAC-060"
+      ],
+      "statement": "The assigned units define BPM and negative-prompt extraction, order-preserving dedupe, conservative prompt cleanup, four mapped picker rows, accessible disabled presentation, route-specific setup footer copy, and single pinned shared-footer behavior.",
+      "title": "Final prompt cleanup and accessible capability-picker presentation"
+    },
+    {
+      "builder_discretion": false,
+      "confidence": 0.96,
+      "dimensions": [
+        "states_transitions",
+        "gui_truth",
+        "accessibility",
+        "concurrency_races",
+        "gui_misleading_states",
+        "test_falsifiability"
+      ],
+      "evidence": [
+        {
+          "exact_quote": "canonical_text: The composer capability picker dropdown exposes Image, Video, TTS, and Music rows mapped respectively to media.image, media.video, media.tts, and media.music.",
+          "line_end": 4177,
+          "line_start": 4177,
+          "path": "Plans/Media_Generation_and_Capabilities.md",
+          "source_sha256": "430a6b538379f7d9d0848ef4c9cec5d49aa8abbae3f791ac8088d67239f1cb0f"
+        },
+        {
+          "exact_quote": "canonical_text: Disabled capabilities remain visible, greyed out, keyboard-focusable, and expose the same disabled reason through hover, focus, and assistive-technology description channels using listbox/option semantics rather than color alone.",
+          "line_end": 4234,
+          "line_start": 4234,
+          "path": "Plans/Media_Generation_and_Capabilities.md",
+          "source_sha256": "430a6b538379f7d9d0848ef4c9cec5d49aa8abbae3f791ac8088d67239f1cb0f"
+        },
+        {
+          "exact_quote": "canonical_text: When visible media capabilities are disabled because no eligible media generation provider route is configured, the dropdown footer shows route-specific setup copy and helper links without implying Gemini or AI Studio is the default media source. The old Gemini-access copy remains preserved only as source-lineage.",
+          "line_end": 4290,
+          "line_start": 4290,
+          "path": "Plans/Media_Generation_and_Capabilities.md",
+          "source_sha256": "430a6b538379f7d9d0848ef4c9cec5d49aa8abbae3f791ac8088d67239f1cb0f"
+        },
+        {
+          "exact_quote": "canonical_text: When multiple visible capabilities share the missing-configuration disabled reason, the dropdown shows the footer banner once, keeps it pinned at the bottom while the list scrolls, and still preserves per-item disabled reasons on hover/focus.",
+          "line_end": 4345,
+          "line_start": 4345,
+          "path": "Plans/Media_Generation_and_Capabilities.md",
+          "source_sha256": "430a6b538379f7d9d0848ef4c9cec5d49aa8abbae3f791ac8088d67239f1cb0f"
+        }
+      ],
+      "gap_kind": "gui_accessibility_transition_oracle",
+      "impact": "A visually conforming implementation can still strand keyboard or assistive-technology users, announce stale reasons, or move focus during asynchronous refresh.",
+      "item_id": "M15-05-GAP",
+      "item_type": "gap",
+      "severity": "high",
+      "source_unit_refs": [
+        "PLANUNIT:MGAC-057",
+        "SEMANTIC:PLANUNIT:MGAC-057",
+        "PLANUNIT:MGAC-058",
+        "SEMANTIC:PLANUNIT:MGAC-058",
+        "PLANUNIT:MGAC-059",
+        "SEMANTIC:PLANUNIT:MGAC-059",
+        "PLANUNIT:MGAC-060",
+        "SEMANTIC:PLANUNIT:MGAC-060"
+      ],
+      "statement": "The picker contracts do not define focus retention, active-descendant behavior, scroll anchoring, live-region announcement, tooltip dismissal, or footer-link behavior when capability eligibility changes while the list is open or while keyboard navigation is active.",
+      "title": "Open-picker state changes lack interaction and accessibility oracles"
+    },
+    {
+      "builder_discretion": false,
+      "confidence": 0.99,
+      "dimensions": [
+        "behavior",
+        "capabilities",
+        "inputs_outputs",
+        "contracts",
+        "states_transitions",
+        "authority",
+        "consumers",
+        "gui_truth",
+        "propagation",
+        "compatibility_migration",
+        "accessibility",
+        "test_falsifiability"
+      ],
+      "evidence": [
+        {
+          "exact_quote": "canonical_text: For the Cursor backend, generated media is enabled only when Cursor declares a verified generated-media route; image-input proof alone is not generated-image support. Unsupported Cursor media kinds remain disabled with BACKEND_UNSUPPORTED, Cursor does not create a separate Gemini account model, and non-Cursor media follows provider/model generated_media_routes[] routing.",
+          "line_end": 4397,
+          "line_start": 4397,
+          "path": "Plans/Media_Generation_and_Capabilities.md",
+          "source_sha256": "430a6b538379f7d9d0848ef4c9cec5d49aa8abbae3f791ac8088d67239f1cb0f"
+        },
+        {
+          "exact_quote": "canonical_text: Clicking an enabled capability item inserts the corresponding pre-authored assistant prompt into the chat composer and points users to the exact prompt strings per capability.",
+          "line_end": 4454,
+          "line_start": 4454,
+          "path": "Plans/Media_Generation_and_Capabilities.md",
+          "source_sha256": "430a6b538379f7d9d0848ef4c9cec5d49aa8abbae3f791ac8088d67239f1cb0f"
+        },
+        {
+          "exact_quote": "canonical_text: A per-message model override may appear inline in the prompt, including the exact Nano Banana Pro image example, and applies only to one generation request without changing the model configured in Settings.",
+          "line_end": 4503,
+          "line_start": 4503,
+          "path": "Plans/Media_Generation_and_Capabilities.md",
+          "source_sha256": "430a6b538379f7d9d0848ef4c9cec5d49aa8abbae3f791ac8088d67239f1cb0f"
+        },
+        {
+          "exact_quote": "canonical_text: The capability picker refreshes after Settings or provider-state changes that affect capability evaluation and preserves already typed composer text while recalculating only picker contents and footer/banner state.",
+          "line_end": 4556,
+          "line_start": 4556,
+          "path": "Plans/Media_Generation_and_Capabilities.md",
+          "source_sha256": "430a6b538379f7d9d0848ef4c9cec5d49aa8abbae3f791ac8088d67239f1cb0f"
+        },
+        {
+          "exact_quote": "canonical_text: The four media capability click prompts are canonical verbatim UI copy for Image, Video, TTS, and Music surfaces.",
+          "line_end": 4613,
+          "line_start": 4613,
+          "path": "Plans/Media_Generation_and_Capabilities.md",
+          "source_sha256": "430a6b538379f7d9d0848ef4c9cec5d49aa8abbae3f791ac8088d67239f1cb0f"
+        },
+        {
+          "exact_quote": "canonical_text: The six disabled-reason messages are canonical verbatim UI copy for NOT_CONFIGURED, MODEL_UNAVAILABLE, ADMIN_DISABLED, BACKEND_UNSUPPORTED, RATE_LIMITED, and QUOTA_EXCEEDED.",
+          "line_end": 4663,
+          "line_start": 4663,
+          "path": "Plans/Media_Generation_and_Capabilities.md",
+          "source_sha256": "430a6b538379f7d9d0848ef4c9cec5d49aa8abbae3f791ac8088d67239f1cb0f"
+        },
+        {
+          "exact_quote": "canonical_text: AC-MED01 requires capabilities.get to return all media capabilities and registered provider-tool capabilities with enabled, disabled_reason, and setup_hint fields.",
+          "line_end": 4726,
+          "line_start": 4726,
+          "path": "Plans/Media_Generation_and_Capabilities.md",
+          "source_sha256": "430a6b538379f7d9d0848ef4c9cec5d49aa8abbae3f791ac8088d67239f1cb0f"
+        }
+      ],
+      "gap_kind": "none",
+      "impact": "These contracts align backend truth with visible picker state and preserve user input while provider or Settings state changes.",
+      "item_id": "M15-06-EXACT",
+      "item_type": "feature",
+      "severity": "info",
+      "source_unit_refs": [
+        "PLANUNIT:MGAC-061",
+        "PLANUNIT:MGAC-062",
+        "PLANUNIT:MGAC-063",
+        "PLANUNIT:MGAC-064",
+        "PLANUNIT:MGAC-065",
+        "PLANUNIT:MGAC-066",
+        "PLANUNIT:MGAC-067",
+        "SEMANTIC:PLANUNIT:MGAC-061",
+        "SEMANTIC:PLANUNIT:MGAC-062",
+        "SEMANTIC:PLANUNIT:MGAC-063",
+        "SEMANTIC:PLANUNIT:MGAC-064",
+        "SEMANTIC:PLANUNIT:MGAC-065",
+        "SEMANTIC:PLANUNIT:MGAC-066",
+        "SEMANTIC:PLANUNIT:MGAC-067"
+      ],
+      "statement": "The assigned units bind generated-media availability to verified routes, insert canonical per-capability prompts, scope inline model overrides to one request, refresh picker state without clearing composer text, define disabled-reason copy, and require capabilities.get to expose media and registered provider-tool capabilities.",
+      "title": "Backend capability truth, picker actions, refresh, copy, and return-shape oracle"
+    },
+    {
+      "builder_discretion": false,
+      "confidence": 0.99,
+      "dimensions": [
+        "states_transitions",
+        "propagation",
+        "concurrency_races",
+        "authority_boundaries",
+        "offline_network_loss",
+        "gui_misleading_states",
+        "observability_support",
+        "test_falsifiability"
+      ],
+      "evidence": [
+        {
+          "exact_quote": "canonical_text: For the Cursor backend, generated media is enabled only when Cursor declares a verified generated-media route; image-input proof alone is not generated-image support. Unsupported Cursor media kinds remain disabled with BACKEND_UNSUPPORTED, Cursor does not create a separate Gemini account model, and non-Cursor media follows provider/model generated_media_routes[] routing.",
+          "line_end": 4397,
+          "line_start": 4397,
+          "path": "Plans/Media_Generation_and_Capabilities.md",
+          "source_sha256": "430a6b538379f7d9d0848ef4c9cec5d49aa8abbae3f791ac8088d67239f1cb0f"
+        },
+        {
+          "exact_quote": "canonical_text: Clicking an enabled capability item inserts the corresponding pre-authored assistant prompt into the chat composer and points users to the exact prompt strings per capability.",
+          "line_end": 4454,
+          "line_start": 4454,
+          "path": "Plans/Media_Generation_and_Capabilities.md",
+          "source_sha256": "430a6b538379f7d9d0848ef4c9cec5d49aa8abbae3f791ac8088d67239f1cb0f"
+        },
+        {
+          "exact_quote": "canonical_text: The capability picker refreshes after Settings or provider-state changes that affect capability evaluation and preserves already typed composer text while recalculating only picker contents and footer/banner state.",
+          "line_end": 4556,
+          "line_start": 4556,
+          "path": "Plans/Media_Generation_and_Capabilities.md",
+          "source_sha256": "430a6b538379f7d9d0848ef4c9cec5d49aa8abbae3f791ac8088d67239f1cb0f"
+        },
+        {
+          "exact_quote": "canonical_text: AC-MED01 requires capabilities.get to return all media capabilities and registered provider-tool capabilities with enabled, disabled_reason, and setup_hint fields.",
+          "line_end": 4726,
+          "line_start": 4726,
+          "path": "Plans/Media_Generation_and_Capabilities.md",
+          "source_sha256": "430a6b538379f7d9d0848ef4c9cec5d49aa8abbae3f791ac8088d67239f1cb0f"
+        }
+      ],
+      "gap_kind": "concurrency_race_and_offline_refresh",
+      "impact": "Concurrent Settings and provider events can regress a newer picker state, enable a revoked capability, insert a prompt for an unavailable route, or overwrite correct footer guidance with stale data.",
+      "item_id": "M15-06-GAP",
+      "item_type": "gap",
+      "severity": "critical",
+      "source_unit_refs": [
+        "PLANUNIT:MGAC-061",
+        "SEMANTIC:PLANUNIT:MGAC-061",
+        "PLANUNIT:MGAC-062",
+        "SEMANTIC:PLANUNIT:MGAC-062",
+        "PLANUNIT:MGAC-064",
+        "SEMANTIC:PLANUNIT:MGAC-064",
+        "PLANUNIT:MGAC-067",
+        "SEMANTIC:PLANUNIT:MGAC-067"
+      ],
+      "statement": "The refresh rule does not define event ordering, debounce or coalescing, revision identity, cancellation, stale capabilities.get response suppression, offline transition behavior, or what happens when a user clicks an item whose route is revoked during refresh.",
+      "title": "Capability refresh ordering and stale-result suppression are unspecified"
+    },
+    {
+      "builder_discretion": false,
+      "confidence": 0.99,
+      "dimensions": [
+        "behavior",
+        "capabilities",
+        "inputs_outputs",
+        "contracts",
+        "states_transitions",
+        "authority",
+        "gui_truth",
+        "failures_recovery",
+        "compatibility_migration",
+        "acceptance_oracles",
+        "cross_document_seams",
+        "test_falsifiability"
+      ],
+      "evidence": [
+        {
+          "exact_quote": "canonical_text: AC-MED02 requires disabled_reason values to be exactly the six canonical values from section 1.3 with no ad-hoc reason strings.",
+          "line_end": 4784,
+          "line_start": 4784,
+          "path": "Plans/Media_Generation_and_Capabilities.md",
+          "source_sha256": "430a6b538379f7d9d0848ef4c9cec5d49aa8abbae3f791ac8088d67239f1cb0f"
+        },
+        {
+          "exact_quote": "canonical_text: AC-MED03 requires Cursor without a verified Cursor generated-media route to keep generated-media output disabled or capability-gated; image-input proof alone must not enable media.image, and unsupported Cursor media kinds use BACKEND_UNSUPPORTED or a route-specific unavailable state.",
+          "line_end": 4835,
+          "line_start": 4835,
+          "path": "Plans/Media_Generation_and_Capabilities.md",
+          "source_sha256": "430a6b538379f7d9d0848ef4c9cec5d49aa8abbae3f791ac8088d67239f1cb0f"
+        },
+        {
+          "exact_quote": "canonical_text: AC-MED03A requires Cursor generated-media availability to depend on Cursor's own verified generated-media route. Valid Gemini Direct or other provider credentials do not make Cursor a generated-media backend; requested/effective routing must disclose any switch to the actual media provider.",
+          "line_end": 4891,
+          "line_start": 4891,
+          "path": "Plans/Media_Generation_and_Capabilities.md",
+          "source_sha256": "430a6b538379f7d9d0848ef4c9cec5d49aa8abbae3f791ac8088d67239f1cb0f"
+        },
+        {
+          "exact_quote": "canonical_text: AC-MED04 requires non-Cursor media capabilities to be eligible only for media kinds declared by the resolved provider/model generated_media_routes[] entry, subject to Settings > Media toggles, route/model availability, and provider-specific support states. An eligible account alone does not guarantee all media kinds are enabled.",
+          "line_end": 4947,
+          "line_start": 4947,
+          "path": "Plans/Media_Generation_and_Capabilities.md",
+          "source_sha256": "430a6b538379f7d9d0848ef4c9cec5d49aa8abbae3f791ac8088d67239f1cb0f"
+        },
+        {
+          "exact_quote": "canonical_text: AC-MED05 requires generated-media capabilities to be disabled with NOT_CONFIGURED, UNSUPPORTED, CAPABILITY_GATED, or the more specific provider/account state when the active backend is non-Cursor and no eligible provider/model generated-media route exists for the resolved request/policy.",
+          "line_end": 5004,
+          "line_start": 5004,
+          "path": "Plans/Media_Generation_and_Capabilities.md",
+          "source_sha256": "430a6b538379f7d9d0848ef4c9cec5d49aa8abbae3f791ac8088d67239f1cb0f"
+        },
+        {
+          "exact_quote": "canonical_text: AC-MED06 requires model_override to resolve by alias -> exact model id -> exact displayName -> else MODEL_UNAVAILABLE and not change persistent Settings.",
+          "line_end": 5058,
+          "line_start": 5058,
+          "path": "Plans/Media_Generation_and_Capabilities.md",
+          "source_sha256": "430a6b538379f7d9d0848ef4c9cec5d49aa8abbae3f791ac8088d67239f1cb0f"
+        },
+        {
+          "exact_quote": "canonical_text: AC-MED07 requires the capability picker to display disabled capabilities as greyed-out items with the appropriate section 5.2 disabled-reason tooltip.",
+          "line_end": 5110,
+          "line_start": 5110,
+          "path": "Plans/Media_Generation_and_Capabilities.md",
+          "source_sha256": "430a6b538379f7d9d0848ef4c9cec5d49aa8abbae3f791ac8088d67239f1cb0f"
+        }
+      ],
+      "gap_kind": "none",
+      "impact": "These criteria are intended to provide falsifiable boundaries for capability evaluation, requested/effective routing, persistent Settings isolation, and GUI disabled-state truth.",
+      "item_id": "M15-07-EXACT",
+      "item_type": "feature",
+      "severity": "info",
+      "source_unit_refs": [
+        "PLANUNIT:MGAC-068",
+        "PLANUNIT:MGAC-069",
+        "PLANUNIT:MGAC-070",
+        "PLANUNIT:MGAC-071",
+        "PLANUNIT:MGAC-072",
+        "PLANUNIT:MGAC-073",
+        "PLANUNIT:MGAC-074",
+        "SEMANTIC:PLANUNIT:MGAC-068",
+        "SEMANTIC:PLANUNIT:MGAC-069",
+        "SEMANTIC:PLANUNIT:MGAC-070",
+        "SEMANTIC:PLANUNIT:MGAC-071",
+        "SEMANTIC:PLANUNIT:MGAC-072",
+        "SEMANTIC:PLANUNIT:MGAC-073",
+        "SEMANTIC:PLANUNIT:MGAC-074"
+      ],
+      "statement": "The assigned units assert disabled-reason enum integrity, route-gated Cursor behavior, disclosed provider switching, provider/model media-kind eligibility, missing-route disablement, one-request model override resolution, and disabled picker display.",
+      "title": "Media acceptance criteria for enums, routing, overrides, and picker display"
+    },
+    {
+      "builder_discretion": false,
+      "confidence": 0.99,
+      "dimensions": [
+        "contracts",
+        "states_transitions",
+        "gui_truth",
+        "invalid_states_transitions",
+        "gui_misleading_states",
+        "cross_document_seams",
+        "test_falsifiability"
+      ],
+      "evidence": [
+        {
+          "exact_quote": "canonical_text: AC-MED02 requires disabled_reason values to be exactly the six canonical values from section 1.3 with no ad-hoc reason strings.",
+          "line_end": 4784,
+          "line_start": 4784,
+          "path": "Plans/Media_Generation_and_Capabilities.md",
+          "source_sha256": "430a6b538379f7d9d0848ef4c9cec5d49aa8abbae3f791ac8088d67239f1cb0f"
+        },
+        {
+          "exact_quote": "canonical_text: AC-MED05 requires generated-media capabilities to be disabled with NOT_CONFIGURED, UNSUPPORTED, CAPABILITY_GATED, or the more specific provider/account state when the active backend is non-Cursor and no eligible provider/model generated-media route exists for the resolved request/policy.",
+          "line_end": 5004,
+          "line_start": 5004,
+          "path": "Plans/Media_Generation_and_Capabilities.md",
+          "source_sha256": "430a6b538379f7d9d0848ef4c9cec5d49aa8abbae3f791ac8088d67239f1cb0f"
+        }
+      ],
+      "gap_kind": "cross_unit_enum_contradiction",
+      "impact": "capabilities.get and the picker cannot simultaneously satisfy both acceptance criteria, so builders may emit schema-invalid values, collapse distinct states inconsistently, or show unrecognized UI copy.",
+      "item_id": "M15-07-GAP",
+      "item_type": "gap",
+      "severity": "critical",
+      "source_unit_refs": [
+        "PLANUNIT:MGAC-068",
+        "SEMANTIC:PLANUNIT:MGAC-068",
+        "PLANUNIT:MGAC-072",
+        "SEMANTIC:PLANUNIT:MGAC-072"
+      ],
+      "statement": "MGAC-068 requires disabled_reason to use exactly six canonical values with no ad-hoc strings, while MGAC-072 permits UNSUPPORTED, CAPABILITY_GATED, or a more specific provider/account state; those values are not among the six named by the assigned disabled-reason copy contract.",
+      "title": "Missing-route states contradict the six-value disabled_reason contract"
+    }
+  ],
+  "model": "gpt-5.6-sol",
+  "phase": "blind_macro_window_review",
+  "reasoning_effort": "xhigh",
+  "schema_version": "macro-review-result-v1",
+  "segments": [
+    {
+      "core_range": [
+        2498,
+        2876
+      ],
+      "covered_source_unit_refs": [
+        "PLANUNIT:MGAC-026",
+        "PLANUNIT:MGAC-027",
+        "PLANUNIT:MGAC-028",
+        "PLANUNIT:MGAC-029",
+        "PLANUNIT:MGAC-030",
+        "PLANUNIT:MGAC-031",
+        "SEMANTIC:PLANUNIT:MGAC-026",
+        "SEMANTIC:PLANUNIT:MGAC-027",
+        "SEMANTIC:PLANUNIT:MGAC-028",
+        "SEMANTIC:PLANUNIT:MGAC-029",
+        "SEMANTIC:PLANUNIT:MGAC-030",
+        "SEMANTIC:PLANUNIT:MGAC-031"
+      ],
+      "item_ids": [
+        "M15-01-EXACT",
+        "M15-01-GAP"
+      ],
+      "reviewed": true,
+      "summary": "Reviewed every core line and every required source unit for media generation response, persistence, concurrency, and failure contracts using exact and adversarial lenses.",
+      "window_id": "WIN-5F6016A27747-0008"
+    },
+    {
+      "core_range": [
+        2877,
+        3232
+      ],
+      "covered_source_unit_refs": [
+        "PLANUNIT:MGAC-032",
+        "PLANUNIT:MGAC-033",
+        "PLANUNIT:MGAC-034",
+        "PLANUNIT:MGAC-035",
+        "PLANUNIT:MGAC-036",
+        "PLANUNIT:MGAC-037",
+        "PLANUNIT:MGAC-038",
+        "SEMANTIC:PLANUNIT:MGAC-032",
+        "SEMANTIC:PLANUNIT:MGAC-033",
+        "SEMANTIC:PLANUNIT:MGAC-034",
+        "SEMANTIC:PLANUNIT:MGAC-035",
+        "SEMANTIC:PLANUNIT:MGAC-036",
+        "SEMANTIC:PLANUNIT:MGAC-037",
+        "SEMANTIC:PLANUNIT:MGAC-038"
+      ],
+      "item_ids": [
+        "M15-02-EXACT",
+        "M15-02-GAP"
+      ],
+      "reviewed": true,
+      "summary": "Reviewed every core line and every required source unit for deterministic prompt preprocessing and kind-detection boundary using exact and adversarial lenses.",
+      "window_id": "WIN-5F6016A27747-0009"
+    },
+    {
+      "core_range": [
+        3233,
+        3632
+      ],
+      "covered_source_unit_refs": [
+        "PLANUNIT:MGAC-039",
+        "PLANUNIT:MGAC-040",
+        "PLANUNIT:MGAC-041",
+        "PLANUNIT:MGAC-042",
+        "PLANUNIT:MGAC-043",
+        "PLANUNIT:MGAC-044",
+        "PLANUNIT:MGAC-045",
+        "PLANUNIT:MGAC-046",
+        "SEMANTIC:PLANUNIT:MGAC-039",
+        "SEMANTIC:PLANUNIT:MGAC-040",
+        "SEMANTIC:PLANUNIT:MGAC-041",
+        "SEMANTIC:PLANUNIT:MGAC-042",
+        "SEMANTIC:PLANUNIT:MGAC-043",
+        "SEMANTIC:PLANUNIT:MGAC-044",
+        "SEMANTIC:PLANUNIT:MGAC-045",
+        "SEMANTIC:PLANUNIT:MGAC-046"
+      ],
+      "item_ids": [
+        "M15-03-EXACT",
+        "M15-03-GAP"
+      ],
+      "reviewed": true,
+      "summary": "Reviewed every core line and every required source unit for kind, precedence, model, count, and aspect extraction rules using exact and adversarial lenses.",
+      "window_id": "WIN-5F6016A27747-0010"
+    },
+    {
+      "core_range": [
+        3633,
+        3995
+      ],
+      "covered_source_unit_refs": [
+        "PLANUNIT:MGAC-047",
+        "PLANUNIT:MGAC-048",
+        "PLANUNIT:MGAC-049",
+        "PLANUNIT:MGAC-050",
+        "PLANUNIT:MGAC-051",
+        "PLANUNIT:MGAC-052",
+        "PLANUNIT:MGAC-053",
+        "SEMANTIC:PLANUNIT:MGAC-047",
+        "SEMANTIC:PLANUNIT:MGAC-048",
+        "SEMANTIC:PLANUNIT:MGAC-049",
+        "SEMANTIC:PLANUNIT:MGAC-050",
+        "SEMANTIC:PLANUNIT:MGAC-051",
+        "SEMANTIC:PLANUNIT:MGAC-052",
+        "SEMANTIC:PLANUNIT:MGAC-053"
+      ],
+      "item_ids": [
+        "M15-04-EXACT",
+        "M15-04-GAP"
+      ],
+      "reviewed": true,
+      "summary": "Reviewed every core line and every required source unit for media slot candidate extraction and guarded assignment using exact and adversarial lenses.",
+      "window_id": "WIN-5F6016A27747-0011"
+    },
+    {
+      "core_range": [
+        3996,
+        4389
+      ],
+      "covered_source_unit_refs": [
+        "PLANUNIT:MGAC-054",
+        "PLANUNIT:MGAC-055",
+        "PLANUNIT:MGAC-056",
+        "PLANUNIT:MGAC-057",
+        "PLANUNIT:MGAC-058",
+        "PLANUNIT:MGAC-059",
+        "PLANUNIT:MGAC-060",
+        "SEMANTIC:PLANUNIT:MGAC-054",
+        "SEMANTIC:PLANUNIT:MGAC-055",
+        "SEMANTIC:PLANUNIT:MGAC-056",
+        "SEMANTIC:PLANUNIT:MGAC-057",
+        "SEMANTIC:PLANUNIT:MGAC-058",
+        "SEMANTIC:PLANUNIT:MGAC-059",
+        "SEMANTIC:PLANUNIT:MGAC-060"
+      ],
+      "item_ids": [
+        "M15-05-EXACT",
+        "M15-05-GAP"
+      ],
+      "reviewed": true,
+      "summary": "Reviewed every core line and every required source unit for final prompt cleanup and accessible capability-picker presentation using exact and adversarial lenses.",
+      "window_id": "WIN-5F6016A27747-0012"
+    },
+    {
+      "core_range": [
+        4390,
+        4776
+      ],
+      "covered_source_unit_refs": [
+        "PLANUNIT:MGAC-061",
+        "PLANUNIT:MGAC-062",
+        "PLANUNIT:MGAC-063",
+        "PLANUNIT:MGAC-064",
+        "PLANUNIT:MGAC-065",
+        "PLANUNIT:MGAC-066",
+        "PLANUNIT:MGAC-067",
+        "SEMANTIC:PLANUNIT:MGAC-061",
+        "SEMANTIC:PLANUNIT:MGAC-062",
+        "SEMANTIC:PLANUNIT:MGAC-063",
+        "SEMANTIC:PLANUNIT:MGAC-064",
+        "SEMANTIC:PLANUNIT:MGAC-065",
+        "SEMANTIC:PLANUNIT:MGAC-066",
+        "SEMANTIC:PLANUNIT:MGAC-067"
+      ],
+      "item_ids": [
+        "M15-06-EXACT",
+        "M15-06-GAP"
+      ],
+      "reviewed": true,
+      "summary": "Reviewed every core line and every required source unit for backend capability truth, picker actions, refresh, copy, and return-shape oracle using exact and adversarial lenses.",
+      "window_id": "WIN-5F6016A27747-0013"
+    },
+    {
+      "core_range": [
+        4777,
+        5154
+      ],
+      "covered_source_unit_refs": [
+        "PLANUNIT:MGAC-068",
+        "PLANUNIT:MGAC-069",
+        "PLANUNIT:MGAC-070",
+        "PLANUNIT:MGAC-071",
+        "PLANUNIT:MGAC-072",
+        "PLANUNIT:MGAC-073",
+        "PLANUNIT:MGAC-074",
+        "SEMANTIC:PLANUNIT:MGAC-068",
+        "SEMANTIC:PLANUNIT:MGAC-069",
+        "SEMANTIC:PLANUNIT:MGAC-070",
+        "SEMANTIC:PLANUNIT:MGAC-071",
+        "SEMANTIC:PLANUNIT:MGAC-072",
+        "SEMANTIC:PLANUNIT:MGAC-073",
+        "SEMANTIC:PLANUNIT:MGAC-074"
+      ],
+      "item_ids": [
+        "M15-07-EXACT",
+        "M15-07-GAP"
+      ],
+      "reviewed": true,
+      "summary": "Reviewed every core line and every required source unit for media acceptance criteria for enums, routing, overrides, and picker display using exact and adversarial lenses.",
+      "window_id": "WIN-5F6016A27747-0014"
+    }
+  ],
+  "self_attestation": {
+    "no_canonical_writes": true,
+    "no_external_research_during_blind_review": true,
+    "no_peer_result_access": true,
+    "no_prior_audit_access": true,
+    "no_unrelated_source_access": true,
+    "terminal_after_submission": true
+  },
+  "source_binding": {
+    "bundle_id": "MACRO15-5F6016A27747-0001",
+    "document_path": "Plans/Media_Generation_and_Capabilities.md",
+    "micro_window_ids": [
+      "WIN-5F6016A27747-0008",
+      "WIN-5F6016A27747-0009",
+      "WIN-5F6016A27747-0010",
+      "WIN-5F6016A27747-0011",
+      "WIN-5F6016A27747-0012",
+      "WIN-5F6016A27747-0013",
+      "WIN-5F6016A27747-0014"
+    ],
+    "source_sha256": "430a6b538379f7d9d0848ef4c9cec5d49aa8abbae3f791ac8088d67239f1cb0f"
+  },
+  "status": "completed",
+  "synthesis": {
+    "cross_document_questions": [
+      "How does Plans/Prompt_Pipeline.md define revision identity and stale-response suppression for requested/effective media route changes?",
+      "Which canonical six-value mapping should Plans/Contracts_V0.md and Plans/FinalGUISpec.md use for UNSUPPORTED, CAPABILITY_GATED, and provider-specific unavailable states?",
+      "What crash-recovery and atomic-publication guarantees does the ArtifactStore primitive require for media manifests and supersession records?"
+    ],
+    "feature_family_keys": [
+      "media_generate_result_contract",
+      "artifact_manifest_recovery",
+      "deterministic_slot_extraction",
+      "capability_picker_accessibility",
+      "generated_media_route_truth",
+      "media_acceptance_oracles"
+    ],
+    "research_queries": [
+      "cross-platform Unicode case folding and regex determinism for prompt parsers",
+      "accessible listbox dynamic option refresh focus and live-region patterns",
+      "crash-consistent artifact manifest publication and orphan cleanup patterns"
+    ]
+  },
+  "task_thread_id": "/root/a005m15_b4_000055_attempt_0015_terminal"
+}

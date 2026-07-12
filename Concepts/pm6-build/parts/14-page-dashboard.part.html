@@ -9,6 +9,7 @@
                 <span class="tab" data-file="src/routes/recipes.rs" onclick="switchEditorPane1Tab('src/routes/recipes.rs')">recipes.rs <span class="dot">*</span> <svg class="tab-close" xmlns="http://www.w3.org/2000/svg" width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="18" y1="6" x2="6" y2="18"></line><line x1="6" y1="6" x2="18" y2="18"></line></svg></span>
                 <span class="tab" data-file="web/src/routes/+page.svelte" onclick="switchEditorPane1Tab('web/src/routes/+page.svelte')">+page.svelte <svg class="tab-close" xmlns="http://www.w3.org/2000/svg" width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="18" y1="6" x2="6" y2="18"></line><line x1="6" y1="6" x2="18" y2="18"></line></svg></span>
                 <span class="tab" data-file="Cargo.toml" onclick="switchEditorPane1Tab('Cargo.toml')">Cargo.toml <svg class="tab-close" xmlns="http://www.w3.org/2000/svg" width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="18" y1="6" x2="6" y2="18"></line><line x1="6" y1="6" x2="18" y2="18"></line></svg></span>
+                <span class="pane-tabbar-actions"><button class="pane-close-btn" data-pane="editorPane1" title="Close pane" aria-label="Close editor pane 1"><svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="18" y1="6" x2="6" y2="18"></line><line x1="6" y1="6" x2="18" y2="18"></line></svg></button></span>
               </div>
               <div class="editor-area">
                 <div class="editor-gutter" id="pane1Gutter"></div>
@@ -33,6 +34,7 @@
                   <svg width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="var(--accent-orange)" stroke-width="2" style="vertical-align:middle; margin-right:2px;"><circle cx="12" cy="12" r="10"/><polygon points="10 8 16 12 10 16 10 8"/></svg>
                   [auto] test-runner
                 </span>
+                <span class="pane-tabbar-actions"><button class="pane-close-btn" data-pane="editorPane2" title="Close pane" aria-label="Close editor pane 2"><svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="18" y1="6" x2="6" y2="18"></line><line x1="6" y1="6" x2="18" y2="18"></line></svg></button></span>
               </div>
               <div class="editor-area" id="editorPane2CodeArea">
                 <div class="editor-gutter" id="pane2Gutter"></div>
@@ -140,7 +142,7 @@
             <!-- Context Detail Pane (hidden until "More Details" clicked) -->
             <div class="editor-pane context-detail-pane" id="contextDetailPane" style="display:none;">
               <div class="editor-tabs">
-                <span class="tab active" style="color:var(--accent-blue);">Context: Import from URL <svg class="tab-close" xmlns="http://www.w3.org/2000/svg" width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" onclick="document.getElementById('contextDetailPane').style.display='none';"><line x1="18" y1="6" x2="6" y2="18"></line><line x1="6" y1="6" x2="18" y2="18"></line></svg></span>
+                <span class="tab active cdp-tab-label" style="color:var(--accent-blue);"><span class="cdp-tab-title">Context: Import from URL</span> <svg class="tab-close" xmlns="http://www.w3.org/2000/svg" width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" onclick="PM6_CONTEXT_TAB.close()"><line x1="18" y1="6" x2="6" y2="18"></line><line x1="6" y1="6" x2="18" y2="18"></line></svg></span>
               </div>
               <div style="flex:1; overflow-y:auto; background:var(--surface);">
                 <!-- View toggle tabs -->
@@ -154,14 +156,14 @@
                   <!-- Overview -->
                   <div class="cdp-section">
                     <div class="cdp-section-title">Overview</div>
-                    <div class="cdp-kv-row"><span class="cdp-kv-label">Thread</span><span class="cdp-kv-value">Import from URL</span></div>
-                    <div class="cdp-kv-row"><span class="cdp-kv-label">Messages</span><span class="cdp-kv-value">6</span></div>
-                    <div class="cdp-kv-row"><span class="cdp-kv-label">Provider</span><span class="cdp-kv-value">Claude</span></div>
-                    <div class="cdp-kv-row"><span class="cdp-kv-label">Model</span><span class="cdp-kv-value">Sonnet 4.6</span></div>
-                    <div class="cdp-kv-row"><span class="cdp-kv-label">Mode</span><span class="cdp-kv-value">Agent</span></div>
-                    <div class="cdp-kv-row"><span class="cdp-kv-label">Persona</span><span class="cdp-kv-value">product-manager</span></div>
+                    <div class="cdp-kv-row"><span class="cdp-kv-label">Thread</span><span class="cdp-kv-value" data-cdp="thread">Import from URL</span></div>
+                    <div class="cdp-kv-row"><span class="cdp-kv-label">Messages</span><span class="cdp-kv-value" data-cdp="messages">6</span></div>
+                    <div class="cdp-kv-row"><span class="cdp-kv-label">Provider</span><span class="cdp-kv-value" data-cdp="provider">Claude</span></div>
+                    <div class="cdp-kv-row"><span class="cdp-kv-label">Model</span><span class="cdp-kv-value" data-cdp="model">Sonnet 4.6</span></div>
+                    <div class="cdp-kv-row"><span class="cdp-kv-label">Mode</span><span class="cdp-kv-value" data-cdp="mode">Agent</span></div>
+                    <div class="cdp-kv-row"><span class="cdp-kv-label">Persona</span><span class="cdp-kv-value" data-cdp="persona">product-manager</span></div>
                     <div class="cdp-kv-row"><span class="cdp-kv-label">Worker</span><span class="cdp-kv-value">assistant</span></div>
-                    <div class="cdp-kv-row"><span class="cdp-kv-label">Tokens</span><span class="cdp-kv-value">42,180 / 128,000</span></div>
+                    <div class="cdp-kv-row"><span class="cdp-kv-label">Tokens</span><span class="cdp-kv-value" data-cdp="tokens">42,180 / 128,000</span></div>
                   </div>
 
                   <!-- Breakdown -->
@@ -289,6 +291,7 @@
             </div>
             </div>
 
+            <div class="editor-empty-state" id="editorEmptyState" style="display:none;">No editors open &mdash; open a file from the Files panel</div>
           </div>
           <div class="resizer-col" id="editorDashResizer"></div>
           <div class="dashboard-view pane-container" id="dashboardView">

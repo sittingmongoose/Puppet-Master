@@ -1,0 +1,17 @@
+{
+  "schema_version": "external-research-native-capture-contract-v5",
+  "audit_id": "audit-20260710-005-plan-assurance-model-lanes-fresh-agent-exhaustive",
+  "sprint_id": "sprint-wave-0001",
+  "retry_namespace": "retry-attempt-0005",
+  "attempt_id": "attempt-0005",
+  "status": "BLOCKED_AWAITING_INDEPENDENT_PRELAUNCH",
+  "current_native_capture_rows": 0,
+  "future_required_row_count": 2,
+  "future_required_assignment_ids": ["ER-0003", "ER-0008"],
+  "required_row_fields": ["assignment_id", "agent_path", "native_child_thread_id", "native_child_turn_id", "native_child_turn_status", "terminal_response_exact", "result_present_before_pmr1", "result_sha256", "receipt_sha256"],
+  "identity_rules": ["all future thread IDs are nonempty and unique", "all future turn IDs are nonempty and unique", "no thread or turn identity may be reused from attempts 0001 through 0004", "capture agent_path equals result and receipt agent_path", "capture thread equals receipt task_thread_id and native_child_thread_id"],
+  "terminal_rules": {"native_child_turn_status": "completed", "terminal_response_exact": "PMR1", "result_present_before_pmr1": true},
+  "capture_deferred_until_after_terminal": true,
+  "coverage_credit": 0,
+  "research_credit": 0
+}

@@ -1,0 +1,187 @@
+{
+  "schema_version": "audit005-promotion-merge-shadow-spec-synthesis-preparation-authority-v1",
+  "audit_id": "audit-20260710-005-plan-assurance-model-lanes-fresh-agent-exhaustive",
+  "preparation_id": "A005PMSSS-ZERO-LAUNCH-PREPARATION-V31-ULTRA",
+  "status": "BLOCKED_ZERO_LAUNCH_AWAITING_ALL_CHECKPOINTS_AND_LUNA",
+  "effective_date": "2026-07-12",
+  "append_only": true,
+  "preparation_only": true,
+  "prior_artifacts_mutated": false,
+  "model_identity_metadata": {
+    "requested_model": "gpt-5.6-sol",
+    "requested_reasoning_effort": "ultra",
+    "controller": "/root/sol_controller_v29",
+    "observed_from_policy_v32_sha256": "4826ade4c38db47ee184b34e5d7b7bd5ba6cabeecc9baa686cb9d99eeff8a3ed",
+    "role": "preparation_metadata_only_not_runtime_attestation",
+    "authorizes_launch": false,
+    "authorizes_credit": false
+  },
+  "scope": {
+    "feature_count": 3888,
+    "feature_inventory_ref": "Plans/.audits/audit-20260710-005-plan-assurance-model-lanes-fresh-agent-exhaustive/master/owner_merge/transactions/owner-merge-batch-0001/provisional_feature_ledger.jsonl",
+    "feature_inventory_sha256": "a53e72afb5f52e7e95797f2179c7fd8da14ebf6e148efd544781614784113267",
+    "feature_ref_digest": "82511b8d574044b0338156f59573fdcf834bb36acc412a134b65ba971e120b2b",
+    "seam_count": 9365,
+    "reverse_shadow_candidate_count": 46,
+    "reverse_shadow_quarantined_candidate_count": 5,
+    "live_head_file_count": 15,
+    "canonical_semantic_delta_file_count": 3,
+    "derived_integrity_delta_file_count": 12,
+    "lineage_dependency_count": 18
+  },
+  "source_snapshot": {
+    "git_head": "7f57ffda79c88878816fee922d85fbed29567f97",
+    "frozen_source_scope_sha256": "963911b952c3909c9012ed25a35151719b4f3f18b173cc6fffc8bbc1036e4e46",
+    "frozen_source_scope_rows": 135,
+    "live_head_manifest_role": "observed_current_delta_bytes_not_settlement_or_checkpoint_proof",
+    "current_live_head_delta_settled": false,
+    "current_live_head_delta_luna_checkpointed": false
+  },
+  "dependency_binding": {
+    "lineage_manifest_role": "exact byte-and-SHA observation of current research, scenario, seam, reverse-shadow, delta, catalog, and policy dependencies",
+    "closed_dependencies_do_not_authorize_synthesis": true,
+    "blocked_preparations_are_never_activation_proof": true,
+    "policy_v31_sha256": "95de3fd798c857751cc6b031d62a4a7a40abe931f9fa1e49590cff0fec6257b5",
+    "current_policy_v32_sha256": "4826ade4c38db47ee184b34e5d7b7bd5ba6cabeecc9baa686cb9d99eeff8a3ed",
+    "current_policy_atomic_transaction_cap": 8,
+    "current_policy_maximum_concurrent_atomic_semantic_transactions": 1,
+    "current_policy_never_edit_live_canonical_plans": true,
+    "current_policy_candidate_credit_zero_until_primary_and_fresh_independent_checkpoint": true
+  },
+  "required_luna_gates": [
+    {
+      "gate_id": "research-shadow-cohort-0001-primary-rejected-set",
+      "model": "gpt-5.6-luna",
+      "reasoning_effort": "max",
+      "fresh_identity_required": true,
+      "current_state": "absent"
+    },
+    {
+      "gate_id": "research-shadow-cohort-0001-atomic8-prelaunch",
+      "model": "gpt-5.6-luna",
+      "reasoning_effort": "max",
+      "fresh_identity_required": true,
+      "current_state": "absent"
+    },
+    {
+      "gate_id": "research-shadow-cohort-0002-primary-rejected-set",
+      "model": "gpt-5.6-luna",
+      "reasoning_effort": "max",
+      "fresh_identity_required": true,
+      "current_state": "absent"
+    },
+    {
+      "gate_id": "research-shadow-cohort-0002-atomic8-prelaunch",
+      "model": "gpt-5.6-luna",
+      "reasoning_effort": "max",
+      "fresh_identity_required": true,
+      "current_state": "absent"
+    },
+    {
+      "gate_id": "scenario-cohort-0002-exact-six-repair-prelaunch",
+      "model": "gpt-5.6-luna",
+      "reasoning_effort": "max",
+      "fresh_identity_required": true,
+      "current_state": "absent"
+    },
+    {
+      "gate_id": "scenario-cohorts-0001-0002-cumulative-terminal-checkpoint",
+      "model": "gpt-5.6-luna",
+      "reasoning_effort": "max",
+      "fresh_identity_required": true,
+      "current_state": "absent"
+    },
+    {
+      "gate_id": "scenario-cohort-0003-prelaunch-and-postrun",
+      "model": "gpt-5.6-luna",
+      "reasoning_effort": "max",
+      "fresh_identity_required": true,
+      "current_state": "absent"
+    },
+    {
+      "gate_id": "scenario-cohort-0004-prelaunch-and-postrun",
+      "model": "gpt-5.6-luna",
+      "reasoning_effort": "max",
+      "fresh_identity_required": true,
+      "current_state": "absent"
+    },
+    {
+      "gate_id": "reverse-shadow-five-edge-promotion-adjudication",
+      "model": "gpt-5.6-luna",
+      "reasoning_effort": "max",
+      "fresh_identity_required": true,
+      "current_state": "absent"
+    },
+    {
+      "gate_id": "final-live-head-delta-prelaunch-and-checkpoint",
+      "model": "gpt-5.6-luna",
+      "reasoning_effort": "max",
+      "fresh_identity_required": true,
+      "current_state": "absent"
+    },
+    {
+      "gate_id": "promotion-merge-shadow-spec-synthesis-prelaunch",
+      "model": "gpt-5.6-luna",
+      "reasoning_effort": "max",
+      "fresh_identity_required": true,
+      "current_state": "absent"
+    },
+    {
+      "gate_id": "promotion-merge-shadow-spec-synthesis-postrun",
+      "model": "gpt-5.6-luna",
+      "reasoning_effort": "max",
+      "fresh_identity_required": true,
+      "current_state": "absent"
+    }
+  ],
+  "permissions": {
+    "semantic_leaf_launch_authorized": false,
+    "activation_authorized": false,
+    "dispatch_authorized": false,
+    "result_acceptance_authorized": false,
+    "receipt_acceptance_authorized": false,
+    "native_capture_authorized": false,
+    "promotion_authorized": false,
+    "merge_authorized": false,
+    "shadow_spec_materialization_authorized": false,
+    "canonical_plan_write_authorized": false,
+    "governance_artifact_write_authorized": false,
+    "credit_authorized": false,
+    "descendants_authorized": false,
+    "followups_authorized": false,
+    "retries_authorized": false
+  },
+  "future_candidate_contract": {
+    "schema_ref": "Plans/.audits/audit-20260710-005-plan-assurance-model-lanes-fresh-agent-exhaustive/master/promotion_merge_shadow_spec_synthesis/zero-launch-preparation-v31-ultra/schema/promotion_merge_shadow_spec_synthesis.schema.json",
+    "schema_role": "candidate-only shape; no candidate exists in this preparation",
+    "exact_feature_decisions_required": 3888,
+    "exact_seam_adjudications_required": 9365,
+    "exact_reverse_shadow_adjudications_required": 46,
+    "exact_shadow_spec_entries_required": 3888,
+    "future_candidate_credit": 0,
+    "future_candidate_canonical_write": false
+  },
+  "blockers": [
+    "research_shadow_retry_requires_two_fresh_luna_rejected_set_validations",
+    "research_shadow_retry_requires_two_fresh_luna_atomic8_prelaunch_gates",
+    "research_shadow_retry_requires_four_fresh_luna_identities",
+    "scenario_cohort_0002_exact_six_assignment_repair_not_activated_or_checkpointed",
+    "scenario_cohort_0002_fresh_luna_rejected_set_confirmation_absent",
+    "scenario_cohorts_0001_0002_cumulative_checkpoint_absent",
+    "scenario_cohort_0003_fresh_luna_prelaunch_execution_postrun_checkpoint_absent",
+    "scenario_cohort_0004_fresh_luna_prelaunch_execution_postrun_checkpoint_absent",
+    "reverse_shadow_five_candidate_edges_remain_semantically_quarantined",
+    "final_live_head_delta_has_binding_only_zero_packets_and_no_luna_delta_checkpoint",
+    "current_15_file_live_head_delta_not_settled_or_checkpointed",
+    "fresh_independent_luna_promotion_merge_shadow_spec_prelaunch_absent",
+    "fresh_independent_luna_promotion_merge_shadow_spec_postrun_absent"
+  ],
+  "artifact_hashes": {
+    "lineage_manifest": "6da6c1516f83d27492887f2980e53bc84e01669b364ca60cfaed4708bbad3756",
+    "live_head_manifest": "f439f1922ad3101797fd9daa903aa9e3677c999768b28ef7f4184ca1b6b5b387",
+    "zero_state_inventory": "11892b46849a6fb438a1b1c6dee804a1a104b744bbad69d46bd1189324903fe0",
+    "result_schema": "90f8b1ee4af3696ed14bf28641954144b32637224fce35df35b9d3f6e1848c6c",
+    "verifier": "707ca59b10c0035f6f858b5bc5f3633d0bd752952884d85c493ba97a68758331",
+    "tests": "c04f6b9e4b16e51e1813234d403498e17b62319794b802475f37d9425c1e7307"
+  }
+}

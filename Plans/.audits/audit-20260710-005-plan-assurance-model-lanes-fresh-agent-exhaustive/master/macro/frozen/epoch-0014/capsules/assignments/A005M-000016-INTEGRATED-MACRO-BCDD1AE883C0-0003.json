@@ -1,0 +1,234 @@
+{
+  "assignment_id": "A005M-000016-INTEGRATED-MACRO-BCDD1AE883C0-0003",
+  "attempt_id": "attempt-0014",
+  "audit_id": "audit-20260710-005-plan-assurance-model-lanes-fresh-agent-exhaustive",
+  "blindness": {
+    "external_research": "deferred_to_feature_research_phase",
+    "peer_results": "forbidden",
+    "prior_audits": "forbidden",
+    "unrelated_sources": "forbidden"
+  },
+  "bundle_core_range": [
+    4701,
+    5992
+  ],
+  "bundle_id": "MACRO-BCDD1AE883C0-0003",
+  "context_ranges": [
+    [
+      4689,
+      4700
+    ]
+  ],
+  "document_path": "Plans/Containers_Registry_and_Unraid.md",
+  "micro_window_ids": [
+    "WIN-BCDD1AE883C0-0014",
+    "WIN-BCDD1AE883C0-0015",
+    "WIN-BCDD1AE883C0-0016",
+    "WIN-BCDD1AE883C0-0017"
+  ],
+  "phase": "blind_macro_window_review",
+  "required_dimensions": [
+    "behavior",
+    "capabilities",
+    "inputs_outputs",
+    "contracts",
+    "states_transitions",
+    "authority",
+    "ownership",
+    "consumers",
+    "gui_truth",
+    "failures_recovery",
+    "security_privacy",
+    "propagation",
+    "operations",
+    "scale_performance",
+    "compatibility_migration",
+    "acceptance_oracles",
+    "builder_discretion",
+    "ambiguity_unknowns",
+    "missing_callers_consumers",
+    "invalid_states_transitions",
+    "concurrency_races",
+    "partial_failure",
+    "recovery_rollback",
+    "authority_boundaries",
+    "privacy_data_lifecycle",
+    "untrusted_inputs",
+    "gui_misleading_states",
+    "offline_network_loss",
+    "scale_limits",
+    "accessibility",
+    "localization",
+    "observability_support",
+    "destructive_actions",
+    "cross_document_seams",
+    "test_falsifiability",
+    "unknown_unknowns"
+  ],
+  "result_schema_ref": "schemas/macro_review_result.schema.json",
+  "review_instructions": "Read every assigned core line and account for every required_source_unit_ref. Apply both exact-behavior and adversarial-negative-space lenses across every required dimension. Extract concise feature, behavior, contract, state, authority, consumer, GUI, failure/recovery, oracle, gap, unknown, and explicit-non-gap items with exact source evidence. Do not merely paraphrase headings or copy unit refs. Each segment must name its complete required_source_unit_refs list and at least one item. Write exactly one regular JSON payload inside the assigned output directory; result.json is recommended but the filename is not semantic. Do not write a terminal seal. Return PMR1 only after the JSON payload is fully written.",
+  "schema_version": "macro-context-capsule-v1",
+  "segments": [
+    {
+      "core_range": [
+        4701,
+        5053
+      ],
+      "core_sha256": "a5db100b31a69d421084d1224d07b17a8c70b95688923b85c0bf4dedeaf6d20a",
+      "plan_unit_ids": [
+        "CRAU-071",
+        "CRAU-072",
+        "CRAU-073",
+        "CRAU-074",
+        "CRAU-075",
+        "CRAU-076",
+        "CRAU-077"
+      ],
+      "required_source_unit_refs": [
+        "PLANUNIT:CRAU-071",
+        "PLANUNIT:CRAU-072",
+        "PLANUNIT:CRAU-073",
+        "PLANUNIT:CRAU-074",
+        "PLANUNIT:CRAU-075",
+        "PLANUNIT:CRAU-076",
+        "PLANUNIT:CRAU-077",
+        "SEMANTIC:PLANUNIT:CRAU-071",
+        "SEMANTIC:PLANUNIT:CRAU-072",
+        "SEMANTIC:PLANUNIT:CRAU-073",
+        "SEMANTIC:PLANUNIT:CRAU-074",
+        "SEMANTIC:PLANUNIT:CRAU-075",
+        "SEMANTIC:PLANUNIT:CRAU-076",
+        "SEMANTIC:PLANUNIT:CRAU-077"
+      ],
+      "semantic_block_ids": [
+        "PLANUNIT:CRAU-071",
+        "PLANUNIT:CRAU-072",
+        "PLANUNIT:CRAU-073",
+        "PLANUNIT:CRAU-074",
+        "PLANUNIT:CRAU-075",
+        "PLANUNIT:CRAU-076",
+        "PLANUNIT:CRAU-077"
+      ],
+      "structural_paths": [],
+      "token_estimate": 5370,
+      "window_id": "WIN-BCDD1AE883C0-0014"
+    },
+    {
+      "core_range": [
+        5054,
+        5424
+      ],
+      "core_sha256": "e59b4a021d41d643124b899765716c5709a24d25bb84d6c8163dc4718050b1d5",
+      "plan_unit_ids": [
+        "CRAU-078",
+        "CRAU-079",
+        "CRAU-080",
+        "CRAU-081",
+        "CRAU-082",
+        "CRAU-083",
+        "CRAU-084"
+      ],
+      "required_source_unit_refs": [
+        "PLANUNIT:CRAU-078",
+        "PLANUNIT:CRAU-079",
+        "PLANUNIT:CRAU-080",
+        "PLANUNIT:CRAU-081",
+        "PLANUNIT:CRAU-082",
+        "PLANUNIT:CRAU-083",
+        "PLANUNIT:CRAU-084",
+        "SEMANTIC:PLANUNIT:CRAU-078",
+        "SEMANTIC:PLANUNIT:CRAU-079",
+        "SEMANTIC:PLANUNIT:CRAU-080",
+        "SEMANTIC:PLANUNIT:CRAU-081",
+        "SEMANTIC:PLANUNIT:CRAU-082",
+        "SEMANTIC:PLANUNIT:CRAU-083",
+        "SEMANTIC:PLANUNIT:CRAU-084"
+      ],
+      "semantic_block_ids": [
+        "PLANUNIT:CRAU-078",
+        "PLANUNIT:CRAU-079",
+        "PLANUNIT:CRAU-080",
+        "PLANUNIT:CRAU-081",
+        "PLANUNIT:CRAU-082",
+        "PLANUNIT:CRAU-083",
+        "PLANUNIT:CRAU-084"
+      ],
+      "structural_paths": [],
+      "token_estimate": 5549,
+      "window_id": "WIN-BCDD1AE883C0-0015"
+    },
+    {
+      "core_range": [
+        5425,
+        5742
+      ],
+      "core_sha256": "5ebbedc76cdada88bf30c0778e7d6c84f2a3572f1bd1d2731feeb06b4f124762",
+      "plan_unit_ids": [
+        "CRAU-085",
+        "CRAU-086",
+        "CRAU-087",
+        "CRAU-088",
+        "CRAU-089",
+        "CRAU-090"
+      ],
+      "required_source_unit_refs": [
+        "PLANUNIT:CRAU-085",
+        "PLANUNIT:CRAU-086",
+        "PLANUNIT:CRAU-087",
+        "PLANUNIT:CRAU-088",
+        "PLANUNIT:CRAU-089",
+        "PLANUNIT:CRAU-090",
+        "SEMANTIC:PLANUNIT:CRAU-085",
+        "SEMANTIC:PLANUNIT:CRAU-086",
+        "SEMANTIC:PLANUNIT:CRAU-087",
+        "SEMANTIC:PLANUNIT:CRAU-088",
+        "SEMANTIC:PLANUNIT:CRAU-089",
+        "SEMANTIC:PLANUNIT:CRAU-090"
+      ],
+      "semantic_block_ids": [
+        "PLANUNIT:CRAU-085",
+        "PLANUNIT:CRAU-086",
+        "PLANUNIT:CRAU-087",
+        "PLANUNIT:CRAU-088",
+        "PLANUNIT:CRAU-089",
+        "PLANUNIT:CRAU-090"
+      ],
+      "structural_paths": [],
+      "token_estimate": 7039,
+      "window_id": "WIN-BCDD1AE883C0-0016"
+    },
+    {
+      "core_range": [
+        5743,
+        5992
+      ],
+      "core_sha256": "15f804ce2c3df84d83838a3e1ad0aab2d0fe844366efdce95bda521f689b9f2c",
+      "plan_unit_ids": [
+        "CRAU-001",
+        "CRAU-091",
+        "CRAU-092"
+      ],
+      "required_source_unit_refs": [
+        "PLANUNIT:CRAU-001",
+        "PLANUNIT:CRAU-091",
+        "PLANUNIT:CRAU-092",
+        "SEMANTIC:PLANUNIT:CRAU-091",
+        "SEMANTIC:PLANUNIT:CRAU-092",
+        "SEMANTIC:PLANUNIT:CRAU-001"
+      ],
+      "semantic_block_ids": [
+        "PLANUNIT:CRAU-091",
+        "PLANUNIT:CRAU-092",
+        "PLANUNIT:CRAU-001"
+      ],
+      "structural_paths": [],
+      "token_estimate": 5440,
+      "window_id": "WIN-BCDD1AE883C0-0017"
+    }
+  ],
+  "source_excerpt_line_format": "L######## followed by a tab and exact canonical source text",
+  "source_excerpt_ref": "capsules/source/99/991c28a85bd0760ca5fb3be4afef1b761e1e3d7224c9fd640b8d0ea0776113b2.txt",
+  "source_excerpt_sha256": "991c28a85bd0760ca5fb3be4afef1b761e1e3d7224c9fd640b8d0ea0776113b2",
+  "source_sha256": "2ff2c1c3c77b3bf336b1d850e592224678e440f82c74e59596393707ac79272b",
+  "token_estimate": 23398
+}

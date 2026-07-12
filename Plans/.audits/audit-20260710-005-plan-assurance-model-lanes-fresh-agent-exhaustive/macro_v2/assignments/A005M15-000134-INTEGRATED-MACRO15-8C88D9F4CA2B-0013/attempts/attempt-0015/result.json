@@ -1,0 +1,648 @@
+{
+  "assignment_id": "A005M15-000134-INTEGRATED-MACRO15-8C88D9F4CA2B-0013",
+  "attempt_id": "attempt-0015",
+  "audit_id": "audit-20260710-005-plan-assurance-model-lanes-fresh-agent-exhaustive",
+  "coverage": {
+    "all_micro_windows_reviewed": true,
+    "all_source_lines_reviewed": true,
+    "all_source_units_accounted": true,
+    "both_exact_and_adversarial_lenses_applied": true,
+    "dimensions_checked": [
+      "behavior",
+      "capabilities",
+      "inputs_outputs",
+      "contracts",
+      "states_transitions",
+      "authority",
+      "ownership",
+      "consumers",
+      "gui_truth",
+      "failures_recovery",
+      "security_privacy",
+      "propagation",
+      "operations",
+      "scale_performance",
+      "compatibility_migration",
+      "acceptance_oracles",
+      "builder_discretion",
+      "ambiguity_unknowns",
+      "missing_callers_consumers",
+      "invalid_states_transitions",
+      "concurrency_races",
+      "partial_failure",
+      "recovery_rollback",
+      "authority_boundaries",
+      "privacy_data_lifecycle",
+      "untrusted_inputs",
+      "gui_misleading_states",
+      "offline_network_loss",
+      "scale_limits",
+      "accessibility",
+      "localization",
+      "observability_support",
+      "destructive_actions",
+      "cross_document_seams",
+      "test_falsifiability",
+      "unknown_unknowns"
+    ]
+  },
+  "items": [
+    {
+      "builder_discretion": false,
+      "confidence": 0.99,
+      "dimensions": [
+        "contracts",
+        "failures_recovery",
+        "acceptance_oracles",
+        "observability_support",
+        "test_falsifiability"
+      ],
+      "evidence": [
+        {
+          "exact_quote": "cmd.source_control.select_tab records an explicit no-persist command receipt or route/open disposition; placeholder command_applied events are invalid.",
+          "line_end": 24416,
+          "line_start": 24416,
+          "path": "Plans/Wiring_Matrix.production.json",
+          "source_sha256": "01b3f170ce11d2f53a01be423c14390354e6bea881fed5322807a0db7e65c36d"
+        }
+      ],
+      "gap_kind": "none_explicit_contract",
+      "impact": "The source-control controls have a falsifiable no-persist effect rule and prohibit fabricated placeholder events, preventing an implementation from claiming success with an invented domain event.",
+      "item_id": "A005M15-000134-I001",
+      "item_type": "explicit_non_gap",
+      "severity": "info",
+      "source_unit_refs": [
+        "SEMANTIC:JSON_FIELD:Plans/Wiring_Matrix.production.json:entries:CONT-065",
+        "STRUCTURAL:$.entries"
+      ],
+      "statement": "Each assigned source-control UI command is bound to a handler, availability and disabled-reason projections, accessibility checks, and a receipt-only or route/open disposition that must not fabricate a persisted command_applied event.",
+      "title": "Source-control controls require observable no-persist receipts"
+    },
+    {
+      "builder_discretion": true,
+      "confidence": 0.97,
+      "dimensions": [
+        "inputs_outputs",
+        "contracts",
+        "failures_recovery",
+        "concurrency_races",
+        "partial_failure",
+        "recovery_rollback",
+        "test_falsifiability"
+      ],
+      "evidence": [
+        {
+          "exact_quote": "cmd.source_control.select_tab must be registered in the UICommand dispatcher with typed args and result contract",
+          "line_end": 24405,
+          "line_start": 24405,
+          "path": "Plans/Wiring_Matrix.production.json",
+          "source_sha256": "01b3f170ce11d2f53a01be423c14390354e6bea881fed5322807a0db7e65c36d"
+        }
+      ],
+      "gap_kind": "operation_specific_contracts_unspecified",
+      "impact": "Builders can choose incompatible tab identifiers, worktree identities, compare-target rules, stash options, filter values, result shapes, and error semantics while still satisfying the generic typed-contract assertion; stale selection and concurrent repository changes have no required oracle.",
+      "item_id": "A005M15-000134-I002",
+      "item_type": "gap",
+      "severity": "high",
+      "source_unit_refs": [
+        "SEMANTIC:JSON_FIELD:Plans/Wiring_Matrix.production.json:entries:CONT-065",
+        "STRUCTURAL:$.entries"
+      ],
+      "statement": "The wiring repeatedly requires typed arguments and results but does not define the operation-specific payload fields, result variants, error taxonomy, idempotency, stale-state handling, or recovery behavior for the assigned source-control commands.",
+      "title": "Source-control payload and failure semantics remain open"
+    },
+    {
+      "builder_discretion": false,
+      "confidence": 0.99,
+      "dimensions": [
+        "behavior",
+        "contracts",
+        "gui_truth",
+        "accessibility",
+        "observability_support"
+      ],
+      "evidence": [
+        {
+          "exact_quote": "cmd.terminal.clear_scrollback has no declared persisted event; dispatch must still record a no-persist command receipt or route/open disposition.",
+          "line_end": 24801,
+          "line_start": 24801,
+          "path": "Plans/Wiring_Matrix.production.json",
+          "source_sha256": "01b3f170ce11d2f53a01be423c14390354e6bea881fed5322807a0db7e65c36d"
+        }
+      ],
+      "gap_kind": "none_explicit_contract",
+      "impact": "Terminal UI actions cannot silently disappear: dispatch is observable even when the operation intentionally produces no persisted domain event.",
+      "item_id": "A005M15-000134-I003",
+      "item_type": "contract",
+      "severity": "info",
+      "source_unit_refs": [
+        "SEMANTIC:JSON_FIELD:Plans/Wiring_Matrix.production.json:entries:CONT-066",
+        "STRUCTURAL:$.entries"
+      ],
+      "statement": "Clear scrollback, close pane, detach, focus, focus session, move pane, and open are modeled as UI commands with explicit handlers, projected availability, disabled copy, accessibility evidence, and no-persist dispatch receipts.",
+      "title": "Terminal pane operations are wired as receipt-only UI commands"
+    },
+    {
+      "builder_discretion": true,
+      "confidence": 0.98,
+      "dimensions": [
+        "states_transitions",
+        "gui_truth",
+        "failures_recovery",
+        "invalid_states_transitions",
+        "partial_failure",
+        "recovery_rollback",
+        "destructive_actions",
+        "test_falsifiability"
+      ],
+      "evidence": [
+        {
+          "exact_quote": "Assert cmd.terminal.close_pane records a dispatch receipt or explicit no-persist route/open disposition and emits no unexpected persisted domain event.",
+          "line_end": 24890,
+          "line_start": 24890,
+          "path": "Plans/Wiring_Matrix.production.json",
+          "source_sha256": "01b3f170ce11d2f53a01be423c14390354e6bea881fed5322807a0db7e65c36d"
+        }
+      ],
+      "gap_kind": "terminal_lifecycle_and_destructive_semantics_missing",
+      "impact": "A close can terminate, detach, or orphan a live process; clear scrollback can irreversibly erase evidence; and move/detach/open can partially alter layout. The current oracle only checks receipt and absence of events, so materially different and misleading behaviors can pass.",
+      "item_id": "A005M15-000134-I004",
+      "item_type": "gap",
+      "severity": "high",
+      "source_unit_refs": [
+        "SEMANTIC:JSON_FIELD:Plans/Wiring_Matrix.production.json:entries:CONT-066",
+        "STRUCTURAL:$.entries"
+      ],
+      "statement": "The terminal wiring does not state process-lifecycle outcomes, confirmation requirements, undo or recovery, target-pane identity rules, atomicity, or the visible state after clear, close, detach, move, and open failures.",
+      "title": "Terminal destructive and lifecycle outcomes are not specified"
+    },
+    {
+      "builder_discretion": false,
+      "confidence": 0.99,
+      "dimensions": [
+        "behavior",
+        "states_transitions",
+        "gui_truth",
+        "security_privacy",
+        "acceptance_oracles"
+      ],
+      "evidence": [
+        {
+          "exact_quote": "Background action preserves visible session identity, test receipt refs, and recovery route without discarding evidence streams",
+          "line_end": 25459,
+          "line_start": 25459,
+          "path": "Plans/Wiring_Matrix.production.json",
+          "source_sha256": "01b3f170ce11d2f53a01be423c14390354e6bea881fed5322807a0db7e65c36d"
+        },
+        {
+          "exact_quote": "Regression evidence proves backgrounding does not mark testing complete or hide critical blockers",
+          "line_end": 25461,
+          "line_start": 25461,
+          "path": "Plans/Wiring_Matrix.production.json",
+          "source_sha256": "01b3f170ce11d2f53a01be423c14390354e6bea881fed5322807a0db7e65c36d"
+        }
+      ],
+      "gap_kind": "none_explicit_behavior",
+      "impact": "The background action has concrete anti-misrepresentation invariants: evidence survives, recovery remains available, and the GUI cannot convert backgrounding into false completion or hidden blockers.",
+      "item_id": "A005M15-000134-I005",
+      "item_type": "explicit_non_gap",
+      "severity": "info",
+      "source_unit_refs": [
+        "SEMANTIC:JSON_FIELD:Plans/Wiring_Matrix.production.json:entries:CONT-067",
+        "STRUCTURAL:$.entries"
+      ],
+      "statement": "Testing-session backgrounding must preserve session identity, evidence references, evidence streams, and a recovery route, and it must not imply completion or conceal critical blockers.",
+      "title": "Testing backgrounding preserves evidence and truthful status"
+    },
+    {
+      "builder_discretion": true,
+      "confidence": 0.98,
+      "dimensions": [
+        "inputs_outputs",
+        "states_transitions",
+        "failures_recovery",
+        "invalid_states_transitions",
+        "concurrency_races",
+        "partial_failure",
+        "recovery_rollback",
+        "destructive_actions"
+      ],
+      "evidence": [
+        {
+          "exact_quote": "cmd.terminal.restart_replace has no declared persisted event; dispatch must still record a no-persist command receipt or route/open disposition.",
+          "line_end": 25241,
+          "line_start": 25241,
+          "path": "Plans/Wiring_Matrix.production.json",
+          "source_sha256": "01b3f170ce11d2f53a01be423c14390354e6bea881fed5322807a0db7e65c36d"
+        }
+      ],
+      "gap_kind": "process_reexecution_semantics_missing",
+      "impact": "Rerun or replacement can duplicate side effects, lose output, race the existing process, or leave neither old nor new process usable. A receipt alone cannot distinguish these outcomes or support recovery.",
+      "item_id": "A005M15-000134-I006",
+      "item_type": "gap",
+      "severity": "high",
+      "source_unit_refs": [
+        "SEMANTIC:JSON_FIELD:Plans/Wiring_Matrix.production.json:entries:CONT-067",
+        "STRUCTURAL:$.entries"
+      ],
+      "statement": "Terminal rerun and restart-replace do not specify which prior command and environment are reused, whether an active process is terminated, how overlapping dispatches are serialized, or how partial replacement is rolled back.",
+      "title": "Rerun and restart-replace process semantics are absent"
+    },
+    {
+      "builder_discretion": true,
+      "confidence": 0.96,
+      "dimensions": [
+        "contracts",
+        "states_transitions",
+        "authority",
+        "ownership",
+        "propagation",
+        "compatibility_migration",
+        "concurrency_races",
+        "cross_document_seams"
+      ],
+      "evidence": [
+        {
+          "exact_quote": "Auto/On/Off capability policy persists at global/project scope and appears in the effective testing policy snapshot",
+          "line_end": 25397,
+          "line_start": 25397,
+          "path": "Plans/Wiring_Matrix.production.json",
+          "source_sha256": "01b3f170ce11d2f53a01be423c14390354e6bea881fed5322807a0db7e65c36d"
+        }
+      ],
+      "gap_kind": "policy_precedence_and_update_conflict_unspecified",
+      "impact": "Different builders can produce opposite effective policies for the same global and project values, and concurrent updates can silently overwrite each other while still emitting the required event.",
+      "item_id": "A005M15-000134-I007",
+      "item_type": "gap",
+      "severity": "high",
+      "source_unit_refs": [
+        "SEMANTIC:JSON_FIELD:Plans/Wiring_Matrix.production.json:entries:CONT-067",
+        "STRUCTURAL:$.entries"
+      ],
+      "statement": "Although capability policy is persisted at global and project scope, this window does not define precedence, inheritance, the meaning of Auto under a conflicting parent value, optimistic concurrency, or migration of existing policy values.",
+      "title": "Testing policy precedence and conflict resolution are undefined"
+    },
+    {
+      "builder_discretion": false,
+      "confidence": 0.99,
+      "dimensions": [
+        "behavior",
+        "security_privacy",
+        "privacy_data_lifecycle",
+        "untrusted_inputs",
+        "gui_misleading_states",
+        "acceptance_oracles"
+      ],
+      "evidence": [
+        {
+          "exact_quote": "Regression evidence proves raw secret/local account data is not exposed by redaction inspection",
+          "line_end": 25585,
+          "line_start": 25585,
+          "path": "Plans/Wiring_Matrix.production.json",
+          "source_sha256": "01b3f170ce11d2f53a01be423c14390354e6bea881fed5322807a0db7e65c36d"
+        },
+        {
+          "exact_quote": "Regression evidence proves Watch is a view/subscription action and does not start or complete tests by itself",
+          "line_end": 25647,
+          "line_start": 25647,
+          "path": "Plans/Wiring_Matrix.production.json",
+          "source_sha256": "01b3f170ce11d2f53a01be423c14390354e6bea881fed5322807a0db7e65c36d"
+        }
+      ],
+      "gap_kind": "none_explicit_safety_oracle",
+      "impact": "The inspection surface has a direct non-disclosure oracle, and the watch control cannot falsely create or complete work; both are concrete negative assertions rather than generic wiring checks.",
+      "item_id": "A005M15-000134-I008",
+      "item_type": "explicit_non_gap",
+      "severity": "info",
+      "source_unit_refs": [
+        "SEMANTIC:JSON_FIELD:Plans/Wiring_Matrix.production.json:entries:CONT-068",
+        "STRUCTURAL:$.entries"
+      ],
+      "statement": "Testing-session redaction inspection is limited to redaction evidence and must not expose raw secrets or local-account data, while Watch is explicitly a view subscription that does not start or complete tests.",
+      "title": "Testing inspection and watch include strong safety boundaries"
+    },
+    {
+      "builder_discretion": true,
+      "confidence": 0.98,
+      "dimensions": [
+        "states_transitions",
+        "consumers",
+        "failures_recovery",
+        "operations",
+        "scale_performance",
+        "partial_failure",
+        "recovery_rollback",
+        "offline_network_loss",
+        "scale_limits",
+        "observability_support"
+      ],
+      "evidence": [
+        {
+          "exact_quote": "Watch action subscribes to an existing visible testing session stream with stable session id and evidence refs",
+          "line_end": 25645,
+          "line_start": 25645,
+          "path": "Plans/Wiring_Matrix.production.json",
+          "source_sha256": "01b3f170ce11d2f53a01be423c14390354e6bea881fed5322807a0db7e65c36d"
+        }
+      ],
+      "gap_kind": "subscription_lifecycle_and_stream_recovery_missing",
+      "impact": "A watch can leak resources, replay or skip evidence, remain falsely live after disconnect, or overwhelm the UI under a high-volume stream without violating the stated start-event and wiring tests.",
+      "item_id": "A005M15-000134-I009",
+      "item_type": "gap",
+      "severity": "high",
+      "source_unit_refs": [
+        "SEMANTIC:JSON_FIELD:Plans/Wiring_Matrix.production.json:entries:CONT-068",
+        "STRUCTURAL:$.entries"
+      ],
+      "statement": "The Watch contract defines subscription start but not unsubscribe, ownership, reconnect and cursor behavior, duplicate or out-of-order evidence, backpressure, resource limits, or visible offline and terminal states.",
+      "title": "Watch subscription lifecycle and network recovery are unspecified"
+    },
+    {
+      "builder_discretion": true,
+      "confidence": 0.97,
+      "dimensions": [
+        "states_transitions",
+        "gui_truth",
+        "failures_recovery",
+        "concurrency_races",
+        "partial_failure",
+        "recovery_rollback",
+        "gui_misleading_states",
+        "destructive_actions",
+        "test_falsifiability"
+      ],
+      "evidence": [
+        {
+          "exact_quote": "cmd.theme.preview records an explicit no-persist command receipt or route/open disposition and emits no fabricated domain event.",
+          "line_end": 25778,
+          "line_start": 25778,
+          "path": "Plans/Wiring_Matrix.production.json",
+          "source_sha256": "01b3f170ce11d2f53a01be423c14390354e6bea881fed5322807a0db7e65c36d"
+        },
+        {
+          "exact_quote": "cmd.theme.reset emits the declared domain event(s) and records dispatch correlation evidence.",
+          "line_end": 25835,
+          "line_start": 25835,
+          "path": "Plans/Wiring_Matrix.production.json",
+          "source_sha256": "01b3f170ce11d2f53a01be423c14390354e6bea881fed5322807a0db7e65c36d"
+        }
+      ],
+      "gap_kind": "theme_preview_reset_state_machine_missing",
+      "impact": "Preview and reset can race or strand transient styling, and a reset can destroy customization without a specified confirmation or rollback. Receipt/event checks do not prove that all windows return to a coherent committed theme.",
+      "item_id": "A005M15-000134-I010",
+      "item_type": "gap",
+      "severity": "high",
+      "source_unit_refs": [
+        "SEMANTIC:JSON_FIELD:Plans/Wiring_Matrix.production.json:entries:CONT-068",
+        "STRUCTURAL:$.entries"
+      ],
+      "statement": "Theme preview and reset lack a shared state machine defining the preview baseline, scope, expiration, commit or cancel, behavior on navigation or crash, ordering against reset, and recovery when propagation partially fails.",
+      "title": "Theme preview and reset lifecycle is not closed"
+    },
+    {
+      "builder_discretion": false,
+      "confidence": 0.99,
+      "dimensions": [
+        "contracts",
+        "propagation",
+        "operations",
+        "acceptance_oracles",
+        "observability_support",
+        "test_falsifiability"
+      ],
+      "evidence": [
+        {
+          "exact_quote": "Assert cmd.theme.set_mode emits settings.theme.updated with command_id, origin, correlation_id, and handler target.",
+          "line_end": 26060,
+          "line_start": 26060,
+          "path": "Plans/Wiring_Matrix.production.json",
+          "source_sha256": "01b3f170ce11d2f53a01be423c14390354e6bea881fed5322807a0db7e65c36d"
+        }
+      ],
+      "gap_kind": "none_explicit_event_oracle",
+      "impact": "All three persistent theme mutations share a canonical event and require dispatch-correlation evidence, giving downstream consumers a common observable integration point.",
+      "item_id": "A005M15-000134-I011",
+      "item_type": "contract",
+      "severity": "info",
+      "source_unit_refs": [
+        "SEMANTIC:JSON_FIELD:Plans/Wiring_Matrix.production.json:entries:CONT-069",
+        "STRUCTURAL:$.entries"
+      ],
+      "statement": "Accent, density, and mode changes dispatch to dedicated handlers and emit settings.theme.updated with command, origin, correlation, and handler-target evidence.",
+      "title": "Theme mutations share a correlated canonical event"
+    },
+    {
+      "builder_discretion": true,
+      "confidence": 0.98,
+      "dimensions": [
+        "inputs_outputs",
+        "contracts",
+        "consumers",
+        "gui_truth",
+        "propagation",
+        "accessibility",
+        "localization",
+        "cross_document_seams",
+        "test_falsifiability"
+      ],
+      "evidence": [
+        {
+          "exact_quote": "Render/control evidence proves role/name, keyboard activation, focus handling, and disabled-state announcement.",
+          "line_end": 25927,
+          "line_start": 25927,
+          "path": "Plans/Wiring_Matrix.production.json",
+          "source_sha256": "01b3f170ce11d2f53a01be423c14390354e6bea881fed5322807a0db7e65c36d"
+        }
+      ],
+      "gap_kind": "theme_value_and_accessibility_semantics_missing",
+      "impact": "A builder can accept invalid accents, modes, or densities, emit the same generic event, and pass the listed generic control checks while producing unreadable contrast, clipped localized content, or consumers unable to determine what changed.",
+      "item_id": "A005M15-000134-I012",
+      "item_type": "gap",
+      "severity": "high",
+      "source_unit_refs": [
+        "SEMANTIC:JSON_FIELD:Plans/Wiring_Matrix.production.json:entries:CONT-069",
+        "STRUCTURAL:$.entries"
+      ],
+      "statement": "The window does not define legal accent, density, or mode values, normalization and fallback, event payload delta/version, propagation scope, contrast thresholds, density reflow constraints, or localized-text layout oracles.",
+      "title": "Theme value domains and visual accessibility oracles are missing"
+    },
+    {
+      "builder_discretion": true,
+      "confidence": 0.99,
+      "dimensions": [
+        "behavior",
+        "states_transitions",
+        "consumers",
+        "gui_truth",
+        "failures_recovery",
+        "propagation",
+        "compatibility_migration",
+        "partial_failure",
+        "recovery_rollback",
+        "gui_misleading_states",
+        "cross_document_seams",
+        "test_falsifiability"
+      ],
+      "evidence": [
+        {
+          "exact_quote": "cmd.widget.add has no declared persisted event; dispatch must still record a no-persist command receipt or route/open disposition.",
+          "line_end": 26081,
+          "line_start": 26081,
+          "path": "Plans/Wiring_Matrix.production.json",
+          "source_sha256": "01b3f170ce11d2f53a01be423c14390354e6bea881fed5322807a0db7e65c36d"
+        }
+      ],
+      "gap_kind": "widget_mutation_effect_model_missing",
+      "impact": "Add, configure, and move appear to mutate user-visible layout yet require only no-persist receipts. Without state or event semantics, consumers cannot reconcile changes, migrations cannot preserve layouts, and a receipt may report success while the visible layout is stale or partially updated.",
+      "item_id": "A005M15-000134-I013",
+      "item_type": "gap",
+      "severity": "high",
+      "source_unit_refs": [
+        "SEMANTIC:JSON_FIELD:Plans/Wiring_Matrix.production.json:entries:CONT-069",
+        "STRUCTURAL:$.entries"
+      ],
+      "statement": "Widget add, configure, and move do not define widget identity, placement/configuration payloads, persisted versus session scope, canonical state transitions, consumer notification, conflict handling, rollback, or post-dispatch GUI reconciliation.",
+      "title": "Widget mutations have no authoritative effect or recovery model"
+    }
+  ],
+  "model": "gpt-5.6-sol",
+  "phase": "blind_macro_window_review",
+  "reasoning_effort": "xhigh",
+  "schema_version": "macro-review-result-v1",
+  "segments": [
+    {
+      "core_range": [
+        24398,
+        24782
+      ],
+      "covered_source_unit_refs": [
+        "SEMANTIC:JSON_FIELD:Plans/Wiring_Matrix.production.json:entries:CONT-065",
+        "STRUCTURAL:$.entries"
+      ],
+      "item_ids": [
+        "A005M15-000134-I001",
+        "A005M15-000134-I002"
+      ],
+      "reviewed": true,
+      "summary": "Reviewed seven source-control controls. The receipt-only, dispatcher, projection, accessibility, and regression pattern is explicit, but operation-specific payloads, errors, concurrency, and recovery remain unspecified.",
+      "window_id": "WIN-8C88D9F4CA2B-0065"
+    },
+    {
+      "core_range": [
+        24783,
+        25167
+      ],
+      "covered_source_unit_refs": [
+        "SEMANTIC:JSON_FIELD:Plans/Wiring_Matrix.production.json:entries:CONT-066",
+        "STRUCTURAL:$.entries"
+      ],
+      "item_ids": [
+        "A005M15-000134-I003",
+        "A005M15-000134-I004"
+      ],
+      "reviewed": true,
+      "summary": "Reviewed clear, close, detach, focus, focus-session, move, and open terminal controls. Their wiring is observable, but destructive and process/pane lifecycle outcomes are not closed.",
+      "window_id": "WIN-8C88D9F4CA2B-0066"
+    },
+    {
+      "core_range": [
+        25168,
+        25511
+      ],
+      "covered_source_unit_refs": [
+        "SEMANTIC:JSON_FIELD:Plans/Wiring_Matrix.production.json:entries:CONT-067",
+        "STRUCTURAL:$.entries"
+      ],
+      "item_ids": [
+        "A005M15-000134-I005",
+        "A005M15-000134-I006",
+        "A005M15-000134-I007"
+      ],
+      "reviewed": true,
+      "summary": "Reviewed terminal reexecution, testing capability policy, and session backgrounding. Background truthfulness is strong, while process replacement and policy precedence/conflict semantics are open.",
+      "window_id": "WIN-8C88D9F4CA2B-0067"
+    },
+    {
+      "core_range": [
+        25512,
+        25876
+      ],
+      "covered_source_unit_refs": [
+        "SEMANTIC:JSON_FIELD:Plans/Wiring_Matrix.production.json:entries:CONT-068",
+        "STRUCTURAL:$.entries"
+      ],
+      "item_ids": [
+        "A005M15-000134-I008",
+        "A005M15-000134-I009",
+        "A005M15-000134-I010"
+      ],
+      "reviewed": true,
+      "summary": "Reviewed testing open, redaction inspection, watch, visibility policy, theme preview, and theme reset. Privacy and non-fabrication oracles are explicit; subscription recovery and theme preview/reset lifecycle are not.",
+      "window_id": "WIN-8C88D9F4CA2B-0068"
+    },
+    {
+      "core_range": [
+        25877,
+        26227
+      ],
+      "covered_source_unit_refs": [
+        "SEMANTIC:JSON_FIELD:Plans/Wiring_Matrix.production.json:entries:CONT-069",
+        "STRUCTURAL:$.entries"
+      ],
+      "item_ids": [
+        "A005M15-000134-I011",
+        "A005M15-000134-I012",
+        "A005M15-000134-I013"
+      ],
+      "reviewed": true,
+      "summary": "Reviewed theme accent/density/mode and widget add/configure/move. Theme dispatch correlation is explicit, but value/accessibility semantics and the authoritative effect model for widget mutation are absent.",
+      "window_id": "WIN-8C88D9F4CA2B-0069"
+    }
+  ],
+  "self_attestation": {
+    "no_canonical_writes": true,
+    "no_external_research_during_blind_review": true,
+    "no_peer_result_access": true,
+    "no_prior_audit_access": true,
+    "no_unrelated_source_access": true,
+    "terminal_after_submission": true
+  },
+  "source_binding": {
+    "bundle_id": "MACRO15-8C88D9F4CA2B-0013",
+    "document_path": "Plans/Wiring_Matrix.production.json",
+    "micro_window_ids": [
+      "WIN-8C88D9F4CA2B-0065",
+      "WIN-8C88D9F4CA2B-0066",
+      "WIN-8C88D9F4CA2B-0067",
+      "WIN-8C88D9F4CA2B-0068",
+      "WIN-8C88D9F4CA2B-0069"
+    ],
+    "source_sha256": "01b3f170ce11d2f53a01be423c14390354e6bea881fed5322807a0db7e65c36d"
+  },
+  "status": "completed",
+  "synthesis": {
+    "cross_document_questions": [
+      "Which canonical owner defines operation-specific payload, result, error, idempotency, and stale-state contracts for source-control and terminal UI commands?",
+      "Which canonical owner defines effective precedence and conflict resolution for global/project testing capability and visibility policies?",
+      "Which canonical owner defines testing watch subscription teardown, reconnect, cursor, ordering, and backpressure semantics?",
+      "Which canonical owner defines the shared theme preview/reset state machine and the payload/version contract of settings.theme.updated?",
+      "Which canonical owner defines persisted widget layout state, mutation events, migration, reconciliation, and rollback?"
+    ],
+    "feature_family_keys": [
+      "source-control-ui-command-wiring",
+      "terminal-pane-and-process-lifecycle",
+      "testing-capability-and-visible-session-policy",
+      "testing-stream-redaction-and-watch",
+      "theme-preview-and-persistent-theme-mutation",
+      "widget-layout-mutation"
+    ],
+    "research_queries": [
+      "desktop terminal pane close detach rerun restart replacement lifecycle failure recovery patterns",
+      "hierarchical global project policy precedence optimistic concurrency effective configuration UX",
+      "live test stream subscription reconnect cursor ordering backpressure accessibility patterns",
+      "theme preview commit cancel reset multi-window propagation contrast density accessibility testing",
+      "widget dashboard layout persistence mutation events conflict resolution migration rollback"
+    ]
+  },
+  "task_thread_id": "/root/a005m15_b7_000134_attempt_0015_terminal"
+}

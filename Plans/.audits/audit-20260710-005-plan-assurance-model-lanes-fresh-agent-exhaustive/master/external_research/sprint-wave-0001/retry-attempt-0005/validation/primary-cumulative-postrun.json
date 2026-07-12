@@ -1,0 +1,462 @@
+{
+  "activation_transaction": {
+    "ER-0003_authorization": {
+      "exact": true,
+      "expected_sha256": "5408e49fb43866b4bb5d894190c3ec16bd174d5e389274ec842d5f1cfdcaa3f6",
+      "path": "/Users/jaredsmacbookair/Documents/PuppetMaster/Plans/.audits/audit-20260710-005-plan-assurance-model-lanes-fresh-agent-exhaustive/master/external_research/sprint-wave-0001/retry-attempt-0005/activation-transaction/leaf-dispatch-authorizations/ER-0003.json",
+      "sha256": "5408e49fb43866b4bb5d894190c3ec16bd174d5e389274ec842d5f1cfdcaa3f6"
+    },
+    "ER-0008_authorization": {
+      "exact": true,
+      "expected_sha256": "27e3579aef55e6376a39bdc706797143d948072ad8f674adcc5338e5f64aa560",
+      "path": "/Users/jaredsmacbookair/Documents/PuppetMaster/Plans/.audits/audit-20260710-005-plan-assurance-model-lanes-fresh-agent-exhaustive/master/external_research/sprint-wave-0001/retry-attempt-0005/activation-transaction/leaf-dispatch-authorizations/ER-0008.json",
+      "sha256": "27e3579aef55e6376a39bdc706797143d948072ad8f674adcc5338e5f64aa560"
+    },
+    "activation_core": {
+      "exact": true,
+      "expected_sha256": "45784f060f94557d40ad57c9e182fdf5012d639dbb8c5e25a7825a34aed30b5e",
+      "path": "/Users/jaredsmacbookair/Documents/PuppetMaster/Plans/.audits/audit-20260710-005-plan-assurance-model-lanes-fresh-agent-exhaustive/master/external_research/sprint-wave-0001/retry-attempt-0005/activation-transaction/activation-core.json",
+      "sha256": "45784f060f94557d40ad57c9e182fdf5012d639dbb8c5e25a7825a34aed30b5e"
+    },
+    "activation_envelope": {
+      "exact": true,
+      "expected_sha256": "ae090433f86fd2f5563b2fc4f8ca1c3094d38d4c357c6044ab6b91148bd7aa88",
+      "path": "/Users/jaredsmacbookair/Documents/PuppetMaster/Plans/.audits/audit-20260710-005-plan-assurance-model-lanes-fresh-agent-exhaustive/master/external_research/sprint-wave-0001/retry-attempt-0005/activation-transaction/activation-envelope.json",
+      "sha256": "ae090433f86fd2f5563b2fc4f8ca1c3094d38d4c357c6044ab6b91148bd7aa88"
+    }
+  },
+  "attempt_0005": {
+    "assignment_results": [
+      {
+        "assignment_id": "ER-0003",
+        "binding_checks": {
+          "forbidden_result_identity_keys": [],
+          "identity_join": true,
+          "intent_sha256": "41c093b4ca54e56e80964bfb935e6105ab9d7bcb6caf291269d3c4b0d818129e",
+          "packet_sha256": "1743eaa3a775cf18d113d56a54bbfd86cdc47a2034678d708d61aa25b28fad59",
+          "result_receipt_capture_hash_join": true
+        },
+        "errors": [
+          "ER-0003:receipt:schema_version"
+        ],
+        "live_url_check": {
+          "browser_verified_after_automated_403": [],
+          "curl_2xx_or_3xx": 12,
+          "errors": [],
+          "reachable": 12,
+          "registered_urls_checked": 12
+        },
+        "native_capture": {
+          "agent_path": "/root/a005_external_research_recovery_er_0003_attempt_0005_terminal",
+          "assignment_id": "ER-0003",
+          "native_child_thread_id": "019f535d-af5d-7b02-8ade-09c6019da611",
+          "native_child_turn_id": "019f535d-affa-7102-8022-deec83e6d238",
+          "native_child_turn_status": "completed",
+          "receipt_sha256": "b215fb26cafee092db5b0435275ecadc86cf5c9cd8e2f5b48ee071a7dd08d250",
+          "result_present_before_pmr1": true,
+          "result_sha256": "72910cf0428c961cf70525629da40260e9ef1ae0d9f5bdde4ee986360c8c2849",
+          "terminal_response_exact": "PMR1"
+        },
+        "original_question_coverage": {
+          "errors": [],
+          "exact_question_list_bound": true,
+          "mappings": [
+            {
+              "evidence_ids": [
+                "F-0001",
+                "F-0003",
+                "F-0006",
+                "F-0009",
+                "P-0001",
+                "P-0003",
+                "P-0005",
+                "P-0006"
+              ],
+              "question": "What contracts make a versioned file-revert operation safe, previewable, atomic, auditable, and distinguishable from whole-turn or conversation rewind?",
+              "question_index": 0
+            },
+            {
+              "evidence_ids": [
+                "F-0002",
+                "F-0003",
+                "F-0004",
+                "F-0005",
+                "P-0002",
+                "P-0003",
+                "P-0004"
+              ],
+              "question": "How do Git, IDE, and agent coding systems bind identity, snapshots, workspace state, and rollback scope?",
+              "question_index": 1
+            },
+            {
+              "evidence_ids": [
+                "F-0006",
+                "F-0007",
+                "F-0008",
+                "F-0009",
+                "F-0010",
+                "FM-0001",
+                "FM-0002",
+                "FM-0003",
+                "FM-0004",
+                "FM-0005",
+                "FM-0006",
+                "FM-0007"
+              ],
+              "question": "Which race, partial-write, stale-base, conflict, and recovery failure modes require explicit handling?",
+              "question_index": 2
+            },
+            {
+              "evidence_ids": [
+                "P-0001",
+                "P-0002",
+                "P-0003",
+                "P-0004",
+                "P-0005",
+                "P-0006",
+                "P-0007",
+                "I-0001",
+                "I-0002",
+                "I-0003",
+                "I-0004"
+              ],
+              "question": "Which patterns should Puppet Master adopt or reject for file-level versus turn-level recovery?",
+              "question_index": 3
+            }
+          ],
+          "question_count": 4
+        },
+        "receipt": {
+          "key_count": 46,
+          "path": "/Users/jaredsmacbookair/Documents/PuppetMaster/Plans/.audits/audit-20260710-005-plan-assurance-model-lanes-fresh-agent-exhaustive/master/external_research/sprint-wave-0001/retry-attempt-0005/dispatch/ER-0003/attempt-0005/dispatch_receipt.json",
+          "schema_version_observed": "external-research-receipt-contract-v5",
+          "schema_version_required_by_frozen_validator": "external-research-dispatch-receipt-v5",
+          "sha256": "b215fb26cafee092db5b0435275ecadc86cf5c9cd8e2f5b48ee071a7dd08d250"
+        },
+        "result": {
+          "bytes": 33256,
+          "draft202012_schema_errors": [],
+          "path": "/Users/jaredsmacbookair/Documents/PuppetMaster/Plans/.audits/audit-20260710-005-plan-assurance-model-lanes-fresh-agent-exhaustive/external_research_v1/ER-0003/attempts/attempt-0005/result.json",
+          "sha256": "72910cf0428c961cf70525629da40260e9ef1ae0d9f5bdde4ee986360c8c2849"
+        },
+        "self_attestations": {
+          "missing_or_false": [],
+          "required_true_count": 10
+        },
+        "source_claim_graph": {
+          "all_urls_direct_https": true,
+          "citation_source_edges": 81,
+          "errors": [],
+          "evidence_class_counts": {
+            "inference": 20,
+            "no_evidence": 2,
+            "supported_claim": 21
+          },
+          "registered_sources": 12,
+          "section_rows": 43,
+          "unique_registered_sources": 12
+        },
+        "state": "rejected"
+      },
+      {
+        "assignment_id": "ER-0008",
+        "binding_checks": {
+          "forbidden_result_identity_keys": [],
+          "identity_join": true,
+          "intent_sha256": "829ef615d9853b92197487f8ade9c01fd0dec747f38fedf91158d507ca712821",
+          "packet_sha256": "08254ebfe8df7d1e9c7354cb772b1f492132583040deab3eb3ad197aa8d9932f",
+          "result_receipt_capture_hash_join": true
+        },
+        "errors": [
+          "ER-0008:receipt:schema_version",
+          "unresolved_questions[1]:no_evidence_with_source"
+        ],
+        "live_url_check": {
+          "browser_verified_after_automated_403": [
+            "https://openai.com/index/updating-our-preparedness-framework/"
+          ],
+          "curl_2xx_or_3xx": 11,
+          "errors": [],
+          "reachable": 12,
+          "registered_urls_checked": 12
+        },
+        "native_capture": {
+          "agent_path": "/root/a005_external_research_recovery_er_0008_attempt_0005_terminal",
+          "assignment_id": "ER-0008",
+          "native_child_thread_id": "019f535d-b001-7c63-a679-69badff0b5c8",
+          "native_child_turn_id": "019f535d-b11c-7223-9510-8dc0b67f1fc4",
+          "native_child_turn_status": "completed",
+          "receipt_sha256": "2e78410dfc26e92b956238fbf86868a2613dbe5e465068523d91f630fd0aae44",
+          "result_present_before_pmr1": true,
+          "result_sha256": "bce959e0db06f308ea374ae753bab7adcb21f61be96fcb7b0d3d669c011cd1d8",
+          "terminal_response_exact": "PMR1"
+        },
+        "original_question_coverage": {
+          "errors": [],
+          "exact_question_list_bound": true,
+          "mappings": [
+            {
+              "evidence_ids": [
+                "F-0001",
+                "F-0002",
+                "F-0006",
+                "F-0007",
+                "P-0001",
+                "P-0005"
+              ],
+              "question": "How do mature agentic engineering and safety systems turn plans into executable preflight checks, scenario simulations, and adversarial certification?",
+              "question_index": 0
+            },
+            {
+              "evidence_ids": [
+                "F-0003",
+                "F-0004",
+                "F-0005",
+                "F-0006",
+                "P-0002",
+                "P-0003",
+                "P-0004",
+                "P-0005"
+              ],
+              "question": "Which acceptance-criteria, negative-space, evidence-gate, human-override, and regression-traceability patterns are documented by primary sources?",
+              "question_index": 1
+            },
+            {
+              "evidence_ids": [
+                "F-0001",
+                "I-0002",
+                "UQ-0001"
+              ],
+              "question": "How should a plan-to-code gate expose blocked, uncertain, overridden, and certified outcomes without conflating them?",
+              "question_index": 2
+            },
+            {
+              "evidence_ids": [
+                "F-0004",
+                "F-0005",
+                "I-0004",
+                "I-0005"
+              ],
+              "question": "What evidence is necessary to claim that a plan remains safe and complete as implementation and dependencies change?",
+              "question_index": 3
+            }
+          ],
+          "question_count": 4
+        },
+        "receipt": {
+          "key_count": 46,
+          "path": "/Users/jaredsmacbookair/Documents/PuppetMaster/Plans/.audits/audit-20260710-005-plan-assurance-model-lanes-fresh-agent-exhaustive/master/external_research/sprint-wave-0001/retry-attempt-0005/dispatch/ER-0008/attempt-0005/dispatch_receipt.json",
+          "schema_version_observed": "external-research-receipt-contract-v5",
+          "schema_version_required_by_frozen_validator": "external-research-dispatch-receipt-v5",
+          "sha256": "2e78410dfc26e92b956238fbf86868a2613dbe5e465068523d91f630fd0aae44"
+        },
+        "result": {
+          "bytes": 30673,
+          "draft202012_schema_errors": [],
+          "path": "/Users/jaredsmacbookair/Documents/PuppetMaster/Plans/.audits/audit-20260710-005-plan-assurance-model-lanes-fresh-agent-exhaustive/external_research_v1/ER-0008/attempts/attempt-0005/result.json",
+          "sha256": "bce959e0db06f308ea374ae753bab7adcb21f61be96fcb7b0d3d669c011cd1d8"
+        },
+        "self_attestations": {
+          "missing_or_false": [],
+          "required_true_count": 10
+        },
+        "source_claim_graph": {
+          "all_urls_direct_https": true,
+          "citation_source_edges": 67,
+          "errors": [
+            "unresolved_questions[1]:no_evidence_with_source"
+          ],
+          "evidence_class_counts": {
+            "inference": 11,
+            "no_evidence": 2,
+            "supported_claim": 17
+          },
+          "registered_sources": 12,
+          "section_rows": 30,
+          "unique_registered_sources": 12
+        },
+        "state": "rejected"
+      }
+    ],
+    "eligible_count": 0,
+    "eligible_ids": [],
+    "rejected_ids": [
+      "ER-0003",
+      "ER-0008"
+    ]
+  },
+  "attempt_id": "attempt-0005",
+  "audit_id": "audit-20260710-005-plan-assurance-model-lanes-fresh-agent-exhaustive",
+  "checker": "audit005_attempt_0005_primary_cumulative_postrun",
+  "conditional_actions": {
+    "active_pointer_written": false,
+    "independent_luna_reviewer_spawned": false,
+    "reason": "primary_not_exact_cumulative_8_of_8",
+    "research_checkpoint_written": false
+  },
+  "coverage_credit": 0,
+  "cumulative": {
+    "eligible_count": 6,
+    "eligible_digest": "111135d1d44849d95577071398351634e899cf0689340919c6b855c239e859b6",
+    "eligible_ids": [
+      "ER-0002",
+      "ER-0001",
+      "ER-0004",
+      "ER-0005",
+      "ER-0006",
+      "ER-0007"
+    ],
+    "exact_eight": false
+  },
+  "cumulative_research_credit": 0,
+  "errors": [
+    "ER-0003:receipt:schema_version",
+    "ER-0008:receipt:schema_version",
+    "unresolved_questions[1]:no_evidence_with_source"
+  ],
+  "frozen_validator": {
+    "authority_sha256": "a430eb6f7b2babb135f51171162fb0ad7c9486984450a90b95a9f718e9be31a2",
+    "exit_code": 1,
+    "path": "/Users/jaredsmacbookair/Documents/PuppetMaster/Plans/.audits/audit-20260710-005-plan-assurance-model-lanes-fresh-agent-exhaustive/master/external_research/sprint-wave-0001/retry-attempt-0005/tools/validate_postrun.py",
+    "report": {
+      "attempt_id": "attempt-0005",
+      "audit_id": "audit-20260710-005-plan-assurance-model-lanes-fresh-agent-exhaustive",
+      "checker": "external_research_recovery_attempt_0005_postrun_v5",
+      "coverage_credit": 0,
+      "cumulative_eligible_count": 6,
+      "cumulative_eligible_ids": [
+        "ER-0002",
+        "ER-0001",
+        "ER-0004",
+        "ER-0005",
+        "ER-0006",
+        "ER-0007"
+      ],
+      "cumulative_research_credit": 0,
+      "eligible_attempt_0005_ids": [],
+      "global_errors": [],
+      "merge_credit": 0,
+      "per_assignment_errors": {
+        "ER-0003": [
+          "ER-0003:receipt:schema_version"
+        ],
+        "ER-0008": [
+          "ER-0008:receipt:schema_version",
+          "unresolved_questions[1]:no_evidence_with_source"
+        ]
+      },
+      "promotion_credit": 0,
+      "rejected_attempt_0005_ids": [
+        "ER-0003",
+        "ER-0008"
+      ],
+      "spec_credit": 0,
+      "status": "fail_closed"
+    },
+    "result_schema_sha256": "2be5b7638104cc71d4e72baea1834fcf249e0cbba2f2872259741c0b660d0bb8",
+    "sha256": "b55fb55060a2076b6570efaed96e310f8133b4e7383ca022a29f4a7840d11a2c"
+  },
+  "gate_passed": false,
+  "merge_credit": 0,
+  "native_capture": {
+    "identity_nonreuse": {
+      "attempts_checked": [
+        "attempt-0001",
+        "attempt-0002",
+        "attempt-0003",
+        "attempt-0004",
+        "attempt-0005"
+      ],
+      "current_agent_paths": [
+        "/root/a005_external_research_recovery_er_0003_attempt_0005_terminal",
+        "/root/a005_external_research_recovery_er_0008_attempt_0005_terminal"
+      ],
+      "current_native_identities": [
+        "019f535d-af5d-7b02-8ade-09c6019da611",
+        "019f535d-affa-7102-8022-deec83e6d238",
+        "019f535d-b001-7c63-a679-69badff0b5c8",
+        "019f535d-b11c-7223-9510-8dc0b67f1fc4"
+      ],
+      "pass": true,
+      "prior_canonical_path_count": 17,
+      "prior_identity_digest": "48d6f5a5f9c729e1195d156472fc8b843d3fae895492f3ab4a5897fdb23a03ee",
+      "prior_native_identity_count": 58,
+      "prior_non_result_json_files_scanned": 106,
+      "reused_native_identities": [],
+      "reused_prior_agent_paths": []
+    },
+    "path": "/Users/jaredsmacbookair/Documents/PuppetMaster/Plans/.audits/audit-20260710-005-plan-assurance-model-lanes-fresh-agent-exhaustive/master/external_research/sprint-wave-0001/retry-attempt-0005/runtime/native_capture.json",
+    "row_count": 2,
+    "sha256": "714463a7494e9cb0b97938f81ac1a1914166c3d84886d0172c1d1eb280164f99",
+    "toctou": {
+      "captured_file_count": 15,
+      "closing_binding_root_sha256": "538a32c48658001a4d8bdc52c46fe8a22601b52ff71ca2b73e52c3bc66503f23",
+      "full_buffer_sha256": true,
+      "initial_binding_root_sha256": "538a32c48658001a4d8bdc52c46fe8a22601b52ff71ca2b73e52c3bc66503f23",
+      "stable": true
+    }
+  },
+  "preserved_six_floor": {
+    "eligible_count": 6,
+    "eligible_digest": "111135d1d44849d95577071398351634e899cf0689340919c6b855c239e859b6",
+    "eligible_ids": [
+      "ER-0002",
+      "ER-0001",
+      "ER-0004",
+      "ER-0005",
+      "ER-0006",
+      "ER-0007"
+    ],
+    "localized_and_not_suppressed": true,
+    "reports": {
+      "attempt_0002_luna_postrun_v3": {
+        "path": "/Users/jaredsmacbookair/Documents/PuppetMaster/Plans/.audits/audit-20260710-005-plan-assurance-model-lanes-fresh-agent-exhaustive/master/external_research/sprint-wave-0001/retry-attempt-0002/validation/postrun-v3/luna-postrun-v3.json",
+        "sha256": "3f5fff2bbec66aa50bd9ae73facc4f5ae61658da4277259d8638954626161913"
+      },
+      "attempt_0003_luna_postrun": {
+        "path": "/Users/jaredsmacbookair/Documents/PuppetMaster/Plans/.audits/audit-20260710-005-plan-assurance-model-lanes-fresh-agent-exhaustive/master/external_research/sprint-wave-0001/retry-attempt-0003/validation/luna-postrun.json",
+        "sha256": "389d6cbc1bee981705d6b5788d4f485ad7246f3fa6db28a0c6a2a581057fe7b3"
+      },
+      "attempt_0003_primary_postrun": {
+        "path": "/Users/jaredsmacbookair/Documents/PuppetMaster/Plans/.audits/audit-20260710-005-plan-assurance-model-lanes-fresh-agent-exhaustive/master/external_research/sprint-wave-0001/retry-attempt-0003/validation/primary-postrun.json",
+        "sha256": "d54a38c6d11f04c17b37fe2e63112bbb572549dedf9122a51cd4bef121bf7de0"
+      },
+      "attempt_0004_failure_lineage": {
+        "path": "/Users/jaredsmacbookair/Documents/PuppetMaster/Plans/.audits/audit-20260710-005-plan-assurance-model-lanes-fresh-agent-exhaustive/master/external_research/sprint-wave-0001/retry-attempt-0004/validation/attempt-0004-failure-lineage.json",
+        "sha256": "87ef882450567912176fb9248ed04b365a6354a0f6b2835c2572aa9962a8009d"
+      }
+    }
+  },
+  "promotion_credit": 0,
+  "retry_namespace": "retry-attempt-0005",
+  "schema_engine": {
+    "distribution": "jsonschema",
+    "format_checker": "jsonschema.FormatChecker",
+    "schema_check_passed": true,
+    "validator_class": "jsonschema.Draft202012Validator",
+    "version": "4.26.0"
+  },
+  "schema_version": "external-research-recovery-primary-cumulative-postrun-v5",
+  "spec_credit": 0,
+  "sprint_id": "sprint-wave-0001",
+  "status": "fail_closed",
+  "toctou": {
+    "captured_input_count": 23,
+    "closing_input_root_sha256": "e66ecf47527fc6b0115c48444b0b2d899fd26973c3847f2433001af987c2d9ec",
+    "full_buffer_sha256": true,
+    "initial_input_root_sha256": "e66ecf47527fc6b0115c48444b0b2d899fd26973c3847f2433001af987c2d9ec",
+    "stable": true
+  },
+  "zero_credit_rejected_lineage": {
+    "attempt_0003_rejected_ids": [
+      "ER-0003",
+      "ER-0008"
+    ],
+    "attempt_0004_failure_sha256": "87ef882450567912176fb9248ed04b365a6354a0f6b2835c2572aa9962a8009d",
+    "attempt_0004_terminal_zero_credit_ids": [
+      "ER-0003",
+      "ER-0008"
+    ]
+  }
+}
+

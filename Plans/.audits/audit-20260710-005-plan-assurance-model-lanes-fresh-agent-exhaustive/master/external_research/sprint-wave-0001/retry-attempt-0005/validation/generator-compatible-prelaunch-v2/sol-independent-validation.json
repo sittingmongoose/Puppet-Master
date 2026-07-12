@@ -1,0 +1,740 @@
+{
+  "_meta": {
+    "activation_invoked": false,
+    "capture_written": 0,
+    "credit_granted": 0,
+    "direct_attestation": true,
+    "frozen_generator_required_fields_derived_by_ast": true,
+    "generator_imported": false,
+    "generator_invoked": false,
+    "independent_source": "sol_ast_and_captured_bytes_reconstruction",
+    "launch_performed": false,
+    "no_inference_or_common_mode_gap_found": true,
+    "not_aliased_to_luna_gate_passed": true,
+    "output_booleans_derived_from_separate_direct_inventories": true,
+    "receipts_written": 0,
+    "results_written": 0,
+    "sole_permitted_next_action": "separate Luna invocation-2/launch turn may invoke the unchanged generator once using this validated report path and SHA",
+    "authority_payload_hash_consensus_excludes_post_authority_local_report": true,
+    "source_report_gate_passed_was_not_used_as_independent_value": true,
+    "source_report_semantic_conclusions_not_trusted": true,
+    "v2_authority_sha256": "bc6a45a58aa94e1ae07e408bffee1474de5bd8b7e7910a10397c5d1d91fbf571",
+    "v2_schema_sha256": "2b11c95b3611f4eb3833ef14ac4f2fdc3519df143df6cd456d894082b363c4d0",
+    "v2_tests_sha256": "fbd3e8933ad2136ce0a237825475443c5c08b1c6bd91bbbde875b3ca27c3e486",
+    "v2_verifier_sha256": "fc3ec38cbb5c763b919dbe1015dbd99addc30730647ccd6ea8d80d7a2b1985cf"
+  },
+  "attempt_id": "attempt-0005",
+  "audit_id": "audit-20260710-005-plan-assurance-model-lanes-fresh-agent-exhaustive",
+  "candidate_bindings": {
+    "agent_paths": [
+      "/root/a005_external_research_recovery_er_0003_attempt_0005_terminal",
+      "/root/a005_external_research_recovery_er_0008_attempt_0005_terminal"
+    ],
+    "assignment_ids": [
+      "ER-0003",
+      "ER-0008"
+    ],
+    "attempt_0004_activation_sha256": "1a3b430d41d6b8507615fbb229df972bb5aa07dcd7ee5937a344df29f4e31301",
+    "attempt_0004_failure_lineage_sha256": "87ef882450567912176fb9248ed04b365a6354a0f6b2835c2572aa9962a8009d",
+    "authority_sha256": "06cafe94c8ea4c02b3836eec77069e2fbd87433a3e2f4ca0eac173fba77c4081",
+    "cumulative_floor_count": 6,
+    "cumulative_floor_digest": "111135d1d44849d95577071398351634e899cf0689340919c6b855c239e859b6",
+    "cumulative_floor_ids": [
+      "ER-0002",
+      "ER-0001",
+      "ER-0004",
+      "ER-0005",
+      "ER-0006",
+      "ER-0007"
+    ],
+    "launch_seal_sha256": "8b658790bb247ada5edd31b44d246117050133a685aa7278a69acee8f737cac8",
+    "local_prelaunch_sha256": "325d398e176a25bee424b24263d110e641e068a735527ad8d06ec845593cf9e3",
+    "manifest_sha256": "3c73119348a18f41069e41ae6f04be7e94bce54e90285aa1ad595829917fd483",
+    "model": "gpt-5.6-luna",
+    "reasoning_effort": "max",
+    "v6_sha256": "0028914f69fdf97ac639b91166b1a53aef10284f8be0938bc2a2d817b00fc5e0"
+  },
+  "checker": "sol_independent_generator_compatible_prelaunch_v2",
+  "errors": [],
+  "field_provenance": {
+    "activation_transaction_authorized": {
+      "equal": true,
+      "method": "independent evaluator conclusion; source gate value not consumed",
+      "sources": [
+        "sol independent AST/bytes/filesystem validator"
+      ]
+    },
+    "agent_paths": {
+      "equal": true,
+      "method": "ordered immutable assignment reconstruction",
+      "sources": [
+        "manifest.json",
+        "launch_seal.json"
+      ]
+    },
+    "assignment_count": {
+      "equal": true,
+      "method": "ordered immutable assignment reconstruction",
+      "sources": [
+        "manifest.json",
+        "launch_seal.json"
+      ]
+    },
+    "assignment_ids": {
+      "equal": true,
+      "method": "ordered immutable assignment reconstruction",
+      "sources": [
+        "manifest.json",
+        "launch_seal.json"
+      ]
+    },
+    "attempt_0004_credit": {
+      "equal": true,
+      "method": "direct immutable lineage plus independent filesystem inventory",
+      "sources": [
+        "retry-attempt-0004/validation/attempt-0004-failure-lineage.json",
+        "external_research_v1/*/attempts/attempt-0004"
+      ]
+    },
+    "attempt_0004_failure_lineage_sha256": {
+      "equal": true,
+      "method": "direct immutable lineage plus independent filesystem inventory",
+      "sources": [
+        "retry-attempt-0004/validation/attempt-0004-failure-lineage.json",
+        "external_research_v1/*/attempts/attempt-0004"
+      ]
+    },
+    "attempt_0004_outputs_empty": {
+      "equal": true,
+      "method": "direct immutable lineage plus independent filesystem inventory",
+      "sources": [
+        "retry-attempt-0004/validation/attempt-0004-failure-lineage.json",
+        "external_research_v1/*/attempts/attempt-0004"
+      ]
+    },
+    "attempt_0004_receipts": {
+      "equal": true,
+      "method": "direct immutable lineage plus independent filesystem inventory",
+      "sources": [
+        "retry-attempt-0004/validation/attempt-0004-failure-lineage.json",
+        "external_research_v1/*/attempts/attempt-0004"
+      ]
+    },
+    "attempt_0004_results": {
+      "equal": true,
+      "method": "direct immutable lineage plus independent filesystem inventory",
+      "sources": [
+        "retry-attempt-0004/validation/attempt-0004-failure-lineage.json",
+        "external_research_v1/*/attempts/attempt-0004"
+      ]
+    },
+    "attempt_0005_activation_transaction_files": {
+      "equal": true,
+      "method": "independent current filesystem inventory",
+      "sources": [
+        "manifest.json",
+        "external_research_v1/*/attempts/attempt-0005",
+        "runtime/native_capture.json",
+        "activation-transaction/"
+      ]
+    },
+    "attempt_0005_native_capture_rows": {
+      "equal": true,
+      "method": "independent current filesystem inventory",
+      "sources": [
+        "manifest.json",
+        "external_research_v1/*/attempts/attempt-0005",
+        "runtime/native_capture.json",
+        "activation-transaction/"
+      ]
+    },
+    "attempt_0005_outputs_empty": {
+      "equal": true,
+      "method": "independent current filesystem inventory",
+      "sources": [
+        "manifest.json",
+        "external_research_v1/*/attempts/attempt-0005",
+        "runtime/native_capture.json",
+        "activation-transaction/"
+      ]
+    },
+    "attempt_0005_receipts": {
+      "equal": true,
+      "method": "independent current filesystem inventory",
+      "sources": [
+        "manifest.json",
+        "external_research_v1/*/attempts/attempt-0005",
+        "runtime/native_capture.json",
+        "activation-transaction/"
+      ]
+    },
+    "attempt_0005_results": {
+      "equal": true,
+      "method": "independent current filesystem inventory",
+      "sources": [
+        "manifest.json",
+        "external_research_v1/*/attempts/attempt-0005",
+        "runtime/native_capture.json",
+        "activation-transaction/"
+      ]
+    },
+    "attempt_id": {
+      "equal": true,
+      "method": "exact immutable control equality",
+      "sources": [
+        "authority.json",
+        "manifest.json"
+      ]
+    },
+    "audit_id": {
+      "equal": true,
+      "method": "exact immutable control equality",
+      "sources": [
+        "authority.json",
+        "manifest.json"
+      ]
+    },
+    "concurrency_policy_v6_sha256": {
+      "equal": true,
+      "method": "direct value and bound-byte SHA equality",
+      "sources": [
+        "authority.json",
+        "manifest.json",
+        "lineage.json",
+        "master/coordination/CONCURRENCY_POLICY_V6.json"
+      ]
+    },
+    "controller_thread_id": {
+      "equal": true,
+      "method": "exact immutable control equality",
+      "sources": [
+        "authority.json",
+        "manifest.json"
+      ]
+    },
+    "coverage_credit": {
+      "equal": true,
+      "method": "zero-credit consensus",
+      "sources": [
+        "authority.json",
+        "manifest.json",
+        "launch_seal.json",
+        "validation/local-prelaunch-candidate.json"
+      ]
+    },
+    "cumulative_floor_count": {
+      "equal": true,
+      "method": "direct value and bound-byte SHA equality",
+      "sources": [
+        "authority.json",
+        "manifest.json",
+        "lineage.json",
+        "master/coordination/CONCURRENCY_POLICY_V6.json"
+      ]
+    },
+    "descendants_forbidden": {
+      "equal": true,
+      "method": "exact immutable control equality",
+      "sources": [
+        "authority.json",
+        "manifest.json"
+      ]
+    },
+    "errors": {
+      "equal": true,
+      "method": "independent evaluator conclusion; source gate value not consumed",
+      "sources": [
+        "sol independent AST/bytes/filesystem validator"
+      ]
+    },
+    "followups_forbidden": {
+      "equal": true,
+      "method": "exact immutable control equality",
+      "sources": [
+        "authority.json",
+        "manifest.json"
+      ]
+    },
+    "fork_turns": {
+      "equal": true,
+      "method": "exact immutable control equality",
+      "sources": [
+        "authority.json",
+        "manifest.json"
+      ]
+    },
+    "fresh_direct_leaves": {
+      "equal": true,
+      "method": "exact immutable control equality",
+      "sources": [
+        "authority.json",
+        "manifest.json"
+      ]
+    },
+    "gate_passed": {
+      "equal": true,
+      "method": "independent evaluator conclusion; source gate value not consumed",
+      "sources": [
+        "sol independent AST/bytes/filesystem validator"
+      ]
+    },
+    "independent": {
+      "equal": true,
+      "method": "independent evaluator conclusion; source gate value not consumed",
+      "sources": [
+        "sol independent AST/bytes/filesystem validator"
+      ]
+    },
+    "merge_credit": {
+      "equal": true,
+      "method": "zero-credit consensus",
+      "sources": [
+        "authority.json",
+        "manifest.json",
+        "launch_seal.json",
+        "validation/local-prelaunch-candidate.json"
+      ]
+    },
+    "model": {
+      "equal": true,
+      "method": "exact immutable control equality",
+      "sources": [
+        "authority.json",
+        "manifest.json"
+      ]
+    },
+    "payload_hashes": {
+      "equal": true,
+      "method": "full-buffer SHA-256 from AST-selected paths",
+      "sources": [
+        "authority.json",
+        "launch_seal.json",
+        "manifest.json",
+        "leaf_prompt.json",
+        "receipt_contract_v5.json",
+        "native_capture_contract_v5.json",
+        "leaf_initial_task_contract.json",
+        "activation_transaction.template.json",
+        "schema/external_research_result_v5.schema.json",
+        "validation/VALIDATOR_AUTHORITY_V5.json",
+        "validation/local-prelaunch-candidate.json",
+        "tools/common.py",
+        "tools/generate_activation_transaction.py",
+        "tools/verify_prelaunch.py",
+        "tools/validate_postrun.py",
+        "tools/test_attempt_0005.py",
+        "packets from manifest",
+        "intents from manifest"
+      ]
+    },
+    "preserved_cumulative_floor_digest": {
+      "equal": true,
+      "method": "direct value and bound-byte SHA equality",
+      "sources": [
+        "authority.json",
+        "manifest.json",
+        "lineage.json",
+        "master/coordination/CONCURRENCY_POLICY_V6.json"
+      ]
+    },
+    "preserved_cumulative_floor_ids": {
+      "equal": true,
+      "method": "direct value and bound-byte SHA equality",
+      "sources": [
+        "authority.json",
+        "manifest.json",
+        "lineage.json",
+        "master/coordination/CONCURRENCY_POLICY_V6.json"
+      ]
+    },
+    "promotion_credit": {
+      "equal": true,
+      "method": "zero-credit consensus",
+      "sources": [
+        "authority.json",
+        "manifest.json",
+        "launch_seal.json",
+        "validation/local-prelaunch-candidate.json"
+      ]
+    },
+    "reasoning_effort": {
+      "equal": true,
+      "method": "exact immutable control equality",
+      "sources": [
+        "authority.json",
+        "manifest.json"
+      ]
+    },
+    "research_credit": {
+      "equal": true,
+      "method": "zero-credit consensus",
+      "sources": [
+        "authority.json",
+        "manifest.json",
+        "launch_seal.json",
+        "validation/local-prelaunch-candidate.json"
+      ]
+    },
+    "retries_forbidden": {
+      "equal": true,
+      "method": "exact immutable control equality",
+      "sources": [
+        "authority.json",
+        "manifest.json"
+      ]
+    },
+    "retry_namespace": {
+      "equal": true,
+      "method": "exact immutable control equality",
+      "sources": [
+        "authority.json",
+        "manifest.json"
+      ]
+    },
+    "spec_credit": {
+      "equal": true,
+      "method": "zero-credit consensus",
+      "sources": [
+        "authority.json",
+        "manifest.json",
+        "launch_seal.json",
+        "validation/local-prelaunch-candidate.json"
+      ]
+    },
+    "sprint_id": {
+      "equal": true,
+      "method": "exact immutable control equality",
+      "sources": [
+        "authority.json",
+        "manifest.json"
+      ]
+    },
+    "status": {
+      "equal": true,
+      "method": "independent evaluator conclusion; source gate value not consumed",
+      "sources": [
+        "sol independent AST/bytes/filesystem validator"
+      ]
+    }
+  },
+  "frozen_generator": {
+    "common_module_imported": false,
+    "expected_sha256": "dc17b3d8580fb035beead86dcd2f42ab511dc6e58f3eeaa372af3919b360101a",
+    "imported": false,
+    "inspection": "AST_only",
+    "invoked": false,
+    "path": "/Users/jaredsmacbookair/Documents/PuppetMaster/Plans/.audits/audit-20260710-005-plan-assurance-model-lanes-fresh-agent-exhaustive/master/external_research/sprint-wave-0001/retry-attempt-0005/tools/generate_activation_transaction.py",
+    "required_field_count": 40,
+    "required_field_set_digest": "5e16feba0b3b0f0b189006acb065f2416cf5c28cc96ec3d9a2ea6db17dc886fb",
+    "required_fields": [
+      "audit_id",
+      "sprint_id",
+      "retry_namespace",
+      "attempt_id",
+      "status",
+      "gate_passed",
+      "independent",
+      "activation_transaction_authorized",
+      "assignment_count",
+      "assignment_ids",
+      "agent_paths",
+      "controller_thread_id",
+      "model",
+      "reasoning_effort",
+      "fresh_direct_leaves",
+      "fork_turns",
+      "descendants_forbidden",
+      "followups_forbidden",
+      "retries_forbidden",
+      "concurrency_policy_v6_sha256",
+      "preserved_cumulative_floor_ids",
+      "preserved_cumulative_floor_digest",
+      "cumulative_floor_count",
+      "attempt_0004_failure_lineage_sha256",
+      "attempt_0004_outputs_empty",
+      "attempt_0004_receipts",
+      "attempt_0004_results",
+      "attempt_0004_credit",
+      "attempt_0005_outputs_empty",
+      "attempt_0005_receipts",
+      "attempt_0005_results",
+      "attempt_0005_native_capture_rows",
+      "attempt_0005_activation_transaction_files",
+      "payload_hashes",
+      "errors",
+      "coverage_credit",
+      "research_credit",
+      "promotion_credit",
+      "spec_credit",
+      "merge_credit"
+    ],
+    "sha256": "dc17b3d8580fb035beead86dcd2f42ab511dc6e58f3eeaa372af3919b360101a"
+  },
+  "gate_passed": true,
+  "generator_payload_comparison": {
+    "all_values_exact": true,
+    "expected_payload_sha256": "a3a0b3ea3e6810850467c737bcd67e7f0aa028a99ad1dde5b3251a2c103726d8",
+    "field_closure_exact": true,
+    "field_count": 40,
+    "matched_field_count": 40,
+    "source_payload_sha256": "a3a0b3ea3e6810850467c737bcd67e7f0aa028a99ad1dde5b3251a2c103726d8"
+  },
+  "identity_nonreuse": {
+    "current_paths": [
+      "/root/a005_external_research_recovery_er_0003_attempt_0005_terminal",
+      "/root/a005_external_research_recovery_er_0008_attempt_0005_terminal"
+    ],
+    "native_identity_expected_prelaunch": 0,
+    "native_identity_observed_prelaunch": 0,
+    "pass": true,
+    "prior_canonical_paths_found": 17,
+    "prior_native_thread_or_turn_ids_found": 45,
+    "prior_non_result_json_files_scanned": 93,
+    "reused_current_paths": []
+  },
+  "negative_probes": {
+    "cases": {
+      "aliasing_direct_attestation": true,
+      "aliasing_gate_flag": true,
+      "aliasing_source": true,
+      "aliasing_source_gate": true,
+      "extra_projected_key": true,
+      "missing_projected_key": true,
+      "report_replay_wrong_source_hash": true,
+      "wrong_activation_transaction_authorized": true,
+      "wrong_agent_paths": true,
+      "wrong_assignment_count": true,
+      "wrong_assignment_ids": true,
+      "wrong_attempt_0004_credit": true,
+      "wrong_attempt_0004_failure_lineage_sha256": true,
+      "wrong_attempt_0004_outputs_empty": true,
+      "wrong_attempt_0004_receipts": true,
+      "wrong_attempt_0004_results": true,
+      "wrong_attempt_0005_activation_transaction_files": true,
+      "wrong_attempt_0005_native_capture_rows": true,
+      "wrong_attempt_0005_outputs_empty": true,
+      "wrong_attempt_0005_receipts": true,
+      "wrong_attempt_0005_results": true,
+      "wrong_attempt_id": true,
+      "wrong_audit_id": true,
+      "wrong_concurrency_policy_v6_sha256": true,
+      "wrong_controller_thread_id": true,
+      "wrong_coverage_credit": true,
+      "wrong_cumulative_floor_count": true,
+      "wrong_descendants_forbidden": true,
+      "wrong_errors": true,
+      "wrong_followups_forbidden": true,
+      "wrong_fork_turns": true,
+      "wrong_fresh_direct_leaves": true,
+      "wrong_gate_passed": true,
+      "wrong_generator_field_set": true,
+      "wrong_independent": true,
+      "wrong_merge_credit": true,
+      "wrong_meta_payload_digest": true,
+      "wrong_model": true,
+      "wrong_payload_hashes": true,
+      "wrong_preserved_cumulative_floor_digest": true,
+      "wrong_preserved_cumulative_floor_ids": true,
+      "wrong_promotion_credit": true,
+      "wrong_reasoning_effort": true,
+      "wrong_research_credit": true,
+      "wrong_retries_forbidden": true,
+      "wrong_retry_namespace": true,
+      "wrong_spec_credit": true,
+      "wrong_sprint_id": true,
+      "wrong_status": true
+    },
+    "count": 49,
+    "failed_to_reject": [],
+    "rejected": 49
+  },
+  "output_observations": {
+    "attempt_0004": {
+      "assignment_count": 2,
+      "assignments": {
+        "ER-0003": {
+          "directory_exists": true,
+          "file_count": 0,
+          "files": [],
+          "path": "/Users/jaredsmacbookair/Documents/PuppetMaster/Plans/.audits/audit-20260710-005-plan-assurance-model-lanes-fresh-agent-exhaustive/external_research_v1/ER-0003/attempts/attempt-0004"
+        },
+        "ER-0008": {
+          "directory_exists": true,
+          "file_count": 0,
+          "files": [],
+          "path": "/Users/jaredsmacbookair/Documents/PuppetMaster/Plans/.audits/audit-20260710-005-plan-assurance-model-lanes-fresh-agent-exhaustive/external_research_v1/ER-0008/attempts/attempt-0004"
+        }
+      },
+      "attempt_id": "attempt-0004",
+      "empty": true,
+      "existing_directory_count": 2,
+      "file_count": 0,
+      "inventory_root_digest": "eacb5ebef109f47ba8d9108576161e10d0b98cd48854824c9e0d01caa44b7d37",
+      "path_root_digest": "b8017f75d8143770a9f4d7425e6257d4b9eae7a2a9951fc9876548fd45d38a23"
+    },
+    "attempt_0005": {
+      "assignment_count": 2,
+      "assignments": {
+        "ER-0003": {
+          "directory_exists": true,
+          "file_count": 0,
+          "files": [],
+          "path": "/Users/jaredsmacbookair/Documents/PuppetMaster/Plans/.audits/audit-20260710-005-plan-assurance-model-lanes-fresh-agent-exhaustive/external_research_v1/ER-0003/attempts/attempt-0005"
+        },
+        "ER-0008": {
+          "directory_exists": true,
+          "file_count": 0,
+          "files": [],
+          "path": "/Users/jaredsmacbookair/Documents/PuppetMaster/Plans/.audits/audit-20260710-005-plan-assurance-model-lanes-fresh-agent-exhaustive/external_research_v1/ER-0008/attempts/attempt-0005"
+        }
+      },
+      "attempt_id": "attempt-0005",
+      "empty": true,
+      "existing_directory_count": 2,
+      "file_count": 0,
+      "inventory_root_digest": "eb46f546a6b126e0a710bf28f9190ff6ce6e7490ee5472d91e8106ffbca5c6ad",
+      "path_root_digest": "1af8477ae477e7cab2438f1fbd989f44e5ad6e3c8689431008f8e02835cc1f2f"
+    }
+  },
+  "phase_stability": {
+    "exact_replay_equal": true,
+    "frozen_validator": {
+      "errors": [],
+      "frozen_test_count": 114,
+      "frozen_test_digest": "0bb6e2a985fd273aedf4fc12930d5f7071ec27face30c7f5d21852f5d97ab0d5",
+      "independent_structural_check_count": 245,
+      "status": "pass"
+    },
+    "phase_1": {
+      "candidate_state": "present_and_valid",
+      "digest": "51425edde53acc1fbbca4c5b81025a2e00496f788eb26b8d8fcd9478fe81e994",
+      "failed": 0,
+      "passed": 114,
+      "phase_stable_contract": true,
+      "status": "pass",
+      "test_count": 114
+    },
+    "phase_2": {
+      "candidate_state": "present_and_valid",
+      "digest": "51425edde53acc1fbbca4c5b81025a2e00496f788eb26b8d8fcd9478fe81e994",
+      "failed": 0,
+      "passed": 114,
+      "phase_stable_contract": true,
+      "status": "pass",
+      "test_count": 114
+    }
+  },
+  "recomputed_generator_payload": {
+    "activation_transaction_authorized": true,
+    "agent_paths": [
+      "/root/a005_external_research_recovery_er_0003_attempt_0005_terminal",
+      "/root/a005_external_research_recovery_er_0008_attempt_0005_terminal"
+    ],
+    "assignment_count": 2,
+    "assignment_ids": [
+      "ER-0003",
+      "ER-0008"
+    ],
+    "attempt_0004_credit": 0,
+    "attempt_0004_failure_lineage_sha256": "87ef882450567912176fb9248ed04b365a6354a0f6b2835c2572aa9962a8009d",
+    "attempt_0004_outputs_empty": true,
+    "attempt_0004_receipts": 0,
+    "attempt_0004_results": 0,
+    "attempt_0005_activation_transaction_files": 0,
+    "attempt_0005_native_capture_rows": 0,
+    "attempt_0005_outputs_empty": true,
+    "attempt_0005_receipts": 0,
+    "attempt_0005_results": 0,
+    "attempt_id": "attempt-0005",
+    "audit_id": "audit-20260710-005-plan-assurance-model-lanes-fresh-agent-exhaustive",
+    "concurrency_policy_v6_sha256": "0028914f69fdf97ac639b91166b1a53aef10284f8be0938bc2a2d817b00fc5e0",
+    "controller_thread_id": "019f5078-6501-7223-b52f-2251010bdc41",
+    "coverage_credit": 0,
+    "cumulative_floor_count": 6,
+    "descendants_forbidden": true,
+    "errors": [],
+    "followups_forbidden": true,
+    "fork_turns": "none",
+    "fresh_direct_leaves": 2,
+    "gate_passed": true,
+    "independent": true,
+    "merge_credit": 0,
+    "model": "gpt-5.6-luna",
+    "payload_hashes": {
+      "activation_transaction.template.json": "e0b4652296fc31227c0d8e8daa3a5b7e92f6dfd29fbcd9fed0088e41bca58f7f",
+      "authority.json": "06cafe94c8ea4c02b3836eec77069e2fbd87433a3e2f4ca0eac173fba77c4081",
+      "intents": {
+        "ER-0003": "41c093b4ca54e56e80964bfb935e6105ab9d7bcb6caf291269d3c4b0d818129e",
+        "ER-0008": "829ef615d9853b92197487f8ade9c01fd0dec747f38fedf91158d507ca712821"
+      },
+      "launch_seal.json": "8b658790bb247ada5edd31b44d246117050133a685aa7278a69acee8f737cac8",
+      "leaf_initial_task_contract.json": "cbd7bd839f2021b3b5890bbc05da1df81c6884465af81dd8a4126eff5c35125d",
+      "leaf_prompt.json": "826fdd2867f8eeeb12ef183602f07cba9ab42284d9ff0de6e5be75f0cbf720fc",
+      "manifest.json": "3c73119348a18f41069e41ae6f04be7e94bce54e90285aa1ad595829917fd483",
+      "native_capture_contract_v5.json": "eefa29599b89db30ad7a0bbffdffd015d6f2c04c0ae3a7b38cfa1ea991cb4693",
+      "packets": {
+        "ER-0003": "1743eaa3a775cf18d113d56a54bbfd86cdc47a2034678d708d61aa25b28fad59",
+        "ER-0008": "08254ebfe8df7d1e9c7354cb772b1f492132583040deab3eb3ad197aa8d9932f"
+      },
+      "receipt_contract_v5.json": "8ad9443dd92b09a8226eaa7d6d4366ce003d5b93168b9ec2e9d8452c3f0183a6",
+      "schema/external_research_result_v5.schema.json": "2be5b7638104cc71d4e72baea1834fcf249e0cbba2f2872259741c0b660d0bb8",
+      "tools/common.py": "939dd6841200f01f18b26bc9c73cfd8fbff5c5c9f953a1b58607188ee626e578",
+      "tools/generate_activation_transaction.py": "dc17b3d8580fb035beead86dcd2f42ab511dc6e58f3eeaa372af3919b360101a",
+      "tools/test_attempt_0005.py": "1bd80a5042e386f8cc55db1d5cf5d386165d93e230573beb505850b24ca940e9",
+      "tools/validate_postrun.py": "b55fb55060a2076b6570efaed96e310f8133b4e7383ca022a29f4a7840d11a2c",
+      "tools/verify_prelaunch.py": "b69bd64bb2a54af3adccd6e03eaff24e90c5aa56142dac33674da7426fcdd0b6",
+      "validation/VALIDATOR_AUTHORITY_V5.json": "a430eb6f7b2babb135f51171162fb0ad7c9486984450a90b95a9f718e9be31a2",
+      "validation/local-prelaunch-candidate.json": "325d398e176a25bee424b24263d110e641e068a735527ad8d06ec845593cf9e3"
+    },
+    "preserved_cumulative_floor_digest": "111135d1d44849d95577071398351634e899cf0689340919c6b855c239e859b6",
+    "preserved_cumulative_floor_ids": [
+      "ER-0002",
+      "ER-0001",
+      "ER-0004",
+      "ER-0005",
+      "ER-0006",
+      "ER-0007"
+    ],
+    "promotion_credit": 0,
+    "reasoning_effort": "max",
+    "research_credit": 0,
+    "retries_forbidden": true,
+    "retry_namespace": "retry-attempt-0005",
+    "spec_credit": 0,
+    "sprint_id": "sprint-wave-0001",
+    "status": "pass"
+  },
+  "retry_namespace": "retry-attempt-0005",
+  "schema_version": "external-research-generator-compatible-prelaunch-v2-sol-independent-validation-v1",
+  "source_report": {
+    "byte_count": 65637,
+    "exact_hash_match": true,
+    "expected_sha256": "01a773c76d9b261c7a465aeeee6421e1322459bc565638c5aaa2efe6d8f49915",
+    "path": "/Users/jaredsmacbookair/Documents/PuppetMaster/Plans/.audits/audit-20260710-005-plan-assurance-model-lanes-fresh-agent-exhaustive/master/external_research/sprint-wave-0001/retry-attempt-0005/validation/generator-compatible-prelaunch-v2.json",
+    "sha256": "01a773c76d9b261c7a465aeeee6421e1322459bc565638c5aaa2efe6d8f49915",
+    "status": "pass"
+  },
+  "sprint_id": "sprint-wave-0001",
+  "status": "pass",
+  "toctou": {
+    "captured_file_count": 28,
+    "closing_root_digest": "696871a4533640017a32839cedacdf88ce59679b516bb3f96b1e35527a9cb6a5",
+    "full_buffer_sha256": true,
+    "initial_root_digest": "696871a4533640017a32839cedacdf88ce59679b516bb3f96b1e35527a9cb6a5",
+    "stable": true
+  },
+  "validation_date": "2026-07-11",
+  "zero_state": {
+    "attempt_0004_receipts": 0,
+    "attempt_0004_results": 0,
+    "attempt_0005_activation_transaction_files": 0,
+    "attempt_0005_native_capture_rows": 0,
+    "attempt_0005_receipts": 0,
+    "attempt_0005_results": 0,
+    "coverage_credit": 0,
+    "merge_credit": 0,
+    "promotion_credit": 0,
+    "research_credit": 0,
+    "spec_credit": 0
+  }
+}

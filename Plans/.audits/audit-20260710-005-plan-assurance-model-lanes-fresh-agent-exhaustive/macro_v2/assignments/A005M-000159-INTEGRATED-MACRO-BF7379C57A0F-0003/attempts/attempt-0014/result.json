@@ -1,0 +1,1740 @@
+{
+  "schema_version": "macro-review-result-v1",
+  "audit_id": "audit-20260710-005-plan-assurance-model-lanes-fresh-agent-exhaustive",
+  "assignment_id": "A005M-000159-INTEGRATED-MACRO-BF7379C57A0F-0003",
+  "attempt_id": "attempt-0014",
+  "task_thread_id": "/root/a005m_000159_attempt_0014_terminal",
+  "model": "gpt-5.6-sol",
+  "reasoning_effort": "xhigh",
+  "phase": "blind_macro_window_review",
+  "status": "completed",
+  "source_binding": {
+    "document_path": "Plans/assistant-chat-design.md",
+    "source_sha256": "dbe013e75b0359ac3f4763abd6cc3756a3366b628c1ddb066c68e4ecc91e0f67",
+    "source_excerpt_ref": "capsules/source/f1/f1655310398d6e62f619d9e7acd7e4db5dab7ecc1fdc789f9094b782b3ccf065.txt",
+    "source_excerpt_sha256": "f1655310398d6e62f619d9e7acd7e4db5dab7ecc1fdc789f9094b782b3ccf065",
+    "capsule_sha256": "8bfd8f3496b69d9ef042f6de034d7bbec3b66b4db2a1a048fbecdee0cc0864e5",
+    "assignment_record_sha256": "411e536b629ae3be9dcf11d1d8336f42db34ec78b2104ee80984fe4b04860281",
+    "identity_match": {
+      "assignment_id": true,
+      "attempt_id": true,
+      "audit_id": true,
+      "model": true,
+      "reasoning_effort": true,
+      "phase": true
+    },
+    "verified_core_hashes": [
+      {
+        "window_id": "WIN-BF7379C57A0F-0009",
+        "core_range": [2806, 3204],
+        "sha256": "9f20711efbd4fe0cc957b4fcec33f8f8d7a519a44ad0d7f5efa920ab7b8af571",
+        "verified": true
+      },
+      {
+        "window_id": "WIN-BF7379C57A0F-0010",
+        "core_range": [3205, 3603],
+        "sha256": "42d31470e41e81918455d656341f415fe5a9875cc603b7e22402e4fc9ec16a09",
+        "verified": true
+      },
+      {
+        "window_id": "WIN-BF7379C57A0F-0011",
+        "core_range": [3604, 3989],
+        "sha256": "de7deee64cb5909cd855d378729a5f4815b19ee1d2eddc44d634619875c583cd",
+        "verified": true
+      },
+      {
+        "window_id": "WIN-BF7379C57A0F-0012",
+        "core_range": [3990, 4369],
+        "sha256": "11d5a5b7e4af8d341ec1775e0d9e6922e6a170fac8bbe9a047d18a426c77f890",
+        "verified": true
+      },
+      {
+        "window_id": "WIN-BF7379C57A0F-0013",
+        "core_range": [4370, 4731],
+        "sha256": "1406061a042ed4b04689b48855443a7b288ef08a4a7a41c43cdc40a5f34251cc",
+        "verified": true
+      },
+      {
+        "window_id": "WIN-BF7379C57A0F-0014",
+        "core_range": [4732, 5104],
+        "sha256": "33edaedbc49d1398f5766ed9cdc2a6572c3797aec07dbdf6a9fc616d8c321ef5",
+        "verified": true
+      },
+      {
+        "window_id": "WIN-BF7379C57A0F-0015",
+        "core_range": [5105, 5484],
+        "sha256": "6c995742ef1f1ea844128040b6440eb840240bda92dc3a275a5c4fb38749cf98",
+        "verified": true
+      }
+    ]
+  },
+  "coverage": {
+    "bundle_id": "MACRO-BF7379C57A0F-0003",
+    "bundle_core_range": [2806, 5484],
+    "context_ranges": [[2794, 2805], [5485, 5496]],
+    "core_line_count": 2679,
+    "core_lines_reviewed": 2679,
+    "segment_count": 7,
+    "required_source_unit_ref_occurrences": 90,
+    "all_core_lines_reviewed": true,
+    "all_required_source_unit_refs_reviewed": true,
+    "exact_behavior_lens_applied": true,
+    "adversarial_negative_space_lens_applied": true,
+    "required_dimensions": [
+      "behavior",
+      "capabilities",
+      "inputs_outputs",
+      "contracts",
+      "states_transitions",
+      "authority",
+      "ownership",
+      "consumers",
+      "gui_truth",
+      "failures_recovery",
+      "security_privacy",
+      "propagation",
+      "operations",
+      "scale_performance",
+      "compatibility_migration",
+      "acceptance_oracles",
+      "builder_discretion",
+      "ambiguity_unknowns",
+      "missing_callers_consumers",
+      "invalid_states_transitions",
+      "concurrency_races",
+      "partial_failure",
+      "recovery_rollback",
+      "authority_boundaries",
+      "privacy_data_lifecycle",
+      "untrusted_inputs",
+      "gui_misleading_states",
+      "offline_network_loss",
+      "scale_limits",
+      "accessibility",
+      "localization",
+      "observability_support",
+      "destructive_actions",
+      "cross_document_seams",
+      "test_falsifiability",
+      "unknown_unknowns"
+    ],
+    "dimensions_reviewed": [
+      "behavior",
+      "capabilities",
+      "inputs_outputs",
+      "contracts",
+      "states_transitions",
+      "authority",
+      "ownership",
+      "consumers",
+      "gui_truth",
+      "failures_recovery",
+      "security_privacy",
+      "propagation",
+      "operations",
+      "scale_performance",
+      "compatibility_migration",
+      "acceptance_oracles",
+      "builder_discretion",
+      "ambiguity_unknowns",
+      "missing_callers_consumers",
+      "invalid_states_transitions",
+      "concurrency_races",
+      "partial_failure",
+      "recovery_rollback",
+      "authority_boundaries",
+      "privacy_data_lifecycle",
+      "untrusted_inputs",
+      "gui_misleading_states",
+      "offline_network_loss",
+      "scale_limits",
+      "accessibility",
+      "localization",
+      "observability_support",
+      "destructive_actions",
+      "cross_document_seams",
+      "test_falsifiability",
+      "unknown_unknowns"
+    ]
+  },
+  "segments": [
+    {
+      "window_id": "WIN-BF7379C57A0F-0009",
+      "core_range": [2806, 3204],
+      "required_source_unit_refs": [
+        "PLANUNIT:ACD-424",
+        "SEMANTIC:PLANUNIT:ACD-424:CONT-001"
+      ],
+      "item_ids": ["M159-001", "M159-002", "M159-003", "M159-004", "M159-005", "M159-006", "M159-007"],
+      "source_unit_item_map": {
+        "PLANUNIT:ACD-424": ["M159-001", "M159-002", "M159-003", "M159-004", "M159-005", "M159-006", "M159-007"],
+        "SEMANTIC:PLANUNIT:ACD-424:CONT-001": ["M159-001", "M159-002", "M159-003", "M159-004", "M159-005", "M159-006", "M159-007"]
+      },
+      "status": "reviewed"
+    },
+    {
+      "window_id": "WIN-BF7379C57A0F-0010",
+      "core_range": [3205, 3603],
+      "required_source_unit_refs": [
+        "PLANUNIT:ACD-001",
+        "PLANUNIT:ACD-002",
+        "PLANUNIT:ACD-424",
+        "SEMANTIC:PLANUNIT:ACD-424:CONT-002",
+        "SEMANTIC:PLANUNIT:ACD-001",
+        "SEMANTIC:PLANUNIT:ACD-002"
+      ],
+      "item_ids": ["M159-008", "M159-009", "M159-010", "M159-011", "M159-012", "M159-013", "M159-014", "M159-015"],
+      "source_unit_item_map": {
+        "PLANUNIT:ACD-001": ["M159-014"],
+        "PLANUNIT:ACD-002": ["M159-014"],
+        "PLANUNIT:ACD-424": ["M159-008", "M159-009", "M159-010", "M159-011", "M159-012", "M159-013", "M159-015"],
+        "SEMANTIC:PLANUNIT:ACD-424:CONT-002": ["M159-008", "M159-009", "M159-010", "M159-011", "M159-012", "M159-013", "M159-015"],
+        "SEMANTIC:PLANUNIT:ACD-001": ["M159-014"],
+        "SEMANTIC:PLANUNIT:ACD-002": ["M159-014"]
+      },
+      "status": "reviewed"
+    },
+    {
+      "window_id": "WIN-BF7379C57A0F-0011",
+      "core_range": [3604, 3989],
+      "required_source_unit_refs": [
+        "PLANUNIT:ACD-003",
+        "PLANUNIT:ACD-004",
+        "PLANUNIT:ACD-005",
+        "PLANUNIT:ACD-006",
+        "PLANUNIT:ACD-007",
+        "PLANUNIT:ACD-008",
+        "PLANUNIT:ACD-009",
+        "PLANUNIT:ACD-010",
+        "SEMANTIC:PLANUNIT:ACD-003",
+        "SEMANTIC:PLANUNIT:ACD-004",
+        "SEMANTIC:PLANUNIT:ACD-005",
+        "SEMANTIC:PLANUNIT:ACD-006",
+        "SEMANTIC:PLANUNIT:ACD-007",
+        "SEMANTIC:PLANUNIT:ACD-008",
+        "SEMANTIC:PLANUNIT:ACD-009",
+        "SEMANTIC:PLANUNIT:ACD-010"
+      ],
+      "item_ids": ["M159-016", "M159-017", "M159-018", "M159-019", "M159-020", "M159-021"],
+      "source_unit_item_map": {
+        "PLANUNIT:ACD-003": ["M159-016"],
+        "PLANUNIT:ACD-004": ["M159-017"],
+        "PLANUNIT:ACD-005": ["M159-018"],
+        "PLANUNIT:ACD-006": ["M159-019"],
+        "PLANUNIT:ACD-007": ["M159-019"],
+        "PLANUNIT:ACD-008": ["M159-017"],
+        "PLANUNIT:ACD-009": ["M159-020"],
+        "PLANUNIT:ACD-010": ["M159-021"],
+        "SEMANTIC:PLANUNIT:ACD-003": ["M159-016"],
+        "SEMANTIC:PLANUNIT:ACD-004": ["M159-017"],
+        "SEMANTIC:PLANUNIT:ACD-005": ["M159-018"],
+        "SEMANTIC:PLANUNIT:ACD-006": ["M159-019"],
+        "SEMANTIC:PLANUNIT:ACD-007": ["M159-019"],
+        "SEMANTIC:PLANUNIT:ACD-008": ["M159-017"],
+        "SEMANTIC:PLANUNIT:ACD-009": ["M159-020"],
+        "SEMANTIC:PLANUNIT:ACD-010": ["M159-021"]
+      },
+      "status": "reviewed"
+    },
+    {
+      "window_id": "WIN-BF7379C57A0F-0012",
+      "core_range": [3990, 4369],
+      "required_source_unit_refs": [
+        "PLANUNIT:ACD-011",
+        "PLANUNIT:ACD-012",
+        "PLANUNIT:ACD-013",
+        "PLANUNIT:ACD-014",
+        "PLANUNIT:ACD-015",
+        "PLANUNIT:ACD-016",
+        "PLANUNIT:ACD-017",
+        "PLANUNIT:ACD-018",
+        "SEMANTIC:PLANUNIT:ACD-011",
+        "SEMANTIC:PLANUNIT:ACD-012",
+        "SEMANTIC:PLANUNIT:ACD-013",
+        "SEMANTIC:PLANUNIT:ACD-014",
+        "SEMANTIC:PLANUNIT:ACD-015",
+        "SEMANTIC:PLANUNIT:ACD-016",
+        "SEMANTIC:PLANUNIT:ACD-017",
+        "SEMANTIC:PLANUNIT:ACD-018"
+      ],
+      "item_ids": ["M159-022", "M159-023", "M159-024", "M159-025", "M159-026", "M159-027", "M159-028"],
+      "source_unit_item_map": {
+        "PLANUNIT:ACD-011": ["M159-022"],
+        "PLANUNIT:ACD-012": ["M159-023"],
+        "PLANUNIT:ACD-013": ["M159-024"],
+        "PLANUNIT:ACD-014": ["M159-025"],
+        "PLANUNIT:ACD-015": ["M159-026"],
+        "PLANUNIT:ACD-016": ["M159-027"],
+        "PLANUNIT:ACD-017": ["M159-028"],
+        "PLANUNIT:ACD-018": ["M159-028"],
+        "SEMANTIC:PLANUNIT:ACD-011": ["M159-022"],
+        "SEMANTIC:PLANUNIT:ACD-012": ["M159-023"],
+        "SEMANTIC:PLANUNIT:ACD-013": ["M159-024"],
+        "SEMANTIC:PLANUNIT:ACD-014": ["M159-025"],
+        "SEMANTIC:PLANUNIT:ACD-015": ["M159-026"],
+        "SEMANTIC:PLANUNIT:ACD-016": ["M159-027"],
+        "SEMANTIC:PLANUNIT:ACD-017": ["M159-028"],
+        "SEMANTIC:PLANUNIT:ACD-018": ["M159-028"]
+      },
+      "status": "reviewed"
+    },
+    {
+      "window_id": "WIN-BF7379C57A0F-0013",
+      "core_range": [4370, 4731],
+      "required_source_unit_refs": [
+        "PLANUNIT:ACD-019",
+        "PLANUNIT:ACD-020",
+        "PLANUNIT:ACD-021",
+        "PLANUNIT:ACD-022",
+        "PLANUNIT:ACD-023",
+        "PLANUNIT:ACD-024",
+        "PLANUNIT:ACD-025",
+        "PLANUNIT:ACD-026",
+        "SEMANTIC:PLANUNIT:ACD-019",
+        "SEMANTIC:PLANUNIT:ACD-020",
+        "SEMANTIC:PLANUNIT:ACD-021",
+        "SEMANTIC:PLANUNIT:ACD-022",
+        "SEMANTIC:PLANUNIT:ACD-023",
+        "SEMANTIC:PLANUNIT:ACD-024",
+        "SEMANTIC:PLANUNIT:ACD-025",
+        "SEMANTIC:PLANUNIT:ACD-026"
+      ],
+      "item_ids": ["M159-029", "M159-030", "M159-031", "M159-032", "M159-033", "M159-034", "M159-035"],
+      "source_unit_item_map": {
+        "PLANUNIT:ACD-019": ["M159-029"],
+        "PLANUNIT:ACD-020": ["M159-030"],
+        "PLANUNIT:ACD-021": ["M159-030", "M159-032"],
+        "PLANUNIT:ACD-022": ["M159-031", "M159-032"],
+        "PLANUNIT:ACD-023": ["M159-033"],
+        "PLANUNIT:ACD-024": ["M159-033"],
+        "PLANUNIT:ACD-025": ["M159-034"],
+        "PLANUNIT:ACD-026": ["M159-035"],
+        "SEMANTIC:PLANUNIT:ACD-019": ["M159-029"],
+        "SEMANTIC:PLANUNIT:ACD-020": ["M159-030"],
+        "SEMANTIC:PLANUNIT:ACD-021": ["M159-030", "M159-032"],
+        "SEMANTIC:PLANUNIT:ACD-022": ["M159-031", "M159-032"],
+        "SEMANTIC:PLANUNIT:ACD-023": ["M159-033"],
+        "SEMANTIC:PLANUNIT:ACD-024": ["M159-033"],
+        "SEMANTIC:PLANUNIT:ACD-025": ["M159-034"],
+        "SEMANTIC:PLANUNIT:ACD-026": ["M159-035"]
+      },
+      "status": "reviewed"
+    },
+    {
+      "window_id": "WIN-BF7379C57A0F-0014",
+      "core_range": [4732, 5104],
+      "required_source_unit_refs": [
+        "PLANUNIT:ACD-027",
+        "PLANUNIT:ACD-028",
+        "PLANUNIT:ACD-029",
+        "PLANUNIT:ACD-030",
+        "PLANUNIT:ACD-031",
+        "PLANUNIT:ACD-032",
+        "PLANUNIT:ACD-033",
+        "PLANUNIT:ACD-034",
+        "SEMANTIC:PLANUNIT:ACD-027",
+        "SEMANTIC:PLANUNIT:ACD-028",
+        "SEMANTIC:PLANUNIT:ACD-029",
+        "SEMANTIC:PLANUNIT:ACD-030",
+        "SEMANTIC:PLANUNIT:ACD-031",
+        "SEMANTIC:PLANUNIT:ACD-032",
+        "SEMANTIC:PLANUNIT:ACD-033",
+        "SEMANTIC:PLANUNIT:ACD-034"
+      ],
+      "item_ids": ["M159-036", "M159-037", "M159-038", "M159-039", "M159-040", "M159-041", "M159-042"],
+      "source_unit_item_map": {
+        "PLANUNIT:ACD-027": ["M159-036"],
+        "PLANUNIT:ACD-028": ["M159-037"],
+        "PLANUNIT:ACD-029": ["M159-038"],
+        "PLANUNIT:ACD-030": ["M159-039"],
+        "PLANUNIT:ACD-031": ["M159-040"],
+        "PLANUNIT:ACD-032": ["M159-041"],
+        "PLANUNIT:ACD-033": ["M159-041"],
+        "PLANUNIT:ACD-034": ["M159-042"],
+        "SEMANTIC:PLANUNIT:ACD-027": ["M159-036"],
+        "SEMANTIC:PLANUNIT:ACD-028": ["M159-037"],
+        "SEMANTIC:PLANUNIT:ACD-029": ["M159-038"],
+        "SEMANTIC:PLANUNIT:ACD-030": ["M159-039"],
+        "SEMANTIC:PLANUNIT:ACD-031": ["M159-040"],
+        "SEMANTIC:PLANUNIT:ACD-032": ["M159-041"],
+        "SEMANTIC:PLANUNIT:ACD-033": ["M159-041"],
+        "SEMANTIC:PLANUNIT:ACD-034": ["M159-042"]
+      },
+      "status": "reviewed"
+    },
+    {
+      "window_id": "WIN-BF7379C57A0F-0015",
+      "core_range": [5105, 5484],
+      "required_source_unit_refs": [
+        "PLANUNIT:ACD-035",
+        "PLANUNIT:ACD-036",
+        "PLANUNIT:ACD-037",
+        "PLANUNIT:ACD-038",
+        "PLANUNIT:ACD-039",
+        "PLANUNIT:ACD-040",
+        "PLANUNIT:ACD-041",
+        "PLANUNIT:ACD-042",
+        "PLANUNIT:ACD-043",
+        "SEMANTIC:PLANUNIT:ACD-035",
+        "SEMANTIC:PLANUNIT:ACD-036",
+        "SEMANTIC:PLANUNIT:ACD-037",
+        "SEMANTIC:PLANUNIT:ACD-038",
+        "SEMANTIC:PLANUNIT:ACD-039",
+        "SEMANTIC:PLANUNIT:ACD-040",
+        "SEMANTIC:PLANUNIT:ACD-041",
+        "SEMANTIC:PLANUNIT:ACD-042",
+        "SEMANTIC:PLANUNIT:ACD-043"
+      ],
+      "item_ids": ["M159-043", "M159-044", "M159-045", "M159-046", "M159-047", "M159-048", "M159-049", "M159-050"],
+      "source_unit_item_map": {
+        "PLANUNIT:ACD-035": ["M159-043"],
+        "PLANUNIT:ACD-036": ["M159-043"],
+        "PLANUNIT:ACD-037": ["M159-044"],
+        "PLANUNIT:ACD-038": ["M159-045"],
+        "PLANUNIT:ACD-039": ["M159-045"],
+        "PLANUNIT:ACD-040": ["M159-046"],
+        "PLANUNIT:ACD-041": ["M159-046", "M159-047", "M159-048"],
+        "PLANUNIT:ACD-042": ["M159-048", "M159-049"],
+        "PLANUNIT:ACD-043": ["M159-050"],
+        "SEMANTIC:PLANUNIT:ACD-035": ["M159-043"],
+        "SEMANTIC:PLANUNIT:ACD-036": ["M159-043"],
+        "SEMANTIC:PLANUNIT:ACD-037": ["M159-044"],
+        "SEMANTIC:PLANUNIT:ACD-038": ["M159-045"],
+        "SEMANTIC:PLANUNIT:ACD-039": ["M159-045"],
+        "SEMANTIC:PLANUNIT:ACD-040": ["M159-046"],
+        "SEMANTIC:PLANUNIT:ACD-041": ["M159-046", "M159-047", "M159-048"],
+        "SEMANTIC:PLANUNIT:ACD-042": ["M159-048", "M159-049"],
+        "SEMANTIC:PLANUNIT:ACD-043": ["M159-050"]
+      },
+      "status": "reviewed"
+    }
+  ],
+  "items": [
+    {
+      "item_id": "M159-001",
+      "item_type": "consumer",
+      "title": "Chat consumes rather than owns provider and media capability truth",
+      "statement": "Assistant Chat is a presentation consumer of provider, account, model, effort, and route-specific media capability schemas. It must expose requested/effective and unsupported or fallback outcomes without deriving truth from legacy platform tables.",
+      "source_unit_refs": ["PLANUNIT:ACD-424", "SEMANTIC:PLANUNIT:ACD-424:CONT-001"],
+      "dimensions": ["capabilities", "ownership", "consumers", "gui_truth", "compatibility_migration"],
+      "severity": "info",
+      "gap_kind": "none",
+      "impact": "This prevents the chat UI from becoming a second provider catalog and makes capability degradation visible.",
+      "builder_discretion": false,
+      "confidence": "high",
+      "evidence": [
+        {
+          "path": "Plans/assistant-chat-design.md",
+          "line_start": 2814,
+          "line_end": 2814,
+          "exact_quote": "  Assistant Chat header, composer, and run-status surfaces consume the provider/account/model/effort and media-route schemas owned by Models, Multi-Account, Contracts, and Media. Chat may present selected provider, account/profile, model, requested thinking effort, effective effort status, media input/generation availability, and source-confidence/blocked states, but it must not own provider catalog truth or infer capability from legacy \u0060platform_specs\u0060. Chat media controls consume route-specific image-generation eligibility from the GUI/Settings and Media owners, including OpenAI/Codex route families, MiniMax \u0060image-01\u0060, Gemini Direct where verified, and Antigravity OAuth/internal \u0060gemini-3.1-flash-image\u0060, while public text-only \u0060agy\u0060 rows remain capability metadata and not generated-image engines unless exact artifact proof exists. Unsupported, clamped, gated, unverified, and fallback outcomes remain visible in the turn/run status.",
+          "source_sha256": "dbe013e75b0359ac3f4763abd6cc3756a3366b628c1ddb066c68e4ecc91e0f67"
+        }
+      ]
+    },
+    {
+      "item_id": "M159-002",
+      "item_type": "contract",
+      "title": "Worktree identity is frozen per turn and path alone is non-canonical",
+      "statement": "Thread-bound operations use repo, worktree, and relative-path identity, and turn start freezes worktree and working-directory context. Historical evidence remains pinned when later rebinding occurs.",
+      "source_unit_refs": ["PLANUNIT:ACD-424", "SEMANTIC:PLANUNIT:ACD-424:CONT-001"],
+      "dimensions": ["contracts", "states_transitions", "propagation", "cross_document_seams"],
+      "severity": "info",
+      "gap_kind": "none",
+      "impact": "The identity rule prevents same-path collisions across worktrees and protects historical reproducibility.",
+      "builder_discretion": false,
+      "confidence": "high",
+      "evidence": [
+        {
+          "path": "Plans/assistant-chat-design.md",
+          "line_start": 2944,
+          "line_end": 2944,
+          "exact_quote": "- At turn-start, Chat populates and freezes \u0060execution_unit_context.worktree_id\u0060 plus \u0060working_directory\u0060 for the whole turn; safe points include worktree snapshot fields \u0060worktree_id\u0060, \u0060worktree_path\u0060, \u0060branch_name\u0060, and \u0060HEAD_sha\u0060.",
+          "source_sha256": "dbe013e75b0359ac3f4763abd6cc3756a3366b628c1ddb066c68e4ecc91e0f67"
+        }
+      ]
+    },
+    {
+      "item_id": "M159-003",
+      "item_type": "gap",
+      "title": "Binding persistence has no atomic commit or reconciliation contract",
+      "statement": "Creation spans a worktree record, thread binding, reverse lookup, and seglog event, but the unit defines atomicity only for one reverse-lookup write. It does not specify transaction ordering, rollback, or authoritative reconciliation after a crash between writes.",
+      "source_unit_refs": ["PLANUNIT:ACD-424", "SEMANTIC:PLANUNIT:ACD-424:CONT-001"],
+      "dimensions": ["contracts", "concurrency_races", "partial_failure", "recovery_rollback", "observability_support"],
+      "severity": "high",
+      "gap_kind": "partial_commit_protocol_missing",
+      "impact": "A crash can leave a bound thread without a reverse lookup, an owner record without a binding, or an event projection that disagrees with redb, defeating one-to-one enforcement.",
+      "builder_discretion": false,
+      "confidence": "high",
+      "evidence": [
+        {
+          "path": "Plans/assistant-chat-design.md",
+          "line_start": 2973,
+          "line_end": 2973,
+          "exact_quote": "6. On success: new \u0060worktree_record\u0060 written to redb; \u0060thread_state:{thread_id}:worktree_binding\u0060 written; \u0060chat.thread_worktree_bound\u0060 seglog event emitted; dialog closes; chat header button updates to bound state",
+          "source_sha256": "dbe013e75b0359ac3f4763abd6cc3756a3366b628c1ddb066c68e4ecc91e0f67"
+        },
+        {
+          "path": "Plans/assistant-chat-design.md",
+          "line_start": 3008,
+          "line_end": 3008,
+          "exact_quote": "**Concurrent auto-create:** \u0060WorktreeManager::create_worktree\u0060 is serialized per project (mutex/lock) to prevent racing. The reverse lookup key write is atomic (redb transaction). If a create fails due to race, auto-create retry logic attempts with the next suffix. Auto-create does NOT retry on non-race failures.",
+          "source_sha256": "dbe013e75b0359ac3f4763abd6cc3756a3366b628c1ddb066c68e4ecc91e0f67"
+        }
+      ]
+    },
+    {
+      "item_id": "M159-004",
+      "item_type": "explicit_non_gap",
+      "title": "Worktree status includes accessibility and stale-projection disclosure",
+      "statement": "The GUI specifies accessible labels and polite announcements for lifecycle changes, and it distinguishes stale last-known status from fresh status rather than presenting it as current.",
+      "source_unit_refs": ["PLANUNIT:ACD-424", "SEMANTIC:PLANUNIT:ACD-424:CONT-001"],
+      "dimensions": ["gui_truth", "accessibility", "gui_misleading_states", "observability_support"],
+      "severity": "info",
+      "gap_kind": "none",
+      "impact": "Assistive-technology users receive state changes, and stale status is not silently misrepresented.",
+      "builder_discretion": false,
+      "confidence": "high",
+      "evidence": [
+        {
+          "path": "Plans/assistant-chat-design.md",
+          "line_start": 2869,
+          "line_end": 2869,
+          "exact_quote": "Status bindings expose \u0060dirty_state\u0060/\u0060/dirty_state\u0060 and \u0060conflict_state\u0060/\u0060/conflict_state\u0060 to the icon renderer for compatibility with older state labels; canonical rendering still reads from \u0060worktree_projection.v1:{project_id}:{worktree_id}\u0060. All worktree controls have accessible labels, and create, unbind, remove, dirty-state, conflict-state, and creation-failed changes are announced through \u0060aria-live=\"polite\"\u0060. Narrow Source Control worktree filters and overflow actions degrade to icon-only controls rather than wrapping text into the compact chat header.",
+          "source_sha256": "dbe013e75b0359ac3f4763abd6cc3756a3366b628c1ddb066c68e4ecc91e0f67"
+        },
+        {
+          "path": "Plans/assistant-chat-design.md",
+          "line_start": 3061,
+          "line_end": 3061,
+          "exact_quote": "**Status source:** Chat header icon and thread selector icon read from \u0060worktree_projection.v1:{project_id}:{worktree_id}\u0060 which includes \u0060dirty_state\u0060 and \u0060conflict_state\u0060 fields. UI subscribes to projection changes via standard reactive binding. If \u0060projection_freshness = stale\u0060: icon shows last-known state with subtle desaturation; tooltip appends \"(status may be outdated)\".",
+          "source_sha256": "dbe013e75b0359ac3f4763abd6cc3756a3366b628c1ddb066c68e4ecc91e0f67"
+        }
+      ]
+    },
+    {
+      "item_id": "M159-005",
+      "item_type": "gap",
+      "title": "Thread deletion and destructive worktree removal lack failure ordering",
+      "statement": "The cleanup contract says delete, unbind, prune, and emit an event, but it does not define which state commits first or what the UI and stores retain if force removal or branch deletion fails after thread deletion.",
+      "source_unit_refs": ["PLANUNIT:ACD-424", "SEMANTIC:PLANUNIT:ACD-424:CONT-001"],
+      "dimensions": ["destructive_actions", "partial_failure", "recovery_rollback", "states_transitions"],
+      "severity": "high",
+      "gap_kind": "destructive_transaction_order_missing",
+      "impact": "A failed prune can orphan disk state or erase the owning thread before the user has a recoverable route to the worktree.",
+      "builder_discretion": false,
+      "confidence": "high",
+      "evidence": [
+        {
+          "path": "Plans/assistant-chat-design.md",
+          "line_start": 3069,
+          "line_end": 3069,
+          "exact_quote": "When the extended delete confirmation uses explicit button copy, \u0060Delete and keep worktree\u0060 deletes the thread, unbinds it, and leaves the worktree on disk as orphaned/manual Source Control inventory. \u0060Delete and remove worktree\u0060 deletes the thread, unbinds it, and prunes the worktree; if the worktree is dirty and the user chooses that destructive option, PM uses \u0060git worktree remove --force <path>\u0060 plus \u0060git branch -D <branch>\u0060 after the warning label has been shown.",
+          "source_sha256": "dbe013e75b0359ac3f4763abd6cc3756a3366b628c1ddb066c68e4ecc91e0f67"
+        },
+        {
+          "path": "Plans/assistant-chat-design.md",
+          "line_start": 3096,
+          "line_end": 3096,
+          "exact_quote": "7. After cleanup: \u0060chat.thread_worktree_unbound\u0060 seglog event emitted with appropriate \u0060reason\u0060",
+          "source_sha256": "dbe013e75b0359ac3f4763abd6cc3756a3366b628c1ddb066c68e4ecc91e0f67"
+        }
+      ]
+    },
+    {
+      "item_id": "M159-006",
+      "item_type": "gap",
+      "title": "Five-minute stale-lock rule can unlock a legitimate long merge",
+      "statement": "The merge lock is removed when older than five minutes even if the recorded process is still alive, while the permitted pre-merge test timeout reaches thirty minutes. No heartbeat, owner-instance token, or live-process age exception prevents two merge sequences from overlapping.",
+      "source_unit_refs": ["PLANUNIT:ACD-424", "SEMANTIC:PLANUNIT:ACD-424:CONT-001"],
+      "dimensions": ["concurrency_races", "scale_limits", "operations", "destructive_actions"],
+      "severity": "critical",
+      "gap_kind": "lock_lease_unsound",
+      "impact": "A second app instance or restart path can remove an active lock and mutate the same main repository concurrently with a still-running test or merge.",
+      "builder_discretion": false,
+      "confidence": "high",
+      "evidence": [
+        {
+          "path": "Plans/assistant-chat-design.md",
+          "line_start": 3044,
+          "line_end": 3044,
+          "exact_quote": "| \u0060worktree_pre_merge_test_timeout_s\u0060 | 30 | 1800 | Clamp to 30 | Numeric stepper |",
+          "source_sha256": "dbe013e75b0359ac3f4763abd6cc3756a3366b628c1ddb066c68e4ecc91e0f67"
+        },
+        {
+          "path": "Plans/assistant-chat-design.md",
+          "line_start": 3162,
+          "line_end": 3162,
+          "exact_quote": "**Stale lock recovery:** On startup (lazy), if PID dead or lock older than 5 minutes → auto-remove. The stale lock is auto-removed before new merge execution proceeds. Toast: \"Stale merge lock cleaned up.\"",
+          "source_sha256": "dbe013e75b0359ac3f4763abd6cc3756a3366b628c1ddb066c68e4ecc91e0f67"
+        }
+      ]
+    },
+    {
+      "item_id": "M159-007",
+      "item_type": "gap",
+      "title": "Main-repository dirty guard does not cover every checkout path",
+      "statement": "Execution checks main-repo dirtiness only for squash or merge with merged-result testing, yet all no-test strategies and branch-only paths can later checkout the target in the main working tree. The contract does not say how unrelated dirty files are preserved or why those paths are safe.",
+      "source_unit_refs": ["PLANUNIT:ACD-424", "SEMANTIC:PLANUNIT:ACD-424:CONT-001"],
+      "dimensions": ["invalid_states_transitions", "destructive_actions", "recovery_rollback", "test_falsifiability"],
+      "severity": "critical",
+      "gap_kind": "guard_coverage_incomplete",
+      "impact": "Target checkout can fail mid-sequence or disturb user work outside the assistant worktree, leaving the merge lock and repository in a transitional state.",
+      "builder_discretion": false,
+      "confidence": "high",
+      "evidence": [
+        {
+          "path": "Plans/assistant-chat-design.md",
+          "line_start": 3140,
+          "line_end": 3140,
+          "exact_quote": "| Main repo dirty (squash/merge + merged_result) | Block. \"Cannot run pre-merge test: main repo has uncommitted changes.\" |",
+          "source_sha256": "dbe013e75b0359ac3f4763abd6cc3756a3366b628c1ddb066c68e4ecc91e0f67"
+        },
+        {
+          "path": "Plans/assistant-chat-design.md",
+          "line_start": 3167,
+          "line_end": 3167,
+          "exact_quote": "- **Rebase:** (in worktree) \u0060git rebase {target}\u0060 → (in main repo) \u0060git checkout {target}\u0060 → \u0060git merge --ff-only {branch}\u0060",
+          "source_sha256": "dbe013e75b0359ac3f4763abd6cc3756a3366b628c1ddb066c68e4ecc91e0f67"
+        }
+      ]
+    },
+    {
+      "item_id": "M159-008",
+      "item_type": "failure_recovery",
+      "title": "PR failures preserve the pushed branch and keep the worktree bound",
+      "statement": "Push and API failures are phase-distinguished and do not open the PR panel. A successful push followed by API failure intentionally leaves the remote branch side effect and the local worktree binding in place.",
+      "source_unit_refs": ["PLANUNIT:ACD-424", "SEMANTIC:PLANUNIT:ACD-424:CONT-002"],
+      "dimensions": ["failures_recovery", "partial_failure", "observability_support", "offline_network_loss"],
+      "severity": "info",
+      "gap_kind": "none",
+      "impact": "The explicit phase event supports retry and support diagnosis without pretending the remote push was rolled back.",
+      "builder_discretion": false,
+      "confidence": "high",
+      "evidence": [
+        {
+          "path": "Plans/assistant-chat-design.md",
+          "line_start": 3206,
+          "line_end": 3206,
+          "exact_quote": "**Auto-push:** \u0060git push -u origin {branch}\u0060 before PR panel opens. Push failure → error toast, PR panel does NOT open, and Chat emits \u0060chat.thread_worktree_pr_failed\u0060 with \u0060phase=push\u0060.",
+          "source_sha256": "dbe013e75b0359ac3f4763abd6cc3756a3366b628c1ddb066c68e4ecc91e0f67"
+        },
+        {
+          "path": "Plans/assistant-chat-design.md",
+          "line_start": 3210,
+          "line_end": 3210,
+          "exact_quote": "If the PR API call fails after push, the PR panel does not open; Chat shows \"PR creation failed: {error}\" and emits \u0060chat.thread_worktree_pr_failed\u0060 with \u0060phase=api\u0060.",
+          "source_sha256": "dbe013e75b0359ac3f4763abd6cc3756a3366b628c1ddb066c68e4ecc91e0f67"
+        }
+      ]
+    },
+    {
+      "item_id": "M159-009",
+      "item_type": "gap",
+      "title": "Post-rebase test failure cannot be recovered with rebase abort",
+      "statement": "The merged-result rebase flow completes git rebase before running tests, then prescribes git rebase --abort on test failure. After a successful rebase completes there is normally no active rebase operation to abort, so the promised clean rollback is not implementable as written.",
+      "source_unit_refs": ["PLANUNIT:ACD-424", "SEMANTIC:PLANUNIT:ACD-424:CONT-002"],
+      "dimensions": ["recovery_rollback", "invalid_states_transitions", "destructive_actions", "test_falsifiability"],
+      "severity": "critical",
+      "gap_kind": "rollback_command_invalid",
+      "impact": "A failing test can leave the assistant branch rewritten despite the UI claiming cancellation or rollback, risking lost commit topology and misleading recovery status.",
+      "builder_discretion": false,
+      "confidence": "high",
+      "evidence": [
+        {
+          "path": "Plans/assistant-chat-design.md",
+          "line_start": 3270,
+          "line_end": 3270,
+          "exact_quote": "| **Rebase** | (worktree) \u0060git rebase {target}\u0060 → **run tests** against the post-rebase worktree state → pass: (main) \u0060git checkout {target}\u0060 → \u0060git merge --ff-only {branch}\u0060 / fail: \u0060git rebase --abort\u0060 |",
+          "source_sha256": "dbe013e75b0359ac3f4763abd6cc3756a3366b628c1ddb066c68e4ecc91e0f67"
+        },
+        {
+          "path": "Plans/assistant-chat-design.md",
+          "line_start": 3287,
+          "line_end": 3287,
+          "exact_quote": "Clean abort paths keep the repo out of a half-committed state: Squash cleanup uses \u0060git reset --hard HEAD\u0060, Merge cleanup uses \u0060git merge --abort\u0060, and Rebase cleanup uses \u0060git rebase --abort\u0060.",
+          "source_sha256": "dbe013e75b0359ac3f4763abd6cc3756a3366b628c1ddb066c68e4ecc91e0f67"
+        }
+      ]
+    },
+    {
+      "item_id": "M159-010",
+      "item_type": "gap",
+      "title": "PR push can race merge because enablement omits the merge lock",
+      "statement": "Merge is disabled while the project merge lock is held, but PR is enabled without a lock condition and performs a branch push. The assigned unit does not define serialization between push, rebase, merge, rename, or branch deletion.",
+      "source_unit_refs": ["PLANUNIT:ACD-424", "SEMANTIC:PLANUNIT:ACD-424:CONT-002"],
+      "dimensions": ["concurrency_races", "authority_boundaries", "partial_failure", "operations"],
+      "severity": "high",
+      "gap_kind": "cross_operation_serialization_missing",
+      "impact": "A PR can push a moving or deleted branch while a merge or rebase is mutating it, producing an incorrect remote source or nondeterministic failure.",
+      "builder_discretion": false,
+      "confidence": "high",
+      "evidence": [
+        {
+          "path": "Plans/assistant-chat-design.md",
+          "line_start": 3337,
+          "line_end": 3338,
+          "exact_quote": "| \u0060cmd.chat.worktree.merge\u0060 | Has binding (or SC row) | No active run AND no merge lock AND not dirty AND no conflicts AND not detached HEAD |\n| \u0060cmd.chat.worktree.pr\u0060 | Has binding AND has GitHub remote | No active run AND not detached HEAD |",
+          "source_sha256": "dbe013e75b0359ac3f4763abd6cc3756a3366b628c1ddb066c68e4ecc91e0f67"
+        }
+      ]
+    },
+    {
+      "item_id": "M159-011",
+      "item_type": "explicit_non_gap",
+      "title": "Remote projects preserve remote host authority with no silent local fallback",
+      "statement": "Worktree, file, terminal, provider CLI, and chat operations remain remote-host-scoped. Offline and stale states must be disclosed, and missing remote CLIs cannot trigger silent local execution or installation.",
+      "source_unit_refs": ["PLANUNIT:ACD-424", "SEMANTIC:PLANUNIT:ACD-424:CONT-002"],
+      "dimensions": ["authority", "security_privacy", "offline_network_loss", "cross_document_seams"],
+      "severity": "info",
+      "gap_kind": "none",
+      "impact": "The boundary prevents accidental mutation of a local mirror when the user believes work is occurring on the remote host.",
+      "builder_discretion": false,
+      "confidence": "high",
+      "evidence": [
+        {
+          "path": "Plans/assistant-chat-design.md",
+          "line_start": 3375,
+          "line_end": 3375,
+          "exact_quote": "Worktree creation follows project host authority. For remote SSH projects, \u0060WorktreeManager\u0060 executes on remote host via SSH subprocess. No silent local fallback. All paths (worktree, FileSafe working_directory, terminal cwd) use remote filesystem.",
+          "source_sha256": "dbe013e75b0359ac3f4763abd6cc3756a3366b628c1ddb066c68e4ecc91e0f67"
+        },
+        {
+          "path": "Plans/assistant-chat-design.md",
+          "line_start": 3378,
+          "line_end": 3378,
+          "exact_quote": "Missing remote provider CLIs surface as degraded or unavailable provider capability: PM may probe or run configured provider CLIs on the remote host, but it MUST NOT auto-install a missing provider CLI without explicit user consent and provisioning confirmation, and it MUST NOT retarget provider execution to a local CLI as a silent fallback.",
+          "source_sha256": "dbe013e75b0359ac3f4763abd6cc3756a3366b628c1ddb066c68e4ecc91e0f67"
+        }
+      ]
+    },
+    {
+      "item_id": "M159-012",
+      "item_type": "gap",
+      "title": "Permission approval scope key is required but not defined",
+      "statement": "The text correctly forbids approval leakage across lanes, accounts, and actors, but only demands a canonical actor/account/lane scope key; it does not provide the key fields, normalization rules, lifetime, or invalidation events.",
+      "source_unit_refs": ["PLANUNIT:ACD-424", "SEMANTIC:PLANUNIT:ACD-424:CONT-002"],
+      "dimensions": ["security_privacy", "authority_boundaries", "contracts", "cross_document_seams"],
+      "severity": "critical",
+      "gap_kind": "authorization_scope_contract_missing",
+      "impact": "Implementations can accidentally reuse an always or session approval under a different account, lane, or runtime actor.",
+      "builder_discretion": false,
+      "confidence": "high",
+      "evidence": [
+        {
+          "path": "Plans/assistant-chat-design.md",
+          "line_start": 3482,
+          "line_end": 3482,
+          "exact_quote": "Permission approval state must not leak across lanes, accounts, or shared-runtime actors just because they share a UI session. \u0060always\u0060, reject-cascade, and doom-loop behavior require a canonical actor/account/lane scope key; \u0060Permissions_System.md\u0060 / \u0060Permissions_System\u0060 default-deny hints for \u0060todoread\u0060 and \u0060todowrite\u0060 must narrow by execution-entity, actor-scoped context, and \u0060/member/lane/account-bounded\u0060 permissions.",
+          "source_sha256": "dbe013e75b0359ac3f4763abd6cc3756a3366b628c1ddb066c68e4ecc91e0f67"
+        }
+      ]
+    },
+    {
+      "item_id": "M159-013",
+      "item_type": "gap",
+      "title": "Worker handoff persistence and delivery remain explicitly unresolved",
+      "statement": "The unit says retry memory and handoff are structured records, then states that the design still must choose JSONL versus redb ownership, concrete path or delivery domain, and bounded-packet delivery. Those are build-blocking contracts, not builder discretion.",
+      "source_unit_refs": ["PLANUNIT:ACD-424", "SEMANTIC:PLANUNIT:ACD-424:CONT-002"],
+      "dimensions": ["inputs_outputs", "contracts", "ownership", "missing_callers_consumers", "operations"],
+      "severity": "high",
+      "gap_kind": "storage_delivery_owner_missing",
+      "impact": "Workers cannot reliably receive, resume, or audit the intended bounded context without parallel incompatible record formats.",
+      "builder_discretion": false,
+      "confidence": "high",
+      "evidence": [
+        {
+          "path": "Plans/assistant-chat-design.md",
+          "line_start": 3484,
+          "line_end": 3484,
+          "exact_quote": "Worker-facing handoff and \u0060/retry\u0060 memory are project-scoped structured runtime records, not vague \"JSON-like\" logs. The design must say whether the backing records/projections are \u0060/JSONL/redb-backed\u0060, which concrete \u0060/path/delivery\u0060 or storage domain owns them, and how a worker receives the bounded packet, while keeping \u0060/projections\u0060 and worker-facing handoff separate from full raw history.",
+          "source_sha256": "dbe013e75b0359ac3f4763abd6cc3756a3366b628c1ddb066c68e4ecc91e0f67"
+        }
+      ]
+    },
+    {
+      "item_id": "M159-014",
+      "item_type": "compatibility_migration",
+      "title": "Retired bridge lineage is separated from live assistant-chat authority",
+      "statement": "ACD-001 is retained solely for migration lineage and cannot re-own atomized product coverage. ACD-002 owns the shared chat UX and source-authority anchors while preserving original prose for exact audit.",
+      "source_unit_refs": ["PLANUNIT:ACD-001", "SEMANTIC:PLANUNIT:ACD-001", "PLANUNIT:ACD-002", "SEMANTIC:PLANUNIT:ACD-002"],
+      "dimensions": ["compatibility_migration", "ownership", "authority", "acceptance_oracles"],
+      "severity": "info",
+      "gap_kind": "none",
+      "impact": "Migration history remains auditable without allowing a retired umbrella unit to masquerade as implementation-ready coverage.",
+      "builder_discretion": false,
+      "confidence": "high",
+      "evidence": [
+        {
+          "path": "Plans/assistant-chat-design.md",
+          "line_start": 3512,
+          "line_end": 3516,
+          "exact_quote": "  The former doc-level source-preserving bridge is retired in place after\n  Phase 2B atomized assistant-chat-design-S0001 through\n  assistant-chat-design-S0182 into ACD-002 through ACD-412. ACD-001 remains\n  only as migration lineage for the retired bridge span and must not re-own\n  atomized source coverage.",
+          "source_sha256": "dbe013e75b0359ac3f4763abd6cc3756a3366b628c1ddb066c68e4ecc91e0f67"
+        },
+        {
+          "path": "Plans/assistant-chat-design.md",
+          "line_start": 3563,
+          "line_end": 3566,
+          "exact_quote": "  Assistant Chat owns the shared Assistant/Interview chat UX, source-preserved\n  owner-section requirements, compliance posture, route-payload boundary\n  headings, change history, executive role, and table-of-contents anchors for\n  this Phase 2B window. Original source prose remains in place for exact audit.",
+          "source_sha256": "dbe013e75b0359ac3f4763abd6cc3756a3366b628c1ddb066c68e4ecc91e0f67"
+        }
+      ]
+    },
+    {
+      "item_id": "M159-015",
+      "item_type": "gap",
+      "title": "Blocked-notice action field has two spellings without normalization",
+      "statement": "The blocked packet names both allowed_action_ids[] and allowed_action_ids but does not distinguish schema notation from separate fields or define normalization. Ordering is required, so ambiguous decoding can change the recovery action shown.",
+      "source_unit_refs": ["PLANUNIT:ACD-424", "SEMANTIC:PLANUNIT:ACD-424:CONT-002"],
+      "dimensions": ["contracts", "inputs_outputs", "gui_misleading_states", "compatibility_migration"],
+      "severity": "medium",
+      "gap_kind": "field_alias_normalization_missing",
+      "impact": "Producers and renderers can disagree about where allowed recovery actions live, yielding empty or reordered blocked-state controls.",
+      "builder_discretion": false,
+      "confidence": "medium",
+      "evidence": [
+        {
+          "path": "Plans/assistant-chat-design.md",
+          "line_start": 3462,
+          "line_end": 3462,
+          "exact_quote": "\u0060blocked_notice\u0060 packets include the blocked reason, detail ref, \u0060/attempt\u0060 and node references when applicable, preserved-local-work summary, and ordered \u0060allowed_action_ids[]\u0060 / \u0060allowed_action_ids\u0060 action rendering. \u0060wizard.blocked\u0060 and \u0060node.blocked\u0060 consume the same stronger blocked taxonomy; any older \u0060pre-runtime-escalation\u0060 wizard shape is compatibility evidence, not a separate live state.",
+          "source_sha256": "dbe013e75b0359ac3f4763abd6cc3756a3366b628c1ddb066c68e4ecc91e0f67"
+        }
+      ]
+    },
+    {
+      "item_id": "M159-016",
+      "item_type": "feature",
+      "title": "Requested and effective provider identity remains concrete",
+      "statement": "The rewrite chat surface must display requested and effective runtime identity while consuming the existing provider and auth field set. Gemini Direct, Antigravity, and retired Gemini CLI lineage may not collapse into one generic badge.",
+      "source_unit_refs": ["PLANUNIT:ACD-003", "SEMANTIC:PLANUNIT:ACD-003"],
+      "dimensions": ["behavior", "gui_truth", "contracts", "compatibility_migration"],
+      "severity": "info",
+      "gap_kind": "none",
+      "impact": "Users can tell which provider and auth route actually executed a turn.",
+      "builder_discretion": false,
+      "confidence": "high",
+      "evidence": [
+        {
+          "path": "Plans/assistant-chat-design.md",
+          "line_start": 3620,
+          "line_end": 3621,
+          "exact_quote": "  - Assistant Chat displays concrete requested/effective provider identity instead of collapsing Gemini Direct, Antigravity, or retired Gemini CLI lineage into one generic badge.\n  - Assistant Chat consumes shared provider/auth fields and does not invent a parallel field set.",
+          "source_sha256": "dbe013e75b0359ac3f4763abd6cc3756a3366b628c1ddb066c68e4ecc91e0f67"
+        }
+      ]
+    },
+    {
+      "item_id": "M159-017",
+      "item_type": "gap",
+      "title": "Workflow-to-run-envelope normalization lacks a complete mapping",
+      "statement": "The UI closes workflow identity to Ask, Agent, Debug, Plan, and Deep Plan while saying only runtime posture normalizes to the run-envelope mode. No table maps every workflow and approval state to legal regular, yolo, or plan envelopes, including resumed and failed flows.",
+      "source_unit_refs": ["PLANUNIT:ACD-004", "SEMANTIC:PLANUNIT:ACD-004", "PLANUNIT:ACD-008", "SEMANTIC:PLANUNIT:ACD-008"],
+      "dimensions": ["states_transitions", "contracts", "invalid_states_transitions", "ambiguity_unknowns"],
+      "severity": "high",
+      "gap_kind": "normalization_table_missing",
+      "impact": "Different callers can mint inconsistent run envelopes for the same visible workflow, especially Debug and Deep Plan.",
+      "builder_discretion": false,
+      "confidence": "high",
+      "evidence": [
+        {
+          "path": "Plans/assistant-chat-design.md",
+          "line_start": 3663,
+          "line_end": 3666,
+          "exact_quote": "  Assistant exposes stable Ask, Agent, Debug, Plan, and Deep Plan choices.\n  Specialized Interview, BrainStorm, and Crew workflows remain overlays or\n  routed flows that normalize through the shared requested/effective runtime\n  and overlay model.",
+          "source_sha256": "dbe013e75b0359ac3f4763abd6cc3756a3366b628c1ddb066c68e4ecc91e0f67"
+        },
+        {
+          "path": "Plans/assistant-chat-design.md",
+          "line_start": 3854,
+          "line_end": 3856,
+          "exact_quote": "  Assistant workflow identity is closed to ask, agent, debug, plan, and\n  deep_plan. Only runtime posture normalizes to the run-envelope mode, and\n  project-scoped capabilities require a selected project.",
+          "source_sha256": "dbe013e75b0359ac3f4763abd6cc3756a3366b628c1ddb066c68e4ecc91e0f67"
+        }
+      ]
+    },
+    {
+      "item_id": "M159-018",
+      "item_type": "authority",
+      "title": "Plan and Deep Plan cannot mutate project files before approval",
+      "statement": "Planning runs are read-only with respect to project files. Approved execution must start under regular or yolo and reuse the approved plan or TODO state; queueing cannot convert the planning run itself into execution.",
+      "source_unit_refs": ["PLANUNIT:ACD-005", "SEMANTIC:PLANUNIT:ACD-005"],
+      "dimensions": ["authority", "authority_boundaries", "destructive_actions", "states_transitions"],
+      "severity": "info",
+      "gap_kind": "none",
+      "impact": "The rule keeps plan review meaningful and prevents approval bypass through queue semantics.",
+      "builder_discretion": false,
+      "confidence": "high",
+      "evidence": [
+        {
+          "path": "Plans/assistant-chat-design.md",
+          "line_start": 3714,
+          "line_end": 3716,
+          "exact_quote": "  Plan and Deep Plan are read-only planning runs. Execution requires approval\n  and then runs under regular or yolo, never under plan; queueing applies only\n  to post-approval execution.",
+          "source_sha256": "dbe013e75b0359ac3f4763abd6cc3756a3366b628c1ddb066c68e4ecc91e0f67"
+        }
+      ]
+    },
+    {
+      "item_id": "M159-019",
+      "item_type": "gap",
+      "title": "Debug revalidation phases lack executable transition and evidence schemas",
+      "statement": "Debug is an execution-capable overlay with named phases and mandatory drift revalidation, but the unit supplies no closed enum, transition guards, drift detector inputs, evidence record shape, retry path, or cleanup failure recovery.",
+      "source_unit_refs": ["PLANUNIT:ACD-006", "SEMANTIC:PLANUNIT:ACD-006", "PLANUNIT:ACD-007", "SEMANTIC:PLANUNIT:ACD-007"],
+      "dimensions": ["states_transitions", "failures_recovery", "contracts", "acceptance_oracles", "observability_support"],
+      "severity": "high",
+      "gap_kind": "state_machine_contract_incomplete",
+      "impact": "Builders cannot consistently determine when mutation is legal, when evidence is stale, or when a run is resolved versus failed_cleanup.",
+      "builder_discretion": false,
+      "confidence": "high",
+      "evidence": [
+        {
+          "path": "Plans/assistant-chat-design.md",
+          "line_start": 3805,
+          "line_end": 3807,
+          "exact_quote": "  Debug investigations follow closed phases from target_binding through cleanup.\n  Drift triggers explicit revalidation, verification is mandatory, and cleanup\n  is the terminal mutation-capable phase unless preservation is explicit.",
+          "source_sha256": "dbe013e75b0359ac3f4763abd6cc3756a3366b628c1ddb066c68e4ecc91e0f67"
+        },
+        {
+          "path": "Plans/assistant-chat-design.md",
+          "line_start": 3813,
+          "line_end": 3814,
+          "exact_quote": "  - Target, runtime, worktree, auth, instrumentation, and evidence drift trigger explicit revalidation before mutation-capable steps continue.\n  - A fix attempt without recorded verification remains attention_required or failed_cleanup, not resolved.",
+          "source_sha256": "dbe013e75b0359ac3f4763abd6cc3756a3366b628c1ddb066c68e4ecc91e0f67"
+        }
+      ]
+    },
+    {
+      "item_id": "M159-020",
+      "item_type": "behavior",
+      "title": "Header selection changes are next-turn state",
+      "statement": "Platform, model, effort, and worktree controls are visible in the header, sourced from account-bound registries and capability resolution, and apply only to the next turn while an in-flight response retains its frozen choice.",
+      "source_unit_refs": ["PLANUNIT:ACD-009", "SEMANTIC:PLANUNIT:ACD-009"],
+      "dimensions": ["behavior", "consumers", "states_transitions", "gui_truth", "concurrency_races"],
+      "severity": "info",
+      "gap_kind": "none",
+      "impact": "The next-turn rule avoids a mixed-identity streaming response.",
+      "builder_discretion": false,
+      "confidence": "high",
+      "evidence": [
+        {
+          "path": "Plans/assistant-chat-design.md",
+          "line_start": 3901,
+          "line_end": 3903,
+          "exact_quote": "  The chat header exposes platform, model, reasoning/effort, and worktree\n  controls. Selections apply to the next turn and do not interrupt a streaming\n  response.",
+          "source_sha256": "dbe013e75b0359ac3f4763abd6cc3756a3366b628c1ddb066c68e4ecc91e0f67"
+        }
+      ]
+    },
+    {
+      "item_id": "M159-021",
+      "item_type": "explicit_non_gap",
+      "title": "Chat and app ELI5 controls have independent scope",
+      "statement": "Chat ELI5 affects assistant behavior only; app-level ELI5 affects authored tooltips and interviewer answers. Neither changes generated technical documentation.",
+      "source_unit_refs": ["PLANUNIT:ACD-010", "SEMANTIC:PLANUNIT:ACD-010"],
+      "dimensions": ["behavior", "gui_truth", "localization", "contracts"],
+      "severity": "info",
+      "gap_kind": "none",
+      "impact": "The split prevents simplified conversational copy from silently altering durable technical artifacts.",
+      "builder_discretion": false,
+      "confidence": "high",
+      "evidence": [
+        {
+          "path": "Plans/assistant-chat-design.md",
+          "line_start": 3959,
+          "line_end": 3960,
+          "exact_quote": "  - Chat ELI5 affects Assistant chat behavior only and is not passed into generated interview documentation prompts.\n  - App-level ELI5 affects tooltips and interviewer Q&A responses without changing generated documentation.",
+          "source_sha256": "dbe013e75b0359ac3f4763abd6cc3756a3366b628c1ddb066c68e4ecc91e0f67"
+        }
+      ]
+    },
+    {
+      "item_id": "M159-022",
+      "item_type": "authority",
+      "title": "Regular permission posture delegates durable defaults to Permissions System",
+      "statement": "Regular mode exposes deny, once, session, and always approval choices, while durable approval defaults remain owned by Permissions System rather than Chat.",
+      "source_unit_refs": ["PLANUNIT:ACD-011", "SEMANTIC:PLANUNIT:ACD-011"],
+      "dimensions": ["authority", "ownership", "gui_truth", "security_privacy"],
+      "severity": "info",
+      "gap_kind": "none",
+      "impact": "The owner boundary avoids a second chat-local approval policy store.",
+      "builder_discretion": false,
+      "confidence": "high",
+      "evidence": [
+        {
+          "path": "Plans/assistant-chat-design.md",
+          "line_start": 3998,
+          "line_end": 4000,
+          "exact_quote": "  Chat supports YOLO and Regular permission postures. Regular uses the\n  canonical deny, once, for session, and always approval ladder, while durable\n  approval defaults remain owned by Permissions_System.",
+          "source_sha256": "dbe013e75b0359ac3f4763abd6cc3756a3366b628c1ddb066c68e4ecc91e0f67"
+        }
+      ]
+    },
+    {
+      "item_id": "M159-023",
+      "item_type": "gap",
+      "title": "Message rewrite and bounded queue interactions are under-specified",
+      "statement": "The unit fixes FIFO capacity at two and scopes Stop, Edit, and Resend to the latest user message, but does not define the third-send result, whether queued messages count as later history, how edit or resend transforms them, or what confirmation protects discarded work.",
+      "source_unit_refs": ["PLANUNIT:ACD-012", "SEMANTIC:PLANUNIT:ACD-012"],
+      "dimensions": ["states_transitions", "destructive_actions", "invalid_states_transitions", "gui_truth", "failures_recovery"],
+      "severity": "high",
+      "gap_kind": "queue_rewrite_state_machine_missing",
+      "impact": "Equivalent UI actions can drop or reorder queued intent differently and erase generated work without a falsifiable oracle.",
+      "builder_discretion": false,
+      "confidence": "high",
+      "evidence": [
+        {
+          "path": "Plans/assistant-chat-design.md",
+          "line_start": 4043,
+          "line_end": 4045,
+          "exact_quote": "  Stop, Edit, and Resend scope to the most recent user message. Copy controls\n  stay visible, the queue is FIFO with max 2 entries, queue state is transient,\n  and delete/rewrite shorthand labels remain retired.",
+          "source_sha256": "dbe013e75b0359ac3f4763abd6cc3756a3366b628c1ddb066c68e4ecc91e0f67"
+        },
+        {
+          "path": "Plans/assistant-chat-design.md",
+          "line_start": 4051,
+          "line_end": 4051,
+          "exact_quote": "  - Stop, Edit, and Resend attach only to the most recent user-sent message and discard later generated history/work where specified.",
+          "source_sha256": "dbe013e75b0359ac3f4763abd6cc3756a3366b628c1ddb066c68e4ecc91e0f67"
+        }
+      ]
+    },
+    {
+      "item_id": "M159-024",
+      "item_type": "gui",
+      "title": "Footer files-touched display is a projection, not a second status model",
+      "statement": "The footer combines send/stop, queue affordance, latest-message actions, and compact files-touched rows synchronized with operation cards; transient queue text does not restore after reload.",
+      "source_unit_refs": ["PLANUNIT:ACD-013", "SEMANTIC:PLANUNIT:ACD-013"],
+      "dimensions": ["gui_truth", "consumers", "propagation", "compatibility_migration"],
+      "severity": "info",
+      "gap_kind": "none",
+      "impact": "A single operation-card status source prevents contradictory edit summaries.",
+      "builder_discretion": false,
+      "confidence": "high",
+      "evidence": [
+        {
+          "path": "Plans/assistant-chat-design.md",
+          "line_start": 4094,
+          "line_end": 4096,
+          "exact_quote": "  The chat footer owns the send/stop morph, queued-message affordance,\n  latest-message actions, and compact files-touched projections synchronized\n  with operation cards.",
+          "source_sha256": "dbe013e75b0359ac3f4763abd6cc3756a3366b628c1ddb066c68e4ecc91e0f67"
+        }
+      ]
+    },
+    {
+      "item_id": "M159-025",
+      "item_type": "explicit_non_gap",
+      "title": "Built-in commands cannot be overridden by retired aliases or user commands",
+      "statement": "Reserved commands remain canonical and non-overridable. Retired aliases are compatibility lineage and cannot suppress active dispatch.",
+      "source_unit_refs": ["PLANUNIT:ACD-014", "SEMANTIC:PLANUNIT:ACD-014"],
+      "dimensions": ["authority_boundaries", "compatibility_migration", "contracts"],
+      "severity": "info",
+      "gap_kind": "none",
+      "impact": "Command authority remains deterministic across upgrades and custom command installation.",
+      "builder_discretion": false,
+      "confidence": "high",
+      "evidence": [
+        {
+          "path": "Plans/assistant-chat-design.md",
+          "line_start": 4136,
+          "line_end": 4138,
+          "exact_quote": "  Reserved slash commands are canonical and non-overridable. Deprecated and\n  retired aliases remain visibly distinct and cannot suppress active command\n  canon.",
+          "source_sha256": "dbe013e75b0359ac3f4763abd6cc3756a3366b628c1ddb066c68e4ecc91e0f67"
+        }
+      ]
+    },
+    {
+      "item_id": "M159-026",
+      "item_type": "gap",
+      "title": "Web URL normalization has no untrusted-network safety contract",
+      "statement": "ACD-015 promises URL normalization and capability disclosure but, within the complete assigned unit, defines no scheme allowlist, localhost or private-network policy, redirect bound, response-size limit, download handling, or credential-forwarding rule.",
+      "source_unit_refs": ["PLANUNIT:ACD-015", "SEMANTIC:PLANUNIT:ACD-015"],
+      "dimensions": ["untrusted_inputs", "security_privacy", "scale_limits", "offline_network_loss", "test_falsifiability"],
+      "severity": "high",
+      "gap_kind": "web_input_safety_contract_missing",
+      "impact": "A conforming implementation could expose local services, follow hostile redirects, or exhaust memory while still claiming URL normalization compliance.",
+      "builder_discretion": false,
+      "confidence": "high",
+      "evidence": [
+        {
+          "path": "Plans/assistant-chat-design.md",
+          "line_start": 4192,
+          "line_end": 4194,
+          "exact_quote": "  /web stays one command family with explicit subcommands, stable command IDs,\n  help-only bare behavior, capability disclosure, normalized schemas, URL\n  normalization, and source-obligation carry-through.",
+          "source_sha256": "dbe013e75b0359ac3f4763abd6cc3756a3366b628c1ddb066c68e4ecc91e0f67"
+        }
+      ]
+    },
+    {
+      "item_id": "M159-027",
+      "item_type": "behavior",
+      "title": "Skill discovery routes converge on one invocation path",
+      "statement": "The GUI panel, slash command, and natural language all converge on invoke_skill. Bare /skill lists skills, and the MVP does not create a second subcommand dispatcher.",
+      "source_unit_refs": ["PLANUNIT:ACD-016", "SEMANTIC:PLANUNIT:ACD-016"],
+      "dimensions": ["behavior", "capabilities", "missing_callers_consumers", "gui_truth"],
+      "severity": "info",
+      "gap_kind": "none",
+      "impact": "Invocation behavior stays consistent regardless of discovery surface.",
+      "builder_discretion": false,
+      "confidence": "high",
+      "evidence": [
+        {
+          "path": "Plans/assistant-chat-design.md",
+          "line_start": 4246,
+          "line_end": 4248,
+          "exact_quote": "  Skill discovery and invocation are locked to the GUI panel, /skill, and\n  natural language, all converging on invoke_skill without an MVP subcommand\n  family.",
+          "source_sha256": "dbe013e75b0359ac3f4763abd6cc3756a3366b628c1ddb066c68e4ecc91e0f67"
+        }
+      ]
+    },
+    {
+      "item_id": "M159-028",
+      "item_type": "authority",
+      "title": "Git, GitHub, and custom-command authority boundaries are explicit",
+      "statement": "Local repository requests stay in source-control commands, hosted requests stay in GitHub commands, and cross-domain handoffs preserve repo, worktree, and compare identity. User commands may complement but never replace PM-native built-ins.",
+      "source_unit_refs": ["PLANUNIT:ACD-017", "SEMANTIC:PLANUNIT:ACD-017", "PLANUNIT:ACD-018", "SEMANTIC:PLANUNIT:ACD-018"],
+      "dimensions": ["authority_boundaries", "propagation", "cross_document_seams", "compatibility_migration"],
+      "severity": "info",
+      "gap_kind": "none",
+      "impact": "The assistant cannot silently reinterpret a local Git request as a hosted GitHub action.",
+      "builder_discretion": false,
+      "confidence": "high",
+      "evidence": [
+        {
+          "path": "Plans/assistant-chat-design.md",
+          "line_start": 4292,
+          "line_end": 4294,
+          "exact_quote": "  /git and local repository requests route to source-control commands. /github\n  and hosted-repo requests route to GitHub commands. Cross-domain flows disclose\n  the boundary and preserve repo, worktree, and compare handoff identity.",
+          "source_sha256": "dbe013e75b0359ac3f4763abd6cc3756a3366b628c1ddb066c68e4ecc91e0f67"
+        },
+        {
+          "path": "Plans/assistant-chat-design.md",
+          "line_start": 4336,
+          "line_end": 4336,
+          "exact_quote": "canonical_text: User Commands may complement built-ins, but they cannot replace or suppress the canonical Assistant Chat command set. PM-native Ask and Plan behavior remains authoritative even when upstream reference products handle modes or permissions differently.",
+          "source_sha256": "dbe013e75b0359ac3f4763abd6cc3756a3366b628c1ddb066c68e4ecc91e0f67"
+        }
+      ]
+    },
+    {
+      "item_id": "M159-029",
+      "item_type": "contract",
+      "title": "All web intent callers share dispatch and reading is not search",
+      "statement": "Slash, palette, natural language, assistant, subagent, Goal Runtime, PRD Builder, and Planning Wizard calls use one dispatcher. Site or page reading resolves to webfetch rather than websearch.",
+      "source_unit_refs": ["PLANUNIT:ACD-019", "SEMANTIC:PLANUNIT:ACD-019"],
+      "dimensions": ["contracts", "missing_callers_consumers", "behavior", "acceptance_oracles"],
+      "severity": "info",
+      "gap_kind": "none",
+      "impact": "Caller parity prevents identical intent from producing different tools and provenance.",
+      "builder_discretion": false,
+      "confidence": "high",
+      "evidence": [
+        {
+          "path": "Plans/assistant-chat-design.md",
+          "line_start": 4377,
+          "line_end": 4377,
+          "exact_quote": "canonical_text: Slash, palette, natural-language, assistant-initiated, subagent, Goal Runtime, PRD Builder, and Planning Wizard web intents use the same dispatcher. Site or page reading intents route to webfetch rather than websearch or provider extract.",
+          "source_sha256": "dbe013e75b0359ac3f4763abd6cc3756a3366b628c1ddb066c68e4ecc91e0f67"
+        }
+      ]
+    },
+    {
+      "item_id": "M159-030",
+      "item_type": "contract",
+      "title": "Teach requires confirmation and explicit durable scope",
+      "statement": "Teach is a capture workflow, not a mode. Storage requires explicit user confirmation, and each record declares thread, project, or user scope with identity, provenance, capture, supersession, and revocation metadata.",
+      "source_unit_refs": ["PLANUNIT:ACD-020", "SEMANTIC:PLANUNIT:ACD-020", "PLANUNIT:ACD-021", "SEMANTIC:PLANUNIT:ACD-021"],
+      "dimensions": ["authority", "privacy_data_lifecycle", "inputs_outputs", "contracts"],
+      "severity": "info",
+      "gap_kind": "none",
+      "impact": "Durable memory cannot be silently created or stored without a declared scope.",
+      "builder_discretion": false,
+      "confidence": "high",
+      "evidence": [
+        {
+          "path": "Plans/assistant-chat-design.md",
+          "line_start": 4423,
+          "line_end": 4423,
+          "exact_quote": "canonical_text: Teach is an explicit capture workflow for durable codebase knowledge, user preferences, and workflow constraints. It uses user-locked records and requires explicit user confirmation before storage; it is not a separate closed mode_overlay.",
+          "source_sha256": "dbe013e75b0359ac3f4763abd6cc3756a3366b628c1ddb066c68e4ecc91e0f67"
+        },
+        {
+          "path": "Plans/assistant-chat-design.md",
+          "line_start": 4467,
+          "line_end": 4467,
+          "exact_quote": "canonical_text: Every Teach record declares thread, project, or user scope before commit and stores the required durable memory fields, including identity, provenance, capture time, normalized fact, supersession, and revocation metadata.",
+          "source_sha256": "dbe013e75b0359ac3f4763abd6cc3756a3366b628c1ddb066c68e4ecc91e0f67"
+        }
+      ]
+    },
+    {
+      "item_id": "M159-031",
+      "item_type": "gap",
+      "title": "Teach secret exclusion lacks detection and erasure oracles",
+      "statement": "The unit prohibits persisting credentials and exposes revocation, but does not specify secret classification, redaction before logging, false-positive handling, encryption, retention, physical deletion, backup propagation, or proof that revoked content no longer enters prompts.",
+      "source_unit_refs": ["PLANUNIT:ACD-022", "SEMANTIC:PLANUNIT:ACD-022"],
+      "dimensions": ["security_privacy", "privacy_data_lifecycle", "acceptance_oracles", "propagation", "recovery_rollback"],
+      "severity": "critical",
+      "gap_kind": "memory_data_lifecycle_incomplete",
+      "impact": "Secrets can be stored despite the prohibition, and revocation may only hide a record while copies continue in prompts, projections, logs, or backups.",
+      "builder_discretion": false,
+      "confidence": "high",
+      "evidence": [
+        {
+          "path": "Plans/assistant-chat-design.md",
+          "line_start": 4515,
+          "line_end": 4515,
+          "exact_quote": "canonical_text: Teach retrieval, disclosure, conflict handling, inspection, narrowing, supersession, revocation, and secret exclusion are auditable safety rules. Taught knowledge enters prompts as explicit memory/context rather than undocumented hidden prompt mutation.",
+          "source_sha256": "dbe013e75b0359ac3f4763abd6cc3756a3366b628c1ddb066c68e4ecc91e0f67"
+        },
+        {
+          "path": "Plans/assistant-chat-design.md",
+          "line_start": 4523,
+          "line_end": 4523,
+          "exact_quote": "  - Teach does not persist secrets, tokens, passwords, or other credentials.",
+          "source_sha256": "dbe013e75b0359ac3f4763abd6cc3756a3366b628c1ddb066c68e4ecc91e0f67"
+        }
+      ]
+    },
+    {
+      "item_id": "M159-032",
+      "item_type": "unknown",
+      "title": "Teach scope precedence and concurrent conflict resolution are unknown",
+      "statement": "Thread, project, and user scopes plus supersession are named, but no deterministic precedence rule covers simultaneous records, divergent multi-window updates, cross-scope contradictions, or revoked records referenced by a newer record.",
+      "source_unit_refs": ["PLANUNIT:ACD-021", "SEMANTIC:PLANUNIT:ACD-021", "PLANUNIT:ACD-022", "SEMANTIC:PLANUNIT:ACD-022"],
+      "dimensions": ["ambiguity_unknowns", "concurrency_races", "states_transitions", "privacy_data_lifecycle"],
+      "severity": "high",
+      "gap_kind": "memory_precedence_unknown",
+      "impact": "The effective prompt can vary by traversal order, making user corrections non-deterministic and difficult to audit.",
+      "builder_discretion": false,
+      "confidence": "high",
+      "evidence": [
+        {
+          "path": "Plans/assistant-chat-design.md",
+          "line_start": 4473,
+          "line_end": 4474,
+          "exact_quote": "  - Each taught item declares thread, project, or user scope before commit.\n  - Persisted Teach records store the required minimum identity, provenance, normalized_fact, supersession, and revocation fields.",
+          "source_sha256": "dbe013e75b0359ac3f4763abd6cc3756a3366b628c1ddb066c68e4ecc91e0f67"
+        },
+        {
+          "path": "Plans/assistant-chat-design.md",
+          "line_start": 4521,
+          "line_end": 4522,
+          "exact_quote": "  - Conflicting teachings record supersession or revocation rather than silently overwriting prior knowledge.\n  - Users can inspect, narrow, supersede, or revoke taught knowledge later.",
+          "source_sha256": "dbe013e75b0359ac3f4763abd6cc3756a3366b628c1ddb066c68e4ecc91e0f67"
+        }
+      ]
+    },
+    {
+      "item_id": "M159-033",
+      "item_type": "gap",
+      "title": "Attachment schema omits storage, safety, and lifecycle limits",
+      "statement": "Attachments preserve provenance and minimum display fields, but the assigned units define no content hash, size ceiling, storage authority, retention and deletion behavior, missing-source state, malware or active-content handling, upload cancellation, or offline retry semantics.",
+      "source_unit_refs": ["PLANUNIT:ACD-023", "SEMANTIC:PLANUNIT:ACD-023", "PLANUNIT:ACD-024", "SEMANTIC:PLANUNIT:ACD-024"],
+      "dimensions": ["inputs_outputs", "untrusted_inputs", "privacy_data_lifecycle", "scale_limits", "failures_recovery"],
+      "severity": "high",
+      "gap_kind": "attachment_lifecycle_contract_missing",
+      "impact": "Large or hostile attachments can exhaust resources or outlive the message while different stores disagree about deletion and provenance.",
+      "builder_discretion": false,
+      "confidence": "high",
+      "evidence": [
+        {
+          "path": "Plans/assistant-chat-design.md",
+          "line_start": 4556,
+          "line_end": 4556,
+          "exact_quote": "canonical_text: Assistant Chat accepts structured inputs and external capability integrations beyond plain text while preserving provenance. Attachments, web search, and extensibility surfaces do not hide origin or capability use.",
+          "source_sha256": "dbe013e75b0359ac3f4763abd6cc3756a3366b628c1ddb066c68e4ecc91e0f67"
+        },
+        {
+          "path": "Plans/assistant-chat-design.md",
+          "line_start": 4597,
+          "line_end": 4597,
+          "exact_quote": "canonical_text: Attachments persist as structured message payloads with defined attachment families and minimum fields for identity, display, source, media type, size, and preview state.",
+          "source_sha256": "dbe013e75b0359ac3f4763abd6cc3756a3366b628c1ddb066c68e4ecc91e0f67"
+        }
+      ]
+    },
+    {
+      "item_id": "M159-034",
+      "item_type": "explicit_non_gap",
+      "title": "Browser and voice capture remain visible drafts until send",
+      "statement": "Voice input becomes visible draft text, browser captures remain visible and removable chips, and selection or element-pick commands never auto-send or inject hidden context.",
+      "source_unit_refs": ["PLANUNIT:ACD-025", "SEMANTIC:PLANUNIT:ACD-025"],
+      "dimensions": ["gui_truth", "security_privacy", "authority", "inputs_outputs"],
+      "severity": "info",
+      "gap_kind": "none",
+      "impact": "Users retain control over what captured browser or voice material enters a prompt.",
+      "builder_discretion": false,
+      "confidence": "high",
+      "evidence": [
+        {
+          "path": "Plans/assistant-chat-design.md",
+          "line_start": 4644,
+          "line_end": 4644,
+          "exact_quote": "canonical_text: Composer attachments, voice drafts, browser capture chips, and browser-to-agent selection lifecycle remain visible, pending, removable, and user-triggered. Browser capture never arrives as hidden automatic context injection.",
+          "source_sha256": "dbe013e75b0359ac3f4763abd6cc3756a3366b628c1ddb066c68e4ecc91e0f67"
+        }
+      ]
+    },
+    {
+      "item_id": "M159-035",
+      "item_type": "oracle",
+      "title": "Web use must expose activity, provenance, and inability",
+      "statement": "A related turn must show web activity and source or citation disclosure, preserve fetched material separately from synthesis, and disclose provider or policy inability rather than implying web access succeeded.",
+      "source_unit_refs": ["PLANUNIT:ACD-026", "SEMANTIC:PLANUNIT:ACD-026"],
+      "dimensions": ["acceptance_oracles", "gui_truth", "observability_support", "failures_recovery"],
+      "severity": "info",
+      "gap_kind": "none",
+      "impact": "The UI gives a testable distinction between sourced retrieval, synthesis, and unavailable capability.",
+      "builder_discretion": false,
+      "confidence": "high",
+      "evidence": [
+        {
+          "path": "Plans/assistant-chat-design.md",
+          "line_start": 4700,
+          "line_end": 4702,
+          "exact_quote": "  - Web use shows explicit web activity cards and later source or citation disclosure in the related assistant turn.\n  - Fetched or extracted content preserves provenance distinct from synthesized conclusions.\n  - Provider or policy inability to use web search is disclosed instead of implied away.",
+          "source_sha256": "dbe013e75b0359ac3f4763abd6cc3756a3366b628c1ddb066c68e4ecc91e0f67"
+        }
+      ]
+    },
+    {
+      "item_id": "M159-036",
+      "item_type": "gap",
+      "title": "Question lifecycle order is not a valid transition graph",
+      "statement": "The canonical lifecycle is written as draft to incomplete to ready_to_submit to submitted to paused, while dismissal elsewhere pauses before submission. No transition table says from which states pause is legal, whether submitted is terminal, or which prior state resume restores.",
+      "source_unit_refs": ["PLANUNIT:ACD-027", "SEMANTIC:PLANUNIT:ACD-027"],
+      "dimensions": ["states_transitions", "invalid_states_transitions", "failures_recovery", "test_falsifiability"],
+      "severity": "high",
+      "gap_kind": "question_state_machine_invalid",
+      "impact": "Implementations can treat paused as post-submission, pre-submission, or both, leading to duplicate submits or lost drafts.",
+      "builder_discretion": false,
+      "confidence": "high",
+      "evidence": [
+        {
+          "path": "Plans/assistant-chat-design.md",
+          "line_start": 4739,
+          "line_end": 4739,
+          "exact_quote": "canonical_text: Question flows are PM-managed, draft-backed, resumable, and follow the canonical lifecycle draft -> incomplete -> ready_to_submit -> submitted -> paused.",
+          "source_sha256": "dbe013e75b0359ac3f4763abd6cc3756a3366b628c1ddb066c68e4ecc91e0f67"
+        }
+      ]
+    },
+    {
+      "item_id": "M159-037",
+      "item_type": "compatibility_migration",
+      "title": "Legacy question shapes normalize before storage and validation",
+      "statement": "single_question promotes into a one-item questionnaire envelope, legacy aliases normalize to canonical answer arrays and option objects, and allow_freeform replaces retired allow_other.",
+      "source_unit_refs": ["PLANUNIT:ACD-028", "SEMANTIC:PLANUNIT:ACD-028"],
+      "dimensions": ["compatibility_migration", "contracts", "inputs_outputs", "acceptance_oracles"],
+      "severity": "info",
+      "gap_kind": "none",
+      "impact": "Compatibility is confined to the boundary instead of infecting durable draft state.",
+      "builder_discretion": false,
+      "confidence": "high",
+      "evidence": [
+        {
+          "path": "Plans/assistant-chat-design.md",
+          "line_start": 4787,
+          "line_end": 4789,
+          "exact_quote": "  - single_question callers are promoted into the questionnaire envelope before processing.\n  - Legacy input and output aliases normalize into canonical answer arrays and object-array options before draft storage, validation, or final answer submission.\n  - allow_freeform is canonical and allow_other remains a retired alias.",
+          "source_sha256": "dbe013e75b0359ac3f4763abd6cc3756a3366b628c1ddb066c68e4ecc91e0f67"
+        }
+      ]
+    },
+    {
+      "item_id": "M159-038",
+      "item_type": "gap",
+      "title": "Question cards lack interaction accessibility and localization oracles",
+      "statement": "The rendering unit specifies checkbox layout, styling parity, and source context but no keyboard traversal, focus restoration, screen-reader group labeling, validation announcement, text expansion, bidirectional layout, or stable option-ID behavior across localized labels.",
+      "source_unit_refs": ["PLANUNIT:ACD-029", "SEMANTIC:PLANUNIT:ACD-029"],
+      "dimensions": ["accessibility", "localization", "gui_truth", "acceptance_oracles"],
+      "severity": "high",
+      "gap_kind": "question_ui_a11y_i18n_missing",
+      "impact": "A visually compliant card can still be unusable with assistive technology or corrupt answers when translated labels change.",
+      "builder_discretion": false,
+      "confidence": "high",
+      "evidence": [
+        {
+          "path": "Plans/assistant-chat-design.md",
+          "line_start": 4837,
+          "line_end": 4837,
+          "exact_quote": "canonical_text: Question-card rendering supports visible options, freeform or Other paths, multi-select checkbox layouts, shared question-card styling across Assistant and document-building flows, and optional source-text-first visual context.",
+          "source_sha256": "dbe013e75b0359ac3f4763abd6cc3756a3366b628c1ddb066c68e4ecc91e0f67"
+        }
+      ]
+    },
+    {
+      "item_id": "M159-039",
+      "item_type": "gap",
+      "title": "Dismiss is behaviorally active but marked stale or retired",
+      "statement": "ACD-030 makes dismissal a canonical pause path and preserves /dismiss, then lists /dismiss as stale_retired_terms. It does not say whether only the slash command is retired, what command replaces it, or whether dismissal remains reachable only through GUI close.",
+      "source_unit_refs": ["PLANUNIT:ACD-030", "SEMANTIC:PLANUNIT:ACD-030"],
+      "dimensions": ["compatibility_migration", "behavior", "contracts", "gui_misleading_states"],
+      "severity": "high",
+      "gap_kind": "command_disposition_contradiction",
+      "impact": "Command catalogs and GUI handlers can disagree about whether dismissal is supported, leaving an unresumable or uncloseable question flow.",
+      "builder_discretion": false,
+      "confidence": "high",
+      "evidence": [
+        {
+          "path": "Plans/assistant-chat-design.md",
+          "line_start": 4883,
+          "line_end": 4883,
+          "exact_quote": "canonical_text: Question submission and dismissal preserve submitted-versus-dismissed distinction. Dismissal pauses the flow and never fabricates partial submitted answers, auto-submits, or auto-cancels the broader thread.",
+          "source_sha256": "dbe013e75b0359ac3f4763abd6cc3756a3366b628c1ddb066c68e4ecc91e0f67"
+        },
+        {
+          "path": "Plans/assistant-chat-design.md",
+          "line_start": 4917,
+          "line_end": 4918,
+          "exact_quote": "stale_retired_terms:\n  - \"/dismiss\"",
+          "source_sha256": "dbe013e75b0359ac3f4763abd6cc3756a3366b628c1ddb066c68e4ecc91e0f67"
+        }
+      ]
+    },
+    {
+      "item_id": "M159-040",
+      "item_type": "explicit_non_gap",
+      "title": "Subagents are default-denied from direct user questioning",
+      "statement": "Subagents escalate questions to the parent orchestrator unless explicitly re-enabled by run configuration. Headless or unavailable HITL surfaces return unavailable rather than fabricating answers.",
+      "source_unit_refs": ["PLANUNIT:ACD-031", "SEMANTIC:PLANUNIT:ACD-031"],
+      "dimensions": ["authority_boundaries", "security_privacy", "failures_recovery", "missing_callers_consumers"],
+      "severity": "info",
+      "gap_kind": "none",
+      "impact": "The user-facing question surface has a single accountable owner.",
+      "builder_discretion": false,
+      "confidence": "high",
+      "evidence": [
+        {
+          "path": "Plans/assistant-chat-design.md",
+          "line_start": 4930,
+          "line_end": 4930,
+          "exact_quote": "canonical_text: Subagent question tool access is default-denied. Subagents escalate user questions to the parent orchestrator, and headless or HITL-unavailable flows return unavailable status.",
+          "source_sha256": "dbe013e75b0359ac3f4763abd6cc3756a3366b628c1ddb066c68e4ecc91e0f67"
+        }
+      ]
+    },
+    {
+      "item_id": "M159-041",
+      "item_type": "feature",
+      "title": "Plan and Deep Plan share visible normalized TODO review",
+      "statement": "Both modes project to one locked TODO model and a checklist-forward review surface with structural editing before approval and live progress tied to the same projection.",
+      "source_unit_refs": ["PLANUNIT:ACD-032", "SEMANTIC:PLANUNIT:ACD-032", "PLANUNIT:ACD-033", "SEMANTIC:PLANUNIT:ACD-033"],
+      "dimensions": ["behavior", "gui_truth", "consumers", "acceptance_oracles"],
+      "severity": "info",
+      "gap_kind": "none",
+      "impact": "Planning and execution do not hide inside an opaque loop or fork separate task representations.",
+      "builder_discretion": false,
+      "confidence": "high",
+      "evidence": [
+        {
+          "path": "Plans/assistant-chat-design.md",
+          "line_start": 4972,
+          "line_end": 4972,
+          "exact_quote": "canonical_text: Plan and Deep Plan share a normalized TODO projection, named Q&A loop, locked TODO schema, and locked status set while preserving explicit plan/checklist review before execution.",
+          "source_sha256": "dbe013e75b0359ac3f4763abd6cc3756a3366b628c1ddb066c68e4ecc91e0f67"
+        },
+        {
+          "path": "Plans/assistant-chat-design.md",
+          "line_start": 5024,
+          "line_end": 5024,
+          "exact_quote": "canonical_text: Plan review is checklist-forward and visible, with a reviewable plan artifact, normalized TODO projection, live execution progress, sticky panel, and structural controls before approval.",
+          "source_sha256": "dbe013e75b0359ac3f4763abd6cc3756a3366b628c1ddb066c68e4ecc91e0f67"
+        }
+      ]
+    },
+    {
+      "item_id": "M159-042",
+      "item_type": "gap",
+      "title": "Artifact edit, TODO revision, approval, and run start lack one transaction boundary",
+      "statement": "ACD-034 requires revisions, diff resynchronization, durable update events, and explicit replans, but does not define optimistic concurrency, revision preconditions, event ordering, or a gate preventing execution from starting against a TODO projection still being resynced.",
+      "source_unit_refs": ["PLANUNIT:ACD-034", "SEMANTIC:PLANUNIT:ACD-034"],
+      "dimensions": ["concurrency_races", "states_transitions", "partial_failure", "propagation", "test_falsifiability"],
+      "severity": "critical",
+      "gap_kind": "plan_revision_transaction_missing",
+      "impact": "A multi-window edit or late Deep Plan diff can race approval and dispatch, executing stale tasks while history claims a newer approved revision.",
+      "builder_discretion": false,
+      "confidence": "high",
+      "evidence": [
+        {
+          "path": "Plans/assistant-chat-design.md",
+          "line_start": 5066,
+          "line_end": 5066,
+          "exact_quote": "canonical_text: Plan and TODO persistence uses explicit revision states, gated structural edits, bounded history, chat.plan_todo_updated emissions, Deep Plan diff reconciliation, run-level states, and explicit replans.",
+          "source_sha256": "dbe013e75b0359ac3f4763abd6cc3756a3366b628c1ddb066c68e4ecc91e0f67"
+        }
+      ]
+    },
+    {
+      "item_id": "M159-043",
+      "item_type": "feature",
+      "title": "Plan Thoroughness is a visible three-level intensity control",
+      "statement": "Plan and Deep Plan expose Light, Balanced, and Comprehensive, default to Balanced, and use the selection to control question, local-research, web-research, risk, alternative, dependency, validation, and TODO detail.",
+      "source_unit_refs": ["PLANUNIT:ACD-035", "SEMANTIC:PLANUNIT:ACD-035", "PLANUNIT:ACD-036", "SEMANTIC:PLANUNIT:ACD-036"],
+      "dimensions": ["gui_truth", "behavior", "capabilities", "scale_performance"],
+      "severity": "info",
+      "gap_kind": "none",
+      "impact": "Users receive one stable control for planning depth while Deep Plan remains more intensive at the same setting.",
+      "builder_discretion": false,
+      "confidence": "high",
+      "evidence": [
+        {
+          "path": "Plans/assistant-chat-design.md",
+          "line_start": 5112,
+          "line_end": 5112,
+          "exact_quote": "canonical_text: Plan Thoroughness is a visible Assistant Chat GUI control for Plan and Deep Plan with the enum Light, Balanced, and Comprehensive; both Plan and Deep Plan default to Balanced.",
+          "source_sha256": "dbe013e75b0359ac3f4763abd6cc3756a3366b628c1ddb066c68e4ecc91e0f67"
+        },
+        {
+          "path": "Plans/assistant-chat-design.md",
+          "line_start": 5152,
+          "line_end": 5152,
+          "exact_quote": "canonical_text: Plan Thoroughness controls clarifying-question budget, repo research breadth, cited web research posture, risk, alternative, dependency, and validation detail, TODO detail, and relative intensity between Plan and Deep Plan.",
+          "source_sha256": "dbe013e75b0359ac3f4763abd6cc3756a3366b628c1ddb066c68e4ecc91e0f67"
+        }
+      ]
+    },
+    {
+      "item_id": "M159-044",
+      "item_type": "gap",
+      "title": "Thoroughness ceilings lack counting and exhaustion semantics",
+      "statement": "The matrix fixes numeric ceilings and source preference but does not define what consumes a question or research unit, whether parallel calls count individually, whether retries consume budget, how unused budget is surfaced, or what happens when the ceiling is reached with unresolved critical uncertainty.",
+      "source_unit_refs": ["PLANUNIT:ACD-037", "SEMANTIC:PLANUNIT:ACD-037"],
+      "dimensions": ["scale_limits", "operations", "states_transitions", "observability_support", "test_falsifiability"],
+      "severity": "high",
+      "gap_kind": "budget_accounting_contract_missing",
+      "impact": "Identical runs can exceed or prematurely stop at the same visible PT value, making the deterministic matrix unfalsifiable.",
+      "builder_discretion": false,
+      "confidence": "high",
+      "evidence": [
+        {
+          "path": "Plans/assistant-chat-design.md",
+          "line_start": 5190,
+          "line_end": 5190,
+          "exact_quote": "canonical_text: The PT budget matrix is the deterministic first-implementation ceiling/default baseline, including Plan budgets 2, 4, and 6, Deep Plan budgets 4, 6, and 8, web-research rules, and primary or official source preference for platform-capability research.",
+          "source_sha256": "dbe013e75b0359ac3f4763abd6cc3756a3366b628c1ddb066c68e4ecc91e0f67"
+        }
+      ]
+    },
+    {
+      "item_id": "M159-045",
+      "item_type": "behavior",
+      "title": "Standard Plan is read-only and its artifact opens only on demand",
+      "statement": "Standard Plan targets medium-complexity work, expects clarification, prefers repository research, and remains read-only. Its written plan and normalized TODO appear in the plan panel; editor opening is available but not automatic.",
+      "source_unit_refs": ["PLANUNIT:ACD-038", "SEMANTIC:PLANUNIT:ACD-038", "PLANUNIT:ACD-039", "SEMANTIC:PLANUNIT:ACD-039"],
+      "dimensions": ["behavior", "authority", "gui_truth", "inputs_outputs"],
+      "severity": "info",
+      "gap_kind": "none",
+      "impact": "The surface distinguishes medium planning from execution and from Deep Plan automatic artifact presentation.",
+      "builder_discretion": false,
+      "confidence": "high",
+      "evidence": [
+        {
+          "path": "Plans/assistant-chat-design.md",
+          "line_start": 5233,
+          "line_end": 5233,
+          "exact_quote": "canonical_text: Standard Plan is for medium-complexity work, asks clarifying questions, remains a read-only planning run, may use safe parallel research where allowed, and prefers repo or codebase research first.",
+          "source_sha256": "dbe013e75b0359ac3f4763abd6cc3756a3366b628c1ddb066c68e4ecc91e0f67"
+        },
+        {
+          "path": "Plans/assistant-chat-design.md",
+          "line_start": 5270,
+          "line_end": 5270,
+          "exact_quote": "canonical_text: Standard Plan shows the written plan plus normalized TODO list in the plan panel, may open the artifact in the editor on demand, and has defined minimum artifact contents.",
+          "source_sha256": "dbe013e75b0359ac3f4763abd6cc3756a3366b628c1ddb066c68e4ecc91e0f67"
+        }
+      ]
+    },
+    {
+      "item_id": "M159-046",
+      "item_type": "feature",
+      "title": "Deep Plan differs by intensity and automatically opens its artifact",
+      "statement": "Deep Plan uses more questions and broader local and web research than Standard Plan at the same PT. It emits a rich markdown document and automatically opens a preview-capable editor surface.",
+      "source_unit_refs": ["PLANUNIT:ACD-040", "SEMANTIC:PLANUNIT:ACD-040", "PLANUNIT:ACD-041", "SEMANTIC:PLANUNIT:ACD-041"],
+      "dimensions": ["behavior", "gui_truth", "capabilities", "inputs_outputs"],
+      "severity": "info",
+      "gap_kind": "none",
+      "impact": "The product has a concrete, degree-based distinction between Plan and Deep Plan.",
+      "builder_discretion": false,
+      "confidence": "high",
+      "evidence": [
+        {
+          "path": "Plans/assistant-chat-design.md",
+          "line_start": 5314,
+          "line_end": 5316,
+          "exact_quote": "  Deep Plan is for larger or higher-uncertainty work and differs from Standard\n  Plan by degree and intensity: more questions, broader local research, and\n  broader web research at the same PT.",
+          "source_sha256": "dbe013e75b0359ac3f4763abd6cc3756a3366b628c1ddb066c68e4ecc91e0f67"
+        },
+        {
+          "path": "Plans/assistant-chat-design.md",
+          "line_start": 5353,
+          "line_end": 5353,
+          "exact_quote": "canonical_text: Deep Plan produces a rich markdown planning document, automatically opens it in a preview-capable editing surface, defaults to planning_draft, and uses transient generated:// artifact buffers when not persisted.",
+          "source_sha256": "dbe013e75b0359ac3f4763abd6cc3756a3366b628c1ddb066c68e4ecc91e0f67"
+        }
+      ]
+    },
+    {
+      "item_id": "M159-047",
+      "item_type": "gap",
+      "title": "Transient generated artifacts have no persistence or crash lifecycle",
+      "statement": "ACD-041 names generated:// buffers as transient but does not define lifetime, crash or restart behavior, save-as transition, ownership, concurrent edits, close warning, garbage collection, or how TODO projections behave if the buffer disappears.",
+      "source_unit_refs": ["PLANUNIT:ACD-041", "SEMANTIC:PLANUNIT:ACD-041"],
+      "dimensions": ["privacy_data_lifecycle", "failures_recovery", "states_transitions", "concurrency_races", "gui_misleading_states"],
+      "severity": "high",
+      "gap_kind": "artifact_lifecycle_contract_missing",
+      "impact": "Users can lose a reviewed plan or execute a TODO projection whose canonical transient source no longer exists.",
+      "builder_discretion": false,
+      "confidence": "high",
+      "evidence": [
+        {
+          "path": "Plans/assistant-chat-design.md",
+          "line_start": 5359,
+          "line_end": 5361,
+          "exact_quote": "  - Deep Plan documents open automatically in a preview-capable editing surface.\n  - Non-persisted Deep Plan documents open as transient generated:// artifact buffers.\n  - Source markdown and Mermaid text remain canonical even when richly rendered.",
+          "source_sha256": "dbe013e75b0359ac3f4763abd6cc3756a3366b628c1ddb066c68e4ecc91e0f67"
+        }
+      ]
+    },
+    {
+      "item_id": "M159-048",
+      "item_type": "gap",
+      "title": "Rich Markdown and Mermaid preview lacks an untrusted-rendering boundary",
+      "statement": "The source declares Markdown and Mermaid canonical and richly rendered but provides no sanitization profile, script or link policy, external resource policy, diagram complexity limit, timeout, or fallback for malicious or pathological generated content.",
+      "source_unit_refs": ["PLANUNIT:ACD-041", "SEMANTIC:PLANUNIT:ACD-041", "PLANUNIT:ACD-042", "SEMANTIC:PLANUNIT:ACD-042"],
+      "dimensions": ["untrusted_inputs", "security_privacy", "scale_performance", "failures_recovery", "gui_truth"],
+      "severity": "high",
+      "gap_kind": "rich_rendering_safety_contract_missing",
+      "impact": "A generated plan can execute unsafe rendering behavior, fetch private resources, or freeze the preview while still preserving valid source text.",
+      "builder_discretion": false,
+      "confidence": "high",
+      "evidence": [
+        {
+          "path": "Plans/assistant-chat-design.md",
+          "line_start": 5361,
+          "line_end": 5361,
+          "exact_quote": "  - Source markdown and Mermaid text remain canonical even when richly rendered.",
+          "source_sha256": "dbe013e75b0359ac3f4763abd6cc3756a3366b628c1ddb066c68e4ecc91e0f67"
+        },
+        {
+          "path": "Plans/assistant-chat-design.md",
+          "line_start": 5396,
+          "line_end": 5396,
+          "exact_quote": "canonical_text: Deep Plan documents have locked minimum sections and allowed optional sections covering objective, scope, context, approach, questions, execution TODOs, validation, risks, alternatives, diagrams, snippets, affected areas, and rollout notes.",
+          "source_sha256": "dbe013e75b0359ac3f4763abd6cc3756a3366b628c1ddb066c68e4ecc91e0f67"
+        }
+      ]
+    },
+    {
+      "item_id": "M159-049",
+      "item_type": "oracle",
+      "title": "Deep Plan document minimums are explicit and testable",
+      "statement": "Every Deep Plan document must include the minimum sections, while optional sections remain permitted without becoming universal requirements.",
+      "source_unit_refs": ["PLANUNIT:ACD-042", "SEMANTIC:PLANUNIT:ACD-042"],
+      "dimensions": ["acceptance_oracles", "inputs_outputs", "test_falsifiability"],
+      "severity": "info",
+      "gap_kind": "none",
+      "impact": "Document completeness can be validated structurally without overrequiring optional content.",
+      "builder_discretion": false,
+      "confidence": "high",
+      "evidence": [
+        {
+          "path": "Plans/assistant-chat-design.md",
+          "line_start": 5402,
+          "line_end": 5403,
+          "exact_quote": "  - Deep Plan documents include every minimum section.\n  - Optional Deep Plan sections remain allowed without becoming required for every document.",
+          "source_sha256": "dbe013e75b0359ac3f4763abd6cc3756a3366b628c1ddb066c68e4ecc91e0f67"
+        }
+      ]
+    },
+    {
+      "item_id": "M159-050",
+      "item_type": "contract",
+      "title": "Normalized TODO schema owns canonical fields and legacy conversion",
+      "statement": "TODO items use order_index and notes, legacy payloads normalize into the assistant schema, and superseded TODO counts remain plan-level summaries rather than an active item status.",
+      "source_unit_refs": ["PLANUNIT:ACD-043", "SEMANTIC:PLANUNIT:ACD-043"],
+      "dimensions": ["contracts", "compatibility_migration", "states_transitions", "inputs_outputs"],
+      "severity": "info",
+      "gap_kind": "none",
+      "impact": "The active status enum remains closed while older payloads can be ingested deterministically.",
+      "builder_discretion": false,
+      "confidence": "high",
+      "evidence": [
+        {
+          "path": "Plans/assistant-chat-design.md",
+          "line_start": 5449,
+          "line_end": 5451,
+          "exact_quote": "  - TODO items use order_index and notes as canonical fields.\n  - Legacy TODO payloads normalize into the Assistant TODO schema.\n  - Superseded TODO N/N remains a plan-level summary and not an active item-level TODO status.",
+          "source_sha256": "dbe013e75b0359ac3f4763abd6cc3756a3366b628c1ddb066c68e4ecc91e0f67"
+        }
+      ]
+    }
+  ],
+  "synthesis": {
+    "overall_assessment": "The assigned macro window is rich in exact UX, ownership, compatibility, and acceptance behavior, but it contains several implementation-blocking concurrency, rollback, authorization-scope, data-lifecycle, and state-machine gaps.",
+    "item_count": 50,
+    "gap_item_ids": [
+      "M159-003",
+      "M159-005",
+      "M159-006",
+      "M159-007",
+      "M159-009",
+      "M159-010",
+      "M159-012",
+      "M159-013",
+      "M159-015",
+      "M159-017",
+      "M159-019",
+      "M159-023",
+      "M159-026",
+      "M159-031",
+      "M159-032",
+      "M159-033",
+      "M159-036",
+      "M159-038",
+      "M159-039",
+      "M159-042",
+      "M159-044",
+      "M159-047",
+      "M159-048"
+    ],
+    "critical_item_ids": ["M159-006", "M159-007", "M159-009", "M159-012", "M159-031", "M159-042"],
+    "highest_risk_themes": [
+      "Worktree merge locking and main-repository mutation guards can permit concurrent or destructive states.",
+      "The prescribed rebase test rollback is not executable after rebase completion.",
+      "Permission approval scope is required but lacks a canonical key contract.",
+      "Teach and attachment lifecycles lack enforceable privacy, retention, and erasure rules.",
+      "Question, debug, and plan-revision flows lack complete transition or transaction contracts."
+    ],
+    "explicit_non_gap_themes": [
+      "Provider and media capability ownership remains outside Chat.",
+      "Remote project operations prohibit silent local fallback.",
+      "Worktree status includes accessibility and stale-state disclosure.",
+      "Browser and voice capture remain visible and user-triggered.",
+      "Subagent direct questioning is default-denied.",
+      "Legacy bridge, command, question, and TODO compatibility dispositions are explicit."
+    ]
+  },
+  "self_attestation": {
+    "fresh_agent": true,
+    "canonical_task_thread_id_used": true,
+    "read_only_scope_respected": true,
+    "only_dispatch_intent_capsule_source_excerpt_and_result_schema_read": true,
+    "peer_results_read": false,
+    "prior_audits_read": false,
+    "external_research_performed": false,
+    "unrelated_sources_read": false,
+    "all_assigned_core_lines_read": true,
+    "all_required_source_unit_refs_accounted": true,
+    "exact_and_adversarial_lenses_applied": true,
+    "capsule_hash_verified": true,
+    "source_excerpt_hash_verified": true,
+    "all_segment_core_hashes_verified": true,
+    "identity_verified": true,
+    "canonical_plans_edited": false,
+    "terminal_seal_written": false,
+    "result_file_count_in_output_directory": 1
+  }
+}

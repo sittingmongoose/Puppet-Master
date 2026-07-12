@@ -1,0 +1,529 @@
+{
+  "assignment_id": "A005M15-000089-INTEGRATED-MACRO15-70745805ACEA-0001",
+  "attempt_id": "attempt-0015",
+  "audit_id": "audit-20260710-005-plan-assurance-model-lanes-fresh-agent-exhaustive",
+  "coverage": {
+    "all_micro_windows_reviewed": true,
+    "all_source_lines_reviewed": true,
+    "all_source_units_accounted": true,
+    "both_exact_and_adversarial_lenses_applied": true,
+    "dimensions_checked": [
+      "behavior",
+      "capabilities",
+      "inputs_outputs",
+      "contracts",
+      "states_transitions",
+      "authority",
+      "ownership",
+      "consumers",
+      "gui_truth",
+      "failures_recovery",
+      "security_privacy",
+      "propagation",
+      "operations",
+      "scale_performance",
+      "compatibility_migration",
+      "acceptance_oracles",
+      "builder_discretion",
+      "ambiguity_unknowns",
+      "missing_callers_consumers",
+      "invalid_states_transitions",
+      "concurrency_races",
+      "partial_failure",
+      "recovery_rollback",
+      "authority_boundaries",
+      "privacy_data_lifecycle",
+      "untrusted_inputs",
+      "gui_misleading_states",
+      "offline_network_loss",
+      "scale_limits",
+      "accessibility",
+      "localization",
+      "observability_support",
+      "destructive_actions",
+      "cross_document_seams",
+      "test_falsifiability",
+      "unknown_unknowns"
+    ]
+  },
+  "items": [
+    {
+      "builder_discretion": false,
+      "confidence": 0.99,
+      "dimensions": ["behavior", "capabilities", "inputs_outputs", "contracts", "compatibility_migration", "acceptance_oracles"],
+      "evidence": [
+        {
+          "exact_quote": "Planning Wizard accepts exactly three canonical input seed families before topic work begins: ApprovedPRDPack, normalized_requirements_pack, or assistant_chat_handoff_seed.",
+          "line_end": 30,
+          "line_start": 30,
+          "path": "Plans/Planning_Wizard.md",
+          "source_sha256": "a4f61959f82a4fcde5872a40f7d92b8172fd609257017496f8c3945dcc992686"
+        }
+      ],
+      "gap_kind": "not_applicable",
+      "impact": "Fixes the accepted intake families, provenance obligations, and retired-name boundary before any topic work begins.",
+      "item_id": "M15-001",
+      "item_type": "contract",
+      "severity": "info",
+      "source_unit_refs": ["PLANUNIT:PWIZ-001", "SEMANTIC:PROLOGUE:Plans/Planning_Wizard.md", "SEMANTIC:PLANUNIT:PWIZ-001"],
+      "statement": "Planning Wizard has exactly three structured, provenance-preserving seed families, while Chain Wizard and Plan Wizard remain retired compatibility lineage and the handoff cannot be an unbounded raw transcript.",
+      "title": "Canonical planning intake and naming boundary"
+    },
+    {
+      "builder_discretion": false,
+      "confidence": 0.98,
+      "dimensions": ["behavior", "contracts", "states_transitions", "ownership", "consumers", "propagation"],
+      "evidence": [
+        {
+          "exact_quote": "PlanningRun owns source pack identity, project and work-intent context, thread group, global planning ledger, dynamic topic map, topic threads, topic plan drafts, amendments, invalidations, audit cycles, final plan pack, status, hashes, and handoff events.",
+          "line_end": 124,
+          "line_start": 124,
+          "path": "Plans/Planning_Wizard.md",
+          "source_sha256": "a4f61959f82a4fcde5872a40f7d92b8172fd609257017496f8c3945dcc992686"
+        }
+      ],
+      "gap_kind": "not_applicable",
+      "impact": "Establishes the PlanningRun aggregate and keeps project context orthogonal to overlapping work-intent axes.",
+      "item_id": "M15-002",
+      "item_type": "feature",
+      "severity": "info",
+      "source_unit_refs": ["PLANUNIT:PWIZ-002", "SEMANTIC:PLANUNIT:PWIZ-002"],
+      "statement": "One PlanningRun groups bounded topic, integration, and audit threads while owning the durable aggregate and representing project context independently from compatible work intents.",
+      "title": "PlanningRun aggregate and bounded thread topology"
+    },
+    {
+      "builder_discretion": false,
+      "confidence": 0.98,
+      "dimensions": ["behavior", "capabilities", "states_transitions", "authority", "gui_truth", "propagation"],
+      "evidence": [
+        {
+          "exact_quote": "The controller can add, split, merge, rename, defer, reopen, reorder, and mark topics impacted, recording the reason, source refs, dependencies, user-visible origin, and resulting invalidations.",
+          "line_end": 211,
+          "line_start": 211,
+          "path": "Plans/Planning_Wizard.md",
+          "source_sha256": "a4f61959f82a4fcde5872a40f7d92b8172fd609257017496f8c3945dcc992686"
+        }
+      ],
+      "gap_kind": "not_applicable",
+      "impact": "Prevents a fixed universal taxonomy and requires graph mutations to remain explainable, traceable, and invalidation-aware.",
+      "item_id": "M15-003",
+      "item_type": "capability",
+      "severity": "info",
+      "source_unit_refs": ["PLANUNIT:PWIZ-003", "SEMANTIC:PLANUNIT:PWIZ-003"],
+      "statement": "The evidence-driven topic graph is mutable through explicit controller operations that preserve reasons, dependencies, origins, and downstream invalidations while the GUI may suggest an order without overriding the graph.",
+      "title": "Dynamic topic graph operations"
+    },
+    {
+      "builder_discretion": false,
+      "confidence": 0.98,
+      "dimensions": ["behavior", "contracts", "authority", "failures_recovery", "security_privacy", "acceptance_oracles", "authority_boundaries", "untrusted_inputs"],
+      "evidence": [
+        {
+          "exact_quote": "The controller answers auto-resolvable gaps from evidence, applies safe defaults with recorded assumptions, and defers downstream-only details; it asks the user only for genuine product direction, risk acceptance, destructive authority, credentials, legal policy, or irreconcilable ambiguity.",
+          "line_end": 278,
+          "line_start": 278,
+          "path": "Plans/Planning_Wizard.md",
+          "source_sha256": "a4f61959f82a4fcde5872a40f7d92b8172fd609257017496f8c3945dcc992686"
+        }
+      ],
+      "gap_kind": "not_applicable",
+      "impact": "Bounds topic-agent context and limits user blocking to decisions that truly require human authority.",
+      "item_id": "M15-004",
+      "item_type": "authority",
+      "severity": "info",
+      "source_unit_refs": ["PLANUNIT:PWIZ-004", "SEMANTIC:PLANUNIT:PWIZ-004"],
+      "statement": "Fresh topic agents receive bounded capsules and must durably synchronize substantive turns; safe defaults and evidence resolve ordinary gaps, while destructive, credential, legal, risk, and irreconcilable-policy choices remain HITL authority boundaries.",
+      "title": "Bounded topic-agent autonomy and HITL boundary"
+    },
+    {
+      "builder_discretion": false,
+      "confidence": 0.99,
+      "dimensions": ["contracts", "states_transitions", "authority", "ownership", "propagation", "compatibility_migration", "destructive_actions"],
+      "evidence": [
+        {
+          "exact_quote": "Approved PRD Packs remain immutable; Planning Wizard records amendments or requests a successor PRD rather than editing the approved source snapshot in place.",
+          "line_end": 361,
+          "line_start": 361,
+          "path": "Plans/Planning_Wizard.md",
+          "source_sha256": "a4f61959f82a4fcde5872a40f7d92b8172fd609257017496f8c3945dcc992686"
+        }
+      ],
+      "gap_kind": "not_applicable",
+      "impact": "Preserves approved-source immutability and makes dependency changes propagate as typed stale, recompile, or reaudit states.",
+      "item_id": "M15-005",
+      "item_type": "state_transition",
+      "severity": "info",
+      "source_unit_refs": ["PLANUNIT:PWIZ-005", "SEMANTIC:PLANUNIT:PWIZ-005"],
+      "statement": "Topic and global records share one Planning Run ledger; material later decisions invalidate dependent drafts, and changed approved intent is represented by clarification, immutable amendment, scope disposition, or successor-PRD request rather than in-place mutation.",
+      "title": "Typed invalidation and immutable PRD amendments"
+    },
+    {
+      "builder_discretion": false,
+      "confidence": 0.98,
+      "dimensions": ["behavior", "contracts", "states_transitions", "ownership", "failures_recovery", "recovery_rollback", "acceptance_oracles", "test_falsifiability"],
+      "evidence": [
+        {
+          "exact_quote": "A new Auditor agent checks ledger-to-plan fidelity, unsupported claims, exact tokens, negative constraints, acceptance, dependencies, images, and open items; a separate repair agent fixes findings and a new Auditor rechecks until pass or a typed blocker.",
+          "line_end": 431,
+          "line_start": 431,
+          "path": "Plans/Planning_Wizard.md",
+          "source_sha256": "a4f61959f82a4fcde5872a40f7d92b8172fd609257017496f8c3945dcc992686"
+        }
+      ],
+      "gap_kind": "not_applicable",
+      "impact": "Separates conversion, audit, repair, and re-audit roles before a topic may become Ready.",
+      "item_id": "M15-006",
+      "item_type": "failure_recovery",
+      "severity": "info",
+      "source_unit_refs": ["PLANUNIT:PWIZ-006", "SEMANTIC:PLANUNIT:PWIZ-006"],
+      "statement": "Topic closure requires versioned conversion with lineage followed by an independent audit-repair-reaudit loop; only a pass or typed blocker closes the loop, while high-risk decisions may invoke policy-scoped HITL.",
+      "title": "Topic conversion and independent audit loop"
+    },
+    {
+      "builder_discretion": false,
+      "confidence": 0.98,
+      "dimensions": ["behavior", "inputs_outputs", "contracts", "consumers", "gui_truth", "security_privacy", "propagation", "accessibility"],
+      "evidence": [
+        {
+          "exact_quote": "Images are supporting references; any requirement, decision, constraint, flow, or acceptance implication introduced by an image must also be written into the planning ledger and canonical Plan text.",
+          "line_end": 502,
+          "line_start": 502,
+          "path": "Plans/Planning_Wizard.md",
+          "source_sha256": "a4f61959f82a4fcde5872a40f7d92b8172fd609257017496f8c3945dcc992686"
+        }
+      ],
+      "gap_kind": "not_applicable",
+      "impact": "Prevents visual artifacts from becoming inaccessible or unauditable shadow requirements.",
+      "item_id": "M15-007",
+      "item_type": "gui_truth",
+      "severity": "info",
+      "source_unit_refs": ["PLANUNIT:PWIZ-007", "SEMANTIC:PLANUNIT:PWIZ-007"],
+      "statement": "Final integration reconciles all Ready topic drafts, and visual references remain supporting evidence whose material implications must be duplicated into canonical textual requirements and ledger records.",
+      "title": "Final integration and text-canonical visual evidence"
+    },
+    {
+      "builder_discretion": false,
+      "confidence": 0.98,
+      "dimensions": ["capabilities", "contracts", "authority", "ownership", "failures_recovery", "operations", "compatibility_migration", "offline_network_loss", "destructive_actions"],
+      "evidence": [
+        {
+          "exact_quote": "For an SSH project, discovery, FileSafe, Git, worktrees, commands, testing, path authority, safe points, and execution occur on the remote host through the authorized adapter, with no silent local fallback.",
+          "line_end": 572,
+          "line_start": 572,
+          "path": "Plans/Planning_Wizard.md",
+          "source_sha256": "a4f61959f82a4fcde5872a40f7d92b8172fd609257017496f8c3945dcc992686"
+        }
+      ],
+      "gap_kind": "not_applicable",
+      "impact": "Prevents planning discovery or setup from silently mutating the wrong host or crossing into Executor-owned provisioning.",
+      "item_id": "M15-008",
+      "item_type": "authority",
+      "severity": "info",
+      "source_unit_refs": ["PLANUNIT:PWIZ-008", "SEMANTIC:PLANUNIT:PWIZ-008"],
+      "statement": "Read-only project discovery is automatic, but repository mutations require policy and receipts; remote projects stay remote without local fallback, and implementation worktree preparation remains Executor-owned after Plan Compile.",
+      "title": "Project discovery and mutation authority boundary"
+    },
+    {
+      "builder_discretion": true,
+      "confidence": 0.97,
+      "dimensions": ["inputs_outputs", "contracts", "consumers", "failures_recovery", "propagation", "partial_failure", "cross_document_seams", "test_falsifiability"],
+      "evidence": [
+        {
+          "exact_quote": "canonical_text: 'The Planning Wizard Testing topic asks about existing commands, frameworks, required environments, credentials or services, evidence expectations, exclusions, risk areas, accessibility, performance, security, and manual validation needs, then passes them to the automated testing system.'",
+          "line_end": 672,
+          "line_start": 672,
+          "path": "Plans/Planning_Wizard.md",
+          "source_sha256": "a4f61959f82a4fcde5872a40f7d92b8172fd609257017496f8c3945dcc992686"
+        }
+      ],
+      "gap_kind": "testing_handoff_contract_missing",
+      "impact": "Without a typed handoff, acknowledgement, and failure disposition, captured testing constraints can be dropped, duplicated, or misinterpreted by the automated testing consumer.",
+      "item_id": "M15-009",
+      "item_type": "gap",
+      "severity": "high",
+      "source_unit_refs": ["PLANUNIT:PWIZ-009", "SEMANTIC:PLANUNIT:PWIZ-009"],
+      "statement": "PWIZ-009 enumerates testing-intake content and names the downstream automated testing system, but it does not define the payload identity/version, required versus optional fields, delivery acknowledgement, idempotency, partial-failure handling, or a falsifiable end-to-end handoff oracle.",
+      "title": "Testing-topic handoff is not mechanically specified"
+    },
+    {
+      "builder_discretion": false,
+      "confidence": 0.99,
+      "dimensions": ["behavior", "inputs_outputs", "contracts", "states_transitions", "authority", "gui_truth", "security_privacy", "acceptance_oracles", "authority_boundaries"],
+      "evidence": [
+        {
+          "exact_quote": "The ApprovedPlanPack and frozen canonical PlanUnit and acceptance-unit indexes are Plan Compile authority; the Planning Wizard ledger remains source and reasoning lineage rather than executable canon.",
+          "line_end": 720,
+          "line_start": 720,
+          "path": "Plans/Planning_Wizard.md",
+          "source_sha256": "a4f61959f82a4fcde5872a40f7d92b8172fd609257017496f8c3945dcc992686"
+        }
+      ],
+      "gap_kind": "not_applicable",
+      "impact": "Defines the immutable authority boundary and removes redundant ordinary launch confirmation after final approval.",
+      "item_id": "M15-010",
+      "item_type": "authority",
+      "severity": "info",
+      "source_unit_refs": ["PLANUNIT:PWIZ-010", "SEMANTIC:PLANUNIT:PWIZ-010"],
+      "statement": "Approve And Build creates the immutable ApprovedPlanPack authority, immediately creates or resumes exactly one PlanCompileRun in product runtime, preserves Executor-owned execution context, and navigates to Orchestrator Plan Compile without a second ordinary Start Build step.",
+      "title": "ApprovedPlanPack and Approve And Build authority"
+    },
+    {
+      "builder_discretion": false,
+      "confidence": 0.99,
+      "dimensions": ["contracts", "states_transitions", "authority", "failures_recovery", "security_privacy", "concurrency_races", "partial_failure", "recovery_rollback", "acceptance_oracles"],
+      "evidence": [
+        {
+          "exact_quote": "Duplicate delivery with the same CAS inputs and idempotency key returns the same PlanCompileRun. A stale CAS input routes to bounded revalidation or final-review refresh rather than silently approving a different plan.",
+          "line_end": 813,
+          "line_start": 813,
+          "path": "Plans/Planning_Wizard.md",
+          "source_sha256": "a4f61959f82a4fcde5872a40f7d92b8172fd609257017496f8c3945dcc992686"
+        }
+      ],
+      "gap_kind": "not_applicable",
+      "impact": "Closes stale-review and duplicate-delivery races at the approval-to-compile boundary.",
+      "item_id": "M15-011",
+      "item_type": "contract",
+      "severity": "info",
+      "source_unit_refs": ["PLANUNIT:PWIZ-014", "SEMANTIC:PLANUNIT:PWIZ-014"],
+      "statement": "Approve And Build is a fail-closed CAS over every displayed currentness input; success atomically records approval and binds one synchronous PlanCompileRun identity, while duplicate delivery is idempotent and stale input returns to bounded revalidation or review refresh.",
+      "title": "Approval CAS and idempotent PlanCompileRun binding"
+    },
+    {
+      "builder_discretion": false,
+      "confidence": 0.98,
+      "dimensions": ["behavior", "contracts", "ownership", "consumers", "failures_recovery", "operations", "scale_performance", "concurrency_races", "observability_support", "test_falsifiability"],
+      "evidence": [
+        {
+          "exact_quote": "The final audit controller must launch multiple bounded read-only specialist agents in parallel for distinct defect families, persist assignments and results, reduce findings, run bounded repairs, and re-audit until all",
+          "line_end": 883,
+          "line_start": 883,
+          "path": "Plans/Planning_Wizard.md",
+          "source_sha256": "a4f61959f82a4fcde5872a40f7d92b8172fd609257017496f8c3945dcc992686"
+        }
+      ],
+      "gap_kind": "not_applicable",
+      "impact": "Requires broad specialist coverage while preserving serialized canonical writes and durable finding closure.",
+      "item_id": "M15-012",
+      "item_type": "failure_recovery",
+      "severity": "info",
+      "source_unit_refs": ["PLANUNIT:PWIZ-011", "SEMANTIC:PLANUNIT:PWIZ-011"],
+      "statement": "Topic and final-pack audits use stable, hash-bound findings and bounded repair/re-audit loops; specialists remain read-only and parallel, while the controller or canonical owner serializes writes and certification.",
+      "title": "Product-native specialist audit and sole-writer repair"
+    },
+    {
+      "builder_discretion": false,
+      "confidence": 0.99,
+      "dimensions": ["behavior", "contracts", "states_transitions", "authority", "failures_recovery", "compatibility_migration", "acceptance_oracles", "ambiguity_unknowns", "test_falsifiability"],
+      "evidence": [
+        {
+          "exact_quote": "Before Approve And Build, active first-party Plans and the ApprovedPlanPack contain zero unresolved stubs, TODOs, TBDs, FIXMEs used as deferred work, placeholders, empty required sections, fake acceptance criteria, mock production behavior, or deferred implementation details.",
+          "line_end": 971,
+          "line_start": 971,
+          "path": "Plans/Planning_Wizard.md",
+          "source_sha256": "a4f61959f82a4fcde5872a40f7d92b8172fd609257017496f8c3945dcc992686"
+        }
+      ],
+      "gap_kind": "not_applicable",
+      "impact": "Makes compile readiness falsifiable and confines incomplete-content exceptions and user-decision blockers to typed, exact, reviewable records.",
+      "item_id": "M15-013",
+      "item_type": "acceptance_oracle",
+      "severity": "info",
+      "source_unit_refs": ["PLANUNIT:PWIZ-012", "SEMANTIC:PLANUNIT:PWIZ-012"],
+      "statement": "Compile readiness requires synchronized, audited, current, traceable inputs and a zero-incomplete gate; any exception must identify the exact span, risk, approver, disposition, and reopen condition, and unsupported invented claims are defects.",
+      "title": "Zero-incomplete compile-readiness oracle"
+    },
+    {
+      "builder_discretion": false,
+      "confidence": 0.99,
+      "dimensions": ["contracts", "states_transitions", "gui_truth", "propagation", "ambiguity_unknowns", "invalid_states_transitions", "gui_misleading_states", "cross_document_seams", "test_falsifiability"],
+      "evidence": [
+        {
+          "exact_quote": "Topic cards represent not_started, active, ledger_syncing, ledger_synced, compiling, auditing, repairing, ready, impacted, reopened, deferred, and blocked, with clear dependency and origin badges.",
+          "line_end": 1078,
+          "line_start": 1078,
+          "path": "Plans/Planning_Wizard.md",
+          "source_sha256": "a4f61959f82a4fcde5872a40f7d92b8172fd609257017496f8c3945dcc992686"
+        },
+        {
+          "exact_quote": "topic card states are `new`, `active`, `needs_user`, `answered`, `accepted`, `deferred`, `blocked`, `superseded`, `compiled`, `sealed`, and `retired`.",
+          "line_end": 1548,
+          "line_start": 1548,
+          "path": "Plans/Planning_Wizard.md",
+          "source_sha256": "a4f61959f82a4fcde5872a40f7d92b8172fd609257017496f8c3945dcc992686"
+        }
+      ],
+      "gap_kind": "contradictory_topic_state_machine",
+      "impact": "Implementers and GUI projections cannot determine the canonical state enum, legal transitions, command applicability, or how progress and recovery states map; different consumers can show mutually inconsistent readiness.",
+      "item_id": "M15-014",
+      "item_type": "gap",
+      "severity": "high",
+      "source_unit_refs": ["PLANUNIT:PWIZ-013", "SEMANTIC:PLANUNIT:PWIZ-013"],
+      "statement": "PWIZ-013 specifies a twelve-state operational GUI vocabulary, but the later repair addendum declares a different eleven-state vocabulary and five commands; neither text reconciles the vocabularies or provides a transition table, leaving the canonical state machine internally contradictory.",
+      "title": "Planning topic state vocabularies conflict"
+    },
+    {
+      "builder_discretion": false,
+      "confidence": 0.98,
+      "dimensions": ["behavior", "inputs_outputs", "contracts", "consumers", "gui_truth", "security_privacy", "untrusted_inputs", "gui_misleading_states", "offline_network_loss"],
+      "evidence": [
+        {
+          "exact_quote": "Selected candidates preserve ranked provenance in Planning Context Capsules and expose stale, fallback, denied, hidden-by-policy, and no-results states in the picker.",
+          "line_end": 1186,
+          "line_start": 1186,
+          "path": "Plans/Planning_Wizard.md",
+          "source_sha256": "a4f61959f82a4fcde5872a40f7d92b8172fd609257017496f8c3945dcc992686"
+        }
+      ],
+      "gap_kind": "not_applicable",
+      "impact": "Keeps discovery results policy-aware, provenance-preserving, visibly current, and non-authoritative for later edits.",
+      "item_id": "M15-015",
+      "item_type": "gui_truth",
+      "severity": "info",
+      "source_unit_refs": ["PLANUNIT:PWIZ-015", "SEMANTIC:PLANUNIT:PWIZ-015"],
+      "statement": "Planning Wizard source pickers consume DiscoveryService with project/host and policy context, expose stale and failure states without leaking hidden candidates, and treat selections only as planning evidence pending exact implementation-time verification.",
+      "title": "Policy-aware planning source picker"
+    },
+    {
+      "builder_discretion": true,
+      "confidence": 0.96,
+      "dimensions": ["contracts", "states_transitions", "authority", "consumers", "operations", "compatibility_migration", "privacy_data_lifecycle", "scale_limits", "destructive_actions", "observability_support"],
+      "evidence": [
+        {
+          "exact_quote": "Final/approved plan outputs are retained forever by default;",
+          "line_end": 1237,
+          "line_start": 1237,
+          "path": "Plans/Planning_Wizard.md",
+          "source_sha256": "a4f61959f82a4fcde5872a40f7d92b8172fd609257017496f8c3945dcc992686"
+        }
+      ],
+      "gap_kind": "history_retention_lifecycle_incomplete",
+      "impact": "An unbounded default retention promise without quota, deletion, legal-hold, export, corruption, and storage-pressure rules risks privacy violations, uncontrolled growth, and ambiguous destructive authority.",
+      "item_id": "M15-016",
+      "item_type": "gap",
+      "severity": "medium",
+      "source_unit_refs": ["PLANUNIT:PWIZ-016", "SEMANTIC:PLANUNIT:PWIZ-016"],
+      "statement": "PWIZ-016 defines immutable project-scoped history, compare/export/reopen/send-forward behavior, and forever-by-default retention for final outputs, but it does not specify deletion or erasure authority, legal-hold precedence, quota and storage-pressure behavior, corruption recovery, export failure handling, or lifecycle oracles for retained drafts versus immutable packs.",
+      "title": "Historical plan-pack retention lacks a complete lifecycle"
+    },
+    {
+      "builder_discretion": false,
+      "confidence": 0.99,
+      "dimensions": ["behavior", "inputs_outputs", "states_transitions", "gui_truth", "failures_recovery", "security_privacy", "authority_boundaries", "gui_misleading_states", "accessibility", "localization"],
+      "evidence": [
+        {
+          "exact_quote": "`Provider setup is not finished. You can still open Planning Wizard, but assistant features may need a provider before",
+          "line_end": 1392,
+          "line_start": 1392,
+          "path": "Plans/Planning_Wizard.md",
+          "source_sha256": "a4f61959f82a4fcde5872a40f7d92b8172fd609257017496f8c3945dcc992686"
+        }
+      ],
+      "gap_kind": "not_applicable",
+      "impact": "Allows first-run planning intake without falsely projecting provider health or silently dropping setup warnings.",
+      "item_id": "M15-017",
+      "item_type": "gui_truth",
+      "severity": "info",
+      "source_unit_refs": ["PLANUNIT:PWIZ-017", "SEMANTIC:PLANUNIT:PWIZ-017"],
+      "statement": "Completed or skipped first-run setup lands on Planning Wizard; skipped or unhealthy provider state remains a nonblocking limited mode with exact warning copy and a Set up provider CTA, while structured onboarding state and warnings are preserved.",
+      "title": "First-run limited-provider landing state"
+    },
+    {
+      "builder_discretion": false,
+      "confidence": 0.99,
+      "dimensions": ["behavior", "contracts", "states_transitions", "authority", "gui_truth", "failures_recovery", "propagation", "acceptance_oracles", "gui_misleading_states", "observability_support", "test_falsifiability"],
+      "evidence": [
+        {
+          "exact_quote": "`cmd.planning_wizard.approve_and_build` control is disabled unless",
+          "line_end": 1477,
+          "line_start": 1477,
+          "path": "Plans/Planning_Wizard.md",
+          "source_sha256": "a4f61959f82a4fcde5872a40f7d92b8172fd609257017496f8c3945dcc992686"
+        }
+      ],
+      "gap_kind": "not_applicable",
+      "impact": "Prevents semantic completeness or green validators from being misrepresented as executable buildability and blocks PlanApproved emission until runtime evidence passes.",
+      "item_id": "M15-018",
+      "item_type": "acceptance_oracle",
+      "severity": "info",
+      "source_unit_refs": ["PLANUNIT:PWIZ-018", "SEMANTIC:PLANUNIT:PWIZ-018"],
+      "statement": "Final review must distinguish Captured, Plan-complete, and Buildable; Approve And Build remains disabled while the buildability report fails, shows all open blocker families and owner docs, and treats PNC-019 as a hard reason only while its live projection is hard-disabled.",
+      "title": "Fail-closed implementation buildability gate"
+    }
+  ],
+  "model": "gpt-5.6-sol",
+  "phase": "blind_macro_window_review",
+  "reasoning_effort": "xhigh",
+  "schema_version": "macro-review-result-v1",
+  "segments": [
+    {
+      "core_range": [1, 352],
+      "covered_source_unit_refs": ["PLANUNIT:PWIZ-001", "PLANUNIT:PWIZ-002", "PLANUNIT:PWIZ-003", "PLANUNIT:PWIZ-004", "SEMANTIC:PROLOGUE:Plans/Planning_Wizard.md", "SEMANTIC:PLANUNIT:PWIZ-001", "SEMANTIC:PLANUNIT:PWIZ-002", "SEMANTIC:PLANUNIT:PWIZ-003", "SEMANTIC:PLANUNIT:PWIZ-004"],
+      "item_ids": ["M15-001", "M15-002", "M15-003", "M15-004"],
+      "reviewed": true,
+      "summary": "Reviewed naming and seed intake, PlanningRun topology, dynamic topic graph operations, and bounded topic-agent autonomy with provenance, invalidation, authority, and HITL adversarial checks.",
+      "window_id": "WIN-70745805ACEA-0001"
+    },
+    {
+      "core_range": [353, 711],
+      "covered_source_unit_refs": ["PLANUNIT:PWIZ-005", "PLANUNIT:PWIZ-006", "PLANUNIT:PWIZ-007", "PLANUNIT:PWIZ-008", "PLANUNIT:PWIZ-009", "SEMANTIC:PLANUNIT:PWIZ-005", "SEMANTIC:PLANUNIT:PWIZ-006", "SEMANTIC:PLANUNIT:PWIZ-007", "SEMANTIC:PLANUNIT:PWIZ-008", "SEMANTIC:PLANUNIT:PWIZ-009"],
+      "item_ids": ["M15-005", "M15-006", "M15-007", "M15-008", "M15-009"],
+      "reviewed": true,
+      "summary": "Reviewed amendment and invalidation semantics, topic conversion and audit, visual-reference canon, project discovery authority, and the testing-topic seam; identified an underspecified automated-testing handoff.",
+      "window_id": "WIN-70745805ACEA-0002"
+    },
+    {
+      "core_range": [712, 1069],
+      "covered_source_unit_refs": ["PLANUNIT:PWIZ-010", "PLANUNIT:PWIZ-011", "PLANUNIT:PWIZ-012", "PLANUNIT:PWIZ-014", "SEMANTIC:PLANUNIT:PWIZ-010", "SEMANTIC:PLANUNIT:PWIZ-014", "SEMANTIC:PLANUNIT:PWIZ-011", "SEMANTIC:PLANUNIT:PWIZ-012"],
+      "item_ids": ["M15-010", "M15-011", "M15-012", "M15-013"],
+      "reviewed": true,
+      "summary": "Reviewed ApprovedPlanPack authority, CAS/currentness and idempotency, specialist audit ownership, and zero-incomplete compile readiness under stale-state, duplicate-delivery, partial-failure, and false-certification lenses.",
+      "window_id": "WIN-70745805ACEA-0003"
+    },
+    {
+      "core_range": [1070, 1465],
+      "covered_source_unit_refs": ["PLANUNIT:PWIZ-013", "PLANUNIT:PWIZ-015", "PLANUNIT:PWIZ-016", "PLANUNIT:PWIZ-017", "SEMANTIC:PLANUNIT:PWIZ-013", "SEMANTIC:PLANUNIT:PWIZ-015", "SEMANTIC:PLANUNIT:PWIZ-016", "SEMANTIC:PLANUNIT:PWIZ-017"],
+      "item_ids": ["M15-014", "M15-015", "M15-016", "M15-017"],
+      "reviewed": true,
+      "summary": "Reviewed Planning Wizard GUI progress, discovery source picking, historical plan records, and first-run landing; found conflicting topic-state vocabularies and an incomplete forever-retention lifecycle.",
+      "window_id": "WIN-70745805ACEA-0004"
+    },
+    {
+      "core_range": [1466, 1552],
+      "covered_source_unit_refs": ["PLANUNIT:PWIZ-018", "SEMANTIC:PLANUNIT:PWIZ-018"],
+      "item_ids": ["M15-018"],
+      "reviewed": true,
+      "summary": "Reviewed the buildability gate and FABLE repair notes, verifying fail-closed enablement, live blocker projection, PNC-019 scoping, and the no-runtime-evidence boundary.",
+      "window_id": "WIN-70745805ACEA-0005"
+    }
+  ],
+  "self_attestation": {
+    "no_canonical_writes": true,
+    "no_external_research_during_blind_review": true,
+    "no_peer_result_access": true,
+    "no_prior_audit_access": true,
+    "no_unrelated_source_access": true,
+    "terminal_after_submission": true
+  },
+  "source_binding": {
+    "bundle_id": "MACRO15-70745805ACEA-0001",
+    "document_path": "Plans/Planning_Wizard.md",
+    "micro_window_ids": ["WIN-70745805ACEA-0001", "WIN-70745805ACEA-0002", "WIN-70745805ACEA-0003", "WIN-70745805ACEA-0004", "WIN-70745805ACEA-0005"],
+    "source_sha256": "a4f61959f82a4fcde5872a40f7d92b8172fd609257017496f8c3945dcc992686"
+  },
+  "status": "completed",
+  "synthesis": {
+    "cross_document_questions": [
+      "Which canonical contract owns the typed Planning Wizard Testing topic handoff, acknowledgement, idempotency, and failure disposition consumed by Automated Testing?",
+      "Which vocabulary is authoritative for Planning Wizard topic card states, and how do PWIZ-013 progress states map to the later repair-addendum states and commands?",
+      "Which storage, permissions, and history contracts own erasure, legal hold, quota, corruption recovery, and storage-pressure behavior for forever-retained final and approved planning outputs?"
+    ],
+    "feature_family_keys": ["planning_intake", "planning_run_topics", "planning_audit_repair", "approve_and_build", "planning_gui", "planning_history", "implementation_buildability"],
+    "research_queries": [
+      "durable workflow state-machine versioning and migration patterns for user-visible long-running planning jobs",
+      "immutable artifact history retention with erasure, legal hold, quota, and project-scoped authorization",
+      "idempotent typed handoff protocols between planning intake and automated test planning"
+    ]
+  },
+  "task_thread_id": "/root/a005m15_b6_000089_attempt_0015_terminal"
+}

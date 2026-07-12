@@ -1,0 +1,31 @@
+{
+  "schema_version": "cross-domain-seam-repair-activation-core-v26-atomic3",
+  "status": "ACTIVE_FOR_EXACTLY_3_FRESH_SOL_XHIGH_REPAIR_LEAVES",
+  "activation_granted": true,
+  "activation_transaction_id": "A005-CDS-REPAIR-V26-ATOMIC3-02e940ededd60054",
+  "assignment_count": 3,
+  "assignment_ids": [
+    "A005CDSV2-0002",
+    "A005CDSV2-0006",
+    "A005CDSV2-0039"
+  ],
+  "controller_thread_id": "019f4f5e-96c6-7893-8c94-ce2c1b760d6c",
+  "model": "gpt-5.6-sol",
+  "reasoning_effort": "xhigh",
+  "fork_turns": "none",
+  "descendants_forbidden": true,
+  "followups_forbidden": true,
+  "retries_forbidden": true,
+  "policy_v26_sha256": "dc8b6856705325223b70822d31f28abe0ef32e6153f57d4fea924b4eaf0dba68",
+  "luna_independent_prelaunch_path": "/Users/jaredsmacbookair/Documents/PuppetMaster/Plans/.audits/audit-20260710-005-plan-assurance-model-lanes-fresh-agent-exhaustive/master/cross_domain_seams/wave-0001/window-sharding-v2/seam-repair-attempt-0002/validation/luna-independent-prelaunch-v2.json",
+  "luna_independent_prelaunch_sha256": "02e940ededd60054f0e654159cabf21fe3e04a57c5d2601a3da09cd17fd6220e",
+  "terminal_preparation_report_sha256": "385cc8d1423859087f047e9ea1b25f4b5f927142f3af0c8fd1528be8b8a9b901",
+  "authority_sha256": "fbecf983ae58ba1b54a8da26ce78eca48d89162ef64561a083e7a02b118fcc71",
+  "manifest_sha256": "59241d14d7e350e5561ffa814d33d467f0c3107547b2ef690953e13d965620d1",
+  "source_results_preserved": 64,
+  "preactivation_outputs_empty": 3,
+  "preactivation_results": 0,
+  "preactivation_receipts": 0,
+  "preactivation_native_capture_rows": 0,
+  "candidate_credit": 0
+}

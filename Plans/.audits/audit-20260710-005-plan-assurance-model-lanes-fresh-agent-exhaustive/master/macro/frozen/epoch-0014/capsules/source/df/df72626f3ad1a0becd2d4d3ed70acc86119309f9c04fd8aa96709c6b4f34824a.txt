@@ -1,0 +1,927 @@
+L00000001	# Run Modes (Canonical SSOT)
+L00000002	
+L00000003	
+L00000004	## Canonical owner-section requirements
+L00000005	
+L00000006	These requirements are canonical live specification text for this owner document and preserve the required product, runtime, storage, UI, and governance details in owner-section form.
+L00000007	
+L00000008	### Identity and blocked-policy transfer cluster
+L00000009	> **Compliance:** This document follows `Plans/DRY_Rules.md` and references SSOT contracts in `Plans/Contracts_V0.md`. Naming: "Puppet Master" only. No open questions; deterministic defaults per `Plans/Decision_Policy.md`.
+L00000010	
+L00000011	## 0. Scope and SSOT status
+L00000012	
+L00000013	This document is the **single canonical source of truth** for Puppet Master run modes. All other plan documents MUST reference this document by anchor (for example `Plans/Run_Modes.md#MODE-ask`) rather than restating mode definitions, strategy selection rules, budgets, or kill conditions.
+L00000014	
+L00000015	ContractRef: Primitive:DRYRules, ContractName:Plans/DRY_Rules.md
+L00000016	
+L00000017	### SSOT references (DRY)
+L00000018	- Locked decisions: `Plans/Spec_Lock.json`
+L00000019	- Canonical contracts (events/tools/auth): `Plans/Contracts_V0.md`
+L00000020	- DRY + ContractRef rule: `Plans/DRY_Rules.md`
+L00000021	- Canonical terms: `Plans/Glossary.md`
+L00000022	- Deterministic ambiguity handling: `Plans/Decision_Policy.md` + `Plans/auto_decisions.jsonl`
+L00000023	- Provider facade + normalized stream: `Plans/CLI_Bridged_Providers.md`
+L00000024	- Tool permissions + tool events: `Plans/Tools.md`
+L00000025	- FileSafe guards and blocking: `Plans/FileSafe.md`
+L00000026	- Context compilation + compaction owner: `Plans/Prompt_Pipeline.md`
+L00000027	- FileSafe safety checks over compiled output: `Plans/FileSafe.md`
+L00000028	- HITL tier-boundary approvals: `Plans/human-in-the-loop.md`
+L00000029	- OpenCode baseline patterns: `Plans/OpenCode_Deep_Extraction.md` (Section 7A)
+L00000030	- Assistant chat modes: `Plans/assistant-chat-design.md` (Section 3)
+L00000031	- Cross-cutting invariants: `Plans/Architecture_Invariants.md`
+L00000032	
+L00000033	ContractRef: ContractName:Plans/Prompt_Pipeline.md, ContractName:Plans/FileSafe.md, ContractName:Plans/Architecture_Invariants.md
+L00000034	
+L00000035	---
+L00000036	
+L00000037	## 1. Canonical mode definitions
+L00000038	### 1.0 Runtime mode and workflow-overlay separation
+L00000039	
+L00000040	Runtime modes and workflow overlays must stay distinct.
+L00000041	
+L00000042	ContractRef: ContractName:Plans/assistant-chat-design.md, ContractName:Plans/Commands_System.md, ContractName:Plans/orchestrator-subagent-integration.md
+L00000043	
+L00000044	Rules:
+L00000045	- `ask`, `plan`, `regular`, and `yolo` are the runtime-mode canon.
+L00000046	- The closed runtime-mode enum is `ask|plan|regular|yolo`; the closed workflow-overlay enum is `none|plan|deep_plan|debug|interview|brainstorm|crew`.
+L00000047	- `debug`, `deep_plan`, `interview`, `brainstorm`, and `crew` are overlays or routed workflow identities rather than extra runtime-mode enum values.
+L00000048	- overlay choice must not widen runtime authority.
+L00000049	- children inherit the parent runtime ceiling and may narrow it only.
+L00000050	- External IDE baselines such as JetBrains chat/agent modes and Junie validate that assistant modes may generate code, edits, and terminal commands with visible progress plus review/apply affordances in tool windows; PM still maps those affordances to `/agent`, `/apply`, operation-card/terminal surfaces, and the runtime authority enum here rather than treating the reference product as an owner.
+L00000051	### 1.1 `ask`
+L00000052	`ask` is the read-only inspection and explanation posture.
+L00000053	
+L00000054	Rules:
+L00000055	- no project mutation or execution authority is implied
+L00000056	- compact chat display may label this as `Ask`
+L00000057	
+L00000058	ContractRef: ContractName:Plans/assistant-chat-design.md, ContractName:Plans/FileSafe.md, ContractName:Plans/Prompt_Pipeline.md
+L00000059	
+L00000060	### 1.2 `plan`
+L00000061	`plan` is the read-only planning posture.
+L00000062	
+L00000063	Rules:
+L00000064	- planning remains read-only with respect to project files
+L00000065	- `plan` posture may be paired with `plan` or `deep_plan` overlay identity
+L00000066	- overlay identity, plan thoroughness, and later execution handoff remain preserved separately from the runtime posture itself
+L00000067	
+L00000068	ContractRef: ContractName:Plans/assistant-chat-design.md, ContractName:Plans/Prompt_Pipeline.md, ContractName:Plans/storage-plan.md
+L00000069	
+L00000070	### 1.3 `regular`
+L00000071	`regular` is the standard execution posture with normal approvals.
+L00000072	
+L00000073	ContractRef: ContractName:Plans/Permissions_System.md, ContractName:Plans/assistant-chat-design.md, ContractName:Plans/Prompt_Pipeline.md
+L00000074	
+L00000075	### 1.4 `yolo`
+L00000076	`yolo` is the full-automation execution posture.
+L00000077	
+L00000078	ContractRef: ContractName:Plans/Permissions_System.md, ContractName:Plans/FileSafe.md, ContractName:Plans/Prompt_Pipeline.md
+L00000079	## 2. CLI-bridged execution strategies
+L00000080	
+L00000081	Two mutually exclusive execution semantics apply when Puppet Master invokes a CLI-bridged provider (see `Plans/CLI_Bridged_Providers.md` for the Provider facade contract).
+L00000082	
+L00000083	ContractRef: ContractName:Plans/CLI_Bridged_Providers.md, ContractName:Plans/Architecture_Invariants.md#INV-009
+L00000084	
+L00000085	<a id="STRATEGY-HTE"></a>
+L00000086	### 2.1 HTE — Hosted Tool Execution
+L00000087	- The provider CLI acts as a **plan/reasoner only**. It produces no file edits and executes no shell commands.
+L00000088	- Puppet Master asks for a structured plan or reasoning output, executes **all** actions itself via Puppet Master tools (subject to the permission model in `Plans/Tools.md`), and feeds results back to the provider.
+L00000089	- HTE is a **host-owned action loop**: the provider may request the next hosted action or return a final answer, but Puppet Master executes every real tool call itself under the permission + FileSafe stack and feeds the structured result back into the next provider turn.
+L00000090	- When `execution_strategy = "hte"`, the adapter MUST place the provider in the most restrictive available **no-tools / no-side-effect** posture for that provider, even when the higher-level runtime mode is `regular`.
+L00000091	- The legacy `/plan/regular` shorthand maps to the canonical ask/plan/regular default: HTE is used for `ask`, `plan`, and `regular` unless `regular` explicitly selects DAE and provider policy allows it.
+L00000092	- Any tool-call observation from the provider stream during HTE is a kill condition (see §5.2).
+L00000093	
+L00000094	<a id="STRATEGY-DAE"></a>
+L00000095	### 2.2 DAE — Delegated Agent Execution
+L00000096	
+L00000097	#### 2.2.1 DAE worktree context
+L00000098	
+L00000099	When a DAE executes inside a worktree (orchestrator-owned or assistant-owned), the execution context carries the worktree identity:
+L00000100	- `working_directory` is set to the worktree root path
+L00000101	- `worktree_id`, `worktree_branch`, and `is_worktree` fields are present in the execution context
+L00000102	- File operations, git operations, terminal sessions, and LSP root identity all resolve to the worktree path
+L00000103	
+L00000104	This applies regardless of whether the DAE was triggered by Orchestrator or by Assistant Chat.
+L00000105	
+L00000106	ContractRef: ContractName:Plans/Executor_Protocol.md, ContractName:Plans/assistant-chat-design.md
+L00000107	
+L00000108	- The provider CLI **executes tools itself** (file edits, shell commands, etc.).
+L00000109	- Puppet Master spawns the CLI in a jailed workspace, ingests the `stream-json` normalized event stream, and enforces policy via guards, reconciliation, and kill-switches.
+L00000110	- DAE uses an **ephemeral Puppet Master-managed jail** (prefer a dedicated worktree; otherwise an equivalent isolated workspace) and the provider sees only jail paths.
+L00000111	- The canonical workspace MUST NOT be directly writable during DAE. Host-side reconciliation applies the verified jail diff back only after scans and FileSafe checks succeed.
+L00000112	- Providers that cannot offer deterministic pre-spawn restriction / tool-policy injection MUST advertise `dae_allowed = false` and cannot be selected for DAE.
+L00000113	- The **actual jail diff** is authoritative for mutation accounting; provider-reported tool/file activity is advisory correlation data only.
+L00000114	- Child/subagent runs inherit the parent selected strategy unless a higher-level SSOT explicitly narrows it.
+L00000115	- Workspace isolation is per-subagent: HTE child/subagent turns inherit the parent write-scope because PM executes tools, while DAE child/subagent turns run in their own jail and reconcile back only after scans and FileSafe checks succeed.
+L00000116	- End-of-run scans are mandatory (see §5.2).
+L00000117	- FileSafe guards (`Plans/FileSafe.md`) apply to all DAE-originated mutations.
+L00000118	
+L00000119	---
+L00000120	
+L00000121	## 3. Deterministic strategy selection
+L00000122	
+L00000123	Strategy selection is a pure function of `(requested_runtime_mode, effective_mode_overlay, config, policy)`.
+L00000124	
+L00000125	Given the same inputs, the same strategy MUST be selected.
+L00000126	
+L00000127	ContractRef: PolicyRule:Decision_Policy.md§2, PolicyRule:Decision_Policy.md§3
+L00000128	
+L00000129	Before strategy selection, any surface-specific workflow state MUST normalize to the runtime-mode enum in this document:
+L00000130	
+L00000131	ContractRef: ContractName:Plans/assistant-chat-design.md, ContractName:Plans/Prompt_Pipeline.md, ContractName:Plans/Contracts_V0.md
+L00000132	
+L00000133	| Surface state | Effective overlay | Normalized runtime mode | Notes |
+L00000134	|---|---|---|---|
+L00000135	| `Ask` | `ask` | `ask` | Read-only posture. |
+L00000136	| `Plan` | `plan` | `plan` | Read-only planning posture. |
+L00000137	| `Deep Plan` | `deep_plan` | `plan` | Read-only planning posture with deeper overlay identity. |
+L00000138	| `Agent` with standard approvals | `agent` | `regular` | Standard execute posture. |
+L00000139	| `Debug` with standard approvals | `debug` | `regular` | Default Debug posture. |
+L00000140	| `Debug` with explicit YOLO posture | `debug` | `yolo` | Power-user opt-in only. |
+L00000141	| Execute from Interview / BrainStorm / Crew with standard approvals | `interview` / `brainstorm` / `crew` | `regular` | Workflow overlays do not create extra runtime-mode enum values. |
+L00000142	| Explicit YOLO posture outside Debug | `agent` or specialized overlay | `yolo` | Full-automation posture. |
+L00000143	
+L00000144	ContractRef: ContractName:Plans/assistant-chat-design.md, ContractName:Plans/Prompt_Pipeline.md, ContractName:Plans/Contracts_V0.md
+L00000145	
+L00000146	| Mode | `writes_allowed` | Strategy | Selection rule |
+L00000147	|---|---|---|---|
+L00000148	| `ask` | `false` | HTE | Always HTE; no opt-out. |
+L00000149	| `plan` | `false` | HTE | Always HTE; no opt-out. |
+L00000150	| `regular` | conditional | HTE (default) | HTE unless `cli_bridged_strategy == "dae"` in run config **and** provider policy allows DAE. |
+L00000151	| `yolo` | `true` | DAE | DAE with mandatory guardrails + scans. |
+L00000152	
+L00000153	**Resolution algorithm:**
+L00000154	
+L00000155	1. Read normalized runtime `mode` from the run envelope.
+L00000156	2. If `mode ∈ {ask, plan}` -> strategy = HTE. Return.
+L00000157	3. If `mode == yolo` -> strategy = DAE. Return.
+L00000158	4. If `mode == regular`:
+L00000159	   a. If run config contains `cli_bridged_strategy: "dae"` and the active provider policy flag `dae_allowed == true` -> strategy = DAE. Return.
+L00000160	   b. Otherwise -> strategy = HTE. Return.
+L00000161	
+L00000162	ContractRef: ContractName:Plans/CLI_Bridged_Providers.md, ContractName:Plans/Run_Modes.md, ContractName:Plans/Tools.md
+L00000163	
+L00000164	Debug-specific resolution notes:
+L00000165	- `effective_mode_overlay = debug` with `mode ∈ {ask, plan}` is an invalid automated-debug combination and MUST be normalized before run spawn; the runtime must not execute a Debug investigation in read-only posture
+L00000166	- `Debug Mode + regular + HTE` is the recommended default runtime/execution model for Debug investigations
+L00000167	- `Debug Mode + yolo` is an advanced opt-in only and MUST NOT become the default Debug posture
+L00000168	- a visible `Debug` picker is a workflow overlay plus target/evidence package, not a brand-new runtime mode; it must normalize into `ask | plan | regular | yolo` rather than adding another runtime enum
+L00000169	- Debug target binding uses target-discovery heuristics and adapter-selection defaults owned by the relevant GUI, evidence, and tool surfaces; file-by-file canonical doc changes must land in those owner docs instead of creating a generic runtime-mode bucket
+L00000170	- the default Debug posture is `mode = regular` with HTE unless the user explicitly requests a DAE-capable posture and provider policy allows it
+L00000171	- `yolo` still requires DAE; if the provider policy snapshot does not allow DAE, the run MUST fail before provider spawn with `stop_reason = "yolo_requires_dae_provider"`; it MUST NOT silently downgrade to HTE
+L00000172	- `run.started` MUST persist `requested_mode_overlay`, `effective_mode_overlay`, `mode`, `strategy`, `strategy_resolution_reason`, and any active Debug Automation Profile snapshot
+L00000173	
+L00000174	### 3.1 P5 run-mode governance recovery requirements
+L00000175	
+L00000176	- `Decision_Policy.md`, `Run_Modes.md`, and `Progression_Gates.md` sharpened from vague policy drift into implementation-blocking runtime-governance gaps: - `Decision_Policy.md` still lacks startup-recovery defaults, misstates retry ceilings in terms that collide with policy-prohibited derived fields, and leaves backoff plus manual/prerequisite resume ceilings unowned. - `Run_Modes.md` still does not resolve the Contribute(PR) vs DAE isolation conflict, DAE-jail durability across pause/resume, the `yolo` step-1 vs step-7 guard ambiguity, `external_publish_side_effect` behavior inside DAE, `/event` recovery, `attention_required` persistence, blocked semantics, or mid-run account-switch invalidation of committed strategy. - strategy selection remains blind to per-account DAE eligibility and child-run account re-resolution ordering. - `Progression_Gates.md` contains duplicate addenda, unnumbered runtime/governance gate families, missing GATE-007 / GATE-008 placement.
+L00000177	- Runtime-governance docs continue to sharpen rather than stabilize: - startup recovery remains split across policy, executor, and storage docs with no single owner deciding how interrupted attempts become `stale_historical` vs rehydrated vs `startup_recovered`. - retry/backoff policy is now more clearly blocked on counter-family ownership because `retry_count` is display-only yet policy wording still acts like a generic “attempts” ceiling is enough. - recovery actions still leak unstable UI labels (`deny`, `manual fix`, `abort node`) even though HITL/runtime docs are closer to a canonical `allowed_action_ids[]` family. - Contribute(PR) vs DAE isolation is now a three-way collision between PR branch ownership, worktree/jail isolation, and provider execution context. - `yolo` is still overstated as approval-free even though non-bypassable step-7 guards remain in force.
+L00000178	- ELI5/Expert currently risks becoming a synonym generator. - the safer rule is: simplify explanation depth, not canonical object names - for example, `Feature Seam` should remain the term in both modes even if the ELI5 explanation is plainer
+L00000179	- Define intent-specific orchestration/worktree modes explicitly, including single-branch exceptions and contract-unification conflict policy.
+L00000180	- current work item posture remains `active`, but the center of gravity is shifting from exploration to owner-hardening
+L00000181	
+L00000182	
+L00000183	ContractRef: ContractName:Plans/Permissions_System.md, ContractName:Plans/storage-plan.md, ContractName:Plans/assistant-chat-design.md
+L00000184	
+L00000185	## 4. Budget defaults
+L00000186	
+L00000187	### 4.1 Concurrency caps (all strategies)
+L00000188	
+L00000189	Three-level concurrency limits apply globally across all run strategies and MUST NOT be overridden by Persona or overlay configuration alone.
+L00000190	
+L00000191	ContractRef: ContractName:Plans/orchestrator-subagent-integration.md, ContractName:Plans/Executor_Protocol.md
+L00000192	
+L00000193	| Cap | Default | Scope | Kill / behavior |
+L00000194	|---|---|---|---|
+L00000195	| `max_concurrent_crews_per_platform` | 4 | Per provider platform | New crew spawn requests queue until a slot is free. |
+L00000196	| `max_concurrent_agents_per_crew` | 8 | Per active crew context | Reviewer or worker spawns queue rather than widening the limit. |
+L00000197	| `max_total_active_agents` | 32 | Entire run | Global cap across all crews and direct child agents. |
+L00000198	
+L00000199	Concurrency SSOT defaults are `max_concurrent_crews_per_platform=4`, `max_concurrent_agents_per_crew=8`, and `max_total_active_agents=32`; any 5-crews / 10-agents wording in downstream docs is stale drift and must be retired rather than treated as an alternate cap.
+L00000200	
+L00000201	ContractRef: ContractName:Plans/orchestrator-subagent-integration.md, ContractName:Plans/interview-subagent-integration.md
+L00000202	
+L00000203	### 4.2 Run-envelope budget fields
+L00000204	
+L00000205	Budget limits are enforced by the run supervisor regardless of strategy. They are frozen into the run envelope and survive pause/resume for the same `run_id`.
+L00000206	
+L00000207	Legacy A2A/OpenCode gap wording may call these ceilings `max_tokens` and `max_wall_time`; the canonical run-envelope keys are `max_estimated_tokens` and `max_wall_ms`, and both feed the budget and kill-condition enforcement below.
+L00000208	
+L00000209	ContractRef: ContractName:Plans/Executor_Protocol.md, ContractName:Plans/Contracts_V0.md
+L00000210	
+L00000211	| Budget key | Default | Applies to | Meaning |
+L00000212	|---|---|---|---|
+L00000213	| `max_nesting_depth` | 4 | All modes | Maximum orchestrator -> crew -> agent -> child nesting depth before `kill.recursion_depth`. |
+L00000214	| `max_total_spawned_agents` | 99 | All modes | Hard cap on total spawned agents before `kill.agent_count`. |
+L00000215	| `max_tool_rounds` | 200 | All modes | Same-level tool-call round ceiling per agent before `kill.tool_round_limit`. |
+L00000216	| `max_wall_ms` | 1200000 | All modes | Maximum wall-clock duration for the run. |
+L00000217	| `max_estimated_tokens` | 80000 | All modes | Estimated token ceiling for the run budget. |
+L00000218	| `max_same_shell_failure` | 3 | DAE / host-managed shell surfaces | Consecutive failures of the same canonical shell fingerprint before stop. |
+L00000219	| `max_write_thrashing` | 5 writes / 10 min | DAE / hosted mutation paths | Same normalized file identity rewritten too often in a sliding window. |
+L00000220	| `max_retryable_errors` | 3 | All modes | Ceiling on retryable provider/executor failures before run termination. |
+L00000221	| `task_timeout_ms` | inherit parent remaining budget | Subagent task envelope | Per-task cap; may narrow parent budget but MUST NOT exceed it. |
+L00000222	| `warn_budget_pct` | 80 | Per-run and per-session budgets | Warning threshold for pre-request estimates and post-response actual cost tracking before budget enforcement terminates the run. |
+L00000223	
+L00000224	ContractRef: ContractName:Plans/CLI_Bridged_Providers.md, ContractName:Plans/orchestrator-subagent-integration.md
+L00000225	
+L00000226	Interpretation rules:
+L00000227	- `max_tool_rounds` is distinct from `max_nesting_depth`; one limits same-level iteration, the other limits recursive delegation depth.
+L00000228	- Canonical run-envelope exact defaults are `max_nesting_depth=4`, `max_total_spawned_agents=99`, and `max_tool_rounds=200`; the kill table consumes those fields without inventing alternate caps.
+L00000229	- Budget overrides MAY narrow defaults per run, but MUST NOT widen beyond the hard policy ceiling.
+L00000230	- Queueing at concurrency caps is deterministic; PM MUST NOT silently discard or auto-widen queued work.
+L00000231	
+L00000232	ContractRef: ContractName:Plans/Permissions_System.md, ContractName:Plans/storage-plan.md
+L00000233	
+L00000234	## 5. Kill conditions and enforcement
+L00000235	
+L00000236	<a id="KILL-CONDITIONS"></a>
+L00000237	
+L00000238	A kill condition triggers immediate run termination with outcome `done.failed` and a machine-readable reason code.
+L00000239	
+L00000240	Run outcome naming follows a two-family reason-code contract: `kill.*` names pre-dispatch or `/active-kill` supervisor triggers, while `done.*` names terminal outcomes recorded after shutdown, usage, or recovery finalization.
+L00000241	
+L00000242	ContractRef: ContractName:Plans/FileSafe.md, ContractName:Plans/CLI_Bridged_Providers.md
+L00000243	
+L00000244	### 5.1 Universal kill conditions (all strategies)
+L00000245	
+L00000246	Universal termination conditions resolve to canonical stop reasons before the run is finalized.
+L00000247	
+L00000248	ContractRef: ContractName:Plans/Executor_Protocol.md, ContractName:Plans/Permissions_System.md, ContractName:Plans/Contracts_V0.md
+L00000249	
+L00000250	| Condition | Trigger | Default threshold | Configurable | Terminal stop reason |
+L00000251	|---|---|---|---|---|
+L00000252	| `kill.recursion_depth` | Nesting depth exceeds `max_nesting_depth` | 4 | Yes | `kill.recursion_depth` |
+L00000253	| `kill.agent_count` | Total spawned agents exceed `max_total_spawned_agents` | 99 | Yes | `kill.agent_count` |
+L00000254	| `kill.tool_round_limit` | Tool-call rounds exceed `max_tool_rounds` | 200 | Yes | `kill.tool_round_limit` |
+L00000255	| `done.task_timeout` | Individual task exhausts `task_timeout_ms` or inherited remaining budget and the grace-period shutdown path completes | Per envelope | Yes | `done.task_timeout` |
+L00000256	| `kill.budget_exceeded` | Pre-request estimate exceeds the remaining run or session budget before dispatch | Per run/session budget | Yes | `kill.budget_exceeded` |
+L00000257	| `stop.identical_failure` | Same `(tool_name, args_hash, error_message)` triple observed twice consecutively | exact-match | No | `stop.identical_failure` |
+L00000258	| `stop.user_cancel` | User explicitly cancels the run | - | No | `stop.user_cancel` plus `done.cancelled` outcome |
+L00000259	| `kill.hte_tool_observed` | Provider-originated tool call appears during HTE | 0 observed | No | `kill.hte_tool_observed` |
+L00000260	
+L00000261	Rules:
+L00000262	- `done.task_timeout` is the canonical terminal stop reason for elapsed-budget exhaustion after graceful teardown. Internal supervisor bookkeeping may classify the pre-terminal trigger as timeout exhaustion, but consumers MUST persist and inspect `done.task_timeout`; `kill.task_timeout` is retired as a consumer-facing terminal alias.
+L00000263	ContractRef: ContractName:Plans/orchestrator-subagent-integration.md, ContractName:Plans/Contracts_V0.md, ContractName:Plans/Executor_Protocol.md
+L00000264	- `kill.budget_exceeded` remains pre-dispatch only. Post-response budget-overrun cases use terminal `done.budget_exceeded` after usage has been durably recorded and MUST NOT be folded back into the pre-dispatch row above.
+L00000265	ContractRef: ContractName:Plans/usage-feature.md, ContractName:Plans/storage-plan.md, ContractName:Plans/Contracts_V0.md
+L00000266	
+L00000267	#### Exact-match doom-loop guard
+L00000268	
+L00000269	The doom-loop guard is exact-match only. PM MUST compare the same `(tool_name, serialized_args_hash, error_message)` triple at the same nesting level across consecutive attempts. Fuzzy matching, substring matching, and `looks similar` heuristics are prohibited for this terminal stop condition.
+L00000270	
+L00000271	Broader retry suppression for substantially equivalent failures is owned by `Plans/Tools.md` and does not rename or replace this exact-match stop condition.
+L00000272	
+L00000273	ContractRef: ContractName:Plans/Executor_Protocol.md, ContractName:Plans/Architecture_Invariants.md, ContractName:Plans/Tools.md
+L00000274	
+L00000275	#### Signal handling and process lifecycle
+L00000276	
+L00000277	PM entrypoints MUST establish the canonical shutdown root with `signal.NotifyContext` or an equivalent once-owned signal fan-out before provider, MCP, terminal, or LSP helpers are started.
+L00000278	
+L00000279	ContractRef: ContractName:Plans/Executor_Protocol.md, ContractName:Plans/Contracts_V0.md, ContractName:Plans/storage-plan.md
+L00000280	
+L00000281	`SIGTERM` and `SIGINT` request graceful shutdown. `SIGHUP` triggers config reload, not shutdown. Every managed provider, MCP, terminal, and LSP subprocess MUST run in its own process group (`setsid` on Unix; `CREATE_NEW_PROCESS_GROUP` on Windows) so signal delivery stays scoped to the `/process-group` rather than individual PIDs.
+L00000282	
+L00000283	Windows MCP subsystem shutdown uses `CREATE_NEW_PROCESS_GROUP`; graceful cancellation sends `CTRL_BREAK_EVENT`, waits 3 seconds, then uses `TerminateProcess` for the still-live child process group. Windows paths that may exceed ordinary path length limits are normalized with the `\\?\` long-path prefix before process launch or teardown bookkeeping.
+L00000284	
+L00000285	This lifecycle section replaces over-summarized process-shutdown wording by naming the entrypoint signal root, process-group rule, platform-specific teardown sequence, and orphaned-process RAM leak prevention rationale.
+L00000286	
+L00000287	Grace periods:
+L00000288	- provider processes: 5 seconds, then force terminate
+L00000289	- MCP and LSP subprocesses: 3 seconds, then force terminate
+L00000290	- shutdown entrypoints MUST be guarded by an idempotent `Once`-style primitive; re-entrant shutdown is a safe no-op
+L00000291	
+L00000292	ContractRef: ContractName:Plans/storage-plan.md, ContractName:Plans/LSPSupport.md, ContractName:Plans/Executor_Protocol.md
+L00000293	
+L00000294	Shutdown durability rules:
+L00000295	- before force termination or final outcome emission, PM flushes buffered normalized events and seglog writers
+L00000296	- if durability flush fails, PM emits a structured diagnostic and the terminal outcome escalates to `done.crashed` rather than claiming a clean shutdown
+L00000297	- user-driven or parent-driven cancellation produces `done.cancelled`, not `done.failed`, even if force termination is needed after the grace window
+L00000298	
+L00000299	ContractRef: ContractName:Plans/storage-plan.md, ContractName:Plans/Architecture_Invariants.md, ContractName:Plans/Contracts_V0.md
+L00000300	
+L00000301	Startup recovery:
+L00000302	- if PM starts and finds an unfinished run with no canonical terminal `done` event, it performs crash recovery against the last durable seglog state
+L00000303	- recovered crash cases synthesize terminal metadata with `done.crashed` and `stop_reason = crash_recovered`
+L00000304	- PM MUST NOT silently drop an incomplete run or rewrite it as `done.failed` without the crash marker
+L00000305	
+L00000306	ContractRef: ContractName:Plans/Contracts_V0.md, ContractName:Plans/storage-plan.md, ContractName:Plans/Architecture_Invariants.md
+L00000307	
+L00000308	##### Resource disposal and health monitoring
+L00000309	
+L00000310	Runtime teardown is an owned lifecycle contract, not best-effort cleanup:
+L00000311	- PM closes DB handles, MCP sessions, terminal shells, temporary files, and owned subprocess groups in a deterministic teardown order
+L00000312	- a failed teardown step emits a structured diagnostic; PM MUST NOT silently reuse poisoned process state or abandoned shell/session state
+L00000313	- helper restarts mint new helper/runtime identity for the restarted process instead of pretending continuity through a crashed or leaked subprocess
+L00000314	
+L00000315	ContractRef: ContractName:Plans/storage-plan.md, ContractName:Plans/Tools.md, ContractName:Plans/orchestrator-subagent-integration.md
+L00000316	
+L00000317	Long-lived helper health monitoring is mandatory:
+L00000318	- PM tracks resident-set growth or equivalent memory-pressure signals for provider, MCP, terminal, and LSP helpers
+L00000319	- sustained growth beyond configured restart thresholds emits `diagnostic(category="resource_pressure")` or equivalent structured telemetry
+L00000320	- when a restart is required, PM performs controlled teardown or failover rather than silently leaving the degraded helper attached to future runs
+L00000321	
+L00000322	ContractRef: ContractName:Plans/Architecture_Invariants.md, ContractName:Plans/storage-plan.md, ContractName:Plans/Executor_Protocol.md
+L00000323	### 5.2 HTE-specific kill conditions
+L00000324	| Condition | Reason code | Description |
+L00000325	|-----------|-------------|-------------|
+L00000326	| Provider tool-call observed | `kill.hte_tool_observed` | Any `tool_use` event observed in the provider stream. HTE MUST NOT allow delegated tool execution. |
+L00000327	
+L00000328	ContractRef: ContractName:Plans/Executor_Protocol.md, ContractName:Plans/Architecture_Invariants.md
+L00000329	
+L00000330	`kill.hte_tool_observed` contract:
+L00000331	- The **first** provider-originated `tool_use` observed during HTE MUST terminate the run immediately.
+L00000332	- The terminal normalized `done` event MUST set `stop_reason = "kill.hte_tool_observed"`, and persisted `run.completed` MUST carry the same `stop_reason`.
+L00000333	
+L00000334	ContractRef: ContractName:Plans/Run_Modes.md, ContractName:Plans/Contracts_V0.md, ContractName:Plans/Tools.md
+L00000335	
+L00000336	### 5.3 DAE-specific kill conditions
+L00000337	| Condition | Reason code | Description |
+L00000338	|-----------|-------------|-------------|
+L00000339	| Repeated shell failure | `kill.shell_failure` | Same canonical shell command fails `max_same_shell_failure` consecutive times. |
+L00000340	| Write thrashing | `kill.write_thrash` | Same file written more than `max_write_thrashing` times within 10 minutes. |
+L00000341	
+L00000342	`kill.shell_failure` counting contract:
+L00000343	- a shell failure increments the streak only when an actually executed canonical shell tool invocation ends with `tool_result.ok == false`, non-zero exit, timeout, or signal termination
+L00000344	- permission denials, FileSafe blocks, validation failures, missing execution due to policy, and synthesized reconciler closures do **not** count as shell failures
+L00000345	- the canonical shell fingerprint is `(tool_name, normalized_command, normalized_cwd)` after adapter normalization, including removal of provider wrapper boilerplate such as an outer `bash -lc` added by Puppet Master
+L00000346	- user-interface-only terminal actions such as reveal, pin, rename, clear-scrollback, or pane movement do **not** count as executed shell invocations
+L00000347	- explicit terminal restart or explicit session replacement resets shell-failure continuity because a new `terminal_session_id` is created
+L00000348	- success of the same fingerprint resets the streak to zero; a different executed fingerprint also resets the previous fingerprint's streak
+L00000349	- Compatibility labels are canonicalized here: `shell-fingerprint` means the canonical shell fingerprint, `terminal-normalized` means the terminal normalized `done` and `/audit` outcome family, and `/replace/stop` covers explicit session replacement, restart, or user/parent stop paths.
+L00000350	
+L00000351	ContractRef: ContractName:Plans/Tools.md, ContractName:Plans/storage-plan.md, ContractName:Plans/UI_Command_Catalog.md
+L00000352	
+L00000353	`kill.write_thrash` counting contract:
+L00000354	- file identity is the normalized project-relative real path of the mutated jail path after symlink / `.` / `..` collapse
+L00000355	- a qualifying write is an actual content-changing create / overwrite / append / rename-destination / delete observed from the authoritative jail diff or equivalent live mutation metadata
+L00000356	- denied, blocked, no-diff, rollback, and Puppet-Master-owned post-processing writes do **not** count
+L00000357	- the window is a **sliding** 10-minute window using the run supervisor's monotonic clock; a kill occurs immediately when a new qualifying write would make the count exceed the configured ceiling for that file
+L00000358	
+L00000359	ContractRef: ContractName:Plans/FileSafe.md, ContractName:Plans/CLI_Bridged_Providers.md, ContractName:Plans/storage-plan.md
+L00000360	### 5.4 DAE end-of-run scans (mandatory)
+L00000361	When a DAE run completes (any terminal outcome), the following scans MUST execute before the outcome is finalized:
+L00000362	1. **FileSafe write-scope audit** — verify all files touched during the run are within the declared write scope.
+L00000363	2. **Security-filter scan** — verify no sensitive-file access violations occurred.
+L00000364	3. **Diff reconciliation** — compare the provider's reported changes against actual workspace diff to detect unreported mutations.
+L00000365	
+L00000366	Scan failures escalate the outcome to `done.failed` with reason `kill.post_scan_failure`.
+L00000367	The failing scan name and details MUST be persisted in `done.stop_reason` / `run.completed.stop_reason` metadata (for example `scan_name = "diff_reconciliation"`).
+L00000368	
+L00000369	ContractRef: ContractName:Plans/FileSafe.md, ContractName:Plans/CLI_Bridged_Providers.md
+L00000370	
+L00000371	---
+L00000372	
+L00000373	## 6. Run outcome taxonomy
+L00000374	
+L00000375	Every run terminates with exactly one canonical coarse outcome value.
+L00000376	
+L00000377	ContractRef: ContractName:Plans/Contracts_V0.md#EventRecord, PolicyRule:Decision_Policy.md§2
+L00000378	
+L00000379	| Outcome | Meaning |
+L00000380	|---------|---------|
+L00000381	| `done.ok` | Run completed successfully; all objectives met. |
+L00000382	| `done.failed` | Run terminated due to a handled error, kill condition, or post-run scan failure. |
+L00000383	| `done.deferred` | Run paused; work remains but requires external input such as HITL approval. |
+L00000384	| `done.rotated` | Run terminated and a follow-up run was spawned for continuation. |
+L00000385	| `done.gutter` | Run terminated without meaningful progress; provider produced no actionable output. |
+L00000386	| `done.cancelled` | Run was explicitly cancelled by the user, parent, or canonical timeout or stop path. |
+L00000387	| `done.crashed` | PM or a managed runtime crashed or lost durability before clean terminal finalization. |
+L00000388	
+L00000389	ContractRef: ContractName:Plans/Tools.md, ContractName:Plans/storage-plan.md
+L00000390	
+L00000391	Rules:
+L00000392	- the outcome MUST be recorded in the terminal `done` event of the normalized provider stream and persisted via `EventRecord` to seglog
+L00000393	- normalized `done.payload.status` remains a coarse transport-facing status (`success | cancelled | failed`), while `done.payload.outcome` carries the canonical taxonomy above
+L00000394	- `done.cancelled` is for explicit cancellation semantics; `done.failed` is not a catch-all for stop paths that were intentionally requested
+L00000395	- `done.crashed` is reserved for crash or durability-loss scenarios, including startup crash recovery
+L00000396	- user-driven terminal restart or replacement mints a new runtime identity instead of mutating the prior run outcome in place
+L00000397	- clearing scrollback or revealing an existing terminal session does not mint a new run outcome
+L00000398	
+L00000399	ContractRef: ContractName:Plans/UI_Command_Catalog.md, ContractName:Plans/Section15_MVP_Promoted_Features_Spec.md, ContractName:Plans/storage-plan.md
+L00000400	
+L00000401	### 6.1 Canonical terminal stop-reason refinements
+L00000402	
+L00000403	The coarse outcome taxonomy above is paired with stable terminal stop reasons when the runtime needs more precision:
+L00000404	- `kill.budget_exceeded` = a pre-dispatch estimate prevented the request from starting
+L00000405	ContractRef: ContractName:Plans/usage-feature.md, ContractName:Plans/storage-plan.md, ContractName:Plans/Contracts_V0.md
+L00000406	- `done.budget_exceeded` = post-response actual cost crossed the run or session budget after usage was durably recorded
+L00000407	ContractRef: ContractName:Plans/usage-feature.md, ContractName:Plans/storage-plan.md, ContractName:Plans/Contracts_V0.md
+L00000408	- `done.task_timeout` = timeout expired, grace-period shutdown ran, and the run or child task terminated for elapsed budget exhaustion
+L00000409	ContractRef: ContractName:Plans/orchestrator-subagent-integration.md, ContractName:Plans/Contracts_V0.md, ContractName:Plans/Executor_Protocol.md
+L00000410	
+L00000411	Rules:
+L00000412	- `done.task_timeout` is the canonical terminal stop reason after timeout exhaustion completes the grace-period shutdown path. `kill.task_timeout` may exist as internal supervisor bookkeeping, but it MUST NOT be emitted as the consumer-facing terminal alias.
+L00000413	ContractRef: ContractName:Plans/Run_Modes.md, ContractName:Plans/orchestrator-subagent-integration.md, ContractName:Plans/Contracts_V0.md
+L00000414	- These terminal stop reasons MUST be preserved in the terminal `done` payload and persisted `run.completed` metadata. Consumers MUST NOT collapse post-response budget overruns back into pre-dispatch naming, and `done.timeout` is retired as a synonym.
+L00000415	ContractRef: ContractName:Plans/storage-plan.md, ContractName:Plans/Run_Modes.md, ContractName:Plans/Architecture_Invariants.md
+L00000416	## 7. Mode effects on context management
+L00000417	
+L00000418	Mode influences context compilation, compaction, and rotation behavior. Detailed context-compilation and compaction contracts are owned by `Plans/Prompt_Pipeline.md`; `Plans/FileSafe.md` owns safety checks over compiled output only. This section defines only the mode-specific deltas.
+L00000419	
+L00000420	ContractRef: ContractName:Plans/Prompt_Pipeline.md, ContractName:Plans/FileSafe.md, ContractName:Plans/Run_Modes.md
+L00000421	
+L00000422	| Mode | Context compilation | Compaction | Rotation |
+L00000423	|------|---------------------|------------|----------|
+L00000424	| `ask` | Read-only context only (no plan/write-scope metadata injected). | Standard compaction thresholds apply. | No rotation (single-turn expected). |
+L00000425	| `plan` | Read-only context + plan-output scaffold. | Standard compaction thresholds apply. | No rotation (planning is bounded). |
+L00000426	| `regular` | Full execution context assembled per `Plans/Prompt_Pipeline.md`; FileSafe applies compiled-output safety checks before execution. | Standard compaction thresholds apply. | Rotation allowed; triggers `done.rotated` outcome. |
+L00000427	| `yolo` | Full execution context assembled per `Plans/Prompt_Pipeline.md`; FileSafe applies compiled-output safety checks before execution. | Standard compaction thresholds apply. | Rotation allowed; triggers `done.rotated` outcome. |
+L00000428	
+L00000429	Canonical context overlays:
+L00000430	- `ask` -> `read_only`
+L00000431	- `plan` -> `read_only + plan_output_scaffold_v1`
+L00000432	- `regular`, `yolo` -> `full_execution`
+L00000433	
+L00000434	`read_only` excludes mutation-authority metadata (write scopes, DAE reconciliation metadata, and execution affordances). `plan_output_scaffold_v1` adds a deterministic plan/todo scaffold only. The overlay is applied during prompt/context compilation before attachments and the Injected Context breakdown are emitted. Child/subagent/rotated follow-up runs inherit the parent effective overlay and may narrow but MUST NOT widen a read-only overlay into `full_execution`.
+L00000435	
+L00000436	ContractRef: ContractName:Plans/Prompt_Pipeline.md, ContractName:Plans/Contracts_V0.md, ContractName:Plans/storage-plan.md
+L00000437	
+L00000438	Rotation decision boundary:
+L00000439	- Compaction/pruning is attempted first against the final assembled payload.
+L00000440	- `ask` and `plan` are rotation-ineligible; if the payload still cannot fit after deterministic compaction, the run terminates under the normal failure/budget taxonomy rather than spawning a follow-up run.
+L00000441	- `regular` and `yolo` are rotation-eligible; a rotated follow-up run inherits `thread_id`, `mode`, `strategy`, effective runtime state, and a narrowed-or-equal tool-policy snapshot.
+L00000442	
+L00000443	ContractRef: ContractName:Plans/Prompt_Pipeline.md, ContractName:Plans/Contracts_V0.md, ContractName:Plans/Permissions_System.md
+L00000444	
+L00000445	---
+L00000446	
+L00000447	## 8. OpenCode baseline
+L00000448	
+L00000449	OpenCode material is reference-only background. Puppet Master run-mode semantics are PM-owned canon.
+L00000450	
+L00000451	ContractRef: ContractName:Plans/Permissions_System.md, ContractName:Plans/assistant-chat-design.md
+L00000452	
+L00000453	Interpretation rules:
+L00000454	- PM is not “based on” OpenCode in a normative sense
+L00000455	- external examples may inform terminology or contrast, but they do not define PM mode behavior
+L00000456	- PM mode, approval, TODO, and web-tool semantics are resolved by PM owner docs when any external baseline conflicts
+L00000457	
+L00000458	---
+L00000459	
+L00000460	## 9. Puppet Master deltas
+L00000461	
+L00000462	Mode selection does not remove read-only repository search: agents and delegated read-only children may use `grep` in every runtime mode subject to the tool registry and permission policy, while mutation remains bounded by the active mode's authority ceiling.
+L00000463	
+L00000464	ContractRef: ContractName:Plans/Run_Modes.md, ContractName:Plans/Tools.md, ContractName:Plans/Permissions_System.md
+L00000465	
+L00000466	### 9.1 `ask`
+L00000467	
+L00000468	`ask` is read-only. It may launch delegated read-only research children but may not launch execution or mutation children.
+L00000469	
+L00000470	ContractRef: ContractName:Plans/Tools.md, ContractName:Plans/Permissions_System.md, ContractName:Plans/assistant-chat-design.md
+L00000471	
+L00000472	### 9.2 `plan`
+L00000473	
+L00000474	`plan` remains a read-first mode with explicit planning artifacts and TODO projection, not a silent auto-deny shell around web tools.
+L00000475	
+L00000476	ContractRef: ContractName:Plans/Tools.md, ContractName:Plans/assistant-chat-design.md, ContractName:Plans/Permissions_System.md
+L00000477	
+L00000478	Rules:
+L00000479	- read-only delegated child runs remain allowed when they stay within the parent mode ceiling
+L00000480	- read-only planning tools such as `todoread`, `todowrite`, limited read-only `task`, read/navigation-only `lsp`, and external-read `/web` family operations go through the normal permission stack in Plan mode rather than being auto-denied as a family
+L00000481	- `websearch`, `webfetch`, `webextract`, `webresearch`, `webcrawl`, and `webmap` remain ask-gated rather than auto-denied
+L00000482	- Ask, Plan, and Deep Plan may self-initiate read-only web, Site Reader, and browser-evidence actions when current, external, URL, visual, dynamic-page, docs/issues/PR, compare, research, or deep-research evidence matters. Strict no-network, admin policy, private-host, robots, or mode-specific denial still blocks execution, but the block is rendered as a visible denied/unavailable card with recovery actions rather than silently hiding the capability.
+L00000483	- Deep Plan's question-driven loop feeds the same normalized TODO projection used by execution
+L00000484	### 9.3 `regular`
+L00000485	
+L00000486	`regular` allows full child-run behavior subject to permission, provider, and capability rules.
+L00000487	
+L00000488	ContractRef: ContractName:Plans/Tools.md, ContractName:Plans/Models_System.md, ContractName:Plans/Permissions_System.md
+L00000489	
+L00000490	### 9.4 `yolo`
+L00000491	
+L00000492	`yolo` may permit broader execution behavior, but it still cannot bypass child capability narrowing, provider restrictions, or the Copilot-native routing exception.
+L00000493	
+L00000494	ContractRef: ContractName:Plans/Models_System.md, ContractName:Plans/CLI_Bridged_Providers.md, ContractName:Plans/Permissions_System.md
+L00000495	
+L00000496	### 9.5 Crew overlay
+L00000497	
+L00000498	Crew is an overlay over the current parent mode, not a separate runtime mode. A crew launched from `plan` remains read-only; a crew launched from `regular` or `yolo` inherits that higher parent ceiling while still respecting all other constraints.
+L00000499	
+L00000500	ContractRef: ContractName:Plans/orchestrator-subagent-integration.md, ContractName:Plans/assistant-chat-design.md, ContractName:Plans/FinalGUISpec.md
+L00000501	## 10. Acceptance criteria
+L00000502	These criteria are testable assertions that MUST hold for any conforming implementation.
+L00000503	
+L00000504	ContractRef: ContractName:Plans/Run_Modes.md, ContractName:Plans/Progression_Gates.md
+L00000505	
+L00000506	<a id="AC-01"></a>
+L00000507	**AC-01:** In HTE strategy, any `tool_use` event observed in the provider stream MUST trigger kill condition `kill.hte_tool_observed` and terminate the run with `done.failed`.
+L00000508	ContractRef: ContractName:Plans/Run_Modes.md, ContractName:Plans/Tools.md
+L00000509	
+L00000510	
+L00000511	<a id="AC-02"></a>
+L00000512	**AC-02:** In DAE strategy, end-of-run scans (§5.4) MUST execute for every terminal outcome. A scan failure MUST escalate the outcome to `done.failed`.
+L00000513	ContractRef: ContractName:Plans/Run_Modes.md, ContractName:Plans/Tools.md
+L00000514	
+L00000515	
+L00000516	<a id="AC-03"></a>
+L00000517	**AC-03:** Mode selection is deterministic: given identical run envelope and config inputs, the resolution algorithm (§3) MUST produce the same `(mode, strategy)` pair.
+L00000518	ContractRef: ContractName:Plans/Run_Modes.md, ContractName:Plans/Contracts_V0.md
+L00000519	
+L00000520	
+L00000521	<a id="AC-04"></a>
+L00000522	**AC-04:** In `ask` and `plan` modes, no project-file mutation may occur. Any write attempt to a project file MUST be blocked by the permission layer (not merely by FileSafe).
+L00000523	ContractRef: ContractName:Plans/Permissions_System.md, ContractName:Plans/FileSafe.md
+L00000524	
+L00000525	
+L00000526	<a id="AC-05"></a>
+L00000527	**AC-05:** In `yolo` mode, FileSafe guards MUST remain active. Disabling FileSafe while `yolo` is active MUST produce a user-visible warning (per `Plans/FileSafe.md` §10a).
+L00000528	ContractRef: ContractName:Plans/FileSafe.md, ContractName:Plans/Run_Modes.md
+L00000529	
+L00000530	
+L00000531	<a id="AC-06"></a>
+L00000532	**AC-06:** Budget limits (§4) MUST be enforced regardless of mode. Exceeding any budget MUST trigger the corresponding kill condition.
+L00000533	ContractRef: ContractName:Plans/Run_Modes.md, ContractName:Plans/Progression_Gates.md
+L00000534	
+L00000535	
+L00000536	<a id="AC-07"></a>
+L00000537	**AC-07:** Every run MUST terminate with exactly one outcome from the taxonomy (§6), recorded in the `done` event and persisted to seglog.
+L00000538	ContractRef: ContractName:Plans/Contracts_V0.md#EventRecord, ContractName:Plans/storage-plan.md
+L00000539	
+L00000540	
+L00000541	<a id="AC-08"></a>
+L00000542	**AC-08:** UI/workflow state MUST normalize deterministically into the canonical runtime mode enum before strategy selection. `Interview`, `BrainStorm`, and `Crew` MUST NOT create additional runtime mode values.
+L00000543	ContractRef: ContractName:Plans/Run_Modes.md, ContractName:Plans/Contracts_V0.md
+L00000544	
+L00000545	
+L00000546	<a id="AC-09"></a>
+L00000547	**AC-09:** In `regular` mode, `cli_bridged_strategy = "dae"` with `dae_allowed != true` MUST deterministically fall back to HTE and persist `strategy_resolution_reason = "regular_dae_disallowed"`.
+L00000548	ContractRef: ContractName:Plans/Run_Modes.md, ContractName:Plans/CLI_Bridged_Providers.md
+L00000549	
+L00000550	
+L00000551	<a id="AC-10"></a>
+L00000552	**AC-10:** In `yolo` mode, a provider with `dae_allowed != true` MUST fail before provider spawn with `stop_reason = "yolo_requires_dae_provider"`; it MUST NOT silently downgrade to HTE.
+L00000553	ContractRef: ContractName:Plans/Run_Modes.md, ContractName:Plans/CLI_Bridged_Providers.md
+L00000554	
+L00000555	
+L00000556	<a id="AC-11"></a>
+L00000557	**AC-11:** `kill.shell_failure` counts only actually executed shell failures for one canonical shell fingerprint. Policy denials, FileSafe blocks, UI-only terminal actions, and different shell fingerprints MUST NOT increment the same streak.
+L00000558	ContractRef: ContractName:Plans/Tools.md, ContractName:Plans/storage-plan.md
+L00000559	
+L00000560	
+L00000561	<a id="AC-12"></a>
+L00000562	**AC-12:** `kill.write_thrash` counts only qualifying content-changing writes to one normalized file identity within a sliding 10-minute window. Writes to different files, aged-out writes, and denied / blocked / no-diff operations MUST NOT trigger the ceiling.
+L00000563	ContractRef: ContractName:Plans/FileSafe.md, ContractName:Plans/storage-plan.md
+L00000564	
+L00000565	
+L00000566	<a id="AC-13"></a>
+L00000567	**AC-13:** Child/subagent/rotated follow-up runs MUST inherit the parent effective context overlay. A read-only parent run (`ask` or `plan`) MUST NOT widen into `full_execution` context in any child run.
+L00000568	ContractRef: ContractName:Plans/Run_Modes.md, ContractName:Plans/Contracts_V0.md
+L00000569	
+L00000570	
+L00000571	<a id="AC-14"></a>
+L00000572	**AC-14:** When a shell-backed invocation is bound to a terminal session, later `Open in Terminal` or `Show Terminal` actions MUST reveal that same `terminal_session_id` when it still exists instead of spawning a duplicate shell.
+L00000573	ContractRef: ContractName:Plans/Section15_MVP_Promoted_Features_Spec.md, ContractName:Plans/UI_Command_Catalog.md
+L00000574	
+L00000575	
+L00000576	<a id="AC-15"></a>
+L00000577	**AC-15:** Explicit terminal restart or replacement MUST mint a new `terminal_session_id`, while clear-scrollback and reveal-only actions MUST preserve the current runtime identity.
+L00000578	ContractRef: ContractName:Plans/UI_Command_Catalog.md, ContractName:Plans/storage-plan.md
+L00000579	
+L00000580	
+L00000581	ContractRef: ContractName:Plans/Section15_MVP_Promoted_Features_Spec.md, ContractName:Plans/UI_Command_Catalog.md, ContractName:Plans/storage-plan.md
+L00000582	## Retry, Blocking, and Safe-Point Clarification Addendum (2026-03-08)
+L00000583	
+L00000584	### 1. Mode interaction with runtime failure classes
+L00000585	
+L00000586	Run mode does not replace runtime failure classification.
+L00000587	
+L00000588	Required rule:
+L00000589	- `ask`, `plan`, `regular`, and `yolo` all use the shared `failure_class` / `blocked_reason_code` taxonomy
+L00000590	- mode may change which classes are likely, but not the meaning of those classes
+L00000591	
+L00000592	Failover reason codes are part of the shared runtime classification and remain stable across modes.
+L00000593	
+L00000594	Required failover reason codes:
+L00000595	- `hard_exhaustion_failover`
+L00000596	- `auth_failure_failover`
+L00000597	- `workspace_deactivated_failover`
+L00000598	- `model_unsupported_failover`
+L00000599	- `provider_unhealthy_failover`
+L00000600	
+L00000601	Rules:
+L00000602	- failover reason codes are recorded in `reason_codes[]` or the owning runtime/audit envelope for the attempt
+L00000603	- changing from `ask` or `plan` to an execution-capable mode does not rewrite the original failover reason
+L00000604	- provider/account routing surfaces may add selection, preemptive-switch, clamp/substitution, or blocked reasons, but those reason families do not replace failover classification
+L00000605	
+L00000606	ContractRef: ContractName:Plans/Multi-Account.md, ContractName:Plans/Models_System.md, ContractName:Plans/usage-feature.md
+L00000607	
+L00000608	### 2. Ask/plan/headless interaction
+L00000609	
+L00000610	Existing headless behavior remains authoritative:
+L00000611	- when tool policy resolves to `ask` and no interactive approval path is available, the outcome becomes `headless_ask_denied` unless the active flow explicitly supports pending HITL at that boundary
+L00000612	- this is a blocked/denied outcome, not an auto-retry class
+L00000613	
+L00000614	### 3. Counters and kill-switch interaction
+L00000615	
+L00000616	Required clarifications:
+L00000617	- blocked outcomes do not count as qualifying writes
+L00000618	- blocked outcomes do not count as retryable provider errors
+L00000619	- `max_retryable_errors` applies only to retryable classes such as `provider_transient` unless another class is explicitly declared retryable by the shared matrix
+L00000620	
+L00000621	### 4. Safe-point applicability
+L00000622	
+L00000623	Runtime safe points are required only for mutation-capable attempts.
+L00000624	
+L00000625	Rules:
+L00000626	- `ask` and `plan` remain read-only for project files and therefore do not require mutation safe points for ordinary planning/inspection work
+L00000627	- `regular` and `yolo` must create safe points before risky mutation-capable attempts
+L00000628	
+L00000629	### 5. Acceptance criteria
+L00000630	
+L00000631	- Run modes do not invent alternative retry taxonomies.
+L00000632	- Headless ask denial remains explicit and non-magical.
+L00000633	- Blocked outcomes are excluded from write-thrash and retryable-provider ceilings.
+L00000634	- Safe-point creation follows execution authority, not generic run existence.
+L00000635	## Runtime Mode / Blocked Recovery Addendum (2026-03-09)
+L00000636	
+L00000637	Execution mode affects which recovery actions can be taken immediately, but mode does not redefine the underlying classification.
+L00000638	
+L00000639	### Mode rules
+L00000640	
+L00000641	#### Worktree invariant across modes
+L00000642	
+L00000643	All assistant chat modes (Ask, Agent, Plan, Deep Plan, Debug) operate within the active thread's worktree when one is bound:
+L00000644	- Ask mode: reads files from worktree
+L00000645	- Agent mode: edits files in worktree
+L00000646	- Plan/Deep Plan mode: executes plans in worktree context
+L00000647	- Debug mode: debug operations target worktree
+L00000648	
+L00000649	Mode transitions do not change worktree binding — binding is a thread-level property, not a mode-level property.
+L00000650	
+L00000651	Worktree commands (`cmd.chat.worktree.*`) are available in all modes, subject to their when-clauses. The worktree header button and dropdown menu are always visible regardless of current mode.
+L00000652	
+L00000653	ContractRef: ContractName:Plans/assistant-chat-design.md, ContractName:Plans/Executor_Protocol.md, ContractName:Plans/UI_Command_Catalog.md
+L00000654	
+L00000655	- interactive modes may present auth, approval, and clarification actions directly
+L00000656	- non-interactive/headless modes that cannot present a required action yield `blocked_reason_code = headless_ask_denied`
+L00000657	- a later mode change may satisfy the prerequisite and allow resume, but it does not rewrite the original blocked classification
+L00000658	
+L00000659	### Safe-point rule
+L00000660	If policy requires rollback before rerun, changing mode alone is insufficient; the safe-point restore requirement still applies.
+L00000661	## Runtime Mode / Recovery Canonical Alignment (2026-03-09)
+L00000662	
+L00000663	Execution mode affects what can be shown immediately, but does not redefine the runtime taxonomy.
+L00000664	
+L00000665	Rules:
+L00000666	- headless or non-interactive inability to present a required approval/auth prompt yields `blocked_reason_code = headless_ask_denied`
+L00000667	- a later mode change may satisfy the prerequisite, but it does not rewrite the original blocked classification
+L00000668	- mode change plus prerequisite resolution creates a new attempt snapshot rather than mutating the blocked attempt
+L00000669	- if policy requires restore-before-rerun, mode change alone is insufficient; the safe-point restore requirement still applies
+L00000670	## Runtime Mode Interaction with Blocked Recovery Consolidation Addendum (2026-03-09)
+L00000671	
+L00000672	This section defines deferred / Waiting Run Mode Semantics.
+L00000673	
+L00000674	### Run-level state
+L00000675	- A run remains active if any node is runnable.
+L00000676	- If no node is runnable and blocked/backoff/prerequisite-waiting work exists, the run is deferred/waiting rather than terminal.
+L00000677	- Terminal completion requires no runnable, no blocked, no backoff, and no unresolved prerequisite work.
+L00000678	
+L00000679	### Headless blocked discovery
+L00000680	When `headless_ask_denied` blocks work in a non-interactive mode:
+L00000681	- emit a blocked notice with `blocked_reason_code: headless_ask_denied`
+L00000682	- surface blocked node count in CLI/log status summaries
+L00000683	- surface a dashboard badge if a UI session is attached
+L00000684	- include the exact permission or approval that could not be presented interactively
+L00000685	- return `status: "unavailable"` with `reason: "headless"` to tool and operation-card consumers when no interactive presenter exists
+L00000686	- do not offer GUI-only recovery actions such as `Open in Terminal` from a headless context; provide resume guidance, permission-preset adjustment, interactive mode change, fallback strategy when policy allows it, or an orchestrator-facing blockage
+L00000687	
+L00000688	### Safe-point applicability
+L00000689	Run modes do not redefine `mutation_capable`. They only determine whether mutation-capable attempts may occur and therefore whether safe points are relevant in that mode.
+L00000690	## Headless Blocked Discovery and Mutation Classifier Alignment Addendum
+L00000691	
+L00000692	### Headless `headless_ask_denied` discovery
+L00000693	
+L00000694	When `headless_ask_denied` blocks a node in a headless or non-interactive run mode:
+L00000695	
+L00000696	1. A `blocked_notice` event is emitted to the event bus with `blocked_reason_code: headless_ask_denied`.
+L00000697	2. The run status summary (visible in CLI output, logs, or dashboard if a UI session is connected) shows the blocked node count.
+L00000698	3. If the run has a connected UI session, a dashboard notification badge appears.
+L00000699	4. The blocked notice includes the specific permission or approval that was needed and could not be presented interactively.
+L00000700	
+L00000701	Recovery: the user must either (a) change the run mode to interactive and resume, (b) adjust permission presets to pre-approve the needed action, or (c) abort the blocked node.
+L00000702	
+L00000703	### Safe-point and mutation_capable alignment
+L00000704	
+L00000705	`mutation_capable` classification is performed by the **tool registry** (each tool declares `mutation_capable: bool`, default `false`). The **node planner** propagates this to the node plan record. Run modes do not override `mutation_capable` classification but do control whether safe points are created:
+L00000706	
+L00000707	- `regular` and `yolo` modes: safe points are created before mutation-capable attempts as normal.
+L00000708	- `ask` and `plan` modes: no mutation-capable attempts occur by definition, so no safe points are needed.
+L00000709	
+L00000710	ContractRef: ContractName:Plans/Executor_Protocol.md, ContractName:Plans/Tools.md, ContractName:Plans/Contracts_V0.md
+L00000711	## Runtime identity and blocked-policy continuity
+L00000712	
+L00000713	#### Acceptance carry-through
+L00000714	- Transfer execution_role, requested_account_id, operational_identity, account-switch and pressure ownership, blocked_sequence minting, startup recovery handshake, and DAE jail/approval policy into owner and consumer docs
+L00000715	- Carry usage switch-history and usage execution-role follow-through
+L00000716	- In `## Runtime identity and blocked-policy continuity`, require `execution_role`, `requested_account_id`, and `operational_identity` as runtime continuity fields.
+L00000717	- Require blocked-policy continuity to include `blocked_sequence` minting/persistence, startup recovery rehydration, and unchanged DAE jail/approval policy ownership.
+L00000718	- Carry usage switch-history and usage execution-role follow-through across mode changes and blocked recovery.
+L00000719	- cov-159 exact item present: Transfer execution_role, requested_account_id, operational_identity, account-switch and pressure ownership, blocked_sequence minting, startup recovery handshake, and DAE jail/approval policy into owner and consumer docs
+L00000720	- cov-159 exact item present: Carry usage switch-history and usage execution-role follow-through
+L00000721	
+L00000722	## Owner / Consumer Map
+L00000723	
+L00000724	This source-preserving standardization keeps the owner and consumer boundaries stated in the original document body. During this batch, `Plans/Run_Modes.md` remains the owner doc for the behavior described by its preserved sections, while cross-doc ownership follows the ContractRefs and boundary notes already present in the original text.
+L00000725	
+L00000726	ContractRef: ContractName:Plans/Plan_Document_System.md, ContractName:Plans/Bootstrap_Planning_Migration.md
+L00000727	
+L00000728	## PlanUnits
+L00000729	
+L00000730	### RM-002 - Run Modes Document Identity And Compliance
+L00000731	
+L00000732	```yaml
+L00000733	{plan_unit_id: "RM-002", unit_type: "requirement", status: "accepted", owner_doc: "Plans/Run_Modes.md", canonical_text: "Run_Modes.md is the canonical Run Modes SSOT and owner-section document; it preserves Puppet Master naming, deterministic defaults, no-open-question posture, and cross-reference compliance with DRY, contracts, glossary, and decision-policy owners.", gui_related: true, gui_classification_reason: "This unit preserves user-visible GUI, UI, surface, workflow, or visual presentation requirements.", split_recommended: false, depends_on: ["PDS-003", "PDS-004", "PDS-005", "PNC-001", "CV-002"], unblocks: [], acceptance_criteria: ["RM-002 remains addressable as a fine-grained Run Modes PlanUnit with source-span coverage.", "ContractRefs, anchors or aliases, exact tokens, negative constraints, compatibility notes, stale/retired dispositions, owner boundaries, and source lineage from the source spans remain preserved.", "No WorkNodes, NodeSeeds, executable queues, final node manifests, production build tasks, implementation files, or source code are created by this PlanUnit."], validation_surfaces: ["python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits", "python3 scripts/pm-plan-index.py validate"], risk_class: "owner_identity_drift", reasoning_tier: "standard", context_scope: "run_modes_identity", implementation_surfaces: ["Plans/Run_Modes.md"], node_compile_hint: {mode: "run_modes_document_identity", create_worknodes: false}, source_lineage: ["Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:Run_Modes-S0001", "Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:Run_Modes-S0002", "Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:Run_Modes-S0003"], preserved_exact_tokens: ["Run Modes (Canonical SSOT)", "Canonical owner-section requirements", "Identity and blocked-policy transfer cluster", "Puppet Master", "No open questions", "deterministic defaults"], negative_constraints: [], preserved_contractrefs: [], compatibility_only_notes: [], stale_retired_dispositions: [], owner_hints: ["Plans/Run_Modes.md", "Plans/DRY_Rules.md", "Plans/Decision_Policy.md", "Plans/Contracts_V0.md"]}
+L00000734	```
+L00000735	
+L00000736	### RM-003 - Run Modes SSOT And DRY Boundary
+L00000737	
+L00000738	```yaml
+L00000739	{plan_unit_id: "RM-003", unit_type: "requirement", status: "accepted", owner_doc: "Plans/Run_Modes.md", canonical_text: "Run_Modes.md is the single canonical source of truth for run-mode definitions, strategy selection, budgets, and kill conditions; other docs must reference its anchors rather than restating those contracts.", gui_related: false, gui_classification_reason: "This unit preserves backend, runtime, policy, storage, provider, or ownership requirements rather than visual presentation.", split_recommended: false, depends_on: ["PDS-003", "PDS-004", "PDS-005", "PNC-001", "BPM-004"], unblocks: [], acceptance_criteria: ["RM-003 remains addressable as a fine-grained Run Modes PlanUnit with source-span coverage.", "ContractRefs, anchors or aliases, exact tokens, negative constraints, compatibility notes, stale/retired dispositions, owner boundaries, and source lineage from the source spans remain preserved.", "No WorkNodes, NodeSeeds, executable queues, final node manifests, production build tasks, implementation files, or source code are created by this PlanUnit."], validation_surfaces: ["python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits", "python3 scripts/pm-plan-index.py validate"], risk_class: "drY_boundary_drift", reasoning_tier: "standard", context_scope: "run_modes_ssot", implementation_surfaces: ["Plans/Run_Modes.md"], node_compile_hint: {mode: "run_modes_ssot_boundary", create_worknodes: false}, source_lineage: ["Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:Run_Modes-S0004", "Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:Run_Modes-S0005"], preserved_exact_tokens: ["single canonical source of truth", "Plans/Run_Modes.md#MODE-ask", "SSOT references (DRY)", "ContractRef: Primitive:DRYRules, ContractName:Plans/DRY_Rules.md"], negative_constraints: ["Other plan documents MUST reference Run_Modes.md by anchor rather than restating mode definitions, strategy selection rules, budgets, or kill conditions."], preserved_contractrefs: ["ContractRef: Primitive:DRYRules, ContractName:Plans/DRY_Rules.md", "ContractRef: ContractName:Plans/Prompt_Pipeline.md, ContractName:Plans/FileSafe.md, ContractName:Plans/Architecture_Invariants.md"], compatibility_only_notes: [], stale_retired_dispositions: [], owner_hints: ["Plans/Run_Modes.md", "Plans/DRY_Rules.md", "Plans/Glossary.md", "Plans/Decision_Policy.md"]}
+L00000740	```
+L00000741	
+L00000742	### RM-004 - Runtime Mode And Overlay Enum Separation
+L00000743	
+L00000744	```yaml
+L00000745	{plan_unit_id: "RM-004", unit_type: "requirement", status: "accepted", owner_doc: "Plans/Run_Modes.md", canonical_text: "Runtime mode and workflow overlay are separate closed enums: runtime mode is ask|plan|regular|yolo, overlay is none|plan|deep_plan|debug|interview|brainstorm|crew, overlays never widen runtime authority, and children inherit or narrow the parent ceiling.", gui_related: false, gui_classification_reason: "This unit preserves backend, runtime, policy, storage, provider, or ownership requirements rather than visual presentation.", split_recommended: false, depends_on: ["PDS-003", "PDS-004", "PDS-005", "PNC-001", "ACD-006", "UCC-001"], unblocks: [], acceptance_criteria: ["RM-004 remains addressable as a fine-grained Run Modes PlanUnit with source-span coverage.", "ContractRefs, anchors or aliases, exact tokens, negative constraints, compatibility notes, stale/retired dispositions, owner boundaries, and source lineage from the source spans remain preserved.", "No WorkNodes, NodeSeeds, executable queues, final node manifests, production build tasks, implementation files, or source code are created by this PlanUnit."], validation_surfaces: ["python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits", "python3 scripts/pm-plan-index.py validate"], risk_class: "runtime_enum_drift", reasoning_tier: "standard", context_scope: "run_mode_definition", implementation_surfaces: ["Plans/Run_Modes.md"], node_compile_hint: {mode: "runtime_mode_overlay_enum_boundary", create_worknodes: false}, source_lineage: ["Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:Run_Modes-S0006", "Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:Run_Modes-S0007"], preserved_exact_tokens: ["ask|plan|regular|yolo", "none|plan|deep_plan|debug|interview|brainstorm|crew", "debug", "deep_plan", "interview", "brainstorm", "crew"], negative_constraints: ["overlay choice must not widen runtime authority.", "children inherit the parent runtime ceiling and may narrow it only."], preserved_contractrefs: ["ContractRef: ContractName:Plans/assistant-chat-design.md, ContractName:Plans/Commands_System.md, ContractName:Plans/orchestrator-subagent-integration.md"], compatibility_only_notes: [], stale_retired_dispositions: [], owner_hints: ["Plans/Run_Modes.md", "Plans/assistant-chat-design.md", "Plans/Commands_System.md", "Plans/orchestrator-subagent-integration.md"]}
+L00000746	```
+L00000747	
+L00000748	### RM-005 - GUI Workflow Affordance Boundary
+L00000749	
+L00000750	```yaml
+L00000751	{plan_unit_id: "RM-005", unit_type: "requirement", status: "accepted", owner_doc: "Plans/Run_Modes.md", canonical_text: "External IDE assistant-mode baselines may validate visible progress and review/apply affordances, but PM maps those affordances to /agent, /apply, operation-card/terminal surfaces, and the runtime authority enum instead of treating external products as owners.", gui_related: true, gui_classification_reason: "This unit preserves user-visible GUI, UI, surface, workflow, or visual presentation requirements.", split_recommended: false, depends_on: ["PDS-003", "PDS-004", "PDS-005", "PNC-001", "ACD-008", "UCC-001"], unblocks: [], acceptance_criteria: ["RM-005 remains addressable as a fine-grained Run Modes PlanUnit with source-span coverage.", "ContractRefs, anchors or aliases, exact tokens, negative constraints, compatibility notes, stale/retired dispositions, owner boundaries, and source lineage from the source spans remain preserved.", "No WorkNodes, NodeSeeds, executable queues, final node manifests, production build tasks, implementation files, or source code are created by this PlanUnit."], validation_surfaces: ["python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits", "python3 scripts/pm-plan-index.py validate"], risk_class: "external_baseline_owner_drift", reasoning_tier: "standard", context_scope: "run_mode_gui_boundary", implementation_surfaces: ["Plans/Run_Modes.md"], node_compile_hint: {mode: "workflow_affordance_owner_boundary", create_worknodes: false}, source_lineage: ["Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:Run_Modes-S0007"], preserved_exact_tokens: ["JetBrains chat/agent modes", "Junie", "visible progress", "review/apply affordances", "/agent", "/apply", "operation-card/terminal surfaces", "runtime authority enum"], negative_constraints: ["External IDE baselines validate comparable affordances but do not become Puppet Master owner docs."], preserved_contractrefs: ["ContractRef: ContractName:Plans/assistant-chat-design.md, ContractName:Plans/Commands_System.md, ContractName:Plans/orchestrator-subagent-integration.md"], compatibility_only_notes: [], stale_retired_dispositions: [], owner_hints: ["Plans/Run_Modes.md", "Plans/assistant-chat-design.md", "Plans/UI_Command_Catalog.md"]}
+L00000752	```
+L00000753	
+L00000754	### RM-006 - Read-Only Ask And Plan Modes
+L00000755	
+L00000756	```yaml
+L00000757	{plan_unit_id: "RM-006", unit_type: "requirement", status: "accepted", owner_doc: "Plans/Run_Modes.md", canonical_text: "ask and plan are read-only postures: ask is inspection/explanation only, plan is planning only, and plan may carry plan or deep_plan overlay identity without granting project mutation authority.", gui_related: false, gui_classification_reason: "This unit preserves backend, runtime, policy, storage, provider, or ownership requirements rather than visual presentation.", split_recommended: false, depends_on: ["PDS-003", "PDS-004", "PDS-005", "PNC-001", "ACD-006", "SP-001", "F2-086"], unblocks: [], acceptance_criteria: ["RM-006 remains addressable as a fine-grained Run Modes PlanUnit with source-span coverage.", "ContractRefs, anchors or aliases, exact tokens, negative constraints, compatibility notes, stale/retired dispositions, owner boundaries, and source lineage from the source spans remain preserved.", "No WorkNodes, NodeSeeds, executable queues, final node manifests, production build tasks, implementation files, or source code are created by this PlanUnit."], validation_surfaces: ["python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits", "python3 scripts/pm-plan-index.py validate"], risk_class: "read_only_mode_widening", reasoning_tier: "standard", context_scope: "run_mode_definition", implementation_surfaces: ["Plans/Run_Modes.md"], node_compile_hint: {mode: "ask_plan_read_only_modes", create_worknodes: false}, source_lineage: ["Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:Run_Modes-S0008", "Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:Run_Modes-S0009"], preserved_exact_tokens: ["ask", "plan", "read-only inspection and explanation posture", "read-only planning posture", "plan_output_scaffold_v1"], negative_constraints: ["No project mutation or execution authority is implied by ask or plan."], preserved_contractrefs: ["ContractRef: ContractName:Plans/assistant-chat-design.md, ContractName:Plans/FileSafe.md, ContractName:Plans/Prompt_Pipeline.md", "ContractRef: ContractName:Plans/assistant-chat-design.md, ContractName:Plans/Prompt_Pipeline.md, ContractName:Plans/storage-plan.md"], compatibility_only_notes: [], stale_retired_dispositions: [], owner_hints: ["Plans/Run_Modes.md", "Plans/FileSafe.md", "Plans/Prompt_Pipeline.md", "Plans/storage-plan.md"]}
+L00000758	```
+L00000759	
+L00000760	### RM-007 - Execution-Capable Regular And Yolo Modes
+L00000761	
+L00000762	```yaml
+L00000763	{plan_unit_id: "RM-007", unit_type: "requirement", status: "accepted", owner_doc: "Plans/Run_Modes.md", canonical_text: "regular is the standard execution posture with normal approvals; yolo is the full-automation execution posture, still bounded by permissions, FileSafe, provider, and prompt-pipeline constraints.", gui_related: false, gui_classification_reason: "This unit preserves backend, runtime, policy, storage, provider, or ownership requirements rather than visual presentation.", split_recommended: false, depends_on: ["PDS-003", "PDS-004", "PDS-005", "PNC-001", "PS-001", "F2-086", "CBP-003"], unblocks: [], acceptance_criteria: ["RM-007 remains addressable as a fine-grained Run Modes PlanUnit with source-span coverage.", "ContractRefs, anchors or aliases, exact tokens, negative constraints, compatibility notes, stale/retired dispositions, owner boundaries, and source lineage from the source spans remain preserved.", "No WorkNodes, NodeSeeds, executable queues, final node manifests, production build tasks, implementation files, or source code are created by this PlanUnit."], validation_surfaces: ["python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits", "python3 scripts/pm-plan-index.py validate"], risk_class: "execution_mode_authority_drift", reasoning_tier: "standard", context_scope: "run_mode_definition", implementation_surfaces: ["Plans/Run_Modes.md"], node_compile_hint: {mode: "regular_yolo_execution_modes", create_worknodes: false}, source_lineage: ["Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:Run_Modes-S0010", "Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:Run_Modes-S0011"], preserved_exact_tokens: ["regular", "yolo", "standard execution posture with normal approvals", "full-automation execution posture"], negative_constraints: ["yolo does not bypass child capability narrowing, provider restrictions, or FileSafe guardrails."], preserved_contractrefs: ["ContractRef: ContractName:Plans/Permissions_System.md, ContractName:Plans/assistant-chat-design.md, ContractName:Plans/Prompt_Pipeline.md", "ContractRef: ContractName:Plans/Permissions_System.md, ContractName:Plans/FileSafe.md, ContractName:Plans/Prompt_Pipeline.md"], compatibility_only_notes: [], stale_retired_dispositions: [], owner_hints: ["Plans/Run_Modes.md", "Plans/Permissions_System.md", "Plans/FileSafe.md", "Plans/Prompt_Pipeline.md"]}
+L00000764	```
+L00000765	
+L00000766	### RM-008 - HTE Hosted Tool Execution Strategy
+L00000767	
+L00000768	```yaml
+L00000769	{plan_unit_id: "RM-008", unit_type: "requirement", status: "accepted", owner_doc: "Plans/Run_Modes.md", canonical_text: "Hosted Tool Execution keeps provider CLIs in plan/reasoner and no-side-effect posture while Puppet Master owns every real action through its tools, permissions, FileSafe stack, and hosted action loop; provider tool_use in HTE is a kill condition.", gui_related: false, gui_classification_reason: "This unit preserves backend, runtime, policy, storage, provider, or ownership requirements rather than visual presentation.", split_recommended: false, depends_on: ["PDS-003", "PDS-004", "PDS-005", "PNC-001", "CBP-003", "CBP-005", "T-001", "PS-001", "F2-086"], unblocks: [], acceptance_criteria: ["RM-008 remains addressable as a fine-grained Run Modes PlanUnit with source-span coverage.", "ContractRefs, anchors or aliases, exact tokens, negative constraints, compatibility notes, stale/retired dispositions, owner boundaries, and source lineage from the source spans remain preserved.", "No WorkNodes, NodeSeeds, executable queues, final node manifests, production build tasks, implementation files, or source code are created by this PlanUnit."], validation_surfaces: ["python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits", "python3 scripts/pm-plan-index.py validate"], risk_class: "delegated_tool_leakage", reasoning_tier: "standard", context_scope: "execution_strategy", implementation_surfaces: ["Plans/Run_Modes.md"], node_compile_hint: {mode: "hte_execution_strategy", create_worknodes: false}, source_lineage: ["Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:Run_Modes-S0012", "Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:Run_Modes-S0013"], preserved_exact_tokens: ["STRATEGY-HTE", "HTE — Hosted Tool Execution", "plan/reasoner only", "no-tools / no-side-effect", "/plan/regular", "kill.hte_tool_observed"], negative_constraints: ["HTE MUST NOT allow delegated tool execution.", "Any tool-call observation from the provider stream during HTE is a kill condition."], preserved_contractrefs: ["ContractRef: ContractName:Plans/CLI_Bridged_Providers.md, ContractName:Plans/Architecture_Invariants.md#INV-009"], compatibility_only_notes: ["The legacy /plan/regular shorthand maps to ask/plan/regular default HTE unless regular explicitly selects DAE and provider policy allows it."], stale_retired_dispositions: [], owner_hints: ["Plans/Run_Modes.md", "Plans/CLI_Bridged_Providers.md", "Plans/Tools.md", "Plans/FileSafe.md"]}
+L00000770	```
+L00000771	
+L00000772	### RM-009 - DAE Jail And Worktree Strategy
+L00000773	
+L00000774	```yaml
+L00000775	{plan_unit_id: "RM-009", unit_type: "requirement", status: "accepted", owner_doc: "Plans/Run_Modes.md", canonical_text: "Delegated Agent Execution runs provider tools inside an isolated PM-managed jail or worktree context, records worktree identity in execution context, treats jail diff as authoritative, blocks direct canonical-workspace writes, requires dae_allowed policy, and reconciles only after scans and FileSafe checks.", gui_related: false, gui_classification_reason: "This unit preserves backend, runtime, policy, storage, provider, or ownership requirements rather than visual presentation.", split_recommended: false, depends_on: ["PDS-003", "PDS-004", "PDS-005", "PNC-001", "CBP-003", "CBP-005", "T-001", "PS-001", "F2-086"], unblocks: [], acceptance_criteria: ["RM-009 remains addressable as a fine-grained Run Modes PlanUnit with source-span coverage.", "ContractRefs, anchors or aliases, exact tokens, negative constraints, compatibility notes, stale/retired dispositions, owner boundaries, and source lineage from the source spans remain preserved.", "No WorkNodes, NodeSeeds, executable queues, final node manifests, production build tasks, implementation files, or source code are created by this PlanUnit."], validation_surfaces: ["python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits", "python3 scripts/pm-plan-index.py validate"], risk_class: "dae_isolation_drift", reasoning_tier: "standard", context_scope: "execution_strategy", implementation_surfaces: ["Plans/Run_Modes.md"], node_compile_hint: {mode: "dae_jail_worktree_strategy", create_worknodes: false}, source_lineage: ["Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:Run_Modes-S0014", "Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:Run_Modes-S0015"], preserved_exact_tokens: ["STRATEGY-DAE", "DAE — Delegated Agent Execution", "2.2.1 DAE worktree context", "working_directory", "worktree_id", "worktree_branch", "is_worktree", "dae_allowed = false", "actual jail diff"], negative_constraints: ["The canonical workspace MUST NOT be directly writable during DAE.", "Providers that cannot offer deterministic pre-spawn restriction / tool-policy injection MUST advertise dae_allowed = false and cannot be selected for DAE."], preserved_contractrefs: ["ContractRef: ContractName:Plans/Executor_Protocol.md, ContractName:Plans/assistant-chat-design.md"], compatibility_only_notes: [], stale_retired_dispositions: [], owner_hints: ["Plans/Run_Modes.md", "Plans/Executor_Protocol.md", "Plans/assistant-chat-design.md", "Plans/CLI_Bridged_Providers.md", "Plans/FileSafe.md"]}
+L00000776	```
+L00000777	
+L00000778	### RM-010 - Surface State Runtime Normalization Table
+L00000779	
+L00000780	```yaml
+L00000781	{plan_unit_id: "RM-010", unit_type: "requirement", status: "accepted", owner_doc: "Plans/Run_Modes.md", canonical_text: "Surface states normalize to runtime mode before strategy selection: Ask to ask, Plan and Deep Plan to plan, Agent/Debug/Interview/BrainStorm/Crew standard approvals to regular, and explicit YOLO posture to yolo.", gui_related: true, gui_classification_reason: "This unit preserves user-visible GUI, UI, surface, workflow, or visual presentation requirements.", split_recommended: false, depends_on: ["PDS-003", "PDS-004", "PDS-005", "PNC-001", "ACD-008", "ACD-006", "CV-002", "CV-006", "UCC-001"], unblocks: [], acceptance_criteria: ["RM-010 remains addressable as a fine-grained Run Modes PlanUnit with source-span coverage.", "ContractRefs, anchors or aliases, exact tokens, negative constraints, compatibility notes, stale/retired dispositions, owner boundaries, and source lineage from the source spans remain preserved.", "No WorkNodes, NodeSeeds, executable queues, final node manifests, production build tasks, implementation files, or source code are created by this PlanUnit."], validation_surfaces: ["python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits", "python3 scripts/pm-plan-index.py validate"], risk_class: "surface_runtime_mapping_drift", reasoning_tier: "standard", context_scope: "strategy_selection_gui_normalization", implementation_surfaces: ["Plans/Run_Modes.md"], node_compile_hint: {mode: "surface_state_runtime_normalization", create_worknodes: false}, source_lineage: ["Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:Run_Modes-S0016"], preserved_exact_tokens: ["Ask", "Plan", "Deep Plan", "Agent", "Debug", "Interview", "BrainStorm", "Crew", "Explicit YOLO posture outside Debug", "Normalized runtime mode"], negative_constraints: ["Interview, BrainStorm, and Crew MUST NOT create additional runtime mode values."], preserved_contractrefs: ["ContractRef: PolicyRule:Decision_Policy.md§2, PolicyRule:Decision_Policy.md§3", "ContractRef: ContractName:Plans/assistant-chat-design.md, ContractName:Plans/Prompt_Pipeline.md, ContractName:Plans/Contracts_V0.md", "ContractRef: ContractName:Plans/CLI_Bridged_Providers.md, ContractName:Plans/Run_Modes.md, ContractName:Plans/Tools.md"], compatibility_only_notes: [], stale_retired_dispositions: [], owner_hints: ["Plans/Run_Modes.md", "Plans/assistant-chat-design.md", "Plans/Prompt_Pipeline.md", "Plans/Contracts_V0.md"]}
+L00000782	```
+L00000783	
+L00000784	### RM-011 - Deterministic Strategy Selection Algorithm
+L00000785	
+L00000786	```yaml
+L00000787	{plan_unit_id: "RM-011", unit_type: "requirement", status: "accepted", owner_doc: "Plans/Run_Modes.md", canonical_text: "Strategy selection is a deterministic pure function of requested runtime mode, effective overlay, config, and policy: ask/plan always HTE, regular defaults HTE unless DAE is requested and allowed, and yolo selects DAE.", gui_related: false, gui_classification_reason: "This unit preserves backend, runtime, policy, storage, provider, or ownership requirements rather than visual presentation.", split_recommended: false, depends_on: ["PDS-003", "PDS-004", "PDS-005", "PNC-001", "CBP-003", "CBP-005", "T-001", "PS-001"], unblocks: [], acceptance_criteria: ["RM-011 remains addressable as a fine-grained Run Modes PlanUnit with source-span coverage.", "ContractRefs, anchors or aliases, exact tokens, negative constraints, compatibility notes, stale/retired dispositions, owner boundaries, and source lineage from the source spans remain preserved.", "No WorkNodes, NodeSeeds, executable queues, final node manifests, production build tasks, implementation files, or source code are created by this PlanUnit."], validation_surfaces: ["python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits", "python3 scripts/pm-plan-index.py validate"], risk_class: "strategy_selection_drift", reasoning_tier: "standard", context_scope: "strategy_selection", implementation_surfaces: ["Plans/Run_Modes.md"], node_compile_hint: {mode: "deterministic_strategy_selection", create_worknodes: false}, source_lineage: ["Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:Run_Modes-S0016"], preserved_exact_tokens: ["Strategy selection is a pure function", "requested_runtime_mode", "effective_mode_overlay", "cli_bridged_strategy: \"dae\"", "dae_allowed == true", "strategy_resolution_reason"], negative_constraints: ["Given the same inputs, the same strategy MUST be selected.", "regular must not select DAE unless config requests it and provider policy allows it."], preserved_contractrefs: ["ContractRef: PolicyRule:Decision_Policy.md§2, PolicyRule:Decision_Policy.md§3", "ContractRef: ContractName:Plans/assistant-chat-design.md, ContractName:Plans/Prompt_Pipeline.md, ContractName:Plans/Contracts_V0.md", "ContractRef: ContractName:Plans/CLI_Bridged_Providers.md, ContractName:Plans/Run_Modes.md, ContractName:Plans/Tools.md"], compatibility_only_notes: [], stale_retired_dispositions: [], owner_hints: ["Plans/Run_Modes.md", "Plans/CLI_Bridged_Providers.md", "Plans/Tools.md", "Plans/Decision_Policy.md"]}
+L00000788	```
+L00000789	
+L00000790	### RM-012 - Debug Overlay Runtime Resolution
+L00000791	
+L00000792	```yaml
+L00000793	{plan_unit_id: "RM-012", unit_type: "requirement", status: "accepted", owner_doc: "Plans/Run_Modes.md", canonical_text: "Debug is a workflow overlay plus target/evidence package, not a new runtime mode; automated Debug cannot execute in read-only mode, defaults to regular+HTE, treats yolo as explicit opt-in, and persists overlay, mode, strategy, reason, and active Debug Automation Profile snapshot in run.started.", gui_related: true, gui_classification_reason: "This unit preserves user-visible GUI, UI, surface, workflow, or visual presentation requirements.", split_recommended: false, depends_on: ["PDS-003", "PDS-004", "PDS-005", "PNC-001", "ACD-008", "ACD-006", "CV-002", "CV-006", "CBP-005", "UCC-001"], unblocks: [], acceptance_criteria: ["RM-012 remains addressable as a fine-grained Run Modes PlanUnit with source-span coverage.", "ContractRefs, anchors or aliases, exact tokens, negative constraints, compatibility notes, stale/retired dispositions, owner boundaries, and source lineage from the source spans remain preserved.", "No WorkNodes, NodeSeeds, executable queues, final node manifests, production build tasks, implementation files, or source code are created by this PlanUnit."], validation_surfaces: ["python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits", "python3 scripts/pm-plan-index.py validate"], risk_class: "debug_mode_authority_drift", reasoning_tier: "standard", context_scope: "debug_runtime_overlay", implementation_surfaces: ["Plans/Run_Modes.md"], node_compile_hint: {mode: "debug_overlay_runtime_resolution", create_worknodes: false}, source_lineage: ["Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:Run_Modes-S0016"], preserved_exact_tokens: ["effective_mode_overlay = debug", "Debug Mode + regular + HTE", "Debug Mode + yolo", "run.started", "requested_mode_overlay", "strategy_resolution_reason", "Debug Automation Profile snapshot"], negative_constraints: ["Debug with mode ask or plan is an invalid automated-debug combination.", "Debug Mode + yolo is an advanced opt-in only and MUST NOT become the default Debug posture.", "yolo still requires DAE and MUST NOT silently downgrade to HTE."], preserved_contractrefs: ["ContractRef: PolicyRule:Decision_Policy.md§2, PolicyRule:Decision_Policy.md§3", "ContractRef: ContractName:Plans/assistant-chat-design.md, ContractName:Plans/Prompt_Pipeline.md, ContractName:Plans/Contracts_V0.md", "ContractRef: ContractName:Plans/CLI_Bridged_Providers.md, ContractName:Plans/Run_Modes.md, ContractName:Plans/Tools.md"], compatibility_only_notes: [], stale_retired_dispositions: [], owner_hints: ["Plans/Run_Modes.md", "Plans/assistant-chat-design.md", "Plans/Contracts_V0.md", "Plans/CLI_Bridged_Providers.md"]}
+L00000794	```
+L00000795	
+L00000796	### RM-013 - Runtime Governance Recovery Gap Register
+L00000797	
+L00000798	```yaml
+L00000799	{plan_unit_id: "RM-013", unit_type: "requirement", status: "accepted", owner_doc: "Plans/Run_Modes.md", canonical_text: "The P5 run-mode recovery section preserves implementation-blocking governance gaps around startup recovery, retry/backoff ownership, Contribute(PR) versus DAE isolation, DAE jail durability, external publish side effects, /event recovery, attention_required persistence, blocked semantics, account-switch invalidation, child-run account re-resolution, gate placement, and work-item posture.", gui_related: false, gui_classification_reason: "This unit preserves backend, runtime, policy, storage, provider, or ownership requirements rather than visual presentation.", split_recommended: false, depends_on: ["PDS-003", "PDS-004", "PDS-005", "PNC-001", "PS-001", "SP-001", "CV-215"], unblocks: [], acceptance_criteria: ["RM-013 remains addressable as a fine-grained Run Modes PlanUnit with source-span coverage.", "ContractRefs, anchors or aliases, exact tokens, negative constraints, compatibility notes, stale/retired dispositions, owner boundaries, and source lineage from the source spans remain preserved.", "No WorkNodes, NodeSeeds, executable queues, final node manifests, production build tasks, implementation files, or source code are created by this PlanUnit."], validation_surfaces: ["python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits", "python3 scripts/pm-plan-index.py validate"], risk_class: "governance_gap_loss", reasoning_tier: "standard", context_scope: "runtime_governance_gaps", implementation_surfaces: ["Plans/Run_Modes.md"], node_compile_hint: {mode: "runtime_governance_recovery_gap_register", create_worknodes: false}, source_lineage: ["Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:Run_Modes-S0017"], preserved_exact_tokens: ["P5 run-mode governance recovery requirements", "startup recovery", "Contribute(PR) vs DAE isolation", "DAE-jail durability", "external_publish_side_effect", "/event recovery", "attention_required", "blocked semantics", "account-switch invalidation", "GATE-007 / GATE-008"], negative_constraints: [], preserved_contractrefs: ["ContractRef: ContractName:Plans/Permissions_System.md, ContractName:Plans/storage-plan.md, ContractName:Plans/assistant-chat-design.md"], compatibility_only_notes: [], stale_retired_dispositions: ["Runtime-governance docs continue to sharpen rather than stabilize."], owner_hints: ["Plans/Run_Modes.md", "Plans/Decision_Policy.md", "Plans/Progression_Gates.md", "Plans/storage-plan.md"]}
+L00000800	```
+L00000801	
+L00000802	### RM-014 - Runtime Governance UI And Explanation Terminology
+L00000803	
+L00000804	```yaml
+L00000805	{plan_unit_id: "RM-014", unit_type: "requirement", status: "accepted", owner_doc: "Plans/Run_Modes.md", canonical_text: "Runtime recovery and explanation surfaces must converge on canonical allowed_action_ids[] and explanation-depth controls; unstable UI labels are warning examples, and ELI5/Expert changes simplify explanation depth without renaming canonical object names such as Feature Seam.", gui_related: true, gui_classification_reason: "This unit preserves user-visible GUI, UI, surface, workflow, or visual presentation requirements.", split_recommended: false, depends_on: ["PDS-003", "PDS-004", "PDS-005", "PNC-001", "UCC-001", "ACD-008", "CV-006"], unblocks: [], acceptance_criteria: ["RM-014 remains addressable as a fine-grained Run Modes PlanUnit with source-span coverage.", "ContractRefs, anchors or aliases, exact tokens, negative constraints, compatibility notes, stale/retired dispositions, owner boundaries, and source lineage from the source spans remain preserved.", "No WorkNodes, NodeSeeds, executable queues, final node manifests, production build tasks, implementation files, or source code are created by this PlanUnit."], validation_surfaces: ["python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits", "python3 scripts/pm-plan-index.py validate"], risk_class: "ui_recovery_label_drift", reasoning_tier: "standard", context_scope: "runtime_governance_gui", implementation_surfaces: ["Plans/Run_Modes.md"], node_compile_hint: {mode: "runtime_governance_ui_explanation_terms", create_worknodes: false}, source_lineage: ["Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:Run_Modes-S0017"], preserved_exact_tokens: ["allowed_action_ids[]", "deny", "manual fix", "abort node", "ELI5/Expert", "Feature Seam"], negative_constraints: ["ELI5/Expert must simplify explanation depth, not canonical object names."], preserved_contractrefs: ["ContractRef: ContractName:Plans/Permissions_System.md, ContractName:Plans/storage-plan.md, ContractName:Plans/assistant-chat-design.md"], compatibility_only_notes: [], stale_retired_dispositions: [], owner_hints: ["Plans/Run_Modes.md", "Plans/human-in-the-loop.md", "Plans/UI_Command_Catalog.md", "Plans/assistant-chat-design.md"]}
+L00000806	```
+L00000807	
+L00000808	### RM-015 - Global Concurrency Cap Defaults
+L00000809	
+L00000810	```yaml
+L00000811	{plan_unit_id: "RM-015", unit_type: "requirement", status: "accepted", owner_doc: "Plans/Run_Modes.md", canonical_text: "Global run-strategy concurrency defaults are max_concurrent_crews_per_platform=4, max_concurrent_agents_per_crew=8, and max_total_active_agents=32; Persona or overlay configuration alone must not override them, and stale 5-crew/10-agent wording is retired.", gui_related: false, gui_classification_reason: "This unit preserves backend, runtime, policy, storage, provider, or ownership requirements rather than visual presentation.", split_recommended: false, depends_on: ["PDS-003", "PDS-004", "PDS-005", "PNC-001", "SP-001", "PS-001"], unblocks: [], acceptance_criteria: ["RM-015 remains addressable as a fine-grained Run Modes PlanUnit with source-span coverage.", "ContractRefs, anchors or aliases, exact tokens, negative constraints, compatibility notes, stale/retired dispositions, owner boundaries, and source lineage from the source spans remain preserved.", "No WorkNodes, NodeSeeds, executable queues, final node manifests, production build tasks, implementation files, or source code are created by this PlanUnit."], validation_surfaces: ["python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits", "python3 scripts/pm-plan-index.py validate"], risk_class: "budget_default_drift", reasoning_tier: "standard", context_scope: "runtime_budget_defaults", implementation_surfaces: ["Plans/Run_Modes.md"], node_compile_hint: {mode: "global_concurrency_cap_defaults", create_worknodes: false}, source_lineage: ["Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:Run_Modes-S0018", "Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:Run_Modes-S0019"], preserved_exact_tokens: ["max_concurrent_crews_per_platform=4", "max_concurrent_agents_per_crew=8", "max_total_active_agents=32", "5-crews / 10-agents", "queue until a slot is free"], negative_constraints: ["Three-level concurrency limits apply globally across all run strategies and MUST NOT be overridden by Persona or overlay configuration alone.", "PM MUST NOT silently discard or auto-widen queued work."], preserved_contractrefs: ["ContractRef: ContractName:Plans/orchestrator-subagent-integration.md, ContractName:Plans/Executor_Protocol.md", "ContractRef: ContractName:Plans/orchestrator-subagent-integration.md, ContractName:Plans/interview-subagent-integration.md"], compatibility_only_notes: [], stale_retired_dispositions: ["Any 5-crews / 10-agents wording in downstream docs is stale drift and must be retired rather than treated as an alternate cap."], owner_hints: ["Plans/Run_Modes.md", "Plans/orchestrator-subagent-integration.md", "Plans/interview-subagent-integration.md", "Plans/Executor_Protocol.md"]}
+L00000812	```
+L00000813	
+L00000814	### RM-016 - Run Envelope Budget Field Defaults
+L00000815	
+L00000816	```yaml
+L00000817	{plan_unit_id: "RM-016", unit_type: "requirement", status: "accepted", owner_doc: "Plans/Run_Modes.md", canonical_text: "Run supervisors enforce canonical run-envelope budget fields across strategies, freezing them into the envelope across pause/resume: max_nesting_depth=4, max_total_spawned_agents=99, max_tool_rounds=200, max_wall_ms=1200000, max_estimated_tokens=80000, max_same_shell_failure=3, max_write_thrashing=5 writes/10 min, max_retryable_errors=3, inherited task_timeout_ms, and warn_budget_pct=80.", gui_related: false, gui_classification_reason: "This unit preserves backend, runtime, policy, storage, provider, or ownership requirements rather than visual presentation.", split_recommended: false, depends_on: ["PDS-003", "PDS-004", "PDS-005", "PNC-001", "SP-001", "PS-001", "CBP-003"], unblocks: [], acceptance_criteria: ["RM-016 remains addressable as a fine-grained Run Modes PlanUnit with source-span coverage.", "ContractRefs, anchors or aliases, exact tokens, negative constraints, compatibility notes, stale/retired dispositions, owner boundaries, and source lineage from the source spans remain preserved.", "No WorkNodes, NodeSeeds, executable queues, final node manifests, production build tasks, implementation files, or source code are created by this PlanUnit."], validation_surfaces: ["python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits", "python3 scripts/pm-plan-index.py validate"], risk_class: "budget_field_drift", reasoning_tier: "standard", context_scope: "runtime_budget_defaults", implementation_surfaces: ["Plans/Run_Modes.md"], node_compile_hint: {mode: "run_envelope_budget_fields", create_worknodes: false}, source_lineage: ["Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:Run_Modes-S0020"], preserved_exact_tokens: ["max_nesting_depth", "max_total_spawned_agents", "max_tool_rounds", "max_wall_ms", "max_estimated_tokens", "max_same_shell_failure", "max_write_thrashing", "max_retryable_errors", "task_timeout_ms", "warn_budget_pct", "max_tokens", "max_wall_time"], negative_constraints: ["Budget overrides MAY narrow defaults per run, but MUST NOT widen beyond the hard policy ceiling.", "task_timeout_ms may narrow parent budget but MUST NOT exceed it."], preserved_contractrefs: ["ContractRef: ContractName:Plans/Executor_Protocol.md, ContractName:Plans/Contracts_V0.md", "ContractRef: ContractName:Plans/CLI_Bridged_Providers.md, ContractName:Plans/orchestrator-subagent-integration.md", "ContractRef: ContractName:Plans/Permissions_System.md, ContractName:Plans/storage-plan.md"], compatibility_only_notes: ["Legacy A2A/OpenCode gap wording may call these ceilings max_tokens and max_wall_time; canonical keys are max_estimated_tokens and max_wall_ms."], stale_retired_dispositions: [], owner_hints: ["Plans/Run_Modes.md", "Plans/Executor_Protocol.md", "Plans/Contracts_V0.md", "Plans/CLI_Bridged_Providers.md", "Plans/storage-plan.md"]}
+L00000818	```
+L00000819	
+L00000820	### RM-017 - Universal Kill And Terminal Reason Contract
+L00000821	
+L00000822	```yaml
+L00000823	{plan_unit_id: "RM-017", unit_type: "requirement", status: "accepted", owner_doc: "Plans/Run_Modes.md", canonical_text: "Run kill enforcement distinguishes pre-dispatch/supervisor kill.* triggers from terminal done.* outcomes, persists canonical stop reasons, retires consumer-facing kill.task_timeout, and keeps post-response budget overrun as done.budget_exceeded after usage is durably recorded.", gui_related: false, gui_classification_reason: "This unit preserves backend, runtime, policy, storage, provider, or ownership requirements rather than visual presentation.", split_recommended: false, depends_on: ["PDS-003", "PDS-004", "PDS-005", "PNC-001", "F2-086", "CBP-003", "PS-001", "CV-215", "SP-001"], unblocks: [], acceptance_criteria: ["RM-017 remains addressable as a fine-grained Run Modes PlanUnit with source-span coverage.", "ContractRefs, anchors or aliases, exact tokens, negative constraints, compatibility notes, stale/retired dispositions, owner boundaries, and source lineage from the source spans remain preserved.", "No WorkNodes, NodeSeeds, executable queues, final node manifests, production build tasks, implementation files, or source code are created by this PlanUnit."], validation_surfaces: ["python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits", "python3 scripts/pm-plan-index.py validate"], risk_class: "stop_reason_drift", reasoning_tier: "standard", context_scope: "kill_conditions", implementation_surfaces: ["Plans/Run_Modes.md"], node_compile_hint: {mode: "universal_kill_terminal_reason_contract", create_worknodes: false}, source_lineage: ["Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:Run_Modes-S0021", "Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:Run_Modes-S0022"], preserved_exact_tokens: ["KILL-CONDITIONS", "done.failed", "kill.*", "done.*", "done.task_timeout", "kill.budget_exceeded", "done.budget_exceeded", "kill.task_timeout"], negative_constraints: ["kill.budget_exceeded remains pre-dispatch only.", "Post-response budget-overrun cases MUST NOT be folded back into pre-dispatch kill.budget_exceeded.", "kill.task_timeout is retired as a consumer-facing terminal alias."], preserved_contractrefs: ["ContractRef: ContractName:Plans/FileSafe.md, ContractName:Plans/CLI_Bridged_Providers.md", "ContractRef: ContractName:Plans/Executor_Protocol.md, ContractName:Plans/Permissions_System.md, ContractName:Plans/Contracts_V0.md", "ContractRef: ContractName:Plans/orchestrator-subagent-integration.md, ContractName:Plans/Contracts_V0.md, ContractName:Plans/Executor_Protocol.md", "ContractRef: ContractName:Plans/usage-feature.md, ContractName:Plans/storage-plan.md, ContractName:Plans/Contracts_V0.md"], compatibility_only_notes: [], stale_retired_dispositions: ["kill.task_timeout is retired as a consumer-facing terminal alias."], owner_hints: ["Plans/Run_Modes.md", "Plans/FileSafe.md", "Plans/CLI_Bridged_Providers.md", "Plans/Executor_Protocol.md", "Plans/Contracts_V0.md", "Plans/usage-feature.md"]}
+L00000824	```
+L00000825	
+L00000826	### RM-018 - Exact-Match Doom Loop Guard
+L00000827	
+L00000828	```yaml
+L00000829	{plan_unit_id: "RM-018", unit_type: "requirement", status: "accepted", owner_doc: "Plans/Run_Modes.md", canonical_text: "The doom-loop guard compares only the same tool_name, serialized_args_hash, and error_message triple at the same nesting level across consecutive attempts; fuzzy, substring, or looks-similar matching is prohibited and broader retry suppression belongs to Tools.", gui_related: false, gui_classification_reason: "This unit preserves backend, runtime, policy, storage, provider, or ownership requirements rather than visual presentation.", split_recommended: false, depends_on: ["PDS-003", "PDS-004", "PDS-005", "PNC-001", "T-001", "CV-215"], unblocks: [], acceptance_criteria: ["RM-018 remains addressable as a fine-grained Run Modes PlanUnit with source-span coverage.", "ContractRefs, anchors or aliases, exact tokens, negative constraints, compatibility notes, stale/retired dispositions, owner boundaries, and source lineage from the source spans remain preserved.", "No WorkNodes, NodeSeeds, executable queues, final node manifests, production build tasks, implementation files, or source code are created by this PlanUnit."], validation_surfaces: ["python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits", "python3 scripts/pm-plan-index.py validate"], risk_class: "retry_guard_overreach", reasoning_tier: "standard", context_scope: "kill_conditions", implementation_surfaces: ["Plans/Run_Modes.md"], node_compile_hint: {mode: "exact_match_doom_loop_guard", create_worknodes: false}, source_lineage: ["Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:Run_Modes-S0023"], preserved_exact_tokens: ["stop.identical_failure", "tool_name", "serialized_args_hash", "error_message", "same nesting level", "looks similar"], negative_constraints: ["Fuzzy matching, substring matching, and looks similar heuristics are prohibited for this terminal stop condition."], preserved_contractrefs: ["ContractRef: ContractName:Plans/Executor_Protocol.md, ContractName:Plans/Architecture_Invariants.md, ContractName:Plans/Tools.md"], compatibility_only_notes: [], stale_retired_dispositions: [], owner_hints: ["Plans/Run_Modes.md", "Plans/Executor_Protocol.md", "Plans/Architecture_Invariants.md", "Plans/Tools.md"]}
+L00000830	```
+L00000831	
+L00000832	### RM-019 - Signal Handling Shutdown And Startup Recovery
+L00000833	
+L00000834	```yaml
+L00000835	{plan_unit_id: "RM-019", unit_type: "requirement", status: "accepted", owner_doc: "Plans/Run_Modes.md", canonical_text: "PM entrypoints own shutdown signal fan-out, process group isolation, platform-specific teardown, idempotent shutdown, durability flushing, cancellation outcome mapping, and startup crash recovery that synthesizes done.crashed with crash_recovered metadata instead of silently dropping unfinished runs.", gui_related: false, gui_classification_reason: "This unit preserves backend, runtime, policy, storage, provider, or ownership requirements rather than visual presentation.", split_recommended: false, depends_on: ["PDS-003", "PDS-004", "PDS-005", "PNC-001", "SP-001", "CV-215"], unblocks: [], acceptance_criteria: ["RM-019 remains addressable as a fine-grained Run Modes PlanUnit with source-span coverage.", "ContractRefs, anchors or aliases, exact tokens, negative constraints, compatibility notes, stale/retired dispositions, owner boundaries, and source lineage from the source spans remain preserved.", "No WorkNodes, NodeSeeds, executable queues, final node manifests, production build tasks, implementation files, or source code are created by this PlanUnit."], validation_surfaces: ["python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits", "python3 scripts/pm-plan-index.py validate"], risk_class: "runtime_lifecycle_drift", reasoning_tier: "standard", context_scope: "runtime_lifecycle", implementation_surfaces: ["Plans/Run_Modes.md"], node_compile_hint: {mode: "signal_shutdown_startup_recovery", create_worknodes: false}, source_lineage: ["Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:Run_Modes-S0024"], preserved_exact_tokens: ["signal.NotifyContext", "SIGTERM", "SIGINT", "SIGHUP", "setsid", "CREATE_NEW_PROCESS_GROUP", "CTRL_BREAK_EVENT", "done.cancelled", "done.crashed", "crash_recovered"], negative_constraints: ["PM MUST NOT silently drop an incomplete run or rewrite it as done.failed without the crash marker."], preserved_contractrefs: ["ContractRef: ContractName:Plans/Executor_Protocol.md, ContractName:Plans/Contracts_V0.md, ContractName:Plans/storage-plan.md", "ContractRef: ContractName:Plans/storage-plan.md, ContractName:Plans/LSPSupport.md, ContractName:Plans/Executor_Protocol.md", "ContractRef: ContractName:Plans/storage-plan.md, ContractName:Plans/Architecture_Invariants.md, ContractName:Plans/Contracts_V0.md", "ContractRef: ContractName:Plans/Contracts_V0.md, ContractName:Plans/storage-plan.md, ContractName:Plans/Architecture_Invariants.md"], compatibility_only_notes: [], stale_retired_dispositions: [], owner_hints: ["Plans/Run_Modes.md", "Plans/Executor_Protocol.md", "Plans/Contracts_V0.md", "Plans/storage-plan.md", "Plans/LSPSupport.md"]}
+L00000836	```
+L00000837	
+L00000838	### RM-020 - Resource Disposal And Helper Health Monitoring
+L00000839	
+L00000840	```yaml
+L00000841	{plan_unit_id: "RM-020", unit_type: "requirement", status: "accepted", owner_doc: "Plans/Run_Modes.md", canonical_text: "Runtime teardown deterministically closes DB handles, MCP sessions, terminal shells, temporary files, and subprocess groups, emits diagnostics for failed teardown, mints new helper identity after restart, and monitors long-lived helper memory pressure for controlled restart or failover.", gui_related: false, gui_classification_reason: "This unit preserves backend, runtime, policy, storage, provider, or ownership requirements rather than visual presentation.", split_recommended: false, depends_on: ["PDS-003", "PDS-004", "PDS-005", "PNC-001", "SP-001", "T-001", "CV-215"], unblocks: [], acceptance_criteria: ["RM-020 remains addressable as a fine-grained Run Modes PlanUnit with source-span coverage.", "ContractRefs, anchors or aliases, exact tokens, negative constraints, compatibility notes, stale/retired dispositions, owner boundaries, and source lineage from the source spans remain preserved.", "No WorkNodes, NodeSeeds, executable queues, final node manifests, production build tasks, implementation files, or source code are created by this PlanUnit."], validation_surfaces: ["python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits", "python3 scripts/pm-plan-index.py validate"], risk_class: "helper_lifecycle_drift", reasoning_tier: "standard", context_scope: "runtime_lifecycle", implementation_surfaces: ["Plans/Run_Modes.md"], node_compile_hint: {mode: "resource_disposal_helper_health_monitoring", create_worknodes: false}, source_lineage: ["Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:Run_Modes-S0025"], preserved_exact_tokens: ["Resource disposal and health monitoring", "DB handles", "MCP sessions", "terminal shells", "temporary files", "resident-set growth", "resource_pressure"], negative_constraints: ["PM MUST NOT silently reuse poisoned process state or abandoned shell/session state."], preserved_contractrefs: ["ContractRef: ContractName:Plans/storage-plan.md, ContractName:Plans/Tools.md, ContractName:Plans/orchestrator-subagent-integration.md", "ContractRef: ContractName:Plans/Architecture_Invariants.md, ContractName:Plans/storage-plan.md, ContractName:Plans/Executor_Protocol.md"], compatibility_only_notes: [], stale_retired_dispositions: [], owner_hints: ["Plans/Run_Modes.md", "Plans/storage-plan.md", "Plans/Tools.md", "Plans/orchestrator-subagent-integration.md", "Plans/Architecture_Invariants.md"]}
+L00000842	```
+L00000843	
+L00000844	### RM-021 - HTE Tool Observation Kill Contract
+L00000845	
+L00000846	```yaml
+L00000847	{plan_unit_id: "RM-021", unit_type: "requirement", status: "accepted", owner_doc: "Plans/Run_Modes.md", canonical_text: "The first provider-originated tool_use observed during HTE terminates the run immediately with stop_reason kill.hte_tool_observed in the terminal normalized done event and persisted run.completed metadata.", gui_related: false, gui_classification_reason: "This unit preserves backend, runtime, policy, storage, provider, or ownership requirements rather than visual presentation.", split_recommended: false, depends_on: ["PDS-003", "PDS-004", "PDS-005", "PNC-001", "CBP-003", "CBP-005", "T-001", "CV-215"], unblocks: [], acceptance_criteria: ["RM-021 remains addressable as a fine-grained Run Modes PlanUnit with source-span coverage.", "ContractRefs, anchors or aliases, exact tokens, negative constraints, compatibility notes, stale/retired dispositions, owner boundaries, and source lineage from the source spans remain preserved.", "No WorkNodes, NodeSeeds, executable queues, final node manifests, production build tasks, implementation files, or source code are created by this PlanUnit."], validation_surfaces: ["python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits", "python3 scripts/pm-plan-index.py validate"], risk_class: "hte_kill_contract_drift", reasoning_tier: "standard", context_scope: "kill_conditions", implementation_surfaces: ["Plans/Run_Modes.md"], node_compile_hint: {mode: "hte_tool_observation_kill_contract", create_worknodes: false}, source_lineage: ["Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:Run_Modes-S0026"], preserved_exact_tokens: ["kill.hte_tool_observed", "tool_use", "terminal normalized done event", "run.completed"], negative_constraints: ["HTE MUST NOT allow delegated tool execution."], preserved_contractrefs: ["ContractRef: ContractName:Plans/Executor_Protocol.md, ContractName:Plans/Architecture_Invariants.md", "ContractRef: ContractName:Plans/Run_Modes.md, ContractName:Plans/Contracts_V0.md, ContractName:Plans/Tools.md"], compatibility_only_notes: [], stale_retired_dispositions: [], owner_hints: ["Plans/Run_Modes.md", "Plans/Executor_Protocol.md", "Plans/Architecture_Invariants.md", "Plans/Contracts_V0.md", "Plans/Tools.md"]}
+L00000848	```
+L00000849	
+L00000850	### RM-022 - DAE Shell Failure And Write Thrash Counting
+L00000851	
+L00000852	```yaml
+L00000853	{plan_unit_id: "RM-022", unit_type: "requirement", status: "accepted", owner_doc: "Plans/Run_Modes.md", canonical_text: "DAE-specific kill counting treats shell_failure as actual executed canonical shell invocation failures for one normalized fingerprint, excludes denials and UI-only terminal actions, resets on success or replacement, and treats write_thrash as qualifying content-changing writes to one normalized jail path in a sliding 10-minute window.", gui_related: false, gui_classification_reason: "This unit preserves backend, runtime, policy, storage, provider, or ownership requirements rather than visual presentation.", split_recommended: false, depends_on: ["PDS-003", "PDS-004", "PDS-005", "PNC-001", "T-001", "SP-001", "UCC-001", "F2-086", "CBP-003"], unblocks: [], acceptance_criteria: ["RM-022 remains addressable as a fine-grained Run Modes PlanUnit with source-span coverage.", "ContractRefs, anchors or aliases, exact tokens, negative constraints, compatibility notes, stale/retired dispositions, owner boundaries, and source lineage from the source spans remain preserved.", "No WorkNodes, NodeSeeds, executable queues, final node manifests, production build tasks, implementation files, or source code are created by this PlanUnit."], validation_surfaces: ["python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits", "python3 scripts/pm-plan-index.py validate"], risk_class: "dae_kill_counting_drift", reasoning_tier: "standard", context_scope: "kill_conditions", implementation_surfaces: ["Plans/Run_Modes.md"], node_compile_hint: {mode: "dae_shell_write_thrash_counting", create_worknodes: false}, source_lineage: ["Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:Run_Modes-S0027"], preserved_exact_tokens: ["kill.shell_failure", "kill.write_thrash", "canonical shell fingerprint", "terminal_session_id", "shell-fingerprint", "terminal-normalized", "/replace/stop", "sliding 10-minute window"], negative_constraints: ["Policy denials, FileSafe blocks, validation failures, missing execution due to policy, and synthesized reconciler closures do not count as shell failures.", "Denied, blocked, no-diff, rollback, and Puppet-Master-owned post-processing writes do not count."], preserved_contractrefs: ["ContractRef: ContractName:Plans/Tools.md, ContractName:Plans/storage-plan.md, ContractName:Plans/UI_Command_Catalog.md", "ContractRef: ContractName:Plans/FileSafe.md, ContractName:Plans/CLI_Bridged_Providers.md, ContractName:Plans/storage-plan.md"], compatibility_only_notes: ["Compatibility labels are canonicalized here: shell-fingerprint, terminal-normalized, and /replace/stop."], stale_retired_dispositions: [], owner_hints: ["Plans/Run_Modes.md", "Plans/Tools.md", "Plans/storage-plan.md", "Plans/UI_Command_Catalog.md", "Plans/FileSafe.md", "Plans/CLI_Bridged_Providers.md"]}
+L00000854	```
+L00000855	
+L00000856	### RM-023 - DAE Mandatory End-Of-Run Scans
+L00000857	
+L00000858	```yaml
+L00000859	{plan_unit_id: "RM-023", unit_type: "requirement", status: "accepted", owner_doc: "Plans/Run_Modes.md", canonical_text: "Every DAE terminal outcome runs mandatory FileSafe write-scope audit, security-filter scan, and diff reconciliation before finalization; scan failure escalates to done.failed with kill.post_scan_failure and persists scan name/details in stop-reason metadata.", gui_related: false, gui_classification_reason: "This unit preserves backend, runtime, policy, storage, provider, or ownership requirements rather than visual presentation.", split_recommended: false, depends_on: ["PDS-003", "PDS-004", "PDS-005", "PNC-001", "F2-086", "CBP-003", "CV-215"], unblocks: [], acceptance_criteria: ["RM-023 remains addressable as a fine-grained Run Modes PlanUnit with source-span coverage.", "ContractRefs, anchors or aliases, exact tokens, negative constraints, compatibility notes, stale/retired dispositions, owner boundaries, and source lineage from the source spans remain preserved.", "No WorkNodes, NodeSeeds, executable queues, final node manifests, production build tasks, implementation files, or source code are created by this PlanUnit."], validation_surfaces: ["python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits", "python3 scripts/pm-plan-index.py validate"], risk_class: "post_scan_gap", reasoning_tier: "standard", context_scope: "kill_conditions", implementation_surfaces: ["Plans/Run_Modes.md"], node_compile_hint: {mode: "dae_mandatory_end_of_run_scans", create_worknodes: false}, source_lineage: ["Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:Run_Modes-S0028"], preserved_exact_tokens: ["FileSafe write-scope audit", "Security-filter scan", "Diff reconciliation", "done.failed", "kill.post_scan_failure", "scan_name = \"diff_reconciliation\""], negative_constraints: ["DAE terminal outcomes must not finalize before mandatory end-of-run scans complete."], preserved_contractrefs: ["ContractRef: ContractName:Plans/FileSafe.md, ContractName:Plans/CLI_Bridged_Providers.md"], compatibility_only_notes: [], stale_retired_dispositions: [], owner_hints: ["Plans/Run_Modes.md", "Plans/FileSafe.md", "Plans/CLI_Bridged_Providers.md"]}
+L00000860	```
+L00000861	
+L00000862	### RM-024 - Run Outcome Taxonomy
+L00000863	
+L00000864	```yaml
+L00000865	{plan_unit_id: "RM-024", unit_type: "requirement", status: "accepted", owner_doc: "Plans/Run_Modes.md", canonical_text: "Every run terminates with exactly one canonical outcome from done.ok, done.failed, done.deferred, done.rotated, done.gutter, done.cancelled, or done.crashed, recorded in terminal done event and persisted through EventRecord/seglog without treating user cancellation or reveal-only terminal actions as generic failure or new runtime identity.", gui_related: false, gui_classification_reason: "This unit preserves backend, runtime, policy, storage, provider, or ownership requirements rather than visual presentation.", split_recommended: false, depends_on: ["PDS-003", "PDS-004", "PDS-005", "PNC-001", "CV-215", "SP-001", "T-001", "UCC-001"], unblocks: [], acceptance_criteria: ["RM-024 remains addressable as a fine-grained Run Modes PlanUnit with source-span coverage.", "ContractRefs, anchors or aliases, exact tokens, negative constraints, compatibility notes, stale/retired dispositions, owner boundaries, and source lineage from the source spans remain preserved.", "No WorkNodes, NodeSeeds, executable queues, final node manifests, production build tasks, implementation files, or source code are created by this PlanUnit."], validation_surfaces: ["python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits", "python3 scripts/pm-plan-index.py validate"], risk_class: "outcome_taxonomy_drift", reasoning_tier: "standard", context_scope: "run_outcomes", implementation_surfaces: ["Plans/Run_Modes.md"], node_compile_hint: {mode: "run_outcome_taxonomy", create_worknodes: false}, source_lineage: ["Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:Run_Modes-S0029"], preserved_exact_tokens: ["done.ok", "done.failed", "done.deferred", "done.rotated", "done.gutter", "done.cancelled", "done.crashed", "done.payload.status", "done.payload.outcome", "terminal_session_id"], negative_constraints: ["done.failed is not a catch-all for intentionally requested stop paths.", "Clearing scrollback or revealing an existing terminal session does not mint a new run outcome."], preserved_contractrefs: ["ContractRef: ContractName:Plans/Contracts_V0.md#EventRecord, PolicyRule:Decision_Policy.md§2", "ContractRef: ContractName:Plans/Tools.md, ContractName:Plans/storage-plan.md", "ContractRef: ContractName:Plans/UI_Command_Catalog.md, ContractName:Plans/Section15_MVP_Promoted_Features_Spec.md, ContractName:Plans/storage-plan.md"], compatibility_only_notes: [], stale_retired_dispositions: [], owner_hints: ["Plans/Run_Modes.md", "Plans/Contracts_V0.md", "Plans/Tools.md", "Plans/storage-plan.md", "Plans/UI_Command_Catalog.md", "Plans/Section15_MVP_Promoted_Features_Spec.md"]}
+L00000866	```
+L00000867	
+L00000868	### RM-025 - Terminal Stop-Reason Refinements
+L00000869	
+L00000870	```yaml
+L00000871	{plan_unit_id: "RM-025", unit_type: "requirement", status: "accepted", owner_doc: "Plans/Run_Modes.md", canonical_text: "Runtime stop-reason refinements preserve kill.budget_exceeded for pre-dispatch budget prevention, done.budget_exceeded for post-response overrun after durable usage recording, and done.task_timeout for elapsed-budget exhaustion after graceful teardown; kill.task_timeout is internal-only bookkeeping and done.timeout is retired.", gui_related: false, gui_classification_reason: "This unit preserves backend, runtime, policy, storage, provider, or ownership requirements rather than visual presentation.", split_recommended: false, depends_on: ["PDS-003", "PDS-004", "PDS-005", "PNC-001", "CV-215", "SP-001"], unblocks: [], acceptance_criteria: ["RM-025 remains addressable as a fine-grained Run Modes PlanUnit with source-span coverage.", "ContractRefs, anchors or aliases, exact tokens, negative constraints, compatibility notes, stale/retired dispositions, owner boundaries, and source lineage from the source spans remain preserved.", "No WorkNodes, NodeSeeds, executable queues, final node manifests, production build tasks, implementation files, or source code are created by this PlanUnit."], validation_surfaces: ["python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits", "python3 scripts/pm-plan-index.py validate"], risk_class: "stop_reason_drift", reasoning_tier: "standard", context_scope: "run_outcomes", implementation_surfaces: ["Plans/Run_Modes.md"], node_compile_hint: {mode: "terminal_stop_reason_refinements", create_worknodes: false}, source_lineage: ["Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:Run_Modes-S0030"], preserved_exact_tokens: ["kill.budget_exceeded", "done.budget_exceeded", "done.task_timeout", "kill.task_timeout", "done.timeout", "run.completed"], negative_constraints: ["kill.task_timeout MUST NOT be emitted as the consumer-facing terminal alias.", "Consumers MUST NOT collapse post-response budget overruns back into pre-dispatch naming."], preserved_contractrefs: ["ContractRef: ContractName:Plans/usage-feature.md, ContractName:Plans/storage-plan.md, ContractName:Plans/Contracts_V0.md", "ContractRef: ContractName:Plans/orchestrator-subagent-integration.md, ContractName:Plans/Contracts_V0.md, ContractName:Plans/Executor_Protocol.md", "ContractRef: ContractName:Plans/Run_Modes.md, ContractName:Plans/orchestrator-subagent-integration.md, ContractName:Plans/Contracts_V0.md", "ContractRef: ContractName:Plans/storage-plan.md, ContractName:Plans/Run_Modes.md, ContractName:Plans/Architecture_Invariants.md"], compatibility_only_notes: [], stale_retired_dispositions: ["done.timeout is retired as a synonym."], owner_hints: ["Plans/Run_Modes.md", "Plans/usage-feature.md", "Plans/storage-plan.md", "Plans/Contracts_V0.md", "Plans/orchestrator-subagent-integration.md", "Plans/Executor_Protocol.md"]}
+L00000872	```
+L00000873	
+L00000874	### RM-026 - Context Overlay And Rotation Effects
+L00000875	
+L00000876	```yaml
+L00000877	{plan_unit_id: "RM-026", unit_type: "requirement", status: "accepted", owner_doc: "Plans/Run_Modes.md", canonical_text: "Run mode controls context overlays and rotation: ask uses read_only, plan uses read_only plus plan_output_scaffold_v1, regular/yolo use full_execution, read-only children and rotated follow-ups may narrow but never widen to full_execution, and ask/plan remain rotation-ineligible after deterministic compaction.", gui_related: false, gui_classification_reason: "This unit preserves backend, runtime, policy, storage, provider, or ownership requirements rather than visual presentation.", split_recommended: false, depends_on: ["PDS-003", "PDS-004", "PDS-005", "PNC-001", "SP-001", "PS-001"], unblocks: [], acceptance_criteria: ["RM-026 remains addressable as a fine-grained Run Modes PlanUnit with source-span coverage.", "ContractRefs, anchors or aliases, exact tokens, negative constraints, compatibility notes, stale/retired dispositions, owner boundaries, and source lineage from the source spans remain preserved.", "No WorkNodes, NodeSeeds, executable queues, final node manifests, production build tasks, implementation files, or source code are created by this PlanUnit."], validation_surfaces: ["python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits", "python3 scripts/pm-plan-index.py validate"], risk_class: "context_overlay_drift", reasoning_tier: "standard", context_scope: "context_management", implementation_surfaces: ["Plans/Run_Modes.md"], node_compile_hint: {mode: "context_overlay_rotation_effects", create_worknodes: false}, source_lineage: ["Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:Run_Modes-S0031"], preserved_exact_tokens: ["read_only", "read_only + plan_output_scaffold_v1", "full_execution", "done.rotated", "Injected Context", "Rotation decision boundary"], negative_constraints: ["read_only excludes mutation-authority metadata.", "Child/subagent/rotated follow-up runs inherit the parent effective overlay and may narrow but MUST NOT widen a read-only overlay into full_execution.", "ask and plan are rotation-ineligible."], preserved_contractrefs: ["ContractRef: ContractName:Plans/Prompt_Pipeline.md, ContractName:Plans/FileSafe.md, ContractName:Plans/Run_Modes.md", "ContractRef: ContractName:Plans/Prompt_Pipeline.md, ContractName:Plans/Contracts_V0.md, ContractName:Plans/storage-plan.md", "ContractRef: ContractName:Plans/Prompt_Pipeline.md, ContractName:Plans/Contracts_V0.md, ContractName:Plans/Permissions_System.md"], compatibility_only_notes: [], stale_retired_dispositions: [], owner_hints: ["Plans/Run_Modes.md", "Plans/Prompt_Pipeline.md", "Plans/FileSafe.md", "Plans/Contracts_V0.md", "Plans/storage-plan.md", "Plans/Permissions_System.md"]}
+L00000878	```
+L00000879	
+L00000880	### RM-027 - OpenCode Reference Boundary
+L00000881	
+L00000882	```yaml
+L00000883	{plan_unit_id: "RM-027", unit_type: "requirement", status: "accepted", owner_doc: "Plans/Run_Modes.md", canonical_text: "OpenCode material is reference-only background for run modes; PM is not normatively based on OpenCode, and PM owner docs resolve mode, approval, TODO, and web-tool semantics when external baselines conflict.", gui_related: false, gui_classification_reason: "This unit preserves backend, runtime, policy, storage, provider, or ownership requirements rather than visual presentation.", split_recommended: false, depends_on: ["PDS-003", "PDS-004", "PDS-005", "PNC-001", "PS-001"], unblocks: [], acceptance_criteria: ["RM-027 remains addressable as a fine-grained Run Modes PlanUnit with source-span coverage.", "ContractRefs, anchors or aliases, exact tokens, negative constraints, compatibility notes, stale/retired dispositions, owner boundaries, and source lineage from the source spans remain preserved.", "No WorkNodes, NodeSeeds, executable queues, final node manifests, production build tasks, implementation files, or source code are created by this PlanUnit."], validation_surfaces: ["python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits", "python3 scripts/pm-plan-index.py validate"], risk_class: "external_reference_drift", reasoning_tier: "standard", context_scope: "external_reference_boundary", implementation_surfaces: ["Plans/Run_Modes.md"], node_compile_hint: {mode: "opencode_reference_boundary", create_worknodes: false}, source_lineage: ["Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:Run_Modes-S0032"], preserved_exact_tokens: ["OpenCode baseline", "reference-only background", "PM is not “based on” OpenCode", "mode, approval, TODO, and web-tool semantics"], negative_constraints: [], preserved_contractrefs: ["ContractRef: ContractName:Plans/Permissions_System.md, ContractName:Plans/assistant-chat-design.md"], compatibility_only_notes: ["OpenCode material is reference-only background. Puppet Master run-mode semantics are PM-owned canon."], stale_retired_dispositions: [], owner_hints: ["Plans/Run_Modes.md", "Plans/Permissions_System.md", "Plans/assistant-chat-design.md"]}
+L00000884	```
+L00000885	
+L00000886	### RM-028 - Cross-Mode Read-Only Search
+L00000887	
+L00000888	```yaml
+L00000889	{plan_unit_id: "RM-028", unit_type: "requirement", status: "accepted", owner_doc: "Plans/Run_Modes.md", canonical_text: "Mode selection does not remove read-only repository search: agents and delegated read-only children may use grep in every runtime mode subject to the tool registry and permission policy while mutation remains bounded by the active mode ceiling.", gui_related: false, gui_classification_reason: "This unit preserves backend, runtime, policy, storage, provider, or ownership requirements rather than visual presentation.", split_recommended: false, depends_on: ["PDS-003", "PDS-004", "PDS-005", "PNC-001", "T-001", "PS-001"], unblocks: [], acceptance_criteria: ["RM-028 remains addressable as a fine-grained Run Modes PlanUnit with source-span coverage.", "ContractRefs, anchors or aliases, exact tokens, negative constraints, compatibility notes, stale/retired dispositions, owner boundaries, and source lineage from the source spans remain preserved.", "No WorkNodes, NodeSeeds, executable queues, final node manifests, production build tasks, implementation files, or source code are created by this PlanUnit."], validation_surfaces: ["python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits", "python3 scripts/pm-plan-index.py validate"], risk_class: "read_tool_permission_drift", reasoning_tier: "standard", context_scope: "mode_tooling_deltas", implementation_surfaces: ["Plans/Run_Modes.md"], node_compile_hint: {mode: "cross_mode_read_only_search", create_worknodes: false}, source_lineage: ["Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:Run_Modes-S0033"], preserved_exact_tokens: ["grep", "read-only repository search", "tool registry", "permission policy", "authority ceiling"], negative_constraints: [], preserved_contractrefs: ["ContractRef: ContractName:Plans/Run_Modes.md, ContractName:Plans/Tools.md, ContractName:Plans/Permissions_System.md"], compatibility_only_notes: [], stale_retired_dispositions: [], owner_hints: ["Plans/Run_Modes.md", "Plans/Tools.md", "Plans/Permissions_System.md"]}
+L00000890	```
+L00000891	
+L00000892	### RM-029 - Ask And Plan Mode Tooling Deltas
+L00000893	
+L00000894	```yaml
+L00000895	{plan_unit_id: "RM-029", unit_type: "requirement", status: "accepted", owner_doc: "Plans/Run_Modes.md", canonical_text: "ask may launch delegated read-only research children but no execution or mutation children; plan remains read-first with explicit planning artifacts, TODO projection, read/navigation LSP, limited read-only task tooling, and ask-gated websearch/webfetch/webextract/webresearch/webcrawl/webmap rather than a silent auto-deny shell.", gui_related: false, gui_classification_reason: "This unit preserves backend, runtime, policy, storage, provider, or ownership requirements rather than visual presentation.", split_recommended: false, depends_on: ["PDS-003", "PDS-004", "PDS-005", "PNC-001", "T-001", "PS-001", "ACD-006"], unblocks: [], acceptance_criteria: ["RM-029 remains addressable as a fine-grained Run Modes PlanUnit with source-span coverage.", "ContractRefs, anchors or aliases, exact tokens, negative constraints, compatibility notes, stale/retired dispositions, owner boundaries, and source lineage from the source spans remain preserved.", "No WorkNodes, NodeSeeds, executable queues, final node manifests, production build tasks, implementation files, or source code are created by this PlanUnit."], validation_surfaces: ["python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits", "python3 scripts/pm-plan-index.py validate"], risk_class: "read_only_tooling_drift", reasoning_tier: "standard", context_scope: "mode_tooling_deltas", implementation_surfaces: ["Plans/Run_Modes.md"], node_compile_hint: {mode: "ask_plan_tooling_deltas", create_worknodes: false}, source_lineage: ["Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:Run_Modes-S0034", "Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:Run_Modes-S0035"], preserved_exact_tokens: ["todoread", "todowrite", "task", "lsp", "/web", "websearch", "webfetch", "webextract", "webresearch", "webcrawl", "webmap", "Deep Plan"], negative_constraints: ["ask may not launch execution or mutation children.", "Plan mode is not a silent auto-deny shell around web tools."], preserved_contractrefs: ["ContractRef: ContractName:Plans/Tools.md, ContractName:Plans/Permissions_System.md, ContractName:Plans/assistant-chat-design.md", "ContractRef: ContractName:Plans/Tools.md, ContractName:Plans/assistant-chat-design.md, ContractName:Plans/Permissions_System.md"], compatibility_only_notes: [], stale_retired_dispositions: [], owner_hints: ["Plans/Run_Modes.md", "Plans/Tools.md", "Plans/Permissions_System.md", "Plans/assistant-chat-design.md"]}
+L00000896	```
+L00000897	
+L00000898	### RM-030 - Regular Yolo And Crew Authority Deltas
+L00000899	
+L00000900	```yaml
+L00000901	{plan_unit_id: "RM-030", unit_type: "requirement", status: "accepted", owner_doc: "Plans/Run_Modes.md", canonical_text: "regular allows full child-run behavior subject to permission, provider, and capability rules; yolo may broaden execution but cannot bypass child capability narrowing, provider restrictions, or Copilot-native routing; Crew is an overlay over the current parent mode rather than a separate runtime mode.", gui_related: false, gui_classification_reason: "This unit preserves backend, runtime, policy, storage, provider, or ownership requirements rather than visual presentation.", split_recommended: false, depends_on: ["PDS-003", "PDS-004", "PDS-005", "PNC-001", "T-001", "PS-001", "CBP-003", "ACD-006"], unblocks: [], acceptance_criteria: ["RM-030 remains addressable as a fine-grained Run Modes PlanUnit with source-span coverage.", "ContractRefs, anchors or aliases, exact tokens, negative constraints, compatibility notes, stale/retired dispositions, owner boundaries, and source lineage from the source spans remain preserved.", "No WorkNodes, NodeSeeds, executable queues, final node manifests, production build tasks, implementation files, or source code are created by this PlanUnit."], validation_surfaces: ["python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits", "python3 scripts/pm-plan-index.py validate"], risk_class: "execution_authority_drift", reasoning_tier: "standard", context_scope: "mode_tooling_deltas", implementation_surfaces: ["Plans/Run_Modes.md"], node_compile_hint: {mode: "regular_yolo_crew_authority_deltas", create_worknodes: false}, source_lineage: ["Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:Run_Modes-S0036", "Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:Run_Modes-S0037", "Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:Run_Modes-S0038"], preserved_exact_tokens: ["regular", "yolo", "Copilot-native routing exception", "Crew is an overlay", "FinalGUISpec"], negative_constraints: ["yolo still cannot bypass child capability narrowing, provider restrictions, or the Copilot-native routing exception.", "Crew is an overlay over the current parent mode, not a separate runtime mode."], preserved_contractrefs: ["ContractRef: ContractName:Plans/Tools.md, ContractName:Plans/Models_System.md, ContractName:Plans/Permissions_System.md", "ContractRef: ContractName:Plans/Models_System.md, ContractName:Plans/CLI_Bridged_Providers.md, ContractName:Plans/Permissions_System.md", "ContractRef: ContractName:Plans/orchestrator-subagent-integration.md, ContractName:Plans/assistant-chat-design.md, ContractName:Plans/FinalGUISpec.md"], compatibility_only_notes: [], stale_retired_dispositions: [], owner_hints: ["Plans/Run_Modes.md", "Plans/Tools.md", "Plans/Models_System.md", "Plans/Permissions_System.md", "Plans/CLI_Bridged_Providers.md", "Plans/orchestrator-subagent-integration.md", "Plans/FinalGUISpec.md"]}
+L00000902	```
+L00000903	
+L00000904	### RM-031 - Strategy And Determinism Acceptance Criteria
+L00000905	
+L00000906	```yaml
+L00000907	{plan_unit_id: "RM-031", unit_type: "requirement", status: "accepted", owner_doc: "Plans/Run_Modes.md", canonical_text: "Acceptance criteria AC-01 through AC-03 require HTE provider tool_use to kill with kill.hte_tool_observed, DAE end-of-run scans to run for every terminal outcome with scan failures escalating to done.failed, and identical inputs to deterministically produce the same mode/strategy pair.", gui_related: false, gui_classification_reason: "This unit preserves backend, runtime, policy, storage, provider, or ownership requirements rather than visual presentation.", split_recommended: false, depends_on: ["PDS-003", "PDS-004", "PDS-005", "PNC-001", "T-001", "CBP-003", "CV-215"], unblocks: [], acceptance_criteria: ["RM-031 remains addressable as a fine-grained Run Modes PlanUnit with source-span coverage.", "ContractRefs, anchors or aliases, exact tokens, negative constraints, compatibility notes, stale/retired dispositions, owner boundaries, and source lineage from the source spans remain preserved.", "No WorkNodes, NodeSeeds, executable queues, final node manifests, production build tasks, implementation files, or source code are created by this PlanUnit."], validation_surfaces: ["python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits", "python3 scripts/pm-plan-index.py validate"], risk_class: "acceptance_criteria_loss", reasoning_tier: "standard", context_scope: "acceptance_criteria", implementation_surfaces: ["Plans/Run_Modes.md"], node_compile_hint: {mode: "strategy_determinism_acceptance_criteria", create_worknodes: false}, source_lineage: ["Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:Run_Modes-S0039"], preserved_exact_tokens: ["AC-01", "AC-02", "AC-03", "kill.hte_tool_observed", "done.failed", "mode, strategy"], negative_constraints: ["Mode selection is deterministic for identical run envelope and config inputs."], preserved_contractrefs: ["ContractRef: ContractName:Plans/Run_Modes.md, ContractName:Plans/Progression_Gates.md", "ContractRef: ContractName:Plans/Run_Modes.md, ContractName:Plans/Tools.md", "ContractRef: ContractName:Plans/Run_Modes.md, ContractName:Plans/Contracts_V0.md", "ContractRef: ContractName:Plans/Permissions_System.md, ContractName:Plans/FileSafe.md", "ContractRef: ContractName:Plans/FileSafe.md, ContractName:Plans/Run_Modes.md", "ContractRef: ContractName:Plans/Contracts_V0.md#EventRecord, ContractName:Plans/storage-plan.md", "ContractRef: ContractName:Plans/Run_Modes.md, ContractName:Plans/CLI_Bridged_Providers.md", "ContractRef: ContractName:Plans/Tools.md, ContractName:Plans/storage-plan.md", "ContractRef: ContractName:Plans/FileSafe.md, ContractName:Plans/storage-plan.md", "ContractRef: ContractName:Plans/Section15_MVP_Promoted_Features_Spec.md, ContractName:Plans/UI_Command_Catalog.md", "ContractRef: ContractName:Plans/UI_Command_Catalog.md, ContractName:Plans/storage-plan.md", "ContractRef: ContractName:Plans/Section15_MVP_Promoted_Features_Spec.md, ContractName:Plans/UI_Command_Catalog.md, ContractName:Plans/storage-plan.md"], compatibility_only_notes: [], stale_retired_dispositions: [], owner_hints: ["Plans/Run_Modes.md", "Plans/Progression_Gates.md", "Plans/Tools.md", "Plans/Contracts_V0.md"]}
+L00000908	```
+L00000909	
+L00000910	### RM-032 - Read-Only FileSafe Budget And Outcome Acceptance Criteria
+L00000911	
+L00000912	```yaml
+L00000913	{plan_unit_id: "RM-032", unit_type: "requirement", status: "accepted", owner_doc: "Plans/Run_Modes.md", canonical_text: "Acceptance criteria AC-04 through AC-07 require ask/plan project-file mutations to be blocked by permissions, yolo to keep FileSafe guards active with user-visible warnings if disabled, budgets to be enforced regardless of mode, and exactly one outcome to be recorded in done and persisted to seglog.", gui_related: false, gui_classification_reason: "This unit preserves backend, runtime, policy, storage, provider, or ownership requirements rather than visual presentation.", split_recommended: false, depends_on: ["PDS-003", "PDS-004", "PDS-005", "PNC-001", "PS-001", "F2-086", "SP-001", "CV-215"], unblocks: [], acceptance_criteria: ["RM-032 remains addressable as a fine-grained Run Modes PlanUnit with source-span coverage.", "ContractRefs, anchors or aliases, exact tokens, negative constraints, compatibility notes, stale/retired dispositions, owner boundaries, and source lineage from the source spans remain preserved.", "No WorkNodes, NodeSeeds, executable queues, final node manifests, production build tasks, implementation files, or source code are created by this PlanUnit."], validation_surfaces: ["python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits", "python3 scripts/pm-plan-index.py validate"], risk_class: "acceptance_criteria_loss", reasoning_tier: "standard", context_scope: "acceptance_criteria", implementation_surfaces: ["Plans/Run_Modes.md"], node_compile_hint: {mode: "read_only_filesafe_budget_outcome_acceptance", create_worknodes: false}, source_lineage: ["Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:Run_Modes-S0039"], preserved_exact_tokens: ["AC-04", "AC-05", "AC-06", "AC-07", "user-visible warning", "seglog"], negative_constraints: ["In ask and plan modes, no project-file mutation may occur.", "FileSafe guards MUST remain active in yolo mode."], preserved_contractrefs: ["ContractRef: ContractName:Plans/Run_Modes.md, ContractName:Plans/Progression_Gates.md", "ContractRef: ContractName:Plans/Run_Modes.md, ContractName:Plans/Tools.md", "ContractRef: ContractName:Plans/Run_Modes.md, ContractName:Plans/Contracts_V0.md", "ContractRef: ContractName:Plans/Permissions_System.md, ContractName:Plans/FileSafe.md", "ContractRef: ContractName:Plans/FileSafe.md, ContractName:Plans/Run_Modes.md", "ContractRef: ContractName:Plans/Contracts_V0.md#EventRecord, ContractName:Plans/storage-plan.md", "ContractRef: ContractName:Plans/Run_Modes.md, ContractName:Plans/CLI_Bridged_Providers.md", "ContractRef: ContractName:Plans/Tools.md, ContractName:Plans/storage-plan.md", "ContractRef: ContractName:Plans/FileSafe.md, ContractName:Plans/storage-plan.md", "ContractRef: ContractName:Plans/Section15_MVP_Promoted_Features_Spec.md, ContractName:Plans/UI_Command_Catalog.md", "ContractRef: ContractName:Plans/UI_Command_Catalog.md, ContractName:Plans/storage-plan.md", "ContractRef: ContractName:Plans/Section15_MVP_Promoted_Features_Spec.md, ContractName:Plans/UI_Command_Catalog.md, ContractName:Plans/storage-plan.md"], compatibility_only_notes: [], stale_retired_dispositions: [], owner_hints: ["Plans/Run_Modes.md", "Plans/Permissions_System.md", "Plans/FileSafe.md", "Plans/Progression_Gates.md", "Plans/Contracts_V0.md", "Plans/storage-plan.md"]}
+L00000914	```
+L00000915	
+L00000916	### RM-033 - UI Workflow Runtime Normalization Acceptance Criterion
+L00000917	
+L00000918	```yaml
+L00000919	{plan_unit_id: "RM-033", unit_type: "requirement", status: "accepted", owner_doc: "Plans/Run_Modes.md", canonical_text: "Acceptance criterion AC-08 requires UI/workflow state to normalize deterministically into the canonical runtime mode enum before strategy selection, and Interview, BrainStorm, and Crew must not create additional runtime mode values.", gui_related: true, gui_classification_reason: "This unit preserves user-visible GUI, UI, surface, workflow, or visual presentation requirements.", split_recommended: false, depends_on: ["PDS-003", "PDS-004", "PDS-005", "PNC-001", "ACD-008", "CV-002", "CV-006", "UCC-001"], unblocks: [], acceptance_criteria: ["RM-033 remains addressable as a fine-grained Run Modes PlanUnit with source-span coverage.", "ContractRefs, anchors or aliases, exact tokens, negative constraints, compatibility notes, stale/retired dispositions, owner boundaries, and source lineage from the source spans remain preserved.", "No WorkNodes, NodeSeeds, executable queues, final node manifests, production build tasks, implementation files, or source code are created by this PlanUnit."], validation_surfaces: ["python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits", "python3 scripts/pm-plan-index.py validate"], risk_class: "ui_runtime_mapping_drift", reasoning_tier: "standard", context_scope: "acceptance_criteria_gui", implementation_surfaces: ["Plans/Run_Modes.md"], node_compile_hint: {mode: "ui_workflow_runtime_normalization_acceptance", create_worknodes: false}, source_lineage: ["Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:Run_Modes-S0039"], preserved_exact_tokens: ["AC-08", "UI/workflow state", "Interview", "BrainStorm", "Crew", "canonical runtime mode enum"], negative_constraints: ["Interview, BrainStorm, and Crew MUST NOT create additional runtime mode values."], preserved_contractrefs: ["ContractRef: ContractName:Plans/Run_Modes.md, ContractName:Plans/Progression_Gates.md", "ContractRef: ContractName:Plans/Run_Modes.md, ContractName:Plans/Tools.md", "ContractRef: ContractName:Plans/Run_Modes.md, ContractName:Plans/Contracts_V0.md", "ContractRef: ContractName:Plans/Permissions_System.md, ContractName:Plans/FileSafe.md", "ContractRef: ContractName:Plans/FileSafe.md, ContractName:Plans/Run_Modes.md", "ContractRef: ContractName:Plans/Contracts_V0.md#EventRecord, ContractName:Plans/storage-plan.md", "ContractRef: ContractName:Plans/Run_Modes.md, ContractName:Plans/CLI_Bridged_Providers.md", "ContractRef: ContractName:Plans/Tools.md, ContractName:Plans/storage-plan.md", "ContractRef: ContractName:Plans/FileSafe.md, ContractName:Plans/storage-plan.md", "ContractRef: ContractName:Plans/Section15_MVP_Promoted_Features_Spec.md, ContractName:Plans/UI_Command_Catalog.md", "ContractRef: ContractName:Plans/UI_Command_Catalog.md, ContractName:Plans/storage-plan.md", "ContractRef: ContractName:Plans/Section15_MVP_Promoted_Features_Spec.md, ContractName:Plans/UI_Command_Catalog.md, ContractName:Plans/storage-plan.md"], compatibility_only_notes: [], stale_retired_dispositions: [], owner_hints: ["Plans/Run_Modes.md", "Plans/Contracts_V0.md", "Plans/assistant-chat-design.md", "Plans/UI_Command_Catalog.md"]}
+L00000920	```
+L00000921	
+L00000922	### RM-034 - DAE Provider Policy Acceptance Criteria
+L00000923	
+L00000924	```yaml
+L00000925	{plan_unit_id: "RM-034", unit_type: "requirement", status: "accepted", owner_doc: "Plans/Run_Modes.md", canonical_text: "Acceptance criteria AC-09 and AC-10 require regular mode with dae disallowed to fall back to HTE while persisting regular_dae_disallowed, and yolo with dae disallowed to fail before provider spawn with yolo_requires_dae_provider rather than silently downgrading.", gui_related: false, gui_classification_reason: "This unit preserves backend, runtime, policy, storage, provider, or ownership requirements rather than visual presentation.", split_recommended: false, depends_on: ["PDS-003", "PDS-004", "PDS-005", "PNC-001", "CBP-003", "CBP-005", "CV-215"], unblocks: [], acceptance_criteria: ["RM-034 remains addressable as a fine-grained Run Modes PlanUnit with source-span coverage.", "ContractRefs, anchors or aliases, exact tokens, negative constraints, compatibility notes, stale/retired dispositions, owner boundaries, and source lineage from the source spans remain preserved.", "No WorkNodes, NodeSeeds, executable queues, final node manifests, production build tasks, implementation files, or source code are created by this PlanUnit."], validation_surfaces: ["python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits", "python3 scripts/pm-plan-index.py validate"], risk_class: "dae_policy_drift", reasoning_tier: "standard", context_scope: "acceptance_criteria", implementation_surfaces: ["Plans/Run_Modes.md"], node_compile_hint: {mode: "dae_provider_policy_acceptance", create_worknodes: false}, source_lineage: ["Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:Run_Modes-S0039"], preserved_exact_tokens: ["AC-09", "AC-10", "cli_bridged_strategy = \"dae\"", "regular_dae_disallowed", "yolo_requires_dae_provider"], negative_constraints: ["yolo MUST NOT silently downgrade to HTE when provider dae_allowed is not true."], preserved_contractrefs: ["ContractRef: ContractName:Plans/Run_Modes.md, ContractName:Plans/Progression_Gates.md", "ContractRef: ContractName:Plans/Run_Modes.md, ContractName:Plans/Tools.md", "ContractRef: ContractName:Plans/Run_Modes.md, ContractName:Plans/Contracts_V0.md", "ContractRef: ContractName:Plans/Permissions_System.md, ContractName:Plans/FileSafe.md", "ContractRef: ContractName:Plans/FileSafe.md, ContractName:Plans/Run_Modes.md", "ContractRef: ContractName:Plans/Contracts_V0.md#EventRecord, ContractName:Plans/storage-plan.md", "ContractRef: ContractName:Plans/Run_Modes.md, ContractName:Plans/CLI_Bridged_Providers.md", "ContractRef: ContractName:Plans/Tools.md, ContractName:Plans/storage-plan.md", "ContractRef: ContractName:Plans/FileSafe.md, ContractName:Plans/storage-plan.md", "ContractRef: ContractName:Plans/Section15_MVP_Promoted_Features_Spec.md, ContractName:Plans/UI_Command_Catalog.md", "ContractRef: ContractName:Plans/UI_Command_Catalog.md, ContractName:Plans/storage-plan.md", "ContractRef: ContractName:Plans/Section15_MVP_Promoted_Features_Spec.md, ContractName:Plans/UI_Command_Catalog.md, ContractName:Plans/storage-plan.md"], compatibility_only_notes: [], stale_retired_dispositions: [], owner_hints: ["Plans/Run_Modes.md", "Plans/CLI_Bridged_Providers.md"]}
+L00000926	```
+L00000927	

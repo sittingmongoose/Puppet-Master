@@ -1,0 +1,99 @@
+{
+  "assignment_id": "A005M-000239-INTEGRATED-MACRO-0A77977E441D-0002",
+  "attempt_id": "attempt-0014",
+  "audit_id": "audit-20260710-005-plan-assurance-model-lanes-fresh-agent-exhaustive",
+  "blindness": {
+    "external_research": "deferred_to_feature_research_phase",
+    "peer_results": "forbidden",
+    "prior_audits": "forbidden",
+    "unrelated_sources": "forbidden"
+  },
+  "bundle_core_range": [
+    2907,
+    3052
+  ],
+  "bundle_id": "MACRO-0A77977E441D-0002",
+  "context_ranges": [
+    [
+      2895,
+      2906
+    ]
+  ],
+  "document_path": "Plans/storage_value_registry.json",
+  "micro_window_ids": [
+    "WIN-0A77977E441D-0009"
+  ],
+  "phase": "blind_macro_window_review",
+  "required_dimensions": [
+    "behavior",
+    "capabilities",
+    "inputs_outputs",
+    "contracts",
+    "states_transitions",
+    "authority",
+    "ownership",
+    "consumers",
+    "gui_truth",
+    "failures_recovery",
+    "security_privacy",
+    "propagation",
+    "operations",
+    "scale_performance",
+    "compatibility_migration",
+    "acceptance_oracles",
+    "builder_discretion",
+    "ambiguity_unknowns",
+    "missing_callers_consumers",
+    "invalid_states_transitions",
+    "concurrency_races",
+    "partial_failure",
+    "recovery_rollback",
+    "authority_boundaries",
+    "privacy_data_lifecycle",
+    "untrusted_inputs",
+    "gui_misleading_states",
+    "offline_network_loss",
+    "scale_limits",
+    "accessibility",
+    "localization",
+    "observability_support",
+    "destructive_actions",
+    "cross_document_seams",
+    "test_falsifiability",
+    "unknown_unknowns"
+  ],
+  "result_schema_ref": "schemas/macro_review_result.schema.json",
+  "review_instructions": "Read every assigned core line and account for every required_source_unit_ref. Apply both exact-behavior and adversarial-negative-space lenses across every required dimension. Extract concise feature, behavior, contract, state, authority, consumer, GUI, failure/recovery, oracle, gap, unknown, and explicit-non-gap items with exact source evidence. Do not merely paraphrase headings or copy unit refs. Each segment must name its complete required_source_unit_refs list and at least one item. Write exactly one regular JSON payload inside the assigned output directory; result.json is recommended but the filename is not semantic. Do not write a terminal seal. Return PMR1 only after the JSON payload is fully written.",
+  "schema_version": "macro-context-capsule-v1",
+  "segments": [
+    {
+      "core_range": [
+        2907,
+        3052
+      ],
+      "core_sha256": "b72cbba5fd669b716c26b00863fe7efb3a758e4d90160054e6fad97a28c18eba",
+      "plan_unit_ids": [],
+      "required_source_unit_refs": [
+        "SEMANTIC:JSON_FIELD:Plans/storage_value_registry.json:families:CONT-009",
+        "SEMANTIC:JSON_SUFFIX:Plans/storage_value_registry.json",
+        "STRUCTURAL:$",
+        "STRUCTURAL:$.families"
+      ],
+      "semantic_block_ids": [
+        "JSON_FIELD:Plans/storage_value_registry.json:families:CONT-009",
+        "JSON_SUFFIX:Plans/storage_value_registry.json"
+      ],
+      "structural_paths": [
+        "$",
+        "$.families"
+      ],
+      "token_estimate": 2686,
+      "window_id": "WIN-0A77977E441D-0009"
+    }
+  ],
+  "source_excerpt_line_format": "L######## followed by a tab and exact canonical source text",
+  "source_excerpt_ref": "capsules/source/c2/c288abb3d8bbd1afba1a789d4aed3f04d774855863b8abf2b64ef406148ea1b0.txt",
+  "source_excerpt_sha256": "c288abb3d8bbd1afba1a789d4aed3f04d774855863b8abf2b64ef406148ea1b0",
+  "source_sha256": "bf8cf1ceb33f175e144a44699996c0f981eda8a6cb6e05503ec281b9d6dc77dc",
+  "token_estimate": 2686
+}

@@ -1,0 +1,565 @@
+{
+  "assignment_id": "A005M15-000104-INTEGRATED-MACRO15-E9F0FF594512-0001",
+  "attempt_id": "attempt-0015",
+  "audit_id": "audit-20260710-005-plan-assurance-model-lanes-fresh-agent-exhaustive",
+  "coverage": {
+    "all_micro_windows_reviewed": true,
+    "all_source_lines_reviewed": true,
+    "all_source_units_accounted": true,
+    "both_exact_and_adversarial_lenses_applied": true,
+    "dimensions_checked": [
+      "behavior",
+      "capabilities",
+      "inputs_outputs",
+      "contracts",
+      "states_transitions",
+      "authority",
+      "ownership",
+      "consumers",
+      "gui_truth",
+      "failures_recovery",
+      "security_privacy",
+      "propagation",
+      "operations",
+      "scale_performance",
+      "compatibility_migration",
+      "acceptance_oracles",
+      "builder_discretion",
+      "ambiguity_unknowns",
+      "missing_callers_consumers",
+      "invalid_states_transitions",
+      "concurrency_races",
+      "partial_failure",
+      "recovery_rollback",
+      "authority_boundaries",
+      "privacy_data_lifecycle",
+      "untrusted_inputs",
+      "gui_misleading_states",
+      "offline_network_loss",
+      "scale_limits",
+      "accessibility",
+      "localization",
+      "observability_support",
+      "destructive_actions",
+      "cross_document_seams",
+      "test_falsifiability",
+      "unknown_unknowns"
+    ]
+  },
+  "items": [
+    {
+      "builder_discretion": false,
+      "confidence": 0.99,
+      "dimensions": [
+        "behavior",
+        "authority",
+        "security_privacy",
+        "privacy_data_lifecycle",
+        "acceptance_oracles"
+      ],
+      "evidence": [
+        {
+          "exact_quote": "  Runtime Artifacts may browse persisted discovery receipts, fallback summaries, selected opaque ids, redacted candidate counts, freshness/fallback/policy state, remote/SSH identity, permission snapshot, host trust state, elapsed/budget fields, and exact-verification links when receipt persistence is promoted. Runtime Artifacts consumes the DiscoveryService receipt envelope but does not own DiscoveryService behavior. Assistant Chat visibility settings never delete or hide durable audit receipts; frecency/history reset stops future ranking use for the selected identity without deleting durable redacted discovery receipts by default unless a separate retention/export/delete owner action applies.",
+          "line_end": 967,
+          "line_start": 967,
+          "path": "Plans/Runtime_Artifacts_Panel.md",
+          "source_sha256": "ce32d49b79ce0095cc0b4344fc20312307df45bb8a93642eecfeddfd992ca173"
+        }
+      ],
+      "gap_kind": "none_explicit_projection_boundary",
+      "impact": "Discovery receipt browsing remains durable, redacted, and separate from DiscoveryService behavior ownership, while visibility and frecency changes cannot silently erase audit evidence.",
+      "item_id": "A005M15-001",
+      "item_type": "explicit_non_gap",
+      "severity": "info",
+      "source_unit_refs": [
+        "PLANUNIT:RAP-031",
+        "SEMANTIC:PLANUNIT:RAP-031"
+      ],
+      "statement": "RAP-031 explicitly defines the projection/owner boundary, redaction inputs, durable visibility behavior, and default retention effect, with acceptance checks for hidden inline activity and persisted receipts.",
+      "title": "Discovery receipts preserve redacted durability and owner separation"
+    },
+    {
+      "builder_discretion": true,
+      "confidence": 0.94,
+      "dimensions": [
+        "contracts",
+        "states_transitions",
+        "concurrency_races",
+        "partial_failure",
+        "authority_boundaries",
+        "test_falsifiability"
+      ],
+      "evidence": [
+        {
+          "exact_quote": "- Do not open or export stale copies without resolving preserved source refs and currentness/authority checks where",
+          "line_end": 1148,
+          "line_start": 1148,
+          "path": "Plans/Runtime_Artifacts_Panel.md",
+          "source_sha256": "ce32d49b79ce0095cc0b4344fc20312307df45bb8a93642eecfeddfd992ca173"
+        }
+      ],
+      "gap_kind": "currentness_resolution_algorithm_unspecified",
+      "impact": "Implementations can disagree about the atomicity, stale-read response, retry behavior, and user-visible result when a source record changes or becomes unavailable between projection render, open, compare, and export.",
+      "item_id": "A005M15-002",
+      "item_type": "gap",
+      "severity": "medium",
+      "source_unit_refs": [
+        "PLANUNIT:RAP-034",
+        "SEMANTIC:PLANUNIT:RAP-034"
+      ],
+      "statement": "RAP-034 requires source-ref resolution and currentness/authority checks but does not define the check point, race handling, stale or missing result states, retry/refresh behavior, or an oracle for concurrent mutation during open, compare, or export.",
+      "title": "History source currentness lacks race and failure semantics"
+    },
+    {
+      "builder_discretion": true,
+      "confidence": 0.96,
+      "dimensions": [
+        "states_transitions",
+        "concurrency_races",
+        "scale_limits",
+        "localization",
+        "recovery_rollback",
+        "ambiguity_unknowns"
+      ],
+      "evidence": [
+        {
+          "exact_quote": "  when available, freshness/staleness, cached/newly generated state, and permission/degraded state. Cache keys include",
+          "line_end": 1171,
+          "line_start": 1171,
+          "path": "Plans/Runtime_Artifacts_Panel.md",
+          "source_sha256": "ce32d49b79ce0095cc0b4344fc20312307df45bb8a93642eecfeddfd992ca173"
+        }
+      ],
+      "gap_kind": "cache_and_rerun_lifecycle_incomplete",
+      "impact": "Concurrent reruns, bridge timeouts, partial writes, eviction, source deletion, and language/detail changes can yield duplicate, orphaned, or misleadingly fresh descriptions without deterministic recovery or retention behavior.",
+      "item_id": "A005M15-003",
+      "item_type": "gap",
+      "severity": "medium",
+      "source_unit_refs": [
+        "PLANUNIT:RAP-035",
+        "SEMANTIC:PLANUNIT:RAP-035"
+      ],
+      "statement": "RAP-035 enumerates cache identity and visible freshness states but leaves cache eviction, concurrent duplicate suppression, interrupted generation, orphan cleanup, source deletion, version ordering, and rerun rollback unspecified.",
+      "title": "Vision description cache lifecycle is under-specified"
+    },
+    {
+      "builder_discretion": true,
+      "confidence": 0.97,
+      "dimensions": [
+        "gui_truth",
+        "states_transitions",
+        "consumers",
+        "accessibility",
+        "localization",
+        "observability_support",
+        "concurrency_races"
+      ],
+      "evidence": [
+        {
+          "exact_quote": "  durable detail payloads. Important blocked or degraded activity remains visible in the thread and can be inspected",
+          "line_end": 1307,
+          "line_start": 1307,
+          "path": "Plans/Runtime_Artifacts_Panel.md",
+          "source_sha256": "ce32d49b79ce0095cc0b4344fc20312307df45bb8a93642eecfeddfd992ca173"
+        }
+      ],
+      "gap_kind": "activity_row_lifecycle_and_presentation_contract_missing",
+      "impact": "Blocked, degraded, fallback, or handoff activity can be reordered, duplicated, collapsed, announced poorly, or retained inconsistently, weakening user trust and screen-reader comprehension.",
+      "item_id": "A005M15-004",
+      "item_type": "gap",
+      "severity": "medium",
+      "source_unit_refs": [
+        "PLANUNIT:RAP-036",
+        "SEMANTIC:PLANUNIT:RAP-036"
+      ],
+      "statement": "RAP-036 mandates durable inspectable Teacher activity, but does not define event identity, ordering, deduplication, terminal-state updates, retention, accessibility announcements, localization of known actions/reasons, or atomic handoff behavior.",
+      "title": "Teacher activity transparency lacks durable row semantics"
+    },
+    {
+      "builder_discretion": true,
+      "confidence": 0.95,
+      "dimensions": [
+        "security_privacy",
+        "untrusted_inputs",
+        "failures_recovery",
+        "offline_network_loss",
+        "acceptance_oracles",
+        "authority_boundaries"
+      ],
+      "evidence": [
+        {
+          "exact_quote": "  and snapshot fallback provenance when re-render is impractical. The projection does not expose raw iframe heap,",
+          "line_end": 1431,
+          "line_start": 1431,
+          "path": "Plans/Runtime_Artifacts_Panel.md",
+          "source_sha256": "ce32d49b79ce0095cc0b4344fc20312307df45bb8a93642eecfeddfd992ca173"
+        }
+      ],
+      "gap_kind": "replay_trust_boundary_and_fallback_trigger_unspecified",
+      "impact": "A replay may execute changed or untrusted content, overreach approved bridge authority, or choose a snapshot inconsistently when source/config dependencies are unavailable, while the current fixtures cannot falsify those cases.",
+      "item_id": "A005M15-005",
+      "item_type": "gap",
+      "severity": "high",
+      "source_unit_refs": [
+        "PLANUNIT:RAP-037",
+        "SEMANTIC:PLANUNIT:RAP-037"
+      ],
+      "statement": "RAP-037 protects private iframe and parent state and distinguishes re-render from snapshot fallback, but does not specify replay isolation, source/config integrity checks, bridge authorization, network-loss behavior, or the deterministic condition that makes re-render impractical.",
+      "title": "Visualizer replay and snapshot fallback need a trust contract"
+    },
+    {
+      "builder_discretion": true,
+      "confidence": 0.94,
+      "dimensions": [
+        "states_transitions",
+        "invalid_states_transitions",
+        "authority",
+        "gui_misleading_states",
+        "recovery_rollback",
+        "test_falsifiability"
+      ],
+      "evidence": [
+        {
+          "exact_quote": "  `rules_application_sha256`, and `rules_project_sha256`. Projection labels distinguish applied, not_material,",
+          "line_end": 1485,
+          "line_start": 1485,
+          "path": "Plans/Runtime_Artifacts_Panel.md",
+          "source_sha256": "ce32d49b79ce0095cc0b4344fc20312307df45bb8a93642eecfeddfd992ca173"
+        }
+      ],
+      "gap_kind": "dry_state_machine_and_action_mapping_missing",
+      "impact": "Different builders can expose contradictory labels for identical receipt inputs or fail to offer a viable refresh, owner-resolution, or retry path for trust-affecting degraded and blocked states.",
+      "item_id": "A005M15-006",
+      "item_type": "gap",
+      "severity": "medium",
+      "source_unit_refs": [
+        "PLANUNIT:RAP-038",
+        "SEMANTIC:PLANUNIT:RAP-038"
+      ],
+      "statement": "RAP-038 provides a useful closed label vocabulary but does not define legal transitions, precedence among simultaneous missing/stale/owner conditions, terminality, allowed actions, or fixtures mapping receipt inputs to exactly one visible state.",
+      "title": "DRY receipt labels lack transition and recovery rules"
+    },
+    {
+      "builder_discretion": true,
+      "confidence": 0.97,
+      "dimensions": [
+        "states_transitions",
+        "partial_failure",
+        "recovery_rollback",
+        "security_privacy",
+        "destructive_actions",
+        "scale_performance",
+        "test_falsifiability"
+      ],
+      "evidence": [
+        {
+          "exact_quote": "  delivery_attempt_id, source_event_ref, destination id, provider kind, event category, status class, HTTP status,",
+          "line_end": 1547,
+          "line_start": 1547,
+          "path": "Plans/Runtime_Artifacts_Panel.md",
+          "source_sha256": "ce32d49b79ce0095cc0b4344fc20312307df45bb8a93642eecfeddfd992ca173"
+        }
+      ],
+      "gap_kind": "delivery_attempt_state_and_retention_contract_missing",
+      "impact": "Retries, duplicate callbacks, provider timeouts, redaction failures, cancellation, and receipt deletion/export can produce contradictory attempt status, duplicate evidence, or unsafe persistence without a defined authority and lifecycle oracle.",
+      "item_id": "A005M15-007",
+      "item_type": "gap",
+      "severity": "high",
+      "source_unit_refs": [
+        "PLANUNIT:RAP-039",
+        "SEMANTIC:PLANUNIT:RAP-039"
+      ],
+      "statement": "RAP-039 enumerates notification receipt fields and visible mock/live/error/retry/permanent-failure classes, but leaves legal status transitions, idempotent duplicate handling, retry exhaustion, cancellation, retention/deletion, redaction-failure behavior, and high-volume pagination unspecified.",
+      "title": "Notification receipt projection lacks a lifecycle oracle"
+    },
+    {
+      "builder_discretion": true,
+      "confidence": 0.96,
+      "dimensions": [
+        "gui_truth",
+        "offline_network_loss",
+        "operations",
+        "failures_recovery",
+        "ambiguity_unknowns",
+        "observability_support"
+      ],
+      "evidence": [
+        {
+          "exact_quote": "  Runtime Artifacts and Advanced/Support diagnostics project Free Models Auto Apply evidence including last successful source/ref/hash, last failed check time, error class, affected provider/model ids, route impact, import diff, activation receipt, quarantine/rollback refs, and redacted copy/export with redaction summary. Normal UI remains plain and passive for successful checks, routine automatic failures, and repeated background check failures unless routing availability is affected.",
+          "line_end": 1622,
+          "line_start": 1622,
+          "path": "Plans/Runtime_Artifacts_Panel.md",
+          "source_sha256": "ce32d49b79ce0095cc0b4344fc20312307df45bb8a93642eecfeddfd992ca173"
+        }
+      ],
+      "gap_kind": "routing_availability_escalation_threshold_undefined",
+      "impact": "A prolonged offline or failing source can remain deceptively passive, or generate inconsistent alerts, because builders have no canonical threshold for route impact, escalation, recovery, or stale-last-success presentation.",
+      "item_id": "A005M15-008",
+      "item_type": "gap",
+      "severity": "medium",
+      "source_unit_refs": [
+        "PLANUNIT:RAP-040",
+        "SEMANTIC:PLANUNIT:RAP-040"
+      ],
+      "statement": "RAP-040 defines passive normal-UI behavior and rich support evidence but does not define when routing availability is affected, how repeated failures aggregate, when stale success becomes misleading, or which recovery clears escalation.",
+      "title": "Free Models diagnostics have no escalation threshold"
+    },
+    {
+      "builder_discretion": true,
+      "confidence": 0.95,
+      "dimensions": [
+        "contracts",
+        "compatibility_migration",
+        "states_transitions",
+        "consumers",
+        "authority_boundaries",
+        "test_falsifiability"
+      ],
+      "evidence": [
+        {
+          "exact_quote": "  Runtime Artifacts projects Free Models route provenance by showing friendly `Free Models` model/provider names normally while preserving underlying provider/model/account/source identity, exact snapshot ids, source hashes, upstream refs, alias/rename/provider-move lineage, attempted models, skipped entries, final result, and plain switch reasons in expanded details or Advanced/Support. Raw provider payloads remain Advanced/Support-only and redacted according to policy.",
+          "line_end": 1680,
+          "line_start": 1680,
+          "path": "Plans/Runtime_Artifacts_Panel.md",
+          "source_sha256": "ce32d49b79ce0095cc0b4344fc20312307df45bb8a93642eecfeddfd992ca173"
+        }
+      ],
+      "gap_kind": "provenance_identity_and_settlement_state_incomplete",
+      "impact": "Friendly names can remain stable while distinct account, snapshot, alias, or provider-move records are conflated, and partially settled attempts may appear final without a canonical identity key and transition model.",
+      "item_id": "A005M15-009",
+      "item_type": "gap",
+      "severity": "medium",
+      "source_unit_refs": [
+        "PLANUNIT:RAP-041",
+        "SEMANTIC:PLANUNIT:RAP-041"
+      ],
+      "statement": "RAP-041 requires underlying identity and migration lineage, yet does not define the canonical composite identity, alias collision handling, account redaction boundary, partial/late attempt settlement, or fixtures for provider moves concurrent with a request.",
+      "title": "Free Models provenance lacks identity collision and settlement rules"
+    },
+    {
+      "builder_discretion": true,
+      "confidence": 0.96,
+      "dimensions": [
+        "authority",
+        "states_transitions",
+        "partial_failure",
+        "recovery_rollback",
+        "gui_misleading_states",
+        "destructive_actions",
+        "concurrency_races"
+      ],
+      "evidence": [
+        {
+          "exact_quote": "  container records remain authoritative; stale or missing owner records degrade the view. `blocked != failed` is",
+          "line_end": 1746,
+          "line_start": 1746,
+          "path": "Plans/Runtime_Artifacts_Panel.md",
+          "source_sha256": "ce32d49b79ce0095cc0b4344fc20312307df45bb8a93642eecfeddfd992ca173"
+        }
+      ],
+      "gap_kind": "projection_refresh_and_allowed_action_semantics_missing",
+      "impact": "A stale view may continue to offer unsafe or obsolete actions, while indeterminate remote outcomes and cleanup states can oscillate or be misclassified without version checks, transition precedence, and recovery rules.",
+      "item_id": "A005M15-010",
+      "item_type": "gap",
+      "severity": "high",
+      "source_unit_refs": [
+        "PLANUNIT:RAP-042",
+        "SEMANTIC:PLANUNIT:RAP-042"
+      ],
+      "statement": "RAP-042 strongly preserves owner authority and blocked-not-failed taxonomy, but does not define projection refresh/version comparison, allowed-action invalidation, stale-to-current transitions, concurrent cleanup/execution conflicts, or recovery from indeterminate remote outcome.",
+      "title": "Container evidence projection needs stale-action and recovery semantics"
+    },
+    {
+      "builder_discretion": false,
+      "confidence": 0.99,
+      "dimensions": [
+        "contracts",
+        "inputs_outputs",
+        "authority",
+        "security_privacy",
+        "acceptance_oracles",
+        "test_falsifiability",
+        "cross_document_seams"
+      ],
+      "evidence": [
+        {
+          "exact_quote": "  The materialized `cost_usage` and `tool_llm_trace` runtime artifact schemas must reject arbitrary non-empty `type_payload` values. `cost_usage` requires canonical usage identity through `usage_event_ref`, provider/route/account/model identity, normalized usage token buckets and counting semantics, nonnegative `reasoning_tokens` as the JSON wire alias for UF-085 reasoning/thoughts, normalized cost fields, quota/window evidence, authority/source/confidence/settlement fields, raw provider payload/redaction refs, and flags for estimated, provider-reported, CLI-reported, local-context-estimated, BYOK, subscription-hidden, and unknown states. `tool_llm_trace` requires `trace_ref`, trace_kind, tool_call_id, llm_call_id or stream_id, provider_attempt_ref, usage_event_ref when available, stream lifecycle timestamps or refs for start/partial/final/error/abort, provider payload/redaction refs, usage settlement link, retry/escalation relation, and quota/usage refs; provider_reported/cli_reported flags are signal flags only, not source authority, and Curated trace views must join UsageRecord authority through `usage_record_id` or `usage_artifact_ref`. Schema-only JSON validation must fail if these required payload fields are absent; repo-specific validators may add fixtures but must not be the only line of defense.",
+          "line_end": 1838,
+          "line_start": 1838,
+          "path": "Plans/Runtime_Artifacts_Panel.md",
+          "source_sha256": "ce32d49b79ce0095cc0b4344fc20312307df45bb8a93642eecfeddfd992ca173"
+        }
+      ],
+      "gap_kind": "none_strict_schema_and_authority_contract",
+      "impact": "Arbitrary payloads, artifact-local usage truth, and source-signal confusion are explicitly rejected by schema-level oracles tied to canonical UsageRecord identity.",
+      "item_id": "A005M15-011",
+      "item_type": "explicit_non_gap",
+      "severity": "info",
+      "source_unit_refs": [
+        "PLANUNIT:RAP-043",
+        "SEMANTIC:PLANUNIT:RAP-043"
+      ],
+      "statement": "RAP-043 supplies a concrete per-type schema contract, identity and authority fields, lifecycle linkage, negative fixtures, and a requirement that JSON Schema itself reject missing payload structure.",
+      "title": "Usage artifact schemas have strict payload and authority oracles"
+    },
+    {
+      "builder_discretion": true,
+      "confidence": 0.97,
+      "dimensions": [
+        "behavior",
+        "gui_truth",
+        "inputs_outputs",
+        "failures_recovery",
+        "security_privacy",
+        "missing_callers_consumers",
+        "accessibility",
+        "localization",
+        "ambiguity_unknowns"
+      ],
+      "evidence": [
+        {
+          "exact_quote": "  Runtime Artifacts usage drill-through is object-first. `Show in Usage` and `Show in Ledger` emit route_target.object_kind = usage_event and a stable object_id whenever usage_event_ref is present, plus secondary refs for usage_event_ref, usage_record_id, artifact_id, attempt_id, node_id, provider_attempt_ref, tool_call_id, trace_ref, receipt refs, raw_payload_ref, run_id, and thread_id. Run, thread, timestamp, and tier remain filters or display scope only. The Runtime Artifacts panel exposes Curated and Raw usage views: Curated shows normalized provider, usage, cost, quota, authority, settlement, counting_semantics, and correlation refs; Raw shows raw_payload_ref, redaction_status, provider_payload_hash, omitted counts, truncation/redaction reason, and permissioned-unavailable state. Append, indexing, and drill-through validation must validate the common envelope plus the matching per-type schema for cost_usage and tool_llm_trace; envelope-only validation or arbitrary non-empty type_payload cannot pass.",
+          "line_end": 1952,
+          "line_start": 1952,
+          "path": "Plans/Runtime_Artifacts_Panel.md",
+          "source_sha256": "ce32d49b79ce0095cc0b4344fc20312307df45bb8a93642eecfeddfd992ca173"
+        }
+      ],
+      "gap_kind": "missing_primary_usage_identity_route_behavior",
+      "impact": "Artifacts that legitimately lack usage_event_ref can expose enabled but non-deterministic Usage/Ledger actions, or inconsistent disabled/error copy, with no defined accessible or localized explanation and no canonical fallback authority.",
+      "item_id": "A005M15-012",
+      "item_type": "gap",
+      "severity": "medium",
+      "source_unit_refs": [
+        "PLANUNIT:RAP-044",
+        "SEMANTIC:PLANUNIT:RAP-044"
+      ],
+      "statement": "RAP-044 is exact when usage_event_ref exists, but does not specify whether Show in Usage or Show in Ledger is hidden, disabled, blocked, or routed through another canonical object when the primary ref is absent, permissioned-unavailable, redacted, or unresolved.",
+      "title": "Usage drill-through has no contract for absent primary identity"
+    }
+  ],
+  "model": "gpt-5.6-sol",
+  "phase": "blind_macro_window_review",
+  "reasoning_effort": "xhigh",
+  "schema_version": "macro-review-result-v1",
+  "segments": [
+    {
+      "core_range": [
+        959,
+        1297
+      ],
+      "covered_source_unit_refs": [
+        "PLANUNIT:RAP-031",
+        "PLANUNIT:RAP-034",
+        "PLANUNIT:RAP-035",
+        "SEMANTIC:PLANUNIT:RAP-031",
+        "SEMANTIC:PLANUNIT:RAP-034",
+        "SEMANTIC:PLANUNIT:RAP-035"
+      ],
+      "item_ids": [
+        "A005M15-001",
+        "A005M15-002",
+        "A005M15-003"
+      ],
+      "reviewed": true,
+      "summary": "Discovery receipt durability is explicit; adversarial review found unresolved History currentness races and incomplete vision cache/rerun lifecycle semantics.",
+      "window_id": "WIN-E9F0FF594512-0005"
+    },
+    {
+      "core_range": [
+        1298,
+        1671
+      ],
+      "covered_source_unit_refs": [
+        "PLANUNIT:RAP-036",
+        "PLANUNIT:RAP-037",
+        "PLANUNIT:RAP-038",
+        "PLANUNIT:RAP-039",
+        "PLANUNIT:RAP-040",
+        "SEMANTIC:PLANUNIT:RAP-036",
+        "SEMANTIC:PLANUNIT:RAP-037",
+        "SEMANTIC:PLANUNIT:RAP-038",
+        "SEMANTIC:PLANUNIT:RAP-039",
+        "SEMANTIC:PLANUNIT:RAP-040"
+      ],
+      "item_ids": [
+        "A005M15-004",
+        "A005M15-005",
+        "A005M15-006",
+        "A005M15-007",
+        "A005M15-008"
+      ],
+      "reviewed": true,
+      "summary": "Teacher, visualizer, DRY, notification, and Free Models projections cover visible evidence and redaction, but leave lifecycle, replay trust, transition, retry, accessibility, and escalation rules materially discretionary.",
+      "window_id": "WIN-E9F0FF594512-0006"
+    },
+    {
+      "core_range": [
+        1672,
+        2015
+      ],
+      "covered_source_unit_refs": [
+        "PLANUNIT:RAP-041",
+        "PLANUNIT:RAP-042",
+        "PLANUNIT:RAP-043",
+        "PLANUNIT:RAP-044",
+        "SEMANTIC:PLANUNIT:RAP-041",
+        "SEMANTIC:PLANUNIT:RAP-042",
+        "SEMANTIC:PLANUNIT:RAP-043",
+        "SEMANTIC:PLANUNIT:RAP-044"
+      ],
+      "item_ids": [
+        "A005M15-009",
+        "A005M15-010",
+        "A005M15-011",
+        "A005M15-012"
+      ],
+      "reviewed": true,
+      "summary": "Usage schema strictness is a strong explicit contract; remaining adversarial gaps concern route provenance identity collisions, stale container actions and recovery, and drill-through behavior when primary usage identity is absent.",
+      "window_id": "WIN-E9F0FF594512-0007"
+    }
+  ],
+  "self_attestation": {
+    "no_canonical_writes": true,
+    "no_external_research_during_blind_review": true,
+    "no_peer_result_access": true,
+    "no_prior_audit_access": true,
+    "no_unrelated_source_access": true,
+    "terminal_after_submission": true
+  },
+  "source_binding": {
+    "bundle_id": "MACRO15-E9F0FF594512-0001",
+    "document_path": "Plans/Runtime_Artifacts_Panel.md",
+    "micro_window_ids": [
+      "WIN-E9F0FF594512-0005",
+      "WIN-E9F0FF594512-0006",
+      "WIN-E9F0FF594512-0007"
+    ],
+    "source_sha256": "ce32d49b79ce0095cc0b4344fc20312307df45bb8a93642eecfeddfd992ca173"
+  },
+  "status": "completed",
+  "synthesis": {
+    "cross_document_questions": [
+      "Which owner contract defines atomic currentness checks and stale-source recovery for History open, compare, and export operations?",
+      "Which owner defines lifecycle, retry, cancellation, and retention semantics for notification delivery attempts while Runtime Artifacts remains projection-only?",
+      "Which route contract governs Show in Usage and Show in Ledger when usage_event_ref is absent, redacted, permissioned-unavailable, or unresolved?",
+      "Which owner invalidates allowed_action_ids when container receipt projections become stale or the remote outcome becomes indeterminate?"
+    ],
+    "feature_family_keys": [
+      "runtime-artifact-projection-authority",
+      "history-and-derived-artifact-lineage",
+      "teacher-and-visualizer-transparency",
+      "notification-and-diagnostics-evidence",
+      "container-host-evidence",
+      "usage-artifact-schema-and-drillthrough"
+    ],
+    "research_queries": [
+      "event sourced read model stale action invalidation and optimistic concurrency UX patterns",
+      "secure iframe replay provenance snapshot fallback integrity contracts",
+      "notification delivery receipt idempotency retry lifecycle retention schema",
+      "accessible activity feed live region ordering deduplication and localization patterns",
+      "usage trace identity routing when canonical usage event reference is unavailable"
+    ]
+  },
+  "task_thread_id": "/root/a005m15_b6_000104_attempt_0015_terminal"
+}

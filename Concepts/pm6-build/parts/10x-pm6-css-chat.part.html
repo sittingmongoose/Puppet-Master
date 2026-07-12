@@ -39,7 +39,6 @@
       white-space: nowrap;
       flex: none;
     }
-    .pm6-chat-badge-mode { color: var(--accent-primary); border-color: var(--accent-glow); background: var(--accent-soft); }
     .pm6-chat-headstats { font-size: var(--fs-xs); }
     .pm6-chat-issues {
       color: var(--accent-orange);
@@ -113,57 +112,9 @@
     .pm6-chat-newthread:hover { background: var(--accent-glow); }
     .pm6-chat-newthread:active { transform: scale(.97); }
     .pm6-chat-thread { border-radius: var(--radius-sm); }
-    .pm6-chat-gate-dot {
-      display: inline-block;
-      width: 7px; height: 7px;
-      border-radius: 50%;
-      background: var(--accent-orange);
-      margin-right: 3px;
-      animation: pm6-chat-pulse 1.4s ease-in-out infinite;
-    }
     @keyframes pm6-chat-pulse {
       0%, 100% { opacity: 1; transform: scale(1); }
       50% { opacity: .45; transform: scale(.8); }
-    }
-    .pm6-chat-thread-gate .thread-title { color: var(--accent-orange); }
-
-    /* ---- control strip ---- */
-    .pm6-chat-controlstrip {
-      display: flex; align-items: center; gap: var(--sm);
-      padding: var(--xs) var(--md);
-      border-bottom: 1px solid var(--border-light);
-      background: var(--surface);
-      flex-wrap: wrap;
-      flex-shrink: 0;
-    }
-    .pm6-chat-ctrlbtn {
-      background: var(--surface-elevated);
-      border: 1px solid var(--border-light);
-      border-radius: var(--radius-sm);
-      padding: 3px 10px;
-      min-height: 24px;
-      color: var(--text-primary);
-      cursor: pointer;
-      display: flex; align-items: center; gap: var(--xs);
-      font-size: var(--fs-xs);
-      font-weight: 600;
-      transition: border-color var(--motion-fast) var(--ease-default), background var(--motion-fast) var(--ease-default);
-    }
-    .pm6-chat-ctrlbtn:hover { border-color: var(--accent-primary); background: var(--accent-soft); }
-    .pm6-chat-ctrlhint {
-      margin-left: auto;
-      font-size: var(--fs-2xs);
-      color: var(--text-muted);
-      font-style: italic;
-      white-space: nowrap;
-    }
-    .pm6-chat-ddgroup {
-      padding: var(--sm) var(--md) 2px;
-      font-weight: 700;
-      color: var(--text-muted);
-      font-size: var(--fs-2xs);
-      text-transform: uppercase;
-      letter-spacing: .06em;
     }
 
     /* ---- stream + typed messages ---- */
@@ -450,35 +401,6 @@
       line-height: var(--lh-body);
     }
     .pm6-chat-slash-item { cursor: pointer; }
-    .pm6-chat-modes {
-      display: flex;
-      background: var(--surface);
-      border: 1px solid var(--border-light);
-      border-radius: var(--radius-pill);
-      padding: 2px;
-      gap: 2px;
-    }
-    .pm6-chat-mode {
-      font-size: var(--fs-2xs);
-      font-weight: 600;
-      color: var(--text-secondary);
-      padding: 2px 9px;
-      border-radius: var(--radius-pill);
-      cursor: pointer;
-      white-space: nowrap;
-      transition: background var(--motion-fast) var(--ease-default), color var(--motion-fast) var(--ease-default);
-    }
-    .pm6-chat-mode:hover { color: var(--text-primary); }
-    .pm6-chat-mode.active { background: var(--accent-primary); color: var(--surface); }
-    .pm6-chat-mode[data-mode="debug"].active { background: var(--accent-orange); }
-    .pm6-chat-pt {
-      display: flex;
-      border: 1px solid var(--border-light);
-      border-radius: var(--radius-pill);
-      padding: 2px;
-      gap: 2px;
-      background: var(--surface);
-    }
     .pm6-chat-ptbtn {
       font-size: 9px;
       font-weight: 700;
@@ -507,23 +429,9 @@
     .pm6-chat-send[data-pm6-state="busy"] { background: var(--accent-magenta); border-color: var(--accent-magenta); }
     .pm6-chat-send[data-pm6-state="busy"] .pm6-chat-send-ico-send { display: none; }
     .pm6-chat-send[data-pm6-state="busy"] .pm6-chat-send-ico-stop { display: inline-flex; animation: pm6-chat-pulse 1.2s ease-in-out infinite; }
-    .pm6-chat-inputhint {
-      display: flex; justify-content: space-between; gap: var(--md);
-      font-size: 9px;
-      color: var(--text-muted);
-      padding: 3px 2px 0;
-      flex-wrap: wrap;
-    }
     .pm6-chat-files .ft-file { cursor: pointer; }
 
     /* ---- floating chat / layout modes ---- */
-    .pm6-chat-badgerow {
-      display: flex;
-      align-items: center;
-      gap: var(--sm);
-      flex-wrap: wrap;
-      min-width: 0;
-    }
     /* floating (detached) mode: header row 1 doubles as the drag handle */
     .floating-chat:not(.pm6-chat-overlay) .chat-panel-header > div:first-child { cursor: move; }
     .floating-chat:not(.pm6-chat-overlay) .chat-panel-header > div:first-child button,
@@ -590,15 +498,86 @@
     .pm6-opcard[data-op-state="canceled"] { background: color-mix(in srgb, var(--accent-orange) 8%, transparent); border-color: color-mix(in srgb, var(--accent-orange) 30%, var(--border)); }
     .pm6-opcard[data-op-state="awaiting_approval"] { background: color-mix(in srgb, var(--accent-orange) 8%, transparent); border-color: color-mix(in srgb, var(--accent-orange) 30%, var(--border)); }
     .pm6-opcard[data-op-state="failed"] { background: color-mix(in srgb, var(--accent-error) 8%, transparent); border-color: color-mix(in srgb, var(--accent-error) 30%, var(--border)); }
-    /* reduced motion: completion states land instantly, nothing pulses */
-    @media (prefers-reduced-motion: reduce) {
-      .pm6-opcard-progressfill { transition: none; }
-      .pm6-opcard-chip-running { animation: none; }
-      .pm6-chat-suggestchip { transition: none; }
+
+    /* ---- unified chrome (companion rules for the single-renderer mounts;
+       the strip/badge/gate deletions land with the CSS consolidation stage) ---- */
+    .pm6-chat-headrow { display: flex; align-items: center; width: 100%; gap: var(--md); min-width: 0; }
+    .pm6-chat-headsearch {
+      display: flex; align-items: center; flex: 1 1 120px; min-width: 90px;
+      background: var(--surface); border: 1px solid var(--border-light);
+      border-radius: var(--radius-sm); padding: 2px var(--sm);
     }
-    [data-motion="reduced"] .pm6-opcard-progressfill { transition: none; }
-    [data-motion="reduced"] .pm6-opcard-chip-running { animation: none; }
-    [data-motion="reduced"] .pm6-chat-suggestchip { transition: none; }
+    .pm6-chat-headsearch input {
+      width: 100%; border: none; background: transparent; padding: 4px;
+      color: var(--text-primary); font-size: 11px;
+    }
+    .pm6-chat-sbtitle .pm6-chat-sbtitle-label { margin-right: auto; }
+    .pm6-chat-newthread-mini {
+      width: auto; flex: none;
+      margin: 0 var(--xs) 0 var(--sm);
+      padding: 2px var(--sm);
+      font-size: var(--fs-2xs);
+    }
+    /* context-usage module: pure-CSS hover reveal + click-to-pin (the module
+       is a child of the pill, so hovering into the popover keeps it open) */
+    .context-usage:hover .context-hover-module,
+    .context-usage.pinned .context-hover-module { display: block; }
+    .context-hover-module .chm-compact-btn { display: inline-block; }
+    /* planning-thoroughness flyout — nested in the Plan / Deep Plan items */
+    .pm6-chat-modepop .chat-dropdown-item.pm6-has-pt { position: relative; }
+    .pm6-chat-pt-flyout {
+      display: none;
+      position: absolute; left: 100%; top: 0;
+      min-width: 210px;
+      background: var(--surface-elevated);
+      border: 1px solid var(--border-light);
+      border-radius: var(--radius-sm);
+      box-shadow: 0 6px 20px rgba(0,0,0,0.25);
+      padding: var(--xs);
+      z-index: 80;
+    }
+    .chat-dropdown-popover.active .pm6-has-pt:hover > .pm6-chat-pt-flyout,
+    .chat-dropdown-popover.active .pm6-has-pt.active > .pm6-chat-pt-flyout { display: block; }
+    .pm6-chat-pt-flytitle {
+      font-size: var(--fs-2xs); font-weight: 700; letter-spacing: .06em; text-transform: uppercase;
+      color: var(--text-muted);
+      padding: var(--xs) var(--sm);
+    }
+    .pm6-chat-pt-flyout .pm6-chat-ptbtn {
+      display: block; width: 100%; text-align: left;
+      border-radius: var(--radius-xs);
+      font-size: var(--fs-xs); font-weight: 600; letter-spacing: 0;
+      padding: var(--xs) var(--sm);
+    }
+    .pm6-chat-pt-flyout .pm6-chat-ptbtn:hover { background: var(--surface); }
+
+    /* ---- wizard-embedded surface (PM6_CHAT_UI.writeEmbedded — chrome off:
+       stream bubbles + quick-reply chips + gated composer only; wrapper keeps
+       .pm6-wiz-chat so the wizard column layout CSS still applies) ---- */
+    .pm6-chat-embed .message { max-width: 88%; font-size: var(--fs-xs); }
+    .pm6-chat-embed .pm6-chat-embed-msg { display: flex; align-items: flex-start; gap: var(--sm); }
+    .pm6-chat-embed .pm6-chat-embed-msg .msg-body { min-width: 0; }
+    .pm6-chat-embed-av {
+      flex: none;
+      width: 22px; height: 22px;
+      display: inline-flex; align-items: center; justify-content: center;
+      border-radius: 50%;
+      background: var(--accent-soft);
+      color: var(--accent-primary);
+      margin-top: 2px;
+    }
+    .pm6-chat-embed-av svg { width: 12px; height: 12px; }
+    .pm6-chat-embed-note .pm6-wiz-glyph { color: var(--accent-blue); }
+    .pm6-chat-embed-typing { align-self: flex-start; }
+    .pm6-chat-send-embed { padding: 9px 16px; font-size: var(--fs-sm); border-radius: var(--radius-md); }
+    .pm6-chat-send-embed[aria-disabled="true"],
+    .pm6-chat-send-embed[aria-disabled="true"]:hover {
+      cursor: not-allowed;
+      color: var(--text-muted);
+      background: color-mix(in srgb, var(--text-primary) 8%, transparent);
+      border-color: var(--border-light);
+      box-shadow: none; transform: none;
+    }
 
     /* ---- theme accents (chat-owned) ---- */
     [data-theme^="glass"] .pm6-opcard,
@@ -617,9 +596,6 @@
     }
     [data-theme^="retro"] .pm6-chat-badge,
     [data-theme^="retro"] .pm6-opcard-chip,
-    [data-theme^="retro"] .pm6-chat-mode,
-    [data-theme^="retro"] .pm6-chat-modes,
-    [data-theme^="retro"] .pm6-chat-pt,
     [data-theme^="retro"] .pm6-chat-ptbtn,
     [data-theme^="retro"] .pm6-chat-send,
     [data-theme^="retro"] .pm6-chat-btn { border-radius: 0; }
@@ -639,4 +615,14 @@
       background: color-mix(in srgb, var(--pm6-cozy-lav) 18%, var(--pm6-cozy-card-base));
     }
     [data-theme$="light"] .pm6-chat-sys { background: var(--surface); }
+
+    /* reduced motion: completion states land instantly, nothing pulses (stays last) */
+    @media (prefers-reduced-motion: reduce) {
+      .pm6-opcard-progressfill { transition: none; }
+      .pm6-opcard-chip-running { animation: none; }
+      .pm6-chat-suggestchip { transition: none; }
+    }
+    [data-motion="reduced"] .pm6-opcard-progressfill { transition: none; }
+    [data-motion="reduced"] .pm6-opcard-chip-running { animation: none; }
+    [data-motion="reduced"] .pm6-chat-suggestchip { transition: none; }
   </style>

@@ -1,0 +1,67 @@
+L00000001	{
+L00000002	  "$schema": "https://json-schema.org/draft/2020-12/schema",
+L00000003	  "$id": "pm.web_capability_source_packet_receipt.schema.v1",
+L00000004	  "title": "Puppet Master Web Capability Source Packet Receipt",
+L00000005	  "type": "object",
+L00000006	  "additionalProperties": false,
+L00000007	  "required": [
+L00000008	    "schema_id",
+L00000009	    "packet_id",
+L00000010	    "received_packet",
+L00000011	    "files",
+L00000012	    "finding_matrix",
+L00000013	    "negative_constraints"
+L00000014	  ],
+L00000015	  "properties": {
+L00000016	    "schema_id": {"type": "string", "const": "pm.web_capability_source_packet_receipt.v1"},
+L00000017	    "packet_id": {"type": "string", "minLength": 1},
+L00000018	    "received_packet": {"type": "string", "minLength": 1},
+L00000019	    "files": {
+L00000020	      "type": "array",
+L00000021	      "minItems": 4,
+L00000022	      "items": {"$ref": "#/$defs/PacketFile"}
+L00000023	    },
+L00000024	    "finding_matrix": {
+L00000025	      "type": "object",
+L00000026	      "additionalProperties": false,
+L00000027	      "required": ["schema_id", "generated_at_utc", "source_repo", "supersedes", "finding_ids", "finding_priorities"],
+L00000028	      "properties": {
+L00000029	        "schema_id": {"type": "string", "const": "pm.web_capability_findings_matrix.v3"},
+L00000030	        "generated_at_utc": {"type": "string", "minLength": 1},
+L00000031	        "source_repo": {"type": "string", "minLength": 1},
+L00000032	        "supersedes": {"type": "array", "items": {"type": "string", "minLength": 1}},
+L00000033	        "finding_ids": {
+L00000034	          "type": "array",
+L00000035	          "minItems": 19,
+L00000036	          "items": {"type": "string", "minLength": 1},
+L00000037	          "uniqueItems": true
+L00000038	        },
+L00000039	        "finding_priorities": {
+L00000040	          "type": "object",
+L00000041	          "additionalProperties": {"type": "string", "enum": ["P0", "P1", "P2", "P3"]}
+L00000042	        }
+L00000043	      }
+L00000044	    },
+L00000045	    "negative_constraints": {
+L00000046	      "type": "array",
+L00000047	      "minItems": 1,
+L00000048	      "items": {"type": "string", "minLength": 1}
+L00000049	    }
+L00000050	  },
+L00000051	  "$defs": {
+L00000052	    "PacketFile": {
+L00000053	      "type": "object",
+L00000054	      "additionalProperties": false,
+L00000055	      "required": ["artifact_name", "artifact_role", "sha256", "byte_size"],
+L00000056	      "properties": {
+L00000057	        "artifact_name": {"type": "string", "minLength": 1},
+L00000058	        "artifact_role": {
+L00000059	          "type": "string",
+L00000060	          "enum": ["review_addendum", "findings_matrix", "goal_prompt", "source_packet_archive"]
+L00000061	        },
+L00000062	        "sha256": {"type": "string", "pattern": "^[0-9a-f]{64}$"},
+L00000063	        "byte_size": {"type": "integer", "minimum": 1}
+L00000064	      }
+L00000065	    }
+L00000066	  }
+L00000067	}

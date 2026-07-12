@@ -1,0 +1,20 @@
+{
+  "assignment_ids": [
+    "ER-0003",
+    "ER-0008"
+  ],
+  "attempt_id": "attempt-0007",
+  "canonicalization_algorithm_id": "a005-canonical-json-decimal-v1",
+  "emission_order": [
+    "activation-transaction/activation-core.json",
+    "activation-transaction/leaf-dispatch-authorizations/ER-0003.json",
+    "activation-transaction/leaf-dispatch-authorizations/ER-0008.json",
+    "activation-transaction/activation-envelope.json"
+  ],
+  "generator_invoked": false,
+  "no_circular_hash_dependency": true,
+  "required_positive_receipt_schema_version": "external-research-dispatch-receipt-v7",
+  "requires_fresh_independent_luna_prelaunch": true,
+  "schema_version": "external-research-activation-transaction-template-v7",
+  "status": "BLOCKED_AWAITING_FRESH_INDEPENDENT_LUNA_PRELAUNCH_V7"
+}

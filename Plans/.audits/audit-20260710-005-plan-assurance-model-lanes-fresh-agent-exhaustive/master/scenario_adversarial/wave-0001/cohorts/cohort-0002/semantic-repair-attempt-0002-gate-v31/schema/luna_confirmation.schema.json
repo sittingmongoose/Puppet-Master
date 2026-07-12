@@ -1,0 +1,82 @@
+{
+  "$comment": "Embedded controller/reviewer identity fields are comparison metadata only and are never native-identity authority.",
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "additionalProperties": true,
+  "properties": {
+    "assignment_sets": {
+      "properties": {
+        "eligible": {
+          "const": [
+            "A005SA-0011",
+            "A005SA-0015"
+          ]
+        },
+        "rejected": {
+          "const": [
+            "A005SA-0009",
+            "A005SA-0010",
+            "A005SA-0012",
+            "A005SA-0013",
+            "A005SA-0014",
+            "A005SA-0016"
+          ]
+        },
+        "unresolved": {
+          "const": []
+        }
+      },
+      "required": [
+        "eligible",
+        "rejected",
+        "unresolved"
+      ],
+      "type": "object"
+    },
+    "audit_id": {
+      "const": "audit-20260710-005-plan-assurance-model-lanes-fresh-agent-exhaustive"
+    },
+    "cohort_id": {
+      "const": "cohort-0002"
+    },
+    "fresh_direct_reviewer": {
+      "const": true
+    },
+    "independently_reconstructed": {
+      "const": true
+    },
+    "model": {
+      "const": "gpt-5.6-luna"
+    },
+    "read_only_verification": {
+      "const": true
+    },
+    "reasoning_effort": {
+      "const": "max"
+    },
+    "schema_version": {
+      "const": "audit005-scenario-adversarial-luna-independent-postrun-v29-ultra-v1"
+    },
+    "status": {
+      "const": "fail_closed"
+    },
+    "wave_id": {
+      "const": "wave-0001"
+    }
+  },
+  "required": [
+    "schema_version",
+    "audit_id",
+    "wave_id",
+    "cohort_id",
+    "status",
+    "assignment_sets",
+    "assignment_statuses",
+    "primary_comparison",
+    "model",
+    "reasoning_effort",
+    "read_only_verification",
+    "fresh_direct_reviewer",
+    "independently_reconstructed"
+  ],
+  "type": "object"
+}

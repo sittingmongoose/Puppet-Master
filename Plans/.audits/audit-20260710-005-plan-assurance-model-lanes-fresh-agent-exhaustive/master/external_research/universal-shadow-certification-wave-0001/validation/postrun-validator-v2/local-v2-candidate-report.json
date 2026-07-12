@@ -1,0 +1,77 @@
+{
+  "activation_authorized": false,
+  "activation_contract_v2_sha256": "c06a674aabe43c3f4732e1c51043c082dcf13a07757b0260380b2904030e2048",
+  "activation_generator_v2_sha256": "6d3dfd17c25a1d7ec63b3be50f5912f5800a801260f53525fa230b7137a450bf",
+  "audit_id": "audit-20260710-005-plan-assurance-model-lanes-fresh-agent-exhaustive",
+  "bypass_reproductions": {
+    "rejected": 12,
+    "results": {
+      "duplicate_finding_citation_ids": true,
+      "duplicate_finding_source_claim_ids": true,
+      "duplicate_supported_certification_claims": true,
+      "empty_supported_certification_claim_string": true,
+      "extra_coverage_key": true,
+      "malformed_accessed_date": true,
+      "nonboolean_live_web_research_performed": true,
+      "nonboolean_under_specified": true,
+      "nonstring_citation_id": true,
+      "nonstring_finding_id": true,
+      "nonstring_supported_certification_claim": true,
+      "overlong_evidence_label": true
+    },
+    "total": 12
+  },
+  "certification_credit": 0,
+  "coverage": {
+    "assignments": 16,
+    "coverage_digest": "91f8e13d91dc3615781c9592abade65072b45514a4b515471e96750409586ca3",
+    "features": 3888,
+    "features_per_assignment": 243,
+    "packets": 16
+  },
+  "engine_gate": {
+    "complete_draft202012_execution_available": false,
+    "current_effect": "all results fail closed before semantic checks",
+    "exact_library_version": null,
+    "selective_fallback_used": false
+  },
+  "independent_fail_report_sha256": "7a5c0302d37af6e5901f59dbf0fb561049fc70d16a06751996580a5b47a264bf",
+  "launch_authorized": false,
+  "mechanical_status": "pass_fail_closed",
+  "remaining_gate_inputs": [
+    "an installed jsonschema distribution exposing Draft202012Validator and FormatChecker",
+    "the exact installed jsonschema version",
+    "a fresh independent v2 report path and SHA binding all v2 controls and zero-state"
+  ],
+  "schema_engine": {
+    "available": false,
+    "distribution": "jsonschema",
+    "error": "ModuleNotFoundError:No module named 'jsonschema'",
+    "format_checker": "jsonschema.FormatChecker",
+    "library_version": null,
+    "meta_schema_id": "https://json-schema.org/draft/2020-12/schema",
+    "validator_class": "jsonschema.Draft202012Validator"
+  },
+  "schema_version": "external-research-universal-shadow-certification-local-v2-candidate-report-v1",
+  "status": "BLOCKED_AWAITING_FRESH_INDEPENDENT_PRELAUNCH_V2",
+  "tests": {
+    "bypasses_rejected": 12,
+    "failed": 0,
+    "generic_schema_fuzz_rejected": 100,
+    "passed": 437,
+    "total": 437
+  },
+  "tests_v2_sha256": "f42b563c1c13010695f2ab3cab37eef4d763738928c48655f59a5a746ce79961",
+  "validator_authority_v2_sha256": "9eec930af0efebee5734892d2d0d9e5836a2bb79928c817492cd73a1ea7d4b97",
+  "validator_v2_sha256": "789bca95c1dbd8ef89a5db06c041c23c67ef330324552ebb1e3602fd24cfa254",
+  "verifier_v2_sha256": "fa8e69eeac0ec93d8e3a587251b8556d1e3fe7eba879db2fde65aff5cecea664",
+  "wave_id": "universal-shadow-certification-wave-0001",
+  "zero_state": {
+    "activation_files": 0,
+    "native_capture_rows": 0,
+    "output_directories": 16,
+    "output_files": 0,
+    "receipts": 0,
+    "results": 0
+  }
+}

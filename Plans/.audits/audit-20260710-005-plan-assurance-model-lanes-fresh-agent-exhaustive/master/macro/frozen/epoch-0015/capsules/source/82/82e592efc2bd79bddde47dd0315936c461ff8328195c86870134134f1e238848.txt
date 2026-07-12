@@ -1,0 +1,3090 @@
+L00022142	- '"{}h {}m"'
+L00022143	negative_constraints: []
+L00022144	compatibility_only_notes:
+L00022145	- Helper snippet is plan evidence only.
+L00022146	stale_retired_dispositions: []
+L00022147	owner_boundary_notes:
+L00022148	- Prompt formatting owner consumes this evidence where appropriate.
+L00022149	owner_hints:
+L00022150	- Plans/orchestrator-subagent-integration.md
+L00022151	preserved_contractrefs: []
+L00022152	```
+L00022153	
+L00022154	### OSI-267 - Orchestrator Pre-Execution Registration
+L00022155	
+L00022156	```yaml
+L00022157	plan_unit_id: OSI-267
+L00022158	unit_type: requirement
+L00022159	status: accepted
+L00022160	owner_doc: Plans/orchestrator-subagent-integration.md
+L00022161	canonical_text: >-
+L00022162	  Before node execution, the orchestrator creates AgentCoordinator and registers an ActiveAgent with agent identity, platform
+L00022163	  from node_config.platform, run/worktree fields, initial operation, and timestamps.
+L00022164	gui_related: false
+L00022165	gui_classification_reason: >-
+L00022166	  This unit covers backend orchestrator runtime integration rather than GUI presentation.
+L00022167	split_recommended: false
+L00022168	depends_on:
+L00022169	- OSI-258
+L00022170	- OSI-256
+L00022171	unblocks: []
+L00022172	acceptance_criteria:
+L00022173	- Covered source lines remain losslessly available for exact-text audit.
+L00022174	- Registration must not hardcode platform identity.
+L00022175	- No WorkNodes, NodeSeeds, executable queues, final node manifests, production build tasks, implementation files, or source code are created.
+L00022176	validation_surfaces:
+L00022177	- >-
+L00022178	  python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits
+L00022179	- python3 scripts/pm-plan-index.py validate
+L00022180	reasoning_tier: standard
+L00022181	context_scope: orchestrator_subagent_standardization
+L00022182	implementation_surfaces:
+L00022183	- Plans/orchestrator-subagent-integration.md
+L00022184	risk_class: orchestrator_pre_execution_registration
+L00022185	node_compile_hint:
+L00022186	  mode: orchestrator_pre_execution_registration
+L00022187	  create_worknodes: false
+L00022188	source_lineage:
+L00022189	- >-
+L00022190	  Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:orchestrator-subagent-integration-S0142
+L00022191	preserved_exact_tokens:
+L00022192	- src/core/orchestrator.rs
+L00022193	- AgentCoordinator::new
+L00022194	- node_config.platform
+L00022195	- get_node_worktree
+L00022196	- Starting node {}
+L00022197	negative_constraints:
+L00022198	- Do not hardcode platform.
+L00022199	compatibility_only_notes:
+L00022200	- Rust snippet is plan evidence only.
+L00022201	stale_retired_dispositions: []
+L00022202	owner_boundary_notes:
+L00022203	- Orchestrator runtime integration owns pre-execution registration timing.
+L00022204	owner_hints:
+L00022205	- Plans/orchestrator-subagent-integration.md
+L00022206	preserved_contractrefs: []
+L00022207	```
+L00022208	
+L00022209	### OSI-268 - Prompt Injection From Coordination Context
+L00022210	
+L00022211	```yaml
+L00022212	plan_unit_id: OSI-268
+L00022213	unit_type: requirement
+L00022214	status: accepted
+L00022215	owner_doc: Plans/orchestrator-subagent-integration.md
+L00022216	canonical_text: >-
+L00022217	  The orchestrator obtains coordination_context and appends it to the prompt only when the context is non-empty, preserving
+L00022218	  the source typo format!"{}\n\n{}" as evidence rather than compilable code.
+L00022219	gui_related: false
+L00022220	gui_classification_reason: >-
+L00022221	  This unit covers backend prompt assembly rather than GUI presentation.
+L00022222	split_recommended: false
+L00022223	depends_on:
+L00022224	- OSI-262
+L00022225	- OSI-254
+L00022226	unblocks: []
+L00022227	acceptance_criteria:
+L00022228	- Covered source lines remain losslessly available for exact-text audit.
+L00022229	- Empty coordination context does not alter the prompt.
+L00022230	- No WorkNodes, NodeSeeds, executable queues, final node manifests, production build tasks, implementation files, or source code are created.
+L00022231	validation_surfaces:
+L00022232	- >-
+L00022233	  python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits
+L00022234	- python3 scripts/pm-plan-index.py validate
+L00022235	reasoning_tier: standard
+L00022236	context_scope: orchestrator_subagent_standardization
+L00022237	implementation_surfaces:
+L00022238	- Plans/orchestrator-subagent-integration.md
+L00022239	risk_class: prompt_injection_from_coordination_context
+L00022240	node_compile_hint:
+L00022241	  mode: prompt_injection_from_coordination_context
+L00022242	  create_worknodes: false
+L00022243	source_lineage:
+L00022244	- >-
+L00022245	  Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:orchestrator-subagent-integration-S0142
+L00022246	preserved_exact_tokens:
+L00022247	- get_coordination_context
+L00022248	- enhanced_prompt
+L00022249	- 'format!"{}\n\n{}"'
+L00022250	negative_constraints:
+L00022251	- Empty context should not alter the prompt.
+L00022252	compatibility_only_notes:
+L00022253	- Preserve the syntax typo as source evidence, not compilable syntax.
+L00022254	stale_retired_dispositions: []
+L00022255	owner_boundary_notes:
+L00022256	- Prompt contract owner consumes this behavior where applicable.
+L00022257	owner_hints:
+L00022258	- Plans/orchestrator-subagent-integration.md
+L00022259	preserved_contractrefs: []
+L00022260	```
+L00022261	
+L00022262	### OSI-269 - Execution Update And Unregister Lifecycle
+L00022263	
+L00022264	```yaml
+L00022265	plan_unit_id: OSI-269
+L00022266	unit_type: requirement
+L00022267	status: accepted
+L00022268	owner_doc: Plans/orchestrator-subagent-integration.md
+L00022269	canonical_text: >-
+L00022270	  During execution, coordination status may update periodically or from file-operation signals, and after execution the agent
+L00022271	  unregisters; current fallback evidence updates on node completion.
+L00022272	gui_related: false
+L00022273	gui_classification_reason: >-
+L00022274	  This unit covers backend execution lifecycle and cleanup rather than GUI presentation.
+L00022275	split_recommended: false
+L00022276	depends_on:
+L00022277	- OSI-260
+L00022278	- OSI-261
+L00022279	- OSI-267
+L00022280	unblocks: []
+L00022281	acceptance_criteria:
+L00022282	- Covered source lines remain losslessly available for exact-text audit.
+L00022283	- Completed agents do not remain registered.
+L00022284	- No WorkNodes, NodeSeeds, executable queues, final node manifests, production build tasks, implementation files, or source code are created.
+L00022285	validation_surfaces:
+L00022286	- >-
+L00022287	  python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits
+L00022288	- python3 scripts/pm-plan-index.py validate
+L00022289	reasoning_tier: standard
+L00022290	context_scope: orchestrator_subagent_standardization
+L00022291	implementation_surfaces:
+L00022292	- Plans/orchestrator-subagent-integration.md
+L00022293	risk_class: execution_update_unregister_lifecycle
+L00022294	node_compile_hint:
+L00022295	  mode: execution_update_unregister_lifecycle
+L00022296	  create_worknodes: false
+L00022297	source_lineage:
+L00022298	- >-
+L00022299	  Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:orchestrator-subagent-integration-S0142
+L00022300	preserved_exact_tokens:
+L00022301	- update status periodically
+L00022302	- platform-specific hooks
+L00022303	- unregister_agent
+L00022304	- For now, update on node completion
+L00022305	negative_constraints:
+L00022306	- Do not leave completed agents registered.
+L00022307	compatibility_only_notes:
+L00022308	- Current fallback update-on-completion wording is source evidence pending richer event integration.
+L00022309	stale_retired_dispositions: []
+L00022310	owner_boundary_notes:
+L00022311	- Executor hooks remain adjacent owners for file-operation signals.
+L00022312	owner_hints:
+L00022313	- Plans/orchestrator-subagent-integration.md
+L00022314	preserved_contractrefs: []
+L00022315	```
+L00022316	
+L00022317	### OSI-270 - Provider Coordination Model
+L00022318	
+L00022319	```yaml
+L00022320	plan_unit_id: OSI-270
+L00022321	unit_type: requirement
+L00022322	status: accepted
+L00022323	owner_doc: Plans/orchestrator-subagent-integration.md
+L00022324	canonical_text: >-
+L00022325	  All platforms use the canonical coordination projection, optional active-agents.json debug mirror, shared schema,
+L00022326	  direct-provider runtime path, and the same prompt contract; provider coordination does not permit local CLI bridge reuse or
+L00022327	  shared SDK threads/sessions.
+L00022328	gui_related: false
+L00022329	gui_classification_reason: >-
+L00022330	  This unit covers backend provider coordination boundaries rather than GUI presentation.
+L00022331	split_recommended: false
+L00022332	depends_on:
+L00022333	- OSI-251
+L00022334	- OSI-252
+L00022335	- OSI-254
+L00022336	unblocks: []
+L00022337	acceptance_criteria:
+L00022338	- Covered source lines remain losslessly available for exact-text audit.
+L00022339	- Provider coordination does not allow local CLI bridge or shared SDK threads/sessions.
+L00022340	- No WorkNodes, NodeSeeds, executable queues, final node manifests, production build tasks, implementation files, or source code are created.
+L00022341	validation_surfaces:
+L00022342	- >-
+L00022343	  python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits
+L00022344	- python3 scripts/pm-plan-index.py validate
+L00022345	reasoning_tier: standard
+L00022346	context_scope: orchestrator_subagent_standardization
+L00022347	implementation_surfaces:
+L00022348	- Plans/orchestrator-subagent-integration.md
+L00022349	risk_class: provider_coordination_model
+L00022350	node_compile_hint:
+L00022351	  mode: provider_coordination_model
+L00022352	  create_worknodes: false
+L00022353	source_lineage:
+L00022354	- >-
+L00022355	  Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:orchestrator-subagent-integration-S0142
+L00022356	preserved_exact_tokens:
+L00022357	- Canonical mode
+L00022358	- active-agents.json
+L00022359	- no local CLI bridge
+L00022360	- no SDK threads/sessions
+L00022361	negative_constraints:
+L00022362	- No local CLI bridge or shared SDK sessions/threads.
+L00022363	compatibility_only_notes:
+L00022364	- Debug mirror is not the source of truth.
+L00022365	stale_retired_dispositions: []
+L00022366	owner_boundary_notes:
+L00022367	- Executor/provider boundary owns runtime path details.
+L00022368	owner_hints:
+L00022369	- Plans/orchestrator-subagent-integration.md
+L00022370	preserved_contractrefs: []
+L00022371	```
+L00022372	
+L00022373	### OSI-271 - Coordination Modes And Hook Enrichment
+L00022374	
+L00022375	```yaml
+L00022376	plan_unit_id: OSI-271
+L00022377	unit_type: requirement
+L00022378	status: accepted
+L00022379	owner_doc: Plans/orchestrator-subagent-integration.md
+L00022380	canonical_text: >-
+L00022381	  Seglog/redb coordination is always on for orchestrator-managed runs, while platform-native hooks are optional enrichments
+L00022382	  that improve update fidelity by emitting normalized coordination events without replacing canonical coordination records or
+L00022383	  projections.
+L00022384	gui_related: false
+L00022385	gui_classification_reason: >-
+L00022386	  This unit covers backend coordination mode and hook adapter boundaries rather than GUI presentation.
+L00022387	split_recommended: false
+L00022388	depends_on:
+L00022389	- OSI-270
+L00022390	unblocks: []
+L00022391	acceptance_criteria:
+L00022392	- Covered source lines remain losslessly available for exact-text audit.
+L00022393	- Platform-native hooks emit or enrich normalized coordination events; they do not become a second coordination source.
+L00022394	- active-agents.json and `.puppet-master/state/*.json` files remain compatibility/debug/export mirrors only and cannot drive scheduling, conflict prevention, execution admission, or prompt injection.
+L00022395	- Agent registration, status, operation, file-activity, unregister, crash, abort, and snapshot behavior is represented by named seglog record families plus redb projections.
+L00022396	- No WorkNodes, NodeSeeds, executable queues, final node manifests, production build tasks, implementation files, or source code are created.
+L00022397	validation_surfaces:
+L00022398	- >-
+L00022399	  python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits
+L00022400	- python3 scripts/pm-plan-index.py validate
+L00022401	reasoning_tier: standard
+L00022402	context_scope: orchestrator_subagent_standardization
+L00022403	implementation_surfaces:
+L00022404	- Plans/orchestrator-subagent-integration.md
+L00022405	risk_class: coordination_modes_hook_enrichment
+L00022406	node_compile_hint:
+L00022407	  mode: coordination_modes_hook_enrichment
+L00022408	  create_worknodes: false
+L00022409	source_lineage:
+L00022410	- >-
+L00022411	  Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:orchestrator-subagent-integration-S0142
+L00022412	preserved_exact_tokens:
+L00022413	- File-based coordination (canonical)
+L00022414	- Always on
+L00022415	- Platform-native hooks
+L00022416	- single source of coordination truth
+L00022417	negative_constraints:
+L00022418	- Hooks must not replace canonical seglog/redb coordination state.
+L00022419	- File-based coordination must not be read as canonical runtime truth.
+L00022420	compatibility_only_notes:
+L00022421	- The preserved token "File-based coordination (canonical)" is retired source-lineage from the original span and now means only optional debug/export mirror availability.
+L00022422	stale_retired_dispositions:
+L00022423	- active-agents.json and `.puppet-master/state/*.json` coordination files are non-canonical mirrors.
+L00022424	owner_boundary_notes:
+L00022425	- Orchestration and platform adapters share enrichment boundaries; storage owns durable coordination record/projection semantics.
+L00022426	owner_hints:
+L00022427	- Plans/orchestrator-subagent-integration.md
+L00022428	preserved_contractrefs: []
+L00022429	```
+L00022430	
+L00022431	### OSI-272 - Coordination Benefit Examples
+L00022432	
+L00022433	```yaml
+L00022434	plan_unit_id: OSI-272
+L00022435	unit_type: requirement
+L00022436	status: accepted
+L00022437	owner_doc: Plans/orchestrator-subagent-integration.md
+L00022438	canonical_text: >-
+L00022439	  Coordination rationale examples preserve reduced conflicts, better context, efficient collaboration, reduced false alarms,
+L00022440	  and platform-neutral deterministic replay benefits.
+L00022441	gui_related: false
+L00022442	gui_classification_reason: >-
+L00022443	  This unit covers backend coordination rationale rather than GUI presentation.
+L00022444	split_recommended: false
+L00022445	depends_on:
+L00022446	- OSI-271
+L00022447	unblocks: []
+L00022448	acceptance_criteria:
+L00022449	- Covered source lines remain losslessly available for exact-text audit.
+L00022450	- Rationale examples are not required literal prompt copy.
+L00022451	- No WorkNodes, NodeSeeds, executable queues, final node manifests, production build tasks, implementation files, or source code are created.
+L00022452	validation_surfaces:
+L00022453	- >-
+L00022454	  python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits
+L00022455	- python3 scripts/pm-plan-index.py validate
+L00022456	reasoning_tier: standard
+L00022457	context_scope: orchestrator_subagent_standardization
+L00022458	implementation_surfaces:
+L00022459	- Plans/orchestrator-subagent-integration.md
+L00022460	risk_class: coordination_benefit_examples
+L00022461	node_compile_hint:
+L00022462	  mode: coordination_benefit_examples
+L00022463	  create_worknodes: false
+L00022464	source_lineage:
+L00022465	- >-
+L00022466	  Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:orchestrator-subagent-integration-S0142
+L00022467	preserved_exact_tokens:
+L00022468	- Reduced conflicts
+L00022469	- No "freaking out"
+L00022470	- Platform-neutral
+L00022471	- deterministic and replayable
+L00022472	negative_constraints:
+L00022473	- Benefit examples are not required literal prompt copy.
+L00022474	compatibility_only_notes:
+L00022475	- Rationale/evidence only.
+L00022476	stale_retired_dispositions: []
+L00022477	owner_boundary_notes:
+L00022478	- Orchestration rationale only; implementation detail remains elsewhere.
+L00022479	owner_hints:
+L00022480	- Plans/orchestrator-subagent-integration.md
+L00022481	preserved_contractrefs: []
+L00022482	```
+L00022483	
+L00022484	### OSI-273 - Coordination State Update Cadence
+L00022485	
+L00022486	```yaml
+L00022487	plan_unit_id: OSI-273
+L00022488	unit_type: requirement
+L00022489	status: accepted
+L00022490	owner_doc: Plans/orchestrator-subagent-integration.md
+L00022491	canonical_text: >-
+L00022492	  Agents register before execution, update coordination state during execution about every 30 seconds or when file operations
+L00022493	  occur with files/current operation/progress, and unregister after execution.
+L00022494	gui_related: false
+L00022495	gui_classification_reason: >-
+L00022496	  This unit covers backend coordination update cadence rather than GUI presentation.
+L00022497	split_recommended: false
+L00022498	depends_on:
+L00022499	- OSI-260
+L00022500	- OSI-261
+L00022501	- OSI-269
+L00022502	unblocks: []
+L00022503	acceptance_criteria:
+L00022504	- Covered source lines remain losslessly available for exact-text audit.
+L00022505	- No stale active entry remains after execution completes.
+L00022506	- No WorkNodes, NodeSeeds, executable queues, final node manifests, production build tasks, implementation files, or source code are created.
+L00022507	validation_surfaces:
+L00022508	- >-
+L00022509	  python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits
+L00022510	- python3 scripts/pm-plan-index.py validate
+L00022511	reasoning_tier: standard
+L00022512	context_scope: orchestrator_subagent_standardization
+L00022513	implementation_surfaces:
+L00022514	- Plans/orchestrator-subagent-integration.md
+L00022515	risk_class: coordination_state_update_cadence
+L00022516	node_compile_hint:
+L00022517	  mode: coordination_state_update_cadence
+L00022518	  create_worknodes: false
+L00022519	source_lineage:
+L00022520	- >-
+L00022521	  Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:orchestrator-subagent-integration-S0142
+L00022522	preserved_exact_tokens:
+L00022523	- every 30 seconds
+L00022524	- Files being edited
+L00022525	- Current operation
+L00022526	- Progress updates
+L00022527	negative_constraints:
+L00022528	- No stale active entry after execution.
+L00022529	compatibility_only_notes:
+L00022530	- Cadence is plan evidence pending runtime tuning.
+L00022531	stale_retired_dispositions: []
+L00022532	owner_boundary_notes:
+L00022533	- Executor scheduling remains adjacent.
+L00022534	owner_hints:
+L00022535	- Plans/orchestrator-subagent-integration.md
+L00022536	preserved_contractrefs: []
+L00022537	```
+L00022538	
+L00022539	### OSI-274 - File Operation Extraction Sources
+L00022540	
+L00022541	```yaml
+L00022542	plan_unit_id: OSI-274
+L00022543	unit_type: requirement
+L00022544	status: accepted
+L00022545	owner_doc: Plans/orchestrator-subagent-integration.md
+L00022546	canonical_text: >-
+L00022547	  File operations can be detected by parsing agent output, native PreToolUse/PostToolUse hooks where available, or
+L00022548	  Codex/Copilot normalized CLI stream or tool events.
+L00022549	gui_related: false
+L00022550	gui_classification_reason: >-
+L00022551	  This unit covers backend event extraction and provider adapter evidence rather than GUI presentation.
+L00022552	split_recommended: false
+L00022553	depends_on:
+L00022554	- OSI-273
+L00022555	unblocks: []
+L00022556	acceptance_criteria:
+L00022557	- Covered source lines remain losslessly available for exact-text audit.
+L00022558	- Platform enrichments do not replace canonical coordination state.
+L00022559	- No WorkNodes, NodeSeeds, executable queues, final node manifests, production build tasks, implementation files, or source code are created.
+L00022560	validation_surfaces:
+L00022561	- >-
+L00022562	  python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits
+L00022563	- python3 scripts/pm-plan-index.py validate
+L00022564	reasoning_tier: standard
+L00022565	context_scope: orchestrator_subagent_standardization
+L00022566	implementation_surfaces:
+L00022567	- Plans/orchestrator-subagent-integration.md
+L00022568	risk_class: file_operation_extraction_sources
+L00022569	node_compile_hint:
+L00022570	  mode: file_operation_extraction_sources
+L00022571	  create_worknodes: false
+L00022572	source_lineage:
+L00022573	- >-
+L00022574	  Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:orchestrator-subagent-integration-S0142
+L00022575	preserved_exact_tokens:
+L00022576	- Parse agent output
+L00022577	- PreToolUse
+L00022578	- PostToolUse
+L00022579	- Provider event adapters
+L00022580	- normalized CLI stream/tool events
+L00022581	negative_constraints:
+L00022582	- Platform enrichments do not replace canonical coordination state.
+L00022583	compatibility_only_notes:
+L00022584	- Adapter details must reconcile with executor and provider contracts.
+L00022585	stale_retired_dispositions: []
+L00022586	owner_boundary_notes:
+L00022587	- Provider adapters own platform-specific extraction details.
+L00022588	owner_hints:
+L00022589	- Plans/orchestrator-subagent-integration.md
+L00022590	preserved_contractrefs: []
+L00022591	```
+L00022592	
+L00022593	### OSI-275 - Cross-Platform Flow Registration And Edit Update
+L00022594	
+L00022595	```yaml
+L00022596	plan_unit_id: OSI-275
+L00022597	unit_type: requirement
+L00022598	status: accepted
+L00022599	owner_doc: Plans/orchestrator-subagent-integration.md
+L00022600	canonical_text: >-
+L00022601	  The cross-platform flow example preserves Agent A registering as Codex, then updating files_being_edited and
+L00022602	  current_operation while editing src/api.rs.
+L00022603	gui_related: false
+L00022604	gui_classification_reason: >-
+L00022605	  This unit covers backend coordination scenario evidence rather than GUI presentation.
+L00022606	split_recommended: false
+L00022607	depends_on:
+L00022608	- OSI-270
+L00022609	- OSI-273
+L00022610	unblocks: []
+L00022611	acceptance_criteria:
+L00022612	- Covered source lines remain losslessly available for exact-text audit.
+L00022613	- Example ids and files remain evidence, not fixed implementation identifiers.
+L00022614	- No WorkNodes, NodeSeeds, executable queues, final node manifests, production build tasks, implementation files, or source code are created.
+L00022615	validation_surfaces:
+L00022616	- >-
+L00022617	  python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits
+L00022618	- python3 scripts/pm-plan-index.py validate
+L00022619	reasoning_tier: standard
+L00022620	context_scope: orchestrator_subagent_standardization
+L00022621	implementation_surfaces:
+L00022622	- Plans/orchestrator-subagent-integration.md
+L00022623	risk_class: cross_platform_flow_registration_edit_update
+L00022624	node_compile_hint:
+L00022625	  mode: cross_platform_flow_registration_edit_update
+L00022626	  create_worknodes: false
+L00022627	source_lineage:
+L00022628	- >-
+L00022629	  Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:orchestrator-subagent-integration-S0142
+L00022630	preserved_exact_tokens:
+L00022631	- rust-engineer-1.1.1
+L00022632	- 'platform: "codex"'
+L00022633	- 'files_being_edited: ["src/api.rs"]'
+L00022634	negative_constraints:
+L00022635	- Example ids and file names are not fixed implementation identifiers.
+L00022636	compatibility_only_notes:
+L00022637	- Scenario evidence only.
+L00022638	stale_retired_dispositions: []
+L00022639	owner_boundary_notes:
+L00022640	- Orchestration examples preserve flow, not literal runtime ids.
+L00022641	owner_hints:
+L00022642	- Plans/orchestrator-subagent-integration.md
+L00022643	preserved_contractrefs: []
+L00022644	```
+L00022645	
+L00022646	### OSI-276 - Cross-Platform Reader Waits And Proceeds
+L00022647	
+L00022648	```yaml
+L00022649	plan_unit_id: OSI-276
+L00022650	unit_type: requirement
+L00022651	status: accepted
+L00022652	owner_doc: Plans/orchestrator-subagent-integration.md
+L00022653	canonical_text: >-
+L00022654	  Agent B on Claude Code reads shared coordination state, receives active-agent context, waits or works elsewhere, and then
+L00022655	  proceeds after Agent A unregisters; canonical projection enables Codex/Claude cross-provider communication.
+L00022656	gui_related: false
+L00022657	gui_classification_reason: >-
+L00022658	  This unit covers backend cross-provider coordination behavior rather than GUI presentation.
+L00022659	split_recommended: false
+L00022660	depends_on:
+L00022661	- OSI-275
+L00022662	unblocks: []
+L00022663	acceptance_criteria:
+L00022664	- Covered source lines remain losslessly available for exact-text audit.
+L00022665	- Coordination context helps avoid simultaneous conflicting edits.
+L00022666	- No WorkNodes, NodeSeeds, executable queues, final node manifests, production build tasks, implementation files, or source code are created.
+L00022667	validation_surfaces:
+L00022668	- >-
+L00022669	  python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits
+L00022670	- python3 scripts/pm-plan-index.py validate
+L00022671	reasoning_tier: standard
+L00022672	context_scope: orchestrator_subagent_standardization
+L00022673	implementation_surfaces:
+L00022674	- Plans/orchestrator-subagent-integration.md
+L00022675	risk_class: cross_platform_reader_waits_proceeds
+L00022676	node_compile_hint:
+L00022677	  mode: cross_platform_reader_waits_proceeds
+L00022678	  create_worknodes: false
+L00022679	source_lineage:
+L00022680	- >-
+L00022681	  Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:orchestrator-subagent-integration-S0142
+L00022682	preserved_exact_tokens:
+L00022683	- test-automator
+L00022684	- Claude Code
+L00022685	- Wait for rust-engineer
+L00022686	- cross-platform communication
+L00022687	negative_constraints:
+L00022688	- Avoid simultaneous conflicting edits.
+L00022689	compatibility_only_notes:
+L00022690	- Prompt example is evidence only.
+L00022691	stale_retired_dispositions: []
+L00022692	owner_boundary_notes:
+L00022693	- Orchestration coordination owns the conflict-avoidance behavior.
+L00022694	owner_hints:
+L00022695	- Plans/orchestrator-subagent-integration.md
+L00022696	preserved_contractrefs: []
+L00022697	```
+L00022698	
+L00022699	### OSI-277 - Platform Runner Coordination Contract
+L00022700	
+L00022701	```yaml
+L00022702	plan_unit_id: OSI-277
+L00022703	unit_type: requirement
+L00022704	status: accepted
+L00022705	owner_doc: Plans/orchestrator-subagent-integration.md
+L00022706	canonical_text: >-
+L00022707	  All platform runners read and update canonical coordination state, consume the same prompt injection contract, avoid shared
+L00022708	  provider sessions or threads, and keep fresh-process isolation per iteration.
+L00022709	gui_related: false
+L00022710	gui_classification_reason: >-
+L00022711	  This unit covers backend platform runner coordination contracts rather than GUI presentation.
+L00022712	split_recommended: false
+L00022713	depends_on:
+L00022714	- OSI-270
+L00022715	- OSI-271
+L00022716	unblocks: []
+L00022717	acceptance_criteria:
+L00022718	- Covered source lines remain losslessly available for exact-text audit.
+L00022719	- Provider-bridge wording does not permit local CLI bridge reuse or shared sessions/threads.
+L00022720	- No WorkNodes, NodeSeeds, executable queues, final node manifests, production build tasks, implementation files, or source code are created.
+L00022721	validation_surfaces:
+L00022722	- >-
+L00022723	  python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits
+L00022724	- python3 scripts/pm-plan-index.py validate
+L00022725	reasoning_tier: standard
+L00022726	context_scope: orchestrator_subagent_standardization
+L00022727	implementation_surfaces:
+L00022728	- Plans/orchestrator-subagent-integration.md
+L00022729	risk_class: platform_runner_coordination_contract
+L00022730	node_compile_hint:
+L00022731	  mode: platform_runner_coordination_contract
+L00022732	  create_worknodes: false
+L00022733	source_lineage:
+L00022734	- >-
+L00022735	  Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:orchestrator-subagent-integration-S0142
+L00022736	preserved_exact_tokens:
+L00022737	- All platform runners (Cursor, Codex, Claude, Gemini, Copilot)
+L00022738	- No shared provider sessions/threads
+L00022739	- fresh-process isolation
+L00022740	negative_constraints:
+L00022741	- No shared provider sessions or threads.
+L00022742	compatibility_only_notes:
+L00022743	- Provider-bridge wording is integration-layer terminology, not local CLI bridge permission.
+L00022744	stale_retired_dispositions: []
+L00022745	owner_boundary_notes:
+L00022746	- Executor/provider runtime owns platform-runner details.
+L00022747	owner_hints:
+L00022748	- Plans/orchestrator-subagent-integration.md
+L00022749	preserved_contractrefs: []
+L00022750	```
+L00022751	
+L00022752	### OSI-278 - Agent Coordination Implementation Placement Notes
+L00022753	
+L00022754	```yaml
+L00022755	plan_unit_id: OSI-278
+L00022756	unit_type: requirement
+L00022757	status: accepted
+L00022758	owner_doc: Plans/orchestrator-subagent-integration.md
+L00022759	canonical_text: >-
+L00022760	  Agent coordination implementation notes identify future src/core/agent_coordination.rs placement, AgentCoordinator,
+L00022761	  prompt injection, provider-agnostic status updates, and register/update/unregister timing.
+L00022762	gui_related: false
+L00022763	gui_classification_reason: >-
+L00022764	  This unit covers backend implementation placement notes rather than GUI presentation.
+L00022765	split_recommended: false
+L00022766	depends_on:
+L00022767	- OSI-260
+L00022768	- OSI-262
+L00022769	- OSI-267
+L00022770	- OSI-277
+L00022771	unblocks: []
+L00022772	acceptance_criteria:
+L00022773	- Covered source lines remain losslessly available for exact-text audit.
+L00022774	- Plan standardization does not create implementation files.
+L00022775	- No WorkNodes, NodeSeeds, executable queues, final node manifests, production build tasks, implementation files, or source code are created.
+L00022776	validation_surfaces:
+L00022777	- >-
+L00022778	  python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits
+L00022779	- python3 scripts/pm-plan-index.py validate
+L00022780	reasoning_tier: standard
+L00022781	context_scope: orchestrator_subagent_standardization
+L00022782	implementation_surfaces:
+L00022783	- Plans/orchestrator-subagent-integration.md
+L00022784	risk_class: agent_coordination_implementation_placement_notes
+L00022785	node_compile_hint:
+L00022786	  mode: agent_coordination_implementation_placement_notes
+L00022787	  create_worknodes: false
+L00022788	source_lineage:
+L00022789	- >-
+L00022790	  Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:orchestrator-subagent-integration-S0142
+L00022791	preserved_exact_tokens:
+L00022792	- src/core/agent_coordination.rs
+L00022793	- AgentCoordinator
+L00022794	- provider-agnostic
+L00022795	- Register agent before execution
+L00022796	negative_constraints:
+L00022797	- Plan standardization must not create implementation files.
+L00022798	compatibility_only_notes:
+L00022799	- Future placement note only.
+L00022800	stale_retired_dispositions: []
+L00022801	owner_boundary_notes:
+L00022802	- Plan document records implementation surface without creating code.
+L00022803	owner_hints:
+L00022804	- Plans/orchestrator-subagent-integration.md
+L00022805	preserved_contractrefs: []
+L00022806	```
+L00022807	
+L00022808	### OSI-279 - Crew Mode Canonical Rules
+L00022809	
+L00022810	```yaml
+L00022811	plan_unit_id: OSI-279
+L00022812	unit_type: requirement
+L00022813	status: accepted
+L00022814	owner_doc: Plans/orchestrator-subagent-integration.md
+L00022815	canonical_text: >-
+L00022816	  Crew mode is a multi-model coordination overlay over child runs: members are child runs, model/provider diversity is the
+L00022817	  default distinguishing axis, the same task and often the same Persona are preserved, member coordination uses an attributable
+L00022818	  crew board, the parent owns final synthesis and user-facing escalation, and crew shared state is explicit coordination state
+L00022819	  rather than hidden long-term member memory. Crew defaults live in model/runtime settings, first invocation confirms default
+L00022820	  crew use, member provider/runtime mapping is disclosed after model choice, and any Copilot-configured member applies a
+L00022821	  crew-level provider constraint.
+L00022822	gui_related: false
+L00022823	gui_classification_reason: >-
+L00022824	  This unit covers crew orchestration defaults and provider/runtime coordination rather than GUI presentation.
+L00022825	split_recommended: false
+L00022826	depends_on:
+L00022827	- OSI-245
+L00022828	- OSI-251
+L00022829	unblocks: []
+L00022830	acceptance_criteria:
+L00022831	- Covered source spans remain losslessly available for exact-text audit.
+L00022832	- Duplicate source spans are recorded as duplicate coverage and do not create separate implementation scope.
+L00022833	- The covered orchestrator/subagent fact is represented by a fine-grained PlanUnit instead of only the residual source-preserving bridge.
+L00022834	- No WorkNodes, NodeSeeds, executable queues, final node manifests, or production build tasks are created.
+L00022835	validation_surfaces:
+L00022836	- >-
+L00022837	  python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits
+L00022838	- python3 scripts/pm-plan-index.py validate
+L00022839	reasoning_tier: standard
+L00022840	context_scope: orchestrator_subagent_standardization
+L00022841	implementation_surfaces:
+L00022842	- Plans/orchestrator-subagent-integration.md
+L00022843	risk_class: crew_mode_canonical_rules
+L00022844	node_compile_hint:
+L00022845	  mode: crew_mode_canonical_rules
+L00022846	  create_worknodes: false
+L00022847	source_lineage:
+L00022848	- >-
+L00022849	  Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:orchestrator-subagent-integration-S0143
+L00022850	- >-
+L00022851	  Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:orchestrator-subagent-integration-S0148
+L00022852	preserved_exact_tokens:
+L00022853	- Puppet Master Crews (Teams/Fleets Alternative)
+L00022854	- members are child runs
+L00022855	- model/provider diversity
+L00022856	- same Persona
+L00022857	- attributable crew board
+L00022858	- not hidden long-term member memory
+L00022859	- member's provider/runtime surface
+L00022860	- member’s provider/runtime surface
+L00022861	negative_constraints:
+L00022862	- Crew shared state must not become hidden long-term member memory.
+L00022863	compatibility_only_notes:
+L00022864	- Duplicate source coverage preserves both apostrophe variants from the repeated block.
+L00022865	stale_retired_dispositions: []
+L00022866	owner_boundary_notes:
+L00022867	- Orchestrator owns crew coordination; model/runtime settings and provider docs own runtime choice surfaces.
+L00022868	owner_hints:
+L00022869	- Plans/orchestrator-subagent-integration.md
+L00022870	preserved_contractrefs:
+L00022871	- 'ContractRef: ContractName:Plans/assistant-chat-design.md, ContractName:Plans/Models_System.md, ContractName:Plans/storage-plan.md'
+L00022872	- 'ContractRef: ContractName:Plans/FinalGUISpec.md, ContractName:Plans/assistant-memory-subsystem.md, ContractName:Plans/CLI_Bridged_Providers.md'
+L00022873	```
+L00022874	
+L00022875	### OSI-280 - Gap-Era Crew Notes Retired
+L00022876	
+L00022877	```yaml
+L00022878	plan_unit_id: OSI-280
+L00022879	unit_type: requirement
+L00022880	status: accepted
+L00022881	owner_doc: Plans/orchestrator-subagent-integration.md
+L00022882	canonical_text: >-
+L00022883	  Gap-era crew notes are retired as canonical guidance; live crew rules resolve through orchestrator contracts rather than
+L00022884	  illustrative fallback numbers, and superseded gap-era examples MUST NOT be implemented as live crew canon.
+L00022885	gui_related: false
+L00022886	gui_classification_reason: This unit covers stale crew-plan disposition rather than GUI presentation.
+L00022887	split_recommended: false
+L00022888	depends_on:
+L00022889	- OSI-279
+L00022890	unblocks: []
+L00022891	acceptance_criteria:
+L00022892	- Covered source spans remain losslessly available for exact-text audit.
+L00022893	- Duplicate source spans are recorded as duplicate coverage and do not create separate implementation scope.
+L00022894	- Retired gap-era examples remain explicitly noncanonical.
+L00022895	- No WorkNodes, NodeSeeds, executable queues, final node manifests, or production build tasks are created.
+L00022896	validation_surfaces:
+L00022897	- >-
+L00022898	  python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits
+L00022899	- python3 scripts/pm-plan-index.py validate
+L00022900	reasoning_tier: standard
+L00022901	context_scope: orchestrator_subagent_standardization
+L00022902	implementation_surfaces:
+L00022903	- Plans/orchestrator-subagent-integration.md
+L00022904	risk_class: gap_era_crew_notes_retired
+L00022905	node_compile_hint:
+L00022906	  mode: gap_era_crew_notes_retired
+L00022907	  create_worknodes: false
+L00022908	source_lineage:
+L00022909	- >-
+L00022910	  Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:orchestrator-subagent-integration-S0144
+L00022911	- >-
+L00022912	  Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:orchestrator-subagent-integration-S0149
+L00022913	preserved_exact_tokens:
+L00022914	- Gaps and Potential Issues for Crews Feature
+L00022915	- Gap-era crew notes
+L00022916	- retired as canonical guidance
+L00022917	- MUST NOT be implemented as live crew canon
+L00022918	negative_constraints:
+L00022919	- Superseded gap-era examples MUST NOT be implemented as live crew canon.
+L00022920	compatibility_only_notes: []
+L00022921	stale_retired_dispositions:
+L00022922	- Gap-era crew notes in this section are retired as canonical guidance.
+L00022923	owner_boundary_notes:
+L00022924	- Live crew rules resolve through orchestrator contracts and referenced owner docs.
+L00022925	owner_hints:
+L00022926	- Plans/orchestrator-subagent-integration.md
+L00022927	preserved_contractrefs:
+L00022928	- 'ContractRef: ContractName:Plans/Run_Modes.md, ContractName:Plans/storage-plan.md, ContractName:Plans/Crosswalk.md'
+L00022929	```
+L00022930	
+L00022931	### OSI-281 - ExecutionLimits Crew Admission Caps
+L00022932	
+L00022933	```yaml
+L00022934	plan_unit_id: OSI-281
+L00022935	unit_type: requirement
+L00022936	status: accepted
+L00022937	owner_doc: Plans/orchestrator-subagent-integration.md
+L00022938	canonical_text: >-
+L00022939	  Crew admission MUST use `executionLimits` as the sole live source for `maxConcurrentCrewsPerPlatform = 4`,
+L00022940	  `maxConcurrentAgentsPerCrew = 8`, `maxTotalActiveAgents = 32`, `maxNestingDepth = 4`, `maxTotalSpawnedAgents = 99`, and
+L00022941	  `maxToolRoundsPerAgent = 200`; availability checks may narrow admission based on support, saturation, quota posture, or
+L00022942	  policy, but they MUST fail closed rather than inventing alternate per-gap ceilings; the first `Canonical crew-cap and
+L00022943	  availability rules` section is the live anchor and duplicate crew-cap copies are retired source-lineage.
+L00022944	gui_related: false
+L00022945	gui_classification_reason: This unit covers runtime admission limits rather than GUI presentation.
+L00022946	split_recommended: false
+L00022947	depends_on:
+L00022948	- OSI-279
+L00022949	unblocks: []
+L00022950	acceptance_criteria:
+L00022951	- Covered source spans remain losslessly available for exact-text audit.
+L00022952	- Duplicate source spans are recorded as duplicate coverage and do not create separate implementation scope.
+L00022953	- Later illustrative examples cannot widen or replace `executionLimits`.
+L00022954	- Duplicate crew-cap subsections are source-lineage only and do not become peer anchors.
+L00022955	- No WorkNodes, NodeSeeds, executable queues, final node manifests, or production build tasks are created.
+L00022956	validation_surfaces:
+L00022957	- >-
+L00022958	  python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits
+L00022959	- python3 scripts/pm-plan-index.py validate
+L00022960	reasoning_tier: standard
+L00022961	context_scope: orchestrator_subagent_standardization
+L00022962	implementation_surfaces:
+L00022963	- Plans/orchestrator-subagent-integration.md
+L00022964	risk_class: executionlimits_crew_admission_caps
+L00022965	node_compile_hint:
+L00022966	  mode: executionlimits_crew_admission_caps
+L00022967	  create_worknodes: false
+L00022968	source_lineage:
+L00022969	- >-
+L00022970	  Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:orchestrator-subagent-integration-S0145
+L00022971	- >-
+L00022972	  Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:orchestrator-subagent-integration-S0150
+L00022973	- Plans/ledgers/v2/pldg-20260613-001-cleanup-fable-audit/records/design_atoms.jsonl:12
+L00022974	- Plans/ledgers/v2/pldg-20260613-001-cleanup-fable-audit/source_shards/section-a-conflicting-canon.md:19
+L00022975	preserved_exact_tokens:
+L00022976	- executionLimits
+L00022977	- §Subagent Configuration executionLimits (this file)
+L00022978	- corrupted YAML block
+L00022979	- crew-cap subsection
+L00022980	- duplicated verbatim twice
+L00022981	- maxConcurrentCrewsPerPlatform = 4
+L00022982	- maxConcurrentAgentsPerCrew = 8
+L00022983	- maxTotalActiveAgents = 32
+L00022984	- maxNestingDepth = 4
+L00022985	- maxTotalSpawnedAgents = 99
+L00022986	- maxToolRoundsPerAgent = 200
+L00022987	negative_constraints:
+L00022988	- Later illustrative examples in this file MUST NOT widen or replace those values.
+L00022989	- Availability checks MUST fail closed rather than inventing alternate per-gap ceilings.
+L00022990	compatibility_only_notes: []
+L00022991	stale_retired_dispositions: []
+L00022992	owner_boundary_notes:
+L00022993	- The first `Canonical crew-cap and availability rules` section is the live same-file executionLimits anchor; duplicate crew-cap copies are retired lineage.
+L00022994	owner_hints:
+L00022995	- Plans/orchestrator-subagent-integration.md
+L00022996	preserved_contractrefs:
+L00022997	- 'ContractRef: ContractName:Plans/Run_Modes.md, ContractName:Plans/interview-subagent-integration.md, ContractName:Plans/Crosswalk.md'
+L00022998	- 'ContractRef: ContractName:Plans/Permissions_System.md, ContractName:Plans/CLI_Bridged_Providers.md, ContractName:Plans/Contracts_V0.md'
+L00022999	```
+L00023000	
+L00023001	### OSI-282 - Crew Lifecycle Uses Parent/Child Runtime Contracts
+L00023002	
+L00023003	```yaml
+L00023004	plan_unit_id: OSI-282
+L00023005	unit_type: requirement
+L00023006	status: accepted
+L00023007	owner_doc: Plans/orchestrator-subagent-integration.md
+L00023008	canonical_text: >-
+L00023009	  Crew lifecycle, timeout propagation, cancellation, and cleanup follow canonical parent/child orchestration and runtime
+L00023010	  lifecycle contracts.
+L00023011	gui_related: false
+L00023012	gui_classification_reason: This unit covers runtime lifecycle behavior rather than GUI presentation.
+L00023013	split_recommended: false
+L00023014	depends_on:
+L00023015	- OSI-279
+L00023016	- OSI-281
+L00023017	unblocks: []
+L00023018	acceptance_criteria:
+L00023019	- Covered source spans remain losslessly available for exact-text audit.
+L00023020	- Duplicate source spans are recorded as duplicate coverage and do not create separate implementation scope.
+L00023021	- Crew lifecycle does not define alternate crew-only runtime paths.
+L00023022	- No WorkNodes, NodeSeeds, executable queues, final node manifests, or production build tasks are created.
+L00023023	validation_surfaces:
+L00023024	- >-
+L00023025	  python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits
+L00023026	- python3 scripts/pm-plan-index.py validate
+L00023027	reasoning_tier: standard
+L00023028	context_scope: orchestrator_subagent_standardization
+L00023029	implementation_surfaces:
+L00023030	- Plans/orchestrator-subagent-integration.md
+L00023031	risk_class: crew_lifecycle_parent_child_runtime_contracts
+L00023032	node_compile_hint:
+L00023033	  mode: crew_lifecycle_parent_child_runtime_contracts
+L00023034	  create_worknodes: false
+L00023035	source_lineage:
+L00023036	- >-
+L00023037	  Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:orchestrator-subagent-integration-S0146
+L00023038	- >-
+L00023039	  Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:orchestrator-subagent-integration-S0151
+L00023040	preserved_exact_tokens:
+L00023041	- Crew lifecycle, timeout propagation, cancellation, and cleanup
+L00023042	- parent/child orchestration
+L00023043	- runtime lifecycle contracts
+L00023044	negative_constraints:
+L00023045	- This section no longer defines separate crew-only timeout ceilings, alternate cleanup paths, or stale concurrency examples.
+L00023046	compatibility_only_notes: []
+L00023047	stale_retired_dispositions:
+L00023048	- Separate crew-only timeout ceilings, alternate cleanup paths, and stale concurrency examples are retired.
+L00023049	owner_boundary_notes:
+L00023050	- Parent/child orchestration and runtime lifecycle contracts remain the owners for lifecycle semantics.
+L00023051	owner_hints:
+L00023052	- Plans/orchestrator-subagent-integration.md
+L00023053	preserved_contractrefs:
+L00023054	- 'ContractRef: ContractName:Plans/Run_Modes.md, ContractName:Plans/storage-plan.md, ContractName:Plans/Contracts_V0.md'
+L00023055	```
+L00023056	
+L00023057	### OSI-283 - Crew GUI And Assistant Surfaces Are Consumer Projections
+L00023058	
+L00023059	```yaml
+L00023060	plan_unit_id: OSI-283
+L00023061	unit_type: requirement
+L00023062	status: accepted
+L00023063	owner_doc: Plans/orchestrator-subagent-integration.md
+L00023064	canonical_text: >-
+L00023065	  GUI and future Assistant-surface affordances for crews disclose canonical crew/member state and runtime ceilings, but they do
+L00023066	  not become the owner of orchestration authority.
+L00023067	gui_related: true
+L00023068	gui_classification_reason: This unit covers user-visible GUI and Assistant-surface crew projections.
+L00023069	split_recommended: false
+L00023070	depends_on:
+L00023071	- OSI-279
+L00023072	- OSI-281
+L00023073	- OSI-282
+L00023074	unblocks: []
+L00023075	acceptance_criteria:
+L00023076	- Covered source spans remain losslessly available for exact-text audit.
+L00023077	- Duplicate source spans are recorded as duplicate coverage and do not create separate implementation scope.
+L00023078	- GUI and Assistant surfaces remain consumer projections of orchestrator-owned state.
+L00023079	- No WorkNodes, NodeSeeds, executable queues, final node manifests, or production build tasks are created.
+L00023080	validation_surfaces:
+L00023081	- >-
+L00023082	  python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits
+L00023083	- python3 scripts/pm-plan-index.py validate
+L00023084	reasoning_tier: standard
+L00023085	context_scope: orchestrator_subagent_standardization
+L00023086	implementation_surfaces:
+L00023087	- Plans/orchestrator-subagent-integration.md
+L00023088	risk_class: crew_gui_assistant_consumer_projection
+L00023089	node_compile_hint:
+L00023090	  mode: crew_gui_assistant_consumer_projection
+L00023091	  create_worknodes: false
+L00023092	source_lineage:
+L00023093	- >-
+L00023094	  Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:orchestrator-subagent-integration-S0146
+L00023095	- >-
+L00023096	  Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:orchestrator-subagent-integration-S0151
+L00023097	preserved_exact_tokens:
+L00023098	- GUI and future Assistant-surface affordances
+L00023099	- disclose canonical crew/member state
+L00023100	- runtime ceilings
+L00023101	- do not become the owner of orchestration authority
+L00023102	negative_constraints:
+L00023103	- GUI and Assistant surfaces must not become the owner of orchestration authority.
+L00023104	compatibility_only_notes: []
+L00023105	stale_retired_dispositions: []
+L00023106	owner_boundary_notes:
+L00023107	- Final GUI and Assistant surfaces consume canonical crew/member state; orchestrator retains authority.
+L00023108	owner_hints:
+L00023109	- Plans/orchestrator-subagent-integration.md
+L00023110	preserved_contractrefs:
+L00023111	- 'ContractRef: ContractName:Plans/assistant-chat-design.md, ContractName:Plans/FinalGUISpec.md, ContractName:Plans/Crosswalk.md'
+L00023112	```
+L00023113	
+L00023114	### OSI-284 - Future Assistant Crew Surface Guardrails
+L00023115	
+L00023116	```yaml
+L00023117	plan_unit_id: OSI-284
+L00023118	unit_type: requirement
+L00023119	status: accepted
+L00023120	owner_doc: Plans/orchestrator-subagent-integration.md
+L00023121	canonical_text: >-
+L00023122	  User-initiated crews remain future Assistant functionality, and when that surface lands, platform selection, queueing, and
+L00023123	  subagent admission still resolve through orchestrator-owned ceilings, compatibility checks, and `executionLimits`.
+L00023124	gui_related: false
+L00023125	gui_classification_reason: This unit covers future-surface governance guardrails rather than GUI layout or presentation.
+L00023126	split_recommended: false
+L00023127	depends_on:
+L00023128	- OSI-279
+L00023129	- OSI-281
+L00023130	- OSI-283
+L00023131	unblocks: []
+L00023132	acceptance_criteria:
+L00023133	- Covered source spans remain losslessly available for exact-text audit.
+L00023134	- Duplicate source spans are recorded as duplicate coverage and do not create separate implementation scope.
+L00023135	- Future Assistant UX cannot reintroduce alternative crew defaults.
+L00023136	- No WorkNodes, NodeSeeds, executable queues, final node manifests, or production build tasks are created.
+L00023137	validation_surfaces:
+L00023138	- >-
+L00023139	  python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits
+L00023140	- python3 scripts/pm-plan-index.py validate
+L00023141	reasoning_tier: standard
+L00023142	context_scope: orchestrator_subagent_standardization
+L00023143	implementation_surfaces:
+L00023144	- Plans/orchestrator-subagent-integration.md
+L00023145	risk_class: future_assistant_crew_surface_guardrails
+L00023146	node_compile_hint:
+L00023147	  mode: future_assistant_crew_surface_guardrails
+L00023148	  create_worknodes: false
+L00023149	source_lineage:
+L00023150	- >-
+L00023151	  Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:orchestrator-subagent-integration-S0147
+L00023152	- >-
+L00023153	  Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:orchestrator-subagent-integration-S0152
+L00023154	preserved_exact_tokens:
+L00023155	- User-initiated crews
+L00023156	- future Assistant functionality
+L00023157	- executionLimits
+L00023158	- 20 total crews
+L00023159	- 3 crews per subagent type
+L00023160	- max 3 crews per subagent type
+L00023161	negative_constraints:
+L00023162	- Future UX MUST NOT reintroduce alternative defaults such as "20 total crews", "3 crews per subagent type", or legacy wording.
+L00023163	compatibility_only_notes:
+L00023164	- User-initiated crews remain future Assistant functionality.
+L00023165	stale_retired_dispositions: []
+L00023166	owner_boundary_notes:
+L00023167	- Future Assistant platform selection and queueing still resolve through orchestrator-owned ceilings and compatibility checks.
+L00023168	owner_hints:
+L00023169	- Plans/orchestrator-subagent-integration.md
+L00023170	preserved_contractrefs:
+L00023171	- 'ContractRef: ContractName:Plans/assistant-chat-design.md, ContractName:Plans/Decision_Policy.md, ContractName:Plans/Crosswalk.md'
+L00023172	```
+L00023173	
+L00023174	### OSI-285 - Future Crew Template Save Surface
+L00023175	
+L00023176	```yaml
+L00023177	plan_unit_id: OSI-285
+L00023178	unit_type: requirement
+L00023179	status: accepted
+L00023180	owner_doc: Plans/orchestrator-subagent-integration.md
+L00023181	canonical_text: When the Assistant feature is added, users may save crew configurations as templates or presets.
+L00023182	gui_related: true
+L00023183	gui_classification_reason: This unit covers a future user-visible Assistant template surface.
+L00023184	split_recommended: false
+L00023185	depends_on:
+L00023186	- OSI-284
+L00023187	unblocks: []
+L00023188	acceptance_criteria:
+L00023189	- Covered source span remains losslessly available for exact-text audit.
+L00023190	- The future Assistant template surface is represented without creating implementation work.
+L00023191	- No WorkNodes, NodeSeeds, executable queues, final node manifests, or production build tasks are created.
+L00023192	validation_surfaces:
+L00023193	- >-
+L00023194	  python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits
+L00023195	- python3 scripts/pm-plan-index.py validate
+L00023196	reasoning_tier: standard
+L00023197	context_scope: orchestrator_subagent_standardization
+L00023198	implementation_surfaces:
+L00023199	- Plans/orchestrator-subagent-integration.md
+L00023200	risk_class: future_crew_template_save_surface
+L00023201	node_compile_hint:
+L00023202	  mode: future_crew_template_save_surface
+L00023203	  create_worknodes: false
+L00023204	source_lineage:
+L00023205	- >-
+L00023206	  Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:orchestrator-subagent-integration-S0153
+L00023207	preserved_exact_tokens:
+L00023208	- Enhancement #1: Crew templates and presets
+L00023209	- when Assistant feature is added
+L00023210	- save crew configurations as templates
+L00023211	negative_constraints: []
+L00023212	compatibility_only_notes:
+L00023213	- Future Assistant feature only.
+L00023214	stale_retired_dispositions: []
+L00023215	owner_boundary_notes:
+L00023216	- Assistant/Final GUI own the user-visible save surface; orchestrator owns crew admission semantics.
+L00023217	owner_hints:
+L00023218	- Plans/orchestrator-subagent-integration.md
+L00023219	preserved_contractrefs: []
+L00023220	```
+L00023221	
+L00023222	### OSI-286 - CrewTemplate Schema Example
+L00023223	
+L00023224	```yaml
+L00023225	plan_unit_id: OSI-286
+L00023226	unit_type: requirement
+L00023227	status: accepted
+L00023228	owner_doc: Plans/orchestrator-subagent-integration.md
+L00023229	canonical_text: >-
+L00023230	  The source preserves the `CrewTemplate` example with `name`, `subagents`, `default_task`, and `description`, plus the
+L00023231	  example template names "Full Stack Crew" and "Security Review Crew".
+L00023232	gui_related: false
+L00023233	gui_classification_reason: This unit covers a schema/example snippet rather than GUI presentation.
+L00023234	split_recommended: false
+L00023235	depends_on:
+L00023236	- OSI-285
+L00023237	unblocks: []
+L00023238	acceptance_criteria:
+L00023239	- Covered source snippet remains losslessly available for exact-text audit.
+L00023240	- The Rust snippet is preserved as plan evidence only.
+L00023241	- No WorkNodes, NodeSeeds, executable queues, final node manifests, or production build tasks are created.
+L00023242	validation_surfaces:
+L00023243	- >-
+L00023244	  python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits
+L00023245	- python3 scripts/pm-plan-index.py validate
+L00023246	reasoning_tier: standard
+L00023247	context_scope: orchestrator_subagent_standardization
+L00023248	implementation_surfaces:
+L00023249	- Plans/orchestrator-subagent-integration.md
+L00023250	risk_class: crewtemplate_schema_example
+L00023251	node_compile_hint:
+L00023252	  mode: crewtemplate_schema_example
+L00023253	  create_worknodes: false
+L00023254	source_lineage:
+L00023255	- >-
+L00023256	  Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:orchestrator-subagent-integration-S0153
+L00023257	preserved_exact_tokens:
+L00023258	- CrewTemplate
+L00023259	- name
+L00023260	- subagents
+L00023261	- default_task
+L00023262	- description
+L00023263	- Full Stack Crew
+L00023264	- Security Review Crew
+L00023265	negative_constraints:
+L00023266	- The Rust snippet must not be treated as created source code.
+L00023267	compatibility_only_notes:
+L00023268	- Rust snippet and example names are plan evidence only.
+L00023269	stale_retired_dispositions: []
+L00023270	owner_boundary_notes: []
+L00023271	owner_hints:
+L00023272	- Plans/orchestrator-subagent-integration.md
+L00023273	preserved_contractrefs: []
+L00023274	```
+L00023275	
+L00023276	### OSI-287 - Crew Performance Metrics
+L00023277	
+L00023278	```yaml
+L00023279	plan_unit_id: OSI-287
+L00023280	unit_type: requirement
+L00023281	status: accepted
+L00023282	owner_doc: Plans/orchestrator-subagent-integration.md
+L00023283	canonical_text: >-
+L00023284	  Crew performance may track and display average completion time, success rate, member utilization, and platform usage
+L00023285	  distribution.
+L00023286	gui_related: true
+L00023287	gui_classification_reason: This unit includes user-visible metric display as well as metric collection.
+L00023288	split_recommended: true
+L00023289	depends_on:
+L00023290	- OSI-279
+L00023291	unblocks: []
+L00023292	acceptance_criteria:
+L00023293	- Covered source span remains losslessly available for exact-text audit.
+L00023294	- Display ownership remains separate from durable metric ownership.
+L00023295	- No WorkNodes, NodeSeeds, executable queues, final node manifests, or production build tasks are created.
+L00023296	validation_surfaces:
+L00023297	- >-
+L00023298	  python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits
+L00023299	- python3 scripts/pm-plan-index.py validate
+L00023300	reasoning_tier: standard
+L00023301	context_scope: orchestrator_subagent_standardization
+L00023302	implementation_surfaces:
+L00023303	- Plans/orchestrator-subagent-integration.md
+L00023304	risk_class: crew_performance_metrics
+L00023305	node_compile_hint:
+L00023306	  mode: crew_performance_metrics
+L00023307	  create_worknodes: false
+L00023308	source_lineage:
+L00023309	- >-
+L00023310	  Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:orchestrator-subagent-integration-S0153
+L00023311	preserved_exact_tokens:
+L00023312	- Enhancement #2: Crew performance metrics
+L00023313	- Average time to complete tasks
+L00023314	- Success rate
+L00023315	- Member utilization
+L00023316	- Platform usage distribution
+L00023317	negative_constraints: []
+L00023318	compatibility_only_notes:
+L00023319	- Future enhancement source coverage only until metric owners accept durable collection semantics.
+L00023320	stale_retired_dispositions: []
+L00023321	owner_boundary_notes:
+L00023322	- Usage/storage own durable metrics; Final GUI owns display projections.
+L00023323	owner_hints:
+L00023324	- Plans/orchestrator-subagent-integration.md
+L00023325	preserved_contractrefs: []
+L00023326	```
+L00023327	
+L00023328	### OSI-288 - Crew Learning And Adaptation
+L00023329	
+L00023330	```yaml
+L00023331	plan_unit_id: OSI-288
+L00023332	unit_type: requirement
+L00023333	status: accepted
+L00023334	owner_doc: Plans/orchestrator-subagent-integration.md
+L00023335	canonical_text: >-
+L00023336	  Future crew learning may track effective subagent combinations, suggest optimal crew compositions, and adapt crew behavior
+L00023337	  based on success patterns.
+L00023338	gui_related: false
+L00023339	gui_classification_reason: This unit covers backend learning/adaptation behavior rather than GUI presentation.
+L00023340	split_recommended: true
+L00023341	depends_on:
+L00023342	- OSI-279
+L00023343	unblocks: []
+L00023344	acceptance_criteria:
+L00023345	- Covered source span remains losslessly available for exact-text audit.
+L00023346	- Learning/adaptation remains future source-lineage coverage until storage, privacy, and policy owners accept live semantics.
+L00023347	- No WorkNodes, NodeSeeds, executable queues, final node manifests, or production build tasks are created.
+L00023348	validation_surfaces:
+L00023349	- >-
+L00023350	  python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits
+L00023351	- python3 scripts/pm-plan-index.py validate
+L00023352	reasoning_tier: standard
+L00023353	context_scope: orchestrator_subagent_standardization
+L00023354	implementation_surfaces:
+L00023355	- Plans/orchestrator-subagent-integration.md
+L00023356	risk_class: crew_learning_and_adaptation
+L00023357	node_compile_hint:
+L00023358	  mode: crew_learning_and_adaptation
+L00023359	  create_worknodes: false
+L00023360	source_lineage:
+L00023361	- >-
+L00023362	  Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:orchestrator-subagent-integration-S0153
+L00023363	preserved_exact_tokens:
+L00023364	- Enhancement #3: Crew learning and adaptation
+L00023365	- Track which subagent combinations work best
+L00023366	- Suggest optimal crew compositions
+L00023367	- Adapt crew behavior based on success patterns
+L00023368	negative_constraints: []
+L00023369	compatibility_only_notes:
+L00023370	- Future enhancement source-lineage coverage; storage/privacy/policy owner acceptance is required before live canon.
+L00023371	stale_retired_dispositions: []
+L00023372	owner_boundary_notes:
+L00023373	- Storage, privacy, and policy owners must adjudicate durable learning semantics before implementation.
+L00023374	owner_hints:
+L00023375	- Plans/orchestrator-subagent-integration.md
+L00023376	preserved_contractrefs: []
+L00023377	```
+L00023378	
+L00023379	### OSI-289 - Crew Scheduling By Tier And Quota
+L00023380	
+L00023381	```yaml
+L00023382	plan_unit_id: OSI-289
+L00023383	unit_type: requirement
+L00023384	status: accepted
+L00023385	owner_doc: Plans/orchestrator-subagent-integration.md
+L00023386	canonical_text: Queued crews may be prioritized by tier dependency and scheduled against platform quota availability.
+L00023387	gui_related: false
+L00023388	gui_classification_reason: This unit covers scheduling policy rather than GUI presentation.
+L00023389	split_recommended: false
+L00023390	depends_on:
+L00023391	- OSI-281
+L00023392	unblocks: []
+L00023393	acceptance_criteria:
+L00023394	- Covered source span remains losslessly available for exact-text audit.
+L00023395	- Scheduling remains subordinate to `executionLimits` and policy admission.
+L00023396	- No WorkNodes, NodeSeeds, executable queues, final node manifests, or production build tasks are created.
+L00023397	validation_surfaces:
+L00023398	- >-
+L00023399	  python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits
+L00023400	- python3 scripts/pm-plan-index.py validate
+L00023401	reasoning_tier: standard
+L00023402	context_scope: orchestrator_subagent_standardization
+L00023403	implementation_surfaces:
+L00023404	- Plans/orchestrator-subagent-integration.md
+L00023405	risk_class: crew_scheduling_by_tier_and_quota
+L00023406	node_compile_hint:
+L00023407	  mode: crew_scheduling_by_tier_and_quota
+L00023408	  create_worknodes: false
+L00023409	source_lineage:
+L00023410	- >-
+L00023411	  Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:orchestrator-subagent-integration-S0153
+L00023412	preserved_exact_tokens:
+L00023413	- Enhancement #4: Crew scheduling and prioritization
+L00023414	- Prioritize crews by tier dependency
+L00023415	- Schedule crews based on platform quota availability
+L00023416	negative_constraints:
+L00023417	- Crew scheduling must not bypass `executionLimits` or policy admission.
+L00023418	compatibility_only_notes: []
+L00023419	stale_retired_dispositions: []
+L00023420	owner_boundary_notes:
+L00023421	- Orchestrator admission and platform quota policy remain authoritative.
+L00023422	owner_hints:
+L00023423	- Plans/orchestrator-subagent-integration.md
+L00023424	preserved_contractrefs: []
+L00023425	```
+L00023426	
+L00023427	### OSI-290 - User Reorders Queued Crew Execution
+L00023428	
+L00023429	```yaml
+L00023430	plan_unit_id: OSI-290
+L00023431	unit_type: requirement
+L00023432	status: accepted
+L00023433	owner_doc: Plans/orchestrator-subagent-integration.md
+L00023434	canonical_text: When the Assistant feature is added, users may reorder crew execution.
+L00023435	gui_related: true
+L00023436	gui_classification_reason: This unit covers a future user-visible queue reordering affordance.
+L00023437	split_recommended: false
+L00023438	depends_on:
+L00023439	- OSI-284
+L00023440	- OSI-289
+L00023441	unblocks: []
+L00023442	acceptance_criteria:
+L00023443	- Covered source span remains losslessly available for exact-text audit.
+L00023444	- User reordering remains a future Assistant surface and does not override orchestrator admission.
+L00023445	- No WorkNodes, NodeSeeds, executable queues, final node manifests, or production build tasks are created.
+L00023446	validation_surfaces:
+L00023447	- >-
+L00023448	  python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits
+L00023449	- python3 scripts/pm-plan-index.py validate
+L00023450	reasoning_tier: standard
+L00023451	context_scope: orchestrator_subagent_standardization
+L00023452	implementation_surfaces:
+L00023453	- Plans/orchestrator-subagent-integration.md
+L00023454	risk_class: user_reorders_queued_crew_execution
+L00023455	node_compile_hint:
+L00023456	  mode: user_reorders_queued_crew_execution
+L00023457	  create_worknodes: false
+L00023458	source_lineage:
+L00023459	- >-
+L00023460	  Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:orchestrator-subagent-integration-S0153
+L00023461	preserved_exact_tokens:
+L00023462	- Allow users to reorder crew execution
+L00023463	- when Assistant feature is added
+L00023464	negative_constraints:
+L00023465	- User-visible reordering must not replace orchestrator admission authority.
+L00023466	compatibility_only_notes:
+L00023467	- Future Assistant feature only.
+L00023468	stale_retired_dispositions: []
+L00023469	owner_boundary_notes:
+L00023470	- Assistant/Final GUI own the user-visible reorder control; orchestrator still owns admission.
+L00023471	owner_hints:
+L00023472	- Plans/orchestrator-subagent-integration.md
+L00023473	preserved_contractrefs: []
+L00023474	```
+L00023475	
+L00023476	### OSI-291 - Crew-Aware PRD Plan Generation Hints
+L00023477	
+L00023478	```yaml
+L00023479	plan_unit_id: OSI-291
+L00023480	unit_type: requirement
+L00023481	status: accepted
+L00023482	owner_doc: Plans/orchestrator-subagent-integration.md
+L00023483	canonical_text: >-
+L00023484	  PRD and plan generation may include crew recommendations, task/subtask crew hints, crew template references, and
+L00023485	  orchestrator consumption of crew hints when appropriate.
+L00023486	gui_related: false
+L00023487	gui_classification_reason: This unit covers PRD/plan metadata and orchestrator consumption rather than GUI presentation.
+L00023488	split_recommended: true
+L00023489	depends_on:
+L00023490	- OSI-279
+L00023491	- OSI-284
+L00023492	unblocks: []
+L00023493	acceptance_criteria:
+L00023494	- Covered source span remains losslessly available for exact-text audit.
+L00023495	- Question-form gap language is preserved as deferred source-lineage, not a forced product decision.
+L00023496	- Automatic crew creation cannot bypass confirmation or admission constraints.
+L00023497	- No WorkNodes, NodeSeeds, executable queues, final node manifests, or production build tasks are created.
+L00023498	validation_surfaces:
+L00023499	- >-
+L00023500	  python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits
+L00023501	- python3 scripts/pm-plan-index.py validate
+L00023502	reasoning_tier: standard
+L00023503	context_scope: orchestrator_subagent_standardization
+L00023504	implementation_surfaces:
+L00023505	- Plans/orchestrator-subagent-integration.md
+L00023506	risk_class: crew_aware_prd_plan_generation_hints
+L00023507	node_compile_hint:
+L00023508	  mode: crew_aware_prd_plan_generation_hints
+L00023509	  create_worknodes: false
+L00023510	source_lineage:
+L00023511	- >-
+L00023512	  Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:orchestrator-subagent-integration-S0153
+L00023513	preserved_exact_tokens:
+L00023514	- Gap #52: Crew integration with PRD/plan generation
+L00023515	- Crew-aware plan generation
+L00023516	- Plan annotations
+L00023517	- Crew templates in plans
+L00023518	- Orchestrator awareness
+L00023519	negative_constraints:
+L00023520	- Automatic crew creation must respect confirmation, admission, and `executionLimits`.
+L00023521	compatibility_only_notes:
+L00023522	- Question-form gap retained as deferred source-lineage until owner docs accept live behavior.
+L00023523	stale_retired_dispositions: []
+L00023524	owner_boundary_notes:
+L00023525	- PRD/interview plan owners must accept schema semantics before crew hints become live schema canon.
+L00023526	owner_hints:
+L00023527	- Plans/orchestrator-subagent-integration.md
+L00023528	preserved_contractrefs: []
+L00023529	```
+L00023530	
+L00023531	### OSI-292 - Crew Recommendation PRD JSON Example
+L00023532	
+L00023533	```yaml
+L00023534	plan_unit_id: OSI-292
+L00023535	unit_type: requirement
+L00023536	status: accepted
+L00023537	owner_doc: Plans/orchestrator-subagent-integration.md
+L00023538	canonical_text: >-
+L00023539	  The source preserves the `prd.json` example containing `crew_recommendation`, `suggested`, `subagents`, and `rationale`
+L00023540	  for `ST-001-001-001`.
+L00023541	gui_related: false
+L00023542	gui_classification_reason: This unit covers a JSON example rather than GUI presentation.
+L00023543	split_recommended: false
+L00023544	depends_on:
+L00023545	- OSI-291
+L00023546	unblocks: []
+L00023547	acceptance_criteria:
+L00023548	- Covered JSON example remains losslessly available for exact-text audit.
+L00023549	- The JSON example is not promoted into schema canon by this standardization batch.
+L00023550	- No WorkNodes, NodeSeeds, executable queues, final node manifests, or production build tasks are created.
+L00023551	validation_surfaces:
+L00023552	- >-
+L00023553	  python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits
+L00023554	- python3 scripts/pm-plan-index.py validate
+L00023555	reasoning_tier: standard
+L00023556	context_scope: orchestrator_subagent_standardization
+L00023557	implementation_surfaces:
+L00023558	- Plans/orchestrator-subagent-integration.md
+L00023559	risk_class: crew_recommendation_prd_json_example
+L00023560	node_compile_hint:
+L00023561	  mode: crew_recommendation_prd_json_example
+L00023562	  create_worknodes: false
+L00023563	source_lineage:
+L00023564	- >-
+L00023565	  Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:orchestrator-subagent-integration-S0153
+L00023566	preserved_exact_tokens:
+L00023567	- prd.json
+L00023568	- crew_recommendation
+L00023569	- suggested
+L00023570	- subagents
+L00023571	- rationale
+L00023572	- ST-001-001-001
+L00023573	- Implement authentication API
+L00023574	negative_constraints:
+L00023575	- The JSON example must not be treated as live schema canon by this batch.
+L00023576	compatibility_only_notes:
+L00023577	- JSON is example evidence only.
+L00023578	stale_retired_dispositions: []
+L00023579	owner_boundary_notes:
+L00023580	- PRD schema ownership remains outside this source-preserving example.
+L00023581	owner_hints:
+L00023582	- Plans/orchestrator-subagent-integration.md
+L00023583	preserved_contractrefs: []
+L00023584	```
+L00023585	
+L00023586	### OSI-293 - Interview Phase Crew Uses
+L00023587	
+L00023588	```yaml
+L00023589	plan_unit_id: OSI-293
+L00023590	unit_type: requirement
+L00023591	status: accepted
+L00023592	owner_doc: Plans/orchestrator-subagent-integration.md
+L00023593	canonical_text: >-
+L00023594	  Interview phases may use crews internally for architecture, research, document generation, and cross-phase coordination.
+L00023595	gui_related: false
+L00023596	gui_classification_reason: This unit covers interview-flow orchestration rather than GUI presentation.
+L00023597	split_recommended: true
+L00023598	depends_on:
+L00023599	- OSI-135
+L00023600	- OSI-279
+L00023601	unblocks: []
+L00023602	acceptance_criteria:
+L00023603	- Covered source span remains losslessly available for exact-text audit.
+L00023604	- Interview-specific crew behavior remains distinct from execution-tier crew behavior.
+L00023605	- No WorkNodes, NodeSeeds, executable queues, final node manifests, or production build tasks are created.
+L00023606	validation_surfaces:
+L00023607	- >-
+L00023608	  python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits
+L00023609	- python3 scripts/pm-plan-index.py validate
+L00023610	reasoning_tier: standard
+L00023611	context_scope: orchestrator_subagent_standardization
+L00023612	implementation_surfaces:
+L00023613	- Plans/orchestrator-subagent-integration.md
+L00023614	risk_class: interview_phase_crew_uses
+L00023615	node_compile_hint:
+L00023616	  mode: interview_phase_crew_uses
+L00023617	  create_worknodes: false
+L00023618	source_lineage:
+L00023619	- >-
+L00023620	  Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:orchestrator-subagent-integration-S0153
+L00023621	preserved_exact_tokens:
+L00023622	- Gap #53: Crew coordination with interview phases
+L00023623	- Interview phase crews
+L00023624	- Research crews
+L00023625	- Document generation crews
+L00023626	- Cross-phase coordination
+L00023627	negative_constraints:
+L00023628	- Interview-flow crews must not be merged with execution-tier crew canon.
+L00023629	compatibility_only_notes:
+L00023630	- Question-form gap retained as source-lineage coverage pending interview owner acceptance.
+L00023631	stale_retired_dispositions: []
+L00023632	owner_boundary_notes:
+L00023633	- interview-subagent-integration remains the phase-specific owner for interview crew behavior.
+L00023634	owner_hints:
+L00023635	- Plans/orchestrator-subagent-integration.md
+L00023636	preserved_contractrefs: []
+L00023637	```
+L00023638	
+L00023639	### OSI-294 - Research Coverage Caveat
+L00023640	
+L00023641	```yaml
+L00023642	plan_unit_id: OSI-294
+L00023643	unit_type: requirement
+L00023644	status: accepted
+L00023645	owner_doc: Plans/orchestrator-subagent-integration.md
+L00023646	canonical_text: >-
+L00023647	  Research crews must record coverage limits when comparator products have mixed or limited public source availability, use
+L00023648	  official `/docs`, public community feedback, and `/web` evidence as fallback, and maximize clone-based or source-level
+L00023649	  inspection through GitHub/web tools wherever cloning is possible or meaningful.
+L00023650	gui_related: false
+L00023651	gui_classification_reason: This unit covers research evidence policy rather than GUI presentation.
+L00023652	split_recommended: false
+L00023653	depends_on:
+L00023654	- OSI-293
+L00023655	unblocks: []
+L00023656	acceptance_criteria:
+L00023657	- Covered source line remains losslessly available for exact-text audit.
+L00023658	- Research outputs cannot imply full source coverage when the source is not available.
+L00023659	- No WorkNodes, NodeSeeds, executable queues, final node manifests, or production build tasks are created.
+L00023660	validation_surfaces:
+L00023661	- >-
+L00023662	  python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits
+L00023663	- python3 scripts/pm-plan-index.py validate
+L00023664	reasoning_tier: standard
+L00023665	context_scope: orchestrator_subagent_standardization
+L00023666	implementation_surfaces:
+L00023667	- Plans/orchestrator-subagent-integration.md
+L00023668	risk_class: research_coverage_caveat
+L00023669	node_compile_hint:
+L00023670	  mode: research_coverage_caveat
+L00023671	  create_worknodes: false
+L00023672	source_lineage:
+L00023673	- >-
+L00023674	  Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:orchestrator-subagent-integration-S0153
+L00023675	preserved_exact_tokens:
+L00023676	- Research /coverage caveat
+L00023677	- official `/docs`
+L00023678	- public community feedback
+L00023679	- '`/web` evidence'
+L00023680	- GitHub/web tools
+L00023681	negative_constraints:
+L00023682	- Research crews must not imply full source coverage when comparator source availability is mixed or limited.
+L00023683	compatibility_only_notes: []
+L00023684	stale_retired_dispositions: []
+L00023685	owner_boundary_notes:
+L00023686	- Research evidence policy must preserve coverage limits and source availability caveats.
+L00023687	owner_hints:
+L00023688	- Plans/orchestrator-subagent-integration.md
+L00023689	preserved_contractrefs: []
+L00023690	```
+L00023691	
+L00023692	### OSI-295 - Interview Crews Are Separate From Execution-Tier Crews
+L00023693	
+L00023694	```yaml
+L00023695	plan_unit_id: OSI-295
+L00023696	unit_type: requirement
+L00023697	status: accepted
+L00023698	owner_doc: Plans/orchestrator-subagent-integration.md
+L00023699	canonical_text: Interview crews are separate from orchestrator-initiated crews for execution tiers.
+L00023700	gui_related: false
+L00023701	gui_classification_reason: This unit covers orchestration boundary semantics rather than GUI presentation.
+L00023702	split_recommended: false
+L00023703	depends_on:
+L00023704	- OSI-293
+L00023705	unblocks: []
+L00023706	acceptance_criteria:
+L00023707	- Covered source line remains losslessly available for exact-text audit.
+L00023708	- Interview crew behavior remains separate from execution-tier crew behavior.
+L00023709	- No WorkNodes, NodeSeeds, executable queues, final node manifests, or production build tasks are created.
+L00023710	validation_surfaces:
+L00023711	- >-
+L00023712	  python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits
+L00023713	- python3 scripts/pm-plan-index.py validate
+L00023714	reasoning_tier: standard
+L00023715	context_scope: orchestrator_subagent_standardization
+L00023716	implementation_surfaces:
+L00023717	- Plans/orchestrator-subagent-integration.md
+L00023718	risk_class: interview_crews_separate_from_execution_tier_crews
+L00023719	node_compile_hint:
+L00023720	  mode: interview_crews_separate_from_execution_tier_crews
+L00023721	  create_worknodes: false
+L00023722	source_lineage:
+L00023723	- >-
+L00023724	  Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:orchestrator-subagent-integration-S0153
+L00023725	preserved_exact_tokens:
+L00023726	- separate from orchestrator-initiated crews
+L00023727	- execution tiers
+L00023728	- Interview crews are for interview flow only
+L00023729	negative_constraints:
+L00023730	- Do not merge interview-flow crew behavior with execution-tier crew canon.
+L00023731	compatibility_only_notes: []
+L00023732	stale_retired_dispositions: []
+L00023733	owner_boundary_notes:
+L00023734	- Interview crew behavior and execution-tier crew behavior retain separate owner contexts.
+L00023735	owner_hints:
+L00023736	- Plans/orchestrator-subagent-integration.md
+L00023737	preserved_contractrefs: []
+L00023738	```
+L00023739	
+L00023740	### OSI-296 - Crew Value Rationale
+L00023741	
+L00023742	```yaml
+L00023743	plan_unit_id: OSI-296
+L00023744	unit_type: requirement
+L00023745	status: accepted
+L00023746	owner_doc: Plans/orchestrator-subagent-integration.md
+L00023747	canonical_text: >-
+L00023748	  The source preserves rationale for cross-platform communication, orchestrator visibility, platform-agnostic behavior,
+L00023749	  enhanced coordination, and a unified interface across supported providers.
+L00023750	gui_related: false
+L00023751	gui_classification_reason: This unit preserves rationale text rather than GUI presentation.
+L00023752	split_recommended: false
+L00023753	depends_on:
+L00023754	- OSI-279
+L00023755	- OSI-245
+L00023756	unblocks: []
+L00023757	acceptance_criteria:
+L00023758	- Covered rationale remains losslessly available for exact-text audit.
+L00023759	- Rationale examples are not promoted into executable work.
+L00023760	- No WorkNodes, NodeSeeds, executable queues, final node manifests, or production build tasks are created.
+L00023761	validation_surfaces:
+L00023762	- >-
+L00023763	  python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits
+L00023764	- python3 scripts/pm-plan-index.py validate
+L00023765	reasoning_tier: standard
+L00023766	context_scope: orchestrator_subagent_standardization
+L00023767	implementation_surfaces:
+L00023768	- Plans/orchestrator-subagent-integration.md
+L00023769	risk_class: crew_value_rationale
+L00023770	node_compile_hint:
+L00023771	  mode: crew_value_rationale
+L00023772	  create_worknodes: false
+L00023773	source_lineage:
+L00023774	- >-
+L00023775	  Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:orchestrator-subagent-integration-S0153
+L00023776	preserved_exact_tokens:
+L00023777	- Cross-platform communication
+L00023778	- Orchestrator visibility
+L00023779	- Platform-agnostic
+L00023780	- Enhanced coordination
+L00023781	- Unified interface
+L00023782	negative_constraints: []
+L00023783	compatibility_only_notes:
+L00023784	- Rationale evidence only.
+L00023785	stale_retired_dispositions: []
+L00023786	owner_boundary_notes: []
+L00023787	owner_hints:
+L00023788	- Plans/orchestrator-subagent-integration.md
+L00023789	preserved_contractrefs: []
+L00023790	```
+L00023791	
+L00023792	### OSI-297 - Native Teams/Fleets Comparison Evidence
+L00023793	
+L00023794	```yaml
+L00023795	plan_unit_id: OSI-297
+L00023796	unit_type: requirement
+L00023797	status: accepted
+L00023798	owner_doc: Plans/orchestrator-subagent-integration.md
+L00023799	canonical_text: >-
+L00023800	  The source preserves comparison tokens for Claude Code Teams, Copilot Fleets, Puppet Master Communication, cross-platform
+L00023801	  support, orchestrator visibility, agent-to-agent messaging, file-based operation, and CLI-only operation.
+L00023802	gui_related: false
+L00023803	gui_classification_reason: This unit preserves comparison evidence rather than GUI presentation.
+L00023804	split_recommended: false
+L00023805	depends_on:
+L00023806	- OSI-296
+L00023807	unblocks: []
+L00023808	acceptance_criteria:
+L00023809	- Covered comparison table remains losslessly available for exact-text audit.
+L00023810	- External-product comparison evidence is not treated as external product canon.
+L00023811	- No WorkNodes, NodeSeeds, executable queues, final node manifests, or production build tasks are created.
+L00023812	validation_surfaces:
+L00023813	- >-
+L00023814	  python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits
+L00023815	- python3 scripts/pm-plan-index.py validate
+L00023816	reasoning_tier: standard
+L00023817	context_scope: orchestrator_subagent_standardization
+L00023818	implementation_surfaces:
+L00023819	- Plans/orchestrator-subagent-integration.md
+L00023820	risk_class: native_teams_fleets_comparison_evidence
+L00023821	node_compile_hint:
+L00023822	  mode: native_teams_fleets_comparison_evidence
+L00023823	  create_worknodes: false
+L00023824	source_lineage:
+L00023825	- >-
+L00023826	  Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:orchestrator-subagent-integration-S0153
+L00023827	preserved_exact_tokens:
+L00023828	- Claude Code Teams
+L00023829	- Copilot Fleets
+L00023830	- Puppet Master Communication
+L00023831	- Cross-platform
+L00023832	- Orchestrator visibility
+L00023833	- Agent-to-agent messaging
+L00023834	- File-based (no API)
+L00023835	- Works with CLI-only
+L00023836	negative_constraints: []
+L00023837	compatibility_only_notes:
+L00023838	- Comparison table is source evidence only and not external product canon.
+L00023839	stale_retired_dispositions: []
+L00023840	owner_boundary_notes: []
+L00023841	owner_hints:
+L00023842	- Plans/orchestrator-subagent-integration.md
+L00023843	preserved_contractrefs: []
+L00023844	```
+L00023845	
+L00023846	### OSI-298 - Agent Message Board Architecture Example
+L00023847	
+L00023848	```yaml
+L00023849	plan_unit_id: OSI-298
+L00023850	unit_type: requirement
+L00023851	status: accepted
+L00023852	owner_doc: Plans/orchestrator-subagent-integration.md
+L00023853	canonical_text: >-
+L00023854	  The communication system example extends coordination state with a message board/queue, preserving `.puppet-master/state/active-agents.json`
+L00023855	  as an optional debug mirror and `.puppet-master/state/agent-messages.json` as an optional debug or interoperability mirror
+L00023856	  for agent-to-agent message records.
+L00023857	gui_related: false
+L00023858	gui_classification_reason: This unit covers backend coordination-state architecture rather than GUI presentation.
+L00023859	split_recommended: false
+L00023860	depends_on:
+L00023861	- OSI-245
+L00023862	- OSI-246
+L00023863	unblocks: []
+L00023864	acceptance_criteria:
+L00023865	- Covered architecture example remains losslessly available for exact-text audit.
+L00023866	- This duplicate-era example does not narrow prior canonical message-board coverage.
+L00023867	- This example must not promote active-agents.json or agent-messages.json into canonical persistence.
+L00023868	- No WorkNodes, NodeSeeds, executable queues, final node manifests, or production build tasks are created.
+L00023869	validation_surfaces:
+L00023870	- >-
+L00023871	  python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits
+L00023872	- python3 scripts/pm-plan-index.py validate
+L00023873	reasoning_tier: standard
+L00023874	context_scope: orchestrator_subagent_standardization
+L00023875	implementation_surfaces:
+L00023876	- Plans/orchestrator-subagent-integration.md
+L00023877	risk_class: agent_message_board_architecture_example
+L00023878	node_compile_hint:
+L00023879	  mode: agent_message_board_architecture_example
+L00023880	  create_worknodes: false
+L00023881	source_lineage:
+L00023882	- >-
+L00023883	  Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:orchestrator-subagent-integration-S0153
+L00023884	- Plans/ledgers/v2/pldg-20260613-001-cleanup-fable-audit/records/design_atoms.jsonl:8
+L00023885	- Plans/ledgers/v2/pldg-20260613-001-cleanup-fable-audit/source_shards/section-a-conflicting-canon.md:15
+L00023886	preserved_exact_tokens:
+L00023887	- .puppet-master/state/
+L00023888	- active-agents.json
+L00023889	- Optional debug mirror
+L00023890	- agent-messages.json
+L00023891	- agent-to-agent messages
+L00023892	negative_constraints:
+L00023893	- The optional active-agents debug mirror must not become the coordination source of truth.
+L00023894	- The optional agent-messages mirror must not become the canonical persistence store.
+L00023895	compatibility_only_notes:
+L00023896	- Duplicate message-board architecture example; do not narrow OSI-245.
+L00023897	- "`.puppet-master/state/agent-messages.json` is compatibility/debug mirror lineage."
+L00023898	stale_retired_dispositions: []
+L00023899	owner_boundary_notes:
+L00023900	- Storage owns durable schema semantics; orchestrator owns coordination use.
+L00023901	owner_hints:
+L00023902	- Plans/orchestrator-subagent-integration.md
+L00023903	preserved_contractrefs: []
+L00023904	```
+L00023905	
+L00023906	### OSI-299 - AgentMessage Structure Example
+L00023907	
+L00023908	```yaml
+L00023909	plan_unit_id: OSI-299
+L00023910	unit_type: requirement
+L00023911	status: accepted
+L00023912	owner_doc: Plans/orchestrator-subagent-integration.md
+L00023913	canonical_text: >-
+L00023914	  The source preserves `AgentMessage` fields including `message_id`, `from_agent_id`, `from_platform`, `to_agent_id`,
+L00023915	  `to_agent_type`, `to_node_id`, `message_type`, `subject`, `content`, `context`, `thread_id`, `in_reply_to`, `created_at`,
+L00023916	  `read_by`, and `resolved`.
+L00023917	gui_related: false
+L00023918	gui_classification_reason: This unit covers a backend message schema example rather than GUI presentation.
+L00023919	split_recommended: false
+L00023920	depends_on:
+L00023921	- OSI-247
+L00023922	unblocks: []
+L00023923	acceptance_criteria:
+L00023924	- Covered Rust structure example remains losslessly available for exact-text audit.
+L00023925	- The example must not narrow the canonical message schema already covered by earlier PlanUnits.
+L00023926	- No WorkNodes, NodeSeeds, executable queues, final node manifests, or production build tasks are created.
+L00023927	validation_surfaces:
+L00023928	- >-
+L00023929	  python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits
+L00023930	- python3 scripts/pm-plan-index.py validate
+L00023931	reasoning_tier: standard
+L00023932	context_scope: orchestrator_subagent_standardization
+L00023933	implementation_surfaces:
+L00023934	- Plans/orchestrator-subagent-integration.md
+L00023935	risk_class: agentmessage_structure_example
+L00023936	node_compile_hint:
+L00023937	  mode: agentmessage_structure_example
+L00023938	  create_worknodes: false
+L00023939	source_lineage:
+L00023940	- >-
+L00023941	  Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:orchestrator-subagent-integration-S0153
+L00023942	preserved_exact_tokens:
+L00023943	- AgentMessage
+L00023944	- message_id
+L00023945	- from_agent_id
+L00023946	- from_platform
+L00023947	- to_agent_id
+L00023948	- to_agent_type
+L00023949	- to_node_id
+L00023950	- read_by
+L00023951	- resolved
+L00023952	negative_constraints:
+L00023953	- The Rust snippet must not narrow canonical message-board schema coverage.
+L00023954	compatibility_only_notes:
+L00023955	- Rust snippet is evidence only.
+L00023956	stale_retired_dispositions: []
+L00023957	owner_boundary_notes:
+L00023958	- Earlier canonical message-board PlanUnits retain lane/priority and lifecycle semantics not repeated by this example.
+L00023959	owner_hints:
+L00023960	- Plans/orchestrator-subagent-integration.md
+L00023961	preserved_contractrefs: []
+L00023962	```
+L00023963	
+L00023964	### OSI-300 - MessageType Enum Example
+L00023965	
+L00023966	```yaml
+L00023967	plan_unit_id: OSI-300
+L00023968	unit_type: requirement
+L00023969	status: accepted
+L00023970	owner_doc: Plans/orchestrator-subagent-integration.md
+L00023971	canonical_text: >-
+L00023972	  The source preserves message type variants `Question`, `Answer`, `Update`, `Request`, `Decision`, `Warning`, and
+L00023973	  `Announcement`.
+L00023974	gui_related: false
+L00023975	gui_classification_reason: This unit covers a backend enum example rather than GUI presentation.
+L00023976	split_recommended: false
+L00023977	depends_on:
+L00023978	- OSI-247
+L00023979	unblocks: []
+L00023980	acceptance_criteria:
+L00023981	- Covered enum example remains losslessly available for exact-text audit.
+L00023982	- The enum snippet is not created as implementation code by this batch.
+L00023983	- No WorkNodes, NodeSeeds, executable queues, final node manifests, or production build tasks are created.
+L00023984	validation_surfaces:
+L00023985	- >-
+L00023986	  python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits
+L00023987	- python3 scripts/pm-plan-index.py validate
+L00023988	reasoning_tier: standard
+L00023989	context_scope: orchestrator_subagent_standardization
+L00023990	implementation_surfaces:
+L00023991	- Plans/orchestrator-subagent-integration.md
+L00023992	risk_class: messagetype_enum_example
+L00023993	node_compile_hint:
+L00023994	  mode: messagetype_enum_example
+L00023995	  create_worknodes: false
+L00023996	source_lineage:
+L00023997	- >-
+L00023998	  Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:orchestrator-subagent-integration-S0153
+L00023999	preserved_exact_tokens:
+L00024000	- MessageType
+L00024001	- Question
+L00024002	- Answer
+L00024003	- Update
+L00024004	- Request
+L00024005	- Decision
+L00024006	- Warning
+L00024007	- Announcement
+L00024008	negative_constraints:
+L00024009	- The enum snippet must not be treated as created implementation code.
+L00024010	compatibility_only_notes:
+L00024011	- Enum snippet is evidence only.
+L00024012	stale_retired_dispositions: []
+L00024013	owner_boundary_notes: []
+L00024014	owner_hints:
+L00024015	- Plans/orchestrator-subagent-integration.md
+L00024016	preserved_contractrefs: []
+L00024017	```
+L00024018	
+L00024019	### OSI-301 - MessageContext And Board Example
+L00024020	
+L00024021	```yaml
+L00024022	plan_unit_id: OSI-301
+L00024023	unit_type: requirement
+L00024024	status: accepted
+L00024025	owner_doc: Plans/orchestrator-subagent-integration.md
+L00024026	canonical_text: >-
+L00024027	  The source preserves `MessageContext` fields `files_mentioned`, `operations_mentioned`, `node_id`, and `related_messages`,
+L00024028	  plus `AgentMessageBoard` fields `messages`, `last_updated`, and `schema_version`.
+L00024029	gui_related: false
+L00024030	gui_classification_reason: This unit covers backend message context and board structure rather than GUI presentation.
+L00024031	split_recommended: false
+L00024032	depends_on:
+L00024033	- OSI-247
+L00024034	- OSI-250
+L00024035	unblocks: []
+L00024036	acceptance_criteria:
+L00024037	- Covered structure examples remain losslessly available for exact-text audit.
+L00024038	- Storage ownership of durable schema semantics is preserved.
+L00024039	- No WorkNodes, NodeSeeds, executable queues, final node manifests, or production build tasks are created.
+L00024040	validation_surfaces:
+L00024041	- >-
+L00024042	  python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits
+L00024043	- python3 scripts/pm-plan-index.py validate
+L00024044	reasoning_tier: standard
+L00024045	context_scope: orchestrator_subagent_standardization
+L00024046	implementation_surfaces:
+L00024047	- Plans/orchestrator-subagent-integration.md
+L00024048	risk_class: messagecontext_and_board_example
+L00024049	node_compile_hint:
+L00024050	  mode: messagecontext_and_board_example
+L00024051	  create_worknodes: false
+L00024052	source_lineage:
+L00024053	- >-
+L00024054	  Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:orchestrator-subagent-integration-S0153
+L00024055	preserved_exact_tokens:
+L00024056	- MessageContext
+L00024057	- files_mentioned
+L00024058	- operations_mentioned
+L00024059	- node_id
+L00024060	- related_messages
+L00024061	- AgentMessageBoard
+L00024062	- schema_version
+L00024063	negative_constraints: []
+L00024064	compatibility_only_notes:
+L00024065	- Structure snippets are evidence only.
+L00024066	stale_retired_dispositions: []
+L00024067	owner_boundary_notes:
+L00024068	- Storage owns durable message-board schema semantics.
+L00024069	owner_hints:
+L00024070	- Plans/orchestrator-subagent-integration.md
+L00024071	preserved_contractrefs: []
+L00024072	```
+L00024073	
+L00024074	### OSI-302 - Message Routing Modes
+L00024075	
+L00024076	```yaml
+L00024077	plan_unit_id: OSI-302
+L00024078	unit_type: requirement
+L00024079	status: accepted
+L00024080	owner_doc: Plans/orchestrator-subagent-integration.md
+L00024081	canonical_text: >-
+L00024082	  Messages route direct by `to_agent_id`, by type through `to_agent_type`, by node through `to_node_id`, or as broadcast
+L00024083	  when `to_agent_id`, `to_agent_type`, and `to_node_id` are all `None`.
+L00024084	gui_related: false
+L00024085	gui_classification_reason: This unit covers routing semantics rather than GUI presentation.
+L00024086	split_recommended: false
+L00024087	depends_on:
+L00024088	- OSI-248
+L00024089	unblocks: []
+L00024090	acceptance_criteria:
+L00024091	- Covered routing example remains losslessly available for exact-text audit.
+L00024092	- This example must not narrow the richer canonical routing/lane coverage in earlier PlanUnits.
+L00024093	- No WorkNodes, NodeSeeds, executable queues, final node manifests, or production build tasks are created.
+L00024094	validation_surfaces:
+L00024095	- >-
+L00024096	  python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits
+L00024097	- python3 scripts/pm-plan-index.py validate
+L00024098	reasoning_tier: standard
+L00024099	context_scope: orchestrator_subagent_standardization
+L00024100	implementation_surfaces:
+L00024101	- Plans/orchestrator-subagent-integration.md
+L00024102	risk_class: message_routing_modes
+L00024103	node_compile_hint:
+L00024104	  mode: message_routing_modes
+L00024105	  create_worknodes: false
+L00024106	source_lineage:
+L00024107	- >-
+L00024108	  Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:orchestrator-subagent-integration-S0153
+L00024109	preserved_exact_tokens:
+L00024110	- Message routing
+L00024111	- Direct
+L00024112	- By type
+L00024113	- By node
+L00024114	- Broadcast
+L00024115	- to_agent_id = None
+L00024116	- to_agent_type = None
+L00024117	- to_node_id = None
+L00024118	negative_constraints:
+L00024119	- This example omits lane routing and must not narrow OSI-248.
+L00024120	compatibility_only_notes:
+L00024121	- Example routing list is source evidence only.
+L00024122	stale_retired_dispositions: []
+L00024123	owner_boundary_notes:
+L00024124	- Earlier canonical routing PlanUnits retain lifecycle and lane/priority semantics.
+L00024125	owner_hints:
+L00024126	- Plans/orchestrator-subagent-integration.md
+L00024127	preserved_contractrefs: []
+L00024128	```
+L00024129	
+L00024130	### OSI-303 - Help Request Message Example
+L00024131	
+L00024132	```yaml
+L00024133	plan_unit_id: OSI-303
+L00024134	unit_type: requirement
+L00024135	status: accepted
+L00024136	owner_doc: Plans/orchestrator-subagent-integration.md
+L00024137	canonical_text: >-
+L00024138	  The source preserves an example where `rust-engineer-1.1.1` on `Platform::Codex` asks `test-automator` for help writing
+L00024139	  tests for `POST /users` in `src/api.rs`.
+L00024140	gui_related: false
+L00024141	gui_classification_reason: This unit covers an agent-message example rather than GUI presentation.
+L00024142	split_recommended: false
+L00024143	depends_on:
+L00024144	- OSI-302
+L00024145	unblocks: []
+L00024146	acceptance_criteria:
+L00024147	- Covered example remains losslessly available for exact-text audit.
+L00024148	- Example ids, files, and endpoints are not promoted into fixed product identifiers.
+L00024149	- No WorkNodes, NodeSeeds, executable queues, final node manifests, or production build tasks are created.
+L00024150	validation_surfaces:
+L00024151	- >-
+L00024152	  python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits
+L00024153	- python3 scripts/pm-plan-index.py validate
+L00024154	reasoning_tier: standard
+L00024155	context_scope: orchestrator_subagent_standardization
+L00024156	implementation_surfaces:
+L00024157	- Plans/orchestrator-subagent-integration.md
+L00024158	risk_class: help_request_message_example
+L00024159	node_compile_hint:
+L00024160	  mode: help_request_message_example
+L00024161	  create_worknodes: false
+L00024162	source_lineage:
+L00024163	- >-
+L00024164	  Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:orchestrator-subagent-integration-S0153
+L00024165	preserved_exact_tokens:
+L00024166	- Agent asking for help
+L00024167	- rust-engineer-1.1.1
+L00024168	- Platform::Codex
+L00024169	- test-automator
+L00024170	- POST /users endpoint
+L00024171	- src/api.rs
+L00024172	negative_constraints:
+L00024173	- Example ids, files, and endpoints are examples only.
+L00024174	compatibility_only_notes:
+L00024175	- Rust message-posting snippet is evidence only.
+L00024176	stale_retired_dispositions: []
+L00024177	owner_boundary_notes: []
+L00024178	owner_hints:
+L00024179	- Plans/orchestrator-subagent-integration.md
+L00024180	preserved_contractrefs: []
+L00024181	```
+L00024182	
+L00024183	### OSI-304 - Architecture Decision Message Example
+L00024184	
+L00024185	```yaml
+L00024186	plan_unit_id: OSI-304
+L00024187	unit_type: requirement
+L00024188	status: accepted
+L00024189	owner_doc: Plans/orchestrator-subagent-integration.md
+L00024190	canonical_text: >-
+L00024191	  The source preserves an example where `architect-reviewer-1.0` shares a `MessageType::Decision` to node `1.1` with the
+L00024192	  subject "Architecture decision: Use Actix-web for API server".
+L00024193	gui_related: false
+L00024194	gui_classification_reason: This unit covers an agent-message example rather than GUI presentation.
+L00024195	split_recommended: false
+L00024196	depends_on:
+L00024197	- OSI-302
+L00024198	unblocks: []
+L00024199	acceptance_criteria:
+L00024200	- Covered example remains losslessly available for exact-text audit.
+L00024201	- The example does not mandate Actix-web or any fixed framework choice.
+L00024202	- No WorkNodes, NodeSeeds, executable queues, final node manifests, or production build tasks are created.
+L00024203	validation_surfaces:
+L00024204	- >-
+L00024205	  python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits
+L00024206	- python3 scripts/pm-plan-index.py validate
+L00024207	reasoning_tier: standard
+L00024208	context_scope: orchestrator_subagent_standardization
+L00024209	implementation_surfaces:
+L00024210	- Plans/orchestrator-subagent-integration.md
+L00024211	risk_class: architecture_decision_message_example
+L00024212	node_compile_hint:
+L00024213	  mode: architecture_decision_message_example
+L00024214	  create_worknodes: false
+L00024215	source_lineage:
+L00024216	- >-
+L00024217	  Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:orchestrator-subagent-integration-S0153
+L00024218	preserved_exact_tokens:
+L00024219	- Agent sharing a decision
+L00024220	- architect-reviewer-1.0
+L00024221	- MessageType::Decision
+L00024222	- Architecture decision: Use Actix-web for API server
+L00024223	- Actix-web
+L00024224	negative_constraints:
+L00024225	- Actix-web is example evidence, not a framework mandate.
+L00024226	compatibility_only_notes:
+L00024227	- Rust message-posting snippet is evidence only.
+L00024228	stale_retired_dispositions: []
+L00024229	owner_boundary_notes: []
+L00024230	owner_hints:
+L00024231	- Plans/orchestrator-subagent-integration.md
+L00024232	preserved_contractrefs: []
+L00024233	```
+L00024234	
+L00024235	### OSI-305 - File Conflict Warning Example
+L00024236	
+L00024237	```yaml
+L00024238	plan_unit_id: OSI-305
+L00024239	unit_type: requirement
+L00024240	status: accepted
+L00024241	owner_doc: Plans/orchestrator-subagent-integration.md
+L00024242	canonical_text: >-
+L00024243	  The source preserves a direct warning example from `test-automator-1.1.2` to `rust-engineer-1.1.1` about `File conflict:
+L00024244	  src/api.rs`, including mentioned files, operations, `read_by`, and `resolved` fields.
+L00024245	gui_related: false
+L00024246	gui_classification_reason: This unit covers an agent-message conflict example rather than GUI presentation.
+L00024247	split_recommended: false
+L00024248	depends_on:
+L00024249	- OSI-302
+L00024250	- OSI-250
+L00024251	unblocks: []
+L00024252	acceptance_criteria:
+L00024253	- Covered warning example remains losslessly available for exact-text audit.
+L00024254	- The example must not create fixed agent ids or file paths.
+L00024255	- No WorkNodes, NodeSeeds, executable queues, final node manifests, or production build tasks are created.
+L00024256	validation_surfaces:
+L00024257	- >-
+L00024258	  python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits
+L00024259	- python3 scripts/pm-plan-index.py validate
+L00024260	reasoning_tier: standard
+L00024261	context_scope: orchestrator_subagent_standardization
+L00024262	implementation_surfaces:
+L00024263	- Plans/orchestrator-subagent-integration.md
+L00024264	risk_class: file_conflict_warning_example
+L00024265	node_compile_hint:
+L00024266	  mode: file_conflict_warning_example
+L00024267	  create_worknodes: false
+L00024268	source_lineage:
+L00024269	- >-
+L00024270	  Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:orchestrator-subagent-integration-S0153
+L00024271	preserved_exact_tokens:
+L00024272	- Agent warning about conflicts
+L00024273	- test-automator-1.1.2
+L00024274	- rust-engineer-1.1.1
+L00024275	- File conflict: src/api.rs
+L00024276	- files_mentioned
+L00024277	- operations_mentioned
+L00024278	- read_by
+L00024279	- resolved
+L00024280	negative_constraints:
+L00024281	- Example ids and file paths are examples only.
+L00024282	compatibility_only_notes:
+L00024283	- Rust message-posting snippet is evidence only.
+L00024284	stale_retired_dispositions: []
+L00024285	owner_boundary_notes: []
+L00024286	owner_hints:
+L00024287	- Plans/orchestrator-subagent-integration.md
+L00024288	preserved_contractrefs: []
+L00024289	```
+L00024290	
+L00024291	### OSI-306 - Orchestrator Message Monitoring
+L00024292	
+L00024293	```yaml
+L00024294	plan_unit_id: OSI-306
+L00024295	unit_type: requirement
+L00024296	status: accepted
+L00024297	owner_doc: Plans/orchestrator-subagent-integration.md
+L00024298	canonical_text: >-
+L00024299	  The orchestrator monitors messages to track agent communication, detect blockers, monitor decisions, and detect conflicts.
+L00024300	gui_related: false
+L00024301	gui_classification_reason: This unit covers orchestrator monitoring behavior rather than GUI presentation.
+L00024302	split_recommended: false
+L00024303	depends_on:
+L00024304	- OSI-247
+L00024305	- OSI-248
+L00024306	- OSI-250
+L00024307	unblocks: []
+L00024308	acceptance_criteria:
+L00024309	- Covered monitoring bullets remain losslessly available for exact-text audit.
+L00024310	- Orchestrator monitoring is represented without creating implementation tasks.
+L00024311	- No WorkNodes, NodeSeeds, executable queues, final node manifests, or production build tasks are created.
+L00024312	validation_surfaces:
+L00024313	- >-
+L00024314	  python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits
+L00024315	- python3 scripts/pm-plan-index.py validate
+L00024316	reasoning_tier: standard
+L00024317	context_scope: orchestrator_subagent_standardization
+L00024318	implementation_surfaces:
+L00024319	- Plans/orchestrator-subagent-integration.md
+L00024320	risk_class: orchestrator_message_monitoring
+L00024321	node_compile_hint:
+L00024322	  mode: orchestrator_message_monitoring
+L00024323	  create_worknodes: false
+L00024324	source_lineage:
+L00024325	- >-
+L00024326	  Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:orchestrator-subagent-integration-S0153
+L00024327	preserved_exact_tokens:
+L00024328	- Integration with orchestrator
+L00024329	- Track agent communication
+L00024330	- Detect blockers
+L00024331	- Monitor decisions
+L00024332	- Detect conflicts
+L00024333	negative_constraints: []
+L00024334	compatibility_only_notes: []
+L00024335	stale_retired_dispositions: []
+L00024336	owner_boundary_notes:
+L00024337	- Orchestrator owns monitoring behavior; message-board storage owns durable records.
+L00024338	owner_hints:
+L00024339	- Plans/orchestrator-subagent-integration.md
+L00024340	preserved_contractrefs: []
+L00024341	```
+L00024342	
+L00024343	### OSI-307 - Communication Pattern GUI Insights
+L00024344	
+L00024345	```yaml
+L00024346	plan_unit_id: OSI-307
+L00024347	unit_type: requirement
+L00024348	status: accepted
+L00024349	owner_doc: Plans/orchestrator-subagent-integration.md
+L00024350	canonical_text: GUI may provide insights showing agent communication patterns.
+L00024351	gui_related: true
+L00024352	gui_classification_reason: This unit covers a user-visible GUI insight projection.
+L00024353	split_recommended: false
+L00024354	depends_on:
+L00024355	- OSI-306
+L00024356	unblocks: []
+L00024357	acceptance_criteria:
+L00024358	- Covered GUI insight bullet remains losslessly available for exact-text audit.
+L00024359	- GUI insight presentation remains a consumer projection of orchestrator-supplied coordination state.
+L00024360	- No WorkNodes, NodeSeeds, executable queues, final node manifests, or production build tasks are created.
+L00024361	validation_surfaces:
+L00024362	- >-
+L00024363	  python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits
+L00024364	- python3 scripts/pm-plan-index.py validate
+L00024365	reasoning_tier: standard
+L00024366	context_scope: orchestrator_subagent_standardization
+L00024367	implementation_surfaces:
+L00024368	- Plans/orchestrator-subagent-integration.md
+L00024369	risk_class: communication_pattern_gui_insights
+L00024370	node_compile_hint:
+L00024371	  mode: communication_pattern_gui_insights
+L00024372	  create_worknodes: false
+L00024373	source_lineage:
+L00024374	- >-
+L00024375	  Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:orchestrator-subagent-integration-S0153
+L00024376	preserved_exact_tokens:
+L00024377	- Provide insights
+L00024378	- communication patterns
+L00024379	- GUI
+L00024380	negative_constraints: []
+L00024381	compatibility_only_notes: []
+L00024382	stale_retired_dispositions: []
+L00024383	owner_boundary_notes:
+L00024384	- Final GUI owns presentation; orchestrator supplies coordination/message state.
+L00024385	owner_hints:
+L00024386	- Plans/orchestrator-subagent-integration.md
+L00024387	preserved_contractrefs: []
+L00024388	```
+L00024389	
+L00024390	### OSI-308 - Agent Prompt Message Injection Introduction
+L00024391	
+L00024392	```yaml
+L00024393	plan_unit_id: OSI-308
+L00024394	unit_type: requirement
+L00024395	status: accepted
+L00024396	owner_doc: Plans/orchestrator-subagent-integration.md
+L00024397	canonical_text: Messages are injected into agent prompts as part of coordination context.
+L00024398	gui_related: false
+L00024399	gui_classification_reason: This unit covers prompt orchestration behavior rather than GUI presentation.
+L00024400	split_recommended: true
+L00024401	depends_on:
+L00024402	- OSI-254
+L00024403	- OSI-302
+L00024404	unblocks: []
+L00024405	acceptance_criteria:
+L00024406	- Covered prompt-injection introduction remains losslessly available for exact-text audit.
+L00024407	- The Rust fence beginning at S0153 source line 4437 remains residual for the next bounded window and is not split mid-snippet.
+L00024408	- No WorkNodes, NodeSeeds, executable queues, final node manifests, or production build tasks are created.
+L00024409	validation_surfaces:
+L00024410	- >-
+L00024411	  python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits
+L00024412	- python3 scripts/pm-plan-index.py validate
+L00024413	reasoning_tier: standard
+L00024414	context_scope: orchestrator_subagent_standardization
+L00024415	implementation_surfaces:
+L00024416	- Plans/orchestrator-subagent-integration.md
+L00024417	risk_class: agent_prompt_message_injection_introduction
+L00024418	node_compile_hint:
+L00024419	  mode: agent_prompt_message_injection_introduction
+L00024420	  create_worknodes: false
+L00024421	source_lineage:
+L00024422	- >-
+L00024423	  Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:orchestrator-subagent-integration-S0153
+L00024424	preserved_exact_tokens:
+L00024425	- Integration with agent prompts
+L00024426	- Messages are injected into agent prompts
+L00024427	- coordination context
+L00024428	negative_constraints:
+L00024429	- Do not treat the Rust fence beginning at source line 4437 as covered by this unit.
+L00024430	compatibility_only_notes:
+L00024431	- The prompt-injection code fence remains residual source-preserving coverage for the next batch.
+L00024432	stale_retired_dispositions: []
+L00024433	owner_boundary_notes:
+L00024434	- Prompt contract ownership remains with orchestrator/prompt pipeline consumers.
+L00024435	owner_hints:
+L00024436	- Plans/orchestrator-subagent-integration.md
+L00024437	preserved_contractrefs: []
+L00024438	```
+L00024439	
+L00024440	### OSI-309 - Prompt Message Injection Rust Example
+L00024441	
+L00024442	```yaml
+L00024443	plan_unit_id: OSI-309
+L00024444	unit_type: requirement
+L00024445	status: accepted
+L00024446	owner_doc: Plans/orchestrator-subagent-integration.md
+L00024447	canonical_text: >-
+L00024448	  Preserve the intact Rust example that loads `coordination_context`, gets messages for `agent_id` and `node_id`, formats
+L00024449	  `message_context`, and builds `enhanced_prompt` containing `**Messages from other agents:**`.
+L00024450	gui_related: false
+L00024451	gui_classification_reason: This unit covers prompt orchestration example code rather than GUI presentation.
+L00024452	split_recommended: false
+L00024453	depends_on:
+L00024454	- OSI-308
+L00024455	- OSI-254
+L00024456	- OSI-302
+L00024457	unblocks: []
+L00024458	acceptance_criteria:
+L00024459	- Covered Rust snippet remains losslessly available for exact-text audit.
+L00024460	- The snippet remains example evidence and does not narrow the canonical prompt contract.
+L00024461	- No WorkNodes, NodeSeeds, executable queues, final node manifests, or production build tasks are created.
+L00024462	validation_surfaces:
+L00024463	- >-
+L00024464	  python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits
+L00024465	- python3 scripts/pm-plan-index.py validate
+L00024466	reasoning_tier: standard
+L00024467	context_scope: orchestrator_subagent_standardization
+L00024468	implementation_surfaces:
+L00024469	- Plans/orchestrator-subagent-integration.md
+L00024470	risk_class: prompt_message_injection_rust_example
+L00024471	node_compile_hint:
+L00024472	  mode: prompt_message_injection_rust_example
+L00024473	  create_worknodes: false
+L00024474	source_lineage:
+L00024475	- >-
+L00024476	  Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:orchestrator-subagent-integration-S0153
+L00024477	preserved_exact_tokens:
+L00024478	- coordination_context
+L00024479	- get_messages_for_agent
+L00024480	- format_messages_for_prompt
+L00024481	- enhanced_prompt
+L00024482	- '**Messages from other agents:**'
+L00024483	negative_constraints:
+L00024484	- Example text must not hardcode or narrow the canonical prompt contract.
+L00024485	compatibility_only_notes:
+L00024486	- Rust snippet is evidence only.
+L00024487	stale_retired_dispositions: []
+L00024488	owner_boundary_notes:
+L00024489	- Earlier prompt and message-board PlanUnits retain canonical prompt-contract semantics.
+L00024490	owner_hints:
+L00024491	- Plans/orchestrator-subagent-integration.md
+L00024492	preserved_contractrefs: []
+L00024493	```
+L00024494	
+L00024495	### OSI-310 - Agent Message Relevance Filters
+L00024496	
+L00024497	```yaml
+L00024498	plan_unit_id: OSI-310
+L00024499	unit_type: requirement
+L00024500	status: accepted
+L00024501	owner_doc: Plans/orchestrator-subagent-integration.md
+L00024502	canonical_text: >-
+L00024503	  Agent-local message views include messages addressed to `agent_id`, agent type, `node_id`, broadcast messages, and messages
+L00024504	  mentioning files the agent is working on.
+L00024505	gui_related: false
+L00024506	gui_classification_reason: This unit covers backend message filtering rather than GUI presentation.
+L00024507	split_recommended: false
+L00024508	depends_on:
+L00024509	- OSI-248
+L00024510	- OSI-302
+L00024511	- OSI-253
+L00024512	unblocks: []
+L00024513	acceptance_criteria:
+L00024514	- Covered filtering prose and snippet remain losslessly available for exact-text audit.
+L00024515	- This example does not narrow richer canonical routing/lane coverage in earlier PlanUnits.
+L00024516	- No WorkNodes, NodeSeeds, executable queues, final node manifests, or production build tasks are created.
+L00024517	validation_surfaces:
+L00024518	- >-
+L00024519	  python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits
+L00024520	- python3 scripts/pm-plan-index.py validate
+L00024521	reasoning_tier: standard
+L00024522	context_scope: orchestrator_subagent_standardization
+L00024523	implementation_surfaces:
+L00024524	- Plans/orchestrator-subagent-integration.md
+L00024525	risk_class: agent_message_relevance_filters
+L00024526	node_compile_hint:
+L00024527	  mode: agent_message_relevance_filters
+L00024528	  create_worknodes: false
+L00024529	source_lineage:
+L00024530	- >-
+L00024531	  Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:orchestrator-subagent-integration-S0153
+L00024532	preserved_exact_tokens:
+L00024533	- Messages addressed to their agent_id
+L00024534	- Messages addressed to their agent type
+L00024535	- Messages addressed to their node_id
+L00024536	- Broadcast messages
+L00024537	- Messages mentioning files they're working on
+L00024538	- files_being_edited
+L00024539	negative_constraints:
+L00024540	- This example omits lane routing and must not narrow OSI-248.
+L00024541	compatibility_only_notes:
+L00024542	- Filtering code is evidence only.
+L00024543	stale_retired_dispositions: []
+L00024544	owner_boundary_notes:
+L00024545	- Earlier canonical message-board routing PlanUnits retain lane and lifecycle semantics not repeated here.
+L00024546	owner_hints:
+L00024547	- Plans/orchestrator-subagent-integration.md
+L00024548	preserved_contractrefs: []
+L00024549	```
+L00024550	
+L00024551	### OSI-311 - Message Threading Fields
+L00024552	
+L00024553	```yaml
+L00024554	plan_unit_id: OSI-311
+L00024555	unit_type: requirement
+L00024556	status: accepted
+L00024557	owner_doc: Plans/orchestrator-subagent-integration.md
+L00024558	canonical_text: >-
+L00024559	  Threaded messages use `thread_id` to group related messages and `in_reply_to` to link replies so agents can follow
+L00024560	  conversation history.
+L00024561	gui_related: false
+L00024562	gui_classification_reason: This unit covers message threading metadata rather than GUI presentation.
+L00024563	split_recommended: false
+L00024564	depends_on:
+L00024565	- OSI-250
+L00024566	unblocks: []
+L00024567	acceptance_criteria:
+L00024568	- Covered threading fields remain losslessly available for exact-text audit.
+L00024569	- Threading coverage reinforces existing message lifecycle canon.
+L00024570	- No WorkNodes, NodeSeeds, executable queues, final node manifests, or production build tasks are created.
+L00024571	validation_surfaces:
+L00024572	- >-
+L00024573	  python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits
+L00024574	- python3 scripts/pm-plan-index.py validate
+L00024575	reasoning_tier: standard
+L00024576	context_scope: orchestrator_subagent_standardization
+L00024577	implementation_surfaces:
+L00024578	- Plans/orchestrator-subagent-integration.md
+L00024579	risk_class: message_threading_fields
+L00024580	node_compile_hint:
+L00024581	  mode: message_threading_fields
+L00024582	  create_worknodes: false
+L00024583	source_lineage:
+L00024584	- >-
+L00024585	  Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:orchestrator-subagent-integration-S0153
+L00024586	preserved_exact_tokens:
+L00024587	- thread_id
+L00024588	- in_reply_to
+L00024589	- conversation history
+L00024590	negative_constraints: []
+L00024591	compatibility_only_notes:
+L00024592	- Source-lineage reinforcement of existing lifecycle canon.
+L00024593	stale_retired_dispositions: []
+L00024594	owner_boundary_notes: []
+L00024595	owner_hints:
+L00024596	- Plans/orchestrator-subagent-integration.md
+L00024597	preserved_contractrefs: []
+L00024598	```
+L00024599	
+L00024600	### OSI-312 - Message Lifecycle And Retention Caveat
+L00024601	
+L00024602	```yaml
+L00024603	plan_unit_id: OSI-312
+L00024604	unit_type: requirement
+L00024605	status: accepted
+L00024606	owner_doc: Plans/orchestrator-subagent-integration.md
+L00024607	canonical_text: >-
+L00024608	  Message lifecycle preserves Created, Read tracked in `read_by`, Replied through `in_reply_to`, Resolved, and Expired/archive
+L00024609	  behavior for old messages.
+L00024610	gui_related: false
+L00024611	gui_classification_reason: This unit covers backend message lifecycle and retention behavior rather than GUI presentation.
+L00024612	split_recommended: false
+L00024613	depends_on:
+L00024614	- OSI-250
+L00024615	unblocks: []
+L00024616	acceptance_criteria:
+L00024617	- Covered lifecycle prose and archive snippet remain losslessly available for exact-text audit.
+L00024618	- Unresolved blocker or coordination-request threads remain visible until resolved or explicitly superseded.
+L00024619	- No WorkNodes, NodeSeeds, executable queues, final node manifests, or production build tasks are created.
+L00024620	validation_surfaces:
+L00024621	- >-
+L00024622	  python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits
+L00024623	- python3 scripts/pm-plan-index.py validate
+L00024624	reasoning_tier: standard
+L00024625	context_scope: orchestrator_subagent_standardization
+L00024626	implementation_surfaces:
+L00024627	- Plans/orchestrator-subagent-integration.md
+L00024628	risk_class: message_lifecycle_and_retention_caveat
+L00024629	node_compile_hint:
+L00024630	  mode: message_lifecycle_and_retention_caveat
+L00024631	  create_worknodes: false
+L00024632	source_lineage:
+L00024633	- >-
+L00024634	  Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:orchestrator-subagent-integration-S0153
+L00024635	preserved_exact_tokens:
+L00024636	- Created
+L00024637	- Read
+L00024638	- Replied
+L00024639	- Resolved
+L00024640	- Expired
+L00024641	- '>24 hours'
+L00024642	- archive.json
+L00024643	negative_constraints:
+L00024644	- Unresolved blocker or coordination-request threads must remain visible until resolved or explicitly superseded.
+L00024645	compatibility_only_notes:
+L00024646	- '`>24 hours`, archived/deleted behavior, and archive-file code remain source evidence and do not override OSI-250.'
+L00024647	stale_retired_dispositions: []
+L00024648	owner_boundary_notes:
+L00024649	- Durable lifecycle and retention semantics remain owned by canonical message-board/storage contracts.
+L00024650	owner_hints:
+L00024651	- Plans/orchestrator-subagent-integration.md
+L00024652	preserved_contractrefs: []
+L00024653	```
+L00024654	
+L00024655	### OSI-313 - AgentCommunicator Placement And Paths Example
+L00024656	
+L00024657	```yaml
+L00024658	plan_unit_id: OSI-313
+L00024659	unit_type: requirement
+L00024660	status: accepted
+L00024661	owner_doc: Plans/orchestrator-subagent-integration.md
+L00024662	canonical_text: >-
+L00024663	  Preserve the `AgentCommunicator` example using `message_board_file`, `AgentCoordinator`, and `.puppet-master/state/agent-messages.json`,
+L00024664	  with load/save behavior analogous to coordination state locking as source-lineage example code, not as canonical persistence.
+L00024665	gui_related: false
+L00024666	gui_classification_reason: This unit covers backend placement and storage-path examples rather than GUI presentation.
+L00024667	split_recommended: false
+L00024668	depends_on:
+L00024669	- OSI-245
+L00024670	- OSI-246
+L00024671	- OSI-251
+L00024672	unblocks: []
+L00024673	acceptance_criteria:
+L00024674	- Covered placement and path example remains losslessly available for exact-text audit.
+L00024675	- Implementation module/path tokens remain examples and do not create source files.
+L00024676	- message_board_file and .puppet-master/state/agent-messages.json remain compatibility-path examples only.
+L00024677	- No WorkNodes, NodeSeeds, executable queues, final node manifests, or production build tasks are created.
+L00024678	validation_surfaces:
+L00024679	- >-
+L00024680	  python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits
+L00024681	- python3 scripts/pm-plan-index.py validate
+L00024682	reasoning_tier: standard
+L00024683	context_scope: orchestrator_subagent_standardization
+L00024684	implementation_surfaces:
+L00024685	- Plans/orchestrator-subagent-integration.md
+L00024686	risk_class: agentcommunicator_placement_and_paths_example
+L00024687	node_compile_hint:
+L00024688	  mode: agentcommunicator_placement_and_paths_example
+L00024689	  create_worknodes: false
+L00024690	source_lineage:
+L00024691	- >-
+L00024692	  Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:orchestrator-subagent-integration-S0153
+L00024693	- Plans/ledgers/v2/pldg-20260613-001-cleanup-fable-audit/records/design_atoms.jsonl:8
+L00024694	- Plans/ledgers/v2/pldg-20260613-001-cleanup-fable-audit/source_shards/section-a-conflicting-canon.md:15
+L00024695	preserved_exact_tokens:
+L00024696	- src/core/agent_communication.rs
+L00024697	- AgentCommunicator
+L00024698	- message_board_file
+L00024699	- AgentCoordinator
+L00024700	- .puppet-master/state/agent-messages.json
+L00024701	- load_message_board
+L00024702	- save_message_board
+L00024703	negative_constraints:
+L00024704	- Implementation module/path tokens are examples, not source-code creation.
+L00024705	- message_board_file must not become canonical persistence.
+L00024706	compatibility_only_notes:
+L00024707	- Rust snippet is evidence only.
+L00024708	- "`.puppet-master/state/agent-messages.json` is compatibility/debug mirror lineage."
+L00024709	stale_retired_dispositions: []
+L00024710	owner_boundary_notes:
+L00024711	- Orchestrator owns communication use; storage owns durable record semantics.
+L00024712	owner_hints:
+L00024713	- Plans/orchestrator-subagent-integration.md
+L00024714	preserved_contractrefs: []
+L00024715	```
+L00024716	
+L00024717	### OSI-314 - Post Message Validation And Persistence Example
+L00024718	
+L00024719	```yaml
+L00024720	plan_unit_id: OSI-314
+L00024721	unit_type: requirement
+L00024722	status: accepted
+L00024723	owner_doc: Plans/orchestrator-subagent-integration.md
+L00024724	canonical_text: >-
+L00024725	  `post_message` preserves the DRY requirement to validate a subagent name with `subagent_registry::is_valid_subagent_name()`,
+L00024726	  load the board, append the message, update `last_updated`, and save.
+L00024727	gui_related: false
+L00024728	gui_classification_reason: This unit covers backend message posting and validation rather than GUI presentation.
+L00024729	split_recommended: false
+L00024730	depends_on:
+L00024731	- OSI-247
+L00024732	unblocks: []
+L00024733	acceptance_criteria:
+L00024734	- Covered post-message snippet remains losslessly available for exact-text audit.
+L00024735	- Subagent-name validation is preserved when `agent_id` encodes a subagent name.
+L00024736	- No WorkNodes, NodeSeeds, executable queues, final node manifests, or production build tasks are created.
+L00024737	validation_surfaces:
+L00024738	- >-
+L00024739	  python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits
+L00024740	- python3 scripts/pm-plan-index.py validate
+L00024741	reasoning_tier: standard
+L00024742	context_scope: orchestrator_subagent_standardization
+L00024743	implementation_surfaces:
+L00024744	- Plans/orchestrator-subagent-integration.md
+L00024745	risk_class: post_message_validation_and_persistence_example
+L00024746	node_compile_hint:
+L00024747	  mode: post_message_validation_and_persistence_example
+L00024748	  create_worknodes: false
+L00024749	source_lineage:
+L00024750	- >-
+L00024751	  Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:orchestrator-subagent-integration-S0153
+L00024752	preserved_exact_tokens:
+L00024753	- DRY:FN:post_message
+L00024754	- subagent_registry::is_valid_subagent_name()
+L00024755	- load_message_board
+L00024756	- board.messages.push(message)
+L00024757	- last_updated
+L00024758	- save_message_board
+L00024759	negative_constraints:
+L00024760	- Subagent-name validation must not be bypassed when `agent_id` encodes a subagent name.
+L00024761	compatibility_only_notes:
+L00024762	- Rust snippet is evidence only.
+L00024763	stale_retired_dispositions: []
+L00024764	owner_boundary_notes: []
+L00024765	owner_hints:
+L00024766	- Plans/orchestrator-subagent-integration.md
+L00024767	preserved_contractrefs:
+L00024768	- 'ContractRef: Primitive:DRYRules, ContractName:Plans/DRY_Rules.md#7'
+L00024769	```
+L00024770	
+L00024771	### OSI-315 - Prompt Formatting Uses Platform Display Contract
+L00024772	
+L00024773	```yaml
+L00024774	plan_unit_id: OSI-315
+L00024775	unit_type: requirement
+L00024776	status: accepted
+L00024777	owner_doc: Plans/orchestrator-subagent-integration.md
+L00024778	canonical_text: >-
+L00024779	  Message prompt formatting preserves `**Recent Messages from Other Agents:**`, limits display to 10 recent messages, formats
+L00024780	  sender, platform, type, subject, content, and files, and uses `platform_specs::display_name_for()` for platform display names.
+L00024781	gui_related: false
+L00024782	gui_classification_reason: This unit covers prompt formatting and platform naming contracts rather than GUI presentation.
+L00024783	split_recommended: false
+L00024784	depends_on:
+L00024785	- OSI-254
+L00024786	- OSI-247
+L00024787	- OSI-300
+L00024788	unblocks: []
+L00024789	acceptance_criteria:
+L00024790	- Covered prompt-formatting snippet remains losslessly available for exact-text audit.
+L00024791	- Platform display names use the DRY platform display contract and are never hardcoded.
+L00024792	- No WorkNodes, NodeSeeds, executable queues, final node manifests, or production build tasks are created.
+L00024793	validation_surfaces:
+L00024794	- >-
+L00024795	  python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits
+L00024796	- python3 scripts/pm-plan-index.py validate
+L00024797	reasoning_tier: standard
+L00024798	context_scope: orchestrator_subagent_standardization
+L00024799	implementation_surfaces:
+L00024800	- Plans/orchestrator-subagent-integration.md
+L00024801	risk_class: prompt_formatting_uses_platform_display_contract
+L00024802	node_compile_hint:
+L00024803	  mode: prompt_formatting_uses_platform_display_contract
+L00024804	  create_worknodes: false
+L00024805	source_lineage:
+L00024806	- >-
+L00024807	  Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:orchestrator-subagent-integration-S0153
+L00024808	preserved_exact_tokens:
+L00024809	- '**Recent Messages from Other Agents:**'
+L00024810	- take(10)
+L00024811	- platform_specs::display_name_for()
+L00024812	- '❓ Question'
+L00024813	- '✅ Answer'
+L00024814	- '📢 Update'
+L00024815	- '🙏 Request'
+L00024816	- '🎯 Decision'
+L00024817	- '⚠️ Warning'
+L00024818	- '📣 Announcement'
+L00024819	negative_constraints:
+L00024820	- Platform display name MUST use `platform_specs::display_name_for()` and NEVER hardcode platform names.
+L00024821	compatibility_only_notes:
+L00024822	- Prompt labels and Rust formatting are example evidence.
+L00024823	stale_retired_dispositions: []
+L00024824	owner_boundary_notes:
+L00024825	- DRY_Rules and Models_System own platform display naming.
+L00024826	owner_hints:
+L00024827	- Plans/orchestrator-subagent-integration.md
+L00024828	preserved_contractrefs:
+L00024829	- 'ContractRef: ContractName:Plans/DRY_Rules.md#7, ContractName:Plans/Models_System.md'
+L00024830	```
+L00024831	
+L00024832	### OSI-316 - Agent Execution Message Command Integration
+L00024833	
+L00024834	```yaml
+L00024835	plan_unit_id: OSI-316
+L00024836	unit_type: requirement
+L00024837	status: accepted
+L00024838	owner_doc: Plans/orchestrator-subagent-integration.md
+L00024839	canonical_text: >-
+L00024840	  During execution, orchestrator output parsing may detect `@message` or `@ask`, parse a message, post it, and inject relevant
+L00024841	  formatted messages before agent execution.
+L00024842	gui_related: false
+L00024843	gui_classification_reason: This unit covers execution/prompt integration rather than GUI presentation.
+L00024844	split_recommended: false
+L00024845	depends_on:
+L00024846	- OSI-314
+L00024847	- OSI-315
+L00024848	unblocks: []
+L00024849	acceptance_criteria:
+L00024850	- Covered execution-integration snippet remains losslessly available for exact-text audit.
+L00024851	- Command parsing remains example evidence, not a command-system implementation task.
+L00024852	- No WorkNodes, NodeSeeds, executable queues, final node manifests, or production build tasks are created.
+L00024853	validation_surfaces:
+L00024854	- >-
+L00024855	  python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits
+L00024856	- python3 scripts/pm-plan-index.py validate
+L00024857	reasoning_tier: standard
+L00024858	context_scope: orchestrator_subagent_standardization
+L00024859	implementation_surfaces:
+L00024860	- Plans/orchestrator-subagent-integration.md
+L00024861	risk_class: agent_execution_message_command_integration
+L00024862	node_compile_hint:
+L00024863	  mode: agent_execution_message_command_integration
+L00024864	  create_worknodes: false
+L00024865	source_lineage:
+L00024866	- >-
+L00024867	  Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:orchestrator-subagent-integration-S0153
+L00024868	preserved_exact_tokens:
+L00024869	- '@message'
+L00024870	- '@ask'
+L00024871	- parse_message_from_output
+L00024872	- communicator.post_message
+L00024873	- get_messages_for_agent
+L00024874	- format_messages_for_prompt
+L00024875	negative_constraints:
+L00024876	- Command parsing snippet is not a command-system implementation task.
+L00024877	compatibility_only_notes:
+L00024878	- Rust snippet is evidence only.
+L00024879	stale_retired_dispositions: []
+L00024880	owner_boundary_notes:
+L00024881	- Commands and prompt pipeline owners retain their respective implementation contracts.
+L00024882	owner_hints:
+L00024883	- Plans/orchestrator-subagent-integration.md
+L00024884	preserved_contractrefs: []
+L00024885	```
+L00024886	
+L00024887	### OSI-317 - Orchestrator Communication Insights Example
+L00024888	
+L00024889	```yaml
+L00024890	plan_unit_id: OSI-317
+L00024891	unit_type: requirement
+L00024892	status: accepted
+L00024893	owner_doc: Plans/orchestrator-subagent-integration.md
+L00024894	canonical_text: >-
+L00024895	  Preserve the `OrchestratorInsights` example with `active_conversations`, `pending_questions`, `recent_decisions`,
+L00024896	  `conflict_warnings`, and `analyze_communication`.
+L00024897	gui_related: false
+L00024898	gui_classification_reason: This unit covers backend insight derivation rather than GUI presentation.
+L00024899	split_recommended: false
+L00024900	depends_on:
+L00024901	- OSI-306
+L00024902	- OSI-247
+L00024903	- OSI-250
+L00024904	unblocks: []
+L00024905	acceptance_criteria:
+L00024906	- Covered insight example remains losslessly available for exact-text audit.
+L00024907	- Monitoring does not re-own durable message-board storage.
+L00024908	- No WorkNodes, NodeSeeds, executable queues, final node manifests, or production build tasks are created.
+L00024909	validation_surfaces:
+L00024910	- >-
+L00024911	  python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits
+L00024912	- python3 scripts/pm-plan-index.py validate
+L00024913	reasoning_tier: standard
+L00024914	context_scope: orchestrator_subagent_standardization
+L00024915	implementation_surfaces:
+L00024916	- Plans/orchestrator-subagent-integration.md
+L00024917	risk_class: orchestrator_communication_insights_example
+L00024918	node_compile_hint:
+L00024919	  mode: orchestrator_communication_insights_example
+L00024920	  create_worknodes: false
+L00024921	source_lineage:
+L00024922	- >-
+L00024923	  Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:orchestrator-subagent-integration-S0153
+L00024924	preserved_exact_tokens:
+L00024925	- OrchestratorInsights
+L00024926	- active_conversations
+L00024927	- pending_questions
+L00024928	- recent_decisions
+L00024929	- conflict_warnings
+L00024930	- analyze_communication
+L00024931	negative_constraints:
+L00024932	- Monitoring does not re-own durable message-board storage.
+L00024933	compatibility_only_notes:
+L00024934	- Rust snippet is evidence only.
+L00024935	stale_retired_dispositions: []
+L00024936	owner_boundary_notes:
+L00024937	- Orchestrator owns insight derivation; storage owns message records.
+L00024938	owner_hints:
+L00024939	- Plans/orchestrator-subagent-integration.md
+L00024940	preserved_contractrefs: []
+L00024941	```
+L00024942	
+L00024943	### OSI-318 - Message Board Benefits Rationale
+L00024944	
+L00024945	```yaml
+L00024946	plan_unit_id: OSI-318
+L00024947	unit_type: requirement
+L00024948	status: accepted
+L00024949	owner_doc: Plans/orchestrator-subagent-integration.md
+L00024950	canonical_text: >-
+L00024951	  Preserve rationale tokens for cross-platform operation, orchestrator visibility, enhanced coordination, file-based operation,
+L00024952	  flexible routing, threaded conversations, and integration with coordination state.
+L00024953	gui_related: false
+L00024954	gui_classification_reason: This unit preserves rationale text rather than GUI presentation.
+L00024955	split_recommended: false
+L00024956	depends_on:
+L00024957	- OSI-245
+L00024958	- OSI-248
+L00024959	- OSI-250
+L00024960	unblocks: []
+L00024961	acceptance_criteria:
+L00024962	- Covered benefit bullets remain losslessly available for exact-text audit.
+L00024963	- Rationale bullets are not executable work.
+L00024964	- No WorkNodes, NodeSeeds, executable queues, final node manifests, or production build tasks are created.
+L00024965	validation_surfaces:
+L00024966	- >-
+L00024967	  python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits
+L00024968	- python3 scripts/pm-plan-index.py validate
+L00024969	reasoning_tier: standard
+L00024970	context_scope: orchestrator_subagent_standardization
+L00024971	implementation_surfaces:
+L00024972	- Plans/orchestrator-subagent-integration.md
+L00024973	risk_class: message_board_benefits_rationale
+L00024974	node_compile_hint:
+L00024975	  mode: message_board_benefits_rationale
+L00024976	  create_worknodes: false
+L00024977	source_lineage:
+L00024978	- >-
+L00024979	  Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:orchestrator-subagent-integration-S0153
+L00024980	preserved_exact_tokens:
+L00024981	- Cross-platform
+L00024982	- Orchestrator visibility
+L00024983	- Enhanced coordination
+L00024984	- File-based
+L00024985	- Flexible routing
+L00024986	- Threaded conversations
+L00024987	- Integration
+L00024988	negative_constraints:
+L00024989	- Rationale bullets are not executable work.
+L00024990	compatibility_only_notes:
+L00024991	- Rationale evidence only.
+L00024992	stale_retired_dispositions: []
+L00024993	owner_boundary_notes: []
+L00024994	owner_hints:
+L00024995	- Plans/orchestrator-subagent-integration.md
+L00024996	preserved_contractrefs: []
+L00024997	```
+L00024998	
+L00024999	### OSI-319 - Message Board Operational Mitigations
+L00025000	
+L00025001	```yaml
+L00025002	plan_unit_id: OSI-319
+L00025003	unit_type: requirement
+L00025004	status: accepted
+L00025005	owner_doc: Plans/orchestrator-subagent-integration.md
+L00025006	canonical_text: >-
+L00025007	  Preserve mitigation tokens for `Message spam`, `max 10 messages/minute`, `Large message board`, `File locking`,
+L00025008	  `Message parsing`, and `Orphaned messages`.
+L00025009	gui_related: false
+L00025010	gui_classification_reason: This unit covers backend operational mitigations rather than GUI presentation.
+L00025011	split_recommended: false
+L00025012	depends_on:
+L00025013	- OSI-249
+L00025014	- OSI-250
+L00025015	unblocks: []
+L00025016	acceptance_criteria:
+L00025017	- Covered mitigation bullets remain losslessly available for exact-text audit.
+L00025018	- Orphaned-message cleanup does not hide unresolved blocker threads.
+L00025019	- No WorkNodes, NodeSeeds, executable queues, final node manifests, or production build tasks are created.
+L00025020	validation_surfaces:
+L00025021	- >-
+L00025022	  python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits
+L00025023	- python3 scripts/pm-plan-index.py validate
+L00025024	reasoning_tier: standard
+L00025025	context_scope: orchestrator_subagent_standardization
+L00025026	implementation_surfaces:
+L00025027	- Plans/orchestrator-subagent-integration.md
+L00025028	risk_class: message_board_operational_mitigations
+L00025029	node_compile_hint:
+L00025030	  mode: message_board_operational_mitigations
+L00025031	  create_worknodes: false
+L00025032	source_lineage:
+L00025033	- >-
+L00025034	  Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:orchestrator-subagent-integration-S0153
+L00025035	preserved_exact_tokens:
+L00025036	- Message spam
+L00025037	- max 10 messages/minute
+L00025038	- Large message board
+L00025039	- File locking
+L00025040	- Message parsing
+L00025041	- Orphaned messages
+L00025042	negative_constraints:
+L00025043	- Orphaned-message cleanup must not hide unresolved blocker threads.
+L00025044	compatibility_only_notes:
+L00025045	- Mitigation list is source evidence and must align to canonical lifecycle/storage owners.
+L00025046	stale_retired_dispositions: []
+L00025047	owner_boundary_notes:
+L00025048	- Canonical lifecycle/storage owners control retention, archive, and cleanup semantics.
+L00025049	owner_hints:
+L00025050	- Plans/orchestrator-subagent-integration.md
+L00025051	preserved_contractrefs: []
+L00025052	```
+L00025053	
+L00025054	### OSI-320 - Message Board Backend Next-Step Checklist Evidence
+L00025055	
+L00025056	```yaml
+L00025057	plan_unit_id: OSI-320
+L00025058	unit_type: requirement
+L00025059	status: accepted
+L00025060	owner_doc: Plans/orchestrator-subagent-integration.md
+L00025061	canonical_text: >-
+L00025062	  Preserve backend checklist tokens to add a message board to coordination state, implement `AgentCommunicator`, integrate
+L00025063	  message injection, add orchestrator monitoring/insights, and test multiple agents across platforms.
+L00025064	gui_related: false
+L00025065	gui_classification_reason: This unit preserves backend checklist evidence rather than GUI presentation.
+L00025066	split_recommended: false
+L00025067	depends_on:
+L00025068	- OSI-245
+L00025069	- OSI-314
+L00025070	- OSI-315
+L00025071	- OSI-317
+L00025072	unblocks: []
+L00025073	acceptance_criteria:
+L00025074	- Covered checklist remains losslessly available for exact-text audit.
+L00025075	- Checklist items are not promoted into WorkNodes, tasks, queues, or production build tasks.
+L00025076	- No WorkNodes, NodeSeeds, executable queues, final node manifests, or production build tasks are created.
+L00025077	validation_surfaces:
+L00025078	- >-
+L00025079	  python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits
+L00025080	- python3 scripts/pm-plan-index.py validate
+L00025081	reasoning_tier: standard
+L00025082	context_scope: orchestrator_subagent_standardization
+L00025083	implementation_surfaces:
+L00025084	- Plans/orchestrator-subagent-integration.md
+L00025085	risk_class: message_board_backend_next_step_checklist_evidence
+L00025086	node_compile_hint:
+L00025087	  mode: message_board_backend_next_step_checklist_evidence
+L00025088	  create_worknodes: false
+L00025089	source_lineage:
+L00025090	- >-
+L00025091	  Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:orchestrator-subagent-integration-S0153
+L00025092	preserved_exact_tokens:
+L00025093	- Add message board to coordination state
+L00025094	- Implement `AgentCommunicator`
+L00025095	- Integrate message injection into agent prompts
+L00025096	- Add orchestrator monitoring/insights
+L00025097	- Test with multiple agents across different platforms
+L00025098	negative_constraints:
+L00025099	- Checklist items are not WorkNodes, tasks, queues, or production build tasks.
+L00025100	compatibility_only_notes:
+L00025101	- Source-lineage checklist only.
+L00025102	stale_retired_dispositions: []
+L00025103	owner_boundary_notes: []
+L00025104	owner_hints:
+L00025105	- Plans/orchestrator-subagent-integration.md
+L00025106	preserved_contractrefs: []
+L00025107	```
+L00025108	
+L00025109	### OSI-321 - Agent Communication GUI Visualization Consumer
+L00025110	
+L00025111	```yaml
+L00025112	plan_unit_id: OSI-321
+L00025113	unit_type: requirement
+L00025114	status: accepted
+L00025115	owner_doc: Plans/orchestrator-subagent-integration.md
+L00025116	canonical_text: GUI may visualize agent communication as a consumer projection of orchestrator/message-board state.
+L00025117	gui_related: true
+L00025118	gui_classification_reason: This unit covers a user-visible GUI visualization projection.
+L00025119	split_recommended: false
+L00025120	depends_on:
+L00025121	- OSI-307
+L00025122	- OSI-317
+L00025123	unblocks: []
+L00025124	acceptance_criteria:
+L00025125	- Covered GUI visualization checklist line remains losslessly available for exact-text audit.
+L00025126	- GUI visualization does not re-own backend message schema or storage.
+L00025127	- No WorkNodes, NodeSeeds, executable queues, final node manifests, or production build tasks are created.
+L00025128	validation_surfaces:
+L00025129	- >-
+L00025130	  python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits
+L00025131	- python3 scripts/pm-plan-index.py validate
+L00025132	reasoning_tier: standard
+L00025133	context_scope: orchestrator_subagent_standardization
+L00025134	implementation_surfaces:
+L00025135	- Plans/orchestrator-subagent-integration.md
+L00025136	risk_class: agent_communication_gui_visualization_consumer
+L00025137	node_compile_hint:
+L00025138	  mode: agent_communication_gui_visualization_consumer
+L00025139	  create_worknodes: false
+L00025140	source_lineage:
+L00025141	- >-
+L00025142	  Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:orchestrator-subagent-integration-S0153
+L00025143	preserved_exact_tokens:
+L00025144	- Add GUI visualization of agent communication
+L00025145	- GUI
+L00025146	- agent communication
+L00025147	negative_constraints:
+L00025148	- GUI visualization does not re-own backend message schema or storage.
+L00025149	compatibility_only_notes: []
+L00025150	stale_retired_dispositions: []
+L00025151	owner_boundary_notes:
+L00025152	- Final GUI owns presentation; orchestrator supplies communication state.
+L00025153	owner_hints:
+L00025154	- Plans/orchestrator-subagent-integration.md
+L00025155	preserved_contractrefs: []
+L00025156	```
+L00025157	
+L00025158	### OSI-322 - Coordination Concurrent Write And Atomicity Gap
+L00025159	
+L00025160	```yaml
+L00025161	plan_unit_id: OSI-322
+L00025162	unit_type: requirement
+L00025163	status: accepted
+L00025164	owner_doc: Plans/orchestrator-subagent-integration.md
+L00025165	canonical_text: >-
+L00025166	  Gap #28 preserves the legacy concurrent-write risk that multiple agents writing `active-agents.json` can cause race
+L00025167	  conditions, file corruption, or lost updates. Canonical mitigation is the coordination append/CAS boundary plus one
+L00025168	  redb projection/checkpoint transaction; advisory locks, exponential backoff, atomic temp-file rename, and
+L00025169	  read-modify-write retry remain debug/export mirror recovery evidence only.
+L00025170	gui_related: false
+L00025171	gui_classification_reason: This unit covers coordination storage safety rather than GUI presentation.
+L00025172	split_recommended: false
+L00025173	depends_on:
+L00025174	- OSI-251
+L00025175	- OSI-253
+L00025176	unblocks: []
+L00025177	acceptance_criteria:
+L00025178	- Covered Gap #28 opening and mitigation bullets remain losslessly available for exact-text audit.
+L00025179	- '`active-agents.json` remains projection/debug compatibility, not canonical runtime truth.'
+L00025180	- Concurrent-write mitigation prevents lost canonical updates through EventRecord append, idempotency, expected revision, and transactional projection advancement.
+L00025181	- Read-modify-write of canonical `.puppet-master/state/*.json` is prohibited; any mirror RMW is exporter-only and recoverable from seglog/redb.
+L00025182	- No WorkNodes, NodeSeeds, executable queues, final node manifests, or production build tasks are created.
+L00025183	validation_surfaces:
+L00025184	- >-
+L00025185	  python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits
+L00025186	- python3 scripts/pm-plan-index.py validate
+L00025187	reasoning_tier: standard
+L00025188	context_scope: orchestrator_subagent_standardization
+L00025189	implementation_surfaces:
+L00025190	- Plans/orchestrator-subagent-integration.md
+L00025191	risk_class: coordination_concurrent_write_and_atomicity_gap
+L00025192	node_compile_hint:
+L00025193	  mode: coordination_concurrent_write_and_atomicity_gap
+L00025194	  create_worknodes: false
+L00025195	source_lineage:
+L00025196	- >-
+L00025197	  Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:orchestrator-subagent-integration-S0154
+L00025198	- Plans/ledgers/v2/pldg-20260613-001-cleanup-fable-audit/records/design_atoms.jsonl:8
+L00025199	- Plans/ledgers/v2/pldg-20260613-001-cleanup-fable-audit/source_shards/section-a-conflicting-canon.md:15
+L00025200	preserved_exact_tokens:
+L00025201	- 'Gap #28: File locking and concurrent writes'
+L00025202	- active-agents.json
+L00025203	- File locking
+L00025204	- Atomic writes
+L00025205	- Read-modify-write with retry
+L00025206	- up to 3 attempts
+L00025207	negative_constraints:
+L00025208	- '`active-agents.json` remains projection/debug compatibility, not canonical runtime truth.'
+L00025209	compatibility_only_notes:
+L00025210	- File-lock/RMW snippets apply only to optional mirror export recovery. Canonical mitigation applies through coordination records/projections and storage-owner alignment.
+L00025211	stale_retired_dispositions:
+L00025212	- File-lock-based coordination is retired as canonical persistence and retained only as debug/export mirror source-lineage.
+L00025213	owner_boundary_notes:
+L00025214	- Storage and coordination contracts own canonical locking and atomicity semantics.
+L00025215	owner_hints:
+L00025216	- Plans/orchestrator-subagent-integration.md
+L00025217	preserved_contractrefs: []
+L00025218	```
+L00025219	
+L00025220	### OSI-323 - Lock Timeout Fail-Open Stale Disposition
+L00025221	
+L00025222	```yaml
+L00025223	plan_unit_id: OSI-323
+L00025224	unit_type: requirement
+L00025225	status: accepted
+L00025226	owner_doc: Plans/orchestrator-subagent-integration.md
+L00025227	canonical_text: >-
+L00025228	  Preserve exact fail-open tokens `within 5 seconds`, `log warning and proceed`, `coordination may be stale but execution
+L00025229	  continues`, and `Proceeding without lock` as stale compatibility evidence.
+L00025230	gui_related: false
+L00025231	gui_classification_reason: This unit covers stale coordination safety disposition rather than GUI presentation.

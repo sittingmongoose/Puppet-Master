@@ -1,0 +1,120 @@
+{
+  "assignment_id": "A005M-000177-INTEGRATED-MACRO-C506D27334DD-0001",
+  "attempt_id": "attempt-0014",
+  "audit_id": "audit-20260710-005-plan-assurance-model-lanes-fresh-agent-exhaustive",
+  "blindness": {
+    "external_research": "deferred_to_feature_research_phase",
+    "peer_results": "forbidden",
+    "prior_audits": "forbidden",
+    "unrelated_sources": "forbidden"
+  },
+  "bundle_core_range": [
+    1,
+    88
+  ],
+  "bundle_id": "MACRO-C506D27334DD-0001",
+  "context_ranges": [],
+  "document_path": "Plans/goal_runtime_events.schema.json",
+  "micro_window_ids": [
+    "WIN-C506D27334DD-0001"
+  ],
+  "phase": "blind_macro_window_review",
+  "required_dimensions": [
+    "behavior",
+    "capabilities",
+    "inputs_outputs",
+    "contracts",
+    "states_transitions",
+    "authority",
+    "ownership",
+    "consumers",
+    "gui_truth",
+    "failures_recovery",
+    "security_privacy",
+    "propagation",
+    "operations",
+    "scale_performance",
+    "compatibility_migration",
+    "acceptance_oracles",
+    "builder_discretion",
+    "ambiguity_unknowns",
+    "missing_callers_consumers",
+    "invalid_states_transitions",
+    "concurrency_races",
+    "partial_failure",
+    "recovery_rollback",
+    "authority_boundaries",
+    "privacy_data_lifecycle",
+    "untrusted_inputs",
+    "gui_misleading_states",
+    "offline_network_loss",
+    "scale_limits",
+    "accessibility",
+    "localization",
+    "observability_support",
+    "destructive_actions",
+    "cross_document_seams",
+    "test_falsifiability",
+    "unknown_unknowns"
+  ],
+  "result_schema_ref": "schemas/macro_review_result.schema.json",
+  "review_instructions": "Read every assigned core line and account for every required_source_unit_ref. Apply both exact-behavior and adversarial-negative-space lenses across every required dimension. Extract concise feature, behavior, contract, state, authority, consumer, GUI, failure/recovery, oracle, gap, unknown, and explicit-non-gap items with exact source evidence. Do not merely paraphrase headings or copy unit refs. Each segment must name its complete required_source_unit_refs list and at least one item. Write exactly one regular JSON payload inside the assigned output directory; result.json is recommended but the filename is not semantic. Do not write a terminal seal. Return PMR1 only after the JSON payload is fully written.",
+  "schema_version": "macro-context-capsule-v1",
+  "segments": [
+    {
+      "core_range": [
+        1,
+        88
+      ],
+      "core_sha256": "b300a7e1f149dcda32ae110c9abd51174c6e8768dce9f2a921fa2f62a8a3e95e",
+      "plan_unit_ids": [],
+      "required_source_unit_refs": [
+        "SEMANTIC:JSON_PREFIX:Plans/goal_runtime_events.schema.json",
+        "SEMANTIC:JSON_FIELD:Plans/goal_runtime_events.schema.json:$schema",
+        "SEMANTIC:JSON_FIELD:Plans/goal_runtime_events.schema.json:$id",
+        "SEMANTIC:JSON_FIELD:Plans/goal_runtime_events.schema.json:title",
+        "SEMANTIC:JSON_FIELD:Plans/goal_runtime_events.schema.json:type",
+        "SEMANTIC:JSON_FIELD:Plans/goal_runtime_events.schema.json:additionalProperties",
+        "SEMANTIC:JSON_FIELD:Plans/goal_runtime_events.schema.json:required",
+        "SEMANTIC:JSON_FIELD:Plans/goal_runtime_events.schema.json:properties",
+        "SEMANTIC:JSON_SUFFIX:Plans/goal_runtime_events.schema.json",
+        "STRUCTURAL:$",
+        "STRUCTURAL:$.$id",
+        "STRUCTURAL:$.$schema",
+        "STRUCTURAL:$.additionalProperties",
+        "STRUCTURAL:$.properties",
+        "STRUCTURAL:$.required",
+        "STRUCTURAL:$.title",
+        "STRUCTURAL:$.type"
+      ],
+      "semantic_block_ids": [
+        "JSON_PREFIX:Plans/goal_runtime_events.schema.json",
+        "JSON_FIELD:Plans/goal_runtime_events.schema.json:$schema",
+        "JSON_FIELD:Plans/goal_runtime_events.schema.json:$id",
+        "JSON_FIELD:Plans/goal_runtime_events.schema.json:title",
+        "JSON_FIELD:Plans/goal_runtime_events.schema.json:type",
+        "JSON_FIELD:Plans/goal_runtime_events.schema.json:additionalProperties",
+        "JSON_FIELD:Plans/goal_runtime_events.schema.json:required",
+        "JSON_FIELD:Plans/goal_runtime_events.schema.json:properties",
+        "JSON_SUFFIX:Plans/goal_runtime_events.schema.json"
+      ],
+      "structural_paths": [
+        "$",
+        "$.$id",
+        "$.$schema",
+        "$.additionalProperties",
+        "$.properties",
+        "$.required",
+        "$.title",
+        "$.type"
+      ],
+      "token_estimate": 932,
+      "window_id": "WIN-C506D27334DD-0001"
+    }
+  ],
+  "source_excerpt_line_format": "L######## followed by a tab and exact canonical source text",
+  "source_excerpt_ref": "capsules/source/7c/7c8706cbea1544f42a31274bcdd6dc23b59eb7a12feb2910e6d3c65b8ec7274b.txt",
+  "source_excerpt_sha256": "7c8706cbea1544f42a31274bcdd6dc23b59eb7a12feb2910e6d3c65b8ec7274b",
+  "source_sha256": "b300a7e1f149dcda32ae110c9abd51174c6e8768dce9f2a921fa2f62a8a3e95e",
+  "token_estimate": 932
+}

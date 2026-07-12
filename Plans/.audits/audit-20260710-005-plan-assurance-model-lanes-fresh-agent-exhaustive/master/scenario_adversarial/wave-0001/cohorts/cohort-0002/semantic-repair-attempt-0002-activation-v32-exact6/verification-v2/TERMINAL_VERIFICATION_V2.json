@@ -1,0 +1,17 @@
+{
+  "schema_version": "scenario-repair-activation-verification-v32-v2",
+  "status": "pass_ready_exact6_v2",
+  "errors": [],
+  "check_count": 19,
+  "checks_passed": 19,
+  "activation_sha256": "4a6ddbddfb45812831b44124e224b9adcfaec13e77714523675b27584181932c",
+  "assignments": 6,
+  "features": 687,
+  "results": 0,
+  "terminal_receipts": 0,
+  "native_capture_rows": 0,
+  "credit": 0,
+  "fresh_luna_report_sha256": "c5c80b27154c4e39831a32dee8c116a3097f4ca6feade83da5faa54c89abe94c",
+  "controller_parent_capture_sha256": "034756c6134cb8119d0b593959123478ab60025a484fdac8bcdbfda4f73eb925",
+  "verification_command": "python3 -S -B verification-v2/verify_activation_v32_v2.py"
+}

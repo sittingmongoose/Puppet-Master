@@ -1,0 +1,43 @@
+{
+  "attempt_id": "attempt-0006",
+  "audit_id": "audit-20260710-005-plan-assurance-model-lanes-fresh-agent-exhaustive",
+  "coverage_credit": 0,
+  "current_native_capture_rows": 0,
+  "future_required_assignment_ids": [
+    "ER-0003",
+    "ER-0008"
+  ],
+  "future_required_row_count": 2,
+  "identity_rules": [
+    "unique nonempty thread and turn IDs",
+    "no identity or canonical path reuse across attempts 0001 through 0005",
+    "result owns canonical agent_path only",
+    "positive receipt owns task/native thread identity",
+    "independent capture owns native thread and turn identity",
+    "result receipt capture must join exactly"
+  ],
+  "merge_credit": 0,
+  "promotion_credit": 0,
+  "required_row_fields": [
+    "assignment_id",
+    "agent_path",
+    "native_child_thread_id",
+    "native_child_turn_id",
+    "native_child_turn_status",
+    "terminal_response_exact",
+    "result_present_before_pmr1",
+    "result_sha256",
+    "receipt_sha256"
+  ],
+  "research_credit": 0,
+  "retry_namespace": "retry-attempt-0006",
+  "schema_version": "external-research-native-capture-contract-v6",
+  "spec_credit": 0,
+  "sprint_id": "sprint-wave-0001",
+  "status": "BLOCKED_AWAITING_FRESH_INDEPENDENT_LUNA_PRELAUNCH",
+  "terminal_rules": {
+    "native_child_turn_status": "completed",
+    "result_present_before_pmr1": true,
+    "terminal_response_exact": "PMR1"
+  }
+}

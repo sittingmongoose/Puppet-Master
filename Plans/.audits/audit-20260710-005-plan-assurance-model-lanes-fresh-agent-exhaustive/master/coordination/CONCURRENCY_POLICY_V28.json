@@ -1,0 +1,65 @@
+{
+  "audit_id": "audit-20260710-005-plan-assurance-model-lanes-fresh-agent-exhaustive",
+  "schema_version": "audit-concurrency-policy-v28",
+  "status": "CLEAN_CONTEXT_ONE_FOR_ONE_SOL_CONTROLLER_REPLACEMENT",
+  "effective_date": "2026-07-12",
+  "supersedes_prospectively": "master/coordination/CONCURRENCY_POLICY_V27.json",
+  "prior_policies_mutated": false,
+  "retired_failed_controllers": [
+    {
+      "thread_id": "019f4f5e-96c6-7893-8c94-ce2c1b760d6c",
+      "archived": true,
+      "may_spawn_new_work": false,
+      "reason": "three consecutive zero-message infrastructure system-error turns"
+    },
+    {
+      "thread_id": "019f5518-66ab-7971-a015-4396ae3a2c2f",
+      "archived": true,
+      "may_spawn_new_work": false,
+      "reason": "history fork inherited the same infrastructure system error",
+      "failed_zero_write_turn_id": "019f5519-9950-7dd0-804a-d77655d1b71a"
+    }
+  ],
+  "replacement_controller": {
+    "thread_id": "019f551c-61fc-72c2-880e-cd6756d9732b",
+    "creation_mode": "same-directory fork with active source turn excluded from completion state",
+    "source_thread_id": "019f5505-9985-7082-89d8-57b260a78b21",
+    "source_role": "active Luna certification reviewer",
+    "source_turn_copied_as_interrupted_only": true,
+    "source_reviewer_remains_active_and_unmodified": true,
+    "source_reviewer_result_or_conclusion_inherited": false,
+    "controller_model_must_be_explicitly_overridden": "gpt-5.6-sol",
+    "controller_reasoning_effort_must_be_explicitly_overridden": "xhigh",
+    "may_use_source_turn_conclusions": false,
+    "must_recompute_all_live_hashes": true,
+    "authorized_as_exact_one_for_one_replacement": true,
+    "additional_concurrent_controller_count": 0
+  },
+  "routing_invariants": {
+    "all_future_sol_semantic_children_spawn_only_from_replacement_controller": true,
+    "all_future_sol_semantic_children_model": "gpt-5.6-sol",
+    "all_future_sol_semantic_children_reasoning_effort": "xhigh",
+    "luna_reviewer_thread_is_not_a_parent_of_sol_children": true,
+    "wrong_parent_or_wrong_model_children_zero_credit": true
+  },
+  "durable_resume_floor": {
+    "research_checkpoint_sha256": "94475c6e25c0559df5cb568b855678fa1c096b1f553ad682ae444b17e4732a4d",
+    "seam_aggregate_checkpoint_sha256": "f6d3fd1087c8dec7e35cfae26374605d31b342df3b945603986194598f9ee809",
+    "scenario_cohort_0001_primary_sha256": "8c6b89cf0686ac50ecaa78053a2a472df375e24a22afae8efe99f094dfbfa6ff",
+    "certification_v8_preparation_sha256": "215da1678af965ef7b8035037592621c9af42d4d8749b94b4a57d1eacc13101f",
+    "partial_live_delta_script_count": 3,
+    "partial_live_delta_activation_count": 0,
+    "partial_live_delta_credit": 0
+  },
+  "inherited_controls": {
+    "v25_sha256": "f2e0cd20f5612b8d6fa1d1946ee03f15b3f26138a38189a410926f4f69f0f63b",
+    "pre_reset_semantic_cap": 24,
+    "post_reset_semantic_cap": 32,
+    "atomic_transaction_cap": 8,
+    "do_not_wait_for_user_snapshot": true,
+    "do_not_interrupt_valid_inflight_work": true,
+    "candidate_credit_before_independent_postrun": 0,
+    "no_duplicate_or_restart_of_terminal_work": true,
+    "canonical_plan_writes_authorized": false
+  }
+}

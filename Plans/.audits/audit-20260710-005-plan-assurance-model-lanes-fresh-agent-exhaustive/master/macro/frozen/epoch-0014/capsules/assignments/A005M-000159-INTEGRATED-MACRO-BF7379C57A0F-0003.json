@@ -1,0 +1,377 @@
+{
+  "assignment_id": "A005M-000159-INTEGRATED-MACRO-BF7379C57A0F-0003",
+  "attempt_id": "attempt-0014",
+  "audit_id": "audit-20260710-005-plan-assurance-model-lanes-fresh-agent-exhaustive",
+  "blindness": {
+    "external_research": "deferred_to_feature_research_phase",
+    "peer_results": "forbidden",
+    "prior_audits": "forbidden",
+    "unrelated_sources": "forbidden"
+  },
+  "bundle_core_range": [
+    2806,
+    5484
+  ],
+  "bundle_id": "MACRO-BF7379C57A0F-0003",
+  "context_ranges": [
+    [
+      2794,
+      2805
+    ],
+    [
+      5485,
+      5496
+    ]
+  ],
+  "document_path": "Plans/assistant-chat-design.md",
+  "micro_window_ids": [
+    "WIN-BF7379C57A0F-0009",
+    "WIN-BF7379C57A0F-0010",
+    "WIN-BF7379C57A0F-0011",
+    "WIN-BF7379C57A0F-0012",
+    "WIN-BF7379C57A0F-0013",
+    "WIN-BF7379C57A0F-0014",
+    "WIN-BF7379C57A0F-0015"
+  ],
+  "phase": "blind_macro_window_review",
+  "required_dimensions": [
+    "behavior",
+    "capabilities",
+    "inputs_outputs",
+    "contracts",
+    "states_transitions",
+    "authority",
+    "ownership",
+    "consumers",
+    "gui_truth",
+    "failures_recovery",
+    "security_privacy",
+    "propagation",
+    "operations",
+    "scale_performance",
+    "compatibility_migration",
+    "acceptance_oracles",
+    "builder_discretion",
+    "ambiguity_unknowns",
+    "missing_callers_consumers",
+    "invalid_states_transitions",
+    "concurrency_races",
+    "partial_failure",
+    "recovery_rollback",
+    "authority_boundaries",
+    "privacy_data_lifecycle",
+    "untrusted_inputs",
+    "gui_misleading_states",
+    "offline_network_loss",
+    "scale_limits",
+    "accessibility",
+    "localization",
+    "observability_support",
+    "destructive_actions",
+    "cross_document_seams",
+    "test_falsifiability",
+    "unknown_unknowns"
+  ],
+  "result_schema_ref": "schemas/macro_review_result.schema.json",
+  "review_instructions": "Read every assigned core line and account for every required_source_unit_ref. Apply both exact-behavior and adversarial-negative-space lenses across every required dimension. Extract concise feature, behavior, contract, state, authority, consumer, GUI, failure/recovery, oracle, gap, unknown, and explicit-non-gap items with exact source evidence. Do not merely paraphrase headings or copy unit refs. Each segment must name its complete required_source_unit_refs list and at least one item. Write exactly one regular JSON payload inside the assigned output directory; result.json is recommended but the filename is not semantic. Do not write a terminal seal. Return PMR1 only after the JSON payload is fully written.",
+  "schema_version": "macro-context-capsule-v1",
+  "segments": [
+    {
+      "core_range": [
+        2806,
+        3204
+      ],
+      "core_sha256": "9f20711efbd4fe0cc957b4fcec33f8f8d7a519a44ad0d7f5efa920ab7b8af571",
+      "plan_unit_ids": [
+        "ACD-424"
+      ],
+      "required_source_unit_refs": [
+        "PLANUNIT:ACD-424",
+        "SEMANTIC:PLANUNIT:ACD-424:CONT-001"
+      ],
+      "semantic_block_ids": [
+        "PLANUNIT:ACD-424:CONT-001"
+      ],
+      "structural_paths": [],
+      "token_estimate": 11784,
+      "window_id": "WIN-BF7379C57A0F-0009"
+    },
+    {
+      "core_range": [
+        3205,
+        3603
+      ],
+      "core_sha256": "42d31470e41e81918455d656341f415fe5a9875cc603b7e22402e4fc9ec16a09",
+      "plan_unit_ids": [
+        "ACD-001",
+        "ACD-002",
+        "ACD-424"
+      ],
+      "required_source_unit_refs": [
+        "PLANUNIT:ACD-001",
+        "PLANUNIT:ACD-002",
+        "PLANUNIT:ACD-424",
+        "SEMANTIC:PLANUNIT:ACD-424:CONT-002",
+        "SEMANTIC:PLANUNIT:ACD-001",
+        "SEMANTIC:PLANUNIT:ACD-002"
+      ],
+      "semantic_block_ids": [
+        "PLANUNIT:ACD-424:CONT-002",
+        "PLANUNIT:ACD-001",
+        "PLANUNIT:ACD-002"
+      ],
+      "structural_paths": [],
+      "token_estimate": 11081,
+      "window_id": "WIN-BF7379C57A0F-0010"
+    },
+    {
+      "core_range": [
+        3604,
+        3989
+      ],
+      "core_sha256": "de7deee64cb5909cd855d378729a5f4815b19ee1d2eddc44d634619875c583cd",
+      "plan_unit_ids": [
+        "ACD-003",
+        "ACD-004",
+        "ACD-005",
+        "ACD-006",
+        "ACD-007",
+        "ACD-008",
+        "ACD-009",
+        "ACD-010"
+      ],
+      "required_source_unit_refs": [
+        "PLANUNIT:ACD-003",
+        "PLANUNIT:ACD-004",
+        "PLANUNIT:ACD-005",
+        "PLANUNIT:ACD-006",
+        "PLANUNIT:ACD-007",
+        "PLANUNIT:ACD-008",
+        "PLANUNIT:ACD-009",
+        "PLANUNIT:ACD-010",
+        "SEMANTIC:PLANUNIT:ACD-003",
+        "SEMANTIC:PLANUNIT:ACD-004",
+        "SEMANTIC:PLANUNIT:ACD-005",
+        "SEMANTIC:PLANUNIT:ACD-006",
+        "SEMANTIC:PLANUNIT:ACD-007",
+        "SEMANTIC:PLANUNIT:ACD-008",
+        "SEMANTIC:PLANUNIT:ACD-009",
+        "SEMANTIC:PLANUNIT:ACD-010"
+      ],
+      "semantic_block_ids": [
+        "PLANUNIT:ACD-003",
+        "PLANUNIT:ACD-004",
+        "PLANUNIT:ACD-005",
+        "PLANUNIT:ACD-006",
+        "PLANUNIT:ACD-007",
+        "PLANUNIT:ACD-008",
+        "PLANUNIT:ACD-009",
+        "PLANUNIT:ACD-010"
+      ],
+      "structural_paths": [],
+      "token_estimate": 4852,
+      "window_id": "WIN-BF7379C57A0F-0011"
+    },
+    {
+      "core_range": [
+        3990,
+        4369
+      ],
+      "core_sha256": "11d5a5b7e4af8d341ec1775e0d9e6922e6a170fac8bbe9a047d18a426c77f890",
+      "plan_unit_ids": [
+        "ACD-011",
+        "ACD-012",
+        "ACD-013",
+        "ACD-014",
+        "ACD-015",
+        "ACD-016",
+        "ACD-017",
+        "ACD-018"
+      ],
+      "required_source_unit_refs": [
+        "PLANUNIT:ACD-011",
+        "PLANUNIT:ACD-012",
+        "PLANUNIT:ACD-013",
+        "PLANUNIT:ACD-014",
+        "PLANUNIT:ACD-015",
+        "PLANUNIT:ACD-016",
+        "PLANUNIT:ACD-017",
+        "PLANUNIT:ACD-018",
+        "SEMANTIC:PLANUNIT:ACD-011",
+        "SEMANTIC:PLANUNIT:ACD-012",
+        "SEMANTIC:PLANUNIT:ACD-013",
+        "SEMANTIC:PLANUNIT:ACD-014",
+        "SEMANTIC:PLANUNIT:ACD-015",
+        "SEMANTIC:PLANUNIT:ACD-016",
+        "SEMANTIC:PLANUNIT:ACD-017",
+        "SEMANTIC:PLANUNIT:ACD-018"
+      ],
+      "semantic_block_ids": [
+        "PLANUNIT:ACD-011",
+        "PLANUNIT:ACD-012",
+        "PLANUNIT:ACD-013",
+        "PLANUNIT:ACD-014",
+        "PLANUNIT:ACD-015",
+        "PLANUNIT:ACD-016",
+        "PLANUNIT:ACD-017",
+        "PLANUNIT:ACD-018"
+      ],
+      "structural_paths": [],
+      "token_estimate": 4645,
+      "window_id": "WIN-BF7379C57A0F-0012"
+    },
+    {
+      "core_range": [
+        4370,
+        4731
+      ],
+      "core_sha256": "1406061a042ed4b04689b48855443a7b288ef08a4a7a41c43cdc40a5f34251cc",
+      "plan_unit_ids": [
+        "ACD-019",
+        "ACD-020",
+        "ACD-021",
+        "ACD-022",
+        "ACD-023",
+        "ACD-024",
+        "ACD-025",
+        "ACD-026"
+      ],
+      "required_source_unit_refs": [
+        "PLANUNIT:ACD-019",
+        "PLANUNIT:ACD-020",
+        "PLANUNIT:ACD-021",
+        "PLANUNIT:ACD-022",
+        "PLANUNIT:ACD-023",
+        "PLANUNIT:ACD-024",
+        "PLANUNIT:ACD-025",
+        "PLANUNIT:ACD-026",
+        "SEMANTIC:PLANUNIT:ACD-019",
+        "SEMANTIC:PLANUNIT:ACD-020",
+        "SEMANTIC:PLANUNIT:ACD-021",
+        "SEMANTIC:PLANUNIT:ACD-022",
+        "SEMANTIC:PLANUNIT:ACD-023",
+        "SEMANTIC:PLANUNIT:ACD-024",
+        "SEMANTIC:PLANUNIT:ACD-025",
+        "SEMANTIC:PLANUNIT:ACD-026"
+      ],
+      "semantic_block_ids": [
+        "PLANUNIT:ACD-019",
+        "PLANUNIT:ACD-020",
+        "PLANUNIT:ACD-021",
+        "PLANUNIT:ACD-022",
+        "PLANUNIT:ACD-023",
+        "PLANUNIT:ACD-024",
+        "PLANUNIT:ACD-025",
+        "PLANUNIT:ACD-026"
+      ],
+      "structural_paths": [],
+      "token_estimate": 4683,
+      "window_id": "WIN-BF7379C57A0F-0013"
+    },
+    {
+      "core_range": [
+        4732,
+        5104
+      ],
+      "core_sha256": "33edaedbc49d1398f5766ed9cdc2a6572c3797aec07dbdf6a9fc616d8c321ef5",
+      "plan_unit_ids": [
+        "ACD-027",
+        "ACD-028",
+        "ACD-029",
+        "ACD-030",
+        "ACD-031",
+        "ACD-032",
+        "ACD-033",
+        "ACD-034"
+      ],
+      "required_source_unit_refs": [
+        "PLANUNIT:ACD-027",
+        "PLANUNIT:ACD-028",
+        "PLANUNIT:ACD-029",
+        "PLANUNIT:ACD-030",
+        "PLANUNIT:ACD-031",
+        "PLANUNIT:ACD-032",
+        "PLANUNIT:ACD-033",
+        "PLANUNIT:ACD-034",
+        "SEMANTIC:PLANUNIT:ACD-027",
+        "SEMANTIC:PLANUNIT:ACD-028",
+        "SEMANTIC:PLANUNIT:ACD-029",
+        "SEMANTIC:PLANUNIT:ACD-030",
+        "SEMANTIC:PLANUNIT:ACD-031",
+        "SEMANTIC:PLANUNIT:ACD-032",
+        "SEMANTIC:PLANUNIT:ACD-033",
+        "SEMANTIC:PLANUNIT:ACD-034"
+      ],
+      "semantic_block_ids": [
+        "PLANUNIT:ACD-027",
+        "PLANUNIT:ACD-028",
+        "PLANUNIT:ACD-029",
+        "PLANUNIT:ACD-030",
+        "PLANUNIT:ACD-031",
+        "PLANUNIT:ACD-032",
+        "PLANUNIT:ACD-033",
+        "PLANUNIT:ACD-034"
+      ],
+      "structural_paths": [],
+      "token_estimate": 4846,
+      "window_id": "WIN-BF7379C57A0F-0014"
+    },
+    {
+      "core_range": [
+        5105,
+        5484
+      ],
+      "core_sha256": "6c995742ef1f1ea844128040b6440eb840240bda92dc3a275a5c4fb38749cf98",
+      "plan_unit_ids": [
+        "ACD-035",
+        "ACD-036",
+        "ACD-037",
+        "ACD-038",
+        "ACD-039",
+        "ACD-040",
+        "ACD-041",
+        "ACD-042",
+        "ACD-043"
+      ],
+      "required_source_unit_refs": [
+        "PLANUNIT:ACD-035",
+        "PLANUNIT:ACD-036",
+        "PLANUNIT:ACD-037",
+        "PLANUNIT:ACD-038",
+        "PLANUNIT:ACD-039",
+        "PLANUNIT:ACD-040",
+        "PLANUNIT:ACD-041",
+        "PLANUNIT:ACD-042",
+        "PLANUNIT:ACD-043",
+        "SEMANTIC:PLANUNIT:ACD-035",
+        "SEMANTIC:PLANUNIT:ACD-036",
+        "SEMANTIC:PLANUNIT:ACD-037",
+        "SEMANTIC:PLANUNIT:ACD-038",
+        "SEMANTIC:PLANUNIT:ACD-039",
+        "SEMANTIC:PLANUNIT:ACD-040",
+        "SEMANTIC:PLANUNIT:ACD-041",
+        "SEMANTIC:PLANUNIT:ACD-042",
+        "SEMANTIC:PLANUNIT:ACD-043"
+      ],
+      "semantic_block_ids": [
+        "PLANUNIT:ACD-035",
+        "PLANUNIT:ACD-036",
+        "PLANUNIT:ACD-037",
+        "PLANUNIT:ACD-038",
+        "PLANUNIT:ACD-039",
+        "PLANUNIT:ACD-040",
+        "PLANUNIT:ACD-041",
+        "PLANUNIT:ACD-042",
+        "PLANUNIT:ACD-043"
+      ],
+      "structural_paths": [],
+      "token_estimate": 4908,
+      "window_id": "WIN-BF7379C57A0F-0015"
+    }
+  ],
+  "source_excerpt_line_format": "L######## followed by a tab and exact canonical source text",
+  "source_excerpt_ref": "capsules/source/f1/f1655310398d6e62f619d9e7acd7e4db5dab7ecc1fdc789f9094b782b3ccf065.txt",
+  "source_excerpt_sha256": "f1655310398d6e62f619d9e7acd7e4db5dab7ecc1fdc789f9094b782b3ccf065",
+  "source_sha256": "dbe013e75b0359ac3f4763abd6cc3756a3366b628c1ddb066c68e4ecc91e0f67",
+  "token_estimate": 46799
+}

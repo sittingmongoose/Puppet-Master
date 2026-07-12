@@ -1,0 +1,650 @@
+{
+  "audit_id": "audit-20260710-005-plan-assurance-model-lanes-fresh-agent-exhaustive",
+  "schema_version": "external-research-result-v2",
+  "phase": "external_research_current_web_research",
+  "assignment_id": "ER-0006",
+  "attempt_id": "attempt-0002",
+  "controller_thread_id": "019f5078-6501-7223-b52f-2251010bdc41",
+  "task_thread_id": "71f47cda-3b9a-497b-9df2-082629eab49e",
+  "agent_path": "/root/a005_external_research_sprint_0001_attempt_0007_terminal",
+  "model": "gpt-5.6-luna",
+  "reasoning_effort": "max",
+  "status": "completed",
+  "topic": "Tool and MCP trust: capability discovery, per-call approval, scoped credentials, revocation, provenance, and malicious-tool containment",
+  "owner_domains": [
+    "tools_integrations_mcp"
+  ],
+  "feature_refs": [],
+  "research_questions": [
+    "How do official MCP, agent-platform, and security standards model capability discovery, trust establishment, per-call approval, and scoped credentials?",
+    "What provenance, revocation, isolation, and malicious-tool containment patterns are recommended by primary sources?",
+    "How should tool identity, capability scope, authorization evidence, and failure recovery be represented per call?",
+    "Which trust-boundary gaps matter most for Puppet Master integrations and MCP orchestration?"
+  ],
+  "source_availability": "available",
+  "unavailable_evidence": [],
+  "sources": [
+    {
+      "url": "https://modelcontextprotocol.io/specification/2025-06-18/basic/lifecycle",
+      "title": "Lifecycle",
+      "publisher": "Model Context Protocol",
+      "published_date": "2025-06-18",
+      "access_date": "2026-07-11",
+      "source_tier": "official",
+      "material_relevance": "Defines MCP initialization, protocol-version agreement, capability negotiation, implementation identity exchange, operation constraints, timeouts, and error handling."
+    },
+    {
+      "url": "https://modelcontextprotocol.io/specification/2025-11-25/basic/authorization",
+      "title": "Authorization",
+      "publisher": "Model Context Protocol",
+      "published_date": "2025-11-25",
+      "access_date": "2026-07-11",
+      "source_tier": "official",
+      "material_relevance": "Defines the MCP OAuth resource-server/client model, protected-resource metadata discovery, resource indicators, audience validation, PKCE, step-up scopes, token lifetimes, and refresh rotation."
+    },
+    {
+      "url": "https://modelcontextprotocol.io/specification/2025-11-25/server/tools",
+      "title": "Tools",
+      "publisher": "Model Context Protocol",
+      "published_date": "2025-11-25",
+      "access_date": "2026-07-11",
+      "source_tier": "official",
+      "material_relevance": "Defines tools/list and tools/call, human-denial guidance, tool identity and schemas, output validation, and the rule that annotations from untrusted servers are not trustworthy."
+    },
+    {
+      "url": "https://modelcontextprotocol.io/docs/tutorials/security/security_best_practices",
+      "title": "Security Best Practices",
+      "publisher": "Model Context Protocol",
+      "published_date": null,
+      "access_date": "2026-07-11",
+      "source_tier": "official",
+      "material_relevance": "Documents token passthrough and confused-deputy risks, SSRF and DNS-rebinding defenses, session hijack mitigations, local-server sandboxing, URL validation, scope minimization, and proxy containment."
+    },
+    {
+      "url": "https://www.rfc-editor.org/rfc/rfc9700.html",
+      "title": "RFC 9700: Best Current Practice for OAuth 2.0 Security",
+      "publisher": "Internet Engineering Task Force",
+      "published_date": "January 2025",
+      "access_date": "2026-07-11",
+      "source_tier": "standard",
+      "material_relevance": "Provides current OAuth security guidance for authorization-code flows, PKCE, sender-constrained tokens, privilege restriction, and audience-restricted access tokens."
+    },
+    {
+      "url": "https://www.rfc-editor.org/rfc/rfc8693.html",
+      "title": "RFC 8693: OAuth 2.0 Token Exchange",
+      "publisher": "Internet Engineering Task Force",
+      "published_date": "January 2020",
+      "access_date": "2026-07-11",
+      "source_tier": "standard",
+      "material_relevance": "Defines an STS-style token exchange supporting delegation and impersonation semantics and explicitly allows a narrower downstream token."
+    },
+    {
+      "url": "https://www.rfc-editor.org/rfc/rfc8707.html",
+      "title": "RFC 8707: Resource Indicators for OAuth 2.0",
+      "publisher": "Internet Engineering Task Force",
+      "published_date": "February 2020",
+      "access_date": "2026-07-11",
+      "source_tier": "standard",
+      "material_relevance": "Defines request parameters that bind a requested token to the identity of its intended protected resource and reduce cross-resource token replay."
+    },
+    {
+      "url": "https://www.rfc-editor.org/rfc/rfc7009.html",
+      "title": "RFC 7009: OAuth 2.0 Token Revocation",
+      "publisher": "Internet Engineering Task Force",
+      "published_date": "August 2013",
+      "access_date": "2026-07-11",
+      "source_tier": "standard",
+      "material_relevance": "Defines an HTTPS revocation endpoint and requires refresh-token revocation support while recommending access-token revocation support."
+    },
+    {
+      "url": "https://www.ietf.org/rfc/rfc9728.html",
+      "title": "RFC 9728: OAuth 2.0 Protected Resource Metadata",
+      "publisher": "Internet Engineering Task Force",
+      "published_date": "April 2025",
+      "access_date": "2026-07-11",
+      "source_tier": "standard",
+      "material_relevance": "Defines protected-resource metadata, authorization-server discovery, scope metadata, HTTPS resource identifiers, and validation against impersonation and DNS-based attacks."
+    },
+    {
+      "url": "https://csrc.nist.gov/pubs/sp/800/207/final",
+      "title": "Zero Trust Architecture",
+      "publisher": "National Institute of Standards and Technology",
+      "published_date": "August 2020",
+      "access_date": "2026-07-11",
+      "source_tier": "official",
+      "material_relevance": "Establishes no implicit trust based on network location and separates authentication and authorization before resource access, supporting per-resource trust boundaries."
+    },
+    {
+      "url": "https://owasp.org/www-project-mcp-top-10/",
+      "title": "OWASP MCP Top 10",
+      "publisher": "OWASP Foundation",
+      "published_date": null,
+      "access_date": "2026-07-11",
+      "source_tier": "mature_open_source",
+      "material_relevance": "Catalogs MCP-specific risks including token exposure, scope creep, tool poisoning, dependency tampering, command execution, weak authorization, lack of telemetry, shadow servers, and over-sharing."
+    },
+    {
+      "url": "https://slsa.dev/spec/v1.2/provenance",
+      "title": "Provenance",
+      "publisher": "SLSA community and Linux Foundation",
+      "published_date": null,
+      "access_date": "2026-07-11",
+      "source_tier": "standard",
+      "material_relevance": "Defines current SLSA provenance as verifiable information tracking an artifact through a supply chain and provides a standard basis for source, builder, input, and output traceability."
+    }
+  ],
+  "findings": [
+    {
+      "finding_id": "F-001",
+      "claim": "MCP capability discovery is a negotiated lifecycle event: initialize exchanges protocol version, client/server capabilities, and implementation information, and operation is constrained to successfully negotiated capabilities.",
+      "evidence_class": "supported_claim",
+      "source_urls": [
+        "https://modelcontextprotocol.io/specification/2025-06-18/basic/lifecycle"
+      ],
+      "confidence": 0.99,
+      "notes": "This is a direct requirement of the MCP lifecycle specification, not an inferred trust policy."
+    },
+    {
+      "finding_id": "F-002",
+      "claim": "The current MCP authorization profile models a protected MCP server as an OAuth resource server and requires protected-resource metadata discovery; MCP clients include the resource indicator and MCP servers validate that tokens were issued for them.",
+      "evidence_class": "supported_claim",
+      "source_urls": [
+        "https://modelcontextprotocol.io/specification/2025-11-25/basic/authorization",
+        "https://www.ietf.org/rfc/rfc9728.html",
+        "https://www.rfc-editor.org/rfc/rfc8707.html"
+      ],
+      "confidence": 0.99,
+      "notes": "Resource metadata, resource indicators, and audience validation form a concrete trust boundary between a client, MCP resource server, and other APIs."
+    },
+    {
+      "finding_id": "F-003",
+      "claim": "MCP authorization requires modern OAuth protections including PKCE with S256 when capable, HTTPS for authorization endpoints, short-lived access tokens, refresh-token rotation for public clients, and targeted step-up scope handling.",
+      "evidence_class": "supported_claim",
+      "source_urls": [
+        "https://modelcontextprotocol.io/specification/2025-11-25/basic/authorization",
+        "https://www.rfc-editor.org/rfc/rfc9700.html"
+      ],
+      "confidence": 0.98,
+      "notes": "The MCP authorization specification directly states the client and server requirements; RFC 9700 supplies the broader OAuth security basis."
+    },
+    {
+      "finding_id": "F-004",
+      "claim": "MCP tool invocation is intended to retain a human-denial path, show which tool is exposed and invoked, and treat tool annotations as untrusted unless the server is trusted.",
+      "evidence_class": "supported_claim",
+      "source_urls": [
+        "https://modelcontextprotocol.io/specification/2025-11-25/server/tools"
+      ],
+      "confidence": 0.98,
+      "notes": "The protocol leaves the exact UI pattern to the host but explicitly calls for human ability to deny and warns that annotations are not authoritative."
+    },
+    {
+      "finding_id": "F-005",
+      "claim": "MCP security guidance forbids token passthrough, identifies confused-deputy risk, and recommends audience validation, secure token storage, scope minimization, no credential logging, and separate downstream credentials.",
+      "evidence_class": "supported_claim",
+      "source_urls": [
+        "https://modelcontextprotocol.io/docs/tutorials/security/security_best_practices",
+        "https://modelcontextprotocol.io/specification/2025-11-25/basic/authorization"
+      ],
+      "confidence": 0.99,
+      "notes": "The guidance connects token audience, accountability, rate-limit/control enforcement, and downstream trust boundaries rather than treating a bearer token as a generic integration credential."
+    },
+    {
+      "finding_id": "F-006",
+      "claim": "OAuth has separate standard primitives for delegation and downstream narrowing (token exchange), resource/audience binding (resource indicators), and revocation of refresh and access tokens (token revocation).",
+      "evidence_class": "supported_claim",
+      "source_urls": [
+        "https://www.rfc-editor.org/rfc/rfc8693.html",
+        "https://www.rfc-editor.org/rfc/rfc8707.html",
+        "https://www.rfc-editor.org/rfc/rfc7009.html"
+      ],
+      "confidence": 0.98,
+      "notes": "These standards are composable primitives; none by itself defines a complete MCP per-call authorization record."
+    },
+    {
+      "finding_id": "F-007",
+      "claim": "SLSA v1.2 defines provenance as verifiable information that tracks an artifact through a complex supply chain to where it came from, providing a standard vocabulary for source, builder, inputs, and outputs.",
+      "evidence_class": "supported_claim",
+      "source_urls": [
+        "https://slsa.dev/spec/v1.2/provenance"
+      ],
+      "confidence": 0.96,
+      "notes": "This supports tool-package and executable provenance checks, but provenance is not equivalent to a safety or authorization decision."
+    },
+    {
+      "finding_id": "F-008",
+      "claim": "A host should treat discovered capabilities, tool descriptions, annotations, and list-change events as proposals that require a separately maintained trust decision; a metadata change should invalidate or re-evaluate prior approval.",
+      "evidence_class": "inference",
+      "source_urls": [
+        "https://modelcontextprotocol.io/specification/2025-06-18/basic/lifecycle",
+        "https://modelcontextprotocol.io/specification/2025-11-25/server/tools",
+        "https://modelcontextprotocol.io/docs/tutorials/security/security_best_practices"
+      ],
+      "confidence": 0.91,
+      "notes": "The sources establish negotiated capabilities, mutable tool lists, and untrusted annotations; the invalidation rule is a derived control recommendation."
+    },
+    {
+      "finding_id": "F-009",
+      "claim": "No reviewed MCP, OAuth, NIST, OWASP, or SLSA source defines a single interoperable per-call evidence object binding user intent and approval, canonical tool identity/version, input and result digests, token audience and scope, provenance, and revocation state.",
+      "evidence_class": "no_evidence",
+      "source_urls": [
+        "https://modelcontextprotocol.io/specification/2025-11-25/basic/authorization",
+        "https://modelcontextprotocol.io/specification/2025-11-25/server/tools",
+        "https://slsa.dev/spec/v1.2/provenance"
+      ],
+      "confidence": 0.78,
+      "notes": "This is a bounded absence claim about the reviewed source set, not a claim that no private implementation or draft proposal exists."
+    }
+  ],
+  "competitor_standard_patterns": [
+    {
+      "pattern_id": "P-001",
+      "pattern": "Handshake-first capability negotiation with protocol-version agreement, implementation identity, explicit optional capabilities, and list-change notifications.",
+      "evidence_class": "supported_claim",
+      "source_urls": [
+        "https://modelcontextprotocol.io/specification/2025-06-18/basic/lifecycle",
+        "https://modelcontextprotocol.io/specification/2025-11-25/server/tools"
+      ],
+      "implication": "Persist the negotiated capability set and protocol version as trust context; do not assume a server supports a feature merely because a client knows it."
+    },
+    {
+      "pattern_id": "P-002",
+      "pattern": "Protected-resource metadata discovery followed by authorization-server discovery and resource/audience-bound token issuance.",
+      "evidence_class": "supported_claim",
+      "source_urls": [
+        "https://modelcontextprotocol.io/specification/2025-11-25/basic/authorization",
+        "https://www.ietf.org/rfc/rfc9728.html",
+        "https://www.rfc-editor.org/rfc/rfc8707.html"
+      ],
+      "implication": "The resource identity used to obtain a token must be explicit and validated; endpoint discovery is part of the trust surface and needs URL and TLS checks."
+    },
+    {
+      "pattern_id": "P-003",
+      "pattern": "Least-privilege baseline scopes with runtime step-up authorization for a specific resource and operation instead of requesting every scope at startup.",
+      "evidence_class": "supported_claim",
+      "source_urls": [
+        "https://modelcontextprotocol.io/specification/2025-11-25/basic/authorization",
+        "https://modelcontextprotocol.io/docs/tutorials/security/security_best_practices",
+        "https://www.rfc-editor.org/rfc/rfc9700.html"
+      ],
+      "implication": "Credential acquisition can align with actual tool risk and user intent, reducing blast radius and making consent/audit events meaningful."
+    },
+    {
+      "pattern_id": "P-004",
+      "pattern": "Human-in-the-loop confirmation for tool operations, with visible inputs and a deny path, while treating server-provided behavior annotations as hints rather than policy.",
+      "evidence_class": "supported_claim",
+      "source_urls": [
+        "https://modelcontextprotocol.io/specification/2025-11-25/server/tools"
+      ],
+      "implication": "Tool metadata can improve explanation but cannot by itself authorize destructive or data-exfiltrating actions."
+    },
+    {
+      "pattern_id": "P-005",
+      "pattern": "Local executable tools are contained through exact-command consent, sandboxing, restricted filesystem/network access, least-privilege process permissions, and restricted IPC or stdio.",
+      "evidence_class": "supported_claim",
+      "source_urls": [
+        "https://modelcontextprotocol.io/docs/tutorials/security/security_best_practices"
+      ],
+      "implication": "Local and remote tool trust should not share an undifferentiated execution path; local process launch is an explicit code-execution boundary."
+    },
+    {
+      "pattern_id": "P-006",
+      "pattern": "A resource server can exchange an upstream credential for a downstream credential that is narrower and expresses delegation rather than forwarding the original bearer token.",
+      "evidence_class": "supported_claim",
+      "source_urls": [
+        "https://www.rfc-editor.org/rfc/rfc8693.html",
+        "https://modelcontextprotocol.io/docs/tutorials/security/security_best_practices"
+      ],
+      "implication": "Downstream calls can preserve accountability and reduce cross-service replay when the integration does not pass client tokens through."
+    },
+    {
+      "pattern_id": "P-007",
+      "pattern": "Revocation is a first-class OAuth operation, complemented by short-lived access tokens and refresh-token rotation to constrain the window of misuse.",
+      "evidence_class": "supported_claim",
+      "source_urls": [
+        "https://www.rfc-editor.org/rfc/rfc7009.html",
+        "https://modelcontextprotocol.io/specification/2025-11-25/basic/authorization",
+        "https://www.rfc-editor.org/rfc/rfc9700.html"
+      ],
+      "implication": "A tool integration needs both planned revocation and expiry/rotation behavior; deletion of a local credential cache alone is not equivalent to server-side revocation."
+    },
+    {
+      "pattern_id": "P-008",
+      "pattern": "SLSA provenance records verifiable artifact lineage and uses builder identity plus captured inputs and outputs as the basis for downstream verification.",
+      "evidence_class": "supported_claim",
+      "source_urls": [
+        "https://slsa.dev/spec/v1.2/provenance"
+      ],
+      "implication": "The same vocabulary can inform a trust registry for executable MCP servers, packages, adapters, and generated tool manifests."
+    },
+    {
+      "pattern_id": "P-009",
+      "pattern": "No reviewed standard provides a common MCP trust-registry or per-call authorization-evidence schema that combines server identity, tool version/digest, user approval, scope, audience, provenance, and revocation.",
+      "evidence_class": "no_evidence",
+      "source_urls": [
+        "https://modelcontextprotocol.io/specification/2025-11-25/basic/authorization",
+        "https://modelcontextprotocol.io/specification/2025-11-25/server/tools",
+        "https://slsa.dev/spec/v1.2/provenance"
+      ],
+      "implication": "Puppet Master would need to define this integration contract explicitly if it requires auditable, replay-resistant tool orchestration."
+    }
+  ],
+  "failure_modes": [
+    {
+      "failure_id": "FM-001",
+      "failure_mode": "Token passthrough or missing audience validation lets an MCP server accept a token issued for another resource and forward it to a downstream API, bypassing controls and obscuring the true caller.",
+      "evidence_class": "supported_claim",
+      "source_urls": [
+        "https://modelcontextprotocol.io/docs/tutorials/security/security_best_practices",
+        "https://modelcontextprotocol.io/specification/2025-11-25/basic/authorization",
+        "https://www.rfc-editor.org/rfc/rfc8707.html"
+      ],
+      "mitigation_or_gap": "Reject tokens not issued for the MCP resource; use resource indicators or equivalent audience validation; exchange for a downstream-scoped token when delegation is required."
+    },
+    {
+      "failure_id": "FM-002",
+      "failure_mode": "A leaked omnibus token with broad file, database, or administrative scopes enables unrelated tool access, lateral movement, and difficult, disruptive revocation.",
+      "evidence_class": "supported_claim",
+      "source_urls": [
+        "https://modelcontextprotocol.io/docs/tutorials/security/security_best_practices",
+        "https://owasp.org/www-project-mcp-top-10/",
+        "https://www.rfc-editor.org/rfc/rfc9700.html"
+      ],
+      "mitigation_or_gap": "Start with minimal discovery/read scopes, step up for a specific operation, use short lifetimes and rotation, and record the granted subset rather than the requested catalog."
+    },
+    {
+      "failure_id": "FM-003",
+      "failure_mode": "Tool poisoning, schema poisoning, rug pulls, or tool shadowing manipulates model behavior or routes calls to an unintended tool while metadata appears legitimate.",
+      "evidence_class": "supported_claim",
+      "source_urls": [
+        "https://owasp.org/www-project-mcp-top-10/",
+        "https://modelcontextprotocol.io/specification/2025-11-25/server/tools"
+      ],
+      "mitigation_or_gap": "Treat descriptions and annotations as untrusted, namespace tools by a canonical server identity, pin versions or digests where possible, and re-evaluate trust when the tool list changes."
+    },
+    {
+      "failure_id": "FM-004",
+      "failure_mode": "A malicious MCP server supplies OAuth metadata, redirect, or authorization URLs that cause SSRF, DNS rebinding, redirect-to-private-network access, credential exfiltration, or unsafe browser/shell execution.",
+      "evidence_class": "supported_claim",
+      "source_urls": [
+        "https://modelcontextprotocol.io/docs/tutorials/security/security_best_practices",
+        "https://www.ietf.org/rfc/rfc9728.html"
+      ],
+      "mitigation_or_gap": "Require HTTPS except approved loopback development cases, validate every redirect hop, block private/reserved destinations, pin or re-check DNS, use egress policy, and avoid shell-based URL opening."
+    },
+    {
+      "failure_id": "FM-005",
+      "failure_mode": "A stolen or predictable session identifier is treated as authentication, enabling session hijack, event injection, or tool-surface changes delivered through a resumed stream.",
+      "evidence_class": "supported_claim",
+      "source_urls": [
+        "https://modelcontextprotocol.io/docs/tutorials/security/security_best_practices"
+      ],
+      "mitigation_or_gap": "Authenticate every inbound request independently, use nondeterministic expiring session identifiers, bind session state to the authorized subject, and never use the session ID as the credential."
+    },
+    {
+      "failure_id": "FM-006",
+      "failure_mode": "A malicious local server or proxy-spawned stdio process runs arbitrary commands with client privileges, can access sensitive files, or escalates a web compromise into host code execution.",
+      "evidence_class": "supported_claim",
+      "source_urls": [
+        "https://modelcontextprotocol.io/docs/tutorials/security/security_best_practices"
+      ],
+      "mitigation_or_gap": "Display the exact launch command, require explicit consent, sandbox the process, restrict filesystem/network access, use least privilege, and log or gate dangerous commands."
+    },
+    {
+      "failure_id": "FM-007",
+      "failure_mode": "A compromised dependency, package, generated manifest, or tool binary changes execution behavior without a verifiable chain back to an expected source and builder.",
+      "evidence_class": "supported_claim",
+      "source_urls": [
+        "https://owasp.org/www-project-mcp-top-10/",
+        "https://slsa.dev/spec/v1.2/provenance"
+      ],
+      "mitigation_or_gap": "Require provenance and digest verification for high-risk executables and maintain a reviewable trust policy for source, builder, dependencies, and release identity."
+    },
+    {
+      "failure_id": "FM-008",
+      "failure_mode": "A client approves a tool surface once, then accepts a later list-change or capability update as if it were covered by the original approval.",
+      "evidence_class": "inference",
+      "source_urls": [
+        "https://modelcontextprotocol.io/specification/2025-06-18/basic/lifecycle",
+        "https://modelcontextprotocol.io/specification/2025-11-25/server/tools",
+        "https://modelcontextprotocol.io/docs/tutorials/security/security_best_practices"
+      ],
+      "mitigation_or_gap": "Hash the approved capability/tool manifest, compare each update, and require reapproval or quarantine on material identity, schema, endpoint, or risk changes."
+    },
+    {
+      "failure_id": "FM-009",
+      "failure_mode": "The reviewed standards do not establish a uniform propagation rule for revocation across cached credentials, queued calls, in-flight calls, resumable tasks, and already-returned results.",
+      "evidence_class": "no_evidence",
+      "source_urls": [
+        "https://www.rfc-editor.org/rfc/rfc7009.html",
+        "https://modelcontextprotocol.io/specification/2025-11-25/basic/authorization"
+      ],
+      "mitigation_or_gap": "Define a local fail-closed policy for queued and in-flight work, clear or mark cached results, and make revocation state visible in every call outcome."
+    }
+  ],
+  "implications": [
+    {
+      "implication_id": "I-001",
+      "implication": "Puppet Master integrations should enforce resource/audience-bound tokens, PKCE, HTTPS, short-lived credentials, refresh rotation, secure storage, and a hard prohibition on token passthrough at the integration boundary.",
+      "evidence_class": "supported_claim",
+      "source_urls": [
+        "https://modelcontextprotocol.io/specification/2025-11-25/basic/authorization",
+        "https://modelcontextprotocol.io/docs/tutorials/security/security_best_practices",
+        "https://www.rfc-editor.org/rfc/rfc9700.html",
+        "https://www.rfc-editor.org/rfc/rfc8707.html"
+      ],
+      "rationale": "These controls are directly stated by current MCP authorization/security guidance or the OAuth standards it profiles and provide the minimum credential trust boundary."
+    },
+    {
+      "implication_id": "I-002",
+      "implication": "Model tool trust as a state machine—discover, authenticate, verify identity and provenance, grant scoped capability, approve the call, execute under containment, record outcome, and revoke or quarantine—rather than as a single trusted/untrusted flag.",
+      "evidence_class": "inference",
+      "source_urls": [
+        "https://modelcontextprotocol.io/specification/2025-06-18/basic/lifecycle",
+        "https://modelcontextprotocol.io/specification/2025-11-25/basic/authorization",
+        "https://modelcontextprotocol.io/docs/tutorials/security/security_best_practices",
+        "https://slsa.dev/spec/v1.2/provenance"
+      ],
+      "rationale": "MCP, OAuth, and SLSA expose separate lifecycle, authorization, containment, and provenance controls; composing them into explicit states makes partial trust and recovery observable."
+    },
+    {
+      "implication_id": "I-003",
+      "implication": "Keep server identity, tool identity/version digest, capability metadata, credential scope/audience, user approval, and result provenance as separate fields in the integration model; never let a descriptive tool annotation stand in for authorization.",
+      "evidence_class": "inference",
+      "source_urls": [
+        "https://modelcontextprotocol.io/specification/2025-11-25/server/tools",
+        "https://modelcontextprotocol.io/specification/2025-11-25/basic/authorization",
+        "https://slsa.dev/spec/v1.2/provenance"
+      ],
+      "rationale": "The sources distinguish metadata hints, negotiated capabilities, OAuth resource identity, and artifact provenance. Combining them would hide which trust check actually succeeded."
+    },
+    {
+      "implication_id": "I-004",
+      "implication": "Use baseline discovery/read authorization and targeted step-up authorization for mutation, exfiltration, or host-execution tools; record requested scope, granted subset, approval decision, and expiry.",
+      "evidence_class": "inference",
+      "source_urls": [
+        "https://modelcontextprotocol.io/specification/2025-11-25/basic/authorization",
+        "https://modelcontextprotocol.io/docs/tutorials/security/security_best_practices",
+        "https://www.rfc-editor.org/rfc/rfc8693.html"
+      ],
+      "rationale": "MCP step-up scope handling and OAuth token exchange support least privilege and downstream narrowing, while an explicit record makes repeated elevation and denial recoverable."
+    },
+    {
+      "implication_id": "I-005",
+      "implication": "At each call boundary require a canonical tool identifier, server/resource identity, protocol and capability fingerprint, input digest, token audience/scope, approval reference, timeout, request/response identifiers, result digest or schema validation status, and error/revocation status.",
+      "evidence_class": "inference",
+      "source_urls": [
+        "https://modelcontextprotocol.io/specification/2025-11-25/server/tools",
+        "https://modelcontextprotocol.io/specification/2025-11-25/basic/authorization",
+        "https://slsa.dev/spec/v1.2/provenance",
+        "https://www.rfc-editor.org/rfc/rfc7009.html"
+      ],
+      "rationale": "This is a proposed call-evidence envelope assembled from MCP schemas, OAuth identity/scope/revocation primitives, and SLSA digest/provenance concepts; it is not presented as an existing MCP schema."
+    },
+    {
+      "implication_id": "I-006",
+      "implication": "Unknown, unsigned, or locally executable tools should enter a quarantine profile with constrained discovery or dry-run behavior until provenance, sandbox, and human-approval checks pass.",
+      "evidence_class": "inference",
+      "source_urls": [
+        "https://modelcontextprotocol.io/docs/tutorials/security/security_best_practices",
+        "https://owasp.org/www-project-mcp-top-10/",
+        "https://slsa.dev/spec/v1.2/provenance"
+      ],
+      "rationale": "The sources establish code-execution, poisoning, supply-chain, and sandbox risks; the quarantine profile is a derived containment pattern."
+    },
+    {
+      "implication_id": "I-007",
+      "implication": "No reviewed public source maps these controls to Puppet Master's specific feature references; this packet should remain a cross-cutting tools/integrations/MCP research result with no fabricated feature bindings.",
+      "evidence_class": "no_evidence",
+      "source_urls": [],
+      "rationale": "The assigned packet explicitly provides no feature references, and the public sources do not supply Puppet Master-specific ownership or feature identifiers."
+    }
+  ],
+  "novel_ideas": [
+    {
+      "idea_id": "N-001",
+      "idea": "Capability lease: issue a short-lived local lease for a server/tool manifest fingerprint, negotiated capability set, provenance status, scope set, and consent class; expire or revoke it when the manifest or authorization context changes.",
+      "evidence_class": "inference",
+      "source_urls": [
+        "https://modelcontextprotocol.io/specification/2025-06-18/basic/lifecycle",
+        "https://modelcontextprotocol.io/specification/2025-11-25/server/tools",
+        "https://modelcontextprotocol.io/specification/2025-11-25/basic/authorization"
+      ],
+      "rationale": "This combines MCP lifecycle mutation signals with OAuth expiry/step-up into a compact trust artifact that can be invalidated without deleting the server registration."
+    },
+    {
+      "idea_id": "N-002",
+      "idea": "Authorization evidence envelope: hash-link the canonical tool identity, tool version or artifact digest, normalized arguments, authorization audience and scopes, user approval, execution environment, result digest, and revocation outcome into one per-call record.",
+      "evidence_class": "inference",
+      "source_urls": [
+        "https://modelcontextprotocol.io/specification/2025-11-25/server/tools",
+        "https://www.rfc-editor.org/rfc/rfc8707.html",
+        "https://www.rfc-editor.org/rfc/rfc7009.html",
+        "https://slsa.dev/spec/v1.2/provenance"
+      ],
+      "rationale": "The proposal turns otherwise separate trust signals into an auditable, replay-detectable boundary without claiming that MCP already standardizes the envelope."
+    },
+    {
+      "idea_id": "N-003",
+      "idea": "Trust lattice with quarantine modes: permit discovery, schema inspection, and dry-run for low-trust tools while withholding data-bearing or destructive execution until provenance and human approval elevate the tool.",
+      "evidence_class": "inference",
+      "source_urls": [
+        "https://modelcontextprotocol.io/specification/2025-11-25/server/tools",
+        "https://modelcontextprotocol.io/docs/tutorials/security/security_best_practices",
+        "https://slsa.dev/spec/v1.2/provenance"
+      ],
+      "rationale": "A lattice preserves useful capability discovery while preventing an unknown tool from receiving the same authority as a verified and approved tool."
+    },
+    {
+      "idea_id": "N-004",
+      "idea": "Revocation circuit breaker: a single revocation or trust-policy event should stop new calls, cancel or fail closed queued work, invalidate capability leases, evict cached credentials, and mark in-flight or cached results as post-revocation.",
+      "evidence_class": "inference",
+      "source_urls": [
+        "https://www.rfc-editor.org/rfc/rfc7009.html",
+        "https://modelcontextprotocol.io/specification/2025-11-25/basic/authorization",
+        "https://modelcontextprotocol.io/docs/tutorials/security/security_best_practices"
+      ],
+      "rationale": "OAuth defines token revocation but does not define orchestration behavior for queued or in-flight tool calls; this circuit breaker closes that operational gap."
+    },
+    {
+      "idea_id": "N-005",
+      "idea": "Provenance threshold policy: require verified source/builder/dependency provenance for executable or high-impact tools, allow lower-risk read-only tools to start in quarantine, and require a new decision when the artifact digest changes.",
+      "evidence_class": "inference",
+      "source_urls": [
+        "https://slsa.dev/spec/v1.2/provenance",
+        "https://owasp.org/www-project-mcp-top-10/",
+        "https://modelcontextprotocol.io/docs/tutorials/security/security_best_practices"
+      ],
+      "rationale": "Risk-tiered acceptance applies SLSA lineage to the MCP-specific supply-chain and local-execution threats without treating provenance as proof of benign behavior."
+    },
+    {
+      "idea_id": "N-006",
+      "idea": "SLSA v1.2 already supplies reusable provenance primitives—artifact subject, builder identity, external parameters, resolved dependencies, and production context—that can anchor a future MCP tool trust record.",
+      "evidence_class": "supported_claim",
+      "source_urls": [
+        "https://slsa.dev/spec/v1.2/provenance"
+      ],
+      "rationale": "The novelty is the proposed application to MCP tool trust; the listed provenance primitives are directly defined by the current SLSA specification."
+    },
+    {
+      "idea_id": "N-007",
+      "idea": "No reviewed source demonstrates an existing interoperable implementation of the proposed capability lease, authorization evidence envelope, trust lattice, or revocation circuit breaker for MCP.",
+      "evidence_class": "no_evidence",
+      "source_urls": [
+        "https://modelcontextprotocol.io/specification/2025-11-25/basic/authorization",
+        "https://modelcontextprotocol.io/specification/2025-11-25/server/tools",
+        "https://slsa.dev/spec/v1.2/provenance"
+      ],
+      "rationale": "These are deliberately marked as design ideas rather than presented as current protocol features."
+    }
+  ],
+  "unresolved_questions": [
+    {
+      "question_id": "UQ-001",
+      "question": "Which Puppet Master host or policy authority owns the human approval decision when the model requests a tool, because MCP requires a deny-capable host interaction but does not prescribe the host UI or approval storage model?",
+      "evidence_class": "supported_claim",
+      "source_urls": [
+        "https://modelcontextprotocol.io/specification/2025-11-25/server/tools",
+        "https://modelcontextprotocol.io/specification/2025-11-25/basic/authorization"
+      ]
+    },
+    {
+      "question_id": "UQ-002",
+      "question": "What common trust policy applies across HTTP MCP servers and local stdio servers, given that MCP authorization is optional and the authorization specification treats stdio credential handling differently from HTTP transports?",
+      "evidence_class": "supported_claim",
+      "source_urls": [
+        "https://modelcontextprotocol.io/specification/2025-11-25/basic/authorization",
+        "https://modelcontextprotocol.io/docs/tutorials/security/security_best_practices"
+      ]
+    },
+    {
+      "question_id": "UQ-003",
+      "question": "What minimum provenance and signer or builder policy is sufficient to move a third-party tool from discoverable or quarantined to executable at each risk tier?",
+      "evidence_class": "inference",
+      "source_urls": [
+        "https://slsa.dev/spec/v1.2/provenance",
+        "https://owasp.org/www-project-mcp-top-10/",
+        "https://modelcontextprotocol.io/docs/tutorials/security/security_best_practices"
+      ]
+    },
+    {
+      "question_id": "UQ-004",
+      "question": "Which tools require a fresh human confirmation on every call, and which can use a bounded approval lease, especially for calls that mutate state, transmit data, or execute on the host?",
+      "evidence_class": "inference",
+      "source_urls": [
+        "https://modelcontextprotocol.io/specification/2025-11-25/server/tools",
+        "https://modelcontextprotocol.io/specification/2025-11-25/basic/authorization"
+      ]
+    },
+    {
+      "question_id": "UQ-005",
+      "question": "No reviewed source provides interoperable semantics for what revocation must do to already queued calls, in-flight calls, resumable tasks, or cached results; what fail-closed behavior should Puppet Master guarantee?",
+      "evidence_class": "no_evidence",
+      "source_urls": [
+        "https://www.rfc-editor.org/rfc/rfc7009.html",
+        "https://modelcontextprotocol.io/specification/2025-11-25/basic/authorization"
+      ]
+    },
+    {
+      "question_id": "UQ-006",
+      "question": "No reviewed source provides a common trust registry binding an MCP server endpoint, canonical tool name, version or code digest, provenance attestation, current scopes, and revocation state; what identity and namespace rules should Puppet Master define?",
+      "evidence_class": "no_evidence",
+      "source_urls": [
+        "https://modelcontextprotocol.io/specification/2025-11-25/server/tools",
+        "https://owasp.org/www-project-mcp-top-10/",
+        "https://slsa.dev/spec/v1.2/provenance"
+      ]
+    }
+  ],
+  "self_attestation": {
+    "current_web_research_performed": true,
+    "official_or_primary_sources_first": true,
+    "direct_urls_only": true,
+    "source_count_contract_checked": true,
+    "supported_inference_no_evidence_labels_present": true,
+    "no_fabricated_claims": true,
+    "no_long_quotations": true,
+    "topic_and_refs_binding_verified": true,
+    "exact_attempt_id_verified": true,
+    "fresh_direct_terminal_contract_acknowledged": true
+  }
+}

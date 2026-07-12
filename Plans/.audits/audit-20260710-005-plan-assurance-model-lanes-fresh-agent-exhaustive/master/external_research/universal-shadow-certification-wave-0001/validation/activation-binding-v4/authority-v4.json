@@ -1,0 +1,111 @@
+{
+  "schema_version": "universal-shadow-certification-activation-binding-authority-v4",
+  "audit_id": "audit-20260710-005-plan-assurance-model-lanes-fresh-agent-exhaustive",
+  "wave_id": "universal-shadow-certification-wave-0001",
+  "status": "READY_FOR_FRESH_INDEPENDENT_PRELAUNCH_V4",
+  "activation_authorized": false,
+  "certification_credit": 0,
+  "cache_reconciliation_path": "master/external_research/universal-shadow-certification-wave-0001/validation/activation-binding-v4/cache-reconciliation-v4.json",
+  "cache_reconciliation_sha256": "9fa68173ccaabf3d8945a98fd0bee08d1ef26938cefe995c21f1bf37e3f356f0",
+  "candidate_snapshot_path": "master/external_research/universal-shadow-certification-wave-0001/validation/activation-binding-v3/candidate-snapshot-v3.json",
+  "candidate_snapshot_sha256": "4726d4c6caa003b79d893dcc445a7e552c7d492f5eb2e3a7647708654a55e5f4",
+  "candidate": {
+    "assignments": 16,
+    "features": 3888,
+    "features_per_assignment": 243,
+    "owner_domains": 16,
+    "source_assignments_per_packet": 24,
+    "coverage_digest": "91f8e13d91dc3615781c9592abade65072b45514a4b515471e96750409586ca3",
+    "packet_root_sha256": "2ef4c307455eae300ade6c487a2816469c2551e9e8afc76014c700c2a8e29926",
+    "intent_root_sha256": "e9e009c14c3e0fb9c1ced388a3300c030822c5d7984b86923e65661e85db42fe",
+    "result_schema_sha256": "d0aad92e52ece20c3164535b2a9fa7a780e57f49343cd7a1ba9ad96d28eec0b1"
+  },
+  "dependency_binding_v1": {
+    "cache_terminal_report_sha256": "bfb3a7fc8a3723994f23930085f5989848c1aac85b4a6b39ed4dc0d15e0b3782",
+    "cache_authority_sha256": "e04b1d8e2b903e1a03b48f2b7cdecf740a4d0687fb29400ee16b1d712d52e855",
+    "semantic_tree_sha256": "f117d8770a942f1760a6555f7544e697d5fdfc2a06a8af608f300e94ac75ee95",
+    "runtime_tree_sha256": "37e2762646b7c6c49af370b5ecf35b03b0d70258536fdb9faa953953b6ac4517",
+    "cache_tree_sha256": "b7262c3dd93051aaa7c3278c2a24ae9c1e4ee1c49a050e17554f18fc589e7ba5",
+    "semantic_file_count": 152,
+    "runtime_file_count": 191,
+    "cache_file_count": 39,
+    "validator_authority_sha256": "9eec930af0efebee5734892d2d0d9e5836a2bb79928c817492cd73a1ea7d4b97",
+    "validator_sha256": "789bca95c1dbd8ef89a5db06c041c23c67ef330324552ebb1e3602fd24cfa254",
+    "validator_tests_sha256": "f42b563c1c13010695f2ab3cab37eef4d763738928c48655f59a5a746ce79961",
+    "activation_contract_v2_sha256": "c06a674aabe43c3f4732e1c51043c082dcf13a07757b0260380b2904030e2048",
+    "activation_generator_v2_sha256": "6d3dfd17c25a1d7ec63b3be50f5912f5800a801260f53525fa230b7137a450bf",
+    "dependency_authority_sha256": "89d86715ed9760a2f9469733bf43cb6099784710b97bccf1b656e9520d0d3afb",
+    "install_receipt_sha256": "f36f64777e31a3d993a3e1fc03ed4d46182b77667d20f81bba6eb5ffc56462f8",
+    "requirements_lock_sha256": "a70d91fb9e7a4efbdded91709cb942d65be08c94f7ea58e473b3f0b1c190996d",
+    "source_registry_sha256": "23ca01e5f0117b8f8637168c883dc99cd459387920629f6ee34be7985b9e9005",
+    "wheel_manifest_sha256": "c662aa4821ea4980210c248711d76afd25c6e296b9367458467f19f1a7665f40"
+  },
+  "v3_lineage": {
+    "preparation_report_sha256": "6e305c66489ea39c152dc93020c5f408ab433fc278552d262b45a64fde451ccc",
+    "failed_luna_report_sha256": "c6da2d69cb2950ec2ed1cfbcfa80900af3c317daae0e660f2b4dd6c4868dddb5",
+    "authority_sha256": "aeb345fa23ea3604f812acc14706f18ef2f0b9a1e234919424ecf6d692d0a8e0",
+    "candidate_snapshot_sha256": "4726d4c6caa003b79d893dcc445a7e552c7d492f5eb2e3a7647708654a55e5f4",
+    "root_reconciliation_sha256": "91cf2e5c1b6e275986d8227e60cc48ade1931ce9e8e5a79f83874f753a9e51f7",
+    "activation_contract_sha256": "6fc66818b4980c1cee3934af14dcb5412257e62413cbc153a3583629bdcbd596",
+    "generator_sha256": "3c7bd9a2e45687d9a60c86f01de013af5bb642931a4de8ad663a1f3a01e15bb7",
+    "verifier_sha256": "011319182ae6c0554582b84ff191db014a7e94bbf26ad0655e4fa02cef8112a0",
+    "tests_sha256": "54f06a651d6223d79b48c236dbea57ae43bbb7169237dc515505ead663172fa5",
+    "frozen_tests": {"passed": 352, "total": 352},
+    "v3_failure_preserved": true
+  },
+  "v3_source_controls": {
+    "architecture_sha256": "027ff81d0d73c9ea04a66557d1fd9270ece11816058808e5b60b1fb1bc1813f6",
+    "batch_authority_sha256": "fe18c2c3dfc80a6481701c4e79387d0221a95d81784949b354b89b7f736abe24",
+    "batch_manifest_sha256": "f41c967a3d2650031c0b8c74a83c410ca168aa8704131b6986c1c70309e68295",
+    "launch_seal_sha256": "7477cb53229aa72883296b87e9339db83b43b0c5208b3ae1be8d2d359e328ebb",
+    "leaf_prompt_sha256": "18470ecb4a53a7f737b35e98debde8fef17f36ea31fe99ba73dc946cc72e8ef6",
+    "native_capture_contract_sha256": "42ae6690b34249eca9a617104f223f4c9e4b41278876254be0a1eec91215da93",
+    "packet_registry_sha256": "ec4df1ce8b250c76d0daba5e93a94c5318d8aea82942d55c7145eed43c200ba8",
+    "receipt_contract_sha256": "9922535622d3e77cc818d40d0ba811bb5fa1bd90fe44af4315bda02a09692767",
+    "result_schema_sha256": "d0aad92e52ece20c3164535b2a9fa7a780e57f49343cd7a1ba9ad96d28eec0b1"
+  },
+  "runtime": {
+    "python_executable_sha256": "eb9d74b9c7cfdfb2c9b91614edb2c3607360ba46c5aa7fc4557b3a4a23e97cff",
+    "python_version": "3.12.13",
+    "platform": "macOS arm64",
+    "jsonschema_version": "4.26.0",
+    "validator_class": "jsonschema.Draft202012Validator",
+    "network_used": false,
+    "global_install": false
+  },
+  "routing": {
+    "policy_path": "master/coordination/MODEL_LANE_ROUTING_POLICY_V2.json",
+    "policy_sha256": "9105752f30b42d482454e8df7782bda95992d94ae7b149977e280ac83df83544",
+    "parent_controller_thread_id": "019f5078-6501-7223-b52f-2251010bdc41",
+    "parent_model": "gpt-5.6-luna",
+    "parent_reasoning_effort": "max",
+    "child_model": "gpt-5.6-luna",
+    "child_reasoning_effort": "max",
+    "fork_turns": "none",
+    "fresh_direct": true,
+    "descendants_forbidden": true,
+    "followups_forbidden": true,
+    "retries_forbidden": true
+  },
+  "v10": {
+    "path": "master/coordination/CONCURRENCY_POLICY_V10.json",
+    "sha256": "0fbaad08800f3f5e8e122e7638e2537382d9c6f6be5fc93afcd307a3a42098f1",
+    "atomic_cap": 16,
+    "rolling_cap": 40
+  },
+  "prospective_scheduling_v11": {
+    "path": "master/coordination/CONCURRENCY_POLICY_V11.json",
+    "sha256": "6717f715c8a32dea88d7e79e70fca87aeb4a0b637853da3742c5c6e6a0c9a086",
+    "rolling_semantic_max": 48,
+    "preferred_rolling_range": [40, 48],
+    "atomic_transaction_cap": 16,
+    "forbidden_atomic_sizes": [32, 40, 48],
+    "separately_gated_disjoint_transactions_only": true,
+    "v10_bound_in_flight_work_preserved": true,
+    "restamp_or_interrupt_forbidden": true
+  },
+  "tool_hashes": {
+    "verify_activation_binding_v4.py": "7ea06af60c33f7eb9f76b0eff02b78c03b8b178d13fcbb99c43d8e6f27e02bb0",
+    "test_activation_binding_v4.py": "1c2cad2cbc2130a413137665a7477bc040e3f7285a13997842743fdce4cfd103"
+  }
+}

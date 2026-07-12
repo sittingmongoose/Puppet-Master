@@ -1870,7 +1870,6 @@
     "PWIZ-004",
     "PWIZ-005",
     "PWIZ-006",
-    "PWIZ-007",
     "PWIZ-008",
     "PWIZ-009",
     "PWIZ-010",
@@ -2080,7 +2079,11 @@
     "EP-096",
     "F-067",
     "F2-199",
+    "F3-421",
+    "F3-419",
+    "PWIZ-007",
     "F3-392",
+    "F3-420",
     "F3-390",
     "0PI-055",
     "GRS-002",
@@ -2213,6 +2216,7 @@
     "F2-192",
     "MS-116",
     "PWIZ-014",
+    "PWIZ-019",
     "RGV-002",
     "RGV-004",
     "RGV-006",
@@ -19796,6 +19800,56 @@
       "edge_type": "depends_on",
       "from": "F3-418",
       "to": "UF-087"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "F3-419",
+      "to": "F3-041"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "F3-419",
+      "to": "F3-071"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "F3-419",
+      "to": "F3-217"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "F3-420",
+      "to": "F3-131"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "F3-420",
+      "to": "F3-149"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "F3-420",
+      "to": "F3-357"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "F3-421",
+      "to": "F3-131"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "F3-421",
+      "to": "F3-132"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "F3-421",
+      "to": "F3-140"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "F3-421",
+      "to": "F3-152"
     },
     {
       "edge_type": "depends_on",
@@ -38034,6 +38088,16 @@
     },
     {
       "edge_type": "depends_on",
+      "from": "PWIZ-007",
+      "to": "F3-146"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "PWIZ-007",
+      "to": "F3-322"
+    },
+    {
+      "edge_type": "depends_on",
       "from": "PWIZ-014",
       "to": "PWIZ-010"
     },
@@ -38116,6 +38180,21 @@
       "edge_type": "depends_on",
       "from": "PWIZ-018",
       "to": "PWIZ-014"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "PWIZ-019",
+      "to": "F3-131"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "PWIZ-019",
+      "to": "F3-357"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "PWIZ-019",
+      "to": "PWIZ-013"
     },
     {
       "edge_type": "depends_on",
@@ -75103,7 +75182,7 @@
       "to": "PG-061"
     }
   ],
-  "generated_at_utc": "2026-07-09T18:12:23Z",
+  "generated_at_utc": "2026-07-12T02:24:28Z",
   "nodes": [
     {
       "context_scope": "residual_plan_standardization",
@@ -115226,6 +115305,57 @@
       "unit_type": "requirement"
     },
     {
+      "context_scope": "finalgui_standardization",
+      "gui_related": true,
+      "owner_doc": "Plans/FinalGUISpec.md",
+      "plan_unit_id": "F3-419",
+      "reasoning_tier": "standard",
+      "risk_class": "finalgui_drift",
+      "source_location": {
+        "heading": "F3-419 - Activity Bar Reorder, Hide, And More Tray",
+        "heading_level": 3,
+        "heading_line": 27350,
+        "line": 27352,
+        "path": "Plans/FinalGUISpec.md"
+      },
+      "status": "accepted",
+      "unit_type": "requirement"
+    },
+    {
+      "context_scope": "finalgui_standardization",
+      "gui_related": true,
+      "owner_doc": "Plans/FinalGUISpec.md",
+      "plan_unit_id": "F3-420",
+      "reasoning_tier": "standard",
+      "risk_class": "finalgui_drift",
+      "source_location": {
+        "heading": "F3-420 - Chat Component Unification And Embedded Chrome Flags",
+        "heading_level": 3,
+        "heading_line": 27404,
+        "line": 27406,
+        "path": "Plans/FinalGUISpec.md"
+      },
+      "status": "accepted",
+      "unit_type": "requirement"
+    },
+    {
+      "context_scope": "finalgui_standardization",
+      "gui_related": true,
+      "owner_doc": "Plans/FinalGUISpec.md",
+      "plan_unit_id": "F3-421",
+      "reasoning_tier": "standard",
+      "risk_class": "finalgui_drift",
+      "source_location": {
+        "heading": "F3-421 - Editor Tab Close, Pane Close, And Tab Overflow",
+        "heading_level": 3,
+        "heading_line": 27464,
+        "line": 27466,
+        "path": "Plans/FinalGUISpec.md"
+      },
+      "status": "accepted",
+      "unit_type": "requirement"
+    },
+    {
       "context_scope": "plan_standardization",
       "gui_related": false,
       "owner_doc": "Plans/feature-list.md",
@@ -150960,6 +151090,23 @@
       "unit_type": "requirement"
     },
     {
+      "context_scope": "planning_wizard_embedded_chat_instances",
+      "gui_related": true,
+      "owner_doc": "Plans/Planning_Wizard.md",
+      "plan_unit_id": "PWIZ-019",
+      "reasoning_tier": "standard",
+      "risk_class": "owner_drift",
+      "source_location": {
+        "heading": "PWIZ-019 - Embedded Assistant Chat Instances In Wizard Workspace",
+        "heading_level": 3,
+        "heading_line": 1558,
+        "line": 1560,
+        "path": "Plans/Planning_Wizard.md"
+      },
+      "status": "accepted",
+      "unit_type": "requirement"
+    },
+    {
       "context_scope": "runtime_artifacts_retired_bridge",
       "gui_related": false,
       "owner_doc": "Plans/Runtime_Artifacts_Panel.md",
@@ -169224,10 +169371,10 @@
     "build_order_available": true,
     "build_order_blocked_node_count": 0,
     "cycle_blocker_count": 0,
-    "depends_on_edge_count": 11847,
+    "depends_on_edge_count": 11862,
     "downstream_blocked_node_count": 0,
-    "edge_count": 13912,
-    "node_count": 5536,
+    "edge_count": 13927,
+    "node_count": 5540,
     "true_cycle_component_count": 0,
     "unblocks_edge_count": 2065,
     "unresolved_reference_count": 0

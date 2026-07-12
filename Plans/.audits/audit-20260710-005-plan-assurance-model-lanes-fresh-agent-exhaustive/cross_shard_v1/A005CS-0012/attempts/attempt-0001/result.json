@@ -1,0 +1,1208 @@
+{
+  "audit_id": "audit-20260710-005-plan-assurance-model-lanes-fresh-agent-exhaustive",
+  "schema_version": "cross-shard-result-v1",
+  "phase": "cross_shard_same_owner_candidate_discovery",
+  "assignment_id": "A005CS-0012",
+  "attempt_id": "attempt-0001",
+  "task_thread_id": "/root/a005_cross_shard_0012_attempt_0001_terminal",
+  "model": "gpt-5.6-sol",
+  "reasoning_effort": "xhigh",
+  "status": "completed",
+  "input_binding": {
+    "packet_id": "CSPKT-0012",
+    "packet_sha256": "a99087d25db382b91bc3d1017471f822d3032ba892adb756712d7459538f5a12",
+    "anchor_refs_digest": "3507fac83cb7d7cd32603feeda9c620e08607bd15b2b9b8b2088275ea3665678",
+    "comparator_refs_digest": "e267ea4a2e1a585c29d62a885bb218019456771906c2199652df1519c6abaed1"
+  },
+  "coverage": {
+    "anchor_count": 73,
+    "anchor_refs": [
+      "OPF::A005OM-0012::PF-0147",
+      "OPF::A005OM-0012::PF-0148",
+      "OPF::A005OM-0012::PF-0149",
+      "OPF::A005OM-0012::PF-0150",
+      "OPF::A005OM-0012::PF-0151",
+      "OPF::A005OM-0012::PF-0152",
+      "OPF::A005OM-0012::PF-0153",
+      "OPF::A005OM-0012::PF-0154",
+      "OPF::A005OM-0012::PF-0155",
+      "OPF::A005OM-0012::PF-0156",
+      "OPF::A005OM-0012::PF-0157",
+      "OPF::A005OM-0012::PF-0158",
+      "OPF::A005OM-0012::PF-0159",
+      "OPF::A005OM-0012::PF-0160",
+      "OPF::A005OM-0012::PF-0161",
+      "OPF::A005OM-0012::PF-0162",
+      "OPF::A005OM-0012::PF-0163",
+      "OPF::A005OM-0012::PF-0164",
+      "OPF::A005OM-0012::PF-0165",
+      "OPF::A005OM-0012::PF-0166",
+      "OPF::A005OM-0012::PF-0167",
+      "OPF::A005OM-0012::PF-0168",
+      "OPF::A005OM-0012::PF-0169",
+      "OPF::A005OM-0012::PF-0170",
+      "OPF::A005OM-0012::PF-0171",
+      "OPF::A005OM-0012::PF-0172",
+      "OPF::A005OM-0012::PF-0173",
+      "OPF::A005OM-0012::PF-0174",
+      "OPF::A005OM-0012::PF-0175",
+      "OPF::A005OM-0012::PF-0176",
+      "OPF::A005OM-0012::PF-0177",
+      "OPF::A005OM-0012::PF-0178",
+      "OPF::A005OM-0012::PF-0179",
+      "OPF::A005OM-0012::PF-0180",
+      "OPF::A005OM-0012::PF-0181",
+      "OPF::A005OM-0012::PF-0182",
+      "OPF::A005OM-0012::PF-0183",
+      "OPF::A005OM-0012::PF-0184",
+      "OPF::A005OM-0012::PF-0185",
+      "OPF::A005OM-0012::PF-0186",
+      "OPF::A005OM-0012::PF-0187",
+      "OPF::A005OM-0012::PF-0188",
+      "OPF::A005OM-0012::PF-0189",
+      "OPF::A005OM-0012::PF-0190",
+      "OPF::A005OM-0012::PF-0191",
+      "OPF::A005OM-0012::PF-0192",
+      "OPF::A005OM-0012::PF-0193",
+      "OPF::A005OM-0012::PF-0194",
+      "OPF::A005OM-0012::PF-0195",
+      "OPF::A005OM-0012::PF-0196",
+      "OPF::A005OM-0012::PF-0197",
+      "OPF::A005OM-0012::PF-0198",
+      "OPF::A005OM-0012::PF-0199",
+      "OPF::A005OM-0012::PF-0200",
+      "OPF::A005OM-0012::PF-0201",
+      "OPF::A005OM-0012::PF-0202",
+      "OPF::A005OM-0012::PF-0203",
+      "OPF::A005OM-0012::PF-0204",
+      "OPF::A005OM-0012::PF-0205",
+      "OPF::A005OM-0012::PF-0206",
+      "OPF::A005OM-0012::PF-0207",
+      "OPF::A005OM-0012::PF-0208",
+      "OPF::A005OM-0012::PF-0209",
+      "OPF::A005OM-0012::PF-0210",
+      "OPF::A005OM-0012::PF-0211",
+      "OPF::A005OM-0012::PF-0212",
+      "OPF::A005OM-0012::PF-0213",
+      "OPF::A005OM-0012::PF-0214",
+      "OPF::A005OM-0012::PF-0215",
+      "OPF::A005OM-0012::PF-0216",
+      "OPF::A005OM-0012::PF-0217",
+      "OPF::A005OM-0012::PF-0218",
+      "OPF::A005OM-0012::PF-0219"
+    ],
+    "comparator_count": 222,
+    "comparator_refs": [
+      "OPF::A005OM-0014::PF-0001",
+      "OPF::A005OM-0014::PF-0002",
+      "OPF::A005OM-0014::PF-0003",
+      "OPF::A005OM-0014::PF-0004",
+      "OPF::A005OM-0014::PF-0005",
+      "OPF::A005OM-0014::PF-0006",
+      "OPF::A005OM-0014::PF-0007",
+      "OPF::A005OM-0014::PF-0008",
+      "OPF::A005OM-0014::PF-0009",
+      "OPF::A005OM-0014::PF-0010",
+      "OPF::A005OM-0014::PF-0011",
+      "OPF::A005OM-0014::PF-0012",
+      "OPF::A005OM-0014::PF-0013",
+      "OPF::A005OM-0014::PF-0014",
+      "OPF::A005OM-0014::PF-0015",
+      "OPF::A005OM-0014::PF-0016",
+      "OPF::A005OM-0014::PF-0017",
+      "OPF::A005OM-0014::PF-0018",
+      "OPF::A005OM-0014::PF-0019",
+      "OPF::A005OM-0014::PF-0020",
+      "OPF::A005OM-0014::PF-0021",
+      "OPF::A005OM-0014::PF-0022",
+      "OPF::A005OM-0014::PF-0023",
+      "OPF::A005OM-0014::PF-0024",
+      "OPF::A005OM-0014::PF-0025",
+      "OPF::A005OM-0014::PF-0026",
+      "OPF::A005OM-0014::PF-0027",
+      "OPF::A005OM-0014::PF-0028",
+      "OPF::A005OM-0014::PF-0029",
+      "OPF::A005OM-0014::PF-0030",
+      "OPF::A005OM-0014::PF-0031",
+      "OPF::A005OM-0014::PF-0032",
+      "OPF::A005OM-0014::PF-0033",
+      "OPF::A005OM-0014::PF-0034",
+      "OPF::A005OM-0014::PF-0035",
+      "OPF::A005OM-0014::PF-0036",
+      "OPF::A005OM-0014::PF-0037",
+      "OPF::A005OM-0014::PF-0038",
+      "OPF::A005OM-0014::PF-0039",
+      "OPF::A005OM-0014::PF-0040",
+      "OPF::A005OM-0014::PF-0041",
+      "OPF::A005OM-0014::PF-0042",
+      "OPF::A005OM-0014::PF-0043",
+      "OPF::A005OM-0014::PF-0044",
+      "OPF::A005OM-0014::PF-0045",
+      "OPF::A005OM-0014::PF-0046",
+      "OPF::A005OM-0014::PF-0047",
+      "OPF::A005OM-0014::PF-0048",
+      "OPF::A005OM-0014::PF-0049",
+      "OPF::A005OM-0014::PF-0050",
+      "OPF::A005OM-0014::PF-0051",
+      "OPF::A005OM-0014::PF-0052",
+      "OPF::A005OM-0014::PF-0053",
+      "OPF::A005OM-0014::PF-0054",
+      "OPF::A005OM-0014::PF-0055",
+      "OPF::A005OM-0014::PF-0056",
+      "OPF::A005OM-0014::PF-0057",
+      "OPF::A005OM-0014::PF-0058",
+      "OPF::A005OM-0014::PF-0059",
+      "OPF::A005OM-0014::PF-0060",
+      "OPF::A005OM-0014::PF-0061",
+      "OPF::A005OM-0014::PF-0062",
+      "OPF::A005OM-0014::PF-0063",
+      "OPF::A005OM-0014::PF-0064",
+      "OPF::A005OM-0014::PF-0065",
+      "OPF::A005OM-0014::PF-0066",
+      "OPF::A005OM-0014::PF-0067",
+      "OPF::A005OM-0014::PF-0068",
+      "OPF::A005OM-0014::PF-0069",
+      "OPF::A005OM-0014::PF-0070",
+      "OPF::A005OM-0014::PF-0071",
+      "OPF::A005OM-0014::PF-0072",
+      "OPF::A005OM-0014::PF-0073",
+      "OPF::A005OM-0014::PF-0074",
+      "OPF::A005OM-0014::PF-0075",
+      "OPF::A005OM-0014::PF-0076",
+      "OPF::A005OM-0014::PF-0077",
+      "OPF::A005OM-0014::PF-0078",
+      "OPF::A005OM-0014::PF-0079",
+      "OPF::A005OM-0014::PF-0080",
+      "OPF::A005OM-0014::PF-0081",
+      "OPF::A005OM-0014::PF-0082",
+      "OPF::A005OM-0014::PF-0083",
+      "OPF::A005OM-0014::PF-0084",
+      "OPF::A005OM-0014::PF-0085",
+      "OPF::A005OM-0014::PF-0086",
+      "OPF::A005OM-0014::PF-0087",
+      "OPF::A005OM-0014::PF-0088",
+      "OPF::A005OM-0014::PF-0089",
+      "OPF::A005OM-0014::PF-0090",
+      "OPF::A005OM-0014::PF-0091",
+      "OPF::A005OM-0014::PF-0092",
+      "OPF::A005OM-0014::PF-0093",
+      "OPF::A005OM-0014::PF-0094",
+      "OPF::A005OM-0014::PF-0095",
+      "OPF::A005OM-0014::PF-0096",
+      "OPF::A005OM-0014::PF-0097",
+      "OPF::A005OM-0014::PF-0098",
+      "OPF::A005OM-0014::PF-0099",
+      "OPF::A005OM-0014::PF-0100",
+      "OPF::A005OM-0014::PF-0101",
+      "OPF::A005OM-0014::PF-0102",
+      "OPF::A005OM-0014::PF-0103",
+      "OPF::A005OM-0014::PF-0104",
+      "OPF::A005OM-0014::PF-0105",
+      "OPF::A005OM-0014::PF-0106",
+      "OPF::A005OM-0014::PF-0107",
+      "OPF::A005OM-0014::PF-0108",
+      "OPF::A005OM-0014::PF-0109",
+      "OPF::A005OM-0014::PF-0110",
+      "OPF::A005OM-0014::PF-0111",
+      "OPF::A005OM-0014::PF-0112",
+      "OPF::A005OM-0014::PF-0113",
+      "OPF::A005OM-0014::PF-0114",
+      "OPF::A005OM-0014::PF-0115",
+      "OPF::A005OM-0014::PF-0116",
+      "OPF::A005OM-0014::PF-0117",
+      "OPF::A005OM-0014::PF-0118",
+      "OPF::A005OM-0014::PF-0119",
+      "OPF::A005OM-0014::PF-0120",
+      "OPF::A005OM-0014::PF-0121",
+      "OPF::A005OM-0014::PF-0122",
+      "OPF::A005OM-0014::PF-0123",
+      "OPF::A005OM-0014::PF-0124",
+      "OPF::A005OM-0014::PF-0125",
+      "OPF::A005OM-0014::PF-0126",
+      "OPF::A005OM-0014::PF-0127",
+      "OPF::A005OM-0014::PF-0128",
+      "OPF::A005OM-0014::PF-0129",
+      "OPF::A005OM-0014::PF-0130",
+      "OPF::A005OM-0014::PF-0131",
+      "OPF::A005OM-0014::PF-0132",
+      "OPF::A005OM-0014::PF-0133",
+      "OPF::A005OM-0014::PF-0134",
+      "OPF::A005OM-0014::PF-0135",
+      "OPF::A005OM-0014::PF-0136",
+      "OPF::A005OM-0014::PF-0137",
+      "OPF::A005OM-0014::PF-0138",
+      "OPF::A005OM-0014::PF-0139",
+      "OPF::A005OM-0014::PF-0140",
+      "OPF::A005OM-0014::PF-0141",
+      "OPF::A005OM-0014::PF-0142",
+      "OPF::A005OM-0014::PF-0143",
+      "OPF::A005OM-0014::PF-0144",
+      "OPF::A005OM-0014::PF-0145",
+      "OPF::A005OM-0014::PF-0146",
+      "OPF::A005OM-0014::PF-0147",
+      "OPF::A005OM-0014::PF-0148",
+      "OPF::A005OM-0014::PF-0149",
+      "OPF::A005OM-0014::PF-0150",
+      "OPF::A005OM-0014::PF-0151",
+      "OPF::A005OM-0014::PF-0152",
+      "OPF::A005OM-0014::PF-0153",
+      "OPF::A005OM-0014::PF-0154",
+      "OPF::A005OM-0014::PF-0155",
+      "OPF::A005OM-0014::PF-0156",
+      "OPF::A005OM-0014::PF-0157",
+      "OPF::A005OM-0014::PF-0158",
+      "OPF::A005OM-0014::PF-0159",
+      "OPF::A005OM-0014::PF-0160",
+      "OPF::A005OM-0014::PF-0161",
+      "OPF::A005OM-0014::PF-0162",
+      "OPF::A005OM-0014::PF-0163",
+      "OPF::A005OM-0014::PF-0164",
+      "OPF::A005OM-0014::PF-0165",
+      "OPF::A005OM-0014::PF-0166",
+      "OPF::A005OM-0014::PF-0167",
+      "OPF::A005OM-0014::PF-0168",
+      "OPF::A005OM-0014::PF-0169",
+      "OPF::A005OM-0014::PF-0170",
+      "OPF::A005OM-0014::PF-0171",
+      "OPF::A005OM-0014::PF-0172",
+      "OPF::A005OM-0014::PF-0173",
+      "OPF::A005OM-0014::PF-0174",
+      "OPF::A005OM-0014::PF-0175",
+      "OPF::A005OM-0014::PF-0176",
+      "OPF::A005OM-0014::PF-0177",
+      "OPF::A005OM-0014::PF-0178",
+      "OPF::A005OM-0014::PF-0179",
+      "OPF::A005OM-0014::PF-0180",
+      "OPF::A005OM-0014::PF-0181",
+      "OPF::A005OM-0014::PF-0182",
+      "OPF::A005OM-0014::PF-0183",
+      "OPF::A005OM-0014::PF-0184",
+      "OPF::A005OM-0014::PF-0185",
+      "OPF::A005OM-0014::PF-0186",
+      "OPF::A005OM-0014::PF-0187",
+      "OPF::A005OM-0014::PF-0188",
+      "OPF::A005OM-0014::PF-0189",
+      "OPF::A005OM-0014::PF-0190",
+      "OPF::A005OM-0014::PF-0191",
+      "OPF::A005OM-0014::PF-0192",
+      "OPF::A005OM-0014::PF-0193",
+      "OPF::A005OM-0014::PF-0194",
+      "OPF::A005OM-0014::PF-0195",
+      "OPF::A005OM-0014::PF-0196",
+      "OPF::A005OM-0014::PF-0197",
+      "OPF::A005OM-0014::PF-0198",
+      "OPF::A005OM-0014::PF-0199",
+      "OPF::A005OM-0014::PF-0200",
+      "OPF::A005OM-0014::PF-0201",
+      "OPF::A005OM-0014::PF-0202",
+      "OPF::A005OM-0014::PF-0203",
+      "OPF::A005OM-0014::PF-0204",
+      "OPF::A005OM-0014::PF-0205",
+      "OPF::A005OM-0014::PF-0206",
+      "OPF::A005OM-0014::PF-0207",
+      "OPF::A005OM-0014::PF-0208",
+      "OPF::A005OM-0014::PF-0209",
+      "OPF::A005OM-0014::PF-0210",
+      "OPF::A005OM-0014::PF-0211",
+      "OPF::A005OM-0014::PF-0212",
+      "OPF::A005OM-0014::PF-0213",
+      "OPF::A005OM-0014::PF-0214",
+      "OPF::A005OM-0014::PF-0215",
+      "OPF::A005OM-0014::PF-0216",
+      "OPF::A005OM-0014::PF-0217",
+      "OPF::A005OM-0014::PF-0218",
+      "OPF::A005OM-0014::PF-0219",
+      "OPF::A005OM-0014::PF-0220",
+      "OPF::A005OM-0014::PF-0221",
+      "OPF::A005OM-0014::PF-0222"
+    ]
+  },
+  "decisions": [
+    {
+      "anchor_provisional_feature_ref": "OPF::A005OM-0012::PF-0147",
+      "compared_against_count": 222,
+      "merge_candidate_refs": [],
+      "related_but_distinct_refs": [
+        "OPF::A005OM-0014::PF-0183"
+      ],
+      "rationale": "All 222 comparators were exhaustively compared. The listed refs are plausible near-neighbors to OPF::A005OM-0012::PF-0147, but each differs in authority, lifecycle, consumer, state machine, recovery contract, security boundary, or user-visible promise; none is a same-feature merge candidate.",
+      "confidence": 0.92
+    },
+    {
+      "anchor_provisional_feature_ref": "OPF::A005OM-0012::PF-0148",
+      "compared_against_count": 222,
+      "merge_candidate_refs": [],
+      "related_but_distinct_refs": [
+        "OPF::A005OM-0014::PF-0012",
+        "OPF::A005OM-0014::PF-0071",
+        "OPF::A005OM-0014::PF-0047"
+      ],
+      "rationale": "All 222 comparators were exhaustively compared. The listed refs are plausible near-neighbors to OPF::A005OM-0012::PF-0148, but each differs in authority, lifecycle, consumer, state machine, recovery contract, security boundary, or user-visible promise; none is a same-feature merge candidate.",
+      "confidence": 0.92
+    },
+    {
+      "anchor_provisional_feature_ref": "OPF::A005OM-0012::PF-0149",
+      "compared_against_count": 222,
+      "merge_candidate_refs": [],
+      "related_but_distinct_refs": [
+        "OPF::A005OM-0014::PF-0160"
+      ],
+      "rationale": "All 222 comparators were exhaustively compared. The listed refs are plausible near-neighbors to OPF::A005OM-0012::PF-0149, but each differs in authority, lifecycle, consumer, state machine, recovery contract, security boundary, or user-visible promise; none is a same-feature merge candidate.",
+      "confidence": 0.92
+    },
+    {
+      "anchor_provisional_feature_ref": "OPF::A005OM-0012::PF-0150",
+      "compared_against_count": 222,
+      "merge_candidate_refs": [],
+      "related_but_distinct_refs": [
+        "OPF::A005OM-0014::PF-0096",
+        "OPF::A005OM-0014::PF-0079"
+      ],
+      "rationale": "All 222 comparators were exhaustively compared. The listed refs are plausible near-neighbors to OPF::A005OM-0012::PF-0150, but each differs in authority, lifecycle, consumer, state machine, recovery contract, security boundary, or user-visible promise; none is a same-feature merge candidate.",
+      "confidence": 0.92
+    },
+    {
+      "anchor_provisional_feature_ref": "OPF::A005OM-0012::PF-0151",
+      "compared_against_count": 222,
+      "merge_candidate_refs": [],
+      "related_but_distinct_refs": [
+        "OPF::A005OM-0014::PF-0096",
+        "OPF::A005OM-0014::PF-0195",
+        "OPF::A005OM-0014::PF-0202"
+      ],
+      "rationale": "All 222 comparators were exhaustively compared. The listed refs are plausible near-neighbors to OPF::A005OM-0012::PF-0151, but each differs in authority, lifecycle, consumer, state machine, recovery contract, security boundary, or user-visible promise; none is a same-feature merge candidate.",
+      "confidence": 0.92
+    },
+    {
+      "anchor_provisional_feature_ref": "OPF::A005OM-0012::PF-0152",
+      "compared_against_count": 222,
+      "merge_candidate_refs": [],
+      "related_but_distinct_refs": [
+        "OPF::A005OM-0014::PF-0096",
+        "OPF::A005OM-0014::PF-0124",
+        "OPF::A005OM-0014::PF-0192"
+      ],
+      "rationale": "All 222 comparators were exhaustively compared. The listed refs are plausible near-neighbors to OPF::A005OM-0012::PF-0152, but each differs in authority, lifecycle, consumer, state machine, recovery contract, security boundary, or user-visible promise; none is a same-feature merge candidate.",
+      "confidence": 0.92
+    },
+    {
+      "anchor_provisional_feature_ref": "OPF::A005OM-0012::PF-0153",
+      "compared_against_count": 222,
+      "merge_candidate_refs": [],
+      "related_but_distinct_refs": [
+        "OPF::A005OM-0014::PF-0016",
+        "OPF::A005OM-0014::PF-0157",
+        "OPF::A005OM-0014::PF-0173"
+      ],
+      "rationale": "All 222 comparators were exhaustively compared. The listed refs are plausible near-neighbors to OPF::A005OM-0012::PF-0153, but each differs in authority, lifecycle, consumer, state machine, recovery contract, security boundary, or user-visible promise; none is a same-feature merge candidate.",
+      "confidence": 0.92
+    },
+    {
+      "anchor_provisional_feature_ref": "OPF::A005OM-0012::PF-0154",
+      "compared_against_count": 222,
+      "merge_candidate_refs": [],
+      "related_but_distinct_refs": [
+        "OPF::A005OM-0014::PF-0097"
+      ],
+      "rationale": "All 222 comparators were exhaustively compared. The listed refs are plausible near-neighbors to OPF::A005OM-0012::PF-0154, but each differs in authority, lifecycle, consumer, state machine, recovery contract, security boundary, or user-visible promise; none is a same-feature merge candidate.",
+      "confidence": 0.92
+    },
+    {
+      "anchor_provisional_feature_ref": "OPF::A005OM-0012::PF-0155",
+      "compared_against_count": 222,
+      "merge_candidate_refs": [],
+      "related_but_distinct_refs": [
+        "OPF::A005OM-0014::PF-0097",
+        "OPF::A005OM-0014::PF-0016",
+        "OPF::A005OM-0014::PF-0157"
+      ],
+      "rationale": "All 222 comparators were exhaustively compared. The listed refs are plausible near-neighbors to OPF::A005OM-0012::PF-0155, but each differs in authority, lifecycle, consumer, state machine, recovery contract, security boundary, or user-visible promise; none is a same-feature merge candidate.",
+      "confidence": 0.92
+    },
+    {
+      "anchor_provisional_feature_ref": "OPF::A005OM-0012::PF-0156",
+      "compared_against_count": 222,
+      "merge_candidate_refs": [],
+      "related_but_distinct_refs": [
+        "OPF::A005OM-0014::PF-0100",
+        "OPF::A005OM-0014::PF-0101",
+        "OPF::A005OM-0014::PF-0163"
+      ],
+      "rationale": "All 222 comparators were exhaustively compared. The listed refs are plausible near-neighbors to OPF::A005OM-0012::PF-0156, but each differs in authority, lifecycle, consumer, state machine, recovery contract, security boundary, or user-visible promise; none is a same-feature merge candidate.",
+      "confidence": 0.92
+    },
+    {
+      "anchor_provisional_feature_ref": "OPF::A005OM-0012::PF-0157",
+      "compared_against_count": 222,
+      "merge_candidate_refs": [],
+      "related_but_distinct_refs": [
+        "OPF::A005OM-0014::PF-0100",
+        "OPF::A005OM-0014::PF-0163"
+      ],
+      "rationale": "All 222 comparators were exhaustively compared. The listed refs are plausible near-neighbors to OPF::A005OM-0012::PF-0157, but each differs in authority, lifecycle, consumer, state machine, recovery contract, security boundary, or user-visible promise; none is a same-feature merge candidate.",
+      "confidence": 0.92
+    },
+    {
+      "anchor_provisional_feature_ref": "OPF::A005OM-0012::PF-0158",
+      "compared_against_count": 222,
+      "merge_candidate_refs": [],
+      "related_but_distinct_refs": [
+        "OPF::A005OM-0014::PF-0111",
+        "OPF::A005OM-0014::PF-0212"
+      ],
+      "rationale": "All 222 comparators were exhaustively compared. The listed refs are plausible near-neighbors to OPF::A005OM-0012::PF-0158, but each differs in authority, lifecycle, consumer, state machine, recovery contract, security boundary, or user-visible promise; none is a same-feature merge candidate.",
+      "confidence": 0.92
+    },
+    {
+      "anchor_provisional_feature_ref": "OPF::A005OM-0012::PF-0159",
+      "compared_against_count": 222,
+      "merge_candidate_refs": [],
+      "related_but_distinct_refs": [
+        "OPF::A005OM-0014::PF-0155",
+        "OPF::A005OM-0014::PF-0154",
+        "OPF::A005OM-0014::PF-0212"
+      ],
+      "rationale": "All 222 comparators were exhaustively compared. The listed refs are plausible near-neighbors to OPF::A005OM-0012::PF-0159, but each differs in authority, lifecycle, consumer, state machine, recovery contract, security boundary, or user-visible promise; none is a same-feature merge candidate.",
+      "confidence": 0.92
+    },
+    {
+      "anchor_provisional_feature_ref": "OPF::A005OM-0012::PF-0160",
+      "compared_against_count": 222,
+      "merge_candidate_refs": [
+        "OPF::A005OM-0014::PF-0103"
+      ],
+      "related_but_distinct_refs": [
+        "OPF::A005OM-0014::PF-0102",
+        "OPF::A005OM-0014::PF-0172",
+        "OPF::A005OM-0014::PF-0061"
+      ],
+      "rationale": "All 222 comparators were exhaustively compared. OPF::A005OM-0014::PF-0103 represents the same product feature as OPF::A005OM-0012::PF-0160 under the same authority and lifecycle. The related refs are adjacent contracts or consumers with distinct authority, state, recovery, security, or user-visible promises.",
+      "confidence": 0.88
+    },
+    {
+      "anchor_provisional_feature_ref": "OPF::A005OM-0012::PF-0161",
+      "compared_against_count": 222,
+      "merge_candidate_refs": [],
+      "related_but_distinct_refs": [
+        "OPF::A005OM-0014::PF-0104",
+        "OPF::A005OM-0014::PF-0191",
+        "OPF::A005OM-0014::PF-0179"
+      ],
+      "rationale": "All 222 comparators were exhaustively compared. The listed refs are plausible near-neighbors to OPF::A005OM-0012::PF-0161, but each differs in authority, lifecycle, consumer, state machine, recovery contract, security boundary, or user-visible promise; none is a same-feature merge candidate.",
+      "confidence": 0.92
+    },
+    {
+      "anchor_provisional_feature_ref": "OPF::A005OM-0012::PF-0162",
+      "compared_against_count": 222,
+      "merge_candidate_refs": [],
+      "related_but_distinct_refs": [
+        "OPF::A005OM-0014::PF-0133",
+        "OPF::A005OM-0014::PF-0141",
+        "OPF::A005OM-0014::PF-0180",
+        "OPF::A005OM-0014::PF-0193"
+      ],
+      "rationale": "All 222 comparators were exhaustively compared. The listed refs are plausible near-neighbors to OPF::A005OM-0012::PF-0162, but each differs in authority, lifecycle, consumer, state machine, recovery contract, security boundary, or user-visible promise; none is a same-feature merge candidate.",
+      "confidence": 0.92
+    },
+    {
+      "anchor_provisional_feature_ref": "OPF::A005OM-0012::PF-0163",
+      "compared_against_count": 222,
+      "merge_candidate_refs": [
+        "OPF::A005OM-0014::PF-0193"
+      ],
+      "related_but_distinct_refs": [
+        "OPF::A005OM-0014::PF-0105",
+        "OPF::A005OM-0014::PF-0140",
+        "OPF::A005OM-0014::PF-0200"
+      ],
+      "rationale": "All 222 comparators were exhaustively compared. OPF::A005OM-0014::PF-0193 represents the same product feature as OPF::A005OM-0012::PF-0163 under the same authority and lifecycle. The related refs are adjacent contracts or consumers with distinct authority, state, recovery, security, or user-visible promises.",
+      "confidence": 0.88
+    },
+    {
+      "anchor_provisional_feature_ref": "OPF::A005OM-0012::PF-0164",
+      "compared_against_count": 222,
+      "merge_candidate_refs": [],
+      "related_but_distinct_refs": [
+        "OPF::A005OM-0014::PF-0099",
+        "OPF::A005OM-0014::PF-0154"
+      ],
+      "rationale": "All 222 comparators were exhaustively compared. The listed refs are plausible near-neighbors to OPF::A005OM-0012::PF-0164, but each differs in authority, lifecycle, consumer, state machine, recovery contract, security boundary, or user-visible promise; none is a same-feature merge candidate.",
+      "confidence": 0.92
+    },
+    {
+      "anchor_provisional_feature_ref": "OPF::A005OM-0012::PF-0165",
+      "compared_against_count": 222,
+      "merge_candidate_refs": [],
+      "related_but_distinct_refs": [
+        "OPF::A005OM-0014::PF-0099",
+        "OPF::A005OM-0014::PF-0154"
+      ],
+      "rationale": "All 222 comparators were exhaustively compared. The listed refs are plausible near-neighbors to OPF::A005OM-0012::PF-0165, but each differs in authority, lifecycle, consumer, state machine, recovery contract, security boundary, or user-visible promise; none is a same-feature merge candidate.",
+      "confidence": 0.92
+    },
+    {
+      "anchor_provisional_feature_ref": "OPF::A005OM-0012::PF-0166",
+      "compared_against_count": 222,
+      "merge_candidate_refs": [],
+      "related_but_distinct_refs": [
+        "OPF::A005OM-0014::PF-0190",
+        "OPF::A005OM-0014::PF-0176"
+      ],
+      "rationale": "All 222 comparators were exhaustively compared. The listed refs are plausible near-neighbors to OPF::A005OM-0012::PF-0166, but each differs in authority, lifecycle, consumer, state machine, recovery contract, security boundary, or user-visible promise; none is a same-feature merge candidate.",
+      "confidence": 0.92
+    },
+    {
+      "anchor_provisional_feature_ref": "OPF::A005OM-0012::PF-0167",
+      "compared_against_count": 222,
+      "merge_candidate_refs": [],
+      "related_but_distinct_refs": [
+        "OPF::A005OM-0014::PF-0162",
+        "OPF::A005OM-0014::PF-0180",
+        "OPF::A005OM-0014::PF-0192"
+      ],
+      "rationale": "All 222 comparators were exhaustively compared. The listed refs are plausible near-neighbors to OPF::A005OM-0012::PF-0167, but each differs in authority, lifecycle, consumer, state machine, recovery contract, security boundary, or user-visible promise; none is a same-feature merge candidate.",
+      "confidence": 0.92
+    },
+    {
+      "anchor_provisional_feature_ref": "OPF::A005OM-0012::PF-0168",
+      "compared_against_count": 222,
+      "merge_candidate_refs": [],
+      "related_but_distinct_refs": [
+        "OPF::A005OM-0014::PF-0146",
+        "OPF::A005OM-0014::PF-0204",
+        "OPF::A005OM-0014::PF-0180"
+      ],
+      "rationale": "All 222 comparators were exhaustively compared. The listed refs are plausible near-neighbors to OPF::A005OM-0012::PF-0168, but each differs in authority, lifecycle, consumer, state machine, recovery contract, security boundary, or user-visible promise; none is a same-feature merge candidate.",
+      "confidence": 0.92
+    },
+    {
+      "anchor_provisional_feature_ref": "OPF::A005OM-0012::PF-0169",
+      "compared_against_count": 222,
+      "merge_candidate_refs": [],
+      "related_but_distinct_refs": [
+        "OPF::A005OM-0014::PF-0191",
+        "OPF::A005OM-0014::PF-0158"
+      ],
+      "rationale": "All 222 comparators were exhaustively compared. The listed refs are plausible near-neighbors to OPF::A005OM-0012::PF-0169, but each differs in authority, lifecycle, consumer, state machine, recovery contract, security boundary, or user-visible promise; none is a same-feature merge candidate.",
+      "confidence": 0.92
+    },
+    {
+      "anchor_provisional_feature_ref": "OPF::A005OM-0012::PF-0170",
+      "compared_against_count": 222,
+      "merge_candidate_refs": [],
+      "related_but_distinct_refs": [
+        "OPF::A005OM-0014::PF-0079",
+        "OPF::A005OM-0014::PF-0001",
+        "OPF::A005OM-0014::PF-0176"
+      ],
+      "rationale": "All 222 comparators were exhaustively compared. The listed refs are plausible near-neighbors to OPF::A005OM-0012::PF-0170, but each differs in authority, lifecycle, consumer, state machine, recovery contract, security boundary, or user-visible promise; none is a same-feature merge candidate.",
+      "confidence": 0.92
+    },
+    {
+      "anchor_provisional_feature_ref": "OPF::A005OM-0012::PF-0171",
+      "compared_against_count": 222,
+      "merge_candidate_refs": [],
+      "related_but_distinct_refs": [
+        "OPF::A005OM-0014::PF-0132",
+        "OPF::A005OM-0014::PF-0208"
+      ],
+      "rationale": "All 222 comparators were exhaustively compared. The listed refs are plausible near-neighbors to OPF::A005OM-0012::PF-0171, but each differs in authority, lifecycle, consumer, state machine, recovery contract, security boundary, or user-visible promise; none is a same-feature merge candidate.",
+      "confidence": 0.92
+    },
+    {
+      "anchor_provisional_feature_ref": "OPF::A005OM-0012::PF-0172",
+      "compared_against_count": 222,
+      "merge_candidate_refs": [
+        "OPF::A005OM-0014::PF-0202"
+      ],
+      "related_but_distinct_refs": [
+        "OPF::A005OM-0014::PF-0054",
+        "OPF::A005OM-0014::PF-0057",
+        "OPF::A005OM-0014::PF-0072"
+      ],
+      "rationale": "All 222 comparators were exhaustively compared. OPF::A005OM-0014::PF-0202 represents the same product feature as OPF::A005OM-0012::PF-0172 under the same authority and lifecycle. The related refs are adjacent contracts or consumers with distinct authority, state, recovery, security, or user-visible promises.",
+      "confidence": 0.88
+    },
+    {
+      "anchor_provisional_feature_ref": "OPF::A005OM-0012::PF-0173",
+      "compared_against_count": 222,
+      "merge_candidate_refs": [],
+      "related_but_distinct_refs": [
+        "OPF::A005OM-0014::PF-0004",
+        "OPF::A005OM-0014::PF-0162",
+        "OPF::A005OM-0014::PF-0072"
+      ],
+      "rationale": "All 222 comparators were exhaustively compared. The listed refs are plausible near-neighbors to OPF::A005OM-0012::PF-0173, but each differs in authority, lifecycle, consumer, state machine, recovery contract, security boundary, or user-visible promise; none is a same-feature merge candidate.",
+      "confidence": 0.92
+    },
+    {
+      "anchor_provisional_feature_ref": "OPF::A005OM-0012::PF-0174",
+      "compared_against_count": 222,
+      "merge_candidate_refs": [],
+      "related_but_distinct_refs": [
+        "OPF::A005OM-0014::PF-0124",
+        "OPF::A005OM-0014::PF-0065",
+        "OPF::A005OM-0014::PF-0040"
+      ],
+      "rationale": "All 222 comparators were exhaustively compared. The listed refs are plausible near-neighbors to OPF::A005OM-0012::PF-0174, but each differs in authority, lifecycle, consumer, state machine, recovery contract, security boundary, or user-visible promise; none is a same-feature merge candidate.",
+      "confidence": 0.92
+    },
+    {
+      "anchor_provisional_feature_ref": "OPF::A005OM-0012::PF-0175",
+      "compared_against_count": 222,
+      "merge_candidate_refs": [],
+      "related_but_distinct_refs": [
+        "OPF::A005OM-0014::PF-0191",
+        "OPF::A005OM-0014::PF-0086",
+        "OPF::A005OM-0014::PF-0108"
+      ],
+      "rationale": "All 222 comparators were exhaustively compared. The listed refs are plausible near-neighbors to OPF::A005OM-0012::PF-0175, but each differs in authority, lifecycle, consumer, state machine, recovery contract, security boundary, or user-visible promise; none is a same-feature merge candidate.",
+      "confidence": 0.92
+    },
+    {
+      "anchor_provisional_feature_ref": "OPF::A005OM-0012::PF-0176",
+      "compared_against_count": 222,
+      "merge_candidate_refs": [],
+      "related_but_distinct_refs": [
+        "OPF::A005OM-0014::PF-0124",
+        "OPF::A005OM-0014::PF-0160",
+        "OPF::A005OM-0014::PF-0168"
+      ],
+      "rationale": "All 222 comparators were exhaustively compared. The listed refs are plausible near-neighbors to OPF::A005OM-0012::PF-0176, but each differs in authority, lifecycle, consumer, state machine, recovery contract, security boundary, or user-visible promise; none is a same-feature merge candidate.",
+      "confidence": 0.92
+    },
+    {
+      "anchor_provisional_feature_ref": "OPF::A005OM-0012::PF-0177",
+      "compared_against_count": 222,
+      "merge_candidate_refs": [],
+      "related_but_distinct_refs": [],
+      "rationale": "All 222 comparators were exhaustively compared. None represents the same product feature under the same authority and lifecycle, and no plausible related-but-distinct comparator remained for OPF::A005OM-0012::PF-0177.",
+      "confidence": 0.96
+    },
+    {
+      "anchor_provisional_feature_ref": "OPF::A005OM-0012::PF-0178",
+      "compared_against_count": 222,
+      "merge_candidate_refs": [
+        "OPF::A005OM-0014::PF-0011"
+      ],
+      "related_but_distinct_refs": [
+        "OPF::A005OM-0014::PF-0010"
+      ],
+      "rationale": "All 222 comparators were exhaustively compared. OPF::A005OM-0014::PF-0011 represents the same product feature as OPF::A005OM-0012::PF-0178 under the same authority and lifecycle. The related refs are adjacent contracts or consumers with distinct authority, state, recovery, security, or user-visible promises.",
+      "confidence": 0.88
+    },
+    {
+      "anchor_provisional_feature_ref": "OPF::A005OM-0012::PF-0179",
+      "compared_against_count": 222,
+      "merge_candidate_refs": [],
+      "related_but_distinct_refs": [
+        "OPF::A005OM-0014::PF-0009",
+        "OPF::A005OM-0014::PF-0010",
+        "OPF::A005OM-0014::PF-0040"
+      ],
+      "rationale": "All 222 comparators were exhaustively compared. The listed refs are plausible near-neighbors to OPF::A005OM-0012::PF-0179, but each differs in authority, lifecycle, consumer, state machine, recovery contract, security boundary, or user-visible promise; none is a same-feature merge candidate.",
+      "confidence": 0.92
+    },
+    {
+      "anchor_provisional_feature_ref": "OPF::A005OM-0012::PF-0180",
+      "compared_against_count": 222,
+      "merge_candidate_refs": [],
+      "related_but_distinct_refs": [
+        "OPF::A005OM-0014::PF-0208",
+        "OPF::A005OM-0014::PF-0040",
+        "OPF::A005OM-0014::PF-0154"
+      ],
+      "rationale": "All 222 comparators were exhaustively compared. The listed refs are plausible near-neighbors to OPF::A005OM-0012::PF-0180, but each differs in authority, lifecycle, consumer, state machine, recovery contract, security boundary, or user-visible promise; none is a same-feature merge candidate.",
+      "confidence": 0.92
+    },
+    {
+      "anchor_provisional_feature_ref": "OPF::A005OM-0012::PF-0181",
+      "compared_against_count": 222,
+      "merge_candidate_refs": [],
+      "related_but_distinct_refs": [
+        "OPF::A005OM-0014::PF-0010",
+        "OPF::A005OM-0014::PF-0011",
+        "OPF::A005OM-0014::PF-0065"
+      ],
+      "rationale": "All 222 comparators were exhaustively compared. The listed refs are plausible near-neighbors to OPF::A005OM-0012::PF-0181, but each differs in authority, lifecycle, consumer, state machine, recovery contract, security boundary, or user-visible promise; none is a same-feature merge candidate.",
+      "confidence": 0.92
+    },
+    {
+      "anchor_provisional_feature_ref": "OPF::A005OM-0012::PF-0182",
+      "compared_against_count": 222,
+      "merge_candidate_refs": [],
+      "related_but_distinct_refs": [
+        "OPF::A005OM-0014::PF-0191",
+        "OPF::A005OM-0014::PF-0208",
+        "OPF::A005OM-0014::PF-0158"
+      ],
+      "rationale": "All 222 comparators were exhaustively compared. The listed refs are plausible near-neighbors to OPF::A005OM-0012::PF-0182, but each differs in authority, lifecycle, consumer, state machine, recovery contract, security boundary, or user-visible promise; none is a same-feature merge candidate.",
+      "confidence": 0.92
+    },
+    {
+      "anchor_provisional_feature_ref": "OPF::A005OM-0012::PF-0183",
+      "compared_against_count": 222,
+      "merge_candidate_refs": [],
+      "related_but_distinct_refs": [
+        "OPF::A005OM-0014::PF-0208",
+        "OPF::A005OM-0014::PF-0197",
+        "OPF::A005OM-0014::PF-0202",
+        "OPF::A005OM-0014::PF-0056"
+      ],
+      "rationale": "All 222 comparators were exhaustively compared. The listed refs are plausible near-neighbors to OPF::A005OM-0012::PF-0183, but each differs in authority, lifecycle, consumer, state machine, recovery contract, security boundary, or user-visible promise; none is a same-feature merge candidate.",
+      "confidence": 0.92
+    },
+    {
+      "anchor_provisional_feature_ref": "OPF::A005OM-0012::PF-0184",
+      "compared_against_count": 222,
+      "merge_candidate_refs": [],
+      "related_but_distinct_refs": [
+        "OPF::A005OM-0014::PF-0010",
+        "OPF::A005OM-0014::PF-0011"
+      ],
+      "rationale": "All 222 comparators were exhaustively compared. The listed refs are plausible near-neighbors to OPF::A005OM-0012::PF-0184, but each differs in authority, lifecycle, consumer, state machine, recovery contract, security boundary, or user-visible promise; none is a same-feature merge candidate.",
+      "confidence": 0.92
+    },
+    {
+      "anchor_provisional_feature_ref": "OPF::A005OM-0012::PF-0185",
+      "compared_against_count": 222,
+      "merge_candidate_refs": [
+        "OPF::A005OM-0014::PF-0010"
+      ],
+      "related_but_distinct_refs": [
+        "OPF::A005OM-0014::PF-0011"
+      ],
+      "rationale": "All 222 comparators were exhaustively compared. OPF::A005OM-0014::PF-0010 represents the same product feature as OPF::A005OM-0012::PF-0185 under the same authority and lifecycle. The related refs are adjacent contracts or consumers with distinct authority, state, recovery, security, or user-visible promises.",
+      "confidence": 0.88
+    },
+    {
+      "anchor_provisional_feature_ref": "OPF::A005OM-0012::PF-0186",
+      "compared_against_count": 222,
+      "merge_candidate_refs": [],
+      "related_but_distinct_refs": [
+        "OPF::A005OM-0014::PF-0036",
+        "OPF::A005OM-0014::PF-0134",
+        "OPF::A005OM-0014::PF-0206"
+      ],
+      "rationale": "All 222 comparators were exhaustively compared. The listed refs are plausible near-neighbors to OPF::A005OM-0012::PF-0186, but each differs in authority, lifecycle, consumer, state machine, recovery contract, security boundary, or user-visible promise; none is a same-feature merge candidate.",
+      "confidence": 0.92
+    },
+    {
+      "anchor_provisional_feature_ref": "OPF::A005OM-0012::PF-0187",
+      "compared_against_count": 222,
+      "merge_candidate_refs": [],
+      "related_but_distinct_refs": [],
+      "rationale": "All 222 comparators were exhaustively compared. None represents the same product feature under the same authority and lifecycle, and no plausible related-but-distinct comparator remained for OPF::A005OM-0012::PF-0187.",
+      "confidence": 0.96
+    },
+    {
+      "anchor_provisional_feature_ref": "OPF::A005OM-0012::PF-0188",
+      "compared_against_count": 222,
+      "merge_candidate_refs": [],
+      "related_but_distinct_refs": [
+        "OPF::A005OM-0014::PF-0109",
+        "OPF::A005OM-0014::PF-0202",
+        "OPF::A005OM-0014::PF-0057"
+      ],
+      "rationale": "All 222 comparators were exhaustively compared. The listed refs are plausible near-neighbors to OPF::A005OM-0012::PF-0188, but each differs in authority, lifecycle, consumer, state machine, recovery contract, security boundary, or user-visible promise; none is a same-feature merge candidate.",
+      "confidence": 0.92
+    },
+    {
+      "anchor_provisional_feature_ref": "OPF::A005OM-0012::PF-0189",
+      "compared_against_count": 222,
+      "merge_candidate_refs": [],
+      "related_but_distinct_refs": [
+        "OPF::A005OM-0014::PF-0165",
+        "OPF::A005OM-0014::PF-0169",
+        "OPF::A005OM-0014::PF-0147",
+        "OPF::A005OM-0014::PF-0141"
+      ],
+      "rationale": "All 222 comparators were exhaustively compared. The listed refs are plausible near-neighbors to OPF::A005OM-0012::PF-0189, but each differs in authority, lifecycle, consumer, state machine, recovery contract, security boundary, or user-visible promise; none is a same-feature merge candidate.",
+      "confidence": 0.92
+    },
+    {
+      "anchor_provisional_feature_ref": "OPF::A005OM-0012::PF-0190",
+      "compared_against_count": 222,
+      "merge_candidate_refs": [],
+      "related_but_distinct_refs": [
+        "OPF::A005OM-0014::PF-0056",
+        "OPF::A005OM-0014::PF-0094",
+        "OPF::A005OM-0014::PF-0191"
+      ],
+      "rationale": "All 222 comparators were exhaustively compared. The listed refs are plausible near-neighbors to OPF::A005OM-0012::PF-0190, but each differs in authority, lifecycle, consumer, state machine, recovery contract, security boundary, or user-visible promise; none is a same-feature merge candidate.",
+      "confidence": 0.92
+    },
+    {
+      "anchor_provisional_feature_ref": "OPF::A005OM-0012::PF-0191",
+      "compared_against_count": 222,
+      "merge_candidate_refs": [],
+      "related_but_distinct_refs": [
+        "OPF::A005OM-0014::PF-0017",
+        "OPF::A005OM-0014::PF-0015",
+        "OPF::A005OM-0014::PF-0054",
+        "OPF::A005OM-0014::PF-0202"
+      ],
+      "rationale": "All 222 comparators were exhaustively compared. The listed refs are plausible near-neighbors to OPF::A005OM-0012::PF-0191, but each differs in authority, lifecycle, consumer, state machine, recovery contract, security boundary, or user-visible promise; none is a same-feature merge candidate.",
+      "confidence": 0.92
+    },
+    {
+      "anchor_provisional_feature_ref": "OPF::A005OM-0012::PF-0192",
+      "compared_against_count": 222,
+      "merge_candidate_refs": [],
+      "related_but_distinct_refs": [
+        "OPF::A005OM-0014::PF-0064",
+        "OPF::A005OM-0014::PF-0066",
+        "OPF::A005OM-0014::PF-0037"
+      ],
+      "rationale": "All 222 comparators were exhaustively compared. The listed refs are plausible near-neighbors to OPF::A005OM-0012::PF-0192, but each differs in authority, lifecycle, consumer, state machine, recovery contract, security boundary, or user-visible promise; none is a same-feature merge candidate.",
+      "confidence": 0.92
+    },
+    {
+      "anchor_provisional_feature_ref": "OPF::A005OM-0012::PF-0193",
+      "compared_against_count": 222,
+      "merge_candidate_refs": [],
+      "related_but_distinct_refs": [
+        "OPF::A005OM-0014::PF-0073",
+        "OPF::A005OM-0014::PF-0108",
+        "OPF::A005OM-0014::PF-0012"
+      ],
+      "rationale": "All 222 comparators were exhaustively compared. The listed refs are plausible near-neighbors to OPF::A005OM-0012::PF-0193, but each differs in authority, lifecycle, consumer, state machine, recovery contract, security boundary, or user-visible promise; none is a same-feature merge candidate.",
+      "confidence": 0.92
+    },
+    {
+      "anchor_provisional_feature_ref": "OPF::A005OM-0012::PF-0194",
+      "compared_against_count": 222,
+      "merge_candidate_refs": [],
+      "related_but_distinct_refs": [],
+      "rationale": "All 222 comparators were exhaustively compared. None represents the same product feature under the same authority and lifecycle, and no plausible related-but-distinct comparator remained for OPF::A005OM-0012::PF-0194.",
+      "confidence": 0.96
+    },
+    {
+      "anchor_provisional_feature_ref": "OPF::A005OM-0012::PF-0195",
+      "compared_against_count": 222,
+      "merge_candidate_refs": [
+        "OPF::A005OM-0014::PF-0088"
+      ],
+      "related_but_distinct_refs": [
+        "OPF::A005OM-0014::PF-0051",
+        "OPF::A005OM-0014::PF-0057",
+        "OPF::A005OM-0014::PF-0061",
+        "OPF::A005OM-0014::PF-0105"
+      ],
+      "rationale": "All 222 comparators were exhaustively compared. OPF::A005OM-0014::PF-0088 represents the same product feature as OPF::A005OM-0012::PF-0195 under the same authority and lifecycle. The related refs are adjacent contracts or consumers with distinct authority, state, recovery, security, or user-visible promises.",
+      "confidence": 0.88
+    },
+    {
+      "anchor_provisional_feature_ref": "OPF::A005OM-0012::PF-0196",
+      "compared_against_count": 222,
+      "merge_candidate_refs": [],
+      "related_but_distinct_refs": [
+        "OPF::A005OM-0014::PF-0090",
+        "OPF::A005OM-0014::PF-0138",
+        "OPF::A005OM-0014::PF-0128",
+        "OPF::A005OM-0014::PF-0092"
+      ],
+      "rationale": "All 222 comparators were exhaustively compared. The listed refs are plausible near-neighbors to OPF::A005OM-0012::PF-0196, but each differs in authority, lifecycle, consumer, state machine, recovery contract, security boundary, or user-visible promise; none is a same-feature merge candidate.",
+      "confidence": 0.92
+    },
+    {
+      "anchor_provisional_feature_ref": "OPF::A005OM-0012::PF-0197",
+      "compared_against_count": 222,
+      "merge_candidate_refs": [],
+      "related_but_distinct_refs": [
+        "OPF::A005OM-0014::PF-0073",
+        "OPF::A005OM-0014::PF-0056"
+      ],
+      "rationale": "All 222 comparators were exhaustively compared. The listed refs are plausible near-neighbors to OPF::A005OM-0012::PF-0197, but each differs in authority, lifecycle, consumer, state machine, recovery contract, security boundary, or user-visible promise; none is a same-feature merge candidate.",
+      "confidence": 0.92
+    },
+    {
+      "anchor_provisional_feature_ref": "OPF::A005OM-0012::PF-0198",
+      "compared_against_count": 222,
+      "merge_candidate_refs": [],
+      "related_but_distinct_refs": [
+        "OPF::A005OM-0014::PF-0001",
+        "OPF::A005OM-0014::PF-0002",
+        "OPF::A005OM-0014::PF-0088",
+        "OPF::A005OM-0014::PF-0105"
+      ],
+      "rationale": "All 222 comparators were exhaustively compared. The listed refs are plausible near-neighbors to OPF::A005OM-0012::PF-0198, but each differs in authority, lifecycle, consumer, state machine, recovery contract, security boundary, or user-visible promise; none is a same-feature merge candidate.",
+      "confidence": 0.92
+    },
+    {
+      "anchor_provisional_feature_ref": "OPF::A005OM-0012::PF-0199",
+      "compared_against_count": 222,
+      "merge_candidate_refs": [],
+      "related_but_distinct_refs": [
+        "OPF::A005OM-0014::PF-0015",
+        "OPF::A005OM-0014::PF-0063",
+        "OPF::A005OM-0014::PF-0081",
+        "OPF::A005OM-0014::PF-0125"
+      ],
+      "rationale": "All 222 comparators were exhaustively compared. The listed refs are plausible near-neighbors to OPF::A005OM-0012::PF-0199, but each differs in authority, lifecycle, consumer, state machine, recovery contract, security boundary, or user-visible promise; none is a same-feature merge candidate.",
+      "confidence": 0.92
+    },
+    {
+      "anchor_provisional_feature_ref": "OPF::A005OM-0012::PF-0200",
+      "compared_against_count": 222,
+      "merge_candidate_refs": [
+        "OPF::A005OM-0014::PF-0186"
+      ],
+      "related_but_distinct_refs": [
+        "OPF::A005OM-0014::PF-0209",
+        "OPF::A005OM-0014::PF-0179",
+        "OPF::A005OM-0014::PF-0189"
+      ],
+      "rationale": "All 222 comparators were exhaustively compared. OPF::A005OM-0014::PF-0186 represents the same product feature as OPF::A005OM-0012::PF-0200 under the same authority and lifecycle. The related refs are adjacent contracts or consumers with distinct authority, state, recovery, security, or user-visible promises.",
+      "confidence": 0.88
+    },
+    {
+      "anchor_provisional_feature_ref": "OPF::A005OM-0012::PF-0201",
+      "compared_against_count": 222,
+      "merge_candidate_refs": [],
+      "related_but_distinct_refs": [
+        "OPF::A005OM-0014::PF-0189",
+        "OPF::A005OM-0014::PF-0051",
+        "OPF::A005OM-0014::PF-0057"
+      ],
+      "rationale": "All 222 comparators were exhaustively compared. The listed refs are plausible near-neighbors to OPF::A005OM-0012::PF-0201, but each differs in authority, lifecycle, consumer, state machine, recovery contract, security boundary, or user-visible promise; none is a same-feature merge candidate.",
+      "confidence": 0.92
+    },
+    {
+      "anchor_provisional_feature_ref": "OPF::A005OM-0012::PF-0202",
+      "compared_against_count": 222,
+      "merge_candidate_refs": [
+        "OPF::A005OM-0014::PF-0088"
+      ],
+      "related_but_distinct_refs": [
+        "OPF::A005OM-0014::PF-0051",
+        "OPF::A005OM-0014::PF-0075",
+        "OPF::A005OM-0014::PF-0105"
+      ],
+      "rationale": "All 222 comparators were exhaustively compared. OPF::A005OM-0014::PF-0088 represents the same product feature as OPF::A005OM-0012::PF-0202 under the same authority and lifecycle. The related refs are adjacent contracts or consumers with distinct authority, state, recovery, security, or user-visible promises.",
+      "confidence": 0.88
+    },
+    {
+      "anchor_provisional_feature_ref": "OPF::A005OM-0012::PF-0203",
+      "compared_against_count": 222,
+      "merge_candidate_refs": [
+        "OPF::A005OM-0014::PF-0087"
+      ],
+      "related_but_distinct_refs": [
+        "OPF::A005OM-0014::PF-0189",
+        "OPF::A005OM-0014::PF-0068",
+        "OPF::A005OM-0014::PF-0057"
+      ],
+      "rationale": "All 222 comparators were exhaustively compared. OPF::A005OM-0014::PF-0087 represents the same product feature as OPF::A005OM-0012::PF-0203 under the same authority and lifecycle. The related refs are adjacent contracts or consumers with distinct authority, state, recovery, security, or user-visible promises.",
+      "confidence": 0.88
+    },
+    {
+      "anchor_provisional_feature_ref": "OPF::A005OM-0012::PF-0204",
+      "compared_against_count": 222,
+      "merge_candidate_refs": [],
+      "related_but_distinct_refs": [
+        "OPF::A005OM-0014::PF-0171",
+        "OPF::A005OM-0014::PF-0164",
+        "OPF::A005OM-0014::PF-0074"
+      ],
+      "rationale": "All 222 comparators were exhaustively compared. The listed refs are plausible near-neighbors to OPF::A005OM-0012::PF-0204, but each differs in authority, lifecycle, consumer, state machine, recovery contract, security boundary, or user-visible promise; none is a same-feature merge candidate.",
+      "confidence": 0.92
+    },
+    {
+      "anchor_provisional_feature_ref": "OPF::A005OM-0012::PF-0205",
+      "compared_against_count": 222,
+      "merge_candidate_refs": [],
+      "related_but_distinct_refs": [
+        "OPF::A005OM-0014::PF-0039",
+        "OPF::A005OM-0014::PF-0071",
+        "OPF::A005OM-0014::PF-0048",
+        "OPF::A005OM-0014::PF-0047"
+      ],
+      "rationale": "All 222 comparators were exhaustively compared. The listed refs are plausible near-neighbors to OPF::A005OM-0012::PF-0205, but each differs in authority, lifecycle, consumer, state machine, recovery contract, security boundary, or user-visible promise; none is a same-feature merge candidate.",
+      "confidence": 0.92
+    },
+    {
+      "anchor_provisional_feature_ref": "OPF::A005OM-0012::PF-0206",
+      "compared_against_count": 222,
+      "merge_candidate_refs": [],
+      "related_but_distinct_refs": [
+        "OPF::A005OM-0014::PF-0175",
+        "OPF::A005OM-0014::PF-0016",
+        "OPF::A005OM-0014::PF-0024",
+        "OPF::A005OM-0014::PF-0173"
+      ],
+      "rationale": "All 222 comparators were exhaustively compared. The listed refs are plausible near-neighbors to OPF::A005OM-0012::PF-0206, but each differs in authority, lifecycle, consumer, state machine, recovery contract, security boundary, or user-visible promise; none is a same-feature merge candidate.",
+      "confidence": 0.92
+    },
+    {
+      "anchor_provisional_feature_ref": "OPF::A005OM-0012::PF-0207",
+      "compared_against_count": 222,
+      "merge_candidate_refs": [
+        "OPF::A005OM-0014::PF-0039"
+      ],
+      "related_but_distinct_refs": [
+        "OPF::A005OM-0014::PF-0041",
+        "OPF::A005OM-0014::PF-0109"
+      ],
+      "rationale": "All 222 comparators were exhaustively compared. OPF::A005OM-0014::PF-0039 represents the same product feature as OPF::A005OM-0012::PF-0207 under the same authority and lifecycle. The related refs are adjacent contracts or consumers with distinct authority, state, recovery, security, or user-visible promises.",
+      "confidence": 0.88
+    },
+    {
+      "anchor_provisional_feature_ref": "OPF::A005OM-0012::PF-0208",
+      "compared_against_count": 222,
+      "merge_candidate_refs": [],
+      "related_but_distinct_refs": [
+        "OPF::A005OM-0014::PF-0191",
+        "OPF::A005OM-0014::PF-0204",
+        "OPF::A005OM-0014::PF-0040"
+      ],
+      "rationale": "All 222 comparators were exhaustively compared. The listed refs are plausible near-neighbors to OPF::A005OM-0012::PF-0208, but each differs in authority, lifecycle, consumer, state machine, recovery contract, security boundary, or user-visible promise; none is a same-feature merge candidate.",
+      "confidence": 0.92
+    },
+    {
+      "anchor_provisional_feature_ref": "OPF::A005OM-0012::PF-0209",
+      "compared_against_count": 222,
+      "merge_candidate_refs": [],
+      "related_but_distinct_refs": [
+        "OPF::A005OM-0014::PF-0170",
+        "OPF::A005OM-0014::PF-0055",
+        "OPF::A005OM-0014::PF-0115",
+        "OPF::A005OM-0014::PF-0142"
+      ],
+      "rationale": "All 222 comparators were exhaustively compared. The listed refs are plausible near-neighbors to OPF::A005OM-0012::PF-0209, but each differs in authority, lifecycle, consumer, state machine, recovery contract, security boundary, or user-visible promise; none is a same-feature merge candidate.",
+      "confidence": 0.92
+    },
+    {
+      "anchor_provisional_feature_ref": "OPF::A005OM-0012::PF-0210",
+      "compared_against_count": 222,
+      "merge_candidate_refs": [],
+      "related_but_distinct_refs": [
+        "OPF::A005OM-0014::PF-0003",
+        "OPF::A005OM-0014::PF-0057",
+        "OPF::A005OM-0014::PF-0094"
+      ],
+      "rationale": "All 222 comparators were exhaustively compared. The listed refs are plausible near-neighbors to OPF::A005OM-0012::PF-0210, but each differs in authority, lifecycle, consumer, state machine, recovery contract, security boundary, or user-visible promise; none is a same-feature merge candidate.",
+      "confidence": 0.92
+    },
+    {
+      "anchor_provisional_feature_ref": "OPF::A005OM-0012::PF-0211",
+      "compared_against_count": 222,
+      "merge_candidate_refs": [],
+      "related_but_distinct_refs": [
+        "OPF::A005OM-0014::PF-0162",
+        "OPF::A005OM-0014::PF-0026",
+        "OPF::A005OM-0014::PF-0141"
+      ],
+      "rationale": "All 222 comparators were exhaustively compared. The listed refs are plausible near-neighbors to OPF::A005OM-0012::PF-0211, but each differs in authority, lifecycle, consumer, state machine, recovery contract, security boundary, or user-visible promise; none is a same-feature merge candidate.",
+      "confidence": 0.92
+    },
+    {
+      "anchor_provisional_feature_ref": "OPF::A005OM-0012::PF-0212",
+      "compared_against_count": 222,
+      "merge_candidate_refs": [],
+      "related_but_distinct_refs": [
+        "OPF::A005OM-0014::PF-0197",
+        "OPF::A005OM-0014::PF-0202",
+        "OPF::A005OM-0014::PF-0190"
+      ],
+      "rationale": "All 222 comparators were exhaustively compared. The listed refs are plausible near-neighbors to OPF::A005OM-0012::PF-0212, but each differs in authority, lifecycle, consumer, state machine, recovery contract, security boundary, or user-visible promise; none is a same-feature merge candidate.",
+      "confidence": 0.92
+    },
+    {
+      "anchor_provisional_feature_ref": "OPF::A005OM-0012::PF-0213",
+      "compared_against_count": 222,
+      "merge_candidate_refs": [],
+      "related_but_distinct_refs": [
+        "OPF::A005OM-0014::PF-0003",
+        "OPF::A005OM-0014::PF-0154",
+        "OPF::A005OM-0014::PF-0202"
+      ],
+      "rationale": "All 222 comparators were exhaustively compared. The listed refs are plausible near-neighbors to OPF::A005OM-0012::PF-0213, but each differs in authority, lifecycle, consumer, state machine, recovery contract, security boundary, or user-visible promise; none is a same-feature merge candidate.",
+      "confidence": 0.92
+    },
+    {
+      "anchor_provisional_feature_ref": "OPF::A005OM-0012::PF-0214",
+      "compared_against_count": 222,
+      "merge_candidate_refs": [],
+      "related_but_distinct_refs": [
+        "OPF::A005OM-0014::PF-0192",
+        "OPF::A005OM-0014::PF-0180",
+        "OPF::A005OM-0014::PF-0138"
+      ],
+      "rationale": "All 222 comparators were exhaustively compared. The listed refs are plausible near-neighbors to OPF::A005OM-0012::PF-0214, but each differs in authority, lifecycle, consumer, state machine, recovery contract, security boundary, or user-visible promise; none is a same-feature merge candidate.",
+      "confidence": 0.92
+    },
+    {
+      "anchor_provisional_feature_ref": "OPF::A005OM-0012::PF-0215",
+      "compared_against_count": 222,
+      "merge_candidate_refs": [
+        "OPF::A005OM-0014::PF-0072"
+      ],
+      "related_but_distinct_refs": [
+        "OPF::A005OM-0014::PF-0202",
+        "OPF::A005OM-0014::PF-0195",
+        "OPF::A005OM-0014::PF-0057"
+      ],
+      "rationale": "All 222 comparators were exhaustively compared. OPF::A005OM-0014::PF-0072 represents the same product feature as OPF::A005OM-0012::PF-0215 under the same authority and lifecycle. The related refs are adjacent contracts or consumers with distinct authority, state, recovery, security, or user-visible promises.",
+      "confidence": 0.88
+    },
+    {
+      "anchor_provisional_feature_ref": "OPF::A005OM-0012::PF-0216",
+      "compared_against_count": 222,
+      "merge_candidate_refs": [],
+      "related_but_distinct_refs": [
+        "OPF::A005OM-0014::PF-0197",
+        "OPF::A005OM-0014::PF-0051",
+        "OPF::A005OM-0014::PF-0088",
+        "OPF::A005OM-0014::PF-0183"
+      ],
+      "rationale": "All 222 comparators were exhaustively compared. The listed refs are plausible near-neighbors to OPF::A005OM-0012::PF-0216, but each differs in authority, lifecycle, consumer, state machine, recovery contract, security boundary, or user-visible promise; none is a same-feature merge candidate.",
+      "confidence": 0.92
+    },
+    {
+      "anchor_provisional_feature_ref": "OPF::A005OM-0012::PF-0217",
+      "compared_against_count": 222,
+      "merge_candidate_refs": [],
+      "related_but_distinct_refs": [
+        "OPF::A005OM-0014::PF-0004",
+        "OPF::A005OM-0014::PF-0165",
+        "OPF::A005OM-0014::PF-0146",
+        "OPF::A005OM-0014::PF-0188"
+      ],
+      "rationale": "All 222 comparators were exhaustively compared. The listed refs are plausible near-neighbors to OPF::A005OM-0012::PF-0217, but each differs in authority, lifecycle, consumer, state machine, recovery contract, security boundary, or user-visible promise; none is a same-feature merge candidate.",
+      "confidence": 0.92
+    },
+    {
+      "anchor_provisional_feature_ref": "OPF::A005OM-0012::PF-0218",
+      "compared_against_count": 222,
+      "merge_candidate_refs": [],
+      "related_but_distinct_refs": [
+        "OPF::A005OM-0014::PF-0162",
+        "OPF::A005OM-0014::PF-0003",
+        "OPF::A005OM-0014::PF-0108"
+      ],
+      "rationale": "All 222 comparators were exhaustively compared. The listed refs are plausible near-neighbors to OPF::A005OM-0012::PF-0218, but each differs in authority, lifecycle, consumer, state machine, recovery contract, security boundary, or user-visible promise; none is a same-feature merge candidate.",
+      "confidence": 0.92
+    },
+    {
+      "anchor_provisional_feature_ref": "OPF::A005OM-0012::PF-0219",
+      "compared_against_count": 222,
+      "merge_candidate_refs": [],
+      "related_but_distinct_refs": [
+        "OPF::A005OM-0014::PF-0075",
+        "OPF::A005OM-0014::PF-0038",
+        "OPF::A005OM-0014::PF-0200"
+      ],
+      "rationale": "All 222 comparators were exhaustively compared. The listed refs are plausible near-neighbors to OPF::A005OM-0012::PF-0219, but each differs in authority, lifecycle, consumer, state machine, recovery contract, security boundary, or user-visible promise; none is a same-feature merge candidate.",
+      "confidence": 0.92
+    }
+  ],
+  "self_attestation": {
+    "every_anchor_decided_once": true,
+    "every_comparator_considered_for_each_anchor": true,
+    "merge_candidates_require_same_authority_and_lifecycle": true,
+    "distinct_boundaries_preserved": true,
+    "same_owner_domain_only": true,
+    "no_external_or_peer_inputs_used": true
+  }
+}

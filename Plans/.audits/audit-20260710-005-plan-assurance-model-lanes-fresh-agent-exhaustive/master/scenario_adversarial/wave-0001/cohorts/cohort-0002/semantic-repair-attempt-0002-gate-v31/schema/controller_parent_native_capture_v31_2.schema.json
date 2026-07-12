@@ -1,0 +1,69 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "additionalProperties": false,
+  "properties": {
+    "append_only": {"const": true},
+    "audit_id": {"const": "audit-20260710-005-plan-assurance-model-lanes-fresh-agent-exhaustive"},
+    "authored_by_role": {"const": "controller"},
+    "authority_bindings": {
+      "additionalProperties": false,
+      "properties": {
+        "immutable_authority": {"const": "45dadd69bd049298c2d551fcb58a916952a355a22c02f6c2f8be6ddf673517e1"},
+        "stable_gate_inventory": {"pattern": "^[0-9a-f]{64}$", "type": "string"},
+        "v31_1_supplement": {"const": "8f26b807d7d2366ec3a4ba11c6343666e6f1d61894bfa6869a32bdec74407f14"},
+        "v31_2_supplement": {"pattern": "^[0-9a-f]{64}$", "type": "string"}
+      },
+      "required": ["immutable_authority", "v31_1_supplement", "v31_2_supplement", "stable_gate_inventory"],
+      "type": "object"
+    },
+    "capture_kind": {"const": "controller_native_identity_and_temporal_separation_v31_2"},
+    "cohort_id": {"const": "cohort-0002"},
+    "controller_agent_path": {"const": "/root/sol_controller_v29"},
+    "gate_id": {"const": "SCENARIO-COHORT-0002-SEMANTIC-REPAIR-ATTEMPT-0002-GATE-V31"},
+    "parent_controller_thread_id": {"pattern": "^[0-9a-f-]{36}$", "type": "string"},
+    "review_report": {
+      "additionalProperties": false,
+      "properties": {
+        "authorship_attested_by_controller": {"const": true},
+        "observed_conclusion": {"const": "pass_blocked_prelaunch"},
+        "path": {"const": "/Users/jaredsmacbookair/Documents/PuppetMaster/Plans/.audits/audit-20260710-005-plan-assurance-model-lanes-fresh-agent-exhaustive/master/scenario_adversarial/wave-0001/cohorts/cohort-0002/semantic-repair-attempt-0002-gate-v31/validation/luna-prelaunch-review-v31_2.json"},
+        "raw_sha256": {"pattern": "^[0-9a-f]{64}$", "type": "string"}
+      },
+      "required": ["path", "raw_sha256", "observed_conclusion", "authorship_attested_by_controller"],
+      "type": "object"
+    },
+    "reviewer_native_identity": {
+      "additionalProperties": false,
+      "properties": {
+        "descendants": {"const": 0},
+        "distinct_from_prior_popper": {"const": true},
+        "followups": {"const": 0},
+        "fork_turns": {"const": "none"},
+        "fresh_direct": {"const": true},
+        "model": {"const": "gpt-5.6-luna"},
+        "native_reviewer_thread_id": {"pattern": "^[0-9a-f-]{36}$", "type": "string"},
+        "observed_via": {"const": "controller_native_subagent_control_plane"},
+        "reasoning_effort": {"const": "max"},
+        "retries": {"const": 0}
+      },
+      "required": ["native_reviewer_thread_id", "observed_via", "model", "reasoning_effort", "fork_turns", "descendants", "followups", "retries", "fresh_direct", "distinct_from_prior_popper"],
+      "type": "object"
+    },
+    "schema_version": {"const": "scenario-adversarial-controller-parent-native-capture-v31.2-v1"},
+    "scope": {
+      "additionalProperties": false,
+      "properties": {
+        "activation": {"const": false},
+        "credit": {"const": 0},
+        "receipt_writes": {"const": 0},
+        "result_writes": {"const": 0},
+        "sol_capture_rows": {"const": 0}
+      },
+      "required": ["activation", "credit", "result_writes", "receipt_writes", "sol_capture_rows"],
+      "type": "object"
+    },
+    "wave_id": {"const": "wave-0001"}
+  },
+  "required": ["schema_version", "gate_id", "audit_id", "wave_id", "cohort_id", "capture_kind", "append_only", "authored_by_role", "controller_agent_path", "parent_controller_thread_id", "reviewer_native_identity", "review_report", "authority_bindings", "scope"],
+  "type": "object"
+}

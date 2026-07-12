@@ -1,0 +1,48 @@
+{
+  "schema_version": "audit005-model-lane-routing-policy-v2",
+  "audit_id": "audit-20260710-005-plan-assurance-model-lanes-fresh-agent-exhaustive",
+  "status": "ACTIVE_PROSPECTIVE",
+  "effective_date": "2026-07-12",
+  "supersedes_prospectively": "ad hoc cross-model child requests made from a controller whose spawn API has no model selector",
+  "root_cause": "the Sol controller requested a Luna reviewer, but its child-spawn API cannot switch model or reasoning effort and the child cannot introspect those labels; the gate correctly failed closed",
+  "controller_lanes": {
+    "sol_semantic": {
+      "thread_id": "019f4f5e-96c6-7893-8c94-ce2c1b760d6c",
+      "required_parent_turn_model": "gpt-5.6-sol",
+      "required_parent_turn_reasoning": "xhigh",
+      "authorized_children": "fresh Sol XHigh semantic reviewers and Sol primary validators only"
+    },
+    "luna_validation": {
+      "thread_id": "019f5078-6501-7223-b52f-2251010bdc41",
+      "required_parent_turn_model": "gpt-5.6-luna",
+      "required_parent_turn_reasoning": "max",
+      "authorized_children": "fresh Luna Max independent mechanical or semantic validators only"
+    }
+  },
+  "routing_rules": {
+    "cross_model_child_request_from_wrong_parent_forbidden": true,
+    "future_parent_turns_must_be_sent_with_explicit_model_and_reasoning_override": true,
+    "child_spawn_api_without_model_selector_inherits_active_parent_lane": true,
+    "fork_turns_none_required_for_fresh_independent_children": true,
+    "parent_spawn_call_and_result_must_be_captured": true,
+    "child_self_introspection_required": false,
+    "child_self_introspection_authoritative": false,
+    "prompt_claim_alone_authoritative": false,
+    "wrong_parent_lane_attempts_receive_zero_credit": true
+  },
+  "independence_rules": {
+    "fresh_child_identity_required": true,
+    "no_descendants": true,
+    "no_followups": true,
+    "no_retries_under_same_identity": true,
+    "single_initial_task": true,
+    "native_thread_and_turn_capture_required_before_credit": true,
+    "result_and_receipt_hash_binding_required": true
+  },
+  "current_disposition": {
+    "seam_prelaunch_report_sha256": "9914f0c32c634bfea6900bd0d8890d1ef43e97545f724fc0234e094303570ad6",
+    "seam_prelaunch_runtime_disposition": "zero credit; reviewer was routed from the wrong parent lane and could not verify Luna Max",
+    "substantive_checks_reusable_after_input_hash_recheck": true,
+    "fresh_luna_gate_required_from_luna_validation_controller": true
+  }
+}

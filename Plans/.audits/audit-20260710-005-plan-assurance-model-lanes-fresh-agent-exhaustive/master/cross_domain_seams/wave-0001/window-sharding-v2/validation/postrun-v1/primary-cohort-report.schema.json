@@ -1,0 +1,20 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "additionalProperties": false,
+  "properties": {
+    "schema_version": {"const": "cross-domain-seam-primary-cohort-report-v1"},
+    "cohort_id": {"enum": ["cohort-0001", "cohort-0002", "cohort-0003", "cohort-0004"]},
+    "status": {"enum": ["pass_candidate_only", "fail_closed"]},
+    "assignment_count": {"const": 16},
+    "eligible_assignment_ids": {"items": {"pattern": "^A005CDSV2-\\d{4}$", "type": "string"}, "type": "array", "uniqueItems": true},
+    "rejected_assignment_ids": {"items": {"pattern": "^A005CDSV2-\\d{4}$", "type": "string"}, "type": "array", "uniqueItems": true},
+    "assignment_reports": {"items": {"additionalProperties": false, "properties": {"assignment_id": {"type": "string"}, "eligible": {"type": "boolean"}, "errors": {"items": {"type": "string"}, "type": "array", "uniqueItems": true}}, "required": ["assignment_id", "eligible", "errors"], "type": "object"}, "maxItems": 16, "minItems": 16, "type": "array"},
+    "validator_sha256": {"pattern": "^[0-9a-f]{64}$", "type": "string"},
+    "authority_sha256": {"pattern": "^[0-9a-f]{64}$", "type": "string"},
+    "result_root_sha256": {"pattern": "^[0-9a-f]{64}$", "type": "string"},
+    "receipt_root_sha256": {"pattern": "^[0-9a-f]{64}$", "type": "string"},
+    "promotion_credit": {"const": 0}
+  },
+  "required": ["schema_version", "cohort_id", "status", "assignment_count", "eligible_assignment_ids", "rejected_assignment_ids", "assignment_reports", "validator_sha256", "authority_sha256", "result_root_sha256", "receipt_root_sha256", "promotion_credit"],
+  "type": "object"
+}

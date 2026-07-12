@@ -1,0 +1,1154 @@
+{
+  "assignment_id": "A005M15-000216-INTEGRATED-MACRO15-510B3DE676A3-0004",
+  "attempt_id": "attempt-0015",
+  "audit_id": "audit-20260710-005-plan-assurance-model-lanes-fresh-agent-exhaustive",
+  "coverage": {
+    "all_micro_windows_reviewed": true,
+    "all_source_lines_reviewed": true,
+    "all_source_units_accounted": true,
+    "both_exact_and_adversarial_lenses_applied": true,
+    "dimensions_checked": [
+      "behavior",
+      "capabilities",
+      "inputs_outputs",
+      "contracts",
+      "states_transitions",
+      "authority",
+      "ownership",
+      "consumers",
+      "gui_truth",
+      "failures_recovery",
+      "security_privacy",
+      "propagation",
+      "operations",
+      "scale_performance",
+      "compatibility_migration",
+      "acceptance_oracles",
+      "builder_discretion",
+      "ambiguity_unknowns",
+      "missing_callers_consumers",
+      "invalid_states_transitions",
+      "concurrency_races",
+      "partial_failure",
+      "recovery_rollback",
+      "authority_boundaries",
+      "privacy_data_lifecycle",
+      "untrusted_inputs",
+      "gui_misleading_states",
+      "offline_network_loss",
+      "scale_limits",
+      "accessibility",
+      "localization",
+      "observability_support",
+      "destructive_actions",
+      "cross_document_seams",
+      "test_falsifiability",
+      "unknown_unknowns"
+    ]
+  },
+  "items": [
+    {
+      "builder_discretion": false,
+      "confidence": 0.91,
+      "dimensions": [
+        "behavior",
+        "capabilities",
+        "inputs_outputs",
+        "contracts",
+        "states_transitions",
+        "authority",
+        "ownership",
+        "consumers",
+        "gui_truth",
+        "failures_recovery",
+        "security_privacy",
+        "propagation",
+        "operations",
+        "scale_performance",
+        "compatibility_migration",
+        "acceptance_oracles",
+        "builder_discretion",
+        "ambiguity_unknowns",
+        "missing_callers_consumers",
+        "invalid_states_transitions",
+        "concurrency_races",
+        "partial_failure",
+        "recovery_rollback",
+        "authority_boundaries",
+        "privacy_data_lifecycle",
+        "untrusted_inputs",
+        "gui_misleading_states",
+        "offline_network_loss",
+        "scale_limits",
+        "accessibility",
+        "localization",
+        "observability_support",
+        "destructive_actions",
+        "cross_document_seams",
+        "test_falsifiability",
+        "unknown_unknowns"
+      ],
+      "evidence": [
+        {
+          "exact_quote": "canonical_text: Regex-index projector rules require byte-level u8 extraction without Unicode decoding, shared build-thread-pool concurrency with one project build slot and FIFO queueing, and platform mmap deletion/open semantics using memmap2 share_mode(0x7) on Windows and inode-by-fd safety on Linux/macOS.",
+          "line_end": 10138,
+          "line_start": 10138,
+          "path": "Plans/storage-plan.md",
+          "source_sha256": "66d19f8d241e488ca19a0f824c24ad28d6bdd89a72abd83bb949b77c234775a1"
+        },
+        {
+          "exact_quote": "canonical_text: Projectors advance in canonical seglog order from redb checkpoints, write only owned projections, commit checkpoints after durable writes, and maintain JSONL mirrors as derived, rebuildable, sequence-ordered files that never backfill seglog.",
+          "line_end": 10197,
+          "line_start": 10197,
+          "path": "Plans/storage-plan.md",
+          "source_sha256": "66d19f8d241e488ca19a0f824c24ad28d6bdd89a72abd83bb949b77c234775a1"
+        },
+        {
+          "exact_quote": "canonical_text: Tantivy indices, analytics rollups, and projections rebuild from seglog or the owning projector canonical source range; projector checkpoints are durable ownership boundaries, partial writes do not advance checkpoints, and schema-version rebuilds clear only derived projection state.",
+          "line_end": 10259,
+          "line_start": 10259,
+          "path": "Plans/storage-plan.md",
+          "source_sha256": "66d19f8d241e488ca19a0f824c24ad28d6bdd89a72abd83bb949b77c234775a1"
+        },
+        {
+          "exact_quote": "canonical_text: Projector checkpoints encode resume state without duplicate semantic writes and are atomic with projector durability, but runtime/executor checkpoint marker events and safe-point lineage records in seglog remain required before mutation-capable execution or restore flows continue; run.completed.usage carries optional usage snapshot attribution from usage.event records.",
+          "line_end": 10318,
+          "line_start": 10318,
+          "path": "Plans/storage-plan.md",
+          "source_sha256": "66d19f8d241e488ca19a0f824c24ad28d6bdd89a72abd83bb949b77c234775a1"
+        },
+        {
+          "exact_quote": "canonical_text: Analytics scans may run periodically or on-demand without blocking the main UI; on-demand refresh keeps prior rollups visible, writes rollup keys in redb, and dashboard consumers read rollups rather than seglog directly.",
+          "line_end": 10382,
+          "line_start": 10382,
+          "path": "Plans/storage-plan.md",
+          "source_sha256": "66d19f8d241e488ca19a0f824c24ad28d6bdd89a72abd83bb949b77c234775a1"
+        },
+        {
+          "exact_quote": "canonical_text: Analytics scans read seglog or JSONL mirror in order over canonical windows, compute usage, tool latency, error rate, and tool usage rollups, exclude denied/FileSafe-blocked calls from tool_usage, and checkpoint last scanned sequence or timestamp idempotently.",
+          "line_end": 10441,
+          "line_start": 10441,
+          "path": "Plans/storage-plan.md",
+          "source_sha256": "66d19f8d241e488ca19a0f824c24ad28d6bdd89a72abd83bb949b77c234775a1"
+        }
+      ],
+      "gap_kind": "underspecified_operational_failure_semantics",
+      "impact": "Implementations can satisfy the named invariants while diverging on overload, corrupt-input, cancellation, and stale-UI behavior; recovery may be operationally unsafe or user-visible freshness may be misleading.",
+      "item_id": "A005M15-I001",
+      "item_type": "gap",
+      "severity": "high",
+      "source_unit_refs": [
+        "PLANUNIT:SP-136",
+        "PLANUNIT:SP-137",
+        "PLANUNIT:SP-138",
+        "PLANUNIT:SP-139",
+        "PLANUNIT:SP-140",
+        "PLANUNIT:SP-141",
+        "SEMANTIC:PLANUNIT:SP-136",
+        "SEMANTIC:PLANUNIT:SP-137",
+        "SEMANTIC:PLANUNIT:SP-138",
+        "SEMANTIC:PLANUNIT:SP-139",
+        "SEMANTIC:PLANUNIT:SP-140",
+        "SEMANTIC:PLANUNIT:SP-141"
+      ],
+      "statement": "The units establish byte handling, projector ordering, checkpoint durability, rebuild authority, runtime-marker separation, and nonblocking analytics behavior, but do not define queue capacity/backpressure, mmap-open failure handling, projector poison-record policy, refresh cancellation, stale-rollup disclosure thresholds, or a falsifiable end-to-end recovery oracle.",
+      "title": "Storage projector and analytics negative-space gap"
+    },
+    {
+      "builder_discretion": false,
+      "confidence": 0.89,
+      "dimensions": [
+        "behavior",
+        "capabilities",
+        "inputs_outputs",
+        "contracts",
+        "states_transitions",
+        "authority",
+        "ownership",
+        "consumers",
+        "gui_truth",
+        "failures_recovery",
+        "security_privacy",
+        "propagation",
+        "operations",
+        "scale_performance",
+        "compatibility_migration",
+        "acceptance_oracles",
+        "builder_discretion",
+        "ambiguity_unknowns",
+        "missing_callers_consumers",
+        "invalid_states_transitions",
+        "concurrency_races",
+        "partial_failure",
+        "recovery_rollback",
+        "authority_boundaries",
+        "privacy_data_lifecycle",
+        "untrusted_inputs",
+        "gui_misleading_states",
+        "offline_network_loss",
+        "scale_limits",
+        "accessibility",
+        "localization",
+        "observability_support",
+        "destructive_actions",
+        "cross_document_seams",
+        "test_falsifiability",
+        "unknown_unknowns"
+      ],
+      "evidence": [
+        {
+          "exact_quote": "canonical_text: Assistant worktree events use underscore canonical names, normalize dot-form aliases before projection, bind to thread/worktree redb projection keys and worktree records, and keep background enqueue fields optional without inventing worktree context.",
+          "line_end": 10504,
+          "line_start": 10504,
+          "path": "Plans/storage-plan.md",
+          "source_sha256": "66d19f8d241e488ca19a0f824c24ad28d6bdd89a72abd83bb949b77c234775a1"
+        },
+        {
+          "exact_quote": "canonical_text: Assistant worktree lifecycle, merge, PR, and pre-merge test events preserve exact chat.thread_worktree_* event names, minimum payload fields, PR failure phase enum push | api, and shorthand expansion only to the three pre-merge test event types.",
+          "line_end": 10563,
+          "line_start": 10563,
+          "path": "Plans/storage-plan.md",
+          "source_sha256": "66d19f8d241e488ca19a0f824c24ad28d6bdd89a72abd83bb949b77c234775a1"
+        },
+        {
+          "exact_quote": "canonical_text: Projectors store assistant worktree events with the canonical envelope, and safe-point creation records for worktree-bound execution include worktree_id, worktree_path, branch_name, and HEAD_sha before mutation-capable merge or test operations continue.",
+          "line_end": 10632,
+          "line_start": 10632,
+          "path": "Plans/storage-plan.md",
+          "source_sha256": "66d19f8d241e488ca19a0f824c24ad28d6bdd89a72abd83bb949b77c234775a1"
+        },
+        {
+          "exact_quote": "canonical_text: The implementation checklist is preserved as PlanUnit readiness metadata for core storage roots, seglog writer, event schemas, redb schema, migration runner, and version bump, not as executable work nodes.",
+          "line_end": 10684,
+          "line_start": 10684,
+          "path": "Plans/storage-plan.md",
+          "source_sha256": "66d19f8d241e488ca19a0f824c24ad28d6bdd89a72abd83bb949b77c234775a1"
+        },
+        {
+          "exact_quote": "canonical_text: The checklist preserves projector requirements for JSONL mirror, Tantivy, redb checkpoints, runtime checkpoint-marker events before mutation or restore, and analytics rollups including tool_usage.{window}.",
+          "line_end": 10750,
+          "line_start": 10750,
+          "path": "Plans/storage-plan.md",
+          "source_sha256": "66d19f8d241e488ca19a0f824c24ad28d6bdd89a72abd83bb949b77c234775a1"
+        },
+        {
+          "exact_quote": "canonical_text: The checklist preserves chat persistence, editor state, and Usage/dashboard wiring as storage integration readiness, including assistant-chat-design, FileManager section 2.9, usage-feature, and Usage view triggers.",
+          "line_end": 10806,
+          "line_start": 10806,
+          "path": "Plans/storage-plan.md",
+          "source_sha256": "66d19f8d241e488ca19a0f824c24ad28d6bdd89a72abd83bb949b77c234775a1"
+        }
+      ],
+      "gap_kind": "underspecified_event_versioning_and_replay",
+      "impact": "Producers and projectors can disagree during retries or mixed-version replay, and checklist preservation can pass governance validation without demonstrating runtime interoperability.",
+      "item_id": "A005M15-I002",
+      "item_type": "gap",
+      "severity": "high",
+      "source_unit_refs": [
+        "PLANUNIT:SP-142",
+        "PLANUNIT:SP-143",
+        "PLANUNIT:SP-144",
+        "PLANUNIT:SP-145",
+        "PLANUNIT:SP-146",
+        "PLANUNIT:SP-147",
+        "SEMANTIC:PLANUNIT:SP-142",
+        "SEMANTIC:PLANUNIT:SP-143",
+        "SEMANTIC:PLANUNIT:SP-144",
+        "SEMANTIC:PLANUNIT:SP-145",
+        "SEMANTIC:PLANUNIT:SP-146",
+        "SEMANTIC:PLANUNIT:SP-147"
+      ],
+      "statement": "The units lock canonical worktree names, selected payload fields, safe-point carry-through, and checklist scope, but do not specify schema version negotiation, duplicate/out-of-order event handling, idempotency keys, retry semantics, or executable acceptance oracles for the preserved checklists.",
+      "title": "Worktree event and checklist contract gap"
+    },
+    {
+      "builder_discretion": false,
+      "confidence": 0.92,
+      "dimensions": [
+        "behavior",
+        "capabilities",
+        "inputs_outputs",
+        "contracts",
+        "states_transitions",
+        "authority",
+        "ownership",
+        "consumers",
+        "gui_truth",
+        "failures_recovery",
+        "security_privacy",
+        "propagation",
+        "operations",
+        "scale_performance",
+        "compatibility_migration",
+        "acceptance_oracles",
+        "builder_discretion",
+        "ambiguity_unknowns",
+        "missing_callers_consumers",
+        "invalid_states_transitions",
+        "concurrency_races",
+        "partial_failure",
+        "recovery_rollback",
+        "authority_boundaries",
+        "privacy_data_lifecycle",
+        "untrusted_inputs",
+        "gui_misleading_states",
+        "offline_network_loss",
+        "scale_limits",
+        "accessibility",
+        "localization",
+        "observability_support",
+        "destructive_actions",
+        "cross_document_seams",
+        "test_falsifiability",
+        "unknown_unknowns"
+      ],
+      "evidence": [
+        {
+          "exact_quote": "canonical_text: Usage checklist coverage requires Assistant/Interview usage events with thread and parent lineage, hidden/background model work usage.event records, and optional run.completed usage snapshots with canonical attribution fields while per-request canon remains usage.event.",
+          "line_end": 10862,
+          "line_start": 10862,
+          "path": "Plans/storage-plan.md",
+          "source_sha256": "66d19f8d241e488ca19a0f824c24ad28d6bdd89a72abd83bb949b77c234775a1"
+        },
+        {
+          "exact_quote": "canonical_text: Assistant and Interview surfaces persist thread-local state, activity traces, and reviewable history, but they consume shared runtime identity projection and do not become canonical owners of runtime identity field names.",
+          "line_end": 10946,
+          "line_start": 10946,
+          "path": "Plans/storage-plan.md",
+          "source_sha256": "66d19f8d241e488ca19a0f824c24ad28d6bdd89a72abd83bb949b77c234775a1"
+        },
+        {
+          "exact_quote": "canonical_text: Shared runtime identity storage preserves requested/effective persona, account binding, operational identity, effective account/provider/project fields, and required account/auth vocabulary for requested account, execution role, credential, login, and auth realm.",
+          "line_end": 11002,
+          "line_start": 11002,
+          "path": "Plans/storage-plan.md",
+          "source_sha256": "66d19f8d241e488ca19a0f824c24ad28d6bdd89a72abd83bb949b77c234775a1"
+        },
+        {
+          "exact_quote": "canonical_text: Runtime identity fields are additive, _id aliases such as requested_persona_id and effective_persona_id are not canonical runtime snapshot fields, and chat/GUI surfaces consume the same stored names while permission snapshots and usage preserve effective_account_id and execution_role.",
+          "line_end": 11063,
+          "line_start": 11063,
+          "path": "Plans/storage-plan.md",
+          "source_sha256": "66d19f8d241e488ca19a0f824c24ad28d6bdd89a72abd83bb949b77c234775a1"
+        },
+        {
+          "exact_quote": "canonical_text: Web-facing runtime records use shared runtime snapshot vocabulary for web/search/extract/research/crawl/map operations; history/detail inspectors read frozen requested/effective snapshots, adapter-layer provider recommendations stay provisional, and provider/runtime selection preserves no-silent-cross-fallback disclosure.",
+          "line_end": 11120,
+          "line_start": 11120,
+          "path": "Plans/storage-plan.md",
+          "source_sha256": "66d19f8d241e488ca19a0f824c24ad28d6bdd89a72abd83bb949b77c234775a1"
+        },
+        {
+          "exact_quote": "canonical_text: Question and questionnaire persistence stores thread-scoped draft, answer, and final submission state as bounded structured data with canonical status values, QuestionItem field names, draft_value, response_kind, validation_state, and answer source metadata.",
+          "line_end": 11185,
+          "line_start": 11185,
+          "path": "Plans/storage-plan.md",
+          "source_sha256": "66d19f8d241e488ca19a0f824c24ad28d6bdd89a72abd83bb949b77c234775a1"
+        }
+      ],
+      "gap_kind": "privacy_concurrency_and_lifecycle_underspecification",
+      "impact": "Sensitive account and usage data may persist or surface inconsistently, while concurrent or restored questionnaire sessions can reach conflicting terminal states without a canonical resolution rule.",
+      "item_id": "A005M15-I003",
+      "item_type": "gap",
+      "severity": "high",
+      "source_unit_refs": [
+        "PLANUNIT:SP-148",
+        "PLANUNIT:SP-149",
+        "PLANUNIT:SP-150",
+        "PLANUNIT:SP-151",
+        "PLANUNIT:SP-152",
+        "PLANUNIT:SP-153",
+        "SEMANTIC:PLANUNIT:SP-148",
+        "SEMANTIC:PLANUNIT:SP-149",
+        "SEMANTIC:PLANUNIT:SP-150",
+        "SEMANTIC:PLANUNIT:SP-151",
+        "SEMANTIC:PLANUNIT:SP-152",
+        "SEMANTIC:PLANUNIT:SP-153"
+      ],
+      "statement": "The units define usage attribution, shared runtime identity vocabulary, alias rejection, fallback disclosure, and questionnaire fields, but leave retention/redaction, account-identity access control, concurrent snapshot reconciliation, questionnaire draft conflict resolution, timeout transition authority, and deletion propagation unspecified.",
+      "title": "Usage identity and questionnaire lifecycle gap"
+    },
+    {
+      "builder_discretion": false,
+      "confidence": 0.93,
+      "dimensions": [
+        "behavior",
+        "capabilities",
+        "inputs_outputs",
+        "contracts",
+        "states_transitions",
+        "authority",
+        "ownership",
+        "consumers",
+        "gui_truth",
+        "failures_recovery",
+        "security_privacy",
+        "propagation",
+        "operations",
+        "scale_performance",
+        "compatibility_migration",
+        "acceptance_oracles",
+        "builder_discretion",
+        "ambiguity_unknowns",
+        "missing_callers_consumers",
+        "invalid_states_transitions",
+        "concurrency_races",
+        "partial_failure",
+        "recovery_rollback",
+        "authority_boundaries",
+        "privacy_data_lifecycle",
+        "untrusted_inputs",
+        "gui_misleading_states",
+        "offline_network_loss",
+        "scale_limits",
+        "accessibility",
+        "localization",
+        "observability_support",
+        "destructive_actions",
+        "cross_document_seams",
+        "test_falsifiability",
+        "unknown_unknowns"
+      ],
+      "evidence": [
+        {
+          "exact_quote": "canonical_text: Shared question-card persistence covers single and multi-question flows with draft, incomplete, ready_to_submit, submitted, and paused states; composer send/resend controls remain UI controls while storage records state transition and active-run linkage.",
+          "line_end": 11248,
+          "line_start": 11248,
+          "path": "Plans/storage-plan.md",
+          "source_sha256": "66d19f8d241e488ca19a0f824c24ad28d6bdd89a72abd83bb949b77c234775a1"
+        },
+        {
+          "exact_quote": "canonical_text: Plan and Deep Plan project to a normalized TODO list with a named Q&A loop, locked TODO schema/status, explicit revision states, structural-edit gating after approval, bounded revision history, and chat.plan_todo_updated for durable TODO mutations.",
+          "line_end": 11308,
+          "line_start": 11308,
+          "path": "Plans/storage-plan.md",
+          "source_sha256": "66d19f8d241e488ca19a0f824c24ad28d6bdd89a72abd83bb949b77c234775a1"
+        },
+        {
+          "exact_quote": "canonical_text: TODO storage preserves item schema fields, item status enum, plan-level superseded state, structural edit meaning, TODO tool behavior, Deep Plan resync rule, and legacy XV2 inline progress strings as plan-level visibility labels rather than TODO item statuses.",
+          "line_end": 11367,
+          "line_start": 11367,
+          "path": "Plans/storage-plan.md",
+          "source_sha256": "66d19f8d241e488ca19a0f824c24ad28d6bdd89a72abd83bb949b77c234775a1"
+        },
+        {
+          "exact_quote": "canonical_text: The Assistant chat TODO panel shows verification_hint per item, compact inline progress examples, and durable plan refresh behavior so auto-use heuristic changes emit chat.plan_todo_updated before execution and do not silently replace the current panel.",
+          "line_end": 11434,
+          "line_start": 11434,
+          "path": "Plans/storage-plan.md",
+          "source_sha256": "66d19f8d241e488ca19a0f824c24ad28d6bdd89a72abd83bb949b77c234775a1"
+        },
+        {
+          "exact_quote": "canonical_text: Durable TODO mutation events persist plan/todo ids, changed field, old/new values, and mutation source, while the Assistant chat plan panel remains the visible source-of-truth and storage owns durable normalized TODO projection consumed by related surfaces.",
+          "line_end": 11493,
+          "line_start": 11493,
+          "path": "Plans/storage-plan.md",
+          "source_sha256": "66d19f8d241e488ca19a0f824c24ad28d6bdd89a72abd83bb949b77c234775a1"
+        },
+        {
+          "exact_quote": "canonical_text: Activity transparency payloads carry canonical runtime bridge fields and receipt refs; storage owns blocked/denied payload persistence, adapter-selection payloads, approval scope linkage, and immutable historical snapshots without allowing chat, GUI, or web-tool local variants.",
+          "line_end": 11551,
+          "line_start": 11551,
+          "path": "Plans/storage-plan.md",
+          "source_sha256": "66d19f8d241e488ca19a0f824c24ad28d6bdd89a72abd83bb949b77c234775a1"
+        }
+      ],
+      "gap_kind": "mutation_authority_and_concurrency_underspecification",
+      "impact": "Concurrent edits or partially persisted operations can silently fork the approved plan, visible panel, and runtime receipts, undermining the claimed source-of-truth and auditability boundaries.",
+      "item_id": "A005M15-I004",
+      "item_type": "gap",
+      "severity": "critical",
+      "source_unit_refs": [
+        "PLANUNIT:SP-154",
+        "PLANUNIT:SP-155",
+        "PLANUNIT:SP-156",
+        "PLANUNIT:SP-157",
+        "PLANUNIT:SP-158",
+        "PLANUNIT:SP-159",
+        "SEMANTIC:PLANUNIT:SP-154",
+        "SEMANTIC:PLANUNIT:SP-155",
+        "SEMANTIC:PLANUNIT:SP-156",
+        "SEMANTIC:PLANUNIT:SP-157",
+        "SEMANTIC:PLANUNIT:SP-158",
+        "SEMANTIC:PLANUNIT:SP-159"
+      ],
+      "statement": "The units define TODO states, durable mutation payloads, visible source-of-truth, revision behavior, and activity bridge ownership, but do not define optimistic concurrency/version checks, simultaneous user-agent edit precedence, authorization for mutation sources, atomic linkage between runtime action and receipt, or rollback after partial projection failure.",
+      "title": "TODO and activity transparency concurrency gap"
+    },
+    {
+      "builder_discretion": false,
+      "confidence": 0.9,
+      "dimensions": [
+        "behavior",
+        "capabilities",
+        "inputs_outputs",
+        "contracts",
+        "states_transitions",
+        "authority",
+        "ownership",
+        "consumers",
+        "gui_truth",
+        "failures_recovery",
+        "security_privacy",
+        "propagation",
+        "operations",
+        "scale_performance",
+        "compatibility_migration",
+        "acceptance_oracles",
+        "builder_discretion",
+        "ambiguity_unknowns",
+        "missing_callers_consumers",
+        "invalid_states_transitions",
+        "concurrency_races",
+        "partial_failure",
+        "recovery_rollback",
+        "authority_boundaries",
+        "privacy_data_lifecycle",
+        "untrusted_inputs",
+        "gui_misleading_states",
+        "offline_network_loss",
+        "scale_limits",
+        "accessibility",
+        "localization",
+        "observability_support",
+        "destructive_actions",
+        "cross_document_seams",
+        "test_falsifiability",
+        "unknown_unknowns"
+      ],
+      "evidence": [
+        {
+          "exact_quote": "canonical_text: Long-running activity transparency persists progress_event payloads and cancellation fields, while question/TODO/runtime state, source-route lineage, runtime receipts, and activity payloads carry through storage rather than stale consumer-only variants.",
+          "line_end": 11609,
+          "line_start": 11609,
+          "path": "Plans/storage-plan.md",
+          "source_sha256": "66d19f8d241e488ca19a0f824c24ad28d6bdd89a72abd83bb949b77c234775a1"
+        },
+        {
+          "exact_quote": "canonical_text: Command child-run, approval/HITL, watch-mode, terminal command, and subagent task records persist execution mode, requested/effective Persona, permission snapshots, approval ladder, operation-card lineage, terminal handoff refs, command labels, and child-agent outcomes as durable activity state.",
+          "line_end": 11676,
+          "line_start": 11676,
+          "path": "Plans/storage-plan.md",
+          "source_sha256": "66d19f8d241e488ca19a0f824c24ad28d6bdd89a72abd83bb949b77c234775a1"
+        },
+        {
+          "exact_quote": "canonical_text: Web-operation storage splits inline activity payload fields from ref/blob payloads, uses blob-ref naming and payload.meta child fields for replay/audit joins, binds cache storage to the web content cache and TTL table, and preserves common and per-tool child fields without duplicating full result bodies.",
+          "line_end": 11749,
+          "line_start": 11749,
+          "path": "Plans/storage-plan.md",
+          "source_sha256": "66d19f8d241e488ca19a0f824c24ad28d6bdd89a72abd83bb949b77c234775a1"
+        },
+        {
+          "exact_quote": "canonical_text: Web activity storage preserves execution_path and provider_fallback_summary so replay, history, audit, compact cards, result cards, and provider-named labels agree on the route used without forking runtime identity names.",
+          "line_end": 11835,
+          "line_start": 11835,
+          "path": "Plans/storage-plan.md",
+          "source_sha256": "66d19f8d241e488ca19a0f824c24ad28d6bdd89a72abd83bb949b77c234775a1"
+        },
+        {
+          "exact_quote": "canonical_text: Activity payload records preserve runtime bridge fields for node, attempt, lane, package, execution role, account, operational identity, provider attempt, usage event, inspection refs, structured operation_input, result quality, and provenance badge values.",
+          "line_end": 11899,
+          "line_start": 11899,
+          "path": "Plans/storage-plan.md",
+          "source_sha256": "66d19f8d241e488ca19a0f824c24ad28d6bdd89a72abd83bb949b77c234775a1"
+        }
+      ],
+      "gap_kind": "cancellation_partial_failure_and_data_lifecycle_gap",
+      "impact": "A cancelled or failed operation can be displayed as successful or leave orphaned sensitive content; replay and audit joins can become incomplete without a canonical repair path.",
+      "item_id": "A005M15-I005",
+      "item_type": "gap",
+      "severity": "high",
+      "source_unit_refs": [
+        "PLANUNIT:SP-160",
+        "PLANUNIT:SP-161",
+        "PLANUNIT:SP-162",
+        "PLANUNIT:SP-163",
+        "PLANUNIT:SP-164",
+        "SEMANTIC:PLANUNIT:SP-160",
+        "SEMANTIC:PLANUNIT:SP-161",
+        "SEMANTIC:PLANUNIT:SP-162",
+        "SEMANTIC:PLANUNIT:SP-163",
+        "SEMANTIC:PLANUNIT:SP-164"
+      ],
+      "statement": "The units preserve progress, cancellation, command/HITL, web blob/ref splits, fallback labels, and bridge fields, but do not define cancellation races, terminal-state precedence, partial-result durability, blob retention/encryption/deletion, cache-key trust boundaries, payload size limits, or recovery when metadata commits without its blob.",
+      "title": "Long-running and web operation partial-failure gap"
+    },
+    {
+      "builder_discretion": false,
+      "confidence": 0.94,
+      "dimensions": [
+        "behavior",
+        "capabilities",
+        "inputs_outputs",
+        "contracts",
+        "states_transitions",
+        "authority",
+        "ownership",
+        "consumers",
+        "gui_truth",
+        "failures_recovery",
+        "security_privacy",
+        "propagation",
+        "operations",
+        "scale_performance",
+        "compatibility_migration",
+        "acceptance_oracles",
+        "builder_discretion",
+        "ambiguity_unknowns",
+        "missing_callers_consumers",
+        "invalid_states_transitions",
+        "concurrency_races",
+        "partial_failure",
+        "recovery_rollback",
+        "authority_boundaries",
+        "privacy_data_lifecycle",
+        "untrusted_inputs",
+        "gui_misleading_states",
+        "offline_network_loss",
+        "scale_limits",
+        "accessibility",
+        "localization",
+        "observability_support",
+        "destructive_actions",
+        "cross_document_seams",
+        "test_falsifiability",
+        "unknown_unknowns"
+      ],
+      "evidence": [
+        {
+          "exact_quote": "canonical_text: Receipt refs remain inspection and provenance links rather than route/open surrogates, bridge-field precedence stays explicit, and effective actor/account identity survives into activity payloads.",
+          "line_end": 11971,
+          "line_start": 11971,
+          "path": "Plans/storage-plan.md",
+          "source_sha256": "66d19f8d241e488ca19a0f824c24ad28d6bdd89a72abd83bb949b77c234775a1"
+        },
+        {
+          "exact_quote": "canonical_text: Inline visualizer persistence stores only PM-managed source, metadata, outputs, render config, and approved host-mediated bridge metadata for sandboxed visual-module cards, not arbitrary bridge calls, direct DOM reach-through, client heap state, or generic send-message payloads.",
+          "line_end": 12025,
+          "line_start": 12025,
+          "path": "Plans/storage-plan.md",
+          "source_sha256": "66d19f8d241e488ca19a0f824c24ad28d6bdd89a72abd83bb949b77c234775a1"
+        },
+        {
+          "exact_quote": "canonical_text: Inline visualizer replay and export review re-render from persisted source, title/type metadata, render config, and PM-managed state outputs, using screenshot or snapshot fallback only when re-render is impractical and storing visible fallback/error state as PM-owned display state.",
+          "line_end": 12094,
+          "line_start": 12094,
+          "path": "Plans/storage-plan.md",
+          "source_sha256": "66d19f8d241e488ca19a0f824c24ad28d6bdd89a72abd83bb949b77c234775a1"
+        },
+        {
+          "exact_quote": "canonical_text: Remaining persistence gaps for the rewrite shell resolve through explicit owner-aligned state rather than feature-local ad hoc blobs.",
+          "line_end": 12152,
+          "line_start": 12152,
+          "path": "Plans/storage-plan.md",
+          "source_sha256": "66d19f8d241e488ca19a0f824c24ad28d6bdd89a72abd83bb949b77c234775a1"
+        },
+        {
+          "exact_quote": "canonical_text: 'Unsaved editor recovery is required MVP live shared-buffer storage: checklist delivery cannot downgrade it to later, recovery starts on first dirty buffer capture, ends only on save/discard/resolution, and multi-view editor surfaces share recovery, restore, and redo lineage.'",
+          "line_end": 12200,
+          "line_start": 12200,
+          "path": "Plans/storage-plan.md",
+          "source_sha256": "66d19f8d241e488ca19a0f824c24ad28d6bdd89a72abd83bb949b77c234775a1"
+        },
+        {
+          "exact_quote": "canonical_text: Editor recovery stores editor_state.v1:{project_id}:{file_path_hash}, cursor, scroll, selection ranges, undo stack reference, unsaved changes flag, and session-restore/conflict-handling behavior that reloads state before focus and shows diffs on disk changes.",
+          "line_end": 12264,
+          "line_start": 12264,
+          "path": "Plans/storage-plan.md",
+          "source_sha256": "66d19f8d241e488ca19a0f824c24ad28d6bdd89a72abd83bb949b77c234775a1"
+        }
+      ],
+      "gap_kind": "untrusted_content_and_conflict_recovery_gap",
+      "impact": "Persisted active content can cross sandbox boundaries, and editor recovery may expose sensitive unsaved data or lose/duplicate edits during concurrent views, crashes, and remote synchronization failures.",
+      "item_id": "A005M15-I006",
+      "item_type": "gap",
+      "severity": "critical",
+      "source_unit_refs": [
+        "PLANUNIT:SP-165",
+        "PLANUNIT:SP-166",
+        "PLANUNIT:SP-167",
+        "PLANUNIT:SP-168",
+        "PLANUNIT:SP-169",
+        "PLANUNIT:SP-170",
+        "SEMANTIC:PLANUNIT:SP-165",
+        "SEMANTIC:PLANUNIT:SP-166",
+        "SEMANTIC:PLANUNIT:SP-167",
+        "SEMANTIC:PLANUNIT:SP-168",
+        "SEMANTIC:PLANUNIT:SP-169",
+        "SEMANTIC:PLANUNIT:SP-170"
+      ],
+      "statement": "The units distinguish receipt refs, constrain visualizer persistence, define replay fallback, and require shared-buffer editor recovery, but do not specify source sanitization/CSP, bridge capability authorization, snapshot integrity and retention, recovery-record encryption, concurrent multi-view merge policy, or crash consistency between buffer capture and destination save.",
+      "title": "Visualizer and editor recovery trust-boundary gap"
+    },
+    {
+      "builder_discretion": false,
+      "confidence": 0.91,
+      "dimensions": [
+        "behavior",
+        "capabilities",
+        "inputs_outputs",
+        "contracts",
+        "states_transitions",
+        "authority",
+        "ownership",
+        "consumers",
+        "gui_truth",
+        "failures_recovery",
+        "security_privacy",
+        "propagation",
+        "operations",
+        "scale_performance",
+        "compatibility_migration",
+        "acceptance_oracles",
+        "builder_discretion",
+        "ambiguity_unknowns",
+        "missing_callers_consumers",
+        "invalid_states_transitions",
+        "concurrency_races",
+        "partial_failure",
+        "recovery_rollback",
+        "authority_boundaries",
+        "privacy_data_lifecycle",
+        "untrusted_inputs",
+        "gui_misleading_states",
+        "offline_network_loss",
+        "scale_limits",
+        "accessibility",
+        "localization",
+        "observability_support",
+        "destructive_actions",
+        "cross_document_seams",
+        "test_falsifiability",
+        "unknown_unknowns"
+      ],
+      "evidence": [
+        {
+          "exact_quote": "canonical_text: The persistence model stores requested versus effective browser runtime/capabilities, LSP enablement/server set, freshness versus health versus write availability, and restore outcomes for historical Search, LSP, browser, and editor recovery surfaces.",
+          "line_end": 12320,
+          "line_start": 12320,
+          "path": "Plans/storage-plan.md",
+          "source_sha256": "66d19f8d241e488ca19a0f824c24ad28d6bdd89a72abd83bb949b77c234775a1"
+        },
+        {
+          "exact_quote": "canonical_text: Requested and effective resource state persist under resource_type requested/effective key patterns; the local freshness triad current/refreshing/stale remains a source preservation note here and must not expand into full projection-health canon beyond the owning sections.",
+          "line_end": 12374,
+          "line_start": 12374,
+          "path": "Plans/storage-plan.md",
+          "source_sha256": "66d19f8d241e488ca19a0f824c24ad28d6bdd89a72abd83bb949b77c234775a1"
+        },
+        {
+          "exact_quote": "canonical_text: 'Search state and Source Control state keep separate projection families: search_projection stores query intent/results/filter/scope, sc_projection stores repo projections, compare origins, review context, branch/diff/staging/commit draft, and editor markers consume rather than own those projections.'",
+          "line_end": 12427,
+          "line_start": 12427,
+          "path": "Plans/storage-plan.md",
+          "source_sha256": "66d19f8d241e488ca19a0f824c24ad28d6bdd89a72abd83bb949b77c234775a1"
+        },
+        {
+          "exact_quote": "canonical_text: Source Control review and conflict persistence stores compare targets, review filters, generated-file visibility, review comments/notes, stale target downgrade refs, conflict presentation settings, and command resolution events without persisting conflict content.",
+          "line_end": 12494,
+          "line_start": 12494,
+          "path": "Plans/storage-plan.md",
+          "source_sha256": "66d19f8d241e488ca19a0f824c24ad28d6bdd89a72abd83bb949b77c234775a1"
+        },
+        {
+          "exact_quote": "canonical_text: GitHub Actions to-code correlation persistence stores project state and receipt projections for run/job/step focus, log focus, diff targets, failing-file hints, heuristic toggles, confidence thresholds, related diffs/worktrees, and evidence-labeled log-to-file candidates.",
+          "line_end": 12565,
+          "line_start": 12565,
+          "path": "Plans/storage-plan.md",
+          "source_sha256": "66d19f8d241e488ca19a0f824c24ad28d6bdd89a72abd83bb949b77c234775a1"
+        },
+        {
+          "exact_quote": "canonical_text: Host-aware LSP persistence stores lifecycle and restart budgets by host-aware session key, discloses current/refreshing/stale/degraded/unavailable state, forbids silent local fallback for remote-mode projects, and deterministically replays attached documents after transport or sync loss.",
+          "line_end": 12634,
+          "line_start": 12634,
+          "path": "Plans/storage-plan.md",
+          "source_sha256": "66d19f8d241e488ca19a0f824c24ad28d6bdd89a72abd83bb949b77c234775a1"
+        }
+      ],
+      "gap_kind": "invalid_transition_and_stale_projection_gap",
+      "impact": "Surfaces can present contradictory freshness, health, and write-availability states or recover to stale projections after reconnect, while users may lack an accessible explanation or deterministic remediation path.",
+      "item_id": "A005M15-I007",
+      "item_type": "gap",
+      "severity": "high",
+      "source_unit_refs": [
+        "PLANUNIT:SP-171",
+        "PLANUNIT:SP-172",
+        "PLANUNIT:SP-173",
+        "PLANUNIT:SP-174",
+        "PLANUNIT:SP-175",
+        "PLANUNIT:SP-176",
+        "SEMANTIC:PLANUNIT:SP-171",
+        "SEMANTIC:PLANUNIT:SP-172",
+        "SEMANTIC:PLANUNIT:SP-173",
+        "SEMANTIC:PLANUNIT:SP-174",
+        "SEMANTIC:PLANUNIT:SP-175",
+        "SEMANTIC:PLANUNIT:SP-176"
+      ],
+      "statement": "The units separate requested/effective state, Search and Source Control projections, review/conflict state, Actions correlation, and host-aware LSP lifecycle, but do not define legal transition tables, freshness expiry, simultaneous refresh ordering, remote network-loss reconciliation, restart-budget reset authority, or accessibility/localization behavior for degraded and stale disclosures.",
+      "title": "Projection freshness and remote recovery state-machine gap"
+    },
+    {
+      "builder_discretion": false,
+      "confidence": 0.95,
+      "dimensions": [
+        "behavior",
+        "capabilities",
+        "inputs_outputs",
+        "contracts",
+        "states_transitions",
+        "authority",
+        "ownership",
+        "consumers",
+        "gui_truth",
+        "failures_recovery",
+        "security_privacy",
+        "propagation",
+        "operations",
+        "scale_performance",
+        "compatibility_migration",
+        "acceptance_oracles",
+        "builder_discretion",
+        "ambiguity_unknowns",
+        "missing_callers_consumers",
+        "invalid_states_transitions",
+        "concurrency_races",
+        "partial_failure",
+        "recovery_rollback",
+        "authority_boundaries",
+        "privacy_data_lifecycle",
+        "untrusted_inputs",
+        "gui_misleading_states",
+        "offline_network_loss",
+        "scale_limits",
+        "accessibility",
+        "localization",
+        "observability_support",
+        "destructive_actions",
+        "cross_document_seams",
+        "test_falsifiability",
+        "unknown_unknowns"
+      ],
+      "evidence": [
+        {
+          "exact_quote": "canonical_text: Each host-aware LSP session keeps a bounded protocol/state trace buffer for operational/debug inspection only, exposing session key, root, current state, last error, restart/backoff, and protocol trace reveal action without becoming canonical app history.",
+          "line_end": 12698,
+          "line_start": 12698,
+          "path": "Plans/storage-plan.md",
+          "source_sha256": "66d19f8d241e488ca19a0f824c24ad28d6bdd89a72abd83bb949b77c234775a1"
+        },
+        {
+          "exact_quote": "canonical_text: LSP server state persists under lsp_server_state.v1:{host_id}:{server_id}:{root_hash} with server config, capabilities snapshot, last known status, restart count, recovery path, and persisted restart counts for stable budget enforcement and degraded-state disclosure.",
+          "line_end": 12752,
+          "line_start": 12752,
+          "path": "Plans/storage-plan.md",
+          "source_sha256": "66d19f8d241e488ca19a0f824c24ad28d6bdd89a72abd83bb949b77c234775a1"
+        },
+        {
+          "exact_quote": "canonical_text: Storage recovery rules preserve seglog last-complete-record recovery, redb backup or canonical-seglog rebuild, bounded projector commits, checkpoint loss rebuild, and projector panic/crash behavior that restarts from the last good checkpoint without advancing it.",
+          "line_end": 12807,
+          "line_start": 12807,
+          "path": "Plans/storage-plan.md",
+          "source_sha256": "66d19f8d241e488ca19a0f824c24ad28d6bdd89a72abd83bb949b77c234775a1"
+        },
+        {
+          "exact_quote": "canonical_text: User-visible storage problem handling keeps analytics scans in the background with freshness state, surfaces disk/storage errors, prevents half-migrated stores, enforces active durable-store lock-path/pm.lock read-only mode, and emits storage.boot_recovery after boot-time janitor cleanup.",
+          "line_end": 12869,
+          "line_start": 12869,
+          "path": "Plans/storage-plan.md",
+          "source_sha256": "66d19f8d241e488ca19a0f824c24ad28d6bdd89a72abd83bb949b77c234775a1"
+        },
+        {
+          "exact_quote": "canonical_text: Storage API and hygiene rules require append/redb writes to return structured Result values without silent swallow, cap in-memory file records at 10,000 with lazy rebuild, and close the DB/redb handle in the shutdown sequence before process exit.",
+          "line_end": 12938,
+          "line_start": 12938,
+          "path": "Plans/storage-plan.md",
+          "source_sha256": "66d19f8d241e488ca19a0f824c24ad28d6bdd89a72abd83bb949b77c234775a1"
+        },
+        {
+          "exact_quote": "canonical_text: Compaction and backup/restore enhancements preserve sequence order, exclude the active segment, keep replay/projector correctness intact, snapshot canonical stores at one shared boundary, validate checksums before restore, and rebuild JSONL/Tantivy disposable projections instead of treating them as authoritative.",
+          "line_end": 12994,
+          "line_start": 12994,
+          "path": "Plans/storage-plan.md",
+          "source_sha256": "66d19f8d241e488ca19a0f824c24ad28d6bdd89a72abd83bb949b77c234775a1"
+        }
+      ],
+      "gap_kind": "restore_atomicity_and_corruption_policy_gap",
+      "impact": "Recovery can discard or expose data, split canonical stores across inconsistent snapshot boundaries, or leave the application indefinitely read-only; corruption skipping and restore behavior lack sufficient authority and audit constraints.",
+      "item_id": "A005M15-I008",
+      "item_type": "gap",
+      "severity": "critical",
+      "source_unit_refs": [
+        "PLANUNIT:SP-177",
+        "PLANUNIT:SP-178",
+        "PLANUNIT:SP-179",
+        "PLANUNIT:SP-180",
+        "PLANUNIT:SP-181",
+        "PLANUNIT:SP-182",
+        "SEMANTIC:PLANUNIT:SP-177",
+        "SEMANTIC:PLANUNIT:SP-178",
+        "SEMANTIC:PLANUNIT:SP-179",
+        "SEMANTIC:PLANUNIT:SP-180",
+        "SEMANTIC:PLANUNIT:SP-181",
+        "SEMANTIC:PLANUNIT:SP-182"
+      ],
+      "statement": "The units define bounded LSP traces, persisted restart counts, seglog/redb/projector recovery, user-visible storage locks, structured write results, shutdown order, compaction, and checksum-validated restore, but do not define backup transaction atomicity, failed-restore rollback, corruption skip authorization, lock staleness/steal rules, disk-full cleanup guarantees, trace redaction/retention, or destructive-action confirmation.",
+      "title": "Storage recovery backup and destructive-action gap"
+    }
+  ],
+  "model": "gpt-5.6-sol",
+  "phase": "blind_macro_window_review",
+  "reasoning_effort": "xhigh",
+  "schema_version": "macro-review-result-v1",
+  "segments": [
+    {
+      "core_range": [
+        10131,
+        10496
+      ],
+      "covered_source_unit_refs": [
+        "PLANUNIT:SP-136",
+        "PLANUNIT:SP-137",
+        "PLANUNIT:SP-138",
+        "PLANUNIT:SP-139",
+        "PLANUNIT:SP-140",
+        "PLANUNIT:SP-141",
+        "SEMANTIC:PLANUNIT:SP-136",
+        "SEMANTIC:PLANUNIT:SP-137",
+        "SEMANTIC:PLANUNIT:SP-138",
+        "SEMANTIC:PLANUNIT:SP-139",
+        "SEMANTIC:PLANUNIT:SP-140",
+        "SEMANTIC:PLANUNIT:SP-141"
+      ],
+      "item_ids": [
+        "A005M15-I001"
+      ],
+      "reviewed": true,
+      "summary": "Reviewed SP-136 through SP-141 exactly and adversarially; core storage authority is strong, while overload, cancellation, and failure-state oracles remain underspecified.",
+      "window_id": "WIN-510B3DE676A3-0029"
+    },
+    {
+      "core_range": [
+        10497,
+        10854
+      ],
+      "covered_source_unit_refs": [
+        "PLANUNIT:SP-142",
+        "PLANUNIT:SP-143",
+        "PLANUNIT:SP-144",
+        "PLANUNIT:SP-145",
+        "PLANUNIT:SP-146",
+        "PLANUNIT:SP-147",
+        "SEMANTIC:PLANUNIT:SP-142",
+        "SEMANTIC:PLANUNIT:SP-143",
+        "SEMANTIC:PLANUNIT:SP-144",
+        "SEMANTIC:PLANUNIT:SP-145",
+        "SEMANTIC:PLANUNIT:SP-146",
+        "SEMANTIC:PLANUNIT:SP-147"
+      ],
+      "item_ids": [
+        "A005M15-I002"
+      ],
+      "reviewed": true,
+      "summary": "Reviewed SP-142 through SP-147 exactly and adversarially; naming and ownership are explicit, but event evolution, retry/replay, and runtime acceptance remain open.",
+      "window_id": "WIN-510B3DE676A3-0030"
+    },
+    {
+      "core_range": [
+        10855,
+        11240
+      ],
+      "covered_source_unit_refs": [
+        "PLANUNIT:SP-148",
+        "PLANUNIT:SP-149",
+        "PLANUNIT:SP-150",
+        "PLANUNIT:SP-151",
+        "PLANUNIT:SP-152",
+        "PLANUNIT:SP-153",
+        "SEMANTIC:PLANUNIT:SP-148",
+        "SEMANTIC:PLANUNIT:SP-149",
+        "SEMANTIC:PLANUNIT:SP-150",
+        "SEMANTIC:PLANUNIT:SP-151",
+        "SEMANTIC:PLANUNIT:SP-152",
+        "SEMANTIC:PLANUNIT:SP-153"
+      ],
+      "item_ids": [
+        "A005M15-I003"
+      ],
+      "reviewed": true,
+      "summary": "Reviewed SP-148 through SP-153 exactly and adversarially; canonical field ownership is clear, while privacy lifecycle and concurrent state resolution are not.",
+      "window_id": "WIN-510B3DE676A3-0031"
+    },
+    {
+      "core_range": [
+        11241,
+        11601
+      ],
+      "covered_source_unit_refs": [
+        "PLANUNIT:SP-154",
+        "PLANUNIT:SP-155",
+        "PLANUNIT:SP-156",
+        "PLANUNIT:SP-157",
+        "PLANUNIT:SP-158",
+        "PLANUNIT:SP-159",
+        "SEMANTIC:PLANUNIT:SP-154",
+        "SEMANTIC:PLANUNIT:SP-155",
+        "SEMANTIC:PLANUNIT:SP-156",
+        "SEMANTIC:PLANUNIT:SP-157",
+        "SEMANTIC:PLANUNIT:SP-158",
+        "SEMANTIC:PLANUNIT:SP-159"
+      ],
+      "item_ids": [
+        "A005M15-I004"
+      ],
+      "reviewed": true,
+      "summary": "Reviewed SP-154 through SP-159 exactly and adversarially; durable mutation intent is explicit, but concurrency, authorization, atomicity, and rollback are unresolved.",
+      "window_id": "WIN-510B3DE676A3-0032"
+    },
+    {
+      "core_range": [
+        11602,
+        11963
+      ],
+      "covered_source_unit_refs": [
+        "PLANUNIT:SP-160",
+        "PLANUNIT:SP-161",
+        "PLANUNIT:SP-162",
+        "PLANUNIT:SP-163",
+        "PLANUNIT:SP-164",
+        "SEMANTIC:PLANUNIT:SP-160",
+        "SEMANTIC:PLANUNIT:SP-161",
+        "SEMANTIC:PLANUNIT:SP-162",
+        "SEMANTIC:PLANUNIT:SP-163",
+        "SEMANTIC:PLANUNIT:SP-164"
+      ],
+      "item_ids": [
+        "A005M15-I005"
+      ],
+      "reviewed": true,
+      "summary": "Reviewed SP-160 through SP-164 exactly and adversarially; payload coverage is broad, while cancellation, partial commit, and sensitive blob lifecycle semantics remain open.",
+      "window_id": "WIN-510B3DE676A3-0033"
+    },
+    {
+      "core_range": [
+        11964,
+        12312
+      ],
+      "covered_source_unit_refs": [
+        "PLANUNIT:SP-165",
+        "PLANUNIT:SP-166",
+        "PLANUNIT:SP-167",
+        "PLANUNIT:SP-168",
+        "PLANUNIT:SP-169",
+        "PLANUNIT:SP-170",
+        "SEMANTIC:PLANUNIT:SP-165",
+        "SEMANTIC:PLANUNIT:SP-166",
+        "SEMANTIC:PLANUNIT:SP-167",
+        "SEMANTIC:PLANUNIT:SP-168",
+        "SEMANTIC:PLANUNIT:SP-169",
+        "SEMANTIC:PLANUNIT:SP-170"
+      ],
+      "item_ids": [
+        "A005M15-I006"
+      ],
+      "reviewed": true,
+      "summary": "Reviewed SP-165 through SP-170 exactly and adversarially; owner boundaries are stated, but hostile content handling and crash/concurrency recovery are not falsifiably closed.",
+      "window_id": "WIN-510B3DE676A3-0034"
+    },
+    {
+      "core_range": [
+        12313,
+        12690
+      ],
+      "covered_source_unit_refs": [
+        "PLANUNIT:SP-171",
+        "PLANUNIT:SP-172",
+        "PLANUNIT:SP-173",
+        "PLANUNIT:SP-174",
+        "PLANUNIT:SP-175",
+        "PLANUNIT:SP-176",
+        "SEMANTIC:PLANUNIT:SP-171",
+        "SEMANTIC:PLANUNIT:SP-172",
+        "SEMANTIC:PLANUNIT:SP-173",
+        "SEMANTIC:PLANUNIT:SP-174",
+        "SEMANTIC:PLANUNIT:SP-175",
+        "SEMANTIC:PLANUNIT:SP-176"
+      ],
+      "item_ids": [
+        "A005M15-I007"
+      ],
+      "reviewed": true,
+      "summary": "Reviewed SP-171 through SP-176 exactly and adversarially; projection ownership is clear, while legal transitions, network-loss convergence, and degraded-state presentation remain underspecified.",
+      "window_id": "WIN-510B3DE676A3-0035"
+    },
+    {
+      "core_range": [
+        12691,
+        13044
+      ],
+      "covered_source_unit_refs": [
+        "PLANUNIT:SP-177",
+        "PLANUNIT:SP-178",
+        "PLANUNIT:SP-179",
+        "PLANUNIT:SP-180",
+        "PLANUNIT:SP-181",
+        "PLANUNIT:SP-182",
+        "SEMANTIC:PLANUNIT:SP-177",
+        "SEMANTIC:PLANUNIT:SP-178",
+        "SEMANTIC:PLANUNIT:SP-179",
+        "SEMANTIC:PLANUNIT:SP-180",
+        "SEMANTIC:PLANUNIT:SP-181",
+        "SEMANTIC:PLANUNIT:SP-182"
+      ],
+      "item_ids": [
+        "A005M15-I008"
+      ],
+      "reviewed": true,
+      "summary": "Reviewed SP-177 through SP-182 exactly and adversarially; recovery primitives are named, while restore atomicity, corruption authority, privacy, and destructive-operation safety remain open.",
+      "window_id": "WIN-510B3DE676A3-0036"
+    }
+  ],
+  "self_attestation": {
+    "no_canonical_writes": true,
+    "no_external_research_during_blind_review": true,
+    "no_peer_result_access": true,
+    "no_prior_audit_access": true,
+    "no_unrelated_source_access": true,
+    "terminal_after_submission": true
+  },
+  "source_binding": {
+    "bundle_id": "MACRO15-510B3DE676A3-0004",
+    "document_path": "Plans/storage-plan.md",
+    "micro_window_ids": [
+      "WIN-510B3DE676A3-0029",
+      "WIN-510B3DE676A3-0030",
+      "WIN-510B3DE676A3-0031",
+      "WIN-510B3DE676A3-0032",
+      "WIN-510B3DE676A3-0033",
+      "WIN-510B3DE676A3-0034",
+      "WIN-510B3DE676A3-0035",
+      "WIN-510B3DE676A3-0036"
+    ],
+    "source_sha256": "66d19f8d241e488ca19a0f824c24ad28d6bdd89a72abd83bb949b77c234775a1"
+  },
+  "status": "completed",
+  "synthesis": {
+    "cross_document_questions": [
+      "Which owner contracts define runtime event versioning, retry idempotency, and mixed-version replay for the storage projections referenced here?",
+      "Which canonical security and privacy contract governs retention, redaction, encryption, deletion, and access to usage identity, web blobs, LSP traces, and editor recovery state?",
+      "Which UI and runtime contracts define legal degraded/stale/offline transitions, cancellation precedence, conflict recovery, and accessible user remediation?",
+      "Which backup and FileSafe contracts define shared-boundary snapshot atomicity, failed-restore rollback, corruption-skip authority, and destructive-action confirmation?"
+    ],
+    "feature_family_keys": [
+      "storage-projectors-analytics",
+      "assistant-worktree-events",
+      "usage-runtime-identity-questionnaires",
+      "plan-todo-activity-transparency",
+      "web-operation-payloads",
+      "inline-visualizer-editor-recovery",
+      "search-source-control-lsp-projections",
+      "storage-recovery-backup-restore"
+    ],
+    "research_queries": []
+  },
+  "task_thread_id": "/root/a005m15_b11_000216_attempt_0015_terminal"
+}

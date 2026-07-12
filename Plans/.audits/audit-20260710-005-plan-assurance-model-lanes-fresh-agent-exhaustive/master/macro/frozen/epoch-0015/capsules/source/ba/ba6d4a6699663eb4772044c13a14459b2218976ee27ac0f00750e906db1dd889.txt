@@ -1,0 +1,2918 @@
+L00000001	{
+L00000002	  "$schema": "https://puppetmaster.local/schemas/storage_value_registry.schema.json",
+L00000003	  "schema_id": "pm.storage_value_registry.v1",
+L00000004	  "schema_version": "1.0.0",
+L00000005	  "generated_at_utc": "2026-07-07T17:54:01Z",
+L00000006	  "owner_doc": "Plans/storage-plan.md",
+L00000007	  "buildability_gate_policy": {
+L00000008	    "buildability_gate_passed_must_remain_false": true,
+L00000009	    "ordinary_product_worknodes_allowed": false,
+L00000010	    "ordinary_product_nodeseeds_allowed": false,
+L00000011	    "scope": "tier_0c_2_storage_value_contracts_only"
+L00000012	  },
+L00000013	  "critical_family_ids": [
+L00000014	    "approved_plan_pack",
+L00000015	    "plan_approved_outbox",
+L00000016	    "plan_compile_run",
+L00000017	    "compiler_wave_contract",
+L00000018	    "workgraph_draft",
+L00000019	    "worknode_request",
+L00000020	    "executor_intake_report",
+L00000021	    "attempt_receipt",
+L00000022	    "event_record_index",
+L00000023	    "blocked_projection",
+L00000024	    "goal_receipt"
+L00000025	  ],
+L00000026	  "families": [
+L00000027	    {
+L00000028	      "family_id": "approved_plan_pack",
+L00000029	      "storage_kind": "redb",
+L00000030	      "status": "materialized",
+L00000031	      "tier": "tier_0_launch_critical",
+L00000032	      "key_shape": "approved_plan_pack.v1:{project_id}:{approved_plan_pack_id}",
+L00000033	      "value_schema_id": "pm.storage_value.approved_plan_pack.v1",
+L00000034	      "value_schema_ref": "Plans/storage_value_registry.json#/families/approved_plan_pack/value_schema",
+L00000035	      "owner_doc": "Plans/Planning_Wizard.md#PWIZ-014",
+L00000036	      "producer": [
+L00000037	        "Planning Wizard final-review approval CAS"
+L00000038	      ],
+L00000039	      "consumers": [
+L00000040	        "PlanCompileRun bootstrap reader",
+L00000041	        "implementation-readiness gate",
+L00000042	        "audit evidence projector"
+L00000043	      ],
+L00000044	      "schema_version": "1.0.0",
+L00000045	      "encoding": "messagepack_canonical",
+L00000046	      "required_fields": [
+L00000047	        "schema_id",
+L00000048	        "schema_version",
+L00000049	        "project_id",
+L00000050	        "approved_plan_pack_id",
+L00000051	        "pack_version",
+L00000052	        "pack_hash",
+L00000053	        "planning_run_id",
+L00000054	        "planning_run_revision",
+L00000055	        "topic_map_version",
+L00000056	        "plan_unit_index_hash",
+L00000057	        "acceptance_unit_index_hash",
+L00000058	        "project_context_snapshot_hash",
+L00000059	        "testing_policy_hash",
+L00000060	        "final_audit_closure_hash",
+L00000061	        "created_at_utc",
+L00000062	        "created_by_actor_ref",
+L00000063	        "source_refs",
+L00000064	        "redaction_profile"
+L00000065	      ],
+L00000066	      "optional_fields": [
+L00000067	        "prd_pack_ref",
+L00000068	        "amendment_refs",
+L00000069	        "closure_record_refs",
+L00000070	        "readiness_report_ref",
+L00000071	        "ledger_lineage_refs",
+L00000072	        "supersedes_pack_id"
+L00000073	      ],
+L00000074	      "nullable_fields": [
+L00000075	        "supersedes_pack_id"
+L00000076	      ],
+L00000077	      "replay_behavior": "Read by exact key during PlanApproved/PlanCompileRun recovery; stale hashes block launch and route back to Planning Wizard refresh.",
+L00000078	      "migration": "No legacy writer is canonical; future value changes require a new family version and source-pack hash preservation.",
+L00000079	      "retention_compaction": "Retain with planning-run lineage, audit closure, and any GoalRun receipt that references the pack; never compact below retained receipt reachability.",
+L00000080	      "redaction_no_secret_rule": "Only non-secret refs and hashes may be persisted; project context and policy bodies are stored by ref, not inline secret-bearing content.",
+L00000081	      "legacy_canonical_crosswalk_status": "Canonical Tier 0C-2 value schema for ApprovedPlanPack; ledger/source-lineage pack prose is non-authoritative.",
+L00000082	      "value_schema": {
+L00000083	        "type": "object",
+L00000084	        "additionalProperties": false,
+L00000085	        "required": [
+L00000086	          "schema_id",
+L00000087	          "schema_version",
+L00000088	          "project_id",
+L00000089	          "approved_plan_pack_id",
+L00000090	          "pack_version",
+L00000091	          "pack_hash",
+L00000092	          "planning_run_id",
+L00000093	          "planning_run_revision",
+L00000094	          "topic_map_version",
+L00000095	          "plan_unit_index_hash",
+L00000096	          "acceptance_unit_index_hash",
+L00000097	          "project_context_snapshot_hash",
+L00000098	          "testing_policy_hash",
+L00000099	          "final_audit_closure_hash",
+L00000100	          "created_at_utc",
+L00000101	          "created_by_actor_ref",
+L00000102	          "source_refs",
+L00000103	          "redaction_profile"
+L00000104	        ],
+L00000105	        "properties": {
+L00000106	          "schema_id": {
+L00000107	            "const": "pm.storage_value.approved_plan_pack.v1"
+L00000108	          },
+L00000109	          "schema_version": {
+L00000110	            "const": "1.0.0"
+L00000111	          },
+L00000112	          "project_id": {
+L00000113	            "type": "string",
+L00000114	            "minLength": 1
+L00000115	          },
+L00000116	          "approved_plan_pack_id": {
+L00000117	            "type": "string",
+L00000118	            "minLength": 1
+L00000119	          },
+L00000120	          "pack_version": {
+L00000121	            "type": "integer",
+L00000122	            "minimum": 1
+L00000123	          },
+L00000124	          "pack_hash": {
+L00000125	            "type": "string",
+L00000126	            "minLength": 1
+L00000127	          },
+L00000128	          "planning_run_id": {
+L00000129	            "type": "string",
+L00000130	            "minLength": 1
+L00000131	          },
+L00000132	          "planning_run_revision": {
+L00000133	            "type": "integer",
+L00000134	            "minimum": 1
+L00000135	          },
+L00000136	          "topic_map_version": {
+L00000137	            "type": "integer",
+L00000138	            "minimum": 1
+L00000139	          },
+L00000140	          "plan_unit_index_hash": {
+L00000141	            "type": "string",
+L00000142	            "minLength": 1
+L00000143	          },
+L00000144	          "acceptance_unit_index_hash": {
+L00000145	            "type": "string",
+L00000146	            "minLength": 1
+L00000147	          },
+L00000148	          "project_context_snapshot_hash": {
+L00000149	            "type": "string",
+L00000150	            "minLength": 1
+L00000151	          },
+L00000152	          "testing_policy_hash": {
+L00000153	            "type": "string",
+L00000154	            "minLength": 1
+L00000155	          },
+L00000156	          "final_audit_closure_hash": {
+L00000157	            "type": "string",
+L00000158	            "minLength": 1
+L00000159	          },
+L00000160	          "created_at_utc": {
+L00000161	            "type": "string",
+L00000162	            "format": "date-time"
+L00000163	          },
+L00000164	          "created_by_actor_ref": {
+L00000165	            "type": "string",
+L00000166	            "minLength": 1
+L00000167	          },
+L00000168	          "source_refs": {
+L00000169	            "type": "array",
+L00000170	            "items": {
+L00000171	              "type": "string",
+L00000172	              "minLength": 1
+L00000173	            }
+L00000174	          },
+L00000175	          "redaction_profile": {
+L00000176	            "type": "string",
+L00000177	            "enum": [
+L00000178	              "no_secrets",
+L00000179	              "redacted_refs_only"
+L00000180	            ]
+L00000181	          },
+L00000182	          "prd_pack_ref": {
+L00000183	            "type": "string"
+L00000184	          },
+L00000185	          "amendment_refs": {
+L00000186	            "type": "array",
+L00000187	            "items": {
+L00000188	              "type": "string"
+L00000189	            }
+L00000190	          },
+L00000191	          "closure_record_refs": {
+L00000192	            "type": "array",
+L00000193	            "items": {
+L00000194	              "type": "string"
+L00000195	            }
+L00000196	          },
+L00000197	          "readiness_report_ref": {
+L00000198	            "type": "string"
+L00000199	          },
+L00000200	          "ledger_lineage_refs": {
+L00000201	            "type": "array",
+L00000202	            "items": {
+L00000203	              "type": "string"
+L00000204	            }
+L00000205	          },
+L00000206	          "supersedes_pack_id": {
+L00000207	            "type": [
+L00000208	              "string",
+L00000209	              "null"
+L00000210	            ]
+L00000211	          }
+L00000212	        }
+L00000213	      }
+L00000214	    },
+L00000215	    {
+L00000216	      "family_id": "plan_approved_outbox",
+L00000217	      "storage_kind": "redb_and_seglog",
+L00000218	      "status": "materialized",
+L00000219	      "tier": "tier_0_launch_critical",
+L00000220	      "key_shape": "plan_approved_outbox.v1:{project_id}:{idempotency_key}",
+L00000221	      "value_schema_id": "pm.storage_value.plan_approved_outbox.v1",
+L00000222	      "value_schema_ref": "Plans/storage_value_registry.json#/families/plan_approved_outbox/value_schema",
+L00000223	      "owner_doc": "Plans/Planning_Wizard.md#PWIZ-014",
+L00000224	      "producer": [
+L00000225	        "Planning Wizard Approve And Build command boundary"
+L00000226	      ],
+L00000227	      "consumers": [
+L00000228	        "EventRecord writer",
+L00000229	        "PlanCompileRun binder",
+L00000230	        "idempotency replay"
+L00000231	      ],
+L00000232	      "schema_version": "1.0.0",
+L00000233	      "encoding": "messagepack_canonical",
+L00000234	      "required_fields": [
+L00000235	        "schema_id",
+L00000236	        "schema_version",
+L00000237	        "project_id",
+L00000238	        "approval_cas_receipt_id",
+L00000239	        "approved_plan_pack_id",
+L00000240	        "idempotency_key",
+L00000241	        "plan_compile_run_id",
+L00000242	        "outbox_status",
+L00000243	        "outbox_sequence",
+L00000244	        "created_at_utc",
+L00000245	        "redaction_profile"
+L00000246	      ],
+L00000247	      "optional_fields": [
+L00000248	        "published_event_id",
+L00000249	        "published_sequence_id",
+L00000250	        "retry_count",
+L00000251	        "last_error_ref"
+L00000252	      ],
+L00000253	      "nullable_fields": [
+L00000254	        "published_event_id",
+L00000255	        "published_sequence_id",
+L00000256	        "last_error_ref"
+L00000257	      ],
+L00000258	      "replay_behavior": "Duplicate approval delivery returns the existing PlanApproved append/projection result for the same idempotency key.",
+L00000259	      "migration": "Legacy unkeyed approval notes are source-lineage only; migration creates an idempotency-keyed outbox row before publishing.",
+L00000260	      "retention_compaction": "Retain at least as long as the referenced PlanCompileRun and audit closure; failed rows retain retry lineage until superseded.",
+L00000261	      "redaction_no_secret_rule": "No approval body or environment data is stored here; only receipt ids, refs, hashes, and status enums.",
+L00000262	      "legacy_canonical_crosswalk_status": "Canonical PlanApproved transactional outbox row; PlanApproved EventRecord remains the append-only publication.",
+L00000263	      "value_schema": {
+L00000264	        "type": "object",
+L00000265	        "additionalProperties": false,
+L00000266	        "required": [
+L00000267	          "schema_id",
+L00000268	          "schema_version",
+L00000269	          "project_id",
+L00000270	          "approval_cas_receipt_id",
+L00000271	          "approved_plan_pack_id",
+L00000272	          "idempotency_key",
+L00000273	          "plan_compile_run_id",
+L00000274	          "outbox_status",
+L00000275	          "outbox_sequence",
+L00000276	          "created_at_utc",
+L00000277	          "redaction_profile"
+L00000278	        ],
+L00000279	        "properties": {
+L00000280	          "schema_id": {
+L00000281	            "const": "pm.storage_value.plan_approved_outbox.v1"
+L00000282	          },
+L00000283	          "schema_version": {
+L00000284	            "const": "1.0.0"
+L00000285	          },
+L00000286	          "project_id": {
+L00000287	            "type": "string",
+L00000288	            "minLength": 1
+L00000289	          },
+L00000290	          "approval_cas_receipt_id": {
+L00000291	            "type": "string",
+L00000292	            "minLength": 1
+L00000293	          },
+L00000294	          "approved_plan_pack_id": {
+L00000295	            "type": "string",
+L00000296	            "minLength": 1
+L00000297	          },
+L00000298	          "idempotency_key": {
+L00000299	            "type": "string",
+L00000300	            "minLength": 1
+L00000301	          },
+L00000302	          "plan_compile_run_id": {
+L00000303	            "type": "string",
+L00000304	            "minLength": 1
+L00000305	          },
+L00000306	          "outbox_status": {
+L00000307	            "type": "string",
+L00000308	            "enum": [
+L00000309	              "pending",
+L00000310	              "published",
+L00000311	              "acked",
+L00000312	              "failed"
+L00000313	            ]
+L00000314	          },
+L00000315	          "outbox_sequence": {
+L00000316	            "type": "integer",
+L00000317	            "minimum": 1
+L00000318	          },
+L00000319	          "created_at_utc": {
+L00000320	            "type": "string",
+L00000321	            "format": "date-time"
+L00000322	          },
+L00000323	          "redaction_profile": {
+L00000324	            "type": "string",
+L00000325	            "enum": [
+L00000326	              "no_secrets",
+L00000327	              "redacted_refs_only"
+L00000328	            ]
+L00000329	          },
+L00000330	          "published_event_id": {
+L00000331	            "type": [
+L00000332	              "string",
+L00000333	              "null"
+L00000334	            ]
+L00000335	          },
+L00000336	          "published_sequence_id": {
+L00000337	            "type": [
+L00000338	              "integer",
+L00000339	              "null"
+L00000340	            ],
+L00000341	            "minimum": 1
+L00000342	          },
+L00000343	          "retry_count": {
+L00000344	            "type": "integer",
+L00000345	            "minimum": 0
+L00000346	          },
+L00000347	          "last_error_ref": {
+L00000348	            "type": [
+L00000349	              "string",
+L00000350	              "null"
+L00000351	            ]
+L00000352	          }
+L00000353	        }
+L00000354	      }
+L00000355	    },
+L00000356	    {
+L00000357	      "family_id": "plan_compile_run",
+L00000358	      "storage_kind": "redb",
+L00000359	      "status": "materialized",
+L00000360	      "tier": "tier_0_launch_critical",
+L00000361	      "key_shape": "plan_compile_run.v1:{project_id}:{plan_compile_run_id}",
+L00000362	      "value_schema_id": "pm.storage_value.plan_compile_run.v1",
+L00000363	      "value_schema_ref": "Plans/storage_value_registry.json#/families/plan_compile_run/value_schema",
+L00000364	      "owner_doc": "Plans/Plan_To_Node_Compilation.md#PNC-010",
+L00000365	      "producer": [
+L00000366	        "PlanCompile bootstrap authority"
+L00000367	      ],
+L00000368	      "consumers": [
+L00000369	        "PlanCompile resume/restart",
+L00000370	        "Planning Wizard disabled-state projection",
+L00000371	        "implementation-readiness gate"
+L00000372	      ],
+L00000373	      "schema_version": "1.0.0",
+L00000374	      "encoding": "messagepack_canonical",
+L00000375	      "required_fields": [
+L00000376	        "schema_id",
+L00000377	        "schema_version",
+L00000378	        "project_id",
+L00000379	        "plan_compile_run_id",
+L00000380	        "approved_plan_pack_id",
+L00000381	        "source_plan_index_hash",
+L00000382	        "acceptance_unit_index_hash",
+L00000383	        "launch_source",
+L00000384	        "contract_mode",
+L00000385	        "runtime_adapter",
+L00000386	        "status",
+L00000387	        "current_stage",
+L00000388	        "cursor",
+L00000389	        "currentness_status",
+L00000390	        "blockers",
+L00000391	        "receipts",
+L00000392	        "created_at_utc",
+L00000393	        "updated_at_utc",
+L00000394	        "redaction_profile"
+L00000395	      ],
+L00000396	      "optional_fields": [
+L00000397	        "last_green_stage",
+L00000398	        "next_required_stage",
+L00000399	        "source_hashes",
+L00000400	        "artifacts",
+L00000401	        "cancellation",
+L00000402	        "supersession",
+L00000403	        "runtime_enablement_ref",
+L00000404	        "runtime_policy_snapshot_ref"
+L00000405	      ],
+L00000406	      "nullable_fields": [
+L00000407	        "last_green_stage",
+L00000408	        "next_required_stage",
+L00000409	        "runtime_enablement_ref",
+L00000410	        "runtime_policy_snapshot_ref"
+L00000411	      ],
+L00000412	      "replay_behavior": "Resume by exact run id; stale currentness, unsupported contract mode, or missing receipts keep PlanCompile disabled.",
+L00000413	      "migration": "No runtime PlanCompile rows are accepted without schema_version and contract_mode; old draft fields are imported only as non-buildable lineage.",
+L00000414	      "retention_compaction": "Retain through all child receipts and audit evidence; superseded runs are historical but not resumable unless currentness says so.",
+L00000415	      "redaction_no_secret_rule": "Stores ids, refs, hashes, stages, and enum status only; provider/account sensitive material remains external ref-only.",
+L00000416	      "legacy_canonical_crosswalk_status": "Canonical Tier 0C-2 PlanCompileRun storage contract, still blocked by PNC-019 runtime lifecycle.",
+L00000417	      "value_schema": {
+L00000418	        "type": "object",
+L00000419	        "additionalProperties": false,
+L00000420	        "required": [
+L00000421	          "schema_id",
+L00000422	          "schema_version",
+L00000423	          "project_id",
+L00000424	          "plan_compile_run_id",
+L00000425	          "approved_plan_pack_id",
+L00000426	          "source_plan_index_hash",
+L00000427	          "acceptance_unit_index_hash",
+L00000428	          "launch_source",
+L00000429	          "contract_mode",
+L00000430	          "runtime_adapter",
+L00000431	          "status",
+L00000432	          "current_stage",
+L00000433	          "cursor",
+L00000434	          "currentness_status",
+L00000435	          "blockers",
+L00000436	          "receipts",
+L00000437	          "created_at_utc",
+L00000438	          "updated_at_utc",
+L00000439	          "redaction_profile"
+L00000440	        ],
+L00000441	        "properties": {
+L00000442	          "schema_id": {
+L00000443	            "const": "pm.storage_value.plan_compile_run.v1"
+L00000444	          },
+L00000445	          "schema_version": {
+L00000446	            "const": "1.0.0"
+L00000447	          },
+L00000448	          "project_id": {
+L00000449	            "type": "string",
+L00000450	            "minLength": 1
+L00000451	          },
+L00000452	          "plan_compile_run_id": {
+L00000453	            "type": "string",
+L00000454	            "minLength": 1
+L00000455	          },
+L00000456	          "approved_plan_pack_id": {
+L00000457	            "type": "string",
+L00000458	            "minLength": 1
+L00000459	          },
+L00000460	          "source_plan_index_hash": {
+L00000461	            "type": "string",
+L00000462	            "minLength": 1
+L00000463	          },
+L00000464	          "acceptance_unit_index_hash": {
+L00000465	            "type": "string",
+L00000466	            "minLength": 1
+L00000467	          },
+L00000468	          "launch_source": {
+L00000469	            "type": "string",
+L00000470	            "enum": [
+L00000471	              "planning_wizard_approve_and_build"
+L00000472	            ]
+L00000473	          },
+L00000474	          "contract_mode": {
+L00000475	            "type": "string",
+L00000476	            "enum": [
+L00000477	              "bootstrap_authority_only",
+L00000478	              "runtime_disabled"
+L00000479	            ]
+L00000480	          },
+L00000481	          "runtime_adapter": {
+L00000482	            "type": "string",
+L00000483	            "enum": [
+L00000484	              "disabled_until_pnc019"
+L00000485	            ]
+L00000486	          },
+L00000487	          "status": {
+L00000488	            "type": "string",
+L00000489	            "enum": [
+L00000490	              "draft",
+L00000491	              "blocked",
+L00000492	              "ready_for_bootstrap_validation",
+L00000493	              "superseded",
+L00000494	              "cancelled"
+L00000495	            ]
+L00000496	          },
+L00000497	          "current_stage": {
+L00000498	            "type": "string",
+L00000499	            "minLength": 1
+L00000500	          },
+L00000501	          "cursor": {
+L00000502	            "type": "object"
+L00000503	          },
+L00000504	          "currentness_status": {
+L00000505	            "type": "object"
+L00000506	          },
+L00000507	          "blockers": {
+L00000508	            "type": "array",
+L00000509	            "items": {
+L00000510	              "type": "string"
+L00000511	            }
+L00000512	          },
+L00000513	          "receipts": {
+L00000514	            "type": "array",
+L00000515	            "items": {
+L00000516	              "type": "string"
+L00000517	            }
+L00000518	          },
+L00000519	          "created_at_utc": {
+L00000520	            "type": "string",
+L00000521	            "format": "date-time"
+L00000522	          },
+L00000523	          "updated_at_utc": {
+L00000524	            "type": "string",
+L00000525	            "format": "date-time"
+L00000526	          },
+L00000527	          "redaction_profile": {
+L00000528	            "type": "string",
+L00000529	            "enum": [
+L00000530	              "no_secrets",
+L00000531	              "redacted_refs_only"
+L00000532	            ]
+L00000533	          },
+L00000534	          "last_green_stage": {
+L00000535	            "type": [
+L00000536	              "string",
+L00000537	              "null"
+L00000538	            ]
+L00000539	          },
+L00000540	          "next_required_stage": {
+L00000541	            "type": [
+L00000542	              "string",
+L00000543	              "null"
+L00000544	            ]
+L00000545	          },
+L00000546	          "source_hashes": {
+L00000547	            "type": "object"
+L00000548	          },
+L00000549	          "artifacts": {
+L00000550	            "type": "array",
+L00000551	            "items": {
+L00000552	              "type": "string"
+L00000553	            }
+L00000554	          },
+L00000555	          "cancellation": {
+L00000556	            "type": "object"
+L00000557	          },
+L00000558	          "supersession": {
+L00000559	            "type": "object"
+L00000560	          },
+L00000561	          "runtime_enablement_ref": {
+L00000562	            "type": [
+L00000563	              "string",
+L00000564	              "null"
+L00000565	            ]
+L00000566	          },
+L00000567	          "runtime_policy_snapshot_ref": {
+L00000568	            "type": [
+L00000569	              "string",
+L00000570	              "null"
+L00000571	            ]
+L00000572	          }
+L00000573	        }
+L00000574	      }
+L00000575	    },
+L00000576	    {
+L00000577	      "family_id": "compiler_wave_contract",
+L00000578	      "storage_kind": "redb",
+L00000579	      "status": "materialized",
+L00000580	      "tier": "tier_0_launch_critical",
+L00000581	      "key_shape": "compiler_wave.v1:{project_id}:{plan_compile_run_id}:{assignment_id}",
+L00000582	      "value_schema_id": "pm.storage_value.compiler_wave_contract.v1",
+L00000583	      "value_schema_ref": "Plans/storage_value_registry.json#/families/compiler_wave_contract/value_schema",
+L00000584	      "owner_doc": "Plans/Plan_To_Node_Compilation.md#PNC-010",
+L00000585	      "producer": [
+L00000586	        "PlanCompile wave allocator"
+L00000587	      ],
+L00000588	      "consumers": [
+L00000589	        "PlanCompile parent writeback",
+L00000590	        "bootstrap validator",
+L00000591	        "evidence projector"
+L00000592	      ],
+L00000593	      "schema_version": "1.0.0",
+L00000594	      "encoding": "messagepack_canonical",
+L00000595	      "required_fields": [
+L00000596	        "schema_id",
+L00000597	        "schema_version",
+L00000598	        "project_id",
+L00000599	        "plan_compile_run_id",
+L00000600	        "assignment_id",
+L00000601	        "assigned_agent_role",
+L00000602	        "source_item_refs",
+L00000603	        "read_set",
+L00000604	        "write_set",
+L00000605	        "forbidden_writes",
+L00000606	        "parent_only_writes",
+L00000607	        "result_status",
+L00000608	        "retry_route",
+L00000609	        "resume_ref",
+L00000610	        "durable_evidence_refs",
+L00000611	        "assignment_receipt",
+L00000612	        "completion_receipt",
+L00000613	        "parent_writeback_required",
+L00000614	        "redaction_profile"
+L00000615	      ],
+L00000616	      "optional_fields": [],
+L00000617	      "nullable_fields": [
+L00000618	        "resume_ref",
+L00000619	        "completion_receipt"
+L00000620	      ],
+L00000621	      "replay_behavior": "Replay restores assignment state and parent-only write obligations without dispatching product work.",
+L00000622	      "migration": "Wave rows without read/write/forbidden boundaries are invalid for runtime bootstrap and remain source-lineage only.",
+L00000623	      "retention_compaction": "Retain until the parent PlanCompileRun is superseded and all evidence refs are preserved.",
+L00000624	      "redaction_no_secret_rule": "Wave rows store document/PlanUnit refs and write boundaries only, never provider transcripts or credentials.",
+L00000625	      "legacy_canonical_crosswalk_status": "Canonical value schema for design-only compiler waves.",
+L00000626	      "value_schema": {
+L00000627	        "type": "object",
+L00000628	        "additionalProperties": false,
+L00000629	        "required": [
+L00000630	          "schema_id",
+L00000631	          "schema_version",
+L00000632	          "project_id",
+L00000633	          "plan_compile_run_id",
+L00000634	          "assignment_id",
+L00000635	          "assigned_agent_role",
+L00000636	          "source_item_refs",
+L00000637	          "read_set",
+L00000638	          "write_set",
+L00000639	          "forbidden_writes",
+L00000640	          "parent_only_writes",
+L00000641	          "result_status",
+L00000642	          "retry_route",
+L00000643	          "resume_ref",
+L00000644	          "durable_evidence_refs",
+L00000645	          "assignment_receipt",
+L00000646	          "completion_receipt",
+L00000647	          "parent_writeback_required",
+L00000648	          "redaction_profile"
+L00000649	        ],
+L00000650	        "properties": {
+L00000651	          "schema_id": {
+L00000652	            "const": "pm.storage_value.compiler_wave_contract.v1"
+L00000653	          },
+L00000654	          "schema_version": {
+L00000655	            "const": "1.0.0"
+L00000656	          },
+L00000657	          "project_id": {
+L00000658	            "type": "string",
+L00000659	            "minLength": 1
+L00000660	          },
+L00000661	          "plan_compile_run_id": {
+L00000662	            "type": "string",
+L00000663	            "minLength": 1
+L00000664	          },
+L00000665	          "assignment_id": {
+L00000666	            "type": "string",
+L00000667	            "minLength": 1
+L00000668	          },
+L00000669	          "assigned_agent_role": {
+L00000670	            "type": "string",
+L00000671	            "minLength": 1
+L00000672	          },
+L00000673	          "source_item_refs": {
+L00000674	            "type": "array",
+L00000675	            "items": {
+L00000676	              "type": "string"
+L00000677	            }
+L00000678	          },
+L00000679	          "read_set": {
+L00000680	            "type": "array",
+L00000681	            "items": {
+L00000682	              "type": "string"
+L00000683	            }
+L00000684	          },
+L00000685	          "write_set": {
+L00000686	            "type": "array",
+L00000687	            "items": {
+L00000688	              "type": "string"
+L00000689	            }
+L00000690	          },
+L00000691	          "forbidden_writes": {
+L00000692	            "type": "array",
+L00000693	            "items": {
+L00000694	              "type": "string"
+L00000695	            }
+L00000696	          },
+L00000697	          "parent_only_writes": {
+L00000698	            "type": "array",
+L00000699	            "items": {
+L00000700	              "type": "string"
+L00000701	            }
+L00000702	          },
+L00000703	          "result_status": {
+L00000704	            "type": "string",
+L00000705	            "enum": [
+L00000706	              "pending",
+L00000707	              "completed",
+L00000708	              "blocked",
+L00000709	              "failed",
+L00000710	              "superseded"
+L00000711	            ]
+L00000712	          },
+L00000713	          "retry_route": {
+L00000714	            "type": "string",
+L00000715	            "minLength": 1
+L00000716	          },
+L00000717	          "resume_ref": {
+L00000718	            "type": [
+L00000719	              "string",
+L00000720	              "null"
+L00000721	            ]
+L00000722	          },
+L00000723	          "durable_evidence_refs": {
+L00000724	            "type": "array",
+L00000725	            "items": {
+L00000726	              "type": "string"
+L00000727	            }
+L00000728	          },
+L00000729	          "assignment_receipt": {
+L00000730	            "type": "string",
+L00000731	            "minLength": 1
+L00000732	          },
+L00000733	          "completion_receipt": {
+L00000734	            "type": [
+L00000735	              "string",
+L00000736	              "null"
+L00000737	            ]
+L00000738	          },
+L00000739	          "parent_writeback_required": {
+L00000740	            "type": "boolean"
+L00000741	          },
+L00000742	          "redaction_profile": {
+L00000743	            "type": "string",
+L00000744	            "enum": [
+L00000745	              "no_secrets",
+L00000746	              "redacted_refs_only"
+L00000747	            ]
+L00000748	          }
+L00000749	        }
+L00000750	      }
+L00000751	    },
+L00000752	    {
+L00000753	      "family_id": "workgraph_draft",
+L00000754	      "storage_kind": "redb",
+L00000755	      "status": "materialized",
+L00000756	      "tier": "tier_0_launch_critical",
+L00000757	      "key_shape": "workgraph_draft.v1:{project_id}:{plan_compile_run_id}:{workgraph_id}:{revision}",
+L00000758	      "value_schema_id": "pm.storage_value.workgraph_draft.v1",
+L00000759	      "value_schema_ref": "Plans/storage_value_registry.json#/families/workgraph_draft/value_schema",
+L00000760	      "owner_doc": "Plans/Plan_To_Node_Compilation.md#PNC-013",
+L00000761	      "producer": [
+L00000762	        "PlanCompile graph draft stage"
+L00000763	      ],
+L00000764	      "consumers": [
+L00000765	        "WorkNodeRequest derivation",
+L00000766	        "graph integrity validation",
+L00000767	        "Goal Runtime certification target"
+L00000768	      ],
+L00000769	      "schema_version": "1.0.0",
+L00000770	      "encoding": "messagepack_canonical",
+L00000771	      "required_fields": [
+L00000772	        "schema_id",
+L00000773	        "schema_version",
+L00000774	        "project_id",
+L00000775	        "plan_compile_run_id",
+L00000776	        "workgraph_id",
+L00000777	        "revision",
+L00000778	        "nodes",
+L00000779	        "entrypoints",
+L00000780	        "dependency_edges",
+L00000781	        "scheduler_policy",
+L00000782	        "graph_integrity",
+L00000783	        "authority",
+L00000784	        "evidence",
+L00000785	        "validation_state",
+L00000786	        "created_at_utc",
+L00000787	        "redaction_profile"
+L00000788	      ],
+L00000789	      "optional_fields": [
+L00000790	        "supersedes_revision"
+L00000791	      ],
+L00000792	      "nullable_fields": [
+L00000793	        "supersedes_revision"
+L00000794	      ],
+L00000795	      "replay_behavior": "Replay restores graph draft revisions for inspection and validation only; activation stays blocked until PNC-019.",
+L00000796	      "migration": "Any value-shape change increments workgraph_draft family version and preserves prior revision reachability.",
+L00000797	      "retention_compaction": "Retain every revision referenced by PlanCompileRun, WorkNodeRequest, or Goal receipt evidence.",
+L00000798	      "redaction_no_secret_rule": "Graph nodes carry refs and readiness metadata, not raw provider output or local secret-bearing file content.",
+L00000799	      "legacy_canonical_crosswalk_status": "Canonical draft graph storage row; not a materialized executable WorkGraph.",
+L00000800	      "value_schema": {
+L00000801	        "type": "object",
+L00000802	        "additionalProperties": false,
+L00000803	        "required": [
+L00000804	          "schema_id",
+L00000805	          "schema_version",
+L00000806	          "project_id",
+L00000807	          "plan_compile_run_id",
+L00000808	          "workgraph_id",
+L00000809	          "revision",
+L00000810	          "nodes",
+L00000811	          "entrypoints",
+L00000812	          "dependency_edges",
+L00000813	          "scheduler_policy",
+L00000814	          "graph_integrity",
+L00000815	          "authority",
+L00000816	          "evidence",
+L00000817	          "validation_state",
+L00000818	          "created_at_utc",
+L00000819	          "redaction_profile"
+L00000820	        ],
+L00000821	        "properties": {
+L00000822	          "schema_id": {
+L00000823	            "const": "pm.storage_value.workgraph_draft.v1"
+L00000824	          },
+L00000825	          "schema_version": {
+L00000826	            "const": "1.0.0"
+L00000827	          },
+L00000828	          "project_id": {
+L00000829	            "type": "string",
+L00000830	            "minLength": 1
+L00000831	          },
+L00000832	          "plan_compile_run_id": {
+L00000833	            "type": "string",
+L00000834	            "minLength": 1
+L00000835	          },
+L00000836	          "workgraph_id": {
+L00000837	            "type": "string",
+L00000838	            "minLength": 1
+L00000839	          },
+L00000840	          "revision": {
+L00000841	            "type": "integer",
+L00000842	            "minimum": 1
+L00000843	          },
+L00000844	          "nodes": {
+L00000845	            "type": "array",
+L00000846	            "items": {
+L00000847	              "type": "object"
+L00000848	            }
+L00000849	          },
+L00000850	          "entrypoints": {
+L00000851	            "type": "array",
+L00000852	            "items": {
+L00000853	              "type": "string"
+L00000854	            }
+L00000855	          },
+L00000856	          "dependency_edges": {
+L00000857	            "type": "array",
+L00000858	            "items": {
+L00000859	              "type": "object"
+L00000860	            }
+L00000861	          },
+L00000862	          "scheduler_policy": {
+L00000863	            "type": "object"
+L00000864	          },
+L00000865	          "graph_integrity": {
+L00000866	            "type": "object"
+L00000867	          },
+L00000868	          "authority": {
+L00000869	            "type": "object"
+L00000870	          },
+L00000871	          "evidence": {
+L00000872	            "type": "array",
+L00000873	            "items": {
+L00000874	              "type": "string"
+L00000875	            }
+L00000876	          },
+L00000877	          "validation_state": {
+L00000878	            "type": "object"
+L00000879	          },
+L00000880	          "created_at_utc": {
+L00000881	            "type": "string",
+L00000882	            "format": "date-time"
+L00000883	          },
+L00000884	          "redaction_profile": {
+L00000885	            "type": "string",
+L00000886	            "enum": [
+L00000887	              "no_secrets",
+L00000888	              "redacted_refs_only"
+L00000889	            ]
+L00000890	          },
+L00000891	          "supersedes_revision": {
+L00000892	            "type": [
+L00000893	              "integer",
+L00000894	              "null"
+L00000895	            ],
+L00000896	            "minimum": 1
+L00000897	          }
+L00000898	        }
+L00000899	      }
+L00000900	    },
+L00000901	    {
+L00000902	      "family_id": "worknode_request",
+L00000903	      "storage_kind": "redb",
+L00000904	      "status": "materialized",
+L00000905	      "tier": "tier_0_launch_critical",
+L00000906	      "key_shape": "worknode_request.v1:{project_id}:{workgraph_id}:{request_id}",
+L00000907	      "value_schema_id": "pm.storage_value.worknode_request.v1",
+L00000908	      "value_schema_ref": "Plans/storage_value_registry.json#/families/worknode_request/value_schema",
+L00000909	      "owner_doc": "Plans/Plan_To_Node_Compilation.md#PNC-014",
+L00000910	      "producer": [
+L00000911	        "PlanCompile WorkNodeRequest derivation"
+L00000912	      ],
+L00000913	      "consumers": [
+L00000914	        "Executor intake preflight",
+L00000915	        "Goal Runtime certification",
+L00000916	        "implementation-readiness gate"
+L00000917	      ],
+L00000918	      "schema_version": "1.0.0",
+L00000919	      "encoding": "messagepack_canonical",
+L00000920	      "required_fields": [
+L00000921	        "schema_id",
+L00000922	        "schema_version",
+L00000923	        "project_id",
+L00000924	        "workgraph_id",
+L00000925	        "request_id",
+L00000926	        "source_plan_unit_refs",
+L00000927	        "objective",
+L00000928	        "implementation_surfaces",
+L00000929	        "read_set_candidates",
+L00000930	        "write_set_candidates",
+L00000931	        "acceptance_criteria",
+L00000932	        "validator_candidates",
+L00000933	        "dependency_refs",
+L00000934	        "work_type",
+L00000935	        "gui_related",
+L00000936	        "frontend_related",
+L00000937	        "effort_class",
+L00000938	        "reasoning_tier",
+L00000939	        "capability_lane",
+L00000940	        "capability_requirements",
+L00000941	        "test_binding",
+L00000942	        "model_routing",
+L00000943	        "ordering_metadata",
+L00000944	        "authority",
+L00000945	        "idempotency_key",
+L00000946	        "cancellation_policy",
+L00000947	        "redaction_profile"
+L00000948	      ],
+L00000949	      "optional_fields": [
+L00000950	        "blocked_reason_refs"
+L00000951	      ],
+L00000952	      "nullable_fields": [],
+L00000953	      "replay_behavior": "Replay may reconstruct pending intake requests but must not materialize WorkNodes while PNC-019 remains blocked.",
+L00000954	      "migration": "Request value changes require a new version before Executor intake accepts them.",
+L00000955	      "retention_compaction": "Retain until referenced GoalRun/PlanCompile evidence is preserved; denied requests retain rejection receipts.",
+L00000956	      "redaction_no_secret_rule": "Requests contain refs, candidates, and policies only; local machine state and provider material stay outside the value.",
+L00000957	      "legacy_canonical_crosswalk_status": "Canonical request schema; not a WorkNode, NodeSeed, candidate queue, or executable task.",
+L00000958	      "value_schema": {
+L00000959	        "type": "object",
+L00000960	        "additionalProperties": false,
+L00000961	        "required": [
+L00000962	          "schema_id",
+L00000963	          "schema_version",
+L00000964	          "project_id",
+L00000965	          "workgraph_id",
+L00000966	          "request_id",
+L00000967	          "source_plan_unit_refs",
+L00000968	          "objective",
+L00000969	          "implementation_surfaces",
+L00000970	          "read_set_candidates",
+L00000971	          "write_set_candidates",
+L00000972	          "acceptance_criteria",
+L00000973	          "validator_candidates",
+L00000974	          "dependency_refs",
+L00000975	          "work_type",
+L00000976	          "gui_related",
+L00000977	          "frontend_related",
+L00000978	          "effort_class",
+L00000979	          "reasoning_tier",
+L00000980	          "capability_lane",
+L00000981	          "capability_requirements",
+L00000982	          "test_binding",
+L00000983	          "model_routing",
+L00000984	          "ordering_metadata",
+L00000985	          "authority",
+L00000986	          "idempotency_key",
+L00000987	          "cancellation_policy",
+L00000988	          "redaction_profile"
+L00000989	        ],
+L00000990	        "properties": {
+L00000991	          "schema_id": {
+L00000992	            "const": "pm.storage_value.worknode_request.v1"
+L00000993	          },
+L00000994	          "schema_version": {
+L00000995	            "const": "1.0.0"
+L00000996	          },
+L00000997	          "project_id": {
+L00000998	            "type": "string",
+L00000999	            "minLength": 1
+L00001000	          },
+L00001001	          "workgraph_id": {
+L00001002	            "type": "string",
+L00001003	            "minLength": 1
+L00001004	          },
+L00001005	          "request_id": {
+L00001006	            "type": "string",
+L00001007	            "minLength": 1
+L00001008	          },
+L00001009	          "source_plan_unit_refs": {
+L00001010	            "type": "array",
+L00001011	            "items": {
+L00001012	              "type": "string"
+L00001013	            }
+L00001014	          },
+L00001015	          "objective": {
+L00001016	            "type": "string",
+L00001017	            "minLength": 1
+L00001018	          },
+L00001019	          "implementation_surfaces": {
+L00001020	            "type": "array",
+L00001021	            "items": {
+L00001022	              "type": "string"
+L00001023	            }
+L00001024	          },
+L00001025	          "read_set_candidates": {
+L00001026	            "type": "array",
+L00001027	            "items": {
+L00001028	              "type": "string"
+L00001029	            }
+L00001030	          },
+L00001031	          "write_set_candidates": {
+L00001032	            "type": "array",
+L00001033	            "items": {
+L00001034	              "type": "string"
+L00001035	            }
+L00001036	          },
+L00001037	          "acceptance_criteria": {
+L00001038	            "type": "array",
+L00001039	            "items": {
+L00001040	              "type": "string"
+L00001041	            }
+L00001042	          },
+L00001043	          "validator_candidates": {
+L00001044	            "type": "array",
+L00001045	            "items": {
+L00001046	              "type": "string"
+L00001047	            }
+L00001048	          },
+L00001049	          "dependency_refs": {
+L00001050	            "type": "array",
+L00001051	            "items": {
+L00001052	              "type": "string"
+L00001053	            }
+L00001054	          },
+L00001055	          "work_type": {
+L00001056	            "type": "string",
+L00001057	            "minLength": 1
+L00001058	          },
+L00001059	          "gui_related": {
+L00001060	            "type": "boolean"
+L00001061	          },
+L00001062	          "frontend_related": {
+L00001063	            "type": "boolean"
+L00001064	          },
+L00001065	          "effort_class": {
+L00001066	            "type": "string",
+L00001067	            "minLength": 1
+L00001068	          },
+L00001069	          "reasoning_tier": {
+L00001070	            "type": "string",
+L00001071	            "enum": [
+L00001072	              "standard",
+L00001073	              "high"
+L00001074	            ]
+L00001075	          },
+L00001076	          "capability_lane": {
+L00001077	            "type": "string",
+L00001078	            "minLength": 1
+L00001079	          },
+L00001080	          "capability_requirements": {
+L00001081	            "type": "array",
+L00001082	            "items": {
+L00001083	              "type": "string"
+L00001084	            }
+L00001085	          },
+L00001086	          "test_binding": {
+L00001087	            "type": "object"
+L00001088	          },
+L00001089	          "model_routing": {
+L00001090	            "type": "object"
+L00001091	          },
+L00001092	          "ordering_metadata": {
+L00001093	            "type": "object"
+L00001094	          },
+L00001095	          "authority": {
+L00001096	            "type": "object"
+L00001097	          },
+L00001098	          "idempotency_key": {
+L00001099	            "type": "string",
+L00001100	            "minLength": 1
+L00001101	          },
+L00001102	          "cancellation_policy": {
+L00001103	            "type": "object"
+L00001104	          },
+L00001105	          "redaction_profile": {
+L00001106	            "type": "string",
+L00001107	            "enum": [
+L00001108	              "no_secrets",
+L00001109	              "redacted_refs_only"
+L00001110	            ]
+L00001111	          },
+L00001112	          "blocked_reason_refs": {
+L00001113	            "type": "array",
+L00001114	            "items": {
+L00001115	              "type": "string"
+L00001116	            }
+L00001117	          }
+L00001118	        }
+L00001119	      }
+L00001120	    },
+L00001121	    {
+L00001122	      "family_id": "executor_intake_report",
+L00001123	      "storage_kind": "redb",
+L00001124	      "status": "materialized",
+L00001125	      "tier": "tier_0_launch_critical",
+L00001126	      "key_shape": "executor_intake_report.v1:{project_id}:{request_id}:{intake_id}",
+L00001127	      "value_schema_id": "pm.storage_value.executor_intake_report.v1",
+L00001128	      "value_schema_ref": "Plans/storage_value_registry.json#/families/executor_intake_report/value_schema",
+L00001129	      "owner_doc": "Plans/Executor_Protocol.md#EP-099",
+L00001130	      "producer": [
+L00001131	        "Executor intake preflight"
+L00001132	      ],
+L00001133	      "consumers": [
+L00001134	        "PlanCompile handoff matrix",
+L00001135	        "blocked projection projector",
+L00001136	        "Goal Runtime certification"
+L00001137	      ],
+L00001138	      "schema_version": "1.0.0",
+L00001139	      "encoding": "messagepack_canonical",
+L00001140	      "required_fields": [
+L00001141	        "schema_id",
+L00001142	        "schema_version",
+L00001143	        "project_id",
+L00001144	        "request_id",
+L00001145	        "intake_id",
+L00001146	        "intake_status",
+L00001147	        "graph_integrity_result",
+L00001148	        "source_control_result",
+L00001149	        "test_binding_result",
+L00001150	        "model_routing_result",
+L00001151	        "authority_result",
+L00001152	        "readiness_result",
+L00001153	        "scheduler_metadata_result",
+L00001154	        "created_at_utc",
+L00001155	        "redaction_profile"
+L00001156	      ],
+L00001157	      "optional_fields": [
+L00001158	        "blocked_reason_code",
+L00001159	        "rejected_reason_code",
+L00001160	        "accepted_at_utc",
+L00001161	        "execution_unit_context_ref"
+L00001162	      ],
+L00001163	      "nullable_fields": [
+L00001164	        "blocked_reason_code",
+L00001165	        "rejected_reason_code",
+L00001166	        "accepted_at_utc",
+L00001167	        "execution_unit_context_ref"
+L00001168	      ],
+L00001169	      "replay_behavior": "Replay uses the report to explain accepted/rejected/blocked intake without launching activation when runtime is disabled.",
+L00001170	      "migration": "Reports lacking schema_version or per-domain result objects are invalid for Executor intake replay.",
+L00001171	      "retention_compaction": "Retain with the parent WorkNodeRequest and any blocked/goal receipts that cite the intake id.",
+L00001172	      "redaction_no_secret_rule": "Preflight details are result refs and status objects; no repository secret, auth token, or local credential is stored.",
+L00001173	      "legacy_canonical_crosswalk_status": "Canonical intake report value; activation receipts remain blocked by runtime lifecycle evidence.",
+L00001174	      "value_schema": {
+L00001175	        "type": "object",
+L00001176	        "additionalProperties": false,
+L00001177	        "required": [
+L00001178	          "schema_id",
+L00001179	          "schema_version",
+L00001180	          "project_id",
+L00001181	          "request_id",
+L00001182	          "intake_id",
+L00001183	          "intake_status",
+L00001184	          "graph_integrity_result",
+L00001185	          "source_control_result",
+L00001186	          "test_binding_result",
+L00001187	          "model_routing_result",
+L00001188	          "authority_result",
+L00001189	          "readiness_result",
+L00001190	          "scheduler_metadata_result",
+L00001191	          "created_at_utc",
+L00001192	          "redaction_profile"
+L00001193	        ],
+L00001194	        "properties": {
+L00001195	          "schema_id": {
+L00001196	            "const": "pm.storage_value.executor_intake_report.v1"
+L00001197	          },
+L00001198	          "schema_version": {
+L00001199	            "const": "1.0.0"
+L00001200	          },
+L00001201	          "project_id": {
+L00001202	            "type": "string",
+L00001203	            "minLength": 1
+L00001204	          },
+L00001205	          "request_id": {
+L00001206	            "type": "string",
+L00001207	            "minLength": 1
+L00001208	          },
+L00001209	          "intake_id": {
+L00001210	            "type": "string",
+L00001211	            "minLength": 1
+L00001212	          },
+L00001213	          "intake_status": {
+L00001214	            "type": "string",
+L00001215	            "enum": [
+L00001216	              "accepted",
+L00001217	              "rejected",
+L00001218	              "blocked"
+L00001219	            ]
+L00001220	          },
+L00001221	          "graph_integrity_result": {
+L00001222	            "type": "object"
+L00001223	          },
+L00001224	          "source_control_result": {
+L00001225	            "type": "object"
+L00001226	          },
+L00001227	          "test_binding_result": {
+L00001228	            "type": "object"
+L00001229	          },
+L00001230	          "model_routing_result": {
+L00001231	            "type": "object"
+L00001232	          },
+L00001233	          "authority_result": {
+L00001234	            "type": "object"
+L00001235	          },
+L00001236	          "readiness_result": {
+L00001237	            "type": "object"
+L00001238	          },
+L00001239	          "scheduler_metadata_result": {
+L00001240	            "type": "object"
+L00001241	          },
+L00001242	          "created_at_utc": {
+L00001243	            "type": "string",
+L00001244	            "format": "date-time"
+L00001245	          },
+L00001246	          "redaction_profile": {
+L00001247	            "type": "string",
+L00001248	            "enum": [
+L00001249	              "no_secrets",
+L00001250	              "redacted_refs_only"
+L00001251	            ]
+L00001252	          },
+L00001253	          "blocked_reason_code": {
+L00001254	            "type": [
+L00001255	              "string",
+L00001256	              "null"
+L00001257	            ]
+L00001258	          },
+L00001259	          "rejected_reason_code": {
+L00001260	            "type": [
+L00001261	              "string",
+L00001262	              "null"
+L00001263	            ]
+L00001264	          },
+L00001265	          "accepted_at_utc": {
+L00001266	            "type": [
+L00001267	              "string",
+L00001268	              "null"
+L00001269	            ],
+L00001270	            "format": "date-time"
+L00001271	          },
+L00001272	          "execution_unit_context_ref": {
+L00001273	            "type": [
+L00001274	              "string",
+L00001275	              "null"
+L00001276	            ]
+L00001277	          }
+L00001278	        }
+L00001279	      }
+L00001280	    },
+L00001281	    {
+L00001282	      "family_id": "attempt_receipt",
+L00001283	      "storage_kind": "redb",
+L00001284	      "status": "materialized",
+L00001285	      "tier": "tier_0_launch_critical",
+L00001286	      "key_shape": "attempt_receipt.v1:{project_id}:{attempt_id}:{receipt_id}",
+L00001287	      "value_schema_id": "pm.storage_value.attempt_receipt.v1",
+L00001288	      "value_schema_ref": "Plans/storage_value_registry.json#/families/attempt_receipt/value_schema",
+L00001289	      "owner_doc": "Plans/Executor_Protocol.md#EP-103",
+L00001290	      "producer": [
+L00001291	        "Executor receipt writer"
+L00001292	      ],
+L00001293	      "consumers": [
+L00001294	        "Runtime Artifacts panel",
+L00001295	        "Goal Runtime certification",
+L00001296	        "audit evidence projector"
+L00001297	      ],
+L00001298	      "schema_version": "1.0.0",
+L00001299	      "encoding": "messagepack_canonical",
+L00001300	      "required_fields": [
+L00001301	        "schema_id",
+L00001302	        "schema_version",
+L00001303	        "project_id",
+L00001304	        "receipt_id",
+L00001305	        "run_id",
+L00001306	        "node_id",
+L00001307	        "attempt_id",
+L00001308	        "receipt_kind",
+L00001309	        "result_summary",
+L00001310	        "status",
+L00001311	        "execution_unit_context_ref",
+L00001312	        "source_artifact_refs",
+L00001313	        "destination_artifact_refs",
+L00001314	        "retry_route",
+L00001315	        "rollback_route",
+L00001316	        "evidence_refs",
+L00001317	        "validator_refs",
+L00001318	        "created_at_utc",
+L00001319	        "redaction_profile"
+L00001320	      ],
+L00001321	      "optional_fields": [
+L00001322	        "provider_attempt_ref",
+L00001323	        "usage_event_ref",
+L00001324	        "worktree_id",
+L00001325	        "safe_point_id",
+L00001326	        "unresolved_risks"
+L00001327	      ],
+L00001328	      "nullable_fields": [
+L00001329	        "provider_attempt_ref",
+L00001330	        "usage_event_ref",
+L00001331	        "worktree_id",
+L00001332	        "safe_point_id"
+L00001333	      ],
+L00001334	      "replay_behavior": "Replay joins attempt receipts by project/attempt/receipt and never treats receipt summaries as executable activation proof.",
+L00001335	      "migration": "Older receipt aliases migrate into attempt_receipt with explicit schema_version, source refs, and redaction profile.",
+L00001336	      "retention_compaction": "Retain canonical receipts and evidence refs; compact only derived summaries once source receipts remain reachable.",
+L00001337	      "redaction_no_secret_rule": "Receipt stores artifact/evidence refs and redacted summaries only, not raw provider output or credentials.",
+L00001338	      "legacy_canonical_crosswalk_status": "Canonical cross-surface attempt receipt value.",
+L00001339	      "value_schema": {
+L00001340	        "type": "object",
+L00001341	        "additionalProperties": false,
+L00001342	        "required": [
+L00001343	          "schema_id",
+L00001344	          "schema_version",
+L00001345	          "project_id",
+L00001346	          "receipt_id",
+L00001347	          "run_id",
+L00001348	          "node_id",
+L00001349	          "attempt_id",
+L00001350	          "receipt_kind",
+L00001351	          "result_summary",
+L00001352	          "status",
+L00001353	          "execution_unit_context_ref",
+L00001354	          "source_artifact_refs",
+L00001355	          "destination_artifact_refs",
+L00001356	          "retry_route",
+L00001357	          "rollback_route",
+L00001358	          "evidence_refs",
+L00001359	          "validator_refs",
+L00001360	          "created_at_utc",
+L00001361	          "redaction_profile"
+L00001362	        ],
+L00001363	        "properties": {
+L00001364	          "schema_id": {
+L00001365	            "const": "pm.storage_value.attempt_receipt.v1"
+L00001366	          },
+L00001367	          "schema_version": {
+L00001368	            "const": "1.0.0"
+L00001369	          },
+L00001370	          "project_id": {
+L00001371	            "type": "string",
+L00001372	            "minLength": 1
+L00001373	          },
+L00001374	          "receipt_id": {
+L00001375	            "type": "string",
+L00001376	            "minLength": 1
+L00001377	          },
+L00001378	          "run_id": {
+L00001379	            "type": "string",
+L00001380	            "minLength": 1
+L00001381	          },
+L00001382	          "node_id": {
+L00001383	            "type": "string",
+L00001384	            "minLength": 1
+L00001385	          },
+L00001386	          "attempt_id": {
+L00001387	            "type": "string",
+L00001388	            "minLength": 1
+L00001389	          },
+L00001390	          "receipt_kind": {
+L00001391	            "type": "string",
+L00001392	            "minLength": 1
+L00001393	          },
+L00001394	          "result_summary": {
+L00001395	            "type": "object"
+L00001396	          },
+L00001397	          "status": {
+L00001398	            "type": "string",
+L00001399	            "enum": [
+L00001400	              "completed",
+L00001401	              "failed",
+L00001402	              "blocked",
+L00001403	              "cancelled",
+L00001404	              "superseded"
+L00001405	            ]
+L00001406	          },
+L00001407	          "execution_unit_context_ref": {
+L00001408	            "type": "string",
+L00001409	            "minLength": 1
+L00001410	          },
+L00001411	          "source_artifact_refs": {
+L00001412	            "type": "array",
+L00001413	            "items": {
+L00001414	              "type": "string"
+L00001415	            }
+L00001416	          },
+L00001417	          "destination_artifact_refs": {
+L00001418	            "type": "array",
+L00001419	            "items": {
+L00001420	              "type": "string"
+L00001421	            }
+L00001422	          },
+L00001423	          "retry_route": {
+L00001424	            "type": "string",
+L00001425	            "minLength": 1
+L00001426	          },
+L00001427	          "rollback_route": {
+L00001428	            "type": "string",
+L00001429	            "minLength": 1
+L00001430	          },
+L00001431	          "evidence_refs": {
+L00001432	            "type": "array",
+L00001433	            "items": {
+L00001434	              "type": "string"
+L00001435	            }
+L00001436	          },
+L00001437	          "validator_refs": {
+L00001438	            "type": "array",
+L00001439	            "items": {
+L00001440	              "type": "string"
+L00001441	            }
+L00001442	          },
+L00001443	          "created_at_utc": {
+L00001444	            "type": "string",
+L00001445	            "format": "date-time"
+L00001446	          },
+L00001447	          "redaction_profile": {
+L00001448	            "type": "string",
+L00001449	            "enum": [
+L00001450	              "no_secrets",
+L00001451	              "redacted_refs_only"
+L00001452	            ]
+L00001453	          },
+L00001454	          "provider_attempt_ref": {
+L00001455	            "type": [
+L00001456	              "string",
+L00001457	              "null"
+L00001458	            ]
+L00001459	          },
+L00001460	          "usage_event_ref": {
+L00001461	            "type": [
+L00001462	              "string",
+L00001463	              "null"
+L00001464	            ]
+L00001465	          },
+L00001466	          "worktree_id": {
+L00001467	            "type": [
+L00001468	              "string",
+L00001469	              "null"
+L00001470	            ]
+L00001471	          },
+L00001472	          "safe_point_id": {
+L00001473	            "type": [
+L00001474	              "string",
+L00001475	              "null"
+L00001476	            ]
+L00001477	          },
+L00001478	          "unresolved_risks": {
+L00001479	            "type": "array",
+L00001480	            "items": {
+L00001481	              "type": "string"
+L00001482	            }
+L00001483	          }
+L00001484	        }
+L00001485	      }
+L00001486	    },
+L00001487	    {
+L00001488	      "family_id": "event_record_index",
+L00001489	      "storage_kind": "redb_index",
+L00001490	      "status": "materialized",
+L00001491	      "tier": "tier_0_launch_critical",
+L00001492	      "key_shape": "event_record_index.v1:{project_id}:{sequence_id}:{event_id}",
+L00001493	      "value_schema_id": "pm.storage_value.event_record_index.v1",
+L00001494	      "value_schema_ref": "Plans/storage_value_registry.json#/families/event_record_index/value_schema",
+L00001495	      "owner_doc": "Plans/storage-plan.md#2.2.5-eventrecord-persistence-boundary",
+L00001496	      "producer": [
+L00001497	        "seglog EventRecord projector"
+L00001498	      ],
+L00001499	      "consumers": [
+L00001500	        "idempotency replay",
+L00001501	        "audit lookup",
+L00001502	        "projectors"
+L00001503	      ],
+L00001504	      "schema_version": "1.0.0",
+L00001505	      "encoding": "messagepack_canonical",
+L00001506	      "required_fields": [
+L00001507	        "schema_id",
+L00001508	        "schema_version",
+L00001509	        "project_id",
+L00001510	        "sequence_id",
+L00001511	        "event_id",
+L00001512	        "event_type",
+L00001513	        "segment_ref",
+L00001514	        "byte_offset",
+L00001515	        "payload_sha256",
+L00001516	        "idempotency_key",
+L00001517	        "correlation_id",
+L00001518	        "persisted_at_utc",
+L00001519	        "redaction_profile"
+L00001520	      ],
+L00001521	      "optional_fields": [
+L00001522	        "causation_event_id"
+L00001523	      ],
+L00001524	      "nullable_fields": [
+L00001525	        "causation_event_id"
+L00001526	      ],
+L00001527	      "replay_behavior": "Index row points back to authoritative seglog bytes and is rebuildable; replay ordering uses segment generation, segment order, offset, and sequence_id.",
+L00001528	      "migration": "Legacy EventEnvelopeV1 lookup rows migrate by adding schema_id/schema_version/event_type and migration metadata at EventRecord level.",
+L00001529	      "retention_compaction": "Rebuildable index may compact only after authoritative seglog retention permits it.",
+L00001530	      "redaction_no_secret_rule": "Index stores only ids, offsets, hashes, and refs; payload bytes stay in seglog under EventRecord redaction rules.",
+L00001531	      "legacy_canonical_crosswalk_status": "Canonical lookup row for pm.event.v0 EventRecord persistence boundary.",
+L00001532	      "value_schema": {
+L00001533	        "type": "object",
+L00001534	        "additionalProperties": false,
+L00001535	        "required": [
+L00001536	          "schema_id",
+L00001537	          "schema_version",
+L00001538	          "project_id",
+L00001539	          "sequence_id",
+L00001540	          "event_id",
+L00001541	          "event_type",
+L00001542	          "segment_ref",
+L00001543	          "byte_offset",
+L00001544	          "payload_sha256",
+L00001545	          "idempotency_key",
+L00001546	          "correlation_id",
+L00001547	          "persisted_at_utc",
+L00001548	          "redaction_profile"
+L00001549	        ],
+L00001550	        "properties": {
+L00001551	          "schema_id": {
+L00001552	            "const": "pm.storage_value.event_record_index.v1"
+L00001553	          },
+L00001554	          "schema_version": {
+L00001555	            "const": "1.0.0"
+L00001556	          },
+L00001557	          "project_id": {
+L00001558	            "type": "string",
+L00001559	            "minLength": 1
+L00001560	          },
+L00001561	          "sequence_id": {
+L00001562	            "type": "integer",
+L00001563	            "minimum": 1
+L00001564	          },
+L00001565	          "event_id": {
+L00001566	            "type": "string",
+L00001567	            "minLength": 1
+L00001568	          },
+L00001569	          "event_type": {
+L00001570	            "type": "string",
+L00001571	            "minLength": 1
+L00001572	          },
+L00001573	          "segment_ref": {
+L00001574	            "type": "string",
+L00001575	            "minLength": 1
+L00001576	          },
+L00001577	          "byte_offset": {
+L00001578	            "type": "integer",
+L00001579	            "minimum": 0
+L00001580	          },
+L00001581	          "payload_sha256": {
+L00001582	            "type": "string",
+L00001583	            "minLength": 1
+L00001584	          },
+L00001585	          "idempotency_key": {
+L00001586	            "type": "string",
+L00001587	            "minLength": 1
+L00001588	          },
+L00001589	          "correlation_id": {
+L00001590	            "type": "string",
+L00001591	            "minLength": 1
+L00001592	          },
+L00001593	          "persisted_at_utc": {
+L00001594	            "type": "string",
+L00001595	            "format": "date-time"
+L00001596	          },
+L00001597	          "redaction_profile": {
+L00001598	            "type": "string",
+L00001599	            "enum": [
+L00001600	              "no_secrets",
+L00001601	              "redacted_refs_only"
+L00001602	            ]
+L00001603	          },
+L00001604	          "causation_event_id": {
+L00001605	            "type": [
+L00001606	              "string",
+L00001607	              "null"
+L00001608	            ]
+L00001609	          }
+L00001610	        }
+L00001611	      }
+L00001612	    },
+L00001613	    {
+L00001614	      "family_id": "blocked_projection",
+L00001615	      "storage_kind": "redb_projection",
+L00001616	      "status": "materialized",
+L00001617	      "tier": "tier_0_launch_critical",
+L00001618	      "key_shape": "blocked_projection.v1:{project_id}:{node_id}",
+L00001619	      "value_schema_id": "pm.storage_value.blocked_projection.v1",
+L00001620	      "value_schema_ref": "Plans/storage_value_registry.json#/families/blocked_projection/value_schema",
+L00001621	      "owner_doc": "Plans/storage-plan.md#blocked-projection-migration-versioning-rule",
+L00001622	      "producer": [
+L00001623	        "Executor blocked-state projector"
+L00001624	      ],
+L00001625	      "consumers": [
+L00001626	        "Planning Wizard disabled reason",
+L00001627	        "Orchestrator projection",
+L00001628	        "Goal Runtime blocked receipt"
+L00001629	      ],
+L00001630	      "schema_version": "1.0.0",
+L00001631	      "encoding": "messagepack_canonical",
+L00001632	      "required_fields": [
+L00001633	        "schema_id",
+L00001634	        "schema_version",
+L00001635	        "project_id",
+L00001636	        "node_id",
+L00001637	        "blocked_reason_code",
+L00001638	        "blocked_at_utc",
+L00001639	        "blocked_family",
+L00001640	        "source_event_ids",
+L00001641	        "projection_freshness",
+L00001642	        "projection_health",
+L00001643	        "last_projected_at_utc",
+L00001644	        "redaction_profile"
+L00001645	      ],
+L00001646	      "optional_fields": [
+L00001647	        "approval_scope_key",
+L00001648	        "allowed_action_ids",
+L00001649	        "dirty_file_paths",
+L00001650	        "conflict_file_paths",
+L00001651	        "recovery_target_ref"
+L00001652	      ],
+L00001653	      "nullable_fields": [
+L00001654	        "approval_scope_key",
+L00001655	        "recovery_target_ref"
+L00001656	      ],
+L00001657	      "replay_behavior": "Projection rebuilds from EventRecord/receipt sources; stale or degraded projections block mutation-capable actions.",
+L00001658	      "migration": "Run-scoped blocked_projection.{run_id}.{node_id}.{blocked_sequence} keys are migration-read aliases only; canonical writes use v1 project/node key.",
+L00001659	      "retention_compaction": "Projection is rebuildable, but source events and blocked receipts retain according to receipt/audit policy.",
+L00001660	      "redaction_no_secret_rule": "File paths may be redacted or ref-only under export policy; raw secret content and credentials are invalid.",
+L00001661	      "legacy_canonical_crosswalk_status": "Canonical blocked projection write target, replacing run-scoped aliases.",
+L00001662	      "value_schema": {
+L00001663	        "type": "object",
+L00001664	        "additionalProperties": false,
+L00001665	        "required": [
+L00001666	          "schema_id",
+L00001667	          "schema_version",
+L00001668	          "project_id",
+L00001669	          "node_id",
+L00001670	          "blocked_reason_code",
+L00001671	          "blocked_at_utc",
+L00001672	          "blocked_family",
+L00001673	          "source_event_ids",
+L00001674	          "projection_freshness",
+L00001675	          "projection_health",
+L00001676	          "last_projected_at_utc",
+L00001677	          "redaction_profile"
+L00001678	        ],
+L00001679	        "properties": {
+L00001680	          "schema_id": {
+L00001681	            "const": "pm.storage_value.blocked_projection.v1"
+L00001682	          },
+L00001683	          "schema_version": {
+L00001684	            "const": "1.0.0"
+L00001685	          },
+L00001686	          "project_id": {
+L00001687	            "type": "string",
+L00001688	            "minLength": 1
+L00001689	          },
+L00001690	          "node_id": {
+L00001691	            "type": "string",
+L00001692	            "minLength": 1
+L00001693	          },
+L00001694	          "blocked_reason_code": {
+L00001695	            "type": "string",
+L00001696	            "minLength": 1
+L00001697	          },
+L00001698	          "blocked_at_utc": {
+L00001699	            "type": "string",
+L00001700	            "format": "date-time"
+L00001701	          },
+L00001702	          "blocked_family": {
+L00001703	            "type": "string",
+L00001704	            "minLength": 1
+L00001705	          },
+L00001706	          "source_event_ids": {
+L00001707	            "type": "array",
+L00001708	            "items": {
+L00001709	              "type": "string"
+L00001710	            }
+L00001711	          },
+L00001712	          "projection_freshness": {
+L00001713	            "type": "string",
+L00001714	            "enum": [
+L00001715	              "current",
+L00001716	              "stale",
+L00001717	              "rebuilding",
+L00001718	              "unavailable"
+L00001719	            ]
+L00001720	          },
+L00001721	          "projection_health": {
+L00001722	            "type": "string",
+L00001723	            "enum": [
+L00001724	              "healthy",
+L00001725	              "degraded",
+L00001726	              "unavailable"
+L00001727	            ]
+L00001728	          },
+L00001729	          "last_projected_at_utc": {
+L00001730	            "type": "string",
+L00001731	            "format": "date-time"
+L00001732	          },
+L00001733	          "redaction_profile": {
+L00001734	            "type": "string",
+L00001735	            "enum": [
+L00001736	              "no_secrets",
+L00001737	              "redacted_refs_only"
+L00001738	            ]
+L00001739	          },
+L00001740	          "approval_scope_key": {
+L00001741	            "type": [
+L00001742	              "string",
+L00001743	              "null"
+L00001744	            ]
+L00001745	          },
+L00001746	          "allowed_action_ids": {
+L00001747	            "type": "array",
+L00001748	            "items": {
+L00001749	              "type": "string"
+L00001750	            }
+L00001751	          },
+L00001752	          "dirty_file_paths": {
+L00001753	            "type": "array",
+L00001754	            "items": {
+L00001755	              "type": "string"
+L00001756	            }
+L00001757	          },
+L00001758	          "conflict_file_paths": {
+L00001759	            "type": "array",
+L00001760	            "items": {
+L00001761	              "type": "string"
+L00001762	            }
+L00001763	          },
+L00001764	          "recovery_target_ref": {
+L00001765	            "type": [
+L00001766	              "string",
+L00001767	              "null"
+L00001768	            ]
+L00001769	          }
+L00001770	        }
+L00001771	      }
+L00001772	    },
+L00001773	    {
+L00001774	      "family_id": "goal_receipt",
+L00001775	      "storage_kind": "redb",
+L00001776	      "status": "materialized",
+L00001777	      "tier": "tier_0_launch_critical",
+L00001778	      "key_shape": "goal_receipt.v1:{project_id}:{receipt_id}",
+L00001779	      "value_schema_id": "pm.storage_value.goal_receipt.v1",
+L00001780	      "value_schema_ref": "Plans/storage_value_registry.json#/families/goal_receipt/value_schema",
+L00001781	      "owner_doc": "Plans/storage-plan.md#SP-214",
+L00001782	      "producer": [
+L00001783	        "Goal Runtime certifier"
+L00001784	      ],
+L00001785	      "consumers": [
+L00001786	        "Goal Runtime state replay",
+L00001787	        "Orchestrator receipt panels",
+L00001788	        "implementation-readiness gate"
+L00001789	      ],
+L00001790	      "schema_version": "1.0.0",
+L00001791	      "encoding": "messagepack_canonical",
+L00001792	      "required_fields": [
+L00001793	        "schema_id",
+L00001794	        "schema_version",
+L00001795	        "project_id",
+L00001796	        "receipt_id",
+L00001797	        "goal_id",
+L00001798	        "receipt_kind",
+L00001799	        "certification_tier",
+L00001800	        "validator_outputs",
+L00001801	        "child_receipt_refs",
+L00001802	        "worknode_receipt_refs",
+L00001803	        "unresolved_risks",
+L00001804	        "final_certifier_decision",
+L00001805	        "evidence_refs",
+L00001806	        "created_at_utc",
+L00001807	        "redaction_profile"
+L00001808	      ],
+L00001809	      "optional_fields": [
+L00001810	        "goal_run_id",
+L00001811	        "workgraph_ref",
+L00001812	        "requested_runtime_ref",
+L00001813	        "effective_runtime_ref"
+L00001814	      ],
+L00001815	      "nullable_fields": [
+L00001816	        "goal_run_id",
+L00001817	        "workgraph_ref",
+L00001818	        "requested_runtime_ref",
+L00001819	        "effective_runtime_ref"
+L00001820	      ],
+L00001821	      "replay_behavior": "Goal state replay consumes append-only goal events plus goal receipts; projections are disposable and stale projections cannot certify completion.",
+L00001822	      "migration": "Goal receipts lacking schema_version, certification tier, validator outputs, or final decision are invalid for buildability proof.",
+L00001823	      "retention_compaction": "Retain completion, degraded, stopped, blocked, child-goal, recovery, evidence, and certification receipts under Goal Runtime retention anchors.",
+L00001824	      "redaction_no_secret_rule": "Receipts store validator/evidence refs and decisions only; provider output and local evidence bodies are ref-only/redacted.",
+L00001825	      "legacy_canonical_crosswalk_status": "Canonical Goal Runtime receipt row for Tier 0C-2; does not close Goal Runtime lifecycle blocker.",
+L00001826	      "value_schema": {
+L00001827	        "type": "object",
+L00001828	        "additionalProperties": false,
+L00001829	        "required": [
+L00001830	          "schema_id",
+L00001831	          "schema_version",
+L00001832	          "project_id",
+L00001833	          "receipt_id",
+L00001834	          "goal_id",
+L00001835	          "receipt_kind",
+L00001836	          "certification_tier",
+L00001837	          "validator_outputs",
+L00001838	          "child_receipt_refs",
+L00001839	          "worknode_receipt_refs",
+L00001840	          "unresolved_risks",
+L00001841	          "final_certifier_decision",
+L00001842	          "evidence_refs",
+L00001843	          "created_at_utc",
+L00001844	          "redaction_profile"
+L00001845	        ],
+L00001846	        "properties": {
+L00001847	          "schema_id": {
+L00001848	            "const": "pm.storage_value.goal_receipt.v1"
+L00001849	          },
+L00001850	          "schema_version": {
+L00001851	            "const": "1.0.0"
+L00001852	          },
+L00001853	          "project_id": {
+L00001854	            "type": "string",
+L00001855	            "minLength": 1
+L00001856	          },
+L00001857	          "receipt_id": {
+L00001858	            "type": "string",
+L00001859	            "minLength": 1
+L00001860	          },
+L00001861	          "goal_id": {
+L00001862	            "type": "string",
+L00001863	            "minLength": 1
+L00001864	          },
+L00001865	          "receipt_kind": {
+L00001866	            "type": "string",
+L00001867	            "minLength": 1
+L00001868	          },
+L00001869	          "certification_tier": {
+L00001870	            "type": "string",
+L00001871	            "minLength": 1
+L00001872	          },
+L00001873	          "validator_outputs": {
+L00001874	            "type": "array",
+L00001875	            "items": {
+L00001876	              "type": "string"
+L00001877	            }
+L00001878	          },
+L00001879	          "child_receipt_refs": {
+L00001880	            "type": "array",
+L00001881	            "items": {
+L00001882	              "type": "string"
+L00001883	            }
+L00001884	          },
+L00001885	          "worknode_receipt_refs": {
+L00001886	            "type": "array",
+L00001887	            "items": {
+L00001888	              "type": "string"
+L00001889	            }
+L00001890	          },
+L00001891	          "unresolved_risks": {
+L00001892	            "type": "array",
+L00001893	            "items": {
+L00001894	              "type": "string"
+L00001895	            }
+L00001896	          },
+L00001897	          "final_certifier_decision": {
+L00001898	            "type": "string",
+L00001899	            "enum": [
+L00001900	              "accepted",
+L00001901	              "rejected",
+L00001902	              "blocked"
+L00001903	            ]
+L00001904	          },
+L00001905	          "evidence_refs": {
+L00001906	            "type": "array",
+L00001907	            "items": {
+L00001908	              "type": "string"
+L00001909	            }
+L00001910	          },
+L00001911	          "created_at_utc": {
+L00001912	            "type": "string",
+L00001913	            "format": "date-time"
+L00001914	          },
+L00001915	          "redaction_profile": {
+L00001916	            "type": "string",
+L00001917	            "enum": [
+L00001918	              "no_secrets",
+L00001919	              "redacted_refs_only"
+L00001920	            ]
+L00001921	          },
+L00001922	          "goal_run_id": {
+L00001923	            "type": [
+L00001924	              "string",
+L00001925	              "null"
+L00001926	            ]
+L00001927	          },
+L00001928	          "workgraph_ref": {
+L00001929	            "type": [
+L00001930	              "string",
+L00001931	              "null"
+L00001932	            ]
+L00001933	          },
+L00001934	          "requested_runtime_ref": {
+L00001935	            "type": [
+L00001936	              "string",
+L00001937	              "null"
+L00001938	            ]
+L00001939	          },
+L00001940	          "effective_runtime_ref": {
+L00001941	            "type": [
+L00001942	              "string",
+L00001943	              "null"
+L00001944	            ]
+L00001945	          }
+L00001946	        }
+L00001947	      }
+L00001948	    },
+L00001949	    {
+L00001950	      "family_id": "run_record_legacy_baseline",
+L00001951	      "storage_kind": "redb",
+L00001952	      "status": "deferred_not_build_blocking",
+L00001953	      "tier": "later_gui_or_feature_projection",
+L00001954	      "key_shape": "run:<run_id>",
+L00001955	      "value_schema_id": "pm.storage_value.run_record_legacy_baseline.v1",
+L00001956	      "value_schema_ref": "deferred:Plans/storage_value_registry.json#/families/run_record_legacy_baseline",
+L00001957	      "owner_doc": "Plans/storage-plan.md#required-redb-keys-baseline",
+L00001958	      "producer": [
+L00001959	        "legacy runtime baseline"
+L00001960	      ],
+L00001961	      "consumers": [
+L00001962	        "migration readers"
+L00001963	      ],
+L00001964	      "schema_version": "1.0.0",
+L00001965	      "encoding": "messagepack_canonical",
+L00001966	      "required_fields": [
+L00001967	        "schema_version"
+L00001968	      ],
+L00001969	      "optional_fields": [
+L00001970	        "created_at_utc",
+L00001971	        "updated_at_utc"
+L00001972	      ],
+L00001973	      "nullable_fields": [],
+L00001974	      "replay_behavior": "Migration-read only until a current run-record owner materializes a v1 value schema.",
+L00001975	      "migration": "Must crosswalk into versioned runtime/receipt families before implementation authority.",
+L00001976	      "retention_compaction": "Retain only under legacy migration policy.",
+L00001977	      "redaction_no_secret_rule": "No raw secret, token, password, credential, api key, oauth value, or local machine secret may be persisted.",
+L00001978	      "legacy_canonical_crosswalk_status": "legacy_baseline_deferred",
+L00001979	      "deferred_owner": "Plans/storage-plan.md",
+L00001980	      "deferred_reason": "Baseline key template predates current PlanCompile/Executor identity contracts.",
+L00001981	      "reopen_condition": "Reopen when runtime run records are needed outside migration-read compatibility."
+L00001982	    },
+L00001983	    {
+L00001984	      "family_id": "node_record_legacy_baseline",
+L00001985	      "storage_kind": "redb",
+L00001986	      "status": "deferred_not_build_blocking",
+L00001987	      "tier": "later_gui_or_feature_projection",
+L00001988	      "key_shape": "node:<node_id>",
+L00001989	      "value_schema_id": "pm.storage_value.node_record_legacy_baseline.v1",
+L00001990	      "value_schema_ref": "deferred:Plans/storage_value_registry.json#/families/node_record_legacy_baseline",
+L00001991	      "owner_doc": "Plans/storage-plan.md#required-redb-keys-baseline",
+L00001992	      "producer": [
+L00001993	        "legacy runtime baseline"
+L00001994	      ],
+L00001995	      "consumers": [
+L00001996	        "migration readers"
+L00001997	      ],
+L00001998	      "schema_version": "1.0.0",
+L00001999	      "encoding": "messagepack_canonical",
+L00002000	      "required_fields": [
+L00002001	        "schema_version"
+L00002002	      ],
+L00002003	      "optional_fields": [
+L00002004	        "created_at_utc",
+L00002005	        "updated_at_utc"
+L00002006	      ],
+L00002007	      "nullable_fields": [],
+L00002008	      "replay_behavior": "Migration-read only; current launch-critical node requests use worknode_request.",
+L00002009	      "migration": "Must crosswalk into WorkNodeRequest/WorkNodeRecord contracts before implementation authority.",
+L00002010	      "retention_compaction": "Retain only under legacy migration policy.",
+L00002011	      "redaction_no_secret_rule": "No raw secret, token, password, credential, api key, oauth value, or local machine secret may be persisted.",
+L00002012	      "legacy_canonical_crosswalk_status": "legacy_baseline_deferred",
+L00002013	      "deferred_owner": "Plans/Plan_To_Node_Compilation.md",
+L00002014	      "deferred_reason": "Current WorkNode materialization remains runtime-disabled by PNC-019.",
+L00002015	      "reopen_condition": "Reopen after activation/materialization contract is allowed."
+L00002016	    },
+L00002017	    {
+L00002018	      "family_id": "execution_unit_context_store",
+L00002019	      "storage_kind": "redb",
+L00002020	      "status": "deferred_not_build_blocking",
+L00002021	      "tier": "later_gui_or_feature_projection",
+L00002022	      "key_shape": "execution_unit:<execution_unit_id>",
+L00002023	      "value_schema_id": "pm.execution_unit_context",
+L00002024	      "value_schema_ref": "Plans/execution_unit_context.schema.json",
+L00002025	      "owner_doc": "Plans/Executor_Protocol.md#5.0-execution_unit_context-canonical-contract",
+L00002026	      "producer": [
+L00002027	        "Executor"
+L00002028	      ],
+L00002029	      "consumers": [
+L00002030	        "Prompt Pipeline",
+L00002031	        "receipt projectors"
+L00002032	      ],
+L00002033	      "schema_version": "1.0.0",
+L00002034	      "encoding": "messagepack_canonical",
+L00002035	      "required_fields": [
+L00002036	        "schema_version"
+L00002037	      ],
+L00002038	      "optional_fields": [
+L00002039	        "execution_unit_context_ref"
+L00002040	      ],
+L00002041	      "nullable_fields": [],
+L00002042	      "replay_behavior": "Use the canonical execution_unit_context schema by ref; storage does not redefine the packet here.",
+L00002043	      "migration": "Any embedded packet missing schema_version is invalid.",
+L00002044	      "retention_compaction": "Retain with attempts and receipts that cite the execution unit.",
+L00002045	      "redaction_no_secret_rule": "The canonical packet forbids persisted secret material.",
+L00002046	      "legacy_canonical_crosswalk_status": "owned_elsewhere_deferred",
+L00002047	      "deferred_owner": "Plans/Executor_Protocol.md",
+L00002048	      "deferred_reason": "Tier 0B already materialized the schema; this row only inventories the redb key family.",
+L00002049	      "reopen_condition": "Reopen only if storage needs a wrapper schema beyond the canonical packet."
+L00002050	    },
+L00002051	    {
+L00002052	      "family_id": "receipt_record_baseline",
+L00002053	      "storage_kind": "redb",
+L00002054	      "status": "deferred_not_build_blocking",
+L00002055	      "tier": "later_gui_or_feature_projection",
+L00002056	      "key_shape": "receipt:<receipt_id>",
+L00002057	      "value_schema_id": "pm.storage_value.receipt_record_baseline.v1",
+L00002058	      "value_schema_ref": "deferred:Plans/storage_value_registry.json#/families/receipt_record_baseline",
+L00002059	      "owner_doc": "Plans/storage-plan.md#cross-surface-receipt-record-baseline",
+L00002060	      "producer": [
+L00002061	        "legacy receipt writer"
+L00002062	      ],
+L00002063	      "consumers": [
+L00002064	        "receipt migration readers"
+L00002065	      ],
+L00002066	      "schema_version": "1.0.0",
+L00002067	      "encoding": "messagepack_canonical",
+L00002068	      "required_fields": [
+L00002069	        "schema_version"
+L00002070	      ],
+L00002071	      "optional_fields": [
+L00002072	        "attempt_receipt_ref",
+L00002073	        "goal_receipt_ref"
+L00002074	      ],
+L00002075	      "nullable_fields": [],
+L00002076	      "replay_behavior": "Migration-read only; launch-critical receipts use attempt_receipt and goal_receipt.",
+L00002077	      "migration": "Crosswalk to attempt_receipt or goal_receipt before implementation authority.",
+L00002078	      "retention_compaction": "Retain source receipts until crosswalk verification is complete.",
+L00002079	      "redaction_no_secret_rule": "No raw secret, token, password, credential, api key, oauth value, or local machine secret may be persisted.",
+L00002080	      "legacy_canonical_crosswalk_status": "legacy_baseline_deferred",
+L00002081	      "deferred_owner": "Plans/storage-plan.md",
+L00002082	      "deferred_reason": "Generic receipt key does not carry enough launch-critical schema ownership.",
+L00002083	      "reopen_condition": "Reopen when generic receipt compatibility must be migrated."
+L00002084	    },
+L00002085	    {
+L00002086	      "family_id": "attempt_record",
+L00002087	      "storage_kind": "redb",
+L00002088	      "status": "deferred_not_build_blocking",
+L00002089	      "tier": "later_gui_or_feature_projection",
+L00002090	      "key_shape": "attempt_record.v1:{project_id}:{node_id}:{attempt_number}",
+L00002091	      "value_schema_id": "pm.storage_value.attempt_record.v1",
+L00002092	      "value_schema_ref": "deferred:Plans/storage_value_registry.json#/families/attempt_record",
+L00002093	      "owner_doc": "Plans/storage-plan.md#canonical-record-field-level-minima",
+L00002094	      "producer": [
+L00002095	        "Executor attempt writer"
+L00002096	      ],
+L00002097	      "consumers": [
+L00002098	        "Runtime Artifacts panel",
+L00002099	        "receipt joins"
+L00002100	      ],
+L00002101	      "schema_version": "1.0.0",
+L00002102	      "encoding": "messagepack_canonical",
+L00002103	      "required_fields": [
+L00002104	        "schema_version"
+L00002105	      ],
+L00002106	      "optional_fields": [
+L00002107	        "project_id",
+L00002108	        "node_id",
+L00002109	        "attempt_number",
+L00002110	        "run_id",
+L00002111	        "attempt_id",
+L00002112	        "execution_unit_context_ref"
+L00002113	      ],
+L00002114	      "nullable_fields": [
+L00002115	        "execution_unit_context_ref"
+L00002116	      ],
+L00002117	      "replay_behavior": "Deferred because launch-critical receipts are materialized separately; attempts need runtime lifecycle fixtures before closure.",
+L00002118	      "migration": "Current aliases must map to the project/node/attempt_number key with schema_version.",
+L00002119	      "retention_compaction": "Retain attempt lineage while receipts/evidence reference it.",
+L00002120	      "redaction_no_secret_rule": "SCM and provider joins are refs or redacted metadata only.",
+L00002121	      "legacy_canonical_crosswalk_status": "canonical_key_deferred_value_schema",
+L00002122	      "deferred_owner": "Plans/Executor_Protocol.md",
+L00002123	      "deferred_reason": "Attempt persistence behavior still depends on activation/restart evidence.",
+L00002124	      "reopen_condition": "Reopen in runtime lifecycle tier when Executor attempts can be exercised."
+L00002125	    },
+L00002126	    {
+L00002127	      "family_id": "concern_record",
+L00002128	      "storage_kind": "redb",
+L00002129	      "status": "deferred_not_build_blocking",
+L00002130	      "tier": "later_gui_or_feature_projection",
+L00002131	      "key_shape": "concern_record.v1:{project_id}:{concern_id}",
+L00002132	      "value_schema_id": "pm.storage_value.concern_record.v1",
+L00002133	      "value_schema_ref": "deferred:Plans/storage_value_registry.json#/families/concern_record",
+L00002134	      "owner_doc": "Plans/storage-plan.md#concern-record-and-lifecycle-canon",
+L00002135	      "producer": [
+L00002136	        "review and attention projectors"
+L00002137	      ],
+L00002138	      "consumers": [
+L00002139	        "Orchestrator",
+L00002140	        "Runtime Artifacts panel"
+L00002141	      ],
+L00002142	      "schema_version": "1.0.0",
+L00002143	      "encoding": "messagepack_canonical",
+L00002144	      "required_fields": [
+L00002145	        "schema_version"
+L00002146	      ],
+L00002147	      "optional_fields": [
+L00002148	        "concern_id",
+L00002149	        "project_id",
+L00002150	        "status"
+L00002151	      ],
+L00002152	      "nullable_fields": [],
+L00002153	      "replay_behavior": "Deferred lifecycle record; not on launch-critical Approve And Build path.",
+L00002154	      "migration": "Must preserve active/acknowledged/resolved/dismissed semantics.",
+L00002155	      "retention_compaction": "Retain while linked source events or blocked episodes remain.",
+L00002156	      "redaction_no_secret_rule": "Evidence bodies are ref-only or redacted.",
+L00002157	      "legacy_canonical_crosswalk_status": "canonical_key_deferred_value_schema",
+L00002158	      "deferred_owner": "Plans/storage-plan.md",
+L00002159	      "deferred_reason": "Concern lifecycle is not Tier 0C-2 storage launch-critical.",
+L00002160	      "reopen_condition": "Reopen when concern lifecycle enters implementation-readiness scope."
+L00002161	    },
+L00002162	    {
+L00002163	      "family_id": "runtime_artifact_projector_families",
+L00002164	      "storage_kind": "redb_projection",
+L00002165	      "status": "deferred_not_build_blocking",
+L00002166	      "tier": "later_gui_or_feature_projection",
+L00002167	      "key_shape": "artifacts_index.v1:{project_id}:{artifact_id} | artifacts_project_state.v1:{project_id} | projector.checkpoint.runtime_artifacts:{project_id}",
+L00002168	      "value_schema_id": "pm.storage_value.runtime_artifact_projector_families.v1",
+L00002169	      "value_schema_ref": "deferred:Plans/storage_value_registry.json#/families/runtime_artifact_projector_families",
+L00002170	      "owner_doc": "Plans/Runtime_Artifacts_Panel.md",
+L00002171	      "producer": [
+L00002172	        "Runtime artifact projector"
+L00002173	      ],
+L00002174	      "consumers": [
+L00002175	        "Runtime Artifacts panel",
+L00002176	        "usage/dashboard"
+L00002177	      ],
+L00002178	      "schema_version": "1.0.0",
+L00002179	      "encoding": "messagepack_canonical",
+L00002180	      "required_fields": [
+L00002181	        "schema_version"
+L00002182	      ],
+L00002183	      "optional_fields": [
+L00002184	        "artifact_id",
+L00002185	        "project_id",
+L00002186	        "checkpoint_cursor"
+L00002187	      ],
+L00002188	      "nullable_fields": [],
+L00002189	      "replay_behavior": "Rebuildable from canonical events and receipts.",
+L00002190	      "migration": "Family-specific schemas required before implementation authority.",
+L00002191	      "retention_compaction": "Checkpoint is disposable; artifact index retention follows artifact/evidence policy.",
+L00002192	      "redaction_no_secret_rule": "Artifact content is ref-only and redacted by evidence class.",
+L00002193	      "legacy_canonical_crosswalk_status": "deferred_group_inventory",
+L00002194	      "deferred_owner": "Plans/Runtime_Artifacts_Panel.md",
+L00002195	      "deferred_reason": "Runtime artifact GUI projections are outside Tier 0C-2 launch-critical storage.",
+L00002196	      "reopen_condition": "Reopen with runtime artifact panel implementation fixtures."
+L00002197	    },
+L00002198	    {
+L00002199	      "family_id": "worktree_lane_thread_families",
+L00002200	      "storage_kind": "redb_projection",
+L00002201	      "status": "deferred_not_build_blocking",
+L00002202	      "tier": "later_gui_or_feature_projection",
+L00002203	      "key_shape": "worktree_record.v1:{project_id}:{worktree_id} | worktree_projection.v1:{project_id}:{worktree_id} | thread_state:{thread_id}:worktree_binding | thread_state:{thread_id}:persona_override | worktree_binding_reverse:{worktree_id} | lane_record.v1:{project_id}:{lane_id} | lane_projection.v1:{project_id}:{lane_id}",
+L00002204	      "value_schema_id": "pm.storage_value.worktree_lane_thread_families.v1",
+L00002205	      "value_schema_ref": "deferred:Plans/storage_value_registry.json#/families/worktree_lane_thread_families",
+L00002206	      "owner_doc": "Plans/WorktreeGitImprovement.md",
+L00002207	      "producer": [
+L00002208	        "Source Control and assistant-thread projectors"
+L00002209	      ],
+L00002210	      "consumers": [
+L00002211	        "Assistant chat",
+L00002212	        "Source Control",
+L00002213	        "Orchestrator"
+L00002214	      ],
+L00002215	      "schema_version": "1.0.0",
+L00002216	      "encoding": "messagepack_canonical",
+L00002217	      "required_fields": [
+L00002218	        "schema_version"
+L00002219	      ],
+L00002220	      "optional_fields": [
+L00002221	        "project_id",
+L00002222	        "thread_id",
+L00002223	        "worktree_id",
+L00002224	        "lane_id"
+L00002225	      ],
+L00002226	      "nullable_fields": [],
+L00002227	      "replay_behavior": "Thread/worktree bindings rebuild from chat.thread_worktree_* events; lane/worktree records retain lifecycle lineage.",
+L00002228	      "migration": "Legacy thread/worktree aliases must write the canonical project/thread/worktree/lane keys.",
+L00002229	      "retention_compaction": "Records retain archive/removed/deleted tombstones while historical links exist.",
+L00002230	      "redaction_no_secret_rule": "Paths may be redacted or display-normalized; no local machine secrets may be stored.",
+L00002231	      "legacy_canonical_crosswalk_status": "deferred_group_inventory",
+L00002232	      "deferred_owner": "Plans/WorktreeGitImprovement.md",
+L00002233	      "deferred_reason": "Worktree/lane GUI projections are not required to close Tier 0C-2 persistence blockers.",
+L00002234	      "reopen_condition": "Reopen when Source Control/assistant worktree storage enters implementation scope."
+L00002235	    },
+L00002236	    {
+L00002237	      "family_id": "project_attention_account_families",
+L00002238	      "storage_kind": "redb_projection",
+L00002239	      "status": "deferred_not_build_blocking",
+L00002240	      "tier": "later_gui_or_feature_projection",
+L00002241	      "key_shape": "project_summary.v1:{project_id} | project_attention_item.v1:{project_id}:{attention_item_id} | account_pressure_episode.v1:{provider_id}:{account_id}:{episode_id} | account_switch_event.v1:{provider_id}:{event_id}",
+L00002242	      "value_schema_id": "pm.storage_value.project_attention_account_families.v1",
+L00002243	      "value_schema_ref": "deferred:Plans/storage_value_registry.json#/families/project_attention_account_families",
+L00002244	      "owner_doc": "Plans/Multi-Account.md",
+L00002245	      "producer": [
+L00002246	        "attention and account projectors"
+L00002247	      ],
+L00002248	      "consumers": [
+L00002249	        "Dashboard",
+L00002250	        "Orchestrator",
+L00002251	        "usage views"
+L00002252	      ],
+L00002253	      "schema_version": "1.0.0",
+L00002254	      "encoding": "messagepack_canonical",
+L00002255	      "required_fields": [
+L00002256	        "schema_version"
+L00002257	      ],
+L00002258	      "optional_fields": [
+L00002259	        "project_id",
+L00002260	        "provider_id",
+L00002261	        "account_id",
+L00002262	        "source_event_ids"
+L00002263	      ],
+L00002264	      "nullable_fields": [],
+L00002265	      "replay_behavior": "Rebuild account/attention projections from events and runtime attribution records.",
+L00002266	      "migration": "Requires owner-specific schemas before build authority.",
+L00002267	      "retention_compaction": "Attention projections are disposable; pressure/switch events retain according to account history policy.",
+L00002268	      "redaction_no_secret_rule": "Account labels and provider identity are redacted/masked according to export policy; auth material is never stored.",
+L00002269	      "legacy_canonical_crosswalk_status": "deferred_group_inventory",
+L00002270	      "deferred_owner": "Plans/Multi-Account.md",
+L00002271	      "deferred_reason": "Account/attention projections are later GUI/runtime projections.",
+L00002272	      "reopen_condition": "Reopen with provider/account stream readiness."
+L00002273	    },
+L00002274	    {
+L00002275	      "family_id": "provider_runtime_identity_families",
+L00002276	      "storage_kind": "redb",
+L00002277	      "status": "deferred_not_build_blocking",
+L00002278	      "tier": "later_gui_or_feature_projection",
+L00002279	      "key_shape": "provider_account_record.v1:{provider_id}:{account_id} | provider_entitlement_context_record.v1:{provider_id}:{account_id}:{billing_entity_id} | server_profile_record.v1:{provider_id}:{connection_profile_id}",
+L00002280	      "value_schema_id": "pm.storage_value.provider_runtime_identity_families.v1",
+L00002281	      "value_schema_ref": "deferred:Plans/storage_value_registry.json#/families/provider_runtime_identity_families",
+L00002282	      "owner_doc": "Plans/Multi-Account.md",
+L00002283	      "producer": [
+L00002284	        "provider discovery and account manager"
+L00002285	      ],
+L00002286	      "consumers": [
+L00002287	        "Prompt Pipeline",
+L00002288	        "PlanCompile provider routing",
+L00002289	        "usage views"
+L00002290	      ],
+L00002291	      "schema_version": "1.0.0",
+L00002292	      "encoding": "messagepack_canonical",
+L00002293	      "required_fields": [
+L00002294	        "schema_version"
+L00002295	      ],
+L00002296	      "optional_fields": [
+L00002297	        "provider_id",
+L00002298	        "account_id",
+L00002299	        "billing_entity_id",
+L00002300	        "connection_profile_id"
+L00002301	      ],
+L00002302	      "nullable_fields": [],
+L00002303	      "replay_behavior": "Deferred; provider stream readiness must prove discovery/currentness before launch.",
+L00002304	      "migration": "Must split account-backed and server-profile-backed runtime identity.",
+L00002305	      "retention_compaction": "Retain non-secret identity snapshots while linked usage/runtime records exist.",
+L00002306	      "redaction_no_secret_rule": "Credentials and tokens remain in the OS credential store; this family stores masked identity refs only.",
+L00002307	      "legacy_canonical_crosswalk_status": "deferred_group_inventory",
+L00002308	      "deferred_owner": "Plans/Multi-Account.md",
+L00002309	      "deferred_reason": "Provider stream blocker remains open.",
+L00002310	      "reopen_condition": "Reopen in provider_stream tier."
+L00002311	    },
+L00002312	    {
+L00002313	      "family_id": "terminal_workspace_state",
+L00002314	      "storage_kind": "redb",
+L00002315	      "status": "materialized",
+L00002316	      "tier": "later_gui_or_feature_projection",
+L00002317	      "key_shape": "terminal_workspace_state.v1:{project_id}:{workspace_tab_id}",
+L00002318	      "value_schema_id": "pm.storage_value.terminal_workspace_state.v1",
+L00002319	      "value_schema_ref": "Plans/storage_value_registry.json#/families/terminal_workspace_state/value_schema",
+L00002320	      "owner_doc": "Plans/storage-plan.md",
+L00002321	      "producer": ["terminal and editor projectors"],
+L00002322	      "consumers": ["terminal GUI", "Runtime Artifacts panel"],
+L00002323	      "schema_version": "1.0.0",
+L00002324	      "encoding": "messagepack_canonical",
+L00002325	      "required_fields": ["schema_id", "schema_version", "project_id", "workspace_tab_id", "section_order", "updated_at_utc", "redaction_profile"],
+L00002326	      "optional_fields": ["active_section_id", "active_terminal_tab_id", "layout_generation", "resource_budget_ref"],
+L00002327	      "nullable_fields": ["active_section_id", "active_terminal_tab_id"],
+L00002328	      "replay_behavior": "Restores terminal workspace layout and selected ids as historical GUI state only; replay never certifies terminal process liveness.",
+L00002329	      "migration": "Legacy terminal bottom-panel blobs split into workspace, section, tab, pane, session, and command-block rows before implementation authority.",
+L00002330	      "retention_compaction": "Retain while the project workspace exists; compact superseded layout generations after referenced sessions and command blocks expire.",
+L00002331	      "redaction_no_secret_rule": "Stores ids, ordering, and layout refs only; transcripts, environment, shell output, and credentials are excluded or stored by scrubbed refs.",
+L00002332	      "legacy_canonical_crosswalk_status": "materialized_from_deferred_terminal_group",
+L00002333	      "value_schema": {
+L00002334	        "type": "object",
+L00002335	        "additionalProperties": false,
+L00002336	        "required": ["schema_id", "schema_version", "project_id", "workspace_tab_id", "section_order", "updated_at_utc", "redaction_profile"],
+L00002337	        "properties": {
+L00002338	          "schema_id": {"const": "pm.storage_value.terminal_workspace_state.v1"},
+L00002339	          "schema_version": {"const": "1.0.0"},
+L00002340	          "project_id": {"type": "string", "minLength": 1},
+L00002341	          "workspace_tab_id": {"type": "string", "minLength": 1},
+L00002342	          "section_order": {"type": "array", "items": {"type": "string"}},
+L00002343	          "active_section_id": {"type": ["string", "null"]},
+L00002344	          "active_terminal_tab_id": {"type": ["string", "null"]},
+L00002345	          "layout_generation": {"type": "integer", "minimum": 0},
+L00002346	          "resource_budget_ref": {"type": "string"},
+L00002347	          "updated_at_utc": {"type": "string", "format": "date-time"},
+L00002348	          "redaction_profile": {"type": "string", "enum": ["no_secrets", "redacted_refs_only"]}
+L00002349	        }
+L00002350	      }
+L00002351	    },
+L00002352	    {
+L00002353	      "family_id": "terminal_section_record",
+L00002354	      "storage_kind": "redb",
+L00002355	      "status": "materialized",
+L00002356	      "tier": "later_gui_or_feature_projection",
+L00002357	      "key_shape": "terminal_section_record.v1:{project_id}:{terminal_section_id}",
+L00002358	      "value_schema_id": "pm.storage_value.terminal_section_record.v1",
+L00002359	      "value_schema_ref": "Plans/storage_value_registry.json#/families/terminal_section_record/value_schema",
+L00002360	      "owner_doc": "Plans/storage-plan.md",
+L00002361	      "producer": ["terminal and editor projectors"],
+L00002362	      "consumers": ["terminal GUI", "Runtime Artifacts panel"],
+L00002363	      "schema_version": "1.0.0",
+L00002364	      "encoding": "messagepack_canonical",
+L00002365	      "required_fields": ["schema_id", "schema_version", "project_id", "terminal_section_id", "workspace_tab_id", "section_title", "terminal_tab_order", "created_at_utc", "updated_at_utc", "redaction_profile"],
+L00002366	      "optional_fields": ["active_terminal_tab_id", "collapsed"],
+L00002367	      "nullable_fields": ["active_terminal_tab_id"],
+L00002368	      "replay_behavior": "Restores terminal sections and tab ordering without asserting that any child process is still alive.",
+L00002369	      "migration": "Imports legacy terminal section blobs into one section row per section id.",
+L00002370	      "retention_compaction": "Retain while referenced by terminal_workspace_state; compact after all child tab records expire.",
+L00002371	      "redaction_no_secret_rule": "Section labels and ids only; command contents and environment values are not persisted here.",
+L00002372	      "legacy_canonical_crosswalk_status": "materialized_from_deferred_terminal_group",
+L00002373	      "value_schema": {
+L00002374	        "type": "object",
+L00002375	        "additionalProperties": false,
+L00002376	        "required": ["schema_id", "schema_version", "project_id", "terminal_section_id", "workspace_tab_id", "section_title", "terminal_tab_order", "created_at_utc", "updated_at_utc", "redaction_profile"],
+L00002377	        "properties": {
+L00002378	          "schema_id": {"const": "pm.storage_value.terminal_section_record.v1"},
+L00002379	          "schema_version": {"const": "1.0.0"},
+L00002380	          "project_id": {"type": "string", "minLength": 1},
+L00002381	          "terminal_section_id": {"type": "string", "minLength": 1},
+L00002382	          "workspace_tab_id": {"type": "string", "minLength": 1},
+L00002383	          "section_title": {"type": "string"},
+L00002384	          "terminal_tab_order": {"type": "array", "items": {"type": "string"}},
+L00002385	          "active_terminal_tab_id": {"type": ["string", "null"]},
+L00002386	          "collapsed": {"type": "boolean"},
+L00002387	          "created_at_utc": {"type": "string", "format": "date-time"},
+L00002388	          "updated_at_utc": {"type": "string", "format": "date-time"},
+L00002389	          "redaction_profile": {"type": "string", "enum": ["no_secrets", "redacted_refs_only"]}
+L00002390	        }
+L00002391	      }
+L00002392	    },
+L00002393	    {
+L00002394	      "family_id": "terminal_tab_record",
+L00002395	      "storage_kind": "redb",
+L00002396	      "status": "materialized",
+L00002397	      "tier": "later_gui_or_feature_projection",
+L00002398	      "key_shape": "terminal_tab_record.v1:{project_id}:{terminal_tab_id}",
+L00002399	      "value_schema_id": "pm.storage_value.terminal_tab_record.v1",
+L00002400	      "value_schema_ref": "Plans/storage_value_registry.json#/families/terminal_tab_record/value_schema",
+L00002401	      "owner_doc": "Plans/storage-plan.md",
+L00002402	      "producer": ["terminal and editor projectors"],
+L00002403	      "consumers": ["terminal GUI", "Runtime Artifacts panel"],
+L00002404	      "schema_version": "1.0.0",
+L00002405	      "encoding": "messagepack_canonical",
+L00002406	      "required_fields": ["schema_id", "schema_version", "project_id", "terminal_tab_id", "terminal_section_id", "tab_title", "pane_tree_root_id", "created_at_utc", "updated_at_utc", "redaction_profile"],
+L00002407	      "optional_fields": ["active_terminal_session_id"],
+L00002408	      "nullable_fields": ["active_terminal_session_id"],
+L00002409	      "replay_behavior": "Restores tab metadata and pane-tree root for historical layout review only.",
+L00002410	      "migration": "Splits legacy terminal tab data from grouped bottom-panel state.",
+L00002411	      "retention_compaction": "Retain while referenced by a section; compact after pane and session references expire.",
+L00002412	      "redaction_no_secret_rule": "Tab metadata cannot include shell output, raw command text, credentials, or secret-bearing environment values.",
+L00002413	      "legacy_canonical_crosswalk_status": "materialized_from_deferred_terminal_group",
+L00002414	      "value_schema": {
+L00002415	        "type": "object",
+L00002416	        "additionalProperties": false,
+L00002417	        "required": ["schema_id", "schema_version", "project_id", "terminal_tab_id", "terminal_section_id", "tab_title", "pane_tree_root_id", "created_at_utc", "updated_at_utc", "redaction_profile"],
+L00002418	        "properties": {
+L00002419	          "schema_id": {"const": "pm.storage_value.terminal_tab_record.v1"},
+L00002420	          "schema_version": {"const": "1.0.0"},
+L00002421	          "project_id": {"type": "string", "minLength": 1},
+L00002422	          "terminal_tab_id": {"type": "string", "minLength": 1},
+L00002423	          "terminal_section_id": {"type": "string", "minLength": 1},
+L00002424	          "tab_title": {"type": "string"},
+L00002425	          "pane_tree_root_id": {"type": "string", "minLength": 1},
+L00002426	          "active_terminal_session_id": {"type": ["string", "null"]},
+L00002427	          "created_at_utc": {"type": "string", "format": "date-time"},
+L00002428	          "updated_at_utc": {"type": "string", "format": "date-time"},
+L00002429	          "redaction_profile": {"type": "string", "enum": ["no_secrets", "redacted_refs_only"]}
+L00002430	        }
+L00002431	      }
+L00002432	    },
+L00002433	    {
+L00002434	      "family_id": "terminal_pane_record",
+L00002435	      "storage_kind": "redb",
+L00002436	      "status": "materialized",
+L00002437	      "tier": "later_gui_or_feature_projection",
+L00002438	      "key_shape": "terminal_pane_record.v1:{project_id}:{terminal_pane_id}",
+L00002439	      "value_schema_id": "pm.storage_value.terminal_pane_record.v1",
+L00002440	      "value_schema_ref": "Plans/storage_value_registry.json#/families/terminal_pane_record/value_schema",
+L00002441	      "owner_doc": "Plans/storage-plan.md",
+L00002442	      "producer": ["terminal and editor projectors"],
+L00002443	      "consumers": ["terminal GUI", "Runtime Artifacts panel"],
+L00002444	      "schema_version": "1.0.0",
+L00002445	      "encoding": "messagepack_canonical",
+L00002446	      "required_fields": ["schema_id", "schema_version", "project_id", "terminal_pane_id", "terminal_tab_id", "pane_kind", "parent_pane_id", "child_pane_ids", "created_at_utc", "updated_at_utc", "redaction_profile"],
+L00002447	      "optional_fields": ["split_axis", "size_fraction"],
+L00002448	      "nullable_fields": ["parent_pane_id", "split_axis", "size_fraction"],
+L00002449	      "replay_behavior": "Restores split tree layout; leaf liveness remains runtime-validated and is never inferred from this value.",
+L00002450	      "migration": "Splits legacy pane-tree blobs into one row per pane.",
+L00002451	      "retention_compaction": "Retain while referenced by terminal_tab_record; compact orphaned panes after child/leaf rows expire.",
+L00002452	      "redaction_no_secret_rule": "Stores layout shape only, with no terminal buffer or process environment.",
+L00002453	      "legacy_canonical_crosswalk_status": "materialized_from_deferred_terminal_group",
+L00002454	      "value_schema": {
+L00002455	        "type": "object",
+L00002456	        "additionalProperties": false,
+L00002457	        "required": ["schema_id", "schema_version", "project_id", "terminal_pane_id", "terminal_tab_id", "pane_kind", "parent_pane_id", "child_pane_ids", "created_at_utc", "updated_at_utc", "redaction_profile"],
+L00002458	        "properties": {
+L00002459	          "schema_id": {"const": "pm.storage_value.terminal_pane_record.v1"},
+L00002460	          "schema_version": {"const": "1.0.0"},
+L00002461	          "project_id": {"type": "string", "minLength": 1},
+L00002462	          "terminal_pane_id": {"type": "string", "minLength": 1},
+L00002463	          "terminal_tab_id": {"type": "string", "minLength": 1},
+L00002464	          "pane_kind": {"type": "string", "enum": ["split", "leaf"]},
+L00002465	          "parent_pane_id": {"type": ["string", "null"]},
+L00002466	          "child_pane_ids": {"type": "array", "items": {"type": "string"}},
+L00002467	          "split_axis": {"type": ["string", "null"], "enum": ["horizontal", "vertical", null]},
+L00002468	          "size_fraction": {"type": ["number", "null"]},
+L00002469	          "created_at_utc": {"type": "string", "format": "date-time"},
+L00002470	          "updated_at_utc": {"type": "string", "format": "date-time"},
+L00002471	          "redaction_profile": {"type": "string", "enum": ["no_secrets", "redacted_refs_only"]}
+L00002472	        }
+L00002473	      }
+L00002474	    },
+L00002475	    {
+L00002476	      "family_id": "terminal_leaf_pane_record",
+L00002477	      "storage_kind": "redb",
+L00002478	      "status": "materialized",
+L00002479	      "tier": "later_gui_or_feature_projection",
+L00002480	      "key_shape": "terminal_leaf_pane_record.v1:{project_id}:{terminal_leaf_pane_id}",
+L00002481	      "value_schema_id": "pm.storage_value.terminal_leaf_pane_record.v1",
+L00002482	      "value_schema_ref": "Plans/storage_value_registry.json#/families/terminal_leaf_pane_record/value_schema",
+L00002483	      "owner_doc": "Plans/storage-plan.md",
+L00002484	      "producer": ["terminal and editor projectors"],
+L00002485	      "consumers": ["terminal GUI", "Runtime Artifacts panel"],
+L00002486	      "schema_version": "1.0.0",
+L00002487	      "encoding": "messagepack_canonical",
+L00002488	      "required_fields": ["schema_id", "schema_version", "project_id", "terminal_leaf_pane_id", "terminal_pane_id", "terminal_session_id", "cwd_ref", "shell_profile_ref", "created_at_utc", "updated_at_utc", "redaction_profile"],
+L00002489	      "optional_fields": ["last_command_block_id", "title"],
+L00002490	      "nullable_fields": ["last_command_block_id"],
+L00002491	      "replay_behavior": "Restores the leaf pane's last known session reference for history; runtime must revalidate or relaunch any process separately.",
+L00002492	      "migration": "Splits terminal leaves from legacy terminal pane blobs.",
+L00002493	      "retention_compaction": "Retain while pane/session references exist; compact display-only titles after session history expires.",
+L00002494	      "redaction_no_secret_rule": "cwd and shell profile are refs only; raw paths with secrets, env values, and output buffers are forbidden.",
+L00002495	      "legacy_canonical_crosswalk_status": "materialized_from_deferred_terminal_group",
+L00002496	      "value_schema": {
+L00002497	        "type": "object",
+L00002498	        "additionalProperties": false,
+L00002499	        "required": ["schema_id", "schema_version", "project_id", "terminal_leaf_pane_id", "terminal_pane_id", "terminal_session_id", "cwd_ref", "shell_profile_ref", "created_at_utc", "updated_at_utc", "redaction_profile"],
+L00002500	        "properties": {
+L00002501	          "schema_id": {"const": "pm.storage_value.terminal_leaf_pane_record.v1"},
+L00002502	          "schema_version": {"const": "1.0.0"},
+L00002503	          "project_id": {"type": "string", "minLength": 1},
+L00002504	          "terminal_leaf_pane_id": {"type": "string", "minLength": 1},
+L00002505	          "terminal_pane_id": {"type": "string", "minLength": 1},
+L00002506	          "terminal_session_id": {"type": "string", "minLength": 1},
+L00002507	          "cwd_ref": {"type": "string", "minLength": 1},
+L00002508	          "shell_profile_ref": {"type": "string", "minLength": 1},
+L00002509	          "last_command_block_id": {"type": ["string", "null"]},
+L00002510	          "title": {"type": "string"},
+L00002511	          "created_at_utc": {"type": "string", "format": "date-time"},
+L00002512	          "updated_at_utc": {"type": "string", "format": "date-time"},
+L00002513	          "redaction_profile": {"type": "string", "enum": ["no_secrets", "redacted_refs_only"]}
+L00002514	        }
+L00002515	      }
+L00002516	    },
+L00002517	    {
+L00002518	      "family_id": "terminal_workgroup_record",
+L00002519	      "storage_kind": "redb",
+L00002520	      "status": "materialized",
+L00002521	      "tier": "later_gui_or_feature_projection",
+L00002522	      "key_shape": "terminal_workgroup_record.v1:{project_id}:{terminal_workgroup_id}",
+L00002523	      "value_schema_id": "pm.storage_value.terminal_workgroup_record.v1",
+L00002524	      "value_schema_ref": "Plans/storage_value_registry.json#/families/terminal_workgroup_record/value_schema",
+L00002525	      "owner_doc": "Plans/storage-plan.md",
+L00002526	      "producer": ["terminal and editor projectors"],
+L00002527	      "consumers": ["terminal GUI", "Runtime Artifacts panel"],
+L00002528	      "schema_version": "1.0.0",
+L00002529	      "encoding": "messagepack_canonical",
+L00002530	      "required_fields": ["schema_id", "schema_version", "project_id", "terminal_workgroup_id", "title", "workspace_tab_ids", "created_at_utc", "updated_at_utc", "redaction_profile"],
+L00002531	      "optional_fields": ["description"],
+L00002532	      "nullable_fields": [],
+L00002533	      "replay_behavior": "Restores named terminal workgroups as GUI grouping metadata only.",
+L00002534	      "migration": "Imports any legacy terminal workgroup metadata into explicit workgroup rows.",
+L00002535	      "retention_compaction": "Retain while any workspace tab id remains live; compact empty historical groups after policy retention.",
+L00002536	      "redaction_no_secret_rule": "Workgroup metadata must not include command output, credentials, or raw shell environment.",
+L00002537	      "legacy_canonical_crosswalk_status": "materialized_from_deferred_terminal_group",
+L00002538	      "value_schema": {
+L00002539	        "type": "object",
+L00002540	        "additionalProperties": false,
+L00002541	        "required": ["schema_id", "schema_version", "project_id", "terminal_workgroup_id", "title", "workspace_tab_ids", "created_at_utc", "updated_at_utc", "redaction_profile"],
+L00002542	        "properties": {
+L00002543	          "schema_id": {"const": "pm.storage_value.terminal_workgroup_record.v1"},
+L00002544	          "schema_version": {"const": "1.0.0"},
+L00002545	          "project_id": {"type": "string", "minLength": 1},
+L00002546	          "terminal_workgroup_id": {"type": "string", "minLength": 1},
+L00002547	          "title": {"type": "string"},
+L00002548	          "description": {"type": "string"},
+L00002549	          "workspace_tab_ids": {"type": "array", "items": {"type": "string"}},
+L00002550	          "created_at_utc": {"type": "string", "format": "date-time"},
+L00002551	          "updated_at_utc": {"type": "string", "format": "date-time"},
+L00002552	          "redaction_profile": {"type": "string", "enum": ["no_secrets", "redacted_refs_only"]}
+L00002553	        }
+L00002554	      }
+L00002555	    },
+L00002556	    {
+L00002557	      "family_id": "editor_terminal_panel_state",
+L00002558	      "storage_kind": "redb",
+L00002559	      "status": "materialized",
+L00002560	      "tier": "later_gui_or_feature_projection",
+L00002561	      "key_shape": "editor_terminal_panel_state.v1:{project_id}:{workspace_tab_id}:{editor_terminal_panel_id}",
+L00002562	      "value_schema_id": "pm.storage_value.editor_terminal_panel_state.v1",
+L00002563	      "value_schema_ref": "Plans/storage_value_registry.json#/families/editor_terminal_panel_state/value_schema",
+L00002564	      "owner_doc": "Plans/storage-plan.md",
+L00002565	      "producer": ["terminal and editor projectors"],
+L00002566	      "consumers": ["terminal GUI", "Runtime Artifacts panel"],
+L00002567	      "schema_version": "1.0.0",
+L00002568	      "encoding": "messagepack_canonical",
+L00002569	      "required_fields": ["schema_id", "schema_version", "project_id", "workspace_tab_id", "editor_terminal_panel_id", "visible", "dock_position", "updated_at_utc", "redaction_profile"],
+L00002570	      "optional_fields": ["active_terminal_tab_id", "height_px"],
+L00002571	      "nullable_fields": ["active_terminal_tab_id", "height_px"],
+L00002572	      "replay_behavior": "Restores editor terminal panel visibility and docking without asserting terminal session liveness.",
+L00002573	      "migration": "Splits editor-panel terminal UI state out of legacy workspace blobs.",
+L00002574	      "retention_compaction": "Retain latest state per workspace tab; older panel-state generations may compact after layout history retention.",
+L00002575	      "redaction_no_secret_rule": "Panel state stores presentation metadata only.",
+L00002576	      "legacy_canonical_crosswalk_status": "materialized_from_deferred_terminal_group",
+L00002577	      "value_schema": {
+L00002578	        "type": "object",
+L00002579	        "additionalProperties": false,
+L00002580	        "required": ["schema_id", "schema_version", "project_id", "workspace_tab_id", "editor_terminal_panel_id", "visible", "dock_position", "updated_at_utc", "redaction_profile"],
+L00002581	        "properties": {
+L00002582	          "schema_id": {"const": "pm.storage_value.editor_terminal_panel_state.v1"},
+L00002583	          "schema_version": {"const": "1.0.0"},
+L00002584	          "project_id": {"type": "string", "minLength": 1},
+L00002585	          "workspace_tab_id": {"type": "string", "minLength": 1},
+L00002586	          "editor_terminal_panel_id": {"type": "string", "minLength": 1},
+L00002587	          "visible": {"type": "boolean"},
+L00002588	          "dock_position": {"type": "string", "enum": ["bottom", "right", "left", "floating"]},
+L00002589	          "active_terminal_tab_id": {"type": ["string", "null"]},
+L00002590	          "height_px": {"type": ["integer", "null"], "minimum": 0},
+L00002591	          "updated_at_utc": {"type": "string", "format": "date-time"},
+L00002592	          "redaction_profile": {"type": "string", "enum": ["no_secrets", "redacted_refs_only"]}
+L00002593	        }
+L00002594	      }
+L00002595	    },
+L00002596	    {
+L00002597	      "family_id": "terminal_session_record",
+L00002598	      "storage_kind": "redb",
+L00002599	      "status": "materialized",
+L00002600	      "tier": "later_gui_or_feature_projection",
+L00002601	      "key_shape": "terminal_session_record.v1:{project_id}:{terminal_session_id}",
+L00002602	      "value_schema_id": "pm.storage_value.terminal_session_record.v1",
+L00002603	      "value_schema_ref": "Plans/storage_value_registry.json#/families/terminal_session_record/value_schema",
+L00002604	      "owner_doc": "Plans/storage-plan.md",
+L00002605	      "producer": ["terminal and editor projectors"],
+L00002606	      "consumers": ["terminal GUI", "Runtime Artifacts panel"],
+L00002607	      "schema_version": "1.0.0",
+L00002608	      "encoding": "messagepack_canonical",
+L00002609	      "required_fields": ["schema_id", "schema_version", "project_id", "terminal_session_id", "terminal_leaf_pane_id", "session_status", "shell_profile_ref", "cwd_ref", "created_at_utc", "updated_at_utc", "redaction_profile"],
+L00002610	      "optional_fields": ["exit_code", "last_command_block_id", "process_identity_ref"],
+L00002611	      "nullable_fields": ["exit_code", "last_command_block_id", "process_identity_ref"],
+L00002612	      "replay_behavior": "Restores historical session identity and status; active process identity must be revalidated by runtime before reuse.",
+L00002613	      "migration": "Splits legacy terminal session snapshots into ref-only session records.",
+L00002614	      "retention_compaction": "Retain active and recently closed sessions while command blocks or receipts reference them; compact orphaned historical sessions under terminal retention policy.",
+L00002615	      "redaction_no_secret_rule": "Session rows store refs and status only; no raw command output, environment, secrets, or credentials.",
+L00002616	      "legacy_canonical_crosswalk_status": "materialized_from_deferred_terminal_group",
+L00002617	      "value_schema": {
+L00002618	        "type": "object",
+L00002619	        "additionalProperties": false,
+L00002620	        "required": ["schema_id", "schema_version", "project_id", "terminal_session_id", "terminal_leaf_pane_id", "session_status", "shell_profile_ref", "cwd_ref", "created_at_utc", "updated_at_utc", "redaction_profile"],
+L00002621	        "properties": {
+L00002622	          "schema_id": {"const": "pm.storage_value.terminal_session_record.v1"},
+L00002623	          "schema_version": {"const": "1.0.0"},
+L00002624	          "project_id": {"type": "string", "minLength": 1},
+L00002625	          "terminal_session_id": {"type": "string", "minLength": 1},
+L00002626	          "terminal_leaf_pane_id": {"type": "string", "minLength": 1},
+L00002627	          "session_status": {"type": "string", "enum": ["starting", "running", "closed", "detached", "restore_required"]},
+L00002628	          "shell_profile_ref": {"type": "string", "minLength": 1},
+L00002629	          "cwd_ref": {"type": "string", "minLength": 1},
+L00002630	          "exit_code": {"type": ["integer", "null"]},
+L00002631	          "last_command_block_id": {"type": ["string", "null"]},
+L00002632	          "process_identity_ref": {"type": ["string", "null"]},
+L00002633	          "created_at_utc": {"type": "string", "format": "date-time"},
+L00002634	          "updated_at_utc": {"type": "string", "format": "date-time"},
+L00002635	          "redaction_profile": {"type": "string", "enum": ["no_secrets", "redacted_refs_only"]}
+L00002636	        }
+L00002637	      }
+L00002638	    },
+L00002639	    {
+L00002640	      "family_id": "terminal_command_block",
+L00002641	      "storage_kind": "redb",
+L00002642	      "status": "materialized",
+L00002643	      "tier": "later_gui_or_feature_projection",
+L00002644	      "key_shape": "terminal_command_block.v1:{project_id}:{terminal_session_id}:{command_block_id}",
+L00002645	      "value_schema_id": "pm.storage_value.terminal_command_block.v1",
+L00002646	      "value_schema_ref": "Plans/storage_value_registry.json#/families/terminal_command_block/value_schema",
+L00002647	      "owner_doc": "Plans/storage-plan.md",
+L00002648	      "producer": ["terminal and editor projectors"],
+L00002649	      "consumers": ["terminal GUI", "Runtime Artifacts panel"],
+L00002650	      "schema_version": "1.0.0",
+L00002651	      "encoding": "messagepack_canonical",
+L00002652	      "required_fields": ["schema_id", "schema_version", "project_id", "terminal_session_id", "command_block_id", "command_text_ref", "started_at_utc", "status", "redaction_profile"],
+L00002653	      "optional_fields": ["finished_at_utc", "exit_code", "transcript_ref", "evidence_refs"],
+L00002654	      "nullable_fields": ["finished_at_utc", "exit_code", "transcript_ref"],
+L00002655	      "replay_behavior": "Restores command history by scrubbed refs only; command blocks are historical evidence and not runtime authority.",
+L00002656	      "migration": "Splits legacy transcript blocks into command metadata plus scrubbed transcript refs.",
+L00002657	      "retention_compaction": "Retain command metadata while linked to terminal history, receipts, or audit evidence; transcript refs follow bounded terminal retention.",
+L00002658	      "redaction_no_secret_rule": "Raw command text and transcript bodies are stored only by scrubbed refs; secret-bearing values, API keys, OAuth tokens, and env dumps are forbidden.",
+L00002659	      "legacy_canonical_crosswalk_status": "materialized_from_deferred_terminal_group",
+L00002660	      "value_schema": {
+L00002661	        "type": "object",
+L00002662	        "additionalProperties": false,
+L00002663	        "required": ["schema_id", "schema_version", "project_id", "terminal_session_id", "command_block_id", "command_text_ref", "started_at_utc", "status", "redaction_profile"],
+L00002664	        "properties": {
+L00002665	          "schema_id": {"const": "pm.storage_value.terminal_command_block.v1"},
+L00002666	          "schema_version": {"const": "1.0.0"},
+L00002667	          "project_id": {"type": "string", "minLength": 1},
+L00002668	          "terminal_session_id": {"type": "string", "minLength": 1},
+L00002669	          "command_block_id": {"type": "string", "minLength": 1},
+L00002670	          "command_text_ref": {"type": "string", "minLength": 1},
+L00002671	          "started_at_utc": {"type": "string", "format": "date-time"},
+L00002672	          "finished_at_utc": {"type": ["string", "null"], "format": "date-time"},
+L00002673	          "exit_code": {"type": ["integer", "null"]},
+L00002674	          "status": {"type": "string", "enum": ["running", "succeeded", "failed", "cancelled", "redacted"]},
+L00002675	          "transcript_ref": {"type": ["string", "null"]},
+L00002676	          "evidence_refs": {"type": "array", "items": {"type": "string"}},
+L00002677	          "redaction_profile": {"type": "string", "enum": ["no_secrets", "redacted_refs_only"]}
+L00002678	        }
+L00002679	      }
+L00002680	    },
+L00002681	    {
+L00002682	      "family_id": "tooling_skill_debug_families",
+L00002683	      "storage_kind": "redb",
+L00002684	      "status": "deferred_not_build_blocking",
+L00002685	      "tier": "later_gui_or_feature_projection",
+L00002686	      "key_shape": "dev_session_record.v1:{project_id}:{dev_session_id} | mcp_server_record.v1:{mcp_server_id} | mcp_runtime_availability.v1:{mcp_server_id}:{provider_id}:{runtime_subject_id} | mcp_tool_record.v1:{mcp_server_id}:{tool_id} | skill_record.v1:{skill_id} | skill_runtime_readiness.v1:{skill_id}:{provider_id}:{runtime_subject_id} | debug_investigation_record.v1:{project_id}:{investigation_id}",
+L00002687	      "value_schema_id": "pm.storage_value.tooling_skill_debug_families.v1",
+L00002688	      "value_schema_ref": "deferred:Plans/storage_value_registry.json#/families/tooling_skill_debug_families",
+L00002689	      "owner_doc": "Plans/Skills_System.md",
+L00002690	      "producer": [
+L00002691	        "tooling, MCP, skill, and debug projectors"
+L00002692	      ],
+L00002693	      "consumers": [
+L00002694	        "tool palettes",
+L00002695	        "debug overlay",
+L00002696	        "runtime artifacts"
+L00002697	      ],
+L00002698	      "schema_version": "1.0.0",
+L00002699	      "encoding": "messagepack_canonical",
+L00002700	      "required_fields": [
+L00002701	        "schema_version"
+L00002702	      ],
+L00002703	      "optional_fields": [
+L00002704	        "project_id",
+L00002705	        "skill_id",
+L00002706	        "mcp_server_id",
+L00002707	        "investigation_id"
+L00002708	      ],
+L00002709	      "nullable_fields": [],
+L00002710	      "replay_behavior": "Deferred GUI/tooling projections remain inspectable but are not launch-critical.",
+L00002711	      "migration": "Requires family-specific schemas and runtime availability fixtures.",
+L00002712	      "retention_compaction": "Bound by resource-governor and debug evidence retention policies.",
+L00002713	      "redaction_no_secret_rule": "Tool outputs and debug evidence are stored by scrubbed refs; sensitive metadata is masked by export policy.",
+L00002714	      "legacy_canonical_crosswalk_status": "deferred_group_inventory",
+L00002715	      "deferred_owner": "Plans/Skills_System.md",
+L00002716	      "deferred_reason": "MCP/skill/debug readiness is outside storage-only Tier 0C-2.",
+L00002717	      "reopen_condition": "Reopen when tool/skill/debug storage is in implementation scope."
+L00002718	    },
+L00002719	    {
+L00002720	      "family_id": "github_bundle_note_preview_browser_families",
+L00002721	      "storage_kind": "redb_projection",
+L00002722	      "status": "deferred_not_build_blocking",
+L00002723	      "tier": "later_gui_or_feature_projection",
+L00002724	      "key_shape": "gha_panel_state.v1:{project_id} | bundle_registry.v1:{project_id}:{bundle_id} | note_record.v1:{bundle_id}:{note_id} | revision_run.v1:{bundle_id}:{revision_id} | composer_prep_state.v1:{thread_id} | preview_state.v1:{project_id}:{preview_id} | browser_session_state.v1:{project_id}:{browser_session_id} | browser_profile_state.v1:{project_id}:{profile_scope}",
+L00002725	      "value_schema_id": "pm.storage_value.github_bundle_note_preview_browser_families.v1",
+L00002726	      "value_schema_ref": "deferred:Plans/storage_value_registry.json#/families/github_bundle_note_preview_browser_families",
+L00002727	      "owner_doc": "Plans/GitHub_Integration.md",
+L00002728	      "producer": [
+L00002729	        "GitHub, bundle, note, preview, and browser projectors"
+L00002730	      ],
+L00002731	      "consumers": [
+L00002732	        "GitHub Actions panel",
+L00002733	        "browser/preview GUI",
+L00002734	        "assistant composer"
+L00002735	      ],
+L00002736	      "schema_version": "1.0.0",
+L00002737	      "encoding": "messagepack_canonical",
+L00002738	      "required_fields": [
+L00002739	        "schema_version"
+L00002740	      ],
+L00002741	      "optional_fields": [
+L00002742	        "project_id",
+L00002743	        "thread_id",
+L00002744	        "bundle_id",
+L00002745	        "browser_session_id"
+L00002746	      ],
+L00002747	      "nullable_fields": [],
+L00002748	      "replay_behavior": "Deferred GUI projections restore panel/browser/preview state without launch authority.",
+L00002749	      "migration": "Family-specific schemas required before mutating actions rely on these projections.",
+L00002750	      "retention_compaction": "State rows compact under per-surface history/retention policy; evidence refs follow source policy.",
+L00002751	      "redaction_no_secret_rule": "Remote URLs, private repo names, account handles, screenshots, and endpoints are sensitive metadata and must be masked unless export policy permits.",
+L00002752	      "legacy_canonical_crosswalk_status": "deferred_group_inventory",
+L00002753	      "deferred_owner": "Plans/GitHub_Integration.md",
+L00002754	      "deferred_reason": "GitHub/browser/preview GUI persistence is not Tier 0C-2 launch-critical.",
+L00002755	      "reopen_condition": "Reopen with GUI/runtime surface implementation."
+L00002756	    },
+L00002757	    {
+L00002758	      "family_id": "goal_projection_families",
+L00002759	      "storage_kind": "redb_projection",
+L00002760	      "status": "deferred_not_build_blocking",
+L00002761	      "tier": "later_gui_or_feature_projection",
+L00002762	      "key_shape": "goal_event_log | goal_state.v1:{project_id}:{goal_id} | goal_blocked_projection.v1:{project_id}:{goal_id} | goal_child_index.v1:{project_id}:{parent_goal_id} | goal_evidence_index.v1:{project_id}:{goal_id} | goal_run_projection.v1:{project_id}:{goal_run_id}",
+L00002763	      "value_schema_id": "pm.storage_value.goal_projection_families.v1",
+L00002764	      "value_schema_ref": "deferred:Plans/storage_value_registry.json#/families/goal_projection_families",
+L00002765	      "owner_doc": "Plans/Goal_Runtime_System.md",
+L00002766	      "producer": [
+L00002767	        "Goal Runtime projector"
+L00002768	      ],
+L00002769	      "consumers": [
+L00002770	        "Orchestrator",
+L00002771	        "Goal Runtime views",
+L00002772	        "certification readers"
+L00002773	      ],
+L00002774	      "schema_version": "1.0.0",
+L00002775	      "encoding": "messagepack_canonical",
+L00002776	      "required_fields": [
+L00002777	        "schema_version"
+L00002778	      ],
+L00002779	      "optional_fields": [
+L00002780	        "project_id",
+L00002781	        "goal_id",
+L00002782	        "goal_run_id",
+L00002783	        "source_event_ids"
+L00002784	      ],
+L00002785	      "nullable_fields": [],
+L00002786	      "replay_behavior": "Append-only goal events and materialized goal_receipt rows are authoritative; projections rebuild and cannot certify stale completion.",
+L00002787	      "migration": "Goal projection schemas must align with Goal Runtime event schemas before lifecycle closure.",
+L00002788	      "retention_compaction": "Projection rows are disposable; goal_event_log and receipts retain under Goal Runtime anchors.",
+L00002789	      "redaction_no_secret_rule": "Evidence and runtime data are refs only; no raw provider output or local machine secret may persist.",
+L00002790	      "legacy_canonical_crosswalk_status": "deferred_group_inventory",
+L00002791	      "deferred_owner": "Plans/Goal_Runtime_System.md",
+L00002792	      "deferred_reason": "Goal receipt is materialized; broader Goal Runtime projections remain blocked by lifecycle and harness evidence.",
+L00002793	      "reopen_condition": "Reopen during Goal Runtime lifecycle certification."
+L00002794	    },
+L00002795	    {
+L00002796	      "family_id": "analytics_rollup_families",
+L00002797	      "storage_kind": "redb_projection",
+L00002798	      "status": "deferred_not_build_blocking",
+L00002799	      "tier": "later_gui_or_feature_projection",
+L00002800	      "key_shape": "usage_5h.{platform} | usage_7d.{platform} | tool_latency.{window} | tool_usage.{window} | tool_usage_meta.{window} | analytics:scan_checkpoint",
+L00002801	      "value_schema_id": "pm.storage_value.analytics_rollup_families.v1",
+L00002802	      "value_schema_ref": "deferred:Plans/storage_value_registry.json#/families/analytics_rollup_families",
+L00002803	      "owner_doc": "Plans/usage-feature.md",
+L00002804	      "producer": [
+L00002805	        "analytics scan job"
+L00002806	      ],
+L00002807	      "consumers": [
+L00002808	        "Usage dashboard",
+L00002809	        "tool usage widget"
+L00002810	      ],
+L00002811	      "schema_version": "1.0.0",
+L00002812	      "encoding": "messagepack_canonical",
+L00002813	      "required_fields": [
+L00002814	        "schema_version"
+L00002815	      ],
+L00002816	      "optional_fields": [
+L00002817	        "window",
+L00002818	        "platform",
+L00002819	        "last_scanned_sequence_id"
+L00002820	      ],
+L00002821	      "nullable_fields": [],
+L00002822	      "replay_behavior": "Rollups rebuild from usage.event, run.completed, and tool.invoked EventRecords.",
+L00002823	      "migration": "Window-specific schemas required before dashboard implementation.",
+L00002824	      "retention_compaction": "Rollups are disposable and checkpointed; canonical usage events retain under seglog policy.",
+L00002825	      "redaction_no_secret_rule": "Aggregates store counts/costs/latency only; no prompt, transcript, or provider secret persists.",
+L00002826	      "legacy_canonical_crosswalk_status": "deferred_group_inventory",
+L00002827	      "deferred_owner": "Plans/usage-feature.md",
+L00002828	      "deferred_reason": "Analytics dashboards are later feature projections.",
+L00002829	      "reopen_condition": "Reopen with usage dashboard implementation."
+L00002830	    },
+L00002831	    {
+L00002832	      "family_id": "storage_project_state_and_config_families",
+L00002833	      "storage_kind": "redb",
+L00002834	      "status": "deferred_not_build_blocking",
+L00002835	      "tier": "later_gui_or_feature_projection",
+L00002836	      "key_shape": "orchestrator.project_state.{project_id} | project_state:v1:{project_id} | projects:v1 | dashboard_layout:v1 | assistant_worktree_branching_config | source_control_accordion_state | source_control_worktree_filter | visualizer_state | notification_settings | notification_destination | notification_sound_mapping | sound_asset_manifest",
+L00002837	      "value_schema_id": "pm.storage_value.storage_project_state_and_config_families.v1",
+L00002838	      "value_schema_ref": "deferred:Plans/storage_value_registry.json#/families/storage_project_state_and_config_families",
+L00002839	      "owner_doc": "Plans/Orchestrator_Page.md",
+L00002840	      "producer": [
+L00002841	        "project state and GUI settings writers"
+L00002842	      ],
+L00002843	      "consumers": [
+L00002844	        "Dashboard",
+L00002845	        "Orchestrator",
+L00002846	        "Source Control",
+L00002847	        "notifications"
+L00002848	      ],
+L00002849	      "schema_version": "1.0.0",
+L00002850	      "encoding": "json_canonical",
+L00002851	      "required_fields": [
+L00002852	        "schema_version"
+L00002853	      ],
+L00002854	      "optional_fields": [
+L00002855	        "project_id",
+L00002856	        "settings_version",
+L00002857	        "source_event_ids"
+L00002858	      ],
+L00002859	      "nullable_fields": [],
+L00002860	      "replay_behavior": "Project/UI state restores from versioned settings and source events where applicable; stale projections remain inspectable only.",
+L00002861	      "migration": "Unversioned settings keys require forward-only migration before implementation authority.",
+L00002862	      "retention_compaction": "Settings retain latest plus migration backup; projections are disposable.",
+L00002863	      "redaction_no_secret_rule": "Selected roots, URLs, handles, and endpoints are sensitive metadata and must be masked or ref-only on export.",
+L00002864	      "legacy_canonical_crosswalk_status": "deferred_group_inventory",
+L00002865	      "deferred_owner": "Plans/Orchestrator_Page.md",
+L00002866	      "deferred_reason": "GUI/project-state settings are outside Tier 0C-2 launch-critical storage.",
+L00002867	      "reopen_condition": "Reopen with GUI settings/runtime state implementation."
+L00002868	    },
+L00002869	    {
+L00002870	      "family_id": "permission_safe_point_restore_families",
+L00002871	      "storage_kind": "redb",
+L00002872	      "status": "deferred_not_build_blocking",
+L00002873	      "tier": "later_gui_or_feature_projection",
+L00002874	      "key_shape": "permission_snapshot_record.v1:{project_id}:{snapshot_id} | safe_point.sp:{run_id}:{node_id}:{attempt_id}:{safe_point_id} | safe_point:<safe_point_id> | restore_point_record.v1:{project_id}:{restore_point_id}",
+L00002875	      "value_schema_id": "pm.storage_value.permission_safe_point_restore_families.v1",
+L00002876	      "value_schema_ref": "deferred:Plans/storage_value_registry.json#/families/permission_safe_point_restore_families",
+L00002877	      "owner_doc": "Plans/Permissions_System.md",
+L00002878	      "producer": [
+L00002879	        "permission and recovery boundary"
+L00002880	      ],
+L00002881	      "consumers": [
+L00002882	        "Executor",
+L00002883	        "Source Control",
+L00002884	        "restore flows"
+L00002885	      ],
+L00002886	      "schema_version": "1.0.0",
+L00002887	      "encoding": "messagepack_canonical",
+L00002888	      "required_fields": [
+L00002889	        "schema_version"
+L00002890	      ],
+L00002891	      "optional_fields": [
+L00002892	        "project_id",
+L00002893	        "snapshot_id",
+L00002894	        "safe_point_id",
+L00002895	        "restore_point_id"
+L00002896	      ],
+L00002897	      "nullable_fields": [],
+L00002898	      "replay_behavior": "Recovery resume uses checkpoint marker events plus safe-point/restore records; projector checkpoints alone are insufficient.",
+L00002899	      "migration": "Safe-point and restore-point namespaces remain separate; aliases need explicit migration records.",
+L00002900	      "retention_compaction": "Retain through recovery, rollback, audit, and hold-state anchors.",
+L00002901	      "redaction_no_secret_rule": "Permission snapshots store decisions/refs, never credentials or policy secrets.",
+L00002902	      "legacy_canonical_crosswalk_status": "deferred_group_inventory",
+L00002903	      "deferred_owner": "Plans/Permissions_System.md",
+L00002904	      "deferred_reason": "Security boundary fixtures are explicitly out of Tier 0C-2 scope.",
+L00002905	      "reopen_condition": "Reopen in security_boundary/runtime_lifecycle tier."
+L00002906	    },
+L00002907	    {
+L00002908	      "family_id": "coordination_event_records",
+L00002909	      "storage_kind": "seglog",
+L00002910	      "status": "deferred_not_build_blocking",
+L00002911	      "tier": "later_gui_or_feature_projection",
+L00002912	      "key_shape": "coordination.agent_registered | coordination.agent_status_updated | coordination.agent_operation_updated | coordination.agent_file_ownership_updated | coordination.agent_unregistered | coordination.agent_crashed | coordination.agent_aborted | coordination.debug_mirror_exported",
+L00002913	      "value_schema_id": "pm.storage_value.coordination_event_records.v1",
+L00002914	      "value_schema_ref": "deferred:Plans/storage_value_registry.json#/families/coordination_event_records",
+L00002915	      "owner_doc": "Plans/Contracts_V0.md#stable-active-agent-coordination-event-families",
+L00002916	      "producer": [
+L00002917	        "AgentCoordinator",
+L00002918	        "platform hook/event adapters",

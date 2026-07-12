@@ -1,0 +1,25 @@
+{
+  "schema_version": "audit005-coverage-scope-reconciliation-v31-pointer-v1",
+  "audit_id": "audit-20260710-005-plan-assurance-model-lanes-fresh-agent-exhaustive",
+  "reconciliation_id": "coverage-scope-reconciliation-v31-0001",
+  "pointer_kind": "append_only_typed_scope_reconciliation_pointer",
+  "status": "BOUND_TYPED_SCOPES_CURRENT_LIVE_HEAD_BLOCKED",
+  "report_ref": "master/coverage_scope_reconciliation/v31/coverage_scope_report.json",
+  "report_sha256": "9c51da019318b0292d4e6592c7d8713c405b1edf1825035f2c84bcb65de8f81f",
+  "schema_ref": "master/coverage_scope_reconciliation/v31/schemas/coverage_scope_reconciliation_v31.schema.json",
+  "schema_sha256": "c728e1e6ec22858e308c943d790437aaf71811721e4fb44b334f20e9a936d0ba",
+  "current_policy_ref": "master/coordination/CONCURRENCY_POLICY_V32.json",
+  "current_policy_sha256": "4826ade4c38db47ee184b34e5d7b7bd5ba6cabeecc9baa686cb9d99eeff8a3ed",
+  "scope_order": [
+    "legacy_role_assignment_lineage",
+    "frozen_macro_micro_window_coverage",
+    "current_live_head_delta"
+  ],
+  "frozen_macro_complete": true,
+  "current_live_head_complete": false,
+  "macro_complete_propagates_to_current_live_head": false,
+  "activation_authorized": false,
+  "coverage_credit_granted": 0,
+  "canonical_plan_writes_authorized": false,
+  "prior_pointers_mutated": false
+}

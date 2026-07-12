@@ -1,0 +1,22 @@
+{
+  "assignment_id": "A005M-000064-INTEGRATED-MACRO-C45446C7AC96-0001",
+  "assignment_record_sha256": "46cfbbd6bff2fb51c54580fc45c6b7ace875d7c2dbb879134b4f37dad64ad1bf",
+  "attempt_id": "attempt-0014",
+  "audit_id": "audit-20260710-005-plan-assurance-model-lanes-fresh-agent-exhaustive",
+  "batch_id": "macro-batch-0001",
+  "capsule_ref": "/Users/jaredsmacbookair/Documents/PuppetMaster/Plans/.audits/audit-20260710-005-plan-assurance-model-lanes-fresh-agent-exhaustive/master/macro/frozen/epoch-0014/capsules/assignments/A005M-000064-INTEGRATED-MACRO-C45446C7AC96-0001.json",
+  "capsule_sha256": "778492ab5ec90de67552020961a65b9d1e2e4726574480091abc4f81bace9d9c",
+  "coverage_credit_before_validation": 0,
+  "epoch_id": "epoch-0014",
+  "followup_messages_forbidden": true,
+  "fork_turns": "none",
+  "fresh_child_required": true,
+  "model": "gpt-5.6-sol",
+  "output_directory": "/Users/jaredsmacbookair/Documents/PuppetMaster/Plans/.audits/audit-20260710-005-plan-assurance-model-lanes-fresh-agent-exhaustive/macro_v2/assignments/A005M-000064-INTEGRATED-MACRO-C45446C7AC96-0001/attempts/attempt-0014",
+  "reasoning_effort": "xhigh",
+  "receipt_ref": "/Users/jaredsmacbookair/Documents/PuppetMaster/Plans/.audits/audit-20260710-005-plan-assurance-model-lanes-fresh-agent-exhaustive/master/macro/dispatch/macro-batch-0001/A005M-000064-INTEGRATED-MACRO-C45446C7AC96-0001/attempt-0014/dispatch_receipt.json",
+  "result_contract": "write exactly one regular JSON file in output_directory; result.json recommended",
+  "result_schema_ref": "/Users/jaredsmacbookair/Documents/PuppetMaster/Plans/.audits/audit-20260710-005-plan-assurance-model-lanes-fresh-agent-exhaustive/master/macro/frozen/epoch-0014/schemas/macro_review_result.schema.json",
+  "schema_version": "macro-dispatch-intent-v1",
+  "terminal_contract": "return PMR1 after payload; do not write terminal seal"
+}

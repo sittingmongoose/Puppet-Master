@@ -1,0 +1,60 @@
+{
+  "audit_id": "audit-20260710-005-plan-assurance-model-lanes-fresh-agent-exhaustive",
+  "schema_version": "audit-concurrency-policy-v8",
+  "status": "ACTIVE_PROSPECTIVE_RESET_CONTINUITY",
+  "effective_date": "2026-07-11",
+  "supersedes_prospectively": "master/coordination/CONCURRENCY_POLICY_V7.json",
+  "prior_policies_mutated": false,
+  "user_authorization": "ramp to the post-reset operating level before the reset and do not pause merely for the accounting boundary",
+  "quota_snapshot": {
+    "remaining_usage_percent": 31,
+    "remaining_minutes_approx": 11,
+    "reset_is_accounting_boundary_only": true
+  },
+  "continuity_policy": {
+    "maximum_active_semantic_leaves": 16,
+    "pause_at_reset": false,
+    "downshift_at_reset": false,
+    "carry_valid_in_flight_work_across_reset": true,
+    "launch_immediately_when_required_gates_pass": true,
+    "never_launch_unvalidated_or_dependency_blocked_work": true
+  },
+  "immediate_recovery": {
+    "assignment_ids": [
+      "ER-0003",
+      "ER-0008"
+    ],
+    "leaf_count": 2,
+    "prepared_lineage_policy": "V6 remains the immutable attempt-0005 artifact binding; V8 governs live scheduling only",
+    "next_action": "after independent Luna prelaunch passes, generate the activation core, two per-leaf authorizations and final envelope once, then launch exactly two fresh Luna Max leaves without waiting for another heartbeat",
+    "result_required_before_pmr1": true,
+    "cumulative_independent_eight_of_eight_required": true
+  },
+  "scenario_pipeline": {
+    "first_transaction": [
+      "cohort-0001",
+      "cohort-0002"
+    ],
+    "second_transaction": [
+      "cohort-0003",
+      "cohort-0004"
+    ],
+    "leaves_per_transaction": 16,
+    "start_condition": "research checkpoint is independently 8 of 8 and both cohort activations separately pass",
+    "all_32_atomic_launch_forbidden": true,
+    "pipeline_independent_validation": true
+  },
+  "controller_threads": {
+    "sol": "019f4f5e-96c6-7893-8c94-ce2c1b760d6c",
+    "luna": "019f5078-6501-7223-b52f-2251010bdc41",
+    "extra_controllers_authorized": 0
+  },
+  "quality_invariants": {
+    "semantic_scope_reduced": false,
+    "external_research_requirement_reduced": false,
+    "independent_validation_reduced": false,
+    "dependency_bypass_authorized": false,
+    "canonical_plan_writes_authorized": false,
+    "immutable_lineage_mutation_authorized": false
+  }
+}

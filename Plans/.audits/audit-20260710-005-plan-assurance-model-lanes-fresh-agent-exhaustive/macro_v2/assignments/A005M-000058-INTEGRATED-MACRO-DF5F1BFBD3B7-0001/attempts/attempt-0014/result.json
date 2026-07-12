@@ -1,0 +1,1234 @@
+{
+  "schema_version": "macro-review-result-v1",
+  "audit_id": "audit-20260710-005-plan-assurance-model-lanes-fresh-agent-exhaustive",
+  "assignment_id": "A005M-000058-INTEGRATED-MACRO-DF5F1BFBD3B7-0001",
+  "attempt_id": "attempt-0014",
+  "task_thread_id": "/root/a005m_000058_attempt_0014_terminal",
+  "model": "gpt-5.6-sol",
+  "reasoning_effort": "xhigh",
+  "phase": "blind_macro_window_review",
+  "status": "completed",
+  "source_binding": {
+    "document_path": "Plans/Goal_Runtime_System.md",
+    "source_sha256": "93074bc367a76d2b977006d394c063fd7ce21bd1bdcae4138bd6944bebb72785",
+    "source_excerpt_ref": "capsules/source/70/70c9b6053fa003582d0f66df48cbf11ec736b9ca957f4eb02f4c74ce6e987e68.txt",
+    "source_excerpt_sha256": "70c9b6053fa003582d0f66df48cbf11ec736b9ca957f4eb02f4c74ce6e987e68",
+    "capsule_sha256": "ea0e9b206ce28e6ed8518429bba4cfb03a31fa857f2ef236536166dbb18d6d4d",
+    "assignment_record_sha256": "8f164d208d89bec7f5f07c857ced29099a59307a34c95a5b250f1fe08e60972b",
+    "bundle_id": "MACRO-DF5F1BFBD3B7-0001",
+    "bundle_core_range": [1, 2480],
+    "context_ranges": [[2481, 2492]],
+    "identity_verified": true,
+    "capsule_hash_verified": true,
+    "source_excerpt_hash_verified": true,
+    "segment_core_hashes_verified": true
+  },
+  "coverage": {
+    "reviewed_core_range": [1, 2480],
+    "reviewed_core_line_count": 2480,
+    "reviewed_context_ranges": [[2481, 2492]],
+    "reviewed_context_line_count": 12,
+    "all_core_lines_reviewed": true,
+    "required_source_unit_ref_count": 67,
+    "accounted_source_unit_ref_count": 67,
+    "all_required_source_units_accounted_for": true,
+    "exact_behavior_lens_applied": true,
+    "adversarial_negative_space_lens_applied": true,
+    "required_dimensions": [
+      "behavior",
+      "capabilities",
+      "inputs_outputs",
+      "contracts",
+      "states_transitions",
+      "authority",
+      "ownership",
+      "consumers",
+      "gui_truth",
+      "failures_recovery",
+      "security_privacy",
+      "propagation",
+      "operations",
+      "scale_performance",
+      "compatibility_migration",
+      "acceptance_oracles",
+      "builder_discretion",
+      "ambiguity_unknowns",
+      "missing_callers_consumers",
+      "invalid_states_transitions",
+      "concurrency_races",
+      "partial_failure",
+      "recovery_rollback",
+      "authority_boundaries",
+      "privacy_data_lifecycle",
+      "untrusted_inputs",
+      "gui_misleading_states",
+      "offline_network_loss",
+      "scale_limits",
+      "accessibility",
+      "localization",
+      "observability_support",
+      "destructive_actions",
+      "cross_document_seams",
+      "test_falsifiability",
+      "unknown_unknowns"
+    ],
+    "reviewed_dimensions": [
+      "behavior",
+      "capabilities",
+      "inputs_outputs",
+      "contracts",
+      "states_transitions",
+      "authority",
+      "ownership",
+      "consumers",
+      "gui_truth",
+      "failures_recovery",
+      "security_privacy",
+      "propagation",
+      "operations",
+      "scale_performance",
+      "compatibility_migration",
+      "acceptance_oracles",
+      "builder_discretion",
+      "ambiguity_unknowns",
+      "missing_callers_consumers",
+      "invalid_states_transitions",
+      "concurrency_races",
+      "partial_failure",
+      "recovery_rollback",
+      "authority_boundaries",
+      "privacy_data_lifecycle",
+      "untrusted_inputs",
+      "gui_misleading_states",
+      "offline_network_loss",
+      "scale_limits",
+      "accessibility",
+      "localization",
+      "observability_support",
+      "destructive_actions",
+      "cross_document_seams",
+      "test_falsifiability",
+      "unknown_unknowns"
+    ]
+  },
+  "segments": [
+    {
+      "window_id": "WIN-DF5F1BFBD3B7-0001",
+      "core_range": [1, 326],
+      "core_sha256": "ced10d827f39733728c40bdafee33494b63d6eaf2d854bf19ecd284b12c049af",
+      "core_sha256_verified": true,
+      "required_source_unit_refs": ["PLANUNIT:GRS-001", "PLANUNIT:GRS-002", "PLANUNIT:GRS-003", "PLANUNIT:GRS-032", "SEMANTIC:PROLOGUE:Plans/Goal_Runtime_System.md", "SEMANTIC:PLANUNIT:GRS-001", "SEMANTIC:PLANUNIT:GRS-032", "SEMANTIC:PLANUNIT:GRS-002", "SEMANTIC:PLANUNIT:GRS-003"],
+      "reviewed_source_unit_refs": ["PLANUNIT:GRS-001", "PLANUNIT:GRS-002", "PLANUNIT:GRS-003", "PLANUNIT:GRS-032", "SEMANTIC:PROLOGUE:Plans/Goal_Runtime_System.md", "SEMANTIC:PLANUNIT:GRS-001", "SEMANTIC:PLANUNIT:GRS-032", "SEMANTIC:PLANUNIT:GRS-002", "SEMANTIC:PLANUNIT:GRS-003"],
+      "item_ids": ["A005M-000058-I001", "A005M-000058-I002", "A005M-000058-I003", "A005M-000058-I004", "A005M-000058-I005", "A005M-000058-I006", "A005M-000058-I007", "A005M-000058-I008"],
+      "all_lines_reviewed": true,
+      "exact_lens_applied": true,
+      "adversarial_lens_applied": true
+    },
+    {
+      "window_id": "WIN-DF5F1BFBD3B7-0002",
+      "core_range": [327, 661],
+      "core_sha256": "4b4968200202b783cdf019c140e0e1698a20513e128d34ade41a76684b5e77e5",
+      "core_sha256_verified": true,
+      "required_source_unit_refs": ["PLANUNIT:GRS-004", "PLANUNIT:GRS-005", "PLANUNIT:GRS-006", "PLANUNIT:GRS-007", "PLANUNIT:GRS-008", "SEMANTIC:PLANUNIT:GRS-004", "SEMANTIC:PLANUNIT:GRS-005", "SEMANTIC:PLANUNIT:GRS-006", "SEMANTIC:PLANUNIT:GRS-007", "SEMANTIC:PLANUNIT:GRS-008"],
+      "reviewed_source_unit_refs": ["PLANUNIT:GRS-004", "PLANUNIT:GRS-005", "PLANUNIT:GRS-006", "PLANUNIT:GRS-007", "PLANUNIT:GRS-008", "SEMANTIC:PLANUNIT:GRS-004", "SEMANTIC:PLANUNIT:GRS-005", "SEMANTIC:PLANUNIT:GRS-006", "SEMANTIC:PLANUNIT:GRS-007", "SEMANTIC:PLANUNIT:GRS-008"],
+      "item_ids": ["A005M-000058-I009", "A005M-000058-I010", "A005M-000058-I011", "A005M-000058-I012", "A005M-000058-I013", "A005M-000058-I014", "A005M-000058-I015", "A005M-000058-I016", "A005M-000058-I017", "A005M-000058-I018"],
+      "all_lines_reviewed": true,
+      "exact_lens_applied": true,
+      "adversarial_lens_applied": true
+    },
+    {
+      "window_id": "WIN-DF5F1BFBD3B7-0003",
+      "core_range": [662, 1059],
+      "core_sha256": "da8136010107473402d52d2e2dc03204e77c28b47622054ae4e10481cbf0f402",
+      "core_sha256_verified": true,
+      "required_source_unit_refs": ["PLANUNIT:GRS-009", "PLANUNIT:GRS-010", "PLANUNIT:GRS-011", "PLANUNIT:GRS-012", "PLANUNIT:GRS-013", "PLANUNIT:GRS-014", "SEMANTIC:PLANUNIT:GRS-009", "SEMANTIC:PLANUNIT:GRS-010", "SEMANTIC:PLANUNIT:GRS-011", "SEMANTIC:PLANUNIT:GRS-012", "SEMANTIC:PLANUNIT:GRS-013", "SEMANTIC:PLANUNIT:GRS-014"],
+      "reviewed_source_unit_refs": ["PLANUNIT:GRS-009", "PLANUNIT:GRS-010", "PLANUNIT:GRS-011", "PLANUNIT:GRS-012", "PLANUNIT:GRS-013", "PLANUNIT:GRS-014", "SEMANTIC:PLANUNIT:GRS-009", "SEMANTIC:PLANUNIT:GRS-010", "SEMANTIC:PLANUNIT:GRS-011", "SEMANTIC:PLANUNIT:GRS-012", "SEMANTIC:PLANUNIT:GRS-013", "SEMANTIC:PLANUNIT:GRS-014"],
+      "item_ids": ["A005M-000058-I019", "A005M-000058-I020", "A005M-000058-I021", "A005M-000058-I022", "A005M-000058-I023", "A005M-000058-I024", "A005M-000058-I025", "A005M-000058-I026", "A005M-000058-I027"],
+      "all_lines_reviewed": true,
+      "exact_lens_applied": true,
+      "adversarial_lens_applied": true
+    },
+    {
+      "window_id": "WIN-DF5F1BFBD3B7-0004",
+      "core_range": [1060, 1417],
+      "core_sha256": "f603735c6eca59cb753ac3c7460ede91016017f7ceeb7e4b242ca9a45722bfcc",
+      "core_sha256_verified": true,
+      "required_source_unit_refs": ["PLANUNIT:GRS-015", "PLANUNIT:GRS-016", "PLANUNIT:GRS-017", "PLANUNIT:GRS-018", "PLANUNIT:GRS-019", "SEMANTIC:PLANUNIT:GRS-015", "SEMANTIC:PLANUNIT:GRS-016", "SEMANTIC:PLANUNIT:GRS-017", "SEMANTIC:PLANUNIT:GRS-018", "SEMANTIC:PLANUNIT:GRS-019"],
+      "reviewed_source_unit_refs": ["PLANUNIT:GRS-015", "PLANUNIT:GRS-016", "PLANUNIT:GRS-017", "PLANUNIT:GRS-018", "PLANUNIT:GRS-019", "SEMANTIC:PLANUNIT:GRS-015", "SEMANTIC:PLANUNIT:GRS-016", "SEMANTIC:PLANUNIT:GRS-017", "SEMANTIC:PLANUNIT:GRS-018", "SEMANTIC:PLANUNIT:GRS-019"],
+      "item_ids": ["A005M-000058-I028", "A005M-000058-I029", "A005M-000058-I030", "A005M-000058-I031", "A005M-000058-I032", "A005M-000058-I033", "A005M-000058-I034", "A005M-000058-I035"],
+      "all_lines_reviewed": true,
+      "exact_lens_applied": true,
+      "adversarial_lens_applied": true
+    },
+    {
+      "window_id": "WIN-DF5F1BFBD3B7-0005",
+      "core_range": [1418, 1705],
+      "core_sha256": "f6936dd3357c7be025ac468c8387edece0389fb0ccd670d3895eedfae43c3b88",
+      "core_sha256_verified": true,
+      "required_source_unit_refs": ["PLANUNIT:GRS-020", "PLANUNIT:GRS-021", "PLANUNIT:GRS-022", "PLANUNIT:GRS-023", "PLANUNIT:GRS-024", "SEMANTIC:PLANUNIT:GRS-020", "SEMANTIC:PLANUNIT:GRS-021", "SEMANTIC:PLANUNIT:GRS-022", "SEMANTIC:PLANUNIT:GRS-023", "SEMANTIC:PLANUNIT:GRS-024"],
+      "reviewed_source_unit_refs": ["PLANUNIT:GRS-020", "PLANUNIT:GRS-021", "PLANUNIT:GRS-022", "PLANUNIT:GRS-023", "PLANUNIT:GRS-024", "SEMANTIC:PLANUNIT:GRS-020", "SEMANTIC:PLANUNIT:GRS-021", "SEMANTIC:PLANUNIT:GRS-022", "SEMANTIC:PLANUNIT:GRS-023", "SEMANTIC:PLANUNIT:GRS-024"],
+      "item_ids": ["A005M-000058-I036", "A005M-000058-I037", "A005M-000058-I038", "A005M-000058-I039", "A005M-000058-I040", "A005M-000058-I051"],
+      "all_lines_reviewed": true,
+      "exact_lens_applied": true,
+      "adversarial_lens_applied": true
+    },
+    {
+      "window_id": "WIN-DF5F1BFBD3B7-0006",
+      "core_range": [1706, 2087],
+      "core_sha256": "58ee6b0d626a8d94d89606fec6e0a09be4a0e421c91bfc47daf6d2c6e66f62cf",
+      "core_sha256_verified": true,
+      "required_source_unit_refs": ["PLANUNIT:GRS-025", "PLANUNIT:GRS-026", "PLANUNIT:GRS-027", "SEMANTIC:PLANUNIT:GRS-025", "SEMANTIC:PLANUNIT:GRS-026", "SEMANTIC:PLANUNIT:GRS-027"],
+      "reviewed_source_unit_refs": ["PLANUNIT:GRS-025", "PLANUNIT:GRS-026", "PLANUNIT:GRS-027", "SEMANTIC:PLANUNIT:GRS-025", "SEMANTIC:PLANUNIT:GRS-026", "SEMANTIC:PLANUNIT:GRS-027"],
+      "item_ids": ["A005M-000058-I041", "A005M-000058-I042", "A005M-000058-I043", "A005M-000058-I044", "A005M-000058-I045", "A005M-000058-I046", "A005M-000058-I047", "A005M-000058-I058"],
+      "all_lines_reviewed": true,
+      "exact_lens_applied": true,
+      "adversarial_lens_applied": true
+    },
+    {
+      "window_id": "WIN-DF5F1BFBD3B7-0007",
+      "core_range": [2088, 2480],
+      "core_sha256": "ec6b10e1d8260eb687f0ad1c2dfec975e4dc2d6210d2dcdfa83fa45fb9935ebc",
+      "core_sha256_verified": true,
+      "required_source_unit_refs": ["PLANUNIT:GRS-028", "PLANUNIT:GRS-029", "PLANUNIT:GRS-030", "PLANUNIT:GRS-031", "PLANUNIT:GRS-033", "SEMANTIC:PLANUNIT:GRS-028", "SEMANTIC:PLANUNIT:GRS-029", "SEMANTIC:PLANUNIT:GRS-030", "SEMANTIC:PLANUNIT:GRS-031", "SEMANTIC:PLANUNIT:GRS-033"],
+      "reviewed_source_unit_refs": ["PLANUNIT:GRS-028", "PLANUNIT:GRS-029", "PLANUNIT:GRS-030", "PLANUNIT:GRS-031", "PLANUNIT:GRS-033", "SEMANTIC:PLANUNIT:GRS-028", "SEMANTIC:PLANUNIT:GRS-029", "SEMANTIC:PLANUNIT:GRS-030", "SEMANTIC:PLANUNIT:GRS-031", "SEMANTIC:PLANUNIT:GRS-033"],
+      "item_ids": ["A005M-000058-I048", "A005M-000058-I049", "A005M-000058-I050", "A005M-000058-I051", "A005M-000058-I052", "A005M-000058-I053", "A005M-000058-I054", "A005M-000058-I055", "A005M-000058-I056", "A005M-000058-I057", "A005M-000058-I058", "A005M-000058-I059", "A005M-000058-I060", "A005M-000058-I061"],
+      "all_lines_reviewed": true,
+      "exact_lens_applied": true,
+      "adversarial_lens_applied": true
+    }
+  ],
+  "items": [
+    {
+      "item_id": "A005M-000058-I001",
+      "item_type": "feature",
+      "title": "Native, general-purpose Goal Runtime scope is explicit",
+      "statement": "The owner defines Goal Mode as a native autonomous runtime, keeps it general-purpose, and permits policy-routed web/browser evidence acquisition when current or external evidence matters.",
+      "severity": "informational",
+      "gap_kind": "none",
+      "confidence": "high",
+      "builder_discretion": false,
+      "dimensions": ["behavior", "capabilities", "operations", "compatibility_migration"],
+      "source_unit_refs": ["SEMANTIC:PROLOGUE:Plans/Goal_Runtime_System.md"],
+      "impact": "This prevents implementation from collapsing Goal Mode into prompt packets or a planning-only flow while preserving governed external-research capability.",
+      "evidence": [
+        {"exact_quote": "The Goal Runtime System is Puppet Master's native autonomous execution mode for long-running, cross-referential, or multi-step work. It is not a prompt-packet workflow, not a D2-style staged handoff, and not a planning-only assistant feature.", "line_start": 9, "line_end": 9, "path": "Plans/Goal_Runtime_System.md", "source_sha256": "93074bc367a76d2b977006d394c063fd7ce21bd1bdcae4138bd6944bebb72785"},
+        {"exact_quote": "Goal Mode is general-purpose: user-facing Assistant Chat can invoke it for bugs, features, tests-until-pass, refactors, documentation, repository research, migrations, audits/repairs, and planning/doc transfer.", "line_start": 11, "line_end": 11, "path": "Plans/Goal_Runtime_System.md", "source_sha256": "93074bc367a76d2b977006d394c063fd7ce21bd1bdcae4138bd6944bebb72785"}
+      ]
+    },
+    {
+      "item_id": "A005M-000058-I002",
+      "item_type": "authority",
+      "title": "Owner and consumer boundaries are deliberately split",
+      "statement": "Goal Runtime owns control-plane semantics, while Assistant Chat, FinalGUISpec, Permissions, Runtime Artifacts, planning systems, and provider/model systems retain their respective UI, policy, artifact, source, and identity ownership.",
+      "severity": "informational",
+      "gap_kind": "none",
+      "confidence": "high",
+      "builder_discretion": false,
+      "dimensions": ["authority", "ownership", "consumers", "cross_document_seams"],
+      "source_unit_refs": ["SEMANTIC:PROLOGUE:Plans/Goal_Runtime_System.md"],
+      "impact": "The separation prevents Goal Runtime projections or receipts from silently becoming scheduler, GUI, permission, provider, or canonical-plan truth.",
+      "evidence": [
+        {"exact_quote": "Goal Runtime owns runtime state, scheduling, update/replan semantics, authority, evidence, certification, model-role policy, and child-goal coordination.", "line_start": 19, "line_end": 19, "path": "Plans/Goal_Runtime_System.md", "source_sha256": "93074bc367a76d2b977006d394c063fd7ce21bd1bdcae4138bd6944bebb72785"},
+        {"exact_quote": "Permissions_System owns the global approval ladder and rule resolution. Goal Runtime owns the Goal-specific invocation rule: high-risk goal actions request explicit approval and invisible/internal goals block when outside predeclared authority.", "line_start": 29, "line_end": 29, "path": "Plans/Goal_Runtime_System.md", "source_sha256": "93074bc367a76d2b977006d394c063fd7ce21bd1bdcae4138bd6944bebb72785"}
+      ]
+    },
+    {
+      "item_id": "A005M-000058-I003",
+      "item_type": "explicit_non_gap",
+      "title": "Retired prompt-packet behavior is unambiguously excluded",
+      "statement": "GRS-001 positively requires native arbitrary-goal execution and negatively prohibits D2/prompt-loop and planning-only reintroductions.",
+      "severity": "informational",
+      "gap_kind": "none",
+      "confidence": "high",
+      "builder_discretion": false,
+      "dimensions": ["behavior", "compatibility_migration", "builder_discretion"],
+      "source_unit_refs": ["PLANUNIT:GRS-001", "SEMANTIC:PLANUNIT:GRS-001"],
+      "impact": "A builder has no discretion to recreate the retired architecture under new naming.",
+      "evidence": [
+        {"exact_quote": "Goal Mode is a native autonomous execution mode for finished Puppet Master product behavior. It replaces the failed long prompt-packet/D2 handoff approach for long or cross-referential work.", "line_start": 45, "line_end": 45, "path": "Plans/Goal_Runtime_System.md", "source_sha256": "93074bc367a76d2b977006d394c063fd7ce21bd1bdcae4138bd6944bebb72785"}
+      ]
+    },
+    {
+      "item_id": "A005M-000058-I004",
+      "item_type": "contract",
+      "title": "Host capability is consumption-only and receipt-gated",
+      "statement": "GRS-032 forbids Goal Runtime from directly dispatching host work and requires host, test, cleanup, blocker, or exception evidence before certification.",
+      "severity": "informational",
+      "gap_kind": "none",
+      "confidence": "high",
+      "builder_discretion": false,
+      "dimensions": ["contracts", "authority", "inputs_outputs", "failures_recovery"],
+      "source_unit_refs": ["PLANUNIT:GRS-032", "SEMANTIC:PLANUNIT:GRS-032"],
+      "impact": "Blocked host execution cannot be laundered into successful Goal completion, and Runtime Artifacts remains a projection rather than receipt authority.",
+      "evidence": [
+        {"exact_quote": "Goal Runtime may request, consume, and certify work that depends on containerized-host capability, but it does not", "line_start": 106, "line_end": 106, "path": "Plans/Goal_Runtime_System.md", "source_sha256": "93074bc367a76d2b977006d394c063fd7ce21bd1bdcae4138bd6944bebb72785"},
+        {"exact_quote": "Blocked host outcomes are preserved as blocked != failed and cannot be transformed into success.", "line_start": 120, "line_end": 120, "path": "Plans/Goal_Runtime_System.md", "source_sha256": "93074bc367a76d2b977006d394c063fd7ce21bd1bdcae4138bd6944bebb72785"}
+      ]
+    },
+    {
+      "item_id": "A005M-000058-I005",
+      "item_type": "gap",
+      "title": "Host receipt sets and verification exceptions lack a decision contract",
+      "statement": "The PlanUnit requires lane-appropriate host/test/cleanup receipts or approved verification exceptions, but does not define the lane-to-required-receipt mapping, exception-granting authority, exception scope or expiry, or fail-closed behavior when that policy is missing.",
+      "severity": "high",
+      "gap_kind": "missing_contract",
+      "confidence": "high",
+      "builder_discretion": true,
+      "dimensions": ["contracts", "acceptance_oracles", "authority_boundaries", "partial_failure", "ambiguity_unknowns", "cross_document_seams", "test_falsifiability"],
+      "source_unit_refs": ["PLANUNIT:GRS-032", "SEMANTIC:PLANUNIT:GRS-032"],
+      "impact": "Different implementations can certify the same host-dependent goal with different evidence or evergreen exceptions, undermining deterministic completion and auditability.",
+      "evidence": [
+        {"exact_quote": "certification requires lane-appropriate host/test/cleanup receipts, explicit blocker payloads, or approved verification", "line_start": 111, "line_end": 111, "path": "Plans/Goal_Runtime_System.md", "source_sha256": "93074bc367a76d2b977006d394c063fd7ce21bd1bdcae4138bd6944bebb72785"},
+        {"exact_quote": "exceptions; Runtime Artifacts remains projection and evidence browsing, not receipt truth.", "line_start": 112, "line_end": 112, "path": "Plans/Goal_Runtime_System.md", "source_sha256": "93074bc367a76d2b977006d394c063fd7ce21bd1bdcae4138bd6944bebb72785"}
+      ]
+    },
+    {
+      "item_id": "A005M-000058-I006",
+      "item_type": "behavior",
+      "title": "One lifecycle serves three integrations with bounded hard stops",
+      "statement": "GRS-002 shares a lifecycle across invisible, Assistant Chat, and Orchestrator integrations, makes invisible work hands-off for ordinary ambiguity, and preserves enumerated hard-stop classes and Executor dispatch ownership.",
+      "severity": "informational",
+      "gap_kind": "none",
+      "confidence": "high",
+      "builder_discretion": false,
+      "dimensions": ["behavior", "states_transitions", "authority", "consumers", "failures_recovery"],
+      "source_unit_refs": ["PLANUNIT:GRS-002", "SEMANTIC:PLANUNIT:GRS-002"],
+      "impact": "The runtime avoids split-brain lifecycle semantics while retaining safety and scheduler boundaries.",
+      "evidence": [
+        {"exact_quote": "Goal Runtime uses one Goal Runtime engine with three product integrations labeled A. invisible, B. Goal mode exposed to the user in chat assistant, and C. orchestration flow", "line_start": 171, "line_end": 171, "path": "Plans/Goal_Runtime_System.md", "source_sha256": "93074bc367a76d2b977006d394c063fd7ce21bd1bdcae4138bd6944bebb72785"}
+      ]
+    },
+    {
+      "item_id": "A005M-000058-I007",
+      "item_type": "explicit_non_gap",
+      "title": "Planning Wizard remains a consumer rather than a second runtime owner",
+      "statement": "GRS-003 requires conversational ledger capture before invisible conversion, keeps the user-facing projection minimal, and routes concrete flow, layout, and copy to the GUI owner documents.",
+      "severity": "informational",
+      "gap_kind": "none",
+      "confidence": "high",
+      "builder_discretion": false,
+      "dimensions": ["consumers", "gui_truth", "ownership", "compatibility_migration"],
+      "source_unit_refs": ["PLANUNIT:GRS-003", "SEMANTIC:PLANUNIT:GRS-003"],
+      "impact": "Minimal status examples do not incorrectly make Goal Runtime the owner of Planning Wizard screen design.",
+      "evidence": [
+        {"exact_quote": "Future Planning Wizard and PRD Builder flows use the v2 ledger system conversationally first, preserving exact user intent before any invisible Goal conversion runs.", "line_start": 256, "line_end": 256, "path": "Plans/Goal_Runtime_System.md", "source_sha256": "93074bc367a76d2b977006d394c063fd7ce21bd1bdcae4138bd6944bebb72785"},
+        {"exact_quote": "Do not define concrete Planning Wizard UI flow, layout, copy, or screen behavior in Goal Runtime canon; route those details to Planning Wizard and Assistant Chat owner docs.", "line_start": 313, "line_end": 313, "path": "Plans/Goal_Runtime_System.md", "source_sha256": "93074bc367a76d2b977006d394c063fd7ce21bd1bdcae4138bd6944bebb72785"}
+      ]
+    },
+    {
+      "item_id": "A005M-000058-I008",
+      "item_type": "gap",
+      "title": "Fetched and browser-derived content has no explicit instruction-trust boundary",
+      "statement": "The runtime may autonomously ingest web, crawl, extract, and dynamic-browser evidence and correctly labels it source evidence, but this owner text does not require fetched instructions to remain non-authoritative data, define prompt-injection handling, or constrain redirects and active content.",
+      "severity": "high",
+      "gap_kind": "missing_security_contract",
+      "confidence": "high",
+      "builder_discretion": true,
+      "dimensions": ["security_privacy", "untrusted_inputs", "authority_boundaries", "operations", "cross_document_seams"],
+      "source_unit_refs": ["SEMANTIC:PROLOGUE:Plans/Goal_Runtime_System.md"],
+      "impact": "Malicious remote content could steer tool use or alter goal interpretation despite lacking product authority.",
+      "evidence": [
+        {"exact_quote": "Goal Mode may self-initiate `websearch`, `webfetch`, `webextract`, `webresearch`, `deep_research`, `webcrawl`, `webmap`, and Site Reader / BrowserAction evidence when current, external, URL, visual, dynamic-page, docs/issues/PR, comparison, research, or deep-research evidence matters.", "line_start": 13, "line_end": 13, "path": "Plans/Goal_Runtime_System.md", "source_sha256": "93074bc367a76d2b977006d394c063fd7ce21bd1bdcae4138bd6944bebb72785"},
+        {"exact_quote": "web/browser evidence is source evidence only until an explicit compile/build phase.", "line_start": 27, "line_end": 27, "path": "Plans/Goal_Runtime_System.md", "source_sha256": "93074bc367a76d2b977006d394c063fd7ce21bd1bdcae4138bd6944bebb72785"}
+      ]
+    },
+    {
+      "item_id": "A005M-000058-I009",
+      "item_type": "feature",
+      "title": "Sharding preserves whole-goal context and coverage",
+      "statement": "GRS-004 treats sharding as retrieval, recovery, and verification infrastructure while carrying whole-objective, source/target-universe, inspected/uninspected, identity, and owner/consumer context.",
+      "severity": "informational",
+      "gap_kind": "none",
+      "confidence": "high",
+      "builder_discretion": false,
+      "dimensions": ["behavior", "inputs_outputs", "scale_performance", "operations", "observability_support"],
+      "source_unit_refs": ["PLANUNIT:GRS-004", "SEMANTIC:PLANUNIT:GRS-004"],
+      "impact": "Workers can process large sources without turning shard boundaries into a staged product workflow or losing global coverage.",
+      "evidence": [
+        {"exact_quote": "Goal Runtime must preserve whole-task coherence while operating over sharded ledgers, sharded Plans, document maps, manifests, compact state, and source/target universes.", "line_start": 335, "line_end": 335, "path": "Plans/Goal_Runtime_System.md", "source_sha256": "93074bc367a76d2b977006d394c063fd7ce21bd1bdcae4138bd6944bebb72785"}
+      ]
+    },
+    {
+      "item_id": "A005M-000058-I010",
+      "item_type": "gap",
+      "title": "Universe currentness after source or target drift is underspecified",
+      "statement": "GRS-004 records hashes, versions, inspected scopes, and uninspected scopes, but does not state how a changed shard invalidates prior coverage, whether dependent inspections become stale, or what must be re-read before completion.",
+      "severity": "medium",
+      "gap_kind": "missing_currentness_rule",
+      "confidence": "high",
+      "builder_discretion": true,
+      "dimensions": ["contracts", "states_transitions", "propagation", "acceptance_oracles", "scale_limits", "test_falsifiability"],
+      "source_unit_refs": ["PLANUNIT:GRS-004", "SEMANTIC:PLANUNIT:GRS-004"],
+      "impact": "A resumed large goal can claim full coverage using inspections against obsolete source or target identities.",
+      "evidence": [
+        {"exact_quote": "Completion coverage tracks inspected scopes, uninspected scopes, hash/version metadata, and owner/consumer relationships.", "line_start": 347, "line_end": 347, "path": "Plans/Goal_Runtime_System.md", "source_sha256": "93074bc367a76d2b977006d394c063fd7ce21bd1bdcae4138bd6944bebb72785"}
+      ]
+    },
+    {
+      "item_id": "A005M-000058-I011",
+      "item_type": "contract",
+      "title": "Durable state, revisions, and append-only history are required",
+      "statement": "GRS-005 names durable goal fields, survival across compaction/restart/model change, an append-only event log, and optimistic concurrency for stale-update prevention.",
+      "severity": "informational",
+      "gap_kind": "none",
+      "confidence": "high",
+      "builder_discretion": false,
+      "dimensions": ["contracts", "states_transitions", "concurrency_races", "failures_recovery"],
+      "source_unit_refs": ["PLANUNIT:GRS-005", "SEMANTIC:PLANUNIT:GRS-005"],
+      "impact": "A goal can be reconstructed and stale state cannot silently overwrite newer state.",
+      "evidence": [
+        {"exact_quote": "Goal Runtime owns durable execution state for each goal, including objective, lifecycle status, task list, allowed scope, constraints, budgets, attachment manifest, child goals, evidence references, completion receipt, revision, and append-only goal event log.", "line_start": 423, "line_end": 423, "path": "Plans/Goal_Runtime_System.md", "source_sha256": "93074bc367a76d2b977006d394c063fd7ce21bd1bdcae4138bd6944bebb72785"}
+      ]
+    },
+    {
+      "item_id": "A005M-000058-I012",
+      "item_type": "gap",
+      "title": "State mutation and event append atomicity is not defined",
+      "statement": "The contract requires both persisted state and an append-only event log plus revision checks, but omits the atomic commit, outbox, replay, or reconciliation invariant for a crash between state mutation and event append.",
+      "severity": "high",
+      "gap_kind": "partial_failure_atomicity",
+      "confidence": "high",
+      "builder_discretion": true,
+      "dimensions": ["contracts", "concurrency_races", "partial_failure", "failures_recovery", "recovery_rollback", "test_falsifiability"],
+      "source_unit_refs": ["PLANUNIT:GRS-005", "SEMANTIC:PLANUNIT:GRS-005"],
+      "impact": "After a crash, canonical goal state and its audit/event history may disagree while each independently appears valid.",
+      "evidence": [
+        {"exact_quote": "Goal state survives compaction, restarts, and model switches, and optimistic concurrency prevents stale overwrite.", "line_start": 423, "line_end": 423, "path": "Plans/Goal_Runtime_System.md", "source_sha256": "93074bc367a76d2b977006d394c063fd7ce21bd1bdcae4138bd6944bebb72785"},
+        {"exact_quote": "Concurrent or stale goal updates are rejected or reconciled through revision checks.", "line_start": 431, "line_end": 431, "path": "Plans/Goal_Runtime_System.md", "source_sha256": "93074bc367a76d2b977006d394c063fd7ce21bd1bdcae4138bd6944bebb72785"}
+      ]
+    },
+    {
+      "item_id": "A005M-000058-I013",
+      "item_type": "behavior",
+      "title": "Runtime-driven continuation is distinct from model recursion",
+      "statement": "GRS-006 makes the runtime scheduler reload canonical state and check currentness, budget, and pending user preemption before starting another bounded turn, with revisioned propagation to child work.",
+      "severity": "informational",
+      "gap_kind": "none",
+      "confidence": "high",
+      "builder_discretion": false,
+      "dimensions": ["behavior", "states_transitions", "propagation", "operations"],
+      "source_unit_refs": ["PLANUNIT:GRS-006", "SEMANTIC:PLANUNIT:GRS-006"],
+      "impact": "Continuation remains runtime-governed and material user updates are not reduced to mutable prompt text.",
+      "evidence": [
+        {"exact_quote": "Goal Runtime, not the worker model alone, drives runtime-driven idle continuation until completion, blocked, stopped, failed, cancelled, or budget-limited.", "line_start": 482, "line_end": 482, "path": "Plans/Goal_Runtime_System.md", "source_sha256": "93074bc367a76d2b977006d394c063fd7ce21bd1bdcae4138bd6944bebb72785"}
+      ]
+    },
+    {
+      "item_id": "A005M-000058-I014",
+      "item_type": "gap",
+      "title": "Preemption check and next-turn start have a race window",
+      "statement": "The scheduler checks user preemption before it starts continuation, but no atomic scheduler lease, expected revision at execution start, or settlement rule is specified for a user message arriving after the check and before tool or mutation work begins.",
+      "severity": "high",
+      "gap_kind": "concurrency_race",
+      "confidence": "high",
+      "builder_discretion": true,
+      "dimensions": ["states_transitions", "concurrency_races", "partial_failure", "authority_boundaries", "failures_recovery"],
+      "source_unit_refs": ["PLANUNIT:GRS-006", "SEMANTIC:PLANUNIT:GRS-006"],
+      "impact": "A supposedly paused or re-steered goal may start stale work and mutate state after the user has preempted it.",
+      "evidence": [
+        {"exact_quote": "When the thread is idle and eligible, `try_start_turn_if_idle` reloads canonical goal state, checks currentness, budgets, and user preemption, and starts the next bounded turn; this is not model self-recursion.", "line_start": 482, "line_end": 482, "path": "Plans/Goal_Runtime_System.md", "source_sha256": "93074bc367a76d2b977006d394c063fd7ce21bd1bdcae4138bd6944bebb72785"},
+        {"exact_quote": "`try_start_turn_if_idle` starts continuation only after canonical-state reload, currentness checks, budget checks, and user preemption checks.", "line_start": 492, "line_end": 492, "path": "Plans/Goal_Runtime_System.md", "source_sha256": "93074bc367a76d2b977006d394c063fd7ce21bd1bdcae4138bd6944bebb72785"}
+      ]
+    },
+    {
+      "item_id": "A005M-000058-I015",
+      "item_type": "state",
+      "title": "Material updates create durable replans with child-work impact",
+      "statement": "GRS-007 classifies interruption kinds, pauses scheduling, computes impact, updates visible work, settles child goals, and resumes only when valid; hard constraints apply immediately.",
+      "severity": "informational",
+      "gap_kind": "none",
+      "confidence": "high",
+      "builder_discretion": false,
+      "dimensions": ["states_transitions", "propagation", "gui_truth", "failures_recovery"],
+      "source_unit_refs": ["PLANUNIT:GRS-007", "SEMANTIC:PLANUNIT:GRS-007"],
+      "impact": "Material steering becomes auditable runtime state instead of silent goal mutation.",
+      "evidence": [
+        {"exact_quote": "Material mid-goal user changes create an explicit Goal Replan Event.", "line_start": 545, "line_end": 545, "path": "Plans/Goal_Runtime_System.md", "source_sha256": "93074bc367a76d2b977006d394c063fd7ce21bd1bdcae4138bd6944bebb72785"}
+      ]
+    },
+    {
+      "item_id": "A005M-000058-I016",
+      "item_type": "gap",
+      "title": "Material, trivial, hard-constraint, and fork classification lacks an oracle",
+      "statement": "GRS-007 names four consequence classes but provides no deterministic classifier, precedence rule, or examples for borderline updates, even though the classification determines whether work is paused, applied inline, or forked.",
+      "severity": "high",
+      "gap_kind": "ambiguous_transition_guard",
+      "confidence": "high",
+      "builder_discretion": true,
+      "dimensions": ["states_transitions", "ambiguity_unknowns", "builder_discretion", "acceptance_oracles", "test_falsifiability", "authority_boundaries"],
+      "source_unit_refs": ["PLANUNIT:GRS-007", "SEMANTIC:PLANUNIT:GRS-007"],
+      "impact": "Controllers can inconsistently inline a scope change that another controller would pause and replan, producing unsafe or surprising execution.",
+      "evidence": [
+        {"exact_quote": "Trivial clarifications may apply inline; hard constraints apply immediately; forks are reserved for alternate paths or material conflicts.", "line_start": 545, "line_end": 545, "path": "Plans/Goal_Runtime_System.md", "source_sha256": "93074bc367a76d2b977006d394c063fd7ce21bd1bdcae4138bd6944bebb72785"}
+      ]
+    },
+    {
+      "item_id": "A005M-000058-I017",
+      "item_type": "contract",
+      "title": "Objective attachments and certification snapshots are durable inputs",
+      "statement": "GRS-008 materializes oversized text, pasted blocks, local images, and remote images into runtime-readable bundles and records frozen objective/attachment identities plus phase-bound evaluation state and live-edit diffs.",
+      "severity": "informational",
+      "gap_kind": "none",
+      "confidence": "high",
+      "builder_discretion": false,
+      "dimensions": ["inputs_outputs", "contracts", "states_transitions", "acceptance_oracles"],
+      "source_unit_refs": ["PLANUNIT:GRS-008", "SEMANTIC:PLANUNIT:GRS-008"],
+      "impact": "Workers and verifiers can replay which objective and artifacts supported a decision without falsely freezing an actively edited repository.",
+      "evidence": [
+        {"exact_quote": "Objective bundles and referenced attachments freeze at goal creation; read/evaluation inputs freeze at certification or phase boundaries; active editing uses live state while recording start state, checkpoints, diffs, hashes, VCS identity, and test-state identity for replayable evidence.", "line_start": 599, "line_end": 599, "path": "Plans/Goal_Runtime_System.md", "source_sha256": "93074bc367a76d2b977006d394c063fd7ce21bd1bdcae4138bd6944bebb72785"}
+      ]
+    },
+    {
+      "item_id": "A005M-000058-I018",
+      "item_type": "gap",
+      "title": "Attachment acquisition and lifecycle controls are absent",
+      "statement": "GRS-008 requires remote URLs and local images to resolve, but does not define allowed URL schemes, redirect/egress rules, size or decompression limits, malware/content validation, credential stripping, access control, retention, expiry, or deletion for objective bundles.",
+      "severity": "high",
+      "gap_kind": "missing_security_and_lifecycle_contract",
+      "confidence": "high",
+      "builder_discretion": true,
+      "dimensions": ["security_privacy", "privacy_data_lifecycle", "untrusted_inputs", "scale_limits", "offline_network_loss", "failures_recovery"],
+      "source_unit_refs": ["PLANUNIT:GRS-008", "SEMANTIC:PLANUNIT:GRS-008"],
+      "impact": "A crafted or sensitive attachment can exhaust resources, leak credentials, persist beyond user intent, or become unreadable in a remote/offline session with no typed recovery path.",
+      "evidence": [
+        {"exact_quote": "local images and remote image URLs must resolve to runtime-readable paths or artifact IDs for local and remote app-server sessions.", "line_start": 599, "line_end": 599, "path": "Plans/Goal_Runtime_System.md", "source_sha256": "93074bc367a76d2b977006d394c063fd7ce21bd1bdcae4138bd6944bebb72785"},
+        {"exact_quote": "Do not lose attachments when a goal runs in a remote session.", "line_start": 651, "line_end": 651, "path": "Plans/Goal_Runtime_System.md", "source_sha256": "93074bc367a76d2b977006d394c063fd7ce21bd1bdcae4138bd6944bebb72785"}
+      ]
+    },
+    {
+      "item_id": "A005M-000058-I019",
+      "item_type": "authority",
+      "title": "Weak-worker output is proposal-only and globally non-certifying",
+      "statement": "GRS-009 separates runtime roles, requires span/evidence-backed material and no-material claims, and prevents workers from certifying parent or global completion.",
+      "severity": "informational",
+      "gap_kind": "none",
+      "confidence": "high",
+      "builder_discretion": false,
+      "dimensions": ["authority", "contracts", "inputs_outputs", "acceptance_oracles"],
+      "source_unit_refs": ["PLANUNIT:GRS-009", "SEMANTIC:PLANUNIT:GRS-009"],
+      "impact": "Low-quality agents cannot convert unsupported or empty output into canonical content or completion truth.",
+      "evidence": [
+        {"exact_quote": "Workers have bounded authority, and weak-worker outputs are proposal only until stronger or deterministic layers verify, merge, route, or complete them.", "line_start": 670, "line_end": 670, "path": "Plans/Goal_Runtime_System.md", "source_sha256": "93074bc367a76d2b977006d394c063fd7ce21bd1bdcae4138bd6944bebb72785"}
+      ]
+    },
+    {
+      "item_id": "A005M-000058-I020",
+      "item_type": "contract",
+      "title": "Worker and verifier model roles are independently policy-bound",
+      "statement": "GRS-010 persists separate model-role settings and makes strong-certification goals block when verifier/adjudicator capability policy cannot be met, while explicitly deferring provider-specific default mappings.",
+      "severity": "informational",
+      "gap_kind": "none",
+      "confidence": "high",
+      "builder_discretion": false,
+      "dimensions": ["contracts", "authority", "compatibility_migration", "cross_document_seams"],
+      "source_unit_refs": ["PLANUNIT:GRS-010", "SEMANTIC:PLANUNIT:GRS-010"],
+      "impact": "Correctness is not hard-coded to one model or provider, and deferral of defaults is not deferral of the certification gate itself.",
+      "evidence": [
+        {"exact_quote": "The verifier/adjudicator model may inherit the worker model only when the inherited model satisfies the required policy for the goal's certification tier.", "line_start": 744, "line_end": 744, "path": "Plans/Goal_Runtime_System.md", "source_sha256": "93074bc367a76d2b977006d394c063fd7ce21bd1bdcae4138bd6944bebb72785"},
+        {"exact_quote": "Exact provider-specific default tier mappings remain deferred.", "line_start": 744, "line_end": 744, "path": "Plans/Goal_Runtime_System.md", "source_sha256": "93074bc367a76d2b977006d394c063fd7ce21bd1bdcae4138bd6944bebb72785"}
+      ]
+    },
+    {
+      "item_id": "A005M-000058-I021",
+      "item_type": "behavior",
+      "title": "Escalation triggers cover evidence, risk, conflict, scope, and validation",
+      "statement": "GRS-011 enumerates provider-neutral triggers for stronger verification, second-pass work, adjudication, or policy handling.",
+      "severity": "informational",
+      "gap_kind": "none",
+      "confidence": "high",
+      "builder_discretion": false,
+      "dimensions": ["behavior", "failures_recovery", "authority", "operations"],
+      "source_unit_refs": ["PLANUNIT:GRS-011", "SEMANTIC:PLANUNIT:GRS-011"],
+      "impact": "High-confidence worker assertions cannot suppress escalation caused by failed validators, out-of-scope writes, destructive actions, or inadequate evidence.",
+      "evidence": [
+        {"exact_quote": "Goal Runtime escalates to a stronger verifier, second-pass worker, adjudicator, or stronger policy handling when evidence is incomplete, stale, or non-replayable", "line_start": 817, "line_end": 817, "path": "Plans/Goal_Runtime_System.md", "source_sha256": "93074bc367a76d2b977006d394c063fd7ce21bd1bdcae4138bd6944bebb72785"}
+      ]
+    },
+    {
+      "item_id": "A005M-000058-I022",
+      "item_type": "gap",
+      "title": "Several escalation predicates are not machine-falsifiable",
+      "statement": "Terms such as high-density slice, large deletion/replacement, low confidence, repeated blockers, and insufficient capability have no threshold, metric, policy-ref requirement, or conservative default in this owner text.",
+      "severity": "medium",
+      "gap_kind": "missing_thresholds",
+      "confidence": "high",
+      "builder_discretion": true,
+      "dimensions": ["acceptance_oracles", "builder_discretion", "ambiguity_unknowns", "test_falsifiability", "scale_limits"],
+      "source_unit_refs": ["PLANUNIT:GRS-011", "SEMANTIC:PLANUNIT:GRS-011"],
+      "impact": "Two compliant implementations may escalate materially different workloads, allowing risky outputs to evade review or safe work to over-escalate indefinitely.",
+      "evidence": [
+        {"exact_quote": "worker confidence is low; high-density slice or high-signal input produces an empty/weak result; target conflict, large deletion/replacement, or failing tests appear", "line_start": 817, "line_end": 817, "path": "Plans/Goal_Runtime_System.md", "source_sha256": "93074bc367a76d2b977006d394c063fd7ce21bd1bdcae4138bd6944bebb72785"}
+      ]
+    },
+    {
+      "item_id": "A005M-000058-I023",
+      "item_type": "contract",
+      "title": "Completion authority is receipt-based and evidence-layered",
+      "statement": "GRS-012 requires every goal to produce a receipt, makes certification a controller/evaluator/certifier decision, inventories and dispositions required work, and separates evidence truth classes.",
+      "severity": "informational",
+      "gap_kind": "none",
+      "confidence": "high",
+      "builder_discretion": false,
+      "dimensions": ["contracts", "authority", "acceptance_oracles", "inputs_outputs"],
+      "source_unit_refs": ["PLANUNIT:GRS-012", "SEMANTIC:PLANUNIT:GRS-012"],
+      "impact": "Worker self-report, source memory, and process artifacts cannot substitute for canonical evidence and certified completion.",
+      "evidence": [
+        {"exact_quote": "Every goal produces a Goal Completion Receipt. Completion is a runtime-certified state, not a worker-model judgment.", "line_start": 877, "line_end": 877, "path": "Plans/Goal_Runtime_System.md", "source_sha256": "93074bc367a76d2b977006d394c063fd7ce21bd1bdcae4138bd6944bebb72785"}
+      ]
+    },
+    {
+      "item_id": "A005M-000058-I024",
+      "item_type": "acceptance_oracle",
+      "title": "Completion evidence scales by risk tier",
+      "statement": "GRS-013 defines lightweight, standard, and strong-certification evidence obligations and explicitly places mutation-heavy and governance-sensitive goals above read-only work.",
+      "severity": "informational",
+      "gap_kind": "none",
+      "confidence": "high",
+      "builder_discretion": false,
+      "dimensions": ["acceptance_oracles", "security_privacy", "destructive_actions", "operations"],
+      "source_unit_refs": ["PLANUNIT:GRS-013", "SEMANTIC:PLANUNIT:GRS-013"],
+      "impact": "Evidence requirements cannot remain equally weak across answer-only and high-impact mutation goals.",
+      "evidence": [
+        {"exact_quote": "Completion certification is tiered by risk and phase.", "line_start": 947, "line_end": 947, "path": "Plans/Goal_Runtime_System.md", "source_sha256": "93074bc367a76d2b977006d394c063fd7ce21bd1bdcae4138bd6944bebb72785"}
+      ]
+    },
+    {
+      "item_id": "A005M-000058-I025",
+      "item_type": "gap",
+      "title": "Goal-to-certification-tier assignment and override authority are missing",
+      "statement": "The document defines the contents of three tiers and examples of work needing stronger certification, but not a deterministic mapping from risk class and goal shape to standard versus strong, nor who may lower a tier and under what recorded exception.",
+      "severity": "high",
+      "gap_kind": "missing_policy_mapping",
+      "confidence": "high",
+      "builder_discretion": true,
+      "dimensions": ["authority_boundaries", "contracts", "acceptance_oracles", "builder_discretion", "test_falsifiability"],
+      "source_unit_refs": ["PLANUNIT:GRS-010", "SEMANTIC:PLANUNIT:GRS-010", "PLANUNIT:GRS-013", "SEMANTIC:PLANUNIT:GRS-013"],
+      "impact": "A runtime can label a sensitive goal standard or low-risk and thereby bypass the independent verifier and replayable-evidence requirements that were intended to block unsafe completion.",
+      "evidence": [
+        {"exact_quote": "standard and strong-certification goals use policy-derived verifier/adjudicator requirements", "line_start": 744, "line_end": 744, "path": "Plans/Goal_Runtime_System.md", "source_sha256": "93074bc367a76d2b977006d394c063fd7ce21bd1bdcae4138bd6944bebb72785"},
+        {"exact_quote": "File-writing, Plan-writing, code-editing, test-running, migration, destructive, and governance-sensitive goals use stronger certification than read-only goals.", "line_start": 954, "line_end": 954, "path": "Plans/Goal_Runtime_System.md", "source_sha256": "93074bc367a76d2b977006d394c063fd7ce21bd1bdcae4138bd6944bebb72785"}
+      ]
+    },
+    {
+      "item_id": "A005M-000058-I026",
+      "item_type": "failure_recovery",
+      "title": "Verifier unavailability has tiered fail/degrade behavior",
+      "statement": "GRS-014 permits degraded low-risk completion, tightly limits standard degradation, blocks strong certification, and keeps raw logs separate, capped, redacted, and content-addressed.",
+      "severity": "informational",
+      "gap_kind": "none",
+      "confidence": "high",
+      "builder_discretion": false,
+      "dimensions": ["failures_recovery", "states_transitions", "security_privacy", "privacy_data_lifecycle"],
+      "source_unit_refs": ["PLANUNIT:GRS-014", "SEMANTIC:PLANUNIT:GRS-014"],
+      "impact": "Verifier outage cannot be silently converted into normal success for strong-certification work.",
+      "evidence": [
+        {"exact_quote": "Verifier/adjudicator unavailable behavior is tiered: low-risk goals may finish with a degraded receipt; standard goals may degrade only when no mutation or required check is affected; strong-certification goals become blocked, not complete.", "line_start": 1003, "line_end": 1003, "path": "Plans/Goal_Runtime_System.md", "source_sha256": "93074bc367a76d2b977006d394c063fd7ce21bd1bdcae4138bd6944bebb72785"}
+      ]
+    },
+    {
+      "item_id": "A005M-000058-I027",
+      "item_type": "gap",
+      "title": "Evidence retention and redaction are requirements without enforceable policy minima",
+      "statement": "GRS-014 requires capped, redacted, separately stored logs but does not define cap units or limits, redaction profiles and secret classes, encryption/access policy, retention duration, deletion handling, or behavior when redaction fails.",
+      "severity": "high",
+      "gap_kind": "missing_privacy_lifecycle_oracle",
+      "confidence": "high",
+      "builder_discretion": true,
+      "dimensions": ["security_privacy", "privacy_data_lifecycle", "acceptance_oracles", "partial_failure", "cross_document_seams", "test_falsifiability"],
+      "source_unit_refs": ["PLANUNIT:GRS-014", "SEMANTIC:PLANUNIT:GRS-014"],
+      "impact": "A receipt can claim compliance while retaining secrets indefinitely or dropping evidence under an undefined cap, and a redaction failure has no fail-closed state.",
+      "evidence": [
+        {"exact_quote": "Raw logs are capped, redacted, separately stored, and referenced by hash/path.", "line_start": 1003, "line_end": 1003, "path": "Plans/Goal_Runtime_System.md", "source_sha256": "93074bc367a76d2b977006d394c063fd7ce21bd1bdcae4138bd6944bebb72785"},
+        {"exact_quote": "Raw logs are never stored uncapped or unredacted inside the receipt.", "line_start": 1012, "line_end": 1012, "path": "Plans/Goal_Runtime_System.md", "source_sha256": "93074bc367a76d2b977006d394c063fd7ce21bd1bdcae4138bd6944bebb72785"}
+      ]
+    },
+    {
+      "item_id": "A005M-000058-I028",
+      "item_type": "contract",
+      "title": "Progress, loop, budget, and validator gates are first-class",
+      "statement": "GRS-015 defines progress fingerprints, blocker signatures, repeated-no-progress detection, hard budget fields, distinct limit statuses, deterministic validators, and repair/adjudication routing for identical blockers.",
+      "severity": "informational",
+      "gap_kind": "none",
+      "confidence": "high",
+      "builder_discretion": false,
+      "dimensions": ["operations", "observability_support", "scale_limits", "failures_recovery", "acceptance_oracles"],
+      "source_unit_refs": ["PLANUNIT:GRS-015", "SEMANTIC:PLANUNIT:GRS-015"],
+      "impact": "Repeated no-progress and exhausted budgets cannot be hidden behind ordinary completion claims.",
+      "evidence": [
+        {"exact_quote": "Goal Runtime uses progress_fingerprint records, blocker_signature, artifact hashes, retry/blocker detection, repeat_count, no-progress continuations, hard budgets, limit statuses, and deterministic validators as first-class gates.", "line_start": 1068, "line_end": 1068, "path": "Plans/Goal_Runtime_System.md", "source_sha256": "93074bc367a76d2b977006d394c063fd7ce21bd1bdcae4138bd6944bebb72785"}
+      ]
+    },
+    {
+      "item_id": "A005M-000058-I029",
+      "item_type": "gap",
+      "title": "Default zero parallel agents contradicts default and mandatory parallelism",
+      "statement": "GRS-015 sets max_parallel_agents=0 by default and says a parent or user policy may narrow defaults, while GRS-016 prefers subagents by default and requires parallel spawning to honor that cap. Zero is not defined as auto/unbounded, and narrowing zero cannot enable agents.",
+      "severity": "high",
+      "gap_kind": "contract_contradiction",
+      "confidence": "high",
+      "builder_discretion": true,
+      "dimensions": ["contracts", "invalid_states_transitions", "scale_limits", "builder_discretion", "cross_document_seams"],
+      "source_unit_refs": ["PLANUNIT:GRS-015", "SEMANTIC:PLANUNIT:GRS-015", "PLANUNIT:GRS-016", "SEMANTIC:PLANUNIT:GRS-016"],
+      "impact": "A literal implementation disables all child goals by default and makes later required parallel stages impossible, while an auto-sentinel interpretation is unsupported and untestable.",
+      "evidence": [
+        {"exact_quote": "Default budget values are explicit: max_turns=25, max_tokens=null (provider/model policy owns the concrete token ceiling), max_wall_time_seconds=7200, and max_parallel_agents=0 unless a parent Goal or user-supplied run policy narrows them.", "line_start": 1081, "line_end": 1081, "path": "Plans/Goal_Runtime_System.md", "source_sha256": "93074bc367a76d2b977006d394c063fd7ce21bd1bdcae4138bd6944bebb72785"},
+        {"exact_quote": "Subagents are preferred by default for bounded parallel work.", "line_start": 1132, "line_end": 1132, "path": "Plans/Goal_Runtime_System.md", "source_sha256": "93074bc367a76d2b977006d394c063fd7ce21bd1bdcae4138bd6944bebb72785"}
+      ]
+    },
+    {
+      "item_id": "A005M-000058-I030",
+      "item_type": "gap",
+      "title": "Nullable token budget can make a declared hard gate fail open",
+      "statement": "The required defaults set max_tokens to null and delegate a concrete ceiling to provider/model policy, but do not require that resolution to succeed or define a blocked state when no provider ceiling exists.",
+      "severity": "medium",
+      "gap_kind": "missing_fail_closed_default",
+      "confidence": "high",
+      "builder_discretion": true,
+      "dimensions": ["scale_limits", "operations", "partial_failure", "acceptance_oracles", "cross_document_seams"],
+      "source_unit_refs": ["PLANUNIT:GRS-015", "SEMANTIC:PLANUNIT:GRS-015"],
+      "impact": "A goal may run without a token ceiling despite the claim that hard budgets are first-class gates.",
+      "evidence": [
+        {"exact_quote": "max_tokens=null (provider/model policy owns the concrete token ceiling)", "line_start": 1081, "line_end": 1081, "path": "Plans/Goal_Runtime_System.md", "source_sha256": "93074bc367a76d2b977006d394c063fd7ce21bd1bdcae4138bd6944bebb72785"}
+      ]
+    },
+    {
+      "item_id": "A005M-000058-I031",
+      "item_type": "authority",
+      "title": "Child goals are first-class but parent completion remains non-delegable",
+      "statement": "GRS-016 requires child identity, scope, budgets, recovery and receipts, bounds parallelism and write conflict, and reserves synthesis, merge, verification, and parent completion to the parent.",
+      "severity": "informational",
+      "gap_kind": "none",
+      "confidence": "high",
+      "builder_discretion": false,
+      "dimensions": ["authority", "ownership", "scale_performance", "contracts", "consumers"],
+      "source_unit_refs": ["PLANUNIT:GRS-016", "SEMANTIC:PLANUNIT:GRS-016"],
+      "impact": "Parallel work is traceable and cannot self-certify or bypass parent synthesis.",
+      "evidence": [
+        {"exact_quote": "Child goals may complete themselves locally, but they cannot complete the parent goal; parent goals own synthesis, merge, final verification, and parent completion certification.", "line_start": 1132, "line_end": 1132, "path": "Plans/Goal_Runtime_System.md", "source_sha256": "93074bc367a76d2b977006d394c063fd7ce21bd1bdcae4138bd6944bebb72785"}
+      ]
+    },
+    {
+      "item_id": "A005M-000058-I032",
+      "item_type": "authority",
+      "title": "Concurrent direct writes require isolation, partitioning, or lease",
+      "statement": "GRS-017 defaults child work to read-only/proposal-only and requires a worktree, explicit non-overlap, or a parent-granted single-writer lease before direct mutation.",
+      "severity": "informational",
+      "gap_kind": "none",
+      "confidence": "high",
+      "builder_discretion": false,
+      "dimensions": ["authority", "concurrency_races", "recovery_rollback", "contracts"],
+      "source_unit_refs": ["PLANUNIT:GRS-017", "SEMANTIC:PLANUNIT:GRS-017"],
+      "impact": "Blind multi-agent edits to the same file are explicitly prohibited.",
+      "evidence": [
+        {"exact_quote": "Child goals default to read_only or proposal_only. Direct writes require an isolated worktree, explicit non-overlapping scope, or a parent-granted single-writer lease.", "line_start": 1207, "line_end": 1207, "path": "Plans/Goal_Runtime_System.md", "source_sha256": "93074bc367a76d2b977006d394c063fd7ce21bd1bdcae4138bd6944bebb72785"}
+      ]
+    },
+    {
+      "item_id": "A005M-000058-I033",
+      "item_type": "feature",
+      "title": "Goal templates bind common work classes to evidence and completion",
+      "statement": "GRS-018 catalogs goal classes and gives concrete oracles for bug fix, feature build, test-until-pass, doc update, and ledger-to-plan transfer while retaining the no-WorkNode boundary.",
+      "severity": "informational",
+      "gap_kind": "none",
+      "confidence": "high",
+      "builder_discretion": false,
+      "dimensions": ["behavior", "capabilities", "acceptance_oracles", "compatibility_migration"],
+      "source_unit_refs": ["PLANUNIT:GRS-018", "SEMANTIC:PLANUNIT:GRS-018"],
+      "impact": "Several common goal classes have stronger completion semantics than generic done assertions.",
+      "evidence": [
+        {"exact_quote": "Goal Runtime provides a task template catalog for common goal classes: bug_fix, feature_build, test_until_pass, doc_update, repo_research, refactor, migration, audit_and_repair, ledger_to_plan_transfer, governance seal, and future plan_graph_build", "line_start": 1263, "line_end": 1263, "path": "Plans/Goal_Runtime_System.md", "source_sha256": "93074bc367a76d2b977006d394c063fd7ce21bd1bdcae4138bd6944bebb72785"}
+      ]
+    },
+    {
+      "item_id": "A005M-000058-I034",
+      "item_type": "gap",
+      "title": "Four catalogued templates lack goal-type completion criteria",
+      "statement": "The canonical text promises criteria for every template, but repo_research, refactor, migration, and governance seal have no concrete completion criteria in the PlanUnit or its acceptance list; audit_and_repair is named in the list but also lacks a direct criterion here.",
+      "severity": "medium",
+      "gap_kind": "incomplete_acceptance_oracles",
+      "confidence": "high",
+      "builder_discretion": true,
+      "dimensions": ["acceptance_oracles", "test_falsifiability", "builder_discretion", "destructive_actions", "compatibility_migration"],
+      "source_unit_refs": ["PLANUNIT:GRS-018", "SEMANTIC:PLANUNIT:GRS-018"],
+      "impact": "These goal types can fall back to generic completion and omit migration rollback, research coverage, refactor equivalence, audit closure, or governance evidence.",
+      "evidence": [
+        {"exact_quote": "Each template carries goal-type completion criteria, validator expectations, evidence requirements, and no-WorkNode boundary where applicable.", "line_start": 1263, "line_end": 1263, "path": "Plans/Goal_Runtime_System.md", "source_sha256": "93074bc367a76d2b977006d394c063fd7ce21bd1bdcae4138bd6944bebb72785"},
+        {"exact_quote": "Bug-fix, feature-build, test-until-pass, doc-update, audit/repair, and ledger-to-plan transfer goals have explicit completion criteria.", "line_start": 1271, "line_end": 1271, "path": "Plans/Goal_Runtime_System.md", "source_sha256": "93074bc367a76d2b977006d394c063fd7ce21bd1bdcae4138bd6944bebb72785"}
+      ]
+    },
+    {
+      "item_id": "A005M-000058-I035",
+      "item_type": "failure_recovery",
+      "title": "Ordinary ambiguity is autonomous and true blockers are exact",
+      "statement": "GRS-019 supplies autonomous recovery actions and requires blocked state to carry cause, scope, prior recovery, safety stop reason, and next safe action rather than a generic failure.",
+      "severity": "informational",
+      "gap_kind": "none",
+      "confidence": "high",
+      "builder_discretion": false,
+      "dimensions": ["failures_recovery", "recovery_rollback", "gui_truth", "ambiguity_unknowns", "observability_support"],
+      "source_unit_refs": ["PLANUNIT:GRS-019", "SEMANTIC:PLANUNIT:GRS-019"],
+      "impact": "Large or cross-referential work does not unnecessarily interrupt the user, while genuine stops remain inspectable and actionable.",
+      "evidence": [
+        {"exact_quote": "Blocked status must store and display blocker_class, cause, affected scope, last attempted recovery, why autonomous recovery cannot continue safely, and next safe action rather than a generic failure label.", "line_start": 1354, "line_end": 1354, "path": "Plans/Goal_Runtime_System.md", "source_sha256": "93074bc367a76d2b977006d394c063fd7ce21bd1bdcae4138bd6944bebb72785"}
+      ]
+    },
+    {
+      "item_id": "A005M-000058-I036",
+      "item_type": "authority",
+      "title": "High-risk actions require explicit approval",
+      "statement": "GRS-020 enumerates destructive, governance, broad-write, external, production, data, dependency, policy, credential, and secret actions requiring explicit user approval; invisible goals block outside predeclared authority.",
+      "severity": "informational",
+      "gap_kind": "none",
+      "confidence": "high",
+      "builder_discretion": false,
+      "dimensions": ["authority_boundaries", "destructive_actions", "security_privacy", "operations"],
+      "source_unit_refs": ["PLANUNIT:GRS-020", "SEMANTIC:PLANUNIT:GRS-020"],
+      "impact": "Child or worker requests cannot bypass the global approval boundary.",
+      "evidence": [
+        {"exact_quote": "Goal Runtime requires explicit user approval for destructive actions, governance seal, broad writes outside declared scope, external paid/network side effects, production-affecting actions, data deletion/migration, dependency/license/security-policy changes, and credential/secrets touching.", "line_start": 1426, "line_end": 1426, "path": "Plans/Goal_Runtime_System.md", "source_sha256": "93074bc367a76d2b977006d394c063fd7ce21bd1bdcae4138bd6944bebb72785"}
+      ]
+    },
+    {
+      "item_id": "A005M-000058-I037",
+      "item_type": "explicit_non_gap",
+      "title": "Planning, indexing, sealing, and runtime build phases are separated",
+      "statement": "GRS-021 forbids generated governance and node/build artifacts during ledger compile, permits index refresh only in an explicit index phase, and requires pending_seal until a distinct seal phase.",
+      "severity": "informational",
+      "gap_kind": "none",
+      "confidence": "high",
+      "builder_discretion": false,
+      "dimensions": ["authority", "ownership", "states_transitions", "compatibility_migration", "acceptance_oracles"],
+      "source_unit_refs": ["PLANUNIT:GRS-021", "SEMANTIC:PLANUNIT:GRS-021"],
+      "impact": "A plan compile cannot silently create runtime work or self-seal governance.",
+      "evidence": [
+        {"exact_quote": "During ordinary ledger planning, plan drafting, and ledger compile, agents must not update Plans/.plan_index, Spec Lock, generated shards, evidence bundles, plan_graph, auto_decisions, WorkNodes, NodeSeeds, executable queues, final node manifests, product implementation files, Rust/Slint app scaffolds, legacy Iced app files, production build tasks, or final node queues.", "line_start": 1481, "line_end": 1481, "path": "Plans/Goal_Runtime_System.md", "source_sha256": "93074bc367a76d2b977006d394c063fd7ce21bd1bdcae4138bd6944bebb72785"}
+      ]
+    },
+    {
+      "item_id": "A005M-000058-I038",
+      "item_type": "gui",
+      "title": "Risk register links false completion, hidden work, and interruption to mitigations",
+      "statement": "GRS-022 names the three primary product/UX/internal-flow risks and binds them to certified receipts, visible controls and evidence, autonomous recovery, and exact hard-stop boundaries.",
+      "severity": "informational",
+      "gap_kind": "none",
+      "confidence": "high",
+      "builder_discretion": false,
+      "dimensions": ["gui_truth", "consumers", "failures_recovery", "authority_boundaries"],
+      "source_unit_refs": ["PLANUNIT:GRS-022", "SEMANTIC:PLANUNIT:GRS-022"],
+      "impact": "Invisible work that affects a user is explicitly required to remain inspectable and controllable.",
+      "evidence": [
+        {"exact_quote": "The primary Goal Runtime risks are false completion by weak agents, hidden work without user control, and invisible/internal flows interrupting the user for ordinary blockers.", "line_start": 1545, "line_end": 1545, "path": "Plans/Goal_Runtime_System.md", "source_sha256": "93074bc367a76d2b977006d394c063fd7ce21bd1bdcae4138bd6944bebb72785"}
+      ]
+    },
+    {
+      "item_id": "A005M-000058-I039",
+      "item_type": "explicit_non_gap",
+      "title": "External implementation references remain non-canonical lineage",
+      "statement": "GRS-023 preserves exact external tokens as research inputs while explicitly denying them ownership over Puppet Master runtime, evidence, role, or completion behavior.",
+      "severity": "informational",
+      "gap_kind": "none",
+      "confidence": "high",
+      "builder_discretion": false,
+      "dimensions": ["compatibility_migration", "ownership", "untrusted_inputs"],
+      "source_unit_refs": ["PLANUNIT:GRS-023", "SEMANTIC:PLANUNIT:GRS-023"],
+      "impact": "Competitor names, PR numbers, and host patterns cannot override local canonical contracts.",
+      "evidence": [
+        {"exact_quote": "These tokens may guide Goal Runtime implementation, but they remain lineage/research and do not override Puppet Master-owned runtime, evidence, model-role, or completion contracts.", "line_start": 1594, "line_end": 1594, "path": "Plans/Goal_Runtime_System.md", "source_sha256": "93074bc367a76d2b977006d394c063fd7ce21bd1bdcae4138bd6944bebb72785"}
+      ]
+    },
+    {
+      "item_id": "A005M-000058-I040",
+      "item_type": "explicit_non_gap",
+      "title": "Legacy wizard compatibility cannot bypass compiler and Executor",
+      "statement": "GRS-024 routes current Planning Wizard semantics to its owner, retains Chain Wizard as lineage-only, and requires runtime PlanCompile to traverse the accepted compiler, Executor intake, activation, and certification chain.",
+      "severity": "informational",
+      "gap_kind": "none",
+      "confidence": "high",
+      "builder_discretion": false,
+      "dimensions": ["compatibility_migration", "authority", "ownership", "consumers", "cross_document_seams"],
+      "source_unit_refs": ["PLANUNIT:GRS-024", "SEMANTIC:PLANUNIT:GRS-024"],
+      "impact": "Legacy compatibility and plan indexing cannot create node artifacts or dispatch runtime work directly.",
+      "evidence": [
+        {"exact_quote": "Runtime PlanCompile may create runtime artifacts only through the Plan_To_Node_Compilation compiler, Executor intake, activation, and completion certification chain.", "line_start": 1660, "line_end": 1660, "path": "Plans/Goal_Runtime_System.md", "source_sha256": "93074bc367a76d2b977006d394c063fd7ce21bd1bdcae4138bd6944bebb72785"}
+      ]
+    },
+    {
+      "item_id": "A005M-000058-I041",
+      "item_type": "explicit_non_gap",
+      "title": "Deferred implementation choices are production-blocking bindings, not optional gaps",
+      "statement": "GRS-025 permits styling, persistence substrate, and provider mappings to remain implementation-bound decisions now, but requires each to bind to owners, records, validation, and evidence before production certification.",
+      "severity": "informational",
+      "gap_kind": "none",
+      "confidence": "high",
+      "builder_discretion": true,
+      "dimensions": ["builder_discretion", "gui_truth", "contracts", "acceptance_oracles", "cross_document_seams"],
+      "source_unit_refs": ["PLANUNIT:GRS-025", "SEMANTIC:PLANUNIT:GRS-025"],
+      "impact": "Implementation may choose the concrete substrate and styling, but may not ship without binding and validating those choices.",
+      "evidence": [
+        {"exact_quote": "unresolved styling, persistence, or provider defaults must block certification rather than remain as unbound implementation gaps.", "line_start": 1714, "line_end": 1714, "path": "Plans/Goal_Runtime_System.md", "source_sha256": "93074bc367a76d2b977006d394c063fd7ce21bd1bdcae4138bd6944bebb72785"}
+      ]
+    },
+    {
+      "item_id": "A005M-000058-I042",
+      "item_type": "contract",
+      "title": "Event envelopes and runtime record minima are extensive",
+      "statement": "The semantic block defines goal, child, progress, write, receipt, event-envelope, event-specific, loop-breaker, agent-control, lease, WorkNode request, audit finding, and closure shapes with identity, authority, evidence, currentness, and settlement fields.",
+      "severity": "informational",
+      "gap_kind": "none",
+      "confidence": "high",
+      "builder_discretion": false,
+      "dimensions": ["contracts", "inputs_outputs", "states_transitions", "operations", "observability_support"],
+      "source_unit_refs": ["SEMANTIC:PLANUNIT:GRS-025"],
+      "impact": "Implementers have concrete minimum payloads for most lifecycle events and supporting control records.",
+      "evidence": [
+        {"exact_quote": "Every persisted Goal Runtime event carries the shared runtime envelope from `Contracts_V0`", "line_start": 1775, "line_end": 1775, "path": "Plans/Goal_Runtime_System.md", "source_sha256": "93074bc367a76d2b977006d394c063fd7ce21bd1bdcae4138bd6944bebb72785"},
+        {"exact_quote": "Runtime records:", "line_start": 1803, "line_end": 1803, "path": "Plans/Goal_Runtime_System.md", "source_sha256": "93074bc367a76d2b977006d394c063fd7ce21bd1bdcae4138bd6944bebb72785"}
+      ]
+    },
+    {
+      "item_id": "A005M-000058-I043",
+      "item_type": "gap",
+      "title": "Terminal statuses and events do not form a closed lifecycle lattice",
+      "statement": "GRS-006 names failed, cancelled, and budget-limited terminal outcomes; GRS-015 adds usage_limited; UI contracts require pause/resume; but the registered Goal event list has no goal.failed, goal.paused, goal.resumed, goal.budget_limited, or goal.usage_limited, and no allowed transition table. The validation summary also omits failed and cancelled receipts.",
+      "severity": "high",
+      "gap_kind": "invalid_or_missing_state_machine",
+      "confidence": "high",
+      "builder_discretion": true,
+      "dimensions": ["states_transitions", "invalid_states_transitions", "contracts", "gui_misleading_states", "failures_recovery", "test_falsifiability"],
+      "source_unit_refs": ["PLANUNIT:GRS-006", "SEMANTIC:PLANUNIT:GRS-006", "PLANUNIT:GRS-015", "SEMANTIC:PLANUNIT:GRS-015", "SEMANTIC:PLANUNIT:GRS-025"],
+      "impact": "Persistence, projections, receipts, and resumption can disagree about whether a goal is paused, failed, cancelled, or limit-stopped, and invalid transitions cannot be rejected deterministically.",
+      "evidence": [
+        {"exact_quote": "Goal Runtime, not the worker model alone, drives runtime-driven idle continuation until completion, blocked, stopped, failed, cancelled, or budget-limited.", "line_start": 482, "line_end": 482, "path": "Plans/Goal_Runtime_System.md", "source_sha256": "93074bc367a76d2b977006d394c063fd7ce21bd1bdcae4138bd6944bebb72785"},
+        {"exact_quote": "Goal event log: append-only events using the Contracts_V0 registered names `goal.created`, `goal.scheduled`, `goal.progressed`, `goal.tool_check_recorded`, `goal.updated`, `goal.replanned`, `goal.child_status_changed`, `goal.evidence_captured`, `goal.verification_decided`, `goal.receipt_recorded`, `goal.completed`, `goal.degraded`, `goal.stopped`, `goal.blocked`, and `goal.cancelled`", "line_start": 1766, "line_end": 1766, "path": "Plans/Goal_Runtime_System.md", "source_sha256": "93074bc367a76d2b977006d394c063fd7ce21bd1bdcae4138bd6944bebb72785"},
+        {"exact_quote": "every goal produces a completion, degraded, stopped, or blocked receipt;", "line_start": 1836, "line_end": 1836, "path": "Plans/Goal_Runtime_System.md", "source_sha256": "93074bc367a76d2b977006d394c063fd7ce21bd1bdcae4138bd6944bebb72785"}
+      ]
+    },
+    {
+      "item_id": "A005M-000058-I044",
+      "item_type": "gap",
+      "title": "Canonical write_mode enum conflicts with GoalRun write modes",
+      "statement": "The data-shape section declares six canonical write_mode values, while GRS-026 consumes patch_only and parent_writer and omits three declared direct-write values. No alias or translation contract reconciles the sets.",
+      "severity": "high",
+      "gap_kind": "schema_enum_contradiction",
+      "confidence": "high",
+      "builder_discretion": true,
+      "dimensions": ["contracts", "authority_boundaries", "cross_document_seams", "invalid_states_transitions", "compatibility_migration"],
+      "source_unit_refs": ["PLANUNIT:GRS-017", "SEMANTIC:PLANUNIT:GRS-017", "PLANUNIT:GRS-026", "SEMANTIC:PLANUNIT:GRS-026", "SEMANTIC:PLANUNIT:GRS-025"],
+      "impact": "Permissions, Worktree, GoalRun, and persisted-event consumers cannot validate or interpret write authority consistently.",
+      "evidence": [
+        {"exact_quote": "Write authority: canonical `write_mode` enum values are `read_only`, `proposal_only`, `isolated_worktree`, `direct_write_single_owner`, `direct_write_partitioned`, and `leased_writer`.", "line_start": 1771, "line_end": 1771, "path": "Plans/Goal_Runtime_System.md", "source_sha256": "93074bc367a76d2b977006d394c063fd7ce21bd1bdcae4138bd6944bebb72785"},
+        {"exact_quote": "GoalRun write authority consumes write_mode values read_only, proposal_only, patch_only, isolated_worktree, leased_writer, and parent_writer", "line_start": 1902, "line_end": 1902, "path": "Plans/Goal_Runtime_System.md", "source_sha256": "93074bc367a76d2b977006d394c063fd7ce21bd1bdcae4138bd6944bebb72785"}
+      ]
+    },
+    {
+      "item_id": "A005M-000058-I045",
+      "item_type": "unknown",
+      "title": "Cross-owner registration and persistence conformance is outside this capsule",
+      "statement": "This owner text explicitly delegates concrete event-name registration, replay, persistence, retention, and approval scope to Contracts_V0, storage-plan, and Permissions. Those sources were not assigned, so their agreement with the local minima is an unresolved cross-document verification requirement, not asserted as a proven gap here.",
+      "severity": "informational",
+      "gap_kind": "cross_document_verification_required",
+      "confidence": "high",
+      "builder_discretion": false,
+      "dimensions": ["cross_document_seams", "missing_callers_consumers", "ambiguity_unknowns", "unknown_unknowns", "contracts"],
+      "source_unit_refs": ["SEMANTIC:PLANUNIT:GRS-025"],
+      "impact": "Buildability depends on exact agreement in delegated owners; this blind macro window cannot certify that agreement.",
+      "evidence": [
+        {"exact_quote": "adjacent owner docs carry the shared envelope, concrete event-name registry, persistence, replay, projection, retention, and approval-scope registration needed for cross-owner routing.", "line_start": 1818, "line_end": 1818, "path": "Plans/Goal_Runtime_System.md", "source_sha256": "93074bc367a76d2b977006d394c063fd7ce21bd1bdcae4138bd6944bebb72785"}
+      ]
+    },
+    {
+      "item_id": "A005M-000058-I046",
+      "item_type": "contract",
+      "title": "Goal Runtime envelopes Orchestrator without taking scheduler truth",
+      "statement": "GRS-026 preserves the GoalRun-to-WorkGraph-to-WorkNode-to-verification-to-repair-to-receipt lifecycle, while Orchestrator owns projections and Executor owns readiness, capacity, retry, wakeup, and dispatch truth.",
+      "severity": "informational",
+      "gap_kind": "none",
+      "confidence": "high",
+      "builder_discretion": false,
+      "dimensions": ["authority", "ownership", "consumers", "propagation", "states_transitions"],
+      "source_unit_refs": ["PLANUNIT:GRS-026", "SEMANTIC:PLANUNIT:GRS-026"],
+      "impact": "Receipt-based GoalRun certification does not create a competing scheduler or UI owner.",
+      "evidence": [
+        {"exact_quote": "It governs GoalRun phase, scope, write authority, child goals and SubagentWaves, evidence expectations, completion criteria, replan events, blockers, receipts, and final certification while Orchestrator owns user-visible projections and Executor owns scheduler truth.", "line_start": 1902, "line_end": 1902, "path": "Plans/Goal_Runtime_System.md", "source_sha256": "93074bc367a76d2b977006d394c063fd7ce21bd1bdcae4138bd6944bebb72785"}
+      ]
+    },
+    {
+      "item_id": "A005M-000058-I047",
+      "item_type": "failure_recovery",
+      "title": "Verification failure drives typed bounded repair and re-verification",
+      "statement": "GRS-027 makes execution success provisional, preserves typed findings and receipts, reruns verification after repair, changes strategy on repeated signatures, escalates on the third cycle, and blocks or degrades when validation, verifier, or budget gates fail.",
+      "severity": "informational",
+      "gap_kind": "none",
+      "confidence": "high",
+      "builder_discretion": false,
+      "dimensions": ["failures_recovery", "recovery_rollback", "contracts", "acceptance_oracles", "operations"],
+      "source_unit_refs": ["PLANUNIT:GRS-027", "SEMANTIC:PLANUNIT:GRS-027"],
+      "impact": "A failed verification cannot become done-with-issues, and cost pressure cannot remove required independent checks or receipts.",
+      "evidence": [
+        {"exact_quote": "Orchestrator GoalRuns treat execution success as provisional.", "line_start": 1973, "line_end": 1973, "path": "Plans/Goal_Runtime_System.md", "source_sha256": "93074bc367a76d2b977006d394c063fd7ce21bd1bdcae4138bd6944bebb72785"},
+        {"exact_quote": "Two consecutive failed verification cycles with the same defect signature force strategy adjustment, and the third failed cycle escalates to a high-end adjudicator or root_cause replan.", "line_start": 1973, "line_end": 1973, "path": "Plans/Goal_Runtime_System.md", "source_sha256": "93074bc367a76d2b977006d394c063fd7ce21bd1bdcae4138bd6944bebb72785"}
+      ]
+    },
+    {
+      "item_id": "A005M-000058-I048",
+      "item_type": "explicit_non_gap",
+      "title": "PlanCompile launch has an explicit disabled-now, enabled-later split",
+      "statement": "GRS-028 keeps bootstrap/design-only launch disabled until a later enablement PlanUnit while preserving the finished-product native branch once runtime enablement and policy snapshot references exist.",
+      "severity": "informational",
+      "gap_kind": "none",
+      "confidence": "high",
+      "builder_discretion": false,
+      "dimensions": ["states_transitions", "compatibility_migration", "authority", "consumers"],
+      "source_unit_refs": ["PLANUNIT:GRS-028", "SEMANTIC:PLANUNIT:GRS-028"],
+      "impact": "Current non-launch behavior does not accidentally erase the accepted future native runtime behavior.",
+      "evidence": [
+        {"exact_quote": "Until then, current bootstrap and design_only v1 PlanCompile records remain design-only and disabled; this disabled boundary does not disable the finished-product native_runtime branch once runtime_enablement_ref and runtime_policy_snapshot_ref exist.", "line_start": 2096, "line_end": 2096, "path": "Plans/Goal_Runtime_System.md", "source_sha256": "93074bc367a76d2b977006d394c063fd7ce21bd1bdcae4138bd6944bebb72785"}
+      ]
+    },
+    {
+      "item_id": "A005M-000058-I049",
+      "item_type": "behavior",
+      "title": "Plans-to-code defaults to hands-off with opt-in HITL",
+      "statement": "GRS-029 routes ordinary uncertainty through internal Auditor, Overseer, graph, model, source-control, test-harness, and high-effort repair before user escalation, while configured checkpoints remain HITL-only additions.",
+      "severity": "informational",
+      "gap_kind": "none",
+      "confidence": "high",
+      "builder_discretion": false,
+      "dimensions": ["behavior", "authority_boundaries", "failures_recovery", "consumers"],
+      "source_unit_refs": ["PLANUNIT:GRS-029", "SEMANTIC:PLANUNIT:GRS-029"],
+      "impact": "Human checkpoints can be added by explicit policy without becoming correctness prerequisites for default autonomous execution.",
+      "evidence": [
+        {"exact_quote": "Plans-to-code execution defaults to hands-off autonomy.", "line_start": 2153, "line_end": 2153, "path": "Plans/Goal_Runtime_System.md", "source_sha256": "93074bc367a76d2b977006d394c063fd7ce21bd1bdcae4138bd6944bebb72785"}
+      ]
+    },
+    {
+      "item_id": "A005M-000058-I050",
+      "item_type": "gap",
+      "title": "GRS-029 contains two incompatible exhaustive escalation lists",
+      "statement": "Its first paragraph permits user escalation for unrecoverable environment failure and a true product decision with no inferable answer, while the next paragraph says default escalation remains limited to five classes that omit both. No precedence or disposition is supplied.",
+      "severity": "high",
+      "gap_kind": "authority_policy_contradiction",
+      "confidence": "high",
+      "builder_discretion": true,
+      "dimensions": ["authority_boundaries", "failures_recovery", "invalid_states_transitions", "ambiguity_unknowns", "test_falsifiability"],
+      "source_unit_refs": ["PLANUNIT:GRS-029", "SEMANTIC:PLANUNIT:GRS-029"],
+      "impact": "A runtime may either wrongly block forever on a true product decision/environment failure or interrupt the user despite a literal limited-to policy.",
+      "evidence": [
+        {"exact_quote": "User escalation is last-resort for critical authority blockers: missing credentials or secrets, billing/payment/legal/license acceptance, unsafe destructive operation, irreversible external side effect, unrecoverable environment failure, true product decision with no inferable answer, or security-sensitive approval.", "line_start": 2153, "line_end": 2153, "path": "Plans/Goal_Runtime_System.md", "source_sha256": "93074bc367a76d2b977006d394c063fd7ce21bd1bdcae4138bd6944bebb72785"},
+        {"exact_quote": "default escalation remains limited to credentials/secrets, billing/payment/legal/license acceptance, unsafe destructive operation, irreversible external side effect, and security-sensitive approval.", "line_start": 2154, "line_end": 2154, "path": "Plans/Goal_Runtime_System.md", "source_sha256": "93074bc367a76d2b977006d394c063fd7ce21bd1bdcae4138bd6944bebb72785"}
+      ]
+    },
+    {
+      "item_id": "A005M-000058-I051",
+      "item_type": "gap",
+      "title": "Network approval policy conflicts with critical-only escalation policy",
+      "statement": "GRS-020 requires explicit approval for external paid/network side effects, but GRS-029's exhaustive default escalation list mentions only irreversible external side effects and omits ordinary network side effects. The document does not state which rule wins or whether predeclared network authority can satisfy explicit approval.",
+      "severity": "high",
+      "gap_kind": "cross_planunit_authority_contradiction",
+      "confidence": "high",
+      "builder_discretion": true,
+      "dimensions": ["authority_boundaries", "operations", "security_privacy", "cross_document_seams", "test_falsifiability"],
+      "source_unit_refs": ["PLANUNIT:GRS-020", "SEMANTIC:PLANUNIT:GRS-020", "PLANUNIT:GRS-029", "SEMANTIC:PLANUNIT:GRS-029"],
+      "impact": "Autonomous network operations may either bypass required approval or spuriously interrupt hands-off execution, depending on which PlanUnit a builder follows.",
+      "evidence": [
+        {"exact_quote": "Goal Runtime requires explicit user approval for destructive actions, governance seal, broad writes outside declared scope, external paid/network side effects", "line_start": 1426, "line_end": 1426, "path": "Plans/Goal_Runtime_System.md", "source_sha256": "93074bc367a76d2b977006d394c063fd7ce21bd1bdcae4138bd6944bebb72785"},
+        {"exact_quote": "default escalation remains limited to credentials/secrets, billing/payment/legal/license acceptance, unsafe destructive operation, irreversible external side effect, and security-sensitive approval.", "line_start": 2154, "line_end": 2154, "path": "Plans/Goal_Runtime_System.md", "source_sha256": "93074bc367a76d2b977006d394c063fd7ce21bd1bdcae4138bd6944bebb72785"}
+      ]
+    },
+    {
+      "item_id": "A005M-000058-I052",
+      "item_type": "acceptance_oracle",
+      "title": "Plans-to-code completion requires artifact-backed global certification",
+      "statement": "GRS-030 requires terminal WorkNode receipts, test and source-control evidence, rollback/safe-point satisfaction, Auditor pass, no active blockers or stale currentness, final source state, summary, and separated evidence layers.",
+      "severity": "informational",
+      "gap_kind": "none",
+      "confidence": "high",
+      "builder_discretion": false,
+      "dimensions": ["acceptance_oracles", "contracts", "states_transitions", "recovery_rollback", "inputs_outputs"],
+      "source_unit_refs": ["PLANUNIT:GRS-030", "SEMANTIC:PLANUNIT:GRS-030"],
+      "impact": "Worker success or partial graph completion cannot certify code-complete status.",
+      "evidence": [
+        {"exact_quote": "Code complete means all WorkNodes are terminal with valid receipts, all required automated tests passed or are explicitly dispositioned, all source-control receipts are valid, rollback and safe-point requirements are satisfied, Auditor passed, no active blockers remain, no stale Plan/WorkGraph/currentness mismatch remains, final source state is clean or intentionally preserved, and final summary/evidence is written.", "line_start": 2207, "line_end": 2207, "path": "Plans/Goal_Runtime_System.md", "source_sha256": "93074bc367a76d2b977006d394c063fd7ce21bd1bdcae4138bd6944bebb72785"}
+      ]
+    },
+    {
+      "item_id": "A005M-000058-I053",
+      "item_type": "gap",
+      "title": "Test disposition can bypass passed-tests language without an authority contract",
+      "statement": "GRS-030 allows required automated tests to be explicitly dispositioned but does not define permitted dispositions, evidence and risk fields, who may approve them, whether strong-certification tests can be waived, or how that reconciles with the adjacent exact claim that all automated tests passed or were dispositioned.",
+      "severity": "high",
+      "gap_kind": "missing_exception_contract",
+      "confidence": "high",
+      "builder_discretion": true,
+      "dimensions": ["acceptance_oracles", "authority_boundaries", "test_falsifiability", "failures_recovery", "security_privacy"],
+      "source_unit_refs": ["PLANUNIT:GRS-030", "SEMANTIC:PLANUNIT:GRS-030"],
+      "impact": "A failed or unrun required test can be dispositioned by an undefined actor and still appear inside a certified code-complete receipt.",
+      "evidence": [
+        {"exact_quote": "all required automated tests passed or are explicitly dispositioned", "line_start": 2207, "line_end": 2207, "path": "Plans/Goal_Runtime_System.md", "source_sha256": "93074bc367a76d2b977006d394c063fd7ce21bd1bdcae4138bd6944bebb72785"},
+        {"exact_quote": "GoalCompletionReceipt certification requires the exact code-complete evidence that all WorkNodes terminal, all automated tests passed or were dispositioned, and no active blockers remain.", "line_start": 2208, "line_end": 2208, "path": "Plans/Goal_Runtime_System.md", "source_sha256": "93074bc367a76d2b977006d394c063fd7ce21bd1bdcae4138bd6944bebb72785"}
+      ]
+    },
+    {
+      "item_id": "A005M-000058-I054",
+      "item_type": "contract",
+      "title": "Approval, idempotent launch, and activation are currentness-bound",
+      "statement": "GRS-031 binds approval to CAS inputs and immutable pack identity, writes approval/outbox records atomically, deduplicates PlanCompileRun creation, requires all required WorkNodeRequests together, and delays running projection until durable atomic activation.",
+      "severity": "informational",
+      "gap_kind": "none",
+      "confidence": "high",
+      "builder_discretion": false,
+      "dimensions": ["contracts", "concurrency_races", "states_transitions", "propagation", "gui_truth"],
+      "source_unit_refs": ["PLANUNIT:GRS-031", "SEMANTIC:PLANUNIT:GRS-031"],
+      "impact": "Stale approval, duplicate launch, partial required graphs, and premature running UI are expressly rejected.",
+      "evidence": [
+        {"exact_quote": "Approve And Build first validates a compare-and-swap approval boundary over the PlanningRun revision, topic map version, immutable pack identity, pack version, pack hash, project-context snapshot hash, PlanUnit index hash, acceptance-unit index hash, testing policy hash, and final audit/closure hash shown in final review.", "line_start": 2269, "line_end": 2269, "path": "Plans/Goal_Runtime_System.md", "source_sha256": "93074bc367a76d2b977006d394c063fd7ce21bd1bdcae4138bd6944bebb72785"},
+        {"exact_quote": "Orchestrator may show launch and provisioning progress before activation, but it marks the build running and exposes runnable WorkNodes only after the atomic activation commit and durable start receipt.", "line_start": 2270, "line_end": 2270, "path": "Plans/Goal_Runtime_System.md", "source_sha256": "93074bc367a76d2b977006d394c063fd7ce21bd1bdcae4138bd6944bebb72785"}
+      ]
+    },
+    {
+      "item_id": "A005M-000058-I055",
+      "item_type": "gap",
+      "title": "Recoverable outbox launch and synchronous run identity lack a failure response",
+      "statement": "GRS-031 says approval commits with a recoverable downstream PlanApproved trigger and also requires the PlanCompileRun identity synchronously. It does not define the atomic boundary or response when approval/outbox commits but run creation is delayed or unavailable, nor whether the approval command blocks, returns activation_pending, or is retried by idempotency key.",
+      "severity": "high",
+      "gap_kind": "partial_failure_protocol_gap",
+      "confidence": "high",
+      "builder_discretion": true,
+      "dimensions": ["partial_failure", "concurrency_races", "states_transitions", "failures_recovery", "contracts", "gui_misleading_states"],
+      "source_unit_refs": ["PLANUNIT:GRS-031", "SEMANTIC:PLANUNIT:GRS-031"],
+      "impact": "The user may have a committed approval but no synchronously returnable run identity, violating one of two mandatory contracts or encouraging duplicate launch attempts.",
+      "evidence": [
+        {"exact_quote": "It then atomically writes the immutable pack, approval_cas_receipt, user approval receipt, and PlanApproved transactional-outbox event so approval cannot be committed without a recoverable downstream trigger.", "line_start": 2269, "line_end": 2269, "path": "Plans/Goal_Runtime_System.md", "source_sha256": "93074bc367a76d2b977006d394c063fd7ce21bd1bdcae4138bd6944bebb72785"},
+        {"exact_quote": "ordinary Approve And Build flow immediately creates or resumes exactly one PlanCompileRun and returns its identity synchronously before projection reconciliation", "line_start": 2269, "line_end": 2269, "path": "Plans/Goal_Runtime_System.md", "source_sha256": "93074bc367a76d2b977006d394c063fd7ce21bd1bdcae4138bd6944bebb72785"}
+      ]
+    },
+    {
+      "item_id": "A005M-000058-I056",
+      "item_type": "gap",
+      "title": "Broad-stage and minimum-parallel classification is not reproducible",
+      "statement": "GRS-031 mandates a controller-computed bounded worklist and minimum parallel assignments for broad stages, but supplies no broad-stage predicate, minimum function, capability-to-reduction rule, or receipt fields proving assignment independence beyond rejecting self-report.",
+      "severity": "medium",
+      "gap_kind": "missing_scale_policy_oracle",
+      "confidence": "high",
+      "builder_discretion": true,
+      "dimensions": ["scale_performance", "scale_limits", "acceptance_oracles", "builder_discretion", "test_falsifiability", "operations"],
+      "source_unit_refs": ["PLANUNIT:GRS-031", "SEMANTIC:PLANUNIT:GRS-031"],
+      "impact": "Mandatory multi-agent review can be silently under-provisioned or inconsistently blocked while still producing superficially valid receipts.",
+      "evidence": [
+        {"exact_quote": "For broad stages the controller computes a bounded worklist and mandatory minimum parallel assignments, launches read-only subagents, records assignment and completion receipts, and rejects certification when required parallel work is absent.", "line_start": 2269, "line_end": 2269, "path": "Plans/Goal_Runtime_System.md", "source_sha256": "93074bc367a76d2b977006d394c063fd7ce21bd1bdcae4138bd6944bebb72785"},
+        {"exact_quote": "Do not accept agent self-report as proof that required parallel subagents were used.", "line_start": 2383, "line_end": 2383, "path": "Plans/Goal_Runtime_System.md", "source_sha256": "93074bc367a76d2b977006d394c063fd7ce21bd1bdcae4138bd6944bebb72785"}
+      ]
+    },
+    {
+      "item_id": "A005M-000058-I057",
+      "item_type": "gui",
+      "title": "Per-agent focus watchdog has concrete visible outcomes",
+      "statement": "GRS-033 requires an AgentProgressHeartbeat and Focus/Attention state with last action, terminal snapshot, expected next check, stalled state, steering, countdown, manual snapshot, and attention_required behavior that preserves the terminal session.",
+      "severity": "informational",
+      "gap_kind": "none",
+      "confidence": "high",
+      "builder_discretion": false,
+      "dimensions": ["gui_truth", "observability_support", "behavior", "consumers", "inputs_outputs"],
+      "source_unit_refs": ["PLANUNIT:GRS-033", "SEMANTIC:PLANUNIT:GRS-033"],
+      "impact": "Long-running terminal-bound agents become inspectable and steerable instead of silently losing focus.",
+      "evidence": [
+        {"exact_quote": "Need GUI-visible per-agent watchdog: last action, last terminal snapshot, expected next check, stalled state, and user steering.", "line_start": 2411, "line_end": 2411, "path": "Plans/Goal_Runtime_System.md", "source_sha256": "93074bc367a76d2b977006d394c063fd7ce21bd1bdcae4138bd6944bebb72785"},
+        {"exact_quote": "Agent stalled/no-heartbeat surfaces as attention_required without losing terminal session.", "line_start": 2420, "line_end": 2420, "path": "Plans/Goal_Runtime_System.md", "source_sha256": "93074bc367a76d2b977006d394c063fd7ce21bd1bdcae4138bd6944bebb72785"}
+      ]
+    },
+    {
+      "item_id": "A005M-000058-I058",
+      "item_type": "gap",
+      "title": "AgentProgressHeartbeat is not registered or shaped in the event contract",
+      "statement": "GRS-033 adds a named event after the document's event registry and payload-minima section, but that registry does not include AgentProgressHeartbeat and no schema version, identity, cadence, sequence/currentness, terminal snapshot reference, expected-next-check, focus-state, or idempotency fields are defined.",
+      "severity": "high",
+      "gap_kind": "missing_event_contract",
+      "confidence": "high",
+      "builder_discretion": true,
+      "dimensions": ["contracts", "states_transitions", "missing_callers_consumers", "cross_document_seams", "observability_support", "test_falsifiability"],
+      "source_unit_refs": ["SEMANTIC:PLANUNIT:GRS-025", "PLANUNIT:GRS-033", "SEMANTIC:PLANUNIT:GRS-033"],
+      "impact": "Producers, storage, replay, Runtime Artifacts, and GUI consumers cannot interoperate reliably or distinguish stale/duplicate heartbeat data.",
+      "evidence": [
+        {"exact_quote": "Goal event log: append-only events using the Contracts_V0 registered names `goal.created`, `goal.scheduled`, `goal.progressed`, `goal.tool_check_recorded`, `goal.updated`, `goal.replanned`, `goal.child_status_changed`, `goal.evidence_captured`, `goal.verification_decided`, `goal.receipt_recorded`, `goal.completed`, `goal.degraded`, `goal.stopped`, `goal.blocked`, and `goal.cancelled`", "line_start": 1766, "line_end": 1766, "path": "Plans/Goal_Runtime_System.md", "source_sha256": "93074bc367a76d2b977006d394c063fd7ce21bd1bdcae4138bd6944bebb72785"},
+        {"exact_quote": "Add AgentProgressHeartbeat event and Focus/Attention state for GoalRuns and terminal-bound agents.", "line_start": 2411, "line_end": 2411, "path": "Plans/Goal_Runtime_System.md", "source_sha256": "93074bc367a76d2b977006d394c063fd7ce21bd1bdcae4138bd6944bebb72785"}
+      ]
+    },
+    {
+      "item_id": "A005M-000058-I059",
+      "item_type": "gap",
+      "title": "Watchdog conflates stall with transport loss and exposes terminal data without privacy rules",
+      "statement": "The watchdog turns no-heartbeat into attention_required and displays the last terminal snapshot, but defines no reason taxonomy for offline session, app sleep, transport partition, provider stream pause, or actual agent stall; it also lacks snapshot redaction, truncation, access, retention, and secret-handling rules.",
+      "severity": "high",
+      "gap_kind": "misleading_state_and_privacy_gap",
+      "confidence": "high",
+      "builder_discretion": true,
+      "dimensions": ["offline_network_loss", "gui_misleading_states", "security_privacy", "privacy_data_lifecycle", "failures_recovery", "untrusted_inputs"],
+      "source_unit_refs": ["PLANUNIT:GRS-033", "SEMANTIC:PLANUNIT:GRS-033"],
+      "impact": "The GUI can falsely accuse an agent of stalling during connectivity loss and can surface credentials or sensitive terminal output to an unauthorized viewer.",
+      "evidence": [
+        {"exact_quote": "Need GUI-visible per-agent watchdog: last action, last terminal snapshot, expected next check, stalled state, and user steering.", "line_start": 2411, "line_end": 2411, "path": "Plans/Goal_Runtime_System.md", "source_sha256": "93074bc367a76d2b977006d394c063fd7ce21bd1bdcae4138bd6944bebb72785"},
+        {"exact_quote": "Agent stalled/no-heartbeat surfaces as attention_required without losing terminal session.", "line_start": 2420, "line_end": 2420, "path": "Plans/Goal_Runtime_System.md", "source_sha256": "93074bc367a76d2b977006d394c063fd7ce21bd1bdcae4138bd6944bebb72785"}
+      ]
+    },
+    {
+      "item_id": "A005M-000058-I060",
+      "item_type": "gap",
+      "title": "Watchdog attention, countdown, and steering have no accessibility or localization acceptance",
+      "statement": "Although GRS-033 classifies the feature as directly implicating accessibility and visual/desktop surfaces, its acceptance criteria do not require semantic announcements, keyboard access to snapshot/steering, non-color attention cues, localized status/countdown strings, pluralization, or locale-safe time presentation.",
+      "severity": "medium",
+      "gap_kind": "missing_gui_acceptance_contract",
+      "confidence": "high",
+      "builder_discretion": true,
+      "dimensions": ["accessibility", "localization", "gui_truth", "acceptance_oracles", "test_falsifiability"],
+      "source_unit_refs": ["PLANUNIT:GRS-033", "SEMANTIC:PLANUNIT:GRS-033"],
+      "impact": "The required watchdog can technically exist while remaining unusable to keyboard or assistive-technology users and displaying ambiguous countdowns across locales.",
+      "evidence": [
+        {"exact_quote": "User-visible GUI, built-in terminal, accessibility, visual, multimodal, or desktop surface is directly implicated.", "line_start": 2413, "line_end": 2413, "path": "Plans/Goal_Runtime_System.md", "source_sha256": "93074bc367a76d2b977006d394c063fd7ce21bd1bdcae4138bd6944bebb72785"},
+        {"exact_quote": "Long-running shell command exposes next-check countdown and manual snapshot trigger.", "line_start": 2419, "line_end": 2419, "path": "Plans/Goal_Runtime_System.md", "source_sha256": "93074bc367a76d2b977006d394c063fd7ce21bd1bdcae4138bd6944bebb72785"}
+      ]
+    },
+    {
+      "item_id": "A005M-000058-I061",
+      "item_type": "explicit_non_gap",
+      "title": "Provisioning projection cannot masquerade as an active build",
+      "statement": "GRS-031 allows visible launch/provisioning progress but explicitly withholds running status and runnable WorkNodes until atomic activation commits with a durable start receipt.",
+      "severity": "informational",
+      "gap_kind": "none",
+      "confidence": "high",
+      "builder_discretion": false,
+      "dimensions": ["gui_truth", "gui_misleading_states", "states_transitions", "acceptance_oracles"],
+      "source_unit_refs": ["PLANUNIT:GRS-031", "SEMANTIC:PLANUNIT:GRS-031"],
+      "impact": "The UI has a clear truth boundary between provisioning and actual executable activation.",
+      "evidence": [
+        {"exact_quote": "Orchestrator may show launch and provisioning progress before activation, but it marks the build running and exposes runnable WorkNodes only after the atomic activation commit and durable start receipt.", "line_start": 2270, "line_end": 2270, "path": "Plans/Goal_Runtime_System.md", "source_sha256": "93074bc367a76d2b977006d394c063fd7ce21bd1bdcae4138bd6944bebb72785"}
+      ]
+    }
+  ],
+  "synthesis": {
+    "overall_assessment": "material_contract_gaps_found",
+    "summary": "The source is unusually strong on native-runtime scope, ownership, receipt authority, worker/parent authority, evidence layers, write isolation, recovery, governance phase separation, and atomic activation GUI truth. It is not yet closed-world buildable because multiple high-impact seams remain contradictory or undefined: lifecycle events do not cover declared states; write_mode enums conflict; default max_parallel_agents=0 conflicts with default and mandatory parallelism; approval/escalation lists disagree; host and test exceptions lack authority policy; persistence/event atomicity and scheduler preemption have race gaps; attachment, log, and terminal-snapshot lifecycle controls are incomplete; and the new heartbeat lacks a registered event shape.",
+    "highest_risk_item_ids": ["A005M-000058-I005", "A005M-000058-I008", "A005M-000058-I012", "A005M-000058-I014", "A005M-000058-I016", "A005M-000058-I018", "A005M-000058-I025", "A005M-000058-I027", "A005M-000058-I029", "A005M-000058-I043", "A005M-000058-I044", "A005M-000058-I050", "A005M-000058-I051", "A005M-000058-I053", "A005M-000058-I055", "A005M-000058-I058", "A005M-000058-I059"],
+    "explicit_non_gap_item_ids": ["A005M-000058-I003", "A005M-000058-I007", "A005M-000058-I037", "A005M-000058-I039", "A005M-000058-I040", "A005M-000058-I041", "A005M-000058-I048", "A005M-000058-I061"],
+    "cross_document_unknown_item_ids": ["A005M-000058-I045"],
+    "recommended_disposition": "repair_required_before_runtime_buildability_or_production_certification",
+    "terminal_seal_written": false
+  },
+  "self_attestation": {
+    "read_every_assigned_core_line": true,
+    "reviewed_every_required_source_unit_ref": true,
+    "used_exact_behavior_lens": true,
+    "used_adversarial_negative_space_lens": true,
+    "verified_capsule_excerpt_and_segment_hashes": true,
+    "verified_assignment_attempt_audit_model_phase_identity": true,
+    "external_research_performed": false,
+    "prior_audits_read": false,
+    "peer_results_read": false,
+    "unrelated_sources_read": false,
+    "canonical_plans_edited": false,
+    "descendants_spawned": false,
+    "followup_messages_sent": false,
+    "terminal_seal_written": false,
+    "only_output_file": "result.json",
+    "task_thread_id_is_canonical_agent_path": true
+  }
+}

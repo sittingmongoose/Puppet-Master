@@ -1,0 +1,781 @@
+{
+  "assignment_id": "A005M15-000213-INTEGRATED-MACRO15-510B3DE676A3-0001",
+  "attempt_id": "attempt-0015",
+  "audit_id": "audit-20260710-005-plan-assurance-model-lanes-fresh-agent-exhaustive",
+  "coverage": {
+    "all_micro_windows_reviewed": true,
+    "all_source_lines_reviewed": true,
+    "all_source_units_accounted": true,
+    "both_exact_and_adversarial_lenses_applied": true,
+    "dimensions_checked": [
+      "behavior",
+      "capabilities",
+      "inputs_outputs",
+      "contracts",
+      "states_transitions",
+      "authority",
+      "ownership",
+      "consumers",
+      "gui_truth",
+      "failures_recovery",
+      "security_privacy",
+      "propagation",
+      "operations",
+      "scale_performance",
+      "compatibility_migration",
+      "acceptance_oracles",
+      "builder_discretion",
+      "ambiguity_unknowns",
+      "missing_callers_consumers",
+      "invalid_states_transitions",
+      "concurrency_races",
+      "partial_failure",
+      "recovery_rollback",
+      "authority_boundaries",
+      "privacy_data_lifecycle",
+      "untrusted_inputs",
+      "gui_misleading_states",
+      "offline_network_loss",
+      "scale_limits",
+      "accessibility",
+      "localization",
+      "observability_support",
+      "destructive_actions",
+      "cross_document_seams",
+      "test_falsifiability",
+      "unknown_unknowns"
+    ]
+  },
+  "items": [
+    {
+      "builder_discretion": false,
+      "confidence": 0.99,
+      "dimensions": ["behavior", "contracts", "authority", "ownership", "propagation", "acceptance_oracles"],
+      "evidence": [
+        {
+          "exact_quote": "Storage for the rewrite follows a multi-store design: **seglog** as the canonical append-only event stream, **redb** for durable KV state (settings, sessions, runs, checkpoints, editor state, analytics rollups), and **Tantivy** for full-text search.",
+          "line_end": 173,
+          "line_start": 173,
+          "path": "Plans/storage-plan.md",
+          "source_sha256": "66d19f8d241e488ca19a0f824c24ad28d6bdd89a72abd83bb949b77c234775a1"
+        },
+        {
+          "exact_quote": "redb projections, JSONL mirror files, and Tantivy indices are rebuildable from seglog plus stable checkpoints; none of them outrank seglog as authority",
+          "line_end": 459,
+          "line_start": 459,
+          "path": "Plans/storage-plan.md",
+          "source_sha256": "66d19f8d241e488ca19a0f824c24ad28d6bdd89a72abd83bb949b77c234775a1"
+        }
+      ],
+      "gap_kind": "not_a_gap_authority_is_explicit",
+      "impact": "The authority hierarchy and rebuild direction are explicit, preventing mirrors and indexes from silently becoming competing sources of truth.",
+      "item_id": "A005M15-S1-001",
+      "item_type": "explicit_non_gap",
+      "severity": "info",
+      "source_unit_refs": ["SEMANTIC:PROLOGUE:Plans/storage-plan.md:CONT-002"],
+      "statement": "Seglog is the canonical event authority, while redb, JSONL, Tantivy, and analytics state are derived or rebuildable consumers.",
+      "title": "Multi-store authority and rebuild direction are explicit"
+    },
+    {
+      "builder_discretion": false,
+      "confidence": 0.93,
+      "dimensions": ["contracts", "security_privacy", "operations", "authority_boundaries", "untrusted_inputs", "cross_document_seams", "test_falsifiability"],
+      "evidence": [
+        {
+          "exact_quote": "PM parses `.gitmodules`/gitmodules, separately bare-clones each submodule repo after validating submodule paths, stores them under `git/modules/{submodule_path}/`, and includes `/modules/{submodule_path}/` content by reading the gitlink-referenced commit via `git show`.",
+          "line_end": 264,
+          "line_start": 264,
+          "path": "Plans/storage-plan.md",
+          "source_sha256": "66d19f8d241e488ca19a0f824c24ad28d6bdd89a72abd83bb949b77c234775a1"
+        }
+      ],
+      "gap_kind": "untrusted_remote_git_input_contract_missing",
+      "impact": "A hostile or malformed submodule declaration could select an unintended host, protocol, credential route, or recursive graph even when its local path passes validation.",
+      "item_id": "A005M15-S1-002",
+      "item_type": "gap",
+      "severity": "high",
+      "source_unit_refs": ["SEMANTIC:PROLOGUE:Plans/storage-plan.md:CONT-002"],
+      "statement": "The remote submodule contract requires path validation but does not define validation of submodule URLs, protocols, host allowlists, credential forwarding, recursion cycles, or failure isolation.",
+      "title": "Remote submodule trust boundary is only partially specified"
+    },
+    {
+      "builder_discretion": false,
+      "confidence": 0.95,
+      "dimensions": ["inputs_outputs", "contracts", "failures_recovery", "security_privacy", "scale_performance", "partial_failure", "untrusted_inputs", "scale_limits", "test_falsifiability"],
+      "evidence": [
+        {
+          "exact_quote": "compression: \"none\" | \"lz4\"",
+          "line_end": 433,
+          "line_start": 433,
+          "path": "Plans/storage-plan.md",
+          "source_sha256": "66d19f8d241e488ca19a0f824c24ad28d6bdd89a72abd83bb949b77c234775a1"
+        },
+        {
+          "exact_quote": "readers validate `payload_length`, then checksum, then decode.",
+          "line_end": 440,
+          "line_start": 440,
+          "path": "Plans/storage-plan.md",
+          "source_sha256": "66d19f8d241e488ca19a0f824c24ad28d6bdd89a72abd83bb949b77c234775a1"
+        }
+      ],
+      "gap_kind": "compressed_payload_resource_bound_missing",
+      "impact": "A valid compressed record can force excessive memory or CPU during replay, block recovery, and turn a durable event log into a denial-of-service vector.",
+      "item_id": "A005M15-S1-003",
+      "item_type": "gap",
+      "severity": "high",
+      "source_unit_refs": ["SEMANTIC:PROLOGUE:Plans/storage-plan.md:CONT-002"],
+      "statement": "The LZ4 wire contract has no uncompressed-length field, maximum expansion ratio, decode budget, or deterministic over-limit recovery behavior.",
+      "title": "LZ4 decoding is not resource bounded"
+    },
+    {
+      "builder_discretion": false,
+      "confidence": 0.94,
+      "dimensions": ["behavior", "contracts", "failures_recovery", "invalid_states_transitions", "partial_failure", "recovery_rollback", "observability_support", "test_falsifiability"],
+      "evidence": [
+        {
+          "exact_quote": "the corrupt record is skipped",
+          "line_end": 402,
+          "line_start": 402,
+          "path": "Plans/storage-plan.md",
+          "source_sha256": "66d19f8d241e488ca19a0f824c24ad28d6bdd89a72abd83bb949b77c234775a1"
+        },
+        {
+          "exact_quote": "readers validate `payload_length`, then checksum, then decode.",
+          "line_end": 440,
+          "line_start": 440,
+          "path": "Plans/storage-plan.md",
+          "source_sha256": "66d19f8d241e488ca19a0f824c24ad28d6bdd89a72abd83bb949b77c234775a1"
+        }
+      ],
+      "gap_kind": "corrupt_record_resynchronization_missing",
+      "impact": "If the length prefix itself is corrupt, a reader cannot know the next record boundary, so 'skip' is not implementable and replay can loop, discard valid suffix records, or diverge across implementations.",
+      "item_id": "A005M15-S1-004",
+      "item_type": "gap",
+      "severity": "high",
+      "source_unit_refs": ["SEMANTIC:PROLOGUE:Plans/storage-plan.md:CONT-002"],
+      "statement": "CRC failure behavior names a skipped record but does not specify frame resynchronization, segment quarantine, sequence-gap representation, or when the corrupt suffix is truncated.",
+      "title": "Corrupt seglog framing has no deterministic resynchronization rule"
+    },
+    {
+      "builder_discretion": false,
+      "confidence": 0.98,
+      "dimensions": ["behavior", "contracts", "failures_recovery", "scale_performance", "acceptance_oracles", "untrusted_inputs", "test_falsifiability"],
+      "evidence": [
+        {
+          "exact_quote": "When two distinct n-grams produce the same xxh3 64-bit hash, their posting lists are merged at index time (Roaring union); the lookup table has exactly one entry per unique hash. Collisions broaden candidates but never affect correctness.",
+          "line_end": 354,
+          "line_start": 354,
+          "path": "Plans/storage-plan.md",
+          "source_sha256": "66d19f8d241e488ca19a0f824c24ad28d6bdd89a72abd83bb949b77c234775a1"
+        },
+        {
+          "exact_quote": "Postings store `u32` file IDs only; line-level precision always comes from ripgrep verification on candidate files.",
+          "line_end": 357,
+          "line_start": 357,
+          "path": "Plans/storage-plan.md",
+          "source_sha256": "66d19f8d241e488ca19a0f824c24ad28d6bdd89a72abd83bb949b77c234775a1"
+        }
+      ],
+      "gap_kind": "not_a_gap_collision_is_false_positive_only",
+      "impact": "Hash collisions may cost performance but cannot create false search results because authoritative content verification remains mandatory.",
+      "item_id": "A005M15-S1-005",
+      "item_type": "explicit_non_gap",
+      "severity": "info",
+      "source_unit_refs": ["SEMANTIC:PROLOGUE:Plans/storage-plan.md:CONT-002"],
+      "statement": "The sparse-index collision behavior deliberately broadens candidates and preserves correctness through ripgrep verification.",
+      "title": "Index hash collisions have a defined correctness backstop"
+    },
+    {
+      "builder_discretion": false,
+      "confidence": 0.99,
+      "dimensions": ["contracts", "authority", "ownership", "compatibility_migration", "acceptance_oracles", "cross_document_seams"],
+      "evidence": [
+        {
+          "exact_quote": "a persisted value family is implementation-authoritative only when the registry row identifies its key shape, value schema id/ref, owner doc, producer, consumers, schema version, encoding, required/optional/nullability fields, replay behavior, migration rule, retention/compaction rule, redaction/no-secret rule, and legacy/canonical crosswalk status.",
+          "line_end": 491,
+          "line_start": 491,
+          "path": "Plans/storage-plan.md",
+          "source_sha256": "66d19f8d241e488ca19a0f824c24ad28d6bdd89a72abd83bb949b77c234775a1"
+        },
+        {
+          "exact_quote": "`buildability_gate_passed` remains false.",
+          "line_end": 510,
+          "line_start": 510,
+          "path": "Plans/storage-plan.md",
+          "source_sha256": "66d19f8d241e488ca19a0f824c24ad28d6bdd89a72abd83bb949b77c234775a1"
+        }
+      ],
+      "gap_kind": "not_a_gap_partial_materialization_is_disclosed",
+      "impact": "Prose-only families cannot be mistaken for implementation-ready schemas, and the section does not overclaim buildability.",
+      "item_id": "A005M15-S2-001",
+      "item_type": "explicit_non_gap",
+      "severity": "info",
+      "source_unit_refs": ["SEMANTIC:PROLOGUE:Plans/storage-plan.md:CONT-003"],
+      "statement": "The value registry is named as machine authority and incomplete families are explicitly deferred rather than silently promoted.",
+      "title": "Registry authority and partial-closure limits are explicit"
+    },
+    {
+      "builder_discretion": false,
+      "confidence": 0.97,
+      "dimensions": ["behavior", "contracts", "states_transitions", "failures_recovery", "operations", "concurrency_races", "partial_failure", "recovery_rollback", "test_falsifiability"],
+      "evidence": [
+        {
+          "exact_quote": "Writers provide an idempotency key plus expected `agent_revision` or `last_applied_event_id`; the append and projection result are one logical append/CAS boundary.",
+          "line_end": 537,
+          "line_start": 537,
+          "path": "Plans/storage-plan.md",
+          "source_sha256": "66d19f8d241e488ca19a0f824c24ad28d6bdd89a72abd83bb949b77c234775a1"
+        },
+        {
+          "exact_quote": "The projector advances `coordination_*_projection.v1` rows and `projector.checkpoint.coordination:{project_id}` in one redb transaction.",
+          "line_end": 538,
+          "line_start": 538,
+          "path": "Plans/storage-plan.md",
+          "source_sha256": "66d19f8d241e488ca19a0f824c24ad28d6bdd89a72abd83bb949b77c234775a1"
+        }
+      ],
+      "gap_kind": "cross_store_append_cas_crash_protocol_missing",
+      "impact": "A crash after seglog append but before redb projection or response can make the caller retry against stale revision, observe a conflict, or receive a result that does not identify the already-committed event.",
+      "item_id": "A005M15-S2-002",
+      "item_type": "gap",
+      "severity": "critical",
+      "source_unit_refs": ["SEMANTIC:PROLOGUE:Plans/storage-plan.md:CONT-003"],
+      "statement": "The text calls seglog append plus redb projection one logical CAS boundary but defines transactionality only inside redb; it does not define the durable crash-reconciliation protocol across the two stores.",
+      "title": "Coordination append and CAS lack a cross-store recovery contract"
+    },
+    {
+      "builder_discretion": false,
+      "confidence": 0.9,
+      "dimensions": ["contracts", "states_transitions", "compatibility_migration", "ambiguity_unknowns", "invalid_states_transitions", "test_falsifiability"],
+      "evidence": [
+        {
+          "exact_quote": "Canonical records are immutable once committed; corrections require a new record with explicit lineage.",
+          "line_end": 554,
+          "line_start": 554,
+          "path": "Plans/storage-plan.md",
+          "source_sha256": "66d19f8d241e488ca19a0f824c24ad28d6bdd89a72abd83bb949b77c234775a1"
+        },
+        {
+          "exact_quote": "All canonical records include `created_at_utc`, `updated_at_utc`, and `created_by` for audit.",
+          "line_end": 555,
+          "line_start": 555,
+          "path": "Plans/storage-plan.md",
+          "source_sha256": "66d19f8d241e488ca19a0f824c24ad28d6bdd89a72abd83bb949b77c234775a1"
+        }
+      ],
+      "gap_kind": "immutable_record_update_semantics_ambiguous",
+      "impact": "Implementers can either mutate `updated_at_utc`, violating immutability, or leave it equal to creation time, making the required field semantically misleading.",
+      "item_id": "A005M15-S2-003",
+      "item_type": "unknown",
+      "severity": "medium",
+      "source_unit_refs": ["SEMANTIC:PROLOGUE:Plans/storage-plan.md:CONT-003"],
+      "statement": "The baseline simultaneously requires immutable canonical records and an `updated_at_utc` field without defining whether that field belongs to the original record, a successor correction, or a mutable projection.",
+      "title": "Immutable-record update timestamp semantics are unresolved"
+    },
+    {
+      "builder_discretion": false,
+      "confidence": 0.96,
+      "dimensions": ["behavior", "contracts", "failures_recovery", "partial_failure", "recovery_rollback", "destructive_actions", "test_falsifiability"],
+      "evidence": [
+        {
+          "exact_quote": "Stored bulk outcomes preserve target preview reference, scope summary/count (`/count`), result state, `partial-success`, `per-target` failure list, spawned attempt/remediation refs, and rollback/undo expectations where possible.",
+          "line_end": 728,
+          "line_start": 728,
+          "path": "Plans/storage-plan.md",
+          "source_sha256": "66d19f8d241e488ca19a0f824c24ad28d6bdd89a72abd83bb949b77c234775a1"
+        }
+      ],
+      "gap_kind": "bulk_action_rollback_contract_optional",
+      "impact": "Destructive multi-target operations can report partial success without a deterministic compensation state, retry boundary, or user-visible distinction between reversible and irreversible targets.",
+      "item_id": "A005M15-S2-004",
+      "item_type": "gap",
+      "severity": "high",
+      "source_unit_refs": ["SEMANTIC:PROLOGUE:Plans/storage-plan.md:CONT-003"],
+      "statement": "The bulk-action record makes rollback and undo expectations conditional on 'where possible' but does not require per-target reversibility, compensation status, or a terminal recovery oracle.",
+      "title": "Bulk partial-success recovery is not deterministic"
+    },
+    {
+      "builder_discretion": false,
+      "confidence": 0.94,
+      "dimensions": ["states_transitions", "failures_recovery", "security_privacy", "operations", "partial_failure", "privacy_data_lifecycle", "observability_support", "destructive_actions", "test_falsifiability"],
+      "evidence": [
+        {
+          "exact_quote": "Logout, unlink, and project-delete cleanup invalidates non-secret residue such as validation snapshots, last-used account identity, workflow admin receipts, registry capability snapshots, kube context selections, discovered endpoints, and downloaded scrubbed artifacts.",
+          "line_end": 742,
+          "line_start": 742,
+          "path": "Plans/storage-plan.md",
+          "source_sha256": "66d19f8d241e488ca19a0f824c24ad28d6bdd89a72abd83bb949b77c234775a1"
+        }
+      ],
+      "gap_kind": "sensitive_residue_cleanup_protocol_missing",
+      "impact": "A crash or disk failure during unlink or deletion can leave account and endpoint metadata behind without a durable indication that cleanup is incomplete or should resume.",
+      "item_id": "A005M15-S2-005",
+      "item_type": "gap",
+      "severity": "high",
+      "source_unit_refs": ["SEMANTIC:PROLOGUE:Plans/storage-plan.md:CONT-003"],
+      "statement": "Sensitive-residue invalidation names the data to remove but omits cleanup ordering, tombstone state, retry/idempotency rules, failure receipts, and a completion oracle.",
+      "title": "Logout and project-delete residue cleanup is not crash recoverable"
+    },
+    {
+      "builder_discretion": false,
+      "confidence": 0.96,
+      "dimensions": ["authority", "ownership", "states_transitions", "concurrency_races", "authority_boundaries", "destructive_actions", "test_falsifiability"],
+      "evidence": [
+        {
+          "exact_quote": "Concurrent mutable control of the same `project_id`, `repo_id`, `/workspace-root`, `/repo/runtime`, runtime target, or hosted `remote_repo_ref` is unsupported unless a canonical project/target lock exists.",
+          "line_end": 914,
+          "line_start": 914,
+          "path": "Plans/storage-plan.md",
+          "source_sha256": "66d19f8d241e488ca19a0f824c24ad28d6bdd89a72abd83bb949b77c234775a1"
+        },
+        {
+          "exact_quote": "If another owner is detected, the affected surface degrades to read-only or explicit override mode; receipts record the cross-process ownership conflict as blocked, not failed.",
+          "line_end": 914,
+          "line_start": 914,
+          "path": "Plans/storage-plan.md",
+          "source_sha256": "66d19f8d241e488ca19a0f824c24ad28d6bdd89a72abd83bb949b77c234775a1"
+        }
+      ],
+      "gap_kind": "cross_process_override_authority_missing",
+      "impact": "Two instances can both believe they have mutation authority after override, producing split-brain writes and receipts against the same target.",
+      "item_id": "A005M15-S3-001",
+      "item_type": "authority",
+      "severity": "critical",
+      "source_unit_refs": ["SEMANTIC:PROLOGUE:Plans/storage-plan.md:CONT-004"],
+      "statement": "The cross-process policy allows an explicit override but does not define who may override, whether the existing owner is fenced, or how stale locks and leases are adjudicated.",
+      "title": "Cross-process override mode lacks fencing authority"
+    },
+    {
+      "builder_discretion": false,
+      "confidence": 0.98,
+      "dimensions": ["inputs_outputs", "contracts", "authority", "operations", "concurrency_races", "authority_boundaries", "untrusted_inputs", "destructive_actions", "cross_document_seams", "test_falsifiability"],
+      "evidence": [
+        {
+          "exact_quote": "write-capable actions must bind to the same project, host, repo/worktree, and recover-unsaved context that owns the buffer",
+          "line_end": 942,
+          "line_start": 942,
+          "path": "Plans/storage-plan.md",
+          "source_sha256": "66d19f8d241e488ca19a0f824c24ad28d6bdd89a72abd83bb949b77c234775a1"
+        },
+        {
+          "exact_quote": "`cmd.file.delete { project_id, paths: string[] }`",
+          "line_end": 958,
+          "line_start": 958,
+          "path": "Plans/storage-plan.md",
+          "source_sha256": "66d19f8d241e488ca19a0f824c24ad28d6bdd89a72abd83bb949b77c234775a1"
+        }
+      ],
+      "gap_kind": "destructive_file_receipt_identity_incomplete",
+      "impact": "After restart, rebinding, or a multi-repo/worktree switch, the stored delete intent can resolve the same path string against a different host or worktree.",
+      "item_id": "A005M15-S3-002",
+      "item_type": "gap",
+      "severity": "critical",
+      "source_unit_refs": ["SEMANTIC:PROLOGUE:Plans/storage-plan.md:CONT-004"],
+      "statement": "The text requires write authority to bind project, host, repo, worktree, and unsaved context, but durable `cmd.file.*` payloads carry only `project_id` and path-oriented fields.",
+      "title": "File mutation receipts omit required host/repo/worktree identity"
+    },
+    {
+      "builder_discretion": false,
+      "confidence": 0.95,
+      "dimensions": ["contracts", "authority", "ownership", "compatibility_migration", "ambiguity_unknowns", "authority_boundaries", "cross_document_seams", "test_falsifiability"],
+      "evidence": [
+        {
+          "exact_quote": "`repo_id` is stable per project repo root and derived from canonical VCS root identity using a `vcs_root_fingerprint`, with candidate format `gitrepo::<project_id>::<vcs_root_fingerprint>`.",
+          "line_end": 946,
+          "line_start": 946,
+          "path": "Plans/storage-plan.md",
+          "source_sha256": "66d19f8d241e488ca19a0f824c24ad28d6bdd89a72abd83bb949b77c234775a1"
+        },
+        {
+          "exact_quote": "`worktree_id` is stable per concrete worktree instance and derived from canonical realpath identity using `worktree_realpath_fingerprint`, with candidate format `worktree::<repo_id>::<worktree_realpath_fingerprint>`.",
+          "line_end": 946,
+          "line_start": 946,
+          "path": "Plans/storage-plan.md",
+          "source_sha256": "66d19f8d241e488ca19a0f824c24ad28d6bdd89a72abd83bb949b77c234775a1"
+        }
+      ],
+      "gap_kind": "canonical_identity_derivation_not_frozen",
+      "impact": "Different implementations can mint different IDs for symlinked, case-folded, moved, remote, or recreated repositories and worktrees, breaking receipts, tombstones, and deep links.",
+      "item_id": "A005M15-S3-003",
+      "item_type": "gap",
+      "severity": "high",
+      "source_unit_refs": ["SEMANTIC:PROLOGUE:Plans/storage-plan.md:CONT-004"],
+      "statement": "Repo and worktree identity depend on undefined fingerprint algorithms and are still presented with candidate formats rather than an exact canonical derivation and collision/migration rule.",
+      "title": "Repo and worktree ID derivation remains provisional"
+    },
+    {
+      "builder_discretion": false,
+      "confidence": 0.96,
+      "dimensions": ["contracts", "states_transitions", "authority", "ownership", "consumers", "security_privacy", "invalid_states_transitions", "authority_boundaries", "test_falsifiability"],
+      "evidence": [
+        {
+          "exact_quote": "required_approvals: u32,",
+          "line_end": 1074,
+          "line_start": 1074,
+          "path": "Plans/storage-plan.md",
+          "source_sha256": "66d19f8d241e488ca19a0f824c24ad28d6bdd89a72abd83bb949b77c234775a1"
+        },
+        {
+          "exact_quote": "current_approvals: u32,",
+          "line_end": 1075,
+          "line_start": 1075,
+          "path": "Plans/storage-plan.md",
+          "source_sha256": "66d19f8d241e488ca19a0f824c24ad28d6bdd89a72abd83bb949b77c234775a1"
+        },
+        {
+          "exact_quote": "auto_merge: bool,",
+          "line_end": 1076,
+          "line_start": 1076,
+          "path": "Plans/storage-plan.md",
+          "source_sha256": "66d19f8d241e488ca19a0f824c24ad28d6bdd89a72abd83bb949b77c234775a1"
+        }
+      ],
+      "gap_kind": "approval_authority_and_lineage_missing",
+      "impact": "A counter can be incremented or replayed without proving distinct authorized approvers, revocation, scope, or policy version, allowing an invalid auto-merge transition.",
+      "item_id": "A005M15-S3-004",
+      "item_type": "gap",
+      "severity": "critical",
+      "source_unit_refs": ["SEMANTIC:PROLOGUE:Plans/storage-plan.md:CONT-004"],
+      "statement": "The bundle review gate stores only approval counts and an auto-merge flag; it has no approval identities, authority snapshots, deduplication key, revocation state, or transition oracle.",
+      "title": "Bundle auto-merge is backed by unauthenticated approval counters"
+    },
+    {
+      "builder_discretion": false,
+      "confidence": 0.99,
+      "dimensions": ["behavior", "states_transitions", "gui_truth", "failures_recovery", "compatibility_migration", "acceptance_oracles", "gui_misleading_states", "destructive_actions"],
+      "evidence": [
+        {
+          "exact_quote": "Project roots can be `active`, `missing_on_disk`, `archived_from_ui`, or `deleted_from_registry`; missing roots show `not-found` with `rebind_required` instead of silently matching a same-name path.",
+          "line_end": 950,
+          "line_start": 950,
+          "path": "Plans/storage-plan.md",
+          "source_sha256": "66d19f8d241e488ca19a0f824c24ad28d6bdd89a72abd83bb949b77c234775a1"
+        },
+        {
+          "exact_quote": "`/recreate` creates a new identity, and resumable state is allowed only when the original root/worktree identity is validated.",
+          "line_end": 950,
+          "line_start": 950,
+          "path": "Plans/storage-plan.md",
+          "source_sha256": "66d19f8d241e488ca19a0f824c24ad28d6bdd89a72abd83bb949b77c234775a1"
+        }
+      ],
+      "gap_kind": "not_a_gap_missing_identity_does_not_silently_rebind",
+      "impact": "Historical receipts and navigation cannot silently gain authority over an unrelated replacement path.",
+      "item_id": "A005M15-S3-005",
+      "item_type": "explicit_non_gap",
+      "severity": "info",
+      "source_unit_refs": ["SEMANTIC:PROLOGUE:Plans/storage-plan.md:CONT-004"],
+      "statement": "Missing or recreated project/worktree roots preserve tombstone truth and require identity validation before resume.",
+      "title": "Project and worktree tombstones prevent same-name rebinding"
+    },
+    {
+      "builder_discretion": false,
+      "confidence": 0.99,
+      "dimensions": ["inputs_outputs", "contracts", "security_privacy", "privacy_data_lifecycle", "untrusted_inputs", "cross_document_seams", "test_falsifiability"],
+      "evidence": [
+        {
+          "exact_quote": "custom_headers: Record<string, string>,",
+          "line_end": 1189,
+          "line_start": 1189,
+          "path": "Plans/storage-plan.md",
+          "source_sha256": "66d19f8d241e488ca19a0f824c24ad28d6bdd89a72abd83bb949b77c234775a1"
+        },
+        {
+          "exact_quote": "localStorage_persistence: \"isolated\" | \"save_on_close\",",
+          "line_end": 1193,
+          "line_start": 1193,
+          "path": "Plans/storage-plan.md",
+          "source_sha256": "66d19f8d241e488ca19a0f824c24ad28d6bdd89a72abd83bb949b77c234775a1"
+        }
+      ],
+      "gap_kind": "browser_secret_persistence_boundary_violated",
+      "impact": "Authorization headers, API keys, session material, or sensitive web storage can enter redb despite the document's no-secret storage rule.",
+      "item_id": "A005M15-S4-001",
+      "item_type": "gap",
+      "severity": "critical",
+      "source_unit_refs": ["SEMANTIC:PROLOGUE:Plans/storage-plan.md:CONT-005"],
+      "statement": "Browser profile persistence accepts arbitrary custom header values and persisted localStorage without excluding secret-bearing names/values or routing them to credential custody.",
+      "title": "Browser profile schema can persist raw credentials"
+    },
+    {
+      "builder_discretion": false,
+      "confidence": 0.99,
+      "dimensions": ["contracts", "ownership", "compatibility_migration", "ambiguity_unknowns", "cross_document_seams", "test_falsifiability"],
+      "evidence": [
+        {
+          "exact_quote": "Required canonical record and projection families include:",
+          "line_end": 972,
+          "line_start": 972,
+          "path": "Plans/storage-plan.md",
+          "source_sha256": "66d19f8d241e488ca19a0f824c24ad28d6bdd89a72abd83bb949b77c234775a1"
+        },
+        {
+          "exact_quote": "`terminal_workspace_state.v1:{project_id}:{workspace_tab_id}`",
+          "line_end": 988,
+          "line_start": 988,
+          "path": "Plans/storage-plan.md",
+          "source_sha256": "66d19f8d241e488ca19a0f824c24ad28d6bdd89a72abd83bb949b77c234775a1"
+        },
+        {
+          "exact_quote": "Storage-plan is the canonical source for terminal persistence keys.",
+          "line_end": 1393,
+          "line_start": 1393,
+          "path": "Plans/storage-plan.md",
+          "source_sha256": "66d19f8d241e488ca19a0f824c24ad28d6bdd89a72abd83bb949b77c234775a1"
+        },
+        {
+          "exact_quote": "`terminal_layout.v1:{project_id}` — terminal panel layout",
+          "line_end": 1396,
+          "line_start": 1396,
+          "path": "Plans/storage-plan.md",
+          "source_sha256": "66d19f8d241e488ca19a0f824c24ad28d6bdd89a72abd83bb949b77c234775a1"
+        }
+      ],
+      "gap_kind": "same_document_canonical_key_conflict",
+      "impact": "Implementers can choose incompatible write keys and restore models, fragmenting terminal identity, migration, cleanup, and cross-surface joins.",
+      "item_id": "A005M15-S4-002",
+      "item_type": "gap",
+      "severity": "critical",
+      "source_unit_refs": ["SEMANTIC:PROLOGUE:Plans/storage-plan.md:CONT-005"],
+      "statement": "The document first names workspace/section/tab/pane/session records as required canonical families, then later declares a different session/layout/history/profile/env/cwd/scroll/font/color decomposition as the canonical key set without a translation or supersession rule.",
+      "title": "Terminal persistence has two competing canonical key decompositions"
+    },
+    {
+      "builder_discretion": false,
+      "confidence": 0.97,
+      "dimensions": ["inputs_outputs", "contracts", "security_privacy", "operations", "privacy_data_lifecycle", "untrusted_inputs", "observability_support", "test_falsifiability"],
+      "evidence": [
+        {
+          "exact_quote": "`terminal_history.v1:{terminal_session_id}` — command history",
+          "line_end": 1397,
+          "line_start": 1397,
+          "path": "Plans/storage-plan.md",
+          "source_sha256": "66d19f8d241e488ca19a0f824c24ad28d6bdd89a72abd83bb949b77c234775a1"
+        },
+        {
+          "exact_quote": "`terminal_env.v1:{project_id}` — environment variable overrides",
+          "line_end": 1399,
+          "line_start": 1399,
+          "path": "Plans/storage-plan.md",
+          "source_sha256": "66d19f8d241e488ca19a0f824c24ad28d6bdd89a72abd83bb949b77c234775a1"
+        },
+        {
+          "exact_quote": "Transcript chunks are bounded, append-oriented, and referenced by session and scrollback anchors",
+          "line_end": 1422,
+          "line_start": 1422,
+          "path": "Plans/storage-plan.md",
+          "source_sha256": "66d19f8d241e488ca19a0f824c24ad28d6bdd89a72abd83bb949b77c234775a1"
+        }
+      ],
+      "gap_kind": "terminal_sensitive_data_lifecycle_missing",
+      "impact": "Commands, output, cwd values, and environment overrides can contain tokens or private paths and may be indexed, exported, restored, or retained without a deterministic scrub and deletion policy.",
+      "item_id": "A005M15-S4-003",
+      "item_type": "gap",
+      "severity": "high",
+      "source_unit_refs": ["SEMANTIC:PROLOGUE:Plans/storage-plan.md:CONT-005"],
+      "statement": "Terminal command history, transcript chunks, scrollback, environment overrides, and cwd snapshots are durable families, but their secret classification, redaction-before-persist/index, encryption, retention defaults, and export policy are not specified here.",
+      "title": "Terminal persistence lacks a sensitive-data lifecycle contract"
+    },
+    {
+      "builder_discretion": false,
+      "confidence": 0.95,
+      "dimensions": ["contracts", "authority", "failures_recovery", "operations", "concurrency_races", "recovery_rollback", "authority_boundaries", "untrusted_inputs", "test_falsifiability"],
+      "evidence": [
+        {
+          "exact_quote": "Storage owns `lock-path` derivation. The active `pm.lock` path is `root-derived`: compute it from the selected `logical-root` and, when the selected durable root is not safe for writes, from the safe-local `fallback-derived` durable-store path while preserving the logical root in lineage and diagnostics.",
+          "line_end": 1447,
+          "line_start": 1447,
+          "path": "Plans/storage-plan.md",
+          "source_sha256": "66d19f8d241e488ca19a0f824c24ad28d6bdd89a72abd83bb949b77c234775a1"
+        },
+        {
+          "exact_quote": "The active durable-store lock is keyed by `(storage_root, authority_scope, store_family)`.",
+          "line_end": 1486,
+          "line_start": 1486,
+          "path": "Plans/storage-plan.md",
+          "source_sha256": "66d19f8d241e488ca19a0f824c24ad28d6bdd89a72abd83bb949b77c234775a1"
+        }
+      ],
+      "gap_kind": "durable_lock_protocol_incomplete",
+      "impact": "Equivalent roots can derive different locks, and a crashed owner can leave either indefinite read-only behavior or an unsafe takeover with no fencing token.",
+      "item_id": "A005M15-S4-004",
+      "item_type": "gap",
+      "severity": "critical",
+      "source_unit_refs": ["SEMANTIC:PROLOGUE:Plans/storage-plan.md:CONT-005"],
+      "statement": "Lock identity and path ownership are named, but canonical root normalization, symlink/case handling, acquisition atomicity, owner metadata, lease/heartbeat, stale-lock recovery, fencing token, and fallback-root equivalence are absent.",
+      "title": "Durable-store lock identity lacks an executable fencing protocol"
+    },
+    {
+      "builder_discretion": false,
+      "confidence": 0.94,
+      "dimensions": ["contracts", "failures_recovery", "operations", "partial_failure", "recovery_rollback", "compatibility_migration", "destructive_actions", "test_falsifiability"],
+      "evidence": [
+        {
+          "exact_quote": "Replacement writes for state files, manifests, checkpoints, segment rewrites, or similar durable storage artifacts MUST create `<target>.tmp.<random>` in the target directory, write the full replacement payload there, `fsync` the temp file, and then rename/promote it into place.",
+          "line_end": 1457,
+          "line_start": 1457,
+          "path": "Plans/storage-plan.md",
+          "source_sha256": "66d19f8d241e488ca19a0f824c24ad28d6bdd89a72abd83bb949b77c234775a1"
+        }
+      ],
+      "gap_kind": "atomic_rewrite_crash_durability_incomplete",
+      "impact": "A crash after rename but before directory metadata is durable can lose the promoted filename on filesystems that require directory sync; platform replacement behavior can also diverge when the target exists.",
+      "item_id": "A005M15-S4-005",
+      "item_type": "gap",
+      "severity": "high",
+      "source_unit_refs": ["SEMANTIC:PROLOGUE:Plans/storage-plan.md:CONT-005"],
+      "statement": "The atomic rewrite recipe syncs the temporary file but does not require syncing the containing directory after promotion or define Windows replace-existing semantics and recovery of an ambiguous promotion result.",
+      "title": "Atomic promotion omits directory durability and platform replacement semantics"
+    },
+    {
+      "builder_discretion": false,
+      "confidence": 0.96,
+      "dimensions": ["contracts", "operations", "scale_performance", "acceptance_oracles", "scale_limits", "observability_support", "destructive_actions", "test_falsifiability"],
+      "evidence": [
+        {
+          "exact_quote": "every persistent `/long-lived` storage-managed collection either declares a time-to-live, declares a maximum retained item count, or declares both.",
+          "line_end": 1495,
+          "line_start": 1495,
+          "path": "Plans/storage-plan.md",
+          "source_sha256": "66d19f8d241e488ca19a0f824c24ad28d6bdd89a72abd83bb949b77c234775a1"
+        },
+        {
+          "exact_quote": "Default TTL is inherited from the owning event family retention window; cleanup is triggered by janitor sweep and segment compaction, with legal-hold or preserved-run anchors opting out explicitly.",
+          "line_end": 1505,
+          "line_start": 1505,
+          "path": "Plans/storage-plan.md",
+          "source_sha256": "66d19f8d241e488ca19a0f824c24ad28d6bdd89a72abd83bb949b77c234775a1"
+        }
+      ],
+      "gap_kind": "bounded_collection_limits_not_materialized",
+      "impact": "Builders cannot prove memory/disk bounds or overload behavior, and legal-hold opt-outs can turn nominally bounded collections into unbounded stores.",
+      "item_id": "A005M15-S4-006",
+      "item_type": "gap",
+      "severity": "high",
+      "source_unit_refs": ["SEMANTIC:PROLOGUE:Plans/storage-plan.md:CONT-005"],
+      "statement": "The universal bounded-collection rule requires a TTL or cardinality, but the listed collections mostly name qualitative bound sources rather than numeric defaults, configuration ranges, overflow behavior, or testable janitor deadlines.",
+      "title": "Bounded-collection canon lacks executable numeric bounds"
+    },
+    {
+      "builder_discretion": false,
+      "confidence": 0.98,
+      "dimensions": ["behavior", "contracts", "states_transitions", "failures_recovery", "propagation", "operations", "concurrency_races", "partial_failure", "recovery_rollback", "acceptance_oracles", "test_falsifiability"],
+      "evidence": [
+        {
+          "exact_quote": "For each event, update only the projections that own it (JSONL mirror, Tantivy, redb snapshot/projector state, analytics enqueue, etc.).",
+          "line_end": 1524,
+          "line_start": 1524,
+          "path": "Plans/storage-plan.md",
+          "source_sha256": "66d19f8d241e488ca19a0f824c24ad28d6bdd89a72abd83bb949b77c234775a1"
+        },
+        {
+          "exact_quote": "Commit the new checkpoint only after the owned projection writes are durable.",
+          "line_end": 1525,
+          "line_start": 1525,
+          "path": "Plans/storage-plan.md",
+          "source_sha256": "66d19f8d241e488ca19a0f824c24ad28d6bdd89a72abd83bb949b77c234775a1"
+        },
+        {
+          "exact_quote": "checkpoints encode enough information to resume without duplicate semantic writes",
+          "line_end": 1544,
+          "line_start": 1544,
+          "path": "Plans/storage-plan.md",
+          "source_sha256": "66d19f8d241e488ca19a0f824c24ad28d6bdd89a72abd83bb949b77c234775a1"
+        }
+      ],
+      "gap_kind": "multi_sink_projector_idempotency_protocol_missing",
+      "impact": "A crash after one sink is durable but before the checkpoint forces replay; without per-sink idempotency, JSONL lines, analytics enqueue, or other effects can duplicate even while another sink is correct.",
+      "item_id": "A005M15-S4-007",
+      "item_type": "gap",
+      "severity": "critical",
+      "source_unit_refs": ["SEMANTIC:PROLOGUE:Plans/storage-plan.md:CONT-005"],
+      "statement": "The projector spans redb, JSONL, Tantivy, and analytics but does not define event-id idempotency, sink commit markers, replay deduplication, or recovery ordering needed to satisfy its no-duplicate semantic-write guarantee.",
+      "title": "Multi-sink projector cannot yet prove exactly-once semantic effects"
+    }
+  ],
+  "model": "gpt-5.6-sol",
+  "phase": "blind_macro_window_review",
+  "reasoning_effort": "xhigh",
+  "schema_version": "macro-review-result-v1",
+  "segments": [
+    {
+      "core_range": [158, 489],
+      "covered_source_unit_refs": ["SEMANTIC:PROLOGUE:Plans/storage-plan.md:CONT-002"],
+      "item_ids": ["A005M15-S1-001", "A005M15-S1-002", "A005M15-S1-003", "A005M15-S1-004", "A005M15-S1-005"],
+      "reviewed": true,
+      "summary": "Reviewed the complete storage architecture, identity, regex-index, remote-cache, binary-format, seglog wire, replay, EventRecord, security, migration, failure, concurrency, and acceptance-oracle content. Authority and collision correctness are explicit; adversarial review found unresolved remote-submodule trust, compressed-payload bounds, and corrupt-frame recovery contracts.",
+      "window_id": "WIN-510B3DE676A3-0002"
+    },
+    {
+      "core_range": [490, 874],
+      "covered_source_unit_refs": ["SEMANTIC:PROLOGUE:Plans/storage-plan.md:CONT-003"],
+      "item_ids": ["A005M15-S2-001", "A005M15-S2-002", "A005M15-S2-003", "A005M15-S2-004", "A005M15-S2-005"],
+      "reviewed": true,
+      "summary": "Reviewed every registry, coordination, record/projection, receipt, attention, evidence, redaction, privileged-session, freshness, attribution, worktree/lane, migration, temporal, retention, and recovery rule. Partial materialization is honestly bounded; cross-store CAS recovery, immutable update semantics, partial bulk rollback, and sensitive-residue cleanup remain under-specified.",
+      "window_id": "WIN-510B3DE676A3-0003"
+    },
+    {
+      "core_range": [875, 1145],
+      "covered_source_unit_refs": ["SEMANTIC:PROLOGUE:Plans/storage-plan.md:CONT-004"],
+      "item_ids": ["A005M15-S3-001", "A005M15-S3-002", "A005M15-S3-003", "A005M15-S3-004", "A005M15-S3-005"],
+      "reviewed": true,
+      "summary": "Reviewed every stale-window, scope, panel-state, cross-process mutation, worktree/SCM identity, deep-link, account-switch, retention, provider/runtime family, investigation, blocked projection, GitHub Actions, bundle/note/revision, composer, and audit-event rule. Tombstone behavior is strong; override fencing, destructive file identity, fingerprint canon, and approval authority contain critical negative-space gaps.",
+      "window_id": "WIN-510B3DE676A3-0004"
+    },
+    {
+      "core_range": [1146, 1541],
+      "covered_source_unit_refs": ["SEMANTIC:PROLOGUE:Plans/storage-plan.md:CONT-005"],
+      "item_ids": ["A005M15-S4-001", "A005M15-S4-002", "A005M15-S4-003", "A005M15-S4-004", "A005M15-S4-005", "A005M15-S4-006", "A005M15-S4-007"],
+      "reviewed": true,
+      "summary": "Reviewed every preview/browser, artifact/worktree/lane, provider/runtime, projection, terminal, lock/root, atomic rewrite, migration-backup, bounded-collection, mmap/build-concurrency, projector, mirror, rebuild, and checkpoint line. Adversarial review found raw browser-secret persistence, competing terminal key canon, missing terminal privacy lifecycle, incomplete fencing and atomic-promotion durability, non-materialized bounds, and unproven multi-sink idempotency.",
+      "window_id": "WIN-510B3DE676A3-0005"
+    }
+  ],
+  "self_attestation": {
+    "no_canonical_writes": true,
+    "no_external_research_during_blind_review": true,
+    "no_peer_result_access": true,
+    "no_prior_audit_access": true,
+    "no_unrelated_source_access": true,
+    "terminal_after_submission": true
+  },
+  "source_binding": {
+    "bundle_id": "MACRO15-510B3DE676A3-0001",
+    "document_path": "Plans/storage-plan.md",
+    "micro_window_ids": ["WIN-510B3DE676A3-0002", "WIN-510B3DE676A3-0003", "WIN-510B3DE676A3-0004", "WIN-510B3DE676A3-0005"],
+    "source_sha256": "66d19f8d241e488ca19a0f824c24ad28d6bdd89a72abd83bb949b77c234775a1"
+  },
+  "status": "completed",
+  "synthesis": {
+    "cross_document_questions": [
+      "Does FileSafe define canonical root normalization, stale-lock recovery, fencing tokens, and override authority for the storage lock contract?",
+      "Do Contracts_V0 and browser owner schemas forbid secret-bearing custom headers, URLs, cookies, and localStorage from durable browser profile/session values?",
+      "Which terminal key decomposition is authoritative, and where is the exact migration crosswalk between the workspace/section/tab/pane families and terminal_session/layout/history/profile/env/cwd/scroll families?",
+      "Which owner contract supplies per-sink projector idempotency for JSONL, Tantivy, redb, and analytics enqueue after a crash-before-checkpoint?",
+      "Where are distinct approver identity, authority snapshot, revocation, and auto-merge transition rules owned for bundle review gates?"
+    ],
+    "feature_family_keys": [
+      "storage.multi_store_authority",
+      "storage.regex_index_remote_cache",
+      "storage.seglog_event_record",
+      "storage.value_registry",
+      "storage.coordination_projection",
+      "storage.receipt_evidence_redaction",
+      "storage.scm_worktree_identity",
+      "storage.bundle_revision_annotations",
+      "storage.browser_persistence",
+      "storage.terminal_persistence",
+      "storage.lock_root_atomic_rewrite",
+      "storage.bounded_collections",
+      "storage.projector_checkpointing"
+    ],
+    "research_queries": [
+      "crash-consistent exactly-once projection across append-only log redb JSONL Tantivy queue",
+      "cross-platform atomic file replacement fsync parent directory Windows replace existing semantics",
+      "secure browser profile persistence custom headers cookies localStorage credential isolation",
+      "untrusted git submodule URL protocol credential forwarding recursive clone threat model",
+      "LZ4 framed payload decompression limits expansion ratio denial of service"
+    ]
+  },
+  "task_thread_id": "/root/a005m15_000213_attempt_0015_terminal"
+}

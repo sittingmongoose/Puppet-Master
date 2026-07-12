@@ -1,0 +1,53 @@
+{
+  "audit_id": "audit-20260710-005-plan-assurance-model-lanes-fresh-agent-exhaustive",
+  "epoch_id": "cross-shard-epoch-0001",
+  "batch_id": "cross-shard-batch-0001",
+  "checker": "cross_shard_luna_prelaunch_v1",
+  "controller_thread_id": "019f5078-6501-7223-b52f-2251010bdc41",
+  "model": "gpt-5.6-luna",
+  "reasoning_effort": "max",
+  "status": "pass",
+  "errors": [],
+  "independently_reconstructed": true,
+  "comparison_verifiers": {
+    "verify_cross_shard_epoch": "pass",
+    "verify_cross_shard_batch": "pass",
+    "test_cross_shard_validator": "pass"
+  },
+  "counts": {
+    "assignments": 32,
+    "shard_pairs": 11,
+    "multi_shard_domains": 6,
+    "provisional_features": 3888
+  },
+  "owner_active_sha256": "67ca453ab6145cbad08e66c63c00b58f620a05154a5e114208371d28f28be5c2",
+  "owner_provisional_ledger_sha256": "a53e72afb5f52e7e95797f2179c7fd8da14ebf6e148efd544781614784113267",
+  "epoch_authority_sha256": "e5a8a03b652d9a17670be5becd319ee21f471f15a4e04721e1e89a1c4ca8e6a5",
+  "epoch_launch_seal_sha256": "7262ddd0ccca3150f027c06f8a3f9e548cc638d90072649e4e1480cad9394523",
+  "batch_authority_sha256": "35dd92ab0b6f56da2371a9393e3f47bccc37896b25d2961a1b78d261135ab6c4",
+  "batch_manifest_sha256": "105256f96adaf0993251b555119bc868aca99918f9c745f7e16d599dd5005fc4",
+  "epoch_local_prelaunch_sha256": "5014c2658b11d17cebd52c611ebea74901e50de1439e2a50b338b2ecb04db7be",
+  "packet_bytes_max": 370254,
+  "mechanical_bindings": {
+    "exact_32_intents_and_assignment_records": true,
+    "all_intent_packet_schema_output_receipt_bindings": true,
+    "all_outputs_empty": true,
+    "all_receipts_absent": true,
+    "exact_11_unordered_pairs_across_6_domains": true,
+    "exact_left_anchor_partition_per_pair": true,
+    "full_right_comparator_set_in_every_slice": true,
+    "same_domain_and_anchor_comparator_nonoverlap": true,
+    "packet_hashes_and_750000_byte_cap": true,
+    "leaf_prompt_exhaustive_comparison_semantics": true,
+    "zero_credit_and_canonical_writes_forbidden": true,
+    "canonical_plan_changes": 0
+  },
+  "strict_tests": {
+    "valid_synthetic_passed": true,
+    "extra_nested_key_rejected": true,
+    "omitted_anchor_rejected": true,
+    "foreign_comparator_rejected": true,
+    "candidate_related_overlap_rejected": true,
+    "incomplete_comparison_count_rejected": true
+  }
+}
