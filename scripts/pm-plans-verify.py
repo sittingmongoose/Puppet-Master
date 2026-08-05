@@ -670,6 +670,17 @@ def validate_schema(instance: Any, schema: Any, root_schema: dict[str, Any] | No
         if all(any_errors):
             errors.append(f"{path}: did not match anyOf")
 
+    if "oneOf" in schema:
+        matching_branches = sum(
+            not validate_schema(instance, sub, root_schema, path)
+            for sub in schema["oneOf"]
+        )
+        if matching_branches != 1:
+            errors.append(f"{path}: matched {matching_branches} oneOf branches instead of exactly one")
+
+    if "not" in schema and not validate_schema(instance, schema["not"], root_schema, path):
+        errors.append(f"{path}: matched forbidden not schema")
+
     expected_type = schema.get("type")
     if expected_type is not None:
         expected_types = expected_type if isinstance(expected_type, list) else [expected_type]
@@ -687,6 +698,11 @@ def validate_schema(instance: Any, schema: Any, root_schema: dict[str, Any] | No
             errors.append(f"{path}: shorter than minLength {schema['minLength']}")
         if "pattern" in schema and not re.search(schema["pattern"], instance):
             errors.append(f"{path}: does not match pattern {schema['pattern']}")
+        if schema.get("format") == "date-time" and not re.match(
+            r"^\d{4}-\d{2}-\d{2}T\d{2}:\d{2}:\d{2}(?:\.\d+)?Z$",
+            instance,
+        ):
+            errors.append(f"{path}: is not a UTC RFC 3339 date-time")
 
     if isinstance(instance, (int, float)) and not isinstance(instance, bool):
         if "minimum" in schema and instance < schema["minimum"]:
@@ -721,6 +737,14 @@ def validate_schema(instance: Any, schema: Any, root_schema: dict[str, Any] | No
         for key in schema.get("required", []):
             if key not in instance:
                 errors.append(f"{path}: missing required key {key}")
+        for trigger, dependents in schema.get("dependentRequired", {}).items():
+            if trigger not in instance:
+                continue
+            for dependent in dependents:
+                if dependent not in instance:
+                    errors.append(
+                        f"{path}: key {trigger} requires dependent key {dependent}"
+                    )
         properties = schema.get("properties", {})
         for key, value in instance.items():
             if key in properties:
@@ -3122,7 +3146,7 @@ USAGE_ROUTE_COMMAND_IDS = {
     "cmd.artifacts.show_in_ledger",
 }
 BROWSER_COMMAND_EXPECTED_EVENTS = {
-    "cmd.browser.open_workspace_preview": ["browser.session.created", "browser.session.state_changed"],
+    "cmd.browser.open_workspace_preview": ["workspace.layout_changed", "browser.session.created", "browser.session.state_changed"],
     "cmd.browser.open_detached_preview": ["browser.session.created", "browser.session.state_changed"],
     "cmd.browser.detach_browser_tab": ["browser.session.state_changed"],
     "cmd.browser.pick_element_for_chat": ["browser.context_captured"],

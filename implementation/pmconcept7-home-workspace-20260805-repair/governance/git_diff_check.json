@@ -1,0 +1,43 @@
+{
+  "schema_id": "pm.pm7_home_workspace_git_diff_check.v1",
+  "status": "FAIL_WITH_SCOPED_PASS",
+  "checks": {
+    "staged_all_default_whitespace_policy": {
+      "exit_code": 2,
+      "finding_count": 47811,
+      "findings_by_path": {
+        "Concepts/pm7-tools/base/PM7-base.html": 47747,
+        "Concepts/PMConcept7.html": 64
+      },
+      "disposition": "The pinned base is CRLF and default Git whitespace policy counts every CR as trailing whitespace. The generated artifact also contains 64 inherited or authored blank-line/trailing-space findings. The base was not normalized because that would violate the immutable raw-base hash and generated-lineage contract."
+    },
+    "staged_all_cr_at_eol_policy": {
+      "exit_code": 2,
+      "finding_count": 129,
+      "findings_by_path": {
+        "Concepts/pm7-tools/base/PM7-base.html": 65,
+        "Concepts/PMConcept7.html": 64
+      },
+      "disposition": "Treating CR as an end-of-line marker isolates 129 real trailing-space findings in the pinned base and its generated output. No output-only cleanup was performed."
+    },
+    "staged_non_concept_scope": {
+      "command": "git diff --cached --check -- Plans scripts implementation/pmconcept7-home-workspace-20260805-repair",
+      "exit_code": 0,
+      "finding_count": 0,
+      "status": "PASS"
+    },
+    "global_unstaged_default_whitespace_policy": {
+      "exit_code": 2,
+      "finding_count": 143243,
+      "primary_paths": {
+        "Concepts/PMConcept6.html": 47747,
+        "Concepts/pm6-build/PMConcept6.assembled.html": 47747,
+        "Concepts/pm6-build/PMConcept6.working.html": 47747,
+        "Concepts/pm6-build/parts/01-head-prelude.part.html": 1,
+        "Concepts/pm6-build/parts/10x-pm6-css-global.part.html": 1
+      },
+      "disposition": "These are untouched pre-existing PM6 worktree changes and were not staged or repaired."
+    }
+  },
+  "claim_boundary": "The required check was executed and is not claimed passing. Canonical, validator, and repair-evidence staged paths pass independently; PM7 lineage files remain fail-closed on their preserved whitespace."
+}

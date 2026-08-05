@@ -1,0 +1,176 @@
+{
+  "url": "http://127.0.0.1:8741/PMConcept7.html",
+  "parity": {
+    "loadErrors": [],
+    "sweepNewErrors": [],
+    "themes": {
+      "friendly-dark": {
+        "bodyBg": "rgb(33, 30, 38)",
+        "glassBgShown": "none"
+      },
+      "friendly-light": {
+        "bodyBg": "rgb(251, 247, 243)",
+        "glassBgShown": "none"
+      },
+      "retro-dark": {
+        "bodyBg": "rgb(26, 26, 26)",
+        "glassBgShown": "none"
+      },
+      "retro-light": {
+        "bodyBg": "rgb(245, 240, 232)",
+        "glassBgShown": "none"
+      },
+      "basic-light": {
+        "bodyBg": "rgb(234, 236, 239)",
+        "glassBgShown": "none"
+      },
+      "basic-dark": {
+        "bodyBg": "rgb(18, 18, 18)",
+        "glassBgShown": "none"
+      },
+      "glass-dark": {
+        "bodyBg": "rgb(36, 27, 54)",
+        "glassBgShown": "block"
+      },
+      "glass-light": {
+        "bodyBg": "rgb(228, 205, 228)",
+        "glassBgShown": "block"
+      }
+    },
+    "glass": {
+      "modes": {
+        "mesh": {
+          "mesh": "block",
+          "depth": "none",
+          "minimal": "none"
+        },
+        "depth": {
+          "mesh": "none",
+          "depth": "block",
+          "minimal": "none"
+        },
+        "minimal": {
+          "mesh": "none",
+          "depth": "none",
+          "minimal": "block"
+        }
+      },
+      "alpha": {
+        "min": "rgba(0, 0, 0, 0)",
+        "mid": "rgba(0, 0, 0, 0)",
+        "max": "rgba(0, 0, 0, 0)"
+      }
+    },
+    "settingsSearch": {
+      "rows": 16,
+      "first": "Project nameProject overrideWhat this project is called across the app."
+    },
+    "settingsBloom": {
+      "open": true,
+      "rows": 57
+    },
+    "settingsDeepLink": {
+      "open": true,
+      "flashed": 0
+    },
+    "chatThreadSwitch": {
+      "items": 18,
+      "activeIdx": 1,
+      "streamChildren": null
+    },
+    "chatModelPopout": {
+      "popouts": 1,
+      "firstText": "Claude*Opus 4.6High*Sonnet 4.6High*Haiku 4.5MediumCodexoGPT-"
+    },
+    "chatFab": {
+      "portal": true,
+      "active": true,
+      "items": 1
+    },
+    "floatingChat": {
+      "afterPopOut": {
+        "floatShown": "flex",
+        "overlay": true,
+        "panelHidden": true
+      },
+      "afterCycle": {
+        "floatShown": "none",
+        "overlay": false,
+        "panelHidden": false
+      }
+    },
+    "wizard": {
+      "stage": "workspace",
+      "engineStage": "approved"
+    },
+    "orchestrator": {
+      "tabs": {
+        "progress": "true",
+        "plan_compile": "true",
+        "seams": "true",
+        "node_graph": "true",
+        "evidence": "true",
+        "history": "true",
+        "ledger": "true"
+      },
+      "inspector": {
+        "visible": true,
+        "head": " Node inspector n-01 recipes table + revisionsn-01 · queuedq"
+      },
+      "nodeClicked": "n-01"
+    },
+    "terminal": {
+      "panesAfter3Splits": 3,
+      "panesAfterGuard": 3,
+      "guardToast": null
+    },
+    "editorOverflow": {
+      "filesOpened": 8,
+      "moreChips": 2,
+      "chipText": "+3 more",
+      "editorTabs": 0
+    },
+    "widgetDrag": {
+      "attempted": true,
+      "newErrors": [],
+      "order": [
+        "orchestrator-progress",
+        "active-lanes",
+        "recent-results",
+        "custom-metrics",
+        "usage.quota_summary",
+        "usage.budget_donuts",
+        "usage.analytics_chart",
+        "orch.lane_health"
+      ]
+    },
+    "devPanel": {
+      "open": true,
+      "playToggle": {
+        "before": false,
+        "after": true
+      },
+      "chapterJump": true,
+      "resetAvailable": true,
+      "resetStory": {
+        "c1_wizard_done": false,
+        "c2_compiled": false,
+        "c3_run_complete": false,
+        "c4_pr_merged": false,
+        "c5_published": false
+      }
+    },
+    "reducedMotion": {
+      "attr": "reduced",
+      "cleared": null
+    },
+    "totalConsoleErrors": 0
+  },
+  "info": {
+    "bakedWallpaper": {
+      "meshLayerUsesWebpData": false,
+      "gradientCount": 0
+    }
+  },
+  "errors": []
+}

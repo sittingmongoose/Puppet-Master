@@ -1,0 +1,1663 @@
+ M Concepts/PMConcept6.html
+ M Concepts/pm6-build/PMConcept6.assembled.html
+ M Concepts/pm6-build/PMConcept6.working.html
+ M Concepts/pm6-build/README.md
+ M Concepts/pm6-build/carve.py
+ M Concepts/pm6-build/contracts/HOOKS.md
+ M Concepts/pm6-build/manifest.json
+ M Concepts/pm6-build/parts/01-head-prelude.part.html
+ M Concepts/pm6-build/parts/02-css-tokens.part.html
+ M Concepts/pm6-build/parts/03-css-glass-a.part.html
+ M Concepts/pm6-build/parts/04-css-glass-b.part.html
+ M Concepts/pm6-build/parts/05-css-shell.part.html
+ M Concepts/pm6-build/parts/06-css-components-a.part.html
+ M Concepts/pm6-build/parts/07-css-components-b.part.html
+ M Concepts/pm6-build/parts/08-css-components-c.part.html
+ M Concepts/pm6-build/parts/09-css-bento-themes.part.html
+ M Concepts/pm6-build/parts/10-css-settings.part.html
+ M Concepts/pm6-build/parts/10x-pm6-css-bottom.part.html
+ M Concepts/pm6-build/parts/10x-pm6-css-chat.part.html
+ M Concepts/pm6-build/parts/10x-pm6-css-dashboard.part.html
+ M Concepts/pm6-build/parts/10x-pm6-css-global.part.html
+ M Concepts/pm6-build/parts/10x-pm6-css-orchestrator.part.html
+ M Concepts/pm6-build/parts/10x-pm6-css-projects.part.html
+ M Concepts/pm6-build/parts/10x-pm6-css-wizard.part.html
+ M Concepts/pm6-build/parts/11-html-shell-open.part.html
+ M Concepts/pm6-build/parts/12-html-side-panels.part.html
+ M Concepts/pm6-build/parts/14-page-dashboard.part.html
+ M Concepts/pm6-build/parts/16-page-wizard.part.html
+ M Concepts/pm6-build/parts/18-page-usage.part.html
+ M Concepts/pm6-build/parts/20-html-bottom-panel.part.html
+ M Concepts/pm6-build/parts/22-html-status-toast.part.html
+ M Concepts/pm6-build/parts/23-html-floating-chat.part.html
+ M Concepts/pm6-build/parts/24-js-main.part.html
+ M Concepts/pm6-build/parts/25-js-terminal-demo.part.html
+ M Concepts/pm6-build/parts/26-js-prd-annotations.part.html
+ M Concepts/pm6-build/parts/29-js-settings-engine.part.html
+ M Concepts/pm6-build/parts/29x-pm6-js-bottom.part.html
+ M Concepts/pm6-build/parts/29x-pm6-js-chat-data.part.html
+ M Concepts/pm6-build/parts/29x-pm6-js-chat.part.html
+ M Concepts/pm6-build/parts/29x-pm6-js-dashboard.part.html
+ M Concepts/pm6-build/parts/29x-pm6-js-demo-files.part.html
+ M Concepts/pm6-build/parts/29x-pm6-js-globals.part.html
+ M Concepts/pm6-build/parts/29x-pm6-js-panels.part.html
+ M Concepts/pm6-build/sidecar/pm_settings_data.json
+ M Plans/.audits/CURRENT_AUDIT_STATUS.md
+ M Plans/.audits/_audit_status_index.json
+ M Plans/.audits/_semantic_closure_registry.jsonl
+ M Plans/.evidence/file-manager-editor-ledger-audit-2026-06-11/evidence.json
+ M Plans/.evidence/final-build-governance-seal-2026-06-09/evidence.json
+ M Plans/.evidence/goal-runtime-system-governance-seal-2026-06-16/evidence.json
+ M Plans/.evidence/ledger-transfer-certification-2026-06-09/evidence.json
+ M Plans/.evidence/orchestrator-goal-runtime-flow-post-audit-repair-2026-06-16/evidence.json
+ M Plans/.evidence/p6-personas-ledger-transfer-2026-06-11/evidence.json
+ M Plans/.evidence/part3-fable-cleanup-governance-seal-2026-06-15/evidence.json
+ M Plans/.evidence/part4-fable-cleanup-post-audit-repair-2026-06-15/evidence.json
+ M Plans/.evidence/plan-sharding-2026-06-09/evidence.json
+ M Plans/.evidence/plan-sharding-2026-06-09/reports/shard_report.json
+ M Plans/.evidence/plan-sharding-2026-06-09/shard_report.json
+ M Plans/.evidence/pm6-concept-promotion-planunits-2026-07-11/evidence.json
+ M Plans/.evidence/spec-lock-support-refresh-2026-06-09/evidence.json
+ M Plans/.evidence/tier-0c-2-storage-value-registry/evidence.json
+ M Plans/.implementation_readiness/buildability_gate_report.json
+ M Plans/.implementation_readiness/pnc019_certification_receipt.json
+ M Plans/.plan_index/acceptance_units.jsonl
+ M Plans/.plan_index/coverage_report.json
+ M Plans/.plan_index/dependencies.json
+ M Plans/.plan_index/doc_cards.json
+ M Plans/.plan_index/node_readiness_report.json
+ M Plans/.plan_index/plan_units.jsonl
+ M Plans/.plan_migration/pds-20260611-002-atomize-planunits/batch_report.jsonl
+ M Plans/.plan_migration/pds-20260611-002-atomize-planunits/final_validation_summary.json
+ M Plans/.plan_migration/pds-20260611-002-atomize-planunits/validation_report.json
+ M Plans/00-plans-index.md
+ M Plans/Architecture_Invariants.md
+ M Plans/Automated_Testing_System.md
+ M Plans/Commands_System.md
+ M Plans/Containers_Registry_and_Unraid.md
+ M Plans/Contracts_V0.md
+ M Plans/DRY_Rules.md
+ M Plans/Decision_Log.md
+ M Plans/Executor_Protocol.md
+ M Plans/FileManager.md
+ M Plans/FileSafe.md
+ M Plans/FinalGUISpec.md
+ M Plans/GUI_Rebuild_Requirements_Checklist.md
+ M Plans/GitHub_Integration.md
+ M Plans/Glossary.md
+ M Plans/Goal_Runtime_System.md
+ M Plans/Models_System.md
+ M Plans/Multi-Account.md
+ M Plans/Orchestrator_Page.md
+ M Plans/Permissions_System.md
+ M Plans/Personas.md
+ M Plans/Planning_Wizard.md
+ M Plans/Provider_OpenCode.md
+ M Plans/Release_Supply_Chain.md
+ M Plans/Run_Graph_View.md
+ M Plans/Run_Modes.md
+ M Plans/Runtime_Artifacts_Panel.md
+ M Plans/Section15_MVP_Promoted_Features_Spec.md
+ M Plans/Spec_Lock.json
+ M Plans/UI_Command_Catalog.md
+ M Plans/UI_Wiring_Rules.md
+ M Plans/Widget_System.md
+ M Plans/Wiring_Matrix.md
+ M Plans/Wiring_Matrix.production.exclusions.json
+ M Plans/Wiring_Matrix.production.json
+ M Plans/WorktreeGitImprovement.md
+ M Plans/_shards/00-plans-index/00-index.md
+ M Plans/_shards/00-plans-index/001-preamble.md
+ M Plans/_shards/00-plans-index/002-change-summary.md
+ M Plans/_shards/00-plans-index/003-anti-drift-layer-required-reading-order.md
+ M Plans/_shards/00-plans-index/004-rewrite-tie-in-2026-02-21.md
+ M Plans/_shards/00-plans-index/005-plan-map.md
+ M Plans/_shards/00-plans-index/006-known-cross-cutting-duplication-hotspots.md
+ M Plans/_shards/00-plans-index/007-shard-indexes.md
+ M Plans/_shards/00-plans-index/008-2026-03-07-addendum-containers-registry-and-unraid.md
+ M Plans/_shards/00-plans-index/009-runtime-packet-index-coverage-consolidation-addendum-2026-03-09.md
+ M Plans/_shards/00-plans-index/010-2026-03-12-addendum-source-control-github-actions-and-docker-man.md
+ M Plans/_shards/00-plans-index/011-web-tools-firecrawl-missing-spec-owner-alignment-note-2026-03-30.md
+ M Plans/_shards/00-plans-index/012-a2a-opencode-research-packet-map-2026-03-28.md
+ M Plans/_shards/00-plans-index/013-owner-consumer-map.md
+ M Plans/_shards/00-plans-index/014-planunits.md
+ M Plans/_shards/00-plans-index/015-migration-coverage.md
+ M Plans/_shards/00-plans-index/016-ledger-compile-addendum-pldg-20260618-001-prd-planning-wizard.md
+ M Plans/_shards/00-plans-index/017-ledger-compile-addendum-pldg-20260624-001-provider-updates.md
+ M Plans/_shards/00-plans-index/018-ledger-compile-addendum-pldg-20260626-001-feature-name.md
+ M Plans/_shards/00-plans-index/019-ledger-compile-addendum-pldg-20260627-001-feature-intake.md
+ M Plans/_shards/00-plans-index/020-ledger-compile-addendum-pldg-20260629-001-feature-name.md
+ M Plans/_shards/00-plans-index/021-ledger-compile-addendum-pldg-20260630-001-feature-intake.md
+ M Plans/_shards/00-plans-index/022-ledger-compile-addendum-pldg-20260703-001-feature-intake.md
+ M Plans/_shards/00-plans-index/manifest.json
+ M Plans/_shards/agent-rules-context/00-index.md
+ M Plans/_shards/agent-rules-context/manifest.json
+ M Plans/_shards/architecture_invariants/00-index.md
+ M Plans/_shards/architecture_invariants/001-preamble.md
+ M Plans/_shards/architecture_invariants/002-0.-scope.md
+ M Plans/_shards/architecture_invariants/003-inv-001-tool-correlation-integrity-normalized-streams-persisted-.md
+ M Plans/_shards/architecture_invariants/004-inv-002-no-secrets-in-persistent-storage.md
+ M Plans/_shards/architecture_invariants/005-inv-003-ui-ssot-no-bespoke-ui-behavior.md
+ M Plans/_shards/architecture_invariants/006-inv-004-ui-command-boundary-no-business-logic-in-ui.md
+ M Plans/_shards/architecture_invariants/007-inv-005-deterministic-ordering-from-ssot-lists.md
+ M Plans/_shards/architecture_invariants/008-inv-006-providers-are-storage-isolated.md
+ M Plans/_shards/architecture_invariants/009-inv-007-no-stringly-typed-ids-outside-ssot.md
+ M Plans/_shards/architecture_invariants/010-inv-008-github-operations-are-api-only.md
+ M Plans/_shards/architecture_invariants/011-inv-009-cursor-transport-is-invisible-to-consumers.md
+ M Plans/_shards/architecture_invariants/012-inv-010-platform-naming-compliance.md
+ M Plans/_shards/architecture_invariants/013-inv-011-ui-command-dispatch-only-rule-1.md
+ M Plans/_shards/architecture_invariants/014-inv-012-wiring-matrix-coverage-rule-2.md
+ M Plans/_shards/architecture_invariants/015-inv-013-pre-dispatch-tool-validation.md
+ M Plans/_shards/architecture_invariants/016-inv-014-shared-mutable-state-requires-rwmutex.md
+ M Plans/_shards/architecture_invariants/017-inv-015-monetary-values-are-integer-microdollars.md
+ M Plans/_shards/architecture_invariants/018-inv-016-token-fields-are-never-aggregated-at-storage-layer.md
+ D Plans/_shards/architecture_invariants/019-inv-017-file-mutations-are-atomic-temp-fsync-rename.md
+ D Plans/_shards/architecture_invariants/020-inv-018-seglog-crc32-is-mandatory.md
+ M Plans/_shards/architecture_invariants/021-contract-driven-code-generation-lightweight-dry.md
+ M Plans/_shards/architecture_invariants/022-validation-gated-autonomous.md
+ M Plans/_shards/architecture_invariants/023-debug-investigation-invariants-addendum-2026-03-23.md
+ M Plans/_shards/architecture_invariants/024-inv-019-runtime-identity-and-blocked-policy-continuity.md
+ M Plans/_shards/architecture_invariants/025-inv-020-project-driven-capability-activation.md
+ M Plans/_shards/architecture_invariants/026-inv-021-dependency-driven-seam-reconciliation-order.md
+ M Plans/_shards/architecture_invariants/027-inv-022-service-bound-native-workbench-architecture.md
+ M Plans/_shards/architecture_invariants/028-inv-023-investigation-lifecycle-budgets-are-typed.md
+ M Plans/_shards/architecture_invariants/029-inv-024-debug-mode-evidence-planes-stay-explicit.md
+ M Plans/_shards/architecture_invariants/030-inv-025-provider-profile-isolation-is-not-shared-mutable-state.md
+ M Plans/_shards/architecture_invariants/031-inv-026-web-provider-recovery-consumers-defer-to-owner-contracts.md
+ D Plans/_shards/architecture_invariants/032-owner-consumer-map.md
+ D Plans/_shards/architecture_invariants/033-planunits.md
+ D Plans/_shards/architecture_invariants/034-migration-coverage.md
+ D Plans/_shards/architecture_invariants/035-fable-deferred-action-concrete-repair-addendum-2026-07-08.md
+ M Plans/_shards/architecture_invariants/manifest.json
+ M Plans/_shards/assistant-chat-design/00-index.md
+ M Plans/_shards/assistant-chat-design/001-preamble.md
+ M Plans/_shards/assistant-chat-design/002-canonical-owner-section-requirements.md
+ M Plans/_shards/assistant-chat-design/003-change-summary.md
+ M Plans/_shards/assistant-chat-design/004-rewrite-alignment-2026-02-21.md
+ M Plans/_shards/assistant-chat-design/005-executive-summary.md
+ M Plans/_shards/assistant-chat-design/006-table-of-contents.md
+ M Plans/_shards/assistant-chat-design/007-1.-modes-overview.md
+ M Plans/_shards/assistant-chat-design/008-2.-eli5-mode.md
+ M Plans/_shards/assistant-chat-design/009-3.-permissions-yolo-vs-regular.md
+ M Plans/_shards/assistant-chat-design/010-4.-message-submission-steer-vs-queue-queued-editing-interrupt-an.md
+ M Plans/_shards/assistant-chat-design/011-5.-commands-slash-commands-and-custom-commands.md
+ M Plans/_shards/assistant-chat-design/012-6.-teach.md
+ M Plans/_shards/assistant-chat-design/013-7.-attachments-web-search-and-extensibility.md
+ M Plans/_shards/assistant-chat-design/014-8.-plan-mode-deep-plan-mode-and-plan-thoroughness-pt.md
+ M Plans/_shards/assistant-chat-design/015-9.-file-manager-ide-style-editor-and-mention.md
+ M Plans/_shards/assistant-chat-design/016-10.-chat-history-search.md
+ M Plans/_shards/assistant-chat-design/017-11.-threads-and-chat-management.md
+ M Plans/_shards/assistant-chat-design/018-12.-context-usage-display.md
+ M Plans/_shards/assistant-chat-design/019-13.-activity-transparency-search-bash-and-file-activity.md
+ M Plans/_shards/assistant-chat-design/020-14.-subagents-crew.md
+ M Plans/_shards/assistant-chat-design/021-15.-plan-mode-crew-mode.md
+ M Plans/_shards/assistant-chat-design/022-16.-interview-phase-ux-chat-surface.md
+ M Plans/_shards/assistant-chat-design/023-17.-context-truncation.md
+ M Plans/_shards/assistant-chat-design/024-18.-brainstorm-mode.md
+ M Plans/_shards/assistant-chat-design/025-19.-documentation-audience-ai-overseer.md
+ M Plans/_shards/assistant-chat-design/026-20.-references.md
+ M Plans/_shards/assistant-chat-design/027-21.-dashboard-warnings-and-calls-to-action.md
+ M Plans/_shards/assistant-chat-design/028-22.-live-testing-tools-and-hot-reload.md
+ M Plans/_shards/assistant-chat-design/029-23.-gaps-competitive-comparison-and-enhancements.md
+ M Plans/_shards/assistant-chat-design/030-24.-chat-thread-performance-virtualization-and-flicker-avoidance.md
+ M Plans/_shards/assistant-chat-design/031-25.-context-circle-enhancements-addendum-2026-02-23.md
+ M Plans/_shards/assistant-chat-design/032-26.-auditor-audit-to-repair-loop-model-provider-settings-invaria.md
+ M Plans/_shards/assistant-chat-design/033-27.-persona-control-in-assistant-chat-2026-03-06.md
+ M Plans/_shards/assistant-chat-design/034-28.-markdown-and-mermaid-rendering-in-chat-and-planning-surfaces.md
+ M Plans/_shards/assistant-chat-design/035-29.-natural-language-mode-invocation-and-wizard-escalation-2026-.md
+ M Plans/_shards/assistant-chat-design/036-unified-thread-blocked-state-lifecycle.md
+ M Plans/_shards/assistant-chat-design/037-worktrees-in-assistant.md
+ M Plans/_shards/assistant-chat-design/038-ledger-compile-addendum-pldg-20260630-001-feature-intake.md
+ M Plans/_shards/assistant-chat-design/039-ledger-compile-addendum-pldg-20260624-001-provider-updates.md
+ M Plans/_shards/assistant-chat-design/040-shared-actor-boundary-route-payload-and-blocked_notice-packet.md
+ M Plans/_shards/assistant-chat-design/041-shared-conversational-actor-runtime-identity.md
+ M Plans/_shards/assistant-chat-design/042-chat-route-permission-and-history-behaviors.md
+ M Plans/_shards/assistant-chat-design/043-owner-consumer-map.md
+ M Plans/_shards/assistant-chat-design/044-planunits.md
+ M Plans/_shards/assistant-chat-design/045-migration-coverage.md
+ M Plans/_shards/assistant-chat-design/046-ledger-compile-addendum-pldg-20260614-001.md
+ M Plans/_shards/assistant-chat-design/047-ledger-compile-addendum-pldg-20260615-001.md
+ M Plans/_shards/assistant-chat-design/048-ledger-compile-addendum-pldg-20260616-001.md
+ M Plans/_shards/assistant-chat-design/049-ledger-compile-addendum-pldg-20260616-002.md
+ M Plans/_shards/assistant-chat-design/050-ledger-compile-addendum-pldg-20260618-001-prd-planning-wizard.md
+ M Plans/_shards/assistant-chat-design/051-ledger-compile-addendum-pldg-20260622-001-fff.md
+ M Plans/_shards/assistant-chat-design/052-ledger-compile-addendum-pldg-20260626-001-feature-name.md
+ M Plans/_shards/assistant-chat-design/053-ledger-compile-addendum-pldg-20260627-001-feature-intake.md
+ M Plans/_shards/assistant-chat-design/054-ledger-compile-addendum-pldg-20260701-001-feature-intake.md
+ M Plans/_shards/assistant-chat-design/055-ledger-compile-addendum-pldg-20260703-001-feature-intake.md
+ M Plans/_shards/assistant-chat-design/056-fable-residual-chat-mechanics-cleanup-addendum-2026-07-07.md
+ M Plans/_shards/assistant-chat-design/057-fable-deferred-action-concrete-repair-addendum-2026-07-08.md
+ M Plans/_shards/assistant-chat-design/058-usage-gui-propagation-addendum-2026-07-09.md
+ M Plans/_shards/assistant-chat-design/manifest.json
+ M Plans/_shards/assistant-memory-subsystem/00-index.md
+ M Plans/_shards/assistant-memory-subsystem/manifest.json
+ M Plans/_shards/automated_testing_system/00-index.md
+ M Plans/_shards/automated_testing_system/001-preamble.md
+ M Plans/_shards/automated_testing_system/002-0.-scope.md
+ M Plans/_shards/automated_testing_system/003-1.-ownership-and-consumers.md
+ M Plans/_shards/automated_testing_system/004-2.-canonical-planunits.md
+ M Plans/_shards/automated_testing_system/005-gui-visible-testing-repair-addendum-2026-07-02.md
+ M Plans/_shards/automated_testing_system/006-gui-web-development-and-smoke-test-workflow-addendum-2026-07-07.md
+ M Plans/_shards/automated_testing_system/007-3.-contracts-schemas-events-or-data-shapes.md
+ M Plans/_shards/automated_testing_system/008-4.-integration-surfaces.md
+ M Plans/_shards/automated_testing_system/009-5.-validation-and-acceptance.md
+ M Plans/_shards/automated_testing_system/010-6.-plan-to-node-readiness.md
+ M Plans/_shards/automated_testing_system/011-7.-deferred-retired-compatibility-and-non-goals.md
+ M Plans/_shards/automated_testing_system/012-8.-source-lineage-and-governance.md
+ M Plans/_shards/automated_testing_system/013-ledger-compile-addendum-pldg-20260618-001-prd-planning-wizard.md
+ M Plans/_shards/automated_testing_system/014-ledger-compile-addendum-pldg-20260622-001-fff.md
+ M Plans/_shards/automated_testing_system/015-ledger-compile-addendum-pldg-20260626-001-feature-name.md
+ M Plans/_shards/automated_testing_system/016-ledger-compile-addendum-pldg-20260627-001-feature-intake.md
+ M Plans/_shards/automated_testing_system/017-ledger-compile-addendum-pldg-20260630-001-feature-intake.md
+ M Plans/_shards/automated_testing_system/018-ledger-compile-addendum-pldg-20260701-001-feature-intake.md
+ M Plans/_shards/automated_testing_system/019-ledger-compile-addendum-pldg-20260703-001-feature-intake.md
+ D Plans/_shards/automated_testing_system/020-fable-deferred-action-concrete-repair-addendum-2026-07-08.md
+ D Plans/_shards/automated_testing_system/021-fable-remaining-action-plan-repair-notes-2026-07-08.md
+ M Plans/_shards/automated_testing_system/manifest.json
+ M Plans/_shards/binarylocator_spec/00-index.md
+ M Plans/_shards/binarylocator_spec/manifest.json
+ M Plans/_shards/bootstrap_planning_migration/00-index.md
+ M Plans/_shards/bootstrap_planning_migration/manifest.json
+ M Plans/_shards/chain-wizard-flexibility/00-index.md
+ M Plans/_shards/chain-wizard-flexibility/manifest.json
+ M Plans/_shards/cli_bridged_providers/00-index.md
+ M Plans/_shards/cli_bridged_providers/manifest.json
+ M Plans/_shards/commands_system/00-index.md
+ M Plans/_shards/commands_system/001-preamble.md
+ M Plans/_shards/commands_system/002-0.-scope-and-ssot-status.md
+ M Plans/_shards/commands_system/003-1.-definitions.md
+ M Plans/_shards/commands_system/004-2.-storage-and-discovery.md
+ M Plans/_shards/commands_system/005-3.-command-schema.md
+ M Plans/_shards/commands_system/006-4.-execution-semantics.md
+ M Plans/_shards/commands_system/007-5.-permissions-integration.md
+ M Plans/_shards/commands_system/008-6.-gui-requirements.md
+ M Plans/_shards/commands_system/009-7.-reserved-built-in-slash-commands.md
+ D Plans/_shards/commands_system/010-7.-uicommand-catalog-entry.md
+ D Plans/_shards/commands_system/011-8.-opencode-baseline-and-puppet-master-deltas.md
+ D Plans/_shards/commands_system/012-9.-acceptance-criteria.md
+ M Plans/_shards/commands_system/013-owner-consumer-map.md
+ M Plans/_shards/commands_system/014-planunits.md
+ M Plans/_shards/commands_system/015-migration-coverage.md
+ M Plans/_shards/commands_system/016-ledger-compile-addendum-pldg-20260614-001.md
+ M Plans/_shards/commands_system/017-ledger-compile-addendum-pldg-20260618-001-prd-planning-wizard.md
+ M Plans/_shards/commands_system/018-ledger-compile-addendum-pldg-20260626-001-feature-name.md
+ D Plans/_shards/commands_system/019-fable-deferred-action-concrete-repair-addendum-2026-07-08.md
+ M Plans/_shards/commands_system/manifest.json
+ M Plans/_shards/containers_registry_and_unraid/00-index.md
+ M Plans/_shards/containers_registry_and_unraid/001-preamble.md
+ M Plans/_shards/containers_registry_and_unraid/002-purpose-and-scope.md
+ M Plans/_shards/containers_registry_and_unraid/003-relationship-to-existing-plans.md
+ M Plans/_shards/containers_registry_and_unraid/004-product-goals.md
+ M Plans/_shards/containers_registry_and_unraid/005-user-visible-surfaces.md
+ M Plans/_shards/containers_registry_and_unraid/006-docker-project-detection-and-visibility-rules.md
+ M Plans/_shards/containers_registry_and_unraid/007-authentication-model.md
+ M Plans/_shards/containers_registry_and_unraid/008-dockerhub-repository-discovery-selection-and-creation.md
+ M Plans/_shards/containers_registry_and_unraid/009-build-run-preview-and-publish-flow.md
+ M Plans/_shards/containers_registry_and_unraid/010-unraid-xml-generation-and-distribution-model.md
+ M Plans/_shards/containers_registry_and_unraid/011-unraid-template-repository-setup-layout-and-publishing.md
+ M Plans/_shards/containers_registry_and_unraid/012-ca_profile.xml-behavior.md
+ M Plans/_shards/containers_registry_and_unraid/013-data-state-model-to-preserve-in-implementation-docs.md
+ M Plans/_shards/containers_registry_and_unraid/014-safety-and-constraints.md
+ M Plans/_shards/containers_registry_and_unraid/015-initial-non-goals.md
+ M Plans/_shards/containers_registry_and_unraid/016-acceptance-criteria.md
+ M Plans/_shards/containers_registry_and_unraid/017-remote-side-effect-blocked-payload-normalization-2026-03-09.md
+ M Plans/_shards/containers_registry_and_unraid/018-owner-consumer-map.md
+ M Plans/_shards/containers_registry_and_unraid/019-planunits.md
+ M Plans/_shards/containers_registry_and_unraid/020-ledger-compile-addendum-pldg-20260630-001-feature-intake.md
+ M Plans/_shards/containers_registry_and_unraid/021-migration-coverage.md
+ M Plans/_shards/containers_registry_and_unraid/022-fable-deferred-action-concrete-repair-addendum-2026-07-08.md
+ M Plans/_shards/containers_registry_and_unraid/023-fable-remaining-action-plan-audit-lineage-notes-2026-07-08.md
+ M Plans/_shards/containers_registry_and_unraid/manifest.json
+ M Plans/_shards/contracts_v0/00-index.md
+ M Plans/_shards/contracts_v0/001-preamble.md
+ M Plans/_shards/contracts_v0/002-canonical-owner-section-requirements.md
+ D Plans/_shards/contracts_v0/003-0.-scope.md
+ D Plans/_shards/contracts_v0/004-cross-surface-runtime-concern-and-route-open-contracts.md
+ D Plans/_shards/contracts_v0/005-1.-events-persisted.md
+ D Plans/_shards/contracts_v0/006-provider-model-capability-snapshot-reference-envelope.md
+ D Plans/_shards/contracts_v0/007-ledger-compile-addendum-pldg-20260624-001-provider-updates.md
+ D Plans/_shards/contracts_v0/008-2.-provider-normalized-stream-non-persisted-contract.md
+ D Plans/_shards/contracts_v0/009-3.-tool-events-persisted.md
+ D Plans/_shards/contracts_v0/010-5.-context-management-instruction-scoping-attempt-journaling-par.md
+ D Plans/_shards/contracts_v0/011-6.-hitlrequest.md
+ D Plans/_shards/contracts_v0/012-7.-uicommand.md
+ D Plans/_shards/contracts_v0/013-8.-ui-scaling.md
+ D Plans/_shards/contracts_v0/014-usage-and-billing-contracts-addendum.md
+ D Plans/_shards/contracts_v0/015-scheduler-safe-point-and-remediation-events-addendum-2026-03-08.md
+ D Plans/_shards/contracts_v0/016-runtime-scheduler-attempt-lineage-contract-addendum-2026-03-09.md
+ D Plans/_shards/contracts_v0/017-canonical-runtime-taxonomy-and-event-precedence-canonical-alignm.md
+ D Plans/_shards/contracts_v0/018-canonical-runtime-event-outcome-and-action-contract-canonical-al.md
+ D Plans/_shards/contracts_v0/019-owner-consumer-map.md
+ D Plans/_shards/contracts_v0/020-planunits.md
+ D Plans/_shards/contracts_v0/021-migration-coverage.md
+ D Plans/_shards/contracts_v0/022-ledger-compile-addendum-pldg-20260614-001.md
+ D Plans/_shards/contracts_v0/023-ledger-compile-addendum-pldg-20260614-002.md
+ D Plans/_shards/contracts_v0/024-ledger-compile-addendum-pldg-20260615-001.md
+ D Plans/_shards/contracts_v0/025-ledger-compile-addendum-pldg-20260616-001.md
+ D Plans/_shards/contracts_v0/026-ledger-compile-addendum-pldg-20260616-002.md
+ D Plans/_shards/contracts_v0/027-ledger-compile-addendum-pldg-20260617-001-plans-to-code-handoff.md
+ D Plans/_shards/contracts_v0/028-ledger-compile-addendum-pldg-20260618-001-prd-planning-wizard.md
+ D Plans/_shards/contracts_v0/029-ledger-compile-addendum-pldg-20260622-001-fff.md
+ D Plans/_shards/contracts_v0/030-ledger-compile-addendum-pldg-20260626-001-feature-name.md
+ D Plans/_shards/contracts_v0/031-ledger-compile-addendum-pldg-20260627-001-feature-intake.md
+ D Plans/_shards/contracts_v0/032-ledger-compile-addendum-pldg-20260629-001-feature-name.md
+ D Plans/_shards/contracts_v0/033-ledger-compile-addendum-pldg-20260630-001-feature-intake.md
+ D Plans/_shards/contracts_v0/034-ledger-compile-addendum-pldg-20260701-001-feature-intake.md
+ D Plans/_shards/contracts_v0/035-ledger-compile-addendum-pldg-20260703-001-feature-intake.md
+ D Plans/_shards/contracts_v0/036-fable-residual-feature-contract-cleanup-addendum-2026-07-07.md
+ D Plans/_shards/contracts_v0/037-fable-deferred-action-concrete-repair-addendum-2026-07-08.md
+ D Plans/_shards/contracts_v0/038-usage-gui-propagation-addendum-2026-07-09.md
+ M Plans/_shards/contracts_v0/manifest.json
+ M Plans/_shards/crosswalk/00-index.md
+ M Plans/_shards/crosswalk/manifest.json
+ M Plans/_shards/decision_log/00-index.md
+ M Plans/_shards/decision_log/001-preamble.md
+ M Plans/_shards/decision_log/002-purpose.md
+ M Plans/_shards/decision_log/003-entries.md
+ M Plans/_shards/decision_log/004-owner-consumer-map.md
+ M Plans/_shards/decision_log/005-planunits.md
+ M Plans/_shards/decision_log/006-migration-coverage.md
+ M Plans/_shards/decision_log/007-fable-deferred-action-concrete-repair-addendum-2026-07-08.md
+ M Plans/_shards/decision_log/008-fable-remaining-action-plan-audit-lineage-notes-2026-07-08.md
+ M Plans/_shards/decision_log/manifest.json
+ M Plans/_shards/decision_policy/00-index.md
+ M Plans/_shards/decision_policy/manifest.json
+ M Plans/_shards/document_packaging_policy/00-index.md
+ M Plans/_shards/document_packaging_policy/manifest.json
+ M Plans/_shards/dry_rules/00-index.md
+ M Plans/_shards/dry_rules/001-preamble.md
+ M Plans/_shards/dry_rules/002-0.-scope.md
+ M Plans/_shards/dry_rules/003-1.-ssot-precedence-global.md
+ M Plans/_shards/dry_rules/004-2.-don-t-duplicate-canonical-contracts.md
+ M Plans/_shards/dry_rules/005-3.-index-only-guidance.md
+ M Plans/_shards/dry_rules/006-4.-forbidden-patterns-drift-accelerators.md
+ M Plans/_shards/dry_rules/007-5.-must-shall-required-implies-contractref.md
+ M Plans/_shards/dry_rules/008-6.-contractref-taxonomy-allowed-categories.md
+ M Plans/_shards/dry_rules/009-7.-contractref-annotation-rule-canonical.md
+ M Plans/_shards/dry_rules/010-7.1-packet-fidelity-semantic-matching.md
+ M Plans/_shards/dry_rules/011-8.-reference-style.md
+ M Plans/_shards/dry_rules/012-9.-no-unreferenced-operational-text.md
+ M Plans/_shards/dry_rules/013-10.-inline-requirement-tag-convention-readability-only.md
+ M Plans/_shards/dry_rules/014-references.md
+ M Plans/_shards/dry_rules/015-owner-consumer-map.md
+ M Plans/_shards/dry_rules/016-planunits.md
+ M Plans/_shards/dry_rules/017-migration-coverage.md
+ M Plans/_shards/dry_rules/018-ledger-compile-addendum-pldg-20260627-001-feature-intake.md
+ M Plans/_shards/dry_rules/019-fable-deferred-action-concrete-repair-addendum-2026-07-08.md
+ M Plans/_shards/dry_rules/manifest.json
+ M Plans/_shards/event_record.schema/00-index.md
+ D Plans/_shards/event_record.schema/001-lines-1-192.md
+ M Plans/_shards/event_record.schema/manifest.json
+ M Plans/_shards/executor_protocol/00-index.md
+ M Plans/_shards/executor_protocol/001-preamble.md
+ M Plans/_shards/executor_protocol/002-canonical-owner-section-requirements.md
+ M Plans/_shards/executor_protocol/003-0.-purpose-and-scope.md
+ M Plans/_shards/executor_protocol/004-1.-role-definitions.md
+ M Plans/_shards/executor_protocol/005-2.-deterministic-readiness.md
+ M Plans/_shards/executor_protocol/006-3.-canonical-status-lifecycle.md
+ M Plans/_shards/executor_protocol/007-4.-auto-marking-rule.md
+ M Plans/_shards/executor_protocol/008-6.-overseer-dispatch-algorithm-deterministic.md
+ M Plans/_shards/executor_protocol/009-runtime-scheduler-addendum-2026-03-08.md
+ M Plans/_shards/executor_protocol/010-runtime-scheduler-recovery-canonical-alignment-2026-03-09.md
+ M Plans/_shards/executor_protocol/011-canonical-runtime-scheduler-canonical-alignment-2026-03-09.md
+ M Plans/_shards/executor_protocol/012-unified-runtime-scheduler-and-attempt-lifecycle-canonical-alignm.md
+ M Plans/_shards/executor_protocol/013-counter-relationships-and-event-ordering-addendum.md
+ M Plans/_shards/executor_protocol/014-execution-context-worktree-handoff.md
+ M Plans/_shards/executor_protocol/015-owner-consumer-map.md
+ M Plans/_shards/executor_protocol/016-planunits.md
+ M Plans/_shards/executor_protocol/017-migration-coverage.md
+ M Plans/_shards/executor_protocol/018-ledger-compile-addendum-pldg-20260614-001.md
+ M Plans/_shards/executor_protocol/019-ledger-compile-addendum-pldg-20260615-001.md
+ M Plans/_shards/executor_protocol/020-ledger-compile-addendum-pldg-20260616-002.md
+ M Plans/_shards/executor_protocol/021-ledger-compile-addendum-pldg-20260617-001-plans-to-code-handoff.md
+ M Plans/_shards/executor_protocol/022-ledger-compile-addendum-pldg-20260618-001-prd-planning-wizard.md
+ M Plans/_shards/executor_protocol/023-ledger-compile-addendum-pldg-20260622-001-fff.md
+ M Plans/_shards/executor_protocol/024-ledger-compile-addendum-pldg-20260629-001-feature-name.md
+ M Plans/_shards/executor_protocol/025-ledger-compile-addendum-pldg-20260630-001-feature-intake.md
+ M Plans/_shards/executor_protocol/026-ledger-compile-addendum-pldg-20260703-001-feature-intake.md
+ M Plans/_shards/executor_protocol/027-fable-deferred-action-concrete-repair-addendum-2026-07-08.md
+ M Plans/_shards/executor_protocol/manifest.json
+ M Plans/_shards/feature-list/00-index.md
+ M Plans/_shards/feature-list/manifest.json
+ M Plans/_shards/filemanager/00-index.md
+ M Plans/_shards/filemanager/001-preamble.md
+ M Plans/_shards/filemanager/002-change-summary.md
+ M Plans/_shards/filemanager/003-summary.md
+ M Plans/_shards/filemanager/004-table-of-contents.md
+ M Plans/_shards/filemanager/005-1.-file-manager-panel.md
+ M Plans/_shards/filemanager/006-2.-in-app-ide-style-editor-mvp.md
+ M Plans/_shards/filemanager/007-3.-mention-in-chat.md
+ M Plans/_shards/filemanager/008-4.-integration-file-manager-editor-and-chat.md
+ M Plans/_shards/filemanager/009-5.-open-targets-and-chooser-behavior.md
+ M Plans/_shards/filemanager/010-6.-preview-subjects-and-rendered-document-modes.md
+ M Plans/_shards/filemanager/011-7.-browser-and-terminal-handoff-boundaries.md
+ M Plans/_shards/filemanager/012-8.-image-viewer-and-html-preview.md
+ M Plans/_shards/filemanager/013-9.-tabs-editor-terminal-browser.md
+ M Plans/_shards/filemanager/014-10.-editor-navigation-and-semantic-affordances.md
+ M Plans/_shards/filemanager/015-11.-file-tree-actions-local-filter-and-chat-handoff.md
+ M Plans/_shards/filemanager/016-12.-source-control-handoff-compare-and-review.md
+ M Plans/_shards/filemanager/017-13.-preview-refresh-and-hot-reload-controls.md
+ M Plans/_shards/filemanager/018-14.-rendering-browser-preview-and-detached-preview-compatibility.md
+ M Plans/_shards/filemanager/019-runtime-artifact-open-by-identity-consolidation-addendum-2026-03.md
+ M Plans/_shards/filemanager/020-owner-consumer-map.md
+ M Plans/_shards/filemanager/021-planunits.md
+ M Plans/_shards/filemanager/022-migration-coverage.md
+ M Plans/_shards/filemanager/023-ledger-compile-addendum-pldg-20260614-001.md
+ M Plans/_shards/filemanager/024-ledger-compile-addendum-pldg-20260614-002.md
+ M Plans/_shards/filemanager/025-ledger-compile-addendum-pldg-20260622-001-fff.md
+ M Plans/_shards/filemanager/026-fable-deferred-action-concrete-repair-addendum-2026-07-08.md
+ M Plans/_shards/filemanager/manifest.json
+ M Plans/_shards/filesafe/00-index.md
+ M Plans/_shards/filesafe/001-preamble.md
+ M Plans/_shards/filesafe/002-dry-method-compliance.md
+ M Plans/_shards/filesafe/003-rewrite-alignment-2026-02-21.md
+ M Plans/_shards/filesafe/004-executive-summary.md
+ M Plans/_shards/filesafe/005-table-of-contents.md
+ M Plans/_shards/filesafe/006-1.-architecture-overview.md
+ M Plans/_shards/filesafe/007-2.-implementation-details.md
+ M Plans/_shards/filesafe/008-3.-integration-with-platform-runner.md
+ M Plans/_shards/filesafe/009-4.-pattern-file.md
+ M Plans/_shards/filesafe/010-5.-configuration-options.md
+ M Plans/_shards/filesafe/011-6.-event-logging.md
+ M Plans/_shards/filesafe/012-7.-error-messages.md
+ M Plans/_shards/filesafe/013-8.-testing.md
+ M Plans/_shards/filesafe/014-9.-implementation-checklist.md
+ M Plans/_shards/filesafe/015-10.-relationship-to-other-plans.md
+ M Plans/_shards/filesafe/016-10a.-filesafe-and-assistant-yolo-mode.md
+ M Plans/_shards/filesafe/017-11.-additional-filesafe-features.md
+ M Plans/_shards/filesafe/018-12.-gaps-and-potential-issues.md
+ M Plans/_shards/filesafe/019-13.-enhancements.md
+ M Plans/_shards/filesafe/020-14.-historical-note-on-moved-context-compilation-canon.md
+ M Plans/_shards/filesafe/021-15.-system-integration-analysis.md
+ M Plans/_shards/filesafe/022-16.-references.md
+ M Plans/_shards/filesafe/023-17.-implementation-order-and-dependencies.md
+ M Plans/_shards/filesafe/024-runtime-blocked-state-integration-addendum-2026-03-08.md
+ M Plans/_shards/filesafe/025-filesafe-blocked-outcome-alignment-addendum-2026-03-09.md
+ M Plans/_shards/filesafe/026-filesafe-runtime-blocked-and-restore-override-consolidation-adde.md
+ M Plans/_shards/filesafe/027-owner-consumer-map.md
+ M Plans/_shards/filesafe/028-planunits.md
+ M Plans/_shards/filesafe/029-migration-coverage.md
+ M Plans/_shards/filesafe/030-ledger-compile-addendum-pldg-20260614-002.md
+ M Plans/_shards/filesafe/031-ledger-compile-addendum-pldg-20260617-001-plans-to-code-handoff.md
+ M Plans/_shards/filesafe/032-ledger-compile-addendum-pldg-20260618-001-prd-planning-wizard.md
+ M Plans/_shards/filesafe/033-ledger-compile-addendum-pldg-20260622-001-fff.md
+ M Plans/_shards/filesafe/034-ledger-compile-addendum-pldg-20260626-001-feature-name.md
+ M Plans/_shards/filesafe/035-ledger-compile-addendum-pldg-20260629-001-feature-name.md
+ M Plans/_shards/filesafe/036-ledger-compile-addendum-pldg-20260630-001-feature-intake.md
+ M Plans/_shards/filesafe/037-ledger-compile-addendum-pldg-20260703-001-feature-intake.md
+ D Plans/_shards/filesafe/038-fable-deferred-action-concrete-repair-addendum-2026-07-08.md
+ D Plans/_shards/filesafe/039-fable-remaining-action-plan-repair-notes-2026-07-08.md
+ M Plans/_shards/filesafe/manifest.json
+ M Plans/_shards/finalguispec/00-index.md
+ M Plans/_shards/finalguispec/001-preamble.md
+ M Plans/_shards/finalguispec/002-canonical-owner-section-requirements.md
+ M Plans/_shards/finalguispec/003-table-of-contents.md
+ M Plans/_shards/finalguispec/004-1.-executive-summary.md
+ M Plans/_shards/finalguispec/005-2.-tech-stack-and-renderer.md
+ D Plans/_shards/finalguispec/006-gui-pmconcept-implementation-readiness-repair-addendum-2026-07-0.md
+ D Plans/_shards/finalguispec/007-ledger-compile-addendum-pldg-20260630-001-feature-intake.md
+ D Plans/_shards/finalguispec/008-ledger-compile-addendum-pldg-20260624-001-provider-updates.md
+ D Plans/_shards/finalguispec/009-3.-master-layout.md
+ D Plans/_shards/finalguispec/010-4.-navigation-architecture.md
+ D Plans/_shards/finalguispec/011-5.-panel-system.md
+ D Plans/_shards/finalguispec/012-6.-theme-system.md
+ D Plans/_shards/finalguispec/013-7.-views-specification.md
+ D Plans/_shards/finalguispec/014-8.-widget-catalog.md
+ D Plans/_shards/finalguispec/015-9.-state-management.md
+ D Plans/_shards/finalguispec/016-10.-ux-patterns.md
+ D Plans/_shards/finalguispec/017-11.-anti-flickering-and-scroll-preservation.md
+ D Plans/_shards/finalguispec/018-12.-responsive-design.md
+ D Plans/_shards/finalguispec/019-13.-accessibility.md
+ D Plans/_shards/finalguispec/020-14.-slint-file-organization.md
+ D Plans/_shards/finalguispec/021-15.-persistence.md
+ D Plans/_shards/finalguispec/022-16.-migration-mapping.md
+ D Plans/_shards/finalguispec/023-17.-risks-and-mitigations.md
+ D Plans/_shards/finalguispec/024-18.-promoted-features-formerly-future-considerations.md
+ D Plans/_shards/finalguispec/025-appendix-a-cross-references.md
+ D Plans/_shards/finalguispec/026-appendix-b-locked-decisions-summary.md
+ D Plans/_shards/finalguispec/027-appendix-c-dashboard-widget-grid-and-widget-catalog-integration-.md
+ D Plans/_shards/finalguispec/028-19.-persona-editor-compatibility-disclosure-and-surface-level-pe.md
+ D Plans/_shards/finalguispec/029-rendering-surface-addendum-2026-03-07.md
+ D Plans/_shards/finalguispec/030-assistant-planning-ux-addendum-2026-03-08.md
+ D Plans/_shards/finalguispec/031-compatibility-source-lineage-scheduler-blocked-and-remediation-g.md
+ D Plans/_shards/finalguispec/032-compatibility-source-lineage-runtime-scheduler-blocked-state-gui.md
+ D Plans/_shards/finalguispec/033-compatibility-source-lineage-runtime-blocked-queue-and-recovery-.md
+ D Plans/_shards/finalguispec/034-compatibility-source-lineage-runtime-scheduler-recovery-gui-cons.md
+ D Plans/_shards/finalguispec/035-canonical-blocked-recovery-behavior.md
+ D Plans/_shards/finalguispec/036-compatibility-source-lineage-blocked-state-visual-distinction-an.md
+ D Plans/_shards/finalguispec/037-15.-promoted-widget-catalog-web-tools-planning-question-operatio.md
+ D Plans/_shards/finalguispec/038-owner-consumer-map.md
+ D Plans/_shards/finalguispec/039-planunits.md
+ D Plans/_shards/finalguispec/040-migration-coverage.md
+ D Plans/_shards/finalguispec/041-ledger-compile-addendum-pldg-20260614-001.md
+ D Plans/_shards/finalguispec/042-ledger-compile-addendum-pldg-20260614-002.md
+ D Plans/_shards/finalguispec/043-ledger-compile-addendum-pldg-20260615-001.md
+ D Plans/_shards/finalguispec/044-ledger-compile-addendum-pldg-20260616-001.md
+ D Plans/_shards/finalguispec/045-ledger-compile-addendum-pldg-20260616-002.md
+ D Plans/_shards/finalguispec/046-ledger-compile-addendum-pldg-20260617-001-plans-to-code-handoff.md
+ D Plans/_shards/finalguispec/047-ledger-compile-addendum-pldg-20260618-001-prd-planning-wizard.md
+ D Plans/_shards/finalguispec/048-ledger-compile-addendum-pldg-20260622-001-fff.md
+ D Plans/_shards/finalguispec/049-ledger-compile-addendum-pldg-20260626-001-feature-name.md
+ D Plans/_shards/finalguispec/050-ledger-compile-addendum-pldg-20260627-001-feature-intake.md
+ D Plans/_shards/finalguispec/051-ledger-compile-addendum-pldg-20260629-001-feature-name.md
+ D Plans/_shards/finalguispec/052-ledger-compile-addendum-pldg-20260701-001-feature-intake.md
+ D Plans/_shards/finalguispec/053-ledger-compile-addendum-pldg-20260703-001-feature-intake.md
+ D Plans/_shards/finalguispec/054-fable-deferred-action-concrete-repair-addendum-2026-07-08.md
+ D Plans/_shards/finalguispec/055-fable-remaining-action-plan-audit-lineage-notes-2026-07-08.md
+ D Plans/_shards/finalguispec/056-usage-gui-propagation-addendum-2026-07-09.md
+ D Plans/_shards/finalguispec/057-pmconcept6-concept-promotion-addendum-2026-07-11.md
+ M Plans/_shards/finalguispec/manifest.json
+ M Plans/_shards/formatters_system/00-index.md
+ M Plans/_shards/formatters_system/manifest.json
+ M Plans/_shards/github_api_auth_and_flows/00-index.md
+ M Plans/_shards/github_api_auth_and_flows/manifest.json
+ M Plans/_shards/github_integration/00-index.md
+ M Plans/_shards/github_integration/001-preamble.md
+ M Plans/_shards/github_integration/002-canonical-owner-section-requirements.md
+ M Plans/_shards/github_integration/003-change-summary.md
+ M Plans/_shards/github_integration/004-ssot-references-dry.md
+ M Plans/_shards/github_integration/005-canonical-owner-and-consumer-reconciliation.md
+ M Plans/_shards/github_integration/006-owner-consumer-map.md
+ M Plans/_shards/github_integration/007-planunits.md
+ M Plans/_shards/github_integration/008-migration-coverage.md
+ M Plans/_shards/github_integration/009-ledger-compile-addendum-pldg-20260617-001-plans-to-code-handoff.md
+ M Plans/_shards/github_integration/010-ledger-compile-addendum-pldg-20260618-001-prd-planning-wizard.md
+ M Plans/_shards/github_integration/011-ledger-compile-addendum-pldg-20260622-001-fff.md
+ M Plans/_shards/github_integration/012-ledger-compile-addendum-pldg-20260703-001-feature-intake.md
+ M Plans/_shards/github_integration/013-fable-deferred-action-concrete-repair-addendum-2026-07-08.md
+ M Plans/_shards/github_integration/014-fable-remaining-action-plan-audit-lineage-notes-2026-07-08.md
+ M Plans/_shards/github_integration/manifest.json
+ M Plans/_shards/glossary/00-index.md
+ M Plans/_shards/glossary/001-preamble.md
+ M Plans/_shards/glossary/002-canonical-owner-section-requirements.md
+ M Plans/_shards/glossary/003-0.-scope.md
+ M Plans/_shards/glossary/004-1.-canonical-platform-name.md
+ M Plans/_shards/glossary/005-2.-core-terms.md
+ M Plans/_shards/glossary/006-4.-evidence.md
+ M Plans/_shards/glossary/007-5.-secret-handling.md
+ M Plans/_shards/glossary/008-6.-primitives.md
+ M Plans/_shards/glossary/009-references.md
+ M Plans/_shards/glossary/010-owner-consumer-map.md
+ M Plans/_shards/glossary/011-planunits.md
+ M Plans/_shards/glossary/012-migration-coverage.md
+ M Plans/_shards/glossary/013-ledger-compile-addendum-pldg-20260626-001-feature-name.md
+ M Plans/_shards/glossary/manifest.json
+ M Plans/_shards/goal_runtime_system/00-index.md
+ M Plans/_shards/goal_runtime_system/001-preamble.md
+ M Plans/_shards/goal_runtime_system/002-0.-scope.md
+ M Plans/_shards/goal_runtime_system/003-1.-ownership-and-consumers.md
+ M Plans/_shards/goal_runtime_system/004-2.-canonical-planunits.md
+ M Plans/_shards/goal_runtime_system/005-ledger-compile-addendum-pldg-20260630-001-feature-intake.md
+ M Plans/_shards/goal_runtime_system/006-3.-contracts-schemas-events-or-data-shapes.md
+ M Plans/_shards/goal_runtime_system/007-4.-integration-surfaces.md
+ M Plans/_shards/goal_runtime_system/008-5.-validation-and-acceptance.md
+ M Plans/_shards/goal_runtime_system/009-6.-plan-to-node-readiness.md
+ M Plans/_shards/goal_runtime_system/010-7.-deferred-retired-compatibility-and-non-goals.md
+ M Plans/_shards/goal_runtime_system/011-8.-source-lineage-and-governance.md
+ M Plans/_shards/goal_runtime_system/012-ledger-compile-addendum-pldg-20260616-002.md
+ M Plans/_shards/goal_runtime_system/013-ledger-compile-addendum-pldg-20260617-001-plans-to-code-handoff.md
+ M Plans/_shards/goal_runtime_system/014-ledger-compile-addendum-pldg-20260618-001-prd-planning-wizard.md
+ M Plans/_shards/goal_runtime_system/015-ledger-compile-addendum-pldg-20260703-001-feature-intake.md
+ M Plans/_shards/goal_runtime_system/manifest.json
+ M Plans/_shards/gui_rebuild_requirements_checklist/00-index.md
+ M Plans/_shards/gui_rebuild_requirements_checklist/001-preamble.md
+ M Plans/_shards/gui_rebuild_requirements_checklist/002-canonical-owner-section-requirements.md
+ M Plans/_shards/gui_rebuild_requirements_checklist/003-purpose.md
+ M Plans/_shards/gui_rebuild_requirements_checklist/004-concern-lifecycle-verification-checklist.md
+ M Plans/_shards/gui_rebuild_requirements_checklist/005-verification-table.md
+ M Plans/_shards/gui_rebuild_requirements_checklist/006-command-catalog-coverage-check.md
+ M Plans/_shards/gui_rebuild_requirements_checklist/007-completion-criteria.md
+ M Plans/_shards/gui_rebuild_requirements_checklist/008-2026-03-07-addendum-dockerhub-unraid-gui-requirements.md
+ M Plans/_shards/gui_rebuild_requirements_checklist/009-derived-evidence-regeneration.md
+ M Plans/_shards/gui_rebuild_requirements_checklist/010-2026-03-09-addendum-artifacts-panel-and-usage-ledger-linkage.md
+ M Plans/_shards/gui_rebuild_requirements_checklist/011-concern-lifecycle-verification-checklist.md
+ M Plans/_shards/gui_rebuild_requirements_checklist/012-owner-consumer-map.md
+ M Plans/_shards/gui_rebuild_requirements_checklist/013-planunits.md
+ M Plans/_shards/gui_rebuild_requirements_checklist/014-migration-coverage.md
+ M Plans/_shards/gui_rebuild_requirements_checklist/015-ledger-compile-addendum-pldg-20260614-001.md
+ M Plans/_shards/gui_rebuild_requirements_checklist/016-fable-deferred-action-concrete-repair-addendum-2026-07-08.md
+ M Plans/_shards/gui_rebuild_requirements_checklist/manifest.json
+ M Plans/_shards/human-in-the-loop/00-index.md
+ M Plans/_shards/human-in-the-loop/manifest.json
+ M Plans/_shards/interview-subagent-integration/00-index.md
+ M Plans/_shards/interview-subagent-integration/manifest.json
+ M Plans/_shards/lspsupport/00-index.md
+ M Plans/_shards/lspsupport/manifest.json
+ M Plans/_shards/mcp_integration/00-index.md
+ M Plans/_shards/mcp_integration/manifest.json
+ M Plans/_shards/media_generation_and_capabilities/00-index.md
+ M Plans/_shards/media_generation_and_capabilities/manifest.json
+ M Plans/_shards/miscplan/00-index.md
+ M Plans/_shards/miscplan/manifest.json
+ M Plans/_shards/models_system/00-index.md
+ M Plans/_shards/models_system/001-preamble.md
+ M Plans/_shards/models_system/002-canonical-owner-section-requirements.md
+ M Plans/_shards/models_system/003-0.-scope-and-ssot-status.md
+ M Plans/_shards/models_system/004-provider-model-precedence-and-settings-resolution.md
+ M Plans/_shards/models_system/005-1.-canonical-model-identifier.md
+ M Plans/_shards/models_system/006-2.-model-and-runtime-selection-priority.md
+ M Plans/_shards/models_system/007-3.-model-options-configuration.md
+ M Plans/_shards/models_system/008-ledger-compile-addendum-pldg-20260624-001-provider-updates.md
+ M Plans/_shards/models_system/009-4.-model-availability-and-error-handling.md
+ M Plans/_shards/models_system/010-5.-per-persona-runtime-preferences.md
+ M Plans/_shards/models_system/011-6.-variants-system.md
+ M Plans/_shards/models_system/012-7.-gui-requirements.md
+ M Plans/_shards/models_system/013-8.-opencode-baseline-and-puppet-master-deltas.md
+ M Plans/_shards/models_system/014-9.-acceptance-criteria.md
+ M Plans/_shards/models_system/015-10.-persona-runtime-controls-and-provider-capability-matrix-2026.md
+ M Plans/_shards/models_system/016-provider-failure-class-alignment-addendum-2026-03-08.md
+ M Plans/_shards/models_system/017-runtime-retry-fallback-ownership-addendum-2026-03-09.md
+ M Plans/_shards/models_system/018-requested-effective-model-and-retry-ownership-canonical-alignmen.md
+ M Plans/_shards/models_system/019-model-selection-versus-runtime-retry-ownership-consolidation-add.md
+ M Plans/_shards/models_system/020-requested-effective-model-snapshot-alignment.md
+ M Plans/_shards/models_system/021-provider-model-selection-policy-and-audit-addendum.md
+ M Plans/_shards/models_system/022-owner-consumer-map.md
+ M Plans/_shards/models_system/023-planunits.md
+ M Plans/_shards/models_system/024-migration-coverage.md
+ M Plans/_shards/models_system/025-ledger-compile-addendum-pldg-20260614-001.md
+ M Plans/_shards/models_system/026-ledger-compile-addendum-pldg-20260616-001.md
+ M Plans/_shards/models_system/027-ledger-compile-addendum-pldg-20260616-002.md
+ M Plans/_shards/models_system/028-ledger-compile-addendum-pldg-20260617-001-plans-to-code-handoff.md
+ M Plans/_shards/models_system/029-ledger-compile-addendum-pldg-20260618-001-prd-planning-wizard.md
+ M Plans/_shards/models_system/030-ledger-compile-addendum-pldg-20260626-001-feature-name.md
+ M Plans/_shards/models_system/031-ledger-compile-addendum-pldg-20260629-001-feature-name.md
+ M Plans/_shards/models_system/032-ledger-compile-addendum-pldg-20260701-001-feature-intake.md
+ M Plans/_shards/models_system/033-ledger-compile-addendum-pldg-20260703-001-feature-intake.md
+ M Plans/_shards/models_system/034-fable-residual-models-contract-cleanup-addendum-2026-07-07.md
+ M Plans/_shards/models_system/035-usage-gui-propagation-addendum-2026-07-09.md
+ M Plans/_shards/models_system/manifest.json
+ M Plans/_shards/multi-account/00-index.md
+ M Plans/_shards/multi-account/001-preamble.md
+ M Plans/_shards/multi-account/002-canonical-owner-section-requirements.md
+ M Plans/_shards/multi-account/003-1.-purpose-and-scope.md
+ M Plans/_shards/multi-account/004-2.-references.md
+ M Plans/_shards/multi-account/005-canonical-data-shape-reconciliation.md
+ M Plans/_shards/multi-account/006-3.-assessment-what-we-have-and-gaps-filled.md
+ M Plans/_shards/multi-account/007-5.-auto-rotation.md
+ M Plans/_shards/multi-account/008-6.-provider-specific-behavior.md
+ M Plans/_shards/multi-account/009-7.-runner-orchestration-contract.md
+ M Plans/_shards/multi-account/010-8.-usage-and-pick-best.md
+ M Plans/_shards/multi-account/011-9.-gui-requirements-ux-only.md
+ M Plans/_shards/multi-account/012-10.-phase-2-native-auth-when-available.md
+ M Plans/_shards/multi-account/013-11.-open-points-for-implementer.md
+ M Plans/_shards/multi-account/014-operational-identity-addendum-for-github-actions-and-docker-mana.md
+ M Plans/_shards/multi-account/015-owner-consumer-map.md
+ M Plans/_shards/multi-account/016-planunits.md
+ M Plans/_shards/multi-account/017-ledger-compile-addendum-pldg-20260624-001-provider-updates.md
+ M Plans/_shards/multi-account/018-migration-coverage.md
+ M Plans/_shards/multi-account/019-ledger-compile-addendum-pldg-20260618-001-prd-planning-wizard.md
+ M Plans/_shards/multi-account/020-ledger-compile-addendum-pldg-20260629-001-feature-name.md
+ M Plans/_shards/multi-account/021-ledger-compile-addendum-pldg-20260701-001-feature-intake.md
+ M Plans/_shards/multi-account/022-ledger-compile-addendum-pldg-20260703-001-feature-intake.md
+ M Plans/_shards/multi-account/023-fable-residual-multi-account-contract-cleanup-addendum-2026-07-0.md
+ M Plans/_shards/multi-account/024-fable-deferred-action-concrete-repair-addendum-2026-07-08.md
+ M Plans/_shards/multi-account/025-usage-gui-propagation-addendum-2026-07-09.md
+ M Plans/_shards/multi-account/manifest.json
+ M Plans/_shards/newfeatures/00-index.md
+ M Plans/_shards/newfeatures/manifest.json
+ M Plans/_shards/newtools/00-index.md
+ M Plans/_shards/newtools/001-preamble.md
+ M Plans/_shards/newtools/002-plan-document-status.md
+ M Plans/_shards/newtools/003-rewrite-alignment-2026-02-21.md
+ M Plans/_shards/newtools/004-dry-method-compliance.md
+ M Plans/_shards/newtools/005-table-of-contents.md
+ M Plans/_shards/newtools/006-1.-executive-summary.md
+ M Plans/_shards/newtools/007-2.-relationship-to-other-plans.md
+ M Plans/_shards/newtools/008-3.-problem-statement.md
+ M Plans/_shards/newtools/009-4.-goals.md
+ M Plans/_shards/newtools/010-5.-design-overview.md
+ M Plans/_shards/newtools/011-6.-framework-tool-discovery-dry.md
+ M Plans/_shards/newtools/012-7.-interviewer-flow-changes.md
+ M Plans/_shards/newtools/013-8.-mcp-support-and-gui-settings.md
+ M Plans/_shards/newtools/014-9.-custom-headless-gui-tool.md
+ M Plans/_shards/newtools/015-10.-integration-with-test-strategy-plans.md
+ M Plans/_shards/newtools/016-11.-implementation-checklist.md
+ M Plans/_shards/newtools/017-12.-gaps-risks-and-dry-notes.md
+ M Plans/_shards/newtools/018-12.7-crews-and-subagent-communication-enhancements-for-tool-disc.md
+ M Plans/_shards/newtools/019-12.8-lifecycle-and-quality-enhancements-for-tool-discovery.md
+ M Plans/_shards/newtools/020-13.-evidence-in-chat-contract-and-flow-research-evidence-media-c.md
+ M Plans/_shards/newtools/021-14.-live-visualization-execution-architecture-research-live-visu.md
+ M Plans/_shards/newtools/022-14.5-mobile-testing-stacks-research-mobile-testing-stacks.md
+ M Plans/_shards/newtools/023-14.6-preview-build-docker-and-actions-contracts.md
+ M Plans/_shards/newtools/024-15.-references.md
+ M Plans/_shards/newtools/025-owner-consumer-map.md
+ M Plans/_shards/newtools/026-planunits.md
+ M Plans/_shards/newtools/027-migration-coverage.md
+ M Plans/_shards/newtools/028-fable-deferred-action-concrete-repair-addendum-2026-07-08.md
+ M Plans/_shards/newtools/manifest.json
+ M Plans/_shards/non_executable_closure_evidence.schema/00-index.md
+ M Plans/_shards/non_executable_closure_evidence.schema/manifest.json
+ M Plans/_shards/non_executable_closure_evidence/00-index.md
+ M Plans/_shards/non_executable_closure_evidence/manifest.json
+ M Plans/_shards/opencode_coverage_matrix/00-index.md
+ M Plans/_shards/opencode_coverage_matrix/manifest.json
+ M Plans/_shards/opencode_deep_extraction/00-index.md
+ M Plans/_shards/opencode_deep_extraction/manifest.json
+ M Plans/_shards/orchestrator-subagent-integration/00-index.md
+ M Plans/_shards/orchestrator-subagent-integration/001-preamble.md
+ M Plans/_shards/orchestrator-subagent-integration/002-canonical-owner-section-requirements.md
+ M Plans/_shards/orchestrator-subagent-integration/003-plan-document-status.md
+ M Plans/_shards/orchestrator-subagent-integration/004-executive-summary.md
+ M Plans/_shards/orchestrator-subagent-integration/005-runtime-scheduler-identity-and-worktree-reconciliation.md
+ M Plans/_shards/orchestrator-subagent-integration/006-rewrite-alignment-2026-02-21.md
+ M Plans/_shards/orchestrator-subagent-integration/007-relationship-between-the-two-plans.md
+ M Plans/_shards/orchestrator-subagent-integration/008-compatibility-tier-level-subagent-strategy.md
+ M Plans/_shards/orchestrator-subagent-integration/009-debug-capable-investigation-orchestration.md
+ M Plans/_shards/orchestrator-subagent-integration/010-dynamic-subagent-selection-architecture.md
+ M Plans/_shards/orchestrator-subagent-integration/011-ledger-compile-addendum-pldg-20260630-001-feature-intake.md
+ M Plans/_shards/orchestrator-subagent-integration/012-integration-with-orchestrator.md
+ M Plans/_shards/orchestrator-subagent-integration/manifest.json
+ M Plans/_shards/orchestrator_page/00-index.md
+ M Plans/_shards/orchestrator_page/001-preamble.md
+ M Plans/_shards/orchestrator_page/002-canonical-owner-section-requirements.md
+ M Plans/_shards/orchestrator_page/003-1.-scope-and-canonical-model.md
+ M Plans/_shards/orchestrator_page/004-owner-consumer-map.md
+ M Plans/_shards/orchestrator_page/005-planunits.md
+ D Plans/_shards/orchestrator_page/006-ledger-compile-addendum-pldg-20260630-001-feature-intake.md
+ D Plans/_shards/orchestrator_page/007-migration-coverage.md
+ D Plans/_shards/orchestrator_page/008-ledger-compile-addendum-pldg-20260614-001.md
+ D Plans/_shards/orchestrator_page/009-ledger-compile-addendum-pldg-20260616-002.md
+ D Plans/_shards/orchestrator_page/010-ledger-compile-addendum-pldg-20260617-001-plans-to-code-handoff.md
+ D Plans/_shards/orchestrator_page/011-ledger-compile-addendum-pldg-20260618-001-prd-planning-wizard.md
+ D Plans/_shards/orchestrator_page/012-ledger-compile-addendum-pldg-20260626-001-feature-name.md
+ D Plans/_shards/orchestrator_page/013-fable-deferred-action-concrete-repair-addendum-2026-07-08.md
+ D Plans/_shards/orchestrator_page/014-fable-remaining-action-plan-audit-lineage-notes-2026-07-08.md
+ D Plans/_shards/orchestrator_page/015-usage-gui-propagation-addendum-2026-07-09.md
+ M Plans/_shards/orchestrator_page/manifest.json
+ M Plans/_shards/permissions_system/00-index.md
+ M Plans/_shards/permissions_system/001-preamble.md
+ M Plans/_shards/permissions_system/002-canonical-owner-section-requirements.md
+ M Plans/_shards/permissions_system/003-0.-scope-and-ssot-status.md
+ M Plans/_shards/permissions_system/004-canonical-data-shape-reconciliation.md
+ M Plans/_shards/permissions_system/005-1.-definitions-and-scope.md
+ M Plans/_shards/permissions_system/006-2.-permission-actions.md
+ M Plans/_shards/permissions_system/007-3.-granular-rules.md
+ M Plans/_shards/permissions_system/008-ledger-compile-addendum-pldg-20260624-001-provider-updates.md
+ M Plans/_shards/permissions_system/009-4.-special-guards.md
+ M Plans/_shards/permissions_system/010-5.-tool-permission-keys.md
+ M Plans/_shards/permissions_system/011-6.-ask-flow-semantics.md
+ M Plans/_shards/permissions_system/012-7.-deterministic-defaults.md
+ M Plans/_shards/permissions_system/013-8.-resolution-algorithm.md
+ M Plans/_shards/permissions_system/014-9.-persistence-and-storage.md
+ M Plans/_shards/permissions_system/015-10.-gui-requirements.md
+ M Plans/_shards/permissions_system/016-10a.-security-model.md
+ M Plans/_shards/permissions_system/017-11.-opencode-baseline-and-puppet-master-deltas.md
+ M Plans/_shards/permissions_system/018-12.-acceptance-criteria.md
+ M Plans/_shards/permissions_system/019-12a.-dockerhub-unraid-remote-side-effect-guard-addendum.md
+ M Plans/_shards/permissions_system/020-runtime-blocked-outcome-integration-addendum-2026-03-08.md
+ M Plans/_shards/permissions_system/021-source-control-github-actions-and-docker-manager-permission-adde.md
+ M Plans/_shards/permissions_system/022-owner-consumer-map.md
+ M Plans/_shards/permissions_system/023-planunits.md
+ M Plans/_shards/permissions_system/024-migration-coverage.md
+ M Plans/_shards/permissions_system/025-ledger-compile-addendum-pldg-20260614-002.md
+ M Plans/_shards/permissions_system/026-ledger-compile-addendum-pldg-20260616-001.md
+ M Plans/_shards/permissions_system/027-ledger-compile-addendum-pldg-20260616-002.md
+ M Plans/_shards/permissions_system/028-ledger-compile-addendum-pldg-20260617-001-plans-to-code-handoff.md
+ M Plans/_shards/permissions_system/029-ledger-compile-addendum-pldg-20260618-001-prd-planning-wizard.md
+ M Plans/_shards/permissions_system/030-ledger-compile-addendum-pldg-20260622-001-fff.md
+ M Plans/_shards/permissions_system/031-ledger-compile-addendum-pldg-20260626-001-feature-name.md
+ M Plans/_shards/permissions_system/032-ledger-compile-addendum-pldg-20260627-001-feature-intake.md
+ M Plans/_shards/permissions_system/033-ledger-compile-addendum-pldg-20260629-001-feature-name.md
+ M Plans/_shards/permissions_system/034-ledger-compile-addendum-pldg-20260630-001-feature-intake.md
+ M Plans/_shards/permissions_system/035-ledger-compile-addendum-pldg-20260703-001-feature-intake.md
+ M Plans/_shards/permissions_system/036-fable-residual-permission-consent-cleanup-addendum-2026-07-07.md
+ M Plans/_shards/permissions_system/037-fable-deferred-action-concrete-repair-addendum-2026-07-08.md
+ M Plans/_shards/permissions_system/manifest.json
+ M Plans/_shards/personas/00-index.md
+ M Plans/_shards/personas/001-preamble.md
+ M Plans/_shards/personas/002-0.-scope-and-ssot-status.md
+ M Plans/_shards/personas/003-1.-definitions.md
+ M Plans/_shards/personas/004-2.-storage-layout.md
+ M Plans/_shards/personas/005-3.-persona-format-schema.md
+ M Plans/_shards/personas/006-4.-gui-requirements.md
+ M Plans/_shards/personas/007-5.-integration-persona-application-to-a-run.md
+ M Plans/_shards/personas/008-6.-reserved-personas.md
+ M Plans/_shards/personas/009-7.-relationship-to-the-persona-registry-and-delegated-subagent-r.md
+ M Plans/_shards/personas/010-8.-opencode-baseline-and-puppet-master-deltas.md
+ M Plans/_shards/personas/011-9.-acceptance-criteria.md
+ M Plans/_shards/personas/012-10.-persona-runtime-contract-expansion-2026-03-06.md
+ M Plans/_shards/personas/013-11.-core-persona-catalog.md
+ M Plans/_shards/personas/014-12.-specialty-persona-catalog-and-curation.md
+ M Plans/_shards/personas/015-owner-consumer-map.md
+ M Plans/_shards/personas/016-planunits.md
+ M Plans/_shards/personas/017-migration-coverage.md
+ M Plans/_shards/personas/018-ledger-compile-addendum-pldg-20260614-001.md
+ M Plans/_shards/personas/019-ledger-compile-addendum-pldg-20260618-001-prd-planning-wizard.md
+ M Plans/_shards/personas/020-ledger-compile-addendum-pldg-20260626-001-feature-name.md
+ M Plans/_shards/personas/021-fable-deferred-action-concrete-repair-addendum-2026-07-08.md
+ M Plans/_shards/personas/022-fable-remaining-action-plan-audit-lineage-notes-2026-07-08.md
+ M Plans/_shards/personas/manifest.json
+ M Plans/_shards/plan_document_system/00-index.md
+ M Plans/_shards/plan_document_system/manifest.json
+ M Plans/_shards/plan_to_node_compilation/00-index.md
+ M Plans/_shards/plan_to_node_compilation/manifest.json
+ M Plans/_shards/planning_ledger_system/00-index.md
+ M Plans/_shards/planning_ledger_system/manifest.json
+ M Plans/_shards/planning_wizard/00-index.md
+ M Plans/_shards/planning_wizard/001-preamble.md
+ M Plans/_shards/planning_wizard/002-0.-scope.md
+ M Plans/_shards/planning_wizard/003-1.-ownership-and-consumers.md
+ M Plans/_shards/planning_wizard/004-2.-canonical-planunits.md
+ M Plans/_shards/planning_wizard/005-gui-approval-and-plan-compile-launch-repair-addendum-2026-07-02.md
+ M Plans/_shards/planning_wizard/006-3.-contracts-schemas-events-or-data-shapes.md
+ M Plans/_shards/planning_wizard/007-4.-integration-surfaces.md
+ M Plans/_shards/planning_wizard/008-5.-validation-and-acceptance.md
+ M Plans/_shards/planning_wizard/009-6.-plan-to-node-readiness.md
+ M Plans/_shards/planning_wizard/010-7.-deferred-retired-compatibility-and-non-goals.md
+ M Plans/_shards/planning_wizard/011-8.-source-lineage-and-governance.md
+ M Plans/_shards/planning_wizard/012-ledger-compile-addendum-pldg-20260622-001-fff.md
+ M Plans/_shards/planning_wizard/013-ledger-compile-addendum-pldg-20260626-001-feature-name.md
+ M Plans/_shards/planning_wizard/014-ledger-compile-addendum-pldg-20260701-001-feature-intake.md
+ M Plans/_shards/planning_wizard/015-implementation-readiness-gate-addendum-2026-07-05.md
+ M Plans/_shards/planning_wizard/016-fable-remaining-action-plan-audit-lineage-notes-2026-07-08.md
+ M Plans/_shards/planning_wizard/017-fable-deferred-action-concrete-repair-addendum-2026-07-08.md
+ M Plans/_shards/planning_wizard/018-pmconcept6-concept-promotion-addendum-2026-07-11.md
+ M Plans/_shards/planning_wizard/manifest.json
+ M Plans/_shards/plugins_system/00-index.md
+ M Plans/_shards/plugins_system/manifest.json
+ M Plans/_shards/prd_builder/00-index.md
+ M Plans/_shards/prd_builder/manifest.json
+ M Plans/_shards/prd_planning_runtime_contracts.schema/00-index.md
+ M Plans/_shards/prd_planning_runtime_contracts.schema/manifest.json
+ M Plans/_shards/prd_planning_runtime_contracts/00-index.md
+ M Plans/_shards/prd_planning_runtime_contracts/manifest.json
+ M Plans/_shards/progression_gates/00-index.md
+ M Plans/_shards/progression_gates/manifest.json
+ M Plans/_shards/project_output_artifacts/00-index.md
+ M Plans/_shards/project_output_artifacts/manifest.json
+ M Plans/_shards/prompt_pipeline/00-index.md
+ M Plans/_shards/prompt_pipeline/manifest.json
+ M Plans/_shards/provider_opencode/00-index.md
+ M Plans/_shards/provider_opencode/001-preamble.md
+ M Plans/_shards/provider_opencode/002-change-summary.md
+ M Plans/_shards/provider_opencode/003-1.-purpose.md
+ M Plans/_shards/provider_opencode/004-2.-non-goals.md
+ M Plans/_shards/provider_opencode/005-3.-ssot-references-dry.md
+ M Plans/_shards/provider_opencode/006-canonical-data-shape-reconciliation.md
+ M Plans/_shards/provider_opencode/007-4.-architecture-overview.md
+ M Plans/_shards/provider_opencode/008-5.-connection-contract.md
+ M Plans/_shards/provider_opencode/009-6.-provider-facade-mapping.md
+ M Plans/_shards/provider_opencode/010-7.-model-discovery.md
+ M Plans/_shards/provider_opencode/011-8.-capability-flags.md
+ M Plans/_shards/provider_opencode/012-9.-failure-states-and-recovery.md
+ M Plans/_shards/provider_opencode/013-10.-gui-configuration.md
+ M Plans/_shards/provider_opencode/014-11.-legacy-platform_specs-lineage-and-current-metadata-ownership.md
+ M Plans/_shards/provider_opencode/015-12.-process-isolation.md
+ M Plans/_shards/provider_opencode/016-13.-invocation-shape-normative.md
+ M Plans/_shards/provider_opencode/017-14.-persistence-mapping-seglog.md
+ M Plans/_shards/provider_opencode/018-15.-acceptance-criteria-testable.md
+ M Plans/_shards/provider_opencode/019-16.-references.md
+ M Plans/_shards/provider_opencode/020-opencode-runtime-retry-blocked-state-packet-canonical-alignment-.md
+ M Plans/_shards/provider_opencode/021-owner-consumer-map.md
+ M Plans/_shards/provider_opencode/022-planunits.md
+ M Plans/_shards/provider_opencode/023-migration-coverage.md
+ M Plans/_shards/provider_opencode/024-ledger-compile-addendum-pldg-20260614-002.md
+ M Plans/_shards/provider_opencode/025-ledger-compile-addendum-pldg-20260626-001-feature-name.md
+ M Plans/_shards/provider_opencode/026-ledger-compile-addendum-pldg-20260703-001-feature-intake.md
+ M Plans/_shards/provider_opencode/manifest.json
+ M Plans/_shards/provider_stream_mapping_external_reference_a2a/00-index.md
+ M Plans/_shards/provider_stream_mapping_external_reference_a2a/manifest.json
+ M Plans/_shards/release_supply_chain/00-index.md
+ M Plans/_shards/release_supply_chain/001-preamble.md
+ M Plans/_shards/release_supply_chain/002-0.-scope.md
+ M Plans/_shards/release_supply_chain/003-1.-ownership-and-consumers.md
+ M Plans/_shards/release_supply_chain/004-2.-canonical-planunits.md
+ M Plans/_shards/release_supply_chain/005-3.-contracts-schemas-events-or-data-shapes.md
+ M Plans/_shards/release_supply_chain/006-4.-integration-surfaces.md
+ M Plans/_shards/release_supply_chain/007-5.-validation-and-acceptance.md
+ M Plans/_shards/release_supply_chain/008-6.-plan-to-node-readiness.md
+ M Plans/_shards/release_supply_chain/009-7.-deferred-retired-compatibility-and-non-goals.md
+ M Plans/_shards/release_supply_chain/010-8.-source-lineage-and-governance.md
+ M Plans/_shards/release_supply_chain/011-fable-residual-release-supply-chain-cleanup-addendum-2026-07-07.md
+ D Plans/_shards/release_supply_chain/012-fable-deferred-action-concrete-repair-addendum-2026-07-08.md
+ D Plans/_shards/release_supply_chain/013-fable-remaining-action-plan-repair-notes-2026-07-08.md
+ M Plans/_shards/release_supply_chain/manifest.json
+ M Plans/_shards/rewrite-tie-in-memo/00-index.md
+ M Plans/_shards/rewrite-tie-in-memo/manifest.json
+ M Plans/_shards/run_graph_view/00-index.md
+ M Plans/_shards/run_graph_view/001-preamble.md
+ M Plans/_shards/run_graph_view/002-canonical-owner-section-requirements.md
+ M Plans/_shards/run_graph_view/003-1.-scope-and-canonical-role.md
+ M Plans/_shards/run_graph_view/004-2.-layout.md
+ M Plans/_shards/run_graph_view/005-3.-node-detail-inspector.md
+ M Plans/_shards/run_graph_view/006-4.-data-model-and-identity.md
+ M Plans/_shards/run_graph_view/007-owner-consumer-map.md
+ M Plans/_shards/run_graph_view/008-planunits.md
+ D Plans/_shards/run_graph_view/009-ledger-compile-addendum-pldg-20260630-001-feature-intake.md
+ D Plans/_shards/run_graph_view/010-migration-coverage.md
+ D Plans/_shards/run_graph_view/011-ledger-compile-addendum-pldg-20260614-002.md
+ D Plans/_shards/run_graph_view/012-ledger-compile-addendum-pldg-20260616-002.md
+ D Plans/_shards/run_graph_view/013-ledger-compile-addendum-pldg-20260617-001-plans-to-code-handoff.md
+ D Plans/_shards/run_graph_view/014-ledger-compile-addendum-pldg-20260618-001-prd-planning-wizard.md
+ D Plans/_shards/run_graph_view/015-fable-deferred-action-concrete-repair-addendum-2026-07-08.md
+ D Plans/_shards/run_graph_view/016-fable-remaining-action-plan-audit-lineage-notes-2026-07-08.md
+ D Plans/_shards/run_graph_view/017-usage-gui-propagation-addendum-2026-07-09.md
+ M Plans/_shards/run_graph_view/manifest.json
+ M Plans/_shards/run_modes/00-index.md
+ M Plans/_shards/run_modes/001-preamble.md
+ M Plans/_shards/run_modes/002-canonical-owner-section-requirements.md
+ M Plans/_shards/run_modes/003-0.-scope-and-ssot-status.md
+ M Plans/_shards/run_modes/004-1.-canonical-mode-definitions.md
+ M Plans/_shards/run_modes/005-2.-cli-bridged-execution-strategies.md
+ M Plans/_shards/run_modes/006-3.-deterministic-strategy-selection.md
+ M Plans/_shards/run_modes/007-4.-budget-defaults.md
+ M Plans/_shards/run_modes/008-5.-kill-conditions-and-enforcement.md
+ M Plans/_shards/run_modes/009-6.-run-outcome-taxonomy.md
+ M Plans/_shards/run_modes/010-7.-mode-effects-on-context-management.md
+ M Plans/_shards/run_modes/011-8.-opencode-baseline.md
+ M Plans/_shards/run_modes/012-9.-puppet-master-deltas.md
+ M Plans/_shards/run_modes/013-10.-acceptance-criteria.md
+ M Plans/_shards/run_modes/014-retry-blocking-and-safe-point-clarification-addendum-2026-03-08.md
+ M Plans/_shards/run_modes/015-runtime-mode-blocked-recovery-addendum-2026-03-09.md
+ M Plans/_shards/run_modes/016-runtime-mode-recovery-canonical-alignment-2026-03-09.md
+ M Plans/_shards/run_modes/017-runtime-mode-interaction-with-blocked-recovery-consolidation-add.md
+ M Plans/_shards/run_modes/018-headless-blocked-discovery-and-mutation-classifier-alignment-add.md
+ M Plans/_shards/run_modes/019-runtime-identity-and-blocked-policy-continuity.md
+ M Plans/_shards/run_modes/020-owner-consumer-map.md
+ M Plans/_shards/run_modes/021-planunits.md
+ M Plans/_shards/run_modes/022-migration-coverage.md
+ M Plans/_shards/run_modes/023-ledger-compile-addendum-pldg-20260630-001-feature-intake.md
+ M Plans/_shards/run_modes/024-fable-deferred-action-concrete-repair-addendum-2026-07-08.md
+ M Plans/_shards/run_modes/025-usage-gui-propagation-addendum-2026-07-09.md
+ M Plans/_shards/run_modes/manifest.json
+ M Plans/_shards/runtime_artifacts_panel/00-index.md
+ M Plans/_shards/runtime_artifacts_panel/001-preamble.md
+ M Plans/_shards/runtime_artifacts_panel/002-canonical-owner-section-requirements.md
+ M Plans/_shards/runtime_artifacts_panel/003-1.-purpose-and-scope.md
+ M Plans/_shards/runtime_artifacts_panel/004-3.-mechanism-one-event-type-per-artifact-type.md
+ M Plans/_shards/runtime_artifacts_panel/005-4.-redb-key-and-projector.md
+ M Plans/_shards/runtime_artifacts_panel/006-5a.-debug-investigation-grouping-manifests-and-exports.md
+ M Plans/_shards/runtime_artifacts_panel/007-6.-reasoning_tokens-and-cost_usage.md
+ M Plans/_shards/runtime_artifacts_panel/008-7.-json-schemas-all-required.md
+ M Plans/_shards/runtime_artifacts_panel/009-8.-browser-recordings.md
+ M Plans/_shards/runtime_artifacts_panel/010-9.-all-differentiators-mvp.md
+ M Plans/_shards/runtime_artifacts_panel/011-10.-references.md
+ M Plans/_shards/runtime_artifacts_panel/012-cross-surface-operation-receipt-linkage-addendum-2026-03-12.md
+ M Plans/_shards/runtime_artifacts_panel/013-owner-consumer-map.md
+ M Plans/_shards/runtime_artifacts_panel/014-planunits.md
+ D Plans/_shards/runtime_artifacts_panel/015-ledger-compile-addendum-pldg-20260624-001-provider-updates.md
+ D Plans/_shards/runtime_artifacts_panel/016-migration-coverage.md
+ D Plans/_shards/runtime_artifacts_panel/017-ledger-compile-addendum-pldg-20260614-001.md
+ D Plans/_shards/runtime_artifacts_panel/018-ledger-compile-addendum-pldg-20260614-002.md
+ D Plans/_shards/runtime_artifacts_panel/019-ledger-compile-addendum-pldg-20260616-002.md
+ D Plans/_shards/runtime_artifacts_panel/020-ledger-compile-addendum-pldg-20260617-001-plans-to-code-handoff.md
+ D Plans/_shards/runtime_artifacts_panel/021-ledger-compile-addendum-pldg-20260618-001-prd-planning-wizard.md
+ D Plans/_shards/runtime_artifacts_panel/022-ledger-compile-addendum-pldg-20260622-001-fff.md
+ D Plans/_shards/runtime_artifacts_panel/023-ledger-compile-addendum-pldg-20260626-001-feature-name.md
+ D Plans/_shards/runtime_artifacts_panel/024-ledger-compile-addendum-pldg-20260627-001-feature-intake.md
+ D Plans/_shards/runtime_artifacts_panel/025-ledger-compile-addendum-pldg-20260629-001-feature-name.md
+ D Plans/_shards/runtime_artifacts_panel/026-ledger-compile-addendum-pldg-20260630-001-feature-intake.md
+ D Plans/_shards/runtime_artifacts_panel/027-usage-artifact-schema-strictness-addendum-2026-07-09.md
+ D Plans/_shards/runtime_artifacts_panel/028-fable-deferred-action-concrete-repair-addendum-2026-07-08.md
+ D Plans/_shards/runtime_artifacts_panel/029-fable-remaining-action-plan-audit-lineage-notes-2026-07-08.md
+ D Plans/_shards/runtime_artifacts_panel/030-usage-gui-propagation-addendum-2026-07-09.md
+ M Plans/_shards/runtime_artifacts_panel/manifest.json
+ M Plans/_shards/section15_mvp_promoted_features_spec/00-index.md
+ M Plans/_shards/section15_mvp_promoted_features_spec/001-preamble.md
+ M Plans/_shards/section15_mvp_promoted_features_spec/002-0.-scope-and-ssot-status.md
+ M Plans/_shards/section15_mvp_promoted_features_spec/003-1.-canonical-shell-and-surface-model.md
+ M Plans/_shards/section15_mvp_promoted_features_spec/004-2.-cross-feature-runtime-contracts.md
+ M Plans/_shards/section15_mvp_promoted_features_spec/005-3.-feature-requirements.md
+ M Plans/_shards/section15_mvp_promoted_features_spec/006-4.-command-families-required-by-the-promoted-features.md
+ M Plans/_shards/section15_mvp_promoted_features_spec/007-5.-persistence-and-restore-rules.md
+ M Plans/_shards/section15_mvp_promoted_features_spec/008-6.-non-goals-and-anti-drift-rules.md
+ M Plans/_shards/section15_mvp_promoted_features_spec/009-owner-consumer-map.md
+ M Plans/_shards/section15_mvp_promoted_features_spec/010-planunits.md
+ M Plans/_shards/section15_mvp_promoted_features_spec/011-migration-coverage.md
+ M Plans/_shards/section15_mvp_promoted_features_spec/012-ledger-compile-addendum-pldg-20260703-001-feature-intake.md
+ D Plans/_shards/section15_mvp_promoted_features_spec/013-fable-deferred-action-concrete-repair-addendum-2026-07-08.md
+ M Plans/_shards/section15_mvp_promoted_features_spec/manifest.json
+ M Plans/_shards/skills_system/00-index.md
+ M Plans/_shards/skills_system/manifest.json
+ M Plans/_shards/storage-plan/00-index.md
+ M Plans/_shards/storage-plan/001-preamble.md
+ M Plans/_shards/storage-plan/002-canonical-owner-section-requirements.md
+ M Plans/_shards/storage-plan/003-summary.md
+ M Plans/_shards/storage-plan/004-table-of-contents.md
+ M Plans/_shards/storage-plan/005-1.-definitions-and-concepts.md
+ M Plans/_shards/storage-plan/006-2.-how-we-re-going-to-do-it.md
+ M Plans/_shards/storage-plan/007-3.-implementation-checklist.md
+ M Plans/_shards/storage-plan/008-4.-impact-on-chat-assistant-interview.md
+ M Plans/_shards/storage-plan/009-5.-gaps-and-how-we-address-them.md
+ M Plans/_shards/storage-plan/010-6.-potential-problems-and-solutions.md
+ D Plans/_shards/storage-plan/011-7.-enhancements.md
+ M Plans/_shards/storage-plan/012-8.-implementation-order-and-testing.md
+ M Plans/_shards/storage-plan/013-version-history.md
+ M Plans/_shards/storage-plan/014-scheduler-runtime-safe-point-and-remediation-storage-addendum-20.md
+ M Plans/_shards/storage-plan/015-runtime-attempt-safe-point-queue-analysis-storage-addendum-2026-.md
+ M Plans/_shards/storage-plan/016-runtime-attempt-safe-point-queue-analysis-canonical-alignment-20.md
+ M Plans/_shards/storage-plan/017-runtime-recovery-persistence-and-restart-canonical-alignment-202.md
+ M Plans/_shards/storage-plan/018-permission-snapshot-storage-and-safe-point-namespace-addendum.md
+ M Plans/_shards/storage-plan/019-assistant-worktree-binding-storage-addendum.md
+ M Plans/_shards/storage-plan/020-8.-web-content-caching-persistence.md
+ M Plans/_shards/storage-plan/021-owner-consumer-map.md
+ M Plans/_shards/storage-plan/022-planunits.md
+ M Plans/_shards/storage-plan/023-migration-coverage.md
+ M Plans/_shards/storage-plan/024-ledger-compile-addendum-pldg-20260614-001.md
+ M Plans/_shards/storage-plan/025-ledger-compile-addendum-pldg-20260616-001.md
+ M Plans/_shards/storage-plan/026-ledger-compile-addendum-pldg-20260616-002.md
+ M Plans/_shards/storage-plan/027-ledger-compile-addendum-pldg-20260618-001-prd-planning-wizard.md
+ M Plans/_shards/storage-plan/028-ledger-compile-addendum-pldg-20260622-001-fff.md
+ M Plans/_shards/storage-plan/029-ledger-compile-addendum-pldg-20260626-001-feature-name.md
+ M Plans/_shards/storage-plan/030-ledger-compile-addendum-pldg-20260627-001-feature-intake.md
+ M Plans/_shards/storage-plan/031-ledger-compile-addendum-pldg-20260629-001-feature-name.md
+ M Plans/_shards/storage-plan/032-ledger-compile-addendum-pldg-20260630-001-feature-intake.md
+ M Plans/_shards/storage-plan/033-ledger-compile-addendum-pldg-20260703-001-feature-intake.md
+ M Plans/_shards/storage-plan/034-fable-deferred-action-concrete-repair-addendum-2026-07-08.md
+ M Plans/_shards/storage-plan/035-fable-remaining-action-plan-audit-lineage-notes-2026-07-08.md
+ M Plans/_shards/storage-plan/036-usage-gui-propagation-addendum-2026-07-09.md
+ M Plans/_shards/storage-plan/manifest.json
+ M Plans/_shards/storage_value_registry.schema/00-index.md
+ M Plans/_shards/storage_value_registry.schema/001-lines-1-200.md
+ D Plans/_shards/storage_value_registry.schema/002-lines-201-230.md
+ M Plans/_shards/storage_value_registry.schema/manifest.json
+ M Plans/_shards/storage_value_registry/00-index.md
+ M Plans/_shards/storage_value_registry/001-lines-1-200.md
+ M Plans/_shards/storage_value_registry/002-lines-201-400.md
+ M Plans/_shards/storage_value_registry/003-lines-401-600.md
+ M Plans/_shards/storage_value_registry/004-lines-601-800.md
+ M Plans/_shards/storage_value_registry/005-lines-801-1000.md
+ M Plans/_shards/storage_value_registry/006-lines-1001-1200.md
+ M Plans/_shards/storage_value_registry/007-lines-1201-1400.md
+ M Plans/_shards/storage_value_registry/008-lines-1401-1600.md
+ M Plans/_shards/storage_value_registry/009-lines-1601-1800.md
+ M Plans/_shards/storage_value_registry/010-lines-1801-2000.md
+ M Plans/_shards/storage_value_registry/011-lines-2001-2200.md
+ M Plans/_shards/storage_value_registry/012-lines-2201-2400.md
+ M Plans/_shards/storage_value_registry/013-lines-2401-2600.md
+ M Plans/_shards/storage_value_registry/014-lines-2601-2800.md
+ M Plans/_shards/storage_value_registry/015-lines-2801-3000.md
+ D Plans/_shards/storage_value_registry/016-lines-3001-3052.md
+ M Plans/_shards/storage_value_registry/manifest.json
+ M Plans/_shards/tools/00-index.md
+ M Plans/_shards/tools/manifest.json
+ M Plans/_shards/ui_command_catalog/00-index.md
+ M Plans/_shards/ui_command_catalog/001-preamble.md
+ M Plans/_shards/ui_command_catalog/002-canonical-owner-section-requirements.md
+ M Plans/_shards/ui_command_catalog/003-0.-scope.md
+ M Plans/_shards/ui_command_catalog/004-1.-naming-rules.md
+ M Plans/_shards/ui_command_catalog/005-2.-canonical-command-ids.md
+ M Plans/_shards/ui_command_catalog/006-references.md
+ M Plans/_shards/ui_command_catalog/007-owner-consumer-map.md
+ M Plans/_shards/ui_command_catalog/008-planunits.md
+ M Plans/_shards/ui_command_catalog/009-migration-coverage.md
+ M Plans/_shards/ui_command_catalog/010-ledger-compile-addendum-pldg-20260618-001-prd-planning-wizard.md
+ M Plans/_shards/ui_command_catalog/011-ledger-compile-addendum-pldg-20260622-001-fff.md
+ M Plans/_shards/ui_command_catalog/012-ledger-compile-addendum-pldg-20260626-001-feature-name.md
+ M Plans/_shards/ui_command_catalog/013-ledger-compile-addendum-pldg-20260627-001-feature-intake.md
+ M Plans/_shards/ui_command_catalog/014-ledger-compile-addendum-pldg-20260701-001-feature-intake.md
+ M Plans/_shards/ui_command_catalog/015-ledger-compile-addendum-pldg-20260630-001-feature-intake.md
+ M Plans/_shards/ui_command_catalog/016-gui-pmconcept-implementation-readiness-repair-addendum-2026-07-0.md
+ M Plans/_shards/ui_command_catalog/017-fable-gui-command-contract-closure-addendum-2026-07-07.md
+ M Plans/_shards/ui_command_catalog/018-fable-deferred-action-concrete-repair-addendum-2026-07-08.md
+ M Plans/_shards/ui_command_catalog/019-usage-gui-propagation-addendum-2026-07-09.md
+ M Plans/_shards/ui_command_catalog/manifest.json
+ M Plans/_shards/ui_wiring_rules/00-index.md
+ M Plans/_shards/ui_wiring_rules/001-preamble.md
+ M Plans/_shards/ui_wiring_rules/002-0.-scope.md
+ M Plans/_shards/ui_wiring_rules/003-owner-consumer-map.md
+ M Plans/_shards/ui_wiring_rules/004-planunits.md
+ M Plans/_shards/ui_wiring_rules/005-1.-rule-1-ui-command-dispatch-only.md
+ M Plans/_shards/ui_wiring_rules/006-2.-rule-2-one-element-one-command.md
+ M Plans/_shards/ui_wiring_rules/007-3.-ui-command-dispatcher-boundary.md
+ M Plans/_shards/ui_wiring_rules/008-4.-wiring-matrix-concept.md
+ M Plans/_shards/ui_wiring_rules/009-5.-autonomous-verification-strategy.md
+ M Plans/_shards/ui_wiring_rules/010-6.-references.md
+ M Plans/_shards/ui_wiring_rules/011-migration-coverage.md
+ M Plans/_shards/ui_wiring_rules/012-fable-deferred-action-concrete-repair-addendum-2026-07-08.md
+ M Plans/_shards/ui_wiring_rules/manifest.json
+ M Plans/_shards/usage-feature/00-index.md
+ M Plans/_shards/usage-feature/001-preamble.md
+ M Plans/_shards/usage-feature/002-canonical-owner-section-requirements.md
+ M Plans/_shards/usage-feature/003-plan-document-status.md
+ M Plans/_shards/usage-feature/004-rewrite-alignment-2026-02-21.md
+ M Plans/_shards/usage-feature/005-storage-dependency-implementation.md
+ M Plans/_shards/usage-feature/006-executive-summary.md
+ M Plans/_shards/usage-feature/007-relationship-to-existing-docs.md
+ M Plans/_shards/usage-feature/008-external-references-competitive-ecosystem.md
+ M Plans/_shards/usage-feature/009-scope-of-the-usage-feature.md
+ M Plans/_shards/usage-feature/010-data-and-backend-conceptual.md
+ M Plans/_shards/usage-feature/011-gui-placement-options.md
+ M Plans/_shards/usage-feature/012-gaps-current-state-vs.-desired.md
+ M Plans/_shards/usage-feature/013-enhancements-beyond-minimum.md
+ M Plans/_shards/usage-feature/014-out-of-scope-for-this-plan.md
+ M Plans/_shards/usage-feature/015-success-criteria.md
+ M Plans/_shards/usage-feature/016-version-history.md
+ M Plans/_shards/usage-feature/017-widget-composed-page-layout-addendum-2026-02-23.md
+ M Plans/_shards/usage-feature/018-runtime-scheduler-recovery-observability-addendum-2026-03-09.md
+ M Plans/_shards/usage-feature/019-source-control-github-actions-and-docker-manager-cost-attributio.md
+ M Plans/_shards/usage-feature/020-cross-surface-usage-routing-clarifications.md
+ M Plans/_shards/usage-feature/021-owner-consumer-map.md
+ M Plans/_shards/usage-feature/022-planunits.md
+ M Plans/_shards/usage-feature/023-migration-coverage.md
+ M Plans/_shards/usage-feature/024-ledger-compile-addendum-pldg-20260624-001-provider-updates.md
+ M Plans/_shards/usage-feature/025-ledger-compile-addendum-pldg-20260626-001-feature-name.md
+ M Plans/_shards/usage-feature/026-ledger-compile-addendum-pldg-20260629-001-feature-name.md
+ M Plans/_shards/usage-feature/027-ledger-compile-addendum-pldg-20260703-001-feature-intake.md
+ M Plans/_shards/usage-feature/028-usage-gui-propagation-addendum-2026-07-09.md
+ M Plans/_shards/usage-feature/029-usage-implementation-ready-evidence-addendum-2026-07-09.md
+ M Plans/_shards/usage-feature/030-fable-deferred-action-concrete-repair-addendum-2026-07-08.md
+ M Plans/_shards/usage-feature/manifest.json
+ M Plans/_shards/web_agent_policy_fixtures/00-index.md
+ M Plans/_shards/web_agent_policy_fixtures/manifest.json
+ M Plans/_shards/web_capability_findings_coverage.schema/00-index.md
+ M Plans/_shards/web_capability_findings_coverage.schema/manifest.json
+ M Plans/_shards/web_capability_findings_coverage/00-index.md
+ M Plans/_shards/web_capability_findings_coverage/manifest.json
+ M Plans/_shards/web_capability_source_packet_receipt.schema/00-index.md
+ M Plans/_shards/web_capability_source_packet_receipt.schema/manifest.json
+ M Plans/_shards/web_capability_source_packet_receipt/00-index.md
+ M Plans/_shards/web_capability_source_packet_receipt/manifest.json
+ M Plans/_shards/web_intent_routing_fixtures/00-index.md
+ M Plans/_shards/web_intent_routing_fixtures/manifest.json
+ M Plans/_shards/web_operation_card_fixtures/00-index.md
+ M Plans/_shards/web_operation_card_fixtures/manifest.json
+ M Plans/_shards/web_operation_contracts.schema/00-index.md
+ M Plans/_shards/web_operation_contracts.schema/manifest.json
+ M Plans/_shards/web_operation_job_fixtures/00-index.md
+ M Plans/_shards/web_operation_job_fixtures/manifest.json
+ M Plans/_shards/web_policy_negative_fixtures.schema/00-index.md
+ M Plans/_shards/web_policy_negative_fixtures.schema/manifest.json
+ M Plans/_shards/web_policy_negative_fixtures/00-index.md
+ M Plans/_shards/web_policy_negative_fixtures/manifest.json
+ M Plans/_shards/web_provider_adapter_registry.seed/00-index.md
+ M Plans/_shards/web_provider_adapter_registry.seed/manifest.json
+ M Plans/_shards/web_provider_projection_fixtures/00-index.md
+ M Plans/_shards/web_provider_projection_fixtures/manifest.json
+ M Plans/_shards/web_research_run_fixtures/00-index.md
+ M Plans/_shards/web_research_run_fixtures/manifest.json
+ M Plans/_shards/widget_system/00-index.md
+ M Plans/_shards/widget_system/001-preamble.md
+ M Plans/_shards/widget_system/002-canonical-owner-section-requirements.md
+ M Plans/_shards/widget_system/003-1.-scope-and-non-scope.md
+ M Plans/_shards/widget_system/004-2.-hostability-and-data-contracts.md
+ M Plans/_shards/widget_system/005-3.-layout-persistence.md
+ M Plans/_shards/widget_system/006-4.-orchestrator-progress-widget-scope-and-catalog-linkage.md
+ M Plans/_shards/widget_system/007-owner-consumer-map.md
+ M Plans/_shards/widget_system/008-planunits.md
+ M Plans/_shards/widget_system/009-usage-gui-propagation-addendum-2026-07-09.md
+ M Plans/_shards/widget_system/010-migration-coverage.md
+ M Plans/_shards/widget_system/011-fable-deferred-action-concrete-repair-addendum-2026-07-08.md
+ M Plans/_shards/widget_system/manifest.json
+ M Plans/_shards/wiring_matrix/00-index.md
+ M Plans/_shards/wiring_matrix/001-preamble.md
+ M Plans/_shards/wiring_matrix/002-canonical-owner-section-requirements.md
+ M Plans/_shards/wiring_matrix/003-0.-scope.md
+ M Plans/_shards/wiring_matrix/004-1.-template.md
+ M Plans/_shards/wiring_matrix/005-2.-example-entries.md
+ M Plans/_shards/wiring_matrix/006-3.-json-example.md
+ M Plans/_shards/wiring_matrix/007-gui-pmconcept-production-wiring-repair-addendum-2026-07-02.md
+ M Plans/_shards/wiring_matrix/008-4.-verification.md
+ M Plans/_shards/wiring_matrix/009-references.md
+ M Plans/_shards/wiring_matrix/010-scheduler-remediation-event-wiring-addendum-2026-03-08.md
+ M Plans/_shards/wiring_matrix/011-runtime-recovery-wiring-requirements-2026-03-09.md
+ M Plans/_shards/wiring_matrix/012-canonical-runtime-event-wiring-canonical-alignment-2026-03-09.md
+ M Plans/_shards/wiring_matrix/013-canonical-runtime-producer-consumer-and-action-wiring-canonical-.md
+ M Plans/_shards/wiring_matrix/014-runtime-recovery-producer-consumer-wiring.md
+ M Plans/_shards/wiring_matrix/015-source-control-github-actions-and-docker-manager-wiring-addendum.md
+ M Plans/_shards/wiring_matrix/016-route-aware-wiring-reconciliation.md
+ M Plans/_shards/wiring_matrix/017-owner-consumer-map.md
+ M Plans/_shards/wiring_matrix/018-planunits.md
+ M Plans/_shards/wiring_matrix/019-migration-coverage.md
+ M Plans/_shards/wiring_matrix/020-ledger-compile-addendum-pldg-20260615-001.md
+ M Plans/_shards/wiring_matrix/021-ledger-compile-addendum-pldg-20260618-001-prd-planning-wizard.md
+ M Plans/_shards/wiring_matrix/022-ledger-compile-addendum-pldg-20260627-001-feature-intake.md
+ M Plans/_shards/wiring_matrix/023-usage-gui-propagation-addendum-2026-07-09.md
+ M Plans/_shards/wiring_matrix/024-fable-production-wiring-repair-addendum-2026-07-07.md
+ M Plans/_shards/wiring_matrix/025-ledger-compile-addendum-pldg-20260701-001-feature-intake.md
+ M Plans/_shards/wiring_matrix/manifest.json
+ M Plans/_shards/worktreegitimprovement/00-index.md
+ M Plans/_shards/worktreegitimprovement/001-preamble.md
+ M Plans/_shards/worktreegitimprovement/002-canonical-owner-section-requirements.md
+ M Plans/_shards/worktreegitimprovement/003-plan-document-status.md
+ M Plans/_shards/worktreegitimprovement/004-rewrite-alignment-2026-02-21.md
+ M Plans/_shards/worktreegitimprovement/005-ssot-references-dry.md
+ M Plans/_shards/worktreegitimprovement/006-table-of-contents.md
+ M Plans/_shards/worktreegitimprovement/007-1.-executive-summary.md
+ M Plans/_shards/worktreegitimprovement/008-2.-worktree-improvements.md
+ M Plans/_shards/worktreegitimprovement/009-3.-git-improvements.md
+ M Plans/_shards/worktreegitimprovement/010-4.-gui-for-git-worktrees.md
+ M Plans/_shards/worktreegitimprovement/011-5.-config-wiring-prerequisite.md
+ M Plans/_shards/worktreegitimprovement/012-6.-implementation-checklist.md
+ M Plans/_shards/worktreegitimprovement/013-7.-gaps-risks-and-implementation-notes.md
+ M Plans/_shards/worktreegitimprovement/014-dry-method-compliance.md
+ M Plans/_shards/worktreegitimprovement/015-7.12-crews-and-subagent-communication-enhancements-for-git-workt.md
+ M Plans/_shards/worktreegitimprovement/016-7.13-lifecycle-and-quality-enhancements-for-git-worktree-operati.md
+ M Plans/_shards/worktreegitimprovement/017-8.-references.md
+ M Plans/_shards/worktreegitimprovement/018-safe-point-and-retry-integration-addendum-2026-03-08.md
+ M Plans/_shards/worktreegitimprovement/019-safe-point-worktree-recovery-alignment-addendum-2026-03-09.md
+ M Plans/_shards/worktreegitimprovement/020-runtime-worktree-conflict-canonical-alignment-2026-03-09.md
+ M Plans/_shards/worktreegitimprovement/021-worktree-lane-allocation-and-source-control-reconciliation.md
+ M Plans/_shards/worktreegitimprovement/022-owner-consumer-map.md
+ M Plans/_shards/worktreegitimprovement/023-planunits.md
+ M Plans/_shards/worktreegitimprovement/024-migration-coverage.md
+ M Plans/_shards/worktreegitimprovement/025-ledger-compile-addendum-pldg-20260614-001.md
+ M Plans/_shards/worktreegitimprovement/026-ledger-compile-addendum-pldg-20260616-002.md
+ M Plans/_shards/worktreegitimprovement/027-ledger-compile-addendum-pldg-20260617-001-plans-to-code-handoff.md
+ M Plans/_shards/worktreegitimprovement/028-ledger-compile-addendum-pldg-20260618-001-prd-planning-wizard.md
+ M Plans/_shards/worktreegitimprovement/029-ledger-compile-addendum-pldg-20260622-001-fff.md
+ M Plans/_shards/worktreegitimprovement/030-fable-deferred-action-concrete-repair-addendum-2026-07-08.md
+ M Plans/_shards/worktreegitimprovement/manifest.json
+ M Plans/assistant-chat-design.md
+ M Plans/auto_decisions.jsonl
+ M Plans/event_record.schema.json
+ M Plans/ledgers/v2/ledger_registry.json
+ M Plans/newtools.md
+ M Plans/orchestrator-subagent-integration.md
+ M Plans/plan_graph.json
+ M Plans/runtime_artifact_envelope.schema.json
+ M Plans/runtime_artifact_restore_point.schema.json
+ M Plans/sharding_config.json
+ M Plans/storage-plan.md
+ M Plans/storage_value_registry.json
+ M Plans/storage_value_registry.schema.json
+ M Plans/usage-feature.md
+ M scripts/pm-governance-seal.py
+ M scripts/pm-implementation-readiness.py
+ M scripts/pm-plans-verify.py
+ M scripts/pm-pnc019-certification-harness.py
+ M tests/fixtures/runtime_artifacts/golden/runtime_artifact_fixtures.json
+?? **Compliance:**
+?? .impeccable.md
+?? .opencode/
+?? .playwright-mcp/
+?? .zcode/plans/plan-sess_1f17272c-2355-4c63-8c04-b740b99a57ec.md
+?? .zcode/plans/plan-sess_43a46891-69bd-4353-ac32-7e1a6de93ac6.md
+?? .zcode/plans/plan-sess_5ca5bd36-29dd-497d-b156-3d207a70a7c5.md
+?? .zcode/plans/plan-sess_9f026f00-fcb5-4e85-8181-dd75a3162dc9.md
+?? .zcode/plans/plan-sess_a1bd7619-d1c5-4415-b67e-64fcb1c93929.md
+?? .zcode/plans/plan-sess_b612ceeb-be55-47f0-9726-e1292827a1e0.md
+?? Concepts/CONCEPT_RULES.md
+?? "Concepts/Chat Gui Updates.md"
+?? Concepts/ChatGuiUpdates2.md
+?? Concepts/ConceptHub/
+?? Concepts/Icon-Concepts/
+?? Concepts/Notification-concepts/
+?? Concepts/PMConcept7-NOTES.md
+?? Concepts/PMConcept7.html
+?? Concepts/PMConcept7.html.bak-pre-pm8-merge
+?? Concepts/PMConcept8.html
+?? Concepts/Puppet_Master_Chat_Concept_Handoff.zip
+?? "Concepts/ScreenRecording_07-29-2026 19-24-09_1.mov"
+?? "Concepts/ScreenRecording_07-29-2026 19-42-23_1.mov"
+?? Concepts/StartConceptHub.command
+?? Concepts/chat-assistant-concepts/
+?? Concepts/concepts.zip
+?? Concepts/motion-wave/
+?? Concepts/pm6-build/parts/10x-pm6-css-cozy-shelves.part.html
+?? Concepts/pm6-build/parts/29x-pm6-js-cozy-shelves.part.html
+?? Concepts/pm6-build/parts/_bak_pre_cozy_shelves_20260728/
+?? Concepts/pm6-build/parts/_bak_pre_magnet_backport_20260722_234352/
+?? Concepts/pm6-build/parts/_bak_pre_pm8_backport_20260722_143020/
+?? Concepts/pm6-build/parts/_bak_pre_titlebar_notify_20260723/
+?? Concepts/pm7-tools/
+?? Concepts/pm7-verify-shots/
+?? Concepts/rail-concepts-review/
+?? Concepts/rail-concepts/
+?? Concepts/settings-redesign-concepts/
+?? Concepts/usage-concepts/
+?? E-search-220.png
+?? F-search-220.png
+?? For
+?? HANDOFF_USAGE_REBUILD.md
+?? It
+?? Plans/.audits/plan-assurance-handoff-2026-07-17/
+?? Plans/.audits/stage-a-f3-postexperiment-synthesis/
+?? Plans/.audits/stage-a-plan-assurance-rolling-trial-packet-v1/
+?? Plans/.audits/stage-a-plan-assurance-rolling-trial-packet-v1_1/
+?? Plans/.audits/stage-a-plan-assurance-rolling-trial-packet-v1_2/
+?? Plans/.audits/stage-a-plan-assurance-rolling-trial-v1-run-001/
+?? Plans/.audits/stage-a-plan-assurance-rolling-trial-v1_1-run-001/
+?? Plans/.evidence/cozy-shelves-panel-reconciliation-2026-07-27/
+?? Plans/.evidence/pm6-chat-footer-float-repair-2026-07-16/
+?? Plans/.evidence/pm6-chat-polish-promotion-2026-07-16/
+?? Plans/.evidence/pm6-command-wiring-registration-2026-07-16/
+?? Plans/.evidence/pm6-shell-sweep-promotion-2026-07-16/
+?? Plans/.evidence/pm6-theme-settings-canon-promotion-2026-07-16/
+?? Plans/.evidence/pm7-chatguiupdates2-concept-promotion-2026-07-23/
+?? Plans/.evidence/pm7-cozy-shelves-integration-2026-07-28/
+?? Plans/.evidence/pm7-deferred-cleanup-2026-07-29/
+?? Plans/.evidence/pmconcept7-home-workspace-post-audit-repair-2026-08-05/
+?? Plans/.evidence/run-debug-revival-spec-2026-07-28/
+?? Plans/CozyShelves_Control_Reconciliation.json
+?? Plans/CozyShelves_PM7_Control_Reconciliation.json
+?? Plans/PMConcept7_Home_Workspace_Control_Reconciliation.json
+?? Plans/Usage_Concepts_Rebuild_Plan.md
+?? Plans/_shards/architecture_invariants/019-inv-017-durable-atomic-replacement-and-exact-replace-recovery.md
+?? Plans/_shards/architecture_invariants/020-inv-018-seglog-frame-integrity-and-deterministic-recovery-are-ma.md
+?? Plans/_shards/architecture_invariants/032-inv-027-durable-state-authority-scope-replay-and-recovery-remain.md
+?? Plans/_shards/architecture_invariants/033-owner-consumer-map.md
+?? Plans/_shards/architecture_invariants/034-planunits.md
+?? Plans/_shards/architecture_invariants/035-migration-coverage.md
+?? Plans/_shards/architecture_invariants/036-fable-deferred-action-concrete-repair-addendum-2026-07-08.md
+?? Plans/_shards/assistant-chat-design/059-pmconcept6-chat-polish-addendum-2026-07-16.md
+?? Plans/_shards/assistant-chat-design/060-immutable-conversation-restore-point-lifecycle-known-37-completi.md
+?? Plans/_shards/assistant-chat-design/061-pmconcept7-concept-promotion-addendum-2026-07-23.md
+?? Plans/_shards/automated_testing_system/020-case-l-durable-state-acceptance-fixture-contract-2026-07-17.md
+?? Plans/_shards/automated_testing_system/021-fable-deferred-action-concrete-repair-addendum-2026-07-08.md
+?? Plans/_shards/automated_testing_system/022-fable-remaining-action-plan-repair-notes-2026-07-08.md
+?? Plans/_shards/automated_testing_system/023-known-37-owner-oracle-materialization-and-execution-status-ledge.md
+?? Plans/_shards/automated_testing_system/024-cozy-shelves-panel-reconciliation-addendum-2026-07-27.md
+?? Plans/_shards/automated_testing_system/025-pmconcept7-home-workspace-test-contract-2026-08-04.md
+?? Plans/_shards/commands_system/010-8.-uicommand-catalog-entry.md
+?? Plans/_shards/commands_system/011-9.-opencode-baseline-and-puppet-master-deltas.md
+?? Plans/_shards/commands_system/012-10.-acceptance-criteria.md
+?? Plans/_shards/commands_system/019-case-l-command-consumer-propagation-addendum-2026-07-17.md
+?? Plans/_shards/commands_system/020-fable-deferred-action-concrete-repair-addendum-2026-07-08.md
+?? Plans/_shards/commands_system/021-known-37-recovery-unavailable-command-registration-2026-07-18.md
+?? Plans/_shards/commands_system/022-cozy-shelves-panel-reconciliation-addendum-2026-07-27.md
+?? Plans/_shards/commands_system/023-run-debug-revival-addendum-2026-07-27.md
+?? Plans/_shards/containers_registry_and_unraid/024-cozy-shelves-panel-reconciliation-addendum-2026-07-27.md
+?? Plans/_shards/contracts_v0/003-pmconcept7-home-workspace-openfile-placement-addendum-2026-08-04.md
+?? Plans/_shards/contracts_v0/004-known-37-case-l-owner-materialization-requested-effective-runtim.md
+?? Plans/_shards/contracts_v0/005-0.-scope.md
+?? Plans/_shards/contracts_v0/006-cross-surface-runtime-concern-and-route-open-contracts.md
+?? Plans/_shards/contracts_v0/007-1.-events-persisted.md
+?? Plans/_shards/contracts_v0/008-provider-model-capability-snapshot-reference-envelope.md
+?? Plans/_shards/contracts_v0/009-ledger-compile-addendum-pldg-20260624-001-provider-updates.md
+?? Plans/_shards/contracts_v0/010-2.-provider-normalized-stream-non-persisted-contract.md
+?? Plans/_shards/contracts_v0/011-3.-tool-events-persisted.md
+?? Plans/_shards/contracts_v0/012-5.-context-management-instruction-scoping-attempt-journaling-par.md
+?? Plans/_shards/contracts_v0/013-6.-hitlrequest.md
+?? Plans/_shards/contracts_v0/014-7.-uicommand.md
+?? Plans/_shards/contracts_v0/015-8.-ui-scaling.md
+?? Plans/_shards/contracts_v0/016-usage-and-billing-contracts-addendum.md
+?? Plans/_shards/contracts_v0/017-scheduler-safe-point-and-remediation-events-addendum-2026-03-08.md
+?? Plans/_shards/contracts_v0/018-runtime-scheduler-attempt-lineage-contract-addendum-2026-03-09.md
+?? Plans/_shards/contracts_v0/019-canonical-runtime-taxonomy-and-event-precedence-canonical-alignm.md
+?? Plans/_shards/contracts_v0/020-canonical-runtime-event-outcome-and-action-contract-canonical-al.md
+?? Plans/_shards/contracts_v0/021-owner-consumer-map.md
+?? Plans/_shards/contracts_v0/022-planunits.md
+?? Plans/_shards/contracts_v0/023-pmconcept7-home-workspace-event-contracts-2026-08-04.md
+?? Plans/_shards/contracts_v0/024-known-37-goal-runtime-v2-schema-registration.md
+?? Plans/_shards/contracts_v0/025-migration-coverage.md
+?? Plans/_shards/contracts_v0/026-ledger-compile-addendum-pldg-20260614-001.md
+?? Plans/_shards/contracts_v0/027-ledger-compile-addendum-pldg-20260614-002.md
+?? Plans/_shards/contracts_v0/028-ledger-compile-addendum-pldg-20260615-001.md
+?? Plans/_shards/contracts_v0/029-ledger-compile-addendum-pldg-20260616-001.md
+?? Plans/_shards/contracts_v0/030-ledger-compile-addendum-pldg-20260616-002.md
+?? Plans/_shards/contracts_v0/031-ledger-compile-addendum-pldg-20260617-001-plans-to-code-handoff.md
+?? Plans/_shards/contracts_v0/032-ledger-compile-addendum-pldg-20260618-001-prd-planning-wizard.md
+?? Plans/_shards/contracts_v0/033-ledger-compile-addendum-pldg-20260622-001-fff.md
+?? Plans/_shards/contracts_v0/034-ledger-compile-addendum-pldg-20260626-001-feature-name.md
+?? Plans/_shards/contracts_v0/035-ledger-compile-addendum-pldg-20260627-001-feature-intake.md
+?? Plans/_shards/contracts_v0/036-ledger-compile-addendum-pldg-20260629-001-feature-name.md
+?? Plans/_shards/contracts_v0/037-ledger-compile-addendum-pldg-20260630-001-feature-intake.md
+?? Plans/_shards/contracts_v0/038-ledger-compile-addendum-pldg-20260701-001-feature-intake.md
+?? Plans/_shards/contracts_v0/039-ledger-compile-addendum-pldg-20260703-001-feature-intake.md
+?? Plans/_shards/contracts_v0/040-fable-residual-feature-contract-cleanup-addendum-2026-07-07.md
+?? Plans/_shards/contracts_v0/041-fable-deferred-action-concrete-repair-addendum-2026-07-08.md
+?? Plans/_shards/contracts_v0/042-usage-gui-propagation-addendum-2026-07-09.md
+?? Plans/_shards/contracts_v0/043-case-l-durable-state-contract-addendum-2026-07-17.md
+?? Plans/_shards/dry_rules/020-pmconcept7-home-workspace-owner-boundary-2026-08-04.md
+?? Plans/_shards/event_record.schema/001-lines-1-200.md
+?? Plans/_shards/event_record.schema/002-lines-201-373.md
+?? Plans/_shards/executor_protocol/028-known-37-run-start-and-recovery-unavailable-admission.md
+?? Plans/_shards/filemanager/027-pmconcept6-shell-sweep-addendum-2026-07-16.md
+?? Plans/_shards/filemanager/028-cozy-shelves-panel-reconciliation-addendum-2026-07-27.md
+?? Plans/_shards/filemanager/029-pmconcept7-cozy-shelves-integration-addendum-2026-07-28.md
+?? Plans/_shards/filemanager/030-pmconcept7-home-workspace-reconciliation-2026-08-04.md
+?? Plans/_shards/filesafe/038-case-l-exact-restore-repair-addendum-2026-07-17.md
+?? Plans/_shards/filesafe/039-fable-deferred-action-concrete-repair-addendum-2026-07-08.md
+?? Plans/_shards/filesafe/040-fable-remaining-action-plan-repair-notes-2026-07-08.md
+?? Plans/_shards/filesafe/041-known-37-corruption-evidence-and-recovery-unavailable-owner-comp.md
+?? Plans/_shards/filesafe/042-cozy-shelves-panel-reconciliation-addendum-2026-07-27.md
+?? Plans/_shards/finalguispec/006-pmconcept7-home-workspace-control-reconciliation-2026-08-04.md
+?? Plans/_shards/finalguispec/007-known-37-recovery-unavailable-gui-projection-2026-07-18.md
+?? Plans/_shards/finalguispec/008-gui-pmconcept-implementation-readiness-repair-addendum-2026-07-0.md
+?? Plans/_shards/finalguispec/009-ledger-compile-addendum-pldg-20260630-001-feature-intake.md
+?? Plans/_shards/finalguispec/010-ledger-compile-addendum-pldg-20260624-001-provider-updates.md
+?? Plans/_shards/finalguispec/011-3.-master-layout.md
+?? Plans/_shards/finalguispec/012-4.-navigation-architecture.md
+?? Plans/_shards/finalguispec/013-5.-panel-system.md
+?? Plans/_shards/finalguispec/014-6.-theme-system.md
+?? Plans/_shards/finalguispec/015-7.-views-specification.md
+?? Plans/_shards/finalguispec/016-8.-widget-catalog.md
+?? Plans/_shards/finalguispec/017-9.-state-management.md
+?? Plans/_shards/finalguispec/018-10.-ux-patterns.md
+?? Plans/_shards/finalguispec/019-11.-anti-flickering-and-scroll-preservation.md
+?? Plans/_shards/finalguispec/020-12.-responsive-design.md
+?? Plans/_shards/finalguispec/021-13.-accessibility.md
+?? Plans/_shards/finalguispec/022-14.-slint-file-organization.md
+?? Plans/_shards/finalguispec/023-15.-persistence.md
+?? Plans/_shards/finalguispec/024-16.-migration-mapping.md
+?? Plans/_shards/finalguispec/025-17.-risks-and-mitigations.md
+?? Plans/_shards/finalguispec/026-18.-promoted-features-formerly-future-considerations.md
+?? Plans/_shards/finalguispec/027-appendix-a-cross-references.md
+?? Plans/_shards/finalguispec/028-appendix-b-locked-decisions-summary.md
+?? Plans/_shards/finalguispec/029-appendix-c-dashboard-widget-grid-and-widget-catalog-integration-.md
+?? Plans/_shards/finalguispec/030-19.-persona-editor-compatibility-disclosure-and-surface-level-pe.md
+?? Plans/_shards/finalguispec/031-rendering-surface-addendum-2026-03-07.md
+?? Plans/_shards/finalguispec/032-assistant-planning-ux-addendum-2026-03-08.md
+?? Plans/_shards/finalguispec/033-compatibility-source-lineage-scheduler-blocked-and-remediation-g.md
+?? Plans/_shards/finalguispec/034-compatibility-source-lineage-runtime-scheduler-blocked-state-gui.md
+?? Plans/_shards/finalguispec/035-compatibility-source-lineage-runtime-blocked-queue-and-recovery-.md
+?? Plans/_shards/finalguispec/036-compatibility-source-lineage-runtime-scheduler-recovery-gui-cons.md
+?? Plans/_shards/finalguispec/037-canonical-blocked-recovery-behavior.md
+?? Plans/_shards/finalguispec/038-compatibility-source-lineage-blocked-state-visual-distinction-an.md
+?? Plans/_shards/finalguispec/039-15.-promoted-widget-catalog-web-tools-planning-question-operatio.md
+?? Plans/_shards/finalguispec/040-owner-consumer-map.md
+?? Plans/_shards/finalguispec/041-planunits.md
+?? Plans/_shards/finalguispec/042-migration-coverage.md
+?? Plans/_shards/finalguispec/043-ledger-compile-addendum-pldg-20260614-001.md
+?? Plans/_shards/finalguispec/044-ledger-compile-addendum-pldg-20260614-002.md
+?? Plans/_shards/finalguispec/045-ledger-compile-addendum-pldg-20260615-001.md
+?? Plans/_shards/finalguispec/046-ledger-compile-addendum-pldg-20260616-001.md
+?? Plans/_shards/finalguispec/047-ledger-compile-addendum-pldg-20260616-002.md
+?? Plans/_shards/finalguispec/048-ledger-compile-addendum-pldg-20260617-001-plans-to-code-handoff.md
+?? Plans/_shards/finalguispec/049-ledger-compile-addendum-pldg-20260618-001-prd-planning-wizard.md
+?? Plans/_shards/finalguispec/050-ledger-compile-addendum-pldg-20260622-001-fff.md
+?? Plans/_shards/finalguispec/051-ledger-compile-addendum-pldg-20260626-001-feature-name.md
+?? Plans/_shards/finalguispec/052-ledger-compile-addendum-pldg-20260627-001-feature-intake.md
+?? Plans/_shards/finalguispec/053-ledger-compile-addendum-pldg-20260629-001-feature-name.md
+?? Plans/_shards/finalguispec/054-ledger-compile-addendum-pldg-20260701-001-feature-intake.md
+?? Plans/_shards/finalguispec/055-ledger-compile-addendum-pldg-20260703-001-feature-intake.md
+?? Plans/_shards/finalguispec/056-fable-deferred-action-concrete-repair-addendum-2026-07-08.md
+?? Plans/_shards/finalguispec/057-fable-remaining-action-plan-audit-lineage-notes-2026-07-08.md
+?? Plans/_shards/finalguispec/058-usage-gui-propagation-addendum-2026-07-09.md
+?? Plans/_shards/finalguispec/059-pmconcept6-concept-promotion-addendum-2026-07-11.md
+?? Plans/_shards/finalguispec/060-pmconcept6-chat-polish-addendum-2026-07-16.md
+?? Plans/_shards/finalguispec/061-theme-system-addendum-2026-07-16.md
+?? Plans/_shards/finalguispec/062-settings-system-addendum-2026-07-16.md
+?? Plans/_shards/finalguispec/063-pmconcept6-shell-sweep-addendum-2026-07-16.md
+?? Plans/_shards/finalguispec/064-pmconcept7-concept-promotion-addendum-2026-07-23.md
+?? Plans/_shards/finalguispec/065-cozy-shelves-panel-reconciliation-addendum-2026-07-27.md
+?? Plans/_shards/finalguispec/066-run-debug-revival-addendum-2026-07-27.md
+?? Plans/_shards/finalguispec/067-pmconcept7-cozy-shelves-integration-addendum-2026-07-28.md
+?? Plans/_shards/github_integration/015-cozy-shelves-panel-reconciliation-addendum-2026-07-27.md
+?? Plans/_shards/goal_runtime_system/016-case-l-durable-goal-recovery-consumer-addendum-2026-07-17.md
+?? Plans/_shards/gui_rebuild_requirements_checklist/017-pmconcept7-home-workspace-checklist-2026-08-04.md
+?? Plans/_shards/models_system/036-run.started-models-owner-join.md
+?? Plans/_shards/multi-account/026-run.started-multi-account-owner-join.md
+?? Plans/_shards/newtools/029-platform-capability-catalog-and-evaluation-contract.md
+?? Plans/_shards/orchestrator_page/006-known-37-recovery-unavailable-orchestrator-actions-2026-07-18.md
+?? Plans/_shards/orchestrator_page/007-ledger-compile-addendum-pldg-20260630-001-feature-intake.md
+?? Plans/_shards/orchestrator_page/008-migration-coverage.md
+?? Plans/_shards/orchestrator_page/009-ledger-compile-addendum-pldg-20260614-001.md
+?? Plans/_shards/orchestrator_page/010-ledger-compile-addendum-pldg-20260616-002.md
+?? Plans/_shards/orchestrator_page/011-ledger-compile-addendum-pldg-20260617-001-plans-to-code-handoff.md
+?? Plans/_shards/orchestrator_page/012-ledger-compile-addendum-pldg-20260618-001-prd-planning-wizard.md
+?? Plans/_shards/orchestrator_page/013-ledger-compile-addendum-pldg-20260626-001-feature-name.md
+?? Plans/_shards/orchestrator_page/014-fable-deferred-action-concrete-repair-addendum-2026-07-08.md
+?? Plans/_shards/orchestrator_page/015-fable-remaining-action-plan-audit-lineage-notes-2026-07-08.md
+?? Plans/_shards/orchestrator_page/016-usage-gui-propagation-addendum-2026-07-09.md
+?? Plans/_shards/orchestrator_page/017-pmconcept6-shell-sweep-addendum-2026-07-16.md
+?? Plans/_shards/orchestrator_page/018-pmconcept7-concept-promotion-addendum-2026-07-23.md
+?? Plans/_shards/orchestrator_page/019-run-debug-revival-addendum-2026-07-27.md
+?? Plans/_shards/permissions_system/038-case-l-permission-snapshot-and-recovery-consumer-addendum-2026-0.md
+?? Plans/_shards/personas/023-run.started-persona-owner-join.md
+?? Plans/_shards/planning_wizard/019-pmconcept6-shell-sweep-addendum-2026-07-16.md
+?? Plans/_shards/planning_wizard/020-pmconcept7-concept-promotion-addendum-2026-07-23.md
+?? Plans/_shards/release_supply_chain/012-case-l-release-migration-and-recovery-gate-propagation-2026-07-1.md
+?? Plans/_shards/release_supply_chain/013-fable-deferred-action-concrete-repair-addendum-2026-07-08.md
+?? Plans/_shards/release_supply_chain/014-fable-remaining-action-plan-repair-notes-2026-07-08.md
+?? Plans/_shards/run_graph_view/009-known-37-recovery-unavailable-graph-actions-2026-07-18.md
+?? Plans/_shards/run_graph_view/010-ledger-compile-addendum-pldg-20260630-001-feature-intake.md
+?? Plans/_shards/run_graph_view/011-migration-coverage.md
+?? Plans/_shards/run_graph_view/012-ledger-compile-addendum-pldg-20260614-002.md
+?? Plans/_shards/run_graph_view/013-ledger-compile-addendum-pldg-20260616-002.md
+?? Plans/_shards/run_graph_view/014-ledger-compile-addendum-pldg-20260617-001-plans-to-code-handoff.md
+?? Plans/_shards/run_graph_view/015-ledger-compile-addendum-pldg-20260618-001-prd-planning-wizard.md
+?? Plans/_shards/run_graph_view/016-fable-deferred-action-concrete-repair-addendum-2026-07-08.md
+?? Plans/_shards/run_graph_view/017-fable-remaining-action-plan-audit-lineage-notes-2026-07-08.md
+?? Plans/_shards/run_graph_view/018-usage-gui-propagation-addendum-2026-07-09.md
+?? Plans/_shards/run_graph_view/019-pmconcept6-shell-sweep-addendum-2026-07-16.md
+?? Plans/_shards/run_modes/026-run.started-requested-effective-owner-projection.md
+?? Plans/_shards/runtime_artifacts_panel/015-known-37-recovery-artifact-projection-2026-07-18.md
+?? Plans/_shards/runtime_artifacts_panel/016-ledger-compile-addendum-pldg-20260624-001-provider-updates.md
+?? Plans/_shards/runtime_artifacts_panel/017-migration-coverage.md
+?? Plans/_shards/runtime_artifacts_panel/018-ledger-compile-addendum-pldg-20260614-001.md
+?? Plans/_shards/runtime_artifacts_panel/019-ledger-compile-addendum-pldg-20260614-002.md
+?? Plans/_shards/runtime_artifacts_panel/020-ledger-compile-addendum-pldg-20260616-002.md
+?? Plans/_shards/runtime_artifacts_panel/021-ledger-compile-addendum-pldg-20260617-001-plans-to-code-handoff.md
+?? Plans/_shards/runtime_artifacts_panel/022-ledger-compile-addendum-pldg-20260618-001-prd-planning-wizard.md
+?? Plans/_shards/runtime_artifacts_panel/023-ledger-compile-addendum-pldg-20260622-001-fff.md
+?? Plans/_shards/runtime_artifacts_panel/024-ledger-compile-addendum-pldg-20260626-001-feature-name.md
+?? Plans/_shards/runtime_artifacts_panel/025-ledger-compile-addendum-pldg-20260627-001-feature-intake.md
+?? Plans/_shards/runtime_artifacts_panel/026-ledger-compile-addendum-pldg-20260629-001-feature-name.md
+?? Plans/_shards/runtime_artifacts_panel/027-ledger-compile-addendum-pldg-20260630-001-feature-intake.md
+?? Plans/_shards/runtime_artifacts_panel/028-usage-artifact-schema-strictness-addendum-2026-07-09.md
+?? Plans/_shards/runtime_artifacts_panel/029-fable-deferred-action-concrete-repair-addendum-2026-07-08.md
+?? Plans/_shards/runtime_artifacts_panel/030-fable-remaining-action-plan-audit-lineage-notes-2026-07-08.md
+?? Plans/_shards/runtime_artifacts_panel/031-usage-gui-propagation-addendum-2026-07-09.md
+?? Plans/_shards/runtime_artifacts_panel/032-case-l-durable-state-consumer-addendum-2026-07-17.md
+?? Plans/_shards/runtime_artifacts_panel/033-cozy-shelves-panel-reconciliation-addendum-2026-07-27.md
+?? Plans/_shards/runtime_artifacts_panel/034-run-debug-revival-addendum-2026-07-27.md
+?? Plans/_shards/section15_mvp_promoted_features_spec/013-pmconcept7-home-workspace-terminal-reconciliation-2026-08-04.md
+?? Plans/_shards/section15_mvp_promoted_features_spec/014-fable-deferred-action-concrete-repair-addendum-2026-07-08.md
+?? Plans/_shards/settings_inventory.schema/
+?? Plans/_shards/settings_inventory/
+?? Plans/_shards/storage-plan/011-7.-backup-restore-compaction-and-optional-storage-enhancements.md
+?? Plans/_shards/storage-plan/037-case-l-durable-state-owner-canon-2026-07-17.md
+?? Plans/_shards/storage-plan/038-known-37-case-l-owner-materialization.md
+?? Plans/_shards/storage-plan/039-pmconcept7-home-workspace-layout-2026-08-04.md
+?? Plans/_shards/storage-plan/040-run-debug-revival-addendum-2026-07-27.md
+?? Plans/_shards/storage_recovery_contracts.schema/
+?? Plans/_shards/storage_value_registry.schema/002-lines-201-400.md
+?? Plans/_shards/storage_value_registry.schema/003-lines-401-600.md
+?? Plans/_shards/storage_value_registry.schema/004-lines-601-800.md
+?? Plans/_shards/storage_value_registry.schema/005-lines-801-828.md
+?? Plans/_shards/storage_value_registry/016-lines-3001-3200.md
+?? Plans/_shards/storage_value_registry/017-lines-3201-3400.md
+?? Plans/_shards/storage_value_registry/018-lines-3401-3600.md
+?? Plans/_shards/storage_value_registry/019-lines-3601-3800.md
+?? Plans/_shards/storage_value_registry/020-lines-3801-4000.md
+?? Plans/_shards/storage_value_registry/021-lines-4001-4200.md
+?? Plans/_shards/storage_value_registry/022-lines-4201-4400.md
+?? Plans/_shards/storage_value_registry/023-lines-4401-4600.md
+?? Plans/_shards/storage_value_registry/024-lines-4601-4800.md
+?? Plans/_shards/storage_value_registry/025-lines-4801-5000.md
+?? Plans/_shards/storage_value_registry/026-lines-5001-5200.md
+?? Plans/_shards/storage_value_registry/027-lines-5201-5400.md
+?? Plans/_shards/storage_value_registry/028-lines-5401-5600.md
+?? Plans/_shards/storage_value_registry/029-lines-5601-5800.md
+?? Plans/_shards/storage_value_registry/030-lines-5801-6000.md
+?? Plans/_shards/storage_value_registry/031-lines-6001-6200.md
+?? Plans/_shards/storage_value_registry/032-lines-6201-6400.md
+?? Plans/_shards/storage_value_registry/033-lines-6401-6600.md
+?? Plans/_shards/storage_value_registry/034-lines-6601-6800.md
+?? Plans/_shards/storage_value_registry/035-lines-6801-7000.md
+?? Plans/_shards/storage_value_registry/036-lines-7001-7200.md
+?? Plans/_shards/storage_value_registry/037-lines-7201-7400.md
+?? Plans/_shards/storage_value_registry/038-lines-7401-7600.md
+?? Plans/_shards/storage_value_registry/039-lines-7601-7800.md
+?? Plans/_shards/storage_value_registry/040-lines-7801-8000.md
+?? Plans/_shards/storage_value_registry/041-lines-8001-8200.md
+?? Plans/_shards/storage_value_registry/042-lines-8201-8400.md
+?? Plans/_shards/storage_value_registry/043-lines-8401-8600.md
+?? Plans/_shards/storage_value_registry/044-lines-8601-8800.md
+?? Plans/_shards/storage_value_registry/045-lines-8801-9000.md
+?? Plans/_shards/storage_value_registry/046-lines-9001-9200.md
+?? Plans/_shards/storage_value_registry/047-lines-9201-9400.md
+?? Plans/_shards/storage_value_registry/048-lines-9401-9600.md
+?? Plans/_shards/storage_value_registry/049-lines-9601-9800.md
+?? Plans/_shards/storage_value_registry/050-lines-9801-10000.md
+?? Plans/_shards/storage_value_registry/051-lines-10001-10200.md
+?? Plans/_shards/storage_value_registry/052-lines-10201-10400.md
+?? Plans/_shards/storage_value_registry/053-lines-10401-10600.md
+?? Plans/_shards/storage_value_registry/054-lines-10601-10800.md
+?? Plans/_shards/storage_value_registry/055-lines-10801-11000.md
+?? Plans/_shards/storage_value_registry/056-lines-11001-11200.md
+?? Plans/_shards/storage_value_registry/057-lines-11201-11234.md
+?? Plans/_shards/ui_command_catalog/020-pmconcept6-control-census-command-addendum-2026-07-16.md
+?? Plans/_shards/ui_command_catalog/021-case-l-command-registration-and-storage-gate-propagation-2026-07.md
+?? Plans/_shards/ui_command_catalog/022-cozy-shelves-panel-reconciliation-addendum-2026-07-27.md
+?? Plans/_shards/ui_command_catalog/023-run-debug-revival-addendum-2026-07-27.md
+?? Plans/_shards/ui_command_catalog/024-pmconcept7-cozy-shelves-integration-addendum-2026-07-28.md
+?? Plans/_shards/ui_command_catalog/025-pmconcept7-deferred-token-hygiene-addendum-2026-07-29.md
+?? Plans/_shards/ui_command_catalog/026-pmconcept7-home-workspace-command-reconciliation-2026-08-04.md
+?? Plans/_shards/ui_wiring_rules/013-pmconcept7-home-workspace-wiring-rules-2026-08-04.md
+?? Plans/_shards/ui_wiring_rules/014-pmconcept7-cozy-shelves-integration-addendum-2026-07-28.md
+?? Plans/_shards/usage-feature/031-pmconcept7-concept-promotion-addendum-2026-07-23.md
+?? Plans/_shards/widget_system/012-pmconcept7-home-workspace-boundary-clarification-2026-08-04.md
+?? Plans/_shards/wiring_matrix/026-cozy-shelves-panel-reconciliation-addendum-2026-07-27.md
+?? Plans/_shards/worktreegitimprovement/031-cozy-shelves-panel-reconciliation-addendum-2026-07-27.md
+?? Plans/event_family_registry.json
+?? Plans/event_family_registry.schema.json
+?? Plans/event_payload_platform_capability_evaluated.schema.json
+?? Plans/event_payload_restore_point_corrupt.schema.json
+?? Plans/event_payload_run_started.schema.json
+?? Plans/event_payload_safe_point_recovery_unavailable.schema.json
+?? Plans/event_payload_storage_boot_recovery.schema.json
+?? Plans/event_payload_storage_integrity_detected.schema.json
+?? Plans/event_payload_storage_recovery_applied.schema.json
+?? Plans/event_payloads/
+?? Plans/home_workspace_layout.schema.json
+?? Plans/ledgers/v2/pldg-20260801-001-feature-intake/
+?? Plans/platform_capability_catalog.json
+?? Plans/platform_capability_catalog.schema.json
+?? Plans/requested_effective_runtime.schema.json
+?? Plans/settings_inventory.json
+?? Plans/settings_inventory.schema.json
+?? Plans/storage_recovery_contracts.schema.json
+?? This
+?? audit-u3-1700.png
+?? audit-u4-1700.png
+?? audit-u5-1700.png
+?? audit-u7-1700.png
+?? audit-u7-retro-1280.png
+?? audit-u8-1700.png
+?? audit-u8-retro-1280.png
+?? audit-u9-1700.png
+?? audit/
+?? brave-mcp-verify.png
+?? c2-fmbanner.png
+?? d-source-220.png
+?? gallery-final.png
+?? implementation/
+?? live-focus.png
+?? live-popup.png
+?? live-t3-975.png
+?? live-t7-975.png
+?? orchestration-2026-07-17/
+?? pb-search-220.png
+?? plans.zip
+?? pm7-compose-retro-280.png
+?? pm7-debugtab-live.png
+?? pm7-dispatch-menu.png
+?? pm7-docker-240.png
+?? pm7-docktabs-280-retro-dark-after.png
+?? pm7-fmbanner-240.png
+?? pm7-fmbanner-fixed.png
+?? pm7-run-240.png
+?? qaF-u5-wide.png
+?? qaF-u8-gd.png
+?? qaF-u9-fd.png
+?? qaF2-u9-fd.png
+?? qaF2-u9-fl.png
+?? qaU3-fd.png
+?? qaU3-gd.png
+?? qaU9-fd.png
+?? qaU9-fl.png
+?? qaU9-wide.png
+?? tests/agent_packet_restrictions/
+?? tests/fixtures/event_record/
+?? tests/test_pm_governance_seal.py
+?? u4-1280.png
+?? u4-quotas-1280.png
+?? u5-1280.png
+?? u5-final-1280.png
+?? u5-retro-dark-full.png
+?? w2-compact.png
+?? w2-final.png
+?? w4-final.png

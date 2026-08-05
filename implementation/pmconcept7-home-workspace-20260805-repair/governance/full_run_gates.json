@@ -1,0 +1,136 @@
+{
+  "check": "run-gates",
+  "failures": [
+    {
+      "check": "validate_implementation_readiness",
+      "failures": [
+        {
+          "actual": "ef5cff5b64eccf95726947654e4ee56913824987245f54aa289b4b2f237e5c6d",
+          "error": "pnc019_source_hash_stale",
+          "expected": "bda87b247d841e058758136731734e515ae947f2261b5f90370015603d3bd353",
+          "path": "Plans/.implementation_readiness/pnc019_certification_receipt.json",
+          "source_path": "Plans/event_record.schema.json"
+        },
+        {
+          "actual": null,
+          "error": "pnc019_source_hash_stale",
+          "expected": "85264dc68c929189e8758b95e0d23efdaf8fd0b3969f3583893c6c60773ed6ad",
+          "path": "Plans/.implementation_readiness/pnc019_certification_receipt.json",
+          "source_path": "Plans/event_family_registry.json"
+        },
+        {
+          "actual": null,
+          "error": "pnc019_source_hash_stale",
+          "expected": "66cb1b8bacd9e9179cbc7ef4b961686a87ea95733298408daf06ca25a0fe1814",
+          "path": "Plans/.implementation_readiness/pnc019_certification_receipt.json",
+          "source_path": "Plans/storage_recovery_contracts.schema.json"
+        },
+        {
+          "actual": "1b3e76591e97de119c9f73bd7ae4d23c01cb07ab3251bbb90b9de27bbabc0e4a",
+          "error": "pnc019_source_hash_stale",
+          "expected": "61a9a0ddd19ab642235848b85a254bdb19219aa1aa1b2d11b64eaf9624149c92",
+          "path": "Plans/.implementation_readiness/pnc019_certification_receipt.json",
+          "source_path": "Plans/storage_value_registry.schema.json"
+        },
+        {
+          "actual": "bf8cf1ceb33f175e144a44699996c0f981eda8a6cb6e05503ec281b9d6dc77dc",
+          "error": "pnc019_source_hash_stale",
+          "expected": "336d453ed7174a0d6415f4ede388cc09a8512206a0e8e64c7bc627c230de4c6a",
+          "path": "Plans/.implementation_readiness/pnc019_certification_receipt.json",
+          "source_path": "Plans/storage_value_registry.json"
+        },
+        {
+          "actual": "2a67a9d2dc647121903502751c2bf8f37a27f4f3e88e86897be79405e1efeae7",
+          "error": "pnc019_source_hash_stale",
+          "expected": "2b9591954871986cc5af23764d026ce102ca67be66634c7d1e49dc6988833d00",
+          "path": "Plans/.implementation_readiness/pnc019_certification_receipt.json",
+          "source_path": "Plans/Planning_Wizard.md"
+        },
+        {
+          "actual": "e28b0932c2d8936cabe844b9a025a7e0e9ab81eaa6cb4990ed97d38baccb17c8",
+          "error": "pnc019_source_hash_stale",
+          "expected": "fdc88d1ce136a9594060eca989fd77ade3904c54ce32cd093bb47da87438f162",
+          "path": "Plans/.implementation_readiness/pnc019_certification_receipt.json",
+          "source_path": "Plans/Executor_Protocol.md"
+        },
+        {
+          "actual": "93074bc367a76d2b977006d394c063fd7ce21bd1bdcae4138bd6944bebb72785",
+          "error": "pnc019_source_hash_stale",
+          "expected": "19b669a1c0c1e827d0b2cc40fa4c9c138032a10212259096201ba08d070a74f3",
+          "path": "Plans/.implementation_readiness/pnc019_certification_receipt.json",
+          "source_path": "Plans/Goal_Runtime_System.md"
+        },
+        {
+          "actual": "ee8528cc5ffc9b7afe7ce9f4bf7851864a1c339907e664ba3c73b93b57ad4f06",
+          "error": "pnc019_source_hash_stale",
+          "expected": "a678065d5ec532bd6c495df5a4fb52d791586f438ae46d50ecc621c79fe6e49a",
+          "path": "Plans/.implementation_readiness/pnc019_certification_receipt.json",
+          "source_path": "Plans/Orchestrator_Page.md"
+        },
+        {
+          "actual": "0b4f3de3038366fd021ea32775313d8e728f279f7873af2436dd119ed603b467",
+          "error": "pnc019_source_hash_stale",
+          "expected": "7babd913a39af4fc7b2020c3e5693c0abd704abe86ab17cf3a4e28817d19c04e",
+          "path": "Plans/.implementation_readiness/pnc019_certification_receipt.json",
+          "source_path": "Plans/Automated_Testing_System.md"
+        },
+        {
+          "actual": null,
+          "error": "pnc019_source_hash_stale",
+          "expected": "bfbeae7b130806955782e089e0b7c5cf8cafb3f12d6e8b471854eb63bdc19afa",
+          "path": "Plans/.implementation_readiness/pnc019_certification_receipt.json",
+          "source_path": "Plans/UI_Command_Catalog.md"
+        },
+        {
+          "actual": null,
+          "error": "pnc019_source_hash_stale",
+          "expected": "42ff981beb8d456f0a442d1f2ec49134d389744fe6ec3a85a1d1db1a0b7828a7",
+          "path": "Plans/.implementation_readiness/pnc019_certification_receipt.json",
+          "source_path": "Plans/Wiring_Matrix.production.json"
+        },
+        {
+          "actual": null,
+          "error": "pnc019_source_hash_stale",
+          "expected": "d9f218e73d37e13be96abe48fd096429c59238e67aba481d8c515bdf35d82368",
+          "path": "Plans/.implementation_readiness/pnc019_certification_receipt.json",
+          "source_path": "Plans/UI_Wiring_Rules.md"
+        },
+        {
+          "actual": "e142c492db8742a65707295b1e5f6611189dad8a0ac9f4c4099434a6dd3d6896",
+          "error": "pnc019_source_hash_stale",
+          "expected": "97a1ec08a223a50d6f296c3b4d4f34120748f40fa28232d61529d1effba6c07a",
+          "path": "Plans/.implementation_readiness/pnc019_certification_receipt.json",
+          "source_path": "scripts/pm-pnc019-certification-harness.py"
+        },
+        {
+          "corpus_complete": false,
+          "disposition": "unknown_or_unregistered_event_types_quarantine_without_checkpoint_advance",
+          "error": "event_denominator_unresolved",
+          "path": "Plans/event_family_registry.json",
+          "proven_persisted_floor": 222,
+          "proven_unregistered_floor": 185,
+          "registered_kernel_rows": 39
+        }
+      ],
+      "status": "fail"
+    },
+    {
+      "check": "validate_plan_migration",
+      "failures": [
+        {
+          "actual": 72,
+          "error": "doc_count_mismatch",
+          "expected": 73,
+          "path": "Plans/.plan_migration/pds-20260611-002-atomize-planunits/inventory.json"
+        },
+        {
+          "error": "inventory_doc_set_mismatch",
+          "path": "Plans/.plan_migration/pds-20260611-002-atomize-planunits/inventory.json"
+        }
+      ],
+      "status": "fail"
+    }
+  ],
+  "generated_at_utc": "2026-08-05T15:32:11Z",
+  "status": "fail"
+}

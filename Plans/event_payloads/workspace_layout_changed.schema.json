@@ -1,0 +1,152 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://puppetmaster.local/schemas/event_payloads/workspace_layout_changed/1.0.0",
+  "title": "workspace.layout_changed event payload",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "schema_id",
+    "schema_version",
+    "project_id",
+    "workspace_tab_id",
+    "command_id",
+    "origin",
+    "correlation_id",
+    "prior_layout_revision",
+    "new_layout_revision",
+    "mutation_kind",
+    "affected_surface_instance_ids",
+    "source_host",
+    "target_host",
+    "target_slot_index",
+    "target_surface_instance_id",
+    "insertion_edge",
+    "persisted"
+  ],
+  "properties": {
+    "schema_id": {
+      "const": "pm.event.workspace_layout_changed.v1"
+    },
+    "schema_version": {
+      "const": "1.0.0"
+    },
+    "project_id": {
+      "type": "string",
+      "minLength": 1
+    },
+    "workspace_tab_id": {
+      "type": "string",
+      "minLength": 1
+    },
+    "command_id": {
+      "type": "string",
+      "pattern": "^cmd\\."
+    },
+    "origin": {
+      "const": "home_workspace"
+    },
+    "correlation_id": {
+      "type": "string",
+      "minLength": 1
+    },
+    "prior_layout_revision": {
+      "type": "integer",
+      "minimum": 0
+    },
+    "new_layout_revision": {
+      "type": "integer",
+      "minimum": 1
+    },
+    "mutation_kind": {
+      "type": "string",
+      "enum": [
+        "open",
+        "close",
+        "focus",
+        "move",
+        "dock",
+        "redock",
+        "undock",
+        "resize_commit",
+        "collapse",
+        "expand",
+        "reset",
+        "restore",
+        "recovery",
+        "open_browser",
+        "open_file_target",
+        "focus_file_target",
+        "move_workgroup",
+        "terminal_split"
+      ]
+    },
+    "affected_surface_instance_ids": {
+      "type": "array",
+      "minItems": 1,
+      "uniqueItems": true,
+      "items": {
+        "type": "string",
+        "minLength": 1
+      }
+    },
+    "source_host": {
+      "type": [
+        "string",
+        "null"
+      ],
+      "enum": [
+        null,
+        "home_main",
+        "dock_left",
+        "dock_right",
+        "dock_top",
+        "dock_bottom",
+        "floating"
+      ]
+    },
+    "target_host": {
+      "type": [
+        "string",
+        "null"
+      ],
+      "enum": [
+        null,
+        "home_main",
+        "dock_left",
+        "dock_right",
+        "dock_top",
+        "dock_bottom",
+        "floating"
+      ]
+    },
+    "target_slot_index": {
+      "type": [
+        "integer",
+        "null"
+      ],
+      "minimum": 0
+    },
+    "target_surface_instance_id": {
+      "type": [
+        "string",
+        "null"
+      ],
+      "minLength": 1
+    },
+    "insertion_edge": {
+      "type": [
+        "string",
+        "null"
+      ],
+      "enum": [
+        null,
+        "before",
+        "after",
+        "inside"
+      ]
+    },
+    "persisted": {
+      "const": true
+    }
+  }
+}

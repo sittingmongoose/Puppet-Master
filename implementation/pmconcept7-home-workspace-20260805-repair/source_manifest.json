@@ -1,0 +1,186 @@
+{
+  "artifacts": [
+    {
+      "bytes": 3424764,
+      "path": "Concepts/PMConcept7.html",
+      "sha256": "91665182b3db3c7ce53018f4ea12e82fc6c65c0abc8b9c0e5c72869d887f21db"
+    },
+    {
+      "bytes": 51213,
+      "path": "Concepts/PMConcept7-NOTES.md",
+      "sha256": "68e27fa353d15640cf49fa837b817953161d9474f4be5d3a7ca76e4a980ea19f"
+    },
+    {
+      "bytes": 11644,
+      "path": "Concepts/pm7-tools/README.md",
+      "sha256": "c3ac9160a1ac9cd3440a536d38b31dd96021c4184b62c57b119c4ef769b4fa0c"
+    },
+    {
+      "bytes": 100065,
+      "path": "Concepts/pm7-tools/build_pm7.py",
+      "sha256": "0dad8e24045e986945aa8253366a46668fa044a9c4848b1b3a37be297dad8eb9"
+    },
+    {
+      "bytes": 16451,
+      "path": "Concepts/pm7-tools/build_report.json",
+      "sha256": "41e221448fc9474723f41b14319f30e2fde2856fccb8ee5e39f184cc30000672"
+    },
+    {
+      "bytes": 149369,
+      "path": "Concepts/pm7-tools/home_workspace_source.py",
+      "sha256": "3e5a3fe2f8b5f5800a834ebe1e96ccdbc4c63ed735c1f559bbb2ff164d37b7b9"
+    },
+    {
+      "bytes": 51807,
+      "path": "Concepts/pm7-tools/verify/home_workspace_matrix.mjs",
+      "sha256": "b3babe82caff9153cb8229d28c87f89b2eae3b9db7d1dee26fc94ea87e73ef2f"
+    },
+    {
+      "bytes": 17923,
+      "path": "Concepts/pm7-tools/verify/smoke.mjs",
+      "sha256": "1ee0e88b921a98b71b8861ab649937e8d2312ebba30039d0cd7f758f0df761ef"
+    },
+    {
+      "bytes": 344390,
+      "path": "Plans/00-plans-index.md",
+      "sha256": "929925d5be9ed56c36377fae3f2fdcf6f18ca22c284868979df1ac8aa73c34a6"
+    },
+    {
+      "bytes": 238904,
+      "path": "Plans/Automated_Testing_System.md",
+      "sha256": "7babd913a39af4fc7b2020c3e5693c0abd704abe86ab17cf3a4e28817d19c04e"
+    },
+    {
+      "bytes": 1074269,
+      "path": "Plans/Contracts_V0.md",
+      "sha256": "9f09a8ab2bed0549cd7c4954ecf837b31885e7dd3804026dc938334e4974dd04"
+    },
+    {
+      "bytes": 92386,
+      "path": "Plans/DRY_Rules.md",
+      "sha256": "bb7f0b4926c02076c8cf9533a63992240935bfd24bd10f290bbb2ff1dfcf410f"
+    },
+    {
+      "bytes": 281485,
+      "path": "Plans/FileManager.md",
+      "sha256": "97c2f24d490395ecf087088fb9de145063f9585d1811187de9df2dc8bf324dae"
+    },
+    {
+      "bytes": 1673662,
+      "path": "Plans/FinalGUISpec.md",
+      "sha256": "a5ae874f29984a17b5867cd8961dc8fe73fa3cf7c36c355d4d91d0ffabf229d2"
+    },
+    {
+      "bytes": 107509,
+      "path": "Plans/GUI_Rebuild_Requirements_Checklist.md",
+      "sha256": "171f065b11ff22f97b3cfe1bf884d75b4048fc9656fc91306f25e9da5f8735ab"
+    },
+    {
+      "bytes": 524106,
+      "path": "Plans/Section15_MVP_Promoted_Features_Spec.md",
+      "sha256": "dc0625ec8d68b6f9d9f74f7b9268e96f5e178277dfb8ee427f13efdd0fd512d2"
+    },
+    {
+      "bytes": 662953,
+      "path": "Plans/UI_Command_Catalog.md",
+      "sha256": "bfbeae7b130806955782e089e0b7c5cf8cafb3f12d6e8b471854eb63bdc19afa"
+    },
+    {
+      "bytes": 46024,
+      "path": "Plans/UI_Wiring_Rules.md",
+      "sha256": "d9f218e73d37e13be96abe48fd096429c59238e67aba481d8c515bdf35d82368"
+    },
+    {
+      "bytes": 58640,
+      "path": "Plans/Widget_System.md",
+      "sha256": "35371c337f13a7a43e31da7b629f9e2405fad713d188bb87915ab577078ea72d"
+    },
+    {
+      "bytes": 3304568,
+      "path": "Plans/Wiring_Matrix.production.json",
+      "sha256": "42ff981beb8d456f0a442d1f2ec49134d389744fe6ec3a85a1d1db1a0b7828a7"
+    },
+    {
+      "bytes": 10406,
+      "path": "Plans/PMConcept7_Home_Workspace_Control_Reconciliation.json",
+      "sha256": "643366a5e2dc8073623ccccea4113884bcf1f4a5c5b24f4a28aca9d9fe0a661b"
+    },
+    {
+      "bytes": 9657,
+      "path": "Plans/home_workspace_layout.schema.json",
+      "sha256": "503cfcbdee9253a9c411b3e88a7f2dcb17394315f632485f1cd027604a1451b7"
+    },
+    {
+      "bytes": 956800,
+      "path": "Plans/storage-plan.md",
+      "sha256": "76b9c94829df04f4f1711c88a5693ecec5f29e682ea61442ca706eedc9c6348b"
+    },
+    {
+      "bytes": 371966,
+      "path": "Plans/storage_value_registry.json",
+      "sha256": "336d453ed7174a0d6415f4ede388cc09a8512206a0e8e64c7bc627c230de4c6a"
+    },
+    {
+      "bytes": 429747,
+      "path": "Plans/settings_inventory.json",
+      "sha256": "806c5e6ac29651d29feed4b25dbb624cd7a878330cb19385d62a5812f8094a91"
+    },
+    {
+      "bytes": 81908,
+      "path": "Plans/event_family_registry.json",
+      "sha256": "85264dc68c929189e8758b95e0d23efdaf8fd0b3969f3583893c6c60773ed6ad"
+    },
+    {
+      "bytes": 2942,
+      "path": "Plans/event_payloads/workspace_layout_changed.schema.json",
+      "sha256": "011539192635e15ab23c9423d7bfb46a93e4f109a497c23f6e4f7e2417630bf0"
+    },
+    {
+      "bytes": 1805,
+      "path": "Plans/event_payloads/terminal_workgroup_moved.schema.json",
+      "sha256": "bba8fdd8aa0e8bd15e4358930e236c41ecb8c0972977826e0d9f71c81b9386d4"
+    },
+    {
+      "bytes": 262887,
+      "path": "Plans/auto_decisions.jsonl",
+      "sha256": "34b0a00402e1f499c6dace3d5a509ce3671c38d47acf1c4a4632fb85eb502de0"
+    },
+    {
+      "bytes": 341317,
+      "path": "scripts/pm-plans-verify.py",
+      "sha256": "e5baa8b91a726f3a43087ed4d082fcf11c8ddd21a3b7a5f536acea247dbe4ba6"
+    },
+    {
+      "bytes": 4397,
+      "path": "implementation/pmconcept7-home-workspace-20260805-repair/tools/enrich_home_wiring_evidence.py",
+      "sha256": "8c5d7ec01407732aa36e1cdf7b5313536069f5422a962957e18db9903e6f2e65"
+    },
+    {
+      "bytes": 41404,
+      "path": "implementation/pmconcept7-home-workspace-20260805-repair/tools/generate_repair_evidence.py",
+      "sha256": "1c091108b4a3a58f688b66cf2199b39b109feca7801c2be63040100e7ade500f"
+    },
+    {
+      "bytes": 1922,
+      "path": "implementation/pmconcept7-home-workspace-20260805-repair/tools/make_visual_contact_sheets.py",
+      "sha256": "e97460af78af539364a33edcd4bdd1aeeca55cb9ee0ea8a97a40eb0430731211"
+    }
+  ],
+  "branch": "codex/pm7-home-workspace-repair",
+  "generated_at_utc": "2026-08-05T15:51:33.456552+00:00",
+  "generated_output": {
+    "bytes": 3424764,
+    "hand_edited_output_only_change_detected": false,
+    "path": "Concepts/PMConcept7.html",
+    "pipeline_transform": "T20_home_workspace",
+    "sha256": "91665182b3db3c7ce53018f4ea12e82fc6c65c0abc8b9c0e5c72869d887f21db"
+  },
+  "missing": [],
+  "schema_id": "pm.pm7_home_workspace_repair_source_manifest.v1",
+  "summary": {
+    "expected": 33,
+    "missing": 0,
+    "present": 33,
+    "status": "PASS"
+  }
+}

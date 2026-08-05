@@ -1,0 +1,149 @@
+{
+  "artifacts": [
+    {
+      "bytes": 6277,
+      "path": "implementation/pmconcept7-home-workspace-20260805-repair/governance/full_run_gates.json",
+      "sha256": "1f5422ad747e5a2380ebc9664dc5485f22adca932cc08869f7215b227103e9f0"
+    },
+    {
+      "bytes": 118,
+      "path": "implementation/pmconcept7-home-workspace-20260805-repair/governance/verify_spec_lock.json",
+      "sha256": "2864c7175f838ddff6368d7040a70ff805588acf483a5890ae9c2769572b34cc"
+    },
+    {
+      "bytes": 119,
+      "path": "implementation/pmconcept7-home-workspace-20260805-repair/governance/validate_evidence.json",
+      "sha256": "2c6d774049964ca070a58cc8394711ea59c2806193666307540ecff0499758ba"
+    },
+    {
+      "bytes": 121,
+      "path": "implementation/pmconcept7-home-workspace-20260805-repair/governance/validate_plan_graph.json",
+      "sha256": "5bce41c975d3ea8f1f35e23c22ecbd7d52b700e77ca5d5e011767478c8a38cf8"
+    },
+    {
+      "bytes": 124,
+      "path": "implementation/pmconcept7-home-workspace-20260805-repair/governance/validate_audit_closure.json",
+      "sha256": "7713bf02c3cd4bf241e8d0146771106fb9786cd090e35e92ab696776820462ea"
+    },
+    {
+      "bytes": 281,
+      "path": "implementation/pmconcept7-home-workspace-20260805-repair/governance/audit_closure_refresh.json",
+      "sha256": "03f9716c7f788f4a5f34dd3a5b0fd3b30de2b1016bb81f5a7ceb5f9db41f5581"
+    },
+    {
+      "bytes": 124,
+      "path": "implementation/pmconcept7-home-workspace-20260805-repair/governance/validate_wiring_matrix.json",
+      "sha256": "3d86321c7233258687b0c9fb9ed1a31dc6649eefd3c597d22b4da874348bc741"
+    },
+    {
+      "bytes": 125,
+      "path": "implementation/pmconcept7-home-workspace-20260805-repair/governance/validate_auto_decisions.json",
+      "sha256": "31834b0a1dd32fa4901cddb4424883468e8b06c0fe8019055eec31ec2ec3617e"
+    },
+    {
+      "bytes": 1291,
+      "path": "implementation/pmconcept7-home-workspace-20260805-repair/governance/plan_index_generate.json",
+      "sha256": "0980a79abea1be72e77348aca533190facc9b59ba1580afb66c4a530dae85263"
+    },
+    {
+      "bytes": 312,
+      "path": "implementation/pmconcept7-home-workspace-20260805-repair/governance/plan_index_validate.json",
+      "sha256": "f3b4044d3cc35b6e8add21f5f1b25bed26b581c7d62b988731145b94c6892411"
+    },
+    {
+      "bytes": 115,
+      "path": "implementation/pmconcept7-home-workspace-20260805-repair/governance/shard_generate.json",
+      "sha256": "0e8dbff465099ae943d497e9dc259a960166bba0e5271e061d906b33655d24e9"
+    },
+    {
+      "bytes": 23804,
+      "path": "implementation/pmconcept7-home-workspace-20260805-repair/governance/shard_check.json",
+      "sha256": "4c52db1e468f8ac8dc39050cb58a9435ff1cf9424c71ad84b6fe48069fdb8bf0"
+    },
+    {
+      "bytes": 19502,
+      "path": "implementation/pmconcept7-home-workspace-20260805-repair/governance/shard_evidence_sync.json",
+      "sha256": "b9c45e16fa6177cbd5fa2187a1ce1df4c8df4a09bf499267f36cbdef6fd33c42"
+    },
+    {
+      "bytes": 17449,
+      "path": "implementation/pmconcept7-home-workspace-20260805-repair/governance/readiness_generate.json",
+      "sha256": "32c1cb3e6b3c98426f297b41ae3b50acffcb3de962191fc696fd7b51c3bd55bc"
+    },
+    {
+      "bytes": 12706,
+      "path": "implementation/pmconcept7-home-workspace-20260805-repair/governance/readiness_selftest.json",
+      "sha256": "a288f6c98a11c7be571171437d6bfac3c4481b07982e599bd03a218f3d758177"
+    },
+    {
+      "bytes": 5579,
+      "path": "implementation/pmconcept7-home-workspace-20260805-repair/governance/validate_implementation_readiness.json",
+      "sha256": "882ec347ff519fc2cf66761aa1ef99b5f078a8a7f8ebdb42afecade7658dbe68"
+    },
+    {
+      "bytes": 542,
+      "path": "implementation/pmconcept7-home-workspace-20260805-repair/governance/pnc019_certification_attempt.json",
+      "sha256": "aff5c6df9a8432ef9051ab7a46f78c7fcc0caaaf683916dd8009f1a63e4954fe"
+    },
+    {
+      "bytes": 140,
+      "path": "implementation/pmconcept7-home-workspace-20260805-repair/governance/plan_migration_hashes.json",
+      "sha256": "59c198dbdec58898ab9f441394fa90cbc6836ac4bec4ed1b2de373e9f36a1adc"
+    },
+    {
+      "bytes": 141,
+      "path": "implementation/pmconcept7-home-workspace-20260805-repair/governance/plan_migration_summary.json",
+      "sha256": "edb89632f4d80a818abcff1cdca75b5ca0d470ccaf50c1b2d53253350621b303"
+    },
+    {
+      "bytes": 369,
+      "path": "implementation/pmconcept7-home-workspace-20260805-repair/governance/validate_plan_migration.json",
+      "sha256": "f4a162f1ab46a368f4d143f0e781329732718217bc1782c4177f0b0b0cba51de"
+    },
+    {
+      "bytes": 48843,
+      "path": "implementation/pmconcept7-home-workspace-20260805-repair/governance/governance_refresh_wave1.json",
+      "sha256": "bb089231b40c6490788328cb115cd50f303411d17657f4be9263ba9ec080ad99"
+    },
+    {
+      "bytes": 4898,
+      "path": "implementation/pmconcept7-home-workspace-20260805-repair/governance/governance_refresh_wave2.json",
+      "sha256": "3a0d1a8be497d4d646be7c7eb14f8617c8cb377f1b01cc169f05f0d1a6b508f7"
+    },
+    {
+      "bytes": 4678,
+      "path": "implementation/pmconcept7-home-workspace-20260805-repair/governance/governance_refresh_converged.json",
+      "sha256": "40f12a15d86ee5d4d2313b335eb5f719c6f914a44a6c563158105a5ccb194ad3"
+    },
+    {
+      "bytes": 116365,
+      "path": "implementation/pmconcept7-home-workspace-20260805-repair/governance/run_gates_status_before.txt",
+      "sha256": "68595f598e505948398a1ff4ceb4f425b96fe68ff628719575eaa0b34b50b9e7"
+    },
+    {
+      "bytes": 116365,
+      "path": "implementation/pmconcept7-home-workspace-20260805-repair/governance/run_gates_status_after.txt",
+      "sha256": "68595f598e505948398a1ff4ceb4f425b96fe68ff628719575eaa0b34b50b9e7"
+    },
+    {
+      "bytes": 1555,
+      "path": "implementation/pmconcept7-home-workspace-20260805-repair/governance/run_gates_hashes_before.txt",
+      "sha256": "d2be021457e4d21ebbdc8b8345ee9432cbd1c77d6d0e735f79f28537fb023960"
+    },
+    {
+      "bytes": 1555,
+      "path": "implementation/pmconcept7-home-workspace-20260805-repair/governance/run_gates_hashes_after.txt",
+      "sha256": "d2be021457e4d21ebbdc8b8345ee9432cbd1c77d6d0e735f79f28537fb023960"
+    }
+  ],
+  "generated_at_utc": "2026-08-05T15:51:33.711710+00:00",
+  "missing": [],
+  "schema_id": "pm.pm7_home_workspace_governance_artifact_manifest.v1",
+  "source_directory": "/tmp",
+  "summary": {
+    "copied": 27,
+    "expected": 27,
+    "missing": 0,
+    "status": "PASS"
+  }
+}

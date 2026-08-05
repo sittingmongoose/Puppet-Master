@@ -4868,6 +4868,51 @@ owner_hints:
   - Plans/usage-feature.md
 ```
 
+### PMConcept7 Home Workspace implementation wave — 2026-08-04
+
+The model-driven Home workspace is routed through these canonical owners and
+consumers:
+
+- `Plans/FinalGUISpec.md` — Home shell composition, four stable editor surfaces,
+  five hosts, drag/drop previews, resize reliability, themes, scroll treatment,
+  and web/native capability matrix.
+- `Plans/FileManager.md` — editor panel identity and File Manager open-target
+  routing.
+- `Plans/Section15_MVP_Promoted_Features_Spec.md` — terminal section/workgroup
+  identity and four-section/four-pane limits.
+- `Plans/home_workspace_layout.schema.json` and `Plans/storage-plan.md` — typed
+  layout record, persistence scope, migration, validation, and recovery.
+- `Plans/UI_Command_Catalog.md`, `Plans/Contracts_V0.md`,
+  `Plans/event_family_registry.json`, `Plans/UI_Wiring_Rules.md`, and
+  `Plans/Wiring_Matrix.production.json` — command/event/wiring boundaries.
+- `Plans/Widget_System.md` and `Plans/DRY_Rules.md` — widget non-hostability and
+  owner/consumer separation.
+- `Plans/Automated_Testing_System.md` and
+  `Plans/GUI_Rebuild_Requirements_Checklist.md` — live and visual evidence gates.
+- `Plans/PMConcept7_Home_Workspace_Control_Reconciliation.json` — implementation
+  control evidence; it does not replace older PMConcept census artifacts.
+
+The former one-floating-editor File Manager limit and two-terminal/editor-area
+Section15 limit are superseded by the explicit addenda in their owner documents.
+Governance artifacts and Spec Lock are refreshed only after these ordinary docs,
+source transforms, generated PM7 output, and evidence stop changing.
+
+#### Post-audit repair registration — 2026-08-05
+
+The implementation-facing Home authority is now formalized by accepted PlanUnits
+`F3-501` through `F3-504`, `F-080`, `SMPFS-138`, `SP-245`, `UCC-144`,
+`CV-323`, `UIW-010`, and `ATS-029`. `SMPFS-079` is retired compatibility
+lineage and no longer supplies a current two-terminal ceiling. The sole layout
+schema ID is `pm.home_workspace_layout.v1`; earlier Home schema/key identifiers
+are read-only migration inputs.
+
+The title-bar Home popup is the compact exact three-row menu owned by `F3-502`,
+not the earlier control-center presentation. Production leaf routing, transactional
+receipt/event truth, source-hashed census, executable interaction coverage, exact
+72-case visual matrix, Slint 1.17.1 Rust/multi-window ownership, Wayland best-effort
+restore, and direct-user-activation popup degradation are routed to the PlanUnits
+above. This registration does not broaden Widget System hostability, introduce any
+Home `cmd.widget.*` command, or change the native `cmd.file.open_with` enum.
 ## Ledger Compile Addendum - pldg-20260629-001-feature-name
 
 This addendum registers the Free Models compile owner map. It does not create WorkNodes, NodeSeeds, executable queues, generated governance artifacts, or implementation files.
