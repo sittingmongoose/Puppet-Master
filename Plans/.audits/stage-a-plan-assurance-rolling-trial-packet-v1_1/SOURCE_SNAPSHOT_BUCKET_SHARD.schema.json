@@ -1,0 +1,31 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://puppet-master.local/schemas/plan-assurance/source-snapshot-bucket-shard.v1.1.json",
+  "type": "object", "additionalProperties": false,
+  "required": ["schema_version", "packet_id", "snapshot_id", "shard_index", "first_bucket", "last_bucket", "buckets", "payload_sha256"],
+  "properties": {
+    "schema_version": {"const": "1.1.0"}, "packet_id": {"const": "stage-a-plan-assurance-rolling-trial-packet-v1_1"},
+    "snapshot_id": {"$ref": "#/$defs/sha256"}, "shard_index": {"type": "integer", "minimum": 0, "maximum": 15},
+    "first_bucket": {"type": "string", "pattern": "^[0-9a-f]{2}$"}, "last_bucket": {"type": "string", "pattern": "^[0-9a-f]{2}$"},
+    "buckets": {"type": "array", "minItems": 16, "maxItems": 16, "items": {"$ref": "#/$defs/bucket"}},
+    "payload_sha256": {"$ref": "#/$defs/sha256"}
+  },
+  "$defs": {
+    "sha256": {"type": "string", "pattern": "^[0-9a-f]{64}$"},
+    "pair": {"type": "array", "minItems": 2, "maxItems": 2},
+    "bucket": {
+      "type": "object", "additionalProperties": false,
+      "required": ["bucket", "entry_count", "regular_file_count", "directory_entry_count", "symlink_count", "nonregular_count", "regular_file_bytes", "path_class_counts", "artifact_role_counts", "physical_merkle_root_sha256", "classification_merkle_root_sha256", "physical_bucket_commitment_sha256", "classification_bucket_commitment_sha256"],
+      "properties": {
+        "bucket": {"type": "string", "pattern": "^[0-9a-f]{2}$"},
+        "entry_count": {"type": "integer", "minimum": 0}, "regular_file_count": {"type": "integer", "minimum": 0},
+        "directory_entry_count": {"type": "integer", "minimum": 0}, "symlink_count": {"type": "integer", "minimum": 0},
+        "nonregular_count": {"type": "integer", "minimum": 0}, "regular_file_bytes": {"type": "integer", "minimum": 0},
+        "path_class_counts": {"type": "array", "minItems": 7, "maxItems": 7, "items": {"$ref": "#/$defs/pair"}},
+        "artifact_role_counts": {"type": "array", "minItems": 9, "maxItems": 9, "items": {"$ref": "#/$defs/pair"}},
+        "physical_merkle_root_sha256": {"$ref": "#/$defs/sha256"}, "classification_merkle_root_sha256": {"$ref": "#/$defs/sha256"},
+        "physical_bucket_commitment_sha256": {"$ref": "#/$defs/sha256"}, "classification_bucket_commitment_sha256": {"$ref": "#/$defs/sha256"}
+      }
+    }
+  }
+}

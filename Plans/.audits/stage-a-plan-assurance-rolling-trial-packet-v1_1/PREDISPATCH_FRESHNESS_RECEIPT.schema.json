@@ -1,0 +1,26 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://puppet-master.local/schemas/plan-assurance/predispatch-freshness-receipt.v1.1.json",
+  "type": "object",
+  "additionalProperties": false,
+  "required": ["schema_version", "packet_id", "trial_id", "generation_id", "request_sha256", "capability_sha256", "authority_sha256", "marker_sha256", "full_validation_completed_at_utc", "post_validation_platform_time_utc", "dispatch_boundary_platform_time_utc", "maximum_completion_to_recheck_seconds", "maximum_recheck_to_dispatch_seconds", "action_occurrence_claim", "receipt_payload_sha256", "terminal"],
+  "properties": {
+    "schema_version": {"const": "1.1.0"},
+    "packet_id": {"const": "stage-a-plan-assurance-rolling-trial-packet-v1_1"},
+    "trial_id": {"type": "string", "minLength": 1},
+    "generation_id": {"type": "string", "minLength": 1},
+    "request_sha256": {"$ref": "#/$defs/sha"},
+    "capability_sha256": {"$ref": "#/$defs/sha"},
+    "authority_sha256": {"$ref": "#/$defs/sha"},
+    "marker_sha256": {"$ref": "#/$defs/sha"},
+    "full_validation_completed_at_utc": {"type": "string", "format": "date-time"},
+    "post_validation_platform_time_utc": {"type": "string", "format": "date-time"},
+    "dispatch_boundary_platform_time_utc": {"type": "string", "format": "date-time"},
+    "maximum_completion_to_recheck_seconds": {"const": 2},
+    "maximum_recheck_to_dispatch_seconds": {"const": 2},
+    "action_occurrence_claim": {"const": false},
+    "receipt_payload_sha256": {"$ref": "#/$defs/sha"},
+    "terminal": {"const": "READY_FOR_IMMEDIATE_FIRST_EXTERNAL_ACTION"}
+  },
+  "$defs": {"sha": {"type": "string", "pattern": "^[0-9a-f]{64}$"}}
+}

@@ -1,0 +1,24 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://puppet-master.local/schemas/plan-assurance/artifact-budget-manifest.v1.1.json",
+  "type": "object", "additionalProperties": false,
+  "required": ["schema_version", "packet_id", "inventory_scope", "manifest_path", "reserved_terminal_paths", "inventory_population_sha256", "physical_files", "logical_artifacts", "totals", "terminal_reserve", "manifest_payload_sha256", "terminal"],
+  "properties": {
+    "schema_version": {"const": "1.1.0"}, "packet_id": {"const": "stage-a-plan-assurance-rolling-trial-packet-v1_1"},
+    "inventory_scope": {"const": "all existing run-root regular files except this manifest plus exact later terminal-reserve paths"},
+    "manifest_path": {"const": "ARTIFACT_BUDGET_MANIFEST.json"},
+    "reserved_terminal_paths": {"type": "array", "maxItems": 8, "uniqueItems": true, "items": {"type": "string", "pattern": "^[A-Za-z0-9._/-]+$"}},
+    "inventory_population_sha256": {"$ref": "#/$defs/sha"},
+    "physical_files": {"type": "array", "maxItems": 640, "items": {"$ref": "#/$defs/file"}},
+    "logical_artifacts": {"type": "array", "maxItems": 256, "items": {"$ref": "#/$defs/logical"}},
+    "totals": {"type": "object", "additionalProperties": false, "required": ["physical_files", "physical_bytes", "manifest_physical_bytes", "decoded_logical_bytes", "shard_files"], "properties": {"physical_files": {"type": "integer", "minimum": 0, "maximum": 640}, "physical_bytes": {"type": "integer", "minimum": 0, "maximum": 201326592}, "manifest_physical_bytes": {"type": "integer", "minimum": 1, "maximum": 1048576}, "decoded_logical_bytes": {"type": "integer", "minimum": 0, "maximum": 268435456}, "shard_files": {"type": "integer", "minimum": 0, "maximum": 128}}},
+    "terminal_reserve": {"const": {"physical_bytes": 4194304, "decoded_bytes": 4194304, "files": 8, "preserved": true}},
+    "manifest_payload_sha256": {"$ref": "#/$defs/sha"}, "terminal": {"const": "WITHIN_FUSE"}
+  },
+  "$defs": {
+    "sha": {"type": "string", "pattern": "^[0-9a-f]{64}$"},
+    "file": {"type": "object", "additionalProperties": false, "required": ["path", "kind", "mode", "link_count", "physical_bytes", "physical_sha256", "owner_scope", "logical_artifact_id"], "properties": {"path": {"type": "string", "pattern": "^[A-Za-z0-9._/-]+$"}, "kind": {"const": "regular_file"}, "mode": {"type": "integer", "minimum": 0}, "link_count": {"const": 1}, "physical_bytes": {"type": "integer", "minimum": 0, "maximum": 8388608}, "physical_sha256": {"$ref": "#/$defs/sha"}, "owner_scope": {"type": "string", "minLength": 1}, "logical_artifact_id": {"type": "string", "minLength": 1}}},
+    "member": {"type": "object", "additionalProperties": false, "required": ["ordinal", "path", "encoding", "physical_bytes", "physical_sha256", "decoded_bytes", "decoded_sha256"], "properties": {"ordinal": {"type": "integer", "minimum": 0, "maximum": 31}, "path": {"type": "string", "pattern": "^[A-Za-z0-9._/-]+$"}, "encoding": {"enum": ["identity", "gzip-single-member"]}, "physical_bytes": {"type": "integer", "minimum": 0, "maximum": 8388608}, "physical_sha256": {"$ref": "#/$defs/sha"}, "decoded_bytes": {"type": "integer", "minimum": 0, "maximum": 8388608}, "decoded_sha256": {"$ref": "#/$defs/sha"}}},
+    "logical": {"type": "object", "additionalProperties": false, "required": ["logical_artifact_id", "artifact_kind", "members", "decoded_bytes", "logical_sha256", "compression_expansion_ratio_maximum"], "properties": {"logical_artifact_id": {"type": "string", "minLength": 1}, "artifact_kind": {"enum": ["ordinary", "source_snapshot_buckets", "structural_map_shards", "research_capture_shards"]}, "members": {"type": "array", "minItems": 1, "maxItems": 32, "items": {"$ref": "#/$defs/member"}}, "decoded_bytes": {"type": "integer", "minimum": 0, "maximum": 100663296}, "logical_sha256": {"$ref": "#/$defs/sha"}, "compression_expansion_ratio_maximum": {"const": 64}}}
+  }
+}
