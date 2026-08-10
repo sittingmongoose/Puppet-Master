@@ -1086,6 +1086,29 @@ def cmd_refresh_final_summary(args: argparse.Namespace) -> dict[str, Any]:
                 ],
             }
         )
+    else:
+        summary.update(
+            {
+                "governance_seal_required": True,
+                "standard_run_gates_status": "not_asserted_preseal",
+                "standard_run_gates_expected_seal_failures": [],
+                "shard_check_status": "not_asserted_preseal",
+                "shard_failure_count": None,
+                "seal_phase_required": [
+                    "Resolve every current governance and readiness blocker before stamping postseal status",
+                    "Rerun python3 scripts/pm-plans-verify.py run-gates and python3 scripts/pm-shard-plans.py --check",
+                ],
+                "forbidden_governance_artifacts_confirmed_not_updated": [],
+                "forbidden_governance_artifacts_changed": [],
+                "node_readiness_status": node_readiness_status,
+                "runtime_enablement_status": runtime_enablement_status,
+                "notes": [
+                    "Pre-seal migration summary refreshed without asserting that governance or readiness gates passed.",
+                    "No WorkNodes, NodeSeeds, NodeSeed candidates, executable queues, final node manifests, product implementation files, production build tasks, or final node queues were created.",
+                    f"Node readiness is {node_readiness_status}; runtime enablement is {runtime_enablement_status}.",
+                ],
+            }
+        )
     ledger_id = getattr(args, "ledger_id", None)
     ledger_command = (
         f"python3 scripts/pm-bootstrap-ledger-validate.py Plans/ledgers/v2/{ledger_id}"

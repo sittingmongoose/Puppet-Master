@@ -650,7 +650,7 @@ def cmd_register_canonical_docs(args: argparse.Namespace) -> int:
             args.plan_graph,
             "Plans/_shards/**",
             "Plans/.evidence/plan-sharding-2026-06-09/evidence.json",
-            "Plans/.evidence/plan-sharding-2026-06-09/reports/shard_report.json",
+            "Plans/.evidence/plan-sharding-2026-06-09/shard_report.json",
         ]
         contract_refs = [
             "PolicyRule:Decision_Policy.md#spec-lock-update-protocol",
