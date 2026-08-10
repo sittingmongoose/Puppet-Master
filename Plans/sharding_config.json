@@ -105,7 +105,10 @@
     "Plans/web_policy_negative_fixtures.schema.json",
     "Plans/web_provider_adapter_registry.seed.json",
     "Plans/web_provider_projection_fixtures.json",
-    "Plans/web_research_run_fixtures.json"
+    "Plans/web_research_run_fixtures.json",
+    "Plans/settings_inventory.json",
+    "Plans/settings_inventory.schema.json",
+    "Plans/storage_recovery_contracts.schema.json"
   ],
   "recovery_register_policy": {
     "MUST CHANGE": "docs requiring direct canonical edits to land owner canon, retire stale same-file canon, or fix active fidelity blockers",
