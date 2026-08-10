@@ -1,0 +1,19 @@
+{
+  "schemaVersion": 1,
+  "topic": "settings-redesign",
+  "model": "fable",
+  "presentation": "hybrid",
+  "order": 10,
+  "widthControl": {
+    "enabled": true, "label": "Page width", "role": "page",
+    "min": 760, "max": 2500, "step": 10, "default": 1280,
+    "presets": [760, 900, 1280, 1700, 2200, 2500], "previewWidth": "test"
+  },
+  "entries": [
+    { "id": "c1-atlas",           "title": "fable · Atlas",           "path": "c1-atlas.html",           "controlMode": "standard", "order": 10 },
+    { "id": "c2-mission-control", "title": "fable · Mission Control", "path": "c2-mission-control.html", "controlMode": "standard", "order": 20 },
+    { "id": "c3-focus-stack",     "title": "fable · Focus Stack",     "path": "c3-focus-stack.html",     "controlMode": "standard", "order": 30 },
+    { "id": "c4-ledger",          "title": "fable · Ledger",          "path": "c4-ledger.html",          "controlMode": "standard", "order": 40 }
+  ],
+  "workspace": { "title": "fable · Settings Bakeoff Index", "path": "index.html", "controlMode": "internal" }
+}
