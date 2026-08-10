@@ -1,0 +1,325 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="friendly-dark" data-reduced-motion="0">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Opus 5 — Settings redesign bakeoff</title>
+<link rel="stylesheet" href="shared/pm-themes.css">
+<style>
+  *, *::before, *::after { box-sizing: border-box; }
+  html, body { margin: 0; padding: 0; }
+  body {
+    background: var(--pm-bg); color: var(--pm-text-1);
+    font-family: var(--pm-font); font-size: var(--pm-font-size); line-height: var(--pm-line);
+    -webkit-font-smoothing: antialiased;
+  }
+  button, select { font: inherit; color: inherit; }
+  button { cursor: pointer; background: none; border: none; padding: 0; }
+  h1, h2, h3, p { margin: 0; }
+  a { color: var(--pm-accent); }
+  :focus-visible { outline: 2px solid var(--pm-focus); outline-offset: 2px; }
+
+  .ix-wrap { max-width: 1840px; margin: 0 auto; padding: 24px; }
+
+  .ix-head { display: flex; align-items: baseline; flex-wrap: wrap; gap: 12px; margin-bottom: 6px; }
+  .ix-model { font-size: 26px; font-weight: 700; letter-spacing: -.02em; }
+  .ix-title { font-size: 26px; font-weight: 500; color: var(--pm-text-3); }
+  .ix-lede { font-size: 14px; color: var(--pm-text-3); max-width: 96ch; margin-bottom: 20px; }
+
+  .ix-controls {
+    position: sticky; top: 0; z-index: 10;
+    display: flex; flex-wrap: wrap; align-items: center; gap: 14px;
+    padding: 10px 14px; margin-bottom: 20px;
+    background: var(--pm-surface-1);
+    border: var(--pm-border-w) solid var(--pm-border-2);
+    border-radius: var(--pm-radius-2);
+    font-size: 12px;
+  }
+  .ix-controls label { color: var(--pm-text-3); text-transform: uppercase; letter-spacing: .07em; font-size: 11px; }
+  .ix-group { display: flex; align-items: center; gap: 7px; }
+  .ix-controls select {
+    background: var(--pm-surface-2); color: var(--pm-text-1);
+    border: var(--pm-border-w) solid var(--pm-border-2);
+    border-radius: var(--pm-radius-1); padding: 4px 7px; font-size: 12px;
+  }
+  .ix-toggle {
+    padding: 4px 11px; border-radius: var(--pm-radius-1);
+    border: var(--pm-border-w) solid var(--pm-border-2);
+    background: var(--pm-surface-2); color: var(--pm-text-2); font-size: 12px;
+  }
+  .ix-toggle[aria-pressed="true"] { background: var(--pm-accent); color: var(--pm-accent-text); border-color: transparent; font-weight: 600; }
+  .ix-note { color: var(--pm-text-3); margin-left: auto; }
+
+  .ix-grid { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 18px; }
+  @media (max-width: 1180px) { .ix-grid { grid-template-columns: minmax(0, 1fr); } }
+
+  .ix-card {
+    border: var(--pm-border-w) solid var(--pm-border-2);
+    border-radius: var(--pm-radius-2);
+    background: var(--pm-surface-1);
+    overflow: hidden;
+    display: flex; flex-direction: column;
+    min-width: 0;
+  }
+  .ix-card-head { padding: 12px 14px; border-bottom: var(--pm-border-w) solid var(--pm-border-1); }
+  .ix-card-title { display: flex; align-items: baseline; gap: 9px; flex-wrap: wrap; }
+  .ix-card-name { font-size: 16px; font-weight: 650; }
+  .ix-card-thesis { font-size: 12px; color: var(--pm-accent); }
+  .ix-card-sub { font-size: 12px; color: var(--pm-text-3); margin-top: 4px; }
+  .ix-card-links { display: flex; gap: 10px; margin-top: 9px; flex-wrap: wrap; font-size: 12px; }
+  .ix-card-links a { text-decoration: none; font-weight: 600; }
+  .ix-card-links a:hover { text-decoration: underline; }
+
+  .ix-frame-wrap { position: relative; background: var(--pm-surface-sunken); }
+  .ix-frame { width: 100%; height: 620px; border: 0; display: block; background: var(--pm-bg); }
+
+  .ix-compare { margin-top: 28px; }
+  .ix-compare h2 { font-size: 15px; text-transform: uppercase; letter-spacing: .1em; color: var(--pm-text-3); margin-bottom: 10px; }
+  .ix-table-scroll { overflow-x: auto; border: var(--pm-border-w) solid var(--pm-border-2); border-radius: var(--pm-radius-2); }
+  table { border-collapse: collapse; width: 100%; min-width: 880px; font-size: 13px; }
+  th, td { text-align: left; padding: 10px 13px; border-bottom: var(--pm-border-w) solid var(--pm-border-1); vertical-align: top; }
+  thead th { background: var(--pm-surface-2); font-size: 11px; text-transform: uppercase; letter-spacing: .07em; color: var(--pm-text-3); white-space: nowrap; }
+  tbody th { font-weight: 600; color: var(--pm-text-2); white-space: nowrap; width: 190px; }
+  td { color: var(--pm-text-2); }
+
+  .ix-foot { margin-top: 26px; font-size: 12.5px; color: var(--pm-text-3); max-width: 100ch; }
+  .ix-foot strong { color: var(--pm-text-2); }
+</style>
+</head>
+<body>
+
+<div class="ix-wrap" data-concept-model="Opus 5">
+  <div class="ix-head">
+    <span class="ix-model">Opus 5</span>
+    <h1 class="ix-title">Settings redesign — four concepts</h1>
+  </div>
+  <p class="ix-lede">
+    Four genuinely different answers to the same brief, not one design in four skins. Each asks a different question about
+    what a setting is addressed by — its location, its name, its route, or its effective value — and that question drives the
+    home, the navigation, the disclosure model and the motion. They share demo data, the status vocabulary, the search index
+    and the section maths; they share no layout. Nothing here is ranked.
+  </p>
+
+  <div class="ix-controls" role="group" aria-label="Comparison controls">
+    <div class="ix-group">
+      <label for="ix-theme">Theme</label>
+      <select id="ix-theme"></select>
+    </div>
+    <div class="ix-group">
+      <label for="ix-width">App width</label>
+      <select id="ix-width"></select>
+    </div>
+    <button class="ix-toggle" id="ix-motion" type="button" aria-pressed="false">Reduced motion</button>
+    <button class="ix-toggle" id="ix-tall" type="button" aria-pressed="false">Tall frames</button>
+    <span class="ix-note">Controls drive all four at once through the Concept Hub bridge.</span>
+  </div>
+
+  <div class="ix-grid" id="ix-grid"></div>
+
+  <section class="ix-compare">
+    <h2>What each one explores differently</h2>
+    <div class="ix-table-scroll">
+      <table>
+        <thead>
+          <tr>
+            <th></th>
+            <th>Opus 5 — Atlas</th>
+            <th>Opus 5 — Console</th>
+            <th>Opus 5 — Stack</th>
+            <th>Opus 5 — Ledger</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr><th>Thesis</th>
+            <td>Settings is a <strong>place</strong></td>
+            <td>Settings is a <strong>question</strong></td>
+            <td>Settings is a <strong>route</strong></td>
+            <td>Settings is a <strong>record</strong></td></tr>
+          <tr><th>A setting is addressed by</th>
+            <td>its location</td><td>its name or intent</td><td>its route</td><td>its effective value</td></tr>
+          <tr><th>Home</th>
+            <td>Directory of destination rows, grouped by plain-language domain, with an attention column</td>
+            <td>One large console; destinations are a numbered contents page</td>
+            <td>Column one is the root list; notices are the first entry</td>
+            <td>Three ledger blocks plus a sortable table of domains with real columns</td></tr>
+          <tr><th>Search</th>
+            <td>Wide locator bar; docks above the outline on navigate</td>
+            <td>The console <em>is</em> the application; answers in place</td>
+            <td>Stack-spanning header; results carry their whole route</td>
+            <td>Omnibar with plain-language filter tokens over results</td></tr>
+          <tr><th>Navigation and scrollspy</th>
+            <td>Sticky outline tree; marker glyph fills on the active node</td>
+            <td>Right-margin index; the marker travels continuously with scroll</td>
+            <td>Column two <em>is</em> the index; scroll in column three drives it, with per-section progress</td>
+            <td>Contents with counts plus an edge mini-map; bands are proportional, the lozenge glides</td></tr>
+          <tr><th>Managers relate to settings as</th>
+            <td>rooms entered in place, outline intact</td>
+            <td>full-bleed console modes</td>
+            <td>a pushed fourth column</td>
+            <td>inventories with requested-versus-effective readings</td></tr>
+          <tr><th>Managers built in full</th>
+            <td>Provider · Context &amp; Instructions · Terminal</td>
+            <td>Provider · Personas · Skills, plugins &amp; tools</td>
+            <td>Provider · Assistant memory · MCP</td>
+            <td>Provider · Crew · Media</td></tr>
+          <tr><th>Motion philosophy</th>
+            <td>Architectural — the row grows into the workspace</td>
+            <td>Typographic — almost no transform, staggered reading order</td>
+            <td>Kinetic depth — columns translate, back reverses exactly</td>
+            <td>Instrument panel — structure still, values animate</td></tr>
+          <tr><th>Reduced motion</th>
+            <td>Crossfade in place, outline already docked</td>
+            <td>Instant dock, single fade, marker jumps</td>
+            <td>Columns crossfade without translating</td>
+            <td>Instant values, wipe becomes a fade</td></tr>
+          <tr><th>Default theme shown</th>
+            <td>Friendly Dark</td><td>Glass Dark</td><td>Basic Dark</td><td>Retro Dark</td></tr>
+        </tbody>
+      </table>
+    </div>
+  </section>
+
+  <p class="ix-foot">
+    <strong>How to read this.</strong> Each concept carries its own review strip with a demo-state switcher — calm, several
+    things needing attention, catalogues refreshing, provider degraded, included usage exhausted — so the required states are
+    inspectable rather than described. Actions that cannot really happen in a standalone page return a dated
+    <em>Simulated</em> receipt naming the call a production build would make; none of them pretend to have signed in, installed
+    a CLI, spent money or contacted a provider. No concept is recommended over another.
+  </p>
+</div>
+
+<script>
+(function () {
+  "use strict";
+
+  var CONCEPTS = [
+    { id: "atlas", name: "Opus 5 — Atlas", thesis: "a place",
+      sub: "Destination directory and a persistent outline. Managers are rooms inside a destination.",
+      file: "opus-5-atlas.html", theme: "friendly-dark" },
+    { id: "console", name: "Opus 5 — Console", thesis: "a question",
+      sub: "The search field is the application; places are a contents page. Managers are console modes.",
+      file: "opus-5-console.html", theme: "glass-dark" },
+    { id: "stack", name: "Opus 5 — Stack", thesis: "a route",
+      sub: "Miller columns with a cross-column scrollspy. A manager pushes a fourth column.",
+      file: "opus-5-stack.html", theme: "basic-dark" },
+    { id: "ledger", name: "Opus 5 — Ledger", thesis: "a record",
+      sub: "State-of-record home and an edge mini-map. Managers show requested versus effective.",
+      file: "opus-5-ledger.html", theme: "retro-dark" }
+  ];
+
+  var THEMES = [
+    ["per-concept", "Each concept's own"],
+    ["friendly-dark", "Friendly Dark"], ["friendly-light", "Friendly Light"],
+    ["glass-dark", "Glass Dark"], ["glass-light", "Glass Light"],
+    ["retro-dark", "Retro Dark"], ["retro-light", "Retro Light"],
+    ["basic-dark", "Basic Dark"], ["basic-light", "Basic Light"]
+  ];
+  var WIDTHS = [760, 900, 1280, 1700, 2200, 2500];
+
+  var grid = document.getElementById("ix-grid");
+  var frames = {};
+
+  CONCEPTS.forEach(function (c) {
+    var card = document.createElement("div");
+    card.className = "ix-card";
+    card.innerHTML =
+      '<div class="ix-card-head">' +
+        '<div class="ix-card-title"><span class="ix-card-name">' + c.name + '</span>' +
+        '<span class="ix-card-thesis">Settings is ' + c.thesis + '</span></div>' +
+        '<div class="ix-card-sub">' + c.sub + '</div>' +
+        '<div class="ix-card-links">' +
+          '<a href="' + c.file + '" target="_blank" rel="noopener">Open full page</a>' +
+          '<a href="' + c.file + '?hub=1" target="_blank" rel="noopener">Open in review mode</a>' +
+        '</div>' +
+      '</div>';
+    var wrap = document.createElement("div");
+    wrap.className = "ix-frame-wrap";
+    var f = document.createElement("iframe");
+    f.className = "ix-frame";
+    f.src = c.file + "?hub=1";
+    f.title = c.name + " preview";
+    f.loading = "lazy";
+    wrap.appendChild(f);
+    card.appendChild(wrap);
+    grid.appendChild(card);
+    frames[c.id] = { frame: f, concept: c };
+  });
+
+  var themeSel = document.getElementById("ix-theme");
+  THEMES.forEach(function (t) {
+    var o = document.createElement("option");
+    o.value = t[0]; o.textContent = t[1];
+    themeSel.appendChild(o);
+  });
+  themeSel.value = "per-concept";
+
+  var widthSel = document.getElementById("ix-width");
+  WIDTHS.forEach(function (w) {
+    var o = document.createElement("option");
+    o.value = String(w); o.textContent = w + " px";
+    widthSel.appendChild(o);
+  });
+  var fit = document.createElement("option");
+  fit.value = "fit"; fit.textContent = "Fit the frame";
+  widthSel.appendChild(fit);
+  widthSel.value = "1280";
+
+  var motionBtn = document.getElementById("ix-motion");
+  var tallBtn = document.getElementById("ix-tall");
+
+  var state = { reducedMotion: false, testWidth: 1280, widthRole: "page" };
+
+  /* Speaks the same protocol the Concept Hub uses, so the previews behave here
+   * exactly as they do inside the Hub. */
+  function push() {
+    Object.keys(frames).forEach(function (id) {
+      var entry = frames[id];
+      var theme = themeSel.value === "per-concept" ? entry.concept.theme : themeSel.value;
+      var payload = {
+        theme: theme,
+        reducedMotion: state.reducedMotion,
+        widthRole: "page"
+      };
+      if (state.testWidth !== "fit") payload.testWidth = state.testWidth;
+      try {
+        entry.frame.contentWindow.postMessage(
+          { source: "pm-concept-hub", type: "pm-concept-state", state: payload }, "*");
+      } catch (e) { /* the frame may not be ready yet; the ready handshake retries */ }
+    });
+    document.documentElement.setAttribute("data-theme",
+      themeSel.value === "per-concept" ? "friendly-dark" : themeSel.value);
+    document.documentElement.setAttribute("data-reduced-motion", state.reducedMotion ? "1" : "0");
+  }
+
+  /* A concept announces itself when it loads; push current state to it then. */
+  window.addEventListener("message", function (e) {
+    var m = e.data;
+    if (!m || m.source !== "pm-concept" || m.type !== "pm-concept-ready") return;
+    push();
+  });
+
+  themeSel.addEventListener("change", push);
+  widthSel.addEventListener("change", function () {
+    state.testWidth = widthSel.value === "fit" ? "fit" : parseInt(widthSel.value, 10);
+    push();
+  });
+  motionBtn.addEventListener("click", function () {
+    state.reducedMotion = !state.reducedMotion;
+    motionBtn.setAttribute("aria-pressed", String(state.reducedMotion));
+    push();
+  });
+  tallBtn.addEventListener("click", function () {
+    var on = tallBtn.getAttribute("aria-pressed") !== "true";
+    tallBtn.setAttribute("aria-pressed", String(on));
+    Object.keys(frames).forEach(function (id) {
+      frames[id].frame.style.height = on ? "1000px" : "620px";
+    });
+  });
+
+  window.setTimeout(push, 400);
+  window.setTimeout(push, 1400);
+})();
+</script>
+
+</body>
+</html>

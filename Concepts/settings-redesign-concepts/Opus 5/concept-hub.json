@@ -1,0 +1,70 @@
+{
+  "schemaVersion": 1,
+  "topic": "settings-redesign",
+  "model": "Opus 5",
+  "presentation": "hybrid",
+  "order": 100,
+  "widthControl": {
+    "enabled": true,
+    "label": "App width",
+    "role": "page",
+    "min": 520,
+    "max": 2600,
+    "step": 10,
+    "default": 1280,
+    "presets": [760, 900, 1280, 1700, 2200, 2500],
+    "previewWidth": "test"
+  },
+  "workspace": {
+    "id": "workspace",
+    "title": "Opus 5 — Settings bakeoff index",
+    "path": "index.html",
+    "openPath": "index.html",
+    "openActions": "both",
+    "controlMode": "internal",
+    "tags": ["index", "comparison"],
+    "order": 1
+  },
+  "entries": [
+    {
+      "id": "opus-5-atlas",
+      "title": "Opus 5 — Atlas",
+      "path": "opus-5-atlas.html",
+      "openPath": "opus-5-atlas.html",
+      "openActions": "both",
+      "controlMode": "standard",
+      "tags": ["settings", "directory", "outline", "place"],
+      "order": 10
+    },
+    {
+      "id": "opus-5-console",
+      "title": "Opus 5 — Console",
+      "path": "opus-5-console.html",
+      "openPath": "opus-5-console.html",
+      "openActions": "both",
+      "controlMode": "standard",
+      "tags": ["settings", "search-first", "contents", "question"],
+      "order": 20
+    },
+    {
+      "id": "opus-5-stack",
+      "title": "Opus 5 — Stack",
+      "path": "opus-5-stack.html",
+      "openPath": "opus-5-stack.html",
+      "openActions": "both",
+      "controlMode": "standard",
+      "tags": ["settings", "columns", "drill-down", "route"],
+      "order": 30
+    },
+    {
+      "id": "opus-5-ledger",
+      "title": "Opus 5 — Ledger",
+      "path": "opus-5-ledger.html",
+      "openPath": "opus-5-ledger.html",
+      "openActions": "both",
+      "controlMode": "standard",
+      "tags": ["settings", "table", "mini-map", "record"],
+      "order": 40
+    }
+  ]
+}
