@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="friendly-dark">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>PM Side-Panel Redesign Prototypes</title>
+<link rel="stylesheet" href="_shared.css">
+</head>
+<body>
+<div class="pp-wall" aria-hidden="true"></div>
+
+<div class="pp-shell">
+  <header class="pp-tbar">
+    <span class="pp-tbar-title">PUPPET MASTER</span>
+    <span class="pp-tbar-sub">side-panel redesign prototypes</span>
+    <span class="pp-tbar-sp"></span>
+    <div class="pp-pickers">
+      <span class="pp-plabel">Variant</span>
+      <div class="pp-menuwrap" id="variantMenuWrap">
+        <button type="button" class="pp-menu-trigger" id="variantTrigger" aria-haspopup="menu" aria-expanded="false" aria-controls="variantMenu">
+          <span class="pp-mt-label" id="variantTriggerLabel">v1</span>
+          <span class="pp-mt-chev">&#9662;</span>
+        </button>
+        <div class="pp-menu" id="variantMenu" role="menu" aria-label="Variant"></div>
+      </div>
+      <button type="button" class="pp-mini" id="applyAllBtn" title="Apply the current variant number to every panel">apply to all</button>
+      <span class="pp-plabel">Width</span>
+      <div class="pp-sizebtns">
+        <button type="button" class="pp-sizebtn" data-width="200" title="Demo minimum (PMConcept7 resizer floor)">200</button>
+        <button type="button" class="pp-sizebtn" data-width="240" title="Canonical minimum (FinalGUISpec clamp)">240</button>
+        <button type="button" class="pp-sizebtn active" data-width="320" title="Default">320</button>
+        <button type="button" class="pp-sizebtn" data-width="480" title="Canonical maximum">480</button>
+      </div>
+      <span class="pp-plabel">Density</span>
+      <div class="pp-sizebtns">
+        <button type="button" class="pp-sizebtn pp-densitybtn active" data-density="demo" title="Seeded demo content">Demo</button>
+        <button type="button" class="pp-sizebtn pp-densitybtn" data-density="busy" title="+4 rows per list">Busy</button>
+        <button type="button" class="pp-sizebtn pp-densitybtn" data-density="crowded" title="+12 rows per list, long names">Crowded</button>
+      </div>
+      <span class="pp-plabel">Theme</span>
+      <div class="pp-menuwrap" id="themeMenuWrap">
+        <button type="button" class="pp-menu-trigger" id="themeTrigger" aria-haspopup="menu" aria-expanded="false" aria-controls="themeMenu">
+          <span class="pp-mt-label" id="themeTriggerLabel">Friendly Dark</span>
+          <span class="pp-mt-chev">&#9662;</span>
+        </button>
+        <div class="pp-menu" id="themeMenu" role="menu" aria-label="Theme"></div>
+      </div>
+    </div>
+  </header>
+
+  <div class="pp-main">
+    <nav class="pp-abar" id="ppAbar" aria-label="Activity bar"></nav>
+    <div class="pp-slotwrap">
+      <aside class="pp-slot" id="ppSlot">
+        <div id="ppSlotContent" style="display:flex;flex-direction:column;height:100%;min-height:0;"></div>
+      </aside>
+      <div class="pp-resizer" id="ppResizer" title="Drag to resize (200-480). Double-click to reset."></div>
+    </div>
+    <main class="pp-stage">
+      <div class="pp-stage-card">
+        <b><span id="ppNowPanel">Search</span> &middot; <span id="ppNowVariant">v1</span></b><br>
+        <span id="ppNowBlurb"></span><br><br>
+        Center stage is intentionally simplified &mdash; only the left panel is under redesign.
+        Use the activity bar to switch panels, the Variant menu for the 6 concepts,
+        width presets or the drag handle for sizing, and the Theme menu to check all 8 themes.
+      </div>
+    </main>
+  </div>
+
+  <footer class="pp-sbar">
+    <span>panel-protosKimi</span>
+    <span id="ppNowWidth">320px</span>
+    <span style="margin-left:auto;">static prototypes &middot; PM menus only &middot; no native selects &middot; Slint-mappable layouts</span>
+  </footer>
+</div>
+
+<script src="_shared.js"></script>
+<script src="panels/search.js"></script>
+<script src="panels/source.js"></script>
+<script src="panels/actions.js"></script>
+<script src="panels/docker.js"></script>
+<script src="panels/tests.js"></script>
+<script src="panels/agents.js"></script>
+<script src="panels/artifacts.js"></script>
+</body>
+</html>
