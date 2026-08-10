@@ -1,0 +1,697 @@
+<!doctype html>
+<html lang="en" data-theme="friendly-light" data-reduced-motion="0">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Ledger — Settings as One Document — Qwen 5.8</title>
+<link rel="stylesheet" href="_shared/pm-shell.css">
+<style>
+.lg-home, .lg-work { flex: 1; min-height: 0; overflow-y: auto; }
+.lg-fade { animation: lgFade .3s ease both; }
+@keyframes lgFade { from { opacity: 0; } to { opacity: 1; } }
+
+.lg-page { max-width: 860px; margin: 0 auto; padding: 34px 34px 90px; width: 100%; }
+.lg-doctype { font-size: 10.5px; letter-spacing: .18em; text-transform: uppercase; color: var(--text-3); border-bottom: 1px solid var(--border-strong); padding-bottom: 8px; display: flex; justify-content: space-between; gap: 10px; flex-wrap: wrap; }
+.lg-h1 { font-size: 32px; font-weight: 750; color: var(--text-1); margin: 16px 0 4px; letter-spacing: -.015em; }
+.lg-lede { color: var(--text-2); font-size: 14px; max-width: 620px; margin: 0 0 22px; }
+
+.lg-searchline { display: flex; align-items: baseline; gap: 12px; border-bottom: 2px solid var(--border-strong); padding-bottom: 8px; margin-bottom: 6px; }
+.lg-searchline:focus-within { border-bottom-color: var(--accent); }
+.lg-searchline .pm-ico { color: var(--text-3); align-self: center; }
+.lg-searchline input { flex: 1; border: none; outline: none; background: none; font-size: 17px; color: var(--text-1); }
+.lg-searchline .pm-note { white-space: nowrap; }
+.lg-hits { margin: 10px 0 4px; }
+.lg-hit { display: flex; align-items: baseline; gap: 10px; width: 100%; text-align: left; background: none; border: none; border-bottom: 1px solid var(--border); padding: 9px 2px; cursor: pointer; }
+.lg-hit:hover, .lg-hit.active { background: var(--accent-soft); }
+.lg-hit .t { color: var(--text-1); font-weight: 650; font-size: 13.5px; }
+.lg-hit .p { color: var(--text-3); font-size: 11.5px; }
+.lg-hit .no { color: var(--text-3); font-family: var(--font-mono); font-size: 11px; flex: none; }
+
+.lg-toc { margin-top: 26px; }
+.lg-toc-cap { font-size: 11px; letter-spacing: .14em; text-transform: uppercase; color: var(--text-3); margin-bottom: 6px; }
+.lg-toc-row { display: grid; grid-template-columns: 34px minmax(0, 1fr) auto auto 16px; gap: 12px; align-items: baseline; width: 100%; text-align: left; background: none; border: none; border-bottom: 1px solid var(--border); padding: 13px 2px; cursor: pointer; }
+.lg-toc-row:hover { background: var(--surface-2); }
+.lg-toc-row .no { font-family: var(--font-mono); color: var(--text-3); font-size: 12px; }
+.lg-toc-row .t { color: var(--text-1); font-size: 15px; font-weight: 650; }
+.lg-toc-row .p { color: var(--text-2); font-size: 12px; display: block; margin-top: 1px; }
+.lg-toc-row .meta { color: var(--text-3); font-size: 11.5px; white-space: nowrap; }
+
+.lg-marg { margin-top: 34px; display: grid; grid-template-columns: 1fr 1fr; gap: 26px; }
+.pm-app[data-wtier="squeezed"] .lg-marg { grid-template-columns: 1fr; }
+.lg-marg h3 { font-size: 11px; letter-spacing: .14em; text-transform: uppercase; color: var(--text-3); margin: 0 0 8px; font-weight: 650; }
+.lg-note-item { border-bottom: 1px solid var(--border); padding: 10px 0; }
+.lg-note-item .top { display: flex; justify-content: space-between; align-items: center; gap: 8px; }
+.lg-note-item h4 { margin: 5px 0 2px; font-size: 13px; color: var(--text-1); font-weight: 650; }
+.lg-note-item p { margin: 0 0 8px; font-size: 12px; color: var(--text-2); }
+.lg-note-actions { display: flex; gap: 8px; align-items: center; }
+.lg-recent { display: flex; gap: 8px; align-items: baseline; width: 100%; text-align: left; background: none; border: none; border-bottom: 1px solid var(--border); padding: 8px 0; cursor: pointer; color: var(--text-2); font-size: 12.5px; }
+.lg-recent:hover { color: var(--text-1); }
+.lg-recent .when { margin-left: auto; color: var(--text-3); font-size: 11px; }
+
+.lg-workhead { position: sticky; top: 0; z-index: 25; background: var(--bg-shell); border-bottom: 1px solid var(--border); padding: 10px 20px; display: flex; align-items: center; gap: 12px; flex-wrap: wrap; }
+[data-chrome-blur="on"] .lg-workhead { backdrop-filter: var(--chrome-blur); }
+.lg-workhead .doc-title { font-weight: 700; color: var(--text-1); font-size: 14px; white-space: nowrap; }
+.lg-workhead .pm-spacer { flex: 1; }
+.lg-workhead .lg-search-mini { display: flex; align-items: center; gap: 7px; border-bottom: 1px solid var(--border-strong); padding: 3px 2px; min-width: 170px; flex: 0 1 240px; }
+.lg-workhead .lg-search-mini input { flex: 1; min-width: 0; border: none; outline: none; background: none; color: var(--text-1); font-size: 12.5px; }
+.lg-disc-links { display: inline-flex; gap: 2px; font-size: 12px; color: var(--text-3); }
+.lg-disc-links button { border: none; background: none; color: var(--text-3); cursor: pointer; padding: 3px 7px; border-radius: var(--radius-s); }
+.lg-disc-links button.active { color: var(--accent); font-weight: 700; background: var(--accent-soft); }
+
+.lg-cols { display: grid; grid-template-columns: minmax(0, 1fr) 190px; gap: 30px; max-width: 1020px; margin: 0 auto; padding: 26px 26px 0; align-items: start; }
+.pm-app[data-wtier="squeezed"] .lg-cols { grid-template-columns: 1fr; }
+.lg-outline { position: sticky; top: 60px; padding: 6px 0; }
+.pm-app[data-wtier="squeezed"] .lg-outline { position: static; display: flex; flex-wrap: wrap; gap: 4px; }
+.lg-outline-track { position: relative; display: flex; flex-direction: column; }
+.pm-app[data-wtier="squeezed"] .lg-outline-track { flex-direction: row; flex-wrap: wrap; }
+.lg-ol-ink { position: absolute; left: -10px; width: 3px; border-radius: 2px; background: var(--accent); transition: top .25s cubic-bezier(.2,.8,.2,1), height .25s cubic-bezier(.2,.8,.2,1); }
+.pm-app[data-wtier="squeezed"] .lg-ol-ink { display: none; }
+.lg-ol-item { border: none; background: none; text-align: left; color: var(--text-3); font-size: 12px; padding: 6px 4px; cursor: pointer; border-radius: var(--radius-s); transition: color .18s; }
+.lg-ol-item:hover { color: var(--text-1); }
+.lg-ol-item.active { color: var(--accent); font-weight: 700; }
+.lg-ol-item .no { font-family: var(--font-mono); font-size: 10px; margin-right: 6px; }
+
+.lg-docbody { min-width: 0; padding-bottom: 90px; }
+.lg-sub { margin-bottom: 40px; scroll-margin-top: 64px; }
+.lg-sub-h { display: flex; align-items: baseline; gap: 10px; border-bottom: 2px solid var(--border-strong); padding-bottom: 6px; margin-bottom: 6px; }
+.lg-sub-h .no { font-family: var(--font-mono); color: var(--text-3); font-size: 12px; }
+.lg-sub-h h2 { margin: 0; font-size: 19px; color: var(--text-1); font-weight: 700; }
+.lg-sub-h .cnt { margin-left: auto; color: var(--text-3); font-size: 11px; white-space: nowrap; }
+
+.lg-row { display: grid; grid-template-columns: minmax(0, 1fr) auto; gap: 16px; padding: 12px 2px; border-bottom: 1px solid var(--border); align-items: start; }
+.pm-app[data-wtier="squeezed"] .lg-row { grid-template-columns: 1fr; }
+.lg-row-label { font-size: 13.5px; font-weight: 650; color: var(--text-1); display: flex; flex-wrap: wrap; gap: 6px; align-items: center; }
+.lg-row-desc { font-size: 12px; color: var(--text-2); margin-top: 2px; max-width: 560px; }
+.lg-row-badges { display: flex; flex-wrap: wrap; gap: 4px; margin-top: 6px; }
+.lg-row-ctl { display: flex; flex-direction: column; align-items: flex-end; gap: 6px; }
+.pm-app[data-wtier="squeezed"] .lg-row-ctl { align-items: flex-start; }
+.lg-row-ctl .line { display: flex; gap: 8px; align-items: center; }
+.lg-row-val { font-family: var(--font-mono); font-size: 12px; color: var(--text-1); }
+.lg-row-detail { grid-column: 1 / -1; display: none; padding: 8px 12px; background: var(--surface-3); border-radius: var(--radius-s); font-size: 12px; color: var(--text-2); }
+.lg-row.open .lg-row-detail { display: block; }
+.lg-row[data-hidden="true"] { display: none; }
+
+.lg-appx { border: 1px solid var(--border); border-radius: var(--radius-m); background: var(--surface); padding: 16px 18px; margin: 14px 0; }
+.lg-appx-cap { font-size: 10.5px; letter-spacing: .14em; text-transform: uppercase; color: var(--text-3); margin-bottom: 4px; }
+.lg-appx h4 { margin: 0 0 6px; font-size: 14.5px; color: var(--text-1); }
+.lg-table { width: 100%; border-collapse: collapse; font-size: 12.5px; margin-top: 8px; }
+.lg-table th { text-align: left; font-size: 10.5px; letter-spacing: .1em; text-transform: uppercase; color: var(--text-3); font-weight: 600; border-bottom: 1px solid var(--border-strong); padding: 5px 8px 5px 0; }
+.lg-table td { border-bottom: 1px solid var(--border); padding: 7px 8px 7px 0; color: var(--text-1); vertical-align: top; }
+.lg-table .sub { color: var(--text-3); font-size: 11px; display: block; }
+.lg-note-card { border: 1px dashed var(--border-strong); border-radius: var(--radius-m); padding: 12px 14px; color: var(--text-2); font-size: 12.5px; margin: 12px 0; background: var(--surface-3); }
+.lg-chain { font-family: var(--font-mono); font-size: 12px; color: var(--text-1); padding: 3px 0; }
+.lg-chain .dim { color: var(--text-3); }
+.lg-src-grid { display: grid; grid-template-columns: minmax(0, 1fr) auto; gap: 4px 14px; font-size: 12.5px; padding: 6px 0; border-bottom: 1px solid var(--border); }
+.lg-src-grid .why { color: var(--text-3); font-size: 11.5px; }
+</style>
+</head>
+<body data-concept-model="Qwen 5.8" data-concept="ledger">
+<div id="app"></div>
+<script src="_shared/concept-hub-bridge.js"></script>
+<script src="_shared/pm-icons.js"></script>
+<script src="_shared/pm-demo-data.js"></script>
+<script src="_shared/pm-state.js"></script>
+<script src="_shared/pm-settings-core.js"></script>
+<script src="_shared/pm-shell.js"></script>
+<script>
+(function () {
+  "use strict";
+  var MODEL = "Qwen 5.8";
+  var shell = window.PMShell.mount({ conceptName: "Ledger concept", model: MODEL });
+  var content = shell.content;
+  var INDEX = window.PMCore.buildSearchIndex();
+  var IMPLEMENTED = { providers: true, "context-sources": true, skills: true };
+  var MANAGER_HOME = { memory: "Atlas", mcp: "Atlas", crew: "Deck", terminal: "Deck", personas: "Spoke", media: "Spoke", lsp: "Deck" };
+  var spy = null;
+  var openDetails = {};
+
+  function dest(id) { return window.PMDemoData.destinations.filter(function (d) { return d.id === id; })[0]; }
+  function esc(s) { return String(s).replace(/[&<>"]/g, function (c) { return { "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;" }[c]; }); }
+  function num(i) { return String(i + 1).padStart(2, "0"); }
+
+  function route() {
+    var v = window.PMState.state.view;
+    if (spy) { spy.destroy(); spy = null; }
+    if (v.name === "home") renderHome(); else renderWork(v);
+  }
+
+  function renderHome() {
+    var st = window.PMState.state;
+    var html = '<div class="lg-home lg-fade" id="lg-home"><div class="lg-page">' +
+      '<div class="lg-doctype"><span>Settings Ledger · ' + MODEL + '</span><span>One document · ten chapters</span></div>' +
+      '<h1 class="lg-h1">The Settings Ledger</h1>' +
+      '<p class="lg-lede">Everything Puppet Master can be told, written as one readable document. Search the ledger, or open a chapter. Managers live inside their chapters as appendices.</p>' +
+      '<label class="lg-searchline">' + window.PMIcons.get("search", 17) + '<input id="lg-q" placeholder="Search the ledger — try “cache”, “FileSafe”, “dictionary”…" autocomplete="off" aria-label="Search the ledger"><span class="pm-note">Enter opens the first match</span></label>' +
+      '<div class="lg-hits" id="lg-hits"></div>' +
+      '<div class="lg-toc"><div class="lg-toc-cap">Contents</div>' +
+      window.PMDemoData.destinations.map(function (d, i) {
+        var status = d.status.kind === "attention" ? '<span class="pm-badge pm-badge-danger">' + esc(d.status.summary) + "</span>"
+          : d.status.kind === "setup" ? '<span class="pm-badge pm-badge-info">' + esc(d.status.summary) + "</span>"
+          : '<span class="pm-badge pm-badge-ok">' + esc(d.status.summary) + "</span>";
+        return '<button class="lg-toc-row" data-dest="' + d.id + '"><span class="no">' + num(i) + '</span>' +
+          '<span><span class="t">' + esc(d.title) + '</span><span class="p">' + esc(d.purpose) + "</span></span>" +
+          status + '<span class="meta">' + d.subcategories.length + " sections</span>" +
+          '<span class="pm-ico">' + window.PMIcons.get("chevronRight", 14) + "</span></button>";
+      }).join("") +
+      "</div>" +
+      '<div class="lg-marg">' +
+        "<div><h3>Marginalia — things to notice</h3>" +
+        (st.notices.length ? st.notices.map(function (n) {
+          var chip = n.kind === "attention" ? '<span class="pm-badge pm-badge-danger">' + esc(n.status) + "</span>"
+            : n.kind === "continue" ? '<span class="pm-badge pm-badge-info">' + esc(n.status) + "</span>"
+            : '<span class="pm-badge pm-badge-ok">' + esc(n.status) + "</span>";
+          return '<div class="lg-note-item" data-notice="' + n.id + '"><div class="top">' + chip + "</div>" +
+            "<h4>" + esc(n.headline) + "</h4><p>" + esc(n.reason) + "</p>" +
+            '<div class="lg-note-actions"><button class="pm-btn pm-btn-primary pm-btn-sm" data-na>' + esc(n.action) + "</button>" +
+            (n.secondary ? '<button class="pm-btn pm-btn-quiet pm-btn-sm" data-ns>' + esc(n.secondary) + "</button>" : "") + "</div></div>";
+        }).join("") : '<div class="lg-note-card">The margin is empty. Nothing needs attention — the calm state.</div>') +
+        "</div>" +
+        "<div><h3>Recently amended</h3>" +
+        st.recents.map(function (r) {
+          return '<button class="lg-recent" data-recent="' + r.id + '"><span>' + esc(r.label) + " — " + esc(r.where) + '</span><span class="when">' + esc(r.when) + "</span></button>";
+        }).join("") +
+        '<div class="lg-note-card" style="margin-top:14px">Amendments are recorded with scope and source. Reset returns any entry to its default wording.</div>' +
+        "</div>" +
+      "</div>" +
+    "</div></div>";
+    content.innerHTML = html;
+    bindHome();
+  }
+
+  function bindHome() {
+    var q = document.getElementById("lg-q");
+    var hitsEl = document.getElementById("lg-hits");
+    var hits = [];
+    var active = -1;
+    function run() {
+      var v = q.value.trim();
+      active = -1;
+      if (!v) { hitsEl.innerHTML = ""; return; }
+      hits = window.PMCore.search(v, INDEX);
+      if (!hits.length) { hitsEl.innerHTML = '<div class="lg-note-card">No entry matches “' + esc(v) + '”.</div>'; return; }
+      hitsEl.innerHTML = hits.map(function (h, i) {
+        return '<button class="lg-hit" data-i="' + i + '"><span class="no">' + h.kind.slice(0, 4).toUpperCase() + '</span><span class="t">' + esc(h.title) + '</span><span class="p">' + esc(h.path.join(" › ")) + "</span></button>";
+      }).join("");
+      hitsEl.querySelectorAll("[data-i]").forEach(function (b) {
+        b.addEventListener("click", function () { go(parseInt(b.getAttribute("data-i"), 10)); });
+      });
+    }
+    function go(i) {
+      var t = Object.assign({}, hits[i].target);
+      t.focusSetting = t.setting || null;
+      window.PMState.navigate(t);
+    }
+    q.addEventListener("input", run);
+    q.addEventListener("keydown", function (e) {
+      var items = hitsEl.querySelectorAll(".lg-hit");
+      if (e.key === "ArrowDown") { e.preventDefault(); active = Math.min(active + 1, items.length - 1); mark(items); }
+      else if (e.key === "ArrowUp") { e.preventDefault(); active = Math.max(active - 1, 0); mark(items); }
+      else if (e.key === "Enter") { e.preventDefault(); if (active >= 0) go(active); else if (hits.length) go(0); }
+    });
+    function mark(items) { items.forEach(function (b, i) { b.classList.toggle("active", i === active); }); }
+
+    content.querySelectorAll("[data-dest]").forEach(function (b) {
+      b.addEventListener("click", function () { window.PMState.navigate({ name: "workspace", category: b.getAttribute("data-dest") }); });
+    });
+    content.querySelectorAll("[data-recent]").forEach(function (b) {
+      b.addEventListener("click", function () {
+        var r = window.PMState.state.recents.filter(function (x) { return x.id === b.getAttribute("data-recent"); })[0];
+        if (r) window.PMState.navigate(Object.assign({ name: "workspace" }, r.target));
+      });
+    });
+    content.querySelectorAll("[data-notice]").forEach(function (card) {
+      var n = window.PMState.state.notices.filter(function (x) { return x.id === card.getAttribute("data-notice"); })[0];
+      if (!n) return;
+      var na = card.querySelector("[data-na]");
+      var ns = card.querySelector("[data-ns]");
+      if (na) na.addEventListener("click", function () { noticeGo(n); });
+      if (ns) ns.addEventListener("click", function () { noticeGo(n, true); });
+    });
+  }
+
+  function noticeGo(n, secondary) {
+    if (secondary && n.id === "anthropic-usage") { window.PMState.receipt("Deep link to Usage", "Usage owns measured balances. Simulated navigation.", "info"); return; }
+    if (secondary && n.id === "gemini-probe") { window.PMState.navigate({ name: "workspace", category: "models", manager: "providers", provider: "gemini-cli" }); return; }
+    if (n.id === "gemini-probe") { window.PMState.navigate({ name: "workspace", category: "models", manager: "providers", provider: "gemini-cli" }); return; }
+    if (n.id === "anthropic-usage") { window.PMState.navigate({ name: "workspace", category: "models", subcategory: "continuation" }); return; }
+    if (n.id === "mcp-docs") { window.PMState.navigate({ name: "workspace", category: "extensions", subcategory: "mcp" }); return; }
+    if (n.id === "continue-media") { window.PMState.navigate({ name: "workspace", category: "media", subcategory: "media-io", setting: "media.io.audio-input" }); return; }
+    if (n.id === "rec-persona") { window.PMState.navigate({ name: "workspace", category: "models", subcategory: "personas" }); return; }
+    if (n.id === "rec-snapshot") { window.PMState.navigate({ name: "workspace", category: "system", subcategory: "backups", setting: "system.backups.pre-risky" }); return; }
+    window.PMState.receipt(n.action, "Simulated notice action.", "sim");
+  }
+
+  function settingRow(s) {
+    var meta = window.PMCore.settingMeta(s);
+    var ctl = "";
+    if (s.type === "toggle") ctl = '<button class="pm-toggle" role="switch" aria-pressed="' + (s.value ? "true" : "false") + '" data-ctl ' + (meta.disabled ? "disabled" : "") + "></button>";
+    else if (s.type === "select") ctl = '<select class="pm-select" data-ctl ' + (meta.disabled ? "disabled" : "") + ">" + (s.options || []).map(function (o) { return "<option" + (o === s.value ? " selected" : "") + ">" + esc(o) + "</option>"; }).join("") + "</select>";
+    else if (s.type === "segment") ctl = '<span class="pm-seg" data-ctl>' + (s.options || []).map(function (o) { return '<button data-seg="' + esc(o) + '" class="' + (o === s.value ? "active" : "") + '">' + esc(o) + "</button>"; }).join("") + "</span>";
+    else if (s.type === "text") ctl = '<input class="pm-input" data-ctl value="' + esc(s.value) + '"' + (meta.disabled ? " disabled" : "") + ">";
+    else if (s.type === "action") ctl = '<button class="pm-btn pm-btn-sm" data-ctl>' + esc(s.actionLabel || "Open") + "</button>";
+    var badges = meta.badges.map(function (b) { return '<span class="pm-badge pm-badge-' + b.kind + '">' + esc(b.label) + "</span>"; }).join("");
+    var hidden = window.PMState.state.ui.disclosure === "standard" && s.tier !== "standard";
+    return '<div class="lg-row" data-setting-id="' + s.id + '" data-hidden="' + hidden + '">' +
+      "<div><div class=\"lg-row-label\">" + esc(s.label) + "</div>" +
+      '<div class="lg-row-desc">' + esc(s.desc) + "</div>" +
+      '<div class="lg-row-badges">' + badges + "</div></div>" +
+      '<div class="lg-row-ctl"><div class="line"><span class="lg-row-val">' + esc(s.type === "toggle" ? (s.value ? "On" : "Off") : s.value) + "</span>" + ctl +
+      (s.source === "custom" || s.source === "inherited" ? '<button class="pm-btn pm-btn-quiet pm-btn-sm" data-reset>Reset</button>' : "") +
+      '<button class="pm-btn pm-btn-quiet pm-btn-sm" data-details aria-expanded="false">Note</button>' +
+      "</div><span class=\"pm-note\">" + esc(meta.sourceLabel) + " · " + esc(s.scope) + "</span></div>" +
+      '<div class="lg-row-detail">Entry ' + esc(s.id) + " — source: " + esc(meta.sourceLabel) + "; exposure: " + esc(s.tier) +
+      (s.requested ? "; requested: " + esc(s.requested) : "") + (s.effective ? "; effective: " + esc(s.effective) : "") +
+      (s.reason ? "; note: " + esc(s.reason) : "") + (s.inheritedFrom ? "; inherited from: " + esc(s.inheritedFrom) : "") +
+      (s.managedBy ? "; managed by: " + esc(s.managedBy) : "") + "</div>" +
+    "</div>";
+  }
+
+  function providersAppendix(v) {
+    var st = window.PMState.state;
+    var html = '<div class="lg-appx"><div class="lg-appx-cap">Appendix — Provider Register</div><h4>Providers, accounts, connections, products, models</h4>' +
+      '<div class="lg-appx-cap" style="margin-top:10px">Catalog feeds — continuously maintained</div>' +
+      st.catalogs.map(function (c) {
+        return '<div class="lg-src-grid"><span>' + esc(c.name) + '<span class="why">' +
+          (c.state === "refreshing" ? "Refreshing — last-known-good rows stay active" : "Checked " + esc(c.lastChecked) + " · activated " + esc(c.lastActivated) + " · " + esc(c.version)) +
+          (c.materialChanges.length ? " · Material changes: " + c.materialChanges.map(esc).join("; ") : "") +
+          '</span></span><span style="display:flex;gap:6px;align-items:center">' +
+          (c.state === "refreshing" ? '<span class="pm-badge pm-badge-info">Refreshing</span>' : "") +
+          '<button class="pm-btn pm-btn-sm" data-catalog-refresh="' + c.id + '"' + (c.state === "refreshing" ? " disabled" : "") + ">" + (c.state === "refreshing" ? "Refreshing…" : "Refresh") + "</button></span></div>";
+      }).join("") +
+      '<div class="lg-appx-cap" style="margin-top:12px">Register</div>' +
+      '<table class="lg-table"><thead><tr><th>Provider</th><th>Accounts & connections</th><th>State</th><th>Usage snapshot</th></tr></thead><tbody>' +
+      st.providers.map(function (p) {
+        var chip = p.state === "ready" ? '<span class="pm-badge pm-badge-ok">Connected</span>'
+          : p.state === "attention" ? '<span class="pm-badge pm-badge-warn">Decision needed</span>'
+          : p.state === "invocation-failed" ? '<span class="pm-badge pm-badge-danger">Invocation failed</span>'
+          : p.state === "needs-setup" ? '<span class="pm-badge pm-badge-info">Setup required</span>'
+          : p.state === "signed-out" ? '<span class="pm-badge pm-badge-warn">Signed out</span>'
+          : '<span class="pm-badge">Not installed</span>';
+        var accts = p.accounts.length ? p.accounts.slice().sort(function (a, b) { return (a.priority || 1) - (b.priority || 1); }).map(function (a) {
+          return '<span>' + esc(a.label) + (a.nickname ? ' <span class="pm-badge" style="font-size:9.5px">' + esc(a.nickname) + "</span>" : "") +
+            '<span class="sub">' + esc(a.authKind) + " · " + esc(a.transport) + (a.preferred ? " · preferred" : "") + (a.enabled === false ? " · disabled" : "") + (a.sticky ? " · sticky" : "") + "</span></span>";
+        }).join("<br>") : '<span class="sub">' + (p.state === "not-installed" ? "Installed on demand" : p.state === "signed-out" ? "Installed — launch CLI login" : "Setup required") + "</span>";
+        var usage = p.accounts.map(function (a) {
+          if (!a.usage) return "";
+          if (a.usage.included === "exhausted") return '<span class="pm-badge pm-badge-danger">Exhausted</span><span class="sub">reset ' + esc(a.usage.reset || "unknown") + "</span>";
+          return '<span class="sub">' + esc(a.usage.included || "n/a") + (a.usage.remaining ? " · " + esc(a.usage.remaining) : "") + "</span>";
+        }).join("<br>");
+        return '<tr data-provider="' + p.id + '"><td><b>' + esc(p.name) + '</b><span class="sub">' + esc(p.group) + "</span></td><td>" + accts + "</td><td>" + chip + '<span class="sub">' + esc(p.stateLabel) + "</span></td><td>" + (usage || '<span class="sub">n/a</span>') + "</td></tr>";
+      }).join("") +
+      "</tbody></table>" +
+      '<div class="lg-note-card">Full console — preferred-account switching, favorites, aliases, priority, probes, continuation choices — is below in the register detail.</div>' +
+      providersDetail(v) +
+      "</div>";
+    return html;
+  }
+
+  function providersDetail(v) {
+    var st = window.PMState.state;
+    var html = "";
+    st.providers.forEach(function (p) {
+      if (p.state === "not-installed") {
+        html += '<div class="lg-note-card" data-provider="' + p.id + '"><b>' + esc(p.name) + "</b> — " + esc(p.install.note) +
+          ' <span style="display:inline-flex;gap:6px;margin-top:6px"><button class="pm-btn pm-btn-sm pm-btn-primary" data-pa="install">Install</button></span></div>';
+        return;
+      }
+      if (p.setup) {
+        html += '<div class="lg-note-card" data-provider="' + p.id + '"><b>' + esc(p.name) + "</b> — " + esc(p.setup.note) +
+          ' Steps: ' + p.setup.steps.map(esc).join(" → ") + ' <span style="display:inline-flex;gap:6px;margin-top:6px"><button class="pm-btn pm-btn-sm pm-btn-primary" data-pa="setup">Start setup</button></span></div>';
+        return;
+      }
+      var open = (v && v.provider === p.id) || openDetails[p.id];
+      html += '<details class="lg-appx" style="margin:10px 0"' + (open ? " open" : "") + ' data-provider="' + p.id + '"><summary style="cursor:pointer;font-weight:650;color:var(--text-1)">' + esc(p.name) + " — register detail</summary>" +
+        (p.state === "signed-out" ? '<div class="lg-note-card" style="margin:8px 0"><b>Installed — signed out.</b> ' + esc(p.login.note) +
+          '<div style="display:flex;gap:6px;margin-top:6px"><button class="pm-btn pm-btn-primary pm-btn-sm" data-pa="login">Launch CLI login</button>' +
+          '<button class="pm-btn pm-btn-sm" data-pa="rescan">Rescan installation</button></div></div>' : "") +
+        p.accounts.slice().sort(function (a, b) { return (a.priority || 1) - (b.priority || 1); }).map(function (a) {
+          var bits = [];
+          if (a.usage) {
+            if (a.usage.included === "exhausted") bits.push('<span class="pm-badge pm-badge-danger">Included usage exhausted</span>');
+            if (a.usage.reset) bits.push('<span class="pm-note">reset ' + esc(a.usage.reset) + "</span>");
+            if (a.usage.extra) bits.push('<span class="pm-note">' + esc(a.usage.extra) + "</span>");
+            if (a.usage.pressure) bits.push('<span class="pm-note">pressure ' + esc(a.usage.pressure) + "</span>");
+          }
+          return '<div style="border-bottom:1px solid var(--border);padding:8px 0" data-account="' + a.id + '">' +
+            '<div style="display:flex;gap:8px;align-items:center;flex-wrap:wrap"><b style="color:var(--text-1)">' + esc(a.label) + "</b>" +
+            (a.nickname ? '<span class="pm-badge">' + esc(a.nickname) + "</span>" : "") +
+            (a.preferred ? '<span class="pm-badge pm-badge-info">Preferred</span>' : "") +
+            (a.sticky ? '<span class="pm-badge pm-badge-muted">Sticky sessions</span>' : "") +
+            (a.enabled === false ? '<span class="pm-badge pm-badge-warn">Disabled</span>' : "") +
+            (a.state === "authenticated" ? '<span class="pm-badge pm-badge-warn">Authenticated — invocation not verified</span>' : "") + bits.join("") +
+            '<span class="pm-note" style="margin-left:auto">priority ' + (a.priority || 1) +
+            ' <button class="pm-btn pm-btn-quiet pm-btn-sm pm-btn-ico" data-acc-up aria-label="Raise account priority">' + window.PMIcons.get("chevronDown", 10) + "</button>" +
+            '<button class="pm-btn pm-btn-quiet pm-btn-sm pm-btn-ico" data-acc-down aria-label="Lower account priority">' + window.PMIcons.get("chevronDown", 10) + "</button></span></div>" +
+            '<div class="pm-note" style="margin-top:3px">Auth owner ' + esc(a.authOwner) + " (" + esc(a.authKind) + ") · transport " + esc(a.transport) +
+            (a.isolation ? " · isolation " + esc(a.isolation) : "") + (a.identity ? " · " + esc(a.identity) : "") +
+            (a.health ? " · catalog " + esc(a.health.catalog) + " · generation " + esc(a.health.generation) : "") + "</div>" +
+            (a.probe ? '<div class="pm-note" style="color:var(--err)">' + esc(a.probe.detail) + " (" + esc(a.probe.at) + ")</div>" : "") +
+            '<div style="display:flex;gap:6px;margin-top:7px;flex-wrap:wrap;align-items:center">' +
+            (a.enabled !== false && !a.preferred ? '<button class="pm-btn pm-btn-sm pm-btn-primary" data-use-account="' + a.id + '">Use for future requests</button>' : "") +
+            (a.preferred ? '<span class="pm-note">Future requests use this account.</span>' : "") +
+            '<button class="pm-btn pm-btn-sm" data-nickname>' + (a.nickname ? "Edit nickname" : "Add nickname") + "</button>" +
+            '<button class="pm-btn pm-btn-sm" data-sticky>Sticky: ' + (a.sticky ? "On" : "Off") + "</button>" +
+            '<button class="pm-btn pm-btn-sm" data-enable>' + (a.enabled === false ? "Enable" : "Disable") + "</button>" +
+            '<button class="pm-btn pm-btn-sm" data-pa="reconnect">Reconnect</button>' +
+            '<button class="pm-btn pm-btn-sm" data-pa="probe">Probe</button>' +
+            '<button class="pm-btn pm-btn-sm" data-pa="diagnostics">Diagnostics</button>' +
+            ((p.id === "gemini-cli" || p.id === "codex-cli") ? '<button class="pm-btn pm-btn-sm" data-pa="update">Check for CLI update</button>' : "") +
+            '<button class="pm-btn pm-btn-quiet pm-btn-sm" data-open-usage>Open Usage</button>' +
+            "</div>" +
+            (a.usage && a.usage.included === "exhausted" && a.continuationOptions ? '<div style="display:flex;gap:8px;margin-top:7px;align-items:center"><span class="pm-note">What happens next:</span><select class="pm-select" data-continuation>' + a.continuationOptions.map(function (o) { return "<option>" + esc(o) + "</option>"; }).join("") + "</select></div>" : "") +
+          "</div>";
+        }).join("") +
+        (p.models.length ? '<table class="lg-table"><thead><tr><th></th><th>Model</th><th>Priority</th><th>Capability evidence</th><th>State</th></tr></thead><tbody>' +
+          p.models.slice().sort(function (a, b) { return (a.hidden ? 1 : 0) - (b.hidden ? 1 : 0) || a.priority - b.priority; }).map(function (m) {
+            var stateChip = m.state === "available" ? '<span class="pm-badge pm-badge-ok">Available</span>'
+              : m.state === "unverified" ? '<span class="pm-badge pm-badge-warn">Unverified</span>'
+              : m.state === "needs-setup" ? '<span class="pm-badge pm-badge-info">Needs setup</span>'
+              : '<span class="pm-badge pm-badge-danger">Unavailable</span>';
+            return '<tr data-model="' + m.id + '"' + (m.hidden ? ' style="opacity:.62"' : "") + '>' +
+              '<td><button class="pm-btn pm-btn-quiet pm-btn-sm pm-btn-ico" data-fav aria-pressed="' + m.favorite + '" aria-label="Favorite" style="color:' + (m.favorite ? "var(--warn)" : "var(--text-3)") + '">' + window.PMIcons.get("star", 13) + "</button></td>" +
+              "<td><b>" + esc(m.name) + "</b>" + (m.alias ? '<span class="sub">alias ' + esc(m.alias) + "</span>" : "") +
+              (m.hidden ? ' <span class="pm-badge pm-badge-muted">Hidden</span>' : "") +
+              '<span class="sub">' + (m.effort.length ? "effort · " : "") + (m.fast ? "Normal/Fast · " : "") + esc(m.context) + " ctx" + (m.free ? " · " + esc(m.free) : "") + "</span></td>" +
+              '<td><span style="display:inline-flex;align-items:center;gap:3px"><button class="pm-btn pm-btn-quiet pm-btn-sm pm-btn-ico" data-up>' + window.PMIcons.get("chevronDown", 10) + '</button> #' + m.priority + ' <button class="pm-btn pm-btn-quiet pm-btn-sm pm-btn-ico" data-down>' + window.PMIcons.get("chevronDown", 10) + "</button></span>" +
+              ' <button class="pm-btn pm-btn-quiet pm-btn-sm" data-alias>Alias</button>' +
+              ' <button class="pm-btn pm-btn-quiet pm-btn-sm" data-hide>' + (m.hidden ? "Show" : "Hide") + "</button></td>" +
+              "<td>" + esc(m.evidence) + (m.reason ? '<span class="sub" style="color:var(--warn)">' + esc(m.reason) + "</span>" : "") + "</td>" +
+              "<td>" + stateChip + "</td></tr>";
+          }).join("") + "</tbody></table>" : "") +
+      "</details>";
+    });
+    html += '<div class="lg-appx-cap" style="margin-top:14px">Requested versus effective roles</div>' +
+      '<table class="lg-table"><thead><tr><th>Role</th><th>Requested</th><th>Effective</th></tr></thead><tbody>' +
+      st.roles.map(function (r) {
+        return "<tr><td>" + esc(r.label) + '</td><td><span class="pm-note">' + esc(r.requested) + "</span></td><td><b>" + esc(r.effective) + "</b>" +
+          (r.differs ? ' <span class="pm-badge pm-badge-diff">Differs</span>' : "") + (r.note ? '<span class="sub">' + esc(r.note) + "</span>" : "") + "</td></tr>";
+      }).join("") + "</tbody></table>";
+    return html;
+  }
+
+  function contextSourcesAppendix() {
+    var cs = window.PMState.state.contextSources;
+    return '<div class="lg-appx"><div class="lg-appx-cap">Appendix — Context & Instruction Sources</div><h4>What was admitted last turn, and why</h4>' +
+      '<div class="lg-appx-cap" style="margin-top:10px">Admitted</div>' +
+      cs.admitted.map(function (a) { return '<div class="lg-src-grid"><span>' + esc(a.name) + '<span class="why">' + esc(a.detail) + '</span></span><span class="pm-badge">' + esc(a.tokens) + " tokens</span></div>"; }).join("") +
+      '<div class="lg-appx-cap" style="margin-top:12px">Omitted</div>' +
+      cs.omitted.map(function (o) { return '<div class="lg-src-grid"><span>' + esc(o.name) + '</span><span class="why">' + esc(o.reason) + "</span></div>"; }).join("") +
+      '<div class="lg-appx-cap" style="margin-top:12px">Instruction chain (AGENTS.md precedence)</div>' +
+      cs.chain.map(function (c) { return '<div class="lg-chain">' + (c.admitted ? "" : '<span class="dim">') + esc(c.path) + " — " + esc(c.role) + (c.reason ? " (" + esc(c.reason) + ")" : "") + (c.admitted ? "" : "</span>") + "</div>"; }).join("") +
+      '<div class="lg-appx-cap" style="margin-top:12px">Compaction & cache</div>' +
+      '<div class="lg-src-grid"><span>Strategy</span><span>' + esc(cs.compaction.strategy) + "</span></div>" +
+      '<div class="lg-src-grid"><span>Cache state</span><span>' + esc(cs.compaction.cacheState) + " · source hash " + esc(cs.compaction.sourceHash) + "</span></div>" +
+      '<div style="display:flex;gap:8px;margin-top:10px"><button class="pm-btn pm-btn-sm" data-cs-act="inspect">Inspect last assembly</button><button class="pm-btn pm-btn-sm" data-cs-act="hashes">Source hashes</button></div>' +
+    "</div>";
+  }
+
+  function skillsAppendix() {
+    var st = window.PMState.state;
+    return '<div class="lg-appx"><div class="lg-appx-cap">Appendix — Skills, Plugins & Tools</div><h4>Related but distinct inventories</h4>' +
+      '<div class="lg-appx-cap" style="margin-top:10px">Skills</div>' +
+      '<table class="lg-table"><thead><tr><th>Skill</th><th>Scope</th><th>Trust</th><th>State</th><th></th></tr></thead><tbody>' +
+      st.skills.map(function (s) {
+        return "<tr data-skill=\"" + s.id + "\"><td><b>" + esc(s.name) + '</b><span class="sub">' + esc(s.permissions) + "</span></td><td>" + esc(s.scope) + "</td><td>" +
+          (s.trust === "Trusted" ? '<span class="pm-badge pm-badge-ok">Trusted</span>' : '<span class="pm-badge pm-badge-warn">' + esc(s.trust) + "</span>") + "</td><td>" +
+          (s.enabled ? '<span class="pm-badge pm-badge-ok">Enabled</span>' : '<span class="pm-badge pm-badge-muted">Disabled</span>') +
+          (s.update === "Update available" ? ' <span class="pm-badge pm-badge-info">Update available</span>' : "") + "</td>" +
+          '<td><button class="pm-btn pm-btn-sm" data-skill-act="toggle">' + (s.enabled ? "Disable" : "Enable") + '</button> <button class="pm-btn pm-btn-quiet pm-btn-sm" data-skill-act="inspect">Inspect</button></td></tr>';
+      }).join("") + "</tbody></table>" +
+      '<div class="lg-appx-cap" style="margin-top:12px">Plugins</div>' +
+      '<table class="lg-table"><thead><tr><th>Plugin</th><th>Compatibility</th><th>Channel</th><th>State</th></tr></thead><tbody>' +
+      st.plugins.map(function (p) {
+        return "<tr><td><b>" + esc(p.name) + '</b><span class="sub">' + esc(p.permissions) + "</span></td><td>" +
+          (p.compatibility.indexOf("Incompatible") === 0 ? '<span class="pm-badge pm-badge-danger">' + esc(p.compatibility) + "</span>" : '<span class="pm-badge pm-badge-ok">' + esc(p.compatibility) + "</span>") +
+          "</td><td>" + esc(p.channel) + "</td><td>" + (p.state === "Enabled" ? '<span class="pm-badge pm-badge-ok">Enabled</span>' : '<span class="pm-badge pm-badge-danger">' + esc(p.state) + "</span>") + "</td></tr>";
+      }).join("") + "</tbody></table>" +
+      '<div class="lg-appx-cap" style="margin-top:12px">Unified tool inventory</div>' +
+      '<table class="lg-table"><thead><tr><th>Tool</th><th>Available now</th><th>Invoked</th><th>Risk & approval</th></tr></thead><tbody>' +
+      st.tools.map(function (t) {
+        return "<tr><td><b>" + esc(t.name) + "</b>" + (t.note ? '<span class="sub">' + esc(t.note) + "</span>" : "") + "</td><td>" +
+          (t.available ? '<span class="pm-badge pm-badge-ok">Available</span>' : '<span class="pm-badge pm-badge-muted">Not selected this turn</span>') + "</td><td>" + t.invoked + "</td><td>" +
+          '<span class="pm-badge pm-badge-' + (t.risk === "High" ? "danger" : t.risk === "Medium" ? "warn" : "ok") + '">' + esc(t.risk) + " risk</span> <span class=\"pm-note\">" + esc(t.approval) + "</span></td></tr>";
+      }).join("") + "</tbody></table>" +
+      '<div class="lg-appx-cap" style="margin-top:12px">Commands</div>' +
+      st.commands.map(function (c) {
+        return '<div class="lg-src-grid"><span>' + esc(c.name) + (c.note ? '<span class="why">' + esc(c.note) + "</span>" : "") + '</span><span>' +
+          (c.state === "conflict" ? '<span class="pm-badge pm-badge-danger">Conflict</span> ' : "") + '<span class="pm-kbd">' + esc(c.shortcut) + "</span></span></div>";
+      }).join("") +
+    "</div>";
+  }
+
+  function managerNote(sub) {
+    var where = MANAGER_HOME[sub.manager] || "another concept";
+    return '<div class="lg-note-card">The full <b>' + esc(window.PMCore.managerTitle(sub.manager)) + "</b> appendix is written in the " + where + " concept of this set. In the Ledger it stays reachable through navigation and search, with its surrounding entries shown here.</div>";
+  }
+
+  function renderWork(v) {
+    var d = dest(v.category);
+    if (!d) { renderHome(); return; }
+    var st = window.PMState.state;
+    var disc = st.ui.disclosure;
+    var di = window.PMDemoData.destinations.indexOf(d);
+    var html = '<div class="lg-work lg-fade" id="lg-work">' +
+      '<div class="lg-workhead">' +
+        '<button class="pm-btn pm-btn-quiet pm-btn-sm" id="lg-back">' + window.PMIcons.get("arrowLeft", 13) + " Contents</button>" +
+        '<span class="doc-title">Chapter ' + num(di) + " — " + esc(d.title) + "</span>" +
+        '<span class="pm-spacer"></span>' +
+        '<label class="lg-search-mini">' + window.PMIcons.get("search", 13) + '<input id="lg-q2" placeholder="Search the ledger…" aria-label="Search the ledger"></label>' +
+        '<span class="lg-disc-links" id="lg-disc">' +
+        ["standard", "advanced", "all"].map(function (x) { return '<button data-disc="' + x + '" class="' + (disc === x ? "active" : "") + '">' + (x === "standard" ? "Standard" : x === "advanced" ? "Advanced" : "All") + "</button>"; }).join("") +
+        "</span>" +
+      "</div>" +
+      '<div class="lg-cols">' +
+        '<div class="lg-docbody" id="lg-doc">' +
+        d.subcategories.map(function (sub, i) {
+          var mgr = "";
+          if (sub.manager) {
+            if (sub.manager === "providers") mgr = providersAppendix(v);
+            else if (sub.manager === "context-sources") mgr = contextSourcesAppendix();
+            else if (sub.manager === "skills") mgr = skillsAppendix();
+            else mgr = managerNote(sub);
+          }
+          return '<section class="lg-sub" data-sub-section="' + sub.id + '">' +
+            '<div class="lg-sub-h"><span class="no">§' + num(di) + "." + (i + 1) + '</span><h2>' + esc(sub.title) + '</h2><span class="cnt">' + sub.settings.length + " entries" + (sub.manager ? " · appendix" : "") + "</span></div>" +
+            mgr + sub.settings.map(settingRow).join("") +
+          "</section>";
+        }).join("") +
+        "</div>" +
+        '<nav class="lg-outline" aria-label="Outline"><div class="lg-outline-track" id="lg-track">' +
+        '<span class="lg-ol-ink" id="lg-ink"></span>' +
+        d.subcategories.map(function (s, i) { return '<button class="lg-ol-item" data-sub="' + s.id + '"><span class="no">§' + num(di) + "." + (i + 1) + "</span>" + esc(s.title) + "</button>"; }).join("") +
+        "</div></nav>" +
+      "</div></div>";
+    content.innerHTML = html;
+    bindWork(v, d);
+  }
+
+  function bindWork(v, d) {
+    var scroller = document.getElementById("lg-work");
+    var doc = document.getElementById("lg-doc");
+    var items = content.querySelectorAll(".lg-ol-item");
+    var ink = document.getElementById("lg-ink");
+
+    document.getElementById("lg-back").addEventListener("click", function () { window.PMState.navigate({ name: "home" }); });
+
+    function moveInk(id) {
+      items.forEach(function (b) {
+        var on = b.getAttribute("data-sub") === id;
+        b.classList.toggle("active", on);
+        if (on && ink && ink.style) {
+          ink.style.top = b.offsetTop + "px";
+          ink.style.height = b.offsetHeight + "px";
+        }
+      });
+    }
+
+    spy = window.PMCore.scrollspy(scroller, function () {
+      return d.subcategories.map(function (s) { return { id: s.id, el: doc.querySelector('[data-sub-section="' + s.id + '"]') }; });
+    }, moveInk, { offset: 70 });
+
+    items.forEach(function (b) { b.addEventListener("click", function () { spy.jumpTo(b.getAttribute("data-sub")); }); });
+
+    document.getElementById("lg-disc").querySelectorAll("[data-disc]").forEach(function (b) {
+      b.addEventListener("click", function () {
+        window.PMState.state.ui.disclosure = b.getAttribute("data-disc");
+        content.querySelectorAll("[data-setting-id]").forEach(function (row) {
+          var s = window.PMState.getSetting(row.getAttribute("data-setting-id"));
+          row.setAttribute("data-hidden", window.PMState.state.ui.disclosure === "standard" && s.tier !== "standard");
+        });
+        content.querySelectorAll("#lg-disc [data-disc]").forEach(function (x) { x.classList.toggle("active", x === b); });
+        window.PMState.receipt("Exposure changed", "The ledger now shows " + b.getAttribute("data-disc") + " entries.", "info");
+        if (spy) spy.refresh();
+      });
+    });
+
+    document.getElementById("lg-q2").addEventListener("keydown", function (e) {
+      if (e.key !== "Enter") return;
+      var hits = window.PMCore.search(e.target.value, INDEX);
+      if (!hits.length) { window.PMState.receipt("No matches", "Nothing found.", "info"); return; }
+      var t = Object.assign({}, hits[0].target);
+      t.focusSetting = t.setting || null;
+      window.PMState.navigate(t);
+    });
+
+    doc.addEventListener("click", function (e) {
+      var row = e.target.closest("[data-setting-id]");
+      var btn = e.target.closest("button, select");
+      if (row && btn) {
+        var id = row.getAttribute("data-setting-id");
+        var s = window.PMState.getSetting(id);
+        if (btn.matches("[data-ctl].pm-toggle")) { window.PMState.setSettingValue(id, !(s.value === true)); patchRow(id); return; }
+        if (btn.matches("[data-seg]")) { window.PMState.setSettingValue(id, btn.getAttribute("data-seg")); patchRow(id); return; }
+        if (btn.matches("[data-reset]")) { window.PMState.resetSetting(id); patchRow(id); return; }
+        if (btn.matches("[data-details]")) { row.classList.toggle("open"); btn.setAttribute("aria-expanded", row.classList.contains("open")); return; }
+        if (btn.matches("[data-ctl]") && btn.tagName === "BUTTON") {
+          if (s.id === "models.providers.refresh") { window.PMState.refreshCatalog("models-dev"); return; }
+          window.PMState.receipt(s.actionLabel || "Opened", s.label + ": honest simulated result.", "sim");
+          return;
+        }
+      }
+      mgrClick(e);
+    });
+    doc.addEventListener("change", function (e) {
+      var row = e.target.closest("[data-setting-id]");
+      if (row && e.target.matches("[data-ctl]")) {
+        var id = row.getAttribute("data-setting-id");
+        window.PMState.setSettingValue(id, e.target.value);
+        patchRow(id);
+      }
+      if (e.target.matches("[data-continuation]")) window.PMState.receipt("Continuation saved", "Anthropic Max: " + e.target.value + " — future requests only.", "ok");
+    });
+    doc.addEventListener("toggle", function (e) {
+      var d = e.target;
+      if (d && d.matches && d.matches("details[data-provider]")) openDetails[d.getAttribute("data-provider")] = d.open;
+    }, true);
+
+    function mgrClick(e) {
+      var t;
+      if ((t = e.target.closest("[data-catalog-refresh]"))) { window.PMState.refreshCatalog(t.getAttribute("data-catalog-refresh")); return; }
+      var pd = e.target.closest("[data-provider]");
+      if (pd) {
+        var pid = pd.getAttribute("data-provider");
+        var acctEl = e.target.closest("[data-account]");
+        var aid = acctEl ? acctEl.getAttribute("data-account") : null;
+        if ((t = e.target.closest("[data-use-account]"))) { window.PMState.setPreferredAccount(pid, t.getAttribute("data-use-account")); rerenderProviders(); return; }
+        if (aid && (t = e.target.closest("[data-nickname]"))) {
+          var acc = window.PMState.accountById(pid, aid);
+          var nn = prompt("Nickname for " + acc.label + ":", acc.nickname || "");
+          if (nn !== null) { window.PMState.setAccountNickname(pid, aid, nn.trim()); rerenderProviders(); }
+          return;
+        }
+        if (aid && (t = e.target.closest("[data-sticky]"))) { var a1 = window.PMState.accountById(pid, aid); window.PMState.setAccountSticky(pid, aid, !a1.sticky); rerenderProviders(); return; }
+        if (aid && (t = e.target.closest("[data-enable]"))) { var a2 = window.PMState.accountById(pid, aid); window.PMState.setAccountEnabled(pid, aid, a2.enabled === false); rerenderProviders(); return; }
+        if (aid && (t = e.target.closest("[data-acc-up]"))) { window.PMState.moveAccountPriority(pid, aid, -1); rerenderProviders(); return; }
+        if (aid && (t = e.target.closest("[data-acc-down]"))) { window.PMState.moveAccountPriority(pid, aid, 1); rerenderProviders(); return; }
+        if ((t = e.target.closest("[data-pa]"))) {
+          var act = t.getAttribute("data-pa");
+          if (act === "setup") { window.PMState.receipt("Setup opened", "Mistral setup runs in the underlying provider. Simulated.", "sim"); return; }
+          window.PMState.providerAction(pid, act); return;
+        }
+        if ((t = e.target.closest("[data-open-usage]"))) { window.PMState.receipt("Deep link to Usage", "Usage owns measured state. Simulated navigation.", "info"); return; }
+        var ml = e.target.closest("[data-model]");
+        if (ml) {
+          var mid = ml.getAttribute("data-model");
+          if ((t = e.target.closest("[data-fav]"))) { window.PMState.toggleFavorite(pid, mid); rerenderProviders(); return; }
+          if ((t = e.target.closest("[data-up]"))) { window.PMState.movePriority(pid, mid, -1); rerenderProviders(); return; }
+          if ((t = e.target.closest("[data-down]"))) { window.PMState.movePriority(pid, mid, 1); rerenderProviders(); return; }
+          if ((t = e.target.closest("[data-alias]"))) {
+            var p = window.PMState.providerById(pid);
+            var m = p.models.filter(function (x) { return x.id === mid; })[0];
+            var next = prompt("Alias for " + m.name + ":", m.alias || "");
+            if (next !== null) { window.PMState.setAlias(pid, mid, next.trim()); rerenderProviders(); }
+            return;
+          }
+          if ((t = e.target.closest("[data-hide]"))) { window.PMState.toggleHidden(pid, mid); rerenderProviders(); return; }
+        }
+      }
+      if ((t = e.target.closest("[data-cs-act]"))) {
+        if (t.getAttribute("data-cs-act") === "inspect") window.PMState.receipt("Last assembly", "Admitted 4 sources, omitted 3. FileSafe and routing stayed outside the prompt.", "info");
+        else window.PMState.receipt("Source hashes", "Instruction and code source hashes verified against last compaction.", "info");
+        return;
+      }
+      var sk = e.target.closest("[data-skill]");
+      if (sk && (t = e.target.closest("[data-skill-act]"))) {
+        var skill = window.PMState.state.skills.filter(function (x) { return x.id === sk.getAttribute("data-skill"); })[0];
+        if (t.getAttribute("data-skill-act") === "toggle") {
+          skill.enabled = !skill.enabled;
+          window.PMState.receipt(skill.enabled ? "Skill enabled" : "Skill disabled", skill.name + " — scope " + skill.scope + ".", "ok");
+          rerenderSkills();
+        } else {
+          window.PMState.receipt("Inspect source", skill.name + ": source and permissions shown. Simulated viewer.", "sim");
+        }
+        return;
+      }
+    }
+
+    function patchRow(id) {
+      var s = window.PMState.getSetting(id);
+      var el = content.querySelector('[data-setting-id="' + id + '"]');
+      if (!el) return;
+      var tmp = document.createElement("div");
+      tmp.innerHTML = settingRow(s);
+      var fresh = tmp.firstChild;
+      fresh.classList.toggle("open", el.classList.contains("open"));
+      el.replaceWith(fresh);
+    }
+    function rerenderProviders() {
+      var section = content.querySelector('[data-sub-section="providers"]');
+      if (!section) return;
+      var head = section.querySelector(".lg-sub-h");
+      var rows = section.querySelectorAll(":scope > .lg-row");
+      section.innerHTML = "";
+      section.appendChild(head);
+      var tmp = document.createElement("div");
+      tmp.innerHTML = providersAppendix(window.PMState.state.view);
+      while (tmp.firstChild) section.appendChild(tmp.firstChild);
+      rows.forEach(function (r) { section.appendChild(r); });
+      if (spy) spy.refresh();
+    }
+    function rerenderSkills() {
+      var section = content.querySelector('[data-sub-section="skills"]');
+      if (!section) return;
+      var head = section.querySelector(".lg-sub-h");
+      var rows = section.querySelectorAll(":scope > .lg-row");
+      section.innerHTML = "";
+      section.appendChild(head);
+      var tmp = document.createElement("div");
+      tmp.innerHTML = skillsAppendix();
+      while (tmp.firstChild) section.appendChild(tmp.firstChild);
+      rows.forEach(function (r) { section.appendChild(r); });
+    }
+    window._ledgerPatch = { patchRow: patchRow, rerenderProviders: rerenderProviders };
+
+    if (v.subcategory) spy.jumpTo(v.subcategory, function () { focusV(v); });
+    else if (v.manager) {
+      var subForMgr = null;
+      d.subcategories.forEach(function (s) { if (s.manager === v.manager) subForMgr = s.id; });
+      if (subForMgr) { spy.jumpTo(subForMgr, function () { focusV(v); }); return; }
+      focusV(v);
+    } else { scroller.scrollTop = 0; focusV(v); }
+  }
+
+  function focusV(v) {
+    if (v.focusSetting) {
+      var el = content.querySelector('[data-setting-id="' + v.focusSetting + '"]');
+      if (el) { el.scrollIntoView({ block: "center", behavior: window.PMCore.reducedMotion() ? "auto" : "smooth" }); window.PMCore.focusFlash(el); }
+    } else if (v.provider) {
+      var card = content.querySelector('[data-provider="' + v.provider + '"]');
+      if (card) {
+        if (card.tagName === "DETAILS") card.open = true;
+        card.scrollIntoView({ block: "center", behavior: window.PMCore.reducedMotion() ? "auto" : "smooth" });
+        window.PMCore.focusFlash(card);
+      }
+    }
+  }
+
+  window.PMState.subscribe(function (kind) {
+    if (kind === "navigate") { route(); return; }
+    if (kind === "scenario") { route(); return; }
+    if (kind === "catalog" && window.PMState.state.view.name === "workspace" && window.PMState.state.view.category === "models" && window._ledgerPatch) window._ledgerPatch.rerenderProviders();
+  });
+
+  route();
+})();
+</script>
+</body>
+</html>
