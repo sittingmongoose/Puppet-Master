@@ -1,0 +1,556 @@
+/* T4 · session spine — one continuous NEUTRAL spine line (var(--border),
+    never a colored accent) runs the left rail at a fixed offset; each turn
+    carries timestamp + duration on the rail. User turns slide their
+    time-and-tick cluster over to sit flush against the right-aligned bubble,
+    joined to the rail by a dotted leader — the tick always points at its
+    bubble, never at void. */
+
+.pmq-thread[data-structure="spine"] {
+  container-type: inline-size;
+  container-name: pmqt4;
+}
+
+.pmq-t4 .pmq-stream {
+  padding: 18px 18px 28px 14px;
+  gap: 0;
+  max-width: 900px;
+  width: 100%;
+  margin: 0 auto;
+}
+
+.pmq-t4 .pmq-msg { margin: 0 0 14px; position: relative; }
+
+/* the continuous spine: one line at a fixed rail offset for EVERY turn, so
+   user rows (whose time cluster moves right) never break the rail */
+.pmq-t4 .pmq-msg::after {
+  content: "";
+  position: absolute;
+  left: 55px;
+  top: 0;
+  bottom: -14px;
+  width: 1px;
+  background: var(--border);
+  z-index: 0;
+}
+
+.pmq-t4 .pmq-msg-inner {
+  display: grid;
+  grid-template-columns: 56px minmax(0, 1fr);
+  column-gap: 14px;
+  align-items: start;
+  position: relative;
+  z-index: 1;
+}
+
+.pmq-t4 .pmq-msg-inner > *:not(.pmq-t4-spine) {
+  grid-column: 2;
+  min-width: 0;
+}
+
+/* ---- the rail ---- */
+
+.pmq-t4-spine {
+  grid-column: 1;
+  grid-row: 1;
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-end;
+  padding: 1px 10px 0 0;
+}
+
+.pmq-t4-tick {
+  width: 7px;
+  height: 1px;
+  margin: 7px -10px 4px 0;
+  align-self: flex-end;
+  background: var(--border-strong);
+  transition: width var(--dur-fast) var(--ease-spring), background-color var(--dur-fast) var(--ease-out);
+}
+
+.pmq-t4 .pmq-msg:hover .pmq-t4-tick,
+.pmq-t4 .pmq-msg:focus-within .pmq-t4-tick {
+  width: 12px;
+  background: var(--text-secondary);
+}
+
+.pmq-t4-time {
+  font-family: var(--mono-font);
+  font-size: 11px;
+  font-variant-numeric: tabular-nums;
+  line-height: 1.3;
+  color: var(--text-secondary);
+  transition: color var(--dur-fast) var(--ease-out);
+}
+
+.pmq-t4 .pmq-msg:hover .pmq-t4-time,
+.pmq-t4 .pmq-msg:focus-within .pmq-t4-time { color: var(--text-primary); }
+
+.pmq-t4-dur {
+  font-family: var(--mono-font);
+  font-size: 9.5px;
+  font-variant-numeric: tabular-nums;
+  line-height: 1.3;
+  color: var(--text-faint);
+}
+
+/* ---- user rows: time + tick bind to the bubble, a dotted leader carries
+   the eye back to the rail — no empty middle ---- */
+
+.pmq-t4 .pmq-msg.pmq-user .pmq-msg-inner {
+  grid-template-columns: minmax(18px, 1fr) 56px fit-content(84%);
+}
+
+.pmq-t4 .pmq-msg.pmq-user .pmq-msg-inner::before {
+  content: "";
+  grid-column: 1;
+  grid-row: 1;
+  align-self: start;
+  margin-top: 12px;
+  height: 1px;
+  background: repeating-linear-gradient(to right, var(--border) 0 3px, transparent 3px 7px);
+}
+
+.pmq-t4 .pmq-msg.pmq-user .pmq-t4-spine { grid-column: 2; }
+
+.pmq-t4 .pmq-msg.pmq-user .pmq-body {
+  grid-column: 3;
+  grid-row: 1;
+  justify-self: start;
+  width: auto;
+  max-width: none;
+}
+
+.pmq-t4 .pmq-msg.pmq-user .pmq-msg-hover {
+  grid-column: 3;
+  justify-content: flex-end;
+}
+
+/* ---- bodies ---- */
+
+.pmq-t4 .pmq-msg.pmq-assistant .pmq-body { max-width: 72ch; }
+
+/* ---- session break ---- */
+
+.pmq-t4 .pmq-daysep {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  margin: 20px 0 16px;
+  font-family: var(--display-font);
+  font-size: var(--fs-2xs);
+  font-weight: 800;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: var(--text-secondary);
+}
+
+/* the break rule starts at the rail, so the label sits in the content lane */
+.pmq-t4 .pmq-daysep::before {
+  content: "";
+  width: 56px;
+  flex: none;
+  height: 1px;
+  background: var(--border-strong);
+}
+
+.pmq-t4 .pmq-daysep::after {
+  content: "· session break";
+  margin-left: 2px;
+  font-family: var(--body-font);
+  font-weight: 600;
+  letter-spacing: 0.08em;
+  color: var(--text-faint);
+}
+
+/* ---- surfaces align with the content lane ---- */
+
+.pmq-t4 .pmq-surfaces {
+  margin-left: 70px;
+  width: calc(100% - 70px);
+  max-width: none;
+}
+
+/* ---- narrow: tighten the rail ---- */
+
+@container pmqt4 (max-width: 559px) {
+  .pmq-t4 .pmq-msg::after { left: 45px; }
+
+  .pmq-t4 .pmq-msg-inner {
+    grid-template-columns: 46px minmax(0, 1fr);
+    column-gap: 10px;
+  }
+
+  .pmq-t4 .pmq-msg.pmq-user .pmq-msg-inner {
+    grid-template-columns: minmax(12px, 1fr) 46px fit-content(86%);
+  }
+
+  .pmq-t4-spine { padding-right: 8px; }
+  .pmq-t4-tick { margin-right: -8px; }
+  .pmq-t4-time { font-size: 10.5px; }
+  .pmq-t4 .pmq-daysep::before { width: 46px; }
+  .pmq-t4 .pmq-surfaces {
+    margin-left: 56px;
+    width: calc(100% - 56px);
+  }
+}
+
+/* ---- questionnaire stepper on the rail (questRenderer) ----
+   The zone mirrors the stream's horizontal padding so the quest rail lands
+   exactly on the session spine; the card box matches the message box. */
+
+.pmq-t4 .pmq-questzone:not(:empty) { padding: 12px 18px 0 14px; }
+
+.pmq-t4-quest {
+  position: relative;
+  z-index: 1;
+  display: grid;
+  grid-template-columns: 56px minmax(0, 1fr);
+  column-gap: 14px;
+  align-items: start;
+  width: 100%;
+  max-width: min(100%, 800px);
+  margin: 0 auto;
+}
+
+/* the rail continues through the quest zone, constant-neutral */
+.pmq-t4-quest::before {
+  content: "";
+  position: absolute;
+  left: 55px;
+  top: -12px;
+  bottom: 0;
+  width: 1px;
+  background: var(--border);
+  pointer-events: none;
+}
+
+.pmq-t4q-railcol { position: relative; grid-column: 1; grid-row: 1; min-height: 19px; }
+
+/* highlighted active node, centered on the 55px rail */
+.pmq-t4q-node {
+  position: absolute;
+  top: 0;
+  left: 46px;
+  width: 19px;
+  height: 19px;
+  border-radius: 50%;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  background: var(--surface-elevated);
+  box-shadow:
+    0 0 0 1.5px color-mix(in srgb, var(--accent-primary) 52%, transparent),
+    0 0 10px color-mix(in srgb, var(--accent-primary) 24%, transparent);
+  color: var(--accent-primary);
+}
+
+.pmq-t4q-node .pmq-ico { width: 11px; height: 11px; }
+
+.pmq-t4q-lane { grid-column: 2; grid-row: 1; min-width: 0; }
+
+.pmq-t4q-card {
+  position: relative;
+  border: 1px solid var(--border);
+  border-radius: var(--radius-lg);
+  background: var(--surface-elevated);
+  box-shadow: var(--elev-1);
+  overflow: hidden;
+}
+
+/* dotted leader carrying the eye from the rail node to the card */
+.pmq-t4q-card::before {
+  content: "";
+  position: absolute;
+  left: -14px;
+  top: 9px;
+  width: 14px;
+  height: 1px;
+  background: repeating-linear-gradient(to right, var(--border-strong) 0 3px, transparent 3px 7px);
+}
+
+.pmq-t4q-head {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding: 7px 9px 7px 12px;
+  border-bottom: 1px solid var(--border);
+}
+
+.pmq-t4q-title {
+  font-family: var(--display-font);
+  font-size: var(--fs-xs);
+  font-weight: 800;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: var(--text-secondary);
+}
+
+.pmq-t4q-num {
+  display: inline-grid;
+  margin-left: auto;
+  flex: none;
+  white-space: nowrap;
+  font-family: var(--mono-font);
+  font-size: var(--fs-2xs);
+  font-variant-numeric: tabular-nums;
+  color: var(--text-faint);
+}
+
+.pmq-t4q-num > * { grid-area: 1 / 1; white-space: nowrap; }
+
+.pmq-t4q-cancel { flex: none; }
+
+/* body: mini progress rail (3-5 tick dots) + the active question slide */
+
+.pmq-t4q-body { display: flex; gap: 11px; padding: 11px 13px; }
+
+.pmq-t4q-dots {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 7px;
+  width: 11px;
+  padding: 5px 0;
+  flex: none;
+}
+
+.pmq-t4q-dots::before {
+  content: "";
+  position: absolute;
+  left: 50%;
+  top: 8px;
+  bottom: 8px;
+  width: 1px;
+  margin-left: -0.5px;
+  background: var(--border);
+}
+
+.pmq-t4q-dot {
+  position: relative;
+  z-index: 1;
+  width: 5px;
+  height: 5px;
+  border-radius: 50%;
+  background: var(--surface-elevated);
+  box-shadow: inset 0 0 0 1px var(--border-strong);
+  transition: background-color var(--dur-fast) var(--ease-out), box-shadow var(--dur-fast) var(--ease-out);
+}
+
+.pmq-t4q-dot.pmq-answered { background: var(--text-secondary); box-shadow: none; }
+
+.pmq-t4q-dot.pmq-here {
+  background: var(--accent-primary);
+  box-shadow: 0 0 0 3px color-mix(in srgb, var(--accent-primary) 24%, transparent);
+}
+
+.pmq-t4q-slide { flex: 1; min-width: 0; }
+
+.pmq-t4q-prompt {
+  font-size: var(--fs-md);
+  font-weight: 700;
+  line-height: 1.45;
+  color: var(--text-primary);
+  margin-bottom: 9px;
+}
+
+.pmq-t4q-optional { font-size: var(--fs-xs); font-weight: 600; color: var(--text-faint); }
+
+.pmq-t4q-opts { display: flex; flex-direction: column; gap: 5px; }
+
+.pmq-t4q-opt {
+  display: flex;
+  align-items: center;
+  gap: 9px;
+  width: 100%;
+  min-height: 26px;
+  padding: 5px 9px;
+  border-radius: var(--radius-md);
+  border: 1px solid var(--border);
+  background: var(--surface);
+  font-size: var(--fs-sm);
+  font-weight: 600;
+  text-align: left;
+  color: var(--text-secondary);
+  transition: border-color var(--dur-fast) var(--ease-out), color var(--dur-fast) var(--ease-out), background-color var(--dur-fast) var(--ease-out);
+}
+
+.pmq-t4q-opt:hover { border-color: var(--border-strong); color: var(--text-primary); }
+
+.pmq-t4q-mark {
+  width: 14px;
+  height: 14px;
+  border-radius: 50%;
+  border: 1.5px solid var(--border-strong);
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  flex: none;
+  transition: background-color var(--dur-fast) var(--ease-out), border-color var(--dur-fast) var(--ease-out);
+}
+
+.pmq-t4q-mark .pmq-ico { width: 9px; height: 9px; color: transparent; }
+
+.pmq-t4q-opttext { min-width: 0; overflow-wrap: break-word; }
+
+.pmq-t4q-opt.pmq-on { border-color: color-mix(in srgb, var(--accent-primary) 55%, transparent); color: var(--text-primary); }
+.pmq-t4q-opt.pmq-on .pmq-t4q-mark { background: var(--accent-primary); border-color: var(--accent-primary); }
+.pmq-t4q-opt.pmq-on .pmq-t4q-mark .pmq-ico { color: var(--btn-on-accent, #fff); }
+
+.pmq-t4q-free {
+  width: 100%;
+  padding: 7px 10px;
+  border-radius: var(--radius-md);
+  border: 1px solid var(--border);
+  background: var(--surface);
+  color: var(--text-primary);
+  font-size: var(--fs-sm);
+  line-height: 1.5;
+  resize: vertical;
+  outline: none;
+}
+
+.pmq-t4q-free:focus { border-color: color-mix(in srgb, var(--accent-primary) 50%, transparent); }
+
+.pmq-t4q-foot {
+  display: flex;
+  align-items: center;
+  gap: 7px;
+  padding: 8px 11px;
+  border-top: 1px solid var(--border);
+}
+
+.pmq-t4q-foot .pmq-btn { min-height: 26px; min-width: 26px; }
+.pmq-t4q-foot .pmq-btn .pmq-ico { width: 12px; height: 12px; }
+.pmq-t4q-spacer { flex: 1; }
+
+/* ---- spine work nodes (workRender) ----
+   Collapsed rows are constant-neutral nodes on the rail with tiny lane
+   labels; expansion opens an inline panel in the content lane under the
+   node. Structure is never state-colored. */
+
+.pmq-t4 .pmq-stream > .pmq-t4-work { width: 100%; max-width: min(100%, 800px); }
+
+.pmq-t4-work { position: relative; margin-top: 18px; }
+
+/* the session spine continues through the work area */
+.pmq-t4-work::before {
+  content: "";
+  position: absolute;
+  left: 55px;
+  top: 0;
+  bottom: 0;
+  width: 1px;
+  background: var(--border);
+  pointer-events: none;
+}
+
+.pmq-t4w-dom { position: relative; }
+
+.pmq-t4w-row {
+  position: relative;
+  z-index: 1;
+  display: grid;
+  grid-template-columns: 56px minmax(0, 1fr);
+  column-gap: 14px;
+  align-items: center;
+  width: 100%;
+  min-height: 28px;
+  padding: 2px 0;
+  text-align: left;
+}
+
+.pmq-t4w-node {
+  grid-column: 1;
+  justify-self: end;
+  width: 7px;
+  height: 7px;
+  margin-right: -3px; /* centers the node on the 55px rail */
+  border-radius: 50%;
+  background: var(--surface);
+  box-shadow: inset 0 0 0 1px var(--border-strong);
+  transition: background-color var(--dur-fast) var(--ease-out), box-shadow var(--dur-fast) var(--ease-out);
+}
+
+.pmq-t4w-row:hover .pmq-t4w-node { box-shadow: inset 0 0 0 1px var(--text-faint); }
+.pmq-t4w-dom.pmq-open .pmq-t4w-node { background: var(--border-strong); }
+
+.pmq-t4w-lane {
+  grid-column: 2;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  min-width: 0;
+}
+
+/* dotted leader from the rail into the lane label */
+.pmq-t4w-lane::before {
+  content: "";
+  flex: none;
+  width: 12px;
+  height: 1px;
+  background: repeating-linear-gradient(to right, var(--border) 0 3px, transparent 3px 7px);
+}
+
+.pmq-t4w-label {
+  font-family: var(--display-font);
+  font-size: var(--fs-2xs);
+  font-weight: 800;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: var(--text-secondary);
+  transition: color var(--dur-fast) var(--ease-out);
+}
+
+.pmq-t4w-row:hover .pmq-t4w-label { color: var(--text-primary); }
+
+.pmq-t4w-val {
+  display: inline-grid;
+  font-family: var(--mono-font);
+  font-size: var(--fs-2xs);
+  font-variant-numeric: tabular-nums;
+  color: var(--text-faint);
+}
+
+.pmq-t4w-val > * { grid-area: 1 / 1; }
+
+.pmq-t4w-chev { width: 11px; height: 11px; flex: none; margin-left: auto; color: var(--text-faint); }
+
+.pmq-t4w-panel { margin-left: 70px; padding: 4px 0 8px; }
+
+/* a closed panel holds no height of its own; hiding it keeps the rail flush
+   (the born-open node on expand is still animated by the kit) */
+.pmq-t4w-panel .pmq-gw:not(.pmq-open) { display: none; }
+
+/* ---- narrow: keep quest + work on the tightened rail ---- */
+
+@container pmqt4 (max-width: 559px) {
+  .pmq-t4-quest {
+    grid-template-columns: 46px minmax(0, 1fr);
+    column-gap: 10px;
+  }
+
+  .pmq-t4-quest::before { left: 45px; }
+
+  .pmq-t4q-railcol { min-height: 17px; }
+
+  .pmq-t4q-node {
+    left: 37px;
+    width: 17px;
+    height: 17px;
+  }
+
+  .pmq-t4q-node .pmq-ico { width: 10px; height: 10px; }
+
+  .pmq-t4q-card::before { left: -10px; width: 10px; }
+
+  .pmq-t4-work::before { left: 45px; }
+
+  .pmq-t4w-row {
+    grid-template-columns: 46px minmax(0, 1fr);
+    column-gap: 10px;
+  }
+
+  .pmq-t4w-panel { margin-left: 56px; }
+}

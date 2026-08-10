@@ -1,0 +1,197 @@
+.pmq-w4 { display: flex; flex: 1; min-width: 0; min-height: 0; }
+
+.pmq-w4-root { display: flex; flex-direction: column; flex: 1; min-width: 0; min-height: 0; }
+
+.pmq-w4-top {
+  flex: none;
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: 10px;
+  padding: 9px 10px 0;
+  margin-bottom: 8px;
+}
+
+.pmq-w4-bottom {
+  flex: none;
+  height: 44px;
+  display: flex;
+  align-items: flex-end;
+  justify-content: space-between;
+  gap: 10px;
+  padding: 0 10px 8px;
+}
+
+.pmq-w4-plate {
+  display: flex;
+  align-items: center;
+  gap: 4px;
+  min-width: 0;
+  padding: 3px;
+  border: 1px solid var(--border);
+  border-radius: var(--radius-md);
+  background: var(--surface-elevated);
+  box-shadow: var(--elev-1);
+  transition: box-shadow var(--dur-fast) var(--ease-out), border-color var(--dur-fast) var(--ease-out);
+}
+
+.pmq-w4-plate:hover { border-color: var(--border-strong); box-shadow: var(--elev-2); }
+
+.pmq-w4-threadchip {
+  display: inline-flex;
+  align-items: center;
+  gap: 7px;
+  min-width: 0;
+  height: 30px;
+  padding: 0 7px 0 9px;
+  border-radius: calc(var(--radius-md) - 3px);
+  color: var(--text-primary);
+  transition: background-color var(--dur-fast) var(--ease-out);
+}
+
+.pmq-w4-threadchip:hover { background: var(--hover-fill-strong); }
+
+.pmq-w4-threadchip > .pmq-ico {
+  width: 15px;
+  height: 15px;
+  flex: none;
+  color: var(--text-faint);
+  transition: color var(--dur-fast) var(--ease-out);
+}
+
+.pmq-w4-threadchip:hover > .pmq-ico { color: var(--accent-primary); }
+
+.pmq-w4-threadchip > .pmq-ico:last-child {
+  width: 12px;
+  height: 12px;
+  transition: transform var(--dur-fast) var(--ease-out), color var(--dur-fast) var(--ease-out);
+}
+
+.pmq-w4-threadchip[aria-expanded="true"] > .pmq-ico:last-child { transform: rotate(180deg); color: var(--accent-primary); }
+
+.pmq-w4-threadchip-t {
+  flex: 0 1 auto;
+  min-width: 0;
+  max-width: 210px;
+  font-family: var(--display-font);
+  font-size: var(--fs-md);
+  font-weight: 700;
+  letter-spacing: 0.01em;
+  text-align: left;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.pmq-w4-plate-tl .pmq-concept-badge { margin: 0 2px 0 0; }
+
+.pmq-w4-plate-bl { flex: 1 1 auto; }
+
+.pmq-w4-plate-tl { flex: 1 1 auto; }
+
+.pmq-w4-plate-bl .pmq-selrow { flex: 1; min-width: 0; }
+
+.pmq-w4-plate-bl .pmq-sel { border-color: transparent; background: transparent; }
+
+.pmq-w4-plate-bl .pmq-sel:hover { border-color: transparent; background: var(--hover-fill-strong); }
+
+.pmq-w4-mid { display: flex; flex: 1; min-width: 0; min-height: 0; }
+
+.pmq-w4-pin {
+  flex: none;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 24px;
+  height: 24px;
+  border-radius: var(--radius-sm);
+  color: var(--text-faint);
+  transition: color var(--dur-fast) var(--ease-out), background-color var(--dur-fast) var(--ease-out);
+}
+
+.pmq-w4-pin:hover { color: var(--text-primary); background: var(--hover-fill); }
+.pmq-w4-pin:active { transform: scale(0.92); }
+.pmq-w4-pin .pmq-ico { width: 14px; height: 14px; transition: transform var(--dur-med) var(--ease-spring); }
+.pmq-w4-pin.pmq-on { color: var(--accent-primary); background: var(--accent-softer); }
+.pmq-w4-pin.pmq-on .pmq-ico { transform: rotate(45deg); }
+
+.pmq-w4-mid > .pmq-pincol { --pmq-pincol-w: 236px; transform-origin: 0 0; animation: pmq-w4-side-in var(--dur-med) var(--ease-out); }
+.pmq-w4-mid > .pmq-artws { transform-origin: 0 0; animation: pmq-w4-side-in var(--dur-med) var(--ease-out); }
+
+@keyframes pmq-w4-side-in {
+  from { opacity: 0; transform: scale(0.96) translateX(calc(-0.4 * var(--slide-x))); }
+  to { opacity: 1; transform: none; }
+}
+
+.pmq-w4-pinrow {
+  display: flex;
+  align-items: center;
+  gap: 7px;
+  width: 100%;
+  min-height: 26px;
+  padding: 5px 8px;
+  border: 1px solid var(--border);
+  border-radius: var(--radius-sm);
+  background: var(--surface-elevated);
+  box-shadow: var(--elev-1);
+  text-align: left;
+  transition: border-color var(--dur-fast) var(--ease-out), box-shadow var(--dur-fast) var(--ease-out),
+    background-color var(--dur-fast) var(--ease-out);
+}
+
+.pmq-w4-pinrow + .pmq-w4-pinrow { margin-top: 5px; }
+.pmq-w4-pinrow:hover { border-color: var(--border-strong); box-shadow: var(--elev-hover); }
+.pmq-w4-pinrow.pmq-active { background: var(--accent-softer); border-color: color-mix(in srgb, var(--accent-primary) 45%, transparent); }
+
+.pmq-w4-pinrow-t {
+  min-width: 0;
+  font-size: var(--fs-2xs);
+  font-weight: 600;
+  color: var(--text-primary);
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.pmq-w4-pinmicro {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 2px;
+  width: 30px;
+  min-height: 32px;
+  margin: 3px auto;
+  padding: 5px 0;
+  border: 1px solid var(--border);
+  border-radius: var(--radius-sm);
+  background: var(--surface-elevated);
+  transition: border-color var(--dur-fast) var(--ease-out), background-color var(--dur-fast) var(--ease-out);
+}
+
+.pmq-w4-pinmicro:hover { border-color: var(--border-strong); }
+.pmq-w4-pinmicro.pmq-active { background: var(--accent-softer); border-color: color-mix(in srgb, var(--accent-primary) 45%, transparent); }
+.pmq-w4-micro-i { font-size: 10px; font-weight: 800; color: var(--text-faint); }
+
+.pmq-w4 .pmq-thread-slot { flex: 1; min-height: 0; min-width: 0; }
+
+.pmq-w4 .pmq-thread-slot .pmq-troot { padding-top: 2px; }
+
+.pmq-w4 .pmq-scroller {
+  padding-top: 18px;
+  scroll-padding-top: 18px;
+  -webkit-mask-image: linear-gradient(to bottom, transparent 0, #000 18px);
+  mask-image: linear-gradient(to bottom, transparent 0, #000 18px);
+}
+
+@media (max-width: 640px) {
+  .pmq-w4 .pmq-concept-badge { display: none; }
+  .pmq-w4-top { gap: 6px; padding: 7px 8px 0; margin-bottom: 5px; }
+  .pmq-w4-bottom { height: 40px; gap: 6px; padding: 0 8px 6px; }
+  .pmq-w4-plate { padding: 2px; }
+  .pmq-w4-threadchip { height: 28px; }
+}
+
+@media (max-width: 620px) {
+  .pmq-w4-plate-bl .pmq-sel-k { display: none; }
+  .pmq-w4-threadchip-t { max-width: none; }
+}

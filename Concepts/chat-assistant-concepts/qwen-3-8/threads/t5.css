@@ -1,0 +1,549 @@
+/* T5 · condenser — same-role runs merge under a ledger rule with a counter
+   chip; everything sits on a dense rhythm and the surfaces collapse into a
+   compact chip strip. Static identity + hover only: no entrance animations. */
+
+.pmq-t5 .pmq-stream {
+  padding: 8px 12px 20px;
+  gap: 0;
+  max-width: 900px;
+  width: 100%;
+  margin: 0 auto;
+}
+
+.pmq-t5 .pmq-msggroup { margin: 0; }
+
+/* ---- group rule: hairline + role + dotted leader + counter chip ---- */
+
+.pmq-t5 .pmq-group-head {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  margin: 10px 0 2px;
+  padding: 4px 6px 4px 7px;
+  border-top: 1px solid var(--border);
+  font-family: var(--display-font);
+  font-size: var(--fs-2xs);
+  font-weight: 800;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+  color: var(--text-secondary);
+  transition: border-color var(--dur-fast) var(--ease-out), color var(--dur-fast) var(--ease-out);
+}
+
+.pmq-t5 .pmq-msggroup:first-child > .pmq-group-head { margin-top: 2px; }
+
+.pmq-t5 .pmq-msggroup:hover > .pmq-group-head {
+  border-top-color: var(--border-strong);
+  color: var(--text-primary);
+}
+
+.pmq-t5 .pmq-group-head::after {
+  content: "";
+  flex: 1;
+  height: 1px;
+  background: repeating-linear-gradient(to right, var(--border) 0 3px, transparent 3px 7px);
+  opacity: 0.85;
+}
+
+.pmq-t5 .pmq-group-n {
+  flex: none;
+  padding: 1px 8px;
+  border: 1px solid var(--border);
+  border-radius: var(--radius-pill);
+  background: var(--surface-sunken);
+  font-family: var(--mono-font);
+  font-size: 9.5px;
+  font-weight: 600;
+  letter-spacing: 0.02em;
+  text-transform: none;
+  font-variant-numeric: tabular-nums;
+  color: var(--text-faint);
+  transition: color var(--dur-fast) var(--ease-out), border-color var(--dur-fast) var(--ease-out);
+}
+
+.pmq-t5 .pmq-msggroup:hover > .pmq-group-head .pmq-group-n {
+  color: var(--text-secondary);
+  border-color: var(--border-strong);
+}
+
+.pmq-t5 .pmq-group-body { gap: 0; }
+
+/* ---- dense message rhythm ---- */
+
+.pmq-t5 .pmq-msg {
+  padding: 1px 0;
+  border-radius: var(--radius-sm);
+  transition: background-color var(--dur-fast) var(--ease-out);
+}
+
+.pmq-t5 .pmq-msg:hover { background: var(--hover-fill); }
+
+.pmq-t5 .pmq-msg.pmq-user { align-self: stretch; max-width: none; }
+.pmq-t5 .pmq-msg.pmq-user .pmq-msg-inner { align-items: stretch; }
+
+.pmq-t5 .pmq-msg.pmq-user .pmq-body {
+  padding: 3px 9px;
+  border-radius: var(--radius-sm);
+  border-color: color-mix(in srgb, var(--accent-primary) 14%, transparent);
+  font-size: var(--fs-sm);
+  line-height: 1.5;
+  max-width: 74ch;
+}
+
+.pmq-t5 .pmq-msg.pmq-assistant .pmq-body {
+  padding: 3px 8px;
+  font-size: var(--fs-sm);
+  line-height: 1.5;
+  max-width: 74ch;
+}
+
+.pmq-t5 .pmq-body p { margin: 0 0 0.28em; }
+.pmq-t5 .pmq-body p:last-child { margin-bottom: 0; }
+
+/* speaker tag inline at the head of each run */
+.pmq-t5-who {
+  font-family: var(--display-font);
+  font-size: 9.5px;
+  font-weight: 800;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: var(--text-secondary);
+}
+
+.pmq-t5 .pmq-user .pmq-t5-who { color: var(--accent-primary); }
+
+.pmq-t5-who::after {
+  content: "·";
+  margin: 0 6px 0 5px;
+  font-weight: 800;
+}
+
+.pmq-t5 .pmq-msg-hover {
+  margin-top: 2px;
+  min-height: 20px;
+  padding-left: 8px;
+}
+
+/* ---- condensed assistant line: uniform ledger rhythm with the user rows ---- */
+
+.pmq-t5 .pmq-t5-cond {
+  display: flex;
+  align-items: baseline;
+  gap: 7px;
+  width: 100%;
+  min-width: 0;
+  padding: 3px 8px;
+  border-radius: var(--radius-sm);
+  text-align: left;
+  transition: background-color var(--dur-fast) var(--ease-out);
+}
+
+.pmq-t5 .pmq-t5-cond:hover { background: var(--hover-fill); }
+
+.pmq-t5 .pmq-t5-cond .pmq-t5-who { flex: none; }
+
+.pmq-t5-snip {
+  flex: 1;
+  min-width: 0;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  font-size: var(--fs-sm);
+  color: var(--text-secondary);
+  transition: color var(--dur-fast) var(--ease-out);
+}
+
+/* CSS-only chevron at the row tail: down when expanded, right when collapsed */
+.pmq-t5 .pmq-t5-cond::after {
+  content: "";
+  flex: none;
+  align-self: center;
+  width: 6px;
+  height: 6px;
+  margin-left: 2px;
+  border-right: 1.5px solid var(--text-faint);
+  border-bottom: 1.5px solid var(--text-faint);
+  transform: rotate(-45deg);
+  transition: transform var(--dur-med) var(--ease-spring), border-color var(--dur-fast) var(--ease-out);
+}
+
+.pmq-t5 .pmq-t5-open .pmq-t5-cond::after {
+  transform: rotate(45deg);
+  border-color: var(--accent-primary);
+}
+
+.pmq-t5 .pmq-t5-open .pmq-t5-cond .pmq-t5-snip { color: var(--text-faint); }
+
+/* the grid-rows plate under the condensed line (wrapper built by t5.js) */
+.pmq-t5 .pmq-t5-plate { transition: grid-template-rows var(--dur-med) var(--ease-out); }
+
+.pmq-t5 .pmq-t5-plate > .pmq-gwi {
+  opacity: 1;
+  visibility: visible;
+  transition: opacity var(--dur-med) var(--ease-out) 60ms, visibility 0s linear 0s;
+}
+
+.pmq-t5 .pmq-t5-plate:not(.pmq-open) > .pmq-gwi {
+  opacity: 0;
+  visibility: hidden;
+  transition: opacity var(--dur-fast) var(--ease-out), visibility 0s linear var(--dur-fast);
+}
+
+.pmq-t5 .pmq-t5-condensed .pmq-msg-hover { padding-left: 8px; }
+
+/* ---- surfaces as a compact chip strip ---- */
+
+.pmq-t5 .pmq-surfaces {
+  flex-direction: row;
+  flex-wrap: wrap;
+  align-items: flex-start;
+  gap: 6px;
+  margin-top: 12px;
+  padding-top: 10px;
+  border-top: 1px solid var(--border);
+}
+
+.pmq-t5 .pmq-surfaces .pmq-surface {
+  flex: 0 1 auto;
+  min-width: 0;
+  max-width: 100%;
+  border-radius: var(--radius-pill);
+  transition:
+    border-color var(--dur-fast) var(--ease-out),
+    box-shadow var(--dur-fast) var(--ease-out),
+    border-radius var(--dur-med) var(--ease-out),
+    transform var(--dur-fast) var(--ease-spring);
+}
+
+.pmq-t5 .pmq-surfaces .pmq-surface:hover {
+  transform: translateY(-1px);
+  border-color: var(--border-strong);
+  box-shadow: var(--elev-hover);
+}
+
+.pmq-t5 .pmq-surfaces .pmq-surface:has(.pmq-gw.pmq-open) {
+  flex: 1 1 100%;
+  border-radius: var(--radius-md);
+}
+
+/* always-visible bodies (artifacts, browser) become half-width cards */
+.pmq-t5 .pmq-surfaces .pmq-surface:has(.pmq-surface-head-static) {
+  flex: 1 1 236px;
+  border-radius: var(--radius-md);
+}
+
+.pmq-t5 .pmq-surfaces .pmq-surface-head {
+  padding: 5px 12px;
+  gap: 7px;
+}
+
+.pmq-t5 .pmq-surfaces .pmq-surface-title { font-size: var(--fs-xs); }
+
+.pmq-t5 .pmq-surfaces .pmq-surface-head > .pmq-ico:first-child { width: 13px; height: 13px; }
+
+.pmq-t5 .pmq-surfaces .pmq-goal-status { padding: 1px 8px; }
+
+.pmq-t5 .pmq-gw { transition: grid-template-rows var(--dur-med) var(--ease-out); }
+
+.pmq-t5 .pmq-expand-ctl {
+  margin-top: 3px;
+  padding: 2px 9px;
+  font-size: var(--fs-2xs);
+}
+
+/* ---- quest: condensed capsule that expands in place ----
+   Collapsed = one capsule row [Q i/n counter chip · prompt 42ch]; it
+   auto-expands via a grid-rows plate into tight ledger option rows.
+   Motion stays minimal: 120-180ms opens, fades and chip crossfades. */
+
+.pmq-t5 .pmq-t5q {
+  position: relative;
+  z-index: 1;
+  width: 100%;
+  max-width: min(100%, 760px);
+  margin: 0 auto;
+}
+
+.pmq-t5q-cap {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  width: 100%;
+  min-width: 0;
+  min-height: 30px;
+  padding: 4px 12px;
+  border: 1px solid var(--border-strong);
+  border-radius: var(--radius-pill);
+  background: var(--surface-elevated);
+  box-shadow: var(--elev-1);
+  text-align: left;
+  transition:
+    border-color var(--dur-fast) var(--ease-out),
+    border-radius var(--dur-med) var(--ease-out),
+    box-shadow var(--dur-fast) var(--ease-out);
+}
+
+.pmq-t5q-cap:hover {
+  border-color: color-mix(in srgb, var(--accent-primary) 40%, var(--border-strong));
+  box-shadow: var(--elev-hover);
+}
+
+.pmq-t5 .pmq-t5q.pmq-open .pmq-t5q-cap {
+  border-radius: var(--radius-lg) var(--radius-lg) 0 0;
+  border-bottom-color: var(--border);
+}
+
+/* progress counter chip — the numeral crossfades as questions advance */
+.pmq-t5q-count {
+  flex: none;
+  padding: 1px 8px;
+  border: 1px solid var(--border);
+  border-radius: var(--radius-pill);
+  background: var(--surface-sunken);
+  font-family: var(--mono-font);
+  font-size: 9.5px;
+  font-weight: 600;
+  letter-spacing: 0.02em;
+  font-variant-numeric: tabular-nums;
+  color: var(--text-secondary);
+  white-space: nowrap;
+}
+
+.pmq-t5q-snip {
+  flex: 1;
+  min-width: 0;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  font-size: var(--fs-sm);
+  color: var(--text-secondary);
+}
+
+.pmq-t5q-snip::before {
+  content: "·";
+  margin-right: 8px;
+  font-weight: 800;
+  color: var(--text-faint);
+}
+
+/* CSS-only chevron at the capsule tail: down when expanded */
+.pmq-t5q-cap::after {
+  content: "";
+  flex: none;
+  align-self: center;
+  width: 6px;
+  height: 6px;
+  margin-left: 2px;
+  border-right: 1.5px solid var(--text-faint);
+  border-bottom: 1.5px solid var(--text-faint);
+  transform: rotate(-45deg);
+  transition: transform var(--dur-med) var(--ease-spring), border-color var(--dur-fast) var(--ease-out);
+}
+
+.pmq-t5 .pmq-t5q.pmq-open .pmq-t5q-cap::after {
+  transform: rotate(45deg);
+  border-color: var(--accent-primary);
+}
+
+.pmq-t5 .pmq-t5q-plate { transition: grid-template-rows var(--dur-fast) var(--ease-out); }
+
+.pmq-t5q-plate .pmq-t5q-body {
+  display: flex;
+  flex-direction: column;
+  gap: 7px;
+  padding: 8px 10px 9px;
+  border: 1px solid var(--border-strong);
+  border-top: none;
+  border-radius: 0 0 var(--radius-lg) var(--radius-lg);
+  background: var(--surface-elevated);
+  box-shadow: var(--elev-1);
+}
+
+.pmq-t5q-prompt {
+  font-size: var(--fs-sm);
+  font-weight: 700;
+  line-height: 1.4;
+  color: var(--text-primary);
+}
+
+.pmq-t5q-optional {
+  margin-left: 7px;
+  font-size: var(--fs-2xs);
+  font-weight: 600;
+  color: var(--text-faint);
+}
+
+/* option ledger: one-line rows on a tight 24px rhythm, hairline rules */
+.pmq-t5q-opts {
+  display: flex;
+  flex-direction: column;
+  border-top: 1px solid var(--border);
+}
+
+.pmq-t5q-opt {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  width: 100%;
+  min-height: 24px;
+  padding: 0 8px;
+  border-bottom: 1px solid var(--border);
+  font-size: var(--fs-xs);
+  font-weight: 600;
+  text-align: left;
+  color: var(--text-secondary);
+  transition: background-color var(--dur-fast) var(--ease-out), color var(--dur-fast) var(--ease-out);
+}
+
+.pmq-t5q-opt:hover { background: var(--hover-fill); color: var(--text-primary); }
+
+.pmq-t5q-opt .pmq-ico {
+  width: 11px;
+  height: 11px;
+  flex: none;
+  color: transparent;
+  transition: color var(--dur-fast) var(--ease-out);
+}
+
+/* selected ledger row = pale fill + check */
+.pmq-t5q-opt.pmq-on { background: var(--accent-softer); color: var(--accent-primary); }
+.pmq-t5q-opt.pmq-on .pmq-ico { color: var(--accent-primary); }
+
+.pmq-t5q-free {
+  width: 100%;
+  padding: 6px 9px;
+  border-radius: var(--radius-sm);
+  border: 1px solid var(--border);
+  background: var(--surface);
+  color: var(--text-primary);
+  font-size: var(--fs-xs);
+  line-height: 1.5;
+  resize: vertical;
+  outline: none;
+}
+
+.pmq-t5q-free:focus { border-color: color-mix(in srgb, var(--accent-primary) 50%, transparent); }
+
+.pmq-t5q-foot { display: flex; align-items: center; gap: 6px; }
+.pmq-t5q-spacer { flex: 1; }
+
+.pmq-t5q-btn {
+  min-height: 24px;
+  min-width: 24px;
+  padding: 0 9px;
+  font-size: var(--fs-2xs);
+}
+
+/* ---- work chip strip: live counts, one detail plate at a time ---- */
+
+.pmq-t5 .pmq-t5work {
+  width: 100%;
+  margin-top: 12px;
+  padding-top: 10px;
+  border-top: 1px solid var(--border);
+}
+
+.pmq-t5w-chips {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 6px;
+}
+
+.pmq-t5w-chip {
+  display: inline-flex;
+  align-items: center;
+  gap: 7px;
+  min-height: 26px;
+  padding: 4px 12px;
+  border: 1px solid var(--border);
+  border-radius: var(--radius-pill);
+  background: var(--surface);
+  font-size: var(--fs-xs);
+  color: var(--text-secondary);
+  white-space: nowrap;
+  transition:
+    border-color var(--dur-fast) var(--ease-out),
+    background-color var(--dur-fast) var(--ease-out),
+    box-shadow var(--dur-fast) var(--ease-out),
+    transform var(--dur-fast) var(--ease-spring);
+}
+
+.pmq-t5w-chip:hover {
+  transform: translateY(-1px);
+  border-color: var(--border-strong);
+  box-shadow: var(--elev-hover);
+}
+
+.pmq-t5w-chip.pmq-open {
+  border-color: color-mix(in srgb, var(--accent-primary) 45%, var(--border));
+  background: var(--accent-softer);
+}
+
+.pmq-t5w-label {
+  font-family: var(--display-font);
+  font-size: 9.5px;
+  font-weight: 800;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: var(--text-secondary);
+  transition: color var(--dur-fast) var(--ease-out);
+}
+
+.pmq-t5w-chip.pmq-open .pmq-t5w-label { color: var(--accent-primary); }
+
+.pmq-t5w-chip[data-domain="goal"] .pmq-t5w-label {
+  max-width: 190px;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.pmq-t5w-num {
+  font-family: var(--mono-font);
+  font-size: 10.5px;
+  font-weight: 600;
+  font-variant-numeric: tabular-nums;
+  color: var(--text-primary);
+}
+
+.pmq-t5w-diffnum { display: inline-flex; gap: 6px; }
+
+.pmq-t5w-sub {
+  font-family: var(--mono-font);
+  font-size: 9.5px;
+  color: var(--text-faint);
+}
+
+.pmq-t5w-glyph { display: inline-flex; align-items: center; color: var(--text-faint); }
+.pmq-t5w-glyph .pmq-glyph { width: 11px; height: 11px; }
+
+.pmq-t5w-chip[data-gst="running"] .pmq-t5w-glyph { color: var(--graph-running); }
+.pmq-t5w-chip[data-gst="paused"] .pmq-t5w-glyph { color: var(--accent-warning); }
+.pmq-t5w-chip[data-gst="blocked"] .pmq-t5w-glyph { color: var(--graph-failed); }
+.pmq-t5w-chip[data-gst="complete"] .pmq-t5w-glyph { color: var(--graph-passed); }
+
+/* the single open detail plate grows downward beneath the strip */
+.pmq-t5 .pmq-t5w-detail { transition: grid-template-rows var(--dur-med) var(--ease-out); }
+
+.pmq-t5 .pmq-t5w-detail > .pmq-gwi {
+  opacity: 1;
+  visibility: visible;
+  transition: opacity var(--dur-med) var(--ease-out) 60ms, visibility 0s linear 0s;
+}
+
+.pmq-t5 .pmq-t5w-detail:not(.pmq-open) > .pmq-gwi {
+  opacity: 0;
+  visibility: hidden;
+  transition: opacity var(--dur-fast) var(--ease-out), visibility 0s linear var(--dur-fast);
+}
+
+.pmq-t5w-card {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  margin-top: 6px;
+  padding: 8px;
+  border: 1px solid var(--border);
+  border-radius: var(--radius-md);
+  background: color-mix(in srgb, var(--surface-sunken) 58%, var(--surface));
+}
