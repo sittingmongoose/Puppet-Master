@@ -1,0 +1,314 @@
+/* w2 "Split Desk" — Opus 5
+ * History costs height, not width. The work rail appears only when width can spare it.
+ * All rules scoped under [data-pmx-window="w2"]; a test fails anything outside that scope.
+ */
+
+[data-pmx-window="w2"] .w2-shell {
+  container-type: inline-size;
+  container-name: pmx-chat;
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+  min-width: 0;
+  overflow: hidden;
+  background: var(--surface);
+  color: var(--text-primary);
+  border-left: 1px solid var(--border);
+}
+
+/* ---------------------------------------------------------------- history strip */
+
+[data-pmx-window="w2"] .w2-strip {
+  display: flex;
+  align-items: center;
+  gap: var(--sm);
+  padding: var(--sm) var(--md);
+  border-bottom: 1px solid var(--border);
+  flex: 0 0 auto;
+  min-width: 0;
+}
+
+[data-pmx-window="w2"] .w2-filter {
+  display: flex;
+  align-items: center;
+  gap: 5px;
+  padding: 3px var(--sm);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-pill);
+  background: var(--surface-elevated);
+  color: var(--text-muted);
+  flex: 0 0 auto;
+  max-width: 150px;
+}
+[data-pmx-window="w2"] .w2-filter-input {
+  width: 96px;
+  min-width: 0;
+  border: none;
+  background: transparent;
+  color: var(--text-primary);
+  font: inherit;
+  font-size: var(--fs-2xs);
+}
+[data-pmx-window="w2"] .w2-filter-input:focus { outline: none; }
+[data-pmx-window="w2"] .w2-filter-input::-webkit-search-cancel-button { display: none; }
+
+/* One row, scrolling sideways on purpose. This is the concept's whole premise, so the
+ * horizontal scroller here is intentional rather than an overflow defect. */
+[data-pmx-window="w2"] .w2-chips {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  flex: 1 1 auto;
+  min-width: 0;
+  overflow-x: auto;
+  overflow-y: hidden;
+  scroll-snap-type: x proximity;
+  padding-bottom: 2px;
+}
+[data-pmx-window="w2"] .w2-chips > * { scroll-snap-align: start; flex: 0 0 auto; }
+
+/* ---------------------------------------------------------------- header */
+
+[data-pmx-window="w2"] .w2-header {
+  display: flex;
+  align-items: center;
+  gap: var(--sm);
+  padding: var(--xs) var(--md);
+  border-bottom: 1px solid color-mix(in srgb, var(--border) 60%, transparent);
+  flex: 0 0 auto;
+  min-width: 0;
+}
+[data-pmx-window="w2"] .w2-brand {
+  display: flex;
+  align-items: baseline;
+  gap: 5px;
+  flex: 0 1 auto;
+  min-width: 0;
+}
+[data-pmx-window="w2"] .w2-brand-name {
+  font-size: var(--fs-2xs);
+  font-weight: 700;
+  letter-spacing: .05em;
+  text-transform: uppercase;
+  color: var(--text-muted);
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  min-width: 0;
+}
+[data-pmx-window="w2"] .w2-brand-sep { color: var(--text-muted); opacity: .5; }
+[data-pmx-window="w2"] .w2-brand-model {
+  font-size: var(--fs-2xs);
+  color: var(--text-muted);
+  letter-spacing: .05em;
+  white-space: nowrap;
+}
+[data-pmx-window="w2"] .w2-tools { margin-left: auto; min-width: 0; display: flex; justify-content: flex-end; }
+
+/* ---------------------------------------------------------------- body */
+
+[data-pmx-window="w2"] .w2-body {
+  display: flex;
+  flex: 1 1 auto;
+  min-height: 0;
+  min-width: 0;
+}
+
+[data-pmx-window="w2"] .w2-transcript {
+  flex: 1 1 auto;
+  min-width: 0;
+  min-height: 0;
+  overflow-y: auto;
+  overflow-x: hidden;
+}
+
+/* Below the threshold the rail becomes an inline sheet above the composer instead of
+ * stealing width from the transcript. Driven by a container query so the same concept
+ * behaves correctly at all eight sizes on one contact sheet. */
+[data-pmx-window="w2"] .w2-rail {
+  flex: 0 0 268px;
+  min-width: 0;
+  overflow-y: auto;
+  border-left: 1px solid var(--border);
+  background: var(--surface-elevated);
+}
+[data-pmx-window="w2"] .w2-rail-head {
+  padding: var(--sm) var(--md) var(--xs);
+  font-size: var(--fs-2xs);
+  font-weight: 700;
+  letter-spacing: .06em;
+  text-transform: uppercase;
+  color: var(--text-muted);
+}
+[data-pmx-window="w2"] .w2-surface-host { display: block; min-width: 0; }
+[data-pmx-window="w2"] .w2-rail:has(.w2-surface-host:empty) { display: none; }
+
+@container pmx-chat (max-width: 900px) {
+  [data-pmx-window="w2"] .w2-body { flex-direction: column; }
+  [data-pmx-window="w2"] .w2-rail {
+    flex: 0 0 auto;
+    order: 2;
+    max-height: 38%;
+    border-left: none;
+    border-top: 1px solid var(--border);
+  }
+  [data-pmx-window="w2"] .w2-transcript { order: 1; }
+}
+
+/* ---------------------------------------------------------------- question and composer */
+
+[data-pmx-window="w2"] .w2-question { flex: 0 0 auto; min-width: 0; }
+[data-pmx-window="w2"] .w2-question:empty { display: none; }
+[data-pmx-window="w2"] .w2-composer { flex: 0 0 auto; min-width: 0; }
+
+/* ---------------------------------------------------------------- overlay root */
+
+[data-pmx-window="w2"] .w2-overlay { position: static; }
+
+/* ---------------------------------------------------------------- narrow width */
+
+@container pmx-chat (max-width: 620px) {
+  [data-pmx-window="w2"] .w2-strip { padding: var(--xs) var(--sm); }
+  [data-pmx-window="w2"] .w2-filter-input { width: 68px; }
+  [data-pmx-window="w2"] .w2-brand-sep,
+  [data-pmx-window="w2"] .w2-brand-model { display: none; }
+  [data-pmx-window="w2"] .w2-header { padding: var(--xs) var(--sm); }
+  [data-pmx-window="w2"] .w2-rail { max-height: 34%; }
+}
+
+/* ---------------------------------------------------------------- pop-out */
+
+[data-pmx-window="w2"] .w2-shell[data-w2-mount="popout"] {
+  border-left: none;
+  border-radius: var(--radius-lg);
+  box-shadow: var(--elev-3);
+}
+
+/* ---------------------------------------------------------------- reduced motion */
+
+[data-motion="reduced"][data-pmx-window="w2"] .w2-chips { scroll-behavior: auto !important; }
+
+/* ---------------------------------------------------------------- signature motion
+ * Two halves of one desk. The chip strip and the work rail counter-weight each
+ * other: whichever one gains emphasis advances slightly while the other yields,
+ * so the split reads as a single balance rather than two independent panels.
+ */
+@keyframes pmx-w2-strip-in {
+  from { opacity: 0; transform: translateY(-8px); }
+  to   { opacity: 1; transform: none; }
+}
+/* The rail sits flush against the right edge, so it enters from the INSIDE
+ * (negative X) and settles outward. Entering from +12px would put it 12px past
+ * the container for the first frame, which measures as horizontal overflow and
+ * can flash a scrollbar before the animation resolves. */
+@keyframes pmx-w2-rail-in {
+  from { opacity: 0; transform: translateX(-12px); }
+  to   { opacity: 1; transform: none; }
+}
+
+[data-pmx-window="w2"] .w2-strip {
+  animation: pmx-w2-strip-in var(--motion-med) var(--ease-spring-real) both;
+  transition: transform var(--motion-med) var(--ease-default);
+}
+[data-pmx-window="w2"] .w2-rail {
+  animation: pmx-w2-rail-in var(--motion-med) var(--ease-spring-real) both;
+  transition: transform var(--motion-med) var(--ease-default);
+}
+/* The counter-weight itself: attention on one side nudges the other back. */
+[data-pmx-window="w2"] .w2-rail:hover ~ .w2-strip,
+[data-pmx-window="w2"] .w2-strip:hover { transform: translateY(-1px); }
+[data-pmx-window="w2"] .w2-rail:hover { transform: translateX(-2px); }
+
+[data-pmx-window="w2"] .w2-chip {
+  transition: transform var(--motion-fast) var(--ease-default);
+}
+[data-pmx-window="w2"] .w2-chip:active { transform: scale(.96); }
+
+[data-motion="reduced"][data-pmx-window="w2"] .w2-strip,
+[data-motion="reduced"][data-pmx-window="w2"] .w2-rail {
+  animation: none !important; opacity: 1 !important; transform: none !important;
+}
+@media (prefers-reduced-motion: reduce) {
+  [data-pmx-window="w2"] .w2-strip,
+  [data-pmx-window="w2"] .w2-rail {
+    animation: none !important; opacity: 1 !important; transform: none !important;
+  }
+}
+
+/* ---------------------------------------------------------------- pinned column
+ * This concept already keeps history permanently visible, so pinning does not
+ * reveal anything new — it changes WHICH dimension history costs. The strip trades
+ * height for a scrolling row of chips; pinned, it trades width for a column where
+ * every row can show its status, time and marks at once. That is the difference
+ * between glancing at threads and monitoring them.
+ */
+[data-pmx-window="w2"] .w2-shell[data-w2-pinned="1"] {
+  display: grid;
+  grid-template-columns: clamp(200px, 23%, 272px) minmax(0, 1fr);
+  grid-template-rows: auto minmax(0, 1fr) auto auto;
+  grid-template-areas:
+    "strip header"
+    "strip body"
+    "strip question"
+    "strip composer";
+  column-gap: 0;
+}
+[data-pmx-window="w2"] .w2-shell[data-w2-pinned="1"] .w2-strip {
+  grid-area: strip;
+  flex-direction: column;
+  align-items: stretch;
+  min-height: 0;
+  border-right: 1px solid var(--border);
+  border-bottom: none;
+  overflow: hidden;
+}
+[data-pmx-window="w2"] .w2-shell[data-w2-pinned="1"] .w2-header { grid-area: header; }
+[data-pmx-window="w2"] .w2-shell[data-w2-pinned="1"] .w2-body { grid-area: body; }
+[data-pmx-window="w2"] .w2-shell[data-w2-pinned="1"] .w2-question { grid-area: question; }
+[data-pmx-window="w2"] .w2-shell[data-w2-pinned="1"] .w2-composer { grid-area: composer; }
+
+/* The chips stop being chips: back to a vertical list, scrolling down instead of
+   across, with the metadata the chip form had to hide. */
+[data-pmx-window="w2"] .w2-shell[data-w2-pinned="1"] .w2-chips {
+  flex: 1 1 auto;
+  min-height: 0;
+  overflow-y: auto;
+  overflow-x: hidden;
+}
+/* The history surface is `flex: 0 0 auto` by default, which suits it as one chip among
+ * several in the unpinned strip. Pinned, it IS the column and must take the width it is
+ * given: flex-shrink 0 meant it kept its content width of 273px inside a 245px content box,
+ * so .w2-strip's `overflow: hidden` sliced 9px off the right of all 18 rows. */
+[data-pmx-window="w2"] .w2-shell[data-w2-pinned="1"] .w2-chips .pmx-chrome-history {
+  flex: 1 1 auto;
+  min-width: 0;
+}
+[data-pmx-window="w2"] .w2-shell[data-w2-pinned="1"] .w2-chips .pmx-chrome-hlist {
+  flex-direction: column;
+  gap: 1px;
+  overflow: visible;
+  /* `min-width: auto` is the default for a flex item, and it refuses to shrink below the
+   * min-content width of the widest row. The chips column is the scroller here and reserves
+   * a 10px stable gutter, so its content box is 28px narrower than the rows wanted to be —
+   * the list overflowed the column and .w2-strip's `overflow: hidden` sliced 9px off the
+   * right of every row. Letting it shrink puts the rows back inside the column, where the
+   * per-row ellipsis can do its job. */
+  min-width: 0;
+}
+[data-pmx-window="w2"] .w2-shell[data-w2-pinned="1"] .w2-chips .pmx-chrome-hrow {
+  width: 100%;
+  max-width: none;
+  border: none;
+  border-radius: var(--radius-sm);
+}
+[data-pmx-window="w2"] .w2-shell[data-w2-pinned="1"] .w2-chips .pmx-chrome-hrow-main {
+  align-items: flex-start;
+  padding: var(--sm) var(--md);
+  gap: var(--md);
+}
+[data-pmx-window="w2"] .w2-shell[data-w2-pinned="1"] .w2-chips .pmx-chrome-hmarks,
+[data-pmx-window="w2"] .w2-shell[data-w2-pinned="1"] .w2-chips .pmx-chrome-htime { display: flex; }
+[data-pmx-window="w2"] .w2-shell[data-w2-pinned="1"] .w2-chips .pmx-chrome-htime { display: inline; }
+[data-pmx-window="w2"] .w2-shell[data-w2-pinned="1"] .w2-chips .pmx-chrome-hmore {
+  width: 26px; height: 26px; margin: var(--sm) var(--sm) 0 0; align-self: flex-start;
+}

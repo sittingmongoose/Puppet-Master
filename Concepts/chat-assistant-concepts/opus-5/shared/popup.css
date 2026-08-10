@@ -1,0 +1,203 @@
+/* PMX popup chrome and sprout motion — Opus 5
+ * The transition values below are the locked Puppet Master popup contract, ported verbatim
+ * in behavior from the Model/Mode selector family. Do not retune them per concept.
+ *
+ * MOTION UPGRADE: the OPENING legs now settle on var(--ease-spring-real), a curve sampled
+ * from a real damped oscillator per theme family, so a menu arrives and settles rather than
+ * easing flat to a stop — retro barely overshoots, friendly bounces twice.
+ *
+ * The CLOSING legs are deliberately left on their original ease-in curves. A spring on the
+ * way out would overshoot INTO the trigger the menu is collapsing toward, which reads as the
+ * panel bouncing off the button instead of retreating into it. Springs belong on arrivals.
+ */
+
+.pmx-overlay-root {
+  position: fixed;
+  inset: 0;
+  pointer-events: none;
+  z-index: 1200;
+}
+.pmx-overlay-root > .pmx-popup { pointer-events: auto; }
+
+.pmx-popup {
+  --pmx-sprout-ox: 12%;
+  --pmx-sprout-oy: 0%;
+  --pmx-sprout-tx: 0px;
+  --pmx-sprout-ty: -10px;
+  --pmx-sprout-sx: 0.72;
+  --pmx-sprout-sy: 0.48;
+
+  position: fixed;
+  /* The z-index belongs HERE, not only on the overlay root, because `z-index` applies
+   * only to positioned elements and w2..w8 each override their overlay root to
+   * `position: static` — which silently makes the root's `z-index: 1200` inert. The
+   * popup itself is always fixed, so this value always takes effect.
+   *
+   * Without it, a popup in those seven windows painted at `z-index: auto` while
+   * `.pmx-stage::after` covers the whole stage at z-index 80 (glass sheen) and 90 (retro
+   * grid). The menu stayed clickable, since that layer is `pointer-events: none`, but the
+   * sheen and the grid were drawn straight over the top of it. */
+  z-index: 1200;
+  min-width: 160px;
+  max-width: min(360px, calc(100vw - 16px));
+  max-height: min(420px, 70vh);
+  overflow: hidden;
+  display: flex;
+  flex-direction: column;
+
+  /* A menu must be OPAQUE. In the glass themes `--surface-elevated` is deliberately
+   * translucent, and a translucent menu lets the transcript read straight through it —
+   * the surface is in front in z-order while being useless to read. Painting the themed
+   * surface as an image over an opaque base colour keeps the theme's tint and guarantees
+   * whatever sits behind is actually hidden. */
+  background-color: var(--background);
+  background-image: linear-gradient(var(--surface-elevated), var(--surface-elevated));
+  color: var(--text-primary);
+  border: var(--border-width, 1px) solid var(--border);
+  border-radius: var(--radius-md);
+  box-shadow: var(--elev-2);
+
+  transform-origin: var(--pmx-sprout-ox) var(--pmx-sprout-oy);
+  opacity: 0;
+  visibility: hidden;
+  pointer-events: none;
+  transform: translate3d(var(--pmx-sprout-tx), var(--pmx-sprout-ty), 0)
+             scale3d(var(--pmx-sprout-sx), var(--pmx-sprout-sy), 1);
+  transition:
+    opacity 160ms var(--ease-out),
+    transform 300ms var(--ease-spring-real),
+    visibility 0s linear 300ms,
+    height 340ms var(--ease-spring-real);
+}
+
+.pmx-popup.is-open {
+  opacity: 1;
+  visibility: visible;
+  pointer-events: auto;
+  transform: translate3d(0, 0, 0) scale3d(1, 1, 1);
+  transition:
+    opacity 140ms var(--ease-out),
+    transform 300ms var(--ease-spring-real),
+    visibility 0s,
+    height 340ms var(--ease-spring-real);
+}
+
+/* The opacity leg is DELAYED on close so content stays crisp while the surface shrinks. */
+.pmx-popup.is-closing {
+  opacity: 0;
+  visibility: hidden;
+  pointer-events: none;
+  transform: translate3d(var(--pmx-sprout-tx), var(--pmx-sprout-ty), 0)
+             scale3d(var(--pmx-sprout-sx), var(--pmx-sprout-sy), 1);
+  transition:
+    opacity 45ms ease-in 175ms,
+    transform 220ms cubic-bezier(0.45, 0.05, 0.55, 0.2),
+    visibility 0s linear 220ms,
+    height 200ms cubic-bezier(0.45, 0.05, 0.55, 0.2);
+}
+
+.pmx-popup-side {
+  --pmx-sprout-sx: 0.48;
+  --pmx-sprout-sy: 0.72;
+}
+
+/* A side flyout re-anchors and re-fills as the pointer crosses rows, so its
+ * height changes far more often than a vertical menu's — and by larger steps,
+ * when one row offers three options and the next offers four. It gets a
+ * stronger spring so that resize reads as one deliberate stretch rather than
+ * as the box being rebuilt underneath the pointer. */
+.pmx-popup-side.is-open {
+  transition:
+    opacity 140ms var(--ease-out),
+    transform 300ms var(--ease-spring-real),
+    visibility 0s,
+    height 360ms var(--ease-spring-real);
+}
+
+/* Spring overshoot when the option count or submenu content changes size. */
+.pmx-popup.is-size-bounce { animation: pmx-popup-size-bounce 380ms var(--ease-spring-real); }
+@keyframes pmx-popup-size-bounce {
+  0%   { transform: translate3d(0,0,0) scale3d(1, 1, 1); }
+  40%  { transform: translate3d(0,0,0) scale3d(1.012, 1.055, 1); }
+  100% { transform: translate3d(0,0,0) scale3d(1, 1, 1); }
+}
+
+.pmx-popup-side.is-size-bounce { animation: pmx-popup-side-size-bounce 420ms var(--ease-spring-real); }
+@keyframes pmx-popup-side-size-bounce {
+  0%   { transform: translate3d(0,0,0) scale3d(1, 1, 1); }
+  35%  { transform: translate3d(0,0,0) scale3d(1.018, 1.085, 1); }
+  70%  { transform: translate3d(0,0,0) scale3d(0.995, 0.975, 1); }
+  100% { transform: translate3d(0,0,0) scale3d(1, 1, 1); }
+}
+
+/* Reduced motion: reach the final state with no partial transform and no lingering ghost.
+ * visibility must be forced too, otherwise the delayed visibility leg keeps a closed popup
+ * hit-testable for a frame. */
+[data-motion="reduced"] .pmx-popup,
+[data-motion="reduced"] .pmx-popup.is-open {
+  transition: none !important;
+  animation: none !important;
+  transform: none !important;
+}
+[data-motion="reduced"] .pmx-popup.is-open {
+  opacity: 1 !important;
+  visibility: visible !important;
+  pointer-events: auto !important;
+}
+[data-motion="reduced"] .pmx-popup.is-closing {
+  opacity: 0 !important;
+  visibility: hidden !important;
+  pointer-events: none !important;
+}
+
+/* ---------------------------------------------------------------- popup contents */
+
+.pmx-popup-scroll { overflow-y: auto; min-height: 0; }
+
+.pmx-popup-search {
+  margin: var(--sm);
+  padding: 5px var(--sm);
+  font: inherit;
+  font-size: var(--fs-xs);
+  color: var(--text-primary);
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-sm);
+  flex: 0 0 auto;
+}
+.pmx-popup-search:focus {
+  outline: none;
+  border-color: var(--accent-primary);
+}
+
+.pmx-popup-group {
+  padding: var(--xs) var(--md);
+  font-size: var(--fs-2xs);
+  font-weight: 600;
+  letter-spacing: .04em;
+  text-transform: uppercase;
+  color: var(--text-muted);
+}
+
+.pmx-popup-item {
+  display: flex;
+  align-items: center;
+  gap: var(--sm);
+  width: 100%;
+  padding: 6px var(--md);
+  border: none;
+  background: transparent;
+  color: var(--text-primary);
+  font: inherit;
+  font-size: var(--fs-xs);
+  text-align: left;
+  cursor: pointer;
+}
+.pmx-popup-item:hover,
+.pmx-popup-item:focus-visible { background: var(--surface); outline: none; }
+
+/* Selection is a background fill plus a check glyph — never a left accent border. */
+.pmx-popup-item[aria-checked="true"] { background: color-mix(in srgb, var(--accent-primary) 14%, transparent); font-weight: 600; }
+.pmx-popup-item-label { flex: 1 1 auto; min-width: 0; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+.pmx-popup-item-hint { flex: 0 0 auto; font-size: var(--fs-2xs); color: var(--text-muted); }
+.pmx-popup-sep { height: 1px; margin: var(--xs) 0; background: var(--border); }

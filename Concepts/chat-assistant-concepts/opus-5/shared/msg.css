@@ -1,0 +1,220 @@
+/* PMX shared message chrome — Opus 5
+ * Hover row, More Info panel, composer. These are shared so behavior and weight read
+ * identically across all sixteen concepts; concepts restyle placement, not semantics.
+ * Every rule here is intentionally low-opinion: thread concepts own the visual voice.
+ */
+
+/* ---------------------------------------------------------------- hover row */
+
+/* The hover row is a SIBLING of the body, never nested inside the bubble. */
+.pmx-msg-hover-row {
+  display: flex;
+  align-items: center;
+  gap: var(--sm);
+  min-height: 22px;
+  margin-top: var(--xs);
+  opacity: 0;
+  transition: opacity 150ms var(--ease-out);
+}
+
+/* Copy may remain hover-only. This supersedes the older rule that it could not. */
+.pmx-msg:hover > .pmx-msg-hover-row,
+.pmx-msg:focus-within > .pmx-msg-hover-row,
+.pmx-msg-hover-row:focus-within,
+.pmx-msg[data-pmx-pinrow="1"] > .pmx-msg-hover-row { opacity: 1; }
+
+.pmx-msg-actions { display: flex; align-items: center; gap: 2px; }
+
+.pmx-msg-btn {
+  display: inline-flex; align-items: center; justify-content: center;
+  width: 22px; height: 22px; padding: 0;
+  border: none; background: transparent; color: var(--text-muted);
+  border-radius: var(--radius-sm); cursor: pointer;
+  transition: background 120ms var(--ease-out), color 120ms var(--ease-out), transform var(--motion-med) var(--ease-spring-real);
+}
+.pmx-msg-btn:hover { background: var(--surface-elevated); color: var(--text-primary); }
+.pmx-msg-btn:focus-visible { outline: 2px solid var(--accent-primary); outline-offset: 1px; }
+
+.pmx-msg-runtime {
+  display: flex; align-items: center; gap: 4px;
+  min-width: 0; flex: 1 1 auto; justify-content: flex-end;
+  font-size: var(--fs-2xs); color: var(--text-muted);
+}
+.pmx-msg-meta { white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+.pmx-msg-sep { opacity: .5; }
+.pmx-msg-info { flex: 0 0 auto; }
+
+/* At the narrow end the provider name is the first thing to go: model and duration
+ * carry more information per character. Nothing is ever clipped mid-glyph. */
+@container pmx-chat (max-width: 620px) {
+  .pmx-msg-provider { display: none; }
+  .pmx-msg-provider + .pmx-msg-sep { display: none; }
+}
+
+/* ---------------------------------------------------------------- More Info */
+
+.pmx-info-title {
+  font-size: var(--fs-2xs); font-weight: 600; letter-spacing: .04em;
+  text-transform: uppercase; color: var(--text-muted);
+  padding: var(--sm) var(--md) var(--xs);
+}
+.pmx-info { display: flex; flex-direction: column; padding: 0 var(--md) var(--sm); }
+.pmx-info-row {
+  display: flex; align-items: baseline; justify-content: space-between;
+  gap: var(--md); padding: 3px 0; font-size: var(--fs-xs);
+  border-bottom: 1px solid color-mix(in srgb, var(--border) 45%, transparent);
+}
+.pmx-info-row:last-child { border-bottom: none; }
+.pmx-info-label { color: var(--text-muted); flex: 0 0 auto; }
+.pmx-info-value {
+  color: var(--text-primary); text-align: right;
+  font-variant-numeric: tabular-nums;
+  overflow-wrap: anywhere; min-width: 0;
+}
+.pmx-info-note {
+  margin: var(--sm) var(--md) var(--md);
+  font-size: var(--fs-2xs); line-height: 1.45; color: var(--text-muted);
+}
+
+/* ---------------------------------------------------------------- composer */
+
+.pmx-composer {
+  display: flex; flex-direction: column; gap: var(--sm);
+  padding: var(--md);
+  border-top: 1px solid var(--border);
+  background: var(--surface);
+}
+
+/* One surface. The box owns the border, the radius and the focus ring; the
+ * textarea and the buttons inside it are transparent. Focusing the field must
+ * ring the WHOLE composer — a field with its own border inside a bordered row
+ * reads as two controls, which is exactly the thing this replaces. */
+.pmx-composer-box {
+  display: flex;
+  flex-direction: column;
+  background: var(--surface-elevated);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-md);
+  transition: border-color 140ms var(--ease-out), box-shadow 140ms var(--ease-out);
+}
+.pmx-composer-box:focus-within {
+  border-color: var(--accent-primary);
+  box-shadow: 0 0 0 3px color-mix(in srgb, var(--accent-primary) 18%, transparent);
+}
+
+.pmx-composer-chips { display: flex; flex-wrap: wrap; gap: var(--sm); padding: var(--sm) var(--sm) 0; }
+.pmx-composer-chip {
+  display: inline-flex; align-items: center; gap: 4px;
+  padding: 2px var(--sm) 2px 6px;
+  font-size: var(--fs-2xs); color: var(--text-secondary);
+  background: var(--surface-elevated);
+  border: 1px solid var(--border-light);
+  border-radius: var(--radius-pill);
+  max-width: 100%; min-width: 0;
+}
+.pmx-composer-chip > span { overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+.pmx-composer-chip-x {
+  display: inline-flex; border: none; background: transparent;
+  color: var(--text-muted); cursor: pointer; padding: 0; flex: 0 0 auto;
+}
+
+.pmx-composer-field {
+  width: 100%; resize: none; min-height: 38px; max-height: 160px;
+  padding: var(--sm) var(--md);
+  font: inherit; font-size: var(--fs-sm); line-height: 1.5;
+  color: var(--text-primary);
+  background: transparent;
+  border: none;
+}
+.pmx-composer-field:focus { outline: none; }
+/* Platform spellcheck stays enabled; only the surrounding treatment is ours. */
+.pmx-composer-field::placeholder { color: var(--text-muted); }
+
+/* Inside the box, not beneath it. No divider rule: a border here would split
+ * the one surface back into two. */
+.pmx-composer-foot {
+  display: flex; align-items: center; gap: var(--sm);
+  padding: 0 var(--sm) var(--sm);
+}
+.pmx-composer-spacer { flex: 1 1 auto; }
+
+.pmx-composer-icon {
+  display: inline-flex; align-items: center; justify-content: center;
+  width: 28px; height: 28px; padding: 0;
+  border: 1px solid transparent; background: transparent;
+  color: var(--text-muted); border-radius: var(--radius-sm); cursor: pointer;
+  transition: background 120ms var(--ease-out), color 120ms var(--ease-out), transform var(--motion-med) var(--ease-spring-real);
+}
+.pmx-composer-icon:hover:not(:disabled) { background: var(--surface-elevated); color: var(--text-primary); }
+.pmx-composer-icon:active:not(:disabled) { transform: scale(.9); }
+.pmx-composer-icon:disabled { opacity: .4; cursor: default; }
+
+/* One button, two states. The colour shift is what makes Stop unmistakable. */
+.pmx-composer-send {
+  display: inline-flex; align-items: center; justify-content: center;
+  width: 32px; height: 32px; padding: 0;
+  border: none; border-radius: var(--radius-md); cursor: pointer;
+  background: var(--accent-primary); color: var(--background);
+  transition: background 160ms var(--ease-out), transform var(--motion-med) var(--ease-spring-real);
+}
+/* Anticipation then release. The hover lift is the wind-up; the press drives past
+ * rest and the spring carries it back, so the button feels driven rather than
+ * merely recoloured. Both legs settle on the theme's own spring. */
+.pmx-composer-send:hover:not(:disabled) { transform: translateY(-1px); }
+.pmx-composer-send:active:not(:disabled) { transform: scale(.93) translateY(0); }
+.pmx-composer-send:disabled { opacity: .4; cursor: default; transform: none; }
+.pmx-composer-send[data-pmx-state="stop"] { background: var(--accent-magenta); }
+.pmx-composer-send[data-pmx-state="stop"] svg { animation: pmx-stop-pulse 1.2s ease-in-out infinite; }
+
+@keyframes pmx-stop-pulse {
+  0%, 100% { opacity: 1; transform: scale(1); }
+  50%      { opacity: .55; transform: scale(.86); }
+}
+
+/* The ordinary composer is unavailable while a questionnaire holds the floor. */
+.pmx-composer-locked { display: none; }
+.pmx-composer[data-pmx-locked="1"] .pmx-composer-box { display: none; }
+.pmx-composer[data-pmx-locked="1"] .pmx-composer-locked {
+  display: block; padding: var(--sm) 0;
+  font-size: var(--fs-xs); color: var(--text-muted);
+}
+
+/* ---------------------------------------------------------------- popup bits */
+
+.pmx-pop-title {
+  font-size: var(--fs-2xs); font-weight: 600; letter-spacing: .04em;
+  text-transform: uppercase; color: var(--text-muted);
+  padding: var(--sm) var(--md) var(--xs);
+}
+.pmx-pop-empty { padding: var(--sm) var(--md) var(--md); font-size: var(--fs-xs); color: var(--text-muted); }
+.pmx-pop-list { display: flex; flex-direction: column; max-height: 260px; overflow-y: auto; }
+.pmx-pop-item {
+  display: flex; flex-direction: column; gap: 2px; align-items: flex-start;
+  padding: var(--sm) var(--md); border: none; background: transparent;
+  text-align: left; cursor: pointer; width: 100%;
+}
+.pmx-pop-item:hover { background: var(--surface-elevated); }
+.pmx-pop-item-time { font-size: var(--fs-2xs); color: var(--text-muted); font-variant-numeric: tabular-nums; }
+.pmx-pop-item-text { font-size: var(--fs-xs); color: var(--text-primary); }
+.pmx-pop-action {
+  display: block; width: 100%; text-align: left;
+  padding: var(--sm) var(--md); border: none; border-top: 1px solid var(--border);
+  background: transparent; color: var(--text-secondary);
+  font-size: var(--fs-xs); cursor: pointer;
+}
+.pmx-pop-action:hover { background: var(--surface-elevated); color: var(--text-primary); }
+
+/* Temporary highlight for an exact-message jump. Under reduced motion the highlight is
+ * held statically and removed by JS rather than fading, so no partial transition remains. */
+.pmx-jump-hit {
+  animation: pmx-jump-flash 1600ms var(--ease-out) forwards;
+  border-radius: var(--radius-sm);
+}
+@keyframes pmx-jump-flash {
+  0%   { background: color-mix(in srgb, var(--accent-primary) 30%, transparent); }
+  100% { background: transparent; }
+}
+[data-motion="reduced"] .pmx-jump-hit {
+  animation: none;
+  background: color-mix(in srgb, var(--accent-primary) 22%, transparent);
+}
