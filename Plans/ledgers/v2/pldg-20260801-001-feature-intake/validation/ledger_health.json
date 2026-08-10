@@ -1,0 +1,168 @@
+{
+  "schema_id": "pm.bootstrap_ledger_health.v1",
+  "ledger_id": "pldg-20260801-001-feature-intake",
+  "updated_at_utc": "2026-08-05T19:28:29Z",
+  "last_event_id": "evt-0026",
+  "status": "pass",
+  "summary": {
+    "events": 26,
+    "design_atoms": 63,
+    "decisions": 51,
+    "questions": 46,
+    "corrections": 13,
+    "blockers": 0,
+    "candidate_atoms": 2,
+    "ready_for_plan_compile_atoms": 0,
+    "compiled_to_plan_atoms": 0,
+    "not_for_plan_atoms": 0,
+    "rejected_atoms": 0,
+    "superseded_atoms": 1,
+    "open_questions": 2,
+    "deferred_questions": 1,
+    "in_progress_questions": 0,
+    "open_blockers": 0,
+    "compile_queue_items": 0,
+    "compiled_plan_units": 0,
+    "governance_status": "not_started",
+    "node_readiness_status": "not_started"
+  },
+  "validator": {
+    "tool": "scripts/pm-bootstrap-ledger-validate.py",
+    "last_result": "pass",
+    "last_errors": [],
+    "last_warnings": [],
+    "last_validated_at_utc": "2026-08-05T19:28:29Z",
+    "summary": {
+      "atoms": 63,
+      "compile_queue_items": 0,
+      "corrections": 13,
+      "decisions": 51,
+      "events": 26,
+      "plan_units_checked": 0,
+      "questions": 46
+    }
+  },
+  "notes": "Bootstrap ledger validator passed with zero errors and zero warnings after August 5 noncanonical packet reconciliation. Sixty atoms are accepted, two are candidates, and one is superseded. q-0045/q-0046 are open; q-0022 remains deferred. Exact 8-low/2-high routes remain unfrozen; all auth/config/provider/route/model call counts remain zero; existing materials remain preregistration drafts; V4 remains invalidated; and no empirical or production-enforcement claim exists.",
+  "checks": [
+    {
+      "check_id": "ledger-init-0001",
+      "status": "pass",
+      "summary": "Initial v2 scaffold, registry entry, compact-state projections, record counts, cursor, and forbidden-surface boundaries validated successfully."
+    },
+    {
+      "check_id": "ledger-turn-0002",
+      "status": "pass",
+      "summary": "Feature identity, exact user language, five gui_related-classified design atoms, four question records, open-item projections, and compile boundaries validated successfully."
+    },
+    {
+      "check_id": "ledger-turn-0003",
+      "status": "pass",
+      "summary": "Universal coverage, quality-agnostic packet policy, hierarchical reduction, exact corrections, eight gui_related-classified atoms, decision records, questions, and owner-doc contradiction projection validated successfully."
+    },
+    {
+      "check_id": "ledger-turn-0004",
+      "status": "pass",
+      "summary": "Relative model quality, harder-versus-simpler bounded routing, evidence certification, exact clarification, eleven gui_related-classified atoms, resolved contradiction, and compact projections validated successfully."
+    },
+    {
+      "check_id": "ledger-turn-0005",
+      "status": "pass",
+      "summary": "User-authoritative rank, default-off opt-in fallback, exact correction, backend and GUI atom split, twelve gui_related-classified atoms, and compact projections validated successfully."
+    },
+    {
+      "check_id": "ledger-turn-0006",
+      "status": "pass",
+      "summary": "Global and one-run fallback controls, fifteen gui_related-classified atoms, machine-envelope, universal-ceiling, and lossless-splitting questions, compact projections, and compile boundaries validated successfully."
+    },
+    {
+      "check_id": "ledger-turn-0007",
+      "status": "pass",
+      "summary": "Budget-free Agent Input Envelope, one fixed low-end profile, exact user corrections, sixteen gui_related-classified atoms, minimal split-trigger questions, compact projections, and compile boundaries validated successfully."
+    },
+    {
+      "check_id": "ledger-turn-0008",
+      "status": "pass",
+      "summary": "Two fixed split triggers, lossless splitting, fifteen-subagent canonical planned-production path inventory, twenty-five gui_related-classified atoms, three cross-surface admission questions, contradictions, compact projections, and compile boundaries validated successfully."
+    },
+    {
+      "check_id": "ledger-turn-0009",
+      "status": "pass",
+      "summary": "Direct Assistant Chat scope correction, tentative `probably` answers, live PlanUnit/shard distinction, twenty-eight gui_related-classified atoms, compact projections, and compile boundaries validated successfully."
+    },
+    {
+      "check_id": "ledger-turn-0010",
+      "status": "pass",
+      "summary": "Core admission resolution, Chat-origin delegation correction, PlanUnit-first acceptance, explicit testing deferral, thirty-two gui_related-classified atoms, compact projections, and compile boundaries validated successfully."
+    },
+    {
+      "check_id": "ledger-turn-0011",
+      "status": "pass",
+      "summary": "Shared compiler, bounded context expansion, and hierarchical reduction acceptance; preserved weak-model uncertainty; unstructured-source census questions; thirty-five gui_related-classified atoms; compact projections; and compile boundaries validated successfully."
+    },
+    {
+      "check_id": "ledger-turn-0012",
+      "status": "pass",
+      "summary": "Unstructured-source obligation census, exact source-linked classification, fail-closed ambiguity handling, provider-enforcement/receipt-custody/user-visibility questions, thirty-eight gui_related-classified atoms, compact projections, and compile boundaries validated successfully."
+    },
+    {
+      "check_id": "ledger-turn-0013",
+      "status": "pass",
+      "summary": "Provider-boundary enforcement, compact receipt custody, concise diagnostics, trusted-origin/closed-world-registry/recovery questions, forty-one gui_related-classified atoms, compact projections, and compile boundaries validated successfully."
+    },
+    {
+      "check_id": "ledger-turn-0014",
+      "status": "pass",
+      "summary": "Trusted origin, closed-world provider-route registration, fail-closed recovery, automated-history/tool-evidence/response-repair questions, forty-four gui_related-classified atoms, compact projections, and compile boundaries validated successfully."
+    },
+    {
+      "check_id": "ledger-turn-0015",
+      "status": "pass",
+      "summary": "Bounded automated history, bounded model-visible evidence, response conformance with repair, authority/invalidation/human-adjudication questions, forty-seven gui_related-classified atoms, compact projections, and compile boundaries validated successfully."
+    },
+    {
+      "check_id": "ledger-turn-0016",
+      "status": "pass",
+      "summary": "Instruction-authority isolation, dependency invalidation, bounded human adjudication, six-slice FileSafe owner-boundary findings, fifty gui_related-classified atoms, compact projections, and compile boundaries validated successfully with zero errors and zero warnings."
+    },
+    {
+      "check_id": "ledger-turn-0017",
+      "status": "pass",
+      "summary": "Co-bound Agent Admission/FileSafe gating, semantic/security authority separation, FileSafe guard currentness, fifty-three gui_related-classified atoms, three non-testing implementation-invariant candidates, compact projections, and compile boundaries validated successfully with zero errors and zero warnings."
+    },
+    {
+      "check_id": "ledger-turn-0018",
+      "status": "pass",
+      "summary": "Least-authority bundles, immutable dispatch intents, cache/authority separation, deterministic Packet Admission Gate terminology, fifty-four gui_related-classified atoms, one zero-hidden-gate-model-call candidate, compact projections, and compile boundaries validated successfully with zero errors and zero warnings."
+    },
+    {
+      "check_id": "ledger-turn-0019",
+      "status": "pass",
+      "summary": "Deterministic program gates with zero hidden per-dispatch model readers, fifty-four gui_related-classified atoms, closed non-testing questions/candidates/contradictions, compact projections, and compile boundaries validated successfully with zero errors and zero warnings."
+    },
+    {
+      "check_id": "ledger-turn-0020",
+      "status": "pass",
+      "summary": "Plan Assurance Master coordination, corrected task identity, strict product-versus-AssuranceLab non-transfer boundary, nine deferred assurance-derived testing inputs, compact projections, and compile boundaries validated successfully with zero errors and zero warnings."
+    },
+    {
+      "check_id": "ledger-turn-0021",
+      "status": "pass",
+      "summary": "Testing-phase activation, separate GPT-5.6 Sol Ultra worktree delegation, q-0022 in-progress state, cross-system except-Chat scope, compact projections, and compile boundaries validated successfully with zero errors and zero warnings."
+    },
+    {
+      "check_id": "ledger-turn-0022",
+      "status": "pass",
+      "summary": "Local dirty-checkout task replacement, exclusive testing-folder boundary, exact 8-low/2-high model matrix, corr-0013, compact projections, and compile boundaries validated successfully with zero errors and zero warnings."
+    },
+    {
+      "check_id": "ledger-turn-0023",
+      "status": "pass",
+      "summary": "Terminal preflight closeout, zero-call preservation, q-0022 deferral, verified preregistration draft counts and hashes, V4 control-plane invalidation, `/tmp` residue preservation, no-claim boundary, compact projections, and compile boundaries validated successfully with zero errors and zero warnings."
+    },
+    {
+      "check_id": "ledger-turn-0024",
+      "status": "pass",
+      "summary": "August 5 packet source-boundary, Context Admission and PromptCapsule course correction, least-authority runtime externalization, sustainable specialist waves, relative model routing, lossless evidence migration, two candidate atoms, two open conflicts, and compact projections validated successfully with zero errors and zero warnings."
+    }
+  ]
+}

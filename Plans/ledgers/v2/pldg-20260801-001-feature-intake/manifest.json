@@ -1,0 +1,35 @@
+{
+  "schema_id": "pm.bootstrap_planning_ledger_manifest.v1",
+  "ledger_id": "pldg-20260801-001-feature-intake",
+  "title": "Agent Prompt and Work-Packet Hardening Planning",
+  "profile": "bootstrap_planning",
+  "status": "active",
+  "phase": "course_correction_reconciliation_open",
+  "created_at_utc": "2026-08-01T04:32:40Z",
+  "updated_at_utc": "2026-08-05T19:28:29Z",
+  "last_event_id": "evt-0026",
+  "last_validation_summary": "Bootstrap ledger validator passed with zero errors and zero warnings after August 5 noncanonical handoff reconciliation, six accepted architecture/migration atoms, two candidate testing/profile atoms, five accepted decisions, and two open user-adjudication questions.",
+  "source_context": "Conversational v2 Bootstrap Planning Ledger for fixing long, obligation-dense prompts sent to agents, especially lower-quality agents that ignore large portions of such prompts.",
+  "notes": "The August 5 handoff is preserved as noncanonical additive source input and reconciled without editing canonical Plans. Its validation receipt is stale/inconsistent. q-0045/q-0046 remain open and atom-0062/atom-0063 remain candidates. Delegated testing remains terminal at STOPPED_BEFORE_SUBJECT_LAUNCH; the exact 8-low/2-high roster was not supplied or frozen; route canary, pilot, fleet, and total model/provider calls are zero. Existing draft evidence and control_plane_defect-0004 remain preserved. No empirical, production-enforcement, readiness, canonical, governance, or build claim exists.",
+  "record_counts": {
+    "events": 26,
+    "design_atoms": 63,
+    "decisions": 51,
+    "questions": 46,
+    "blockers": 0,
+    "corrections": 13
+  },
+  "files": {
+    "events": "events.jsonl",
+    "design_atoms": "records/design_atoms.jsonl",
+    "decisions": "records/decisions.jsonl",
+    "questions": "records/questions.jsonl",
+    "blockers": "records/blockers.jsonl",
+    "corrections": "records/corrections.jsonl",
+    "current_state": "state/current.json",
+    "handoff": "state/handoff.json",
+    "open_items": "state/open_items.json",
+    "compile_queue": "state/compile_queue.json",
+    "operating_capsule": "state/operating_capsule.json"
+  }
+}

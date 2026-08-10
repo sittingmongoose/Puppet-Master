@@ -1,0 +1,45 @@
+{
+  "schema_id": "pm.bootstrap_compile_queue.v1",
+  "ledger_id": "pldg-20260801-001-feature-intake",
+  "status": "course_correction_reconciliation_open",
+  "governance_status": "not_started",
+  "updated_at_utc": "2026-08-05T19:28:29Z",
+  "last_event_id": "evt-0026",
+  "terminal_ledger_event_id": "",
+  "items": [],
+  "canonical_plan_targets": [],
+  "compiled_owner_docs": [],
+  "compiled_plan_outputs": [],
+  "compiled_plan_unit_ids": [],
+  "latest_audit_ref": "",
+  "latest_audit_status": "",
+  "resolved_contradictions": [
+    "contradiction-0001",
+    "contradiction-0002",
+    "contradiction-0003",
+    "contradiction-0004",
+    "contradiction-0005",
+    "contradiction-0006",
+    "contradiction-0007",
+    "contradiction-0008",
+    "contradiction-0009",
+    "contradiction-0010",
+    "contradiction-0011",
+    "contradiction-0012",
+    "contradiction-0013"
+  ],
+  "unresolved_contradictions": [
+    "q-0045",
+    "q-0046"
+  ],
+  "notes": "No compile request has been made. The August 5 packet is noncanonical additive source input; q-0045/q-0046 and candidate atoms atom-0062/atom-0063 remain open. Delegated testing is still terminal at STOPPED_BEFORE_SUBJECT_LAUNCH: the exact 8-low/2-high roster did not freeze; route canary, pilot, fleet, and total model/provider calls are all zero; and q-0022 is deferred. Verified materials remain preregistration drafts, V4 remains invalidated by control_plane_defect-0004, and no empirical, production-enforcement, canonical, governance, or build claim exists.",
+  "validation_state": {
+    "bootstrap_ledger_validator": "pass",
+    "last_validated_at_utc": "2026-08-05T19:28:29Z",
+    "governance_status": "not_started",
+    "no_worknodes_created": true,
+    "no_nodeseeds_created": true,
+    "no_executable_queues_created": true,
+    "no_feature_or_model_tests_run": true
+  }
+}
