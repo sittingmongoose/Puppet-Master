@@ -1,0 +1,185 @@
+/* Grok 4.5 — chat-facing theme tokens (additive layer over themes.css).
+   Diverges from byte-identical rail inheritance: chat surfaces get their own
+   mixes so the effective chat look is no longer “unmodified rail copy only”. */
+
+:root {
+  --pm-msg-user-bg: color-mix(in srgb, var(--accent-primary) 26%, var(--surface-elevated));
+  --pm-msg-user-fg: var(--text-primary);
+  --pm-msg-user-border: color-mix(in srgb, var(--accent-primary) 38%, var(--border));
+  --pm-msg-assistant-fg: var(--text-primary);
+  --pm-dock-bg: color-mix(in srgb, var(--surface-elevated) 92%, var(--background));
+  --pm-dock-border: var(--border-light);
+  --pm-dock-shadow: 0 -8px 24px color-mix(in srgb, var(--text-primary) 7%, transparent);
+  --pm-q-bg: var(--surface-elevated);
+  --pm-q-border: var(--border);
+  --pm-q-option-bg: color-mix(in srgb, var(--surface) 82%, transparent);
+  --pm-q-option-selected-bg: color-mix(in srgb, var(--accent-primary) 14%, var(--surface-elevated));
+  --pm-rail-bg: color-mix(in srgb, var(--surface) 88%, var(--background));
+  --pm-work-surface-bg: transparent;
+  --pm-work-surface-border: var(--border-light);
+  --pm-lens-chip-bg: var(--surface-elevated);
+  --pm-lens-chip-fg: var(--text-secondary);
+  --pm-lens-bar-bg: color-mix(in srgb, var(--accent-primary) 9%, var(--surface-alt, var(--surface)));
+  --pm-composer-bg: var(--surface-alt, var(--surface));
+  --pm-composer-input-bg: var(--surface-elevated);
+  --pm-activity-dot: var(--graph-running, var(--accent-primary));
+  --pm-chat-motion-enter: var(--motion-med, 240ms);
+  --pm-chat-motion-surface: var(--motion-med, 260ms);
+  --elev-1: 0 4px 14px color-mix(in srgb, var(--text-primary) 8%, transparent);
+  --elev-2: 0 10px 28px color-mix(in srgb, var(--text-primary) 12%, transparent);
+  --elev-3: 0 18px 44px color-mix(in srgb, var(--text-primary) 18%, transparent);
+}
+
+/* ---- Friendly: soft coral-sky user chips, cozy dock ---- */
+[data-theme="friendly-dark"] {
+  --pm-msg-user-bg: color-mix(in srgb, var(--pm6-cozy-coral, #FFAD93) 22%, var(--surface-elevated));
+  --pm-msg-user-fg: #F7F2EE;
+  --pm-msg-user-border: color-mix(in srgb, var(--pm6-cozy-coral, #FFAD93) 36%, var(--border));
+  --pm-dock-bg: color-mix(in srgb, #2E2A36 78%, #1C1A22);
+  --pm-dock-shadow: 0 -10px 28px rgba(0, 0, 0, 0.28);
+  --pm-q-bg: color-mix(in srgb, var(--surface) 12%, var(--surface-elevated));
+  --pm-q-option-selected-bg: color-mix(in srgb, var(--pm6-cozy-sky, #6FC6E8) 16%, var(--surface-elevated));
+  --pm-rail-bg: color-mix(in srgb, var(--pm6-cozy-chrome, rgba(40, 36, 48, 0.6)) 55%, #211E26);
+  --pm-lens-chip-bg: color-mix(in srgb, var(--pm6-cozy-mint, #6FDABC) 10%, var(--surface-elevated));
+  --pm-lens-bar-bg: color-mix(in srgb, var(--pm6-cozy-sky, #6FC6E8) 10%, var(--surface-alt));
+  --pm-activity-dot: var(--pm6-cozy-coral, #FFAD93);
+  --pm-chat-motion-enter: 260ms;
+  --pm-chat-motion-surface: 280ms;
+}
+
+[data-theme="friendly-light"] {
+  --pm-msg-user-bg: color-mix(in srgb, var(--pm6-cozy-coral, #FF9E80) 18%, #FFFFFF);
+  --pm-msg-user-fg: #3F3848;
+  --pm-msg-user-border: color-mix(in srgb, var(--pm6-cozy-coral, #FF9E80) 32%, var(--border));
+  --pm-dock-bg: color-mix(in srgb, #FFFFFF 70%, #F5EFEA);
+  --pm-dock-shadow: 0 -10px 26px rgba(122, 109, 140, 0.1);
+  --pm-q-bg: color-mix(in srgb, var(--surface) 6%, #FFFFFF);
+  --pm-q-option-selected-bg: color-mix(in srgb, var(--pm6-cozy-sky, #5AB9E0) 12%, #FFFFFF);
+  --pm-rail-bg: color-mix(in srgb, #FFFFFF 55%, #FBF7F3);
+  --pm-lens-chip-bg: color-mix(in srgb, var(--pm6-cozy-mint, #5FD0B0) 9%, #FFFFFF);
+  --pm-lens-bar-bg: color-mix(in srgb, var(--pm6-cozy-sky, #5AB9E0) 8%, #F5EFEA);
+  --pm-activity-dot: var(--pm6-cozy-coral, #FF9E80);
+  --pm-chat-motion-enter: 260ms;
+  --pm-chat-motion-surface: 280ms;
+}
+
+/* ---- Retro: hard ink user blocks, zero-radius dock ---- */
+[data-theme="retro-dark"] {
+  --pm-msg-user-bg: #0F2A12;
+  --pm-msg-user-fg: #B8FFC4;
+  --pm-msg-user-border: #00FF41;
+  --pm-dock-bg: #1F1F1F;
+  --pm-dock-border: #A8ACB3;
+  --pm-dock-shadow: 0 -3px 0 rgba(224, 224, 224, 0.35);
+  --pm-q-bg: #252525;
+  --pm-q-border: #A8ACB3;
+  --pm-q-option-bg: #1A1A1A;
+  --pm-q-option-selected-bg: #00331A;
+  --pm-rail-bg: #141414;
+  --pm-work-surface-border: #3A3D42;
+  --pm-lens-chip-bg: #1A1A1A;
+  --pm-lens-chip-fg: #E0E0E0;
+  --pm-lens-bar-bg: #1A241A;
+  --pm-composer-bg: #1A1A1A;
+  --pm-activity-dot: #FF7F27;
+  --pm-chat-motion-enter: 140ms;
+  --pm-chat-motion-surface: 140ms;
+}
+
+[data-theme="retro-light"] {
+  --pm-msg-user-bg: #DCE8F8;
+  --pm-msg-user-fg: #001A4A;
+  --pm-msg-user-border: #0047AB;
+  --pm-dock-bg: #FAF7F2;
+  --pm-dock-border: #4A463F;
+  --pm-dock-shadow: 0 -3px 0 rgba(26, 26, 26, 0.22);
+  --pm-q-bg: #FAF7F2;
+  --pm-q-border: #4A463F;
+  --pm-q-option-bg: #F5F0E8;
+  --pm-q-option-selected-bg: #C9D8F0;
+  --pm-rail-bg: #EDE6DA;
+  --pm-work-surface-border: #D8D1C7;
+  --pm-lens-chip-bg: #F5F0E8;
+  --pm-lens-chip-fg: #1A1A1A;
+  --pm-lens-bar-bg: #E4ECF6;
+  --pm-composer-bg: #F5F0E8;
+  --pm-activity-dot: #FF7F27;
+  --pm-chat-motion-enter: 140ms;
+  --pm-chat-motion-surface: 140ms;
+}
+
+/* ---- Basic: flat, quiet, low chroma ---- */
+[data-theme="basic-dark"] {
+  --pm-msg-user-bg: #2A3038;
+  --pm-msg-user-fg: #E8ECF0;
+  --pm-msg-user-border: #3D4652;
+  --pm-dock-bg: #22262C;
+  --pm-dock-shadow: 0 -6px 18px rgba(0, 0, 0, 0.25);
+  --pm-q-bg: #262B32;
+  --pm-q-option-selected-bg: #2F3A48;
+  --pm-rail-bg: #1C2025;
+  --pm-lens-chip-bg: #262B32;
+  --pm-lens-bar-bg: #242A32;
+  --pm-activity-dot: #6EA8FE;
+  --pm-chat-motion-enter: 200ms;
+  --pm-chat-motion-surface: 220ms;
+}
+
+[data-theme="basic-light"] {
+  --pm-msg-user-bg: #E2E7EE;
+  --pm-msg-user-fg: #1A1A1A;
+  --pm-msg-user-border: #C5CDD8;
+  --pm-dock-bg: #F4F5F7;
+  --pm-dock-shadow: 0 -6px 16px rgba(30, 40, 55, 0.08);
+  --pm-q-bg: #FFFFFF;
+  --pm-q-option-selected-bg: #E8EEF6;
+  --pm-rail-bg: #E4E7EB;
+  --pm-lens-chip-bg: #FFFFFF;
+  --pm-lens-bar-bg: #E9EDF2;
+  --pm-activity-dot: #3B6FB6;
+  --pm-chat-motion-enter: 200ms;
+  --pm-chat-motion-surface: 220ms;
+}
+
+/* ---- Glass: frosted dock / translucent user chip ---- */
+[data-theme="glass-dark"] {
+  --pm-msg-user-bg: rgba(183, 156, 255, 0.22);
+  --pm-msg-user-fg: #F4EFFC;
+  --pm-msg-user-border: rgba(183, 156, 255, 0.4);
+  --pm-dock-bg: rgb(46, 34, 72);
+  --pm-dock-border: rgba(255, 255, 255, 0.14);
+  --pm-dock-shadow: 0 -12px 32px rgba(10, 5, 25, 0.4);
+  --pm-q-bg: color-mix(in srgb, var(--surface-elevated) 88%, #3a4658);
+  --pm-q-border: rgba(255, 255, 255, 0.16);
+  --pm-q-option-bg: rgb(72, 56, 104);
+  --pm-q-option-selected-bg: rgba(183, 156, 255, 0.22);
+  --pm-rail-bg: rgb(36, 27, 54);
+  --pm-lens-chip-bg: color-mix(in srgb, var(--surface-elevated) 88%, #3a4658);
+  --pm-lens-bar-bg: rgb(52, 40, 78);
+  --pm-composer-bg: transparent;
+  --pm-composer-input-bg: color-mix(in srgb, var(--surface-elevated) 88%, #3a4658);
+  --pm-activity-dot: #F3B266;
+  --pm-chat-motion-enter: 320ms;
+  --pm-chat-motion-surface: 320ms;
+}
+
+[data-theme="glass-light"] {
+  --pm-msg-user-bg: rgba(139, 110, 217, 0.16);
+  --pm-msg-user-fg: #3A3150;
+  --pm-msg-user-border: rgba(139, 110, 217, 0.32);
+  --pm-dock-bg: rgb(246, 240, 255);
+  --pm-dock-border: rgba(69, 58, 92, 0.14);
+  --pm-dock-shadow: 0 -12px 28px rgba(93, 63, 133, 0.12);
+  --pm-q-bg: #ffffff;
+  --pm-q-border: rgba(69, 58, 92, 0.16);
+  --pm-q-option-bg: #f3eefc;
+  --pm-q-option-selected-bg: rgba(139, 110, 217, 0.14);
+  --pm-rail-bg: rgb(246, 240, 255);
+  --pm-lens-chip-bg: #ffffff;
+  --pm-lens-bar-bg: #efe8fb;
+  --pm-composer-bg: transparent;
+  --pm-composer-input-bg: #ffffff;
+  --pm-activity-dot: #B26A2A;
+  --pm-chat-motion-enter: 320ms;
+  --pm-chat-motion-surface: 320ms;
+}

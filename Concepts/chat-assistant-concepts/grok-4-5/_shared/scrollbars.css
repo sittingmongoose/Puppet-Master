@@ -1,0 +1,18 @@
+/* ============================================================================
+   grok-4-5/_shared/scrollbars.css
+   Opt-in themed scrollbar. themes.css hides OS scrollbars globally;
+   add .pm-scroll to any overflow pane that should show the PM thumb.
+   ============================================================================ */
+
+.pm-scroll {
+  scrollbar-width: thin;
+  scrollbar-color: var(--pm6-sb-thumb) transparent;
+}
+.pm-scroll::-webkit-scrollbar { width: 10px; height: 10px; }
+.pm-scroll::-webkit-scrollbar-thumb {
+  background: var(--pm6-sb-thumb);
+  border: 3px solid transparent;
+  background-clip: padding-box;
+  border-radius: var(--pm6-sb-radius);
+}
+.pm-scroll::-webkit-scrollbar-thumb:hover { background: var(--pm6-sb-thumb-hover); }

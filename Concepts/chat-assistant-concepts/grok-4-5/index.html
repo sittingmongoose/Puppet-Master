@@ -1,0 +1,673 @@
+<!DOCTYPE html>
+<html lang="en" data-concept-model="Grok 4.5" data-theme="friendly-dark" data-reduced-motion="0">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<link rel="icon" href="data:,">
+<title>Grok 4.5 — Assistant Chat Concepts</title>
+<script>(function(){try{var ok=['friendly-dark','friendly-light','retro-dark','retro-light','basic-light','basic-dark','glass-dark','glass-light'];var t=localStorage.getItem('pm.theme');if(ok.indexOf(t)===-1)t='friendly-dark';var d=document.documentElement;d.setAttribute('data-theme',t);d.setAttribute('data-concept-model','Grok 4.5');d.style.colorScheme=/-dark$/.test(t)?'dark':'light';}catch(e){}})();</script>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="preload" as="style" href="https://fonts.googleapis.com/css2?family=Cal+Sans&family=Inter:wght@400;500;600;700&family=Nunito:wght@400;600;700;800&family=Orbitron:wght@500;700&family=Quicksand:wght@400;500;600;700&family=Rajdhani:wght@400;500;600;700&display=swap" onload="this.onload=null;this.rel='stylesheet'">
+<noscript><link href="https://fonts.googleapis.com/css2?family=Cal+Sans&family=Inter:wght@400;500;600;700&family=Nunito:wght@400;600;700;800&family=Orbitron:wght@500;700&family=Quicksand:wght@400;500;600;700&family=Rajdhani:wght@400;500;600;700&display=swap" rel="stylesheet"></noscript>
+<link rel="stylesheet" href="_shared/themes.css">
+<link rel="stylesheet" href="_shared/base.css">
+<link rel="stylesheet" href="_shared/gallery.css">
+</head>
+<body>
+<div class="g-ambient" aria-hidden="true"></div>
+
+<header class="g-top">
+  <div class="g-brand">
+    <svg class="g-logo" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 2l8 4.5v9L12 20l-8-4.5v-9L12 2z"/><path d="M12 11L4 6.5M12 11l8-4.5M12 11v9"/></svg>
+    <div>
+      <div class="g-app">Grok 4.5 — Assistant Chat Concepts</div>
+      <div class="g-sub">8 windows × 8 threads · independent mounts · theme &amp; width broadcast</div>
+    </div>
+    <span class="g-badge">Grok 4.5</span>
+  </div>
+  <div class="g-spacer"></div>
+
+  <div class="g-mode" id="gMode" role="tablist" aria-label="View mode">
+    <button class="on" data-mode="focus" role="tab">Focus</button>
+    <button data-mode="compare" role="tab">Compare</button>
+    <button data-mode="catalog" role="tab">Catalog</button>
+  </div>
+
+  <div class="g-ctrl">
+    <span class="g-ctrl-lbl">THEME</span>
+    <div class="pm6-tb-menu-wrap" id="galThemeWrap">
+      <button type="button" class="pm6-tb-menu-trigger" id="galThemeBtn" aria-controls="galThemeMenu"><span class="pm6-tb-menu-label" id="galThemeLabel">Friendly Dark</span><i data-ico="chevD" class="pm-ico sm"></i></button>
+      <div class="pm6-tb-menu" id="galThemeMenu" role="menu" aria-label="Theme" data-pm-menu-select>
+        <button type="button" class="pm6-tb-menu-item is-selected" role="menuitem" data-value="friendly-dark" data-label="Friendly Dark">Friendly Dark</button>
+        <button type="button" class="pm6-tb-menu-item" role="menuitem" data-value="friendly-light" data-label="Friendly Light">Friendly Light</button>
+        <button type="button" class="pm6-tb-menu-item" role="menuitem" data-value="glass-dark" data-label="Glass Dark">Glass Dark</button>
+        <button type="button" class="pm6-tb-menu-item" role="menuitem" data-value="glass-light" data-label="Glass Light">Glass Light</button>
+        <button type="button" class="pm6-tb-menu-item" role="menuitem" data-value="retro-dark" data-label="Retro Dark">Retro Dark</button>
+        <button type="button" class="pm6-tb-menu-item" role="menuitem" data-value="retro-light" data-label="Retro Light">Retro Light</button>
+        <button type="button" class="pm6-tb-menu-item" role="menuitem" data-value="basic-dark" data-label="Basic Dark">Basic Dark</button>
+        <button type="button" class="pm6-tb-menu-item" role="menuitem" data-value="basic-light" data-label="Basic Light">Basic Light</button>
+      </div>
+    </div>
+  </div>
+
+  <div class="g-ctrl" id="gWidthCtrl">
+    <span class="g-ctrl-lbl">CHAT WIDTH</span>
+    <button type="button" class="g-preset" data-w="520">520</button>
+    <button type="button" class="g-preset on" data-w="750">750</button>
+    <button type="button" class="g-preset" data-w="975">975</button>
+    <button type="button" class="g-preset" data-w="1200">1200</button>
+    <input type="range" id="galWidth" min="520" max="1200" value="750" step="1" aria-label="Chat content width across all previews">
+    <span class="g-wread" id="galWRead">750px</span>
+  </div>
+
+  <div class="g-ctrl">
+    <span class="g-ctrl-lbl">MOUNT</span>
+    <div class="g-seg" id="gMount" role="group" aria-label="Mount mode">
+      <button type="button" class="on" data-mount="docked">Docked</button>
+      <button type="button" data-mount="popout">Pop-out</button>
+    </div>
+  </div>
+
+  <div class="g-ctrl">
+    <button type="button" class="g-tog on" id="galRail" aria-pressed="true" title="Toggle fake application rail (open/closed)"><i data-ico="layers"></i>RAIL</button>
+    <button type="button" class="g-tog" id="galRM" aria-pressed="false" title="Toggle reduced motion across all Grok 4.5 previews"><i data-ico="motion"></i>MOTION</button>
+  </div>
+</header>
+
+<div class="g-pairbar">
+  <div class="g-pair-group">
+    <span class="g-ctrl-lbl">WINDOW</span>
+    <div class="pm6-tb-menu-wrap" id="galWinWrap">
+      <button type="button" class="pm6-tb-menu-trigger" id="galWinBtn" aria-controls="galWinMenu"><span class="pm6-tb-menu-label" id="galWinLabel">w6 Focus Stage</span><i data-ico="chevD" class="pm-ico sm"></i></button>
+      <div class="pm6-tb-menu" id="galWinMenu" role="menu" aria-label="Window concept" data-pm-menu-select></div>
+    </div>
+  </div>
+  <div class="g-pair-group">
+    <span class="g-ctrl-lbl">THREAD</span>
+    <div class="pm6-tb-menu-wrap" id="galThrWrap">
+      <button type="button" class="pm6-tb-menu-trigger" id="galThrBtn" aria-controls="galThrMenu"><span class="pm6-tb-menu-label" id="galThrLabel">t1 Prose Column</span><i data-ico="chevD" class="pm-ico sm"></i></button>
+      <div class="pm6-tb-menu" id="galThrMenu" role="menu" aria-label="Thread concept" data-pm-menu-select></div>
+    </div>
+  </div>
+  <div class="g-pair-read" id="gPairRead"><b>Grok 4.5</b> · <span id="gPairIds">w6 × t1</span></div>
+  <a class="g-open-full" id="gOpenFull" href="host.html?w=w6&amp;t=t1&amp;mount=docked" target="_blank" rel="noopener">
+    <span>Open full</span><span class="g-open-arr">&rarr;</span>
+  </a>
+</div>
+
+<div class="g-shell">
+  <nav class="g-nav" aria-label="Quick pick" id="gNav">
+    <div class="g-nav-head">WINDOWS</div>
+    <div class="g-nav-list" id="gNavWins"></div>
+    <div class="g-nav-sep" aria-hidden="true"></div>
+    <div class="g-nav-head">THREADS</div>
+    <div class="g-nav-list" id="gNavThrs"></div>
+    <div class="g-nav-foot"><b>Grok 4.5</b> · Window and thread selectors are independent. Any thread mounts in any window.</div>
+  </nav>
+
+  <main class="g-main">
+    <div class="g-main-head">
+      <div class="g-main-title" id="gMainTitle">Grok 4.5 — <span class="accent">Focus</span></div>
+      <div class="g-main-meta" id="gMainMeta">interactive host</div>
+      <div class="g-main-hint" id="gMainHint">Pick a window and thread, flip theme and chat width, then open full for a dedicated host tab.</div>
+    </div>
+
+    <div class="g-focus on" id="gFocus">
+      <div class="g-focus-frame" id="gFocusFrame"></div>
+    </div>
+
+    <div class="g-compare" id="gCompare" aria-label="Frozen pair compare grid"></div>
+
+    <div class="g-catalog" id="gCatalog">
+      <div class="g-cat-head">
+        <div class="g-cat-title">WINDOWS · GROK 4.5</div>
+      </div>
+      <div class="g-cat-grid" id="gCatWins"></div>
+      <div class="g-cat-head" style="margin-top:16px">
+        <div class="g-cat-title">THREADS · GROK 4.5</div>
+      </div>
+      <div class="g-cat-grid" id="gCatThrs"></div>
+    </div>
+  </main>
+</div>
+
+<script src="_shared/icons.js"></script>
+<script src="_shared/menu.js"></script>
+<script src="_shared/labels.js"></script>
+<script src="_shared/bridge.js"></script>
+<script>
+/* ConceptHub: pm-concept-ready pm-concept-state */
+(function () {
+  document.documentElement.setAttribute('data-concept-model', 'Grok 4.5');
+  function announce() {
+    try {
+      window.dispatchEvent(new CustomEvent('pm-concept-ready', { detail: { model: 'Grok 4.5' } }));
+      window.dispatchEvent(new CustomEvent('pm-concept-state', { detail: { model: 'Grok 4.5', ready: true } }));
+    } catch (_) {}
+  }
+  if (document.readyState === 'loading') document.addEventListener('DOMContentLoaded', announce);
+  else announce();
+})();
+</script>
+<script>
+(function () {
+  'use strict';
+
+  var AGENT = (window.PMChatLabels && window.PMChatLabels.MODEL) || 'Grok 4.5';
+
+  var WINDOWS = [
+    { id: 'w1', name: 'Ledger Spine' },
+    { id: 'w2', name: 'Overlay Capsule' },
+    { id: 'w3', name: 'Strip Console' },
+    { id: 'w4', name: 'Pocket Index' },
+    { id: 'w5', name: 'Dual Band' },
+    { id: 'w6', name: 'Focus Stage' },
+    { id: 'w7', name: 'Split Latch' },
+    { id: 'w8', name: 'Ribbon Dock' }
+  ];
+
+  var THREADS = [
+    { id: 't1', name: 'Prose Column' },
+    { id: 't2', name: 'Turn Beats' },
+    { id: 't3', name: 'Soft Shelves' },
+    { id: 't4', name: 'Yield Sheets' },
+    { id: 't5', name: 'Live Condenser' },
+    { id: 't6', name: 'Margin Index' },
+    { id: 't7', name: 'One-Turn Focus' },
+    { id: 't8', name: 'Paired Breath' }
+  ];
+
+  /* Frozen compare snapshots — independent of live Focus selectors */
+  var FROZEN = [
+    { w: 'w6', t: 't1', note: 'Focus Stage × Prose Column — default reading lane' },
+    { w: 'w1', t: 't2', note: 'Ledger Spine × Turn Beats — chronological beats' },
+    { w: 'w5', t: 't5', note: 'Dual Band × Live Condenser — streaming pressure' },
+    { w: 'w2', t: 't8', note: 'Overlay Capsule × Paired Breath — dialog overlay' },
+    { w: 'w7', t: 't4', note: 'Split Latch × Yield Sheets — structured yield' },
+    { w: 'w8', t: 't3', note: 'Ribbon Dock × Soft Shelves — shelf rhythm' }
+  ];
+
+  var state = {
+    mode: 'focus',
+    windowId: 'w6',
+    threadId: 't1',
+    mount: 'docked',
+    theme: document.documentElement.getAttribute('data-theme') || 'friendly-dark',
+    chatWidth: 750,
+    railOpen: true,
+    rm: false,
+    focusLoaded: false
+  };
+
+  function winName(id) {
+    var x = WINDOWS.filter(function (w) { return w.id === id; })[0];
+    return x ? x.name : id;
+  }
+  function thrName(id) {
+    var x = THREADS.filter(function (t) { return t.id === id; })[0];
+    return x ? x.name : id;
+  }
+  function labelWin(id) { return id + ' ' + winName(id); }
+  function labelThr(id) { return id + ' ' + thrName(id); }
+
+  function openFullHref(w, t, mount) {
+    return 'host.html?w=' + encodeURIComponent(w) +
+      '&t=' + encodeURIComponent(t) +
+      '&mount=' + encodeURIComponent(mount || state.mount);
+  }
+
+  function hostUrl(w, t, mount, extra) {
+    var q = new URLSearchParams();
+    q.set('w', w || state.windowId);
+    q.set('t', t || state.threadId);
+    q.set('mount', mount || state.mount);
+    q.set('theme', state.theme);
+    q.set('width', String(state.chatWidth));
+    q.set('rail', state.railOpen ? '1' : '0');
+    q.set('rm', state.rm ? '1' : '0');
+    if (extra) {
+      Object.keys(extra).forEach(function (k) { q.set(k, extra[k]); });
+    }
+    return 'host.html?' + q.toString();
+  }
+
+  function iframes() {
+    return Array.prototype.slice.call(document.querySelectorAll('iframe'));
+  }
+
+  function broadcast(msg) {
+    iframes().forEach(function (ifr) {
+      try { ifr.contentWindow && ifr.contentWindow.postMessage(msg, '*'); } catch (e) {}
+    });
+  }
+
+  function pushStateTo(win, opts) {
+    if (!win) return;
+    opts = opts || {};
+    var wId = opts.windowId || state.windowId;
+    var tId = opts.threadId || state.threadId;
+    try {
+      win.postMessage({ type: 'pm-theme', theme: state.theme }, '*');
+      win.postMessage({ type: 'pm-rm', on: state.rm }, '*');
+      win.postMessage({ type: 'pm-chat-width', px: state.chatWidth }, '*');
+      win.postMessage({ type: 'pm-rail', open: state.railOpen }, '*');
+      win.postMessage({ type: 'pm-mount', mode: state.mount }, '*');
+      if (opts.usePair) {
+        win.postMessage({ type: 'pm-pair', windowId: wId, threadId: tId }, '*');
+      } else {
+        win.postMessage({ type: 'pm-window', id: wId }, '*');
+        win.postMessage({ type: 'pm-thread', id: tId }, '*');
+      }
+    } catch (e) {}
+  }
+
+  function pushFullToAll() {
+    iframes().forEach(function (ifr) {
+      var frozen = ifr.getAttribute('data-frozen');
+      if (frozen) {
+        var parts = frozen.split(',');
+        pushStateTo(ifr.contentWindow, { windowId: parts[0], threadId: parts[1], usePair: true });
+      } else {
+        pushStateTo(ifr.contentWindow, { usePair: false });
+      }
+    });
+  }
+
+  /* —— Menus —— */
+  function fillConceptMenus() {
+    var winMenu = document.getElementById('galWinMenu');
+    var thrMenu = document.getElementById('galThrMenu');
+    winMenu.innerHTML = '';
+    thrMenu.innerHTML = '';
+    WINDOWS.forEach(function (w) {
+      var b = document.createElement('button');
+      b.type = 'button';
+      b.className = 'pm6-tb-menu-item' + (w.id === state.windowId ? ' is-selected' : '');
+      b.setAttribute('role', 'menuitem');
+      b.setAttribute('data-value', w.id);
+      b.setAttribute('data-label', labelWin(w.id));
+      b.textContent = labelWin(w.id);
+      winMenu.appendChild(b);
+    });
+    THREADS.forEach(function (t) {
+      var b = document.createElement('button');
+      b.type = 'button';
+      b.className = 'pm6-tb-menu-item' + (t.id === state.threadId ? ' is-selected' : '');
+      b.setAttribute('role', 'menuitem');
+      b.setAttribute('data-value', t.id);
+      b.setAttribute('data-label', labelThr(t.id));
+      b.textContent = labelThr(t.id);
+      thrMenu.appendChild(b);
+    });
+  }
+
+  function syncMenuLabels() {
+    document.getElementById('galWinLabel').textContent = labelWin(state.windowId);
+    document.getElementById('galThrLabel').textContent = labelThr(state.threadId);
+    document.querySelectorAll('#galWinMenu [data-value]').forEach(function (i) {
+      i.classList.toggle('is-selected', i.getAttribute('data-value') === state.windowId);
+    });
+    document.querySelectorAll('#galThrMenu [data-value]').forEach(function (i) {
+      i.classList.toggle('is-selected', i.getAttribute('data-value') === state.threadId);
+    });
+  }
+
+  /* —— Nav + catalog —— */
+  function buildNav() {
+    var wins = document.getElementById('gNavWins');
+    var thrs = document.getElementById('gNavThrs');
+    wins.innerHTML = '';
+    thrs.innerHTML = '';
+    WINDOWS.forEach(function (w) {
+      var b = document.createElement('button');
+      b.type = 'button';
+      b.className = 'g-nav-btn' + (w.id === state.windowId ? ' on' : '');
+      b.innerHTML = '<span class="id">' + w.id + '</span><span class="nm">' + w.name + '</span>';
+      b.addEventListener('click', function () { setWindow(w.id); });
+      wins.appendChild(b);
+    });
+    THREADS.forEach(function (t) {
+      var b = document.createElement('button');
+      b.type = 'button';
+      b.className = 'g-nav-btn' + (t.id === state.threadId ? ' on' : '');
+      b.innerHTML = '<span class="id">' + t.id + '</span><span class="nm">' + t.name + '</span>';
+      b.addEventListener('click', function () { setThread(t.id); });
+      thrs.appendChild(b);
+    });
+  }
+
+  function buildCatalog() {
+    var cw = document.getElementById('gCatWins');
+    var ct = document.getElementById('gCatThrs');
+    cw.innerHTML = '';
+    ct.innerHTML = '';
+    WINDOWS.forEach(function (w) {
+      var b = document.createElement('button');
+      b.type = 'button';
+      b.className = 'g-cat-card' + (w.id === state.windowId ? ' on' : '');
+      b.innerHTML =
+        '<div class="row"><span class="g-id">' + w.id + '</span><span class="lab">' + w.name + '</span></div>' +
+        '<div class="kind">Window · ' + AGENT + '</div>';
+      b.addEventListener('click', function () {
+        setWindow(w.id);
+        setMode('focus');
+      });
+      cw.appendChild(b);
+    });
+    THREADS.forEach(function (t) {
+      var b = document.createElement('button');
+      b.type = 'button';
+      b.className = 'g-cat-card' + (t.id === state.threadId ? ' on' : '');
+      b.innerHTML =
+        '<div class="row"><span class="g-id soft">' + t.id + '</span><span class="lab">' + t.name + '</span></div>' +
+        '<div class="kind">Thread · ' + AGENT + '</div>';
+      b.addEventListener('click', function () {
+        setThread(t.id);
+        setMode('focus');
+      });
+      ct.appendChild(b);
+    });
+  }
+
+  /* —— Focus + Compare frames —— */
+  function fitCompareFrames() {
+    document.querySelectorAll('#gCompare .g-frame').forEach(function (f) {
+      var w = f.clientWidth;
+      if (!w) return;
+      var sc = w / 1280;
+      var ifr = f.querySelector('iframe');
+      if (ifr) ifr.style.transform = 'scale(' + sc + ')';
+      f.style.height = Math.round(800 * sc) + 'px';
+    });
+  }
+
+  function ensureFocusIframe() {
+    var frame = document.getElementById('gFocusFrame');
+    var ifr = frame.querySelector('iframe');
+    var src = hostUrl(state.windowId, state.threadId, state.mount);
+    if (!ifr) {
+      ifr = document.createElement('iframe');
+      ifr.title = AGENT + ' focus host';
+      ifr.setAttribute('data-role', 'focus');
+      ifr.src = src;
+      frame.appendChild(ifr);
+      state.focusLoaded = true;
+      return;
+    }
+    /* Prefer live postMessage; reload only when query-critical cold load needed */
+    if (!state.focusLoaded) {
+      ifr.src = src;
+      state.focusLoaded = true;
+    }
+  }
+
+  function reloadFocus() {
+    var frame = document.getElementById('gFocusFrame');
+    var ifr = frame.querySelector('iframe');
+    var src = hostUrl(state.windowId, state.threadId, state.mount);
+    if (!ifr) {
+      ensureFocusIframe();
+      return;
+    }
+    ifr.src = src;
+  }
+
+  function buildCompare() {
+    var grid = document.getElementById('gCompare');
+    if (grid.getAttribute('data-built') === '1') {
+      fitCompareFrames();
+      return;
+    }
+    grid.innerHTML = '';
+    FROZEN.forEach(function (p, idx) {
+      var art = document.createElement('article');
+      art.className = 'g-card';
+      art.style.animationDelay = Math.min(idx, 8) * 40 + 'ms';
+      var url = hostUrl(p.w, p.t, state.mount);
+      art.innerHTML =
+        '<div class="g-cap">' +
+          '<span class="g-id">' + p.w + '</span>' +
+          '<span class="g-id soft">' + p.t + '</span>' +
+          '<h3>' + winName(p.w) + ' × ' + thrName(p.t) + '</h3>' +
+          '<span class="g-mech">' + AGENT + '</span>' +
+        '</div>' +
+        '<div class="g-sub2">' + p.note + '</div>' +
+        '<div class="g-frame"><iframe loading="lazy" data-frozen="' + p.w + ',' + p.t + '" title="' + AGENT + ' ' + p.w + ' ' + p.t + '" src="' + url + '"></iframe></div>' +
+        '<a class="g-open" href="' + openFullHref(p.w, p.t, state.mount) + '" target="_blank" rel="noopener"><span>Open full</span><span class="g-open-arr">&rarr;</span></a>';
+      grid.appendChild(art);
+    });
+    grid.setAttribute('data-built', '1');
+    setTimeout(fitCompareFrames, 80);
+  }
+
+  /* —— UI sync —— */
+  function updatePairChrome() {
+    document.getElementById('gPairIds').textContent = state.windowId + ' × ' + state.threadId;
+    var open = document.getElementById('gOpenFull');
+    open.href = openFullHref(state.windowId, state.threadId, state.mount);
+    syncMenuLabels();
+    buildNav();
+    if (state.mode === 'catalog') buildCatalog();
+
+    /* Keep compare Open full links in sync with mount */
+    document.querySelectorAll('#gCompare .g-card').forEach(function (card) {
+      var ifr = card.querySelector('iframe[data-frozen]');
+      var a = card.querySelector('a.g-open');
+      if (!ifr || !a) return;
+      var parts = ifr.getAttribute('data-frozen').split(',');
+      a.href = openFullHref(parts[0], parts[1], state.mount);
+    });
+
+    var title = document.getElementById('gMainTitle');
+    var meta = document.getElementById('gMainMeta');
+    var hint = document.getElementById('gMainHint');
+    if (state.mode === 'focus') {
+      title.innerHTML = AGENT + ' — <span class="accent">' + labelWin(state.windowId) + '</span>';
+      meta.textContent = labelThr(state.threadId) + ' · ' + state.mount;
+      hint.textContent = 'Interactive host. Theme, chat width, rail, mount, and reduced-motion broadcast to every iframe. Window and thread stay independent.';
+    } else if (state.mode === 'compare') {
+      title.innerHTML = AGENT + ' — <span class="accent">' + FROZEN.length + ' frozen pairs</span>';
+      meta.textContent = 'same chrome stress, fixed compositions';
+      hint.textContent = 'Compare freezes a few window×thread pairs. Live Focus selectors do not remount these; theme / width / rail / mount / motion still apply.';
+    } else {
+      title.innerHTML = AGENT + ' — <span class="accent">Catalog</span>';
+      meta.textContent = '8 windows · 8 threads';
+      hint.textContent = 'Every window and thread concept for ' + AGENT + '. Click a card to open it in Focus.';
+    }
+  }
+
+  function setMode(mode) {
+    state.mode = mode;
+    document.querySelectorAll('#gMode button').forEach(function (b) {
+      b.classList.toggle('on', b.getAttribute('data-mode') === mode);
+    });
+    document.getElementById('gFocus').classList.toggle('on', mode === 'focus');
+    document.getElementById('gCompare').classList.toggle('on', mode === 'compare');
+    document.getElementById('gCatalog').classList.toggle('on', mode === 'catalog');
+    if (mode === 'focus') ensureFocusIframe();
+    if (mode === 'compare') buildCompare();
+    if (mode === 'catalog') buildCatalog();
+    updatePairChrome();
+  }
+
+  function focusWin() {
+    var focusIfr = document.querySelector('#gFocusFrame iframe');
+    return focusIfr && focusIfr.contentWindow ? focusIfr.contentWindow : null;
+  }
+
+  function setWindow(id) {
+    if (WINDOWS.every(function (w) { return w.id !== id; })) return;
+    state.windowId = id;
+    updatePairChrome();
+    var win = focusWin();
+    if (win) {
+      try {
+        win.postMessage({ type: 'pm-pair', windowId: state.windowId, threadId: state.threadId }, '*');
+      } catch (e) {
+        reloadFocus();
+      }
+    } else {
+      ensureFocusIframe();
+      reloadFocus();
+    }
+  }
+
+  function setThread(id) {
+    if (THREADS.every(function (t) { return t.id !== id; })) return;
+    state.threadId = id;
+    updatePairChrome();
+    var win = focusWin();
+    if (win) {
+      try {
+        win.postMessage({ type: 'pm-pair', windowId: state.windowId, threadId: state.threadId }, '*');
+      } catch (e) {
+        reloadFocus();
+      }
+    } else {
+      ensureFocusIframe();
+      reloadFocus();
+    }
+  }
+
+  function setMount(mode) {
+    var next = mode === 'popout' ? 'popout' : 'docked';
+    state.mount = next;
+    document.querySelectorAll('#gMount button').forEach(function (b) {
+      b.classList.toggle('on', b.getAttribute('data-mount') === next);
+    });
+    updatePairChrome();
+    broadcast({ type: 'pm-mount', mode: next });
+  }
+
+  function setChatWidth(px) {
+    px = Math.max(520, Math.min(1200, px | 0));
+    state.chatWidth = px;
+    document.getElementById('galWidth').value = px;
+    document.getElementById('galWRead').textContent = px + 'px';
+    document.querySelectorAll('#gWidthCtrl .g-preset').forEach(function (b) {
+      b.classList.toggle('on', parseInt(b.getAttribute('data-w'), 10) === px);
+    });
+    broadcast({ type: 'pm-chat-width', px: px });
+  }
+
+  function setTheme(t) {
+    state.theme = t;
+    document.documentElement.setAttribute('data-theme', t);
+    document.documentElement.style.colorScheme = /-dark$/.test(t) ? 'dark' : 'light';
+    try { localStorage.setItem('pm.theme', t); } catch (e) {}
+    var lbl = document.getElementById('galThemeLabel');
+    var sel = document.querySelector('#galThemeMenu [data-value="' + t + '"]');
+    if (sel) {
+      lbl.textContent = sel.getAttribute('data-label');
+      document.querySelectorAll('#galThemeMenu [data-value]').forEach(function (i) {
+        i.classList.toggle('is-selected', i === sel);
+      });
+    }
+    broadcast({ type: 'pm-theme', theme: t });
+  }
+
+  /* —— Events —— */
+  window.addEventListener('message', function (e) {
+    if (!e.data || typeof e.data !== 'object') return;
+    if (e.data.type === 'pm-ready') {
+      var src = e.source;
+      var el = iframes().filter(function (i) { return i.contentWindow === src; })[0];
+      if (!el) return;
+      var frozen = el.getAttribute('data-frozen');
+      if (frozen) {
+        var parts = frozen.split(',');
+        pushStateTo(src, { windowId: parts[0], threadId: parts[1], usePair: true });
+      } else {
+        pushStateTo(src, { usePair: false });
+      }
+    }
+  });
+
+  document.querySelectorAll('#gMode button').forEach(function (b) {
+    b.addEventListener('click', function () { setMode(b.getAttribute('data-mode')); });
+  });
+
+  document.getElementById('galThemeMenu').addEventListener('pm-menu-pick', function (ev) {
+    var t = ev.detail && ev.detail.value;
+    if (t) setTheme(t);
+  });
+
+  document.getElementById('galWinMenu').addEventListener('pm-menu-pick', function (ev) {
+    var v = ev.detail && ev.detail.value;
+    if (v) setWindow(v);
+  });
+  document.getElementById('galThrMenu').addEventListener('pm-menu-pick', function (ev) {
+    var v = ev.detail && ev.detail.value;
+    if (v) setThread(v);
+  });
+
+  document.getElementById('galWidth').addEventListener('input', function () {
+    setChatWidth(parseInt(this.value, 10));
+  });
+  document.querySelectorAll('#gWidthCtrl .g-preset').forEach(function (b) {
+    b.addEventListener('click', function () {
+      setChatWidth(parseInt(b.getAttribute('data-w'), 10));
+    });
+  });
+
+  document.querySelectorAll('#gMount button').forEach(function (b) {
+    b.addEventListener('click', function () { setMount(b.getAttribute('data-mount')); });
+  });
+
+  document.getElementById('galRail').addEventListener('click', function () {
+    state.railOpen = !state.railOpen;
+    this.classList.toggle('on', state.railOpen);
+    this.setAttribute('aria-pressed', String(state.railOpen));
+    broadcast({ type: 'pm-rail', open: state.railOpen });
+  });
+
+  document.getElementById('galRM').addEventListener('click', function () {
+    state.rm = !state.rm;
+    this.classList.toggle('on', state.rm);
+    this.classList.toggle('warn', state.rm);
+    this.setAttribute('aria-pressed', String(state.rm));
+    document.documentElement.setAttribute('data-reduced-motion', state.rm ? '1' : '0');
+    broadcast({ type: 'pm-rm', on: state.rm });
+  });
+
+  window.addEventListener('resize', function () {
+    if (state.mode === 'compare') fitCompareFrames();
+  });
+
+  document.querySelectorAll('header i[data-ico], .g-pairbar i[data-ico]').forEach(function (el) {
+    el.innerHTML = window.PMIcon(el.getAttribute('data-ico'), el.className);
+  });
+
+  /* boot */
+  fillConceptMenus();
+  (function syncThemeLabel() {
+    var lbl = document.getElementById('galThemeLabel');
+    var sel = document.querySelector('#galThemeMenu [data-value="' + state.theme + '"]');
+    if (sel) {
+      lbl.textContent = sel.getAttribute('data-label');
+      document.querySelectorAll('#galThemeMenu [data-value]').forEach(function (i) {
+        i.classList.toggle('is-selected', i === sel);
+      });
+    }
+  })();
+  setMode('focus');
+  ensureFocusIframe();
+  updatePairChrome();
+
+  window.__gal = {
+    state: state,
+    setWindow: setWindow,
+    setThread: setThread,
+    setMount: setMount,
+    setChatWidth: setChatWidth,
+    setTheme: setTheme,
+    setMode: setMode,
+    reloadFocus: reloadFocus,
+    pushFullToAll: pushFullToAll,
+    agent: AGENT
+  };
+})();
+</script>
+</body>
+</html>
