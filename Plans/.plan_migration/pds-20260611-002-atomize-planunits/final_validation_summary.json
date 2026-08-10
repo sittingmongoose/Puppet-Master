@@ -459,21 +459,21 @@
   "docs_still_source_preserving_count": 0,
   "forbidden_governance_artifacts_changed": [],
   "forbidden_governance_artifacts_confirmed_not_updated": [],
-  "generated_at_utc": "2026-07-12T02:22:17Z",
-  "governance_seal_required": false,
+  "generated_at_utc": "2026-08-10T18:49:16Z",
+  "governance_seal_required": true,
   "implementation_files_created": false,
-  "live_plan_unit_count": 5540,
+  "live_plan_unit_count": 5774,
   "next_batch_cursor": null,
   "next_cursor": null,
   "no_executable_build_tasks_created": true,
   "no_final_node_queues_created": true,
   "no_worknodes_created": true,
-  "node_readiness_status": "ready_for_node_compile",
+  "node_readiness_status": "blocked_runtime_certification_incomplete",
   "nodeseed_candidates_created": false,
   "notes": [
-    "Post-seal migration summary refreshed after live Plan repairs and governance artifact regeneration.",
+    "Pre-seal migration summary refreshed without asserting that governance or readiness gates passed.",
     "No WorkNodes, NodeSeeds, NodeSeed candidates, executable queues, final node manifests, product implementation files, production build tasks, or final node queues were created.",
-    "Node readiness remains ready_for_node_compile; runtime enablement remains runtime_certified_ready_for_plancompile because PlanCompile runtime launch and node artifact generation are not enabled."
+    "Node readiness is blocked_runtime_certification_incomplete; runtime enablement is blocked_runtime_certification_incomplete."
   ],
   "pre_conversion_preserved_in_place_rows": 0,
   "pre_conversion_repair": {
@@ -493,20 +493,23 @@
   "production_build_tasks_created": false,
   "residual_source_preserving_plan_units": [],
   "run_id": "pds-20260611-002-atomize-planunits",
-  "runtime_enablement_status": "runtime_certified_ready_for_plancompile",
+  "runtime_enablement_status": "blocked_runtime_certification_incomplete",
   "schema_id": "pm.plan_migration.phase2_final_validation_summary.v2",
   "scope": "Phase 2 Plan standardization currentness finalized for pds-20260611-002-atomize-planunits without broad Plan re-conversion.",
-  "seal_phase_required": [],
-  "shard_check_status": "passed_after_governance_seal",
-  "shard_failure_count": 0,
+  "seal_phase_required": [
+    "Resolve every current governance and readiness blocker before stamping postseal status",
+    "Rerun python3 scripts/pm-plans-verify.py run-gates and python3 scripts/pm-shard-plans.py --check"
+  ],
+  "shard_check_status": "not_asserted_preseal",
+  "shard_failure_count": null,
   "source_lineage_residual_plan_units": [
     "CV-001"
   ],
   "source_preserving_unit_count_after_batch": 0,
   "standard_run_gates_expected_seal_failures": [],
-  "standard_run_gates_status": "passed_after_governance_seal",
+  "standard_run_gates_status": "not_asserted_preseal",
   "status": "COMPLETE",
-  "unique_live_plan_unit_count": 5540,
+  "unique_live_plan_unit_count": 5774,
   "validators": {
     "required_current_commands": [
       "python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits",
