@@ -1,0 +1,357 @@
+/* ============================================================================
+   pm-themes.css — Puppet Master Settings redesign: shared theme tokens
+   ----------------------------------------------------------------------------
+   Eight themes, selected via `<html data-theme="...">`:
+     friendly-dark (default) | friendly-light
+     glass-dark              | glass-light
+     retro-dark              | retro-light
+     basic-dark              | basic-light
+
+   Every theme block sets the full token set:
+     Surfaces : --pm-bg, --pm-bg-raised, --pm-bg-sunken
+     Ink      : --pm-ink, --pm-ink-dim, --pm-ink-faint
+     Lines    : --pm-line
+     Brand    : --pm-accent, --pm-accent-ink (ink drawn ON accent fills)
+     Status   : --pm-ok, --pm-warn, --pm-danger, --pm-info, --pm-rec,
+                --pm-on-status (ink drawn ON status-colored fills)
+     Shape    : --pm-radius-s, --pm-radius-m, --pm-radius-l
+     Depth    : --pm-shadow-1, --pm-shadow-2
+     Type     : --pm-font (system UI stack), --pm-font-mono (system mono stack)
+     Motion   : --pm-motion-scale (duration multiplier: 1 normal, retro .8,
+                basic .6 — flavor only, never changes WHAT animates)
+     Focus    : --pm-focus (focus ring color)
+
+   Contracts consumers rely on:
+   - `--pm-bg` may be a plain color OR a layered gradient list (glass/retro).
+     Always consume it as `background: var(--pm-bg);` (shorthand), never as
+     `background-color`.
+   - `--pm-bg-raised` may be translucent (glass). Raised surfaces should not
+     stack their own backdrop-filter; use the `.pm-blur-raised` utility below
+     on at most ONE raised layer at a time (Slint: a single blur rect).
+   - Status colors are never the sole carrier of meaning; pair with text/icon
+     (see pm-components.css).
+   - No external fonts. System stacks only.
+   ========================================================================== */
+
+/* ---------- Friendly Dark (default) ---------- */
+:root,
+:root[data-theme="friendly-dark"] {
+  color-scheme: dark;
+  --pm-bg: #211E26;
+  --pm-bg-raised: #2A2731;
+  --pm-bg-sunken: #1A181F;
+  --pm-ink: #F0EDF4;
+  --pm-ink-dim: #B4AEBE;
+  --pm-ink-faint: #8A8494;
+  --pm-line: rgba(240, 237, 244, .10);
+  --pm-accent: #6FC6E8;
+  --pm-accent-ink: #10222C;
+  --pm-ok: #6FDABC;
+  --pm-warn: #FFD97F;
+  --pm-danger: #FF8A73;
+  --pm-info: #6FC6E8;
+  --pm-rec: #C3B1E4;
+  --pm-on-status: #1A181F;
+  --pm-radius-s: 8px;
+  --pm-radius-m: 14px;
+  --pm-radius-l: 20px;
+  --pm-shadow-1: 0 1px 3px rgba(0, 0, 0, .26);
+  --pm-shadow-2: 0 2px 6px rgba(0, 0, 0, .30), 0 10px 24px rgba(0, 0, 0, .22);
+  --pm-font: ui-rounded, "SF Pro Rounded", "Segoe UI", system-ui, sans-serif;
+  --pm-font-mono: ui-monospace, "SF Mono", "Cascadia Mono", Menlo, Consolas, monospace;
+  --pm-motion-scale: 1;
+  --pm-focus: #8ED2EE;
+}
+
+/* ---------- Friendly Light ---------- */
+:root[data-theme="friendly-light"] {
+  color-scheme: light;
+  --pm-bg: #FBF7F3;
+  --pm-bg-raised: #FFFFFF;
+  --pm-bg-sunken: #F2EBE4;
+  --pm-ink: #4A4550;
+  --pm-ink-dim: #6B6473;
+  --pm-ink-faint: #9A93A0;
+  --pm-line: #E4DCEA;
+  --pm-accent: #3F9CC7;
+  --pm-accent-ink: #FFFFFF;
+  --pm-ok: #2FA183;
+  --pm-warn: #A87912;
+  --pm-danger: #E8654C;
+  --pm-info: #3F9CC7;
+  --pm-rec: #9678C9;
+  --pm-on-status: #FFFFFF;
+  --pm-radius-s: 8px;
+  --pm-radius-m: 14px;
+  --pm-radius-l: 20px;
+  --pm-shadow-1: 0 1px 3px rgba(122, 109, 140, .12);
+  --pm-shadow-2: 0 2px 6px rgba(122, 109, 140, .12), 0 10px 24px rgba(122, 109, 140, .14);
+  --pm-font: ui-rounded, "SF Pro Rounded", "Segoe UI", system-ui, sans-serif;
+  --pm-font-mono: ui-monospace, "SF Mono", "Cascadia Mono", Menlo, Consolas, monospace;
+  --pm-motion-scale: 1;
+  --pm-focus: #2F86B0;
+}
+
+/* ---------- Glass Dark ----------
+   Subtle gradient wash on --pm-bg; raised surfaces slightly translucent.
+   The matching blur lives in `.pm-blur-raised` (single layer, @supports). */
+:root[data-theme="glass-dark"] {
+  color-scheme: dark;
+  --pm-bg:
+    radial-gradient(1100px 750px at 88% -12%, rgba(122, 92, 196, .20), transparent 62%),
+    radial-gradient(950px 700px at -12% 112%, rgba(64, 110, 168, .16), transparent 58%),
+    linear-gradient(180deg, #12141F 0%, #0E1119 100%);
+  --pm-bg-raised: rgba(26, 29, 44, .66);
+  --pm-bg-sunken: rgba(9, 11, 18, .55);
+  --pm-ink: #EAEAF2;
+  --pm-ink-dim: #A9ABC0;
+  --pm-ink-faint: #7B7E94;
+  --pm-line: rgba(235, 238, 255, .10);
+  --pm-accent: #8AB4FF;
+  --pm-accent-ink: #0E1B33;
+  --pm-ok: #7BD8B0;
+  --pm-warn: #F2CE84;
+  --pm-danger: #FF9E8A;
+  --pm-info: #8AB4FF;
+  --pm-rec: #C9A8FF;
+  --pm-on-status: #10131F;
+  --pm-radius-s: 10px;
+  --pm-radius-m: 16px;
+  --pm-radius-l: 22px;
+  --pm-shadow-1: 0 1px 2px rgba(4, 6, 12, .50);
+  --pm-shadow-2: 0 2px 8px rgba(4, 6, 12, .42), 0 14px 34px rgba(4, 6, 12, .40);
+  --pm-font: system-ui, -apple-system, "Segoe UI", Roboto, sans-serif;
+  --pm-font-mono: ui-monospace, "SF Mono", "Cascadia Mono", Menlo, Consolas, monospace;
+  --pm-motion-scale: 1;
+  --pm-focus: #A8C6FF;
+}
+
+/* ---------- Glass Light ---------- */
+:root[data-theme="glass-light"] {
+  color-scheme: light;
+  --pm-bg:
+    radial-gradient(1100px 760px at 90% -12%, rgba(150, 120, 220, .16), transparent 62%),
+    radial-gradient(980px 720px at -12% 112%, rgba(90, 150, 220, .14), transparent 58%),
+    linear-gradient(180deg, #F0F2F9 0%, #E8ECF5 100%);
+  --pm-bg-raised: rgba(255, 255, 255, .62);
+  --pm-bg-sunken: rgba(223, 228, 241, .55);
+  --pm-ink: #2A2E3F;
+  --pm-ink-dim: #565B72;
+  --pm-ink-faint: #83889E;
+  --pm-line: rgba(43, 48, 71, .12);
+  --pm-accent: #3D6FD1;
+  --pm-accent-ink: #FFFFFF;
+  --pm-ok: #1F8F6B;
+  --pm-warn: #8F6408;
+  --pm-danger: #C74B36;
+  --pm-info: #3D6FD1;
+  --pm-rec: #7A4FC9;
+  --pm-on-status: #FFFFFF;
+  --pm-radius-s: 10px;
+  --pm-radius-m: 16px;
+  --pm-radius-l: 22px;
+  --pm-shadow-1: 0 1px 2px rgba(43, 48, 71, .10);
+  --pm-shadow-2: 0 2px 8px rgba(43, 48, 71, .10), 0 14px 34px rgba(43, 48, 71, .14);
+  --pm-font: system-ui, -apple-system, "Segoe UI", Roboto, sans-serif;
+  --pm-font-mono: ui-monospace, "SF Mono", "Cascadia Mono", Menlo, Consolas, monospace;
+  --pm-motion-scale: 1;
+  --pm-focus: #2F5BB5;
+}
+
+/* ---------- Retro Dark ----------
+   Warmer palette, larger radius, gradient-only texture (no scanlines),
+   slightly calmer motion (.8). */
+:root[data-theme="retro-dark"] {
+  color-scheme: dark;
+  --pm-bg:
+    radial-gradient(1000px 700px at 15% -10%, rgba(255, 180, 84, .07), transparent 60%),
+    radial-gradient(900px 650px at 105% 110%, rgba(210, 120, 60, .06), transparent 55%),
+    #241C14;
+  --pm-bg-raised: #2F2519;
+  --pm-bg-sunken: #1B150E;
+  --pm-ink: #F4E9D8;
+  --pm-ink-dim: #C9B89E;
+  --pm-ink-faint: #9A8A70;
+  --pm-line: rgba(244, 233, 216, .12);
+  --pm-accent: #FFB454;
+  --pm-accent-ink: #2A1C08;
+  --pm-ok: #9CC97C;
+  --pm-warn: #F2C14E;
+  --pm-danger: #F07B5E;
+  --pm-info: #7FB5C9;
+  --pm-rec: #D1A3D8;
+  --pm-on-status: #241C14;
+  --pm-radius-s: 10px;
+  --pm-radius-m: 16px;
+  --pm-radius-l: 24px;
+  --pm-shadow-1: 0 1px 3px rgba(40, 24, 8, .35);
+  --pm-shadow-2: 0 2px 6px rgba(40, 24, 8, .32), 0 10px 24px rgba(40, 24, 8, .30);
+  --pm-font: "Trebuchet MS", "Gill Sans", Verdana, system-ui, sans-serif;
+  --pm-font-mono: "Courier New", Courier, ui-monospace, monospace;
+  --pm-motion-scale: .8;
+  --pm-focus: #FFC97E;
+}
+
+/* ---------- Retro Light ---------- */
+:root[data-theme="retro-light"] {
+  color-scheme: light;
+  --pm-bg:
+    radial-gradient(1000px 700px at 15% -10%, rgba(179, 92, 18, .06), transparent 60%),
+    radial-gradient(900px 650px at 105% 110%, rgba(140, 90, 40, .05), transparent 55%),
+    #F6EDDD;
+  --pm-bg-raised: #FFFBF2;
+  --pm-bg-sunken: #EEE2CD;
+  --pm-ink: #4A3A28;
+  --pm-ink-dim: #6E5C44;
+  --pm-ink-faint: #97856A;
+  --pm-line: #E3D5BC;
+  --pm-accent: #B35C12;
+  --pm-accent-ink: #FFFBF2;
+  --pm-ok: #4E7E3A;
+  --pm-warn: #8F6A0A;
+  --pm-danger: #B3402A;
+  --pm-info: #3F7E96;
+  --pm-rec: #8A5AA0;
+  --pm-on-status: #FFFBF2;
+  --pm-radius-s: 10px;
+  --pm-radius-m: 16px;
+  --pm-radius-l: 24px;
+  --pm-shadow-1: 0 1px 3px rgba(74, 58, 40, .14);
+  --pm-shadow-2: 0 2px 6px rgba(74, 58, 40, .14), 0 10px 24px rgba(74, 58, 40, .16);
+  --pm-font: "Trebuchet MS", "Gill Sans", Verdana, system-ui, sans-serif;
+  --pm-font-mono: "Courier New", Courier, ui-monospace, monospace;
+  --pm-motion-scale: .8;
+  --pm-focus: #9A4E0F;
+}
+
+/* ---------- Basic Dark ----------
+   Flat system grays, minimal shadows, brisk motion (.6). */
+:root[data-theme="basic-dark"] {
+  color-scheme: dark;
+  --pm-bg: #1C1C1E;
+  --pm-bg-raised: #2C2C2E;
+  --pm-bg-sunken: #131314;
+  --pm-ink: #EDEDED;
+  --pm-ink-dim: #ABABAB;
+  --pm-ink-faint: #7E7E7E;
+  --pm-line: #3A3A3C;
+  --pm-accent: #0A84FF;
+  --pm-accent-ink: #FFFFFF;
+  --pm-ok: #30D158;
+  --pm-warn: #FFD60A;
+  --pm-danger: #FF453A;
+  --pm-info: #0A84FF;
+  --pm-rec: #BF5AF2;
+  --pm-on-status: #FFFFFF;
+  --pm-radius-s: 3px;
+  --pm-radius-m: 5px;
+  --pm-radius-l: 8px;
+  --pm-shadow-1: 0 1px 2px rgba(0, 0, 0, .35);
+  --pm-shadow-2: 0 4px 12px rgba(0, 0, 0, .28);
+  --pm-font: system-ui, -apple-system, "Segoe UI", Roboto, Arial, sans-serif;
+  --pm-font-mono: ui-monospace, "SF Mono", "Cascadia Mono", Menlo, Consolas, monospace;
+  --pm-motion-scale: .6;
+  --pm-focus: #409CFF;
+}
+
+/* ---------- Basic Light ---------- */
+:root[data-theme="basic-light"] {
+  color-scheme: light;
+  --pm-bg: #F5F5F7;
+  --pm-bg-raised: #FFFFFF;
+  --pm-bg-sunken: #E9E9EB;
+  --pm-ink: #1D1D1F;
+  --pm-ink-dim: #5A5A5E;
+  --pm-ink-faint: #86868B;
+  --pm-line: #D2D2D7;
+  --pm-accent: #0066CC;
+  --pm-accent-ink: #FFFFFF;
+  --pm-ok: #248A3D;
+  --pm-warn: #9E6C00;
+  --pm-danger: #D70015;
+  --pm-info: #0066CC;
+  --pm-rec: #8944AB;
+  --pm-on-status: #FFFFFF;
+  --pm-radius-s: 3px;
+  --pm-radius-m: 5px;
+  --pm-radius-l: 8px;
+  --pm-shadow-1: 0 1px 2px rgba(0, 0, 0, .08);
+  --pm-shadow-2: 0 4px 12px rgba(0, 0, 0, .12);
+  --pm-font: system-ui, -apple-system, "Segoe UI", Roboto, Arial, sans-serif;
+  --pm-font-mono: ui-monospace, "SF Mono", "Cascadia Mono", Menlo, Consolas, monospace;
+  --pm-motion-scale: .6;
+  --pm-focus: #0058B8;
+}
+
+/* ============================================================================
+   Glass blur utility — the ONLY backdrop-filter in the system.
+   Apply `.pm-blur-raised` to at most one raised overlay layer at a time
+   (drawer, dialog, or toast stack — pick one). Slint equivalent: a single
+   blurred rectangle behind the overlay. Wrapped in @supports; other themes
+   never match because their --pm-bg-raised is opaque.
+   ========================================================================== */
+@supports ((backdrop-filter: blur(14px)) or (-webkit-backdrop-filter: blur(14px))) {
+  :root[data-theme^="glass"] .pm-blur-raised {
+    -webkit-backdrop-filter: blur(14px);
+    backdrop-filter: blur(14px);
+  }
+}
+
+/* ============================================================================
+   Reduced motion kill switch.
+   Pages/concept JS set `<html data-motion="reduced">` (PMBridge does this from
+   the ConceptHub state); the OS-level media query is honored independently.
+   Durations collapse to ~0 so every animated sequence lands on its final
+   state immediately — same end state, no motion.
+   ========================================================================== */
+[data-motion="reduced"] *,
+[data-motion="reduced"] *::before,
+[data-motion="reduced"] *::after {
+  animation-duration: 0.01ms !important;
+  transition-duration: 0.01ms !important;
+  scroll-behavior: auto !important;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
+  }
+}
+
+/* ============================================================================
+   Focus-settle treatment — the deep-link / scrollspy landing cue.
+   A one-shot ~600ms ease: a soft ring opens at 3px with a faint background
+   tint, then settles to a 1px ring and the tint eases away. It plays ONCE
+   (forwards fill) and never pulses or repeats. After the animation the
+   consumer keeps a persistent subtle marker via `[data-spy-current]`
+   (PMSpy.jumpTo manages both). Under reduced motion the global kill switch
+   above collapses this to the final state instantly.
+   ========================================================================== */
+@keyframes pm-focus-settle {
+  0% {
+    box-shadow: 0 0 0 0 transparent;
+    background-color: color-mix(in srgb, var(--pm-focus) 14%, transparent);
+  }
+  35% {
+    box-shadow: 0 0 0 3px var(--pm-focus);
+    background-color: color-mix(in srgb, var(--pm-focus) 10%, transparent);
+  }
+  100% {
+    box-shadow: 0 0 0 1px var(--pm-focus);
+    background-color: transparent;
+  }
+}
+
+.pm-focus-settle {
+  animation: pm-focus-settle calc(600ms * var(--pm-motion-scale, 1)) cubic-bezier(.22, .61, .36, 1) 1 both;
+}
+
+/* Persistent subtle marker left behind after the settle animation. */
+[data-spy-current] {
+  outline: 1px solid var(--pm-focus);
+  outline-offset: 2px;
+}
