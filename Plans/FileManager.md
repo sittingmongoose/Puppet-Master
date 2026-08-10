@@ -2747,9 +2747,12 @@ unit_type: requirement
 status: accepted
 owner_doc: Plans/FileManager.md
 canonical_text: >-
-  FileManager owns the editor breadcrumb strip and outline; available LSP data uses
-  documentSymbol, fallback uses heuristic or regex outline data, and degraded state is labeled
-  when LSP is unavailable.
+  The editor breadcrumb strip and outline rail chrome are retired per Jared's 2026-07-16
+  decision; no breadcrumb or outline chrome renders in the editor. FileManager continues to own
+  the underlying symbol data pipeline: available LSP data uses documentSymbol, fallback uses
+  heuristic or regex outline data, and degraded state is labeled when LSP is unavailable, with
+  that data available to search and navigation consumers. Retired lineage (kept findable): the
+  prior contract had FileManager own the editor breadcrumb strip and outline surfaces.
 gui_related: true
 gui_classification_reason: >-
   This unit governs visible editor breadcrumb and outline surfaces.
@@ -4489,6 +4492,376 @@ This addendum repairs non-runtime File Manager rows without creating WorkNodes, 
 - Repairs `sfk-727204593d5dec2cd6e647bc`: file watcher/LRU behavior is owned by named anchor `File watcher and LRU eviction`. It uses `watch_root_ref`, `event_kind`, `path_ref`, `debounce_ms=100`, `max_cached_entries=10000`, and eviction order least-recently-viewed then lexical path.
 - Repairs `sfk-5d6a5537857b5a5be3432001`: Sections 5-8 and 13-14 are not considered present from pointer-only recovery prose. Their live coverage must be explicit owner sections or explicit source-lineage references; this row is repaired by this canonical negative constraint.
 - Repairs `sfk-def5ee8b66e138410b66ee36`: peer references to nonexistent `§10.10.5-8` are retired aliases. LSP-adjacent File Manager behavior routes to `Plans/LSPSupport.md` plus the named File Manager command anchors above.
+
+## PMConcept6 Shell Sweep Addendum - 2026-07-16
+
+This addendum promotes user-approved PMConcept6 editor viewer renderer mechanics into canonical PlanUnits. `Concepts/pm6-build/**` remains illustrative source-lineage only per `Plans/usage-feature.md`. This addendum creates no WorkNodes, NodeSeeds, executable queues, implementation files, runtime artifacts, generated wiring rows, production build tasks, final manifests, or PNC-019 receipts.
+
+### F-073 - Editor Viewer Renderer Mechanics
+
+```yaml
+plan_unit_id: F-073
+unit_type: requirement
+status: accepted
+owner_doc: Plans/FileManager.md
+canonical_text: >-
+  The rich file and editor viewer renderer reveals newly opened viewer content with a staggered content reveal, and reduced motion disables the stagger so content renders immediately in final position. Long documents expose a canvas-style minimap with a viewport thumb that tracks the visible region during ordinary scrolling; clicking the minimap navigates to the clicked region, and pointer drag-scrub on the minimap scrolls the document continuously while the thumb follows the pointer until release. The document scroll position remains the single scroll authority: minimap interactions issue scroll intents against the shared editor buffer view rather than owning a second scroll state.
+gui_related: true
+gui_classification_reason: This is visible editor viewer reveal motion, minimap rendering, and scroll interaction behavior.
+depends_on: [F-043]
+unblocks: []
+acceptance_criteria:
+  - Opening a rich file or editor viewer staggers content reveal, and reduced motion renders content immediately without stagger.
+  - Long documents show a canvas-style minimap whose viewport thumb tracks the visible region during ordinary scrolling.
+  - Minimap click navigates to the target region, and pointer drag-scrub scrolls continuously until pointer release.
+  - Minimap interactions never fork scroll state away from the shared editor buffer view.
+  - No WorkNodes, NodeSeeds, executable queues, final node manifests, or production build tasks are created.
+validation_surfaces:
+  - python3 scripts/pm-plan-index.py validate
+  - Future editor viewer staggered-reveal and reduced-motion tests.
+  - Future editor viewer minimap drag-scrub and thumb-tracking tests.
+risk_class: filemanager_viewer_renderer_drift
+reasoning_tier: standard
+context_scope: file_manager_viewer_renderer
+implementation_surfaces: [Plans/FileManager.md, future editor viewer renderer]
+node_compile_hint: {mode: filemanager_viewer_renderer, create_worknodes: false, create_nodeseeds: false}
+source_lineage:
+  - Concepts/pm6-build (PMConcept6 demo; source-lineage-only per Plans/usage-feature.md)
+  - Concepts/pm6-build/parts/24-js-main.part.html
+  - Concepts/pm6-build/parts/10x-pm6-css-global.part.html
+  - Plans/FileManager.md:24
+  - Plans/FileManager.md:262
+  - Plans/FileManager.md:448-450
+source_atom_ids: []
+preserved_exact_tokens: ["staggered content reveal", "reduced motion", "minimap", "viewport thumb", "drag-scrub"]
+negative_constraints:
+  - Do not create a second scroll authority; minimap interactions issue scroll intents against the shared editor buffer view.
+  - Do not block editing, input, or save authority while the staggered reveal runs.
+compatibility_only_notes:
+  - "Slint compatibility: the minimap renders as a retained canvas-style element with transform-driven thumb and scroll updates rather than per-frame style writes; no arbitrary-content backdrop blur, no SVG filters, color math precomputed; any glass treatment uses a single blur over a known wallpaper as a pre-blurred asset."
+owner_boundary_notes:
+  - "The RGV-004 minimap precedent is graph-scoped (Run Graph canvas minimap); this unit owns the editor viewer minimap variant inside FileManager viewer surfaces."
+owner_hints: [Plans/FileManager.md, Plans/FinalGUISpec.md]
+```
+
+## Cozy Shelves Panel Reconciliation Addendum - 2026-07-27
+
+This addendum closes File Manager spec gaps exposed by the Cozy Shelves left-rail concept review and promotes the user-ratified rulings from that review (user decisions 2026-07-27) into canonical PlanUnits. `Concepts/rail-concepts/QwenRailConcepts/c2-cozy-shelves.html` and `Concepts/rail-concepts/QwenRailConcepts/c2-cozy-shelves-files.html` remain illustrative source-lineage only: no HTML, CSS, color values, demo data, or class names from those files may enter spec or implementation. No existing PlanUnit, preserved_exact_tokens list, canonical_text, or retired bridge is edited; stale-prose supersession is expressed only through the new successor units below. This addendum creates no WorkNodes, NodeSeeds, executable queues, implementation files, runtime artifacts, generated wiring rows, production build tasks, final manifests, or PNC-019 receipts.
+
+### F-074 - File Tree Git Status Decoration Owner Ruling
+
+```yaml
+plan_unit_id: F-074
+unit_type: requirement
+status: accepted
+owner_doc: Plans/FileManager.md
+canonical_text: >-
+  FileManager owns the presentation of per-node git status decorations in the file tree (user
+  decision 2026-07-27). A decorated node shows a trailing single-letter text badge: M (modified),
+  A (added), D (deleted), ? (untracked), C (conflicted). Badge colors resolve through per-theme
+  status-decoration text tokens rather than hard-coded values and must meet WCAG AA text contrast
+  on light themes; the selection accent (--accent-primary indirection) is reserved for selection
+  and is never used as a git-status color. A collapsed folder rolls up descendant status as a
+  folder-name tint using the strongest descendant state plus an optional "N changed" count chip;
+  the strongest-descendant precedence order is C > D > M > A > ?. Decorations are a consumer
+  projection of Source Control state: repository state ownership, git semantics, staging, and
+  refresh cadence remain with Source Control and worktree contracts per F-057, with file identity,
+  repo_id, and worktree_id handed off explicitly.
+gui_related: true
+gui_classification_reason: This unit governs visible file-tree git badge, rollup tint, and count-chip presentation.
+depends_on: [F-057]
+unblocks: []
+acceptance_criteria:
+  - Per-node badges are limited to the text letters M, A, D, ?, and C; no emoji glyphs.
+  - Badge and rollup colors come from per-theme tokens and meet AA text contrast on light themes.
+  - Collapsed-folder rollup uses strongest-descendant precedence C > D > M > A > ? with an optional N-changed chip.
+  - The selection accent is never used as a git-status decoration color.
+  - FileManager renders projected Source Control state and never computes git state locally.
+  - No WorkNodes, NodeSeeds, executable queues, final node manifests, or production build tasks are created by this PlanUnit.
+validation_surfaces:
+  - python3 scripts/pm-plan-index.py validate
+  - Future file-tree git decoration precedence and contrast tests.
+risk_class: file_manager_drift
+reasoning_tier: standard
+context_scope: file_manager_git_decorations
+implementation_surfaces: [Plans/FileManager.md, future file tree renderer]
+node_compile_hint: {mode: filemanager_git_decorations, create_worknodes: false, create_nodeseeds: false}
+source_lineage:
+  - user decision 2026-07-27 (Cozy Shelves panel review)
+  - Concepts/rail-concepts/QwenRailConcepts/c2-cozy-shelves-files.html (source-lineage-only)
+  - Plans/FileManager.md:165
+source_atom_ids: []
+preserved_exact_tokens: ["optional Git status strip"]
+negative_constraints:
+  - Do not let FileManager own git semantics, staging, or repository refresh; F-057 handoff boundaries apply.
+  - Do not hard-code badge colors or reuse the selection accent for status decoration.
+compatibility_only_notes:
+  - "Slint compatibility: badges and rollup tints render as opaque precomputed surfaces with precomputed color math; no arbitrary-content backdrop blur, no SVG filters; any glass treatment uses a single blur over a known wallpaper as a pre-blurred asset."
+owner_boundary_notes:
+  - "Source Control and worktree contracts own git state; this unit owns only the tree-side presentation of the projected state."
+owner_hints: [Plans/FileManager.md, Plans/WorktreeGitImprovement.md, Plans/GitHub_Integration.md]
+```
+
+### F-075 - Section 10.1 Breadcrumb Prose Stale Disposition
+
+```yaml
+plan_unit_id: F-075
+unit_type: compatibility_disposition
+status: accepted
+owner_doc: Plans/FileManager.md
+canonical_text: >-
+  The section 10.1 prose sentence "FileManager owns the editor breadcrumb strip and outline"
+  (Plans/FileManager.md:472) is stale source-lineage superseded by accepted F-042: the editor
+  breadcrumb strip and outline rail chrome are retired per Jared's 2026-07-16 decision, and
+  FileManager retains only the underlying symbol data pipeline (documentSymbol when LSP is
+  available, heuristic or regex outline fallback, labeled degraded state) for search and
+  navigation consumers. Readers and ports must treat the section 10.1 chrome-ownership wording
+  as retired lineage; no Cozy Shelves rail or editor surface may reintroduce breadcrumb or
+  outline chrome. This successor unit records the disposition without editing preserved prose.
+gui_related: true
+gui_classification_reason: This unit dispositions stale prose about visible editor breadcrumb and outline chrome.
+depends_on: [F-042]
+unblocks: []
+acceptance_criteria:
+  - Section 10.1 chrome-ownership prose is read as retired lineage; F-042 remains the live canon.
+  - No new surface reintroduces breadcrumb or outline chrome; the symbol pipeline remains available to consumers.
+  - No WorkNodes, NodeSeeds, executable queues, final node manifests, or production build tasks are created by this PlanUnit.
+validation_surfaces:
+  - python3 scripts/pm-plan-index.py validate
+risk_class: file_manager_drift
+reasoning_tier: standard
+context_scope: file_manager_standardization
+implementation_surfaces: [Plans/FileManager.md]
+node_compile_hint: {mode: filemanager_stale_prose_disposition, create_worknodes: false, create_nodeseeds: false}
+source_lineage:
+  - Plans/FileManager.md:472
+  - Plans/FileManager.md F-042 (Jared's 2026-07-16 decision)
+source_atom_ids: []
+preserved_exact_tokens: []
+negative_constraints:
+  - Do not edit the preserved section 10.1 prose or F-042 canonical_text; supersession lives in this unit.
+compatibility_only_notes: []
+owner_boundary_notes: []
+owner_hints: [Plans/FileManager.md]
+```
+
+### F-076 - Bulk Operation Selection Basket And Ops Tray Contract
+
+```yaml
+plan_unit_id: F-076
+unit_type: requirement
+status: accepted
+owner_doc: Plans/FileManager.md
+canonical_text: >-
+  File Manager bulk operations use a selection-basket-plus-ops-tray UI contract (user decision
+  2026-07-27). The selection basket persists across scrolling, expansion, and filter changes and
+  is disclosed by an always-visible "N selected" chip; range-select extends only across currently
+  visible rows, and filtered-out or collapsed rows are never silently added to the basket.
+  Executing bulk operations render in an ops-tray footer row inside the panel with per-operation
+  and aggregate progress, a cancel control, and a retry-failed action scoped to the failed subset.
+  Post-operation refresh contract: on a terminal operation state the affected directory nodes are
+  refreshed or invalidated so results appear without manual refresh; the basket clears on full
+  success and retains only the failed subset while retry-failed is offered. Destructive bulk
+  actions route through the shared confirm surface with exact target preview. Every bulk mutation
+  joins the F-068 FileSafe mutation-session model and the F-069 operation lifecycle
+  (operation_type bulk with per-file conflict, evidence, rollback/recovery, and refresh state).
+gui_related: true
+gui_classification_reason: Selection chips, ops-tray progress, cancel/retry controls, and refresh behavior are user-visible panel behavior.
+depends_on: [F-068, F-069]
+unblocks: []
+acceptance_criteria:
+  - The selection basket persists across scroll/filter changes and is disclosed by a visible N-selected chip.
+  - Range-select is limited to visible rows; hidden rows never join the basket implicitly.
+  - The ops tray shows per-op and aggregate progress with cancel and retry-failed controls.
+  - Terminal operations refresh affected directories; the basket clears on success and retains the failed subset for retry.
+  - Destructive bulk actions use the shared confirm surface with exact target preview and the F-068/F-069 lifecycle.
+  - No WorkNodes, NodeSeeds, executable queues, final node manifests, or production build tasks are created by this PlanUnit.
+validation_surfaces:
+  - python3 scripts/pm-plan-index.py validate
+  - Future bulk-operation basket persistence and ops-tray progress tests.
+risk_class: file_operation_conflict_drift
+reasoning_tier: high
+context_scope: filemanager_bulk_operation_ui
+implementation_surfaces: [Plans/FileManager.md, Plans/FileSafe.md, future File Manager panel]
+node_compile_hint: {mode: filemanager_bulk_operation_ui, create_worknodes: false, create_nodeseeds: false}
+source_lineage:
+  - user decision 2026-07-27 (Cozy Shelves panel review)
+  - Concepts/rail-concepts/QwenRailConcepts/c2-cozy-shelves-files.html (source-lineage-only)
+  - Plans/FileManager.md:174
+source_atom_ids: []
+preserved_exact_tokens: ["operation_type", "bulk"]
+negative_constraints:
+  - Do not let bulk operations bypass per-file conflict, evidence, rollback/recovery, and refresh state (F-069).
+  - Do not run bulk mutations outside a FileSafe mutation session (F-068).
+  - Do not add hidden rows to the basket through range-select.
+compatibility_only_notes:
+  - "Slint compatibility: basket chip and ops-tray progress render as opaque precomputed surfaces with transform-driven updates and precomputed color math; no arbitrary-content backdrop blur, no SVG filters; any glass treatment uses a single blur over a known wallpaper as a pre-blurred asset."
+owner_boundary_notes: []
+owner_hints: [Plans/FileManager.md, Plans/FileSafe.md, Plans/FinalGUISpec.md]
+```
+
+### F-077 - Keyboard Tree Interaction Model Reaffirmation
+
+```yaml
+plan_unit_id: F-077
+unit_type: requirement
+status: accepted
+owner_doc: Plans/FileManager.md
+canonical_text: >-
+  This unit reaffirms and concretizes the keyboard contract at Plans/FileManager.md:172. The file
+  tree is fully keyboard operable: Up/Down move the active row; Right expands a collapsed folder
+  or moves to its first child; Left collapses an expanded folder or moves to the parent; Enter
+  opens the active file or toggles the active folder; printable-character type-ahead narrows to
+  matching nodes with DiscoveryService ordering per F-072; F2 begins rename on the active row;
+  Delete requests deletion of the current selection through the standard confirm and
+  mutation-session path. The tree exposes assistive-technology semantics equivalent to
+  role=tree/role=treeitem with per-node level (aria-level), expanded state (aria-expanded), and
+  selection state, delivered through Slint accessibility properties.
+gui_related: true
+gui_classification_reason: Keyboard navigation and assistive-technology exposure are user-visible tree interaction behavior.
+depends_on: [F-068, F-072]
+unblocks: []
+acceptance_criteria:
+  - Arrow keys, Enter, type-ahead, F2, and Delete behave as specified with keyboard-only operation supported end to end.
+  - Delete routes through the standard confirm and FileSafe mutation-session path, never a direct unlink.
+  - Tree nodes expose role/level/expanded/selection semantics equivalent to role=tree with aria-level and aria-expanded.
+  - No WorkNodes, NodeSeeds, executable queues, final node manifests, or production build tasks are created by this PlanUnit.
+validation_surfaces:
+  - python3 scripts/pm-plan-index.py validate
+  - Future keyboard-only tree navigation and accessibility exposure tests.
+risk_class: file_manager_drift
+reasoning_tier: standard
+context_scope: file_manager_keyboard_model
+implementation_surfaces: [Plans/FileManager.md, future file tree renderer]
+node_compile_hint: {mode: filemanager_keyboard_tree_model, create_worknodes: false, create_nodeseeds: false}
+source_lineage:
+  - Plans/FileManager.md:172
+  - Plans/FileManager.md:174
+source_atom_ids: []
+preserved_exact_tokens: ["Keyboard-only use must be supported for accessibility."]
+negative_constraints:
+  - Do not fork a second keyboard model between docked and floating File Manager surfaces.
+compatibility_only_notes:
+  - "Slint compatibility: accessibility semantics are exposed through Slint accessible-role/accessible-* properties; role=tree/aria-* names are the contract vocabulary, not a DOM requirement."
+owner_boundary_notes: []
+owner_hints: [Plans/FileManager.md, Plans/FinalGUISpec.md]
+```
+
+### F-078 - Changed And Open Pane Expander Consumption
+
+```yaml
+plan_unit_id: F-078
+unit_type: requirement
+status: accepted
+owner_doc: Plans/FileManager.md
+canonical_text: >-
+  The File Manager panel's Changed-files and Open-editors panes consume the shared unified
+  expander contract owned by the Cozy Shelves Panel Reconciliation Addendum - 2026-07-27 in
+  Plans/FinalGUISpec.md; FileManager does not re-own that contract. Consumption binds: rows are
+  collapsed by default; each row header is a single accessible button exposing expanded state;
+  the expanded body renders slots in the order kv-facts, status-detail, blocked-reason-detail,
+  actions, overflow; the body is capped near 200px with internal scroll; blocked reasons remain
+  visible outside the collapsible body; destructive row actions route through the shared confirm
+  surface; blocked payloads carry blocked_reason_code plus ordered allowed_action_ids[]. Changed
+  rows are presentation consumers only: git semantics, staging, and discard ownership remain with
+  Source Control per F-057, and row actions hand off file identity, repo_id, and worktree_id
+  explicitly.
+gui_related: true
+gui_classification_reason: Expander rows, slot order, and blocked-reason presentation are user-visible panel behavior.
+depends_on: [F-057]
+unblocks: []
+acceptance_criteria:
+  - Changed and Open pane rows follow the shared expander contract without local variants of slot order, cap, or header semantics.
+  - Blocked reasons stay visible when the row body is collapsed.
+  - Destructive row actions use the shared confirm surface; blocked payloads use blocked_reason_code plus ordered allowed_action_ids[].
+  - Git semantics remain owned by Source Control; rows hand off identity explicitly.
+  - No WorkNodes, NodeSeeds, executable queues, final node manifests, or production build tasks are created by this PlanUnit.
+validation_surfaces:
+  - python3 scripts/pm-plan-index.py validate
+  - Future Changed/Open pane expander conformance tests.
+risk_class: file_manager_drift
+reasoning_tier: standard
+context_scope: file_manager_panel_expanders
+implementation_surfaces: [Plans/FileManager.md, future File Manager panel]
+node_compile_hint: {mode: filemanager_expander_consumption, create_worknodes: false, create_nodeseeds: false}
+source_lineage:
+  - user decision 2026-07-27 (Cozy Shelves panel review)
+  - Concepts/rail-concepts/QwenRailConcepts/c2-cozy-shelves-files.html (source-lineage-only)
+source_atom_ids: []
+preserved_exact_tokens: []
+negative_constraints:
+  - Do not re-own or locally fork the unified expander contract; FileManager is a consumer.
+  - Do not render staging or discard controls whose semantics FileManager would own; hand off to Source Control.
+compatibility_only_notes:
+  - "Slint compatibility: expander bodies are opaque precomputed surfaces with internal scroll; no arbitrary-content backdrop blur, no SVG filters, precomputed color math; any glass treatment uses a single blur over a known wallpaper as a pre-blurred asset."
+owner_boundary_notes:
+  - "The unified expander contract itself is owned by Plans/FinalGUISpec.md; this unit binds only FileManager's consumption of it."
+owner_hints: [Plans/FileManager.md, Plans/FinalGUISpec.md]
+```
+
+## PMConcept7 Cozy Shelves Integration Addendum - 2026-07-28
+
+This addendum records the integration of the ratified Cozy Shelves File Manager concept (`Concepts/rail-concepts/QwenRailConcepts/c2-cozy-shelves-files.html`, source-lineage-only per `Plans/usage-feature.md`) into the `Concepts/PMConcept7.html` build via the `Concepts/pm6-build` parts pipeline. It creates no WorkNodes, NodeSeeds, executable queues, implementation files, runtime artifacts, generated wiring rows, production build tasks, final manifests, or PNC-019 receipts.
+
+### F-079 - Cozy Shelves File Manager PM7 Integration
+
+```yaml
+plan_unit_id: F-079
+unit_type: requirement
+status: accepted
+owner_doc: Plans/FileManager.md
+canonical_text: >-
+  The Cozy Shelves File Manager is integrated into Concepts/PMConcept7.html as the
+  panel-files view: explorer/changed/open segmented tabs, a measured-height tree
+  animator with full keyboard tree model, hover quick actions per row kind,
+  multi-select with a selection bar, type-ahead filter, hide-ignored toggle,
+  collapse-all, worktree root menu, and the sprout context menu whose hook id
+  remains fileContextMenu. The context menu's Delete affordance follows the F2-205
+  trash-first decision (OS-trash soft delete with undo toast; permanent delete
+  stays behind the fail-closed confirm; explicit disclosure when trash is
+  impossible), and Open with / Copy path submenu entries keep their c2 command
+  bindings. The retired PM6 file-tree markup and its pm6FmFilter-era wiring are
+  removed in the same change.
+gui_related: true
+gui_classification_reason: This unit records the user-visible File Manager panel integration into the PMConcept7 build.
+split_recommended: false
+depends_on: [F-078, F2-205]
+unblocks: []
+acceptance_criteria:
+- "The integrated File Manager opens from the FILES activity-bar icon with the three segmented tabs and all tree folders collapsed by default except the reveal chain of the active file."
+- "Right-click and Shift+F10 open the sprout context menu; submenu hover/click/keyboard paths work; Delete routes the trash-first flow per F2-205."
+- "Tree keyboard model works: arrows walk visible rows, Right expands, Left collapses or focuses parent, Enter activates, letters type-ahead."
+- "No WorkNodes, NodeSeeds, executable queues, final node manifests, or production build tasks are created by this PlanUnit."
+validation_surfaces:
+- "python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits"
+- "python3 scripts/pm-plan-index.py validate"
+risk_class: filemanager_drift
+reasoning_tier: standard
+context_scope: pm7_cozy_shelves_integration
+implementation_surfaces:
+- "Concepts/pm6-build/parts/12-html-side-panels.part.html"
+- "Concepts/pm6-build/parts/29x-pm6-js-cozy-shelves.part.html"
+node_compile_hint:
+  mode: cozy_shelves_fm_pm7_integration_record
+  create_worknodes: false
+source_lineage:
+- "Concepts/rail-concepts/QwenRailConcepts/c2-cozy-shelves-files.html (winning files concept; source-lineage-only)"
+- "Plans/FileSafe.md (F2-205 trash-first delete decision)"
+preserved_exact_tokens:
+- "fileContextMenu"
+- "explorer"
+- "changed"
+- "open"
+negative_constraints:
+- "Do not reintroduce the retired PM6 file-tree markup or its filter wiring."
+- "Do not surface a permanent-delete primary action; trash-first per F2-205 with permanent only behind the fail-closed confirm."
+compatibility_only_notes:
+- "Slint: the tree maps to a model-driven TreeView with measured expand animation per F3-473; the context menu maps to PopupWindow (F3-242 contract); no DOM-shaped hover quick actions — use Slint hover delegates."
+stale_retired_dispositions: []
+owner_boundary_notes:
+- "Plans/FinalGUISpec.md owns the panel integration record (F3-497) and the unified expander contract; Plans/FileSafe.md owns the delete safety semantics; this unit owns only the File Manager surface realization."
+owner_hints: [Plans/FileManager.md, Plans/FinalGUISpec.md, Plans/FileSafe.md]
+```
 
 ## PMConcept7 Home Workspace reconciliation — 2026-08-04
 

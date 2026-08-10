@@ -1,6 +1,6 @@
 {
   "$schema": "https://json-schema.org/draft/2020-12/schema",
-  "$id": "https://puppetmaster.local/schemas/event_record.schema.json",
+  "$id": "https://puppetmaster.local/schemas/event_record/2.0.0/event_record.schema.json",
   "title": "Puppet Master EventRecord Envelope",
   "description": "Canonical persisted EventRecord envelope for schema_id pm.event.v0. The envelope is closed and carries identity, sequence, causality, redaction, replay, idempotency, and migration fields. Event-specific payload content is dispatched through payload_schema_id and remains owned by the registered payload schema. No raw secret, token, password, credential, API key, OAuth value, or local machine secret may be stored in this envelope or payload.",
   "type": "object",
@@ -8,6 +8,7 @@
   "required": [
     "schema_id",
     "schema_version",
+    "scope_kind",
     "event_id",
     "event_type",
     "project_id",
@@ -41,7 +42,14 @@
     },
     "schema_version": {
       "type": "string",
-      "const": "1.0.0"
+      "const": "2.0.0"
+    },
+    "scope_kind": {
+      "type": "string",
+      "enum": [
+        "application",
+        "project"
+      ]
     },
     "event_id": {
       "$ref": "#/$defs/non_empty_string"
@@ -51,7 +59,7 @@
       "pattern": "^[a-z][a-z0-9_]*(\\.[a-z][a-z0-9_]*)+$"
     },
     "project_id": {
-      "$ref": "#/$defs/non_empty_string"
+      "$ref": "#/$defs/nullable_non_empty_string"
     },
     "thread_id": {
       "$ref": "#/$defs/nullable_non_empty_string"
@@ -133,6 +141,46 @@
       "$ref": "#/$defs/migration"
     }
   },
+  "allOf": [
+    {
+      "if": {
+        "properties": {
+          "scope_kind": {
+            "const": "application"
+          }
+        },
+        "required": [
+          "scope_kind"
+        ]
+      },
+      "then": {
+        "properties": {
+          "project_id": {
+            "type": "null"
+          }
+        }
+      }
+    },
+    {
+      "if": {
+        "properties": {
+          "scope_kind": {
+            "const": "project"
+          }
+        },
+        "required": [
+          "scope_kind"
+        ]
+      },
+      "then": {
+        "properties": {
+          "project_id": {
+            "$ref": "#/$defs/non_empty_string"
+          }
+        }
+      }
+    }
+  ],
   "$defs": {
     "non_empty_string": {
       "type": "string",
@@ -185,6 +233,139 @@
         },
         "compatibility_event_type": {
           "$ref": "#/$defs/nullable_non_empty_string"
+        }
+      }
+    },
+    "event_record_1_0_0_compatibility_reader": {
+      "description": "Frozen compatibility reader shape for persisted pm.event.v0 version 1.0.0 values. New writers must not emit this shape.",
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "schema_id",
+        "schema_version",
+        "event_id",
+        "event_type",
+        "project_id",
+        "thread_id",
+        "run_id",
+        "node_id",
+        "attempt_id",
+        "actor_ref",
+        "requested_account_ref",
+        "effective_account_ref",
+        "occurred_at_utc",
+        "observed_at_utc",
+        "persisted_at_utc",
+        "sequence_id",
+        "producer_sequence_id",
+        "correlation_id",
+        "causation_event_id",
+        "parent_event_id",
+        "idempotency_key",
+        "payload_schema_id",
+        "payload",
+        "payload_ref",
+        "redaction_profile",
+        "replay_policy",
+        "migration"
+      ],
+      "properties": {
+        "schema_id": {
+          "type": "string",
+          "const": "pm.event.v0"
+        },
+        "schema_version": {
+          "type": "string",
+          "const": "1.0.0"
+        },
+        "event_id": {
+          "$ref": "#/$defs/non_empty_string"
+        },
+        "event_type": {
+          "type": "string",
+          "pattern": "^[a-z][a-z0-9_]*(\\.[a-z][a-z0-9_]*)+$"
+        },
+        "project_id": {
+          "$ref": "#/$defs/non_empty_string"
+        },
+        "thread_id": {
+          "$ref": "#/$defs/nullable_non_empty_string"
+        },
+        "run_id": {
+          "$ref": "#/$defs/nullable_non_empty_string"
+        },
+        "node_id": {
+          "$ref": "#/$defs/nullable_non_empty_string"
+        },
+        "attempt_id": {
+          "$ref": "#/$defs/nullable_non_empty_string"
+        },
+        "actor_ref": {
+          "$ref": "#/$defs/non_empty_string"
+        },
+        "requested_account_ref": {
+          "$ref": "#/$defs/nullable_non_empty_string"
+        },
+        "effective_account_ref": {
+          "$ref": "#/$defs/nullable_non_empty_string"
+        },
+        "occurred_at_utc": {
+          "$ref": "#/$defs/date_time_string"
+        },
+        "observed_at_utc": {
+          "$ref": "#/$defs/date_time_string"
+        },
+        "persisted_at_utc": {
+          "$ref": "#/$defs/date_time_string"
+        },
+        "sequence_id": {
+          "type": "integer",
+          "minimum": 0
+        },
+        "producer_sequence_id": {
+          "$ref": "#/$defs/nullable_non_negative_integer"
+        },
+        "correlation_id": {
+          "$ref": "#/$defs/non_empty_string"
+        },
+        "causation_event_id": {
+          "$ref": "#/$defs/nullable_non_empty_string"
+        },
+        "parent_event_id": {
+          "$ref": "#/$defs/nullable_non_empty_string"
+        },
+        "idempotency_key": {
+          "$ref": "#/$defs/non_empty_string"
+        },
+        "payload_schema_id": {
+          "$ref": "#/$defs/non_empty_string"
+        },
+        "payload": {
+          "type": "object",
+          "additionalProperties": true
+        },
+        "payload_ref": {
+          "$ref": "#/$defs/nullable_non_empty_string"
+        },
+        "redaction_profile": {
+          "type": "string",
+          "enum": [
+            "no_secrets",
+            "redacted",
+            "secret_refs_only"
+          ]
+        },
+        "replay_policy": {
+          "type": "string",
+          "enum": [
+            "append_once",
+            "dedupe_by_event_id",
+            "dedupe_by_idempotency_key",
+            "projector_replay_only"
+          ]
+        },
+        "migration": {
+          "$ref": "#/$defs/migration"
         }
       }
     }

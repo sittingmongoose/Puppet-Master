@@ -41,7 +41,7 @@ User Commands consume, but do not re-own, several adjacent runtime and provider 
 
 For context behavior, Commands defer to `Plans/Run_Modes.md` `## 0. Scope and SSOT status`, `### SSOT references (DRY)`, and `## 7. Mode effects on context management`: `LF-006` and `LF-007` are treated as stale-residue / wrong-owner-routing failures whenever command prose sends detailed context-compilation or `/compaction` readers to `Plans/FileSafe.md` instead of the `Plans/Prompt_Pipeline.md` owner. FileSafe remains the guard over compiled output, not the context-compilation SSOT.
 
-For storage and migration paths, command execution uses the storage owner detection order `config > $PUPPET_MASTER_DATA_DIR > project dir > global dir`; Commands may display the resolved storage-root or pass it through execution context, but migration, persistence, and path-resolution semantics stay in `Plans/storage-plan.md`.
+For storage and migration paths, `config > $PUPPET_MASTER_DATA_DIR > project dir > global dir` selects only a `logical_root` candidate. It does not prove continuity or writer authority. Before any command may rely on that candidate, the storage owner must reconcile the out-of-root bootstrap binding with the in-root `storage_instance_id`, `logical_root_fingerprint`, and `root_generation`, select the `active_root`, and publish `storage_access_mode = writer | viewer | blocked` with its closed `storage_mode_reason`. Commands may display redacted root identity/status or pass stable refs through execution context, but User Command files and frontmatter cannot accept, relocate, initialize, merge, overwrite, or switch storage roots. Persistence, continuity, relocation, unsafe fallback, migration, and path-resolution semantics stay in `Plans/storage-plan.md`.
 
 For retry and failure recovery, Commands may expose status and recovery actions, but `429`, `402`, and `/breaker` behavior are owned by the bridge/runtime failure taxonomy in `Plans/CLI_Bridged_Providers.md`, `Plans/Executor_Protocol.md`, and `Plans/Run_Modes.md`. A User Command cannot override no-retry, rate-limit, quota, or circuit-breaker decisions with command-local retry text.
 
@@ -49,13 +49,13 @@ For Assistant Chat message actions, Commands consume the owner-defined `Resend` 
 
 For clarification-request and `question-flow` behavior, command presets and wizard entry points defer to the shared question system in `Plans/assistant-chat-design.md` and the planning flow consumer rules in `Plans/chain-wizard-flexibility.md`; Commands may launch or reference those flows but do not define a separate question lifecycle.
 
-For process coordination, Commands consume the resolved project `lock-file` path from the storage/runtime owner contract. The lock location derives from the storage logical-root with any safe-local-fallback defined by `Plans/storage-plan.md`; command templates must not invent an alternate lock directory or persist a stale path beside the owner-derived value.
+For process coordination, Commands consume the aggregate canonical-store `pm.lock` and storage access result from the storage owner. The lock lives under the owner-selected `active_root`; if unsafe fallback is active, all canonical stores and the aggregate lock move together. User Commands and handlers must not inspect PID, mtime, heartbeat, file existence, or a copied lock path as authority, invent an alternate lock directory, delete/rename `pm.lock`, or persist a stale path beside the owner-derived value.
 
 Command-visible provider context is a projection of provider owners. For bridged providers, `Plans/CLI_Bridged_Providers.md` (`/CLI_Bridged_Providers.md`) owns the versioned correlation `/context` block and account-health semantics; Commands may surface those values when a command launches or resumes work, but account-health is stronger than auth lifecycle alone and must not be collapsed into command-local credential state. For OpenCode, `Plans/Provider_OpenCode.md` (`/Provider_OpenCode.md`) owns canonical `thread_id` mapping and upstream-account opacity; Commands may pass through the selected `thread_id`, but it cannot infer upstream-account identity when the provider marks it opaque.
 
 Launcher and binary-location context is likewise owner-projected. `Plans/BinaryLocator_Spec.md` and `BinaryLocator_Spec` own OpenCode launcher ownership and binary discovery; Commands may invoke that resolved launcher, but it must treat rewrite-adjacent dead `four-tier` names, process-scope wording, and `/session-scope` wording as stale compatibility labels that cannot define command-local runtime identity.
 
-Command-contract reconciliation is registry-facing, not prose-only. `Commands_System.md`, `Wiring_Matrix.md`, and `UI_Wiring_Rules.md` must keep command-contract `IDs` and validation hooks aligned: `/compact` stays reserved when `cmd.chat.compact_context` exists, `cmd.chat.run_user_command` cannot claim a phantom `chat.message.submitted` event unless the event owner registers it, `cmd.chat.branch_from_restore` remains invalid until it is either registered or marked `/superseded`, and `AC-CMD02`, `AC-CMD07`, and `AC-CMD10` all enforce the same `override_builtin`, reserved-name, `/catalog`, `/actions`, `/mutation`, and projection-freshness boundaries instead of leaving git/actions prefix prohibition as prose-only guidance. The same registry boundary owns slash-command reservation, the command execution seam for User Commands, runtime vs overlay mode semantics, and reverse-coverage enforcement for every normative `cmd.*` reference.
+Command-contract reconciliation is registry-facing, not prose-only. `Commands_System.md`, `Wiring_Matrix.md`, and `UI_Wiring_Rules.md` must keep command-contract `IDs` and validation hooks aligned: `/compact` stays reserved when `cmd.chat.compact_context` exists, `cmd.chat.run_user_command` cannot claim a phantom `chat.message.submitted` event unless the event owner registers it, and `AC-CMD02`, `AC-CMD07`, and `AC-CMD10` all enforce the same `override_builtin`, reserved-name, `/catalog`, `/actions`, `/mutation`, and projection-freshness boundaries instead of leaving git/actions prefix prohibition as prose-only guidance. Case L commands `cmd.chat.create_restore_point`, `cmd.chat.branch_from_restore`, and `cmd.chat.delete_restore_point` now have canonical catalog rows plus one-handler production wiring/reverse coverage. Their dispatch remains fail-closed on current catalog/wiring mismatch or an unavailable owner family; this current registration must not be replaced by a hand-maintained ghost-command example. The same registry boundary owns slash-command reservation, the command execution seam for User Commands, runtime vs overlay mode semantics, and reverse-coverage enforcement for every normative `cmd.*` reference.
 
 Route-like UICommands may be surfaced beside User Commands, but Commands does not let feature-local labels become private target models. In `Plans/UI_Command_Catalog.md` (`/UI_Command_Catalog.md`), `/UI` rows that still expose graph HITL `request_id` or `hitl_request_id` commands are a same-file contradiction when the same catalog centers canonical runtime recovery commands; those rows must resolve to runtime `blocked_sequence` before acting. First-class object-selection/navigation commands such as `cmd.source_control.select_worktree` must not remain `layout/UI state only` when they perform object-first worktree selection or object-selection. `cmd.artifacts.open_panel`, `cmd.artifacts.show_in_ledger`, `cmd.artifacts.show_in_usage`, `cmd.orchestrator.open_in_source_control`, `cmd.orchestrator.open_in_github_actions`, `cmd.orchestrator.open_in_docker_manager`, graph `/filter` focus commands, chat usage `/open` commands, and `cmd.source_control.select_worktree` must normalize through a shared `/route` route-target / `route_target` / `/subject` subject-open family before they carry object identity. Navigation commands that restore scope must carry `project_id`, `focused_run_id`, `thread_id`, or an equivalent derivation rule instead of being labeled `/UI-state` only. If `cmd.nav` or `cmd.nav.*` is introduced, surface-specific commands either wrap it with explicit `normalizes_to_contract` metadata or remain typed `navigation_wrapper` / `domain_action` specializations; pure `layout/UI state only` shell commands must not silently become object-first navigation commands. `cmd.panel.switch` and `cmd.source_control.switch_subview` stay pure `/view` /view-state commands with controlled destination vocabularies: they may consume normalized routing context, but they must not replace the canonical `route_target` model. `Plans/Contracts_V0.md` (`/Contracts_V0.md`) owns the route-target / `route_target` and subject-open contract family above individual surface commands, while this document owns whether a User Command can invoke or display repo-state inspection, hosted workflow inspection, or chat `/navigation` commands without rebinding them.
 
@@ -88,6 +88,88 @@ Command availability and summary vocabulary are consumer constraints, not local 
 Discoverability does not weaken confirmation. Any command palette, shortcut surface, or User Command surface that invokes a `strong`, `hard_gate`, `non_reversible`, or `compensating_action_only` action must preserve the owner-defined confirmation, gating, preview, and blocked-action checks before dispatch.
 
 ContractRef: ContractName:Plans/Tools.md, ContractName:Plans/Run_Modes.md, ContractName:Plans/Prompt_Pipeline.md, ContractName:Plans/FileSafe.md, ContractName:Plans/storage-plan.md, ContractName:Plans/CLI_Bridged_Providers.md, ContractName:Plans/Executor_Protocol.md
+
+### 0.3 Case L storage, restore, and recovery command boundary
+
+This section is the Commands consumer propagation for approved Case L decisions. It owns command-dispatch admission and owner-routing only. `Plans/storage-plan.md` owns root, lock, viewer, I/O, backup, and persistence behavior; `Plans/FileSafe.md` owns exact-replace restore/equality/rollback/restart; `Plans/WorktreeGitImprovement.md` owns baseline filesystem/Git effects; `Plans/Executor_Protocol.md` owns blocked-episode and successor-attempt admission; `Plans/Contracts_V0.md` owns EventRecord v2, restore outcomes/reasons, and lifecycle events; Assistant Chat owns conversation restore-point lifecycle; and `Plans/UI_Command_Catalog.md` remains the sole command-registration and machine argument-contract owner.
+
+ContractRef: ContractName:Plans/storage-plan.md#Case-L-4, ContractName:Plans/FileSafe.md#11.1.2b, ContractName:Plans/WorktreeGitImprovement.md#approved-exact-baseline-target-SCM-contract, ContractName:Plans/Executor_Protocol.md#approved-baseline-target-retry-and-restore-lifecycle, ContractName:Plans/Contracts_V0.md#EventRecord, ContractName:Plans/UI_Command_Catalog.md
+
+#### Storage access gate, viewer envelope, and root navigation
+
+Every invocation path, including direct handler dispatch, evaluates the storage-owner access result before command-local permission, projection, or business validation can authorize a side effect. An unknown/missing access result fails closed; a label, visible enabled control, cached projection, stale heartbeat, or available lock file never substitutes for `storage_access_mode = writer`.
+
+In `viewer` mode, Commands allows only operations that stay inside the storage-owner frozen/manual-refresh envelope: canonical/history/receipt/artifact inspection, read-only search, copying text or stable identifiers, redacted diagnostics, view-local in-memory state, and explicitly permitted read/export/navigation against the captured high-water mark. A User Command preview is allowed only when expansion itself performs no shell injection, provider/tool call, child launch, persistence, or external mutation. User Command invocation that creates chat/history, changes settings, dispatches a run/agent/provider/tool, writes a receipt/checkpoint/index, changes project files/SCM, or performs an external side effect is disabled. Every mutation-capable command and direct handler returns the owner token `storage_read_only`; commands remain discoverable when useful and do not masquerade as unavailable for an unrelated reason.
+
+`Retry storage` and `Try write mode` are owner-defined recovery action labels, not command IDs minted here. `Retry storage` is available only for the storage-owned explicit probe after `storage_io_exhausted`; `Try write mode` is available only for a compatible lock-conflict viewer. Neither action auto-resumes a blocked attempt. The later catalog/wiring wave must either register stable commands for these labels with owner preconditions/results or keep them as non-command recovery controls; this document and GUI consumers must not reference an invented `cmd.storage.*` ID.
+
+Storage-value viewing and root-opening are read/navigation operations only when they carry the owner-resolved stable root/store/family/value identity plus the shared `route_target`/`OpenSubject` contract. A raw filesystem path is display/local handoff data, never root continuity, lock, or value authority. Opening `logical_root`, `active_root`, a retained relocation source, or a fallback recovery copy may reveal that exact redacted target but cannot select it as authoritative, promote it, clear a hold, or establish writer mode. A viewer that cannot safely open one captured value/root remains `blocked`; it must not fall back to an empty surface.
+
+Root mismatch exposes only the owner actions `Use previous location`, `Choose location`, `Copy and switch to selected location`, and strongly confirmed `Start a new storage instance`. Fallback reconciliation keeps `cmd.storage.fallback.return_fast_forward` separate and admits it only while the immutable base still matches. `fallback_diverged` exposes exactly the registered visible dispositions `cmd.storage.fallback.keep_logical_root`, `cmd.storage.fallback.fork_new_instance`, and `cmd.storage.fallback.export_both`; User Command frontmatter cannot invoke them. Each disposition consumes the storage/Contracts-owned shared closed `StorageFallbackDispositionRequest` envelope, including its exact command-specific `confirmation`, full eight-component CAS set, lowercase 64-hex hashes, actor/idempotency identity, and sole storage handler; `Plans/UI_Command_Catalog.md` registers and consumes that envelope and the closed `StorageFallbackDispositionResult` but does not own either payload. Fork returns only an inactive `candidate_binding` without changing active bootstrap selection; export returns exact-byte encrypted `export_custody`, whose non-secret `manifest_ref` is output evidence rather than request input. All three retain both roots and record only `StorageFallbackResolutionReceipt`, with no EventRecord family, automatic merge, overwrite, deletion, or silent switch.
+
+The storage command gate consumes the closed owner families exactly:
+
+- `storage_access_mode = writer | viewer | blocked`;
+- `storage_mode_reason = normal | lock_held | lock_indeterminate | unsupported_store_version | unsafe_filesystem_no_fallback | storage_io_exhausted | root_mismatch | root_unavailable | fallback_diverged`;
+- `storage_io_class = interrupted | transient_busy | capacity_exhausted | quota_exhausted | read_only_media | permission_denied | device_unavailable | lock_conflict | integrity_failure | invalid_path`.
+
+Only `interrupted` and `transient_busy` receive the owner automatic retry budgets. Commands cannot add a generic retry, translate unknown I/O to a retryable class, or turn returned writer access into an automatic replay of the blocked command. Unknown storage I/O maps owner-side to `device_unavailable`; unknown/malformed command-side state remains blocked without mutation.
+
+#### Compatibility, maintenance, retention, and required-family availability
+
+A newer or otherwise unsupported store is not a live viewer target. Commands may surface only the storage-owner metadata diagnostics and the state-valid startup recovery intents `check_for_update | choose_compatible_backup | open_diagnostics | quit`; they cannot expose `try_anyway`, force-open, live inspection of unsupported values, downgrade-in-place, or mutation. Migration and backup-restore progress remains journal-derived owner state. Cancellation is legal only in migration `preflight`; after that boundary a command surface must preserve the owner do-not-interrupt/recovery-resumes-on-next-launch disclosure and cannot invent force-cancel, rollback-now, skip-step, or an ETA.
+
+The approved MVP has no generic user- or support-invocable live verify/repair/salvage command, Doctor mutation mode, in-place store editor, or bypass token. `Retry storage` and retry-recovery actions rerun closed admission/verification gates; they do not repair bytes. Backup restore stays offline and journaled. Migration, restore, compaction, quarantine, and any future salvage algorithm remain coordinator-owned maintenance under the aggregate lock and maintenance lease. User Command frontmatter, direct handlers, and command aliases cannot expose those internals as mutation verbs.
+
+Retention/compaction is likewise owner-routed. Commands cannot infer expiry or destructive eligibility from prefix, key, path, filename, mtime, UI sort order, or focus. An unknown `retention_policy_ref` is indefinite/no-count-eviction and `materially_incomplete`, not permission to clean up. Storage & Retention settings may request only owner-admitted windows at or above owner minima. Legal-hold set/clear remains the protected `storage.legal_hold.manage` action with actor, reason, and durable receipt; manual compaction remains an owner-routed maintenance request. Neither can bypass holds, recovery/recent-run/live/backup/rollback/maintenance refs, the maintenance lease, or the storage access gate, and neither is a User Command ID registered by this document.
+
+Command discoverability and registration never substitute for machine storage-family materialization. Safe-point restore, restore-point create/branch/delete, migration history, retention/anchor/maintenance, quarantine, and deletion actions remain unavailable when their required `Plans/storage_value_registry.json` family/value schema is absent, deferred, ambiguous, or unsupported. Compatibility aliases are coordinator-owned read/copy-forward inputs only; ordinary command handling cannot lazily rewrite them or route one family into another.
+
+#### Safe-point restore, retry, Chat revert, and SCM consequences
+
+The canonical runtime recovery commands remain `cmd.runtime.restore_safe_point_then_retry`, `cmd.runtime.retry_now`, and `cmd.runtime.start_fresh_attempt`. `cmd.orchestrator.safe_point_retry` is a UI/catalog wrapper and `cmd.orchestrator.restore_safe_point_then_retry` is its compatibility alias. Both accept the same wrapper input: the exact canonical safe-point fields plus optional `permission_snapshot_id`. Admission validates that optional evidence against current permission state, consumes it, and deterministically produces the exact canonical payload for the sole domain/handler pair `cmd.runtime.restore_safe_point_then_retry` / `handlers::runtime::restore_safe_point_then_retry`. Both share the runtime result, `safe_point.restored` producer, effects, idempotency identity, and admission; no orchestrator handler or receipt-only/no-event peer execution path exists.
+
+Command admission consumes the exact blocked episode `{run_id, node_id, blocked_sequence, prior_attempt_id?}`, its ordered `allowed_action_ids[]`, and exact repo/worktree/baseline identity. When `requires_safe_point_restore = true`, only `cmd.runtime.restore_safe_point_then_retry` is legal, its `baseline_target` is exactly `safe_point`, and it requires the named `safe_point_id`, `repo_id`, and `worktree_id`. `retry_now`, `start_fresh_attempt`, resume, and wrapper aliases cannot bypass that rule. A missing/corrupt/unanchored safe point keeps the episode `recovery_unavailable`; recovery hold, local work, and worktree ownership remain preserved.
+
+For `cmd.runtime.retry_now` and `cmd.runtime.start_fresh_attempt`, `baseline_target` is closed to `safe_point | historical_commit | worktree_head` only when the owning blocked/retry policy allows the verb and all target-specific fields are present. `safe_point` exact-replaces the named worktree through FileSafe. `historical_commit` requires the full immutable `historical_commit_oid`, preserves the source worktree byte-for-byte, and creates a new isolated clean worktree. `worktree_head` requires `expected_head_oid` plus `expected_state_sha256`, performs no checkout/reset/stash/clean/file mutation, and binds only after exact revalidation. No command may infer a target from focus, substitute another worktree/safe point/ref, resolve a moving/abbreviated ref, or treat `cmd.git.worktree.open` navigation as baseline preparation. The created historical worktree becomes openable only after its durable baseline receipt and identity exist; opening it does not prove it runnable.
+
+`cmd.chat.revert` remains registered as file-mutation restore, not conversation rewind. Assistant Chat resolves one immutable eligible assistant-turn whole-mutation manifest; FileSafe exact-replaces that complete scope using recorded canonical identities and the same target verification, rollback snapshot, durable operation journal, CAS, equality, restart reconciliation, remote custody, and holds as safe-point restore. Omitted target resolution remains Chat-owned. Commands must not reinterpret paths through current `working_directory`, revert a subset of a multi-file turn, emit partial success, change transcript state, or weaken the operation into merge.
+
+The closed Contracts/FileSafe results are consumed exactly:
+
+- `restored_clean` or `restore_skipped` may continue to successor-attempt admission only with the required equality proof and durable baseline/restore receipt;
+- `restore_refused` is pre-mutation and mints no successor;
+- `restore_failed` means verified rollback equality, not target success, and mints no successor;
+- `restore_recovery_required` retains the mutation fence, restore transaction, recovery hold, blocked episode, and worktree ownership;
+- `restored_with_conflicts` is invalid for safe-point restore and `cmd.chat.revert` and is treated as an owner-contract violation.
+
+Permission denial, `storage_read_only`, `storage_io_exhausted`, `snapshot_missing`, `snapshot_corrupt`, `snapshot_scope_unsupported`, `concurrent_edit_conflict`, `historical_commit_missing`, `baseline_stale`, `restore_recovery_required`, in-progress operation identity, and stale blocked/baseline identity remain distinct reasons. Command consumers must not collapse them to generic `restore_failed`, `unknown`, or retry. If an unknown result or reason reaches dispatch, fail closed, retain every fence/hold, emit no success, and route to diagnostics.
+
+#### Conversation restore-point registered command boundary
+
+Approved `PD-RSP-08` defines immutable conversation-boundary restore points under `rp:{project_id}:{restore_point_id}`. Applying one branches the frozen conversation state into a new `thread_id` and conversation `branch_id`; it leaves the source thread and source worktree unchanged, and an optional `safe_point_id` is lineage only. It never silently restores files.
+
+The approved command set `cmd.chat.create_restore_point`, `cmd.chat.branch_from_restore`, and `cmd.chat.delete_restore_point` is registered by `Plans/UI_Command_Catalog.md` and has one-handler reverse coverage in `Plans/Wiring_Matrix.production.json`. Commands consumes that live registration; a current catalog/wiring mismatch, unknown command, or unavailable `restore_point_record` family still fails closed.
+
+- create consumes `project_id`, `thread_id`, `source_message_id`, and `idempotency_key` and produces the owner `restore_point.created` record/event;
+- branch consumes `project_id`, `restore_point_id`, `source_thread_id`, `expected_restore_point_sha256`, and optional `new_thread_title`, requires source-boundary/new-target disclosure, and only `branched` creates new thread/branch identity plus exactly one `restore_point.applied`;
+- delete consumes `project_id`, `restore_point_id`, and `expected_restore_point_sha256` and follows owner retention/hold and expected-hash rules.
+
+Status is `available | expired | deleted | corrupt`; application result is `branched | refused | failed`. Replay returns the recorded result and the same target IDs for `branched` without a second `restore_point.applied`. Refused/failed and expired/deleted/corrupt/stale-hash, permission, storage, hold, or in-progress states return no target IDs and no application event. First execution and replay preserve the source thread, source conversation branch, worktree, files, Git/index state, queue, and runtime safe points. Successful application does not consume the restore point. Commands cannot release descendant/preserve/legal holds, substitute a safe point, or combine conversation branching with FileSafe restore; a future combined operation requires a separately registered and confirmed composite transaction.
+
+#### EventRecord v2 and command-originated evidence
+
+Commands never creates a local event envelope. Any command-originated persisted event or domain event named above uses the Contracts-owned EventRecord `schema_version = 2.0.0`, required `scope_kind`, and conditional project identity. Command events for safe-point, FileSafe, worktree, attempt, receipt, and restore-point lifecycles are project-scoped with non-empty `project_id`; app-root storage recovery/compatibility evidence remains application-scoped with `project_id = null`. No User Command, wrapper, or handler may fabricate a project for application scope. Read-only inspection of an EventRecord `2.0.0` root is admitted only when the reader validates `2.0.0`; otherwise the command refuses open rather than constructing a partial or best-effort projection.
+
+Command retries preserve the app-root-global `event_id` rule and the store-lifetime `(scope_partition, event_type, idempotency_key)` rule. `scope_partition` is exactly `app` for application scope and `project~{base64url_no_pad(UTF8(project_id))}` for project scope. Any command/view that resolves an event through the canonical `event_record_index.v2:{scope_partition}:{sequence_id_20}:{event_id}` key requires zero-padded unsigned-decimal `sequence_id_20` and treats key/value scope mismatch as corruption. A replayed command identity returns the original semantic result only when the producer semantic digest agrees; a conflict or `dedupe_unavailable` appends nothing. Normal command dispatch cannot construct or request `projector_replay_only`; normal append rejects `replay_only_not_appendable`, and compatibility replay cannot execute commands, tools, providers, network, notifications, usage charging, safe-point mutation, or external side effects.
+
+`persisted_at_utc` does not by itself authorize command success. Where the owner requires durable event/receipt evidence before mutation or successor dispatch, Commands requires the matching synced `AppendReceipt`/owner receipt. `StorageCompatibilityStatus` for an unsupported/newer store is diagnostic-only and is never appended into that incompatible target. Command arguments, diagnostics, copy/export, and EventRecord payloads cannot persist or disclose raw secrets, tokens, passwords, credentials, API keys, OAuth values, local credential paths, or local-machine secrets. Raw root/worktree paths remain local/redacted in exported EventRecord content; stable non-secret refs and identities carry cross-surface authority.
+
+#### Case L command acceptance boundary
+
+Required command-level oracles are: complete viewer/direct-handler inventory with zero durable/runtime/external mutation; `Retry storage` and `Try write mode` full revalidation with no automatic blocked-command replay; unsupported-store and migration inventory with no force-open/try-anyway/generic repair/salvage/Doctor mutation; retention/hold/compaction requests with no inferred eligibility or bypass; required-family materialization before command availability; root mismatch and fallback divergence with no silent initialization/merge/overwrite; exact target fields and no-substitution for every `baseline_target`; kill/failure restore outcomes matching proven equality; durable recovery holds surviving cleanup; whole-turn Chat revert parity; restore-point create/branch/delete registration and source preservation; EventRecord v2 reader/scope/index/dedupe/no-secret checks; and command/catalog/wiring reverse coverage for every stable ID. These are future fixture obligations, not runtime evidence or completeness certification from this prose.
+
+ContractRef: ContractName:Plans/storage-plan.md, ContractName:Plans/FileSafe.md, ContractName:Plans/Contracts_V0.md, ContractName:Plans/Executor_Protocol.md, ContractName:Plans/WorktreeGitImprovement.md, ContractName:Plans/UI_Command_Catalog.md, DecisionID:PD-RSP-07, DecisionID:PD-RSP-08, DecisionID:PD-RSP-09
 
 ### Debug and launcher command boundary
 
@@ -575,7 +657,7 @@ Goal Mode reserved slash commands:
 - `/goal again` updates the active goal through `cmd.chat.goal.update`.
 - These are reserved Assistant Chat built-ins and cannot be overridden by User Commands.
 
-## 7. UICommand catalog entry
+## 8. UICommand catalog entry
 
 <a id="UICOMMAND-ENTRY"></a>
 
@@ -612,7 +694,7 @@ ContractRef: ContractName:Plans/assistant-chat-design.md, ContractName:Plans/UI_
 
 ---
 
-## 8. OpenCode baseline and Puppet Master deltas
+## 9. OpenCode baseline and Puppet Master deltas
 
 OpenCode command material is external reference input used for ALIGNED/RECONCILED/ADOPTED/REFERENCE categorization only; it does not override Puppet Master command names, dispatch rules, storage paths, or reserved slash-command policy.
 
@@ -621,11 +703,11 @@ OpenCode command material is external reference input used for ALIGNED/RECONCILE
 
 Per `Plans/OpenCode_Deep_Extraction.md` §7D and §9D:
 
-### 8.1 Baseline
+### 9.1 Baseline
 
 OpenCode loads commands from four sources: built-in commands (`init`, `review`), config-defined commands, MCP prompts (converted to commands), and skills (registered as commands if no name collision). Discovery paths: `.opencode/commands/<name>.md` (project) and `~/.config/opencode/commands/<name>.md` (global). Template features: `$ARGUMENTS`, `$1`/`$2` positional args, `` !`shell` `` injection, `@file` inclusion. `subtask: true` runs as a subagent task. `model` override uses `provider_id/model_id` format. Custom commands can override built-in commands by name; when a user-defined command has the same name as a built-in command, the user-defined version takes precedence.
 
-### 8.2 Puppet Master deltas
+### 9.2 Puppet Master deltas
 
 1. **Discovery paths:** Puppet Master uses `.puppet-master/commands/<name>.md` (project) and `~/.config/puppet-master/commands/<name>.md` (global) instead of `.opencode/` paths.
 2. **Persona integration:** OpenCode commands specify `agent` (agent name). Puppet Master commands specify `persona` (Persona ID per `Plans/Personas.md`), which is a higher-level role definition decoupled from provider-native agent concepts.
@@ -640,7 +722,7 @@ ContractRef: ContractName:Plans/OpenCode_Deep_Extraction.md
 
 ---
 
-## 9. Acceptance criteria
+## 10. Acceptance criteria
 
 <a id="ACCEPTANCE"></a>
 
@@ -944,7 +1026,7 @@ unblocks: [CS-007, CS-008, CS-011, CS-013]
 acceptance_criteria:
   - /compact stays reserved when cmd.chat.compact_context exists.
   - cmd.chat.run_user_command cannot claim chat.message.submitted unless the event owner registers it.
-  - cmd.chat.branch_from_restore remains invalid until registered or marked /superseded.
+  - Live-derived command validation confirms cmd.chat.branch_from_restore has one current catalog row and one sole-handler production-wiring row; stale hand-maintained ghost examples do not override that result.
   - Route-like commands normalize object identity through route_target, /route, or /subject contracts before carrying object identity.
   - cmd.panel.switch and cmd.source_control.switch_subview remain pure /view state commands with controlled destination vocabularies.
   - Palette object results route through the deep-link contract and shared route_target or subject-open family.
@@ -3693,6 +3775,383 @@ owner_hints:
 - Plans/FinalGUISpec.md
 ```
 
+## Case L Command Consumer Propagation Addendum - 2026-07-17
+
+This addendum propagates approved Case L owner contracts into Commands-owned dispatch admission and owner routing. It does not register UI commands, edit the Command Catalog or wiring, create runtime implementation, run durability/restore fixtures, generate governance artifacts, or certify finding/repository completeness.
+
+### CS-054 - Storage Access And Viewer Command Gate
+
+```yaml
+plan_unit_id: CS-054
+unit_type: requirement
+status: accepted
+owner_doc: Plans/Commands_System.md
+canonical_text: >-
+  Every User Command, UICommand wrapper, and direct handler consumes the storage-owned
+  writer/viewer/blocked access result before side-effect admission. Viewer permits only
+  frozen-snapshot read, inspect, search, copy, redacted diagnostic, explicitly permitted
+  export/navigation, and ephemeral view-local actions; durable, runtime, filesystem/SCM,
+  provider/tool, receipt-producing, and external mutation remains discoverable but disabled
+  with storage_read_only. Retry storage and Try write mode are owner actions that require
+  full revalidation and never auto-replay blocked work.
+gui_related: true
+gui_classification_reason: Viewer mode changes visible command availability, disabled reasons, refresh, recovery, and ephemeral-state disclosure.
+split_recommended: false
+depends_on: [CS-004, CS-007, CS-011, SP-238, SP-239]
+unblocks: []
+acceptance_criteria:
+  - Every command and direct handler is classified against writer, viewer, and blocked access before a side effect can start.
+  - Viewer inventory proves zero durable, runtime, filesystem/SCM, provider/tool, receipt-producing, or external mutation, including direct-dispatch bypass attempts.
+  - User Command preview remains available only when expansion performs no shell injection, provider/tool call, child launch, persistence, or external mutation.
+  - storage_read_only is preserved as the shared disabled result; unknown/missing access state fails closed without a second vocabulary.
+  - Retry storage and Try write mode rerun owner gates and do not automatically resume or replay a blocked command.
+validation_surfaces:
+  - future Case L viewer command-inventory and direct-handler fixtures
+  - python3 scripts/pm-plan-index.py validate
+risk_class: storage_viewer_command_gate_bypass
+reasoning_tier: high
+context_scope: case_l_storage_access_command_admission
+implementation_surfaces: [Plans/Commands_System.md, Plans/storage-plan.md, Plans/UI_Command_Catalog.md, Plans/Wiring_Matrix.md]
+node_compile_hint:
+  mode: case_l_storage_viewer_command_gate
+  create_worknodes: false
+  create_nodeseeds: false
+source_lineage:
+  - Case-L:L-012
+  - Case-L:L-014
+  - Case-L:L012-C1..L012-C4
+  - Case-L:L014-C1..L014-C4
+preserved_exact_tokens:
+  - storage_access_mode
+  - storage_mode_reason
+  - storage_io_class
+  - storage_read_only
+  - Retry storage
+  - Try write mode
+negative_constraints:
+  - Do not use PID, mtime, heartbeat, visible control state, or lock-file existence as writer authority.
+  - Do not invent a cmd.storage command ID in Commands_System.
+  - Do not auto-resume blocked work when storage returns to writer mode.
+owner_hints: [Plans/Commands_System.md, Plans/storage-plan.md, Plans/UI_Command_Catalog.md]
+```
+
+### CS-055 - Root Continuity Fallback And Value-Navigation Consumer
+
+```yaml
+plan_unit_id: CS-055
+unit_type: requirement
+status: accepted
+owner_doc: Plans/Commands_System.md
+canonical_text: >-
+  Storage precedence selects only a logical-root candidate; Commands consumes bootstrap-binding,
+  storage_instance_id, root-generation, active-root, and fallback-base continuity before dispatch.
+  Storage-value viewers and root-opening actions use stable owner identity plus route_target/OpenSubject,
+  while raw paths remain display-local and cannot select authority. Root mismatch, relocation, and
+  fallback divergence uses exactly three registered visible disposition commands with no
+  command-frontmatter acceptance, initialization, merge, overwrite, or silent empty-root fallback.
+gui_related: true
+gui_classification_reason: Root and value navigation, mismatch actions, retained recovery copies, and fallback dispositions are user-visible command surfaces.
+split_recommended: false
+depends_on: [CS-004, CS-006, CS-012, SP-240]
+unblocks: []
+acceptance_criteria:
+  - config, PUPPET_MASTER_DATA_DIR, project-dir, and global-dir precedence never bypasses continuity proof or silently initializes a known-prior empty candidate.
+  - Root/value open actions carry stable root/store/family/value identity and shared route targets; raw paths do not become authority.
+  - Use previous location, Choose location, Copy and switch to selected location, and Start a new storage instance cannot be invoked from User Command frontmatter.
+  - fallback_diverged never dispatches automatic merge/overwrite and preserves both stores through keep_logical_root, fork_new_instance, or export_both until separate cleanup.
+  - The three divergence commands require exact component CAS, lowercase 64-hex hashes, independent permission/confirmation, one storage handler each, idempotent owner receipts, and production-wiring reverse coverage.
+  - Fork returns a candidate binding without changing active bootstrap selection; export is encrypted exact-byte custody with explicit destination, non-secret manifest, and key refs.
+validation_surfaces:
+  - future Case L storage-root continuity, relocation, fallback-divergence, and root-navigation fixtures
+  - python3 scripts/pm-plan-index.py validate
+risk_class: root_continuity_command_authority_drift
+reasoning_tier: high
+context_scope: case_l_root_and_value_navigation
+implementation_surfaces: [Plans/Commands_System.md, Plans/storage-plan.md, Plans/Contracts_V0.md, Plans/UI_Command_Catalog.md]
+node_compile_hint:
+  mode: case_l_root_continuity_command_consumer
+  create_worknodes: false
+  create_nodeseeds: false
+source_lineage:
+  - Case-L:L-011
+  - Case-L:L-018
+  - Case-L:L011-C1..L011-C3
+  - Case-L:L018-C1..L018-C3
+preserved_exact_tokens:
+  - logical_root
+  - active_root
+  - storage_instance_id
+  - root_generation
+  - fallback_branch_id
+  - fallback_base
+  - fallback_diverged
+  - cmd.storage.fallback.keep_logical_root
+  - cmd.storage.fallback.fork_new_instance
+  - cmd.storage.fallback.export_both
+  - route_target
+  - OpenSubject
+negative_constraints:
+  - Root precedence cannot replace continuity proof.
+  - A root-opening/navigation command cannot select writer authority or clear a recovery hold.
+  - Fallback never automatically merges, overwrites, or claims cross-host writer exclusion.
+owner_hints: [Plans/Commands_System.md, Plans/storage-plan.md, Plans/UI_Command_Catalog.md]
+```
+
+### CS-056 - Exact Restore Retry Revert And SCM Command Admission
+
+```yaml
+plan_unit_id: CS-056
+unit_type: requirement
+status: accepted
+owner_doc: Plans/Commands_System.md
+canonical_text: >-
+  Runtime restore/retry and Chat revert commands consume exact blocked, safe-point, repo,
+  worktree, baseline, equality, and receipt identity. restore_safe_point_then_retry accepts
+  only the named safe_point when restore is required; historical_commit creates a separate
+  clean worktree at a full immutable OID; worktree_head performs no mutation and binds only
+  to the exact OID/state digest; and cmd.chat.revert exact-replaces one complete immutable
+  whole-turn mutation manifest through FileSafe without conversation rewind or partial success.
+gui_related: true
+gui_classification_reason: Recovery and revert commands expose visible preconditions, confirmation, disabled reasons, outcomes, and worktree navigation consequences.
+split_recommended: false
+depends_on: [CS-005, CS-018, CS-039, F2-200, F2-201, F2-202, F2-203, F2-204, EP-072]
+unblocks: []
+acceptance_criteria:
+  - requires_safe_point_restore admits only cmd.runtime.restore_safe_point_then_retry with baseline_target safe_point and exact safe-point/repo/worktree/blocked identity.
+  - safe_point, historical_commit, and worktree_head enforce their target-specific fields and postconditions without focus/ref/worktree substitution.
+  - Safe-point and restore command admission stays unavailable until the required machine registry families and exact value schemas are materialized; compatibility aliases never trigger lazy ordinary-command rewrite.
+  - A successor attempt is impossible before a proved target and durable owner receipt; refused, failed, recovery-required, unavailable, or unknown results mint none.
+  - cmd.chat.revert uses the recorded whole-turn scope and canonical identities, never current working_directory, merge, partial per-file success, or conversation rewind.
+  - Recovery-required and recovery-unavailable retain mutation fence, blocked episode, holds, local work, and worktree ownership.
+validation_surfaces:
+  - RSP-ATOMIC-001
+  - RSP-ATOMIC-002
+  - RSP-ATOMIC-003
+  - RSP-BASELINE-001
+  - RSP-BASELINE-002
+  - RSP-BASELINE-003
+  - RSP-BASELINE-004
+  - RSP-CHAT-001
+risk_class: command_restore_or_baseline_substitution
+reasoning_tier: high
+context_scope: case_l_restore_retry_revert_commands
+implementation_surfaces: [Plans/Commands_System.md, Plans/FileSafe.md, Plans/Executor_Protocol.md, Plans/WorktreeGitImprovement.md, Plans/UI_Command_Catalog.md]
+node_compile_hint:
+  mode: case_l_restore_retry_command_consumer
+  create_worknodes: false
+  create_nodeseeds: false
+source_lineage:
+  - Case-L:L-006
+  - Case-L:L-010
+  - Case-L:L-020
+  - Case-L:L-024
+  - Case-L:PD-RSP-01..PD-RSP-07
+  - Case-L:PD-RSP-09
+preserved_exact_tokens:
+  - cmd.runtime.restore_safe_point_then_retry
+  - cmd.runtime.retry_now
+  - cmd.runtime.start_fresh_attempt
+  - cmd.chat.revert
+  - safe_point
+  - historical_commit
+  - worktree_head
+  - restore_refused
+  - restore_failed
+  - restore_recovery_required
+negative_constraints:
+  - Do not emit restored_with_conflicts from safe-point restore or Chat revert.
+  - Do not treat cmd.git.worktree.open navigation as baseline preparation or runnable proof.
+  - Do not release a recovery hold or clean preserved work because restore material is missing or corrupt.
+owner_hints: [Plans/Commands_System.md, Plans/FileSafe.md, Plans/Executor_Protocol.md, Plans/WorktreeGitImprovement.md]
+```
+
+### CS-057 - Conversation Restore-Point Registered Command Boundary
+
+```yaml
+plan_unit_id: CS-057
+unit_type: requirement
+status: accepted
+owner_doc: Plans/Commands_System.md
+canonical_text: >-
+  Conversation restore-point commands create_restore_point, branch_from_restore, and
+  delete_restore_point have canonical UI Command Catalog rows and one-handler production-wiring
+  reverse coverage. Branch application creates new thread and conversation-branch identity only
+  for branched, emits exactly one restore_point.applied, returns the same result and target IDs on
+  replay without a duplicate event, and leaves source conversation/worktree/SCM/runtime state unchanged.
+gui_related: true
+gui_classification_reason: Restore-point create, branch, delete, disclosure, unavailable states, and resulting thread/branch are visible command behavior.
+split_recommended: false
+depends_on: [CS-005, CS-006, CS-041, CV-320, SP-242]
+unblocks: []
+acceptance_criteria:
+  - cmd.chat.create_restore_point, cmd.chat.branch_from_restore, and cmd.chat.delete_restore_point each have one catalog row, conditional args, and one-handler production-wiring reverse coverage.
+  - Catalog registration cannot enable restore-point actions until the restore_point_record family and exact value schema are materialized in the machine storage registry.
+  - Registered branch consumes exact project/restore-point/source-thread/expected-hash identity and discloses source boundary plus new target before creation.
+  - Only branched creates new thread/conversation-branch identity and exactly one restore_point.applied; refused/failed/expired/deleted/corrupt/stale/permission/storage/hold states return no target IDs and emit no event.
+  - Replay returns the recorded result and same target IDs without a duplicate restore_point.applied.
+  - Source thread, source conversation branch, source worktree, files, Git/index, queue, and runtime safe points remain unchanged on first execution and replay; successful application does not consume the restore point, and optional safe_point_id is lineage only.
+validation_surfaces:
+  - RSP-RP-001
+  - RSP-RP-002
+  - RSP-RP-003
+  - RSP-RP-004
+  - RSP-CMD-001
+risk_class: restore_point_ghost_or_composite_command
+reasoning_tier: high
+context_scope: case_l_restore_point_command_registration
+implementation_surfaces: [Plans/Commands_System.md, Plans/UI_Command_Catalog.md, Plans/Wiring_Matrix.md, Plans/assistant-chat-design.md]
+node_compile_hint:
+  mode: case_l_restore_point_registration_dependency
+  create_worknodes: false
+  create_nodeseeds: false
+source_lineage:
+  - Case-L:L-022
+  - Case-L:PD-RSP-08
+preserved_exact_tokens:
+  - cmd.chat.create_restore_point
+  - cmd.chat.branch_from_restore
+  - cmd.chat.delete_restore_point
+  - available
+  - expired
+  - deleted
+  - corrupt
+  - branched
+  - refused
+  - failed
+negative_constraints:
+  - Do not replace live-derived fail-closed catalog/wiring validation with a stale hand-maintained ghost-command list.
+  - Do not combine conversation branching with FileSafe/workspace restore.
+  - Do not let Commands_System own command registration or the conversation lifecycle.
+owner_hints: [Plans/Commands_System.md, Plans/UI_Command_Catalog.md, Plans/assistant-chat-design.md]
+```
+
+### CS-058 - EventRecord V2 Command Evidence Consumer
+
+```yaml
+plan_unit_id: CS-058
+unit_type: requirement
+status: accepted
+owner_doc: Plans/Commands_System.md
+canonical_text: >-
+  Command-originated persisted domain evidence consumes EventRecord 2.0 scope, global
+  event identity, exact scope-partitioned index identity, scoped lifetime idempotency,
+  dedupe catch-up, complete-reader admission, no-secret custody, and synced-receipt truth.
+  Project restore, worktree, attempt, receipt, and restore-point events require project
+  scope; app-root storage diagnostics use application scope without a fake project;
+  StorageCompatibilityStatus is not appended into an incompatible target; and normal
+  command dispatch can neither request projector_replay_only nor fabricate local events.
+gui_related: false
+gui_classification_reason: Defines backend event identity, dedupe, durability, and scope constraints for command handlers.
+split_recommended: false
+depends_on: [CS-006, CS-007, CV-317, CV-318, CV-320, CV-321, SP-241]
+unblocks: []
+acceptance_criteria:
+  - Every command-originated persisted event uses schema_version 2.0.0, exact scope_kind/project_id pairing, and a registered payload/event owner.
+  - EventRecord 2.0 root inspection refuses open unless the reader validates 2.0.0; partial or best-effort projection is impossible.
+  - Event index access uses exact app/project scope_partition encoding, zero-padded sequence_id_20, and the canonical event_record_index.v2 key; key/value scope mismatch is corruption.
+  - A replayed command identity returns the original only for the same semantic digest; conflict or dedupe_unavailable appends nothing.
+  - No command success that requires durability is authorized by persisted_at_utc without the matching synced AppendReceipt or owner receipt.
+  - Normal dispatch cannot construct projector_replay_only, and compatibility replay produces zero command/tool/provider/network/notification/usage/safe-point/external side effects.
+  - Unsupported/newer-store compatibility status remains diagnostic-only; secrets and local root/worktree/credential paths remain absent or local/redacted.
+validation_surfaces:
+  - future Case L EventRecord scope, dedupe, replay-only, and command-receipt fixtures
+  - python3 -m json.tool Plans/event_record.schema.json
+  - python3 scripts/pm-plan-index.py validate
+risk_class: command_event_identity_or_durability_drift
+reasoning_tier: high
+context_scope: case_l_command_eventrecord_v2
+implementation_surfaces: [Plans/Commands_System.md, Plans/Contracts_V0.md, Plans/event_record.schema.json, Plans/storage-plan.md]
+node_compile_hint:
+  mode: case_l_command_eventrecord_consumer
+  create_worknodes: false
+  create_nodeseeds: false
+source_lineage:
+  - Case-L:L-007
+  - Case-L:L-008
+  - Case-L:L-009
+  - Case-L:L-023
+  - Case-L:EVT-01..EVT-07
+preserved_exact_tokens:
+  - EventRecord
+  - 2.0.0
+  - scope_kind
+  - scope_partition
+  - application
+  - project
+  - "event_record_index.v2:{scope_partition}:{sequence_id_20}:{event_id}"
+  - sequence_id_20
+  - projector_replay_only
+  - replay_only_not_appendable
+  - dedupe_unavailable
+  - AppendReceipt
+  - synced
+negative_constraints:
+  - Do not fabricate a project for application scope or emit into an incompatible store.
+  - Do not let command handlers create a peer event envelope, dedupe rule, or durability meaning.
+  - Do not infer successful persistence from timestamps or projection/UI state.
+  - Do not open an EventRecord 2.0 root with a reader that cannot validate 2.0.0 or persist raw secret/credential material in command evidence.
+owner_hints: [Plans/Commands_System.md, Plans/Contracts_V0.md, Plans/storage-plan.md]
+```
+
+### CS-059 - Storage Compatibility Maintenance Retention And Availability Gate
+
+```yaml
+plan_unit_id: CS-059
+unit_type: constraint
+status: accepted
+owner_doc: Plans/Commands_System.md
+canonical_text: >-
+  Storage-facing commands consume owner compatibility, migration, maintenance, retention,
+  and registry-materialization gates without creating a live unsupported-store viewer,
+  generic repair/salvage/Doctor mutation, force-cancel/try-anyway path, retention inference,
+  hold/maintenance bypass, or lazy alias rewrite. Retry actions revalidate rather than repair;
+  protected hold and manual-compaction requests stay owner-routed; and affected actions remain
+  unavailable until their exact machine storage families and value schemas are materialized.
+gui_related: true
+gui_classification_reason: Compatibility blocks, migration interruption, retention settings, legal holds, compaction, diagnostics, and unavailable actions are visible command states.
+split_recommended: false
+depends_on: [CS-054, CS-056, CS-057, SP-235, SP-237, SP-243]
+unblocks: []
+acceptance_criteria:
+  - Unsupported/newer-store command inventory exposes only check_for_update, choose_compatible_backup, open_diagnostics, and quit; no live viewer, try_anyway, force-open, downgrade-in-place, or mutation is reachable.
+  - Migration cancellation is admitted only in preflight; later phases preserve recovery-on-next-launch disclosure and expose no force-cancel, skip-step, rollback-now, or invented ETA.
+  - Retry storage and retry-recovery actions rerun owner admission/verification and never claim byte repair, live salvage, or automatic blocked-work replay.
+  - Commands expose no generic verify/repair/salvage, Doctor mutation, in-place editor, or bypass token; backup restore and internal maintenance stay coordinator-owned and offline where required.
+  - Unknown retention policy remains indefinite/no-count-eviction and materially_incomplete; no command infers destructive eligibility from prefix, key, path, filename, mtime, ordering, or focus.
+  - storage.legal_hold.manage and manual compaction preserve owner permission, actor/reason/receipt, holds/anchors/refs, maintenance lease, and storage access gates.
+  - Missing, deferred, ambiguous, or unsupported machine registry family/value schema keeps the affected safe-point, restore-point, migration, retention, quarantine, or deletion action unavailable.
+validation_surfaces:
+  - future Case L startup command inventory, migration interruption, retention/hold/compaction, and registry-availability fixtures
+  - python3 scripts/pm-plan-index.py validate
+risk_class: storage_command_maintenance_or_retention_bypass
+reasoning_tier: high
+context_scope: case_l_storage_compatibility_maintenance_retention_commands
+implementation_surfaces: [Plans/Commands_System.md, Plans/storage-plan.md, Plans/storage_value_registry.json, Plans/UI_Command_Catalog.md]
+node_compile_hint:
+  mode: case_l_storage_compatibility_retention_command_gate
+  create_worknodes: false
+  create_nodeseeds: false
+source_lineage:
+  - Case-L:L-005
+  - Case-L:L-017
+  - Case-L:L-031
+  - Case-L:L-032
+  - Case-L:PD-L005-01..PD-L005-07
+preserved_exact_tokens:
+  - blocked_newer_store
+  - check_for_update
+  - choose_compatible_backup
+  - open_diagnostics
+  - storage.legal_hold.manage
+  - retention_policy_ref
+  - materially_incomplete
+negative_constraints:
+  - Do not turn metadata diagnostics into live unsupported-store inspection or mutation.
+  - Do not mint a generic repair/salvage/Doctor mutation command from storage recovery wording.
+  - Do not treat command registration, plan validation, or registry-row presence as runtime durability, migration, compaction, or restore proof.
+owner_hints: [Plans/Commands_System.md, Plans/storage-plan.md, Plans/UI_Command_Catalog.md]
+```
+
 ## FABLE Deferred Action Concrete Repair Addendum - 2026-07-08
 
 This addendum repairs non-runtime command-system rows without creating WorkNodes, implementation files, runtime artifacts, or PNC-019 evidence.
@@ -3700,3 +4159,455 @@ This addendum repairs non-runtime command-system rows without creating WorkNodes
 - Repairs `sfk-f5d64ed00d4c22eab6a72e2e`: `arguments[]` entries have fields `name`, `type`, `required`, `default?`, `enum_values[]?`, `description`, and `ui_editor`. `type` values are `string`, `number`, `boolean`, `path`, `enum`, `object`, and `array`.
 - Repairs `sfk-9e43a6ff3203f5ce66e0126d`: Section 6 numbering is structurally superseded by named headings. Missing `6.4` and `6.5` are retired aliases; new citations must use heading names, not bare section numbers.
 - Repairs `sfk-03404db2c315565320a4b3e9`: reserved command prefixes are `cmd.git.`, `cmd.github.`, `cmd.source_control.`, `cmd.file.`, `cmd.permissions.`, `cmd.runtime.`, `cmd.testing.`, `cmd.browser.`, and `cmd.persona.`. Non-owner docs may consume but not mint commands under those prefixes.
+
+## Known-37 recovery-unavailable command registration - 2026-07-18
+
+Commands registers exactly two stable domain commands and no wrappers, aliases, generic repair route, or second handler:
+
+| `allowed_action_id` | Command | Sole handler | Typed request | Typed result | Label |
+|---|---|---|---|---|---|
+| `locate_and_verify_recovery` | `cmd.runtime.locate_and_verify_recovery` | `handlers::runtime::locate_and_verify_recovery` | `LocateAndVerifyRecoveryRequest` | `LocateAndVerifyRecoveryResult` | Locate and verify recovery |
+| `abandon_recovery` | `cmd.runtime.abandon_recovery` | `handlers::runtime::abandon_recovery` | `AbandonRecoveryRequest` | `AbandonRecoveryResult` | Abandon recovery |
+
+Both commands are admitted only from the current ordered `safe_point.recovery_unavailable.allowed_action_ids[]`, exact blocked episode and recovery anchor, exact five-value owner reason, exact non-empty snapshot set, preserved local work, current storage/permission state, operation exclusivity, and a fresh or exactly replayable idempotency key. Pre-attempt dispatch omits `attempt_id`; post-attempt dispatch requires the exact event/anchor/prior-attempt identity. A stale projection, reordered action list, caller-selected branch, raw path, moving ref, inferred reason, or mismatched snapshot set refuses before mutation.
+
+`LocateAndVerifyRecoveryRequest` is closed at `1.0.0` and requires `schema_version`, const command ID, `project_id`, `run_id`, `node_id`, `blocked_sequence`, `safe_point_id`, `anchor_ref`, `expected_snapshot_refs`, `expected_recovery_unavailable_reason_code`, `recovery_source_ref`, `actor_ref`, and `idempotency_key`, plus the conditional attempt field. Optional `expected_manifest_sha256` and `permission_snapshot_id` are evidence only. FileSafe must place the source under owner custody and verify safe-point/run/node/attempt/worktree identity, scope, manifest, and content before Storage commits the result.
+
+`AbandonRecoveryRequest` is closed at `1.0.0` and requires the common exact episode fields plus `actor_ref`, `confirmation = abandon_recovery_and_preserve_local_work`, durable `confirmation_ref`, `preserved_local_work_acknowledged = true`, and `idempotency_key`, plus the conditional attempt field. Run exit, archive, timeout, policy, dialog-local state, or cancellation is not explicit abandonment authority.
+
+Both typed results use `outcome = applied | replayed | refused | failed_recoverable`, `receipt_state = committed | not_committed`, required command/idempotency/episode/anchor identity, conditional attempt identity, and `cleanup_performed = false`. Locate success requires owner verification evidence and releases only as `resolved`; abandonment success releases only as `abandoned_by_user`. A release requires a committed `recovery_unavailable_resolution_receipt`; UI acknowledgement does not suffice. Nonsuccess and receipt failure retain `recovery_unavailable`, every hold/ref and local work. Replay returns the original result/receipt with no second release. Commands emits no new EventRecord family for either action.
+
+## Cozy Shelves Panel Reconciliation Addendum - 2026-07-27
+
+This addendum propagates the ratified Cozy Shelves panel-review decisions (user decision 2026-07-27) into Commands-owned prefix reservation, panel-switch destination consumption, and availability/confirmation class consumption. Source lineage is the winning left-rail concept (`Concepts/rail-concepts/QwenRailConcepts/c2-cozy-shelves.html` and `c2-cozy-shelves-files.html`, source-lineage-only: no concept HTML/CSS/class names are copied into spec). Command registration rows remain owned by `Plans/UI_Command_Catalog.md`; this addendum mirrors that catalog addendum without minting rows here. It does not edit existing PlanUnits, retired bridges, `preserved_exact_tokens`, or canonical_text, and it does not create WorkNodes, NodeSeeds, executable queues, final node manifests, or production build tasks.
+
+Renumber note (CS-050 structural repair): the duplicate second `## 7` heading (`UICommand catalog entry`) is retitled `## 8. UICommand catalog entry`, and the follow-on headings are renumbered in cascade: `## 9. OpenCode baseline and Puppet Master deltas` (subsections `### 9.1 Baseline`, `### 9.2 Puppet Master deltas`) and `## 10. Acceptance criteria`. Heading text is otherwise preserved verbatim; no command identifiers, command-owner refs, or acceptance IDs are renamed. `## 7. Reserved built-in slash commands` is now the single canonical Section 7 anchor, satisfying CS-050 acceptance. Per the FABLE 2026-07-08 addendum rule, citations must use heading names, not bare section numbers; a repo-wide check found no cross-doc bare-number citations of the renumbered sections.
+
+### CS-060 - Panel Domain Reserved Prefix Registry Extension
+
+```yaml
+plan_unit_id: CS-060
+unit_type: constraint
+status: accepted
+owner_doc: Plans/Commands_System.md
+canonical_text: >-
+  The reserved command-prefix registry extends to cmd.docker., cmd.search., cmd.artifacts.,
+  cmd.agents., cmd.editor., cmd.panel., and cmd.terminal., joining the existing reserved
+  families cmd.git., cmd.github., cmd.source_control., cmd.file., cmd.permissions.,
+  cmd.runtime., cmd.testing., cmd.browser., and cmd.persona. Minting authority for every
+  reserved prefix is Plans/UI_Command_Catalog.md; non-owner docs and User Commands may
+  consume but not mint commands under them. cmd.actions. is explicitly NOT reserved and has
+  no minting authority: GitHub Actions commands live under cmd.github., and the concept-only
+  ID cmd.actions.rerun must reconcile to cmd.github.actions.rerun before any catalog row or
+  wiring coverage can treat it as real.
+gui_related: false
+gui_classification_reason: Prefix reservation is command-registry governance, not a visible GUI surface.
+split_recommended: false
+depends_on: [CS-013, CS-039, CS-050]
+unblocks: []
+acceptance_criteria:
+  - The reserved-prefix registry enumerates all sixteen reserved families with Plans/UI_Command_Catalog.md as the sole minting authority.
+  - User Command creation whose name collides into any reserved prefix is rejected, consistent with the AC-CMD02/AC-CMD10 reserved-name boundaries.
+  - cmd.actions. is absent from the reserved registry; no cmd.actions.* command can be minted, and GitHub Actions IDs reconcile under cmd.github.
+  - No prototype command ID under a newly reserved prefix is treated as real until it has a UI_Command_Catalog row plus Wiring_Matrix reverse coverage, with fail-closed dispatch on mismatch.
+validation_surfaces:
+  - python3 scripts/pm-plan-index.py validate
+  - future catalog/wiring reverse-coverage checks for cmd.* references
+risk_class: command_prefix_minting_ambiguity
+reasoning_tier: medium
+context_scope: cozy_shelves_panel_command_prefix_reservation
+implementation_surfaces: [Plans/Commands_System.md, Plans/UI_Command_Catalog.md, Plans/Wiring_Matrix.md]
+node_compile_hint:
+  mode: reserved_prefix_registry_extension
+  create_worknodes: false
+  create_nodeseeds: false
+source_lineage:
+  - user-decision:2026-07-27-cozy-shelves-panel-review
+  - Concepts/rail-concepts/QwenRailConcepts/c2-cozy-shelves.html (source-lineage-only)
+  - fable-2026-07-08:sfk-03404db2c315565320a4b3e9
+preserved_exact_tokens:
+  - cmd.docker.
+  - cmd.search.
+  - cmd.artifacts.
+  - cmd.agents.
+  - cmd.editor.
+  - cmd.panel.
+  - cmd.terminal.
+  - cmd.github.actions.rerun
+negative_constraints:
+  - No WorkNodes, NodeSeeds, executable queues, final node manifests, or production build tasks are created by this PlanUnit.
+  - Do not mint, rename, or retire catalog rows from this constraint; Plans/UI_Command_Catalog.md remains the sole registration owner.
+  - Do not reserve cmd.actions. or let a cmd.actions.* ID survive reconciliation as canonical.
+owner_hints: [Plans/Commands_System.md, Plans/UI_Command_Catalog.md]
+```
+
+### CS-061 - Panel Switch Destination Vocabulary And Undock Adjudication
+
+```yaml
+plan_unit_id: CS-061
+unit_type: constraint
+status: accepted
+owner_doc: Plans/Commands_System.md
+canonical_text: >-
+  cmd.panel.switch remains a pure view-state command whose controlled destination vocabulary
+  is the canonical panel-id inventory owned by Plans/FinalGUISpec.md Section 4.1: search,
+  chat, files, source_control, github_actions, docker_manager, testing, agents, artifacts,
+  and run_debug. Commands consume that inventory by reference and must not define, extend,
+  reorder, or fork it locally; an unknown destination refuses before dispatch. Panel
+  detachment is adjudicated as cmd.panel.undock with cmd.panel.redock as its inverse;
+  detach (cmd.panel.detach) is a recorded compatibility alias of cmd.panel.undock, never a
+  second handler or peer command.
+gui_related: true
+gui_classification_reason: The destination vocabulary determines visible panel navigation targets and the undock/redock affordance.
+split_recommended: false
+depends_on: [CS-006, CS-011, CS-060]
+unblocks: []
+acceptance_criteria:
+  - cmd.panel.switch accepts only the ten canonical panel ids from the Plans/FinalGUISpec.md Section 4.1 inventory; any other destination refuses before dispatch.
+  - cmd.panel.switch stays view-state only; it may consume normalized routing context but never replaces the canonical route_target model.
+  - Undock and redock resolve to single handlers; cmd.panel.detach exists only as recorded alias metadata of cmd.panel.undock with no separate handler, row semantics, or event meaning.
+validation_surfaces:
+  - python3 scripts/pm-plan-index.py validate
+  - future panel-switch destination-vocabulary and alias-dispatch fixtures
+risk_class: panel_destination_vocabulary_drift
+reasoning_tier: medium
+context_scope: cozy_shelves_panel_switch_destination_vocabulary
+implementation_surfaces: [Plans/Commands_System.md, Plans/UI_Command_Catalog.md, Plans/FinalGUISpec.md]
+node_compile_hint:
+  mode: panel_switch_vocabulary_consumer
+  create_worknodes: false
+  create_nodeseeds: false
+source_lineage:
+  - user-decision:2026-07-27-cozy-shelves-panel-review
+  - Concepts/rail-concepts/QwenRailConcepts/c2-cozy-shelves.html (source-lineage-only)
+preserved_exact_tokens:
+  - cmd.panel.switch
+  - cmd.panel.undock
+  - cmd.panel.redock
+  - docker_manager
+  - github_actions
+  - source_control
+  - run_debug
+negative_constraints:
+  - No WorkNodes, NodeSeeds, executable queues, final node manifests, or production build tasks are created by this PlanUnit.
+  - Do not enumerate a second panel-id vocabulary in this document; Plans/FinalGUISpec.md Section 4.1 owns the inventory.
+  - Do not promote cmd.panel.detach to a canonical command or let cmd.panel.switch become an object-first navigation command.
+owner_hints: [Plans/Commands_System.md, Plans/FinalGUISpec.md, Plans/UI_Command_Catalog.md]
+```
+
+### CS-062 - Panel Command Availability And Confirmation Class Assignments
+
+```yaml
+plan_unit_id: CS-062
+unit_type: constraint
+status: accepted
+owner_doc: Plans/Commands_System.md
+canonical_text: >-
+  Newly registered panel-domain commands declare availability and confirmation classes
+  before palette, shortcut, or route dispatch, mirroring the UI_Command_Catalog addendum
+  rows: cmd.testing.watch_run, cmd.artifacts.watch_recording, cmd.docker.container.stop,
+  and cmd.docker.container.restart are live-run only; cmd.artifacts.play_recording and
+  cmd.testing.export_bundle are record-only/export-only. cmd.file.delete,
+  cmd.git.discard_hunks, cmd.source_control.stash.drop, cmd.git.worktree.remove,
+  cmd.docker.container.delete, cmd.docker.image.delete, cmd.docker.compose.scenario.delete,
+  cmd.docker.cleanup.prune, cmd.search.replace_all, and cmd.testing.quarantine carry
+  owner-assigned destructive confirmation classes (strong, hard_gate, non_reversible, or
+  compensating_action_only as assigned by the catalog) and dispatch only through the shared
+  confirm surface referenced by the unified expander contract. Commands never infers
+  historical safety from a label; a panel command without a declared availability class
+  refuses palette, shortcut, and route dispatch. Blocked panel commands surface the owner
+  blocked_reason_code with ordered allowed_action_ids[], consumed by reference from the
+  unified expander contract owner.
+gui_related: true
+gui_classification_reason: Availability classes, confirmation gates, disabled reasons, and blocked-action payloads are visible command states in the panel expanders.
+split_recommended: false
+depends_on: [CS-008, CS-060, CS-061]
+unblocks: []
+acceptance_criteria:
+  - Every newly registered panel-domain command row declares exactly one availability class (live-run only, historical-safe, or record-only/export-only) before palette, shortcut, or route dispatch; class-less dispatch refuses.
+  - cmd.testing.watch_run, cmd.artifacts.watch_recording, cmd.docker.container.stop, and cmd.docker.container.restart refuse in historical or record-only contexts; cmd.artifacts.play_recording and cmd.testing.export_bundle perform no live mutation.
+  - Each listed destructive command carries its catalog-assigned confirmation class and preserves owner-defined confirmation, gating, preview, and blocked-action checks before dispatch; discoverability never weakens confirmation.
+  - Destructive panel actions dispatch only through the shared confirm surface; no expander-local confirmation variant is introduced.
+  - Blocked panel commands present blocked_reason_code plus ordered allowed_action_ids[] consumed from the owner payload, and admissibility is evaluated against allowed_action_ids[] before mutation.
+validation_surfaces:
+  - python3 scripts/pm-plan-index.py validate
+  - future availability-class and destructive-confirmation dispatch fixtures
+risk_class: panel_command_class_omission
+reasoning_tier: medium
+context_scope: cozy_shelves_panel_command_availability_confirmation
+implementation_surfaces: [Plans/Commands_System.md, Plans/UI_Command_Catalog.md, Plans/Wiring_Matrix.md]
+node_compile_hint:
+  mode: panel_command_class_consumer
+  create_worknodes: false
+  create_nodeseeds: false
+source_lineage:
+  - user-decision:2026-07-27-cozy-shelves-panel-review
+  - Concepts/rail-concepts/QwenRailConcepts/c2-cozy-shelves.html (source-lineage-only)
+  - Concepts/rail-concepts/QwenRailConcepts/c2-cozy-shelves-files.html (source-lineage-only)
+preserved_exact_tokens:
+  - live-run only
+  - record-only/export-only
+  - hard_gate
+  - compensating_action_only
+  - blocked_reason_code
+  - allowed_action_ids[]
+negative_constraints:
+  - No WorkNodes, NodeSeeds, executable queues, final node manifests, or production build tasks are created by this PlanUnit.
+  - Do not assign or override concrete per-row classes here; Plans/UI_Command_Catalog.md owns the row-level assignments this unit mirrors.
+  - Do not re-own the unified expander contract, its slot order, or its confirm surface; consume blocked_reason_code and allowed_action_ids[] by reference only.
+owner_hints: [Plans/Commands_System.md, Plans/UI_Command_Catalog.md]
+```
+
+## Run & Debug Revival Addendum - 2026-07-27
+
+This addendum mints the `cmd.run_debug.*` dispatch family for the classical DAP debugger (§7.2), reaffirms the `cmd.debug.*` assistant-investigation boundary (CS-009, §7.1), and registers the `cmd.run.*` orchestrator run-control trio (§7.3) referenced by the `run_interrupted` CTA card (`Plans/FinalGUISpec.md`). Bottom-zone Debug tab and rail "Debug & Run" panel layout and state-machine canon lives in `Plans/FinalGUISpec.md` Run & Debug Revival Addendum (F3-482..F3-496) and is consumed here by unit id only, never restated. `Concepts/**` materials remain source-lineage-only. Row-level command registration remains owned by `Plans/UI_Command_Catalog.md`; this addendum states family semantics, availability and confirmation classes, and the closed disabled-reason set exactly once and does not mint catalog rows. It does not edit existing PlanUnits, retired bridges, `preserved_exact_tokens`, or canonical_text, and it does not create WorkNodes, NodeSeeds, executable queues, final node manifests, implementation files, or production build tasks.
+
+### 7.2 Run & Debug dispatch family (cmd.run_debug.*)
+
+Run & Debug actions use a dedicated canonical UICommand family, `cmd.run_debug.*`, for classical DAP debugger dispatch. These dispatch IDs are internal wiring identifiers for the classical debugger surfaces — the rail "Debug & Run" panel and the bottom-zone Debug tab per `Plans/FinalGUISpec.md` F3-482/F3-485/F3-490 (referenced) — not User Commands. They are distinct from the assistant-investigation `cmd.debug.*` family (§7.1) per the CS-009 boundary: `cmd.debug.*` remains scoped to assistant-thread investigation control, and classical debugger dispatch uses only `cmd.run_debug.*`.
+
+| Command ID | Label | Description | Preconditions |
+|---|---|---|---|
+| `cmd.run_debug.start` | Start Debugging | Launches the selected launch profile with the debugger | `config_selected && !session_initializing` |
+| `cmd.run_debug.start_no_debug` | Run Without Debugging | Launches the selected profile without attaching the debugger | `config_selected` |
+| `cmd.run_debug.stop` | Stop Session | Terminates the focused debug session | `session_active` |
+| `cmd.run_debug.disconnect` | Disconnect | Detaches from the focused attach-type session | `session_active && session_is_attach` |
+| `cmd.run_debug.restart` | Restart Session | Restarts the focused session with the same profile | `session_active or session_terminated` |
+| `cmd.run_debug.attach` | Attach to Process | Opens the attach flow and attaches the debugger to the chosen process | `adapter_available` |
+| `cmd.run_debug.pause` | Pause | Pauses the focused running session | `session_running` |
+| `cmd.run_debug.continue` | Continue | Resumes the focused paused session | `session_paused` |
+| `cmd.run_debug.step_over` | Step Over | Steps over the current line | `session_paused` |
+| `cmd.run_debug.step_into` | Step Into | Steps into the current call | `session_paused` |
+| `cmd.run_debug.step_out` | Step Out | Steps out of the current frame | `session_paused` |
+| `cmd.run_debug.session.select` | Select Session | Focuses a session; all debug controls retarget per F3-484 (referenced) | `session_count > 0` |
+| `cmd.run_debug.config.select` | Select Configuration | Chooses the active launch profile | `config_count > 0` |
+| `cmd.run_debug.config.add` | Add Configuration | Opens the inline add-configuration form | `panel_visible` |
+| `cmd.run_debug.config.edit` | Edit Configuration | Opens the inline edit form for a launch profile | `config_selected` |
+| `cmd.run_debug.config.delete` | Delete Configuration | Deletes a launch profile (confirmation class below) | `config_selected && !config_in_use_by_active_session` |
+| `cmd.run_debug.config.open_file` | Open Configurations File | Opens the project's launch config file in the editor surface | always |
+| `cmd.run_debug.breakpoint.toggle` | Toggle Breakpoint | Toggles activation of a breakpoint record | `breakpoint_selected` |
+| `cmd.run_debug.breakpoint.edit` | Edit Breakpoint | Opens the inline edit strip (Expression / Hit Count / Log Message) | `breakpoint_selected` |
+| `cmd.run_debug.breakpoint.add_function` | Add Function Breakpoint | Adds a function breakpoint via inline name input | always |
+| `cmd.run_debug.breakpoint.remove_all` | Remove All Breakpoints | Removes every breakpoint (confirmation class below) | `has_breakpoints` |
+| `cmd.run_debug.breakpoint.toggle_activation` | Toggle All Activations | Enables or disables all breakpoints at once | `has_breakpoints` |
+| `cmd.run_debug.breakpoint.goto_source` | Go to Breakpoint Source | Opens the breakpoint's file:line in the editor | `breakpoint_selected` |
+| `cmd.run_debug.breakpoint.set_exception_filters` | Set Exception Filters | Updates exception breakpoint filter checkboxes | `adapter_supports_exception_filters` |
+| `cmd.run_debug.watch.add` | Add Watch | Adds a watch expression via inline input (allowed pre-session; evaluates on next pause) | `session_exists_or_panel_visible` |
+| `cmd.run_debug.watch.edit` | Edit Watch | Edits a watch expression inline | `watch_selected` |
+| `cmd.run_debug.watch.remove` | Remove Watch | Removes one watch expression | `watch_selected` |
+| `cmd.run_debug.watch.remove_all` | Remove All Watches | Clears all watch expressions | `has_watches` |
+| `cmd.run_debug.variables.set_value` | Set Variable Value | Sets a variable's value via inline input (capability-gated per F3-494, referenced) | `session_paused && variable_writable` |
+| `cmd.run_debug.variables.copy_value` | Copy Value | Copies the variable's display value | `variable_selected` |
+| `cmd.run_debug.variables.copy_expression` | Copy as Expression | Copies the variable's evaluate path for watch paste | `variable_selected` |
+| `cmd.run_debug.variables.add_to_watch` | Add to Watch | Adds the variable's evaluate path to watches | `variable_selected` |
+| `cmd.run_debug.callstack.select_frame` | Select Frame | Selects a frame; variables/watch re-scope and the editor opens the location per F3-491 (referenced) | `session_paused && frame_present` |
+| `cmd.run_debug.callstack.restart_frame` | Restart Frame | Restarts the selected frame (capability-gated) | `session_paused && adapter_supports_restart_frame` |
+| `cmd.run_debug.callstack.show_execution_point` | Show Execution Point | Returns the editor to the pause location | `session_paused` |
+| `cmd.run_debug.console.evaluate` | Evaluate Expression | Evaluates the REPL input against the selected frame with context 'repl' | `session_active` |
+| `cmd.run_debug.console.clear` | Clear Console | Clears the Debug Console pane scrollback | always |
+| `cmd.run_debug.console.reveal` | Reveal Debug Tab | Focuses/un-collapses the bottom-zone Debug tab per F3-491 (referenced) | always |
+| `cmd.run_debug.terminal.reveal` | Reveal Process Pane | Focuses the Debug tab's Process pane when present per F3-490 (referenced) | `session_active && console_routing == integrated_terminal` |
+
+The three stepping commands are enabled only while the focused session is paused, per the `Plans/FinalGUISpec.md` F3-483 debug session state machine (referenced, not restated).
+
+Availability and confirmation classes mirror the CS-062 pattern; every row declares exactly one availability class before palette, shortcut, or route dispatch, and class-less dispatch refuses:
+
+- **Session-state gated** (availability follows the F3-483 state machine: continue is paused-only, pause is running-only, steps are paused-only, stop/disconnect are any-active): the eight session-lifecycle rows, the three stepping rows, the three call-stack rows, `cmd.run_debug.console.evaluate`, and `cmd.run_debug.terminal.reveal`.
+- **Selection** (requires a selected subject): `cmd.run_debug.session.select`, the four config CRUD rows (`config.select`, `config.add`, `config.edit`, `config.delete`), the breakpoint rows `breakpoint.toggle`, `breakpoint.edit`, `breakpoint.remove_all`, `breakpoint.toggle_activation`, `breakpoint.goto_source`, and `breakpoint.set_exception_filters`, all four watch rows, and the variables rows `variables.copy_value`, `variables.copy_expression`, and `variables.add_to_watch`.
+- **Session-paused** as tabled: `cmd.run_debug.variables.set_value` (`session_paused && variable_writable`, capability-gated per F3-494, referenced).
+- **Always**: `cmd.run_debug.config.open_file`, `cmd.run_debug.breakpoint.add_function`, `cmd.run_debug.console.clear`, and `cmd.run_debug.console.reveal`.
+
+Confirmation classes: `cmd.run_debug.config.delete` and `cmd.run_debug.breakpoint.remove_all` carry destructive confirmation class `strong` and dispatch only through the shared confirm surface referenced by the unified expander contract (referenced, not restated); all other rows are confirmation `none`.
+
+Disabled reasons come only from the closed set `unsupported`, `not_configured`, `adapter_unavailable`, `session_state_mismatch`, `capability_absent`, `stale_projection`, `permission_required`:
+
+| disabled_reason | Raised by |
+|---|---|
+| `unsupported` | `cmd.run_debug.terminal.reveal` when `console_routing != integrated_terminal`; `cmd.run_debug.config.open_file`, `cmd.run_debug.console.clear`, and `cmd.run_debug.console.reveal` when the owning surface is unavailable |
+| `not_configured` | `cmd.run_debug.start` and `cmd.run_debug.start_no_debug` (no launch profile); config CRUD rows; `cmd.run_debug.breakpoint.remove_all` and `breakpoint.toggle_activation` (no breakpoints); `cmd.run_debug.watch.add` and `watch.remove_all` (no watches) |
+| `adapter_unavailable` | `cmd.run_debug.start` and `cmd.run_debug.attach` when the debug adapter is absent or disconnected |
+| `session_state_mismatch` | every session-state gated row when the F3-483 state does not match the row's required state (e.g. continue while running, pause while paused, steps while running, disconnect on a launch-type session) |
+| `capability_absent` | `cmd.run_debug.variables.set_value` (non-writable variable), `cmd.run_debug.callstack.restart_frame`, `cmd.run_debug.breakpoint.set_exception_filters` |
+| `stale_projection` | any row whose precondition reads session, config, breakpoint, watch, or variable projection state |
+| `permission_required` | `cmd.run_debug.start`, `cmd.run_debug.attach`, and any row routed through the central permission/capability gate per CS-009 |
+
+ContractRef: ContractName:Plans/FinalGUISpec.md, ContractName:Plans/UI_Command_Catalog.md, ContractName:Plans/Glossary.md
+
+### 7.3 Orchestrator run-control trio (cmd.run.*)
+
+The orchestrator run-control trio registers the canonical dispatch IDs referenced by the `run_interrupted` CTA card (`Plans/FinalGUISpec.md` CTA Card Contracts): `cmd.run.resume` (Resume Run — resumes an interrupted orchestrator run; precondition `run_interrupted`), `cmd.run.view_log` (View Run Log — reveals the run's log surface; precondition `run_selected`), and `cmd.run.stop` (Stop Run — requests run stop; precondition `run_active`). Run lifecycle semantics are consumed by reference from `Plans/Orchestrator_Page.md` ("Current vs historical run behavior", including the focused-run/historical routing contract, and "Owner-surface command routing") and `Plans/Run_Graph_View.md` ("Focused run and historical routing contract", RGV-002, and §4 data model and identity); this section does not restate them. Availability class is `selection` for all three rows. Confirmation: `cmd.run.stop` is `two_step`; `cmd.run.resume` and `cmd.run.view_log` are `none`. Disabled reasons come only from the closed set `stale_projection`, `permission_required`, `unreachable`: `cmd.run.resume` and `cmd.run.stop` may raise all three; `cmd.run.view_log` may raise `stale_projection`.
+
+ContractRef: ContractName:Plans/Orchestrator_Page.md, ContractName:Plans/Run_Graph_View.md, ContractName:Plans/FinalGUISpec.md
+
+### CS-063 - Run & Debug Command Family Registration
+
+```yaml
+plan_unit_id: CS-063
+unit_type: requirement
+status: accepted
+owner_doc: Plans/Commands_System.md
+canonical_text: >-
+  The cmd.run_debug.* family (39 ids) is the sole minting namespace for classical
+  DAP debugger dispatch, registered per §7.2 with availability classes derived
+  from the debug session state machine (Plans/FinalGUISpec.md F3-483, referenced)
+  and the closed disabled-reason set; class-less dispatch refuses palette,
+  shortcut, and route dispatch per the existing dispatch-gate canon. The family
+  is distinct from cmd.debug.* (assistant investigation) per CS-009.
+gui_related: true
+gui_classification_reason: Run & Debug dispatch commands drive visible debugger controls, their enabled/disabled states, and destructive confirmation surfaces.
+split_recommended: false
+depends_on: [CS-009, CS-062]
+unblocks: [CS-064]
+acceptance_criteria:
+  - Every §7.2 row declares exactly one availability class before palette, shortcut, or route dispatch; class-less dispatch refuses.
+  - Destructive rows cmd.run_debug.config.delete and cmd.run_debug.breakpoint.remove_all route the shared confirm surface with confirmation class strong.
+  - Disabled reasons come only from the closed set unsupported, not_configured, adapter_unavailable, session_state_mismatch, capability_absent, stale_projection, permission_required.
+  - No WorkNodes, NodeSeeds, executable queues, final node manifests, or production build tasks are created by this PlanUnit.
+validation_surfaces:
+  - python3 scripts/pm-plan-index.py validate
+  - future availability-class and destructive-confirmation dispatch fixtures
+risk_class: command_family_drift
+reasoning_tier: medium
+context_scope: run_debug_revival
+implementation_surfaces: [Plans/Commands_System.md, Plans/UI_Command_Catalog.md, Plans/FinalGUISpec.md]
+node_compile_hint:
+  mode: run_debug_command_family_registration
+  create_worknodes: false
+  create_nodeseeds: false
+source_lineage:
+  - user-decision:2026-07-27-run-debug-revival
+  - Plans/FinalGUISpec.md (Run & Debug Revival Addendum F3-482..F3-496; referenced)
+preserved_exact_tokens:
+  - cmd.run_debug.*
+  - cmd.run_debug.start
+  - cmd.run_debug.breakpoint.edit
+  - cmd.run_debug.console.reveal
+  - unsupported
+  - not_configured
+  - adapter_unavailable
+  - session_state_mismatch
+  - capability_absent
+  - stale_projection
+  - permission_required
+negative_constraints:
+  - No WorkNodes, NodeSeeds, executable queues, final node manifests, or production build tasks are created by this PlanUnit.
+  - Do not restate the Debug tab or rail panel layout or the debug session state machine here; Plans/FinalGUISpec.md F3-482..F3-496 owns that canon and is referenced by unit id only.
+  - Do not re-scope or restate cmd.debug.* semantics; the assistant-investigation boundary per CS-009 and §7.1 stands unchanged.
+  - Do not mint catalog rows here; Plans/UI_Command_Catalog.md owns row-level registration.
+owner_hints: [Plans/Commands_System.md, Plans/UI_Command_Catalog.md, Plans/FinalGUISpec.md]
+```
+
+### CS-064 - Orchestrator Run-Control Trio Registration
+
+```yaml
+plan_unit_id: CS-064
+unit_type: requirement
+status: accepted
+owner_doc: Plans/Commands_System.md
+canonical_text: >-
+  cmd.run.resume, cmd.run.view_log, and cmd.run.stop are registered per §7.3
+  with run lifecycle semantics owned by Plans/Orchestrator_Page.md and
+  Plans/Run_Graph_View.md; the run_interrupted CTA card's action references
+  (Plans/FinalGUISpec.md CTA Card Contracts) now resolve to canonical
+  dispatch ids.
+gui_related: true
+gui_classification_reason: Run-control commands back the visible run_interrupted CTA card primary and secondary actions.
+split_recommended: false
+depends_on: [CS-063]
+unblocks: []
+acceptance_criteria:
+  - All three cmd.run.* rows declare availability class selection before palette, shortcut, or route dispatch.
+  - cmd.run.stop carries confirmation class two_step; cmd.run.resume and cmd.run.view_log carry none.
+  - Disabled reasons come only from the closed set stale_projection, permission_required, unreachable.
+  - The run_interrupted CTA card primary and secondary action ids resolve to the registered cmd.run.* ids.
+  - No WorkNodes, NodeSeeds, executable queues, final node manifests, or production build tasks are created by this PlanUnit.
+validation_surfaces:
+  - python3 scripts/pm-plan-index.py validate
+risk_class: run_control_command_drift
+reasoning_tier: medium
+context_scope: run_debug_revival
+implementation_surfaces: [Plans/Commands_System.md, Plans/UI_Command_Catalog.md, Plans/Orchestrator_Page.md, Plans/Run_Graph_View.md]
+node_compile_hint:
+  mode: orchestrator_run_control_trio_registration
+  create_worknodes: false
+  create_nodeseeds: false
+source_lineage:
+  - user-decision:2026-07-27-run-debug-revival
+  - Plans/FinalGUISpec.md (run_interrupted CTA card contract row)
+preserved_exact_tokens:
+  - cmd.run.resume
+  - cmd.run.view_log
+  - cmd.run.stop
+  - run_interrupted
+negative_constraints:
+  - No WorkNodes, NodeSeeds, executable queues, final node manifests, or production build tasks are created by this PlanUnit.
+  - Do not restate run lifecycle semantics here; Plans/Orchestrator_Page.md and Plans/Run_Graph_View.md own run lifecycle canon.
+  - Do not mint additional cmd.run.* ids in this addendum.
+owner_hints: [Plans/Orchestrator_Page.md, Plans/Run_Graph_View.md, Plans/UI_Command_Catalog.md]
+```
+
+### 7.4 Debug investigation verification and cleanup rows
+
+The §1.0B closed debug phase model (`Plans/assistant-chat-design.md`) makes `verification` mandatory — a fix attempt without a recorded verification result remains `attention_required` or `failed_cleanup`, never `resolved` — and names `cleanup` the terminal mutation-capable phase. The 2026-07-27 gap audit found no command id covering either phase; this section closes both holes inside the existing `cmd.debug.*` investigation family (§7.1 owns the family; these two rows extend it). They are internal wiring identifiers, not User Commands, and they do not alter the classical-debugger boundary (CS-009): `cmd.run_debug.*` remains the sole classical DAP namespace.
+
+| command_id | label | description | precondition |
+|---|---|---|---|
+| `cmd.debug.record_verification` | Record Verification Result | Records the investigation's verification outcome (resolved or still failing, with evidence refs) so the investigation may leave `attention_required` | `investigation_active && at_verification_phase` |
+| `cmd.debug.run_cleanup` | Run Investigation Cleanup | Dispatches removal of temporary instrumentation, temporary env/config, and debug-only runtime state, honoring explicit preservation/hold rules | `investigation_active && verification_recorded` |
+
+Availability class: both rows are `selection` on their tabled preconditions. `cmd.debug.run_cleanup` is mutation-capable (it reverts system state) and carries confirmation class `two_step`; `cmd.debug.record_verification` carries confirmation class `none`. Disabled reasons come only from the closed set: `stale_projection`, `phase_not_reached`, `preservation_hold_active`. Revalidation-gate semantics (target-identity drift, evidence expiry) are owned by `Plans/assistant-chat-design.md` §1.0B and consumed by reference; this section adds no revalidation rules.
+
+### CS-065 - Debug Investigation Verification and Cleanup Registration
+
+```yaml
+plan_unit_id: CS-065
+unit_type: requirement
+status: accepted
+owner_doc: Plans/Commands_System.md
+canonical_text: >-
+  cmd.debug.record_verification and cmd.debug.run_cleanup are registered per §7.4 as
+  the investigation family's verification-recording and cleanup-dispatch commands,
+  closing the two §1.0B phase-model holes found in the 2026-07-27 gap audit.
+  cmd.debug.run_cleanup is mutation-capable and dispatches only behind confirmation
+  class two_step; cmd.debug.record_verification records the verification outcome that
+  lets an investigation leave attention_required; both draw disabled reasons only from
+  the closed §7.4 set, and revalidation-gate semantics remain owned by
+  Plans/assistant-chat-design.md §1.0B by reference.
+gui_related: true
+gui_classification_reason: Verification recording and cleanup dispatch surface as investigation banner/header controls in Assistant Chat's Debug Mode overlay.
+split_recommended: false
+depends_on: [CS-042, CS-063]
+unblocks: []
+acceptance_criteria:
+  - cmd.debug.record_verification refuses dispatch unless the investigation is active and at the verification phase, and records a resolved or still-failing outcome with evidence refs.
+  - cmd.debug.run_cleanup refuses dispatch unless a verification result is recorded, routes confirmation class two_step through the shared confirm surface, and honors explicit preservation/hold rules for temporary instrumentation.
+  - Disabled reasons for both rows come only from the closed set: stale_projection, phase_not_reached, preservation_hold_active.
+  - No WorkNodes, NodeSeeds, executable queues, final node manifests, or production build tasks are created by this PlanUnit.
+validation_surfaces:
+  - python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits
+  - python3 scripts/pm-plan-index.py validate
+risk_class: command_family_drift
+reasoning_tier: standard
+context_scope: run_debug_revival
+implementation_surfaces: [Plans/Commands_System.md, Plans/UI_Command_Catalog.md, Plans/assistant-chat-design.md]
+node_compile_hint:
+  mode: debug_investigation_verification_cleanup_registration
+  create_worknodes: false
+  create_nodeseeds: false
+source_lineage:
+  - user-decision:2026-07-27-run-debug-revival
+  - Plans/assistant-chat-design.md (§1.0B closed debug phase model; verification/cleanup phases)
+preserved_exact_tokens:
+  - cmd.debug.record_verification
+  - cmd.debug.run_cleanup
+  - verification
+  - cleanup
+negative_constraints:
+  - No WorkNodes, NodeSeeds, executable queues, final node manifests, or production build tasks are created by this PlanUnit.
+  - Do not restate §1.0B revalidation rules here; Plans/assistant-chat-design.md owns them.
+  - Do not re-scope these ids to classical DAP debugging; cmd.run_debug.* remains the sole classical namespace (CS-009).
+stale_retired_dispositions: []
+owner_boundary_notes:
+  - "Plans/Commands_System.md §7.1 owns the cmd.debug.* family; this unit registers only the verification/cleanup pair that closes the §1.0B phase-model holes."
+owner_hints: [Plans/Commands_System.md, Plans/UI_Command_Catalog.md, Plans/assistant-chat-design.md]
+```

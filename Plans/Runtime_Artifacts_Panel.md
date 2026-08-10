@@ -29,10 +29,12 @@ ContractRef: Plans/Project_Output_Artifacts.md#Runtime Artifacts (GUI panel) —
 Required fields:
 - artifact_id
 - artifact_type
-- run_id
-- attempt_id
+- run_id (required for every artifact type except `restore_point`; optional attribution bridge for `restore_point`)
+- attempt_id (required for every artifact type except `restore_point`; optional attribution bridge for `restore_point`)
 - projection_freshness
 - projection_health
+
+For `restore_point`, `type_payload.restore_point_id` is the primary identity. Optional `run_id` and `attempt_id` preserve runtime attribution only; they do not become restore-point authority.
 
 Canonical terms and values:
 - seglog `runtime_artifact.*`
@@ -299,7 +301,7 @@ Schema-file materialization note: `Plans/runtime_artifact_envelope.schema.json` 
 
 The runtime-artifact payload/schema-owner split resolves here: this document is the `/schema-owner` for the runtime-artifact payload envelope until `Plans/runtime_artifact_envelope.schema.json` and the 19 per-type `Plans/runtime_artifact_<type>.schema.json` files materialize. `Plans/Contracts_V0.md` owns the EventRecord wrapper and shared event vocabulary; `Plans/storage-plan.md` owns key registration and projector storage; neither owner may redefine runtime-artifact payload fields locally.
 
-The common envelope pins `artifact_id`, `artifact_type`, canonical IDs, `run_id`, `thread_id?`, `node_id?`, `attempt_id`, `provider_attempt_ref?`, `usage_event_ref?`, receipt refs, producer/actor refs, content refs, projection fields, and routing refs. Per-type schemas may add required fields for a specific `runtime_artifact.*` family, but they must not drift from or override those envelope fields.
+The common envelope pins `artifact_id`, `artifact_type`, canonical IDs, `thread_id?`, `node_id?`, `provider_attempt_ref?`, `usage_event_ref?`, receipt refs, producer/actor refs, content refs, projection fields, and routing refs. It requires `run_id` and `attempt_id` for every artifact family except `restore_point`; for `restore_point` each is an optional attribution bridge and `type_payload.restore_point_id` remains primary identity. Per-type schemas may add required fields for a specific `runtime_artifact.*` family, but they must not drift from or override those envelope fields.
 
 Spec-integrity rows that also name command `/catalog` ghost IDs, HITL executor canon, `/crosswalk/TOC` cleanup, glossary links, duplicated command families, or missing advertised sections stay with those owner docs. This panel owns only the runtime-artifact payload/schema-owner envelope and the artifact-panel routing contract.
 
@@ -416,6 +418,12 @@ ContractRef: ContractName:Plans/Plan_Document_System.md, ContractName:Plans/Boot
 ```yaml
 {plan_unit_id: "RAP-002", unit_type: "requirement", status: "accepted", owner_doc: "Plans/Runtime_Artifacts_Panel.md", canonical_text: "Runtime_Artifacts_Panel.md is the Runtime Artifacts Panel SSOT and owner-section document; it preserves Puppet Master naming, deterministic defaults, required artifact envelope routing preference, and ContractRefs to Contracts, storage, usage, and Project Output Artifacts owners.", gui_related: true, gui_classification_reason: "This unit preserves user-visible GUI, UI, surface, workflow, or visual presentation requirements.", split_recommended: false, depends_on: ["PDS-003", "PDS-004", "PDS-005", "PNC-001", "CV-002", "SP-001", "UF-001"], unblocks: [], acceptance_criteria: ["RAP-002 remains addressable as a fine-grained Runtime Artifacts Panel PlanUnit with source-span coverage.", "ContractRefs, anchors or aliases, exact tokens, negative constraints, compatibility notes, stale/retired dispositions, owner boundaries, and source lineage from the source spans remain preserved.", "No WorkNodes, NodeSeeds, executable queues, final node manifests, production build tasks, implementation files, or source code are created by this PlanUnit."], validation_surfaces: ["python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits", "python3 scripts/pm-plan-index.py validate"], risk_class: "owner_identity_drift", reasoning_tier: "standard", context_scope: "runtime_artifact_authority", implementation_surfaces: ["Plans/Runtime_Artifacts_Panel.md"], node_compile_hint: {mode: "runtime_artifacts_authority_preface", create_worknodes: false}, source_lineage: ["Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:Runtime_Artifacts_Panel-S0001", "Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:Runtime_Artifacts_Panel-S0002", "Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:Runtime_Artifacts_Panel-S0006"], preserved_exact_tokens: ["Runtime Artifacts Panel — SSOT", "Canonical owner-section requirements", "Artifact envelope routing preference", "Puppet Master", "No open questions", "ContractRef: ContractName:Plans/Contracts_V0.md, ContractName:Plans/storage-plan.md, ContractName:Plans/usage-feature.md, ContractName:Plans/Project_Output_Artifacts.md"], negative_constraints: [], preserved_contractrefs: ["ContractRef: ContractName:Plans/Contracts_V0.md, ContractName:Plans/storage-plan.md, ContractName:Plans/usage-feature.md, ContractName:Plans/Project_Output_Artifacts.md"], compatibility_only_notes: [], stale_retired_dispositions: [], owner_hints: ["Plans/Runtime_Artifacts_Panel.md"]}
 ```
+
+## Known-37 recovery artifact projection - 2026-07-18
+
+The Runtime Artifacts panel exposes, by stable non-secret ref, the `safe_point.recovery_unavailable` event, recovery anchor, snapshot set, reason, preserved-work state, typed command result, verification evidence or confirmation authority, and `recovery_unavailable_resolution_receipt`. It preserves the owner ordering of `allowed_action_ids[]`; it does not derive membership from the presence of artifacts or offer ordinary restore/retry while the anchor remains recovery unavailable.
+
+Locate success shows the verified snapshot refs, lowercase manifest SHA-256, verification evidence ref, exact `resolved` release, and committed receipt identity. Abandonment shows the actor/confirmation ref, exact `abandoned_by_user` release, preserved snapshot/local-work custody, and committed receipt identity. Both show `cleanup_performed = false`. Nonsuccess, receipt `not_committed`, an unresolved ref, or replay uncertainty leaves the anchor visibly `recovery_unavailable` and must not be represented as partial recovery, cleanup, or success. The panel is a read-only receipt/evidence consumer and cannot create an authority ref or release an anchor.
 
 ## Ledger Compile Addendum - pldg-20260624-001-provider-updates
 
@@ -2012,4 +2020,543 @@ owner_hints:
   - Plans/usage-feature.md
   - Plans/UI_Command_Catalog.md
   - Plans/Contracts_V0.md
+```
+
+## Case L Durable-State Consumer Addendum - 2026-07-17
+
+This addendum is the Runtime Artifacts consumer propagation for approved Case L findings `L-013`, `L-022`, and `L-027`. It consumes the owner contracts in `Plans/Contracts_V0.md`, `Plans/storage-plan.md`, `Plans/FileSafe.md`, and `Plans/assistant-chat-design.md`; it does not create a second EventRecord envelope, storage recovery algorithm, restore engine, restore-point lifecycle, retention policy, permission rule, or storage-access state machine. The approved source is `PuppetMaster-AssuranceLab/orchestration-2026-07-17/phase2-case-L/CASE_L_APPROVAL_2026-07-17.md`, including Bundles B, C, D, E, and F. This documentation propagation creates no runtime implementation, WorkNodes, NodeSeeds, executable queues, generated governance artifacts, build tasks, or completeness evidence.
+
+### Canonical-history continuity and projection truth
+
+Every new `runtime_artifact.*` write uses the current EventRecord `2.0.0` envelope. Runtime-artifact events are project-scoped: `scope_kind = project` and `project_id` is the non-empty owning project ID. The panel never invents a default project. Application-scoped `storage.integrity_detected`, `storage.recovery_applied`, and `storage.boot_recovery` records instead carry `scope_kind = application` and `project_id = null`; the panel may show their proven affected project/run/event refs from payload evidence, but must not rewrite their envelope scope.
+
+Read-only artifact/history inspection of an EventRecord `2.0.0` root requires a reader that validates `2.0.0`; an unsupported reader refuses the live panel with `unsupported_schema_version` rather than presenting a partial or best-effort view. Event routing consumes the storage-owned key `event_record_index.v2:{scope_partition}:{sequence_id_20}:{event_id}` where application scope uses `app` and project scope uses the registered reversible project partition. The panel does not reconstruct this key from display project state, omit `event_id`, or treat the lookup index as event authority.
+
+Runtime-artifact producers preserve globally unique `event_id`, the Contracts-owned `(scope_partition, event_type, idempotency_key)` lifetime identity, and the selected `replay_policy`. `dedupe_unavailable` means no persisted artifact append succeeded: the panel may retain explicitly ephemeral view state, but it must not show a durable artifact, receipt, or success row. A compatibility value normalized as `projector_replay_only` may update only the rebuildable artifact projection and its atomic checkpoint; it cannot emit another artifact, execute an open/apply action, dispatch work, create usage, or mutate canonical state.
+
+Canonical-history continuity is separate from projector currentness. The panel consumes owner recovery evidence including `integrity_id`, `recovery_id`, `impact_precision`, proven affected byte/sequence/event ranges, last-good and next-good identities, survivor digest, checkpoint action, projection action, repair provenance, and user-disclosure requirement. The closed panel vocabulary is:
+
+- `projection_freshness = current | refreshing | stale`;
+- `projection_health = healthy | degraded | unavailable`.
+
+A projection rebuilt to the current survivor checkpoint may be `projection_freshness = current` while remaining `projection_health = degraded` because canonical history has a proven or possible hole. Unknown, acknowledged, mutation-authorizing, or receipt-authority loss is never rendered `healthy`. `unavailable` applies when the owner cannot establish a trustworthy view. Gap rendering distinguishes unacknowledged tail, exact event, exact byte range, bounded sequence range, and unknown segment remainder, and links the storage recovery/disclosure record. Runtime Artifacts never infers lost identity from timestamps or from its rebuildable index.
+
+### Restore-point projection and exact-restore outcome consumption
+
+`runtime_artifact.restore_point` is a projection of the Assistant Chat-owned immutable conversation restore-point record, not the record itself and not a safe point. Its `type_payload` requires `restore_point_id` as primary identity plus `record_ref`, `record_sha256`, `status`, source `project_id`, `source_thread_id`, `source_branch_id`, `source_message_id`, context/provenance/attachment/citation refs, `retention_policy_ref`, and current hold/reference summaries. `safe_point_id` is optional lineage only and MUST NOT become restore-point identity or silently restore files.
+
+Status is consumed exactly as `available | expired | deleted | corrupt`. An available record may expose the registered branch-from-restore route after permission, current-hash, and storage-writer preflight. Successful application creates a new `thread_id` and `branch_id`, leaves the source thread and source worktree unchanged, does not consume the record, and has no filesystem apply semantics. Expired, deleted, corrupt, stale-hash, permission-denied, viewer, and blocked states remain browsable with their exact unavailable reason and no enabled apply route. Cleanup may expire a regenerable artifact projection, but cannot delete the canonical `rp:{project_id}:{restore_point_id}` record or clear its descendant/application/legal-hold refs.
+
+When Runtime Artifacts displays a FileSafe safe-point or Chat-revert receipt, it consumes the closed owner outcomes without relabeling them: `restored_clean` requires target equality; `restore_skipped` requires pre-existing target equality and no mutation; `restore_refused` is pre-mutation; `restore_failed` requires verified rollback equality; and `restore_recovery_required` retains the mutation fence, worktree/safe-point/transaction holds, and blocked recovery episode. `restored_with_conflicts` is not a valid exact-replace success. A `recovery_unavailable` episode stays blocked and anchored until explicit abandon, replan, or verified recovery.
+
+### Storage root, viewer, and permission-affordance dependency
+
+Artifact browsing consumes storage-owned `storage_instance_id`, `root_generation`, redacted `logical_root_fingerprint`, `storage_access_mode = writer | viewer | blocked`, `storage_mode_reason`, `lock_ownership`, and `snapshot_high_water_ref`. It never uses display path, current project selection, or an index row as root authority.
+
+In compatible lock-conflict viewer mode, Runtime Artifacts is a frozen, manually refreshable read snapshot. It may inspect/copy/export only within FileSafe and permission policy; view-local changes are visibly ephemeral. Apply, restore, retry, delete, retention/hold mutation, settings/history persistence, dispatch, provider calls requiring receipts, and every other durable/runtime/external mutation remain discoverable where useful but disabled with `storage_read_only`. Permission approval cannot widen this storage gate. Promotion is never automatic and the panel only reflects the storage-owned full-revalidation result. A newer-format store exposes metadata-only compatibility diagnostics, not the Runtime Artifacts viewer. `root_mismatch`, `root_unavailable`, `fallback_diverged`, or inability to prove a coherent snapshot yields the owner viewer/blocked posture and never an apparently empty artifact list.
+
+Runtime Artifacts diagnostics do not create a generic verify, repair, salvage, force-open, or `try_anyway` action. `Retry storage` is an owner admission probe only; it neither repairs bytes nor automatically resumes a blocked artifact action.
+
+Permission-denied artifact actions consume the permission-owned blocked payload (`blocked_family`, `blocked_reason_code`, ordered `allowed_action_ids[]`, `permission_snapshot_id?`, `approval_scope_key?`, `executed: false`) and do not collapse denial, approval required, storage read-only, integrity block, or preflight drift into generic failure.
+
+ContractRef: ContractName:Plans/Contracts_V0.md#EventRecord, ContractName:Plans/storage-plan.md#Case-L-durable-state-owner-canon, ContractName:Plans/FileSafe.md#Case-L-Exact-Restore-Repair-Addendum, ContractName:Plans/Permissions_System.md, ContractName:Plans/assistant-chat-design.md
+
+### RAP-045 - Case L Canonical History And Projection Trust Consumer
+
+```yaml
+plan_unit_id: RAP-045
+unit_type: requirement
+status: accepted
+owner_doc: Plans/Runtime_Artifacts_Panel.md
+canonical_text: >-
+  Runtime Artifacts consumes EventRecord 2.0 scope, identity, idempotency, replay,
+  and storage recovery evidence while keeping projection_freshness current,
+  refreshing, or stale separate from projection_health healthy, degraded, or
+  unavailable. Canonical-history holes, affected ranges, survivor/rebuild state,
+  and repair provenance remain visible even when a survivor projection is current;
+  dedupe-unavailable or replay-only input never fabricates a durable artifact.
+gui_related: true
+gui_classification_reason: The unit defines visible artifact trust, continuity-gap, and recovery-provenance rendering.
+depends_on: [RAP-020, RAP-026, CV-317, CV-318, SP-236]
+unblocks: []
+acceptance_criteria:
+  - Runtime-artifact writes use project-scoped EventRecord 2.0 without fake project identity.
+  - Application-scoped storage recovery records remain application scoped while proven affected refs remain inspectable.
+  - A reader lacking EventRecord 2.0 validation refuses the panel, and artifact event routing consumes the full storage-owned v2 scope, sequence, and event lookup key.
+  - A current survivor projection with a canonical-history hole remains degraded or unavailable, never healthy.
+  - dedupe_unavailable creates no persisted artifact success and projector_replay_only creates no canonical or external side effect.
+  - Gap fixtures render exact event, exact byte range, bounded sequence range, and unknown remainder distinctly with recovery provenance.
+validation_surfaces:
+  - python3 scripts/pm-plan-index.py validate
+  - future Case L Runtime Artifacts continuity and EventRecord fixture suite
+risk_class: runtime_artifact_false_continuity
+reasoning_tier: high
+context_scope: case_l_runtime_artifact_continuity
+implementation_surfaces:
+  - Plans/Runtime_Artifacts_Panel.md
+  - Plans/runtime_artifact_envelope.schema.json
+node_compile_hint:
+  mode: case_l_runtime_artifact_continuity_consumer
+  create_worknodes: false
+  create_nodeseeds: false
+source_lineage:
+  - Case-L:L-013
+  - Case-L:L-027
+  - Case-L:EVT-01..EVT-07
+  - Case-L:SEG-D-013..SEG-D-016
+  - PuppetMaster-AssuranceLab/orchestration-2026-07-17/phase2-case-L/planning/CONSUMER_PROPAGATION_MAP.md
+negative_constraints:
+  - Do not collapse projection freshness and health.
+  - Do not label rebuilt projections healthy when canonical continuity is missing.
+  - Do not infer lost identities from timestamps or artifact-index rows.
+owner_hints:
+  - Plans/Runtime_Artifacts_Panel.md
+```
+
+### RAP-046 - Case L Restore Point And Exact Restore Projection
+
+```yaml
+plan_unit_id: RAP-046
+unit_type: requirement
+status: accepted
+owner_doc: Plans/Runtime_Artifacts_Panel.md
+canonical_text: >-
+  runtime_artifact.restore_point projects the immutable Assistant Chat restore-point
+  record by restore_point_id, record hash, source conversation boundary, provenance,
+  retention, and available, expired, deleted, or corrupt status. An optional
+  safe_point_id is lineage only. Branch-from-restore creates a new thread and branch
+  without mutating the source thread/worktree, while FileSafe exact-replace receipts
+  preserve their owner-defined equality, refusal, rollback, and recovery-required truth.
+gui_related: true
+gui_classification_reason: Restore-point browsing, disabled states, branching, and restore receipt truth are visible panel behavior.
+depends_on: [RAP-004, CV-320, SP-242]
+unblocks: []
+acceptance_criteria:
+  - Restore-point rows route by restore_point_id and never use safe_point_id as primary identity.
+  - Available create-to-branch fixtures produce a new thread and branch while leaving source conversation and worktree unchanged.
+  - Expired, deleted, corrupt, stale-hash, permission-denied, viewer, and blocked fixtures expose no enabled apply route.
+  - restored_clean and restore_failed render only with target-equality and rollback-equality proof respectively.
+  - restore_recovery_required and recovery_unavailable remain visibly fenced and held.
+validation_surfaces:
+  - python3 scripts/pm-plan-index.py validate
+  - future RSP-RP-001 through RSP-RP-004 artifact projection fixtures
+  - future RSP-ATOMIC-001 through RSP-ATOMIC-003 receipt rendering fixtures
+risk_class: runtime_artifact_restore_identity_drift
+reasoning_tier: high
+context_scope: case_l_restore_point_projection
+implementation_surfaces:
+  - Plans/Runtime_Artifacts_Panel.md
+  - Plans/runtime_artifact_restore_point.schema.json
+node_compile_hint:
+  mode: case_l_restore_point_projection_consumer
+  create_worknodes: false
+  create_nodeseeds: false
+source_lineage:
+  - Case-L:L-006
+  - Case-L:L-010
+  - Case-L:L-021
+  - Case-L:L-022
+  - Case-L:L-024
+  - Case-L:PD-RSP-01..PD-RSP-09
+negative_constraints:
+  - Do not collapse restore points into safe points or runtime artifacts into lifecycle authority.
+  - Do not claim original state preservation without owner equality proof.
+owner_hints:
+  - Plans/Runtime_Artifacts_Panel.md
+```
+
+### RAP-047 - Case L Storage Access And Blocked Action Affordances
+
+```yaml
+plan_unit_id: RAP-047
+unit_type: requirement
+status: accepted
+owner_doc: Plans/Runtime_Artifacts_Panel.md
+canonical_text: >-
+  Runtime Artifacts consumes storage root identity and writer, viewer, or blocked
+  access state. Compatible viewer mode is a frozen manually refreshed snapshot;
+  durable, runtime, and external mutations are disabled with storage_read_only,
+  permission approval cannot widen the gate, newer stores expose diagnostics rather
+  than a live panel, and root mismatch or fallback divergence never appears as an
+  empty artifact list. Permission denial remains a typed non-executed blocked result.
+gui_related: true
+gui_classification_reason: Storage viewer banners, refresh, disabled actions, root mismatch, and denial states are user-visible affordances.
+depends_on: [RAP-026, SP-239, SP-240]
+unblocks: []
+acceptance_criteria:
+  - Viewer fixtures start no writer-capable component and classify every mutating panel action as storage_read_only.
+  - Manual refresh recaptures one owner high-water snapshot without projector or checkpoint writes.
+  - Permission approval cannot enable an action prohibited by viewer or blocked storage state.
+  - Newer-store and root-continuity fixtures show diagnostics or blocked state rather than live or empty artifact content.
+  - Diagnostics expose no generic repair, salvage, force-open, or try-anyway path, and Retry storage cannot auto-resume an artifact action.
+  - Permission denial preserves blocked family, reason, ordered action IDs, snapshot ref when present, and executed false.
+validation_surfaces:
+  - python3 scripts/pm-plan-index.py validate
+  - future Case L storage lock, viewer, root continuity, and direct-handler fixtures
+risk_class: runtime_artifact_viewer_mutation_leak
+reasoning_tier: high
+context_scope: case_l_runtime_artifact_storage_access
+implementation_surfaces:
+  - Plans/Runtime_Artifacts_Panel.md
+node_compile_hint:
+  mode: case_l_runtime_artifact_storage_access_consumer
+  create_worknodes: false
+  create_nodeseeds: false
+source_lineage:
+  - Case-L:L-011
+  - Case-L:L-012
+  - Case-L:L-014
+  - Case-L:L-018
+  - Case-L:L011-C1..L018-C3
+negative_constraints:
+  - Do not make display path, current project selection, or the rebuildable index storage-root authority.
+  - Do not auto-promote a viewer or expose Runtime Artifacts for an unsupported newer store.
+owner_hints:
+  - Plans/Runtime_Artifacts_Panel.md
+```
+
+## Cozy Shelves Panel Reconciliation Addendum - 2026-07-27
+
+This addendum closes the Runtime Artifacts spec gaps exposed by the winning Cozy Shelves left-rail concept (`Concepts/rail-concepts/QwenRailConcepts/c2-cozy-shelves.html` and `c2-cozy-shelves-files.html`, source-lineage-only; no concept HTML, CSS, or class names are canon). It binds the panel's label-only actions to canonical `cmd.*` ids, pins the freshness x health visual mapping, adds positive empty states, records how artifact receipt rows consume the shared unified expander contract, and surfaces retention/pin/tombstone behavior. Ratified inputs are cited as user decision 2026-07-27: the rail width envelope (240px min / 480px max / 280px default; 220px is test-only adversarial), the `--cat-*` per-theme category indirection with `--accent-primary` reserved for selection, and the c2 concept files as the patched-in-place implementation base. The unified expander contract itself is owned by the GUI shell owner doc (`Plans/FinalGUISpec.md`, Cozy Shelves reconciliation layer); this panel consumes it and does not re-own it. `Plans/UI_Command_Catalog.md` retains sole `cmd.*` minting authority. Slint compatibility holds throughout: opaque precomputed surfaces, precomputed color math, no arbitrary-content backdrop blur, no SVG filters, and glass only as pre-blurred wallpaper. This addendum creates no WorkNodes, NodeSeeds, executable queues, final node manifests, implementation files, or production build tasks, and it never edits or supersedes existing PlanUnits except by explicit new-unit statement.
+
+### RAP-048 - Cozy Shelves Action-To-Command Binding
+
+```yaml
+plan_unit_id: RAP-048
+unit_type: requirement
+status: accepted
+owner_doc: Plans/Runtime_Artifacts_Panel.md
+canonical_text: >-
+  Every mandated Runtime Artifacts panel action binds to a canonical UI_Command_Catalog id; label-only
+  actions are retired as canon. Show in Ledger = cmd.artifacts.show_in_ledger and Show in Usage =
+  cmd.artifacts.show_in_usage (existing rows); list sort = cmd.artifacts.sort (shell_view row); recording
+  playback = cmd.artifacts.play_recording (record-only availability); live recording watch =
+  cmd.artifacts.watch_recording (live-run availability); Sources = cmd.artifacts.show_sources
+  (navigation wrapper replacing the prototype web.sources verb); panel entry = cmd.panel.switch with
+  panel_id = artifacts (retiring prototype panels.show/panels.open_chat forms). Open and Watch on
+  visible-session evidence dispatch the ATS-owned Open/Watch fallback route (ATS-009 semantics preserved
+  by RAP-030) rather than artifact-local commands, and inspect / rerun-with-a-question on described-image
+  and receipt rows route to the owning surface; the panel never executes reruns or mutations locally.
+  This unit binds labels to ids only; Plans/UI_Command_Catalog.md mints and owns the rows.
+gui_related: true
+gui_classification_reason: Action bindings determine which visible panel controls dispatch which commands.
+depends_on: [RAP-008, RAP-030, RAP-042, RAP-044, UCC-109]
+unblocks: []
+acceptance_criteria:
+  - Each mandated panel action has exactly one canonical cmd.* binding and no label-only action remains unbound.
+  - Prototype verbs web.sources, panels.show, and panels.open_chat do not survive as canonical ids.
+  - play_recording is available on completed recordings only and watch_recording on live runs only, with reason-coded disabled states otherwise.
+  - Open/Watch on visible-session evidence resolves through the ATS-owned route, and inspect/rerun actions resolve to owner surfaces, never panel-local execution.
+  - No WorkNodes, NodeSeeds, executable queues, final node manifests, or production build tasks are created by this PlanUnit.
+validation_surfaces:
+  - python3 scripts/pm-plan-index.py validate
+  - future Cozy Shelves control-reconciliation artifact check
+risk_class: artifact_action_command_drift
+reasoning_tier: standard
+context_scope: cozy_shelves_artifact_command_binding
+implementation_surfaces:
+  - Plans/Runtime_Artifacts_Panel.md
+  - Plans/UI_Command_Catalog.md
+node_compile_hint:
+  mode: artifact_action_command_binding
+  create_worknodes: false
+  create_nodeseeds: false
+source_lineage:
+  - "Concepts/rail-concepts/QwenRailConcepts/c2-cozy-shelves.html (source-lineage-only)"
+  - "user decision 2026-07-27"
+  - "Plans/UI_Command_Catalog.md Cozy Shelves reconciliation layer"
+preserved_exact_tokens:
+  - cmd.artifacts.show_in_ledger
+  - cmd.artifacts.show_in_usage
+  - cmd.artifacts.sort
+  - cmd.artifacts.play_recording
+  - cmd.artifacts.watch_recording
+  - cmd.artifacts.show_sources
+  - cmd.panel.switch
+negative_constraints:
+  - Do not keep label-only actions as canonical panel canon.
+  - Do not mint cmd.* rows in this doc; UI_Command_Catalog.md owns minting.
+  - Do not execute rerun, inspect-mutation, or recording capture panel-locally.
+owner_hints:
+  - Plans/Runtime_Artifacts_Panel.md
+  - Plans/UI_Command_Catalog.md
+  - Plans/Automated_Testing_System.md
+```
+
+### RAP-049 - Freshness x Health Visual Mapping
+
+```yaml
+plan_unit_id: RAP-049
+unit_type: requirement
+status: accepted
+owner_doc: Plans/Runtime_Artifacts_Panel.md
+canonical_text: >-
+  The projection_freshness x projection_health matrix (current | refreshing | stale x healthy | degraded |
+  unavailable) renders through two redundant channels: projection_health drives the row/panel status dot
+  color from theme status tokens, and projection_freshness renders as a text staleness chip (current shows
+  no chip; refreshing and stale show labeled chips). All nine combinations remain distinguishable, state is
+  never encoded by color alone, and degraded or unavailable health always carries its text label plus the
+  recovery/disclosure provenance link required by the Case L consumer contract. The health dot never uses
+  --accent-primary, which stays reserved for selection (user decision 2026-07-27); category shelf tinting
+  is a separate --cat-* per-theme indirection concern and does not encode health or freshness.
+gui_related: true
+gui_classification_reason: Defines the visible badge/chip treatment for artifact projection trust states.
+depends_on: [RAP-045]
+unblocks: []
+acceptance_criteria:
+  - Fixtures render all nine freshness x health combinations distinguishably with dot color plus text chip, never color alone.
+  - A current-but-degraded projection shows a healthy-position freshness (no chip) with a degraded dot and its text label, never a healthy rendering.
+  - Stale and refreshing chips are text-labeled and readable in every shipped theme, including retro-dark and basic-light overrides.
+  - Degraded and unavailable states link the owning recovery/disclosure record.
+  - No WorkNodes, NodeSeeds, executable queues, final node manifests, or production build tasks are created by this PlanUnit.
+validation_surfaces:
+  - python3 scripts/pm-plan-index.py validate
+  - future Case L Runtime Artifacts continuity and EventRecord fixture suite
+risk_class: freshness_health_color_only_signal
+reasoning_tier: standard
+context_scope: artifact_freshness_health_rendering
+implementation_surfaces:
+  - Plans/Runtime_Artifacts_Panel.md
+node_compile_hint:
+  mode: artifact_freshness_health_visual_mapping
+  create_worknodes: false
+  create_nodeseeds: false
+source_lineage:
+  - "Concepts/rail-concepts/QwenRailConcepts/c2-cozy-shelves.html (source-lineage-only)"
+  - "user decision 2026-07-27"
+  - "Plans/Runtime_Artifacts_Panel.md:2037-2042"
+preserved_exact_tokens:
+  - projection_freshness
+  - projection_health
+compatibility_only_notes:
+  - "Slint compatibility: freshness/health treatments are opaque precomputed surfaces with precomputed color math; no arbitrary-content backdrop blur and no SVG filters at runtime; glass appears only as pre-blurred wallpaper."
+negative_constraints:
+  - Do not encode any freshness or health state by color alone.
+  - Do not collapse the two axes into one badge or reuse --accent-primary for health.
+owner_hints:
+  - Plans/Runtime_Artifacts_Panel.md
+```
+
+### RAP-050 - Positive Empty States
+
+```yaml
+plan_unit_id: RAP-050
+unit_type: requirement
+status: accepted
+owner_doc: Plans/Runtime_Artifacts_Panel.md
+canonical_text: >-
+  A healthy-but-empty Runtime Artifacts panel renders a positive empty state, never a bare blank list.
+  With a proven-coherent snapshot and no runs yet for the project, the panel shows a no-runs-yet state
+  with a short explanation and a CTA that routes to the owning run surface; the panel itself never
+  dispatches work. When active filters reduce a non-empty index to zero rows, the panel shows a
+  filtered-to-zero state naming the active filter summary with a clear-filter chip that restores the
+  unfiltered list. These positive states apply only when the storage owner proves a coherent healthy
+  snapshot; root_mismatch, root_unavailable, fallback_diverged, viewer/blocked, and
+  unprovable-snapshot conditions keep the RAP-047 owner posture and never render as an apparently
+  empty artifact list.
+gui_related: true
+gui_classification_reason: Empty, filtered-empty, and blocked-empty renderings are user-visible panel states.
+depends_on: [RAP-026, RAP-047]
+unblocks: []
+acceptance_criteria:
+  - No-runs-yet fixtures show explanation plus a CTA routing to the owning run surface without panel-local dispatch.
+  - Filtered-to-zero fixtures show the active filter summary and a clear-filter chip that restores the list.
+  - Root-mismatch, root-unavailable, fallback-diverged, and viewer/blocked fixtures never render either positive empty state.
+  - The two positive empty states are visually and textually distinct from each other and from blocked/diagnostic states.
+  - No WorkNodes, NodeSeeds, executable queues, final node manifests, or production build tasks are created by this PlanUnit.
+validation_surfaces:
+  - python3 scripts/pm-plan-index.py validate
+  - future Runtime Artifacts empty-state fixtures
+risk_class: empty_state_ambiguity
+reasoning_tier: standard
+context_scope: artifact_panel_empty_states
+implementation_surfaces:
+  - Plans/Runtime_Artifacts_Panel.md
+node_compile_hint:
+  mode: artifact_panel_positive_empty_states
+  create_worknodes: false
+  create_nodeseeds: false
+source_lineage:
+  - "Concepts/rail-concepts/QwenRailConcepts/c2-cozy-shelves.html (source-lineage-only)"
+  - "user decision 2026-07-27"
+  - "Plans/Runtime_Artifacts_Panel.md:2056"
+negative_constraints:
+  - Do not render storage-access or continuity failures as an empty artifact list.
+  - Do not let the empty-state CTA execute runs from the panel.
+owner_hints:
+  - Plans/Runtime_Artifacts_Panel.md
+```
+
+### RAP-051 - Receipt-Row Unified Expander Consumption
+
+```yaml
+plan_unit_id: RAP-051
+unit_type: requirement
+status: accepted
+owner_doc: Plans/Runtime_Artifacts_Panel.md
+canonical_text: >-
+  Runtime Artifacts rows consume the shared unified expander contract owned by the GUI shell owner doc
+  without re-owning it: rows are collapsed by default, the row header is a single accessible button with
+  aria-expanded, and the body follows the slot order kv-facts, status-detail, blocked-reason-detail,
+  actions, overflow with an approximately 200px body cap and internal scroll. The collapsed receipt row is
+  two lines carrying the artifact family pill, label, status, and age; failed rows keep a one-line failure
+  excerpt and live rows keep their progress line while collapsed. Blocked reasons stay visible outside the
+  collapsible body, destructive actions route through the shared confirm surface, and blocked payloads
+  carry blocked_reason_code plus ordered allowed_action_ids[]. The expanded body exposes the
+  metadata-first demand-loaded preview, provenance/producer refs, the actions row including the retention
+  line and pin action, a copyable canonical artifact id, and truncation_state for any excerpted content.
+  Investigation-bundle groups collapse with same-kind grouping and per-kind count badges, remaining the
+  RAP-013 index/navigation layer over canonical artifact records rather than a new family.
+gui_related: true
+gui_classification_reason: Row anatomy, expansion behavior, and grouped-bundle presentation are visible panel structure.
+depends_on: [RAP-008, RAP-013, RAP-041, RAP-042]
+unblocks: []
+acceptance_criteria:
+  - Rows default collapsed with a single aria-expanded header button and the mandated body slot order.
+  - Collapsed rows keep family pill, label, status, and age; failed rows keep their one-line excerpt and live rows their progress line.
+  - Blocked reasons render outside the collapsible body and blocked payloads preserve blocked_reason_code plus ordered allowed_action_ids[].
+  - Expanded bodies expose demand-loaded preview, provenance refs, retention line, pin action, copyable id, and truncation_state within the ~200px internal-scroll cap.
+  - Investigation groups collapse with same-kind grouping and count badges without minting a new artifact family.
+  - No WorkNodes, NodeSeeds, executable queues, final node manifests, or production build tasks are created by this PlanUnit.
+validation_surfaces:
+  - python3 scripts/pm-plan-index.py validate
+  - future unified expander conformance fixtures
+risk_class: expander_contract_fork
+reasoning_tier: standard
+context_scope: artifact_receipt_row_expander
+implementation_surfaces:
+  - Plans/Runtime_Artifacts_Panel.md
+node_compile_hint:
+  mode: artifact_receipt_row_expander_consumer
+  create_worknodes: false
+  create_nodeseeds: false
+source_lineage:
+  - "Concepts/rail-concepts/QwenRailConcepts/c2-cozy-shelves.html (source-lineage-only)"
+  - "user decision 2026-07-27"
+  - "Plans/Runtime_Artifacts_Panel.md:193-260"
+preserved_exact_tokens:
+  - blocked_reason_code
+  - "allowed_action_ids[]"
+  - truncation_state
+compatibility_only_notes:
+  - "Slint compatibility: expander bodies are opaque precomputed surfaces; no arbitrary-content backdrop blur, no SVG filters; motion and color math precomputed."
+negative_constraints:
+  - Do not re-own or fork the unified expander contract in this doc.
+  - Do not hide blocked reasons inside the collapsible body.
+  - Do not route destructive actions outside the shared confirm surface.
+owner_hints:
+  - Plans/Runtime_Artifacts_Panel.md
+  - Plans/FinalGUISpec.md
+```
+
+### RAP-052 - Retention, Pin, And Tombstone Surface
+
+```yaml
+plan_unit_id: RAP-052
+unit_type: requirement
+status: accepted
+owner_doc: Plans/Runtime_Artifacts_Panel.md
+canonical_text: >-
+  Every artifact row surfaces its retention truth. Rows whose RAP-010 retention class bounds their
+  lifetime show an expires-in line derived from the owner retention policy; a pin-to-keep action routes
+  through the owning retention/hold surface and is disabled with storage_read_only in viewer mode, where
+  permission approval cannot widen the gate. Expiry produces a tombstone row that preserves provenance
+  metadata - canonical artifact id, family, run/thread/attempt refs, receipt refs, retention class, and
+  redaction summary - after the content itself is gone. Tombstones and cleanup expire only regenerable
+  projections; they never delete canonical records or clear descendant/application/legal-hold refs, and
+  a tombstone renders visually distinct from failed, blocked, and empty states.
+gui_related: true
+gui_classification_reason: Expiry lines, pin actions, and tombstone rows are user-visible retention affordances.
+depends_on: [RAP-010, RAP-046, RAP-047]
+unblocks: []
+acceptance_criteria:
+  - Bounded-retention rows show an expires-in line sourced from owner retention policy, never a panel-local estimate.
+  - Pin-to-keep routes to the owning retention/hold surface and classifies as storage_read_only in viewer mode.
+  - Expired rows become tombstones preserving canonical id, family, lineage refs, receipt refs, retention class, and redaction summary.
+  - Tombstone fixtures prove canonical records and legal-hold refs survive projection expiry.
+  - Tombstone rendering is distinguishable from failed, blocked, and empty states.
+  - No WorkNodes, NodeSeeds, executable queues, final node manifests, or production build tasks are created by this PlanUnit.
+validation_surfaces:
+  - python3 scripts/pm-plan-index.py validate
+  - future Runtime Artifacts retention and tombstone fixtures
+risk_class: retention_visibility_loss
+reasoning_tier: standard
+context_scope: artifact_retention_pin_tombstone
+implementation_surfaces:
+  - Plans/Runtime_Artifacts_Panel.md
+node_compile_hint:
+  mode: artifact_retention_pin_tombstone_surface
+  create_worknodes: false
+  create_nodeseeds: false
+source_lineage:
+  - "Concepts/rail-concepts/QwenRailConcepts/c2-cozy-shelves.html (source-lineage-only)"
+  - "user decision 2026-07-27"
+  - "Plans/Runtime_Artifacts_Panel.md:166-190"
+  - "Plans/Runtime_Artifacts_Panel.md:2048"
+preserved_exact_tokens:
+  - durable
+  - session_bounded
+  - ephemeral_view
+  - storage_read_only
+negative_constraints:
+  - Do not let panel cleanup or expiry delete canonical records or clear legal-hold refs.
+  - Do not render a tombstone as failed, blocked, or empty.
+  - Do not enable pin-to-keep in viewer or blocked storage modes.
+owner_hints:
+  - Plans/Runtime_Artifacts_Panel.md
+  - Plans/storage-plan.md
+```
+
+## Run & Debug Revival Addendum - 2026-07-27
+
+This addendum closes the cross-cutting "debug adapter model" deferral recorded in this document's consume-list by pointing contract ownership at `Plans/FinalGUISpec.md` Run & Debug Revival Addendum (F3-482..F3-496, referenced by unit id only, never restated). It introduces no artifact schema changes and creates no WorkNodes, NodeSeeds, executable queues, final node manifests, implementation files, or production build tasks.
+
+### RAP-053 - Debug Adapter Model Deferral Closure
+
+```yaml
+plan_unit_id: RAP-053
+unit_type: requirement
+status: accepted
+owner_doc: Plans/Runtime_Artifacts_Panel.md
+canonical_text: >-
+  The "debug adapter model" contract this document's consume-list previously deferred is now owned by
+  Plans/FinalGUISpec.md F3-494 (debug adapter registry, capability gating, portability - consumed by
+  reference); runtime artifacts that record debug sessions reference dap_session_id through the
+  existing §5A investigation identity discipline (referenced, not restated); no artifact schema
+  changes are introduced by this closure.
+gui_related: false
+gui_classification_reason: This unit records a contract ownership pointer with no visible surface.
+depends_on: [RAP-052]
+unblocks: []
+acceptance_criteria:
+  - The consume-list "debug adapter model" deferral resolves to Plans/FinalGUISpec.md F3-494 by reference; no adapter registry, capability, or portability prose is restated here.
+  - Debug-session runtime artifacts reference dap_session_id only through the existing §5A investigation identity discipline.
+  - No artifact schema change is introduced by this closure.
+  - No WorkNodes, NodeSeeds, executable queues, final node manifests, or production build tasks are created by this PlanUnit.
+validation_surfaces:
+  - python3 scripts/pm-plan-index.py validate
+  - future debug-session artifact identity fixtures
+risk_class: contract_ownership_drift
+reasoning_tier: standard
+context_scope: run_debug_revival
+implementation_surfaces:
+  - Plans/Runtime_Artifacts_Panel.md
+node_compile_hint:
+  mode: debug_adapter_model_deferral_closure
+  create_worknodes: false
+  create_nodeseeds: false
+source_lineage:
+  - "user decision 2026-07-27"
+  - "Plans/Runtime_Artifacts_Panel.md:191"
+  - Plans/FinalGUISpec.md (Run & Debug Revival Addendum F3-494; referenced)
+preserved_exact_tokens:
+  - dap_session_id
+  - debug adapter model
+negative_constraints:
+  - Do not restate the debug adapter registry, capability gating, or portability contract here; Plans/FinalGUISpec.md F3-494 owns it.
+  - Do not mint a new artifact family or identity field for debug sessions; §5A investigation identity discipline is referenced, not restated.
+  - No WorkNodes, NodeSeeds, executable queues, final node manifests, or production build tasks are created by this PlanUnit.
+owner_hints:
+  - Plans/Runtime_Artifacts_Panel.md
+  - Plans/FinalGUISpec.md
 ```

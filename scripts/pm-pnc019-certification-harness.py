@@ -10,10 +10,12 @@ WorkNodes, NodeSeeds, queues, manifests, runtime launches, or build tasks.
 from __future__ import annotations
 
 import argparse
+import base64
 import copy
 import hashlib
 import json
 import re
+import subprocess
 import sys
 from pathlib import Path
 from typing import Any
@@ -34,6 +36,15 @@ GOAL_RUN_ID = "goalrun-pnc019-0001"
 NODE_ID = "node-pnc019-0001"
 ATTEMPT_ID = "attempt-pnc019-0001"
 IDEMPOTENCY_KEY = "idem-pnc019-approved-plan-pack-0001"
+STORAGE_VALUE_REGISTRY_SCHEMA_ID = "pm.storage_value_registry.v2"
+STORAGE_VALUE_REGISTRY_SCHEMA_VERSION = "2.0.0"
+EVENT_RECORD_INDEX_SCHEMA_ID = "pm.storage_value.event_record_index.v2"
+EVENT_RECORD_INDEX_SCHEMA_VERSION = "2.0.0"
+EVENT_RECORD_INDEX_FIXTURE_SEGMENT_GENERATION = 1
+EVENT_RECORD_INDEX_FIXTURE_RECOVERY_EPOCH = 0
+EVENT_FAMILY_PROVEN_PERSISTED_FLOOR = 222
+EVENT_FAMILY_REGISTERED_KERNEL_ROWS = 39
+EVENT_FAMILY_PROVEN_UNREGISTERED_FLOOR = 185
 
 REQUIRED_POSITIVE_CASE_IDS = [
     "fresh_run",
@@ -114,6 +125,43 @@ def stable_hash(value: Any) -> str:
     return hashlib.sha256(encoded).hexdigest()
 
 
+def event_scope_partition(event: dict[str, Any]) -> str:
+    if event.get("scope_kind") == "application":
+        return "app"
+    project_id = event.get("project_id")
+    if event.get("scope_kind") != "project" or not isinstance(project_id, str) or not project_id:
+        raise ValueError("event_scope_partition_requires_valid_scope_identity")
+    encoded = base64.urlsafe_b64encode(project_id.encode("utf-8")).decode("ascii").rstrip("=")
+    return f"project~{encoded}"
+
+
+def event_producer_semantic_digest(event: dict[str, Any]) -> str:
+    producer_fields = [
+        "event_type",
+        "scope_kind",
+        "project_id",
+        "thread_id",
+        "run_id",
+        "node_id",
+        "attempt_id",
+        "actor_ref",
+        "requested_account_ref",
+        "effective_account_ref",
+        "occurred_at_utc",
+        "producer_sequence_id",
+        "correlation_id",
+        "causation_event_id",
+        "parent_event_id",
+        "idempotency_key",
+        "payload_schema_id",
+        "payload",
+        "payload_ref",
+        "redaction_profile",
+        "migration",
+    ]
+    return stable_hash({field: event.get(field) for field in producer_fields})
+
+
 def json_type_matches(value: Any, expected_type: str) -> bool:
     if expected_type == "object":
         return isinstance(value, dict)
@@ -188,6 +236,24 @@ def draft202012_schema_failures(instance: Any, schema: Any, *, path_label: str) 
             if not any(not result for result in branch_results):
                 fail(pointer, "anyOf", {"branch_error_count": [len(result) for result in branch_results]})
             return
+
+        all_of = node.get("allOf")
+        if all_of is not None:
+            if not isinstance(all_of, list) or not all_of:
+                fail(pointer, "allOf", {"detail": "branches missing"})
+            else:
+                for branch in all_of:
+                    validate_node(value, branch, pointer)
+
+        if_schema = node.get("if")
+        if if_schema is not None:
+            before = len(failures)
+            validate_node(value, if_schema, pointer)
+            condition_matched = len(failures) == before
+            del failures[before:]
+            selected = node.get("then") if condition_matched else node.get("else")
+            if selected is not None:
+                validate_node(value, selected, pointer)
 
         expected_type = node.get("type")
         if expected_type is not None:
@@ -286,7 +352,40 @@ class CertificationHarness:
         self.event_record_schema = read_json(PLANS / "event_record.schema.json")
         self.execution_context_schema = read_json(PLANS / "execution_unit_context.schema.json")
         self.storage_registry = read_json(PLANS / "storage_value_registry.json")
+        if (
+            self.storage_registry.get("schema_id") != STORAGE_VALUE_REGISTRY_SCHEMA_ID
+            or self.storage_registry.get("schema_version") != STORAGE_VALUE_REGISTRY_SCHEMA_VERSION
+        ):
+            raise AssertionError(
+                json.dumps(
+                    {
+                        "error": "storage_value_registry_version_mismatch",
+                        "expected_schema_id": STORAGE_VALUE_REGISTRY_SCHEMA_ID,
+                        "actual_schema_id": self.storage_registry.get("schema_id"),
+                        "expected_schema_version": STORAGE_VALUE_REGISTRY_SCHEMA_VERSION,
+                        "actual_schema_version": self.storage_registry.get("schema_version"),
+                    },
+                    sort_keys=True,
+                )
+            )
         self.families = {row["family_id"]: row for row in self.storage_registry["families"]}
+        event_record_index = self.families.get("event_record_index", {})
+        if (
+            event_record_index.get("value_schema_id") != EVENT_RECORD_INDEX_SCHEMA_ID
+            or event_record_index.get("schema_version") != EVENT_RECORD_INDEX_SCHEMA_VERSION
+        ):
+            raise AssertionError(
+                json.dumps(
+                    {
+                        "error": "event_record_index_version_mismatch",
+                        "expected_schema_id": EVENT_RECORD_INDEX_SCHEMA_ID,
+                        "actual_schema_id": event_record_index.get("value_schema_id"),
+                        "expected_schema_version": EVENT_RECORD_INDEX_SCHEMA_VERSION,
+                        "actual_schema_version": event_record_index.get("schema_version"),
+                    },
+                    sort_keys=True,
+                )
+            )
         self.storage: dict[str, list[dict[str, Any]]] = {family_id: [] for family_id in self.families}
         self.events: list[dict[str, Any]] = []
         self.idempotency: dict[str, str] = {}
@@ -302,6 +401,25 @@ class CertificationHarness:
 
     def validate_event_record(self, record: dict[str, Any], *, label: str) -> list[dict[str, Any]]:
         failures = draft202012_schema_failures(record, self.event_record_schema, path_label=label)
+        failures.extend(secret_material_failures(record, path_label=label))
+        return failures
+
+    def validate_event_record_v1_compatibility(
+        self,
+        record: dict[str, Any],
+        *,
+        label: str,
+    ) -> list[dict[str, Any]]:
+        defs = (
+            self.event_record_schema.get("$defs", {})
+            if isinstance(self.event_record_schema.get("$defs"), dict)
+            else {}
+        )
+        compatibility_reader = defs.get("event_record_1_0_0_compatibility_reader")
+        if not isinstance(compatibility_reader, dict):
+            return [{"path": label, "error": "event_record_v1_compatibility_reader_missing"}]
+        compatibility_schema = {"$defs": defs, **compatibility_reader}
+        failures = draft202012_schema_failures(record, compatibility_schema, path_label=label)
         failures.extend(secret_material_failures(record, path_label=label))
         return failures
 
@@ -346,7 +464,8 @@ class CertificationHarness:
     ) -> dict[str, Any]:
         return {
             "schema_id": "pm.event.v0",
-            "schema_version": "1.0.0",
+            "schema_version": "2.0.0",
+            "scope_kind": "project",
             "event_id": event_id,
             "event_type": event_type,
             "project_id": PROJECT_ID,
@@ -387,20 +506,45 @@ class CertificationHarness:
         self.store_value(
             "event_record_index",
             {
-                "schema_id": "pm.storage_value.event_record_index.v1",
-                "schema_version": "1.0.0",
-                "project_id": PROJECT_ID,
+                "schema_id": EVENT_RECORD_INDEX_SCHEMA_ID,
+                "schema_version": EVENT_RECORD_INDEX_SCHEMA_VERSION,
+                "scope_kind": event["scope_kind"],
+                "project_id": event["project_id"],
+                "scope_partition": event_scope_partition(event),
                 "sequence_id": event["sequence_id"],
                 "event_id": event["event_id"],
                 "event_type": event["event_type"],
-                "segment_ref": "memory://pnc019/seglog-001",
-                "byte_offset": event["sequence_id"] * 100,
+                "source_locator": {
+                    "segment_generation": EVENT_RECORD_INDEX_FIXTURE_SEGMENT_GENERATION,
+                    "segment_name": "pnc019-seglog-0001.closed",
+                    "byte_offset": event["sequence_id"] * 100,
+                    "sequence_id": event["sequence_id"],
+                },
+                "publication_locator": {
+                    "manifest_generation": EVENT_RECORD_INDEX_FIXTURE_SEGMENT_GENERATION,
+                    "recovery_epoch": EVENT_RECORD_INDEX_FIXTURE_RECOVERY_EPOCH,
+                    "survivor_prefix_sha256": stable_hash(
+                        {
+                            "fixture": "pnc019-event-index",
+                            "segment_generation": EVENT_RECORD_INDEX_FIXTURE_SEGMENT_GENERATION,
+                        }
+                    ),
+                    "checkpoint_ref": (
+                        "checkpoint:pnc019:event-record-index:"
+                        f"{EVENT_RECORD_INDEX_FIXTURE_SEGMENT_GENERATION}"
+                    ),
+                    "compaction_translation_manifest_ref": None,
+                },
                 "payload_sha256": stable_hash(event["payload"]),
+                "producer_semantic_digest": event_producer_semantic_digest(event),
                 "idempotency_key": event["idempotency_key"],
                 "correlation_id": event["correlation_id"],
-                "persisted_at_utc": event["persisted_at_utc"],
-                "redaction_profile": "no_secrets",
                 "causation_event_id": event["causation_event_id"],
+                "persisted_at_utc": event["persisted_at_utc"],
+                "redaction_profile": event["redaction_profile"],
+                "source_schema_id": event["schema_id"],
+                "source_schema_version": event["schema_version"],
+                "projector_replay_only": event["replay_policy"] == "projector_replay_only",
             },
             label=f"{label}.event_record_index",
         )
@@ -1052,6 +1196,24 @@ class CertificationHarness:
         missing_schema_version.pop("schema_version")
         invalid_event = copy.deepcopy(valid_event)
         invalid_event["event_type"] = "PlanApproved"
+        missing_scope_kind = copy.deepcopy(valid_event)
+        missing_scope_kind.pop("scope_kind")
+        invalid_scope_kind = copy.deepcopy(valid_event)
+        invalid_scope_kind["scope_kind"] = "global"
+        valid_application_event = copy.deepcopy(valid_event)
+        valid_application_event["scope_kind"] = "application"
+        valid_application_event["project_id"] = None
+        application_with_project = copy.deepcopy(valid_application_event)
+        application_with_project["project_id"] = "fake-application-project"
+        project_without_project = copy.deepcopy(valid_event)
+        project_without_project["project_id"] = None
+        invalid_redaction_profile = copy.deepcopy(valid_event)
+        invalid_redaction_profile["redaction_profile"] = "raw"
+        invalid_replay_policy = copy.deepcopy(valid_event)
+        invalid_replay_policy["replay_policy"] = "timestamp_order"
+        compatibility_v1_event = copy.deepcopy(valid_event)
+        compatibility_v1_event.pop("scope_kind")
+        compatibility_v1_event["schema_version"] = "1.0.0"
         context = self.execution_context()
         invalid_context = copy.deepcopy(context)
         invalid_context["execution_unit_type"] = "not-a-valid-unit"
@@ -1069,6 +1231,65 @@ class CertificationHarness:
         missing_behavioral = copy.deepcopy(self.artifacts["worknode_request"])
         missing_behavioral["acceptance_criteria"] = []
         static_only = {"schema_id": "pm.pnc019.static_only_proof", "schema_version": "1.0.0", "ran": False}
+        invalid_event_checks = {
+            "event_type_pattern_rejected": bool(
+                self.validate_event_record(invalid_event, label="negative.invalid_event_type")
+            ),
+            "missing_scope_kind_rejected": any(
+                failure.get("keyword") == "required" and failure.get("missing") == "scope_kind"
+                for failure in self.validate_event_record(
+                    missing_scope_kind,
+                    label="negative.missing_scope_kind",
+                )
+            ),
+            "scope_kind_closed_enum_rejected": any(
+                failure.get("keyword") == "enum" and failure.get("pointer") == "$/scope_kind"
+                for failure in self.validate_event_record(
+                    invalid_scope_kind,
+                    label="negative.invalid_scope_kind",
+                )
+            ),
+            "valid_application_scope_accepted": not self.validate_event_record(
+                valid_application_event,
+                label="negative.valid_application_scope_control",
+            ),
+            "application_scope_project_id_rejected": bool(
+                self.validate_event_record(
+                    application_with_project,
+                    label="negative.application_with_project",
+                )
+            ),
+            "project_scope_null_project_id_rejected": bool(
+                self.validate_event_record(
+                    project_without_project,
+                    label="negative.project_without_project",
+                )
+            ),
+            "redaction_profile_closed_enum_rejected": any(
+                failure.get("keyword") == "enum" and failure.get("pointer") == "$/redaction_profile"
+                for failure in self.validate_event_record(
+                    invalid_redaction_profile,
+                    label="negative.invalid_redaction_profile",
+                )
+            ),
+            "replay_policy_closed_enum_rejected": any(
+                failure.get("keyword") == "enum" and failure.get("pointer") == "$/replay_policy"
+                for failure in self.validate_event_record(
+                    invalid_replay_policy,
+                    label="negative.invalid_replay_policy",
+                )
+            ),
+            "v1_compatibility_reader_accepts_frozen_shape": not self.validate_event_record_v1_compatibility(
+                compatibility_v1_event,
+                label="negative.v1_compatibility_control",
+            ),
+            "v1_shape_rejected_by_current_writer": bool(
+                self.validate_event_record(
+                    compatibility_v1_event,
+                    label="negative.v1_rejected_by_current_writer",
+                )
+            ),
+        }
 
         return [
             self.negative_case(
@@ -1082,7 +1303,8 @@ class CertificationHarness:
             self.negative_case(
                 "invalid_event_record",
                 "event_record_schema_validation_failed",
-                bool(self.validate_event_record(invalid_event, label="negative.invalid_event_record")),
+                all(invalid_event_checks.values()),
+                {"checks": invalid_event_checks},
             ),
             self.negative_case(
                 "invalid_execution_unit_context",
@@ -1140,7 +1362,9 @@ class CertificationHarness:
         lifecycle_trace = positives[0]["trace"]
         source_hash_paths = [
             "Plans/event_record.schema.json",
+            "Plans/event_family_registry.json",
             "Plans/execution_unit_context.schema.json",
+            "Plans/storage_recovery_contracts.schema.json",
             "Plans/storage_value_registry.schema.json",
             "Plans/storage_value_registry.json",
             "Plans/Plan_To_Node_Compilation.md",
@@ -1149,6 +1373,9 @@ class CertificationHarness:
             "Plans/Goal_Runtime_System.md",
             "Plans/Orchestrator_Page.md",
             "Plans/Automated_Testing_System.md",
+            "Plans/UI_Command_Catalog.md",
+            "Plans/Wiring_Matrix.production.json",
+            "Plans/UI_Wiring_Rules.md",
             "Plans/Progression_Gates.md",
             "scripts/pm-pnc019-certification-harness.py",
         ]
@@ -1259,7 +1486,97 @@ def validate_receipt_semantics(receipt: dict[str, Any]) -> list[dict[str, Any]]:
     return failures
 
 
+def certification_preflight_failures() -> list[dict[str, Any]]:
+    """Fail closed before any PNC receipt write while Case L authority is incomplete."""
+    failures: list[dict[str, Any]] = []
+    verifier = ROOT / "scripts/pm-plans-verify.py"
+    proc = subprocess.run(
+        [sys.executable, str(verifier), "validate-case-l-non-event-materialization"],
+        cwd=ROOT,
+        text=True,
+        stdout=subprocess.PIPE,
+        stderr=subprocess.PIPE,
+        check=False,
+    )
+    if proc.returncode != 0:
+        try:
+            targeted = json.loads(proc.stdout)
+        except Exception:  # noqa: BLE001 - preflight records bounded tool output.
+            targeted = {
+                "status": "fail",
+                "failures": [
+                    {
+                        "error": "case_l_non_event_validator_output_invalid",
+                        "stdout_excerpt": proc.stdout[-2000:],
+                        "stderr_excerpt": proc.stderr[-2000:],
+                    }
+                ],
+            }
+        failures.append(
+            {
+                "error": "case_l_non_event_materialization_not_valid",
+                "validator": "python3 scripts/pm-plans-verify.py validate-case-l-non-event-materialization",
+                "validator_status": targeted.get("status"),
+                "validator_failures": targeted.get("failures", [])[:50],
+            }
+        )
+
+    try:
+        registry = read_json(PLANS / "event_family_registry.json")
+        registered_rows = len(registry.get("families", [])) if isinstance(registry.get("families"), list) else -1
+    except Exception as exc:  # noqa: BLE001
+        failures.append({"error": "event_family_registry_unavailable", "detail": str(exc)})
+        registered_rows = -1
+    if registered_rows == EVENT_FAMILY_REGISTERED_KERNEL_ROWS:
+        failures.append(
+            {
+                "error": "event_denominator_unresolved",
+                "registered_kernel_rows": registered_rows,
+                "proven_persisted_floor": EVENT_FAMILY_PROVEN_PERSISTED_FLOOR,
+                "proven_unregistered_floor": EVENT_FAMILY_PROVEN_UNREGISTERED_FLOOR,
+                "complete_denominator_known": False,
+            }
+        )
+        failures.append(
+            {
+                "error": "event_family_contract_depth_unresolved",
+                "registered_kernel_rows": registered_rows,
+                "contract_depth_complete": False,
+            }
+        )
+    else:
+        # A changed registry cannot silently clear this checkpoint. A later approved
+        # producer-owner repair must update the readiness verifier and this preflight
+        # with its new, independently verified denominator/depth evidence.
+        failures.append(
+            {
+                "error": "event_authority_checkpoint_changed_requires_fresh_approval",
+                "expected_registered_kernel_rows": EVENT_FAMILY_REGISTERED_KERNEL_ROWS,
+                "actual_registered_rows": registered_rows,
+                "proven_persisted_floor": EVENT_FAMILY_PROVEN_PERSISTED_FLOOR,
+                "proven_unregistered_floor": EVENT_FAMILY_PROVEN_UNREGISTERED_FLOOR,
+            }
+        )
+    return failures
+
+
 def cmd_run(args: argparse.Namespace) -> int:
+    preflight_failures = certification_preflight_failures()
+    if preflight_failures:
+        print(
+            json.dumps(
+                {
+                    "status": "fail",
+                    "receipt_path": None,
+                    "receipt_written": False,
+                    "failures": preflight_failures,
+                    "claim_boundary": "PNC-019 certification did not start and no receipt was written.",
+                },
+                indent=2,
+                sort_keys=True,
+            )
+        )
+        return 1
     receipt = CertificationHarness().receipt()
     failures = validate_receipt_semantics(receipt)
     if failures:

@@ -8666,3 +8666,12 @@ Repairs rows `sfk-69876bef3b441cb17b89d231` and `sfk-db7708202eb32b69931bb737`.
 
 - `split_recommended: true` on N2-096 through N2-140 is a planning-quality signal, not a buildability claim. A row may remain unsplit only when it has an explicit `split_deferred_reason`, `owner_doc_ref`, and `reopen_condition`.
 - The canonical registry auth constraint is: `doctor.registry.auth` is deprecated for DockerHub auth; use `doctor.dockerhub.auth.capability` for DockerHub-specific capability checks. Any N2-120/N2-141 duplicate wording must normalize to that single sentence.
+
+
+## Platform capability catalog and evaluation contract
+
+Status: `STATICALLY_MATERIALIZED`; no runtime or validator execution is claimed.
+
+Platform capability identity comes only from `Plans/platform_capability_catalog.json` and its closed schema. A `PlatformCapabilityRef` requires `ref_type=platform_capability_catalog_entry`, `catalog_id=pm.platform_capability_catalog`, `catalog_schema_version=1.0.0`, integer `catalog_revision>=1`, and one exact active `capability_id`. Aliases are migration-reader inputs only.
+
+Evaluation freezes the active revision, validates evidence against the entry, rejects duplicate same-source disagreement, and selects `live_runtime_discovery`, then `provider_policy_snapshot`, then `static_platform_baseline`. Lower-precedence valid evidence remains provenance and cannot override. The v2 writer is `Plans/event_payload_platform_capability_evaluated.schema.json#`; the exact v1 object is reader-only at `#/$defs/platform_capability_evaluated_1_0_0_compatibility_reader`. Storage binding is `MIG-PLATFORM-CAPABILITY-EVALUATED-PAYLOAD-001@1.0.0`; unprovable migration quarantines without checkpoint advance.

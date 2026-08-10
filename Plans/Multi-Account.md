@@ -5157,3 +5157,12 @@ owner_hints:
   - Plans/Models_System.md
   - Plans/CLI_Bridged_Providers.md
 ```
+
+
+## `run.started` Multi-Account owner join
+
+Status: `STATICALLY_MATERIALIZED`; account/auth resolution is `NOT_EXECUTABLE_UNDER_THIS_TRANSACTION`.
+
+Both `requested_account_id` and `effective_account_id` are required-present and nullable stable PM account IDs. Account-backed routes require a non-null effective ID; explicit requested/effective differences and `null -> non-null` default selection require immutable owner evidence and non-null `account_switch_reason`. Non-account-backed subjects require `null/null`; provider-native labels or IDs cannot substitute.
+
+The complete runtime snapshot also requires `requested_account_binding = none | preferred | required`, non-empty `requested_account_policy`, non-empty `effective_provider_identity`, `multi_account_resolution_ref`, and `auth_resolution_ref`. These refs must historically attest subject class, binding/policy, account pair, provider identity, switch reason, and non-secret auth resolution. Raw auth values, credentials, tokens, credential paths, display labels, or current-account reconstruction are forbidden.

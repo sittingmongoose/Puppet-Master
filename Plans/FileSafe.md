@@ -1479,6 +1479,105 @@ ContractRef: ContractName:Plans/WorktreeGitImprovement.md, ContractName:Plans/Fi
 
 This contract applies to both local and remote-mode project mutations. Read-only operations and evidence capture do not require snapshot creation, but any path that claims reversibility MUST satisfy the full contract above.
 
+#### 11.1.2b Exact-replace safe-point restore and Chat-revert transaction
+
+This section is the FileSafe owner for snapshot materialization, manifest integrity and equality, exact-replace application, rollback, and restart reconciliation. `Plans/storage-plan.md` and the storage value registry own safe-point keys, closed persisted record schemas, alias migration, transaction custody, storage-root selection, maintenance exclusion, and retention policy. `Plans/Contracts_V0.md` owns closed restore outcomes, conflict reasons, and event payloads. `Plans/WorktreeGitImprovement.md` owns the filesystem/Git effect of each `baseline_target`; `Plans/Executor_Protocol.md` owns recovery-command admission and new-attempt lineage; `Plans/assistant-chat-design.md` owns conversation restore-point lifecycle and Chat target selection; and `Plans/UI_Command_Catalog.md` owns command identifiers and argument shapes. FileSafe MUST consume those owners and MUST NOT create peer key, event, command, baseline, or conversation-lifecycle canon.
+
+ContractRef: ContractName:Plans/storage-plan.md, ContractName:Plans/Contracts_V0.md, ContractName:Plans/WorktreeGitImprovement.md, ContractName:Plans/Executor_Protocol.md, ContractName:Plans/assistant-chat-design.md, ContractName:Plans/UI_Command_Catalog.md
+
+##### Canonical manifest and equality boundary
+
+FileSafe exact-replace operations use a versioned canonical JSON manifest whose SHA-256 is the only equality authority. `git status`, mtimes, path counts, or a successful subprocess are diagnostic inputs only and MUST NOT independently establish `restore_skipped`, `restored_clean`, or rollback equality.
+
+The safe-point worktree manifest records, in canonical path order:
+- `repo_id`, `worktree_id`, canonical worktree-root identity, branch name, exact `HEAD` OID, and Git index entries and stages;
+- every tracked path and its presence/deletion state;
+- every untracked non-ignored path;
+- ignored paths only when they are in the authorized mutation write-set or were created by the attempt and recorded in its change ledger;
+- regular-file bytes and size, supported path type, symlink target bytes without following the link, Git mode or submodule gitlink OID, portable executable bit, POSIX mode when supported, and Windows read-only attribute when supported; and
+- the manifest format version, content-scope version, entry count, total bytes, referenced blob hashes and lengths, and the canonical serialization/hash algorithm.
+
+The scope excludes `.git` internals, other worktrees, paths outside the canonical worktree root, ignored paths outside the authorized mutation scope, directory mtimes, hard-link identity, ACLs, xattrs/resource forks, sockets, FIFOs, device nodes, and nested submodule contents without a separately authorized nested-project safe point. Required parent directories may be represented for type and existence, but their mtimes are never equality inputs. Unsupported entry types or ambiguous case/symlink scope fail safe-point creation before mutation. A parent safe point records only a submodule gitlink OID unless the nested project has its own authorized safe point.
+
+`restored_clean` and `restore_skipped` assert equality only inside the manifest's declared content scope; they do not claim restoration of excluded host metadata. The full safe-point profile covers the worktree scope above. The Chat-revert profile uses the same format, hashing, metadata, path-canonicalization, and blob-verification rules but is bounded to the immutable whole-turn mutation set supplied by the Chat owner: every path affected by the resolved assistant turn, plus Git index or SCM identity when that turn mutated them. It MUST NOT claim that unrelated worktree paths were restored.
+
+##### Snapshot custody and compatibility lookup
+
+Snapshot bodies are content-addressed and off-worktree. FileSafe materializes manifests and blobs below the storage-owner-resolved active storage root, using refs equivalent to `snapshots/manifests/<sha256>.json` and `snapshots/blobs/<sha256>`. The exact root layout and persisted keys remain storage-owned. Snapshot bodies inherit the storage owner's sensitive local custody, are owner-only, are not included in routine exports, logs, events, or redb values, and are never copied into the worktree merely to make restore possible. Persisted values and events carry stable refs, hashes, lengths, and redaction metadata rather than captured file bodies.
+
+For an SSH/remote project, manifest enumeration, blob custody, verification, staging, restore, and rollback occur on the authorized remote host under its resolved Puppet Master storage root. The local process may retain refs and hashes permitted by the contract, but MUST NOT silently create or restore from an unrelated local snapshot. Remote unavailability before mutation is a refusal; remote unavailability after a prepared transaction preserves the fence and routes to recovery-required reconciliation.
+
+FileSafe requests safe points by the storage-owned canonical identity `sp:{run_id}:{node_id}:{attempt_id}:{safe_point_id}` and never writes a new legacy primary key. `safe_point.sp:{run_id}:{node_id}:{attempt_id}:{safe_point_id}` is consumed only through the storage-owned read/migrate alias, and `safe_point:<safe_point_id>` is consumed only through the storage-owned unique lookup index. FileSafe proceeds only after alias resolution returns one canonical key and a verified record. Zero matches maps to the Contracts-owned missing-snapshot reason; multiple matches or an alias/canonical mismatch is an integrity refusal. FileSafe does not own alias retention or copy-forward deletion.
+
+##### Exact-replace transaction and durable journal
+
+Safe-point restore is exact replacement of the target manifest, never merge. `cmd.chat.revert` is exact replacement of the resolved whole-turn manifest scope, never a conversation rewind and never a hidden merge path. FileSafe promises logical transaction atomicity, not a portable whole-tree atomic rename: an external filesystem observer may see intermediate per-path states, but Puppet Master keeps the named worktree fenced and reports no resolved terminal result until equality with the target or the recorded pre-restore state is proven.
+
+The ordered restore algorithm is:
+
+1. Resolve one canonical target record and exact repo/worktree identity. Acquire the exclusive FileSafe mutation lease for that worktree, stop Executor dispatch into it, and obtain the storage-owner-required writer/maintenance admission needed to persist the restore transaction and pin snapshot material. Viewer or blocked storage posture cannot start a restore.
+2. Canonicalize every in-scope path using §11.1.1 and recapture the current canonical manifest as the admission state. Revalidate permission, worktree, branch, `HEAD`, index, scope-version, remote-host, and target-owner preconditions without substituting a different worktree or moving ref.
+3. Read the target manifest; recompute its canonical manifest SHA-256; verify every referenced blob hash and length; verify entry scope, supported types/metadata, SCM identity, and authorization. Missing, corrupt, unsupported-scope, stale, unauthorized, or ambiguous input is refused before target-path mutation.
+4. If the admission manifest equals the target within the declared profile, durably record `restore_skipped`, perform zero path mutations, and release the lease after the result is persisted.
+5. Otherwise materialize and independently verify an off-worktree pre-restore rollback manifest and blobs for the complete operation scope. Fsync new blobs/manifests and required parent directories. Failure to create, persist, or re-read this rollback snapshot refuses the restore before target-path mutation.
+6. Build a deterministic ordered operation ledger. Each entry records an operation ID, canonical path ref/hash, operation kind, expected-before hash/type, target hash/type, stage/tombstone ref, and state. Persist and durably flush the storage-owned transaction in `prepared`, including target and rollback refs/digests, mutation-lease ref, and the full operation list, before the first target-path mutation.
+7. For creation or replacement, persist intent, stage on the target filesystem in the same directory, fsync staged content where supported, re-run canonical-path and expected-before CAS checks, promote by same-directory atomic rename, fsync the affected parent, and durably advance the journal cursor. Deletion uses a transaction-owned same-directory tombstone/rollback path rather than an unjournaled unlink. An already-target-matching path is idempotently applied; an expected-before-matching path is pending; any third state is `concurrent_edit_conflict` and MUST NOT be overwritten.
+8. Recompute the complete target-scope manifest. Only exact target digest and SCM equality may advance through target verification to committed and emit `restored_clean`.
+9. On apply or post-verification failure, durably enter rollback and restore through the same CAS, staging, rename, parent-fsync, and cursor rules. Only exact equality with the recorded admission digest may finalize rolled back and emit `restore_failed`.
+10. If target equality and rollback equality are both unproven, rollback material is missing/corrupt, a third-party state prevents safe continuation, or the authorized remote becomes unavailable, durably enter recovery-required. Retain the mutation fence and all safe-point/transaction/worktree holds; disable mutation-capable execution; and emit the Contracts-owned recovery-required outcome without claiming success or preserved original state.
+
+The durable transaction phases consumed from storage are `prepared | applying | verifying_target | committed | rolling_back | verifying_rollback | rolled_back | recovery_required`. `committed` and `rolled_back` are automatically resolved terminal phases. `recovery_required` is durable and fenced, not a success-shaped terminal result. FileSafe does not redefine the storage record schema or the Contracts enum.
+
+##### Restart reconciliation and truthful producer constraints
+
+Before ordinary Executor recovery, new worktree dispatch, or janitor deletion, FileSafe reconciles every nonterminal restore transaction for that worktree:
+- live target-scope equality plus valid target refs finalizes committed / `restored_clean` with restart-recovery evidence;
+- live rollback-scope equality plus valid rollback refs finalizes rolled back / `restore_failed` with restart-recovery evidence;
+- otherwise the operation journal may resume idempotently only when every current path equals its recorded expected-before or target state; and
+- any third state, corrupt/unavailable input, or unreachable authorized remote enters or retains recovery-required and keeps dispatch fenced.
+
+FileSafe producer rules for the Contracts-owned closed outcomes are:
+- `restored_clean`: post-state target equality is proven and no unresolved conflict exists;
+- `restore_skipped`: preflight equality is proven and zero target-path mutations occurred;
+- `restore_refused`: a precondition failed before target-path mutation and the observed admission state remains unchanged;
+- `restore_failed`: apply failed or post-verification failed, rollback completed, and final equality with the recorded admission manifest is proven;
+- `restore_recovery_required`: neither target nor original equality can be proven, so fencing and the blocked episode remain active; and
+- `restored_with_conflicts`: compatibility for a future explicitly merge-capable owner only; safe-point restore and `cmd.chat.revert` MUST NOT emit it.
+
+Snapshot missing and snapshot corrupt remain distinct. A corrupt manifest, missing/corrupt blob, unsupported content scope, stale identity, concurrent third state, or historical-commit resolution failure MUST use the exact Contracts-owned reason when available; FileSafe MUST NOT collapse them to generic `restore_failed`. Compatibility producer names such as `filesafe.snapshot_restore` remain wrappers over the Contracts-owned `safe_point.restored` event and do not create a second outcome family.
+
+##### Recovery holds, retention, and cleanup interaction
+
+FileSafe co-owns only the trigger and release request for recovery holds; storage owns hold records, retention evaluation, legal-hold authority, TTL/cardinality values, compaction, and janitor execution.
+
+- Before exposing `restore_safe_point_then_retry` as the only legal rerun action, FileSafe MUST receive durable proof that the blocked episode, canonical safe-point record, manifest/blob refs, and blocked recovery hold were published as one storage-defined durability unit.
+- An active attempt, unresolved restore-required blocked episode, nonterminal restore transaction, preserved run, or legal hold keeps the named safe point and every manifest/blob/worktree dependency ineligible for cleanup. Starting a restore adds its transaction hold before target mutation.
+- FileSafe requests release only for `resolved`, `superseded_with_verified_successor`, or explicit `abandoned_by_user`, and only when no successor/restorable lineage still references the safe point. Age, process exit, run archival, worktree unbinding, or ordinary run completion MUST NOT release the last legal recovery path.
+- After the final durable hold release, storage applies its approved released-safe-point retention and cardinality policy. FileSafe MUST NOT implement a competing timer or delete snapshot bodies directly.
+- If an older installation already lost or corrupted required snapshot material, the episode becomes recovery-unavailable with the exact reason, remains blocked/anchored, and preserves local work and worktree ownership. Restore is disabled; explicit inspect, isolated replan/fresh-attempt, verified recovery, or abandon actions remain owner-routed. Cleanup loss alone can never mark the episode resolved.
+- Janitor may remove staging or tombstone material only after the transaction is verified terminal and storage says its refs are unheld and retention-eligible. Storage migration, compaction, store restore, salvage, and backup-boundary capture remain mutually exclusive under the storage maintenance owner; FileSafe must respect that admission and MUST NOT bypass it to read or delete snapshot custody.
+
+##### Chat-revert parity and lifecycle boundary
+
+The Chat owner resolves `cmd.chat.revert` to one immutable assistant-turn mutation record. An omitted target selects the latest eligible mutating assistant turn under the Chat contract; no eligible turn returns `no_eligible_mutating_turn` without a FileSafe restore transaction. The resolved record supplies the complete affected-path set using recorded canonical absolute identities, the expected whole-turn manifest hash, project/repo/worktree identity, and mutation lineage. FileSafe MUST NOT reinterpret a relative path through the current `working_directory`, select a different turn, rewind transcript state, or apply only a subset of a multi-file turn.
+
+Once resolved, Chat revert uses the same target verification, rollback snapshot, durable journal, path CAS, same-directory promotion, post-state equality, outcome constraints, restart reconciliation, remote-host rule, and retention holds as safe-point restore. A failure on file N of M rolls back the whole manifest scope or remains recovery-required; partial success is never reported. Transcript/conversation state remains unchanged by FileSafe. Editor refresh, confirmation copy, command registration, and conversation history remain consumer/lifecycle responsibilities outside this owner section.
+
+##### Case L acceptance oracles
+
+- `RSP-ATOMIC-001`: kill after every multi-file operation boundary; restart proves exact target or exact rollback equality and emits only the matching outcome.
+- `RSP-ATOMIC-002`: injected apply failure plus successful verified rollback emits only `restore_failed`, with post digest equal to admission digest.
+- `RSP-ATOMIC-003`: a concurrent third-party edit is not overwritten; the result is recovery-required and dispatch stays fenced.
+- `RSP-EQUAL-001`: complete declared-scope equality emits `restore_skipped` with zero target mutations.
+- `RSP-INTEGRITY-001` and `RSP-INTEGRITY-002`: corrupt manifest or missing/corrupt blob refuses before mutation with the exact reason and unchanged admission digest.
+- `RSP-INTEGRITY-003`: post-apply mismatch rolls back and proves `restore_failed` or remains recovery-required; it never emits `restored_clean`.
+- `RSP-SCOPE-001`: tracked, staged, unstaged, untracked, explicitly scoped ignored, symlink, executable, and submodule fixtures round-trip exactly within the declared manifest boundary; exclusions remain deterministic.
+- `RSP-RETENTION-001` through `RSP-RETENTION-003`: blocked holds outlive ordinary retention, final verified release permits later storage-owned cleanup, and pre-existing missing/corrupt material preserves local work without false resolution.
+- `RSP-KEY-001` consumer assertion: FileSafe writes only the canonical `sp:` identity; deterministic alias migration/lookup may resolve it, while ambiguous lookup fails closed.
+- `RSP-CHAT-001`: multi-file `cmd.chat.revert` under failure and kill injection has the same FileSafe transaction truth as safe-point restore and never rewinds the conversation.
+
+These are specification oracles for the repository's testing owners, not evidence that runtime restore has executed. Validator success does not prove filesystem atomicity, crash convergence, remote custody, or behavioral completion.
+
 #### 11.1.3 Case folding and file-record lifecycle
 
 FileSafe and permission matching MUST use the same filesystem-awareness for case sensitivity; this closes the OC-FILE-201/202 symlink-scope pair together with the case-fold comparison contract.
@@ -2820,8 +2919,12 @@ If a mutation-capable attempt performed local changes before the FileSafe block 
 
 When `requires_safe_point_restore = true`, the only legal rerun path is `restore_safe_point_then_retry`.
 
+The rerun action is admissible only after storage returns one verified canonical `sp:{run_id}:{node_id}:{attempt_id}:{safe_point_id}` record and durable proof that the blocked recovery hold protects its manifest, blobs, transaction lineage, and named worktree. FileSafe executes the exact-replace transaction in §11.1.2b; it does not interpret `restore_safe_point_then_retry` as merge, best-effort checkout, or retry-before-restore. Missing/corrupt snapshot material changes the episode to recovery-unavailable, preserves local work, and leaves ordinary retry illegal.
+
 ### Persistence
 A FileSafe block is a persistent blocked runtime episode until resolved or superseded.
+
+When the episode requires safe-point restore, the blocked episode, safe-point refs, and blocked hold are one storage-defined durability unit before the sole recovery action is exposed. A nonterminal restore transaction is reconstructed before ordinary Executor dispatch or janitor cleanup. FileSafe requests hold release only after `resolved`, `superseded_with_verified_successor`, or explicit `abandoned_by_user`, and never because of age, process exit, archival, worktree unbinding, or missing cleanup material.
 
 Context-shaping and handoff rule:
 - FileSafe does not define alternate child continuity or alternate memory behavior.
@@ -14090,6 +14193,275 @@ owner_hints:
   - Plans/Permissions_System.md
 ```
 
+## Case L Exact-Restore Repair Addendum - 2026-07-17
+
+This addendum adopts approved Case L Bundle F decisions `PD-RSP-01` through `PD-RSP-09` only for FileSafe-owned mechanics and its recovery-hold trigger. Storage key/schema/retention/maintenance authority, Contracts enums/events, Worktree baseline effects, Executor attempt admission, Assistant Chat conversation/restore-point lifecycle, and UI command registration remain with their canonical owners. It creates no WorkNodes, NodeSeeds, executable queues, implementation files, runtime launches, production build tasks, generated shards/evidence, or governance-seal artifacts.
+
+### F2-200 - Canonical Restore Manifest, Custody, And Alias Consumption
+
+```yaml
+plan_unit_id: F2-200
+unit_type: requirement
+status: accepted
+owner_doc: Plans/FileSafe.md
+canonical_text: >-
+  FileSafe restore equality is the SHA-256 of a versioned canonical JSON manifest covering the
+  declared repository/worktree/SCM/index and tracked, untracked, explicitly mutation-scoped
+  ignored, content, symlink, Git-mode, executable, and supported portable metadata boundary.
+  Snapshot manifests and blobs are content-addressed below the storage-owner-resolved root outside
+  the worktree; remote-project custody stays on the authorized remote host. FileSafe writes only
+  the canonical sp:{run_id}:{node_id}:{attempt_id}:{safe_point_id} identity and consumes legacy
+  safe_point.sp:{...} and safe_point:<safe_point_id> forms only through deterministic storage-owned
+  migration/lookup resolution.
+gui_related: false
+gui_classification_reason: This unit defines backend snapshot integrity, equality, custody, and compatibility lookup.
+depends_on: [F2-074, F2-081, F2-082, F2-189]
+unblocks: [F2-201, F2-202, F2-204]
+acceptance_criteria:
+  - Canonical manifest serialization and SHA-256, not git status or mtime, decides restore equality.
+  - Tracked, staged, unstaged, untracked, explicitly scoped ignored, symlink, executable, and submodule fixtures include or exclude exactly the declared boundary.
+  - Unsupported entry types fail safe-point creation before mutation, and symlink targets are not followed as content.
+  - Snapshot bodies remain off-worktree and out of routine events, redb values, logs, and exports; persisted records carry refs and hashes.
+  - Remote restore never falls back to unrelated local snapshot custody.
+  - New writes use only the canonical sp: key; zero or ambiguous compatibility lookup fails closed.
+validation_surfaces:
+  - RSP-SCOPE-001
+  - RSP-INTEGRITY-001
+  - RSP-INTEGRITY-002
+  - RSP-KEY-001
+risk_class: restore_manifest_or_custody_drift
+reasoning_tier: high
+context_scope: filesafe_restore_manifest_custody_and_alias_consumption
+implementation_surfaces: [Plans/FileSafe.md, Plans/storage-plan.md, Plans/storage_value_registry.json, Plans/Contracts_V0.md]
+node_compile_hint: {mode: filesafe_restore_manifest_contract, create_worknodes: false, create_nodeseeds: false}
+source_lineage:
+  - Case L finding L-024
+  - Case L approved decisions PD-RSP-02, PD-RSP-03, and PD-RSP-05
+preserved_exact_tokens:
+  - "sp:{run_id}:{node_id}:{attempt_id}:{safe_point_id}"
+  - "safe_point.sp:{run_id}:{node_id}:{attempt_id}:{safe_point_id}"
+  - "safe_point:<safe_point_id>"
+  - "snapshots/manifests/<sha256>.json"
+  - "snapshots/blobs/<sha256>"
+  - "SHA-256"
+negative_constraints:
+  - Do not use git status, mtime, or path count as the equality authority.
+  - Do not keep snapshot bodies in the worktree or silently move remote custody local.
+  - Do not write a new compatibility alias as a primary safe-point key.
+owner_hints: [Plans/FileSafe.md]
+```
+
+### F2-201 - Exact-Replace Restore Journal And Verified Rollback
+
+```yaml
+plan_unit_id: F2-201
+unit_type: requirement
+status: accepted
+owner_doc: Plans/FileSafe.md
+canonical_text: >-
+  Safe-point restore is exact replacement, not merge. FileSafe acquires the named-worktree mutation
+  lease, verifies the target before mutation, creates and verifies an off-worktree rollback
+  snapshot, durably prepares a deterministic operation journal, applies each path through
+  expected-before CAS and same-directory staging/rename/parent durability, verifies full target
+  equality, and on failure rolls back through the same discipline. It promises logical transaction
+  atomicity while the worktree is fenced, not a portable whole-tree atomic rename.
+gui_related: false
+gui_classification_reason: This unit defines backend exact-replace application and rollback mechanics.
+depends_on: [F2-075, F2-076, F2-077, F2-078, F2-079, F2-200, F2-203]
+unblocks: [F2-202, F2-204]
+acceptance_criteria:
+  - Target manifest/blob/scope/SCM verification completes before target-path mutation.
+  - Rollback refs, digests, and every ordered operation are durable in prepared state before the first mutation.
+  - Each operation accepts only expected-before or target state; a third state is not overwritten.
+  - Deletions use journaled tombstone/rollback custody rather than unjournaled unlink.
+  - restored_clean is impossible without full target equality, and restore_failed is impossible without full rollback equality.
+validation_surfaces:
+  - RSP-ATOMIC-001
+  - RSP-ATOMIC-002
+  - RSP-ATOMIC-003
+  - RSP-EQUAL-001
+  - RSP-INTEGRITY-003
+risk_class: partial_or_untruthful_restore
+reasoning_tier: high
+context_scope: filesafe_exact_replace_restore_transaction
+implementation_surfaces: [Plans/FileSafe.md, Plans/storage-plan.md, Plans/Contracts_V0.md, Plans/Executor_Protocol.md]
+node_compile_hint: {mode: filesafe_exact_replace_restore, create_worknodes: false, create_nodeseeds: false}
+source_lineage:
+  - Case L finding L-006
+  - Case L approved decision PD-RSP-01
+preserved_exact_tokens:
+  - "prepared"
+  - "applying"
+  - "verifying_target"
+  - "committed"
+  - "rolling_back"
+  - "verifying_rollback"
+  - "rolled_back"
+  - "recovery_required"
+  - "logical transaction atomicity"
+negative_constraints:
+  - Do not implement safe-point restore as merge or best-effort sequential rewrite.
+  - Do not claim a portable whole-worktree atomic rename.
+  - Do not overwrite a concurrent third state during apply or rollback.
+owner_hints: [Plans/FileSafe.md]
+```
+
+### F2-202 - Restart Reconciliation And Truthful Restore Outcomes
+
+```yaml
+plan_unit_id: F2-202
+unit_type: requirement
+status: accepted
+owner_doc: Plans/FileSafe.md
+canonical_text: >-
+  Before ordinary dispatch or janitor cleanup, FileSafe reconciles nonterminal restore journals:
+  exact target equality finalizes restored_clean, exact rollback equality finalizes restore_failed,
+  expected-before/target-only path state may resume idempotently, and every third, corrupt, missing,
+  or unavailable state becomes restore_recovery_required with the mutation fence retained.
+  restore_refused is pre-mutation only, restore_skipped requires preflight equality and zero path
+  mutations, and exact safe-point or Chat-revert operations never emit restored_with_conflicts.
+gui_related: false
+gui_classification_reason: This unit defines backend crash convergence and outcome-producer truth.
+depends_on: [F2-201]
+unblocks: []
+acceptance_criteria:
+  - Kill after every operation boundary converges to proven target, proven rollback, or fenced recovery-required.
+  - restore_refused leaves the admission state unchanged and occurs before target mutation.
+  - restore_skipped performs zero target mutations.
+  - restore_failed is emitted only when final state equals the recorded admission manifest.
+  - Missing and corrupt snapshots remain distinct; neither is flattened into restore_failed.
+  - Compatibility filesafe.snapshot_restore remains a wrapper over the Contracts-owned safe_point.restored family.
+validation_surfaces:
+  - RSP-ATOMIC-001
+  - RSP-ATOMIC-002
+  - RSP-ATOMIC-003
+  - RSP-EQUAL-001
+  - RSP-INTEGRITY-001
+  - RSP-INTEGRITY-002
+  - RSP-INTEGRITY-003
+risk_class: restore_outcome_or_restart_drift
+reasoning_tier: high
+context_scope: filesafe_restore_restart_and_truthful_outcomes
+implementation_surfaces: [Plans/FileSafe.md, Plans/Contracts_V0.md, Plans/storage-plan.md]
+node_compile_hint: {mode: filesafe_restore_restart_reconciliation, create_worknodes: false, create_nodeseeds: false}
+source_lineage:
+  - Case L findings L-006 and L-024
+  - Case L approved decision PD-RSP-04
+preserved_exact_tokens:
+  - "restored_clean"
+  - "restored_with_conflicts"
+  - "restore_failed"
+  - "restore_skipped"
+  - "restore_refused"
+  - "restore_recovery_required"
+  - "snapshot_missing"
+  - "snapshot_corrupt"
+negative_constraints:
+  - Do not report original state preserved unless rollback equality is proven.
+  - Do not emit restored_clean without target equality.
+  - Do not emit restored_with_conflicts from exact safe-point or Chat-revert restore.
+owner_hints: [Plans/FileSafe.md]
+```
+
+### F2-203 - Recovery Hold Trigger And Cleanup Exclusion
+
+```yaml
+plan_unit_id: F2-203
+unit_type: requirement
+status: accepted
+owner_doc: Plans/FileSafe.md
+canonical_text: >-
+  Before restore_safe_point_then_retry becomes the only legal action, FileSafe requires durable
+  publication of the blocked episode, canonical safe-point refs, snapshot/blob refs, and blocked
+  recovery hold as one storage-defined unit. Active attempts, unresolved restore-required blocks,
+  nonterminal restore transactions, preserved runs, and legal holds protect every recovery
+  dependency. FileSafe requests release only after resolved, superseded_with_verified_successor,
+  or explicit abandoned_by_user and never owns a competing TTL, janitor, compaction, or legal-hold
+  policy.
+gui_related: false
+gui_classification_reason: This unit defines backend recovery-anchor trigger and cleanup exclusion.
+depends_on: [F2-077, F2-186, F2-187, F2-189, F2-200]
+unblocks: [F2-201]
+acceptance_criteria:
+  - An unresolved blocked episode cannot be published without durable refs protecting its safe-point record, manifest, blobs, and worktree.
+  - A blocked episode older than the storage retention window survives cleanup while any hold remains.
+  - Final verified hold release permits only later storage-owned cleanup under the approved retention policy.
+  - Missing/corrupt legacy snapshot material produces recovery-unavailable, preserves local work, and does not falsely resolve the episode.
+  - Age, process exit, archival, worktree unbinding, and ordinary completion do not release the last legal recovery path.
+validation_surfaces:
+  - RSP-RETENTION-001
+  - RSP-RETENTION-002
+  - RSP-RETENTION-003
+  - ANCHOR-005-atomic-publish
+risk_class: cleanup_deletes_only_legal_recovery_path
+reasoning_tier: high
+context_scope: filesafe_recovery_hold_trigger
+implementation_surfaces: [Plans/FileSafe.md, Plans/storage-plan.md, Plans/Contracts_V0.md]
+node_compile_hint: {mode: filesafe_recovery_hold_trigger, create_worknodes: false, create_nodeseeds: false}
+source_lineage:
+  - Case L finding L-010
+  - Case L approved decision PD-RSP-06
+  - Case L approved decisions PD-L010-01 through PD-L010-03
+preserved_exact_tokens:
+  - "restore_safe_point_then_retry"
+  - "resolved"
+  - "superseded_with_verified_successor"
+  - "abandoned_by_user"
+  - "recovery_unavailable"
+negative_constraints:
+  - Do not let FileSafe invent retention numbers, legal-hold authority, or compaction policy.
+  - Do not release the last recovery anchor merely because the run aged, exited, archived, or lost snapshot material.
+owner_hints: [Plans/FileSafe.md]
+```
+
+### F2-204 - Chat Revert FileSafe Transaction Parity
+
+```yaml
+plan_unit_id: F2-204
+unit_type: requirement
+status: accepted
+owner_doc: Plans/FileSafe.md
+canonical_text: >-
+  After Assistant Chat resolves cmd.chat.revert to one immutable eligible assistant-turn mutation
+  record, FileSafe exact-replaces the complete recorded whole-turn path scope through the same
+  manifest verification, rollback snapshot, durable journal, CAS, equality, truthful outcome,
+  restart, remote-custody, and recovery-hold rules as safe-point restore. It uses recorded canonical
+  absolute identities, never reinterprets paths through the current working_directory, never
+  applies a partial multi-file turn, and never rewinds conversation state.
+gui_related: false
+gui_classification_reason: This unit defines backend FileSafe mechanics consumed by a Chat command.
+depends_on: [F2-200, F2-201, F2-202, F2-203]
+unblocks: []
+acceptance_criteria:
+  - A multi-file turn is restored as one complete manifest scope or rolled back/recovery-required as one transaction.
+  - Failure or kill after file N of M cannot report partial success.
+  - Recorded canonical absolute identities are used; current working_directory cannot retarget the restore.
+  - No eligible mutating turn creates no FileSafe transaction and changes no file, worktree, queue, or transcript.
+  - Chat revert never emits restored_with_conflicts and never changes conversation history.
+validation_surfaces:
+  - RSP-CHAT-001
+  - RSP-ATOMIC-001
+  - RSP-ATOMIC-002
+  - RSP-ATOMIC-003
+risk_class: chat_revert_partial_or_weaker_restore
+reasoning_tier: high
+context_scope: filesafe_chat_revert_transaction_parity
+implementation_surfaces: [Plans/FileSafe.md, Plans/assistant-chat-design.md, Plans/UI_Command_Catalog.md, Plans/Contracts_V0.md]
+node_compile_hint: {mode: filesafe_chat_revert_parity, create_worknodes: false, create_nodeseeds: false}
+source_lineage:
+  - Case L finding L-006
+  - Case L approved decision PD-RSP-09
+preserved_exact_tokens:
+  - "cmd.chat.revert"
+  - "no_eligible_mutating_turn"
+  - "whole-turn mutation manifest"
+  - "working_directory"
+negative_constraints:
+  - Do not make Chat revert a conversation rewind, merge, or partial per-file success path.
+  - Do not let FileSafe select the assistant turn or own conversation restore-point lifecycle.
+owner_hints: [Plans/FileSafe.md]
+```
+
 ## FABLE Deferred Action Concrete Repair Addendum - 2026-07-08
 
 This addendum repairs non-runtime FileSafe rows without creating WorkNodes, implementation files, runtime artifacts, or PNC-019 evidence.
@@ -14104,3 +14476,181 @@ This owner note closes or dispositions non-runtime rows from `Plans/.audits/fabl
 - `registry_line 133` (explicitly_deferred; source line 578; `sfk-e8baa3796f5c29cdb66f46eb`): Explicitly deferred: closing this row requires a dedicated owner-doc/schema/detail lane beyond safe non-runtime hygiene; no buildability or runtime proof is claimed here. Source summary: - [HIGH] L13510-13589,13664-13754 (F2-195/197): RedactionSettlement and ObservabilityEnvelope/TracePersistencePolicy proposed with zero data contract, hook point, quota, or sampling algorithm FIX: define concrete schema/limits or mark as requiring a follow-up design doc.
 
 <!-- FABLE_REMAINING_ACTION_PLAN_REPAIR_20260708_END -->
+
+
+## Known-37 corruption evidence and recovery-unavailable owner completion
+
+Status: `STATICALLY_MATERIALIZED`; filesystem, recovery, and crash behavior is `NOT_EXECUTABLE_UNDER_THIS_TRANSACTION`.
+
+For `restore_point.corrupt`, FileSafe attests immutable, non-secret evidence refs, lowercase SHA-256, referenced-material hashes and lengths, and content-scope results. Referenced material fields are exactly `context_provenance_refs | attachment_refs | citation_refs`. Evidence carries refs/hashes/lengths, never record bodies, snapshot bytes, raw local paths, credentials, or secrets. Missing record/material is not corruption. Indeterminate I/O remains unknown/quarantined.
+
+For `safe_point.recovery_unavailable`, FileSafe owns the five exact reasons `snapshot_missing | snapshot_corrupt | snapshot_scope_unsupported | snapshot_identity_stale | snapshot_unanchored`, proves `preserved_local_work=true`, and preserves the anchor, worktree ownership, refs, fences, and holds until durable release. The event/action order is owner-issued and cannot be reconstructed by a GUI.
+
+`cmd.runtime.locate_and_verify_recovery` accepts only a FileSafe-normalized non-secret `recovery_source_ref`, exact current episode/anchor/snapshot/reason/attempt identity, and current permission/storage access. FileSafe verifies safe-point/run/node/attempt/worktree identity, snapshot scope, manifest/content hashes, and then transfers the material into owner custody. Only a committed `applied|replayed` result with verified refs/hash/evidence and a committed receipt releases as `resolved`.
+
+`cmd.runtime.abandon_recovery` requires durable actor-bound confirmation `abandon_recovery_and_preserve_local_work` and acknowledgement of preserved work. It releases only the recovery anchor as `abandoned_by_user`; `cleanup_performed=false`. It never aliases `abort_run`, deletes snapshots/work, detaches a worktree, or decides GoalRun terminal state. Age, exit, archive, completion, pressure, compaction, or cleanup never releases the anchor.
+
+## Cozy Shelves Panel Reconciliation Addendum - 2026-07-27
+
+This addendum closes FileSafe-owned gaps exposed by the Cozy Shelves left-rail concept review: it records one proposed delete-behavior decision awaiting user ratification, binds the File Manager rail panel as a blocked-episode display consumer, and dispositions two stale env-var override bullets against the P0 fail-closed security resolution. `Concepts/rail-concepts/QwenRailConcepts/c2-cozy-shelves.html` and `Concepts/rail-concepts/QwenRailConcepts/c2-cozy-shelves-files.html` remain illustrative source-lineage only: no HTML, CSS, color values, demo data, or class names from those files may enter spec or implementation. No existing PlanUnit, preserved_exact_tokens list, canonical_text, or retired bridge is edited; supersession is expressed only through the new units below. This addendum creates no WorkNodes, NodeSeeds, executable queues, implementation files, runtime artifacts, generated wiring rows, production build tasks, final manifests, or PNC-019 receipts.
+
+### F2-205 - Trash-First File Manager Delete Decision
+
+```yaml
+plan_unit_id: F2-205
+unit_type: decision
+status: accepted
+ratification_note: "Ratified by Jared 2026-07-27 (dec-2026-07-27-cozy-shelves-decision-ratifications). Trash-first delete is canon; command/wiring registration for trash restore/empty follows in a later catalog wave."
+owner_doc: Plans/FileSafe.md
+canonical_text: >-
+  Ratified decision (2026-07-27): File Manager Delete defaults to an
+  OS-trash-backed soft delete with an undo toast; Shift+Delete performs permanent deletion and
+  stays behind the existing fail-closed destructive confirm; when trash placement is impossible
+  (cross-filesystem move, remote/SSH root, unsupported volume) the UI says so explicitly and
+  offers permanent deletion only, never a silent fallback to permanent deletion under the
+  soft-delete label. This decision layers presentation policy over, and must satisfy, the
+  journaled-tombstone restore contract: deletion inside a FileSafe transaction continues to use
+  the transaction-owned same-directory tombstone/rollback path of sections 11.1.2a and 11.1.2b
+  rather than an unjournaled unlink, and any reversibility claim (undo toast, restore affordance)
+  is valid only where the restore path satisfies that contract. OS-trash custody and FileSafe
+  tombstone custody are distinct: the undo toast must not present OS-trash recovery as
+  FileSafe-journaled restore. Override authority is unchanged by this decision; the P0
+  fail-closed security resolution (2026-07-07) remains binding.
+gui_related: true
+gui_classification_reason: Delete defaults, undo toast, and trash-impossible disclosure are user-visible File Manager behavior.
+depends_on: [F2-188]
+unblocks: []
+acceptance_criteria:
+  - Default Delete moves targets to OS trash and shows an undo toast; Shift+Delete is permanent behind the fail-closed confirm.
+  - When trash is impossible the UI discloses why and offers permanent deletion only; no silent permanent fallback.
+  - Journaled FileSafe deletions keep the same-directory tombstone/rollback path; no unjournaled unlink.
+  - Reversibility claims are made only where the restore path satisfies the 11.1.2a/11.1.2b contract; OS-trash recovery is never presented as journaled restore.
+  - No enforcement, allowlist, or override authority is weakened by this decision.
+  - No WorkNodes, NodeSeeds, executable queues, final node manifests, or production build tasks are created by this PlanUnit.
+validation_surfaces:
+  - python3 scripts/pm-plan-index.py validate
+  - RSP-ATOMIC-001
+  - Future trash-first delete, undo-toast, and trash-impossible disclosure tests.
+risk_class: filesafe_delete_reversibility_overclaim
+reasoning_tier: high
+context_scope: filesafe_trash_first_delete_decision
+implementation_surfaces: [Plans/FileSafe.md, Plans/FileManager.md, future File Manager panel]
+node_compile_hint: {mode: filesafe_trash_first_delete, create_worknodes: false, create_nodeseeds: false}
+source_lineage:
+  - Cozy Shelves panel review 2026-07-27 (decision proposed, not yet user-ratified)
+  - Concepts/rail-concepts/QwenRailConcepts/c2-cozy-shelves-files.html (source-lineage-only)
+  - Plans/FileSafe.md:1524
+preserved_exact_tokens:
+  - "tombstone"
+  - "concurrent_edit_conflict"
+negative_constraints:
+  - Do not treat this unit as accepted canon before explicit user ratification.
+  - Do not claim reversibility that the journaled-tombstone restore contract cannot honor.
+  - Do not let trash-first defaults weaken the fail-closed destructive confirm or override authority.
+compatibility_only_notes:
+  - "Slint compatibility: undo toast and disclosure copy render as opaque precomputed surfaces; no arbitrary-content backdrop blur, no SVG filters, precomputed color math; any glass treatment uses a single blur over a known wallpaper as a pre-blurred asset."
+owner_boundary_notes:
+  - "Plans/FileManager.md owns the Delete affordance surface; this unit owns the safety, custody, and reversibility-claim semantics."
+owner_hints: [Plans/FileSafe.md, Plans/FileManager.md]
+```
+
+### F2-206 - File Manager Rail Blocked-Episode Consumption
+
+```yaml
+plan_unit_id: F2-206
+unit_type: requirement
+status: accepted
+owner_doc: Plans/FileSafe.md
+canonical_text: >-
+  The File Manager rail panel MAY render filesafe.blocked and filesafe.path_denied episodes that
+  affect its visible scope as blocked-with-reason rows carrying blocked_reason_code plus ordered
+  allowed_action_ids[] exactly as issued by canonical FileSafe recovery payloads. This extends
+  the blocked-state attention-routing surface list (Dashboard, Orchestrator, chat-thread) with
+  the File Manager panel as a display and consumption surface only: the Settings > Advanced
+  FileSafe card remains the sole control surface per F2-121 and F2-132; the panel derives
+  episodes from the canonical seglog stream or derived projections per F2-055 and F2-140, never
+  a filesafe-only mirror; the panel must not invent, reorder, or filter allowed actions, must
+  not offer enforcement-reducing controls, and must not leak blocked names or counts beyond what
+  the episode payload discloses.
+gui_related: true
+gui_classification_reason: Blocked-with-reason rows in the File Manager panel are user-visible behavior.
+depends_on: [F2-055, F2-121]
+unblocks: []
+acceptance_criteria:
+  - filesafe.blocked and filesafe.path_denied episodes render with blocked_reason_code and the payload's ordered allowed_action_ids[].
+  - The panel is display-only; enforcement-state controls remain in the Settings FileSafe card.
+  - Episode data comes from the canonical stream or derived projections, never a filesafe-only mirror.
+  - The panel discloses nothing beyond the episode payload; no leaked blocked names or counts.
+  - No WorkNodes, NodeSeeds, executable queues, final node manifests, or production build tasks are created by this PlanUnit.
+validation_surfaces:
+  - python3 scripts/pm-plan-index.py validate
+  - Future File Manager blocked-episode rendering and no-leak tests.
+risk_class: filesafe_blocked_surface_drift
+reasoning_tier: standard
+context_scope: filesafe_rail_blocked_episode_consumption
+implementation_surfaces: [Plans/FileSafe.md, Plans/FileManager.md, Plans/FinalGUISpec.md]
+node_compile_hint: {mode: filesafe_rail_blocked_consumption, create_worknodes: false, create_nodeseeds: false}
+source_lineage:
+  - user decision 2026-07-27 (Cozy Shelves panel review; implementation base = c2 concept files patched in place)
+  - Concepts/rail-concepts/QwenRailConcepts/c2-cozy-shelves-files.html (source-lineage-only)
+preserved_exact_tokens:
+  - "filesafe.blocked"
+  - "filesafe.path_denied"
+  - "blocked_reason_code"
+  - "allowed_action_ids[]"
+negative_constraints:
+  - Do not make the rail panel an enforcement or configuration surface for FileSafe.
+  - Do not invent, reorder, or filter allowed actions outside the canonical payload ordering.
+compatibility_only_notes:
+  - "Slint compatibility: blocked rows render as opaque precomputed surfaces; no arbitrary-content backdrop blur, no SVG filters, precomputed color math; any glass treatment uses a single blur over a known wallpaper as a pre-blurred asset."
+owner_boundary_notes:
+  - "Plans/FinalGUISpec.md owns rail placement and the shared expander/blocked presentation chrome; this unit owns which FileSafe episodes the panel may consume and under what fidelity constraints."
+owner_hints: [Plans/FileSafe.md, Plans/FileManager.md, Plans/FinalGUISpec.md]
+```
+
+### F2-207 - Env-Var Override Mitigation Bullets Stale Disposition
+
+```yaml
+plan_unit_id: F2-207
+unit_type: compatibility_disposition
+status: accepted
+owner_doc: Plans/FileSafe.md
+canonical_text: >-
+  The mitigation bullets reading "Allow override via environment variable" in section 12.2 False
+  Positives (Plans/FileSafe.md:1995) and section 15.10 Potential Issues, Issue 1
+  (Plans/FileSafe.md:2610) are stale source-lineage superseded by the P0 fail-closed security
+  resolution (2026-07-07): PUPPET_MASTER_ALLOW_DESTRUCTIVE=1 is a request signal only and is
+  never sufficient authority by itself; a destructive override requires an authenticated operator
+  grant with auth realm, operator identity, reason, scope, duration/expiry, project/run/worktree
+  binding, and an emitted security event and receipt. Per the P0 section's fencing requirement,
+  those two bullets must be read as retired/noncanonical and are not implementation guidance.
+  This successor unit records the disposition without editing preserved prose.
+gui_related: false
+gui_classification_reason: This unit dispositions stale mitigation prose; it defines no visible behavior.
+depends_on: []
+unblocks: []
+acceptance_criteria:
+  - The two env-var override bullets are read as retired/noncanonical lineage; the P0 fail-closed resolution remains the live canon.
+  - No implementation treats an environment variable as sufficient override authority.
+  - No WorkNodes, NodeSeeds, executable queues, final node manifests, or production build tasks are created by this PlanUnit.
+validation_surfaces:
+  - python3 scripts/pm-plan-index.py validate
+  - python3 scripts/pm-plans-verify.py validate-filesafe-security-policy
+risk_class: filesafe_fail_open_regression
+reasoning_tier: standard
+context_scope: filesafe_stale_override_disposition
+implementation_surfaces: [Plans/FileSafe.md]
+node_compile_hint: {mode: filesafe_stale_override_disposition, create_worknodes: false, create_nodeseeds: false}
+source_lineage:
+  - Plans/FileSafe.md:1995
+  - Plans/FileSafe.md:2610
+  - Plans/FileSafe.md P0 fail-closed security resolution (2026-07-07), lines 102-116
+preserved_exact_tokens:
+  - "PUPPET_MASTER_ALLOW_DESTRUCTIVE"
+negative_constraints:
+  - Do not edit the preserved section 12.2 or 15.10 prose; supersession lives in this unit.
+  - Do not cite the retired bullets as behavior authority in new spec or implementation text.
+compatibility_only_notes: []
+owner_boundary_notes: []
+owner_hints: [Plans/FileSafe.md]
+```

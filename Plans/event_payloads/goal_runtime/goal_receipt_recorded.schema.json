@@ -1,0 +1,989 @@
+{
+  "$comment": "CANDIDATE DRAFT ONLY. Held for EA-OC-010; not canon, authority, materialization, validation evidence, runtime proof, or certification. Source obligation EA-UND-0009-GOAL. The closed schema encodes Draft-2020-12-decidable structure. EA-OC-009 requires behavioral equality, transition, replay, side-effect, currentness, referenced-record, and authority predicates to remain owner/test prose; event-local comments preserve that boundary without pretending to execute those predicates. For non-created rows, goal_revision = expected_goal_revision + 1 and expected_goal_revision = current.goal_revision remain owner/runtime equality predicates because standard Draft 2020-12 has no cross-instance data-equality keyword.",
+  "$defs": {
+    "artifact_hash": {
+      "additionalProperties": false,
+      "properties": {
+        "artifact_ref": {
+          "$ref": "#/$defs/non_empty_ref"
+        },
+        "sha256": {
+          "$ref": "#/$defs/sha256_hex"
+        }
+      },
+      "required": [
+        "artifact_ref",
+        "sha256"
+      ],
+      "type": "object"
+    },
+    "budget": {
+      "additionalProperties": false,
+      "properties": {
+        "max_parallel_agents": {
+          "minimum": 0,
+          "type": "integer"
+        },
+        "max_tokens": {
+          "anyOf": [
+            {
+              "minimum": 1,
+              "type": "integer"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "max_turns": {
+          "minimum": 1,
+          "type": "integer"
+        },
+        "max_wall_time_seconds": {
+          "minimum": 1,
+          "type": "integer"
+        }
+      },
+      "required": [
+        "max_turns",
+        "max_tokens",
+        "max_wall_time_seconds",
+        "max_parallel_agents"
+      ],
+      "type": "object"
+    },
+    "child_decision": {
+      "additionalProperties": false,
+      "oneOf": [
+        {
+          "properties": {
+            "decision": {
+              "const": "resteer"
+            }
+          },
+          "required": [
+            "decision",
+            "new_scope"
+          ]
+        },
+        {
+          "not": {
+            "required": [
+              "new_scope"
+            ]
+          },
+          "properties": {
+            "decision": {
+              "enum": [
+                "continue",
+                "pause",
+                "cancel"
+              ]
+            }
+          },
+          "required": [
+            "decision"
+          ]
+        }
+      ],
+      "properties": {
+        "child_goal_id": {
+          "$ref": "#/$defs/non_empty_ref"
+        },
+        "decision": {
+          "enum": [
+            "continue",
+            "pause",
+            "cancel",
+            "resteer"
+          ],
+          "type": "string"
+        },
+        "new_scope": {
+          "$ref": "#/$defs/scope"
+        },
+        "reason": {
+          "$ref": "#/$defs/non_empty_string"
+        }
+      },
+      "required": [
+        "child_goal_id",
+        "decision",
+        "reason"
+      ],
+      "type": "object"
+    },
+    "constraint": {
+      "additionalProperties": false,
+      "properties": {
+        "constraint_id": {
+          "$ref": "#/$defs/non_empty_ref"
+        },
+        "kind": {
+          "enum": [
+            "positive",
+            "negative",
+            "authority",
+            "compatibility",
+            "safety"
+          ],
+          "type": "string"
+        },
+        "statement": {
+          "$ref": "#/$defs/non_empty_string"
+        }
+      },
+      "required": [
+        "constraint_id",
+        "kind",
+        "statement"
+      ],
+      "type": "object"
+    },
+    "criterion_disposition": {
+      "additionalProperties": false,
+      "oneOf": [
+        {
+          "properties": {
+            "disposition": {
+              "const": "satisfied"
+            },
+            "evidence_refs": {
+              "$ref": "#/$defs/non_empty_ref_array"
+            }
+          },
+          "required": [
+            "disposition"
+          ]
+        },
+        {
+          "properties": {
+            "disposition": {
+              "enum": [
+                "unsatisfied",
+                "not_applicable",
+                "deferred"
+              ]
+            }
+          },
+          "required": [
+            "disposition",
+            "reason"
+          ]
+        }
+      ],
+      "properties": {
+        "criterion_id": {
+          "$ref": "#/$defs/non_empty_ref"
+        },
+        "disposition": {
+          "enum": [
+            "satisfied",
+            "unsatisfied",
+            "not_applicable",
+            "deferred"
+          ],
+          "type": "string"
+        },
+        "evidence_refs": {
+          "$ref": "#/$defs/ref_array"
+        },
+        "reason": {
+          "$ref": "#/$defs/non_empty_string"
+        }
+      },
+      "required": [
+        "criterion_id",
+        "disposition",
+        "evidence_refs"
+      ],
+      "type": "object"
+    },
+    "delta": {
+      "additionalProperties": false,
+      "oneOf": [
+        {
+          "properties": {
+            "op": {
+              "enum": [
+                "clear",
+                "remove"
+              ]
+            }
+          },
+          "required": [
+            "op",
+            "before_hash"
+          ]
+        },
+        {
+          "properties": {
+            "op": {
+              "enum": [
+                "set",
+                "add"
+              ]
+            }
+          },
+          "required": [
+            "op",
+            "after_hash"
+          ]
+        },
+        {
+          "properties": {
+            "op": {
+              "const": "replace"
+            }
+          },
+          "required": [
+            "op",
+            "before_hash",
+            "after_hash"
+          ]
+        }
+      ],
+      "properties": {
+        "after_hash": {
+          "$ref": "#/$defs/sha256_hex"
+        },
+        "before_hash": {
+          "$ref": "#/$defs/sha256_hex"
+        },
+        "op": {
+          "enum": [
+            "set",
+            "clear",
+            "add",
+            "remove",
+            "replace"
+          ],
+          "type": "string"
+        },
+        "path": {
+          "minLength": 1,
+          "pattern": "^(?:/(?:[^~/]|~0|~1)*)+$",
+          "type": "string"
+        }
+      },
+      "required": [
+        "op",
+        "path"
+      ],
+      "type": "object"
+    },
+    "event_payload": {
+      "$comment": "Receipt existence/validity, declared dependency completeness, residual-risk meaning, state preservation, and completion authority remain owner/runtime predicates.",
+      "additionalProperties": false,
+      "allOf": [
+        {
+          "if": {
+            "properties": {
+              "certifier_decision": {
+                "const": "certified"
+              }
+            },
+            "required": [
+              "certifier_decision"
+            ]
+          },
+          "then": {
+            "properties": {
+              "validator_outputs": {
+                "not": {
+                  "contains": {
+                    "properties": {
+                      "outcome": {
+                        "enum": [
+                          "failed",
+                          "blocked"
+                        ]
+                      }
+                    },
+                    "required": [
+                      "outcome"
+                    ],
+                    "type": "object"
+                  }
+                }
+              }
+            }
+          }
+        }
+      ],
+      "properties": {
+        "certification_tier": {
+          "enum": [
+            "lightweight",
+            "standard",
+            "strong"
+          ],
+          "type": "string"
+        },
+        "certifier_decision": {
+          "enum": [
+            "certified",
+            "certified_with_approved_exception",
+            "rejected",
+            "blocked"
+          ],
+          "type": "string"
+        },
+        "child_receipt_refs": {
+          "$ref": "#/$defs/ref_array"
+        },
+        "receipt_id": {
+          "$ref": "#/$defs/non_empty_ref"
+        },
+        "receipt_kind": {
+          "enum": [
+            "goal_completion",
+            "goal_degraded",
+            "goal_stopped",
+            "goal_blocked",
+            "goal_run_certification",
+            "verification",
+            "worknode",
+            "child_goal"
+          ],
+          "type": "string"
+        },
+        "validator_outputs": {
+          "items": {
+            "allOf": [
+              {
+                "$ref": "#/$defs/validator_output"
+              },
+              {
+                "if": {
+                  "properties": {
+                    "outcome": {
+                      "const": "skipped"
+                    }
+                  },
+                  "required": [
+                    "outcome"
+                  ]
+                },
+                "then": {
+                  "required": [
+                    "waiver_ref"
+                  ]
+                }
+              }
+            ]
+          },
+          "type": "array"
+        },
+        "worknode_receipt_refs": {
+          "$ref": "#/$defs/ref_array"
+        }
+      },
+      "required": [
+        "receipt_id",
+        "receipt_kind",
+        "certification_tier",
+        "validator_outputs",
+        "child_receipt_refs",
+        "worknode_receipt_refs",
+        "certifier_decision"
+      ],
+      "type": "object"
+    },
+    "execution_role": {
+      "enum": [
+        "user",
+        "worker",
+        "planner",
+        "evaluator",
+        "reducer",
+        "verifier",
+        "adjudicator",
+        "runtime_controller"
+      ],
+      "type": "string"
+    },
+    "goal_run_status": {
+      "enum": [
+        "ready",
+        "running",
+        "provisional_success",
+        "verifying",
+        "failed_verification",
+        "repairing",
+        "certified",
+        "failed",
+        "blocked",
+        "cancelled",
+        "stopped"
+      ],
+      "type": "string"
+    },
+    "goal_status": {
+      "enum": [
+        "created",
+        "scheduled",
+        "running",
+        "paused",
+        "replanning",
+        "verifying",
+        "repairing",
+        "degraded",
+        "blocked",
+        "stopped",
+        "budget_limited",
+        "usage_limited",
+        "failed",
+        "cancelled",
+        "completed"
+      ],
+      "type": "string"
+    },
+    "model_policy": {
+      "additionalProperties": false,
+      "properties": {
+        "adjudicator_policy_ref": {
+          "$ref": "#/$defs/non_empty_ref"
+        },
+        "evaluator_policy_ref": {
+          "$ref": "#/$defs/non_empty_ref"
+        },
+        "inheritance": {
+          "enum": [
+            "inherit_parent",
+            "override_within_ceiling"
+          ],
+          "type": "string"
+        },
+        "planner_policy_ref": {
+          "$ref": "#/$defs/non_empty_ref"
+        },
+        "verifier_policy_ref": {
+          "$ref": "#/$defs/non_empty_ref"
+        },
+        "worker_policy_ref": {
+          "$ref": "#/$defs/non_empty_ref"
+        }
+      },
+      "required": [
+        "worker_policy_ref",
+        "inheritance"
+      ],
+      "type": "object"
+    },
+    "no_progress_marker": {
+      "additionalProperties": false,
+      "properties": {
+        "blocker_signature": {
+          "$ref": "#/$defs/non_empty_string"
+        },
+        "continuation_count": {
+          "minimum": 2,
+          "type": "integer"
+        },
+        "unchanged_artifact_hashes": {
+          "items": {
+            "$ref": "#/$defs/artifact_hash"
+          },
+          "type": "array"
+        }
+      },
+      "required": [
+        "blocker_signature",
+        "unchanged_artifact_hashes",
+        "continuation_count"
+      ],
+      "type": "object"
+    },
+    "non_empty_ref": {
+      "minLength": 1,
+      "type": "string"
+    },
+    "non_empty_ref_array": {
+      "items": {
+        "$ref": "#/$defs/non_empty_ref"
+      },
+      "minItems": 1,
+      "type": "array",
+      "uniqueItems": true
+    },
+    "non_empty_string": {
+      "minLength": 1,
+      "type": "string"
+    },
+    "ref_array": {
+      "items": {
+        "$ref": "#/$defs/non_empty_ref"
+      },
+      "type": "array",
+      "uniqueItems": true
+    },
+    "scope": {
+      "additionalProperties": false,
+      "allOf": [
+        {
+          "if": {
+            "properties": {
+              "scope_kind": {
+                "const": "external_read_only"
+              }
+            },
+            "required": [
+              "scope_kind"
+            ]
+          },
+          "then": {
+            "properties": {
+              "write_allowed": {
+                "const": false
+              }
+            }
+          }
+        }
+      ],
+      "properties": {
+        "exclude_refs": {
+          "$ref": "#/$defs/ref_array"
+        },
+        "include_refs": {
+          "$ref": "#/$defs/ref_array"
+        },
+        "scope_kind": {
+          "enum": [
+            "repository",
+            "plan_corpus",
+            "project",
+            "external_read_only"
+          ],
+          "type": "string"
+        },
+        "write_allowed": {
+          "type": "boolean"
+        }
+      },
+      "required": [
+        "scope_kind",
+        "include_refs",
+        "exclude_refs",
+        "write_allowed"
+      ],
+      "type": "object"
+    },
+    "sha256_hex": {
+      "pattern": "^[0-9a-f]{64}$",
+      "type": "string"
+    },
+    "source_span": {
+      "additionalProperties": false,
+      "oneOf": [
+        {
+          "$comment": "Owner predicate retained in prose: end_line >= start_line.",
+          "not": {
+            "anyOf": [
+              {
+                "required": [
+                  "json_pointer"
+                ]
+              },
+              {
+                "required": [
+                  "fragment"
+                ]
+              }
+            ]
+          },
+          "properties": {
+            "locator_kind": {
+              "const": "line_range"
+            }
+          },
+          "required": [
+            "locator_kind",
+            "start_line",
+            "end_line"
+          ]
+        },
+        {
+          "not": {
+            "anyOf": [
+              {
+                "required": [
+                  "start_line"
+                ]
+              },
+              {
+                "required": [
+                  "end_line"
+                ]
+              },
+              {
+                "required": [
+                  "fragment"
+                ]
+              }
+            ]
+          },
+          "properties": {
+            "locator_kind": {
+              "const": "json_pointer"
+            }
+          },
+          "required": [
+            "locator_kind",
+            "json_pointer"
+          ]
+        },
+        {
+          "not": {
+            "anyOf": [
+              {
+                "required": [
+                  "start_line"
+                ]
+              },
+              {
+                "required": [
+                  "end_line"
+                ]
+              },
+              {
+                "required": [
+                  "json_pointer"
+                ]
+              }
+            ]
+          },
+          "properties": {
+            "locator_kind": {
+              "const": "artifact_fragment"
+            }
+          },
+          "required": [
+            "locator_kind",
+            "fragment"
+          ]
+        }
+      ],
+      "properties": {
+        "end_line": {
+          "minimum": 1,
+          "type": "integer"
+        },
+        "fragment": {
+          "$ref": "#/$defs/non_empty_string"
+        },
+        "json_pointer": {
+          "minLength": 1,
+          "pattern": "^(?:/(?:[^~/]|~0|~1)*)+$",
+          "type": "string"
+        },
+        "locator_kind": {
+          "enum": [
+            "line_range",
+            "json_pointer",
+            "artifact_fragment"
+          ],
+          "type": "string"
+        },
+        "source_ref": {
+          "$ref": "#/$defs/non_empty_ref"
+        },
+        "start_line": {
+          "minimum": 1,
+          "type": "integer"
+        }
+      },
+      "required": [
+        "source_ref",
+        "locator_kind"
+      ],
+      "type": "object"
+    },
+    "task_delta": {
+      "$comment": "Owner predicate retained in prose: membership is disjoint across the four arrays.",
+      "additionalProperties": false,
+      "anyOf": [
+        {
+          "properties": {
+            "added_task_ids": {
+              "$ref": "#/$defs/non_empty_ref_array"
+            }
+          }
+        },
+        {
+          "properties": {
+            "updated_task_ids": {
+              "$ref": "#/$defs/non_empty_ref_array"
+            }
+          }
+        },
+        {
+          "properties": {
+            "completed_task_ids": {
+              "$ref": "#/$defs/non_empty_ref_array"
+            }
+          }
+        },
+        {
+          "properties": {
+            "removed_task_ids": {
+              "$ref": "#/$defs/non_empty_ref_array"
+            }
+          }
+        }
+      ],
+      "properties": {
+        "added_task_ids": {
+          "$ref": "#/$defs/ref_array"
+        },
+        "completed_task_ids": {
+          "$ref": "#/$defs/ref_array"
+        },
+        "removed_task_ids": {
+          "$ref": "#/$defs/ref_array"
+        },
+        "updated_task_ids": {
+          "$ref": "#/$defs/ref_array"
+        }
+      },
+      "required": [
+        "added_task_ids",
+        "updated_task_ids",
+        "completed_task_ids",
+        "removed_task_ids"
+      ],
+      "type": "object"
+    },
+    "utc_date_time": {
+      "format": "date-time",
+      "type": "string"
+    },
+    "validator_output": {
+      "$comment": "A certified-success row refines skipped outputs to require waiver_ref.",
+      "additionalProperties": false,
+      "oneOf": [
+        {
+          "properties": {
+            "outcome": {
+              "const": "passed"
+            }
+          },
+          "required": [
+            "outcome",
+            "evidence_ref"
+          ]
+        },
+        {
+          "properties": {
+            "outcome": {
+              "enum": [
+                "failed",
+                "blocked",
+                "skipped"
+              ]
+            }
+          },
+          "required": [
+            "outcome",
+            "reason_code"
+          ]
+        }
+      ],
+      "properties": {
+        "evidence_ref": {
+          "$ref": "#/$defs/non_empty_ref"
+        },
+        "outcome": {
+          "enum": [
+            "passed",
+            "failed",
+            "blocked",
+            "skipped"
+          ],
+          "type": "string"
+        },
+        "reason_code": {
+          "$ref": "#/$defs/non_empty_string"
+        },
+        "validator_id": {
+          "$ref": "#/$defs/non_empty_ref"
+        },
+        "waiver_ref": {
+          "$ref": "#/$defs/non_empty_ref"
+        }
+      },
+      "required": [
+        "validator_id",
+        "outcome"
+      ],
+      "type": "object"
+    }
+  },
+  "$id": "pm.goal_runtime_event.goal_receipt_recorded.schema.v2",
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "additionalProperties": false,
+  "allOf": [
+    {
+      "if": {
+        "properties": {
+          "payload": {
+            "properties": {
+              "certifier_decision": {
+                "const": "certified_with_approved_exception"
+              }
+            },
+            "required": [
+              "certifier_decision"
+            ]
+          }
+        },
+        "required": [
+          "payload"
+        ]
+      },
+      "then": {
+        "properties": {
+          "evidence_refs": {
+            "$ref": "#/$defs/non_empty_ref_array"
+          }
+        },
+        "required": [
+          "approval_refs"
+        ]
+      }
+    },
+    {
+      "if": {
+        "properties": {
+          "payload": {
+            "properties": {
+              "certifier_decision": {
+                "enum": [
+                  "rejected",
+                  "blocked"
+                ]
+              }
+            },
+            "required": [
+              "certifier_decision"
+            ]
+          }
+        },
+        "required": [
+          "payload"
+        ]
+      },
+      "then": {
+        "properties": {
+          "evidence_refs": {
+            "$ref": "#/$defs/non_empty_ref_array"
+          }
+        }
+      }
+    }
+  ],
+  "properties": {
+    "actor_ref": {
+      "$ref": "#/$defs/non_empty_ref"
+    },
+    "approval_refs": {
+      "$ref": "#/$defs/non_empty_ref_array"
+    },
+    "artifact_refs": {
+      "$ref": "#/$defs/ref_array"
+    },
+    "block_refs": {
+      "$ref": "#/$defs/non_empty_ref_array"
+    },
+    "causation_event_ref": {
+      "$ref": "#/$defs/non_empty_ref"
+    },
+    "correlation_id": {
+      "$ref": "#/$defs/non_empty_string"
+    },
+    "effective_account_ref": {
+      "$ref": "#/$defs/non_empty_ref"
+    },
+    "effective_model_ref": {
+      "$ref": "#/$defs/non_empty_ref"
+    },
+    "effective_provider_ref": {
+      "$ref": "#/$defs/non_empty_ref"
+    },
+    "event_name": {
+      "const": "goal.receipt_recorded",
+      "type": "string"
+    },
+    "evidence_refs": {
+      "$ref": "#/$defs/ref_array"
+    },
+    "execution_role": {
+      "$ref": "#/$defs/execution_role"
+    },
+    "expected_goal_revision": {
+      "minimum": 1,
+      "type": "integer"
+    },
+    "goal_id": {
+      "$ref": "#/$defs/non_empty_string"
+    },
+    "goal_revision": {
+      "minimum": 1,
+      "type": "integer"
+    },
+    "idempotency_key": {
+      "$ref": "#/$defs/non_empty_string"
+    },
+    "occurred_at_utc": {
+      "$ref": "#/$defs/utc_date_time"
+    },
+    "parent_goal_id": {
+      "$ref": "#/$defs/non_empty_string"
+    },
+    "payload": {
+      "$ref": "#/$defs/event_payload"
+    },
+    "project_id": {
+      "$ref": "#/$defs/non_empty_string"
+    },
+    "requested_account_ref": {
+      "$ref": "#/$defs/non_empty_ref"
+    },
+    "requested_model_ref": {
+      "$ref": "#/$defs/non_empty_ref"
+    },
+    "requested_provider_ref": {
+      "$ref": "#/$defs/non_empty_ref"
+    },
+    "schema_version": {
+      "const": "pm.goal_runtime_event.goal_receipt_recorded.schema.v2",
+      "type": "string"
+    },
+    "thread_id": {
+      "$ref": "#/$defs/non_empty_string"
+    }
+  },
+  "required": [
+    "event_name",
+    "schema_version",
+    "occurred_at_utc",
+    "project_id",
+    "goal_id",
+    "goal_revision",
+    "actor_ref",
+    "execution_role",
+    "requested_provider_ref",
+    "effective_provider_ref",
+    "requested_model_ref",
+    "effective_model_ref",
+    "requested_account_ref",
+    "effective_account_ref",
+    "correlation_id",
+    "evidence_refs",
+    "artifact_refs",
+    "payload",
+    "expected_goal_revision"
+  ],
+  "type": "object",
+  "unevaluatedProperties": false
+}
