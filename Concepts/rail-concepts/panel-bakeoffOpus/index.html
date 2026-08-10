@@ -1,0 +1,285 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<title>Puppet Master - Side Panel Bakeoff</title>
+<meta name="viewport" content="width=device-width, initial-scale=1">
+
+<!--
+  PUPPET MASTER SIDE PANEL BAKEOFF
+  ============================================================================
+  Six competing designs for seven narrow side panels, rendered across all 8
+  themes and 5 widths, with a machine fit-check over every combination.
+
+  Open this file directly. No build step, no server, no node.
+
+  Why one page and not six:
+    Themes are container-scopable in this codebase (every theme selector is a
+    bare [data-theme="x"], never html[data-theme] -- verified across 1055
+    sites). So an 8-theme contact sheet is eight sibling divs in ONE document,
+    and the fit checker gets full DOM access to all of them. Six standalone
+    files would need iframes, and iframe.contentDocument is blocked under
+    file:// -- which would kill the checker and the contact sheet outright.
+    <script src> has no such restriction, so versions live in versions/*.js.
+
+  Adding a version: create versions/vX-name.js calling PM_BAKEOFF.register(),
+  then add one <script src> below. Read versions/README before writing one.
+-->
+
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<!-- All six families the 8 themes use, at the EXACT weights the app requests
+     (copied verbatim from parts/01-head-prelude.part.html:55 - note Orbitron
+     is weight 700 only). Matching the app exactly matters: these metrics are
+     what every measurement in the fit checker is taken against.
+     The checker force-loads and then ASSERTS each face before measuring,
+     because web fonts load lazily and fallback metrics would produce
+     confidently wrong answers. -->
+<link href="https://fonts.googleapis.com/css2?family=Cal+Sans&family=Inter:wght@400;500;600;700&family=Nunito:wght@400;600;700;800&family=Orbitron:wght@700&family=Quicksand:wght@400;500;600;700&family=Rajdhani:wght@400;500;600;700&display=swap" rel="stylesheet">
+
+<link rel="stylesheet" href="_pm-tokens.css?v=319adc0b">
+<link rel="stylesheet" href="_pm-primitives.css?v=319adc0b">
+<link rel="stylesheet" href="_extracted.css?v=bdc836a4">
+<link rel="stylesheet" href="_pm-shell.css?v=319adc0b">
+<link rel="stylesheet" href="_pm-components.css?v=319adc0b">
+<link rel="stylesheet" href="_pm-kit.css?v=319adc0b">
+<!-- Motion layer: six primitives (expand, push/pop, list enter, sheet, lens
+     indicator, value flash), theme-aware through seven --pmm-* knobs mapped
+     per theme family, every one of them killed by [data-motion="reduced"] and
+     prefers-reduced-motion. AFTER the kit, because it suppresses the kit's
+     static lens mark for any strip that opts into a sliding indicator. -->
+<link rel="stylesheet" href="_pm-motion.css?v=319adc0b">
+<!-- vG "Cozy Shelves": the whole .cz-* design system in one sheet. LAST of the
+     stylesheets on purpose - it is additive and scoped to .cz, and it reads the
+     theme tokens and the motion knobs declared above it. -->
+<link rel="stylesheet" href="_pm-cozy.css?v=319adc0b">
+
+<style>
+/* ==========================================================================
+   HARNESS CHROME
+   Deliberately unlike all 8 themes so it can never be mistaken for the design
+   under test: graphite ground, one acid-green accent no theme uses, monospace
+   UI type no theme uses, and zero animation so it stays visually inert while
+   the design under test animates. It lives OUTSIDE every [data-theme] subtree.
+   ========================================================================== */
+:root{
+  --hx-bg:#101215; --hx-bg2:#15171A; --hx-line:#2A2F35; --hx-line2:#3A424B;
+  --hx-fg:#E6EAEE; --hx-dim:#8A939D; --hx-acc:#00E5A0; --hx-warn:#FFB020; --hx-err:#FF5C5C;
+  --hx-mono:ui-monospace,'SF Mono','Cascadia Mono',Menlo,Consolas,monospace;
+}
+*{box-sizing:border-box}
+html,body{margin:0;padding:0;height:100%}
+body{
+  background:var(--hx-bg); color:var(--hx-fg);
+  font-family:var(--hx-mono); font-size:12px; line-height:1.4;
+  display:flex; flex-direction:column; overflow:hidden;
+}
+
+/* ---- control bar -------------------------------------------------------- */
+.hx-top{flex:0 0 auto; background:var(--hx-bg2); border-bottom:2px solid var(--hx-acc); z-index:9000}
+.hx-row{display:flex; align-items:center; gap:14px; padding:0 12px; height:44px; flex-wrap:nowrap; overflow-x:auto}
+.hx-row2{height:30px; border-top:1px solid var(--hx-line); font-size:11px}
+.hx-row2[hidden]{display:none}
+.hx-by{font-size:10px; letter-spacing:.12em; color:var(--hx-acc); border:1px solid var(--hx-acc);
+  padding:3px 7px; flex:0 0 auto; opacity:.85}
+.hx-mark{
+  font-weight:700; letter-spacing:.16em; font-size:11px; color:var(--hx-acc);
+  border:1px solid var(--hx-acc); padding:3px 7px; flex:0 0 auto; user-select:none;
+}
+.hx-grp{display:flex; align-items:center; gap:6px; flex:0 0 auto}
+.hx-lbl{color:var(--hx-dim); font-size:10px; letter-spacing:.1em; text-transform:uppercase}
+.hx-seg{display:flex; border:1px solid var(--hx-line2); overflow:hidden}
+.hx-seg button{
+  font:inherit; font-size:11px; background:transparent; color:var(--hx-dim);
+  border:0; border-right:1px solid var(--hx-line2); padding:5px 9px; cursor:pointer;
+  min-height:24px; white-space:nowrap;
+}
+.hx-seg button:last-child{border-right:0}
+.hx-seg button:hover{color:var(--hx-fg); background:#1D2126}
+.hx-seg button[aria-pressed="true"]{background:var(--hx-acc); color:#06120D; font-weight:700}
+.hx-sel{
+  font:inherit; font-size:11px; background:#0B0D10; color:var(--hx-fg);
+  border:1px solid var(--hx-line2); padding:5px 8px; min-height:24px; cursor:pointer;
+}
+.hx-num{color:var(--hx-acc); font-weight:700; min-width:52px; text-align:right}
+.hx-range{width:150px; accent-color:var(--hx-acc)}
+.hx-btn{
+  font:inherit; font-size:11px; background:#0B0D10; color:var(--hx-fg);
+  border:1px solid var(--hx-line2); padding:5px 10px; min-height:24px; cursor:pointer;
+}
+.hx-btn:hover{border-color:var(--hx-acc); color:var(--hx-acc)}
+.hx-btn--go{border-color:var(--hx-acc); color:var(--hx-acc); font-weight:700}
+.hx-pill{padding:3px 8px; border:1px solid var(--hx-line2); color:var(--hx-dim); font-size:10px}
+.hx-pill[data-tone="pass"]{border-color:var(--hx-acc); color:var(--hx-acc)}
+.hx-pill[data-tone="warn"]{border-color:var(--hx-warn); color:var(--hx-warn)}
+.hx-pill[data-tone="fail"]{border-color:var(--hx-err); color:var(--hx-err)}
+.hx-chk{display:flex; align-items:center; gap:5px; color:var(--hx-dim); cursor:pointer; white-space:nowrap}
+.hx-chk input{accent-color:var(--hx-acc); margin:0}
+.hx-spacer{flex:1 1 auto; min-width:8px}
+
+/* ---- stage area --------------------------------------------------------- */
+.hx-main{flex:1 1 auto; min-height:0; overflow:auto; padding:14px}
+.hx-lane{display:flex; gap:16px; align-items:flex-start; flex-wrap:wrap}
+.hx-frame{margin:0; display:flex; flex-direction:column; gap:0}
+.hx-cap{
+  display:flex; align-items:center; gap:8px; font-size:10px; color:var(--hx-dim);
+  padding:3px 6px; border:1px dashed var(--hx-acc); border-bottom:0;
+  letter-spacing:.06em; white-space:nowrap;
+}
+.hx-cap b{color:var(--hx-acc); font-weight:700}
+.hx-cap .hx-pickbtn{
+  font:inherit; font-size:9px; margin-left:auto; background:transparent;
+  color:var(--hx-dim); border:1px solid var(--hx-line2); padding:2px 6px; cursor:pointer;
+}
+.hx-cap .hx-pickbtn[aria-pressed="true"]{background:var(--hx-acc); color:#06120D; border-color:var(--hx-acc); font-weight:700}
+.hx-frame > .pm-stage{border:1px dashed var(--hx-acc)}
+
+/* Stage sizing per mode. Height is fixed so vertical overflow is a real,
+   comparable signal rather than a function of how much content a version
+   happens to emit. */
+.pm-stage{width:1100px; height:720px}
+[data-mode="compare"] .pm-stage{width:820px; height:660px}
+[data-mode="contact"] .pm-stage{width:560px; height:440px}
+[data-mode="contact"] .hx-lane{display:grid; grid-template-columns:repeat(auto-fit,minmax(560px,1fr)); gap:14px}
+/* SOLO fills the window. It previously reserved a fixed 76px for the control
+   bar and set an explicit height, so any other bar height letterboxed the
+   stage with dead space and clipped the bottom of the panel. Now the main area
+   is the flex remainder and the stage simply fills it, which also means the
+   gallery can hide the control bar entirely and the stage grows to take the
+   space rather than leaving a hole. */
+[data-mode="solo"] .hx-main{padding:0; display:flex; min-height:0; overflow:hidden}
+/* align-items:stretch is the whole fix. The base lane uses flex-start so cards
+   in the grid modes size to their own content; in solo that left the single
+   frame at its intrinsic 541px inside a 674px lane, which is exactly the black
+   band below the panel and the clipped bottom. */
+[data-mode="solo"] .hx-lane{flex:1 1 auto; min-height:0; display:flex; align-items:stretch; flex-wrap:nowrap}
+[data-mode="solo"] .hx-frame{flex:1 1 auto; min-height:0; min-width:0}
+[data-mode="solo"] .hx-frame > .pm-stage{border:0}
+[data-mode="solo"] .hx-cap{display:none}
+[data-mode="solo"] .pm-stage{width:100%; height:100%; flex:1 1 auto; min-height:0}
+
+/* ---- debug overlays ----------------------------------------------------- */
+.hx-dbg-box .pm6-sp-content, .hx-dbg-box .pm-sp-content{outline:1px solid #FF00FF; outline-offset:-1px}
+.hx-dbg-hit [role="button"], .hx-dbg-hit button,
+.hx-dbg-hit .pm6-sp-row, .hx-dbg-hit .pm6-sp-btn, .hx-dbg-hit .pm6-sp-minibtn,
+.hx-dbg-hit .pm6-sp-iconbtn, .hx-dbg-hit .pm-row, .hx-dbg-hit .pm-btn{
+  outline:1px dashed rgba(255,176,32,.9); outline-offset:0;
+}
+.hx-fit-hot{outline:2px solid #FF3B3B !important; outline-offset:1px}
+.hx-fit-warn{outline:2px dotted #FFB020 !important; outline-offset:1px}
+
+/* ---- matrix ------------------------------------------------------------- */
+.hx-matrix{font-size:10px; border-collapse:collapse}
+.hx-matrix th{color:var(--hx-dim); font-weight:400; padding:2px 4px; text-align:left; white-space:nowrap}
+.hx-matrix th.rot{writing-mode:vertical-rl; text-orientation:mixed; height:78px; padding:2px}
+.hx-matrix td{padding:0}
+.hx-cell{
+  width:15px; height:15px; border:1px solid var(--hx-bg); cursor:pointer; display:block;
+  background:#2A2F35;
+}
+.hx-cell[data-t="pass"]{background:#12A97B}
+.hx-cell[data-t="warn"]{background:#B57C12}
+.hx-cell[data-t="fail"]{background:#C93A3A}
+.hx-empty{color:var(--hx-dim); padding:40px; text-align:center}
+.hx-note{color:var(--hx-dim); font-size:11px; padding:10px 2px; max-width:820px; line-height:1.6}
+.hx-note code{color:var(--hx-acc)}
+</style>
+</head>
+<body>
+
+<div class="hx-top">
+  <div class="hx-row">
+    <span class="hx-mark">HARNESS</span>
+    <span class="hx-by">Claude Opus</span>
+
+    <div class="hx-grp"><span class="hx-lbl">Version</span>
+      <div class="hx-seg" id="cVersion"></div></div>
+
+    <div class="hx-grp"><span class="hx-lbl">Panel</span>
+      <select class="hx-sel" id="cPanel"></select></div>
+
+    <div class="hx-grp"><span class="hx-lbl">Theme</span>
+      <select class="hx-sel" id="cTheme"></select></div>
+
+    <div class="hx-grp"><span class="hx-lbl">Width</span>
+      <div class="hx-seg" id="cWidth"></div>
+      <input class="hx-range" id="cWidthRange" type="range" min="200" max="560" step="1">
+      <span class="hx-num" id="cWidthNum">380px</span></div>
+
+    <div class="hx-grp"><span class="hx-lbl">Mode</span>
+      <div class="hx-seg" id="cMode"></div></div>
+
+    <span class="hx-spacer"></span>
+
+    <div class="hx-grp">
+      <button class="hx-btn hx-btn--go" id="cFit">Run fit check</button>
+      <span class="hx-pill" id="cFitPill">not run</span>
+      <button class="hx-btn" id="cRow2">Options</button>
+    </div>
+  </div>
+
+  <div class="hx-row hx-row2" id="row2" hidden>
+    <div class="hx-grp"><span class="hx-lbl">Density</span>
+      <div class="hx-seg" id="cDensity"></div></div>
+    <div class="hx-grp"><span class="hx-lbl">Motion</span>
+      <div class="hx-seg" id="cMotion"></div></div>
+    <div class="hx-grp"><span class="hx-lbl">Glass bg</span>
+      <div class="hx-seg" id="cGlass"></div></div>
+    <div class="hx-grp"><span class="hx-lbl">Rail</span>
+      <div class="hx-seg" id="cRail"></div></div>
+    <span class="hx-spacer"></span>
+    <label class="hx-chk"><input type="checkbox" id="dbgBox"> content box</label>
+    <label class="hx-chk"><input type="checkbox" id="dbgHit"> 24px targets</label>
+    <label class="hx-chk"><input type="checkbox" id="cCompareB"> B stage follows A</label>
+    <button class="hx-btn" id="cReport">Download report</button>
+  </div>
+</div>
+
+<main class="hx-main" id="stageWrap"></main>
+
+<script src="_pm-data.js?v=319adc0b"></script>
+<script src="_pm-portal.js?v=319adc0b"></script>
+<script src="_pm-components.js?v=319adc0b"></script>
+<script src="_pm-kit.js?v=319adc0b"></script>
+<!-- PMM.* - the JS a few of those primitives need. Class toggles and two
+     custom properties only: no rAF loop, no pointer listener, no per-frame
+     work. Every helper no-ops under reduced motion and is safe on a detached
+     node, because versions build markup as strings and stages re-render. -->
+<script src="_pm-motion.js?v=319adc0b"></script>
+<script src="_pm-fitcheck.js?v=319adc0b"></script>
+<script src="_pm-shell.js?v=319adc0b"></script>
+
+<!-- versions: one file each, registered on load. Order here is display order. -->
+<script src="versions/v0-baseline.js?v=319adc0b"></script>
+<script src="versions/vA-ledger.js?v=319adc0b"></script>
+<script src="versions/vB-gutter-sheet.js?v=319adc0b"></script>
+<script src="versions/vC-lens-deck.js?v=319adc0b"></script>
+<script src="versions/vD-drill-stack.js?v=319adc0b"></script>
+<script src="versions/vE-cockpit.js?v=319adc0b"></script>
+<script src="versions/vF-stream.js?v=319adc0b"></script>
+
+<!-- Extra one-off variants for the three hardest panels. Each registers a
+     version that populates ONLY its own panel; the others fall back to the
+     harness placeholder, which is how a panel-scoped variant stays comparable
+     against the six full systems without pretending to be one. -->
+<script src="versions/x-docker.js?v=319adc0b"></script>
+<script src="versions/x-source.js?v=319adc0b"></script>
+<script src="versions/x-artifacts.js?v=319adc0b"></script>
+
+<!-- vG "Cozy Shelves". Five files, and the order below is the only one that is
+     cheap to reason about: helpers, then the four panel files that assign into
+     window.VG_PANELS, then the registration. The registration resolves each
+     panel LAZILY at render time, so it does not actually depend on this order -
+     but _pm-cozy.js does have to precede the panel files at RENDER time, and
+     keeping load order and dependency order aligned means a future reader never
+     has to work out which of the two is doing the saving. -->
+<script src="_pm-cozy.js?v=319adc0b"></script>
+<script src="versions/vG-panels-a.js?v=319adc0b"></script>
+<script src="versions/vG-panels-b.js?v=319adc0b"></script>
+<script src="versions/vG-panels-c.js?v=319adc0b"></script>
+<script src="versions/vG-panels-d.js?v=319adc0b"></script>
+<script src="versions/vG-cozy.js?v=319adc0b"></script>
+
+<script>PM_BAKEOFF.boot();</script>
+</body>
+</html>

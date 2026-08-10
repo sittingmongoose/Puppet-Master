@@ -1,0 +1,562 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="friendly-dark" data-glass-bg="mesh">
+<head>
+<meta charset="utf-8">
+<title>Puppet Master - Side Panel Gallery</title>
+<meta name="viewport" content="width=device-width, initial-scale=1">
+
+<!--
+  SIDE PANEL GALLERY
+  ==========================================================================
+  A presentation surface over the bakeoff. index.html is the INSTRUMENT - a
+  deliberately un-app-like control bar for measuring one stage at a time. This
+  is the opposite: every design live at once, themed like the product, meant to
+  be looked at rather than measured.
+
+  Two axes, because those are the two questions:
+    BY PANEL    one panel, every design of it        "which Docker do I want?"
+    BY DESIGN   one design, every panel it covers    "does this hold up across
+                                                      the whole app?"
+
+  Every card is a LIVE stage, not a screenshot. Change the theme or drag the
+  width and all of them re-render together, so a comparison is never between
+  one design as it is now and another as it was when someone captured it.
+
+  HOW THE CARDS ARE DRIVEN. Each card is an iframe pointing at index.html in
+  solo mode. Served over http:// the frames are same-origin, so this page calls
+  contentWindow.PM_BAKEOFF.setState() on them directly - no postMessage
+  protocol, and, more importantly, NO CHANGES TO THE HARNESS. The gallery is
+  additive: delete this file and the bakeoff is exactly as it was.
+
+  It must be SERVED, not opened from disk: file:// gives every document an
+  opaque origin and contentWindow access is blocked.
+
+      python3 tools/serve.py 47955      then open /gallery.html
+
+  Scaling: each iframe is laid out at a fixed 1240x780 and scaled down with
+  transform-origin: top left. Scaling rather than shrinking the viewport means
+  every card shows the app at a real desktop size, so the panel occupies its
+  true proportion of the shell instead of a phone-sized fiction.
+-->
+
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Cal+Sans&family=Inter:wght@400;500;600;700&family=Nunito:wght@400;600;700;800&family=Orbitron:wght@700&family=Quicksand:wght@400;500;600;700&family=Rajdhani:wght@400;500;600;700&display=swap" rel="stylesheet">
+
+<!-- The gallery chrome is themed by the SAME tokens as the designs, so the
+     page you judge from is not a different visual language to the thing being
+     judged. Flipping the theme reskins the gallery and all 16 cards at once. -->
+<link rel="stylesheet" href="_pm-tokens.css?v=319adc0b">
+
+<style>
+*{box-sizing:border-box}
+html,body{margin:0;padding:0;height:100%}
+body{
+  background:var(--background); color:var(--text-primary);
+  font-family:var(--body-font); font-size:var(--base-font-size);
+  line-height:var(--line-height); letter-spacing:var(--letter-spacing);
+  display:flex; flex-direction:column; overflow:hidden;
+}
+button,select,input{font-family:inherit}
+
+/* ------------------------------------------------------------- top bar --- */
+.g-top{
+  flex:0 0 auto; display:flex; align-items:center; gap:var(--xl);
+  padding:var(--md) var(--lg); min-height:56px;
+  background:var(--surface); border-bottom:var(--border-width,1px) solid var(--border);
+  position:relative; z-index:60;
+}
+.g-brand{display:flex; align-items:center; gap:var(--md); flex:0 0 auto}
+.g-brand svg{width:26px;height:26px;color:var(--accent-primary)}
+.g-name{font-family:var(--display-font); font-weight:700; font-size:15px; letter-spacing:.06em}
+.g-by{display:inline-block; margin-left:var(--md); font-size:var(--fs-2xs); font-weight:600;
+  letter-spacing:.06em; color:var(--accent-primary); border:1px solid var(--accent-primary);
+  border-radius:var(--radius-pill); padding:1px 9px; vertical-align:middle}
+.g-sub{font-size:var(--fs-2xs); color:var(--text-muted); letter-spacing:.04em}
+.g-spacer{flex:1 1 auto}
+
+.g-grp{display:flex; align-items:center; gap:var(--sm); flex:0 0 auto}
+.g-lbl{font-size:var(--fs-2xs); color:var(--text-muted); letter-spacing:.1em; text-transform:uppercase}
+
+.g-seg{display:inline-flex; gap:2px; padding:2px; background:var(--surface-elevated);
+  border:var(--border-width,1px) solid var(--border); border-radius:var(--radius-pill)}
+.g-seg button{
+  font-family:var(--display-font-sm,var(--body-font)); font-size:var(--fs-2xs); font-weight:700;
+  letter-spacing:.08em; text-transform:uppercase; color:var(--text-muted);
+  background:transparent; border:0; border-radius:var(--radius-pill);
+  padding:5px 12px; min-height:26px; cursor:pointer;
+}
+.g-seg button:hover{color:var(--text-primary)}
+.g-seg button.on{color:var(--text-primary); background:var(--accent-soft)}
+.g-seg button:focus-visible{outline:2px solid var(--accent-primary); outline-offset:1px}
+
+.g-sel{
+  background:var(--surface-elevated); color:var(--text-primary);
+  border:var(--border-width,1px) solid var(--border); border-radius:var(--radius-sm);
+  padding:5px var(--md); min-height:28px; font-size:var(--fs-xs); cursor:pointer;
+}
+.g-range{width:120px; accent-color:var(--accent-primary)}
+.g-num{font-family:var(--mono-font); font-size:var(--fs-2xs); color:var(--accent-primary);
+  font-weight:700; min-width:46px; text-align:right}
+
+/* ---------------------------------------------------------------- body --- */
+.g-body{flex:1 1 auto; min-height:0; display:flex}
+
+.g-nav{
+  flex:0 0 210px; min-width:0; padding:var(--md) var(--sm) var(--lg);
+  background:var(--surface-alt,var(--surface));
+  border-right:var(--border-width,1px) solid var(--border);
+  overflow-y:auto; display:flex; flex-direction:column; gap:2px;
+}
+.g-nav-head{font-family:var(--display-font-sm,var(--body-font)); font-size:var(--fs-2xs);
+  font-weight:700; letter-spacing:.12em; color:var(--text-muted);
+  padding:var(--sm) var(--md) var(--md)}
+.g-nav-btn{
+  display:flex; align-items:center; gap:var(--md); width:100%;
+  padding:7px var(--md); min-height:32px;
+  background:transparent; border:0; border-radius:var(--radius-sm);
+  color:var(--text-secondary); font-size:var(--fs-xs); text-align:left; cursor:pointer;
+}
+.g-nav-btn svg{width:15px;height:15px;flex:none;opacity:.85}
+.g-nav-btn .nm{flex:1 1 auto; min-width:0; overflow:hidden; text-overflow:ellipsis; white-space:nowrap}
+.g-nav-btn .ct{flex:none; font-size:var(--fs-2xs); color:var(--text-muted);
+  font-family:var(--mono-font)}
+.g-nav-btn:hover{color:var(--text-primary); background:var(--accent-soft)}
+.g-nav-btn.on{color:var(--text-primary); background:var(--accent-soft);
+  box-shadow:inset 3px 0 0 var(--accent-primary)}
+.g-nav-btn:focus-visible{outline:2px solid var(--accent-primary); outline-offset:-2px}
+.g-nav-note{margin-top:auto; padding:var(--lg) var(--md) 0; font-size:var(--fs-2xs);
+  color:var(--text-muted); line-height:var(--lh-body)}
+
+.g-main{flex:1 1 auto; min-width:0; overflow-y:auto; padding:var(--xl)}
+.g-head{display:flex; align-items:flex-end; gap:var(--lg); margin-bottom:var(--xl); flex-wrap:wrap}
+.g-h1{font-family:var(--display-font); font-size:24px; font-weight:700; margin:0}
+.g-h1 em{font-style:normal; color:var(--accent-primary)}
+.g-h1-sub{font-size:var(--fs-sm); color:var(--text-muted)}
+.g-hint{margin-left:auto; max-width:460px; text-align:right; font-size:var(--fs-2xs);
+  color:var(--text-muted); line-height:var(--lh-body)}
+
+/* ---------------------------------------------------------------- grid --- */
+.g-grid{display:grid; grid-template-columns:repeat(auto-fill,minmax(400px,1fr)); gap:var(--xl)}
+.g-card{
+  display:flex; flex-direction:column; min-width:0;
+  background:var(--surface); border:var(--border-width,1px) solid var(--border);
+  border-radius:var(--radius-lg); overflow:hidden;
+  box-shadow:var(--elev-1);
+}
+.g-card:hover{border-color:var(--accent-primary)}
+.g-cap{display:flex; align-items:center; gap:var(--md); padding:var(--md) var(--lg) var(--sm)}
+.g-id{
+  flex:none; font-family:var(--mono-font); font-size:var(--fs-2xs); font-weight:700;
+  padding:3px 7px; border-radius:var(--radius-sm);
+  background:var(--accent-soft); color:var(--accent-primary);
+}
+.g-cap h3{flex:1 1 auto; min-width:0; margin:0; font-size:var(--fs-md); font-weight:700;
+  overflow:hidden; text-overflow:ellipsis; white-space:nowrap}
+.g-tag{flex:none; font-size:var(--fs-2xs); color:var(--text-muted);
+  border:1px solid var(--border-light,var(--border)); border-radius:var(--radius-pill);
+  padding:2px 9px; white-space:nowrap}
+.g-pitch{padding:0 var(--lg) var(--md); font-size:var(--fs-xs); color:var(--text-secondary);
+  line-height:var(--lh-body); min-height:38px}
+
+/* The frame is laid out at desktop size and scaled, so each card shows the app
+   at true proportions rather than a squeezed viewport. */
+.g-frame{position:relative; width:100%; overflow:hidden; background:var(--background);
+  border-top:1px solid var(--border-light,var(--border)); flex:0 0 auto}
+.g-frame iframe{position:absolute; top:0; left:0; width:1240px; height:780px; border:0;
+  transform-origin:top left; background:var(--background)}
+.g-frame[data-loading="1"]::after{
+  content:'rendering'; position:absolute; inset:0; display:flex; align-items:center;
+  justify-content:center; font-family:var(--mono-font); font-size:var(--fs-2xs);
+  color:var(--text-muted); background:var(--surface); letter-spacing:.1em;
+}
+.g-foot{display:flex; align-items:center; gap:var(--md); padding:var(--sm) var(--lg) var(--md)}
+.g-open{font-size:var(--fs-2xs); font-weight:700; color:var(--accent-primary);
+  text-decoration:none; letter-spacing:.04em}
+.g-open:hover{text-decoration:underline}
+.g-meta{margin-left:auto; font-family:var(--mono-font); font-size:var(--fs-2xs);
+  color:var(--text-muted)}
+.g-empty{padding:60px; text-align:center; color:var(--text-muted); font-size:var(--fs-sm)}
+
+@media (prefers-reduced-motion: reduce){ *{transition:none !important; animation:none !important} }
+[data-motion="reduced"] *{transition:none !important; animation:none !important}
+</style>
+</head>
+<body>
+
+<header class="g-top">
+  <div class="g-brand">
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"
+         stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+      <path d="M21 16V8a2 2 0 0 0-1-1.73l-7-4a2 2 0 0 0-2 0l-7 4A2 2 0 0 0 3 8v8a2 2 0 0 0 1 1.73l7 4a2 2 0 0 0 2 0l7-4A2 2 0 0 0 21 16z"/>
+      <polyline points="3.27 6.96 12 12.01 20.73 6.96"/><line x1="12" y1="22.08" x2="12" y2="12"/>
+    </svg>
+    <span>
+      <span class="g-name">PUPPET MASTER</span>
+      <span class="g-by">Claude Opus</span><br>
+      <span class="g-sub" id="gSub">side panel gallery</span>
+    </span>
+  </div>
+
+  <div class="g-seg" id="gMode" role="tablist" aria-label="Compare by">
+    <button class="on" data-mode="panel" role="tab" aria-selected="true">By panel</button>
+    <button data-mode="design" role="tab" aria-selected="false">By design</button>
+  </div>
+
+  <span class="g-spacer"></span>
+
+  <div class="g-grp"><span class="g-lbl">Theme</span>
+    <select class="g-sel" id="gTheme" aria-label="Theme"></select></div>
+
+  <div class="g-grp"><span class="g-lbl">Panel width</span>
+    <div class="g-seg" id="gW"></div>
+    <input class="g-range" id="gWr" type="range" min="220" max="520" step="4" value="380"
+           aria-label="Panel width in pixels">
+    <span class="g-num" id="gWn">380px</span></div>
+
+  <div class="g-grp"><span class="g-lbl">Motion</span>
+    <div class="g-seg" id="gMotion">
+      <button class="on" data-rm="full">On</button><button data-rm="reduced">Reduced</button>
+    </div></div>
+</header>
+
+<div class="g-body">
+  <nav class="g-nav">
+    <div class="g-nav-head" id="gNavHead">PANELS</div>
+    <div id="gNavList"></div>
+    <div class="g-nav-note" id="gNavNote"></div>
+  </nav>
+  <main class="g-main">
+    <div class="g-head">
+      <div>
+        <h1 class="g-h1" id="gH1"></h1>
+        <div class="g-h1-sub" id="gH1Sub"></div>
+      </div>
+      <div class="g-hint" id="gHint"></div>
+    </div>
+    <div class="g-grid" id="gGrid"></div>
+  </main>
+</div>
+
+<script src="_pm-data.js?v=319adc0b"></script>
+<script>
+(function () {
+  'use strict';
+
+  /* Every card is index.html in solo mode. Same-origin over http:// means we
+     drive PM_BAKEOFF directly rather than inventing a message protocol - and
+     the harness needs no changes at all to support this page. */
+  var SOLO = 'index.html#mode=solo&v=%V&panel=%P&theme=%T&w=%W';
+
+  var PANELS = (window.PM_DATA && PM_DATA.panels ? PM_DATA.panels : [])
+    .filter(function (p) { return p.redesign; });
+  var THEMES = (window.PM_DATA && PM_DATA.themes) || [];
+
+  /* Design roster. Kept here rather than read from the registry because the
+     gallery must name and pitch each design for a human - the registry only
+     carries what the harness needs. `covers` is which panels it implements:
+     the six full systems cover all seven, the variants cover one each. */
+  /* ALL is the seven panels the original bake-off covered. File Manager arrived
+     later, with Cozy Shelves, so only the designs that actually implement it claim
+     it - otherwise fifteen cards would render "NOT BUILT" and the comparison would
+     be noise. v0 keeps it because the shipped file manager is the floor to beat. */
+  var ALL = ['search', 'source', 'git', 'docker', 'tests', 'agents', 'artifacts'];
+  var ALL8 = ALL.concat(['files']);
+  var DESIGNS = [
+    { id:'v0', name:'Baseline (today)', tag:'control', covers:ALL8,
+      pitch:'PMConcept7 exactly as it ships. Present so every comparison has a floor - not a candidate.' },
+    { id:'vG', name:'Cozy Shelves', tag:'shelf grammar', covers:ALL8,
+      pitch:'The picked design. Titled shelves announce what and how many, rows are identity over qualification, one semantic accent, and disclosure carries the depth so the row never grows.' },
+    { id:'vA', name:'Ledger', tag:'two-line rows', covers:ALL,
+      pitch:'One flat list of uniform two-line receipts under sticky headers. Identity on line one, metadata on line two, zero nesting.' },
+    { id:'vB', name:'Gutter & Sheet', tag:'spine depth', covers:ALL,
+      pitch:'Strictly one-line rows with an exclusive in-place sheet. Depth rides a spine inside the gutter, so nesting costs no text width.' },
+    { id:'vC', name:'Lens Deck', tag:'one lens at a time', covers:ALL,
+      pitch:'A constant four-strip frame over a single lens. No panel ever shows two kinds of object at once.' },
+    { id:'vD', name:'Drill Stack', tag:'hub to detail', covers:ALL,
+      pitch:'Hub of counts, then list, then object. Only one level renders, so no level competes for the band.' },
+    { id:'vE', name:'Cockpit', tag:'focus card', covers:ALL,
+      pitch:'One fixed focus card for the current object, and a lean one-line list beneath it. Deliberately asymmetric.' },
+    { id:'vF', name:'Stream', tag:'time axis', covers:ALL,
+      pitch:'Reverse-chronological activity; objects become filter chips rather than structure. A fixed time gutter anchors every row.' },
+    { id:'xD1', name:'Docker: Triage Board', tag:'problems first', covers:['docker'],
+      pitch:'Opens with what is wrong across every surface at once; the settled remainder collapses to one accordion.' },
+    { id:'xD2', name:'Docker: Column Ledger', tag:'paged columns', covers:['docker'],
+      pitch:'A dense table with a frozen identity and a navigable attribute window. Transposes at 240px.' },
+    { id:'xD3', name:'Docker: Command Line', tag:'query first', covers:['docker'],
+      pitch:'One persistent query over federated results. The eleven-subview problem dissolves into the query zero state.' },
+    { id:'xS1', name:'Source: Commit Desk', tag:'commit first', covers:['source'],
+      pitch:'The composer is the masthead and never moves; everything below is graded by whether it is in the commit.' },
+    { id:'xS2', name:'Source: Lane Board', tag:'worktree first', covers:['source'],
+      pitch:'The lane is the primary object. Changes, history and branches render inside one worktree at a time.' },
+    { id:'xS3', name:'Source: Review Queue', tag:'worklist', covers:['source'],
+      pitch:'Sixteen changed files as a reviewed/unreviewed worklist, with a two-column split at 480px.' },
+    { id:'xA1', name:'Artifacts: Glyph Column', tag:'kind as picture', covers:['artifacts'],
+      pitch:'Nineteen artifact kinds encoded as glyphs in one narrow gutter, freeing the whole band for the summary.' },
+    { id:'xA2', name:'Artifacts: Casefile', tag:'bundles first', covers:['artifacts'],
+      pitch:'The investigation is the primary object; loose artifacts are the exception rather than the rule.' },
+    { id:'xA3', name:'Artifacts: Monoculture', tag:'kind as heading', covers:['artifacts'],
+      pitch:'Homogeneous runs under sticky type headers, so the kind is stated once per run and never on a row.' }
+  ];
+
+  var ICON = {
+    files:'<path d="M22 19a2 2 0 0 1-2 2H4a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h5l2 3h9a2 2 0 0 1 2 2z"/>',
+    search:'<circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/>',
+    source:'<circle cx="18" cy="18" r="3"/><circle cx="6" cy="6" r="3"/><circle cx="6" cy="18" r="3"/><path d="M18 15V9a3 3 0 0 0-3-3H9"/><line x1="6" y1="9" x2="6" y2="15"/>',
+    git:'<path d="M9 19c-5 1.5-5-2.5-7-3m14 6v-3.87a3.37 3.37 0 0 0-.94-2.61c3.14-.35 6.44-1.54 6.44-7A5.44 5.44 0 0 0 20 4.77 5.07 5.07 0 0 0 19.91 1S18.73.65 16 2.48a13.38 13.38 0 0 0-7 0C6.27.65 5.09 1 5.09 1A5.07 5.07 0 0 0 5 4.77a5.44 5.44 0 0 0-1.5 3.78c0 5.42 3.3 6.61 6.44 7A3.37 3.37 0 0 0 9 18.13V22"/>',
+    docker:'<path d="M21 16V8a2 2 0 0 0-1-1.73l-7-4a2 2 0 0 0-2 0l-7 4A2 2 0 0 0 3 8v8a2 2 0 0 0 1 1.73l7 4a2 2 0 0 0 2 0l7-4A2 2 0 0 0 21 16z"/><polyline points="3.27 6.96 12 12.01 20.73 6.96"/><line x1="12" y1="22.08" x2="12" y2="12"/>',
+    tests:'<circle cx="12" cy="12" r="9"/><path d="M8 12.2l2.8 2.8L16.4 9"/>',
+    agents:'<rect x="5" y="8" width="14" height="11" rx="2.5"/><path d="M12 8V5"/><circle cx="12" cy="4" r="1"/><path d="M9.5 16h5"/><path d="M3 12v4M21 12v4"/>',
+    artifacts:'<polyline points="21 8 21 21 3 21 3 8"/><rect x="1" y="3" width="22" height="5"/><line x1="10" y1="12" x2="14" y2="12"/>',
+    design:'<circle cx="12" cy="12" r="9"/><path d="M12 3v18M3 12h18"/>'
+  };
+  function icon(n) {
+    return '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" ' +
+      'stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">' + (ICON[n] || ICON.design) + '</svg>';
+  }
+  function esc(s) {
+    return String(s == null ? '' : s).replace(/[&<>"']/g, function (c) {
+      return { '&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;' }[c];
+    });
+  }
+  function panelLabel(id) {
+    for (var i = 0; i < PANELS.length; i++) if (PANELS[i].id === id) return PANELS[i].label;
+    return id;
+  }
+  function designsFor(panelId) {
+    return DESIGNS.filter(function (d) { return d.covers.indexOf(panelId) >= 0; });
+  }
+
+  /* What each panel is FOR, in one line. Shown on by-design cards so the
+     seven of them read as seven different problems rather than seven copies
+     of the same sentence. Drawn from the research briefs. */
+  var PANEL_PITCH = {
+    search:    'Find-in-files and replace across 14 files, plus the whole indexing control surface.',
+    source:    '65 wired commands: changes, worktrees, history, graph, branches and the commit composer.',
+    git:       'Hosted workflows, run and job triage, dispatch, and the blocked-state taxonomy.',
+    docker:    'The largest surface in the app - 78 commands and 11 subviews that cannot fit a chip strip.',
+    tests:     'The five spec-named regions: run list, active run, failures, artifact preview, redaction notice.',
+    agents:    'Mirrors the subagent registry - active and available - with lineage entrypoints.',
+    artifacts: '38 artifacts across 19 kinds, where the envelope guarantees no title at all.',
+    files:     'A recursive tree in a flat grammar - 260 rows nine deep, where indent competes directly with the filename.'
+  };
+  function panelPitch(id) { return PANEL_PITCH[id] || panelLabel(id); }
+
+  var state = { mode:'panel', panel:'docker', design:'vD',
+                theme:'friendly-dark', w:380, rm:false };
+
+  var grid = document.getElementById('gGrid');
+  var navList = document.getElementById('gNavList');
+
+  /* Same-origin: reach into the frame and set its state. Falls back silently
+     while a frame is still parsing - onload re-applies. */
+  function push(ifr) {
+    try {
+      var w = ifr.contentWindow;
+      if (!w || !w.PM_BAKEOFF) return false;
+      w.PM_BAKEOFF.setState({
+        version: ifr.dataset.v, panel: ifr.dataset.p,
+        theme: state.theme, width: state.w,
+        motion: state.rm ? 'reduced' : 'full', mode: 'solo'
+      });
+      /* Hide the instrument's own control bar inside the card. Injected rather
+         than added to index.html so the gallery stays purely additive. */
+      var d = w.document;
+      if (d && !d.getElementById('gal-embed-style')) {
+        var st = d.createElement('style');
+        st.id = 'gal-embed-style';
+        st.textContent = '.hx-top{display:none !important}.hx-main{padding:0 !important}';
+        d.head.appendChild(st);
+      }
+      return true;
+    } catch (e) { return false; }
+  }
+  function pushAll() {
+    Array.prototype.forEach.call(grid.querySelectorAll('iframe'), push);
+  }
+
+  function fitFrame(box) {
+    var ifr = box.querySelector('iframe');
+    var scale = box.clientWidth / 1240;
+    ifr.style.transform = 'scale(' + scale + ')';
+    box.style.height = Math.round(780 * scale) + 'px';
+  }
+  function fitAll() {
+    Array.prototype.forEach.call(grid.querySelectorAll('.g-frame'), fitFrame);
+  }
+
+  function card(design, panelId) {
+    var art = document.createElement('article');
+    art.className = 'g-card';
+    var href = SOLO.replace('%V', design.id).replace('%P', panelId)
+      .replace('%T', state.theme).replace('%W', state.w);
+    /* The card is led by whatever VARIES in this mode. By panel, the design
+       name is the variable and its pitch is worth repeating. By design, the
+       design is constant and its pitch already sits in the page header, so
+       repeating it on all seven cards is pure noise - the panel becomes the
+       heading and the pitch is dropped. */
+    var byPanel = state.mode === 'panel';
+    art.innerHTML =
+      '<div class="g-cap"><span class="g-id">' + esc(design.id) + '</span>' +
+        '<h3>' + esc(byPanel ? design.name : panelLabel(panelId)) + '</h3>' +
+        '<span class="g-tag">' + esc(byPanel ? design.tag : design.name) + '</span></div>' +
+      (byPanel
+        ? '<div class="g-pitch">' + esc(design.pitch) + '</div>'
+        : '<div class="g-pitch">' + esc(panelPitch(panelId)) + '</div>') +
+      '<div class="g-frame" data-loading="1">' +
+        '<iframe loading="lazy" data-v="' + esc(design.id) + '" data-p="' + esc(panelId) + '" ' +
+        'title="' + esc(design.name + ' - ' + panelLabel(panelId)) + '" src="' + href + '"></iframe>' +
+      '</div>' +
+      '<div class="g-foot">' +
+        '<a class="g-open" href="' + href + '" target="_blank" rel="noopener">open full &rarr;</a>' +
+        '<span class="g-meta">' + esc(panelLabel(panelId)) + ' &middot; ' + state.w + 'px</span>' +
+      '</div>';
+    var box = art.querySelector('.g-frame');
+    var ifr = art.querySelector('iframe');
+    ifr.addEventListener('load', function () {
+      /* The harness boots from the hash, then we push live state so later
+         theme/width changes do not require a reload. */
+      var tries = 0;
+      (function settle() {
+        if (push(ifr) || tries++ > 40) { box.removeAttribute('data-loading'); return; }
+        setTimeout(settle, 50);
+      })();
+    });
+    return art;
+  }
+
+  function render() {
+    document.documentElement.setAttribute('data-theme', state.theme);
+    document.documentElement.setAttribute('data-motion', state.rm ? 'reduced' : 'full');
+
+    var byPanel = state.mode === 'panel';
+    document.getElementById('gNavHead').textContent = byPanel ? 'PANELS' : 'DESIGNS';
+
+    navList.innerHTML = '';
+    (byPanel ? PANELS : DESIGNS).forEach(function (item) {
+      var id = item.id;
+      var on = byPanel ? id === state.panel : id === state.design;
+      var count = byPanel ? designsFor(id).length : item.covers.length;
+      var b = document.createElement('button');
+      b.className = 'g-nav-btn' + (on ? ' on' : '');
+      b.setAttribute('aria-pressed', on ? 'true' : 'false');
+      b.innerHTML = icon(byPanel ? id : 'design') +
+        '<span class="nm">' + esc(byPanel ? item.label : item.name) + '</span>' +
+        '<span class="ct">' + count + '</span>';
+      b.addEventListener('click', function () {
+        if (byPanel) state.panel = id; else state.design = id;
+        render();
+      });
+      navList.appendChild(b);
+    });
+
+    var list, h1, sub, hint;
+    if (byPanel) {
+      list = designsFor(state.panel).map(function (d) { return [d, state.panel]; });
+      h1 = esc(panelLabel(state.panel)) + ' &mdash; <em>' + list.length + ' designs</em>';
+      sub = 'the same panel, every way it was drawn';
+      hint = 'Each card is a different design language for this panel, live at the current ' +
+             'theme and width. Flip the theme or drag the width to stress them all at once. ' +
+             'Switch to <b>By design</b> to follow one language across all seven panels.';
+    } else {
+      var d = DESIGNS.filter(function (x) { return x.id === state.design; })[0] || DESIGNS[0];
+      list = d.covers.map(function (p) { return [d, p]; });
+      h1 = esc(d.name) + ' &mdash; <em>' + list.length + (list.length === 1 ? ' panel' : ' panels') + '</em>';
+      sub = d.pitch;
+      hint = 'One design language across every panel it covers. This is the view that answers ' +
+             'whether an idea holds up beyond the panel it was invented for &mdash; the six full ' +
+             'systems cover all seven, the variants cover one each.';
+    }
+    document.getElementById('gH1').innerHTML = h1;
+    document.getElementById('gH1Sub').textContent = sub;
+    document.getElementById('gHint').innerHTML = hint;
+    document.getElementById('gSub').textContent =
+      DESIGNS.length + ' designs across ' + PANELS.length + ' panels';
+    document.getElementById('gNavNote').innerHTML = byPanel
+      ? '<b>By panel</b> compares designs of one surface. Counts show how many designs cover it.'
+      : '<b>By design</b> follows one language across the app. Counts show how many panels it covers.';
+
+    grid.innerHTML = '';
+    if (!list.length) {
+      grid.innerHTML = '<div class="g-empty">Nothing to show.</div>';
+      return;
+    }
+    list.forEach(function (pair) { grid.appendChild(card(pair[0], pair[1])); });
+    requestAnimationFrame(fitAll);
+  }
+
+  /* ------------------------------------------------------------ controls */
+  var themeSel = document.getElementById('gTheme');
+  THEMES.forEach(function (t) {
+    var o = document.createElement('option');
+    o.value = t.id; o.textContent = t.label;
+    themeSel.appendChild(o);
+  });
+  themeSel.value = state.theme;
+  themeSel.addEventListener('change', function () {
+    state.theme = this.value;
+    document.documentElement.setAttribute('data-theme', state.theme);
+    pushAll();
+  });
+
+  var wSeg = document.getElementById('gW');
+  [['Min', 240], ['Default', 380], ['Max', 480]].forEach(function (p) {
+    var b = document.createElement('button');
+    b.textContent = p[0];
+    b.addEventListener('click', function () { setW(p[1]); });
+    wSeg.appendChild(b);
+  });
+  function setW(px) {
+    state.w = px;
+    document.getElementById('gWr').value = px;
+    document.getElementById('gWn').textContent = px + 'px';
+    Array.prototype.forEach.call(wSeg.children, function (b, i) {
+      b.classList.toggle('on', [240, 380, 480][i] === px);
+    });
+    Array.prototype.forEach.call(grid.querySelectorAll('.g-meta'), function (m) {
+      m.textContent = m.textContent.replace(/\d+px$/, px + 'px');
+    });
+    pushAll();
+  }
+  document.getElementById('gWr').addEventListener('input', function () { setW(+this.value); });
+
+  document.getElementById('gMode').addEventListener('click', function (e) {
+    var b = e.target.closest('button[data-mode]');
+    if (!b) return;
+    state.mode = b.dataset.mode;
+    Array.prototype.forEach.call(this.children, function (x) {
+      var on = x === b;
+      x.classList.toggle('on', on);
+      x.setAttribute('aria-selected', on ? 'true' : 'false');
+    });
+    render();
+  });
+
+  document.getElementById('gMotion').addEventListener('click', function (e) {
+    var b = e.target.closest('button[data-rm]');
+    if (!b) return;
+    state.rm = b.dataset.rm === 'reduced';
+    Array.prototype.forEach.call(this.children, function (x) { x.classList.toggle('on', x === b); });
+    document.documentElement.setAttribute('data-motion', state.rm ? 'reduced' : 'full');
+    pushAll();
+  });
+
+  window.addEventListener('resize', fitAll);
+
+  if (location.protocol === 'file:') {
+    document.body.innerHTML =
+      '<div style="padding:48px;font-family:ui-monospace,monospace;line-height:1.8">' +
+      '<b>This page must be served, not opened from disk.</b><br><br>' +
+      'file:// gives every document an opaque origin, so the gallery cannot reach into ' +
+      'the cards to drive them.<br><br>' +
+      'python3 tools/serve.py 47955<br>then open http://127.0.0.1:47955/gallery.html</div>';
+    return;
+  }
+
+  setW(380);
+  render();
+  window.__gallery = { state: state, render: render, pushAll: pushAll };
+})();
+</script>
+</body>
+</html>
