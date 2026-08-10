@@ -1,0 +1,284 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="friendly-dark" data-motion="full">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<link rel="icon" href="data:,">
+<title>Kimi K3 — Assistant Chat Concept Workspace</title>
+<!-- Preview-only font convenience (identical to PMConcept7); falls back to system fonts offline. -->
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Cal+Sans&family=Quicksand:wght@400;500;600;700&family=Orbitron:wght@500;600;700&family=Rajdhani:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="_shared/themes.css">
+<link rel="stylesheet" href="_shared/base.css">
+<link rel="stylesheet" href="_shared/motion.css">
+<link rel="stylesheet" href="_shared/popups.css">
+<style>
+  /* Workspace chrome (not a concept; not the Puppet Master Home page). */
+  body { background: var(--background); color: var(--text-primary); font-family: var(--body-font, system-ui, sans-serif); margin: 0; }
+  .k3ws-top {
+    position: sticky; top: 0; z-index: 900;
+    display: flex; align-items: center; gap: 10px; flex-wrap: wrap;
+    padding: 10px 14px;
+    background: var(--surface);
+    border-bottom: var(--border-width, 1px) solid var(--border);
+  }
+  .k3ws-brand { display: flex; flex-direction: column; line-height: 1.15; margin-right: 6px; }
+  .k3ws-brand b { font-size: var(--fs-md, 14px); }
+  .k3ws-brand span { color: var(--text-muted); font-size: var(--fs-xs, 11px); }
+  .k3ws-ctl { display: flex; align-items: center; gap: 6px; }
+  .k3ws-ctl > label { color: var(--text-muted); font-size: var(--fs-xs, 11px); }
+  .k3ws-sep { width: 1px; height: 20px; background: var(--border); }
+  .k3ws-widthval { min-width: 44px; text-align: right; font-variant-numeric: tabular-nums; color: var(--text-secondary); font-size: var(--fs-xs, 11px); }
+  .k3ws-preset.is-on { border-color: var(--accent-primary); color: var(--accent-primary); }
+
+  .k3ws-section { padding: 16px 14px 6px; }
+  .k3ws-section h2 { font-size: var(--fs-md, 14px); margin: 0 0 2px; }
+  .k3ws-section p { color: var(--text-muted); font-size: var(--fs-xs, 11px); margin: 0 0 10px; }
+
+  .k3ws-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(430px, 1fr)); gap: 14px; padding: 0 14px 18px; }
+  .k3ws-card { border: var(--border-width, 1px) solid var(--border); border-radius: var(--radius-md, 10px); overflow: hidden; background: var(--surface); cursor: pointer; }
+  .k3ws-card.is-sel { outline: 2px solid var(--accent-primary); outline-offset: 1px; }
+  .k3ws-card-head { display: flex; align-items: baseline; gap: 8px; padding: 8px 10px; border-bottom: var(--border-width, 1px) solid var(--border-light, var(--border)); }
+  .k3ws-card-head b { font-size: var(--fs-sm, 13px); }
+  .k3ws-card-head .k3ws-tag { color: var(--text-muted); font-size: var(--fs-2xs, 10px); }
+  .k3ws-card-head .k3ws-agent { margin-left: auto; color: var(--accent-primary); font-size: var(--fs-2xs, 10px); font-weight: 650; }
+  .k3ws-framebox { overflow: hidden; position: relative; background: var(--background); }
+  .k3ws-framebox iframe { border: 0; display: block; transform-origin: 0 0; pointer-events: auto; }
+
+  .k3ws-stage-wrap { padding: 0 14px 26px; }
+  .k3ws-stage-bar { display: flex; align-items: center; gap: 10px; padding: 8px 2px; color: var(--text-muted); font-size: var(--fs-xs, 11px); }
+  .k3ws-stage { border: var(--border-width, 1px) solid var(--border); border-radius: var(--radius-md, 10px); overflow: auto; background: var(--background); min-height: 600px; display: flex; justify-content: center; }
+  .k3ws-stage iframe { border: 0; display: block; flex: 0 0 auto; }
+</style>
+</head>
+<body>
+<header class="k3ws-top">
+  <div class="k3ws-brand">
+    <b>Kimi K3 — Assistant Chat Concept Workspace</b>
+    <span>Eight windows and eight threads · any pairing mountable · prototype gallery, not the Puppet Master Home page</span>
+  </div>
+  <div class="k3ws-ctl">
+    <label>Theme</label>
+    <button type="button" class="k3-btn" id="k3ws-theme" data-testid="k3-ws-theme">Friendly Dark</button>
+  </div>
+  <div class="k3ws-sep"></div>
+  <div class="k3ws-ctl">
+    <label>Chat width</label>
+    <input type="range" id="k3ws-width" min="520" max="1200" step="1" value="750" data-testid="k3-ws-width-slider">
+    <span class="k3ws-widthval" id="k3ws-widthval">750 px</span>
+    <button type="button" class="k3-btn k3-btn-ghost k3ws-preset" data-w="520" data-testid="k3-ws-preset-520">520</button>
+    <button type="button" class="k3-btn k3-btn-ghost k3ws-preset is-on" data-w="750" data-testid="k3-ws-preset-750">750</button>
+    <button type="button" class="k3-btn k3-btn-ghost k3ws-preset" data-w="975" data-testid="k3-ws-preset-975">975</button>
+    <button type="button" class="k3-btn k3-btn-ghost k3ws-preset" data-w="1200" data-testid="k3-ws-preset-1200">1200</button>
+  </div>
+  <div class="k3ws-sep"></div>
+  <div class="k3ws-ctl">
+    <button type="button" class="k3-btn k3-btn-ghost" id="k3ws-rail" data-testid="k3-ws-rail">Rail: open</button>
+    <button type="button" class="k3-btn k3-btn-ghost" id="k3ws-rm" data-testid="k3-ws-rm">Reduced motion: off</button>
+    <button type="button" class="k3-btn k3-btn-ghost" id="k3ws-mount" data-testid="k3-ws-mount">Form: docked</button>
+  </div>
+</header>
+
+<section class="k3ws-section">
+  <h2>Chat windows <span class="k3ws-tag">— select one</span></h2>
+  <p>Each preview is a live instance with its default thread. All eight broadcast the same theme, width, rail, and motion state.</p>
+</section>
+<div class="k3ws-grid" id="k3ws-windows"></div>
+
+<section class="k3ws-section">
+  <h2>Chat threads <span class="k3ws-tag">— select one; shown in reference host W1 Solo Column</span></h2>
+  <p>Any thread mounts in any window. The inspect stage below mounts the selected pairing at true size.</p>
+</section>
+<div class="k3ws-grid" id="k3ws-threads"></div>
+
+<section class="k3ws-section">
+  <h2>Inspect pairing</h2>
+</section>
+<div class="k3ws-stage-wrap">
+  <div class="k3ws-stage-bar" id="k3ws-stage-meta"></div>
+  <div class="k3ws-stage" id="k3ws-stage"></div>
+</div>
+
+<script src="_shared/k3.js"></script>
+<script src="_shared/icons.js"></script>
+<script src="_shared/popups.js"></script>
+<script src="_shared/bridge.js"></script>
+<script>
+(function () {
+  'use strict';
+  const K3 = window.K3;
+  const THEMES = [
+    ['friendly-dark', 'Friendly Dark'], ['friendly-light', 'Friendly Light'],
+    ['retro-dark', 'Retro Dark'], ['retro-light', 'Retro Light'],
+    ['basic-light', 'Basic Light'], ['basic-dark', 'Basic Dark'],
+    ['glass-dark', 'Glass Dark'], ['glass-light', 'Glass Light']
+  ];
+  const WINDOWS = [
+    ['w1', 'Solo Column'], ['w2', 'Triptych'], ['w3', 'Dock Tabs'], ['w4', 'Anchor Cards'],
+    ['w5', 'Console Footer'], ['w6', 'Icon Rail'], ['w7', 'Vertical Stack'], ['w8', 'Sheet Modal']
+  ];
+  const THREADS = [
+    ['t1', 'Prose Measure'], ['t2', 'Spine Timeline'], ['t3', 'Turn Units'], ['t4', 'Two Register'],
+    ['t5', 'Ledger Rows'], ['t6', 'Margin Notes'], ['t7', 'Chaptered'], ['t8', 'Calm Chips']
+  ];
+  const GALLERY_FRAME_W = 1520, GALLERY_FRAME_H = 820, STAGE_H = 780;
+
+  const env = { theme: 'friendly-dark', width: 750, reducedMotion: false, mode: 'docked', railOpen: true, label: 'Kimi K3' };
+  let sel = { windowId: 'w1', threadId: 't1' };
+  const frames = []; // all live gallery iframes
+  let stageFrame = null;
+
+  function hostURL(windowId, threadId, extra) {
+    return 'host.html?window=' + windowId + '&thread=' + threadId +
+      '&theme=' + env.theme + '&width=' + env.width +
+      '&rail=' + (env.railOpen ? 'open' : 'closed') +
+      '&rm=' + (env.reducedMotion ? '1' : '0') +
+      '&mode=' + env.mode + '&sess=ws' + (extra || '');
+  }
+
+  function makeCard(id, name, kind) {
+    const card = document.createElement('div');
+    card.className = 'k3ws-card';
+    card.setAttribute('data-testid', 'k3-ws-card-' + kind + '-' + id);
+    card.innerHTML =
+      '<div class="k3ws-card-head"><b>' + id.toUpperCase() + ' · ' + name + '</b>' +
+      '<span class="k3ws-tag">' + (kind === 'window' ? 'chat window' : 'chat thread') + '</span>' +
+      '<span class="k3ws-agent">Kimi K3</span></div>';
+    const box = document.createElement('div');
+    box.className = 'k3ws-framebox';
+    const iframe = document.createElement('iframe');
+    iframe.loading = 'lazy';
+    iframe.width = GALLERY_FRAME_W;
+    iframe.height = GALLERY_FRAME_H;
+    const defaultThread = 't' + id.slice(1);
+    const defaultWindow = 'w1';
+    iframe.src = kind === 'window' ? hostURL(id, defaultThread) : hostURL(defaultWindow, id);
+    box.appendChild(iframe);
+    card.appendChild(box);
+    card.addEventListener('click', () => {
+      sel[kind === 'window' ? 'windowId' : 'threadId'] = id;
+      refreshSelection();
+      mountStage();
+    });
+    frames.push(iframe);
+    return card;
+  }
+
+  function layoutCards() {
+    document.querySelectorAll('.k3ws-framebox').forEach((box) => {
+      const scale = box.clientWidth / GALLERY_FRAME_W;
+      const iframe = box.querySelector('iframe');
+      iframe.style.transform = 'scale(' + scale + ')';
+      box.style.height = (GALLERY_FRAME_H * scale) + 'px';
+    });
+  }
+
+  function refreshSelection() {
+    document.querySelectorAll('.k3ws-card').forEach((c) => c.classList.remove('is-sel'));
+    const w = document.querySelector('[data-testid="k3-ws-card-window-' + sel.windowId + '"]');
+    const t = document.querySelector('[data-testid="k3-ws-card-thread-' + sel.threadId + '"]');
+    if (w) w.classList.add('is-sel');
+    if (t) t.classList.add('is-sel');
+  }
+
+  function mountStage() {
+    const stage = document.getElementById('k3ws-stage');
+    stage.innerHTML = '';
+    stageFrame = document.createElement('iframe');
+    const w = env.railOpen ? 240 : 72;
+    stageFrame.width = env.width + w + 24;
+    stageFrame.height = STAGE_H;
+    stageFrame.src = hostURL(sel.windowId, sel.threadId, '&_=' + Date.now());
+    stageFrame.setAttribute('data-testid', 'k3-ws-stage-frame');
+    stage.appendChild(stageFrame);
+    const wname = WINDOWS.find((x) => x[0] === sel.windowId)[1];
+    const tname = THREADS.find((x) => x[0] === sel.threadId)[1];
+    document.getElementById('k3ws-stage-meta').textContent =
+      sel.windowId.toUpperCase() + ' ' + wname + ' x ' + sel.threadId.toUpperCase() + ' ' + tname +
+      ' · ' + env.width + ' px · ' + (env.mode === 'popout' ? 'pop-out form' : 'docked form') +
+      ' · ' + THEMES.find((x) => x[0] === env.theme)[1] + ' · Kimi K3';
+  }
+
+  function applyEnv() {
+    document.documentElement.dataset.theme = env.theme;
+    document.documentElement.dataset.motion = env.reducedMotion ? 'reduced' : 'full';
+    document.getElementById('k3ws-widthval').textContent = env.width + ' px';
+    document.getElementById('k3ws-width').value = env.width;
+    document.querySelectorAll('.k3ws-preset').forEach((b) => b.classList.toggle('is-on', +b.dataset.w === env.width));
+    document.getElementById('k3ws-rail').textContent = 'Rail: ' + (env.railOpen ? 'open' : 'closed');
+    document.getElementById('k3ws-rm').textContent = 'Reduced motion: ' + (env.reducedMotion ? 'on' : 'off');
+    document.getElementById('k3ws-mount').textContent = 'Form: ' + (env.mode === 'popout' ? 'pop-out' : 'docked');
+    document.getElementById('k3ws-theme').textContent = THEMES.find((x) => x[0] === env.theme)[1];
+    window.K3Bridge.broadcastEnv(frames.concat(stageFrame ? [stageFrame] : []), {
+      theme: env.theme, width: env.width, reducedMotion: env.reducedMotion,
+      railOpen: env.railOpen, mode: env.mode, label: 'Kimi K3'
+    });
+    mountStageWidthOnly();
+  }
+
+  // Width/rail changes resize the stage frame without reloading it.
+  function mountStageWidthOnly() {
+    if (!stageFrame) return;
+    const w = env.railOpen ? 240 : 72;
+    stageFrame.width = env.width + w + 24;
+    mountStageMetaOnly();
+  }
+  function mountStageMetaOnly() {
+    const meta = document.getElementById('k3ws-stage-meta');
+    if (!meta.textContent) return;
+    const wname = WINDOWS.find((x) => x[0] === sel.windowId)[1];
+    const tname = THREADS.find((x) => x[0] === sel.threadId)[1];
+    meta.textContent =
+      sel.windowId.toUpperCase() + ' ' + wname + ' x ' + sel.threadId.toUpperCase() + ' ' + tname +
+      ' · ' + env.width + ' px · ' + (env.mode === 'popout' ? 'pop-out form' : 'docked form') +
+      ' · ' + THEMES.find((x) => x[0] === env.theme)[1] + ' · Kimi K3';
+  }
+
+  // --- controls -------------------------------------------------------------
+  document.getElementById('k3ws-theme').addEventListener('click', (e) => {
+    window.K3UI.menu(e.currentTarget, THEMES.map(([id, name]) => ({
+      label: name, selected: id === env.theme,
+      action: () => { env.theme = id; applyEnv(); }
+    })), { searchable: false });
+  });
+  document.getElementById('k3ws-width').addEventListener('input', (e) => {
+    env.width = Math.max(520, Math.min(1200, +e.target.value));
+    applyEnv();
+  });
+  document.querySelectorAll('.k3ws-preset').forEach((b) => {
+    b.addEventListener('click', () => { env.width = +b.dataset.w; applyEnv(); });
+  });
+  document.getElementById('k3ws-rail').addEventListener('click', () => { env.railOpen = !env.railOpen; applyEnv(); });
+  document.getElementById('k3ws-rm').addEventListener('click', () => { env.reducedMotion = !env.reducedMotion; applyEnv(); });
+  document.getElementById('k3ws-mount').addEventListener('click', () => {
+    env.mode = env.mode === 'popout' ? 'docked' : 'popout';
+    applyEnv();
+  });
+
+  // Re-broadcast env to frames that report ready (late loaders).
+  window.addEventListener('message', (e) => {
+    if (e.data && e.data.k3 === true && e.data.type === 'k3-ready') {
+      window.K3Bridge.broadcastEnv(frames.concat(stageFrame ? [stageFrame] : []), {
+        theme: env.theme, width: env.width, reducedMotion: env.reducedMotion,
+        railOpen: env.railOpen, mode: env.mode, label: 'Kimi K3'
+      });
+    }
+  });
+
+  // --- boot ------------------------------------------------------------------
+  const wg = document.getElementById('k3ws-windows');
+  const tg = document.getElementById('k3ws-threads');
+  WINDOWS.forEach(([id, name]) => wg.appendChild(makeCard(id, name, 'window')));
+  THREADS.forEach(([id, name]) => tg.appendChild(makeCard(id, name, 'thread')));
+  refreshSelection();
+  mountStage();
+  applyEnv();
+  layoutCards();
+  window.addEventListener('resize', layoutCards);
+
+  window.__k3ws = { env, sel, frames: () => frames, stage: () => stageFrame };
+})();
+</script>
+</body>
+</html>

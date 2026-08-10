@@ -1,0 +1,610 @@
+/* ============================================================================
+   Kimi K3 — shared transcript engine styles (prefix k3t-).
+   Presentation-neutral, token-driven, theme-complete across all 8 themes.
+   - Status is communicated with chips/dots — never colored left-side borders.
+   - Cards stay one level deep (payload content is rows, not nested cards).
+   - Animations are transform/opacity only (Slint-mappable); the collapse fade
+     uses a mask-image gradient (color-agnostic, works in every theme).
+   Layout options ride root classes set by _thread-kit.js:
+   .k3t-group-none|turn|chapter · .k3t-work-inline|chip
+   .k3t-measure-full|reading · .k3t-density-roomy|compact
+   ========================================================================== */
+
+.k3t-root {
+  --k3t-gap: 18px;
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+  min-height: 0;
+  color: var(--text-primary);
+}
+.k3t-density-compact { --k3t-gap: 10px; }
+
+.k3t-scroll {
+  flex: 1 1 auto;
+  min-height: 0;
+  overflow-y: auto;
+  overscroll-behavior: contain;
+}
+
+/* ---- top region: sentinel, history pill, chapter outline ---- */
+.k3t-top {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 8px;
+  padding: 12px 20px 2px;
+}
+.k3t-sentinel { width: 100%; height: 1px; }
+.k3t-history-pill {
+  padding: 4px 12px;
+  font-size: var(--fs-xs, 11px);
+  color: var(--text-muted);
+  background: var(--surface-elevated);
+  border: var(--border-width, 1px) solid var(--border-light);
+  border-radius: var(--radius-pill, 999px);
+  user-select: none;
+}
+.k3t-chapters {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 6px;
+}
+.k3t-chapters:empty { display: none; }
+.k3t-chapter-chip {
+  padding: 3px 9px;
+  font-size: var(--fs-2xs, 10px);
+  font-weight: 600;
+  color: var(--text-secondary);
+  background: var(--surface);
+  border: var(--border-width, 1px) solid var(--border-light);
+  border-radius: var(--radius-pill, 999px);
+  cursor: pointer;
+  transition: color var(--motion-fast, 120ms) var(--ease-default, ease-out),
+              background-color var(--motion-fast, 120ms) var(--ease-default, ease-out),
+              border-color var(--motion-fast, 120ms) var(--ease-default, ease-out);
+}
+.k3t-chapter-chip:hover {
+  color: var(--accent-primary);
+  background: var(--accent-soft);
+  border-color: var(--accent-primary);
+}
+
+/* ---- message list + grouping ---- */
+.k3t-list {
+  display: flex;
+  flex-direction: column;
+  gap: var(--k3t-gap);
+  padding: 12px 20px 16px;
+}
+.k3t-density-compact .k3t-list { padding: 8px 14px 12px; }
+.k3t-list.is-selecting { padding-left: 44px; }
+.k3t-empty {
+  padding: 32px 0;
+  text-align: center;
+  color: var(--text-muted);
+  font-size: var(--fs-sm, 12px);
+}
+
+.k3t-turn { display: flex; flex-direction: column; gap: calc(var(--k3t-gap) * .6); }
+.k3t-turn-head {
+  font-size: var(--fs-xs, 11px);
+  color: var(--text-muted);
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  user-select: none;
+}
+.k3t-turn-body { display: flex; flex-direction: column; gap: var(--k3t-gap); }
+
+.k3t-chapter {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  font-size: var(--fs-xs, 11px);
+  color: var(--text-muted);
+  user-select: none;
+}
+.k3t-chapter::before,
+.k3t-chapter::after {
+  content: "";
+  flex: 1 1 auto;
+  border-top: var(--border-width, 1px) solid var(--border-light);
+}
+.k3t-chapter-label { white-space: nowrap; }
+
+/* ---- message ---- */
+.k3t-msg { position: relative; min-width: 0; }
+.k3t-msg.is-muted { opacity: .45; }
+.k3t-msg.is-focused {
+  background: var(--accent-soft);
+  border-radius: var(--radius-md, 10px);
+  padding: 8px 10px;
+  margin: -8px -10px; /* padding compensation: neighbors never shift */
+}
+.k3t-msg.is-selected {
+  outline: 2px solid var(--accent-primary);
+  outline-offset: 3px;
+  border-radius: var(--radius-sm, 6px);
+}
+.k3t-msg.is-rehydrated { opacity: .92; }
+
+.k3t-lens-check {
+  position: absolute;
+  left: -32px;
+  top: 1px;
+  width: 20px;
+  height: 20px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  color: transparent;
+  background: var(--surface);
+  border: var(--border-width, 1px) solid var(--border);
+  border-radius: var(--radius-sm, 6px);
+  cursor: pointer;
+}
+.k3t-lens-check svg { width: 12px; height: 12px; }
+.k3t-lens-check:hover { border-color: var(--accent-primary); }
+.k3t-msg.is-selected .k3t-lens-check {
+  color: var(--accent-primary);
+  border-color: var(--accent-primary);
+  background: var(--accent-soft);
+}
+
+.k3t-msg-body { overflow-wrap: break-word; min-width: 0; }
+.k3t-measure-reading .k3t-msg-body { max-width: 68ch; }
+.k3t-msg-body p + p { margin-top: .7em; }
+.k3t-msg-body.is-clamped {
+  max-height: 7.5em;
+  overflow: hidden;
+  -webkit-mask-image: linear-gradient(to bottom, #000 55%, transparent 100%);
+  mask-image: linear-gradient(to bottom, #000 55%, transparent 100%);
+}
+
+.k3t-stopped {
+  display: inline-flex;
+  align-items: center;
+  margin-top: 6px;
+  padding: 2px 8px;
+  font-size: var(--fs-2xs, 10px);
+  font-weight: 600;
+  color: var(--text-muted);
+  background: var(--surface-elevated);
+  border: var(--border-width, 1px) solid var(--border-light);
+  border-radius: var(--radius-pill, 999px);
+  user-select: none;
+}
+
+/* ---- hover row (opacity-gated, space always reserved) ---- */
+.k3t-msg-hover {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  margin-top: 6px;
+  font-size: 11.5px;
+  line-height: 1.4;
+  color: var(--text-muted);
+  opacity: 0;
+  transition: opacity var(--motion-fast, 120ms) var(--ease-default, ease-out);
+}
+.k3t-msg:hover .k3t-msg-hover,
+.k3t-msg:focus-within .k3t-msg-hover { opacity: 1; }
+.k3t-msg.is-editing .k3t-msg-hover { visibility: hidden; }
+.k3t-hover-actions { display: flex; align-items: center; gap: 2px; flex: 0 0 auto; }
+.k3t-hover-meta {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  margin-left: auto;
+  min-width: 0;
+}
+.k3t-meta-text {
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  font-variant-numeric: tabular-nums;
+}
+.k3t-ghost {
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+  padding: 2px 6px;
+  font-size: 11.5px;
+  color: var(--text-muted);
+  background: transparent;
+  border: 0;
+  border-radius: var(--radius-sm, 6px);
+  cursor: pointer;
+  white-space: nowrap;
+  transition: color var(--motion-fast, 120ms) var(--ease-default, ease-out),
+              background-color var(--motion-fast, 120ms) var(--ease-default, ease-out);
+}
+.k3t-ghost:hover { color: var(--accent-primary); background: var(--accent-soft); }
+.k3t-ghost-ic { display: inline-flex; }
+.k3t-ghost-ic svg { width: 13px; height: 13px; }
+.k3t-edited-tag {
+  padding: 1px 7px;
+  font-size: var(--fs-2xs, 10px);
+  font-weight: 600;
+  color: var(--text-secondary);
+  border: var(--border-width, 1px) solid var(--border-light);
+  border-radius: var(--radius-pill, 999px);
+  user-select: none;
+}
+
+/* ---- edit mode ---- */
+textarea.k3t-edit-area { width: 100%; }
+.k3t-edit-actions { display: flex; gap: 8px; margin-top: 8px; }
+
+/* ---- payload cards (one level deep, hairline-bordered) ---- */
+.k3t-card {
+  margin-top: 8px;
+  padding: 10px 12px;
+  background: var(--surface);
+  border: var(--border-width, 1px) solid var(--border-light);
+  border-radius: var(--radius-md, 10px);
+  min-width: 0;
+}
+.k3t-density-compact .k3t-card { margin-top: 6px; padding: 8px 10px; }
+.k3t-card .k3t-card { margin-top: 10px; } /* only inside a work chip: one level */
+
+.k3t-rowhead {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  width: 100%;
+  padding: 0;
+  text-align: left;
+  font-size: var(--fs-sm, 12px);
+  font-weight: 600;
+  color: var(--text-primary);
+  background: none;
+  border: 0;
+  cursor: pointer;
+  min-width: 0;
+}
+.k3t-rowhead .k3t-ic { display: inline-flex; flex: 0 0 auto; color: var(--text-muted); }
+.k3t-rowhead .k3t-ic svg { width: 14px; height: 14px; }
+.k3t-rowhead-title {
+  min-width: 0;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+.k3t-note {
+  font-size: var(--fs-xs, 11px);
+  font-weight: 400;
+  color: var(--text-muted);
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+.k3t-rowhead-meta {
+  font-size: var(--fs-xs, 11px);
+  font-weight: 400;
+  color: var(--text-muted);
+  white-space: nowrap;
+  font-variant-numeric: tabular-nums;
+}
+.k3t-chev {
+  margin-left: auto;
+  display: inline-flex;
+  flex: 0 0 auto;
+  color: var(--text-muted);
+  transition: transform var(--motion-fast, 120ms) var(--ease-default, ease-out);
+}
+.k3t-chev svg { width: 13px; height: 13px; }
+.k3t-rowhead[aria-expanded="true"] .k3t-chev { transform: rotate(180deg); }
+
+/* ---- activity stages ---- */
+.k3t-stages { display: flex; flex-direction: column; gap: 8px; padding-top: 10px; }
+.k3t-stage {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: baseline;
+  gap: 4px 8px;
+  font-size: var(--fs-sm, 12px);
+}
+.k3t-stage-ic { display: inline-flex; align-self: center; color: var(--text-muted); }
+.k3t-stage-ic svg { width: 12px; height: 12px; }
+.k3t-stage-label { font-weight: 600; }
+.k3t-stage-dur { color: var(--text-muted); font-variant-numeric: tabular-nums; }
+.k3t-stage-status { color: var(--text-secondary); }
+.k3t-stage-summary { flex-basis: 100%; color: var(--text-secondary); }
+
+/* stage rail (opts.showStageRail) */
+.k3t-stage-rail { display: flex; flex-wrap: wrap; gap: 6px; margin-top: 8px; }
+.k3t-stage-rail-item {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 20px;
+  height: 20px;
+  color: var(--text-muted);
+  background: var(--surface-elevated);
+  border-radius: var(--radius-pill, 999px);
+}
+.k3t-stage-rail-item.is-complete { color: var(--accent-primary); background: var(--accent-soft); }
+.k3t-stage-rail-item svg { width: 11px; height: 11px; }
+
+/* ---- thoughts ---- */
+.k3t-thought-body { padding-top: 8px; font-size: var(--fs-sm, 12px); color: var(--text-secondary); }
+.k3t-thought-body p + p { margin-top: .6em; }
+
+/* ---- questionnaire history ---- */
+.k3t-qhistory-summary { margin-top: 6px; font-size: var(--fs-sm, 12px); color: var(--text-secondary); }
+.k3t-qa-list { padding-top: 6px; }
+.k3t-qa { padding: 7px 0; border-top: var(--border-width, 1px) solid var(--border-light); }
+.k3t-qa-q { font-size: var(--fs-sm, 12px); font-weight: 600; }
+.k3t-qa-a { margin-top: 2px; font-size: var(--fs-sm, 12px); color: var(--text-secondary); }
+
+/* ---- status chip ---- */
+.k3t-status {
+  display: inline-flex;
+  align-items: center;
+  padding: 2px 8px;
+  font-size: var(--fs-2xs, 10px);
+  font-weight: 700;
+  letter-spacing: .02em;
+  color: var(--accent-primary);
+  background: var(--accent-soft);
+  border-radius: var(--radius-pill, 999px);
+  white-space: nowrap;
+  user-select: none;
+}
+.k3t-status.is-live { background: var(--accent-glow); }
+.k3t-status.is-error {
+  color: var(--accent-error);
+  background: color-mix(in srgb, var(--accent-error) 14%, transparent);
+}
+.k3t-status.is-quiet { color: var(--text-secondary); background: var(--surface-elevated); }
+
+/* ---- subcompact (Context Lens) ---- */
+.k3t-subcompact-head {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  font-size: var(--fs-sm, 12px);
+  font-weight: 600;
+}
+.k3t-subcompact-head .k3t-ic { display: inline-flex; color: var(--text-muted); }
+.k3t-subcompact-head .k3t-ic svg { width: 14px; height: 14px; }
+.k3t-subcompact-summary { margin-top: 6px; font-size: var(--fs-sm, 12px); color: var(--text-secondary); }
+.k3t-footnote { margin-top: 6px; font-size: var(--fs-xs, 11px); color: var(--text-muted); }
+.k3t-rehydrate-btn { margin-top: 6px; }
+.k3t-subcompact-sources {
+  display: flex;
+  flex-direction: column;
+  gap: var(--k3t-gap);
+  margin-top: 10px;
+  padding: 10px 12px;
+  border: var(--border-width, 1px) dashed var(--border-light);
+  border-radius: var(--radius-md, 10px);
+}
+.k3t-subcompact-sources .k3t-card { margin-top: 8px; }
+.k3t-rehydrated-note { font-size: var(--fs-xs, 11px); color: var(--text-muted); }
+
+/* ---- thread-level work zone ---- */
+.k3t-endzone {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  padding: 0 20px 16px;
+}
+.k3t-density-compact .k3t-endzone { padding: 0 14px 12px; }
+.k3t-endzone .k3t-card { margin-top: 0; }
+.k3t-endzone:empty { display: none; }
+
+.k3t-agents { padding-top: 4px; }
+.k3t-agent { padding: 8px 0; border-top: var(--border-width, 1px) solid var(--border-light); }
+.k3t-agent-head { display: flex; align-items: center; justify-content: space-between; gap: 10px; }
+.k3t-agent-name { font-size: var(--fs-sm, 12px); font-weight: 600; }
+.k3t-agent-task { margin-top: 2px; font-size: var(--fs-sm, 12px); }
+.k3t-agent-activity {
+  margin-top: 2px;
+  font-size: var(--fs-xs, 11px);
+  color: var(--text-secondary);
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+.k3t-agent-meta { margin-top: 2px; font-size: var(--fs-xs, 11px); color: var(--text-muted); }
+.k3t-card-foot { padding-top: 8px; }
+
+.k3t-agent-table { border-collapse: collapse; min-width: 340px; font-size: var(--fs-sm, 12px); }
+.k3t-agent-table th {
+  text-align: left;
+  font-weight: 600;
+  color: var(--text-muted);
+  padding: 4px 12px 4px 0;
+  border-bottom: var(--border-width, 1px) solid var(--border-light);
+  white-space: nowrap;
+}
+.k3t-agent-table td {
+  padding: 4px 12px 4px 0;
+  border-bottom: var(--border-width, 1px) solid var(--border-light);
+  color: var(--text-primary);
+}
+.k3t-agent-table tr:last-child td { border-bottom: 0; }
+.k3t-table-pop { max-width: min(480px, calc(100vw - 16px)); overflow-x: auto; }
+
+.k3t-diff-rows { padding-top: 6px; }
+.k3t-diff-row {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 6px 0;
+  border-top: var(--border-width, 1px) solid var(--border-light);
+  font-size: var(--fs-sm, 12px);
+}
+.k3t-diff-row:first-child { border-top: 0; }
+.k3t-diff-path {
+  flex: 1 1 auto;
+  min-width: 0;
+  font-family: var(--mono-font, monospace);
+  font-size: var(--fs-xs, 11px);
+  overflow-wrap: anywhere;
+}
+.k3t-diff-stats { white-space: nowrap; font-variant-numeric: tabular-nums; }
+.k3t-diff-add { color: var(--accent-lime); }
+.k3t-diff-del { color: var(--accent-error); }
+
+.k3t-links { display: flex; flex-direction: column; gap: 8px; }
+.k3t-shortcut {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  width: 100%;
+  padding: 10px 12px;
+  text-align: left;
+  background: var(--surface);
+  border: var(--border-width, 1px) solid var(--border-light);
+  border-radius: var(--radius-md, 10px);
+  cursor: pointer;
+  transition: background-color var(--motion-fast, 120ms) var(--ease-default, ease-out),
+              border-color var(--motion-fast, 120ms) var(--ease-default, ease-out);
+}
+.k3t-shortcut:hover { background: var(--surface-elevated); border-color: var(--border); }
+.k3t-shortcut-ic { display: inline-flex; flex: 0 0 auto; color: var(--accent-primary); }
+.k3t-shortcut-ic svg { width: 16px; height: 16px; }
+.k3t-shortcut-txt { display: flex; flex-direction: column; gap: 1px; min-width: 0; }
+.k3t-shortcut-title {
+  font-size: var(--fs-sm, 12px);
+  font-weight: 600;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+.k3t-shortcut-meta {
+  font-size: var(--fs-xs, 11px);
+  color: var(--text-muted);
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+/* ---- live working region ---- */
+.k3t-live {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  margin: 0 20px 14px;
+  padding: 8px 12px;
+  background: var(--surface-elevated);
+  border: var(--border-width, 1px) solid var(--border-light);
+  border-radius: var(--radius-md, 10px);
+  font-size: var(--fs-sm, 12px);
+}
+.k3t-density-compact .k3t-live { margin: 0 14px 12px; }
+/* lead cluster: pulsing dot + four-dot orbit spinner side by side */
+.k3t-live-lead {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  flex: 0 0 auto;
+}
+.k3t-live-lead .k3-orbit { width: 13px; height: 13px; }
+.k3t-live-lead .k3-orbit > i { background: var(--accent-primary); }
+.k3t-live-action {
+  flex: 1 1 auto;
+  min-width: 0;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+.k3t-live-timer {
+  flex: 0 0 auto;
+  color: var(--text-muted);
+  font-variant-numeric: tabular-nums;
+  white-space: nowrap;
+}
+
+/* ---- jump-to-latest pill ---- */
+.k3t-jump-latest {
+  position: absolute;
+  right: 18px;
+  bottom: 18px;
+  z-index: 5;
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  padding: 7px 14px;
+  font-size: var(--fs-xs, 11px);
+  font-weight: 600;
+  color: var(--text-primary);
+  background: var(--surface-elevated);
+  border: var(--border-width, 1px) solid var(--border-light);
+  border-radius: var(--radius-pill, 999px);
+  box-shadow: var(--elev-2);
+  cursor: pointer;
+  opacity: 0;
+  pointer-events: none;
+  transform: translateY(6px);
+  transition: opacity var(--motion-fast, 120ms) var(--ease-default, ease-out),
+              transform var(--motion-fast, 120ms) var(--ease-default, ease-out);
+}
+.k3t-jump-latest.is-visible { opacity: 1; pointer-events: auto; transform: none; }
+.k3t-jump-latest svg { width: 13px; height: 13px; }
+
+/* ---- misc ---- */
+.k3t-mono { font-family: var(--mono-font, monospace); }
+.k3t-info-pop { min-width: 280px; max-width: min(360px, calc(100vw - 16px)); }
+
+/* ============================================================================
+   THREAD MICRO-INTERACTIONS — alive touches across all 8 thread concepts.
+   Transform/opacity, token-driven; reduced-motion collapses to instant.
+   ========================================================================== */
+
+/* hover row reveals with a tiny lift feel (opacity stays the gate; add a
+   subtle translate on the row body so the message "responds" to hover) */
+.k3t-msg-hover { transition: opacity var(--k3-dur-fast, 120ms) var(--ease-out, ease-out),
+                             transform var(--k3-dur-fast, 120ms) var(--ease-out, ease-out); }
+.k3t-msg:hover .k3t-msg-hover { transform: translateY(-1px); }
+
+/* hover-row controls depress on press */
+.k3t-msg-hover button:active { transform: scale(.94); }
+.k3t-msg-hover button { transition: background-color var(--k3-dur-fast, 120ms) var(--ease-out, ease-out),
+                                    color var(--k3-dur-fast, 120ms) var(--ease-out, ease-out),
+                                    transform var(--k3-dur-fast, 120ms) var(--ease-out, ease-out); }
+
+/* payload accordion headers (activity/thought/subagents/diff/qhistory):
+   chevron rotates with a spring; header lifts on hover */
+.k3t-rowhead { transition: background-color var(--k3-dur-fast, 120ms) var(--ease-out, ease-out); }
+.k3t-rowhead:hover { background: var(--accent-soft); }
+.k3t-chev { transition: transform var(--k3-dur-med, 220ms) var(--ease-spring, ease-out); }
+
+/* ghost reveal- buttons (load older, expand collapsed) lift on hover */
+.k3t-ghost { transition: color var(--k3-dur-fast, 120ms) var(--ease-out, ease-out),
+                         background-color var(--k3-dur-fast, 120ms) var(--ease-out, ease-out),
+                         transform var(--k3-dur-fast, 120ms) var(--ease-out, ease-out); }
+.k3t-ghost:hover { transform: translateY(-1px); }
+.k3t-ghost:active { transform: translateY(0) scale(.98); }
+
+/* shortcuts (artifact/browser) spring in on mount + lift on hover */
+.k3t-shortcut { animation: k3-scale-in var(--k3-dur-med, 220ms) var(--ease-soft-spring, ease-out) both;
+                transition: background-color var(--k3-dur-fast, 120ms) var(--ease-out, ease-out),
+                            border-color var(--k3-dur-fast, 120ms) var(--ease-out, ease-out),
+                            transform var(--k3-dur-fast, 120ms) var(--ease-out, ease-out); }
+.k3t-shortcut:hover { transform: translateY(-1px); }
+.k3t-shortcut:active { transform: translateY(0) scale(.98); }
+
+/* chapter chips (t7) pop on hover */
+.k3t-chapter-chip { transition: background-color var(--k3-dur-fast, 120ms) var(--ease-out, ease-out),
+                                color var(--k3-dur-fast, 120ms) var(--ease-out, ease-out),
+                                transform var(--k3-dur-fast, 120ms) var(--ease-out, ease-out); }
+.k3t-chapter-chip:hover { transform: translateY(-1px) scale(1.02); }
+.k3t-chapter-chip:active { transform: translateY(0) scale(.98); }
+
+/* jump-to-latest pill: springier entrance + depress */
+.k3t-jump-latest { transition: opacity var(--k3-dur-fast, 120ms) var(--ease-out, ease-out),
+                               transform var(--k3-dur-fast, 120ms) var(--ease-soft-spring, ease-out); }
+.k3t-jump-latest:active { transform: scale(.96); }
+
+/* cards (activity/thought/subagents/diff/qhistory) spring in on mount */
+.k3t-card { animation: k3-scale-in var(--k3-dur-med, 220ms) var(--ease-soft-spring, ease-out) both; }
+
+/* the search-jump flash target settles with a soft glow (refines k3-flash) */
+.k3t-msg.is-flashing { animation: k3-flash var(--k3-dur-slow, 360ms) var(--ease-out, ease-out) 2; }

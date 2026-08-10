@@ -1,0 +1,178 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="friendly-dark" data-motion="full">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<link rel="icon" href="data:,">
+<title>Kimi K3 — Chat Host</title>
+<!-- Preview-only font convenience (identical to PMConcept7); falls back to system fonts offline. -->
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Cal+Sans&family=Quicksand:wght@400;500;600;700&family=Orbitron:wght@500;600;700&family=Rajdhani:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="_shared/themes.css">
+<link rel="stylesheet" href="_shared/base.css">
+<link rel="stylesheet" href="_shared/motion.css">
+<link rel="stylesheet" href="_shared/popups.css">
+<link rel="stylesheet" href="_shared/shell.css">
+<link rel="stylesheet" href="_shared/composer.css">
+<link rel="stylesheet" href="_shared/search.css">
+<link rel="stylesheet" href="_shared/lens.css">
+<link rel="stylesheet" href="_shared/questionnaire.css">
+<link rel="stylesheet" href="_shared/questionnaire-variants.css">
+<link rel="stylesheet" href="windows/_window-kit.css">
+<link rel="stylesheet" href="threads/_thread-kit.css">
+<link rel="stylesheet" href="windows/w1-solo-column.css">
+<link rel="stylesheet" href="windows/w2-triptych.css">
+<link rel="stylesheet" href="windows/w3-dock-tabs.css">
+<link rel="stylesheet" href="windows/w4-anchor-cards.css">
+<link rel="stylesheet" href="windows/w5-console-footer.css">
+<link rel="stylesheet" href="windows/w6-icon-rail.css">
+<link rel="stylesheet" href="windows/w7-vertical-stack.css">
+<link rel="stylesheet" href="windows/w8-sheet-modal.css">
+<link rel="stylesheet" href="threads/t1-prose-measure.css">
+<link rel="stylesheet" href="threads/t2-spine-timeline.css">
+<link rel="stylesheet" href="threads/t3-turn-units.css">
+<link rel="stylesheet" href="threads/t4-two-register.css">
+<link rel="stylesheet" href="threads/t5-ledger-rows.css">
+<link rel="stylesheet" href="threads/t6-margin-notes.css">
+<link rel="stylesheet" href="threads/t7-chaptered.css">
+<link rel="stylesheet" href="threads/t8-calm-chips.css">
+</head>
+<body>
+<!-- The fake Puppet Master shell renders into #k3-app. -->
+<div id="k3-app"></div>
+
+<script src="_shared/demo-data.js"></script>
+<script src="_shared/demo-augment.js"></script>
+<script src="_shared/k3.js"></script>
+<script src="_shared/store.js"></script>
+<script src="_shared/icons.js"></script>
+<script src="_shared/popups.js"></script>
+<script src="_shared/bridge.js"></script>
+<script src="_shared/data.js"></script>
+<script src="_shared/composer.js"></script>
+<script src="_shared/search.js"></script>
+<script src="_shared/lens.js"></script>
+<script src="_shared/questionnaire.js"></script>
+<script src="_shared/states.js"></script>
+<script src="_shared/shell.js"></script>
+<script src="windows/_window-kit.js"></script>
+<script src="windows/w1-solo-column.js"></script>
+<script src="windows/w2-triptych.js"></script>
+<script src="windows/w3-dock-tabs.js"></script>
+<script src="windows/w4-anchor-cards.js"></script>
+<script src="windows/w5-console-footer.js"></script>
+<script src="windows/w6-icon-rail.js"></script>
+<script src="windows/w7-vertical-stack.js"></script>
+<script src="windows/w8-sheet-modal.js"></script>
+<script src="threads/_thread-kit.js"></script>
+<script src="threads/t1-prose-measure.js"></script>
+<script src="threads/t2-spine-timeline.js"></script>
+<script src="threads/t3-turn-units.js"></script>
+<script src="threads/t4-two-register.js"></script>
+<script src="threads/t5-ledger-rows.js"></script>
+<script src="threads/t6-margin-notes.js"></script>
+<script src="threads/t7-chaptered.js"></script>
+<script src="threads/t8-calm-chips.js"></script>
+<script>
+(function () {
+  'use strict';
+  const K3 = window.K3, store = window.K3Store, data = window.K3Data;
+
+  // 1. Environment from query params, then persisted semantic state.
+  K3.setEnv(K3.parseQuery());
+  store.loadPersisted();
+
+  // 2. Demo data (synchronous; ships as JS for file:// safety).
+  data.init({ seed: K3.env.seed });
+
+  // 2b. A boot with no persisted session has no active thread; everything
+  //     downstream (header title, composer send, ring stats) needs one.
+  if (!data.thread(store.get('activeThreadId', null))) {
+    const first = data.listThreads()[0];
+    if (first) store.set('activeThreadId', first.id);
+  }
+
+  const ctx = K3.makeCtx();
+
+  // 3. Fake shell (title bar, app rail, dashboard ghost, editor tabs,
+  //    docked dock + pop-out floating window roots).
+  const shell = window.K3Shell.mount(document.getElementById('k3-app'), ctx);
+
+  let mounted = null; // {windowInst, threadInst, composerInst, mode}
+
+  function currentMountRoot() {
+    return K3.env.mode === 'popout' ? shell.floatRoot : shell.dockRoot;
+  }
+
+  function mountPairing() {
+    unmountPairing();
+    const wdef = K3.windows[K3.env.windowId];
+    const tdef = K3.threads[K3.env.threadId];
+    if (!wdef || !tdef) {
+      console.error('K3: unknown pairing', K3.env.windowId, K3.env.threadId);
+      return;
+    }
+    const root = currentMountRoot();
+    root.innerHTML = '';
+    const windowInst = wdef.mount(root, ctx);
+    const threadSlot = root.querySelector('[data-k3-slot="thread"]');
+    const composerSlot = root.querySelector('[data-k3-slot="composer"]');
+    if (!threadSlot || !composerSlot) {
+      console.error('K3: window ' + K3.env.windowId + ' must provide thread and composer slots');
+      return;
+    }
+    const threadInst = tdef.mount(threadSlot, ctx);
+    const composerInst = window.K3Composer.mount(composerSlot, ctx);
+    mounted = { windowInst, threadInst, composerInst, mode: K3.env.mode };
+    shell.setPairingMeta(wdef.meta, tdef.meta);
+    if (K3.env.state && window.K3States) window.K3States.apply(K3.env.state, ctx);
+  }
+
+  function unmountPairing() {
+    if (!mounted) return;
+    window.K3UI.closeAll();
+    try { mounted.composerInst && mounted.composerInst.unmount && mounted.composerInst.unmount(); } catch (e) {}
+    try { mounted.threadInst && mounted.threadInst.unmount && mounted.threadInst.unmount(); } catch (e) {}
+    try { mounted.windowInst && mounted.windowInst.unmount && mounted.windowInst.unmount(); } catch (e) {}
+    mounted = null;
+  }
+
+  function applyPairing(windowId, threadId) {
+    if (windowId && K3.windows[windowId]) K3.env.windowId = windowId;
+    if (threadId && K3.threads[threadId]) K3.env.threadId = threadId;
+    mountPairing();
+  }
+
+  // 4. Remount on mount-form change (docked <-> pop-out): geometry changes,
+  //    semantic state does not.
+  let lastMode = K3.env.mode;
+  K3.on('env', (env) => {
+    document.documentElement.style.setProperty('--k3-chat-w', env.width + 'px');
+    if (env.mode !== lastMode) {
+      lastMode = env.mode;
+      mountPairing();
+    }
+  });
+  document.documentElement.style.setProperty('--k3-chat-w', K3.env.width + 'px');
+
+  // 5. Bridge: announce + accept env/pairing/snapshot messages.
+  window.K3Bridge.listenInHost(applyPairing);
+  window.K3Bridge.announceReady();
+
+  // 6. Boot.
+  mountPairing();
+
+  // 7. Test/observability hooks.
+  window.__k3 = {
+    env: K3.env,
+    store,
+    data,
+    pairing: () => ({ windowId: K3.env.windowId, threadId: K3.env.threadId, mode: K3.env.mode }),
+    remount: mountPairing,
+    applyPairing
+  };
+})();
+</script>
+</body>
+</html>

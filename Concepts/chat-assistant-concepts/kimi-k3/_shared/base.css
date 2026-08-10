@@ -1,0 +1,281 @@
+/* ============================================================================
+   Kimi K3 — base reset, Puppet Master scrollbar treatment, shared primitives.
+   Everything is token-driven (see themes.css): no hardcoded colors here.
+   Selection/status NEVER uses colored left-side accent borders — background
+   tint / outline / weight only. No emoji. No underscore-heavy text.
+   ========================================================================== */
+
+/* ---- reset (PM7-style) ---- */
+*, *::before, *::after { box-sizing: border-box; }
+* { margin: 0; padding: 0; }
+button, input, select, textarea { font: inherit; color: inherit; }
+button { background: none; border: 0; cursor: pointer; }
+button:disabled { cursor: default; }
+
+/* ---- base html/body ---- */
+html { height: 100%; font-size: var(--base-font-size, 14px); }
+body {
+  min-height: 100%;
+  background: var(--background);
+  color: var(--text-primary);
+  font-family: var(--body-font, system-ui, sans-serif);
+  font-size: var(--base-font-size, 14px);
+  line-height: var(--line-height, 1.5);
+  letter-spacing: var(--letter-spacing, normal);
+  -webkit-font-smoothing: antialiased;
+}
+
+/* text selection rides the accent family */
+::selection { background: var(--accent-glow); color: var(--text-primary); }
+
+/* ---- themed focus rings ---- */
+:focus-visible {
+  outline: 2px solid var(--accent-primary);
+  outline-offset: 1px;
+}
+
+/* ============================================================================
+   SCROLLBARS — hidden everywhere by default; no OS scrollbars ever show.
+   Scroll panes opt in via .k3-scroll (thin, 10px webkit, themed thumb).
+   Chat panes use .k3-scroll-chat: stable gutter + idle auto-hide — the thumb
+   stays transparent until hover or until JS toggles .k3-sb-active while
+   scrolling. Thumb color rides the --pm6-sb-* hooks (themes.css; families
+   re-tint). The 3px transparent thumb border fakes an inset overlay.
+   ========================================================================== */
+* { scrollbar-width: none; }
+*::-webkit-scrollbar { width: 0; height: 0; }
+*::-webkit-scrollbar-button { display: none; width: 0; height: 0; }
+*::-webkit-scrollbar-corner { background: transparent; }
+*::-webkit-scrollbar-track { background: transparent; }
+*::-webkit-scrollbar-thumb {
+  background: var(--pm6-sb-thumb);
+  border: 3px solid transparent;
+  background-clip: padding-box;
+  border-radius: var(--pm6-sb-radius);
+}
+*::-webkit-scrollbar-thumb:hover { background: var(--pm6-sb-thumb-hover); }
+
+/* opt-in scroll pane */
+.k3-scroll {
+  scrollbar-width: thin;
+  scrollbar-color: var(--pm6-sb-thumb) transparent;
+}
+.k3-scroll::-webkit-scrollbar { width: 10px; height: 10px; }
+
+/* chat pane: gutter reserved so bar show/hide never shifts layout;
+   thumb hidden while idle, revealed on hover or while scrolling */
+.k3-scroll-chat {
+  scrollbar-width: thin;
+  scrollbar-gutter: stable;
+  scrollbar-color: transparent transparent;
+}
+.k3-scroll-chat::-webkit-scrollbar { width: 10px; height: 10px; }
+.k3-scroll-chat::-webkit-scrollbar-thumb {
+  background: transparent;
+  transition: background-color .25s ease;
+}
+.k3-scroll-chat:hover,
+.k3-scroll-chat.k3-sb-active {
+  scrollbar-color: var(--pm6-sb-thumb) transparent;
+}
+.k3-scroll-chat:hover::-webkit-scrollbar-thumb,
+.k3-scroll-chat.k3-sb-active::-webkit-scrollbar-thumb {
+  background: var(--pm6-sb-thumb);
+  border: 3px solid transparent;
+  background-clip: padding-box;
+}
+.k3-scroll-chat:hover::-webkit-scrollbar-thumb:hover,
+.k3-scroll-chat.k3-sb-active::-webkit-scrollbar-thumb:hover {
+  background: var(--pm6-sb-thumb-hover);
+  border: 3px solid transparent;
+  background-clip: padding-box;
+}
+
+/* ============================================================================
+   PRIMITIVES — exact class names used across windows/threads/popups.
+   Token-driven, so all 8 themes render complete (retro squares + hardens
+   via the radius/border-width tokens, glass goes borderless at width 0).
+   ========================================================================== */
+
+/* primary action button */
+.k3-btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 6px;
+  padding: 6px 14px;
+  font-size: var(--fs-sm, 13px);
+  font-weight: 600;
+  line-height: var(--lh-tight, 1.2);
+  color: var(--accent-primary);
+  background: var(--accent-soft);
+  border: var(--border-width, 1px) solid var(--accent-primary);
+  border-radius: var(--radius-sm, 6px);
+  cursor: pointer;
+  user-select: none;
+  white-space: nowrap;
+  transition: background-color var(--motion-fast, 120ms) var(--ease-default, ease-out),
+              border-color var(--motion-fast, 120ms) var(--ease-default, ease-out),
+              color var(--motion-fast, 120ms) var(--ease-default, ease-out);
+}
+.k3-btn:hover:not(:disabled) { background: var(--accent-glow); }
+.k3-btn:active:not(:disabled) { box-shadow: var(--elev-1); }
+.k3-btn:disabled { opacity: .45; cursor: default; }
+.k3-btn svg { width: 14px; height: 14px; flex: 0 0 auto; }
+
+/* quiet secondary button */
+.k3-btn-ghost {
+  color: var(--text-secondary);
+  background: transparent;
+  border-color: var(--border);
+}
+.k3-btn-ghost:hover:not(:disabled) {
+  color: var(--accent-primary);
+  background: var(--accent-soft);
+  border-color: var(--accent-primary);
+}
+
+/* destructive action */
+.k3-btn-danger {
+  color: var(--accent-error);
+  background: color-mix(in srgb, var(--accent-error) 12%, transparent);
+  border-color: var(--accent-error);
+}
+.k3-btn-danger:hover:not(:disabled) {
+  background: color-mix(in srgb, var(--accent-error) 22%, transparent);
+}
+
+/* square icon button */
+.k3-icon-btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 28px;
+  height: 28px;
+  padding: 0;
+  flex: 0 0 auto;
+  color: var(--text-secondary);
+  background: transparent;
+  border: 0;
+  border-radius: var(--radius-sm, 6px);
+  cursor: pointer;
+  transition: background-color var(--motion-fast, 120ms) var(--ease-default, ease-out),
+              color var(--motion-fast, 120ms) var(--ease-default, ease-out);
+}
+.k3-icon-btn:hover:not(:disabled) { background: var(--accent-soft); color: var(--accent-primary); }
+.k3-icon-btn:disabled { opacity: .45; cursor: default; }
+.k3-icon-btn svg { width: 15px; height: 15px; }
+
+/* filter/status chip */
+.k3-chip {
+  display: inline-flex;
+  align-items: center;
+  gap: 5px;
+  padding: 3px 10px;
+  font-size: var(--fs-xs, 11px);
+  font-weight: 600;
+  line-height: var(--lh-tight, 1.2);
+  color: var(--accent-primary);
+  background: var(--accent-soft);
+  border: var(--border-width, 1px) solid transparent;
+  border-radius: var(--radius-pill, 999px);
+  white-space: nowrap;
+  user-select: none;
+}
+
+/* text input (also textarea.k3-input) */
+.k3-input {
+  display: block;
+  width: 100%;
+  box-sizing: border-box;
+  padding: 7px 10px;
+  font-size: var(--fs-sm, 13px);
+  line-height: var(--lh-body, 1.5);
+  color: var(--text-primary);
+  background: var(--surface);
+  border: var(--border-width, 1px) solid var(--border);
+  border-radius: var(--radius-sm, 6px);
+  outline: none;
+  caret-color: var(--accent-primary);
+  transition: border-color var(--motion-fast, 120ms) var(--ease-default, ease-out),
+              box-shadow var(--motion-fast, 120ms) var(--ease-default, ease-out);
+}
+.k3-input::placeholder { color: var(--text-muted); }
+.k3-input:focus-visible {
+  outline: none;
+  border-color: var(--accent-primary);
+  box-shadow: 0 0 0 2px var(--accent-soft);
+}
+.k3-input:disabled { opacity: .5; }
+textarea.k3-input { resize: vertical; min-height: 2.5em; }
+
+/* key/value row (label left, value right) */
+.k3-kv {
+  display: flex;
+  align-items: baseline;
+  justify-content: space-between;
+  gap: 12px;
+  padding: 5px 0;
+  font-size: var(--fs-sm, 13px);
+  border-bottom: var(--border-width, 1px) solid var(--border-light);
+}
+.k3-kv:last-child { border-bottom: 0; }
+.k3-kv-k { color: var(--text-muted); }
+.k3-kv-v {
+  color: var(--text-primary);
+  font-weight: 600;
+  text-align: right;
+  font-variant-numeric: tabular-nums;
+}
+
+/* muted small text */
+.k3-footnote {
+  color: var(--text-muted);
+  font-size: var(--fs-xs, 11px);
+  line-height: var(--lh-body, 1.5);
+}
+
+/* status dot — motion.css adds the running pulse; variants carry a soft
+   halo of the same hue (background tint, never a side border) */
+.k3-dot {
+  display: inline-block;
+  width: 8px;
+  height: 8px;
+  flex: 0 0 auto;
+  border-radius: 50%;
+  background: var(--text-muted);
+}
+.k3-dot.is-running  { background: var(--accent-primary); box-shadow: 0 0 0 3px var(--accent-soft); }
+.k3-dot.is-blocked  { background: var(--accent-error);   box-shadow: 0 0 0 3px color-mix(in srgb, var(--accent-error) 18%, transparent); }
+.k3-dot.is-paused   { background: var(--accent-warning); box-shadow: 0 0 0 3px color-mix(in srgb, var(--accent-warning) 18%, transparent); }
+.k3-dot.is-complete { background: var(--accent-lime);    box-shadow: 0 0 0 3px color-mix(in srgb, var(--accent-lime) 18%, transparent); }
+.k3-dot.is-waiting  { background: var(--accent-orange);  box-shadow: 0 0 0 3px color-mix(in srgb, var(--accent-orange) 18%, transparent); }
+
+/* generic card surface */
+.k3-card {
+  background: var(--surface);
+  color: var(--text-primary);
+  border: var(--border-width, 1px) solid var(--border);
+  border-radius: var(--radius-md, 10px);
+  box-shadow: var(--elev-1);
+  padding: 12px;
+}
+
+/* small uppercase provenance label chip ("Kimi K3") */
+.k3-agent-tag {
+  display: inline-flex;
+  align-items: center;
+  gap: 5px;
+  padding: 2px 8px;
+  font-size: var(--fs-2xs, 10px);
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: .06em;
+  line-height: var(--lh-tight, 1.2);
+  color: var(--accent-primary);
+  background: var(--accent-soft);
+  border: 1px solid color-mix(in srgb, var(--accent-primary) 35%, transparent);
+  border-radius: var(--radius-pill, 999px);
+  white-space: nowrap;
+  user-select: none;
+}

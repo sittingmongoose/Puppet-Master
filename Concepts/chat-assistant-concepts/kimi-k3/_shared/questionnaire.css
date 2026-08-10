@@ -1,0 +1,268 @@
+/* ============================================================================
+   Kimi K3 — questionnaire card (window.K3Questionnaire). Token-driven only:
+   rides the shared surfaces/borders/radii/accents so all 8 themes render
+   complete. Layout: elevated card filling the composer slot, top-down —
+   header (icon + title + origin note + pager + close), pager dots, sliding
+   question body (numbered option rows + freeform row), footer (inline note,
+   ghost cancel + morphing primary action, queue line). Question changes
+   slide via transform/opacity 180ms; the global data-motion kill-switch
+   collapses that to instant with an identical final state. Selected options
+   tint + check — no colored side borders anywhere. 520px-safe: every row
+   flexes and wraps, nothing has a fixed width.
+   ========================================================================== */
+
+.k3q-card {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  width: 100%;
+  box-sizing: border-box;
+  padding: 10px 12px;
+  background: var(--surface-elevated);
+  color: var(--text-primary);
+  border: var(--border-width, 1px) solid var(--border);
+  border-radius: var(--radius-lg, 16px);
+  box-shadow: var(--elev-1);
+  font-size: var(--fs-sm, 13px);
+}
+
+/* ---- header: icon + title (+ origin note) left, pager + close right ---- */
+.k3q-head {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+.k3q-head-main {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  min-width: 0;
+}
+.k3q-head-icon {
+  display: inline-flex;
+  flex: 0 0 auto;
+  width: 16px;
+  height: 16px;
+  color: var(--accent-primary);
+}
+.k3q-head-icon svg { width: 16px; height: 16px; }
+.k3q-title {
+  flex: 0 0 auto;
+  font-weight: 600;
+  white-space: nowrap;
+}
+.k3q-origin { /* shrinks away first at 520px, never pushes the pager off */
+  flex: 0 1 auto;
+  min-width: 0;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  color: var(--text-muted);
+  font-size: var(--fs-xs, 11px);
+}
+.k3q-head-spacer { flex: 1 1 auto; }
+
+.k3q-pager {
+  display: flex;
+  align-items: center;
+  gap: 2px;
+  flex: 0 0 auto;
+}
+.k3q-pager-btn { width: 22px; height: 22px; }
+.k3q-pager-label {
+  min-width: 34px;
+  text-align: center;
+  white-space: nowrap;
+  color: var(--text-secondary);
+  font-size: var(--fs-xs, 11px);
+  font-variant-numeric: tabular-nums;
+}
+.k3q-close { flex: 0 0 auto; }
+
+/* ---- pager dots: 8px state dots, one per question -----------------------
+   base = optional & unanswered (hollow neutral); .is-answered filled accent;
+   .is-skipped a dash; .is-current an accent ring; .is-missing (required,
+   unanswered) a hollow warning ring. The JS applies exactly one state. ---- */
+.k3q-dots-row {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  min-height: 12px;
+}
+.k3q-dots {
+  display: flex;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 6px;
+  min-width: 0;
+}
+.k3q-dot {
+  width: 8px;
+  height: 8px;
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+  border: 1.5px solid var(--text-muted);
+  border-radius: var(--radius-pill, 999px);
+  background: transparent;
+  cursor: pointer;
+}
+.k3q-dot.is-answered {
+  border-color: var(--accent-primary);
+  background: var(--accent-primary);
+}
+.k3q-dot.is-skipped { /* dash, not a ring */
+  height: 2.5px;
+  border: 0;
+  background: var(--text-muted);
+}
+.k3q-dot.is-current {
+  border-color: var(--accent-primary);
+  box-shadow: 0 0 0 2px var(--accent-soft);
+}
+.k3q-dot.is-missing {
+  border-color: var(--accent-warning);
+}
+.k3q-dot:focus-visible {
+  outline: 2px solid var(--accent-primary);
+  outline-offset: 1px;
+}
+.k3q-skipped-tag {
+  flex: 0 0 auto;
+  padding: 1px 7px;
+  border: 1px solid var(--border-light, var(--border));
+  border-radius: var(--radius-pill, 999px);
+  color: var(--text-muted);
+  font-size: var(--fs-2xs, 10px);
+  white-space: nowrap;
+}
+
+/* ---- body: prompt + option rows + freeform row; slide on question change -- */
+.k3q-body { min-width: 0; }
+.k3q-anim {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+@keyframes k3q-slide-next {
+  from { opacity: 0; transform: translateX(14px); }
+  to   { opacity: 1; transform: translateX(0); }
+}
+@keyframes k3q-slide-prev {
+  from { opacity: 0; transform: translateX(-14px); }
+  to   { opacity: 1; transform: translateX(0); }
+}
+/* final state == natural state, so reduced motion lands identically */
+.k3q-in-next { animation: k3q-slide-next 180ms var(--ease-out, ease-out); }
+.k3q-in-prev { animation: k3q-slide-prev 180ms var(--ease-out, ease-out); }
+
+.k3q-prompt-row {
+  display: flex;
+  align-items: flex-start;
+  gap: 8px;
+}
+.k3q-prompt {
+  flex: 1 1 auto;
+  min-width: 0;
+  margin: 0;
+  color: var(--text-primary);
+  font-size: var(--fs-sm, 13px);
+  line-height: var(--lh-body, 1.5);
+  overflow-wrap: break-word;
+}
+.k3q-required { flex: 0 0 auto; }
+
+/* ---- option rows: full width, hover tint; selected = accent tint + check
+   (the check slot stays reserved so toggling never shifts the label) ---- */
+.k3q-options {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+}
+.k3q-option {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  width: 100%;
+  box-sizing: border-box;
+  padding: 7px 10px;
+  border: 0;
+  border-radius: var(--radius-md, 10px);
+  background: transparent;
+  color: var(--text-primary);
+  font: inherit;
+  font-size: var(--fs-sm, 13px);
+  line-height: var(--lh-body, 1.5);
+  text-align: left;
+  cursor: pointer;
+  transition: background-color var(--motion-fast, 120ms) var(--ease-default, ease-out);
+}
+.k3q-option:hover { background: var(--accent-soft); }
+.k3q-option.is-selected {
+  background: var(--accent-soft);
+  color: var(--accent-primary);
+}
+.k3q-option:focus-visible {
+  outline: 2px solid var(--accent-primary);
+  outline-offset: -2px;
+}
+.k3q-option-num {
+  flex: 0 0 auto;
+  min-width: 16px;
+  color: var(--text-muted);
+  font-variant-numeric: tabular-nums;
+}
+.k3q-option.is-selected .k3q-option-num { color: var(--accent-primary); }
+.k3q-option-label {
+  flex: 1 1 auto;
+  min-width: 0;
+  overflow-wrap: break-word;
+}
+.k3q-option-check {
+  display: inline-flex;
+  flex: 0 0 auto;
+  width: 14px;
+  height: 14px;
+  color: var(--accent-primary);
+  visibility: hidden;
+}
+.k3q-option-check svg { width: 14px; height: 14px; }
+.k3q-option.is-selected .k3q-option-check { visibility: visible; }
+
+/* ---- freeform row ("Something else" on option questions) ---- */
+.k3q-freeform {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+.k3q-freeform-label {
+  color: var(--text-muted);
+  font-size: var(--fs-xs, 11px);
+}
+.k3q-freeform-input {
+  width: 100%;
+  box-sizing: border-box;
+}
+
+/* ---- footer: inline note, ghost cancel left + morphing primary right,
+   then the queue line when more questionnaires wait ---- */
+.k3q-foot {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+.k3q-note {
+  color: var(--accent-warning);
+  font-size: var(--fs-xs, 11px);
+}
+.k3q-foot-row {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+.k3q-cancel { margin-right: auto; }
+.k3q-primary { flex: 0 0 auto; }
+.k3q-queue-line {
+  color: var(--text-muted);
+  font-size: var(--fs-xs, 11px);
+}

@@ -1,0 +1,133 @@
+/* ============================================================================
+   Kimi K3 — T1 Prose Measure presentation (scoped [data-k3-thread="t1"]).
+   Bubble-free prose: one centered 68ch reading column; 40px gutter with a
+   26px monogram chip per message ("U" / "A"); work payloads render as slim
+   inline entries separated by a hairline, not boxed cards. Token-driven so
+   all 8 themes render complete; status rides dots/chips — never a colored
+   left-side accent border.
+   ========================================================================== */
+
+[data-k3-thread="t1"] {
+  height: 100%;
+  min-height: 0;
+  display: flex;
+  flex-direction: column;
+}
+[data-k3-thread="t1"] .k3t-root {
+  flex: 1 1 auto;
+  min-height: 0;
+}
+
+/* ---- the centered reading column ------------------------------------------
+   Every message caps at 68ch of prose plus its 40px monogram gutter and
+   centers as a unit, so the eye tracks one vertical seam down the thread. */
+[data-k3-thread="t1"] .k3t-list {
+  gap: 26px;
+  padding: 18px 20px 24px;
+}
+[data-k3-thread="t1"] .k3t-msg {
+  width: 100%;
+  max-width: calc(68ch + 40px);
+  margin-inline: auto;
+  padding-left: 40px;
+}
+
+/* lens selection mode: the kit indents the list for its checkboxes; keep the
+   column centered by giving the checkbox room inside the gutter instead */
+[data-k3-thread="t1"] .k3t-list.is-selecting { padding-left: 20px; }
+[data-k3-thread="t1"] .k3t-lens-check { left: 8px; }
+
+/* ---- role monogram chips ---------------------------------------------------- */
+[data-k3-thread="t1"] .k3t-msg::before {
+  content: "";
+  position: absolute;
+  left: 0;
+  top: 1px;
+  width: 26px;
+  height: 26px;
+  box-sizing: border-box;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 11px;
+  font-weight: 700;
+  letter-spacing: .02em;
+  line-height: 1;
+  border-radius: 50%;
+  user-select: none;
+}
+[data-k3-thread="t1"] .k3t-msg[data-role="user"]::before {
+  content: "U";
+  color: var(--text-secondary);
+  background: var(--surface-elevated);
+  border: var(--border-width, 1px) solid var(--border-light);
+}
+[data-k3-thread="t1"] .k3t-msg[data-role="assistant"]::before {
+  content: "A";
+  color: var(--accent-primary);
+  background: var(--accent-soft);
+  border: var(--border-width, 1px) solid color-mix(in srgb, var(--accent-primary) 30%, transparent);
+}
+
+/* ---- prose ------------------------------------------------------------------ */
+[data-k3-thread="t1"] .k3t-msg-body {
+  font-size: var(--fs-md, 14px);
+  line-height: var(--lh-body, 1.55);
+}
+[data-k3-thread="t1"] .k3t-msg[data-role="user"] .k3t-msg-body { color: var(--text-secondary); }
+[data-k3-thread="t1"] .k3t-msg.is-focused {
+  /* keep the kit's tint feedback without its neighbor-shifting negative margins */
+  margin: 0 auto;
+  padding: 8px 10px 8px 40px;
+}
+
+/* ---- work records as slim inline entries -------------------------------------
+   Activity / thought / questionnaire-history payloads drop the card box:
+   a hairline above, content flush with the reading column. */
+[data-k3-thread="t1"] .k3t-card {
+  margin-top: 12px;
+  padding: 10px 0 2px;
+  background: transparent;
+  border: 0;
+  border-top: var(--border-width, 1px) solid var(--border-light);
+  border-radius: 0;
+  box-shadow: none;
+}
+[data-k3-thread="t1"] .k3t-subcompact {
+  border-top-style: dashed;
+}
+[data-k3-thread="t1"] .k3t-subcompact-sources {
+  margin-top: 10px;
+  padding: 12px 0 2px;
+  border: 0;
+  border-top: var(--border-width, 1px) dashed var(--border-light);
+  border-radius: 0;
+}
+
+/* ---- thread-level work zone: same centered column --------------------------- */
+[data-k3-thread="t1"] .k3t-endzone { padding: 0 20px 20px; }
+[data-k3-thread="t1"] .k3t-endzone > * {
+  width: 100%;
+  max-width: calc(68ch + 40px);
+  margin-inline: auto;
+}
+[data-k3-thread="t1"] .k3t-endzone .k3t-card { margin-top: 0; }
+[data-k3-thread="t1"] .k3t-links { gap: 6px; }
+[data-k3-thread="t1"] .k3t-shortcut {
+  background: transparent;
+  border-color: var(--border-light);
+  padding: 8px 10px;
+}
+
+/* ---- live working region rides the same column ------------------------------ */
+[data-k3-thread="t1"] .k3t-live {
+  margin: 0 auto 14px;
+  width: calc(100% - 40px);
+  max-width: calc(68ch + 40px);
+  box-sizing: border-box;
+  background: transparent;
+  border-color: var(--border-light);
+}
+
+/* ---- hover row: quiet, flush with the measure ------------------------------- */
+[data-k3-thread="t1"] .k3t-msg-hover { margin-top: 4px; }

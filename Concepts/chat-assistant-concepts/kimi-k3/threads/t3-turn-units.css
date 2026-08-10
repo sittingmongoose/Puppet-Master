@@ -1,0 +1,95 @@
+/* ============================================================================
+   Kimi K3 — T3 Turn Units presentation (scoped [data-k3-thread="t3"]).
+   The transcript as a stack of self-contained unit cards: each .k3t-turn is a
+   single-level bordered card (var(--surface) / var(--border-light) /
+   var(--radius-md)), the turn head sits as a unit header, and messages render
+   as bubble-free prose inside the card. 14px of air separates units. Token-
+   driven so all 8 themes render complete; status rides background tint /
+   weight — never a colored left-side accent border.
+
+   Geometry (list padding 18px 20px):
+     turn card:    list-x 20..                 fills the reading column
+     turn head:    card-x 0..                  unit header row
+     messages:     card body, max 68ch prose   (measure:'reading')
+   ========================================================================== */
+
+[data-k3-thread="t3"] {
+  height: 100%;
+  min-height: 0;
+  display: flex;
+  flex-direction: column;
+}
+[data-k3-thread="t3"] .k3t-root {
+  flex: 1 1 auto;
+  min-height: 0;
+}
+
+/* ---- the list: 14px gaps between unit cards ------------------------------- */
+[data-k3-thread="t3"] .k3t-list {
+  gap: 14px;
+  padding: 16px 20px 22px;
+}
+
+/* ---- unit card: each turn is one bordered surface ------------------------- */
+[data-k3-thread="t3"] .k3t-turn {
+  background: var(--surface);
+  border: var(--border-width, 1px) solid var(--border-light);
+  border-radius: var(--radius-md, 10px);
+  padding: 12px 16px;
+  gap: 10px;
+  box-shadow: var(--elev-1);
+}
+/* anonymous turns (assistant reply after a user-led turn) get the same card
+   treatment so the stack reads as a consistent row of units */
+[data-k3-thread="t3"] .k3t-turn-anon { padding: 12px 16px; }
+
+/* ---- unit header: turn head acts as the card's title bar ----------------- */
+[data-k3-thread="t3"] .k3t-turn-head {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding-bottom: 8px;
+  font-size: var(--fs-xs, 11px);
+  font-weight: 700;
+  letter-spacing: .03em;
+  text-transform: uppercase;
+  color: var(--text-secondary);
+  border-bottom: var(--border-width, 1px) solid var(--border-light);
+}
+
+/* ---- messages: bubble-free prose inside the card -------------------------- */
+[data-k3-thread="t3"] .k3t-turn-body { gap: 12px; }
+[data-k3-thread="t3"] .k3t-msg { padding: 0; }
+[data-k3-thread="t3"] .k3t-msg-body {
+  font-size: var(--fs-md, 14px);
+  line-height: var(--lh-body, 1.55);
+}
+[data-k3-thread="t3"] .k3t-msg[data-role="user"] .k3t-msg-body {
+  color: var(--text-primary);
+  font-weight: 500;
+}
+
+/* focus tint: keep it inside the card (no neighbor-shifting negative margins) */
+[data-k3-thread="t3"] .k3t-msg.is-focused {
+  margin: 0;
+  padding: 8px 10px;
+}
+
+/* ---- work records: stay inside the unit, ride its inset -------------------- */
+[data-k3-thread="t3"] .k3t-card {
+  margin-top: 4px;
+  background: var(--surface-elevated);
+  border-color: var(--border-light);
+}
+[data-k3-thread="t3"] .k3t-subcompact { border-top-style: solid; }
+
+/* ---- thread-level work zone + live region align to the card column -------- */
+[data-k3-thread="t3"] .k3t-endzone { padding: 0 20px 20px; }
+[data-k3-thread="t3"] .k3t-live {
+  margin: 0 20px 14px;
+  background: var(--surface);
+  border-color: var(--border-light);
+}
+
+/* ---- hover row: quiet, flush inside the card ------------------------------ */
+[data-k3-thread="t3"] .k3t-msg-hover { margin-top: 4px; }

@@ -1,0 +1,132 @@
+/* ============================================================================
+   Kimi K3 — T2 Spine Timeline presentation (scoped [data-k3-thread="t2"]).
+   A quiet git/timeline metaphor: one 2px vertical spine in the left gutter
+   (--border-light), every message a node ON the spine (hollow circle user /
+   filled accent circle assistant), activity stage-rail items branching off
+   the spine as milestone ticks. Token-driven so all 8 themes render complete
+   (retro gets square nodes via --radius-pill: 2px); status rides fills/tints,
+   never a colored left-side accent border.
+
+   Geometry (roomy list padding 20px left):
+     spine:        list-x 10..12px            (center 11)
+     article box:  list-x 20..                (list padding)
+     message text: list-x 52..                (article padding-left 32)
+     node dot:     article-x -15..-3          (12px, center -9 == spine center)
+   Lens-select mode shifts the list +24px; the spine moves with it (left 34)
+   so nodes stay centered.
+   ========================================================================== */
+
+[data-k3-thread="t2"] {
+  height: 100%;
+  min-height: 0;
+  display: flex;
+  flex-direction: column;
+}
+[data-k3-thread="t2"] .k3t-root {
+  flex: 1 1 auto;
+  min-height: 0;
+}
+
+/* ---- the spine ------------------------------------------------------------ */
+[data-k3-thread="t2"] .k3t-list {
+  position: relative;
+  gap: 22px;
+  padding: 16px 20px 20px;
+}
+[data-k3-thread="t2"] .k3t-list::before {
+  content: "";
+  position: absolute;
+  left: 10px;
+  top: 0;
+  bottom: 0;
+  width: 2px;
+  background: var(--border-light);
+  pointer-events: none;
+}
+/* lens selection mode: the kit indents the list 44px for its checkboxes;
+   move the spine with it so the nodes stay centered on the rule */
+[data-k3-thread="t2"] .k3t-list.is-selecting::before { left: 34px; }
+
+/* ---- messages indent to clear the spine ------------------------------------ */
+[data-k3-thread="t2"] .k3t-msg { padding-left: 32px; }
+
+/* ---- node dots on the spine --------------------------------------------------
+   --radius-pill resolves to a full circle in round themes and a 2px rounded
+   square in retro, so the nodes stay intentional in every family. */
+[data-k3-thread="t2"] .k3t-msg::before {
+  content: "";
+  position: absolute;
+  left: -15px;
+  top: 5px;
+  width: 12px;
+  height: 12px;
+  box-sizing: border-box;
+  border-radius: var(--radius-pill, 999px);
+  user-select: none;
+}
+[data-k3-thread="t2"] .k3t-msg[data-role="user"]::before {
+  /* hollow node: opaque ground knocks out the spine behind the ring */
+  background: var(--background);
+  border: 2px solid var(--text-muted);
+}
+[data-k3-thread="t2"] .k3t-msg[data-role="assistant"]::before {
+  background: var(--accent-primary);
+  border: 2px solid var(--accent-primary);
+}
+
+/* focus tint: keep the node pinned to the spine (no neighbor-shifting
+   negative side margins) */
+[data-k3-thread="t2"] .k3t-msg.is-focused {
+  margin: -8px 0;
+  padding: 8px 10px 8px 32px;
+}
+
+/* ---- activity stage rail: milestones branching off the spine ---------------- */
+[data-k3-thread="t2"] .k3t-stage-rail {
+  position: relative;
+  margin-top: 10px;
+  gap: 8px;
+}
+/* horizontal branch tick from the spine out to the first milestone */
+[data-k3-thread="t2"] .k3t-stage-rail::before {
+  content: "";
+  position: absolute;
+  left: -41px;
+  top: 10px;
+  width: 37px;
+  border-top: 2px solid var(--border-light);
+  pointer-events: none;
+}
+[data-k3-thread="t2"] .k3t-stage-rail-item {
+  width: 20px;
+  height: 20px;
+  background: var(--surface);
+  border: var(--border-width, 1px) solid var(--border-light);
+}
+[data-k3-thread="t2"] .k3t-stage-rail-item.is-complete {
+  color: var(--accent-primary);
+  background: var(--accent-soft);
+  border-color: color-mix(in srgb, var(--accent-primary) 40%, transparent);
+}
+
+/* ---- payload cards ride the same seam; subcompact blocks at list level
+   indent to clear the spine ------------------------------------------------- */
+[data-k3-thread="t2"] .k3t-list > .k3t-subcompact,
+[data-k3-thread="t2"] .k3t-list > .k3t-subcompact-sources,
+[data-k3-thread="t2"] .k3t-list > .k3t-rehydrated-note {
+  margin-left: 32px;
+}
+/* rehydrated sources nest real articles: no duplicate nodes inside the box */
+[data-k3-thread="t2"] .k3t-subcompact-sources .k3t-msg { padding-left: 0; }
+[data-k3-thread="t2"] .k3t-subcompact-sources .k3t-msg::before { content: none; }
+
+/* ---- thread-level work zone + live region indent to the message seam ------- */
+[data-k3-thread="t2"] .k3t-endzone { padding: 0 20px 20px 52px; }
+[data-k3-thread="t2"] .k3t-live {
+  margin: 0 20px 14px 52px;
+  background: transparent;
+  border-color: var(--border-light);
+}
+
+/* ---- hover row: quiet, flush with the message seam ------------------------- */
+[data-k3-thread="t2"] .k3t-msg-hover { margin-top: 5px; }
