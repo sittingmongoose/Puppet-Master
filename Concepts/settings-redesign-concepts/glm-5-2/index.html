@@ -1,0 +1,213 @@
+<!doctype html>
+<html lang="en" data-theme="friendly-dark" data-reduced-motion="0" data-density="comfortable">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+  <link rel="icon" href="data:,">
+  <title>GLM-5.2 Settings Bakeoff — comparison</title>
+  <link rel="stylesheet" href="assets/themes.css">
+  <link rel="stylesheet" href="assets/shell.css">
+  <style>
+    body { overflow: auto; }
+    .gallery { max-width: 1280px; margin: 0 auto; padding: clamp(20px,4vw,56px) clamp(16px,3vw,40px) 80px; }
+    .g-head { margin-bottom: 28px; }
+    .g-eyebrow { color: var(--accent); font-size: 11px; font-weight: 800; letter-spacing: .16em; text-transform: uppercase; }
+    .g-title { font-size: clamp(28px,4vw,46px); font-weight: 800; letter-spacing: -.03em; margin: 6px 0 8px; line-height: 1.04; }
+    .g-title .g-accent { color: var(--accent); }
+    .g-sub { color: var(--ink-2); font-size: 15px; max-width: 68ch; line-height: 1.6; }
+    .g-meta { display: flex; gap: 10px; flex-wrap: wrap; margin-top: 16px; }
+
+    .g-themebar { display: flex; align-items: center; gap: 12px; flex-wrap: wrap; padding: 12px 16px; border: 1px solid var(--line); border-radius: var(--r); background: var(--surface); margin-bottom: 24px; position: sticky; top: 12px; z-index: 5; backdrop-filter: blur(6px); }
+    [data-theme^="glass"] .g-themebar { backdrop-filter: none; }
+    .g-themebar label { font-size: 12px; color: var(--ink-2); display: flex; align-items: center; gap: 6px; }
+
+    .g-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(290px, 1fr)); gap: 18px; }
+    .g-card { display: flex; flex-direction: column; border: 1px solid var(--line); border-radius: var(--r-lg); background: var(--surface); overflow: hidden; text-decoration: none; color: inherit; transition: transform var(--t-mid) var(--ease), border-color var(--t-fast) var(--ease), box-shadow var(--t-fast) var(--ease); }
+    .g-card:hover { transform: translateY(-4px); border-color: var(--accent-line); box-shadow: var(--sh-3); }
+    .g-card-thumb { height: 150px; position: relative; overflow: hidden; display: grid; place-items: center; }
+    /* mini visual per concept */
+    .g-thumb-cr { background: linear-gradient(135deg, var(--surface-2), var(--surface-elev)); }
+    .g-thumb-at { background: var(--surface-2); }
+    .g-thumb-st { background: linear-gradient(180deg, var(--surface-elev), var(--surface-2)); }
+    .g-thumb-sr { background: var(--surface-2); }
+    .g-thumb-num { position: absolute; top: 12px; left: 14px; font-size: 11px; font-weight: 800; letter-spacing: .12em; color: var(--ink-3); }
+    .g-card-body { padding: 18px; display: flex; flex-direction: column; gap: 10px; flex: 1; }
+    .g-card-thesis { color: var(--accent); font-size: 11px; font-weight: 800; letter-spacing: .1em; text-transform: uppercase; }
+    .g-card-title { font-size: 19px; font-weight: 800; letter-spacing: -.02em; margin: 0; }
+    .g-card-desc { color: var(--ink-2); font-size: 13px; line-height: 1.55; }
+    .g-card-tags { display: flex; flex-wrap: wrap; gap: 6px; margin-top: auto; }
+    .g-card-cta { display: inline-flex; align-items: center; gap: 6px; font-size: 12px; font-weight: 700; color: var(--accent); margin-top: 4px; }
+
+    .g-section { margin-top: 36px; }
+    .g-section h2 { font-size: 18px; margin: 0 0 6px; }
+    .g-section p { color: var(--ink-2); font-size: 13px; max-width: 70ch; line-height: 1.6; }
+    .g-files { font-family: var(--mono); font-size: 12px; background: var(--surface-2); border: 1px solid var(--line); border-radius: var(--r-sm); padding: 14px; overflow: auto; line-height: 1.7; }
+    .g-rules { display: grid; grid-template-columns: repeat(auto-fit, minmax(220px,1fr)); gap: 10px; margin-top: 12px; }
+    .g-rule { padding: 10px 12px; border: 1px solid var(--line); border-radius: var(--r-sm); background: var(--surface-2); font-size: 12px; color: var(--ink-2); display: flex; gap: 8px; align-items: center; }
+    .g-rule svg { color: var(--ok); flex: none; }
+
+    .g-note { margin-top: 28px; padding: 14px 16px; border-radius: var(--r); background: var(--info-soft); border: 1px solid color-mix(in srgb, var(--info) 30%, var(--line)); font-size: 13px; color: var(--ink-2); }
+  </style>
+</head>
+<body>
+  <a data-concept-model="GLM-5.2" href="#" hidden>GLM-5.2</a>
+  <div class="gallery">
+    <header class="g-head">
+      <div class="g-eyebrow">Settings redesign bakeoff · Model GLM-5.2</div>
+      <h1 class="g-title">Four genuinely different <span class="g-accent">Settings redesigns.</span></h1>
+      <p class="g-sub">Each concept explores a distinct information-architecture thesis for Puppet Master's Settings system — not four skins of one design. They share realistic demo data, all eight themes plus reduced motion, the required narrow/squeezed and surrounding-shell states, and a uniform manager language. No concept is ranked here.</p>
+      <div class="g-meta">
+        <span class="chip accent">GLM-5.2</span>
+        <span class="chip">4 concepts</span>
+        <span class="chip">8 themes + reduced motion</span>
+        <span class="chip">Uniform manager shell</span>
+        <span class="chip">10 managers featured</span>
+      </div>
+    </header>
+
+    <div class="g-themebar">
+      <label>Theme
+        <select id="gTheme" class="btn sm">
+          <option value="friendly-dark">Friendly · Dark</option>
+          <option value="friendly-light">Friendly · Light</option>
+          <option value="glass-dark">Glass · Dark</option>
+          <option value="glass-light">Glass · Light</option>
+          <option value="retro-dark">Retro · Dark</option>
+          <option value="retro-light">Retro · Light</option>
+          <option value="basic-dark">Basic · Dark</option>
+          <option value="basic-light">Basic · Light</option>
+        </select>
+      </label>
+      <label>Reduced motion <button class="switch" role="switch" aria-checked="false" id="gRM"></button></label>
+      <span class="grow"></span>
+      <span class="muted small">Comparison canvas · page width role · width presets: 760 · 900 · 1280 · 1700 · 2200 · 2500</span>
+    </div>
+
+    <div class="g-grid">
+      <a class="g-card" href="concept-01-control-room.html">
+        <div class="g-card-thumb g-thumb-cr">
+          <span class="g-thumb-num">01</span>
+          <svg width="120" height="80" viewBox="0 0 120 80" fill="none" stroke="currentColor" stroke-width="1.5" opacity=".5"><rect x="10" y="10" width="100" height="14" rx="7"/><rect x="10" y="32" width="46" height="38" rx="4"/><rect x="62" y="32" width="48" height="18" rx="4"/><rect x="62" y="54" width="48" height="16" rx="4"/></svg>
+        </div>
+        <div class="g-card-body">
+          <span class="g-card-thesis">Editorial · command center</span>
+          <h2 class="g-card-title">Control Room</h2>
+          <p class="g-card-desc">One dominant search is the primary verb. Important areas are large editorial panels with a title, purpose, and live status — never filter chips. Notices carry one clear action. Workspace is a book-TOC: left category index + a continuous document.</p>
+          <div class="g-card-tags"><span class="chip">book-TOC</span><span class="chip">scrollspy</span><span class="chip">Memory</span><span class="chip">MCP</span></div>
+          <span class="g-card-cta">Open Control Room →</span>
+        </div>
+      </a>
+
+      <a class="g-card" href="concept-02-atlas.html">
+        <div class="g-card-thumb g-thumb-at">
+          <span class="g-thumb-num">02</span>
+          <svg width="120" height="80" viewBox="0 0 120 80" fill="none" stroke="currentColor" stroke-width="1.5" opacity=".5"><rect x="10" y="10" width="40" height="26" rx="3"/><rect x="54" y="10" width="28" height="18" rx="3"/><rect x="86" y="10" width="24" height="40" rx="3"/><rect x="10" y="40" width="40" height="30" rx="3"/><rect x="54" y="32" width="28" height="38" rx="3"/><circle cx="98" cy="60" r="5" fill="currentColor"/></svg>
+        </div>
+        <div class="g-card-body">
+          <span class="g-card-thesis">Spatial · focus + context</span>
+          <h2 class="g-card-title">Atlas</h2>
+          <p class="g-card-desc">Settings is territory to navigate, not a list to filter. Destinations are named regions with boundaries and a you-are-here marker; region size encodes density. Workspace is focus+context: one region fills the canvas while a compact minimap keeps the whole map visible.</p>
+          <div class="g-card-tags"><span class="chip">minimap</span><span class="chip">you-are-here</span><span class="chip">Crew</span><span class="chip">Skills</span></div>
+          <span class="g-card-cta">Open Atlas →</span>
+        </div>
+      </a>
+
+      <a class="g-card" href="concept-03-stack.html">
+        <div class="g-card-thumb g-thumb-st">
+          <span class="g-thumb-num">03</span>
+          <svg width="120" height="80" viewBox="0 0 120 80" fill="none" stroke="currentColor" stroke-width="1.5" opacity=".5"><rect x="14" y="12" width="92" height="14" rx="3"/><rect x="14" y="30" width="92" height="38" rx="3"/><rect x="14" y="54" width="92" height="14" rx="3" fill="currentColor" opacity=".15"/></svg>
+        </div>
+        <div class="g-card-body">
+          <span class="g-card-thesis">Single surface · disclosure</span>
+          <h2 class="g-card-title">Stack</h2>
+          <p class="g-card-desc">Settings never navigates away — everything is one surface that expands. Home is a prioritized stack: search, then status-critical, then destinations as expandable rows that grow inline into the full workspace. Only one expanded at a time. Disclosure is the whole model.</p>
+          <div class="g-card-tags"><span class="chip">expand-in-place</span><span class="chip">FLIP</span><span class="chip">Personas</span><span class="chip">Context</span></div>
+          <span class="g-card-cta">Open Stack →</span>
+        </div>
+      </a>
+
+      <a class="g-card" href="concept-04-stream.html">
+        <div class="g-card-thumb g-thumb-sr">
+          <span class="g-thumb-num">04</span>
+          <svg width="120" height="80" viewBox="0 0 120 80" fill="none" stroke="currentColor" stroke-width="1.5" opacity=".5"><path d="M20 8c8 8 8 16 0 24s-8 16 0 24 8 16 0 24"/><path d="M60 8c8 8 8 16 0 24s-8 16 0 24 8 16 0 24"/><path d="M100 8c8 8 8 16 0 24s-8 16 0 24 8 16 0 24"/><circle cx="20" cy="32" r="3" fill="currentColor"/><circle cx="60" cy="56" r="3" fill="currentColor"/></svg>
+        </div>
+        <div class="g-card-body">
+          <span class="g-card-thesis">Continuous document · river</span>
+          <h2 class="g-card-title">Stream</h2>
+          <p class="g-card-desc">Settings is a river you read and jump within. Home is the headwaters: a persistent landmark rail of named markers + search + an opening status beat. Destinations are named sections; managers are channels you switch among via tabs within their section.</p>
+          <div class="g-card-tags"><span class="chip">landmark rail</span><span class="chip">channels</span><span class="chip">LSP</span><span class="chip">Terminal</span><span class="chip">Media</span></div>
+          <span class="g-card-cta">Open Stream →</span>
+        </div>
+      </a>
+    </div>
+
+    <section class="g-section">
+      <h2>What every concept shares</h2>
+      <p>A uniform manager language proves the design is a system, not one provider screen. Every manager renders through the same shell: search/filter, add/connect, health summary, resource rows, requested-vs-effective state, loading/empty/error/managed/unavailable states, and logs.</p>
+      <div class="g-rules">
+        <div class="g-rule">○ Search is central; no primary category pills</div>
+        <div class="g-rule">○ No emoji, no colored left-side borders</div>
+        <div class="g-rule">○ All 8 themes + reduced motion</div>
+        <div class="g-rule">○ Narrow/squeezed + surrounding shell</div>
+        <div class="g-rule">○ Provider/Agent/Model in every concept</div>
+        <div class="g-rule">○ 10 managers across the four</div>
+        <div class="g-rule">○ Requested vs effective everywhere</div>
+        <div class="g-rule">○ Slint-portable (no DOM-measured state)</div>
+      </div>
+    </section>
+
+    <section class="g-section">
+      <h2>File layout</h2>
+      <div class="g-files">Concepts/settings-redesign-concepts/glm-5-2/
+├─ concept-hub.json            # schemaVersion 1 · page width role · hybrid
+├─ concept-hub-bridge.js       # ConceptHub bridge (pm-concept-ready/state)
+├─ index.html                  # this comparison surface
+├─ concept-01-control-room.html
+├─ concept-02-atlas.html
+├─ concept-03-stack.html
+├─ concept-04-stream.html
+├─ assets/
+│  ├─ themes.css               # 8 themes + reduced motion + density
+│  ├─ shell.css                # quiet PM shell + universal primitives
+│  ├─ managers.css             # uniform manager shell styling
+│  ├─ demo-data.js             # canonical data (one source of truth)
+│  ├─ icons.svg.js             # inline SVG icons (no emoji)
+│  ├─ state.js                 # theme reducer, search, scrollspy/jump core
+│  ├─ shared.js                # shell + settings-row renderers
+│  └─ managers.js              # uniform manager shell + 10 managers
+├─ README.md
+├─ FINDINGS.md
+├─ IMPACT_REGISTER.json
+└─ TEST_REPORT.md</div>
+    </section>
+
+    <div class="g-note">
+      <strong>No ranking or recommendation.</strong> Per the bakeoff packet, concepts are presented for comparison only. See <code>FINDINGS.md</code> for IA choices, simulated functionality, and Slint translation risks, and <code>IMPACT_REGISTER.json</code> for Plans/inventory/command/wiring/schema implications — recorded, not applied.
+    </div>
+  </div>
+
+  <script>
+    (function () {
+      var root = document.documentElement;
+      var saved = {};
+      try { saved = JSON.parse(localStorage.getItem("pm-glm-settings") || "{}"); } catch (e ) {}
+      function apply(theme, rm) {
+        root.setAttribute("data-theme", theme);
+        root.style.colorScheme = /-dark$/.test(theme) ? "dark" : "light";
+        root.setAttribute("data-reduced-motion", rm ? "1" : "0");
+        var sel = document.getElementById("gTheme"); if (sel) sel.value = theme;
+        var sw = document.getElementById("gRM"); if (sw) sw.setAttribute("aria-checked", String(rm));
+      }
+      var theme = saved.theme || "friendly-dark", rm = !!saved.reducedMotion;
+      apply(theme, rm);
+      document.getElementById("gTheme").addEventListener("change", function () {
+        theme = this.value; apply(theme, rm); persist();
+      });
+      document.getElementById("gRM").addEventListener("click", function () {
+        rm = this.getAttribute("aria-checked") !== "true"; apply(theme, rm); persist();
+      });
+      function persist() { try { localStorage.setItem("pm-glm-settings", JSON.stringify({theme:theme, reducedMotion:rm, density:"comfortable", rail:"open", chat:"closed"})); } catch (e ) {} }
+    })();
+  </script>
+</body>
+</html>
