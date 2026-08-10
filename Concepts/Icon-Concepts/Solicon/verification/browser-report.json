@@ -1,0 +1,138 @@
+{
+  "schema_id": "pm.solicon.browser_verification.v1",
+  "status": "passed",
+  "modes": [
+    {
+      "mode": "file",
+      "url": "file:///Users/jaredsmacbookair/Documents/PuppetMaster/Concepts/Solicon/index.html",
+      "static_cards": 8,
+      "loader_cards": 64,
+      "friendly_filter_cards": 24,
+      "download_links_checked": 70,
+      "console_errors": 0
+    },
+    {
+      "mode": "localhost",
+      "url": "http://127.0.0.1:54966/index.html",
+      "static_cards": 8,
+      "loader_cards": 64,
+      "friendly_filter_cards": 24,
+      "download_links_checked": 70,
+      "console_errors": 0
+    }
+  ],
+  "viewports": [
+    {
+      "width": 360,
+      "height": 800,
+      "overflow": false,
+      "screenshot": "verification/dashboard/dashboard-360.png"
+    },
+    {
+      "width": 768,
+      "height": 900,
+      "overflow": false,
+      "screenshot": "verification/dashboard/dashboard-768.png"
+    },
+    {
+      "width": 1280,
+      "height": 900,
+      "overflow": false,
+      "screenshot": "verification/dashboard/dashboard-1280.png"
+    },
+    {
+      "width": 1600,
+      "height": 900,
+      "overflow": false,
+      "screenshot": "verification/dashboard/dashboard-1600.png"
+    }
+  ],
+  "raster_sheets": [
+    {
+      "kind": "app",
+      "sizes": [
+        16,
+        32,
+        64,
+        256
+      ],
+      "samples": 64,
+      "screenshot": "verification/raster-sheets/app-icons-16-32-64-256.png"
+    },
+    {
+      "kind": "tray",
+      "sizes": [
+        16,
+        20,
+        24,
+        32,
+        48
+      ],
+      "samples": 240,
+      "screenshot": "verification/raster-sheets/tray-icons-16-20-24-32-48.png"
+    }
+  ],
+  "motion_sheets": [
+    {
+      "motion_id": "soft-breath",
+      "loader_assets": 32,
+      "phase_captures": 128,
+      "screenshot": "verification/motion-sheets/soft-breath-four-phases.png",
+      "layers_visible": true
+    },
+    {
+      "motion_id": "puppet-lift",
+      "loader_assets": 32,
+      "phase_captures": 128,
+      "screenshot": "verification/motion-sheets/puppet-lift-four-phases.png",
+      "layers_visible": true
+    },
+    {
+      "motion_id": "guiding-wave",
+      "loader_assets": 32,
+      "phase_captures": 128,
+      "screenshot": "verification/motion-sheets/guiding-wave-four-phases.png",
+      "layers_visible": true
+    },
+    {
+      "motion_id": "crossbar-cycle",
+      "loader_assets": 32,
+      "phase_captures": 128,
+      "screenshot": "verification/motion-sheets/crossbar-cycle-four-phases.png",
+      "layers_visible": true
+    },
+    {
+      "motion_id": "modular-assembly",
+      "loader_assets": 32,
+      "phase_captures": 128,
+      "screenshot": "verification/motion-sheets/modular-assembly-four-phases.png",
+      "layers_visible": true
+    },
+    {
+      "motion_id": "signal-relay",
+      "loader_assets": 32,
+      "phase_captures": 128,
+      "screenshot": "verification/motion-sheets/signal-relay-four-phases.png",
+      "layers_visible": true
+    },
+    {
+      "motion_id": "brace-orbit",
+      "loader_assets": 32,
+      "phase_captures": 128,
+      "screenshot": "verification/motion-sheets/brace-orbit-four-phases.png",
+      "layers_visible": true
+    },
+    {
+      "motion_id": "phase-weave",
+      "loader_assets": 32,
+      "phase_captures": 128,
+      "screenshot": "verification/motion-sheets/phase-weave-four-phases.png",
+      "layers_visible": true
+    }
+  ],
+  "reduced_motion": {
+    "loader_assets": 256,
+    "opacity_only": true,
+    "screenshot": "verification/motion-sheets/reduced-motion-all-loaders.png"
+  }
+}
