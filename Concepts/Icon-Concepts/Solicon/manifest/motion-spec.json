@@ -1,0 +1,527 @@
+{
+  "motions": [
+    {
+      "browser_properties": [
+        "transform",
+        "opacity"
+      ],
+      "description": "A gentle scale and accent-opacity cycle.",
+      "duration_ms": 2400,
+      "id": "soft-breath",
+      "label": "Soft Breath",
+      "layer_property_map": {
+        "pm-mark": [
+          "scale",
+          "opacity"
+        ]
+      },
+      "loop": "infinite-seamless",
+      "reduced_motion": "No translation, rotation, or scaling; opacity-only loading signal.",
+      "slint_mapping": {
+        "embedded_svg_animation_assumed": false,
+        "portable_layer_properties": {
+          "opacity": "float",
+          "phase_offset": "duration",
+          "rotation_degrees": "angle",
+          "scale": "float",
+          "scale_x": "float",
+          "scale_y": "float",
+          "translate_x": "length",
+          "translate_y": "length"
+        },
+        "preferred": "Recompose each listed stable SVG layer as a Slint item, derive its listed properties from loader-progress, and advance the loop with property animations or animation-tick().",
+        "progress_property": {
+          "name": "loader-progress",
+          "range": [
+            0.0,
+            1.0
+          ],
+          "type": "float",
+          "wrap": "1.0 to 0.0"
+        },
+        "renderer_note": "Transforms are an enhancement for renderers that support the recomposed layer operation; do not depend on an embedded SVG animation timeline.",
+        "software_renderer_fallback": {
+          "duration_multiplier": 1.5,
+          "easing": "linear",
+          "mark_opacity_range": [
+            0.72,
+            1.0
+          ],
+          "stationary_layers": true
+        }
+      },
+      "tone": "friendly-technical"
+    },
+    {
+      "browser_properties": [
+        "transform",
+        "opacity"
+      ],
+      "description": "Strings lift the monogram while the controls counter-tilt.",
+      "duration_ms": 1800,
+      "id": "puppet-lift",
+      "label": "Puppet Lift",
+      "layer_property_map": {
+        "pm-braces": [
+          "translate_y"
+        ],
+        "pm-monogram": [
+          "translate_y"
+        ],
+        "pm-stick-back": [
+          "rotation_degrees"
+        ],
+        "pm-stick-front": [
+          "rotation_degrees"
+        ],
+        "pm-strings": [
+          "scale_y"
+        ]
+      },
+      "loop": "infinite-seamless",
+      "reduced_motion": "No translation, rotation, or scaling; opacity-only loading signal.",
+      "slint_mapping": {
+        "embedded_svg_animation_assumed": false,
+        "portable_layer_properties": {
+          "opacity": "float",
+          "phase_offset": "duration",
+          "rotation_degrees": "angle",
+          "scale": "float",
+          "scale_x": "float",
+          "scale_y": "float",
+          "translate_x": "length",
+          "translate_y": "length"
+        },
+        "preferred": "Recompose each listed stable SVG layer as a Slint item, derive its listed properties from loader-progress, and advance the loop with property animations or animation-tick().",
+        "progress_property": {
+          "name": "loader-progress",
+          "range": [
+            0.0,
+            1.0
+          ],
+          "type": "float",
+          "wrap": "1.0 to 0.0"
+        },
+        "renderer_note": "Transforms are an enhancement for renderers that support the recomposed layer operation; do not depend on an embedded SVG animation timeline.",
+        "software_renderer_fallback": {
+          "duration_multiplier": 1.5,
+          "easing": "linear",
+          "mark_opacity_range": [
+            0.72,
+            1.0
+          ],
+          "stationary_layers": true
+        }
+      },
+      "tone": "friendly-technical"
+    },
+    {
+      "browser_properties": [
+        "transform",
+        "opacity"
+      ],
+      "description": "A calm top-to-bottom cascade through the logo layers.",
+      "duration_ms": 2000,
+      "id": "guiding-wave",
+      "label": "Guiding Wave",
+      "layer_property_map": {
+        "pm-braces": [
+          "translate_y",
+          "opacity",
+          "phase_offset"
+        ],
+        "pm-monogram": [
+          "translate_y",
+          "opacity",
+          "phase_offset"
+        ],
+        "pm-stick-back": [
+          "translate_y",
+          "opacity",
+          "phase_offset"
+        ],
+        "pm-stick-front": [
+          "translate_y",
+          "opacity",
+          "phase_offset"
+        ],
+        "pm-strings": [
+          "translate_y",
+          "opacity",
+          "phase_offset"
+        ]
+      },
+      "loop": "infinite-seamless",
+      "reduced_motion": "No translation, rotation, or scaling; opacity-only loading signal.",
+      "slint_mapping": {
+        "embedded_svg_animation_assumed": false,
+        "portable_layer_properties": {
+          "opacity": "float",
+          "phase_offset": "duration",
+          "rotation_degrees": "angle",
+          "scale": "float",
+          "scale_x": "float",
+          "scale_y": "float",
+          "translate_x": "length",
+          "translate_y": "length"
+        },
+        "preferred": "Recompose each listed stable SVG layer as a Slint item, derive its listed properties from loader-progress, and advance the loop with property animations or animation-tick().",
+        "progress_property": {
+          "name": "loader-progress",
+          "range": [
+            0.0,
+            1.0
+          ],
+          "type": "float",
+          "wrap": "1.0 to 0.0"
+        },
+        "renderer_note": "Transforms are an enhancement for renderers that support the recomposed layer operation; do not depend on an embedded SVG animation timeline.",
+        "software_renderer_fallback": {
+          "duration_multiplier": 1.5,
+          "easing": "linear",
+          "mark_opacity_range": [
+            0.72,
+            1.0
+          ],
+          "stationary_layers": true
+        }
+      },
+      "tone": "friendly-technical"
+    },
+    {
+      "browser_properties": [
+        "transform",
+        "opacity"
+      ],
+      "description": "Crisp opposing pivots create a measured mechanical cycle.",
+      "duration_ms": 1400,
+      "id": "crossbar-cycle",
+      "label": "Crossbar Cycle",
+      "layer_property_map": {
+        "pm-stick-back": [
+          "rotation_degrees"
+        ],
+        "pm-stick-front": [
+          "rotation_degrees"
+        ],
+        "pm-strings": [
+          "scale_y",
+          "opacity"
+        ]
+      },
+      "loop": "infinite-seamless",
+      "reduced_motion": "No translation, rotation, or scaling; opacity-only loading signal.",
+      "slint_mapping": {
+        "embedded_svg_animation_assumed": false,
+        "portable_layer_properties": {
+          "opacity": "float",
+          "phase_offset": "duration",
+          "rotation_degrees": "angle",
+          "scale": "float",
+          "scale_x": "float",
+          "scale_y": "float",
+          "translate_x": "length",
+          "translate_y": "length"
+        },
+        "preferred": "Recompose each listed stable SVG layer as a Slint item, derive its listed properties from loader-progress, and advance the loop with property animations or animation-tick().",
+        "progress_property": {
+          "name": "loader-progress",
+          "range": [
+            0.0,
+            1.0
+          ],
+          "type": "float",
+          "wrap": "1.0 to 0.0"
+        },
+        "renderer_note": "Transforms are an enhancement for renderers that support the recomposed layer operation; do not depend on an embedded SVG animation timeline.",
+        "software_renderer_fallback": {
+          "duration_multiplier": 1.5,
+          "easing": "linear",
+          "mark_opacity_range": [
+            0.72,
+            1.0
+          ],
+          "stationary_layers": true
+        }
+      },
+      "tone": "precision-industrial"
+    },
+    {
+      "browser_properties": [
+        "transform",
+        "opacity"
+      ],
+      "description": "Components slide inward, lock briefly, and reset.",
+      "duration_ms": 2200,
+      "id": "modular-assembly",
+      "label": "Modular Assembly",
+      "layer_property_map": {
+        "pm-braces": [
+          "scale_x",
+          "opacity"
+        ],
+        "pm-monogram": [
+          "translate_y",
+          "opacity"
+        ],
+        "pm-stick-back": [
+          "translate_x",
+          "translate_y",
+          "opacity"
+        ],
+        "pm-stick-front": [
+          "translate_x",
+          "translate_y",
+          "opacity"
+        ],
+        "pm-strings": [
+          "translate_y",
+          "opacity"
+        ]
+      },
+      "loop": "infinite-seamless",
+      "reduced_motion": "No translation, rotation, or scaling; opacity-only loading signal.",
+      "slint_mapping": {
+        "embedded_svg_animation_assumed": false,
+        "portable_layer_properties": {
+          "opacity": "float",
+          "phase_offset": "duration",
+          "rotation_degrees": "angle",
+          "scale": "float",
+          "scale_x": "float",
+          "scale_y": "float",
+          "translate_x": "length",
+          "translate_y": "length"
+        },
+        "preferred": "Recompose each listed stable SVG layer as a Slint item, derive its listed properties from loader-progress, and advance the loop with property animations or animation-tick().",
+        "progress_property": {
+          "name": "loader-progress",
+          "range": [
+            0.0,
+            1.0
+          ],
+          "type": "float",
+          "wrap": "1.0 to 0.0"
+        },
+        "renderer_note": "Transforms are an enhancement for renderers that support the recomposed layer operation; do not depend on an embedded SVG animation timeline.",
+        "software_renderer_fallback": {
+          "duration_multiplier": 1.5,
+          "easing": "linear",
+          "mark_opacity_range": [
+            0.72,
+            1.0
+          ],
+          "stationary_layers": true
+        }
+      },
+      "tone": "precision-industrial"
+    },
+    {
+      "browser_properties": [
+        "transform",
+        "opacity"
+      ],
+      "description": "An accent pulse travels through controls, strings, and type.",
+      "duration_ms": 1600,
+      "id": "signal-relay",
+      "label": "Signal Relay",
+      "layer_property_map": {
+        "pm-braces": [
+          "scale",
+          "opacity",
+          "phase_offset"
+        ],
+        "pm-monogram": [
+          "scale",
+          "opacity",
+          "phase_offset"
+        ],
+        "pm-stick-back": [
+          "scale",
+          "opacity",
+          "phase_offset"
+        ],
+        "pm-stick-front": [
+          "scale",
+          "opacity",
+          "phase_offset"
+        ],
+        "pm-strings": [
+          "scale",
+          "opacity",
+          "phase_offset"
+        ]
+      },
+      "loop": "infinite-seamless",
+      "reduced_motion": "No translation, rotation, or scaling; opacity-only loading signal.",
+      "slint_mapping": {
+        "embedded_svg_animation_assumed": false,
+        "portable_layer_properties": {
+          "opacity": "float",
+          "phase_offset": "duration",
+          "rotation_degrees": "angle",
+          "scale": "float",
+          "scale_x": "float",
+          "scale_y": "float",
+          "translate_x": "length",
+          "translate_y": "length"
+        },
+        "preferred": "Recompose each listed stable SVG layer as a Slint item, derive its listed properties from loader-progress, and advance the loop with property animations or animation-tick().",
+        "progress_property": {
+          "name": "loader-progress",
+          "range": [
+            0.0,
+            1.0
+          ],
+          "type": "float",
+          "wrap": "1.0 to 0.0"
+        },
+        "renderer_note": "Transforms are an enhancement for renderers that support the recomposed layer operation; do not depend on an embedded SVG animation timeline.",
+        "software_renderer_fallback": {
+          "duration_multiplier": 1.5,
+          "easing": "linear",
+          "mark_opacity_range": [
+            0.72,
+            1.0
+          ],
+          "stationary_layers": true
+        }
+      },
+      "tone": "precision-industrial"
+    },
+    {
+      "browser_properties": [
+        "transform",
+        "opacity"
+      ],
+      "description": "The braces trace shallow arcs around the monogram.",
+      "duration_ms": 2000,
+      "id": "brace-orbit",
+      "label": "Brace Orbit",
+      "layer_property_map": {
+        "pm-brace-left": [
+          "translate_x",
+          "translate_y",
+          "rotation_degrees"
+        ],
+        "pm-brace-right": [
+          "translate_x",
+          "translate_y",
+          "rotation_degrees"
+        ],
+        "pm-monogram": [
+          "scale",
+          "opacity"
+        ],
+        "pm-strings": [
+          "scale",
+          "opacity"
+        ]
+      },
+      "loop": "infinite-seamless",
+      "reduced_motion": "No translation, rotation, or scaling; opacity-only loading signal.",
+      "slint_mapping": {
+        "embedded_svg_animation_assumed": false,
+        "portable_layer_properties": {
+          "opacity": "float",
+          "phase_offset": "duration",
+          "rotation_degrees": "angle",
+          "scale": "float",
+          "scale_x": "float",
+          "scale_y": "float",
+          "translate_x": "length",
+          "translate_y": "length"
+        },
+        "preferred": "Recompose each listed stable SVG layer as a Slint item, derive its listed properties from loader-progress, and advance the loop with property animations or animation-tick().",
+        "progress_property": {
+          "name": "loader-progress",
+          "range": [
+            0.0,
+            1.0
+          ],
+          "type": "float",
+          "wrap": "1.0 to 0.0"
+        },
+        "renderer_note": "Transforms are an enhancement for renderers that support the recomposed layer operation; do not depend on an embedded SVG animation timeline.",
+        "software_renderer_fallback": {
+          "duration_multiplier": 1.5,
+          "easing": "linear",
+          "mark_opacity_range": [
+            0.72,
+            1.0
+          ],
+          "stationary_layers": true
+        }
+      },
+      "tone": "expressive-futuristic"
+    },
+    {
+      "browser_properties": [
+        "transform",
+        "opacity"
+      ],
+      "description": "The crossed controls exchange depth around a counter-pulse.",
+      "duration_ms": 1800,
+      "id": "phase-weave",
+      "label": "Phase Weave",
+      "layer_property_map": {
+        "pm-braces": [
+          "scale",
+          "opacity"
+        ],
+        "pm-monogram": [
+          "scale",
+          "opacity"
+        ],
+        "pm-stick-back": [
+          "rotation_degrees",
+          "scale",
+          "opacity"
+        ],
+        "pm-stick-front": [
+          "rotation_degrees",
+          "scale",
+          "opacity"
+        ]
+      },
+      "loop": "infinite-seamless",
+      "reduced_motion": "No translation, rotation, or scaling; opacity-only loading signal.",
+      "slint_mapping": {
+        "embedded_svg_animation_assumed": false,
+        "portable_layer_properties": {
+          "opacity": "float",
+          "phase_offset": "duration",
+          "rotation_degrees": "angle",
+          "scale": "float",
+          "scale_x": "float",
+          "scale_y": "float",
+          "translate_x": "length",
+          "translate_y": "length"
+        },
+        "preferred": "Recompose each listed stable SVG layer as a Slint item, derive its listed properties from loader-progress, and advance the loop with property animations or animation-tick().",
+        "progress_property": {
+          "name": "loader-progress",
+          "range": [
+            0.0,
+            1.0
+          ],
+          "type": "float",
+          "wrap": "1.0 to 0.0"
+        },
+        "renderer_note": "Transforms are an enhancement for renderers that support the recomposed layer operation; do not depend on an embedded SVG animation timeline.",
+        "software_renderer_fallback": {
+          "duration_multiplier": 1.5,
+          "easing": "linear",
+          "mark_opacity_range": [
+            0.72,
+            1.0
+          ],
+          "stationary_layers": true
+        }
+      },
+      "tone": "expressive-futuristic"
+    }
+  ],
+  "schema_id": "pm.solicon.motion_spec.v1",
+  "schema_version": "1.0.0"
+}

@@ -1,0 +1,57 @@
+{
+  "$id": "pm.solicon.manifest.v1",
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "additionalProperties": true,
+  "properties": {
+    "bundles": {
+      "type": "array"
+    },
+    "counts": {
+      "type": "object"
+    },
+    "loader_assets": {
+      "maxItems": 256,
+      "minItems": 256,
+      "type": "array"
+    },
+    "motions": {
+      "maxItems": 8,
+      "minItems": 8,
+      "type": "array"
+    },
+    "platform_packs": {
+      "type": "array"
+    },
+    "schema_id": {
+      "const": "pm.solicon.manifest.v1"
+    },
+    "schema_version": {
+      "const": "1.0.0"
+    },
+    "source": {
+      "type": "object"
+    },
+    "static_assets": {
+      "maxItems": 32,
+      "minItems": 32,
+      "type": "array"
+    },
+    "themes": {
+      "maxItems": 8,
+      "minItems": 8,
+      "type": "array"
+    }
+  },
+  "required": [
+    "schema_id",
+    "schema_version",
+    "source",
+    "counts",
+    "themes",
+    "motions",
+    "static_assets",
+    "loader_assets"
+  ],
+  "title": "Puppet Master Solicon asset manifest",
+  "type": "object"
+}
