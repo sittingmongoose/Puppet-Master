@@ -42,9 +42,30 @@ EVENT_RECORD_INDEX_SCHEMA_ID = "pm.storage_value.event_record_index.v2"
 EVENT_RECORD_INDEX_SCHEMA_VERSION = "2.0.0"
 EVENT_RECORD_INDEX_FIXTURE_SEGMENT_GENERATION = 1
 EVENT_RECORD_INDEX_FIXTURE_RECOVERY_EPOCH = 0
-EVENT_FAMILY_PROVEN_PERSISTED_FLOOR = 222
+EVENT_FAMILY_EVIDENCE_REGISTERED_ROWS = 37
+EVENT_FAMILY_PROVEN_PERSISTED_FLOOR = 285
 EVENT_FAMILY_REGISTERED_KERNEL_ROWS = 39
-EVENT_FAMILY_PROVEN_UNREGISTERED_FLOOR = 185
+EVENT_FAMILY_PROVEN_UNREGISTERED_FLOOR = 248
+EVENT_FAMILY_UNRESOLVED_FLOOR = 40
+EVENT_FAMILY_EXCLUDED_COUNT = 68
+EVENT_FAMILY_DENOMINATOR_STATUS = "UNKNOWN_OPEN"
+EVENT_FAMILY_BULK_REGISTRATION_ALLOWED = False
+EVENT_FAMILY_EVIDENCE_CURRENTNESS = "source_dated_lower_bound_pending_fresh_reconciliation"
+EVENT_FAMILY_EVIDENCE_REFS = [
+    {
+        "artifact_id": "EA-27_PRODUCER_UNION_AND_DENOMINATOR.json",
+        "custody_root": "PuppetMaster-AssuranceLab",
+        "custody_path": "orchestration-2026-07-17/phase3/event-authority/EA-27_PRODUCER_UNION_AND_DENOMINATOR.json",
+        "sha256": "644c6d0bc913eaed62f41e231fdb7e04f55d270549fcdede73a0869994111e47",
+        "union_rows_sha256": "aa9c365904788eba74df73bb1b5eecaae903a6aa167e0514b7937198aa0dbf4d",
+    },
+    {
+        "artifact_id": "EA-29_TERMINAL_FINDINGS_RESIDUALS_CONTRACT_DEPTH_REPAIR_AND_WAVE1_CHECKPOINT.md",
+        "custody_root": "PuppetMaster-AssuranceLab",
+        "custody_path": "orchestration-2026-07-17/phase3/event-authority/EA-29_TERMINAL_FINDINGS_RESIDUALS_CONTRACT_DEPTH_REPAIR_AND_WAVE1_CHECKPOINT.md",
+        "sha256": "17820aef1b498acf2e5165bee106171ff1ef35a1b23fa67d0cc23e291a8ed7bf",
+    },
+]
 
 REQUIRED_POSITIVE_CASE_IDS = [
     "fresh_run",
@@ -1532,8 +1553,15 @@ def certification_preflight_failures() -> list[dict[str, Any]]:
             {
                 "error": "event_denominator_unresolved",
                 "registered_kernel_rows": registered_rows,
+                "evidence_registered_rows": EVENT_FAMILY_EVIDENCE_REGISTERED_ROWS,
                 "proven_persisted_floor": EVENT_FAMILY_PROVEN_PERSISTED_FLOOR,
                 "proven_unregistered_floor": EVENT_FAMILY_PROVEN_UNREGISTERED_FLOOR,
+                "unresolved_floor": EVENT_FAMILY_UNRESOLVED_FLOOR,
+                "excluded_count": EVENT_FAMILY_EXCLUDED_COUNT,
+                "denominator_status": EVENT_FAMILY_DENOMINATOR_STATUS,
+                "bulk_registration_allowed": EVENT_FAMILY_BULK_REGISTRATION_ALLOWED,
+                "evidence_currentness": EVENT_FAMILY_EVIDENCE_CURRENTNESS,
+                "evidence_refs": EVENT_FAMILY_EVIDENCE_REFS,
                 "complete_denominator_known": False,
             }
         )
@@ -1541,6 +1569,11 @@ def certification_preflight_failures() -> list[dict[str, Any]]:
             {
                 "error": "event_family_contract_depth_unresolved",
                 "registered_kernel_rows": registered_rows,
+                "evidence_registered_rows": EVENT_FAMILY_EVIDENCE_REGISTERED_ROWS,
+                "proven_unregistered_floor": EVENT_FAMILY_PROVEN_UNREGISTERED_FLOOR,
+                "unresolved_floor": EVENT_FAMILY_UNRESOLVED_FLOOR,
+                "bulk_registration_allowed": EVENT_FAMILY_BULK_REGISTRATION_ALLOWED,
+                "evidence_refs": EVENT_FAMILY_EVIDENCE_REFS,
                 "contract_depth_complete": False,
             }
         )
@@ -1553,8 +1586,15 @@ def certification_preflight_failures() -> list[dict[str, Any]]:
                 "error": "event_authority_checkpoint_changed_requires_fresh_approval",
                 "expected_registered_kernel_rows": EVENT_FAMILY_REGISTERED_KERNEL_ROWS,
                 "actual_registered_rows": registered_rows,
+                "evidence_registered_rows": EVENT_FAMILY_EVIDENCE_REGISTERED_ROWS,
                 "proven_persisted_floor": EVENT_FAMILY_PROVEN_PERSISTED_FLOOR,
                 "proven_unregistered_floor": EVENT_FAMILY_PROVEN_UNREGISTERED_FLOOR,
+                "unresolved_floor": EVENT_FAMILY_UNRESOLVED_FLOOR,
+                "excluded_count": EVENT_FAMILY_EXCLUDED_COUNT,
+                "denominator_status": EVENT_FAMILY_DENOMINATOR_STATUS,
+                "bulk_registration_allowed": EVENT_FAMILY_BULK_REGISTRATION_ALLOWED,
+                "evidence_currentness": EVENT_FAMILY_EVIDENCE_CURRENTNESS,
+                "evidence_refs": EVENT_FAMILY_EVIDENCE_REFS,
             }
         )
     return failures

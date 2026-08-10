@@ -444,8 +444,29 @@ EVENT_FAMILY_REGISTRY_SCHEMA_URI = (
     "https://puppetmaster.local/schemas/event_family_registry/1.0.0/event_family_registry.schema.json"
 )
 EVENT_FAMILY_REGISTRY_KERNEL_ROW_COUNT = 39
-EVENT_FAMILY_PROVEN_PERSISTED_FLOOR = 222
-EVENT_FAMILY_PROVEN_UNREGISTERED_FLOOR = 185
+EVENT_FAMILY_EVIDENCE_REGISTERED_ROWS = 37
+EVENT_FAMILY_PROVEN_PERSISTED_FLOOR = 285
+EVENT_FAMILY_PROVEN_UNREGISTERED_FLOOR = 248
+EVENT_FAMILY_UNRESOLVED_FLOOR = 40
+EVENT_FAMILY_EXCLUDED_COUNT = 68
+EVENT_FAMILY_DENOMINATOR_STATUS = "UNKNOWN_OPEN"
+EVENT_FAMILY_BULK_REGISTRATION_ALLOWED = False
+EVENT_FAMILY_EVIDENCE_CURRENTNESS = "source_dated_lower_bound_pending_fresh_reconciliation"
+EVENT_FAMILY_EVIDENCE_REFS = [
+    {
+        "artifact_id": "EA-27_PRODUCER_UNION_AND_DENOMINATOR.json",
+        "custody_root": "PuppetMaster-AssuranceLab",
+        "custody_path": "orchestration-2026-07-17/phase3/event-authority/EA-27_PRODUCER_UNION_AND_DENOMINATOR.json",
+        "sha256": "644c6d0bc913eaed62f41e231fdb7e04f55d270549fcdede73a0869994111e47",
+        "union_rows_sha256": "aa9c365904788eba74df73bb1b5eecaae903a6aa167e0514b7937198aa0dbf4d",
+    },
+    {
+        "artifact_id": "EA-29_TERMINAL_FINDINGS_RESIDUALS_CONTRACT_DEPTH_REPAIR_AND_WAVE1_CHECKPOINT.md",
+        "custody_root": "PuppetMaster-AssuranceLab",
+        "custody_path": "orchestration-2026-07-17/phase3/event-authority/EA-29_TERMINAL_FINDINGS_RESIDUALS_CONTRACT_DEPTH_REPAIR_AND_WAVE1_CHECKPOINT.md",
+        "sha256": "17820aef1b498acf2e5165bee106171ff1ef35a1b23fa67d0cc23e291a8ed7bf",
+    },
+]
 EVENT_FAMILY_GOAL_OWNER_SCHEMA_PATH = PLANS / "goal_runtime_events.schema.json"
 EVENT_FAMILY_GOAL_PAYLOAD_SCHEMA_REFS = {
     "goal.created": "Plans/event_payloads/goal_runtime/goal_created.schema.json",
@@ -2796,8 +2817,15 @@ def event_family_registry_data_failures(
                 "path": path_label,
                 "error": "event_denominator_unresolved",
                 "registered_kernel_rows": len(families),
+                "evidence_registered_rows": EVENT_FAMILY_EVIDENCE_REGISTERED_ROWS,
                 "proven_persisted_floor": EVENT_FAMILY_PROVEN_PERSISTED_FLOOR,
                 "proven_unregistered_floor": EVENT_FAMILY_PROVEN_UNREGISTERED_FLOOR,
+                "unresolved_floor": EVENT_FAMILY_UNRESOLVED_FLOOR,
+                "excluded_count": EVENT_FAMILY_EXCLUDED_COUNT,
+                "denominator_status": EVENT_FAMILY_DENOMINATOR_STATUS,
+                "bulk_registration_allowed": EVENT_FAMILY_BULK_REGISTRATION_ALLOWED,
+                "evidence_currentness": EVENT_FAMILY_EVIDENCE_CURRENTNESS,
+                "evidence_refs": EVENT_FAMILY_EVIDENCE_REFS,
                 "corpus_complete": False,
                 "disposition": "unknown_or_unregistered_event_types_quarantine_without_checkpoint_advance",
             }
@@ -4468,9 +4496,20 @@ def pnc019_case_l_preflight_source_failures() -> list[dict[str, Any]]:
         "event_family_contract_depth_unresolved",
         "proven_persisted_floor",
         "proven_unregistered_floor",
+        "denominator_status",
+        "bulk_registration_allowed",
+        "evidence_currentness",
+        "evidence_refs",
     ):
         if marker not in preflight_body:
             failures.append({"path": rel(PNC019_CERTIFICATION_HARNESS_PATH), "error": "pnc019_case_l_preflight_marker_missing", "marker": marker})
+    for marker in (
+        "644c6d0bc913eaed62f41e231fdb7e04f55d270549fcdede73a0869994111e47",
+        "aa9c365904788eba74df73bb1b5eecaae903a6aa167e0514b7937198aa0dbf4d",
+        "17820aef1b498acf2e5165bee106171ff1ef35a1b23fa67d0cc23e291a8ed7bf",
+    ):
+        if marker not in text:
+            failures.append({"path": rel(PNC019_CERTIFICATION_HARNESS_PATH), "error": "pnc019_event_authority_evidence_marker_missing", "marker": marker})
     preflight_call = cmd_body.find("certification_preflight_failures()")
     receipt_build = cmd_body.find("CertificationHarness().receipt()")
     receipt_write = cmd_body.find("write_json(")
@@ -4967,8 +5006,16 @@ def case_l_verification_self_test_checks() -> dict[str, bool]:
     checks["event_denominator_residual_remains_fail_closed"] = any(
         failure.get("error") == "event_denominator_unresolved"
         and failure.get("registered_kernel_rows") == 39
-        and failure.get("proven_persisted_floor") == 222
-        and failure.get("proven_unregistered_floor") == 185
+        and failure.get("evidence_registered_rows") == 37
+        and failure.get("proven_persisted_floor") == 285
+        and failure.get("proven_unregistered_floor") == 248
+        and failure.get("unresolved_floor") == 40
+        and failure.get("excluded_count") == 68
+        and failure.get("denominator_status") == "UNKNOWN_OPEN"
+        and failure.get("bulk_registration_allowed") is False
+        and failure.get("evidence_currentness")
+        == "source_dated_lower_bound_pending_fresh_reconciliation"
+        and failure.get("evidence_refs") == EVENT_FAMILY_EVIDENCE_REFS
         and failure.get("corpus_complete") is False
         and failure.get("disposition")
         == "unknown_or_unregistered_event_types_quarantine_without_checkpoint_advance"
@@ -7792,7 +7839,14 @@ def cmd_validate_case_l(args: argparse.Namespace) -> int:
         "event_authority_boundary": {
             "proven_persisted_floor": EVENT_FAMILY_PROVEN_PERSISTED_FLOOR,
             "registered_kernel_rows": EVENT_FAMILY_REGISTRY_KERNEL_ROW_COUNT,
+            "evidence_registered_rows": EVENT_FAMILY_EVIDENCE_REGISTERED_ROWS,
             "proven_unregistered_floor": EVENT_FAMILY_PROVEN_UNREGISTERED_FLOOR,
+            "unresolved_floor": EVENT_FAMILY_UNRESOLVED_FLOOR,
+            "excluded_count": EVENT_FAMILY_EXCLUDED_COUNT,
+            "denominator_status": EVENT_FAMILY_DENOMINATOR_STATUS,
+            "bulk_registration_allowed": EVENT_FAMILY_BULK_REGISTRATION_ALLOWED,
+            "evidence_currentness": EVENT_FAMILY_EVIDENCE_CURRENTNESS,
+            "evidence_refs": EVENT_FAMILY_EVIDENCE_REFS,
             "complete_denominator_known": False,
             "contract_depth_complete": False,
             "disposition": "excluded_from_this_non_event_pass_and_still_fail_closed",
