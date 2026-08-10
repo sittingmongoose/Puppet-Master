@@ -1,0 +1,177 @@
+/* =====================================================================
+   proto-sprout-menu.css — the canonical Puppet Master "sprout" popout menu.
+   Extracted from Concepts/pm6-build/parts/10x-pm6-css-chat.part.html (lines
+   76–176) and adapted for the prototype. This is the ONLY menu pattern used
+   in this prototype — no native <select>, <dialog>, or contextmenu.
+   Slint note: a sprout menu maps to a PopupWindow/Window with a springy
+   scale animation driven by a state machine.
+   ===================================================================== */
+
+/* trigger button */
+.pm6-tb-menu-trigger {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--sm);
+  padding: var(--sm) var(--md);
+  background: var(--surface-elevated);
+  border: var(--border-width) solid var(--border-light);
+  border-radius: var(--radius-sm);
+  color: var(--text-secondary);
+  font-size: var(--fs-xs);
+  font-weight: 600;
+  cursor: pointer;
+  white-space: nowrap;
+  box-sizing: border-box;
+  transition: color var(--motion-fast) var(--ease-out),
+              background var(--motion-fast) var(--ease-out);
+}
+.pm6-tb-menu-trigger:hover { color: var(--text-primary); background: var(--surface); }
+.pm6-tb-menu-trigger[aria-expanded="true"] { color: var(--text-primary); }
+.pm6-tb-menu-trigger .pm6-tb-chev {
+  font-size: 9px;
+  opacity: .6;
+  transition: transform var(--motion-med) var(--ease-spring);
+}
+.pm6-tb-menu-trigger[aria-expanded="true"] .pm6-tb-chev { transform: rotate(180deg); }
+
+/* menu panel base — sprouts from a corner of the trigger */
+.pm6-tb-menu {
+  display: none;
+  /* position:fixed escapes any overflow:hidden ancestor (the panel host), so
+     the dropdown is never clipped by the narrow panel's scroll frame. The
+     open() helper computes top/left from the trigger's viewport rect. */
+  position: fixed;
+  top: 0;
+  left: 0;
+  min-width: 160px;
+  max-width: calc(100vw - 16px);
+  z-index: 220;
+  background: var(--surface-elevated);
+  border: var(--border-width) solid var(--border);
+  border-radius: var(--radius-md);
+  box-shadow: var(--elev-3);
+  padding: var(--xs) 0;
+  /* sprout origin vars (pinned per-open by JS setPopoutSprout) */
+  --pm6-sprout-ox: 88%;
+  --pm6-sprout-oy: 0%;
+  --pm6-sprout-tx: 0px;
+  --pm6-sprout-ty: -10px;
+  --pm6-sprout-sx: 0.72;
+  --pm6-sprout-sy: 0.48;
+  transform-origin: var(--pm6-sprout-ox) var(--pm6-sprout-oy);
+  opacity: 0;
+  transform: translate3d(var(--pm6-sprout-tx), var(--pm6-sprout-ty), 0)
+    scale3d(var(--pm6-sprout-sx), var(--pm6-sprout-sy), 1);
+  visibility: hidden;
+  pointer-events: none;
+  transition:
+    opacity 160ms var(--ease-out),
+    transform 300ms cubic-bezier(0.22, 1.55, 0.36, 1),
+    visibility 0s linear 300ms;
+  will-change: transform, opacity;
+  max-height: min(60vh, 420px);
+  overflow-y: auto;
+  box-sizing: border-box;
+}
+/* left-anchored variant: sprouts from the trigger's left edge instead of right.
+   (positional coords are now set by open(); this only tunes the grow origin.) */
+.pm6-tb-menu.sprout-left {
+  --pm6-sprout-ox: 12%;
+}
+
+/* open + closing states */
+.pm6-tb-menu.is-open {
+  display: block;
+  opacity: 1;
+  transform: translate3d(0, 0, 0) scale3d(1, 1, 1);
+  visibility: visible;
+  pointer-events: auto;
+  transition:
+    opacity 140ms var(--ease-out),
+    transform 300ms cubic-bezier(0.22, 1.55, 0.36, 1),
+    visibility 0s;
+}
+.pm6-tb-menu.is-closing {
+  display: block;
+  opacity: 0;
+  transform: translate3d(var(--pm6-sprout-tx), var(--pm6-sprout-ty), 0)
+    scale3d(var(--pm6-sprout-sx), var(--pm6-sprout-sy), 1);
+  visibility: hidden;
+  pointer-events: none;
+  transition:
+    opacity 45ms ease-in 175ms,
+    transform 220ms cubic-bezier(0.45, 0.05, 0.55, 0.2),
+    visibility 0s linear 220ms;
+}
+
+/* menu items */
+.pm6-tb-menu-item {
+  display: flex;
+  align-items: center;
+  gap: var(--sm);
+  width: 100%;
+  height: auto;
+  min-height: 30px;
+  text-align: left;
+  background: none;
+  border: none;
+  color: var(--text-secondary);
+  font-size: var(--fs-xs);
+  font-weight: 600;
+  line-height: 1.3;
+  letter-spacing: 0.02em;
+  padding: var(--sm) var(--md);
+  cursor: pointer;
+  border-radius: 0;
+  white-space: nowrap;
+  box-sizing: border-box;
+  font-family: inherit;
+}
+.pm6-tb-menu-item:hover {
+  background: var(--surface);
+  color: var(--text-primary);
+}
+.pm6-tb-menu-item.is-selected {
+  color: var(--text-primary);
+  background: var(--accent-soft);
+}
+.pm6-tb-menu-item .pm6-mi-check {
+  width: 12px; height: 12px;
+  opacity: 0;
+  color: var(--accent-primary);
+  flex-shrink: 0;
+}
+.pm6-tb-menu-item.is-selected .pm6-mi-check { opacity: 1; }
+.pm6-tb-menu-item .pm6-mi-label { flex: 1 1 auto; min-width: 0; overflow: hidden; text-overflow: ellipsis; }
+.pm6-tb-menu-item .pm6-mi-meta {
+  font-size: var(--fs-2xs);
+  color: var(--text-muted);
+  font-weight: 500;
+}
+.pm6-tb-menu-item.destructive { color: var(--accent-error); }
+.pm6-tb-menu-item.destructive:hover {
+  background: color-mix(in srgb, var(--accent-error) 10%, transparent);
+  color: var(--accent-error);
+}
+.pm6-tb-menu-item[disabled],
+.pm6-tb-menu-item.is-disabled {
+  opacity: .45;
+  cursor: not-allowed;
+  pointer-events: none;
+}
+.pm6-tb-menu-sep {
+  height: 1px;
+  background: var(--border-light);
+  margin: var(--xs) var(--md);
+}
+.pm6-tb-menu-group-label {
+  font-size: var(--fs-2xs);
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: .08em;
+  color: var(--text-muted);
+  padding: var(--sm) var(--md) var(--xs);
+}
+
+/* wrapper that positions the menu relative to its trigger */
+.pm6-tb-menu-wrap { position: relative; display: inline-flex; }

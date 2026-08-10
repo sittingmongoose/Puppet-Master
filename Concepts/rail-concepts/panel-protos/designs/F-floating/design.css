@@ -1,0 +1,417 @@
+/* =====================================================================
+   DESIGN F — FLOATING CARDS (BENTO-NARROW)
+   Philosophy: the anti-cramped option. Every concept lives in its own
+   detached, rounded, elevated card. Cards stack vertically, full-width —
+   so they never try to sit side by side and always fit the 220px floor.
+   Generous gaps (var(--md)) and breathing-room padding give the calm,
+   premium, friendly feel that is the friendly-dark / glass themes' native
+   aesthetic. Hover lifts each card a hair. Round everything.
+
+   Slint note: primary layout is a vertical ColumnLayout of card
+   containers; each card body is itself a small ColumnLayout. No CSS grid
+   on the primary axis, no :has(), no clamp(), no aspect-ratio.
+   ===================================================================== */
+
+/* ---- root: the vertical stack of cards ---- */
+.pf-root {
+  padding: var(--md);
+  display: flex;
+  flex-direction: column;
+  gap: var(--md);                 /* generous breathing room between cards */
+  font-size: var(--fs-xs);
+}
+
+/* ---- THE CARD (the signature element of this design) ---- */
+.pf-card {
+  background: var(--surface-elevated);
+  border: var(--border-width) solid var(--border);
+  border-radius: var(--radius-md);
+  padding: var(--md);
+  box-shadow: var(--elev-1);
+  display: flex;
+  flex-direction: column;
+  gap: var(--md);
+  transition: box-shadow var(--motion-med) var(--ease-out),
+              transform var(--motion-med) var(--ease-out),
+              border-color var(--motion-med) var(--ease-out);
+}
+.pf-card:hover {
+  transform: translateY(-1px);
+  box-shadow: var(--elev-2);
+}
+
+/* card header: uppercase tiny title (left) + optional chip (right) */
+.pf-head {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: var(--sm);
+  min-height: 16px;
+}
+.pf-title {
+  font-size: var(--fs-2xs);
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: .08em;
+  color: var(--text-muted);
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  min-width: 0;
+}
+.pf-head-chip { flex-shrink: 0; }
+
+/* card body: vertical flow of content */
+.pf-body {
+  display: flex;
+  flex-direction: column;
+  gap: var(--sm);
+}
+
+/* =====================================================================
+   ATOMS — reusable across every card. Mirrors the .pa-* vocabulary but
+   tuned for the airier floating aesthetic (softer, rounder, pill chips).
+   ===================================================================== */
+
+/* status dot */
+.pf-dot {
+  width: 7px; height: 7px;
+  border-radius: 50%;
+  flex-shrink: 0;
+  box-shadow: 0 0 0 2px color-mix(in srgb, currentColor 12%, transparent);
+}
+.pf-dot.ok   { background: var(--graph-passed);  color: var(--graph-passed); }
+.pf-dot.run  { background: var(--graph-running); color: var(--graph-running); }
+.pf-dot.fail { background: var(--graph-failed);  color: var(--graph-failed); }
+.pf-dot.idle { background: var(--graph-pending); color: var(--graph-pending); box-shadow: none; }
+
+/* soft status chip (pill) */
+.pf-chip {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--xs);
+  height: 18px;
+  padding: 0 var(--sm);
+  border-radius: var(--radius-pill);
+  font-size: var(--fs-2xs);
+  font-weight: 700;
+  letter-spacing: .02em;
+  white-space: nowrap;
+  flex-shrink: 0;
+  line-height: 1;
+}
+.pf-chip.ok    { background: color-mix(in srgb, var(--graph-passed) 18%, transparent); color: var(--graph-passed); }
+.pf-chip.warn  { background: color-mix(in srgb, var(--graph-running) 18%, transparent); color: var(--graph-running); }
+.pf-chip.err   { background: color-mix(in srgb, var(--graph-failed)  18%, transparent); color: var(--graph-failed); }
+.pf-chip.idle  { background: color-mix(in srgb, var(--graph-pending) 18%, transparent); color: var(--graph-pending); }
+.pf-chip.muted { background: color-mix(in srgb, var(--text-muted) 16%, transparent); color: var(--text-muted); }
+.pf-chip.fam   { background: var(--accent-soft); color: var(--accent-primary); }
+
+/* a chip that also carries a soft dot */
+.pf-chip .pf-chip-dot { width: 6px; height: 6px; border-radius: 50%; background: currentColor; box-shadow: none; }
+
+/* git status letter badge */
+.pf-gs {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 16px; height: 16px;
+  font-size: 9px;
+  font-weight: 800;
+  font-family: var(--mono-font);
+  border-radius: var(--radius-xs);
+  flex-shrink: 0;
+}
+.pf-gs.M { background: color-mix(in srgb, var(--graph-running) 22%, transparent); color: var(--graph-running); }
+.pf-gs.A { background: color-mix(in srgb, var(--graph-passed) 22%, transparent); color: var(--graph-passed); }
+
+/* ---- list rows (inside a card body) ---- */
+.pf-list { display: flex; flex-direction: column; gap: var(--xs); }
+.pf-row {
+  display: flex;
+  align-items: center;
+  gap: var(--sm);
+  padding: var(--sm) var(--sm);
+  min-height: 28px;
+  border-radius: var(--radius-sm);
+  background: color-mix(in srgb, var(--background) 55%, transparent);
+  color: var(--text-secondary);
+  cursor: pointer;
+  transition: background var(--motion-fast) var(--ease-out), color var(--motion-fast) var(--ease-out);
+}
+.pf-row:hover { background: var(--accent-soft); color: var(--text-primary); }
+.pf-row .pf-main {
+  flex: 1 1 auto;
+  min-width: 0;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  font-size: var(--fs-xs);
+}
+.pf-row .pf-meta { font-size: var(--fs-2xs); color: var(--text-muted); flex-shrink: 0; white-space: nowrap; }
+.pf-row .pf-sub  { display: block; font-size: var(--fs-2xs); color: var(--text-muted); margin-top: 1px; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+
+/* flat row variant (no fill) for dense KV-style lines */
+.pf-row.flat { background: none; min-height: 20px; padding: 1px var(--xs); }
+.pf-row.flat:hover { background: none; color: var(--text-secondary); }
+
+/* search hit line */
+.pf-hit {
+  display: flex;
+  gap: var(--sm);
+  padding: var(--xs) var(--sm);
+  font-family: var(--mono-font);
+  font-size: var(--fs-2xs);
+  color: var(--text-secondary);
+  cursor: pointer;
+  border-radius: var(--radius-xs);
+  line-height: 1.5;
+  background: color-mix(in srgb, var(--background) 50%, transparent);
+}
+.pf-hit:hover { background: var(--accent-soft); }
+.pf-hit .pf-ln { color: var(--text-muted); flex-shrink: 0; min-width: 20px; text-align: right; }
+.pf-hit .pf-code { overflow: hidden; text-overflow: ellipsis; white-space: nowrap; min-width: 0; }
+.pf-hit em { font-style: normal; background: color-mix(in srgb, var(--accent-warning) 35%, transparent); color: var(--text-primary); border-radius: var(--radius-xs); padding: 0 2px; }
+
+/* ---- KV (label : value) line, airy ---- */
+.pf-kv {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: var(--sm);
+  font-size: var(--fs-2xs);
+  min-height: 18px;
+}
+.pf-kv-k { color: var(--text-muted); text-transform: uppercase; letter-spacing: .04em; font-weight: 600; flex-shrink: 0; }
+.pf-kv-v { color: var(--text-secondary); text-align: right; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; min-width: 0; }
+.pf-kv-v.mono { font-family: var(--mono-font); }
+
+/* ---- inputs ---- */
+.pf-input {
+  width: 100%;
+  min-width: 0;
+  height: 30px;
+  padding: 0 var(--md);
+  background: var(--background);
+  border: var(--border-width) solid var(--border-light);
+  border-radius: var(--radius-md);
+  color: var(--text-primary);
+  font-size: var(--fs-xs);
+  font-family: inherit;
+  outline: none;
+  transition: border-color var(--motion-fast) var(--ease-out), box-shadow var(--motion-fast) var(--ease-out);
+}
+.pf-input:focus {
+  border-color: var(--accent-primary);
+  box-shadow: 0 0 0 3px var(--accent-glow);
+}
+.pf-input::placeholder { color: var(--text-muted); }
+
+/* ---- buttons (rounded, soft) ---- */
+.pf-btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: var(--xs);
+  height: 28px;
+  padding: 0 var(--md);
+  background: var(--background);
+  border: var(--border-width) solid var(--border-light);
+  border-radius: var(--radius-md);
+  color: var(--text-secondary);
+  font-size: var(--fs-xs);
+  font-weight: 600;
+  cursor: pointer;
+  font-family: inherit;
+  white-space: nowrap;
+  transition: all var(--motion-fast) var(--ease-out);
+}
+.pf-btn:hover { color: var(--text-primary); border-color: var(--accent-primary); background: var(--accent-soft); }
+.pf-btn.primary {
+  background: var(--accent-primary);
+  color: var(--background);
+  border-color: var(--accent-primary);
+  font-weight: 700;
+}
+.pf-btn.primary:hover { filter: brightness(1.08); background: var(--accent-primary); }
+.pf-btn.block { width: 100%; }
+.pf-btnrow { display: flex; gap: var(--sm); flex-wrap: wrap; }
+.pf-btnrow > .pf-btn { flex: 1 1 0; min-width: 0; }
+
+/* icon button */
+.pf-iconbtn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 30px; height: 30px;
+  background: var(--background);
+  border: var(--border-width) solid var(--border-light);
+  border-radius: var(--radius-md);
+  color: var(--text-secondary);
+  cursor: pointer;
+  flex-shrink: 0;
+  transition: all var(--motion-fast) var(--ease-out);
+}
+.pf-iconbtn:hover { color: var(--accent-primary); border-color: var(--accent-primary); background: var(--accent-soft); }
+
+/* mini row button */
+.pf-minibtn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  min-width: 22px; height: 22px;
+  padding: 0 var(--xs);
+  background: transparent;
+  border: var(--border-width) solid var(--border-light);
+  border-radius: var(--radius-pill);
+  color: var(--text-muted);
+  font-size: var(--fs-2xs);
+  font-weight: 700;
+  cursor: pointer;
+  font-family: inherit;
+  flex-shrink: 0;
+}
+.pf-minibtn:hover { color: var(--text-primary); border-color: var(--accent-primary); background: var(--accent-soft); }
+.pf-minibtn.danger { color: var(--accent-error); }
+.pf-minibtn.danger:hover { border-color: var(--accent-error); background: color-mix(in srgb, var(--accent-error) 12%, transparent); }
+
+/* ---- pills (toggle flags / filters) ---- */
+.pf-pills { display: flex; flex-wrap: wrap; gap: var(--xs); }
+.pf-pill {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--xs);
+  height: 22px;
+  padding: 0 var(--md);
+  background: var(--background);
+  border: var(--border-width) solid var(--border-light);
+  border-radius: var(--radius-pill);
+  color: var(--text-secondary);
+  font-size: var(--fs-2xs);
+  font-weight: 600;
+  cursor: pointer;
+  font-family: inherit;
+  white-space: nowrap;
+  transition: all var(--motion-fast) var(--ease-out);
+}
+.pf-pill:hover { color: var(--text-primary); border-color: var(--accent-primary); }
+.pf-pill.active {
+  background: var(--accent-soft);
+  border-color: var(--accent-primary);
+  color: var(--accent-primary);
+  font-weight: 700;
+}
+
+/* ---- sprout menu trigger (for scope / branch / view) ----
+   proto-sprout-menu.css sets .pm6-tb-menu-wrap{display:inline-flex}.
+   We widen it to full-width so the trigger fills the card. */
+.pf-sprout-wrap.pf-full {
+  display: flex;
+  width: 100%;
+}
+.pf-trigger {
+  display: flex;
+  align-items: center;
+  gap: var(--sm);
+  width: 100%;
+  height: 30px;
+  padding: 0 var(--md);
+  background: var(--background);
+  border: var(--border-width) solid var(--border-light);
+  border-radius: var(--radius-md);
+  color: var(--text-secondary);
+  font-size: var(--fs-xs);
+  font-weight: 600;
+  cursor: pointer;
+  font-family: inherit;
+  transition: all var(--motion-fast) var(--ease-out);
+}
+.pf-trigger:hover { color: var(--text-primary); border-color: var(--accent-primary); background: var(--accent-soft); }
+.pf-trigger .pf-trigger-label { flex: 1 1 auto; min-width: 0; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; text-align: left; }
+
+/* ---- footnote / helper text ---- */
+.pf-foot {
+  font-size: var(--fs-2xs);
+  color: var(--text-muted);
+  line-height: 1.5;
+}
+
+/* ---- two-column KV grid (tiny, allowed by brief) ----
+   Used for index status / build details. Slint-equivalent: GridLayout. */
+.pf-kvgrid { display: flex; flex-direction: column; gap: var(--xs); }
+
+/* ---- mono accent text (sha, ids, paths) ---- */
+.pf-mono { font-family: var(--mono-font); font-size: var(--fs-2xs); color: var(--text-secondary); }
+.pf-mono.accent { color: var(--accent-primary); }
+
+/* ---- chain (publish stages) ---- */
+.pf-chain { display: flex; flex-direction: column; gap: var(--xs); }
+.pf-chain-step {
+  display: flex;
+  align-items: center;
+  gap: var(--sm);
+  font-size: var(--fs-2xs);
+  padding: var(--xs) var(--sm);
+  border-radius: var(--radius-sm);
+  background: color-mix(in srgb, var(--background) 50%, transparent);
+}
+.pf-chain-num {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 18px; height: 18px;
+  border-radius: 50%;
+  background: var(--background);
+  border: var(--border-width) solid var(--border-light);
+  font-weight: 700;
+  color: var(--text-muted);
+  flex-shrink: 0;
+}
+.pf-chain-step.done .pf-chain-num { background: var(--graph-passed); color: var(--background); border-color: var(--graph-passed); }
+.pf-chain-step .pf-chain-label { flex: 1 1 auto; min-width: 0; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+
+/* ---- triage log block ---- */
+.pf-log {
+  font-family: var(--mono-font);
+  font-size: var(--fs-2xs);
+  background: var(--background);
+  border: var(--border-width) solid var(--border-light);
+  border-radius: var(--radius-sm);
+  padding: var(--sm) var(--md);
+  color: var(--text-secondary);
+  line-height: 1.55;
+  display: flex;
+  flex-direction: column;
+  gap: 1px;
+}
+.pf-log .pf-log-fail { color: var(--graph-failed); font-weight: 600; }
+
+/* ---- investigation bundle chips wrap ---- */
+.pf-bundle-chips { display: flex; flex-wrap: wrap; gap: var(--xs); }
+
+/* ---- subtle divider inside a card body ---- */
+.pf-divider {
+  height: 1px;
+  background: var(--border-light);
+  margin: var(--xs) 0;
+}
+
+/* small inline header label between groups */
+.pf-group-label {
+  font-size: var(--fs-2xs);
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: .06em;
+  color: var(--text-muted);
+}
+
+/* ---- section sub-summary (count line) ---- */
+.pf-tally {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: var(--sm);
+  font-size: var(--fs-2xs);
+  color: var(--text-muted);
+}
+.pf-tally b { color: var(--text-secondary); font-weight: 700; }

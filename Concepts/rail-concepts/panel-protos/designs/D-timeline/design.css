@@ -1,0 +1,542 @@
+/* =====================================================================
+   DESIGN D — VERTICAL TIMELINE
+   Philosophy: a story unfolding top-to-bottom. A vertical spine runs down
+   the left edge; every entry is a node on the spine (colored dot) with a
+   compact card to its right. Node color maps to status. Single-column
+   cards fit at 220px. The spine doubles as a "match spine" for Search
+   (files = nodes, hits = mini-nodes) and a "status spine" for Docker.
+
+   Vocabulary: .pt-* (proto-timeline). All colors/sizes/radii via tokens.
+   No CSS grid for the primary axis — flexbox columns only (Slint-safe).
+   No native <select>; sprout menus only.
+   ===================================================================== */
+
+/* ---- root + header ---- */
+.pt-root {
+  padding: var(--md);
+  display: flex;
+  flex-direction: column;
+  gap: var(--md);
+  font-size: var(--fs-xs);
+}
+
+/* small panel header line: title chip + optional scope control */
+.pt-head {
+  display: flex;
+  flex-direction: column;
+  gap: var(--sm);
+}
+.pt-head-row {
+  display: flex;
+  align-items: center;
+  gap: var(--sm);
+  min-width: 0;
+}
+.pt-head-label {
+  font-size: var(--fs-2xs);
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: .07em;
+  color: var(--text-muted);
+  flex: 1 1 auto;
+  min-width: 0;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+.pt-head-meta {
+  font-size: var(--fs-2xs);
+  color: var(--text-secondary);
+  font-weight: 600;
+  flex-shrink: 0;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  max-width: 60%;
+}
+
+/* ---- the spine: a relative container whose ::before draws the line ---- */
+.pt-spine {
+  position: relative;
+  padding-left: 22px;          /* room for node + line */
+  display: flex;
+  flex-direction: column;
+  gap: var(--md);              /* vertical breathing room between entries */
+}
+.pt-spine::before {
+  content: "";
+  position: absolute;
+  left: 4px;                   /* center of 10px node at 0..10, node left:-6 → center at 4 within padding */
+  top: 5px;                    /* start at first node's vertical center */
+  bottom: 5px;
+  width: 2px;
+  background: var(--border-light);
+  border-radius: var(--radius-pill);
+  pointer-events: none;
+}
+
+/* a single timeline entry: node (absolutely on line) + card */
+.pt-entry {
+  position: relative;
+  min-width: 0;
+}
+.pt-node {
+  position: absolute;
+  left: -22px;                 /* sit on the spine line (offset matches spine padding) */
+  top: 2px;
+  width: 10px;
+  height: 10px;
+  border-radius: 50%;
+  background: var(--graph-pending);
+  border: 2px solid var(--surface);   /* punch through the line so the dot reads clean */
+  box-sizing: border-box;
+  z-index: 1;
+}
+.pt-node.ok   { background: var(--graph-passed); }
+.pt-node.run  { background: var(--graph-running); }
+.pt-node.fail { background: var(--graph-failed); }
+.pt-node.idle { background: var(--graph-pending); }
+.pt-node.accent { background: var(--accent-primary); }
+.pt-node.warn { background: var(--accent-warning); }
+/* running node gets a soft pulsing ring */
+.pt-node.run::after,
+.pt-node.ok::after {
+  content: "";
+  position: absolute;
+  inset: -3px;
+  border-radius: 50%;
+  background: color-mix(in srgb, currentColor 40%, transparent);
+  opacity: .35;
+}
+.pt-node.run { color: var(--graph-running); }
+.pt-node.ok  { color: var(--graph-passed); }
+
+/* ---- the card to the right of a node ---- */
+.pt-card {
+  display: flex;
+  flex-direction: column;
+  gap: var(--xs);
+  min-width: 0;
+}
+.pt-line {
+  display: flex;
+  align-items: center;
+  gap: var(--sm);
+  min-width: 0;
+}
+.pt-title {
+  flex: 1 1 auto;
+  min-width: 0;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  font-size: var(--fs-xs);
+  font-weight: 700;
+  color: var(--text-primary);
+  cursor: pointer;
+}
+.pt-title.mono { font-family: var(--mono-font); font-weight: 600; font-size: var(--fs-2xs); }
+.pt-meta {
+  font-size: var(--fs-2xs);
+  color: var(--text-muted);
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  min-width: 0;
+}
+.pt-meta.mono { font-family: var(--mono-font); }
+.pt-sub {
+  font-size: var(--fs-2xs);
+  color: var(--text-secondary);
+  line-height: 1.45;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  min-width: 0;
+}
+.pt-sub.wrap { white-space: normal; }
+
+/* clickable card surface (hover affordance) */
+.pt-card.clickable { cursor: pointer; border-radius: var(--radius-sm); padding: 2px 0; }
+.pt-card.clickable:hover .pt-title { color: var(--accent-primary); }
+
+/* ---- status chip ---- */
+.pt-chip {
+  display: inline-flex;
+  align-items: center;
+  height: 17px;
+  padding: 0 var(--sm);
+  border-radius: var(--radius-pill);
+  font-size: var(--fs-2xs);
+  font-weight: 700;
+  letter-spacing: .02em;
+  white-space: nowrap;
+  flex-shrink: 0;
+}
+.pt-chip.ok    { background: color-mix(in srgb, var(--graph-passed) 18%, transparent); color: var(--graph-passed); }
+.pt-chip.run   { background: color-mix(in srgb, var(--graph-running) 18%, transparent); color: var(--graph-running); }
+.pt-chip.fail  { background: color-mix(in srgb, var(--graph-failed) 18%, transparent); color: var(--graph-failed); }
+.pt-chip.idle  { background: color-mix(in srgb, var(--graph-pending) 18%, transparent); color: var(--graph-pending); }
+.pt-chip.warn  { background: color-mix(in srgb, var(--accent-warning) 18%, transparent); color: var(--accent-warning); }
+.pt-chip.muted { background: color-mix(in srgb, var(--text-muted) 16%, transparent); color: var(--text-muted); }
+.pt-chip.accent{ background: var(--accent-soft); color: var(--accent-primary); }
+.pt-chip.err   { background: color-mix(in srgb, var(--accent-error) 18%, transparent); color: var(--accent-error); }
+
+/* git status letter badge */
+.pt-gs {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 15px; height: 15px;
+  font-size: 9px;
+  font-weight: 800;
+  font-family: var(--mono-font);
+  border-radius: var(--radius-xs);
+  flex-shrink: 0;
+}
+.pt-gs.M { background: color-mix(in srgb, var(--graph-running) 22%, transparent); color: var(--graph-running); }
+.pt-gs.A { background: color-mix(in srgb, var(--graph-passed) 22%, transparent); color: var(--graph-passed); }
+.pt-gs.D { background: color-mix(in srgb, var(--accent-error) 22%, transparent); color: var(--accent-error); }
+
+/* ---- nested mini-spine (search hits under a file node) ---- */
+.pt-sub-spine {
+  position: relative;
+  padding-left: 16px;
+  display: flex;
+  flex-direction: column;
+  gap: var(--xs);
+  margin-top: var(--xs);
+}
+.pt-sub-spine::before {
+  content: "";
+  position: absolute;
+  left: 3px;
+  top: 4px;
+  bottom: 4px;
+  width: 2px;
+  background: var(--border-light);
+  border-radius: var(--radius-pill);
+  opacity: .7;
+}
+.pt-mini-node {
+  position: absolute;
+  left: -16px;
+  top: 4px;
+  width: 6px;
+  height: 6px;
+  border-radius: 50%;
+  background: var(--accent-primary);
+  opacity: .7;
+}
+.pt-hit {
+  position: relative;
+  display: flex;
+  gap: var(--sm);
+  font-family: var(--mono-font);
+  font-size: var(--fs-2xs);
+  color: var(--text-secondary);
+  cursor: pointer;
+  border-radius: var(--radius-xs);
+  line-height: 1.4;
+  padding: 1px 0;
+}
+.pt-hit:hover { color: var(--text-primary); }
+.pt-hit .pt-ln {
+  color: var(--text-muted);
+  flex-shrink: 0;
+  min-width: 20px;
+  text-align: right;
+}
+.pt-hit .pt-code {
+  flex: 1 1 auto;
+  min-width: 0;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+.pt-hit em {
+  font-style: normal;
+  background: color-mix(in srgb, var(--accent-warning) 30%, transparent);
+  color: var(--text-primary);
+  border-radius: 2px;
+  padding: 0 1px;
+}
+
+/* ---- controls row (toggle pills, scope menus) ---- */
+.pt-pills {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--xs);
+  min-width: 0;
+}
+.pt-pill {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--xs);
+  height: 21px;
+  padding: 0 var(--sm);
+  background: var(--surface-elevated);
+  border: var(--border-width) solid var(--border-light);
+  border-radius: var(--radius-pill);
+  color: var(--text-secondary);
+  font-size: var(--fs-2xs);
+  font-weight: 600;
+  cursor: pointer;
+  font-family: inherit;
+  white-space: nowrap;
+  transition: all var(--motion-fast) var(--ease-out);
+}
+.pt-pill:hover { color: var(--text-primary); border-color: var(--border); }
+.pt-pill.active {
+  background: var(--accent-soft);
+  border-color: var(--accent-primary);
+  color: var(--text-primary);
+}
+
+/* scope/branch trigger styled like a pill but block-width when needed */
+.pt-trigger {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--xs);
+  height: 24px;
+  padding: 0 var(--sm);
+  background: var(--surface-elevated);
+  border: var(--border-width) solid var(--border-light);
+  border-radius: var(--radius-sm);
+  color: var(--text-secondary);
+  font-size: var(--fs-2xs);
+  font-weight: 600;
+  cursor: pointer;
+  font-family: inherit;
+  white-space: nowrap;
+  transition: all var(--motion-fast) var(--ease-out);
+}
+.pt-trigger:hover { color: var(--text-primary); border-color: var(--border); }
+.pt-trigger.block { width: 100%; justify-content: flex-start; }
+.pt-trigger .pt-trig-label {
+  flex: 1 1 auto;
+  min-width: 0;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+/* ---- search input ---- */
+.pt-input {
+  flex: 1 1 auto;
+  min-width: 0;
+  height: 28px;
+  padding: 0 var(--md);
+  background: var(--surface-elevated);
+  border: var(--border-width) solid var(--border-light);
+  border-radius: var(--radius-sm);
+  color: var(--text-primary);
+  font-size: var(--fs-xs);
+  font-family: inherit;
+  outline: none;
+}
+.pt-input:focus { border-color: var(--accent-primary); }
+.pt-input::placeholder { color: var(--text-muted); }
+.pt-input.mono { font-family: var(--mono-font); font-size: var(--fs-2xs); }
+
+/* ---- buttons ---- */
+.pt-btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: var(--xs);
+  height: 24px;
+  padding: 0 var(--md);
+  background: var(--surface-elevated);
+  border: var(--border-width) solid var(--border-light);
+  border-radius: var(--radius-sm);
+  color: var(--text-secondary);
+  font-size: var(--fs-xs);
+  font-weight: 600;
+  cursor: pointer;
+  font-family: inherit;
+  white-space: nowrap;
+  transition: all var(--motion-fast) var(--ease-out);
+}
+.pt-btn:hover { color: var(--text-primary); border-color: var(--border); }
+.pt-btn.primary {
+  background: var(--accent-primary);
+  color: var(--background);
+  border-color: var(--accent-primary);
+  font-weight: 700;
+}
+.pt-btn.primary:hover { filter: brightness(1.08); }
+.pt-btn.block { width: 100%; }
+.pt-btnrow { display: flex; gap: var(--sm); }
+.pt-btnrow > .pt-btn { flex: 1 1 0; min-width: 0; }
+.pt-btnrow > .pt-btn-span-2 { flex: 2 1 0; }
+
+/* mini action button (row-level) */
+.pt-minibtn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  min-width: 18px; height: 18px;
+  padding: 0 var(--xs);
+  background: none;
+  border: var(--border-width) solid var(--border-light);
+  border-radius: var(--radius-xs);
+  color: var(--text-muted);
+  font-size: var(--fs-2xs);
+  font-weight: 700;
+  cursor: pointer;
+  font-family: inherit;
+  flex-shrink: 0;
+}
+.pt-minibtn:hover { color: var(--text-primary); border-color: var(--border); background: var(--surface-elevated); }
+.pt-minibtn.danger { color: var(--accent-error); }
+.pt-minibtn.danger:hover { border-color: var(--accent-error); }
+
+/* ---- KV detail block (used inside entries / triage) ---- */
+.pt-kv {
+  display: flex;
+  align-items: baseline;
+  justify-content: space-between;
+  gap: var(--sm);
+  font-size: var(--fs-2xs);
+  min-height: 16px;
+  min-width: 0;
+}
+.pt-kv-k {
+  color: var(--text-muted);
+  text-transform: uppercase;
+  letter-spacing: .04em;
+  font-weight: 600;
+  flex-shrink: 0;
+}
+.pt-kv-v {
+  color: var(--text-secondary);
+  text-align: right;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  min-width: 0;
+}
+.pt-kv-v.mono { font-family: var(--mono-font); }
+
+/* triage / log block (failed run detail) */
+.pt-log {
+  font-family: var(--mono-font);
+  font-size: var(--fs-2xs);
+  background: var(--background);
+  border: var(--border-width) solid var(--border-light);
+  border-radius: var(--radius-xs);
+  padding: var(--sm);
+  color: var(--text-secondary);
+  line-height: 1.5;
+  display: flex;
+  flex-direction: column;
+  gap: 1px;
+}
+.pt-log .pt-log-fail { color: var(--graph-failed); }
+.pt-log-head { color: var(--text-muted); margin-bottom: var(--xs); font-family: var(--body-font); }
+.pt-log-head b { color: var(--text-primary); font-family: var(--mono-font); font-weight: 700; }
+
+/* ---- footer ---- */
+.pt-foot {
+  font-size: var(--fs-2xs);
+  color: var(--text-muted);
+  line-height: 1.4;
+}
+
+/* ---- section divider header (groups within a spine) ---- */
+.pt-group-label {
+  font-size: var(--fs-2xs);
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: .07em;
+  color: var(--text-muted);
+  margin-top: var(--xs);
+  padding-left: 0;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+.pt-group-label:first-child { margin-top: 0; }
+
+/* ---- publish chain (docker) — vertical status spine of stages ---- */
+.pt-chain {
+  position: relative;
+  padding-left: 22px;
+  display: flex;
+  flex-direction: column;
+  gap: var(--sm);
+}
+.pt-chain::before {
+  content: "";
+  position: absolute;
+  left: 9px;
+  top: 9px;
+  bottom: 9px;
+  width: 2px;
+  background: var(--border-light);
+  border-radius: var(--radius-pill);
+}
+.pt-chain-step {
+  position: relative;
+  display: flex;
+  align-items: center;
+  gap: var(--sm);
+  font-size: var(--fs-2xs);
+  min-width: 0;
+}
+.pt-chain-num {
+  position: absolute;
+  left: -22px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 18px; height: 18px;
+  border-radius: 50%;
+  background: var(--surface-elevated);
+  border: var(--border-width) solid var(--border-light);
+  font-weight: 700;
+  font-size: var(--fs-2xs);
+  color: var(--text-muted);
+  flex-shrink: 0;
+  z-index: 1;
+}
+.pt-chain-step.done .pt-chain-num {
+  background: var(--graph-passed);
+  color: var(--background);
+  border-color: var(--graph-passed);
+}
+.pt-chain-step.run .pt-chain-num {
+  background: var(--graph-running);
+  color: var(--background);
+  border-color: var(--graph-running);
+}
+.pt-chain-step > .pt-chain-label {
+  flex: 1 1 auto;
+  min-width: 0;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+/* ---- investigation bundle (artifacts) ---- */
+.pt-bundle {
+  border: var(--border-width) solid var(--border-light);
+  border-radius: var(--radius-md);
+  padding: var(--md);
+  display: flex;
+  flex-direction: column;
+  gap: var(--sm);
+}
+.pt-bundle-id {
+  font-family: var(--mono-font);
+  font-size: var(--fs-2xs);
+  color: var(--accent-primary);
+  font-weight: 700;
+}
+.pt-bundle-chips { display: flex; flex-wrap: wrap; gap: var(--xs); }
+
+/* utility */
+.pt-mono { font-family: var(--mono-font); }
+.pt-muted { color: var(--text-muted); }
+.pt-spacer { flex: 1 1 auto; min-width: 0; }
