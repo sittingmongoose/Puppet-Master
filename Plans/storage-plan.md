@@ -16830,7 +16830,7 @@ This section is the canonical storage-owner repair for Case L. It supersedes ear
 
 Approved source refs:
 
-- `Plans/.audits/plan-assurance-handoff-2026-07-17/HANDOFF.md#Phase-2-authorized-repair`
+- `Plans/.audits/plan-assurance-handoff-2026-07-17/HANDOFF.md#phase-2--execute-the-case-l-repairs-parallel-with-phase-1`
 - `Case-L:CASE_L_APPROVAL_2026-07-17.md`
 - `Case-L:DECISION_REGISTER.md`
 - `Case-L:REPAIR_BRIEF.md#L-001..L-033`
