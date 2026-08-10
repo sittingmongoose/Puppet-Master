@@ -1,0 +1,225 @@
+<!doctype html>
+<html lang="en" data-theme="friendly-dark" data-reduced-motion="0">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+  <meta name="color-scheme" content="dark light">
+  <meta name="concept-hub-version" content="2">
+  <link rel="icon" href="data:,">
+  <title>Puppet Master — Concept Hub</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Cal+Sans&family=Nunito:wght@500;600;700;800&family=Outfit:wght@400;500;600;700&family=Rajdhani:wght@500;600;700&display=swap">
+  <link rel="stylesheet" href="/assets/styles.css?v=2">
+</head>
+<body>
+  <a class="skip-link" href="#conceptsMain">Skip to concepts</a>
+  <div class="ambient" aria-hidden="true"></div>
+
+  <header class="topbar">
+    <a class="brand" href="#usage" aria-label="Puppet Master Concept Hub home">
+      <svg class="brand-mark" viewBox="0 0 28 28" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+        <path d="M5 7.5 14 2.5l9 5v10l-9 5-9-5z"/>
+        <path d="m5 7.5 9 5 9-5M14 12.5v10M9.5 5l9 5"/>
+      </svg>
+      <span class="brand-copy"><strong>PUPPET MASTER</strong><small>Concept Hub</small></span>
+    </a>
+
+    <nav class="topic-tabs" id="topicTabs" role="tablist" aria-label="Concept topics"></nav>
+
+    <div class="topbar-actions">
+      <a class="quiet-link" id="baselineLink" href="/concepts/PMConcept7.html" target="_blank" rel="noopener">
+        <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4 5h16v14H4zM8 9h8M8 13h5"/></svg>
+        <span>PMConcept7</span>
+      </a>
+      <span class="access-badge" id="accessBadge">Connecting</span>
+    </div>
+  </header>
+
+  <section class="control-deck" aria-label="Comparison controls">
+    <div class="control-group view-control" aria-label="View mode">
+      <span class="control-label">VIEW</span>
+      <div class="segmented" role="group" aria-label="View mode">
+        <button type="button" class="segment is-active" id="compareMode" aria-pressed="true">Compare</button>
+        <button type="button" class="segment" id="focusMode" aria-pressed="false">Focus</button>
+      </div>
+    </div>
+
+    <label class="control-group select-control">
+      <span class="control-label">THEME</span>
+      <span class="select-wrap">
+        <select id="themeSelect">
+          <option value="friendly-dark">Friendly Dark</option>
+          <option value="friendly-light">Friendly Light</option>
+          <option value="glass-dark">Glass Dark</option>
+          <option value="glass-light">Glass Light</option>
+          <option value="retro-dark">Retro Dark</option>
+          <option value="retro-light">Retro Light</option>
+          <option value="basic-dark">Basic Dark</option>
+          <option value="basic-light">Basic Light</option>
+        </select>
+        <svg viewBox="0 0 24 24" aria-hidden="true"><path d="m8 10 4 4 4-4"/></svg>
+      </span>
+    </label>
+
+    <div class="control-group range-control">
+      <span class="control-label">PREVIEW SIZE</span>
+      <div class="preset-row" id="cardPresets">
+        <button type="button" data-card-width="300">300</button>
+        <button type="button" data-card-width="380">380</button>
+        <button type="button" data-card-width="480">480</button>
+        <button type="button" data-card-width="600">600</button>
+      </div>
+      <input id="cardSize" type="range" min="260" max="680" step="10" value="380" aria-label="Preview card width">
+      <output id="cardSizeReadout" for="cardSize">380</output>
+    </div>
+
+    <div class="control-group range-control" id="testWidthControl">
+      <span class="control-label" id="testWidthLabel">TEST WIDTH</span>
+      <div class="preset-row page-presets" id="pagePresets"></div>
+      <input id="pageWidth" type="range" min="360" max="2500" step="10" value="1280" aria-label="Rendered width inside each preview">
+      <output id="pageWidthReadout" for="pageWidth">1280</output>
+    </div>
+
+    <button type="button" class="motion-toggle" id="motionToggle" aria-pressed="false">
+      <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4 14c3-8 5 4 8-4s5 4 8-4"/></svg>
+      <span>Reduce motion</span>
+    </button>
+  </section>
+
+  <div class="workspace-shell">
+    <aside class="filter-panel" id="filterPanel" aria-label="Concept filters">
+      <div class="filter-heading">
+        <div>
+          <span class="section-kicker">NARROW THE ROOM</span>
+          <h2>Filters</h2>
+        </div>
+        <button type="button" class="icon-button mobile-filter-close" id="closeFilters" aria-label="Close filters">
+          <svg viewBox="0 0 24 24" aria-hidden="true"><path d="m6 6 12 12M18 6 6 18"/></svg>
+        </button>
+      </div>
+      <div class="filter-section">
+        <div class="filter-section-title"><span>Models</span><button type="button" id="clearModels">Clear</button></div>
+        <div class="filter-list" id="modelFilters"></div>
+      </div>
+      <div class="filter-section">
+        <div class="filter-section-title"><span>Types</span><button type="button" id="clearTypes">Clear</button></div>
+        <div class="filter-list" id="typeFilters"></div>
+      </div>
+      <div class="filter-section">
+        <div class="filter-section-title"><span>Tags</span><button type="button" id="clearTags">Clear</button></div>
+        <div class="tag-cloud" id="tagFilters"></div>
+      </div>
+      <div class="filter-note">
+        <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 3v18M7 8l5-5 5 5M7 16l5 5 5-5"/></svg>
+        <p id="widthHelp">Preview size changes the room. Test width changes the relevant surface inside each concept.</p>
+      </div>
+    </aside>
+
+    <main class="main" id="conceptsMain" tabindex="-1">
+      <header class="main-header">
+        <div class="title-block">
+          <span class="section-kicker" id="topicKicker">CONCEPT COLLECTION</span>
+          <h1 id="topicTitle">Usage</h1>
+          <p id="topicDescription">Loading concept collection…</p>
+        </div>
+        <div class="collection-count" aria-live="polite">
+          <strong id="visibleCount">0</strong>
+          <span id="countLabel">concepts visible</span>
+        </div>
+      </header>
+
+      <div class="search-row">
+        <label class="search-field">
+          <svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="11" cy="11" r="6"/><path d="m16 16 4 4"/></svg>
+          <span class="sr-only">Search concepts</span>
+          <input id="searchInput" type="search" placeholder="Search concepts, models, or tags" autocomplete="off">
+        </label>
+        <label class="sort-field">
+          <span>Sort</span>
+          <span class="select-wrap">
+            <select id="sortSelect">
+              <option value="curated">Curated</option>
+              <option value="model">Model A–Z</option>
+              <option value="title">Title A–Z</option>
+              <option value="recent">Recently changed</option>
+            </select>
+            <svg viewBox="0 0 24 24" aria-hidden="true"><path d="m8 10 4 4 4-4"/></svg>
+          </span>
+        </label>
+        <button type="button" class="filter-trigger" id="openFilters">
+          <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4 6h16M7 12h10M10 18h4"/></svg>
+          Filters
+        </button>
+      </div>
+
+      <div class="warning-strip" id="warningStrip" hidden>
+        <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 4 3 20h18zM12 9v5M12 17h.01"/></svg>
+        <span id="warningText"></span>
+      </div>
+
+      <div class="topic-rooms" id="topicRooms" aria-live="polite"></div>
+
+      <section class="empty-state" id="emptyState" hidden>
+        <svg viewBox="0 0 64 64" aria-hidden="true"><path d="M10 16h44v34H10zM18 24h28M18 32h18M18 40h23"/></svg>
+        <h2>No concepts match</h2>
+        <p>Clear a filter or try a broader search.</p>
+        <button type="button" id="resetFilters">Show all concepts</button>
+      </section>
+    </main>
+  </div>
+
+  <div class="filter-scrim" id="filterScrim" hidden></div>
+  <button type="button" class="focus-exit" id="exitFocus" hidden>
+    <svg viewBox="0 0 24 24" aria-hidden="true"><path d="m6 6 12 12M18 6 6 18"/></svg>
+    <span>Exit Focus</span>
+    <kbd>Esc</kbd>
+  </button>
+  <div class="toast-region" id="toastRegion" aria-live="polite" aria-atomic="true"></div>
+
+  <template id="cardTemplate">
+    <article class="concept-card">
+      <header class="card-header">
+        <div class="model-line">
+          <span class="model-badge"></span>
+          <span class="unknown-badge" hidden>Unconfirmed author</span>
+          <button type="button" class="edit-label" hidden>
+            <svg viewBox="0 0 24 24" aria-hidden="true"><path d="m4 16-.5 4.5L8 20l10-10-4-4zM12.5 7.5l4 4"/></svg>
+            <span>Edit label</span>
+          </button>
+        </div>
+        <div class="card-title-row">
+          <div class="card-copy">
+            <span class="card-kind"></span>
+            <h2 class="card-title"></h2>
+          </div>
+          <button type="button" class="focus-card" aria-label="Focus concept">
+            <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M8 3H3v5M16 3h5v5M8 21H3v-5M16 21h5v-5"/></svg>
+            <span>Focus</span>
+          </button>
+        </div>
+        <div class="card-tags"></div>
+      </header>
+      <div class="workspace-notice" hidden>
+        <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4 5h16v14H4zM8 9h8M8 13h5"/></svg>
+        Controls inside workspace
+      </div>
+      <div class="preview-stage">
+        <div class="preview-loading"><span></span><span></span><span></span></div>
+        <iframe loading="lazy" title=""></iframe>
+        <div class="preview-error" hidden>
+          <strong>Preview unavailable</strong>
+          <span></span>
+          <button type="button" class="preview-retry" hidden>Retry preview</button>
+        </div>
+      </div>
+      <footer class="card-footer">
+        <div class="card-actions"></div>
+        <span class="viewport-readout"></span>
+      </footer>
+    </article>
+  </template>
+
+  <script src="/assets/app.js?v=2" defer></script>
+</body>
+</html>
