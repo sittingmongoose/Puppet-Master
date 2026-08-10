@@ -1,7 +1,0 @@
-{"disposition":"excluded","path_prefix":"Plans/.audits/","reason":"audit outputs are not canonical product prose"}
-{"disposition":"excluded","path_prefix":"Plans/ledgers/","reason":"source lineage memory only"}
-{"disposition":"excluded","path_prefix":"Plans/_shards/","reason":"generated shards"}
-{"disposition":"excluded","path_prefix":"Plans/.evidence/","reason":"generated governance evidence"}
-{"disposition":"structural_input_only","path_prefix":"Plans/.plan_index/","reason":"generated index used only for semantic boundaries"}
-{"disposition":"excluded","path_prefix":"Plans/Spec_Lock.json","reason":"governance lock artifact"}
-{"disposition":"excluded","path_prefix":"Plans/auto_decisions.jsonl","reason":"generated decision artifact"}
