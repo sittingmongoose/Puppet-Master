@@ -1,0 +1,325 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="friendly-dark">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Proto 03 — Chip rail</title>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&family=Nunito:wght@600;700&family=Orbitron:wght@600;700&family=Quicksand:wght@500;600;700&family=Rajdhani:wght@500;600;700&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="_shared.css" />
+  <style>
+    .cr-host { position: relative; width: 100%; height: 100%; display: flex; align-items: center; justify-content: center; }
+    .cr-rail {
+      display: flex; align-items: center; gap: 4px;
+      height: 28px; max-width: 100%;
+      padding: 0 4px;
+      border: var(--border-width) dashed var(--border-light);
+      border-radius: var(--border-radius);
+      min-width: 80px;
+      cursor: pointer;
+    }
+    .cr-rail:hover { border-style: solid; border-color: var(--border); }
+    .cr-chip {
+      height: 22px;
+      max-width: 92px;
+      padding: 0 8px;
+      display: inline-flex; align-items: center; gap: 4px;
+      border-radius: var(--radius-pill);
+      border: var(--border-width) solid color-mix(in srgb, var(--n-accent) 55%, var(--border));
+      background: color-mix(in srgb, var(--n-accent) 18%, var(--surface-elevated));
+      color: var(--text-primary);
+      font-size: 10px; font-weight: 700;
+      white-space: nowrap; overflow: hidden; text-overflow: ellipsis;
+      animation: crIn var(--motion-med) var(--ease-spring) both;
+      position: relative;
+    }
+    .cr-chip.ephemeral { opacity: .85; }
+    .cr-chip .dot {
+      width: 6px; height: 6px; border-radius: 50%;
+      background: var(--n-accent); flex: 0 0 auto;
+    }
+    .cr-chip .lab { overflow: hidden; text-overflow: ellipsis; }
+    .cr-chip .n-x {
+      display: none; font-size: 12px; margin-left: 2px;
+    }
+    .cr-chip:hover .n-x { display: inline; }
+    .cr-more {
+      height: 22px; min-width: 28px; padding: 0 6px;
+      border-radius: var(--radius-pill);
+      border: var(--border-width) solid var(--border);
+      background: var(--surface-elevated);
+      font-size: 10px; font-weight: 800;
+      color: var(--text-secondary);
+      display: inline-flex; align-items: center; justify-content: center;
+    }
+    .cr-placeholder {
+      font-size: 10px; color: var(--text-muted); font-weight: 700; padding: 0 6px;
+    }
+    @keyframes crIn {
+      from { opacity: 0; transform: scale(.7) translateY(4px); }
+      to { opacity: 1; transform: scale(1) translateY(0); }
+    }
+    @keyframes crOut {
+      to { opacity: 0; transform: scale(.8); max-width: 0; padding: 0; margin: 0; }
+    }
+    .cr-chip.out { animation: crOut var(--motion-med) var(--ease-out) forwards; }
+
+    .cr-panel {
+      position: absolute;
+      top: calc(100% + 8px);
+      left: 50%;
+      width: 300px;
+      background: var(--surface-elevated);
+      border: var(--border-width) solid var(--border);
+      border-radius: var(--border-radius);
+      box-shadow: var(--elev-3);
+      padding: 8px;
+      z-index: 60;
+      opacity: 0;
+      transform: translateX(-50%) translateY(-8px);
+      pointer-events: none;
+      transition: opacity var(--motion-med), transform var(--motion-med) var(--ease-out);
+    }
+    .cr-panel.open {
+      opacity: 1;
+      transform: translateX(-50%) translateY(0);
+      pointer-events: auto;
+    }
+    .cr-panel-head {
+      display: flex; justify-content: space-between; align-items: center;
+      padding: 4px 4px 8px; font-size: 11px; font-weight: 700; color: var(--text-muted);
+    }
+    .cr-row {
+      display: flex; gap: 8px; align-items: flex-start;
+      padding: 8px; margin-bottom: 6px;
+      border: var(--border-width) solid var(--border-light);
+      border-radius: var(--border-radius);
+      border-left: 3px solid var(--n-accent);
+      background: var(--surface);
+    }
+    .cr-row .t { font-size: 12px; font-weight: 700; }
+    .cr-row .b { font-size: 11px; color: var(--text-muted); }
+    .cr-row .meta { flex: 1; }
+  </style>
+</head>
+<body>
+  <div class="app-shell">
+    <header class="title-bar">
+      <span class="app-name">Puppet Master</span>
+      <div class="project-dropdown"><span>tastebook</span><span>▼</span></div>
+      <nav class="page-tabs">
+        <span class="page-tab active">Home</span>
+        <span class="page-tab">Projects</span>
+        <span class="page-tab">Planning Wizard</span>
+        <span class="page-tab">Orchestrator</span>
+        <span class="page-tab">Usage</span>
+        <span class="page-tab">Settings</span>
+      </nav>
+      <div class="notify-slot">
+        <div class="cr-host">
+          <div class="cr-rail" id="crRail" title="Click to expand"></div>
+          <div class="cr-panel" id="crPanel">
+            <div class="cr-panel-head">
+              <span>Severity rail</span>
+              <button type="button" class="clear-all-btn" id="crClear">Clear all</button>
+            </div>
+            <div id="crList"></div>
+          </div>
+        </div>
+      </div>
+      <input type="text" class="search-bar" placeholder="Search files, commands..." />
+      <select class="theme-select" id="themeSelect">
+        <option value="friendly-dark">Friendly Dark</option>
+        <option value="friendly-light">Friendly Light</option>
+        <option value="glass-dark">Glass Dark</option>
+        <option value="glass-light">Glass Light</option>
+        <option value="retro-dark">Retro Dark</option>
+        <option value="retro-light">Retro Light</option>
+        <option value="basic-dark">Basic Dark</option>
+        <option value="basic-light">Basic Light</option>
+      </select>
+    </header>
+    <div class="main-area">
+      <aside class="fake-side"><div class="dot"></div><div class="dot"></div><div class="dot"></div><span>CHAT</span></aside>
+      <main class="home-pane">
+        <div class="proto-banner">Proto 03 — Severity chip rail</div>
+        <h1>Home</h1>
+        <p>Compact severity-colored chips pack left→right. Overflow becomes +N. Ephemeral chips auto-vanish; important chips stay until dismissed.</p>
+        <div class="home-cards">
+          <div class="home-card"><strong>Projects</strong><span>3 active</span></div>
+          <div class="home-card"><strong>Runs</strong><span>Wave idle</span></div>
+          <div class="home-card"><strong>Usage</strong><span>42% today</span></div>
+        </div>
+      </main>
+      <aside class="fake-chat">
+        <div class="bubble">Chips encode severity at a glance.</div>
+        <div class="bubble me">Click the rail for the full list.</div>
+      </aside>
+    </div>
+  </div>
+
+  <div class="demo-panel">
+    <h2>Proto 03 controls</h2>
+    <p class="hint">Color chips + overflow count. Dense and scannable.</p>
+    <div class="row">
+      <button type="button" id="btnEph">Ephemeral</button>
+      <button type="button" class="primary" id="btnImp">Important</button>
+      <button type="button" id="btnWarn">Warning</button>
+    </div>
+    <div class="row">
+      <button type="button" id="btnReduced">Motion: full</button>
+      <button type="button" id="btnClear">Clear all</button>
+    </div>
+    <div class="demo-nav">
+      <a href="01-rightward-stack.html">01</a>
+      <a href="02-bell-accordion.html">02</a>
+      <a class="current" href="03-chip-rail.html">03</a>
+      <a href="04-latest-morph.html">04</a>
+      <a href="05-drop-then-dock.html">05</a>
+      <a href="06-fan-deck.html">06</a>
+    </div>
+  </div>
+
+  <script src="_shared.js"></script>
+  <script>
+(function () {
+  var S = window.PMNotifyShared;
+  S.bootTheme();
+  S.wireThemeSelect(document.getElementById('themeSelect'));
+  S.wireReduced(document.getElementById('btnReduced'));
+
+  var MAX_VISIBLE = 3;
+  var items = []; /* important only */
+  var ephemeralEls = [];
+  var expanded = false;
+  var rail = document.getElementById('crRail');
+  var panel = document.getElementById('crPanel');
+  var list = document.getElementById('crList');
+
+  function renderRail() {
+    rail.innerHTML = '';
+    var eph = ephemeralEls.filter(Boolean);
+    var slots = [];
+    items.forEach(function (it) { slots.push({ type: 'imp', it: it }); });
+    eph.forEach(function (entry) { slots.push({ type: 'eph', entry: entry }); });
+    if (!slots.length) {
+      rail.innerHTML = '<span class="cr-placeholder">No alerts</span>';
+      return;
+    }
+    var visible = slots.slice(0, MAX_VISIBLE);
+    var rest = slots.length - visible.length;
+    visible.forEach(function (s) {
+      if (s.type === 'imp') rail.appendChild(makeChip(s.it, false));
+      else rail.appendChild(s.entry.el);
+    });
+    if (rest > 0) {
+      var more = document.createElement('span');
+      more.className = 'cr-more';
+      more.textContent = '+' + rest;
+      rail.appendChild(more);
+    }
+  }
+
+  function makeChip(it, ephemeral) {
+    var el = document.createElement('span');
+    el.className = 'cr-chip n-sev-' + it.severity + (ephemeral ? ' ephemeral' : '');
+    el.innerHTML = '<span class="dot"></span><span class="lab"></span><button type="button" class="n-x" aria-label="Dismiss">×</button>';
+    el.querySelector('.lab').textContent = it.title;
+    el.querySelector('.n-x').addEventListener('click', function (e) {
+      e.stopPropagation();
+      if (ephemeral) removeEph(it.id);
+      else dismiss(it.id);
+    });
+    return el;
+  }
+
+  function renderPanel() {
+    list.innerHTML = '';
+    if (!items.length) {
+      list.innerHTML = '<div style="padding:12px;text-align:center;color:var(--text-muted);font-size:12px">No stored notifications</div>';
+      return;
+    }
+    items.forEach(function (it) {
+      var row = document.createElement('div');
+      row.className = 'cr-row n-sev-' + it.severity;
+      row.innerHTML = '<div class="meta"><div class="t"></div><div class="b"></div></div><button type="button" class="n-x" aria-label="Dismiss">×</button>';
+      row.querySelector('.t').textContent = it.title;
+      row.querySelector('.b').textContent = it.body;
+      row.querySelector('.n-x').addEventListener('click', function (e) {
+        e.stopPropagation();
+        dismiss(it.id);
+      });
+      list.appendChild(row);
+    });
+  }
+
+  function setExpanded(on) {
+    expanded = on && items.length > 0;
+    panel.classList.toggle('open', expanded);
+    if (expanded) renderPanel();
+  }
+
+  function dismiss(id) {
+    items = items.filter(function (x) { return x.id !== id; });
+    renderRail();
+    if (expanded) renderPanel();
+    if (!items.length) setExpanded(false);
+  }
+
+  function removeEph(id) {
+    ephemeralEls = ephemeralEls.filter(function (e) {
+      if (e.it.id === id) {
+        e.el.classList.add('out');
+        setTimeout(function () { e.el.remove(); }, 200);
+        return false;
+      }
+      return true;
+    });
+    renderRail();
+  }
+
+  function clearAll() {
+    items = [];
+    ephemeralEls = [];
+    renderRail();
+    setExpanded(false);
+  }
+
+  function push(msg) {
+    if (!msg.important) {
+      var el = makeChip(msg, true);
+      var entry = { it: msg, el: el };
+      ephemeralEls.unshift(entry);
+      renderRail();
+      setTimeout(function () {
+        removeEph(msg.id);
+      }, 2400);
+      return;
+    }
+    items.unshift(msg);
+    if (items.length > 16) items.length = 16;
+    renderRail();
+    if (expanded) renderPanel();
+  }
+
+  rail.addEventListener('click', function () {
+    if (!items.length) return;
+    setExpanded(!expanded);
+  });
+  document.getElementById('crClear').addEventListener('click', function (e) { e.stopPropagation(); clearAll(); });
+  document.addEventListener('click', function (e) {
+    if (!expanded) return;
+    if (e.target.closest && (e.target.closest('#crPanel') || e.target.closest('#crRail'))) return;
+    setExpanded(false);
+  });
+  S.escCollapse(function () { setExpanded(false); });
+
+  document.getElementById('btnClear').addEventListener('click', clearAll);
+  document.getElementById('btnEph').addEventListener('click', function () { push(S.ephemeral()); });
+  document.getElementById('btnImp').addEventListener('click', function () { push(S.important()); });
+  document.getElementById('btnWarn').addEventListener('click', function () { push(S.warning()); });
+
+  renderRail();
+})();
+  </script>
+</body>
+</html>

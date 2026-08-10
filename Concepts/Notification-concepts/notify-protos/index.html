@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="friendly-dark">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>PM Notify Prototypes — Index</title>
+  <link href="https://fonts.googleapis.com/css2?family=Nunito:wght@600;700&family=Quicksand:wght@500;600;700&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="_shared.css" />
+  <style>
+    body { overflow: auto; }
+    .wrap { max-width: 720px; margin: 40px auto; padding: 0 20px 60px; }
+    h1 { font-family: var(--display-font); margin: 0 0 8px; }
+    .lead { color: var(--text-secondary); margin: 0 0 24px; }
+    .grid { display: grid; gap: 12px; }
+    a.card {
+      display: block;
+      padding: 16px 18px;
+      background: var(--surface-elevated);
+      border: var(--border-width) solid var(--border);
+      border-radius: var(--border-radius);
+      box-shadow: var(--elev-1);
+      text-decoration: none;
+      color: var(--text-primary);
+      transition: transform var(--motion-fast) var(--ease-spring), box-shadow var(--motion-fast);
+    }
+    a.card:hover { transform: translateY(-2px); box-shadow: var(--elev-2); }
+    a.card strong { display: block; font-size: 15px; margin-bottom: 4px; }
+    a.card span { color: var(--text-muted); font-size: 13px; line-height: 1.4; }
+    .note {
+      margin-top: 24px; padding: 12px 14px;
+      background: var(--surface);
+      border: var(--border-width) solid var(--border-light);
+      border-radius: var(--border-radius);
+      font-size: 13px; color: var(--text-secondary);
+    }
+  </style>
+</head>
+<body>
+  <div class="wrap">
+    <h1>Title-bar notification prototypes</h1>
+    <p class="lead">Six approaches for the title bar. <strong>01</strong> is the polish candidate: stack + count replaces the status-bar bell, with deep-links and Plans-backed action cards.</p>
+    <div class="grid">
+      <a class="card" href="01-rightward-stack.html">
+        <strong>01 — Rightward stack (polish candidate)</strong>
+        <span>Stack + count is the sole notify affordance (no bottom bell). Accordion inbox, theme-native cards, HITL/Permission/FileSafe/Concern actions, click → navigate.</span>
+      </a>
+      <a class="card" href="02-bell-accordion.html">
+        <strong>02 — Bell + accordion</strong>
+        <span>Compact bell + badge. Flash preview under the bar, then accordion inbox.</span>
+      </a>
+      <a class="card" href="03-chip-rail.html">
+        <strong>03 — Severity chip rail</strong>
+        <span>Color chips pack left→right with +N overflow. Dense and scannable.</span>
+      </a>
+      <a class="card" href="04-latest-morph.html">
+        <strong>04 — Latest morph</strong>
+        <span>One pill shows the newest item + count; expands by morphing into a list.</span>
+      </a>
+      <a class="card" href="05-drop-then-dock.html">
+        <strong>05 — Drop then dock</strong>
+        <span>Center drop under the bar; important items fly into a mini dock.</span>
+      </a>
+      <a class="card" href="06-fan-deck.html">
+        <strong>06 — Fan deck</strong>
+        <span>Mild 2D fan of cards in the spacer; click unfolds a staggered column.</span>
+      </a>
+    </div>
+    <p class="note"><strong>01</strong> is selected for polish. Port to <code>PMConcept8.html</code> later: retire <code>#pm6StatusBell</code> / bottom toast stack and route unread through the title-bar stack.</p>
+  </div>
+  <script src="_shared.js"></script>
+  <script>PMNotifyShared.bootTheme();</script>
+</body>
+</html>

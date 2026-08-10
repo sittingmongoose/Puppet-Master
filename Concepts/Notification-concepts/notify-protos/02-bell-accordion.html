@@ -1,0 +1,368 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="friendly-dark">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Proto 02 — Bell accordion</title>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&family=Nunito:wght@600;700&family=Orbitron:wght@600;700&family=Quicksand:wght@500;600;700&family=Rajdhani:wght@500;600;700&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="_shared.css" />
+  <style>
+    .ba-host { position: relative; width: 100%; height: 100%; display: flex; align-items: center; justify-content: center; }
+    .ba-bell {
+      width: 32px; height: 28px;
+      display: inline-flex; align-items: center; justify-content: center;
+      background: var(--surface-elevated);
+      border: var(--border-width) solid var(--border);
+      border-radius: var(--border-radius);
+      cursor: pointer;
+      position: relative;
+      color: var(--text-secondary);
+      transition: transform var(--motion-fast) var(--ease-spring), color var(--motion-fast);
+    }
+    .ba-bell:hover { color: var(--text-primary); }
+    .ba-bell.pulse { animation: baPulse var(--motion-slow) var(--ease-spring); }
+    .ba-bell svg { width: 14px; height: 14px; }
+    .ba-badge {
+      position: absolute; top: -5px; right: -6px;
+      min-width: 16px; height: 16px; padding: 0 4px;
+      border-radius: var(--radius-pill);
+      background: var(--accent-error);
+      color: #fff; font-size: 10px; font-weight: 800;
+      display: flex; align-items: center; justify-content: center;
+      transform: scale(0);
+      transition: transform var(--motion-med) var(--ease-spring);
+    }
+    .ba-badge.on { transform: scale(1); }
+    @keyframes baPulse {
+      0%,100% { transform: scale(1); }
+      30% { transform: scale(1.12) rotate(-6deg); }
+      55% { transform: scale(1.08) rotate(5deg); }
+    }
+
+    .ba-flash {
+      position: absolute;
+      left: 50%; top: calc(100% + 8px);
+      transform: translateX(-50%) translateY(-4px);
+      min-width: 220px; max-width: 300px;
+      padding: 8px 10px;
+      border-left: 3px solid var(--n-accent, var(--accent-blue));
+      opacity: 0;
+      pointer-events: none;
+      z-index: 55;
+      display: flex; gap: 8px; align-items: flex-start;
+      transition: opacity var(--motion-med) var(--ease-out), transform var(--motion-med) var(--ease-out);
+    }
+    .ba-flash.show {
+      opacity: 1;
+      transform: translateX(-50%) translateY(0);
+      pointer-events: auto;
+    }
+    .ba-flash.hide {
+      opacity: 0;
+      transform: translateX(-50%) translateY(-10px) scale(.92);
+    }
+    .ba-flash .t { font-size: 12px; font-weight: 700; }
+    .ba-flash .b { font-size: 11px; color: var(--text-muted); }
+
+    .ba-panel {
+      position: absolute;
+      top: calc(100% + 8px);
+      left: 50%;
+      width: 300px;
+      background: var(--surface-elevated);
+      border: var(--border-width) solid var(--border);
+      border-radius: var(--border-radius);
+      box-shadow: var(--elev-3);
+      overflow: hidden;
+      z-index: 60;
+      transform-origin: top center;
+      transform: translateX(-50%) scaleY(0.4);
+      opacity: 0;
+      pointer-events: none;
+      max-height: 0;
+      transition:
+        opacity var(--motion-med) var(--ease-out),
+        transform var(--motion-med) var(--ease-spring),
+        max-height var(--motion-slow) var(--ease-out);
+    }
+    .ba-panel.open {
+      opacity: 1;
+      transform: translateX(-50%) scaleY(1);
+      pointer-events: auto;
+      max-height: 360px;
+    }
+    .ba-panel-head {
+      display: flex; align-items: center; justify-content: space-between;
+      padding: 10px 12px 8px;
+      border-bottom: var(--border-width) solid var(--border-light);
+      font-size: 11px; font-weight: 700; color: var(--text-muted);
+    }
+    .ba-list { padding: 8px; display: flex; flex-direction: column; gap: 0; max-height: 300px; overflow: auto; }
+    .ba-item {
+      display: grid;
+      grid-template-rows: 0fr;
+      transition: grid-template-rows var(--motion-med) var(--ease-out);
+    }
+    .ba-panel.open .ba-item { grid-template-rows: 1fr; }
+    .ba-item-inner {
+      overflow: hidden;
+      display: flex; gap: 8px; align-items: flex-start;
+      padding: 0 8px;
+      margin-bottom: 6px;
+      border: var(--border-width) solid var(--border-light);
+      border-radius: var(--border-radius);
+      border-left: 3px solid var(--n-accent, var(--accent-blue));
+      background: var(--surface);
+      opacity: 0;
+      transform: translateY(-6px);
+    }
+    .ba-panel.open .ba-item-inner {
+      padding: 8px;
+      opacity: 1;
+      transform: translateY(0);
+      transition:
+        opacity var(--motion-med) var(--ease-out),
+        transform var(--motion-med) var(--ease-out),
+        padding var(--motion-med);
+      transition-delay: var(--d, 0ms);
+    }
+    .ba-item .meta { flex: 1; min-width: 0; }
+    .ba-item .t { font-size: 12px; font-weight: 700; }
+    .ba-item .b { font-size: 11px; color: var(--text-muted); }
+    .ba-empty { padding: 16px; text-align: center; color: var(--text-muted); font-size: 12px; }
+  </style>
+</head>
+<body>
+  <div class="app-shell">
+    <header class="title-bar">
+      <span class="app-name">Puppet Master</span>
+      <div class="project-dropdown"><span>tastebook</span><span>▼</span></div>
+      <nav class="page-tabs">
+        <span class="page-tab active">Home</span>
+        <span class="page-tab">Projects</span>
+        <span class="page-tab">Planning Wizard</span>
+        <span class="page-tab">Orchestrator</span>
+        <span class="page-tab">Usage</span>
+        <span class="page-tab">Settings</span>
+      </nav>
+      <div class="notify-slot">
+        <div class="ba-host">
+          <button type="button" class="ba-bell" id="baBell" aria-label="Notifications">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M15 17h5l-1.4-1.4A2 2 0 0 1 18 14.2V11a6 6 0 1 0-12 0v3.2c0 .5-.2 1-.6 1.4L4 17h5"/><path d="M9 17a3 3 0 0 0 6 0"/></svg>
+            <span class="ba-badge" id="baBadge">0</span>
+          </button>
+          <div class="ba-flash n-card" id="baFlash">
+            <div class="meta"><div class="t"></div><div class="b"></div></div>
+            <button type="button" class="n-x" id="baFlashX" aria-label="Dismiss">×</button>
+          </div>
+          <div class="ba-panel" id="baPanel">
+            <div class="ba-panel-head">
+              <span>Inbox</span>
+              <button type="button" class="clear-all-btn" id="baClear">Clear all</button>
+            </div>
+            <div class="ba-list" id="baList"></div>
+          </div>
+        </div>
+      </div>
+      <input type="text" class="search-bar" placeholder="Search files, commands..." />
+      <select class="theme-select" id="themeSelect">
+        <option value="friendly-dark">Friendly Dark</option>
+        <option value="friendly-light">Friendly Light</option>
+        <option value="glass-dark">Glass Dark</option>
+        <option value="glass-light">Glass Light</option>
+        <option value="retro-dark">Retro Dark</option>
+        <option value="retro-light">Retro Light</option>
+        <option value="basic-dark">Basic Dark</option>
+        <option value="basic-light">Basic Light</option>
+      </select>
+    </header>
+    <div class="main-area">
+      <aside class="fake-side"><div class="dot"></div><div class="dot"></div><div class="dot"></div><span>CHAT</span></aside>
+      <main class="home-pane">
+        <div class="proto-banner">Proto 02 — Bell + accordion</div>
+        <h1>Home</h1>
+        <p>A single bell sits in the spacer. Events flash a one-line preview under the bar, then collapse into the badge. Click the bell for an accordion inbox.</p>
+        <div class="home-cards">
+          <div class="home-card"><strong>Projects</strong><span>3 active</span></div>
+          <div class="home-card"><strong>Runs</strong><span>Wave idle</span></div>
+          <div class="home-card"><strong>Usage</strong><span>42% today</span></div>
+        </div>
+      </main>
+      <aside class="fake-chat">
+        <div class="bubble">Notifications live in a compact bell.</div>
+        <div class="bubble me">Ephemeral flashes vanish; important ones stick in the badge.</div>
+      </aside>
+    </div>
+  </div>
+
+  <div class="demo-panel">
+    <h2>Proto 02 controls</h2>
+    <p class="hint">Bell + badge. Flash preview, then accordion expand.</p>
+    <div class="row">
+      <button type="button" id="btnEph">Ephemeral</button>
+      <button type="button" class="primary" id="btnImp">Important</button>
+      <button type="button" id="btnWarn">Warning</button>
+    </div>
+    <div class="row">
+      <button type="button" id="btnReduced">Motion: full</button>
+      <button type="button" id="btnClear">Clear all</button>
+    </div>
+    <div class="demo-nav">
+      <a href="01-rightward-stack.html">01</a>
+      <a class="current" href="02-bell-accordion.html">02</a>
+      <a href="03-chip-rail.html">03</a>
+      <a href="04-latest-morph.html">04</a>
+      <a href="05-drop-then-dock.html">05</a>
+      <a href="06-fan-deck.html">06</a>
+    </div>
+  </div>
+
+  <script src="_shared.js"></script>
+  <script>
+(function () {
+  var S = window.PMNotifyShared;
+  S.bootTheme();
+  S.wireThemeSelect(document.getElementById('themeSelect'));
+  S.wireReduced(document.getElementById('btnReduced'));
+
+  var items = [];
+  var expanded = false;
+  var flashTimer = null;
+  var bell = document.getElementById('baBell');
+  var badge = document.getElementById('baBadge');
+  var flash = document.getElementById('baFlash');
+  var panel = document.getElementById('baPanel');
+  var list = document.getElementById('baList');
+  var flashMsg = null;
+
+  function updateBadge() {
+    var n = items.length;
+    badge.textContent = n > 9 ? '9+' : String(n);
+    badge.classList.toggle('on', n > 0);
+  }
+
+  function renderList() {
+    list.innerHTML = '';
+    if (!items.length) {
+      list.innerHTML = '<div class="ba-empty">No notifications</div>';
+      return;
+    }
+    items.forEach(function (it, i) {
+      var wrap = document.createElement('div');
+      wrap.className = 'ba-item';
+      wrap.innerHTML = '<div class="ba-item-inner n-sev-' + it.severity + '"><div class="meta"><div class="t"></div><div class="b"></div></div><button type="button" class="n-x" aria-label="Dismiss">×</button></div>';
+      var inner = wrap.querySelector('.ba-item-inner');
+      inner.style.setProperty('--d', (i * 45) + 'ms');
+      wrap.querySelector('.t').textContent = it.title;
+      wrap.querySelector('.b').textContent = it.body;
+      wrap.querySelector('.n-x').addEventListener('click', function (e) {
+        e.stopPropagation();
+        dismiss(it.id);
+      });
+      list.appendChild(wrap);
+    });
+  }
+
+  function setExpanded(on) {
+    expanded = on;
+    panel.classList.toggle('open', expanded);
+    if (expanded) {
+      hideFlash(true);
+      renderList();
+    }
+  }
+
+  function dismiss(id) {
+    items = items.filter(function (x) { return x.id !== id; });
+    updateBadge();
+    if (expanded) renderList();
+    if (!items.length) setExpanded(false);
+  }
+
+  function clearAll() {
+    items = [];
+    updateBadge();
+    setExpanded(false);
+    hideFlash(true);
+  }
+
+  function hideFlash(immediate) {
+    if (flashTimer) { clearTimeout(flashTimer); flashTimer = null; }
+    flash.classList.remove('show');
+    if (immediate) flash.classList.remove('hide');
+    else {
+      flash.classList.add('hide');
+      setTimeout(function () { flash.classList.remove('hide'); }, 200);
+    }
+    flashMsg = null;
+  }
+
+  function showFlash(msg, onDone) {
+    hideFlash(true);
+    flashMsg = msg;
+    flash.className = 'ba-flash n-card n-sev-' + msg.severity + ' show';
+    flash.querySelector('.t').textContent = msg.title;
+    flash.querySelector('.b').textContent = msg.body;
+    bell.classList.remove('pulse');
+    void bell.offsetWidth;
+    bell.classList.add('pulse');
+    var ttl = msg.important ? 1100 : 2000;
+    flashTimer = setTimeout(function () {
+      flash.classList.remove('show');
+      flash.classList.add('hide');
+      setTimeout(function () {
+        flash.classList.remove('hide');
+        onDone && onDone();
+      }, S.reduced() ? 10 : 200);
+    }, ttl);
+  }
+
+  function push(msg) {
+    if (expanded) {
+      if (msg.important) {
+        items.unshift(msg);
+        updateBadge();
+        renderList();
+      } else {
+        showFlash(msg, function () {});
+      }
+      return;
+    }
+    showFlash(msg, function () {
+      if (msg.important) {
+        items.unshift(msg);
+        if (items.length > 12) items.length = 12;
+        updateBadge();
+      }
+    });
+  }
+
+  bell.addEventListener('click', function (e) {
+    e.stopPropagation();
+    setExpanded(!expanded);
+  });
+  document.getElementById('baFlashX').addEventListener('click', function (e) {
+    e.stopPropagation();
+    var was = flashMsg;
+    hideFlash(true);
+    /* dismissed before archive */
+    if (was && was.important) { /* intentionally not archived */ }
+  });
+  document.getElementById('baClear').addEventListener('click', function (e) { e.stopPropagation(); clearAll(); });
+  document.addEventListener('click', function (e) {
+    if (!expanded) return;
+    if (e.target.closest && (e.target.closest('#baPanel') || e.target.closest('#baBell'))) return;
+    setExpanded(false);
+  });
+  S.escCollapse(function () { setExpanded(false); });
+
+  document.getElementById('btnClear').addEventListener('click', clearAll);
+  document.getElementById('btnEph').addEventListener('click', function () { push(S.ephemeral()); });
+  document.getElementById('btnImp').addEventListener('click', function () { push(S.important()); });
+  document.getElementById('btnWarn').addEventListener('click', function () { push(S.warning()); });
+
+  updateBadge();
+})();
+  </script>
+</body>
+</html>

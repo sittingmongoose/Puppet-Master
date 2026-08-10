@@ -1,0 +1,351 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="friendly-dark">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Proto 06 — Fan deck</title>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&family=Nunito:wght@600;700&family=Orbitron:wght@600;700&family=Quicksand:wght@500;600;700&family=Rajdhani:wght@500;600;700&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="_shared.css" />
+  <style>
+    .fd-host { position: relative; width: 100%; height: 100%; display: flex; align-items: center; justify-content: center; }
+    .fd-deck {
+      position: relative;
+      width: 200px; height: 28px;
+      cursor: pointer;
+    }
+    .fd-deck.empty::after {
+      content: 'Fan deck';
+      position: absolute; inset: 0;
+      display: flex; align-items: center; justify-content: center;
+      font-size: 11px; font-weight: 700; color: var(--text-muted);
+      border: var(--border-width) dashed var(--border);
+      border-radius: var(--border-radius);
+    }
+    .fd-card {
+      position: absolute;
+      left: 10px; top: 0;
+      width: 180px; height: 28px;
+      display: flex; align-items: center; gap: 6px;
+      padding: 0 8px;
+      border-left: 3px solid var(--n-accent);
+      transform-origin: 20% 100%;
+      transition:
+        transform var(--motion-med) var(--ease-spring),
+        opacity var(--motion-med) var(--ease-out),
+        top var(--motion-slow) var(--ease-out),
+        left var(--motion-slow) var(--ease-out);
+      overflow: hidden;
+    }
+    .fd-card .t {
+      flex: 1; min-width: 0;
+      font-size: 11px; font-weight: 700;
+      white-space: nowrap; overflow: hidden; text-overflow: ellipsis;
+    }
+    .fd-card .n-x { opacity: 0; }
+    .fd-card:hover .n-x, .fd-deck.expanded .fd-card .n-x { opacity: 1; }
+
+    /* staging pop below */
+    .fd-stage {
+      position: absolute;
+      left: 50%; top: calc(100% + 10px);
+      transform: translateX(-50%);
+      width: 240px;
+      z-index: 55;
+    }
+    .fd-stage .fd-card {
+      position: relative; left: auto; top: auto;
+      width: 100%; height: auto; min-height: 44px;
+      padding: 8px 10px;
+      flex-direction: column; align-items: stretch;
+      animation: fdPop var(--motion-med) var(--ease-spring) both;
+    }
+    .fd-stage .b { font-size: 10px; color: var(--text-muted); font-weight: 500; }
+    .fd-stage .row { display: flex; align-items: center; gap: 6px; }
+    .fd-stage .fd-card.leaving { animation: fdOut var(--motion-med) var(--ease-out) forwards; }
+    .fd-stage .fd-card.joining { animation: fdJoin var(--motion-slow) var(--ease-out) forwards; }
+    @keyframes fdPop {
+      from { opacity: 0; transform: translateY(-8px) rotate(-2deg) scale(.94); }
+      to { opacity: 1; transform: translateY(0) rotate(0) scale(1); }
+    }
+    @keyframes fdOut {
+      to { opacity: 0; transform: translateY(8px) scale(.95); }
+    }
+    @keyframes fdJoin {
+      to { opacity: 0; transform: translateY(-40px) rotate(4deg) scale(.7); }
+    }
+
+    .fd-toolbar {
+      position: absolute;
+      top: calc(100% + 8px);
+      left: 50%;
+      transform: translateX(-50%);
+      z-index: 65;
+      display: none;
+      gap: 8px;
+      align-items: center;
+      padding: 6px 8px;
+      background: var(--surface-elevated);
+      border: var(--border-width) solid var(--border);
+      border-radius: var(--border-radius);
+      box-shadow: var(--elev-2);
+    }
+    .fd-deck.expanded ~ .fd-toolbar,
+    .fd-host.expanded .fd-toolbar { display: flex; }
+
+    .fd-body-note {
+      position: absolute;
+      top: calc(100% + 44px);
+      left: 50%;
+      transform: translateX(-50%);
+      width: 280px;
+      max-height: 280px;
+      overflow: auto;
+      z-index: 64;
+      display: none;
+      flex-direction: column;
+      gap: 6px;
+      padding: 8px;
+      background: var(--surface-elevated);
+      border: var(--border-width) solid var(--border);
+      border-radius: var(--border-radius);
+      box-shadow: var(--elev-3);
+    }
+    .fd-host.expanded .fd-body-note { display: flex; }
+    .fd-detail {
+      display: flex; gap: 8px; align-items: flex-start;
+      padding: 8px;
+      border: var(--border-width) solid var(--border-light);
+      border-radius: var(--border-radius);
+      border-left: 3px solid var(--n-accent);
+      background: var(--surface);
+      opacity: 0;
+      transform: translateY(-10px) rotate(-1deg);
+      animation: fdCascade var(--motion-med) var(--ease-spring) forwards;
+    }
+    .fd-detail .meta { flex: 1; }
+    .fd-detail .t { font-size: 12px; font-weight: 700; }
+    .fd-detail .b { font-size: 11px; color: var(--text-muted); }
+    @keyframes fdCascade {
+      to { opacity: 1; transform: translateY(0) rotate(0); }
+    }
+  </style>
+</head>
+<body>
+  <div class="app-shell">
+    <header class="title-bar">
+      <span class="app-name">Puppet Master</span>
+      <div class="project-dropdown"><span>tastebook</span><span>▼</span></div>
+      <nav class="page-tabs">
+        <span class="page-tab active">Home</span>
+        <span class="page-tab">Projects</span>
+        <span class="page-tab">Planning Wizard</span>
+        <span class="page-tab">Orchestrator</span>
+        <span class="page-tab">Usage</span>
+        <span class="page-tab">Settings</span>
+      </nav>
+      <div class="notify-slot">
+        <div class="fd-host" id="fdHost">
+          <div class="fd-deck empty" id="fdDeck" title="Click to fan open"></div>
+          <div class="fd-stage" id="fdStage"></div>
+          <div class="fd-toolbar" id="fdToolbar">
+            <span style="font-size:11px;font-weight:700;color:var(--text-muted)">Fan open</span>
+            <button type="button" class="clear-all-btn" id="fdClear">Clear all</button>
+          </div>
+          <div class="fd-body-note" id="fdList"></div>
+        </div>
+      </div>
+      <input type="text" class="search-bar" placeholder="Search files, commands..." />
+      <select class="theme-select" id="themeSelect">
+        <option value="friendly-dark">Friendly Dark</option>
+        <option value="friendly-light">Friendly Light</option>
+        <option value="glass-dark">Glass Dark</option>
+        <option value="glass-light">Glass Light</option>
+        <option value="retro-dark">Retro Dark</option>
+        <option value="retro-light">Retro Light</option>
+        <option value="basic-dark">Basic Dark</option>
+        <option value="basic-light">Basic Light</option>
+      </select>
+    </header>
+    <div class="main-area">
+      <aside class="fake-side"><div class="dot"></div><div class="dot"></div><div class="dot"></div><span>CHAT</span></aside>
+      <main class="home-pane">
+        <div class="proto-banner">Proto 06 — Fan deck</div>
+        <h1>Home</h1>
+        <p>Important notifications form a mild 2D fan in the spacer (rotate + overlap). Click to unfold downward into a staggered column. Mild transforms only — Slint-friendly.</p>
+        <div class="home-cards">
+          <div class="home-card"><strong>Projects</strong><span>3 active</span></div>
+          <div class="home-card"><strong>Runs</strong><span>Wave idle</span></div>
+          <div class="home-card"><strong>Usage</strong><span>42% today</span></div>
+        </div>
+      </main>
+      <aside class="fake-chat">
+        <div class="bubble">Fan collapses to a deck silhouette.</div>
+        <div class="bubble me">Expand cascades cards downward.</div>
+      </aside>
+    </div>
+  </div>
+
+  <div class="demo-panel">
+    <h2>Proto 06 controls</h2>
+    <p class="hint">2D fan deck that unfolds into a list.</p>
+    <div class="row">
+      <button type="button" id="btnEph">Ephemeral</button>
+      <button type="button" class="primary" id="btnImp">Important</button>
+      <button type="button" id="btnWarn">Warning</button>
+    </div>
+    <div class="row">
+      <button type="button" id="btnReduced">Motion: full</button>
+      <button type="button" id="btnClear">Clear all</button>
+    </div>
+    <div class="demo-nav">
+      <a href="01-rightward-stack.html">01</a>
+      <a href="02-bell-accordion.html">02</a>
+      <a href="03-chip-rail.html">03</a>
+      <a href="04-latest-morph.html">04</a>
+      <a href="05-drop-then-dock.html">05</a>
+      <a class="current" href="06-fan-deck.html">06</a>
+    </div>
+  </div>
+
+  <script src="_shared.js"></script>
+  <script>
+(function () {
+  var S = window.PMNotifyShared;
+  S.bootTheme();
+  S.wireThemeSelect(document.getElementById('themeSelect'));
+  S.wireReduced(document.getElementById('btnReduced'));
+
+  var items = [];
+  var expanded = false;
+  var host = document.getElementById('fdHost');
+  var deck = document.getElementById('fdDeck');
+  var stage = document.getElementById('fdStage');
+  var list = document.getElementById('fdList');
+
+  var FAN_ANGLES = [0, -5, 5, -9, 9];
+
+  function renderDeck() {
+    deck.classList.toggle('empty', items.length === 0);
+    deck.classList.toggle('expanded', expanded);
+    deck.innerHTML = '';
+    if (expanded) return; /* details live in list panel */
+    items.slice(0, 5).forEach(function (it, i) {
+      var card = document.createElement('div');
+      card.className = 'fd-card n-card n-sev-' + it.severity;
+      card.style.zIndex = String(20 - i);
+      var ang = FAN_ANGLES[i] || (i % 2 ? -6 : 6);
+      var x = i * 6;
+      card.style.transform = 'translateX(' + x + 'px) rotate(' + ang + 'deg)';
+      card.style.opacity = String(1 - i * 0.12);
+      card.innerHTML = '<span class="t"></span><button type="button" class="n-x" aria-label="Dismiss">×</button>';
+      card.querySelector('.t').textContent = it.title;
+      card.querySelector('.n-x').addEventListener('click', function (e) {
+        e.stopPropagation();
+        dismiss(it.id);
+      });
+      deck.appendChild(card);
+    });
+  }
+
+  function renderList() {
+    list.innerHTML = '';
+    items.forEach(function (it, i) {
+      var row = document.createElement('div');
+      row.className = 'fd-detail n-sev-' + it.severity;
+      row.style.animationDelay = (i * 50) + 'ms';
+      row.innerHTML = '<div class="meta"><div class="t"></div><div class="b"></div></div><button type="button" class="n-x" aria-label="Dismiss">×</button>';
+      row.querySelector('.t').textContent = it.title;
+      row.querySelector('.b').textContent = it.body;
+      row.querySelector('.n-x').addEventListener('click', function (e) {
+        e.stopPropagation();
+        dismiss(it.id);
+      });
+      list.appendChild(row);
+    });
+  }
+
+  function setExpanded(on) {
+    expanded = on && items.length > 0;
+    host.classList.toggle('expanded', expanded);
+    renderDeck();
+    if (expanded) renderList();
+  }
+
+  function dismiss(id) {
+    items = items.filter(function (x) { return x.id !== id; });
+    renderDeck();
+    if (expanded) {
+      if (!items.length) setExpanded(false);
+      else renderList();
+    }
+  }
+
+  function clearAll() {
+    items = [];
+    setExpanded(false);
+    renderDeck();
+  }
+
+  function stageToast(msg, then) {
+    var card = document.createElement('div');
+    card.className = 'fd-card n-card n-sev-' + msg.severity;
+    card.innerHTML = '<div class="row"><span class="t"></span><button type="button" class="n-x" aria-label="Dismiss">×</button></div><div class="b"></div>';
+    card.querySelector('.t').textContent = msg.title;
+    card.querySelector('.b').textContent = msg.body;
+    stage.appendChild(card);
+    var done = false;
+    function finish(action) {
+      if (done) return;
+      done = true;
+      then(action);
+    }
+    card.querySelector('.n-x').addEventListener('click', function (e) {
+      e.stopPropagation();
+      card.classList.add('leaving');
+      setTimeout(function () { card.remove(); finish('dismiss'); }, S.reduced() ? 10 : 220);
+    });
+    setTimeout(function () {
+      if (done) return;
+      if (msg.important) {
+        card.classList.add('joining');
+        setTimeout(function () { card.remove(); finish('join'); }, S.reduced() ? 10 : 380);
+      } else {
+        card.classList.add('leaving');
+        setTimeout(function () { card.remove(); finish('fade'); }, S.reduced() ? 10 : 220);
+      }
+    }, msg.important ? 900 : 2100);
+  }
+
+  function push(msg) {
+    stageToast(msg, function (action) {
+      if (action === 'join') {
+        items.unshift(msg);
+        if (items.length > 12) items.length = 12;
+        renderDeck();
+        if (expanded) renderList();
+      }
+    });
+  }
+
+  deck.addEventListener('click', function () {
+    if (!items.length) return;
+    setExpanded(!expanded);
+  });
+  document.getElementById('fdClear').addEventListener('click', function (e) { e.stopPropagation(); clearAll(); });
+  document.addEventListener('click', function (e) {
+    if (!expanded) return;
+    if (e.target.closest && e.target.closest('#fdHost')) return;
+    setExpanded(false);
+  });
+  S.escCollapse(function () { setExpanded(false); });
+
+  document.getElementById('btnClear').addEventListener('click', clearAll);
+  document.getElementById('btnEph').addEventListener('click', function () { push(S.ephemeral()); });
+  document.getElementById('btnImp').addEventListener('click', function () { push(S.important()); });
+  document.getElementById('btnWarn').addEventListener('click', function () { push(S.warning()); });
+
+  renderDeck();
+})();
+  </script>
+</body>
+</html>
