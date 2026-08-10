@@ -6,7 +6,7 @@ What was read for the Usage redesign research, and where. Full per-range detail 
 | Document | Size | How read | Topics covered |
 |---|---|---|---|
 | Plans/usage-feature.md | 6237 ln | full, in chunks | UF-041 windows; UF-064/083/085/086/087 token buckets, counting_semantics, cost, provenance, dedupe; UF-074 unknown-not-zero; window_kind enum |
-| Plans/Usage_Concepts_Rebuild_Plan.md | full | full | usage-first framing; widget kebab/presets (prototype-only); 5h/7d framing; motion prose |
+| Concepts/usage-concepts/BUILD_PLAN.md | full | full | usage-first framing; widget kebab/presets (prototype-only); 5h/7d framing; motion prose |
 | Plans/Multi-Account.md | 5168 ln | targeted | MA-022 cooldown→hard_block; MA-063 5h vs 7d separate resets; Alibaba 5h/weekly/monthly; per-provider non-authoritative quota |
 | Plans/FinalGUISpec.md | 33074 ln | grep+range via _shards/finalguispec | F3-132 compact-not-from-hover; F3-306 Context Lens; F3-418 provenance-on-every-value; F3-427 glass shell; F3-473 web→Slint map; §6 themes; §8 atomic widgets; §C.3/C.5 add-widget/persistence; scrollbar token; icon tooltip; reduced motion (2120/29698); Slint 1.17.1 pin (133/198) |
 | Plans/assistant-chat-design.md | 24392 ln | grep+range via _shards | ACD-438/439/441/442 single-overlay + corner-origin sprout; §12.0 Context Detail IA; redaction (23732) |

@@ -2,7 +2,7 @@
 
 Canonical IDs verified in the CURRENT corpus (2026-07-30). Owner = the doc that owns the ID/behavior. Persistence/mutation from the catalog row's event column + wiring. Flags: Net = needs network/provider; Paid = cost/billing-bearing; Dest = destructive/irreversible (confirmation class per FinalGUISpec §10.1). "Proto-only" = appears only in the prototype build plan / concept HTML, no canonical Plans registration.
 
-Source key: UCC = `Plans/UI_Command_Catalog.md` §2 canonical-command-ids; WM = `Plans/Wiring_Matrix.md`; WMp = `Plans/Wiring_Matrix.production.json`; ACD = `Plans/assistant-chat-design.md`; F3 = `Plans/FinalGUISpec.md`; UF = `Plans/usage-feature.md`; WS = `Plans/Widget_System.md`; RP = `Plans/Usage_Concepts_Rebuild_Plan.md` (build plan, NOT canonical).
+Source key: UCC = `Plans/UI_Command_Catalog.md` §2 canonical-command-ids; WM = `Plans/Wiring_Matrix.md`; WMp = `Plans/Wiring_Matrix.production.json`; ACD = `Plans/assistant-chat-design.md`; F3 = `Plans/FinalGUISpec.md`; UF = `Plans/usage-feature.md`; WS = `Plans/Widget_System.md`; RP = `Concepts/usage-concepts/BUILD_PLAN.md` (build plan, NOT canonical).
 
 | Control (prototype) | Canonical command ID | Owner module | Mutation / persistence | Net | Paid | Dest | Proto-only? | Citation |
 |---|---|---|---|---|---|---|---|---|

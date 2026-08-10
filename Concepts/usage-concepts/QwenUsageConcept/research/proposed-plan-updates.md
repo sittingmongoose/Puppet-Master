@@ -56,7 +56,7 @@ Per governance, canonical Plans/**, `Spec_Lock.json`, shards, and evidence were 
 - **Command impact:** none (presentation rule).
 
 ## P12 — Usage-first IA with cost one tab away as a governing principle (NEW)
-- **Owner:** FinalGUISpec.md (GUI-USG information architecture) + `Usage_Concepts_Rebuild_Plan.md`.
+- **Owner:** FinalGUISpec.md (GUI-USG information architecture) + `Concepts/usage-concepts/BUILD_PLAN.md`.
 - **Why:** The U9 Deck review confirmed the pattern: the default view should lead with usage (quotas, attention, tokens) and park literal cost/spend widgets on a dedicated tab/section — "cost stays a tab away." The Budget dollar-hero sitting on Overview was read as a defect and fixed. Make usage-first IA + cost-one-navigation-away an explicit governing principle so future layouts do not regress.
 - **Proposed contract:** the default Usage surface leads with usage/entitlement state; cost/spend is a first-class but secondary surface, always exactly one navigation step away (tab or section), never the landing hero. Consistent with the single-cost-authority three-way projection (P6); interacts with the curated default board (P9) and `widget.budget_donuts` (register U8).
 - **Command impact:** none (IA principle).

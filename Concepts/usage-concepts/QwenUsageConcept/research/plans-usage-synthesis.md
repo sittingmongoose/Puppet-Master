@@ -6,7 +6,7 @@ Owner hierarchy: `Plans/usage-feature.md` (UF-*) owns usage semantics; `Plans/Co
 owns the persisted envelope/attribution/cost-type contracts; `Plans/FinalGUISpec.md` (F3-418)
 owns the GUI value-state rendering; `Plans/Multi-Account.md` owns account/pressure/cooldown;
 `Plans/assistant-chat-design.md` (ACD-434) consumes UsageRecord projections in chat.
-`Plans/Usage_Concepts_Rebuild_Plan.md` is a **build plan** (derived, not canonical).
+`Concepts/usage-concepts/BUILD_PLAN.md` is a **build plan** (derived, not canonical).
 
 The single load-bearing fact: **UF-085 (`usage-feature.md:5611-5719`) is the implementation-ready
 UsageRecord accounting contract; UF-087 (`:5421-5511`) + F3-418 (`FinalGUISpec.md:27739-27816`)
@@ -105,7 +105,7 @@ cache observability views expose **measured vs estimated vs unsupported** (UF-08
   "paid-overage, metered, credit-consuming, API-billed" `:5226`) and require **plan-backed vs
   API-billed buckets to stay separate** (Codex `:233`; MA-023 `Multi-Account.md:2291`). The
   explicit "**purchased extra usage = its own add-on/overage bucket (own used + reset)**" is a
-  **build-plan decision** (`Usage_Concepts_Rebuild_Plan.md:23`), not canonical Plans vocabulary.
+  **build-plan decision** (`Concepts/usage-concepts/BUILD_PLAN.md:23`), not canonical Plans vocabulary.
 - **Rule forbidding synthesizing a weekly reset from a 5-hour reset:** **there is NO literal
   sentence.** It is implied by: preserve Alibaba 5h/weekly/monthly separately, not flattened
   (`usage-feature.md:358`); avoid one generic 5h/7d column (UF-041 `:3120`); no fabricated
@@ -115,7 +115,7 @@ cache observability views expose **measured vs estimated vs unsupported** (UF-08
 ## Q4 — Burn rate and run-out (forecast exhaustion)
 
 - **There is NO canonical definition of "burn rate" or "run-out / forecast exhaustion" anywhere in
-  `Plans/**`.** The only occurrences are: the **build plan** (`Usage_Concepts_Rebuild_Plan.md:79`
+  `Plans/**`.** The only occurrences are: the **build plan** (`Concepts/usage-concepts/BUILD_PLAN.md:79`
   "burn/run-out"; `:130` Claude-Code-Usage-Monitor "burn, P90/custom limit, run-out" as
   computation-only demo realism), the **`spend_rate_exceeded` anomaly guard class** (UF-083
   `:6016`), and the **high-cost action "cost forecast and warning semantics"** (UF-065 `:4362`;
@@ -181,7 +181,7 @@ cache observability views expose **measured vs estimated vs unsupported** (UF-08
   → `hidden_byok` / `hidden_subscription` states (UF-085 `:5619`; UF-087 `:5439`; GUI-USG-004 `:5530`).
 - **"API-billed / plan-included / combined" three projections:** this is a **build-plan GUI
   projection over the SINGLE cost authority (UF-087), explicitly NOT a second cost model**
-  (`Usage_Concepts_Rebuild_Plan.md:20-22`). Canonical Plans have **one** cost authority; the
+  (`Concepts/usage-concepts/BUILD_PLAN.md:20-22`). Canonical Plans have **one** cost authority; the
   three-way split is presentation. API-key-backed Codex = "API-billed" bucket vs ChatGPT plan
   bucket (`usage-feature.md:235-238`).
 - **Add-on vs overage separation:** see Q3 — overage is a policy state; add-on-as-bucket is

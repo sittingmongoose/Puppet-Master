@@ -6,7 +6,7 @@ Reconciles: user requirements (handoff) × current canonical Plans (research/pla
 ## Information architecture & semantics
 | Behavior | Class | Evidence / decision |
 |---|---|---|
-| Usage-first IA (quota/pressure/remaining/reset/cache/used/sessions/burn lead; cost secondary) | CANON+PROTO | Matches UF-085/UF-087 emphasis; "usage-first" framing is rebuild-plan (Usage_Concepts_Rebuild_Plan.md). U8 still cost-forward in code → FIX (not yet applied). |
+| Usage-first IA (quota/pressure/remaining/reset/cache/used/sessions/burn lead; cost secondary) | CANON+PROTO | Matches UF-085/UF-087 emphasis; "usage-first" framing is rebuild-plan (Concepts/usage-concepts/BUILD_PLAN.md). U8 still cost-forward in code → FIX (not yet applied). |
 | Token buckets input/output/reasoning/cache-read/cache-write with per-provider inclusivity | FIX | `counting_semantics` decides inclusivity (OpenAI inclusive vs Anthropic additive). Current demo sum `input+output+cache_read` DOUBLE-COUNTS inclusive providers. Must reconcile per provider before display. (plans-usage-synthesis Q1; LiteLLM/Helicone/opencode evidence.) |
 | "Used tokens" total | FIX | `provider_total` is the provider total; `total_tokens` convenience-only, never re-add inclusive subsets. Cross-provider sum keyed by (provider,model,account,billing_entity,entitlement_class); when not producible → per-provider **unknown, not zero**. Current demo total is not source-aware. |
 | Cache-read/cache-write + hit rate first-class | CANON | Buckets exist (UF-085). Display only after counting semantics valid. |

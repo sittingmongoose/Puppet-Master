@@ -326,12 +326,12 @@
     {
       "id": "gui-rebuild-plan",
       "domain": "gui",
-      "file": "Plans/Usage_Concepts_Rebuild_Plan.md",
+      "file": "Concepts/usage-concepts/BUILD_PLAN.md",
       "anchor": "Locked decisions + Phase 0 backbone + Motion system + Phase 4 verification",
       "lines": "1-131",
       "grounds": "PROTOTYPE/BUILD-PLAN ONLY (not canonical): Context-Lens popover as app standard popup, calm More-Details, PMWidgets kebab focus/S-M-L-XL/close + free resize pointer-up snap, motion token table, no-underscore R.human, no left status edge-bars, Settings scrollbar on every scroller, Slint non-portable audit",
       "gui_related": true,
-      "owner_doc": "Plans/Usage_Concepts_Rebuild_Plan.md",
+      "owner_doc": "Concepts/usage-concepts/BUILD_PLAN.md",
       "note": "Governing build plan for the prototypes; source-lineage only. Distinguish from canonical Plans prose - see gaps G2-G10."
     },
     {
@@ -933,12 +933,12 @@
     {
       "id": "usage-rebuild-plan",
       "domain": "usage",
-      "file": "Plans/Usage_Concepts_Rebuild_Plan.md",
+      "file": "Concepts/usage-concepts/BUILD_PLAN.md",
       "anchor": "Locked decisions + Phase 2 + Plan-update notes + Demo-data realism sources",
       "lines": "11-131",
       "grounds": "BUILD-PLAN framing (derived, NOT canonical): 5h/7d labels, three cost projections, add-on/overage bucket, burn/run-out, value-state+provenance on every numeric.",
       "gui_related": true,
-      "owner_doc": "Plans/Usage_Concepts_Rebuild_Plan.md",
+      "owner_doc": "Concepts/usage-concepts/BUILD_PLAN.md",
       "topic": "build-plan framing vs canonical vocabulary",
       "requirement_summary": "Governing build plan (derives from canonical specs, does not replace them). Locked decisions: 5h short window (7d weekly) with per-provider window labels per UF-041; Spend is secondary, shown as three projections (API-billed / plan-included / combined) that are GUI projections over the SINGLE UsageRecord cost authority (UF-087), NOT a second cost model; purchased extra usage = its own add-on/overage bucket (own used + reset); value-state + provenance on every numeric. Phase 2 adds burn/run-out to the secondary Cost section. Demo-realism sources (computation only): ccusage, tokscale, Claude-Code-Usage-Monitor (burn, P90/custom limit, run-out, official-vs-estimate provenance), opencode. Plan-update notes (recorded, NOT applied): no explicit window_kind per provider except MiniMax; Glossary missing settlement_status/source_class/value_state/source_confidence/cost_status; cache-subset-of-input not explicit in Prompt_Pipeline.",
       "prohibitions": ["No user-facing string may contain '_' (humanize at the view layer)", "No emoji/pictographs as UI or status (SVG only); no left status edge-bars"],

@@ -69,7 +69,7 @@ shards is a seal-phase action. Citations are `file:line` to live files; PlanUnit
    (`Contracts_V0.md:2192-2196`; UF-085 `:5619`); `cost_usd` is presentation-only with precision tiers
    of 6dp under $0.01, 4dp under $1, else 2dp (`usage-feature.md:523-524`). The "API-billed /
    plan-included / combined" split is a **GUI projection over that single authority, explicitly NOT a
-   second cost model** (`Usage_Concepts_Rebuild_Plan.md:20-22`); overage is a policy/entitlement state,
+   second cost model** (`Concepts/usage-concepts/BUILD_PLAN.md:20-22`); overage is a policy/entitlement state,
    and plan-backed vs API-billed buckets must not merge (register U3). The rebuilt demo data reconciles
    exactly: **61,850,000 (API-billed) + 125,570,000 (plan-included) = 187,420,000 = the single
    `cost_microdollars`** — machine-verified by the data-unit gate.
