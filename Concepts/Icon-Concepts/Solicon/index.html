@@ -1,0 +1,187 @@
+<!doctype html>
+<html lang="en" data-canvas-theme="friendly-dark">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+  <meta name="color-scheme" content="dark light">
+  <title>Solicon — Puppet Master identity and loader gallery</title>
+  <link rel="icon" href="assets/static/pm-friendly-dark-character-micro.svg" type="image/svg+xml">
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+  <a class="skip-link" href="#main-content">Skip to gallery</a>
+
+  <header class="topbar" aria-label="Solicon navigation">
+    <a class="brand-lockup" href="#static" data-view-link="static" aria-label="Solicon home">
+      <img src="assets/static/pm-friendly-dark-character-micro.svg" alt="" width="24" height="24">
+      <span class="dashboard-label">Sol.</span>
+      <span class="brand-copy"><strong>Solicon</strong><small>Puppet Master asset atelier</small></span>
+    </a>
+
+    <nav class="view-tabs" role="tablist" aria-label="Gallery views">
+      <button id="tab-static" type="button" class="view-tab is-active" role="tab" aria-selected="true" aria-controls="view-static" data-view="static">Static</button>
+      <button id="tab-loaders" type="button" class="view-tab" role="tab" aria-selected="false" aria-controls="view-loaders" data-view="loaders">Loaders</button>
+      <button id="tab-downloads" type="button" class="view-tab" role="tab" aria-selected="false" aria-controls="view-downloads" data-view="downloads">Downloads</button>
+    </nav>
+
+    <label class="theme-picker">
+      <span>Canvas</span>
+      <select id="canvas-theme" aria-label="Dashboard canvas theme"></select>
+    </label>
+  </header>
+
+  <main id="main-content">
+    <section class="hero" aria-labelledby="hero-title">
+      <div class="hero-copy">
+        <p class="eyebrow">Identity system · eight native themes</p>
+        <h1 id="hero-title">One mark.<br><em>Many working states.</em></h1>
+        <p class="hero-lede">Compare the full Puppet Master mark at launcher scale, inspect its micro companion where every pixel matters, then audition eight loading rhythms across all PMConcept7 palettes.</p>
+        <div class="hero-actions">
+          <button type="button" class="primary-action" data-jump="loaders">
+            <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M8 5.5v13l10-6.5z"/></svg>
+            Explore motion
+          </button>
+          <a class="secondary-action" href="bundles/solicon-complete.zip" download>
+            <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 3v11m0 0 4-4m-4 4-4-4M5 18v2h14v-2"/></svg>
+            Download library
+          </a>
+        </div>
+      </div>
+
+      <div class="hero-stage" aria-label="Featured Puppet Master logo preview">
+        <div class="hero-orbit" aria-hidden="true"></div>
+        <img id="hero-logo" src="assets/static/pm-friendly-dark-character-full.svg" alt="Puppet Master logo" width="220" height="220">
+        <div class="hero-caption"><span id="hero-theme-label">Friendly Dark</span><span>Character · Full</span></div>
+      </div>
+
+      <dl class="hero-counts" aria-label="Library counts">
+        <div><dt>32</dt><dd>static masters</dd></div>
+        <div><dt>256</dt><dd>animated SVGs</dd></div>
+        <div><dt>8 × 8</dt><dd>theme-motion matrix</dd></div>
+      </dl>
+    </section>
+
+    <section class="workbench" aria-label="Gallery workbench">
+      <aside class="control-dock" aria-label="Preview controls">
+        <div class="dock-heading">
+          <span class="dock-kicker">Workbench</span>
+          <strong id="dock-title">Identity board</strong>
+        </div>
+
+        <fieldset class="asset-control" data-control-group="treatment">
+          <legend>Treatment</legend>
+          <div class="segmented">
+            <button type="button" class="is-on" data-treatment="character" aria-pressed="true">Character</button>
+            <button type="button" data-treatment="flat" aria-pressed="false">Flat</button>
+          </div>
+        </fieldset>
+
+        <fieldset class="static-control" data-control-group="form">
+          <legend>Form</legend>
+          <div class="segmented">
+            <button type="button" class="is-on" data-form="full" aria-pressed="true">Full</button>
+            <button type="button" data-form="micro" aria-pressed="false">Micro</button>
+          </div>
+        </fieldset>
+
+        <fieldset class="loader-control" data-control-group="presentation">
+          <legend>Presentation</legend>
+          <div class="segmented">
+            <button type="button" class="is-on" data-presentation="tiled" aria-pressed="true">Tile</button>
+            <button type="button" data-presentation="transparent" aria-pressed="false">Transparent</button>
+          </div>
+        </fieldset>
+
+        <label class="select-control loader-control">
+          <span>Tone</span>
+          <select id="tone-filter">
+            <option value="all">All personalities</option>
+            <option value="friendly-technical">Friendly technical</option>
+            <option value="precision-industrial">Precision industrial</option>
+            <option value="expressive-futuristic">Expressive futuristic</option>
+          </select>
+        </label>
+
+        <label class="select-control asset-control">
+          <span>Context</span>
+          <select id="context-select">
+            <option value="app">App launcher</option>
+            <option value="titlebar">28 px title bar</option>
+            <option value="tray">System tray</option>
+            <option value="loading">Loading surface</option>
+          </select>
+        </label>
+
+        <div class="playback loader-control">
+          <span class="control-label">Playback</span>
+          <div class="playback-row">
+            <button type="button" class="icon-action" id="toggle-play" aria-label="Pause animations" aria-pressed="false">
+              <svg class="pause-icon" viewBox="0 0 24 24" aria-hidden="true"><path d="M7 5h3v14H7zm7 0h3v14h-3z"/></svg>
+              <svg class="play-icon" viewBox="0 0 24 24" aria-hidden="true"><path d="M8 5.5v13l10-6.5z"/></svg>
+            </button>
+            <button type="button" class="icon-action" id="replay" aria-label="Replay animations">
+              <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M5 8V4m0 0h4M5 4l3.2 3.2A7 7 0 1 1 5 12"/></svg>
+            </button>
+            <label class="speed-control"><span>Speed</span><select id="speed-select"><option value="0.5">0.5×</option><option value="1" selected>1×</option><option value="1.5">1.5×</option><option value="2">2×</option></select></label>
+          </div>
+        </div>
+
+        <label class="switch-control loader-control">
+          <span><strong>Reduced motion</strong><small>Opacity-only signal</small></span>
+          <input type="checkbox" id="reduce-motion">
+          <i aria-hidden="true"></i>
+        </label>
+
+        <div class="dock-note">
+          <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 3l8 4.5v9L12 21l-8-4.5v-9zM12 8v4m0 3h.01"/></svg>
+          <p>Previews are generated from the same geometry, palette, and motion contracts as the downloadable files.</p>
+        </div>
+      </aside>
+
+      <div class="gallery-area">
+        <section id="view-static" class="gallery-view is-active" role="tabpanel" aria-labelledby="tab-static">
+          <header class="section-heading">
+            <div><p class="eyebrow">Identity board</p><h2>Eight themes, two readings</h2></div>
+            <p>Use the context control to judge the same mark where it will actually live. The micro form is optimized for 16–24 px and intentionally drops the braces.</p>
+          </header>
+          <div id="static-grid" class="asset-grid static-grid" aria-live="polite"></div>
+        </section>
+
+        <section id="view-loaders" class="gallery-view" role="tabpanel" aria-labelledby="tab-loaders" hidden>
+          <header class="section-heading">
+            <div><p class="eyebrow">Motion matrix</p><h2>Eight rhythms across every theme</h2></div>
+            <p>Only visible previews are mounted. Filters change the audition surface; every treatment and presentation remains available as a direct SVG download.</p>
+          </header>
+          <div id="motion-index" class="motion-index" aria-label="Motion concepts"></div>
+          <div id="loader-grid" class="asset-grid loader-grid" aria-live="polite"></div>
+        </section>
+
+        <section id="view-downloads" class="gallery-view" role="tabpanel" aria-labelledby="tab-downloads" hidden>
+          <header class="section-heading">
+            <div><p class="eyebrow">Pack room</p><h2>Take one, or take the whole system</h2></div>
+            <p>Every ZIP is deterministic. The checksum ledgers and versioned manifest make later promotion into the native app auditable.</p>
+          </header>
+          <div id="bundle-groups" class="bundle-groups"></div>
+          <div class="manifest-strip">
+            <div><strong>Machine-readable contracts</strong><span>Manifest, palette provenance, motion recipes, and SHA-256 ledgers.</span></div>
+            <div class="manifest-links">
+              <a href="manifest/manifest.json" download>Asset manifest</a>
+              <a href="manifest/motion-spec.json" download>Motion spec</a>
+              <a href="checksums.sha256" download>Checksums</a>
+            </div>
+          </div>
+        </section>
+      </div>
+    </section>
+  </main>
+
+  <footer>
+    <span>Solicon · isolated concept asset system</span>
+    <span id="source-status">Protected inputs verified</span>
+  </footer>
+
+  <div class="status-toast" id="status-toast" role="status" aria-live="polite"></div>
+  <script src="data.js"></script>
+  <script src="app.js"></script>
+</body>
+</html>
