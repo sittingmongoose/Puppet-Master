@@ -1,0 +1,18 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://puppet-master.local/schemas/plan-assurance/required-control-registry.v1.json",
+  "title": "Plan Assurance Required Control Registry",
+  "type": "object", "additionalProperties": false,
+  "required": ["schema_version", "schema_id", "trial_id", "surface_ledger_sha256", "pilot_briefs_sha256", "frozen_before_plan_comparison", "controls", "registry_sha256"],
+  "properties": {
+    "schema_version": {"const": "1.0.0"}, "schema_id": {"const": "pm.plan_assurance.required_control_registry.v1"},
+    "trial_id": {"type": "string", "minLength": 1}, "surface_ledger_sha256": {"$ref": "#/$defs/sha256"},
+    "pilot_briefs_sha256": {"$ref": "#/$defs/sha256"}, "frozen_before_plan_comparison": {"const": true},
+    "controls": {"type": "array", "minItems": 33, "items": {"$ref": "#/$defs/control_definition"}},
+    "registry_sha256": {"$ref": "#/$defs/sha256"}
+  },
+  "$defs": {
+    "sha256": {"type": "string", "pattern": "^[0-9a-f]{64}$"},
+    "control_definition": {"type": "object", "additionalProperties": false, "required": ["control_id", "family_id", "control_kind", "origin", "requirement_text", "requirement_sha256", "source_refs", "identity_status", "expected_instance_ids", "unresolved_identity_selectors", "applicability", "definition_sha256"], "properties": {"control_id": {"type": "string", "minLength": 1}, "family_id": {"enum": ["USAGE_ACCOUNTING_TRUTH", "WEB_RESEARCH_BEHAVIOR", "ACCESSIBILITY_CONTROL_CONTRACTS", "MIGRATIONS_DURABLE_STATE"]}, "control_kind": {"enum": ["positive_sentinel", "negative_sentinel", "discovery_generated"]}, "origin": {"enum": ["common_visible_brief", "discovery_lock"]}, "requirement_text": {"type": "string", "minLength": 1}, "requirement_sha256": {"$ref": "#/$defs/sha256"}, "source_refs": {"type": "array", "minItems": 1, "items": {"type": "string", "minLength": 1}}, "identity_status": {"enum": ["resolved", "unresolved"]}, "expected_instance_ids": {"type": "array", "uniqueItems": true, "items": {"type": "string", "minLength": 1}}, "unresolved_identity_selectors": {"type": "array", "uniqueItems": true, "items": {"type": "string", "minLength": 1}}, "applicability": {"enum": ["required", "conditional"]}, "definition_sha256": {"$ref": "#/$defs/sha256"}}}
+  }
+}

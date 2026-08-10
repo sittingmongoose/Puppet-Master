@@ -1,0 +1,218 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://puppet-master.local/schemas/plan-assurance/surface-instance-ledger.v1.json",
+  "title": "Plan Assurance Surface Instance Ledger",
+  "type": "object",
+  "additionalProperties": false,
+  "required": ["schema_version", "trial_id", "snapshot", "candidate_inventory", "instances", "relations", "aliases", "denominator_sets", "invalidations", "summary"],
+  "properties": {
+    "schema_version": {"const": "1.0.0"},
+    "trial_id": {"type": "string", "minLength": 1},
+    "snapshot": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["structural_map_sha256", "source_manifest_sha256", "artifact_validator_sha256", "created_at_utc"],
+      "properties": {
+        "structural_map_sha256": {"$ref": "#/$defs/sha256"},
+        "source_manifest_sha256": {"$ref": "#/$defs/sha256"},
+        "artifact_validator_sha256": {"$ref": "#/$defs/sha256"},
+        "created_at_utc": {"type": "string", "format": "date-time"}
+      }
+    },
+    "candidate_inventory": {"type": "array", "minItems": 1, "items": {"$ref": "#/$defs/candidate"}},
+    "instances": {"type": "array", "items": {"$ref": "#/$defs/instance"}},
+    "relations": {"type": "array", "items": {"$ref": "#/$defs/relation"}},
+    "aliases": {"type": "array", "items": {"$ref": "#/$defs/alias"}},
+    "denominator_sets": {"type": "array", "items": {"$ref": "#/$defs/denominator"}},
+    "invalidations": {"type": "array", "items": {"$ref": "#/$defs/invalidation"}},
+    "summary": {"$ref": "#/$defs/summary"}
+  },
+  "allOf": [
+    {
+      "if": {"properties": {"summary": {"properties": {"terminal": {"const": "PASS"}}, "required": ["terminal"]}}, "required": ["summary"]},
+      "then": {
+        "properties": {
+          "instances": {"minItems": 1},
+          "denominator_sets": {"minItems": 1},
+          "summary": {"properties": {
+            "unresolved_identity_count": {"const": 0},
+            "named_instances_closed_only_by_template_count": {"const": 0},
+            "dangling_reference_count": {"const": 0},
+            "unfrozen_denominator_count": {"const": 0}
+          }}
+        }
+      }
+    }
+  ],
+  "$defs": {
+    "sha256": {"type": "string", "pattern": "^[0-9a-f]{64}$"},
+    "stable_id": {"type": "string", "pattern": "^sil[.][a-z][a-z0-9_.:-]+$"},
+    "source_binding": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["ref", "content_sha256", "semantic_sha256", "authority_class"],
+      "properties": {
+        "ref": {"type": "string", "minLength": 1},
+        "content_sha256": {"$ref": "#/$defs/sha256"},
+        "semantic_sha256": {"$ref": "#/$defs/sha256"},
+        "authority_class": {"enum": ["canonical_owner", "canonical_registry", "validated_projection", "consumer", "source_lineage"]}
+      }
+    },
+    "candidate": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["candidate_id", "capability_id", "kind", "canonical_key", "source_ref", "disposition", "instance_id", "exclusion_reason"],
+      "properties": {
+        "candidate_id": {"type": "string", "minLength": 1},
+        "capability_id": {"type": "string", "minLength": 1},
+        "kind": {"enum": ["product", "journey", "entrypoint", "surface", "control", "command", "setting", "actor", "state", "event_type", "service", "data_store", "artifact", "provider", "automation_scenario"]},
+        "canonical_key": {"type": "string", "minLength": 1},
+        "source_ref": {"type": "string", "pattern": "^Plans/"},
+        "disposition": {"enum": ["included", "excluded_non_product", "excluded_retired", "excluded_duplicate", "excluded_out_of_scope"]},
+        "instance_id": {"oneOf": [{"$ref": "#/$defs/stable_id"}, {"type": "null"}]},
+        "exclusion_reason": {"type": ["string", "null"]}
+      }
+    },
+    "owner": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["owner_doc", "owner_plan_unit", "authority_class"],
+      "properties": {
+        "owner_doc": {"type": "string", "pattern": "^Plans/"},
+        "owner_plan_unit": {"type": ["string", "null"]},
+        "authority_class": {"enum": ["canonical_owner", "canonical_registry", "validated_projection", "consumer", "source_lineage"]}
+      }
+    },
+    "realization": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["identity", "semantics", "placement", "wiring", "automation", "runtime_evidence", "blockers"],
+      "properties": {
+        "identity": {"enum": ["bound", "missing", "conflicted"]},
+        "semantics": {"enum": ["complete", "partial", "missing", "not_applicable"]},
+        "placement": {"enum": ["declared", "concrete", "missing", "not_applicable"]},
+        "wiring": {"enum": ["complete_non_executable", "partial", "missing", "not_applicable"]},
+        "automation": {"enum": ["verified", "specified_unrun", "missing", "stale", "not_applicable"]},
+        "runtime_evidence": {"enum": ["verified", "missing", "stale", "not_applicable"]},
+        "blockers": {"type": "array", "items": {"type": "string", "minLength": 1}}
+      }
+    },
+    "instance": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["instance_id", "kind", "canonical_key", "canonical_label", "instance_role", "lifecycle", "owner", "source_bindings", "parent_instance_ids", "capability_ids", "risk_tier", "applicability", "kind_contract", "template_coverage", "realization", "obligation_ids", "mutation_dependencies"],
+      "properties": {
+        "instance_id": {"$ref": "#/$defs/stable_id"},
+        "kind": {"enum": ["product", "journey", "entrypoint", "surface", "control", "command", "setting", "actor", "state", "event_type", "service", "data_store", "artifact", "provider", "automation_scenario"]},
+        "canonical_key": {"type": "string", "minLength": 1},
+        "canonical_label": {"type": "string", "minLength": 1},
+        "instance_role": {"enum": ["named_instance", "parameterized_instance_set", "contract_template", "source_lineage", "dynamic_evidence"]},
+        "lifecycle": {"enum": ["candidate", "active", "conflicted", "deferred", "retired", "superseded"]},
+        "owner": {"$ref": "#/$defs/owner"},
+        "source_bindings": {"type": "array", "minItems": 1, "items": {"$ref": "#/$defs/source_binding"}},
+        "parent_instance_ids": {"type": "array", "items": {"$ref": "#/$defs/stable_id"}},
+        "capability_ids": {"type": "array", "minItems": 1, "uniqueItems": true, "items": {"type": "string", "minLength": 1}},
+        "risk_tier": {"enum": ["R1", "R2", "R3"]},
+        "applicability": {"enum": ["applicable", "conditional", "not_applicable", "unresolved"]},
+        "kind_contract": {"type": "object", "minProperties": 1},
+        "template_coverage": {
+          "oneOf": [
+            {"type": "null"},
+            {
+              "type": "object",
+              "additionalProperties": false,
+              "required": ["covers_instance_ids", "instance_set_ref", "membership_sha256"],
+              "properties": {
+                "covers_instance_ids": {"type": "array", "uniqueItems": true, "items": {"$ref": "#/$defs/stable_id"}},
+                "instance_set_ref": {"type": ["string", "null"]},
+                "membership_sha256": {"oneOf": [{"$ref": "#/$defs/sha256"}, {"type": "null"}]}
+              }
+            }
+          ]
+        },
+        "realization": {"$ref": "#/$defs/realization"},
+        "obligation_ids": {"type": "array", "items": {"type": "string", "minLength": 1}},
+        "mutation_dependencies": {"type": "array", "items": {"type": "string", "minLength": 1}}
+      }
+    },
+    "relation": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["relation_id", "from_instance_id", "to_instance_id", "relation_type", "source_ref"],
+      "properties": {
+        "relation_id": {"type": "string", "minLength": 1},
+        "from_instance_id": {"$ref": "#/$defs/stable_id"},
+        "to_instance_id": {"$ref": "#/$defs/stable_id"},
+        "relation_type": {"enum": ["contains", "entered_by", "acts_as", "invokes", "emits", "reads", "writes", "projects", "consumes", "validated_by", "supersedes"]},
+        "source_ref": {"type": "string", "minLength": 1}
+      }
+    },
+    "alias": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["alias", "target_instance_id", "alias_kind", "source_ref", "counts_toward_denominator"],
+      "properties": {
+        "alias": {"type": "string", "minLength": 1},
+        "target_instance_id": {"$ref": "#/$defs/stable_id"},
+        "alias_kind": {"enum": ["rename", "compatibility", "display", "source_lineage"]},
+        "source_ref": {"type": "string", "minLength": 1},
+        "counts_toward_denominator": {"const": false}
+      }
+    },
+    "denominator": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["set_id", "capability_id", "kind", "member_instance_ids", "membership_sha256", "excluded_rows", "frozen_before_scoring"],
+      "properties": {
+        "set_id": {"type": "string", "minLength": 1},
+        "capability_id": {"type": "string", "minLength": 1},
+        "kind": {"type": "string", "minLength": 1},
+        "member_instance_ids": {"type": "array", "uniqueItems": true, "items": {"$ref": "#/$defs/stable_id"}},
+        "membership_sha256": {"$ref": "#/$defs/sha256"},
+        "excluded_rows": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "additionalProperties": false,
+            "required": ["candidate_ref", "reason", "evidence_ref"],
+            "properties": {
+              "candidate_ref": {"type": "string", "minLength": 1},
+              "reason": {"type": "string", "minLength": 1},
+              "evidence_ref": {"type": "string", "minLength": 1}
+            }
+          }
+        },
+        "frozen_before_scoring": {"type": "boolean"}
+      }
+    },
+    "invalidation": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["invalidation_id", "instance_ids", "cause", "affected_dimensions", "source_ref", "status"],
+      "properties": {
+        "invalidation_id": {"type": "string", "minLength": 1},
+        "instance_ids": {"type": "array", "minItems": 1, "items": {"$ref": "#/$defs/stable_id"}},
+        "cause": {"type": "string", "minLength": 1},
+        "affected_dimensions": {"type": "array", "items": {"enum": ["identity", "semantics", "placement", "wiring", "automation", "runtime_evidence"]}},
+        "source_ref": {"type": "string", "minLength": 1},
+        "status": {"enum": ["open", "recomputed", "superseded"]}
+      }
+    },
+    "summary": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["instance_count", "active_named_instance_count", "template_count", "denominator_member_count", "unresolved_identity_count", "named_instances_closed_only_by_template_count", "dangling_reference_count", "unfrozen_denominator_count", "terminal"],
+      "properties": {
+        "instance_count": {"type": "integer", "minimum": 0},
+        "active_named_instance_count": {"type": "integer", "minimum": 0},
+        "template_count": {"type": "integer", "minimum": 0},
+        "denominator_member_count": {"type": "integer", "minimum": 0},
+        "unresolved_identity_count": {"type": "integer", "minimum": 0},
+        "named_instances_closed_only_by_template_count": {"type": "integer", "minimum": 0},
+        "dangling_reference_count": {"type": "integer", "minimum": 0},
+        "unfrozen_denominator_count": {"type": "integer", "minimum": 0},
+        "terminal": {"enum": ["PASS", "REVISE", "BLOCKED", "INVALID"]}
+      }
+    }
+  }
+}
