@@ -1,0 +1,443 @@
+/* usage-concepts/_shared/usage-widget-renderers.css
+   Widget-BODY styles for the shared PMWidgetDefs renderers. Loaded after
+   usage-shared.css + usage-widgets.css. Everything is scoped under .wd-*,
+   theme-agnostic (CSS vars only), and reuses the shared primitives in
+   usage-shared.css (.us-meter, .us-tbl, .vs chips, .us-kv, .us-foot, ...). */
+
+/* ---------- shared body bits ---------------------------------------------- */
+.wd-hlrow   { display: flex; align-items: center; gap: var(--md); flex-wrap: wrap; min-width: 0; }
+.wd-cap     { font-size: var(--fs-2xs); color: var(--text-muted); letter-spacing: .02em; min-width: 0; }
+.wd-cap b   { color: var(--text-secondary); }
+.wd-note    { font-size: var(--fs-2xs); color: var(--text-muted); line-height: var(--lh-body); }
+.wd-note svg { width: 10px; height: 10px; vertical-align: -1px; margin-right: 3px; }
+.wd-none    { font-size: var(--fs-2xs); color: var(--text-muted); font-style: italic; padding: 1px 0; }
+.wd-tblwrap { flex: 1 1 auto; min-height: 0; }
+
+.wd-hlrow .us-big { font-size: var(--fs-2xl); }
+.wd-hlrow .us-big.sm { font-size: var(--fs-lg); }
+.wd-hlrow .us-big.ok  { color: var(--tone-ok-text); }
+.wd-hlrow .us-big.err { color: var(--tone-err-text); }
+
+/* tier-change settle: when a body re-renders at a new density, its children
+   land with a short staggered fade instead of a hard swap. Transform/opacity
+   only (no layout), frozen by the reduced-motion kill-switch. */
+@keyframes wdSettle { from { opacity: 0; transform: translateY(3px); } to { opacity: 1; transform: none; } }
+.uw-body > * { animation: wdSettle var(--mo-enter, 220ms) var(--ease-out, ease-out) both; }
+.uw-body > *:nth-child(2) { animation-delay: 24ms; }
+.uw-body > *:nth-child(3) { animation-delay: 48ms; }
+.uw-body > *:nth-child(4) { animation-delay: 72ms; }
+.uw-body > *:nth-child(5) { animation-delay: 96ms; }
+.uw-body > *:nth-child(n+6) { animation-delay: 120ms; }
+@media (prefers-reduced-motion: reduce) { .uw-body > * { animation: none; } }
+
+/* row hover feedback — every list family answers the pointer */
+.wd-qrowc, .wd-crow, .wd-trow, .wd-sess, .wd-pgrow, .wd-sigrow, .wd-pv,
+.wd-costrow, .wd-fam, .us-wc { border-radius: var(--radius-xs); transition: background var(--mo-hover-dur, 120ms) var(--mo-hover-ease, ease-out); }
+.wd-qrowc:hover, .wd-crow:hover, .wd-trow:hover, .wd-sess:hover, .wd-pgrow:hover,
+.wd-sigrow:hover, .wd-pv:hover, .wd-costrow:hover, .wd-fam:hover, .us-wc:hover { background: color-mix(in srgb, var(--text-primary) 4%, transparent); }
+
+/* two-up split: wide tiles run long lists in two independent groups, each
+   keeping its own aligned subgrid tracks (meter edges stay equal per group) */
+.wd-duo { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 0 var(--lg); min-width: 0; }
+.wd-duo > * { min-width: 0; }
+.wd-glist    { display: flex; flex-direction: column; gap: 6px; min-width: 0; }
+.wd-sesslist { display: flex; flex-direction: column; min-width: 0; }
+.wd-pglist, .wd-wclist, .wd-pvlist { display: block; min-width: 0; }
+
+/* topN disclosure ("+N more") — the folded rows are already in the DOM */
+.wd-more   { min-width: 0; }
+.wd-more-t { width: 100%; justify-content: flex-start; }
+.wd-more-t.open { color: var(--accent-primary); border-color: color-mix(in srgb, var(--accent-primary) 40%, transparent); background: var(--accent-soft); }
+.wd-more-b { margin-top: 3px; animation: wdSettle var(--mo-enter, 220ms) var(--ease-out, ease-out) both; }
+@media (prefers-reduced-motion: reduce) { .wd-more-b { animation: none; } }
+
+/* sliver tier (sub-100px bodies): one line, ellipsis on the label parts,
+   chips and figures stay whole */
+.wd-sliver { display: flex; align-items: center; gap: 6px; min-width: 0; font-size: var(--fs-2xs); color: var(--text-secondary); white-space: nowrap; overflow: hidden; }
+.wd-sliver b { font-family: var(--mono-font); font-weight: 700; color: var(--text-primary); font-variant-numeric: tabular-nums; }
+.wd-sliver .ell { overflow: hidden; text-overflow: ellipsis; min-width: 0; }
+.wd-sliver .vs { flex: 0 0 auto; max-width: none; min-width: max-content; }
+
+/* value-state chip honesty: inside the renderer rows the chip NEVER clips
+   mid-word — it is unshrinkable (the adjacent NAME absorbs the squeeze with
+   an ellipsis), and narrow/micro tiles emit the .vs-dot collapse instead:
+   a clean colored dot whose full state rides the title tooltip. */
+.uw-body .wd-qid .vs, .uw-body .wd-cid .vs, .uw-body .wd-tid .vs { flex: 0 0 auto; max-width: none; min-width: max-content; }
+.vs.vs-dot   { padding: 2px 5px; gap: 0; }
+.vs.vs-dot > span { font-size: 0; line-height: 0; letter-spacing: 0; width: 7px; height: 7px; min-width: 0; border-radius: 50%; background: currentColor; }
+
+/* chips-in-a-row (spend/cost micro tiers) */
+.wd-chiprow  { display: flex; align-items: center; gap: 6px; flex-wrap: wrap; min-width: 0; }
+.wd-minichip { display: inline-flex; align-items: center; gap: 4px; font-family: var(--mono-font); font-size: var(--fs-2xs); color: var(--text-muted); padding: 2px 7px; border: 1px solid var(--border-light); border-radius: var(--radius-pill); white-space: nowrap; min-width: 0; }
+.wd-minichip b { color: var(--text-secondary); font-weight: 700; }
+.wd-minichip .us-cost { font-size: var(--fs-2xs); }
+.wd-spanrow  { display: flex; gap: var(--md); justify-content: space-between; flex-wrap: wrap; }
+.wd-subkv    { padding: 1px 0 4px; border-bottom: 1px solid var(--border-light); }
+
+/* ---------- quota ---------------------------------------------------------- */
+.wd-qrow   { display: flex; flex-direction: column; gap: 3px; padding: 5px 0; border-bottom: 1px solid var(--border-light); min-width: 0; }
+.wd-qrow:last-of-type { border-bottom: 0; }
+.wd-qh     { display: flex; align-items: center; gap: var(--sm); min-width: 0; flex-wrap: wrap; }
+.wd-qnm    { font-size: var(--fs-xs); font-weight: 700; color: var(--text-primary); white-space: nowrap; overflow: hidden; text-overflow: ellipsis; min-width: 0; }
+.wd-qsub   { font-size: var(--fs-2xs); color: var(--text-muted); white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+.wd-qnote  { font-size: var(--fs-2xs); color: var(--text-muted); line-height: var(--lh-body); }
+.wd-qrst   { display: inline-flex; align-items: center; gap: 4px; font-family: var(--mono-font); font-size: var(--fs-2xs); color: var(--text-secondary); }
+.wd-qrst svg { width: 10px; height: 10px; }
+.wd-qrst.unk { color: var(--text-muted); font-style: italic; }
+.wd-runout { font-size: 9px; color: var(--text-muted); letter-spacing: .02em; padding-left: 2px; display: flex; align-items: center; gap: 6px; flex-wrap: wrap; }
+
+/* quota compact one-line list — ONE shared grid so every row's meter track
+   aligns (equal left/right edges across rows) and soaks a healthy share of the
+   width. Row model: provider label (content-fit, capped) · window label ·
+   meter track (1fr soak) · value% · reset, value/reset right-aligned. No
+   stranded stub meter, no dead right third. subgrid keeps each row's own box
+   (the divider) while its cells ride the shared tracks; the block below is the
+   functional fallback for engines without subgrid. */
+.wd-qlist { min-width: 0; }
+.wd-qctl  { display: flex; align-items: center; gap: 6px; flex-wrap: wrap; padding-top: 5px; }
+.wd-qid   { display: flex; align-items: center; gap: 6px; min-width: 0; overflow: hidden; }
+.wd-qid .wd-qnm { flex: 0 1 auto; }
+.wd-qid .vs { flex: 0 1 auto; max-width: 56%; }
+.wd-qrowc { display: grid; grid-template-columns: minmax(88px, 30%) minmax(0, 1fr); align-items: center; gap: var(--sm); padding: 5px 0; border-bottom: 1px solid var(--border-light); min-width: 0; }
+.wd-qrowc .us-winrow { padding: 0; }
+@supports (grid-template-columns: subgrid) {
+  .wd-qlist { display: grid; column-gap: var(--sm); align-items: center;
+    grid-template-columns:
+      fit-content(32%)                   /* provider + chips: content-fit, capped */
+      max-content                        /* window label (5h / 7d / month …) */
+      minmax(56px, 1fr)                  /* meter track — the soak */
+      max-content                        /* value % */
+      max-content; }                     /* reset */
+  .wd-qrowc { grid-column: 1 / -1; grid-template-columns: subgrid; }
+  .wd-qrowc > .wd-qid { grid-column: 1; }
+  .wd-qrowc > .us-winrow { grid-column: 2 / -1; display: grid; grid-template-columns: subgrid; padding: 0; }
+  .wd-qrowc > .wd-none { grid-column: 2 / -1; }
+}
+
+/* ---------- guard ---------------------------------------------------------- */
+.wd-gcard  { display: flex; flex-direction: column; gap: 5px; padding: 8px 10px; border: 1px solid var(--border-light); border-left: 3px solid var(--tone-mute); border-radius: var(--radius-md); background: var(--surface); min-width: 0; transition: border-color var(--mo-hover-dur, 120ms) var(--mo-hover-ease, ease-out), box-shadow var(--mo-hover-dur, 120ms) var(--mo-hover-ease, ease-out); }
+.wd-gcard:hover { box-shadow: var(--elev-1); }
+.wd-gcard.blocked { border-left-color: var(--tone-err); background: color-mix(in srgb, var(--tone-err) 5%, var(--surface)); }
+.wd-gcard.warn    { border-left-color: var(--tone-warn); }
+.wd-gcard.okk     { border-left-color: var(--tone-ok); }
+.wd-gh     { display: flex; align-items: center; gap: 6px; min-width: 0; }
+.wd-gh svg { width: 13px; height: 13px; flex: none; color: var(--text-muted); }
+.wd-gcard.blocked .wd-gh svg { color: var(--tone-err-text); }
+.wd-gt     { font-size: var(--fs-xs); font-weight: 700; color: var(--text-primary); white-space: nowrap; overflow: hidden; text-overflow: ellipsis; min-width: 0; flex: 1 1 auto; }
+.wd-gb     { font-size: var(--fs-2xs); color: var(--text-secondary); line-height: var(--lh-body); }
+.wd-gw     { font-family: var(--mono-font); font-size: 9px; color: var(--text-muted); }
+.wd-why    { min-width: 0; }
+.wd-why-t  { display: inline-flex; align-items: center; gap: 4px; padding: 2px 0; border: 0; background: transparent; font-size: var(--fs-2xs); font-weight: 700; color: var(--accent-primary); cursor: pointer; }
+.wd-why-t svg { width: 10px; height: 10px; transition: transform var(--motion-fast, 140ms) var(--ease-out, ease-out); }
+.wd-why.open .wd-why-t svg { transform: rotate(90deg); }
+.wd-why-b  { display: none; padding: 4px 0 2px 14px; }
+.wd-why.open .wd-why-b { display: block; }
+.wd-gacts  { display: flex; gap: var(--sm); flex-wrap: wrap; }
+
+.wd-btn    { display: inline-flex; align-items: center; gap: 5px; font-size: var(--fs-2xs); font-weight: 600; padding: 4px 9px; border-radius: var(--radius-sm); border: 1px solid var(--border-light); background: transparent; color: var(--text-secondary); cursor: pointer; transition: all var(--mo-hover-dur, 120ms) var(--mo-hover-ease, ease-out); }
+.wd-btn svg { width: 10px; height: 10px; }
+.wd-btn:hover { color: var(--text-primary); border-color: var(--border); background: var(--accent-soft); transform: translateY(-1px); }
+.wd-btn.primary { background: var(--accent-soft); color: var(--accent-primary); border-color: color-mix(in srgb, var(--accent-primary) 40%, transparent); }
+
+.wd-dgrid  { display: grid; grid-template-columns: repeat(auto-fill, minmax(150px, 1fr)); gap: 6px; }
+.wd-di     { display: flex; flex-direction: column; gap: 1px; padding: 5px 8px; border-radius: var(--radius-sm); background: color-mix(in srgb, var(--text-primary) 4%, transparent); min-width: 0; }
+.wd-di b   { font-size: 9px; font-weight: 700; letter-spacing: .06em; text-transform: uppercase; color: var(--text-muted); }
+.wd-di span { font-size: var(--fs-2xs); color: var(--text-primary); line-height: var(--lh-body); word-break: break-word; }
+.wd-dact   { margin-top: var(--sm); }
+
+/* ---------- analytics ------------------------------------------------------- */
+.wd-cnote  { display: block; margin: 1px 0 3px; }
+.wd-wins   { display: inline-flex; gap: 3px; }
+.wd-wins button { font-family: var(--mono-font); font-size: 9px; font-weight: 700; padding: 3px 8px; border-radius: var(--radius-xs); border: 1px solid var(--border-light); background: transparent; color: var(--text-secondary); cursor: pointer; transition: all var(--motion-fast, 140ms) var(--ease-out, ease-out); }
+.wd-wins button:hover { color: var(--text-primary); border-color: var(--border); }
+.wd-wins button.on { color: var(--accent-primary); background: var(--accent-soft); border-color: color-mix(in srgb, var(--accent-primary) 40%, transparent); }
+.wd-chart  { position: relative; flex: 1 1 auto; min-height: 96px; }
+.wd-plot   { position: absolute; inset: 0 0 14px 0; display: flex; align-items: flex-end; gap: 3px; }
+.wd-col    { flex: 1 1 0; min-width: 0; height: 100%; display: flex; flex-direction: column; justify-content: flex-end; position: relative; }
+.wd-cs     { display: flex; flex-direction: column-reverse; height: 100%; min-height: 0; border-radius: 2px 2px 0 0; overflow: hidden; }
+.wd-cs i   { display: block; width: 100%; height: 0; transition: height var(--mo-data-refresh-dur, 800ms) var(--mo-data-refresh-ease, ease), opacity var(--mo-hover-dur, 120ms) ease; }
+.wd-cs .s-inp   { background: var(--ser-inp); }
+.wd-cs .s-out   { background: var(--ser-out); }
+.wd-cs .s-rea   { background: var(--ser-rea); }
+.wd-cs .s-cache { background: var(--ser-cache); }
+.wd-chart.outline .wd-cs i { background: color-mix(in srgb, currentColor 12%, transparent); }
+.wd-chart.outline .wd-cs .s-inp   { color: var(--ser-inp);   box-shadow: inset 0 0 0 1px var(--ser-inp); }
+.wd-chart.outline .wd-cs .s-out   { color: var(--ser-out);   box-shadow: inset 0 0 0 1px var(--ser-out); }
+.wd-chart.outline .wd-cs .s-rea   { color: var(--ser-rea);   box-shadow: inset 0 0 0 1px var(--ser-rea); }
+.wd-chart.outline .wd-cs .s-cache { color: var(--ser-cache); box-shadow: inset 0 0 0 1px var(--ser-cache); }
+.wd-col > b { position: absolute; bottom: -14px; left: 0; right: 0; text-align: center; font-family: var(--mono-font); font-weight: 400; font-size: 8px; color: var(--text-muted); white-space: nowrap; overflow: hidden; }
+.wd-bline  { position: absolute; left: 0; right: 0; border-top: 1px dashed color-mix(in srgb, var(--tone-warn) 70%, transparent); pointer-events: none; }
+.wd-bline span { position: absolute; right: 0; top: -13px; font-family: var(--mono-font); font-size: 8px; color: var(--tone-warn-text); background: var(--surface-elevated); padding: 0 3px; }
+.wd-legend { display: flex; gap: var(--sm); flex-wrap: wrap; margin-top: 2px; }
+.wd-legend button { display: inline-flex; align-items: center; gap: 4px; padding: 1px 2px; border: 0; background: transparent; font-size: var(--fs-2xs); color: var(--text-secondary); cursor: pointer; transition: opacity var(--mo-hover-dur, 120ms) ease, color var(--mo-hover-dur, 120ms) ease; }
+.wd-legend button:hover { color: var(--text-primary); }
+.wd-legend button.muted { opacity: .35; text-decoration: line-through; }
+.wd-sw     { width: 8px; height: 8px; border-radius: 2px; flex: none; }
+
+/* ---------- budget / spend --------------------------------------------------- */
+.wd-donuts { display: flex; gap: var(--md); flex-wrap: wrap; align-items: flex-start; }
+.wd-donut  { display: inline-flex; flex-direction: column; align-items: center; gap: 2px; }
+.wd-donut svg { width: 52px; height: 52px; }
+.wd-donut .dbg { fill: none; stroke: var(--border-light); stroke-width: 6; }
+.wd-donut .dfill { fill: none; stroke-width: 6; stroke-linecap: round; transform: rotate(-90deg); transform-origin: center; transition: stroke-dashoffset var(--mo-data-refresh-dur, 800ms) var(--mo-data-refresh-ease, ease); }
+.wd-donut text { font-family: var(--mono-font); font-size: 13px; fill: var(--text-primary); text-anchor: middle; dominant-baseline: middle; transform: none; }
+.wd-donut small { font-size: 9px; color: var(--text-muted); max-width: 60px; text-align: center; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+/* nth-child(n) pads the specificity so the compact size wins over host-page
+   enlargements (e.g. u7's .u7-grid .wd-donut:nth-child(-n+2) svg) */
+.wd-donuts.wd-donuts-sm { gap: var(--sm); }
+.wd-donuts.wd-donuts-sm .wd-donut:nth-child(n) svg { width: 42px; height: 42px; }
+.wd-donuts.wd-donuts-sm .wd-donut:nth-child(n) text { font-size: 15px; }
+.wd-pres   { display: flex; align-items: center; gap: 4px; flex-wrap: wrap; }
+.wd-presk  { font-size: var(--fs-2xs); font-weight: 700; color: var(--text-muted); margin-right: 2px; }
+.wd-pchip  { font-family: var(--mono-font); font-size: 9px; font-weight: 700; padding: 3px 7px; border-radius: var(--radius-pill); border: 1px solid var(--border-light); background: transparent; color: var(--text-secondary); cursor: pointer; transition: all var(--motion-fast, 140ms) var(--ease-out, ease-out); }
+.wd-pchip:hover { color: var(--text-primary); border-color: var(--border); transform: translateY(-1px); }
+.wd-pchip.on { color: var(--pm-on-ink, var(--accent-primary)); background: var(--pm-on-well, var(--accent-soft)); border-color: var(--pm-on-edge, color-mix(in srgb, var(--accent-primary) 40%, transparent)); }
+.wd-stats  { display: grid; grid-template-columns: repeat(auto-fill, minmax(128px, 1fr)); gap: 6px; }
+.wd-stat   { display: flex; flex-direction: column; gap: 1px; padding: 6px 9px; border: 1px solid var(--border-light); border-radius: var(--radius-md); background: var(--surface); min-width: 0; transition: border-color var(--mo-hover-dur, 120ms) ease, transform var(--mo-hover-dur, 120ms) ease; }
+.wd-stat:hover { border-color: var(--border); transform: translateY(-1px); }
+.wd-stat .k { display: inline-flex; align-items: center; gap: 4px; font-size: 9px; font-weight: 700; letter-spacing: .06em; text-transform: uppercase; color: var(--text-muted); }
+.wd-stat .k svg { width: 10px; height: 10px; }
+.wd-stat .v { font-family: var(--mono-font); font-size: var(--fs-sm); font-weight: 700; color: var(--text-primary); font-variant-numeric: tabular-nums; }
+.wd-stat .v.warn { color: var(--tone-warn-text); }
+.wd-stat .v.ok   { color: var(--tone-ok-text); }
+.wd-stat .s { font-size: 9px; color: var(--text-muted); }
+.wd-gaugerow { display: flex; align-items: center; gap: var(--md); }
+.wd-spark  { display: flex; flex-direction: column; gap: 4px; min-width: 0; }
+.wd-spk    { display: flex; align-items: flex-end; gap: 2px; height: 40px; }
+.wd-spk i  { flex: 1 1 0; min-width: 0; border-radius: 1px 1px 0 0; background: color-mix(in srgb, var(--accent-primary) 55%, transparent); transition: background var(--mo-hover-dur, 120ms) ease; }
+.wd-spk i:hover { background: var(--accent-primary); }
+
+/* ---------- cache -------------------------------------------------------------
+   provider rows share ONE grid (same recipe as .wd-qlist): name+chip column is
+   content-fit/capped, the meter track soaks a shared column with the hit % in
+   its own column, r/w + savings right-aligned — equal meter left/right edges
+   across every row (a real soak bar, not a stub). subgrid rides the shared
+   tracks; the plain per-row grid is the functional no-subgrid fallback. */
+.wd-clist  { min-width: 0; }
+.wd-crow   { display: grid; grid-template-columns: minmax(70px, 30%) minmax(56px, 1fr) max-content max-content; align-items: center; gap: var(--sm); padding: 3px 0; border-bottom: 1px solid var(--border-light); min-width: 0; }
+.wd-crow:last-of-type { border-bottom: 0; }
+.wd-cid    { display: flex; align-items: center; gap: 6px; min-width: 0; overflow: hidden; }
+.wd-cid .wd-cnm { flex: 0 1 auto; }
+.wd-cid .vs { flex: 0 1 auto; min-width: 0; max-width: 56%; }
+.wd-crow > .wd-cnum  { grid-column: 3; }
+.wd-crow > .wd-csave { grid-column: 4; }
+@supports (grid-template-columns: subgrid) {
+  .wd-clist { display: grid; column-gap: var(--sm); align-items: center;
+    grid-template-columns:
+      fit-content(32%)                   /* name + state chip: content-fit, capped */
+      minmax(56px, 1fr)                  /* meter track — the soak */
+      max-content                        /* hit % */
+      max-content                        /* r/w tokens */
+      max-content; }                     /* savings */
+  .wd-crow { grid-column: 1 / -1; grid-template-columns: subgrid; }
+  .wd-crow > .wd-cid    { grid-column: 1; }
+  .wd-crow > .us-meter  { grid-column: 2 / 4; grid-template-columns: subgrid; }
+  .wd-crow > .wd-cnum   { grid-column: 4; }
+  .wd-crow > .wd-csave  { grid-column: 5; }
+  .wd-crow > .wd-cnote  { grid-column: 1 / -1; }
+}
+.wd-clist .us-meter .pc { justify-self: end; }
+/* purposeful fill: the top-level provider list soaks the body height and spreads
+   its rows evenly so a medium tile (e.g. a 2×5) reads composed instead of
+   top-clung over a big bottom void. The row COUNT is capped by the renderer to
+   what seats under the body (never scrolls); the flex soak turns the leftover
+   into even breathing room. Scoped to the direct-body list only — the folded
+   "+N more" tail and the tier-2 two-up duo groups keep their tight stack. The
+   meter columns ride subgrid, so vertical distribution never moves their edges. */
+.uw-body > .wd-clist { flex: 1 1 auto; min-height: 0; }
+@supports (grid-template-columns: subgrid) {
+  .uw-body > .wd-clist { align-content: space-between; }
+  /* tier-2+ runs the full list two-up; let the duo soak the body and spread each
+     group's rows so a tall tile (3×8, 4×7…) fills instead of voiding above its
+     pinned footnote */
+  .uw-body > .wd-duo { flex: 1 1 auto; min-height: 0; }
+  .uw-body > .wd-duo > .wd-clist { align-content: space-between; }
+}
+/* a genuinely tiny box renders the one-line sliver + disclosure centered as a
+   group, so even a sub-2-row resize reads balanced rather than top-heavy */
+.uw-body:has(> .wd-sliver) { justify-content: center; }
+/* tier-1 cache headline: one line — context-hit label, a soaking meter, and
+   the provider savings counterweight, so the two metrics read as distinct at
+   a glance without spending two stacked blocks */
+.wd-ctxline { display: grid; grid-template-columns: max-content minmax(40px, 1fr) max-content; align-items: center; gap: var(--sm); padding: 2px 0 5px; border-bottom: 1px solid var(--border-light); min-width: 0; }
+.wd-ctxk { font-family: var(--display-font); font-size: 8.5px; font-weight: 700; letter-spacing: 1.1px; text-transform: uppercase; color: var(--text-muted); white-space: nowrap; }
+.wd-ctxp { font-family: var(--mono-font); font-size: var(--fs-2xs); color: var(--text-secondary); white-space: nowrap; }
+.wd-ctxp b { color: var(--tone-ok-text); font-weight: 700; }
+/* slim rows (tier 0 / narrow tiles): name+chip | savings only — the meter and
+   r/w columns are dropped, never cut off. Overrides both the fallback and the
+   subgrid placement above. */
+.wd-crow.slim { grid-template-columns: minmax(0, 1fr) max-content; }
+.wd-crow.slim > .wd-cid   { grid-column: 1; }
+.wd-crow.slim > .wd-csave { grid-column: 2; }
+.wd-cnm    { font-size: var(--fs-2xs); font-weight: 700; color: var(--text-primary); white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+.wd-cnum   { font-family: var(--mono-font); font-size: var(--fs-2xs); color: var(--text-secondary); white-space: nowrap; justify-self: end; }
+.wd-cnum.dim { color: var(--text-muted); font-style: italic; }
+.wd-csave  { font-family: var(--mono-font); font-size: var(--fs-2xs); font-weight: 700; color: var(--tone-ok-text); white-space: nowrap; justify-self: end; }
+.wd-csave.zero { color: var(--text-muted); }
+.wd-csave.na   { color: var(--text-muted); }
+.wd-cnote  { grid-column: 1 / -1; font-size: var(--fs-2xs); color: var(--text-muted); line-height: var(--lh-body); margin-top: -1px; }
+
+/* ---------- accounts ------------------------------------------------------------ */
+.wd-agrid  { display: flex; flex-direction: column; gap: 6px; }
+.wd-acct   { display: flex; flex-direction: column; gap: 3px; padding: 7px 9px; border: 1px solid var(--border-light); border-radius: var(--radius-md); background: var(--surface); min-width: 0; transition: border-color var(--mo-hover-dur, 120ms) ease, box-shadow var(--mo-hover-dur, 120ms) ease; }
+.wd-acct:hover { box-shadow: var(--elev-1); }
+.wd-acct.effective { border-color: color-mix(in srgb, var(--tone-ok) 45%, var(--border-light)); }
+.wd-ach    { display: flex; align-items: center; gap: var(--sm); flex-wrap: wrap; min-width: 0; }
+.wd-acnm   { font-size: var(--fs-xs); font-weight: 700; color: var(--text-primary); white-space: nowrap; overflow: hidden; text-overflow: ellipsis; min-width: 0; }
+.wd-acml   { font-family: var(--mono-font); font-size: 9px; color: var(--text-muted); white-space: nowrap; overflow: hidden; text-overflow: ellipsis; min-width: 0; }
+.wd-mk     { font-size: 8px; font-weight: 700; letter-spacing: .07em; text-transform: uppercase; padding: 1px 5px; border-radius: var(--radius-pill); }
+.wd-mk.req { background: color-mix(in srgb, var(--tone-info) 14%, transparent); color: var(--tone-info-text); }
+.wd-mk.eff { display: inline-flex; align-items: center; gap: 3px; background: color-mix(in srgb, var(--tone-ok) 14%, transparent); color: var(--tone-ok-text); }
+.wd-mk.eff svg { width: 8px; height: 8px; }
+.wd-acst   { display: flex; align-items: center; gap: 6px; min-width: 0; }
+.wd-acstat { font-size: var(--fs-2xs); color: var(--text-secondary); line-height: var(--lh-body); min-width: 0; }
+.wd-cd     { font-family: var(--mono-font); font-size: var(--fs-2xs); font-weight: 700; color: var(--tone-warn-text); font-variant-numeric: tabular-nums; }
+.wd-acnt   { font-size: var(--fs-2xs); color: var(--text-muted); line-height: var(--lh-body); }
+.wd-hist   { min-width: 0; }
+.wd-hist-t { display: flex; align-items: center; gap: 6px; width: 100%; padding: 3px 0; border: 0; background: transparent; font-size: var(--fs-2xs); font-weight: 700; color: var(--text-secondary); cursor: pointer; text-align: left; }
+.wd-hist-t svg { width: 11px; height: 11px; flex: none; transition: transform var(--motion-fast, 140ms) var(--ease-out, ease-out); }
+.wd-hist-t svg:first-child { width: 9px; height: 9px; }
+.wd-hist.open .wd-hist-t svg:first-child { transform: rotate(90deg); }
+.wd-hist-b { display: none; padding-top: 3px; }
+.wd-hist.open .wd-hist-b { display: block; }
+.wd-hn     { margin-left: auto; font-family: var(--mono-font); font-weight: 400; font-size: 9px; color: var(--text-muted); }
+
+/* ---------- context / signals ----------------------------------------------------
+   family/component rows share ONE grid (same recipe as .wd-qlist): the name is
+   content-fit/capped, the meter track soaks a shared column with the share % in
+   its own column, tokens right-aligned — equal meter left/right edges across the
+   whole breakdown, including the promoted total row. The per-row grid below is
+   the functional no-subgrid fallback. */
+.wd-famlist { min-width: 0; }
+.wd-fam    { display: grid; grid-template-columns: minmax(84px, 30%) minmax(56px, 1fr) max-content; align-items: center; gap: var(--sm); padding: 1px 0; min-width: 0; }
+@supports (grid-template-columns: subgrid) {
+  .wd-famlist { display: grid; column-gap: var(--sm); align-items: center;
+    grid-template-columns:
+      fit-content(34%)                   /* family / component name: content-fit, capped */
+      minmax(56px, 1fr)                  /* meter track — the soak */
+      max-content                        /* share % */
+      max-content; }                     /* tokens / value */
+  .wd-fam { grid-column: 1 / -1; grid-template-columns: subgrid; }
+  .wd-fam > .wd-famn  { grid-column: 1; }
+  .wd-fam > .us-meter { grid-column: 2 / 4; grid-template-columns: subgrid; }
+  .wd-fam > .wd-famt  { grid-column: 4; }
+}
+.wd-famlist .us-meter .pc { justify-self: end; }
+.wd-famtot { padding-bottom: 4px; border-bottom: 1px solid var(--border-light); margin-bottom: 2px; }
+.wd-famtot .wd-famn { font-weight: 700; color: var(--text-muted); }
+.wd-famn   { font-size: var(--fs-2xs); color: var(--text-secondary); white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+.wd-famt   { font-family: var(--mono-font); font-size: var(--fs-2xs); color: var(--text-primary); text-align: right; font-variant-numeric: tabular-nums; }
+.wd-sigbody { display: flex; flex-direction: column; gap: 3px; min-width: 0; }
+.wd-grade  { display: flex; align-items: baseline; gap: var(--md); padding: 2px 0 4px; }
+.wd-grade b { font-family: var(--display-font); font-size: var(--fs-3xl); font-weight: 800; line-height: 1; color: var(--accent-primary); }
+.wd-grade.sm { padding: 1px 0 2px; }
+.wd-grade.sm b { font-size: var(--fs-2xl); }
+.wd-grade span { font-size: var(--fs-2xs); color: var(--text-muted); line-height: var(--lh-body); }
+.wd-sigk   { font-family: var(--display-font); font-size: 9px; font-weight: 700; letter-spacing: .12em; margin-top: 4px; }
+.wd-sigk.win  { color: var(--tone-ok-text); }
+.wd-sigk.imp  { color: var(--tone-info-text); }
+.wd-sigk.risk { color: var(--tone-warn-text); }
+.wd-sigrow { display: flex; align-items: flex-start; gap: 7px; padding: 2px 0; min-width: 0; }
+.wd-sigrow .sd { width: 6px; height: 6px; border-radius: 50%; flex: none; margin-top: 4px; }
+.wd-sigrow.win .sd  { background: var(--tone-ok); }
+.wd-sigrow.imp .sd  { background: var(--tone-info); }
+.wd-sigrow.risk .sd { background: var(--tone-warn); }
+.wd-sigrow .st { font-size: var(--fs-2xs); color: var(--text-secondary); line-height: var(--lh-body); min-width: 0; }
+
+/* ---------- plan gating ------------------------------------------------------------ */
+.wd-pgrow  { display: flex; flex-direction: column; gap: 2px; padding: 5px 0; border-bottom: 1px solid var(--border-light); min-width: 0; }
+.wd-pgrow:last-of-type { border-bottom: 0; }
+.wd-pgh    { display: flex; align-items: center; gap: var(--sm); min-width: 0; flex-wrap: wrap; }
+.wd-pgnm   { font-size: var(--fs-xs); font-weight: 700; color: var(--text-primary); white-space: nowrap; overflow: hidden; text-overflow: ellipsis; min-width: 0; flex: 1 1 auto; }
+.wd-pgst   { font-size: var(--fs-2xs); color: var(--text-secondary); line-height: var(--lh-body); }
+/* short tier-1 boxes (2×5): one status line, full text in the title — the
+   row keeps its chip + state without spilling the 184px body */
+.wd-pgrow.tight { padding: 3px 0; gap: 1px; }
+.wd-pgst.tight { white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+
+/* ---------- ledger ------------------------------------------------------------------- */
+.wd-lctl   { display: flex; align-items: center; gap: var(--sm); flex-wrap: wrap; min-width: 0; }
+.wd-lsearch { flex: 1 1 150px; min-width: 120px; }
+.wd-live   { display: inline-flex; align-items: center; gap: 5px; font-family: var(--mono-font); font-size: 9px; font-weight: 700; letter-spacing: .1em; text-transform: uppercase; color: var(--tone-ok-text); }
+.wd-lcount { font-family: var(--mono-font); font-size: var(--fs-2xs); color: var(--text-muted); margin-left: auto; white-space: nowrap; }
+.wd-lcaret { display: inline-flex; align-items: center; justify-content: center; width: 18px; height: 18px; padding: 0; border: 0; border-radius: var(--radius-xs); background: transparent; color: var(--text-muted); cursor: pointer; transition: color var(--mo-hover-dur, 120ms) ease, background var(--mo-hover-dur, 120ms) ease; }
+.wd-lcaret svg { width: 10px; height: 10px; transition: transform var(--motion-fast, 140ms) var(--ease-out, ease-out); }
+.wd-lcaret:hover { color: var(--text-primary); background: var(--accent-soft); }
+.wd-lcaret.open svg { transform: rotate(90deg); }
+th[data-wd-sort]::after { content: ''; display: inline-block; width: 0; margin-left: 3px; }
+th[data-wd-sort].on::after { content: '\25B4'; }
+th[data-wd-sort].on.rev::after { content: '\25BE'; }
+.wd-ldet td { background: color-mix(in srgb, var(--text-primary) 3%, transparent); white-space: normal !important; }
+.wd-ldet .wd-dgrid { padding: 2px 0; }
+
+/* ---------- provenance ----------------------------------------------------------------- */
+.wd-pv     { display: grid; grid-template-columns: minmax(84px, auto) minmax(0, 1fr); align-items: center; gap: var(--sm); padding: 2px 0; border-bottom: 1px solid var(--border-light); min-width: 0; }
+.wd-pv:last-of-type { border-bottom: 0; }
+.wd-pv > span { font-size: var(--fs-2xs); color: var(--text-muted); white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+.wd-pv > b { display: inline-flex; align-items: center; gap: 5px; font-family: var(--mono-font); font-size: var(--fs-2xs); font-weight: 600; color: var(--text-primary); min-width: 0; flex-wrap: wrap; }
+/* micro/narrow stack: label over value, values wrap — a two-column pv grid
+   cannot survive under ~160px (the old 1-wide strip clipped 130-165px right) */
+.wd-pvstack .wd-pv { grid-template-columns: minmax(0, 1fr); gap: 1px; padding: 4px 0; align-items: start; }
+.wd-pvstack .wd-pv > span { font-size: 8px; font-weight: 700; letter-spacing: .08em; text-transform: uppercase; }
+.wd-pvstack .wd-pv > b { font-size: var(--fs-2xs); word-break: break-word; }
+
+/* ---------- sessions / tokens / cost ------------------------------------------------------ */
+.wd-sess   { display: flex; flex-direction: column; gap: 2px; padding: 5px 0; border-bottom: 1px solid var(--border-light); min-width: 0; }
+.wd-sess:last-of-type { border-bottom: 0; }
+.wd-sess .us-kv > .v .us-cost { font-size: var(--fs-2xs); }
+/* slim session card (short tier-2 tiles): total rides the title line */
+.wd-sess.slim { gap: 1px; padding: 4px 0; }
+.wd-sess.slim .wd-qh { justify-content: space-between; gap: var(--sm); }
+.wd-stot { font-family: var(--mono-font); font-size: var(--fs-xs); font-weight: 700; color: var(--text-primary); white-space: nowrap; font-variant-numeric: tabular-nums; }
+
+/* cost three-way breakdown (API-billed · plan-included · combined). Modest,
+   not a $ hero: a compact ledger of three figures, each with its value-state
+   chip, the combined row gently promoted. */
+.wd-cost    { display: flex; flex-direction: column; min-width: 0; }
+.wd-costrow { display: grid; grid-template-columns: minmax(0, 1fr) auto; align-items: center; column-gap: var(--sm); padding: 4px 0; border-bottom: 1px solid var(--border-light); min-width: 0; }
+.wd-costrow:last-of-type { border-bottom: 0; }
+.wd-costrow .k { font-size: var(--fs-2xs); color: var(--text-secondary); min-width: 0; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+.wd-costrow .v { display: inline-flex; align-items: center; gap: 5px; justify-self: end; white-space: nowrap; }
+.wd-costrow .v .us-cost { font-family: var(--mono-font); font-size: var(--fs-2xs); font-weight: 700; color: var(--text-primary); font-variant-numeric: tabular-nums; }
+.wd-costrow.strong .k { color: var(--text-primary); font-weight: 700; }
+.wd-costrow.strong .v .us-cost { font-size: var(--fs-sm); }
+
+/* wide-tall compositions (cost + spend): side-by-side columns that soak
+   their half so manually resized wide tiles fill instead of scroll */
+.wd-costcol, .wd-spendcol { display: flex; flex-direction: column; gap: 6px; min-width: 0; justify-content: center; }
+.wd-costcol { justify-content: flex-start; }
+.wd-spendcol .wd-spark { margin-top: 2px; }
+
+/* ---------- tokens by model ---------------------------------------------------------------
+   one compact shared grid (same recipe as .wd-qlist): model + value-state chip
+   content-fit/capped, provider·sessions soaks, total and cost right-aligned —
+   equal column edges across every row. The headline is the source-aware total;
+   in/out/cache detail rides the sub line at tier 3. The per-row grid below is
+   the functional no-subgrid fallback. */
+.wd-tlist { min-width: 0; }
+.wd-trow  { display: grid; grid-template-columns: minmax(0, 1fr) max-content; align-items: center; gap: var(--sm); padding: 2px 0; border-bottom: 1px solid var(--border-light); min-width: 0; }
+.wd-trow:last-of-type { border-bottom: 0; }
+.wd-trow .wd-qnm { line-height: 1.25; }
+.wd-tid  { line-height: 1; }
+.wd-tid   { display: flex; align-items: center; gap: 6px; min-width: 0; overflow: hidden; }
+.wd-tid .wd-qnm { flex: 0 1 auto; }
+.wd-tid .vs { flex: 0 1 auto; max-width: 52%; }
+.wd-tsub  { font-size: var(--fs-2xs); color: var(--text-muted); white-space: nowrap; overflow: hidden; text-overflow: ellipsis; min-width: 0; }
+.wd-ttot  { font-family: var(--mono-font); font-size: var(--fs-xs); line-height: 1.25; font-weight: 700; color: var(--text-primary); white-space: nowrap; justify-self: end; font-variant-numeric: tabular-nums; }
+.wd-tcost { white-space: nowrap; justify-self: end; }
+.wd-tcost .us-cost { font-family: var(--mono-font); font-size: var(--fs-2xs); font-weight: 600; }
+@supports (grid-template-columns: subgrid) {
+  .wd-tlist { display: grid; column-gap: var(--sm); align-items: center;
+    grid-template-columns:
+      fit-content(44%)                   /* model + value-state chip: content-fit, capped */
+      minmax(0, 1fr)                     /* provider · sessions — the soak */
+      max-content                        /* source-aware total */
+      max-content; }                     /* cost */
+  .wd-trow { grid-column: 1 / -1; grid-template-columns: subgrid; }
+  .wd-trow > .wd-tid   { grid-column: 1; }
+  .wd-trow > .wd-tsub  { grid-column: 2; }
+  .wd-trow > .wd-ttot  { grid-column: 3; }
+  .wd-trow > .wd-tcost { grid-column: 4; }
+  .wd-trow.slim { grid-template-columns: minmax(0, 1fr) max-content; }
+  .wd-trow.slim > .wd-ttot { grid-column: 2; }
+}

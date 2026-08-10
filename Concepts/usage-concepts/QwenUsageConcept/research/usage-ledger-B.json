@@ -1,0 +1,331 @@
+{
+  "batch": "B",
+  "scope": "LLM observability/gateway/billing/metering platforms, VS Code extensions measuring tokens/cost/quota/context, niche individual GitHub-usage trackers",
+  "researcher_access_date": "2026-07-30",
+  "method": "shallow clones (depth 1) into temp dir; code read locally; issues/PRs via gh api. Clones removed after.",
+  "projects": [
+    {
+      "name": "LiteLLM",
+      "repo_url": "https://github.com/BerriAI/litellm",
+      "category": "platform/gateway+billing+metering",
+      "license": "MIT (code outside enterprise/); enterprise/ dir under separate proprietary license (LICENSE is NOASSERTION on GitHub)",
+      "access_date": "2026-07-30",
+      "branch": "litellm_internal_staging",
+      "commit_sha": "71b825a7f0549fd9a297f7926fc5990c11323d92",
+      "last_commit_date": "2026-07-30T03:00:19-07:00",
+      "stars": 55102,
+      "forks": 10201,
+      "maintenance_signal": "very active; HEAD commit same day as access; thousands of open PRs/issues; dedicated cost_calculator module",
+      "files_examined": [
+        "litellm/cost_calculator.py",
+        "litellm/cost.json",
+        "litellm/budget_manager.py",
+        "litellm/litellm_core_utils/get_model_cost_map.py",
+        "litellm/router_strategy/lowest_cost.py"
+      ],
+      "tracks": "input/output/reasoning/cache-read/cache-write tokens; per-call response_cost; cost breakdown (input/output/cache_read/cache_creation/reasoning); per-model pricing; budgets per key/user/team; cost-weighted routing",
+      "value_sources": {
+        "tokens": "API usage object (provider response). Reads OpenAI-style usage.prompt_tokens_details.cached_tokens & cache_write_tokens/cache_creation_tokens AND Anthropic-style top-level usage.cache_read_input_tokens/cache_creation_input_tokens (cost_calculator.py:374-397)",
+        "price": "static pricing table cost.json / get_model_cost_map.py (bundled, refreshable), plus custom_cost_per_token and custom_cost_per_second overrides at call time",
+        "reasoning": "completion_tokens_details.reasoning_tokens folded into completion cost; separate reasoning_cost in breakdown"
+      },
+      "data_path": "proxy call -> usage parsed from provider response -> cost_per_token()/response_cost() -> StandardLoggingPayload (response_cost + response_cost_breakdown) -> emitted to logging callbacks / DB spend logs -> aggregated for budgets & routing -> UI/spend endpoints",
+      "cache_token_handling": "KEY: helper assumes prompt_tokens INCLUDES cache tokens (OpenAI convention) and computes regular = max(prompt - cached - cache_creation, 0) to avoid double count (cost_calculator.py:212-215). For Anthropic-style usage where prompt/input EXCLUDES cache, it normalizes by ADDING cache tokens first (cost_calculator.py:400-404). Inclusive-vs-additive reconciled to a single invariant.",
+      "inclusive_vs_additive_evidence": "Explicit. OpenAI=inclusive (prompt includes cached); Anthropic=additive (input excludes cache) -> normalized to inclusive before pricing.",
+      "double_count_prevention": "regular_prompt_tokens = max(prompt_tokens - cached_tokens - cache_creation_tokens, 0)",
+      "windows_quotas": "budget_manager + max_budget per key/user/team; spend tracked cumulatively; budget_duration (e.g. monthly) with reset; soft vs hard block via proxy. Less formal window model than openmeter/lago.",
+      "forecast": "not a first-class run-out forecast; budget alerts via spend thresholds",
+      "api_price_vs_plan": "API-priced cost only (per-token pricing table). No notion of plan-included value; custom pricing/discounts via custom_cost_per_token and (open feature req) deployment discounts.",
+      "custom_pricing_currencies": "custom_cost_per_token / custom_cost_per_second overrides; prices USD; historical price changes handled by refreshing cost.json map (no time-travel reconciliation in core)",
+      "privacy": "proxy can run self-hosted/local; logging callbacks optional; success/failure logging configurable; redaction of prompt/responses supported in enterprise",
+      "failure_modes_from_issues": [
+        "cache_write_tokens (OpenAI field) unrecognized -> response_cost understated, billed at input rate (PR #33983)",
+        "itemized cost_breakdown.cache_read_cost/cache_creation_cost null for OpenAI Responses API because only Anthropic-style top-level keys read, even though total cost correct (issue #34309)",
+        "provider-specific calculators (e.g. fireworks_ai) ignore cached_tokens/cache_read_input_token_cost (issue #32496)"
+      ],
+      "issues_prs": [
+        {"ref": "PR #33983", "url": "https://github.com/BerriAI/litellm/pull/33983", "state": "open", "title": "fix: include cache_write_tokens in cost calculation for cached-input requests", "note": "OpenAI cache-write tokens mis-priced because cost path only recognized Anthropic field cache_creation_tokens; response_cost understated; error compounded in 3 places in cost path; cache-write billed at 1.25x cache-creation rate."},
+        {"ref": "issue #34309", "url": "https://github.com/BerriAI/litellm/issues/34309", "state": "open", "title": "cost_breakdown.cache_read_cost/cache_creation_cost always null for OpenAI Responses API", "note": "Total response_cost correct but itemized breakdown fields null because breakdown only reads Anthropic-style top-level usage keys; breaks downstream consumers of StandardLoggingPayload.response_cost_breakdown."},
+        {"ref": "PR #33900", "url": "https://github.com/BerriAI/litellm/pull/33900", "state": "open", "title": "fix(cost): price OpenAI cache-write tokens and tiered cache-creation rates", "note": "tiered cache-creation pricing (5m vs 1h) support."}
+      ]
+    },
+    {
+      "name": "Helicone",
+      "repo_url": "https://github.com/Helicone/helicone",
+      "category": "platform/observability+gateway+metering",
+      "license": "Apache-2.0",
+      "access_date": "2026-07-30",
+      "branch": "main",
+      "commit_sha": "67df07b8d807a960f2e53d9ec2a9c49513ca2379",
+      "last_commit_date": "2026-07-21T05:35:38-07:00",
+      "stars": 6017,
+      "forks": 641,
+      "maintenance_signal": "active; pushed within ~1 week of access; large monorepo (worker, web, clickhouse, valhalla, packages/cost)",
+      "files_examined": [
+        "packages/cost/costCalc.ts",
+        "packages/cost/index.ts",
+        "packages/cost/models/calculate-cost.ts (referenced)",
+        "packages/cost/providers/mappings.ts",
+        "web/utils/LogCostCalculation.ts",
+        "web/lib/api/metrics/totalCosts.ts"
+      ],
+      "tracks": "prompt/completion tokens; cache write (incl. 5m and 1h TTL buckets), cache read; audio tokens; per-call cost; cost over time; requests; caching hits",
+      "value_sources": {
+        "tokens": "gateway/proxy intercept of request+response; usage from provider response stored to ClickHouse (sum_prompt_tokens, prompt_cache_write_tokens, prompt_cache_read_tokens, prompt_cache_write_5m, prompt_cache_write_1h, completion/audio)",
+        "price": "model cost registry (packages/cost/providers/*, generated, e.g. buildPricesOpenRouter.py for OpenRouter)",
+        "precision": "costs stored as integers x COST_PRECISION_MULTIPLIER=1e9 in ClickHouse, divided back to USD (costCalc.ts:6-8)"
+      },
+      "data_path": "gateway proxy/async log -> worker parses usage -> ClickHouse columns (token buckets) -> cost computed via @helicone-package/cost registry -> aggregated in SQL (totalCosts/getCostOverTime) -> web dashboard charts -> export",
+      "cache_token_handling": "Separate priced buckets: prompt_cache_read_token, prompt_cache_write_token, prompt_cache_creation_5m, prompt_cache_creation_1h; falls back to prompt_token price when a specific cache price is absent (index.ts:101-124).",
+      "double_count_prevention": "Explicit: 'For anthropic requests, the prompt cache write tokens are the sum of the 5m and 1h writes so we subtract to not double count': effectivePromptCacheWriteTokens = promptCacheWriteTokens - write5m - write1h (index.ts:102-108).",
+      "inclusive_vs_additive_evidence": "Treats sum_prompt_tokens as fresh/uncached prompt tokens (index.ts:97-98 comment 'fresh, uncached tokens') and ADDS cache buckets separately -> additive model, with explicit subtraction when buckets overlap.",
+      "windows_quotas": "rate limiting & budgets via gateway; cost-over-time metrics; caching layer reduces billed tokens",
+      "forecast": "cost-over-time trend metrics; no explicit run-out forecast in cost package",
+      "api_price_vs_plan": "API-priced cost from registry; per-request override headers (Helicone-Input-Token-Cost/Output-Token-Cost) let caller inject actual provider cost (PR #5694) — separation mechanism when registry single rate is wrong (e.g. OpenRouter pass-through).",
+      "custom_pricing_currencies": "custom per-token overrides via headers; registry generated per provider; USD; new-model/stale-price handled by adding to registry (PR #5743 Kimi K3)",
+      "privacy": "self-hostable; async logging mode; stores prompts/responses optionally; ClickHouse retention configurable",
+      "failure_modes_from_issues": [
+        "registry single rate wrong for OpenRouter requests whose underlying provider varies -> need per-request override headers (PR #5694 / issue #5172)",
+        "new models absent from registry -> zero/unknown cost until added (PR #5743)"
+      ],
+      "issues_prs": [
+        {"ref": "PR #5694", "url": "https://github.com/Helicone/helicone/pull/5694", "state": "open", "title": "feat(cost): support per-token cost overrides in cost breakdown", "note": "Adds per-request cost override headers Helicone-Input-Token-Cost/Helicone-Output-Token-Cost because OpenRouter costs vary by underlying provider and the registry's single rate is wrong for those requests. Direct evidence for custom pricing + stale/incorrect registry price separation."},
+        {"ref": "PR #5743", "url": "https://github.com/Helicone/helicone/pull/5743", "state": "open", "title": "fix(cost): add Kimi K3 (moonshotai) to the model cost registry", "note": "stale/missing pricing for a new model -> registry update."}
+      ]
+    },
+    {
+      "name": "OpenMeter",
+      "repo_url": "https://github.com/openmeterio/openmeter",
+      "category": "platform/metering+entitlements+billing",
+      "license": "Apache-2.0",
+      "access_date": "2026-07-30",
+      "branch": "main",
+      "commit_sha": "593670394f141c6dad888740db80cb8d6379227d",
+      "last_commit_date": "2026-07-30T13:07:01Z",
+      "stars": 2158,
+      "forks": 199,
+      "maintenance_signal": "very active; HEAD commit same day as access",
+      "files_examined": [
+        "openmeter/entitlement/usageperiod.go",
+        "openmeter/entitlement/metered/entitlement.go",
+        "openmeter/entitlement/metered/balance.go",
+        "openmeter/entitlement/metered/reset.go",
+        "openmeter/credit/grant/grant.go",
+        "openmeter/credit/balance/balance.go",
+        "openmeter/meter/meter.go"
+      ],
+      "tracks": "event-derived usage counts per meter; entitlement balance within a usage period; overage; grants/credits; balance snapshots",
+      "value_sources": {
+        "usage": "ingested CloudEvents streamed to meters (event log), aggregated by query; not API usage objects — generic event metering",
+        "balance": "balance snapshots persisted (ent/db/balance_snapshot) + recalculated from event stream over the current window"
+      },
+      "data_path": "events ingest (CloudEvents) -> meter aggregation -> entitlement metered service computes usage-in-period from event stream + balance snapshots -> balance/overage -> persisted snapshots (balanceworker) -> API/UI -> export",
+      "window_model": "STRONG. UsagePeriod = Interval (ISO-8601 duration: Day/Week/Month/Year) + Anchor time; GetCurrentPeriodAt(at) returns ClosedPeriod; GetResetTimelineInclusive; OriginalUsagePeriodAnchor + LastReset track drift (usageperiod.go:154,186). Supports rolling anchored windows, not just calendar.",
+      "threshold_overage": "metered Entitlement: IssueAfterReset (default grant amount+priority re-issued each window), IsSoftLimit (allow access at 0 balance vs hard block), PreserveOverageAtReset (carry negative overage into next window) (metered/entitlement.go:30-49). BalanceWindow{UsageInPeriod, Overage, BalanceAtStart, OverageAtStart} (metered/balance.go:29-43).",
+      "double_count_prevention": "grant priorities + idempotent balance snapshots; overage preserved rather than re-granted",
+      "forecast": "not a run-out forecast; reset timeline + balance give deterministic projection",
+      "api_price_vs_plan": "models entitlements/credits (plan-included value), NOT API dollar cost — pure quota/allowance layer; cost is a separate concern",
+      "custom_pricing_currencies": "n/a (units/credits, not currency)",
+      "privacy": "self-hostable; events stored in your infra; retention via event store config",
+      "failure_modes_from_issues": [
+        "grant expiring at the exact moment a window reset happens caused incorrect balance; fixed with a clock package to model the race (PR #1127/#1128)"
+      ],
+      "issues_prs": [
+        {"ref": "PR #1128", "url": "https://github.com/openmeterio/openmeter/pull/1128", "state": "closed", "title": "feat: fix issues when grant expires the same time when a reset happens", "note": "Edge case: grant expiry coincident with usage-period reset produced wrong balance; adds a clock package to model composite ordering of expiry vs reset."},
+        {"ref": "PR #1127", "url": "https://github.com/openmeterio/openmeter/pull/1127", "state": "closed", "title": "fix: check if grants expire at reset time", "note": "companion fix for grant expiry evaluated at reset boundary."}
+      ]
+    },
+    {
+      "name": "Lago (lago-api)",
+      "repo_url": "https://github.com/getlago/lago-api",
+      "category": "platform/billing+wallets+alerts",
+      "license": "AGPL-3.0",
+      "access_date": "2026-07-30",
+      "branch": "main",
+      "commit_sha": "526b4b51e74e2ebe2fa99d940887da86302c43d1",
+      "last_commit_date": "2026-07-30T17:43:19+02:00",
+      "stars": null,
+      "note_repo": "getlago/lago umbrella (docker-compose) uses lago-api as a submodule at api/; the Rails billing code lives in getlago/lago-api (cloned directly). Umbrella getlago/lago HEAD b4ad1532, AGPL-3.0.",
+      "maintenance_signal": "very active; HEAD commit same day as access",
+      "files_examined": [
+        "app/models/wallet.rb",
+        "app/models/wallet_transaction.rb",
+        "app/models/usage_monitoring/alert.rb",
+        "app/models/usage_monitoring/alert_threshold.rb",
+        "app/models/usage_monitoring/triggered_alert.rb",
+        "app/models/usage_monitoring/wallet_credits_balance_alert.rb",
+        "app/models/usage_monitoring/current_usage_amount_alert.rb"
+      ],
+      "tracks": "wallet credit balance (cents + credits), ongoing balance, consumed credits, usage amounts vs billable metrics, triggered alerts at thresholds; subscriptions/charges",
+      "value_sources": {
+        "usage": "ingested events aggregated against billable metrics; wallet balance decremented by wallet_transaction ledger entries",
+        "balance": "balance_cents (bigint), credits_balance/credits_ongoing_balance/credits_ongoing_usage_balance (decimal(30,5)); monetize :balance_cents with per-wallet currency (wallet.rb:39-41,137-146)",
+        "alerts": "usage_monitoring/* STI alert types evaluated against thresholds"
+      },
+      "data_path": "events -> billable metric aggregation -> charges/wallet debit via wallet_transaction ledger -> wallet balance (balance_cents, credits_ongoing_balance) -> usage_monitoring alert evaluation -> triggered_alert rows -> webhooks/emails -> billing UI + invoices/export",
+      "threshold_model": "STRONG. AlertThreshold{value decimal(30,5), recurring bool} with UNIQUE index on (alert_id) WHERE recurring IS TRUE; SOFT_LIMIT=20 constant (alert_threshold.rb:4,19-29). Alert STI subclasses: current_usage_amount_alert, wallet_credits_balance_alert, wallet_credits_ongoing_balance_alert, wallet_balance_amount_alert, billable_metric_lifetime_usage_units_alert. recurring vs one-shot thresholds.",
+      "wallet_topup_overage": "paid_top_up_min_credits/max_credits, recurring top-up at threshold; negative threshold_credits allowed (PR #2007) to trigger top-up before balance hits zero; in_application_order for wallet consumption priority.",
+      "double_count_prevention": "Unique wallet transaction job for threshold top-ups keyed on (organization_id, wallet_id, paid_credits...) to stop duplicate credit grants when the threshold job fires repeatedly in a short window (PR #3710).",
+      "refresh_staleness": "ongoing balance historically relied on a 5-minute polling job, which broke auto top-up and threshold-based billing semantics (issue #4954) — explicit stale-balance failure mode.",
+      "forecast": "no run-out forecast; threshold/recurring top-up is reactive",
+      "api_price_vs_plan": "plan/subscription + prepaid wallet credits (plan-included value) SEPARATE from pay-in-arrears usage charges; wallets are the prepaid allowance layer, charges are the metered-billing layer — clear separation of included value vs billed overage.",
+      "custom_pricing_currencies": "per-wallet balance_currency; multi-currency; decimal(30,5) credits; rate_amount per wallet (credits<->currency)",
+      "privacy": "self-hostable AGPL; data in your Postgres/ClickHouse",
+      "failure_modes_from_issues": [
+        "ongoing wallet balance computed by a 5-minute polling job -> stale balance breaks auto top-up & threshold billing (issue #4954)",
+        "threshold top-up jobs enqueued multiple times in a short window -> duplicate credit grants; fixed with unique job keying (PR #3710)"
+      ],
+      "issues_prs": [
+        {"ref": "issue #4954", "url": "https://github.com/getlago/lago-api/issues/4954", "state": "closed", "title": "Wallet ongoing balance relies on 5-minute polling job — breaks auto top-up and threshold-based billing semantics", "note": "Stale ongoing balance due to polling cadence breaks threshold/auto-top-up correctness — direct evidence for refresh/staleness handling."},
+        {"ref": "PR #3710", "url": "https://github.com/getlago/lago-api/pull/3710", "state": "closed", "title": "feat: Unique wallet transaction job for threshold top-ups", "note": "Duplicate top-up jobs within a short window caused duplicate credit grants; makes the job uniquely enqueued by organization_id/wallet_id/paid_credits — double-count prevention for threshold actions."},
+        {"ref": "PR #2007", "url": "https://github.com/getlago/lago-api/pull/2007", "state": "closed", "title": "feat(wallet): Accept negative values for threshold_credits", "note": "negative threshold lets top-up fire before balance reaches zero (pre-emptive overage avoidance)."}
+      ]
+    },
+    {
+      "name": "Live LLM Token Counter (VS Code)",
+      "repo_url": "https://github.com/BedirT/LLM-Token-Counter-VSCode",
+      "category": "vscode-extension/token measurement",
+      "license": "MIT",
+      "access_date": "2026-07-30",
+      "branch": "main",
+      "commit_sha": "295e4b7f0a662d9d03781c0d1312d6c2dfa33c53",
+      "last_commit_date": "2026-06-22T13:48:20-07:00",
+      "stars": 68,
+      "forks": 9,
+      "maintenance_signal": "maintained; v1.5.2; pushed ~5 weeks before access; active PR history",
+      "files_examined": [
+        "src/extension.js",
+        "package.json",
+        "README.md"
+      ],
+      "tracks": "token count of selected text / whole file; per-model tokenizer; optional highlight overlays; status-bar count via configurable template ({count}/{family}/{provider}/{model}/{label})",
+      "value_sources": {
+        "tokens": "LOCAL ESTIMATION via real tokenizer libs: tiktoken (OpenAI), @anthropic-ai/tokenizer, @huggingface/tokenizers (remote HF hub models). No API call, no cost.",
+        "price": "none (pure token counting, no pricing table)"
+      },
+      "data_path": "editor selection/file text -> tokenizer.encode() -> token id array -> count (+ reconstructed char offsets for highlighting) -> status bar item / decorations. Stateless, in-memory, local-only.",
+      "cache_token_handling": "n/a (counts raw text tokens; no cache/reasoning concept)",
+      "context_window_surfacing": "shows count in status bar; no explicit %-of-context-window or quota; user supplies model to pick tokenizer",
+      "privacy": "fully local; HuggingFace tokenizer files fetched from Hub and cached in hf-tokenizers dir; no telemetry of content",
+      "failure_modes_from_issues": [
+        "token highlight offsets broke on multibyte UTF-8 and on Claude's normalization of full-width punctuation e.g. （）; fixed via UTF-8 byte-boundary tracking + Claude normalization offset mapping (PR #12) — tokenizer-vs-editor offset mismatch"
+      ],
+      "issues_prs": [
+        {"ref": "PR #12", "url": "https://github.com/BedirT/LLM-Token-Counter-VSCode/pull/12", "state": "closed", "title": "Fix token highlighting for UTF-8 and Claude normalization", "note": "Switched highlight range reconstruction from string matching to UTF-8 byte-boundary tracking; added Claude normalization offset handling for full-width punctuation; regression tests. Evidence that tokenizer counts can disagree with editor character offsets."},
+        {"ref": "PR #13", "url": "https://github.com/BedirT/LLM-Token-Counter-VSCode/pull/13", "state": "closed", "title": "feat: HuggingFace tokenizer provider with live highlighting", "note": "adds arbitrary HF tokenizers as a provider."}
+      ]
+    },
+    {
+      "name": "Agent Context (vs-context, VS Code)",
+      "repo_url": "https://github.com/ivarhuni/-vs-context",
+      "category": "vscode-extension/context-window usage",
+      "license": "MIT",
+      "access_date": "2026-07-30",
+      "branch": "main",
+      "commit_sha": "af50d276ba8ab6e06e8fac120042edfa35bb8619",
+      "last_commit_date": "2026-02-23T11:11:29Z",
+      "stars": 0,
+      "forks": 0,
+      "maintenance_signal": "niche/individual; last push ~5 months before access; but well-structured (tests, schema)",
+      "files_examined": [
+        "src/extension.ts",
+        "src/reader/copilotSessionReader.ts",
+        "src/parser/vscodeSessionAdapter.ts",
+        "src/config/settings.ts",
+        "src/views/statusBarManager.ts",
+        "src/poller/filePoller.ts",
+        "schema/logSchema.v1.json"
+      ],
+      "tracks": "per-agent context-window usage % (latest prompt tokens vs model context), prompt composition breakdown (system/messages/toolResults/files as percentageOfPrompt), multi-agent peak",
+      "value_sources": {
+        "tokens": "LOCAL telemetry LOG parsing: polls Copilot/VS Code session JSONL logs on disk (filePoller + copilotSessionReader), reads latestPromptTokens and promptTokenDetails[].percentageOfPrompt. Source = on-disk agent logs, NOT API calls.",
+        "price": "none"
+      },
+      "data_path": "filePoller watches JSONL session logs -> copilotSessionReader parses (schema logSchema.v1.json) -> vscodeSessionAdapter buckets percentageOfPrompt into system/messages/toolResults/files and computes usedTokens=latestPromptTokens -> stateStore -> StatusBarManager/agentTreeProvider/webview. Local-only, polling refresh.",
+      "context_window_surfacing": "KEY for compact popup: status bar `${icon} CTX ${agentLabel} ${percent}%` (or `${agents} agents · ${peak}% peak`); risk icon by threshold (>=critical -> $(error), >=warning -> $(warning), else $(pulse)); default warningThreshold=70, criticalThreshold=85; tooltip lists hottest agent %, total agents, warning/critical counts; click focuses tree (statusBarManager.ts:8-9,47-57,72-74).",
+      "thresholds": "configurable warningThresholdPercent/criticalThresholdPercent; modes 'hottestAgent' | 'sessionSummary'",
+      "privacy": "fully local; reads only local log files; malformed/unsupported-version fixtures handled (parser pruning tests)",
+      "failure_modes_from_issues": [
+        "malformed/unsupported-version JSONL handled defensively (test fixtures malformed.jsonl, unsupported-version.jsonl; parserPruning tests) — log-format drift is the main risk for a log-scraping extension"
+      ],
+      "issues_prs": [
+        {"ref": "issue #5", "url": "https://github.com/ivarhuni/-vs-context/issues/5", "state": "closed", "title": "Cloud agent cached files", "note": "handling of cached/cloud agent session files — reflects the log-source coverage problem."}
+      ]
+    },
+    {
+      "name": "Copilot Usage Dashboard v2 (feelgood4everai)",
+      "repo_url": "https://github.com/feelgood4everai/copilot-usage-dashboard-v2",
+      "category": "niche-individual/github-copilot usage + forecast (also a VS Code extension)",
+      "license": "MIT",
+      "access_date": "2026-07-30",
+      "branch": "master",
+      "commit_sha": "c2be1973e7d68a5f5db3bfa3a8eda9720d669a82",
+      "last_commit_date": "2026-03-19T08:10:19Z",
+      "stars": 0,
+      "forks": 0,
+      "maintenance_signal": "individual/hobby; pushed ~4 months before access; has SPEC.md/DESIGN.md and unit tests (rateLimitPredictor.test.ts)",
+      "files_examined": [
+        "src/rateLimitPredictor.ts",
+        "src/usageTracker.ts",
+        "src/dashboardProvider.ts",
+        "src/storage.ts",
+        "src/types.ts",
+        "SPEC.md"
+      ],
+      "tracks": "Copilot request counts per session/hour/day; limit vs used; run-out prediction (hoursToLimit) with confidence; visual warnings",
+      "value_sources": {
+        "usage": "in-app instrumentation: usageTracker increments session/currentHour/today request counters as the user makes Copilot requests (manual event counting, not log scraping or API). limit is configured/known plan limit.",
+        "price": "none (request/quota counts, premium-request style)"
+      },
+      "data_path": "extension hooks count requests -> in-memory + storage.ts persisted hourly/daily buckets -> rateLimitPredictor blends rates -> dashboard webview with warnings. Local-only.",
+      "forecast": "KEY for burn/run-out: predictLimitExhaustion() computes current rate, blends 70% current / 30% historical (also weights previous-hour 0.3 and same-hour-yesterday 0.2), remaining = limit - used, hoursToLimit = remaining / projectedRate, confidence from history volume; recommended actions: CRITICAL pause (<~1h), <2h 'spacing out', <4h 'moderate' (rateLimitPredictor.ts:17-199). Explicit confidence + unknown handling ('Start using Copilot to get predictions.' when no data).",
+      "thresholds": "warning/critical visual states driven by hoursToLimit and usage ratio",
+      "privacy": "local-only, in-extension storage",
+      "failure_modes_from_issues": [
+        "no public issues; design risk noted in code: simplified rate calc and small history lower confidence — forecast quality degrades with sparse data (confidence scaled by history amount)"
+      ],
+      "issues_prs": []
+    },
+    {
+      "name": "GitHub Copilot Usage Tracker (shardiwal)",
+      "repo_url": "https://github.com/shardiwal/github-copilot-usage-tracker",
+      "category": "niche-individual/github-copilot token estimation (also a VS Code extension)",
+      "license": "MIT",
+      "access_date": "2026-07-30",
+      "branch": "master",
+      "commit_sha": "f8ff6af5e23df3624478967fee43acaf91d37c26",
+      "last_commit_date": "2026-06-24T20:04:37+09:00",
+      "stars": 0,
+      "forks": 0,
+      "maintenance_signal": "individual; pushed ~5 weeks before access; versioned .vsix releases (0.1.4/0.1.5), tests, docs",
+      "files_examined": [
+        "src/chat/trackerParticipant.ts",
+        "src/tracker/costCalculator.ts (referenced)",
+        "src/statusbar/statusBar.ts",
+        "src/tree/usageTreeProvider.ts",
+        "src/webview/dashboardProvider.ts",
+        "src/utils/date.ts",
+        "scripts/copy-wasm.js"
+      ],
+      "tracks": "per-chat-request input & output tokens forwarded to a Copilot language model; estimated cost; usage over time (status bar + tree + webview dashboard)",
+      "value_sources": {
+        "tokens": "HYBRID: a chat participant forwards each request to a Copilot vscode.lm model and records actual input/output token counts from the API/model (model.countTokens / response usage) into a local SQLite DB; wasm tokenizer (scripts/copy-wasm.js) for estimation.",
+        "price": "local costCalculator.ts pricing table for estimated cost"
+      },
+      "data_path": "chat participant intercepts request -> selects Copilot model (request.model or vscode.lm.selectChatModels vendor=copilot) -> counts input tokens for messages + output tokens from response -> SQLite persist (date-bucketed) -> statusBar/tree/webview aggregation + export. Local-only DB.",
+      "context_window_surfacing": "status bar token/cost; tree grouped by date; webview dashboard charts",
+      "privacy": "local SQLite; content passes through Copilot model as part of normal chat",
+      "failure_modes_from_issues": [
+        "no public issues; risk: depends on Copilot model availability (warns 'No Copilot language models available') and on VS Code 1.113+ request.model API — provider/API-version dependency"
+      ],
+      "issues_prs": []
+    }
+  ],
+  "cross_cutting_answers": {
+    "a_window_threshold_overage_modeling": "OpenMeter is the reference model: UsagePeriod = ISO-8601 Interval + Anchor (rolling anchored windows, GetCurrentPeriodAt/GetResetTimelineInclusive), metered Entitlement with IssueAfterReset (auto re-grant each window), IsSoftLimit (allow-at-zero vs hard block), PreserveOverageAtReset (carry overage across reset), and BalanceWindow{UsageInPeriod,Overage,BalanceAtStart,OverageAtStart}. Lago complements with AlertThreshold{value decimal(30,5), recurring} (UNIQUE recurring-per-alert, SOFT_LIMIT const) and recurring wallet top-ups with min/max credits and negative thresholds (fire before zero). Pattern: separate the window definition (anchor+interval+lastReset) from the allowance (grant/credit) from the policy (soft/hard limit, overage preservation) from the alert (recurring vs one-shot threshold).",
+    "b_api_cost_vs_plan_value_separation": "They live in different layers. Lago separates prepaid wallet credits / plan subscription (included value) from pay-in-arrears metered charges (billed overage) — wallets are the allowance, charges are the bill. OpenMeter models only entitlements/credits (plan-included units), deliberately NOT dollar cost. LiteLLM/Helicone model only API dollar cost (pricing table/registry). Helicone PR #5694 adds per-request override headers so the caller can inject the true provider cost when the registry's single rate is wrong (OpenRouter pass-through) — i.e. keep 'registry/list price' and 'actual billed cost' as overridable separate fields. PM implication: store list-price cost and plan-included allowance as distinct ledgers, with an override channel for actuals.",
+    "c_vscode_compact_context_surfacing": "vs-context is the template: a single status-bar item `${riskIcon} CTX ${agentLabel} ${pct}%` (or `${n} agents · ${peak}% peak`), risk icon switched at warning=70%/critical=85% thresholds ($(pulse)/$(warning)/$(error)), rich tooltip (hottest agent %, total agents, warning/critical counts), click -> tree focus. Data comes from local agent session logs (percentageOfPrompt per category: system/messages/toolResults/files). BedirT shows a configurable token-count template but no %-of-window. Compact = one % number + risk color + expandable detail.",
+    "d_stale_pricing_and_historical_changes": "All use a bundled/generated pricing artifact (LiteLLM cost.json/get_model_cost_map, Helicone packages/cost registry generated per provider incl. buildPricesOpenRouter.py) refreshed by releasing an update — no time-travel reconciliation in core. New/changed models produce zero or wrong cost until the registry is updated (Helicone PR #5743 Kimi K3; LiteLLM issue #32496 fireworks). Mitigations seen: custom_cost_per_token overrides (LiteLLM) and per-request cost override headers (Helicone PR #5694). Historical price changes are handled by re-fetching the current map, not by versioned effective-dated prices.",
+    "e_inclusive_vs_additive_cache_tokens": "Direct evidence both ways, explicitly reconciled. LiteLLM: OpenAI prompt_tokens INCLUDES cached_tokens (inclusive) while Anthropic input_tokens EXCLUDES cache (additive); it normalizes Anthropic by ADDING cache tokens (cost_calculator.py:400-404) then computes regular = max(prompt - cached - cache_creation,0) to avoid double count. Helicone: treats sum_prompt_tokens as fresh/uncached and ADDS cache buckets separately, and explicitly SUBTRACTS overlapping 5m/1h buckets from prompt_cache_write_tokens 'to not double count' (index.ts:102-108). Conclusion: providers disagree; a metering layer must (1) detect the convention per provider, (2) normalize to one invariant, (3) subtract any overlapping sub-buckets."
+  }
+}

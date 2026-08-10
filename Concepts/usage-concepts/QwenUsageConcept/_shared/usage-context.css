@@ -1,0 +1,199 @@
+/* ---- viewport clamp: context sprouts never spill past the bottom edge at low
+       heights — viewport-relative max-height + internal scroll, scoped to the
+       context popups (the shared .pm-sprout base stays overflow:visible). ---- */
+.pm-sprout.pm-ctx-sprout { max-height: calc(100vh - 16px); max-height: calc(100dvh - 16px); overflow: auto; overscroll-behavior: contain; }
+.pm-ctx-ring { width: 22px; height: 22px; flex: none; display: inline-flex; align-items: center; justify-content: center; border-radius: 50%; border: 0; background: transparent; cursor: pointer; color: var(--text-secondary); padding: 0; }
+.pm-ctx-ring svg { width: 15px; height: 15px; display: block; transition: filter var(--motion-fast) var(--ease-out); }
+.pm-ctx-ring:hover svg, .pm-ctx-ring.is-open svg { filter: drop-shadow(0 0 3px color-mix(in srgb, var(--accent-blue) 70%, transparent)) drop-shadow(0 0 7px color-mix(in srgb, var(--accent-blue) 40%, transparent)); }
+/* ---- ring life: breathes as context usage heats up (state-linked via the
+       data-heat band usage-context.js sets from D.ring.pct: >=70 warm, >=90
+       hot). Warm breathes cooler/slower, hot warmer/faster. The pulse rides the
+       span's filter so the svg's hover glow rule above still composes. ---- */
+.pm-ctx-ring[data-heat="warm"] { animation: pmCtxPulseWarm calc(var(--mo-pulse, 1.8s) * 1.45) ease-in-out infinite; }
+.pm-ctx-ring[data-heat="hot"] { animation: pmCtxPulseHot calc(var(--mo-pulse, 1.8s) * 0.9) ease-in-out infinite; }
+@keyframes pmCtxPulseWarm {
+  0%, 100% { filter: drop-shadow(0 0 2px color-mix(in srgb, var(--accent-blue) 28%, transparent)); }
+  50% { filter: drop-shadow(0 0 6px color-mix(in srgb, var(--accent-blue) 62%, transparent)); }
+}
+@keyframes pmCtxPulseHot {
+  0%, 100% { filter: drop-shadow(0 0 2px color-mix(in srgb, var(--accent-orange) 42%, var(--accent-blue))); }
+  50% { filter: drop-shadow(0 0 7px color-mix(in srgb, var(--accent-orange) 80%, var(--accent-blue))); }
+}
+/* one satisfying pop when the popup opens: anticipation squash into a spring
+   back. The keyframes re-carry the svg's inline rotate(-90deg) so the arc never
+   appears un-rotated mid-pop (animation overrides the inline style).
+   NOTE: literal beziers here — Chromium drops var() inside @keyframes for
+   animation-timing-function; values mirror --mo-antic-ease / --mo-spring-ease. */
+.pm-ctx-ring.is-pop svg { animation: pmCtxRingPop var(--mo-spring-dur, 420ms) 1; }
+@keyframes pmCtxRingPop {
+  0% { transform: rotate(-90deg) scale(1); animation-timing-function: cubic-bezier(0.55, -0.35, 0.7, 0.05); }
+  34% { transform: rotate(-90deg) scale(0.82); animation-timing-function: cubic-bezier(0.34, 1.56, 0.64, 1); }
+  100% { transform: rotate(-90deg) scale(1); }
+}
+.pm-ctx-pop { padding: var(--md); font-size: 11px; min-width: 248px; display: flex; flex-direction: column; gap: 6px; }
+.pm-ctx-pop .cp-top { display: flex; align-items: baseline; justify-content: space-between; gap: var(--sm); }
+.pm-ctx-pop .cp-title { font-family: var(--display-font); font-weight: 700; font-size: 12px; color: var(--text-primary); letter-spacing: .02em; }
+.pm-ctx-pop .cp-frac { font-family: var(--mono-font); font-variant-numeric: tabular-nums; font-weight: 700; color: var(--text-primary); white-space: nowrap; }
+/* track carries a hairline ring (box-shadow, zero layout cost) so a low-fill
+   segment still reads as a bar; the fill rides the >=3:1 --us-fill-info token
+   (WCAG 1.4.11) with the vivid accent-blue only where it already passes */
+.pm-ctx-pop .cp-bar { height: 5px; border-radius: var(--radius-pill); background: var(--border-light); overflow: hidden; margin: 2px 0 4px; box-shadow: 0 0 0 1px color-mix(in srgb, var(--text-primary) 24%, transparent); }
+.pm-ctx-pop .cp-bar > i { display: block; height: 100%; background: var(--us-fill-info, var(--accent-blue)); }
+.pm-ctx-pop .cp-row { display: grid; grid-template-columns: 8px minmax(0, 1fr) auto; align-items: center; gap: 7px; padding: 2px 0; }
+.pm-ctx-pop .cp-dot { width: 7px; height: 7px; border-radius: 50%; }
+.pm-ctx-pop .cp-lab { color: var(--text-muted); overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+.pm-ctx-pop .cp-val { font-family: var(--mono-font); font-variant-numeric: tabular-nums; color: var(--text-primary); }
+.pm-ctx-pop .cp-div { height: 1px; background: var(--border-light); margin: 4px 0; }
+.pm-ctx-pop .cp-cache { display: flex; justify-content: space-between; padding: 2px 0; }
+.pm-ctx-pop .cp-cache .k { color: var(--text-muted); }
+.pm-ctx-pop .cp-cache .v { font-family: var(--mono-font); font-variant-numeric: tabular-nums; color: var(--text-primary); }
+.pm-ctx-pop .cp-acts { display: flex; gap: var(--sm); margin-top: 4px; padding-top: 6px; border-top: 1px solid var(--border-light); }
+.pm-ctx-pop .cp-acts button { font-size: 11px; font-weight: 700; padding: 4px 9px; border-radius: var(--radius-sm); border: 1px solid var(--border-light); background: transparent; color: var(--text-secondary); cursor: pointer; transition: all var(--motion-fast) var(--ease-out); }
+.pm-ctx-pop .cp-acts button:hover { color: var(--text-primary); border-color: var(--border); }
+/* action text rides the legible -text tones (WCAG 1.4.3): the raw accents stay
+   vivid on darks where they already clear 4.5 via the token fallback chain */
+.pm-ctx-pop .cp-acts .cp-compact { background: color-mix(in srgb, var(--accent-orange) 16%, var(--surface-elevated)); color: var(--tone-warn-text, var(--accent-orange)); border-color: transparent; }
+.pm-ctx-pop .cp-acts .cp-more { color: var(--tone-info-text, var(--accent-blue)); border-color: transparent; }
+.pm-md { width: min(680px, 92vw); max-height: min(78vh, 860px); overflow: auto; padding: var(--lg); display: flex; flex-direction: column; gap: var(--md); }
+.pm-md-head { display: flex; align-items: center; gap: var(--sm); }
+.pm-md-head .md-t { font-family: var(--display-font); font-size: var(--fs-lg); font-weight: 800; color: var(--text-primary); }
+.pm-md-head .md-sub { font-size: var(--fs-2xs); color: var(--text-muted); overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+.pm-md-head .us-proj { margin-left: auto; }
+.pm-md-head .md-x { margin-left: var(--sm); width: 28px; height: 28px; border-radius: var(--radius-sm); border: 1px solid var(--border-light); background: transparent; color: var(--text-secondary); cursor: pointer; display: inline-flex; align-items: center; justify-content: center; flex: none; }
+.pm-md-head .md-x:hover { color: var(--text-primary); border-color: var(--border); }
+.pm-md-head .md-x .pm-ico { width: 14px; height: 14px; }
+.pm-md-grid { display: grid; grid-template-columns: minmax(0, 1.5fr) minmax(180px, 1fr); gap: var(--md); align-items: start; }
+@media (max-width: 640px) { .pm-md-grid { grid-template-columns: 1fr; } }
+.pm-md-card { border: 1px solid var(--border-light); border-radius: var(--radius-md); padding: var(--md); background: color-mix(in srgb, var(--surface) 60%, transparent); display: flex; flex-direction: column; gap: var(--sm); }
+.pm-md-card > h4 { margin: 0; font-family: var(--display-font); font-size: 10px; font-weight: 700; letter-spacing: .12em; text-transform: uppercase; color: var(--text-muted); }
+.pm-md-bar { height: 10px; border-radius: var(--radius-pill); overflow: hidden; display: flex; background: var(--border-light); }
+.pm-md-bar > i { height: 100%; }
+.pm-md-legend { display: flex; flex-direction: column; gap: 2px; }
+.pm-md-cost { display: grid; grid-template-columns: 1fr 1fr 1fr; gap: var(--sm); }
+.pm-md-cost .cc { display: flex; flex-direction: column; gap: 2px; padding: var(--sm); border-radius: var(--radius-sm); background: color-mix(in srgb, var(--surface-elevated) 70%, transparent); }
+.pm-md-cost .cc .k { font-size: 9px; font-weight: 700; letter-spacing: .08em; text-transform: uppercase; color: var(--text-muted); }
+.pm-md-cost .cc .v { font-family: var(--mono-font); font-variant-numeric: tabular-nums; font-weight: 700; font-size: var(--fs-md); color: var(--text-primary); }
+.pm-md-toggle { align-self: flex-start; font-size: var(--fs-2xs); font-weight: 700; color: var(--tone-info-text, var(--accent-blue)); background: transparent; border: 0; cursor: pointer; padding: 2px 0; }
+.pm-md-raw { font-family: var(--mono-font); font-size: 10px; color: var(--text-muted); white-space: pre-wrap; background: color-mix(in srgb, var(--surface) 70%, transparent); border: 1px solid var(--border-light); border-radius: var(--radius-sm); padding: var(--sm); margin: 0; }
+
+/* ---- popup: Usage remaining (5h + Weekly). Bars share the .us-meter grid so
+      the two tracks align to equal left/right edges (one --us-mlb / --us-mpc). ---- */
+.pm-ctx-pop .cp-remain { display: flex; flex-direction: column; gap: 6px; --us-mlb: 46px; --us-mpc: 56px; }
+.pm-ctx-pop .cp-remain-head { display: flex; align-items: baseline; justify-content: space-between; gap: var(--sm); }
+.pm-ctx-pop .cp-src { font-size: 9px; font-weight: 700; letter-spacing: .03em; color: var(--text-muted); white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+.pm-ctx-pop .cp-rrow { display: flex; flex-direction: column; gap: 2px; }
+.pm-ctx-pop .cp-rrow .us-meter { font-size: 10px; }
+.pm-ctx-pop .cp-rrow .us-track { height: 5px; }
+.pm-ctx-pop .cp-rrow .pc { font-size: 9px; }
+.pm-ctx-pop .cp-rsub { display: flex; align-items: center; gap: var(--sm); padding-left: calc(var(--us-mlb, 46px) + var(--sm)); font-size: 9px; color: var(--text-muted); min-width: 0; }
+.pm-ctx-pop .cp-rst { overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+.pm-ctx-pop .cp-rst.cd { color: var(--tone-warn-text); font-weight: 700; }
+.pm-ctx-pop .cp-rsub .us-proj { flex: none; }
+
+/* ---- More Details: Curated / Raw tabs ---- */
+.pm-md-pane { display: none; flex-direction: column; gap: var(--md); }
+.pm-md-pane.is-active { display: flex; }
+.pm-md-tabs { display: flex; align-items: center; gap: var(--md); border-bottom: 1px solid var(--border-light); }
+.pm-md-tab { font-size: var(--fs-xs); font-weight: 700; color: var(--text-muted); background: transparent; border: 0; border-bottom: 2px solid transparent; padding: var(--xs) 2px; cursor: pointer; transition: color var(--motion-fast) var(--ease-out); }
+.pm-md-tab:hover { color: var(--text-secondary); }
+/* active tab text + underline ride the legible info-text tone (4.5+ on the
+   sprout plate on every theme); raw accent-blue was 1.82–3.78 as text */
+.pm-md-tab.is-active { color: var(--tone-info-text, var(--accent-blue)); border-bottom-color: var(--tone-info-text, var(--accent-blue)); }
+[data-theme^="glass"] .pm-md-tab.is-active { background: var(--pm6-glass-step-3, transparent); border-bottom-color: var(--tone-info-text, var(--accent-blue)); }
+.pm-md-sub { font-size: 9px; font-weight: 700; letter-spacing: .12em; text-transform: uppercase; color: var(--text-muted); margin-top: 2px; }
+.pm-md-ov { display: flex; flex-direction: column; gap: 2px; }
+.pm-md-card .us-list, .pm-md-card .us-kv { margin: 0; }
+.pm-md-bymodel, .pm-md-legend { display: flex; flex-direction: column; gap: 2px; }
+
+/* ---- More Details: per-message rows ---- */
+.pm-md-msgs { display: flex; flex-direction: column; gap: 4px; }
+.pm-md-msg { display: grid; grid-template-columns: minmax(0, 1fr) auto; column-gap: var(--xs); align-items: center; border: 1px solid var(--border-light); border-radius: var(--radius-sm); padding: 4px 6px; }
+.pm-md-msg-head { display: flex; align-items: center; gap: var(--sm); min-width: 0; background: transparent; border: 0; cursor: pointer; padding: 2px 0; text-align: left; font: inherit; color: inherit; }
+.pm-md-msg-head .cp-dot { width: 7px; height: 7px; border-radius: 50%; flex: none; }
+.pm-md-msg-head .mm-role { font-size: var(--fs-2xs); font-weight: 700; color: var(--text-primary); flex: none; }
+.pm-md-msg-head .mm-model { font-size: var(--fs-2xs); color: var(--text-muted); overflow: hidden; text-overflow: ellipsis; white-space: nowrap; min-width: 0; flex: 1 1 auto; }
+.pm-md-msg-head .mm-tok, .pm-md-msg-head .mm-cost { font-family: var(--mono-font); font-variant-numeric: tabular-nums; font-size: var(--fs-2xs); color: var(--text-secondary); flex: none; white-space: nowrap; }
+.pm-md-msg-head .mm-chev { flex: none; display: inline-flex; color: var(--text-muted); transition: transform var(--motion-fast) var(--ease-out); }
+.pm-md-msg.is-open .mm-chev { transform: rotate(180deg); }
+.mm-deep { width: 24px; height: 24px; border-radius: var(--radius-sm); border: 1px solid transparent; background: transparent; color: var(--text-muted); cursor: pointer; display: inline-flex; align-items: center; justify-content: center; flex: none; }
+.mm-deep:hover { color: var(--accent-blue); border-color: var(--border-light); }
+.pm-md-msgdet { grid-column: 1 / -1; display: grid; grid-template-columns: 1fr 1fr; gap: 2px var(--md); margin-top: 4px; padding: 6px 8px; border-left: 2px solid var(--border-light); }
+.pm-md-msgdet .us-proj { grid-column: 1 / -1; }
+
+/* ---- More Details: redacted Raw (tucked tab) ---- */
+.pm-md-rawwrap { display: flex; flex-direction: column; gap: var(--sm); }
+.pm-md-rawnote { display: flex; align-items: center; gap: var(--sm); font-size: var(--fs-2xs); color: var(--text-muted); }
+.pm-md-rawnote .vs { flex: none; }
+
+/* ---- reading plate: the .pm-sprout chrome already carries var(--pm6-glass-plate)
+      (usage-shared.css); the dialog cards step down to a calm transparency step. ---- */
+[data-theme^="glass"] .pm-md-card { background: var(--pm6-glass-step-1, color-mix(in srgb, var(--surface) 60%, transparent)); border-color: var(--glass-hairline, var(--border-light)); }
+[data-theme^="glass"] .pm-md-msg { border-color: var(--glass-hairline, var(--border-light)); }
+
+/* ---- context popup motion — scoped OVERRIDE of the shared .pm-sprout (§12).
+       The shared corner-origin base rule is untouched; everything below is
+       gated on .pm-ctx-sprout and wins on specificity + source order.
+       Shell: a deeper corner grow (smaller resting scale vars) landing on a
+       truer spring (--mo-spring-dur/ease, real overshoot). Close is NOT
+       overridden — it keeps the shared fast accelerating 150ms ease-in.
+       Content: the inner plate rides follow-through (--mo-follow-*) so it
+       settles a beat AFTER the shell lands (secondary motion). ---- */
+.pm-sprout.pm-ctx-sprout { --pm6-sprout-sx: 0.55; --pm6-sprout-sy: 0.38; }
+.pm-sprout.pm-ctx-sprout.is-open {
+  transition: opacity var(--mo-popup-open-fade, 120ms) var(--pm-ease-out, ease-out),
+    transform var(--mo-spring-dur, 420ms) var(--mo-spring-ease, cubic-bezier(0.34, 1.56, 0.64, 1)),
+    visibility 0s;
+}
+/* follow-through: shell springs, content settles a beat later. No transition on
+   the closed state — on close the content snaps away with the fast shell. */
+.pm-ctx-sprout .pm-ctx-pop, .pm-ctx-sprout .pm-md { opacity: 0; transform: translateY(5px) scale(0.99); transform-origin: var(--pm6-sprout-ox, 88%) var(--pm6-sprout-oy, 0%); }
+.pm-ctx-sprout.is-open .pm-ctx-pop, .pm-ctx-sprout.is-open .pm-md {
+  opacity: 1; transform: translate3d(0, 0, 0) scale(1, 1);
+  transition: transform var(--mo-follow-dur, 560ms) var(--mo-follow-ease, cubic-bezier(0.25, 1.45, 0.45, 1)) var(--mo-antic-dur, 90ms),
+    opacity var(--mo-settle-dur, 300ms) var(--pm-ease-out, ease-out) calc(var(--mo-antic-dur, 90ms) / 2);
+}
+/* role-breakdown rows cascade in on open: --i is set inline per row
+   (usage-context.js ringPopHTML), stepped by --mo-stagger. */
+.pm-ctx-pop .cp-row { opacity: 0; transform: translateX(-5px); }
+.pm-ctx-sprout.is-open .cp-row {
+  opacity: 1; transform: none;
+  transition: opacity var(--mo-reveal-dur, 480ms) var(--mo-reveal-ease, ease-out) calc(var(--mo-antic-dur, 90ms) + var(--mo-stagger, 24ms) * var(--i, 0)),
+    transform var(--mo-reveal-dur, 480ms) var(--mo-reveal-ease, ease-out) calc(var(--mo-antic-dur, 90ms) + var(--mo-stagger, 24ms) * var(--i, 0));
+}
+/* meters grow with a soft overshoot: the follow ease runs the width past its
+   target then settles (the track's overflow:hidden clips any >100 peak). */
+.pm-ctx-sprout .us-fill, .pm-ctx-pop .cp-bar > i { transition: width var(--mo-data-refresh-dur, 800ms) var(--mo-follow-ease, cubic-bezier(0.25, 1.45, 0.45, 1)); }
+/* More Details: Curated cards stagger in (translateY + fade on --mo-reveal-*,
+   stepped by --mo-stagger); the pane itself stays put so the cards carry it. */
+.pm-ctx-sprout .pm-md-pane > .pm-md-card { opacity: 0; transform: translateY(9px); }
+.pm-ctx-sprout.is-open .pm-md-pane > .pm-md-card {
+  opacity: 1; transform: none;
+  transition: opacity var(--mo-reveal-dur, 480ms) var(--mo-reveal-ease, ease-out) calc(var(--mo-antic-dur, 90ms) + var(--mo-stagger, 24ms) * var(--ci, 0)),
+    transform var(--mo-reveal-dur, 480ms) var(--mo-reveal-ease, ease-out) calc(var(--mo-antic-dur, 90ms) + var(--mo-stagger, 24ms) * var(--ci, 0));
+}
+.pm-md-pane > .pm-md-card:nth-child(1) { --ci: 0; }
+.pm-md-pane > .pm-md-card:nth-child(2) { --ci: 1; }
+.pm-md-pane > .pm-md-card:nth-child(3) { --ci: 2; }
+/* Curated<->Raw: the incoming pane cross-fades and slides from its tab's side
+   (is-anim is retriggered per switch in usage-context.js, then cleared on
+   animationend). First open skips this — the card cascade carries the reveal. */
+.pm-md-pane[data-md-pane="curated"] { --pm-pane-x: -10px; }
+.pm-md-pane[data-md-pane="raw"] { --pm-pane-x: 10px; }
+.pm-md-pane.is-anim.is-active { animation: pmCtxPaneIn var(--mo-tab-in-dur, 200ms) var(--mo-tab-in-ease, ease-out) both; }
+@keyframes pmCtxPaneIn {
+  from { opacity: 0; transform: translateX(var(--pm-pane-x, 8px)); }
+  to { opacity: 1; transform: translateX(0); }
+}
+/* ---- reduced motion: the shared sprout rule already drops the shell to a
+       near-instant fade; here we drop the inner travel, stagger DELAYS (the
+       themes.css kill-switch zeroes durations but not delays), pane slide and
+       ring pulse/pop — every state still shows immediately. ---- */
+html[data-reduced-motion="1"] .pm-ctx-ring, html[data-reduced-motion="1"] .pm-ctx-ring svg { animation: none !important; }
+html[data-reduced-motion="1"] .pm-ctx-sprout .pm-ctx-pop, html[data-reduced-motion="1"] .pm-ctx-sprout .pm-md,
+html[data-reduced-motion="1"] .pm-ctx-sprout .cp-row, html[data-reduced-motion="1"] .pm-ctx-sprout .pm-md-pane > .pm-md-card { opacity: 1 !important; transform: none !important; transition: none !important; }
+html[data-reduced-motion="1"] .pm-md-pane.is-anim.is-active { animation: none !important; }
+@media (prefers-reduced-motion: reduce) {
+  .pm-ctx-ring, .pm-ctx-ring svg { animation: none !important; }
+  .pm-ctx-sprout .pm-ctx-pop, .pm-ctx-sprout .pm-md, .pm-ctx-sprout .cp-row, .pm-ctx-sprout .pm-md-pane > .pm-md-card { opacity: 1 !important; transform: none !important; transition: none !important; }
+  .pm-md-pane.is-anim.is-active { animation: none !important; }
+}

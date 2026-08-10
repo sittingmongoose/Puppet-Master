@@ -1,0 +1,308 @@
+[
+  {
+    "source_name": "Slint 1.17.1 — Animations, States & Transitions, Rectangle reference, and core source",
+    "org": "SixtyFPS GmbH (Slint)",
+    "url": "https://docs.slint.dev/latest/docs/slint/guide/language/coding/animation/",
+    "type": "slint-doc",
+    "date_or_version": "1.17.1 (docs 'latest' pinned to 1.17.1)",
+    "accessed": "2026-07-30",
+    "key_claims": [
+      "Property animation is declared with `animate <prop> { duration; delay; iteration-count; easing; direction; enabled; }`; multiple props can share one animate block.",
+      "`duration` defaults to 0ms; `iteration-count` is a float where a negative value means infinite and fractional values are allowed; `animation-tick()` is provided for permanently-running / time-driven animation.",
+      "`easing` defaults to linear and accepts the named easings.net set PLUS `cubic-bezier(a,b,c,d)` (confirmed in source: EasingCurve::CubicBezier([f32;4])). There is NO spring easing variant (EasingCurve enum = Linear, CubicBezier, EaseIn/Out/InOut Elastic, EaseIn/Out/InOut Bounce only; Custom is commented out).",
+      "`direction` supports normal/reverse/alternate/alternate-reverse (CSS-equivalent) for loops.",
+      "`enabled: false` makes the property jump to its target instantly with no delay/easing/iteration — this is the documented reduced-motion hook.",
+      "States (`states [ name when <cond> : { props } ]`) plus `in {} / out {} / in-out {}` transition blocks bind `animate` to state changes — the Slint equivalent of CSS state-driven transitions.",
+      "Rectangle exposes background (brush, supports @linear-gradient), border-color, border-width, border-radius, clip — but NO CSS-style box-shadow and NO blur on the box. The render core has a separate `BoxShadow` primitive (offset-x/offset-y/color/blur/spread) confirmed in internal/core/items.rs.",
+      "There is NO backdrop-filter / live backdrop blur anywhere in the core (no `backdrop` symbol in internal/core/items.rs or graphics.rs).",
+      "Animatable per-element visual/transform properties (confirmed in internal/core/items.rs): opacity, visible, rotate (rotation-angle + origin), scale (+origin), translate, cache-rendering-hint.",
+      "PopupWindow (confirmed in internal/compiler/typeregister.rs) provides show()/close() functions and a `close-on-click` bool; it has NO built-in open/close animation, so entrance/exit must be driven by animating the popup root's opacity/scale/translate (and exit-then-close via a Timer)."
+    ],
+    "extracted_tokens_or_values": [
+      "animate { duration (default 0ms); delay; iteration-count (float, <0 = infinite); easing (default linear); direction (normal|reverse|alternate|alternate-reverse); enabled (bool, false => instant) }",
+      "easing: linear | named Penner set (quad/cubic/quart/quint/sine/expo/circ/back/elastic/bounce, in/in-out/out) | cubic-bezier(a,b,c,d)",
+      "NO spring easing; NO @keyframes; NO backdrop-filter; NO CSS box-shadow on Rectangle (separate BoxShadow primitive: offset-x, offset-y, color, blur, spread)",
+      "animatable transforms: opacity, visible, translate, scale, rotation-angle (+origin-x/origin-y), cache-rendering-hint",
+      "states [...] { in/out/in-out { animate * { duration; easing; } } }",
+      "PopupWindow: .show(), .close(), close-on-click (bool); animation via states on the popup root"
+    ]
+  },
+  {
+    "source_name": "MDN — prefers-reduced-motion CSS media feature",
+    "org": "Mozilla (MDN Web Docs)",
+    "url": "https://developer.mozilla.org/en-US/docs/Web/CSS/@media/prefers-reduced-motion",
+    "type": "spec",
+    "date_or_version": "Media Queries Level 5; page last modified 2026-06-10",
+    "accessed": "2026-07-30",
+    "key_claims": [
+      "prefers-reduced-motion detects a user OS setting to minimize non-essential motion; `reduce` evaluates true and `no-preference` false.",
+      "The motivation is vestibular motion disorders; scaling or panning large objects are named triggers.",
+      "The recommended pattern is to TONE DOWN or REPLACE motion, not merely delete it — the worked example swaps a scale `pulse` for an opacity-only `dissolve`, preserving the signal while removing the vestibular trigger.",
+      "OS hooks exist across platforms (macOS Reduce motion, Windows Animation Effects, GNOME/KDE animation settings), so a desktop app can/should read the system preference."
+    ],
+    "extracted_tokens_or_values": [
+      "@media (prefers-reduced-motion: reduce) { ... }",
+      "pattern: replace transform/scale animation with opacity-only animation (state still conveyed)",
+      "values: no-preference | reduce"
+    ]
+  },
+  {
+    "source_name": "W3C WCAG 2.1 — Understanding SC 2.3.3 Animation from Interactions",
+    "org": "World Wide Web Consortium (W3C / WAI)",
+    "url": "https://www.w3.org/WAI/WCAG21/Understanding/animation-from-interactions.html",
+    "type": "spec",
+    "date_or_version": "WCAG 2.1 SC 2.3.3 (Level AAA); page updated 2025-09-16",
+    "accessed": "2026-07-30",
+    "key_claims": [
+      "Motion animation triggered by interaction must be disable-able unless it is ESSENTIAL to the functionality or information conveyed.",
+      "Non-essential motion can trigger vestibular reactions (dizziness, nausea, migraine); parallax and scroll-driven movement are called out as common offenders.",
+      "Definition: 'motion animation' = adding steps between conditions to create the illusion of movement; changes of color or opacity that do NOT change perceived size/shape/position are lower risk (errata now includes blur as motion).",
+      "Three compliant strategies: avoid unnecessary animation; provide a user control to turn it off; honor the OS reduce-motion setting.",
+      "Sufficient techniques: C39 (CSS prefers-reduced-motion) and SCR40 (JS). Essential animation (e.g. the movement IS the content) is allowed."
+    ],
+    "extracted_tokens_or_values": [
+      "disable non-essential interaction motion unless essential",
+      "lower-risk channels: color / opacity (no size/shape/position change); blur counts as motion (errata)",
+      "strategies: avoid | user control | honor OS reduce-motion",
+      "techniques: C39 (CSS), SCR40 (JS)"
+    ]
+  },
+  {
+    "source_name": "NN/g — Response Times: The 3 Important Limits",
+    "org": "Nielsen Norman Group",
+    "url": "https://www.nngroup.com/articles/response-times-3-important-limits/",
+    "type": "research",
+    "date_or_version": "Jakob Nielsen, 1993 (web update 2014); excerpt from Usability Engineering (1993)",
+    "accessed": "2026-07-30",
+    "key_claims": [
+      "0.1 second is the limit for the user to feel the system reacts instantaneously / for direct manipulation (no special feedback needed).",
+      "1.0 second is the limit for the user's flow of thought to stay uninterrupted; delays of 0.2-1.0s are noticed and the user loses the feeling of operating directly on the data.",
+      "10 seconds is the limit for keeping the user's attention; beyond it a percent-done indicator and a way to interrupt are required.",
+      "Animations must be timed by a real-time clock, not by CPU execution speed; a UI can be 'too fast' (display inertia — changes flashing too rapidly stress users)."
+    ],
+    "extracted_tokens_or_values": [
+      "0.1s = instantaneous / direct-manipulation ceiling",
+      "1.0s = uninterrupted flow-of-thought ceiling",
+      "10s = attention ceiling (needs progress + interrupt)",
+      "principle: clock-timed motion; avoid display inertia / too-fast changes"
+    ]
+  },
+  {
+    "source_name": "Microsoft — Motion in Windows (Fluent Design)",
+    "org": "Microsoft",
+    "url": "https://learn.microsoft.com/en-us/windows/apps/design/signature-experiences/motion",
+    "type": "design-system",
+    "date_or_version": "ms.date 2024-07-24 (Windows 11 / Fluent 2)",
+    "accessed": "2026-07-30",
+    "key_claims": [
+      "Principles: Connected (elements connect seamlessly across states to lower cognitive load / aid way-finding), Consistent (shared entry points invoke & dismiss the same way, respecting timing/easing/direction), Responsive, Delightful (brief & fleeting), Resourceful (avoid custom animations; reuse system controls).",
+      "Connected Animation is the layer-to-layer (FLIP-like) transition that gives focus to a selected element while retaining context; page transitions respect directional flow.",
+      "Direct Exit must ALWAYS be combined with a fade-out."
+    ],
+    "extracted_tokens_or_values": [
+      "Direct Entrance: cubic-bezier(0,0,0,1); 167 / 250 / 333 ms (Position, Scale, Rotation)",
+      "Existing Elements (point-to-point): cubic-bezier(0.55,0.55,0,1); 167 / 250 / 333 ms",
+      "Direct Exit: cubic-bezier(0,0,0,1); 167 ms; ALWAYS + fade-out",
+      "Gentle Exit: cubic-bezier(1,0,1,1); 167 ms",
+      "Bare Minimum (fade in+out, opacity): Linear; 83 ms",
+      "Strong Entrance (elastic, 3 keyframes): (0.85,0,0,1)/167 + (0.85,0,0.75,1)/167 + (0.85,0,0,1)/333 ms",
+      "duration ladder: 83 / 167 / 250 / 333 ms"
+    ]
+  },
+  {
+    "source_name": "Motion for React (Framer Motion) — Transitions docs",
+    "org": "Motion / Framer (motion.dev)",
+    "url": "https://motion.dev/docs/react-transitions",
+    "type": "library",
+    "date_or_version": "Motion for React (motion.dev docs), 2026",
+    "accessed": "2026-07-30",
+    "key_claims": [
+      "A transition has type 'tween' | 'spring' | 'inertia'; tween default duration is 0.3s (0.8s for keyframes) with an ease that can be a named curve or a cubic-bezier array.",
+      "Springs are physics-based (stiffness/damping/mass) and incorporate the velocity of existing gestures for natural feedback; they can also be duration-based (duration + bounce) and generated as pure CSS.",
+      "Inertia decelerates a value by its initial velocity and can snap-to-grid via modifyTarget — the model used for drag release / settle.",
+      "MotionConfig manages default transitions AND reduced-motion preferences; orchestration via delay/stagger/delayChildren and when:beforeChildren/afterChildren.",
+      "visualDuration lets a spring's perceived settle time be coordinated with time-based animations."
+    ],
+    "extracted_tokens_or_values": [
+      "tween: duration default 0.3s (0.8s keyframes); ease = named | cubic-bezier[4] | JS fn",
+      "spring: stiffness, damping (default 10), mass (default 1), bounce (default 0.25), velocity, restSpeed 0.1, restDelta 0.01, visualDuration",
+      "inertia: power 0.8, timeConstant 700, modifyTarget (snap-to-grid), bounceStiffness 500, bounceDamping 10",
+      "easing names: linear, easeIn/Out/InOut, circIn/Out/InOut, backIn/Out/InOut, anticipate",
+      "orchestration: delay, stagger, delayChildren, repeat/repeatType, when"
+    ]
+  },
+  {
+    "source_name": "GSAP — Easing reference (and Flip / Draggable / Inertia plugins)",
+    "org": "GreenSock (GSAP, a Webflow product)",
+    "url": "https://gsap.com/docs/v3/Eases/",
+    "type": "library",
+    "date_or_version": "GSAP v3.15",
+    "accessed": "2026-07-30",
+    "key_claims": [
+      "'Easing is the primary way to change the timing of your tweens' — the ease carries the feel/personality of the motion.",
+      "Default ease is power1.out; the core provides power1-4 (quad/cubic/quart/quint), back, bounce, circ, elastic, expo, sine, steps, plus EasePack (rough/slow/expoScale) and CustomEase/CustomBounce/CustomWiggle.",
+      "GSAP ships a first-class Flip plugin (First-Last-Invert-Play) for animating layout/position changes, plus Draggable and Inertia plugins for pointer drag with momentum — the canonical, inspectable FLIP and drag-settle implementations."
+    ],
+    "extracted_tokens_or_values": [
+      "default ease: power1.out",
+      "ease families: power1-4, back, bounce, circ, elastic, expo, sine, steps (+ Custom*)",
+      "Flip plugin = First/Last/Invert/Play layout animation; Draggable + Inertia = drag + momentum settle"
+    ]
+  },
+  {
+    "source_name": "Material Design 3 — Easing and duration tokens & specs",
+    "org": "Google",
+    "url": "https://m3.material.io/styles/motion/easing-and-duration/tokens-specs",
+    "type": "design-system",
+    "date_or_version": "Material Design 3 (M3); note: GM3 Expressive now uses a spring physics system, easing+duration kept for transitions",
+    "accessed": "2026-07-30",
+    "key_claims": [
+      "The expressive direction is a spring physics system; the easing+duration token system remains for transitions and for teams not yet on Expressive.",
+      "Emphasized easing (decelerate/accelerate) is the expressive workhorse; Standard easing is for small/utility transitions.",
+      "Durations are tiered by traversed area: short (small utility), medium (medium screen area), long (large expressive, paired with Emphasized), extra-long (ambient, no user input).",
+      "Reference pairings: selection control 200ms + Standard; FAB->Sheet 400ms + Emphasized; Card->full-screen 500ms + Emphasized; ambient carousel 1000ms."
+    ],
+    "extracted_tokens_or_values": [
+      "easing emphasized.decelerate: cubic-bezier(0.05, 0.7, 0.1, 1.0)",
+      "easing emphasized.accelerate: cubic-bezier(0.3, 0.0, 0.8, 0.15)",
+      "easing standard: cubic-bezier(0.2, 0.0, 0, 1.0)",
+      "easing standard.decelerate: cubic-bezier(0, 0, 0, 1)",
+      "easing standard.accelerate: cubic-bezier(0.3, 0, 1, 1)",
+      "duration short1-4: 50 / 100 / 150 / 200 ms",
+      "duration medium1-4: 250 / 300 / 350 / 400 ms",
+      "duration long1-4: 450 / 500 / 550 / 600 ms",
+      "duration extra-long1-4: 700 / 800 / 900 / 1000 ms"
+    ]
+  },
+  {
+    "source_name": "IBM Carbon — Motion (Overview + Choreography)",
+    "org": "IBM (Carbon Design System)",
+    "url": "https://www.carbondesignsystem.com/elements/motion/overview/",
+    "type": "design-system",
+    "date_or_version": "Carbon (carbon-design-system); page updated 2026-07-29",
+    "accessed": "2026-07-30",
+    "key_claims": [
+      "Two motion styles: productive (efficient, subtle, task-focused: microinteractions, dropdowns, data tables/viz) and expressive (significant moments: opening a page, primary action, system alerts/notifications). Reserve expressive for occasional important moments.",
+      "'Strictly linear movement appears unnatural'; elements speed up quickly and slow down smoothly (light-weight material). 'Do not use easing curves that suggest bounce, stretch, or sudden stops.' Avoid purely decorative easing.",
+      "Exit easing speeds up to imply permanent departure; EXCEPTION: an element that leaves but stays nearby (e.g. a side panel) uses standard easing so it feels recallable.",
+      "Micro-interactions use ease-out on user input and fall in a 90-120ms static band. Duration scales non-linearly with distance/size of change.",
+      "'The best interface motion may go unnoticed.' Always provide static alternatives; consider reduced motion for mobile/tablet.",
+      "Choreography: motion paths follow the grid and never run diagonally — stagger horizontal+vertical to make rounded-corner paths; criss-cross sorting 'appears disorganized — avoid'. Semantic/spatial/intentional consistency. Higher layer = slide + dim-below; same layer = push/mask. Continuity via shared elements that 'should not distract'. Stagger table rows ~20ms, keep total < 500ms. Sequence: shell -> body -> dynamic content -> primary action -> data viz."
+    ],
+    "extracted_tokens_or_values": [
+      "standard easing: productive cubic-bezier(0.2, 0, 0.38, 0.9) | expressive cubic-bezier(0.4, 0.14, 0.3, 1)",
+      "entrance easing: productive cubic-bezier(0, 0, 0.38, 0.9) | expressive cubic-bezier(0, 0, 0.3, 1)",
+      "exit easing: productive cubic-bezier(0.2, 0, 1, 0.9) | expressive cubic-bezier(0.4, 0.14, 1, 1)",
+      "duration-fast-01: 70ms (button/toggle)",
+      "duration-fast-02: 110ms (fade)",
+      "duration-moderate-01: 150ms (micro, small expansion, short distance)",
+      "duration-moderate-02: 240ms (expansion, system communication, toast)",
+      "duration-slow-01: 400ms (large expansion, important notification)",
+      "duration-slow-02: 700ms (background dimming)",
+      "micro-interaction band: 90-120ms ease-out on input; stagger ~20ms, total < 500ms"
+    ]
+  },
+  {
+    "source_name": "Apple Human Interface Guidelines — Motion",
+    "org": "Apple",
+    "url": "https://developer.apple.com/design/human-interface-guidelines/motion",
+    "type": "design-system",
+    "date_or_version": "Apple HIG; updated 2025-09-09 (incl. Liquid Glass guidance)",
+    "accessed": "2026-07-30",
+    "key_claims": [
+      "'Add motion purposefully... Don't add motion for the sake of adding motion. Gratuitous or excessive animation can distract people and may make them feel disconnected or physically uncomfortable.'",
+      "'Make motion optional' — never use motion as the only way to communicate important information; supplement with haptics/audio.",
+      "Feedback motion should be realistic and follow gestures/expectations; a mismatched dismiss direction (reveal down, dismiss sideways) disorients.",
+      "'Aim for brevity and precision' — brief, precise feedback often conveys information more effectively than prominent animation.",
+      "'Avoid adding motion to UI interactions that occur frequently.'",
+      "'Let people cancel motion' — don't make users wait for an animation to complete, especially repeated ones (supports interruptible/reversible motion).",
+      "Maintain 30-60fps; avoid peripheral/edge motion and sustained ~0.2Hz oscillation (vestibular); use fades to relocate objects whose movement communicates nothing; SwiftUI applies built-in in/out easing that cannot be customized."
+    ],
+    "extracted_tokens_or_values": [
+      "principles: purposeful, optional, brief/precise, realistic/gesture-following, cancellable/interruptible",
+      "avoid motion on frequent interactions; avoid gratuitous/excessive motion",
+      "30-60fps target; fade to relocate non-communicative movement",
+      "no numeric duration scale (principle-based)"
+    ]
+  },
+  {
+    "source_name": "Adobe Spectrum — Motion",
+    "org": "Adobe",
+    "url": "https://spectrum.adobe.com/page/motion/",
+    "type": "design-system",
+    "date_or_version": "Spectrum Motion v5.0.0",
+    "accessed": "2026-07-30",
+    "key_claims": [
+      "Principles: Purposeful (surface connections between states/views, draw attention, give feedback), Intuitive (mirrors real-world acceleration/gravity/volume), Seamless ('just enough to get the intention across and no more'; 'never slow them down').",
+      "Three easings: ease-out for fading/animating INTO view (most common), ease-in for exiting/fading out, ease-in-out for place-to-place movement (draws attention; reserve for bigger movements).",
+      "Duration considers element complexity, easing, and scale; micro animations cover small ground (color fades, hovers, accordions, tooltips), macro animations cover large ground (panel/drawer reveals, cross-screen movement).",
+      "Don't build custom components solely to follow animation guidelines — prefer native controls to leverage built-in accessibility."
+    ],
+    "extracted_tokens_or_values": [
+      "ease-out (enter): cubic-bezier(0, 0, 0.40, 1)",
+      "ease-in (exit): cubic-bezier(0.50, 0, 1, 1)",
+      "ease-in-out (place-to-place): cubic-bezier(0.45, 0, 0.40, 1)",
+      "duration-100..400 (micro): 130 / 160 / 190 / 220 ms",
+      "duration-500..1000 (macro): 250 / 300 / 350 / 400 / 450 / 500 ms"
+    ]
+  },
+  {
+    "source_name": "react-spring — spring config presets (source code)",
+    "org": "pmndrs (react-spring)",
+    "url": "https://github.com/pmndrs/react-spring/blob/main/packages/core/src/constants.ts",
+    "type": "library",
+    "date_or_version": "react-spring main branch (constants.ts), 2026",
+    "accessed": "2026-07-30",
+    "key_claims": [
+      "react-spring models motion as a physics spring (tension/friction, mass defaults to 1) via an `animated` primitive and useSpring.",
+      "It ships named config presets that map intent to tension/friction pairs — an inspectable, widely-reused reference for 'how stiff/damped should a UI spring feel'.",
+      "These preset values are the same family the PM prototypes already use in their JS spring knobs (e.g. basic ~ stiffness 210 / damping 26), confirming the prototype's spring feel is react-spring-derived."
+    ],
+    "extracted_tokens_or_values": [
+      "config.default: { tension: 170, friction: 26 }",
+      "config.gentle: { tension: 120, friction: 14 }",
+      "config.wobbly: { tension: 180, friction: 12 }",
+      "config.stiff: { tension: 210, friction: 20 }",
+      "config.slow: { tension: 280, friction: 60 }",
+      "config.molasses: { tension: 280, friction: 120 }",
+      "mass default: 1"
+    ]
+  },
+  {
+    "source_name": "Animation: can it facilitate?",
+    "org": "Tversky, Morrison & Betrancourt (academic, Int. J. Human-Computer Studies)",
+    "url": "https://doi.org/10.1006/ijhc.2002.1017",
+    "type": "research",
+    "date_or_version": "2002, Int. J. Human-Computer Studies (~1,888 citations)",
+    "accessed": "2026-07-30",
+    "key_claims": [
+      "Animation's apparent superiority over static graphics usually comes from extra information or interactivity, not from motion itself (i.e. motion alone is not a comprehension win).",
+      "Apprehension Principle: animation must be apprehensible — viewers must be able to perceive and make sense of it; too-fast or too-complex animation fails.",
+      "Expressive Principle: animation should express the change/message so viewers can infer the meaning.",
+      "Animation helps when it externalizes a change in spatial structure over time (a route, a mechanism, a state transition); decorative or poorly-designed animation does not aid, and can impede, comprehension."
+    ],
+    "extracted_tokens_or_values": [
+      "Apprehension Principle (must be perceivable/comprehensible; not too fast/complex)",
+      "Expressive Principle (motion must convey the meaning)",
+      "motion helps for spatial/temporal change; decorative motion does not aid comprehension"
+    ]
+  },
+  {
+    "source_name": "Change blindness",
+    "org": "Simons & Levin (academic, Trends in Cognitive Sciences)",
+    "url": "https://doi.org/10.1016/s1364-6613(97)01080-2",
+    "type": "research",
+    "date_or_version": "1997, Trends in Cognitive Sciences 1(7):261-267",
+    "accessed": "2026-07-30",
+    "key_claims": [
+      "Observers frequently fail to detect large changes in a visual scene, especially when the change coincides with a visual disruption (a cut, flicker, saccade, or repaint).",
+      "Attention is required to perceive change; without a continuity cue, object identity is lost across the disruption.",
+      "Implication for UI: if an element is removed and re-added (or jumps) with no continuous transformation, users may not connect the before/after states — continuous motion (FLIP/connected animation) preserves object identity and spatial understanding."
+    ],
+    "extracted_tokens_or_values": [
+      "large changes go unnoticed across a visual disruption",
+      "attention + continuity cue required to bind before/after",
+      "rationale for FLIP / connected animation over abrupt remove/re-add"
+    ]
+  }
+]

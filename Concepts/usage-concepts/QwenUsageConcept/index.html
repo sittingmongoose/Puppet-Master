@@ -1,0 +1,396 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="friendly-dark">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<link rel="icon" href="data:,">
+<title>Puppet Master — Usage Design Gallery</title>
+<script>(function(){try{var ok=['friendly-dark','friendly-light','retro-dark','retro-light','basic-light','basic-dark','glass-dark','glass-light'];var t=localStorage.getItem('pm.theme');if(ok.indexOf(t)===-1)t='friendly-dark';var d=document.documentElement;d.setAttribute('data-theme',t);d.style.colorScheme=/-dark$/.test(t)?'dark':'light';}catch(e){}})();</script>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<!-- TYP-1 type voices: Cal Sans (friendly display) · Inter 400–800 (basic +
+     tabular numerics) · JetBrains Mono 400–800 (retro display + global mono) ·
+     Nunito 400–800 (friendly numeric) · Outfit 400–700 (glass body) ·
+     Quicksand 400–700 (friendly body) · Rajdhani 400–700 (retro body) ·
+     Sora 500–800 (glass display + numeric). Orbitron dropped. -->
+<link rel="preload" as="style" href="https://fonts.googleapis.com/css2?family=Cal+Sans&family=Inter:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;500;700;800&family=Nunito:wght@400;600;700;800&family=Outfit:wght@400;500;600;700&family=Quicksand:wght@400;500;600;700&family=Rajdhani:wght@400;500;600;700&family=Sora:wght@500;600;700;800&display=swap" onload="this.onload=null;this.rel='stylesheet'">
+<noscript><link href="https://fonts.googleapis.com/css2?family=Cal+Sans&family=Inter:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;500;700;800&family=Nunito:wght@400;600;700;800&family=Outfit:wght@400;500;600;700&family=Quicksand:wght@400;500;600;700&family=Rajdhani:wght@400;500;600;700&family=Sora:wght@500;600;700;800&display=swap" rel="stylesheet"></noscript>
+<link rel="stylesheet" href="_shared/themes.css">
+<link rel="stylesheet" href="_shared/base.css">
+<style>
+html, body { height: 100%; overflow: hidden; }
+body { background: var(--background); }
+
+.g-ambient { position: fixed; inset: 0; z-index: 0; pointer-events: none;
+  background-image:
+    radial-gradient(120% 55% at 50% -8%, color-mix(in srgb, var(--accent-primary) 7%, transparent), transparent 62%),
+    radial-gradient(color-mix(in srgb, var(--text-primary) 4.5%, transparent) 1px, transparent 1.5px);
+  background-size: auto, 22px 22px; background-position: center top, 0 0; }
+[data-theme^="glass"] .g-ambient { opacity: .5; }
+
+.g-top { position: relative; z-index: 30; display: flex; align-items: center; gap: var(--lg); flex-wrap: wrap;
+  padding: 11px 20px; background: color-mix(in srgb, var(--surface) 80%, transparent);
+  border-bottom: 1px solid var(--border); }
+:is([data-theme^="glass"], [data-theme^="friendly"]) .g-top { -webkit-backdrop-filter: blur(14px); backdrop-filter: blur(14px); }
+.g-brand { display: flex; align-items: center; gap: 10px; min-width: 0; }
+.g-logo { width: 26px; height: 26px; color: var(--accent-primary); flex: none; }
+.g-app { font-family: var(--display-font); font-size: 13px; font-weight: 700; letter-spacing: .14em; color: var(--text-primary); }
+.g-sub { font-size: 10px; color: var(--text-muted); }
+.g-spacer { flex: 1 1 auto; }
+
+.g-mode { display: inline-flex; border: 1px solid var(--border); border-radius: var(--radius-pill); padding: 2px; gap: 2px; background: var(--surface-elevated); }
+.g-mode button { font-family: var(--display-font); font-size: 9.5px; font-weight: 700; letter-spacing: .08em; text-transform: uppercase;
+  padding: 5px 12px; border-radius: var(--radius-pill); color: var(--text-secondary); transition: all var(--motion-fast) var(--ease-out); }
+.g-mode button.on { color: var(--text-primary); background: var(--accent-soft); box-shadow: inset 0 0 0 1px color-mix(in srgb, var(--accent-primary) 35%, transparent); }
+
+.g-ctrl { display: flex; align-items: center; gap: 8px; }
+.g-ctrl-lbl { font-family: var(--display-font); font-size: 8px; letter-spacing: 1.3px; color: var(--text-muted); }
+.g-preset { font-size: 9px; font-weight: 700; letter-spacing: .05em; padding: 4px 8px; border-radius: var(--radius-sm); border: 1px solid var(--border-light); color: var(--text-secondary); background: transparent; cursor: pointer; transition: all var(--motion-fast) var(--ease-out); }
+.g-preset:hover { color: var(--text-primary); border-color: var(--border); }
+.g-preset.on { color: var(--accent-primary); background: var(--accent-soft); border-color: color-mix(in srgb, var(--accent-primary) 40%, transparent); }
+.g-ctrl input[type="range"] { width: 110px; accent-color: var(--accent-primary); cursor: ew-resize; }
+.g-wread { font-family: var(--mono-font); font-size: 10px; color: var(--text-primary); min-width: 42px; text-align: right; }
+.g-rm { display: inline-flex; align-items: center; gap: 5px; font-size: 9px; font-weight: 700; letter-spacing: .08em; color: var(--text-muted); padding: 4px 8px; border-radius: var(--radius-sm); border: 1px solid transparent; cursor: pointer; }
+.g-rm:hover { color: var(--text-primary); border-color: var(--border-light); }
+.g-rm.on { color: var(--text-primary); border-color: color-mix(in srgb, var(--accent-primary) 40%, transparent); background: color-mix(in srgb, var(--accent-primary) 12%, transparent); }
+.g-rm svg { width: 12px; height: 12px; }
+.g-top .pm6-tb-menu-trigger { border: 1px solid var(--border-light); border-radius: var(--radius-sm); }
+
+.g-shell { position: relative; z-index: 1; display: flex; height: 100%; min-height: 0; }
+.g-nav { flex: none; width: 196px; display: flex; flex-direction: column; min-height: 0;
+  background: var(--surface-alt, var(--surface)); border-right: 1px solid var(--border); }
+[data-theme^="friendly"] .g-nav { background: transparent; border-right-color: var(--pm6-cozy-chrome-border); }
+[data-theme^="glass"] .g-nav { background: rgba(var(--glass-tint-rgb), calc(var(--glass-alpha) * .5)); border-right-color: var(--glass-hairline); }
+.g-nav-head { padding: 14px 16px 8px; font-family: var(--display-font); font-size: 8.5px; letter-spacing: 1.5px; color: var(--text-muted); }
+.g-nav-list { flex: 1; min-height: 0; overflow-y: auto; padding: 0 8px 12px; display: flex; flex-direction: column; gap: 3px; }
+.g-nav-btn { position: relative; display: flex; align-items: center; gap: 10px; width: 100%; text-align: left;
+  padding: 9px 10px; border-radius: var(--radius-md); color: var(--text-secondary);
+  border: 1px solid transparent; transition: all var(--motion-fast) var(--ease-out); }
+.g-nav-btn svg { width: 16px; height: 16px; flex: none; color: var(--text-muted); transition: color var(--motion-fast) var(--ease-out); }
+.g-nav-btn .nm { font-family: var(--display-font); font-size: 11px; font-weight: 700; letter-spacing: .02em; flex: 1 1 auto; min-width: 0; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+.g-nav-btn .ct { font-family: var(--mono-font); font-size: 9px; font-weight: 700; flex: none; min-width: 16px; height: 16px; padding: 0 4px; border-radius: var(--radius-pill); display: flex; align-items: center; justify-content: center; background: color-mix(in srgb, var(--text-primary) 8%, transparent); color: var(--text-muted); }
+.g-nav-btn:hover { color: var(--text-primary); background: var(--accent-soft); }
+.g-nav-btn:hover svg { color: var(--text-primary); }
+.g-nav-btn.on { color: var(--text-primary); background: var(--accent-soft); border-color: color-mix(in srgb, var(--accent-primary) 30%, transparent); }
+.g-nav-btn.on svg { color: var(--accent-primary); }
+.g-nav-btn.on .ct { background: color-mix(in srgb, var(--accent-primary) 22%, transparent); color: var(--accent-primary); }
+.g-nav-btn.on::before { content: ''; position: absolute; left: -8px; top: 7px; bottom: 7px; width: 3px; border-radius: var(--radius-pill); background: var(--accent-primary); }
+.g-nav-foot { padding: 10px 16px; border-top: 1px solid var(--border-light); font-size: 9.5px; color: var(--text-muted); line-height: 1.5; }
+.g-nav-foot b { color: var(--text-secondary); }
+
+.g-main { flex: 1; min-width: 0; display: flex; flex-direction: column; min-height: 0; }
+.g-main-head { flex: none; padding: 16px 22px 12px; display: flex; align-items: baseline; gap: 12px; flex-wrap: wrap; border-bottom: 1px solid var(--border-light); }
+.g-main-title { font-family: var(--display-font); font-size: 30px; font-weight: 800; letter-spacing: .2px; color: var(--text-primary); line-height: 1.05; }
+.g-main-title .accent { color: var(--accent-primary); }
+.g-main-meta { font-size: 12px; color: var(--text-muted); align-self: center; }
+.g-main-hint { margin-left: auto; font-size: 10px; color: var(--text-muted); max-width: 480px; text-align: right; line-height: 1.5; }
+
+.g-grid { flex: 1; min-height: 0; overflow-y: auto; padding: 20px 22px 60px;
+  display: grid; grid-template-columns: repeat(auto-fit, calc(var(--card-w) * 1px));
+  grid-auto-rows: max-content; justify-content: center; align-content: start; gap: 20px;
+  --card-w: 380; --vw: 1280; --gal-aspect: 0.62; }
+
+.g-card { display: flex; flex-direction: column; width: calc(var(--card-w) * 1px); flex: 0 0 auto; box-sizing: border-box;
+  background: color-mix(in srgb, var(--surface-elevated) 88%, transparent);
+  border: 1px solid var(--border); border-radius: var(--radius-lg); box-shadow: var(--elev-2); overflow: hidden;
+  opacity: 0; transform: translateY(12px); animation: cardIn var(--motion-med) var(--ease-spring) forwards;
+  transition: transform var(--motion-med) var(--ease-out), box-shadow var(--motion-med) var(--ease-out), border-color var(--motion-med) var(--ease-out); }
+.g-card:hover { transform: translateY(-3px); box-shadow: var(--elev-hover); border-color: color-mix(in srgb, var(--fam, var(--accent-primary)) 35%, var(--border)); }
+@keyframes cardIn { to { opacity: 1; transform: none; } }
+.g-cap { display: flex; align-items: center; gap: 9px; padding: 11px 13px 4px; }
+.g-id { font-family: var(--display-font); font-size: 10px; font-weight: 700; letter-spacing: .8px; color: var(--background); background: var(--accent-primary); padding: 2px 7px; border-radius: var(--radius-sm); flex: none; }
+.g-card h3 { font-family: var(--display-font); font-size: 16px; font-weight: 700; letter-spacing: .2px; color: var(--text-primary); margin: 0; min-width: 0; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+.g-mech { margin-left: auto; font-size: 9px; font-weight: 700; letter-spacing: .03em; color: var(--fam, var(--accent-blue)); background: color-mix(in srgb, var(--fam, var(--accent-blue)) 14%, transparent); padding: 2px 8px; border-radius: var(--radius-pill); white-space: nowrap; flex: none; max-width: 50%; overflow: hidden; text-overflow: ellipsis; }
+.g-sub2 { padding: 0 13px 9px; font-size: 10.5px; color: var(--text-muted); line-height: 1.45; min-height: 2.9em;
+  display: -webkit-box; -webkit-line-clamp: 2; -webkit-box-orient: vertical; overflow: hidden; }
+.g-frame { position: relative; flex: none; width: 100%; height: calc((var(--card-w) - 2) * var(--gal-aspect) * 1px); background: var(--background); border-top: 1px solid var(--border-light); border-bottom: 1px solid var(--border-light); overflow: hidden; }
+.g-frame iframe { position: absolute; top: 0; left: 0; border: 0; width: calc(var(--vw) * 1px); height: calc(var(--vw) * var(--gal-aspect) * 1px); transform-origin: top left; transform: scale(calc((var(--card-w) - 2) / var(--vw))); transition: transform var(--motion-med) var(--ease-out); background: var(--background); }
+.g-frame.pm-live::after { content: ''; position: absolute; inset: 0; pointer-events: none; background: linear-gradient(90deg, transparent, color-mix(in srgb, var(--accent-primary) 8%, transparent), transparent); transform: translateX(-100%); animation: gShimmer 1.4s var(--ease-out) infinite; }
+@keyframes gShimmer { to { transform: translateX(100%); } }
+.g-open { display: flex; align-items: center; justify-content: center; gap: 6px; text-align: center; font-size: 10px; font-weight: 700; letter-spacing: .04em; color: var(--accent-primary); text-decoration: none; padding: 9px; transition: background var(--motion-fast) var(--ease-out); }
+.g-open:hover { background: var(--accent-soft); }
+.g-open-arr { transition: transform var(--motion-fast) var(--ease-out); }
+.g-open:hover .g-open-arr { transform: translateX(3px); }
+
+.g-focus { flex: 1; min-height: 0; display: none; flex-direction: column; }
+.g-focus.on { display: flex; }
+.g-focus-cap { flex: none; padding: 12px 22px; display: flex; align-items: center; gap: 10px; border-bottom: 1px solid var(--border-light); }
+.g-focus-frame { position: relative; flex: 1; min-height: 0; background: var(--background); display: flex; justify-content: center; overflow: hidden; }
+.g-focus-frame iframe { border: 0; background: var(--background); box-shadow: var(--elev-3); }
+.g-grid.off { display: none; }
+
+@media (max-width: 820px) {
+  body { overflow: auto; }
+  .g-shell { flex-direction: column; height: auto; }
+  .g-nav { width: 100%; border-right: none; border-bottom: 1px solid var(--border); }
+  .g-nav-list { flex-direction: row; overflow-x: auto; overflow-y: hidden; }
+  .g-nav-btn { width: auto; flex: none; }
+  .g-nav-btn.on::before { display: none; }
+  .g-nav-foot { display: none; }
+  .g-grid { overflow: visible; }
+}
+</style>
+</head>
+<body>
+<div class="g-ambient" aria-hidden="true"></div>
+
+<header class="g-top">
+  <div class="g-brand">
+    <svg class="g-logo" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 2l8 4.5v9L12 20l-8-4.5v-9L12 2z"/><path d="M12 11L4 6.5M12 11l8-4.5M12 11v9"/></svg>
+    <div><div class="g-app">PUPPET MASTER</div><div class="g-sub">usage design gallery · 11 concepts</div></div>
+  </div>
+  <div class="g-spacer"></div>
+  <div class="g-mode" id="gMode" role="tablist" aria-label="View mode">
+    <button class="on" data-mode="compare" role="tab">Compare</button>
+    <button data-mode="focus" role="tab">Focus</button>
+  </div>
+  <div class="g-ctrl">
+    <span class="g-ctrl-lbl">THEME</span>
+    <div class="pm6-tb-menu-wrap" id="galThemeWrap">
+      <button type="button" class="pm6-tb-menu-trigger" id="galThemeBtn" aria-controls="galThemeMenu"><span class="pm6-tb-menu-label" id="galThemeLabel">Friendly Dark</span><i data-ico="chevD" class="pm-ico sm"></i></button>
+      <div class="pm6-tb-menu" id="galThemeMenu" role="menu" aria-label="Theme" data-pm-menu-select>
+        <button type="button" class="pm6-tb-menu-item is-selected" role="menuitem" data-value="friendly-dark" data-label="Friendly Dark">Friendly Dark</button>
+        <button type="button" class="pm6-tb-menu-item" role="menuitem" data-value="friendly-light" data-label="Friendly Light">Friendly Light</button>
+        <button type="button" class="pm6-tb-menu-item" role="menuitem" data-value="glass-dark" data-label="Glass Dark">Glass Dark</button>
+        <button type="button" class="pm6-tb-menu-item" role="menuitem" data-value="glass-light" data-label="Glass Light">Glass Light</button>
+        <button type="button" class="pm6-tb-menu-item" role="menuitem" data-value="retro-dark" data-label="Retro Dark">Retro Dark</button>
+        <button type="button" class="pm6-tb-menu-item" role="menuitem" data-value="retro-light" data-label="Retro Light">Retro Light</button>
+        <button type="button" class="pm6-tb-menu-item" role="menuitem" data-value="basic-dark" data-label="Basic Dark">Basic Dark</button>
+        <button type="button" class="pm6-tb-menu-item" role="menuitem" data-value="basic-light" data-label="Basic Light">Basic Light</button>
+      </div>
+    </div>
+  </div>
+  <div class="g-ctrl" id="gBoxCtrl">
+    <span class="g-ctrl-lbl">BOX SIZE</span>
+    <button class="g-preset" data-bw="300">300</button>
+    <button class="g-preset on" data-bw="380">380</button>
+    <button class="g-preset" data-bw="480">480</button>
+    <button class="g-preset" data-bw="600">600</button>
+    <input type="range" id="galBox" min="240" max="680" value="380" step="10" aria-label="Preview card size — reflows the grid">
+    <span class="g-wread" id="galBoxRead">380</span>
+  </div>
+  <div class="g-ctrl" id="gWidthCtrl">
+    <span class="g-ctrl-lbl">PAGE WIDTH</span>
+    <button class="g-preset" data-w="900">900</button>
+    <button class="g-preset on" data-w="1280">1280</button>
+    <button class="g-preset" data-w="1700">1700</button>
+    <button class="g-preset" data-w="2200">2200</button>
+    <button class="g-preset" data-w="2500">2500</button>
+    <input type="range" id="galWidth" min="360" max="2500" value="1280" step="1" aria-label="Rendered width inside each preview">
+    <span class="g-wread" id="galWRead">1280px</span>
+  </div>
+  <div class="g-ctrl">
+    <button class="g-rm" id="galRM" aria-pressed="false"><i data-ico="motion"></i>MOTION</button>
+  </div>
+</header>
+
+<div class="g-shell">
+  <nav class="g-nav" aria-label="Selector">
+    <div class="g-nav-head" id="gNavHead">FAMILIES</div>
+    <div class="g-nav-list" id="gNavList"></div>
+    <div class="g-nav-foot" id="gNavFoot"></div>
+  </nav>
+  <main class="g-main">
+    <div class="g-main-head">
+      <div class="g-main-title" id="gMainTitle"></div>
+      <div class="g-main-meta" id="gMainMeta"></div>
+      <div class="g-main-hint" id="gMainHint"></div>
+    </div>
+    <div class="g-grid" id="gGrid"></div>
+    <div class="g-focus" id="gFocus">
+      <div class="g-focus-cap" id="gFocusCap"></div>
+      <div class="g-focus-frame" id="gFocusFrame"></div>
+    </div>
+  </main>
+</div>
+
+<script src="_shared/icons.js"></script>
+<script src="_shared/usage-icons.js"></script>
+<script src="_shared/menu.js"></script>
+<script>
+var CONCEPTS = [
+  { id:'U1', file:'u1-signal.html',       name:'Signal',       family:'Triage',    pitch:'Attention-first triage — a status line, a "now" hero, a severity-ranked deck, then a calm "all clear".' },
+  { id:'U2', file:'u2-stream.html',       name:'Stream',       family:'Timeline',  pitch:'A chronological ledger spine grouped into 5-hour billing blocks with burn-rate projection.' },
+  { id:'U3', file:'u3-cockpit.html',      name:'Cockpit',      family:'Telemetry', pitch:'A dense instrumentation deck — uniform gauges, LED readouts, sparklines on a strict grid.' },
+  { id:'U4', file:'u4-focus.html',        name:'Focus',        family:'Focus',     pitch:'One roomy section at a time via a depth rail; maximum legibility, deep content per pane.' },
+  { id:'U5', file:'u5-cozy-console.html', name:'Cozy Console', family:'Cozy',      pitch:'The Cozy Shelves language at page scale — soft tinted shelves, a spend pulse, even rhythm.' },
+  { id:'U6', file:'u6-workspace.html',    name:'Workspace',    family:'Workspace', pitch:'Master-detail split — a pressure-sorted subject index beside a full context pane.' },
+  { id:'U7', file:'u7-board.html',        name:'Board',        family:'Widgets',   pitch:'The spec widget grid — drag/resize/configure/add/remove, density that adapts to size.' },
+  { id:'U8', file:'u8-canvas.html',       name:'Canvas',       family:'Widgets',   pitch:'A bento mosaic — varied-span tiles, drag-reorder, size presets, expand-to-focus.' },
+  { id:'U9', file:'u9-deck.html',         name:'Deck',         family:'Deck',      pitch:'Tabbed, widget-composed deck — usage-first; add your own widgets, drag and resize on a grid.' },
+  { id:'U10', file:'u10-prism.html',      name:'Prism',        family:'Focus',     pitch:'The focus rail rebuilt as living widget panes — one roomy section at a time, with a provider prism that re-scopes the data.' },
+  { id:'U11', file:'u11-prism.html',      name:'Prism II',     family:'Focus',     pitch:'Prism rebuilt on stable identities — human rooms, three disclosure levels, a hierarchical scope picker, capacity forecasts, and a compact segmented context ring.' }
+];
+var FAMILY_ICON = { Triage:'siren', Timeline:'history', Telemetry:'gauge', Focus:'eye', Cozy:'layers', Workspace:'grid', Widgets:'sliders', Deck:'expand' };
+var FAMILY_ACCENT = { Triage:'var(--tone-err)', Timeline:'var(--accent-blue)', Telemetry:'var(--accent-lime)', Focus:'var(--accent-magenta)', Cozy:'var(--accent-orange)', Workspace:'var(--accent-primary)', Widgets:'var(--accent-lime)', Deck:'var(--tone-purple)' };
+var FAMILIES = ['All'].concat(CONCEPTS.map(function(c){return c.family;}).filter(function(v,i,a){return a.indexOf(v)===i;}));
+
+var state = { mode:'compare', family:'All', concept:'U9', theme: document.documentElement.getAttribute('data-theme')||'friendly-dark', w:1280, cardW:380, rm:false };
+
+var grid = document.getElementById('gGrid');
+var navList = document.getElementById('gNavList');
+var focus = document.getElementById('gFocus');
+var focusFrame = document.getElementById('gFocusFrame');
+
+function iframes() { return Array.prototype.slice.call(document.querySelectorAll('iframe')); }
+function broadcast(msg) { iframes().forEach(function (ifr) { try { ifr.contentWindow && ifr.contentWindow.postMessage(msg, '*'); } catch (e) {} }); }
+function conceptsForFamily(f) { return f === 'All' ? CONCEPTS : CONCEPTS.filter(function (c) { return c.family === f; }); }
+
+function buildCard(c, idx) {
+  var art = document.createElement('article');
+  art.className = 'g-card';
+  art.style.animationDelay = Math.min(idx, 8) * 45 + 'ms';
+  art.style.setProperty('--fam', FAMILY_ACCENT[c.family] || 'var(--accent-primary)');
+  art.innerHTML =
+    '<div class="g-cap"><span class="g-id">' + c.id + '</span><h3>' + c.name + '</h3><span class="g-mech" title="' + c.family + '">' + c.family + '</span></div>' +
+    '<div class="g-sub2" title="' + c.pitch.replace(/"/g, '&quot;') + '">' + c.pitch + '</div>' +
+    '<div class="g-frame pm-live" data-fam="' + c.family + '"><iframe src="' + c.file + '?embed=1" loading="lazy" title="' + c.id + ' ' + c.name + '"></iframe></div>' +
+    '<a class="g-open" href="' + c.file + '" target="_blank" rel="noopener"><span>open full</span><span class="g-open-arr">&rarr;</span></a>';
+  var ifr = art.querySelector('iframe'), fr = art.querySelector('.g-frame');
+  ifr.addEventListener('load', function () { fr.classList.remove('pm-live'); });
+  return art;
+}
+
+function fitFrames() {
+  if (state.mode !== 'compare') fitFocus();
+}
+function fitFocus() {
+  var ifr = focusFrame.querySelector('iframe'); if (!ifr) return;
+  var fw = focusFrame.clientWidth, fh = focusFrame.clientHeight;
+  ifr.style.width = fw + 'px'; ifr.style.height = fh + 'px'; ifr.style.transform = 'none';
+}
+
+function render() {
+  navList.innerHTML = '';
+  if (state.mode === 'compare') {
+    document.getElementById('gNavHead').textContent = 'FAMILIES';
+    FAMILIES.forEach(function (f) {
+      var n = conceptsForFamily(f).length;
+      var b = document.createElement('button');
+      b.className = 'g-nav-btn' + (f === state.family ? ' on' : '');
+      b.innerHTML = window.PMIcon(f === 'All' ? 'layers' : (FAMILY_ICON[f] || 'more')) + '<span class="nm">' + f + '</span><span class="ct">' + n + '</span>';
+      b.addEventListener('click', function () { state.family = f; render(); });
+      navList.appendChild(b);
+    });
+  } else {
+    document.getElementById('gNavHead').textContent = 'CONCEPTS';
+    CONCEPTS.forEach(function (c) {
+      var b = document.createElement('button');
+      b.className = 'g-nav-btn' + (c.id === state.concept ? ' on' : '');
+      b.innerHTML = window.PMIcon(FAMILY_ICON[c.family] || 'more') + '<span class="nm">' + c.id + ' ' + c.name + '</span><span class="ct">' + c.family.slice(0,3) + '</span>';
+      b.addEventListener('click', function () { state.concept = c.id; render(); });
+      navList.appendChild(b);
+    });
+  }
+
+  var isCompare = state.mode === 'compare';
+  grid.classList.toggle('off', !isCompare);
+  focus.classList.toggle('on', !isCompare);
+  var wc = document.getElementById('gWidthCtrl'); wc.style.opacity = isCompare ? '1' : '.45'; wc.style.pointerEvents = isCompare ? '' : 'none';
+  var bc = document.getElementById('gBoxCtrl'); bc.style.opacity = isCompare ? '1' : '.45'; bc.style.pointerEvents = isCompare ? '' : 'none';
+
+  if (isCompare) {
+    grid.innerHTML = '';
+    var list = conceptsForFamily(state.family);
+    list.forEach(function (c, i) { grid.appendChild(buildCard(c, i)); });
+    grid.style.setProperty('--card-w', state.cardW);
+    grid.style.setProperty('--vw', state.w);
+    document.getElementById('gMainTitle').innerHTML = (state.family === 'All' ? 'Usage page' : state.family) + ' &mdash; <span class="accent">' + list.length + ' design' + (list.length === 1 ? '' : 's') + '</span>';
+    document.getElementById('gMainMeta').textContent = state.family === 'All' ? 'eleven paradigms · U1–U10 one dataset, U11 its own identity model' : 'one family of approaches';
+    document.getElementById('gMainHint').textContent = 'Uniform preview cards. BOX SIZE grows the cards and reflows the columns; PAGE WIDTH thumbs each embedded page across its responsive breakpoints; THEME stresses spacing on all 8; FOCUS drives one full-size.';
+    document.getElementById('gNavFoot').innerHTML = '<b>Compare</b> shows the concepts side by side at one identical size. Filter by family on the left. Open any card full to interact with it.';
+    broadcastAll();
+  } else {
+    var c = CONCEPTS.filter(function (x) { return x.id === state.concept; })[0];
+    document.getElementById('gMainTitle').innerHTML = c.id + ' ' + c.name + ' &mdash; <span class="accent">focus</span>';
+    document.getElementById('gMainMeta').textContent = c.family;
+    document.getElementById('gMainHint').textContent = c.pitch + ' Uses the window width (resize the browser to test responsive). Drag PAGE WIDTH in Compare mode to thumb all 9 at once.';
+    document.getElementById('gNavFoot').innerHTML = '<b>Focus</b> drives one concept at full size so you can use its interactions. Pick another on the left.';
+    document.getElementById('gFocusCap').innerHTML = '<span class="g-id">' + c.id + '</span><strong style="font-family:var(--display-font);font-size:13px;color:var(--text-primary)">' + c.name + '</strong><span style="font-size:10px;color:var(--text-muted)">' + c.pitch + '</span><a class="g-open" style="margin-left:auto;padding:4px 10px;border:1px solid var(--border-light);border-radius:var(--radius-sm)" href="' + c.file + '" target="_blank" rel="noopener">open full &rarr;</a>';
+    focusFrame.innerHTML = '<iframe src="' + c.file + '" title="' + c.id + ' ' + c.name + '"></iframe>';
+    fitFocus();
+    broadcastAll();
+  }
+}
+
+function broadcastAll() {
+  iframes().forEach(function (ifr) {
+    try {
+      ifr.contentWindow && ifr.contentWindow.postMessage({ type:'pm-theme', theme: state.theme }, '*');
+      ifr.contentWindow && ifr.contentWindow.postMessage({ type:'pm-rm', on: state.rm }, '*');
+      if (state.mode === 'compare') ifr.contentWindow && ifr.contentWindow.postMessage({ type:'pm-setw', w: state.w }, '*');
+      else { var fw = focusFrame.clientWidth; if (fw) ifr.contentWindow.postMessage({ type:'pm-setw', w: fw }, '*'); }
+    } catch (e) {}
+  });
+}
+
+window.addEventListener('message', function (e) {
+  if (e.data && e.data.type === 'pm-ready') {
+    var src = e.source;
+    try {
+      src.postMessage({ type:'pm-theme', theme: state.theme }, '*');
+      src.postMessage({ type:'pm-rm', on: state.rm }, '*');
+      if (state.mode === 'compare') src.postMessage({ type:'pm-setw', w: state.w }, '*');
+      else { var fw = focusFrame.clientWidth; if (fw) src.postMessage({ type:'pm-setw', w: fw }, '*'); }
+    } catch (err) {}
+  }
+});
+
+document.querySelectorAll('#gMode button').forEach(function (b) {
+  b.addEventListener('click', function () {
+    document.querySelectorAll('#gMode button').forEach(function (x) { x.classList.toggle('on', x === b); });
+    state.mode = b.getAttribute('data-mode');
+    render();
+  });
+});
+document.getElementById('galThemeMenu').addEventListener('pm-menu-pick', function (ev) {
+  var t = ev.detail.value; if (!t) return;
+  state.theme = t;
+  document.documentElement.setAttribute('data-theme', t);
+  document.documentElement.style.colorScheme = /-dark$/.test(t) ? 'dark' : 'light';
+  try { localStorage.setItem('pm.theme', t); } catch (e) {}
+  broadcast({ type:'pm-theme', theme: t });
+});
+(function () {
+  var lbl = document.getElementById('galThemeLabel');
+  var sel = document.querySelector('#galThemeMenu [data-value="' + state.theme + '"]');
+  if (sel) { lbl.textContent = sel.getAttribute('data-label'); document.querySelectorAll('#galThemeMenu [data-value]').forEach(function (i) { i.classList.toggle('is-selected', i === sel); }); }
+})();
+
+var slider = document.getElementById('galWidth'), wread = document.getElementById('galWRead');
+function setW(px) {
+  px = Math.max(360, Math.min(px, 2500));
+  state.w = px; slider.value = px; wread.textContent = px + 'px';
+  grid.style.setProperty('--vw', px);
+  document.querySelectorAll('#gWidthCtrl .g-preset').forEach(function (b) { b.classList.toggle('on', parseInt(b.getAttribute('data-w'), 10) === px); });
+  if (state.mode === 'compare') broadcast({ type:'pm-setw', w: px });
+}
+slider.addEventListener('input', function () { setW(parseInt(slider.value, 10)); });
+document.querySelectorAll('#gWidthCtrl .g-preset').forEach(function (b) { b.addEventListener('click', function () { setW(parseInt(b.getAttribute('data-w'), 10)); }); });
+
+var boxSlider = document.getElementById('galBox'), boxRead = document.getElementById('galBoxRead');
+function setCardW(px) {
+  px = Math.max(240, Math.min(px, 680));
+  state.cardW = px; grid.style.setProperty('--card-w', px); boxSlider.value = px; boxRead.textContent = px;
+  document.querySelectorAll('#gBoxCtrl .g-preset').forEach(function (b) { b.classList.toggle('on', parseInt(b.getAttribute('data-bw'), 10) === px); });
+}
+boxSlider.addEventListener('input', function () { setCardW(parseInt(boxSlider.value, 10)); });
+document.querySelectorAll('#gBoxCtrl .g-preset').forEach(function (b) { b.addEventListener('click', function () { setCardW(parseInt(b.getAttribute('data-bw'), 10)); }); });
+
+document.getElementById('galRM').addEventListener('click', function () {
+  state.rm = !state.rm;
+  this.classList.toggle('on', state.rm); this.setAttribute('aria-pressed', String(state.rm));
+  document.documentElement.setAttribute('data-reduced-motion', state.rm ? '1' : '0');
+  broadcast({ type:'pm-rm', on: state.rm });
+});
+
+document.querySelectorAll('header i[data-ico]').forEach(function (el) { el.innerHTML = window.PMIcon(el.getAttribute('data-ico'), el.className); });
+
+window.addEventListener('resize', function () { fitFrames(); if (state.mode === 'focus') { var fw = focusFrame.clientWidth; if (fw) broadcast({ type:'pm-setw', w: fw }); } });
+
+render();
+setTimeout(fitFrames, 250);
+window.__gal = { set: function (o) { if (o.mode) state.mode = o.mode; if (o.family) state.family = o.family; if (o.concept) state.concept = o.concept; render(); }, state: state, count: function () { return iframes().length; }, setBox: setCardW, setWidth: setW };
+</script>
+</body>
+</html>

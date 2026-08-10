@@ -1,0 +1,1311 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="friendly-dark">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<link rel="icon" href="data:,">
+<title>U5 · Cozy Console — Usage — Puppet Master Concepts</title>
+<script>(function(){try{var ok=['friendly-dark','friendly-light','retro-dark','retro-light','basic-light','basic-dark','glass-dark','glass-light'];var t=localStorage.getItem('pm.theme');if(ok.indexOf(t)===-1)t='friendly-dark';var d=document.documentElement;d.setAttribute('data-theme',t);d.style.colorScheme=/-dark$/.test(t)?'dark':'light';}catch(e){}})();</script>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="preload" as="style" href="https://fonts.googleapis.com/css2?family=Cal+Sans&family=Inter:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;500;700;800&family=Nunito:wght@400;600;700;800&family=Outfit:wght@400;500;600;700&family=Quicksand:wght@400;500;600;700&family=Rajdhani:wght@400;500;600;700&family=Sora:wght@500;600;700;800&display=swap" onload="this.onload=null;this.rel='stylesheet'">
+<noscript><link href="https://fonts.googleapis.com/css2?family=Cal+Sans&family=Inter:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;500;700;800&family=Nunito:wght@400;600;700;800&family=Outfit:wght@400;500;600;700&family=Quicksand:wght@400;500;600;700&family=Rajdhani:wght@400;500;600;700&family=Sora:wght@500;600;700;800&display=swap" rel="stylesheet"></noscript>
+<link rel="stylesheet" href="_shared/themes.css">
+<link rel="stylesheet" href="_shared/base.css">
+<link rel="stylesheet" href="_shared/usage-shared.css">
+<link rel="stylesheet" href="_shared/usage-context.css">
+<style>
+/* =====================================================================
+   U5 — COZY CONSOLE
+   The Cozy Shelves language carried to a full page. Soft category-tinted
+   shelves stack down the page, each with a warm header band; the spend
+   pulse opens the page as a wide gradient banner instead of a wall of
+   cards. Tints derive from per-shelf accent vars so it re-themes on all
+   8 themes with no hardcoded pastels. Every number carries its value-state
+   chip; every quota carries its window model + reset; spacing runs on the
+   single shared ladder so nothing drifts.
+   ===================================================================== */
+
+/* Big-number voice comes from the canonical TYP-1 block in themes.css
+   (html[data-theme^="friendly"] routes --num-font to loaded Nunito/Quicksand,
+   glass to Sora, retro to JetBrains Mono, basic to Inter) — the interim
+   :root/--display-font shims and the Nunito force-load probe are gone now
+   that the page ships the canonical font link itself. */
+
+.u5 .us-scroll { padding: var(--us-pad) var(--us-pad) calc(var(--us-pad) + 26px); }
+
+/* ---- pulse banner = the room's HEARTH: money + health open the page on a
+   warm, gently breathing shelf. The heartbeat glow behind the hero number is
+   U5's signature — a calm, reassuring pulse, never an alarm. The six KPIs are
+   demoted to quiet objects resting in their own soft pockets, so the big
+   pressure number is the unmistakable focal point (usage-first hierarchy). ---- */
+.u5-pulse {
+  position: relative; overflow: hidden; display: flex; align-items: stretch; gap: var(--md);
+  margin-bottom: var(--us-gap); border-radius: var(--radius-lg);
+  background:
+    radial-gradient(130% 150% at 2% -30%, color-mix(in srgb, var(--accent-primary) 14%, transparent), transparent 52%),
+    radial-gradient(120% 150% at 100% 120%, color-mix(in srgb, var(--accent-magenta) 9%, transparent), transparent 54%),
+    color-mix(in srgb, var(--cat, var(--accent-primary)) 5%, var(--surface-elevated));
+  border: 1px solid color-mix(in srgb, var(--accent-primary) 20%, var(--border-light));
+  box-shadow: var(--elev-2), inset 0 1px 0 color-mix(in srgb, var(--text-primary) 6%, transparent);
+  padding: var(--sm);
+  /* the ember's temperament: --u5-heart-k (0.12 calm → 1.0 warm) is set by
+     renderPulse from the 5h spend, so a hotter burn breathes a touch faster
+     and glows a touch deeper — always inside a calming band, never an alarm.
+     dur runs 4.6s (resting) → 3.2s (busy) like a heart rate, not a spinner */
+  --u5-heart-k: .35;
+  --u5-heart-dur: calc(4.6s - (var(--u5-heart-k, .35) * 1.4s));
+}
+/* living heartbeat glow — soft, slow, warm; a lub-dub double-beat cadence that
+   reads as a calm heart, frozen under the reduced-motion kill-switch in
+   themes.css. Amplitude + hue depth ride --u5-heart-k (spend-linked) */
+.u5-pulse::before { content: ''; position: absolute; left: -5%; top: -52%; width: 46%; height: 204%;
+  pointer-events: none; z-index: 0; border-radius: 50%;
+  background:
+    radial-gradient(closest-side, color-mix(in srgb, var(--accent-primary) calc(19% + (var(--u5-heart-k, .35) * 9%)), transparent), transparent 72%),
+    radial-gradient(closest-side, color-mix(in srgb, var(--accent-magenta) calc(5% + (var(--u5-heart-k, .35) * 5%)), transparent), transparent 66%);
+  animation: u5Heartbeat var(--u5-heart-dur, 3.8s) var(--ease-smooth) infinite; }
+@keyframes u5Heartbeat {
+  0%, 32%, 100% { opacity: calc(.34 + (var(--u5-heart-k, .35) * .16)); transform: scale(.965); }
+  9%  { opacity: calc(.74 + (var(--u5-heart-k, .35) * .2)); transform: scale(1.045); }
+  17% { opacity: calc(.44 + (var(--u5-heart-k, .35) * .14)); transform: scale(.985); }
+  25% { opacity: calc(.6 + (var(--u5-heart-k, .35) * .18)); transform: scale(1.02); }
+}
+/* sheen sweep — a quiet light passing over the hearth on hover */
+.u5-pulse::after { content:''; position:absolute; inset:0; z-index: 1; pointer-events:none;
+  background: linear-gradient(105deg, transparent 34%, color-mix(in srgb, var(--text-primary) 6%, transparent) 47%, transparent 58%);
+  transform: translateX(-130%); transition: transform var(--mo-chart-transition-dur, 400ms) var(--pm-ease-out, ease-out); }
+.u5-pulse:hover::after { transform: translateX(130%); }
+/* hearth: the hero number sits in its own warm niche, the page's focal point */
+.u5-pulse-main { position: relative; z-index: 2; flex: 0 0 auto; display: flex; flex-direction: column; justify-content: center; gap: 6px;
+  padding: var(--lg) var(--xl); min-width: 218px; border-radius: calc(var(--radius-lg) - 4px);
+  background: radial-gradient(120% 96% at 26% 38%, color-mix(in srgb, var(--accent-primary) 13%, transparent), transparent 70%); }
+/* focal ink: the hero figure rides the accent by default, but glass-light's
+   soft frost + mauve hearth glow was the set's weakest focal contrast — deepen
+   the violet there (same ink as glass-light's badge family in themes.css) so
+   the number clears 4.5:1 with margin; the heartbeat glow keeps breathing in
+   the raw accent either way */
+.u5-pulse { --u5-hero-ink: var(--accent-primary);
+  /* value-state inks for the hero figure (set by renderPulse): the -text tokens
+     were tuned for plain surfaces, but the hearth's tint + glow softens them —
+     deepen a step inside the same hue on the light grounds for confident focal
+     contrast (>=4.5:1) while the dark rooms keep the cozy glowing pastels */
+  --u5-ink-ok: var(--tone-ok-text); --u5-ink-warn: var(--tone-warn-text); --u5-ink-err: var(--tone-err-text); }
+[data-theme="glass-light"] .u5-pulse { --u5-hero-ink: #5b34b8; }
+:is([data-theme="friendly-light"], [data-theme="glass-light"], [data-theme="basic-light"], [data-theme="retro-light"]) .u5-pulse {
+  --u5-ink-ok: color-mix(in srgb, var(--tone-ok-text) 80%, #000);
+  --u5-ink-warn: color-mix(in srgb, var(--tone-warn-text) 80%, #000);
+  --u5-ink-err: color-mix(in srgb, var(--tone-err-text) 80%, #000); }
+.u5-pulse-big { font-family: var(--num-font); font-weight: 800; font-size: 50px; line-height: .96; color: var(--u5-hero-ink, var(--accent-primary)); letter-spacing: .3px; font-variant-numeric: tabular-nums;
+  filter: drop-shadow(0 2px 10px color-mix(in srgb, var(--accent-primary) 24%, transparent));
+  animation: u5InkGlow var(--u5-heart-dur, 3.8s) var(--ease-smooth) infinite; }
+/* the number's halo breathes with the hearth — the same slow double-beat,
+   barely perceptible, so the focal figure feels lit from within */
+@keyframes u5InkGlow {
+  0%, 32%, 100% { filter: drop-shadow(0 2px 9px color-mix(in srgb, var(--accent-primary) 20%, transparent)); }
+  9%  { filter: drop-shadow(0 2px 15px color-mix(in srgb, var(--accent-primary) 34%, transparent)); }
+  17% { filter: drop-shadow(0 2px 10px color-mix(in srgb, var(--accent-primary) 22%, transparent)); }
+  25% { filter: drop-shadow(0 2px 13px color-mix(in srgb, var(--accent-primary) 28%, transparent)); }
+}
+.u5-pulse-lbl { display: flex; align-items: center; flex-wrap: wrap; gap: 4px 6px; font-size: var(--fs-2xs); color: var(--text-muted); letter-spacing: .04em; }
+.u5-pulse-lbl b { color: var(--text-secondary); }
+/* the ember: a tiny live coal beside the spend line, keeping the hearth's
+   exact cadence (--u5-heart-dur) so the money and the fire breathe together */
+.u5-ember { width: 7px; height: 7px; border-radius: 50%; flex: none; display: inline-block;
+  background: radial-gradient(circle at 34% 30%, color-mix(in srgb, var(--accent-primary) 88%, var(--text-primary)), color-mix(in srgb, var(--accent-primary) 42%, transparent));
+  box-shadow: 0 0 9px 2px color-mix(in srgb, var(--accent-primary) 38%, transparent);
+  animation: u5Ember var(--u5-heart-dur, 3.8s) var(--ease-smooth) infinite; }
+@keyframes u5Ember {
+  0%, 32%, 100% { opacity: .55; transform: scale(.92); }
+  9%  { opacity: 1; transform: scale(1.12); }
+  17% { opacity: .68; transform: scale(.97); }
+  25% { opacity: .88; transform: scale(1.05); }
+}
+/* objects-on-the-shelf: each KPI rests in a soft recessed pocket instead of a
+   hairline-divided spreadsheet cell — warm, tactile, clearly secondary */
+.u5-pulse-items { position: relative; z-index: 2; flex: 1 1 auto; display: flex; align-items: stretch; gap: var(--sm); min-width: 0; padding: var(--xs); }
+.u5-pi { position: relative; flex: 1 1 0; min-width: 0; display: flex; flex-direction: column; justify-content: center; gap: 5px;
+  padding: var(--md) var(--md) var(--md) calc(var(--md) + 3px); border-radius: var(--radius-md);
+  background: color-mix(in srgb, var(--cat, var(--text-primary)) 3.5%, transparent);
+  box-shadow: inset 0 1px 0 color-mix(in srgb, var(--text-primary) 4.5%, transparent), inset 0 0 0 1px color-mix(in srgb, var(--text-primary) 4.5%, transparent);
+  transition: background var(--motion-fast) var(--ease-out), box-shadow var(--motion-fast) var(--ease-out), transform var(--motion-fast) var(--ease-out); }
+/* ambient pocket warmth: a slow breathing tint (8s, desynchronised per pocket
+   with negative delays so the shelf shimmers organically, never in lockstep) */
+.u5-pi::after { content: ''; position: absolute; inset: 0; z-index: 0; border-radius: inherit; pointer-events: none;
+  background: radial-gradient(130% 110% at 16% -8%, color-mix(in srgb, var(--cat, var(--accent-primary)) 10%, transparent), transparent 62%);
+  opacity: .22; animation: u5Breath calc(8s * var(--pm-motion-k, 1)) ease-in-out infinite; }
+.u5-pi > * { position: relative; z-index: 1; }
+.u5-pi:nth-child(2)::after { animation-delay: -1.4s; }
+.u5-pi:nth-child(3)::after { animation-delay: -2.9s; }
+.u5-pi:nth-child(4)::after { animation-delay: -4.1s; }
+.u5-pi:nth-child(5)::after { animation-delay: -5.6s; }
+.u5-pi:nth-child(6)::after { animation-delay: -6.8s; }
+@keyframes u5Breath { 0%, 100% { opacity: .18; } 50% { opacity: .5; } }
+/* picking the object up: a hair more lift + a warm under-glow in the hearth hue */
+.u5-pi:hover { background: color-mix(in srgb, var(--accent-primary) 7%, transparent); transform: translateY(-2px);
+  box-shadow: inset 0 1px 0 color-mix(in srgb, var(--text-primary) 6%, transparent), inset 0 0 0 1px color-mix(in srgb, var(--accent-primary) 16%, transparent),
+    0 10px 22px -14px color-mix(in srgb, var(--accent-primary) 65%, transparent); }
+/* pocket labels ride a secondary→primary blend, not raw --text-muted: muted
+   sat under AA 4.5:1 on the pocket tint in every theme (3.77 friendly-dark,
+   4.45 friendly-light, 3.81 basic-dark). The blend stays clearly subordinate
+   to the --text-primary value line yet clears 4.5:1 with margin everywhere
+   (worst basic-dark 3.81→5.03), re-derived per theme like the .u5-shcount fix */
+.u5-pi-k { font-family: var(--display-font); font-size: 8.5px; font-weight: 700; letter-spacing: 1.3px; text-transform: uppercase; color: color-mix(in srgb, var(--text-secondary) 82%, var(--text-primary)); display: flex; align-items: center; gap: 5px; white-space: nowrap; }
+.u5-pi-k svg { width: 11px; height: 11px; flex: none; }
+.u5-pi-v { font-family: var(--mono-font); font-size: var(--fs-lg); font-weight: 700; color: var(--text-primary); font-variant-numeric: tabular-nums; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+.u5-pi-v.warn { color: var(--tone-warn-text); } .u5-pi-v.err { color: var(--tone-err-text); } .u5-pi-v.ok { color: var(--tone-ok-text); }
+.u5-pi-s { display: flex; align-items: center; flex-wrap: wrap; gap: 3px 5px; font-size: var(--fs-2xs); color: var(--text-muted); min-width: 0; }
+.u5-pi-s .u5-pi-t { white-space: normal; overflow-wrap: anywhere; min-width: 0; color: color-mix(in srgb, var(--text-secondary) 82%, var(--text-primary)); }
+.u5-pi-s .us-proj { flex: none; }
+.u5-pi-bar { height: 5px; border-radius: var(--radius-pill); background: color-mix(in srgb, var(--text-primary) 8%, transparent); overflow: hidden; }
+.u5-pi-bar i { display: block; height: 100%; border-radius: var(--radius-pill); width: 0; transition: width var(--mo-data-refresh-dur, 800ms) var(--mo-data-refresh-ease, ease); }
+/* stacked / 2-up until there is genuinely enough width for all six tiles:
+   the single row needs ~1650px before the GUARDS value ("1 blocked · 1 warn")
+   stops clipping, so below that the items wrap two-per-line instead */
+@media (max-width: 1649px) { .u5-pulse { flex-direction: column; } .u5-pulse-items { flex-wrap: wrap; } .u5-pi { flex: 1 1 calc(50% - var(--sm)); } }
+
+/* ---- cozy shelves: each section is a warm shelf sitting on the room's ground.
+   A tinted face + a brighter top lip (the shelf edge catching light) + a soft
+   contact shadow underneath give real depth; a faint paper grain over the face
+   gives a tactile, premium-wood feel. The category hue tints the whole shelf so
+   it re-themes on all 8 themes with no hardcoded pastel. ---- */
+.u5-shelf { position: relative; overflow: hidden; margin-bottom: calc(var(--us-gap) + 4px);
+  border-radius: var(--radius-lg);
+  background:
+    radial-gradient(118% 84% at 100% 0%, color-mix(in srgb, var(--cat, var(--accent-blue)) 11%, transparent), transparent 58%),
+    radial-gradient(120% 96% at 0% 116%, color-mix(in srgb, var(--cat, var(--accent-blue)) 7%, transparent), transparent 60%),
+    color-mix(in srgb, var(--cat, var(--accent-blue)) 8%, var(--surface-elevated));
+  border: 1px solid color-mix(in srgb, var(--cat, var(--accent-blue)) 20%, var(--border-light));
+  box-shadow: var(--elev-2), 0 1px 0 color-mix(in srgb, var(--cat, var(--accent-blue)) 12%, transparent),
+    inset 0 1px 0 color-mix(in srgb, var(--text-primary) 6%, transparent);
+  transition: box-shadow var(--motion-med) var(--ease-out), transform var(--motion-med) var(--ease-out);
+}
+/* hovering the shelf lifts it and warms the contact shadow beneath, like
+   lamplight pooling under an object you've raised */
+.u5-shelf:hover { box-shadow: var(--elev-3), 0 1px 0 color-mix(in srgb, var(--cat, var(--accent-blue)) 14%, transparent),
+    inset 0 1px 0 color-mix(in srgb, var(--text-primary) 7%, transparent),
+    0 16px 34px -20px color-mix(in srgb, var(--cat, var(--accent-blue)) 60%, transparent); transform: translateY(-1px); }
+/* tactile paper grain — sits above the tint, below the content, very faint so it
+   reads as material warmth, never noise; disabled on the utilitarian basic theme */
+.u5-shelf::after { content: ''; position: absolute; inset: 0; z-index: 0; pointer-events: none;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='140' height='140'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='2' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='0.5'/%3E%3C/svg%3E");
+  opacity: .035; mix-blend-mode: overlay; }
+/* shelf lip — a brighter top edge like light catching a wooden shelf front;
+   it breathes very slowly (firelight on the wood), each shelf slightly out of
+   phase via --u5-lip-del so the room glows unevenly, like a real hearth */
+.u5-shelf::before { content: ''; position: absolute; left: 0; right: 0; top: 0; height: 2px; z-index: 1;
+  background: linear-gradient(90deg, transparent, color-mix(in srgb, var(--cat, var(--text-primary)) 26%, transparent) 14%, color-mix(in srgb, var(--cat, var(--text-primary)) 26%, transparent) 86%, transparent);
+  pointer-events: none;
+  animation: u5LipBreath calc(9s * var(--pm-motion-k, 1)) ease-in-out infinite; animation-delay: var(--u5-lip-del, 0s); }
+@keyframes u5LipBreath { 0%, 100% { opacity: .55; } 50% { opacity: 1; } }
+.u5-shhead { position: relative; z-index: 1; display: flex; align-items: center; gap: var(--md); padding: var(--md) var(--lg);
+  background: linear-gradient(180deg, color-mix(in srgb, var(--cat, var(--accent-blue)) 15%, transparent), color-mix(in srgb, var(--cat, var(--accent-blue)) 7%, transparent));
+  border-bottom: 1px solid color-mix(in srgb, var(--cat, var(--accent-blue)) 12%, var(--border-light));
+  border-radius: var(--radius-lg) var(--radius-lg) 0 0; cursor: default; min-height: var(--us-sec-h);
+  transition: background var(--motion-fast) var(--ease-out); }
+.u5-shelf[data-acc] .u5-shhead { cursor: pointer; }
+[data-acc] .u5-shhead:hover { background: linear-gradient(180deg, color-mix(in srgb, var(--cat, var(--accent-primary)) 20%, transparent), color-mix(in srgb, var(--cat, var(--accent-primary)) 9%, transparent)); }
+button.u5-shhead { width: 100%; border: 0; font: inherit; color: inherit; text-align: left; appearance: none; -webkit-appearance: none; }
+button.u5-shhead:focus-visible { outline: 2px solid color-mix(in srgb, var(--cat, var(--accent-primary)) 70%, transparent); outline-offset: -3px; }
+.u5-shico { width: 26px; height: 26px; flex: none; border-radius: var(--radius-md); display: inline-flex; align-items: center; justify-content: center;
+  background: color-mix(in srgb, var(--cat, var(--accent-blue)) 24%, transparent); color: var(--cat, var(--accent-blue));
+  box-shadow: inset 0 1px 0 color-mix(in srgb, var(--text-primary) 14%, transparent); }
+.u5-shico svg { width: 13px; height: 13px; }
+.u5-shlabel { font-family: var(--display-font); font-size: 10px; font-weight: 700; letter-spacing: 1.5px; text-transform: uppercase; color: var(--text-primary); white-space: nowrap; }
+.u5-shmeta { font-size: var(--fs-2xs); color: var(--text-muted); white-space: nowrap; overflow: hidden; text-overflow: ellipsis; min-width: 0; }
+.u5-shcount { margin-left: auto; flex: none; font-size: var(--fs-2xs); font-weight: 700; padding: 1px 9px; border-radius: var(--radius-pill);
+  background: color-mix(in srgb, var(--cat, var(--accent-blue)) 16%, transparent);
+  /* keep the category hue but pull it toward the readable text token so the
+     count clears 4.5:1 on the tinted pill (raw pastel-on-tint was ~1.2:1) */
+  color: color-mix(in srgb, var(--cat, var(--accent-blue)) 30%, var(--text-primary)); white-space: nowrap; }
+/* the chevron turns with the shelf's own soft spring, never a mechanical snap */
+.u5-shchev { margin-left: var(--sm); flex: none; width: 12px; height: 12px; color: var(--text-muted); transition: transform var(--mo-spring-dur, 420ms) var(--pm-ease-spring, ease-out); }
+.u5-shelf.open .u5-shchev { transform: rotate(180deg); }
+.u5-shbody { position: relative; z-index: 1; padding: var(--md) var(--lg) var(--lg); display: flex; flex-direction: column; gap: var(--us-row); }
+.u5-shelf[data-acc]:not(.open) .u5-shbody { display: none; }
+
+/* two-up pairing (even rhythm, no drift) */
+.u5-pair { display: grid; grid-template-columns: 1fr 1fr; gap: var(--us-gap); align-items: start; margin-bottom: var(--us-gap); }
+.u5-pair > .u5-shelf { margin-bottom: 0; }
+@media (max-width: 1150px) { .u5-pair { grid-template-columns: 1fr; } .u5-pair > .u5-shelf { margin-bottom: var(--us-gap); } }
+
+/* ---- quota rows: objects resting in the shelf's groove, not a flat spec list.
+   Each row is a soft category-tinted slab in the same pocket language as the
+   KPI tiles above (faint tint + inset top light + inset hairline ring), so the
+   warmth reaches the content the user actually scans. Padding is identical on
+   every row, so the meter tracks below stay perfectly edge-aligned. */
+/* meter columns are the only fr tracks; label/control columns are fixed so every
+   row resolves to identical track widths -> meter left AND right edges align. */
+.u5-qrow { display: grid; grid-template-columns: minmax(170px, 1.25fr) 168px minmax(150px, 1.6fr) 74px; gap: var(--sm) var(--md); align-items: center; padding: 10px 12px; position: relative; z-index: 1;
+  border-radius: var(--radius-md);
+  background: color-mix(in srgb, var(--cat, var(--accent-blue)) 4%, transparent);
+  box-shadow: inset 0 1px 0 color-mix(in srgb, var(--text-primary) 4.5%, transparent), inset 0 0 0 1px color-mix(in srgb, var(--cat, var(--accent-blue)) 7%, transparent);
+  transition: background var(--motion-fast) var(--ease-out), box-shadow var(--motion-fast) var(--ease-out), transform var(--motion-fast) var(--ease-out); }
+@media (max-width: 480px) { .u5-qrow { grid-template-columns: minmax(0, 1fr); } }
+/* warm hover: the slab brightens toward its category hue and lifts a hair —
+   the same quiet response the KPI pockets give, never a table-flash */
+.u5-qrow:hover { background: color-mix(in srgb, var(--cat, var(--accent-blue)) 8%, transparent); transform: translateY(-1px);
+  box-shadow: inset 0 1px 0 color-mix(in srgb, var(--text-primary) 6%, transparent), inset 0 0 0 1px color-mix(in srgb, var(--cat, var(--accent-blue)) 16%, transparent),
+    0 8px 18px -12px color-mix(in srgb, var(--cat, var(--accent-blue)) 55%, transparent); }
+.u5-qname { font-size: var(--fs-sm); font-weight: 600; color: var(--text-primary); display: flex; align-items: center; flex-wrap: wrap; gap: 2px 6px; min-width: 0; }
+.u5-qwin { font-size: var(--fs-2xs); color: var(--text-muted); font-family: var(--mono-font); white-space: nowrap; }
+.u5-qbars { display: flex; flex-direction: column; gap: 4px; min-width: 0; }
+/* window labels are the window's own id ("5h" / "7d" / "month"), so widen
+   the shared 30px .lb just enough that "month" fits and every bar stays
+   left-aligned across rows */
+.u5-qbars .us-meter .lb { width: 40px; }
+.u5-qpct { text-align: right; font-family: var(--mono-font); font-size: var(--fs-2xs); color: var(--text-secondary); line-height: 1.35; }
+.u5-qnote { grid-column: 1 / -1; font-size: var(--fs-2xs); color: var(--text-muted); line-height: var(--lh-body); margin-top: -2px; padding-left: 2px; }
+.u5-qreset { display: inline-flex; align-items: center; gap: 4px; font-family: var(--mono-font); font-size: var(--fs-2xs); color: var(--text-muted); white-space: nowrap; }
+.u5-qreset svg { width: 10px; height: 10px; }
+.u5-qnone { font-size: var(--fs-2xs); color: var(--text-muted); font-style: italic; }
+
+/* the right bold % is a quiet secondary echo (the bar already carries the value),
+   not a competing column — so it reads as a gentle confirmation, not redundancy */
+.u5-qpct b { color: var(--text-secondary); font-weight: 700; font-size: var(--fs-2xs); opacity: .82; }
+
+/* ---- spend / budget ---- */
+.u5-spendrow { display: flex; align-items: baseline; gap: var(--md); flex-wrap: wrap; }
+.u5-spend-sub { font-size: var(--fs-2xs); color: var(--text-muted); }
+#u5BudgetSpend { color: var(--accent-primary); }
+.u5-donuts { display: flex; gap: var(--lg); flex-wrap: wrap; align-items: flex-end; margin-top: var(--sm); }
+.u5-donut { display: flex; flex-direction: column; align-items: center; gap: 4px; min-width: 62px; }
+.u5-donut svg { width: 62px; height: 62px; }
+.u5-donut .dbg { fill: none; stroke: var(--border-light); stroke-width: 6; }
+.u5-donut .dfill { fill: none; stroke-width: 6; stroke-linecap: round; transform: rotate(-90deg); transform-origin: center; transition: stroke-dashoffset var(--mo-data-refresh-dur, 800ms) var(--mo-data-refresh-ease, ease); }
+.u5-donut text { font-family: var(--num-font); font-size: 12px; font-weight: 700; fill: var(--text-primary); text-anchor: middle; dominant-baseline: central; }
+.u5-donut small { font-size: var(--fs-2xs); color: var(--text-secondary); max-width: 78px; text-align: center; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+.u5-presets { display: flex; align-items: center; gap: var(--sm); flex-wrap: wrap; margin-top: var(--sm); }
+.u5-presets .k { font-size: var(--fs-2xs); color: var(--text-muted); }
+.u5-pchip { padding: 2px 10px; border-radius: var(--radius-pill); border: 1px solid var(--border-light); font-size: var(--fs-2xs); font-weight: 700; color: var(--text-muted); cursor: pointer; transition: all var(--motion-fast) var(--ease-out); font-family: var(--mono-font); }
+.u5-pchip:hover { color: var(--text-primary); border-color: var(--border); }
+.u5-pchip.on { color: var(--accent-primary); background: var(--accent-soft); border-color: color-mix(in srgb, var(--accent-primary) 40%, transparent); }
+
+/* ---- analytics chart ---- */
+.u5-chart { display: flex; align-items: flex-end; gap: 5px; height: 150px; padding-top: var(--sm); position: relative; }
+.u5-chart .budgetline { position: absolute; left: 0; right: 0; height: 0; border-top: 2px solid color-mix(in srgb, var(--tone-err) 55%, transparent); z-index: 3; pointer-events: none; }
+.u5-chart .budgetline span { position: absolute; right: 0; top: -16px; font-size: 8px; font-weight: 700; letter-spacing: .06em; color: var(--tone-err-text); text-transform: uppercase; }
+.u5-col { flex: 1 1 0; min-width: 0; display: flex; flex-direction: column; gap: 3px; position: relative; }
+.u5-colstack { display: flex; flex-direction: column-reverse; height: 122px; gap: 1px; }
+.u5-colstack i { display: block; width: 100%; border-radius: var(--radius-xs); background: currentColor; height: 0; transition: height var(--mo-chart-transition-dur, 400ms) var(--mo-chart-transition-ease, ease); min-height: 0; }
+.u5-colstack .s-inp { color: var(--ser-inp); } .u5-colstack .s-out { color: var(--ser-out); }
+.u5-colstack .s-rea { color: var(--ser-rea); } .u5-colstack .s-cache { color: var(--ser-cache); }
+.u5-col b { font-size: 9px; font-weight: 600; color: var(--text-muted); text-align: center; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+.u5-col .tip { position: absolute; bottom: calc(100% + 4px); left: 50%; transform: translateX(-50%); background: var(--surface-elevated); border: 1px solid var(--border-light); padding: 4px 8px; border-radius: var(--radius-sm); font-size: var(--fs-2xs); color: var(--text-primary); white-space: nowrap; pointer-events: none; opacity: 0; transition: opacity var(--motion-fast) var(--ease-out); z-index: 10; box-shadow: var(--elev-2); }
+.u5-col:hover .tip { opacity: 1; }
+.u5-legend { display: flex; gap: var(--md); flex-wrap: wrap; font-size: var(--fs-2xs); color: var(--text-secondary); margin-top: var(--sm); }
+.u5-legend span { display: inline-flex; align-items: center; gap: 4px; cursor: pointer; transition: opacity var(--motion-fast) var(--ease-out); }
+.u5-legend span.muted { opacity: .3; }
+.u5-swatch { width: 9px; height: 9px; border-radius: var(--radius-xs); display: inline-block; }
+.u5-winbtns { display: inline-flex; gap: 2px; border: 1px solid var(--border-light); border-radius: var(--radius-pill); padding: 2px; }
+.u5-winbtns button { font-family: var(--mono-font); font-size: var(--fs-2xs); font-weight: 700; padding: 2px 9px; border-radius: var(--radius-pill); color: var(--text-muted); transition: all var(--motion-fast) var(--ease-out); }
+.u5-winbtns button:hover { color: var(--text-primary); background: color-mix(in srgb, var(--text-primary) 6%, transparent); }
+.u5-winbtns button.on { color: var(--accent-primary); background: var(--accent-soft); }
+
+/* ---- cache rows ---- */
+/* cache rows sit on the same groove slabs as the quota rows, just quieter */
+.u5-crow { display: grid; grid-template-columns: minmax(120px,1.1fr) 88px 1.3fr 116px 56px; gap: var(--sm) var(--md); align-items: center; padding: 9px 12px; position: relative; z-index: 1;
+  border-radius: var(--radius-md); font-size: var(--fs-xs);
+  background: color-mix(in srgb, var(--cat, var(--accent-lime)) 3.5%, transparent);
+  box-shadow: inset 0 1px 0 color-mix(in srgb, var(--text-primary) 4%, transparent), inset 0 0 0 1px color-mix(in srgb, var(--cat, var(--accent-lime)) 6%, transparent);
+  transition: background var(--motion-fast) var(--ease-out), box-shadow var(--motion-fast) var(--ease-out), transform var(--motion-fast) var(--ease-out); }
+@media (max-width: 480px) { .u5-crow { grid-template-columns: minmax(0,1fr) auto; } }
+.u5-crow:hover { background: color-mix(in srgb, var(--cat, var(--accent-lime)) 7%, transparent); transform: translateY(-1px);
+  box-shadow: inset 0 1px 0 color-mix(in srgb, var(--text-primary) 6%, transparent), inset 0 0 0 1px color-mix(in srgb, var(--cat, var(--accent-lime)) 14%, transparent); }
+.u5-cname { color: var(--text-primary); font-weight: 600; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+.u5-cnums { font-family: var(--mono-font); font-size: var(--fs-2xs); color: var(--text-secondary); white-space: nowrap; text-align: right; min-width: 0; overflow: hidden; text-overflow: ellipsis; }
+/* the "provider does not expose cache fields" annotation lives in a dim .u5-cnums
+   cell; at 1280 the paired half-width shelf starves that column and nowrap clipped
+   it mid-phrase. Let the annotation (and the em-dash sibling) wrap so the full
+   note reads; right-aligned wrapping stays tidy against the save column. */
+.u5-cnums.dim { white-space: normal; overflow: visible; text-overflow: clip; overflow-wrap: anywhere; }
+.u5-csave { font-family: var(--mono-font); font-weight: 700; color: var(--tone-ok-text); white-space: nowrap; text-align: right; }
+.u5-csave.zero { color: var(--text-secondary); } .u5-csave.na { color: var(--text-muted); font-weight: 500; }
+/* ultra-wide rebalance: at >=1900 the name/plan/numeric columns are pinned to fixed,
+   content-fitted tracks (sized to the widest real cell + headroom so no label wraps)
+   instead of fr tracks that hoarded width and left a tall empty band after each short
+   left-aligned label; the meter track is the lone flexible column and soaks the released
+   width as the row's hero bar. The residual space after a short label is the structural
+   floor of a row-aligned grid (the meter's left edge must match across rows, so the name
+   track cannot shrink per row) and now lands under ~8% of row width. Every row of a kind
+   still resolves one identical template (fixed tracks are content-independent), so the
+   meter left/right edge alignment is untouched (delta 0). */
+@media (min-width: 1900px) {
+  .u5-qrow { grid-template-columns: minmax(200px, 380px) minmax(150px, 182px) minmax(180px, 1fr) 74px; }
+  .u5-crow { grid-template-columns: minmax(96px, 108px) 88px minmax(120px, 1fr) minmax(96px, 128px) 56px; }
+}
+
+/* ---- account cards (objects on the shelf) ---- */
+.u5-acct { position: relative; z-index: 1; display: flex; flex-direction: column; gap: 6px; padding: var(--md);
+  background: color-mix(in srgb, var(--cat, var(--accent-blue)) 4%, var(--surface));
+  border-radius: var(--radius-md); border: 1px solid color-mix(in srgb, var(--cat, var(--accent-blue)) 12%, var(--border-light));
+  box-shadow: inset 0 1px 0 color-mix(in srgb, var(--text-primary) 5%, transparent);
+  transition: border-color var(--motion-fast) var(--ease-out), box-shadow var(--motion-fast) var(--ease-out), transform var(--motion-fast) var(--ease-out); }
+.u5-acct:hover { box-shadow: var(--elev-1), inset 0 1px 0 color-mix(in srgb, var(--text-primary) 6%, transparent),
+    0 10px 20px -14px color-mix(in srgb, var(--cat, var(--accent-blue)) 55%, transparent); transform: translateY(-1px); }
+.u5-acct.effective { border-color: color-mix(in srgb, var(--tone-ok) 45%, transparent); }
+.u5-acct-h { display: flex; align-items: center; gap: var(--sm); flex-wrap: wrap; }
+.u5-acct-name { font-size: var(--fs-sm); font-weight: 700; color: var(--text-primary); }
+.u5-acct-mail { font-size: var(--fs-2xs); color: var(--text-muted); font-family: var(--mono-font); }
+.u5-acct-status { font-size: var(--fs-xs); color: var(--text-secondary); display: flex; align-items: center; gap: 7px; line-height: var(--lh-body); }
+.u5-cd { font-family: var(--mono-font); font-weight: 700; font-size: var(--fs-sm); color: var(--tone-warn-text); letter-spacing: .05em; }
+.u5-marker { display: inline-flex; align-items: center; gap: 4px; font-size: var(--fs-2xs); font-weight: 700; padding: 1px 8px; border-radius: var(--radius-pill); }
+.u5-marker.req { background: color-mix(in srgb, var(--tone-info) 14%, transparent); color: var(--tone-info-text); }
+.u5-marker.eff { background: color-mix(in srgb, var(--tone-ok) 14%, transparent); color: var(--tone-ok-text); }
+.u5-acct-note { font-size: var(--fs-2xs); color: var(--text-muted); line-height: var(--lh-body); }
+
+/* ---- guard cards ---- */
+.u5-guard { position: relative; z-index: 1; display: flex; flex-direction: column; gap: var(--sm); padding: var(--md); border-radius: var(--radius-md);
+  background: color-mix(in srgb, var(--cat, var(--accent-error)) 4%, var(--surface));
+  box-shadow: inset 0 1px 0 color-mix(in srgb, var(--text-primary) 5%, transparent);
+  border: 1px solid color-mix(in srgb, var(--tone-err) 35%, transparent); }
+.u5-guard.warn { border-color: color-mix(in srgb, var(--tone-warn) 40%, transparent); }
+.u5-guard.ok { border-color: var(--border-light); }
+.u5-guard-h { display: flex; align-items: center; gap: var(--sm); flex-wrap: wrap; }
+.u5-guard-h svg { width: 15px; height: 15px; flex: none; }
+.u5-guard.blocked .u5-guard-h svg { color: var(--tone-err); }
+.u5-guard.warn .u5-guard-h svg { color: var(--tone-warn); }
+.u5-guard.ok .u5-guard-h svg { color: var(--tone-ok); }
+.u5-guard-name { font-family: var(--mono-font); font-size: var(--fs-xs); font-weight: 700; color: var(--text-primary); }
+.u5-guard-body { font-size: var(--fs-xs); color: var(--text-secondary); line-height: var(--lh-body); }
+.u5-why { border: 1px solid var(--border-light); border-radius: var(--radius-sm); overflow: hidden; }
+.u5-why-t { display: flex; align-items: center; gap: 6px; padding: 6px var(--md); font-size: var(--fs-2xs); font-weight: 700; color: var(--text-secondary); cursor: pointer; user-select: none; background: color-mix(in srgb, var(--text-primary) 3%, transparent); }
+.u5-why-t .car { transition: transform var(--motion-fast) var(--ease-out); display: inline-flex; }
+.u5-why.open .u5-why-t .car { transform: rotate(90deg); }
+.u5-why-b { display: grid; grid-template-rows: 0fr; opacity: 0; padding: 0 var(--md); transition: grid-template-rows var(--motion-med) var(--ease-out), opacity var(--motion-med) var(--ease-out), padding var(--motion-med) var(--ease-out); }
+.u5-why-b > * { overflow: hidden; min-height: 0; }
+.u5-why.open .u5-why-b { grid-template-rows: 1fr; opacity: 1; padding: var(--sm) var(--md) var(--md); }
+.u5-dgrid { display: grid; grid-template-columns: repeat(auto-fill, minmax(150px, 1fr)); gap: var(--sm); padding: 2px 0; }
+.u5-di { display: flex; flex-direction: column; gap: 2px; }
+.u5-di b { font-size: 9px; color: var(--text-muted); text-transform: uppercase; letter-spacing: .04em; font-weight: 700; }
+.u5-di span { font-size: var(--fs-xs); color: var(--text-primary); }
+
+/* ---- signals (coaching) ---- */
+.u5-sig { display: flex; flex-direction: column; gap: 4px; }
+.u5-sigrow { display: flex; align-items: flex-start; gap: 7px; font-size: var(--fs-xs); line-height: var(--lh-body); padding: 3px 0; }
+.u5-sigrow .sd { width: 7px; height: 7px; border-radius: 50%; flex: none; margin-top: 5px; }
+.u5-sigrow.win .sd { background: var(--tone-ok); } .u5-sigrow.imp .sd { background: var(--tone-info); } .u5-sigrow.risk .sd { background: var(--tone-warn); }
+.u5-sigrow .st { color: var(--text-secondary); min-width: 0; }
+.u5-gradehero { display: flex; flex-direction: column; gap: 3px; margin-bottom: var(--sm); }
+.u5-gradehero b { font-family: var(--num-font); font-weight: 800; font-size: 30px; line-height: 1; font-variant-numeric: tabular-nums; }
+.u5-gradehero span { font-size: var(--fs-2xs); font-weight: 700; letter-spacing: .08em; color: var(--text-muted); }
+.u5-gradehero.g-ok { color: var(--tone-ok-text); } .u5-gradehero.g-warn { color: var(--tone-warn-text); } .u5-gradehero.g-err { color: var(--tone-err-text); }
+
+/* ---- context budget family bars ---- */
+/* context/efficiency family bars: the quietest slab of the three — a whisper
+   of tint so the meter stays the hero of the row */
+.u5-fam { display: grid; grid-template-columns: minmax(140px,1.1fr) minmax(0,1.4fr) auto; gap: var(--sm) var(--md); align-items: center; padding: 6px 10px; position: relative; z-index: 1; border-radius: var(--radius-sm);
+  background: color-mix(in srgb, var(--cat, var(--accent-orange)) 3%, transparent);
+  box-shadow: inset 0 1px 0 color-mix(in srgb, var(--text-primary) 3.5%, transparent);
+  transition: background var(--motion-fast) var(--ease-out), transform var(--motion-fast) var(--ease-out); }
+.u5-fam:hover { background: color-mix(in srgb, var(--cat, var(--accent-orange)) 6%, transparent); }
+.u5-fam-name { font-size: var(--fs-xs); color: var(--text-primary); font-weight: 600; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+.u5-fam-tok { font-family: var(--mono-font); font-size: var(--fs-2xs); color: var(--text-muted); text-align: right; white-space: normal; overflow-wrap: anywhere; }
+@media (max-width: 480px) { .u5-fam { grid-template-columns: minmax(0,1fr); } .u5-fam-tok { text-align: left; } }
+.u5-shelf, .u5-shbody, .u5-shhead { min-width: 0; }
+.u5-shhead { flex-wrap: wrap; row-gap: 4px; }
+.u5-shhead > * { min-width: 0; overflow-wrap: anywhere; }
+@media (max-width: 480px) { .u5-crow { grid-template-columns: minmax(0,1fr); } .us-foot span, .us-wc span { white-space: normal; overflow-wrap: anywhere; } }
+
+/* ---- ledger ---- */
+.u5-lctrl { display: flex; gap: var(--sm); flex-wrap: wrap; align-items: center; margin-bottom: var(--sm); }
+.u5-lsearch { flex: 1 1 160px; max-width: 280px; }
+.u5-live { display: inline-flex; align-items: center; gap: 6px; font-size: var(--fs-2xs); color: var(--tone-ok-text); font-weight: 700; }
+.u5-caret { cursor: pointer; color: var(--text-muted); width: 18px; text-align: center; user-select: none; display: inline-block; transition: transform var(--motion-fast) var(--ease-out); }
+.u5-caret.open { transform: rotate(90deg); }
+.u5-detail td { background: var(--surface); white-space: normal; }
+
+/* cozy buttons inside the page */
+.u5 .pm-btn { border-radius: var(--radius-pill); }
+.u5 .pm-minibtn { border-radius: var(--radius-pill); }
+.u5-btn { display: inline-flex; align-items: center; gap: 6px; padding: 5px 13px; border-radius: var(--radius-pill); border: 1px solid var(--border-light); background: transparent; color: var(--text-secondary); font-size: var(--fs-2xs); font-weight: 700; cursor: pointer; transition: all var(--motion-fast) var(--ease-out); font-family: var(--body-font); white-space: nowrap; }
+.u5-btn:hover { color: var(--text-primary); border-color: var(--border); background: var(--accent-soft); transform: translateY(-1px); }
+.u5-btn:active { transform: scale(.97); }
+.u5-btn.primary { color: var(--accent-primary); background: var(--accent-soft); border-color: transparent; }
+
+/* retro: square the shelves a touch, keep the hard offset edge as the shelf lip */
+[data-theme^="retro"] .u5-shelf, [data-theme^="retro"] .u5-pulse { border-radius: 0; border-width: 2px; }
+[data-theme^="retro"] .u5-shhead, [data-theme^="retro"] .u5-acct, [data-theme^="retro"] .u5-guard { border-radius: 0; }
+[data-theme^="retro"] .u5-shelf::before { height: 3px; }
+/* a faint warm phosphor scanline on retro shelves keeps the CRT soul, not flat */
+[data-theme^="retro"] .u5-shelf::after {
+  background-image: repeating-linear-gradient(0deg, color-mix(in srgb, var(--accent-primary) 6%, transparent) 0 1px, transparent 1px 3px);
+  opacity: .5; mix-blend-mode: screen; }
+/* basic: the calm, utilitarian counterpoint — keep it FLAT (no grain/sheen/lift),
+   but warm the neutral ground so even the plain theme reads as considered, not cold */
+[data-theme^="basic"] .u5-pulse::after { display: none; }
+[data-theme^="basic"] .u5-shelf::after { display: none; }
+[data-theme^="basic"] .u5-shelf { box-shadow: var(--elev-1); }
+[data-theme^="basic"] .u5-shelf:hover { transform: none; box-shadow: var(--elev-2); }
+[data-theme^="basic"] .u5-acct:hover, [data-theme^="basic"] .u5-pi:hover,
+[data-theme^="basic"] .u5-qrow:hover, [data-theme^="basic"] .u5-crow:hover { transform: none; }
+[data-theme="basic-light"] { --background: #F3EFEB; }
+[data-theme="basic-light"] .us-page { background: #F3EFEB; }
+[data-theme="basic-dark"] { --background: #171513; }
+[data-theme="basic-dark"] .us-page { background: #171513; }
+/* glass: keep the frosted slab, but layer the cozy corner glows + category tint
+   back over the frost so the hearth and each shelf keep their warmth instead of
+   reading as a flat frost rectangle (the single flat rgba the pane used before
+   erased the radial warmth that gives U5 its soul on the dark glass) */
+[data-theme^="glass"] .u5-shelf {
+  background:
+    radial-gradient(118% 84% at 100% 0%, color-mix(in srgb, var(--cat, var(--accent-blue)) 12%, transparent), transparent 58%),
+    radial-gradient(120% 96% at 0% 116%, color-mix(in srgb, var(--cat, var(--accent-blue)) 7%, transparent), transparent 60%),
+    rgba(var(--glass-tint-rgb), calc(var(--glass-alpha) + .05));
+  border-color: var(--glass-hairline); }
+[data-theme^="glass"] .u5-pulse {
+  background:
+    radial-gradient(130% 150% at 2% -30%, color-mix(in srgb, var(--accent-primary) 16%, transparent), transparent 52%),
+    radial-gradient(120% 150% at 100% 120%, color-mix(in srgb, var(--accent-magenta) 10%, transparent), transparent 54%),
+    rgba(var(--glass-tint-rgb), calc(var(--glass-alpha) + .05));
+  border-color: var(--glass-hairline); }
+[data-theme^="glass"] .u5-shelf::after { opacity: .02; }
+[data-theme^="glass"] .u5-acct, [data-theme^="glass"] .u5-guard { background: rgba(var(--glass-tint-rgb), calc(var(--glass-alpha) + .03)); }
+/* the KPI pockets were the one object left off the glass frost ladder (the qrow /
+   crow / fam slabs ride --glass-alpha steps but the pockets kept a 3.5% cat wash
+   that vanished on the bright pane, leaving white voids). Seat them on the same
+   frost step so the shelf's objects read as resting in the glass, every theme */
+[data-theme^="glass"] .u5-pi {
+  background: rgba(var(--glass-tint-rgb), calc(var(--glass-alpha) * .20));
+  box-shadow: inset 0 1px 0 var(--glass-hairline), inset 0 0 0 1px var(--glass-hairline); }
+[data-theme^="glass"] .u5-pi::after {
+  background: radial-gradient(130% 110% at 16% -8%, color-mix(in srgb, var(--cat, var(--accent-primary)) 14%, transparent), transparent 62%); }
+/* row slabs become frost steps on the pane — same warmth, glass grammar */
+[data-theme^="glass"] .u5-qrow, [data-theme^="glass"] .u5-crow, [data-theme^="glass"] .u5-fam {
+  background: rgba(var(--glass-tint-rgb), calc(var(--glass-alpha) * .16));
+  box-shadow: inset 0 1px 0 var(--glass-hairline); }
+[data-theme^="glass"] .u5-qrow:hover, [data-theme^="glass"] .u5-crow:hover, [data-theme^="glass"] .u5-fam:hover {
+  background: rgba(var(--glass-tint-rgb), calc(var(--glass-alpha) * .26));
+  box-shadow: inset 0 1px 0 var(--glass-hairline), inset 0 0 0 1px var(--glass-hairline); }
+/* friendly: let the warm tan dot-grid ground breathe in the gaps between shelves,
+   and strengthen its presence so the room feels warm behind the mounted shelves */
+[data-theme^="friendly"] .u5-shelf { margin-bottom: calc(var(--us-gap) + 6px); }
+.u5-marker svg { width: 10px; height: 10px; flex: none; }
+.u5-caret svg { width: 11px; height: 11px; }
+/* scroll reveals settle like objects placed on a shelf: a touch more travel
+   than the shared reveal and a muted spring (cubic-bezier with ~6% give) so
+   each shelf lands with a soft thud instead of a fade. The shared stagger in
+   usage-chrome.js (--mo-stagger steps, capped) cascades them down the page. */
+.u5 .pm-rev { transform: translateY(12px) scale(.992);
+  transition: opacity var(--mo-reveal-dur, var(--motion-med)) var(--mo-reveal-ease, var(--ease-out)),
+    transform var(--mo-spring-dur, var(--motion-med)) var(--u5-settle-ease, cubic-bezier(0.3, 1.18, 0.5, 1)); }
+.u5 .pm-rev.in { transform: none; }
+/* the hearth + every breathing glow freeze calm and still under reduced motion
+   (the global kill-switch already covers this, this is a belt-and-braces guard
+   so no ember ever animates for motion-sensitive users). Pseudo-elements are
+   listed out by hand — :is() never matches them. */
+html[data-reduced-motion="1"] .u5-pulse::before,
+html[data-reduced-motion="1"] .u5-pulse-big,
+html[data-reduced-motion="1"] .u5-ember,
+html[data-reduced-motion="1"] .u5-pi::after,
+html[data-reduced-motion="1"] .u5-shelf::before { animation: none; }
+html[data-reduced-motion="1"] .u5-pulse::before { opacity: .6; }
+html[data-reduced-motion="1"] .u5 .pm-rev, html[data-reduced-motion="1"] .u5 .pm-rev.in { opacity: 1; transform: none; transition: none; }
+@media (prefers-reduced-motion: reduce) {
+  .u5-pulse::before, .u5-pulse-big, .u5-ember, .u5-pi::after, .u5-shelf::before { animation: none; }
+  .u5-pulse::before { opacity: .6; }
+  .u5 .pm-rev, .u5 .pm-rev.in { opacity: 1; transform: none; transition: none; }
+}
+/* basic stays flat: no breathing tints, no lip glow — calm by design */
+[data-theme^="basic"] .u5-pi::after { display: none; }
+[data-theme^="basic"] .u5-shelf::before { animation: none; }
+/* retro keeps its scanline still; the CRT hum is not a breathing room */
+[data-theme^="retro"] .u5-shelf::before { animation: none; }
+/* friendly ground: a barely-there warm wash pooling behind the hearth, so the
+   dot-grid wall reads as firelit rather than neutral */
+[data-theme^="friendly"] .u5 .us-scroll { background:
+  radial-gradient(52% 320px at 14% 0, color-mix(in srgb, var(--accent-primary) 5%, transparent), transparent 72%); }
+/* ---- friendly-light: keep the warmth film-level on the sunlit ground. On the
+   dark room the 5–8% category tints read as glowing shelves, but mixed into the
+   light theme's white surface-elevated they wash out to flat white cards and the
+   cozy signature collapses into a generic dashboard. Deepen ONLY this theme's
+   hearth + shelf + pocket tints (and the shelf lip that catches the light) so it
+   reads as a sunlit room of warm shelves — warmth drawn from U5's own teal /
+   coral / violet category hues, never the beige-terracotta-serif cliché. Dark,
+   retro and the deliberately-flat basic themes are untouched. ---- */
+[data-theme="friendly-light"] .u5-pulse {
+  background:
+    radial-gradient(130% 150% at 2% -30%, color-mix(in srgb, var(--accent-primary) 20%, transparent), transparent 54%),
+    radial-gradient(120% 150% at 100% 120%, color-mix(in srgb, var(--accent-magenta) 13%, transparent), transparent 56%),
+    color-mix(in srgb, var(--cat, var(--accent-primary)) 9%, var(--surface-elevated)); }
+[data-theme="friendly-light"] .u5-pulse-main {
+  background: radial-gradient(120% 96% at 26% 38%, color-mix(in srgb, var(--accent-primary) 20%, transparent), transparent 70%); }
+[data-theme="friendly-light"] .u5-pi { background: color-mix(in srgb, var(--cat, var(--accent-primary)) 7%, transparent); }
+[data-theme="friendly-light"] .u5-pi::after {
+  background: radial-gradient(130% 110% at 16% -8%, color-mix(in srgb, var(--cat, var(--accent-primary)) 18%, transparent), transparent 62%); }
+[data-theme="friendly-light"] .u5-shelf {
+  background:
+    radial-gradient(118% 84% at 100% 0%, color-mix(in srgb, var(--cat, var(--accent-blue)) 16%, transparent), transparent 58%),
+    radial-gradient(120% 96% at 0% 116%, color-mix(in srgb, var(--cat, var(--accent-blue)) 11%, transparent), transparent 60%),
+    color-mix(in srgb, var(--cat, var(--accent-blue)) 12%, var(--surface-elevated)); }
+[data-theme="friendly-light"] .u5-shelf::before {
+  background: linear-gradient(90deg, transparent, color-mix(in srgb, var(--cat, var(--text-primary)) 42%, transparent) 14%, color-mix(in srgb, var(--cat, var(--text-primary)) 42%, transparent) 86%, transparent); }
+[data-theme="friendly-light"] .u5-shhead {
+  background: linear-gradient(180deg, color-mix(in srgb, var(--cat, var(--accent-blue)) 22%, transparent), color-mix(in srgb, var(--cat, var(--accent-blue)) 11%, transparent)); }
+[data-theme="friendly-light"] .u5-qrow { background: color-mix(in srgb, var(--cat, var(--accent-blue)) 7%, transparent); }
+[data-theme="friendly-light"] .u5-crow { background: color-mix(in srgb, var(--cat, var(--accent-lime)) 6%, transparent); }
+[data-theme="friendly-light"] .u5-fam { background: color-mix(in srgb, var(--cat, var(--accent-orange)) 6%, transparent); }
+th[data-sort] { cursor: pointer; user-select: none; }
+th[data-sort]:focus-visible { outline: 2px solid var(--accent-primary); outline-offset: -2px; }
+.u5-sortic { display: inline-block; position: relative; width: 10px; height: 10px; margin-left: 4px; vertical-align: -1px; }
+.u5-sortic svg { position: absolute; left: 0; top: 0; width: 10px; height: 10px; opacity: 0; transition: opacity var(--mo-hover-dur, 120ms) var(--pm-ease-out, ease-out); }
+th[data-sort]:hover .u5-sortic svg { opacity: .4; }
+th[data-sort].asc .u5-sortic .au, th[data-sort].desc .u5-sortic .ad { opacity: .9; }
+/* anchor caret for the context popover: the shared .pm-sprout chrome carries no
+   pointer, so the panel read as covering its trigger. Local scoped equivalent
+   (_shared stays untouched): a fill diamond riding the panel edge, positioned by
+   the same --pm6-sprout-oy var the shared placer sets (so it tracks whether the
+   popover opens below or above), with its horizontal aim set by the concept
+   script (--u5-caret-x, computed from the trigger's centre so the pointer lands
+   over the ring chip rather than drifting to a fixed 12%/88% corner). Two visible
+   hairline edges match the panel border so the pointer reads crisply on every
+   theme, including the bright glass plate. */
+.pm-sprout:has(> .pm-ctx-pop)::after {
+  content: ''; position: absolute; z-index: 3;
+  width: 11px; height: 11px; left: var(--u5-caret-x, var(--pm6-sprout-ox, 88%));
+  top: calc(var(--pm6-sprout-oy, 0%) - 6px);
+  transform: translateX(-50%) rotate(45deg);
+  background: var(--surface-elevated);
+  border-right: 1px solid var(--border); border-bottom: 1px solid var(--border);
+  pointer-events: none;
+}
+[data-theme^="glass"] .pm-sprout:has(> .pm-ctx-pop)::after { background: var(--pm6-glass-plate, var(--surface-elevated)); border-color: var(--glass-hairline); }
+/* the shared viewport-clamp rule sets overflow:auto on every context sprout,
+   which clips the caret diamond that protrudes past the panel edge. The ring
+   popover is short and the shared placer already keeps its box on-screen, so it
+   needs no internal scroll — let it overflow visible so the caret shows. The More
+   Details modal keeps overflow:auto (it is the one that actually scrolls). */
+.pm-sprout:has(> .pm-ctx-pop) { overflow: visible; }
+</style>
+</head>
+<body>
+<div id="app"></div>
+
+<template id="usage-page">
+  <div class="us-page u5">
+    <header class="us-head">
+      <h1 class="us-head-title">Usage</h1>
+      <div class="us-head-sub">AI cost &amp; usage for <b>Tastebook</b> — quotas, cost, cache savings and safety guards. Refreshes every <b>5 min</b> · history kept <b>90 days</b></div>
+      <span class="us-fresh" id="u5Fresh"><span class="d"></span><span id="u5FreshTxt">current · as of 14:42</span></span>
+      <div class="us-head-acts">
+        <button class="us-hbtn" id="u5Refresh" title="Refresh usage projections" aria-label="Refresh usage projections"><i data-ico="refresh" class="pm-ico"></i></button>
+        <button class="us-hbtn primary" title="Export usage as JSON" aria-label="Export usage as JSON"><i data-ico="exportIc" class="pm-ico"></i></button>
+      </div>
+    </header>
+
+    <div class="us-scroll">
+
+      <!-- PULSE: opens with money + health -->
+      <section class="u5-pulse pm-rev" aria-label="Current usage pulse">
+        <div class="u5-pulse-main">
+          <span class="u5-pulse-big" id="u5PulseBig">&mdash;</span>
+          <span class="u5-pulse-lbl" id="u5PulseLbl"><i data-ico="gauge" class="pm-ico sm"></i>top window</span>
+          <span class="u5-pulse-lbl" id="u5PulseSub" style="color:var(--text-muted)">spend <b id="u5Spend">$0.00</b> last 5h (list-rate)</span>
+        </div>
+        <div class="u5-pulse-items" id="u5PulseItems"></div>
+      </section>
+
+      <!-- QUOTAS -->
+      <section class="u5-shelf open pm-rev" data-acc style="--cat:var(--accent-blue); --u5-lip-del:-1.2s">
+        <button type="button" class="u5-shhead" data-collapse aria-expanded="true" aria-label="Toggle shelf: Quota and plan visibility">
+          <span class="u5-shico"><i data-ico="dial" class="pm-ico sm"></i></span>
+          <span class="u5-shlabel">Quota &amp; plan visibility</span>
+          <span class="u5-shmeta">window model per provider · missing ≠ zero</span>
+          <span class="u5-shcount" id="u5QuotaCount"></span>
+          <i data-ico="chevD" class="pm-ico u5-shchev"></i>
+        </button>
+        <div class="u5-shbody" id="u5Quotas"></div>
+      </section>
+
+      <!-- ANALYTICS + BUDGET -->
+      <div class="u5-pair pm-rev">
+        <section class="u5-shelf open" style="--cat:var(--accent-magenta); --u5-lip-del:-3.1s">
+          <div class="u5-shhead">
+            <span class="u5-shico"><i data-ico="trend" class="pm-ico sm"></i></span>
+            <span class="u5-shlabel">Token analytics</span>
+            <span class="u5-shmeta" id="u5ChartMeta">last 24h</span>
+            <span class="u5-winbtns" id="u5ChartWin" role="group" aria-label="Chart time window"></span>
+          </div>
+          <div class="u5-shbody">
+            <div class="u5-chart" id="u5Chart"></div>
+            <div class="u5-legend" id="u5Legend"></div>
+          </div>
+        </section>
+
+        <section class="u5-shelf open" style="--cat:var(--accent-lime); --u5-lip-del:-5.2s">
+          <div class="u5-shhead">
+            <span class="u5-shico"><i data-ico="pie" class="pm-ico sm"></i></span>
+            <span class="u5-shlabel">Budgets &amp; spend</span>
+            <span class="u5-shmeta">monthly limit $300 · block at limit</span>
+          </div>
+          <div class="u5-shbody">
+            <div class="u5-spendrow">
+              <span class="us-big" id="u5BudgetSpend" data-counter="187.42" data-prefix="$">$0.00</span>
+            <span class="u5-spend-sub">spent MTD · projected <b class="us-cost warn" id="u5BudgetProj" data-counter="224.10" data-prefix="$">$0.00</b> by month end <span id="u5BudgetProv"></span></span>
+          </div>
+            <div class="u5-donuts" id="u5Donuts"></div>
+            <div class="u5-presets" id="u5Presets"></div>
+            <div class="us-foot" style="margin-top:var(--sm)"><i data-ico="info" class="pm-ico sm"></i><span>Budget presets are exactly 50 / 80 / 90 / 95 / 100. A budget does not cap spend by itself — policy is <b>block at limit</b>.</span></div>
+          </div>
+        </section>
+      </div>
+
+      <!-- CACHE + CONTEXT BUDGET -->
+      <div class="u5-pair pm-rev">
+        <section class="u5-shelf open" style="--cat:var(--accent-lime); --u5-lip-del:-2.2s">
+          <div class="u5-shhead">
+            <span class="u5-shico"><i data-ico="layers" class="pm-ico sm"></i></span>
+            <span class="u5-shlabel">Prompt-cache savings</span>
+            <span class="u5-shmeta">zero ≠ unsupported</span>
+          </div>
+          <div class="u5-shbody" id="u5Cache"></div>
+        </section>
+
+        <section class="u5-shelf open" style="--cat:var(--accent-orange); --u5-lip-del:-6.4s">
+          <div class="u5-shhead">
+            <span class="u5-shico"><i data-ico="inbox" class="pm-ico sm"></i></span>
+            <span class="u5-shlabel">Context budget by source</span>
+            <span class="u5-shmeta" id="u5CtxMeta"></span>
+          </div>
+          <div class="u5-shbody" id="u5Context"></div>
+        </section>
+      </div>
+
+      <!-- ACCOUNTS -->
+      <section class="u5-shelf open pm-rev" data-acc style="--cat:var(--accent-blue); --u5-lip-del:-4.3s">
+        <button type="button" class="u5-shhead" data-collapse aria-expanded="true" aria-label="Toggle shelf: Accounts and pressure">
+          <span class="u5-shico"><i data-ico="users" class="pm-ico sm"></i></span>
+          <span class="u5-shlabel">Accounts &amp; pressure</span>
+          <span class="u5-shmeta">requested vs effective · cooldowns tick live</span>
+          <span class="u5-shcount" id="u5AcctCount"></span>
+          <i data-ico="chevD" class="pm-ico u5-shchev"></i>
+        </button>
+        <div class="u5-shbody" id="u5Accounts"></div>
+      </section>
+
+      <!-- GUARD + SIGNALS -->
+      <div class="u5-pair pm-rev">
+        <section class="u5-shelf open" style="--cat:var(--accent-error); --u5-lip-del:-0.7s">
+          <div class="u5-shhead">
+            <span class="u5-shico"><i data-ico="shield" class="pm-ico sm"></i></span>
+            <span class="u5-shlabel">Anomaly &amp; quota guard</span>
+            <span class="u5-shmeta">1h window · 3.0× spike</span>
+          </div>
+          <div class="u5-shbody" id="u5Guards"></div>
+        </section>
+
+        <section class="u5-shelf open" style="--cat:var(--accent-magenta); --u5-lip-del:-5.8s">
+          <div class="u5-shhead">
+            <span class="u5-shico"><i data-ico="spark" class="pm-ico sm"></i></span>
+            <span class="u5-shlabel">Signals &amp; efficiency</span>
+          </div>
+          <div class="u5-shbody">
+            <div class="u5-gradehero" id="u5GradeHero"></div>
+            <div class="u5-sig" id="u5Signals"></div>
+          </div>
+        </section>
+      </div>
+
+      <!-- TOOLS -->
+      <section class="u5-shelf open pm-rev" data-acc style="--cat:var(--accent-blue); --u5-lip-del:-2.8s">
+        <button type="button" class="u5-shhead" data-collapse aria-expanded="true" aria-label="Toggle shelf: Tool usage">
+          <span class="u5-shico"><i data-ico="chip" class="pm-ico sm"></i></span>
+          <span class="u5-shlabel">Tool usage</span>
+          <span class="u5-shmeta">latency p50/p95 · error rate · index used</span>
+          <span class="u5-shcount">last 24h</span>
+          <i data-ico="chevD" class="pm-ico u5-shchev"></i>
+        </button>
+        <div class="u5-shbody" id="u5Tools"></div>
+      </section>
+
+      <!-- LEDGER -->
+      <section class="u5-shelf open pm-rev" style="--cat:var(--accent-lime); --u5-lip-del:-4.9s">
+        <div class="u5-shhead">
+          <span class="u5-shico"><i data-ico="clipboard" class="pm-ico sm"></i></span>
+          <span class="u5-shlabel">Event ledger</span>
+          <span class="u5-shmeta">normalized UsageRecords · cost lands on the effective account</span>
+          <span class="u5-shcount" id="u5LedgerCount"></span>
+        </div>
+        <div class="u5-shbody">
+          <div class="u5-lctrl">
+            <label class="pm-input u5-lsearch"><i data-ico="search" class="pm-ico sm"></i><input id="u5LedgerSearch" type="text" placeholder="Search platform, model, run, lane…" aria-label="Search ledger"></label>
+            <div class="pm6-tb-menu-wrap" id="u5PlatWrap">
+              <button type="button" class="pm6-tb-menu-trigger" aria-controls="u5PlatMenu"><span class="pm6-tb-menu-label" id="u5PlatLabel">All platforms</span><i data-ico="chevD" class="pm-ico sm"></i></button>
+              <div class="pm6-tb-menu" id="u5PlatMenu" role="menu" aria-label="Filter platform" data-pm-menu-select></div>
+            </div>
+            <div class="pm6-tb-menu-wrap" id="u5RepWrap">
+              <button type="button" class="pm6-tb-menu-trigger" aria-controls="u5RepMenu"><span class="pm6-tb-menu-label" id="u5RepLabel">Any reporting</span><i data-ico="chevD" class="pm-ico sm"></i></button>
+              <div class="pm6-tb-menu" id="u5RepMenu" role="menu" aria-label="Filter reporting" data-pm-menu-select></div>
+            </div>
+            <button class="u5-btn" id="u5LedgerJson"><i data-ico="clipboard" class="pm-ico sm"></i>JSON</button>
+            <span class="u5-live" style="margin-left:auto"><span class="us-dot ok pulse"></span>live — new events append as the run works</span>
+          </div>
+          <div class="us-tblwrap" style="max-height:380px">
+            <table class="us-tbl">
+              <thead><tr>
+                <th style="width:20px" aria-label="Expand"></th>
+                <th data-sort="t">Time</th><th data-sort="ev">Event</th><th data-sort="run">Run · lane</th><th data-sort="prov">Platform</th><th data-sort="model">Model</th>
+                <th class="num" data-sort="tin">In</th><th class="num" data-sort="tout">Out</th><th class="num" data-sort="cr">Cache r</th>
+                <th data-sort="rep">Report</th><th class="num" data-sort="cost">Cost</th>
+              </tr></thead>
+              <tbody id="u5LedgerBody"></tbody>
+            </table>
+          </div>
+          <div class="us-foot" style="margin-top:var(--sm)"><i data-ico="info" class="pm-ico sm"></i><span id="u5LedgerFoot"></span></div>
+        </div>
+      </section>
+
+      <div class="us-foot pm-rev" style="padding:0 2px var(--md)"><i data-ico="help" class="pm-ico sm"></i><span>Missing a number? Every quota carries a value-state chip — <b>disabled, not exposed, hidden, unknown</b> are states, never zero. Cozy Console renders the canonical UsageRecord projections.</span></div>
+    </div>
+  </div>
+</template>
+
+<script src="_shared/icons.js"></script>
+<script src="_shared/usage-icons.js"></script>
+<script src="_shared/usage-data.js"></script>
+<script src="_shared/menu.js"></script>
+<script src="_shared/usage-chrome.js"></script>
+<script src="_shared/usage-context.js"></script>
+<script>
+PMUsageChrome.boot({ badge: { id: 'U5', name: 'Cozy Console' } });
+if (window.PMContext) window.PMContext.mountTriggers(document.getElementById('sbChips'));
+
+(function () {
+  'use strict';
+  var D = window.USAGE, fmt = window.USfmt, VS = window.USvs, CONF = window.USconf;
+  var R = window.USrender;
+  var ic = function (n, c) { return window.PMIcon(n, c || 'pm-ico sm'); };
+  function $(id) { return document.getElementById(id); }
+  /* provenance chips (R.projChip) — surface source · confidence · freshness on headlines */
+  function prov(o) {
+    var src = R.human(o.value_state || o.vs || 'unknown');
+    var fresh = o.projection_freshness || 'current';
+    if (fresh === 'current' || fresh === (o.value_state || o.vs)) fresh = 'current';
+    return R.projChip({ source: src, conf: o.source_confidence || o.conf || 'unknown', fresh: fresh });
+  }
+  function provFresh(source, conf) {
+    return R.projChip({ source: source, conf: conf, fresh: (D.projectionMeta && D.projectionMeta.fresh) || 'current' });
+  }
+  /* motion tokens read back from CSS so JS animators stay token-driven */
+  function cssMs(tok, fb) { var v = parseFloat(getComputedStyle(document.documentElement).getPropertyValue(tok)); return isNaN(v) || v < 0 ? fb : v; }
+  function motK() { var k = parseFloat(getComputedStyle(document.documentElement).getPropertyValue('--pm-motion-k')); return isNaN(k) || k <= 0 ? 1 : k; }
+  function fillTone(p) { return p >= 90 ? 'hot' : p >= 70 ? 'warn' : 'ok'; }
+  function chip(vsKey) {
+    var v = VS[vsKey] || { label: vsKey, tone: 'mute' };
+    return '<span class="vs vs-' + v.tone + (v.dashed ? ' vs-dash' : '') + '" title="value state: ' + v.label + '">' + v.label + '</span>';
+  }
+  function conf(c) {
+    var v = CONF[c] || CONF.unknown;
+    return '<span class="conf conf-' + c + '" title="source confidence: ' + v.label + '"><span class="cd"></span>' + v.label + '</span>';
+  }
+  function meter(pct, tone) {
+    var t = tone || fillTone(pct);
+    return '<span class="us-track"><span class="us-fill ' + t + '" data-fill="' + (pct || 0) + '" style="--wf:' + (pct || 0) + '%"></span></span>';
+  }
+
+  /* ---------- pulse items ---------- */
+  function renderPulse() {
+    var top = D.quotas.filter(function (q) { return q.used != null; }).sort(function (a, b) { return b.used - a.used; })[0];
+    var ttone = top.used >= 90 ? 'err' : (top.used >= 70 ? 'warn' : 'ok');
+    var tcol = { ok: 'var(--u5-ink-ok)', warn: 'var(--u5-ink-warn)', err: 'var(--u5-ink-err)' };
+    /* the hearth's temperament rides the 5h spend: $0 rests at k=0.12 (slow,
+       dim), ~$22+ glows at k=1 (a touch faster, a touch hotter) — the CSS
+       turns k into cadence (4.6s→3.2s) and glow depth, always calming */
+    var sp = parseFloat(D.spend['5h']) || 0;
+    var hk = Math.max(0.12, Math.min(1, sp / 22));
+    var pulseEl = document.querySelector('.u5-pulse');
+    if (pulseEl) pulseEl.style.setProperty('--u5-heart-k', hk.toFixed(3));
+    var pb = $('u5PulseBig');
+    if (pb) {
+      pb.innerHTML = '<span id="u5PulseNum" data-counter="' + top.used + '" data-decimals="0">' + top.used + '</span><span aria-hidden="true">%</span>';
+      pb.style.color = tcol[ttone];
+    }
+    var pl = $('u5PulseLbl'); if (pl) pl.innerHTML = ic('gauge') + 'top window \u00b7 ' + top.name;
+    var psu = $('u5PulseSub'); if (psu) psu.innerHTML = '<i class="u5-ember" aria-hidden="true"></i>spend <b>' + fmt.cost(D.spend['5h']) + '</b> last 5h \u00b7 resets ' + (top.reset === 'unknown' ? '\u2014' : top.reset) + ' ' + provFresh(R.human(D.spendBasis), 'medium');
+    var guardBlocked = D.guards.filter(function (g) { return g.state === 'blocked'; }).length;
+    var guardWarn = D.guards.filter(function (g) { return g.state === 'warn'; }).length;
+    var tokSrc = D.usedTokensTotal == null ? 'unknown' : 'source-aware mix';
+    /* numeric pocket values ride the shared [data-counter] animator, so they
+       count value→value and land with the soft tick; unit suffixes live in a
+       sibling span so the tween only ever owns the digits */
+    var vBurn = '<span data-counter="' + D.burn.perHour.toFixed(2) + '" data-prefix="$">$0.00</span><span class="u5-pi-suf">/hr</span>';
+    var vPace = '<span data-counter="' + D.forecast.monthPace.toFixed(2) + '" data-prefix="$" data-decimals="0">$0</span>';
+    var vTop = '<span data-counter="' + top.used + '" data-decimals="0">' + top.used + '</span><span aria-hidden="true">%</span>';
+    var items = [
+      { k: 'burn rate', ico: 'bolt', v: vBurn, s: '$' + D.burn.perDay.toFixed(0) + '/day pace', pv: provFresh('derived from spend', 'medium'), cls: '' },
+      { k: 'tokens used', ico: 'hash', v: D.usedTokensTotal == null ? 'unknown' : fmt.tok(D.usedTokensTotal), s: D.usedTokensByProvider.length + ' provider rows summed', pv: provFresh(tokSrc, 'medium'), cls: '' },
+      { k: 'month pace', ico: 'trend', v: vPace, s: '+' + D.forecast.monthPaceDelta + '% vs last month', pv: provFresh('derived from spend', 'medium'), cls: 'warn' },
+      { k: 'top pressure', ico: 'thermo', v: vTop, s: top.name + ' · ' + top.win, pv: prov(top), cls: top.used >= 90 ? 'err' : 'warn', bar: top.used, tone: fillTone(top.used) },
+      { k: 'next reset', ico: 'timer', v: top.reset === 'unknown' ? 'unknown' : top.reset, s: top.name, pv: prov(top), cls: '' },
+      { k: 'guards', ico: 'shield', v: guardBlocked + ' blocked · ' + guardWarn + ' warn', s: 'token-spike paused node n-19', pv: provFresh('local window scan', 'high'), cls: guardBlocked ? 'err' : 'ok' }
+    ];
+    $('u5PulseItems').innerHTML = items.map(function (it) {
+      var bar = it.bar != null ? '<span class="u5-pi-bar"><i class="us-fill ' + it.tone + '" data-fill="' + it.bar + '" style="--wf:' + it.bar + '%"></i></span>' : '';
+      return '<div class="u5-pi"><span class="u5-pi-k">' + ic(it.ico) + it.k + '</span><span class="u5-pi-v ' + it.cls + '">' + it.v + '</span>' + bar + '<span class="u5-pi-s"><span class="u5-pi-t">' + it.s + '</span>' + (it.pv || '') + '</span></div>';
+    }).join('');
+  }
+
+  /* ---------- quotas ---------- */
+  function renderQuotas() {
+    var rows = D.quotas.map(function (q) {
+      var hasBars = q.used != null;
+      /* window labels come from the quota's own window records, never a
+         hardcoded 5h/7d — a billing_cycle provider (Copilot) leads with
+         "month", matching U7–U9 */
+      var wins = q.windows || [];
+      var lab0 = (wins[0] && wins[0].id) || q.win || '\u2014';
+      var lab1 = (wins[1] && wins[1].id) || '7d';
+      var bars = hasBars
+        ? '<span class="u5-qbars">' +
+            '<span class="us-meter"><span class="lb">' + lab0 + '</span>' + meter(q.used) + '</span>' +
+            (q.sevenUsed != null ? '<span class="us-meter"><span class="lb">' + lab1 + '</span>' + meter(q.sevenUsed) + '</span>' : '') +
+          '</span>'
+        : '<span class="u5-qnone">no reading — see chip</span>';
+      var pct = hasBars ? '<span class="u5-qpct"><b>' + q.used + '%</b><br><span style="color:var(--text-muted)">' + (q.sevenUsed != null ? q.sevenUsed + '%' : '\u2014') + '</span></span>' : '<span class="u5-qpct">\u2014</span>';
+      var reset = q.reset ? '<span class="u5-qreset">' + ic('timer') + (q.reset === 'unknown' ? 'unknown reset' : 'resets ' + q.reset) + '</span>' : '';
+      var note = q.note ? '<div class="u5-qnote">' + q.note + '</div>' : '';
+      return '<div class="u5-qrow">' +
+        '<span class="u5-qname">' + q.name + ' ' + chip(q.vs) + prov(q) + '</span>' +
+        '<span class="u5-qwin">' + q.plan + ' · ' + q.kind + '<br>' + reset + '</span>' +
+        bars + pct + note +
+      '</div>';
+    }).join('');
+    $('u5Quotas').innerHTML = rows +
+      '<div class="us-foot"><i data-ico="info" class="pm-ico sm"></i><span>Window semantics differ by provider (<b>rolling / fixed reset / billing cycle / session only / unknown</b>) — never one generic 5h/7d column. A missing bar is explained by its chip, not assumed zero.</span></div>';
+    $('u5QuotaCount').textContent = D.quotas.length + ' providers';
+  }
+
+  /* ---------- analytics chart ---------- */
+  var chartWin = '24h', mutedSeries = {};
+  function renderChart() {
+    var ds = D.chart[chartWin] || D.chart['24h'];
+    $('u5ChartMeta').textContent = ds.note;
+    var cols = ds.cols.map(function (c) {
+      return '<div class="u5-col"><span class="tip">' + c[0] + ': ' + c[1] + '% in · ' + c[2] + '% out</span>' +
+        '<span class="u5-colstack">' +
+          '<i class="s-inp" data-h="' + c[1] + '"></i><i class="s-out" data-h="' + c[2] + '"></i>' +
+          '<i class="s-rea" data-h="' + c[3] + '"></i><i class="s-cache" data-h="' + c[4] + '"></i>' +
+        '</span><b>' + c[0] + '</b></div>';
+    }).join('');
+    var bl = D.chartBudgetLine;
+    $('u5Chart').innerHTML = cols + '<span class="budgetline" style="bottom:' + (bl * 1.22) + 'px"><span>budget ' + D.budget.warningThreshold + '%</span></span>';
+    var series = [['inp', 'Input', '--ser-inp'], ['out', 'Output', '--ser-out'], ['rea', 'Reasoning', '--ser-rea'], ['cache', 'Cache r/w', '--ser-cache']];
+    $('u5Legend').innerHTML = series.map(function (s) {
+      return '<span data-series="' + s[0] + '" class="' + (mutedSeries[s[0]] ? 'muted' : '') + '" role="button" tabindex="0" aria-pressed="' + (mutedSeries[s[0]] ? 'false' : 'true') + '" title="Toggle ' + s[1] + ' series"><span class="u5-swatch" style="background:var(' + s[2] + ')"></span>' + s[1] + '</span>';
+    }).join('');
+    $('u5Legend').querySelectorAll('[data-series]').forEach(function (it) {
+      function toggle() {
+        var k = it.dataset.series; mutedSeries[k] = !mutedSeries[k];
+        it.classList.toggle('muted', !!mutedSeries[k]);
+        it.setAttribute('aria-pressed', mutedSeries[k] ? 'false' : 'true');
+        $('u5Chart').querySelectorAll('.s-' + k).forEach(function (seg) { seg.style.opacity = mutedSeries[k] ? '.12' : '1'; });
+      }
+      it.addEventListener('click', toggle);
+      it.addEventListener('keydown', function (e) { if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); toggle(); } });
+    });
+    requestAnimationFrame(function () { animateChart(); });
+  }
+  function animateChart() {
+    var rm = window.USrender.isRM();
+    /* warm stagger WAVE across columns (segments of a column rise together),
+       matching the shared animator's cadence: flat --mo-stagger step, capped,
+       with the soft follow-through ease — bars grow like flames settling */
+    var dur = cssMs('--mo-chart-transition-dur', 400);
+    var stag = cssMs('--mo-stagger', 24);
+    $('u5Chart').querySelectorAll('.u5-col').forEach(function (col, ci) {
+      var d = rm ? 0 : Math.min(ci, 14) * stag;
+      col.querySelectorAll('i[data-h]').forEach(function (seg) {
+        var h = Math.min((parseFloat(seg.dataset.h) || 0) * 0.6, 58);
+        if (rm) { seg.style.transition = 'none'; seg.style.height = h + '%'; return; }
+        seg.style.transition = 'height ' + dur + 'ms cubic-bezier(0.25, 1.45, 0.45, 1) ' + d + 'ms, opacity var(--mo-hover-dur, 120ms) ease';
+        requestAnimationFrame(function () { requestAnimationFrame(function () { seg.style.height = h + '%'; }); });
+      });
+    });
+  }
+  function renderChartWin() {
+    $('u5ChartWin').innerHTML = ['5h', '24h', '7d'].map(function (w) {
+      return '<button data-cw="' + w + '" class="' + (w === chartWin ? 'on' : '') + '">' + w + '</button>';
+    }).join('');
+    $('u5ChartWin').querySelectorAll('[data-cw]').forEach(function (b) {
+      b.addEventListener('click', function () { chartWin = b.dataset.cw; renderChartWin(); renderChart(); });
+    });
+  }
+
+  /* ---------- budget donuts + presets ---------- */
+  function donut(name, pct, toneVar) {
+    var circ = 163.4;
+    return '<span class="u5-donut"><svg viewBox="0 0 64 64" role="img" aria-label="' + name + ' budget ' + pct + '%">' +
+      '<circle class="dbg" cx="32" cy="32" r="26"></circle>' +
+      '<circle class="dfill" cx="32" cy="32" r="26" stroke="' + toneVar + '" data-pct="' + pct + '" style="stroke-dasharray:163.4;stroke-dashoffset:163.4"></circle>' +
+      '<text x="32" y="33">' + pct + '%</text></svg><small>' + name + '</small></span>';
+  }
+  function renderDonuts() {
+    var toneVar = { ok: 'var(--tone-ok)', warn: 'var(--tone-warn)', hot: 'var(--tone-err)' };
+    var dts = [ ['Claude', 78, 'warn'], ['Copilot', 91, 'hot'], ['Codex', 34, 'ok'], ['Gemini', 41, 'ok'], ['Cursor', 56, 'ok'], ['Antigravity', 28, 'ok'] ];
+    $('u5Donuts').innerHTML = dts.map(function (x) { return donut(x[0], x[1], toneVar[x[2]]); }).join('');
+    $('u5Presets').innerHTML = '<span class="k">Warn at</span>' + D.budget.presets.map(function (p) {
+      return '<button class="u5-pchip' + (p === D.budget.warningThreshold ? ' on' : '') + '" data-preset="' + p + '">' + p + '%</button>';
+    }).join('');
+    $('u5Presets').querySelectorAll('[data-preset]').forEach(function (b) {
+      b.addEventListener('click', function () {
+        D.budget.warningThreshold = parseInt(b.dataset.preset, 10);
+        renderDonuts();
+        if (window.toast) window.toast('Budget warning threshold set to ' + b.dataset.preset + '% (demo)');
+      });
+    });
+    /* shared donut spring: stroke draws with overshoot-then-settle, staggered */
+    window.USrender.animateDonuts($('u5Donuts'));
+  }
+
+  /* ---------- cache ---------- */
+  function renderCache() {
+    var rows = D.cache.map(function (c) {
+      if (c.state === 'unsupported') {
+        return '<div class="u5-crow"><span class="u5-cname">' + c.name + '</span>' + chip('unsupported') +
+          '<span class="u5-cnums dim">provider does not expose cache fields</span><span class="u5-cnums dim">\u2014</span><span class="u5-csave na">\u2014</span></div>';
+      }
+      var zero = (c.save || 0) === 0;
+      var note = c.zeroNote ? '<div class="u5-qnote" style="grid-column:1/-1">' + c.zeroNote + '</div>' : (c.missReason ? '<div class="u5-qnote" style="grid-column:1/-1">miss reason: ' + c.missReason + '</div>' : '');
+      return '<div class="u5-crow"><span class="u5-cname">' + c.name + '</span>' + chip(c.state) +
+        '<span class="us-meter">' + meter(c.hit, 'ok') + '<span class="pc">' + c.hit + '%</span></span>' +
+        '<span class="u5-cnums">r ' + fmt.tok(c.cr) + ' · w ' + fmt.tok(c.cw) + '</span>' +
+        '<span class="u5-csave' + (zero ? ' zero' : '') + '">' + (zero ? '$0.00' : '\u2212$' + c.save.toFixed(2)) + '</span>' + note + '</div>';
+    }).join('');
+    $('u5Cache').innerHTML = rows +
+      '<div class="us-foot" style="margin-top:var(--sm)"><i data-ico="info" class="pm-ico sm"></i><span>Saved about <b>$' + D.cacheTotalSaved.toFixed(2) + '</b> today from provider caches ' + provFresh('derived from cache rows', 'medium') + ' — entries expire on their own; Puppet Master cannot clear provider caches.</span></div>';
+  }
+
+  /* ---------- context budget ---------- */
+  function renderContext() {
+    var cb = D.contextBudget;
+    $('u5CtxMeta').textContent = fmt.tok(cb.totalTokens) + ' / ' + fmt.tok(cb.limit) + ' tokens';
+    var rows = cb.families.map(function (f) {
+      return '<div class="u5-fam"><span class="u5-fam-name">' + f.name + '</span>' +
+        '<span class="us-meter">' + meter(f.share, 'info') + '<span class="pc">' + f.share + '%</span></span>' +
+        '<span class="u5-fam-tok">' + fmt.tok(f.tokens) + '</span></div>';
+    }).join('');
+    var omitted = cb.omitted.map(function (o) {
+      return '<div class="us-wc"><span class="q">' + o.name + '</span><span class="a part">' + o.reason + '</span></div>';
+    }).join('');
+    $('u5Context').innerHTML = rows +
+      '<hr class="us-hr">' +
+      '<div class="us-foot" style="margin-bottom:4px"><i data-ico="info" class="pm-ico sm"></i><span>Omitted / deferred catalog entries carry a reason receipt.</span></div>' + omitted;
+  }
+
+  /* ---------- accounts ---------- */
+  function fmtCd(s) { var h = Math.floor(s / 3600), m = Math.floor((s % 3600) / 60), x = s % 60; return String(h).padStart(2, '0') + ':' + String(m).padStart(2, '0') + ':' + String(x).padStart(2, '0'); }
+  function renderAccounts() {
+    var presChip = { ok: chip('measured'), approaching_threshold: chip('estimated'), cooldown: chip('blocked'), exhausted: chip('failed') };
+    var cards = D.accounts.map(function (a, i) {
+      var markers = (a.requested ? '<span class="u5-marker req">' + ic('user') + ' requested</span>' : '') + (a.effective ? '<span class="u5-marker eff">' + ic('check') + ' effective</span>' : '');
+      var cd = a.cooldownSec != null ? ' <span class="u5-cd" data-cd-idx="' + i + '">' + fmtCd(a.cooldownSec) + '</span>' : '';
+      var dot = a.pressure === 'cooldown' || a.pressure === 'exhausted' ? 'err' : (a.pressure === 'approaching_threshold' ? 'warn' : 'ok');
+      var note = a.note ? '<div class="u5-acct-note">' + ic('info') + ' ' + a.note + '</div>' : '';
+      return '<div class="u5-acct' + (a.effective ? ' effective' : '') + '">' +
+        '<div class="u5-acct-h"><span class="u5-acct-name">' + a.prov + ' \u00b7 ' + a.name + '</span><span class="u5-acct-mail">' + a.mail + '</span>' + markers + '</div>' +
+        '<div class="u5-acct-status"><span class="us-dot ' + dot + (dot !== 'ok' ? ' pulse' : '') + '"></span><span>' + a.status + cd + '</span><span style="margin-left:auto">' + (a.pressure !== 'ok' ? presChip[a.pressure] : '') + '</span></div>' +
+        note + '</div>';
+    }).join('');
+    var hist = D.pressureHistory.map(function (h) {
+      var tone = h.kind === 'switch' ? 'info' : (h.state === 'exhausted' ? 'err' : (h.state === 'approaching' ? 'warn' : 'mute'));
+      return '<div class="us-wc"><span class="q">' + h.t + ' \u00b7 ' + h.text + '</span><span class="a" style="color:var(--tone-' + tone + '-text)">' + h.reason + '</span></div>';
+    }).join('');
+    $('u5Accounts').innerHTML = cards +
+      '<hr class="us-hr">' +
+      '<div class="us-foot" style="margin-bottom:4px"><i data-ico="history" class="pm-ico sm"></i><span><b>Pressure &amp; switch history</b> (append-only records) — requested is the account you chose; effective is the one doing the work; cost lands on effective.</span></div>' + hist;
+    $('u5AcctCount').textContent = D.accounts.length + ' accounts';
+  }
+  /* tick cooldowns live */
+  setInterval(function () {
+    if (document.visibilityState !== 'visible') return;
+    D.accounts.forEach(function (a, i) {
+      if (a.cooldownSec != null && a.cooldownSec > 0) {
+        a.cooldownSec--;
+        var el = document.querySelector('[data-cd-idx="' + i + '"]');
+        if (el) el.textContent = fmtCd(a.cooldownSec);
+      }
+    });
+  }, 1000);
+
+  /* ---------- guards ---------- */
+  function renderGuards() {
+    var rows = D.guards.map(function (g, i) {
+      var cls = g.state === 'blocked' ? 'blocked' : (g.state === 'warn' ? 'warn' : 'ok');
+      var stChip = g.state === 'blocked' ? chip('blocked') : (g.state === 'warn' ? chip('estimated') : chip('measured'));
+      var why = '<div class="u5-why" data-why="' + i + '"><div class="u5-why-t" role="button" tabindex="0" aria-expanded="false"><span class="car">' + ic('chevR') + '</span>Why was this ' + g.state + '?</div>' +
+        '<div class="u5-why-b"><div class="u5-dgrid">' + g.why.map(function (kv) { return '<div class="u5-di"><b>' + kv[0] + '</b><span>' + kv[1] + '</span></div>'; }).join('') + '</div></div></div>';
+      var actions = g.state === 'blocked'
+        ? '<div style="display:flex;gap:var(--sm);flex-wrap:wrap"><button class="u5-btn primary" data-demo-action="usage.anomaly_keep" data-demo-arg="Keep blocking ' + g.kind + '">Looks right — keep blocking</button><button class="u5-btn" data-demo-action="usage.anomaly_allow" data-demo-arg="Allow once: ' + g.kind + '">It was expected — allow once</button></div>' : '';
+      return '<div class="u5-guard ' + cls + '"><div class="u5-guard-h">' + ic('shield') + '<span class="u5-guard-name">' + g.title + '</span>' + stChip + '</div>' +
+        '<div class="u5-guard-body">' + g.body + '</div><div class="u5-guard-body" style="color:var(--text-muted)">' + g.where + ' · ' + g.t + '</div>' + why + actions + '</div>';
+    }).join('');
+    $('u5Guards').innerHTML = rows +
+      '<div class="us-foot" style="margin-top:var(--sm)"><i data-ico="info" class="pm-ico sm"></i><span>Guard types: ' + D.guardTypes.join(', ') + '. Window 1h, spike ratio ' + D.guardConfig.spikeRatio + '\u00d7.</span></div>';
+    document.querySelectorAll('.u5-why-t').forEach(function (t) {
+      function tog() { t.setAttribute('aria-expanded', t.parentElement.classList.toggle('open') ? 'true' : 'false'); }
+      t.addEventListener('click', tog);
+      t.addEventListener('keydown', function (e) { if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); tog(); } });
+    });
+  }
+
+  /* ---------- signals ---------- */
+  function renderSignals() {
+    var e = D.efficiency;
+    $('u5GradeHero').className = 'u5-gradehero ' + (e.score >= 85 ? 'g-ok' : e.score >= 70 ? 'g-warn' : 'g-err');
+    $('u5GradeHero').innerHTML = '<b>' + e.grade + '</b><span>SCORE · ' + e.score + '/100</span>';
+    var comp = e.components.map(function (c) {
+      return '<div class="u5-fam"><span class="u5-fam-name">' + c.k + ' (' + Math.round(c.w * 100) + '%)</span>' +
+        '<span class="us-meter">' + meter(c.v, c.adverse ? 'hot' : 'ok') + '<span class="pc">' + c.v + (c.adverse ? '%' : '') + '</span></span><span class="u5-fam-tok"></span></div>';
+    }).join('');
+    function sig(list, cls) {
+      return list.map(function (s) { return '<div class="u5-sigrow ' + cls + '"><span class="sd"></span><span class="st">' + s.text + '</span></div>'; }).join('');
+    }
+    $('u5Signals').innerHTML =
+      '<div class="us-foot" style="margin-bottom:2px"><span style="font-weight:700;color:var(--text-secondary)">EFFICIENCY</span></div>' + comp +
+      '<hr class="us-hr">' +
+      '<div class="us-foot" style="margin-bottom:2px"><span style="font-weight:700;color:var(--tone-ok-text)">WINS</span></div>' + sig(D.signals.wins, 'win') +
+      '<div class="us-foot" style="margin:6px 0 2px"><span style="font-weight:700;color:var(--tone-info-text)">IMPROVEMENTS</span></div>' + sig(D.signals.improvements, 'imp') +
+      '<div class="us-foot" style="margin:6px 0 2px"><span style="font-weight:700;color:var(--tone-warn-text)">RISKS</span></div>' + sig(D.signals.risks, 'risk');
+  }
+
+  /* ---------- tools ---------- */
+  function renderTools() {
+    var rows = D.tools.map(function (t) {
+      var errCls = t.err >= 5 ? 'err' : t.err >= 2 ? 'warn' : 'ok';
+      var idx = t.idx == null ? '<span class="dim">\u2014</span>' : '<span class="us-meter" style="min-width:70px">' + meter(t.idx, 'info') + '<span class="pc">' + t.idx + '%</span></span>';
+      return '<tr><td class="mono">' + window.USrender.humanCap(t.tool) + '</td><td class="num">' + fmt.num(t.calls) + '</td>' +
+        '<td class="num">' + t.p50 + 'ms</td><td class="num">' + fmt.num(t.p95) + 'ms</td>' +
+        '<td><span class="vs vs-' + errCls + '">' + t.err.toFixed(1) + '%</span></td><td>' + idx + '</td></tr>';
+    }).join('');
+    $('u5Tools').innerHTML = '<div class="us-tblwrap"><table class="us-tbl">' +
+      '<thead><tr><th>Tool</th><th class="num">Calls</th><th class="num">p50</th><th class="num">p95</th><th>Error rate</th><th>index_used</th></tr></thead>' +
+      '<tbody>' + rows + '</tbody></table></div>';
+  }
+
+  /* ---------- ledger ---------- */
+  var LF = { q: '', plat: '', rep: '' };
+  var LSORT = { key: '', dir: 1 };
+  var EV_LABEL = { completion: 'Completion', tool: 'Tool call', error: 'Error', guard: 'Guard', switch: 'Acct switch' };
+  function matches(r) {
+    if (LF.plat && r.prov !== LF.plat) return false;
+    if (LF.rep && r.rep !== LF.rep) return false;
+    if (LF.q) { var hay = (r.t + ' ' + r.ev + ' ' + r.run + ' ' + r.lane + ' ' + r.prov + ' ' + r.model + ' ' + r.acct).toLowerCase(); if (hay.indexOf(LF.q) === -1) return false; }
+    return true;
+  }
+  function ledgerRow(r, idx, fresh) {
+    var main = '<tr class="' + (fresh ? 'us-new' : '') + '" data-lrow="' + idx + '">' +
+      '<td><span class="u5-caret" role="button" tabindex="0" title="Show details" aria-label="Show details" aria-expanded="false">' + ic('chevR') + '</span></td>' +
+      '<td class="mono">' + r.t + '</td>' +
+      '<td class="ev-' + r.ev + '">' + (EV_LABEL[r.ev] || r.ev) + '</td>' +
+      '<td class="mono">' + r.run + ' \u00b7 ' + r.lane + '</td>' +
+      '<td>' + r.prov + '</td><td class="mono">' + r.model + '</td>' +
+      '<td class="num">' + fmt.num(r.tin) + '</td><td class="num">' + fmt.num(r.tout) + '</td>' +
+      '<td class="num">' + (r.cr == null ? '<span class="dim" title="not reported">\u2014</span>' : fmt.num(r.cr)) + '</td>' +
+      '<td>' + chip(r.rep) + '</td>' +
+      '<td class="num">' + (r.cost ? fmt.cost(r.cost) : '$0.00') + '</td></tr>';
+    var kv = r.detail || {};
+    var cells = Object.keys(kv).map(function (k) { return '<div class="u5-di"><b>' + window.USrender.humanCap(k) + '</b><span>' + window.USrender.human(kv[k]) + '</span></div>'; }).join('') +
+      '<div class="u5-di"><b>Latency</b><span>' + r.lat + '</span></div><div class="u5-di"><b>usage event ref</b><span class="mono">' + (r.ref || '\u2014') + '</span></div>';
+    var det = '<tr class="u5-detail" data-ldetail="' + idx + '" hidden><td></td><td colspan="10"><div class="u5-dgrid">' + cells + '</div>' +
+      '<div style="margin-top:var(--sm)"><button class="u5-btn" data-demo-action="usage.drill" data-demo-arg="Open in Orchestrator · ' + (r.ref || '') + '">Open in Orchestrator ' + ic('external') + '</button></div></td></tr>';
+    return main + det;
+  }
+  function renderLedger() {
+    var tbody = $('u5LedgerBody');
+    var shown = 0;
+    var rows = D.ledger.filter(function (r) { return matches(r); });
+    if (LSORT.key) {
+      var num = { tin: 1, tout: 1, cr: 1, cost: 1 };
+      rows = rows.slice().sort(function (a, b) {
+        var av = a[LSORT.key], bv = b[LSORT.key];
+        if (num[LSORT.key]) { av = av == null ? -1 : av; bv = bv == null ? -1 : bv; return (av - bv) * LSORT.dir; }
+        return String(av == null ? '' : av).localeCompare(String(bv == null ? '' : bv)) * LSORT.dir;
+      });
+    }
+    tbody.innerHTML = rows.map(function (r) { shown++; return ledgerRow(r, D.ledger.indexOf(r), false); }).join('');
+    $('u5LedgerCount').textContent = shown + ' of ' + D.ledger.length + ' events';
+    $('u5LedgerFoot').textContent = 'Every row carries a stable usage event ref; drill-through preserves it. Window: last 5h · cost is attributed to the effective account.';
+    wireLedgerRows(tbody);
+  }
+  function wireLedgerRows(tbody) {
+    tbody.querySelectorAll('[data-lrow]').forEach(function (row) {
+      var car = row.querySelector('.u5-caret');
+      function tog() { var det = tbody.querySelector('[data-ldetail="' + row.dataset.lrow + '"]'); if (!det) return; det.hidden = !det.hidden; car.classList.toggle('open', !det.hidden); car.setAttribute('aria-expanded', det.hidden ? 'false' : 'true'); }
+      car.addEventListener('click', tog);
+      car.addEventListener('keydown', function (e) { if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); tog(); } });
+    });
+  }
+  function buildLedgerMenus() {
+    var provs = {}; D.ledger.forEach(function (r) { provs[r.prov] = 1; });
+    $('u5PlatMenu').innerHTML = '<button type="button" class="pm6-tb-menu-item is-selected" role="menuitem" data-value="">All platforms</button>' +
+      Object.keys(provs).sort().map(function (p) { return '<button type="button" class="pm6-tb-menu-item" role="menuitem" data-value="' + p + '">' + p + '</button>'; }).join('');
+    $('u5RepMenu').innerHTML = ['measured', 'estimated', 'unsupported'].map(function (r, i) {
+      return i === 0 ? '<button type="button" class="pm6-tb-menu-item is-selected" role="menuitem" data-value="">Any reporting</button><button type="button" class="pm6-tb-menu-item" role="menuitem" data-value="' + r + '">' + r + '</button>'
+        : '<button type="button" class="pm6-tb-menu-item" role="menuitem" data-value="' + r + '">' + r + '</button>';
+    }).join('');
+    $('u5PlatMenu').addEventListener('pm-menu-pick', function (ev) { LF.plat = ev.detail.value || ''; $('u5PlatLabel').textContent = ev.detail.value || 'All platforms'; renderLedger(); });
+    $('u5RepMenu').addEventListener('pm-menu-pick', function (ev) { LF.rep = ev.detail.value || ''; $('u5RepLabel').textContent = ev.detail.value || 'Any reporting'; renderLedger(); });
+  }
+  $('u5LedgerSearch').addEventListener('input', function () { LF.q = this.value.toLowerCase(); renderLedger(); });
+
+  /* live ledger appends */
+  var liveIdx = 0, liveRef = 2000;
+  setInterval(function () {
+    if (document.visibilityState !== 'visible') return;
+    var src = D.livePool[liveIdx++ % D.livePool.length];
+    var r = {}; Object.keys(src).forEach(function (k) { r[k] = src[k]; });
+    r.ref = 'ue-47-' + (liveRef++);
+    var now = new Date(); r.t = String(now.getHours()).padStart(2, '0') + ':' + String(now.getMinutes()).padStart(2, '0');
+    D.ledger.unshift(r); if (D.ledger.length > 40) D.ledger.pop();
+    if (!matches(r)) return;
+    var tbody = $('u5LedgerBody');
+    var tmp = document.createElement('tbody'); tmp.innerHTML = ledgerRow(r, 'L' + Date.now(), true);
+    while (tmp.firstChild) tbody.insertBefore(tmp.firstChild, tbody.firstChild);
+    wireLedgerRows(tbody);
+    $('u5LedgerCount').textContent = tbody.querySelectorAll('[data-lrow]').length + ' of ' + D.ledger.length + ' events';
+  }, 9000);
+
+  /* ---------- animated counters + fills (shared upgraded animators) ----------
+     counters tween value→value with a soft overshoot and a landing tick; fills
+     spring past their target then settle — both honor reduced motion */
+  function animateCounters() { window.USrender.animateCounters(document); }
+  function animateFills() { window.USrender.animateFills(document); }
+
+  /* ---------- shelf settle: rows land like objects placed in the groove ----
+     one soft spring per row, staggered down the group; skipped entirely under
+     reduced motion (the final state is already correct without it) */
+  function settleRows(scope) {
+    if (!scope || window.USrender.isRM()) return;
+    var rows = scope.querySelectorAll('.u5-pi, .u5-qrow, .u5-crow, .u5-fam, .u5-acct, .u5-guard, .u5-donut');
+    var dur = cssMs('--mo-spring-dur', 420);
+    var stag = cssMs('--mo-stagger', 24);
+    rows.forEach(function (el, i) {
+      if (el._u5Settle) { try { el._u5Settle.cancel(); } catch (e) {} }
+      el._u5Settle = el.animate(
+        [{ opacity: 0, transform: 'translateY(6px)' }, { opacity: 1, transform: 'translateY(0)' }],
+        { duration: dur, easing: 'cubic-bezier(0.3, 1.22, 0.5, 1)', delay: Math.min(i, 10) * stag, fill: 'backwards' });
+    });
+  }
+  var settleTimer = 0;
+  function scheduleSettle() {
+    clearTimeout(settleTimer);
+    settleTimer = setTimeout(function () {
+      settleRows(document.querySelector('.u5-pulse'));
+      document.querySelectorAll('.u5-shelf.open').forEach(function (s) { settleRows(s); });
+    }, 260 * motK());
+  }
+
+  /* refresh button */
+  $('u5Refresh').addEventListener('click', function () {
+    var b = this; b.classList.add('spinning');
+    $('u5FreshTxt').textContent = 'refreshing\u2026';
+    $('u5Fresh').classList.add('stale');
+    setTimeout(function () {
+      b.classList.remove('spinning');
+      $('u5Fresh').classList.remove('stale');
+      $('u5FreshTxt').textContent = 'current · as of ' + D.asOf;
+      renderAll();
+      if (window.toast) window.toast('Usage projections refreshed (demo)');
+    }, 900);
+  });
+
+  function wireLedgerSort() {
+    document.querySelectorAll('th[data-sort]').forEach(function (th) {
+      var lbl = th.textContent.trim();
+      th.insertAdjacentHTML('beforeend', '<span class="u5-sortic" aria-hidden="true">' + window.PMIcon('arrowUp', 'au') + window.PMIcon('arrowDn', 'ad') + '</span>');
+      th.setAttribute('tabindex', '0');
+      th.setAttribute('title', 'Sort by ' + lbl);
+      function act() {
+        var k = th.getAttribute('data-sort');
+        if (LSORT.key === k) LSORT.dir = -LSORT.dir; else { LSORT.key = k; LSORT.dir = 1; }
+        document.querySelectorAll('th[data-sort]').forEach(function (x) { x.classList.remove('asc', 'desc'); x.removeAttribute('aria-sort'); });
+        th.classList.add(LSORT.dir === 1 ? 'asc' : 'desc');
+        th.setAttribute('aria-sort', LSORT.dir === 1 ? 'ascending' : 'descending');
+        renderLedger();
+      }
+      th.addEventListener('click', act);
+      th.addEventListener('keydown', function (e) { if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); act(); } });
+    });
+  }
+  function renderAll() {
+    renderPulse(); renderQuotas(); renderChartWin(); renderChart(); renderDonuts();
+    renderCache(); renderContext(); renderAccounts(); renderGuards(); renderSignals();
+    renderTools(); renderLedger();
+    animateCounters(); requestAnimationFrame(animateFills);
+    scheduleSettle();
+    window.USrender.deText(document);
+  }
+  /* shelf headers are real <button>s: toggle .open on the shelf, keep
+     aria-expanded in sync, and let the shelf body expand/contract with a soft
+     warm settle (a gentle give on open, a smooth gather on close) while the
+     chevron springs around on its own. Keyboard activation rides the same
+     click path; reduced motion snaps the shelf instantly. */
+  function toggleShelf(shelf, h) {
+    var body = shelf.querySelector('.u5-shbody');
+    function sync() { h.setAttribute('aria-expanded', shelf.classList.contains('open') ? 'true' : 'false'); }
+    if (!body || window.USrender.isRM() || !body.animate) { shelf.classList.toggle('open'); sync(); return; }
+    if (body._u5Shelf) { try { body._u5Shelf.cancel(); } catch (e) {} body._u5Shelf = null; }
+    body.style.height = ''; body.style.overflow = '';
+    var opening = !shelf.classList.contains('open');
+    var dur = opening ? cssMs('--mo-spring-dur', 420) : Math.round(cssMs('--mo-settle-dur', 300) * 0.9);
+    var ease = opening ? 'cubic-bezier(0.32, 1.14, 0.45, 1)' : 'cubic-bezier(0.45, 0, 0.4, 1)';
+    if (opening) {
+      shelf.classList.add('open'); sync();
+      var to = body.offsetHeight;
+      body.style.overflow = 'hidden';
+      body._u5Shelf = body.animate([{ height: '0px' }, { height: to + 'px' }], { duration: dur, easing: ease });
+    } else {
+      var from = body.offsetHeight;
+      body.style.overflow = 'hidden';
+      body._u5Shelf = body.animate([{ height: from + 'px' }, { height: '0px' }], { duration: dur, easing: ease });
+      body._u5Shelf.onfinish = function () {
+        shelf.classList.remove('open'); sync();
+        body.style.height = ''; body.style.overflow = ''; body._u5Shelf = null;
+      };
+    }
+    body._u5Shelf.addEventListener('finish', function () {
+      if (opening) { body.style.height = ''; body.style.overflow = ''; body._u5Shelf = null; settleRows(shelf); }
+    });
+  }
+  document.querySelectorAll('.u5-shhead[data-collapse]').forEach(function (h) {
+    var shelf = h.closest('[data-acc]');
+    function sync() { h.setAttribute('aria-expanded', shelf && shelf.classList.contains('open') ? 'true' : 'false'); }
+    sync();
+    h.addEventListener('click', function () { if (shelf) toggleShelf(shelf, h); });
+  });
+  var bp = $('u5BudgetProv'); if (bp) bp.innerHTML = prov(D.budget);
+
+  /* aim the context popover's caret at its trigger. The shared placer parks the
+     diamond at a fixed 12%/88% corner which, for the bottom-bar ring chip, lands
+     ~100px off the chip; recompute the horizontal anchor from the chip's centre
+     (sprout._btn is set by the shared open()) whenever the popover opens. */
+  function aimCaret() {
+    var spr = document.getElementById('pm-ctx-ring-pop');
+    if (!spr || !spr.classList.contains('is-open')) return;
+    var btn = spr._btn; if (!btn) return;
+    var sr = spr.getBoundingClientRect(), br = btn.getBoundingClientRect();
+    var x = (br.left + br.width / 2) - sr.left;
+    x = Math.max(14, Math.min(sr.width - 14, x));
+    spr.style.setProperty('--u5-caret-x', x.toFixed(1) + 'px');
+  }
+  (function () {
+    function reg() {
+      var spr = document.getElementById('pm-ctx-ring-pop');
+      if (!spr || spr._caretObs) return;
+      spr._caretObs = true;
+      new MutationObserver(function (ms) {
+        for (var i = 0; i < ms.length; i++) if (ms[i].attributeName === 'class') { requestAnimationFrame(aimCaret); return; }
+      }).observe(spr, { attributes: true, attributeFilter: ['class'] });
+    }
+    if (document.getElementById('pm-ctx-ring-pop')) reg();
+    else if (window.PMContext && window.PMContext.mountTriggers) { window.PMContext.mountTriggers(document.getElementById('sbChips')); reg(); }
+    window.addEventListener('resize', aimCaret);
+  })();
+
+  buildLedgerMenus();
+  wireLedgerSort();
+  renderAll();
+})();
+</script>
+</body>
+</html>
