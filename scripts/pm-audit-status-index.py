@@ -73,6 +73,23 @@ def status_family(status: str | None) -> str:
 
 def build_index() -> dict[str, Any]:
     closure_rows = load_jsonl(REGISTRY)
+    latest_closure_by_finding: dict[str, dict[str, Any]] = {}
+    for row in closure_rows:
+        finding_key = str(row.get("finding_key", "")).strip()
+        if finding_key:
+            latest_closure_by_finding[finding_key] = row
+    active_reopened_findings = [
+        {
+            "closure_id": row.get("closure_id"),
+            "finding_key": row.get("finding_key"),
+            "line": row.get("_line"),
+            "audit_ids": row.get("audit_ids", []),
+            "closure_reason": row.get("closure_reason"),
+        }
+        for row in latest_closure_by_finding.values()
+        if row.get("closure_status") == "reopened"
+    ]
+    active_reopened_findings.sort(key=lambda row: (str(row.get("finding_key")), str(row.get("closure_id"))))
     closure_by_audit: dict[str, list[dict[str, Any]]] = defaultdict(list)
     for row in closure_rows:
         for audit_id in row.get("audit_ids", []) or []:
@@ -116,6 +133,7 @@ def build_index() -> dict[str, Any]:
         )
 
     status_counts = Counter(row["reported_status_family"] for row in reports)
+    current_report_blocker_count = sum(1 for row in reports if row["current_blocker"])
     return {
         "schema_id": "pm.audit_status_index.v1",
         "generated_at_utc": utc_now(),
@@ -126,12 +144,15 @@ def build_index() -> dict[str, Any]:
         "summary": {
             "report_count": len(reports),
             "reported_status_family_counts": dict(sorted(status_counts.items())),
-            "current_blocker_count": sum(1 for row in reports if row["current_blocker"]),
+            "current_blocker_count": current_report_blocker_count + len(active_reopened_findings),
+            "current_report_blocker_count": current_report_blocker_count,
+            "current_reopened_finding_count": len(active_reopened_findings),
             "historical_blocked_or_fail_report_count": sum(
                 1 for row in reports if row["reported_status_family"] == "blocked_or_fail"
             ),
             "closure_registry_row_count": len(closure_rows),
         },
+        "active_reopened_findings": active_reopened_findings,
         "reports": reports,
     }
 
@@ -146,12 +167,34 @@ def render_markdown(index: dict[str, Any]) -> str:
         f"- Generated: `{index['generated_at_utc']}`",
         f"- Reports indexed: {summary['report_count']}",
         f"- Current blockers: {summary['current_blocker_count']}",
+        f"- Current report blockers: {summary['current_report_blocker_count']}",
+        f"- Reopened finding blockers: {summary['current_reopened_finding_count']}",
         f"- Historical BLOCKED/FAIL reports indexed: {summary['historical_blocked_or_fail_report_count']}",
         f"- Closure registry rows: {summary['closure_registry_row_count']}",
+    ]
+    if index["active_reopened_findings"]:
+        rows.extend(
+            [
+                "",
+                "## Active reopened findings",
+                "",
+                "| Finding key | Closure row | Registry line |",
+                "|---|---|---:|",
+            ]
+        )
+        for finding in index["active_reopened_findings"]:
+            rows.append(
+                f"| `{finding['finding_key']}` | `{finding['closure_id']}` | {finding['line']} |"
+            )
+    rows.extend(
+        [
+        "",
+        "## Historical audit reports",
         "",
         "| Audit | Reported status | Effective status | Current blocker | Closure rows |",
         "|---|---|---|---:|---:|",
-    ]
+        ]
+    )
     for report in index["reports"]:
         status = report["reported_status"] or "STATUS_UNSTATED"
         closure_rows = report["closure_registry_basis"]["matching_rows"]
@@ -188,6 +231,7 @@ def validate() -> dict[str, Any]:
     required_phrases = [
         "separates immutable historical report headers from current presentation status",
         "Current blockers:",
+        "Reopened finding blockers:",
         "Historical BLOCKED/FAIL reports indexed:",
     ]
     for phrase in required_phrases:

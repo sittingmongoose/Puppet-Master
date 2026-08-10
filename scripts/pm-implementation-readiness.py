@@ -918,16 +918,38 @@ def effective_open_blockers_from(
     *,
     pnc019_certification_current: bool,
 ) -> list[dict[str, Any]]:
-    return [
-        row
-        for row in blockers
-        if is_open_blocker(row)
-        or (
+    effective: list[dict[str, Any]] = []
+    for row in blockers:
+        blocker_id = str(row.get("blocker_id", ""))
+        blocker_family = str(row.get("blocker_family", ""))
+        certification_reopens_blocker = (
             not pnc019_certification_current
-            and PNC019_EXECUTABLE_BLOCKER_FAMILIES_BY_ID.get(str(row.get("blocker_id", "")))
-            == str(row.get("blocker_family", ""))
+            and PNC019_EXECUTABLE_BLOCKER_FAMILIES_BY_ID.get(blocker_id) == blocker_family
         )
-    ]
+        if not is_open_blocker(row) and not certification_reopens_blocker:
+            continue
+
+        projected = dict(row)
+        if certification_reopens_blocker and not is_open_blocker(row):
+            projected.pop("closed_at_utc", None)
+            projected.update(
+                {
+                    "status": "open",
+                    "closure_scope": "reopened_until_current_pnc019_executable_lifecycle_certification",
+                    "effective_reopen_reason": "pnc019_certification_not_current",
+                    "summary": (
+                        f"{blocker_id} {blocker_family} is effectively open because the governed "
+                        "PNC-019 certification receipt is not current."
+                    ),
+                    "notes": (
+                        "The blocker registry preserves the historical closure row, but this generated "
+                        "currentness projection reopens it until the executable certification receipt "
+                        "passes with current source bindings and Event Authority evidence."
+                    ),
+                }
+            )
+        effective.append(projected)
+    return effective
 
 
 def report_effectively_opens_blocker(
@@ -7134,12 +7156,24 @@ def run_self_tests() -> dict[str, Any]:
         disabled_reasons = report["approve_and_build_gate"]["disabled_reasons"]
         hard_reasons = report["approve_and_build_gate"]["hard_disabled_reasons"]
         open_blocker_ids = [row.get("blocker_id") for row in report["remaining_open_blockers"]]
+        source_status_by_id = {str(row.get("blocker_id")): str(row.get("status")) for row in blockers}
+        effectively_reopened_rows = [
+            row
+            for row in report["remaining_open_blockers"]
+            if source_status_by_id.get(str(row.get("blocker_id"))) in CLOSED_BLOCKER_STATUSES
+        ]
         disabled_families = [reason.get("blocker_family") for reason in disabled_reasons]
         node_readiness = report["node_readiness"]
         checks = {
             "open_blocker_count": report["open_blocker_count"] == scenario["expected_open_count"],
             "disabled_reason_count": len(disabled_reasons) == scenario["expected_disabled_count"],
             "effective_open_blocker_ids": open_blocker_ids == scenario.get("expected_open_ids", open_blocker_ids),
+            "effective_reopened_blocker_projection": all(
+                row.get("status") == "open"
+                and row.get("effective_reopen_reason") == "pnc019_certification_not_current"
+                and "closed_at_utc" not in row
+                for row in effectively_reopened_rows
+            ),
             "effective_disabled_families": disabled_families
             == scenario.get("expected_disabled_families", disabled_families),
             "pnc019_hard_reason": any(reason.get("plan_unit_id") == "PNC-019" for reason in hard_reasons)
