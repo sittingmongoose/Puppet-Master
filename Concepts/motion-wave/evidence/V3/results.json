@@ -1,0 +1,782 @@
+{
+  "results": [
+    {
+      "item": 1,
+      "id": "a",
+      "desc": "open fires enter anim (.pm-panel-enter and/or animation)",
+      "pass": true,
+      "detail": "enterCls=true anims=1"
+    },
+    {
+      "item": 1,
+      "id": "b",
+      "desc": "after enter: panel .active, slot visible",
+      "pass": true,
+      "detail": "active=true slotHidden=false"
+    },
+    {
+      "item": 1,
+      "id": "c",
+      "desc": "close fires .pm-panel-exit (and/or exit animation)",
+      "pass": true,
+      "detail": "exitCls=true anims=1"
+    },
+    {
+      "item": 1,
+      "id": "d",
+      "desc": "after close: slot .hidden, panel not .active, exit class cleaned",
+      "pass": true,
+      "detail": "hidden=true active=false stuckExit=false"
+    },
+    {
+      "item": 1,
+      "id": "e",
+      "desc": "reopen restores .active",
+      "pass": true,
+      "detail": "active=true"
+    },
+    {
+      "item": 1,
+      "id": "f",
+      "desc": "search<->source x3: no stuck exit classes, exactly one active",
+      "pass": true,
+      "detail": "search={\"exit\":false,\"enter\":false,\"active\":true} source={\"exit\":false,\"enter\":false,\"active\":false}"
+    },
+    {
+      "item": 2,
+      "id": "a",
+      "desc": "segtab ink element present",
+      "pass": true,
+      "detail": "ink=true"
+    },
+    {
+      "item": 2,
+      "id": "b",
+      "desc": "find->replace: ink animates mid-flight",
+      "pass": true,
+      "detail": "inkAnims={\"n\":1,\"names\":[\"waapi\"]}"
+    },
+    {
+      "item": 2,
+      "id": "c",
+      "desc": "direction-aware pane dir set (find->replace = 1) and replace pane visible",
+      "pass": true,
+      "detail": "dir=1 replaceHidden=false"
+    },
+    {
+      "item": 2,
+      "id": "d",
+      "desc": "replace->find: dir=-1 and ink animates",
+      "pass": true,
+      "detail": "dir=-1 inkAnims=1"
+    },
+    {
+      "item": 2,
+      "id": "e",
+      "desc": "after switch back: find pane visible, replace hidden",
+      "pass": true,
+      "detail": "findVisible=true"
+    },
+    {
+      "item": 3,
+      "id": "a",
+      "desc": "shIdxToggle opens panel (.open, aria-expanded=true)",
+      "pass": true,
+      "detail": "open=true aria=true"
+    },
+    {
+      "item": 3,
+      "id": "b",
+      "desc": "disclosure body animates + inner .sh-kv cascade (pm-kid-in)",
+      "pass": true,
+      "detail": "bodyAnims=0 cascade=true"
+    },
+    {
+      "item": 3,
+      "id": "c",
+      "desc": "Rebuild -> building state (strip shown, dot-run, cancel visible)",
+      "pass": true,
+      "detail": "{\"stripHidden\":false,\"dot\":\"dot dot-run\",\"text\":\"building search index — 42% (539 / 1,284 docs)\",\"cancelHidden\":false,\"refreshHidden\":true}"
+    },
+    {
+      "item": 3,
+      "id": "d",
+      "desc": "building -> stale at ~1600ms (dot-warn, refresh visible)",
+      "pass": true,
+      "detail": "{\"dot\":\"dot dot-warn\",\"text\":\"stale — changes since abc12ef\",\"refreshHidden\":false,\"cancelHidden\":true}"
+    },
+    {
+      "item": 3,
+      "id": "e",
+      "desc": "shIdxRefresh reachable in stale state",
+      "pass": true,
+      "detail": "reachable=true"
+    },
+    {
+      "item": 3,
+      "id": "f",
+      "desc": "stale -> ok at ~3200ms (strip hidden, dot-ok)",
+      "pass": true,
+      "detail": "{\"stripHidden\":true,\"dot\":\"dot dot-ok\"}"
+    },
+    {
+      "item": 3,
+      "id": "g",
+      "desc": "Cancel -> stale flow (dot-warn, refresh shown) + toast",
+      "pass": true,
+      "detail": "{\"dot\":\"dot dot-warn\",\"refreshHidden\":false} toasts=3"
+    },
+    {
+      "item": 3,
+      "id": "h",
+      "desc": "shIdxToggle closes disclosure",
+      "pass": true,
+      "detail": "closed=true"
+    },
+    {
+      "item": 4,
+      "id": "a",
+      "desc": "shScopeMenu opens animated (.is-open + cascade)",
+      "pass": true,
+      "detail": "{\"isOpen\":true,\"cascade\":true,\"anims\":2}"
+    },
+    {
+      "item": 4,
+      "id": "b",
+      "desc": "trigger chevron flips + aria-expanded",
+      "pass": true,
+      "detail": "{\"expanded\":\"true\",\"anims\":1}"
+    },
+    {
+      "item": 4,
+      "id": "c",
+      "desc": "shScopeMenu has 4 items",
+      "pass": true,
+      "detail": "items=4"
+    },
+    {
+      "item": 4,
+      "id": "d",
+      "desc": "pick src/ on find -> replace side mirrors (label + is-selected)",
+      "pass": true,
+      "detail": "{\"findLab\":\"src/ only\",\"replLab\":\"src/ only\",\"replSelVal\":\"src\"}"
+    },
+    {
+      "item": 4,
+      "id": "e",
+      "desc": "menu closes after pick",
+      "pass": true,
+      "detail": "closed=true"
+    },
+    {
+      "item": 4,
+      "id": "f",
+      "desc": "shReplScopeMenu opens animated with 4 items",
+      "pass": true,
+      "detail": "{\"isOpen\":true,\"items\":4}"
+    },
+    {
+      "item": 4,
+      "id": "g",
+      "desc": "Escape closes replace menu (no stuck is-closing)",
+      "pass": true,
+      "detail": "closed=true"
+    },
+    {
+      "item": 5,
+      "id": "a",
+      "desc": "typing in find input mirrors to replace input",
+      "pass": true,
+      "detail": "replValue=foobar"
+    },
+    {
+      "item": 5,
+      "id": "b",
+      "desc": "focus ring transition defined on .pm-input",
+      "pass": true,
+      "detail": "transitionProperty=border-color, box-shadow"
+    },
+    {
+      "item": 5,
+      "id": "c",
+      "desc": "typing in replace input mirrors back to find",
+      "pass": true,
+      "detail": "findValue=bazqux"
+    },
+    {
+      "item": 6,
+      "id": "a",
+      "desc": "find Case flag toggles .on + pmChipPop + aria-pressed=true",
+      "pass": true,
+      "detail": "{\"on\":true,\"pop\":true,\"aria\":\"true\",\"anims\":7}"
+    },
+    {
+      "item": 6,
+      "id": "b",
+      "desc": "pairing: replace Case flag syncs .on + aria",
+      "pass": true,
+      "detail": "{\"on\":true,\"aria\":\"true\"}"
+    },
+    {
+      "item": 6,
+      "id": "c",
+      "desc": "flag toast fires",
+      "pass": true,
+      "detail": "toasts=1"
+    },
+    {
+      "item": 6,
+      "id": "d",
+      "desc": "replace Regex toggles + pop; find Regex syncs .on",
+      "pass": true,
+      "detail": "repl={\"on\":true,\"pop\":true} find={\"on\":true,\"aria\":\"true\"}"
+    },
+    {
+      "item": 6,
+      "id": "e",
+      "desc": "3 flags on each pane",
+      "pass": true,
+      "detail": "{\"find\":3,\"repl\":3}"
+    },
+    {
+      "item": 7,
+      "id": "a",
+      "desc": "shFilterToggle opens drawer (.open + cascade)",
+      "pass": true,
+      "detail": "{\"open\":true,\"aria\":\"true\",\"cascade\":true}"
+    },
+    {
+      "item": 7,
+      "id": "b",
+      "desc": "glob include -> .js-filterchip appears",
+      "pass": true,
+      "detail": "display=flex"
+    },
+    {
+      "item": 7,
+      "id": "c",
+      "desc": "RESULTS shelf flashes (pm-flashing) on filter chip flip",
+      "pass": true,
+      "detail": "flashing=true"
+    },
+    {
+      "item": 7,
+      "id": "d",
+      "desc": "ignore toggle: off then on with pop on re-enable",
+      "pass": true,
+      "detail": "before=true off={\"on\":false,\"aria\":\"false\"} on={\"on\":true,\"pop\":true}"
+    },
+    {
+      "item": 8,
+      "id": "a",
+      "desc": "6 .sh-file groups present",
+      "pass": true,
+      "detail": "groups=6"
+    },
+    {
+      "item": 8,
+      "id": "b",
+      "desc": "collapse-all: all groups closed + RESULTS flash + grid-rows anim",
+      "pass": true,
+      "detail": "collapsed=true flash=true anims=2"
+    },
+    {
+      "item": 8,
+      "id": "c",
+      "desc": "expand-all: all groups open (cascade)",
+      "pass": true,
+      "detail": "expanded=true"
+    },
+    {
+      "item": 8,
+      "id": "d",
+      "desc": "individual .sh-fileh header toggles group (via chevron)",
+      "pass": true,
+      "detail": "closed=true reopen=true"
+    },
+    {
+      "item": 8,
+      "id": "e",
+      "desc": ".sh-fp click -> toast + does NOT toggle group",
+      "pass": false,
+      "detail": "toasts=0 before=true after=true"
+    },
+    {
+      "item": 8,
+      "id": "f",
+      "desc": "5+ .sh-hit rows clickable -> toasts",
+      "pass": true,
+      "detail": "toasts=5 hits=16"
+    },
+    {
+      "item": 8,
+      "id": "g",
+      "desc": ".sh-hit has hover transition (background/transform)",
+      "pass": true,
+      "detail": "transition=background, border-color"
+    },
+    {
+      "item": 9,
+      "id": "a",
+      "desc": "Replace button -> toast + transform transition (squash)",
+      "pass": true,
+      "detail": "toasts=1 transition=color, border-color, background, box-shadow, transform"
+    },
+    {
+      "item": 9,
+      "id": "b",
+      "desc": "Replace all button -> toast",
+      "pass": true,
+      "detail": "toasts=1"
+    },
+    {
+      "item": 9,
+      "id": "c",
+      "desc": "replace preview .sh-fileh clickable -> toast",
+      "pass": true,
+      "detail": "toasts=1"
+    },
+    {
+      "item": 10,
+      "id": "a",
+      "desc": "Prev + Next -> toasts + squash transition",
+      "pass": true,
+      "detail": "prev=1 next=2 transition=color, border-color, background, box-shadow, transform"
+    },
+    {
+      "item": 11,
+      "id": "a",
+      "desc": "emulateMedia reduce: search opens functional, zero panel anims",
+      "pass": true,
+      "detail": "active=true anims=0"
+    },
+    {
+      "item": 11,
+      "id": "b",
+      "desc": "reduce: tab switch works, ink has zero anims",
+      "pass": true,
+      "detail": "replVisible=true inkAnims=0"
+    },
+    {
+      "item": 11,
+      "id": "c",
+      "desc": "reduce: flag toggles .on, no pop, zero anims",
+      "pass": true,
+      "detail": "{\"on\":true,\"pop\":false,\"anims\":0}"
+    },
+    {
+      "item": 11,
+      "id": "d",
+      "desc": "reduce: accordion opens to correct end state, zero anims",
+      "pass": true,
+      "detail": "{\"open\":true,\"anims\":0}"
+    },
+    {
+      "item": 11,
+      "id": "e",
+      "desc": "reduce(emulateMedia): zero console errors",
+      "pass": true,
+      "detail": "errs=[]"
+    },
+    {
+      "item": 11,
+      "id": "f",
+      "desc": "data-motion=reduced attr path: functional + zero anims",
+      "pass": true,
+      "detail": "active=true anims=0"
+    },
+    {
+      "item": 12,
+      "id": "a",
+      "desc": "4 source tabs present",
+      "pass": true,
+      "detail": "tabs=4"
+    },
+    {
+      "item": 12,
+      "id": "b",
+      "desc": "changes->branches non-adjacent: ink animates + dir=1 + branches pane shown",
+      "pass": true,
+      "detail": "ink=1 dir=1 visible=true"
+    },
+    {
+      "item": 12,
+      "id": "c",
+      "desc": "branches->changes: dir=-1 + ink animates",
+      "pass": true,
+      "detail": "dir=-1 ink=1"
+    },
+    {
+      "item": 12,
+      "id": "d",
+      "desc": "worktrees pane shown + rows cascade animate",
+      "pass": true,
+      "detail": "visible=true rowAnims=7"
+    },
+    {
+      "item": 12,
+      "id": "e",
+      "desc": "history pane reachable",
+      "pass": true,
+      "detail": "visible=true"
+    },
+    {
+      "item": 13,
+      "id": "a",
+      "desc": "shBranchMenu opens animated w/ 5 items",
+      "pass": true,
+      "detail": "{\"open\":true,\"items\":5,\"cascade\":true}"
+    },
+    {
+      "item": 13,
+      "id": "b",
+      "desc": "pick orch/lane-b-api -> label updates + toast",
+      "pass": true,
+      "detail": "label=orch/lane-b-api toasts=1"
+    },
+    {
+      "item": 13,
+      "id": "c",
+      "desc": "Escape closes branch menu (no stuck is-closing)",
+      "pass": true,
+      "detail": "closed=true"
+    },
+    {
+      "item": 13,
+      "id": "d",
+      "desc": "outside click closes branch menu",
+      "pass": true,
+      "detail": "closed=true"
+    },
+    {
+      "item": 14,
+      "id": "a",
+      "desc": "STAGED Unstage-all minibtn -> toast",
+      "pass": true,
+      "detail": "toasts=1"
+    },
+    {
+      "item": 14,
+      "id": "b",
+      "desc": "2 staged + 4 unstaged .sh-chg rows",
+      "pass": true,
+      "detail": "{\"staged\":2,\"unstaged\":4}"
+    },
+    {
+      "item": 14,
+      "id": "c",
+      "desc": "staged row header toggles open + grid-rows anim",
+      "pass": true,
+      "detail": "{\"open\":true,\"trackAnims\":2,\"cascade\":true}"
+    },
+    {
+      "item": 14,
+      "id": "d",
+      "desc": "row actions (Open diff/Unstage/Discard) -> 3 toasts",
+      "pass": true,
+      "detail": "labels=[\"Open diff\",\"Unstage\",\"Discard\"] toasts=3"
+    },
+    {
+      "item": 14,
+      "id": "e",
+      "desc": "UNSTAGED Stage-all minibtn -> toast",
+      "pass": true,
+      "detail": "toasts=1"
+    },
+    {
+      "item": 14,
+      "id": "f",
+      "desc": "commit input types + Generate AI + Commit -> toasts",
+      "pass": true,
+      "detail": "val=test commit msg gen=1 commit=2"
+    },
+    {
+      "item": 14,
+      "id": "g",
+      "desc": "Pull/Push/Fetch -> 3 toasts",
+      "pass": true,
+      "detail": "toasts=3"
+    },
+    {
+      "item": 14,
+      "id": "h",
+      "desc": "Stash changes -> toast",
+      "pass": true,
+      "detail": "toasts=1"
+    },
+    {
+      "item": 14,
+      "id": "i",
+      "desc": "REMOTE PROJECTION disclosure toggles (chevron + grid-rows)",
+      "pass": true,
+      "detail": "before=false after={\"open\":true,\"anims\":2}"
+    },
+    {
+      "item": 15,
+      "id": "a",
+      "desc": "5 filter chips present",
+      "pass": true,
+      "detail": "chips=5"
+    },
+    {
+      "item": 15,
+      "id": "b",
+      "desc": "Orch chip: FLIP anim on survivors + chip pop + shelf flash",
+      "pass": true,
+      "detail": "{\"survivorAnims\":4,\"chipPop\":true,\"chipActive\":true,\"bodyFlash\":true,\"visibleOwners\":[\"orch\",\"orch\",null]}"
+    },
+    {
+      "item": 15,
+      "id": "c",
+      "desc": "Orch filter: exactly 2 orch rows remain (orphan row persists by design)",
+      "pass": true,
+      "detail": "owners=[\"orch\",\"orch\",null]"
+    },
+    {
+      "item": 15,
+      "id": "d",
+      "desc": "each chip filters + activates (thread/agents/manual/all)",
+      "pass": true,
+      "detail": "[{\"f\":\"thread\",\"vis\":3,\"activeOk\":true},{\"f\":\"agents\",\"vis\":2,\"activeOk\":true},{\"f\":\"manual\",\"vis\":2,\"activeOk\":true},{\"f\":\"all\",\"vis\":7,\"activeOk\":true}]"
+    },
+    {
+      "item": 15,
+      "id": "e",
+      "desc": "7 worktree rows total",
+      "pass": true,
+      "detail": "rows=7"
+    },
+    {
+      "item": 15,
+      "id": "f",
+      "desc": "all 7 rows expand (cascade)",
+      "pass": true,
+      "detail": "[{\"i\":0,\"opened\":true,\"casc\":2},{\"i\":1,\"opened\":true,\"casc\":2},{\"i\":2,\"opened\":true,\"casc\":2},{\"i\":3,\"opened\":true,\"casc\":2},{\"i\":4,\"opened\":true,\"casc\":2},{\"i\":5,\"opened\":true,\"casc\":2},{\"i\":6,\"opened\":true,\"casc\":2}]"
+    },
+    {
+      "item": 15,
+      "id": "g",
+      "desc": "every per-row action fires toast (Lane/page.go excluded)",
+      "pass": true,
+      "detail": "clicked=30 toasts=30"
+    },
+    {
+      "item": 15,
+      "id": "h",
+      "desc": "lane-b Remove is aria-disabled with reason (demo.reason)",
+      "pass": true,
+      "detail": "{\"found\":true,\"ariaDisabled\":\"true\",\"reason\":\"blocked_preserved — owned by run #47\",\"action\":\"demo.reason\"}"
+    },
+    {
+      "item": 15,
+      "id": "i",
+      "desc": "orphaned row has Repair + Prune",
+      "pass": true,
+      "detail": "{\"found\":true,\"acts\":[\"Repair\",\"Prune\"]}"
+    },
+    {
+      "item": 15,
+      "id": "j",
+      "desc": "+ New Worktree -> toast",
+      "pass": true,
+      "detail": "toasts=1"
+    },
+    {
+      "item": 15,
+      "id": "k",
+      "desc": "Lane (page.go) navigates w/o error + returns to source",
+      "pass": true,
+      "detail": "newErrs=0 back=true"
+    },
+    {
+      "item": 16,
+      "id": "a",
+      "desc": "6 .sh-commit rows",
+      "pass": true,
+      "detail": "commits=6"
+    },
+    {
+      "item": 16,
+      "id": "b",
+      "desc": "all 6 commits expand with 4 actions each",
+      "pass": true,
+      "detail": "[{\"i\":0,\"open\":true,\"nActs\":4},{\"i\":1,\"open\":true,\"nActs\":4},{\"i\":2,\"open\":true,\"nActs\":4},{\"i\":3,\"open\":true,\"nActs\":4},{\"i\":4,\"open\":true,\"nActs\":4},{\"i\":5,\"open\":true,\"nActs\":4}]"
+    },
+    {
+      "item": 16,
+      "id": "c",
+      "desc": "commit actions (Open diff/Copy SHA/Set compare/Show in history) -> toasts",
+      "pass": true,
+      "detail": "acts=4 toasts=4"
+    },
+    {
+      "item": 16,
+      "id": "d",
+      "desc": "trailing Set compare target -> toast",
+      "pass": true,
+      "detail": "toasts=1"
+    },
+    {
+      "item": 17,
+      "id": "a",
+      "desc": "main current row displays",
+      "pass": true,
+      "detail": "mainCurrent=true"
+    },
+    {
+      "item": 17,
+      "id": "b",
+      "desc": "8 .sh-chg rows (6 branch + 2 stash)",
+      "pass": true,
+      "detail": "rows=8"
+    },
+    {
+      "item": 17,
+      "id": "c",
+      "desc": "6 branch rows expand with Switch/Merge/Rename/Delete",
+      "pass": true,
+      "detail": "[{\"i\":0,\"open\":true,\"acts\":4},{\"i\":1,\"open\":true,\"acts\":4},{\"i\":2,\"open\":true,\"acts\":4},{\"i\":3,\"open\":true,\"acts\":4},{\"i\":4,\"open\":true,\"acts\":4},{\"i\":5,\"open\":true,\"acts\":4}]"
+    },
+    {
+      "item": 17,
+      "id": "d",
+      "desc": "branch row actions -> toasts",
+      "pass": true,
+      "detail": "toasts=4"
+    },
+    {
+      "item": 17,
+      "id": "e",
+      "desc": "+ New branch -> toast",
+      "pass": true,
+      "detail": "toasts=1"
+    },
+    {
+      "item": 17,
+      "id": "f",
+      "desc": "2 stash rows expand with Apply/Pop/Drop",
+      "pass": true,
+      "detail": "ok=true"
+    },
+    {
+      "item": 17,
+      "id": "g",
+      "desc": "stash actions -> toasts",
+      "pass": true,
+      "detail": "toasts=3"
+    },
+    {
+      "item": 17,
+      "id": "h",
+      "desc": "GRAPH shelf shows nodes",
+      "pass": true,
+      "detail": "nodes=4"
+    },
+    {
+      "item": 17,
+      "id": "i",
+      "desc": "Open full graph (page.go) clicks without error",
+      "pass": true,
+      "detail": "newErrs=0"
+    },
+    {
+      "item": 17,
+      "id": "j",
+      "desc": "return to source via rail after page.go",
+      "pass": true,
+      "detail": "active=true"
+    },
+    {
+      "item": 18,
+      "id": "a",
+      "desc": "reduce: worktree filter functional, FLIP instant (zero anims), 2 orch rows (+orphan)",
+      "pass": true,
+      "detail": "{\"anims\":0,\"orch\":2,\"stray\":0,\"active\":true}"
+    },
+    {
+      "item": 18,
+      "id": "b",
+      "desc": "reduce: source tab switch functional, zero ink anims",
+      "pass": true,
+      "detail": "visible=true ink=0"
+    },
+    {
+      "item": 18,
+      "id": "c",
+      "desc": "reduce: accordion toggles both directions to correct end state, zero anims",
+      "pass": true,
+      "detail": "init=true mid={\"open\":false,\"anims\":0} end={\"open\":true,\"anims\":0}"
+    },
+    {
+      "item": 19,
+      "id": "a",
+      "desc": "friendly-dark accordion uses spring bezier (1.56 overshoot)",
+      "pass": true,
+      "detail": "{\"ttf\":\"cubic-bezier(0.34, 1.56, 0.64, 1), cubic-bezier(0.22, 1, 0.36, 1)\",\"prop\":\"grid-template-rows, opacity\",\"accEase\":\"cubic-bezier(.34,1.56,.64,1)\",\"inkAnims\":1}"
+    },
+    {
+      "item": 19,
+      "id": "b",
+      "desc": "retro-light accordion uses snap bezier (.2,0,0,1)",
+      "pass": true,
+      "detail": "{\"ttf\":\"cubic-bezier(0.2, 0, 0, 1), cubic-bezier(0.22, 1, 0.36, 1)\",\"prop\":\"grid-template-rows, opacity\",\"accEase\":\"cubic-bezier(.2,0,0,1)\",\"inkAnims\":1}"
+    },
+    {
+      "item": 19,
+      "id": "c",
+      "desc": "basic-light accordion uses settle bezier (1.4 overshoot)",
+      "pass": true,
+      "detail": "{\"ttf\":\"cubic-bezier(0.26, 1.4, 0.36, 1), cubic-bezier(0.22, 1, 0.36, 1)\",\"prop\":\"grid-template-rows, opacity\",\"accEase\":\"cubic-bezier(.26,1.4,.36,1)\",\"inkAnims\":1}"
+    },
+    {
+      "item": 19,
+      "id": "d",
+      "desc": "per-theme timing functions all distinct (personality observable)",
+      "pass": true,
+      "detail": "fd=cubic-bezier(0.34, 1.56, 0.64, 1), cubic-bezier(0.22, 1, 0.36, 1) rl=cubic-bezier(0.2, 0, 0, 1), cubic-bezier(0.22, 1, 0.36, 1) bl=cubic-bezier(0.26, 1.4, 0.36, 1), cubic-bezier(0.22, 1, 0.36, 1)"
+    },
+    {
+      "item": 19,
+      "id": "e",
+      "desc": "tabs ink runs under all 3 themes",
+      "pass": true,
+      "detail": "[{\"t\":\"friendly-dark\",\"ink\":1},{\"t\":\"retro-light\",\"ink\":1},{\"t\":\"basic-light\",\"ink\":1}]"
+    },
+    {
+      "item": 20,
+      "id": "a",
+      "desc": "accordion spam x8 settles (no running anim, valid end state)",
+      "pass": true,
+      "detail": "{\"open\":false,\"running\":0,\"csRows\":\"0px\"}"
+    },
+    {
+      "item": 20,
+      "id": "b",
+      "desc": "tab spam x8: exactly one pane visible matching active tab",
+      "pass": true,
+      "detail": "{\"activeTab\":\"changes\",\"visiblePanes\":[\"changes\"],\"stuckInline\":0}"
+    },
+    {
+      "item": 20,
+      "id": "c",
+      "desc": "menu spam x5: no stuck is-closing class",
+      "pass": true,
+      "detail": "{\"isOpen\":true,\"isClosing\":false}"
+    },
+    {
+      "item": 20,
+      "id": "d",
+      "desc": "stress: zero new console errors",
+      "pass": true,
+      "detail": "newErrs=0"
+    },
+    {
+      "item": 21,
+      "id": "a",
+      "desc": "zero console errors beyond favicon baseline",
+      "pass": true,
+      "detail": "total=0 nonFavicon=[]"
+    }
+  ],
+  "consoleErrors": []
+}

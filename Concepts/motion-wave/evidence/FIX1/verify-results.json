@@ -1,0 +1,126 @@
+{
+  "fix1": {
+    "moreBtnDataEmpty": "0",
+    "trayRows": 3,
+    "cascade": [
+      {
+        "delay": "0s",
+        "opacity": "1",
+        "fill": "backwards"
+      },
+      {
+        "delay": "0.026s",
+        "opacity": "1",
+        "fill": "backwards"
+      },
+      {
+        "delay": "0.052s",
+        "opacity": "1",
+        "fill": "backwards"
+      }
+    ],
+    "hoverTransform": "matrix(1, 0, 0, 1, 2, 0)",
+    "hoverTranslateX2": true,
+    "activeTransform": "matrix(0.97, 0, 0, 0.97, 0, 0)",
+    "activeTransition": {
+      "trans": "background, color, transform|0.12s, 0.12s, 0.12s"
+    },
+    "activeScales": true,
+    "activeDiffersFromHover": true,
+    "fillModeBackwards": true,
+    "rowsVisibleAfterSettle": true,
+    "staggerPresent": true
+  },
+  "fix2": {
+    "findFpCount": 6,
+    "groupOpenBefore": true,
+    "fpToast": "cmd.search.open_result -> src/services/import.rs",
+    "groupOpenAfterFpClick": true,
+    "fpToasted": true,
+    "fpDidNotToggle": true,
+    "headerToggleBefore": true,
+    "headerToggleAfter": false,
+    "headerToggles": true,
+    "replaceFilehCount": 2,
+    "replaceToast": "cmd.search.open_result -> src/services/import.rs",
+    "replaceToasted": true
+  },
+  "fix3": {
+    "quarantineFound": true,
+    "quarantineToast": "already quarantined 2d",
+    "quarantineSpecific": true,
+    "publishFound": true,
+    "publishToast": "image not built yet",
+    "publishSpecific": true,
+    "gitRunFound": true,
+    "gitRunToast": "missing workflow scope",
+    "gitRunSpecific": true,
+    "staleFound": true,
+    "staleToast": "This projection is stale — refresh it before mutating anything.",
+    "staleTokenResolved": true
+  },
+  "fix4": {
+    "perPanel": {
+      "panel-docker:dotPulse": {
+        "baseline": 2,
+        "reducedAttr1": 0,
+        "resumed": 2,
+        "killed": true,
+        "resumedOk": true
+      },
+      "panel-testing:dotPulse": {
+        "baseline": 2,
+        "reducedAttr1": 0,
+        "resumed": 2,
+        "killed": true,
+        "resumedOk": true
+      },
+      "panel-run:liveRail": {
+        "baseline": 1,
+        "reducedAttr1": 0,
+        "resumed": 1,
+        "killed": true,
+        "resumedOk": true
+      },
+      "panel-artifacts:pmShimmer": {
+        "baseline": 1,
+        "reducedAttr1": 0,
+        "resumed": 1,
+        "killed": true,
+        "resumedOk": true,
+        "note": "measured on fresh artifacts visit (loop run->artifacts ordering suppresses baseline shimmer; isolated probe authoritative)"
+      },
+      "panel-files:fmbreathe": {
+        "baseline": 1,
+        "reducedAttr1": 0,
+        "resumed": 1,
+        "killed": true,
+        "resumedOk": true
+      }
+    },
+    "dotUnderReduced": {
+      "opacity": "1",
+      "bg": "rgb(255, 173, 147)"
+    },
+    "dotVisibleCorrectColor": true,
+    "threePath": {
+      "attr1": 0,
+      "motion": 0,
+      "emulate": 0,
+      "afterUnset": 2
+    },
+    "allKilled": true,
+    "allResumed": true,
+    "pmShimmerIsolatedProbe": {
+      "baseline": 1,
+      "attr1": 0,
+      "motion": 0,
+      "emulate": 0,
+      "resumed": 1,
+      "killed": true,
+      "resumedOk": true
+    }
+  },
+  "consoleErrors": [],
+  "pageErrors": []
+}

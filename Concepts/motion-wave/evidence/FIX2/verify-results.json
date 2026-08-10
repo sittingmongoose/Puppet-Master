@@ -1,0 +1,200 @@
+{
+  "fixA": {
+    "a1_openDiff": {
+      "opened": {
+        "isOpen": true,
+        "isClosing": false,
+        "display": "block"
+      },
+      "sampledAfterClick": {
+        "isOpen": false,
+        "isClosing": true,
+        "display": "block"
+      },
+      "after340ms": {
+        "isOpen": false,
+        "isClosing": false,
+        "display": "none"
+      },
+      "toasts": [
+        "cmd.git.diff_open -> hand off identity + repo_id + worktree_id to Source Control"
+      ]
+    },
+    "a2_submenu": {
+      "opened": {
+        "isOpen": true,
+        "isClosing": false,
+        "display": "block"
+      },
+      "trigHovered": true,
+      "submenuFlyout": {
+        "wrapOpen": true,
+        "subDisplay": "block"
+      },
+      "menuOpenBeforePick": {
+        "isOpen": true,
+        "isClosing": false,
+        "display": "block"
+      },
+      "sampledAfterPick": {
+        "isOpen": false,
+        "isClosing": true,
+        "display": "block"
+      },
+      "after340ms": {
+        "isOpen": false,
+        "isClosing": false,
+        "display": "none"
+      },
+      "toasts": [
+        "cmd.file.open_with -> source_editor"
+      ]
+    },
+    "a3_disabled": {
+      "sampledAfterClick": {
+        "isOpen": false,
+        "isClosing": true,
+        "display": "block"
+      },
+      "after340ms": {
+        "isOpen": false,
+        "isClosing": false,
+        "display": "none"
+      },
+      "toasts": [
+        "system_default is not in the MVP open_with enum; separate future handoff"
+      ]
+    },
+    "a4_escape": {
+      "opened": {
+        "isOpen": true,
+        "isClosing": false,
+        "display": "block"
+      },
+      "after": {
+        "isOpen": false,
+        "isClosing": false,
+        "display": "none"
+      }
+    },
+    "a5_outside": {
+      "opened": {
+        "isOpen": true,
+        "isClosing": false,
+        "display": "block"
+      },
+      "after": {
+        "isOpen": false,
+        "isClosing": false,
+        "display": "none"
+      }
+    },
+    "a6_retarget": {
+      "openCount": 1,
+      "isOpen": true,
+      "isClosing": false
+    }
+  },
+  "fixB": {
+    "b1_spike": {
+      "menuOpen": true,
+      "toasts": [
+        "spike/r2-storage is read-only in this demo (manual worktree)"
+      ]
+    },
+    "b2_quarantine": {
+      "toasts": [
+        "already quarantined 2d"
+      ]
+    },
+    "b3_dockerPush": {
+      "toasts": [
+        "image not built yet"
+      ]
+    }
+  },
+  "fixC": {
+    "start": {
+      "label": "Collapse all",
+      "openFolders": 3,
+      "totalFolders": 11
+    },
+    "afterCollapse": {
+      "label": "Expand all",
+      "openFolders": 0,
+      "totalFolders": 11
+    },
+    "afterExpand": {
+      "label": "Collapse all",
+      "openFolders": 11,
+      "totalFolders": 11
+    },
+    "afterSpam5": {
+      "label": "Expand all",
+      "openFolders": 0,
+      "totalFolders": 11
+    },
+    "reducePath": {
+      "label": "Collapse all",
+      "openFolders": 11,
+      "totalFolders": 11
+    },
+    "screenshotState": {
+      "label": "Expand all",
+      "openFolders": 0,
+      "totalFolders": 11
+    }
+  },
+  "fixD": {
+    "readme": {
+      "titles": [
+        "Open preview",
+        "Copy relative path"
+      ],
+      "actions": [
+        "cmd.file.open_with",
+        "cmd.file.copy_path"
+      ]
+    },
+    "folder": {
+      "name": null,
+      "titles": [
+        "New file here",
+        "New folder here",
+        "Open in terminal"
+      ]
+    },
+    "git": {
+      "name": "recipes.rs",
+      "titles": [
+        "Stage changes",
+        "Open diff",
+        "Discard changes"
+      ]
+    },
+    "plain": {
+      "name": "main.rs",
+      "titles": [
+        "Add to chat",
+        "Copy relative path",
+        "Open in terminal"
+      ]
+    }
+  },
+  "console": {
+    "pageErrors": [],
+    "consoleErrors": [],
+    "consoleErrorsFiltered": []
+  },
+  "diag": {
+    "theme": "friendly-dark",
+    "panelVisible": true,
+    "rowCount": 36,
+    "firstRowBox": {
+      "w": 232,
+      "h": 24,
+      "top": 177
+    },
+    "toastHooked": true
+  }
+}

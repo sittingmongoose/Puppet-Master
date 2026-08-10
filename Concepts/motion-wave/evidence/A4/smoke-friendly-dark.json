@@ -1,0 +1,371 @@
+{
+ "theme": "friendly-dark",
+ "panels": {
+  "panel-files": {
+   "tabs": 3,
+   "inkLand": [
+    {
+     "dLeft": 0,
+     "dW": 0.328125,
+     "iw": 77,
+     "anims": 0
+    },
+    {
+     "dLeft": 0.328125,
+     "dW": 0.34375,
+     "iw": 77,
+     "anims": 0
+    },
+    {
+     "dLeft": 0.328125,
+     "dW": 0.328125,
+     "iw": 77,
+     "anims": 0
+    }
+   ],
+   "dirInc": "1",
+   "dirDec": "-1",
+   "hasPanes": true,
+   "delays": {
+    "n": 0,
+    "d": []
+   }
+  },
+  "panel-search": {
+   "tabs": 2,
+   "inkLand": [
+    {
+     "dLeft": 0,
+     "dW": 0,
+     "iw": 116,
+     "anims": 0
+    },
+    {
+     "dLeft": 0,
+     "dW": 0,
+     "iw": 116,
+     "anims": 0
+    }
+   ],
+   "dirInc": "1",
+   "dirDec": "-1",
+   "hasPanes": true,
+   "delays": {
+    "n": 6,
+    "d": [
+     0,
+     0.026,
+     0.052,
+     0.078
+    ]
+   }
+  },
+  "panel-source": {
+   "tabs": 4,
+   "inkLand": [
+    {
+     "dLeft": 0,
+     "dW": 0,
+     "iw": 58,
+     "anims": 0
+    },
+    {
+     "dLeft": 0,
+     "dW": 0,
+     "iw": 58,
+     "anims": 0
+    },
+    {
+     "dLeft": 0,
+     "dW": 0,
+     "iw": 58,
+     "anims": 0
+    },
+    {
+     "dLeft": 0,
+     "dW": 0,
+     "iw": 58,
+     "anims": 0
+    }
+   ],
+   "dirInc": "1",
+   "dirDec": "-1",
+   "hasPanes": true,
+   "delays": {
+    "n": 6,
+    "d": [
+     0,
+     0.026,
+     0.052,
+     0.078
+    ]
+   }
+  },
+  "panel-git": {
+   "tabs": 3,
+   "inkLand": [
+    {
+     "dLeft": 0,
+     "dW": 0.328125,
+     "iw": 77,
+     "anims": 0
+    },
+    {
+     "dLeft": 0.328125,
+     "dW": 0.34375,
+     "iw": 77,
+     "anims": 0
+    },
+    {
+     "dLeft": 0.328125,
+     "dW": 0.328125,
+     "iw": 77,
+     "anims": 0
+    }
+   ],
+   "dirInc": "1",
+   "dirDec": "-1",
+   "hasPanes": true,
+   "delays": {
+    "n": 7,
+    "d": [
+     0,
+     0.026,
+     0.052,
+     0.078
+    ]
+   }
+  },
+  "panel-docker": {
+   "tabs": 6,
+   "inkLand": [
+    {
+     "dLeft": 0,
+     "dW": 0.34375,
+     "iw": 39,
+     "anims": 0
+    },
+    {
+     "dLeft": 0.34375,
+     "dW": 0.328125,
+     "iw": 39,
+     "anims": 0
+    },
+    {
+     "dLeft": 0.328125,
+     "dW": 0.34375,
+     "iw": 39,
+     "anims": 0
+    },
+    {
+     "dLeft": 0.015625,
+     "dW": 0.328125,
+     "iw": 39,
+     "anims": 0
+    },
+    {
+     "dLeft": 0.34375,
+     "dW": 0.328125,
+     "iw": 39,
+     "anims": 0
+    },
+    {
+     "dLeft": 0.328125,
+     "dW": 0.328125,
+     "iw": 39,
+     "anims": 0
+    }
+   ],
+   "dirInc": "1",
+   "dirDec": "-1",
+   "hasPanes": true,
+   "delays": {
+    "n": 9,
+    "d": [
+     0,
+     0.026,
+     0.052,
+     0.078
+    ]
+   }
+  },
+  "panel-artifacts": {
+   "tabs": 4,
+   "inkLand": [
+    {
+     "dLeft": 0,
+     "dW": 0,
+     "iw": 58,
+     "anims": 0
+    },
+    {
+     "dLeft": 0,
+     "dW": 0,
+     "iw": 58,
+     "anims": 0
+    },
+    {
+     "dLeft": 0,
+     "dW": 0,
+     "iw": 58,
+     "anims": 0
+    },
+    {
+     "dLeft": 0,
+     "dW": 0,
+     "iw": 58,
+     "anims": 0
+    }
+   ],
+   "dirInc": "1",
+   "dirDec": "-1",
+   "hasPanes": false,
+   "delays": {
+    "n": 0,
+    "d": []
+   }
+  }
+ },
+ "checks": [
+  {
+   "name": "panel-files: ink lands on every tab (<=1px)",
+   "ok": true,
+   "extra": "[[\"0.00\",\"0.33\",\"77\"],[\"0.33\",\"0.34\",\"77\"],[\"0.33\",\"0.33\",\"77\"]]"
+  },
+  {
+   "name": "panel-files: direction inc=1 dec=-1",
+   "ok": true,
+   "extra": "inc=1 dec=-1"
+  },
+  {
+   "name": "panel-files: row delays ascending",
+   "ok": true,
+   "extra": "no W4 cascade rows in active pane (e.g. FM tree is W5)"
+  },
+  {
+   "name": "panel-search: ink lands on every tab (<=1px)",
+   "ok": true,
+   "extra": "[[\"0.00\",\"0.00\",\"116\"],[\"0.00\",\"0.00\",\"116\"]]"
+  },
+  {
+   "name": "panel-search: direction inc=1 dec=-1",
+   "ok": true,
+   "extra": "inc=1 dec=-1"
+  },
+  {
+   "name": "panel-search: row delays ascending",
+   "ok": true,
+   "extra": "n=6 [0,0.026,0.052,0.078]"
+  },
+  {
+   "name": "panel-source: ink lands on every tab (<=1px)",
+   "ok": true,
+   "extra": "[[\"0.00\",\"0.00\",\"58\"],[\"0.00\",\"0.00\",\"58\"],[\"0.00\",\"0.00\",\"58\"],[\"0.00\",\"0.00\",\"58\"]]"
+  },
+  {
+   "name": "panel-source: direction inc=1 dec=-1",
+   "ok": true,
+   "extra": "inc=1 dec=-1"
+  },
+  {
+   "name": "panel-source: row delays ascending",
+   "ok": true,
+   "extra": "n=6 [0,0.026,0.052,0.078]"
+  },
+  {
+   "name": "panel-git: ink lands on every tab (<=1px)",
+   "ok": true,
+   "extra": "[[\"0.00\",\"0.33\",\"77\"],[\"0.33\",\"0.34\",\"77\"],[\"0.33\",\"0.33\",\"77\"]]"
+  },
+  {
+   "name": "panel-git: direction inc=1 dec=-1",
+   "ok": true,
+   "extra": "inc=1 dec=-1"
+  },
+  {
+   "name": "panel-git: row delays ascending",
+   "ok": true,
+   "extra": "n=7 [0,0.026,0.052,0.078]"
+  },
+  {
+   "name": "panel-docker: ink lands on every tab (<=1px)",
+   "ok": true,
+   "extra": "[[\"0.00\",\"0.34\",\"39\"],[\"0.34\",\"0.33\",\"39\"],[\"0.33\",\"0.34\",\"39\"],[\"0.02\",\"0.33\",\"39\"],[\"0.34\",\"0.33\",\"39\"],[\"0.33\",\"0.33\",\"39\"]]"
+  },
+  {
+   "name": "panel-docker: direction inc=1 dec=-1",
+   "ok": true,
+   "extra": "inc=1 dec=-1"
+  },
+  {
+   "name": "panel-docker: row delays ascending",
+   "ok": true,
+   "extra": "n=9 [0,0.026,0.052,0.078]"
+  },
+  {
+   "name": "panel-artifacts: ink lands on every tab (<=1px)",
+   "ok": true,
+   "extra": "[[\"0.00\",\"0.00\",\"58\"],[\"0.00\",\"0.00\",\"58\"],[\"0.00\",\"0.00\",\"58\"],[\"0.00\",\"0.00\",\"58\"]]"
+  },
+  {
+   "name": "panel-artifacts: direction inc=1 dec=-1",
+   "ok": true,
+   "extra": "inc=1 dec=-1"
+  },
+  {
+   "name": "panel-artifacts: filter panel (no panes) — cascade N/A, uses FLIP",
+   "ok": true,
+   "extra": "no [data-pane]"
+  },
+  {
+   "name": "artifacts: family filter shows only browser + FLIP survivors",
+   "ok": true,
+   "extra": "midMoving=2 visible=3"
+  },
+  {
+   "name": "artifacts: sort FLIP runs for all 3 modes",
+   "ok": true,
+   "extra": "[{\"mode\":\"old\",\"midMoving\":15,\"n\":15},{\"mode\":\"fam\",\"midMoving\":15,\"n\":15},{\"mode\":\"new\",\"midMoving\":11,\"n\":15}]"
+  },
+  {
+   "name": "artifacts: sort=old yields ascending ts",
+   "ok": true,
+   "extra": "[\"13:20:07\",\"13:58:02\",\"14:02:11\",\"14:09:12\",\"14:09:47\",\"14:11:03\",\"14:18:40\",\"14:18:52\",\"14:20:01\",\"14:21:58\",\"14:22:30\",\"14:24:11\",\"14:26:33\",\"14:30:44\",\"14:31:02\"]"
+  },
+  {
+   "name": "source: worktree chips filter correct + FLIP survivors",
+   "ok": true,
+   "extra": "[{\"v\":\"thread\",\"midMoving\":2,\"vis\":2,\"ok\":true},{\"v\":\"orch\",\"midMoving\":2,\"vis\":2,\"ok\":true},{\"v\":\"all\",\"midMoving\":6,\"vis\":6,\"ok\":true}]"
+  },
+  {
+   "name": "resize: ink snaps (no anim) and stays on tab",
+   "ok": true,
+   "extra": "{\"anims\":0,\"dLeft\":0,\"dW\":0}"
+  },
+  {
+   "name": "pill-fit: refit does not re-fire settled rows / no residue",
+   "ok": true,
+   "extra": "{\"pill\":{\"before\":{\"anims\":6,\"op\":\"1\"},\"after\":{\"anims\":6,\"op\":\"1\"},\"residue\":false},\"pillResidue\":false}"
+  },
+  {
+   "name": "rapid spam: final = last-clicked tab, single active, ink settled, no stuck classes",
+   "ok": true,
+   "extra": "{\"activeCount\":1,\"expectedIsActive\":true,\"actIsExpected\":true,\"inkAnims\":0,\"dLeft\":0.328125,\"dW\":0.328125,\"visPanes\":1,\"stuckExit\":false,\"stuckEnter\":false}"
+  },
+  {
+   "name": "reduced-motion: ink snaps on tab, panes instant, no shPaneInDir/row anims",
+   "ok": true,
+   "extra": "{\"inkAnims\":0,\"inkOnTab\":true,\"paneName\":\"history\",\"paneOpacity\":\"1\",\"shPaneInDirRunning\":0,\"rowAnim\":0}"
+  },
+  {
+   "name": "console: zero new errors vs favicon baseline",
+   "ok": true,
+   "extra": "[]"
+  }
+ ],
+ "summary": {
+  "pass": 27,
+  "total": 27,
+  "allPass": true
+ }
+}

@@ -1,0 +1,64 @@
+{
+ "results": [
+  {
+   "item": "4.1",
+   "name": "expand: width mid-flight sampled with running transition; settles at 72px",
+   "ok": false,
+   "details": "mid=undefined settle=72"
+  },
+  {
+   "item": "4.1",
+   "name": "expanded: icon click switches panel; indicator within 1px",
+   "ok": true,
+   "details": "{\"dTop\":0,\"av\":\"panel-search\"}"
+  },
+  {
+   "item": "4.2",
+   "name": "collapse: width mid-flight sampled; settles 36px, labels hidden, indicator repositioned within 1px",
+   "ok": true,
+   "details": "mid={\"w\":53.140625,\"anims\":1} settle={\"w\":36,\"collapsed\":true,\"dTop\":0,\"dH\":0,\"label\":\"none\"}"
+  },
+  {
+   "item": "4.2",
+   "name": "collapsed: icon click switches panel; indicator within 1px",
+   "ok": true,
+   "details": "{\"dTop\":0,\"av\":\"panel-docker\"}"
+  },
+  {
+   "item": "4.1",
+   "name": "re-expand settles at 72px",
+   "ok": true,
+   "details": "w=72"
+  },
+  {
+   "item": "1.1",
+   "name": "long hop (search->artifacts): stretched slug mid-flight after 130ms swap",
+   "ok": true,
+   "details": "m1={\"h\":44,\"anims\":[0]} m2={\"h\":528.28125,\"anims\":[31]} (target h=44)"
+  },
+  {
+   "item": "3.prep",
+   "name": "testing hidden for sprout test",
+   "ok": true,
+   "details": ""
+  },
+  {
+   "item": "3.1",
+   "name": "sprout: closed->growing(scale<1)->overshoot(scale>1)->settle, WAAPI running",
+   "ok": true,
+   "details": "phases=C:matrix(0.7, 0, 0, 0.5, 0, 0) | C:matrix(0.7, 0, 0, 0.5, 0, 0) | O:matrix(0.7, 0, 0, 0.5, 0, 0) | O:matrix(0.7, 0, 0, 0.5, 0, 0) | O:matrix(0.807007, 0, 0, 0.678345, 0, 0) | O:matrix(0.890434, 0, 0, 0.81739, 0, 0) | O:matrix(0.948492, 0, 0, 0.914154, 0, 0) | O:matrix(0.98772, 0, 0, 0.979534, 0, 0) | O:matrix(1.01138, 0, 0, 1.01897, 0, 0) | O:matrix(1.0232, 0, 0, 1.03866, 0, 0) | O:matrix(1.02783, 0, 0, 1.04638, 0, 0) | O:matrix(1.02814, 0, 0, 1.0469, 0, 0) | O:matrix(1.02609, 0, 0, 1.04348, 0, 0) | O:matrix(1.02222, 0, 0, 1.03704, 0, 0) | O:matrix(1.01803, 0, 0, 1.03005, 0, 0) | O:matrix(1.01378, 0, 0, 1.02297, 0, 0)"
+  },
+  {
+   "item": "3.2",
+   "name": "BUG CONFIRMED: row :hover translateX(2px) masked by trayRowIn fill:both (works when animation stripped)",
+   "ok": true,
+   "details": "with-anim: t=matrix(1, 0, 0, 1, 0, 0) bg=rgb(42, 39, 49); animation=trayRowIn/both; stripped: t=matrix(1, 0, 0, 1, 2, 0)"
+  },
+  {
+   "item": "6.3",
+   "name": "media reduce: ghost direct-follow (integer coords, max lag <1px)",
+   "ok": false,
+   "details": "lags=1.54,1.54,1.54,1.54,1.54,1.54,1.54,1.54"
+  }
+ ]
+}

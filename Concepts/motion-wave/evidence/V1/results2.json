@@ -1,0 +1,263 @@
+{
+ "results": [
+  {
+   "item": "4.prep",
+   "name": "rail expanded to 72px for battery",
+   "ok": true,
+   "details": "w=72"
+  },
+  {
+   "item": "1.1",
+   "name": "search: indicator in-flight WAAPI sampled (t=35/85ms)",
+   "ok": true,
+   "details": "t1=[{\"cur\":15,\"dur\":260}] t2=[{\"cur\":67,\"dur\":260}] dTop35-85=0.0px stretchH=113.9"
+  },
+  {
+   "item": "1.1",
+   "name": "search: view+icon correct after settle",
+   "ok": true,
+   "details": "view=panel-search active=true"
+  },
+  {
+   "item": "1.1",
+   "name": "search: indicator settled within 1px (neutral pointer)",
+   "ok": true,
+   "details": "ind=258.00+44.00 exp=258.00+44.00"
+  },
+  {
+   "item": "1.1",
+   "name": "source: indicator in-flight WAAPI sampled (t=35/85ms)",
+   "ok": true,
+   "details": "t1=[{\"cur\":15,\"dur\":260}] t2=[{\"cur\":67,\"dur\":260}] dTop35-85=0.0px stretchH=113.9"
+  },
+  {
+   "item": "1.1",
+   "name": "source: view+icon correct after settle",
+   "ok": true,
+   "details": "view=panel-source active=true"
+  },
+  {
+   "item": "1.1",
+   "name": "source: indicator settled within 1px (neutral pointer)",
+   "ok": true,
+   "details": "ind=322.00+44.00 exp=322.00+44.00"
+  },
+  {
+   "item": "1.1",
+   "name": "gh-actions: indicator in-flight WAAPI sampled (t=35/85ms)",
+   "ok": true,
+   "details": "t1=[{\"cur\":0,\"dur\":260}] t2=[{\"cur\":66,\"dur\":260}] dTop35-85=0.0px stretchH=114.0"
+  },
+  {
+   "item": "1.1",
+   "name": "gh-actions: view+icon correct after settle",
+   "ok": true,
+   "details": "view=panel-git active=true"
+  },
+  {
+   "item": "1.1",
+   "name": "gh-actions: indicator settled within 1px (neutral pointer)",
+   "ok": true,
+   "details": "ind=386.00+44.00 exp=386.00+44.00"
+  },
+  {
+   "item": "1.1",
+   "name": "docker: indicator in-flight WAAPI sampled (t=35/85ms)",
+   "ok": true,
+   "details": "t1=[{\"cur\":0,\"dur\":260}] t2=[{\"cur\":67,\"dur\":260}] dTop35-85=0.0px stretchH=113.9"
+  },
+  {
+   "item": "1.1",
+   "name": "docker: view+icon correct after settle",
+   "ok": true,
+   "details": "view=panel-docker active=true"
+  },
+  {
+   "item": "1.1",
+   "name": "docker: indicator settled within 1px (neutral pointer)",
+   "ok": true,
+   "details": "ind=450.00+44.00 exp=450.00+44.00"
+  },
+  {
+   "item": "1.1",
+   "name": "testing: indicator in-flight WAAPI sampled (t=35/85ms)",
+   "ok": true,
+   "details": "t1=[{\"cur\":0,\"dur\":260}] t2=[{\"cur\":67,\"dur\":260}] dTop35-85=0.0px stretchH=113.9"
+  },
+  {
+   "item": "1.1",
+   "name": "testing: view+icon correct after settle",
+   "ok": true,
+   "details": "view=panel-testing active=true"
+  },
+  {
+   "item": "1.1",
+   "name": "testing: indicator settled within 1px (neutral pointer)",
+   "ok": true,
+   "details": "ind=514.00+44.00 exp=514.00+44.00"
+  },
+  {
+   "item": "1.1",
+   "name": "run: indicator in-flight WAAPI sampled (t=35/85ms)",
+   "ok": true,
+   "details": "t1=[{\"cur\":15,\"dur\":260}] t2=[{\"cur\":67,\"dur\":260}] dTop35-85=0.0px stretchH=113.9"
+  },
+  {
+   "item": "1.1",
+   "name": "run: view+icon correct after settle",
+   "ok": true,
+   "details": "view=panel-run active=true"
+  },
+  {
+   "item": "1.1",
+   "name": "run: indicator settled within 1px (neutral pointer)",
+   "ok": true,
+   "details": "ind=578.00+44.00 exp=578.00+44.00"
+  },
+  {
+   "item": "1.1",
+   "name": "agents: indicator in-flight WAAPI sampled (t=35/85ms)",
+   "ok": true,
+   "details": "t1=[{\"cur\":0,\"dur\":260}] t2=[{\"cur\":67,\"dur\":260}] dTop35-85=0.0px stretchH=112.8"
+  },
+  {
+   "item": "1.1",
+   "name": "agents: view+icon correct after settle",
+   "ok": true,
+   "details": "view=panel-agents active=true"
+  },
+  {
+   "item": "1.1",
+   "name": "agents: indicator settled within 1px (neutral pointer)",
+   "ok": true,
+   "details": "ind=641.00+44.00 exp=641.00+44.00"
+  },
+  {
+   "item": "1.1",
+   "name": "artifacts: indicator in-flight WAAPI sampled (t=35/85ms)",
+   "ok": true,
+   "details": "t1=[{\"cur\":0,\"dur\":260}] t2=[{\"cur\":66,\"dur\":260}] dTop35-85=0.0px stretchH=114.0"
+  },
+  {
+   "item": "1.1",
+   "name": "artifacts: view+icon correct after settle",
+   "ok": true,
+   "details": "view=panel-artifacts active=true"
+  },
+  {
+   "item": "1.1",
+   "name": "artifacts: indicator settled within 1px (neutral pointer)",
+   "ok": true,
+   "details": "ind=705.00+44.00 exp=705.00+44.00"
+  },
+  {
+   "item": "1.1",
+   "name": "files: indicator in-flight WAAPI sampled (t=35/85ms)",
+   "ok": true,
+   "details": "t1=[{\"cur\":0,\"dur\":260}] t2=[{\"cur\":66,\"dur\":260}] dTop35-85=559.0px stretchH=603.0"
+  },
+  {
+   "item": "1.1",
+   "name": "files: view+icon correct after settle",
+   "ok": true,
+   "details": "view=panel-files active=true"
+  },
+  {
+   "item": "1.1",
+   "name": "files: indicator settled within 1px (neutral pointer)",
+   "ok": true,
+   "details": "ind=194.00+44.00 exp=194.00+44.00"
+  },
+  {
+   "item": "1.1",
+   "name": "long hop (search->artifacts): stretched slug mid-flight",
+   "ok": false,
+   "details": "h=44.0 target=44.0 anims=[]"
+  },
+  {
+   "item": "1.2",
+   "name": "press: settled :active scale = --ab-press-scale (.9) (magnet parked, hold 320ms)",
+   "ok": true,
+   "details": "chat/files/docker/artifacts all settled at a=0.9"
+  },
+  {
+   "item": "1.3",
+   "name": "re-click active: .pm-panel-exit animation on outgoing view (t=35/85ms)",
+   "ok": false,
+   "details": "t35={\"exit\":false,\"anims\":0} t85={\"exit\":false,\"anims\":0}"
+  },
+  {
+   "item": "1.3",
+   "name": "re-click active: indicator opacity fading mid-exit (0 < op < 1)",
+   "ok": true,
+   "details": "op@85ms=0.490129"
+  },
+  {
+   "item": "1.3",
+   "name": "after settle: slot .hidden, icon inactive, indicator opacity 0",
+   "ok": false,
+   "details": "slotHidden=true iconActive=false op=1"
+  },
+  {
+   "item": "1.1",
+   "name": "chat: toggles panel + indicator on chat within 1px",
+   "ok": false,
+   "details": "panel true->false ind=66.0 exp=322.0"
+  },
+  {
+   "item": "1.1",
+   "name": "chat re-click: closes + indicator fades",
+   "ok": false,
+   "details": "active=false op=1"
+  },
+  {
+   "item": "1.1",
+   "name": "dashboard: view shows + .active + indicator within 1px",
+   "ok": false,
+   "details": "display flex->none ind=66.0 exp=66.0"
+  },
+  {
+   "item": "4.1",
+   "name": "collapse: width mid-flight between 36-72 with running transition",
+   "ok": true,
+   "details": "w@50ms=43.2 (from 72) anims=1"
+  },
+  {
+   "item": "4.2",
+   "name": "collapsed settle: 36px + indicator repositioned within 1px (h resizes to icon)",
+   "ok": true,
+   "details": "w=36 ind=246.0/16.0 exp=246.0/16.0"
+  },
+  {
+   "item": "4.2",
+   "name": "docker: indicator in-flight WAAPI sampled (t=35/85ms)",
+   "ok": true,
+   "details": "t1=[{\"cur\":150,\"dur\":260},{\"cur\":33,\"dur\":260}] t2=[{\"cur\":200,\"dur\":260},{\"cur\":83,\"dur\":260}] dTop35-85=13.7px stretchH=292.7"
+  },
+  {
+   "item": "4.2",
+   "name": "docker: view+icon correct after settle",
+   "ok": false,
+   "details": "view=null active=false"
+  },
+  {
+   "item": "4.2",
+   "name": "docker: indicator settled within 1px (neutral pointer)",
+   "ok": false,
+   "details": "ind=66.00+16.00 exp=318.00+16.00"
+  },
+  {
+   "item": "4.1",
+   "name": "expand: width mid-flight with running transition",
+   "ok": false,
+   "details": "w@50ms=36.0 anims=0"
+  },
+  {
+   "item": "4.1",
+   "name": "expanded settle: 72px + indicator within 1px",
+   "ok": false,
+   "details": "w=36 ind=66.0/16.0 exp=318.0/16.0"
+  }
+ ],
+ "fatal": "page.evaluate: TypeError: Cannot read properties of null (reading 'getBoundingClientRect')\n    at iconRect (eval at evaluate (:311:30), <anonymous>:1:102)\n    at UtilityScript.evaluate (<anonymous>:313:16)\n    at UtilityScript.<anonymous> (<anonymous>:1:44)\n    at pg (/private/var/folders/11/2hptcv3s40dbdlfwdzmy3ym80000gn/T/opencode/v1/run2.js:59:35)\n    at clickIcon (/private/var/folders/11/2hptcv3s40dbdlfwdzmy3ym80000gn/T/opencode/v1/run2.js:62:21)\n    at switchAndVerify (/private/var/folders/11/2hptcv3s40dbdlfwdzmy3ym80000gn/T/opencode/v1/run2.js:69:11)\n    at main (/private/var/folders/11/2hptcv3s40dbdlfwdzmy3ym80000gn/T/opencode/v1/run2.js:211:13)"
+}

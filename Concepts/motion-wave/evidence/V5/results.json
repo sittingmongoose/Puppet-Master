@@ -1,0 +1,436 @@
+{
+ "total": 83,
+ "pass": 80,
+ "fails": [
+  {
+   "id": "4d Pause/Disconnect respond (state-aware toast)",
+   "note": "last=Outside the Tastebook demo script — everything in the main story is clickable though."
+  },
+  {
+   "id": "6c Receipt/Export/Cancel(reason)",
+   "note": "rc=true ex=true cn=true msg=\"Outside the Tastebook demo script — everything in the main story is clickable though.\""
+  },
+  {
+   "id": "7g tr-2219 Quarantine aria-disabled→reason",
+   "note": "toast=true aria=true msg=\"Outside the Tastebook demo script — everything in the main story is clickable though.\""
+  }
+ ],
+ "consoleErrs": [],
+ "items": [
+  {
+   "id": "1a open+enter anim (railPanelIn)",
+   "pass": true,
+   "note": "active=true enter=true"
+  },
+  {
+   "id": "1b close: exit anim (railPanelOut) + hides",
+   "pass": true,
+   "note": "hidden=true exitAnim=true"
+  },
+  {
+   "id": "1c reopen",
+   "pass": true,
+   "note": "active=true"
+  },
+  {
+   "id": "2a cfg menu open anim+cascade+chevron",
+   "pass": true,
+   "note": "{\"open\":true,\"cascade\":true,\"anim\":true,\"items\":6,\"pi\":\"0,1,2,3,4,5\"} chev=true"
+  },
+  {
+   "id": "2b pick config → label+close",
+   "pass": true,
+   "note": "{\"lbl\":\"vite dev — tastebook-web\",\"closed\":true,\"ariaExp\":\"false\",\"pop\":true} before=\"tastebook-api — cargo runtastebook-api\""
+  },
+  {
+   "id": "2c Add Configuration reveals #rdAddForm",
+   "pass": true,
+   "note": "{\"hidden\":false,\"anims\":[],\"visible\":true}"
+  },
+  {
+   "id": "2d adapter menu 3 items open",
+   "pass": true,
+   "note": "{\"open\":true,\"n\":3,\"casc\":true}"
+  },
+  {
+   "id": "2e adapter pick → Node.js",
+   "pass": true,
+   "note": "label=Node.js"
+  },
+  {
+   "id": "2f text inputs type + focus-ring transition",
+   "pass": true,
+   "note": "[\"cargo run --bin x\",\"/tmp/cwd\"] tr=border-color, box-shadow"
+  },
+  {
+   "id": "2g stop-on-entry checkbox toggles",
+   "pass": true,
+   "note": "checked=true"
+  },
+  {
+   "id": "2h Save → toast",
+   "pass": true,
+   "note": "toast=true"
+  },
+  {
+   "id": "2i Cancel hides form",
+   "pass": true,
+   "note": "gone=true"
+  },
+  {
+   "id": "4a 4 shelf headers toggle w/ grid-rows anim",
+   "pass": true,
+   "note": "animSeen=4/4"
+  },
+  {
+   "id": "4b inner cascade pm-kid-in",
+   "pass": true,
+   "note": "cascSeen=4/4"
+  },
+  {
+   "id": "3a rdSessMenu 2 items open",
+   "pass": true,
+   "note": "{\"open\":true,\"n\":2,\"casc\":true}"
+  },
+  {
+   "id": "3b session pick → import worker + close",
+   "pass": true,
+   "note": "{\"lbl\":\"import worker\",\"closed\":true}"
+  },
+  {
+   "id": "3c rdBpMode 3 items open",
+   "pass": true,
+   "note": "{\"open\":true,\"n\":3}"
+  },
+  {
+   "id": "3d bp mode pick → Hit Count",
+   "pass": true,
+   "note": "label=Hit Count"
+  },
+  {
+   "id": "3e condition input typing",
+   "pass": true,
+   "note": "val=qty > 42"
+  },
+  {
+   "id": "3f Apply/Cancel toasts",
+   "pass": true,
+   "note": "apply=true cancel=true"
+  },
+  {
+   "id": "4c transport 6 buttons toast + Reveal opens bottom panel",
+   "pass": true,
+   "note": "ok=6/6 bpBefore=false bpAfter=true missing="
+  },
+  {
+   "id": "4d Pause/Disconnect respond (state-aware toast)",
+   "pass": false,
+   "note": "last=Outside the Tastebook demo script — everything in the main story is clickable though."
+  },
+  {
+   "id": "4e session rows select (toast)",
+   "pass": true,
+   "note": "rd1=true rd2=true"
+  },
+  {
+   "id": "4f shelf-header action buttons fire",
+   "pass": true,
+   "note": "hb=3/3 bpHdr=3"
+  },
+  {
+   "id": "4g watch edit/remove buttons toast",
+   "pass": true,
+   "note": "ok=4/4"
+  },
+  {
+   "id": "4h variable row buttons toast",
+   "pass": true,
+   "note": "ok=9/9"
+  },
+  {
+   "id": "4i nested cfg variable expands",
+   "pass": true,
+   "note": "{\"open\":true,\"anim\":true}"
+  },
+  {
+   "id": "4j scopes collapse/expand",
+   "pass": true,
+   "note": "collapsed=true"
+  },
+  {
+   "id": "4k call stack 4 frames + more toast",
+   "pass": true,
+   "note": "frames=4/4 more=true"
+  },
+  {
+   "id": "4l bp toggles + goto-source toast",
+   "pass": true,
+   "note": "tog=4/4 loc=4/4"
+  },
+  {
+   "id": "4m exception checkboxes toggle+toast",
+   "pass": true,
+   "note": "unchecked=true toast=true"
+  },
+  {
+   "id": "4n Start/RunNoDebug/cog toast + squash",
+   "pass": true,
+   "note": "start=true nodbg=true cog=true squash=true"
+  },
+  {
+   "id": "5 pulsing dots on run panel",
+   "pass": true,
+   "note": "[\"liveRail\"]"
+  },
+  {
+   "id": "6a LAST RUN buttons toast+squash",
+   "pass": true,
+   "note": "run=true watch=true sq=true"
+  },
+  {
+   "id": "6b Receipt details expand anim+cascade",
+   "pass": true,
+   "note": "{\"anims\":[\"grid-template-rows\",\"opacity\"],\"kid\":true}"
+  },
+  {
+   "id": "6c Receipt/Export/Cancel(reason)",
+   "pass": false,
+   "note": "rc=true ex=true cn=true msg=\"Outside the Tastebook demo script — everything in the main story is clickable though.\""
+  },
+  {
+   "id": "7a RUNS 10 headers toggle anim+cascade",
+   "pass": true,
+   "note": "n=10 anim=10 casc=10"
+  },
+  {
+   "id": "7b tstLiveElapsed ticker advances",
+   "pass": true,
+   "note": "85.0s -> 86.0s"
+  },
+  {
+   "id": "7c running row Watch/Cancel + dots pulse",
+   "pass": true,
+   "note": "w=true c=true dots=[\"dotPulse\",\"dotPulse\"]"
+  },
+  {
+   "id": "7d passed tr-2214 Receipt/Output/Re-run",
+   "pass": true,
+   "note": "ok=3/3"
+  },
+  {
+   "id": "7e flaky tr-2217 Quarantine toast",
+   "pass": true,
+   "note": "toast=true"
+  },
+  {
+   "id": "7f errored tr-2218 Re-run toast",
+   "pass": true,
+   "note": "toast=true"
+  },
+  {
+   "id": "7g tr-2219 Quarantine aria-disabled→reason",
+   "pass": false,
+   "note": "toast=true aria=true msg=\"Outside the Tastebook demo script — everything in the main story is clickable though.\""
+  },
+  {
+   "id": "7h cancelled tr-2212 Re-run toast",
+   "pass": true,
+   "note": "toast=true"
+  },
+  {
+   "id": "7i failed tr-2199 Rerun-failed-only",
+   "pass": true,
+   "note": "toast=true"
+  },
+  {
+   "id": "8a QUARANTINED expand + Release/Receipt",
+   "pass": true,
+   "note": "{\"open\":true,\"anim\":true} rel=true rec=true"
+  },
+  {
+   "id": "8b EVIDENCE expand + Inspect + Open in Artifacts→panel switch",
+   "pass": true,
+   "note": "open=true insp=true landedArtifacts=true"
+  },
+  {
+   "id": "8c return to testing via rail",
+   "pass": true,
+   "note": "back=true"
+  },
+  {
+   "id": "9a 4 active + 3 queued rows expand anim+cascade",
+   "pass": true,
+   "note": "n=7(4 active+3 queued) anim=7 casc=7"
+  },
+  {
+   "id": "9b context occupancy bars render",
+   "pass": true,
+   "note": "[\"62%\",\"74%\",\"80%\",\"40%\",\"20%\"]"
+  },
+  {
+   "id": "9c Open chat responds (toast per cmd.chat.open_thread)",
+   "pass": true,
+   "note": "toast=true msg=\"cmd.chat.open_thread -> Migration Runner blocking question\""
+  },
+  {
+   "id": "9d all Open node/thread buttons respond",
+   "pass": true,
+   "note": "ok=17/17"
+  },
+  {
+   "id": "9e LANE CAPACITY expands",
+   "pass": true,
+   "note": "{\"open\":true,\"anim\":true,\"occ\":3}"
+  },
+  {
+   "id": "10a 3 completed rows expand + …3 more toast",
+   "pass": true,
+   "note": "n=3 anim=3 more=true"
+  },
+  {
+   "id": "10b Open Chat toggles #chatPanel",
+   "pass": true,
+   "note": "before=false after=true"
+  },
+  {
+   "id": "11a 14+ cards present",
+   "pass": true,
+   "note": "cards=15"
+  },
+  {
+   "id": "11b Web tab FLIP+filter",
+   "pass": true,
+   "note": "{\"anims\":[{\"kf\":[\"translate(0px, 477.469px)\",\"none\"]},{\"kf\":[\"translate(0px, 527.188px)\",\"none\"]}],\"inl\":2} vis=2"
+  },
+  {
+   "id": "11c shelf flash pm-flashing",
+   "pass": true,
+   "note": "flash=true"
+  },
+  {
+   "id": "11d chip active",
+   "pass": true,
+   "note": "chip=true"
+  },
+  {
+   "id": "11e Browser tab filter",
+   "pass": true,
+   "note": "vis=3"
+  },
+  {
+   "id": "11f Evidence tab + pm-empty present",
+   "pass": true,
+   "note": "vis=10"
+  },
+  {
+   "id": "11g All tab restores",
+   "pass": true,
+   "note": "vis=15/15"
+  },
+  {
+   "id": "12a sort menu open",
+   "pass": true,
+   "note": "{\"open\":true,\"n\":3,\"casc\":true}"
+  },
+  {
+   "id": "12b Oldest first FLIP reorder",
+   "pass": true,
+   "note": "mid=15 reversed=true before=14:31:02,14:30:44,14:26:33 after=13:20:07,13:58:02,14:02:11"
+  },
+  {
+   "id": "12c FLIP cleanup no inline transforms",
+   "pass": true,
+   "note": "leftover=0"
+  },
+  {
+   "id": "12d By family groups cards (contiguous runs)",
+   "pass": true,
+   "note": "order=web,web,browser,browser,browser,evidence,evidence,evidence,evidence,evidence,evidence,evidence,evidence,evidence,evidence"
+  },
+  {
+   "id": "13a all card headers expand anim+cascade",
+   "pass": true,
+   "note": "anim=15/15 casc=15"
+  },
+  {
+   "id": "13b artLiveElapsed ticker advances",
+   "pass": true,
+   "note": "90.0s -> 91.0s"
+  },
+  {
+   "id": "13c live card Watch+play toast",
+   "pass": true,
+   "note": "w=true p=true"
+  },
+  {
+   "id": "13d all card action buttons respond",
+   "pass": true,
+   "note": "toast=53 switch=2/55"
+  },
+  {
+   "id": "13e expired card Copy ONLY",
+   "pass": true,
+   "note": "[\"Copy\"]"
+  },
+  {
+   "id": "14 hover sheen transition + card lift",
+   "pass": true,
+   "note": "{\"tr\":\"transform 0.7s cubic-bezier(0.22, 1, 0.36, 1)\",\"transform\":\"matrix(1, 0, 0, 1, 135.459, 0)\",\"opacity\":\"1\"} lift=true"
+  },
+  {
+   "id": "15a 6 trail rows toast",
+   "pass": true,
+   "note": "rows=6 ok=6"
+  },
+  {
+   "id": "15b Open in Orchestrator no error",
+   "pass": true,
+   "note": "active=true errs=0"
+  },
+  {
+   "id": "15c return via rail",
+   "pass": true,
+   "note": "js-click-fallback back=true"
+  },
+  {
+   "id": "16a emulateMedia reduce: functional, zero anims",
+   "pass": true,
+   "note": "ok"
+  },
+  {
+   "id": "16b data-motion=reduced attr path",
+   "pass": true,
+   "note": "open=true flipAnims=0"
+  },
+  {
+   "id": "17a theme personality differs",
+   "pass": true,
+   "note": "{\"friendly-dark\":{\"accTrans\":\"ease\",\"accDur\":\"0s\",\"enter\":[\"railPanelIn:340:linear\"]},\"retro-light\":{\"accTrans\":\"ease\",\"accDur\":\"0s\",\"enter\":[]}}"
+  },
+  {
+   "id": "17b basic-light items 11+12 pass",
+   "pass": true,
+   "note": "ok"
+  },
+  {
+   "id": "18a family-tab spam x8 settles",
+   "pass": true,
+   "note": "last=evidence vis=true stuck=0"
+  },
+  {
+   "id": "18b sort spam x5 settles",
+   "pass": true,
+   "note": "stuck=0 menuStuck=false"
+  },
+  {
+   "id": "18c accordion spam x8 settles",
+   "pass": true,
+   "note": "{\"anims\":0,\"classes\":\"sh-card expired\"} stuckCls=false"
+  },
+  {
+   "id": "19 console clean",
+   "pass": true,
+   "note": "errs=[]"
+  }
+ ]
+}
