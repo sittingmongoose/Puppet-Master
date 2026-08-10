@@ -64,10 +64,30 @@
   var LIVE_APPLY = {
     'general.visual.theme': function (v) {
       var t = slug(v);
-      docEl.setAttribute('data-theme', t);
-      lsSet('pm.theme', t);
-      var sel = document.getElementById('themeSelect');
-      if (sel) { try { sel.value = t; } catch (e) {} }
+      if (window.PM_THEME && typeof window.PM_THEME.set === 'function') {
+        /* PM_THEME.set parses the slug into family + explicit mode and
+           persists pm.themeFamily / pm.themeMode / pm.theme itself. */
+        window.PM_THEME.set(t, { dispatch: false });
+      } else {
+        docEl.setAttribute('data-theme', t);
+        lsSet('pm.theme', t);
+        var sel = document.getElementById('themeSelect');
+        if (sel) {
+          try { sel.value = t; } catch (e) {}
+          sel.setAttribute('data-value', t);
+          var lab = document.getElementById('themeMenuLabel');
+          if (lab) lab.textContent = t;
+        }
+      }
+      refreshGlassLocks();
+    },
+    'general.visual.theme-mode': function (v) {
+      var m = slug(v);
+      if (window.PM_THEME && typeof window.PM_THEME.setMode === 'function') {
+        window.PM_THEME.setMode(m);
+      } else {
+        lsSet('pm.themeMode', m);
+      }
       refreshGlassLocks();
     },
     'general.visual.glass-background-mode': function (v) {
@@ -136,10 +156,22 @@
       Object.keys(panelCache).forEach(function (k) { scan(panelCache[k]); });
     } catch (e) {}
   }
+  /* Exposed so PM_THEME's auto-mode OS-scheme re-resolve can refresh the
+     Glass Transparency lock without reaching into this closure. */
+  window.PM_GLASS_LOCK_REFRESH = refreshGlassLocks;
   /* Boot sync: rows reflect what the head boot snippet already applied. */
   (function syncVisualStateFromDom() {
     var setIf = function (id, v) { if (byId.has(id)) { state.set(id, v); } };
     setIf('general.visual.theme', titleCase(docEl.getAttribute('data-theme') || 'friendly-dark'));
+    var tmode = null;
+    try { tmode = localStorage.getItem('pm.themeMode'); } catch (eTm) {}
+    if (!tmode) {
+      var ltheme = null;
+      try { ltheme = localStorage.getItem('pm.theme'); } catch (eLt) {}
+      if (/-light$/.test(ltheme || '')) { tmode = 'light'; }
+      else if (/-dark$/.test(ltheme || '')) { tmode = 'dark'; }
+    }
+    if (tmode) { setIf('general.visual.theme-mode', titleCase(tmode)); }
     setIf('general.visual.glass-background-mode', titleCase(docEl.getAttribute('data-glass-bg') || 'mesh'));
     setIf('general.visual.reduce-animations', docEl.getAttribute('data-motion') === 'reduced');
     var dens = docEl.getAttribute('data-density');

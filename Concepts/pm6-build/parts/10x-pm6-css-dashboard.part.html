@@ -36,6 +36,31 @@
 .pm6-dash-add:active { transform: scale(.97); }
 .pm6-dash-add .pm6-ico { color: var(--accent-primary); }
 
+/* Frosted scroll-under (Task 5): the widget scroll surface runs BEHIND
+   the Main/Metrics/Monitoring header. Fixed header height — CSS
+   constant; the scroller is lifted under the plate and padded back
+   down, so content stays sharp until it crosses the header's lower
+   boundary. z stays under the catalog overlay (z 60) and the pane drag
+   handle (z 50). */
+.dashboard-view { --pm6-dash-head-h: 27px; }
+.page-dashboard .dashboard-header {
+  position: relative;
+  z-index: 5;
+  background: color-mix(in srgb, var(--surface) 72%, transparent);
+  -webkit-backdrop-filter: blur(11px) saturate(140%);
+  backdrop-filter: blur(11px) saturate(140%);
+}
+/* glass blur budget: no nested backdrop-filter inside the pane */
+[data-theme^="glass"] .page-dashboard .dashboard-header {
+  -webkit-backdrop-filter: none;
+  backdrop-filter: none;
+  background: color-mix(in srgb, var(--surface) 88%, transparent);
+}
+.page-dashboard .pm6-dash-scroll {
+  margin-top: calc(-1 * var(--pm6-dash-head-h));
+  padding-top: calc(var(--pm6-dash-head-h) + var(--md));
+}
+
 /* ---------- icon plumbing ---------- */
 .pm6-ico { display: inline-flex; width: 1em; height: 1em; flex: none; }
 .pm6-ico svg { width: 1em; height: 1em; display: block; }
@@ -43,7 +68,11 @@
 /* ---------- scroll region + grid ---------- */
 .pm6-dash-scroll {
   flex: 1; overflow-y: auto; overflow-x: hidden;
-  padding: var(--md); display: flex; flex-direction: column; gap: var(--md);
+  /* bottom trimmed to --sm: enough to keep the last row off the panel edge
+     now that .primary-content no longer contributes a gutter of its own.
+     padding-top is re-set by the .page-dashboard rule above (frosted header
+     inset) — do not fold it back into this shorthand. */
+  padding: var(--md) var(--md) var(--sm); display: flex; flex-direction: column; gap: var(--md);
   container-type: inline-size; container-name: pm6dash;
 }
 .pm6-dash-grid {

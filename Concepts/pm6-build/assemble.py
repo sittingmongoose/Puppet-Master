@@ -91,7 +91,7 @@ def main():
 
     # G0 byte-identity invariant
     if gate == "g0":
-        same = out == WORKING.read_text(encoding="utf-8")
+        same = ASSEMBLED.read_bytes() == WORKING.read_bytes()
         print(f"[G0] byte-identity vs working copy: {'IDENTICAL' if same else 'DIFFERS'}")
         if not same:
             hard_fail = True

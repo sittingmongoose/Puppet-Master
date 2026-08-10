@@ -217,12 +217,32 @@
       background: var(--surface);
       flex: none;
     }
+    /* Non-retro: Projects-like open header; friendly gets rounded inset box */
+    :is([data-theme^="friendly"], [data-theme^="glass"], [data-theme^="basic"]) .pm6-wiz-runhead {
+      padding: 0;
+      margin: var(--md) var(--xl) 0;
+      border-bottom: none;
+      background: transparent;
+      justify-content: space-between;
+      flex-wrap: nowrap;
+      gap: var(--md);
+    }
+    [data-theme^="friendly"] .pm6-wiz-runhead {
+      padding: var(--md) var(--lg);
+      background: var(--pm6-cozy-card-base, var(--surface-elevated));
+      border: 1px solid var(--pm6-cozy-chrome-border, var(--border-light));
+      border-radius: var(--radius-lg);
+    }
+    :is([data-theme^="friendly"], [data-theme^="glass"], [data-theme^="basic"]) .pm6-wiz-runhead-title {
+      font-size: 24px;
+      font-weight: 700;
+      letter-spacing: 0.5px;
+    }
     /* single static title row — collapse control + chips row deleted (F2);
-       run info, seed lineage, PRD-pack chip and state pill all ride row one */
+       PRD-pack chip and state pill all ride row one */
     .pm6-wiz-runhead-main { flex: 1; min-width: 0; display: flex; flex-direction: column; gap: 6px; }
-    .pm6-wiz-runhead-titlerow { display: flex; align-items: baseline; gap: var(--md); flex-wrap: wrap; }
+    .pm6-wiz-runhead-titlerow { display: flex; align-items: baseline; gap: var(--md); flex-wrap: nowrap; }
     .pm6-wiz-runhead-title { font-family: var(--display-font); font-size: var(--fs-xl); font-weight: 800; color: var(--text-primary); }
-    .pm6-wiz-runhead-run { font-size: var(--fs-sm); color: var(--text-muted); font-weight: 600; }
     .pm6-wiz-runhead-state { flex: none; display: flex; align-items: center; gap: var(--sm); }
 
     /* status pill (JS writes content) */
@@ -259,7 +279,44 @@
       display: flex; flex-direction: column; gap: var(--sm);
       padding: 4px 2px 6px 0; /* top inset keeps the hover-lift unclipped (F1) */
     }
+    /* Frosted scroll-under: the topic cards pass behind the column head.
+       This was tried twice and reverted twice, both times for the SAME reason
+       and not the plate's fault: .pm6-wiz-topic-card set no flex, so as a flex
+       item of this column it was flex-shrink:1, and the plate's re-padding
+       squeezed every card until the 2-line clamped subtitle got sliced
+       mid-glyph inside the card's overflow:hidden. That is fixed below with
+       flex:none, so the plate is safe now.
+       Scoped to .pm6-wiz-topics on purpose: .pm6-wiz-col-head is a shared
+       idiom used five times and only the topic map has a scroller beneath it.
+       The list keeps its F1 4px top inset inside the re-padding so the first
+       card's hover-lift stays unclipped. */
+    .pm6-wiz-topics { --pm6-wiz-colhead-h: 22px; }
+    .pm6-wiz-topics > .pm6-wiz-col-head {
+      position: relative;
+      z-index: 5;
+      background: color-mix(in srgb, var(--surface) 72%, transparent);
+      -webkit-backdrop-filter: blur(11px) saturate(140%);
+      backdrop-filter: blur(11px) saturate(140%);
+    }
+    /* glass blur budget: no nested backdrop-filter inside the pane */
+    [data-theme^="glass"] .pm6-wiz-topics > .pm6-wiz-col-head {
+      -webkit-backdrop-filter: none;
+      backdrop-filter: none;
+      background: color-mix(in srgb, var(--surface) 88%, transparent);
+    }
+    .pm6-wiz-topics > .pm6-wiz-topic-list {
+      margin-top: calc(-1 * var(--pm6-wiz-colhead-h, 22px));
+      padding-top: calc(var(--pm6-wiz-colhead-h, 22px) + 4px);
+    }
     .pm6-wiz-topic-card {
+      /* flex:none is load-bearing. The card is a flex ITEM of the column
+         .pm6-wiz-topic-list, so without it the default flex-shrink:1 lets the
+         list squeeze every card instead of scrolling. Because the card is
+         overflow:hidden around a 2-line -webkit-line-clamp subtitle, that
+         squeeze slices the clamped line mid-glyph and reads as a stray rule
+         drawn across the lower half of each box. The subtitle is MEANT to be
+         two lines; pin the height and let the list scroll. */
+      flex: none;
       position: relative; overflow: hidden; cursor: pointer; text-align: left;
       width: 100%; font-family: var(--body-font);
       background: var(--surface); border: 1px solid var(--border-light);
@@ -368,6 +425,30 @@
       padding: var(--xl); display: flex; flex-direction: column; gap: var(--lg);
     }
     .pm6-wiz-thread-note { font-size: var(--fs-sm); color: var(--text-muted); line-height: var(--lh-body); }
+
+    /* Frosted scroll-under (Task 5): the thread body scrolls BEHIND the
+       thread head. Fixed single-line head — CSS constant. The .pm6-wiz-
+       chat variant keeps body padding at 0; its log carries the inset
+       (see the compensation in the chat-surface section below). */
+    .pm6-wiz-thread { --pm6-wiz-head-h: 45px; }
+    .pm6-wiz-thread-head {
+      position: relative;
+      z-index: 5;
+      background: color-mix(in srgb, var(--surface) 72%, transparent);
+      -webkit-backdrop-filter: blur(11px) saturate(140%);
+      backdrop-filter: blur(11px) saturate(140%);
+      border-bottom: 1px solid var(--border-light);
+    }
+    /* glass blur budget: no nested backdrop-filter inside the pane */
+    [data-theme^="glass"] .pm6-wiz-thread-head {
+      -webkit-backdrop-filter: none;
+      backdrop-filter: none;
+      background: color-mix(in srgb, var(--surface) 88%, transparent);
+    }
+    .pm6-wiz-thread-body {
+      margin-top: calc(-1 * var(--pm6-wiz-head-h));
+      padding-top: calc(var(--pm6-wiz-head-h) + var(--xl));
+    }
 
     /* question blocks */
     .pm6-wiz-q {
@@ -503,6 +584,56 @@
       font-family: var(--display-font); font-size: var(--fs-lg); font-weight: 800;
       color: var(--text-primary); padding-bottom: var(--sm);
       border-bottom: 1px solid var(--border-light);
+    }
+    /* The doc title is NOT sticky, deliberately. It was pinned with
+       position:sticky + a plate and reverted: this title is part of the
+       document, not chrome above it, and it should scroll away with the copy
+       it names. The rule was also unscoped, so it pinned the title in the
+       expanded overlay too. .pm6-wiz-doc is correspondingly out of PM_EDGE's
+       skipTop — there is no sticky row left that a masked edge could fade. */
+
+    /* Frosted scroll-under for the plan preview.
+       The plate is an OVERLAY ON THE WRAPPER, not a child of the card, and
+       that is the whole point. It was first written as a sticky ::before
+       inside .pm6-wiz-doc and it landed in the wrong place: a sticky box is
+       clamped by its containing block, which for a flex item of the card is
+       the card's CONTENT box — starting var(--xl) down. So top:0 pinned it
+       where the title sits rather than at the card's top edge, and copy
+       reaching the real top never met it.
+       Out here it can cover the card's true top edge. The card drops its own
+       padding-top so content runs all the way up to that edge and passes
+       beneath the plate; the plate supplies the inset instead. Inset by the
+       card's 1px border and given its top radius so it does not overhang the
+       rounded corners. pointer-events:none — it must never eat a click. */
+    .pm6-wiz-preview {
+      position: relative;
+      /* measured (PM_FROST -> --pm6-wiz-previewhead-h): the caption above the
+         card, so the overlay knows where the card's top edge is. Fallback
+         matches the caption's resting height. */
+      --pm6-wiz-previewhead-h: 22px;
+    }
+    .pm6-wiz-preview > .pm6-wiz-doc { padding-top: 0; }
+    .pm6-wiz-preview::after {
+      content: '';
+      position: absolute;
+      left: 1px;
+      right: 1px;
+      /* sits at the card's top: the wrapper's only other child is the caption
+         head, so the card starts at its bottom */
+      top: calc(var(--pm6-wiz-previewhead-h, 22px) + 1px);
+      height: var(--xl);
+      z-index: 5;
+      border-radius: var(--radius-lg) var(--radius-lg) 0 0;
+      background: color-mix(in srgb, var(--surface-elevated) 72%, transparent);
+      -webkit-backdrop-filter: blur(11px) saturate(140%);
+      backdrop-filter: blur(11px) saturate(140%);
+      pointer-events: none;
+    }
+    /* glass blur budget: no nested backdrop-filter inside the pane */
+    [data-theme^="glass"] .pm6-wiz-preview::after {
+      -webkit-backdrop-filter: none;
+      backdrop-filter: none;
+      background: color-mix(in srgb, var(--surface-elevated) 88%, transparent);
     }
     .pm6-wiz-doc-sec { display: flex; flex-direction: column; gap: 6px; }
     .pm6-wiz-doc-sec.fresh { animation: pm-enter-up var(--motion-med) var(--ease-default) both; }
@@ -715,7 +846,10 @@
       border-color: var(--glass-hairline);
       box-shadow: inset 0 1px 0 var(--glass-edge), inset 0 0 0 1px var(--glass-hairline);
     }
-    [data-theme^="glass"] .pm6-wiz-runhead { background: var(--pm6-glass-step-1); border-color: var(--glass-hairline); }
+    [data-theme^="glass"] .pm6-wiz-runhead {
+      background: transparent;
+      border: none;
+    }
     [data-theme^="glass"] .pm6-wiz-q, [data-theme^="glass"] .pm6-wiz-ans,
     [data-theme^="glass"] .pm6-wiz-rev-stat, [data-theme^="glass"] .pm6-wiz-cite,
     [data-theme^="glass"] .pm6-wiz-evd { border-color: var(--glass-hairline); }
@@ -1002,6 +1136,37 @@
       padding: var(--xl) clamp(24px, 6vw, 64px);
       border: none; border-radius: 0; background: transparent;
     }
+    /* Scroll-under (Task 5) with an OPAQUE plate, not a frosted one: the D3
+       note above is explicit that this overlay stays free of backdrop-filter
+       for the Slint port ("no backdrop blur anywhere"), and that decision
+       outranks the house frost recipe. The interaction is identical — the
+       document runs behind the title bar and is covered by it — the plate is
+       just precomputable. No [data-theme^="glass"] reset is needed for the
+       same reason: there is no nested backdrop-filter here to undo.
+       Measured (PM_FROST -> --pm6-wiz-docov-head-h) because the title
+       ellipsises on one line but the close button's type ramp is themed; the
+       overlay is display:none at boot so it measures 0 and the constant holds
+       until it is first opened. */
+    .pm6-wiz-doc-overlay-panel { --pm6-wiz-docov-head-h: 49px; }
+    .pm6-wiz-doc-overlay-head {
+      position: relative;
+      z-index: 5;
+      background: var(--surface-elevated);
+    }
+    /* glass runs a translucent panel plate, so a single coat of it would let
+       the document ghost through the title bar. Two coats of the panel's own
+       plate colour read solid and keep the bar the same hue as its panel —
+       the same near-solid trick pm6-css-cozy-shelves uses to stop tree rows
+       bleeding through sprout menus, and still blur-free for Slint. */
+    [data-theme^="glass"] .pm6-wiz-doc-overlay-head {
+      background: linear-gradient(var(--pm6-glass-plate), var(--pm6-glass-plate)), var(--pm6-glass-plate);
+    }
+    .pm6-wiz-doc-overlay-body {
+      margin-top: calc(-1 * var(--pm6-wiz-docov-head-h, 49px));
+      padding-top: calc(var(--pm6-wiz-docov-head-h, 49px) + var(--xl));
+    }
+    /* No sticky-offset compensation for .pm6-wiz-doc-h here any more: the doc
+       title scrolls with its copy in both views, so there is nothing to park. */
 
     /* ---- D4: selection context menu ---- */
     .pm6-wiz-selmenu {
@@ -1198,6 +1363,12 @@
     /* topic thread body doubles as a chat surface — log carries the padding */
     .pm6-wiz-thread-body.pm6-wiz-chat { padding: 0; gap: 0; overflow: hidden; }
     .pm6-wiz-thread-body.pm6-wiz-chat .pm6-wiz-chat-log { gap: var(--lg); padding: var(--xl); }
+    /* Task 5 scroll-under compensation: the chat variant body is still
+       lifted behind the frosted head (margin-top from the base rule);
+       the log owns the scroll, so it carries the head-height inset. */
+    .pm6-wiz-thread-body.pm6-wiz-chat .pm6-wiz-chat-log {
+      padding-top: calc(var(--pm6-wiz-head-h, 45px) + var(--xl));
+    }
 
     .pm6-wiz-msg {
       display: flex; align-items: flex-end; gap: var(--sm); max-width: 94%;

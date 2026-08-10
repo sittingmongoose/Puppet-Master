@@ -5,14 +5,42 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Puppet Master - Dashboard</title>
   <script>
-    /* pm6 boot: apply persisted theme prefs BEFORE first CSS paint (defaults: friendly-dark / mesh) */
+    /* pm6 boot: apply persisted theme prefs BEFORE first CSS paint (defaults: friendly + dark / mesh).
+       Theme model: pm.themeFamily (friendly|glass|retro|basic) x pm.themeMode (light|dark|auto);
+       auto follows prefers-color-scheme. The legacy pm.theme slug migrates on first read and is
+       kept in sync (resolved slug) for older readers.
+       Also stamps a critical solid canvas color + color-scheme so the 2.5MB stylesheet
+       (and render-blocking webfonts) cannot flash the browser's default white twice. */
     (function () {
       'use strict';
       var d = document.documentElement;
+      var BGS = {
+        'friendly-dark': '#211E26',
+        'friendly-light': '#FBF7F3',
+        'retro-dark': '#1A1A1A',
+        'retro-light': '#F5F0E8',
+        'basic-dark': '#121212',
+        'basic-light': '#EAECEF',
+        'glass-dark': '#241B36',
+        'glass-light': '#E4CDE4'
+      };
       try {
-        var themes = ['friendly-dark', 'friendly-light', 'retro-dark', 'retro-light', 'basic-light', 'basic-dark', 'glass-dark', 'glass-light'];
-        var t = localStorage.getItem('pm.theme');
-        if (themes.indexOf(t) === -1) { t = 'friendly-dark'; }
+        var fams = ['friendly', 'glass', 'retro', 'basic'];
+        var tmodes = ['light', 'dark', 'auto'];
+        var fam = localStorage.getItem('pm.themeFamily');
+        var tmode = localStorage.getItem('pm.themeMode');
+        var leg = /^(friendly|glass|retro|basic)-(light|dark)$/.exec(localStorage.getItem('pm.theme') || '');
+        if (fams.indexOf(fam) === -1) { fam = leg ? leg[1] : 'friendly'; }
+        if (tmodes.indexOf(tmode) === -1) { tmode = leg ? leg[2] : 'dark'; }
+        var scheme = tmode === 'light' ? 'light' : 'dark';
+        if (tmode === 'auto') {
+          try { scheme = (window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches) ? 'dark' : 'light'; }
+          catch (e2) { scheme = 'dark'; }
+        }
+        var t = fam + '-' + scheme;
+        localStorage.setItem('pm.themeFamily', fam);
+        localStorage.setItem('pm.themeMode', tmode);
+        localStorage.setItem('pm.theme', t);
         d.setAttribute('data-theme', t);
         var modes = ['mesh', 'depth', 'minimal'];
         var g = localStorage.getItem('pm.glassBg');
@@ -25,9 +53,20 @@
           var hi = light ? 0.88 : 0.85;
           d.style.setProperty('--glass-alpha', String(Math.min(hi, Math.max(lo, a))));
         }
+        var bg = BGS[t] || '#211E26';
+        var isDark = /-dark$/.test(t);
+        d.style.background = bg;
+        d.style.colorScheme = isDark ? 'dark' : 'light';
+        var s = document.createElement('style');
+        s.id = 'pm-boot-paint';
+        s.textContent = 'html,body{background:' + bg + ';color-scheme:' + (isDark ? 'dark' : 'light') + ';}';
+        (document.head || d).appendChild(s);
       } catch (e) { /* storage unavailable - keep markup defaults */ }
     })();
   </script>
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Cal+Sans&family=Inter:wght@400;500;600;700&family=Nunito:wght@400;600;700;800&family=Orbitron:wght@700&family=Quicksand:wght@400;500;600;700&family=Rajdhani:wght@400;500;600;700&display=swap" rel="stylesheet">
+  
+  <!-- Non-blocking fonts: a blocking stylesheet here delayed first paint and contributed to the double white flash on reload. -->
+  <link rel="preload" as="style" href="https://fonts.googleapis.com/css2?family=Cal+Sans&family=Inter:wght@400;500;600;700&family=Nunito:wght@400;600;700;800&family=Orbitron:wght@700&family=Quicksand:wght@400;500;600;700&family=Rajdhani:wght@400;500;600;700&display=swap" onload="this.onload=null;this.rel='stylesheet'">
+  <noscript><link href="https://fonts.googleapis.com/css2?family=Cal+Sans&family=Inter:wght@400;500;600;700&family=Nunito:wght@400;600;700;800&family=Orbitron:wght@700&family=Quicksand:wght@400;500;600;700&family=Rajdhani:wght@400;500;600;700&display=swap" rel="stylesheet"></noscript>

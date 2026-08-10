@@ -4,28 +4,18 @@
        Token-only. Owner: bottom-panel agent.
        ============================================================ */
 
-    /* --- resize affordance --- */
+    /* --- resize affordance ---
+       The pre-rev-7 44x3 pill (#terminalResizer::after) and the full-bar
+       hover fill are GONE. That ::after was an ID-specificity rule that
+       silently hijacked the shared .resizer-row halo pseudo-element
+       (width/height/background/transform all lost), so the dock bar rendered
+       only the bare core with no halo, no breath and no drag scale — the
+       "terminals only show one grab point" report. #terminalResizer now
+       inherits the pointer-anchored grab-glow from pm6-css-bento like every
+       other resizer; do not re-add an ::after here. */
     #terminalResizer {
       position: relative;
-      transition: background var(--motion-fast) var(--ease-default);
     }
-    #terminalResizer:hover,
-    #terminalResizer.dragging { background: var(--accent-soft); }
-    #terminalResizer::after {
-      content: "";
-      position: absolute;
-      left: 50%;
-      top: 50%;
-      width: 44px;
-      height: 3px;
-      transform: translate(-50%, -50%);
-      border-radius: var(--radius-pill);
-      background: var(--border-light);
-      opacity: 0;
-      transition: opacity var(--motion-fast) var(--ease-default);
-      pointer-events: none;
-    }
-    #terminalResizer:hover::after { opacity: 1; background: var(--accent-primary); }
 
     #bottomPanel { position: relative; }
     #bottomPanel > .pane-header-drag {
@@ -42,6 +32,18 @@
       transition: background var(--motion-fast) var(--ease-default);
     }
     #bottomPanel > .pane-header-drag:hover { background: var(--accent-primary); }
+
+    /* --- Task 5 (frosted scroll-under) decision record ---
+       .bottom-tabs: SKIPPED — its content is sibling tab panes that swap
+       in place and each pane scrolls internally, so no content ever
+       passes under the strip (nothing to frost over).
+       .pm-term-subdock / workgroup cluster: SKIPPED — it is horizontal
+       chrome INSIDE the tab strip, not a header above a vertical
+       scroller.
+       Terminal panes (.terminal-pane) have no per-pane title strip in
+       this build; the only terminal header-over-scroller surface is
+       .pm-editor-term-dock-bar — frosted + scroll-under in
+       pm6-css-components-a (06), next to its base rules. */
 
     /* --- tab count badges --- */
     .pm6-bottom-count {
@@ -371,29 +373,12 @@
     .pm6-status-fineprint { color: var(--text-muted); font-size: 9px; }
 
     /* ============================================================
-       Toast polish (overrides part-06 baseline; contract kept)
+       Legacy bottom toast retired — title-bar notify owns delivery
        ============================================================ */
-    #pmToastStack { gap: var(--sm); }
-    .pm-toast {
-      padding: 9px 14px;
-      font-size: var(--fs-xs);
-      line-height: var(--lh-body);
-      color: var(--text-primary);
-      background: var(--surface-elevated);
-      border: var(--border-width) solid var(--border-light);
-      border-radius: var(--radius-md);
-      box-shadow: var(--elev-2);
-      animation: pm6-toast-in var(--motion-med) var(--ease-spring);
-    }
-    .pm-toast.pm6-toast-out { animation: pm6-toast-out var(--motion-med) var(--ease-default) forwards; }
-    @keyframes pm6-toast-in {
-      from { opacity: 0; transform: translateY(10px) scale(.97); }
-      to { opacity: 1; transform: translateY(0) scale(1); }
-    }
-    @keyframes pm6-toast-out {
-      from { opacity: 1; transform: translateY(0); }
-      to { opacity: 0; transform: translateY(6px); }
-    }
+    #pmToastStack { display: none !important; }
+    #pm6StatusBell,
+    #pm6StatusBellBadge,
+    #pm6StatusBellPop { display: none !important; }
 
     /* ============================================================
        Theme accents
@@ -461,4 +446,693 @@
     [data-motion="reduced"] .pm6-status-pop.visible,
     [data-motion="reduced"] .pm6-status-orch .pm6-status-dot,
     [data-motion="reduced"] .pm6-status-ctx-fill { animation: none !important; transition: none !important; }
+
+
+    /* ============================================================
+       Title-bar notifications (port of notify-protos/01)
+       Bottom #pmToastStack + status-bar bell retired.
+       ============================================================ */
+    #pmToastStack { display: none !important; }
+    #pm6StatusBell,
+    #pm6StatusBellBadge,
+    #pm6StatusBellPop { display: none !important; }
+
+/* Shared notify primitives — no left-stripe; theme severity via --n-accent tint */
+.n-card {
+  background: var(--surface-elevated);
+  border: var(--border-width) solid var(--border);
+  border-radius: var(--border-radius);
+  box-shadow: var(--elev-2);
+  color: var(--text-primary);
+  font-family: var(--body-font);
+  font-weight: 600;
+  position: relative;
+}
+.n-card .n-x {
+  appearance: none;
+  border: none;
+  background: transparent;
+  color: var(--text-muted);
+  cursor: pointer;
+  font-size: 14px;
+  line-height: 1;
+  padding: 2px 4px;
+  border-radius: 4px;
+  opacity: .72; /* #4 always-visible dismiss */
+  flex: 0 0 auto;
+}
+.n-card .n-x:hover {
+  opacity: 1;
+  color: var(--accent-error);
+  background: color-mix(in srgb, var(--accent-error) 14%, transparent);
+}
+.n-sev-info { --n-accent: var(--accent-blue); }
+.n-sev-success { --n-accent: var(--accent-lime); }
+.n-sev-warn { --n-accent: var(--accent-warning); }
+.n-sev-error { --n-accent: var(--accent-error); }
+
+/* Severity cue: small glyph (not left stripe) */
+.n-sev-dot {
+  width: 7px; height: 7px; border-radius: 50%;
+  background: var(--n-accent, var(--accent-blue));
+  flex: 0 0 auto;
+  box-shadow: 0 0 0 2px color-mix(in srgb, var(--n-accent) 22%, transparent);
+}
+[data-theme^="retro"] .n-sev-dot {
+  border-radius: 0;
+  box-shadow: 1px 1px 0 color-mix(in srgb, var(--n-accent) 55%, transparent);
+}
+
+/* Glass plate edge (match files-panel language). Blur on ::before so titles stay sharp. */
+[data-theme^="glass"] .n-card {
+  position: relative;
+  isolation: isolate;
+  border: none;
+  background: var(--surface-elevated);
+  box-shadow:
+    inset 0 1px 0 var(--glass-edge),
+    inset 0 0 0 1px var(--glass-edge),
+    var(--elev-2);
+}
+[data-theme^="glass"] .n-card::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  z-index: -1;
+  border-radius: inherit;
+  pointer-events: none;
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+}
+[data-theme^="friendly"] .n-card {
+  background: color-mix(in srgb, var(--n-accent, var(--pm6-cozy-mint)) var(--pm6-cozy-mix), var(--pm6-cozy-card-base));
+  border-color: color-mix(in srgb, var(--n-accent, var(--pm6-cozy-mint)) var(--pm6-cozy-border-mix), var(--pm6-cozy-card-base));
+}
+[data-theme^="retro"] .n-card {
+  box-shadow: var(--shadow);
+}
+
+/* Action buttons */
+.n-actions {
+  display: flex; flex-wrap: wrap; gap: 6px;
+  margin-top: 8px;
+  align-items: center;
+}
+.n-btn {
+  appearance: none;
+  border: var(--border-width) solid var(--border);
+  background: var(--surface);
+  color: var(--text-primary);
+  border-radius: var(--border-radius);
+  padding: 4px 9px;
+  font-size: 11px;
+  font-weight: 700;
+  cursor: pointer;
+  font-family: var(--body-font);
+  transition: transform var(--motion-fast) var(--ease-out), opacity var(--motion-fast);
+}
+.n-btn:hover { transform: translateY(-1px); }
+.n-btn:active { transform: translateY(0) scale(.98); }
+.n-btn.primary {
+  background: var(--accent-primary);
+  color: var(--surface);
+  border-color: transparent;
+}
+.n-btn.danger {
+  border-color: color-mix(in srgb, var(--accent-error) 45%, var(--border));
+  color: var(--accent-error);
+}
+.n-btn.ghost { background: transparent; }
+[data-theme^="glass"] .n-btn {
+  box-shadow: inset 0 1px 0 var(--glass-edge);
+}
+[data-theme^="retro"] .n-btn:hover {
+  box-shadow: 2px 2px 0 rgba(0,0,0,.35);
+  transform: none;
+}
+
+.n-rationale {
+  width: 100%;
+  margin-top: 6px;
+  padding: 6px 8px;
+  font-size: 11px;
+  font-family: var(--body-font);
+  color: var(--text-primary);
+  background: var(--surface);
+  border: var(--border-width) solid var(--border);
+  border-radius: var(--border-radius);
+  resize: vertical;
+  min-height: 36px;
+}
+.n-rationale:focus {
+  outline: 2px solid color-mix(in srgb, var(--accent-primary) 45%, transparent);
+  outline-offset: 1px;
+}
+.n-explain {
+  margin-top: 8px;
+  padding: 8px;
+  font-size: 11px;
+  font-weight: 500;
+  color: var(--text-secondary);
+  white-space: pre-wrap;
+  background: color-mix(in srgb, var(--accent-blue) 10%, var(--surface));
+  border: var(--border-width) solid var(--border-light);
+  border-radius: var(--border-radius);
+}
+.n-pattern {
+  margin-top: 6px;
+  display: flex; gap: 6px; align-items: center;
+  font-size: 11px; color: var(--text-muted);
+}
+.n-pattern input {
+  flex: 1;
+  padding: 4px 8px;
+  font-size: 11px;
+  font-family: var(--mono-font, ui-monospace, monospace);
+  background: var(--surface);
+  border: var(--border-width) solid var(--border);
+  border-radius: var(--border-radius);
+  color: var(--text-primary);
+}
+.n-ttl {
+  font-size: 10px;
+  font-weight: 700;
+  color: var(--accent-error);
+  margin-left: auto;
+}
+
+.clear-all-btn {
+  appearance: none;
+  border: var(--border-width) solid var(--border);
+  background: var(--surface);
+  color: var(--text-primary);
+  border-radius: var(--border-radius);
+  padding: 4px 10px;
+  font-size: 11px;
+  font-weight: 700;
+  cursor: pointer;
+  font-family: var(--body-font);
+}
+.clear-all-btn:hover {
+  background: color-mix(in srgb, var(--accent-error) 16%, var(--surface));
+  border-color: var(--accent-error);
+}
+
+
+
+    /* —— Stack geometry: denser host, rightward peek, glass clip —— */
+    .rs-host {
+      position: relative;
+      width: 100%;
+      height: 100%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+    .rs-stack {
+      position: relative;
+      height: 28px;
+      width: var(--rs-stack-w, 248px);
+      cursor: pointer;
+      transform-origin: center center;
+    }
+    .rs-stack.empty {
+      opacity: .72;
+      cursor: pointer;
+    }
+    /* Empty affordance: SVG bell (no emoji, no dashed box) */
+    .rs-empty-bell {
+      display: none;
+      position: absolute;
+      left: 50%; top: 50%;
+      width: 16px; height: 16px;
+      margin: -8px 0 0 -8px;
+      color: var(--text-muted);
+      pointer-events: none;
+    }
+    .rs-stack.empty .rs-empty-bell { display: block; }
+    .rs-stack:not(.empty) .rs-empty-bell { display: none; }
+    .rs-stack.empty:hover .rs-empty-bell { color: var(--text-secondary); }
+    .rs-clip {
+      position: absolute;
+      inset: 0;
+      overflow: hidden; /* glass: no under-bleed */
+      border-radius: var(--border-radius);
+    }
+    .rs-stack.empty .rs-clip { display: none; }
+    [data-theme^="glass"] .rs-clip {
+      /* mild rightward peek — keep left edge readable */
+      -webkit-mask-image: linear-gradient(90deg, rgba(0,0,0,.72) 0%, #000 4%, #000 100%);
+      mask-image: linear-gradient(90deg, rgba(0,0,0,.72) 0%, #000 4%, #000 100%);
+    }
+    /* Glass needs an opaque backing under the notification pill. The base card
+       is an 8% accent tint over --surface-elevated, and under glass that token
+       is translucent over a light wallpaper gradient — at 8% the pill all but
+       disappeared in glass-light. Double-coat the surface so it is opaque, then
+       carry a stronger tint and a tinted hairline on top. Same near-solid
+       trick the glass sprout menus use; no backdrop-filter, so the one-blur
+       pane budget is untouched. */
+    [data-theme^="glass"] .rs-card {
+      background:
+        linear-gradient(color-mix(in srgb, var(--n-accent, var(--accent-blue)) 20%, transparent),
+                        color-mix(in srgb, var(--n-accent, var(--accent-blue)) 20%, transparent)),
+        linear-gradient(var(--surface-elevated), var(--surface-elevated)),
+        var(--surface-elevated);
+      border: 1px solid color-mix(in srgb, var(--n-accent, var(--accent-blue)) 34%, var(--border));
+      box-shadow: var(--elev-1);
+    }
+    [data-theme^="glass"] .rs-card .n-title { color: var(--text-primary); }
+
+    .rs-card {
+      position: absolute;
+      left: 0; top: 0;
+      width: calc(var(--rs-stack-w, 248px) - 20px); height: 28px;
+      max-width: 228px;
+      display: flex; align-items: center; gap: 6px;
+      padding: 0 6px 0 8px;
+      transform-origin: left center;
+      transition:
+        transform var(--motion-med) var(--ease-default),
+        opacity var(--motion-med) var(--ease-out);
+      overflow: hidden;
+      z-index: 1;
+      will-change: auto;
+      /* no left-stripe — severity via tint + dot */
+      background: color-mix(in srgb, var(--n-accent, var(--accent-blue)) 8%, var(--surface-elevated));
+    }
+    .rs-card .n-title {
+      flex: 1; min-width: 0;
+      font-size: 11px; font-weight: 700;
+      font-family: var(--display-font);
+      white-space: nowrap; overflow: hidden; text-overflow: ellipsis;
+    }
+    .rs-card .n-x { opacity: .72; } /* always visible (#4) */
+
+    /* Collapsed hover: slight rightward fan + front lift (transform only) */
+    .rs-stack:not(.empty):hover .rs-card {
+      /* per-index nudge applied in JS via --fan */
+    }
+    .rs-stack.animating .rs-card { will-change: transform; }
+
+    /* Count badge = unread indicator */
+    .rs-badge {
+      position: absolute;
+      top: -6px; right: -4px;
+      min-width: 18px; height: 18px; padding: 0 5px;
+      border-radius: var(--radius-pill);
+      background: var(--accent-primary);
+      color: var(--surface);
+      font-size: 10px; font-weight: 800;
+      font-family: var(--display-font);
+      display: flex; align-items: center; justify-content: center;
+      transform: scale(0);
+      opacity: 0;
+      z-index: 20;
+      pointer-events: none;
+      box-shadow: var(--elev-1);
+      transition: transform var(--motion-med) var(--ease-spring), opacity var(--motion-fast);
+    }
+    .rs-badge.on { transform: scale(1); opacity: 1; }
+    [data-theme^="retro"] .rs-badge { border-radius: 0; box-shadow: 2px 2px 0 rgba(0,0,0,.35); }
+    [data-theme^="glass"] .rs-badge {
+      box-shadow: inset 0 1px 0 var(--glass-edge), var(--elev-1);
+    }
+
+    .rs-stack.jiggle { animation: rsJiggle var(--motion-slow) var(--ease-spring); }
+    @keyframes rsJiggle {
+      0%, 100% { transform: translate3d(0,0,0) rotate(0); }
+      20% { transform: translate3d(0,0,0) rotate(-3deg) scale(1.03); }
+      45% { transform: translate3d(0,0,0) rotate(2.5deg) scale(1.02); }
+      70% { transform: translate3d(0,0,0) rotate(-1.5deg); }
+    }
+
+    /* Staging: pop below stack */
+    .rs-stage {
+      position: absolute;
+      left: 50%; top: calc(100% + 10px);
+      transform: translateX(-50%);
+      width: 256px;
+      pointer-events: none;
+      z-index: 50;
+    }
+    .rs-stage .rs-card {
+      position: relative; left: auto; top: auto;
+      width: 100%; height: auto; min-height: 44px;
+      padding: 8px 10px;
+      pointer-events: auto;
+      flex-direction: column; align-items: stretch; gap: 2px;
+      animation: rsPopIn var(--motion-med) var(--ease-default) both;
+    }
+    .rs-stage .rs-card .n-body { font-size: 10px; color: var(--text-muted); font-weight: 500; }
+    .rs-stage .rs-card .n-row { display: flex; align-items: center; gap: 6px; }
+    .rs-stage .rs-card .n-title { flex: 1; white-space: normal; }
+    .rs-stage .rs-card.leaving {
+      animation: rsFadeOut var(--motion-med) var(--ease-out) forwards;
+    }
+    .rs-stage .rs-card.joining {
+      animation: rsJoinUp var(--motion-slow) var(--ease-out) forwards;
+    }
+    @keyframes rsPopIn {
+      from { opacity: 0; transform: translate3d(0,-8px,0) scale(.94); }
+      to { opacity: 1; transform: translate3d(0,0,0) scale(1); }
+    }
+    @keyframes rsFadeOut {
+      to { opacity: 0; transform: translate3d(0,6px,0) scale(.96); }
+    }
+    @keyframes rsJoinUp {
+      to { opacity: 0; transform: translate3d(0,-42px,0) scale(.85); }
+    }
+
+    /* —— Expanded: PM7 sprout open/close + height spring —— */
+    .rs-panel {
+      position: absolute;
+      top: calc(100% + 6px);
+      left: 50%;
+      width: 312px;
+      margin-left: -156px; /* center without translateX so sprout scale stays clean */
+      z-index: 60;
+      --rs-sprout-ox: 50%;
+      --rs-sprout-oy: 0%;
+      --rs-sprout-tx: 0px;
+      --rs-sprout-ty: -8px;
+      --rs-sprout-sx: 0.72;
+      --rs-sprout-sy: 0.48;
+      transform-origin: var(--rs-sprout-ox) var(--rs-sprout-oy);
+      opacity: 0;
+      transform: translate3d(var(--rs-sprout-tx), var(--rs-sprout-ty), 0)
+        scale3d(var(--rs-sprout-sx), var(--rs-sprout-sy), 1);
+      visibility: hidden;
+      pointer-events: none;
+      transition:
+        opacity 160ms var(--ease-out),
+        transform 300ms cubic-bezier(0.22, 1.55, 0.36, 1),
+        visibility 0s linear 300ms,
+        height 340ms cubic-bezier(0.22, 1.72, 0.36, 1);
+      will-change: transform, opacity, height;
+    }
+    .rs-panel.open {
+      opacity: 1;
+      transform: translate3d(0, 0, 0) scale3d(1, 1, 1);
+      visibility: visible;
+      pointer-events: auto;
+      transition:
+        opacity 140ms var(--ease-out),
+        transform 300ms cubic-bezier(0.22, 1.55, 0.36, 1),
+        visibility 0s,
+        height 360ms cubic-bezier(0.22, 1.78, 0.36, 1);
+    }
+    .rs-panel.is-closing {
+      opacity: 0;
+      transform: translate3d(var(--rs-sprout-tx), var(--rs-sprout-ty), 0)
+        scale3d(var(--rs-sprout-sx), var(--rs-sprout-sy), 1);
+      visibility: hidden;
+      pointer-events: none;
+      transition:
+        opacity 45ms ease-in 175ms,
+        transform 220ms cubic-bezier(0.45, 0.05, 0.55, 0.2),
+        visibility 0s linear 220ms,
+        height 200ms cubic-bezier(0.45, 0.05, 0.55, 0.2);
+    }
+    @keyframes rs-effort-size-bounce {
+      0%   { transform: translate3d(0, 0, 0) scale3d(1, 1, 1); }
+      35%  { transform: translate3d(0, 0, 0) scale3d(1.018, 1.085, 1); }
+      70%  { transform: translate3d(0, 0, 0) scale3d(0.995, 0.975, 1); }
+      100% { transform: translate3d(0, 0, 0) scale3d(1, 1, 1); }
+    }
+    .rs-panel.open.is-size-bounce {
+      animation: rs-effort-size-bounce 420ms cubic-bezier(0.22, 1.65, 0.36, 1);
+    }
+
+    /* Glass / retro / basic: boxed chrome */
+    .rs-panel-chrome {
+      background: var(--surface-elevated);
+      border: var(--border-width) solid var(--border);
+      border-radius: var(--border-radius);
+      box-shadow: var(--elev-3);
+      overflow: hidden;
+      max-height: 380px;
+      display: flex; flex-direction: column;
+    }
+    [data-theme^="glass"] .rs-panel-chrome {
+      position: relative;
+      isolation: isolate;
+      border: none;
+      box-shadow:
+        inset 0 1px 0 var(--glass-edge),
+        inset 0 0 0 1px var(--glass-edge),
+        var(--elev-3);
+    }
+    [data-theme^="glass"] .rs-panel-chrome::before {
+      content: '';
+      position: absolute;
+      inset: 0;
+      z-index: -1;
+      border-radius: inherit;
+      pointer-events: none;
+      backdrop-filter: blur(14px);
+      -webkit-backdrop-filter: blur(14px);
+    }
+    [data-theme^="retro"] .rs-panel-chrome {
+      border-radius: 0;
+      box-shadow: 4px 4px 0 rgba(0,0,0,.35);
+    }
+
+    /* Friendly: free-float chrome — list still scrolls */
+    [data-theme^="friendly"] .rs-panel-chrome {
+      background: transparent;
+      border: none;
+      box-shadow: none;
+      overflow: hidden;
+      padding-bottom: 4px;
+    }
+    [data-theme^="friendly"] .rs-panel-head {
+      background: transparent;
+      border: none;
+      padding: 0 4px 8px;
+    }
+    [data-theme^="friendly"] .rs-panel-head .clear-all-btn {
+      box-shadow: var(--elev-2);
+    }
+
+    .rs-panel-head {
+      display: flex; align-items: center; justify-content: space-between;
+      padding: 10px 12px 8px;
+      border-bottom: var(--border-width) solid var(--border-light);
+      font-size: 11px; font-weight: 700; color: var(--text-muted);
+      font-family: var(--display-font);
+      flex: 0 0 auto;
+    }
+    .rs-panel.is-empty .rs-panel-head { display: none; }
+    .rs-panel-list {
+      padding: 8px 8px 16px;
+      display: flex; flex-direction: column; gap: 6px;
+      max-height: 320px;
+      overflow-y: auto;
+      overflow-x: hidden;
+    }
+    [data-theme^="friendly"] .rs-panel-list {
+      padding: 0 2px 12px;
+      max-height: 320px;
+      overflow-y: auto;
+      -webkit-mask-image: linear-gradient(180deg, #000 0%, #000 96%, transparent 100%);
+      mask-image: linear-gradient(180deg, #000 0%, #000 96%, transparent 100%);
+    }
+    .rs-panel.is-empty .rs-panel-list {
+      padding: 0;
+      max-height: none;
+      overflow: visible;
+      -webkit-mask-image: none;
+      mask-image: none;
+    }
+    .rs-empty-msg {
+      padding: 6px 12px 8px;
+      margin-top: -2px;
+      text-align: center;
+      font-size: 11px;
+      font-weight: 600;
+      color: var(--text-muted);
+    }
+    .rs-panel.is-empty .rs-panel-chrome {
+      background: var(--surface-elevated);
+      border: var(--border-width) solid var(--border);
+      border-radius: var(--border-radius);
+      box-shadow: var(--elev-2);
+      overflow: visible;
+      max-height: none;
+    }
+    [data-theme^="friendly"] .rs-panel.is-empty .rs-panel-chrome {
+      background: color-mix(in srgb, var(--surface-elevated) 92%, transparent);
+      border: var(--border-width) solid var(--border);
+      box-shadow: var(--elev-2);
+    }
+    [data-theme^="glass"] .rs-panel.is-empty .rs-panel-chrome {
+      border: none;
+      box-shadow:
+        inset 0 1px 0 var(--glass-edge),
+        inset 0 0 0 1px var(--glass-edge),
+        var(--elev-2);
+    }
+    [data-theme^="retro"] .rs-panel.is-empty .rs-panel-chrome {
+      border-radius: 0;
+      box-shadow: 2px 2px 0 rgba(0,0,0,.28);
+    }
+
+    .rs-item {
+      display: flex; flex-direction: column; gap: 0;
+      padding: 10px;
+      border: var(--border-width) solid var(--border-light);
+      border-radius: var(--border-radius);
+      background: color-mix(in srgb, var(--n-accent, var(--accent-blue)) 8%, var(--surface));
+      opacity: 0;
+      transform: translate3d(0,-8px,0);
+      cursor: pointer;
+      transition:
+        transform var(--motion-fast) var(--ease-out),
+        opacity var(--motion-med) var(--ease-out),
+        background var(--motion-fast);
+      box-shadow: var(--elev-1);
+    }
+    .rs-panel.open .rs-item {
+      opacity: 1;
+      transform: translate3d(0,0,0);
+      transition-delay: var(--d, 0ms);
+    }
+    /* Clear all: collapse upward into the stack (first motion) */
+    .rs-panel.open .rs-item.is-leaving {
+      opacity: 0;
+      transform: translate3d(0, -28px, 0) scale(0.92);
+      pointer-events: none;
+      transition:
+        opacity 380ms var(--ease-out),
+        transform 420ms cubic-bezier(0.45, 0.05, 0.55, 0.2);
+      transition-delay: var(--leave-d, 0ms);
+    }
+    .rs-item:hover {
+      transform: translate3d(3px,0,0);
+      background: color-mix(in srgb, var(--n-accent, var(--accent-blue)) 14%, var(--surface));
+    }
+    .rs-panel.open .rs-item.is-leaving:hover {
+      transform: translate3d(0, -28px, 0) scale(0.92);
+    }
+    [data-theme^="glass"] .rs-item {
+      position: relative;
+      isolation: isolate;
+      border: none;
+      box-shadow:
+        inset 0 1px 0 var(--glass-edge),
+        inset 0 0 0 1px var(--glass-hairline),
+        var(--elev-1);
+    }
+    [data-theme^="glass"] .rs-item::before {
+      content: '';
+      position: absolute;
+      inset: 0;
+      z-index: -1;
+      border-radius: inherit;
+      pointer-events: none;
+      backdrop-filter: blur(8px);
+      -webkit-backdrop-filter: blur(8px);
+    }
+    [data-theme^="friendly"] .rs-item {
+      box-shadow: var(--elev-2);
+      border-color: color-mix(in srgb, var(--n-accent) 30%, var(--border));
+    }
+    /* Opaque cozy fills — match other friendly cards; free-float chrome stays transparent */
+    [data-theme^="friendly"] .rs-item.n-card,
+    [data-theme^="friendly"] .rs-stage .rs-card.n-card,
+    [data-theme^="friendly"] .rs-clip .rs-card.n-card {
+      background: color-mix(in srgb, var(--n-accent, var(--pm6-cozy-mint)) var(--pm6-cozy-mix), var(--pm6-cozy-card-base));
+      border-color: color-mix(in srgb, var(--n-accent, var(--pm6-cozy-mint)) var(--pm6-cozy-border-mix), var(--pm6-cozy-card-base));
+    }
+    [data-theme^="friendly"] .clear-all-btn {
+      background: var(--pm6-cozy-card-base);
+    }
+    [data-theme^="retro"] .rs-item {
+      border-radius: 0;
+      border-width: 2px;
+      box-shadow: 2px 2px 0 rgba(0,0,0,.28);
+    }
+    [data-theme^="basic"] .rs-item {
+      border-radius: 4px;
+      box-shadow: none;
+    }
+
+    .rs-item-top {
+      display: flex; align-items: flex-start; gap: 8px;
+    }
+    .rs-item .meta { flex: 1; min-width: 0; }
+    .rs-item .t {
+      font-size: 12px; font-weight: 700;
+      font-family: var(--display-font);
+      line-height: 1.25;
+    }
+    .rs-item .b {
+      font-size: 11px; color: var(--text-muted); font-weight: 500;
+      margin-top: 2px; line-height: 1.35;
+    }
+    .rs-item .kind-tag {
+      font-size: 9px; font-weight: 800; letter-spacing: .04em;
+      text-transform: uppercase; color: var(--n-accent, var(--accent-blue));
+      margin-bottom: 2px;
+    }
+    /* Action row: single line, tight buttons */
+    .rs-item .n-actions {
+      display: flex;
+      flex-wrap: nowrap;
+      align-items: center;
+      margin-top: 8px;
+      gap: 4px;
+      opacity: .55;
+      transform: translate3d(0,2px,0);
+      transition:
+        opacity var(--motion-fast) var(--ease-out),
+        transform var(--motion-fast) var(--ease-out);
+    }
+    .rs-item .n-actions .n-btn {
+      flex: 0 1 auto;
+      white-space: nowrap;
+      font-size: 10px;
+      padding: 3px 6px;
+      line-height: 1.2;
+    }
+    .rs-item:hover .n-actions,
+    .rs-item:focus-within .n-actions {
+      opacity: 1;
+      transform: translate3d(0,0,0);
+    }
+    .rs-item.kind-hitl .n-actions,
+    .rs-item.kind-permission .n-actions,
+    .rs-item.kind-filesafe .n-actions,
+    .rs-item.kind-concern .n-actions,
+    .rs-item.kind-wizard .n-actions,
+    .rs-item.kind-usage .n-actions {
+      opacity: 1;
+      transform: none;
+    }
+
+    body[data-reduced="1"] .rs-stack.jiggle { animation: none; }
+    body[data-reduced="1"] .rs-panel,
+    body[data-reduced="1"] .rs-panel.open,
+    body[data-reduced="1"] .rs-panel.is-closing {
+      transition: none !important;
+      animation: none !important;
+      transform: none;
+    }
+    body[data-reduced="1"] .rs-panel:not(.open) {
+      opacity: 0;
+      visibility: hidden;
+    }
+    body[data-reduced="1"] .rs-panel.open {
+      opacity: 1;
+      visibility: visible;
+    }
+
+
+    .focus-ring {
+      outline: 2px solid var(--accent-primary);
+      outline-offset: 3px;
+      border-radius: var(--border-radius);
+    }
+    .rs-stage .rs-card .n-row { display: flex; align-items: center; gap: 6px; width: 100%; }
+
 </style>

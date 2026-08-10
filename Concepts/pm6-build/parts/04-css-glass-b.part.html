@@ -111,12 +111,12 @@
       border: 1px solid var(--glass-hairline) !important;
       border-radius: 8px !important;
     }
-    /* Chat stream footer — same fill as input container */
+    /* Chat stream footer — floating overlay pill; glass-themed fill/border only.
+       Positioning (absolute + center) comes from the base rule. */
     [data-theme^="glass"] .chat-stream-footer {
       background: var(--pm6-glass-step-2);
       border: 1px solid var(--glass-hairline);
       border-radius: 8px;
-      margin: 0 var(--sm) var(--xs);
     }
     /* Dropdown buttons — slightly lighter pre-baked fill */
     [data-theme^="glass"] .chat-dropdown-btn {

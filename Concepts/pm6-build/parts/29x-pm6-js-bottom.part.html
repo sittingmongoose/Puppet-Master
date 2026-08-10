@@ -38,26 +38,9 @@
     });
   }
 
-  /* ---------- toast: same contract, polished exit ---------- */
+  /* ---------- toast: title-bar notify owns window.toast (do not overwrite) ---------- */
   function upgradeToast() {
-    window.toast = function (msg) {
-      try {
-        var stack = $('pmToastStack');
-        if (!stack) { try { console.log('[toast]', msg); } catch (e0) {} return; }
-        var el = document.createElement('div');
-        el.className = 'pm-toast';
-        el.textContent = msg;
-        stack.appendChild(el);
-        while (stack.children.length > 5) stack.removeChild(stack.firstChild);
-        var ttl = 3400;
-        if (reducedMotion()) {
-          setTimeout(function () { el.remove(); }, ttl);
-        } else {
-          setTimeout(function () { el.classList.add('pm6-toast-out'); }, ttl - 260);
-          setTimeout(function () { el.remove(); }, ttl);
-        }
-      } catch (e) { try { console.log('[toast]', msg); } catch (e1) {} }
-    };
+    /* no-op: 29x-pm6-js-globals installs title-bar notify as window.toast */
   }
 
   /* ---------- Browser Evidence: six-pane subtab routing ---------- */
@@ -217,21 +200,10 @@
     }
   }
 
-  /* ---------- status bar: context / orchestrator / index ---------- */
+  /* ---------- status bar: orchestrator / index (ctx chips removed) ---------- */
   function renderCtx(ctx) {
-    if (!ctx || !ctx.max) return;
-    var label = $('pm6StatusCtxLabel');
-    var fill = $('pm6StatusCtxFill');
-    var wrap = $('pm6StatusCtx');
-    var used = Math.round((ctx.used || 0) / 1000);
-    var max = Math.round(ctx.max / 1000);
-    var pct = Math.max(2, Math.min(100, Math.round((ctx.used || 0) / ctx.max * 100)));
-    if (label) label.textContent = used + 'k/' + max + 'k';
-    if (fill) {
-      fill.style.width = pct + '%';
-      fill.classList.toggle('pm6-ctx-warn', pct >= 75);
-    }
-    if (wrap) wrap.title = 'Focused thread context: ' + used + 'k of ' + max + 'k tokens (' + pct + '%) - click the context circle in Chat for the breakdown';
+    /* Status-bar context chip removed; chat context ring remains the owner. */
+    return;
   }
   var lastRun = null;
   var gateOpen = false;
@@ -308,6 +280,21 @@
     }
   }
   function addNote(text, meta, page, subTab, warn) {
+    /* Durable alerts go to title-bar stack (status bell retired). */
+    try {
+      if (window.toast && window.toast.important) {
+        window.toast.important({
+          title: text,
+          body: meta || '',
+          severity: warn ? 'warn' : 'info',
+          kind: 'advisory',
+          page: page || null,
+          subTab: subTab || null,
+          allowed_action_ids: page ? ['open', 'acknowledge'] : ['acknowledge']
+        });
+        return;
+      }
+    } catch (e0) {}
     if (notes.some(function (n) { return n.text === text; })) return;
     notes.push({ text: text, meta: meta, page: page, subTab: subTab, warn: !!warn, read: false });
     renderNotes();
@@ -332,15 +319,9 @@
       }
       var pick = e.target.closest ? e.target.closest('[data-pm6-pick]') : null;
       if (pick) {
+        /* Platform/model status-bar pickers removed; ignore stale picks. */
         e.stopPropagation();
-        var kind = pick.getAttribute('data-pm6-pick');
-        var value = pick.getAttribute('data-pm6-value') || '';
-        var labelEl = kind === 'platform' ? $('pm6StatusPlatformLabel') : $('pm6StatusModelLabel');
-        if (labelEl) labelEl.textContent = value;
-        var pop2 = pick.closest('.pm6-status-pop');
-        if (pop2) pop2.querySelectorAll('.pm6-status-pop-item').forEach(function (it) { it.classList.toggle('active', it === pick); });
         closePops();
-        say((kind === 'platform' ? 'Platform' : 'Model') + ' set to ' + value + ' — requested value applies from the next turn; effective values are shown per node.');
       }
     });
     document.addEventListener('click', function (e) {
