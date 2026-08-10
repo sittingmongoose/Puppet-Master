@@ -1,0 +1,342 @@
+<!-- A1 · Evidence Wall · bonus-artifacts-a.html -->
+<!DOCTYPE html>
+<html lang="en" data-theme="friendly-dark">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<link rel="icon" href="data:,">
+<title>BONUS A1 · panel-artifacts · Evidence Wall — Puppet Master Rail Concepts</title>
+<script>(function(){try{var ok=['friendly-dark','friendly-light','retro-dark','retro-light','basic-light','basic-dark','glass-dark','glass-light'];var t=localStorage.getItem('pm.theme');if(ok.indexOf(t)===-1)t='friendly-dark';var d=document.documentElement;d.setAttribute('data-theme',t);d.style.colorScheme=/-dark$/.test(t)?'dark':'light';}catch(e){}})();</script>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="preload" as="style" href="https://fonts.googleapis.com/css2?family=Cal+Sans&family=Inter:wght@400;500;600;700&family=Nunito:wght@400;600;700;800&family=Orbitron:wght@500;700&family=Quicksand:wght@400;500;600;700&family=Rajdhani:wght@400;500;600;700&display=swap" onload="this.onload=null;this.rel='stylesheet'">
+<noscript><link href="https://fonts.googleapis.com/css2?family=Cal+Sans&family=Inter:wght@400;500;600;700&family=Nunito:wght@400;600;700;800&family=Orbitron:wght@500;700&family=Quicksand:wght@400;500;600;700&family=Rajdhani:wght@400;500;600;700&display=swap" rel="stylesheet"></noscript>
+<link rel="stylesheet" href="_shared/themes.css">
+<link rel="stylesheet" href="_shared/base.css">
+<style>
+.side-panel-view{background:var(--surface)}
+.aA-head{flex:none;display:flex;align-items:center;gap:var(--md);padding:var(--lg);min-width:0;overflow:hidden;border-bottom:1px solid var(--border-light)}
+.aA-hico{width:26px;height:26px;flex:none;border-radius:var(--radius-md);display:flex;align-items:center;justify-content:center;background:var(--accent-soft);color:var(--accent-primary)}
+.aA-title{font-family:var(--display-font);font-size:11px;font-weight:700;letter-spacing:.6px;flex:1 1 auto;min-width:max-content;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.aA-stat{margin-left:auto;flex:0 1 auto;min-width:0;max-width:52%;font-family:var(--mono-font);font-size:9.5px;color:var(--text-muted);white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.aA-scroll{flex:1;min-height:0;overflow-y:auto;overflow-x:hidden;padding:var(--md) var(--lg) var(--lg)}
+.aA-chips{padding:0 0 var(--md)}
+.aA-case{position:sticky;top:0;z-index:3;margin:0 0 var(--md);padding:var(--md);border:1px solid var(--border-light);border-left:2px solid var(--accent-primary);border-radius:var(--radius-md);background:linear-gradient(var(--surface-elevated),var(--surface-elevated)),var(--surface);box-shadow:var(--elev-1);transition:box-shadow var(--motion-fast) var(--ease-out)}
+.aA-case:hover{box-shadow:var(--elev-2)}
+.aA-case-h{display:flex;align-items:center;gap:var(--sm);min-width:0;margin-bottom:var(--sm)}
+.aA-case-k{font-family:var(--display-font);font-size:8.5px;font-weight:700;letter-spacing:2px;text-transform:uppercase;color:var(--accent-primary);flex:none}
+.aA-case-t{font-family:var(--mono-font);font-size:12px;font-weight:700;color:var(--text-primary);flex:1 1 auto;min-width:0;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.aA-case-st{font-family:var(--mono-font);font-size:9.5px;color:var(--graph-passed);flex:none}
+.aA-mchips{display:flex;flex-wrap:wrap;gap:4px;margin:0 0 var(--sm)}
+.aA-mchip{font-size:8.5px;padding:0 6px}
+.aA-roles{border-top:1px solid var(--border-light);padding-top:var(--sm)}
+.aA-row{display:flex;align-items:center;gap:var(--sm);min-width:0;padding:5px 6px;border-radius:var(--radius-xs);cursor:pointer;transition:background var(--motion-fast) var(--ease-out),transform var(--motion-fast) var(--ease-out)}
+.aA-row:hover{background:var(--accent-soft);transform:translateX(2px)}
+.aA-row-main{flex:1 1 auto;min-width:0;display:flex;flex-direction:column}
+.aA-row .pm-ico{flex:none;color:var(--text-muted)}
+.aA-fam{font-family:var(--mono-font);font-size:8.5px;letter-spacing:.04em;padding:1px 6px;border-radius:var(--radius-xs);background:color-mix(in srgb,var(--cc,var(--accent-blue)) 14%,transparent);color:var(--cc,var(--accent-blue));flex:none;white-space:nowrap}
+.aA-f-shot{--cc:var(--accent-blue)}
+.aA-f-diff{--cc:var(--accent-lime)}
+.aA-f-test{--cc:var(--graph-passed)}
+.aA-f-web{--cc:var(--accent-magenta)}
+.aA-f-rec{--cc:var(--accent-orange)}
+.aA-f-chore{--cc:var(--text-muted)}
+.aA-lbl{font-size:11.5px;font-weight:600;color:var(--text-primary);white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.aA-meta{font-family:var(--mono-font);font-size:9.5px;color:var(--text-muted);white-space:nowrap;overflow:hidden;text-overflow:ellipsis;margin-top:2px}
+.aA-case-acts{display:flex;gap:var(--sm);margin-top:var(--sm)}
+.aA-case-acts .pm-btn{flex:1 1 auto;min-width:0;overflow:hidden;text-overflow:ellipsis}
+.aA-sec{display:flex;align-items:center;gap:var(--sm);min-width:0;margin:var(--sm) 0 var(--md)}
+.aA-sec-t{font-family:var(--display-font);font-size:8.5px;font-weight:700;letter-spacing:2px;text-transform:uppercase;color:var(--text-muted);flex:none}
+.aA-sec-n{font-family:var(--mono-font);font-size:9.5px;color:var(--text-muted);flex:none}
+.aA-sec .pm6-tb-menu-wrap{margin-left:auto}
+.aA-sec .pm6-tb-menu-trigger{border:1px solid var(--border-light);border-radius:var(--radius-xs);font-family:var(--mono-font);font-size:9.5px;padding:2px 7px}
+.aA-sec .pm6-tb-menu{min-width:140px}
+.aA-wall{column-count:1;column-gap:var(--md)}
+.side-panel-slot[data-wtier="wide"] .aA-wall{column-count:2}
+.aA-card{break-inside:avoid;display:inline-block;width:100%;vertical-align:top;margin:0 0 var(--md);border:1px solid var(--border-light);border-left:2px solid var(--cc,var(--accent-blue));border-radius:var(--radius-sm);background:var(--surface-elevated);cursor:pointer;transition:transform var(--motion-fast) var(--ease-out),box-shadow var(--motion-fast) var(--ease-out),border-color var(--motion-fast) var(--ease-out)}
+.aA-card:hover{transform:translateY(-2px);box-shadow:var(--elev-2);border-color:color-mix(in srgb,var(--cc,var(--accent-blue)) 45%,var(--border-light))}
+.aA-t-shot{--cc:var(--accent-blue)}
+.aA-t-diff{--cc:var(--accent-lime)}
+.aA-t-valok{--cc:var(--graph-passed)}
+.aA-t-valerr{--cc:var(--graph-failed)}
+.aA-t-web{--cc:var(--accent-magenta)}
+.aA-t-rec{--cc:var(--accent-orange)}
+.aA-body{padding:var(--md);min-width:0}
+.aA-r1{display:flex;align-items:center;gap:var(--sm);min-width:0;margin-bottom:4px}
+.aA-r1 .aA-lbl{flex:1 1 auto;min-width:0}
+.aA-thumb{position:relative;width:100%;aspect-ratio:16/9;overflow:hidden;border-bottom:1px solid var(--border-light);border-radius:var(--radius-sm) var(--radius-sm) 0 0}
+.aA-thumb::after{content:'';position:absolute;inset:0;background:linear-gradient(105deg,transparent 32%,color-mix(in srgb,var(--text-primary) 12%,transparent) 46%,transparent 60%);transform:translateX(-130%);transition:transform .7s var(--ease-out);pointer-events:none}
+.aA-card:hover .aA-thumb::after{transform:translateX(130%)}
+.aA-th-editor{background:linear-gradient(180deg,color-mix(in srgb,var(--text-primary) 9%,transparent) 0 13%,transparent 13%),linear-gradient(90deg,color-mix(in srgb,var(--accent-blue) 16%,transparent) 0 24%,transparent 24%),linear-gradient(0deg,color-mix(in srgb,var(--graph-failed) 30%,transparent) 0 20%,transparent 20%),repeating-linear-gradient(180deg,color-mix(in srgb,var(--text-primary) 12%,transparent) 0 3px,transparent 3px 11px),linear-gradient(140deg,color-mix(in srgb,var(--accent-blue) 14%,var(--surface)),color-mix(in srgb,var(--accent-magenta) 9%,var(--surface)))}
+.aA-th-matrix{background:repeating-linear-gradient(90deg,color-mix(in srgb,var(--accent-lime) 18%,transparent) 0 1px,transparent 1px 17%),repeating-linear-gradient(180deg,color-mix(in srgb,var(--accent-lime) 18%,transparent) 0 1px,transparent 1px 20%),linear-gradient(180deg,transparent 0 58%,color-mix(in srgb,var(--accent-lime) 22%,transparent) 58% 79%,transparent 79%),linear-gradient(140deg,color-mix(in srgb,var(--accent-lime) 12%,var(--surface)),var(--surface))}
+.aA-th-ci{background:radial-gradient(circle at 12px 9px,color-mix(in srgb,var(--graph-failed) 80%,transparent) 0 3px,transparent 3px),radial-gradient(circle at 24px 9px,color-mix(in srgb,var(--accent-warning) 80%,transparent) 0 3px,transparent 3px),radial-gradient(circle at 36px 9px,color-mix(in srgb,var(--graph-passed) 80%,transparent) 0 3px,transparent 3px),linear-gradient(180deg,color-mix(in srgb,var(--text-primary) 8%,transparent) 0 15%,transparent 15%),repeating-linear-gradient(180deg,color-mix(in srgb,var(--text-primary) 10%,transparent) 0 4px,transparent 4px 13px),linear-gradient(140deg,color-mix(in srgb,var(--accent-blue) 10%,var(--surface)),color-mix(in srgb,var(--accent-orange) 8%,var(--surface)))}
+.aA-cap{position:absolute;left:0;right:0;bottom:0;display:flex;align-items:center;gap:5px;min-width:0;padding:3px 7px;background:color-mix(in srgb,var(--surface) 82%,transparent);font-family:var(--mono-font);font-size:8.5px;color:var(--text-secondary)}
+.aA-cap .pm-ico{flex:none;color:var(--text-muted)}
+.aA-cap-t{flex:1 1 auto;min-width:0;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.aA-cap-r{flex:none;color:var(--text-muted)}
+.aA-diff{display:flex;flex-direction:column;gap:2px;margin:4px 0 2px;font-family:var(--mono-font);font-size:10px;line-height:1.6}
+.aA-dl{white-space:nowrap;overflow:hidden;text-overflow:ellipsis;padding:1px 6px;border-radius:var(--radius-xs)}
+.aA-dl-ctx{color:var(--text-muted)}
+.aA-dl-add{color:var(--graph-passed);background:color-mix(in srgb,var(--graph-passed) 10%,transparent)}
+.aA-dl-del{color:var(--graph-failed);background:color-mix(in srgb,var(--graph-failed) 10%,transparent)}
+.aA-foot{display:flex;align-items:center;gap:var(--sm);min-width:0;margin-top:5px}
+.aA-foot .aA-meta{flex:1 1 auto;min-width:0;margin-top:0}
+.aA-dstat{font-family:var(--mono-font);font-size:9.5px;flex:none;white-space:nowrap}
+.aA-dstat b{font-weight:700}
+.aA-dstat .ok{color:var(--graph-passed)}
+.aA-dstat .no{color:var(--graph-failed)}
+.aA-vals{display:flex;align-items:flex-end;gap:var(--lg);margin:4px 0 2px;min-width:0}
+.aA-val{display:flex;flex-direction:column;flex:none}
+.aA-valn{font-family:var(--mono-font);font-size:16px;font-weight:700;line-height:1.1;color:var(--text-primary)}
+.aA-valn.ok{color:var(--graph-passed)}
+.aA-valn.err{color:var(--graph-failed)}
+.aA-valk{font-family:var(--display-font);font-size:7.5px;font-weight:700;letter-spacing:1.2px;text-transform:uppercase;color:var(--text-muted);margin-top:2px}
+.aA-vals .dot{margin-left:auto;align-self:center}
+.aA-log{font-family:var(--mono-font);font-size:9.5px;color:var(--graph-failed);white-space:nowrap;overflow:hidden;text-overflow:ellipsis;margin-top:4px}
+.aA-q{font-size:11px;font-weight:600;color:var(--text-primary);white-space:nowrap;overflow:hidden;text-overflow:ellipsis;margin:2px 0 0}
+.aA-prov{display:flex;flex-wrap:wrap;gap:4px;margin:6px 0 0}
+.aA-pchip{font-family:var(--mono-font);font-size:8.5px;padding:1px 6px;border-radius:var(--radius-pill);border:1px solid var(--border-light);color:var(--text-muted);white-space:nowrap}
+.aA-pchip.ok{color:var(--graph-passed);border-color:color-mix(in srgb,var(--graph-passed) 35%,transparent);background:color-mix(in srgb,var(--graph-passed) 9%,transparent)}
+.aA-pchip.warn{color:var(--accent-warning);border-color:color-mix(in srgb,var(--accent-warning) 35%,transparent);background:color-mix(in srgb,var(--accent-warning) 9%,transparent)}
+.aA-mb{width:auto;padding:0 8px;height:20px;font-size:9px;font-weight:700;gap:4px;display:inline-flex;flex:none}
+.aA-rec1{display:flex;align-items:center;gap:var(--md);min-width:0}
+.aA-play{width:26px;height:26px;flex:none;border-radius:50%;display:flex;align-items:center;justify-content:center;border:1px solid color-mix(in srgb,var(--accent-orange) 45%,transparent);background:color-mix(in srgb,var(--accent-orange) 15%,transparent);color:var(--accent-orange);cursor:pointer;transition:transform var(--motion-fast) var(--ease-out),box-shadow var(--motion-fast) var(--ease-out),background var(--motion-fast) var(--ease-out)}
+.aA-play:hover{transform:scale(1.12);background:color-mix(in srgb,var(--accent-orange) 26%,transparent);box-shadow:0 0 0 4px color-mix(in srgb,var(--accent-orange) 16%,transparent)}
+.aA-ticks{height:14px;flex:none;margin:7px 0 0;border-radius:var(--radius-xs);border:1px solid var(--border-light);background:repeating-linear-gradient(90deg,color-mix(in srgb,var(--accent-orange) 50%,transparent) 0 2px,color-mix(in srgb,var(--accent-orange) 14%,transparent) 2px 4px,transparent 4px 11px),color-mix(in srgb,var(--surface) 70%,transparent)}
+.aA-live{border-left-color:var(--graph-running)}
+.aA-live .aA-play{border-color:color-mix(in srgb,var(--graph-running) 50%,transparent);background:color-mix(in srgb,var(--graph-running) 15%,transparent);color:var(--graph-running)}
+.aA-end{display:flex;align-items:center;gap:var(--sm);min-width:0}
+.aA-end .pm-footnote{flex:1 1 auto;min-width:0;padding:0}
+</style>
+</head>
+<body>
+<div id="app"></div>
+<template id="rail-panels">
+  <div class="side-panel-view" id="panel-artifacts">
+    <div class="aA-head"><span class="aA-hico"><i data-ico="artifacts" class="pm-ico"></i></span><span class="aA-title">RUNTIME ARTIFACTS</span><span class="aA-stat">12 rec · 1 case</span></div>
+    <div class="aA-scroll rail-scroll">
+
+      <div class="pm-chiprow aA-chips">
+        <button class="pm-chipbtn active" data-demo-action="cmd.artifacts.set_filter" data-demo-arg="cmd.artifacts.set_filter -> all families">All</button>
+        <button class="pm-chipbtn" data-demo-action="cmd.artifacts.set_filter" data-demo-arg="cmd.artifacts.set_filter -> api_web_call">Web</button>
+        <button class="pm-chipbtn" data-demo-action="cmd.artifacts.set_filter" data-demo-arg="cmd.artifacts.set_filter -> browser_recording">Browser</button>
+        <button class="pm-chipbtn" data-demo-action="cmd.artifacts.set_filter" data-demo-arg="cmd.artifacts.set_filter -> screenshot + code_diff + validation_test">Evidence</button>
+        <button class="pm-chipbtn" data-demo-action="cmd.artifacts.set_filter" data-demo-arg="cmd.artifacts.set_filter -> case inv-import-7x">Investigation</button>
+      </div>
+
+      <div class="aA-case">
+        <div class="aA-case-h"><span class="aA-case-k">Case file</span><span class="aA-case-t">inv-import-7x</span><span class="dot dot-ok"></span><span class="aA-case-st">fixed</span></div>
+        <div class="aA-mchips">
+          <span class="pm-chip pm-chip-ok aA-mchip">final_state fixed</span>
+          <span class="pm-chip pm-chip-ok aA-mchip">stop verified_fix</span>
+          <span class="pm-chip aA-mchip">artifacts 5</span>
+          <span class="pm-chip pm-chip-ok aA-mchip">verification strong</span>
+        </div>
+        <div class="aA-roles">
+          <div class="aA-row aA-f-shot" data-demo-action="cmd.artifacts.open_evidence" data-demo-arg="cmd.artifacts.open_evidence -> baseline screenshot of inv-import-7x">
+            <span class="aA-fam">baseline</span>
+            <span class="aA-row-main"><span class="aA-lbl">Editor renders 11.5 for "1 1/2 cup"</span><span class="aA-meta">screenshot · 1280x800 · 14:02:11</span></span>
+            <i data-ico="chevR" class="pm-ico sm"></i>
+          </div>
+          <div class="aA-row aA-f-rec" data-demo-action="cmd.artifacts.open_evidence" data-demo-arg="cmd.artifacts.open_evidence -> repro recording of inv-import-7x">
+            <span class="aA-fam">repro</span>
+            <span class="aA-row-main"><span class="aA-lbl">Stepper loop: type 1 1/2, blur, watch qty jump</span><span class="aA-meta">browser_recording · 14 actions · 0:52</span></span>
+            <i data-ico="chevR" class="pm-ico sm"></i>
+          </div>
+          <div class="aA-row aA-f-web" data-demo-action="cmd.artifacts.open_evidence" data-demo-arg="cmd.artifacts.open_evidence -> diagnosis web call of inv-import-7x">
+            <span class="aA-fam">diagnosis</span>
+            <span class="aA-row-main"><span class="aA-lbl">seriouseats.com/the-food-lab/why-fractions-break-our-parser</span><span class="aA-meta">api_web_call · 3 sources · 14:09:47</span></span>
+            <i data-ico="chevR" class="pm-ico sm"></i>
+          </div>
+          <div class="aA-row aA-f-diff" data-demo-action="cmd.artifacts.open_evidence" data-demo-arg="cmd.artifacts.open_evidence -> fix diff of inv-import-7x">
+            <span class="aA-fam">fix</span>
+            <span class="aA-row-main"><span class="aA-lbl">refactor(import): split mixed-fraction normalization into a unit-aware parser with property-based tests</span><span class="aA-meta">code_diff · mixed_fractions.rs · +38 -9</span></span>
+            <i data-ico="chevR" class="pm-ico sm"></i>
+          </div>
+          <div class="aA-row aA-f-test" data-demo-action="cmd.artifacts.open_evidence" data-demo-arg="cmd.artifacts.open_evidence -> verify test run of inv-import-7x">
+            <span class="aA-fam">verify</span>
+            <span class="aA-row-main"><span class="aA-lbl">import::normalize_units 27 passed (retry 2/2)</span><span class="aA-meta">validation_test · 3.2s · 14:21:58</span></span>
+            <i data-ico="chevR" class="pm-ico sm"></i>
+          </div>
+          <div class="aA-row aA-f-chore" data-demo-action="cmd.artifacts.open_evidence" data-demo-arg="cmd.artifacts.open_evidence -> cleanup commit of inv-import-7x">
+            <span class="aA-fam">cleanup</span>
+            <span class="aA-row-main"><span class="aA-lbl">chore(ci): pin buildx and enable multi-arch manifest-list digests for amd64 and arm64</span><span class="aA-meta">commit · abc12ef · 14:26:33</span></span>
+            <i data-ico="chevR" class="pm-ico sm"></i>
+          </div>
+        </div>
+        <div class="aA-case-acts">
+          <button class="pm-btn pm-btn-primary" data-demo-action="page.go" data-demo-arg="Opening Orchestrator -> case inv-import-7x">Open in Orchestrator</button>
+          <button class="pm-btn" data-demo-action="cmd.artifacts.export_bundle" data-demo-arg="cmd.artifacts.export_bundle -> inv-import-7x (12 records, 4.1 MB)">Export bundle</button>
+        </div>
+      </div>
+
+      <div class="aA-sec">
+        <span class="aA-sec-t">Evidence wall</span>
+        <span class="aA-sec-n">12 cards</span>
+        <div class="pm6-tb-menu-wrap">
+          <button type="button" class="pm6-tb-menu-trigger" aria-controls="aASortMenu"><span class="pm6-tb-menu-label">Newest first</span> <i data-ico="chevD" class="pm-ico sm"></i></button>
+          <div class="pm6-tb-menu" id="aASortMenu" role="menu" aria-label="Sort evidence" data-pm-menu-select>
+            <button type="button" class="pm6-tb-menu-item is-selected" role="menuitem" data-value="new" data-label="Newest first" data-demo-action="cmd.artifacts.sort" data-demo-arg="cmd.artifacts.sort -> newest first">Newest first</button>
+            <button type="button" class="pm6-tb-menu-item" role="menuitem" data-value="old" data-label="Oldest first" data-demo-action="cmd.artifacts.sort" data-demo-arg="cmd.artifacts.sort -> oldest first">Oldest first</button>
+            <button type="button" class="pm6-tb-menu-item" role="menuitem" data-value="fam" data-label="By family" data-demo-action="cmd.artifacts.sort" data-demo-arg="cmd.artifacts.sort -> grouped by family">By family</button>
+          </div>
+        </div>
+      </div>
+
+      <div class="aA-wall">
+
+        <div class="aA-card aA-t-shot" data-demo-action="cmd.artifacts.open_evidence" data-demo-arg="cmd.artifacts.open_evidence -> screenshot: QuantityStepper before fix">
+          <div class="aA-thumb aA-th-editor">
+            <span class="aA-cap"><i data-ico="monitor" class="pm-ico sm"></i><span class="aA-cap-t">14:02:11 · 1280x800 · baseline</span><span class="aA-cap-r">png</span></span>
+          </div>
+          <div class="aA-body">
+            <div class="aA-r1"><span class="aA-fam aA-f-shot">screenshot</span><span class="aA-lbl">Stepper renders "1 1/2 cup" as 11.5</span></div>
+            <div class="aA-meta">web/src/lib/components/recipe/editor/QuantityStepper.svelte</div>
+          </div>
+        </div>
+
+        <div class="aA-card aA-t-diff" data-demo-action="cmd.artifacts.open_evidence" data-demo-arg="cmd.artifacts.open_evidence -> diff: mixed_fractions.rs hunk 2/4">
+          <div class="aA-body">
+            <div class="aA-r1"><span class="aA-fam aA-f-diff">code_diff</span><span class="aA-lbl">editing mixed_fractions.rs (hunk 2/4)</span></div>
+            <div class="aA-diff">
+              <span class="aA-dl aA-dl-ctx">fn normalize(raw: &amp;str, unit: Unit) -&gt; Result&lt;Qty, ImportError&gt; {</span>
+              <span class="aA-dl aA-dl-del">-    raw.replace(' ', "").parse::&lt;f32&gt;().unwrap_or(0.0)</span>
+              <span class="aA-dl aA-dl-add">+    MixedFraction::parse(raw).and_then(|mf| mf.to_qty(unit))</span>
+            </div>
+            <div class="aA-foot"><span class="aA-meta">src/services/import/normalize_units/mixed_fractions.rs</span><span class="aA-dstat"><b class="ok">+38</b> <b class="no">-9</b></span></div>
+          </div>
+        </div>
+
+        <div class="aA-card aA-t-valerr" data-demo-action="cmd.artifacts.open_evidence" data-demo-arg="cmd.artifacts.open_evidence -> failed validation: mixed_fraction_does_not_explode">
+          <div class="aA-body">
+            <div class="aA-r1"><span class="aA-fam aA-f-test">validation_test</span><span class="aA-lbl">mixed_fraction_does_not_explode</span></div>
+            <div class="aA-vals">
+              <span class="aA-val"><span class="aA-valn">0</span><span class="aA-valk">passed</span></span>
+              <span class="aA-val"><span class="aA-valn err">1</span><span class="aA-valk">failed</span></span>
+              <span class="aA-val"><span class="aA-valn">0:41</span><span class="aA-valk">duration</span></span>
+              <span class="dot dot-err"></span>
+            </div>
+            <div class="aA-log">thread 'import::normalize_units::tests::mixed_fraction_does_not_explode' panicked at src/services/import.rs:58:9</div>
+            <div class="aA-log">assertion `left == right` failed: qty.value == 1.5 (got 11.5 from "1 1/2 cup")</div>
+          </div>
+        </div>
+
+        <div class="aA-card aA-t-web" data-demo-action="cmd.artifacts.open_evidence" data-demo-arg="cmd.artifacts.open_evidence -> web call: schema.org Recipe coverage">
+          <div class="aA-body">
+            <div class="aA-r1"><span class="aA-fam aA-f-web">api_web_call</span><span class="aA-lbl">research query</span></div>
+            <div class="aA-q">schema.org Recipe structured-data markup coverage 2026</div>
+            <div class="aA-prov"><span class="aA-pchip">agent_judgment</span><span class="aA-pchip">scope *</span><span class="aA-pchip ok">approved</span></div>
+            <div class="aA-foot"><button type="button" class="pm-minibtn aA-mb" data-demo-action="cmd.artifacts.open_sources" data-demo-arg="cmd.artifacts.open_sources -> 3 sources for schema.org coverage query"><i data-ico="external" class="pm-ico sm"></i>Sources</button><span class="aA-meta">3 sources · 14:11:03</span></div>
+          </div>
+        </div>
+
+        <div class="aA-card aA-t-rec" data-demo-action="cmd.artifacts.open_evidence" data-demo-arg="cmd.artifacts.open_evidence -> recording: repro stepper loop">
+          <div class="aA-body">
+            <div class="aA-rec1">
+              <button type="button" class="aA-play" title="Play recording" data-demo-action="cmd.artifacts.play_recording" data-demo-arg="cmd.artifacts.play_recording -> repro stepper loop (14 actions, 0:52)"><i data-ico="play" class="pm-ico sm"></i></button>
+              <span class="aA-row-main"><span class="aA-lbl">repro: stepper loop on recipes/[id]/edit</span><span class="aA-meta">browser_recording · 14 actions · 0:52</span></span>
+            </div>
+            <div class="aA-ticks"></div>
+            <div class="aA-foot"><button type="button" class="pm-minibtn aA-mb" data-demo-action="cmd.artifacts.watch_recording" data-demo-arg="cmd.artifacts.watch_recording -> repro stepper loop"><i data-ico="eye" class="pm-ico sm"></i>Watch</button><span class="aA-meta">web/src/routes/(app)/recipes/[id]/edit/+page.server.ts</span></div>
+          </div>
+        </div>
+
+        <div class="aA-card aA-t-shot" data-demo-action="cmd.artifacts.open_evidence" data-demo-arg="cmd.artifacts.open_evidence -> screenshot: freshness x health matrix">
+          <div class="aA-thumb aA-th-matrix">
+            <span class="aA-cap"><i data-ico="monitor" class="pm-ico sm"></i><span class="aA-cap-t">14:18:40 · 1024x768 · receipt matrix</span><span class="aA-cap-r">png</span></span>
+          </div>
+          <div class="aA-body">
+            <div class="aA-r1"><span class="aA-fam aA-f-shot">screenshot</span><span class="aA-lbl">Receipt matrix: freshness x health</span></div>
+            <div class="aA-meta">crates/puppet-core/src/artifacts/projection_freshness.rs</div>
+          </div>
+        </div>
+
+        <div class="aA-card aA-t-diff" data-demo-action="cmd.artifacts.open_evidence" data-demo-arg="cmd.artifacts.open_evidence -> diff: QuantityStepper.svelte hunk 1/2">
+          <div class="aA-body">
+            <div class="aA-r1"><span class="aA-fam aA-f-diff">code_diff</span><span class="aA-lbl">editing QuantityStepper.svelte (hunk 1/2)</span></div>
+            <div class="aA-diff">
+              <span class="aA-dl aA-dl-ctx">&lt;script lang="ts"&gt;</span>
+              <span class="aA-dl aA-dl-del">-  $: display = qty.value.toFixed(2);</span>
+              <span class="aA-dl aA-dl-add">+  $: display = formatMixed(qty.value, qty.unit);</span>
+            </div>
+            <div class="aA-foot"><span class="aA-meta">web/src/lib/components/recipe/editor/QuantityStepper.svelte</span><span class="aA-dstat"><b class="ok">+6</b> <b class="no">-2</b></span></div>
+          </div>
+        </div>
+
+        <div class="aA-card aA-t-valok" data-demo-action="cmd.artifacts.open_evidence" data-demo-arg="cmd.artifacts.open_evidence -> passed validation: import::normalize_units">
+          <div class="aA-body">
+            <div class="aA-r1"><span class="aA-fam aA-f-test">validation_test</span><span class="aA-lbl">import::normalize_units green</span></div>
+            <div class="aA-vals">
+              <span class="aA-val"><span class="aA-valn ok">27</span><span class="aA-valk">passed</span></span>
+              <span class="aA-val"><span class="aA-valn">0</span><span class="aA-valk">failed</span></span>
+              <span class="aA-val"><span class="aA-valn">3.2s</span><span class="aA-valk">duration</span></span>
+              <span class="dot dot-ok"></span>
+            </div>
+            <div class="aA-meta">running cargo test -p puppet-core import::normalize_units (retry 2/2)</div>
+          </div>
+        </div>
+
+        <div class="aA-card aA-t-web" data-demo-action="cmd.artifacts.open_evidence" data-demo-arg="cmd.artifacts.open_evidence -> web call: why fractions break our parser">
+          <div class="aA-body">
+            <div class="aA-r1"><span class="aA-fam aA-f-web">api_web_call</span><span class="aA-lbl">diagnosis lookup</span></div>
+            <div class="aA-q">seriouseats.com/the-food-lab/why-fractions-break-our-parser</div>
+            <div class="aA-prov"><span class="aA-pchip">agent_judgment</span><span class="aA-pchip">scope seriouseats.com</span><span class="aA-pchip ok">approved</span></div>
+            <div class="aA-foot"><button type="button" class="pm-minibtn aA-mb" data-demo-action="cmd.artifacts.open_sources" data-demo-arg="cmd.artifacts.open_sources -> 5 sources for mixed-fraction parser lookup"><i data-ico="external" class="pm-ico sm"></i>Sources</button><span class="aA-meta">5 sources · 14:09:47</span></div>
+          </div>
+        </div>
+
+        <div class="aA-card aA-t-rec aA-live" data-demo-action="cmd.artifacts.open_evidence" data-demo-arg="cmd.artifacts.open_evidence -> recording: verify walkthrough (live)">
+          <div class="aA-body">
+            <div class="aA-rec1">
+              <button type="button" class="aA-play" title="Play recording" data-demo-action="cmd.artifacts.play_recording" data-demo-arg="cmd.artifacts.play_recording -> verify walkthrough (live, 6 actions)"><i data-ico="play" class="pm-ico sm"></i></button>
+              <span class="aA-row-main"><span class="aA-lbl">verify: post-fix walkthrough</span><span class="aA-meta"><span class="dot dot-run"></span> running · 6 actions · 0:18</span></span>
+            </div>
+            <div class="aA-ticks pm-live"></div>
+            <div class="aA-foot"><button type="button" class="pm-minibtn aA-mb" data-demo-action="cmd.artifacts.watch_recording" data-demo-arg="cmd.artifacts.watch_recording -> verify walkthrough (streaming)"><i data-ico="eye" class="pm-ico sm"></i>Watch</button><span class="aA-meta">ops/unraid/templates/tastebook-api-1.4.xml</span></div>
+          </div>
+        </div>
+
+        <div class="aA-card aA-t-shot" data-demo-action="cmd.artifacts.open_evidence" data-demo-arg="cmd.artifacts.open_evidence -> screenshot: CI run #310 artifact drawer">
+          <div class="aA-thumb aA-th-ci">
+            <span class="aA-cap"><i data-ico="monitor" class="pm-ico sm"></i><span class="aA-cap-t">14:22:05 · 1440x900 · run #310</span><span class="aA-cap-r">png</span></span>
+          </div>
+          <div class="aA-body">
+            <div class="aA-r1"><span class="aA-fam aA-f-shot">screenshot</span><span class="aA-lbl">CI run #310 artifact drawer</span></div>
+            <div class="aA-meta">.github/workflows/ci-build-test-and-publish.yml</div>
+          </div>
+        </div>
+
+        <div class="aA-card aA-t-diff" data-demo-action="cmd.artifacts.open_evidence" data-demo-arg="cmd.artifacts.open_evidence -> diff: projection_freshness.rs receipt rows">
+          <div class="aA-body">
+            <div class="aA-r1"><span class="aA-fam aA-f-diff">code_diff</span><span class="aA-lbl">reviewing diff of projection_freshness.rs</span></div>
+            <div class="aA-diff">
+              <span class="aA-dl aA-dl-ctx">pub fn receipt_row(p: &amp;Projection) -&gt; ReceiptRow {</span>
+              <span class="aA-dl aA-dl-del">-        fresh: p.staleness_secs &lt; 300,</span>
+              <span class="aA-dl aA-dl-add">+        fresh: p.staleness_secs &lt; p.cfg.fresh_ttl &amp;&amp; p.health.ok(),</span>
+            </div>
+            <div class="aA-foot"><span class="aA-meta">crates/puppet-core/src/artifacts/projection_freshness.rs</span><span class="aA-dstat"><b class="ok">+12</b> <b class="no">-4</b></span></div>
+          </div>
+        </div>
+
+      </div>
+
+      <div class="aA-end">
+        <span class="pm-footnote">Records are immutable once the case seals — prune unlocks after inv-import-7x archives.</span>
+        <button type="button" class="pm-minibtn danger aA-mb" aria-disabled="true" data-demo-reason="case_open" data-demo-action="demo.reason" data-demo-arg="Prune blocked: case inv-import-7x is open — every card is evidence"><i data-ico="trash" class="pm-ico sm"></i>Prune drafts</button>
+      </div>
+
+    </div>
+  </div>
+  <div class="side-panel-view" id="panel-search"><div style="display:flex;flex:1;align-items:center;justify-content:center;padding:24px;text-align:center;color:var(--text-muted);font-size:11px;line-height:1.5">This bonus variant explores an alternate design for search. The full six-concept rail set lives in c1..c6-*.html.</div></div>
+  <div class="side-panel-view" id="panel-source"><div style="display:flex;flex:1;align-items:center;justify-content:center;padding:24px;text-align:center;color:var(--text-muted);font-size:11px;line-height:1.5">This bonus variant explores an alternate design for source. The full six-concept rail set lives in c1..c6-*.html.</div></div>
+  <div class="side-panel-view" id="panel-git"><div style="display:flex;flex:1;align-items:center;justify-content:center;padding:24px;text-align:center;color:var(--text-muted);font-size:11px;line-height:1.5">This bonus variant explores an alternate design for git. The full six-concept rail set lives in c1..c6-*.html.</div></div>
+  <div class="side-panel-view" id="panel-docker"><div style="display:flex;flex:1;align-items:center;justify-content:center;padding:24px;text-align:center;color:var(--text-muted);font-size:11px;line-height:1.5">This bonus variant explores an alternate design for docker. The full six-concept rail set lives in c1..c6-*.html.</div></div>
+  <div class="side-panel-view" id="panel-testing"><div style="display:flex;flex:1;align-items:center;justify-content:center;padding:24px;text-align:center;color:var(--text-muted);font-size:11px;line-height:1.5">This bonus variant explores an alternate design for testing. The full six-concept rail set lives in c1..c6-*.html.</div></div>
+  <div class="side-panel-view" id="panel-agents"><div style="display:flex;flex:1;align-items:center;justify-content:center;padding:24px;text-align:center;color:var(--text-muted);font-size:11px;line-height:1.5">This bonus variant explores an alternate design for agents. The full six-concept rail set lives in c1..c6-*.html.</div></div>
+</template>
+<script src="_shared/icons.js"></script>
+<script src="_shared/menu.js"></script>
+<script src="_shared/chrome.js"></script>
+<script>PMChrome.boot({ badge: { id: 'A1', name: 'Evidence Wall' } }); PMRail.showPanel('panel-artifacts');</script>
+</body>
+</html>
