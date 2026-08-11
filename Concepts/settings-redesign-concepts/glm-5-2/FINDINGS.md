@@ -84,6 +84,10 @@ Recorded per packet `05` (Slint 1.17.1 portability). The concepts deliberately a
 6. **`localStorage` persistence** → production uses the real settings store; the concept's localStorage is a web-only convenience with no Slint equivalent. Low risk (it is not semantic state).
 7. **Long lists** (provider/model rows, memory Gists) → the concepts render the full demo set (small). Production must virtualize per packet `05` ("no always-instantiated rendering of hundreds of rows"); the row components are already data-driven and stateless, so virtualization is additive.
 8. **`max-height` transition on Stack expand** → uses `max-height` animation which is a web idiom; Slint would animate `height` or use a layout animation. Reduced-motion path is opacity-only and portable.
+9. **Motion helpers (`motion.js`)** → FLIP, staggerIn, transitionView, smoothJump, pulseOnce, crossFade, growSettle are all web-DOM-idiom animations. The **semantic state** they animate (expanded/active-saved/active-sub) lives in `PM.state`, separate from DOM geometry. Slint port: each helper maps to a Slint property animation or layout animation; the reduced-motion fallbacks (opacity/state-only) are portable as-is.
+10. **Spellcheck demo (`spellcheck.js`)** → uses `contenteditable` + TreeWalker text-node wrapping, which is browser-only. Production must use a **Slint-portable spelling-service abstraction** (packet 04); the concept's dictionary/suggestion-menu/skip-logic contract is the portable part, not the DOM-wrapping mechanism.
+11. **Exposure-level disclosure** → the segmented control filters rows by `data-exposure` attribute; in Slint this is a model filter on the settings list, not a DOM show/hide. Portable.
+12. **Setup-stepper modal** → uses `position:fixed` overlay; Slint uses `PopupWindow` or a dialog component. Portable.
 
 ## No ranking
 

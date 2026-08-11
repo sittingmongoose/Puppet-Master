@@ -60,6 +60,7 @@
       sub: [
         { id: "git", title: "Git" },
         { id: "worktrees", title: "Worktrees" },
+        { id: "ops", title: "Operational awareness" },
         { id: "crew", title: "Crew templates", manager: "crew" }
       ]},
     { id: "extensions", title: "MCP, Skills & Tools", purpose: "Servers, skills, plugins, tools, and commands.",
@@ -188,9 +189,14 @@
         note:"PRD/Planning discussion must use a high-quality route." },
       { id:"goal-concurrency", label:"Configured concurrency", expl:"Ceiling. Effective capacity is shown by the runtime.",
         type:"slider", value:8, min:1, max:16, unit:" agents", state:"custom", source:"You", exposure:"advanced",
-        effective:2, effectiveNote:"Sustainable capacity is 2 now; 3 waves recommended." },
+        effective:2, effectiveNote:"Sustainable capacity is 2 now; 3 waves recommended.",
+        warning:"Starting eight agents now is unlikely to finish before the provider resets. PM recommends two concurrent agents and three waves." },
       { id:"goal-reserve", label:"Reserve for synthesis", expl:"Keep budget for final integration and verification.",
-        type:"switch", value:true, state:"recommended", source:"Recommended", exposure:"advanced" }
+        type:"switch", value:true, state:"recommended", source:"Recommended", exposure:"advanced" },
+      { id:"goal-spend-guard", label:"Spend/time guard", expl:"Pause Goals before exceeding a budget ceiling.",
+        type:"switch", value:true, state:"recommended", source:"Recommended", exposure:"advanced" },
+      { id:"goal-checkpoint", label:"Automatic checkpoint + compact", expl:"Checkpoint long Goals and compact context safely.",
+        type:"select", value:"Auto", options:["Off","Auto","Ask"], state:"default", source:"Default", exposure:"advanced" }
     ],
     "planning.prd": [
       { id:"prd-route", label:"PRD conversation route", expl:"Must stay high-quality by default.",
@@ -209,6 +215,20 @@
     "git.worktrees": [
       { id:"auto-provision", label:"Auto-provision worktrees", expl:"Create an isolated worktree per Goal.",
         type:"select", value:"Ask", options:["Never","Ask","Always"], state:"recommended", source:"Recommended", exposure:"advanced" }
+    ],
+    "git.ops": [
+      { id:"port-collision", label:"Port-collision behavior", expl:"What happens when a dev server port is taken.",
+        type:"select", value:"Ask", options:["Fail","Ask","Auto-increment"], state:"recommended", source:"Recommended", exposure:"advanced" },
+      { id:"cross-project-read", label:"Cross-project read access", expl:"Off by default. Lets agents read other projects' threads and artifacts.",
+        type:"select", value:"Off", options:["Off","Once","Thread","Goal","Persistent"], state:"default", source:"Default", exposure:"expert",
+        safety:"privacy" },
+      { id:"cross-project-write", label:"Cross-project write access", expl:"Separate from read. Never granted by default.",
+        type:"select", value:"Off", options:["Off","Once","Thread","Goal","Persistent"], state:"default", source:"Default", exposure:"expert",
+        safety:"safety" },
+      { id:"test-automation", label:"Testing & debug automation", expl:"Whether children may run tests and capture diagnostics automatically.",
+        type:"select", value:"Ask", options:["Never","Ask","Always"], state:"recommended", source:"Recommended", exposure:"advanced" },
+      { id:"snapshot-access", label:"Snapshot & backup access", expl:"Whether agents may create/restore snapshots.",
+        type:"select", value:"Ask", options:["Never","Ask","Always"], state:"default", source:"Default", exposure:"advanced" }
     ],
     "system.health": [
       { id:"health-status", label:"Overall health", expl:"Aggregated system status.",
@@ -302,8 +322,14 @@
       ]}
     ], models:[
       { id:"gpt-5", name:"GPT-5", main:true, fav:true, alias:"", priority:3,
-        modalities:["text","image"], ctx:"400k", tools:true, effort:true, fast:false,
-        capability:"supported", evidence:"observed successful use · 12 min ago", role:"Approval review",
+        modalities:["text","image"], ctx:"400k", tools:true, effort:true, fast:false, structuredOutput:true,
+        capability:"supported", evidence:"observed successful use · 12 min ago", evidenceFresh:"fresh", role:"Approval review",
+        status:"available" },
+      { id:"gpt-5-effective", name:"GPT-5 (4o fallback)", main:false, fav:false, alias:"", priority:3, hidden:false,
+        modalities:["text"], ctx:"128k", tools:true, effort:false, fast:true, structuredOutput:true,
+        capability:"supported through another configured route", evidence:"effective route · GPT-5 quota pressured", evidenceFresh:"fresh",
+        role:"Approval review",
+        requestedModel:"gpt-5", effectiveNote:"Requested GPT-5; effective GPT-5 (4o fallback) because OpenAI — Personal hit its rate window.",
         status:"available" },
       { id:"gpt-5-mini", name:"GPT-5 mini", main:false, fav:false, alias:"", priority:6,
         modalities:["text"], ctx:"200k", tools:true, effort:false, fast:true,
@@ -346,9 +372,28 @@
   PM_DEMO.catalogMeta = {
     sources:["models.dev","Free Coding Models"],
     lastChecked:"just now",
-    sourceVersion:"models.dev @ 2026-08-05 · FCM @ 2026-08-04",
+    lastActivated:"5 min ago",
+    sourceVersion:"models.dev @ a1b2c3d · FCM @ 2026-08-04",
     state:"last-known-good",
-    note:"Catalogs refresh in the background (stale-while-revalidate). A fresh catalog does not prove entitlement."
+    validation:"validated · no quarantined entries",
+    note:"Catalogs refresh in the background (stale-while-revalidate). A fresh catalog does not prove entitlement.",
+    changes:[
+      { id:"ch1", kind:"material", text:"Sonnet 4.5 context limit raised to 200k (models.dev a1b2c3d)", date:"2026-08-04" },
+      { id:"ch2", kind:"removed-free", text:"Promo-X free tier reclassified to paid; included usage exhausted. Add an API key to continue.", date:"2026-07-30" }
+    ]
+  };
+
+  /* Free-model setup flow steps (packet 02) */
+  PM_DEMO.freeModelSetup = {
+    modelId:"free-needs-setup",
+    steps:[
+      { id:"account", title:"Create account", detail:"Sign up at the provider; choose the free tier.", kind:"external" },
+      { id:"credential", title:"Create credential", detail:"Generate an API key in the provider dashboard.", kind:"external" },
+      { id:"scopes", title:"Required scopes", detail:"Allow: models:read, models:invoke. No billing scopes needed.", kind:"info" },
+      { id:"verify", title:"Verify", detail:"PM runs a safe probe (readiness check, not a real generation).", kind:"pm" },
+      { id:"quota", title:"Quota caveats", detail:"Free · rate-limited to 60/hour · promotional · data-sharing may apply.", kind:"warn" },
+      { id:"return", title:"Return to model", detail:"Reopens the originating model row with the new route attached.", kind:"pm" }
+    ]
   };
 
   /* roles (packet 02) */
@@ -450,20 +495,48 @@
       note:"Formatting ownership conflict with Prettier." }
   ];
 
-  /* ----- SKILLS / PLUGINS / TOOLS (packet 04) ----- */
+  /* ----- SKILLS / PLUGINS / TOOLS / COMMANDS (packet 04) — four distinct kinds ----- */
   PM_DEMO.skills = [
-    { id:"sk-1", name:"pm-bootstrap-ledger", kind:"skill", enabled:true, trust:"trusted", scope:"project", source:"local" },
-    { id:"sk-2", name:"frontend-design", kind:"skill", enabled:true, trust:"trusted", scope:"global", source:"marketplace" },
-    { id:"pl-1", name:"pdf-tools", kind:"plugin", enabled:true, trust:"review", scope:"global", source:"marketplace", update:"available" },
-    { id:"tool-1", name:"ripgrep", kind:"tool", enabled:true, trust:"trusted", scope:"workspace", source:"system",
-      state:"available", invoked:"6 min ago" },
-    { id:"cmd-1", name:"/seal", kind:"command", enabled:true, trust:"trusted", scope:"project", source:"custom", shortcut:"⌘⇧S" }
+    // Skills: discover/install/update, source, permissions, trust, scope
+    { id:"sk-1", name:"pm-bootstrap-ledger", kind:"skill", enabled:true, trust:"trusted", scope:"project", source:"local",
+      perms:["read:Plans/**","write:Plans/ledgers/**"], update:"current" },
+    { id:"sk-2", name:"frontend-design", kind:"skill", enabled:true, trust:"trusted", scope:"global", source:"marketplace",
+      perms:["read:Concepts/**"], update:"current" },
+    { id:"sk-3", name:"overdrive", kind:"skill", enabled:false, trust:"review", scope:"project", source:"marketplace",
+      perms:["read:Concepts/**","write:scratchpad/**"], update:"available" },
+    // Plugins: lifecycle, compatibility, requested permissions, update channel, failure state
+    { id:"pl-1", name:"pdf-tools", kind:"plugin", enabled:true, trust:"review", scope:"global", source:"marketplace",
+      compat:"PM ≥ 2026.7", channel:"stable", failure:"none", update:"available", perms:["read:*.pdf","write:*.docx"] },
+    { id:"pl-2", name:"docx-export", kind:"plugin", enabled:true, trust:"trusted", scope:"project", source:"marketplace",
+      compat:"PM ≥ 2026.6", channel:"stable", failure:"none", update:"current", perms:["write:*.docx"] },
+    { id:"pl-3", name:"legacy-bridge", kind:"plugin", enabled:false, trust:"untrusted", scope:"global", source:"local",
+      compat:"incompatible (needs PM ≤ 2025.x)", channel:"none", failure:"failed to load: API mismatch", update:"none", perms:[] },
+    // Tools: installed / project-enabled / currently-available / selected-for-turn / actually-invoked
+    { id:"tool-1", name:"ripgrep", kind:"tool", scope:"workspace", source:"system",
+      installed:true, projectEnabled:true, available:true, selected:false, invoked:"6 min ago",
+      risk:"read-only", trust:"trusted" },
+    { id:"tool-2", name:"shell-exec", kind:"tool", scope:"project", source:"system",
+      installed:true, projectEnabled:true, available:true, selected:true, invoked:"2 min ago",
+      risk:"elevated", trust:"review", policy:"confirm on write outside workspace" },
+    { id:"tool-3", name:"browser-control", kind:"tool", scope:"project", source:"plugin:browser-use",
+      installed:true, projectEnabled:false, available:false, selected:false, invoked:"never",
+      risk:"network + automation", trust:"review" },
+    // Commands: search, shortcuts, conflicts, remap, reset, custom lifecycle
+    { id:"cmd-1", name:"/seal", kind:"command", enabled:true, scope:"project", source:"custom", shortcut:"⌘⇧S", conflicts:[] },
+    { id:"cmd-2", name:"/compile", kind:"command", enabled:true, scope:"global", source:"builtin", shortcut:"⌘⇧C", conflicts:["/compile (PM6 plugin)"] },
+    { id:"cmd-3", name:"/audit", kind:"command", enabled:true, scope:"global", source:"builtin", shortcut:"", conflicts:[] }
   ];
 
   /* ----- TERMINAL (packet 04) ----- */
   PM_DEMO.terminals = [
-    { id:"t-default", name:"Default", shell:"zsh", font:"SF Mono", size:13, fg:"#e7e9ed", bg:"#15171b", opacity:0.92, default:true },
-    { id:"t-build", name:"Build", shell:"bash", font:"JetBrains Mono", size:12, fg:"#c8f7d0", bg:"#0e0e0e", opacity:1.0, default:false }
+    { id:"t-default", name:"Default", shell:"zsh", font:"SF Mono", fontFallback:"Menlo, monospace", size:13, lineheight:1.4,
+      fg:"#e7e9ed", bg:"#15171b", opacity:0.92, cursor:"block", blink:false, copyLinks:true, cwd:"~",
+      env:"inherit", retention:"90 days", default:true,
+      ansi:["#000","#c00","#0a0","#aa0","#05f","#a0a","#0aa","#aaa","#555","#f55","#5f5","#ff5","#5cf","#f5f","#5ff","#fff"] },
+    { id:"t-build", name:"Build", shell:"bash", font:"JetBrains Mono", fontFallback:"Cascadia Code, monospace", size:12, lineheight:1.3,
+      fg:"#c8f7d0", bg:"#0e0e0e", opacity:1.0, cursor:"bar", blink:true, copyLinks:false, cwd:"project",
+      env:"minimal", retention:"30 days", default:false,
+      ansi:["#000","#e55","#5d5","#df5","#5af","#d5d","#5dd","#fff","#444","#f77","#7f7","#ff7","#7cf","#fff","#7ff","#fff"] }
   ];
 
   /* ----- MEDIA (packet 02) ----- */

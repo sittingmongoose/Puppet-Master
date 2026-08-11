@@ -86,6 +86,11 @@
     [data-reduced-motion="0"] .sr-section { opacity: 0; transform: translateY(6px); transition: opacity var(--t-slow) var(--ease-settle), transform var(--t-slow) var(--ease-settle); }
     [data-reduced-motion="0"] .sr-section.in-view { opacity: 1; transform: none; }
     @media (prefers-reduced-motion: reduce) { .sr-section { opacity: 1 !important; transform: none !important; } }
+    /* C2: landmark tick rides scroll position (tween, not snap) */
+    [data-reduced-motion="0"] .sr-landmark-tick { transition: background var(--t-mid) var(--ease), transform var(--t-fast) var(--ease), border-color var(--t-mid) var(--ease); }
+    [data-reduced-motion="0"] .sr-progress { transition: height var(--t-fast) linear; }
+    /* C2: channel cross-fade */
+    [data-reduced-motion="0"] [data-channel-body] { transition: opacity var(--t-mid) var(--ease); }
 
     @media (max-width: 760px) {
       .sr-landmarks { display: none; }
@@ -101,14 +106,16 @@
     <div style="position:fixed;top:8px;right:12px;z-index:99;padding:3px 9px;border:1px solid #6fc6e8;color:#6fc6e8;border-radius:999px;font:bold 10px sans-serif">GLM-5.2</div>
   </noscript>
   <a data-concept-model="GLM-5.2" href="index.html" title="GLM-5.2 settings concept"
-     style="position:fixed;bottom:36px;right:12px;z-index:50;display:inline-flex;align-items:center;gap:5px;padding:3px 9px;border:1px solid var(--accent-line,#6fc6e8);background:var(--accent-soft,rgba(111,198,232,.14));color:var(--accent,#6fc6e8);border-radius:999px;font:bold 10px sans-serif;text-decoration:none">GLM-5.2 · 04</a>
+     style="position:fixed;bottom:var(--footer-h,30px);right:12px;z-index:40;display:inline-flex;align-items:center;gap:5px;padding:2px 8px;border:1px solid var(--accent-line,#6fc6e8);background:var(--accent-soft,rgba(111,198,232,.14));color:var(--accent,#6fc6e8);border-radius:999px;font:bold 9px sans-serif;text-decoration:none;opacity:.85">GLM-5.2 · 04</a>
 
   <script src="assets/icons.svg.js"></script>
   <script src="assets/demo-data.js"></script>
   <script src="concept-hub-bridge.js"></script>
   <script src="assets/state.js"></script>
+  <script src="assets/motion.js"></script>
   <script src="assets/shared.js"></script>
   <script src="assets/managers.js"></script>
+  <script src="assets/spellcheck.js"></script>
   <script>
     (function () {
       "use strict";
@@ -207,7 +214,9 @@
           return '<div class="sr-manager-host" data-manager-host="' + sub.manager + '"><div data-manager-id="' + sub.manager + '">' + PM.managers_lib.render(sub.manager) + '</div></div>';
         }
         var rows = PM.shared.subList(cat.id, sub.id);
-        return '<section class="sr-sub-section" data-sub-section="' + sub.id + '"><div class="set-list">' + rows + '</div></section>';
+        return '<div class="row between" style="margin-bottom:8px">' + PM.shared.exposureControl() + '</div>' +
+          '<section class="sr-sub-section" data-sub-section="' + sub.id + '"><div class="set-list">' + rows + '</div></section>' +
+          PM.shared.proseField("Notes for this channel", "I definately want to recieve seperate reports on this cuz the occured issue is thru the roof.");
       }
 
       function wireHome() {
@@ -261,7 +270,7 @@
             }
           });
         });
-        // channel switching
+        // channel switching (B2: clear pending timeouts on outgoing manager; C2: cross-fade)
         document.querySelectorAll("[data-channel]").forEach(function (b) {
           b.addEventListener("click", function () {
             var sec = this.closest(".sr-section");
@@ -271,13 +280,22 @@
             sec.querySelectorAll(".sr-channel").forEach(function (c) { c.classList.remove("active"); });
             this.classList.add("active");
             var sub = PM.catById(cat).sub.find(function (s) { return s.id === subId; });
-            sec.querySelector("[data-channel-body]").innerHTML = channelBody(PM.catById(cat), sub);
-            if (manager) {
-              var host = sec.querySelector('[data-manager-host="' + manager + '"]');
-              if (host) PM.managers_lib.wire(host.querySelector(".mgr"));
-            } else {
-              PM.shared.wireSettings(sec.querySelector("[data-channel-body]"));
-            }
+            var bodyHost = sec.querySelector("[data-channel-body]");
+            // B2: cancel any pending refresh-overlay timeout on the outgoing manager
+            var oldMgr = bodyHost.querySelector("[data-manager-host] .mgr");
+            if (oldMgr && oldMgr.dataset.pmTimer) { clearTimeout(Number(oldMgr.dataset.pmTimer)); }
+            bodyHost.querySelectorAll(".refresh-overlay").forEach(function (o) { o.remove(); });
+            // C2 motion: cross-fade the channel body
+            PM.motion.crossFade(bodyHost, function () {
+              bodyHost.innerHTML = channelBody(PM.catById(cat), sub);
+              if (manager) {
+                var host = bodyHost.querySelector('[data-manager-host="' + manager + '"]');
+                if (host) PM.managers_lib.wire(host.querySelector(".mgr"));
+              } else {
+                PM.shared.wireSettings(bodyHost);
+                PM.shared.wireProseFields(bodyHost);
+              }
+            });
           });
         });
         // notices
@@ -323,6 +341,7 @@
 
       PM.render = home;
       PM.init();
+      PM.motion.install();
       shell();
       home();
     })();

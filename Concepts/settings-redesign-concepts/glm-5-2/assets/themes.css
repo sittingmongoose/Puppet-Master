@@ -120,14 +120,14 @@
 [data-theme="retro-dark"] {
   --bg:#0e0e0e; --surface:#161616; --surface-2:#1c1c1c; --surface-3:#232323; --surface-elev:#2a2a2a;
   --overlay: rgba(14,14,14,0.78);
-  --ink:#c8f7d0; --ink-2:#9fd9a8; --ink-3:#6fa978; --ink-4:#4a704f;
+  --ink:#c8f7d0; --ink-2:#b8e8c0; --ink-3:#8fc99a; --ink-4:#6fa978;
   --line:#2e4d33; --line-2:#224026;
   --accent:#00ff41; --accent-ink:#0a0a0a; --accent-soft:rgba(0,255,65,.10); --accent-line:rgba(0,255,65,.55);
   --ok:#00ff41; --ok-soft:rgba(0,255,65,.10);
   --warn:#ffcc00; --warn-soft:rgba(255,204,0,.12);
   --bad:#ff4d4d; --bad-soft:rgba(255,77,77,.12);
   --info:#33ccff; --info-soft:rgba(51,204,255,.12);
-  --neutral:#7a9a7e; --neutral-soft:rgba(122,154,126,.14);
+  --neutral:#8fc99a; --neutral-soft:rgba(143,201,154,.14);
   --r-xs:0; --r-sm:0; --r:0; --r-lg:0; --r-xl:0; --r-pill:0;
   --font:"Rajdhani","DejaVu Sans Mono","Arial Narrow",sans-serif;
   --mono:"JetBrains Mono","Cascadia Code",monospace;
