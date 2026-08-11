@@ -13,6 +13,7 @@ import argparse
 import base64
 import copy
 import hashlib
+import importlib.util
 import json
 import re
 import subprocess
@@ -20,16 +21,34 @@ import sys
 from pathlib import Path
 from typing import Any
 
-try:
-    from pm_pnc019_currentness import (
-        REQUIRED_PNC019_SOURCE_HASH_PATHS,
-        pnc019_event_authority_clearance_failures,
-    )
-except ModuleNotFoundError:  # Support importlib-based unit tests from the repo root.
-    from scripts.pm_pnc019_currentness import (
-        REQUIRED_PNC019_SOURCE_HASH_PATHS,
-        pnc019_event_authority_clearance_failures,
-    )
+def _load_pnc019_currentness():
+    """Load the governed helper from this script's directory."""
+    module_name = "pm_pnc019_currentness"
+    helper_path = Path(__file__).resolve().with_name("pm_pnc019_currentness.py")
+    existing = sys.modules.get(module_name)
+    if existing is not None:
+        existing_path = getattr(existing, "__file__", None)
+        if existing_path is None or Path(existing_path).resolve() != helper_path:
+            raise ImportError(f"{module_name} is already loaded from a different path")
+        return existing
+
+    spec = importlib.util.spec_from_file_location(module_name, helper_path)
+    if spec is None or spec.loader is None:
+        raise ImportError(f"unable to load governed helper: {helper_path}")
+    module = importlib.util.module_from_spec(spec)
+    sys.modules[module_name] = module
+    try:
+        spec.loader.exec_module(module)
+    except BaseException:
+        if sys.modules.get(module_name) is module:
+            del sys.modules[module_name]
+        raise
+    return module
+
+
+_pnc019_currentness = _load_pnc019_currentness()
+REQUIRED_PNC019_SOURCE_HASH_PATHS = _pnc019_currentness.REQUIRED_PNC019_SOURCE_HASH_PATHS
+pnc019_event_authority_clearance_failures = _pnc019_currentness.pnc019_event_authority_clearance_failures
 
 
 ROOT = Path(__file__).resolve().parents[1]
