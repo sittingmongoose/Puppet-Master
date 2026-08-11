@@ -109,6 +109,13 @@
     .at-region:nth-child(1){animation-delay:0ms}.at-region:nth-child(2){animation-delay:50ms}.at-region:nth-child(3){animation-delay:100ms}
     .at-region:nth-child(4){animation-delay:150ms}.at-region:nth-child(5){animation-delay:200ms}.at-region:nth-child(6){animation-delay:250ms}
     @keyframes at-zoom-in { from { opacity:0; transform: scale(.96); } to { opacity:1; transform:none; } }
+    /* C2: region → focus directed continuity (scale + cross-fade) */
+    [data-reduced-motion="0"] .at-workspace { animation: at-focus-in 420ms var(--ease-settle) both; }
+    @keyframes at-focus-in { from { opacity:0; transform: scale(1.04); } to { opacity:1; transform:none; } }
+    /* C2: viewport thumb tweens (not snap) */
+    [data-reduced-motion="0"] #vpThumb { transition: top var(--t-mid) var(--ease), height var(--t-mid) var(--ease); }
+    /* C2: minimap active region indicator slide */
+    [data-reduced-motion="0"] .at-mm-region { transition: background var(--t-fast) var(--ease), color var(--t-fast) var(--ease), border-color var(--t-fast) var(--ease); }
 
     /* squeeze */
     @media (max-width: 1100px) {
@@ -127,14 +134,16 @@
     <div style="position:fixed;top:8px;right:12px;z-index:99;padding:3px 9px;border:1px solid #6fc6e8;color:#6fc6e8;border-radius:999px;font:bold 10px sans-serif">GLM-5.2</div>
   </noscript>
   <a data-concept-model="GLM-5.2" href="index.html" title="GLM-5.2 settings concept"
-     style="position:fixed;bottom:36px;right:12px;z-index:50;display:inline-flex;align-items:center;gap:5px;padding:3px 9px;border:1px solid var(--accent-line,#6fc6e8);background:var(--accent-soft,rgba(111,198,232,.14));color:var(--accent,#6fc6e8);border-radius:999px;font:bold 10px sans-serif;text-decoration:none">GLM-5.2 · 02</a>
+     style="position:fixed;bottom:var(--footer-h,30px);right:12px;z-index:40;display:inline-flex;align-items:center;gap:5px;padding:2px 8px;border:1px solid var(--accent-line,#6fc6e8);background:var(--accent-soft,rgba(111,198,232,.14));color:var(--accent,#6fc6e8);border-radius:999px;font:bold 9px sans-serif;text-decoration:none;opacity:.85">GLM-5.2 · 02</a>
 
   <script src="assets/icons.svg.js"></script>
   <script src="assets/demo-data.js"></script>
   <script src="concept-hub-bridge.js"></script>
   <script src="assets/state.js"></script>
+  <script src="assets/motion.js"></script>
   <script src="assets/shared.js"></script>
   <script src="assets/managers.js"></script>
+  <script src="assets/spellcheck.js"></script>
   <script>
     (function () {
       "use strict";
@@ -287,14 +296,17 @@
               minimap,
             '</aside>',
             '<div class="at-focus" data-scroller>',
-              '<div class="at-backbar" style="position:sticky;top:0;z-index:5;background:var(--surface);margin:0 0 12px;">',
+              '<div class="at-backbar" style="position:sticky;top:0;z-index:5;background:var(--surface);margin:0 0 12px;display:flex;align-items:center;gap:10px">',
                 '<button class="btn sm ghost" data-go-home>' + PM.svg("back",13) + 'Map</button>',
                 '<span class="muted small">Settings · <b style="color:var(--ink)">' + cat.title + '</b></span>',
+                '<span class="grow"></span>',
+                PM.shared.exposureControl(),
               '</div>',
               '<div class="at-focus-inner">',
                 '<h2>' + cat.title + '</h2>',
                 '<p class="at-focus-purpose">' + cat.purpose + '</p>',
                 focusDoc,
+                PM.shared.proseField("Notes for this region", "I definately want to recieve seperate reports on this cuz the occured issue is thru the roof."),
               '</div>',
             '</div>',
             '<aside class="at-viewport-rail">',
@@ -331,6 +343,10 @@
           a.addEventListener("click", function (e) { e.preventDefault(); PM.openManager(this.getAttribute("data-sub-manager")); render(); });
         });
         PM.shared.wireSettings(document.querySelector(".at-focus-inner"));
+        var focusInner = document.querySelector(".at-focus-inner");
+        PM.shared.wireExposureControl(document.querySelector(".at-workspace"));
+        PM.shared.applyExposure(document.querySelector(".at-workspace"));
+        PM.shared.wireProseFields(focusInner);
         PM.onScrollspy = function (subId) {
           document.querySelectorAll("[data-mm-sub],[data-vp-sub]").forEach(function (b) {
             b.classList.toggle("active", b.getAttribute("data-mm-sub") === subId || b.getAttribute("data-vp-sub") === subId);
@@ -376,6 +392,7 @@
 
       PM.render = render;
       PM.init();
+      PM.motion.install();
       shell();
       render();
     })();

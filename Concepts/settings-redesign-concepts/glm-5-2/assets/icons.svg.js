@@ -58,5 +58,6 @@ window.PM_ICONS = {
   check:    '<path d="m5 12 4 4L19 6"/>',
   arrowDown:'<path d="M12 5v14M5 12l7 7 7-7"/>',
   dot:      '<circle cx="12" cy="12" r="3"/>',
-  vbar:     '<path d="M12 4v16"/>'
+  vbar:     '<path d="M12 4v16"/>',
+  overflow: '<circle cx="6" cy="12" r="1.6"/><circle cx="12" cy="12" r="1.6"/><circle cx="18" cy="12" r="1.6"/>'
 };

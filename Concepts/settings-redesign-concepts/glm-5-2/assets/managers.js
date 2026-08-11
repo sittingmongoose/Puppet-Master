@@ -51,23 +51,28 @@
             "needs-setup":"Needs setup", signedin:"Signed in"
           })[it.status] || it.status;
           var remaining = it.remaining ? '<span class="chip">' + it.remaining + (it.remainingPct != null ? ' · ' + it.remainingPct + '%' : '') + '</span>' : "";
+          var identity = it.identity ? ' · id: ' + it.identity : "";
+          var lastGen = it.lastGen && it.lastGen !== "—" ? ' · last gen ' + it.lastGen : "";
+          // free-model setup action (A8)
+          var setupBtn = it.status === "needs-setup" ? '<button class="btn sm primary" data-conn-action="setup" data-setup-model="' + PM_DEMO.freeModelSetup.modelId + '">' + PM.svg("bolt",13) + 'Setup</button>' : "";
           return [
             '<div class="conn-row" data-conn="' + it.id + '">',
               '<span class="sdot ' + st + '"></span>',
               '<div class="col grow gap-xs">',
-                '<div class="row center gap-sm"><strong class="conn-name">' + it.name + '</strong>',
+                '<div class="row center gap-sm wrap"><strong class="conn-name">' + it.name + '</strong>',
                   '<span class="chip ' + (st === "ok" ? "ok" : st === "warn" ? "warn" : "bad") + '">' + stLabel + '</span>',
                   it.credType ? '<span class="chip">' + it.credType + '</span>' : '',
+                  it.multi ? '<span class="priority-badge" data-priority="' + (it.priority||1) + '">P' + (it.priority||1) + '</span>' : '',
                 '</div>',
-                '<span class="muted small">' + (it.authOwner ? 'Owner: ' + it.authOwner + ' · ' : '') + (it.profile ? it.profile : '') + (it.endpoint ? ' · ' + it.endpoint : '') + '</span>',
+                '<span class="muted small">' + (it.authOwner ? 'Owner: ' + it.authOwner + ' · ' : '') + (it.profile ? it.profile : '') + (it.endpoint ? ' · ' + it.endpoint : '') + identity + lastGen + '</span>',
                 remaining,
                 it.note ? '<span class="mgr-note ' + st + '">' + it.note + '</span>' : '',
               '</div>',
               '<div class="row center gap-xs">',
                 st === "warn" || st === "bad" ? '<button class="btn sm primary" data-conn-action="reconnect">' + PM.svg("refresh",13) + 'Reconnect</button>' : '',
-                '<button class="btn sm ghost" data-conn-action="refresh">' + PM.svg("refresh",13) + '</button>',
-                '<button class="btn sm ghost" data-conn-action="logs">Logs</button>',
-                '<button class="btn sm ghost" data-conn-action="details">' + PM.svg("chevron",13) + '</button>',
+                setupBtn,
+                '<button class="btn sm ghost" data-conn-action="refresh" title="Refresh">' + PM.svg("refresh",13) + '</button>',
+                '<button class="btn sm ghost" data-conn-action="overflow" title="More" aria-label="More actions">' + PM.svg("overflow", 16) + '</button>',
               '</div>',
             '</div>'
           ].join("");
@@ -85,16 +90,21 @@
         var stChip = mm.status === "available"
           ? '<span class="chip ok">Available</span>'
           : '<span class="chip bad">Unavailable</span><span class="mgr-note bad small">' + (mm.unavailableReason || "") + '</span>';
+        // requested-vs-effective model (A6)
+        var effNote = mm.requestedModel ? '<span class="mgr-note warn small">Requested ' + mm.requestedModel + '; effective ' + mm.name + ' — ' + (mm.effectiveNote||"") + '</span>' : "";
         var roles = mm.role && mm.role !== "—" ? '<span class="chip accent">' + mm.role + '</span>' : "";
         var badges = [];
         if (mm.fav) badges.push('<span class="chip" title="Favorite">' + PM.svg("pin",11) + 'Favorite</span>');
         if (mm.alias) badges.push('<span class="chip">alias: ' + mm.alias + '</span>');
+        if (mm.priority) badges.push('<span class="priority-badge">P' + mm.priority + '</span>');
         if (mm.fast) badges.push('<span class="chip">Fast variant</span>');
         if (mm.effort) badges.push('<span class="chip">Effort</span>');
+        if (mm.structuredOutput) badges.push('<span class="chip">Structured output</span>');
         if (mm.ctx) badges.push('<span class="chip mono">' + mm.ctx + ' ctx</span>');
         if (mm.tools) badges.push('<span class="chip">Tools</span>');
+        if (mm.evidenceFresh === "fresh") badges.push('<span class="chip ok">Evidence fresh</span>');
         return [
-          '<div class="model-row" data-model="' + mm.id + '">',
+          '<div class="model-row" data-model="' + mm.id + '"' + (mm.hidden?' data-hidden="1" style="opacity:.5"':'') + '>',
             '<div class="row center gap">',
               '<button class="btn sm ghost icon" data-model-fav aria-label="Toggle favorite" aria-pressed="' + (mm.fav ? "true" : "false") + '">' + PM.svg("pin",13) + '</button>',
               '<div class="col grow gap-xs">',
@@ -104,6 +114,7 @@
                   '<span class="chip">Evidence: ' + mm.evidence + '</span>',
                   '<span>' + mm.modalities.join(" · ") + '</span>',
                 '</div>',
+                effNote,
                 badges.length ? '<div class="row center gap-xs wrap">' + badges.join("") + '</div>' : '',
               '</div>',
             '</div>',
@@ -139,11 +150,16 @@
       '<div class="catalog-bar">',
         '<span class="chip info">Catalog</span>',
         '<span class="muted small">' + PM_DEMO.catalogMeta.sources.join(" + ") + ' · ' + PM_DEMO.catalogMeta.state + '</span>',
-        '<span class="muted small">Checked ' + PM_DEMO.catalogMeta.lastChecked + '</span>',
-        '<span class="muted small mono">' + PM_DEMO.catalogMeta.sourceVersion + '</span>',
+        '<span class="muted small">Checked ' + PM_DEMO.catalogMeta.lastChecked + ' · activated ' + PM_DEMO.catalogMeta.lastActivated + '</span>',
+        '<span class="chip ok" title="' + PM_DEMO.catalogMeta.validation + '">' + PM_DEMO.catalogMeta.validation.split("·")[0].trim() + '</span>',
         '<span class="grow"></span>',
-        '<span class="muted small">' + PM_DEMO.catalogMeta.note + '</span>',
-      '</div>'
+        '<span class="muted small mono">' + PM_DEMO.catalogMeta.sourceVersion + '</span>',
+      '</div>',
+      '<details class="catalog-history"><summary>Material-change notices &amp; removed-free history</summary><ul>',
+        PM_DEMO.catalogMeta.changes.map(function (ch) {
+          return '<li class="' + (ch.kind==="removed-free"?"removed":"") + '">' + ch.text + ' <span class="faint">(' + ch.date + ')</span></li>';
+        }).join(""),
+      '</ul></details>'
     ].join("");
 
     var roles = [
@@ -291,40 +307,77 @@
     }, rows);
   };
 
-  /* ---------- SKILLS / PLUGINS / TOOLS (deep-dive 02) ---------- */
+  /* ---------- SKILLS / PLUGINS / TOOLS / COMMANDS (deep-dive 02) — four distinct kinds ---------- */
   M.skills = function () {
     var kindLabel = { skill:"Skill", plugin:"Plugin", tool:"Tool", command:"Command" };
+    var kinds = ["all","skill","plugin","tool","command"];
+    var tabs = kinds.map(function (k) {
+      var count = k === "all" ? PM_DEMO.skills.length : PM_DEMO.skills.filter(function(s){return s.kind===k;}).length;
+      return '<button class="kind-tab' + (k==="all"?" active":"") + '" data-kind-tab="' + k + '">' + (k==="all"?"All":kindLabel[k]) + ' <span class="faint">(' + count + ')</span></button>';
+    }).join("");
+
     var rows = PM_DEMO.skills.map(function (s) {
-      var update = s.update ? '<span class="chip info">Update available</span>' : "";
-      var stLabel = s.kind === "tool" ? (s.state === "available" ? "Available" : "Installed") : (s.enabled ? "Enabled" : "Disabled");
-      var st = s.enabled ? "ok" : "neutral";
+      var stDot, stLabel, detail;
+      if (s.kind === "skill") {
+        stDot = s.enabled ? "ok" : "neutral";
+        stLabel = s.enabled ? "Enabled" : "Disabled";
+        var upd = s.update === "available" ? '<span class="chip info">Update available</span>' : "";
+        detail = '<span class="muted small">Source: ' + s.source + ' · perms: ' + (s.perms||[]).join(", ") + '</span>' + upd;
+      } else if (s.kind === "plugin") {
+        stDot = s.failure && s.failure !== "none" ? "bad" : (s.enabled ? "ok" : "neutral");
+        stLabel = s.failure && s.failure !== "none" ? "Failed" : (s.enabled ? "Enabled" : "Disabled");
+        var fail = s.failure && s.failure !== "none" ? '<span class="mgr-note bad small">' + s.failure + '</span>' : "";
+        var updP = s.update === "available" ? '<span class="chip info">Update available</span>' : "";
+        detail = '<span class="muted small">compat: ' + s.compat + ' · channel: ' + s.channel + ' · perms: ' + (s.perms||[]).join(", ") + '</span>' + fail + updP;
+      } else if (s.kind === "tool") {
+        // five distinct states: installed / project-enabled / currently-available / selected-for-turn / actually-invoked
+        stDot = s.available ? "ok" : "neutral";
+        var states = [];
+        states.push(s.installed ? "installed" : "not installed");
+        states.push(s.projectEnabled ? "project-enabled" : "project-off");
+        states.push(s.available ? "available" : "unavailable");
+        states.push(s.selected ? "selected" : "not selected");
+        states.push(s.invoked !== "never" ? "invoked " + s.invoked : "never invoked");
+        stLabel = states.slice(0,3).join(" · ");
+        detail = '<span class="muted small">risk: ' + (s.risk||"—") + ' · ' + states.slice(3).join(" · ") + '</span>' +
+                 (s.policy ? '<span class="mgr-note info small">' + s.policy + '</span>' : "");
+      } else { // command
+        stDot = s.enabled ? "ok" : "neutral";
+        stLabel = s.enabled ? "Enabled" : "Disabled";
+        var conflicts = s.conflicts && s.conflicts.length ? '<span class="mgr-note warn small">Shortcut conflict: ' + s.conflicts.join("; ") + '</span>' : "";
+        detail = '<span class="muted small">source: ' + s.source + (s.shortcut?' · ' + s.shortcut:' · no shortcut') + '</span>' + conflicts;
+      }
+      var actions;
+      if (s.kind === "command") {
+        actions = '<button class="btn sm ghost" data-cmd-act="remap">Remap</button><button class="btn sm ghost" data-cmd-act="reset">Reset</button>';
+      } else if (s.kind === "tool") {
+        actions = '<button class="btn sm ghost" data-tool-act="select">' + (s.selected?"Deselect":"Select for turn") + '</button>';
+      } else {
+        actions = '<button class="btn sm ghost" data-skill-toggle>' + (s.enabled ? "Disable" : "Enable") + '</button><button class="btn sm ghost icon" data-skill-act="details">' + PM.svg("external",13) + '</button>';
+      }
       return [
-        '<div class="skill-row" data-skill="' + s.id + '">',
-          '<span class="sdot ' + st + '"></span>',
+        '<div class="skill-row" data-skill="' + s.id + '" data-kind="' + s.kind + '">',
+          '<span class="sdot ' + stDot + '"></span>',
           '<div class="col grow gap-xs">',
             '<div class="row center gap-sm wrap"><strong>' + s.name + '</strong>',
               '<span class="chip">' + kindLabel[s.kind] + '</span>',
-              '<span class="chip ' + st + '">' + stLabel + '</span>',
+              '<span class="chip ' + (stDot==="ok"?"ok":stDot==="bad"?"bad":"") + '">' + stLabel + '</span>',
               '<span class="chip">' + s.scope + '</span>',
               '<span class="chip">trust: ' + s.trust + '</span>',
-              s.shortcut ? '<span class="chip mono">' + s.shortcut + '</span>' : '',
-              update,
             '</div>',
-            '<span class="muted small">Source: ' + s.source + (s.invoked ? ' · invoked ' + s.invoked : "") + '</span>',
+            detail,
           '</div>',
-          '<div class="row center gap-xs">',
-            '<button class="btn sm ghost" data-skill-toggle>' + (s.enabled ? "Disable" : "Enable") + '</button>',
-            '<button class="btn sm ghost icon" data-skill-act="details">' + PM.svg("external",13) + '</button>',
-          '</div>',
+          '<div class="row center gap-xs">' + actions + '</div>',
         '</div>'
       ].join("");
     }).join("");
+
     return M.shell({
       title: "Skills, Plugins & Tools", icon: "skills",
-      addLabel: "Install", health: { text: "5 resources · 1 update", kind: "ok" },
-      summary: "Skills, plugins, tools, and commands — distinct but related. Progressive disclosure enforced.",
+      addLabel: "Install", health: { text: PM_DEMO.skills.length + " resources · 1 update · 1 conflict · 1 failed", kind: "warn" },
+      summary: "Skills, plugins, tools, and commands — four distinct kinds. Tools carry 5 lifecycle states.",
       toolbar: [{id:"marketplace",label:"Marketplace",icon:"globe"}]
-    }, '<div class="skill-list">' + rows + '</div>');
+    }, '<div class="kind-tabs" data-kind-tabs>' + tabs + '</div><div class="skill-list">' + rows + '</div>');
   };
 
   /* ---------- PERSONAS (deep-dive 03) ---------- */
@@ -416,21 +469,31 @@
     }, '<div class="lsp-list">' + rows + '</div>');
   };
 
-  /* ---------- TERMINAL (deep-dive 04) ---------- */
+  /* ---------- TERMINAL (deep-dive 04) — full profile depth (A11) ---------- */
   M.terminal = function () {
     var rows = PM_DEMO.terminals.map(function (t) {
+      var ansi = (t.ansi||[]).map(function (c) { return '<span class="ansi-sw" style="background:' + c + '"></span>'; }).join("");
       return [
         '<div class="term-row" data-term="' + t.id + '">',
           '<div class="term-swatch" style="background:' + t.bg + ';color:' + t.fg + '">' + PM.svg("terminal",16) + '</div>',
           '<div class="col grow gap-xs">',
-            '<div class="row center gap-sm"><strong>' + t.name + '</strong>',
+            '<div class="row center gap-sm wrap"><strong>' + t.name + '</strong>',
               t.default ? '<span class="chip accent">Default</span>' : "",
               '<span class="chip">' + t.shell + '</span>',
-              '<span class="chip mono">' + t.font + ' ' + t.size + 'px</span>',
+              '<span class="chip mono">' + t.font + ' ' + t.size + 'px / lh ' + t.lineheight + '</span>',
+              '<span class="chip">fallback ' + (t.fontFallback||"inherit") + '</span>',
               '<span class="chip">opacity ' + Math.round(t.opacity*100) + '%</span>',
+              '<span class="chip">cursor ' + t.cursor + (t.blink?" (blink)":"") + '</span>',
             '</div>',
-            '<span class="muted small">Sample</span>',
-            '<div class="term-preview" style="background:' + t.bg + ';color:' + t.fg + ';opacity:' + t.opacity + '"><span class="mono">$ git status — clean</span></div>',
+            '<div class="row center gap-xs wrap muted small">',
+              '<span class="chip">copy links: ' + (t.copyLinks?"on":"off") + '</span>',
+              '<span class="chip">CWD: ' + t.cwd + '</span>',
+              '<span class="chip">env: ' + t.env + '</span>',
+              '<span class="chip">retention: ' + t.retention + '</span>',
+            '</div>',
+            '<span class="muted small">ANSI palette · sample</span>',
+            '<div class="ansi-palette">' + ansi + '</div>',
+            '<div class="term-preview" style="background:' + t.bg + ';color:' + t.fg + ';opacity:' + t.opacity + '"><span class="mono">$ git status<span style="color:' + (t.ansi&&t.ansi[2]||'#0a0')+ '"> — clean</span> <span style="color:' + (t.ansi&&t.ansi[4]||'#05f')+'">main</span></span></div>',
           '</div>',
           '<div class="row center gap-xs">',
             '<button class="btn sm">Edit</button>',
@@ -442,7 +505,7 @@
     return M.shell({
       title: "Terminal", icon: "terminal",
       addLabel: "New profile", health: { text: "2 profiles", kind: "ok" },
-      summary: "Profiles, shell, font, palette, opacity, cursor, and transcript retention.",
+      summary: "Profiles, shell, font + fallback, ANSI palette, opacity, cursor, copy-paste, CWD/env, retention.",
       toolbar: [{id:"diagnostics",label:"Diagnostics"}]
     }, '<div class="term-list">' + rows + '</div>');
   };
@@ -565,7 +628,75 @@
     });
     // skill toggle
     root.querySelectorAll('[data-skill-toggle]').forEach(function (btn) {
-      btn.addEventListener("click", function () { this.textContent = this.textContent.trim() === "Disable" ? "Enable" : "Disable"; });
+      btn.addEventListener("click", function () {
+        this.textContent = this.textContent.trim() === "Disable" ? "Enable" : "Disable";
+        var row = this.closest(".skill-row");
+        var dot = row && row.querySelector(".sdot");
+        if (dot) { dot.classList.toggle("ok"); dot.classList.toggle("neutral"); }
+      });
+    });
+    // kind-tabs (A12) — filter the skills list by kind
+    var tabs = root.querySelector("[data-kind-tabs]");
+    if (tabs) {
+      tabs.querySelectorAll("[data-kind-tab]").forEach(function (tab) {
+        tab.addEventListener("click", function () {
+          tabs.querySelectorAll("[data-kind-tab]").forEach(function (t) { t.classList.remove("active"); });
+          this.classList.add("active");
+          var k = this.getAttribute("data-kind-tab");
+          root.querySelectorAll("[data-skill]").forEach(function (row) {
+            row.style.display = (k === "all" || row.getAttribute("data-kind") === k) ? "" : "none";
+          });
+        });
+      });
+    }
+    // command remap/reset
+    root.querySelectorAll('[data-cmd-act="remap"]').forEach(function (btn) {
+      btn.addEventListener("click", function () {
+        var row = this.closest("[data-skill]");
+        PM.toast("Remap shortcut for " + (row && row.querySelector("strong").textContent) + " — simulated");
+      });
+    });
+    root.querySelectorAll('[data-cmd-act="reset"]').forEach(function (btn) {
+      btn.addEventListener("click", function () {
+        var row = this.closest("[data-skill]");
+        PM.toast("Reset " + (row && row.querySelector("strong").textContent) + " to default binding");
+      });
+    });
+    // tool select-for-turn
+    root.querySelectorAll('[data-tool-act="select"]').forEach(function (btn) {
+      btn.addEventListener("click", function () {
+        var isSelect = this.textContent.indexOf("Select") > -1;
+        this.textContent = isSelect ? "Deselect" : "Select for turn";
+        PM.toast(isSelect ? "Tool selected for this turn only" : "Tool deselected");
+      });
+    });
+    // account-overflow menu (A4) — Use first/next, priority, enable, sticky
+    root.querySelectorAll('[data-conn-action="overflow"]').forEach(function (btn) {
+      btn.addEventListener("click", function () {
+        var row = this.closest("[data-conn]");
+        var items = [
+          '<button class="pm-menu-item" data-acc="use-first">Use first</button>',
+          '<button class="pm-menu-item" data-acc="use-next">Use next</button>',
+          '<button class="pm-menu-item" data-acc="priority">Set priority…</button>',
+          '<button class="pm-menu-item" data-acc="sticky">Sticky session</button>',
+          '<div class="pm-menu-sep"></div>',
+          '<button class="pm-menu-item" data-acc="repair">Repair</button>',
+          '<button class="pm-menu-item" data-acc="install">Install / Update</button>',
+          '<button class="pm-menu-item" data-acc="rescan">Rescan</button>',
+          '<button class="pm-menu-item" data-acc="logs">Logs</button>'
+        ].join("");
+        PM.menu(btn, items, function (item) {
+          if (item === "use-first") PM.toast("Use first — affects future requests only; in-flight requests are not migrated");
+          else if (item === "use-next") PM.toast("Use next — queued for the next request");
+          else if (item === "priority") { if (row) { var pb = row.querySelector("[data-priority]"); if (pb) pb.textContent = "P1"; } PM.toast("Priority set to P1"); }
+          else if (item === "sticky") PM.toast("Sticky session enabled for this connection");
+          else PM.toast(item + " — simulated receipt");
+        });
+      });
+    });
+    // free-model setup stepper (A8)
+    root.querySelectorAll('[data-conn-action="setup"]').forEach(function (btn) {
+      btn.addEventListener("click", function () { showSetupStepper(btn); });
     });
     // generic add — simulated result or honest unavailable
     root.querySelectorAll('[data-manager-action="add"]').forEach(function (btn) {
@@ -575,6 +706,29 @@
       });
     });
   };
+
+  /* ---------- free-model setup stepper (A8) ---------- */
+  function showSetupStepper(anchor) {
+    var steps = PM_DEMO.freeModelSetup.steps;
+    var old = document.querySelector("[data-popover].setup-modal"); if (old) old.remove();
+    var stepHTML = steps.map(function (s, i) {
+      var kindChip = { external:"info", info:"info", pm:"accent", warn:"warn" }[s.kind] || "neutral";
+      return '<div class="setup-step" data-step="' + i + '"><span class="chip ' + kindChip + '">' + (i+1) + '</span>' +
+        '<div class="col gap-xs"><strong>' + s.title + '</strong><span class="muted small">' + s.detail + '</span></div></div>';
+    }).join("");
+    var modal = PM.el("div", "setup-modal", { "data-popover":"", role:"dialog", "aria-label":"Free model setup" },
+      '<div class="setup-modal-head"><strong>Set up free model</strong><button class="btn sm ghost icon" data-setup-close>' + PM.svg("close",14) + '</button></div>' +
+      '<div class="muted small" style="margin-bottom:10px">PM-owned instructions. Steps open the underlying provider connection.</div>' +
+      '<div class="setup-steps">' + stepHTML + '</div>' +
+      '<div class="setup-modal-foot"><button class="btn sm ghost" data-setup-close>Cancel</button><button class="btn sm primary" data-setup-done>Mark complete · return to model</button></div>'
+    );
+    document.body.appendChild(modal);
+    modal.querySelector("[data-setup-close]").addEventListener("click", function () { modal.remove(); });
+    modal.querySelector("[data-setup-done]").addEventListener("click", function () {
+      modal.remove();
+      PM.toast("Setup complete · returned to model row");
+    });
+  }
 
   /* ---------- TOAST + MENU (shared overlays) ---------- */
   PM.toast = function (msg) {

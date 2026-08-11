@@ -18,7 +18,9 @@
     activeCat: null,
     activeSub: null,
     activeManager: null,
-    query: ""
+    query: "",
+    settingValues: {},     // B7 settings persistence (id → {value, state})
+    exposure: "standard"   // A2 exposure disclosure level
   };
 
   PM.applyTheme = function (theme) {
@@ -94,7 +96,7 @@
     PM.render && PM.render();
   };
 
-  /* jump to a subcategory element + brief non-flashing focus */
+  /* jump to a subcategory element + brief non-flashing focus (C1: uses smoothJump helper) */
   PM.focusSub = function (subId, opts) {
     opts = opts || {};
     var el = document.querySelector('[data-sub-section="' + subId + '"]');
@@ -102,10 +104,11 @@
     var scroller = PM.scroller();
     if (scroller && opts.jump) {
       var top = el.offsetTop - (PM.jumpOffset ? PM.jumpOffset() : 16);
-      if (PM.state.reducedMotion) scroller.scrollTop = top;
+      if (PM.motion) PM.motion.smoothJump(scroller, top);
+      else if (PM.state.reducedMotion) scroller.scrollTop = top;
       else scroller.scrollTo({ top: top, behavior: "smooth" });
     }
-    // brief non-flashing focus flash
+    // brief non-flashing focus flash (softened to 2-ring settle via C1)
     if (opts.flash) {
       el.querySelectorAll && el.querySelectorAll(".focus-flash").forEach(function (n) { n.classList.remove("focus-flash"); });
       void el.offsetWidth;
@@ -114,31 +117,54 @@
   };
   PM.scroller = function () { return document.querySelector("[data-scroller]"); };
 
-  /* ---------- SCROLLSPY (passive, no oscillation) ---------- */
+  /* ---------- SCROLLSPY (passive, no oscillation; B6 short-content fallback) ---------- */
   /* Uses IntersectionObserver with a rootMargin that favors the top.
-     Concepts call PM.initScrollspy() once their workspace is in the DOM. */
+     Concepts call PM.initScrollspy() once their workspace is in the DOM.
+     B6: if the scroller can't scroll (content shorter than viewport), fall back to
+     picking the section whose center is closest to the viewport center, so the
+     active sub still advances on short categories. */
   PM.initScrollspy = function () {
     var scroller = PM.scroller();
     if (!scroller) return;
     var sections = Array.prototype.slice.call(scroller.querySelectorAll("[data-sub-section]"));
     if (!sections.length) return;
     if (PM._spyObs) { try { PM._spyObs.disconnect(); } catch (e) {} }
-    var rootTop = scroller.getBoundingClientRect().top;
-    var io = new IntersectionObserver(function (entries) {
-      // pick the section whose top is closest to (but past) the activation line
+    if (PM._spyScroll) { try { scroller.removeEventListener("scroll", PM._spyScroll); } catch (e) {} }
+
+    function computeActive() {
+      var rootTop = scroller.getBoundingClientRect().top;
+      var scrollable = scroller.scrollHeight - scroller.clientHeight > 8;
       var best = null, bestDist = Infinity;
-      sections.forEach(function (s) {
-        var r = s.getBoundingClientRect();
-        var dist = Math.abs(r.top - rootTop - 80);
-        if (r.top - rootTop <= 120 && dist < bestDist) { bestDist = dist; best = s.getAttribute("data-sub-section"); }
-      });
+      if (scrollable) {
+        // normal case: last section whose top crossed the activation line
+        sections.forEach(function (s) {
+          var r = s.getBoundingClientRect();
+          var dist = Math.abs(r.top - rootTop - 80);
+          if (r.top - rootTop <= 120 && dist < bestDist) { bestDist = dist; best = s.getAttribute("data-sub-section"); }
+        });
+      } else {
+        // B6 fallback: section whose center is nearest the viewport center
+        var vpCenter = rootTop + scroller.clientHeight / 2;
+        sections.forEach(function (s) {
+          var r = s.getBoundingClientRect();
+          var center = r.top + r.height / 2;
+          var dist = Math.abs(center - vpCenter);
+          if (dist < bestDist) { bestDist = dist; best = s.getAttribute("data-sub-section"); }
+        });
+      }
       if (!best && sections[0]) best = sections[0].getAttribute("data-sub-section");
       if (best && best !== PM.state.activeSub) {
         PM.state.activeSub = best;
         PM.onScrollspy && PM.onScrollspy(best);
       }
-    }, { root: scroller, rootMargin: "-80px 0px -55% 0px", threshold: [0, 0.1, 0.5, 1] });
+    }
+    var io = new IntersectionObserver(function () { computeActive(); },
+      { root: scroller, rootMargin: "-80px 0px -55% 0px", threshold: [0, 0.1, 0.5, 1] });
     sections.forEach(function (s) { io.observe(s); });
+    // B6: also recompute on scroll for short-content + general robustness
+    PM._spyScroll = function () { computeActive(); };
+    scroller.addEventListener("scroll", PM._spyScroll, { passive: true });
+    computeActive();
     PM._spyObs = io;
   };
 

@@ -97,14 +97,16 @@
     <div style="position:fixed;top:8px;right:12px;z-index:99;padding:3px 9px;border:1px solid #6fc6e8;color:#6fc6e8;border-radius:999px;font:bold 10px sans-serif">GLM-5.2</div>
   </noscript>
   <a data-concept-model="GLM-5.2" href="index.html" title="GLM-5.2 settings concept"
-     style="position:fixed;bottom:36px;right:12px;z-index:50;display:inline-flex;align-items:center;gap:5px;padding:3px 9px;border:1px solid var(--accent-line,#6fc6e8);background:var(--accent-soft,rgba(111,198,232,.14));color:var(--accent,#6fc6e8);border-radius:999px;font:bold 10px sans-serif;text-decoration:none">GLM-5.2 · 03</a>
+     style="position:fixed;bottom:var(--footer-h,30px);right:12px;z-index:40;display:inline-flex;align-items:center;gap:5px;padding:2px 8px;border:1px solid var(--accent-line,#6fc6e8);background:var(--accent-soft,rgba(111,198,232,.14));color:var(--accent,#6fc6e8);border-radius:999px;font:bold 9px sans-serif;text-decoration:none;opacity:.85">GLM-5.2 · 03</a>
 
   <script src="assets/icons.svg.js"></script>
   <script src="assets/demo-data.js"></script>
   <script src="concept-hub-bridge.js"></script>
   <script src="assets/state.js"></script>
+  <script src="assets/motion.js"></script>
   <script src="assets/shared.js"></script>
   <script src="assets/managers.js"></script>
+  <script src="assets/spellcheck.js"></script>
   <script>
     (function () {
       "use strict";
@@ -177,6 +179,7 @@
                 '<div class="st-eyebrow">Concept 03 · Stack · GLM-5.2</div>',
                 '<h1 class="st-h1">Settings as <span class="st-thesis">one expanding surface.</span></h1>',
                 '<div class="st-searchrow">',
+                  '<button class="btn sm ghost" data-collapse-all title="Collapse and return to stack top">' + PM.svg("home",14) + 'Home</button>',
                   '<div class="st-search"><span class="muted">' + PM.svg("search",16) + '</span><input type="search" placeholder="Search settings…" data-search-input aria-label="Search settings"><span class="muted small">⌘K</span></div>',
                   '<button class="btn sm" data-expand-all>Browse</button>',
                 '</div>',
@@ -200,7 +203,7 @@
       }
 
       function expandedBody(cat) {
-        // subnav + continuous document of all subcategories
+        // subnav + exposure control + continuous document of all subcategories
         var subnav = cat.sub.map(function (s) {
           return '<button class="st-subnav-item' + (s.id===PM.state.activeSub?" active":"") + '" data-subnav="' + s.id + '">' + s.title + '</button>';
         }).join("");
@@ -209,7 +212,8 @@
           var managerNote = s.manager ? '<a data-sub-manager="' + s.manager + '" style="float:right;font-size:11px">Open ' + PM.managers[s.manager].title + ' ' + PM.svg("external",11) + '</a>' : "";
           return '<section class="st-sub-section" data-sub-section="' + s.id + '"><h4>' + s.title + managerNote + '</h4><div class="set-list">' + body + '</div></section>';
         }).join("");
-        return '<div class="st-subnav">' + subnav + '</div>' + doc;
+        return '<div class="st-subnav"><div style="display:flex;align-items:center;gap:8px;flex-wrap:wrap"><span class="muted small">Sections:</span>' + subnav + '<span class="grow"></span>' + PM.shared.exposureControl() + '</div></div>' + doc +
+          PM.shared.proseField("Notes for this area", "I definately want to recieve seperate reports on this cuz the occured issue is thru the roof.");
       }
 
       function wireHome() {
@@ -255,8 +259,18 @@
               var catObj = PM.catById(cat);
               PM.state.activeSub = catObj.sub[0].id;
               // render the body
-              item.querySelector(".st-item-body-inner").innerHTML = expandedBody(catObj);
+              var bodyInner = item.querySelector(".st-item-body-inner");
+              bodyInner.innerHTML = expandedBody(catObj);
               item.classList.add("expanded"); this.setAttribute("aria-expanded","true");
+              // C2 motion: push/pop depth — FLIP grow the item, then stagger content
+              var body = item.querySelector(".st-item-body");
+              PM.motion && PM.motion.staggerIn(bodyInner, ".st-subnav-item, .set-row, .mgr-promo", { step: 24, duration: 280, delay: 60 });
+              // wire the newly-rendered body (B1 fix: settings + exposure + prose + subnav/sub-manager)
+              PM.shared.wireSettings(bodyInner);
+              PM.shared.wireExposureControl(item);
+              PM.shared.applyExposure(item);
+              PM.shared.wireProseFields(bodyInner);
+              wireBody(bodyInner);
               PM.initScrollspy();
               setTimeout(function(){ PM.initScrollspy(); PM.focusSub(PM.state.activeSub,{flash:true}); }, 80);
             }
@@ -281,8 +295,23 @@
           var first = document.querySelector("[data-item-toggle]");
           if (first) first.click();
         });
+        // D4: Home button collapses all expanded items
+        var collapseBtn = document.querySelector("[data-collapse-all]");
+        if (collapseBtn) collapseBtn.addEventListener("click", function () {
+          document.querySelectorAll(".st-item.expanded").forEach(function (o) {
+            o.classList.remove("expanded");
+            o.querySelector("[data-item-toggle]").setAttribute("aria-expanded","false");
+          });
+          PM.state.expanded = null; PM.state.view = "home";
+          var scroller = document.querySelector("[data-scroller]");
+          if (scroller) PM.motion.smoothJump(scroller, 0);
+          var crumb = document.querySelector("[data-crumb]"); if (crumb) crumb.innerHTML = "Settings";
+        });
         PM.shared.wireSettings(document.querySelector(".st-stack"));
         PM.shared.wireThemePicker();
+        // search results stagger (C2 motion moment #2)
+        var resInner2 = document.querySelector(".st-results-inner");
+        PM.shared.wireProseFields(document.querySelector(".st-stack"));
         PM.onScrollspy = function (subId) {
           document.querySelectorAll("[data-subnav]").forEach(function (b) {
             b.classList.toggle("active", b.getAttribute("data-subnav") === subId);
@@ -296,17 +325,33 @@
         var dest = PM_DEMO.destinations.find(function (d) { return d.target.indexOf(m.managerCat) === 0; });
         var itemEl = dest ? document.querySelector('[data-item="' + dest.id + '"]') : null;
         if (!itemEl) return;
-        // ensure expanded
-        if (PM.state.expanded !== dest.id) { itemEl.querySelector("[data-item-toggle]").click(); }
+        // B1 fix: expand directly WITHOUT toggling (the old .click() could collapse if already expanded)
+        if (PM.state.expanded !== dest.id) {
+          PM.state.expanded = dest.id; PM.state.view = "workspace"; PM.state.activeCat = m.managerCat;
+          var catObj = PM.catById(m.managerCat);
+          PM.state.activeSub = catObj.sub[0].id;
+          var toggleBtn = itemEl.querySelector("[data-item-toggle]");
+          toggleBtn.setAttribute("aria-expanded","true");
+          itemEl.classList.add("expanded");
+        }
         var body = itemEl.querySelector(".st-item-body-inner");
-        body.innerHTML = '<div class="st-item-manager" data-manager-id="' + m.id + '"><div class="st-backbar" style="display:flex;gap:10px;align-items:center;padding:8px 0"><button class="btn sm ghost" data-back-to-area>' + PM.svg("back",13) + 'Back to ' + PM.catById(m.managerCat).title + '</button><span class="muted small">' + m.title + '</span></div><div style="overflow:auto;max-height:60vh">' + PM.managers_lib.render(m.id) + '</div></div>';
-        PM.managers_lib.wire(body.querySelector(".mgr"));
-        body.querySelector("[data-back-to-area]").addEventListener("click", function () {
-          var cat = PM.catById(m.managerCat);
-          body.innerHTML = expandedBody(cat);
-          PM.shared.wireSettings(body);
-          PM.initScrollspy(); setTimeout(function(){ PM.initScrollspy(); }, 60);
-          wireBody(body);
+        // C2 motion: cross-fade the inline manager in (push/pop depth)
+        PM.motion.crossFade(body, function () {
+          body.innerHTML = '<div class="st-item-manager" data-manager-id="' + m.id + '"><div class="st-backbar" style="display:flex;gap:10px;align-items:center;padding:8px 0"><button class="btn sm ghost" data-back-to-area>' + PM.svg("back",13) + 'Back to ' + PM.catById(m.managerCat).title + '</button><span class="muted small">' + m.title + '</span></div><div style="overflow:auto;max-height:60vh">' + PM.managers_lib.render(m.id) + '</div></div>';
+          PM.managers_lib.wire(body.querySelector(".mgr"));
+          body.querySelector("[data-back-to-area]").addEventListener("click", function () {
+            var cat = PM.catById(m.managerCat);
+            // B1 fix: restore the expanded body AND re-wire settings + body + exposure + prose
+            PM.motion.crossFade(body, function () {
+              body.innerHTML = expandedBody(cat);
+              PM.shared.wireSettings(body);
+              PM.shared.wireExposureControl(itemEl);
+              PM.shared.applyExposure(itemEl);
+              PM.shared.wireProseFields(body);
+              wireBody(body);
+              PM.initScrollspy(); setTimeout(function(){ PM.initScrollspy(); }, 60);
+            });
+          });
         });
       }
 
@@ -327,6 +372,7 @@
 
       PM.render = render;
       PM.init();
+      PM.motion.install();
       shell();
       render();
     })();
