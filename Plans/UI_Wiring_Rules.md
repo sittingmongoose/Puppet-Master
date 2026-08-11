@@ -89,7 +89,7 @@ acceptance_criteria:
   - Product layout, command catalog membership, runtime event schemas, storage projections, and evidence schemas remain with their owner docs.
 validation_surfaces:
   - python3 scripts/pm-plans-verify.py lint-contractrefs
-  - python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-001-standardize-plans
+  - python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits
 risk_class: owner_drift
 reasoning_tier: standard
 context_scope: ui_wiring
