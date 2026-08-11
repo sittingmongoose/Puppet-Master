@@ -14,6 +14,45 @@ from datetime import datetime, timezone
 from pathlib import Path
 from typing import Any
 
+try:
+    from pm_pnc019_currentness import (
+        EVENT_FAMILY_BULK_REGISTRATION_ALLOWED,
+        EVENT_FAMILY_DENOMINATOR_STATUS,
+        EVENT_FAMILY_EVIDENCE_CURRENTNESS,
+        EVENT_FAMILY_EVIDENCE_REFS,
+        EVENT_FAMILY_EVIDENCE_REGISTERED_ROWS,
+        EVENT_FAMILY_EXCLUDED_COUNT,
+        EVENT_FAMILY_PROVEN_PERSISTED_FLOOR,
+        EVENT_FAMILY_PROVEN_UNREGISTERED_FLOOR,
+        EVENT_FAMILY_REGISTRY_KERNEL_ROW_COUNT,
+        EVENT_FAMILY_REGISTRY_SCHEMA_ID,
+        EVENT_FAMILY_REGISTRY_SCHEMA_VERSION,
+        EVENT_FAMILY_UNRESOLVED_FLOOR,
+        REQUIRED_PNC019_SOURCE_HASH_PATHS,
+        pnc019_event_authority_clearance_failures,
+        pnc019_event_authority_failures_for_registry,
+        pnc019_source_hash_failures,
+    )
+except ModuleNotFoundError:  # Support importlib-based unit tests from the repo root.
+    from scripts.pm_pnc019_currentness import (
+        EVENT_FAMILY_BULK_REGISTRATION_ALLOWED,
+        EVENT_FAMILY_DENOMINATOR_STATUS,
+        EVENT_FAMILY_EVIDENCE_CURRENTNESS,
+        EVENT_FAMILY_EVIDENCE_REFS,
+        EVENT_FAMILY_EVIDENCE_REGISTERED_ROWS,
+        EVENT_FAMILY_EXCLUDED_COUNT,
+        EVENT_FAMILY_PROVEN_PERSISTED_FLOOR,
+        EVENT_FAMILY_PROVEN_UNREGISTERED_FLOOR,
+        EVENT_FAMILY_REGISTRY_KERNEL_ROW_COUNT,
+        EVENT_FAMILY_REGISTRY_SCHEMA_ID,
+        EVENT_FAMILY_REGISTRY_SCHEMA_VERSION,
+        EVENT_FAMILY_UNRESOLVED_FLOOR,
+        REQUIRED_PNC019_SOURCE_HASH_PATHS,
+        pnc019_event_authority_clearance_failures,
+        pnc019_event_authority_failures_for_registry,
+        pnc019_source_hash_failures,
+    )
+
 
 ROOT = Path(__file__).resolve().parents[1]
 PLANS = ROOT / "Plans"
@@ -26,6 +65,7 @@ CLOSURE_EVIDENCE_SCHEMA_PATH = READINESS_DIR / "non_executable_closure_evidence.
 PNC019_CERTIFICATION_RECEIPT_PATH = READINESS_DIR / "pnc019_certification_receipt.json"
 PNC019_CERTIFICATION_RECEIPT_SCHEMA_PATH = READINESS_DIR / "pnc019_certification_receipt.schema.json"
 PNC019_CERTIFICATION_HARNESS_PATH = ROOT / "scripts/pm-pnc019-certification-harness.py"
+PNC019_CURRENTNESS_HELPER_PATH = ROOT / "scripts/pm_pnc019_currentness.py"
 NODE_READINESS_PATH = PLANS / ".plan_index/node_readiness_report.json"
 PLAN_UNITS_INDEX_PATH = PLANS / ".plan_index/plan_units.jsonl"
 DEPENDENCIES_INDEX_PATH = PLANS / ".plan_index/dependencies.json"
@@ -137,25 +177,6 @@ REQUIRED_PNC019_STORAGE_FAMILIES = [
     "event_record_index",
     "blocked_projection",
     "goal_receipt",
-]
-REQUIRED_PNC019_SOURCE_HASH_PATHS = [
-    "Plans/event_record.schema.json",
-    "Plans/event_family_registry.json",
-    "Plans/execution_unit_context.schema.json",
-    "Plans/storage_recovery_contracts.schema.json",
-    "Plans/storage_value_registry.schema.json",
-    "Plans/storage_value_registry.json",
-    "Plans/Plan_To_Node_Compilation.md",
-    "Plans/Planning_Wizard.md",
-    "Plans/Executor_Protocol.md",
-    "Plans/Goal_Runtime_System.md",
-    "Plans/Orchestrator_Page.md",
-    "Plans/Automated_Testing_System.md",
-    "Plans/UI_Command_Catalog.md",
-    "Plans/Wiring_Matrix.production.json",
-    "Plans/UI_Wiring_Rules.md",
-    "Plans/Progression_Gates.md",
-    "scripts/pm-pnc019-certification-harness.py",
 ]
 REQUIRED_PLANCOMPILE_ARTIFACT_KINDS = [
     "approved_plan_pack",
@@ -438,35 +459,9 @@ EVENT_RECORD_SPEC_LOCK_PATHS = [
 ]
 EVENT_FAMILY_REGISTRY_PATH = PLANS / "event_family_registry.json"
 EVENT_FAMILY_REGISTRY_SCHEMA_PATH = PLANS / "event_family_registry.schema.json"
-EVENT_FAMILY_REGISTRY_SCHEMA_ID = "pm.event_family_registry.v1"
-EVENT_FAMILY_REGISTRY_SCHEMA_VERSION = "2.0.0"
 EVENT_FAMILY_REGISTRY_SCHEMA_URI = (
     "https://puppetmaster.local/schemas/event_family_registry/1.0.0/event_family_registry.schema.json"
 )
-EVENT_FAMILY_REGISTRY_KERNEL_ROW_COUNT = 39
-EVENT_FAMILY_EVIDENCE_REGISTERED_ROWS = 37
-EVENT_FAMILY_PROVEN_PERSISTED_FLOOR = 285
-EVENT_FAMILY_PROVEN_UNREGISTERED_FLOOR = 248
-EVENT_FAMILY_UNRESOLVED_FLOOR = 40
-EVENT_FAMILY_EXCLUDED_COUNT = 68
-EVENT_FAMILY_DENOMINATOR_STATUS = "UNKNOWN_OPEN"
-EVENT_FAMILY_BULK_REGISTRATION_ALLOWED = False
-EVENT_FAMILY_EVIDENCE_CURRENTNESS = "source_dated_lower_bound_pending_fresh_reconciliation"
-EVENT_FAMILY_EVIDENCE_REFS = [
-    {
-        "artifact_id": "EA-27_PRODUCER_UNION_AND_DENOMINATOR.json",
-        "custody_root": "PuppetMaster-AssuranceLab",
-        "custody_path": "orchestration-2026-07-17/phase3/event-authority/EA-27_PRODUCER_UNION_AND_DENOMINATOR.json",
-        "sha256": "644c6d0bc913eaed62f41e231fdb7e04f55d270549fcdede73a0869994111e47",
-        "union_rows_sha256": "aa9c365904788eba74df73bb1b5eecaae903a6aa167e0514b7937198aa0dbf4d",
-    },
-    {
-        "artifact_id": "EA-29_TERMINAL_FINDINGS_RESIDUALS_CONTRACT_DEPTH_REPAIR_AND_WAVE1_CHECKPOINT.md",
-        "custody_root": "PuppetMaster-AssuranceLab",
-        "custody_path": "orchestration-2026-07-17/phase3/event-authority/EA-29_TERMINAL_FINDINGS_RESIDUALS_CONTRACT_DEPTH_REPAIR_AND_WAVE1_CHECKPOINT.md",
-        "sha256": "17820aef1b498acf2e5165bee106171ff1ef35a1b23fa67d0cc23e291a8ed7bf",
-    },
-]
 EVENT_FAMILY_GOAL_OWNER_SCHEMA_PATH = PLANS / "goal_runtime_events.schema.json"
 EVENT_FAMILY_GOAL_PAYLOAD_SCHEMA_REFS = {
     "goal.created": "Plans/event_payloads/goal_runtime/goal_created.schema.json",
@@ -2834,23 +2829,11 @@ def event_family_registry_data_failures(
         failures.append({"path": rel(EVENT_FAMILY_GOAL_OWNER_SCHEMA_PATH), "error": "event_family_goal_schema_unavailable", "detail": str(exc)})
 
     if include_residuals:
-        failures.append(
-            {
-                "path": path_label,
-                "error": "event_denominator_unresolved",
-                "registered_kernel_rows": len(families),
-                "evidence_registered_rows": EVENT_FAMILY_EVIDENCE_REGISTERED_ROWS,
-                "proven_persisted_floor": EVENT_FAMILY_PROVEN_PERSISTED_FLOOR,
-                "proven_unregistered_floor": EVENT_FAMILY_PROVEN_UNREGISTERED_FLOOR,
-                "unresolved_floor": EVENT_FAMILY_UNRESOLVED_FLOOR,
-                "excluded_count": EVENT_FAMILY_EXCLUDED_COUNT,
-                "denominator_status": EVENT_FAMILY_DENOMINATOR_STATUS,
-                "bulk_registration_allowed": EVENT_FAMILY_BULK_REGISTRATION_ALLOWED,
-                "evidence_currentness": EVENT_FAMILY_EVIDENCE_CURRENTNESS,
-                "evidence_refs": EVENT_FAMILY_EVIDENCE_REFS,
-                "corpus_complete": False,
-                "disposition": "unknown_or_unregistered_event_types_quarantine_without_checkpoint_advance",
-            }
+        failures.extend(
+            pnc019_event_authority_failures_for_registry(
+                registry,
+                path_label=path_label,
+            )
         )
     return failures
 
@@ -4502,6 +4485,7 @@ def case_l_command_data_failures(
 def pnc019_case_l_preflight_source_failures() -> list[dict[str, Any]]:
     try:
         text = PNC019_CERTIFICATION_HARNESS_PATH.read_text(encoding="utf-8")
+        helper_text = PNC019_CURRENTNESS_HELPER_PATH.read_text(encoding="utf-8")
     except Exception as exc:  # noqa: BLE001
         return [{"path": rel(PNC019_CERTIFICATION_HARNESS_PATH), "error": "pnc019_case_l_preflight_source_unavailable", "detail": str(exc)}]
     failures: list[dict[str, Any]] = []
@@ -4514,6 +4498,11 @@ def pnc019_case_l_preflight_source_failures() -> list[dict[str, Any]]:
     cmd_body = text[end:cmd_end]
     for marker in (
         "validate-case-l-non-event-materialization",
+        "pnc019_event_authority_clearance_failures(ROOT)",
+    ):
+        if marker not in preflight_body:
+            failures.append({"path": rel(PNC019_CERTIFICATION_HARNESS_PATH), "error": "pnc019_case_l_preflight_marker_missing", "marker": marker})
+    for marker in (
         "event_denominator_unresolved",
         "event_family_contract_depth_unresolved",
         "proven_persisted_floor",
@@ -4523,15 +4512,18 @@ def pnc019_case_l_preflight_source_failures() -> list[dict[str, Any]]:
         "evidence_currentness",
         "evidence_refs",
     ):
-        if marker not in preflight_body:
-            failures.append({"path": rel(PNC019_CERTIFICATION_HARNESS_PATH), "error": "pnc019_case_l_preflight_marker_missing", "marker": marker})
+        if marker not in helper_text:
+            failures.append({"path": rel(PNC019_CURRENTNESS_HELPER_PATH), "error": "pnc019_case_l_preflight_marker_missing", "marker": marker})
     for marker in (
         "644c6d0bc913eaed62f41e231fdb7e04f55d270549fcdede73a0869994111e47",
         "aa9c365904788eba74df73bb1b5eecaae903a6aa167e0514b7937198aa0dbf4d",
         "17820aef1b498acf2e5165bee106171ff1ef35a1b23fa67d0cc23e291a8ed7bf",
+        "scripts/pm_pnc019_currentness.py",
     ):
-        if marker not in text:
-            failures.append({"path": rel(PNC019_CERTIFICATION_HARNESS_PATH), "error": "pnc019_event_authority_evidence_marker_missing", "marker": marker})
+        if marker not in helper_text:
+            failures.append({"path": rel(PNC019_CURRENTNESS_HELPER_PATH), "error": "pnc019_event_authority_evidence_marker_missing", "marker": marker})
+    if "REQUIRED_PNC019_SOURCE_HASH_PATHS" not in text:
+        failures.append({"path": rel(PNC019_CERTIFICATION_HARNESS_PATH), "error": "pnc019_shared_source_hash_contract_not_consumed"})
     preflight_call = cmd_body.find("certification_preflight_failures()")
     receipt_build = cmd_body.find("CertificationHarness().receipt()")
     receipt_write = cmd_body.find("write_json(")
@@ -5043,8 +5035,10 @@ def case_l_verification_self_test_checks() -> dict[str, bool]:
         == "unknown_or_unregistered_event_types_quarantine_without_checkpoint_advance"
         for failure in residual_failures
     )
-    checks["event_contract_depth_static_closure_complete"] = not any(
+    checks["event_contract_depth_residual_remains_fail_closed"] = any(
         failure.get("error") == "event_family_contract_depth_unresolved"
+        and failure.get("registered_kernel_rows") == 39
+        and failure.get("contract_depth_complete") is False
         for failure in residual_failures
     )
     missing_event_row = clone(event_registry)
@@ -6441,26 +6435,19 @@ def pnc019_certification_receipt_failures() -> list[dict[str, Any]]:
         if family_id not in validated_family_ids:
             failures.append({"path": path_label, "error": "pnc019_storage_family_not_validated", "family_id": family_id})
 
-    source_hashes = receipt.get("source_hashes", {})
-    if not isinstance(source_hashes, dict):
-        failures.append({"path": path_label, "error": "pnc019_source_hashes_missing_or_invalid"})
-        source_hashes = {}
-    for path in REQUIRED_PNC019_SOURCE_HASH_PATHS:
-        target = ROOT / path
-        if not target.exists():
-            failures.append({"path": path_label, "error": "pnc019_source_hash_path_missing", "source_path": path})
-            continue
-        expected = sha256_file(target)
-        if source_hashes.get(path) != expected:
-            failures.append(
-                {
-                    "path": path_label,
-                    "error": "pnc019_source_hash_stale",
-                    "source_path": path,
-                    "expected": expected,
-                    "actual": source_hashes.get(path),
-                }
-            )
+    failures.extend(
+        pnc019_source_hash_failures(
+            ROOT,
+            receipt.get("source_hashes"),
+            path_label=path_label,
+        )
+    )
+    failures.extend(
+        pnc019_event_authority_clearance_failures(
+            ROOT,
+            path_label=rel(EVENT_FAMILY_REGISTRY_PATH),
+        )
+    )
     failures.extend(pnc019_ref_failures(receipt.get("evidence_refs"), path_label=path_label, field="evidence_refs"))
     return failures
 

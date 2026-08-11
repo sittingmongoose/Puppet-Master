@@ -21,6 +21,19 @@ from typing import Any
 
 import yaml
 
+try:
+    from pm_pnc019_currentness import (
+        REQUIRED_PNC019_SOURCE_HASH_PATHS,
+        pnc019_event_authority_clearance_failures,
+        pnc019_source_hash_failures,
+    )
+except ModuleNotFoundError:  # Support importlib-based unit tests from the repo root.
+    from scripts.pm_pnc019_currentness import (
+        REQUIRED_PNC019_SOURCE_HASH_PATHS,
+        pnc019_event_authority_clearance_failures,
+        pnc019_source_hash_failures,
+    )
+
 
 ROOT = Path(__file__).resolve().parents[1]
 PLANS = ROOT / "Plans"
@@ -112,22 +125,6 @@ REQUIRED_PNC019_ORDINARY_ZERO_FIELDS = [
     "runtime_launches",
     "production_build_tasks",
 ]
-REQUIRED_PNC019_SOURCE_HASH_PATHS = [
-    "Plans/event_record.schema.json",
-    "Plans/execution_unit_context.schema.json",
-    "Plans/storage_value_registry.schema.json",
-    "Plans/storage_value_registry.json",
-    "Plans/Plan_To_Node_Compilation.md",
-    "Plans/Planning_Wizard.md",
-    "Plans/Executor_Protocol.md",
-    "Plans/Goal_Runtime_System.md",
-    "Plans/Orchestrator_Page.md",
-    "Plans/Automated_Testing_System.md",
-    "Plans/Progression_Gates.md",
-    "scripts/pm-pnc019-certification-harness.py",
-]
-
-
 @dataclass(frozen=True)
 class CachedPlanDoc:
     path: Path
@@ -241,11 +238,13 @@ def pnc019_certification_status() -> dict[str, Any]:
         if not isinstance(ordinary_counts, dict) or ordinary_counts.get(field) != 0:
             failures.append({"error": "pnc019_ordinary_product_artifact_count_nonzero", "field": field})
 
-    source_hashes = receipt.get("source_hashes", {})
-    for path in REQUIRED_PNC019_SOURCE_HASH_PATHS:
-        target = ROOT / path
-        if not target.exists() or not isinstance(source_hashes, dict) or source_hashes.get(path) != sha256_file(target):
-            failures.append({"error": "pnc019_source_hash_stale_or_missing", "source_path": path})
+    failures.extend(
+        pnc019_source_hash_failures(
+            ROOT,
+            receipt.get("source_hashes"),
+        )
+    )
+    failures.extend(pnc019_event_authority_clearance_failures(ROOT, path_label=None))
 
     return {
         "complete": not failures,

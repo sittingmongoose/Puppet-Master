@@ -20,6 +20,17 @@ import sys
 from pathlib import Path
 from typing import Any
 
+try:
+    from pm_pnc019_currentness import (
+        REQUIRED_PNC019_SOURCE_HASH_PATHS,
+        pnc019_event_authority_clearance_failures,
+    )
+except ModuleNotFoundError:  # Support importlib-based unit tests from the repo root.
+    from scripts.pm_pnc019_currentness import (
+        REQUIRED_PNC019_SOURCE_HASH_PATHS,
+        pnc019_event_authority_clearance_failures,
+    )
+
 
 ROOT = Path(__file__).resolve().parents[1]
 PLANS = ROOT / "Plans"
@@ -42,30 +53,6 @@ EVENT_RECORD_INDEX_SCHEMA_ID = "pm.storage_value.event_record_index.v2"
 EVENT_RECORD_INDEX_SCHEMA_VERSION = "2.0.0"
 EVENT_RECORD_INDEX_FIXTURE_SEGMENT_GENERATION = 1
 EVENT_RECORD_INDEX_FIXTURE_RECOVERY_EPOCH = 0
-EVENT_FAMILY_EVIDENCE_REGISTERED_ROWS = 37
-EVENT_FAMILY_PROVEN_PERSISTED_FLOOR = 285
-EVENT_FAMILY_REGISTERED_KERNEL_ROWS = 39
-EVENT_FAMILY_PROVEN_UNREGISTERED_FLOOR = 248
-EVENT_FAMILY_UNRESOLVED_FLOOR = 40
-EVENT_FAMILY_EXCLUDED_COUNT = 68
-EVENT_FAMILY_DENOMINATOR_STATUS = "UNKNOWN_OPEN"
-EVENT_FAMILY_BULK_REGISTRATION_ALLOWED = False
-EVENT_FAMILY_EVIDENCE_CURRENTNESS = "source_dated_lower_bound_pending_fresh_reconciliation"
-EVENT_FAMILY_EVIDENCE_REFS = [
-    {
-        "artifact_id": "EA-27_PRODUCER_UNION_AND_DENOMINATOR.json",
-        "custody_root": "PuppetMaster-AssuranceLab",
-        "custody_path": "orchestration-2026-07-17/phase3/event-authority/EA-27_PRODUCER_UNION_AND_DENOMINATOR.json",
-        "sha256": "644c6d0bc913eaed62f41e231fdb7e04f55d270549fcdede73a0869994111e47",
-        "union_rows_sha256": "aa9c365904788eba74df73bb1b5eecaae903a6aa167e0514b7937198aa0dbf4d",
-    },
-    {
-        "artifact_id": "EA-29_TERMINAL_FINDINGS_RESIDUALS_CONTRACT_DEPTH_REPAIR_AND_WAVE1_CHECKPOINT.md",
-        "custody_root": "PuppetMaster-AssuranceLab",
-        "custody_path": "orchestration-2026-07-17/phase3/event-authority/EA-29_TERMINAL_FINDINGS_RESIDUALS_CONTRACT_DEPTH_REPAIR_AND_WAVE1_CHECKPOINT.md",
-        "sha256": "17820aef1b498acf2e5165bee106171ff1ef35a1b23fa67d0cc23e291a8ed7bf",
-    },
-]
 
 REQUIRED_POSITIVE_CASE_IDS = [
     "fresh_run",
@@ -1381,25 +1368,6 @@ class CertificationHarness:
         positives = self.positive_cases()
         negatives = self.negative_cases()
         lifecycle_trace = positives[0]["trace"]
-        source_hash_paths = [
-            "Plans/event_record.schema.json",
-            "Plans/event_family_registry.json",
-            "Plans/execution_unit_context.schema.json",
-            "Plans/storage_recovery_contracts.schema.json",
-            "Plans/storage_value_registry.schema.json",
-            "Plans/storage_value_registry.json",
-            "Plans/Plan_To_Node_Compilation.md",
-            "Plans/Planning_Wizard.md",
-            "Plans/Executor_Protocol.md",
-            "Plans/Goal_Runtime_System.md",
-            "Plans/Orchestrator_Page.md",
-            "Plans/Automated_Testing_System.md",
-            "Plans/UI_Command_Catalog.md",
-            "Plans/Wiring_Matrix.production.json",
-            "Plans/UI_Wiring_Rules.md",
-            "Plans/Progression_Gates.md",
-            "scripts/pm-pnc019-certification-harness.py",
-        ]
         receipt = {
             "schema_id": "pm.implementation_readiness.pnc019_certification_receipt.v1",
             "schema_version": "1.0.0",
@@ -1465,7 +1433,10 @@ class CertificationHarness:
                 "validations": self.storage_validations,
             },
             "event_record_count": len(self.events),
-            "source_hashes": {path: sha256_file(ROOT / path) for path in source_hash_paths},
+            "source_hashes": {
+                path: sha256_file(ROOT / path)
+                for path in REQUIRED_PNC019_SOURCE_HASH_PATHS
+            },
             "evidence_refs": [
                 "Plans/Plan_To_Node_Compilation.md#PNC-019",
                 "Plans/Plan_To_Node_Compilation.md#PNC-022",
@@ -1542,61 +1513,7 @@ def certification_preflight_failures() -> list[dict[str, Any]]:
             }
         )
 
-    try:
-        registry = read_json(PLANS / "event_family_registry.json")
-        registered_rows = len(registry.get("families", [])) if isinstance(registry.get("families"), list) else -1
-    except Exception as exc:  # noqa: BLE001
-        failures.append({"error": "event_family_registry_unavailable", "detail": str(exc)})
-        registered_rows = -1
-    if registered_rows == EVENT_FAMILY_REGISTERED_KERNEL_ROWS:
-        failures.append(
-            {
-                "error": "event_denominator_unresolved",
-                "registered_kernel_rows": registered_rows,
-                "evidence_registered_rows": EVENT_FAMILY_EVIDENCE_REGISTERED_ROWS,
-                "proven_persisted_floor": EVENT_FAMILY_PROVEN_PERSISTED_FLOOR,
-                "proven_unregistered_floor": EVENT_FAMILY_PROVEN_UNREGISTERED_FLOOR,
-                "unresolved_floor": EVENT_FAMILY_UNRESOLVED_FLOOR,
-                "excluded_count": EVENT_FAMILY_EXCLUDED_COUNT,
-                "denominator_status": EVENT_FAMILY_DENOMINATOR_STATUS,
-                "bulk_registration_allowed": EVENT_FAMILY_BULK_REGISTRATION_ALLOWED,
-                "evidence_currentness": EVENT_FAMILY_EVIDENCE_CURRENTNESS,
-                "evidence_refs": EVENT_FAMILY_EVIDENCE_REFS,
-                "complete_denominator_known": False,
-            }
-        )
-        failures.append(
-            {
-                "error": "event_family_contract_depth_unresolved",
-                "registered_kernel_rows": registered_rows,
-                "evidence_registered_rows": EVENT_FAMILY_EVIDENCE_REGISTERED_ROWS,
-                "proven_unregistered_floor": EVENT_FAMILY_PROVEN_UNREGISTERED_FLOOR,
-                "unresolved_floor": EVENT_FAMILY_UNRESOLVED_FLOOR,
-                "bulk_registration_allowed": EVENT_FAMILY_BULK_REGISTRATION_ALLOWED,
-                "evidence_refs": EVENT_FAMILY_EVIDENCE_REFS,
-                "contract_depth_complete": False,
-            }
-        )
-    else:
-        # A changed registry cannot silently clear this checkpoint. A later approved
-        # producer-owner repair must update the readiness verifier and this preflight
-        # with its new, independently verified denominator/depth evidence.
-        failures.append(
-            {
-                "error": "event_authority_checkpoint_changed_requires_fresh_approval",
-                "expected_registered_kernel_rows": EVENT_FAMILY_REGISTERED_KERNEL_ROWS,
-                "actual_registered_rows": registered_rows,
-                "evidence_registered_rows": EVENT_FAMILY_EVIDENCE_REGISTERED_ROWS,
-                "proven_persisted_floor": EVENT_FAMILY_PROVEN_PERSISTED_FLOOR,
-                "proven_unregistered_floor": EVENT_FAMILY_PROVEN_UNREGISTERED_FLOOR,
-                "unresolved_floor": EVENT_FAMILY_UNRESOLVED_FLOOR,
-                "excluded_count": EVENT_FAMILY_EXCLUDED_COUNT,
-                "denominator_status": EVENT_FAMILY_DENOMINATOR_STATUS,
-                "bulk_registration_allowed": EVENT_FAMILY_BULK_REGISTRATION_ALLOWED,
-                "evidence_currentness": EVENT_FAMILY_EVIDENCE_CURRENTNESS,
-                "evidence_refs": EVENT_FAMILY_EVIDENCE_REFS,
-            }
-        )
+    failures.extend(pnc019_event_authority_clearance_failures(ROOT))
     return failures
 
 
