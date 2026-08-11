@@ -7803,11 +7803,11 @@
   "schema_id": "pm.solicon.manifest.v1",
   "schema_version": "1.0.0",
   "source": {
-    "generated_scope": "Concepts/Solicon/** only",
+    "generated_scope": "Concepts/Icon-Concepts/Solicon/** only",
     "pmconcept7": {
-      "bytes": 3264190,
-      "path": "../PMConcept7.html",
-      "sha256": "87efd896d9cd8d98bbb3327ef82654d42618f8d5f868d119f30dd0d0941ab2c8",
+      "bytes": 3424764,
+      "path": "../../PMConcept7.html",
+      "sha256": "91665182b3db3c7ce53018f4ea12e82fc6c65c0abc8b9c0e5c72869d887f21db",
       "theme_ids": [
         "friendly-dark",
         "friendly-light",
@@ -7824,7 +7824,7 @@
       "bytes": 4672,
       "copied_path": "source/Pm-placeholder-3-original.svg",
       "copy_byte_identical": true,
-      "original_path": "/Users/jaredsmacbookair/Downloads/Pm placeholder 3.svg",
+      "original_path": "source/Pm-placeholder-3-original.svg",
       "sha256": "c73265aa00eb4481f6afadb5c815a1c2a2141a127fb44d52cd2871511e8c4211"
     }
   },
@@ -8406,9 +8406,9 @@
       },
       "scheme": "dark",
       "source": {
-        "path": "../PMConcept7.html",
+        "path": "../../PMConcept7.html",
         "selector": "[data-theme=\"friendly-dark\"]",
-        "sha256": "87efd896d9cd8d98bbb3327ef82654d42618f8d5f868d119f30dd0d0941ab2c8"
+        "sha256": "91665182b3db3c7ce53018f4ea12e82fc6c65c0abc8b9c0e5c72869d887f21db"
       },
       "tokens": {
         "accent_blue": "#6FC6E8",
@@ -8490,9 +8490,9 @@
       },
       "scheme": "light",
       "source": {
-        "path": "../PMConcept7.html",
+        "path": "../../PMConcept7.html",
         "selector": "[data-theme=\"friendly-light\"]",
-        "sha256": "87efd896d9cd8d98bbb3327ef82654d42618f8d5f868d119f30dd0d0941ab2c8"
+        "sha256": "91665182b3db3c7ce53018f4ea12e82fc6c65c0abc8b9c0e5c72869d887f21db"
       },
       "tokens": {
         "accent_blue": "#3F9CC7",
@@ -8559,9 +8559,9 @@
       },
       "scheme": "dark",
       "source": {
-        "path": "../PMConcept7.html",
+        "path": "../../PMConcept7.html",
         "selector": "[data-theme=\"glass-dark\"]",
-        "sha256": "87efd896d9cd8d98bbb3327ef82654d42618f8d5f868d119f30dd0d0941ab2c8"
+        "sha256": "91665182b3db3c7ce53018f4ea12e82fc6c65c0abc8b9c0e5c72869d887f21db"
       },
       "tokens": {
         "accent_blue": "#B79CFF",
@@ -8628,9 +8628,9 @@
       },
       "scheme": "light",
       "source": {
-        "path": "../PMConcept7.html",
+        "path": "../../PMConcept7.html",
         "selector": "[data-theme=\"glass-light\"]",
-        "sha256": "87efd896d9cd8d98bbb3327ef82654d42618f8d5f868d119f30dd0d0941ab2c8"
+        "sha256": "91665182b3db3c7ce53018f4ea12e82fc6c65c0abc8b9c0e5c72869d887f21db"
       },
       "tokens": {
         "accent_blue": "#8B6ED9",
@@ -8703,9 +8703,9 @@
       },
       "scheme": "dark",
       "source": {
-        "path": "../PMConcept7.html",
+        "path": "../../PMConcept7.html",
         "selector": "[data-theme=\"retro-dark\"]",
-        "sha256": "87efd896d9cd8d98bbb3327ef82654d42618f8d5f868d119f30dd0d0941ab2c8"
+        "sha256": "91665182b3db3c7ce53018f4ea12e82fc6c65c0abc8b9c0e5c72869d887f21db"
       },
       "tokens": {
         "accent_blue": "#0047AB",
@@ -8778,9 +8778,9 @@
       },
       "scheme": "light",
       "source": {
-        "path": "../PMConcept7.html",
+        "path": "../../PMConcept7.html",
         "selector": "[data-theme=\"retro-light\"]",
-        "sha256": "87efd896d9cd8d98bbb3327ef82654d42618f8d5f868d119f30dd0d0941ab2c8"
+        "sha256": "91665182b3db3c7ce53018f4ea12e82fc6c65c0abc8b9c0e5c72869d887f21db"
       },
       "tokens": {
         "accent_blue": "#0047AB",
@@ -8848,9 +8848,9 @@
       },
       "scheme": "dark",
       "source": {
-        "path": "../PMConcept7.html",
+        "path": "../../PMConcept7.html",
         "selector": "[data-theme=\"basic-dark\"]",
-        "sha256": "87efd896d9cd8d98bbb3327ef82654d42618f8d5f868d119f30dd0d0941ab2c8"
+        "sha256": "91665182b3db3c7ce53018f4ea12e82fc6c65c0abc8b9c0e5c72869d887f21db"
       },
       "tokens": {
         "accent_blue": "#64B5F6",
@@ -8918,9 +8918,9 @@
       },
       "scheme": "light",
       "source": {
-        "path": "../PMConcept7.html",
+        "path": "../../PMConcept7.html",
         "selector": "[data-theme=\"basic-light\"]",
-        "sha256": "87efd896d9cd8d98bbb3327ef82654d42618f8d5f868d119f30dd0d0941ab2c8"
+        "sha256": "91665182b3db3c7ce53018f4ea12e82fc6c65c0abc8b9c0e5c72869d887f21db"
       },
       "tokens": {
         "accent_blue": "#0056B3",

@@ -18,8 +18,9 @@ from pathlib import Path
 
 
 ROOT = Path(__file__).resolve().parents[1]
-SOURCE_SVG = Path("/Users/jaredsmacbookair/Downloads/Pm placeholder 3.svg")
-PMCONCEPT7 = ROOT.parent / "PMConcept7.html"
+REPO = ROOT.parents[2]
+SOURCE_SVG = ROOT / "source" / "Pm-placeholder-3-original.svg"
+PMCONCEPT7 = REPO / "Concepts" / "PMConcept7.html"
 REPORT = ROOT / "verification" / "asset-report.json"
 APP_SIZES = (16, 32, 64, 128, 256, 512, 1024)
 TRAY_SIZES = (16, 20, 24, 32, 48)
@@ -253,7 +254,7 @@ def verify() -> dict:
 
     source_expected = provenance["source_svg"]["sha256"]
     pm_expected = provenance["pmconcept7"]["sha256"]
-    require(sha256(SOURCE_SVG) == source_expected, "Original Downloads SVG changed")
+    require(sha256(SOURCE_SVG) == source_expected, "Tracked source SVG changed")
     require(sha256(ROOT / provenance["source_svg"]["copied_path"]) == source_expected, "Provenance SVG copy is not byte-identical")
     require(sha256(PMCONCEPT7) == pm_expected, "PMConcept7 changed")
 
@@ -293,7 +294,7 @@ def verify() -> dict:
         "raster_diversity": {"app_unique_per_size": 16, "tray_idle_minimum_unique_per_size": 8, "tray_running_minimum_unique_per_size": 8, "template_masks_identical": True},
         "contrast": {"minimum_recorded_ratio": round(minimum_contrast, 2), "themes": contrast_rows},
         "protected_inputs": {"source_svg_sha256": source_expected, "pmconcept7_sha256": pm_expected, "unchanged": True},
-        "scope": {"generated_root": str(ROOT), "outside_root_writes": 0},
+        "scope": {"generated_root": "Concepts/Icon-Concepts/Solicon", "outside_root_writes": 0},
     }
 
 

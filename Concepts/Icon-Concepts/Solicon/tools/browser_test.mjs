@@ -3,12 +3,57 @@ import { createServer } from "node:http";
 import { readFile, stat, mkdir, writeFile } from "node:fs/promises";
 import path from "node:path";
 import { fileURLToPath, pathToFileURL } from "node:url";
-import { chromium } from "../../usage-concepts/verification/node_modules/playwright-core/index.mjs";
 
 const TOOLS = path.dirname(fileURLToPath(import.meta.url));
 const ROOT = path.resolve(TOOLS, "..");
 const VERIFY = path.join(ROOT, "verification");
-const CHROME = "/Applications/Google Chrome.app/Contents/MacOS/Google Chrome";
+const CHROME_EXECUTABLE = process.env.SOLICON_CHROME_EXECUTABLE || process.env.CHROME_BIN;
+const CHROME_CHANNEL = process.env.SOLICON_CHROME_CHANNEL || "chrome";
+const PLAYWRIGHT_HELP = [
+  "Playwright Core is required for Solicon browser verification.",
+  "Install it in disposable scratch space and pass that node_modules directory:",
+  '  solicon_modules="$(mktemp -d)"',
+  '  npm install --prefix "$solicon_modules" --no-save playwright-core',
+  '  node Concepts/Icon-Concepts/Solicon/tools/browser_test.mjs --modules "$solicon_modules/node_modules"',
+].join("\n");
+
+function modulesArgument(argv) {
+  let modules = process.env.SOLICON_PLAYWRIGHT_MODULE || "";
+  for (let index = 0; index < argv.length; index += 1) {
+    const argument = argv[index];
+    if (argument !== "--modules") throw new Error(`Unknown argument: ${argument}\n\n${PLAYWRIGHT_HELP}`);
+    const value = argv[index + 1];
+    if (!value || value.startsWith("--")) throw new Error(`--modules requires a directory\n\n${PLAYWRIGHT_HELP}`);
+    modules = value;
+    index += 1;
+  }
+  return modules;
+}
+
+async function loadChromium(modules) {
+  const candidates = [];
+  if (modules) {
+    const moduleRoot = path.resolve(modules);
+    candidates.push(pathToFileURL(path.join(moduleRoot, "playwright-core", "index.js")).href);
+    candidates.push(pathToFileURL(path.join(moduleRoot, "playwright-core")).href);
+  }
+  candidates.push("playwright-core");
+
+  const failures = [];
+  for (const candidate of candidates) {
+    try {
+      const loaded = await import(candidate);
+      const chromium = loaded.chromium || loaded.default?.chromium;
+      if (chromium) return chromium;
+      failures.push(`${candidate}: module does not export chromium`);
+    } catch (error) {
+      failures.push(`${candidate}: ${error.code || error.message}`);
+    }
+  }
+  throw new Error(`${PLAYWRIGHT_HELP}\n\nResolution attempts:\n- ${failures.join("\n- ")}`);
+}
+
+const chromium = await loadChromium(modulesArgument(process.argv.slice(2)));
 const manifest = JSON.parse(await readFile(path.join(ROOT, "manifest/manifest.json"), "utf8"));
 const MIME = {
   ".html": "text/html; charset=utf-8",
@@ -314,7 +359,10 @@ await mkdir(VERIFY, { recursive: true });
 const { server, port } = await startServer();
 const baseUrl = `http://127.0.0.1:${port}`;
 const fileUrl = pathToFileURL(path.join(ROOT, "index.html")).href;
-const browser = await chromium.launch({ executablePath: CHROME, headless: true });
+const launchOptions = { headless: true };
+if (CHROME_EXECUTABLE) launchOptions.executablePath = CHROME_EXECUTABLE;
+else launchOptions.channel = CHROME_CHANNEL;
+const browser = await chromium.launch(launchOptions);
 const page = await browser.newPage({ viewport: { width: 1280, height: 900 } });
 const report = {
   schema_id: "pm.solicon.browser_verification.v1",

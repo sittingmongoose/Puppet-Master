@@ -2,8 +2,8 @@
 """Build the isolated Puppet Master Solicon asset library.
 
 The generator is intentionally standard-library-only. It reads two protected inputs,
-creates all generated content below Concepts/Solicon, and records enough provenance
-to prove that neither input changed.
+creates all generated content below Concepts/Icon-Concepts/Solicon, and records
+enough provenance to prove that neither input changed.
 """
 
 from __future__ import annotations
@@ -22,8 +22,8 @@ from typing import Dict, Iterable, List, Mapping, Sequence, Tuple
 
 
 ROOT = Path(__file__).resolve().parents[1]
-REPO = ROOT.parent.parent
-SOURCE_SVG = Path("/Users/jaredsmacbookair/Downloads/Pm placeholder 3.svg")
+REPO = ROOT.parents[2]
+SOURCE_SVG = ROOT / "source" / "Pm-placeholder-3-original.svg"
 PMCONCEPT7 = REPO / "Concepts" / "PMConcept7.html"
 EXPECTED_SOURCE_SHA256 = "c73265aa00eb4481f6afadb5c815a1c2a2141a127fb44d52cd2871511e8c4211"
 FIXED_ZIP_TIME = (1980, 1, 1, 0, 0, 0)
@@ -210,7 +210,7 @@ def extract_themes(pmconcept: str, pm_hash: str) -> List[dict]:
                 "family": family,
                 "scheme": scheme,
                 "source": {
-                    "path": "../PMConcept7.html",
+                    "path": "../../PMConcept7.html",
                     "sha256": pm_hash,
                     "selector": f'[data-theme="{theme_id}"]',
                 },
@@ -522,7 +522,7 @@ def svg_markup(
 
 
 def clean_generated() -> None:
-    for name in ("assets", "exports", "bundles", "manifest", "source", "data.js", "asset-checksums.sha256", "checksums.sha256"):
+    for name in ("assets", "exports", "bundles", "manifest", "data.js", "asset-checksums.sha256", "checksums.sha256"):
         target = ROOT / name
         if target.is_dir():
             shutil.rmtree(target)
@@ -747,8 +747,6 @@ def main() -> None:
     clean_generated()
     for directory in ("assets/static", "assets/loaders", "exports/app", "exports/tray", "bundles", "manifest", "source"):
         (ROOT / directory).mkdir(parents=True, exist_ok=True)
-    shutil.copyfile(SOURCE_SVG, ROOT / "source" / "Pm-placeholder-3-original.svg")
-
     master_theme = theme_by_id["friendly-dark"]
     write_text(
         ROOT / "source" / "pm-logo-layered-master.svg",
@@ -856,19 +854,19 @@ def main() -> None:
     provenance = {
         "schema_id": "pm.solicon.provenance.v1",
         "source_svg": {
-            "original_path": str(SOURCE_SVG),
+            "original_path": "source/Pm-placeholder-3-original.svg",
             "copied_path": "source/Pm-placeholder-3-original.svg",
             "sha256": source_hash_before,
             "bytes": SOURCE_SVG.stat().st_size,
             "copy_byte_identical": sha256(ROOT / "source" / "Pm-placeholder-3-original.svg") == source_hash_before,
         },
         "pmconcept7": {
-            "path": "../PMConcept7.html",
+            "path": "../../PMConcept7.html",
             "sha256": pm_hash_before,
             "bytes": PMCONCEPT7.stat().st_size,
             "theme_ids": list(THEME_IDS),
         },
-        "generated_scope": "Concepts/Solicon/** only",
+        "generated_scope": "Concepts/Icon-Concepts/Solicon/** only",
     }
     write_json(ROOT / "manifest" / "provenance.json", provenance)
     write_json(

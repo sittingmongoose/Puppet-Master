@@ -5,9 +5,9 @@ contains theme-aware logo candidates, small-size companions, native app/tray
 exports, and a local comparison dashboard. Nothing in this folder is wired into
 PMConcept7 or the future Slint application automatically.
 
-Open `index.html` directly, or serve `Concepts/Solicon/` from localhost. The
-dashboard has no package install, build step, network dependency, remote font,
-or CDN requirement.
+Open `index.html` directly, or serve `Concepts/Icon-Concepts/Solicon/` from
+localhost. The dashboard has no package install, build step, network dependency,
+remote font, or CDN requirement.
 
 ## Design Context
 
@@ -55,17 +55,33 @@ work without bounce, elastic easing, or decorative noise.
   and Slint-portable motion specification.
 - `bundles/` contains deterministic theme, motion, treatment, platform, and full
   library ZIPs.
-- `verification/` contains generated reports and visual/browser witnesses.
+- `verification/` is ignored and generated on demand for local reports and
+  visual/browser witnesses; its outputs are not retained in the repository.
 - `tools/` contains the deterministic generator and verification programs.
 
 ## Regenerate and verify
 
+Asset generation is macOS-native and requires the system `qlmanage` and
+`iconutil` tools. Browser verification requires Node.js, npm, and an installed
+Google Chrome. By default Playwright launches Chrome's `chrome` channel; set
+`SOLICON_CHROME_CHANNEL`, `SOLICON_CHROME_EXECUTABLE`, or `CHROME_BIN` to
+override that selection.
+
 ```sh
-python3 Concepts/Solicon/tools/build_assets.py
-python3 Concepts/Solicon/tools/verify_assets.py
-node Concepts/Solicon/tools/browser_test.mjs
-python3 Concepts/Solicon/tools/check_reproducibility.py
+python3 Concepts/Icon-Concepts/Solicon/tools/build_assets.py
+python3 Concepts/Icon-Concepts/Solicon/tools/verify_assets.py
+solicon_modules="$(mktemp -d)"
+trap 'rm -rf "$solicon_modules"' EXIT
+npm install --prefix "$solicon_modules" --no-save playwright-core
+node Concepts/Icon-Concepts/Solicon/tools/browser_test.mjs --modules "$solicon_modules/node_modules"
+python3 Concepts/Icon-Concepts/Solicon/tools/check_reproducibility.py
 ```
+
+`SOLICON_PLAYWRIGHT_MODULE` may supply the same `node_modules` directory instead
+of `--modules`. The browser test also falls back to a normally resolvable
+`playwright-core` package and fails closed with the scratch-install commands if
+none of those sources is available. Dependency installation never needs to
+write into the repository.
 
 The generator fails closed if the supplied source SVG has changed. It snapshots
 the current PMConcept7 hash and exact theme-token values on every generation,
