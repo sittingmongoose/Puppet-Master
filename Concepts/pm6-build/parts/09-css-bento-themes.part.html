@@ -64,32 +64,183 @@
     }
 
     /* --- RESIZERS & EDITORS CSS --- */
+    /* pm7 A1: 9px centered grab zone via padding + negative margin (visible
+       line stays a 2px content-box strip) — pairs with the pointer-capture
+       drag in js-terminal-demo. Retro hover overrides dropped: --accent-primary
+       already resolves to lime on retro themes, blue on friendly/basic. */
     .resizer-col {
-      width: 2px;
+      --pm-glow-off: 0px;
+      width: 9px;
+      margin: 0 -3.5px;
+      padding: 0 3.5px;
+      flex: none;
       background: transparent;
+      background-clip: content-box;
       cursor: col-resize;
-      transition: background 0.2s;
+      position: relative;
+      touch-action: none;
+      transition: background var(--motion-fast) var(--ease-default);
       z-index: 100;
-    }
-    .resizer-col:hover, .resizer-col.resizing {
-      background: var(--accent-blue);
-    }
-    [data-theme^="retro"] .resizer-col:hover, [data-theme^="retro"] .resizer-col.resizing {
-      background: var(--accent-lime);
     }
 
     .resizer-row {
-      height: 2px;
+      --pm-glow-off: 0px;
+      height: 9px;
+      margin: -3.5px 0;
+      padding: 3.5px 0;
+      flex: none;
       background: transparent;
+      background-clip: content-box;
       cursor: row-resize;
-      transition: background 0.2s;
+      position: relative;
+      touch-action: none;
+      transition: background var(--motion-fast) var(--ease-default);
       z-index: 100;
     }
-    .resizer-row:hover, .resizer-row.resizing {
-      background: var(--accent-blue);
+
+    /* pm8 grab-glow: ::before organic core + ::after diffuse halo, both
+       anchored to --pm-glow-off (written per-pointermove by the resize
+       controller in js-terminal-demo) so the light appears where the bar is
+       about to be grabbed instead of at its midpoint. The bar itself is never
+       filled end-to-end any more — the halo's long thin streak layer IS the
+       lit border, falling off with distance from the grab point.
+       Shape comes from an asymmetric, slowly morphing border-radius plus
+       gradient falloff, not clip-path, so there is no hard rhombus edge.
+       Crossfade stays opacity/transform-only (compositor-friendly, no
+       box-shadow/filter animation). Themed via --accent-primary(-rgb). */
+    .resizer-col::before, .resizer-row::before,
+    .resizer-col::after, .resizer-row::after {
+      content: '';
+      position: absolute;
+      pointer-events: none;
+      opacity: 0;
+      transform: translate(-50%, -50%) scale(.72);
+      transition: opacity 150ms ease-in, transform 150ms ease-in;
     }
-    [data-theme^="retro"] .resizer-row:hover, [data-theme^="retro"] .resizer-row.resizing {
-      background: var(--accent-lime);
+    /* vertical bar: glow rides the Y axis; horizontal bar: the X axis.
+       Anchored at the bar's midpoint by static top/left plus a
+       compositor-only `translate` — top/left are LAYOUT properties, and
+       writing one per pointermove relaid out the resizer's stacking context
+       on every frame of a drag. `translate` is applied BEFORE `transform`,
+       both about the same origin, and prepending a pure translation to
+       translate(-50%, -50%) scale(...) commutes with it: the glow still
+       lands centred on the offset point at every scale state, and the
+       reduced-motion blocks (which only reset transform + animation) keep
+       their anchor. Percentages here would resolve against the
+       pseudo-element's OWN box, so js-terminal-demo writes px. */
+    .resizer-col::before, .resizer-col::after {
+      left: 50%;
+      top: 50%;
+      translate: 0 var(--pm-glow-off, 0px);
+    }
+    .resizer-row::before, .resizer-row::after {
+      left: 50%;
+      top: 50%;
+      translate: var(--pm-glow-off, 0px) 0;
+    }
+    .resizer-col::before, .resizer-row::before {
+      border-radius: 54% 46% 58% 42% / 38% 42% 58% 62%;
+      background: radial-gradient(closest-side at 50% 50%,
+        color-mix(in srgb, var(--accent-primary) 94%, white),
+        color-mix(in srgb, var(--accent-primary) 78%, white) 46%,
+        rgba(var(--accent-primary-rgb), 0) 100%);
+    }
+    .resizer-col::before { width: 16px; height: 56px; }
+    .resizer-row::before { width: 56px; height: 16px; }
+    /* halo = bright streak along the bar axis (the lit border, fading with
+       distance) layered over a soft bloom at the grab point itself.
+       Bloom percentages are re-based whenever the box length changes so the
+       bloom stays a point-source and only the STREAK gets longer: 22% of
+       240 ~= the 26%-of-180 it replaced. */
+    .resizer-col::after {
+      width: 46px;
+      height: 240px;
+      background:
+        radial-gradient(ellipse 4px 48% at 50% 50%,
+          rgba(var(--accent-primary-rgb), .85),
+          rgba(var(--accent-primary-rgb), .28) 40%,
+          rgba(var(--accent-primary-rgb), 0) 100%),
+        radial-gradient(ellipse 55% 22% at 50% 50%,
+          rgba(var(--accent-primary-rgb), .40),
+          rgba(var(--accent-primary-rgb), .14) 55%,
+          rgba(var(--accent-primary-rgb), 0) 100%);
+    }
+    .resizer-row::after {
+      width: 240px;
+      height: 46px;
+      background:
+        radial-gradient(ellipse 48% 4px at 50% 50%,
+          rgba(var(--accent-primary-rgb), .85),
+          rgba(var(--accent-primary-rgb), .28) 40%,
+          rgba(var(--accent-primary-rgb), 0) 100%),
+        radial-gradient(ellipse 22% 55% at 50% 50%,
+          rgba(var(--accent-primary-rgb), .40),
+          rgba(var(--accent-primary-rgb), .14) 55%,
+          rgba(var(--accent-primary-rgb), 0) 100%);
+    }
+    .resizer-col:hover::before, .resizer-row:hover::before,
+    .resizer-col:hover::after, .resizer-row:hover::after,
+    .resizer-col.resizing::before, .resizer-row.resizing::before,
+    .resizer-col.resizing::after, .resizer-row.resizing::after {
+      opacity: 1;
+      transform: translate(-50%, -50%) scale(1);
+      transition: opacity 220ms var(--ease-out), transform 220ms var(--ease-out);
+    }
+    .resizer-col:hover::after, .resizer-row:hover::after {
+      animation: pm6ResizerBreath 2.6s ease-in-out 300ms infinite;
+    }
+    .resizer-col:hover::before, .resizer-row:hover::before,
+    .resizer-col.resizing::before, .resizer-row.resizing::before {
+      animation: pm7GlowDrift 7s ease-in-out infinite;
+    }
+    .resizer-col.resizing::before, .resizer-row.resizing::before,
+    .resizer-col.resizing::after, .resizer-row.resizing::after {
+      transform: translate(-50%, -50%) scale(1.08);
+      transition: opacity var(--motion-fast) var(--ease-default),
+        transform var(--motion-fast) var(--ease-default);
+    }
+    .resizer-col.resizing::after, .resizer-row.resizing::after {
+      animation: none;
+    }
+    @keyframes pm6ResizerBreath {
+      0%, 100% { opacity: 1; }
+      50% { opacity: .78; }
+    }
+    /* organic drift: morph the radius quartet only — transform stays owned by
+       the hover/resizing states so the two never fight */
+    @keyframes pm7GlowDrift {
+      0%, 100% { border-radius: 54% 46% 58% 42% / 38% 42% 58% 62%; }
+      33% { border-radius: 44% 56% 42% 58% / 56% 34% 66% 44%; }
+      66% { border-radius: 60% 40% 50% 50% / 44% 62% 38% 56%; }
+    }
+    /* Reduced motion: opacity-only fade, no scale, no breathing */
+    @media (prefers-reduced-motion: reduce) {
+      .resizer-col::before, .resizer-row::before,
+      .resizer-col::after, .resizer-row::after,
+      .resizer-col:hover::before, .resizer-row:hover::before,
+      .resizer-col:hover::after, .resizer-row:hover::after,
+      .resizer-col.resizing::before, .resizer-row.resizing::before,
+      .resizer-col.resizing::after, .resizer-row.resizing::after {
+        animation: none;
+        transform: translate(-50%, -50%);
+        transition: opacity var(--motion-fast) var(--ease-default);
+      }
+    }
+    [data-motion="reduced"] .resizer-col::before,
+    [data-motion="reduced"] .resizer-row::before,
+    [data-motion="reduced"] .resizer-col::after,
+    [data-motion="reduced"] .resizer-row::after,
+    [data-motion="reduced"] .resizer-col:hover::before,
+    [data-motion="reduced"] .resizer-row:hover::before,
+    [data-motion="reduced"] .resizer-col:hover::after,
+    [data-motion="reduced"] .resizer-row:hover::after,
+    [data-motion="reduced"] .resizer-col.resizing::before,
+    [data-motion="reduced"] .resizer-row.resizing::before,
+    [data-motion="reduced"] .resizer-col.resizing::after,
+    [data-motion="reduced"] .resizer-row.resizing::after {
+      animation: none;
+      transform: translate(-50%, -50%);
+      transition: opacity var(--motion-fast) var(--ease-default);
     }
 
     .editor-pane {
@@ -141,7 +292,6 @@
       display: none;
       flex-direction: column;
       height: 100%;
-      animation: slideInLeft 0.2s cubic-bezier(0.4, 0, 0.2, 1);
     }
     .side-panel-view.active {
       display: flex;
@@ -271,20 +421,80 @@
     .msg-actions { display: flex; gap: var(--xs); align-items: center; }
     .msg-runtime-compact { display: flex; gap: var(--sm); align-items: center; color: var(--text-muted); font-family: var(--body-font); white-space: nowrap; line-height: 1; }
     .msg-runtime-compact .sep { opacity: 0.4; }
-    .msg-runtime-compact .info-icon { cursor: pointer; color: var(--text-muted); display: inline-flex; align-items: center; justify-content: center; background: var(--border-light); border-radius: 50%; width: 16px; height: 16px; position: relative; }
+    .msg-runtime-compact .info-icon { cursor: pointer; color: var(--text-muted); display: inline-flex; align-items: center; justify-content: center; background: var(--border-light); border-radius: 50%; width: 16px; height: 16px; position: relative; flex-shrink: 0; overflow: visible; }
     .msg-runtime-compact .info-icon:hover { color: var(--text-primary); background: var(--border); }
     .msg-control-btn { background: none; border: none; border-radius: 0; padding: 2px; color: var(--text-muted); cursor: pointer; display: flex; align-items: center; justify-content: center; width: 18px; height: 18px; transition: color 0.15s; }
     .msg-control-btn:hover { background: none; color: var(--text-primary); }
     .msg-control-btn svg { width: 12px; height: 12px; }
-    /* --- Message runtime popover --- */
-    .msg-runtime-popover { display: none; position: absolute; bottom: calc(100% + 4px); right: 0; background: var(--surface-elevated); border: 1px solid var(--border-light); border-radius: 6px; padding: var(--sm) var(--md); box-shadow: 0 4px 16px rgba(0,0,0,0.2); z-index: 60; min-width: 200px; font-size: 11px; }
-    .msg-runtime-popover.visible { display: block; }
+    /* --- Message runtime popover: opens DOWN from the i icon; body-portaled above composer --- */
+    .msg-hover-row { overflow: visible; }
+    .msg-runtime-compact { overflow: visible; }
+    .msg-runtime-popover {
+      display: none;
+      position: absolute;
+      top: calc(100% + 6px);
+      right: 0;
+      left: auto;
+      bottom: auto;
+      background: var(--surface-elevated);
+      border: 1px solid var(--border-light);
+      border-radius: 6px;
+      padding: var(--sm) var(--md);
+      box-shadow: 0 4px 16px rgba(0,0,0,0.2);
+      z-index: 1250;
+      min-width: 200px;
+      font-size: 11px;
+    }
+    .msg-runtime-popover.visible {
+      display: block;
+      position: fixed;
+      z-index: 1400;
+      top: auto;
+      right: auto;
+      left: auto;
+      bottom: auto;
+    }
     .msg-runtime-popover .popover-row { display: flex; justify-content: space-between; padding: 3px 0; gap: var(--md); }
     .msg-runtime-popover .popover-label { color: var(--text-muted); }
     .msg-runtime-popover .popover-value { color: var(--text-primary); font-weight: 600; text-align: right; }
 
-    .jump-to-latest { position: sticky; bottom: 0; align-self: center; background: none; border: none; color: var(--text-secondary); width: 20px; height: 20px; display: flex; align-items: center; justify-content: center; cursor: pointer; z-index: 10; padding: 0; opacity: 0.7; flex-shrink: 0; margin-top: auto; }
-    .jump-to-latest:hover { opacity: 1; color: var(--text-primary); }
+    /* Issue 7 + 12: .msg-controls is the legacy single-row variant some static
+       bubbles still emit. Make it behave like a hover-revealed control strip
+       (flex, right-aligned, hidden until :hover) so it never shoves the bubble
+       text onto its own line. The full .msg-hover-row above is preferred. */
+    .msg-controls { display: flex; gap: var(--xs); align-items: center; justify-content: flex-end; margin-top: var(--xs); opacity: 0; transition: opacity 0.15s; line-height: 1; }
+    .message:hover .msg-controls { opacity: 1; }
+    /* Issue 12: short assistant bubbles (e.g. a one-line "checked the docs"
+       reply) were getting crushed to a sliver because .msg-body shrink-wraps
+       and there was no floor. Give assistant bodies a min-width so even terse
+       replies keep a comfortable shape and the hover-row lays out cleanly. */
+    .message.assistant .msg-body { min-width: min(180px, 100%); max-width: 100%; }
+    /* Issue 7: rebalance bubble text padding (was top-heavy 2px/8px/8px) and
+       give it a real line-height so multi-line text breathes inside the bubble
+       instead of crowding the edges. */
+    .msg-body { line-height: var(--line-height, 1.5); min-width: 0; max-width: 100%; }
+
+    /* Jump-to-latest floats over the stream bottom-center and is revealed only
+       when the user has scrolled up (JS toggles .is-away). */
+    .jump-to-latest {
+      position: absolute; left: 50%;
+      bottom: calc(var(--chat-footer-stack-height, 0px) + var(--sm) + 6px);
+      transform: translateX(-50%);
+      background: var(--surface-elevated);
+      border: 1px solid var(--border-light);
+      border-radius: var(--radius-pill);
+      color: var(--text-secondary);
+      width: 26px; height: 26px;
+      display: flex; align-items: center; justify-content: center;
+      cursor: pointer; z-index: 11; padding: 0;
+      opacity: 0; pointer-events: none;
+      transition: opacity .15s ease, color .15s ease, box-shadow .15s ease;
+      box-shadow: 0 2px 8px rgba(0,0,0,.10);
+    }
+    .pm6-chat-streamwrap { position: relative; }
+    .jump-to-latest.is-away { opacity: 1; pointer-events: auto; }
+    .jump-to-latest.is-away:hover { color: var(--text-primary); box-shadow: 0 4px 14px rgba(0,0,0,.16); }
+    [data-motion="reduced"] .jump-to-latest { transition: none; }
     [data-theme^="retro"] .jump-to-latest { color: var(--accent-lime); }
     [data-theme^="basic"] .jump-to-latest { color: var(--accent-blue); }
 
@@ -294,7 +504,7 @@
     .activity-card.bash { background: color-mix(in srgb, var(--accent-magenta) 8%, var(--surface)); border-color: color-mix(in srgb, var(--accent-magenta) 30%, var(--border)); }
     .activity-card.diff { background: color-mix(in srgb, var(--accent-blue) 8%, var(--surface)); border-color: color-mix(in srgb, var(--accent-blue) 30%, var(--border)); }
     .activity-card-header { display: flex; justify-content: space-between; align-items: center; font-weight: 600; }
-    .activity-card-body { color: var(--text-secondary); font-family: monospace; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+    .activity-card-body { color: var(--text-secondary); font-family: monospace; white-space: pre-wrap; overflow-x: auto; overflow-wrap: anywhere; word-break: break-word; max-width: 100%; }
 
     .questionnaire-ui { background: var(--surface-elevated); border: 1px solid var(--border); border-radius: 8px; padding: var(--md); margin-top: var(--md); display: flex; flex-direction: column; gap: var(--md); }
     [data-theme^="retro"] .questionnaire-ui { border-radius: 0; box-shadow: var(--pm6-rb-shadow-hard, 3px 3px 0 rgba(0,0,0,0.35)); }
@@ -306,10 +516,66 @@
     .runtime-snapshot { font-size: 10px; padding: 2px 6px; background: color-mix(in srgb, var(--text-primary) 10%, transparent); border-radius: 12px; color: var(--text-muted); font-family: var(--display-font); display: inline-block; margin-bottom: var(--xs); border: 1px solid var(--border-light); }
     [data-theme^="retro"] .runtime-snapshot { border-radius: 0; }
 
-    /* --- Context ring hover module --- */
+    /* --- Context ring click module --- */
     .context-usage { position: relative; cursor: pointer; }
-    .context-hover-module { display: none; position: absolute; top: calc(100% + 8px); right: 0; background: var(--surface-elevated); border: 1px solid var(--border-light); border-radius: 6px; padding: var(--md); box-shadow: 0 6px 20px rgba(0,0,0,0.25); z-index: 70; min-width: 220px; font-size: 11px; }
-    .context-hover-module.visible { display: block; }
+    /* Sprout open/close (same motion as model/mode popouts). Click-driven via JS
+       (.is-open / .is-closing). Hover glows accent-blue (matches context lens),
+       not a hard ring outline around the SVG. */
+    /* Surface chrome matches model/mode popouts: theme tokens for radius,
+       border, elev — so all 8 themes reshape these menus automatically. */
+    .context-hover-module {
+      display: none;
+      position: absolute;
+      top: calc(100% + 8px);
+      right: 0;
+      background: var(--surface-elevated);
+      border: 1px solid var(--border);
+      border-radius: var(--radius-md);
+      padding: var(--md);
+      box-shadow: var(--elev-3);
+      z-index: 200;
+      min-width: 220px;
+      font-size: 11px;
+      --pm6-sprout-ox: 88%;
+      --pm6-sprout-oy: 0%;
+      --pm6-sprout-tx: 0px;
+      --pm6-sprout-ty: -10px;
+      --pm6-sprout-sx: 0.72;
+      --pm6-sprout-sy: 0.48;
+      transform-origin: var(--pm6-sprout-ox) var(--pm6-sprout-oy);
+      opacity: 0;
+      transform: translate3d(var(--pm6-sprout-tx), var(--pm6-sprout-ty), 0)
+        scale3d(var(--pm6-sprout-sx), var(--pm6-sprout-sy), 1);
+      visibility: hidden;
+      pointer-events: none;
+      transition:
+        opacity 160ms var(--ease-out),
+        transform 300ms cubic-bezier(0.22, 1.55, 0.36, 1),
+        visibility 0s linear 300ms;
+      will-change: transform, opacity;
+    }
+    .context-hover-module.is-open {
+      display: block;
+      opacity: 1;
+      transform: translate3d(0, 0, 0) scale3d(1, 1, 1);
+      visibility: visible;
+      pointer-events: auto;
+      transition:
+        opacity 140ms var(--ease-out),
+        transform 300ms cubic-bezier(0.22, 1.55, 0.36, 1),
+        visibility 0s;
+    }
+    .context-hover-module.is-closing {
+      opacity: 0;
+      transform: translate3d(var(--pm6-sprout-tx), var(--pm6-sprout-ty), 0)
+        scale3d(var(--pm6-sprout-sx), var(--pm6-sprout-sy), 1);
+      visibility: hidden;
+      pointer-events: none;
+      transition:
+        opacity 45ms ease-in 175ms,
+        transform 220ms cubic-bezier(0.45, 0.05, 0.55, 0.2),
+        visibility 0s linear 220ms;
+    }
     .context-hover-module .chm-row { display: flex; justify-content: space-between; padding: 4px 0; }
     .context-hover-module .chm-label { color: var(--text-muted); }
     .context-hover-module .chm-value { color: var(--text-primary); font-weight: 600; }
@@ -357,6 +623,7 @@
     .context-lens-btn.cl-mode-focus .cl-icon-focus { display: block; }
     .context-lens-btn.cl-mode-subcompact .cl-icon-default { display: none; }
     .context-lens-btn.cl-mode-subcompact .cl-icon-subcompact { display: block; }
+    /* Click-to-sprout (same motion as model popouts / context ring) */
     .context-lens-popover {
       display: none;
       position: absolute;
@@ -364,15 +631,54 @@
       right: 0;
       width: 220px;
       background: var(--surface-elevated);
-      border: 1px solid var(--border-light);
-      border-radius: 8px;
-      box-shadow: 0 8px 24px rgba(0, 0, 0, 0.20);
-      z-index: 100;
+      border: 1px solid var(--border);
+      border-radius: var(--radius-md);
+      box-shadow: var(--elev-3);
+      padding: var(--xs);
+      z-index: 200;
       flex-direction: column;
       overflow: hidden;
-      animation: slideUp 0.15s ease-out;
+      --pm6-sprout-ox: 88%;
+      --pm6-sprout-oy: 0%;
+      --pm6-sprout-tx: 0px;
+      --pm6-sprout-ty: -10px;
+      --pm6-sprout-sx: 0.72;
+      --pm6-sprout-sy: 0.48;
+      transform-origin: var(--pm6-sprout-ox) var(--pm6-sprout-oy);
+      opacity: 0;
+      transform: translate3d(var(--pm6-sprout-tx), var(--pm6-sprout-ty), 0)
+        scale3d(var(--pm6-sprout-sx), var(--pm6-sprout-sy), 1);
+      visibility: hidden;
+      pointer-events: none;
+      transition:
+        opacity 160ms var(--ease-out),
+        transform 300ms cubic-bezier(0.22, 1.55, 0.36, 1),
+        visibility 0s linear 300ms;
+      will-change: transform, opacity;
     }
-    .context-lens-popover.active { display: flex; }
+    .context-lens-popover.is-open {
+      display: flex;
+      opacity: 1;
+      transform: translate3d(0, 0, 0) scale3d(1, 1, 1);
+      visibility: visible;
+      pointer-events: auto;
+      transition:
+        opacity 140ms var(--ease-out),
+        transform 300ms cubic-bezier(0.22, 1.55, 0.36, 1),
+        visibility 0s;
+    }
+    .context-lens-popover.is-closing {
+      display: flex;
+      opacity: 0;
+      transform: translate3d(var(--pm6-sprout-tx), var(--pm6-sprout-ty), 0)
+        scale3d(var(--pm6-sprout-sx), var(--pm6-sprout-sy), 1);
+      visibility: hidden;
+      pointer-events: none;
+      transition:
+        opacity 45ms ease-in 175ms,
+        transform 220ms cubic-bezier(0.45, 0.05, 0.55, 0.2),
+        visibility 0s linear 220ms;
+    }
     .cl-popover-title {
       padding: 8px 12px 4px;
       font-size: 10px;
@@ -435,20 +741,43 @@
       background: var(--pm6-glass-step-1);
       border-color: var(--glass-hairline);
     }
-    [data-theme^="glass"] .context-lens-btn:hover {
+    /* Lens + worktree share one glass hover (bound/unbound included) */
+    [data-theme^="glass"] .context-lens-btn:hover,
+    [data-theme^="glass"] .wt-bind-btn:hover,
+    [data-theme^="glass"] .wt-bind-btn.wt-unbound:hover,
+    [data-theme^="glass"] .wt-bind-btn.wt-bound:hover,
+    [data-theme^="glass"] .wt-bind-btn.wt-bound-clean:hover,
+    [data-theme^="glass"] .wt-bind-btn.wt-bound-dirty:hover,
+    [data-theme^="glass"] .wt-bind-btn.wt-bound-conflict:hover {
       background: var(--pm6-glass-step-2);
       border-color: var(--glass-edge);
+      color: var(--text-primary);
+      opacity: 1;
+      filter: none;
     }
     [data-theme^="glass"] .context-lens-btn.cl-active {
       background: var(--pm6-glass-step-3);
       border-color: rgba(var(--pm6-glass-a-rgb), 0.40);
       box-shadow: inset 0 1px 0 var(--glass-edge);
     }
-    [data-theme^="glass"] .context-lens-popover {
+    /* Header sprout menus = same glass plate treatment as model/mode popouts */
+    [data-theme^="glass"] .pm6-tb-search-pop,
+    [data-theme^="glass"] .context-hover-module,
+    [data-theme^="glass"] .context-lens-popover,
+    [data-theme^="glass"] .wt-bind-dropdown,
+    [data-theme^="glass"] .pm6-chat-more-menu,
+    [data-theme^="glass"] .pm6-tb-menu,
+    [data-theme^="glass"] .msg-runtime-popover,
+    [data-theme^="glass"] .pm6-chat-mini-popout-portal,
+    [data-theme^="glass"] .pm6-chat-mode-popout-portal,
+    [data-theme^="glass"] .pm6-chat-persona-popout-portal,
+    [data-theme^="glass"] .pm6-chat-effort-popout-portal,
+    [data-theme^="glass"] .pm6-chat-pt-popout-portal {
       background: var(--pm6-glass-plate);
       border: 1px solid var(--glass-hairline);
       box-shadow: inset 0 1px 0 var(--glass-edge),
         var(--pm6-glass-drop);
+      border-radius: 12px;
     }
     [data-theme="glass-light"] .context-lens-btn.cl-active {
       color: var(--text-primary);
@@ -487,15 +816,94 @@
        ============================================================ */
 
     /* --- Worktree Binding Button --- */
-    .wt-bind-btn { width: 32px; height: 32px; background: none; border: none; cursor: pointer; position: relative; display: flex; align-items: center; justify-content: center; }
+    .wt-bind-btn {
+      width: 28px;
+      height: 28px;
+      background: var(--surface-elevated);
+      border: 1px solid var(--border-light);
+      border-radius: 6px;
+      color: var(--text-muted);
+      cursor: pointer;
+      position: relative;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      flex-shrink: 0;
+      padding: 0;
+      transition: all 0.2s ease;
+    }
+    /* Match .context-lens-btn:hover exactly (all bind states) */
+    .wt-bind-btn:hover,
+    .wt-bind-btn.wt-unbound:hover,
+    .wt-bind-btn.wt-bound:hover,
+    .wt-bind-btn.wt-bound-clean:hover,
+    .wt-bind-btn.wt-bound-dirty:hover,
+    .wt-bind-btn.wt-bound-conflict:hover {
+      color: var(--text-primary);
+      border-color: var(--accent-blue);
+      background: var(--surface);
+      opacity: 1;
+      filter: none;
+    }
     .wt-bind-btn.wt-unbound { opacity: 0.4; filter: grayscale(1); }
     .wt-bind-btn.wt-bound { opacity: 1; color: var(--accent-lime); }
     .wt-dirty-dot { position: absolute; top: 2px; right: 2px; width: 6px; height: 6px; border-radius: 50%; background: var(--accent-warning); animation: wtDirtyPulse 2s infinite; }
     .wt-conflict-triangle { position: absolute; top: 1px; right: 1px; color: var(--accent-error); font-size: 8px; }
 
-    /* --- Worktree Dropdown --- */
-    .wt-bind-dropdown { width: 260px; position: absolute; top: 100%; right: 0; z-index: 200; background: var(--surface-elevated); border: 1px solid var(--border-light); border-radius: 8px; box-shadow: 0 8px 24px rgba(0,0,0,0.25); padding: 4px 0; opacity: 0; pointer-events: none; transform: translateY(-4px); transition: all 0.15s ease; }
-    .wt-bind-dropdown.active { opacity: 1; pointer-events: auto; transform: translateY(0); }
+    /* --- Worktree Dropdown (click-to-sprout) --- */
+    .wt-bind-dropdown {
+      display: none;
+      width: 260px;
+      position: absolute;
+      top: calc(100% + 6px);
+      right: 0;
+      z-index: 200;
+      background: var(--surface-elevated);
+      border: 1px solid var(--border);
+      border-radius: var(--radius-md);
+      box-shadow: var(--elev-3);
+      padding: var(--xs) 0;
+      --pm6-sprout-ox: 88%;
+      --pm6-sprout-oy: 0%;
+      --pm6-sprout-tx: 0px;
+      --pm6-sprout-ty: -10px;
+      --pm6-sprout-sx: 0.72;
+      --pm6-sprout-sy: 0.48;
+      transform-origin: var(--pm6-sprout-ox) var(--pm6-sprout-oy);
+      opacity: 0;
+      transform: translate3d(var(--pm6-sprout-tx), var(--pm6-sprout-ty), 0)
+        scale3d(var(--pm6-sprout-sx), var(--pm6-sprout-sy), 1);
+      visibility: hidden;
+      pointer-events: none;
+      transition:
+        opacity 160ms var(--ease-out),
+        transform 300ms cubic-bezier(0.22, 1.55, 0.36, 1),
+        visibility 0s linear 300ms;
+      will-change: transform, opacity;
+    }
+    .wt-bind-dropdown.is-open {
+      display: block;
+      opacity: 1;
+      transform: translate3d(0, 0, 0) scale3d(1, 1, 1);
+      visibility: visible;
+      pointer-events: auto;
+      transition:
+        opacity 140ms var(--ease-out),
+        transform 300ms cubic-bezier(0.22, 1.55, 0.36, 1),
+        visibility 0s;
+    }
+    .wt-bind-dropdown.is-closing {
+      display: block;
+      opacity: 0;
+      transform: translate3d(var(--pm6-sprout-tx), var(--pm6-sprout-ty), 0)
+        scale3d(var(--pm6-sprout-sx), var(--pm6-sprout-sy), 1);
+      visibility: hidden;
+      pointer-events: none;
+      transition:
+        opacity 45ms ease-in 175ms,
+        transform 220ms cubic-bezier(0.45, 0.05, 0.55, 0.2),
+        visibility 0s linear 220ms;
+    }
     .wt-info-row { padding: 10px 14px; border-bottom: 1px solid var(--border-light); }
     .wt-branch-name { font-weight: 700; font-size: 12px; font-family: monospace; color: var(--text-primary); margin-bottom: 2px; }
     .wt-path { font-size: 10px; color: var(--text-muted); margin-bottom: 6px; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
@@ -593,14 +1001,14 @@
     .sa-batch-footer { font-size: 10px; color: var(--text-muted); margin-top: 10px; font-style: italic; }
 
     /* --- Crew Board --- */
-    .sa-crew-board { border: 2px solid color-mix(in srgb, var(--accent-blue) 25%, transparent); border-radius: 10px; padding: 16px; margin: 12px 0; background: color-mix(in srgb, var(--accent-blue) 4%, transparent); }
-    .sa-crew-header { font-weight: 700; font-size: 14px; color: var(--text-primary); margin-bottom: 12px; display: flex; align-items: center; gap: 8px; }
-    .sa-crew-members-bar { display: flex; gap: 8px; margin-bottom: 14px; flex-wrap: wrap; }
-    .sa-crew-member-chip { display: flex; align-items: center; gap: 6px; padding: 5px 12px; border-radius: 20px; border: 1px solid var(--border-light); font-size: 10px; background: var(--surface); font-weight: 600; }
+    .sa-crew-board { border: 2px solid color-mix(in srgb, var(--accent-blue) 25%, transparent); border-radius: 10px; padding: 16px; margin: 12px 0; background: color-mix(in srgb, var(--accent-blue) 4%, transparent); max-width: 100%; min-width: 0; box-sizing: border-box; overflow-x: auto; }
+    .sa-crew-header { font-weight: 700; font-size: 14px; color: var(--text-primary); margin-bottom: 12px; display: flex; align-items: center; gap: 8px; flex-wrap: wrap; min-width: 0; }
+    .sa-crew-members-bar { display: flex; gap: 8px; margin-bottom: 14px; flex-wrap: wrap; min-width: 0; }
+    .sa-crew-member-chip { display: flex; align-items: center; gap: 6px; padding: 5px 12px; border-radius: 20px; border: 1px solid var(--border-light); font-size: 10px; background: var(--surface); font-weight: 600; max-width: 100%; min-width: 0; }
     .sa-crew-member-chip .member-dot { width: 8px; height: 8px; border-radius: 50%; flex-shrink: 0; }
     .sa-crew-member-chip .member-model { font-weight: 400; color: var(--text-muted); font-size: 10px; }
-    .sa-crew-debate { border-top: 1px solid var(--border-light); padding-top: 12px; }
-    .sa-crew-msg { padding: 10px 14px; margin: 8px 0; border-radius: 8px; font-size: 11px; background: var(--surface); line-height: 1.5; animation: crewDebateSlide 0.3s ease; }
+    .sa-crew-debate { border-top: 1px solid var(--border-light); padding-top: 12px; min-width: 0; }
+    .sa-crew-msg { padding: 10px 14px; margin: 8px 0; border-radius: 8px; font-size: 11px; background: var(--surface); line-height: 1.5; animation: crewDebateSlide 0.3s ease; max-width: 100%; min-width: 0; overflow-x: auto; box-sizing: border-box; overflow-wrap: anywhere; word-break: break-word; }
     .sa-crew-msg .crew-author { font-weight: 700; font-size: 10px; margin-bottom: 5px; text-transform: uppercase; letter-spacing: 0.06em; }
     .sa-crew-msg.from-architect { background: color-mix(in srgb, var(--accent-blue) 8%, var(--surface)); border: 1px solid color-mix(in srgb, var(--accent-blue) 30%, var(--border)); }
     .sa-crew-msg.from-architect .crew-author { color: var(--accent-blue); }
@@ -610,14 +1018,22 @@
     .sa-crew-msg.from-api .crew-author { color: var(--accent-lime); }
     .sa-crew-msg.from-lead { background: color-mix(in srgb, var(--accent-orange) 8%, var(--surface)); border: 1px solid color-mix(in srgb, var(--accent-orange) 30%, var(--border)); }
     .sa-crew-msg.from-lead .crew-author { color: var(--accent-orange); }
-    .sa-crew-synthesis { background: color-mix(in srgb, var(--accent-lime) 6%, transparent); border: 1px solid color-mix(in srgb, var(--accent-lime) 18%, transparent); padding: 14px; border-radius: 8px; margin: 12px 0; font-size: 11px; line-height: 1.6; }
+    .sa-crew-synthesis { background: color-mix(in srgb, var(--accent-lime) 6%, transparent); border: 1px solid color-mix(in srgb, var(--accent-lime) 18%, transparent); padding: 14px; border-radius: 8px; margin: 12px 0; font-size: 11px; line-height: 1.6; max-width: 100%; min-width: 0; box-sizing: border-box; overflow-wrap: anywhere; }
     .sa-crew-synthesis .synth-title { font-weight: 700; font-size: 12px; margin-bottom: 8px; color: var(--accent-lime); }
-    .sa-crew-confirmation { background: var(--surface-elevated); padding: 14px; border-radius: 8px; margin: 12px 0; border: 1px solid var(--border-light); }
+    .sa-crew-confirmation { background: var(--surface-elevated); padding: 14px; border-radius: 8px; margin: 12px 0; border: 1px solid var(--border-light); max-width: 100%; min-width: 0; box-sizing: border-box; }
     .sa-crew-confirmation .conf-title { font-weight: 700; font-size: 11px; margin-bottom: 8px; text-transform: uppercase; letter-spacing: 0.06em; color: var(--text-muted); }
-    .sa-crew-member-row { display: flex; justify-content: space-between; padding: 5px 0; font-size: 11px; border-bottom: 1px solid var(--border-light); }
+    .sa-crew-member-row { display: flex; justify-content: space-between; padding: 5px 0; font-size: 11px; border-bottom: 1px solid var(--border-light); gap: var(--sm); min-width: 0; }
     .sa-crew-member-row:last-child { border-bottom: none; }
-    .sa-crew-member-row .role-label { font-weight: 600; color: var(--text-primary); }
-    .sa-crew-member-row .model-label { color: var(--text-muted); font-family: monospace; font-size: 10px; }
+    .sa-crew-member-row .role-label { font-weight: 600; color: var(--text-primary); min-width: 0; }
+    .sa-crew-member-row .model-label { color: var(--text-muted); font-family: monospace; font-size: 10px; min-width: 0; overflow: hidden; text-overflow: ellipsis; }
+    /* Mono endpoint / pre blocks inside crew debate stay inside the card */
+    .sa-crew-msg .pm6-preblock,
+    .msg-body .pm6-preblock {
+      margin: 6px 0; padding: 6px 8px; background: var(--surface); border-radius: var(--border-radius);
+      font-family: var(--mono-font, var(--font-mono), monospace); font-size: 10px;
+      white-space: pre-wrap; overflow-x: auto; max-width: 100%; box-sizing: border-box;
+      overflow-wrap: anywhere; word-break: break-word;
+    }
 
     /* --- Source Control Accordion --- */
     .sc-accordion { display: flex; flex-direction: column; }
@@ -682,7 +1098,6 @@
     [data-theme^="glass"] .subagent-card { background: var(--pm6-glass-step-2); border: 1px solid var(--glass-hairline); }
     [data-theme^="glass"] .sa-crew-board { background: rgba(var(--pm6-glass-a-rgb),0.07); border-color: rgba(var(--pm6-glass-a-rgb),0.20); }
     [data-theme^="glass"] .sa-batch-card { background: var(--pm6-glass-step-1); }
-    [data-theme^="glass"] .wt-bind-dropdown { background: var(--pm6-glass-plate); box-shadow: inset 0 1px 0 var(--glass-edge), var(--pm6-glass-drop); }
     [data-theme^="glass"] .wt-create-modal .wt-modal-inner { background: var(--pm6-glass-plate); box-shadow: inset 0 1px 0 var(--glass-edge), 0 16px 48px var(--pm6-glass-pane-shadow2); }
     [data-theme^="glass"] .wt-merge-modal .wt-merge-inner { background: var(--pm6-glass-plate); box-shadow: inset 0 1px 0 var(--glass-edge), 0 16px 48px var(--pm6-glass-pane-shadow2); }
     [data-theme^="glass"] .sa-crew-msg { background: var(--pm6-glass-step-1); }
@@ -694,7 +1109,17 @@
     [data-theme^="retro"] .sa-persona-label { font-family: var(--display-font); letter-spacing: 1px; text-transform: uppercase; }
     [data-theme^="retro"] .sa-crew-board { border-radius: 0; border: var(--border-width) solid var(--accent-blue); }
     [data-theme^="retro"] .sa-batch-card { border-radius: 0; }
-    [data-theme^="retro"] .wt-bind-dropdown { border-radius: 0; }
+    [data-theme^="retro"] .context-hover-module,
+    [data-theme^="retro"] .context-lens-popover,
+    [data-theme^="retro"] .wt-bind-dropdown,
+    [data-theme^="retro"] .pm6-chat-more-menu,
+    [data-theme^="retro"] .pm6-tb-menu,
+    [data-theme^="retro"] .pm6-tb-search-pop,
+    [data-theme^="retro"] .pm6-chat-mini-popout-portal,
+    [data-theme^="retro"] .pm6-chat-mode-popout-portal,
+    [data-theme^="retro"] .pm6-chat-persona-popout-portal,
+    [data-theme^="retro"] .pm6-chat-effort-popout-portal,
+    [data-theme^="retro"] .pm6-chat-pt-popout-portal { border-radius: 0; }
     [data-theme^="retro"] .wt-create-modal .wt-modal-inner { border-radius: 0; border: var(--border-width) solid var(--border); }
     [data-theme^="retro"] .wt-merge-modal .wt-merge-inner { border-radius: 0; border: var(--border-width) solid var(--border); }
     [data-theme^="retro"] .sc-accordion-header { border-radius: 0; font-family: var(--display-font-sm, 'Rajdhani', sans-serif); letter-spacing: 0.08em; }
@@ -747,15 +1172,65 @@
     /* --- End New Component Stylesheet --- */
 
     /* --- Chat footer status --- */
-    .chat-footer-status { font-size: 10px; color: var(--text-muted); padding: var(--xs) var(--md); display: flex; align-items: center; gap: var(--sm); }
+    /* Content-sized pill that floats over the scrolling message stream
+       (position:absolute inside .pm6-chat-streamwrap). Sides stay transparent
+       so the thread scrolls behind; only the pill has a surface fill. */
+    .chat-footer-status {
+      font-size: 10px; color: var(--text-muted);
+      display: inline-flex; align-items: center; gap: var(--sm); padding: 0;
+      background: none; border: none; cursor: pointer; font-family: inherit;
+      -webkit-appearance: none; appearance: none;
+      min-width: 0; flex: 0 1 auto;
+      transition: color 0.15s;
+    }
     .chat-footer-status .subagent-dot { width: 6px; height: 6px; border-radius: 50%; background: var(--accent-lime); display: inline-block; animation: pulse 1.5s infinite; }
-    .files-touched-strip { font-size: 10px; padding: 0 var(--md) var(--xs); display: flex; flex-wrap: wrap; gap: var(--sm); align-items: center; }
-    .files-touched-strip .ft-file { font-family: monospace; color: var(--text-secondary); cursor: pointer; display: inline-flex; align-items: center; gap: 3px; }
+    .files-touched-strip { font-size: 10px; padding: 0; display: inline-flex; flex-wrap: wrap; gap: var(--sm); align-items: center; max-width: 100%; overflow: hidden; }
+    .files-touched-strip .ft-file { font-family: monospace; color: var(--text-secondary); cursor: pointer; display: inline-flex; align-items: center; gap: 3px; max-width: 160px; overflow: hidden; white-space: nowrap; text-overflow: ellipsis; }
     .files-touched-strip .ft-file:hover { color: var(--accent-blue); }
     .files-touched-strip .ft-add { color: var(--accent-lime); font-weight: 600; }
     .files-touched-strip .ft-del { color: var(--accent-magenta); font-weight: 600; }
-    .chat-stream-footer { border-top: 1px solid var(--border-light); padding: var(--xs) 0; flex-shrink: 0; }
+    .chat-stream-footer {
+      position: absolute; left: 50%; bottom: var(--sm); transform: translateX(-50%);
+      z-index: 9;
+      width: max-content; max-width: calc(100% - 2 * var(--sm));
+      display: inline-flex; flex-wrap: nowrap; align-items: center; justify-content: center;
+      gap: var(--xs);
+      padding: 2px var(--sm);
+      /* Floating pill — content-sized, centered over the stream. Glass themes
+         override the fill/border below. */
+      background: var(--surface-elevated);
+      border: 1px solid var(--border-light);
+      border-radius: var(--radius-sm);
+      box-shadow: 0 2px 8px rgba(0,0,0,.10);
+    }
     .chat-stream-footer:empty { display: none; }
+    .chat-footer-files {
+      font-size: 10px; color: var(--text-secondary);
+      display: inline-flex; align-items: center; gap: var(--xs);
+      max-width: 100%; white-space: nowrap; overflow: hidden;
+      cursor: pointer; border: none; background: none; padding: 0;
+      font-family: inherit;
+      min-width: 0; flex: 0 1 auto;
+    }
+    .chat-stream-footer.pm6-footer-has-sa .chatFooterFiles::before {
+      content: '\00b7'; color: var(--text-muted); margin-right: var(--xs); flex: none;
+    }
+    .chat-footer-files:hover { color: var(--accent-blue); }
+    .chat-footer-files.is-open { color: var(--accent-primary); }
+    .chat-footer-files .ft-add { color: var(--accent-lime); font-weight: 600; }
+    .chat-footer-files .ft-del { color: var(--accent-magenta); font-weight: 600; }
+    .chat-footer-status:hover,
+    .chat-footer-status.is-open { color: var(--accent-blue); }
+    .pm6-footer-summary-label { overflow: hidden; text-overflow: ellipsis; max-width: 14rem; }
+    .pm6-footer-totals { flex: none; margin-left: var(--xs); font-variant-numeric: tabular-nums; font-weight: 600; }
+    .pm6-subagent-card.pm6-subagent-highlight { box-shadow: 0 0 0 2px var(--accent-primary); }
+    .pm6-chat-streamwrap.pm6-footer-active .messageStream {
+      /* Content inset, not scrollport shrink: the stream extends behind the
+         floating pill so the area around it is see-through live stream;
+         the bottom padding keeps the newest row clear of the pill when pinned. */
+      padding-bottom: var(--chat-footer-inset, calc(var(--chat-footer-stack-height, 0px) + var(--sm) + 8px));
+      scroll-padding-bottom: var(--chat-footer-inset, calc(var(--chat-footer-stack-height, 0px) + var(--sm) + 8px));
+    }
 
     /* --- Retro theme: boost small text readability --- */
     [data-theme^="retro"] .chat-footer-status,
@@ -796,18 +1271,15 @@
        Your authored motion and entrance animations should remain visible. */
 
     /* Minimum desktop layout mode (desktop IDE, no mobile stacking).
-       Triggered by either a 4:3-or-tighter aspect ratio or reduced viewport height. */
+       Triggered by either a 4:3-or-tighter aspect ratio or reduced viewport height.
+       Do NOT shrink title-bar horizontal padding or gap here — that pulled
+       “Puppet Master” into the pill edge and the project control toward the brand. */
     @media (max-aspect-ratio: 4/3), (max-height: 800px) {
-      .title-bar {
-        gap: var(--sm);
-        padding: 0 var(--sm) !important;
-      }
       .title-bar .page-tabs {
         margin-left: 1.25rem;
         font-size: 11px;
+        /* progressive ▼ overflow (wireTitleBarDensity) — do not force scroll */
         min-width: 0;
-        flex: 1;
-        overflow-x: auto;
         white-space: nowrap;
       }
       .title-bar .search-bar {
@@ -818,7 +1290,7 @@
       }
 
       .side-panel-slot {
-        width: var(--files-panel-w, 220px) !important;
+        width: var(--files-panel-w, 240px);
         min-width: 0 !important;
       }
       .files-panel {
@@ -845,18 +1317,19 @@
         min-width: 0 !important;
       }
 
+      /* margin/padding-right are now var(--xs) at every width (see
+         .editor-view in pm6-css-components-a) — only the sizing pair is
+         still short-window specific. */
       .editor-view {
         width: auto !important;
         min-width: 240px !important;
-        margin-right: var(--xs) !important;
-        padding-right: var(--xs) !important;
       }
       .editor-minimap {
         width: 20px;
       }
 
       .primary-content {
-        padding: var(--sm) !important;
+        padding: var(--sm) var(--sm) 0 !important;
       }
 
       .bottom-panel {
@@ -866,9 +1339,9 @@
       .floating-chat {
         right: 20px;
         top: 90px;
-        width: 420px;
+        width: max(380px, min(var(--floating-chat-w, 440px), 40vw));
         height: 500px;
-        min-width: 320px;
+        min-width: 380px;
         min-height: 360px;
       }
 

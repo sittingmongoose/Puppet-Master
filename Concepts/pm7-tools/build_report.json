@@ -1,0 +1,494 @@
+{
+  "generated": "2026-08-05 10:55:45",
+  "base": "/Users/jaredsmacbookair/Documents/PuppetMaster/Concepts/pm7-tools/base/PM7-base.html",
+  "base_sha256": "27a5d1da059608df2ebd248120f57f616721bca1245fc606f4885b5ac25ff4d2",
+  "base_sha_pinned": "27a5d1da059608df2ebd248120f57f616721bca1245fc606f4885b5ac25ff4d2",
+  "base_pin_ok": true,
+  "base_bytes": 3142754,
+  "transforms": [
+    {
+      "name": "T01_dead_css_selectors",
+      "status": "ok",
+      "bytes_before": 3142754,
+      "bytes_after": 3089807,
+      "bytes_delta": -52947,
+      "notes": {
+        "selectors_frozen": 399,
+        "rules_deleted": 360,
+        "rules_spliced": 30,
+        "keyframes_removed": [
+          "orch-hitl-pulse",
+          "pm6-panels-spin",
+          "slideInBottom",
+          "slideInLeft",
+          "zoomInBounce"
+        ],
+        "bytes_removed": 52947,
+        "design_band": [
+          40960,
+          61440
+        ],
+        "in_design_band": true
+      }
+    },
+    {
+      "name": "T02_shimmer_guard",
+      "status": "ok",
+      "bytes_before": 3089807,
+      "bytes_after": 3089679,
+      "bytes_delta": -128,
+      "notes": {
+        "removed": "guard comment + display:none rule"
+      }
+    },
+    {
+      "name": "T03_pm_sheen_killer",
+      "status": "ok",
+      "bytes_before": 3089679,
+      "bytes_after": 3089521,
+      "bytes_delta": -158,
+      "notes": {
+        "removed": "content:none ::before killer; comment rewritten"
+      }
+    },
+    {
+      "name": "T04_breadcrumb_stub",
+      "status": "ok",
+      "bytes_before": 3089521,
+      "bytes_after": 3089521,
+      "bytes_delta": 0,
+      "notes": {
+        "decision": "SKIP (already applied upstream in pm6 parts)",
+        "removed": null
+      }
+    },
+    {
+      "name": "T05_chat_suggestions_field",
+      "status": "ok",
+      "bytes_before": 3089521,
+      "bytes_after": 3089521,
+      "bytes_delta": 0,
+      "notes": {
+        "decision": "SKIP (already applied upstream in pm6 parts)",
+        "removed": null
+      }
+    },
+    {
+      "name": "T06_terminal_dead_interval",
+      "status": "ok",
+      "bytes_before": 3089521,
+      "bytes_after": 3089435,
+      "bytes_delta": -86,
+      "notes": {
+        "removed": "clockTick state field + 1s counter interval (never read)"
+      }
+    },
+    {
+      "name": "T07_merge_pointermove",
+      "status": "ok",
+      "bytes_before": 3089435,
+      "bytes_after": 3090474,
+      "bytes_delta": 1039,
+      "notes": {
+        "adaptation": "post-assert adapted: 1 UNCONDITIONAL document registration (dispatcher) + 1 guarded fallback occurrence; runtime listener count == 1 verified by Playwright probe"
+      }
+    },
+    {
+      "name": "T08_cooldown_dom_gating",
+      "status": "ok",
+      "bytes_before": 3090474,
+      "bytes_after": 3091886,
+      "bytes_delta": 1412,
+      "notes": {
+        "scope": "usage: tickCooldown + setCooldown writes gated (local ticker stands down after engine sync; setCooldown is the live writer); dashboard: 1s interval write gated; both flush via page.changed"
+      }
+    },
+    {
+      "name": "T09_terminal_feed_gating",
+      "status": "ok",
+      "bytes_before": 3091886,
+      "bytes_after": 3093008,
+      "bytes_delta": 1122,
+      "notes": {
+        "verified_buffer_model": "p.lines state append (cap 400) + renderTranscript(body, p.lines) rebuild confirmed on base before gating"
+      }
+    },
+    {
+      "name": "T10_snapshot_handler_gating",
+      "status": "ok",
+      "bytes_before": 3093008,
+      "bytes_after": 3094303,
+      "bytes_delta": 1295,
+      "notes": {
+        "wrapped": [
+          "pm6-js-dashboard on('usage.tick') -> pm7PageGate('dashboard', ...)"
+        ],
+        "skipped_not_hot": {
+          "dashboard run.state": "0 emissions in 30s idle census",
+          "panels renderAgents (run.state)": "excised upstream in the 2026-07-29 deferred-cleanup wave"
+        },
+        "excluded_event_semantic": [
+          "run.gate CTAs",
+          "usage.alert toasts",
+          "bottom term.feed/web.op",
+          "orchestrator (already page-gated upstream)"
+        ]
+      }
+    },
+    {
+      "name": "T11_settings_data_defer",
+      "status": "ok",
+      "bytes_before": 3094303,
+      "bytes_after": 3095278,
+      "bytes_delta": 975,
+      "notes": {
+        "literal_bytes": 342033,
+        "deep_equal": true
+      }
+    },
+    {
+      "name": "T12_chat_data_defer",
+      "status": "ok",
+      "bytes_before": 3095278,
+      "bytes_after": 3095278,
+      "bytes_delta": 0,
+      "notes": {
+        "decision": "SKIP (per design default)",
+        "evidence": "pm6-js-chat-data is a JS object literal (single-quoted strings; not JSON) consumed via THREADS() during the initial docked-chat render. Instrumented probe (probes/defer_access.js, 6 runs on the pinned base): first window.PM6_CHAT_THREADS read lands -1ms..+4ms around first-paint and BEFORE first-paint in 2 of 6 runs -- post-first-paint access is NOT proven, so the text/plain + indirect-eval defer is not implemented."
+      }
+    },
+    {
+      "name": "T13_demo_files_defer",
+      "status": "ok",
+      "bytes_before": 3095278,
+      "bytes_after": 3095278,
+      "bytes_delta": 0,
+      "notes": {
+        "decision": "SKIP (per design default)",
+        "evidence": "Timing alone would pass: probe (probes/defer_access.js, 6 runs) shows the first PM_DEMO_TEXT.files read (key src/main.rs) at a stable +89..+93ms after first-paint. The block is nevertheless NOT deferred: it is executable code (IIFE with highlight helpers), not a data literal, and its eval mutates the engine-shared PM_DEMO_TEXT.files object consumed via multiple independent read paths (pm6-js-dashboard pm6RenderFile, the engine's inline file-render fallback reading its TEXT closure, chat editor docking). A lazy trigger would need accessor juggling on a live engine object with reentrancy handling (the block itself reads T.files during eval). The ~56KB parse win (~1-3ms) does not justify that risk -> design default-skip stands."
+      }
+    },
+    {
+      "name": "T14_page_init_defer",
+      "status": "ok",
+      "bytes_before": 3095278,
+      "bytes_after": 3095278,
+      "bytes_delta": 0,
+      "notes": {
+        "decision": "SKIP -- all three candidates fail the eligibility audit",
+        "audit": {
+          "projects": "boot does NOT render from PM_DEMO.state snapshots: the pickup call onRunState(null) is a no-op (guard `(p && (p.state||p.status)) || ''`), so card chips depend on LIVE run.state/run.gate subscriptions registered at eval; deferring would leave stale chips after a chapter jump until the next run.state emission (which never comes while idle: census 0/30s). INELIGIBLE.",
+          "wizard": "boot resync() does reconstruct from the wizard snapshot, BUT the wizard.topic subscription fires a GLOBAL toast (say() on topic unlock) while the page is hidden -- a cross-page side effect registered at boot. Deferring loses those toasts (PM6 shows them from any page). Doubt rule -> ship eager. INELIGIBLE.",
+          "usage": "pm6-js-usage does stateful event ACCUMULATION, not snapshot renders: usage.tick appends only unseen engine-ledger rows and seeds its `seen` set from the backlog AT INIT TIME -- deferred init would permanently drop every row that arrived before first visit (PM6 appends them live into the hidden page). INELIGIBLE."
+        },
+        "consequence": "PM7_LAZY registry not installed (would be dead code with zero registered pages); PM_PAGES.go untouched"
+      }
+    },
+    {
+      "name": "T15_static_colormix_precompute",
+      "status": "ok",
+      "bytes_before": 3095278,
+      "bytes_after": 3095278,
+      "bytes_delta": 0,
+      "notes": {
+        "decision": "SKIP (measured yield below design threshold)",
+        "colormix_total": 711,
+        "colormix_zero_var": 2,
+        "zero_var_sites": [
+          "color-mix(in srgb, #fff 16%, transparent)",
+          "color-mix(in srgb,currentColor 20%,transparent)"
+        ],
+        "threshold": 30
+      }
+    },
+    {
+      "name": "T16_glass_wallpaper_prebake",
+      "status": "ok",
+      "bytes_before": 3095278,
+      "bytes_after": 3267964,
+      "bytes_delta": 172686,
+      "notes": {
+        "assets": {
+          "file": "/Users/jaredsmacbookair/Documents/PuppetMaster/Concepts/pm7-tools/baked_wallpaper.json",
+          "tier": 5,
+          "viewport": {
+            "width": 1120,
+            "height": 630
+          },
+          "quality": 0.5,
+          "per_image_bytes": {
+            "mesh_light": 6079,
+            "mesh_dark": 5943,
+            "depth_base_light": 6311,
+            "depth_base_dark": 6719,
+            "depth_billow_light": 62679,
+            "depth_billow_dark": 89127
+          },
+          "total_data_uri_bytes": 176858,
+          "cap_bytes": 184320
+        },
+        "float_colors_presaturated": {
+          "rgba(255,255,255,.85) glass-light": "rgba(255,255,255,.85)",
+          "rgba(255,255,255,.75) glass-light": "rgba(255,255,255,.75)",
+          "rgba(244,199,235,.7) glass-light": "rgba(248,198,238,.7)",
+          "rgba(255,255,255,.9) glass-light": "rgba(255,255,255,.9)",
+          "rgba(214,190,246,.8) glass-light": "rgba(216,189,252,.8)",
+          "rgba(255,255,255,.8) glass-light": "rgba(255,255,255,.8)",
+          "rgba(203,148,206,.5) glass-dark": "rgba(209,146,212,.5)",
+          "rgba(146,110,196,.45) glass-dark": "rgba(149,108,207,.45)",
+          "rgba(226,152,142,.45) glass-dark": "rgba(235,150,138,.45)",
+          "rgba(178,120,182,.5) glass-dark": "rgba(184,117,189,.5)",
+          "rgba(196,130,148,.45) glass-dark": "rgba(204,128,148,.45)",
+          "rgba(233,166,152,.5) glass-dark": "rgba(241,164,148,.5)"
+        },
+        "approved_visual_change": "wallpaper blur/saturate baked into images; pm-sky-drift removed; floats+parallax stay live; ONE app-shell backdrop-filter unchanged"
+      }
+    },
+    {
+      "name": "T17_slint_clarity_layer",
+      "status": "ok",
+      "bytes_before": 3267964,
+      "bytes_after": 3278877,
+      "bytes_delta": 10913,
+      "notes": {
+        "readme_bytes": 6274,
+        "banners": 32,
+        "adaptation": "design memo said 31 blocks; built doc has 32 (T11 settings-data JSON block) -- all bannered"
+      }
+    },
+    {
+      "name": "T18_pm7_visual_cleanup",
+      "status": "ok",
+      "bytes_before": 3278877,
+      "bytes_after": 3277044,
+      "bytes_delta": -1833,
+      "notes": {
+        "search_result_hover": "transparent layout rail retained; colored rail removed",
+        "selected_chat_thread_stripes_removed": 14,
+        "topic_map_header_min_height": "--pm6-wiz-colhead-h (22px fallback)",
+        "preview_frost_owner": ".pm6-wiz-preview > .pm6-wiz-col-head",
+        "preview_document_lift": "negative measured header margin + matching top padding"
+      }
+    },
+    {
+      "name": "T19_pm7_preview_fit",
+      "status": "ok",
+      "bytes_before": 3277044,
+      "bytes_after": 3277227,
+      "bytes_delta": 183,
+      "notes": {
+        "preview_header_inset": "1px inline inset preserves the document border edge"
+      }
+    },
+    {
+      "name": "T20_home_workspace",
+      "status": "ok",
+      "bytes_before": 3277227,
+      "bytes_after": 3424764,
+      "bytes_delta": 147537,
+      "notes": {
+        "marker": "PM7 T20: Home workspace model-first transform",
+        "markup_bytes": 5565,
+        "style_bytes": 12043,
+        "script_bytes": 130668,
+        "legacy_surface_dnd_removed": true,
+        "legacy_surface_swap_token_absent": true,
+        "topbar_menu_actions": [
+          "Open Panel",
+          "Open Browser in Panel",
+          "Collapse Bottom Terminal"
+        ],
+        "topbar_menu_action_count": 3,
+        "settings_reset_id": "general.startup.reset-home-layout",
+        "injection_blocks": [
+          "pm6-css-dashboard",
+          "pm6-js-dashboard"
+        ],
+        "model_identity": [
+          "editor_panel_1",
+          "editor_panel_2",
+          "editor_panel_3",
+          "editor_panel_4",
+          "dashboard",
+          "chat",
+          "terminal_section:<terminal_section_id>"
+        ],
+        "hosts": [
+          "home_main",
+          "dock_left",
+          "dock_right",
+          "dock_top",
+          "dock_bottom",
+          "floating"
+        ],
+        "commit_rule": "preview local; one command/event/persist on semantic end",
+        "native_authority": "Slint 1.17.1 multi-window; web in-canvas floating fallback"
+      }
+    }
+  ],
+  "gates": [
+    {
+      "name": "brace_balance",
+      "pass": true,
+      "detail": [
+        {
+          "block": "style@10668",
+          "balanced": true
+        },
+        {
+          "block": "pm4-settings-css",
+          "balanced": true
+        },
+        {
+          "block": "pm6-css-global",
+          "balanced": true
+        },
+        {
+          "block": "pm6-css-dashboard",
+          "balanced": true
+        },
+        {
+          "block": "pm6-css-projects",
+          "balanced": true
+        },
+        {
+          "block": "pm6-css-wizard",
+          "balanced": true
+        },
+        {
+          "block": "pm6-css-orchestrator",
+          "balanced": true
+        },
+        {
+          "block": "pm6-css-usage",
+          "balanced": true
+        },
+        {
+          "block": "pm6-css-chat",
+          "balanced": true
+        },
+        {
+          "block": "pm6-css-bottom",
+          "balanced": true
+        },
+        {
+          "block": "pm6-css-panels",
+          "balanced": true
+        },
+        {
+          "block": "pm6-css-cozy-shelves",
+          "balanced": true
+        },
+        {
+          "block": "style@1487749",
+          "balanced": true
+        }
+      ]
+    },
+    {
+      "name": "css_vars_defined",
+      "pass": true,
+      "undefined_new": [],
+      "undefined_preexisting_in_base": []
+    },
+    {
+      "name": "js_node_check",
+      "pass": true,
+      "detail": [
+        {
+          "block": "script@6657",
+          "pass": true
+        },
+        {
+          "block": "script@1527929",
+          "pass": true
+        },
+        {
+          "block": "script@1636771",
+          "pass": true
+        },
+        {
+          "block": "script@1795400",
+          "pass": true
+        },
+        {
+          "block": "pm7-settings-data",
+          "pass": true,
+          "skipped": "non-JS type: application/json"
+        },
+        {
+          "block": "pm4-settings-js",
+          "pass": true
+        },
+        {
+          "block": "pm6-js-globals",
+          "pass": true
+        },
+        {
+          "block": "pm6-js-demo-engine",
+          "pass": true
+        },
+        {
+          "block": "pm6-js-demo-files",
+          "pass": true
+        },
+        {
+          "block": "pm6-js-dashboard",
+          "pass": true
+        },
+        {
+          "block": "pm6-js-projects",
+          "pass": true
+        },
+        {
+          "block": "pm6-js-wizard",
+          "pass": true
+        },
+        {
+          "block": "pm6-js-orchestrator",
+          "pass": true
+        },
+        {
+          "block": "pm6-js-usage",
+          "pass": true
+        },
+        {
+          "block": "pm6-js-chat-data",
+          "pass": true
+        },
+        {
+          "block": "pm6-js-chat",
+          "pass": true
+        },
+        {
+          "block": "pm6-js-bottom",
+          "pass": true
+        },
+        {
+          "block": "pm6-js-panels",
+          "pass": true
+        },
+        {
+          "block": "pm6-js-cozy-shelves",
+          "pass": true
+        }
+      ]
+    },
+    {
+      "name": "no_emoji",
+      "pass": true,
+      "stdout": "check_no_emoji: 566 WARNING glyph(s) >= U+2190 outside allowlist (not banned ranges):\n  ~ '\u2212' U+2212 MINUS SIGN x3 (lines [8999, 42267, 42268])\n  ~ '\u2500' U+2500 BOX DRAWINGS LIGHT HORIZONTAL x435 (lines [214, 214, 214, 214, 1804, 1804, 1804, 1804]\u2026)\n  ~ '\u2502' U+2502 BOX DRAWINGS LIGHT VERTICAL x1 (lines [22578])\n  ~ '\u2550' U+2550 BOX DRAWINGS DOUBLE HORIZONTAL x126 (lines [25372, 25372, 25372, 25372, 25372, 25372, 25372, 25372]\u2026)\n  ~ '\u25b6' U+25B6 BLACK RIGHT-POINTING TRIANGLE x1 (lines [25368])\ncheck_no_emoji: OK (0 banned glyphs; 566 warnings)\n",
+      "stderr": ""
+    }
+  ],
+  "block_census": {
+    "total": 31,
+    "style": 13,
+    "script": 18
+  },
+  "output": "Concepts/PMConcept7.html",
+  "output_bytes": 3424764,
+  "output_sha256": "91665182b3db3c7ce53018f4ea12e82fc6c65c0abc8b9c0e5c72869d887f21db",
+  "total_bytes_removed": -282010,
+  "gates_all_pass": true
+}

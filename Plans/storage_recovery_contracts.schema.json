@@ -1,0 +1,418 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://puppetmaster.local/schemas/storage_recovery_contracts/1.0.0/storage_recovery_contracts.schema.json",
+  "title": "Puppet Master storage recovery contracts",
+  "description": "Closed storage-owned migration preflight and journal-derived progress contracts. The x-puppet-master-assertions keyword is a mandatory local assertion vocabulary: a consumer that cannot enforce every listed arithmetic relation must fail preflight rather than accept the instance from structural validation alone.",
+  "oneOf": [
+    {
+      "$ref": "#/$defs/migration_preflight_result"
+    },
+    {
+      "$ref": "#/$defs/migration_progress_snapshot"
+    }
+  ],
+  "$defs": {
+    "migration_preflight_result": {
+      "title": "MigrationPreflightResult",
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "outcome",
+        "reason_code",
+        "filesystem_ref",
+        "free_bytes",
+        "required_free_bytes",
+        "backup_bytes",
+        "staging_bytes",
+        "reserve_bytes",
+        "checked_at_utc"
+      ],
+      "properties": {
+        "outcome": {
+          "enum": [
+            "ready",
+            "blocked"
+          ]
+        },
+        "reason_code": {
+          "enum": [
+            null,
+            "blocked_insufficient_space"
+          ]
+        },
+        "filesystem_ref": {
+          "description": "Non-secret stable filesystem identity; never an absolute path.",
+          "type": "string",
+          "minLength": 1
+        },
+        "free_bytes": {
+          "type": "integer",
+          "minimum": 0
+        },
+        "required_free_bytes": {
+          "type": "integer",
+          "minimum": 0
+        },
+        "backup_bytes": {
+          "type": "integer",
+          "minimum": 0
+        },
+        "staging_bytes": {
+          "type": "integer",
+          "minimum": 0
+        },
+        "reserve_bytes": {
+          "type": "integer",
+          "minimum": 268435456
+        },
+        "checked_at_utc": {
+          "type": "string",
+          "format": "date-time"
+        }
+      },
+      "allOf": [
+        {
+          "if": {
+            "properties": {
+              "outcome": {
+                "const": "ready"
+              }
+            },
+            "required": [
+              "outcome"
+            ]
+          },
+          "then": {
+            "properties": {
+              "reason_code": {
+                "const": null
+              }
+            }
+          }
+        },
+        {
+          "if": {
+            "properties": {
+              "outcome": {
+                "const": "blocked"
+              }
+            },
+            "required": [
+              "outcome"
+            ]
+          },
+          "then": {
+            "properties": {
+              "reason_code": {
+                "const": "blocked_insufficient_space"
+              }
+            }
+          }
+        }
+      ],
+      "x-puppet-master-assertions": [
+        {
+          "id": "reserve_formula",
+          "expression": "reserve_bytes == max(268435456, ceil(0.10 * (backup_bytes + staging_bytes)))"
+        },
+        {
+          "id": "required_free_formula",
+          "expression": "required_free_bytes == backup_bytes + staging_bytes + reserve_bytes"
+        },
+        {
+          "id": "ready_space_pairing",
+          "expression": "outcome != 'ready' or free_bytes >= required_free_bytes"
+        },
+        {
+          "id": "blocked_space_pairing",
+          "expression": "outcome != 'blocked' or free_bytes < required_free_bytes"
+        }
+      ]
+    },
+    "migration_progress_snapshot": {
+      "title": "MigrationProgressSnapshot",
+      "description": "A projection derived only from the matching durable storage migration journal; it is not a receipt and carries no inferred percentage or ETA.",
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "migration_id",
+        "journal_ref",
+        "phase",
+        "stable_step_label",
+        "completed_steps",
+        "total_steps",
+        "cancellable",
+        "updated_at_utc"
+      ],
+      "properties": {
+        "migration_id": {
+          "type": "string",
+          "minLength": 1
+        },
+        "journal_ref": {
+          "type": "string",
+          "minLength": 1
+        },
+        "phase": {
+          "enum": [
+            "preflight",
+            "backup_in_progress",
+            "backup_verified",
+            "applying",
+            "pre_stamp_verified",
+            "stamp_committed",
+            "post_stamp_verifying",
+            "committed",
+            "restore_required",
+            "restoring",
+            "rolled_back",
+            "blocked"
+          ]
+        },
+        "stable_step_label": {
+          "type": "string",
+          "minLength": 1
+        },
+        "completed_steps": {
+          "type": "integer",
+          "minimum": 0
+        },
+        "total_steps": {
+          "type": "integer",
+          "minimum": 0
+        },
+        "bytes_done": {
+          "type": "integer",
+          "minimum": 0
+        },
+        "bytes_total": {
+          "type": "integer",
+          "minimum": 0
+        },
+        "cancellable": {
+          "type": "boolean"
+        },
+        "preflight_result": {
+          "$ref": "#/$defs/migration_preflight_result"
+        },
+        "backup_ref": {
+          "type": "string",
+          "minLength": 1
+        },
+        "data_loss_risk": {
+          "type": "object",
+          "additionalProperties": false,
+          "required": [
+            "class",
+            "backup_boundary_ref",
+            "affected_family_ids",
+            "summary_ref"
+          ],
+          "properties": {
+            "class": {
+              "enum": [
+                "none",
+                "post_backup_writes_will_be_lost",
+                "unknown_due_corruption"
+              ]
+            },
+            "backup_boundary_ref": {
+              "type": [
+                "string",
+                "null"
+              ]
+            },
+            "affected_family_ids": {
+              "type": "array",
+              "items": {
+                "type": "string",
+                "minLength": 1
+              },
+              "uniqueItems": true
+            },
+            "summary_ref": {
+              "type": [
+                "string",
+                "null"
+              ]
+            }
+          }
+        },
+        "updated_at_utc": {
+          "type": "string",
+          "format": "date-time"
+        },
+        "terminal_receipt_ref": {
+          "description": "Reference to the one storage-registry pm.storage_value.migration_receipt.v1 receipt; never a peer progress receipt.",
+          "type": "string",
+          "minLength": 1
+        }
+      },
+      "dependentRequired": {
+        "bytes_done": [
+          "bytes_total"
+        ],
+        "bytes_total": [
+          "bytes_done"
+        ]
+      },
+      "allOf": [
+        {
+          "if": {
+            "properties": {
+              "phase": {
+                "const": "preflight"
+              }
+            },
+            "required": [
+              "phase"
+            ]
+          },
+          "then": {
+            "properties": {
+              "cancellable": {
+                "const": true
+              }
+            }
+          },
+          "else": {
+            "properties": {
+              "cancellable": {
+                "const": false
+              }
+            },
+            "required": [
+              "preflight_result"
+            ]
+          }
+        },
+        {
+          "if": {
+            "properties": {
+              "phase": {
+                "enum": [
+                  "committed",
+                  "rolled_back"
+                ]
+              }
+            },
+            "required": [
+              "phase"
+            ]
+          },
+          "then": {
+            "required": [
+              "terminal_receipt_ref"
+            ],
+            "properties": {
+              "preflight_result": {
+                "properties": {
+                  "outcome": {
+                    "const": "ready"
+                  }
+                }
+              }
+            }
+          }
+        },
+        {
+          "if": {
+            "properties": {
+              "phase": {
+                "const": "blocked"
+              },
+              "preflight_result": {
+                "properties": {
+                  "outcome": {
+                    "const": "blocked"
+                  }
+                },
+                "required": [
+                  "outcome"
+                ]
+              }
+            },
+            "required": [
+              "phase",
+              "preflight_result"
+            ]
+          },
+          "then": {
+            "not": {
+              "required": [
+                "terminal_receipt_ref"
+              ]
+            }
+          }
+        },
+        {
+          "if": {
+            "properties": {
+              "phase": {
+                "const": "blocked"
+              },
+              "preflight_result": {
+                "properties": {
+                  "outcome": {
+                    "const": "ready"
+                  }
+                },
+                "required": [
+                  "outcome"
+                ]
+              }
+            },
+            "required": [
+              "phase",
+              "preflight_result"
+            ]
+          },
+          "then": {
+            "required": [
+              "terminal_receipt_ref"
+            ]
+          }
+        },
+        {
+          "if": {
+            "properties": {
+              "phase": {
+                "enum": [
+                  "preflight",
+                  "backup_in_progress",
+                  "backup_verified",
+                  "applying",
+                  "pre_stamp_verified",
+                  "stamp_committed",
+                  "post_stamp_verifying",
+                  "restore_required",
+                  "restoring"
+                ]
+              }
+            },
+            "required": [
+              "phase"
+            ]
+          },
+          "then": {
+            "not": {
+              "required": [
+                "terminal_receipt_ref"
+              ]
+            }
+          }
+        }
+      ],
+      "x-puppet-master-assertions": [
+        {
+          "id": "step_bounds",
+          "expression": "0 <= completed_steps <= total_steps"
+        },
+        {
+          "id": "byte_bounds_when_present",
+          "expression": "bytes_done is absent or 0 <= bytes_done <= bytes_total"
+        }
+      ]
+    }
+  }
+}

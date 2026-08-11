@@ -1,0 +1,346 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="friendly-dark">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Proto 05 — Drop then dock</title>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&family=Nunito:wght@600;700&family=Orbitron:wght@600;700&family=Quicksand:wght@500;600;700&family=Rajdhani:wght@500;600;700&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="_shared.css" />
+  <style>
+    .dd-host {
+      position: relative;
+      width: 100%; height: 100%;
+      display: flex; align-items: center; justify-content: center;
+      gap: 8px;
+    }
+    .dd-dropzone {
+      position: absolute;
+      left: 50%; top: calc(100% + 10px);
+      transform: translateX(-50%);
+      width: 260px;
+      z-index: 55;
+      pointer-events: none;
+    }
+    .dd-drop {
+      pointer-events: auto;
+      padding: 10px 12px;
+      border-left: 3px solid var(--n-accent);
+      display: flex; gap: 8px; align-items: flex-start;
+      animation: ddDropIn var(--motion-med) var(--ease-spring) both;
+    }
+    .dd-drop .t { font-size: 12px; font-weight: 700; }
+    .dd-drop .b { font-size: 11px; color: var(--text-muted); }
+    .dd-drop.fade {
+      animation: ddFade var(--motion-med) var(--ease-out) forwards;
+    }
+    .dd-drop.fly {
+      animation: ddFlyDock var(--motion-slow) var(--ease-out) forwards;
+    }
+    @keyframes ddDropIn {
+      from { opacity: 0; transform: translateY(-16px) scale(.9); }
+      to { opacity: 1; transform: translateY(0) scale(1); }
+    }
+    @keyframes ddFade {
+      to { opacity: 0; transform: translateY(8px) scale(.96); }
+    }
+    @keyframes ddFlyDock {
+      to {
+        opacity: .2;
+        transform: translate(110px, -52px) scale(.35);
+      }
+    }
+
+    .dd-dock {
+      position: relative;
+      width: 120px; height: 28px;
+      cursor: pointer;
+      flex: 0 0 auto;
+    }
+    .dd-dock.empty::after {
+      content: 'Dock';
+      position: absolute; inset: 0;
+      display: flex; align-items: center; justify-content: center;
+      font-size: 10px; font-weight: 700; color: var(--text-muted);
+      border: var(--border-width) dashed var(--border);
+      border-radius: var(--border-radius);
+    }
+    .dd-mini {
+      position: absolute;
+      left: 0; top: 2px;
+      width: 72px; height: 24px;
+      padding: 0 6px;
+      display: flex; align-items: center;
+      font-size: 9px; font-weight: 800;
+      white-space: nowrap; overflow: hidden; text-overflow: ellipsis;
+      border-left: 3px solid var(--n-accent);
+      transform-origin: left center;
+      transition: transform var(--motion-med) var(--ease-out), opacity var(--motion-med);
+    }
+    .dd-label {
+      font-size: 10px; font-weight: 700; color: var(--text-muted);
+      margin-right: 4px; white-space: nowrap;
+    }
+
+    .dd-panel {
+      position: absolute;
+      top: calc(100% + 8px);
+      right: 0;
+      width: 300px;
+      background: var(--surface-elevated);
+      border: var(--border-width) solid var(--border);
+      border-radius: var(--border-radius);
+      box-shadow: var(--elev-3);
+      padding: 8px;
+      z-index: 60;
+      opacity: 0;
+      transform: translateY(-8px) scale(.96);
+      pointer-events: none;
+      transition: opacity var(--motion-med), transform var(--motion-med) var(--ease-spring);
+    }
+    .dd-panel.open {
+      opacity: 1;
+      transform: translateY(0) scale(1);
+      pointer-events: auto;
+    }
+    .dd-panel-head {
+      display: flex; justify-content: space-between; align-items: center;
+      padding: 4px 4px 8px; font-size: 11px; font-weight: 700; color: var(--text-muted);
+    }
+    .dd-row {
+      display: flex; gap: 8px; align-items: flex-start;
+      padding: 8px; margin-bottom: 6px;
+      border: var(--border-width) solid var(--border-light);
+      border-radius: var(--border-radius);
+      border-left: 3px solid var(--n-accent);
+      background: var(--surface);
+      animation: ddRowIn var(--motion-med) var(--ease-out) both;
+    }
+    .dd-row .meta { flex: 1; }
+    .dd-row .t { font-size: 12px; font-weight: 700; }
+    .dd-row .b { font-size: 11px; color: var(--text-muted); }
+    @keyframes ddRowIn {
+      from { opacity: 0; transform: translateX(12px); }
+      to { opacity: 1; transform: translateX(0); }
+    }
+  </style>
+</head>
+<body>
+  <div class="app-shell">
+    <header class="title-bar">
+      <span class="app-name">Puppet Master</span>
+      <div class="project-dropdown"><span>tastebook</span><span>▼</span></div>
+      <nav class="page-tabs">
+        <span class="page-tab active">Home</span>
+        <span class="page-tab">Projects</span>
+        <span class="page-tab">Planning Wizard</span>
+        <span class="page-tab">Orchestrator</span>
+        <span class="page-tab">Usage</span>
+        <span class="page-tab">Settings</span>
+      </nav>
+      <div class="notify-slot">
+        <div class="dd-host">
+          <span class="dd-label" id="ddHint">drop →</span>
+          <div class="dd-dock empty" id="ddDock" title="Click to expand"></div>
+          <div class="dd-dropzone" id="ddZone"></div>
+          <div class="dd-panel" id="ddPanel">
+            <div class="dd-panel-head">
+              <span>Docked alerts</span>
+              <button type="button" class="clear-all-btn" id="ddClear">Clear all</button>
+            </div>
+            <div id="ddList"></div>
+          </div>
+        </div>
+      </div>
+      <input type="text" class="search-bar" placeholder="Search files, commands..." />
+      <select class="theme-select" id="themeSelect">
+        <option value="friendly-dark">Friendly Dark</option>
+        <option value="friendly-light">Friendly Light</option>
+        <option value="glass-dark">Glass Dark</option>
+        <option value="glass-light">Glass Light</option>
+        <option value="retro-dark">Retro Dark</option>
+        <option value="retro-light">Retro Light</option>
+        <option value="basic-dark">Basic Dark</option>
+        <option value="basic-light">Basic Light</option>
+      </select>
+    </header>
+    <div class="main-area">
+      <aside class="fake-side"><div class="dot"></div><div class="dot"></div><div class="dot"></div><span>CHAT</span></aside>
+      <main class="home-pane">
+        <div class="proto-banner">Proto 05 — Drop then dock</div>
+        <h1>Home</h1>
+        <p>Every notification drops under the title-bar center. Ephemeral fades away. Important shrinks and flies into a mini-card dock on the right of the slot.</p>
+        <div class="home-cards">
+          <div class="home-card"><strong>Projects</strong><span>3 active</span></div>
+          <div class="home-card"><strong>Runs</strong><span>Wave idle</span></div>
+          <div class="home-card"><strong>Usage</strong><span>42% today</span></div>
+        </div>
+      </main>
+      <aside class="fake-chat">
+        <div class="bubble">Watch the fly-to-dock motion.</div>
+        <div class="bubble me">Staging drop keeps chat clear.</div>
+      </aside>
+    </div>
+  </div>
+
+  <div class="demo-panel">
+    <h2>Proto 05 controls</h2>
+    <p class="hint">Center drop, then fly into a compact dock.</p>
+    <div class="row">
+      <button type="button" id="btnEph">Ephemeral</button>
+      <button type="button" class="primary" id="btnImp">Important</button>
+      <button type="button" id="btnWarn">Warning</button>
+    </div>
+    <div class="row">
+      <button type="button" id="btnReduced">Motion: full</button>
+      <button type="button" id="btnClear">Clear all</button>
+    </div>
+    <div class="demo-nav">
+      <a href="01-rightward-stack.html">01</a>
+      <a href="02-bell-accordion.html">02</a>
+      <a href="03-chip-rail.html">03</a>
+      <a href="04-latest-morph.html">04</a>
+      <a class="current" href="05-drop-then-dock.html">05</a>
+      <a href="06-fan-deck.html">06</a>
+    </div>
+  </div>
+
+  <script src="_shared.js"></script>
+  <script>
+(function () {
+  var S = window.PMNotifyShared;
+  S.bootTheme();
+  S.wireThemeSelect(document.getElementById('themeSelect'));
+  S.wireReduced(document.getElementById('btnReduced'));
+
+  var items = [];
+  var expanded = false;
+  var busy = false;
+  var queue = [];
+  var dock = document.getElementById('ddDock');
+  var zone = document.getElementById('ddZone');
+  var panel = document.getElementById('ddPanel');
+  var list = document.getElementById('ddList');
+
+  function renderDock() {
+    dock.classList.toggle('empty', items.length === 0);
+    dock.innerHTML = '';
+    items.slice(0, 4).forEach(function (it, i) {
+      var mini = document.createElement('div');
+      mini.className = 'dd-mini n-card n-sev-' + it.severity;
+      mini.style.zIndex = String(10 - i);
+      mini.style.transform = 'translateX(' + (i * 12) + 'px) scale(' + (1 - i * 0.08) + ')';
+      mini.style.opacity = String(1 - i * 0.15);
+      mini.textContent = it.title;
+      dock.appendChild(mini);
+    });
+  }
+
+  function renderPanel() {
+    list.innerHTML = '';
+    items.forEach(function (it, i) {
+      var row = document.createElement('div');
+      row.className = 'dd-row n-sev-' + it.severity;
+      row.style.animationDelay = (i * 40) + 'ms';
+      row.innerHTML = '<div class="meta"><div class="t"></div><div class="b"></div></div><button type="button" class="n-x" aria-label="Dismiss">×</button>';
+      row.querySelector('.t').textContent = it.title;
+      row.querySelector('.b').textContent = it.body;
+      row.querySelector('.n-x').addEventListener('click', function (e) {
+        e.stopPropagation();
+        dismiss(it.id);
+      });
+      list.appendChild(row);
+    });
+  }
+
+  function setExpanded(on) {
+    expanded = on && items.length > 0;
+    panel.classList.toggle('open', expanded);
+    if (expanded) renderPanel();
+  }
+
+  function dismiss(id) {
+    items = items.filter(function (x) { return x.id !== id; });
+    renderDock();
+    if (expanded) renderPanel();
+    if (!items.length) setExpanded(false);
+  }
+
+  function clearAll() {
+    items = [];
+    queue = [];
+    busy = false;
+    zone.innerHTML = '';
+    renderDock();
+    setExpanded(false);
+  }
+
+  function drain() {
+    if (busy || !queue.length) return;
+    busy = true;
+    var msg = queue.shift();
+    var el = document.createElement('div');
+    el.className = 'dd-drop n-card n-sev-' + msg.severity;
+    el.innerHTML = '<div style="flex:1"><div class="t"></div><div class="b"></div></div><button type="button" class="n-x" aria-label="Dismiss">×</button>';
+    el.querySelector('.t').textContent = msg.title;
+    el.querySelector('.b').textContent = msg.body;
+    var cancelled = false;
+    el.querySelector('.n-x').addEventListener('click', function (e) {
+      e.stopPropagation();
+      cancelled = true;
+      el.classList.add('fade');
+      setTimeout(finish, S.reduced() ? 10 : 220);
+    });
+    zone.appendChild(el);
+
+    var hold = msg.important ? 850 : 2000;
+    setTimeout(function () {
+      if (cancelled) return;
+      if (msg.important) {
+        el.classList.add('fly');
+        setTimeout(function () {
+          el.remove();
+          items.unshift(msg);
+          if (items.length > 12) items.length = 12;
+          renderDock();
+          if (expanded) renderPanel();
+          finish();
+        }, S.reduced() ? 10 : 420);
+      } else {
+        el.classList.add('fade');
+        setTimeout(function () { el.remove(); finish(); }, S.reduced() ? 10 : 220);
+      }
+    }, hold);
+
+    function finish() {
+      busy = false;
+      drain();
+    }
+  }
+
+  function push(msg) {
+    queue.push(msg);
+    drain();
+  }
+
+  dock.addEventListener('click', function () {
+    if (!items.length) return;
+    setExpanded(!expanded);
+  });
+  document.getElementById('ddClear').addEventListener('click', function (e) { e.stopPropagation(); clearAll(); });
+  document.addEventListener('click', function (e) {
+    if (!expanded) return;
+    if (e.target.closest && (e.target.closest('#ddPanel') || e.target.closest('#ddDock'))) return;
+    setExpanded(false);
+  });
+  S.escCollapse(function () { setExpanded(false); });
+
+  document.getElementById('btnClear').addEventListener('click', clearAll);
+  document.getElementById('btnEph').addEventListener('click', function () { push(S.ephemeral()); });
+  document.getElementById('btnImp').addEventListener('click', function () { push(S.important()); });
+  document.getElementById('btnWarn').addEventListener('click', function () { push(S.warning()); });
+
+  renderDock();
+})();
+  </script>
+</body>
+</html>

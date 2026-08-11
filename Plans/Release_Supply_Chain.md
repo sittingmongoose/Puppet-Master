@@ -32,6 +32,7 @@ status: accepted
 owner_doc: Plans/Release_Supply_Chain.md
 canonical_text: >-
   P0-RELEASE-MIGRATION-GATE (P0) is compiled as canonical Puppet Master intent for Release, installer, migration, and rollback hardening: Add Release_Compatibility_and_Migration.md or PlanUnits under Progression_Gates. All major updates must run state-migration and rollback fixtures before users get them. The preserved PM gap/delta is: Need a release compatibility plan: canary/stable rings, artifact provenance, generated-link checks, state migration tests, downgrade/backup restore, extension/CLI/server protocol handshake, terminal session preservation across updates. The observed external-repo signal remains source-lineage evidence: Cline v4 issues report task corruption and release stability concerns; Agent Zero issue list includes missing upgrade tag, v2 regression, Launcher/self-update bugs; Pi has binary/provenance and packaging/link issues; Ghostty 1.3.1 quickly patched 1.3.0 regressions; Warp changelog shows frequent migration/restore fixes; Codex changelog shows frequent CLI/app releases.
+  Case L propagation makes the migration portion executable as a release gate by consuming the storage-owned compatibility, migration-journal, mandatory-backup, offline-restore, recovery-disposition, and receipt contracts plus the Automated Testing System fixture receipts. Release does not define a peer migration or restore algorithm.
 gui_related: true
 gui_classification_reason: User-visible GUI, built-in terminal, accessibility, visual, multimodal, or desktop surface is directly implicated.
 depends_on:
@@ -39,7 +40,12 @@ depends_on:
 - PNC-001
 unblocks: []
 acceptance_criteria:
-- Major version migration has backup/restore test.
+- One-version-ahead redb, seglog, and EventRecord fixtures block before writer/projector/migration start and prove the target root is unchanged.
+- Migration crash cuts after backup, between steps, before/after the version stamp, and before receipt publication converge to the storage-owned committed, verified rollback, or blocked state with no ordinary-open mixed store.
+- Major-version release evidence includes a verified shared-boundary backup, restore preflight, kill-mid-restore convergence, previous-major alias migration, and unsupported-old/newer-backup refusal.
+- Every materialized canonical non-rebuildable family has release evidence for its registry-owned mandatory-backup/restore disposition; projection rebuild is not accepted as recovery proof for canonical redb state.
+- Disk-space preflight and progress-interruption fixtures prove no backup or mutation begins below the exact required space and that restart resumes from the durable journal.
+- Startup recovery action inventory proves metadata diagnostics and retry gates expose no generic live verify/repair/salvage command, Doctor mutation mode, store editor, bypass token, force-cancel, or try-anyway path.
 - Generated release links validate.
 - Protocol version mismatch blocks with actionable message.
 - App update does not orphan terminal/process sessions silently.
@@ -47,7 +53,8 @@ acceptance_criteria:
 validation_surfaces:
 - python3 scripts/pm-plan-index.py validate
 - python3 scripts/pm-bootstrap-ledger-validate.py Plans/ledgers/v2/pldg-20260703-001-feature-intake
-- Major version migration has backup/restore test.
+- Plans/Automated_Testing_System.md#ATS-024
+- FX-L001-*, FX-L002-*, FX-L003-*, FX-L016-*, FX-L025-*, and FX-L032-* fixture receipts
 - Generated release links validate.
 - Protocol version mismatch blocks with actionable message.
 - App update does not orphan terminal/process sessions silently.
@@ -59,12 +66,24 @@ implementation_surfaces:
 - Plans/Progression_Gates.md
 - Plans/Project_Output_Artifacts.md
 - Plans/storage-plan.md
+- Plans/storage_value_registry.json
+- Plans/Contracts_V0.md
+- Plans/Automated_Testing_System.md
 - Plans/Goal_Runtime_System.md
 node_compile_hint:
   mode: p0_release_migration_gate
   create_worknodes: false
   create_nodeseeds: false
 source_lineage:
+- Case-L:L-001
+- Case-L:L-002
+- Case-L:L-003
+- Case-L:L-016
+- Case-L:L-025
+- Case-L:L-031
+- Case-L:L-032
+- Case-L:PD-L-01..PD-L-06
+- PuppetMaster-AssuranceLab/orchestration-2026-07-17/phase2-case-L/CASE_L_APPROVAL_2026-07-17.md
 - pldg-20260703-001-feature-intake:atom-0012
 - Plans/ledgers/v2/pldg-20260703-001-feature-intake/records/design_atoms.jsonl:atom-0012
 - Plans/ledgers/v2/pldg-20260703-001-feature-intake/source_shards/external_repo_import_20260703/02_LEDGER_READY_ATOMS.jsonl:extrepo-20260703-0008/P0-RELEASE-MIGRATION-GATE@line=8
@@ -97,6 +116,11 @@ owner_hints:
 - Plans/storage-plan.md
 - Plans/Goal_Runtime_System.md
 preserved_exact_tokens:
+- blocked_newer_store
+- StorageMigrationCoordinator
+- backup-before-any-migration-step
+- data_loss_risk
+- pm.storage_value.migration_receipt.v1
 - extrepo-20260703-0008
 - P0-RELEASE-MIGRATION-GATE
 - P0
@@ -107,7 +131,10 @@ preserved_exact_tokens:
 - ghostty-org/ghostty
 - warpdotdev/warp
 - openai/codex
-negative_constraints: []
+negative_constraints:
+- Do not in-place downgrade, ordinary-open a half-migrated or mixed-restored store, or expose try_anyway/live viewer access to unsupported newer state.
+- Do not accept projection rebuild as recovery proof for canonical non-rebuildable redb state.
+- Do not treat plan validation, fixture registration, or a terminal receipt alone as evidence that runtime migration, backup, restore, or crash convergence executed.
 observed_signal: Cline v4 issues report task corruption and release stability concerns; Agent Zero issue list includes missing upgrade tag, v2 regression, Launcher/self-update bugs; Pi has binary/provenance and packaging/link issues; Ghostty 1.3.1 quickly patched 1.3.0 regressions; Warp changelog shows frequent migration/restore fixes; Codex changelog shows frequent CLI/app releases.
 pm_current_coverage: PM has governance gates and protected namespace, but release/migration strategy is not as explicit as runtime specs.
 pm_gap_or_delta: 'Need a release compatibility plan: canary/stable rings, artifact provenance, generated-link checks, state migration tests, downgrade/backup restore, extension/CLI/server protocol handshake, terminal session preservation across updates.'
@@ -603,6 +630,8 @@ canonical_text: >-
   trust_root_ref, signature_ref, notarization_ref?, artifact_sha256, and verifier_result. SBOM records SPDX or
   CycloneDX format, component count, dependency hashes, license summary, generator, and generation time. Updates
   record channel, version, minimum_supported_version, migration_plan_ref, rollback_ref, and user-visible failure state.
+  Migration receipt authority is the storage-registry pm.storage_value.migration_receipt.v1 row produced by
+  StorageMigrationCoordinator; Release consumes that row and its journal/backup evidence rather than defining a peer receipt.
 gui_related: false
 gui_classification_reason: Release signing, SBOM, update, and migration contracts are supply-chain governance, not GUI implementation.
 depends_on: [RSC-001, RSC-002, RSC-003, RSC-004, RSC-005, RSC-006, RSC-007]
@@ -611,27 +640,53 @@ acceptance_criteria:
   - ReleaseArtifactReceipt includes artifact_name, platform, artifact_sha256, size_bytes, signature_ref, key_id, trust_root_ref, notarization_ref?, sbom_ref, and provenance_ref.
   - SBOM receipt uses SPDX JSON or CycloneDX JSON, records generator identity, component_count, dependency_hashes_present, license_summary_ref, and reproducibility_notes_ref.
   - UpdateMetadata records channel, version, previous_version, minimum_supported_version, rollout_percentage, migration_plan_ref, rollback_ref, release_notes_ref, and failure_state_copy_ref.
-  - MigrationReceipt records from_version, to_version, schema_ids[], preflight_result, backup_ref, applied_steps[], rollback_available, rollback_result?, and data_loss_risk.
+  - MigrationReceipt round-trips schema_id, schema_version, receipt_id, migration_id, from_version, to_version, schema_ids[], store_transitions[], family_transitions[], preflight_result, backup_ref, applied_steps[], verification_result, rollback_available, rollback_result, data_loss_risk, terminal_status, started_at_utc, completed_at_utc, app_version, journal_ref, and redaction_profile from pm.storage_value.migration_receipt.v1; rollback_result is required-present on every receipt and its value may be null only as allowed by that registered schema.
+  - terminal_status is storage-owned and closed to committed, rolled_back, or blocked; each release fixture must match its expected terminal state, and committed is not accepted without verification_result plus receipt read-back.
+  - preflight_result carries exact required and available space evidence; insufficient space fails before backup or mutation and preserves before/after target equality.
+  - backup_ref resolves to one verified shared-boundary manifest with relative file hashes/sizes, store/app versions, root identity, backup kind, and durable seglog boundary; JSON/JSONL export is not accepted as an MVP backup.
+  - rollback_available, required-present but nullable rollback_result, and data_loss_risk bind to the storage-owned whole-boundary restore-only downgrade policy and disclose post-backup writes or unknown corruption risk before confirmation.
   - Install/update validation fails closed when signature, SBOM, artifact hash, migration, or rollback receipt is missing or stale.
 validation_surfaces:
   - python3 scripts/pm-plan-index.py validate
   - python3 scripts/pm-plans-verify.py lint-contractrefs
+  - Plans/Automated_Testing_System.md#ATS-024
+  - FX-L002-RECEIPT-ROUNDTRIP
+  - FX-L016-ACTIVE-WRITE
+  - FX-L016-NEWER-BACKUP
+  - FX-L016-KILL-RESTORE
+  - FX-L032-NOSPACE
   - python3 scripts/pm-audit-closure.py validate --audit-dir Plans/.audits/fable-20260706 --require-closure-matrix --require-effective-status --source-artifact residual_feature_contract_findings.jsonl
 risk_class: fable_residual_release_supply_chain_contract_drift
 reasoning_tier: high
 context_scope: residual_feature_contract_cleanup
 implementation_surfaces:
   - Plans/Release_Supply_Chain.md
+  - Plans/storage-plan.md
+  - Plans/storage_value_registry.json
+  - Plans/Contracts_V0.md
+  - Plans/Automated_Testing_System.md
 node_compile_hint:
   mode: release_supply_chain_residual_minimum_contract
   create_worknodes: false
   create_nodeseeds: false
 source_lineage:
+  - Case-L:L-001
+  - Case-L:L-002
+  - Case-L:L-003
+  - Case-L:L-016
+  - Case-L:L-032
+  - Case-L:PD-L-01..PD-L-06
+  - PuppetMaster-AssuranceLab/orchestration-2026-07-17/phase2-case-L/CASE_L_APPROVAL_2026-07-17.md
   - fablereport.md:1264
   - fablereport.md:1265
   - Plans/.audits/fable-20260706/buildability_repair_registry.jsonl
 source_atom_ids: []
 preserved_exact_tokens:
+  - "pm.storage_value.migration_receipt.v1"
+  - "StorageMigrationCoordinator"
+  - "verification_result"
+  - "terminal_status"
+  - "data_loss_risk"
   - "signing"
   - "SBOM"
   - "update"
@@ -641,10 +696,103 @@ preserved_exact_tokens:
 negative_constraints:
   - Do not create package artifacts, installer jobs, production build tasks, implementation files, WorkNodes, NodeSeeds, executable queues, or runtime certification evidence.
   - Do not treat release notes or checksums alone as signing, SBOM, update, or migration proof.
+  - Do not redefine the storage migration state machine, receipt, backup manifest, restore algorithm, or compatibility enum in Release.
+  - Do not count fixture registration or a schema-valid receipt as executed migration, backup, restore, rollback, or crash-convergence proof.
 owner_hints:
   - Plans/Release_Supply_Chain.md
   - Plans/BinaryLocator_Spec.md
   - Plans/Project_Output_Artifacts.md
+```
+
+## Case L Release Migration And Recovery Gate Propagation - 2026-07-17
+
+This section consumes the approved Case L owner contracts after owner-first repair. `Plans/storage-plan.md` owns version admission, `StorageMigrationCoordinator`, mandatory recovery snapshots, backup/restore, progress/preflight, retention/maintenance exclusion, and storage aftermath. `Plans/storage_value_registry.json` owns the machine recovery disposition and `pm.storage_value.migration_receipt.v1` row. `Plans/Contracts_V0.md` owns `StorageCompatibilityStatus` and `MigrationProgressSnapshot`. `Plans/Automated_Testing_System.md` owns fixture execution and receipts. Release owns only candidate admission and rollout refusal based on that evidence.
+
+The release gate is fail-closed. A candidate cannot enter a user rollout ring when any required Case L fixture is missing, skipped, inconclusive, stale for the candidate's exact artifact/store-schema set, or produces an outcome other than the owner-defined oracle. A generic “downgrade/backup restore passed” label is not acceptable evidence.
+
+Required release evidence is:
+
+- compatibility/no-mutation: `FX-L001-REDB-AHEAD`, `FX-L001-SEGLOG-AHEAD`, `FX-L001-EVENT-AHEAD`, and `FX-L001-DOWNGRADE-WRITES`;
+- migration crash/history/preflight: every `FX-L002-*`, `FX-L025-PREV-MAJOR-ALIAS`, `FX-L025-TOO-OLD`, `FX-L032-NOSPACE`, and `FX-L032-PROGRESS-INTERRUPT`;
+- canonical redb recovery: every `FX-L003-*`, tied to the exact registry revision and affected canonical family IDs;
+- shared-boundary backup/restore: `FX-L016-ACTIVE-WRITE`, `FX-L016-NEWER-BACKUP`, and `FX-L016-KILL-RESTORE`; and
+- cross-contract envelope checks from `ATS-024`, including EventRecord 2.0/legacy compatibility and exact-replace restore/SCM/retention negative oracles when the candidate changes or consumes those surfaces.
+
+The migration-progress fixture asserts the exact post-preflight interruption copy `Keep Puppet Master open. If interrupted, recovery will resume on the next launch.` and the absence of force-cancel/try-anyway after preflight. The startup action inventory asserts read-only metadata diagnostics and owner-routed recovery only; a generic live verify/repair/salvage command, Doctor mutation mode, in-place store editor, or bypass token fails the candidate.
+
+The gate records candidate artifact hashes, app/store/EventRecord versions, registry revision, fixture IDs, linked `TestRunReceipt`/evidence refs, backup-manifest ref/hash, migration receipt ID, exact expected/observed terminal state, and freshness. It does not copy the storage journal or FileSafe restore algorithm into release metadata.
+
+Negative release oracles are mandatory: no target mutation on incompatible/preflight refusal; no ordinary-open mixed migration/restore state; no “rebuildable projection” recovery claim for canonical redb; no compatible-backup downgrade without `data_loss_risk`; no success from `restore_failed`, `restore_recovery_required`, skipped/inconclusive tests, or missing receipt read-back; and no runtime/completeness claim from plan or schema validation.
+
+ContractRef: ContractName:Plans/storage-plan.md, ContractName:Plans/storage_value_registry.json, ContractName:Plans/Contracts_V0.md, ContractName:Plans/Automated_Testing_System.md, DecisionID:PD-L-01, DecisionID:PD-L-02, DecisionID:PD-L-03, DecisionID:PD-L-04, DecisionID:PD-L-05, DecisionID:PD-L-06
+
+### RSC-009 - Case L Release Migration Backup And Recovery Evidence Gate
+
+```yaml
+plan_unit_id: RSC-009
+unit_type: requirement
+status: accepted
+owner_doc: Plans/Release_Supply_Chain.md
+canonical_text: >-
+  Release admission consumes, without redefining, the storage-owned newer-store refusal, forward migration,
+  mandatory canonical-redb backup, whole-boundary restore-only downgrade, disk preflight, progress, recovery
+  disposition, and migration-receipt contracts. A candidate advances only when every applicable named Case L
+  fixture produces its exact positive and negative oracle with current artifact/schema/registry evidence.
+gui_related: true
+gui_classification_reason: Release-blocked compatibility, rollback loss, and recovery results have user-visible update and recovery consequences.
+depends_on: [RSC-001, RSC-008, ATS-024, SP-235]
+unblocks: []
+acceptance_criteria:
+  - One-version-ahead and unsupported-old fixtures refuse before mutation; before/after hashes are identical and no live newer-store viewer or try-anyway path exists.
+  - Every migration crash cut converges from the durable journal to the expected committed, verified rollback, or blocked state with exactly one receipt and no ordinary-open mixed state.
+  - Every canonical non-rebuildable family has registry-bound verified-backup/restore evidence; projection rebuild cannot satisfy the gate.
+  - Active-write backup and kill-mid-restore fixtures prove one verified shared boundary or the verified original, while newer backups are refused before live mutation.
+  - Startup and progress command inventory exposes only owner-approved diagnostics/recovery actions and no generic repair/salvage/Doctor mutation, bypass, post-preflight force-cancel, or try-anyway path.
+  - RSC-008 fields round-trip from pm.storage_value.migration_receipt.v1 and each fixture's terminal_status matches its expected oracle.
+  - Missing, stale, skipped, inconclusive, or merely schema-valid evidence blocks rollout and is never reported as runtime completion.
+validation_surfaces:
+  - Plans/Automated_Testing_System.md#ATS-024
+  - FX-L001-*, FX-L002-*, FX-L003-*, FX-L016-*, FX-L025-*, and FX-L032-*
+  - python3 scripts/pm-plan-index.py validate
+risk_class: case_l_release_migration_recovery_false_admission
+reasoning_tier: high
+context_scope: case_l_release_migration_backup_recovery
+implementation_surfaces:
+  - Plans/Release_Supply_Chain.md
+  - Plans/Automated_Testing_System.md
+  - Plans/storage-plan.md
+  - Plans/storage_value_registry.json
+  - Plans/Contracts_V0.md
+node_compile_hint:
+  mode: case_l_release_evidence_gate
+  create_worknodes: false
+  create_nodeseeds: false
+source_lineage:
+  - Case-L:L-001
+  - Case-L:L-002
+  - Case-L:L-003
+  - Case-L:L-016
+  - Case-L:L-025
+  - Case-L:L-031
+  - Case-L:L-032
+  - Case-L:PD-L-01..PD-L-06
+  - PuppetMaster-AssuranceLab/orchestration-2026-07-17/phase2-case-L/planning/CONSUMER_PROPAGATION_MAP.md
+  - PuppetMaster-AssuranceLab/orchestration-2026-07-17/phase2-case-L/CASE_L_APPROVAL_2026-07-17.md
+preserved_exact_tokens:
+  - "blocked_newer_store"
+  - "pm.storage_value.migration_receipt.v1"
+  - "verification_result"
+  - "terminal_status"
+  - "data_loss_risk"
+  - "FX-L016-KILL-RESTORE"
+negative_constraints:
+  - Do not define a peer migration receipt, state machine, backup manifest, restore algorithm, or compatibility enum.
+  - Do not admit rollout from generic pass labels, schema validity, or missing/skipped/inconclusive fixture evidence.
+  - Do not claim runtime execution, finding closure, buildability, certification, or Plans completeness from this contract.
+owner_hints:
+  - Plans/Release_Supply_Chain.md
+  - Plans/storage-plan.md
+  - Plans/Automated_Testing_System.md
 ```
 
 ## FABLE Deferred Action Concrete Repair Addendum - 2026-07-08

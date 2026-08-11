@@ -1,0 +1,387 @@
+<!-- BONUS D1 · Fleet Grid · panel-docker · prefix dA -->
+<!DOCTYPE html>
+<html lang="en" data-theme="friendly-dark">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<link rel="icon" href="data:,">
+<title>BONUS D1 · DOCKER · Fleet Grid — Puppet Master Rail Concepts</title>
+<script>(function(){try{var ok=['friendly-dark','friendly-light','retro-dark','retro-light','basic-light','basic-dark','glass-dark','glass-light'];var t=localStorage.getItem('pm.theme');if(ok.indexOf(t)===-1)t='friendly-dark';var d=document.documentElement;d.setAttribute('data-theme',t);d.style.colorScheme=/-dark$/.test(t)?'dark':'light';}catch(e){}})();</script>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="preload" as="style" href="https://fonts.googleapis.com/css2?family=Cal+Sans&family=Inter:wght@400;500;600;700&family=Nunito:wght@400;600;700;800&family=Orbitron:wght@500;700&family=Quicksand:wght@400;500;600;700&family=Rajdhani:wght@400;500;600;700&display=swap" onload="this.onload=null;this.rel='stylesheet'">
+<noscript><link href="https://fonts.googleapis.com/css2?family=Cal+Sans&family=Inter:wght@400;500;600;700&family=Nunito:wght@400;600;700;800&family=Orbitron:wght@500;700&family=Quicksand:wght@400;500;600;700&family=Rajdhani:wght@400;500;600;700&display=swap" rel="stylesheet"></noscript>
+<link rel="stylesheet" href="_shared/themes.css">
+<link rel="stylesheet" href="_shared/base.css">
+<style>
+.dA-head{flex:none;display:flex;align-items:center;gap:var(--md);padding:var(--lg);min-width:0;overflow:hidden;border-bottom:1px solid var(--border-light)}
+.dA-hico{width:26px;height:26px;flex:none;border-radius:var(--radius-md);display:flex;align-items:center;justify-content:center;background:var(--accent-soft);color:var(--accent-primary)}
+.dA-title{font-family:var(--display-font);font-size:11px;font-weight:700;letter-spacing:.6px;flex:1 1 auto;min-width:max-content;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.dA-stat{margin-left:auto;flex:0 1 auto;min-width:0;max-width:52%;font-family:var(--mono-font);font-size:9.5px;color:var(--text-muted);white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.dA-scroll{flex:1;min-height:0;overflow-y:auto;overflow-x:hidden;padding:var(--md) var(--lg) var(--lg)}
+
+.dA-sec{margin:0 0 var(--lg);min-width:0}
+.dA-lab{display:flex;align-items:center;gap:var(--sm);margin:0 0 var(--sm);font-family:var(--display-font);font-size:8.5px;font-weight:700;letter-spacing:2px;color:var(--cc,var(--accent-primary));min-width:0}
+.dA-lab::before{content:'';flex:none;width:12px;height:2px;background:var(--cc,var(--accent-primary));border-radius:1px}
+.dA-lab-r{margin-left:auto;flex:0 1 auto;min-width:0;font-family:var(--mono-font);font-size:9px;font-weight:400;letter-spacing:0;color:var(--text-muted);white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.dA-lab .pm-chip{font-size:8.5px;padding:0 6px;flex:none}
+
+.dA-pipe{position:relative;white-space:nowrap;overflow-x:auto;overflow-y:hidden;padding:2px 2px 6px}
+.dA-pipe::before{content:'';position:absolute;left:10px;right:10px;top:11px;height:1px;background:var(--border-light)}
+.dA-stage{appearance:none;background:none;border:0;padding:0;cursor:pointer;display:inline-flex;flex-direction:column;align-items:center;gap:4px;min-width:56px;vertical-align:top;position:relative;z-index:1}
+.dA-pn{width:18px;height:18px;flex:none;border-radius:50%;border:1px solid var(--border);display:flex;align-items:center;justify-content:center;background:var(--surface-elevated);color:var(--text-muted);font-family:var(--mono-font);font-size:8.5px;font-style:normal;transition:border-color var(--motion-fast) var(--ease-out),color var(--motion-fast) var(--ease-out),transform var(--motion-fast) var(--ease-out)}
+.dA-stage:hover .dA-pn{transform:scale(1.12)}
+.dA-sl{font-family:var(--mono-font);font-size:8.5px;letter-spacing:.4px;color:var(--text-muted);max-width:62px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.dA-stage.exists .dA-pn{border-color:var(--graph-passed);color:var(--graph-passed)}
+.dA-stage.exists .dA-sl{color:var(--text-secondary)}
+.dA-stage.ready .dA-pn{border-color:var(--graph-running);color:var(--graph-running);animation:dAPulse 1.4s var(--ease-out) infinite}
+.dA-stage.ready .dA-sl{color:var(--graph-running);font-weight:700}
+.dA-stage.waiting .dA-pn{border-color:var(--border-light)}
+.dA-stage.pending .dA-pn{border-style:dashed;border-color:var(--border-light);opacity:.55}
+.dA-stage.pending .dA-sl{opacity:.55}
+@keyframes dAPulse{50%{opacity:.35}}
+.dA-pub{display:flex;flex-wrap:wrap;gap:var(--sm);margin-top:var(--sm)}
+.dA-pub .pm-btn{flex:1 1 auto;min-width:0;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.dA-pub .pm6-tb-menu-wrap{flex:1 1 auto;min-width:0}
+.dA-pub .pm6-tb-menu-trigger{width:100%;justify-content:space-between;border:1px solid var(--border-light);border-radius:var(--radius-xs);font-family:var(--mono-font);font-size:10px;padding:4px 7px;min-width:0}
+.dA-pub .pm6-tb-menu-label{min-width:0;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.dA-pub .pm6-tb-menu{min-width:190px}
+
+.dA-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(150px,1fr));gap:var(--sm)}
+.dA-tile{position:relative;overflow:hidden;min-width:0;display:flex;flex-direction:column;gap:6px;padding:var(--md);background:var(--surface-elevated);border:1px solid var(--border-light);border-top:2px solid var(--cc,var(--accent-blue));border-radius:var(--radius-sm);box-shadow:var(--elev-1);transition:transform var(--motion-fast) var(--ease-out),box-shadow var(--motion-fast) var(--ease-out),border-color var(--motion-fast) var(--ease-out)}
+.dA-tile:hover{transform:translateY(-2px);box-shadow:var(--elev-2);border-color:var(--border)}
+.dA-t1{display:flex;align-items:center;gap:var(--sm);min-width:0}
+.dA-name{font-size:11.5px;font-weight:600;color:var(--text-primary);min-width:0;flex:1;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.dA-meta{font-family:var(--mono-font);font-size:9px;color:var(--text-muted);white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.dA-img{font-family:var(--mono-font);font-size:9px;color:var(--accent-blue);white-space:nowrap;overflow:hidden;text-overflow:ellipsis;cursor:pointer}
+.dA-img:hover{text-decoration:underline}
+.dA-meters{display:flex;flex-direction:column;gap:4px}
+.dA-meter{display:flex;align-items:center;gap:var(--sm);min-width:0}
+.dA-mk{flex:none;font-family:var(--display-font);font-size:7px;font-weight:700;letter-spacing:1px;color:var(--text-muted);width:20px}
+.dA-bar{flex:1;min-width:0;height:3px;border-radius:2px;background:var(--border-light);overflow:hidden}
+.dA-fill{display:block;height:100%;border-radius:2px;background:var(--fc,var(--accent-primary));transition:width .5s var(--ease-out)}
+.dA-mv{flex:none;font-family:var(--mono-font);font-size:8.5px;color:var(--text-secondary);width:26px;text-align:right}
+.dA-acts{display:flex;gap:var(--xs);margin-top:2px}
+.dA-acts .pm-minibtn{flex:1;min-width:0}
+.dA-tile:has(.dot-run){border-color:color-mix(in srgb,var(--graph-running) 55%,transparent);background:linear-gradient(105deg,color-mix(in srgb,var(--graph-running) 9%,var(--surface-elevated)),var(--surface-elevated) 62%)}
+.dA-tile:has(.dot-run)::after{content:'';position:absolute;inset:0;pointer-events:none;background:linear-gradient(90deg,transparent,color-mix(in srgb,var(--graph-running) 15%,transparent),transparent);transform:translateX(-100%);animation:dASheen 2.2s var(--ease-out) infinite}
+@keyframes dASheen{0%{transform:translateX(-100%)}55%,100%{transform:translateX(100%)}}
+
+.dA-row{display:flex;align-items:center;gap:var(--md);padding:5px 6px;border-radius:var(--radius-xs);min-width:0}
+.dA-row:hover{background:var(--accent-soft)}
+.dA-row:has(.dot-run){background:linear-gradient(90deg,color-mix(in srgb,var(--graph-running) 8%,transparent),transparent 62%)}
+.dA-row-main{flex:1;min-width:0;display:flex;flex-direction:column}
+.dA-row-name{font-size:11px;font-weight:600;color:var(--text-primary);white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.dA-row-name.mono{font-family:var(--mono-font);font-size:10px;font-weight:400;color:var(--accent-blue)}
+.dA-row-meta{font-family:var(--mono-font);font-size:9px;color:var(--text-muted);white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.dA-row-side{flex:none;font-family:var(--mono-font);font-size:9.5px;color:var(--text-secondary);white-space:nowrap}
+
+.dA-card{min-width:0;padding:var(--md);background:var(--surface-elevated);border:1px solid var(--border-light);border-left:2px solid var(--cc,var(--accent-orange));border-radius:var(--radius-sm);box-shadow:var(--elev-1)}
+.dA-card .pm-kv{font-size:11px}
+.dA-reg .pm-kv-v{font-size:10.5px}
+
+.side-panel-slot[data-wtier="min"] .dA-lab-r{display:none}
+.side-panel-slot[data-wtier="min"] .dA-row-side{display:none}
+.side-panel-slot[data-wtier="min"] .dA-mv{display:none}
+.side-panel-slot[data-wtier="min"] .dA-pub .pm6-tb-menu-wrap{flex-basis:100%}
+.side-panel-slot[data-wtier="wide"] .dA-grid{grid-template-columns:repeat(auto-fill,minmax(172px,1fr))}
+
+@media (prefers-reduced-motion:reduce){
+  .dA-tile:has(.dot-run)::after,.dA-stage.ready .dA-pn{animation:none}
+  .dA-tile,.dA-fill,.dA-pn{transition:none}
+}
+[data-reduced-motion="1"] .dA-tile:has(.dot-run)::after,[data-reduced-motion="1"] .dA-stage.ready .dA-pn{animation:none}
+[data-reduced-motion="1"] .dA-tile,[data-reduced-motion="1"] .dA-fill,[data-reduced-motion="1"] .dA-pn{transition:none}
+</style>
+</head>
+<body>
+<div id="app"></div>
+<template id="rail-panels">
+  <div class="side-panel-view" id="panel-docker">
+    <div class="dA-head"><span class="dA-hico"><i data-ico="docker" class="pm-ico"></i></span><span class="dA-title">DOCKER MANAGER</span><span class="dA-stat">9 ctr · 1.4 GB</span></div>
+    <div class="dA-scroll rail-scroll">
+
+      <section class="dA-sec" style="--cc:var(--accent-orange)">
+        <h3 class="dA-lab">PUBLISH PIPELINE <span class="dA-lab-r">1.4.2-rc.1 -&gt; ops/unraid/templates/tastebook-api-1.4.xml</span></h3>
+        <div class="dA-pipe">
+          <button type="button" class="dA-stage exists" data-demo-action="cmd.docker.publish.open_stage" data-demo-arg="cmd.docker.publish.open_stage -> build (done 14:02, 96s)"><i class="dA-pn">1</i><span class="dA-sl">build</span></button>
+          <button type="button" class="dA-stage exists" data-demo-action="cmd.docker.publish.open_stage" data-demo-arg="cmd.docker.publish.open_stage -> tag (1.4.2-rc.1 + edge)"><i class="dA-pn">2</i><span class="dA-sl">tag</span></button>
+          <button type="button" class="dA-stage ready" data-demo-action="cmd.docker.publish.open_stage" data-demo-arg="cmd.docker.publish.open_stage -> smoke test ready to run"><i class="dA-pn">3</i><span class="dA-sl">test</span></button>
+          <button type="button" class="dA-stage waiting" data-demo-action="cmd.docker.publish.open_stage" data-demo-arg="cmd.docker.publish.open_stage -> push image (waiting on test)"><i class="dA-pn">4</i><span class="dA-sl">push img</span></button>
+          <button type="button" class="dA-stage pending" data-demo-action="cmd.docker.publish.open_stage" data-demo-arg="cmd.docker.publish.open_stage -> commit template (pending)"><i class="dA-pn">5</i><span class="dA-sl">commit tpl</span></button>
+          <button type="button" class="dA-stage pending" data-demo-action="cmd.docker.publish.open_stage" data-demo-arg="cmd.docker.publish.open_stage -> push template (pending)"><i class="dA-pn">6</i><span class="dA-sl">push tpl</span></button>
+        </div>
+        <div class="dA-pub">
+          <button class="pm-btn pm-btn-primary" data-demo-action="cmd.docker.publish.push_image" data-demo-arg="cmd.docker.publish.push_image -> jared/tastebook-api:1.4.2-rc.1@sha256:9f2c4b8a1e77 (amd64, arm64)"><i data-ico="upload" class="pm-ico sm"></i>Push image</button>
+          <button class="pm-btn" data-demo-action="cmd.docker.publish.commit_template" data-demo-arg="cmd.docker.publish.commit_template -> ops/unraid/templates/tastebook-api-1.4.xml (digest bump)"><i data-ico="diff" class="pm-ico sm"></i>Commit tpl</button>
+          <button class="pm-btn" data-demo-action="cmd.docker.publish.push_template" data-demo-arg="cmd.docker.publish.push_template -> template repo push queued"><i data-ico="push" class="pm-ico sm"></i>Push tpl</button>
+          <div class="pm6-tb-menu-wrap">
+            <button type="button" class="pm6-tb-menu-trigger" aria-controls="dARegMenu"><span class="pm6-tb-menu-label">Docker Hub</span><i data-ico="chevD" class="pm-ico sm"></i></button>
+            <div class="pm6-tb-menu pm6-tb-menu-left" id="dARegMenu" role="menu" aria-label="Target registry" data-pm-menu-select>
+              <button type="button" class="pm6-tb-menu-item is-selected" role="menuitem" data-value="hub" data-label="Docker Hub" data-demo-action="cmd.docker.publish.set_registry" data-demo-arg="cmd.docker.publish.set_registry -> Docker Hub (jared)">Docker Hub <span class="pm6-tb-menu-meta">jared</span></button>
+              <button type="button" class="pm6-tb-menu-item" role="menuitem" data-value="local" data-label="localhost:5000" data-demo-action="cmd.docker.publish.set_registry" data-demo-arg="cmd.docker.publish.set_registry -> localhost:5000 (cache mirror)">localhost:5000 <span class="pm6-tb-menu-meta">cache</span></button>
+              <button type="button" class="pm6-tb-menu-item" role="menuitem" data-value="ghcr" data-label="ghcr.io" aria-disabled="true" data-demo-action="demo.reason" data-demo-arg="ghcr.io is not_configured - add a token in Settings, then retry">ghcr.io <span class="pm6-tb-menu-meta">not_configured</span></button>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <section class="dA-sec" style="--cc:var(--accent-blue)">
+        <h3 class="dA-lab">CONTAINERS <span class="pm-chip pm-chip-ok">6 up</span><span class="pm-chip pm-chip-warn">1 loop</span><span class="dA-lab-r">ctx default</span></h3>
+        <div class="pm6-tb-menu-wrap" style="margin-bottom:var(--sm)">
+          <button type="button" class="pm6-tb-menu-trigger" style="width:100%;justify-content:space-between;border:1px solid var(--border-light);border-radius:var(--radius-xs);font-family:var(--mono-font);font-size:10px;padding:4px 7px" aria-controls="dACtxMenu"><span class="pm6-tb-menu-label" style="display:inline-flex;align-items:center;gap:6px;min-width:0;overflow:hidden"><i data-ico="docker" class="pm-ico sm"></i>default - unix:///var/run/docker.sock</span><i data-ico="chevD" class="pm-ico sm"></i></button>
+          <div class="pm6-tb-menu pm6-tb-menu-left" id="dACtxMenu" role="menu" aria-label="Docker context" data-pm-menu-select style="min-width:210px">
+            <button type="button" class="pm6-tb-menu-item is-selected" role="menuitem" data-value="default" data-label="default" data-demo-action="cmd.docker.set_context" data-demo-arg="cmd.docker.set_context -> default (9 containers)">default <span class="pm6-tb-menu-meta">9 ctr</span></button>
+            <button type="button" class="pm6-tb-menu-item" role="menuitem" data-value="unraid" data-label="unraid-tower" data-demo-action="cmd.docker.set_context" data-demo-arg="cmd.docker.set_context -> unraid-tower (ssh://tower:2376)">unraid-tower <span class="pm6-tb-menu-meta">ssh</span></button>
+            <button type="button" class="pm6-tb-menu-item" role="menuitem" data-value="colima" data-label="colima" data-demo-action="cmd.docker.set_context" data-demo-arg="cmd.docker.set_context -> colima (vm offline)">colima <span class="pm6-tb-menu-meta">offline</span></button>
+          </div>
+        </div>
+        <div class="dA-grid">
+          <div class="dA-tile" style="--cc:var(--accent-blue)">
+            <div class="dA-t1"><span class="dot dot-ok"></span><span class="dA-name">tastebook-api</span></div>
+            <div class="dA-meta">up 3h · :8080 · healthy</div>
+            <div class="dA-img" data-demo-action="cmd.docker.image.inspect" data-demo-arg="cmd.docker.image.inspect -> jared/tastebook-api:1.4.2-rc.1@sha256:9f2c4b8a1e77">jared/tastebook-api:1.4.2-rc.1@sha256:9f2c4b8a1e77</div>
+            <div class="dA-meters">
+              <div class="dA-meter"><span class="dA-mk">CPU</span><span class="dA-bar"><i class="dA-fill" style="width:12%;--fc:var(--accent-blue)"></i></span><span class="dA-mv">12%</span></div>
+              <div class="dA-meter"><span class="dA-mk">MEM</span><span class="dA-bar"><i class="dA-fill" style="width:34%;--fc:var(--accent-magenta)"></i></span><span class="dA-mv">34%</span></div>
+            </div>
+            <div class="dA-acts">
+              <button class="pm-minibtn" title="Logs" data-demo-action="cmd.docker.container.view_logs" data-demo-arg="cmd.docker.container.view_logs -> tastebook-api streaming to Docker terminal group"><i data-ico="terminal" class="pm-ico sm"></i></button>
+              <button class="pm-minibtn" title="Stop" data-demo-action="cmd.docker.container.stop" data-demo-arg="cmd.docker.container.stop -> tastebook-api (SIGTERM, 10s grace)"><i data-ico="stop" class="pm-ico sm"></i></button>
+              <button class="pm-minibtn" title="Restart" data-demo-action="cmd.docker.container.restart" data-demo-arg="cmd.docker.container.restart -> tastebook-api"><i data-ico="refresh" class="pm-ico sm"></i></button>
+            </div>
+          </div>
+          <div class="dA-tile" style="--cc:var(--accent-blue)">
+            <div class="dA-t1"><span class="dot dot-ok"></span><span class="dA-name">tastebook-web</span></div>
+            <div class="dA-meta">up 3h · :3000 · healthy</div>
+            <div class="dA-img" data-demo-action="cmd.docker.image.inspect" data-demo-arg="cmd.docker.image.inspect -> ghcr.io/jared/tastebook-web:edge-2026.07.24@sha256:77be41">ghcr.io/jared/tastebook-web:edge-2026.07.24@sha256:77be41</div>
+            <div class="dA-meters">
+              <div class="dA-meter"><span class="dA-mk">CPU</span><span class="dA-bar"><i class="dA-fill" style="width:8%;--fc:var(--accent-blue)"></i></span><span class="dA-mv">8%</span></div>
+              <div class="dA-meter"><span class="dA-mk">MEM</span><span class="dA-bar"><i class="dA-fill" style="width:22%;--fc:var(--accent-magenta)"></i></span><span class="dA-mv">22%</span></div>
+            </div>
+            <div class="dA-acts">
+              <button class="pm-minibtn" title="Logs" data-demo-action="cmd.docker.container.view_logs" data-demo-arg="cmd.docker.container.view_logs -> tastebook-web"><i data-ico="terminal" class="pm-ico sm"></i></button>
+              <button class="pm-minibtn" title="Stop" data-demo-action="cmd.docker.container.stop" data-demo-arg="cmd.docker.container.stop -> tastebook-web"><i data-ico="stop" class="pm-ico sm"></i></button>
+              <button class="pm-minibtn" title="Restart" data-demo-action="cmd.docker.container.restart" data-demo-arg="cmd.docker.container.restart -> tastebook-web"><i data-ico="refresh" class="pm-ico sm"></i></button>
+            </div>
+          </div>
+          <div class="dA-tile" style="--cc:var(--accent-blue)">
+            <div class="dA-t1"><span class="dot dot-ok"></span><span class="dA-name">postgres-16-alpine-primary</span></div>
+            <div class="dA-meta">up 2d · :5432 · primary</div>
+            <div class="dA-img" data-demo-action="cmd.docker.image.inspect" data-demo-arg="cmd.docker.image.inspect -> postgres:16.3-alpine3.19@sha256:c1f09e2b">postgres:16.3-alpine3.19@sha256:c1f09e2b</div>
+            <div class="dA-meters">
+              <div class="dA-meter"><span class="dA-mk">CPU</span><span class="dA-bar"><i class="dA-fill" style="width:4%;--fc:var(--accent-blue)"></i></span><span class="dA-mv">4%</span></div>
+              <div class="dA-meter"><span class="dA-mk">MEM</span><span class="dA-bar"><i class="dA-fill" style="width:41%;--fc:var(--accent-magenta)"></i></span><span class="dA-mv">41%</span></div>
+            </div>
+            <div class="dA-acts">
+              <button class="pm-minibtn" title="Logs" data-demo-action="cmd.docker.container.view_logs" data-demo-arg="cmd.docker.container.view_logs -> postgres-16-alpine-primary"><i data-ico="terminal" class="pm-ico sm"></i></button>
+              <button class="pm-minibtn" title="Stop" data-demo-action="cmd.docker.container.stop" data-demo-arg="cmd.docker.container.stop -> postgres-16-alpine-primary (dependent services will pause)"><i data-ico="stop" class="pm-ico sm"></i></button>
+              <button class="pm-minibtn" title="Restart" data-demo-action="cmd.docker.container.restart" data-demo-arg="cmd.docker.container.restart -> postgres-16-alpine-primary"><i data-ico="refresh" class="pm-ico sm"></i></button>
+            </div>
+          </div>
+          <div class="dA-tile" style="--cc:var(--accent-blue)">
+            <div class="dA-t1"><span class="dot dot-ok"></span><span class="dA-name">tastebook-import-worker-batch</span></div>
+            <div class="dA-meta">up 41m · queue 218 · draining</div>
+            <div class="dA-img" data-demo-action="cmd.docker.image.inspect" data-demo-arg="cmd.docker.image.inspect -> jared/tastebook-import-worker:1.4.2-rc.1@sha256:3a7d0c">jared/tastebook-import-worker:1.4.2-rc.1@sha256:3a7d0c</div>
+            <div class="dA-meters">
+              <div class="dA-meter"><span class="dA-mk">CPU</span><span class="dA-bar"><i class="dA-fill" style="width:63%;--fc:var(--accent-blue)"></i></span><span class="dA-mv">63%</span></div>
+              <div class="dA-meter"><span class="dA-mk">MEM</span><span class="dA-bar"><i class="dA-fill" style="width:58%;--fc:var(--accent-magenta)"></i></span><span class="dA-mv">58%</span></div>
+            </div>
+            <div class="dA-acts">
+              <button class="pm-minibtn" title="Logs" data-demo-action="cmd.docker.container.view_logs" data-demo-arg="cmd.docker.container.view_logs -> tastebook-import-worker-batch"><i data-ico="terminal" class="pm-ico sm"></i></button>
+              <button class="pm-minibtn" title="Stop" data-demo-action="cmd.docker.container.stop" data-demo-arg="cmd.docker.container.stop -> tastebook-import-worker-batch (queue persists)"><i data-ico="stop" class="pm-ico sm"></i></button>
+              <button class="pm-minibtn" title="Restart" data-demo-action="cmd.docker.container.restart" data-demo-arg="cmd.docker.container.restart -> tastebook-import-worker-batch"><i data-ico="refresh" class="pm-ico sm"></i></button>
+            </div>
+          </div>
+          <div class="dA-tile" style="--cc:var(--graph-running)">
+            <div class="dA-t1"><span class="dot dot-run"></span><span class="dA-name">import-worker</span></div>
+            <div class="dA-meta">restarting · attempt 3/5 · crash loop</div>
+            <div class="dA-img" data-demo-action="cmd.docker.image.inspect" data-demo-arg="cmd.docker.image.inspect -> jared/tastebook-import-worker:1.4.2-rc.1@sha256:3a7d0c">jared/tastebook-import-worker:1.4.2-rc.1@sha256:3a7d0c</div>
+            <div class="dA-meters">
+              <div class="dA-meter"><span class="dA-mk">CPU</span><span class="dA-bar"><i class="dA-fill" style="width:71%;--fc:var(--accent-blue)"></i></span><span class="dA-mv">71%</span></div>
+              <div class="dA-meter"><span class="dA-mk">MEM</span><span class="dA-bar"><i class="dA-fill" style="width:47%;--fc:var(--accent-magenta)"></i></span><span class="dA-mv">47%</span></div>
+            </div>
+            <div class="dA-acts">
+              <button class="pm-minibtn" title="Logs" data-demo-action="cmd.docker.container.view_logs" data-demo-arg="cmd.docker.container.view_logs -> import-worker (crash loop, tail 200)"><i data-ico="terminal" class="pm-ico sm"></i></button>
+              <button class="pm-minibtn" title="Stop" data-demo-action="cmd.docker.container.stop" data-demo-arg="cmd.docker.container.stop -> import-worker (breaks the restart loop)"><i data-ico="stop" class="pm-ico sm"></i></button>
+              <button class="pm-minibtn" title="Restart" data-demo-action="cmd.docker.container.restart" data-demo-arg="cmd.docker.container.restart -> import-worker"><i data-ico="refresh" class="pm-ico sm"></i></button>
+            </div>
+          </div>
+          <div class="dA-tile" style="--cc:var(--graph-pending)">
+            <div class="dA-t1"><span class="dot dot-idle"></span><span class="dA-name">redis-7-session-cache</span></div>
+            <div class="dA-meta">exited (0) · 41m ago</div>
+            <div class="dA-img" data-demo-action="cmd.docker.image.inspect" data-demo-arg="cmd.docker.image.inspect -> redis:7.2-alpine3.19@sha256:d0a51f3e">redis:7.2-alpine3.19@sha256:d0a51f3e</div>
+            <div class="dA-meters">
+              <div class="dA-meter"><span class="dA-mk">CPU</span><span class="dA-bar"><i class="dA-fill" style="width:0%;--fc:var(--accent-blue)"></i></span><span class="dA-mv">0%</span></div>
+              <div class="dA-meter"><span class="dA-mk">MEM</span><span class="dA-bar"><i class="dA-fill" style="width:0%;--fc:var(--accent-magenta)"></i></span><span class="dA-mv">0%</span></div>
+            </div>
+            <div class="dA-acts">
+              <button class="pm-minibtn" title="Logs" data-demo-action="cmd.docker.container.view_logs" data-demo-arg="cmd.docker.container.view_logs -> redis-7-session-cache (last 50 lines)"><i data-ico="terminal" class="pm-ico sm"></i></button>
+              <button class="pm-minibtn" title="Start" data-demo-action="cmd.docker.container.start" data-demo-arg="cmd.docker.container.start -> redis-7-session-cache"><i data-ico="play" class="pm-ico sm"></i></button>
+            </div>
+          </div>
+          <div class="dA-tile" style="--cc:var(--graph-pending)">
+            <div class="dA-t1"><span class="dot dot-idle"></span><span class="dA-name">tastebook-migrator</span></div>
+            <div class="dA-meta">exited (0) · migrations clean · 2h ago</div>
+            <div class="dA-img" data-demo-action="cmd.docker.image.inspect" data-demo-arg="cmd.docker.image.inspect -> jared/tastebook-migrator:1.4.2-rc.1@sha256:b81d4e07">jared/tastebook-migrator:1.4.2-rc.1@sha256:b81d4e07</div>
+            <div class="dA-meters">
+              <div class="dA-meter"><span class="dA-mk">CPU</span><span class="dA-bar"><i class="dA-fill" style="width:0%;--fc:var(--accent-blue)"></i></span><span class="dA-mv">0%</span></div>
+              <div class="dA-meter"><span class="dA-mk">MEM</span><span class="dA-bar"><i class="dA-fill" style="width:0%;--fc:var(--accent-magenta)"></i></span><span class="dA-mv">0%</span></div>
+            </div>
+            <div class="dA-acts">
+              <button class="pm-minibtn" title="Logs" data-demo-action="cmd.docker.container.view_logs" data-demo-arg="cmd.docker.container.view_logs -> tastebook-migrator"><i data-ico="terminal" class="pm-ico sm"></i></button>
+              <button class="pm-minibtn" title="Start" data-demo-action="cmd.docker.container.start" data-demo-arg="cmd.docker.container.start -> tastebook-migrator (runs pending migrations)"><i data-ico="play" class="pm-ico sm"></i></button>
+            </div>
+          </div>
+          <div class="dA-tile" style="--cc:var(--accent-blue)">
+            <div class="dA-t1"><span class="dot dot-ok"></span><span class="dA-name">registry-mirror-localhost-5000</span></div>
+            <div class="dA-meta">up 6d · :5000 · 28 blobs</div>
+            <div class="dA-img" data-demo-action="cmd.docker.image.inspect" data-demo-arg="cmd.docker.image.inspect -> registry:2.8@sha256:f2e8a91d">registry:2.8@sha256:f2e8a91d</div>
+            <div class="dA-meters">
+              <div class="dA-meter"><span class="dA-mk">CPU</span><span class="dA-bar"><i class="dA-fill" style="width:2%;--fc:var(--accent-blue)"></i></span><span class="dA-mv">2%</span></div>
+              <div class="dA-meter"><span class="dA-mk">MEM</span><span class="dA-bar"><i class="dA-fill" style="width:9%;--fc:var(--accent-magenta)"></i></span><span class="dA-mv">9%</span></div>
+            </div>
+            <div class="dA-acts">
+              <button class="pm-minibtn" title="Logs" data-demo-action="cmd.docker.container.view_logs" data-demo-arg="cmd.docker.container.view_logs -> registry-mirror-localhost-5000"><i data-ico="terminal" class="pm-ico sm"></i></button>
+              <button class="pm-minibtn" title="Stop" data-demo-action="cmd.docker.container.stop" data-demo-arg="cmd.docker.container.stop -> registry-mirror-localhost-5000"><i data-ico="stop" class="pm-ico sm"></i></button>
+              <button class="pm-minibtn" title="Restart" data-demo-action="cmd.docker.container.restart" data-demo-arg="cmd.docker.container.restart -> registry-mirror-localhost-5000"><i data-ico="refresh" class="pm-ico sm"></i></button>
+            </div>
+          </div>
+          <div class="dA-tile" style="--cc:var(--accent-warning)">
+            <div class="dA-t1"><span class="dot dot-warn"></span><span class="dA-name">tastebook-cron-scheduler</span></div>
+            <div class="dA-meta">up 3h · next run overdue 12m</div>
+            <div class="dA-img" data-demo-action="cmd.docker.image.inspect" data-demo-arg="cmd.docker.image.inspect -> jared/tastebook-cron:1.4.1@sha256:19c3f6a2">jared/tastebook-cron:1.4.1@sha256:19c3f6a2</div>
+            <div class="dA-meters">
+              <div class="dA-meter"><span class="dA-mk">CPU</span><span class="dA-bar"><i class="dA-fill" style="width:1%;--fc:var(--accent-blue)"></i></span><span class="dA-mv">1%</span></div>
+              <div class="dA-meter"><span class="dA-mk">MEM</span><span class="dA-bar"><i class="dA-fill" style="width:12%;--fc:var(--accent-magenta)"></i></span><span class="dA-mv">12%</span></div>
+            </div>
+            <div class="dA-acts">
+              <button class="pm-minibtn" title="Logs" data-demo-action="cmd.docker.container.view_logs" data-demo-arg="cmd.docker.container.view_logs -> tastebook-cron-scheduler"><i data-ico="terminal" class="pm-ico sm"></i></button>
+              <button class="pm-minibtn" title="Stop" data-demo-action="cmd.docker.container.stop" data-demo-arg="cmd.docker.container.stop -> tastebook-cron-scheduler"><i data-ico="stop" class="pm-ico sm"></i></button>
+              <button class="pm-minibtn" title="Restart" data-demo-action="cmd.docker.container.restart" data-demo-arg="cmd.docker.container.restart -> tastebook-cron-scheduler"><i data-ico="refresh" class="pm-ico sm"></i></button>
+            </div>
+          </div>
+        </div>
+        <div class="pm-note" style="margin-top:var(--md)"><i data-ico="warn" class="pm-ico sm pm-note-glyph"></i><span><b>import-worker</b> crash loop — thread 'import::normalize_units::tests::mixed_fraction_does_not_explode' panicked at src/services/import.rs:58:9</span></div>
+      </section>
+
+      <section class="dA-sec" style="--cc:var(--accent-magenta)">
+        <h3 class="dA-lab">IMAGES <span class="dA-lab-r">8 local · 1.4 GB</span></h3>
+        <div class="dA-row">
+          <span class="dA-row-main"><span class="dA-row-name mono">jared/tastebook-api:1.4.2-rc.1@sha256:9f2c4b8a1e77</span><span class="dA-row-meta">in use by 1 container · built 2h ago</span></span>
+          <span class="dA-row-side">412 MB</span>
+          <button class="pm-minibtn" title="Pull" data-demo-action="cmd.docker.image.pull" data-demo-arg="cmd.docker.image.pull -> jared/tastebook-api:1.4.2-rc.1 (up to date)"><i data-ico="pull" class="pm-ico sm"></i></button>
+          <button class="pm-minibtn danger" title="Prune" aria-disabled="true" data-demo-reason="image_in_use" data-demo-action="demo.reason" data-demo-arg="Prune blocked: image in use by tastebook-api"><i data-ico="trash" class="pm-ico sm"></i></button>
+        </div>
+        <div class="dA-row">
+          <span class="dA-row-main"><span class="dA-row-name mono">jared/tastebook-import-worker:1.4.2-rc.1@sha256:3a7d0c</span><span class="dA-row-meta">in use by 2 containers · built 2h ago</span></span>
+          <span class="dA-row-side">388 MB</span>
+          <button class="pm-minibtn" title="Pull" data-demo-action="cmd.docker.image.pull" data-demo-arg="cmd.docker.image.pull -> jared/tastebook-import-worker:1.4.2-rc.1 (up to date)"><i data-ico="pull" class="pm-ico sm"></i></button>
+          <button class="pm-minibtn danger" title="Prune" aria-disabled="true" data-demo-reason="image_in_use" data-demo-action="demo.reason" data-demo-arg="Prune blocked: image in use by import-worker batch"><i data-ico="trash" class="pm-ico sm"></i></button>
+        </div>
+        <div class="dA-row">
+          <span class="dA-row-main"><span class="dA-row-name mono">postgres:16.3-alpine3.19@sha256:c1f09e2b</span><span class="dA-row-meta">in use by 1 container · pulled 6d ago</span></span>
+          <span class="dA-row-side">243 MB</span>
+          <button class="pm-minibtn" title="Pull" data-demo-action="cmd.docker.image.pull" data-demo-arg="cmd.docker.image.pull -> postgres:16.3-alpine3.19 (checking digest)"><i data-ico="pull" class="pm-ico sm"></i></button>
+          <button class="pm-minibtn danger" title="Prune" aria-disabled="true" data-demo-reason="image_in_use" data-demo-action="demo.reason" data-demo-arg="Prune blocked: image in use by postgres-16-alpine-primary"><i data-ico="trash" class="pm-ico sm"></i></button>
+        </div>
+        <div class="dA-row">
+          <span class="dA-row-main"><span class="dA-row-name mono">ghcr.io/jared/tastebook-web:edge-2026.07.24@sha256:77be41</span><span class="dA-row-meta">in use by 1 container · pulled 4h ago</span></span>
+          <span class="dA-row-side">161 MB</span>
+          <button class="pm-minibtn" title="Pull" data-demo-action="cmd.docker.image.pull" data-demo-arg="cmd.docker.image.pull -> ghcr.io/jared/tastebook-web:edge-2026.07.24"><i data-ico="pull" class="pm-ico sm"></i></button>
+          <button class="pm-minibtn danger" title="Prune" aria-disabled="true" data-demo-reason="image_in_use" data-demo-action="demo.reason" data-demo-arg="Prune blocked: image in use by tastebook-web"><i data-ico="trash" class="pm-ico sm"></i></button>
+        </div>
+        <div class="dA-row">
+          <span class="dA-row-main"><span class="dA-row-name mono">jared/tastebook-migrator:1.4.2-rc.1@sha256:b81d4e07</span><span class="dA-row-meta">tag current · previous 1.4.1 also local</span></span>
+          <span class="dA-row-side">96 MB</span>
+          <button class="pm-minibtn" title="Pull" data-demo-action="cmd.docker.image.pull" data-demo-arg="cmd.docker.image.pull -> jared/tastebook-migrator:1.4.2-rc.1"><i data-ico="pull" class="pm-ico sm"></i></button>
+          <button class="pm-minibtn danger" title="Prune" data-demo-action="cmd.docker.image.prune" data-demo-arg="cmd.docker.image.prune -> jared/tastebook-migrator (untagged 1.4.1 frees 94 MB, confirm)"><i data-ico="trash" class="pm-ico sm"></i></button>
+        </div>
+        <div class="dA-row">
+          <span class="dA-row-main"><span class="dA-row-name mono">redis:7.2-alpine3.19@sha256:d0a51f3e</span><span class="dA-row-meta">stopped container retains it</span></span>
+          <span class="dA-row-side">41 MB</span>
+          <button class="pm-minibtn" title="Pull" data-demo-action="cmd.docker.image.pull" data-demo-arg="cmd.docker.image.pull -> redis:7.2-alpine3.19 (up to date)"><i data-ico="pull" class="pm-ico sm"></i></button>
+          <button class="pm-minibtn danger" title="Prune" aria-disabled="true" data-demo-reason="image_in_use" data-demo-action="demo.reason" data-demo-arg="Prune blocked: retained by exited redis-7-session-cache"><i data-ico="trash" class="pm-ico sm"></i></button>
+        </div>
+        <div class="dA-row">
+          <span class="dA-row-main"><span class="dA-row-name mono">jared/tastebook-cron:1.4.1@sha256:19c3f6a2</span><span class="dA-row-meta">1.4.0 dangling · superseded</span></span>
+          <span class="dA-row-side">28 MB</span>
+          <button class="pm-minibtn" title="Pull" data-demo-action="cmd.docker.image.pull" data-demo-arg="cmd.docker.image.pull -> jared/tastebook-cron:1.4.1 (up to date)"><i data-ico="pull" class="pm-ico sm"></i></button>
+          <button class="pm-minibtn danger" title="Prune" data-demo-action="cmd.docker.image.prune" data-demo-arg="cmd.docker.image.prune -> dangling 1.4.0 layer frees 27 MB (confirm)"><i data-ico="trash" class="pm-ico sm"></i></button>
+        </div>
+        <div class="dA-row">
+          <span class="dA-row-main"><span class="dA-row-name mono">registry:2.8@sha256:f2e8a91d</span><span class="dA-row-meta">mirror runtime · no update channel</span></span>
+          <span class="dA-row-side">19 MB</span>
+          <button class="pm-minibtn" title="Pull" data-demo-action="cmd.docker.image.pull" data-demo-arg="cmd.docker.image.pull -> registry:2.8 (up to date)"><i data-ico="pull" class="pm-ico sm"></i></button>
+          <button class="pm-minibtn danger" title="Prune" aria-disabled="true" data-demo-reason="image_in_use" data-demo-action="demo.reason" data-demo-arg="Prune blocked: image in use by registry mirror"><i data-ico="trash" class="pm-ico sm"></i></button>
+        </div>
+        <div class="dA-pub"><button class="pm-btn" data-demo-action="cmd.docker.cleanup.scan" data-demo-arg="cmd.docker.cleanup.scan -> dry-run frees 342 MB across 11 dangling layers, protected assets untouched">Cleanup Advisor</button></div>
+      </section>
+
+      <section class="dA-sec" style="--cc:var(--accent-lime)">
+        <h3 class="dA-lab">COMPOSE <span class="pm-chip">tastebook.yml</span><span class="dA-lab-r">7 svc</span></h3>
+        <div class="dA-row"><span class="dot dot-ok"></span><span class="dA-row-main"><span class="dA-row-name">db</span><span class="dA-row-meta">postgres:16.3-alpine3.19@sha256:c1f09e2b</span></span><span class="dA-row-side">:5432</span></div>
+        <div class="dA-row"><span class="dot dot-ok"></span><span class="dA-row-main"><span class="dA-row-name">cache</span><span class="dA-row-meta">redis:7.2-alpine3.19@sha256:d0a51f3e</span></span><span class="dA-row-side">:6379</span></div>
+        <div class="dA-row"><span class="dot dot-ok"></span><span class="dA-row-main"><span class="dA-row-name">web</span><span class="dA-row-meta">ghcr.io/jared/tastebook-web:edge-2026.07.24@sha256:77be41</span></span><span class="dA-row-side">:3000</span></div>
+        <div class="dA-row"><span class="dot dot-ok"></span><span class="dA-row-main"><span class="dA-row-name">api</span><span class="dA-row-meta">jared/tastebook-api:1.4.2-rc.1@sha256:9f2c4b8a1e77</span></span><span class="dA-row-side">:8080</span></div>
+        <div class="dA-row"><span class="dot dot-run"></span><span class="dA-row-main"><span class="dA-row-name">worker</span><span class="dA-row-meta">jared/tastebook-import-worker:1.4.2-rc.1@sha256:3a7d0c · restarting</span></span><span class="dA-row-side">3/5</span></div>
+        <div class="dA-row"><span class="dot dot-ok"></span><span class="dA-row-main"><span class="dA-row-name">batch</span><span class="dA-row-meta">jared/tastebook-import-worker:1.4.2-rc.1@sha256:3a7d0c · profile import</span></span><span class="dA-row-side">queue</span></div>
+        <div class="dA-row"><span class="dot dot-idle"></span><span class="dA-row-main"><span class="dA-row-name">migrator</span><span class="dA-row-meta">jared/tastebook-migrator:1.4.2-rc.1@sha256:b81d4e07 · run-once</span></span><span class="dA-row-side">exit 0</span></div>
+        <div class="dA-pub"><button class="pm-btn pm-btn-primary" data-demo-action="cmd.docker.compose_up" data-demo-arg="cmd.docker.compose_up -> bringing up tastebook stack (6 of 7 services)"><i data-ico="play" class="pm-ico sm"></i>Compose up</button></div>
+      </section>
+
+      <section class="dA-sec dA-reg" style="--cc:var(--accent-blue)">
+        <h3 class="dA-lab">REGISTRIES <span class="dA-lab-r">3 of 4 reachable</span></h3>
+        <div class="dA-card" style="--cc:var(--accent-blue)">
+          <div class="pm-kv"><span class="pm-kv-k">Docker Hub</span><span class="pm-kv-v"><span class="pm-chip pm-chip-ok">authenticated</span> jared</span></div>
+          <div class="pm-kv"><span class="pm-kv-k">localhost:5000</span><span class="pm-kv-v"><span class="pm-chip pm-chip-ok">reachable</span> cache mirror</span></div>
+          <div class="pm-kv"><span class="pm-kv-k">ghcr.io</span><span class="pm-kv-v"><span class="pm-chip pm-chip-warn">not_configured</span> token missing</span></div>
+          <div class="pm-kv"><span class="pm-kv-k">harbor.home.arpa</span><span class="pm-kv-v"><span class="pm-chip pm-chip-ok">reachable</span> backups</span></div>
+        </div>
+      </section>
+
+      <section class="dA-sec" style="--cc:var(--accent-orange)">
+        <h3 class="dA-lab">BUILD <span class="dA-lab-r">buildx · bake</span></h3>
+        <div class="dA-card">
+          <div class="pm-kv"><span class="pm-kv-k">Dockerfile target</span><span class="pm-kv-v">runtime</span></div>
+          <div class="pm-kv"><span class="pm-kv-k">Tag</span><span class="pm-kv-v">jared/tastebook-api:1.4.2-rc.2</span></div>
+          <div class="pm-kv"><span class="pm-kv-k">Digest</span><span class="pm-kv-v">sha256:9f2c4b8a1e77 (last build)</span></div>
+          <div class="pm-kv"><span class="pm-kv-k">Platforms</span><span class="pm-kv-v">linux/amd64 + linux/arm64</span></div>
+          <div class="pm-kv"><span class="pm-kv-k">Context</span><span class="pm-kv-v">.github/workflows/ci-build-test-and-publish.yml</span></div>
+          <div class="dA-pub"><button class="pm-btn pm-btn-primary" data-demo-action="cmd.docker.build" data-demo-arg="cmd.docker.build -> building jared/tastebook-api:1.4.2-rc.2 (amd64, arm64) via buildx bake"><i data-ico="flame" class="pm-ico sm"></i>Build</button></div>
+        </div>
+      </section>
+
+      <section class="dA-sec" style="--cc:var(--accent-warning)">
+        <h3 class="dA-lab">SCENARIOS <span class="dA-lab-r">saved stacks</span></h3>
+        <div class="dA-row">
+          <span class="dA-row-main"><span class="dA-row-name">dev — web + db only</span><span class="dA-row-meta">profile dev · ports 5173, 5432</span></span>
+          <button class="pm-minibtn" title="Run scenario" data-demo-action="cmd.docker.compose.scenario.run" data-demo-arg="cmd.docker.compose.scenario.run -> dev (web, db)"><i data-ico="play" class="pm-ico sm"></i></button>
+        </div>
+        <div class="dA-row">
+          <span class="dA-row-main"><span class="dA-row-name">import-load — worker x3 <span class="pm-chip pm-chip-warn">stale</span></span><span class="dA-row-meta">compose file changed since save · running cargo test -p puppet-core import::normalize_units (retry 2/2)</span></span>
+          <button class="pm-minibtn" title="Run scenario" aria-disabled="true" data-demo-reason="stale scenario" data-demo-action="demo.reason" data-demo-arg="Scenario is stale: compose file changed - edit to refresh before running"><i data-ico="play" class="pm-ico sm"></i></button>
+        </div>
+        <div class="dA-row">
+          <span class="dA-row-main"><span class="dA-row-name">full-stack — all services + mirror</span><span class="dA-row-meta">profile prod-like · ports 3000, 8080, 5432, 6379, 5000</span></span>
+          <button class="pm-minibtn" title="Run scenario" data-demo-action="cmd.docker.compose.scenario.run" data-demo-arg="cmd.docker.compose.scenario.run -> full-stack (7 services)"><i data-ico="play" class="pm-ico sm"></i></button>
+        </div>
+        <div class="pm-footnote">Scenario runs reuse the current compose file; stale saves must be re-edited before dispatch.</div>
+      </section>
+
+    </div>
+  </div>
+
+  <div class="side-panel-view" id="panel-search"><div style="display:flex;flex:1;align-items:center;justify-content:center;padding:24px;text-align:center;color:var(--text-muted);font-size:11px;line-height:1.5">This bonus variant explores an alternate design for Search. The full six-concept rail set lives in c1..c6-*.html.</div></div>
+  <div class="side-panel-view" id="panel-source"><div style="display:flex;flex:1;align-items:center;justify-content:center;padding:24px;text-align:center;color:var(--text-muted);font-size:11px;line-height:1.5">This bonus variant explores an alternate design for Source Control. The full six-concept rail set lives in c1..c6-*.html.</div></div>
+  <div class="side-panel-view" id="panel-git"><div style="display:flex;flex:1;align-items:center;justify-content:center;padding:24px;text-align:center;color:var(--text-muted);font-size:11px;line-height:1.5">This bonus variant explores an alternate design for GitHub Actions. The full six-concept rail set lives in c1..c6-*.html.</div></div>
+  <div class="side-panel-view" id="panel-testing"><div style="display:flex;flex:1;align-items:center;justify-content:center;padding:24px;text-align:center;color:var(--text-muted);font-size:11px;line-height:1.5">This bonus variant explores an alternate design for Testing. The full six-concept rail set lives in c1..c6-*.html.</div></div>
+  <div class="side-panel-view" id="panel-agents"><div style="display:flex;flex:1;align-items:center;justify-content:center;padding:24px;text-align:center;color:var(--text-muted);font-size:11px;line-height:1.5">This bonus variant explores an alternate design for Agents. The full six-concept rail set lives in c1..c6-*.html.</div></div>
+  <div class="side-panel-view" id="panel-artifacts"><div style="display:flex;flex:1;align-items:center;justify-content:center;padding:24px;text-align:center;color:var(--text-muted);font-size:11px;line-height:1.5">This bonus variant explores an alternate design for Runtime Artifacts. The full six-concept rail set lives in c1..c6-*.html.</div></div>
+</template>
+<script src="_shared/icons.js"></script>
+<script src="_shared/menu.js"></script>
+<script src="_shared/chrome.js"></script>
+<script>PMChrome.boot({ badge: { id: 'D1', name: 'Fleet Grid' } }); PMRail.showPanel('panel-docker');</script>
+</body>
+</html>

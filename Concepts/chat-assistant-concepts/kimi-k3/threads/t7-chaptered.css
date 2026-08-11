@@ -1,0 +1,125 @@
+/* ============================================================================
+   Kimi K3 — T7 Chaptered presentation (scoped [data-k3-thread="t7"]).
+   The transcript read as chapters:
+     - prominent sticky .k3t-chapter banners (position:sticky; top:0; surface
+       background) so the current chapter's message range stays pinned while
+       you scroll through it;
+     - the chapter outline chips (.k3t-chapter-chip in .k3t-chapters) promoted
+       into a mini table-of-contents row at the top of the thread;
+     - messages indented under their chapter on a centered reading measure.
+   Token-driven so all 8 themes render complete; status rides weight / tint —
+   never a colored left-side accent border.
+
+   Geometry (list padding 18px 20px):
+     chapter banner: full list width, sticky at top:0
+     messages:       centered reading measure, max 68ch, indented from the banner
+   ========================================================================== */
+
+[data-k3-thread="t7"] {
+  height: 100%;
+  min-height: 0;
+  display: flex;
+  flex-direction: column;
+}
+[data-k3-thread="t7"] .k3t-root {
+  flex: 1 1 auto;
+  min-height: 0;
+}
+
+/* ---- chapter outline: mini table-of-contents row ------------------------- */
+[data-k3-thread="t7"] .k3t-chapters {
+  gap: 6px;
+  padding: 2px 20px 8px;
+  justify-content: flex-start;
+}
+[data-k3-thread="t7"] .k3t-chapter-chip {
+  padding: 4px 11px;
+  font-family: var(--mono-font, monospace);
+  font-size: var(--fs-2xs, 10px);
+  letter-spacing: .04em;
+  color: var(--text-secondary);
+  background: var(--surface);
+  border: var(--border-width, 1px) solid var(--border-light);
+  border-radius: var(--radius-pill, 999px);
+}
+
+/* ---- the list: roomy, centered reading measure --------------------------- */
+[data-k3-thread="t7"] .k3t-list {
+  gap: 20px;
+  padding: 18px 20px 24px;
+}
+
+/* ---- chapter divider: prominent sticky banner ---------------------------- */
+[data-k3-thread="t7"] .k3t-chapter {
+  position: sticky;
+  top: 0;
+  z-index: 2;
+  gap: 10px;
+  margin: 4px -4px 0;
+  padding: 8px 12px;
+  background: var(--surface);
+  border-bottom: var(--border-width, 1px) solid var(--border-light);
+  border-radius: var(--radius-sm, 6px);
+  box-shadow: var(--elev-1);
+}
+/* drop the kit's full-bleed hairlines; the banner's own edge is the rule */
+[data-k3-thread="t7"] .k3t-chapter::before,
+[data-k3-thread="t7"] .k3t-chapter::after { content: none; }
+[data-k3-thread="t7"] .k3t-chapter-label {
+  font-family: var(--mono-font, monospace);
+  font-size: var(--fs-xs, 11px);
+  font-weight: 700;
+  letter-spacing: .06em;
+  text-transform: uppercase;
+  color: var(--text-secondary);
+}
+
+/* ---- messages: reading measure, indented under the banner ---------------- */
+[data-k3-thread="t7"] .k3t-msg {
+  width: 100%;
+  max-width: calc(68ch);
+  margin-inline: auto;
+}
+[data-k3-thread="t7"] .k3t-msg-body {
+  font-size: var(--fs-md, 14px);
+  line-height: var(--lh-body, 1.55);
+}
+[data-k3-thread="t7"] .k3t-msg[data-role="user"] .k3t-msg-body { color: var(--text-secondary); }
+
+/* focus tint without neighbor-shifting negative margins */
+[data-k3-thread="t7"] .k3t-msg.is-focused {
+  margin: 0 auto;
+  padding: 8px 10px;
+}
+
+/* ---- work records: slim inline entries under the chapter ------------------ */
+[data-k3-thread="t7"] .k3t-card {
+  margin-top: 12px;
+  padding: 10px 0 2px;
+  background: transparent;
+  border: 0;
+  border-top: var(--border-width, 1px) solid var(--border-light);
+  border-radius: 0;
+  box-shadow: none;
+}
+[data-k3-thread="t7"] .k3t-subcompact { border-top-style: dashed; }
+
+/* ---- thread-level work zone + live region ride the measure ---------------- */
+[data-k3-thread="t7"] .k3t-endzone { padding: 0 20px 20px; }
+[data-k3-thread="t7"] .k3t-endzone > * {
+  width: 100%;
+  max-width: calc(68ch);
+  margin-inline: auto;
+}
+[data-k3-thread="t7"] .k3t-endzone .k3t-card { margin-top: 0; }
+[data-k3-thread="t7"] .k3t-live {
+  margin: 0 auto 14px;
+  width: calc(100% - 40px);
+  max-width: calc(68ch);
+  box-sizing: border-box;
+  background: transparent;
+  border-color: var(--border-light);
+}
+
+/* ---- hover row: quiet, flush with the measure ----------------------------- */
+[data-k3-thread="t7"] .k3t-msg-hover { margin-top: 4px; }

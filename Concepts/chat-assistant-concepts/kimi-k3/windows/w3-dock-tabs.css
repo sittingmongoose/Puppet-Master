@@ -1,0 +1,237 @@
+/* ============================================================================
+   Kimi K3 — W3 Dock Tabs chrome (scoped [data-k3-window="w3"]).
+   One vertical column: kit header, lens banner, thread slot (flex 1), a
+   tabbed dock above the composer (Goal/Todo/Agents/Diff/Activity — only the
+   tabs with data), and the composer slot. Tabs use surface backgrounds; the
+   active tab is accent-soft + weight — never a colored left-side border.
+   Token-driven only.
+   ========================================================================== */
+
+[data-k3-window="w3"] {
+  flex: 1 1 auto;
+  height: 100%;
+  min-height: 0;
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  background: var(--background);
+  color: var(--text-primary);
+  overflow: hidden;
+}
+[data-k3-window="w3"] .w3-main {
+  flex: 1 1 auto;
+  min-height: 0;
+  display: flex;
+  flex-direction: column;
+}
+
+[data-k3-window="w3"] > .w3-main > .k3w-kit-header { flex: 0 0 auto; }
+[data-k3-window="w3"] .k3w-kit-lens-banner { flex: 0 0 auto; }
+
+/* ---- thread slot ----------------------------------------------------------- */
+[data-k3-window="w3"] .w3-thread {
+  flex: 1 1 auto;
+  min-height: 0;
+  display: flex;
+  flex-direction: column;
+}
+
+/* ---- dock: tab strip + pane ------------------------------------------------ */
+[data-k3-window="w3"] .w3-dock {
+  flex: 0 0 auto;
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  background: var(--surface);
+  border-top: var(--border-width, 1px) solid var(--border-light);
+}
+
+[data-k3-window="w3"] .w3-tabs {
+  flex: 0 0 auto;
+  display: flex;
+  align-items: stretch;
+  gap: 2px;
+  padding: 6px 8px 0;
+  overflow-x: auto;
+  /* thin themed scrollbar so overflow is never silently hidden (was
+     scrollbar-width:none); tabs stay fully reachable and the strip signals
+     there is more to scroll. */
+  scrollbar-width: thin;
+  scrollbar-color: var(--border) transparent;
+  scroll-behavior: smooth;
+}
+[data-k3-window="w3"] .w3-tabs::-webkit-scrollbar { width: 8px; height: 8px; }
+[data-k3-window="w3"] .w3-tabs::-webkit-scrollbar-track { background: transparent; }
+[data-k3-window="w3"] .w3-tabs::-webkit-scrollbar-thumb {
+  background: var(--border);
+  border-radius: var(--radius-pill, 999px);
+}
+[data-k3-window="w3"] .w3-tabs::-webkit-scrollbar-thumb:hover { background: var(--text-muted); }
+
+/* Edge fade cues: a gradient at each end of the tab strip signals more tabs in
+   that direction. They only appear when the strip actually overflows that way
+   (JS toggles is-overflow-left / is-overflow-right on the dock). */
+[data-k3-window="w3"] .w3-dock::before,
+[data-k3-window="w3"] .w3-dock::after {
+  content: "";
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  width: 18px;
+  pointer-events: none;
+  opacity: 0;
+  transition: opacity var(--motion-fast, 120ms) var(--ease-default, ease-out);
+  z-index: 2;
+}
+[data-k3-window="w3"] .w3-dock::before {
+  left: 0;
+  background: linear-gradient(to right, var(--surface), transparent);
+}
+[data-k3-window="w3"] .w3-dock::after {
+  right: 0;
+  background: linear-gradient(to left, var(--surface), transparent);
+}
+[data-k3-window="w3"] .w3-dock.is-overflow-left::before { opacity: 1; }
+[data-k3-window="w3"] .w3-dock.is-overflow-right::after { opacity: 1; }
+
+[data-k3-window="w3"] .w3-tab {
+  flex: 0 0 auto;
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  padding: 6px 10px;
+  background: transparent;
+  border: 0;
+  border-radius: var(--radius-sm, 6px) var(--radius-sm, 6px) 0 0;
+  font-size: var(--fs-xs, 11px);
+  color: var(--text-secondary);
+  cursor: pointer;
+  white-space: nowrap;
+  transition: background-color var(--motion-fast, 120ms) var(--ease-default, ease-out),
+              color var(--motion-fast, 120ms) var(--ease-default, ease-out);
+}
+[data-k3-window="w3"] .w3-tab:hover {
+  color: var(--accent-primary);
+  background: var(--accent-soft);
+}
+/* active tab = accent-soft + weight, never a left-side accent border */
+[data-k3-window="w3"] .w3-tab[aria-selected="true"] {
+  background: var(--accent-soft);
+  color: var(--accent-primary);
+  font-weight: 600;
+}
+[data-k3-window="w3"] .w3-tab-ic { display: inline-flex; flex: 0 0 auto; position: relative; }
+[data-k3-window="w3"] .w3-tab-ic svg { width: 13px; height: 13px; }
+[data-k3-window="w3"] .w3-tab-label { flex: 0 0 auto; }
+[data-k3-window="w3"] .w3-tab-badge {
+  flex: 0 0 auto;
+  padding: 1px 6px;
+  font-size: var(--fs-2xs, 10px);
+  font-weight: 600;
+  color: var(--text-secondary);
+  background: var(--background);
+  border: var(--border-width, 1px) solid var(--border-light);
+  border-radius: var(--radius-pill, 999px);
+  line-height: var(--lh-tight, 1.2);
+}
+[data-k3-window="w3"] .w3-tab[aria-selected="true"] .w3-tab-badge {
+  color: var(--accent-primary);
+  background: var(--surface);
+  border-color: var(--accent-primary);
+}
+
+/* ---- Chats tab (first position, always present) + pin toggle -------------- */
+/* The Chats tab is a wrapper carrying the tab button + a pin toggle. The pin
+   locks the pane to Chats so work-surface tabs cannot switch it away. */
+[data-k3-window="w3"] .w3-tab-chats {
+  display: inline-flex;
+  align-items: center;
+  gap: 0;
+  padding: 0;
+  background: transparent;
+  border: 0;
+}
+[data-k3-window="w3"] .w3-tab-chats .w3-tab-main {
+  flex: 0 0 auto;
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  padding: 6px 4px 6px 10px;
+  background: transparent;
+  border: 0;
+  border-radius: var(--radius-sm, 6px) 0 0 var(--radius-sm, 6px);
+  font-size: var(--fs-xs, 11px);
+  color: var(--text-secondary);
+  cursor: pointer;
+  white-space: nowrap;
+  transition: background-color var(--motion-fast, 120ms) var(--ease-default, ease-out),
+              color var(--motion-fast, 120ms) var(--ease-default, ease-out);
+}
+[data-k3-window="w3"] .w3-tab-chats .w3-tab-main:hover {
+  color: var(--accent-primary);
+  background: var(--accent-soft);
+}
+[data-k3-window="w3"] .w3-tab-chats .w3-tab-main[aria-selected="true"] {
+  background: var(--accent-soft);
+  color: var(--accent-primary);
+  font-weight: 600;
+}
+[data-k3-window="w3"] .w3-tab-pin {
+  width: 24px;
+  height: auto;
+  align-self: stretch;
+  min-height: 26px;
+  border-radius: 0 var(--radius-sm, 6px) var(--radius-sm, 6px) 0;
+}
+[data-k3-window="w3"] .w3-tab-pin svg { width: 13px; height: 13px; }
+/* pressed (pinned) = accent tint, never a colored left border */
+[data-k3-window="w3"] .w3-tab-pin.is-pinned {
+  background: var(--accent-soft);
+  color: var(--accent-primary);
+}
+/* small live indicator dot when a thread needs attention */
+[data-k3-window="w3"] .w3-chats-dot {
+  position: absolute;
+  top: -1px;
+  right: -3px;
+  width: 6px;
+  height: 6px;
+  border-radius: var(--radius-pill, 999px);
+  background: var(--accent-orange, var(--accent-error));
+  box-shadow: 0 0 0 2px var(--surface);
+}
+
+/* ---- pane (holds the active kit surface) ---------------------------------- */
+[data-k3-window="w3"] .w3-pane {
+  flex: 0 0 auto;
+  max-height: 38vh;
+  min-height: 0;
+  display: flex;
+  flex-direction: column;
+  background: var(--surface);
+  border-top: var(--border-width, 1px) solid var(--border-light);
+}
+[data-k3-window="w3"] .w3-pane-body {
+  flex: 1 1 auto;
+  min-height: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  padding: 10px 12px 12px;
+  overflow-y: auto;
+}
+[data-k3-window="w3"] .w3-pane-body .k3w-kit-surface { width: 100%; }
+[data-k3-window="w3"] .w3-pane-body .k3w-kit-chips { padding-top: 2px; }
+[data-k3-window="w3"] .w3-pane-history {
+  width: 100%;
+  min-height: 0;
+  background: transparent;
+  border: 0;
+}
+[data-k3-window="w3"] .w3-pane-history:not([hidden]) { display: block; }
+
+/* ---- composer slot --------------------------------------------------------- */
+[data-k3-window="w3"] .w3-composer {
+  flex: 0 0 auto;
+  padding: 10px 14px 14px;
+}

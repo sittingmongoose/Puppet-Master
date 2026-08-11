@@ -1,0 +1,435 @@
+/* ============================================================================
+   Kimi K3 — composer module (window.K3Composer).
+
+   Fills the window module's [data-k3-slot="composer"]. Per active thread:
+   - Draft text + attachments persist through K3Data draft helpers (the
+     store semantic slice), so they survive thread switches, docked/pop-out
+     remounts, and simulated restarts.
+   - Send/Stop state machine: agent active + empty draft -> Stop; active +
+     typed text -> Send (steers, never stops); inactive -> Send (disabled
+     while the draft is empty). Enter sends, Shift+Enter newline.
+   - Draft revisions: pushRevision on blur and every 15s while dirty;
+     history menu restores a revision or clears the draft (with confirm).
+   - Questionnaire takeover: while K3Data.activeQuestionnaire(threadId)
+     returns a questionnaire the composer yields the slot to
+     window.K3Questionnaire. Re-evaluated on every 'data' event and on
+     activeThreadId changes. Only one UI occupies the slot at a time.
+   ========================================================================== */
+(function () {
+  'use strict';
+
+  var PLACEHOLDER = 'Message the assistant';
+  var MAX_ROWS = 6;
+  var REVISION_INTERVAL_MS = 15000;
+  var PREVIEW_LEN = 50;
+  var ATTACHMENT_NAMES = [
+    'usage-audit.md',
+    'billing-screen.tsx',
+    'retention-notes.txt',
+    'theme-tokens.css',
+    'import-log.txt'
+  ];
+
+  function icon(name) { return window.K3Icons.get(name); }
+
+  // per-window questionnaire choreography variant. Each concept gets a
+  // distinct entrance/motion feel; the data interaction is shared.
+  //   morph        — faithful to the reference video: pill<->card height
+  //                  morph, staged option reveal, Skip->Submit morph.
+  //   rise         — calm/airy: question rises inline, options cascade.
+  //   stack        — playful/tactile: card scales in elastically, advances
+  //                  push the card out and the next springs from depth.
+  //   inline-strip — compact: expanding strip -> option reel, minimal footprint.
+  var QUESTIONNAIRE_VARIANTS = {
+    w1: 'morph', w2: 'rise', w3: 'stack', w4: 'rise',
+    w5: 'inline-strip', w6: 'stack', w7: 'morph', w8: 'inline-strip'
+  };
+  function windowQuestionnaireVariant(windowId) {
+    return QUESTIONNAIRE_VARIANTS[windowId] || 'morph';
+  }
+
+  function mount(slotEl, ctx) {
+    var data = ctx.data;
+    var store = ctx.store;
+    var ui = ctx.ui;
+
+    var threadId = store.get('activeThreadId', null);
+    var mode = null;                 // null | 'composer' | 'questionnaire'
+    var questionnaireInst = null;
+    var attachCycle = 0;             // cycles fake attachment names per mount
+
+    // --- composer-UI scoped state (rebuilt on every composer render) --------
+    var root = null;
+    var chipsWrap = null;
+    var textarea = null;
+    var actionBtn = null;
+    var revisionsBtn = null;
+    var attachments = [];
+    var dirty = false;               // text changed since last revision push
+    var revTimer = null;
+    var lastActionState = null;      // avoid rebuilding the button every key
+
+    // --- small state helpers -------------------------------------------------
+    function hasText() { return !!textarea && textarea.value.trim().length > 0; }
+    function agentActive() { return !!(threadId && data.isActive(threadId)); }
+    // Exact contract: active + empty -> stop; anything else -> send.
+    function actionState() { return (agentActive() && !hasText()) ? 'stop' : 'send'; }
+
+    function saveDraftNow() {
+      if (!threadId) return;
+      data.saveDraft(threadId, textarea.value, attachments);
+    }
+
+    function pushRevisionIfDirty() {
+      if (!dirty || !threadId) return;
+      data.pushRevision(threadId); // data.js dedupes identical, bounds to 8
+      dirty = false;
+    }
+
+    // --- send / stop ----------------------------------------------------------
+    function doSend() {
+      if (!threadId || !hasText()) return;
+      var text = textarea.value;
+      data.send(threadId, text);       // steers when the agent is working
+      data.clearDraft(threadId);       // send archives; clear is not a revision
+      attachments = [];
+      dirty = false;
+      textarea.value = '';
+      renderChips();
+      autogrow();
+      updateActionButton();
+      textarea.focus();
+    }
+
+    function doStop() {
+      if (!threadId) return;
+      data.stop(threadId);
+      updateActionButton();
+    }
+
+    function onActionClick() {
+      if (actionState() === 'stop') doStop();
+      else doSend();
+    }
+
+    // --- action button (single element, swapped between Send and Stop) --------
+    function updateActionButton() {
+      if (!actionBtn) return;
+      var state = actionState();
+      var disabled = state === 'send' && !hasText();
+      if (state !== lastActionState) {
+        lastActionState = state;
+        actionBtn.setAttribute('data-testid', state === 'stop' ? 'k3-composer-stop' : 'k3-composer-send');
+        actionBtn.className = 'k3-btn k3c-action' + (state === 'stop' ? ' k3-btn-danger' : '');
+        actionBtn.textContent = '';
+        actionBtn.appendChild(icon(state === 'stop' ? 'stop' : 'send'));
+        var label = document.createElement('span');
+        label.textContent = state === 'stop' ? 'Stop' : 'Send';
+        actionBtn.appendChild(label);
+      }
+      actionBtn.disabled = disabled;
+    }
+
+    // --- attachments ------------------------------------------------------------
+    function addAttachment() {
+      if (!threadId) return;
+      attachments.push(ATTACHMENT_NAMES[attachCycle % ATTACHMENT_NAMES.length]);
+      attachCycle += 1;
+      saveDraftNow();
+      renderChips();
+    }
+
+    function removeAttachment(index) {
+      if (index < 0 || index >= attachments.length) return;
+      attachments.splice(index, 1);
+      saveDraftNow();
+      renderChips();
+    }
+
+    function renderChips() {
+      if (!chipsWrap) return;
+      chipsWrap.textContent = '';
+      attachments.forEach(function (name, index) {
+        var chip = document.createElement('span');
+        chip.className = 'k3-chip k3c-chip';
+        chip.setAttribute('data-testid', 'k3-composer-chip');
+        chip.title = name;
+
+        var ic = document.createElement('span');
+        ic.className = 'k3c-chip-ic';
+        ic.appendChild(icon('artifact'));
+        chip.appendChild(ic);
+
+        var label = document.createElement('span');
+        label.className = 'k3c-chip-name';
+        label.textContent = name;
+        chip.appendChild(label);
+
+        var rm = document.createElement('button');
+        rm.type = 'button';
+        rm.className = 'k3-icon-btn k3c-chip-x';
+        rm.setAttribute('aria-label', 'Remove attachment ' + name);
+        rm.appendChild(icon('close'));
+        rm.addEventListener('click', function () { removeAttachment(index); });
+        chip.appendChild(rm);
+
+        chipsWrap.appendChild(chip);
+      });
+    }
+
+    // --- textarea auto-grow (1..6 rows, .k3-scroll only when scrollable) --------
+    function autogrow() {
+      if (!textarea) return;
+      textarea.style.height = 'auto';
+      var cs = window.getComputedStyle(textarea);
+      var lh = parseFloat(cs.lineHeight);
+      if (!lh || isNaN(lh)) lh = (parseFloat(cs.fontSize) || 13) * 1.5;
+      var pad = (parseFloat(cs.paddingTop) || 0) + (parseFloat(cs.paddingBottom) || 0);
+      var border = (parseFloat(cs.borderTopWidth) || 0) + (parseFloat(cs.borderBottomWidth) || 0);
+      var min = lh + pad + border;
+      var max = lh * MAX_ROWS + pad + border;
+      var h = Math.max(min, Math.min(textarea.scrollHeight + border, max));
+      textarea.style.height = h + 'px';
+      textarea.classList.toggle('k3-scroll', textarea.scrollHeight + border > max + 1);
+    }
+
+    // --- draft revisions ----------------------------------------------------------
+    function revisionLabel(rev) {
+      var time = '';
+      try {
+        var d = new Date(rev.savedAt);
+        if (!isNaN(d.getTime())) time = d.toLocaleTimeString();
+      } catch (e) { /* keep empty time */ }
+      var oneLine = String(rev.text || '').replace(/\s+/g, ' ').trim();
+      var preview = oneLine.length > PREVIEW_LEN ? oneLine.slice(0, PREVIEW_LEN).trim() + '...' : oneLine;
+      if (!preview) preview = '(empty draft)';
+      return time ? time + ' — ' + preview : preview;
+    }
+
+    function restoreRevision(rev) {
+      if (!threadId || !textarea) return;
+      textarea.value = String(rev.text || '');
+      saveDraftNow();              // restored text becomes the current draft
+      dirty = false;
+      autogrow();
+      updateActionButton();
+      textarea.focus();
+    }
+
+    function confirmClearDraft() {
+      var tid = threadId;
+      ui.confirm({
+        title: 'Clear this draft?',
+        body: 'This is distinct from sending.',
+        confirmLabel: 'Clear draft',
+        cancelLabel: 'Cancel',
+        danger: true
+      }).then(function (ok) {
+        if (!ok) return;
+        data.clearDraft(tid);
+        if (mode !== 'composer' || !textarea || threadId !== tid) return;
+        attachments = [];
+        dirty = false;
+        textarea.value = '';
+        renderChips();
+        autogrow();
+        updateActionButton();
+        textarea.focus();
+      });
+    }
+
+    function openRevisionsMenu() {
+      if (!threadId || !revisionsBtn) return;
+      var draft = data.getDraft(threadId);
+      var revs = draft ? draft.revisions : [];
+      var items = [];
+      if (revs.length === 0) {
+        items.push({ label: 'No saved revisions', disabled: true });
+      } else {
+        revs.slice().reverse().forEach(function (rev) { // newest first
+          items.push({
+            label: revisionLabel(rev),
+            icon: 'restore',
+            action: function () { restoreRevision(rev); }
+          });
+        });
+      }
+      items.push({ type: 'separator' });
+      items.push({
+        label: 'Clear draft',
+        icon: 'trash',
+        danger: true,
+        testid: 'k3-composer-clear',
+        action: confirmClearDraft
+      });
+      ui.menu(revisionsBtn, items, { width: 340 });
+    }
+
+    // --- composer DOM -------------------------------------------------------------
+    function buildButton(cls, testid, aria, iconName) {
+      var btn = document.createElement('button');
+      btn.type = 'button';
+      btn.className = cls;
+      btn.setAttribute('data-testid', testid);
+      btn.setAttribute('aria-label', aria);
+      btn.title = aria;
+      btn.appendChild(icon(iconName));
+      return btn;
+    }
+
+    function renderComposer() {
+      var draft = threadId ? data.getDraft(threadId) : null;
+      attachments = draft ? draft.attachments.slice() : [];
+      dirty = false;
+      lastActionState = null;
+
+      root = document.createElement('div');
+      root.className = 'k3c';
+      root.setAttribute('data-testid', 'k3-composer');
+
+      chipsWrap = document.createElement('div');
+      chipsWrap.className = 'k3c-chips';
+      chipsWrap.setAttribute('data-testid', 'k3-composer-chips');
+      root.appendChild(chipsWrap);
+
+      textarea = document.createElement('textarea');
+      textarea.className = 'k3c-input';
+      textarea.setAttribute('data-testid', 'k3-composer-input');
+      textarea.setAttribute('spellcheck', 'true');
+      textarea.setAttribute('rows', '1');
+      textarea.setAttribute('placeholder', PLACEHOLDER);
+      textarea.setAttribute('aria-label', PLACEHOLDER);
+      textarea.value = draft ? draft.text : '';
+      root.appendChild(textarea);
+
+      var toolbar = document.createElement('div');
+      toolbar.className = 'k3c-toolbar';
+
+      var attachBtn = buildButton('k3-icon-btn k3c-tool', 'k3-composer-attach', 'Attach a file', 'attach');
+      attachBtn.addEventListener('click', addAttachment);
+      toolbar.appendChild(attachBtn);
+
+      revisionsBtn = buildButton('k3-icon-btn k3c-tool', 'k3-composer-revisions', 'Draft revision history', 'history');
+      revisionsBtn.addEventListener('click', openRevisionsMenu);
+      toolbar.appendChild(revisionsBtn);
+
+      var spacer = document.createElement('span');
+      spacer.className = 'k3c-spacer';
+      toolbar.appendChild(spacer);
+
+      actionBtn = document.createElement('button');
+      actionBtn.type = 'button';
+      actionBtn.addEventListener('click', onActionClick);
+      toolbar.appendChild(actionBtn);
+
+      root.appendChild(toolbar);
+      slotEl.appendChild(root);
+
+      textarea.addEventListener('input', function () {
+        dirty = true;
+        saveDraftNow();
+        autogrow();
+        updateActionButton();
+      });
+      textarea.addEventListener('keydown', function (e) {
+        if (e.key === 'Enter' && !e.shiftKey) {
+          e.preventDefault();
+          if (hasText()) doSend(); // empty draft while active: Enter does nothing
+        }
+      });
+      textarea.addEventListener('blur', pushRevisionIfDirty);
+
+      revTimer = setInterval(pushRevisionIfDirty, REVISION_INTERVAL_MS);
+
+      renderChips();
+      autogrow();
+      updateActionButton();
+    }
+
+    function teardownComposer() {
+      if (revTimer) { clearInterval(revTimer); revTimer = null; }
+      if (textarea) pushRevisionIfDirty();
+      if (root && root.parentNode) root.parentNode.removeChild(root);
+      root = null;
+      chipsWrap = null;
+      textarea = null;
+      actionBtn = null;
+      revisionsBtn = null;
+      attachments = [];
+      dirty = false;
+      lastActionState = null;
+    }
+
+    // --- questionnaire takeover / composer: exactly one occupies the slot --------
+    function syncMode() {
+      var q = threadId ? data.activeQuestionnaire(threadId) : null;
+      var canTakeOver = !!(q && window.K3Questionnaire && typeof window.K3Questionnaire.mount === 'function');
+
+      if (canTakeOver) {
+        if (mode !== 'questionnaire') {
+          teardownComposer();
+          // pick a per-window choreography variant so each concept gets a
+          // distinct questionnaire feel. Falls back to the default ('morph').
+          var variant = (window.K3 && window.K3.env && window.K3.env.windowId)
+            ? windowQuestionnaireVariant(window.K3.env.windowId) : 'morph';
+          questionnaireInst = window.K3Questionnaire.mount(slotEl, ctx, threadId, variant);
+          mode = 'questionnaire';
+        }
+        return;
+      }
+      if (mode === 'questionnaire') {
+        try { if (questionnaireInst && questionnaireInst.unmount) questionnaireInst.unmount(); } catch (e) {}
+        questionnaireInst = null;
+        mode = null;
+      }
+      if (mode !== 'composer') {
+        renderComposer();
+        mode = 'composer';
+      } else {
+        updateActionButton();
+      }
+    }
+
+    function rebuildForThread() {
+      if (mode === 'questionnaire') {
+        try { if (questionnaireInst && questionnaireInst.unmount) questionnaireInst.unmount(); } catch (e) {}
+        questionnaireInst = null;
+      }
+      teardownComposer();
+      mode = null;
+      syncMode();
+    }
+
+    // --- subscriptions --------------------------------------------------------------
+    function onData(evt) {
+      syncMode(); // takeover re-evaluates on EVERY data event
+      if (mode !== 'composer') return;
+      if (!evt || !evt.threadId || evt.threadId === threadId) updateActionButton();
+    }
+    ctx.on('data', onData);
+
+    var unsubStore = store.subscribe('activeThreadId', function () {
+      var next = store.get('activeThreadId', null);
+      if (next === threadId) { syncMode(); return; } // e.g. simulated restart
+      threadId = next;
+      rebuildForThread();
+    });
+
+    syncMode();
+
+    return {
+      unmount: function () {
+        ctx.off('data', onData);
+        unsubStore();
+        if (mode === 'questionnaire') {
+          try { if (questionnaireInst && questionnaireInst.unmount) questionnaireInst.unmount(); } catch (e) {}
+          questionnaireInst = null;
+        }
+        teardownComposer();
+        mode = null;
+      }
+    };
+  }
+
+  window.K3Composer = { mount: mount };
+})();

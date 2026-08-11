@@ -94,7 +94,10 @@
         "ContractName:Plans/web_policy_negative_fixtures.schema.json",
         "ContractName:Plans/web_provider_adapter_registry.seed.json",
         "ContractName:Plans/web_provider_projection_fixtures.json",
-        "ContractName:Plans/web_research_run_fixtures.json"
+        "ContractName:Plans/web_research_run_fixtures.json",
+        "ContractName:Plans/storage_value_registry.schema.json",
+        "ContractName:Plans/storage_value_registry.json",
+        "ContractName:Plans/storage_recovery_contracts.schema.json"
       ],
       "decision_refs": [
         "dec-2026-06-09-build-governance-support-seal",
@@ -107,7 +110,8 @@
         "AD-20260621-prd-planning-runtime-contract-packet",
         "dec-2026-07-06-non-executable-readiness-closure-evidence-schema-governance-registration",
         "dec-2026-07-06-non-executable-readiness-closure-evidence-governance-registration",
-        "dec-2026-07-09-web-capability-agentic-routing-governance-registration"
+        "dec-2026-07-09-web-capability-agentic-routing-governance-registration",
+        "dec-2026-08-10-storage-value-registry-v2-governance-registration"
       ],
       "evidence_pointer": {
         "kind": "filesystem_path",
@@ -310,6 +314,21 @@
           "kind": "file",
           "ref": "Plans/web_research_run_fixtures.json",
           "note": "Registered canonical owner doc coverage."
+        },
+        {
+          "kind": "file",
+          "ref": "Plans/storage_value_registry.schema.json",
+          "note": "Registered canonical owner doc coverage."
+        },
+        {
+          "kind": "file",
+          "ref": "Plans/storage_value_registry.json",
+          "note": "Registered canonical owner doc coverage."
+        },
+        {
+          "kind": "file",
+          "ref": "Plans/storage_recovery_contracts.schema.json",
+          "note": "Registered canonical owner doc coverage."
         }
       ],
       "node_id": "pm.build-governance.spec-lock-support-refresh",
@@ -506,6 +525,21 @@
         {
           "kind": "file",
           "ref": "Plans/web_research_run_fixtures.json",
+          "note": "Registered canonical owner doc coverage."
+        },
+        {
+          "kind": "file",
+          "ref": "Plans/storage_value_registry.schema.json",
+          "note": "Registered canonical owner doc coverage."
+        },
+        {
+          "kind": "file",
+          "ref": "Plans/storage_value_registry.json",
+          "note": "Registered canonical owner doc coverage."
+        },
+        {
+          "kind": "file",
+          "ref": "Plans/storage_recovery_contracts.schema.json",
           "note": "Registered canonical owner doc coverage."
         }
       ],

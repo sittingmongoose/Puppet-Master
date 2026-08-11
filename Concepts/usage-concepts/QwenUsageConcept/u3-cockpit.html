@@ -1,0 +1,1469 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="friendly-dark">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<link rel="icon" href="data:,">
+<title>U3 · Cockpit — Usage — Puppet Master Concepts</title>
+<script>(function(){try{var ok=['friendly-dark','friendly-light','retro-dark','retro-light','basic-light','basic-dark','glass-dark','glass-light'];var t=localStorage.getItem('pm.theme');if(ok.indexOf(t)===-1)t='friendly-dark';var d=document.documentElement;d.setAttribute('data-theme',t);d.style.colorScheme=/-dark$/.test(t)?'dark':'light';}catch(e){}})();</script>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="preload" as="style" href="https://fonts.googleapis.com/css2?family=Cal+Sans&family=Inter:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;500;700;800&family=Nunito:wght@400;600;700;800&family=Outfit:wght@400;500;600;700&family=Quicksand:wght@400;500;600;700&family=Rajdhani:wght@400;500;600;700&family=Sora:wght@500;600;700;800&display=swap" onload="this.onload=null;this.rel='stylesheet'">
+<noscript><link href="https://fonts.googleapis.com/css2?family=Cal+Sans&family=Inter:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;500;700;800&family=Nunito:wght@400;600;700;800&family=Outfit:wght@400;500;600;700&family=Quicksand:wght@400;500;600;700&family=Rajdhani:wght@400;500;600;700&family=Sora:wght@500;600;700;800&display=swap" rel="stylesheet"></noscript>
+<link rel="stylesheet" href="_shared/themes.css">
+<link rel="stylesheet" href="_shared/base.css">
+<link rel="stylesheet" href="_shared/usage-shared.css">
+<link rel="stylesheet" href="_shared/usage-context.css">
+<style>
+/* =====================================================================
+   U3 — COCKPIT
+   A dense instrumentation deck. The page opens on a primary readout
+   cluster — one wide semicircle gauge for monthly budget with a solid
+   threshold tick, beside a hairline bank of LED readouts — then everything
+   else mounts on ONE strict grid of uniform instrument tiles: identical
+   padding, identical gap (var(--us-gap)), identical header bands, thin
+   solid gridlines, Grafana-style threshold coloring (ok <70 / warn 70-90 /
+   hot >=90) driven by the same tone tokens for gauge fills, tile accents,
+   lamps and chips. A scrolling LED ticker and a dense ledger table close
+   the deck. All tints derive from theme tokens via color-mix, so the panel
+   re-lights correctly on all 8 themes.
+   ===================================================================== */
+
+.u3 .us-scroll { padding: var(--us-pad) var(--us-pad) calc(var(--us-pad) + 26px); }
+
+/* ---------- lamps (square cockpit indicators) ---------- */
+.u3-lamp { --lamp: var(--tone-mute); width: 7px; height: 7px; flex: none; display: inline-block; border-radius: 1px; background: var(--tone-mute); transition: box-shadow var(--mo-hover-dur, 120ms) var(--pm-ease-out); }
+.u3-lamp.ok  { --lamp: var(--tone-ok);   background: var(--tone-ok);   box-shadow: 0 0 5px color-mix(in srgb, var(--tone-ok) 70%, transparent); }
+.u3-lamp.warn{ --lamp: var(--tone-warn); background: var(--tone-warn); box-shadow: 0 0 5px color-mix(in srgb, var(--tone-warn) 70%, transparent); }
+.u3-lamp.hot, .u3-lamp.err { --lamp: var(--tone-err); background: var(--tone-err); box-shadow: 0 0 5px color-mix(in srgb, var(--tone-err) 70%, transparent); }
+.u3-lamp.info{ --lamp: var(--tone-info); background: var(--tone-info); box-shadow: 0 0 5px color-mix(in srgb, var(--tone-info) 60%, transparent); }
+.u3-lamp.purple { --lamp: var(--tone-purple); background: var(--tone-purple); }
+.u3-lamp.pulse { animation: u3Blink 1.3s ease-in-out infinite; }
+@keyframes u3Blink { 0%,100% { opacity: 1; } 50% { opacity: .25; } }
+/* ---------- power-on + threshold signaling (boot cascade, flash, hot pulse) ---------- */
+/* instrument strike-on: a cell powers up from a dim dead state, lamps double-strike */
+@keyframes u3LedOn { from { opacity: .28; } to { opacity: 1; } }
+@keyframes u3LampOn { 0% { opacity: 0; } 42% { opacity: 1; } 60% { opacity: .3; } 100% { opacity: 1; } }
+.u3-led.u3-boot { animation: u3LedOn var(--mo-settle-dur, 300ms) var(--pm-ease-out) both; }
+.u3-lamp.u3-lampon { animation: u3LampOn 480ms var(--pm-ease-out) both; }
+.u3-lamp.u3-lampon.hotlive { animation: u3LampOn 480ms var(--pm-ease-out) both, u3HotGlow 2.6s ease-in-out 700ms infinite; }
+/* one-time threshold flash when a warn/hot readout comes online (tint overlay,
+   never the element's own shadow, so elevation survives) */
+.u3-led, .u3-dial, .u3-gu, .u3-gcell { position: relative; }
+.u3-flashonce::after { content: ''; position: absolute; inset: 0; border-radius: inherit; pointer-events: none;
+  background: var(--flt, transparent); opacity: 0; animation: u3ThFade 750ms var(--pm-ease-out) var(--fd, 0ms) both; }
+@keyframes u3ThFade { 0% { opacity: .17; } 100% { opacity: 0; } }
+/* gentle ongoing hot pulse — a glow breath, not a blink */
+@keyframes u3HotGlow { 0%,100% { opacity: 1; } 50% { opacity: .55; } }
+@keyframes u3HotNum { 0%,100% { text-shadow: 0 0 14px color-mix(in srgb, var(--tone-err) 42%, transparent); }
+  50% { text-shadow: 0 0 2px color-mix(in srgb, var(--tone-err) 10%, transparent); } }
+@keyframes u3HotRing { 0%,100% { stroke-opacity: 1; } 50% { stroke-opacity: .68; } }
+.u3-lamp.hotlive, .u3-led.err .u3-lamp { animation: u3HotGlow 2.4s ease-in-out infinite; }
+.u3-gpct.hotlive { animation: u3HotNum 2.8s ease-in-out infinite; }
+.u3-dial.dt-hot .dfill { animation: u3HotRing 2.6s ease-in-out infinite; }
+/* cockpit idiom: an LED brightens when its tile / row is inspected */
+.u3-tile:hover .u3-lamp, .u3-gu:hover .u3-lamp, .u3-led:hover .u3-lamp { box-shadow: 0 0 8px color-mix(in srgb, var(--lamp) 85%, transparent); }
+
+/* ---------- primary readout cluster (gauge HERO + tiered LED bank) ----------
+   One instrument is the focal point — the quota gauge gets the largest cell,
+   the largest numeral on the deck and a bezel with a threshold zone. The LED
+   bank beside it is deliberately NOT six equal cells: one tall primary readout
+   (cost velocity — the secondary focus) plus four quiet sub-readouts. */
+.u3-primary { display: grid; grid-template-columns: minmax(302px, 376px) minmax(0, 1fr); gap: 1px;
+  background: var(--border-light); border: 1px solid var(--border-light); border-radius: var(--radius-md);
+  overflow: hidden; margin-bottom: var(--us-gap); box-shadow: var(--elev-1); }
+.u3-gcell { background: linear-gradient(180deg, color-mix(in srgb, var(--accent-primary) 7%, transparent), transparent 46%), var(--surface-elevated); padding: var(--md) var(--lg) var(--lg); display: flex; flex-direction: column; gap: var(--sm); min-width: 0; }
+.u3-ghead { display: flex; align-items: center; gap: 6px; font-family: var(--display-font); font-size: 9px; font-weight: 700;
+  letter-spacing: 1.4px; text-transform: uppercase; color: var(--text-muted); white-space: nowrap; overflow: hidden; }
+.u3-ghead .pm-ico { width: 11px; height: 11px; flex: none; }
+.u3-ghm { margin-left: auto; font-family: var(--mono-font); letter-spacing: .05em; color: var(--tone-warn-text); }
+.u3-gwrap { position: relative; }
+.u3-gwrap svg { display: block; width: 100%; max-width: 348px; margin: 10px auto 0; }
+.u3-gbg  { fill: none; stroke: var(--border-light); stroke-width: 8; }
+.u3-garc { fill: none; stroke-width: 8; transition: stroke-dashoffset var(--mo-data-refresh-dur, 800ms) var(--mo-data-refresh-ease, ease); }
+.u3-gtick { stroke: var(--text-muted); stroke-width: 1; opacity: .55; }
+.u3-gtick.major { stroke: var(--text-secondary); stroke-width: 1.5; opacity: .8; }
+/* bezel: the warn-to-limit zone is painted on the rim so the threshold is a
+   physical part of the instrument, plus the hard threshold tick across the track */
+.u3-gzone { fill: none; stroke-width: 2.5; opacity: .6; }
+.u3-gtick.th { stroke: var(--tone-warn); stroke-width: 2; opacity: 1; }
+.u3-glab { font-family: var(--mono-font); font-size: 5px; letter-spacing: .04em; fill: var(--text-muted); text-anchor: middle; }
+.u3-gov { position: absolute; left: 0; right: 0; bottom: 0; display: flex; flex-direction: column; align-items: center; gap: 2px; pointer-events: none; }
+.u3-gpct { font-family: var(--num-font); font-weight: 800; font-size: calc(var(--fs-3xl) * 1.9); line-height: .92; letter-spacing: .5px; color: var(--text-primary); font-variant-numeric: tabular-nums; }
+.u3-gpct.ok { color: var(--tone-ok-text); } .u3-gpct.warn { color: var(--tone-warn-text); } .u3-gpct.hot, .u3-gpct.err { color: var(--tone-err-text); }
+.u3-gsub  { font-family: var(--mono-font); font-size: 9.5px; color: var(--text-secondary); white-space: nowrap; }
+.u3-gproj { font-family: var(--mono-font); font-size: 9px; color: var(--text-muted); white-space: nowrap; }
+
+/* LED bank: 1 primary (spans both rows) + 2x2 secondary — hierarchy by size,
+   weight and span, not just one accent color */
+.u3-leds { display: grid; grid-template-columns: minmax(0, 1.35fr) repeat(2, minmax(0, 1fr)); grid-template-rows: repeat(2, minmax(0, 1fr));
+  gap: 1px; background: var(--border-light); min-width: 0; }
+.u3-led { background: var(--surface-elevated); padding: 9px var(--md) 8px; display: flex; flex-direction: column; gap: 3px; min-width: 0;
+  transition: background var(--mo-hover-dur, 120ms) var(--pm-ease-out); }
+.u3-led:hover { background: color-mix(in srgb, var(--text-primary) 4%, var(--surface-elevated)); }
+.u3-led.pri { --ledtone: var(--accent-primary); grid-row: 1 / -1; justify-content: center; gap: 5px;
+  padding: var(--md) var(--lg); box-shadow: inset 3px 0 0 color-mix(in srgb, var(--ledtone) 55%, transparent);
+  background: color-mix(in srgb, var(--ledtone) 4%, var(--surface-elevated)); }
+.u3-led.pri:hover { background: color-mix(in srgb, var(--ledtone) 8%, var(--surface-elevated)); }
+.u3-led.pri.ok { --ledtone: var(--tone-ok); } .u3-led.pri.warn { --ledtone: var(--tone-warn); }
+.u3-led.pri.err { --ledtone: var(--tone-err); } .u3-led.pri.mute { --ledtone: var(--text-muted); }
+.u3-led-k { display: flex; align-items: center; gap: 5px; font-family: var(--display-font); font-size: 8.5px; font-weight: 700;
+  letter-spacing: 1.3px; text-transform: uppercase; color: var(--text-muted); white-space: nowrap; overflow: hidden; }
+.u3-led-k .pm-ico { width: 10px; height: 10px; flex: none; }
+.u3-led-v { font-family: var(--num-font); font-weight: 700; font-size: calc(var(--fs-3xl) * .66); line-height: 1.05; letter-spacing: .4px;
+  color: var(--text-primary); white-space: nowrap; overflow: hidden; text-overflow: ellipsis; font-variant-numeric: tabular-nums; }
+.u3-led-u { font-size: .74em; font-weight: 600; letter-spacing: .03em; color: var(--text-secondary); }
+.u3-led-v.warn { color: var(--tone-warn-text); } .u3-led-v.err { color: var(--tone-err-text); } .u3-led-v.ok { color: var(--tone-ok-text); }
+.u3-led-s { font-size: var(--fs-2xs); color: var(--text-secondary); white-space: nowrap; overflow: hidden; text-overflow: ellipsis;
+  display: flex; align-items: center; gap: 5px; }
+.u3-led.pri .u3-led-k { font-size: var(--fs-2xs); letter-spacing: 1.5px; color: var(--text-secondary); }
+.u3-led.pri .u3-led-k .pm-ico { width: 11px; height: 11px; }
+.u3-led.pri .u3-led-v { font-size: calc(var(--fs-3xl) * 1.06); font-weight: 800; letter-spacing: .6px; }
+.u3-led.pri .u3-led-s { white-space: normal; line-height: 1.4; }
+@media (max-width: 940px) { .u3-primary { grid-template-columns: 1fr; } }
+@media (max-width: 620px) {
+  .u3-leds { grid-template-columns: repeat(2, minmax(0, 1fr)); grid-template-rows: auto; }
+  .u3-led.pri { grid-column: 1 / -1; grid-row: auto; }
+}
+
+/* ---------- secondary strip (session facts, hairline cells) ---------- */
+.u3-strip { display: grid; grid-template-columns: repeat(auto-fit, minmax(158px, 1fr)); gap: 1px;
+  background: var(--border-light); border: 1px solid var(--border-light); border-radius: var(--radius-md);
+  overflow: hidden; margin-bottom: var(--us-gap); }
+.u3-st { background: var(--surface-elevated); padding: 6px var(--md); display: flex; align-items: center; gap: 8px; min-width: 0;
+  font-family: var(--mono-font); font-size: var(--fs-2xs); color: var(--text-secondary); white-space: nowrap; overflow: hidden; }
+.u3-st .k { color: var(--text-muted); letter-spacing: .05em; flex: none; }
+.u3-st > :last-child { margin-left: auto; }
+.u3-st b { color: var(--text-primary); font-weight: 700; text-align: right; overflow: hidden; text-overflow: ellipsis; }
+
+/* ---------- THE DECK: one strict grid of uniform tiles ----------
+   Every bus-separated group's spans sum to exactly the column count at each
+   breakpoint (4/6/8), so dense packing leaves no dead columns at wide widths. */
+.u3-deck { display: grid; gap: var(--us-gap); grid-template-columns: repeat(4, minmax(0, 1fr)); align-items: stretch; grid-auto-flow: row dense; }
+/* per-tile width roles — the ONLY span source. Each bus-separated group sums to
+   exactly the column count (4 / 6 / 8) so dense packing finds no holes: no dead
+   columns at wide widths, and tiles never backfill above their own bus bar. */
+@media (min-width: 561px) {
+  .u3-w-dial, .u3-w-flow, .u3-w-acc, .u3-w-tools, .u3-w-sig, .u3-w-wc { grid-column: span 2; }
+  .u3-w-gating { grid-column: span 2; }
+}
+@media (min-width: 1500px) { .u3-deck { grid-template-columns: repeat(6, minmax(0, 1fr)); } }
+@media (min-width: 2200px) { .u3-deck { grid-template-columns: repeat(8, minmax(0, 1fr)); } }
+/* the quota bank is the deck's headline instrument: from the 4-col tier up it owns
+   a full-width, content-height row (7-up strip, no stretch bezel) while guards and
+   cache pair beneath it — sharing a row with those two let their narrow-column
+   wrapping dictate the bank's height and maroon the dials in vertical padding */
+@media (min-width: 1121px) and (max-width: 1499px) {
+  .u3-w-dial { grid-column: 1 / -1; }
+  .u3-w-guards, .u3-w-cache { grid-column: span 2; }
+}
+@media (min-width: 1500px) {
+  .u3-w-dial { grid-column: 1 / -1; } .u3-w-guards, .u3-w-cache { grid-column: span 3; }
+  .u3-w-ctx, .u3-w-eff { grid-column: span 2; }
+  .u3-w-bud, .u3-w-attr { grid-column: span 2; }
+  .u3-w-acc, .u3-w-tools, .u3-w-sig, .u3-w-wc { grid-column: span 3; }
+}
+@media (min-width: 2200px) {
+  .u3-w-guards, .u3-w-cache { grid-column: span 4; }
+  .u3-w-flow { grid-column: span 4; } .u3-w-ctx, .u3-w-eff { grid-column: span 2; }
+  .u3-w-bud { grid-column: span 2; } .u3-w-attr, .u3-w-gating { grid-column: span 3; }
+  .u3-w-acc, .u3-w-tools, .u3-w-sig, .u3-w-wc { grid-column: span 2; }
+}
+/* mid/narrow: stack full-width — clean reading order under every bus bar */
+@media (max-width: 1120px) { .u3-deck { grid-template-columns: repeat(3, minmax(0, 1fr)); } .u3-deck > .u3-tile { grid-column: 1 / -1; } }
+@media (max-width: 840px)  { .u3-deck { grid-template-columns: repeat(2, minmax(0, 1fr)); } }
+@media (max-width: 560px)  { .u3-deck { grid-template-columns: minmax(0, 1fr); } }
+
+.u3-bus { grid-column: 1 / -1; display: flex; align-items: center; flex-wrap: wrap; row-gap: 3px; gap: var(--md); min-width: 0; padding-top: 2px; }
+.u3-bus b { display: flex; align-items: center; gap: 7px; font-family: var(--display-font); font-size: var(--fs-2xs); font-weight: 700;
+  letter-spacing: 1.6px; text-transform: uppercase; color: var(--text-secondary); white-space: normal; min-width: 0; }
+.u3-bus i.rule { flex: 1 1 auto; height: 1px; min-width: 16px; background: var(--border-light); }
+.u3-bus span.m { font-family: var(--mono-font); font-size: 9px; letter-spacing: .04em; color: var(--text-muted);
+  white-space: nowrap; overflow: hidden; text-overflow: ellipsis; min-width: 0; }
+
+.u3-tile { display: flex; flex-direction: column; gap: var(--us-row); min-width: 0; padding: var(--us-cpad);
+  background: linear-gradient(180deg, color-mix(in srgb, var(--tt, var(--text-muted)) 9%, transparent), transparent 32%), var(--surface-elevated);
+  border: 1px solid var(--border-light);
+  border-radius: var(--radius-md); box-shadow: var(--elev-1);
+  transition: border-color var(--mo-hover-dur, 120ms) var(--pm-ease-out), box-shadow var(--mo-hover-dur, 120ms) var(--pm-ease-out); }
+.u3-tile:hover { box-shadow: var(--elev-2), 0 10px 26px -16px color-mix(in srgb, var(--tt, var(--text-muted)) 55%, transparent);
+  border-color: color-mix(in srgb, var(--tt, var(--text-muted)) 35%, var(--border-light)); }
+.u3-tt-ok   { --tt: var(--tone-ok); }   .u3-tt-warn { --tt: var(--tone-warn); }
+.u3-tt-hot  { --tt: var(--tone-err); }  .u3-tt-err  { --tt: var(--tone-err); }
+.u3-tt-info { --tt: var(--tone-info); } .u3-tt-mute { --tt: var(--text-muted); }
+.u3-tt-purple { --tt: var(--tone-purple); }
+
+.u3-th { display: flex; align-items: center; gap: 7px; min-width: 0; flex-wrap: wrap; }
+.u3-tht { font-family: var(--display-font); font-size: var(--fs-2xs); font-weight: 700; letter-spacing: 1.3px; text-transform: uppercase;
+  color: var(--text-primary); white-space: nowrap; overflow: hidden; text-overflow: ellipsis; min-width: 0; }
+.u3-thm { margin-left: auto; display: flex; align-items: center; gap: 6px; font-family: var(--mono-font); font-size: 9px;
+  letter-spacing: .03em; color: var(--text-muted); white-space: nowrap; flex: none; }
+
+.u3-note { margin-top: auto; font-size: var(--fs-2xs); color: var(--text-muted); line-height: 1.35;
+  white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+
+/* ---------- quota gauge tiles ---------- */
+.u3-qg { display: flex; align-items: center; gap: var(--md); min-width: 0; }
+.u3-qd { flex: none; width: 72px; height: 72px; }
+.u3-qd .dbg { fill: none; stroke: var(--border-light); stroke-width: 7; }
+.u3-qd .dfill { fill: none; stroke-width: 7; stroke-linecap: butt; transform: rotate(-90deg); transform-origin: center;
+  transition: stroke-dashoffset var(--mo-data-refresh-dur, 800ms) var(--mo-data-refresh-ease, ease); }
+.u3-qd text { font-family: var(--num-font); font-size: 13px; font-weight: 700; fill: var(--text-primary);
+  text-anchor: middle; dominant-baseline: central; }
+.u3-qs { display: flex; flex-direction: column; gap: 4px; min-width: 0; flex: 1 1 auto; }
+.u3-qr { display: flex; align-items: center; gap: 6px; font-family: var(--mono-font); font-size: 9.5px; color: var(--text-secondary); min-width: 0; }
+.u3-qr .k { color: var(--text-muted); flex: none; width: 28px; letter-spacing: .05em; }
+.u3-qr .v { overflow: hidden; text-overflow: ellipsis; white-space: nowrap; min-width: 0; margin-left: auto; text-align: right; }
+.u3-qna { display: flex; flex-direction: column; align-items: stretch; gap: 7px; padding: 8px 0 4px; }
+.u3-qna > * { min-width: 0; }
+.u3-qna > .vs, .u3-qna > .conf { align-self: flex-start; max-width: 100%; }
+.u3-qna .u3-qr .v { margin-left: 0; text-align: left; }
+
+/* ---------- quota dial bank (one instrument panel, not equal cards) ----------
+   Hierarchical by design: the single hottest window is the LEAD dial (bigger
+   ring, heavier numeral, brighter name); the rest read as secondary. Quotas
+   with no reading never draw a hollow ring — they collapse into one footnote
+   band so emptiness never occupies dial real estate. */
+.u3-dialbank { display: flex; flex-direction: column; flex: 1 1 auto; min-width: 0;
+  border-top: 1px solid var(--border-light); border-left: 1px solid var(--border-light);
+  border-radius: var(--radius-sm); overflow: hidden; }
+.u3-dials { display: grid; grid-template-columns: repeat(auto-fill, minmax(112px, 1fr)); grid-auto-rows: minmax(0, 1fr);
+  flex: 1 1 auto; min-width: 0; }
+/* live dials only: lock column counts so the 7 live dials always land on balanced
+   rows (4+3 or a single 7-up) — auto-fill orphans a dial beside dead cells. On its
+   own full-width row the 7-up grid simply fills the panel and the proportional
+   ring sizing keeps each gauge framed, never marooned. The no-reading band sits
+   OUTSIDE this grid, snug beneath the dials, so it can never claim half the panel
+   as an empty band. */
+@media (min-width: 640px) and (max-width: 1120px) { .u3-dials { grid-template-columns: repeat(4, minmax(0, 1fr)); } }
+@media (min-width: 1121px) { .u3-dials { grid-template-columns: repeat(7, minmax(112px, 1fr)); } }
+.u3-dial { display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 4px; padding: 10px 8px 9px; min-width: 0;
+  border-right: 1px solid var(--border-light); border-bottom: 1px solid var(--border-light);
+  background: var(--surface-elevated); transition: background var(--mo-hover-dur, 120ms) var(--pm-ease-out); }
+.u3-dial:hover { background: color-mix(in srgb, var(--text-primary) 4%, var(--surface-elevated)); }
+/* rings scale with their cell (clamped) so every tier keeps the same gauge-to-cell
+   density — a proportional bezel frames each dial instead of leaving dead width;
+   the lead (hottest) dial reads larger still to anchor the strip */
+.u3-dial svg { display: block; width: clamp(46px, 60%, 210px); height: auto; flex: none; }
+.u3-dial .dbg { fill: none; stroke: var(--border-light); stroke-width: 7; }
+.u3-dial .dfill { fill: none; stroke-width: 7; stroke-linecap: butt; transform: rotate(-90deg); transform-origin: center;
+  transition: stroke-dashoffset var(--mo-data-refresh-dur, 800ms) var(--mo-data-refresh-ease, ease); }
+.u3-dial.lead { background: color-mix(in srgb, var(--text-primary) 3%, var(--surface-elevated)); }
+.u3-dial.lead svg { width: clamp(60px, 70%, 250px); }
+.u3-dial.lead .dfill { stroke-width: 9; }
+/* dial names are short provider/plan labels and must always be read in full —
+   they wrap to a centered second line instead of truncating. If a label ever
+   exceeds two lines it clamps with a real ellipsis glyph (never the retro face's
+   inline glyph, which draws as a low bar) and the full name rides in the title
+   tooltip on the name and on the dial cell itself — never a silent cut. */
+.u3-dial-n { max-width: 100%; font-family: var(--display-font); font-size: 8.5px; font-weight: 700; letter-spacing: 1.2px;
+  text-transform: uppercase; color: var(--text-muted); text-align: center; line-height: 1.3;
+  display: -webkit-box; -webkit-line-clamp: 2; -webkit-box-orient: vertical; overflow: hidden;
+  text-overflow: ellipsis; overflow-wrap: break-word;
+  transition: color var(--mo-hover-dur, 120ms) var(--pm-ease-out); }
+.u3-dial.lead .u3-dial-n { color: var(--text-secondary); font-size: 9px; }
+.u3-dial-p { font-family: var(--mono-font); font-size: 11.5px; font-weight: 700; letter-spacing: .02em; line-height: 1; }
+.u3-dial-p.lead { font-size: 13.5px; font-weight: 800; }
+/* ultrawide dial bank: the strip's cells are capped + content-height, so the
+   remaining step-up is instrument weight — heavier strokes and larger readouts
+   keep the gauges commanding their cells */
+@media (min-width: 2200px) {
+  .u3-dial { padding: 12px 8px 11px; }
+  .u3-dial .dfill { stroke-width: 9; }
+  .u3-dial.lead .dfill { stroke-width: 11; }
+  .u3-dial-p { font-size: 15.5px; }
+  .u3-dial-p.lead { font-size: 21px; }
+  .u3-dial-n { font-size: 10px; }
+}
+/* no-reading band: names + value-state chips inline, one designed state —
+   never a row of hollow rings. Content-sized (flex: none) so it hugs the bottom
+   of the bank; the last dial row's own bottom border is the separator. */
+.u3-dialna { flex: none; display: flex; align-items: center; flex-wrap: wrap; gap: 5px 12px; padding: 7px 10px; min-width: 0;
+  border-right: 1px solid var(--border-light); border-bottom: 1px solid var(--border-light);
+  background: color-mix(in srgb, var(--text-primary) 3%, var(--surface-elevated)); }
+.u3-nak { font-family: var(--display-font); font-size: 8px; font-weight: 700; letter-spacing: 1.3px; text-transform: uppercase;
+  color: var(--text-muted); white-space: nowrap; flex: none; }
+.u3-nai { display: inline-flex; align-items: center; gap: 5px; min-width: 0; font-family: var(--mono-font); font-size: 9px;
+  color: var(--text-secondary); white-space: nowrap; }
+.u3-nai .nm { overflow: hidden; text-overflow: ellipsis; min-width: 0; }
+/* tight-tier fit: shave tracking/padding so dial names and strip values keep
+   more characters before ellipsis (900 is narrow for a 7-column bank) */
+@media (max-width: 940px) {
+  .u3-dial-n { letter-spacing: .7px; }
+  .u3-st { padding: 6px 9px; gap: 7px; }
+  .u3-st .k { letter-spacing: .02em; }
+}
+
+/* ---------- analytics tile ---------- */
+.u3-chart { position: relative; display: flex; align-items: stretch; gap: 4px; min-width: 0; flex: 1 1 auto; min-height: 132px; }
+.u3-cgrid { position: absolute; left: 0; right: 0; top: 0; bottom: 18px; pointer-events: none; }
+.u3-gl { position: absolute; left: 0; right: 0; height: 1px; background: var(--border-light); }
+.u3-bline { position: absolute; left: 0; right: 0; border-top: 2px solid color-mix(in srgb, var(--tone-err) 55%, transparent); }
+.u3-bline span { position: absolute; right: 0; top: -14px; font-family: var(--mono-font); font-size: 8px; font-weight: 700;
+  letter-spacing: .05em; text-transform: uppercase; color: var(--tone-err-text); white-space: nowrap; }
+.u3-col { flex: 1 1 0; min-width: 0; display: flex; flex-direction: column; position: relative; z-index: 1; }
+.u3-colstack { flex: 1 1 auto; min-height: 96px; display: flex; flex-direction: column-reverse; gap: 1px; }
+.u3-colstack i { display: block; width: 100%; height: 0; background: currentColor; transition: height var(--mo-chart-transition-dur, 400ms) var(--mo-chart-transition-ease, ease); }
+.u3-si { color: var(--ser-inp); } .u3-so { color: var(--ser-out); }
+.u3-sr { color: var(--ser-rea); } .u3-sc { color: var(--ser-cache); }
+.u3-col b { height: 18px; display: flex; align-items: flex-end; justify-content: center; font-family: var(--mono-font);
+  font-size: 8.5px; font-weight: 600; color: var(--text-muted); white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+.u3-col .tip { position: absolute; bottom: calc(100% + 4px); left: 50%; transform: translateX(-50%); z-index: 10;
+  background: var(--surface-elevated); border: 1px solid var(--border-light); padding: 4px 8px; border-radius: var(--radius-sm);
+  font-family: var(--mono-font); font-size: 9px; color: var(--text-primary); white-space: nowrap; pointer-events: none;
+  opacity: 0; transition: opacity var(--mo-hover-dur, 120ms) var(--pm-ease-out); box-shadow: var(--elev-2); }
+.u3-col:hover .tip { opacity: 1; }
+.u3-legend { display: flex; gap: var(--md); flex-wrap: wrap; font-size: var(--fs-2xs); color: var(--text-secondary); }
+.u3-legend > button { appearance: none; background: none; border: 0; margin: 0; padding: 2px 3px; font: inherit; font-size: var(--fs-2xs);
+  color: inherit; display: inline-flex; align-items: center; gap: 5px; cursor: pointer; border-radius: var(--radius-sm);
+  transition: opacity var(--mo-hover-dur, 120ms) var(--pm-ease-out), background var(--mo-hover-dur, 120ms) var(--pm-ease-out); }
+.u3-legend > button:hover { background: color-mix(in srgb, var(--text-primary) 6%, transparent); }
+.u3-legend > button.muted { opacity: .3; }
+.u3-sw { width: 9px; height: 9px; flex: none; display: inline-block; border-radius: 1px; }
+.u3-seg { display: inline-flex; gap: 2px; border: 1px solid var(--border-light); border-radius: var(--radius-sm); padding: 2px; }
+.u3-seg button { font-family: var(--mono-font); font-size: 9px; font-weight: 700; letter-spacing: .06em; padding: 1px 8px;
+  min-height: 18px; display: inline-flex; align-items: center;
+  border-radius: calc(var(--radius-sm) - 2px); color: var(--text-muted); cursor: pointer;
+  transition: all var(--mo-hover-dur, 120ms) var(--pm-ease-out); }
+.u3-seg button:hover { color: var(--text-primary); }
+.u3-seg button.on { color: var(--accent-primary); background: var(--accent-soft); }
+
+/* ---------- budget tile ---------- */
+.u3-donuts { display: flex; gap: var(--md); align-items: flex-start; flex-wrap: wrap; }
+.u3-donut { display: flex; flex-direction: column; align-items: center; gap: 3px; }
+.u3-donut svg { width: 64px; height: 64px; }
+.u3-donut .dbg { fill: none; stroke: var(--border-light); stroke-width: 6; }
+.u3-donut .dfill { fill: none; stroke-width: 6; stroke-linecap: butt; transform: rotate(-90deg); transform-origin: center;
+  transition: stroke-dashoffset var(--mo-data-refresh-dur, 800ms) var(--mo-data-refresh-ease, ease); }
+.u3-donut text { font-family: var(--num-font); font-size: 12px; font-weight: 700; fill: var(--text-primary);
+  text-anchor: middle; dominant-baseline: central; }
+.u3-donut small { font-family: var(--mono-font); font-size: 8px; letter-spacing: .07em; text-transform: uppercase; color: var(--text-muted); }
+.u3-presets { display: flex; align-items: center; gap: 5px; flex-wrap: wrap; }
+.u3-presets .k, .u3-kv .k { font-family: var(--mono-font); font-size: 8.5px; letter-spacing: .08em; color: var(--text-muted); flex: none; }
+.u3-pchip { padding: 1px 8px; min-height: 20px; display: inline-flex; align-items: center; border: 1px solid var(--border-light); border-radius: var(--radius-sm); font-family: var(--mono-font);
+  font-size: 9.5px; font-weight: 700; color: var(--text-muted); cursor: pointer; transition: all var(--mo-hover-dur, 120ms) var(--pm-ease-out); }
+.u3-pchip:hover { color: var(--text-primary); border-color: var(--border); }
+.u3-pchip.on { color: var(--accent-primary); background: var(--accent-soft); border-color: color-mix(in srgb, var(--accent-primary) 45%, transparent); }
+.u3-kv { display: flex; align-items: center; gap: 8px; font-family: var(--mono-font); font-size: 9.5px; color: var(--text-muted); min-width: 0; }
+.u3-kv b { margin-left: auto; color: var(--text-primary); text-align: right; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+.u3-cnt { font-variant-numeric: tabular-nums; }
+
+/* ---------- cache tile ---------- */
+.u3-crow { display: grid; grid-template-columns: minmax(0, 1fr) auto; gap: 3px var(--sm); align-items: center;
+  padding: 5px 0; border-bottom: 1px solid var(--border-light); }
+.u3-crow:last-child { border-bottom: none; }
+.u3-cn { display: flex; align-items: center; gap: 6px; min-width: 0; font-size: var(--fs-xs); font-weight: 600; color: var(--text-primary); }
+.u3-cn .nm { overflow: hidden; text-overflow: ellipsis; white-space: nowrap; min-width: 0; }
+.u3-cright { display: flex; align-items: center; gap: 6px; justify-content: flex-end; }
+.u3-csave { font-family: var(--mono-font); font-size: var(--fs-2xs); font-weight: 700; color: var(--tone-ok-text); white-space: nowrap; }
+.u3-csave.zero { color: var(--text-secondary); }
+/* nested grid (not flex): two content-independent fr tracks so the bar width is
+   identical on every row -> left AND right edges align; num ellipsises to fit. */
+.u3-cm { grid-column: 1 / -1; display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, 1.3fr); align-items: center; gap: var(--sm); min-width: 0; }
+.u3-cm .us-track { min-width: 24px; }
+.u3-cm .us-num { min-width: 0; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+/* while the cache tile is a single deck column the 1.3fr num track clips the
+   r/w token detail — stack it right-aligned under a full-width bar (track edges
+   still identical on every row); two tracks return once the tile spans 2+ cols */
+@media (min-width: 1121px) and (max-width: 1499px) {
+  .u3-cm { grid-template-columns: minmax(0, 1fr); }
+  .u3-cm .us-num { text-align: right; }
+}
+.u3-cnote { grid-column: 1 / -1; font-size: var(--fs-2xs); color: var(--text-muted); line-height: 1.35; }
+/* cache tile keeps TWO metrics distinct: a labelled sub-header separates the
+   context cache-hit rate from the per-provider prompt-cache savings so they
+   are never read as one figure */
+.u3-csub { display: flex; align-items: baseline; gap: 6px; margin: 7px 0 2px; font-family: var(--display-font); font-size: 8.5px;
+  font-weight: 700; letter-spacing: 1.1px; text-transform: uppercase; color: var(--text-muted); min-width: 0; }
+.u3-csub:first-child { margin-top: 0; }
+.u3-csubm { margin-left: auto; font-family: var(--mono-font); letter-spacing: .03em; text-transform: none; color: var(--tone-ok-text); white-space: nowrap; }
+
+/* ---------- family/component rows (context, efficiency, attribution) ---------- */
+.u3-fam { display: flex; flex-direction: column; gap: 3px; padding: 4px 0; min-width: 0; }
+.u3-fh { display: flex; align-items: baseline; gap: var(--sm); min-width: 0; }
+.u3-fn { flex: 1 1 auto; min-width: 0; font-size: var(--fs-2xs); font-weight: 600; color: var(--text-primary);
+  overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+
+/* ---------- accounts tile ---------- */
+.u3-arow { display: grid; grid-template-columns: auto minmax(150px, 1fr) minmax(0, 1.3fr) auto; gap: 4px var(--md);
+  align-items: center; padding: 6px 0; border-bottom: 1px solid var(--border-light); }
+.u3-arow:last-child { border-bottom: none; }
+.u3-anc { display: flex; flex-direction: column; gap: 2px; min-width: 0; }
+.u3-an { display: flex; align-items: center; gap: 6px; flex-wrap: wrap; font-size: var(--fs-xs); font-weight: 700; color: var(--text-primary); min-width: 0; }
+.u3-am { font-family: var(--mono-font); font-size: 8.5px; color: var(--text-muted); overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+/* status is a full-sentence readout — wrap it to a second line rather than
+   cutting the value mid-sentence while the tile is half-width (e.g. 1280);
+   the title tooltip carries the exact string either way */
+.u3-as { font-size: var(--fs-2xs); color: var(--text-secondary); min-width: 0; line-height: 1.35; overflow-wrap: break-word; }
+/* at the widest tier the accounts tile is only 2/8 cols — the 4-track row starves
+   the status to a stub; give name + right the row and let status take a full line */
+@media (min-width: 2200px) {
+  .u3-arow { grid-template-columns: auto minmax(0, 1fr) auto; }
+  .u3-as { grid-column: 2 / -1; }
+}
+.u3-aright { display: flex; align-items: center; gap: 7px; justify-content: flex-end; flex-wrap: wrap; }
+.u3-cd { font-family: var(--mono-font); font-weight: 700; font-size: var(--fs-xs); letter-spacing: .06em; color: var(--tone-warn-text); }
+.u3-lv { font-family: var(--mono-font); font-size: 8.5px; color: var(--text-muted); white-space: nowrap; }
+.u3-mk { font-family: var(--mono-font); font-size: 8px; font-weight: 700; letter-spacing: .08em; padding: 1px 6px; border-radius: 2px; white-space: nowrap; }
+.u3-mk.req { background: color-mix(in srgb, var(--tone-info) 15%, transparent); color: var(--tone-info-text); }
+.u3-mk.eff { background: color-mix(in srgb, var(--tone-ok) 15%, transparent); color: var(--tone-ok-text); }
+.u3-anote { grid-column: 2 / -1; font-size: var(--fs-2xs); color: var(--text-muted); line-height: 1.35; }
+.u3-hist-h { display: flex; align-items: center; gap: 6px; width: 100%; padding-top: var(--sm); font-family: var(--display-font); font-size: 8.5px;
+  font-weight: 700; letter-spacing: 1.2px; text-transform: uppercase; color: var(--text-muted); cursor: pointer; user-select: none;
+  appearance: none; background: none; border: 0; text-align: left; }
+.u3-hist-h .car { display: inline-flex; transition: transform var(--mo-widget-reflow-dur, 240ms) var(--pm-ease-out); }
+.u3-hist-h .car svg { width: 10px; height: 10px; }
+.u3-hist.open .u3-hist-h .car { transform: rotate(90deg); }
+.u3-hist-b { display: grid; grid-template-rows: 0fr; opacity: 0; padding: 0; transition: grid-template-rows var(--mo-widget-reflow-dur, 240ms) var(--mo-widget-reflow-ease, ease-in-out), opacity var(--mo-widget-reflow-dur, 240ms) var(--mo-widget-reflow-ease, ease-in-out), padding var(--mo-widget-reflow-dur, 240ms) var(--mo-widget-reflow-ease, ease-in-out); }
+.u3-hist-b > * { overflow: hidden; min-height: 0; }
+.u3-hist.open .u3-hist-b { grid-template-rows: 1fr; opacity: 1; padding-top: var(--sm); }
+
+/* ---------- guard tile ---------- */
+.u3-guards { display: flex; flex-direction: column; gap: var(--us-row); min-width: 0; }
+.u3-gu { --gtone: var(--tone-mute); display: flex; flex-direction: column; gap: var(--sm); padding: var(--sm) var(--md); min-width: 0;
+  border-radius: var(--radius-sm);
+  background: color-mix(in srgb, var(--gtone) 7%, var(--surface-elevated)); transition: background var(--mo-hover-dur, 120ms) var(--pm-ease-out), box-shadow var(--mo-hover-dur, 120ms) var(--pm-ease-out); }
+.u3-gu:hover { background: color-mix(in srgb, var(--gtone) 12%, var(--surface-elevated)); box-shadow: 0 8px 20px -14px color-mix(in srgb, var(--gtone) 55%, transparent); }
+.u3-gu.blocked { --gtone: var(--tone-err); }
+.u3-gu.warn { --gtone: var(--tone-warn); }
+.u3-gu.watch { --gtone: var(--tone-info); }
+.u3-gu.allowed { --gtone: var(--tone-ok); }
+.u3-guh { display: flex; align-items: center; gap: 7px; flex-wrap: wrap; min-width: 0; }
+.u3-gut { font-family: var(--mono-font); font-size: var(--fs-2xs); font-weight: 700; color: var(--text-primary);
+  overflow: hidden; text-overflow: ellipsis; white-space: nowrap; min-width: 0; }
+.u3-gutime { margin-left: auto; font-family: var(--mono-font); font-size: 8.5px; color: var(--text-muted); white-space: nowrap; }
+.u3-gub { font-size: var(--fs-2xs); color: var(--text-secondary); line-height: 1.4; }
+.u3-guw { font-family: var(--mono-font); font-size: 8.5px; letter-spacing: .03em; color: var(--text-muted);
+  overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+.u3-gacts { display: flex; gap: var(--sm); flex-wrap: wrap; }
+.u3-why { border: 1px solid var(--border-light); border-radius: var(--radius-sm); overflow: hidden; }
+.u3-why-t { display: flex; align-items: center; gap: 6px; width: 100%; padding: 5px var(--sm); font-family: var(--mono-font); font-size: 8.5px;
+  font-weight: 700; letter-spacing: .07em; text-transform: uppercase; color: var(--text-secondary); cursor: pointer; user-select: none;
+  appearance: none; border: 0; text-align: left;
+  background: color-mix(in srgb, var(--text-primary) 3%, transparent); }
+.u3-why-t .car { display: inline-flex; transition: transform var(--mo-widget-reflow-dur, 240ms) var(--pm-ease-out); }
+.u3-why-t .car svg { width: 9px; height: 9px; }
+.u3-why.open .u3-why-t .car { transform: rotate(90deg); }
+.u3-why-b { display: grid; grid-template-rows: 0fr; opacity: 0; padding: 0; transition: grid-template-rows var(--mo-widget-reflow-dur, 240ms) var(--mo-widget-reflow-ease, ease-in-out), opacity var(--mo-widget-reflow-dur, 240ms) var(--mo-widget-reflow-ease, ease-in-out), padding var(--mo-widget-reflow-dur, 240ms) var(--mo-widget-reflow-ease, ease-in-out); }
+.u3-why-b > * { overflow: hidden; min-height: 0; }
+.u3-why.open .u3-why-b { grid-template-rows: 1fr; opacity: 1; padding: var(--sm); }
+.u3-dgrid { display: grid; grid-template-columns: repeat(auto-fill, minmax(130px, 1fr)); gap: var(--sm); }
+.u3-di { display: flex; flex-direction: column; gap: 1px; min-width: 0; }
+.u3-di b { font-family: var(--mono-font); font-size: 8px; letter-spacing: .05em; text-transform: uppercase; color: var(--text-muted); }
+.u3-di span { font-size: var(--fs-2xs); color: var(--text-primary); overflow-wrap: anywhere; }
+
+/* ---------- plan gating tile ---------- */
+.u3-gt { display: grid; grid-template-columns: minmax(0, 1fr) auto; gap: 2px var(--sm); align-items: center;
+  padding: 4px 0; border-bottom: 1px solid var(--border-light); }
+.u3-gt:last-child { border-bottom: none; }
+.u3-gtn { font-size: var(--fs-2xs); font-weight: 600; color: var(--text-primary); overflow: hidden; text-overflow: ellipsis; white-space: nowrap; min-width: 0; }
+.u3-gts { grid-column: 1 / -1; font-size: var(--fs-2xs); color: var(--text-muted); line-height: 1.3; }
+
+/* ---------- signals tile ----------
+   the three coaching columns own the tile height at wide widths: rows share the
+   vertical space evenly so the panel reads as a spread of instruments, not a
+   stub floating above a dead band (content-sized again when the tile stacks) */
+.u3-sigcols { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: var(--md); min-width: 0; flex: 1 1 auto; }
+@media (max-width: 840px) { .u3-sigcols { grid-template-columns: minmax(0, 1fr); } }
+.u3-sigcol { display: flex; flex-direction: column; min-width: 0; }
+.u3-sigh { flex: none; display: flex; align-items: center; gap: 6px; margin-bottom: 4px; font-family: var(--display-font); font-size: 8.5px;
+  font-weight: 700; letter-spacing: 1.2px; text-transform: uppercase; color: var(--text-muted); }
+.u3-sigrow { flex: 1 1 0; display: flex; align-items: center; gap: 7px; padding: 3px 0; font-size: var(--fs-2xs); color: var(--text-secondary); line-height: 1.4; }
+.u3-sq { width: 6px; height: 6px; flex: none; border-radius: 1px; }
+.u3-sq.ok { background: var(--tone-ok); } .u3-sq.info { background: var(--tone-info); } .u3-sq.warn { background: var(--tone-warn); }
+
+/* ---------- efficiency tile ----------
+   grade + component meters spread through the tile's full height at wide widths
+   (space-evenly adds nothing when the tile is content-sized in a stacked deck);
+   the rows carry their own breathing padding so the spread stays tight */
+.u3-effb { flex: 1 1 auto; display: flex; flex-direction: column; gap: var(--us-row); justify-content: space-evenly; min-width: 0; }
+.u3-effb .u3-fam { padding: 7px 0; }
+.u3-grade { display: flex; align-items: baseline; gap: var(--md); }
+.u3-gr { font-family: var(--num-font); font-size: calc(var(--fs-3xl) * 1.06); font-weight: 800; line-height: 1; }
+.u3-gr.g-ok { color: var(--tone-ok-text); } .u3-gr.g-warn { color: var(--tone-warn-text); } .u3-gr.g-err { color: var(--tone-err-text); }
+.u3-gsub2 { font-family: var(--mono-font); font-size: 9px; color: var(--text-muted); }
+
+/* ---------- LED ticker ---------- */
+.u3-ticker { margin-top: var(--us-gap); overflow: hidden; border: 1px solid var(--border-light); border-radius: var(--radius-md);
+  background: color-mix(in srgb, var(--text-primary) 3%, var(--surface-elevated)); }
+.u3-tk-in { display: flex; width: max-content; animation: u3Tick 48s linear infinite; will-change: transform; }
+.u3-ticker:hover .u3-tk-in { animation-play-state: paused; }
+.u3-tk { display: flex; align-items: center; gap: var(--lg); padding: 7px 0 7px var(--lg); font-family: var(--mono-font);
+  font-size: var(--fs-2xs); color: var(--text-secondary); white-space: nowrap; }
+.u3-tki { display: inline-flex; align-items: center; gap: 6px; }
+.u3-tk b { font-weight: 700; color: var(--text-primary); }
+.u3-tk b.up { color: var(--tone-warn-text); } .u3-tk b.dn { color: var(--tone-ok-text); }
+@keyframes u3Tick { to { transform: translateX(-50%); } }
+
+/* ---------- ledger panel ---------- */
+.u3-panel { margin-top: var(--us-gap); border: 1px solid var(--border-light);
+  border-radius: var(--radius-md); background: linear-gradient(180deg, color-mix(in srgb, var(--tone-info) 8%, transparent), transparent 26%), var(--surface-elevated); box-shadow: var(--elev-1); overflow: hidden; }
+.u3-ph { display: flex; align-items: center; gap: 8px; padding: 8px var(--us-cpad); border-bottom: 1px solid var(--border-light); min-width: 0; }
+.u3-ph .pm-ico { width: 12px; height: 12px; flex: none; color: var(--accent-primary); }
+.u3-pht { font-family: var(--display-font); font-size: var(--fs-2xs); font-weight: 700; letter-spacing: 1.3px; text-transform: uppercase;
+  color: var(--text-primary); white-space: nowrap; }
+.u3-phm { font-size: var(--fs-2xs); color: var(--text-muted); white-space: nowrap; overflow: hidden; text-overflow: ellipsis; min-width: 0; }
+/* secondary header note — at squished widths it competes with the title and
+   collapses to a sliver; drop it so the panel title + live count stay legible */
+@media (max-width: 560px) { .u3-phm { display: none; } }
+.u3-phc { margin-left: auto; font-family: var(--mono-font); font-size: 9px; color: var(--text-secondary); white-space: nowrap; }
+.u3-live { display: inline-flex; align-items: center; gap: 5px; font-family: var(--mono-font); font-size: 8.5px; font-weight: 700;
+  letter-spacing: .1em; text-transform: uppercase; color: var(--tone-ok-text); white-space: nowrap; }
+.u3-pb { padding: var(--us-cpad); display: flex; flex-direction: column; gap: var(--us-row); min-width: 0; }
+.u3-lctrl { display: flex; gap: var(--sm); flex-wrap: wrap; align-items: center; }
+.u3-lsearch { flex: 1 1 170px; max-width: 280px; }
+.u3-btn { display: inline-flex; align-items: center; gap: 6px; padding: 4px 11px; min-height: 22px; border: 1px solid var(--border-light);
+  border-radius: var(--radius-sm); background: transparent; color: var(--text-secondary); font-family: var(--mono-font);
+  font-size: 9.5px; font-weight: 700; letter-spacing: .05em; cursor: pointer; white-space: nowrap;
+  transition: all var(--mo-hover-dur, 120ms) var(--pm-ease-out); }
+.u3-btn:hover { color: var(--text-primary); border-color: var(--border); background: var(--accent-soft); }
+.u3-btn.primary { color: var(--accent-primary); background: var(--accent-soft); border-color: transparent; }
+.u3-btn svg { width: 11px; height: 11px; flex: none; }
+/* embedded tool table owns the tile height at wide widths — rows stretch to
+   equal shares so the grid fills the panel instead of leaving a dead band */
+.u3-embed { border: none; background: transparent; flex: 1 1 auto; display: flex; min-height: 0; }
+.u3-embed .us-tbl { flex: 1 1 auto; height: 100%; }
+.u3-tblwrap { max-height: 380px; }
+.u3-car { cursor: pointer; color: var(--text-muted); display: inline-flex; transition: transform var(--mo-widget-reflow-dur, 240ms) var(--pm-ease-out); }
+.u3-car svg { width: 11px; height: 11px; }
+.u3-car.open { transform: rotate(90deg); }
+button.u3-car { appearance: none; background: none; border: 0; padding: 3px; margin: 0; font: inherit; min-width: 20px; min-height: 20px;
+  align-items: center; justify-content: center; border-radius: var(--radius-sm);
+  transition: transform var(--mo-widget-reflow-dur, 240ms) var(--pm-ease-out), background var(--mo-hover-dur, 120ms) var(--pm-ease-out), color var(--mo-hover-dur, 120ms) var(--pm-ease-out); }
+button.u3-car:hover { color: var(--text-primary); background: color-mix(in srgb, var(--text-primary) 7%, transparent); }
+.u3-panel th[data-sort] { cursor: pointer; user-select: none; }
+.u3-panel th[data-sort]:focus-visible { outline: 2px solid var(--accent-primary); outline-offset: -2px; }
+.u3-panel th[data-sort] .u3-sic { display: inline-flex; width: 9px; height: 9px; margin-left: 4px; vertical-align: 0;
+  opacity: 0; transition: opacity var(--mo-hover-dur, 120ms) var(--pm-ease-out); }
+.u3-panel th[data-sort].asc .u3-sic, .u3-panel th[data-sort].desc .u3-sic { opacity: .85; }
+.u3-sic svg { width: 9px; height: 9px; stroke-width: 3; }
+.u3-detail td { background: var(--surface); white-space: normal; }
+.u3-pfoot { margin-top: 2px; }
+.u3-pagefoot { padding: var(--md) 2px 0; }
+
+/* ---------- theme tempering ---------- */
+[data-theme^="retro"] .u3 :is(.u3-primary, .u3-strip, .u3-tile, .u3-panel, .u3-ticker, .u3-seg, .u3-pchip, .u3-sw, .u3-sq, .u3-lamp, .u3-gu, .u3-why, .u3-mk) { border-radius: 0; }
+[data-theme^="retro"] .u3-tile { border-width: 2px; }
+[data-theme^="retro"] .u3-panel { border-width: 2px; }
+[data-theme^="basic"] .u3-tile, [data-theme^="basic"] .u3-panel { box-shadow: none; }
+[data-theme^="glass"] .u3-tile, [data-theme^="glass"] .u3-panel { border-color: var(--glass-hairline); background: rgba(var(--glass-tint-rgb), calc(var(--glass-alpha) + .05)); }
+[data-theme^="glass"] .u3-primary, [data-theme^="glass"] .u3-strip, [data-theme^="glass"] .u3-ticker { border-color: var(--glass-hairline); }
+[data-theme^="glass"] .u3-led, [data-theme^="glass"] .u3-dial, [data-theme^="glass"] .u3-st { background: rgba(var(--glass-tint-rgb), calc(var(--glass-alpha) + .02)); }
+[data-theme^="glass"] .u3-led.pri { background: rgba(var(--glass-tint-rgb), calc(var(--glass-alpha) + .07)); }
+[data-theme^="glass"] :is(.u3-dialna, .u3-dial.lead) { background: rgba(var(--glass-tint-rgb), calc(var(--glass-alpha) + .05)); }
+/* flat/retro: status lives in the lamp + tint only — no colored ambient halo */
+:is([data-theme^="basic"], [data-theme^="retro"]) .u3-tile:hover { box-shadow: var(--elev-2); }
+:is([data-theme^="basic"], [data-theme^="retro"]) .u3-gu:hover { box-shadow: none; }
+[data-theme^="basic"] .u3-tile:hover { box-shadow: none; border-color: color-mix(in srgb, var(--tt, var(--text-muted)) 35%, var(--border-light)); }
+
+/* glass-light: the alpha'd --text-muted label tier reads soft over the bright
+   frosted plates + morning-sky field. Deepen the secondary/label tier toward
+   --text-secondary (a token-derived blend, re-themed like the U5 pocket-label
+   fix) so it clears 4.5:1 with margin on the lightest plate while staying a
+   visible step below the --text-secondary value readouts (hierarchy intact). */
+[data-theme="glass-light"] .u3 :is(.u3-ghead, .u3-led-k, .u3-dial-n, .u3-st .k, .u3-thm, .u3-note, .u3-bus span.m, .u3-gproj, .u3-csub, .u3-sigh, .u3-nak, .u3-lv, .u3-cnote, .u3-phm) {
+  color: color-mix(in srgb, var(--text-secondary) 72%, var(--text-muted));
+}
+[data-theme="glass-light"] .u3 .u3-led.pri .u3-led-k { color: color-mix(in srgb, var(--text-secondary) 80%, var(--text-primary)); }
+
+/* guard-cell annotation legibility: the quiet --text-muted tier (timestamps,
+   the "where" line, and the why-expand keys) sits on the status-tinted guard
+   cells and drops toward ~3.85:1 in the dark themes. Deepen it toward
+   --text-secondary with the same token-derived blend the light themes use so it
+   clears 4.5:1 with margin while staying below the --text-secondary readouts. */
+.u3 .u3-gu .u3-gutime, .u3 .u3-gu .u3-guw, .u3 .u3-gu .u3-di b {
+  color: color-mix(in srgb, var(--text-secondary) 72%, var(--text-muted));
+}
+
+/* ---------- reduced motion ---------- */
+@media (prefers-reduced-motion: reduce) {
+  .u3-tk-in, .u3-lamp.pulse { animation: none; }
+  .u3-garc, .u3-qd .dfill, .u3-donut .dfill, .u3-dial .dfill, .u3-colstack i { transition: none; }
+  .u3-led.u3-boot, .u3-lamp.u3-lampon, .u3-lamp.u3-lampon.hotlive, .u3-lamp.hotlive, .u3-led.err .u3-lamp,
+  .u3-gpct.hotlive, .u3-dial.dt-hot .dfill { animation: none; }
+  .u3-flashonce::after { animation: none; opacity: 0; }
+}
+html[data-reduced-motion="1"] .u3-tk-in, html[data-reduced-motion="1"] .u3-lamp.pulse { animation: none; }
+html[data-reduced-motion="1"] :is(.u3-garc, .u3-qd .dfill, .u3-donut .dfill, .u3-dial .dfill, .u3-colstack i) { transition: none; }
+html[data-reduced-motion="1"] :is(.u3-led.u3-boot, .u3-lamp.u3-lampon, .u3-lamp.u3-lampon.hotlive, .u3-lamp.hotlive, .u3-led.err .u3-lamp,
+  .u3-gpct.hotlive, .u3-dial.dt-hot .dfill) { animation: none; }
+html[data-reduced-motion="1"] .u3-flashonce::after { animation: none; opacity: 0; }
+</style>
+</head>
+<body>
+<div id="app"></div>
+
+<template id="usage-page">
+  <div class="us-page u3">
+
+    <header class="us-head">
+      <h1 class="us-head-title">Usage</h1>
+      <div class="us-head-sub">AI usage &amp; cost for <b>Tastebook</b> — quotas &amp; resets, cache hit, tokens, then spend &amp; safety guards. Refreshes every <b>5 min</b> · history kept <b>90 days</b></div>
+      <span class="us-fresh" id="u3Fresh"><span class="d"></span><span id="u3FreshTxt">current · as of 14:42</span></span>
+      <div class="us-head-acts">
+        <button class="us-hbtn" id="u3Refresh" title="Refresh usage projections" aria-label="Refresh usage projections"><i data-ico="refresh" class="pm-ico"></i></button>
+        <button class="us-hbtn primary" title="Export usage as JSON" aria-label="Export usage as JSON" data-demo-action="usage.export_json" data-demo-arg="Usage snapshot exported as JSON (demo)"><i data-ico="exportIc" class="pm-ico"></i></button>
+      </div>
+    </header>
+
+    <div class="us-scroll">
+
+      <section class="u3-primary" aria-label="Primary readout cluster">
+        <div class="u3-gcell">
+          <div class="u3-ghead"><span class="u3-lamp" id="u3GaugeLamp"></span><i data-ico="gauge" class="pm-ico sm"></i><span>Top window</span><span id="u3GaugeProv"></span><span class="u3-ghm" id="u3GaugeTh">warn at 80%</span></div>
+          <div class="u3-gwrap">
+            <svg id="u3Gauge" viewBox="0 -8 132 76" role="img" aria-label="Top window used gauge"></svg>
+            <div class="u3-gov">
+              <span class="u3-gpct" id="u3GaugePct"><span data-counter="0" data-decimals="0">0</span><span>%</span></span>
+              <span class="u3-gsub" id="u3GaugeSub"></span>
+              <span class="u3-gproj" id="u3GaugeProj"></span>
+            </div>
+          </div>
+        </div>
+        <div class="u3-leds" id="u3Leds" aria-label="Key readouts"></div>
+      </section>
+
+      <div class="u3-strip" id="u3Strip" aria-label="Session facts"></div>
+
+      <div class="u3-deck" id="u3Deck"></div>
+
+      <div class="u3-ticker pm-rev" aria-label="Live telemetry ticker"><div class="u3-tk-in" id="u3Ticker"></div></div>
+
+      <section class="u3-panel pm-rev" aria-label="Event ledger">
+        <div class="u3-ph">
+          <span class="u3-lamp info"></span>
+          <i data-ico="clipboard" class="pm-ico sm"></i>
+          <span class="u3-pht">Event ledger</span>
+          <span class="u3-phm">normalized UsageRecords · cost lands on the effective account</span>
+          <span class="u3-phc" id="u3LedgerCount"></span>
+          <span class="u3-live"><span class="us-dot ok pulse"></span>live</span>
+        </div>
+        <div class="u3-pb">
+          <div class="u3-lctrl">
+            <label class="pm-input u3-lsearch"><i data-ico="search" class="pm-ico sm"></i><input id="u3LedgerSearch" type="text" placeholder="Search platform, model, run, lane…" aria-label="Search ledger"></label>
+            <div class="pm6-tb-menu-wrap" id="u3PlatWrap">
+              <button type="button" class="pm6-tb-menu-trigger" aria-controls="u3PlatMenu"><span class="pm6-tb-menu-label" id="u3PlatLabel">All platforms</span><i data-ico="chevD" class="pm-ico sm"></i></button>
+              <div class="pm6-tb-menu" id="u3PlatMenu" role="menu" aria-label="Filter platform" data-pm-menu-select></div>
+            </div>
+            <div class="pm6-tb-menu-wrap" id="u3RepWrap">
+              <button type="button" class="pm6-tb-menu-trigger" aria-controls="u3RepMenu"><span class="pm6-tb-menu-label" id="u3RepLabel">Any reporting</span><i data-ico="chevD" class="pm-ico sm"></i></button>
+              <div class="pm6-tb-menu" id="u3RepMenu" role="menu" aria-label="Filter reporting" data-pm-menu-select></div>
+            </div>
+            <button class="u3-btn" id="u3LedgerJson" title="Copy ledger as JSON" aria-label="Copy ledger as JSON" data-demo-action="usage.copy_ledger" data-demo-arg="Ledger JSON copied to clipboard (demo)"><i data-ico="braces" class="pm-ico sm"></i>JSON</button>
+          </div>
+          <div class="us-tblwrap u3-tblwrap">
+            <table class="us-tbl">
+              <thead><tr>
+                <th style="width:20px" aria-label="Expand"></th>
+                <th data-sort="t">Time</th><th data-sort="ev">Event</th><th data-sort="run">Run · lane</th><th data-sort="prov">Platform</th><th data-sort="model">Model</th>
+                <th class="num" data-sort="tin">In</th><th class="num" data-sort="tout">Out</th><th class="num" data-sort="cr">Cache r</th>
+                <th data-sort="rep">Report</th><th class="num" data-sort="cost">Cost</th>
+              </tr></thead>
+              <tbody id="u3LedgerBody"></tbody>
+            </table>
+          </div>
+          <div class="us-foot u3-pfoot"><i data-ico="info" class="pm-ico sm"></i><span id="u3LedgerFoot"></span></div>
+        </div>
+      </section>
+
+      <div class="us-foot u3-pagefoot pm-rev"><i data-ico="help" class="pm-ico sm"></i><span>Missing a number? Every instrument carries a value-state chip — <b>disabled, not exposed, hidden, unknown</b> are states, never zero. Cockpit renders the canonical UsageRecord projections as of <b>14:42</b>; list-rate basis may differ from the actual bill.</span></div>
+    </div>
+  </div>
+</template>
+
+<script src="_shared/icons.js"></script>
+<script src="_shared/usage-icons.js"></script>
+<script src="_shared/usage-data.js"></script>
+<script src="_shared/menu.js"></script>
+<script src="_shared/usage-chrome.js"></script>
+<script src="_shared/usage-context.js"></script>
+<script>
+PMUsageChrome.boot({ badge: { id: 'U3', name: 'Cockpit' } });
+if (window.PMContext) window.PMContext.mountTriggers(document.getElementById('sbChips'));
+
+(function () {
+  'use strict';
+  var D = window.USAGE, fmt = window.USfmt, R = window.USrender;
+  function $(id) { return document.getElementById(id); }
+  var TONE = { ok: 'var(--tone-ok)', warn: 'var(--tone-warn)', hot: 'var(--tone-err)', info: 'var(--tone-info)' };
+  /* raw tones stay vivid for strokes/fills; text readouts route through the
+     legible -text variants so the dial % clears 4.5:1 on every theme */
+  var TONE_TEXT = { ok: 'var(--tone-ok-text)', warn: 'var(--tone-warn-text)', hot: 'var(--tone-err-text)', info: 'var(--tone-info-text)', mute: 'var(--tone-mute-text)' };
+  var SEMI = Math.PI * 50;
+
+  /* ---------- instrument motion core --------------------------------------
+     Needle sweeps are rAF-driven ease-out-back with the drawn arc clamped to
+     0-100% (a css spring on dashoffset would overshoot past full-scale and
+     open a gap at the rim). The boot cascade powers the deck on in sequence:
+     hero gauge first, then the dial bank one dial at a time, then the LED
+     bank strikes on with counting readouts. Everything collapses to instant
+     final values under reduced motion. */
+  var booted = false, lastGaugePct = 0, lastFlashPct = -1;
+  var DIAL_LAST = {}, DONUT_LAST = {};
+  function tokMs(name, fb) {
+    var n = parseFloat(getComputedStyle(document.documentElement).getPropertyValue(name));
+    return (isFinite(n) && n > 0) ? n : fb;
+  }
+  function bootMs(ms) { return booted ? 0 : ms; }
+  function after(ms, fn) { if (R.isRM() || ms <= 0) fn(); else setTimeout(fn, ms); }
+  function backOut(p, s) { var q = p - 1; return 1 + (s + 1) * q * q * q + s * q * q; }
+  function sweepDash(el, circ, fromPct, toPct, dur, delay, land) {
+    var off = function (p) { return circ * (1 - Math.min(Math.max(p, 0), 100) / 100); };
+    if (R.isRM() || fromPct === toPct) {
+      el.style.transition = 'none';
+      el.style.strokeDashoffset = off(toPct);
+      if (land) land();
+      return;
+    }
+    el.style.transition = 'none';
+    el.style.strokeDashoffset = off(fromPct);
+    var t0 = performance.now() + (delay || 0);
+    function frame(now) {
+      if (now < t0) { requestAnimationFrame(frame); return; }
+      var p = (now - t0) / dur;
+      if (p >= 1) { el.style.strokeDashoffset = off(toPct); if (land) land(); return; }
+      el.style.strokeDashoffset = off(fromPct + (toPct - fromPct) * backOut(p, 1.1));
+      requestAnimationFrame(frame);
+    }
+    requestAnimationFrame(frame);
+  }
+  function numTick(el) {
+    if (!el || !el.animate) return;
+    try { el.animate([{ transform: 'scale(1)' }, { transform: 'scale(1.045)', offset: .45 }, { transform: 'scale(1)' }],
+      { duration: tokMs('--mo-settle-dur', 300), easing: 'cubic-bezier(0.34, 1.56, 0.64, 1)' }); } catch (e) {}
+  }
+  function tokParts(v) {
+    if (v == null) return null;
+    if (Math.abs(v) >= 1e6) return { n: v / 1e6, dec: 1, suf: 'M' };
+    if (Math.abs(v) >= 1e3) return { n: v / 1e3, dec: 1, suf: 'k' };
+    return { n: v, dec: 0, suf: '' };
+  }
+  /* power-on for one instrument cluster: meters fill, rings sweep, counters
+     count — called at boot for in-view clusters and on scroll-reveal for the rest */
+  function powerOn(el, base) {
+    if (!el || el._powed) return;
+    el._powed = true;
+    var b = base || 0;
+    after(b, function () { R.animateFills(el); R.animateCounters(el); });
+    var dials = el.querySelectorAll('.u3-dial .dfill');
+    if (dials.length) after(b, function () {
+      dials.forEach(function (c, i) {
+        var pct = parseFloat(c.dataset.pct) || 0, last = DIAL_LAST[i] || 0;
+        sweepDash(c, 163.4, last, pct, tokMs('--mo-spring-dur', 420) + 60, i * 85);
+        DIAL_LAST[i] = pct;
+      });
+    });
+    after(b, function () {
+      el.querySelectorAll('[data-flt]').forEach(function (x) {
+        x.style.setProperty('--flt', x.dataset.flt);
+        x.style.setProperty('--fd', (parseInt(x.dataset.fd || '0', 10)) + 'ms');
+        x.classList.add('u3-flashonce');
+      });
+    });
+    el.querySelectorAll('.u3-donut .dfill').forEach(function (c, i) {
+      var pct = parseFloat(c.dataset.pct) || 0, key = el.id + ':' + i, last = DONUT_LAST[key] || 0;
+      after(b + i * 90, function () { sweepDash(c, 163.4, last, pct, tokMs('--mo-spring-dur', 420) + 40, 0); });
+      DONUT_LAST[key] = pct;
+    });
+    if (el.querySelector('#u3Chart')) after(b, function () { renderChart(); });
+  }
+  /* re-power a node replaced in place (budget tile swaps on preset changes):
+     keep its reveal state so a visible swap never flashes back to hidden, and
+     power its instruments on injection. The budget tile sits below the fold, so
+     deferring to the scroll-reveal pass left its two donuts never caught by the
+     boot animation — stuck at an empty ring (stroke-dashoffset 163.4) on load.
+     Sweeping them here runs on load and on every re-render; the _powed guard
+     keeps the later scroll-reveal pass from double-animating. */
+  function repower(el) {
+    el.classList.add('pm-rev');
+    if (el.getBoundingClientRect().top < window.innerHeight) el.classList.add('in');
+    powerOn(el, 0);
+  }
+  var powIO = ('IntersectionObserver' in window) ? new IntersectionObserver(function (es) {
+    es.forEach(function (e) { if (e.isIntersecting) { powIO.unobserve(e.target); powerOn(e.target, 0); } });
+  }, { threshold: 0.12 }) : null;
+  function armDeckPower() {
+    var vi = 0;
+    Array.prototype.forEach.call($('u3Deck').children, function (el) {
+      el.classList.add('pm-rev');
+      el.setAttribute('data-u3pow', '1');
+      if (!powIO) { powerOn(el, 0); return; }
+      var r = el.getBoundingClientRect();
+      if (r.top < window.innerHeight && r.bottom > 0) powerOn(el, bootMs(480 + (vi++) * 170));
+      else powIO.observe(el);
+    });
+  }
+
+  function lamp(tone, pulse) { return '<span class="u3-lamp ' + tone + (pulse ? ' pulse' : '') + '"></span>'; }
+  function th(tone, title, meta) {
+    return '<div class="u3-th">' + lamp(tone) + '<span class="u3-tht">' + title + '</span><span class="u3-thm">' + (meta || '') + '</span></div>';
+  }
+  function bus(title, meta, tone) {
+    return '<div class="u3-bus"><b>' + lamp(tone || 'mute') + title + '</b><i class="rule"></i><span class="m">' + (meta || '') + '</span></div>';
+  }
+  /* provenance chip adapter: accepts attachProv'd objects OR a raw projectionMeta,
+     humanizes tokens so no underscores reach the deck */
+  function pmeta(o) {
+    if (!o) return null;
+    var src = o.source_class || o.source || null;
+    var conf = o.source_confidence || o.conf || null;
+    var fresh = o.projection_freshness || o.fresh || null;
+    return { source: src ? R.human(src) : null, conf: conf ? R.human(conf) : null, fresh: fresh ? R.human(fresh) : null };
+  }
+
+  /* ---------- primary gauge (hero bezel: 10% ticks, painted warn zone,
+       hard threshold tick across the track, scale labels) ----------
+     Arc parameterization: x = CX - r*cos(pi*t), y = CY - r*sin(pi*t), t 0..1 */
+  var GCX = 66, GCY = 62;
+  function gpt(r, t) { var a = Math.PI * t; return [(GCX - r * Math.cos(a)), (GCY - r * Math.sin(a))]; }
+  function gaugeSvg(pct, tone, thPct) {
+    var parts = [];
+    var z0 = gpt(58, thPct / 100), z1 = gpt(58, 1);
+    parts.push('<path class="u3-gzone" stroke="' + TONE.warn + '" d="M ' + z0[0].toFixed(2) + ' ' + z0[1].toFixed(2) +
+      ' A 58 58 0 0 1 ' + z1[0].toFixed(2) + ' ' + z1[1].toFixed(2) + '"/>');
+    for (var i = 0; i <= 10; i++) {
+      var t = i / 10, major = (i % 5 === 0);
+      var p1 = gpt(54.5, t), p2 = gpt(major ? 59.5 : 58, t);
+      parts.push('<line class="u3-gtick' + (major ? ' major' : '') + '" x1="' + p1[0].toFixed(2) + '" y1="' + p1[1].toFixed(2) +
+        '" x2="' + p2[0].toFixed(2) + '" y2="' + p2[1].toFixed(2) + '"/>');
+    }
+    var ti = gpt(45, thPct / 100), to = gpt(59.5, thPct / 100);
+    parts.push('<line class="u3-gtick th" x1="' + ti[0].toFixed(2) + '" y1="' + ti[1].toFixed(2) +
+      '" x2="' + to[0].toFixed(2) + '" y2="' + to[1].toFixed(2) + '"/>');
+    parts.push('<path class="u3-gbg" d="M ' + (GCX - 50) + ' ' + GCY + ' A 50 50 0 0 1 ' + (GCX + 50) + ' ' + GCY + '"/>');
+    var off = SEMI * (1 - Math.min(Math.max(pct, 0), 100) / 100);
+    parts.push('<path class="u3-garc" d="M ' + (GCX - 50) + ' ' + GCY + ' A 50 50 0 0 1 ' + (GCX + 50) + ' ' + GCY +
+      '" stroke="' + TONE[tone] + '" stroke-dasharray="' + SEMI.toFixed(2) + '" stroke-dashoffset="' + SEMI.toFixed(2) + '" data-go="' + off.toFixed(2) + '"/>');
+    [[0, '0'], [50, '50'], [100, '100']].forEach(function (lb) {
+      var p = gpt(63.5, lb[0] / 100);
+      parts.push('<text class="u3-glab" x="' + p[0].toFixed(2) + '" y="' + (p[1] + (lb[0] === 50 ? 3.5 : 4.5)).toFixed(2) + '">' + lb[1] + '</text>');
+    });
+    return parts.join('');
+  }
+  function renderPrimary() {
+    var top = D.quotas.filter(function (q) { return q.used != null; }).sort(function (a, b2) { return b2.used - a.used; })[0];
+    var pct = top ? top.used : 0;
+    var tone = R.fillTone(pct);
+    var thPct = D.budget.warningThreshold;
+    $('u3Gauge').innerHTML = gaugeSvg(pct, tone, thPct);
+    var gp = $('u3GaugePct');
+    gp.className = 'u3-gpct ' + tone;
+    var gc = gp.querySelector('[data-counter]');
+    gc.dataset.counter = pct;
+    after(bootMs(150), function () { R.animateCounters(gp); });
+    $('u3GaugeSub').textContent = top ? top.name + ' \u00b7 ' + top.win : '\u2014';
+    $('u3GaugeProj').textContent = top ? ('resets ' + (top.reset === 'unknown' ? '\u2014' : top.reset)) : '';
+    $('u3GaugeProv').innerHTML = top ? R.projChip(pmeta(top)) : '';
+    $('u3GaugeTh').textContent = 'warn at ' + thPct + '%';
+    var gl = $('u3GaugeLamp');
+    gl.className = 'u3-lamp ' + tone + (tone === 'hot' ? ' hotlive' : ' u3-lampon');
+    if (tone !== 'hot') gl.style.animationDelay = bootMs(150) + 'ms';
+    /* the needle whips to the reading with a restrained overshoot, then settles;
+       the numeral rides along and ticks on landing */
+    var arc = $('u3Gauge').querySelector('.u3-garc');
+    var from = lastGaugePct;
+    lastGaugePct = pct;
+    sweepDash(arc, SEMI, from, pct, tokMs('--mo-data-refresh-dur', 800), bootMs(150), function () {
+      numTick(gc);
+      if (tone !== 'ok') gp.classList.add('hotlive');
+      if (tone !== 'ok' && pct !== lastFlashPct) {
+        lastFlashPct = pct;
+        var cell = gp.closest('.u3-gcell');
+        cell.style.setProperty('--flt', 'var(--tone-' + (tone === 'hot' ? 'err' : tone) + ')');
+        cell.style.setProperty('--fd', '0ms');
+        cell.classList.remove('u3-flashonce');
+        void cell.offsetWidth;
+        cell.classList.add('u3-flashonce');
+      }
+    });
+  }
+
+  /* ---------- LED bank + session strip ----------
+     Tiered readouts: ONE primary LED (cost velocity — the secondary focus
+     after the quota gauge) spans the full bank height; four quiet secondary
+     readouts fill a 2x2 beside it. Top window is NOT repeated here — the
+     gauge already owns it. */
+  function renderLeds() {
+    var blk = D.guards.filter(function (g) { return g.state === 'blocked'; }).length;
+    var wrn = D.guards.filter(function (g) { return g.state === 'warn'; }).length;
+    /* corrected source-aware total (no double-count) — never recompute from byModel here */
+    var usedTok = D.usedTokensTotal;
+    var cacheHit = D.contextByRole ? D.contextByRole.cacheHitRate : null;
+    function cnt(n, dec, pre) { return '<span data-counter="' + n + '" data-decimals="' + dec + '"' + (pre ? ' data-prefix="' + pre + '"' : '') +
+      '>' + (pre || '') + (0).toFixed(dec) + '</span>'; }
+    function unit(s) { return s ? '<span class="u3-led-u">' + s + '</span>' : ''; }
+    var tp = tokParts(usedTok);
+    var pri = { ico: 'bolt', k: 'burn rate', v: cnt(D.burn.perHour, 2, '$') + unit('/hr'), cls: 'mute',
+      s: fmt.cost(D.burn.perDay) + '/day pace \u00b7 ' + R.chip(D.spendBasis === 'estimated' ? 'pricing_estimated' : D.spendBasis) + ' ' + R.projChip(pmeta(D.projectionMeta)) };
+    var minors = [
+      { ico: 'shield', k: 'guards', v: cnt(blk, 0) + '<span class="u3-led-u"> blk</span> \u00b7 ' + cnt(wrn, 0) + '<span class="u3-led-u"> warn</span>', cls: blk ? 'err' : 'ok', s: '1h window \u00b7 ' + D.guardConfig.spikeRatio.toFixed(1) + '\u00d7 spike' },
+      { ico: 'hash', k: 'used tokens', v: tp ? (cnt(tp.n, tp.dec) + unit(tp.suf)) : '\u2014', cls: '', s: 'source-aware total \u00b7 this period ' + R.projChip(pmeta(D.projectionMeta)) },
+      { ico: 'layers', k: 'ctx cache hit', v: (cacheHit == null ? '\u2014' : cnt(cacheHit, 1) + unit('%')), cls: 'ok', s: 'share of in-context tokens from cache' },
+      { ico: 'coin', k: 'spend \u00b7 5h', v: cnt(D.spend['5h'], 2, '$'), cls: '', s: 'this 5-hour window \u00b7 effective account' }
+    ];
+    var li = 0;
+    function led(it, cls) {
+      var d = bootMs(880 + (li++) * 70);
+      var fl = (it.cls === 'err' || it.cls === 'warn') ? ' u3-flashonce' : '';
+      var flt = fl ? ' style="--flt:var(--tone-' + (it.cls === 'err' ? 'err' : 'warn') + ');--fd:' + d + 'ms;animation-delay:' + d + 'ms"' : ' style="animation-delay:' + d + 'ms"';
+      return '<div class="u3-led u3-boot' + (cls ? ' ' + cls : '') + (it.cls ? ' ' + it.cls : '') + fl + '"' + flt + '><span class="u3-led-k">' +
+        '<span class="u3-lamp ' + (it.cls || 'mute') + ' u3-lampon" style="animation-delay:' + d + 'ms"></span>' + R.ic(it.ico) + it.k + '</span>' +
+        '<span class="u3-led-v ' + it.cls + '">' + it.v + '</span><span class="u3-led-s">' + it.s + '</span></div>';
+    }
+    $('u3Leds').innerHTML = led(pri, 'pri') + minors.map(function (it) { return led(it, ''); }).join('');
+    after(bootMs(920), function () { R.animateCounters($('u3Leds')); });
+  }
+  /* session strip: facts the hero does not already show (no duplicated
+     top-window / cache-hit cells) */
+  function renderStrip() {
+    var top = D.quotas.filter(function (q) { return q.used != null; }).sort(function (a, b2) { return b2.used - a.used; })[0];
+    var cells = [
+      ['WINDOW MODEL', '<b>' + (top ? top.name + ' \u00b7 ' + top.win : '\u2014') + '</b>'],
+      ['NEXT RESET', '<b>' + (top && top.reset !== 'unknown' ? top.reset : '\u2014') + '</b>'],
+      ['BUDGET MTD', '<b>' + fmt.cost(D.budget.spentMTD) + ' / ' + fmt.cost(D.budget.monthlyLimit) + '</b>'],
+      ['BASIS', R.chip('pricing_estimated')],
+      ['AS-OF', '<b>' + D.asOf + '</b>']
+    ];
+    $('u3Strip').innerHTML = cells.map(function (c) {
+      return '<span class="u3-st"><span class="k">' + c[0] + '</span>' + c[1] + '</span>';
+    }).join('');
+  }
+
+  /* ---------- quota dial bank (one instrument panel, not equal rings) ----------
+     The hottest window is the LEAD dial (bigger ring, heavier numeral); the
+     rest are secondary. Quotas with no reading never render hollow rings —
+     they collapse into one footnote band of name + value-state chip. */
+  function dialBankTile() {
+    var live = D.quotas.filter(function (q) { return q.used != null; })
+      .sort(function (a, b2) { return b2.used - a.used; });
+    var dark = D.quotas.filter(function (q) { return q.used == null; });
+    var leadId = live[0].id;
+    var cells = live.map(function (q, i) {
+      var tone = R.fillTone(q.used), lead = q.id === leadId;
+      var flag = tone !== 'ok' ? '" data-flt="var(--tone-' + (tone === 'hot' ? 'err' : tone) + ')" data-fd="' + (i * 85) : '';
+      return '<div class="u3-dial dt-' + tone + (lead ? ' lead' : '') + flag + '" title="' + q.name + ' \u00b7 ' + q.plan + ' \u00b7 ' + R.human(q.kind) + ' ' + q.win +
+        (lead ? ' \u00b7 highest pressure on the deck' : '') + '\n' + q.note + '">' +
+        '<svg viewBox="0 0 64 64" role="img" aria-label="' + q.name + ' ' + q.used + '% of window' + (lead ? ', highest pressure' : '') + '">' +
+        '<circle class="dbg" cx="32" cy="32" r="26"></circle>' +
+        '<circle class="dfill" cx="32" cy="32" r="26" stroke="' + TONE[tone] + '" data-pct="' + q.used +
+        '" style="stroke-dasharray:163.4;stroke-dashoffset:163.4"></circle></svg>' +
+        '<span class="u3-dial-n" title="' + q.name + '">' + q.name + '</span>' +
+        '<span class="u3-dial-p' + (lead ? ' lead' : '') + '" style="color:' + TONE_TEXT[tone] + '">' + q.used + '%</span></div>';
+    }).join('');
+    var naBand = dark.length ? '<div class="u3-dialna" role="list" aria-label="Quotas with no reading"><span class="u3-nak">No reading</span>' +
+      dark.map(function (q) {
+        return '<span class="u3-nai" role="listitem" title="' + q.note + '"><span class="nm">' + q.name + '</span>' + R.chip(q.vs) + '</span>';
+      }).join('') + '</div>' : '';
+    return '<article class="u3-tile u3-w-dial u3-tt-' + R.fillTone(live[0].used) + '">' +
+      th(R.fillTone(live[0].used), 'Quota bank', '<span>' + live.length + ' live \u00b7 ' + dark.length + ' no reading \u2014 never zero</span>') +
+      '<div class="u3-dialbank"><div class="u3-dials">' + cells + '</div>' + naBand + '</div>' +
+      '<div class="u3-note">window model per provider \u00b7 lead dial = highest pressure \u00b7 missing is a state, not zero</div></article>';
+  }
+
+  /* ---------- analytics tile ---------- */
+  var chartWin = '24h', muted = {};
+  function analyticsTile() {
+    return '<article class="u3-tile u3-w-flow u3-tt-info">' +
+      th('info', 'Token flow', '<span id="u3ChartMeta"></span><span class="u3-seg" id="u3ChartWin"></span>') +
+      '<div class="u3-chart" id="u3Chart"></div><div class="u3-legend" id="u3Legend"></div></article>';
+  }
+  function renderChartWin() {
+    $('u3ChartWin').innerHTML = ['5h', '24h', '7d'].map(function (w) {
+      return '<button type="button" data-cw="' + w + '" class="' + (w === chartWin ? 'on' : '') + '">' + w.toUpperCase() + '</button>';
+    }).join('');
+    $('u3ChartWin').querySelectorAll('[data-cw]').forEach(function (b2) {
+      b2.addEventListener('click', function () { chartWin = b2.dataset.cw; renderChartWin(); renderChart(); });
+    });
+  }
+  function renderChart() {
+    var ds = D.chart[chartWin] || D.chart['24h'];
+    $('u3ChartMeta').textContent = ds.note;
+    var grid = '<span class="u3-cgrid"><span class="u3-gl" style="bottom:0"></span><span class="u3-gl" style="bottom:50%"></span>' +
+      '<span class="u3-gl" style="bottom:100%"></span><span class="u3-bline" style="bottom:' + (D.chartBudgetLine * 0.45).toFixed(1) +
+      '%"><span>budget ' + D.budget.warningThreshold + '%</span></span></span>';
+    var cols = ds.cols.map(function (c) {
+      return '<div class="u3-col"><span class="tip">' + c[0] + ' \u00b7 in ' + c[1] + ' \u00b7 out ' + c[2] + ' \u00b7 rea ' + c[3] + ' \u00b7 cache ' + c[4] + '</span>' +
+        '<span class="u3-colstack"><i class="u3-si" data-h="' + c[1] + '"></i><i class="u3-so" data-h="' + c[2] + '"></i>' +
+        '<i class="u3-sr" data-h="' + c[3] + '"></i><i class="u3-sc" data-h="' + c[4] + '"></i></span><b>' + c[0] + '</b></div>';
+    }).join('');
+    $('u3Chart').innerHTML = grid + cols;
+    var series = [['si', 'Input', '--ser-inp'], ['so', 'Output', '--ser-out'], ['sr', 'Reasoning', '--ser-rea'], ['sc', 'Cache r/w', '--ser-cache']];
+    $('u3Legend').innerHTML = series.map(function (s2) {
+      return '<button type="button" data-series="' + s2[0] + '" class="' + (muted[s2[0]] ? 'muted' : '') + '" aria-pressed="' + String(!muted[s2[0]]) + '" title="Toggle ' + s2[1] + ' series"><span class="u3-sw" style="background:var(' + s2[2] + ')"></span>' + s2[1] + '</button>';
+    }).join('');
+    $('u3Legend').querySelectorAll('[data-series]').forEach(function (el) {
+      el.addEventListener('click', function () {
+        var k = el.dataset.series;
+        muted[k] = !muted[k];
+        el.classList.toggle('muted', !!muted[k]);
+        el.setAttribute('aria-pressed', String(!muted[k]));
+        $('u3Chart').querySelectorAll('.u3-' + k).forEach(function (seg) { seg.style.opacity = muted[k] ? '.12' : '1'; });
+      });
+    });
+    requestAnimationFrame(function () {
+      var rm = window.USrender.isRM();
+      $('u3Chart').querySelectorAll('.u3-colstack i[data-h]').forEach(function (seg, i) {
+        var h = Math.min((parseFloat(seg.dataset.h) || 0) * 0.45, 46);
+        if (rm) { seg.style.height = h + '%'; return; }
+        setTimeout(function () { seg.style.height = h + '%'; }, Math.min(i, 40) * 14);
+      });
+    });
+  }
+
+  /* ---------- budget tile (donuts + presets + policy) ---------- */
+  function budgetTileHtml() {
+    var b = D.budget;
+    var pct = Math.round(b.spentMTD / b.monthlyLimit * 100);
+    var ppct = Math.round(b.projectedMTD / b.monthlyLimit * 100);
+    function donut(lbl, p, tone) {
+      return '<span class="u3-donut"><svg viewBox="0 0 64 64" role="img" aria-label="' + lbl + ' budget ' + p + '%">' +
+        '<circle class="dbg" cx="32" cy="32" r="26"></circle>' +
+        '<circle class="dfill" cx="32" cy="32" r="26" stroke="' + TONE[tone] + '" data-pct="' + p +
+        '" style="stroke-dasharray:163.4;stroke-dashoffset:163.4"></circle>' +
+        '<text x="32" y="33">' + p + '%</text></svg><small>' + lbl + '</small></span>';
+    }
+    var presets = '<div class="u3-presets"><span class="k">WARN AT</span>' + b.presets.map(function (p) {
+      return '<button type="button" class="u3-pchip' + (p === b.warningThreshold ? ' on' : '') + '" data-preset="' + p + '">' + p + '</button>';
+    }).join('') + '</div>';
+    return '<article class="u3-tile u3-w-bud u3-tt-' + R.fillTone(pct) + '" id="u3BudgetTile">' +
+      th(R.fillTone(pct), 'Budget', '<span>MTD</span>') +
+      '<div class="u3-kv"><span class="k">SPENT MTD</span><b class="u3-cnt" data-counter="' + b.spentMTD + '" data-prefix="$">$0.00</b>' + R.projChip(pmeta(D.budget)) + '</div>' +
+      '<div class="u3-donuts">' + donut('spent', pct, R.fillTone(pct)) + donut('proj', ppct, R.fillTone(ppct)) + '</div>' +
+      '<div class="u3-kv"><span class="k">LIMIT</span><b>' + fmt.cost(b.monthlyLimit) + ' / mo</b></div>' +
+      presets +
+      '<div class="u3-kv"><span class="k">POLICY</span><b>' + b.policy.replace(/_/g, ' ').toUpperCase() + '</b></div>' +
+      '<div class="u3-note">presets exactly 50 / 80 / 90 / 95 / 100 \u2014 a budget does not cap spend by itself</div></article>';
+  }
+  function renderBudget() {
+    var old = $('u3BudgetTile');
+    var holder = document.createElement('div');
+    holder.innerHTML = budgetTileHtml();
+    var nu = holder.firstChild;
+    old.parentNode.replaceChild(nu, old);
+    nu.classList.toggle('in', old.classList.contains('in'));
+    nu.querySelectorAll('[data-preset]').forEach(function (btn) {
+      btn.addEventListener('click', function () {
+        D.budget.warningThreshold = parseInt(btn.dataset.preset, 10);
+        renderBudget(); renderPrimary(); renderChart();
+        if (window.toast) window.toast('Budget warning threshold set to ' + btn.dataset.preset + '% (demo)');
+      });
+    });
+    repower(nu);
+  }
+
+  /* ---------- cache tile ----------
+     Two DISTINCT metrics, never one figure: the CONTEXT cache-hit rate (share
+     of in-context tokens served from cache, D.contextByRole) and the PROVIDER
+     prompt-cache savings (per-provider hit/save in D.cache, totalling the $
+     saved). Each carries its own labelled sub-header so they are not read as
+     a single "cache hit" number. */
+  function cacheTile() {
+    var cb = D.contextByRole || {};
+    var provRows = D.cache.map(function (c) {
+      if (c.state === 'unsupported') {
+        return '<div class="u3-crow"><span class="u3-cn"><span class="nm">' + c.name + '</span></span>' + R.chip('unsupported') +
+          '<span class="u3-cnote">' + c.note + '</span></div>';
+      }
+      var zero = (c.save || 0) === 0;
+      var right = zero ? R.chip('zero') + '<span class="u3-csave zero">$0.00</span>'
+        : '<span class="u3-csave">\u2212$' + c.save.toFixed(2) + '</span>';
+      var note = c.zeroNote ? c.zeroNote : (c.missReason ? 'miss reason: ' + c.missReason : '');
+      return '<div class="u3-crow"><span class="u3-cn"><span class="nm">' + c.name + '</span>' + R.chip(c.state) + '</span>' +
+        '<span class="u3-cright">' + right + '</span>' +
+        '<span class="u3-cm">' + R.meter(c.hit, 'ok') + '<span class="us-num">' + c.hit + '% hit \u00b7 r ' + fmt.tok(c.cr) + ' \u00b7 w ' + fmt.tok(c.cw) + '</span></span>' +
+        (note ? '<span class="u3-cnote">' + note + '</span>' : '') + '</div>';
+    }).join('');
+    var ctxBlock =
+      '<div class="u3-csub">Context cache hit<span class="u3-csubm" style="color:var(--text-muted)">context window</span></div>' +
+      '<div class="u3-crow"><span class="u3-cn"><span class="nm">In-context tokens from cache</span>' + R.projChip(pmeta(cb)) + '</span>' +
+      '<span class="u3-cright"><span class="u3-csave" style="color:var(--text-primary)">' + (cb.cacheHitRate == null ? '\u2014' : cb.cacheHitRate + '%') + '</span></span>' +
+      (cb.cacheHitNote ? '<span class="u3-cnote">' + cb.cacheHitNote + '</span>' : '') + '</div>';
+    var provBlock =
+      '<div class="u3-csub">Provider prompt-cache<span class="u3-csubm">\u2212$' + D.cacheTotalSaved.toFixed(2) + ' today</span></div>' +
+      provRows;
+    return '<article class="u3-tile u3-w-cache u3-tt-ok">' + th('ok', 'Cache', '<span>context vs provider \u00b7 two metrics</span>') +
+      '<div>' + ctxBlock + provBlock + '</div>' +
+      '<div class="u3-note">context cache hit \u2260 provider prompt-cache savings \u00b7 zero \u2260 unsupported</div></article>';
+  }
+
+  /* ---------- tools tile ---------- */
+  function toolsTile() {
+    var rows = D.tools.map(function (t) {
+      var eCls = t.err >= 5 ? 'err' : (t.err >= 2 ? 'warn' : 'ok');
+      var idx = t.idx == null ? '<span class="dim">\u2014</span>'
+        : '<span class="us-meter" style="min-width:86px">' + R.meter(t.idx, 'info') + '<span class="pc">' + t.idx + '%</span></span>';
+      return '<tr><td class="mono">' + R.humanCap(t.tool) + '</td><td class="num">' + fmt.num(t.calls) + '</td>' +
+        '<td class="num">' + t.p50 + 'ms</td><td class="num">' + fmt.num(t.p95) + 'ms</td>' +
+        '<td style="text-align:right"><span class="vs vs-' + eCls + '">' + t.err.toFixed(1) + '%</span></td><td>' + idx + '</td></tr>';
+    }).join('');
+    return '<article class="u3-tile u3-w-tools u3-tt-info">' + th('info', 'Tool usage', '<span>last 24h \u00b7 latency \u00b7 index used</span>') +
+      '<div class="us-tblwrap u3-embed"><table class="us-tbl">' +
+      '<thead><tr><th>Tool</th><th class="num">Calls</th><th class="num">p50</th><th class="num">p95</th><th class="num">Err</th><th>Index used</th></tr></thead>' +
+      '<tbody>' + rows + '</tbody></table></div></article>';
+  }
+
+  /* ---------- accounts tile ---------- */
+  function accountsTile() {
+    /* account PRESSURE is a routing state, not a data value-state — give it its
+       own labels instead of reusing estimated/blocked/failed chips */
+    function pchip(t, tone) { return '<span class="vs vs-' + tone + '">' + t + '</span>'; }
+    var presChip = { ok: '', approaching_threshold: pchip('approaching', 'warn'), cooldown: pchip('cooldown', 'err'), exhausted: pchip('exhausted', 'err') };
+    var rows = D.accounts.map(function (a, i) {
+      var dot = (a.pressure === 'cooldown' || a.pressure === 'exhausted') ? 'err' : (a.pressure === 'approaching_threshold' ? 'warn' : 'ok');
+      var cd = a.cooldownSec != null ? '<span class="u3-cd" data-cd-idx="' + i + '">' + R.fmtCd(a.cooldownSec) + '</span>' : '';
+      var lv = a.lastValidated ? '<span class="u3-lv">val ' + a.lastValidated + ' ago</span>' : '';
+      var marks = (a.requested ? '<span class="u3-mk req">REQ</span>' : '') + (a.effective ? '<span class="u3-mk eff">EFF</span>' : '');
+      var note = a.note ? '<div class="u3-anote">' + a.note + '</div>' : '';
+      return '<div class="u3-arow">' +
+        '<span class="us-dot ' + dot + (dot !== 'ok' ? ' pulse' : '') + '"></span>' +
+        '<span class="u3-anc"><span class="u3-an">' + a.prov + ' \u00b7 ' + a.name + '</span>' + marks + '<span class="u3-am">' + a.mail + '</span></span>' +
+        '<span class="u3-as" title="' + a.status + '">' + a.status + '</span>' +
+        '<span class="u3-aright">' + (presChip[a.pressure] || '') + cd + lv + '</span>' + note + '</div>';
+    }).join('');
+    var hist = D.pressureHistory.map(function (h) {
+      var tone = h.kind === 'switch' ? 'info' : (h.state === 'exhausted' ? 'err' : (h.state === 'approaching' ? 'warn' : 'mute'));
+      return '<div class="us-wc"><span class="q">' + h.t + ' \u00b7 ' + h.text + '</span><span class="a" style="color:var(--tone-' + tone + '-text)">' + h.reason + '</span></div>';
+    }).join('');
+    return '<article class="u3-tile u3-w-acc u3-tt-info">' + th('info', 'Accounts & pressure', '<span>' + D.accounts.length + ' crewed \u00b7 requested vs effective</span>') +
+      '<div>' + rows + '</div>' +
+      '<div class="u3-hist" data-acc><button type="button" class="u3-hist-h" data-collapse aria-expanded="false" title="Toggle pressure and switch history"><span class="car">' + R.ic('chevR') + '</span>pressure &amp; switch history (' + D.pressureHistory.length + ')</button>' +
+      '<div class="u3-hist-b"><div>' + hist + '</div></div></div></article>';
+  }
+
+  /* ---------- guard tile ---------- */
+  function guardsTile() {
+    var blk = D.guards.some(function (g) { return g.state === 'blocked'; });
+    var rows = D.guards.map(function (g, i) {
+      var cls = g.state === 'blocked' ? 'blocked' : (g.state === 'warn' ? 'warn' : (g.state === 'watch' ? 'watch' : 'allowed'));
+      var lampT = g.state === 'blocked' ? 'err' : (g.state === 'warn' ? 'warn' : (g.state === 'watch' ? 'info' : 'ok'));
+      var stChip = g.state === 'blocked' ? R.chip('blocked') : (g.state === 'warn' ? R.chip('estimated') : R.chip('measured'));
+      var why = '<div class="u3-why"><button type="button" class="u3-why-t" aria-expanded="false" title="Toggle reasoning details"><span class="car">' + R.ic('chevR') + '</span>why ' + R.human(g.state) + '</button>' +
+        '<div class="u3-why-b"><div class="u3-dgrid">' + g.why.map(function (kv) {
+          return '<div class="u3-di"><b>' + kv[0] + '</b><span>' + kv[1] + '</span></div>';
+        }).join('') + '</div></div></div>';
+      var actions = g.state === 'blocked'
+        ? '<div class="u3-gacts"><button type="button" class="u3-btn primary" data-demo-action="usage.anomaly_keep" data-demo-arg="Keep blocking ' + R.human(g.kind) + '">Looks right \u2014 keep blocking</button>' +
+          '<button type="button" class="u3-btn" data-demo-action="usage.anomaly_allow" data-demo-arg="Allow once: ' + R.human(g.kind) + '">It was expected \u2014 allow once</button></div>' : '';
+      var gfl = (cls === 'blocked' || cls === 'warn') ? ' data-flt="var(--tone-' + (cls === 'blocked' ? 'err' : 'warn') + ')" data-fd="' + (i * 110) + '"' : '';
+      return '<div class="u3-gu ' + cls + '"' + gfl + '>' +
+        '<div class="u3-guh">' + lamp(lampT, cls === 'blocked') + '<span class="u3-gut">' + R.humanCap(g.title) + '</span>' + stChip +
+        '<span class="u3-gutime">' + g.t + '</span></div>' +
+        '<div class="u3-gub">' + g.body + '</div>' +
+        '<div class="u3-guw">' + g.where + '</div>' + why + actions + '</div>';
+    }).join('');
+    return '<article class="u3-tile u3-w-guards u3-tt-' + (blk ? 'err' : 'ok') + '">' +
+      th(blk ? 'err' : 'ok', 'Anomaly & quota guard', '<span>1h window \u00b7 ' + D.guardConfig.spikeRatio.toFixed(1) + '\u00d7 spike</span>') +
+      '<div class="u3-guards">' + rows + '</div>' +
+      '<div class="u3-note">' + D.guardTypes.length + ' guard types armed \u00b7 confidence ' + D.guardConfig.confidence + '</div></article>';
+  }
+
+  /* ---------- context / efficiency / attribution / gating tiles ---------- */
+  function famRow(name, pct, tokens, tone) {
+    return '<div class="u3-fam"><span class="u3-fh"><span class="u3-fn">' + name + '</span><span class="us-num">' + tokens + '</span></span>' +
+      '<span class="us-meter">' + R.meter(pct, tone) + '<span class="pc">' + pct + '%</span></span></div>';
+  }
+  function contextTile() {
+    var cb = D.contextBudget;
+    var rows = cb.families.map(function (f) { return famRow(f.name, f.share, fmt.tok(f.tokens), 'info'); }).join('');
+    var omitted = cb.omitted.map(function (o) {
+      return '<div class="us-wc"><span class="q">' + o.name + '</span><span class="a part">' + o.reason + '</span></div>';
+    }).join('');
+    return '<article class="u3-tile u3-w-ctx u3-tt-info">' + th('info', 'Context budget', '<span>' + fmt.tok(cb.totalTokens) + ' / ' + fmt.tok(cb.limit) + '</span>') +
+      '<div>' + rows + '</div><hr class="us-hr">' + omitted +
+      '<div class="u3-note">omitted / deferred entries carry a reason receipt</div></article>';
+  }
+  function efficiencyTile() {
+    var e = D.efficiency;
+    var comp = e.components.map(function (c) {
+      return '<div class="u3-fam"><span class="u3-fh"><span class="u3-fn">' + c.k + ' (' + Math.round(c.w * 100) + '%)</span>' +
+        '<span class="us-num">' + c.v + (c.adverse ? '% tax' : '') + '</span></span>' +
+        '<span class="us-meter">' + R.meter(c.v, c.adverse ? 'hot' : 'ok') + '<span class="pc">' + c.v + '</span></span></div>';
+    }).join('');
+    var gTone = e.score >= 85 ? 'g-ok' : (e.score >= 70 ? 'g-warn' : 'g-err');
+    return '<article class="u3-tile u3-w-eff u3-tt-ok">' + th('ok', 'Efficiency', '<span>score ' + e.score + '/100</span>') +
+      '<div class="u3-effb"><div class="u3-grade"><span class="u3-gr ' + gTone + '">' + e.grade + '</span><span class="u3-gsub2">retry tax ' + e.retryTaxPct + '% \u00b7 ' + fmt.cost(e.retryTaxUsd) + '</span></div>' +
+      comp + '</div>' +
+      '<div class="u3-note">weighted blend of the three meters \u00b7 retry tax priced at list rate</div></article>';
+  }
+  function attributionTile() {
+    var rows = D.attribution.map(function (a) { return famRow(a.name, a.pct, a.pct + '% of spend', 'purple'); }).join('');
+    return '<article class="u3-tile u3-w-attr u3-tt-purple">' + th('purple', 'Attribution', '<span>by entity</span>') + '<div>' + rows + '</div></article>';
+  }
+  function gatingTile() {
+    var map = { ok: ['vs-ok', 'active'], included_premium_exhausted: ['vs-warn', 'premium exhausted'],
+      rate_limited: ['vs-warn', 'rate-limited'], unverified: ['vs-mute vs-dash', 'unverified'], plan_not_included: ['vs-err', 'not in plan'] };
+    var rows = D.planGating.map(function (g) {
+      var m = map[g.state] || ['vs-mute', g.state];
+      return '<div class="u3-gt"><span class="u3-gtn">' + g.prov + '</span><span class="vs ' + m[0] + '">' + m[1] + '</span>' +
+        '<span class="u3-gts">' + g.status + (g.sub ? ' \u2014 ' + g.sub : '') + '</span></div>';
+    }).join('');
+    return '<article class="u3-tile u3-w-gating u3-tt-warn">' + th('warn', 'Plan gating', '<span>' + D.planGating.length + ' tracked</span>') +
+      '<div>' + rows + '</div></article>';
+  }
+
+  /* ---------- signals + what-counts tiles ---------- */
+  function signalsTile() {
+    function col(title, list, tone) {
+      return '<div class="u3-sigcol"><div class="u3-sigh">' + lamp(tone) + title + '</div>' +
+        list.map(function (s) { return '<div class="u3-sigrow"><span class="u3-sq ' + tone + '"></span><span>' + s.text + '</span></div>'; }).join('') + '</div>';
+    }
+    return '<article class="u3-tile u3-w-sig u3-tt-ok">' + th('ok', 'Signals', '<span>coaching</span>') +
+      '<div class="u3-sigcols">' + col('wins', D.signals.wins, 'ok') + col('improvements', D.signals.improvements, 'info') +
+      col('risks', D.signals.risks, 'warn') + '</div></article>';
+  }
+  function whatCountsTile() {
+    var rows = D.whatCounts.map(function (w) {
+      var cls = w.counts === true ? 'yes' : (w.counts === false ? 'no' : 'part');
+      var lab = w.counts === true ? 'counts' : (w.counts === false ? 'no' : 'partial');
+      return '<div class="us-wc"><span class="q" title="' + (w.note || '') + '">' + w.q + '</span><span class="a ' + cls + '">' + lab + '</span></div>';
+    }).join('');
+    return '<article class="u3-tile u3-w-wc u3-tt-mute">' + th('mute', 'What counts', '<span>billing matrix</span>') +
+      '<div>' + rows + '</div><div class="u3-note">as of ' + D.asOf + ' \u00b7 canonical UsageRecord projections \u00b7 missing \u2260 zero</div></article>';
+  }
+
+  /* ---------- deck assembly ---------- */
+  function renderDeck() {
+    var h = '';
+    h += bus('Quotas \u00b7 guards \u00b7 cache', D.quotas.length + ' instruments \u00b7 window model per provider \u00b7 missing \u2260 zero', 'info');
+    h += dialBankTile();
+    h += guardsTile();
+    h += cacheTile();
+    h += bus('Usage \u00b7 context \u00b7 efficiency', 'per-family budgets \u00b7 entity attribution \u00b7 token flow', 'info');
+    h += contextTile();
+    h += efficiencyTile();
+    h += analyticsTile();
+    h += bus('Spend \u00b7 budget \u00b7 gating', 'cost lands on the effective account \u00b7 list-rate basis', 'warn');
+    h += budgetTileHtml();
+    h += attributionTile();
+    h += gatingTile();
+    h += bus('Crew \u00b7 tools \u00b7 provenance', 'cooldowns tick live \u00b7 coaching \u00b7 billing matrix', 'ok');
+    h += accountsTile();
+    h += toolsTile();
+    h += signalsTile();
+    h += whatCountsTile();
+    $('u3Deck').innerHTML = h;
+    renderChartWin();
+    renderChart();
+    renderBudget();
+    document.querySelectorAll('.u3-why-t').forEach(function (t) {
+      t.addEventListener('click', function () {
+        var w = t.parentElement;
+        w.classList.toggle('open');
+        t.setAttribute('aria-expanded', String(w.classList.contains('open')));
+      });
+    });
+    /* real <button data-collapse>: the shared chrome accordion skips buttons,
+       so this one is wired here (single toggle) with aria-expanded in sync */
+    document.querySelectorAll('.u3-hist-h[data-collapse]').forEach(function (h) {
+      h.addEventListener('click', function () {
+        var acc = h.closest('[data-acc]');
+        if (!acc) return;
+        acc.classList.toggle('open');
+        h.setAttribute('aria-expanded', String(acc.classList.contains('open')));
+      });
+    });
+    armDeckPower();
+  }
+
+  /* ---------- ticker ----------
+     Opens with a computed SYS status (guard blocks > quota pressure > nominal)
+     on a pulsing lamp, so the marquee leads with the deck's verdict instead of
+     a raw spend figure. */
+  function renderTicker() {
+    var blk = D.guards.filter(function (g) { return g.state === 'blocked'; }).length;
+    var tops = D.quotas.filter(function (q) { return q.used != null; }).sort(function (a, b2) { return b2.used - a.used; }).slice(0, 2);
+    var sys = blk ? ['SYS', 'GUARD BLOCKED', 'up', true]
+      : (tops[0].used >= 90 ? ['SYS', 'PRESSURE HIGH', 'up', true]
+        : (tops[0].used >= 70 ? ['SYS', 'PRESSURE ELEVATED', 'up', false] : ['SYS', 'SYSTEM NOMINAL', 'dn', false]));
+    var items = [sys,
+      ['SPEND 5H', fmt.cost(D.spend['5h']), ''],
+      ['BURN', fmt.cost(D.burn.perHour) + '/HR', ''],
+      ['PACE', fmt.cost(D.forecast.monthPace) + ' +' + D.forecast.monthPaceDelta + '%', 'up'],
+      ['CACHE SAVED', '\u2212' + fmt.cost(D.cacheTotalSaved), 'dn'],
+      ['GUARD', blk + ' BLOCKED', blk ? 'up' : '']
+    ];
+    tops.forEach(function (q) { items.push([q.name.toUpperCase(), q.used + '% \u00b7 ' + q.win.toUpperCase(), q.used >= 90 ? 'up' : '']); });
+    items.push(['NEXT RESET', tops[0].reset === 'unknown' ? 'UNKNOWN' : tops[0].reset.toUpperCase(), '']);
+    items.push(['AUTO-REFRESH', D.nextAutoRefresh, '']);
+    var seg = items.map(function (it) {
+      var lampT = it[2] === 'up' ? 'warn' : (it[2] === 'dn' ? 'ok' : 'info');
+      return '<span class="u3-tki">' + lamp(lampT, it[3]) + it[0] + ' <b class="' + it[2] + '">' + it[1] + '</b></span>';
+    }).join('');
+    $('u3Ticker').innerHTML = '<span class="u3-tk">' + seg + '</span><span class="u3-tk" aria-hidden="true">' + seg + '</span>';
+  }
+
+  /* ---------- ledger ---------- */
+  var LF = { q: '', plat: '', rep: '' };
+  var LSORT = { key: '', dir: 1 };
+  function matches(r) {
+    if (LF.plat && r.prov !== LF.plat) return false;
+    if (LF.rep && r.rep !== LF.rep) return false;
+    if (LF.q) {
+      var hay = (r.t + ' ' + r.ev + ' ' + r.run + ' ' + r.lane + ' ' + r.prov + ' ' + r.model + ' ' + r.acct).toLowerCase();
+      if (hay.indexOf(LF.q) === -1) return false;
+    }
+    return true;
+  }
+  function ledgerRow(r, idx, fresh) {
+    var main = '<tr class="' + (fresh ? 'us-new' : '') + '" data-lrow="' + idx + '">' +
+      '<td><button type="button" class="u3-car" title="Toggle event details" aria-label="Toggle event details" aria-expanded="false">' + R.ic('chevR') + '</button></td>' +
+      '<td class="mono">' + r.t + '</td>' +
+      '<td class="ev-' + r.ev + '">' + (R.evLabel[r.ev] || r.ev) + '</td>' +
+      '<td class="mono">' + r.run + ' \u00b7 ' + r.lane + '</td>' +
+      '<td>' + r.prov + '</td><td class="mono">' + r.model + '</td>' +
+      '<td class="num">' + fmt.num(r.tin) + '</td><td class="num">' + fmt.num(r.tout) + '</td>' +
+      '<td class="num">' + (r.cr == null ? '<span class="dim" title="not reported">\u2014</span>' : fmt.num(r.cr)) + '</td>' +
+      '<td>' + R.chip(r.rep) + '</td>' +
+      '<td class="num">' + (r.cost ? fmt.cost(r.cost) : '$0.00') + '</td></tr>';
+    var kv = r.detail || {};
+    var cells = Object.keys(kv).map(function (k) { return '<div class="u3-di"><b>' + R.humanCap(k) + '</b><span>' + R.human(kv[k]) + '</span></div>'; }).join('') +
+      '<div class="u3-di"><b>Account</b><span>' + r.acct + '</span></div>' +
+      '<div class="u3-di"><b>Latency</b><span>' + r.lat + '</span></div>' +
+      '<div class="u3-di"><b>Usage event ref</b><span>' + (r.ref || '\u2014') + '</span></div>';
+    var det = '<tr class="u3-detail" data-ldetail="' + idx + '" hidden><td></td><td colspan="10"><div class="u3-dgrid">' + cells + '</div>' +
+      '<div class="u3-gacts" style="margin-top:var(--sm)">' +
+      '<button type="button" class="u3-btn" data-demo-action="usage.drill" data-demo-arg="Open in Orchestrator \u00b7 ' + (r.ref || '') + '">' + R.ic('external') + 'Open in Orchestrator</button>' +
+      '<button type="button" class="u3-btn" data-demo-action="usage.copy_ref" data-demo-arg="Copied ' + (r.ref || '') + '">' + R.ic('copy') + 'Copy ref</button></div></td></tr>';
+    return main + det;
+  }
+  function wireLedgerRows(tbody) {
+    tbody.querySelectorAll('[data-lrow]').forEach(function (row) {
+      var car = row.querySelector('.u3-car');
+      if (!car || car._wired) return;
+      car._wired = true;
+      function tog() {
+        var det = tbody.querySelector('[data-ldetail="' + row.dataset.lrow + '"]');
+        if (!det) return;
+        det.hidden = !det.hidden;
+        car.classList.toggle('open', !det.hidden);
+        car.setAttribute('aria-expanded', String(!det.hidden));
+      }
+      car.addEventListener('click', tog);
+    });
+  }
+  function rewire() { if (window.PMUsageShell) window.PMUsageShell.wireDemoActions(document); }
+  function renderLedger() {
+    var tbody = $('u3LedgerBody');
+    var shown = 0;
+    var rows = D.ledger.filter(function (r) { return matches(r); });
+    if (LSORT.key) {
+      var num = { tin: 1, tout: 1, cr: 1, cost: 1 };
+      rows = rows.slice().sort(function (a, b) {
+        var av = a[LSORT.key], bv = b[LSORT.key];
+        if (num[LSORT.key]) { av = av == null ? -1 : av; bv = bv == null ? -1 : bv; return (av - bv) * LSORT.dir; }
+        return String(av == null ? '' : av).localeCompare(String(bv == null ? '' : bv)) * LSORT.dir;
+      });
+    }
+    tbody.innerHTML = rows.map(function (r) { shown++; return ledgerRow(r, D.ledger.indexOf(r), false); }).join('');
+    $('u3LedgerCount').textContent = shown + ' of ' + D.ledger.length + ' events';
+    $('u3LedgerFoot').textContent = 'Every row carries a stable usage event ref; drill-through preserves it. Window: last 5h \u00b7 cost is attributed to the effective account.';
+    wireLedgerRows(tbody);
+    rewire();
+  }
+  function buildLedgerMenus() {
+    var provs = {};
+    D.ledger.forEach(function (r) { provs[r.prov] = 1; });
+    $('u3PlatMenu').innerHTML = '<button type="button" class="pm6-tb-menu-item is-selected" role="menuitem" data-value="">All platforms</button>' +
+      Object.keys(provs).sort().map(function (p) { return '<button type="button" class="pm6-tb-menu-item" role="menuitem" data-value="' + p + '">' + p + '</button>'; }).join('');
+    $('u3RepMenu').innerHTML = '<button type="button" class="pm6-tb-menu-item is-selected" role="menuitem" data-value="">Any reporting</button>' +
+      ['measured', 'estimated', 'unsupported'].map(function (r) { return '<button type="button" class="pm6-tb-menu-item" role="menuitem" data-value="' + r + '">' + r + '</button>'; }).join('');
+    $('u3PlatMenu').addEventListener('pm-menu-pick', function (ev) {
+      LF.plat = ev.detail.value || ''; $('u3PlatLabel').textContent = ev.detail.value || 'All platforms'; renderLedger();
+    });
+    $('u3RepMenu').addEventListener('pm-menu-pick', function (ev) {
+      LF.rep = ev.detail.value || ''; $('u3RepLabel').textContent = ev.detail.value || 'Any reporting'; renderLedger();
+    });
+  }
+
+  /* ---------- live systems: cooldown ticks + ledger append ---------- */
+  setInterval(function () {
+    if (document.visibilityState !== 'visible') return;
+    D.accounts.forEach(function (a, i) {
+      if (a.cooldownSec != null && a.cooldownSec > 0) {
+        a.cooldownSec--;
+        var el = document.querySelector('[data-cd-idx="' + i + '"]');
+        if (el) el.textContent = R.fmtCd(a.cooldownSec);
+      }
+    });
+  }, 1000);
+
+  var liveIdx = 0, liveRef = 2000;
+  setInterval(function () {
+    if (document.visibilityState !== 'visible') return;
+    var src = D.livePool[liveIdx++ % D.livePool.length];
+    var r = {};
+    Object.keys(src).forEach(function (k) { r[k] = src[k]; });
+    r.ref = 'ue-47-' + (liveRef++);
+    var now = new Date();
+    r.t = String(now.getHours()).padStart(2, '0') + ':' + String(now.getMinutes()).padStart(2, '0');
+    D.ledger.unshift(r);
+    if (D.ledger.length > 40) D.ledger.pop();
+    if (!matches(r)) return;
+    var tbody = $('u3LedgerBody');
+    var tmp = document.createElement('tbody');
+    tmp.innerHTML = ledgerRow(r, 'L' + Date.now(), true);
+    while (tmp.firstChild) tbody.insertBefore(tmp.firstChild, tbody.firstChild);
+    wireLedgerRows(tbody);
+    rewire();
+    R.deText(tbody);
+    $('u3LedgerCount').textContent = tbody.querySelectorAll('[data-lrow]').length + ' of ' + D.ledger.length + ' events';
+  }, 9000);
+
+  /* ---------- refresh + boot ---------- */
+  $('u3Refresh').addEventListener('click', function () {
+    var b = this;
+    b.classList.add('spinning');
+    $('u3FreshTxt').textContent = 'refreshing\u2026';
+    $('u3Fresh').classList.add('stale');
+    setTimeout(function () {
+      b.classList.remove('spinning');
+      $('u3Fresh').classList.remove('stale');
+      $('u3FreshTxt').textContent = 'current \u00b7 as of ' + D.asOf;
+      renderAll();
+      if (window.toast) window.toast('Usage projections refreshed (demo)');
+    }, 900);
+  });
+  $('u3LedgerSearch').addEventListener('input', function () { LF.q = this.value.toLowerCase(); renderLedger(); });
+
+  function syncSortGlyphs() {
+    document.querySelectorAll('.u3-panel th[data-sort]').forEach(function (x) {
+      var g = x.querySelector('.u3-sic');
+      var dir = x.classList.contains('asc') ? 'asc' : (x.classList.contains('desc') ? 'desc' : '');
+      if (g) g.innerHTML = dir ? window.PMIcon(dir === 'asc' ? 'arrowUp' : 'arrowDn', '') : '';
+      x.setAttribute('aria-sort', dir === 'asc' ? 'ascending' : (dir === 'desc' ? 'descending' : 'none'));
+    });
+  }
+  function wireLedgerSort() {
+    document.querySelectorAll('.u3-panel th[data-sort]').forEach(function (th) {
+      if (!th.querySelector('.u3-sic')) {
+        var g = document.createElement('span');
+        g.className = 'u3-sic';
+        g.setAttribute('aria-hidden', 'true');
+        th.appendChild(g);
+      }
+      if (!th.hasAttribute('tabindex')) th.setAttribute('tabindex', '0');
+      function act() {
+        var k = th.getAttribute('data-sort');
+        if (LSORT.key === k) LSORT.dir = -LSORT.dir; else { LSORT.key = k; LSORT.dir = 1; }
+        document.querySelectorAll('.u3-panel th[data-sort]').forEach(function (x) { x.classList.remove('asc', 'desc'); });
+        th.classList.add(LSORT.dir === 1 ? 'asc' : 'desc');
+        syncSortGlyphs();
+        renderLedger();
+      }
+      th.addEventListener('click', act);
+      th.addEventListener('keydown', function (e) { if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); act(); } });
+    });
+    syncSortGlyphs();
+  }
+  function renderAll() {
+    renderPrimary(); renderLeds(); renderStrip(); renderDeck(); renderTicker(); renderLedger();
+    R.deText(document);
+  }
+  buildLedgerMenus();
+  wireLedgerSort();
+  renderAll();
+  setTimeout(function () { booted = true; }, 1700);
+})();
+</script>
+</body>
+</html>

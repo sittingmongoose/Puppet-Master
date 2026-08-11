@@ -1,0 +1,305 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<title>W6 menus proto</title>
+<style>
+:root {
+  --motion-fast: 120ms; --motion-med: 220ms;
+  --ease-out: cubic-bezier(.22,1,.36,1);
+  --ease-settle: cubic-bezier(.22,1.5,.36,1);
+  --ease-pop: cubic-bezier(.3,1.36,.34,1);
+  --pm-row-step: 22ms;
+  --surface: #14181f; --surface-elevated: #1c222c; --border: #2c3442;
+  --border-light: #232a36; --text-primary: #e8ecf3; --text-secondary: #9aa4b4;
+  --text-muted: #67707f; --accent-soft: rgba(96,150,255,.14); --accent-primary: #6096ff;
+  --accent-error: #ff6b6b; --elev-2: 0 10px 30px rgba(0,0,0,.4); --elev-3: 0 14px 40px rgba(0,0,0,.5);
+  --radius-md: 10px; --radius-xs: 6px; --xs: 4px; --sm: 6px;
+}
+body { margin: 0; background: var(--surface); color: var(--text-primary); font: 13px/1.4 system-ui, sans-serif; padding: 28px; }
+h1 { font-size: 13px; color: var(--text-secondary); }
+.row { display: flex; gap: 18px; align-items: flex-start; margin: 18px 0; }
+.card { background: var(--surface-elevated); border: 1px solid var(--border); border-radius: 12px; padding: 16px; }
+button { font: inherit; color: inherit; }
+.log { font: 10px ui-monospace, monospace; color: var(--text-muted); white-space: pre-wrap; max-height: 220px; overflow: auto; }
+
+/* ---- (c) trigger with chevron ---- */
+.tbm-wrap { position: relative; display: inline-block; }
+.tbm-trigger {
+  display: inline-flex; align-items: center; gap: 6px; padding: 5px 10px;
+  border-radius: 8px; border: 1px solid var(--border-light); background: none;
+  color: var(--text-secondary); cursor: pointer;
+  transition: color var(--motion-fast) var(--ease-out), background var(--motion-fast) var(--ease-out);
+}
+.tbm-trigger:hover, .tbm-trigger[aria-expanded="true"] { color: var(--text-primary); background: var(--accent-soft); }
+.tbm-trigger > .chev { transition: transform var(--motion-med) var(--ease-settle); }
+.tbm-trigger.pm-trigger-open > .chev { transform: rotate(180deg); }
+
+/* ---- (a) tb-menu-like sprout, EXACT reference pattern ---- */
+.tbm {
+  display: none;
+  position: absolute; top: calc(100% + 6px); left: 0; min-width: 210px; z-index: 220;
+  background: var(--surface-elevated); border: 1px solid var(--border); border-radius: var(--radius-md);
+  box-shadow: var(--elev-3); padding: 5px 0;
+  --pm6-sprout-ox: 12%; --pm6-sprout-oy: 0%;
+  --pm6-sprout-tx: 0px; --pm6-sprout-ty: -10px;
+  --pm6-sprout-sx: 0.72; --pm6-sprout-sy: 0.48;
+  transform-origin: var(--pm6-sprout-ox) var(--pm6-sprout-oy);
+  opacity: 0;
+  transform: translate3d(var(--pm6-sprout-tx), var(--pm6-sprout-ty), 0) scale3d(var(--pm6-sprout-sx), var(--pm6-sprout-sy), 1);
+  visibility: hidden; pointer-events: none;
+  transition: opacity 160ms var(--ease-out), transform 300ms cubic-bezier(0.22,1.55,0.36,1), visibility 0s linear 300ms;
+  will-change: transform, opacity;
+}
+.tbm.is-open {
+  display: block; opacity: 1; transform: translate3d(0,0,0) scale3d(1,1,1);
+  visibility: visible; pointer-events: auto;
+  transition: opacity 140ms var(--ease-out), transform 300ms cubic-bezier(0.22,1.55,0.36,1), visibility 0s;
+  @starting-style {
+    opacity: 0;
+    transform: translate3d(var(--pm6-sprout-tx), var(--pm6-sprout-ty), 0) scale3d(var(--pm6-sprout-sx), var(--pm6-sprout-sy), 1);
+  }
+}
+.tbm.is-closing {
+  display: block; opacity: 0;
+  transform: translate3d(var(--pm6-sprout-tx), var(--pm6-sprout-ty), 0) scale3d(var(--pm6-sprout-sx), var(--pm6-sprout-sy), 1);
+  visibility: hidden; pointer-events: none;
+  transition: opacity 45ms ease-in 175ms, transform 220ms cubic-bezier(0.45,0.05,0.55,0.2), visibility 0s linear 220ms;
+}
+
+/* ---- (b) fm-ctx-like context menu: transition sprout mirroring tbm ---- */
+.fm-ctx {
+  position: fixed; z-index: 300; min-width: 224px; padding: 5px;
+  border-radius: var(--radius-md); background: var(--surface-elevated);
+  border: 1px solid var(--border); box-shadow: var(--elev-2);
+  display: none;
+  transform-origin: var(--pm6-sprout-ox, 12%) var(--pm6-sprout-oy, 0%);
+  opacity: 0;
+  transform: translate3d(0, -6px, 0) scale3d(.78, .52, 1);
+  visibility: hidden; pointer-events: none;
+  transition: opacity 160ms var(--ease-out), transform 300ms cubic-bezier(0.22,1.55,0.36,1), visibility 0s linear 300ms;
+  will-change: transform, opacity;
+}
+.fm-ctx.is-open {
+  display: block; opacity: 1; transform: translate3d(0,0,0) scale3d(1,1,1);
+  visibility: visible; pointer-events: auto;
+  transition: opacity 140ms var(--ease-out), transform 300ms cubic-bezier(0.22,1.55,0.36,1), visibility 0s;
+  @starting-style {
+    opacity: 0;
+    transform: translate3d(0, -6px, 0) scale3d(.78, .52, 1);
+  }
+}
+.fm-ctx.is-closing {
+  display: block; opacity: 0;
+  transform: translate3d(0, -6px, 0) scale3d(.78, .52, 1);
+  visibility: hidden; pointer-events: none;
+  transition: opacity 45ms ease-in 175ms, transform 220ms cubic-bezier(0.45,0.05,0.55,0.2), visibility 0s linear 220ms;
+}
+
+/* ---- items (shared look) + micro-interactions + cascade ---- */
+.mi {
+  display: flex; align-items: center; gap: 8px; width: 100%; padding: 7px 12px;
+  border: 0; background: none; border-radius: var(--radius-xs);
+  color: var(--text-secondary); font-size: 12px; cursor: pointer; text-align: left;
+  transition: background var(--motion-fast) var(--ease-out), color var(--motion-fast) var(--ease-out), transform var(--motion-fast) var(--ease-out);
+}
+.mi:hover, .mi:focus-visible { background: var(--accent-soft); color: var(--text-primary); transform: translateX(2px); outline: none; }
+.mi:active { transform: scale(.98); }
+.mi .k { margin-left: auto; font: 9px ui-monospace, monospace; color: var(--text-muted); }
+.sep { height: 1px; background: var(--border-light); margin: 4px 6px; }
+
+@keyframes pmMenuIn { from { opacity: 0; transform: translateY(4px); } to { opacity: 1; transform: none; } }
+.pm-menu-in > * { animation: pmMenuIn .22s var(--ease-out) both; animation-delay: calc(var(--pi, 0) * 12ms); }
+
+@keyframes pmSelPop { 0% { transform: scale(.6); } 60% { transform: scale(1.15); } 100% { transform: scale(1); } }
+.mi .tick { width: 12px; flex: none; color: var(--accent-primary); opacity: 0; }
+.mi.is-selected { color: var(--text-primary); background: var(--accent-soft); }
+.mi.is-selected .tick { opacity: 1; }
+.mi.pm-sel-pop .tick { animation: pmSelPop .2s var(--ease-pop); }
+
+/* ---- submenu flyout (right-flying: origin left/top) ---- */
+.fmc-wrap { position: relative; }
+.fmc-sub {
+  position: absolute; left: calc(100% - 4px); top: -5px; min-width: 196px; padding: 5px;
+  border-radius: var(--radius-md); background: var(--surface-elevated);
+  border: 1px solid var(--border); box-shadow: var(--elev-2); z-index: 1;
+  display: none;
+  transform-origin: 0% 0%;
+  opacity: 0;
+  transform: translate3d(-6px, 0, 0) scale3d(.8, .6, 1);
+  visibility: hidden; pointer-events: none;
+  transition: opacity 140ms var(--ease-out), transform 260ms cubic-bezier(0.22,1.55,0.36,1), visibility 0s linear 260ms;
+}
+.fmc-wrap.open > .fmc-sub {
+  display: block; opacity: 1; transform: translate3d(0,0,0) scale3d(1,1,1);
+  visibility: visible; pointer-events: auto;
+  transition: opacity 120ms var(--ease-out), transform 260ms cubic-bezier(0.22,1.55,0.36,1), visibility 0s;
+  @starting-style {
+    opacity: 0;
+    transform: translate3d(-6px, 0, 0) scale3d(.8, .6, 1);
+  }
+}
+.mi .caret { margin-left: auto; color: var(--text-muted); }
+
+/* ---- reduced ---- */
+html.reduced *, html.reduced *::before, html.reduced *::after {
+  animation-duration: .01ms !important; animation-iteration-count: 1 !important;
+  transition-duration: .01ms !important; transition-delay: 0ms !important;
+}
+html.reduced .pm-menu-in > * { animation: none !important; opacity: 1; transform: none; }
+html.reduced .fm-ctx, html.reduced .fm-ctx.is-open, html.reduced .fm-ctx.is-closing,
+html.reduced .fmc-sub, html.reduced .fmc-wrap.open > .fmc-sub,
+html.reduced .tbm, html.reduced .tbm.is-open, html.reduced .tbm.is-closing { transition: none !important; }
+html.reduced .tbm-trigger > .chev { transition: none !important; }
+</style>
+</head>
+<body>
+<h1>W6 menus proto — tb-sprout / fm-ctx sprout from click point / submenus / chevron / cascade</h1>
+
+<div class="row">
+  <div class="card">
+    <div class="tbm-wrap" id="tbWrap">
+      <button class="tbm-trigger" id="tbTrig" aria-haspopup="menu" aria-expanded="false">
+        <span>Newest first</span><span class="chev">▾</span>
+      </button>
+      <div class="tbm" id="tbMenu" role="menu">
+        <button class="mi is-selected" role="menuitem"><span class="tick">✓</span>Newest first</button>
+        <button class="mi" role="menuitem"><span class="tick">✓</span>Oldest first</button>
+        <button class="mi" role="menuitem"><span class="tick">✓</span>By name</button>
+        <div class="sep"></div>
+        <button class="mi" role="menuitem"><span class="tick"></span>Group by family</button>
+      </div>
+    </div>
+  </div>
+  <div class="card" style="flex:1">
+    <div>Right-click anywhere in this box, or focus a row and press Shift+F10.</div>
+    <div id="rows" style="margin-top:10px"></div>
+  </div>
+  <div class="card">
+    <button id="redBtn">toggle reduced</button>
+    <div class="log" id="log"></div>
+  </div>
+</div>
+
+<div class="fm-ctx" id="ctx" role="menu">
+  <button class="mi" role="menuitem">New file<span class="k">ctrl+n</span></button>
+  <button class="mi" role="menuitem">New folder</button>
+  <div class="sep"></div>
+  <div class="fmc-wrap" data-sub>
+    <button class="mi" role="menuitem" aria-haspopup="true">Open with…<span class="caret">▸</span></button>
+    <div class="fmc-sub" role="menu">
+      <button class="mi" role="menuitem">Source editor</button>
+      <button class="mi" role="menuitem">Image viewer</button>
+      <button class="mi" role="menuitem">Workspace preview</button>
+    </div>
+  </div>
+  <div class="fmc-wrap" data-sub>
+    <button class="mi" role="menuitem" aria-haspopup="true">Copy path<span class="caret">▸</span></button>
+    <div class="fmc-sub" role="menu">
+      <button class="mi" role="menuitem">Copy relative path</button>
+      <button class="mi" role="menuitem">Copy full path</button>
+    </div>
+  </div>
+  <button class="mi" role="menuitem">Rename<span class="k">F2</span></button>
+  <div class="sep"></div>
+  <button class="mi" role="menuitem" style="color:var(--accent-error)">Delete<span class="k">Del</span></button>
+</div>
+
+<script>
+var log = document.getElementById('log');
+function L(m) { log.textContent = m + '\n' + log.textContent; }
+function reduce() { return document.documentElement.classList.contains('reduced'); }
+
+/* tb menu engine (mini mirror of PMCozeMenu) */
+var tbTrig = document.getElementById('tbTrig'), tbMenu = document.getElementById('tbMenu');
+function cascade(menu, cap) {
+  if (reduce()) return;
+  var kids = menu.children, max = Math.min((cap || 8) - 1, kids.length - 1);
+  Array.prototype.forEach.call(kids, function (k, i) { k.style.setProperty('--pi', String(Math.min(i, max))); });
+  if (menu._t) clearTimeout(menu._t);
+  menu.classList.remove('pm-menu-in'); void menu.offsetWidth; menu.classList.add('pm-menu-in');
+  menu._t = setTimeout(function () { menu.classList.remove('pm-menu-in'); menu._t = null; }, 640);
+}
+function tbOpen() {
+  tbMenu.classList.remove('is-closing'); tbMenu.classList.add('is-open');
+  tbTrig.setAttribute('aria-expanded', 'true'); tbTrig.classList.add('pm-trigger-open');
+  cascade(tbMenu, 8);
+}
+function tbClose(instant) {
+  if (!tbMenu.classList.contains('is-open') && !tbMenu.classList.contains('is-closing')) return;
+  tbMenu.classList.remove('is-open'); tbMenu.classList.add('is-closing');
+  tbTrig.setAttribute('aria-expanded', 'false'); tbTrig.classList.remove('pm-trigger-open');
+  var done = function () { tbMenu.classList.remove('is-closing'); tbMenu.classList.remove('pm-menu-in'); };
+  if (instant || reduce()) done(); else setTimeout(done, 240);
+}
+tbTrig.addEventListener('click', function (ev) { ev.stopPropagation(); tbMenu.classList.contains('is-open') ? tbClose() : tbOpen(); });
+tbMenu.addEventListener('click', function (ev) {
+  var it = ev.target.closest('.mi'); if (!it) return;
+  tbMenu.querySelectorAll('.mi').forEach(function (m) { m.classList.remove('is-selected'); });
+  it.classList.add('is-selected');
+  it.classList.remove('pm-sel-pop'); void it.offsetWidth; it.classList.add('pm-sel-pop');
+  tbClose();
+});
+document.addEventListener('click', function (ev) { if (!ev.target.closest('.tbm, .tbm-trigger, .fm-ctx')) tbClose(); });
+document.addEventListener('keydown', function (ev) { if (ev.key === 'Escape') { tbClose(); ctxClose(); } });
+
+/* fm-ctx */
+var ctx = document.getElementById('ctx');
+var box = document.getElementById('rows');
+['folder:src', 'file:main.rs', 'git-M:lib.rs'].forEach(function (s) {
+  var k = s.split(':')[0], n = s.split(':')[1];
+  var d = document.createElement('div');
+  d.textContent = n + ' (' + k + ')';
+  d.setAttribute('data-kind', k);
+  d.setAttribute('tabindex', '0');
+  d.style.cssText = 'padding:8px 10px;border:1px solid var(--border-light);border-radius:8px;margin:6px 0;cursor:default';
+  box.appendChild(d);
+});
+function ctxOpenAt(x, y) {
+  ctx.classList.remove('is-closing'); ctx.classList.add('is-open');
+  ctx.style.position = 'fixed'; ctx.style.left = '0px'; ctx.style.top = '0px';
+  var w = ctx.offsetWidth, h = ctx.offsetHeight, vw = innerWidth, vh = innerHeight;
+  var fx = Math.min(x, vw - w - 8), fy = (y + h > vh - 8) ? Math.max(8, y - h) : y;
+  ctx.style.left = fx + 'px'; ctx.style.top = fy + 'px';
+  ctx.style.setProperty('--pm6-sprout-ox', (x - fx) + 'px');
+  ctx.style.setProperty('--pm6-sprout-oy', (y - fy) + 'px');
+  cascade(ctx, 8);
+}
+function ctxClose() {
+  if (!ctx.classList.contains('is-open') && !ctx.classList.contains('is-closing')) return;
+  ctx.classList.remove('is-open'); ctx.classList.add('is-closing');
+  ctx.querySelectorAll('.fmc-wrap.open').forEach(function (s) { s.classList.remove('open'); });
+  var done = function () { ctx.classList.remove('is-closing'); ctx.classList.remove('pm-menu-in'); };
+  if (reduce()) done(); else setTimeout(done, 240);
+}
+box.addEventListener('contextmenu', function (ev) {
+  var r = ev.target.closest('[data-kind]'); if (!r) return;
+  ev.preventDefault();
+  ctxOpenAt(ev.clientX, ev.clientY);
+  L('ctx open at ' + ev.clientX + ',' + ev.clientY);
+});
+box.addEventListener('keydown', function (ev) {
+  if (ev.key !== 'F10' || !ev.shiftKey) return;
+  var r = ev.target.closest('[data-kind]'); if (!r) return;
+  ev.preventDefault();
+  var rc = r.getBoundingClientRect();
+  ctxOpenAt(rc.left, rc.bottom);
+});
+ctx.addEventListener('click', function (ev) { if (ev.target.closest('.mi:not([aria-haspopup])')) ctxClose(); });
+document.addEventListener('click', function (ev) { if (!ev.target.closest('.fm-ctx, #rows')) ctxClose(); });
+
+/* submenus */
+ctx.querySelectorAll('.fmc-wrap[data-sub]').forEach(function (w) {
+  w.addEventListener('mouseenter', function () {
+    ctx.querySelectorAll('.fmc-wrap.open').forEach(function (o) { o.classList.remove('open'); o.querySelector('.fmc-sub').classList.remove('pm-menu-in'); });
+    w.classList.add('open'); cascade(w.querySelector('.fmc-sub'), 5);
+  });
+  w.addEventListener('mouseleave', function () { w.classList.remove('open'); w.querySelector('.fmc-sub').classList.remove('pm-menu-in'); });
+});
+document.getElementById('redBtn').addEventListener('click', function () {
+  document.documentElement.classList.toggle('reduced');
+  L('reduced=' + reduce());
+});
+</script>
+</body>
+</html>

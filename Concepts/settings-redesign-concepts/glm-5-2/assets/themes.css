@@ -1,0 +1,204 @@
+/* themes.css — shared by all four GLM-5.2 settings concepts.
+   IA + semantic status language is constant across all eight themes;
+   only material, typography, radius, border, shadow, and motion flavor differ.
+   One design rule per CONCEPT_RULES + packet 05: no emoji, no colored left-side
+   status borders, no filter-pill primary forms, no raw internal labels, no clipped text. */
+
+/* ============ TOKEN BASE (Friendly Dark default) ============ */
+:root {
+  /* surfaces */
+  --bg: #211e26;
+  --surface: #2b2731;
+  --surface-2: #322d3b;
+  --surface-3: #3a3442;
+  --surface-elev: #423b4d;
+  --overlay: rgba(20, 17, 24, 0.62);
+
+  /* text */
+  --ink: #f1eef6;
+  --ink-2: #c8c1d2;
+  --ink-3: #948c9f;
+  --ink-4: #6b6476;
+
+  /* lines */
+  --line: #51495d;
+  --line-2: #3e3946;
+
+  /* accent + status (semantic language identical across themes) */
+  --accent: #6fc6e8;
+  --accent-ink: #11202a;
+  --accent-soft: rgba(111, 198, 232, 0.14);
+  --accent-line: rgba(111, 198, 232, 0.40);
+
+  /* status fills are solid surfaces with a quiet glyph, never a left bar */
+  --ok: #6fdabc;       --ok-soft: rgba(111, 218, 188, 0.14);
+  --warn: #f0c674;     --warn-soft: rgba(240, 198, 116, 0.16);
+  --bad: #ec6f7a;      --bad-soft: rgba(236, 111, 122, 0.15);
+  --info: #9db4e8;     --info-soft: rgba(157, 180, 232, 0.15);
+  --neutral: #948c9f;  --neutral-soft: rgba(148, 140, 159, 0.16);
+
+  /* geometry */
+  --r-xs: 6px;  --r-sm: 9px;  --r: 13px;  --r-lg: 18px;  --r-xl: 26px;  --r-pill: 999px;
+  --gap-xs: 4px; --gap-sm: 8px; --gap: 14px; --gap-lg: 22px; --gap-xl: 34px;
+  --row-h: 46px;
+  --shell-h: 46px;
+  --footer-h: 30px;
+
+  /* type */
+  --font: "Avenir Next", "Segoe UI", system-ui, sans-serif;
+  --mono: "SF Mono", "JetBrains Mono", "Cascadia Code", ui-monospace, monospace;
+
+  /* motion (per-concept may override the *personality* curves, not the contract) */
+  --ease: cubic-bezier(.22, 1, .36, 1);
+  --ease-pop: cubic-bezier(.34, 1.56, .64, 1);
+  --ease-settle: cubic-bezier(.16, 1, .3, 1);
+  --t-fast: 130ms; --t-mid: 220ms; --t-slow: 360ms;
+
+  /* shadow */
+  --sh-1: 0 1px 2px rgba(0,0,0,.30);
+  --sh-2: 0 6px 18px -6px rgba(0,0,0,.45);
+  --sh-3: 0 20px 44px -16px rgba(0,0,0,.58);
+
+  /* concept widths driven by the ConceptHub bridge */
+  --hub-test-width: 1280px;
+  --hub-page-width: 1280px;
+}
+
+/* ============ FRIENDLY LIGHT ============ */
+[data-theme="friendly-light"] {
+  --bg:#fbf7f3; --surface:#f3ece7; --surface-2:#efe7e1; --surface-3:#e9dfd7; --surface-elev:#fffaf7;
+  --overlay: rgba(255,250,247,0.74);
+  --ink:#423d49; --ink-2:#665f6d; --ink-3:#817986; --ink-4:#a39ca7;
+  --line:#d8cfd9; --line-2:#e7dfe8;
+  --accent:#3f9cc7; --accent-ink:#f8fcff; --accent-soft:rgba(63,156,199,.13); --accent-line:rgba(63,156,199,.40);
+  --ok:#1f9d6b; --ok-soft:rgba(31,157,107,.13);
+  --warn:#b8791a; --warn-soft:rgba(184,121,26,.15);
+  --bad:#c8454f; --bad-soft:rgba(200,69,79,.12);
+  --info:#4466a8; --info-soft:rgba(68,102,168,.12);
+  --neutral:#7b7480; --neutral-soft:rgba(123,116,128,.13);
+  --sh-1: 0 1px 2px rgba(74,69,80,.10); --sh-2: 0 6px 18px -6px rgba(74,69,80,.18); --sh-3: 0 20px 44px -16px rgba(74,69,80,.24);
+}
+
+/* ============ GLASS DARK ============ */
+[data-theme="glass-dark"] {
+  --bg:#1c1530; --surface:#2a2042; --surface-2:#2f2550; --surface-3:#372b5e; --surface-elev:#3f3270;
+  --overlay: rgba(28, 21, 48, 0.66);
+  --ink:#efe8fc; --ink-2:#d0c4ec; --ink-3:#a99cca; --ink-4:#7d6f9e;
+  --line:#5a4683; --line-2:#433467;
+  --accent:#b79cff; --accent-ink:#241a3e; --accent-soft:rgba(183,156,255,.16); --accent-line:rgba(183,156,255,.46);
+  --ok:#7fe3c0; --ok-soft:rgba(127,227,192,.14);
+  --warn:#f0c98a; --warn-soft:rgba(240,201,138,.16);
+  --bad:#ef8a93; --bad-soft:rgba(239,138,147,.15);
+  --info:#a9bdf0; --info-soft:rgba(169,189,240,.15);
+  --neutral:#a99cca; --neutral-soft:rgba(169,156,202,.16);
+  --sh-1: 0 1px 2px rgba(0,0,0,.34); --sh-2: 0 6px 18px -6px rgba(0,0,0,.50); --sh-3: 0 20px 44px -16px rgba(0,0,0,.62);
+  /* glass = one backdrop blur over a pre-baked wallpaper (PMConcept7 technique) */
+  --glass-wall: radial-gradient(120% 90% at 18% 12%, #4a2d7a 0%, transparent 55%),
+                radial-gradient(110% 80% at 86% 88%, #2a5a7a 0%, transparent 60%),
+                linear-gradient(160deg, #1c1530, #241a44);
+}
+
+/* ============ GLASS LIGHT ============ */
+[data-theme="glass-light"] {
+  --bg:#e8e0ef; --surface:#f1eaf6; --surface-2:#ece3f2; --surface-3:#e6daee; --surface-elev:#faf5fd;
+  --overlay: rgba(250,245,253,0.72);
+  --ink:#423a57; --ink-2:#645674; --ink-3:#796c85; --ink-4:#9a8fa8;
+  --line:#cbb9d2; --line-2:#dccfe2;
+  --accent:#8161d6; --accent-ink:#fff; --accent-soft:rgba(129,97,214,.13); --accent-line:rgba(129,97,214,.42);
+  --ok:#1f9d6b; --ok-soft:rgba(31,157,107,.13);
+  --warn:#b8791a; --warn-soft:rgba(184,121,26,.14);
+  --bad:#c8454f; --bad-soft:rgba(200,69,79,.11);
+  --info:#4466a8; --info-soft:rgba(68,102,168,.11);
+  --neutral:#7b7480; --neutral-soft:rgba(123,116,128,.12);
+  --sh-1: 0 1px 2px rgba(66,58,87,.10); --sh-2: 0 6px 18px -6px rgba(66,58,87,.18); --sh-3: 0 20px 44px -16px rgba(66,58,87,.24);
+  --glass-wall: radial-gradient(120% 90% at 20% 10%, #d9c4f5 0%, transparent 55%),
+                radial-gradient(110% 80% at 84% 90%, #c4d9f0 0%, transparent 60%),
+                linear-gradient(160deg, #efe7f5, #e0d4ee);
+}
+
+/* ============ RETRO DARK ============ */
+[data-theme="retro-dark"] {
+  --bg:#0e0e0e; --surface:#161616; --surface-2:#1c1c1c; --surface-3:#232323; --surface-elev:#2a2a2a;
+  --overlay: rgba(14,14,14,0.78);
+  --ink:#c8f7d0; --ink-2:#9fd9a8; --ink-3:#6fa978; --ink-4:#4a704f;
+  --line:#2e4d33; --line-2:#224026;
+  --accent:#00ff41; --accent-ink:#0a0a0a; --accent-soft:rgba(0,255,65,.10); --accent-line:rgba(0,255,65,.55);
+  --ok:#00ff41; --ok-soft:rgba(0,255,65,.10);
+  --warn:#ffcc00; --warn-soft:rgba(255,204,0,.12);
+  --bad:#ff4d4d; --bad-soft:rgba(255,77,77,.12);
+  --info:#33ccff; --info-soft:rgba(51,204,255,.12);
+  --neutral:#7a9a7e; --neutral-soft:rgba(122,154,126,.14);
+  --r-xs:0; --r-sm:0; --r:0; --r-lg:0; --r-xl:0; --r-pill:0;
+  --font:"Rajdhani","DejaVu Sans Mono","Arial Narrow",sans-serif;
+  --mono:"JetBrains Mono","Cascadia Code",monospace;
+  --sh-1:none; --sh-2:none; --sh-3:0 0 0 1px var(--line);
+}
+
+/* ============ RETRO LIGHT ============ */
+[data-theme="retro-light"] {
+  --bg:#f1ece1; --surface:#e8e1d2; --surface-2:#ded6c4; --surface-3:#d4cab4; --surface-elev:#f7f2e7;
+  --overlay: rgba(247,242,231,0.80);
+  --ink:#1a2a1c; --ink-2:#3a4d3c; --ink-3:#5c6b5e; --ink-4:#8a988b;
+  --line:#8a8270; --line-2:#a8a092;
+  --accent:#0047ab; --accent-ink:#fff; --accent-soft:rgba(0,71,171,.10); --accent-line:rgba(0,71,171,.55);
+  --ok:#1f7a3a; --ok-soft:rgba(31,122,58,.13);
+  --warn:#a8650a; --warn-soft:rgba(168,101,10,.14);
+  --bad:#9c2a2f; --bad-soft:rgba(156,42,47,.11);
+  --info:#244a8a; --info-soft:rgba(36,74,138,.11);
+  --neutral:#6b6456; --neutral-soft:rgba(107,100,86,.13);
+  --r-xs:0; --r-sm:0; --r:0; --r-lg:0; --r-xl:0; --r-pill:0;
+  --font:"Rajdhani","DejaVu Sans Mono","Arial Narrow",sans-serif;
+  --mono:"JetBrains Mono","Cascadia Code",monospace;
+  --sh-1:none; --sh-2:none; --sh-3:0 0 0 1px var(--line);
+}
+
+/* ============ BASIC DARK ============ */
+[data-theme="basic-dark"] {
+  --bg:#15171b; --surface:#1e2127; --surface-2:#24282f; --surface-3:#2b3038; --surface-elev:#323843;
+  --overlay: rgba(21,23,27,0.80);
+  --ink:#e7e9ed; --ink-2:#bec2c9; --ink-3:#9298a2; --ink-4:#6c727c;
+  --line:#3a4049; --line-2:#2c3138;
+  --accent:#64b5f6; --accent-ink:#0d1820; --accent-soft:rgba(100,181,246,.13); --accent-line:rgba(100,181,246,.42);
+  --ok:#5ec89e; --ok-soft:rgba(94,200,158,.13);
+  --warn:#e0b257; --warn-soft:rgba(224,178,87,.14);
+  --bad:#e0777f; --bad-soft:rgba(224,119,127,.13);
+  --info:#88a6e0; --info-soft:rgba(136,166,224,.13);
+  --neutral:#828892; --neutral-soft:rgba(130,136,146,.14);
+  --r-xs:3px; --r-sm:4px; --r:6px; --r-lg:8px; --r-xl:10px; --r-pill:4px;
+  --font:"Segoe UI", system-ui, sans-serif;
+  --sh-1: 0 1px 2px rgba(0,0,0,.32); --sh-2: 0 2px 8px -2px rgba(0,0,0,.40); --sh-3: 0 8px 20px -8px rgba(0,0,0,.50);
+}
+
+/* ============ BASIC LIGHT ============ */
+[data-theme="basic-light"] {
+  --bg:#eef0f3; --surface:#f7f8fa; --surface-2:#eef0f4; --surface-3:#e6e9ee; --surface-elev:#ffffff;
+  --overlay: rgba(255,255,255,0.82);
+  --ink:#20242a; --ink-2:#4e555f; --ink-3:#747c86; --ink-4:#9aa1aa;
+  --line:#cbd0d7; --line-2:#dde1e7;
+  --accent:#0056b3; --accent-ink:#fff; --accent-soft:rgba(0,86,179,.10); --accent-line:rgba(0,86,179,.42);
+  --ok:#1f9d6b; --ok-soft:rgba(31,157,107,.12);
+  --warn:#b8791a; --warn-soft:rgba(184,121,26,.13);
+  --bad:#c8454f; --bad-soft:rgba(200,69,79,.11);
+  --info:#4466a8; --info-soft:rgba(68,102,168,.11);
+  --neutral:#747c86; --neutral-soft:rgba(116,124,134,.12);
+  --r-xs:3px; --r-sm:4px; --r:6px; --r-lg:8px; --r-xl:10px; --r-pill:4px;
+  --font:"Segoe UI", system-ui, sans-serif;
+  --sh-1: 0 1px 2px rgba(32,36,42,.08); --sh-2: 0 2px 8px -2px rgba(32,36,42,.14); --sh-3: 0 8px 20px -8px rgba(32,36,42,.20);
+}
+
+/* ============ DENSITY + REDUCED MOTION ============ */
+[data-density="compact"] { --row-h: 36px; }
+[data-density="compact"] .row { padding-top:6px !important; padding-bottom:6px !important; }
+
+/* reduced motion: same final states, opacity/state-only transitions */
+[data-reduced-motion="1"] *,
+[data-reduced-motion="1"] *::before,
+[data-reduced-motion="1"] *::after {
+  animation-duration: .01ms !important;
+  animation-iteration-count: 1 !important;
+  transition-duration: .01ms !important;
+  scroll-behavior: auto !important;
+}
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after { animation-duration:.01ms !important; transition-duration:.01ms !important; scroll-behavior:auto !important; }
+}

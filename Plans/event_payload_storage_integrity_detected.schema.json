@@ -1,0 +1,531 @@
+{
+  "$defs": {
+    "byte_range": {
+      "items": false,
+      "maxItems": 2,
+      "minItems": 2,
+      "prefixItems": [
+        {
+          "maximum": 18446744073709551615,
+          "minimum": 0,
+          "type": "integer"
+        },
+        {
+          "maximum": 18446744073709551615,
+          "minimum": 0,
+          "type": "integer"
+        }
+      ],
+      "type": "array"
+    },
+    "sequence_range": {
+      "items": false,
+      "maxItems": 2,
+      "minItems": 2,
+      "prefixItems": [
+        {
+          "maximum": 18446744073709551615,
+          "minimum": 0,
+          "type": "integer"
+        },
+        {
+          "maximum": 18446744073709551615,
+          "minimum": 0,
+          "type": "integer"
+        }
+      ],
+      "type": "array"
+    },
+    "storage_integrity_detected_1_0_0_compatibility_reader": {
+      "$id": "https://puppetmaster.local/schemas/event_payloads/storage_integrity_detected/1.0.0",
+      "$schema": "https://json-schema.org/draft/2020-12/schema",
+      "additionalProperties": false,
+      "properties": {
+        "affected_byte_range": {
+          "items": {},
+          "type": "array"
+        },
+        "affected_event_refs": {
+          "items": {},
+          "type": "array"
+        },
+        "affected_sequence_range": {
+          "items": {},
+          "type": "array"
+        },
+        "detection_offset": {
+          "type": "integer"
+        },
+        "durable_watermark_relation": {
+          "type": "string"
+        },
+        "expected_crc": {
+          "type": "integer"
+        },
+        "failure_class": {
+          "type": "string"
+        },
+        "frame_version": {
+          "type": "integer"
+        },
+        "impact_precision": {
+          "type": "string"
+        },
+        "integrity_id": {
+          "type": "string"
+        },
+        "last_good_offset": {
+          "type": "integer"
+        },
+        "next_good_offset": {
+          "type": "integer"
+        },
+        "observed_crc": {
+          "type": "integer"
+        },
+        "report_ref": {
+          "type": "string"
+        },
+        "schema_version": {
+          "minLength": 1,
+          "type": "string"
+        },
+        "segment_generation": {
+          "type": "integer"
+        },
+        "segment_hash": {
+          "type": "string"
+        },
+        "segment_name": {
+          "type": "string"
+        },
+        "segment_state": {
+          "type": "string"
+        },
+        "storage_root_hash": {
+          "type": "string"
+        },
+        "storage_root_ref": {
+          "type": "string"
+        }
+      },
+      "required": [
+        "schema_version",
+        "integrity_id",
+        "storage_root_ref",
+        "storage_root_hash",
+        "segment_generation",
+        "segment_name",
+        "segment_hash",
+        "segment_state",
+        "frame_version",
+        "failure_class",
+        "detection_offset",
+        "last_good_offset",
+        "next_good_offset",
+        "impact_precision",
+        "durable_watermark_relation",
+        "report_ref"
+      ],
+      "type": "object"
+    }
+  },
+  "$id": "https://puppetmaster.local/schemas/event_payloads/storage_integrity_detected/2.0.0",
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "additionalProperties": false,
+  "allOf": [
+    {
+      "oneOf": [
+        {
+          "required": [
+            "expected_crc",
+            "observed_crc"
+          ]
+        },
+        {
+          "not": {
+            "anyOf": [
+              {
+                "required": [
+                  "expected_crc"
+                ]
+              },
+              {
+                "required": [
+                  "observed_crc"
+                ]
+              }
+            ]
+          }
+        }
+      ]
+    },
+    {
+      "oneOf": [
+        {
+          "properties": {
+            "impact_precision": {
+              "const": "exact_event"
+            }
+          },
+          "required": [
+            "affected_byte_range",
+            "affected_sequence_range",
+            "affected_event_refs"
+          ]
+        },
+        {
+          "not": {
+            "anyOf": [
+              {
+                "required": [
+                  "affected_sequence_range"
+                ]
+              },
+              {
+                "required": [
+                  "affected_event_refs"
+                ]
+              }
+            ]
+          },
+          "properties": {
+            "impact_precision": {
+              "const": "exact_byte_range"
+            }
+          },
+          "required": [
+            "affected_byte_range"
+          ]
+        },
+        {
+          "not": {
+            "anyOf": [
+              {
+                "required": [
+                  "affected_event_refs"
+                ]
+              }
+            ]
+          },
+          "properties": {
+            "impact_precision": {
+              "const": "bounded_sequence_range"
+            }
+          },
+          "required": [
+            "affected_sequence_range"
+          ]
+        },
+        {
+          "not": {
+            "anyOf": [
+              {
+                "required": [
+                  "affected_sequence_range"
+                ]
+              },
+              {
+                "required": [
+                  "affected_event_refs"
+                ]
+              }
+            ]
+          },
+          "properties": {
+            "impact_precision": {
+              "const": "unknown_segment_remainder"
+            }
+          },
+          "required": [
+            "affected_byte_range"
+          ]
+        }
+      ]
+    },
+    {
+      "oneOf": [
+        {
+          "properties": {
+            "failure_class": {
+              "const": "frame_integrity"
+            },
+            "impact_precision": {
+              "enum": [
+                "exact_byte_range",
+                "unknown_segment_remainder"
+              ]
+            }
+          }
+        },
+        {
+          "properties": {
+            "failure_class": {
+              "const": "header_integrity"
+            },
+            "impact_precision": {
+              "enum": [
+                "exact_byte_range",
+                "unknown_segment_remainder"
+              ]
+            }
+          }
+        },
+        {
+          "properties": {
+            "failure_class": {
+              "const": "payload_integrity"
+            },
+            "impact_precision": {
+              "enum": [
+                "exact_event",
+                "exact_byte_range"
+              ]
+            }
+          }
+        },
+        {
+          "not": {
+            "anyOf": [
+              {
+                "required": [
+                  "expected_crc"
+                ]
+              },
+              {
+                "required": [
+                  "observed_crc"
+                ]
+              }
+            ]
+          },
+          "properties": {
+            "failure_class": {
+              "const": "segment_integrity"
+            },
+            "impact_precision": {
+              "enum": [
+                "exact_byte_range",
+                "bounded_sequence_range",
+                "unknown_segment_remainder"
+              ]
+            }
+          }
+        },
+        {
+          "not": {
+            "anyOf": [
+              {
+                "required": [
+                  "expected_crc"
+                ]
+              },
+              {
+                "required": [
+                  "observed_crc"
+                ]
+              }
+            ]
+          },
+          "properties": {
+            "failure_class": {
+              "const": "manifest_integrity"
+            },
+            "impact_precision": {
+              "enum": [
+                "bounded_sequence_range",
+                "unknown_segment_remainder"
+              ]
+            }
+          }
+        },
+        {
+          "not": {
+            "anyOf": [
+              {
+                "required": [
+                  "expected_crc"
+                ]
+              },
+              {
+                "required": [
+                  "observed_crc"
+                ]
+              }
+            ]
+          },
+          "properties": {
+            "failure_class": {
+              "const": "watermark_integrity"
+            },
+            "impact_precision": {
+              "enum": [
+                "bounded_sequence_range",
+                "unknown_segment_remainder"
+              ]
+            }
+          }
+        },
+        {
+          "not": {
+            "anyOf": [
+              {
+                "required": [
+                  "expected_crc"
+                ]
+              },
+              {
+                "required": [
+                  "observed_crc"
+                ]
+              }
+            ]
+          },
+          "properties": {
+            "failure_class": {
+              "const": "sequence_integrity"
+            },
+            "impact_precision": {
+              "enum": [
+                "exact_event",
+                "bounded_sequence_range"
+              ]
+            }
+          }
+        }
+      ]
+    }
+  ],
+  "properties": {
+    "affected_byte_range": {
+      "$ref": "#/$defs/byte_range"
+    },
+    "affected_event_refs": {
+      "items": {
+        "minLength": 1,
+        "type": "string"
+      },
+      "maxItems": 4096,
+      "minItems": 1,
+      "type": "array",
+      "uniqueItems": true
+    },
+    "affected_sequence_range": {
+      "$ref": "#/$defs/sequence_range"
+    },
+    "detection_offset": {
+      "maximum": 18446744073709551615,
+      "minimum": 0,
+      "type": "integer"
+    },
+    "durable_watermark_relation": {
+      "enum": [
+        "wholly_above_durable_watermark",
+        "at_or_below_durable_watermark",
+        "straddles_durable_watermark",
+        "unknown_durable_watermark_relation"
+      ]
+    },
+    "expected_crc": {
+      "maximum": 4294967295,
+      "minimum": 0,
+      "type": "integer"
+    },
+    "failure_class": {
+      "enum": [
+        "frame_integrity",
+        "header_integrity",
+        "payload_integrity",
+        "segment_integrity",
+        "manifest_integrity",
+        "watermark_integrity",
+        "sequence_integrity"
+      ]
+    },
+    "frame_version": {
+      "const": 2
+    },
+    "impact_precision": {
+      "enum": [
+        "exact_event",
+        "exact_byte_range",
+        "bounded_sequence_range",
+        "unknown_segment_remainder"
+      ]
+    },
+    "integrity_id": {
+      "pattern": "^pm\\.storage\\.integrity\\.v1:[0-9a-f]{64}$",
+      "type": "string"
+    },
+    "last_good_offset": {
+      "maximum": 18446744073709551615,
+      "minimum": 0,
+      "type": "integer"
+    },
+    "next_good_offset": {
+      "maximum": 18446744073709551615,
+      "minimum": 0,
+      "type": "integer"
+    },
+    "observed_crc": {
+      "maximum": 4294967295,
+      "minimum": 0,
+      "type": "integer"
+    },
+    "report_ref": {
+      "minLength": 1,
+      "type": "string"
+    },
+    "schema_version": {
+      "const": "2.0.0"
+    },
+    "segment_generation": {
+      "maximum": 18446744073709551615,
+      "minimum": 0,
+      "type": "integer"
+    },
+    "segment_hash": {
+      "pattern": "^[0-9a-f]{64}$",
+      "type": "string"
+    },
+    "segment_name": {
+      "minLength": 1,
+      "type": "string"
+    },
+    "segment_state": {
+      "enum": [
+        "opening",
+        "active",
+        "closed",
+        "sealed_degraded"
+      ]
+    },
+    "storage_root_hash": {
+      "pattern": "^[0-9a-f]{64}$",
+      "type": "string"
+    },
+    "storage_root_ref": {
+      "minLength": 1,
+      "type": "string"
+    }
+  },
+  "required": [
+    "schema_version",
+    "integrity_id",
+    "storage_root_ref",
+    "storage_root_hash",
+    "segment_generation",
+    "segment_name",
+    "segment_hash",
+    "segment_state",
+    "frame_version",
+    "failure_class",
+    "detection_offset",
+    "last_good_offset",
+    "next_good_offset",
+    "impact_precision",
+    "durable_watermark_relation",
+    "report_ref"
+  ],
+  "type": "object"
+}

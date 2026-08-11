@@ -1,0 +1,17 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://puppet-master.local/schemas/plan-assurance/fresh-launch-identity.v1.2.json",
+  "type": "object",
+  "additionalProperties": false,
+  "required": ["packet_id", "trial_id", "generation_id", "run_root", "request_id", "message_id", "marker_id", "nonce_id"],
+  "properties": {
+    "packet_id": {"const": "stage-a-plan-assurance-rolling-trial-packet-v1_2"},
+    "trial_id": {"const": "stage-a-plan-assurance-rolling-trial-v1_2-run-001"},
+    "generation_id": {"const": "generation-v1_2-001-20260717"},
+    "run_root": {"const": "/Users/jaredsmacbookair/Documents/PuppetMaster/Plans/.audits/stage-a-plan-assurance-rolling-trial-packet-v1_2/backtest/stage-a-plan-assurance-rolling-trial-v1_2-run-001"},
+    "request_id": {"type": "string", "pattern": "^request\\.v1_2\\."},
+    "message_id": {"type": "string", "pattern": "^message\\.v1_2\\."},
+    "marker_id": {"type": "string", "pattern": "^marker\\.v1_2\\."},
+    "nonce_id": {"type": "string", "pattern": "^nonce\\.v1_2\\."}
+  }
+}

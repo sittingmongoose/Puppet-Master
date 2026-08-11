@@ -5,7 +5,7 @@
    authored docked stream (th-main) and the legacy per-thread mocks; threads
    with a `builder` key have no static streamHtml — 'deepPlan' is built by
    pm6-js-chat and 'terminalDemoTpl' is read at boot from the #tplThreadTerminalDemo
-   template. footer.filesHtml is self-contained (pre-wrapped .ft-file spans). */
+   template. footer.files is an array of { path, add, del } objects (legacy filesHtml still parsed). */
 window.PM6_CHAT_THREADS = {
   'th-main': {
     id: 'th-main',
@@ -15,27 +15,39 @@ window.PM6_CHAT_THREADS = {
     status: 'working',
     summaryHtml: 'Main agent thread · research run live<br>Photos pipeline + import hardening',
     mode: 'agent',
-    footer: { subagents: '1 active subagent', filesHtml: '<span class="ft-file" data-demo-action="files.open" data-demo-arg="src/services/import.rs">src/services/import.rs <span class="ft-add">+18</span> <span class="ft-del">−4</span></span><span class="ft-file" data-demo-action="files.open" data-demo-arg="migrations/0001_init.sql">migrations/0001_init.sql <span class="ft-add">+6</span> <span class="ft-del">−0</span></span><span class="ft-file" data-demo-action="files.open" data-demo-arg="src/main.rs">src/main.rs <span class="ft-add">+2</span> <span class="ft-del">−1</span></span>', problems: false },
-    suggestions: [
-      { label: 'Crawl the docs site', action: 'web.run', arg: 'webcrawl|docs.tastebook.dev|suggestion_chip', title: 'cmd.chat.web.crawl — approval card first: scope https://docs.tastebook.dev/* (visible origin/root) · max 25 pages · depth 3' },
-      { label: 'Map tastebook.dev', action: 'web.run', arg: 'webmap|tastebook.dev|suggestion_chip', title: 'cmd.chat.web.map — compact route tree, with a provider-fallback showcase mid-run' },
-      { label: 'Extract the recipe schema', action: 'web.run', arg: 'webextract|https://tastebook.dev/recipes/pad-thai|suggestion_chip', title: 'cmd.chat.web.extract — 3-row structured preview; the full extraction stays in the Runtime Artifact' }
-    ],
+    footer: {
+      subagents: {
+        count: 1,
+        label: '1 active subagent',
+        items: [{ id: 'sa-test-sleuth', name: 'Test Sleuth', task: 'reproduce import failure', state: 'running', summary: 'cargo test — narrowing normalize_units_mixed_fraction' }]
+      },
+      files: [
+        { path: 'src/services/import.rs', add: 18, del: 4 },
+        { path: 'migrations/0001_init.sql', add: 6, del: 0 },
+        { path: 'src/main.rs', add: 2, del: 1 }
+      ],
+      problems: false
+    },
     composerChips: ['src/services/import.rs'],
     hoverActions: [
       '<button class="thread-action-btn" title="Archive" data-demo-action="demo.toast" data-demo-arg="Thread archived — restore it any time from History."><svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="21 8 21 21 3 21 3 8"></polyline><rect x="1" y="3" width="22" height="5"></rect><line x1="10" y1="12" x2="14" y2="12"></line></svg></button>',
       '<button class="thread-action-btn" title="More..." data-demo-action="demo.toast" data-demo-arg="Rename, duplicate and export live here in the full build."><svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="1"></circle><circle cx="12" cy="5" r="1"></circle><circle cx="12" cy="19" r="1"></circle></svg></button>'
     ],
     streamHtml: `
-                  <div class="message system pm6-chat-sys"><span class="pm6-ico" data-pm6-ico="info"></span> Thread created from Dashboard · injected context: run <b>pcr-47</b> · seam-content · worktree feat/dashboard-v2</div>
-
                   <div class="message user pm6-chat-msg" data-pm6-role="user">
                     <div class="msg-body">
                       <div class="runtime-snapshot">v1.2.4 (Frozen) • default-persona</div>
                       I want recipe photos to stop looking terrible, and imports from blogs keep breaking.
-                      <div class="msg-controls">
+                    </div>
+                    <div class="msg-hover-row">
+                      <div class="msg-actions">
                         <button class="msg-control-btn" title="Copy" data-demo-action="demo.toast" data-demo-arg="Message copied to clipboard."><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="9" y="9" width="13" height="13" rx="2" ry="2"></rect><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"></path></svg></button>
                         <button class="msg-control-btn pm6-chat-disabled" title="Edit is only available on your most recent message — recovery: edit the newest message below." data-demo-action="demo.reason" data-demo-arg="already_done"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M11 4H4a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-7"></path><path d="M18.5 2.5a2.121 2.121 0 0 1 3 3L12 15l-4 1 1-4 9.5-9.5z"></path></svg></button>
+                      </div>
+                      <div class="msg-runtime-compact">
+                        <span>Agent</span><span class="sep">·</span><span>Claude</span><span class="sep">·</span><span>Sonnet 4.6</span><span class="sep">·</span><span>2:34 PM</span>
+                        <span class="info-icon" onclick="event.stopPropagation(); window.pm6ToggleRuntimePopover && window.pm6ToggleRuntimePopover(this)"><span style="font-size:10px; font-weight:700; font-style:italic; font-family:Georgia,serif;">i</span>
+                        <div class="msg-runtime-popover"><div class="popover-row"><span class="popover-label">Mode</span><span class="popover-value">Agent</span></div><div class="popover-row"><span class="popover-label">Provider</span><span class="popover-value">Claude</span></div><div class="popover-row"><span class="popover-label">Model</span><span class="popover-value">Sonnet 4.6</span></div><div class="popover-row"><span class="popover-label">Effort</span><span class="popover-value">High</span></div><div class="popover-row"><span class="popover-label">Persona</span><span class="popover-value">default</span></div><div class="popover-row"><span class="popover-label">Tokens</span><span class="popover-value">1,240</span></div><div class="popover-row"><span class="popover-label">Context</span><span class="popover-value">8.2k / 128k</span></div><div class="popover-row"><span class="popover-label">Est. Cost</span><span class="popover-value" style="color:var(--accent-orange);">$0.02</span></div></div></span>
                       </div>
                     </div>
                   </div>
@@ -44,8 +56,15 @@ window.PM6_CHAT_THREADS = {
                     <div class="msg-body">
                       <div class="runtime-snapshot">v1.2.5 (Current) • product-manager · Claude · Sonnet 4.6</div>
                       Both are structural: photos need an <b>image-processing package</b> (resize ladder + EXIF strip) and imports need a hardened worker with retries and sanitization. That is bigger than a chat patch — it spans the data model, the API, the frontend and deployment.
-                      <div class="msg-controls">
+                    </div>
+                    <div class="msg-hover-row">
+                      <div class="msg-actions">
                         <button class="msg-control-btn" title="Copy" data-demo-action="demo.toast" data-demo-arg="Message copied to clipboard."><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="9" y="9" width="13" height="13" rx="2" ry="2"></rect><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"></path></svg></button>
+                      </div>
+                      <div class="msg-runtime-compact">
+                        <span>Agent</span><span class="sep">·</span><span>Claude</span><span class="sep">·</span><span>Sonnet 4.6</span><span class="sep">·</span><span>12s</span>
+                        <span class="info-icon" onclick="event.stopPropagation(); window.pm6ToggleRuntimePopover && window.pm6ToggleRuntimePopover(this)"><span style="font-size:10px; font-weight:700; font-style:italic; font-family:Georgia,serif;">i</span>
+                        <div class="msg-runtime-popover"><div class="popover-row"><span class="popover-label">Mode</span><span class="popover-value">Agent</span></div><div class="popover-row"><span class="popover-label">Provider</span><span class="popover-value">Claude</span></div><div class="popover-row"><span class="popover-label">Model</span><span class="popover-value">Sonnet 4.6</span></div><div class="popover-row"><span class="popover-label">Effort</span><span class="popover-value">High</span></div><div class="popover-row"><span class="popover-label">Persona</span><span class="popover-value">product-manager</span></div><div class="popover-row"><span class="popover-label">Tokens</span><span class="popover-value">8,420</span></div><div class="popover-row"><span class="popover-label">Context</span><span class="popover-value">9.4k / 128k</span></div><div class="popover-row"><span class="popover-label">Est. Cost</span><span class="popover-value" style="color:var(--accent-orange);">$0.05</span></div></div></span>
                       </div>
                     </div>
                   </div>
@@ -66,6 +85,16 @@ window.PM6_CHAT_THREADS = {
                     <div class="msg-body">
                       <div class="runtime-snapshot">v1.2.5 (Current) • product-manager · Claude · Sonnet 4.6</div>
                       Before proposing scope I checked how recipe sites actually mark things up. 3 of 5 sources read; the full list is in the sources drawer.
+                    </div>
+                    <div class="msg-hover-row">
+                      <div class="msg-actions">
+                        <button class="msg-control-btn" title="Copy" data-demo-action="demo.toast" data-demo-arg="Message copied to clipboard."><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="9" y="9" width="13" height="13" rx="2" ry="2"></rect><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"></path></svg></button>
+                      </div>
+                      <div class="msg-runtime-compact">
+                        <span>Agent</span><span class="sep">·</span><span>Claude</span><span class="sep">·</span><span>Sonnet 4.6</span><span class="sep">·</span><span>4s</span>
+                        <span class="info-icon" onclick="event.stopPropagation(); window.pm6ToggleRuntimePopover && window.pm6ToggleRuntimePopover(this)"><span style="font-size:10px; font-weight:700; font-style:italic; font-family:Georgia,serif;">i</span>
+                        <div class="msg-runtime-popover"><div class="popover-row"><span class="popover-label">Mode</span><span class="popover-value">Agent</span></div><div class="popover-row"><span class="popover-label">Provider</span><span class="popover-value">Claude</span></div><div class="popover-row"><span class="popover-label">Model</span><span class="popover-value">Sonnet 4.6</span></div><div class="popover-row"><span class="popover-label">Effort</span><span class="popover-value">High</span></div><div class="popover-row"><span class="popover-label">Persona</span><span class="popover-value">product-manager</span></div><div class="popover-row"><span class="popover-label">Tokens</span><span class="popover-value">3,200</span></div><div class="popover-row"><span class="popover-label">Context</span><span class="popover-value">18.1k / 128k</span></div><div class="popover-row"><span class="popover-label">Est. Cost</span><span class="popover-value" style="color:var(--accent-orange);">$0.02</span></div></div></span>
+                      </div>
                     </div>
                   </div>
 
@@ -170,13 +199,13 @@ window.PM6_CHAT_THREADS = {
                     <div class="msg-body">
                       <div class="runtime-snapshot">v1.2.5 (Current) • product-manager · Claude · Sonnet 4.6</div>
                       While research runs, I asked a subagent to reproduce the import failure so we have evidence, not vibes:
-                      <div class="pm6-subagent-card">
+                      <div class="pm6-subagent-card" data-pm6-subagent-id="sa-test-sleuth">
                         <div class="pm6-subagent-row" onclick="this.parentElement.classList.toggle('expanded')">
                           <span class="pm6-subagent-status pm6-subagent-status-running"></span>
                           <span class="pm6-subagent-name">Test Sleuth</span>
                           <span class="pm6-subagent-task">reproduce import failure</span>
                           <span class="pm6-subagent-state">running · 38s</span>
-                          <span class="pm6-subagent-caret">▾</span>
+                          <span class="pm6-subagent-caret"><svg width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="6 9 12 15 18 9"></polyline></svg></span>
                         </div>
                         <div class="pm6-subagent-detail">
                           <div class="pm6-subagent-sec"><b>Work stream</b>
@@ -196,6 +225,16 @@ window.PM6_CHAT_THREADS = {
                         <span class="ft-file" data-demo-action="files.open" data-demo-arg="migrations/0001_init.sql" title="Open in editor">migrations/0001_init.sql <span class="ft-add">+6</span> <span class="ft-del">−0</span></span>
                       </div>
                     </div>
+                    <div class="msg-hover-row">
+                      <div class="msg-actions">
+                        <button class="msg-control-btn" title="Copy" data-demo-action="demo.toast" data-demo-arg="Message copied to clipboard."><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="9" y="9" width="13" height="13" rx="2" ry="2"></rect><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"></path></svg></button>
+                      </div>
+                      <div class="msg-runtime-compact">
+                        <span>Agent</span><span class="sep">·</span><span>Claude</span><span class="sep">·</span><span>Sonnet 4.6</span><span class="sep">·</span><span>20s</span>
+                        <span class="info-icon" onclick="event.stopPropagation(); window.pm6ToggleRuntimePopover && window.pm6ToggleRuntimePopover(this)"><span style="font-size:10px; font-weight:700; font-style:italic; font-family:Georgia,serif;">i</span>
+                        <div class="msg-runtime-popover"><div class="popover-row"><span class="popover-label">Mode</span><span class="popover-value">Agent</span></div><div class="popover-row"><span class="popover-label">Provider</span><span class="popover-value">Claude</span></div><div class="popover-row"><span class="popover-label">Model</span><span class="popover-value">Sonnet 4.6</span></div><div class="popover-row"><span class="popover-label">Effort</span><span class="popover-value">High</span></div><div class="popover-row"><span class="popover-label">Persona</span><span class="popover-value">product-manager</span></div><div class="popover-row"><span class="popover-label">Tokens</span><span class="popover-value">5,120</span></div><div class="popover-row"><span class="popover-label">Context</span><span class="popover-value">19.8k / 128k</span></div><div class="popover-row"><span class="popover-label">Est. Cost</span><span class="popover-value" style="color:var(--accent-orange);">$0.03</span></div></div></span>
+                      </div>
+                    </div>
                   </div>
 
                   <div class="pm6-chat-notice pm6-chat-notice-warn">
@@ -207,10 +246,17 @@ window.PM6_CHAT_THREADS = {
                     <div class="msg-body">
                       <div class="runtime-snapshot">v1.2.4 (Frozen) • default-persona</div>
                       Where should the resized images live long-term?
-                      <div class="msg-controls">
+                    </div>
+                    <div class="msg-hover-row">
+                      <div class="msg-actions">
                         <button class="msg-control-btn" title="Copy" data-demo-action="demo.toast" data-demo-arg="Message copied to clipboard."><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="9" y="9" width="13" height="13" rx="2" ry="2"></rect><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"></path></svg></button>
                         <button class="msg-control-btn" title="Edit — supersedes this message (tombstone kept)" data-demo-action="demo.toast" data-demo-arg="Edit soft-supersedes the turn — the original stays as a tombstone."><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M11 4H4a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-7"></path><path d="M18.5 2.5a2.121 2.121 0 0 1 3 3L12 15l-4 1 1-4 9.5-9.5z"></path></svg></button>
                         <button class="msg-control-btn" title="Resend" data-demo-action="demo.toast" data-demo-arg="Resent — the earlier turn is soft-superseded, never deleted."><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="23 4 23 10 17 10"></polyline><path d="M20.49 15a9 9 0 1 1-2.12-9.36L23 10"></path></svg></button>
+                      </div>
+                      <div class="msg-runtime-compact">
+                        <span>Agent</span><span class="sep">·</span><span>Claude</span><span class="sep">·</span><span>Sonnet 4.6</span><span class="sep">·</span><span>2:47 PM</span>
+                        <span class="info-icon" onclick="event.stopPropagation(); window.pm6ToggleRuntimePopover && window.pm6ToggleRuntimePopover(this)"><span style="font-size:10px; font-weight:700; font-style:italic; font-family:Georgia,serif;">i</span>
+                        <div class="msg-runtime-popover"><div class="popover-row"><span class="popover-label">Mode</span><span class="popover-value">Agent</span></div><div class="popover-row"><span class="popover-label">Provider</span><span class="popover-value">Claude</span></div><div class="popover-row"><span class="popover-label">Model</span><span class="popover-value">Sonnet 4.6</span></div><div class="popover-row"><span class="popover-label">Effort</span><span class="popover-value">High</span></div><div class="popover-row"><span class="popover-label">Persona</span><span class="popover-value">default</span></div><div class="popover-row"><span class="popover-label">Tokens</span><span class="popover-value">680</span></div><div class="popover-row"><span class="popover-label">Context</span><span class="popover-value">22.0k / 128k</span></div><div class="popover-row"><span class="popover-label">Est. Cost</span><span class="popover-value" style="color:var(--accent-orange);">$0.01</span></div></div></span>
                       </div>
                     </div>
                   </div>
@@ -219,8 +265,15 @@ window.PM6_CHAT_THREADS = {
                     <div class="msg-body">
                       <div class="runtime-snapshot">v1.2.5 (Current) • product-manager · Claude · Sonnet 4.6</div>
                       That is a product decision, so the wizard will ask you directly: <b>AWS S3</b>, <b>Cloudflare R2</b> or a <b>local volume</b>. R2 is the cheap default for image-heavy reads. Everything else I can resolve from evidence and record as assumptions.
-                      <div class="msg-controls">
+                    </div>
+                    <div class="msg-hover-row">
+                      <div class="msg-actions">
                         <button class="msg-control-btn" title="Copy" data-demo-action="demo.toast" data-demo-arg="Message copied to clipboard."><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="9" y="9" width="13" height="13" rx="2" ry="2"></rect><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"></path></svg></button>
+                      </div>
+                      <div class="msg-runtime-compact">
+                        <span>Agent</span><span class="sep">·</span><span>Claude</span><span class="sep">·</span><span>Sonnet 4.6</span><span class="sep">·</span><span>8s</span>
+                        <span class="info-icon" onclick="event.stopPropagation(); window.pm6ToggleRuntimePopover && window.pm6ToggleRuntimePopover(this)"><span style="font-size:10px; font-weight:700; font-style:italic; font-family:Georgia,serif;">i</span>
+                        <div class="msg-runtime-popover"><div class="popover-row"><span class="popover-label">Mode</span><span class="popover-value">Agent</span></div><div class="popover-row"><span class="popover-label">Provider</span><span class="popover-value">Claude</span></div><div class="popover-row"><span class="popover-label">Model</span><span class="popover-value">Sonnet 4.6</span></div><div class="popover-row"><span class="popover-label">Effort</span><span class="popover-value">High</span></div><div class="popover-row"><span class="popover-label">Persona</span><span class="popover-value">product-manager</span></div><div class="popover-row"><span class="popover-label">Tokens</span><span class="popover-value">1,840</span></div><div class="popover-row"><span class="popover-label">Context</span><span class="popover-value">22.6k / 128k</span></div><div class="popover-row"><span class="popover-label">Est. Cost</span><span class="popover-value" style="color:var(--accent-orange);">$0.02</span></div></div></span>
                       </div>
                     </div>
                   </div>
@@ -234,8 +287,7 @@ window.PM6_CHAT_THREADS = {
     status: 'draft',
     summaryHtml: 'Plan doc draft &middot; TODO 2/5 done<br>states: approved &middot; executing step 3',
     mode: 'deep-plan',
-    footer: { subagents: null, filesHtml: '<span class="ft-file" data-demo-action="files.open" data-demo-arg="PRD.md">PRD.md <span class="ft-add">+124</span> <span class="ft-del">−0</span></span>', problems: false },
-    suggestions: null,
+    footer: { subagents: null, files: [{ path: 'PRD.md', add: 124, del: 0 }], problems: false },
     composerChips: null,
     hoverActions: [
       '<button class="thread-action-btn" title="Open plan doc in editor" data-demo-action="files.open" data-demo-arg="PRD.md"><svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"></path><polyline points="14 2 14 8 20 8"></polyline></svg></button>'
@@ -245,14 +297,20 @@ window.PM6_CHAT_THREADS = {
   'thread-debug1': {
     id: 'thread-debug1',
     title: 'Debug: Login 401 Loop',
-    titleHtml: '<span style="width:6px; height:6px; border-radius:50%; background:var(--accent-orange); display:inline-block;"></span> Debug: Login 401 Loop',
     role: 'assistant',
     timestamp: '8m',
     status: 'working',
     summaryHtml: 'Debug investigation · evidence-first<br>Step: Root Cause &middot; DAP attached',
     mode: 'debug',
-    footer: { subagents: '1 active subagent', filesHtml: '<span class="ft-file">auth/token_refresh.rs <span class="ft-add">+0</span> <span class="ft-del">−0</span> (inspecting)</span>', problems: false },
-    suggestions: null,
+    footer: {
+      subagents: {
+        count: 1,
+        label: '1 active subagent',
+        items: [{ id: 'sa-debug-inspector', name: 'Debug Inspector', task: 'trace token refresh race', state: 'running', summary: 'Inspecting auth/token_refresh.rs' }]
+      },
+      files: [{ path: 'auth/token_refresh.rs', add: 0, del: 0, label: 'auth/token_refresh.rs (inspecting)' }],
+      problems: false
+    },
     composerChips: null,
     hoverActions: [
       '<button class="thread-action-btn" title="Promote investigation" data-demo-action="demo.toast" data-demo-arg="cmd.chat.debug_investigation.promote — investigation promoted to a tracked concern."><svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="18 15 12 9 6 15"></polyline></svg></button>',
@@ -322,8 +380,8 @@ window.PM6_CHAT_THREADS = {
     </div>
     <div class="msg-runtime-compact">
       <span style="color:var(--accent-orange);">Debug</span><span class="sep">&middot;</span><span>Claude</span><span class="sep">&middot;</span><span>Sonnet 4.6</span><span class="sep">&middot;</span><span>8m</span>
-      <span class="info-icon" onclick="this.nextElementSibling.classList.toggle('visible')"><span style="font-size:10px; font-weight:700; font-style:italic; font-family:Georgia,serif;">i</span></span>
-      <div class="msg-runtime-popover"><div class="popover-row"><span class="popover-label">Mode</span><span class="popover-value" style="color:var(--accent-orange);">Debug</span></div><div class="popover-row"><span class="popover-label">Provider</span><span class="popover-value">Claude</span></div><div class="popover-row"><span class="popover-label">Model</span><span class="popover-value">Sonnet 4.6</span></div><div class="popover-row"><span class="popover-label">Debug Profile</span><span class="popover-value">breakpoint-on-panic</span></div><div class="popover-row"><span class="popover-label">Stage</span><span class="popover-value">Root Cause Analysis</span></div><div class="popover-row"><span class="popover-label">Evidence Items</span><span class="popover-value">5</span></div><div class="popover-row"><span class="popover-label">Tokens</span><span class="popover-value">12,840</span></div><div class="popover-row"><span class="popover-label">Context</span><span class="popover-value">18.6k / 128k</span></div><div class="popover-row"><span class="popover-label">Est. Cost</span><span class="popover-value" style="color:var(--accent-orange);">$0.08</span></div></div>
+      <span class="info-icon" onclick="event.stopPropagation(); window.pm6ToggleRuntimePopover && window.pm6ToggleRuntimePopover(this)"><span style="font-size:10px; font-weight:700; font-style:italic; font-family:Georgia,serif;">i</span>
+      <div class="msg-runtime-popover"><div class="popover-row"><span class="popover-label">Mode</span><span class="popover-value" style="color:var(--accent-orange);">Debug</span></div><div class="popover-row"><span class="popover-label">Provider</span><span class="popover-value">Claude</span></div><div class="popover-row"><span class="popover-label">Model</span><span class="popover-value">Sonnet 4.6</span></div><div class="popover-row"><span class="popover-label">Debug Profile</span><span class="popover-value">breakpoint-on-panic</span></div><div class="popover-row"><span class="popover-label">Stage</span><span class="popover-value">Root Cause Analysis</span></div><div class="popover-row"><span class="popover-label">Evidence Items</span><span class="popover-value">5</span></div><div class="popover-row"><span class="popover-label">Tokens</span><span class="popover-value">12,840</span></div><div class="popover-row"><span class="popover-label">Context</span><span class="popover-value">18.6k / 128k</span></div><div class="popover-row"><span class="popover-label">Est. Cost</span><span class="popover-value" style="color:var(--accent-orange);">$0.08</span></div></div></span>
     </div>
   </div>
 </div>
@@ -347,8 +405,7 @@ window.PM6_CHAT_THREADS = {
     status: 'read',
     summaryHtml: 'Shell-first model · command cards · bottom runtime',
     mode: 'agent',
-    footer: { subagents: null, filesHtml: null, problems: true },
-    suggestions: null,
+    footer: { subagents: null, files: null, problems: true },
     composerChips: null,
     hoverActions: [
       '<button class="thread-action-btn" title="Archive" data-demo-action="demo.toast" data-demo-arg="Thread archived — restore it any time from History."><svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="21 8 21 21 3 21 3 8"></polyline><rect x="1" y="3" width="22" height="5"></rect><line x1="10" y1="12" x2="14" y2="12"></line></svg></button>'
@@ -363,8 +420,23 @@ window.PM6_CHAT_THREADS = {
     status: 'working',
     summaryHtml: '<svg class="thread-wt-glyph wt-clean" width="8" height="8" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" style="vertical-align:middle; margin-right:2px;"><line x1="6" y1="3" x2="6" y2="15"></line><circle cx="18" cy="6" r="3"></circle><circle cx="6" cy="18" r="3"></circle><path d="M18 9a9 9 0 0 1-9 9"></path></svg>3 subagents: OAuth2, session adapter, tests<br>feat/oauth2-pkce &middot; 2 running',
     mode: 'agent',
-    footer: { subagents: '3 active subagents', filesHtml: '<span class="ft-file">auth/oauth2.rs <span class="ft-add">+86</span> <span class="ft-del">−0</span></span><span class="ft-file">auth/session.rs <span class="ft-add">+24</span> <span class="ft-del">−8</span></span><span class="ft-file">auth/mod.rs <span class="ft-add">+12</span> <span class="ft-del">−3</span></span>', problems: false },
-    suggestions: null,
+    footer: {
+      subagents: {
+        count: 3,
+        label: '3 active subagents',
+        items: [
+          { id: 'sa-oauth2', name: 'OAuth2 Specialist', task: 'Implement PKCE flow in auth/oauth2.rs', state: 'running', summary: 'PKCE challenge generation and token exchange' },
+          { id: 'sa-session-migrator', name: 'Session Migrator', task: 'Create backward-compatible session adapter', state: 'running', summary: 'SessionAdapter wrapping both auth providers' },
+          { id: 'sa-test-writer', name: 'Test Writer', task: 'Write integration tests for dual auth pathways', state: 'queued', summary: 'Waiting for OAuth2 and session workstreams' }
+        ]
+      },
+      files: [
+        { path: 'auth/oauth2.rs', add: 86, del: 0 },
+        { path: 'auth/session.rs', add: 24, del: 8 },
+        { path: 'auth/mod.rs', add: 12, del: 3 }
+      ],
+      problems: false
+    },
     composerChips: null,
     hoverActions: [
       '<button class="thread-action-btn" title="Archive" data-demo-action="demo.toast" data-demo-arg="Thread archived — restore it any time from History."><svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="21 8 21 21 3 21 3 8"></polyline><rect x="1" y="3" width="22" height="5"></rect><line x1="10" y1="12" x2="14" y2="12"></line></svg></button>'
@@ -372,6 +444,7 @@ window.PM6_CHAT_THREADS = {
     streamHtml: `
 <div class="message user">
   <div class="msg-body">Refactor the auth module to support OAuth2 PKCE flow alongside the existing session-based auth. Keep backward compatibility.</div>
+  <div class="msg-hover-row"><div class="msg-actions"><button class="msg-control-btn" title="Copy" data-demo-action="demo.toast" data-demo-arg="Message copied to clipboard."><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="9" y="9" width="13" height="13" rx="2" ry="2"></rect><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"></path></svg></button><button class="msg-control-btn" title="Edit" data-demo-action="demo.toast" data-demo-arg="Edit this message."><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M11 4H4a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-7"></path><path d="M18.5 2.5a2.121 2.121 0 0 1 3 3L12 15l-4 1 1-4 9.5-9.5z"></path></svg></button><button class="msg-control-btn" title="Resend" data-demo-action="demo.toast" data-demo-arg="Resending this message..."><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="23 4 23 10 17 10"></polyline><path d="M20.49 15a9 9 0 1 1-2.12-9.36L23 10"></path></svg></button></div><div class="msg-runtime-compact"><span>Agent</span><span class="sep">·</span><span>Claude</span><span class="sep">·</span><span>Sonnet 4.6</span><span class="sep">·</span><span>1:12 PM</span><span class="info-icon" onclick="event.stopPropagation(); window.pm6ToggleRuntimePopover && window.pm6ToggleRuntimePopover(this)"><span style="font-size:10px; font-weight:700; font-style:italic; font-family:Georgia,serif;">i</span><div class="msg-runtime-popover"><div class="popover-row"><span class="popover-label">Mode</span><span class="popover-value">Agent</span></div><div class="popover-row"><span class="popover-label">Provider</span><span class="popover-value">Claude</span></div><div class="popover-row"><span class="popover-label">Model</span><span class="popover-value">Sonnet 4.6</span></div><div class="popover-row"><span class="popover-label">Effort</span><span class="popover-value">High</span></div><div class="popover-row"><span class="popover-label">Persona</span><span class="popover-value">default</span></div><div class="popover-row"><span class="popover-label">Tokens</span><span class="popover-value">920</span></div><div class="popover-row"><span class="popover-label">Context</span><span class="popover-value">4.1k / 128k</span></div><div class="popover-row"><span class="popover-label">Est. Cost</span><span class="popover-value" style="color:var(--accent-orange);">$0.01</span></div></div></span></div></div>
 </div>
 
 <div class="message assistant">
@@ -387,7 +460,7 @@ window.PM6_CHAT_THREADS = {
   </div>
 
   <!-- Subagent 1: OAuth2 Specialist (expanded, running) -->
-  <div class="subagent-card expanded" data-sa-id='sa-oauth2'>
+  <div class="subagent-card expanded" data-sa-id='sa-oauth2' data-pm6-subagent-id="sa-oauth2">
     <div class="subagent-card-header" onclick="this.closest('.subagent-card').classList.toggle('expanded')">
       <span class="sa-chevron">&#9656;</span>
       <span class="sa-persona-label" style="color:var(--accent-blue);">OAuth2 Specialist</span>
@@ -430,7 +503,7 @@ window.PM6_CHAT_THREADS = {
   </div>
 
   <!-- Subagent 2: Session Migrator (collapsed, running) -->
-  <div class="subagent-card" data-sa-id='sa-session-migrator'>
+  <div class="subagent-card" data-sa-id='sa-session-migrator' data-pm6-subagent-id="sa-session-migrator">
     <div class="subagent-card-header" onclick="this.closest('.subagent-card').classList.toggle('expanded')">
       <span class="sa-chevron">&#9656;</span>
       <span class="sa-persona-label" style="color:var(--accent-lime);">Session Migrator</span>
@@ -457,7 +530,7 @@ window.PM6_CHAT_THREADS = {
   </div>
 
   <!-- Subagent 3: Test Writer (collapsed, queued) -->
-  <div class="subagent-card" data-sa-id='sa-test-writer'>
+  <div class="subagent-card" data-sa-id='sa-test-writer' data-pm6-subagent-id="sa-test-writer">
     <div class="subagent-card-header" onclick="this.closest('.subagent-card').classList.toggle('expanded')">
       <span class="sa-chevron">&#9656;</span>
       <span class="sa-persona-label" style="color:var(--accent-magenta);">Test Writer</span>
@@ -482,8 +555,8 @@ window.PM6_CHAT_THREADS = {
     </div>
     <div class="msg-runtime-compact">
       <span>Agent</span><span class="sep">&middot;</span><span>Claude</span><span class="sep">&middot;</span><span>Opus 4</span><span class="sep">&middot;</span><span>1m 42s</span>
-      <span class="info-icon" onclick="this.nextElementSibling.classList.toggle('visible')"><span style="font-size:10px; font-weight:700; font-style:italic; font-family:Georgia,serif;">i</span></span>
-      <div class="msg-runtime-popover"><div class="popover-row"><span class="popover-label">Mode</span><span class="popover-value">Agent</span></div><div class="popover-row"><span class="popover-label">Subagents</span><span class="popover-value">3 (2 running, 1 queued)</span></div><div class="popover-row"><span class="popover-label">Tokens</span><span class="popover-value">28,400</span></div><div class="popover-row"><span class="popover-label">Context</span><span class="popover-value">42.1k / 200k</span></div><div class="popover-row"><span class="popover-label">Est. Cost</span><span class="popover-value">$0.24</span></div></div>
+      <span class="info-icon" onclick="event.stopPropagation(); window.pm6ToggleRuntimePopover && window.pm6ToggleRuntimePopover(this)"><span style="font-size:10px; font-weight:700; font-style:italic; font-family:Georgia,serif;">i</span>
+      <div class="msg-runtime-popover"><div class="popover-row"><span class="popover-label">Mode</span><span class="popover-value">Agent</span></div><div class="popover-row"><span class="popover-label">Subagents</span><span class="popover-value">3 (2 running, 1 queued)</span></div><div class="popover-row"><span class="popover-label">Tokens</span><span class="popover-value">28,400</span></div><div class="popover-row"><span class="popover-label">Context</span><span class="popover-value">42.1k / 200k</span></div><div class="popover-row"><span class="popover-label">Est. Cost</span><span class="popover-value">$0.24</span></div></div></span>
     </div>
   </div>
 </div>
@@ -497,8 +570,15 @@ window.PM6_CHAT_THREADS = {
     status: 'working',
     summaryHtml: '3-model crew deliberation<br>Architect + Security + API &middot; consensus reached',
     mode: 'agent',
-    footer: { subagents: '3 crew members active', filesHtml: null, problems: false },
-    suggestions: null,
+    footer: {
+      subagents: { count: 3, label: '3 crew members active', items: [
+        { id: 'sa-crew-architect', name: 'Lead Architect', task: 'API structure review', state: 'running', summary: 'Crew deliberation — workspace CRUD endpoints' },
+        { id: 'sa-crew-security', name: 'Security Expert', task: 'RBAC threat model', state: 'running', summary: 'Tenant isolation and role boundaries' },
+        { id: 'sa-crew-api', name: 'API Specialist', task: 'REST contract polish', state: 'running', summary: 'Pagination and versioning recommendations' }
+      ]},
+      files: null,
+      problems: false
+    },
     composerChips: null,
     hoverActions: [
       '<button class="thread-action-btn" title="Archive" data-demo-action="demo.toast" data-demo-arg="Thread archived — restore it any time from History."><svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="21 8 21 21 3 21 3 8"></polyline><rect x="1" y="3" width="22" height="5"></rect><line x1="10" y1="12" x2="14" y2="12"></line></svg></button>'
@@ -527,6 +607,7 @@ window.PM6_CHAT_THREADS = {
 
 <div class="message user">
   <div class="msg-body">Design the REST API for our multi-tenant workspace management. We need endpoints for workspace CRUD, member management, and role-based access control.</div>
+  <div class="msg-hover-row"><div class="msg-actions"><button class="msg-control-btn" title="Copy" data-demo-action="demo.toast" data-demo-arg="Message copied to clipboard."><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="9" y="9" width="13" height="13" rx="2" ry="2"></rect><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"></path></svg></button><button class="msg-control-btn" title="Edit" data-demo-action="demo.toast" data-demo-arg="Edit this message."><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M11 4H4a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-7"></path><path d="M18.5 2.5a2.121 2.121 0 0 1 3 3L12 15l-4 1 1-4 9.5-9.5z"></path></svg></button><button class="msg-control-btn" title="Resend" data-demo-action="demo.toast" data-demo-arg="Resending this message..."><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="23 4 23 10 17 10"></polyline><path d="M20.49 15a9 9 0 1 1-2.12-9.36L23 10"></path></svg></button></div><div class="msg-runtime-compact"><span>Agent</span><span class="sep">·</span><span>Claude</span><span class="sep">·</span><span>Sonnet 4.6</span><span class="sep">·</span><span>3:45 PM</span><span class="info-icon" onclick="event.stopPropagation(); window.pm6ToggleRuntimePopover && window.pm6ToggleRuntimePopover(this)"><span style="font-size:10px; font-weight:700; font-style:italic; font-family:Georgia,serif;">i</span><div class="msg-runtime-popover"><div class="popover-row"><span class="popover-label">Mode</span><span class="popover-value">Agent</span></div><div class="popover-row"><span class="popover-label">Provider</span><span class="popover-value">Claude</span></div><div class="popover-row"><span class="popover-label">Model</span><span class="popover-value">Sonnet 4.6</span></div><div class="popover-row"><span class="popover-label">Effort</span><span class="popover-value">High</span></div><div class="popover-row"><span class="popover-label">Persona</span><span class="popover-value">architect-reviewer</span></div><div class="popover-row"><span class="popover-label">Tokens</span><span class="popover-value">1,480</span></div><div class="popover-row"><span class="popover-label">Context</span><span class="popover-value">6.8k / 128k</span></div><div class="popover-row"><span class="popover-label">Est. Cost</span><span class="popover-value" style="color:var(--accent-orange);">$0.02</span></div></div></span></div></div>
 </div>
 
 <div class="message assistant">
@@ -546,7 +627,7 @@ window.PM6_CHAT_THREADS = {
       <div class="sa-crew-msg from-architect">
         <div style="font-weight:600; font-size:10px; margin-bottom:4px; color:var(--accent-blue);">Lead Architect</div>
         I propose a resource-oriented REST design. Top-level resource is <code>/v1/workspaces</code>, with nested sub-resources for members and roles:
-        <div style="margin:6px 0; padding:6px 8px; background:var(--surface); border-radius:var(--border-radius); font-family:var(--font-mono); font-size:10px; white-space:pre;">GET    /v1/workspaces
+        <div class="pm6-preblock" style="margin:6px 0; padding:6px 8px; background:var(--surface); border-radius:var(--border-radius); font-family:var(--font-mono); font-size:10px">GET    /v1/workspaces
 POST   /v1/workspaces
 GET    /v1/workspaces/{id}
 PATCH  /v1/workspaces/{id}
@@ -560,7 +641,7 @@ DELETE /v1/workspaces/{id}/members/{uid}</div>
       <div class="sa-crew-msg from-security">
         <div style="font-weight:600; font-size:10px; margin-bottom:4px; color:var(--accent-magenta);">Security Expert</div>
         RBAC needs scoped tokens. I recommend workspace-level JWTs with embedded role claims rather than API keys for member management. The token payload should include:
-        <div style="margin:6px 0; padding:6px 8px; background:var(--surface); border-radius:var(--border-radius); font-family:var(--font-mono); font-size:10px; white-space:pre;">{ "sub": "user_id",
+        <div class="pm6-preblock" style="margin:6px 0; padding:6px 8px; background:var(--surface); border-radius:var(--border-radius); font-family:var(--font-mono); font-size:10px">{ "sub": "user_id",
   "wid": "workspace_id",
   "role": "admin|editor|viewer",
   "scope": ["ws:read","ws:write","members:manage"] }</div>
@@ -570,7 +651,7 @@ DELETE /v1/workspaces/{id}/members/{uid}</div>
       <div class="sa-crew-msg from-api">
         <div style="font-weight:600; font-size:10px; margin-bottom:4px; color:var(--accent-lime);">API Specialist</div>
         Agreed on resource structure. For pagination, I strongly recommend cursor-based over offset-based &mdash; workspace member lists can grow large and offset pagination breaks with concurrent writes. Proposed response envelope:
-        <div style="margin:6px 0; padding:6px 8px; background:var(--surface); border-radius:var(--border-radius); font-family:var(--font-mono); font-size:10px; white-space:pre;">{ "data": [...],
+        <div class="pm6-preblock" style="margin:6px 0; padding:6px 8px; background:var(--surface); border-radius:var(--border-radius); font-family:var(--font-mono); font-size:10px">{ "data": [...],
   "cursor": { "next": "eyJ...", "has_more": true },
   "meta": { "total_estimate": 1284 } }</div>
         Rate limiting should be per-workspace, not per-user. Suggest <code>X-RateLimit-Workspace</code> headers.
@@ -602,8 +683,8 @@ DELETE /v1/workspaces/{id}/members/{uid}</div>
     </div>
     <div class="msg-runtime-compact">
       <span>Crew</span><span class="sep">&middot;</span><span>3 models</span><span class="sep">&middot;</span><span>2m 18s</span>
-      <span class="info-icon" onclick="this.nextElementSibling.classList.toggle('visible')"><span style="font-size:10px; font-weight:700; font-style:italic; font-family:Georgia,serif;">i</span></span>
-      <div class="msg-runtime-popover"><div class="popover-row"><span class="popover-label">Mode</span><span class="popover-value">Crew</span></div><div class="popover-row"><span class="popover-label">Members</span><span class="popover-value">3</span></div><div class="popover-row"><span class="popover-label">Debate Rounds</span><span class="popover-value">4</span></div><div class="popover-row"><span class="popover-label">Consensus</span><span class="popover-value" style="color:var(--accent-lime);">Reached</span></div><div class="popover-row"><span class="popover-label">Tokens</span><span class="popover-value">34,200</span></div><div class="popover-row"><span class="popover-label">Est. Cost</span><span class="popover-value">$0.41</span></div></div>
+      <span class="info-icon" onclick="event.stopPropagation(); window.pm6ToggleRuntimePopover && window.pm6ToggleRuntimePopover(this)"><span style="font-size:10px; font-weight:700; font-style:italic; font-family:Georgia,serif;">i</span>
+      <div class="msg-runtime-popover"><div class="popover-row"><span class="popover-label">Mode</span><span class="popover-value">Crew</span></div><div class="popover-row"><span class="popover-label">Members</span><span class="popover-value">3</span></div><div class="popover-row"><span class="popover-label">Debate Rounds</span><span class="popover-value">4</span></div><div class="popover-row"><span class="popover-label">Consensus</span><span class="popover-value" style="color:var(--accent-lime);">Reached</span></div><div class="popover-row"><span class="popover-label">Tokens</span><span class="popover-value">34,200</span></div><div class="popover-row"><span class="popover-label">Est. Cost</span><span class="popover-value">$0.41</span></div></div></span>
     </div>
   </div>
 </div>
@@ -617,8 +698,14 @@ DELETE /v1/workspaces/{id}/members/{uid}</div>
     status: 'working',
     summaryHtml: '25 subagents: 8 done, 11 running, 2 failed<br>~2 min remaining',
     mode: 'agent',
-    footer: { subagents: '25 subagents (11 running)', filesHtml: '<span class="ft-file">tests/**/*.rs (read-only analysis)</span>', problems: false },
-    suggestions: null,
+    footer: {
+      subagents: { count: 25, label: '25 subagents (11 running)', items: [
+        { id: 'sa-webhook-tests', name: 'webhook_tests', task: 'integration module', state: 'running', summary: 'Parallel test execution' },
+        { id: 'sa-realtime-tests', name: 'realtime_tests', task: 'integration module', state: 'failed', summary: 'Connection refused — needs retry' }
+      ]},
+      files: [{ path: 'tests/**/*.rs', add: null, del: null, label: 'tests/**/*.rs (read-only analysis)' }],
+      problems: false
+    },
     composerChips: null,
     hoverActions: [
       '<button class="thread-action-btn" title="Archive" data-demo-action="demo.toast" data-demo-arg="Thread archived — restore it any time from History."><svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="21 8 21 21 3 21 3 8"></polyline><rect x="1" y="3" width="22" height="5"></rect><line x1="10" y1="12" x2="14" y2="12"></line></svg></button>'
@@ -626,6 +713,7 @@ DELETE /v1/workspaces/{id}/members/{uid}</div>
     streamHtml: `
 <div class="message user">
   <div class="msg-body">Run the full integration test suite in parallel. Each test module should get its own subagent.</div>
+  <div class="msg-hover-row"><div class="msg-actions"><button class="msg-control-btn" title="Copy" data-demo-action="demo.toast" data-demo-arg="Message copied to clipboard."><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="9" y="9" width="13" height="13" rx="2" ry="2"></rect><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"></path></svg></button><button class="msg-control-btn" title="Edit" data-demo-action="demo.toast" data-demo-arg="Edit this message."><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M11 4H4a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-7"></path><path d="M18.5 2.5a2.121 2.121 0 0 1 3 3L12 15l-4 1 1-4 9.5-9.5z"></path></svg></button><button class="msg-control-btn" title="Resend" data-demo-action="demo.toast" data-demo-arg="Resending this message..."><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="23 4 23 10 17 10"></polyline><path d="M20.49 15a9 9 0 1 1-2.12-9.36L23 10"></path></svg></button></div><div class="msg-runtime-compact"><span>Agent</span><span class="sep">·</span><span>Claude</span><span class="sep">·</span><span>Sonnet 4.6</span><span class="sep">·</span><span>4:02 PM</span><span class="info-icon" onclick="event.stopPropagation(); window.pm6ToggleRuntimePopover && window.pm6ToggleRuntimePopover(this)"><span style="font-size:10px; font-weight:700; font-style:italic; font-family:Georgia,serif;">i</span><div class="msg-runtime-popover"><div class="popover-row"><span class="popover-label">Mode</span><span class="popover-value">Agent</span></div><div class="popover-row"><span class="popover-label">Provider</span><span class="popover-value">Claude</span></div><div class="popover-row"><span class="popover-label">Model</span><span class="popover-value">Sonnet 4.6</span></div><div class="popover-row"><span class="popover-label">Effort</span><span class="popover-value">High</span></div><div class="popover-row"><span class="popover-label">Persona</span><span class="popover-value">rust-engineer</span></div><div class="popover-row"><span class="popover-label">Tokens</span><span class="popover-value">640</span></div><div class="popover-row"><span class="popover-label">Context</span><span class="popover-value">3.2k / 128k</span></div><div class="popover-row"><span class="popover-label">Est. Cost</span><span class="popover-value" style="color:var(--accent-orange);">$0.01</span></div></div></span></div></div>
 </div>
 
 <div class="message assistant">
@@ -789,8 +877,8 @@ DELETE /v1/workspaces/{id}/members/{uid}</div>
     </div>
     <div class="msg-runtime-compact">
       <span>Agent</span><span class="sep">&middot;</span><span>Claude</span><span class="sep">&middot;</span><span>Opus 4</span><span class="sep">&middot;</span><span>3m 45s</span>
-      <span class="info-icon" onclick="this.nextElementSibling.classList.toggle('visible')"><span style="font-size:10px; font-weight:700; font-style:italic; font-family:Georgia,serif;">i</span></span>
-      <div class="msg-runtime-popover"><div class="popover-row"><span class="popover-label">Mode</span><span class="popover-value">Agent (Batch)</span></div><div class="popover-row"><span class="popover-label">Subagents</span><span class="popover-value">25 total</span></div><div class="popover-row"><span class="popover-label">Running</span><span class="popover-value">11</span></div><div class="popover-row"><span class="popover-label">Failed</span><span class="popover-value" style="color:var(--accent-error);">2</span></div><div class="popover-row"><span class="popover-label">Tokens</span><span class="popover-value">86,400</span></div><div class="popover-row"><span class="popover-label">Est. Cost</span><span class="popover-value">$0.92</span></div></div>
+      <span class="info-icon" onclick="event.stopPropagation(); window.pm6ToggleRuntimePopover && window.pm6ToggleRuntimePopover(this)"><span style="font-size:10px; font-weight:700; font-style:italic; font-family:Georgia,serif;">i</span>
+      <div class="msg-runtime-popover"><div class="popover-row"><span class="popover-label">Mode</span><span class="popover-value">Agent (Batch)</span></div><div class="popover-row"><span class="popover-label">Subagents</span><span class="popover-value">25 total</span></div><div class="popover-row"><span class="popover-label">Running</span><span class="popover-value">11</span></div><div class="popover-row"><span class="popover-label">Failed</span><span class="popover-value" style="color:var(--accent-error);">2</span></div><div class="popover-row"><span class="popover-label">Tokens</span><span class="popover-value">86,400</span></div><div class="popover-row"><span class="popover-label">Est. Cost</span><span class="popover-value">$0.92</span></div></div></span>
     </div>
   </div>
 </div>
@@ -804,8 +892,15 @@ DELETE /v1/workspaces/{id}/members/{uid}</div>
     status: 'unread',
     summaryHtml: '<svg class="thread-wt-glyph wt-dirty" width="8" height="8" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" style="vertical-align:middle; margin-right:2px;"><line x1="6" y1="3" x2="6" y2="15"></line><circle cx="18" cy="6" r="3"></circle><circle cx="6" cy="18" r="3"></circle><path d="M18 9a9 9 0 0 1-9 9"></path></svg>Merge pending &middot; 1 test failing<br>feat/multi-tenant &middot; squash to main',
     mode: 'agent',
-    footer: { subagents: null, filesHtml: '<span class="ft-file">migrations/20260318_tenants.sql <span class="ft-add">+54</span> <span class="ft-del">−0</span></span><span class="ft-file">src/tenant/mod.rs <span class="ft-add">+38</span> <span class="ft-del">−4</span></span><span class="ft-file">src/tenant/rls.rs <span class="ft-add">+38</span> <span class="ft-del">−0</span></span>', problems: false },
-    suggestions: null,
+    footer: {
+      subagents: null,
+      files: [
+        { path: 'migrations/20260318_tenants.sql', add: 54, del: 0 },
+        { path: 'src/tenant/mod.rs', add: 38, del: 4 },
+        { path: 'src/tenant/rls.rs', add: 38, del: 0 }
+      ],
+      problems: false
+    },
     composerChips: null,
     hoverActions: [
       '<button class="thread-action-btn" title="Archive" data-demo-action="demo.toast" data-demo-arg="Thread archived — restore it any time from History."><svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="21 8 21 21 3 21 3 8"></polyline><rect x="1" y="3" width="22" height="5"></rect><line x1="10" y1="12" x2="14" y2="12"></line></svg></button>',
@@ -814,6 +909,7 @@ DELETE /v1/workspaces/{id}/members/{uid}</div>
     streamHtml: `
 <div class="message user">
   <div class="msg-body">Implement the multi-tenant database schema migration with row-level security.</div>
+  <div class="msg-hover-row"><div class="msg-actions"><button class="msg-control-btn" title="Copy" data-demo-action="demo.toast" data-demo-arg="Message copied to clipboard."><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="9" y="9" width="13" height="13" rx="2" ry="2"></rect><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"></path></svg></button><button class="msg-control-btn" title="Edit" data-demo-action="demo.toast" data-demo-arg="Edit this message."><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M11 4H4a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-7"></path><path d="M18.5 2.5a2.121 2.121 0 0 1 3 3L12 15l-4 1 1-4 9.5-9.5z"></path></svg></button><button class="msg-control-btn" title="Resend" data-demo-action="demo.toast" data-demo-arg="Resending this message..."><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="23 4 23 10 17 10"></polyline><path d="M20.49 15a9 9 0 1 1-2.12-9.36L23 10"></path></svg></button></div><div class="msg-runtime-compact"><span>Agent</span><span class="sep">·</span><span>Claude</span><span class="sep">·</span><span>Sonnet 4.6</span><span class="sep">·</span><span>5:18 PM</span><span class="info-icon" onclick="event.stopPropagation(); window.pm6ToggleRuntimePopover && window.pm6ToggleRuntimePopover(this)"><span style="font-size:10px; font-weight:700; font-style:italic; font-family:Georgia,serif;">i</span><div class="msg-runtime-popover"><div class="popover-row"><span class="popover-label">Mode</span><span class="popover-value">Agent</span></div><div class="popover-row"><span class="popover-label">Provider</span><span class="popover-value">Claude</span></div><div class="popover-row"><span class="popover-label">Model</span><span class="popover-value">Sonnet 4.6</span></div><div class="popover-row"><span class="popover-label">Effort</span><span class="popover-value">High</span></div><div class="popover-row"><span class="popover-label">Persona</span><span class="popover-value">architect-reviewer</span></div><div class="popover-row"><span class="popover-label">Tokens</span><span class="popover-value">810</span></div><div class="popover-row"><span class="popover-label">Context</span><span class="popover-value">5.4k / 128k</span></div><div class="popover-row"><span class="popover-label">Est. Cost</span><span class="popover-value" style="color:var(--accent-orange);">$0.01</span></div></div></span></div></div>
 </div>
 
 <div class="message assistant">
@@ -902,8 +998,8 @@ policies for tenant isolation, and add migration script.</textarea>
     </div>
     <div class="msg-runtime-compact">
       <span>Agent</span><span class="sep">&middot;</span><span>Claude</span><span class="sep">&middot;</span><span>Opus 4</span><span class="sep">&middot;</span><span>4m 12s</span>
-      <span class="info-icon" onclick="this.nextElementSibling.classList.toggle('visible')"><span style="font-size:10px; font-weight:700; font-style:italic; font-family:Georgia,serif;">i</span></span>
-      <div class="msg-runtime-popover"><div class="popover-row"><span class="popover-label">Mode</span><span class="popover-value">Agent</span></div><div class="popover-row"><span class="popover-label">Worktree</span><span class="popover-value">feat/multi-tenant</span></div><div class="popover-row"><span class="popover-label">Merge Status</span><span class="popover-value" style="color:var(--accent-warning);">Tests Failing</span></div><div class="popover-row"><span class="popover-label">Tokens</span><span class="popover-value">22,100</span></div><div class="popover-row"><span class="popover-label">Est. Cost</span><span class="popover-value">$0.18</span></div></div>
+      <span class="info-icon" onclick="event.stopPropagation(); window.pm6ToggleRuntimePopover && window.pm6ToggleRuntimePopover(this)"><span style="font-size:10px; font-weight:700; font-style:italic; font-family:Georgia,serif;">i</span>
+      <div class="msg-runtime-popover"><div class="popover-row"><span class="popover-label">Mode</span><span class="popover-value">Agent</span></div><div class="popover-row"><span class="popover-label">Worktree</span><span class="popover-value">feat/multi-tenant</span></div><div class="popover-row"><span class="popover-label">Merge Status</span><span class="popover-value" style="color:var(--accent-warning);">Tests Failing</span></div><div class="popover-row"><span class="popover-label">Tokens</span><span class="popover-value">22,100</span></div><div class="popover-row"><span class="popover-label">Est. Cost</span><span class="popover-value">$0.18</span></div></div></span>
     </div>
   </div>
 </div>
@@ -917,8 +1013,21 @@ policies for tenant isolation, and add migration script.</textarea>
     status: 'unread',
     summaryHtml: '<svg class="thread-wt-glyph wt-clean" width="8" height="8" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" style="vertical-align:middle; margin-right:2px;"><line x1="6" y1="3" x2="6" y2="15"></line><circle cx="18" cy="6" r="3"></circle><circle cx="6" cy="18" r="3"></circle><path d="M18 9a9 9 0 0 1-9 9"></path></svg>2 subagents: 1 awaiting, 1 blocked<br>perf/analytics-opt &middot; needs guidance',
     mode: 'agent',
-    footer: { subagents: '2 subagents (0 running)', filesHtml: '<span class="ft-file">src/analytics/queries.rs <span class="ft-add">+0</span> <span class="ft-del">−0</span></span><span class="ft-file">src/analytics/schema.rs <span class="ft-add">+0</span> <span class="ft-del">−0</span></span>', problems: false },
-    suggestions: null,
+    footer: {
+      subagents: {
+        count: 2,
+        label: '2 subagents (0 running)',
+        items: [
+          { id: 'sa-query-analyzer', name: 'Query Analyzer', task: 'profile slow analytics queries', state: 'awaiting', summary: 'Needs guidance on acceptable index tradeoffs' },
+          { id: 'sa-schema-reviewer', name: 'Schema Reviewer', task: 'review analytics schema', state: 'blocked', summary: 'Blocked on migration_tests completion' }
+        ]
+      },
+      files: [
+        { path: 'src/analytics/queries.rs', add: 0, del: 0 },
+        { path: 'src/analytics/schema.rs', add: 0, del: 0 }
+      ],
+      problems: false
+    },
     composerChips: null,
     hoverActions: [
       '<button class="thread-action-btn" title="Archive" data-demo-action="demo.toast" data-demo-arg="Thread archived — restore it any time from History."><svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="21 8 21 21 3 21 3 8"></polyline><rect x="1" y="3" width="22" height="5"></rect><line x1="10" y1="12" x2="14" y2="12"></line></svg></button>',
@@ -927,6 +1036,7 @@ policies for tenant isolation, and add migration script.</textarea>
     streamHtml: `
 <div class="message user">
   <div class="msg-body">Optimize the slow queries in the analytics dashboard. The P95 latency is 4.2s, target is under 500ms.</div>
+  <div class="msg-hover-row"><div class="msg-actions"><button class="msg-control-btn" title="Copy" data-demo-action="demo.toast" data-demo-arg="Message copied to clipboard."><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="9" y="9" width="13" height="13" rx="2" ry="2"></rect><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"></path></svg></button><button class="msg-control-btn" title="Edit" data-demo-action="demo.toast" data-demo-arg="Edit this message."><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M11 4H4a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-7"></path><path d="M18.5 2.5a2.121 2.121 0 0 1 3 3L12 15l-4 1 1-4 9.5-9.5z"></path></svg></button><button class="msg-control-btn" title="Resend" data-demo-action="demo.toast" data-demo-arg="Resending this message..."><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="23 4 23 10 17 10"></polyline><path d="M20.49 15a9 9 0 1 1-2.12-9.36L23 10"></path></svg></button></div><div class="msg-runtime-compact"><span>Agent</span><span class="sep">·</span><span>Claude</span><span class="sep">·</span><span>Sonnet 4.6</span><span class="sep">·</span><span>5:51 PM</span><span class="info-icon" onclick="event.stopPropagation(); window.pm6ToggleRuntimePopover && window.pm6ToggleRuntimePopover(this)"><span style="font-size:10px; font-weight:700; font-style:italic; font-family:Georgia,serif;">i</span><div class="msg-runtime-popover"><div class="popover-row"><span class="popover-label">Mode</span><span class="popover-value">Agent</span></div><div class="popover-row"><span class="popover-label">Provider</span><span class="popover-value">Claude</span></div><div class="popover-row"><span class="popover-label">Model</span><span class="popover-value">Sonnet 4.6</span></div><div class="popover-row"><span class="popover-label">Effort</span><span class="popover-value">High</span></div><div class="popover-row"><span class="popover-label">Persona</span><span class="popover-value">rust-engineer</span></div><div class="popover-row"><span class="popover-label">Tokens</span><span class="popover-value">720</span></div><div class="popover-row"><span class="popover-label">Context</span><span class="popover-value">3.8k / 128k</span></div><div class="popover-row"><span class="popover-label">Est. Cost</span><span class="popover-value" style="color:var(--accent-orange);">$0.01</span></div></div></span></div></div>
 </div>
 
 <div class="message assistant">
@@ -942,7 +1052,7 @@ policies for tenant isolation, and add migration script.</textarea>
   </div>
 
   <!-- Subagent 1: Query Analyzer (awaiting parent) -->
-  <div class="subagent-card expanded" data-sa-id='sa-query-analyzer'>
+  <div class="subagent-card expanded" data-sa-id='sa-query-analyzer' data-pm6-subagent-id="sa-query-analyzer">
     <div class="subagent-card-header" onclick="this.closest('.subagent-card').classList.toggle('expanded')">
       <span class="sa-chevron">&#9656;</span>
       <span class="sa-persona-label" style="color:var(--accent-orange);">Query Analyzer</span>
@@ -981,7 +1091,7 @@ policies for tenant isolation, and add migration script.</textarea>
   </div>
 
   <!-- Subagent 2: Schema Reviewer (blocked) -->
-  <div class="subagent-card expanded" data-sa-id='sa-schema-reviewer'>
+  <div class="subagent-card expanded" data-sa-id='sa-schema-reviewer' data-pm6-subagent-id="sa-schema-reviewer">
     <div class="subagent-card-header" onclick="this.closest('.subagent-card').classList.toggle('expanded')">
       <span class="sa-chevron">&#9656;</span>
       <span class="sa-persona-label" style="color:var(--accent-error);">Schema Reviewer</span>
@@ -1029,8 +1139,8 @@ policies for tenant isolation, and add migration script.</textarea>
     </div>
     <div class="msg-runtime-compact">
       <span>Agent</span><span class="sep">&middot;</span><span>Claude</span><span class="sep">&middot;</span><span>Opus 4</span><span class="sep">&middot;</span><span>2m 06s</span>
-      <span class="info-icon" onclick="this.nextElementSibling.classList.toggle('visible')"><span style="font-size:10px; font-weight:700; font-style:italic; font-family:Georgia,serif;">i</span></span>
-      <div class="msg-runtime-popover"><div class="popover-row"><span class="popover-label">Mode</span><span class="popover-value">Agent</span></div><div class="popover-row"><span class="popover-label">Subagents</span><span class="popover-value">2 (0 running)</span></div><div class="popover-row"><span class="popover-label">Escalations</span><span class="popover-value" style="color:var(--accent-warning);">1 awaiting</span></div><div class="popover-row"><span class="popover-label">Blocks</span><span class="popover-value" style="color:var(--accent-error);">1 policy</span></div><div class="popover-row"><span class="popover-label">Tokens</span><span class="popover-value">18,600</span></div><div class="popover-row"><span class="popover-label">Est. Cost</span><span class="popover-value">$0.16</span></div></div>
+      <span class="info-icon" onclick="event.stopPropagation(); window.pm6ToggleRuntimePopover && window.pm6ToggleRuntimePopover(this)"><span style="font-size:10px; font-weight:700; font-style:italic; font-family:Georgia,serif;">i</span>
+      <div class="msg-runtime-popover"><div class="popover-row"><span class="popover-label">Mode</span><span class="popover-value">Agent</span></div><div class="popover-row"><span class="popover-label">Subagents</span><span class="popover-value">2 (0 running)</span></div><div class="popover-row"><span class="popover-label">Escalations</span><span class="popover-value" style="color:var(--accent-warning);">1 awaiting</span></div><div class="popover-row"><span class="popover-label">Blocks</span><span class="popover-value" style="color:var(--accent-error);">1 policy</span></div><div class="popover-row"><span class="popover-label">Tokens</span><span class="popover-value">18,600</span></div><div class="popover-row"><span class="popover-label">Est. Cost</span><span class="popover-value">$0.16</span></div></div></span>
     </div>
   </div>
 </div>

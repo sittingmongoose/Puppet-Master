@@ -1,0 +1,76 @@
+/* ============================================================================
+   Kimi K3 — Context Lens styles (window.K3Lens). Token-driven only.
+   Two pieces: the header button (.k3l-button, rides .k3-icon-btn) and the
+   slim selection-mode banner (.k3l-banner) windows place above the
+   transcript slot. Active states use background tint + accent text — no
+   colored side borders. Transitions collapse under the global data-motion
+   reduced contract (motion.css).
+   ========================================================================== */
+
+/* ---- header button -------------------------------------------------------- */
+/* .is-on = the active thread has applied shaping; persistent accent tint
+   (the base .k3-icon-btn hover rule already supplies the same tint) */
+.k3l-button.is-on {
+  color: var(--accent-primary);
+  background: var(--accent-soft);
+}
+.k3l-button.is-on:hover:not(:disabled) {
+  background: var(--accent-glow);
+  color: var(--accent-primary);
+}
+
+/* ---- selection-mode banner ------------------------------------------------- */
+.k3l-banner {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  width: 100%;
+  box-sizing: border-box;
+  padding: 6px 10px;
+  font-size: var(--fs-sm, 13px);
+  line-height: var(--lh-body, 1.5);
+  color: var(--text-primary);
+  background: var(--accent-soft);
+  border: var(--border-width, 1px) solid color-mix(in srgb, var(--accent-primary) 30%, transparent);
+  border-radius: var(--radius-md, 10px);
+  /* rises in when selection mode engages; ends at rest (opacity 1, no transform) */
+  animation: k3-rise var(--k3-dur-med, 220ms) var(--ease-soft-spring, ease-out) both;
+}
+
+/* [hidden] must beat the display set by .k3l-banner / .k3-btn above */
+.k3l-banner[hidden],
+.k3l-banner-note[hidden],
+.k3l-apply[hidden] { display: none; }
+
+.k3l-banner-ic {
+  display: inline-flex;
+  flex: 0 0 auto;
+  width: 14px;
+  height: 14px;
+  color: var(--accent-primary);
+}
+.k3l-banner-ic svg { width: 14px; height: 14px; }
+
+.k3l-banner-text {
+  flex: 0 1 auto;
+  min-width: 0;
+  color: var(--text-primary);
+}
+
+/* inline limit note ("25 messages per operation") */
+.k3l-banner-note {
+  flex: 0 0 auto;
+  color: var(--accent-error);
+  font-size: var(--fs-xs, 11px);
+  font-weight: 600;
+  white-space: nowrap;
+}
+
+.k3l-spacer { flex: 1 1 auto; }
+
+/* banner actions ride the shared button primitives, slightly slimmer */
+.k3l-apply,
+.k3l-done {
+  flex: 0 0 auto;
+  padding: 4px 10px;
+}

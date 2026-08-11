@@ -1,0 +1,188 @@
+/* usage-concepts/_shared/usage-widgets.css
+   Chrome for the shared DRY widget module (usage-widgets.js). Sizing is free
+   grid-span; S/M/L/XL are non-binding shortcuts. Entrance (uwIn) plays ONLY
+   via .uw-enter (mount/add/reset) as a staggered wave (inline animation-delay
+   = --mo-stagger × flow-order index, capped by JS) — resize and drag-reorder
+   use JS FLIP and never replay it. Interaction polish: shared hover depth
+   (lift + shadow + brighten), press squash with a spring release, and a
+   menu-item cascade when the kebab/picker/config sprout opens. Theme variants
+   (glass/retro/basic/friendly) flow from tokens; motion honors the themes.css
+   reduced-motion kill-switch (the stagger delay is force-zeroed there since
+   the kill-switch freezes durations but not delays). */
+
+/* ---------- canvas grid (responsive cols, 28px auto-rows) ---------- */
+.uw-canvas { display: grid; gap: 10px; grid-auto-rows: 28px; grid-template-columns: repeat(4, minmax(0, 1fr)); align-content: start; }
+@media (max-width: 1280px) { .uw-canvas { grid-template-columns: repeat(3, minmax(0, 1fr)); } }
+@media (max-width: 900px) { .uw-canvas { grid-template-columns: repeat(2, minmax(0, 1fr)); } }
+@media (max-width: 600px) { .uw-canvas { grid-template-columns: minmax(0, 1fr); } }
+@media (min-width: 1800px) { .uw-canvas { grid-template-columns: repeat(5, minmax(0, 1fr)); } }
+@media (min-width: 2300px) { .uw-canvas { grid-template-columns: repeat(6, minmax(0, 1fr)); } }
+
+/* ---------- add bar ---------- */
+.uw-addbar { display: flex; align-items: center; gap: var(--md); margin-bottom: var(--md); flex-wrap: wrap; }
+/* press squash: every control squashes fast on :active and SPRINGS back on
+   release — the release curve is the --mo-press spring (overshoots 1 before
+   settling), so letting go feels physical. Squash scales live behind the
+   reduced-motion gates; state colors/cursors still answer without them. */
+.uw-addbtn { display: inline-flex; align-items: center; gap: 6px; font-family: var(--display-font); font-size: 11px; font-weight: 700; padding: 6px 12px; border-radius: var(--radius-pill); border: 1px solid color-mix(in srgb, var(--accent-primary) 40%, transparent); background: var(--accent-soft); color: var(--accent-primary); cursor: pointer; transition: filter var(--motion-fast) var(--ease-out), color var(--motion-fast) var(--ease-out), background var(--motion-fast) var(--ease-out), border-color var(--motion-fast) var(--ease-out), transform var(--mo-press-dur, 110ms) var(--mo-press-ease, cubic-bezier(0.34, 1.56, 0.64, 1)); }
+.uw-addbtn svg { width: 11px; height: 11px; }
+.uw-addbtn:hover { filter: brightness(1.05); transform: translateY(-1px); }
+.uw-addbtn:active { transform: translateY(0); }
+.uw-resetbtn { width: 24px; height: 24px; display: inline-flex; align-items: center; justify-content: center; padding: 0; border-radius: var(--radius-sm); border: 1px solid var(--border-light); background: transparent; color: var(--text-muted); cursor: pointer; transition: color var(--motion-fast) var(--ease-out), border-color var(--motion-fast) var(--ease-out), background var(--motion-fast) var(--ease-out), transform var(--mo-press-dur, 110ms) var(--mo-press-ease, cubic-bezier(0.34, 1.56, 0.64, 1)); }
+.uw-resetbtn svg { width: 11px; height: 11px; transition: transform var(--motion-med) var(--ease-default); }
+.uw-resetbtn:hover { color: var(--text-primary); border-color: var(--border); background: var(--accent-soft); }
+.uw-resetbtn:active svg { transform: rotate(-180deg); }
+.uw-hint { font-size: 10px; color: var(--text-muted); }
+
+/* ---------- widget shell ---------- */
+.uw { position: relative; display: flex; flex-direction: column; min-width: 0; min-height: 0; background: var(--surface-elevated); border: 1px solid var(--border); border-radius: var(--radius-lg); overflow: hidden; box-shadow: var(--elev-1); transition: transform var(--mo-hover-dur, 120ms) var(--mo-hover-ease, ease-out), box-shadow var(--mo-hover-dur, 120ms) var(--mo-hover-ease, ease-out), border-color var(--mo-hover-dur, 120ms) var(--mo-hover-ease, ease-out); }
+/* entrance: a springy rise (--mo-spring-ease overshoots the landing hairline);
+   the stagger delay is inline (set at render) and consumed with the class.
+   fill is backwards only, so once uwIn ends the transform channel belongs to
+   hover/FLIP again — a `both` fill would pin it and kill the hover lift. */
+.uw.uw-enter { animation: uwIn var(--mo-spring-dur, 420ms) var(--mo-spring-ease, cubic-bezier(0.34, 1.56, 0.64, 1)) backwards; }
+@keyframes uwIn { from { opacity: 0; transform: translateY(8px); } to { opacity: 1; transform: none; } }
+/* the kill-switch freezes animation DURATION but not animation-DELAY: zero the
+   stagger step here too, so reduced motion never sits on invisible widgets */
+html[data-reduced-motion="1"] .uw.uw-enter { animation-delay: 0ms !important; }
+@media (prefers-reduced-motion: reduce) { .uw.uw-enter { animation-delay: 0ms !important; } }
+[data-theme^="glass"] .uw { background: rgba(var(--glass-tint-rgb), calc(var(--glass-alpha) + .05)); border-color: var(--glass-hairline); }
+/* hover state signal (all pointers incl. touch/RM): accent edge + deeper shadow */
+.uw:hover { border-color: color-mix(in srgb, var(--cat, var(--accent-primary)) 35%, var(--border)); box-shadow: var(--elev-2); }
+/* hover depth (fine pointers, full motion): a three-layer answer to the
+   pointer — 2px lift, a category-tinted drop shadow, and a breath of
+   brighten in the body. The lift rides `transform`, so a live FLIP inline
+   transform always outranks it mid-reflow; the held clone, the landing
+   ghost, the focused card and a resizing card are excluded. While a drag is
+   in flight the lift stands down (shadow/border stay) so reflowing
+   neighbors don't bob under the held widget. */
+@media (hover: hover) and (prefers-reduced-motion: no-preference) {
+  html:not([data-reduced-motion="1"]) .uw:hover:not(.uw-lifted):not(.is-placeholder):not(.is-focus):not(.is-resizing) { transform: translateY(-2px); z-index: 2; box-shadow: 0 10px 22px -8px color-mix(in srgb, var(--cat, var(--accent-primary)) 22%, transparent), var(--elev-2); border-color: color-mix(in srgb, var(--cat, var(--accent-primary)) 45%, var(--border)); }
+  html:not([data-reduced-motion="1"]) .uw:hover:not(.uw-lifted):not(.is-placeholder):not(.is-focus) .uw-body { filter: brightness(1.02); }
+  html:not([data-reduced-motion="1"]).pmw-drag .uw:hover:not(.uw-lifted):not(.is-placeholder) { transform: none; z-index: auto; }
+  /* whole-card press answer while the grip is held (pre-drag frame); listed
+     after (and more specific than) the lift so the squeeze wins the cascade */
+  html:not([data-reduced-motion="1"]) .uw:hover:not(.uw-lifted):not(.is-placeholder):not(.is-focus):not(.is-resizing):has(.uw-grip:active) { transform: translateY(-1px) scale(0.995); }
+}
+.uw-head { display: flex; align-items: center; gap: 7px; min-height: 34px; padding: 5px 6px 5px 10px; border-bottom: 1px solid var(--border-light); flex: none; }
+.uw-grip { flex: none; width: 18px; height: 18px; display: inline-flex; align-items: center; justify-content: center; padding: 0; border: 0; background: transparent; color: var(--text-muted); cursor: grab; border-radius: var(--radius-xs); transition: color var(--motion-fast) var(--ease-out), background var(--motion-fast) var(--ease-out), transform var(--mo-press-dur, 110ms) var(--mo-press-ease, cubic-bezier(0.34, 1.56, 0.64, 1)); }
+.uw-grip:hover { color: var(--text-primary); background: var(--accent-soft); }
+.uw-grip:active { cursor: grabbing; }
+.uw-grip svg { width: 12px; height: 12px; }
+.uw-ico { flex: none; width: 18px; height: 18px; display: inline-flex; align-items: center; justify-content: center; border-radius: var(--radius-sm); background: color-mix(in srgb, var(--cat, var(--accent-primary)) 14%, transparent); color: var(--cat, var(--accent-primary)); }
+.uw-ico svg { width: 11px; height: 11px; }
+.uw-tt { flex: 1 1 auto; min-width: 0; font-family: var(--display-font); font-size: 11px; font-weight: 700; letter-spacing: .03em; color: var(--text-primary); white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+.uw-kebab { flex: none; width: 22px; height: 22px; display: inline-flex; align-items: center; justify-content: center; padding: 0; border-radius: var(--radius-sm); border: 1px solid transparent; background: transparent; color: var(--text-muted); cursor: pointer; transition: color var(--motion-fast) var(--ease-out), border-color var(--motion-fast) var(--ease-out), background var(--motion-fast) var(--ease-out), transform var(--mo-press-dur, 110ms) var(--mo-press-ease, cubic-bezier(0.34, 1.56, 0.64, 1)); }
+.uw-kebab:hover { color: var(--text-primary); border-color: var(--border-light); background: var(--accent-soft); }
+.uw-kebab svg { width: 13px; height: 13px; }
+.uw-grip:focus-visible, .uw-kebab:focus-visible, .uw-resize:focus-visible, .uw-addbtn:focus-visible, .uw-resetbtn:focus-visible { outline: 2px solid var(--accent-primary); outline-offset: 1px; }
+.uw-body { flex: 1 1 auto; min-height: 0; overflow: auto; padding: 10px; display: flex; flex-direction: column; gap: var(--us-row); }
+.uw-resize { position: absolute; right: 1px; bottom: 1px; width: 18px; height: 18px; padding: 0; border: 0; background: transparent; cursor: nwse-resize; color: var(--text-muted); display: inline-flex; align-items: center; justify-content: center; opacity: .5; transition: opacity var(--motion-fast) var(--ease-out), color var(--motion-fast) var(--ease-out), transform var(--mo-press-dur, 110ms) var(--mo-press-ease, cubic-bezier(0.34, 1.56, 0.64, 1)); }
+.uw:hover .uw-resize, .uw-resize:focus-visible { opacity: 1; color: var(--text-primary); }
+.uw-resize svg { width: 11px; height: 11px; }
+.uw.is-resizing { outline: 2px solid var(--accent-primary); outline-offset: -2px; }
+.uw-grip { touch-action: none; } /* the grip is for dragging, never for page scroll */
+.uw.is-focus .uw-grip, .uw.is-focus .uw-resize { display: none; } /* locked while focused */
+.uw-body { transition: filter var(--mo-hover-dur, 120ms) var(--mo-hover-ease, ease-out); }
+/* press squash (full motion only): a quick squeeze on the way down, a spring
+   past 1 on the way back up — the base rules above carry the spring release
+   transition, the :active rules halve the duration so the squash lands fast */
+@media (hover: hover) and (prefers-reduced-motion: no-preference) {
+  html:not([data-reduced-motion="1"]) .uw-grip:active { transform: scale(0.85); transition-duration: calc(var(--mo-press-dur, 110ms) * 0.5); }
+  html:not([data-reduced-motion="1"]) .uw-kebab:active { transform: scale(0.88); transition-duration: calc(var(--mo-press-dur, 110ms) * 0.5); }
+  html:not([data-reduced-motion="1"]) .uw-resize:active { transform: scale(0.85); transition-duration: calc(var(--mo-press-dur, 110ms) * 0.5); }
+  html:not([data-reduced-motion="1"]) .uw-addbtn:active { transform: translateY(0) scale(0.94); transition-duration: calc(var(--mo-press-dur, 110ms) * 0.5); }
+  html:not([data-reduced-motion="1"]) .uw-resetbtn:active { transform: scale(0.88); transition-duration: calc(var(--mo-press-dur, 110ms) * 0.5); }
+}
+
+/* ---------- drag reorder: lifted clone + landing ghost ----------
+   The held widget is a fixed clone (.uw-lifted) on <body> above the focus
+   scrim (z:500) and sprouts (z:530); left/top are JS-driven with NO
+   transition (1:1 pointer tracking) — only the lift (widget-pickup token)
+   and the drop settle (widget-drop token, set inline by JS) animate. The
+   vacated slot becomes .uw.is-placeholder: same spans, dashed accent ring,
+   a faint breathing tint, invisible to hit-testing so the pointer always
+   "touches" whatever is beneath it. */
+.uw-lifted { position: fixed; z-index: 600; margin: 0; pointer-events: none; cursor: grabbing; transform-origin: top left; will-change: left, top, transform; box-shadow: var(--elev-2); transition: transform var(--mo-widget-pickup-dur, 120ms) var(--mo-widget-pickup-ease, var(--pm-ease-out, cubic-bezier(0.22, 1, 0.36, 1))), box-shadow var(--mo-widget-pickup-dur, 120ms) var(--mo-widget-pickup-ease, var(--pm-ease-out, cubic-bezier(0.22, 1, 0.36, 1))); }
+.uw-lifted.is-lifted { transform: scale(1.03) rotate(0.4deg); box-shadow: 0 20px 44px color-mix(in srgb, var(--accent-primary) 20%, transparent), var(--elev-3); }
+.uw.is-placeholder { pointer-events: none; background-color: color-mix(in srgb, var(--accent-primary) 6%, transparent); border: 1px dashed color-mix(in srgb, var(--accent-primary) 55%, transparent); box-shadow: none; animation: uwPhBreath var(--mo-pulse, 1.8s) ease-in-out infinite; }
+.uw.is-placeholder > * { display: none; } /* the landing slot is always empty inside */
+@keyframes uwPhBreath { 0%, 100% { background-color: color-mix(in srgb, var(--accent-primary) 5%, transparent); } 50% { background-color: color-mix(in srgb, var(--accent-primary) 12%, transparent); } }
+html.pmw-drag, html.pmw-drag * { cursor: grabbing !important; }
+html.pmw-drag { -webkit-user-select: none; user-select: none; }
+@media (prefers-reduced-motion: reduce) {
+  .uw-lifted.is-lifted { transform: none; } /* state (elevated shadow) without the scale/tilt channel */
+  .uw.is-placeholder { animation: none; background-color: color-mix(in srgb, var(--accent-primary) 8%, transparent); }
+}
+
+/* ---------- focus mode: scrim + one focused widget ----------
+   The focused card is parked on <body> by usage-widgets.js (host chrome wraps
+   the page in a lower stacking context, e.g. .us-center z:1, which would keep
+   it under the scrim). As body siblings the z-index order holds: the card
+   (510) renders above the scrim (500), fully bright; everything else dims. */
+.uw-scrim { position: fixed; inset: 0; z-index: 500; background: color-mix(in srgb, var(--bg) 72%, transparent); opacity: 0; pointer-events: none; transition: opacity var(--mo-focus-scrim-dur, 700ms) var(--ease-default, ease); }
+.uw-scrim.is-on { opacity: 1; pointer-events: auto; }
+.uw.is-focus { position: fixed; inset: 5vh 5vw; z-index: 510; grid-column: auto !important; grid-row: auto !important; box-shadow: var(--elev-3); width: auto; height: auto; }
+
+/* ---------- widget sprout (PMMenu chrome, raised above the focus scrim) ---------- */
+.pm-sprout.uw-sprout { z-index: 530; max-height: min(64vh, 480px); overflow: auto; }
+
+/* ---------- menu-item cascade ------------------------------------------------
+   When the kebab/picker/config sprout opens, its rows arrive in a quick
+   top-down wave: --mo-stagger steps capped at 3 (kebab lands in ≤ ~190ms),
+   the size chips micro-stagger inside their group, and the picker's long row
+   list rides a half-step extension so it never drags past ~240ms. Fill is
+   backwards only — a `both` fill would pin `transform: none` and kill the
+   rows' hover nudge after the cascade. Reduced motion drops the cascade
+   entirely (rows land together, immediately visible). */
+@keyframes uwMiIn { from { opacity: 0; transform: translateY(5px); } to { opacity: 1; transform: none; } }
+.pm-sprout.uw-sprout.is-open .uw-menu > *,
+.pm-sprout.uw-sprout.is-open .uw-szgroup > .uw-sz { animation: uwMiIn var(--mo-popup-open-fade, 120ms) var(--mo-spring-ease, cubic-bezier(0.34, 1.56, 0.64, 1)) backwards; }
+.pm-sprout.uw-sprout.is-open .uw-menu > :nth-child(2) { animation-delay: var(--mo-stagger, 24ms); }
+.pm-sprout.uw-sprout.is-open .uw-menu > :nth-child(3) { animation-delay: calc(var(--mo-stagger, 24ms) * 2); }
+.pm-sprout.uw-sprout.is-open .uw-menu > :nth-child(n+4) { animation-delay: calc(var(--mo-stagger, 24ms) * 3); }
+.pm-sprout.uw-sprout.is-open .uw-szgroup > .uw-sz:nth-child(1) { animation-delay: var(--mo-stagger, 24ms); }
+.pm-sprout.uw-sprout.is-open .uw-szgroup > .uw-sz:nth-child(2) { animation-delay: calc(var(--mo-stagger, 24ms) * 1.5); }
+.pm-sprout.uw-sprout.is-open .uw-szgroup > .uw-sz:nth-child(3) { animation-delay: calc(var(--mo-stagger, 24ms) * 2); }
+.pm-sprout.uw-sprout.is-open .uw-szgroup > .uw-sz:nth-child(4) { animation-delay: calc(var(--mo-stagger, 24ms) * 2.5); }
+.pm-sprout.uw-sprout.is-open .uw-szgroup > .uw-sz:nth-child(n+5) { animation-delay: calc(var(--mo-stagger, 24ms) * 3); }
+.pm-sprout.uw-sprout.is-open .uw-picker > .uw-pk-row:nth-of-type(2) { animation-delay: calc(var(--mo-stagger, 24ms) * 3.5); }
+.pm-sprout.uw-sprout.is-open .uw-picker > .uw-pk-row:nth-of-type(3) { animation-delay: calc(var(--mo-stagger, 24ms) * 4); }
+.pm-sprout.uw-sprout.is-open .uw-picker > .uw-pk-row:nth-of-type(4) { animation-delay: calc(var(--mo-stagger, 24ms) * 4.5); }
+.pm-sprout.uw-sprout.is-open .uw-picker > .uw-pk-row:nth-of-type(n+5) { animation-delay: calc(var(--mo-stagger, 24ms) * 5); }
+html[data-reduced-motion="1"] .pm-sprout.uw-sprout .uw-menu > *,
+html[data-reduced-motion="1"] .pm-sprout.uw-sprout .uw-szgroup > .uw-sz { animation: none; }
+@media (prefers-reduced-motion: reduce) {
+  .pm-sprout.uw-sprout .uw-menu > *, .pm-sprout.uw-sprout .uw-szgroup > .uw-sz { animation: none; }
+}
+
+.uw-menu { min-width: 168px; padding: var(--xs); display: flex; flex-direction: column; gap: 2px; }
+.uw-menu .mi { display: flex; align-items: center; gap: 8px; width: 100%; padding: 6px 8px; border-radius: var(--radius-xs); font-size: 11px; color: var(--text-secondary); cursor: pointer; border: 0; background: transparent; text-align: left; transition: all var(--motion-fast) var(--ease-out); }
+.uw-menu .mi:hover, .uw-menu .mi:focus-visible { background: var(--accent-soft); color: var(--text-primary); }
+.uw-menu .mi svg { width: 13px; height: 13px; flex: none; }
+.uw-menu .mi.uw-danger:hover, .uw-menu .mi.uw-danger:focus-visible { color: var(--tone-err-text); background: color-mix(in srgb, var(--tone-err-text) 12%, transparent); }
+.uw-menu .uw-back svg { transform: rotate(180deg); }
+.uw-menu .sep { height: 1px; background: var(--border-light); margin: 3px 0; }
+.uw-menu select, .uw-menu input[type="text"] { font-family: var(--mono-font); font-size: 10px; padding: 2px 4px; border-radius: var(--radius-xs); border: 1px solid var(--border-light); background: var(--surface); color: var(--text-primary); }
+.uw-cfgrow { display: grid; grid-template-columns: minmax(0, 1fr) auto; align-items: center; gap: 8px; }
+
+/* ---------- size presets (S/M/L/XL shortcuts + Custom indication) ---------- */
+.uw-szgroup { display: flex; gap: 3px; padding: 4px; }
+.uw-sz { flex: 1; font-family: var(--mono-font); font-size: 9px; font-weight: 700; padding: 4px 0; border-radius: var(--radius-xs); border: 1px solid var(--border-light); background: transparent; color: var(--text-secondary); cursor: pointer; transition: all var(--motion-fast) var(--ease-out); }
+.uw-sz:hover { color: var(--text-primary); border-color: var(--border); }
+.uw-sz.on { color: var(--accent-primary); background: var(--accent-soft); border-color: color-mix(in srgb, var(--accent-primary) 40%, transparent); }
+.uw-sz-custom { flex: none; padding: 4px 8px; letter-spacing: .06em; text-transform: uppercase; cursor: default; }
+
+/* ---------- add-widget picker (content + initial size) ---------- */
+.uw-picker { min-width: 248px; }
+.uw-pk-cap { font-size: 9px; font-weight: 700; letter-spacing: .1em; text-transform: uppercase; color: var(--text-muted); padding: 2px 8px 4px; }
+.uw-pk-row { display: grid; grid-template-columns: auto minmax(0, 1fr) auto; align-items: center; gap: 9px; width: 100%; padding: 6px 8px; border: 0; border-radius: var(--radius-xs); background: transparent; text-align: left; cursor: pointer; transition: background var(--motion-fast) var(--ease-out), transform var(--motion-fast) var(--ease-out); }
+.uw-pk-row:hover, .uw-pk-row:focus-visible { background: var(--accent-soft); transform: translateX(1px); }
+.uw-pk-ico { width: 22px; height: 22px; display: inline-flex; align-items: center; justify-content: center; border-radius: var(--radius-sm); background: color-mix(in srgb, var(--accent-primary) 14%, transparent); color: var(--accent-primary); }
+.uw-pk-ico svg { width: 12px; height: 12px; }
+.uw-pk-txt { display: flex; flex-direction: column; gap: 1px; min-width: 0; }
+.uw-pk-lab { font-family: var(--display-font); font-size: 11px; font-weight: 700; color: var(--text-primary); white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+.uw-pk-desc { font-size: 10px; color: var(--text-muted); white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+.uw-pk-added { display: inline-flex; align-items: center; gap: 3px; font-family: var(--mono-font); font-size: 9px; font-weight: 700; color: var(--accent-primary); }
+.uw-pk-added svg { width: 10px; height: 10px; }
+.uw-pk-empty { font-size: 10px; color: var(--text-muted); padding: 6px 8px; }

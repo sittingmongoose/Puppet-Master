@@ -1,0 +1,296 @@
+/* PMX fake Puppet Master shell — Opus 5
+ *
+ * This exists ONLY to expose realistic spacing pressure around the Assistant Chat. It is
+ * deliberately plain and quiet so it never competes with the concept under test, and it is
+ * shared unchanged by all eight window concepts.
+ *
+ * The rail width and the chat width are INDEPENDENT axes. Nothing here couples them.
+ */
+
+/* The shell class is applied to the stage element itself, so this selector is written to
+ * outrank the plain `.pmx-stage` block rule in workspace.css regardless of load order.
+ * Without the doubled selector the chat host wraps below the dashboard instead of sitting
+ * beside it. */
+.pmx-shell,
+.pmx-stage.pmx-shell {
+  display: flex;
+  flex-direction: row;
+  flex-wrap: nowrap;
+  height: 100%;
+  width: 100%;
+  min-width: 0;
+  overflow: hidden;
+  background: var(--background);
+  color: var(--text-primary);
+  font-family: var(--body-font);
+  font-size: var(--base-font-size, 14px);
+}
+
+/* ---------------------------------------------------------------- application rail */
+
+.pmx-shell-rail {
+  flex: 0 0 auto;
+  width: 72px;
+  display: flex;
+  flex-direction: column;
+  min-height: 0;
+  background: var(--surface);
+  border-right: 1px solid var(--border);
+  transition: width var(--motion-med) var(--ease-default);
+  overflow: hidden;
+}
+.pmx-shell[data-rail="closed"] .pmx-shell-rail { width: 36px; }
+
+.pmx-shell-rail-head {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: var(--sm) 0;
+  flex: 0 0 auto;
+}
+.pmx-shell-rail-toggle {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 24px;
+  height: 24px;
+  border: 1px solid var(--border);
+  border-radius: var(--radius-sm);
+  background: transparent;
+  color: var(--text-muted);
+  cursor: pointer;
+}
+.pmx-shell-rail-toggle:hover { color: var(--text-primary); background: var(--surface-elevated); }
+.pmx-shell-rail-toggle-icon { display: inline-flex; transition: transform var(--motion-fast) var(--ease-default); }
+.pmx-shell[data-rail="closed"] .pmx-shell-rail-toggle-icon { transform: rotate(180deg); }
+
+.pmx-shell-rail-list {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+  padding: var(--sm) 4px;
+  margin: 0;
+  list-style: none;
+  flex: 1 1 auto;
+  min-width: 0;
+  min-height: 0;
+  overflow-y: auto;
+  overflow-x: hidden;
+}
+/* The list is rendered as ul/li, so the list items need the same shrink permission as the
+ * buttons inside them. Without min-width:0 the label sets a floor and the row overflows the
+ * rail by a few pixels in the themes with wider default type. */
+.pmx-shell-rail-list > li {
+  min-width: 0;
+  max-width: 100%;
+  list-style: none;
+  display: flex;
+}
+.pmx-shell-rail-list > li > .pmx-shell-rail-item { flex: 1 1 auto; min-width: 0; }
+
+.pmx-shell-rail-item {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 2px;
+  padding: 6px 2px;
+  border: none;
+  border-radius: var(--radius-sm);
+  background: transparent;
+  color: var(--text-muted);
+  font: inherit;
+  font-size: var(--fs-2xs);
+  cursor: pointer;
+  transition: background var(--motion-fast) var(--ease-default), color var(--motion-fast) var(--ease-default);
+}
+.pmx-shell-rail-item:hover { background: var(--surface-elevated); color: var(--text-primary); }
+
+/* Active state is a background fill plus weight. Deliberately NOT a colored left accent
+ * border — that treatment is prohibited project-wide as a selection or status marker. */
+.pmx-shell-rail-item.is-active {
+  background: color-mix(in srgb, var(--accent-primary) 18%, transparent);
+  color: var(--text-primary);
+  font-weight: 600;
+}
+
+.pmx-shell-rail-icon { display: inline-flex; flex: 0 0 auto; }
+.pmx-shell-rail-label {
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  max-width: 100%;
+}
+.pmx-shell[data-rail="closed"] .pmx-shell-rail-label { display: none; }
+.pmx-shell[data-rail="closed"] .pmx-shell-rail-item { padding: 6px 0; }
+
+/* ---------------------------------------------------------------- dashboard */
+
+.pmx-shell-dashboard {
+  flex: 1 1 auto;
+  min-width: 0;
+  min-height: 0;
+  overflow-y: auto;
+  padding: var(--lg);
+}
+
+.pmx-shell-dash-header { margin-bottom: var(--lg); }
+.pmx-shell-dash-eyebrow {
+  display: block;
+  font-size: var(--fs-2xs);
+  letter-spacing: .06em;
+  text-transform: uppercase;
+  color: var(--text-muted);
+}
+.pmx-shell-dash-title {
+  margin: 2px 0 0;
+  font-family: var(--display-font);
+  font-size: var(--fs-xl);
+  font-weight: 600;
+  color: var(--text-primary);
+}
+
+/* min() keeps the track from forcing a 220px column inside a narrower dashboard, which
+ * happens as soon as the chat takes 1200px of a modest viewport. Without it the grid
+ * overflows its own container. */
+.pmx-shell-dash-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(min(220px, 100%), 1fr));
+  gap: var(--md);
+  min-width: 0;
+}
+
+.pmx-shell-card {
+  padding: var(--md);
+  background: var(--surface);
+  border: var(--border-width, 1px) solid var(--border);
+  border-radius: var(--radius-md);
+  min-width: 0;
+}
+.pmx-shell-card-title {
+  margin: 0 0 var(--sm);
+  font-size: var(--fs-2xs);
+  font-weight: 600;
+  letter-spacing: .05em;
+  text-transform: uppercase;
+  color: var(--text-muted);
+}
+
+.pmx-shell-project-name { font-size: var(--fs-md); color: var(--text-primary); }
+
+.pmx-shell-kv { display: flex; flex-direction: column; gap: 4px; }
+.pmx-shell-kv-row {
+  display: flex;
+  justify-content: space-between;
+  gap: var(--sm);
+  font-size: var(--fs-xs);
+  color: var(--text-secondary);
+  min-width: 0;
+}
+.pmx-shell-kv-row > span:last-child { color: var(--text-primary); font-variant-numeric: tabular-nums; }
+
+.pmx-shell-file-list { display: flex; flex-direction: column; gap: 4px; }
+.pmx-shell-file-row { display: flex; align-items: center; gap: var(--sm); min-width: 0; font-size: var(--fs-xs); }
+.pmx-shell-file-icon { flex: 0 0 auto; color: var(--text-muted); display: inline-flex; }
+.pmx-shell-file-name {
+  min-width: 0; overflow: hidden; text-overflow: ellipsis; white-space: nowrap;
+  color: var(--text-primary); font-family: var(--mono-font);
+}
+.pmx-shell-file-meta { margin-left: auto; flex: 0 0 auto; color: var(--text-muted); font-size: var(--fs-2xs); }
+
+.pmx-shell-counters { display: flex; gap: var(--lg); }
+.pmx-shell-counter { display: flex; flex-direction: column; }
+.pmx-shell-counter-value {
+  font-size: var(--fs-xl); font-weight: 600; color: var(--text-primary);
+  font-variant-numeric: tabular-nums; line-height: 1.1;
+}
+.pmx-shell-counter-label { font-size: var(--fs-2xs); color: var(--text-muted); }
+
+/* ---------------------------------------------------------------- chat host */
+
+/* Docked: a flex child sized by the chat width variable, which the workspace drives.
+ * Note there is no dependency on the rail width here — that is the independence the
+ * requirements call for and a test asserts. */
+.pmx-shell-chat-host {
+  flex: 0 0 auto;
+  width: var(--pmx-chat-w, 750px);
+  max-width: 100%;
+  min-width: 0;
+  height: 100%;
+  overflow: hidden;
+  position: relative;
+}
+
+.pmx-shell-chat-backdrop { display: none; }
+
+/* ---------------------------------------------------------------- artifact host
+ * A sibling immediately before the chat host in flex order, so the artifact workspace is to
+ * the LEFT of Chat and outside the message/composer rectangle. It costs zero width when
+ * closed, which is why the panel itself carries `display: none` at [data-open="0"] rather
+ * than this container carrying a width transition — an empty flex child with a width would
+ * reserve space for a surface that is not there.
+ *
+ * The width is clamped rather than fixed: at the narrow end an artifact must not push Chat
+ * below the width at which the conversation stops being readable, and each window concept
+ * may override this within its own scope for a placement that needs different proportions. */
+.pmx-shell-artifact-host {
+  flex: 0 1 auto;
+  min-width: 0;
+  height: 100%;
+  overflow: hidden;
+  position: relative;
+}
+.pmx-shell-artifact-host:not(:has(.pmx-artifact[data-open="1"])) { flex-basis: 0; width: 0; }
+.pmx-shell-artifact-host:has(.pmx-artifact[data-open="1"]) {
+  width: clamp(280px, 32%, 460px);
+  flex: 0 0 clamp(280px, 32%, 460px);
+}
+
+/* Pop-out floats the chat above the dashboard, so an artifact panel left in the flex row would
+ * sit behind it. It floats too, anchored to the right edge of the centred chat surface so the
+ * left-of-Chat relationship is identical in both forms. The chat is centred with auto margins,
+ * so its left edge is `50% - chatWidth/2`; the panel's right edge meets exactly that. */
+.pmx-stage[data-mount="popout"] .pmx-shell-artifact-host:has(.pmx-artifact[data-open="1"]) {
+  position: absolute;
+  z-index: 21;
+  top: 0; bottom: 0;
+  margin: auto 0;
+  right: calc(50% + (var(--pmx-chat-w, 750px) / 2));
+  height: min(88%, 860px);
+  border: 1px solid var(--border);
+  border-right: none;
+  border-radius: var(--radius-lg) 0 0 var(--radius-lg);
+  overflow: hidden;
+}
+
+/* Pop-out: the dashboard fills the full width and the chat floats above it. Geometry
+ * changes; semantic state does not — that is handled by the store, not by CSS. */
+.pmx-stage[data-mount="popout"] .pmx-shell-chat-backdrop {
+  display: block;
+  position: absolute;
+  inset: 0;
+  z-index: 20;
+  background: color-mix(in srgb, var(--background) 55%, transparent);
+}
+/* Centred with auto margins rather than a translate. A transform on this element would
+ * establish a containing block for fixed-position descendants, which would trap the popup
+ * overlay root inside an `overflow: hidden` box and let menus be clipped at the edges. */
+.pmx-stage[data-mount="popout"] .pmx-shell-chat-host {
+  position: absolute;
+  z-index: 21;
+  inset: 0;
+  margin: auto;
+  height: min(88%, 860px);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-lg);
+  box-shadow: var(--elev-3);
+  background: var(--surface);
+  /* The chat host clips its own content, but the overlay root is position:fixed and, with
+   * no transformed ancestor, escapes this box as intended. */
+  overflow: hidden;
+}
+
+/* ---------------------------------------------------------------- reduced motion */
+
+[data-motion="reduced"] .pmx-shell-rail,
+[data-motion="reduced"] .pmx-shell-rail-toggle-icon,
+[data-motion="reduced"] .pmx-shell-rail-item { transition: none !important; }

@@ -1,0 +1,38 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://puppet-master.local/schemas/plan-assurance/source-snapshot.v1.json",
+  "title": "Plan Assurance Independent Source Snapshot",
+  "type": "object",
+  "additionalProperties": false,
+  "required": ["schema_version", "trial_id", "plans_root", "excluded_future_run_root", "excluded_future_run_root_absent_at_freeze", "created_at_utc", "population_algorithm", "entries", "regular_file_count", "directory_entry_count", "population_sha256", "protected_before_sha256", "terminal"],
+  "properties": {
+    "schema_version": {"const": "1.0.0"},
+    "trial_id": {"type": "string", "minLength": 1},
+    "plans_root": {"type": "string", "minLength": 1},
+    "excluded_future_run_root": {"type": "string", "minLength": 1},
+    "excluded_future_run_root_absent_at_freeze": {"const": true},
+    "created_at_utc": {"type": "string", "format": "date-time"},
+    "population_algorithm": {"const": "lstat sorted NFC relative paths; record every entry; hash exact bytes for regular files only"},
+    "entries": {"type": "array", "minItems": 1, "items": {"$ref": "#/$defs/entry"}},
+    "regular_file_count": {"type": "integer", "minimum": 1},
+    "directory_entry_count": {"type": "integer", "minimum": 1},
+    "population_sha256": {"$ref": "#/$defs/sha256"},
+    "protected_before_sha256": {"allOf": [{"$ref": "#/$defs/sha256"}], "description": "Derived protected BEFORE state-payload SHA-256, not the receipt file hash."},
+    "terminal": {"enum": ["PASS", "REVISE", "BLOCKED", "INVALID"]}
+  },
+  "$defs": {
+    "sha256": {"type": "string", "pattern": "^[0-9a-f]{64}$"},
+    "entry": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["path", "entry_kind", "mode", "bytes", "sha256"],
+      "properties": {
+        "path": {"type": "string", "pattern": "^Plans(?:/|$)"},
+        "entry_kind": {"enum": ["regular_file", "directory", "symlink", "nonregular"]},
+        "mode": {"type": "integer", "minimum": 0},
+        "bytes": {"type": ["integer", "null"], "minimum": 0},
+        "sha256": {"oneOf": [{"$ref": "#/$defs/sha256"}, {"type": "null"}]}
+      }
+    }
+  }
+}

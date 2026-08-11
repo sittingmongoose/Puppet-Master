@@ -1,0 +1,179 @@
+/* ============================================================================
+   Kimi K3 — W2 Triptych chrome (scoped [data-k3-window="w2"]).
+
+   Three columns when the chat width allows it: a persistent left history
+   rail (~170px), the transcript column, and a right work inspector
+   (~240px). The inspector is mounted/unmounted by the JS module on the
+   975px breakpoint; CSS only styles what exists. Below the breakpoint the
+   inspector is hidden and the same kit surfaces live in an expandable Work
+   drawer (a k3-acc region above the composer) toggled by a Work button.
+
+   Token-driven only — every color/radius/border comes from themes.css so
+   all 8 theme tables render complete. Active/selected states use
+   background tint + weight, never a colored left-side accent border.
+   ========================================================================= */
+
+[data-k3-window="w2"] {
+  flex: 1 1 auto;
+  height: 100%;
+  min-height: 0;
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  background: var(--background);
+  color: var(--text-primary);
+  overflow: hidden;
+}
+
+/* the kit header spans the full window top */
+[data-k3-window="w2"] > .k3w-kit-header { flex: 0 0 auto; }
+
+/* lens banner host: collapses to nothing while the lens is quiet */
+[data-k3-window="w2"] .k3w-kit-lens-banner { flex: 0 0 auto; }
+
+/* ---- body: three-column flex row ---------------------------------------- */
+[data-k3-window="w2"] .w2-body {
+  flex: 1 1 auto;
+  min-height: 0;
+  display: flex;
+  flex-direction: row;
+  align-items: stretch;
+  gap: 0;
+}
+
+/* ---- left: persistent history rail -------------------------------------- */
+[data-k3-window="w2"] .w2-rail {
+  flex: 0 0 170px;
+  width: 170px;
+  min-width: 0;
+  display: flex;
+  flex-direction: column;
+  min-height: 0;
+  background: var(--surface);
+  border-right: var(--border-width, 1px) solid var(--border-light);
+}
+[data-k3-window="w2"] .w2-rail .k3w-kit-history {
+  flex: 1 1 auto;
+  min-height: 0;
+  background: transparent;
+  border: 0;
+}
+
+/* ---- middle: transcript + work drawer + composer ------------------------ */
+[data-k3-window="w2"] .w2-center {
+  flex: 1 1 auto;
+  min-width: 0;
+  min-height: 0;
+  display: flex;
+  flex-direction: column;
+}
+
+[data-k3-window="w2"] .w2-thread {
+  flex: 1 1 auto;
+  min-height: 0;
+  display: flex;
+  flex-direction: column;
+}
+
+/* Work drawer (k3-acc) — only rendered when narrow AND there is work to
+   show. The JS toggles .is-open; the accordion grid animates height. */
+[data-k3-window="w2"] .w2-work-acc {
+  flex: 0 0 auto;
+  background: var(--surface);
+  border-top: var(--border-width, 1px) solid var(--border-light);
+}
+[data-k3-window="w2"] .w2-work-body {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  padding: 10px 12px 12px;
+  max-height: 40vh;
+  overflow-y: auto;
+}
+
+/* Work button — the single-line summary that opens the drawer. Hidden by
+   the JS when wide (inspector takes over) or when there is no work. */
+[data-k3-window="w2"] .w2-work-btn {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  width: 100%;
+  flex: 0 0 auto;
+  padding: 8px 14px;
+  background: var(--surface);
+  border: 0;
+  border-top: var(--border-width, 1px) solid var(--border-light);
+  font-size: var(--fs-xs, 11px);
+  color: var(--text-secondary);
+  text-align: left;
+  cursor: pointer;
+  transition: color var(--motion-fast, 120ms) var(--ease-default, ease-out),
+              background-color var(--motion-fast, 120ms) var(--ease-default, ease-out);
+}
+[data-k3-window="w2"] .w2-work-btn:hover {
+  color: var(--accent-primary);
+  background: var(--accent-soft);
+}
+[data-k3-window="w2"] .w2-work-btn-ic { display: inline-flex; flex: 0 0 auto; color: var(--accent-primary); }
+[data-k3-window="w2"] .w2-work-btn-ic svg { width: 14px; height: 14px; }
+[data-k3-window="w2"] .w2-work-btn-label { flex: 0 0 auto; font-weight: 650; color: var(--text-primary); }
+[data-k3-window="w2"] .w2-work-btn-summary {
+  flex: 1 1 auto;
+  min-width: 0;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+[data-k3-window="w2"] .w2-work-btn-chev {
+  display: inline-flex;
+  flex: 0 0 auto;
+  color: var(--text-muted);
+  transition: transform var(--motion-fast, 120ms) var(--ease-default, ease-out);
+}
+[data-k3-window="w2"] .w2-work-btn-chev svg { width: 12px; height: 12px; }
+[data-k3-window="w2"] .w2-work-btn[aria-expanded="true"] .w2-work-btn-chev { transform: rotate(180deg); }
+
+[data-k3-window="w2"] .w2-composer {
+  flex: 0 0 auto;
+  padding: 10px 14px 14px;
+}
+
+/* ---- right: work inspector (wide layout only) --------------------------- */
+[data-k3-window="w2"] .w2-inspector {
+  flex: 0 0 240px;
+  width: 240px;
+  min-width: 0;
+  display: flex;
+  flex-direction: column;
+  min-height: 0;
+  background: var(--surface);
+  border-left: var(--border-width, 1px) solid var(--border-light);
+}
+[data-k3-window="w2"] .w2-insp-head {
+  flex: 0 0 auto;
+  padding: 10px 12px;
+  font-size: var(--fs-2xs, 10px);
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: .05em;
+  color: var(--text-muted);
+  border-bottom: var(--border-width, 1px) solid var(--border-light);
+}
+[data-k3-window="w2"] .w2-insp-body {
+  flex: 1 1 auto;
+  min-height: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  padding: 10px 12px;
+  overflow-y: auto;
+}
+[data-k3-window="w2"] .w2-note {
+  font-size: var(--fs-xs, 11px);
+  color: var(--text-muted);
+  line-height: var(--lh-body, 1.5);
+  padding: 4px 2px;
+}
+
+/* inspector surfaces share the kit card spacing but sit flush in a column */
+[data-k3-window="w2"] .w2-insp-body .k3w-kit-surface { width: 100%; }

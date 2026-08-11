@@ -1,0 +1,3051 @@
+{
+  "schema_id": "pm.pm7_home_workspace_control_census.v1",
+  "generated_at_utc": "2026-08-05T15:51:33.440910+00:00",
+  "authority": "Plans/PMConcept7_Home_Workspace_Control_Reconciliation.json",
+  "source_hashes": {
+    "Concepts/pm7-tools/home_workspace_source.py": "3e5a3fe2f8b5f5800a834ebe1e96ccdbc4c63ed735c1f559bbb2ff164d37b7b9",
+    "Concepts/pm7-tools/verify/home_workspace_matrix.mjs": "b3babe82caff9153cb8229d28c87f89b2eae3b9db7d1dee26fc94ea87e73ef2f",
+    "Plans/Wiring_Matrix.production.json": "42ff981beb8d456f0a442d1f2ec49134d389744fe6ec3a85a1d1db1a0b7828a7"
+  },
+  "summary": {
+    "semantic_production_rows": 128,
+    "view_only_rows": 6,
+    "total_rows": 134,
+    "unresolved_count": 0,
+    "duplicate_control_id_count": 0,
+    "status": "PASS"
+  },
+  "unresolved": [],
+  "semantic_controls": [
+    {
+      "control_id": "home.settings.reset_layout",
+      "selector": ".s4-row[data-sid=\"general.startup.reset-home-layout\"] .s4-action",
+      "state_selector": "state.home_workspace.home_settings_reset_layout.availability",
+      "disabled_reason_projection": "state.home_workspace.home_settings_reset_layout.disabled_reason",
+      "command_or_view_only_disposition": "cmd.workspace_layout.reset",
+      "receipt_or_event": [
+        "workspace.layout_changed"
+      ],
+      "handler": "handlers::workspace_layout::reset",
+      "production_wiring_row": "Plans/Wiring_Matrix.production.json#/entries/home.settings.reset_layout",
+      "executable_test": [
+        "Concepts/pm7-tools/verify/home_workspace_matrix.mjs#settings_reset_visible_location_and_identity_preservation",
+        "Concepts/pm7-tools/verify/home_workspace_matrix.mjs#settings_reset_visible_location_and_identity_preservation:dispatcher_fixture",
+        "Concepts/pm7-tools/verify/home_workspace_matrix.mjs#settings_reset_visible_location_and_identity_preservation:state_projection",
+        "Concepts/pm7-tools/verify/home_workspace_matrix.mjs#settings_reset_visible_location_and_identity_preservation:receipt_or_event_assertion",
+        "Concepts/pm7-tools/verify/home_workspace_matrix.mjs#settings_reset_visible_location_and_identity_preservation:accessibility_regression"
+      ],
+      "expected_event_types": [
+        "workspace.layout_changed"
+      ]
+    },
+    {
+      "control_id": "home.more_options.collapse_bottom",
+      "selector": "#pm-home-more-menu [data-pm-home-action=\"collapse-terminal\"]",
+      "state_selector": "state.home_workspace.home_more_options_collapse_bottom.availability",
+      "disabled_reason_projection": "state.home_workspace.home_more_options_collapse_bottom.disabled_reason",
+      "command_or_view_only_disposition": "cmd.workspace_layout.set_collapsed",
+      "receipt_or_event": [
+        "workspace.layout_changed"
+      ],
+      "handler": "handlers::workspace_layout::set_collapsed",
+      "production_wiring_row": "Plans/Wiring_Matrix.production.json#/entries/home.more_options.collapse_bottom",
+      "executable_test": [
+        "Concepts/pm7-tools/verify/home_workspace_matrix.mjs#collapse_bottom_terminal_disabled_reason_and_no_expand_alias",
+        "Concepts/pm7-tools/verify/home_workspace_matrix.mjs#collapse_bottom_terminal_disabled_reason_and_no_expand_alias:dispatcher_fixture",
+        "Concepts/pm7-tools/verify/home_workspace_matrix.mjs#collapse_bottom_terminal_disabled_reason_and_no_expand_alias:state_projection",
+        "Concepts/pm7-tools/verify/home_workspace_matrix.mjs#collapse_bottom_terminal_disabled_reason_and_no_expand_alias:receipt_or_event_assertion",
+        "Concepts/pm7-tools/verify/home_workspace_matrix.mjs#collapse_bottom_terminal_disabled_reason_and_no_expand_alias:accessibility_regression"
+      ],
+      "expected_event_types": [
+        "workspace.layout_changed"
+      ]
+    },
+    {
+      "control_id": "home.more_options.open_panel_1",
+      "selector": "#pm-home-open-panel-flyout [data-pm-home-action=\"open-panel\"][data-pm-home-surface-id=\"editor_panel_1\"]",
+      "state_selector": "state.home_workspace.home_more_options_open_panel_1.availability",
+      "disabled_reason_projection": "state.home_workspace.home_more_options_open_panel_1.disabled_reason",
+      "command_or_view_only_disposition": "cmd.editor.open_panel",
+      "receipt_or_event": [
+        "workspace.layout_changed"
+      ],
+      "handler": "handlers::editor::open_panel",
+      "production_wiring_row": "Plans/Wiring_Matrix.production.json#/entries/home.more_options.open_panel_1",
+      "executable_test": [
+        "Concepts/pm7-tools/verify/home_workspace_matrix.mjs#four_editor_panels_idempotent_stable_identity",
+        "Concepts/pm7-tools/verify/home_workspace_matrix.mjs#four_editor_panels_idempotent_stable_identity:dispatcher_fixture",
+        "Concepts/pm7-tools/verify/home_workspace_matrix.mjs#four_editor_panels_idempotent_stable_identity:state_projection",
+        "Concepts/pm7-tools/verify/home_workspace_matrix.mjs#four_editor_panels_idempotent_stable_identity:receipt_or_event_assertion",
+        "Concepts/pm7-tools/verify/home_workspace_matrix.mjs#four_editor_panels_idempotent_stable_identity:accessibility_regression"
+      ],
+      "expected_event_types": [
+        "workspace.layout_changed"
+      ]
+    },
+    {
+      "control_id": "home.more_options.open_browser_panel_1",
+      "selector": "#pm-home-open-browser-flyout [data-pm-home-action=\"open-browser\"][data-pm-home-surface-id=\"editor_panel_1\"]",
+      "state_selector": "state.home_workspace.home_more_options_open_browser_panel_1.availability",
+      "disabled_reason_projection": "state.home_workspace.home_more_options_open_browser_panel_1.disabled_reason",
+      "command_or_view_only_disposition": "cmd.browser.open_workspace_preview",
+      "receipt_or_event": [
+        "workspace.layout_changed",
+        "browser.session.created",
+        "browser.session.state_changed"
+      ],
+      "handler": "handlers::browser::open_workspace_preview",
+      "production_wiring_row": "Plans/Wiring_Matrix.production.json#/entries/home.more_options.open_browser_panel_1",
+      "executable_test": [
+        "Concepts/pm7-tools/verify/home_workspace_matrix.mjs#browser_visible_routing_all_four_panels_one_session",
+        "Concepts/pm7-tools/verify/home_workspace_matrix.mjs#browser_visible_routing_all_four_panels_one_session:dispatcher_fixture",
+        "Concepts/pm7-tools/verify/home_workspace_matrix.mjs#browser_visible_routing_all_four_panels_one_session:state_projection",
+        "Concepts/pm7-tools/verify/home_workspace_matrix.mjs#browser_visible_routing_all_four_panels_one_session:receipt_or_event_assertion",
+        "Concepts/pm7-tools/verify/home_workspace_matrix.mjs#browser_visible_routing_all_four_panels_one_session:accessibility_regression"
+      ],
+      "expected_event_types": [
+        "workspace.layout_changed",
+        "browser.session.created",
+        "browser.session.state_changed"
+      ]
+    },
+    {
+      "control_id": "home.file_manager.open_panel_1",
+      "selector": "#pm-home-file-panel-menu [data-pm-home-action=\"file-open-panel\"][data-pm-home-surface-id=\"editor_panel_1\"]",
+      "state_selector": "state.home_workspace.home_file_manager_open_panel_1.availability",
+      "disabled_reason_projection": "state.home_workspace.home_file_manager_open_panel_1.disabled_reason",
+      "command_or_view_only_disposition": "cmd.file.open",
+      "receipt_or_event": [
+        "workspace.layout_changed"
+      ],
+      "handler": "handlers::file::open",
+      "production_wiring_row": "Plans/Wiring_Matrix.production.json#/entries/home.file_manager.open_panel_1",
+      "executable_test": [
+        "Concepts/pm7-tools/verify/home_workspace_matrix.mjs#file_manager_open_in_panel_visible_submenu_all_four",
+        "Concepts/pm7-tools/verify/home_workspace_matrix.mjs#file_manager_open_in_panel_visible_submenu_all_four:dispatcher_fixture",
+        "Concepts/pm7-tools/verify/home_workspace_matrix.mjs#file_manager_open_in_panel_visible_submenu_all_four:state_projection",
+        "Concepts/pm7-tools/verify/home_workspace_matrix.mjs#file_manager_open_in_panel_visible_submenu_all_four:receipt_or_event_assertion",
+        "Concepts/pm7-tools/verify/home_workspace_matrix.mjs#file_manager_open_in_panel_visible_submenu_all_four:accessibility_regression"
+      ],
+      "expected_event_types": [
+        "workspace.layout_changed"
+      ]
+    },
+    {
+      "control_id": "home.more_options.open_panel_2",
+      "selector": "#pm-home-open-panel-flyout [data-pm-home-action=\"open-panel\"][data-pm-home-surface-id=\"editor_panel_2\"]",
+      "state_selector": "state.home_workspace.home_more_options_open_panel_2.availability",
+      "disabled_reason_projection": "state.home_workspace.home_more_options_open_panel_2.disabled_reason",
+      "command_or_view_only_disposition": "cmd.editor.open_panel",
+      "receipt_or_event": [
+        "workspace.layout_changed"
+      ],
+      "handler": "handlers::editor::open_panel",
+      "production_wiring_row": "Plans/Wiring_Matrix.production.json#/entries/home.more_options.open_panel_2",
+      "executable_test": [
+        "Concepts/pm7-tools/verify/home_workspace_matrix.mjs#four_editor_panels_idempotent_stable_identity",
+        "Concepts/pm7-tools/verify/home_workspace_matrix.mjs#four_editor_panels_idempotent_stable_identity:dispatcher_fixture",
+        "Concepts/pm7-tools/verify/home_workspace_matrix.mjs#four_editor_panels_idempotent_stable_identity:state_projection",
+        "Concepts/pm7-tools/verify/home_workspace_matrix.mjs#four_editor_panels_idempotent_stable_identity:receipt_or_event_assertion",
+        "Concepts/pm7-tools/verify/home_workspace_matrix.mjs#four_editor_panels_idempotent_stable_identity:accessibility_regression"
+      ],
+      "expected_event_types": [
+        "workspace.layout_changed"
+      ]
+    },
+    {
+      "control_id": "home.more_options.open_browser_panel_2",
+      "selector": "#pm-home-open-browser-flyout [data-pm-home-action=\"open-browser\"][data-pm-home-surface-id=\"editor_panel_2\"]",
+      "state_selector": "state.home_workspace.home_more_options_open_browser_panel_2.availability",
+      "disabled_reason_projection": "state.home_workspace.home_more_options_open_browser_panel_2.disabled_reason",
+      "command_or_view_only_disposition": "cmd.browser.open_workspace_preview",
+      "receipt_or_event": [
+        "workspace.layout_changed",
+        "browser.session.created",
+        "browser.session.state_changed"
+      ],
+      "handler": "handlers::browser::open_workspace_preview",
+      "production_wiring_row": "Plans/Wiring_Matrix.production.json#/entries/home.more_options.open_browser_panel_2",
+      "executable_test": [
+        "Concepts/pm7-tools/verify/home_workspace_matrix.mjs#browser_visible_routing_all_four_panels_one_session",
+        "Concepts/pm7-tools/verify/home_workspace_matrix.mjs#browser_visible_routing_all_four_panels_one_session:dispatcher_fixture",
+        "Concepts/pm7-tools/verify/home_workspace_matrix.mjs#browser_visible_routing_all_four_panels_one_session:state_projection",
+        "Concepts/pm7-tools/verify/home_workspace_matrix.mjs#browser_visible_routing_all_four_panels_one_session:receipt_or_event_assertion",
+        "Concepts/pm7-tools/verify/home_workspace_matrix.mjs#browser_visible_routing_all_four_panels_one_session:accessibility_regression"
+      ],
+      "expected_event_types": [
+        "workspace.layout_changed",
+        "browser.session.created",
+        "browser.session.state_changed"
+      ]
+    },
+    {
+      "control_id": "home.file_manager.open_panel_2",
+      "selector": "#pm-home-file-panel-menu [data-pm-home-action=\"file-open-panel\"][data-pm-home-surface-id=\"editor_panel_2\"]",
+      "state_selector": "state.home_workspace.home_file_manager_open_panel_2.availability",
+      "disabled_reason_projection": "state.home_workspace.home_file_manager_open_panel_2.disabled_reason",
+      "command_or_view_only_disposition": "cmd.file.open",
+      "receipt_or_event": [
+        "workspace.layout_changed"
+      ],
+      "handler": "handlers::file::open",
+      "production_wiring_row": "Plans/Wiring_Matrix.production.json#/entries/home.file_manager.open_panel_2",
+      "executable_test": [
+        "Concepts/pm7-tools/verify/home_workspace_matrix.mjs#file_manager_open_in_panel_visible_submenu_all_four",
+        "Concepts/pm7-tools/verify/home_workspace_matrix.mjs#file_manager_open_in_panel_visible_submenu_all_four:dispatcher_fixture",
+        "Concepts/pm7-tools/verify/home_workspace_matrix.mjs#file_manager_open_in_panel_visible_submenu_all_four:state_projection",
+        "Concepts/pm7-tools/verify/home_workspace_matrix.mjs#file_manager_open_in_panel_visible_submenu_all_four:receipt_or_event_assertion",
+        "Concepts/pm7-tools/verify/home_workspace_matrix.mjs#file_manager_open_in_panel_visible_submenu_all_four:accessibility_regression"
+      ],
+      "expected_event_types": [
+        "workspace.layout_changed"
+      ]
+    },
+    {
+      "control_id": "home.more_options.open_panel_3",
+      "selector": "#pm-home-open-panel-flyout [data-pm-home-action=\"open-panel\"][data-pm-home-surface-id=\"editor_panel_3\"]",
+      "state_selector": "state.home_workspace.home_more_options_open_panel_3.availability",
+      "disabled_reason_projection": "state.home_workspace.home_more_options_open_panel_3.disabled_reason",
+      "command_or_view_only_disposition": "cmd.editor.open_panel",
+      "receipt_or_event": [
+        "workspace.layout_changed"
+      ],
+      "handler": "handlers::editor::open_panel",
+      "production_wiring_row": "Plans/Wiring_Matrix.production.json#/entries/home.more_options.open_panel_3",
+      "executable_test": [
+        "Concepts/pm7-tools/verify/home_workspace_matrix.mjs#four_editor_panels_idempotent_stable_identity",
+        "Concepts/pm7-tools/verify/home_workspace_matrix.mjs#four_editor_panels_idempotent_stable_identity:dispatcher_fixture",
+        "Concepts/pm7-tools/verify/home_workspace_matrix.mjs#four_editor_panels_idempotent_stable_identity:state_projection",
+        "Concepts/pm7-tools/verify/home_workspace_matrix.mjs#four_editor_panels_idempotent_stable_identity:receipt_or_event_assertion",
+        "Concepts/pm7-tools/verify/home_workspace_matrix.mjs#four_editor_panels_idempotent_stable_identity:accessibility_regression"
+      ],
+      "expected_event_types": [
+        "workspace.layout_changed"
+      ]
+    },
+    {
+      "control_id": "home.more_options.open_browser_panel_3",
+      "selector": "#pm-home-open-browser-flyout [data-pm-home-action=\"open-browser\"][data-pm-home-surface-id=\"editor_panel_3\"]",
+      "state_selector": "state.home_workspace.home_more_options_open_browser_panel_3.availability",
+      "disabled_reason_projection": "state.home_workspace.home_more_options_open_browser_panel_3.disabled_reason",
+      "command_or_view_only_disposition": "cmd.browser.open_workspace_preview",
+      "receipt_or_event": [
+        "workspace.layout_changed",
+        "browser.session.created",
+        "browser.session.state_changed"
+      ],
+      "handler": "handlers::browser::open_workspace_preview",
+      "production_wiring_row": "Plans/Wiring_Matrix.production.json#/entries/home.more_options.open_browser_panel_3",
+      "executable_test": [
+        "Concepts/pm7-tools/verify/home_workspace_matrix.mjs#browser_visible_routing_all_four_panels_one_session",
+        "Concepts/pm7-tools/verify/home_workspace_matrix.mjs#browser_visible_routing_all_four_panels_one_session:dispatcher_fixture",
+        "Concepts/pm7-tools/verify/home_workspace_matrix.mjs#browser_visible_routing_all_four_panels_one_session:state_projection",
+        "Concepts/pm7-tools/verify/home_workspace_matrix.mjs#browser_visible_routing_all_four_panels_one_session:receipt_or_event_assertion",
+        "Concepts/pm7-tools/verify/home_workspace_matrix.mjs#browser_visible_routing_all_four_panels_one_session:accessibility_regression"
+      ],
+      "expected_event_types": [
+        "workspace.layout_changed",
+        "browser.session.created",
+        "browser.session.state_changed"
+      ]
+    },
+    {
+      "control_id": "home.file_manager.open_panel_3",
+      "selector": "#pm-home-file-panel-menu [data-pm-home-action=\"file-open-panel\"][data-pm-home-surface-id=\"editor_panel_3\"]",
+      "state_selector": "state.home_workspace.home_file_manager_open_panel_3.availability",
+      "disabled_reason_projection": "state.home_workspace.home_file_manager_open_panel_3.disabled_reason",
+      "command_or_view_only_disposition": "cmd.file.open",
+      "receipt_or_event": [
+        "workspace.layout_changed"
+      ],
+      "handler": "handlers::file::open",
+      "production_wiring_row": "Plans/Wiring_Matrix.production.json#/entries/home.file_manager.open_panel_3",
+      "executable_test": [
+        "Concepts/pm7-tools/verify/home_workspace_matrix.mjs#file_manager_open_in_panel_visible_submenu_all_four",
+        "Concepts/pm7-tools/verify/home_workspace_matrix.mjs#file_manager_open_in_panel_visible_submenu_all_four:dispatcher_fixture",
+        "Concepts/pm7-tools/verify/home_workspace_matrix.mjs#file_manager_open_in_panel_visible_submenu_all_four:state_projection",
+        "Concepts/pm7-tools/verify/home_workspace_matrix.mjs#file_manager_open_in_panel_visible_submenu_all_four:receipt_or_event_assertion",
+        "Concepts/pm7-tools/verify/home_workspace_matrix.mjs#file_manager_open_in_panel_visible_submenu_all_four:accessibility_regression"
+      ],
+      "expected_event_types": [
+        "workspace.layout_changed"
+      ]
+    },
+    {
+      "control_id": "home.more_options.open_panel_4",
+      "selector": "#pm-home-open-panel-flyout [data-pm-home-action=\"open-panel\"][data-pm-home-surface-id=\"editor_panel_4\"]",
+      "state_selector": "state.home_workspace.home_more_options_open_panel_4.availability",
+      "disabled_reason_projection": "state.home_workspace.home_more_options_open_panel_4.disabled_reason",
+      "command_or_view_only_disposition": "cmd.editor.open_panel",
+      "receipt_or_event": [
+        "workspace.layout_changed"
+      ],
+      "handler": "handlers::editor::open_panel",
+      "production_wiring_row": "Plans/Wiring_Matrix.production.json#/entries/home.more_options.open_panel_4",
+      "executable_test": [
+        "Concepts/pm7-tools/verify/home_workspace_matrix.mjs#four_editor_panels_idempotent_stable_identity",
+        "Concepts/pm7-tools/verify/home_workspace_matrix.mjs#four_editor_panels_idempotent_stable_identity:dispatcher_fixture",
+        "Concepts/pm7-tools/verify/home_workspace_matrix.mjs#four_editor_panels_idempotent_stable_identity:state_projection",
+        "Concepts/pm7-tools/verify/home_workspace_matrix.mjs#four_editor_panels_idempotent_stable_identity:receipt_or_event_assertion",
+        "Concepts/pm7-tools/verify/home_workspace_matrix.mjs#four_editor_panels_idempotent_stable_identity:accessibility_regression"
+      ],
+      "expected_event_types": [
+        "workspace.layout_changed"
+      ]
+    },
+    {
+      "control_id": "home.more_options.open_browser_panel_4",
+      "selector": "#pm-home-open-browser-flyout [data-pm-home-action=\"open-browser\"][data-pm-home-surface-id=\"editor_panel_4\"]",
+      "state_selector": "state.home_workspace.home_more_options_open_browser_panel_4.availability",
+      "disabled_reason_projection": "state.home_workspace.home_more_options_open_browser_panel_4.disabled_reason",
+      "command_or_view_only_disposition": "cmd.browser.open_workspace_preview",
+      "receipt_or_event": [
+        "workspace.layout_changed",
+        "browser.session.created",
+        "browser.session.state_changed"
+      ],
+      "handler": "handlers::browser::open_workspace_preview",
+      "production_wiring_row": "Plans/Wiring_Matrix.production.json#/entries/home.more_options.open_browser_panel_4",
+      "executable_test": [
+        "Concepts/pm7-tools/verify/home_workspace_matrix.mjs#browser_visible_routing_all_four_panels_one_session",
+        "Concepts/pm7-tools/verify/home_workspace_matrix.mjs#browser_visible_routing_all_four_panels_one_session:dispatcher_fixture",
+        "Concepts/pm7-tools/verify/home_workspace_matrix.mjs#browser_visible_routing_all_four_panels_one_session:state_projection",
+        "Concepts/pm7-tools/verify/home_workspace_matrix.mjs#browser_visible_routing_all_four_panels_one_session:receipt_or_event_assertion",
+        "Concepts/pm7-tools/verify/home_workspace_matrix.mjs#browser_visible_routing_all_four_panels_one_session:accessibility_regression"
+      ],
+      "expected_event_types": [
+        "workspace.layout_changed",
+        "browser.session.created",
+        "browser.session.state_changed"
+      ]
+    },
+    {
+      "control_id": "home.file_manager.open_panel_4",
+      "selector": "#pm-home-file-panel-menu [data-pm-home-action=\"file-open-panel\"][data-pm-home-surface-id=\"editor_panel_4\"]",
+      "state_selector": "state.home_workspace.home_file_manager_open_panel_4.availability",
+      "disabled_reason_projection": "state.home_workspace.home_file_manager_open_panel_4.disabled_reason",
+      "command_or_view_only_disposition": "cmd.file.open",
+      "receipt_or_event": [
+        "workspace.layout_changed"
+      ],
+      "handler": "handlers::file::open",
+      "production_wiring_row": "Plans/Wiring_Matrix.production.json#/entries/home.file_manager.open_panel_4",
+      "executable_test": [
+        "Concepts/pm7-tools/verify/home_workspace_matrix.mjs#file_manager_open_in_panel_visible_submenu_all_four",
+        "Concepts/pm7-tools/verify/home_workspace_matrix.mjs#file_manager_open_in_panel_visible_submenu_all_four:dispatcher_fixture",
+        "Concepts/pm7-tools/verify/home_workspace_matrix.mjs#file_manager_open_in_panel_visible_submenu_all_four:state_projection",
+        "Concepts/pm7-tools/verify/home_workspace_matrix.mjs#file_manager_open_in_panel_visible_submenu_all_four:receipt_or_event_assertion",
+        "Concepts/pm7-tools/verify/home_workspace_matrix.mjs#file_manager_open_in_panel_visible_submenu_all_four:accessibility_regression"
+      ],
+      "expected_event_types": [
+        "workspace.layout_changed"
+      ]
+    },
+    {
+      "control_id": "home.editor_panel_1.grab",
+      "selector": "[data-pm-home-handle][data-pm-home-surface-id=\"editor_panel_1\"]",
+      "state_selector": "state.home_workspace.home_editor_panel_1_grab.availability",
+      "disabled_reason_projection": "state.home_workspace.home_editor_panel_1_grab.disabled_reason",
+      "command_or_view_only_disposition": "cmd.workspace_layout.move_surface",
+      "receipt_or_event": [
+        "workspace.layout_changed"
+      ],
+      "handler": "handlers::workspace_layout::move_surface",
+      "production_wiring_row": "Plans/Wiring_Matrix.production.json#/entries/home.editor_panel_1.grab",
+      "executable_test": [
+        "Concepts/pm7-tools/verify/home_workspace_matrix.mjs#drag_one_commit_and_all_cancellation_paths",
+        "Concepts/pm7-tools/verify/home_workspace_matrix.mjs#drag_one_commit_and_all_cancellation_paths:dispatcher_fixture",
+        "Concepts/pm7-tools/verify/home_workspace_matrix.mjs#drag_one_commit_and_all_cancellation_paths:state_projection",
+        "Concepts/pm7-tools/verify/home_workspace_matrix.mjs#drag_one_commit_and_all_cancellation_paths:receipt_or_event_assertion",
+        "Concepts/pm7-tools/verify/home_workspace_matrix.mjs#drag_one_commit_and_all_cancellation_paths:accessibility_regression"
+      ],
+      "expected_event_types": [
+        "workspace.layout_changed"
+      ]
+    },
+    {
+      "control_id": "home.editor_panel_1.move.home_main",
+      "selector": "#pm-home-surface-menu [data-pm-home-action=\"move-surface\"][data-pm-home-surface-id=\"editor_panel_1\"][data-pm-home-target-host=\"home_main\"]",
+      "state_selector": "state.home_workspace.home_editor_panel_1_move_home_main.availability",
+      "disabled_reason_projection": "state.home_workspace.home_editor_panel_1_move_home_main.disabled_reason",
+      "command_or_view_only_disposition": "cmd.workspace_layout.move_surface",
+      "receipt_or_event": [
+        "workspace.layout_changed"
+      ],
+      "handler": "handlers::workspace_layout::move_surface",
+      "production_wiring_row": "Plans/Wiring_Matrix.production.json#/entries/home.editor_panel_1.move.home_main",
+      "executable_test": [
+        "Concepts/pm7-tools/verify/home_workspace_matrix.mjs#surface_move_dock_float_inventory_and_commands",
+        "Concepts/pm7-tools/verify/home_workspace_matrix.mjs#surface_move_dock_float_inventory_and_commands:dispatcher_fixture",
+        "Concepts/pm7-tools/verify/home_workspace_matrix.mjs#surface_move_dock_float_inventory_and_commands:state_projection",
+        "Concepts/pm7-tools/verify/home_workspace_matrix.mjs#surface_move_dock_float_inventory_and_commands:receipt_or_event_assertion",
+        "Concepts/pm7-tools/verify/home_workspace_matrix.mjs#surface_move_dock_float_inventory_and_commands:accessibility_regression"
+      ],
+      "expected_event_types": [
+        "workspace.layout_changed"
+      ]
+    },
+    {
+      "control_id": "home.editor_panel_1.redock.home_main",
+      "selector": "#pm-home-surface-menu [data-pm-home-action=\"move-surface\"][data-pm-home-surface-id=\"editor_panel_1\"][data-pm-home-target-host=\"home_main\"]",
+      "state_selector": "state.home_workspace.home_editor_panel_1_redock_home_main.availability",
+      "disabled_reason_projection": "state.home_workspace.home_editor_panel_1_redock_home_main.disabled_reason",
+      "command_or_view_only_disposition": "cmd.panel.redock",
+      "receipt_or_event": [
+        "workspace.layout_changed",
+        "panel.redocked"
+      ],
+      "handler": "handlers::panel::redock",
+      "production_wiring_row": "Plans/Wiring_Matrix.production.json#/entries/home.editor_panel_1.redock.home_main",
+      "executable_test": [
+        "Concepts/pm7-tools/verify/home_workspace_matrix.mjs#surface_move_dock_float_inventory_and_commands",
+        "Concepts/pm7-tools/verify/home_workspace_matrix.mjs#surface_move_dock_float_inventory_and_commands:dispatcher_fixture",
+        "Concepts/pm7-tools/verify/home_workspace_matrix.mjs#surface_move_dock_float_inventory_and_commands:state_projection",
+        "Concepts/pm7-tools/verify/home_workspace_matrix.mjs#surface_move_dock_float_inventory_and_commands:receipt_or_event_assertion",
+        "Concepts/pm7-tools/verify/home_workspace_matrix.mjs#surface_move_dock_float_inventory_and_commands:accessibility_regression"
+      ],
+      "expected_event_types": [
+        "workspace.layout_changed",
+        "panel.redocked"
+      ]
+    },
+    {
+      "control_id": "home.editor_panel_1.move.dock_left",
+      "selector": "#pm-home-surface-menu [data-pm-home-action=\"move-surface\"][data-pm-home-surface-id=\"editor_panel_1\"][data-pm-home-target-host=\"dock_left\"]",
+      "state_selector": "state.home_workspace.home_editor_panel_1_move_dock_left.availability",
+      "disabled_reason_projection": "state.home_workspace.home_editor_panel_1_move_dock_left.disabled_reason",
+      "command_or_view_only_disposition": "cmd.workspace_layout.move_surface",
+      "receipt_or_event": [
+        "workspace.layout_changed"
+      ],
+      "handler": "handlers::workspace_layout::move_surface",
+      "production_wiring_row": "Plans/Wiring_Matrix.production.json#/entries/home.editor_panel_1.move.dock_left",
+      "executable_test": [
+        "Concepts/pm7-tools/verify/home_workspace_matrix.mjs#surface_move_dock_float_inventory_and_commands",
+        "Concepts/pm7-tools/verify/home_workspace_matrix.mjs#surface_move_dock_float_inventory_and_commands:dispatcher_fixture",
+        "Concepts/pm7-tools/verify/home_workspace_matrix.mjs#surface_move_dock_float_inventory_and_commands:state_projection",
+        "Concepts/pm7-tools/verify/home_workspace_matrix.mjs#surface_move_dock_float_inventory_and_commands:receipt_or_event_assertion",
+        "Concepts/pm7-tools/verify/home_workspace_matrix.mjs#surface_move_dock_float_inventory_and_commands:accessibility_regression"
+      ],
+      "expected_event_types": [
+        "workspace.layout_changed"
+      ]
+    },
+    {
+      "control_id": "home.editor_panel_1.redock.dock_left",
+      "selector": "#pm-home-surface-menu [data-pm-home-action=\"move-surface\"][data-pm-home-surface-id=\"editor_panel_1\"][data-pm-home-target-host=\"dock_left\"]",
+      "state_selector": "state.home_workspace.home_editor_panel_1_redock_dock_left.availability",
+      "disabled_reason_projection": "state.home_workspace.home_editor_panel_1_redock_dock_left.disabled_reason",
+      "command_or_view_only_disposition": "cmd.panel.redock",
+      "receipt_or_event": [
+        "workspace.layout_changed",
+        "panel.redocked"
+      ],
+      "handler": "handlers::panel::redock",
+      "production_wiring_row": "Plans/Wiring_Matrix.production.json#/entries/home.editor_panel_1.redock.dock_left",
+      "executable_test": [
+        "Concepts/pm7-tools/verify/home_workspace_matrix.mjs#surface_move_dock_float_inventory_and_commands",
+        "Concepts/pm7-tools/verify/home_workspace_matrix.mjs#surface_move_dock_float_inventory_and_commands:dispatcher_fixture",
+        "Concepts/pm7-tools/verify/home_workspace_matrix.mjs#surface_move_dock_float_inventory_and_commands:state_projection",
+        "Concepts/pm7-tools/verify/home_workspace_matrix.mjs#surface_move_dock_float_inventory_and_commands:receipt_or_event_assertion",
+        "Concepts/pm7-tools/verify/home_workspace_matrix.mjs#surface_move_dock_float_inventory_and_commands:accessibility_regression"
+      ],
+      "expected_event_types": [
+        "workspace.layout_changed",
+        "panel.redocked"
+      ]
+    },
+    {
+      "control_id": "home.editor_panel_1.move.dock_right",
+      "selector": "#pm-home-surface-menu [data-pm-home-action=\"move-surface\"][data-pm-home-surface-id=\"editor_panel_1\"][data-pm-home-target-host=\"dock_right\"]",
+      "state_selector": "state.home_workspace.home_editor_panel_1_move_dock_right.availability",
+      "disabled_reason_projection": "state.home_workspace.home_editor_panel_1_move_dock_right.disabled_reason",
+      "command_or_view_only_disposition": "cmd.workspace_layout.move_surface",
+      "receipt_or_event": [
+        "workspace.layout_changed"
+      ],
+      "handler": "handlers::workspace_layout::move_surface",
+      "production_wiring_row": "Plans/Wiring_Matrix.production.json#/entries/home.editor_panel_1.move.dock_right",
+      "executable_test": [
+        "Concepts/pm7-tools/verify/home_workspace_matrix.mjs#surface_move_dock_float_inventory_and_commands",
+        "Concepts/pm7-tools/verify/home_workspace_matrix.mjs#surface_move_dock_float_inventory_and_commands:dispatcher_fixture",
+        "Concepts/pm7-tools/verify/home_workspace_matrix.mjs#surface_move_dock_float_inventory_and_commands:state_projection",
+        "Concepts/pm7-tools/verify/home_workspace_matrix.mjs#surface_move_dock_float_inventory_and_commands:receipt_or_event_assertion",
+        "Concepts/pm7-tools/verify/home_workspace_matrix.mjs#surface_move_dock_float_inventory_and_commands:accessibility_regression"
+      ],
+      "expected_event_types": [
+        "workspace.layout_changed"
+      ]
+    },
+    {
+      "control_id": "home.editor_panel_1.redock.dock_right",
+      "selector": "#pm-home-surface-menu [data-pm-home-action=\"move-surface\"][data-pm-home-surface-id=\"editor_panel_1\"][data-pm-home-target-host=\"dock_right\"]",
+      "state_selector": "state.home_workspace.home_editor_panel_1_redock_dock_right.availability",
+      "disabled_reason_projection": "state.home_workspace.home_editor_panel_1_redock_dock_right.disabled_reason",
+      "command_or_view_only_disposition": "cmd.panel.redock",
+      "receipt_or_event": [
+        "workspace.layout_changed",
+        "panel.redocked"
+      ],
+      "handler": "handlers::panel::redock",
+      "production_wiring_row": "Plans/Wiring_Matrix.production.json#/entries/home.editor_panel_1.redock.dock_right",
+      "executable_test": [
+        "Concepts/pm7-tools/verify/home_workspace_matrix.mjs#surface_move_dock_float_inventory_and_commands",
+        "Concepts/pm7-tools/verify/home_workspace_matrix.mjs#surface_move_dock_float_inventory_and_commands:dispatcher_fixture",
+        "Concepts/pm7-tools/verify/home_workspace_matrix.mjs#surface_move_dock_float_inventory_and_commands:state_projection",
+        "Concepts/pm7-tools/verify/home_workspace_matrix.mjs#surface_move_dock_float_inventory_and_commands:receipt_or_event_assertion",
+        "Concepts/pm7-tools/verify/home_workspace_matrix.mjs#surface_move_dock_float_inventory_and_commands:accessibility_regression"
+      ],
+      "expected_event_types": [
+        "workspace.layout_changed",
+        "panel.redocked"
+      ]
+    },
+    {
+      "control_id": "home.editor_panel_1.move.dock_top",
+      "selector": "#pm-home-surface-menu [data-pm-home-action=\"move-surface\"][data-pm-home-surface-id=\"editor_panel_1\"][data-pm-home-target-host=\"dock_top\"]",
+      "state_selector": "state.home_workspace.home_editor_panel_1_move_dock_top.availability",
+      "disabled_reason_projection": "state.home_workspace.home_editor_panel_1_move_dock_top.disabled_reason",
+      "command_or_view_only_disposition": "cmd.workspace_layout.move_surface",
+      "receipt_or_event": [
+        "workspace.layout_changed"
+      ],
+      "handler": "handlers::workspace_layout::move_surface",
+      "production_wiring_row": "Plans/Wiring_Matrix.production.json#/entries/home.editor_panel_1.move.dock_top",
+      "executable_test": [
+        "Concepts/pm7-tools/verify/home_workspace_matrix.mjs#surface_move_dock_float_inventory_and_commands",
+        "Concepts/pm7-tools/verify/home_workspace_matrix.mjs#surface_move_dock_float_inventory_and_commands:dispatcher_fixture",
+        "Concepts/pm7-tools/verify/home_workspace_matrix.mjs#surface_move_dock_float_inventory_and_commands:state_projection",
+        "Concepts/pm7-tools/verify/home_workspace_matrix.mjs#surface_move_dock_float_inventory_and_commands:receipt_or_event_assertion",
+        "Concepts/pm7-tools/verify/home_workspace_matrix.mjs#surface_move_dock_float_inventory_and_commands:accessibility_regression"
+      ],
+      "expected_event_types": [
+        "workspace.layout_changed"
+      ]
+    },
+    {
+      "control_id": "home.editor_panel_1.redock.dock_top",
+      "selector": "#pm-home-surface-menu [data-pm-home-action=\"move-surface\"][data-pm-home-surface-id=\"editor_panel_1\"][data-pm-home-target-host=\"dock_top\"]",
+      "state_selector": "state.home_workspace.home_editor_panel_1_redock_dock_top.availability",
+      "disabled_reason_projection": "state.home_workspace.home_editor_panel_1_redock_dock_top.disabled_reason",
+      "command_or_view_only_disposition": "cmd.panel.redock",
+      "receipt_or_event": [
+        "workspace.layout_changed",
+        "panel.redocked"
+      ],
+      "handler": "handlers::panel::redock",
+      "production_wiring_row": "Plans/Wiring_Matrix.production.json#/entries/home.editor_panel_1.redock.dock_top",
+      "executable_test": [
+        "Concepts/pm7-tools/verify/home_workspace_matrix.mjs#surface_move_dock_float_inventory_and_commands",
+        "Concepts/pm7-tools/verify/home_workspace_matrix.mjs#surface_move_dock_float_inventory_and_commands:dispatcher_fixture",
+        "Concepts/pm7-tools/verify/home_workspace_matrix.mjs#surface_move_dock_float_inventory_and_commands:state_projection",
+        "Concepts/pm7-tools/verify/home_workspace_matrix.mjs#surface_move_dock_float_inventory_and_commands:receipt_or_event_assertion",
+        "Concepts/pm7-tools/verify/home_workspace_matrix.mjs#surface_move_dock_float_inventory_and_commands:accessibility_regression"
+      ],
+      "expected_event_types": [
+        "workspace.layout_changed",
+        "panel.redocked"
+      ]
+    },
+    {
+      "control_id": "home.editor_panel_1.move.dock_bottom",
+      "selector": "#pm-home-surface-menu [data-pm-home-action=\"move-surface\"][data-pm-home-surface-id=\"editor_panel_1\"][data-pm-home-target-host=\"dock_bottom\"]",
+      "state_selector": "state.home_workspace.home_editor_panel_1_move_dock_bottom.availability",
+      "disabled_reason_projection": "state.home_workspace.home_editor_panel_1_move_dock_bottom.disabled_reason",
+      "command_or_view_only_disposition": "cmd.workspace_layout.move_surface",
+      "receipt_or_event": [
+        "workspace.layout_changed"
+      ],
+      "handler": "handlers::workspace_layout::move_surface",
+      "production_wiring_row": "Plans/Wiring_Matrix.production.json#/entries/home.editor_panel_1.move.dock_bottom",
+      "executable_test": [
+        "Concepts/pm7-tools/verify/home_workspace_matrix.mjs#surface_move_dock_float_inventory_and_commands",
+        "Concepts/pm7-tools/verify/home_workspace_matrix.mjs#surface_move_dock_float_inventory_and_commands:dispatcher_fixture",
+        "Concepts/pm7-tools/verify/home_workspace_matrix.mjs#surface_move_dock_float_inventory_and_commands:state_projection",
+        "Concepts/pm7-tools/verify/home_workspace_matrix.mjs#surface_move_dock_float_inventory_and_commands:receipt_or_event_assertion",
+        "Concepts/pm7-tools/verify/home_workspace_matrix.mjs#surface_move_dock_float_inventory_and_commands:accessibility_regression"
+      ],
+      "expected_event_types": [
+        "workspace.layout_changed"
+      ]
+    },
+    {
+      "control_id": "home.editor_panel_1.redock.dock_bottom",
+      "selector": "#pm-home-surface-menu [data-pm-home-action=\"move-surface\"][data-pm-home-surface-id=\"editor_panel_1\"][data-pm-home-target-host=\"dock_bottom\"]",
+      "state_selector": "state.home_workspace.home_editor_panel_1_redock_dock_bottom.availability",
+      "disabled_reason_projection": "state.home_workspace.home_editor_panel_1_redock_dock_bottom.disabled_reason",
+      "command_or_view_only_disposition": "cmd.panel.redock",
+      "receipt_or_event": [
+        "workspace.layout_changed",
+        "panel.redocked"
+      ],
+      "handler": "handlers::panel::redock",
+      "production_wiring_row": "Plans/Wiring_Matrix.production.json#/entries/home.editor_panel_1.redock.dock_bottom",
+      "executable_test": [
+        "Concepts/pm7-tools/verify/home_workspace_matrix.mjs#surface_move_dock_float_inventory_and_commands",
+        "Concepts/pm7-tools/verify/home_workspace_matrix.mjs#surface_move_dock_float_inventory_and_commands:dispatcher_fixture",
+        "Concepts/pm7-tools/verify/home_workspace_matrix.mjs#surface_move_dock_float_inventory_and_commands:state_projection",
+        "Concepts/pm7-tools/verify/home_workspace_matrix.mjs#surface_move_dock_float_inventory_and_commands:receipt_or_event_assertion",
+        "Concepts/pm7-tools/verify/home_workspace_matrix.mjs#surface_move_dock_float_inventory_and_commands:accessibility_regression"
+      ],
+      "expected_event_types": [
+        "workspace.layout_changed",
+        "panel.redocked"
+      ]
+    },
+    {
+      "control_id": "home.editor_panel_1.move.floating",
+      "selector": "#pm-home-surface-menu [data-pm-home-action=\"move-surface\"][data-pm-home-surface-id=\"editor_panel_1\"][data-pm-home-target-host=\"floating\"]",
+      "state_selector": "state.home_workspace.home_editor_panel_1_move_floating.availability",
+      "disabled_reason_projection": "state.home_workspace.home_editor_panel_1_move_floating.disabled_reason",
+      "command_or_view_only_disposition": "cmd.panel.undock",
+      "receipt_or_event": [
+        "workspace.layout_changed",
+        "panel.undocked"
+      ],
+      "handler": "handlers::panel::undock",
+      "production_wiring_row": "Plans/Wiring_Matrix.production.json#/entries/home.editor_panel_1.move.floating",
+      "executable_test": [
+        "Concepts/pm7-tools/verify/home_workspace_matrix.mjs#surface_move_dock_float_inventory_and_commands",
+        "Concepts/pm7-tools/verify/home_workspace_matrix.mjs#surface_move_dock_float_inventory_and_commands:dispatcher_fixture",
+        "Concepts/pm7-tools/verify/home_workspace_matrix.mjs#surface_move_dock_float_inventory_and_commands:state_projection",
+        "Concepts/pm7-tools/verify/home_workspace_matrix.mjs#surface_move_dock_float_inventory_and_commands:receipt_or_event_assertion",
+        "Concepts/pm7-tools/verify/home_workspace_matrix.mjs#surface_move_dock_float_inventory_and_commands:accessibility_regression"
+      ],
+      "expected_event_types": [
+        "workspace.layout_changed",
+        "panel.undocked"
+      ]
+    },
+    {
+      "control_id": "home.editor_panel_2.grab",
+      "selector": "[data-pm-home-handle][data-pm-home-surface-id=\"editor_panel_2\"]",
+      "state_selector": "state.home_workspace.home_editor_panel_2_grab.availability",
+      "disabled_reason_projection": "state.home_workspace.home_editor_panel_2_grab.disabled_reason",
+      "command_or_view_only_disposition": "cmd.workspace_layout.move_surface",
+      "receipt_or_event": [
+        "workspace.layout_changed"
+      ],
+      "handler": "handlers::workspace_layout::move_surface",
+      "production_wiring_row": "Plans/Wiring_Matrix.production.json#/entries/home.editor_panel_2.grab",
+      "executable_test": [
+        "Concepts/pm7-tools/verify/home_workspace_matrix.mjs#drag_one_commit_and_all_cancellation_paths",
+        "Concepts/pm7-tools/verify/home_workspace_matrix.mjs#drag_one_commit_and_all_cancellation_paths:dispatcher_fixture",
+        "Concepts/pm7-tools/verify/home_workspace_matrix.mjs#drag_one_commit_and_all_cancellation_paths:state_projection",
+        "Concepts/pm7-tools/verify/home_workspace_matrix.mjs#drag_one_commit_and_all_cancellation_paths:receipt_or_event_assertion",
+        "Concepts/pm7-tools/verify/home_workspace_matrix.mjs#drag_one_commit_and_all_cancellation_paths:accessibility_regression"
+      ],
+      "expected_event_types": [
+        "workspace.layout_changed"
+      ]
+    },
+    {
+      "control_id": "home.editor_panel_2.move.home_main",
+      "selector": "#pm-home-surface-menu [data-pm-home-action=\"move-surface\"][data-pm-home-surface-id=\"editor_panel_2\"][data-pm-home-target-host=\"home_main\"]",
+      "state_selector": "state.home_workspace.home_editor_panel_2_move_home_main.availability",
+      "disabled_reason_projection": "state.home_workspace.home_editor_panel_2_move_home_main.disabled_reason",
+      "command_or_view_only_disposition": "cmd.workspace_layout.move_surface",
+      "receipt_or_event": [
+        "workspace.layout_changed"
+      ],
+      "handler": "handlers::workspace_layout::move_surface",
+      "production_wiring_row": "Plans/Wiring_Matrix.production.json#/entries/home.editor_panel_2.move.home_main",
+      "executable_test": [
+        "Concepts/pm7-tools/verify/home_workspace_matrix.mjs#surface_move_dock_float_inventory_and_commands",
+        "Concepts/pm7-tools/verify/home_workspace_matrix.mjs#surface_move_dock_float_inventory_and_commands:dispatcher_fixture",
+        "Concepts/pm7-tools/verify/home_workspace_matrix.mjs#surface_move_dock_float_inventory_and_commands:state_projection",
+        "Concepts/pm7-tools/verify/home_workspace_matrix.mjs#surface_move_dock_float_inventory_and_commands:receipt_or_event_assertion",
+        "Concepts/pm7-tools/verify/home_workspace_matrix.mjs#surface_move_dock_float_inventory_and_commands:accessibility_regression"
+      ],
+      "expected_event_types": [
+        "workspace.layout_changed"
+      ]
+    },
+    {
+      "control_id": "home.editor_panel_2.redock.home_main",
+      "selector": "#pm-home-surface-menu [data-pm-home-action=\"move-surface\"][data-pm-home-surface-id=\"editor_panel_2\"][data-pm-home-target-host=\"home_main\"]",
+      "state_selector": "state.home_workspace.home_editor_panel_2_redock_home_main.availability",
+      "disabled_reason_projection": "state.home_workspace.home_editor_panel_2_redock_home_main.disabled_reason",
+      "command_or_view_only_disposition": "cmd.panel.redock",
+      "receipt_or_event": [
+        "workspace.layout_changed",
+        "panel.redocked"
+      ],
+      "handler": "handlers::panel::redock",
+      "production_wiring_row": "Plans/Wiring_Matrix.production.json#/entries/home.editor_panel_2.redock.home_main",
+      "executable_test": [
+        "Concepts/pm7-tools/verify/home_workspace_matrix.mjs#surface_move_dock_float_inventory_and_commands",
+        "Concepts/pm7-tools/verify/home_workspace_matrix.mjs#surface_move_dock_float_inventory_and_commands:dispatcher_fixture",
+        "Concepts/pm7-tools/verify/home_workspace_matrix.mjs#surface_move_dock_float_inventory_and_commands:state_projection",
+        "Concepts/pm7-tools/verify/home_workspace_matrix.mjs#surface_move_dock_float_inventory_and_commands:receipt_or_event_assertion",
+        "Concepts/pm7-tools/verify/home_workspace_matrix.mjs#surface_move_dock_float_inventory_and_commands:accessibility_regression"
+      ],
+      "expected_event_types": [
+        "workspace.layout_changed",
+        "panel.redocked"
+      ]
+    },
+    {
+      "control_id": "home.editor_panel_2.move.dock_left",
+      "selector": "#pm-home-surface-menu [data-pm-home-action=\"move-surface\"][data-pm-home-surface-id=\"editor_panel_2\"][data-pm-home-target-host=\"dock_left\"]",
+      "state_selector": "state.home_workspace.home_editor_panel_2_move_dock_left.availability",
+      "disabled_reason_projection": "state.home_workspace.home_editor_panel_2_move_dock_left.disabled_reason",
+      "command_or_view_only_disposition": "cmd.workspace_layout.move_surface",
+      "receipt_or_event": [
+        "workspace.layout_changed"
+      ],
+      "handler": "handlers::workspace_layout::move_surface",
+      "production_wiring_row": "Plans/Wiring_Matrix.production.json#/entries/home.editor_panel_2.move.dock_left",
+      "executable_test": [
+        "Concepts/pm7-tools/verify/home_workspace_matrix.mjs#surface_move_dock_float_inventory_and_commands",
+        "Concepts/pm7-tools/verify/home_workspace_matrix.mjs#surface_move_dock_float_inventory_and_commands:dispatcher_fixture",
+        "Concepts/pm7-tools/verify/home_workspace_matrix.mjs#surface_move_dock_float_inventory_and_commands:state_projection",
+        "Concepts/pm7-tools/verify/home_workspace_matrix.mjs#surface_move_dock_float_inventory_and_commands:receipt_or_event_assertion",
+        "Concepts/pm7-tools/verify/home_workspace_matrix.mjs#surface_move_dock_float_inventory_and_commands:accessibility_regression"
+      ],
+      "expected_event_types": [
+        "workspace.layout_changed"
+      ]
+    },
+    {
+      "control_id": "home.editor_panel_2.redock.dock_left",
+      "selector": "#pm-home-surface-menu [data-pm-home-action=\"move-surface\"][data-pm-home-surface-id=\"editor_panel_2\"][data-pm-home-target-host=\"dock_left\"]",
+      "state_selector": "state.home_workspace.home_editor_panel_2_redock_dock_left.availability",
+      "disabled_reason_projection": "state.home_workspace.home_editor_panel_2_redock_dock_left.disabled_reason",
+      "command_or_view_only_disposition": "cmd.panel.redock",
+      "receipt_or_event": [
+        "workspace.layout_changed",
+        "panel.redocked"
+      ],
+      "handler": "handlers::panel::redock",
+      "production_wiring_row": "Plans/Wiring_Matrix.production.json#/entries/home.editor_panel_2.redock.dock_left",
+      "executable_test": [
+        "Concepts/pm7-tools/verify/home_workspace_matrix.mjs#surface_move_dock_float_inventory_and_commands",
+        "Concepts/pm7-tools/verify/home_workspace_matrix.mjs#surface_move_dock_float_inventory_and_commands:dispatcher_fixture",
+        "Concepts/pm7-tools/verify/home_workspace_matrix.mjs#surface_move_dock_float_inventory_and_commands:state_projection",
+        "Concepts/pm7-tools/verify/home_workspace_matrix.mjs#surface_move_dock_float_inventory_and_commands:receipt_or_event_assertion",
+        "Concepts/pm7-tools/verify/home_workspace_matrix.mjs#surface_move_dock_float_inventory_and_commands:accessibility_regression"
+      ],
+      "expected_event_types": [
+        "workspace.layout_changed",
+        "panel.redocked"
+      ]
+    },
+    {
+      "control_id": "home.editor_panel_2.move.dock_right",
+      "selector": "#pm-home-surface-menu [data-pm-home-action=\"move-surface\"][data-pm-home-surface-id=\"editor_panel_2\"][data-pm-home-target-host=\"dock_right\"]",
+      "state_selector": "state.home_workspace.home_editor_panel_2_move_dock_right.availability",
+      "disabled_reason_projection": "state.home_workspace.home_editor_panel_2_move_dock_right.disabled_reason",
+      "command_or_view_only_disposition": "cmd.workspace_layout.move_surface",
+      "receipt_or_event": [
+        "workspace.layout_changed"
+      ],
+      "handler": "handlers::workspace_layout::move_surface",
+      "production_wiring_row": "Plans/Wiring_Matrix.production.json#/entries/home.editor_panel_2.move.dock_right",
+      "executable_test": [
+        "Concepts/pm7-tools/verify/home_workspace_matrix.mjs#surface_move_dock_float_inventory_and_commands",
+        "Concepts/pm7-tools/verify/home_workspace_matrix.mjs#surface_move_dock_float_inventory_and_commands:dispatcher_fixture",
+        "Concepts/pm7-tools/verify/home_workspace_matrix.mjs#surface_move_dock_float_inventory_and_commands:state_projection",
+        "Concepts/pm7-tools/verify/home_workspace_matrix.mjs#surface_move_dock_float_inventory_and_commands:receipt_or_event_assertion",
+        "Concepts/pm7-tools/verify/home_workspace_matrix.mjs#surface_move_dock_float_inventory_and_commands:accessibility_regression"
+      ],
+      "expected_event_types": [
+        "workspace.layout_changed"
+      ]
+    },
+    {
+      "control_id": "home.editor_panel_2.redock.dock_right",
+      "selector": "#pm-home-surface-menu [data-pm-home-action=\"move-surface\"][data-pm-home-surface-id=\"editor_panel_2\"][data-pm-home-target-host=\"dock_right\"]",
+      "state_selector": "state.home_workspace.home_editor_panel_2_redock_dock_right.availability",
+      "disabled_reason_projection": "state.home_workspace.home_editor_panel_2_redock_dock_right.disabled_reason",
+      "command_or_view_only_disposition": "cmd.panel.redock",
+      "receipt_or_event": [
+        "workspace.layout_changed",
+        "panel.redocked"
+      ],
+      "handler": "handlers::panel::redock",
+      "production_wiring_row": "Plans/Wiring_Matrix.production.json#/entries/home.editor_panel_2.redock.dock_right",
+      "executable_test": [
+        "Concepts/pm7-tools/verify/home_workspace_matrix.mjs#surface_move_dock_float_inventory_and_commands",
+        "Concepts/pm7-tools/verify/home_workspace_matrix.mjs#surface_move_dock_float_inventory_and_commands:dispatcher_fixture",
+        "Concepts/pm7-tools/verify/home_workspace_matrix.mjs#surface_move_dock_float_inventory_and_commands:state_projection",
+        "Concepts/pm7-tools/verify/home_workspace_matrix.mjs#surface_move_dock_float_inventory_and_commands:receipt_or_event_assertion",
+        "Concepts/pm7-tools/verify/home_workspace_matrix.mjs#surface_move_dock_float_inventory_and_commands:accessibility_regression"
+      ],
+      "expected_event_types": [
+        "workspace.layout_changed",
+        "panel.redocked"
+      ]
+    },
+    {
+      "control_id": "home.editor_panel_2.move.dock_top",
+      "selector": "#pm-home-surface-menu [data-pm-home-action=\"move-surface\"][data-pm-home-surface-id=\"editor_panel_2\"][data-pm-home-target-host=\"dock_top\"]",
+      "state_selector": "state.home_workspace.home_editor_panel_2_move_dock_top.availability",
+      "disabled_reason_projection": "state.home_workspace.home_editor_panel_2_move_dock_top.disabled_reason",
+      "command_or_view_only_disposition": "cmd.workspace_layout.move_surface",
+      "receipt_or_event": [
+        "workspace.layout_changed"
+      ],
+      "handler": "handlers::workspace_layout::move_surface",
+      "production_wiring_row": "Plans/Wiring_Matrix.production.json#/entries/home.editor_panel_2.move.dock_top",
+      "executable_test": [
+        "Concepts/pm7-tools/verify/home_workspace_matrix.mjs#surface_move_dock_float_inventory_and_commands",
+        "Concepts/pm7-tools/verify/home_workspace_matrix.mjs#surface_move_dock_float_inventory_and_commands:dispatcher_fixture",
+        "Concepts/pm7-tools/verify/home_workspace_matrix.mjs#surface_move_dock_float_inventory_and_commands:state_projection",
+        "Concepts/pm7-tools/verify/home_workspace_matrix.mjs#surface_move_dock_float_inventory_and_commands:receipt_or_event_assertion",
+        "Concepts/pm7-tools/verify/home_workspace_matrix.mjs#surface_move_dock_float_inventory_and_commands:accessibility_regression"
+      ],
+      "expected_event_types": [
+        "workspace.layout_changed"
+      ]
+    },
+    {
+      "control_id": "home.editor_panel_2.redock.dock_top",
+      "selector": "#pm-home-surface-menu [data-pm-home-action=\"move-surface\"][data-pm-home-surface-id=\"editor_panel_2\"][data-pm-home-target-host=\"dock_top\"]",
+      "state_selector": "state.home_workspace.home_editor_panel_2_redock_dock_top.availability",
+      "disabled_reason_projection": "state.home_workspace.home_editor_panel_2_redock_dock_top.disabled_reason",
+      "command_or_view_only_disposition": "cmd.panel.redock",
+      "receipt_or_event": [
+        "workspace.layout_changed",
+        "panel.redocked"
+      ],
+      "handler": "handlers::panel::redock",
+      "production_wiring_row": "Plans/Wiring_Matrix.production.json#/entries/home.editor_panel_2.redock.dock_top",
+      "executable_test": [
+        "Concepts/pm7-tools/verify/home_workspace_matrix.mjs#surface_move_dock_float_inventory_and_commands",
+        "Concepts/pm7-tools/verify/home_workspace_matrix.mjs#surface_move_dock_float_inventory_and_commands:dispatcher_fixture",
+        "Concepts/pm7-tools/verify/home_workspace_matrix.mjs#surface_move_dock_float_inventory_and_commands:state_projection",
+        "Concepts/pm7-tools/verify/home_workspace_matrix.mjs#surface_move_dock_float_inventory_and_commands:receipt_or_event_assertion",
+        "Concepts/pm7-tools/verify/home_workspace_matrix.mjs#surface_move_dock_float_inventory_and_commands:accessibility_regression"
+      ],
+      "expected_event_types": [
+        "workspace.layout_changed",
+        "panel.redocked"
+      ]
+    },
+    {
+      "control_id": "home.editor_panel_2.move.dock_bottom",
+      "selector": "#pm-home-surface-menu [data-pm-home-action=\"move-surface\"][data-pm-home-surface-id=\"editor_panel_2\"][data-pm-home-target-host=\"dock_bottom\"]",
+      "state_selector": "state.home_workspace.home_editor_panel_2_move_dock_bottom.availability",
+      "disabled_reason_projection": "state.home_workspace.home_editor_panel_2_move_dock_bottom.disabled_reason",
+      "command_or_view_only_disposition": "cmd.workspace_layout.move_surface",
+      "receipt_or_event": [
+        "workspace.layout_changed"
+      ],
+      "handler": "handlers::workspace_layout::move_surface",
+      "production_wiring_row": "Plans/Wiring_Matrix.production.json#/entries/home.editor_panel_2.move.dock_bottom",
+      "executable_test": [
+        "Concepts/pm7-tools/verify/home_workspace_matrix.mjs#surface_move_dock_float_inventory_and_commands",
+        "Concepts/pm7-tools/verify/home_workspace_matrix.mjs#surface_move_dock_float_inventory_and_commands:dispatcher_fixture",
+        "Concepts/pm7-tools/verify/home_workspace_matrix.mjs#surface_move_dock_float_inventory_and_commands:state_projection",
+        "Concepts/pm7-tools/verify/home_workspace_matrix.mjs#surface_move_dock_float_inventory_and_commands:receipt_or_event_assertion",
+        "Concepts/pm7-tools/verify/home_workspace_matrix.mjs#surface_move_dock_float_inventory_and_commands:accessibility_regression"
+      ],
+      "expected_event_types": [
+        "workspace.layout_changed"
+      ]
+    },
+    {
+      "control_id": "home.editor_panel_2.redock.dock_bottom",
+      "selector": "#pm-home-surface-menu [data-pm-home-action=\"move-surface\"][data-pm-home-surface-id=\"editor_panel_2\"][data-pm-home-target-host=\"dock_bottom\"]",
+      "state_selector": "state.home_workspace.home_editor_panel_2_redock_dock_bottom.availability",
+      "disabled_reason_projection": "state.home_workspace.home_editor_panel_2_redock_dock_bottom.disabled_reason",
+      "command_or_view_only_disposition": "cmd.panel.redock",
+      "receipt_or_event": [
+        "workspace.layout_changed",
+        "panel.redocked"
+      ],
+      "handler": "handlers::panel::redock",
+      "production_wiring_row": "Plans/Wiring_Matrix.production.json#/entries/home.editor_panel_2.redock.dock_bottom",
+      "executable_test": [
+        "Concepts/pm7-tools/verify/home_workspace_matrix.mjs#surface_move_dock_float_inventory_and_commands",
+        "Concepts/pm7-tools/verify/home_workspace_matrix.mjs#surface_move_dock_float_inventory_and_commands:dispatcher_fixture",
+        "Concepts/pm7-tools/verify/home_workspace_matrix.mjs#surface_move_dock_float_inventory_and_commands:state_projection",
+        "Concepts/pm7-tools/verify/home_workspace_matrix.mjs#surface_move_dock_float_inventory_and_commands:receipt_or_event_assertion",
+        "Concepts/pm7-tools/verify/home_workspace_matrix.mjs#surface_move_dock_float_inventory_and_commands:accessibility_regression"
+      ],
+      "expected_event_types": [
+        "workspace.layout_changed",
+        "panel.redocked"
+      ]
+    },
+    {
+      "control_id": "home.editor_panel_2.move.floating",
+      "selector": "#pm-home-surface-menu [data-pm-home-action=\"move-surface\"][data-pm-home-surface-id=\"editor_panel_2\"][data-pm-home-target-host=\"floating\"]",
+      "state_selector": "state.home_workspace.home_editor_panel_2_move_floating.availability",
+      "disabled_reason_projection": "state.home_workspace.home_editor_panel_2_move_floating.disabled_reason",
+      "command_or_view_only_disposition": "cmd.panel.undock",
+      "receipt_or_event": [
+        "workspace.layout_changed",
+        "panel.undocked"
+      ],
+      "handler": "handlers::panel::undock",
+      "production_wiring_row": "Plans/Wiring_Matrix.production.json#/entries/home.editor_panel_2.move.floating",
+      "executable_test": [
+        "Concepts/pm7-tools/verify/home_workspace_matrix.mjs#surface_move_dock_float_inventory_and_commands",
+        "Concepts/pm7-tools/verify/home_workspace_matrix.mjs#surface_move_dock_float_inventory_and_commands:dispatcher_fixture",
+        "Concepts/pm7-tools/verify/home_workspace_matrix.mjs#surface_move_dock_float_inventory_and_commands:state_projection",
+        "Concepts/pm7-tools/verify/home_workspace_matrix.mjs#surface_move_dock_float_inventory_and_commands:receipt_or_event_assertion",
+        "Concepts/pm7-tools/verify/home_workspace_matrix.mjs#surface_move_dock_float_inventory_and_commands:accessibility_regression"
+      ],
+      "expected_event_types": [
+        "workspace.layout_changed",
+        "panel.undocked"
+      ]
+    },
+    {
+      "control_id": "home.editor_panel_3.grab",
+      "selector": "[data-pm-home-handle][data-pm-home-surface-id=\"editor_panel_3\"]",
+      "state_selector": "state.home_workspace.home_editor_panel_3_grab.availability",
+      "disabled_reason_projection": "state.home_workspace.home_editor_panel_3_grab.disabled_reason",
+      "command_or_view_only_disposition": "cmd.workspace_layout.move_surface",
+      "receipt_or_event": [
+        "workspace.layout_changed"
+      ],
+      "handler": "handlers::workspace_layout::move_surface",
+      "production_wiring_row": "Plans/Wiring_Matrix.production.json#/entries/home.editor_panel_3.grab",
+      "executable_test": [
+        "Concepts/pm7-tools/verify/home_workspace_matrix.mjs#drag_one_commit_and_all_cancellation_paths",
+        "Concepts/pm7-tools/verify/home_workspace_matrix.mjs#drag_one_commit_and_all_cancellation_paths:dispatcher_fixture",
+        "Concepts/pm7-tools/verify/home_workspace_matrix.mjs#drag_one_commit_and_all_cancellation_paths:state_projection",
+        "Concepts/pm7-tools/verify/home_workspace_matrix.mjs#drag_one_commit_and_all_cancellation_paths:receipt_or_event_assertion",
+        "Concepts/pm7-tools/verify/home_workspace_matrix.mjs#drag_one_commit_and_all_cancellation_paths:accessibility_regression"
+      ],
+      "expected_event_types": [
+        "workspace.layout_changed"
+      ]
+    },
+    {
+      "control_id": "home.editor_panel_3.move.home_main",
+      "selector": "#pm-home-surface-menu [data-pm-home-action=\"move-surface\"][data-pm-home-surface-id=\"editor_panel_3\"][data-pm-home-target-host=\"home_main\"]",
+      "state_selector": "state.home_workspace.home_editor_panel_3_move_home_main.availability",
+      "disabled_reason_projection": "state.home_workspace.home_editor_panel_3_move_home_main.disabled_reason",
+      "command_or_view_only_disposition": "cmd.workspace_layout.move_surface",
+      "receipt_or_event": [
+        "workspace.layout_changed"
+      ],
+      "handler": "handlers::workspace_layout::move_surface",
+      "production_wiring_row": "Plans/Wiring_Matrix.production.json#/entries/home.editor_panel_3.move.home_main",
+      "executable_test": [
+        "Concepts/pm7-tools/verify/home_workspace_matrix.mjs#surface_move_dock_float_inventory_and_commands",
+        "Concepts/pm7-tools/verify/home_workspace_matrix.mjs#surface_move_dock_float_inventory_and_commands:dispatcher_fixture",
+        "Concepts/pm7-tools/verify/home_workspace_matrix.mjs#surface_move_dock_float_inventory_and_commands:state_projection",
+        "Concepts/pm7-tools/verify/home_workspace_matrix.mjs#surface_move_dock_float_inventory_and_commands:receipt_or_event_assertion",
+        "Concepts/pm7-tools/verify/home_workspace_matrix.mjs#surface_move_dock_float_inventory_and_commands:accessibility_regression"
+      ],
+      "expected_event_types": [
+        "workspace.layout_changed"
+      ]
+    },
+    {
+      "control_id": "home.editor_panel_3.redock.home_main",
+      "selector": "#pm-home-surface-menu [data-pm-home-action=\"move-surface\"][data-pm-home-surface-id=\"editor_panel_3\"][data-pm-home-target-host=\"home_main\"]",
+      "state_selector": "state.home_workspace.home_editor_panel_3_redock_home_main.availability",
+      "disabled_reason_projection": "state.home_workspace.home_editor_panel_3_redock_home_main.disabled_reason",
+      "command_or_view_only_disposition": "cmd.panel.redock",
+      "receipt_or_event": [
+        "workspace.layout_changed",
+        "panel.redocked"
+      ],
+      "handler": "handlers::panel::redock",
+      "production_wiring_row": "Plans/Wiring_Matrix.production.json#/entries/home.editor_panel_3.redock.home_main",
+      "executable_test": [
+        "Concepts/pm7-tools/verify/home_workspace_matrix.mjs#surface_move_dock_float_inventory_and_commands",
+        "Concepts/pm7-tools/verify/home_workspace_matrix.mjs#surface_move_dock_float_inventory_and_commands:dispatcher_fixture",
+        "Concepts/pm7-tools/verify/home_workspace_matrix.mjs#surface_move_dock_float_inventory_and_commands:state_projection",
+        "Concepts/pm7-tools/verify/home_workspace_matrix.mjs#surface_move_dock_float_inventory_and_commands:receipt_or_event_assertion",
+        "Concepts/pm7-tools/verify/home_workspace_matrix.mjs#surface_move_dock_float_inventory_and_commands:accessibility_regression"
+      ],
+      "expected_event_types": [
+        "workspace.layout_changed",
+        "panel.redocked"
+      ]
+    },
+    {
+      "control_id": "home.editor_panel_3.move.dock_left",
+      "selector": "#pm-home-surface-menu [data-pm-home-action=\"move-surface\"][data-pm-home-surface-id=\"editor_panel_3\"][data-pm-home-target-host=\"dock_left\"]",
+      "state_selector": "state.home_workspace.home_editor_panel_3_move_dock_left.availability",
+      "disabled_reason_projection": "state.home_workspace.home_editor_panel_3_move_dock_left.disabled_reason",
+      "command_or_view_only_disposition": "cmd.workspace_layout.move_surface",
+      "receipt_or_event": [
+        "workspace.layout_changed"
+      ],
+      "handler": "handlers::workspace_layout::move_surface",
+      "production_wiring_row": "Plans/Wiring_Matrix.production.json#/entries/home.editor_panel_3.move.dock_left",
+      "executable_test": [
+        "Concepts/pm7-tools/verify/home_workspace_matrix.mjs#surface_move_dock_float_inventory_and_commands",
+        "Concepts/pm7-tools/verify/home_workspace_matrix.mjs#surface_move_dock_float_inventory_and_commands:dispatcher_fixture",
+        "Concepts/pm7-tools/verify/home_workspace_matrix.mjs#surface_move_dock_float_inventory_and_commands:state_projection",
+        "Concepts/pm7-tools/verify/home_workspace_matrix.mjs#surface_move_dock_float_inventory_and_commands:receipt_or_event_assertion",
+        "Concepts/pm7-tools/verify/home_workspace_matrix.mjs#surface_move_dock_float_inventory_and_commands:accessibility_regression"
+      ],
+      "expected_event_types": [
+        "workspace.layout_changed"
+      ]
+    },
+    {
+      "control_id": "home.editor_panel_3.redock.dock_left",
+      "selector": "#pm-home-surface-menu [data-pm-home-action=\"move-surface\"][data-pm-home-surface-id=\"editor_panel_3\"][data-pm-home-target-host=\"dock_left\"]",
+      "state_selector": "state.home_workspace.home_editor_panel_3_redock_dock_left.availability",
+      "disabled_reason_projection": "state.home_workspace.home_editor_panel_3_redock_dock_left.disabled_reason",
+      "command_or_view_only_disposition": "cmd.panel.redock",
+      "receipt_or_event": [
+        "workspace.layout_changed",
+        "panel.redocked"
+      ],
+      "handler": "handlers::panel::redock",
+      "production_wiring_row": "Plans/Wiring_Matrix.production.json#/entries/home.editor_panel_3.redock.dock_left",
+      "executable_test": [
+        "Concepts/pm7-tools/verify/home_workspace_matrix.mjs#surface_move_dock_float_inventory_and_commands",
+        "Concepts/pm7-tools/verify/home_workspace_matrix.mjs#surface_move_dock_float_inventory_and_commands:dispatcher_fixture",
+        "Concepts/pm7-tools/verify/home_workspace_matrix.mjs#surface_move_dock_float_inventory_and_commands:state_projection",
+        "Concepts/pm7-tools/verify/home_workspace_matrix.mjs#surface_move_dock_float_inventory_and_commands:receipt_or_event_assertion",
+        "Concepts/pm7-tools/verify/home_workspace_matrix.mjs#surface_move_dock_float_inventory_and_commands:accessibility_regression"
+      ],
+      "expected_event_types": [
+        "workspace.layout_changed",
+        "panel.redocked"
+      ]
+    },
+    {
+      "control_id": "home.editor_panel_3.move.dock_right",
+      "selector": "#pm-home-surface-menu [data-pm-home-action=\"move-surface\"][data-pm-home-surface-id=\"editor_panel_3\"][data-pm-home-target-host=\"dock_right\"]",
+      "state_selector": "state.home_workspace.home_editor_panel_3_move_dock_right.availability",
+      "disabled_reason_projection": "state.home_workspace.home_editor_panel_3_move_dock_right.disabled_reason",
+      "command_or_view_only_disposition": "cmd.workspace_layout.move_surface",
+      "receipt_or_event": [
+        "workspace.layout_changed"
+      ],
+      "handler": "handlers::workspace_layout::move_surface",
+      "production_wiring_row": "Plans/Wiring_Matrix.production.json#/entries/home.editor_panel_3.move.dock_right",
+      "executable_test": [
+        "Concepts/pm7-tools/verify/home_workspace_matrix.mjs#surface_move_dock_float_inventory_and_commands",
+        "Concepts/pm7-tools/verify/home_workspace_matrix.mjs#surface_move_dock_float_inventory_and_commands:dispatcher_fixture",
+        "Concepts/pm7-tools/verify/home_workspace_matrix.mjs#surface_move_dock_float_inventory_and_commands:state_projection",
+        "Concepts/pm7-tools/verify/home_workspace_matrix.mjs#surface_move_dock_float_inventory_and_commands:receipt_or_event_assertion",
+        "Concepts/pm7-tools/verify/home_workspace_matrix.mjs#surface_move_dock_float_inventory_and_commands:accessibility_regression"
+      ],
+      "expected_event_types": [
+        "workspace.layout_changed"
+      ]
+    },
+    {
+      "control_id": "home.editor_panel_3.redock.dock_right",
+      "selector": "#pm-home-surface-menu [data-pm-home-action=\"move-surface\"][data-pm-home-surface-id=\"editor_panel_3\"][data-pm-home-target-host=\"dock_right\"]",
+      "state_selector": "state.home_workspace.home_editor_panel_3_redock_dock_right.availability",
+      "disabled_reason_projection": "state.home_workspace.home_editor_panel_3_redock_dock_right.disabled_reason",
+      "command_or_view_only_disposition": "cmd.panel.redock",
+      "receipt_or_event": [
+        "workspace.layout_changed",
+        "panel.redocked"
+      ],
+      "handler": "handlers::panel::redock",
+      "production_wiring_row": "Plans/Wiring_Matrix.production.json#/entries/home.editor_panel_3.redock.dock_right",
+      "executable_test": [
+        "Concepts/pm7-tools/verify/home_workspace_matrix.mjs#surface_move_dock_float_inventory_and_commands",
+        "Concepts/pm7-tools/verify/home_workspace_matrix.mjs#surface_move_dock_float_inventory_and_commands:dispatcher_fixture",
+        "Concepts/pm7-tools/verify/home_workspace_matrix.mjs#surface_move_dock_float_inventory_and_commands:state_projection",
+        "Concepts/pm7-tools/verify/home_workspace_matrix.mjs#surface_move_dock_float_inventory_and_commands:receipt_or_event_assertion",
+        "Concepts/pm7-tools/verify/home_workspace_matrix.mjs#surface_move_dock_float_inventory_and_commands:accessibility_regression"
+      ],
+      "expected_event_types": [
+        "workspace.layout_changed",
+        "panel.redocked"
+      ]
+    },
+    {
+      "control_id": "home.editor_panel_3.move.dock_top",
+      "selector": "#pm-home-surface-menu [data-pm-home-action=\"move-surface\"][data-pm-home-surface-id=\"editor_panel_3\"][data-pm-home-target-host=\"dock_top\"]",
+      "state_selector": "state.home_workspace.home_editor_panel_3_move_dock_top.availability",
+      "disabled_reason_projection": "state.home_workspace.home_editor_panel_3_move_dock_top.disabled_reason",
+      "command_or_view_only_disposition": "cmd.workspace_layout.move_surface",
+      "receipt_or_event": [
+        "workspace.layout_changed"
+      ],
+      "handler": "handlers::workspace_layout::move_surface",
+      "production_wiring_row": "Plans/Wiring_Matrix.production.json#/entries/home.editor_panel_3.move.dock_top",
+      "executable_test": [
+        "Concepts/pm7-tools/verify/home_workspace_matrix.mjs#surface_move_dock_float_inventory_and_commands",
+        "Concepts/pm7-tools/verify/home_workspace_matrix.mjs#surface_move_dock_float_inventory_and_commands:dispatcher_fixture",
+        "Concepts/pm7-tools/verify/home_workspace_matrix.mjs#surface_move_dock_float_inventory_and_commands:state_projection",
+        "Concepts/pm7-tools/verify/home_workspace_matrix.mjs#surface_move_dock_float_inventory_and_commands:receipt_or_event_assertion",
+        "Concepts/pm7-tools/verify/home_workspace_matrix.mjs#surface_move_dock_float_inventory_and_commands:accessibility_regression"
+      ],
+      "expected_event_types": [
+        "workspace.layout_changed"
+      ]
+    },
+    {
+      "control_id": "home.editor_panel_3.redock.dock_top",
+      "selector": "#pm-home-surface-menu [data-pm-home-action=\"move-surface\"][data-pm-home-surface-id=\"editor_panel_3\"][data-pm-home-target-host=\"dock_top\"]",
+      "state_selector": "state.home_workspace.home_editor_panel_3_redock_dock_top.availability",
+      "disabled_reason_projection": "state.home_workspace.home_editor_panel_3_redock_dock_top.disabled_reason",
+      "command_or_view_only_disposition": "cmd.panel.redock",
+      "receipt_or_event": [
+        "workspace.layout_changed",
+        "panel.redocked"
+      ],
+      "handler": "handlers::panel::redock",
+      "production_wiring_row": "Plans/Wiring_Matrix.production.json#/entries/home.editor_panel_3.redock.dock_top",
+      "executable_test": [
+        "Concepts/pm7-tools/verify/home_workspace_matrix.mjs#surface_move_dock_float_inventory_and_commands",
+        "Concepts/pm7-tools/verify/home_workspace_matrix.mjs#surface_move_dock_float_inventory_and_commands:dispatcher_fixture",
+        "Concepts/pm7-tools/verify/home_workspace_matrix.mjs#surface_move_dock_float_inventory_and_commands:state_projection",
+        "Concepts/pm7-tools/verify/home_workspace_matrix.mjs#surface_move_dock_float_inventory_and_commands:receipt_or_event_assertion",
+        "Concepts/pm7-tools/verify/home_workspace_matrix.mjs#surface_move_dock_float_inventory_and_commands:accessibility_regression"
+      ],
+      "expected_event_types": [
+        "workspace.layout_changed",
+        "panel.redocked"
+      ]
+    },
+    {
+      "control_id": "home.editor_panel_3.move.dock_bottom",
+      "selector": "#pm-home-surface-menu [data-pm-home-action=\"move-surface\"][data-pm-home-surface-id=\"editor_panel_3\"][data-pm-home-target-host=\"dock_bottom\"]",
+      "state_selector": "state.home_workspace.home_editor_panel_3_move_dock_bottom.availability",
+      "disabled_reason_projection": "state.home_workspace.home_editor_panel_3_move_dock_bottom.disabled_reason",
+      "command_or_view_only_disposition": "cmd.workspace_layout.move_surface",
+      "receipt_or_event": [
+        "workspace.layout_changed"
+      ],
+      "handler": "handlers::workspace_layout::move_surface",
+      "production_wiring_row": "Plans/Wiring_Matrix.production.json#/entries/home.editor_panel_3.move.dock_bottom",
+      "executable_test": [
+        "Concepts/pm7-tools/verify/home_workspace_matrix.mjs#surface_move_dock_float_inventory_and_commands",
+        "Concepts/pm7-tools/verify/home_workspace_matrix.mjs#surface_move_dock_float_inventory_and_commands:dispatcher_fixture",
+        "Concepts/pm7-tools/verify/home_workspace_matrix.mjs#surface_move_dock_float_inventory_and_commands:state_projection",
+        "Concepts/pm7-tools/verify/home_workspace_matrix.mjs#surface_move_dock_float_inventory_and_commands:receipt_or_event_assertion",
+        "Concepts/pm7-tools/verify/home_workspace_matrix.mjs#surface_move_dock_float_inventory_and_commands:accessibility_regression"
+      ],
+      "expected_event_types": [
+        "workspace.layout_changed"
+      ]
+    },
+    {
+      "control_id": "home.editor_panel_3.redock.dock_bottom",
+      "selector": "#pm-home-surface-menu [data-pm-home-action=\"move-surface\"][data-pm-home-surface-id=\"editor_panel_3\"][data-pm-home-target-host=\"dock_bottom\"]",
+      "state_selector": "state.home_workspace.home_editor_panel_3_redock_dock_bottom.availability",
+      "disabled_reason_projection": "state.home_workspace.home_editor_panel_3_redock_dock_bottom.disabled_reason",
+      "command_or_view_only_disposition": "cmd.panel.redock",
+      "receipt_or_event": [
+        "workspace.layout_changed",
+        "panel.redocked"
+      ],
+      "handler": "handlers::panel::redock",
+      "production_wiring_row": "Plans/Wiring_Matrix.production.json#/entries/home.editor_panel_3.redock.dock_bottom",
+      "executable_test": [
+        "Concepts/pm7-tools/verify/home_workspace_matrix.mjs#surface_move_dock_float_inventory_and_commands",
+        "Concepts/pm7-tools/verify/home_workspace_matrix.mjs#surface_move_dock_float_inventory_and_commands:dispatcher_fixture",
+        "Concepts/pm7-tools/verify/home_workspace_matrix.mjs#surface_move_dock_float_inventory_and_commands:state_projection",
+        "Concepts/pm7-tools/verify/home_workspace_matrix.mjs#surface_move_dock_float_inventory_and_commands:receipt_or_event_assertion",
+        "Concepts/pm7-tools/verify/home_workspace_matrix.mjs#surface_move_dock_float_inventory_and_commands:accessibility_regression"
+      ],
+      "expected_event_types": [
+        "workspace.layout_changed",
+        "panel.redocked"
+      ]
+    },
+    {
+      "control_id": "home.editor_panel_3.move.floating",
+      "selector": "#pm-home-surface-menu [data-pm-home-action=\"move-surface\"][data-pm-home-surface-id=\"editor_panel_3\"][data-pm-home-target-host=\"floating\"]",
+      "state_selector": "state.home_workspace.home_editor_panel_3_move_floating.availability",
+      "disabled_reason_projection": "state.home_workspace.home_editor_panel_3_move_floating.disabled_reason",
+      "command_or_view_only_disposition": "cmd.panel.undock",
+      "receipt_or_event": [
+        "workspace.layout_changed",
+        "panel.undocked"
+      ],
+      "handler": "handlers::panel::undock",
+      "production_wiring_row": "Plans/Wiring_Matrix.production.json#/entries/home.editor_panel_3.move.floating",
+      "executable_test": [
+        "Concepts/pm7-tools/verify/home_workspace_matrix.mjs#surface_move_dock_float_inventory_and_commands",
+        "Concepts/pm7-tools/verify/home_workspace_matrix.mjs#surface_move_dock_float_inventory_and_commands:dispatcher_fixture",
+        "Concepts/pm7-tools/verify/home_workspace_matrix.mjs#surface_move_dock_float_inventory_and_commands:state_projection",
+        "Concepts/pm7-tools/verify/home_workspace_matrix.mjs#surface_move_dock_float_inventory_and_commands:receipt_or_event_assertion",
+        "Concepts/pm7-tools/verify/home_workspace_matrix.mjs#surface_move_dock_float_inventory_and_commands:accessibility_regression"
+      ],
+      "expected_event_types": [
+        "workspace.layout_changed",
+        "panel.undocked"
+      ]
+    },
+    {
+      "control_id": "home.editor_panel_4.grab",
+      "selector": "[data-pm-home-handle][data-pm-home-surface-id=\"editor_panel_4\"]",
+      "state_selector": "state.home_workspace.home_editor_panel_4_grab.availability",
+      "disabled_reason_projection": "state.home_workspace.home_editor_panel_4_grab.disabled_reason",
+      "command_or_view_only_disposition": "cmd.workspace_layout.move_surface",
+      "receipt_or_event": [
+        "workspace.layout_changed"
+      ],
+      "handler": "handlers::workspace_layout::move_surface",
+      "production_wiring_row": "Plans/Wiring_Matrix.production.json#/entries/home.editor_panel_4.grab",
+      "executable_test": [
+        "Concepts/pm7-tools/verify/home_workspace_matrix.mjs#drag_one_commit_and_all_cancellation_paths",
+        "Concepts/pm7-tools/verify/home_workspace_matrix.mjs#drag_one_commit_and_all_cancellation_paths:dispatcher_fixture",
+        "Concepts/pm7-tools/verify/home_workspace_matrix.mjs#drag_one_commit_and_all_cancellation_paths:state_projection",
+        "Concepts/pm7-tools/verify/home_workspace_matrix.mjs#drag_one_commit_and_all_cancellation_paths:receipt_or_event_assertion",
+        "Concepts/pm7-tools/verify/home_workspace_matrix.mjs#drag_one_commit_and_all_cancellation_paths:accessibility_regression"
+      ],
+      "expected_event_types": [
+        "workspace.layout_changed"
+      ]
+    },
+    {
+      "control_id": "home.editor_panel_4.move.home_main",
+      "selector": "#pm-home-surface-menu [data-pm-home-action=\"move-surface\"][data-pm-home-surface-id=\"editor_panel_4\"][data-pm-home-target-host=\"home_main\"]",
+      "state_selector": "state.home_workspace.home_editor_panel_4_move_home_main.availability",
+      "disabled_reason_projection": "state.home_workspace.home_editor_panel_4_move_home_main.disabled_reason",
+      "command_or_view_only_disposition": "cmd.workspace_layout.move_surface",
+      "receipt_or_event": [
+        "workspace.layout_changed"
+      ],
+      "handler": "handlers::workspace_layout::move_surface",
+      "production_wiring_row": "Plans/Wiring_Matrix.production.json#/entries/home.editor_panel_4.move.home_main",
+      "executable_test": [
+        "Concepts/pm7-tools/verify/home_workspace_matrix.mjs#surface_move_dock_float_inventory_and_commands",
+        "Concepts/pm7-tools/verify/home_workspace_matrix.mjs#surface_move_dock_float_inventory_and_commands:dispatcher_fixture",
+        "Concepts/pm7-tools/verify/home_workspace_matrix.mjs#surface_move_dock_float_inventory_and_commands:state_projection",
+        "Concepts/pm7-tools/verify/home_workspace_matrix.mjs#surface_move_dock_float_inventory_and_commands:receipt_or_event_assertion",
+        "Concepts/pm7-tools/verify/home_workspace_matrix.mjs#surface_move_dock_float_inventory_and_commands:accessibility_regression"
+      ],
+      "expected_event_types": [
+        "workspace.layout_changed"
+      ]
+    },
+    {
+      "control_id": "home.editor_panel_4.redock.home_main",
+      "selector": "#pm-home-surface-menu [data-pm-home-action=\"move-surface\"][data-pm-home-surface-id=\"editor_panel_4\"][data-pm-home-target-host=\"home_main\"]",
+      "state_selector": "state.home_workspace.home_editor_panel_4_redock_home_main.availability",
+      "disabled_reason_projection": "state.home_workspace.home_editor_panel_4_redock_home_main.disabled_reason",
+      "command_or_view_only_disposition": "cmd.panel.redock",
+      "receipt_or_event": [
+        "workspace.layout_changed",
+        "panel.redocked"
+      ],
+      "handler": "handlers::panel::redock",
+      "production_wiring_row": "Plans/Wiring_Matrix.production.json#/entries/home.editor_panel_4.redock.home_main",
+      "executable_test": [
+        "Concepts/pm7-tools/verify/home_workspace_matrix.mjs#surface_move_dock_float_inventory_and_commands",
+        "Concepts/pm7-tools/verify/home_workspace_matrix.mjs#surface_move_dock_float_inventory_and_commands:dispatcher_fixture",
+        "Concepts/pm7-tools/verify/home_workspace_matrix.mjs#surface_move_dock_float_inventory_and_commands:state_projection",
+        "Concepts/pm7-tools/verify/home_workspace_matrix.mjs#surface_move_dock_float_inventory_and_commands:receipt_or_event_assertion",
+        "Concepts/pm7-tools/verify/home_workspace_matrix.mjs#surface_move_dock_float_inventory_and_commands:accessibility_regression"
+      ],
+      "expected_event_types": [
+        "workspace.layout_changed",
+        "panel.redocked"
+      ]
+    },
+    {
+      "control_id": "home.editor_panel_4.move.dock_left",
+      "selector": "#pm-home-surface-menu [data-pm-home-action=\"move-surface\"][data-pm-home-surface-id=\"editor_panel_4\"][data-pm-home-target-host=\"dock_left\"]",
+      "state_selector": "state.home_workspace.home_editor_panel_4_move_dock_left.availability",
+      "disabled_reason_projection": "state.home_workspace.home_editor_panel_4_move_dock_left.disabled_reason",
+      "command_or_view_only_disposition": "cmd.workspace_layout.move_surface",
+      "receipt_or_event": [
+        "workspace.layout_changed"
+      ],
+      "handler": "handlers::workspace_layout::move_surface",
+      "production_wiring_row": "Plans/Wiring_Matrix.production.json#/entries/home.editor_panel_4.move.dock_left",
+      "executable_test": [
+        "Concepts/pm7-tools/verify/home_workspace_matrix.mjs#surface_move_dock_float_inventory_and_commands",
+        "Concepts/pm7-tools/verify/home_workspace_matrix.mjs#surface_move_dock_float_inventory_and_commands:dispatcher_fixture",
+        "Concepts/pm7-tools/verify/home_workspace_matrix.mjs#surface_move_dock_float_inventory_and_commands:state_projection",
+        "Concepts/pm7-tools/verify/home_workspace_matrix.mjs#surface_move_dock_float_inventory_and_commands:receipt_or_event_assertion",
+        "Concepts/pm7-tools/verify/home_workspace_matrix.mjs#surface_move_dock_float_inventory_and_commands:accessibility_regression"
+      ],
+      "expected_event_types": [
+        "workspace.layout_changed"
+      ]
+    },
+    {
+      "control_id": "home.editor_panel_4.redock.dock_left",
+      "selector": "#pm-home-surface-menu [data-pm-home-action=\"move-surface\"][data-pm-home-surface-id=\"editor_panel_4\"][data-pm-home-target-host=\"dock_left\"]",
+      "state_selector": "state.home_workspace.home_editor_panel_4_redock_dock_left.availability",
+      "disabled_reason_projection": "state.home_workspace.home_editor_panel_4_redock_dock_left.disabled_reason",
+      "command_or_view_only_disposition": "cmd.panel.redock",
+      "receipt_or_event": [
+        "workspace.layout_changed",
+        "panel.redocked"
+      ],
+      "handler": "handlers::panel::redock",
+      "production_wiring_row": "Plans/Wiring_Matrix.production.json#/entries/home.editor_panel_4.redock.dock_left",
+      "executable_test": [
+        "Concepts/pm7-tools/verify/home_workspace_matrix.mjs#surface_move_dock_float_inventory_and_commands",
+        "Concepts/pm7-tools/verify/home_workspace_matrix.mjs#surface_move_dock_float_inventory_and_commands:dispatcher_fixture",
+        "Concepts/pm7-tools/verify/home_workspace_matrix.mjs#surface_move_dock_float_inventory_and_commands:state_projection",
+        "Concepts/pm7-tools/verify/home_workspace_matrix.mjs#surface_move_dock_float_inventory_and_commands:receipt_or_event_assertion",
+        "Concepts/pm7-tools/verify/home_workspace_matrix.mjs#surface_move_dock_float_inventory_and_commands:accessibility_regression"
+      ],
+      "expected_event_types": [
+        "workspace.layout_changed",
+        "panel.redocked"
+      ]
+    },
+    {
+      "control_id": "home.editor_panel_4.move.dock_right",
+      "selector": "#pm-home-surface-menu [data-pm-home-action=\"move-surface\"][data-pm-home-surface-id=\"editor_panel_4\"][data-pm-home-target-host=\"dock_right\"]",
+      "state_selector": "state.home_workspace.home_editor_panel_4_move_dock_right.availability",
+      "disabled_reason_projection": "state.home_workspace.home_editor_panel_4_move_dock_right.disabled_reason",
+      "command_or_view_only_disposition": "cmd.workspace_layout.move_surface",
+      "receipt_or_event": [
+        "workspace.layout_changed"
+      ],
+      "handler": "handlers::workspace_layout::move_surface",
+      "production_wiring_row": "Plans/Wiring_Matrix.production.json#/entries/home.editor_panel_4.move.dock_right",
+      "executable_test": [
+        "Concepts/pm7-tools/verify/home_workspace_matrix.mjs#surface_move_dock_float_inventory_and_commands",
+        "Concepts/pm7-tools/verify/home_workspace_matrix.mjs#surface_move_dock_float_inventory_and_commands:dispatcher_fixture",
+        "Concepts/pm7-tools/verify/home_workspace_matrix.mjs#surface_move_dock_float_inventory_and_commands:state_projection",
+        "Concepts/pm7-tools/verify/home_workspace_matrix.mjs#surface_move_dock_float_inventory_and_commands:receipt_or_event_assertion",
+        "Concepts/pm7-tools/verify/home_workspace_matrix.mjs#surface_move_dock_float_inventory_and_commands:accessibility_regression"
+      ],
+      "expected_event_types": [
+        "workspace.layout_changed"
+      ]
+    },
+    {
+      "control_id": "home.editor_panel_4.redock.dock_right",
+      "selector": "#pm-home-surface-menu [data-pm-home-action=\"move-surface\"][data-pm-home-surface-id=\"editor_panel_4\"][data-pm-home-target-host=\"dock_right\"]",
+      "state_selector": "state.home_workspace.home_editor_panel_4_redock_dock_right.availability",
+      "disabled_reason_projection": "state.home_workspace.home_editor_panel_4_redock_dock_right.disabled_reason",
+      "command_or_view_only_disposition": "cmd.panel.redock",
+      "receipt_or_event": [
+        "workspace.layout_changed",
+        "panel.redocked"
+      ],
+      "handler": "handlers::panel::redock",
+      "production_wiring_row": "Plans/Wiring_Matrix.production.json#/entries/home.editor_panel_4.redock.dock_right",
+      "executable_test": [
+        "Concepts/pm7-tools/verify/home_workspace_matrix.mjs#surface_move_dock_float_inventory_and_commands",
+        "Concepts/pm7-tools/verify/home_workspace_matrix.mjs#surface_move_dock_float_inventory_and_commands:dispatcher_fixture",
+        "Concepts/pm7-tools/verify/home_workspace_matrix.mjs#surface_move_dock_float_inventory_and_commands:state_projection",
+        "Concepts/pm7-tools/verify/home_workspace_matrix.mjs#surface_move_dock_float_inventory_and_commands:receipt_or_event_assertion",
+        "Concepts/pm7-tools/verify/home_workspace_matrix.mjs#surface_move_dock_float_inventory_and_commands:accessibility_regression"
+      ],
+      "expected_event_types": [
+        "workspace.layout_changed",
+        "panel.redocked"
+      ]
+    },
+    {
+      "control_id": "home.editor_panel_4.move.dock_top",
+      "selector": "#pm-home-surface-menu [data-pm-home-action=\"move-surface\"][data-pm-home-surface-id=\"editor_panel_4\"][data-pm-home-target-host=\"dock_top\"]",
+      "state_selector": "state.home_workspace.home_editor_panel_4_move_dock_top.availability",
+      "disabled_reason_projection": "state.home_workspace.home_editor_panel_4_move_dock_top.disabled_reason",
+      "command_or_view_only_disposition": "cmd.workspace_layout.move_surface",
+      "receipt_or_event": [
+        "workspace.layout_changed"
+      ],
+      "handler": "handlers::workspace_layout::move_surface",
+      "production_wiring_row": "Plans/Wiring_Matrix.production.json#/entries/home.editor_panel_4.move.dock_top",
+      "executable_test": [
+        "Concepts/pm7-tools/verify/home_workspace_matrix.mjs#surface_move_dock_float_inventory_and_commands",
+        "Concepts/pm7-tools/verify/home_workspace_matrix.mjs#surface_move_dock_float_inventory_and_commands:dispatcher_fixture",
+        "Concepts/pm7-tools/verify/home_workspace_matrix.mjs#surface_move_dock_float_inventory_and_commands:state_projection",
+        "Concepts/pm7-tools/verify/home_workspace_matrix.mjs#surface_move_dock_float_inventory_and_commands:receipt_or_event_assertion",
+        "Concepts/pm7-tools/verify/home_workspace_matrix.mjs#surface_move_dock_float_inventory_and_commands:accessibility_regression"
+      ],
+      "expected_event_types": [
+        "workspace.layout_changed"
+      ]
+    },
+    {
+      "control_id": "home.editor_panel_4.redock.dock_top",
+      "selector": "#pm-home-surface-menu [data-pm-home-action=\"move-surface\"][data-pm-home-surface-id=\"editor_panel_4\"][data-pm-home-target-host=\"dock_top\"]",
+      "state_selector": "state.home_workspace.home_editor_panel_4_redock_dock_top.availability",
+      "disabled_reason_projection": "state.home_workspace.home_editor_panel_4_redock_dock_top.disabled_reason",
+      "command_or_view_only_disposition": "cmd.panel.redock",
+      "receipt_or_event": [
+        "workspace.layout_changed",
+        "panel.redocked"
+      ],
+      "handler": "handlers::panel::redock",
+      "production_wiring_row": "Plans/Wiring_Matrix.production.json#/entries/home.editor_panel_4.redock.dock_top",
+      "executable_test": [
+        "Concepts/pm7-tools/verify/home_workspace_matrix.mjs#surface_move_dock_float_inventory_and_commands",
+        "Concepts/pm7-tools/verify/home_workspace_matrix.mjs#surface_move_dock_float_inventory_and_commands:dispatcher_fixture",
+        "Concepts/pm7-tools/verify/home_workspace_matrix.mjs#surface_move_dock_float_inventory_and_commands:state_projection",
+        "Concepts/pm7-tools/verify/home_workspace_matrix.mjs#surface_move_dock_float_inventory_and_commands:receipt_or_event_assertion",
+        "Concepts/pm7-tools/verify/home_workspace_matrix.mjs#surface_move_dock_float_inventory_and_commands:accessibility_regression"
+      ],
+      "expected_event_types": [
+        "workspace.layout_changed",
+        "panel.redocked"
+      ]
+    },
+    {
+      "control_id": "home.editor_panel_4.move.dock_bottom",
+      "selector": "#pm-home-surface-menu [data-pm-home-action=\"move-surface\"][data-pm-home-surface-id=\"editor_panel_4\"][data-pm-home-target-host=\"dock_bottom\"]",
+      "state_selector": "state.home_workspace.home_editor_panel_4_move_dock_bottom.availability",
+      "disabled_reason_projection": "state.home_workspace.home_editor_panel_4_move_dock_bottom.disabled_reason",
+      "command_or_view_only_disposition": "cmd.workspace_layout.move_surface",
+      "receipt_or_event": [
+        "workspace.layout_changed"
+      ],
+      "handler": "handlers::workspace_layout::move_surface",
+      "production_wiring_row": "Plans/Wiring_Matrix.production.json#/entries/home.editor_panel_4.move.dock_bottom",
+      "executable_test": [
+        "Concepts/pm7-tools/verify/home_workspace_matrix.mjs#surface_move_dock_float_inventory_and_commands",
+        "Concepts/pm7-tools/verify/home_workspace_matrix.mjs#surface_move_dock_float_inventory_and_commands:dispatcher_fixture",
+        "Concepts/pm7-tools/verify/home_workspace_matrix.mjs#surface_move_dock_float_inventory_and_commands:state_projection",
+        "Concepts/pm7-tools/verify/home_workspace_matrix.mjs#surface_move_dock_float_inventory_and_commands:receipt_or_event_assertion",
+        "Concepts/pm7-tools/verify/home_workspace_matrix.mjs#surface_move_dock_float_inventory_and_commands:accessibility_regression"
+      ],
+      "expected_event_types": [
+        "workspace.layout_changed"
+      ]
+    },
+    {
+      "control_id": "home.editor_panel_4.redock.dock_bottom",
+      "selector": "#pm-home-surface-menu [data-pm-home-action=\"move-surface\"][data-pm-home-surface-id=\"editor_panel_4\"][data-pm-home-target-host=\"dock_bottom\"]",
+      "state_selector": "state.home_workspace.home_editor_panel_4_redock_dock_bottom.availability",
+      "disabled_reason_projection": "state.home_workspace.home_editor_panel_4_redock_dock_bottom.disabled_reason",
+      "command_or_view_only_disposition": "cmd.panel.redock",
+      "receipt_or_event": [
+        "workspace.layout_changed",
+        "panel.redocked"
+      ],
+      "handler": "handlers::panel::redock",
+      "production_wiring_row": "Plans/Wiring_Matrix.production.json#/entries/home.editor_panel_4.redock.dock_bottom",
+      "executable_test": [
+        "Concepts/pm7-tools/verify/home_workspace_matrix.mjs#surface_move_dock_float_inventory_and_commands",
+        "Concepts/pm7-tools/verify/home_workspace_matrix.mjs#surface_move_dock_float_inventory_and_commands:dispatcher_fixture",
+        "Concepts/pm7-tools/verify/home_workspace_matrix.mjs#surface_move_dock_float_inventory_and_commands:state_projection",
+        "Concepts/pm7-tools/verify/home_workspace_matrix.mjs#surface_move_dock_float_inventory_and_commands:receipt_or_event_assertion",
+        "Concepts/pm7-tools/verify/home_workspace_matrix.mjs#surface_move_dock_float_inventory_and_commands:accessibility_regression"
+      ],
+      "expected_event_types": [
+        "workspace.layout_changed",
+        "panel.redocked"
+      ]
+    },
+    {
+      "control_id": "home.editor_panel_4.move.floating",
+      "selector": "#pm-home-surface-menu [data-pm-home-action=\"move-surface\"][data-pm-home-surface-id=\"editor_panel_4\"][data-pm-home-target-host=\"floating\"]",
+      "state_selector": "state.home_workspace.home_editor_panel_4_move_floating.availability",
+      "disabled_reason_projection": "state.home_workspace.home_editor_panel_4_move_floating.disabled_reason",
+      "command_or_view_only_disposition": "cmd.panel.undock",
+      "receipt_or_event": [
+        "workspace.layout_changed",
+        "panel.undocked"
+      ],
+      "handler": "handlers::panel::undock",
+      "production_wiring_row": "Plans/Wiring_Matrix.production.json#/entries/home.editor_panel_4.move.floating",
+      "executable_test": [
+        "Concepts/pm7-tools/verify/home_workspace_matrix.mjs#surface_move_dock_float_inventory_and_commands",
+        "Concepts/pm7-tools/verify/home_workspace_matrix.mjs#surface_move_dock_float_inventory_and_commands:dispatcher_fixture",
+        "Concepts/pm7-tools/verify/home_workspace_matrix.mjs#surface_move_dock_float_inventory_and_commands:state_projection",
+        "Concepts/pm7-tools/verify/home_workspace_matrix.mjs#surface_move_dock_float_inventory_and_commands:receipt_or_event_assertion",
+        "Concepts/pm7-tools/verify/home_workspace_matrix.mjs#surface_move_dock_float_inventory_and_commands:accessibility_regression"
+      ],
+      "expected_event_types": [
+        "workspace.layout_changed",
+        "panel.undocked"
+      ]
+    },
+    {
+      "control_id": "home.dashboard.grab",
+      "selector": "[data-pm-home-handle][data-pm-home-surface-id=\"dashboard\"]",
+      "state_selector": "state.home_workspace.home_dashboard_grab.availability",
+      "disabled_reason_projection": "state.home_workspace.home_dashboard_grab.disabled_reason",
+      "command_or_view_only_disposition": "cmd.workspace_layout.move_surface",
+      "receipt_or_event": [
+        "workspace.layout_changed"
+      ],
+      "handler": "handlers::workspace_layout::move_surface",
+      "production_wiring_row": "Plans/Wiring_Matrix.production.json#/entries/home.dashboard.grab",
+      "executable_test": [
+        "Concepts/pm7-tools/verify/home_workspace_matrix.mjs#drag_one_commit_and_all_cancellation_paths",
+        "Concepts/pm7-tools/verify/home_workspace_matrix.mjs#drag_one_commit_and_all_cancellation_paths:dispatcher_fixture",
+        "Concepts/pm7-tools/verify/home_workspace_matrix.mjs#drag_one_commit_and_all_cancellation_paths:state_projection",
+        "Concepts/pm7-tools/verify/home_workspace_matrix.mjs#drag_one_commit_and_all_cancellation_paths:receipt_or_event_assertion",
+        "Concepts/pm7-tools/verify/home_workspace_matrix.mjs#drag_one_commit_and_all_cancellation_paths:accessibility_regression"
+      ],
+      "expected_event_types": [
+        "workspace.layout_changed"
+      ]
+    },
+    {
+      "control_id": "home.dashboard.move.home_main",
+      "selector": "#pm-home-surface-menu [data-pm-home-action=\"move-surface\"][data-pm-home-surface-id=\"dashboard\"][data-pm-home-target-host=\"home_main\"]",
+      "state_selector": "state.home_workspace.home_dashboard_move_home_main.availability",
+      "disabled_reason_projection": "state.home_workspace.home_dashboard_move_home_main.disabled_reason",
+      "command_or_view_only_disposition": "cmd.workspace_layout.move_surface",
+      "receipt_or_event": [
+        "workspace.layout_changed"
+      ],
+      "handler": "handlers::workspace_layout::move_surface",
+      "production_wiring_row": "Plans/Wiring_Matrix.production.json#/entries/home.dashboard.move.home_main",
+      "executable_test": [
+        "Concepts/pm7-tools/verify/home_workspace_matrix.mjs#surface_move_dock_float_inventory_and_commands",
+        "Concepts/pm7-tools/verify/home_workspace_matrix.mjs#surface_move_dock_float_inventory_and_commands:dispatcher_fixture",
+        "Concepts/pm7-tools/verify/home_workspace_matrix.mjs#surface_move_dock_float_inventory_and_commands:state_projection",
+        "Concepts/pm7-tools/verify/home_workspace_matrix.mjs#surface_move_dock_float_inventory_and_commands:receipt_or_event_assertion",
+        "Concepts/pm7-tools/verify/home_workspace_matrix.mjs#surface_move_dock_float_inventory_and_commands:accessibility_regression"
+      ],
+      "expected_event_types": [
+        "workspace.layout_changed"
+      ]
+    },
+    {
+      "control_id": "home.dashboard.redock.home_main",
+      "selector": "#pm-home-surface-menu [data-pm-home-action=\"move-surface\"][data-pm-home-surface-id=\"dashboard\"][data-pm-home-target-host=\"home_main\"]",
+      "state_selector": "state.home_workspace.home_dashboard_redock_home_main.availability",
+      "disabled_reason_projection": "state.home_workspace.home_dashboard_redock_home_main.disabled_reason",
+      "command_or_view_only_disposition": "cmd.panel.redock",
+      "receipt_or_event": [
+        "workspace.layout_changed",
+        "panel.redocked"
+      ],
+      "handler": "handlers::panel::redock",
+      "production_wiring_row": "Plans/Wiring_Matrix.production.json#/entries/home.dashboard.redock.home_main",
+      "executable_test": [
+        "Concepts/pm7-tools/verify/home_workspace_matrix.mjs#surface_move_dock_float_inventory_and_commands",
+        "Concepts/pm7-tools/verify/home_workspace_matrix.mjs#surface_move_dock_float_inventory_and_commands:dispatcher_fixture",
+        "Concepts/pm7-tools/verify/home_workspace_matrix.mjs#surface_move_dock_float_inventory_and_commands:state_projection",
+        "Concepts/pm7-tools/verify/home_workspace_matrix.mjs#surface_move_dock_float_inventory_and_commands:receipt_or_event_assertion",
+        "Concepts/pm7-tools/verify/home_workspace_matrix.mjs#surface_move_dock_float_inventory_and_commands:accessibility_regression"
+      ],
+      "expected_event_types": [
+        "workspace.layout_changed",
+        "panel.redocked"
+      ]
+    },
+    {
+      "control_id": "home.dashboard.move.dock_left",
+      "selector": "#pm-home-surface-menu [data-pm-home-action=\"move-surface\"][data-pm-home-surface-id=\"dashboard\"][data-pm-home-target-host=\"dock_left\"]",
+      "state_selector": "state.home_workspace.home_dashboard_move_dock_left.availability",
+      "disabled_reason_projection": "state.home_workspace.home_dashboard_move_dock_left.disabled_reason",
+      "command_or_view_only_disposition": "cmd.workspace_layout.move_surface",
+      "receipt_or_event": [
+        "workspace.layout_changed"
+      ],
+      "handler": "handlers::workspace_layout::move_surface",
+      "production_wiring_row": "Plans/Wiring_Matrix.production.json#/entries/home.dashboard.move.dock_left",
+      "executable_test": [
+        "Concepts/pm7-tools/verify/home_workspace_matrix.mjs#surface_move_dock_float_inventory_and_commands",
+        "Concepts/pm7-tools/verify/home_workspace_matrix.mjs#surface_move_dock_float_inventory_and_commands:dispatcher_fixture",
+        "Concepts/pm7-tools/verify/home_workspace_matrix.mjs#surface_move_dock_float_inventory_and_commands:state_projection",
+        "Concepts/pm7-tools/verify/home_workspace_matrix.mjs#surface_move_dock_float_inventory_and_commands:receipt_or_event_assertion",
+        "Concepts/pm7-tools/verify/home_workspace_matrix.mjs#surface_move_dock_float_inventory_and_commands:accessibility_regression"
+      ],
+      "expected_event_types": [
+        "workspace.layout_changed"
+      ]
+    },
+    {
+      "control_id": "home.dashboard.redock.dock_left",
+      "selector": "#pm-home-surface-menu [data-pm-home-action=\"move-surface\"][data-pm-home-surface-id=\"dashboard\"][data-pm-home-target-host=\"dock_left\"]",
+      "state_selector": "state.home_workspace.home_dashboard_redock_dock_left.availability",
+      "disabled_reason_projection": "state.home_workspace.home_dashboard_redock_dock_left.disabled_reason",
+      "command_or_view_only_disposition": "cmd.panel.redock",
+      "receipt_or_event": [
+        "workspace.layout_changed",
+        "panel.redocked"
+      ],
+      "handler": "handlers::panel::redock",
+      "production_wiring_row": "Plans/Wiring_Matrix.production.json#/entries/home.dashboard.redock.dock_left",
+      "executable_test": [
+        "Concepts/pm7-tools/verify/home_workspace_matrix.mjs#surface_move_dock_float_inventory_and_commands",
+        "Concepts/pm7-tools/verify/home_workspace_matrix.mjs#surface_move_dock_float_inventory_and_commands:dispatcher_fixture",
+        "Concepts/pm7-tools/verify/home_workspace_matrix.mjs#surface_move_dock_float_inventory_and_commands:state_projection",
+        "Concepts/pm7-tools/verify/home_workspace_matrix.mjs#surface_move_dock_float_inventory_and_commands:receipt_or_event_assertion",
+        "Concepts/pm7-tools/verify/home_workspace_matrix.mjs#surface_move_dock_float_inventory_and_commands:accessibility_regression"
+      ],
+      "expected_event_types": [
+        "workspace.layout_changed",
+        "panel.redocked"
+      ]
+    },
+    {
+      "control_id": "home.dashboard.move.dock_right",
+      "selector": "#pm-home-surface-menu [data-pm-home-action=\"move-surface\"][data-pm-home-surface-id=\"dashboard\"][data-pm-home-target-host=\"dock_right\"]",
+      "state_selector": "state.home_workspace.home_dashboard_move_dock_right.availability",
+      "disabled_reason_projection": "state.home_workspace.home_dashboard_move_dock_right.disabled_reason",
+      "command_or_view_only_disposition": "cmd.workspace_layout.move_surface",
+      "receipt_or_event": [
+        "workspace.layout_changed"
+      ],
+      "handler": "handlers::workspace_layout::move_surface",
+      "production_wiring_row": "Plans/Wiring_Matrix.production.json#/entries/home.dashboard.move.dock_right",
+      "executable_test": [
+        "Concepts/pm7-tools/verify/home_workspace_matrix.mjs#surface_move_dock_float_inventory_and_commands",
+        "Concepts/pm7-tools/verify/home_workspace_matrix.mjs#surface_move_dock_float_inventory_and_commands:dispatcher_fixture",
+        "Concepts/pm7-tools/verify/home_workspace_matrix.mjs#surface_move_dock_float_inventory_and_commands:state_projection",
+        "Concepts/pm7-tools/verify/home_workspace_matrix.mjs#surface_move_dock_float_inventory_and_commands:receipt_or_event_assertion",
+        "Concepts/pm7-tools/verify/home_workspace_matrix.mjs#surface_move_dock_float_inventory_and_commands:accessibility_regression"
+      ],
+      "expected_event_types": [
+        "workspace.layout_changed"
+      ]
+    },
+    {
+      "control_id": "home.dashboard.redock.dock_right",
+      "selector": "#pm-home-surface-menu [data-pm-home-action=\"move-surface\"][data-pm-home-surface-id=\"dashboard\"][data-pm-home-target-host=\"dock_right\"]",
+      "state_selector": "state.home_workspace.home_dashboard_redock_dock_right.availability",
+      "disabled_reason_projection": "state.home_workspace.home_dashboard_redock_dock_right.disabled_reason",
+      "command_or_view_only_disposition": "cmd.panel.redock",
+      "receipt_or_event": [
+        "workspace.layout_changed",
+        "panel.redocked"
+      ],
+      "handler": "handlers::panel::redock",
+      "production_wiring_row": "Plans/Wiring_Matrix.production.json#/entries/home.dashboard.redock.dock_right",
+      "executable_test": [
+        "Concepts/pm7-tools/verify/home_workspace_matrix.mjs#surface_move_dock_float_inventory_and_commands",
+        "Concepts/pm7-tools/verify/home_workspace_matrix.mjs#surface_move_dock_float_inventory_and_commands:dispatcher_fixture",
+        "Concepts/pm7-tools/verify/home_workspace_matrix.mjs#surface_move_dock_float_inventory_and_commands:state_projection",
+        "Concepts/pm7-tools/verify/home_workspace_matrix.mjs#surface_move_dock_float_inventory_and_commands:receipt_or_event_assertion",
+        "Concepts/pm7-tools/verify/home_workspace_matrix.mjs#surface_move_dock_float_inventory_and_commands:accessibility_regression"
+      ],
+      "expected_event_types": [
+        "workspace.layout_changed",
+        "panel.redocked"
+      ]
+    },
+    {
+      "control_id": "home.dashboard.move.dock_top",
+      "selector": "#pm-home-surface-menu [data-pm-home-action=\"move-surface\"][data-pm-home-surface-id=\"dashboard\"][data-pm-home-target-host=\"dock_top\"]",
+      "state_selector": "state.home_workspace.home_dashboard_move_dock_top.availability",
+      "disabled_reason_projection": "state.home_workspace.home_dashboard_move_dock_top.disabled_reason",
+      "command_or_view_only_disposition": "cmd.workspace_layout.move_surface",
+      "receipt_or_event": [
+        "workspace.layout_changed"
+      ],
+      "handler": "handlers::workspace_layout::move_surface",
+      "production_wiring_row": "Plans/Wiring_Matrix.production.json#/entries/home.dashboard.move.dock_top",
+      "executable_test": [
+        "Concepts/pm7-tools/verify/home_workspace_matrix.mjs#surface_move_dock_float_inventory_and_commands",
+        "Concepts/pm7-tools/verify/home_workspace_matrix.mjs#surface_move_dock_float_inventory_and_commands:dispatcher_fixture",
+        "Concepts/pm7-tools/verify/home_workspace_matrix.mjs#surface_move_dock_float_inventory_and_commands:state_projection",
+        "Concepts/pm7-tools/verify/home_workspace_matrix.mjs#surface_move_dock_float_inventory_and_commands:receipt_or_event_assertion",
+        "Concepts/pm7-tools/verify/home_workspace_matrix.mjs#surface_move_dock_float_inventory_and_commands:accessibility_regression"
+      ],
+      "expected_event_types": [
+        "workspace.layout_changed"
+      ]
+    },
+    {
+      "control_id": "home.dashboard.redock.dock_top",
+      "selector": "#pm-home-surface-menu [data-pm-home-action=\"move-surface\"][data-pm-home-surface-id=\"dashboard\"][data-pm-home-target-host=\"dock_top\"]",
+      "state_selector": "state.home_workspace.home_dashboard_redock_dock_top.availability",
+      "disabled_reason_projection": "state.home_workspace.home_dashboard_redock_dock_top.disabled_reason",
+      "command_or_view_only_disposition": "cmd.panel.redock",
+      "receipt_or_event": [
+        "workspace.layout_changed",
+        "panel.redocked"
+      ],
+      "handler": "handlers::panel::redock",
+      "production_wiring_row": "Plans/Wiring_Matrix.production.json#/entries/home.dashboard.redock.dock_top",
+      "executable_test": [
+        "Concepts/pm7-tools/verify/home_workspace_matrix.mjs#surface_move_dock_float_inventory_and_commands",
+        "Concepts/pm7-tools/verify/home_workspace_matrix.mjs#surface_move_dock_float_inventory_and_commands:dispatcher_fixture",
+        "Concepts/pm7-tools/verify/home_workspace_matrix.mjs#surface_move_dock_float_inventory_and_commands:state_projection",
+        "Concepts/pm7-tools/verify/home_workspace_matrix.mjs#surface_move_dock_float_inventory_and_commands:receipt_or_event_assertion",
+        "Concepts/pm7-tools/verify/home_workspace_matrix.mjs#surface_move_dock_float_inventory_and_commands:accessibility_regression"
+      ],
+      "expected_event_types": [
+        "workspace.layout_changed",
+        "panel.redocked"
+      ]
+    },
+    {
+      "control_id": "home.dashboard.move.dock_bottom",
+      "selector": "#pm-home-surface-menu [data-pm-home-action=\"move-surface\"][data-pm-home-surface-id=\"dashboard\"][data-pm-home-target-host=\"dock_bottom\"]",
+      "state_selector": "state.home_workspace.home_dashboard_move_dock_bottom.availability",
+      "disabled_reason_projection": "state.home_workspace.home_dashboard_move_dock_bottom.disabled_reason",
+      "command_or_view_only_disposition": "cmd.workspace_layout.move_surface",
+      "receipt_or_event": [
+        "workspace.layout_changed"
+      ],
+      "handler": "handlers::workspace_layout::move_surface",
+      "production_wiring_row": "Plans/Wiring_Matrix.production.json#/entries/home.dashboard.move.dock_bottom",
+      "executable_test": [
+        "Concepts/pm7-tools/verify/home_workspace_matrix.mjs#surface_move_dock_float_inventory_and_commands",
+        "Concepts/pm7-tools/verify/home_workspace_matrix.mjs#surface_move_dock_float_inventory_and_commands:dispatcher_fixture",
+        "Concepts/pm7-tools/verify/home_workspace_matrix.mjs#surface_move_dock_float_inventory_and_commands:state_projection",
+        "Concepts/pm7-tools/verify/home_workspace_matrix.mjs#surface_move_dock_float_inventory_and_commands:receipt_or_event_assertion",
+        "Concepts/pm7-tools/verify/home_workspace_matrix.mjs#surface_move_dock_float_inventory_and_commands:accessibility_regression"
+      ],
+      "expected_event_types": [
+        "workspace.layout_changed"
+      ]
+    },
+    {
+      "control_id": "home.dashboard.redock.dock_bottom",
+      "selector": "#pm-home-surface-menu [data-pm-home-action=\"move-surface\"][data-pm-home-surface-id=\"dashboard\"][data-pm-home-target-host=\"dock_bottom\"]",
+      "state_selector": "state.home_workspace.home_dashboard_redock_dock_bottom.availability",
+      "disabled_reason_projection": "state.home_workspace.home_dashboard_redock_dock_bottom.disabled_reason",
+      "command_or_view_only_disposition": "cmd.panel.redock",
+      "receipt_or_event": [
+        "workspace.layout_changed",
+        "panel.redocked"
+      ],
+      "handler": "handlers::panel::redock",
+      "production_wiring_row": "Plans/Wiring_Matrix.production.json#/entries/home.dashboard.redock.dock_bottom",
+      "executable_test": [
+        "Concepts/pm7-tools/verify/home_workspace_matrix.mjs#surface_move_dock_float_inventory_and_commands",
+        "Concepts/pm7-tools/verify/home_workspace_matrix.mjs#surface_move_dock_float_inventory_and_commands:dispatcher_fixture",
+        "Concepts/pm7-tools/verify/home_workspace_matrix.mjs#surface_move_dock_float_inventory_and_commands:state_projection",
+        "Concepts/pm7-tools/verify/home_workspace_matrix.mjs#surface_move_dock_float_inventory_and_commands:receipt_or_event_assertion",
+        "Concepts/pm7-tools/verify/home_workspace_matrix.mjs#surface_move_dock_float_inventory_and_commands:accessibility_regression"
+      ],
+      "expected_event_types": [
+        "workspace.layout_changed",
+        "panel.redocked"
+      ]
+    },
+    {
+      "control_id": "home.dashboard.move.floating",
+      "selector": "#pm-home-surface-menu [data-pm-home-action=\"move-surface\"][data-pm-home-surface-id=\"dashboard\"][data-pm-home-target-host=\"floating\"]",
+      "state_selector": "state.home_workspace.home_dashboard_move_floating.availability",
+      "disabled_reason_projection": "state.home_workspace.home_dashboard_move_floating.disabled_reason",
+      "command_or_view_only_disposition": "cmd.panel.undock",
+      "receipt_or_event": [
+        "workspace.layout_changed",
+        "panel.undocked"
+      ],
+      "handler": "handlers::panel::undock",
+      "production_wiring_row": "Plans/Wiring_Matrix.production.json#/entries/home.dashboard.move.floating",
+      "executable_test": [
+        "Concepts/pm7-tools/verify/home_workspace_matrix.mjs#surface_move_dock_float_inventory_and_commands",
+        "Concepts/pm7-tools/verify/home_workspace_matrix.mjs#surface_move_dock_float_inventory_and_commands:dispatcher_fixture",
+        "Concepts/pm7-tools/verify/home_workspace_matrix.mjs#surface_move_dock_float_inventory_and_commands:state_projection",
+        "Concepts/pm7-tools/verify/home_workspace_matrix.mjs#surface_move_dock_float_inventory_and_commands:receipt_or_event_assertion",
+        "Concepts/pm7-tools/verify/home_workspace_matrix.mjs#surface_move_dock_float_inventory_and_commands:accessibility_regression"
+      ],
+      "expected_event_types": [
+        "workspace.layout_changed",
+        "panel.undocked"
+      ]
+    },
+    {
+      "control_id": "home.chat.grab",
+      "selector": "[data-pm-home-handle][data-pm-home-surface-id=\"chat\"]",
+      "state_selector": "state.home_workspace.home_chat_grab.availability",
+      "disabled_reason_projection": "state.home_workspace.home_chat_grab.disabled_reason",
+      "command_or_view_only_disposition": "cmd.workspace_layout.move_surface",
+      "receipt_or_event": [
+        "workspace.layout_changed"
+      ],
+      "handler": "handlers::workspace_layout::move_surface",
+      "production_wiring_row": "Plans/Wiring_Matrix.production.json#/entries/home.chat.grab",
+      "executable_test": [
+        "Concepts/pm7-tools/verify/home_workspace_matrix.mjs#drag_one_commit_and_all_cancellation_paths",
+        "Concepts/pm7-tools/verify/home_workspace_matrix.mjs#drag_one_commit_and_all_cancellation_paths:dispatcher_fixture",
+        "Concepts/pm7-tools/verify/home_workspace_matrix.mjs#drag_one_commit_and_all_cancellation_paths:state_projection",
+        "Concepts/pm7-tools/verify/home_workspace_matrix.mjs#drag_one_commit_and_all_cancellation_paths:receipt_or_event_assertion",
+        "Concepts/pm7-tools/verify/home_workspace_matrix.mjs#drag_one_commit_and_all_cancellation_paths:accessibility_regression"
+      ],
+      "expected_event_types": [
+        "workspace.layout_changed"
+      ]
+    },
+    {
+      "control_id": "home.chat.move.home_main",
+      "selector": "#pm-home-surface-menu [data-pm-home-action=\"move-surface\"][data-pm-home-surface-id=\"chat\"][data-pm-home-target-host=\"home_main\"]",
+      "state_selector": "state.home_workspace.home_chat_move_home_main.availability",
+      "disabled_reason_projection": "state.home_workspace.home_chat_move_home_main.disabled_reason",
+      "command_or_view_only_disposition": "cmd.workspace_layout.move_surface",
+      "receipt_or_event": [
+        "workspace.layout_changed"
+      ],
+      "handler": "handlers::workspace_layout::move_surface",
+      "production_wiring_row": "Plans/Wiring_Matrix.production.json#/entries/home.chat.move.home_main",
+      "executable_test": [
+        "Concepts/pm7-tools/verify/home_workspace_matrix.mjs#surface_move_dock_float_inventory_and_commands",
+        "Concepts/pm7-tools/verify/home_workspace_matrix.mjs#surface_move_dock_float_inventory_and_commands:dispatcher_fixture",
+        "Concepts/pm7-tools/verify/home_workspace_matrix.mjs#surface_move_dock_float_inventory_and_commands:state_projection",
+        "Concepts/pm7-tools/verify/home_workspace_matrix.mjs#surface_move_dock_float_inventory_and_commands:receipt_or_event_assertion",
+        "Concepts/pm7-tools/verify/home_workspace_matrix.mjs#surface_move_dock_float_inventory_and_commands:accessibility_regression"
+      ],
+      "expected_event_types": [
+        "workspace.layout_changed"
+      ]
+    },
+    {
+      "control_id": "home.chat.redock.home_main",
+      "selector": "#pm-home-surface-menu [data-pm-home-action=\"move-surface\"][data-pm-home-surface-id=\"chat\"][data-pm-home-target-host=\"home_main\"]",
+      "state_selector": "state.home_workspace.home_chat_redock_home_main.availability",
+      "disabled_reason_projection": "state.home_workspace.home_chat_redock_home_main.disabled_reason",
+      "command_or_view_only_disposition": "cmd.panel.redock",
+      "receipt_or_event": [
+        "workspace.layout_changed",
+        "panel.redocked"
+      ],
+      "handler": "handlers::panel::redock",
+      "production_wiring_row": "Plans/Wiring_Matrix.production.json#/entries/home.chat.redock.home_main",
+      "executable_test": [
+        "Concepts/pm7-tools/verify/home_workspace_matrix.mjs#surface_move_dock_float_inventory_and_commands",
+        "Concepts/pm7-tools/verify/home_workspace_matrix.mjs#surface_move_dock_float_inventory_and_commands:dispatcher_fixture",
+        "Concepts/pm7-tools/verify/home_workspace_matrix.mjs#surface_move_dock_float_inventory_and_commands:state_projection",
+        "Concepts/pm7-tools/verify/home_workspace_matrix.mjs#surface_move_dock_float_inventory_and_commands:receipt_or_event_assertion",
+        "Concepts/pm7-tools/verify/home_workspace_matrix.mjs#surface_move_dock_float_inventory_and_commands:accessibility_regression"
+      ],
+      "expected_event_types": [
+        "workspace.layout_changed",
+        "panel.redocked"
+      ]
+    },
+    {
+      "control_id": "home.chat.move.dock_left",
+      "selector": "#pm-home-surface-menu [data-pm-home-action=\"move-surface\"][data-pm-home-surface-id=\"chat\"][data-pm-home-target-host=\"dock_left\"]",
+      "state_selector": "state.home_workspace.home_chat_move_dock_left.availability",
+      "disabled_reason_projection": "state.home_workspace.home_chat_move_dock_left.disabled_reason",
+      "command_or_view_only_disposition": "cmd.workspace_layout.move_surface",
+      "receipt_or_event": [
+        "workspace.layout_changed"
+      ],
+      "handler": "handlers::workspace_layout::move_surface",
+      "production_wiring_row": "Plans/Wiring_Matrix.production.json#/entries/home.chat.move.dock_left",
+      "executable_test": [
+        "Concepts/pm7-tools/verify/home_workspace_matrix.mjs#surface_move_dock_float_inventory_and_commands",
+        "Concepts/pm7-tools/verify/home_workspace_matrix.mjs#surface_move_dock_float_inventory_and_commands:dispatcher_fixture",
+        "Concepts/pm7-tools/verify/home_workspace_matrix.mjs#surface_move_dock_float_inventory_and_commands:state_projection",
+        "Concepts/pm7-tools/verify/home_workspace_matrix.mjs#surface_move_dock_float_inventory_and_commands:receipt_or_event_assertion",
+        "Concepts/pm7-tools/verify/home_workspace_matrix.mjs#surface_move_dock_float_inventory_and_commands:accessibility_regression"
+      ],
+      "expected_event_types": [
+        "workspace.layout_changed"
+      ]
+    },
+    {
+      "control_id": "home.chat.redock.dock_left",
+      "selector": "#pm-home-surface-menu [data-pm-home-action=\"move-surface\"][data-pm-home-surface-id=\"chat\"][data-pm-home-target-host=\"dock_left\"]",
+      "state_selector": "state.home_workspace.home_chat_redock_dock_left.availability",
+      "disabled_reason_projection": "state.home_workspace.home_chat_redock_dock_left.disabled_reason",
+      "command_or_view_only_disposition": "cmd.panel.redock",
+      "receipt_or_event": [
+        "workspace.layout_changed",
+        "panel.redocked"
+      ],
+      "handler": "handlers::panel::redock",
+      "production_wiring_row": "Plans/Wiring_Matrix.production.json#/entries/home.chat.redock.dock_left",
+      "executable_test": [
+        "Concepts/pm7-tools/verify/home_workspace_matrix.mjs#surface_move_dock_float_inventory_and_commands",
+        "Concepts/pm7-tools/verify/home_workspace_matrix.mjs#surface_move_dock_float_inventory_and_commands:dispatcher_fixture",
+        "Concepts/pm7-tools/verify/home_workspace_matrix.mjs#surface_move_dock_float_inventory_and_commands:state_projection",
+        "Concepts/pm7-tools/verify/home_workspace_matrix.mjs#surface_move_dock_float_inventory_and_commands:receipt_or_event_assertion",
+        "Concepts/pm7-tools/verify/home_workspace_matrix.mjs#surface_move_dock_float_inventory_and_commands:accessibility_regression"
+      ],
+      "expected_event_types": [
+        "workspace.layout_changed",
+        "panel.redocked"
+      ]
+    },
+    {
+      "control_id": "home.chat.move.dock_right",
+      "selector": "#pm-home-surface-menu [data-pm-home-action=\"move-surface\"][data-pm-home-surface-id=\"chat\"][data-pm-home-target-host=\"dock_right\"]",
+      "state_selector": "state.home_workspace.home_chat_move_dock_right.availability",
+      "disabled_reason_projection": "state.home_workspace.home_chat_move_dock_right.disabled_reason",
+      "command_or_view_only_disposition": "cmd.workspace_layout.move_surface",
+      "receipt_or_event": [
+        "workspace.layout_changed"
+      ],
+      "handler": "handlers::workspace_layout::move_surface",
+      "production_wiring_row": "Plans/Wiring_Matrix.production.json#/entries/home.chat.move.dock_right",
+      "executable_test": [
+        "Concepts/pm7-tools/verify/home_workspace_matrix.mjs#surface_move_dock_float_inventory_and_commands",
+        "Concepts/pm7-tools/verify/home_workspace_matrix.mjs#surface_move_dock_float_inventory_and_commands:dispatcher_fixture",
+        "Concepts/pm7-tools/verify/home_workspace_matrix.mjs#surface_move_dock_float_inventory_and_commands:state_projection",
+        "Concepts/pm7-tools/verify/home_workspace_matrix.mjs#surface_move_dock_float_inventory_and_commands:receipt_or_event_assertion",
+        "Concepts/pm7-tools/verify/home_workspace_matrix.mjs#surface_move_dock_float_inventory_and_commands:accessibility_regression"
+      ],
+      "expected_event_types": [
+        "workspace.layout_changed"
+      ]
+    },
+    {
+      "control_id": "home.chat.redock.dock_right",
+      "selector": "#pm-home-surface-menu [data-pm-home-action=\"move-surface\"][data-pm-home-surface-id=\"chat\"][data-pm-home-target-host=\"dock_right\"]",
+      "state_selector": "state.home_workspace.home_chat_redock_dock_right.availability",
+      "disabled_reason_projection": "state.home_workspace.home_chat_redock_dock_right.disabled_reason",
+      "command_or_view_only_disposition": "cmd.panel.redock",
+      "receipt_or_event": [
+        "workspace.layout_changed",
+        "panel.redocked"
+      ],
+      "handler": "handlers::panel::redock",
+      "production_wiring_row": "Plans/Wiring_Matrix.production.json#/entries/home.chat.redock.dock_right",
+      "executable_test": [
+        "Concepts/pm7-tools/verify/home_workspace_matrix.mjs#surface_move_dock_float_inventory_and_commands",
+        "Concepts/pm7-tools/verify/home_workspace_matrix.mjs#surface_move_dock_float_inventory_and_commands:dispatcher_fixture",
+        "Concepts/pm7-tools/verify/home_workspace_matrix.mjs#surface_move_dock_float_inventory_and_commands:state_projection",
+        "Concepts/pm7-tools/verify/home_workspace_matrix.mjs#surface_move_dock_float_inventory_and_commands:receipt_or_event_assertion",
+        "Concepts/pm7-tools/verify/home_workspace_matrix.mjs#surface_move_dock_float_inventory_and_commands:accessibility_regression"
+      ],
+      "expected_event_types": [
+        "workspace.layout_changed",
+        "panel.redocked"
+      ]
+    },
+    {
+      "control_id": "home.chat.move.dock_top",
+      "selector": "#pm-home-surface-menu [data-pm-home-action=\"move-surface\"][data-pm-home-surface-id=\"chat\"][data-pm-home-target-host=\"dock_top\"]",
+      "state_selector": "state.home_workspace.home_chat_move_dock_top.availability",
+      "disabled_reason_projection": "state.home_workspace.home_chat_move_dock_top.disabled_reason",
+      "command_or_view_only_disposition": "cmd.workspace_layout.move_surface",
+      "receipt_or_event": [
+        "workspace.layout_changed"
+      ],
+      "handler": "handlers::workspace_layout::move_surface",
+      "production_wiring_row": "Plans/Wiring_Matrix.production.json#/entries/home.chat.move.dock_top",
+      "executable_test": [
+        "Concepts/pm7-tools/verify/home_workspace_matrix.mjs#surface_move_dock_float_inventory_and_commands",
+        "Concepts/pm7-tools/verify/home_workspace_matrix.mjs#surface_move_dock_float_inventory_and_commands:dispatcher_fixture",
+        "Concepts/pm7-tools/verify/home_workspace_matrix.mjs#surface_move_dock_float_inventory_and_commands:state_projection",
+        "Concepts/pm7-tools/verify/home_workspace_matrix.mjs#surface_move_dock_float_inventory_and_commands:receipt_or_event_assertion",
+        "Concepts/pm7-tools/verify/home_workspace_matrix.mjs#surface_move_dock_float_inventory_and_commands:accessibility_regression"
+      ],
+      "expected_event_types": [
+        "workspace.layout_changed"
+      ]
+    },
+    {
+      "control_id": "home.chat.redock.dock_top",
+      "selector": "#pm-home-surface-menu [data-pm-home-action=\"move-surface\"][data-pm-home-surface-id=\"chat\"][data-pm-home-target-host=\"dock_top\"]",
+      "state_selector": "state.home_workspace.home_chat_redock_dock_top.availability",
+      "disabled_reason_projection": "state.home_workspace.home_chat_redock_dock_top.disabled_reason",
+      "command_or_view_only_disposition": "cmd.panel.redock",
+      "receipt_or_event": [
+        "workspace.layout_changed",
+        "panel.redocked"
+      ],
+      "handler": "handlers::panel::redock",
+      "production_wiring_row": "Plans/Wiring_Matrix.production.json#/entries/home.chat.redock.dock_top",
+      "executable_test": [
+        "Concepts/pm7-tools/verify/home_workspace_matrix.mjs#surface_move_dock_float_inventory_and_commands",
+        "Concepts/pm7-tools/verify/home_workspace_matrix.mjs#surface_move_dock_float_inventory_and_commands:dispatcher_fixture",
+        "Concepts/pm7-tools/verify/home_workspace_matrix.mjs#surface_move_dock_float_inventory_and_commands:state_projection",
+        "Concepts/pm7-tools/verify/home_workspace_matrix.mjs#surface_move_dock_float_inventory_and_commands:receipt_or_event_assertion",
+        "Concepts/pm7-tools/verify/home_workspace_matrix.mjs#surface_move_dock_float_inventory_and_commands:accessibility_regression"
+      ],
+      "expected_event_types": [
+        "workspace.layout_changed",
+        "panel.redocked"
+      ]
+    },
+    {
+      "control_id": "home.chat.move.dock_bottom",
+      "selector": "#pm-home-surface-menu [data-pm-home-action=\"move-surface\"][data-pm-home-surface-id=\"chat\"][data-pm-home-target-host=\"dock_bottom\"]",
+      "state_selector": "state.home_workspace.home_chat_move_dock_bottom.availability",
+      "disabled_reason_projection": "state.home_workspace.home_chat_move_dock_bottom.disabled_reason",
+      "command_or_view_only_disposition": "cmd.workspace_layout.move_surface",
+      "receipt_or_event": [
+        "workspace.layout_changed"
+      ],
+      "handler": "handlers::workspace_layout::move_surface",
+      "production_wiring_row": "Plans/Wiring_Matrix.production.json#/entries/home.chat.move.dock_bottom",
+      "executable_test": [
+        "Concepts/pm7-tools/verify/home_workspace_matrix.mjs#surface_move_dock_float_inventory_and_commands",
+        "Concepts/pm7-tools/verify/home_workspace_matrix.mjs#surface_move_dock_float_inventory_and_commands:dispatcher_fixture",
+        "Concepts/pm7-tools/verify/home_workspace_matrix.mjs#surface_move_dock_float_inventory_and_commands:state_projection",
+        "Concepts/pm7-tools/verify/home_workspace_matrix.mjs#surface_move_dock_float_inventory_and_commands:receipt_or_event_assertion",
+        "Concepts/pm7-tools/verify/home_workspace_matrix.mjs#surface_move_dock_float_inventory_and_commands:accessibility_regression"
+      ],
+      "expected_event_types": [
+        "workspace.layout_changed"
+      ]
+    },
+    {
+      "control_id": "home.chat.redock.dock_bottom",
+      "selector": "#pm-home-surface-menu [data-pm-home-action=\"move-surface\"][data-pm-home-surface-id=\"chat\"][data-pm-home-target-host=\"dock_bottom\"]",
+      "state_selector": "state.home_workspace.home_chat_redock_dock_bottom.availability",
+      "disabled_reason_projection": "state.home_workspace.home_chat_redock_dock_bottom.disabled_reason",
+      "command_or_view_only_disposition": "cmd.panel.redock",
+      "receipt_or_event": [
+        "workspace.layout_changed",
+        "panel.redocked"
+      ],
+      "handler": "handlers::panel::redock",
+      "production_wiring_row": "Plans/Wiring_Matrix.production.json#/entries/home.chat.redock.dock_bottom",
+      "executable_test": [
+        "Concepts/pm7-tools/verify/home_workspace_matrix.mjs#surface_move_dock_float_inventory_and_commands",
+        "Concepts/pm7-tools/verify/home_workspace_matrix.mjs#surface_move_dock_float_inventory_and_commands:dispatcher_fixture",
+        "Concepts/pm7-tools/verify/home_workspace_matrix.mjs#surface_move_dock_float_inventory_and_commands:state_projection",
+        "Concepts/pm7-tools/verify/home_workspace_matrix.mjs#surface_move_dock_float_inventory_and_commands:receipt_or_event_assertion",
+        "Concepts/pm7-tools/verify/home_workspace_matrix.mjs#surface_move_dock_float_inventory_and_commands:accessibility_regression"
+      ],
+      "expected_event_types": [
+        "workspace.layout_changed",
+        "panel.redocked"
+      ]
+    },
+    {
+      "control_id": "home.chat.move.floating",
+      "selector": "#pm-home-surface-menu [data-pm-home-action=\"move-surface\"][data-pm-home-surface-id=\"chat\"][data-pm-home-target-host=\"floating\"]",
+      "state_selector": "state.home_workspace.home_chat_move_floating.availability",
+      "disabled_reason_projection": "state.home_workspace.home_chat_move_floating.disabled_reason",
+      "command_or_view_only_disposition": "cmd.panel.undock",
+      "receipt_or_event": [
+        "workspace.layout_changed",
+        "panel.undocked"
+      ],
+      "handler": "handlers::panel::undock",
+      "production_wiring_row": "Plans/Wiring_Matrix.production.json#/entries/home.chat.move.floating",
+      "executable_test": [
+        "Concepts/pm7-tools/verify/home_workspace_matrix.mjs#surface_move_dock_float_inventory_and_commands",
+        "Concepts/pm7-tools/verify/home_workspace_matrix.mjs#surface_move_dock_float_inventory_and_commands:dispatcher_fixture",
+        "Concepts/pm7-tools/verify/home_workspace_matrix.mjs#surface_move_dock_float_inventory_and_commands:state_projection",
+        "Concepts/pm7-tools/verify/home_workspace_matrix.mjs#surface_move_dock_float_inventory_and_commands:receipt_or_event_assertion",
+        "Concepts/pm7-tools/verify/home_workspace_matrix.mjs#surface_move_dock_float_inventory_and_commands:accessibility_regression"
+      ],
+      "expected_event_types": [
+        "workspace.layout_changed",
+        "panel.undocked"
+      ]
+    },
+    {
+      "control_id": "home.terminal_section.grab",
+      "selector": "[data-pm-home-handle][data-pm-home-surface-id^=\"terminal_section:\"]",
+      "state_selector": "state.home_workspace.home_terminal_section_grab.availability",
+      "disabled_reason_projection": "state.home_workspace.home_terminal_section_grab.disabled_reason",
+      "command_or_view_only_disposition": "cmd.workspace_layout.move_surface",
+      "receipt_or_event": [
+        "workspace.layout_changed"
+      ],
+      "handler": "handlers::workspace_layout::move_surface",
+      "production_wiring_row": "Plans/Wiring_Matrix.production.json#/entries/home.terminal_section.grab",
+      "executable_test": [
+        "Concepts/pm7-tools/verify/home_workspace_matrix.mjs#terminal_four_section_four_pane_caps_and_identity",
+        "Concepts/pm7-tools/verify/home_workspace_matrix.mjs#terminal_four_section_four_pane_caps_and_identity:dispatcher_fixture",
+        "Concepts/pm7-tools/verify/home_workspace_matrix.mjs#terminal_four_section_four_pane_caps_and_identity:state_projection",
+        "Concepts/pm7-tools/verify/home_workspace_matrix.mjs#terminal_four_section_four_pane_caps_and_identity:receipt_or_event_assertion",
+        "Concepts/pm7-tools/verify/home_workspace_matrix.mjs#terminal_four_section_four_pane_caps_and_identity:accessibility_regression"
+      ],
+      "expected_event_types": [
+        "workspace.layout_changed"
+      ]
+    },
+    {
+      "control_id": "home.terminal_section.move.home_main",
+      "selector": "#pm-home-surface-menu [data-pm-home-action=\"move-surface\"][data-pm-home-surface-id^=\"terminal_section:\"][data-pm-home-target-host=\"home_main\"]",
+      "state_selector": "state.home_workspace.home_terminal_section_move_home_main.availability",
+      "disabled_reason_projection": "state.home_workspace.home_terminal_section_move_home_main.disabled_reason",
+      "command_or_view_only_disposition": "cmd.workspace_layout.move_surface",
+      "receipt_or_event": [
+        "workspace.layout_changed"
+      ],
+      "handler": "handlers::workspace_layout::move_surface",
+      "production_wiring_row": "Plans/Wiring_Matrix.production.json#/entries/home.terminal_section.move.home_main",
+      "executable_test": [
+        "Concepts/pm7-tools/verify/home_workspace_matrix.mjs#surface_move_dock_float_inventory_and_commands",
+        "Concepts/pm7-tools/verify/home_workspace_matrix.mjs#surface_move_dock_float_inventory_and_commands:dispatcher_fixture",
+        "Concepts/pm7-tools/verify/home_workspace_matrix.mjs#surface_move_dock_float_inventory_and_commands:state_projection",
+        "Concepts/pm7-tools/verify/home_workspace_matrix.mjs#surface_move_dock_float_inventory_and_commands:receipt_or_event_assertion",
+        "Concepts/pm7-tools/verify/home_workspace_matrix.mjs#surface_move_dock_float_inventory_and_commands:accessibility_regression"
+      ],
+      "expected_event_types": [
+        "workspace.layout_changed"
+      ]
+    },
+    {
+      "control_id": "home.terminal_section.redock.home_main",
+      "selector": "#pm-home-surface-menu [data-pm-home-action=\"move-surface\"][data-pm-home-surface-id^=\"terminal_section:\"][data-pm-home-target-host=\"home_main\"]",
+      "state_selector": "state.home_workspace.home_terminal_section_redock_home_main.availability",
+      "disabled_reason_projection": "state.home_workspace.home_terminal_section_redock_home_main.disabled_reason",
+      "command_or_view_only_disposition": "cmd.panel.redock",
+      "receipt_or_event": [
+        "workspace.layout_changed",
+        "panel.redocked"
+      ],
+      "handler": "handlers::panel::redock",
+      "production_wiring_row": "Plans/Wiring_Matrix.production.json#/entries/home.terminal_section.redock.home_main",
+      "executable_test": [
+        "Concepts/pm7-tools/verify/home_workspace_matrix.mjs#surface_move_dock_float_inventory_and_commands",
+        "Concepts/pm7-tools/verify/home_workspace_matrix.mjs#surface_move_dock_float_inventory_and_commands:dispatcher_fixture",
+        "Concepts/pm7-tools/verify/home_workspace_matrix.mjs#surface_move_dock_float_inventory_and_commands:state_projection",
+        "Concepts/pm7-tools/verify/home_workspace_matrix.mjs#surface_move_dock_float_inventory_and_commands:receipt_or_event_assertion",
+        "Concepts/pm7-tools/verify/home_workspace_matrix.mjs#surface_move_dock_float_inventory_and_commands:accessibility_regression"
+      ],
+      "expected_event_types": [
+        "workspace.layout_changed",
+        "panel.redocked"
+      ]
+    },
+    {
+      "control_id": "home.terminal_section.move.dock_left",
+      "selector": "#pm-home-surface-menu [data-pm-home-action=\"move-surface\"][data-pm-home-surface-id^=\"terminal_section:\"][data-pm-home-target-host=\"dock_left\"]",
+      "state_selector": "state.home_workspace.home_terminal_section_move_dock_left.availability",
+      "disabled_reason_projection": "state.home_workspace.home_terminal_section_move_dock_left.disabled_reason",
+      "command_or_view_only_disposition": "cmd.workspace_layout.move_surface",
+      "receipt_or_event": [
+        "workspace.layout_changed"
+      ],
+      "handler": "handlers::workspace_layout::move_surface",
+      "production_wiring_row": "Plans/Wiring_Matrix.production.json#/entries/home.terminal_section.move.dock_left",
+      "executable_test": [
+        "Concepts/pm7-tools/verify/home_workspace_matrix.mjs#surface_move_dock_float_inventory_and_commands",
+        "Concepts/pm7-tools/verify/home_workspace_matrix.mjs#surface_move_dock_float_inventory_and_commands:dispatcher_fixture",
+        "Concepts/pm7-tools/verify/home_workspace_matrix.mjs#surface_move_dock_float_inventory_and_commands:state_projection",
+        "Concepts/pm7-tools/verify/home_workspace_matrix.mjs#surface_move_dock_float_inventory_and_commands:receipt_or_event_assertion",
+        "Concepts/pm7-tools/verify/home_workspace_matrix.mjs#surface_move_dock_float_inventory_and_commands:accessibility_regression"
+      ],
+      "expected_event_types": [
+        "workspace.layout_changed"
+      ]
+    },
+    {
+      "control_id": "home.terminal_section.redock.dock_left",
+      "selector": "#pm-home-surface-menu [data-pm-home-action=\"move-surface\"][data-pm-home-surface-id^=\"terminal_section:\"][data-pm-home-target-host=\"dock_left\"]",
+      "state_selector": "state.home_workspace.home_terminal_section_redock_dock_left.availability",
+      "disabled_reason_projection": "state.home_workspace.home_terminal_section_redock_dock_left.disabled_reason",
+      "command_or_view_only_disposition": "cmd.panel.redock",
+      "receipt_or_event": [
+        "workspace.layout_changed",
+        "panel.redocked"
+      ],
+      "handler": "handlers::panel::redock",
+      "production_wiring_row": "Plans/Wiring_Matrix.production.json#/entries/home.terminal_section.redock.dock_left",
+      "executable_test": [
+        "Concepts/pm7-tools/verify/home_workspace_matrix.mjs#surface_move_dock_float_inventory_and_commands",
+        "Concepts/pm7-tools/verify/home_workspace_matrix.mjs#surface_move_dock_float_inventory_and_commands:dispatcher_fixture",
+        "Concepts/pm7-tools/verify/home_workspace_matrix.mjs#surface_move_dock_float_inventory_and_commands:state_projection",
+        "Concepts/pm7-tools/verify/home_workspace_matrix.mjs#surface_move_dock_float_inventory_and_commands:receipt_or_event_assertion",
+        "Concepts/pm7-tools/verify/home_workspace_matrix.mjs#surface_move_dock_float_inventory_and_commands:accessibility_regression"
+      ],
+      "expected_event_types": [
+        "workspace.layout_changed",
+        "panel.redocked"
+      ]
+    },
+    {
+      "control_id": "home.terminal_section.move.dock_right",
+      "selector": "#pm-home-surface-menu [data-pm-home-action=\"move-surface\"][data-pm-home-surface-id^=\"terminal_section:\"][data-pm-home-target-host=\"dock_right\"]",
+      "state_selector": "state.home_workspace.home_terminal_section_move_dock_right.availability",
+      "disabled_reason_projection": "state.home_workspace.home_terminal_section_move_dock_right.disabled_reason",
+      "command_or_view_only_disposition": "cmd.workspace_layout.move_surface",
+      "receipt_or_event": [
+        "workspace.layout_changed"
+      ],
+      "handler": "handlers::workspace_layout::move_surface",
+      "production_wiring_row": "Plans/Wiring_Matrix.production.json#/entries/home.terminal_section.move.dock_right",
+      "executable_test": [
+        "Concepts/pm7-tools/verify/home_workspace_matrix.mjs#surface_move_dock_float_inventory_and_commands",
+        "Concepts/pm7-tools/verify/home_workspace_matrix.mjs#surface_move_dock_float_inventory_and_commands:dispatcher_fixture",
+        "Concepts/pm7-tools/verify/home_workspace_matrix.mjs#surface_move_dock_float_inventory_and_commands:state_projection",
+        "Concepts/pm7-tools/verify/home_workspace_matrix.mjs#surface_move_dock_float_inventory_and_commands:receipt_or_event_assertion",
+        "Concepts/pm7-tools/verify/home_workspace_matrix.mjs#surface_move_dock_float_inventory_and_commands:accessibility_regression"
+      ],
+      "expected_event_types": [
+        "workspace.layout_changed"
+      ]
+    },
+    {
+      "control_id": "home.terminal_section.redock.dock_right",
+      "selector": "#pm-home-surface-menu [data-pm-home-action=\"move-surface\"][data-pm-home-surface-id^=\"terminal_section:\"][data-pm-home-target-host=\"dock_right\"]",
+      "state_selector": "state.home_workspace.home_terminal_section_redock_dock_right.availability",
+      "disabled_reason_projection": "state.home_workspace.home_terminal_section_redock_dock_right.disabled_reason",
+      "command_or_view_only_disposition": "cmd.panel.redock",
+      "receipt_or_event": [
+        "workspace.layout_changed",
+        "panel.redocked"
+      ],
+      "handler": "handlers::panel::redock",
+      "production_wiring_row": "Plans/Wiring_Matrix.production.json#/entries/home.terminal_section.redock.dock_right",
+      "executable_test": [
+        "Concepts/pm7-tools/verify/home_workspace_matrix.mjs#surface_move_dock_float_inventory_and_commands",
+        "Concepts/pm7-tools/verify/home_workspace_matrix.mjs#surface_move_dock_float_inventory_and_commands:dispatcher_fixture",
+        "Concepts/pm7-tools/verify/home_workspace_matrix.mjs#surface_move_dock_float_inventory_and_commands:state_projection",
+        "Concepts/pm7-tools/verify/home_workspace_matrix.mjs#surface_move_dock_float_inventory_and_commands:receipt_or_event_assertion",
+        "Concepts/pm7-tools/verify/home_workspace_matrix.mjs#surface_move_dock_float_inventory_and_commands:accessibility_regression"
+      ],
+      "expected_event_types": [
+        "workspace.layout_changed",
+        "panel.redocked"
+      ]
+    },
+    {
+      "control_id": "home.terminal_section.move.dock_top",
+      "selector": "#pm-home-surface-menu [data-pm-home-action=\"move-surface\"][data-pm-home-surface-id^=\"terminal_section:\"][data-pm-home-target-host=\"dock_top\"]",
+      "state_selector": "state.home_workspace.home_terminal_section_move_dock_top.availability",
+      "disabled_reason_projection": "state.home_workspace.home_terminal_section_move_dock_top.disabled_reason",
+      "command_or_view_only_disposition": "cmd.workspace_layout.move_surface",
+      "receipt_or_event": [
+        "workspace.layout_changed"
+      ],
+      "handler": "handlers::workspace_layout::move_surface",
+      "production_wiring_row": "Plans/Wiring_Matrix.production.json#/entries/home.terminal_section.move.dock_top",
+      "executable_test": [
+        "Concepts/pm7-tools/verify/home_workspace_matrix.mjs#surface_move_dock_float_inventory_and_commands",
+        "Concepts/pm7-tools/verify/home_workspace_matrix.mjs#surface_move_dock_float_inventory_and_commands:dispatcher_fixture",
+        "Concepts/pm7-tools/verify/home_workspace_matrix.mjs#surface_move_dock_float_inventory_and_commands:state_projection",
+        "Concepts/pm7-tools/verify/home_workspace_matrix.mjs#surface_move_dock_float_inventory_and_commands:receipt_or_event_assertion",
+        "Concepts/pm7-tools/verify/home_workspace_matrix.mjs#surface_move_dock_float_inventory_and_commands:accessibility_regression"
+      ],
+      "expected_event_types": [
+        "workspace.layout_changed"
+      ]
+    },
+    {
+      "control_id": "home.terminal_section.redock.dock_top",
+      "selector": "#pm-home-surface-menu [data-pm-home-action=\"move-surface\"][data-pm-home-surface-id^=\"terminal_section:\"][data-pm-home-target-host=\"dock_top\"]",
+      "state_selector": "state.home_workspace.home_terminal_section_redock_dock_top.availability",
+      "disabled_reason_projection": "state.home_workspace.home_terminal_section_redock_dock_top.disabled_reason",
+      "command_or_view_only_disposition": "cmd.panel.redock",
+      "receipt_or_event": [
+        "workspace.layout_changed",
+        "panel.redocked"
+      ],
+      "handler": "handlers::panel::redock",
+      "production_wiring_row": "Plans/Wiring_Matrix.production.json#/entries/home.terminal_section.redock.dock_top",
+      "executable_test": [
+        "Concepts/pm7-tools/verify/home_workspace_matrix.mjs#surface_move_dock_float_inventory_and_commands",
+        "Concepts/pm7-tools/verify/home_workspace_matrix.mjs#surface_move_dock_float_inventory_and_commands:dispatcher_fixture",
+        "Concepts/pm7-tools/verify/home_workspace_matrix.mjs#surface_move_dock_float_inventory_and_commands:state_projection",
+        "Concepts/pm7-tools/verify/home_workspace_matrix.mjs#surface_move_dock_float_inventory_and_commands:receipt_or_event_assertion",
+        "Concepts/pm7-tools/verify/home_workspace_matrix.mjs#surface_move_dock_float_inventory_and_commands:accessibility_regression"
+      ],
+      "expected_event_types": [
+        "workspace.layout_changed",
+        "panel.redocked"
+      ]
+    },
+    {
+      "control_id": "home.terminal_section.move.dock_bottom",
+      "selector": "#pm-home-surface-menu [data-pm-home-action=\"move-surface\"][data-pm-home-surface-id^=\"terminal_section:\"][data-pm-home-target-host=\"dock_bottom\"]",
+      "state_selector": "state.home_workspace.home_terminal_section_move_dock_bottom.availability",
+      "disabled_reason_projection": "state.home_workspace.home_terminal_section_move_dock_bottom.disabled_reason",
+      "command_or_view_only_disposition": "cmd.workspace_layout.move_surface",
+      "receipt_or_event": [
+        "workspace.layout_changed"
+      ],
+      "handler": "handlers::workspace_layout::move_surface",
+      "production_wiring_row": "Plans/Wiring_Matrix.production.json#/entries/home.terminal_section.move.dock_bottom",
+      "executable_test": [
+        "Concepts/pm7-tools/verify/home_workspace_matrix.mjs#surface_move_dock_float_inventory_and_commands",
+        "Concepts/pm7-tools/verify/home_workspace_matrix.mjs#surface_move_dock_float_inventory_and_commands:dispatcher_fixture",
+        "Concepts/pm7-tools/verify/home_workspace_matrix.mjs#surface_move_dock_float_inventory_and_commands:state_projection",
+        "Concepts/pm7-tools/verify/home_workspace_matrix.mjs#surface_move_dock_float_inventory_and_commands:receipt_or_event_assertion",
+        "Concepts/pm7-tools/verify/home_workspace_matrix.mjs#surface_move_dock_float_inventory_and_commands:accessibility_regression"
+      ],
+      "expected_event_types": [
+        "workspace.layout_changed"
+      ]
+    },
+    {
+      "control_id": "home.terminal_section.redock.dock_bottom",
+      "selector": "#pm-home-surface-menu [data-pm-home-action=\"move-surface\"][data-pm-home-surface-id^=\"terminal_section:\"][data-pm-home-target-host=\"dock_bottom\"]",
+      "state_selector": "state.home_workspace.home_terminal_section_redock_dock_bottom.availability",
+      "disabled_reason_projection": "state.home_workspace.home_terminal_section_redock_dock_bottom.disabled_reason",
+      "command_or_view_only_disposition": "cmd.panel.redock",
+      "receipt_or_event": [
+        "workspace.layout_changed",
+        "panel.redocked"
+      ],
+      "handler": "handlers::panel::redock",
+      "production_wiring_row": "Plans/Wiring_Matrix.production.json#/entries/home.terminal_section.redock.dock_bottom",
+      "executable_test": [
+        "Concepts/pm7-tools/verify/home_workspace_matrix.mjs#surface_move_dock_float_inventory_and_commands",
+        "Concepts/pm7-tools/verify/home_workspace_matrix.mjs#surface_move_dock_float_inventory_and_commands:dispatcher_fixture",
+        "Concepts/pm7-tools/verify/home_workspace_matrix.mjs#surface_move_dock_float_inventory_and_commands:state_projection",
+        "Concepts/pm7-tools/verify/home_workspace_matrix.mjs#surface_move_dock_float_inventory_and_commands:receipt_or_event_assertion",
+        "Concepts/pm7-tools/verify/home_workspace_matrix.mjs#surface_move_dock_float_inventory_and_commands:accessibility_regression"
+      ],
+      "expected_event_types": [
+        "workspace.layout_changed",
+        "panel.redocked"
+      ]
+    },
+    {
+      "control_id": "home.terminal_section.move.floating",
+      "selector": "#pm-home-surface-menu [data-pm-home-action=\"move-surface\"][data-pm-home-surface-id^=\"terminal_section:\"][data-pm-home-target-host=\"floating\"]",
+      "state_selector": "state.home_workspace.home_terminal_section_move_floating.availability",
+      "disabled_reason_projection": "state.home_workspace.home_terminal_section_move_floating.disabled_reason",
+      "command_or_view_only_disposition": "cmd.panel.undock",
+      "receipt_or_event": [
+        "workspace.layout_changed",
+        "panel.undocked"
+      ],
+      "handler": "handlers::panel::undock",
+      "production_wiring_row": "Plans/Wiring_Matrix.production.json#/entries/home.terminal_section.move.floating",
+      "executable_test": [
+        "Concepts/pm7-tools/verify/home_workspace_matrix.mjs#surface_move_dock_float_inventory_and_commands",
+        "Concepts/pm7-tools/verify/home_workspace_matrix.mjs#surface_move_dock_float_inventory_and_commands:dispatcher_fixture",
+        "Concepts/pm7-tools/verify/home_workspace_matrix.mjs#surface_move_dock_float_inventory_and_commands:state_projection",
+        "Concepts/pm7-tools/verify/home_workspace_matrix.mjs#surface_move_dock_float_inventory_and_commands:receipt_or_event_assertion",
+        "Concepts/pm7-tools/verify/home_workspace_matrix.mjs#surface_move_dock_float_inventory_and_commands:accessibility_regression"
+      ],
+      "expected_event_types": [
+        "workspace.layout_changed",
+        "panel.undocked"
+      ]
+    },
+    {
+      "control_id": "home.editor_panel_1.open_browser",
+      "selector": "#pm-home-surface-menu [data-pm-home-action=\"open-browser\"][data-pm-home-surface-id=\"editor_panel_1\"]",
+      "state_selector": "state.home_workspace.home_editor_panel_1_open_browser.availability",
+      "disabled_reason_projection": "state.home_workspace.home_editor_panel_1_open_browser.disabled_reason",
+      "command_or_view_only_disposition": "cmd.browser.open_workspace_preview",
+      "receipt_or_event": [
+        "workspace.layout_changed",
+        "browser.session.created",
+        "browser.session.state_changed"
+      ],
+      "handler": "handlers::browser::open_workspace_preview",
+      "production_wiring_row": "Plans/Wiring_Matrix.production.json#/entries/home.editor_panel_1.open_browser",
+      "executable_test": [
+        "Concepts/pm7-tools/verify/home_workspace_matrix.mjs#browser_visible_routing_all_four_panels_one_session",
+        "Concepts/pm7-tools/verify/home_workspace_matrix.mjs#browser_visible_routing_all_four_panels_one_session:dispatcher_fixture",
+        "Concepts/pm7-tools/verify/home_workspace_matrix.mjs#browser_visible_routing_all_four_panels_one_session:state_projection",
+        "Concepts/pm7-tools/verify/home_workspace_matrix.mjs#browser_visible_routing_all_four_panels_one_session:receipt_or_event_assertion",
+        "Concepts/pm7-tools/verify/home_workspace_matrix.mjs#browser_visible_routing_all_four_panels_one_session:accessibility_regression"
+      ],
+      "expected_event_types": [
+        "workspace.layout_changed",
+        "browser.session.created",
+        "browser.session.state_changed"
+      ]
+    },
+    {
+      "control_id": "home.editor_panel_1.pop_out",
+      "selector": "#pm-home-surface-menu [data-pm-home-action=\"popout-panel\"][data-pm-home-surface-id=\"editor_panel_1\"]",
+      "state_selector": "state.home_workspace.home_editor_panel_1_pop_out.availability",
+      "disabled_reason_projection": "state.home_workspace.home_editor_panel_1_pop_out.disabled_reason",
+      "command_or_view_only_disposition": "cmd.panel.undock",
+      "receipt_or_event": [
+        "workspace.layout_changed",
+        "panel.undocked"
+      ],
+      "handler": "handlers::panel::undock",
+      "production_wiring_row": "Plans/Wiring_Matrix.production.json#/entries/home.editor_panel_1.pop_out",
+      "executable_test": [
+        "Concepts/pm7-tools/verify/home_workspace_matrix.mjs#popup_blocked_honest_in_canvas_fallback",
+        "Concepts/pm7-tools/verify/home_workspace_matrix.mjs#popup_blocked_honest_in_canvas_fallback:dispatcher_fixture",
+        "Concepts/pm7-tools/verify/home_workspace_matrix.mjs#popup_blocked_honest_in_canvas_fallback:state_projection",
+        "Concepts/pm7-tools/verify/home_workspace_matrix.mjs#popup_blocked_honest_in_canvas_fallback:receipt_or_event_assertion",
+        "Concepts/pm7-tools/verify/home_workspace_matrix.mjs#popup_blocked_honest_in_canvas_fallback:accessibility_regression"
+      ],
+      "expected_event_types": [
+        "workspace.layout_changed",
+        "panel.undocked"
+      ]
+    },
+    {
+      "control_id": "home.editor_panel_1.close",
+      "selector": "#pm-home-surface-menu [data-pm-home-action=\"close-panel\"][data-pm-home-surface-id=\"editor_panel_1\"]",
+      "state_selector": "state.home_workspace.home_editor_panel_1_close.availability",
+      "disabled_reason_projection": "state.home_workspace.home_editor_panel_1_close.disabled_reason",
+      "command_or_view_only_disposition": "cmd.editor.close_panel",
+      "receipt_or_event": [
+        "workspace.layout_changed"
+      ],
+      "handler": "handlers::editor::close_panel",
+      "production_wiring_row": "Plans/Wiring_Matrix.production.json#/entries/home.editor_panel_1.close",
+      "executable_test": [
+        "Concepts/pm7-tools/verify/home_workspace_matrix.mjs#four_editor_panels_idempotent_stable_identity",
+        "Concepts/pm7-tools/verify/home_workspace_matrix.mjs#four_editor_panels_idempotent_stable_identity:dispatcher_fixture",
+        "Concepts/pm7-tools/verify/home_workspace_matrix.mjs#four_editor_panels_idempotent_stable_identity:state_projection",
+        "Concepts/pm7-tools/verify/home_workspace_matrix.mjs#four_editor_panels_idempotent_stable_identity:receipt_or_event_assertion",
+        "Concepts/pm7-tools/verify/home_workspace_matrix.mjs#four_editor_panels_idempotent_stable_identity:accessibility_regression"
+      ],
+      "expected_event_types": [
+        "workspace.layout_changed"
+      ]
+    },
+    {
+      "control_id": "home.editor_panel_2.open_browser",
+      "selector": "#pm-home-surface-menu [data-pm-home-action=\"open-browser\"][data-pm-home-surface-id=\"editor_panel_2\"]",
+      "state_selector": "state.home_workspace.home_editor_panel_2_open_browser.availability",
+      "disabled_reason_projection": "state.home_workspace.home_editor_panel_2_open_browser.disabled_reason",
+      "command_or_view_only_disposition": "cmd.browser.open_workspace_preview",
+      "receipt_or_event": [
+        "workspace.layout_changed",
+        "browser.session.created",
+        "browser.session.state_changed"
+      ],
+      "handler": "handlers::browser::open_workspace_preview",
+      "production_wiring_row": "Plans/Wiring_Matrix.production.json#/entries/home.editor_panel_2.open_browser",
+      "executable_test": [
+        "Concepts/pm7-tools/verify/home_workspace_matrix.mjs#browser_visible_routing_all_four_panels_one_session",
+        "Concepts/pm7-tools/verify/home_workspace_matrix.mjs#browser_visible_routing_all_four_panels_one_session:dispatcher_fixture",
+        "Concepts/pm7-tools/verify/home_workspace_matrix.mjs#browser_visible_routing_all_four_panels_one_session:state_projection",
+        "Concepts/pm7-tools/verify/home_workspace_matrix.mjs#browser_visible_routing_all_four_panels_one_session:receipt_or_event_assertion",
+        "Concepts/pm7-tools/verify/home_workspace_matrix.mjs#browser_visible_routing_all_four_panels_one_session:accessibility_regression"
+      ],
+      "expected_event_types": [
+        "workspace.layout_changed",
+        "browser.session.created",
+        "browser.session.state_changed"
+      ]
+    },
+    {
+      "control_id": "home.editor_panel_2.pop_out",
+      "selector": "#pm-home-surface-menu [data-pm-home-action=\"popout-panel\"][data-pm-home-surface-id=\"editor_panel_2\"]",
+      "state_selector": "state.home_workspace.home_editor_panel_2_pop_out.availability",
+      "disabled_reason_projection": "state.home_workspace.home_editor_panel_2_pop_out.disabled_reason",
+      "command_or_view_only_disposition": "cmd.panel.undock",
+      "receipt_or_event": [
+        "workspace.layout_changed",
+        "panel.undocked"
+      ],
+      "handler": "handlers::panel::undock",
+      "production_wiring_row": "Plans/Wiring_Matrix.production.json#/entries/home.editor_panel_2.pop_out",
+      "executable_test": [
+        "Concepts/pm7-tools/verify/home_workspace_matrix.mjs#popup_blocked_honest_in_canvas_fallback",
+        "Concepts/pm7-tools/verify/home_workspace_matrix.mjs#popup_blocked_honest_in_canvas_fallback:dispatcher_fixture",
+        "Concepts/pm7-tools/verify/home_workspace_matrix.mjs#popup_blocked_honest_in_canvas_fallback:state_projection",
+        "Concepts/pm7-tools/verify/home_workspace_matrix.mjs#popup_blocked_honest_in_canvas_fallback:receipt_or_event_assertion",
+        "Concepts/pm7-tools/verify/home_workspace_matrix.mjs#popup_blocked_honest_in_canvas_fallback:accessibility_regression"
+      ],
+      "expected_event_types": [
+        "workspace.layout_changed",
+        "panel.undocked"
+      ]
+    },
+    {
+      "control_id": "home.editor_panel_2.close",
+      "selector": "#pm-home-surface-menu [data-pm-home-action=\"close-panel\"][data-pm-home-surface-id=\"editor_panel_2\"]",
+      "state_selector": "state.home_workspace.home_editor_panel_2_close.availability",
+      "disabled_reason_projection": "state.home_workspace.home_editor_panel_2_close.disabled_reason",
+      "command_or_view_only_disposition": "cmd.editor.close_panel",
+      "receipt_or_event": [
+        "workspace.layout_changed"
+      ],
+      "handler": "handlers::editor::close_panel",
+      "production_wiring_row": "Plans/Wiring_Matrix.production.json#/entries/home.editor_panel_2.close",
+      "executable_test": [
+        "Concepts/pm7-tools/verify/home_workspace_matrix.mjs#four_editor_panels_idempotent_stable_identity",
+        "Concepts/pm7-tools/verify/home_workspace_matrix.mjs#four_editor_panels_idempotent_stable_identity:dispatcher_fixture",
+        "Concepts/pm7-tools/verify/home_workspace_matrix.mjs#four_editor_panels_idempotent_stable_identity:state_projection",
+        "Concepts/pm7-tools/verify/home_workspace_matrix.mjs#four_editor_panels_idempotent_stable_identity:receipt_or_event_assertion",
+        "Concepts/pm7-tools/verify/home_workspace_matrix.mjs#four_editor_panels_idempotent_stable_identity:accessibility_regression"
+      ],
+      "expected_event_types": [
+        "workspace.layout_changed"
+      ]
+    },
+    {
+      "control_id": "home.editor_panel_3.open_browser",
+      "selector": "#pm-home-surface-menu [data-pm-home-action=\"open-browser\"][data-pm-home-surface-id=\"editor_panel_3\"]",
+      "state_selector": "state.home_workspace.home_editor_panel_3_open_browser.availability",
+      "disabled_reason_projection": "state.home_workspace.home_editor_panel_3_open_browser.disabled_reason",
+      "command_or_view_only_disposition": "cmd.browser.open_workspace_preview",
+      "receipt_or_event": [
+        "workspace.layout_changed",
+        "browser.session.created",
+        "browser.session.state_changed"
+      ],
+      "handler": "handlers::browser::open_workspace_preview",
+      "production_wiring_row": "Plans/Wiring_Matrix.production.json#/entries/home.editor_panel_3.open_browser",
+      "executable_test": [
+        "Concepts/pm7-tools/verify/home_workspace_matrix.mjs#browser_visible_routing_all_four_panels_one_session",
+        "Concepts/pm7-tools/verify/home_workspace_matrix.mjs#browser_visible_routing_all_four_panels_one_session:dispatcher_fixture",
+        "Concepts/pm7-tools/verify/home_workspace_matrix.mjs#browser_visible_routing_all_four_panels_one_session:state_projection",
+        "Concepts/pm7-tools/verify/home_workspace_matrix.mjs#browser_visible_routing_all_four_panels_one_session:receipt_or_event_assertion",
+        "Concepts/pm7-tools/verify/home_workspace_matrix.mjs#browser_visible_routing_all_four_panels_one_session:accessibility_regression"
+      ],
+      "expected_event_types": [
+        "workspace.layout_changed",
+        "browser.session.created",
+        "browser.session.state_changed"
+      ]
+    },
+    {
+      "control_id": "home.editor_panel_3.pop_out",
+      "selector": "#pm-home-surface-menu [data-pm-home-action=\"popout-panel\"][data-pm-home-surface-id=\"editor_panel_3\"]",
+      "state_selector": "state.home_workspace.home_editor_panel_3_pop_out.availability",
+      "disabled_reason_projection": "state.home_workspace.home_editor_panel_3_pop_out.disabled_reason",
+      "command_or_view_only_disposition": "cmd.panel.undock",
+      "receipt_or_event": [
+        "workspace.layout_changed",
+        "panel.undocked"
+      ],
+      "handler": "handlers::panel::undock",
+      "production_wiring_row": "Plans/Wiring_Matrix.production.json#/entries/home.editor_panel_3.pop_out",
+      "executable_test": [
+        "Concepts/pm7-tools/verify/home_workspace_matrix.mjs#popup_blocked_honest_in_canvas_fallback",
+        "Concepts/pm7-tools/verify/home_workspace_matrix.mjs#popup_blocked_honest_in_canvas_fallback:dispatcher_fixture",
+        "Concepts/pm7-tools/verify/home_workspace_matrix.mjs#popup_blocked_honest_in_canvas_fallback:state_projection",
+        "Concepts/pm7-tools/verify/home_workspace_matrix.mjs#popup_blocked_honest_in_canvas_fallback:receipt_or_event_assertion",
+        "Concepts/pm7-tools/verify/home_workspace_matrix.mjs#popup_blocked_honest_in_canvas_fallback:accessibility_regression"
+      ],
+      "expected_event_types": [
+        "workspace.layout_changed",
+        "panel.undocked"
+      ]
+    },
+    {
+      "control_id": "home.editor_panel_3.close",
+      "selector": "#pm-home-surface-menu [data-pm-home-action=\"close-panel\"][data-pm-home-surface-id=\"editor_panel_3\"]",
+      "state_selector": "state.home_workspace.home_editor_panel_3_close.availability",
+      "disabled_reason_projection": "state.home_workspace.home_editor_panel_3_close.disabled_reason",
+      "command_or_view_only_disposition": "cmd.editor.close_panel",
+      "receipt_or_event": [
+        "workspace.layout_changed"
+      ],
+      "handler": "handlers::editor::close_panel",
+      "production_wiring_row": "Plans/Wiring_Matrix.production.json#/entries/home.editor_panel_3.close",
+      "executable_test": [
+        "Concepts/pm7-tools/verify/home_workspace_matrix.mjs#four_editor_panels_idempotent_stable_identity",
+        "Concepts/pm7-tools/verify/home_workspace_matrix.mjs#four_editor_panels_idempotent_stable_identity:dispatcher_fixture",
+        "Concepts/pm7-tools/verify/home_workspace_matrix.mjs#four_editor_panels_idempotent_stable_identity:state_projection",
+        "Concepts/pm7-tools/verify/home_workspace_matrix.mjs#four_editor_panels_idempotent_stable_identity:receipt_or_event_assertion",
+        "Concepts/pm7-tools/verify/home_workspace_matrix.mjs#four_editor_panels_idempotent_stable_identity:accessibility_regression"
+      ],
+      "expected_event_types": [
+        "workspace.layout_changed"
+      ]
+    },
+    {
+      "control_id": "home.editor_panel_4.open_browser",
+      "selector": "#pm-home-surface-menu [data-pm-home-action=\"open-browser\"][data-pm-home-surface-id=\"editor_panel_4\"]",
+      "state_selector": "state.home_workspace.home_editor_panel_4_open_browser.availability",
+      "disabled_reason_projection": "state.home_workspace.home_editor_panel_4_open_browser.disabled_reason",
+      "command_or_view_only_disposition": "cmd.browser.open_workspace_preview",
+      "receipt_or_event": [
+        "workspace.layout_changed",
+        "browser.session.created",
+        "browser.session.state_changed"
+      ],
+      "handler": "handlers::browser::open_workspace_preview",
+      "production_wiring_row": "Plans/Wiring_Matrix.production.json#/entries/home.editor_panel_4.open_browser",
+      "executable_test": [
+        "Concepts/pm7-tools/verify/home_workspace_matrix.mjs#browser_visible_routing_all_four_panels_one_session",
+        "Concepts/pm7-tools/verify/home_workspace_matrix.mjs#browser_visible_routing_all_four_panels_one_session:dispatcher_fixture",
+        "Concepts/pm7-tools/verify/home_workspace_matrix.mjs#browser_visible_routing_all_four_panels_one_session:state_projection",
+        "Concepts/pm7-tools/verify/home_workspace_matrix.mjs#browser_visible_routing_all_four_panels_one_session:receipt_or_event_assertion",
+        "Concepts/pm7-tools/verify/home_workspace_matrix.mjs#browser_visible_routing_all_four_panels_one_session:accessibility_regression"
+      ],
+      "expected_event_types": [
+        "workspace.layout_changed",
+        "browser.session.created",
+        "browser.session.state_changed"
+      ]
+    },
+    {
+      "control_id": "home.editor_panel_4.pop_out",
+      "selector": "#pm-home-surface-menu [data-pm-home-action=\"popout-panel\"][data-pm-home-surface-id=\"editor_panel_4\"]",
+      "state_selector": "state.home_workspace.home_editor_panel_4_pop_out.availability",
+      "disabled_reason_projection": "state.home_workspace.home_editor_panel_4_pop_out.disabled_reason",
+      "command_or_view_only_disposition": "cmd.panel.undock",
+      "receipt_or_event": [
+        "workspace.layout_changed",
+        "panel.undocked"
+      ],
+      "handler": "handlers::panel::undock",
+      "production_wiring_row": "Plans/Wiring_Matrix.production.json#/entries/home.editor_panel_4.pop_out",
+      "executable_test": [
+        "Concepts/pm7-tools/verify/home_workspace_matrix.mjs#popup_blocked_honest_in_canvas_fallback",
+        "Concepts/pm7-tools/verify/home_workspace_matrix.mjs#popup_blocked_honest_in_canvas_fallback:dispatcher_fixture",
+        "Concepts/pm7-tools/verify/home_workspace_matrix.mjs#popup_blocked_honest_in_canvas_fallback:state_projection",
+        "Concepts/pm7-tools/verify/home_workspace_matrix.mjs#popup_blocked_honest_in_canvas_fallback:receipt_or_event_assertion",
+        "Concepts/pm7-tools/verify/home_workspace_matrix.mjs#popup_blocked_honest_in_canvas_fallback:accessibility_regression"
+      ],
+      "expected_event_types": [
+        "workspace.layout_changed",
+        "panel.undocked"
+      ]
+    },
+    {
+      "control_id": "home.editor_panel_4.close",
+      "selector": "#pm-home-surface-menu [data-pm-home-action=\"close-panel\"][data-pm-home-surface-id=\"editor_panel_4\"]",
+      "state_selector": "state.home_workspace.home_editor_panel_4_close.availability",
+      "disabled_reason_projection": "state.home_workspace.home_editor_panel_4_close.disabled_reason",
+      "command_or_view_only_disposition": "cmd.editor.close_panel",
+      "receipt_or_event": [
+        "workspace.layout_changed"
+      ],
+      "handler": "handlers::editor::close_panel",
+      "production_wiring_row": "Plans/Wiring_Matrix.production.json#/entries/home.editor_panel_4.close",
+      "executable_test": [
+        "Concepts/pm7-tools/verify/home_workspace_matrix.mjs#four_editor_panels_idempotent_stable_identity",
+        "Concepts/pm7-tools/verify/home_workspace_matrix.mjs#four_editor_panels_idempotent_stable_identity:dispatcher_fixture",
+        "Concepts/pm7-tools/verify/home_workspace_matrix.mjs#four_editor_panels_idempotent_stable_identity:state_projection",
+        "Concepts/pm7-tools/verify/home_workspace_matrix.mjs#four_editor_panels_idempotent_stable_identity:receipt_or_event_assertion",
+        "Concepts/pm7-tools/verify/home_workspace_matrix.mjs#four_editor_panels_idempotent_stable_identity:accessibility_regression"
+      ],
+      "expected_event_types": [
+        "workspace.layout_changed"
+      ]
+    },
+    {
+      "control_id": "home.chat.activity_toggle",
+      "selector": ".activity-bar .icon[title=\"Chat\"]",
+      "state_selector": "state.home_workspace.home_chat_activity_toggle.availability",
+      "disabled_reason_projection": "state.home_workspace.home_chat_activity_toggle.disabled_reason",
+      "command_or_view_only_disposition": "cmd.panel.switch",
+      "receipt_or_event": [
+        "workspace.layout_changed"
+      ],
+      "handler": "handlers::panel::switch",
+      "production_wiring_row": "Plans/Wiring_Matrix.production.json#/entries/home.chat.activity_toggle",
+      "executable_test": [
+        "Concepts/pm7-tools/verify/home_workspace_matrix.mjs#surface_move_dock_float_inventory_and_commands",
+        "Concepts/pm7-tools/verify/home_workspace_matrix.mjs#surface_move_dock_float_inventory_and_commands:dispatcher_fixture",
+        "Concepts/pm7-tools/verify/home_workspace_matrix.mjs#surface_move_dock_float_inventory_and_commands:state_projection",
+        "Concepts/pm7-tools/verify/home_workspace_matrix.mjs#surface_move_dock_float_inventory_and_commands:receipt_or_event_assertion",
+        "Concepts/pm7-tools/verify/home_workspace_matrix.mjs#surface_move_dock_float_inventory_and_commands:accessibility_regression"
+      ],
+      "expected_event_types": [
+        "workspace.layout_changed"
+      ]
+    },
+    {
+      "control_id": "home.terminal_section.bottom_toggle",
+      "selector": "#collapseBottom",
+      "state_selector": "state.home_workspace.home_terminal_section_bottom_toggle.availability",
+      "disabled_reason_projection": "state.home_workspace.home_terminal_section_bottom_toggle.disabled_reason",
+      "command_or_view_only_disposition": "cmd.workspace_layout.set_collapsed",
+      "receipt_or_event": [
+        "workspace.layout_changed"
+      ],
+      "handler": "handlers::workspace_layout::set_collapsed",
+      "production_wiring_row": "Plans/Wiring_Matrix.production.json#/entries/home.terminal_section.bottom_toggle",
+      "executable_test": [
+        "Concepts/pm7-tools/verify/home_workspace_matrix.mjs#collapse_bottom_terminal_disabled_reason_and_no_expand_alias",
+        "Concepts/pm7-tools/verify/home_workspace_matrix.mjs#collapse_bottom_terminal_disabled_reason_and_no_expand_alias:dispatcher_fixture",
+        "Concepts/pm7-tools/verify/home_workspace_matrix.mjs#collapse_bottom_terminal_disabled_reason_and_no_expand_alias:state_projection",
+        "Concepts/pm7-tools/verify/home_workspace_matrix.mjs#collapse_bottom_terminal_disabled_reason_and_no_expand_alias:receipt_or_event_assertion",
+        "Concepts/pm7-tools/verify/home_workspace_matrix.mjs#collapse_bottom_terminal_disabled_reason_and_no_expand_alias:accessibility_regression"
+      ],
+      "expected_event_types": [
+        "workspace.layout_changed"
+      ]
+    },
+    {
+      "control_id": "home.terminal_section.move_workgroup",
+      "selector": "[data-pm-home-workgroup-handle]",
+      "state_selector": "state.home_workspace.home_terminal_section_move_workgroup.availability",
+      "disabled_reason_projection": "state.home_workspace.home_terminal_section_move_workgroup.disabled_reason",
+      "command_or_view_only_disposition": "cmd.terminal.move_workgroup",
+      "receipt_or_event": [
+        "workspace.layout_changed",
+        "terminal.workgroup_moved"
+      ],
+      "handler": "handlers::terminal::move_workgroup",
+      "production_wiring_row": "Plans/Wiring_Matrix.production.json#/entries/home.terminal_section.move_workgroup",
+      "executable_test": [
+        "Concepts/pm7-tools/verify/home_workspace_matrix.mjs#terminal_four_section_four_pane_caps_and_identity",
+        "Concepts/pm7-tools/verify/home_workspace_matrix.mjs#terminal_four_section_four_pane_caps_and_identity:dispatcher_fixture",
+        "Concepts/pm7-tools/verify/home_workspace_matrix.mjs#terminal_four_section_four_pane_caps_and_identity:state_projection",
+        "Concepts/pm7-tools/verify/home_workspace_matrix.mjs#terminal_four_section_four_pane_caps_and_identity:receipt_or_event_assertion",
+        "Concepts/pm7-tools/verify/home_workspace_matrix.mjs#terminal_four_section_four_pane_caps_and_identity:accessibility_regression"
+      ],
+      "expected_event_types": [
+        "workspace.layout_changed",
+        "terminal.workgroup_moved"
+      ]
+    },
+    {
+      "control_id": "home.terminal_section.split_pane",
+      "selector": "[data-pm-home-action=\"split-terminal-pane\"]",
+      "state_selector": "state.home_workspace.home_terminal_section_split_pane.availability",
+      "disabled_reason_projection": "state.home_workspace.home_terminal_section_split_pane.disabled_reason",
+      "command_or_view_only_disposition": "cmd.terminal.split_pane",
+      "receipt_or_event": [
+        "workspace.layout_changed"
+      ],
+      "handler": "handlers::terminal::split_pane",
+      "production_wiring_row": "Plans/Wiring_Matrix.production.json#/entries/home.terminal_section.split_pane",
+      "executable_test": [
+        "Concepts/pm7-tools/verify/home_workspace_matrix.mjs#terminal_four_section_four_pane_caps_and_identity",
+        "Concepts/pm7-tools/verify/home_workspace_matrix.mjs#terminal_four_section_four_pane_caps_and_identity:dispatcher_fixture",
+        "Concepts/pm7-tools/verify/home_workspace_matrix.mjs#terminal_four_section_four_pane_caps_and_identity:state_projection",
+        "Concepts/pm7-tools/verify/home_workspace_matrix.mjs#terminal_four_section_four_pane_caps_and_identity:receipt_or_event_assertion",
+        "Concepts/pm7-tools/verify/home_workspace_matrix.mjs#terminal_four_section_four_pane_caps_and_identity:accessibility_regression"
+      ],
+      "expected_event_types": [
+        "workspace.layout_changed"
+      ]
+    },
+    {
+      "control_id": "home.terminal_section.new_section",
+      "selector": "[data-pm-home-action=\"move-workgroup-new-section\"]",
+      "state_selector": "state.home_workspace.home_terminal_section_new_section.availability",
+      "disabled_reason_projection": "state.home_workspace.home_terminal_section_new_section.disabled_reason",
+      "command_or_view_only_disposition": "cmd.terminal.move_workgroup",
+      "receipt_or_event": [
+        "workspace.layout_changed",
+        "terminal.workgroup_moved"
+      ],
+      "handler": "handlers::terminal::move_workgroup",
+      "production_wiring_row": "Plans/Wiring_Matrix.production.json#/entries/home.terminal_section.new_section",
+      "executable_test": [
+        "Concepts/pm7-tools/verify/home_workspace_matrix.mjs#terminal_four_section_four_pane_caps_and_identity",
+        "Concepts/pm7-tools/verify/home_workspace_matrix.mjs#terminal_four_section_four_pane_caps_and_identity:dispatcher_fixture",
+        "Concepts/pm7-tools/verify/home_workspace_matrix.mjs#terminal_four_section_four_pane_caps_and_identity:state_projection",
+        "Concepts/pm7-tools/verify/home_workspace_matrix.mjs#terminal_four_section_four_pane_caps_and_identity:receipt_or_event_assertion",
+        "Concepts/pm7-tools/verify/home_workspace_matrix.mjs#terminal_four_section_four_pane_caps_and_identity:accessibility_regression"
+      ],
+      "expected_event_types": [
+        "workspace.layout_changed",
+        "terminal.workgroup_moved"
+      ]
+    },
+    {
+      "control_id": "home.drop_target.main",
+      "selector": "[data-pm-home-drop-host=\"home_main\"]",
+      "state_selector": "state.home_workspace.home_drop_target_main.availability",
+      "disabled_reason_projection": "state.home_workspace.home_drop_target_main.disabled_reason",
+      "command_or_view_only_disposition": "cmd.workspace_layout.move_surface",
+      "receipt_or_event": [
+        "workspace.layout_changed"
+      ],
+      "handler": "handlers::workspace_layout::move_surface",
+      "production_wiring_row": "Plans/Wiring_Matrix.production.json#/entries/home.drop_target.main",
+      "executable_test": [
+        "Concepts/pm7-tools/verify/home_workspace_matrix.mjs#drag_one_commit_and_all_cancellation_paths",
+        "Concepts/pm7-tools/verify/home_workspace_matrix.mjs#drag_one_commit_and_all_cancellation_paths:dispatcher_fixture",
+        "Concepts/pm7-tools/verify/home_workspace_matrix.mjs#drag_one_commit_and_all_cancellation_paths:state_projection",
+        "Concepts/pm7-tools/verify/home_workspace_matrix.mjs#drag_one_commit_and_all_cancellation_paths:receipt_or_event_assertion",
+        "Concepts/pm7-tools/verify/home_workspace_matrix.mjs#drag_one_commit_and_all_cancellation_paths:accessibility_regression"
+      ],
+      "expected_event_types": [
+        "workspace.layout_changed"
+      ]
+    },
+    {
+      "control_id": "home.drop_target.left",
+      "selector": "[data-pm-home-drop-host=\"dock_left\"]",
+      "state_selector": "state.home_workspace.home_drop_target_left.availability",
+      "disabled_reason_projection": "state.home_workspace.home_drop_target_left.disabled_reason",
+      "command_or_view_only_disposition": "cmd.workspace_layout.move_surface",
+      "receipt_or_event": [
+        "workspace.layout_changed"
+      ],
+      "handler": "handlers::workspace_layout::move_surface",
+      "production_wiring_row": "Plans/Wiring_Matrix.production.json#/entries/home.drop_target.left",
+      "executable_test": [
+        "Concepts/pm7-tools/verify/home_workspace_matrix.mjs#drag_one_commit_and_all_cancellation_paths",
+        "Concepts/pm7-tools/verify/home_workspace_matrix.mjs#drag_one_commit_and_all_cancellation_paths:dispatcher_fixture",
+        "Concepts/pm7-tools/verify/home_workspace_matrix.mjs#drag_one_commit_and_all_cancellation_paths:state_projection",
+        "Concepts/pm7-tools/verify/home_workspace_matrix.mjs#drag_one_commit_and_all_cancellation_paths:receipt_or_event_assertion",
+        "Concepts/pm7-tools/verify/home_workspace_matrix.mjs#drag_one_commit_and_all_cancellation_paths:accessibility_regression"
+      ],
+      "expected_event_types": [
+        "workspace.layout_changed"
+      ]
+    },
+    {
+      "control_id": "home.drop_target.right",
+      "selector": "[data-pm-home-drop-host=\"dock_right\"]",
+      "state_selector": "state.home_workspace.home_drop_target_right.availability",
+      "disabled_reason_projection": "state.home_workspace.home_drop_target_right.disabled_reason",
+      "command_or_view_only_disposition": "cmd.workspace_layout.move_surface",
+      "receipt_or_event": [
+        "workspace.layout_changed"
+      ],
+      "handler": "handlers::workspace_layout::move_surface",
+      "production_wiring_row": "Plans/Wiring_Matrix.production.json#/entries/home.drop_target.right",
+      "executable_test": [
+        "Concepts/pm7-tools/verify/home_workspace_matrix.mjs#drag_one_commit_and_all_cancellation_paths",
+        "Concepts/pm7-tools/verify/home_workspace_matrix.mjs#drag_one_commit_and_all_cancellation_paths:dispatcher_fixture",
+        "Concepts/pm7-tools/verify/home_workspace_matrix.mjs#drag_one_commit_and_all_cancellation_paths:state_projection",
+        "Concepts/pm7-tools/verify/home_workspace_matrix.mjs#drag_one_commit_and_all_cancellation_paths:receipt_or_event_assertion",
+        "Concepts/pm7-tools/verify/home_workspace_matrix.mjs#drag_one_commit_and_all_cancellation_paths:accessibility_regression"
+      ],
+      "expected_event_types": [
+        "workspace.layout_changed"
+      ]
+    },
+    {
+      "control_id": "home.drop_target.top",
+      "selector": "[data-pm-home-drop-host=\"dock_top\"]",
+      "state_selector": "state.home_workspace.home_drop_target_top.availability",
+      "disabled_reason_projection": "state.home_workspace.home_drop_target_top.disabled_reason",
+      "command_or_view_only_disposition": "cmd.workspace_layout.move_surface",
+      "receipt_or_event": [
+        "workspace.layout_changed"
+      ],
+      "handler": "handlers::workspace_layout::move_surface",
+      "production_wiring_row": "Plans/Wiring_Matrix.production.json#/entries/home.drop_target.top",
+      "executable_test": [
+        "Concepts/pm7-tools/verify/home_workspace_matrix.mjs#drag_one_commit_and_all_cancellation_paths",
+        "Concepts/pm7-tools/verify/home_workspace_matrix.mjs#drag_one_commit_and_all_cancellation_paths:dispatcher_fixture",
+        "Concepts/pm7-tools/verify/home_workspace_matrix.mjs#drag_one_commit_and_all_cancellation_paths:state_projection",
+        "Concepts/pm7-tools/verify/home_workspace_matrix.mjs#drag_one_commit_and_all_cancellation_paths:receipt_or_event_assertion",
+        "Concepts/pm7-tools/verify/home_workspace_matrix.mjs#drag_one_commit_and_all_cancellation_paths:accessibility_regression"
+      ],
+      "expected_event_types": [
+        "workspace.layout_changed"
+      ]
+    },
+    {
+      "control_id": "home.drop_target.bottom",
+      "selector": "[data-pm-home-drop-host=\"dock_bottom\"]",
+      "state_selector": "state.home_workspace.home_drop_target_bottom.availability",
+      "disabled_reason_projection": "state.home_workspace.home_drop_target_bottom.disabled_reason",
+      "command_or_view_only_disposition": "cmd.workspace_layout.move_surface",
+      "receipt_or_event": [
+        "workspace.layout_changed"
+      ],
+      "handler": "handlers::workspace_layout::move_surface",
+      "production_wiring_row": "Plans/Wiring_Matrix.production.json#/entries/home.drop_target.bottom",
+      "executable_test": [
+        "Concepts/pm7-tools/verify/home_workspace_matrix.mjs#drag_one_commit_and_all_cancellation_paths",
+        "Concepts/pm7-tools/verify/home_workspace_matrix.mjs#drag_one_commit_and_all_cancellation_paths:dispatcher_fixture",
+        "Concepts/pm7-tools/verify/home_workspace_matrix.mjs#drag_one_commit_and_all_cancellation_paths:state_projection",
+        "Concepts/pm7-tools/verify/home_workspace_matrix.mjs#drag_one_commit_and_all_cancellation_paths:receipt_or_event_assertion",
+        "Concepts/pm7-tools/verify/home_workspace_matrix.mjs#drag_one_commit_and_all_cancellation_paths:accessibility_regression"
+      ],
+      "expected_event_types": [
+        "workspace.layout_changed"
+      ]
+    },
+    {
+      "control_id": "home.drop_target.floating",
+      "selector": "[data-pm-home-drop-host=\"floating\"]",
+      "state_selector": "state.home_workspace.home_drop_target_floating.availability",
+      "disabled_reason_projection": "state.home_workspace.home_drop_target_floating.disabled_reason",
+      "command_or_view_only_disposition": "cmd.workspace_layout.move_surface",
+      "receipt_or_event": [
+        "workspace.layout_changed"
+      ],
+      "handler": "handlers::workspace_layout::move_surface",
+      "production_wiring_row": "Plans/Wiring_Matrix.production.json#/entries/home.drop_target.floating",
+      "executable_test": [
+        "Concepts/pm7-tools/verify/home_workspace_matrix.mjs#drag_one_commit_and_all_cancellation_paths",
+        "Concepts/pm7-tools/verify/home_workspace_matrix.mjs#drag_one_commit_and_all_cancellation_paths:dispatcher_fixture",
+        "Concepts/pm7-tools/verify/home_workspace_matrix.mjs#drag_one_commit_and_all_cancellation_paths:state_projection",
+        "Concepts/pm7-tools/verify/home_workspace_matrix.mjs#drag_one_commit_and_all_cancellation_paths:receipt_or_event_assertion",
+        "Concepts/pm7-tools/verify/home_workspace_matrix.mjs#drag_one_commit_and_all_cancellation_paths:accessibility_regression"
+      ],
+      "expected_event_types": [
+        "workspace.layout_changed"
+      ]
+    },
+    {
+      "control_id": "home.resizer.editor_panel_1",
+      "selector": "[data-pm-home-resizer][data-pm-home-surface-id=\"editor_panel_1\"]",
+      "state_selector": "state.home_workspace.home_resizer_editor_panel_1.availability",
+      "disabled_reason_projection": "state.home_workspace.home_resizer_editor_panel_1.disabled_reason",
+      "command_or_view_only_disposition": "cmd.workspace_layout.resize_surface",
+      "receipt_or_event": [
+        "workspace.layout_changed"
+      ],
+      "handler": "handlers::workspace_layout::resize_surface",
+      "production_wiring_row": "Plans/Wiring_Matrix.production.json#/entries/home.resizer.editor_panel_1",
+      "executable_test": [
+        "Concepts/pm7-tools/verify/home_workspace_matrix.mjs#shared_resizers_one_commit_changed_only_and_cancel",
+        "Concepts/pm7-tools/verify/home_workspace_matrix.mjs#shared_resizers_one_commit_changed_only_and_cancel:dispatcher_fixture",
+        "Concepts/pm7-tools/verify/home_workspace_matrix.mjs#shared_resizers_one_commit_changed_only_and_cancel:state_projection",
+        "Concepts/pm7-tools/verify/home_workspace_matrix.mjs#shared_resizers_one_commit_changed_only_and_cancel:receipt_or_event_assertion",
+        "Concepts/pm7-tools/verify/home_workspace_matrix.mjs#shared_resizers_one_commit_changed_only_and_cancel:accessibility_regression"
+      ],
+      "expected_event_types": [
+        "workspace.layout_changed"
+      ]
+    },
+    {
+      "control_id": "home.resizer.editor_panel_2",
+      "selector": "[data-pm-home-resizer][data-pm-home-surface-id=\"editor_panel_2\"]",
+      "state_selector": "state.home_workspace.home_resizer_editor_panel_2.availability",
+      "disabled_reason_projection": "state.home_workspace.home_resizer_editor_panel_2.disabled_reason",
+      "command_or_view_only_disposition": "cmd.workspace_layout.resize_surface",
+      "receipt_or_event": [
+        "workspace.layout_changed"
+      ],
+      "handler": "handlers::workspace_layout::resize_surface",
+      "production_wiring_row": "Plans/Wiring_Matrix.production.json#/entries/home.resizer.editor_panel_2",
+      "executable_test": [
+        "Concepts/pm7-tools/verify/home_workspace_matrix.mjs#shared_resizers_one_commit_changed_only_and_cancel",
+        "Concepts/pm7-tools/verify/home_workspace_matrix.mjs#shared_resizers_one_commit_changed_only_and_cancel:dispatcher_fixture",
+        "Concepts/pm7-tools/verify/home_workspace_matrix.mjs#shared_resizers_one_commit_changed_only_and_cancel:state_projection",
+        "Concepts/pm7-tools/verify/home_workspace_matrix.mjs#shared_resizers_one_commit_changed_only_and_cancel:receipt_or_event_assertion",
+        "Concepts/pm7-tools/verify/home_workspace_matrix.mjs#shared_resizers_one_commit_changed_only_and_cancel:accessibility_regression"
+      ],
+      "expected_event_types": [
+        "workspace.layout_changed"
+      ]
+    },
+    {
+      "control_id": "home.resizer.editor_panel_3",
+      "selector": "[data-pm-home-resizer][data-pm-home-surface-id=\"editor_panel_3\"]",
+      "state_selector": "state.home_workspace.home_resizer_editor_panel_3.availability",
+      "disabled_reason_projection": "state.home_workspace.home_resizer_editor_panel_3.disabled_reason",
+      "command_or_view_only_disposition": "cmd.workspace_layout.resize_surface",
+      "receipt_or_event": [
+        "workspace.layout_changed"
+      ],
+      "handler": "handlers::workspace_layout::resize_surface",
+      "production_wiring_row": "Plans/Wiring_Matrix.production.json#/entries/home.resizer.editor_panel_3",
+      "executable_test": [
+        "Concepts/pm7-tools/verify/home_workspace_matrix.mjs#shared_resizers_one_commit_changed_only_and_cancel",
+        "Concepts/pm7-tools/verify/home_workspace_matrix.mjs#shared_resizers_one_commit_changed_only_and_cancel:dispatcher_fixture",
+        "Concepts/pm7-tools/verify/home_workspace_matrix.mjs#shared_resizers_one_commit_changed_only_and_cancel:state_projection",
+        "Concepts/pm7-tools/verify/home_workspace_matrix.mjs#shared_resizers_one_commit_changed_only_and_cancel:receipt_or_event_assertion",
+        "Concepts/pm7-tools/verify/home_workspace_matrix.mjs#shared_resizers_one_commit_changed_only_and_cancel:accessibility_regression"
+      ],
+      "expected_event_types": [
+        "workspace.layout_changed"
+      ]
+    },
+    {
+      "control_id": "home.resizer.editor_panel_4",
+      "selector": "[data-pm-home-resizer][data-pm-home-surface-id=\"editor_panel_4\"]",
+      "state_selector": "state.home_workspace.home_resizer_editor_panel_4.availability",
+      "disabled_reason_projection": "state.home_workspace.home_resizer_editor_panel_4.disabled_reason",
+      "command_or_view_only_disposition": "cmd.workspace_layout.resize_surface",
+      "receipt_or_event": [
+        "workspace.layout_changed"
+      ],
+      "handler": "handlers::workspace_layout::resize_surface",
+      "production_wiring_row": "Plans/Wiring_Matrix.production.json#/entries/home.resizer.editor_panel_4",
+      "executable_test": [
+        "Concepts/pm7-tools/verify/home_workspace_matrix.mjs#shared_resizers_one_commit_changed_only_and_cancel",
+        "Concepts/pm7-tools/verify/home_workspace_matrix.mjs#shared_resizers_one_commit_changed_only_and_cancel:dispatcher_fixture",
+        "Concepts/pm7-tools/verify/home_workspace_matrix.mjs#shared_resizers_one_commit_changed_only_and_cancel:state_projection",
+        "Concepts/pm7-tools/verify/home_workspace_matrix.mjs#shared_resizers_one_commit_changed_only_and_cancel:receipt_or_event_assertion",
+        "Concepts/pm7-tools/verify/home_workspace_matrix.mjs#shared_resizers_one_commit_changed_only_and_cancel:accessibility_regression"
+      ],
+      "expected_event_types": [
+        "workspace.layout_changed"
+      ]
+    },
+    {
+      "control_id": "home.resizer.dashboard",
+      "selector": "[data-pm-home-resizer][data-pm-home-surface-id=\"dashboard\"]",
+      "state_selector": "state.home_workspace.home_resizer_dashboard.availability",
+      "disabled_reason_projection": "state.home_workspace.home_resizer_dashboard.disabled_reason",
+      "command_or_view_only_disposition": "cmd.workspace_layout.resize_surface",
+      "receipt_or_event": [
+        "workspace.layout_changed"
+      ],
+      "handler": "handlers::workspace_layout::resize_surface",
+      "production_wiring_row": "Plans/Wiring_Matrix.production.json#/entries/home.resizer.dashboard",
+      "executable_test": [
+        "Concepts/pm7-tools/verify/home_workspace_matrix.mjs#shared_resizers_one_commit_changed_only_and_cancel",
+        "Concepts/pm7-tools/verify/home_workspace_matrix.mjs#shared_resizers_one_commit_changed_only_and_cancel:dispatcher_fixture",
+        "Concepts/pm7-tools/verify/home_workspace_matrix.mjs#shared_resizers_one_commit_changed_only_and_cancel:state_projection",
+        "Concepts/pm7-tools/verify/home_workspace_matrix.mjs#shared_resizers_one_commit_changed_only_and_cancel:receipt_or_event_assertion",
+        "Concepts/pm7-tools/verify/home_workspace_matrix.mjs#shared_resizers_one_commit_changed_only_and_cancel:accessibility_regression"
+      ],
+      "expected_event_types": [
+        "workspace.layout_changed"
+      ]
+    },
+    {
+      "control_id": "home.resizer.chat",
+      "selector": "[data-pm-home-resizer][data-pm-home-surface-id=\"chat\"]",
+      "state_selector": "state.home_workspace.home_resizer_chat.availability",
+      "disabled_reason_projection": "state.home_workspace.home_resizer_chat.disabled_reason",
+      "command_or_view_only_disposition": "cmd.workspace_layout.resize_surface",
+      "receipt_or_event": [
+        "workspace.layout_changed"
+      ],
+      "handler": "handlers::workspace_layout::resize_surface",
+      "production_wiring_row": "Plans/Wiring_Matrix.production.json#/entries/home.resizer.chat",
+      "executable_test": [
+        "Concepts/pm7-tools/verify/home_workspace_matrix.mjs#shared_resizers_one_commit_changed_only_and_cancel",
+        "Concepts/pm7-tools/verify/home_workspace_matrix.mjs#shared_resizers_one_commit_changed_only_and_cancel:dispatcher_fixture",
+        "Concepts/pm7-tools/verify/home_workspace_matrix.mjs#shared_resizers_one_commit_changed_only_and_cancel:state_projection",
+        "Concepts/pm7-tools/verify/home_workspace_matrix.mjs#shared_resizers_one_commit_changed_only_and_cancel:receipt_or_event_assertion",
+        "Concepts/pm7-tools/verify/home_workspace_matrix.mjs#shared_resizers_one_commit_changed_only_and_cancel:accessibility_regression"
+      ],
+      "expected_event_types": [
+        "workspace.layout_changed"
+      ]
+    },
+    {
+      "control_id": "home.resizer.terminal_section",
+      "selector": "[data-pm-home-resizer][data-pm-home-surface-id^=\"terminal_section:\"]",
+      "state_selector": "state.home_workspace.home_resizer_terminal_section.availability",
+      "disabled_reason_projection": "state.home_workspace.home_resizer_terminal_section.disabled_reason",
+      "command_or_view_only_disposition": "cmd.workspace_layout.resize_surface",
+      "receipt_or_event": [
+        "workspace.layout_changed"
+      ],
+      "handler": "handlers::workspace_layout::resize_surface",
+      "production_wiring_row": "Plans/Wiring_Matrix.production.json#/entries/home.resizer.terminal_section",
+      "executable_test": [
+        "Concepts/pm7-tools/verify/home_workspace_matrix.mjs#shared_resizers_one_commit_changed_only_and_cancel",
+        "Concepts/pm7-tools/verify/home_workspace_matrix.mjs#shared_resizers_one_commit_changed_only_and_cancel:dispatcher_fixture",
+        "Concepts/pm7-tools/verify/home_workspace_matrix.mjs#shared_resizers_one_commit_changed_only_and_cancel:state_projection",
+        "Concepts/pm7-tools/verify/home_workspace_matrix.mjs#shared_resizers_one_commit_changed_only_and_cancel:receipt_or_event_assertion",
+        "Concepts/pm7-tools/verify/home_workspace_matrix.mjs#shared_resizers_one_commit_changed_only_and_cancel:accessibility_regression"
+      ],
+      "expected_event_types": [
+        "workspace.layout_changed"
+      ]
+    }
+  ],
+  "view_only_controls": [
+    {
+      "control_id": "home.more_options.trigger",
+      "selector": "#pm-home-more-btn",
+      "state_selector": "view.menu_state.home_more_options",
+      "handler": "installTitlebarHomeControl/openMainMenu",
+      "test": "Concepts/pm7-tools/verify/home_workspace_matrix.mjs#compact_menu_exact_inventory_and_geometry",
+      "disabled_reason_projection": "not_applicable_disclosure_only",
+      "command_or_view_only_disposition": "view_only_no_dispatch",
+      "receipt_or_event": [],
+      "production_wiring_row": "Plans/UI_Wiring_Rules.md#UIW-010",
+      "executable_test": [
+        "Concepts/pm7-tools/verify/home_workspace_matrix.mjs#compact_menu_exact_inventory_and_geometry"
+      ]
+    },
+    {
+      "control_id": "home.more_options.open_panel_disclosure",
+      "selector": "[data-pm-home-submenu=\"pm-home-open-panel-flyout\"]",
+      "state_selector": "view.menu_state.home_open_panel_flyout",
+      "handler": "scheduleFlyout/openFlyout",
+      "test": "Concepts/pm7-tools/verify/home_workspace_matrix.mjs#compact_menu_keyboard_hover_bridge_and_focus_restore",
+      "disabled_reason_projection": "not_applicable_disclosure_only",
+      "command_or_view_only_disposition": "view_only_no_dispatch",
+      "receipt_or_event": [],
+      "production_wiring_row": "Plans/UI_Wiring_Rules.md#UIW-010",
+      "executable_test": [
+        "Concepts/pm7-tools/verify/home_workspace_matrix.mjs#compact_menu_keyboard_hover_bridge_and_focus_restore"
+      ]
+    },
+    {
+      "control_id": "home.more_options.open_browser_disclosure",
+      "selector": "[data-pm-home-submenu=\"pm-home-open-browser-flyout\"]",
+      "state_selector": "view.menu_state.home_open_browser_flyout",
+      "handler": "scheduleFlyout/openFlyout",
+      "test": "Concepts/pm7-tools/verify/home_workspace_matrix.mjs#compact_menu_keyboard_hover_bridge_and_focus_restore",
+      "disabled_reason_projection": "not_applicable_disclosure_only",
+      "command_or_view_only_disposition": "view_only_no_dispatch",
+      "receipt_or_event": [],
+      "production_wiring_row": "Plans/UI_Wiring_Rules.md#UIW-010",
+      "executable_test": [
+        "Concepts/pm7-tools/verify/home_workspace_matrix.mjs#compact_menu_keyboard_hover_bridge_and_focus_restore"
+      ]
+    },
+    {
+      "control_id": "home.surface_options.disclosure",
+      "selector": "[data-pm-home-surface-options]",
+      "state_selector": "view.menu_state.home_surface_options",
+      "handler": "openSurfaceMenu",
+      "test": "Concepts/pm7-tools/verify/home_workspace_matrix.mjs#surface_move_dock_float_inventory_and_commands",
+      "disabled_reason_projection": "not_applicable_disclosure_only",
+      "command_or_view_only_disposition": "view_only_no_dispatch",
+      "receipt_or_event": [],
+      "production_wiring_row": "Plans/UI_Wiring_Rules.md#UIW-010",
+      "executable_test": [
+        "Concepts/pm7-tools/verify/home_workspace_matrix.mjs#surface_move_dock_float_inventory_and_commands"
+      ]
+    },
+    {
+      "control_id": "home.file_manager.open_in_panel_disclosure",
+      "selector": "[data-pm-home-file-submenu]",
+      "state_selector": "view.menu_state.home_file_panel_flyout",
+      "handler": "installFileManagerOpenTargets/openFlyout",
+      "test": "Concepts/pm7-tools/verify/home_workspace_matrix.mjs#file_manager_open_in_panel_visible_submenu_all_four",
+      "disabled_reason_projection": "not_applicable_disclosure_only",
+      "command_or_view_only_disposition": "view_only_no_dispatch",
+      "receipt_or_event": [],
+      "production_wiring_row": "Plans/UI_Wiring_Rules.md#UIW-010",
+      "executable_test": [
+        "Concepts/pm7-tools/verify/home_workspace_matrix.mjs#file_manager_open_in_panel_visible_submenu_all_four"
+      ]
+    },
+    {
+      "control_id": "home.popup.dismissal",
+      "selector": ".pm-home-portal",
+      "state_selector": "view.menu_state.active_portal",
+      "handler": "menuKeydown/closeAllMenus/closeFlyout",
+      "test": "Concepts/pm7-tools/verify/home_workspace_matrix.mjs#compact_menu_keyboard_hover_bridge_and_focus_restore",
+      "disabled_reason_projection": "not_applicable_disclosure_only",
+      "command_or_view_only_disposition": "view_only_no_dispatch",
+      "receipt_or_event": [],
+      "production_wiring_row": "Plans/UI_Wiring_Rules.md#UIW-010",
+      "executable_test": [
+        "Concepts/pm7-tools/verify/home_workspace_matrix.mjs#compact_menu_keyboard_hover_bridge_and_focus_restore"
+      ]
+    }
+  ]
+}

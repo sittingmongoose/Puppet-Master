@@ -1910,3 +1910,31 @@ This addendum repairs non-runtime GUI checklist rows without creating WorkNodes,
 
 - Repairs `sfk-42b8d395baf8155efb2d98bc`: unchecked checklist rows are not PASS evidence. The checklist is an auditable summary only after each row references a validator, screenshot, or owner-doc evidence record and has status `pass`, `fail`, `blocked`, or `not_applicable`.
 - Repairs `sfk-8bbca61cb9960d94f08e192a`: automatable checklist rows must carry `test_id`, `validator_command?`, `evidence_ref?`, and `owner_doc_ref`. Prose-only assertions remain source-lineage until converted.
+
+## PMConcept7 Home Workspace checklist — 2026-08-04
+
+The GUI rebuild is not Home-complete until the evidence set verifies:
+
+- four stable editor panels with Panel 1/2 open defaults, Panel 3/4 closed defaults,
+  panel menus, close/reopen identity, Browser access in every panel, and File
+  Manager `Open in Panel` submenu targets 1 through 4;
+- one 28 by 28 Home more-options button immediately left of Theme whose compact
+  popup contains exactly Open Panel, Open Browser in Panel, divider, and Collapse
+  Bottom Terminal, with Reset Home Layout only under Startup & Recovery;
+- Dashboard, Chat, and terminal-section movement through `home_main`, all four
+  in-app edge docks, and web in-canvas floating, with independent editor floating
+  panels and native Slint multi-window disclosure;
+- four terminal sections, four visible panes per active section, workgroup movement,
+  empty-section behavior, and rejection at the section cap;
+- model-first Pointer Events movement/resize with U10 cues, cancellation-safe
+  restoration, reduced motion, shared resizer glow/recovery, four-edge scroll
+  dissolve, and exactly one command/persist at semantic commit;
+- project/workspace persistence, corruption/migration/off-screen recovery, all eight
+  themes, Light/Dark/Auto, inline SVG only, no emoji, and zero page/console errors.
+- one source-hashed zero-omission control census, byte-identical dual pipeline
+  builds, and the exact 72-case fresh-context visual matrix plus direct headful
+  keyboard/drag/blur/glow/scroll/popup pass.
+
+Each row requires a `test_id`, validator or harness command, evidence reference,
+owner-document reference, and status. An unchecked or screenshot-only row is not
+PASS evidence.

@@ -163,7 +163,7 @@ Orchestrator worker identity rows from `Orchestrator_Page` / `Orchestrator_Page.
 
 ## 1. Executive Summary
 
-This document is the authoritative GUI specification for the Puppet Master desktop application, replacing the retired Rust/Iced-lineage GUI with a Slint 1.17.1 implementation on Rust stable 1.96.1. The design follows an IDE-shell layout (Activity Bar + Primary Content + Side Panel + Bottom Panel) with three user-facing theme families (Retro Dark, Retro Light, Basic Modern) backed by deterministic built-in palette variants plus user-created custom themes, detachable panels, and a rearrangeable dashboard.
+This document is the authoritative GUI specification for the Puppet Master desktop application, replacing the retired Rust/Iced-lineage GUI with a Slint 1.17.1 implementation on Rust stable 1.96.1. The design follows an IDE-shell layout (Activity Bar + Primary Content + Side Panel + Bottom Panel) with eight built-in themes across four families (Friendly, Glass, Retro, Basic; default Friendly Dark) backed by deterministic built-in palette variants plus user-created custom themes, detachable panels, and a rearrangeable dashboard.
 
 The current GUI uses a two-row header with 16 flat navigation buttons above a single full-width content area. This wastes screen real estate and forces constant page-switching. The new layout follows a three-column IDE shell inspired by VS Code / JetBrains, dressed in the existing retro-futuristic aesthetic.
 
@@ -174,7 +174,7 @@ Key changes from the retired Rust/Iced-lineage GUI:
 - **New views:** Usage page, File Manager panel, editor surface, Chat panel, Agent Activity pane, Artifacts, Source Control, GitHub Actions, Docker Manager, and Run & Debug side-panel surfaces
 - **Bottom runtime zone:** Terminal, Problems, Output, Ports, and the classical **Debugger** / **DAP Debugger** live here; normal browsing and HTML preview remain editor-tab or detached-window browser surfaces rather than bottom-panel tabs
 - Coarse surface vocabulary treats primary-content pages `/views`, side-panel destinations, bottom-panel surfaces, and Orchestrator tabs as shell categories, not interchangeable route identities.
-- **Themes:** Three theme families with full extensibility and deterministic built-in variants
+- **Themes:** Four theme families (eight built-in themes) with full extensibility and deterministic built-in variants
 - **Real-time:** Event-driven updates via Rust channels and `invoke_from_event_loop`, not polling
 - **Panels:** Chat and File Manager are detachable; shell state remains identity-safe when re-docked
 - **Project bar:** Instant project switching from title bar with full state preservation and reload
@@ -258,6 +258,278 @@ fn main() {
     slint_build::compile_with_config("ui/app.slint", config).unwrap();
 }
 ```
+
+## PMConcept7 Home Workspace Control Reconciliation — 2026-08-04
+
+This addendum is the GUI/shell behavior owner for the model-driven Home workspace. The
+canonical record shape, migration rules, and persistence key live in
+`Plans/home_workspace_layout.schema.json` and `Plans/storage-plan.md`; consumers cite
+those owners instead of copying field definitions.
+
+### F3-HOME-001 — Home composition and stable surface identity
+
+Home is one shell workspace with a flexible `home_main` center and five in-app host
+registries: `dock_left`, `dock_right`, `dock_top`, `dock_bottom`, and `floating`.
+The desktop `floating` host is a native Slint window; the guaranteed web fallback is
+an in-canvas floating presentation. The shell presents four stable editor surface
+identities, `editor_panel_1` through `editor_panel_4`, plus the stable `dashboard`,
+`chat`, and `terminal_section:<terminal_section_id>` surface identities. Panel labels
+are presentation text and never become persisted identity. Panel 1 and Panel 2 are
+open in the default layout; Panel 3 and Panel 4 are closed but reopenable without
+minting a new identity. Dashboard widget placement, editor buffers, terminal
+sessions/PTYs, browser sessions, and chat messages remain domain-owned projections;
+the Home layout stores references and presentation state only.
+
+### F3-HOME-002 — Model-first movement and resize behavior
+
+Surface movement and resize use a committed layout plus a local draft layout. Pointer
+offset, lift, placeholder, neighbor reflow, edge-zone detection, cancellation, and
+reduced-motion behavior follow the approved U10 interaction semantics. DOM/Slint
+items are projections, not layout authority. A changed semantic drop or resize end
+validates the expected layout revision, dispatches one typed command, increments the
+revision, and persists once. Cancellation, invalid targets, lost capture, Escape,
+blur, and pointer cancellation restore the exact pre-gesture snapshot. The target
+priority is explicit inner insertion/split, outer edge dock, floating, then invalid
+revert. All resize endpoints use the shared resizer glow/recovery contract and all
+new scrollports register with the four-edge scroll dissolve system.
+
+### F3-HOME-003 — Shell controls and capability envelope
+
+The Home title bar exposes one 28 by 28 inline-SVG `Home more options` button
+immediately left of Theme. Its compact body-portaled popup has exactly three
+top-level rows, in order: `Open Panel` with a Panel 1 through Panel 4 side flyout,
+`Open Browser in Panel` with the same four-target side flyout, a divider, and
+`Collapse Bottom Terminal`. It follows the Chat model/mode popup and effort-flyout
+interaction language: restrained elevation, corner-sprout opening, viewport
+flipping, hover bridge, roving keyboard focus, Enter/Right Arrow to enter a
+flyout, Left Arrow to return, Escape/outside dismissal, reduced-motion parity,
+and focus restoration to the invoker. `Collapse Bottom Terminal` is disabled
+with an accessible reason when no eligible bottom terminal exists or the eligible
+terminal is already collapsed; its label never changes into an Expand action.
+
+Reset, File Manager, Move/Dock, pop-out, close, counts, recovery diagnostics, and
+layout revision/debug data are forbidden in this popup. `Reset Home Layout` lives
+under Settings -> General & Appearance -> Startup & Recovery and resets shell
+presentation only. Move/Dock remains in each eligible surface's options menu;
+File Manager targets remain in File Manager; terminal limits remain in
+terminal-local controls. Each eligible editor, Dashboard, Chat, and terminal
+section menu exposes Main, Dock Left, Dock Right, Dock Top, Dock Bottom, and Float.
+Editor menus additionally expose Open Browser, Pop Out, and Close Panel.
+
+Browser access from any editor panel, File Manager `Open in Panel`, Dashboard/Chat
+movement, terminal section/workgroup movement, explicit empty-section state, and
+reset route through the command and production-wiring owners; disclosure-only menu
+and flyout opening is view-local, while every selected leaf action dispatches
+exactly one semantic command or a typed no-change receipt. Opening an already-open
+panel focuses its existing view, and Browser routing reparents or focuses one
+stable Browser session without duplicating it.
+
+Web guarantees all four in-app docks and in-canvas floating. `window.open()` is
+optional, is attempted only from direct user activation, and can never be the sole
+path; a blocked or unavailable popup discloses the fallback and retains in-canvas
+floating. Native Slint 1.17.1 multi-window behavior remains the desktop authority.
+All eight themes and Light/Dark/Auto remain supported, and no new control may use
+emoji or non-inline image assets.
+
+### F3-HOME-004 — Transactional persistence and identity
+
+`HomeWorkspaceLayoutV1` is the only Home shell layout authority. A candidate
+mutation is validated, written to the canonical record, read back byte-for-byte,
+and only then becomes committed state, advances `layout_revision`, updates success
+counters, or emits a success EventRecord with `persisted=true`. Write/readback
+failure restores the exact prior model and focus sequence, emits a failure receipt,
+and emits no success event. Corrupt, duplicate-identity, future-version, malformed,
+or off-screen records are quarantined, normalized to a safe canonical record,
+written forward, and disclosed through the existing recovery status treatment;
+the next reload must be clean. Layout movement/reload never mints editor panel,
+editor group, worktree, buffer, dirty-buffer, terminal section, workgroup, pane,
+PTY/session, Browser, Dashboard, or Chat identity.
+
+### F3-HOME-005 — Native Slint portability contract
+
+The native Rust implementation owns the committed/draft layout model, command
+transaction, identity registry, persistence, and multi-window registry. Slint
+1.17.1 reusable surface components render inline while docked and in separate
+`Window` instances while detached, using `TouchArea`, `DragArea`, `DropArea`, or
+equivalent typed input surfaces only as projections over the Rust model.
+Cross-window drag and OS snap orchestration remain Rust/window-layer concerns.
+Window size and position may be persisted, but exact position restoration on
+Wayland is best effort; an unprovable placement falls back to the last valid dock
+or `home_main`. DOM clone/FLIP mechanics remain prototype-only and cannot become
+native layout authority.
+
+### Explicit superseded dispositions
+
+The old single-floating-editor limit is superseded by the four stable editor panel
+model above. The old two-terminal-section/editor-area exclusion is superseded by
+four terminal sections and Home target participation while retaining the default
+bottom placement. Historical HTML5/CSS-order panel swapping is prototype lineage,
+not GUI canon; the implementation must use the model-first Pointer Events
+transaction described above. Existing Dashboard widget hostability and widget
+layout remain separate contracts and are not expanded by Home surface movement.
+
+### F3-501 - Home Workspace Model And Stable Identity
+
+```yaml
+plan_unit_id: F3-501
+unit_type: requirement
+status: accepted
+owner_doc: Plans/FinalGUISpec.md
+canonical_text: Home is rendered from one Rust-owned HomeWorkspaceLayoutV1 across home_main, four outer docks, and a floating host; four editors, Dashboard, Chat, and up to four terminal sections retain stable domain-owner identities across move, close, reopen, float, re-dock, persistence, and reload.
+gui_related: true
+gui_classification_reason: This unit owns the user-visible Home shell composition and stable surface behavior.
+split_recommended: false
+depends_on: [F3-500]
+unblocks: [SP-245, UCC-144, CV-323, F3-502, F3-503, F3-504]
+acceptance_criteria:
+- Exactly four editor panel identities exist; Panels 1 and 2 default open and Panels 3 and 4 default closed.
+- Dashboard and Chat are singleton surfaces; terminal sections are bounded at four.
+- Layout projections reparent existing owner-backed views and never duplicate editor, terminal, Browser, Dashboard, or Chat authority.
+- Old HTML5/CSS-order swapping is retired as Home authority.
+validation_surfaces:
+- python3 scripts/pm-plan-index.py validate
+- node Concepts/pm7-tools/verify/home_workspace_matrix.mjs
+risk_class: home_workspace_identity_drift
+reasoning_tier: standard
+context_scope: pmconcept7_home_workspace
+implementation_surfaces: [Plans/FinalGUISpec.md, Concepts/pm7-tools/home_workspace_source.py]
+node_compile_hint:
+  mode: home_workspace_shell
+  create_worknodes: false
+source_lineage:
+- PMConcept7_Home_Workspace_Audit_Packet_v1/shared/01_REQUIREMENTS.jsonl
+preserved_exact_tokens: [HomeWorkspaceLayoutV1, editor_panel_1, editor_panel_2, editor_panel_3, editor_panel_4]
+negative_constraints:
+- Do not make DOM order, CSS order, or generated PMConcept7 output the layout authority.
+- Do not mint domain identities during shell movement.
+compatibility_only_notes: []
+stale_retired_dispositions:
+- The HTML5/CSS-order Home swap demo is retired source lineage only.
+owner_hints: [Plans/FinalGUISpec.md, Plans/storage-plan.md]
+```
+
+### F3-502 - Compact Home More Options Menu
+
+```yaml
+plan_unit_id: F3-502
+unit_type: requirement
+status: accepted
+owner_doc: Plans/FinalGUISpec.md
+canonical_text: "The 28 by 28 Home more-options trigger immediately left of Theme opens one compact body-portaled three-row popup: Open Panel, Open Browser in Panel, divider, and Collapse Bottom Terminal; the first two rows expose Panel 1 through Panel 4 side flyouts and all other Home actions live at their owner surfaces."
+gui_related: true
+gui_classification_reason: This unit owns the visible title-bar menu inventory, placement, keyboard behavior, and disabled treatment.
+split_recommended: false
+depends_on: [F3-501, UCC-144, UIW-010]
+unblocks: []
+acceptance_criteria:
+- The popup has exactly the three ordered top-level actions and no reset, File Manager, Move/Dock, pop-out, close, count, recovery, revision, or debug row.
+- Flyouts support hover bridge, Enter/Right Arrow, Left Arrow, roving focus, Escape/outside dismissal, viewport flipping, reduced motion, and trigger focus restoration.
+- Collapse stays Collapse, is never an Expand alias, and exposes the canonical disabled reason.
+- Reset Home Layout is visible only under Settings -> General & Appearance -> Startup & Recovery.
+validation_surfaces:
+- node Concepts/pm7-tools/verify/home_workspace_matrix.mjs
+- python3 Concepts/pm7-tools/build_pm7.py
+risk_class: home_menu_regression
+reasoning_tier: standard
+context_scope: pmconcept7_home_menu
+implementation_surfaces: [Plans/FinalGUISpec.md, Concepts/pm7-tools/home_workspace_source.py, Concepts/pm7-tools/build_pm7.py]
+node_compile_hint:
+  mode: compact_home_menu
+  create_worknodes: false
+source_lineage:
+- PMConcept7_Home_Workspace_Audit_Packet_v1/shared/01_REQUIREMENTS.jsonl
+preserved_exact_tokens: [Open Panel, Open Browser in Panel, Collapse Bottom Terminal, Reset Home Layout]
+negative_constraints:
+- Do not restore the Home control-center menu.
+- Do not place disclosure-only actions on the command bus.
+compatibility_only_notes: []
+stale_retired_dispositions:
+- Reset and diagnostics in the title-bar Home menu are retired.
+owner_hints: [Plans/FinalGUISpec.md, Plans/UI_Command_Catalog.md]
+```
+
+### F3-503 - Home Gestures Resizers And Scroll Dissolve
+
+```yaml
+plan_unit_id: F3-503
+unit_type: requirement
+status: accepted
+owner_doc: Plans/FinalGUISpec.md
+canonical_text: Home surface drag, drop, insertion, reflow, float, dock, and resize use one draft-model Pointer Events transaction, shared diamond resizers, and shared four-edge scroll dissolve; pointermove is preview-only and one changed end commits once.
+gui_related: true
+gui_classification_reason: This unit owns visible layout gestures, previews, resize feedback, scrolling-edge treatment, and recovery.
+split_recommended: false
+depends_on: [F3-501, UIW-010]
+unblocks: []
+acceptance_criteria:
+- Pickup retains pointer offset and shows landing placeholder, neighbor reflow, and narrow theme-aware edge previews.
+- Escape, pointercancel, lost capture, blur, invalid targets, and unchanged drops restore the exact committed model with no command, persistence, or success event.
+- Every eligible boundary uses the shared theme-aware diamond glow/recovery controller and commits once on changed pointer-up only.
+- Every new vertical or horizontal scrollport enrolls in the shared four-edge dissolve system with no-overflow and reduced-motion handling.
+validation_surfaces:
+- node Concepts/pm7-tools/verify/home_workspace_matrix.mjs
+risk_class: home_gesture_regression
+reasoning_tier: standard
+context_scope: pmconcept7_home_gestures
+implementation_surfaces: [Plans/FinalGUISpec.md, Concepts/pm7-tools/home_workspace_source.py]
+node_compile_hint:
+  mode: home_gesture_transaction
+  create_worknodes: false
+source_lineage:
+- PMConcept7_Home_Workspace_Audit_Packet_v1/shared/01_REQUIREMENTS.jsonl
+preserved_exact_tokens: [pointercancel, lostpointercapture, four-edge scroll dissolve]
+negative_constraints:
+- Do not dispatch commands, events, or persistence writes on pointermove.
+compatibility_only_notes: []
+stale_retired_dispositions: []
+owner_hints: [Plans/FinalGUISpec.md, Plans/UI_Wiring_Rules.md]
+```
+
+### F3-504 - Home Web And Native Capability Boundary
+
+```yaml
+plan_unit_id: F3-504
+unit_type: requirement
+status: accepted
+owner_doc: Plans/FinalGUISpec.md
+canonical_text: Native Slint 1.17.1 is Rust-model-first and multi-window capable; web guarantees in-app docks and in-canvas floating only, treats popup presentation as direct-user-activation optional degradation, and falls back honestly when blocked.
+gui_related: true
+gui_classification_reason: This unit owns visible native/web capability behavior and degradation disclosure.
+split_recommended: false
+depends_on: [F3-501]
+unblocks: []
+acceptance_criteria:
+- Native reusable surfaces are backed by shared Rust models and a multi-window registry; Slint input areas do not own layout identity.
+- Wayland window position restoration is best effort with a valid in-app fallback.
+- window.open is never the only path, is attempted only under direct user activation, and blocked popup state falls back to in-canvas floating.
+- Reduced motion disables interpolation but retains target and state cues.
+validation_surfaces:
+- node Concepts/pm7-tools/verify/home_workspace_matrix.mjs
+- python3 scripts/pm-plan-index.py validate
+risk_class: home_platform_claim_drift
+reasoning_tier: standard
+context_scope: pmconcept7_home_platform
+implementation_surfaces: [Plans/FinalGUISpec.md]
+node_compile_hint:
+  mode: home_platform_boundary
+  create_worknodes: false
+source_lineage:
+- PMConcept7_Home_Workspace_Audit_Packet_v1/shared/06_WEB_SLINT_FEASIBILITY.md
+preserved_exact_tokens: [Slint 1.17.1, Wayland, direct user activation, in-canvas floating]
+negative_constraints:
+- Do not claim OS docking or unrestricted popup placement as a web guarantee.
+compatibility_only_notes: []
+stale_retired_dispositions: []
+owner_hints: [Plans/FinalGUISpec.md]
+```
+
+## Known-37 recovery-unavailable GUI projection - 2026-07-18
+
+Every recovery-unavailable surface renders the owner-provided reason (`snapshot_missing`, `snapshot_corrupt`, `snapshot_scope_unsupported`, `snapshot_identity_stale`, or `snapshot_unanchored`), exact preserved-work warning, blocked episode/anchor identity, and the exact ordered `allowed_action_ids[]`. The order is inspect, locate/verify, replan, optional owner-admitted isolated fresh attempt, then explicit abandonment. The GUI does not sort, add, remove, rename, or infer actions; ordinary restore and retry remain disabled in this state.
+
+`locate_and_verify_recovery` collects a non-secret owner custody ref and explains identity/scope/manifest/content verification. `abandon_recovery` requires the exact confirmation `abandon_recovery_and_preserve_local_work`, durable confirmation authority, and preserved-work acknowledgement, and explicitly states that abandonment is not run abort or cleanup. Pre-attempt dispatch omits `attempt_id`; post-attempt dispatch carries the exact current value. Every enabled state is revalidated against current owner membership, identity, reason, snapshot set, permissions, storage, and operation state before dispatch.
+
+The GUI displays success only from the typed domain result plus committed `recovery_unavailable_resolution_receipt`: locate uses `resolved`; abandon uses `abandoned_by_user`; both show `cleanup_performed = false`. A generic UI acknowledgement, accepted dispatch, `not_committed`, stale projection, refusal, recoverable failure, or missing receipt displays no release/recovery/cleanup/retry/success claim and preserves the blocked projection. Replay shows the original result and receipt without implying a second effect.
 
 ## GUI / PMConcept implementation-readiness repair addendum (2026-07-02)
 
@@ -516,7 +788,7 @@ fn main() -> Result<(), Box<dyn std::error::Error>> {
 
 ```
 +-----------------------------------------------------------------+
-|  TITLE BAR: Puppet Master  [project v] [theme] [gear]           |  28px
+|  TITLE BAR: Puppet Master [proj v] [tabs] [notify (n)] [search] |  28px
 +------+------------------------------------------+---------------+
 |      |                                          |               |
 | ACT  |   PRIMARY CONTENT AREA                   | SIDE PANEL    |
@@ -529,7 +801,7 @@ fn main() -> Result<(), Box<dyn std::error::Error>> {
 |      |  Terminal / Problems / Output             |               |
 |      |  120-300px                                |               |
 +------+------------------------------------------+---------------+
-|  STATUS BAR: [mode] [platform v] [model v] [ctx: 42k/128k]     |  24px
+|  STATUS BAR: [workspace] [orch] [index] [ports] [branch] [sync] |  24px
 +-----------------------------------------------------------------+
 ```
 
@@ -537,12 +809,12 @@ fn main() -> Result<(), Box<dyn std::error::Error>> {
 
 | Zone | Slint Container | Size | Behavior |
 |------|----------------|------|----------|
-| **Title bar** | `HorizontalLayout` | height: 28px fixed | App name (Orbitron Bold 14px), compact current-project context, theme toggle, settings gear |
+| **Title bar** | `HorizontalLayout` | height: 28px fixed | App name (Orbitron Bold 14px), compact current-project context, title-bar page tabs, rightward notification stack with count badge (between the page tabs and the title-bar search; F3-460), title-bar search, theme selector (morphing sun/moon/auto icon trigger with Light/Dark/Auto mode control), settings gear |
 | **Activity bar** | `VerticalLayout` | width: 48px fixed | Icon-only vertical nav; always visible |
 | **Primary content** | `VerticalLayout` (flex: 1) | fills remaining space | Active page view; scrollable internally per page |
 | **Side panel** | `VerticalLayout` | width: 240-480px, resizable | Hosts the currently selected activity-bar side-panel surface; one visible at a time; detachable where supported |
 | **Bottom panel** | `VerticalLayout` | height: 120-300px, collapsible | Terminal, Problems, Output tabs |
-| **Status bar** | `HorizontalLayout` | height: 24px fixed | Chat mode, platform/model dropdowns, context usage, orchestrator status, and regex-index progress / refresh disclosure |
+| **Status bar** | `HorizontalLayout` | height: 24px fixed | Workspace status menu, orchestrator status, regex-index progress / refresh disclosure, ports, branch, and sync chips (chat mode, platform/model, and context usage moved to the assistant chat surface and chat context ring per the amended F3-448) |
 
 `FinalGUISpec.md §3.1` is the shell confirmation for right-hand side-panel occupants: the side panel is the Activity Bar surface slot with a 240-480px width budget. Legacy labels such as `/File`, `/Source`, `/GitHub`, and `/etc` are migration labels for occupants or groups, not separate page surfaces that bypass the right-hand side-panel model.
 
@@ -584,6 +856,8 @@ Required visible behavior:
 - badge when the active project has background activity, blocked items, or unsaved shell state that needs attention
 - keyboard entrypoint for instant project switch
 - responsive collapse without losing the command-palette project switch path
+
+PMConcept7 promotion (2026-07-23): the title bar also hosts the rightward notification stack and count badge, sitting between the title-bar page tabs and the title-bar search. This stack is the sole in-app notification affordance; ephemeral toasts stage beneath it and durable alerts join it, with the sprout inbox panel opening from it. See F3-460 and F3-461.
 
 Non-canonical after this section:
 - title-bar dropdown/strip as the primary project-switch shell
@@ -961,20 +1235,23 @@ Three-signal system for panel detach discovery:
 
 ## 6. Theme System
 
-### 6.1 Three Theme Families (Three User-Facing Choices)
+### 6.1 Theme Families (Eight Built-In Themes)
 
 
-| Theme Family | Variants | Retro Effects | Target Audience |
+| Theme Family | Variants | Signature Effects | Target Audience |
 |-------|--------|--------------|----------------|
-| **Retro Dark** | 1 | Full: pixel grid, paper texture, scanlines, hard shadows, sharp corners, Orbitron + Rajdhani | Users who love the current aesthetic |
-| **Retro Light** | 1 | Full (reduced opacity): pixel grid, paper texture, hard shadows, sharp corners, Orbitron + Rajdhani | Light-mode users who want the aesthetic |
-| **Basic Modern** | 2 internal palette variants | None: flat colors, subtle borders, rounded corners, system fonts | Accessibility, readability, reduced visual noise |
+| **Friendly** (default: Friendly Dark) | 2 (Friendly Dark, Friendly Light) | Cozy: Cal Sans/Quicksand/Nunito, paper ground + 18px dot grid, category pastel tints, frosted chrome blur limited to title/status/bottom bars | Default experience; warm, approachable |
+| **Glass** | 2 (Glass Dark, Glass Light) | One-pane glass slab: single backdrop blur over a pre-blurred wallpaper asset, alpha-derived transparency steps, glass-alpha slider, background modes mesh/depth/minimal | Users who want the translucent composition |
+| **Retro** | 2 (Retro Dark, Retro Light) | Full: pixel grid, paper texture, scanlines (dark) or reduced opacity (light), hard shadows, sharp corners, Orbitron + Rajdhani | Users who love the original aesthetic |
+| **Basic** | 2 (Basic Dark, Basic Light) | None: flat colors, subtle borders, rounded corners, system fonts | Accessibility, readability, reduced visual noise |
 
 User-facing selector contract:
-- The GUI MUST expose exactly three built-in theme choices: `Retro Dark`, `Retro Light`, and `Basic`.
-- `Basic` may internally resolve to light or dark palette tokens based on explicit sub-setting or system scheme, but that internal palette choice does not create a fourth user-facing built-in theme promise.
+- The GUI MUST expose exactly eight built-in theme variants, organized as four theme families (Friendly, Glass, Retro, Basic) x two schemes (dark, light): `Friendly Dark`, `Friendly Light`, `Glass Dark`, `Glass Light`, `Retro Dark`, `Retro Light`, `Basic Dark`, and `Basic Light`.
+- In addition to the variant set, the selector carries a presentation mode dimension: Light, Dark, and Auto. Auto resolves the selected family to its dark or light variant by following the operating system appearance (`prefers-color-scheme`) and updates live when the OS setting changes; Light and Dark pin the scheme manually.
+- The default is family Friendly with mode Dark as shipped (`Friendly Dark`).
+- Migration lineage (superseded 2026-07-16 by the four-family promotion, kept findable for token continuity): the prior contract read "The GUI MUST expose exactly three built-in theme choices: `Retro Dark`, `Retro Light`, and `Basic`", where `Basic` internally resolved to light or dark palette tokens without creating a fourth user-facing built-in theme promise.
 
-### 6.2 Theme Token Table
+### 6.2 Theme Token Table (Retro/Basic variants; Friendly and Glass variant tables are in the Theme System addendum - 2026-07-16)
 
 | Token | Retro Dark | Retro Light | Basic Light | Basic Dark |
 |-------|-----------|-------------|-------------|------------|
@@ -1025,17 +1302,19 @@ if Theme.retro-effects-enabled && Theme.paper-texture-enabled: PaperTextureOverl
 ### 6.4 Theme Switching
 
 - **Live switch** for colors, spacing, borders, overlays: Slint's reactive property system propagates changes instantly
-- **Restart required** for font family change: Switching between Retro (Orbitron/Rajdhani) and Basic (system fonts) requires app restart because Slint loads fonts at initialization
-- **Within same family is live:** Switching between Retro Dark and Retro Light is instant (same fonts)
-- **Basic palette note:** Switching Basic between its internal light/dark palette variants MAY be live when fonts do not change, but it remains one built-in theme family in the UI model.
+- **Restart required** for font family change: Cross-family switches that change loaded fonts (Retro's Orbitron/Rajdhani, Friendly's Cal Sans/Quicksand/Nunito, or Basic/Glass system fonts) require app restart because Slint loads fonts at initialization
+- **Within same family is live:** Switching between the dark and light variants of one family (for example Retro Dark to Retro Light, or Friendly Dark to Friendly Light) is instant (same fonts)
+- **Glass/Basic note:** Glass and Basic share system fonts, so switches between them MAY be live when no other loaded-font change occurs.
 
 ### 6.5 Slint Implementation
 
 ```slint
-export enum ThemeMode { retro-dark, retro-light, basic-light, basic-dark }
+export enum ThemeMode { friendly-dark, friendly-light, glass-dark, glass-light, retro-dark, retro-light, basic-light, basic-dark }
+
+export enum ThemePresentationMode { light, dark, auto }
 
 export global Theme {
-    in property <ThemeMode> mode: retro-dark;
+    in property <ThemeMode> mode: friendly-dark;
     in property <color> background: #0a0a1a;
     in property <color> surface: #1a1a2e;
     in property <color> surface-elevated: #252540;
@@ -1061,6 +1340,8 @@ export global Theme {
 }
 ```
 
+The runtime stores the selected theme family plus a presentation mode (`ThemePresentationMode`) and derives the active `ThemeMode` variant from that pair; in `auto` the effective variant tracks the operating system appearance (`prefers-color-scheme`) live.
+
 A Rust-side `ThemeVariant` enum applies all tokens to the global at runtime:
 
 ```rust
@@ -1080,12 +1361,12 @@ impl ThemeVariant {
 
 ### 6.6 Theme Extensibility Architecture (MVP)
 
-The architecture supports unlimited user-created themes beyond the four built-in variants.
+The architecture supports unlimited user-created themes beyond the eight built-in variants.
 
 **Built-in themes (ship with app):**
-- Retro Dark, Retro Light, Basic Light, Basic Dark (the four variants in §6.1-6.2)
+- Friendly Dark (default), Friendly Light, Glass Dark, Glass Light, Retro Dark, Retro Light, Basic Light, Basic Dark (the eight variants in §6.1-6.2 and the Theme System addendum - 2026-07-16)
 
-**Custom theme file format:** Custom themes are defined as TOML files in `~/.puppet-master/themes/<name>.toml`. Each file specifies token overrides; any token not specified inherits from the base theme (Basic Dark or Basic Light, chosen by a `base` field).
+**Custom theme file format:** Custom themes are defined as TOML files in `~/.puppet-master/themes/<name>.toml`. Each file specifies token overrides; any token not specified inherits from any built-in variant base named by a `base` field (`basic-*`, `retro-*`, `glass-*`, or `friendly-*`).
 
 ```toml
 [meta]
@@ -1121,14 +1402,16 @@ border-radius = 4
 **Theme loading and validation:**
 - On startup, scan `~/.puppet-master/themes/` for `.toml` files
 - Parse and validate each file against the token schema (§6.2). Invalid files log a warning and are skipped (not loaded); user sees a toast on Settings open: "Theme '{name}' has errors -- see log for details"
-- Valid custom themes appear in the theme selector (Settings > General and title bar toggle) alongside built-in themes
+- Valid custom themes appear in the theme selector (Settings > General and title bar theme selector) alongside built-in themes
 - **Hot reload:** Editing a theme TOML file while the app is running triggers a re-scan (via file watcher on the themes directory). If the currently active theme is modified, changes apply immediately (same as live theme switch within a family). If font changes are detected, prompt for restart.
 
 **Theme selector UI:**
-- Title bar theme toggle becomes a dropdown when >4 themes are available (built-in + custom)
-- Each entry shows: theme name, color swatch preview (4 circles: background, surface, accent-blue, accent-lime), author (for custom), "[built-in]" or "[custom]" badge
+- The title-bar trigger is a morphing icon button: sun = manual Light mode, moon = manual Dark mode, continuous sun-to-moon morph = Auto mode (follows OS appearance)
+- The menu shows a Light/Dark/Auto segmented control above four theme-family rows (Friendly, Glass, Retro, Basic)
+- Each family row shows: family name, color swatch preview (4 circles: background, surface, accent-blue, accent-lime), and a "[built-in]" or "[custom]" badge; when a family has >4 themes available (built-in + custom), that row becomes a dropdown of its variants with author shown for custom entries
+- In Auto mode the selected family resolves to its dark or light variant by following the operating system appearance (`prefers-color-scheme`) and updates live when the OS setting changes
 - "Manage themes" link at bottom opens Settings > General > Themes section
-- Settings > General includes: theme dropdown, "Open themes folder" button (opens `~/.puppet-master/themes/` in system file manager), "Create new theme" button (copies a template TOML to the themes folder and opens it in File Editor), "Import theme" button (file picker for .toml), "Export theme" button (saves current token values as .toml)
+- Settings > General includes: theme family selection plus Light/Dark/Auto mode control, "Open themes folder" button (opens `~/.puppet-master/themes/` in system file manager), "Create new theme" button (copies a template TOML to the themes folder and opens it in File Editor), "Import theme" button (file picker for .toml), "Export theme" button (saves current token values as .toml)
 - Theme selection, including terminal color-scheme selection, must support preview before apply, fast switching, `/search`, explicit readability `/contrast` signals, and instant apply/revert; `/revert` returns to the previously persisted theme or terminal color scheme without waiting for app restart.
 - Settings > Terminal owns durable terminal appearance/theme/color, default cwd, font, and default behavior controls; runtime terminal panels consume those preferences but do not mint separate settings owners.
 - Terminal theme schema is semantic, not raw ANSI-only: it defines background `/foreground`, ANSI `/basic` and bright palettes, cursor and selection colors, search highlight colors, command-block and sticky-header chrome, and badge/status colors for `/failure/running/context` states.
@@ -1330,9 +1613,11 @@ The Indexing settings subsection exposes the project search index as an admin su
 
 Settings provider and web rows must preserve row-level health/error disclosure, last-failure messaging, availability plus support-tier visibility in Settings, and availability plus support-tier visibility in /web help/autocomplete. The row contract includes provider identity, support tier, readiness state, last failure, and contextual help without moving provider routing ownership out of `Plans/Tools.md`.
 
-Settings Tab Registry:
+Canonical Settings surface (search-first, per F3-432 and the Settings System addendum - 2026-07-16): the Settings home is the s4 search-first one-box model — a single search box with fuzzy multi-token relevance (F3-433), twelve category chips with derived-status attention dots opening per-category bloom panels (F3-434), and a shelves home of Fix These, Recents, and Suggested (F3-435, F3-436, F3-437). Rows render per the setting-row contract (F3-438) from the canonical inventory registry `Plans/settings_inventory.json` (F3-441), apply instantly (F3-439), and live-apply through the wiring map (F3-440). There is no visible tab bar.
 
-The unified Settings surface exposes a stable tab registry so run-touched settings content has a visible landing zone without copying detailed owner-doc behavior into this GUI file. The registry is a placement and owner-routing contract: hidden or unsupported tabs remain searchable and command-addressable, but they show unavailable or unsupported state instead of disappearing silently.
+Settings Tab Registry (owner-routing and search lineage):
+
+The registry below is preserved as an owner-routing and search/migration lineage contract so every settings row keeps a resolvable owner mapping; it is not a visible tab bar. Hidden or unsupported items remain searchable and command-addressable, but they show unavailable or unsupported state instead of disappearing silently.
 
 | Tab | Final GUI responsibility | Owner detail |
 |---|---|---|
@@ -1356,7 +1641,7 @@ The unified Settings surface exposes a stable tab registry so run-touched settin
 | Skills | Skill registry visibility, readiness, source, and persona references | Skills_System and Agent Config |
 | Plugins | Plugin registry visibility, readiness, source, and capability disclosure | Plugins_System and MCP/Tools owners |
 
-This table is the canonical 19-tab Settings registry. Older `24 tabs across 5 groups` risk rows and the legacy `Nodes, Branching, Verification, Memory, Budgets, Advanced, Interview, YAML` migration list are stale migration/source-lineage notes only.
+This table is preserved as owner-routing and search lineage; the visible Settings surface is the search-first model (F3-432). Older `24 tabs across 5 groups` risk rows and the legacy `Nodes, Branching, Verification, Memory, Budgets, Advanced, Interview, YAML` migration list are stale migration/source-lineage notes only.
 
 Settings is the tooltip-heavy `/help` surface for explaining what a setting does and what wins when multiple settings apply; it links to owner docs rather than duplicating runtime policy.
 
@@ -2288,8 +2573,10 @@ Chat messages, file trees, log outputs, evidence lists, and other long lists use
 | `layout:v1` | Panel/editor layout geometry only: panel dock state per panel (docked side + width, or floating position/size), center splits, bottom runtime-panel height, detached-window geometry, and split ratios for terminal sections. It is not terminal topology or terminal session identity. Single JSON blob for atomic read/write. | On change (debounced 300ms) |
 | `widget_layout:v1:dashboard` | Canonical dashboard widget grid layout, positions, sizes, and widget IDs | On change (debounced 300ms) |
 | `activity_bar_order:v1` | Ordered list of activity bar item IDs + separator position | On change (debounced 300ms) |
-| `theme:v1` | Current ThemeVariant enum value | On change |
-| `editor_state:v1:{project_id}` | Open tabs, active tab, scroll/cursor position per project | On change (debounced 500ms) |
+| `theme:v1` | Theme family + presentation mode (Light/Dark/Auto), with the resolved ThemeVariant enum value kept for readers | On change |
+| `glass_background_mode:v1` | Glass wallpaper background mode (mesh, depth, or minimal) for the Glass theme family | On change |
+| `glass_alpha:v1` | Glass surface alpha within the per-theme clamps (Glass Dark 0.35-0.85, Glass Light 0.45-0.88) | On change (debounced 300ms) |
+| `editor_workspace_state.v1:{project_id}` | Canonical project-wide editor workspace state: open tabs, active tab, and per-tab scroll/cursor presentation; contains no unsaved buffer bytes | On change (debounced 500ms) |
 | `filetree_state:v1:{project_id}` | Expanded folder set, local filter text, and tree scroll position | On change (debounced 300ms) |
 | `search_panel_state.v1:{project_id}` | Search side-panel UI state: last query, replacement text, toggles, include/exclude globs, expanded groups, selected result ref, and active query session ref | On change (debounced 250ms) |
 | `project_state:v1:{project_id}` | Lightweight shell/UX projection cache, not a canonical state store: editor tabs, file-tree expansion, chat thread selection, last active side-panel occupant, active view, language badges, requested/effective LSP selection summary, last-focused Search/Source Control refs, and remote-context summary | On change (debounced 300ms) |
@@ -2303,6 +2590,8 @@ ContractRef: ContractName:Plans/storage-plan.md, ContractName:Plans/FileManager.
 | Key | Content | Write Frequency |
 |-----|---------|----------------|
 | `settings:v1` | Durable app settings and preferences | On save |
+| `settings_recents:v1` | Recently edited setting ids, most-recent-first, deduped, cap 8, for the Settings Recents shelf | On change (debounced 300ms) |
+| `settings_suggestions_dismissed:v1` | Dismissed Suggested-shelf entries with dismissal timestamps and driving-signal scope (project or global); entries expire after 90 days | On change |
 | `config:v1` | Full app config struct subordinate to `settings:v1`, not a competing global config key (all Settings values including permissions, shortcuts, LSP registry settings, Search defaults, and file-manager behavior) | On change (debounced 200ms) |
 | `chat_state:v1` | Unsent input text and active thread selection | On change (debounced 200ms) |
 | `wizard_state:v1:{project_id}` | Current wizard step and form data | On change (debounced 300ms) |
@@ -2327,7 +2616,9 @@ ContractRef: ContractName:Plans/storage-plan.md, ContractName:Plans/assistant-ch
 | `preview_source_artifact.v1:{project_id}:{artifact_id}` | Artifact-backed preview metadata and source linkage | On change |
 | `browser_session_state.v1:{project_id}:{browser_session_id}` | Browser session state: session class, workspace tab, preview subject, requested/effective runtime and capabilities, blocked actions, profile scope, restore policy, and last error | On change (debounced 300ms) |
 | `browser_profile_state.v1:{project_id}:{profile_scope}` | Browser history/bookmarks and project-scoped profile state, including persistent profiles requested as `profile: { name: string, saveChanges: boolean }`, `saveChanges` writeback state, and cookies/localStorage scope | On change (debounced 500ms) |
-| `editor_unsaved_buffer.v1:{project_id}:{document_id}` | Recoverable local unsaved buffer snapshot, capture metadata, host/path identity, and write-availability state at capture time | On change (debounced 500ms) |
+| `editor_state.v1:{project_id}:{file_path_hash}` | Canonical per-file `editor_buffer_recovery_state`: protected unsaved-buffer ref, baseline hash, revision, capture metadata, host/path identity, and write-availability state | On change (debounced 500ms) |
+| `hotreload_state.v1:{project_id}` | Resettable historical hot-reload UI state; process, watcher, and dev-session liveness is always reprobed | On change (debounced 500ms) |
+| `onboarding_state.v1:{project_id}` | Resettable project-scoped onboarding progress and provider-setup readiness refs; never credentials or tokens | On change |
 | `search_query_state.v1:{project_id}:{query_session_id}` | Query-session snapshot: query, replacement, scope, result snapshot ref, freshness, health, and last error | On query update/complete |
 | `lsp_session_state.v1:{project_id}:{host_id}:{server_id}:{root_identity}` | Host-aware LSP session projection: state, freshness, health, restart metadata, capability summary, and last error | On lifecycle change |
 | `lsp_diagnostics_snapshot.v1:{project_id}:{host_id}:{server_id}:{root_identity}` | Diagnostics snapshot ref(s), counts, capture time, freshness, and health for the owning host-aware LSP session | On diagnostics update |
@@ -2348,7 +2639,9 @@ Normative mapping notes:
 - `ssh_remotes/{id}` replaces the stale flat `ssh_connections:v1` concept in GUI-facing persistence summaries.
 - `preview_state.v1:*`, `preview_source_artifact.v1:*`, `browser_session_state.v1:*`, and `browser_profile_state.v1:*` replace stale single-blob `browser_state.v1` and `browser_state:v1` models.
 - Search and LSP rows in this section are GUI-facing projections and MUST resolve back to owner-doc contracts in `Plans/storage-plan.md`, `Plans/FileManager.md`, and `Plans/LSPSupport.md`.
-- `editor_unsaved_buffer.v1:*` stores local unsaved buffer state only and MUST NOT imply that a remote write succeeded.
+- `editor_state.v1:{project_id}:{file_path_hash}` and `editor_workspace_state.v1:{project_id}` are separate canonical, non-rebuildable families. The per-file row owns unsaved-buffer recovery; the project-wide row owns tabs and view positions and MUST NOT contain buffer bytes. Neither row implies that a local or remote file write succeeded.
+- `editor_state:v1:{project_id}`, `hotreload_state:v1:{project_id}`, and `onboarding:v1` are read-only `StorageMigrationCoordinator` copy-forward inputs, never ordinary-open fallbacks or new-write keys. The global onboarding alias may copy forward only when its target project is unambiguous. A missing canonical row plus a present alias enters migration; it does not authorize a lazy rewrite-on-save. New writes use only `editor_workspace_state.v1:{project_id}`, `hotreload_state.v1:{project_id}`, and `onboarding_state.v1:{project_id}`.
+- Missing `hotreload_state` or `onboarding_state` may use the registered default/first-run presentation. Corrupt or incompatible values are secured byte-for-byte in quarantine before the GUI discloses the reset and uses defaults. Missing, corrupt, or incompatible `editor_buffer_recovery_state` or `editor_workspace_state` is not a silent empty/default workspace: the GUI attempts mandatory-backup recovery and discloses the affected files/workspace state and maximum credible loss when recovery is unavailable.
 - `dashboard_layout:v1` is a deprecated migration-read alias only; `widget_layout:v1:dashboard` is the canonical dashboard key after migration.
 - §15.1 lists the keys required for GUI state persistence. For the complete key catalog including non-GUI keys, see `Plans/storage-plan.md` §2.3.
 - Viewer-mode and MCP readiness copy must mirror owner-doc precision. When the active durable store is locked by another writer or the selected `pm.lock` cannot be acquired, the GUI enters `/viewer-mode` and labels the state as read-only/viewer rather than implying ordinary edit capability. MCP readiness rows consume `mcp_server_record` and `mcp_runtime_availability` from the MCP owner docs; cost-display and `/account/readiness` copy must route to the canonical Usage/cost and account/readiness owner pipelines instead of creating local MCP, account, or cost buckets.
@@ -2375,16 +2668,18 @@ On startup:
 2. Read `theme:v1` from redb and apply theme.
 3. Read `widget_layout:v1:dashboard` and restore dashboard widget layout. On first launch after migration, read from deprecated `dashboard_layout:v1` only when the canonical key is absent, then write back to `widget_layout:v1:dashboard`.
 4. Read `activity_bar_order:v1` and restore icon order.
-5. Read `editor_state:v1:{project}` and restore open tabs.
+5. Read `editor_workspace_state.v1:{project_id}` and restore open tabs and view positions. Restore each dirty per-file buffer from `editor_state.v1:{project_id}:{file_path_hash}` before focusing the active tab; if the disk baseline differs, present a diff and never overwrite either side implicitly.
 6. Read `project_state:v1:{project_id}` and restore the active project-facing shell state.
 7. Read `terminal_layout.v1:{project_id}` plus linked `terminal_session.v1:{terminal_session_id}` / canonical terminal record families and restore terminal section layout, tabs, pane tree, labels, and selected focus targets. On first launch after migration, a compatibility reader MAY ingest deprecated `terminal_state:v1` payloads and rewrite them into the canonical terminal key family.
-8. Read `hotreload_state:v1:{project_id}` and rehydrate dev-session UI state as historical or verified-live state.
-9. Read `onboarding:v1` and determine whether tour or first-run hints should show.
+8. Read `hotreload_state.v1:{project_id}` and rehydrate only historical dev-session UI state; revalidate process, watcher, port, and session liveness before any live badge or control is enabled.
+9. Read `onboarding_state.v1:{project_id}` and determine whether project-scoped tour, provider-setup, or first-run hints should show.
 10. If a floating or detached window was on a disconnected monitor, fall back to docked presentation or to a safe detached coordinate.
 
 ContractRef: ContractName:Plans/storage-plan.md, ContractName:Plans/FileManager.md, ContractName:Plans/Section15_MVP_Promoted_Features_Spec.md
 
 Restore rules:
+- Compatibility aliases are consumed only by an admitted migration. Ordinary startup never falls back from a missing canonical dotted key to an alias and never rewrites an alias opportunistically.
+- Resettable hot-reload/onboarding corruption follows `detected -> secured -> reset_to_default -> purged`: raw bytes are secured before reset and the warning card names the reset. Editor buffer/workspace corruption is canonical non-rebuildable loss, follows mandatory-backup recovery, and cannot be relabeled as first run or an empty project.
 - terminal restore MUST preserve section, tab, and pane identity before attempting any session liveness verification
 - restored historical sessions may appear immediately, but live-state badges wait for verification
 - startup restore MUST prefer revealing prior selected terminal containers over creating new empty terminals automatically
@@ -2440,6 +2735,395 @@ ContractRef: ContractName:Plans/Runtime_Artifacts_Panel.md, ContractName:Plans/W
 Rules:
 - restore does not invent queue continuity
 - Keep this recovery section consuming Plans/assistant-chat-design.md#4. Message submission (Steer vs Queue), queued editing, interrupt, and stop
+
+### 15.6 Durable Storage Recovery, Continuity, and Trust Surfaces (Case L)
+
+This section is the Final GUI consumer of the storage, Contracts, FileSafe, Assistant Chat, Runtime Artifacts, Permissions, and command-catalog owners. It defines what the user sees and may invoke; it does not create a GUI-local storage state machine, recovery algorithm, repair tool, or command namespace.
+
+#### Startup admission and newer-store block
+
+Before ordinary project chrome appears, the startup shell consumes `StorageCompatibilityStatus` and renders the storage-owned open state: `checking | compatible | migrating | recovering | blocked_newer_store | blocked_unsupported_old_store | blocked_integrity | blocked_recovery_failed | ready`. The Contracts transport may use `checking_compatibility`, `blocked_corrupt_or_incomplete_store`, and `blocked_recovery_failed`; the adapter maps those values to the same visible owner states without weakening them.
+
+`blocked_newer_store` is a metadata-only compatibility screen. It does not start a live store reader, projector, migration, Runtime Artifacts panel, project browser, or read-only viewer, and it never presents an empty project. The primary message is exact:
+
+> This data was written by Puppet Master {writer_version}. This version supports storage through {max_supported_version}. Update Puppet Master or restore a compatible backup. Your data was not changed.
+
+The screen may show only redacted store identity, detected/writer version, maximum supported version, last verified compatible-backup metadata, and diagnostics refs obtained without opening the live store. Its allowed intents are `check_for_update | choose_compatible_backup | open_diagnostics | quit`. It has no `try_anyway`, force-open, in-place downgrade, live verify, repair, salvage, import, Doctor mutation, or bypass affordance. Unsupported-old, integrity, and recovery-failed blocks consume their owner-provided reason and allowed-action subset; no blocked state is silently initialized as first run.
+
+#### Migration, mandatory snapshot, and recovery shell
+
+Migration is a blocking recovery-shell workflow with the storage-owned phases `preflight | backup_in_progress | backup_verified | applying | pre_stamp_verified | stamp_committed | post_stamp_verifying | committed | restore_required | restoring | rolled_back | blocked`. The shell consumes `MigrationProgressSnapshot` fields `migration_id`, `journal_ref`, `phase`, `stable_step_label`, `completed_steps`, `total_steps`, optional `bytes_done` / `bytes_total`, `cancellable`, optional `preflight_result`, optional `backup_ref`, optional `data_loss_risk`, `updated_at_utc`, and optional `terminal_receipt_ref`.
+
+- Preflight shows the storage-owner required-space formula, required bytes from `preflight_result.required_free_bytes`, and available bytes from `preflight_result.free_bytes`; insufficient space changes no target bytes.
+- `applying` cannot begin until the shared-boundary backup is durable and verified. The version stamp commits only after migrated content verifies, and ordinary project chrome appears only after post-stamp verification; otherwise the journal drives verified restore/rollback or a blocked recovery state.
+- Progress is journal-derived: a stable step label and completed/total steps are always shown, and byte progress appears only when both measured byte values exist. The GUI never invents an ETA, estimated percent, or background-completion promise.
+- Cancel is available only while `cancellable = true` in preflight. After mutation-capable work begins the shell disables close/cancel/force-cancel and displays: “Keep Puppet Master open. If interrupted, recovery will resume on the next launch.”
+- A failure stays in the recovery shell and reports whether verified target, verified rollback, or neither is proven. Allowed actions are the owner-provided subset of retry recovery, update, choose compatible backup, metadata diagnostics, and quit. Retry reruns admission/recovery checks; it is not byte repair and never auto-resumes the blocked operation that encountered the failure.
+
+The recovery shell exposes the mandatory verified-snapshot boundary without presenting JSON/JSONL export as a backup or an import path. A verified baseline is required before the first mutation-capable startup; additional mandatory snapshots cover the first dirty mutation within five minutes, a dirty store at 24 hours, and clean shutdown while dirty. The snapshot inspector shows verification state, shared-boundary/high-water ref, creation trigger, protected-reference/hold state, and the three-newest baseline policy. If verification or restore fails, the GUI moves to viewer/recovery or blocked posture and discloses the last verified boundary, affected families, and maximum credible loss. It never calls canonical non-rebuildable state reconstructable merely because a projection can rebuild.
+
+#### Canonical-history loss and projection trust
+
+Every History, Ledger, Evidence, Usage, Runtime Artifacts, and other projection-backed surface renders `projection_freshness = current | refreshing | stale` independently from `projection_health = healthy | degraded | unavailable`. A projection rebuilt to the current survivor checkpoint may be `current` and still `degraded`; no surviving projection makes lost canonical bytes repaired.
+
+Integrity disclosure distinguishes an unacknowledged tail, one proven record, an exact event/byte range, a bounded sequence range, and an unknown segment remainder. The banner links the integrity/recovery record and shows survivor checkpoint, affected identities when proven, recovery provenance, and user-disclosure requirement. Safe read-only inspection may continue for History, Ledger, Evidence, and Runtime Artifacts only when the owner proves the survivor view safe. Unknown loss, acknowledged-record loss, mutation-authorizing loss, receipt/approval authority loss, or inability to establish a trustworthy view blocks mutation and cannot render `healthy`. Runtime Artifacts uses record-backed views when its index is missing/corrupt, but an EventRecord-incompatible reader refuses the live panel with `unsupported_schema_version`; neither path invents identity from timestamps or shows an empty project.
+
+#### Compatible viewer, storage I/O, and promotion
+
+The persistent storage posture consumes `storage_access_mode = writer | viewer | blocked` and `storage_mode_reason = normal | lock_held | lock_indeterminate | unsupported_store_version | unsafe_filesystem_no_fallback | storage_io_exhausted | root_mismatch | root_unavailable | fallback_diverged`. A compatible lock-conflict viewer is a frozen, manually refreshable snapshot at one `snapshot_high_water_ref`. It is distinct from the newer-store metadata-only block.
+
+Viewer mode starts no writer, migration writer, janitor, writer projector, analytics/compaction/backup worker, settings/history/session writer, agent/run/provider mutator, or external mutation. View-local selection, expansion, filtering, and draft presentation are explicitly ephemeral. Mutating commands remain discoverable where useful but disabled with `storage_read_only`; direct handlers apply the same gate, and permission approval cannot widen it. Manual refresh reacquires a coherent compatible snapshot and visibly advances or retains the high-water mark. Copy/export remains subject to FileSafe and permission policy.
+
+Disabled Case L controls preserve the catalog reason without generic-error relabeling: `storage_read_only | storage_io_exhausted | unsupported_store_version | root_mismatch | root_unavailable | fallback_diverged | permission_denied | operation_in_progress | state_changed | integrity_failure | invalid_path`. A missing, deferred, ambiguous, or unsupported required machine family uses `required_family_unavailable`. Unknown or malformed command/owner state fails closed and enables no mutation.
+
+`Try write mode` dispatches `cmd.storage.try_write_mode` and is never automatic. `cmd.storage.viewer.refresh` owns compatible viewer refresh. Try-write closes readers, then revalidates root continuity, safety, store version, integrity, root generation, lock authority, recovery state, and migration requirements before acquiring writer mode and enabling services. Failure remains viewer/blocked with the exact reason; a newer-format store never promotes to viewer or writer.
+
+Storage errors retain the closed `storage_io_class` value: `interrupted | transient_busy | capacity_exhausted | quota_exhausted | read_only_media | permission_denied | device_unavailable | lock_conflict | integrity_failure | invalid_path`. Only interrupted calls receive at most three immediate adapter attempts and `transient_busy` receives exactly one retry after 250 ms; the UI never implies exponential or background retry for canonical writes. Exhausted or nonretryable canonical I/O closes the write gate and never presents in-memory state as durable. ENOSPC/EDQUOT does not delete receipts, checkpoints, safe points, recovery anchors, or other authority to “make room,” and does not imply that partial writes succeeded. The banner shows affected write site, error class, last verified durable boundary, access mode, and allowed owner action. `Retry storage` dispatches `cmd.storage.retry`; it only probes and revalidates storage admission, and blocked agents/runs/actions remain blocked until the user explicitly retries them after writer mode is proven.
+
+#### Root continuity, relocation, and fallback divergence
+
+Startup shows continuity identity, not just a display path: `storage_instance_id`, `root_generation`, redacted logical-root fingerprint, binding state, and selected root status. A known binding paired with an empty, missing, different, corrupt, or unidentifiable root blocks before initialization and never becomes a blank project. An unbound legacy root opens only in the storage-owner viewer/recovery posture.
+
+A root mismatch recovery card may offer only `cmd.storage.root.use_previous`, `cmd.storage.root.choose`, `cmd.storage.root.copy_and_switch`, or strongly confirmed `cmd.storage.root.start_new_instance`. Relocation is `copy -> validate -> switch`: the binding changes last, and the source remains a labeled recovery copy. Crash/interruption resumes or rolls back through owner state rather than asking the user to guess which root is current. Storage-value/root navigation uses `cmd.storage.open_value` / `cmd.storage.open_root` and never establishes authority.
+
+An unsafe-primary fallback is one deterministic detached branch carrying `fallback_branch_id` and exact `fallback_base`; the whole store and lock move together. Returning to the primary dispatches `cmd.storage.fallback.return_fast_forward` and is fast-forward-only. If both sides changed, the GUI closes mutation, renders `fallback_diverged`, preserves both stores, and exposes exactly three distinct visible commands: `cmd.storage.fallback.keep_logical_root`, `cmd.storage.fallback.fork_new_instance`, and `cmd.storage.fallback.export_both`. Each confirmation names the disposition and both retained roots, and export additionally names the explicit destination, non-secret manifest, and key refs. Controls consume catalog-owned full component CAS and lowercase 64-hex validation, independent permission/confirmation, typed results, idempotency, and one storage handler each. Fork displays a candidate binding and explicitly states that active bootstrap selection did not change. Export is encrypted exact-byte recovery custody. All three show the owner receipt as audit evidence, emit no new EventRecord family, and retain both roots until separate cleanup. The GUI never aliases these dispositions to fast-forward return, auto-merges, overwrites, deletes a root, silently switches authority, or claims cross-host exclusion.
+
+#### Storage and retention settings, holds, deletion, and quarantine
+
+`cmd.settings.open_storage_retention` opens `Advanced > Storage & Retention`, which displays effective policies, owner minima, next/last janitor evaluation, last maintenance result, storage pressure, reclaimable bytes/percentage, compaction state, the latest-25 terminal-run anchor, and read-only legal-hold/quarantine rows. Users may lengthen or otherwise strengthen only the configurable history, diagnostics, and released-safe-point policies; values below owner minima are rejected before save. Legal-hold set/clear dispatches `cmd.storage.legal_hold.manage`, requires the distinct protected `storage.legal_hold.manage` authorization plus a reason, and never clears automatically. Manual compaction is only the owner-admitted request `cmd.storage.compaction.request`. Settings never invent a general import/export, live repair, salvage, or purge-authority control. Automatic janitor evaluates at startup and every 6 hours with a 10,000-key or 512 MiB pass budget; compaction evaluates every 24 hours and at 20 percent or 1 GiB reclaimable thresholds. These are displayed schedules/limits, not ETAs or proof that maintenance ran.
+
+The canonical settings inventory contributes exactly these seven Case L rows:
+
+| Setting ID | Surface contract |
+|---|---|
+| `system.advanced.chat-history-retention` | Read-only effective policy: retain canonical chat/edit history while the thread exists; at 250,000 events continue in a linked successor; deletion/hold rules remain storage-owned. |
+| `system.advanced.runtime-history-days` | Number, default/minimum 365 days; larger values allowed, lower values rejected. |
+| `system.advanced.diagnostic-history-days` | Number, default/minimum 30 days; larger values allowed, lower values rejected; cannot shorten fixed authority retention. |
+| `system.advanced.released-safe-point-days` | Number, default/minimum 90 days; larger values allowed, while anchors/references/holds override age. |
+| `system.advanced.preserved-terminal-runs` | Read-only effective latest-25 policy; only the automatic anchor clears at 26th-oldest. |
+| `system.advanced.request-storage-compaction` | Action that dispatches `cmd.storage.compaction.request`; it cannot force maintenance or bypass eligibility/holds/lease. |
+| `system.advanced.inspect-holds-quarantine` | Read-only inspection action; cannot mutate holds or export/purge/reset quarantined bytes. |
+
+The visible minimum/effective policy table preserves these owner values:
+
+| Family | Effective minimum / cardinality |
+|---|---|
+| Approval, receipt, audit, deletion tombstone, and source-lineage authority | Indefinite or owner-reference lifetime |
+| Security and migration/recovery operations | 2555 days |
+| Runtime operational records | 365 days |
+| Assistant Chat canonical conversation | While the thread exists, subject to holds and descendant refs; at 250,000 canonical chat-content events, continue in a linked successor rather than evicting history |
+| Usage | 90 days |
+| Appendable seglog source segments | 7 days minimum before compaction eligibility; holds/anchors still win |
+| Coordination records | 180 days |
+| Released safe points | 90 days, 64 per run, and 2048 per project; unresolved/held anchors override expiry |
+| Terminal-run recovery anchor | Latest 25 terminal runs remain anchored |
+
+`cmd.project.remove` removes a project from the recent/project list as navigation cleanup; it is not deletion of Puppet Master project data. `cmd.chat.delete` hides a thread logically immediately and exposes a deletion-status row; active canonical content is physically purged within 24 hours unless held, while backup copies may retain bytes for at most 30 days unless held. Strongly confirmed `cmd.project.delete_data` is the separate project-data deletion intent and uses owner scope plus a durable deletion receipt; it never infers deletion targets from path prefix, filename, or mtime.
+
+Quarantine rows show risk `Q-CRITICAL | Q-RESETTABLE | Q-DERIVED | Q-MIRROR`, affected family/key hash, and explicit transition edges `detected -> secured`; `secured -> migrated | rebuilt | reset_to_default | restored | recovery_blocked`; and `migrated | rebuilt | reset_to_default | restored -> purged`, with no direct `detected` resolution, no `recovery_blocked -> purged`, and no transition out of `purged`; rows also show recovery/backup refs, disclosure, and permitted next action. Exact raw bytes are secured before any governed reset, rebuild, migration, replacement, or purge. Reset is limited to registered resettable GUI/projection state. Critical authority, receipts, blocked state, safe points, holds, and audit lineage fail closed and are never silently defaulted, cap-evicted, or described as repaired.
+
+#### Safe points, Assistant Chat restore points, and exact-replace outcomes
+
+The GUI keeps runtime safe points and Assistant Chat restore points visibly distinct:
+
+| Concept | Canonical identity | User-visible meaning |
+|---|---|---|
+| Runtime/FileSafe safe point | `sp:{run_id}:{node_id}:{attempt_id}:{safe_point_id}` | Filesystem/runtime recovery anchor for an exact-replace transaction; not a conversation restore point |
+| Assistant Chat restore point | `rp:{project_id}:{restore_point_id}` | Immutable conversation branch anchor; applying it creates a new thread and branch and leaves the source thread, source worktree, and files unchanged |
+
+Creation is explicit through `cmd.chat.create_restore_point`; its confirmation names the inclusive source thread/branch/message boundary and records no workspace file bodies, secrets, stream state, or queue. Branching is only `cmd.chat.branch_from_restore`. Before dispatch, the surface shows the exact source boundary, whether that source is running or dirty, and that the target is a new conversation branch. Only owner result `branched` creates the new `thread_id` and `branch_id` and emits exactly one `restore_point.applied`; `refused` and `failed` return no target IDs and emit no application event. Replay returns the recorded result and same target IDs for `branched` without a duplicate event. A successful branch appends an application ref and does not consume the restore-point record. Every result and replay leaves the source thread, source conversation branch, source worktree, files, Git/index state, queue, and runtime safe points unchanged.
+
+Restore-point lifecycle is exactly `available -> expired | deleted | corrupt`. Only `available` may expose the registered branch-from-restore action after permission, expected-record-hash, source-content, hold/ref, and storage-writer preflight. The effective policy shown is `RP-RESTOREPOINT-90D-AFTER-RELEASE@1.0.0`: eligibility is inclusive at owner-proven `reference_release + 7,776,000 seconds`, and count pressure at `2,048/project` selects only the oldest eligible record. Descendant branch/application refs, preserve/legal holds, in-flight application, source-lineage, live, recovery, backup, rollback, and maintenance refs override age and count eligibility until owner-defined release evidence is durable. The GUI shows policy/status but invents no expiry timer, release inference, undo window, hold clear, or new control. `cmd.chat.delete_restore_point` requires expected hash plus permission/storage preflight and remains disabled while any protecting ref exists; deletion never clears a hold.
+
+Expired, deleted, corrupt, stale-hash, source-content-unavailable, permission-denied, viewer/blocked-storage, held-delete, and in-progress rows remain inspectable with their exact unavailable reason and no enabled mutation that violates the state. A deleted source thread stays hidden and is never resurrected: verified held boundary material may still create a visibly new branch, while unavailable deleted-source content returns `source_deleted_content_unavailable` and creates nothing. A `runtime_artifact.restore_point` is a projection of this Chat record; optional `safe_point_id` is lineage only and never changes its identity or grants file-restore semantics. Restore-point actions consume their current command-catalog rows and sole-handler production-wiring coverage; any live mismatch or unavailable owner family disables dispatch fail-closed.
+
+Safe-point restore and whole-turn Assistant Chat revert use the same closed exact-replace outcome copy without strengthening it:
+
+| Outcome | GUI meaning |
+|---|---|
+| `restored_clean` | Exact target equality was verified after apply. |
+| `restore_skipped` | Target was already exactly equal; no mutation occurred. |
+| `restore_refused` | A precondition failed before mutation; target remained unchanged. |
+| `restore_failed` | Apply failed, but exact rollback equality with the original target was verified; the requested target was not restored. |
+| `restore_recovery_required` | Target/original equality is unproved; the mutation fence, transaction, safe-point/worktree, and recovery holds remain. |
+
+`restored_with_conflicts` is invalid for safe-point restore and Chat revert. `cmd.chat.revert` resolves one immutable whole-turn mutation manifest; omitted `target_message_id` resolves once to the latest eligible mutating assistant turn, and no eligible turn returns `no_eligible_mutating_turn` without opening a restore transaction. Revert exact-replaces the whole affected-file scope, keeps transcript/queue/thread lifecycle unchanged, refreshes editors only after a durable owner result, and cannot report partial success. A removed target worktree is refused without recreating directories. Case L does not choose confirmation-versus-proceed UX for revert: the registered surface follows its existing command/permission policy while preserving the identical target and FileSafe guarantees. A `recovery_unavailable` episode remains blocked and anchored until explicit abandon, replan, or verified recovery. Buttons and menus dispatch only command-catalog-registered owner intents; this section does not mint `repair`, `salvage`, `import backup`, `force cancel`, `try anyway`, or estimated-completion actions.
+
+ContractRef: ContractName:Plans/storage-plan.md#Case-L-durable-state-owner-canon, ContractName:Plans/Contracts_V0.md, ContractName:Plans/FileSafe.md#Case-L-Exact-Restore-Repair-Addendum, ContractName:Plans/assistant-chat-design.md, ContractName:Plans/Runtime_Artifacts_Panel.md, ContractName:Plans/UI_Command_Catalog.md, ContractName:Plans/Permissions_System.md
+
+### F3-454 - Case L Storage Compatibility Migration And Snapshot Shell
+
+```yaml
+plan_unit_id: F3-454
+unit_type: requirement
+status: accepted
+owner_doc: Plans/FinalGUISpec.md
+canonical_text: >-
+  The Final GUI consumes storage compatibility, migration journal, verified snapshot,
+  and recovery status in one blocking startup shell. Newer stores remain metadata-only
+  with no live viewer; migration progress is journal-derived with no invented ETA;
+  mutation-capable phases cannot be force-cancelled; and failed backup, restore, or
+  migration discloses the last verified boundary and maximum credible loss without
+  exposing repair, salvage, import, bypass, or try-anyway actions.
+gui_related: true
+gui_classification_reason: This unit defines startup compatibility, migration progress, snapshot, and recovery-shell presentation and controls.
+depends_on: [SP-235, CV-321]
+unblocks: []
+acceptance_criteria:
+  - A one-version-ahead fixture renders the exact blocked_newer_store message, leaves the target unchanged, and exposes only update, compatible backup, metadata diagnostics, and quit intents.
+  - Newer-store fixtures start no live reader, projector, migration, Runtime Artifacts panel, project browser, or read-only viewer.
+  - Migration fixtures render every owner phase, stable step label, completed/total counts, measured bytes only, and no ETA.
+  - Cancellation is enabled only in preflight; later phases show the exact do-not-interrupt copy and no force-cancel route.
+  - Snapshot failure and recovery failure disclose verified boundary, affected families, and credible loss without calling JSON/JSONL export an importable backup.
+validation_surfaces:
+  - python3 scripts/pm-plan-index.py validate
+  - future Case L Final GUI compatibility, migration, and snapshot fixture suite
+risk_class: gui_storage_compatibility_overclaim
+reasoning_tier: high
+context_scope: case_l_gui_startup_recovery
+implementation_surfaces: [Plans/FinalGUISpec.md]
+node_compile_hint:
+  mode: case_l_gui_compatibility_migration_snapshot
+  create_worknodes: false
+  create_nodeseeds: false
+source_lineage: [Case-L:L-001, Case-L:L-002, Case-L:L-003, Case-L:L-016, Case-L:L-031, Case-L:L-032]
+preserved_exact_tokens: [blocked_newer_store, MigrationProgressSnapshot, data_loss_risk]
+negative_constraints:
+  - Do not expose a live viewer for a newer-format store.
+  - Do not invent repair, salvage, import, ETA, force cancel, force open, or try-anyway actions.
+owner_hints: [Plans/FinalGUISpec.md, Plans/storage-plan.md, Plans/Contracts_V0.md]
+```
+
+### F3-455 - Case L Canonical History Loss And Projection Trust
+
+```yaml
+plan_unit_id: F3-455
+unit_type: requirement
+status: accepted
+owner_doc: Plans/FinalGUISpec.md
+canonical_text: >-
+  Projection-backed GUI surfaces render projection_freshness independently from
+  projection_health and preserve canonical-history loss, survivor boundary, affected
+  range precision, and recovery provenance. A current survivor projection may remain
+  degraded, safe record-backed inspection may continue only when proven, and unknown,
+  acknowledged, mutation-authorizing, receipt, or approval loss blocks mutation and
+  never appears healthy, repaired, or empty.
+gui_related: true
+gui_classification_reason: This unit defines persistent trust, loss, and degradation rendering across visible record-backed surfaces.
+depends_on: [SP-236, CV-318, RAP-045]
+unblocks: []
+acceptance_criteria:
+  - Fixtures independently render current, refreshing, or stale freshness and healthy, degraded, or unavailable health.
+  - Current survivor projections with canonical-history holes remain degraded or unavailable.
+  - Loss copy distinguishes unacknowledged tail, one proven record, exact byte/event range, bounded sequence range, and unknown remainder.
+  - Missing or corrupt artifact indexes use record-backed views, while unsupported EventRecord readers refuse the live panel with unsupported_schema_version.
+  - Unknown or authority-affecting loss disables mutation and never presents an empty project or repaired history.
+validation_surfaces:
+  - python3 scripts/pm-plan-index.py validate
+  - future Case L Final GUI continuity and projection-trust fixture suite
+risk_class: gui_false_canonical_continuity
+reasoning_tier: high
+context_scope: case_l_gui_projection_trust
+implementation_surfaces: [Plans/FinalGUISpec.md]
+node_compile_hint:
+  mode: case_l_gui_history_projection_trust
+  create_worknodes: false
+  create_nodeseeds: false
+source_lineage: [Case-L:L-004, Case-L:L-013, Case-L:SEG-D-013..SEG-D-016]
+preserved_exact_tokens: [projection_freshness, projection_health, unsupported_schema_version]
+negative_constraints:
+  - Do not call a rebuilt survivor projection healthy solely because it is current.
+  - Do not infer lost identity from timestamps or rebuildable index rows.
+owner_hints: [Plans/FinalGUISpec.md, Plans/storage-plan.md, Plans/Runtime_Artifacts_Panel.md]
+```
+
+### F3-456 - Case L Viewer IO And Root Continuity Surfaces
+
+```yaml
+plan_unit_id: F3-456
+unit_type: requirement
+status: accepted
+owner_doc: Plans/FinalGUISpec.md
+canonical_text: >-
+  Final GUI storage posture distinguishes writer, compatible frozen/manual-refresh
+  viewer, and blocked modes; gates direct handlers and visible mutation controls with
+  storage_read_only; exposes exact storage I/O aftermath without pseudo-durability;
+  and renders root identity, relocation, deterministic fallback branch, fast-forward-only
+  return, and fallback divergence without silent initialization, merge, overwrite, or
+  automatic viewer promotion.
+gui_related: true
+gui_classification_reason: This unit controls visible read-only state, error recovery, root selection, relocation, and divergence workflows.
+depends_on: [SP-238, SP-239, SP-240, UCC-123]
+unblocks: []
+acceptance_criteria:
+  - Viewer fixtures freeze one coherent high-water snapshot, permit manual refresh, and disable every durable/runtime/external mutation with storage_read_only.
+  - cmd.storage.viewer.refresh changes only the compatible captured snapshot; cmd.storage.try_write_mode closes readers and revalidates continuity, safety, version, integrity, generation, lock, recovery, and migration before writer services enable.
+  - ENOSPC and every storage_io_class fixture shows the affected site, last verified boundary, access mode, and owner action without claiming buffered durability or deleting authority.
+  - cmd.storage.retry probes admission without byte repair or replay; known-root empty, missing, mismatched, corrupt, and unavailable fixtures block without creating a blank project.
+  - Root command rows preserve relocation binding-last/source-retention truth; cmd.storage.fallback.return_fast_forward stays exact-base-only and separate from the three divergence disposition commands.
+  - keep_logical_root, fork_new_instance, and export_both show exact CAS/permission/confirmation state, typed owner results, both retained roots, receipt-only audit, candidate-only fork binding, and encrypted exact-byte export refs without a new EventRecord family.
+validation_surfaces:
+  - python3 scripts/pm-plan-index.py validate
+  - future Case L Final GUI viewer, I/O, root, and fallback fixture suite
+risk_class: gui_storage_mode_or_root_drift
+reasoning_tier: high
+context_scope: case_l_gui_storage_access_root
+implementation_surfaces: [Plans/FinalGUISpec.md]
+node_compile_hint:
+  mode: case_l_gui_viewer_io_root
+  create_worknodes: false
+  create_nodeseeds: false
+source_lineage: [Case-L:L-011, Case-L:L-012, Case-L:L-014, Case-L:L-018]
+preserved_exact_tokens: [storage_read_only, storage_io_exhausted, required_family_unavailable, storage_instance_id, root_generation, fallback_diverged, cmd.storage.viewer.refresh, cmd.storage.try_write_mode, cmd.storage.retry, cmd.storage.fallback.return_fast_forward, cmd.storage.fallback.keep_logical_root, cmd.storage.fallback.fork_new_instance, cmd.storage.fallback.export_both]
+negative_constraints:
+  - Do not automatically promote viewer mode or widen it through permission approval.
+  - Do not initialize a known empty/mismatched root or auto-merge divergent fallback state.
+owner_hints: [Plans/FinalGUISpec.md, Plans/storage-plan.md, Plans/UI_Command_Catalog.md]
+```
+
+### F3-457 - Case L Retention Deletion And Quarantine Surfaces
+
+```yaml
+plan_unit_id: F3-457
+unit_type: requirement
+status: accepted
+owner_doc: Plans/FinalGUISpec.md
+canonical_text: >-
+  Advanced Storage and Retention settings display effective owner minima, anchors,
+  holds, storage pressure, compaction state, and deletion/quarantine progress; allow
+  only supported policy strengthening; route legal-hold and maintenance mutation to
+  protected owners; distinguish project-list removal from data deletion; and secure
+  exact invalid bytes before any registered reset, rebuild, migration, replacement,
+  or purge while critical authority always fails closed.
+gui_related: true
+gui_classification_reason: This unit defines user-visible settings, hold, deletion-status, storage-pressure, and quarantine recovery surfaces.
+depends_on: [SP-237, CV-319, F3-441, UCC-124]
+unblocks: []
+acceptance_criteria:
+  - Settings show every owner retention minimum, latest-25 terminal-run anchor, effective policy, holds, pressure, and compaction state.
+  - Configurable values below owner minima are rejected; hold mutation uses cmd.storage.legal_hold.manage plus storage.legal_hold.manage authorization, and compaction uses only cmd.storage.compaction.request.
+  - cmd.project.remove never claims data deletion; cmd.chat.delete hides immediately and reports the 24-hour active-content and 30-day backup-copy boundaries; cmd.project.delete_data is the separately confirmed data-purge intent.
+  - Quarantine fixtures render Q-CRITICAL, Q-RESETTABLE, Q-DERIVED, and Q-MIRROR with exact secured-before-action state.
+  - Critical authority, receipts, blocked state, safe points, holds, and audit lineage never reset, cap-evict, or appear repaired.
+validation_surfaces:
+  - python3 scripts/pm-plan-index.py validate
+  - future Case L Final GUI retention, deletion, and quarantine fixture suite
+risk_class: gui_retention_or_quarantine_data_loss
+reasoning_tier: high
+context_scope: case_l_gui_retention_quarantine
+implementation_surfaces: [Plans/FinalGUISpec.md]
+node_compile_hint:
+  mode: case_l_gui_retention_deletion_quarantine
+  create_worknodes: false
+  create_nodeseeds: false
+source_lineage: [Case-L:L-005, Case-L:L-010, Case-L:L-015, Case-L:L-033]
+preserved_exact_tokens: [storage.legal_hold.manage, cmd.storage.legal_hold.manage, cmd.storage.compaction.request, cmd.settings.open_storage_retention, cmd.project.remove, cmd.project.delete_data, Q-CRITICAL, Q-RESETTABLE, recovery_blocked]
+negative_constraints:
+  - Do not infer deletion eligibility from prefix, path, filename, or mtime.
+  - Do not expose general import/export, repair, salvage, or authority-purge controls.
+owner_hints: [Plans/FinalGUISpec.md, Plans/storage-plan.md, Plans/Contracts_V0.md]
+```
+
+### F3-458 - Case L GUI State Registry And Startup Recovery
+
+```yaml
+plan_unit_id: F3-458
+unit_type: requirement
+status: accepted
+owner_doc: Plans/FinalGUISpec.md
+canonical_text: >-
+  Final GUI startup uses the machine-registry canonical editor buffer, editor workspace,
+  hot-reload, and onboarding keys without collapsing sibling shapes or treating aliases
+  as ordinary fallbacks. Resettable UI corruption is secured before disclosed defaulting;
+  canonical editor workspace or buffer loss follows mandatory-backup recovery and never
+  becomes a silent first-run, empty project, or false successful file write.
+gui_related: true
+gui_classification_reason: This unit defines restoration and recovery presentation for editor, hot-reload, and onboarding GUI state.
+depends_on: [SP-243]
+unblocks: []
+acceptance_criteria:
+  - Registry fixtures route per-file editor_state.v1:{project_id}:{file_path_hash} separately from project-wide editor_workspace_state.v1:{project_id}.
+  - Colon-form aliases are read only during admitted coordinator migration; ambiguous global onboarding alias copy-forward fails closed.
+  - Missing hot-reload/onboarding state uses registered defaults, while corrupt/incompatible values are secured before disclosed reset.
+  - Missing/corrupt/incompatible editor buffer or workspace state attempts mandatory-backup recovery and discloses affected scope and credible loss.
+  - Restored dirty buffers compare disk baseline and never overwrite either side implicitly or imply a remote write succeeded.
+validation_surfaces:
+  - python3 scripts/pm-plan-index.py validate
+  - future Case L Final GUI registry-key and startup-recovery fixture suite
+risk_class: gui_registry_alias_or_recovery_drift
+reasoning_tier: high
+context_scope: case_l_gui_state_registry
+implementation_surfaces: [Plans/FinalGUISpec.md]
+node_compile_hint:
+  mode: case_l_gui_state_registry_restore
+  create_worknodes: false
+  create_nodeseeds: false
+source_lineage: [Case-L:L-017, Case-L:L-033, Case-L:PD-RSP-01..PD-RSP-09]
+preserved_exact_tokens:
+  - "editor_state.v1:{project_id}:{file_path_hash}"
+  - "editor_workspace_state.v1:{project_id}"
+  - "hotreload_state.v1:{project_id}"
+  - "onboarding_state.v1:{project_id}"
+negative_constraints:
+  - Do not collapse per-file buffer recovery into project workspace state.
+  - Do not use compatibility aliases as ordinary-open or lazy rewrite-on-save paths.
+owner_hints: [Plans/FinalGUISpec.md, Plans/storage-plan.md, Plans/storage_value_registry.json]
+```
+
+### F3-459 - Case L Safe Point Restore Point And Exact Outcome Surfaces
+
+```yaml
+plan_unit_id: F3-459
+unit_type: requirement
+status: accepted
+owner_doc: Plans/FinalGUISpec.md
+canonical_text: >-
+  Final GUI distinguishes runtime/FileSafe safe points from Assistant Chat conversation
+  restore points by canonical identity and effect; gates explicit create, branch, and delete
+  commands by exact lifecycle, hash, source-content, hold, permission, storage, catalog, and
+  wiring state; and renders safe-point restore and whole-turn Chat revert through the closed
+  exact-replace outcomes without conflict-success or partial-success invention. Recovery-
+  required state retains its visible fence, holds, and explicit recovery disposition.
+gui_related: true
+gui_classification_reason: This unit defines visible restore identities, availability, actions, exact outcomes, and recovery-required states.
+depends_on: [SP-242, CV-320, RAP-046, F3-344, UCC-125, UCC-126]
+unblocks: []
+acceptance_criteria:
+  - Safe points route by sp:{run_id}:{node_id}:{attempt_id}:{safe_point_id}; Chat restore points route by rp:{project_id}:{restore_point_id}.
+  - Only branched creates new thread and branch identities; source conversation, worktree, files, Git/index, queue, and safe points remain unchanged.
+  - Branched emits exactly one restore_point.applied; replay returns the same target IDs without a duplicate event, and refused/failed return no target IDs or application event.
+  - Expired, deleted, corrupt, stale-hash, source-content-unavailable, viewer/blocked-storage, held-delete, permission-denied, and in-progress restore points show no violating mutation.
+  - RP-RESTOREPOINT-90D-AFTER-RELEASE@1.0.0 is shown as release-anchored and ref-gated without a GUI-invented timer, and a deleted source thread is never resurrected or described as undo.
+  - Restore-point create, branch, and delete actions consume one current catalog row and one sole-handler production-wiring row each; live mismatch fails closed.
+  - restored_clean, restore_skipped, restore_refused, restore_failed, and restore_recovery_required render only with their owner-defined equality and mutation-boundary proof.
+  - Chat revert resolves one immutable whole-turn mutation manifest; restored_with_conflicts and partial success are impossible.
+validation_surfaces:
+  - python3 scripts/pm-plan-index.py validate
+  - future Case L Final GUI safe-point, restore-point, and Chat-revert fixture suite
+risk_class: gui_restore_identity_or_outcome_overclaim
+reasoning_tier: high
+context_scope: case_l_gui_restore_surfaces
+implementation_surfaces: [Plans/FinalGUISpec.md]
+node_compile_hint:
+  mode: case_l_gui_safe_restore_exact_outcome
+  create_worknodes: false
+  create_nodeseeds: false
+source_lineage: [Case-L:L-006, Case-L:L-020, Case-L:L-021, Case-L:L-022, Case-L:L-024]
+preserved_exact_tokens:
+  - "sp:{run_id}:{node_id}:{attempt_id}:{safe_point_id}"
+  - "rp:{project_id}:{restore_point_id}"
+  - cmd.chat.create_restore_point
+  - cmd.chat.branch_from_restore
+  - cmd.chat.delete_restore_point
+  - cmd.chat.revert
+  - restored_clean
+  - restore_recovery_required
+negative_constraints:
+  - Do not treat conversation restore points as file restore anchors.
+  - Do not report restored_with_conflicts or partial success for exact-replace operations.
+owner_hints: [Plans/FinalGUISpec.md, Plans/storage-plan.md, Plans/FileSafe.md, Plans/assistant-chat-design.md]
+```
+
 ## 16. Migration Mapping
 
 
@@ -2530,7 +3214,7 @@ cargo check
 | **Limited screen reader support** | Medium | Keyboard navigation is comprehensive (§13.3). Set `accessible-role` and `accessible-label` where Slint supports them. Document limitations. Basic theme provides maximum readability. |
 | **No built-in context menu** | Low | Custom `ContextMenu` widget using `TouchArea` pointer events. Positioned at mouse coordinates. Styled per theme. Clipboard operations (Copy/Paste/Select All) delegate to Slint's native `TextInput.copy()` / `.paste()` / `.select-all()` — no custom clipboard state management needed. |
 | **No built-in docking framework** | High | Custom `PanelRegistry` in Rust handles dock/undock state machine, snap detection, window lifecycle. This is the most complex custom component and should be implemented early. |
-| **Font family change requires restart** | Low | Detect font family change in settings. Show restart prompt. Pre-load fonts for all themes on startup so within-family switches (Dark <-> Light) are instant. |
+| **Font family change requires restart** | Low | Detect font family change in settings. Show restart prompt. Pre-load fonts for all themes on startup so within-family switches (Dark <-> Light) are instant. Auto-mode transitions are equally instant: an OS appearance change resolves the selected family to its other variant with no restart. |
 | **4-split terminal performance** | Medium | Live terminal panes use native screen/buffer state, diff-based painting, and off-UI-thread PTY/buffer ingestion and processing per Section 15. Keep bounded ring buffers per pane (max 10k retained rows) and one PTY per pane. `VecModel`/`ListView` holds only bounded transcript/plain-log projection windows (~500 visible rows plus small overscan), not the terminal core. Batch/throttle projection updates (max 30fps). |
 | **Platform-specific window manager issues** | Medium | Test: macOS window snapping with floating panels, Linux compositing with overlay effects, Windows DPI scaling. Handle gracefully with fallback behaviors. |
 | **Large Settings page complexity** | Medium | The old `24 tabs across 5 groups` count is stale migration residue; the current canonical registry is the §7.4.4 19-tab Settings registry. Two-level sidebar navigation (left sidebar for groups, right area for selected tab) is mandatory. Group labels act as collapsible headers. Settings search bar at the top of the sidebar. Test with real data. |
@@ -2629,7 +3313,7 @@ These decisions are final and must not be revisited during implementation:
 2. **winit + Skia** default, **winit + FemtoVG-wgpu** fallback
 3. **No React/Tauri/DOM-rendered product UI or HTML/CSS/JS product shell** -- native desktop is Rust + Slint `.slint` markup; Slint/WASM web may use only minimal HTML/canvas bootstrap and generated/minimal JavaScript glue needed to load the WASM canvas client
 4. **IDE shell layout** -- Activity Bar + Primary Content + Side Panel + Bottom Panel
-5. **Three theme families** -- Retro Dark, Retro Light, Basic Modern (built-in variants + custom themes via TOML)
+5. **Four theme families / eight built-in themes** -- Friendly Dark (default), Friendly Light, Glass Dark, Glass Light, Retro Dark, Retro Light, Basic Dark, Basic Light (built-in variants + custom themes via TOML); supersedes the prior three-family lock (Retro Dark, Retro Light, Basic Modern) per dec-2026-07-16-pm6-theme-settings-canon-promotion-seal
 6. **Settings restructure** -- unified page merging old Config + Settings + Login + Doctor
 7. **Event-driven updates** via `invoke_from_event_loop`, not polling
 8. **redb for layout persistence**, seglog for events, Tantivy for search
@@ -3297,8 +3981,10 @@ Scheduler surfaces MUST visually distinguish:
 
 ### Recovery UX rules
 - safe points are runtime recovery anchors and MUST NOT be presented as user-facing restore points
+- runtime safe points route by `sp:{run_id}:{node_id}:{attempt_id}:{safe_point_id}`; Assistant Chat restore points route separately by `rp:{project_id}:{restore_point_id}` and branch conversation state without restoring files
 - retry controls MUST distinguish `Retry from safe point` from `Start fresh attempt`
 - if no valid safe point exists, `Retry from safe point` is disabled with an explanation
+- exact-replace receipts retain the Case L meanings `restored_clean | restore_skipped | restore_refused | restore_failed | restore_recovery_required`; `restored_with_conflicts` and partial success are invalid for safe-point restore and whole-turn Chat revert
 - Seam review outputs include a review verdict, failure classes with severity, evidence bundle/rationale, remediation-node or graph-patch recommendations, and corroboration requirement/outcome when invoked.
 
 ContractRef: ContractName:Plans/Contracts_V0.md, ContractName:Plans/human-in-the-loop.md, ContractName:Plans/UI_Command_Catalog.md, ContractName:Plans/assistant-chat-design.md
@@ -5481,8 +6167,10 @@ status: accepted
 owner_doc: Plans/FinalGUISpec.md
 canonical_text: >-
   FinalGUISpec structural zones use Slint layouts with fixed title/activity/status bars, flexible
-  primary content, a 240-480px side panel, collapsible bottom panel, and right-hand side-panel
-  occupants rather than separate page surfaces.
+  primary content, a side panel resizable between a 220px minimum and a 50vw maximum, collapsible
+  bottom panel, and right-hand side-panel occupants rather than separate page surfaces.
+  Superseded lineage (2026-07-16, kept findable): the prior contract specified a 240-480px side
+  panel.
 gui_related: true
 gui_classification_reason: >-
   This unit defines user-visible GUI surface, shell, copy, control, or projection behavior.
@@ -5853,8 +6541,9 @@ status: accepted
 owner_doc: Plans/FinalGUISpec.md
 canonical_text: >-
   The canonical side-panel inventory and labels are search, chat, files, source_control,
-  github_actions, docker_manager, artifacts, and run_debug with matching labels, tooltips,
-  shortcuts, and command IDs.
+  github_actions, docker_manager, artifacts, run_debug, testing, and agents with
+  matching labels, tooltips, shortcuts, and command IDs. The testing and agents
+  panels joined the inventory per the 2026-07-16 shell sweep promotion (F3-451, F3-452).
 gui_related: true
 gui_classification_reason: >-
   This unit defines user-visible GUI surface, shell, copy, control, or projection behavior.
@@ -5864,6 +6553,7 @@ unblocks: []
 acceptance_criteria:
 - "The covered source span remains losslessly available for exact-text audit."
 - "The behavior is addressable through this fine-grained PlanUnit instead of broad F3-001 coverage."
+- "The side-panel inventory is canonical at 10 panels."
 - "ContractRefs, anchors or aliases, exact tokens, examples, negative constraints, compatibility notes, stale/retired dispositions, owner boundaries, and source lineage remain traceable."
 - "No WorkNodes, NodeSeeds, executable queues, final node manifests, or production build tasks are created."
 validation_surfaces:
@@ -5891,7 +6581,8 @@ preserved_exact_tokens:
 - "Canonical side-panel descriptions"
 negative_constraints: []
 compatibility_only_notes: []
-stale_retired_dispositions: []
+stale_retired_dispositions:
+- "The notifications side panel joined the inventory per the 2026-07-16 shell sweep promotion (F3-453) and is retired from the inventory per PMConcept7 title-bar notifications (2026-07-23); the shared alert store and ack/snooze lifecycle survive in F3-453, and durable alerts render via the title-bar notification stack (F3-460) and sprout inbox panel (F3-461)."
 owner_boundary_notes:
 - "ContractRef: ContractName:Plans/assistant-chat-design.md, ContractName:Plans/GitHub_Integration.md, ContractName:Plans/UI_Command_Catalog.md"
 owner_hints:
@@ -6632,8 +7323,10 @@ unit_type: requirement
 status: accepted
 owner_doc: Plans/FinalGUISpec.md
 canonical_text: >-
-  The primary content breadcrumb strip is 20px tall, displays Group > Page, and provides clickable
-  breadcrumb items for quick navigation within a group.
+  The primary content breadcrumb strip is retired per Jared's 2026-07-16 decision; no breadcrumb
+  strip renders above primary content, and group/page orientation is carried by the compacted
+  page header. Retired lineage (kept findable): the prior contract specified a 20px tall strip
+  displaying Group > Page with clickable breadcrumb items for quick navigation within a group.
 gui_related: true
 gui_classification_reason: >-
   This unit defines user-visible GUI surface, shell, copy, control, or projection behavior.
@@ -6665,7 +7358,8 @@ preserved_exact_tokens:
 - "Breadcrumb"
 negative_constraints: []
 compatibility_only_notes: []
-stale_retired_dispositions: []
+stale_retired_dispositions:
+- "The Group > Page breadcrumb strip is retired per the 2026-07-16 shell sweep promotion; the prior 20px strip contract is preserved above as retired lineage."
 owner_boundary_notes: []
 owner_hints:
 - "Plans/FinalGUISpec.md"
@@ -7446,9 +8140,12 @@ unit_type: requirement
 status: accepted
 owner_doc: Plans/FinalGUISpec.md
 canonical_text: >-
-  The GUI exposes exactly three built-in theme choices, Retro Dark, Retro Light, and Basic, while
-  Basic may resolve internally to light or dark palette tokens without creating a fourth built-in
-  theme promise.
+  The GUI exposes exactly eight built-in theme choices across four families, Friendly Dark,
+  Friendly Light, Glass Dark, Glass Light, Retro Dark, Retro Light, Basic Dark, and Basic Light,
+  with Friendly Dark as the default. Superseded lineage (2026-07-16 promotion, kept findable):
+  the prior contract exposed exactly three built-in theme choices, Retro Dark, Retro Light, and
+  Basic, while Basic could resolve internally to light or dark palette tokens without creating a
+  fourth built-in theme promise.
 gui_related: true
 gui_classification_reason: >-
   This unit defines user-visible GUI surface, shell, copy, control, or projection behavior.
@@ -7497,8 +8194,10 @@ status: accepted
 owner_doc: Plans/FinalGUISpec.md
 canonical_text: >-
   The theme token matrix defines colors, accents, fonts, hard shadows, border widths, radii,
-  effects flags, opacity, padding scale, and scrollbar width for Retro Dark, Retro Light, Basic
-  Light, and Basic Dark palettes.
+  effects flags, opacity, padding scale, and scrollbar width for all eight built-in variants:
+  the Retro Dark, Retro Light, Basic Light, and Basic Dark tables live in section 6.2, and the
+  Friendly Dark, Friendly Light, Glass Dark, and Glass Light tables live in the Theme System
+  addendum - 2026-07-16 as F3-426 spec data.
 gui_related: true
 gui_classification_reason: >-
   This unit defines user-visible GUI surface, shell, copy, control, or projection behavior.
@@ -7652,9 +8351,15 @@ unit_type: requirement
 status: accepted
 owner_doc: Plans/FinalGUISpec.md
 canonical_text: >-
-  Theme switching is live for colors, spacing, borders, overlays, and same-family switches,
-  requires restart for font family changes between Retro and Basic, and keeps Basic one built-in
-  theme family.
+  Theme switching is live for colors, spacing, borders, overlays, and same-family switches, and
+  requires restart for cross-family switches that change loaded font families (Retro's
+  Orbitron/Rajdhani, Friendly's Cal Sans/Quicksand/Nunito, or Glass/Basic system fonts); Glass
+  and Basic share system fonts so switches between them may be live. Auto presentation mode
+  follows the same within-family live rule: when the OS appearance (prefers-color-scheme)
+  changes, the selected family resolves to its other variant instantly with no restart.
+  Superseded lineage
+  (2026-07-16, kept findable): the prior rule named restart for font family changes between
+  Retro and Basic and kept Basic one built-in theme family.
 gui_related: true
 gui_classification_reason: >-
   This unit defines user-visible GUI surface, shell, copy, control, or projection behavior.
@@ -7688,6 +8393,8 @@ preserved_exact_tokens:
 - "font family"
 - "same-family instant"
 - "Basic remains one family"
+- "Auto presentation mode"
+- "prefers-color-scheme"
 negative_constraints: []
 compatibility_only_notes: []
 stale_retired_dispositions: []
@@ -7704,9 +8411,14 @@ unit_type: requirement
 status: accepted
 owner_doc: Plans/FinalGUISpec.md
 canonical_text: >-
-  The Slint theme global exposes the canonical ThemeMode values and theme token properties for
-  colors, accents, retro effects, paper texture, borders, padding, scrollbar width, line height,
-  and base font size.
+  The Slint theme global exposes the canonical ThemeMode values for all eight built-in variants
+  (friendly-dark, friendly-light, glass-dark, glass-light, retro-dark, retro-light, basic-light,
+  basic-dark) and theme token properties for colors, accents, retro effects, paper texture,
+  borders, padding, scrollbar width, line height, and base font size, with the property defaults
+  illustrative per active variant and friendly-dark as the default mode. The
+  ThemePresentationMode dimension (light, dark, auto) resolves family + mode to one of the same
+  eight token sets; in auto the effective variant tracks the OS appearance
+  (prefers-color-scheme) live and feeds the identical per-variant tokens.
 gui_related: true
 gui_classification_reason: >-
   This unit defines user-visible theme tokens, visual presentation, and Slint GUI styling state.
@@ -7733,6 +8445,10 @@ source_lineage:
 - "Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:FinalGUISpec-S0063"
 preserved_exact_tokens:
 - "ThemeMode"
+- "friendly-dark"
+- "friendly-light"
+- "glass-dark"
+- "glass-light"
 - "retro-dark"
 - "retro-light"
 - "basic-light"
@@ -7743,6 +8459,8 @@ preserved_exact_tokens:
 - "accent-orange"
 - "paper-texture-enabled"
 - "base-font-size"
+- "ThemePresentationMode"
+- "prefers-color-scheme"
 negative_constraints: []
 compatibility_only_notes: []
 stale_retired_dispositions: []
@@ -7759,8 +8477,12 @@ unit_type: requirement
 status: accepted
 owner_doc: Plans/FinalGUISpec.md
 canonical_text: >-
-  Rust-side ThemeVariant applies all theme tokens to the Slint AppWindow at runtime for RetroDark,
-  RetroLight, BasicLight, and BasicDark, including disabling effects for the Basic variants.
+  Rust-side ThemeVariant applies all theme tokens to the Slint AppWindow at runtime for all eight
+  built-in variants (FriendlyDark, FriendlyLight, GlassDark, GlassLight, RetroDark, RetroLight,
+  BasicLight, and BasicDark), including disabling retro effects for non-Retro variants and
+  applying the glass composition tokens only for the Glass variants. In auto presentation mode
+  the Rust runtime resolves the active variant via the OS appearance signal
+  (prefers-color-scheme) and re-applies the resolved variant tokens live when it changes.
 gui_related: true
 gui_classification_reason: >-
   This unit defines runtime application of GUI theme and visual styling tokens.
@@ -7794,6 +8516,8 @@ preserved_exact_tokens:
 - "apply_to"
 - "AppWindow"
 - "disable effects"
+- "auto presentation mode"
+- "prefers-color-scheme"
 negative_constraints: []
 compatibility_only_notes: []
 stale_retired_dispositions: []
@@ -7811,8 +8535,8 @@ status: accepted
 owner_doc: Plans/FinalGUISpec.md
 canonical_text: >-
   Custom themes are TOML files under the Puppet Master themes directory, specify metadata plus
-  token overrides, and inherit unspecified tokens from the Basic Dark or Basic Light base named
-  by the base field.
+  token overrides, and inherit unspecified tokens from any built-in variant base named by the
+  base field (basic-*, retro-*, glass-*, or friendly-*, for example base = "basic-dark").
 gui_related: true
 gui_classification_reason: >-
   This unit defines user-visible custom theme configuration and theme authoring behavior.
@@ -7913,9 +8637,14 @@ unit_type: requirement
 status: accepted
 owner_doc: Plans/FinalGUISpec.md
 canonical_text: >-
-  The theme selector becomes a dropdown when more than four themes are available, shows built-in
-  and custom theme metadata with swatch previews, and exposes theme folder, create, import, and
-  export actions in Settings > General.
+  The title-bar theme selector is a morphing sun/moon icon trigger (sun = manual Light, moon =
+  manual Dark, continuous sun-to-moon morph = Auto) opening a menu with a Light/Dark/Auto
+  segmented control above four theme-family rows (Friendly, Glass, Retro, Basic); each family
+  row shows built-in and custom theme metadata with swatch previews, and a family row becomes a
+  dropdown when >4 themes are available in it (built-in + custom). In Auto the selected family
+  resolves to its dark or light variant by following the OS appearance (prefers-color-scheme)
+  live. Settings > General exposes the theme family + mode controls and theme folder, create,
+  import, and export actions.
 gui_related: true
 gui_classification_reason: >-
   This unit defines user-visible theme selector controls and Settings theme management UI.
@@ -7950,6 +8679,9 @@ preserved_exact_tokens:
 - "Create new theme"
 - "Import theme"
 - "Export theme"
+- "Light/Dark/Auto"
+- "prefers-color-scheme"
+- "morphing sun/moon icon trigger"
 negative_constraints: []
 compatibility_only_notes: []
 stale_retired_dispositions: []
@@ -9368,9 +10100,11 @@ unit_type: requirement
 status: accepted
 owner_doc: Plans/FinalGUISpec.md
 canonical_text: >-
-  The unified Settings surface exposes the canonical 19-tab registry so run-touched settings
-  content has a visible landing zone, unsupported tabs remain searchable and command-addressable,
-  and tab placement routes to owner docs instead of copying their detailed behavior.
+  The unified Settings surface is the search-first one-box model (F3-432) with category chips,
+  bloom panels, and shelves; the former 19-tab registry is preserved as owner-routing and
+  search/migration lineage so run-touched settings content keeps a resolvable owner mapping,
+  unsupported or hidden items remain searchable and command-addressable, and placement routes to
+  owner docs instead of copying their detailed behavior.
 gui_related: true
 gui_classification_reason: >-
   This unit defines visible Settings tab structure, labels, searchability, and owner routing.
@@ -9380,7 +10114,7 @@ unblocks: []
 acceptance_criteria:
 - "The covered source span remains losslessly available for exact-text audit."
 - "The behavior is addressable through this fine-grained PlanUnit instead of broad F3-001 coverage."
-- "The Settings Tab Registry is canonical at 19 tabs and includes Terminal."
+- "The former 19-tab registry is preserved as owner-routing lineage, includes Terminal, and every registry owner mapping remains resolvable."
 - "ContractRefs, anchors or aliases, exact tokens, examples, negative constraints, compatibility notes, stale/retired dispositions, owner boundaries, and source lineage remain traceable."
 - "No WorkNodes, NodeSeeds, executable queues, final node manifests, or production build tasks are created."
 validation_surfaces:
@@ -15268,9 +16002,11 @@ owner_doc: Plans/FinalGUISpec.md
 canonical_text: >-
   Preview, browser, LSP, account, MCP, skill, web operation, terminal, and remote GUI
   persistence keys include preview state/source artifact, browser session/profile state,
-  unsaved buffer, search query, LSP session/diagnostics, provider account/server profile,
-  pressure/switch records, MCP/skill records, `web_operation_payload`, terminal layout/session
-  summaries, and `ssh_remotes/{id}`.
+  canonical per-file editor buffer recovery, search query, LSP session/diagnostics, provider
+  account/server profile, pressure/switch records, MCP/skill records, `web_operation_payload`,
+  terminal layout/session summaries, and `ssh_remotes/{id}`. The former
+  `editor_unsaved_buffer.v1:{project_id}:{document_id}` token is source-lineage only; live
+  buffer recovery uses `editor_state.v1:{project_id}:{file_path_hash}`.
 gui_related: true
 gui_classification_reason: >-
   This unit defines GUI preview, browser, recovery, LSP, account, MCP, skill, web-operation,
@@ -15301,7 +16037,7 @@ preserved_exact_tokens:
 - "preview_source_artifact.v1:{project_id}:{artifact_id}"
 - "browser_session_state.v1:{project_id}:{browser_session_id}"
 - "browser_profile_state.v1:{project_id}:{profile_scope}"
-- "editor_unsaved_buffer.v1:{project_id}:{document_id}"
+- "editor_state.v1:{project_id}:{file_path_hash}"
 - "search_query_state.v1:{project_id}:{query_session_id}"
 - "lsp_session_state.v1:{project_id}:{host_id}:{server_id}:{root_identity}"
 - "lsp_diagnostics_snapshot.v1:{project_id}:{host_id}:{server_id}:{root_identity}"
@@ -15315,9 +16051,10 @@ preserved_exact_tokens:
 - "ContractName:Plans/GitHub_Integration.md"
 - "ContractName:Plans/Section15_MVP_Promoted_Features_Spec.md"
 negative_constraints:
-- "`editor_unsaved_buffer.v1:*` stores local unsaved buffer state only and MUST NOT imply that a remote write succeeded."
+- "Per-file buffer recovery MUST NOT imply that a local or remote file write succeeded."
 compatibility_only_notes: []
-stale_retired_dispositions: []
+stale_retired_dispositions:
+- "`editor_unsaved_buffer.v1:{project_id}:{document_id}` and wildcard `editor_unsaved_buffer.v1:*` are source-lineage only; they are not registered live write keys."
 owner_boundary_notes: []
 owner_hints:
 - "Plans/FinalGUISpec.md"
@@ -15333,9 +16070,9 @@ owner_doc: Plans/FinalGUISpec.md
 canonical_text: >-
   GUI persistence summaries replace stale `ssh_connections:v1`, stale `browser_state.v1` /
   `browser_state:v1`, and deprecated `dashboard_layout:v1` with canonical key families;
-  Search/LSP rows resolve back to storage, FileManager, and LSP owner contracts; viewer-mode
-  and MCP readiness copy mirror owner-doc precision and do not create local MCP, account, or
-  cost buckets.
+  preserve editor workspace, hot-reload, and onboarding colon-form keys only as admitted
+  migration inputs; and route Search/LSP, viewer-mode, and MCP readiness through owner-doc
+  precision without creating local storage, MCP, account, or cost authority.
 gui_related: true
 gui_classification_reason: >-
   This unit preserves stale/deprecated alias rules and owner-routing constraints for GUI
@@ -15371,6 +16108,12 @@ preserved_exact_tokens:
 - "browser_state:v1"
 - "dashboard_layout:v1"
 - "widget_layout:v1:dashboard"
+- "editor_state:v1:{project_id}"
+- "editor_workspace_state.v1:{project_id}"
+- "hotreload_state:v1:{project_id}"
+- "hotreload_state.v1:{project_id}"
+- "onboarding:v1"
+- "onboarding_state.v1:{project_id}"
 - "/viewer-mode"
 - "pm.lock"
 - "mcp_server_record"
@@ -15382,6 +16125,7 @@ negative_constraints:
 compatibility_only_notes: []
 stale_retired_dispositions:
 - "`ssh_connections:v1`, single-blob browser state keys, and `dashboard_layout:v1` are stale/deprecated aliases only."
+- "Editor workspace, hot-reload, and onboarding colon-form aliases are read-only StorageMigrationCoordinator inputs, never ordinary-open fallback or new-write keys."
 owner_boundary_notes:
 - "Search, LSP, MCP readiness, usage/cost, and account/readiness copy route through their owner docs."
 owner_hints:
@@ -15618,13 +16362,15 @@ status: accepted
 owner_doc: Plans/FinalGUISpec.md
 canonical_text: >-
   On startup, the GUI restores layout, theme, dashboard widget layout, activity bar order,
-  editor tabs, active project-facing shell state, hot-reload state, onboarding/tour state, and
-  safe detached-window coordinates from canonical persistence keys.
+  editor workspace and per-file dirty buffers, active project-facing shell state, historical
+  hot-reload state, project onboarding/tour state, and safe detached-window coordinates from
+  canonical persistence keys. Resettable corruption is secured before a disclosed reset;
+  canonical editor loss uses mandatory-backup recovery and never becomes a false empty project.
 gui_related: true
 gui_classification_reason: >-
   This unit defines startup restoration of visible shell state.
 split_recommended: false
-depends_on: []
+depends_on: [F3-458]
 unblocks: []
 acceptance_criteria:
 - "The covered source span remains losslessly available for exact-text audit."
@@ -15649,10 +16395,11 @@ preserved_exact_tokens:
 - "theme:v1"
 - "widget_layout:v1:dashboard"
 - "activity_bar_order:v1"
-- "editor_state:v1:{project}"
+- "editor_workspace_state.v1:{project_id}"
+- "editor_state.v1:{project_id}:{file_path_hash}"
 - "project_state:v1:{project_id}"
-- "hotreload_state:v1:{project_id}"
-- "onboarding:v1"
+- "hotreload_state.v1:{project_id}"
+- "onboarding_state.v1:{project_id}"
 - "disconnected monitor"
 - "safe detached coordinate"
 - "ContractName:Plans/storage-plan.md"
@@ -15661,7 +16408,7 @@ preserved_exact_tokens:
 negative_constraints: []
 compatibility_only_notes: []
 stale_retired_dispositions:
-- "`dashboard_layout:v1` may be read only on first launch after migration when canonical `widget_layout:v1:dashboard` is absent."
+- "`dashboard_layout:v1`, `editor_state:v1:{project_id}`, `hotreload_state:v1:{project_id}`, and `onboarding:v1` are read-only coordinator migration inputs; ordinary startup does not use them as fallbacks."
 owner_boundary_notes: []
 owner_hints:
 - "Plans/FinalGUISpec.md"
@@ -16864,9 +17611,11 @@ status: accepted
 owner_doc: Plans/FinalGUISpec.md
 canonical_text: >-
   The `Large Settings page complexity` risk preserves the stale `24 tabs across 5 groups` label
-  only as migration lineage; the live Settings registry is 19 tabs, mitigated by mandatory
-  two-level sidebar navigation, collapsible group headers, sidebar search, deep links, and
-  real-data testing.
+  only as migration lineage; the live Settings surface is the search-first one-box model over the
+  19-item owner-routing registry, mitigated by the fuzzy search contract, category bloom
+  navigation, shelves, command-palette deep links, and real-data testing. Superseded mitigation
+  lineage (2026-07-16, kept findable): mandatory two-level sidebar navigation, collapsible group
+  headers, sidebar search, deep links.
 gui_related: true
 gui_classification_reason: >-
   This unit preserves one row of the user-visible Slint migration risks and mitigations table.
@@ -17473,7 +18222,8 @@ owner_doc: Plans/FinalGUISpec.md
 canonical_text: >-
   The `DAP debugger reliability` risk is mitigated as follows: DAP requests use timeouts,
   crashed adapters auto-restart once, debugger surfaces clear unresponsive errors, and
-  concurrent debug sessions cap at one per project.
+  concurrent debug sessions are permitted per project under the multi-session policy
+  (F3-484), with exactly one focused session at a time.
 gui_related: true
 gui_classification_reason: >-
   This unit preserves one row of the user-visible Slint migration risks and mitigations table.
@@ -17506,7 +18256,8 @@ preserved_exact_tokens:
 - "Cap concurrent debug sessions to 1 per project"
 negative_constraints: []
 compatibility_only_notes: []
-stale_retired_dispositions: []
+stale_retired_dispositions:
+- "The one-session-per-project concurrency cap is retired per the Run & Debug Revival Addendum - 2026-07-27; multi-session policy is owned by F3-484."
 owner_boundary_notes:
 - "The row remains part of the FinalGUISpec risk/mitigation matrix."
 owner_hints:
@@ -17722,9 +18473,11 @@ status: accepted
 owner_doc: Plans/FinalGUISpec.md
 canonical_text: >-
   The `Settings page tab count (24 tabs)` risk preserves the stale `24 tabs across 5 groups`
-  label only as risk-lineage; the live Settings registry is 19 tabs, mitigated by mandatory
-  two-level sidebar navigation, collapsible groups, top search/filter, and command-palette deep
-  links.
+  label only as risk-lineage; the live Settings surface is the search-first one-box model over
+  the 19-item owner-routing registry, mitigated by the fuzzy search contract, category bloom
+  navigation, shelves, and command-palette deep links. Superseded mitigation lineage
+  (2026-07-16, kept findable): mandatory two-level sidebar navigation, collapsible groups, top
+  search/filter.
 gui_related: true
 gui_classification_reason: >-
   This unit preserves one row of the user-visible Slint migration risks and mitigations table.
@@ -18130,7 +18883,9 @@ status: accepted
 owner_doc: Plans/FinalGUISpec.md
 canonical_text: >-
   Implementation decisions are final for Slint 1.17.1 on Rust stable 1.96.1, winit+Skia with FemtoVG-wgpu fallback,
-  no React/JS/TS/HTML/CSS shell, IDE shell layout, three theme families, Settings restructure,
+  no React/JS/TS/HTML/CSS shell, IDE shell layout, four theme families (eight built-in themes,
+  default Friendly Dark; supersedes the prior three-family decision per
+  dec-2026-07-16-pm6-theme-settings-canon-promotion-seal), Settings restructure,
   event-driven updates, redb/seglog/Tantivy persistence/search, model/platform dropdowns, and
   product name Puppet Master.
 gui_related: true
@@ -22099,14 +22854,16 @@ unit_type: requirement
 status: accepted
 owner_doc: Plans/FinalGUISpec.md
 canonical_text: >-
-  Safe points are runtime recovery anchors and must not be presented as user-facing restore
-  points; retry controls distinguish Retry from safe point from Start fresh attempt; and Retry
-  from safe point is disabled with an explanation when no valid safe point exists.
+  Safe points are runtime recovery anchors under the canonical sp identity and must not be
+  presented as Assistant Chat restore points under the separate rp identity; retry controls
+  distinguish Retry from safe point from Start fresh attempt; unavailable recovery disables
+  retry with an explanation; and exact-replace receipts preserve the closed Case L outcomes
+  without conflict-success or partial-success invention.
 gui_related: true
 gui_classification_reason: >-
   This unit defines visible FinalGUISpec GUI behavior.
 split_recommended: false
-depends_on: []
+depends_on: [SP-242, CV-320]
 unblocks: []
 acceptance_criteria:
 - "The covered source span remains losslessly available for exact-text audit."
@@ -22133,8 +22890,13 @@ preserved_exact_tokens:
 - "Retry from safe point"
 - "Start fresh attempt"
 - "disabled with an explanation"
+- "sp:{run_id}:{node_id}:{attempt_id}:{safe_point_id}"
+- "rp:{project_id}:{restore_point_id}"
+- "restored_clean"
+- "restore_recovery_required"
 negative_constraints:
 - "Safe points must not be presented as user-facing restore points."
+- "restored_with_conflicts and partial success are invalid for safe-point restore and whole-turn Chat revert."
 compatibility_only_notes: []
 stale_retired_dispositions: []
 owner_boundary_notes:
@@ -25997,7 +26759,9 @@ canonical_text: >-
   mode/disable-notification fields. The routing matrix uses canonical event categories and default sound mappings, and
   the sound library shows built-in normal notification sound entries with source/license/version/duration/hash metadata
   beside uploaded and imported assets. Sound is never the sole carrier for important state, and missing audio support
-  hides or labels controls rather than failing silently.
+  hides or labels controls rather than failing silently. The in-app toast/banner destination renders through the
+  title-bar notification affordance per PMConcept7 (2026-07-23): ephemeral deliveries stage beneath the title-bar
+  notification stack and durable deliveries join the stack and its count badge (F3-460, F3-461).
 gui_related: true
 gui_classification_reason: Defines Settings GUI, notification destination controls, sound library controls, upload UI, preview, and test-send presentation.
 depends_on: [ACD-428, CV-298, SP-222, PS-124, UCC-103]
@@ -27202,15 +27966,16 @@ CTA cards must never rely on generic "function identically" prose without the ro
 
 Repairs row `sfk-94c4451c654561bebe80cef7`.
 
-The five Activity Bar groups are:
+The four Activity Bar groups are:
 
-1. `work`: Orchestrator, Run Graph, Planning Wizard.
-2. `project`: File Manager, Search, Source Control.
-3. `automation`: GitHub Actions, Docker Manager, Testing.
-4. `communication`: Chat, Agents, Notifications.
-5. `system`: Settings, Usage, Runtime Artifacts.
+1. `project`: File Manager, Search, Source Control.
+2. `automation`: GitHub Actions, Docker Manager, Testing.
+3. `communication`: Chat, Agents.
+4. `system`: Runtime Artifacts.
 
-`Ctrl+1..8` binds to the first eight visible side-panel items in group order after policy and feature availability filtering. Hidden or unsupported items remain command-palette addressable but do not consume a shortcut slot.
+PMConcept7 trim (2026-07-23): the former `work` group (Orchestrator, Run Graph, Planning Wizard) is removed in full, Notifications is removed from `communication`, and Settings and Usage are removed from `system`. The removed pages stay reachable through the title-bar page tabs, and the alerts affordance is the title-bar notification stack and count badge (F3-460, F3-461), not an activity-bar shortcut.
+
+`Ctrl+1..8` binds to the first eight visible side-panel items in group order after policy and feature availability filtering. Hidden or unsupported items remain command-palette addressable but do not consume a shortcut slot. The binding mechanics are unchanged by the PMConcept7 trim; the shortcuts simply resolve over the remaining visible items (F3-419 mechanics unchanged).
 
 ### Settings Registry And Numbering Supersession
 
@@ -27244,7 +28009,7 @@ These paths are planned GUI host locations only. They do not create implementati
 
 Repairs row `sfk-047b362fce3b487a9bce5d6b`.
 
-Startup restore reads `hotreload_state.v1:{project_id}` and `onboarding_state.v1:{project_id}` as defined by `Plans/storage-plan.md`. The GUI treats missing keys as first-run defaults, corrupt keys as recoverable reset with a warning card, and compatibility aliases as migration inputs only.
+Startup restore reads `hotreload_state.v1:{project_id}` and `onboarding_state.v1:{project_id}` as defined by `Plans/storage-plan.md`. These two registered `resettable_ui_state` families may use defaults when missing; corrupt/incompatible bytes are secured in quarantine before reset and the warning card names the affected family. `editor_workspace_state.v1:{project_id}` and per-file `editor_state.v1:{project_id}:{file_path_hash}` are instead canonical non-rebuildable families: missing/corrupt/incompatible state attempts mandatory-backup recovery and discloses credible loss rather than showing a false first-run, empty project, or silent default. `editor_state:v1:{project_id}`, `hotreload_state:v1:{project_id}`, and `onboarding:v1` are read-only `StorageMigrationCoordinator` inputs only, and the global onboarding alias may copy forward only to an unambiguous project.
 
 ### Terminal-Core Section Anchor
 
@@ -27258,6 +28023,7 @@ The terminal-core architecture reference means the screen/buffer/diff-painting m
 These rows are preserved as audit-lineage notes only. They do not prove repair by themselves; repaired status requires concrete canonical prose/schema/enum/command/algorithm evidence in this owner doc or an explicit non-repair disposition in `Plans/.audits/fable-20260706/owner_note_closure_fidelity_after.jsonl`. This note creates no WorkNodes, NodeSeeds, queues, runtime artifacts, implementation files, production build tasks, final manifests, or PNC-019 receipts, and it does not mark `buildability_gate_passed` true.
 
 - `registry_line 39` (source_lineage_only; source line 315; `sfk-dbfb199dce43d628bb3dc410`): PMConcept Settings alternatives are source-lineage only; live canon remains the unified Settings registry, two-level/sidebar model, and separate Agent Config placement. Source summary: 1. **Settings IA** concept ships three alternate Settings prototypes (`.page-settings-a/-b/-c`, CSS 73377345) plus an 18-card bento grid + slide-in inspector (1343614450) plus a Project Settings Modal (10380) plus a separate 7-tab Agent Config page (12694). Plans canon is a s
+- `registry_line 39` supersession (2026-07-16): the s4 search-first Settings model is now canon per F3-432 and dec-2026-07-16-pm6-theme-settings-canon-promotion-seal; the two-level/sidebar model is owner-routing lineage. The preserved row above is unmodified audit lineage.
 - `registry_line 44` (repaired; source line 321; `sfk-abfc2f6cec0ea06de128b05e`): Dashboard widget canon repaired: PMConcept twenty-widget/sub-tab variants are source-lineage only; the default Dashboard set is exactly widget-orchestrator-progress, widget-active-lanes, widget-recent-results, and widget-custom-metrics. Source summary: 7. **Dashboard widgets** concept ~20 bespoke widgets across Main/Metrics/Monitoring sub-tabs (990110163) vs plans-locked catalog of exactly 4 dashboard widgets (F3-277/279) + 13 `progress.*` widget ids (F3-099), and plans themselves disagree 3-vs-4 on the default set (GUI-1 ME
 - `registry_line 83` (repaired; source line 447; `sfk-fa1be2ed51683d179c169cb8`): Dashboard reorder precedence repaired: F3-275 full widget grid behavior supersedes the F3-252 drag-handle/click-to-swap mitigation; the latter remains migration-risk lineage only. Source summary: - [HIGH] L17073-18305 (F3-252 vs F3-275): Dashboard widget-grid reorder is locked to "drag-handle + click-to-swap, full DnD deferred" in one accepted unit while a later accepted unit requires full drag-to-reorder + edge resize + grid snapping as required MVP no precedence state
 - `registry_line 84` (repaired; source line 448; `sfk-4c1d61c95c67c91b36401598`): Add Widget flow repaired: visible entrypoints dispatch cmd.dashboard.add_widget through catalog.dashboard_add_widget; the flow opens catalog, chooses widget, chooses or accepts slot/size, and persists layout. Source summary: - [HIGH] L18470-18474: "Add Widget" has three undecided entry points (menu/FAB/toolbar) with no command ID and a flow contradiction (choose-then-place vs auto-place-then-move) FIX: decide entrypoint, register `dashboard.add_widget`, sequence the flow.
@@ -27395,7 +28161,8 @@ negative_constraints:
 - "Do not register a new storage key for activity bar hidden state; the separator position inside activity_bar_order:v1 encodes the hidden set."
 compatibility_only_notes:
 - "Slint portability: drag ghosts, drop indicators, and the More tray render as opaque precomputed surfaces; no arbitrary-content backdrop blur, no SVG filters, and color math is precomputed rather than runtime-mixed."
-stale_retired_dispositions: []
+stale_retired_dispositions:
+- "The pre-2026-07-23 default visible set (which included Orchestrator, Run Graph, Planning Wizard, Notifications, Settings, and Usage shortcuts) is retired per the PMConcept7 activity-bar trim; those pages stay reachable via the title-bar page tabs and the alerts affordance is the title-bar notification stack (F3-460). Reorder, hide, tray, persistence, and hotkey mechanics of this unit are unchanged and now operate over the trimmed default set."
 owner_boundary_notes: []
 owner_hints:
 - "Plans/FinalGUISpec.md"
@@ -27415,7 +28182,7 @@ canonical_text: >-
   header, thread rail, thread search, issues and worktree indicators, persona and model
   selectors, mode strip, panel toggles, and composer affordances per mount; embedded mode is
   chrome-reduced to the message stream, composer, and quick-reply chips with gated send.
-  Stream, footer, and suggestion content resolve per thread, and context boxes are
+  Stream and footer content resolve per thread, and context boxes are
   thread-scoped. The unified component is consumed by wizard embedding and promoted surfaces,
   and the separate `#chatPanel` side panel mount remains canonical.
 gui_related: true
@@ -27453,7 +28220,8 @@ negative_constraints:
 - "Chat must remain available as the separate side panel; embedded instances must not replace the #chatPanel mount."
 compatibility_only_notes:
 - "Slint portability: per-instance chrome flags map to conditional widget composition; embedded chat chrome requires no arbitrary-content backdrop blur or SVG filters, color styling is precomputed, and any glass treatment uses a single blur over a known wallpaper as a pre-blurred asset."
-stale_retired_dispositions: []
+stale_retired_dispositions:
+- "The standalone web-suggestions strip is retired per the 2026-07-16 chat polish promotion; embedded-mode quick-reply chips are a different element and remain canonical."
 owner_boundary_notes:
 - "Plans/assistant-chat-design.md remains the prose owner for chat behavior taxonomy (message stream, composer, and thread model sections); this unit records the component unification and chrome-flag presentation contract in FinalGUISpec without byte-editing assistant-chat-design.md."
 owner_hints:
@@ -27510,6 +28278,5098 @@ compatibility_only_notes:
 - "Slint portability: the overflow picker, drag affordances, and pane-close overlays are opaque surfaces; no arbitrary-content backdrop blur or SVG filters, and color math is precomputed."
 stale_retired_dispositions: []
 owner_boundary_notes: []
+owner_hints:
+- "Plans/FinalGUISpec.md"
+```
+
+## PMConcept6 Chat Polish Addendum - 2026-07-16
+
+This addendum promotes user-approved PMConcept6 chat polish behaviors into canonical PlanUnits. `Concepts/pm6-build/**` remains illustrative source-lineage only per `Plans/usage-feature.md`. This addendum creates no WorkNodes, NodeSeeds, executable queues, implementation files, runtime artifacts, generated wiring rows, production build tasks, final manifests, or PNC-019 receipts.
+
+### F3-422 - Chat Footer Pill And Jump-To-Latest Geometry
+
+```yaml
+plan_unit_id: F3-422
+unit_type: requirement
+status: accepted
+owner_doc: Plans/FinalGUISpec.md
+canonical_text: >-
+  The chat stream footer renders as a floating pill centered over the message stream inside
+  the stream wrap: content-sized at max-content with a max-width of the stream minus side
+  margins, single-row nowrap layout with tight padding. The stream is see-through around the
+  pill: the message stream extends behind the pill, stream content may scroll beneath it, and
+  no opaque band or full-width strip renders around the pill. A stack-height variable
+  (--chat-footer-stack-height) and a footer inset (--chat-footer-inset, computed as footer
+  height plus bottom offset plus 8px clearance) reserve bottom content space inside the
+  scrollport (a content inset, not a scrollport shrink) so the newest row clears the pill when
+  pinned, and position the jump-to-latest control above the pill at a higher z-order. The
+  jump-to-latest control stays hidden until the stream is scrolled away from the bottom by
+  more than a 24 pixel threshold. When the stream is pinned to the bottom, reserve changes
+  re-scroll the stream so the last row stays above the pill. Stream children opt out of flex
+  shrink so floating-footer reserve changes cannot crush embedded cards. Superseded lineage
+  (2026-07-16 float repair, kept findable): the initial promotion reserved scrollport space
+  under the stream, which rendered an opaque band around the pill.
+gui_related: true
+gui_classification_reason: This unit defines visible chat footer pill geometry and jump-to-latest placement.
+split_recommended: false
+depends_on: [F3-131, F3-189, F3-420]
+unblocks: []
+acceptance_criteria:
+- "The footer pill floats centered over the stream, sized to its content with no fixed side gutters, in both the docked panel and the floating window; the stream is visible around and beneath the pill, with no opaque band or full-width strip."
+- "The bottom content inset tracks measured footer height through --chat-footer-stack-height and --chat-footer-inset (footer height plus bottom offset plus 8px clearance) inside the scrollport, and stream content may scroll beneath the pill."
+- "The jump-to-latest control renders above the footer pill at a higher z-order, appears only when scrolled more than 24px away from the bottom, and returns the stream to the latest message."
+- "Pinned-to-bottom reserve changes re-scroll so the newest content stays visible above the pill; stream children do not flex-shrink."
+- "No WorkNodes, NodeSeeds, executable queues, final node manifests, or production build tasks are created."
+validation_surfaces:
+- "python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits"
+- "python3 scripts/pm-plan-index.py validate"
+risk_class: finalgui_drift
+reasoning_tier: standard
+context_scope: finalgui_standardization
+implementation_surfaces:
+- "Plans/FinalGUISpec.md"
+node_compile_hint:
+  mode: chat_footer_pill_and_jump_to_latest_geometry
+  create_worknodes: false
+source_lineage:
+- "Plans/FinalGUISpec.md:13639"
+- "Plans/assistant-chat-design.md:4086"
+- "Concepts/pm6-build (PMConcept6 demo; source-lineage-only per Plans/usage-feature.md)"
+preserved_exact_tokens:
+- "--chat-footer-stack-height"
+- "--chat-footer-inset"
+- "max-content"
+- "24"
+- "8px"
+negative_constraints:
+- "The footer pill must not use fixed side gutters or full-width footer bars; it is content-sized and centered."
+compatibility_only_notes:
+- "Slint portability: the pill and jump control are anchored overlay surfaces expressed as layout constraints rather than measure-then-write style passes; no arbitrary-content backdrop blur, no SVG filters, and color math is precomputed."
+stale_retired_dispositions: []
+owner_boundary_notes:
+- "Plans/assistant-chat-design.md owns footer content semantics (ACD-435); this unit records geometry and scroll-reserve behavior only."
+owner_hints:
+- "Plans/FinalGUISpec.md"
+```
+
+### F3-423 - Composer Layout, Selector Row Layout, And Floating Chat Width Floor
+
+```yaml
+plan_unit_id: F3-423
+unit_type: requirement
+status: accepted
+owner_doc: Plans/FinalGUISpec.md
+canonical_text: >-
+  The chat composer lays out with attach plus the ELI5, YOLO, and CREW toggles on the left
+  rail, and the rewind FAB followed by icon-only send and stop controls (inline SVG glyphs)
+  on the right with an extra gap between rewind and send. The header selector row renders
+  Persona, Model, and Mode as equal-shrink slots whose labels ellipsize when narrow. The
+  floating chat window enforces a minimum and default width floor of 380px via
+  max(380px, min(var(--floating-chat-w), 40vw)) so the selector row is not clipped on first
+  open. The docked #chatPanel mount and the floating #floatingChat mount render both layouts
+  from the shared chat template of the unified component.
+gui_related: true
+gui_classification_reason: This unit defines visible composer, selector row, and floating chat width layout.
+split_recommended: false
+depends_on: [F3-135, F3-131, F3-253, F3-420, ACD-437]
+unblocks: []
+acceptance_criteria:
+- "Composer left rail renders attach plus ELI5, YOLO, and CREW toggles; the right side renders the rewind FAB with an extra gap before icon-only inline-SVG send and stop controls."
+- "The selector row renders Persona, Model, and Mode as equal-shrink slots with label ellipsis when narrow, in both mounts."
+- "The floating chat window width floor resolves as max(380px, min(var(--floating-chat-w), 40vw)) and the selector row is not clipped on first open."
+- "No WorkNodes, NodeSeeds, executable queues, final node manifests, or production build tasks are created."
+validation_surfaces:
+- "python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits"
+- "python3 scripts/pm-plan-index.py validate"
+risk_class: finalgui_drift
+reasoning_tier: standard
+context_scope: finalgui_standardization
+implementation_surfaces:
+- "Plans/FinalGUISpec.md"
+node_compile_hint:
+  mode: composer_selector_row_and_floating_width_floor
+  create_worknodes: false
+source_lineage:
+- "Plans/FinalGUISpec.md:10800"
+- "Plans/FinalGUISpec.md:10582"
+- "Plans/assistant-chat-design.md:186"
+- "Concepts/pm6-build (PMConcept6 demo; source-lineage-only per Plans/usage-feature.md)"
+preserved_exact_tokens:
+- "380px"
+- "40vw"
+- "#chatPanel"
+- "#floatingChat"
+- "ELI5"
+- "YOLO"
+- "CREW"
+negative_constraints:
+- "Send and stop controls are icon-only inline SVG glyphs; no emoji glyphs and no text-labeled send button."
+compatibility_only_notes:
+- "Slint portability: the width floor maps to a min-width constraint on the floating window; toggles and FABs are opaque precomputed surfaces with no arbitrary-content backdrop blur, no SVG filters, and precomputed color math."
+stale_retired_dispositions: []
+owner_boundary_notes:
+- "Plans/assistant-chat-design.md owns selector-row behavior semantics (ACD-437); this unit records layout geometry."
+owner_hints:
+- "Plans/FinalGUISpec.md"
+```
+
+### F3-424 - Chat Overlay Portals And Motion Contract
+
+```yaml
+plan_unit_id: F3-424
+unit_type: requirement
+status: accepted
+owner_doc: Plans/FinalGUISpec.md
+canonical_text: >-
+  Chat mode, model, and effort popouts render as body-portaled overlays above stream overflow
+  clipping so they are never clipped by the scrollport; the persona dropdown remains inline
+  with an overflow flip when it would exit the viewport. Footer FAB items reveal with a
+  spring-stagger motion treatment. Under reduced motion all popout and FAB reveals render as
+  instant show and hide with no animation.
+gui_related: true
+gui_classification_reason: This unit defines visible chat overlay layering and motion behavior.
+split_recommended: false
+depends_on: [F3-422, ACD-438]
+unblocks: []
+acceptance_criteria:
+- "Mode, model, and effort popouts render above stream overflow clipping in both chat mounts and are never clipped by the scrollport."
+- "The persona dropdown remains inline and flips its opening direction when it would overflow the viewport."
+- "FAB items reveal with a spring stagger; reduced motion renders instant show and hide."
+- "No WorkNodes, NodeSeeds, executable queues, final node manifests, or production build tasks are created."
+validation_surfaces:
+- "python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits"
+- "python3 scripts/pm-plan-index.py validate"
+risk_class: finalgui_drift
+reasoning_tier: standard
+context_scope: finalgui_standardization
+implementation_surfaces:
+- "Plans/FinalGUISpec.md"
+node_compile_hint:
+  mode: chat_overlay_portals_and_motion_contract
+  create_worknodes: false
+source_lineage:
+- "Plans/FinalGUISpec.md:27404"
+- "Concepts/pm6-build (PMConcept6 demo; source-lineage-only per Plans/usage-feature.md)"
+preserved_exact_tokens:
+- "spring"
+- "reduced motion"
+negative_constraints:
+- "Popout overlays must not be clipped by stream overflow; body-portal layering (or the native popup equivalent) is required."
+compatibility_only_notes:
+- "Slint portability: body-portaled popouts map to native PopupWindow surfaces, which replaces the portal-plus-reposition-on-scroll machinery entirely; no arbitrary-content backdrop blur, no SVG filters, and color math is precomputed."
+stale_retired_dispositions: []
+owner_boundary_notes: []
+owner_hints:
+- "Plans/FinalGUISpec.md"
+```
+
+## Theme System Addendum - 2026-07-16
+
+This addendum promotes the user-approved PMConcept6 eight-theme system into canonical PlanUnits and carries the exact per-variant token tables as spec data. `Concepts/pm6-build/**` remains illustrative source-lineage only per `Plans/usage-feature.md`. This addendum creates no WorkNodes, NodeSeeds, executable queues, implementation files, runtime artifacts, generated wiring rows, production build tasks, final manifests, or PNC-019 receipts.
+
+### F3-425 - Eight Built-In Themes And Friendly Dark Default
+
+```yaml
+plan_unit_id: F3-425
+unit_type: requirement
+status: accepted
+owner_doc: Plans/FinalGUISpec.md
+canonical_text: >-
+  The built-in theme set is exactly eight variants across four families: friendly-dark,
+  friendly-light, glass-dark, glass-light, retro-dark, retro-light, basic-dark, and basic-light.
+  The default theme is friendly-dark. The selector additionally carries a presentation mode
+  dimension (Light, Dark, Auto); Auto resolves the selected family to its dark or light variant
+  by following the operating system appearance (prefers-color-scheme) and updates live when the
+  OS setting changes. This supersedes the prior three-family adjudication
+  (exactly three built-in theme choices with a Retro Dark default), which is preserved as
+  clearly labeled migration lineage prose so its exact tokens remain findable. Theme identity
+  persistence continues through the existing theme:v1 storage contract carrying the theme
+  family, presentation mode, and resolved variant; no new storage key is introduced for theme
+  identity.
+gui_related: true
+gui_classification_reason: This unit defines the user-visible built-in theme set and the default theme selection.
+split_recommended: false
+depends_on: [F3-073, F3-217]
+unblocks: []
+acceptance_criteria:
+- "The theme selector exposes exactly eight built-in variants: friendly-dark, friendly-light, glass-dark, glass-light, retro-dark, retro-light, basic-dark, and basic-light."
+- "The selector additionally exposes a Light/Dark/Auto presentation mode, and in Auto the selected family resolves to its dark or light variant by following the OS appearance (prefers-color-scheme) live."
+- "The default theme is friendly-dark."
+- "The superseded three-family selector contract remains findable in the owner doc as clearly labeled migration lineage prose."
+- "theme:v1 persists the theme family, presentation mode, and resolved variant, and no new storage key is registered for theme identity."
+- "No WorkNodes, NodeSeeds, executable queues, final node manifests, or production build tasks are created."
+validation_surfaces:
+- "python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits"
+- "python3 scripts/pm-plan-index.py validate"
+risk_class: finalgui_drift
+reasoning_tier: standard
+context_scope: finalgui_standardization
+implementation_surfaces:
+- "Plans/FinalGUISpec.md"
+node_compile_hint:
+  mode: eight_built_in_themes_and_friendly_dark_default
+  create_worknodes: false
+source_lineage:
+- "Plans/FinalGUISpec.md:166"
+- "Plans/FinalGUISpec.md:177"
+- "Plans/FinalGUISpec.md:964"
+- "Plans/FinalGUISpec.md:1035"
+- "Plans/FinalGUISpec.md:2632"
+- "Plans/FinalGUISpec.md:7441"
+- "Concepts/pm6-build (PMConcept6 demo; source-lineage-only per Plans/usage-feature.md)"
+preserved_exact_tokens:
+- "friendly-dark"
+- "friendly-light"
+- "glass-dark"
+- "glass-light"
+- "theme:v1"
+- "prefers-color-scheme"
+- "Light, Dark, Auto"
+negative_constraints:
+- "Retro Dark is not the default."
+- "Do not register a new storage key for theme identity; theme:v1 carries the theme family, presentation mode, and resolved variant."
+compatibility_only_notes:
+- "Slint portability: all eight built-in variants resolve to deterministic precomputed token sets; no arbitrary-content backdrop blur, no SVG filters, color math is precomputed rather than runtime-mixed, and any glass treatment uses a single blur over a known wallpaper as a pre-blurred asset."
+stale_retired_dispositions:
+- "The three-family / Retro-Dark-default selector adjudication is superseded per dec-2026-07-16-pm6-theme-settings-canon-promotion-seal and preserved as migration lineage prose."
+owner_boundary_notes:
+- "The theme:v1 key row and its write frequency remain owned by the section 15.1 redb schema and F3-217; this unit widens only the persisted enum."
+owner_hints:
+- "Plans/FinalGUISpec.md"
+```
+
+### F3-426 - Per-Family Theme Token Contract
+
+```yaml
+plan_unit_id: F3-426
+unit_type: requirement
+status: accepted
+owner_doc: Plans/FinalGUISpec.md
+canonical_text: >-
+  Each of the eight built-in theme variants ships a complete precomputed token table covering
+  surfaces, text colors, borders, the six named accents plus the primary accent and its RGB
+  triple, the six graph-state colors, elevation shadows, radius and border-width geometry,
+  motion easing resolution and durations, the per-variant diff-tint variable set, and
+  typography. The exact values are spec data carried in the Theme Token Tables of this
+  addendum; they are canonical, not illustrative. Token values that the concept derives at
+  runtime through color-mix() or alpha-scaling calc() expressions are resolved to precomputed
+  per-variant constants at build time, and the application performs no runtime color
+  derivation.
+gui_related: true
+gui_classification_reason: This unit defines the visible color, typography, and geometry token values for every built-in theme variant.
+split_recommended: false
+depends_on: [F3-425, F3-074, F3-078]
+unblocks: []
+acceptance_criteria:
+- "Every one of the eight built-in variants has a complete token table in the owner doc covering surfaces, text, borders, accents with the primary accent and RGB triple, graph-state colors, elevation, geometry, motion, diff tints, and typography."
+- "The addendum token table values are treated as canonical spec data, and per-variant values marked runtime-derived in the concept are precomputed constants in the product."
+- "No token value is derived at runtime through color-mix() or alpha-scaling calc() expressions."
+- "No WorkNodes, NodeSeeds, executable queues, final node manifests, or production build tasks are created."
+validation_surfaces:
+- "python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits"
+- "python3 scripts/pm-plan-index.py validate"
+risk_class: finalgui_drift
+reasoning_tier: standard
+context_scope: finalgui_standardization
+implementation_surfaces:
+- "Plans/FinalGUISpec.md"
+node_compile_hint:
+  mode: per_family_theme_token_contract
+  create_worknodes: false
+source_lineage:
+- "Plans/FinalGUISpec.md:978"
+- "Plans/FinalGUISpec.md:7491"
+- "Plans/FinalGUISpec.md:7699"
+- "Concepts/pm6-build (PMConcept6 demo; source-lineage-only per Plans/usage-feature.md)"
+preserved_exact_tokens:
+- "--accent-primary"
+- "--accent-primary-rgb"
+- "--graph-pending"
+- "--diff-added-bg"
+- "--ease-default"
+negative_constraints:
+- "Do not derive theme token values at runtime; per-variant tables carry precomputed constants."
+compatibility_only_notes:
+- "Slint portability: precomputed per-variant token tables replace the concept's color-mix() and alpha-scaling calc() derivation at build time; no arbitrary-content backdrop blur, no SVG filters, color math is precomputed rather than runtime-mixed, and any glass treatment uses a single blur over a known wallpaper as a pre-blurred asset."
+stale_retired_dispositions:
+- "The concept's runtime color-mix() and calc()-alpha token derivation is demo technique only; canon carries precomputed per-variant values."
+owner_boundary_notes:
+- "The section 6.2 table remains the Retro/Basic variant matrix; the Friendly and Glass variant tables and the full eight-variant spec data live in this addendum."
+owner_hints:
+- "Plans/FinalGUISpec.md"
+```
+
+### F3-427 - Glass Composition Single-Blur Contract
+
+```yaml
+plan_unit_id: F3-427
+unit_type: requirement
+status: accepted
+owner_doc: Plans/FinalGUISpec.md
+canonical_text: >-
+  Glass themes composite exactly one in-viewport backdrop blur of 34px with saturate 160% on
+  the app-shell slab, plus one more of the same material on the floating chat slab, which
+  floats outside the pane and is never nested inside it. Interior glass structure is expressed
+  as a four-step transparency scale of plain fills with no additional blur: step one is the
+  clearest see-through region for side panels, step two is the light frost for toolbars,
+  controls, and cards, step three is the lighter frosted selection pill, and the near-opaque
+  reading plate backs code surfaces and popovers. Pane fills derive from the pane k-factors:
+  .73, .57, and .67 for glass-dark and .62, .36, and .47 for glass-light. The cloudscape
+  wallpaper ships as a pre-blurred baked asset; the concept's runtime filter blur over
+  gradient layers is demo technique only.
+gui_related: true
+gui_classification_reason: This unit defines the visible glass slab composition, blur budget, and transparency structure of glass themes.
+split_recommended: false
+depends_on: [F3-425]
+unblocks: []
+acceptance_criteria:
+- "Glass themes render exactly one app-shell backdrop blur at 34px with saturate 160% plus one floating-chat blur of the same material, and no other in-viewport backdrop blur inside the pane."
+- "Interior glass surfaces use the four-step transparency scale (step one through step three plus the reading plate) as plain fills without additional blur."
+- "Pane fills use the k-factors .73/.57/.67 for glass-dark and .62/.36/.47 for glass-light."
+- "The glass wallpaper is a pre-blurred baked asset; no wallpaper blur runs at runtime."
+- "No WorkNodes, NodeSeeds, executable queues, final node manifests, or production build tasks are created."
+validation_surfaces:
+- "python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits"
+- "python3 scripts/pm-plan-index.py validate"
+risk_class: finalgui_drift
+reasoning_tier: standard
+context_scope: finalgui_standardization
+implementation_surfaces:
+- "Plans/FinalGUISpec.md"
+node_compile_hint:
+  mode: glass_composition_single_blur_contract
+  create_worknodes: false
+source_lineage:
+- "Plans/FinalGUISpec.md:964"
+- "Plans/FinalGUISpec.md:2632"
+- "Concepts/pm6-build (PMConcept6 demo; source-lineage-only per Plans/usage-feature.md)"
+preserved_exact_tokens:
+- "34"
+- "160%"
+- ".73"
+- ".57"
+- ".67"
+- ".62"
+- ".36"
+- ".47"
+negative_constraints:
+- "No nested backdrop-filter; no runtime wallpaper blur."
+compatibility_only_notes:
+- "Slint portability: the two permitted blurs map to frosted slabs composited over the known pre-blurred wallpaper asset; no arbitrary-content backdrop blur, no SVG filters, color math is precomputed rather than runtime-mixed, and any glass treatment uses a single blur over a known wallpaper as a pre-blurred asset."
+stale_retired_dispositions:
+- "The concept's per-zone glass tint casts were retired in the concept itself; the one-pane composition with transparency steps is the promoted model."
+owner_boundary_notes: []
+owner_hints:
+- "Plans/FinalGUISpec.md"
+```
+
+### F3-428 - Glass Background Modes
+
+```yaml
+plan_unit_id: F3-428
+unit_type: requirement
+status: accepted
+owner_doc: Plans/FinalGUISpec.md
+canonical_text: >-
+  Glass themes offer three wallpaper background modes selected through the data-glass-bg
+  state: mesh, depth, and minimal, with mesh as the default. Mesh renders the full cloudscape
+  (base sky plus one billow layer) with one very slow transform-only drift. Depth renders the
+  same cloudscape plus a second parallax billow layer and cloud puffs whose offsets are
+  pointer-driven; depth parallax and all drift animation are disabled under reduced motion.
+  Minimal renders the base gradient sky only, static. The selected mode persists at
+  glass_background_mode:v1.
+gui_related: true
+gui_classification_reason: This unit defines the visible glass wallpaper modes, their layer inventory, and their motion behavior.
+split_recommended: false
+depends_on: [F3-427, F3-444]
+unblocks: []
+acceptance_criteria:
+- "Glass themes expose exactly the mesh, depth, and minimal background modes with mesh as the default."
+- "Depth mode adds pointer-driven parallax cloud layers, and reduced motion disables parallax and drift."
+- "Minimal mode renders a static base gradient sky with no billow layers."
+- "The selected mode persists at glass_background_mode:v1."
+- "No WorkNodes, NodeSeeds, executable queues, final node manifests, or production build tasks are created."
+validation_surfaces:
+- "python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits"
+- "python3 scripts/pm-plan-index.py validate"
+risk_class: finalgui_drift
+reasoning_tier: standard
+context_scope: finalgui_standardization
+implementation_surfaces:
+- "Plans/FinalGUISpec.md"
+node_compile_hint:
+  mode: glass_background_modes
+  create_worknodes: false
+source_lineage:
+- "Plans/FinalGUISpec.md:964"
+- "Plans/FinalGUISpec.md:2292"
+- "Concepts/pm6-build (PMConcept6 demo; source-lineage-only per Plans/usage-feature.md)"
+preserved_exact_tokens:
+- "mesh"
+- "depth"
+- "minimal"
+- "glass_background_mode:v1"
+negative_constraints:
+- "Do not run drift or parallax animation under reduced motion."
+compatibility_only_notes:
+- "Slint portability: each background mode renders from pre-blurred baked bitmaps, with depth layers baked separately so parallax offsets remain applicable; no arbitrary-content backdrop blur, no SVG filters, color math is precomputed rather than runtime-mixed, and any glass treatment uses a single blur over a known wallpaper as a pre-blurred asset."
+stale_retired_dispositions:
+- "The concept localStorage name pm.glassBg is a demo persistence shim; the canonical key is glass_background_mode:v1."
+owner_boundary_notes:
+- "Registration of glass_background_mode:v1 in the section 15.1 storage tables is owned by F3-444; this unit consumes the key."
+owner_hints:
+- "Plans/FinalGUISpec.md"
+```
+
+### F3-429 - Glass Alpha Transparency Slider
+
+```yaml
+plan_unit_id: F3-429
+unit_type: requirement
+status: accepted
+owner_doc: Plans/FinalGUISpec.md
+canonical_text: >-
+  Glass themes expose a user-facing transparency control bound to --glass-alpha. Defaults are
+  .60 for glass-dark and .55 for glass-light. Values clamp per theme: .35 through .85 for
+  glass-dark and .45 through .88 for glass-light. Changes apply live to every alpha-driven
+  glass fill and persist at glass_alpha:v1. The slider is a glass-only setting and renders
+  only while a glass theme is active.
+gui_related: true
+gui_classification_reason: This unit defines a user-facing transparency control and its visible effect on glass surfaces.
+split_recommended: false
+depends_on: [F3-427, F3-444]
+unblocks: []
+acceptance_criteria:
+- "The --glass-alpha control defaults to .60 on glass-dark and .55 on glass-light."
+- "Values clamp to .35 through .85 on glass-dark and .45 through .88 on glass-light."
+- "Slider changes apply live to alpha-driven glass fills and persist at glass_alpha:v1."
+- "The slider is glass-only."
+- "No WorkNodes, NodeSeeds, executable queues, final node manifests, or production build tasks are created."
+validation_surfaces:
+- "python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits"
+- "python3 scripts/pm-plan-index.py validate"
+risk_class: finalgui_drift
+reasoning_tier: standard
+context_scope: finalgui_standardization
+implementation_surfaces:
+- "Plans/FinalGUISpec.md"
+node_compile_hint:
+  mode: glass_alpha_transparency_slider
+  create_worknodes: false
+source_lineage:
+- "Plans/FinalGUISpec.md:964"
+- "Plans/FinalGUISpec.md:2292"
+- "Concepts/pm6-build (PMConcept6 demo; source-lineage-only per Plans/usage-feature.md)"
+preserved_exact_tokens:
+- "--glass-alpha"
+- ".60"
+- ".55"
+- ".35"
+- ".85"
+- ".45"
+- ".88"
+- "glass_alpha:v1"
+negative_constraints:
+- "Do not accept alpha values outside the per-theme clamps, and do not render the slider for non-glass themes as an editable control."
+compatibility_only_notes:
+- "Slint portability: alpha-driven fills resolve to a bounded set of precomputed fill values sampled across the clamp range or to a native alpha-composited constant tint; no arbitrary-content backdrop blur, no SVG filters, color math is precomputed rather than runtime-mixed, and any glass treatment uses a single blur over a known wallpaper as a pre-blurred asset."
+stale_retired_dispositions:
+- "The concept localStorage name pm.glassAlpha is a demo persistence shim; the canonical key is glass_alpha:v1."
+owner_boundary_notes:
+- "Registration of glass_alpha:v1 in the section 15.1 storage tables is owned by F3-444; the locked non-glass presentation row is owned by F3-443."
+owner_hints:
+- "Plans/FinalGUISpec.md"
+```
+
+### F3-430 - Friendly Family Ingredients And Font Rules
+
+```yaml
+plan_unit_id: F3-430
+unit_type: requirement
+status: accepted
+owner_doc: Plans/FinalGUISpec.md
+canonical_text: >-
+  The Friendly family ships Cal Sans display, Quicksand body, and Nunito fallback fonts
+  bundled locally with the application; no runtime font CDN is used. The Friendly ground is a
+  warm paper texture with an 18px dot grid and static pastel corner glows. Frosted chrome
+  backdrop blur of 14px is limited to the title bar, status bar, and bottom panel. Five
+  category pastels (mint, sky, coral, lavender, butter) tint category surfaces through the
+  cozy hook tokens. The theme-switching restart rules extend to cross-family switches
+  involving Friendly or Retro fonts: same-family switches stay live; cross-family switches
+  that change font families between Retro (Orbitron, Rajdhani) and Friendly (Cal Sans,
+  Quicksand, Nunito) require restart; and switches between the system-font Glass and Basic
+  families stay live.
+gui_related: true
+gui_classification_reason: This unit defines the visible Friendly theme fonts, ground texture, frosted chrome, pastels, and switch behavior.
+split_recommended: false
+depends_on: [F3-425, F3-077]
+unblocks: []
+acceptance_criteria:
+- "Cal Sans, Quicksand, and Nunito are bundled locally and no runtime font CDN request is made."
+- "The Friendly ground renders the paper texture with an 18px dot grid, and frosted 14px chrome blur is limited to the title bar, status bar, and bottom panel."
+- "The five category pastels (mint, sky, coral, lavender, butter) drive category surface tinting."
+- "Cross-family theme switches that change Retro or Friendly font families require restart, while same-family and Glass/Basic system-font switches stay live."
+- "No WorkNodes, NodeSeeds, executable queues, final node manifests, or production build tasks are created."
+validation_surfaces:
+- "python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits"
+- "python3 scripts/pm-plan-index.py validate"
+risk_class: finalgui_drift
+reasoning_tier: standard
+context_scope: finalgui_standardization
+implementation_surfaces:
+- "Plans/FinalGUISpec.md"
+node_compile_hint:
+  mode: friendly_family_ingredients_and_font_rules
+  create_worknodes: false
+source_lineage:
+- "Plans/FinalGUISpec.md:964"
+- "Plans/FinalGUISpec.md:7647"
+- "Concepts/pm6-build (PMConcept6 demo; source-lineage-only per Plans/usage-feature.md)"
+preserved_exact_tokens:
+- "Cal Sans"
+- "Quicksand"
+- "Nunito"
+- "18px"
+- "14px"
+negative_constraints:
+- "Do not load Friendly fonts from a runtime font CDN, and do not apply frosted chrome blur outside the title bar, status bar, and bottom panel."
+compatibility_only_notes:
+- "Slint portability: bundled font files register with the Slint font database; the paper texture, dot grid, and corner glows render as precomputed opaque or baked surfaces; the three chrome frosts render over known shell content; no arbitrary-content backdrop blur, no SVG filters, color math is precomputed rather than runtime-mixed, and any glass treatment uses a single blur over a known wallpaper as a pre-blurred asset."
+stale_retired_dispositions:
+- "The concept loads Cal Sans, Quicksand, and Nunito from a runtime font CDN; that loading path is demo technique only and is replaced by locally bundled fonts."
+owner_boundary_notes:
+- "The live/restart switching matrix remains owned by F3-077; this unit extends its restart set to cross-family Friendly/Retro font changes."
+owner_hints:
+- "Plans/FinalGUISpec.md"
+```
+
+### F3-431 - Slint Theme Hazard Remediation
+
+```yaml
+plan_unit_id: F3-431
+unit_type: constraint
+status: accepted
+owner_doc: Plans/FinalGUISpec.md
+canonical_text: >-
+  Slint theme hazard remediation constraints bind all eight built-in variants. Every
+  color-mix() and alpha-scaling calc() token in the concept CSS is resolved to precomputed
+  per-variant values at build time, matching the precomputed-color constraint already carried
+  by PWIZ-019. All theme fonts are bundled locally. Glass cloudscapes are baked as pre-blurred
+  bitmaps per background mode, with depth-mode parallax layers baked as separate bitmaps so
+  the parallax offset variables continue to operate. The backdrop-filter budget is enumerated
+  and closed: two glass-theme blurs (app shell and floating chat), three friendly-theme blurs
+  (title bar, status bar, bottom panel), and two settings-modal blurs (the bloom backdrop
+  scrim and, under glass, the bloom and project-settings modal slabs). Effects the concept
+  builds with mix-blend-mode or mask-composite, such as the glass pane sheen and gradient
+  hairline rings, are either renderable natively by the toolkit or precomputed into baked
+  assets.
+gui_related: true
+gui_classification_reason: This unit constrains how visible theme effects are produced so every variant renders on the Slint toolkit.
+split_recommended: false
+depends_on: [F3-426, F3-427, F3-430]
+unblocks: []
+acceptance_criteria:
+- "No color-mix() or alpha-scaling calc() color derivation survives to runtime; per-variant precomputed values replace them at build time."
+- "All theme fonts are bundled locally and cloudscapes are baked as pre-blurred bitmaps per background mode, with depth parallax layers baked separately."
+- "The backdrop-filter budget is closed at two glass blurs, three friendly blurs, and two settings-modal blurs, and no surface adds a blur outside that enumeration."
+- "mix-blend-mode and mask-composite effects are renderable natively or precomputed into baked assets."
+- "No WorkNodes, NodeSeeds, executable queues, final node manifests, or production build tasks are created."
+validation_surfaces:
+- "python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits"
+- "python3 scripts/pm-plan-index.py validate"
+risk_class: finalgui_drift
+reasoning_tier: standard
+context_scope: finalgui_standardization
+implementation_surfaces:
+- "Plans/FinalGUISpec.md"
+node_compile_hint:
+  mode: slint_theme_hazard_remediation
+  create_worknodes: false
+source_lineage:
+- "Plans/FinalGUISpec.md:1035"
+- "Plans/FinalGUISpec.md:7699"
+- "Concepts/pm6-build (PMConcept6 demo; source-lineage-only per Plans/usage-feature.md)"
+preserved_exact_tokens:
+- "color-mix()"
+- "backdrop-filter"
+- "mix-blend-mode"
+- "mask-composite"
+negative_constraints:
+- "No arbitrary-content backdrop blur; no SVG filters; no runtime color math."
+compatibility_only_notes:
+- "Slint portability: this unit is the family-wide remediation contract; no arbitrary-content backdrop blur, no SVG filters, color math is precomputed rather than runtime-mixed, and any glass treatment uses a single blur over a known wallpaper as a pre-blurred asset."
+stale_retired_dispositions: []
+owner_boundary_notes:
+- "The precomputed-color constraint phrasing aligns with PWIZ-019 in Plans/Planning_Wizard.md; that unit remains owner of the embedded-chat surface it constrains."
+owner_hints:
+- "Plans/FinalGUISpec.md"
+```
+
+### Theme Token Tables (F3-426 spec data)
+
+Values below are transcribed verbatim from the concept CSS: `Concepts/pm6-build/parts/02-css-tokens.part.html` (root contract :28-66, theme blocks :140-552, glass background stage :554-733), `Concepts/pm6-build/parts/03-css-glass-a.part.html` (:19-49, :59-153), `Concepts/pm6-build/parts/04-css-glass-b.part.html` (:11-56, :138-196), `Concepts/pm6-build/parts/10x-pm6-css-global.part.html` (:139-176 friendly chrome), `Concepts/pm6-build/parts/10-css-settings.part.html` (:580-590, :912-940), and `Concepts/pm6-build/parts/29-js-settings-engine.part.html` (:60-86 alpha clamps). Values containing `calc()`, `color-mix()`, or `var()` chains are runtime-derived in concept; precompute per F3-431.
+
+#### Root fallback contract (`:root`, 02-css-tokens.part.html:28-66)
+
+Variants inherit these values wherever a per-variant table row says "not defined (inherits root)".
+
+| Token | Root value |
+|---|---|
+| `--radius-xs` | `2px` |
+| `--radius-sm` | `6px` |
+| `--radius-md` | `10px` |
+| `--radius-lg` | `16px` |
+| `--radius-xl` | `22px` |
+| `--radius-pill` | `999px` |
+| `--border-width` | `2px` |
+| `--border-radius` | `0px` |
+| `--accent-primary` | `var(--accent-blue)` |
+| `--accent-primary-rgb` | `0,71,171` |
+| `--accent-soft` | `color-mix(in srgb, var(--accent-primary) 12%, transparent)` (runtime-derived in concept; precompute per F3-431) |
+| `--accent-glow` | `color-mix(in srgb, var(--accent-primary) 25%, transparent)` (runtime-derived in concept; precompute per F3-431) |
+| `--elev-1` | `0 1px 2px rgba(0,0,0,.12)` |
+| `--elev-2` | `0 4px 14px rgba(0,0,0,.16)` |
+| `--elev-3` | `0 12px 36px rgba(0,0,0,.22)` |
+| `--elev-hover` | `0 10px 30px var(--accent-glow)` (runtime-derived in concept; precompute per F3-431) |
+| `--motion-fast` | `120ms` |
+| `--motion-med` | `240ms` |
+| `--motion-slow` | `420ms` |
+| `--ease-out` | `cubic-bezier(.22,1,.36,1)` |
+| `--ease-spring` | `cubic-bezier(.34,1.56,.64,1)` |
+| `--ease-smooth` | `cubic-bezier(.4,0,.2,1)` |
+| `--ease-snap` | `cubic-bezier(.2,0,0,1)` |
+| `--ease-default` | `var(--ease-smooth)` |
+| `--sheen-dur` | `.6s` |
+| `--display-font` | `'Orbitron', sans-serif` |
+| `--body-font` | `'Rajdhani', sans-serif` |
+| `--mono-font` | `ui-monospace, 'SF Mono', 'Cascadia Mono', Menlo, Consolas, monospace` |
+| `--base-font-size` | `14px` |
+| `--line-height` | `1.4` |
+| `--letter-spacing` | `normal` |
+| `--grid-gap` | `24px` |
+
+#### retro-dark (02-css-tokens.part.html:140-187)
+
+| Group | Token | Value |
+|---|---|---|
+| Surfaces | `--background` | `#1A1A1A` |
+| Surfaces | `--surface` | `#1A1A1A` |
+| Surfaces | `--surface-elevated` | `#252525` |
+| Surfaces | `--surface-alt` | not defined (friendly-only token; no root definition) |
+| Text | `--text-primary` | `#E0E0E0` |
+| Text | `--text-secondary` | `#A6A6A6` |
+| Text | `--text-muted` | `#909090` |
+| Borders | `--border` | `#A8ACB3` |
+| Borders | `--border-light` | `#3A3D42` |
+| Accents | `--accent-blue` | `#0047AB` |
+| Accents | `--accent-magenta` | `#FF1493` |
+| Accents | `--accent-lime` | `#00FF41` |
+| Accents | `--accent-orange` | `#FF7F27` |
+| Accents | `--accent-warning` | `#FFB300` |
+| Accents | `--accent-error` | `#FF5252` |
+| Accents | `--accent-primary` | `var(--accent-lime)` (resolves to `#00FF41`) |
+| Accents | `--accent-primary-rgb` | `0,255,65` |
+| Graph | `--graph-pending` | `#6C757D` |
+| Graph | `--graph-running` | `#FF9800` |
+| Graph | `--graph-passed` | `#4CAF50` |
+| Graph | `--graph-failed` | `#F44336` |
+| Graph | `--graph-planning` | `#2196F3` |
+| Graph | `--graph-gating` | `#9C27B0` |
+| Elevation | `--shadow` | `3px 3px 0 rgba(224,224,224,.55)` |
+| Elevation | `--pm6-rb-shadow-hard` | `3px 3px 0 rgba(224,224,224,.55)` |
+| Elevation | `--elev-1` | `2px 2px 0 rgba(224,224,224,.40)` |
+| Elevation | `--elev-2` | `3px 3px 0 rgba(224,224,224,.55)` |
+| Elevation | `--elev-3` | `5px 5px 0 rgba(224,224,224,.55)` |
+| Elevation | `--elev-hover` | `4px 4px 0 var(--accent-glow)` (runtime-derived in concept; precompute per F3-431) |
+| Geometry | `--border-radius` | `0px` |
+| Geometry | `--border-width` | `2px` |
+| Geometry | `--border-width-inner` | `1px` |
+| Geometry | `--radius-xs` | `2px` |
+| Geometry | `--radius-sm` | `0px` |
+| Geometry | `--radius-md` | `0px` |
+| Geometry | `--radius-lg` | `0px` |
+| Geometry | `--radius-xl` | `0px` |
+| Geometry | `--radius-pill` | `2px` |
+| Geometry | `--grid-gap` | `24px` |
+| Motion | `--ease-default` | `var(--ease-snap)` (resolves to `cubic-bezier(.2,0,0,1)`) |
+| Motion | `--motion-med` | `140ms` |
+| Motion | `--sheen-dur` | `.35s` |
+| Typography | `--display-font` | `'Orbitron', sans-serif` |
+| Typography | `--display-font-sm` | `'Rajdhani', sans-serif` |
+| Typography | `--body-font` | `'Rajdhani', sans-serif` |
+| Typography | `--base-font-size` | `15px` |
+| Typography | `--line-height` | `1.55` |
+| Typography | `--letter-spacing` | not defined (inherits root: `normal`) |
+
+#### retro-light (02-css-tokens.part.html:192-239)
+
+| Group | Token | Value |
+|---|---|---|
+| Surfaces | `--background` | `#F5F0E8` |
+| Surfaces | `--surface` | `#F5F0E8` |
+| Surfaces | `--surface-elevated` | `#FAF7F2` |
+| Surfaces | `--surface-alt` | not defined (friendly-only token; no root definition) |
+| Text | `--text-primary` | `#1A1A1A` |
+| Text | `--text-secondary` | `#444444` |
+| Text | `--text-muted` | `#524F49` |
+| Borders | `--border` | `#4A463F` |
+| Borders | `--border-light` | `#D8D1C7` |
+| Accents | `--accent-blue` | `#0047AB` |
+| Accents | `--accent-magenta` | `#FF1493` |
+| Accents | `--accent-lime` | `#00FF41` |
+| Accents | `--accent-orange` | `#FF7F27` |
+| Accents | `--accent-warning` | `#F57C00` |
+| Accents | `--accent-error` | `#D32F2F` |
+| Accents | `--accent-primary` | `var(--accent-blue)` (resolves to `#0047AB`) |
+| Accents | `--accent-primary-rgb` | `0,71,171` |
+| Graph | `--graph-pending` | `#ADB5BD` |
+| Graph | `--graph-running` | `#FFB74D` |
+| Graph | `--graph-passed` | `#66BB6A` |
+| Graph | `--graph-failed` | `#EF5350` |
+| Graph | `--graph-planning` | `#42A5F5` |
+| Graph | `--graph-gating` | `#AB47BC` |
+| Elevation | `--shadow` | `3px 3px 0 rgba(26,26,26,.30)` |
+| Elevation | `--pm6-rb-shadow-hard` | `3px 3px 0 rgba(26,26,26,.30)` |
+| Elevation | `--elev-1` | `2px 2px 0 rgba(26,26,26,.22)` |
+| Elevation | `--elev-2` | `3px 3px 0 rgba(26,26,26,.30)` |
+| Elevation | `--elev-3` | `5px 5px 0 rgba(26,26,26,.30)` |
+| Elevation | `--elev-hover` | `4px 4px 0 var(--accent-glow)` (runtime-derived in concept; precompute per F3-431) |
+| Geometry | `--border-radius` | `0px` |
+| Geometry | `--border-width` | `2px` |
+| Geometry | `--border-width-inner` | `1px` |
+| Geometry | `--radius-xs` | `2px` |
+| Geometry | `--radius-sm` | `0px` |
+| Geometry | `--radius-md` | `0px` |
+| Geometry | `--radius-lg` | `0px` |
+| Geometry | `--radius-xl` | `0px` |
+| Geometry | `--radius-pill` | `2px` |
+| Geometry | `--grid-gap` | `24px` |
+| Motion | `--ease-default` | `var(--ease-snap)` (resolves to `cubic-bezier(.2,0,0,1)`) |
+| Motion | `--motion-med` | `140ms` |
+| Motion | `--sheen-dur` | `.35s` |
+| Typography | `--display-font` | `'Orbitron', sans-serif` |
+| Typography | `--display-font-sm` | `'Rajdhani', sans-serif` |
+| Typography | `--body-font` | `'Rajdhani', sans-serif` |
+| Typography | `--base-font-size` | `15px` |
+| Typography | `--line-height` | `1.55` |
+| Typography | `--letter-spacing` | not defined (inherits root: `normal`) |
+
+#### basic-light (02-css-tokens.part.html:244-286)
+
+| Group | Token | Value |
+|---|---|---|
+| Surfaces | `--background` | `#EAECEF` |
+| Surfaces | `--surface` | `#EAECEF` |
+| Surfaces | `--surface-elevated` | `#FFFFFF` |
+| Surfaces | `--surface-alt` | not defined (friendly-only token; no root definition) |
+| Text | `--text-primary` | `#1A1A1A` |
+| Text | `--text-secondary` | `#3B3B3B` |
+| Text | `--text-muted` | `#5C6470` |
+| Borders | `--border` | `#C4C4C4` |
+| Borders | `--border-light` | `#E0E0E0` |
+| Accents | `--accent-blue` | `#0056B3` |
+| Accents | `--accent-magenta` | `#D32F2F` |
+| Accents | `--accent-lime` | `#0B8043` |
+| Accents | `--accent-orange` | `#E65100` |
+| Accents | `--accent-warning` | `#E65100` |
+| Accents | `--accent-error` | `#C62828` |
+| Accents | `--accent-primary` | not defined (inherits root: `var(--accent-blue)`; resolves to `#0056B3` in this variant) |
+| Accents | `--accent-primary-rgb` | `0,86,179` |
+| Graph | `--graph-pending` | `#ADB5BD` |
+| Graph | `--graph-running` | `#FF9800` |
+| Graph | `--graph-passed` | `#4CAF50` |
+| Graph | `--graph-failed` | `#F44336` |
+| Graph | `--graph-planning` | `#2196F3` |
+| Graph | `--graph-gating` | `#9C27B0` |
+| Elevation | `--shadow` | `none` |
+| Elevation | `--elev-1` | `0 1px 2px rgba(0,0,0,.08)` |
+| Elevation | `--elev-2` | `0 2px 8px rgba(0,0,0,.10)` |
+| Elevation | `--elev-3` | `0 6px 20px rgba(0,0,0,.14)` |
+| Elevation | `--elev-hover` | `0 6px 18px var(--accent-glow)` (runtime-derived in concept; precompute per F3-431) |
+| Geometry | `--border-radius` | `4px` |
+| Geometry | `--border-width` | `1px` |
+| Geometry | `--radius-xs` | `2px` |
+| Geometry | `--radius-sm` | `4px` |
+| Geometry | `--radius-md` | `6px` |
+| Geometry | `--radius-lg` | `8px` |
+| Geometry | `--radius-xl` | `10px` |
+| Geometry | `--radius-pill` | not defined (inherits root: `999px`) |
+| Geometry | `--grid-gap` | `24px` |
+| Motion | `--ease-default` | `var(--ease-smooth)` (resolves to `cubic-bezier(.4,0,.2,1)`) |
+| Motion | `--motion-med` | `200ms` |
+| Motion | `--sheen-dur` | not defined (inherits root: `.6s`) |
+| Typography | `--display-font` | `'Inter', system-ui, sans-serif` |
+| Typography | `--body-font` | `'Inter', system-ui, sans-serif` |
+| Typography | `--base-font-size` | `15px` |
+| Typography | `--line-height` | `1.6` |
+| Typography | `--letter-spacing` | `0.02em` |
+
+#### basic-dark (02-css-tokens.part.html:291-333)
+
+| Group | Token | Value |
+|---|---|---|
+| Surfaces | `--background` | `#121212` |
+| Surfaces | `--surface` | `#1E1E1E` |
+| Surfaces | `--surface-elevated` | `#2D2D2D` |
+| Surfaces | `--surface-alt` | not defined (friendly-only token; no root definition) |
+| Text | `--text-primary` | `#E8E8E8` |
+| Text | `--text-secondary` | `#A0A0A0` |
+| Text | `--text-muted` | `#6B7280` |
+| Borders | `--border` | `#424242` |
+| Borders | `--border-light` | `#333333` |
+| Accents | `--accent-blue` | `#64B5F6` |
+| Accents | `--accent-magenta` | `#FF69B4` |
+| Accents | `--accent-lime` | `#3DD68C` |
+| Accents | `--accent-orange` | `#FFA347` |
+| Accents | `--accent-warning` | `#FFB74D` |
+| Accents | `--accent-error` | `#EF5350` |
+| Accents | `--accent-primary` | not defined (inherits root: `var(--accent-blue)`; resolves to `#64B5F6` in this variant) |
+| Accents | `--accent-primary-rgb` | `100,181,246` |
+| Graph | `--graph-pending` | `#6C757D` |
+| Graph | `--graph-running` | `#FF9800` |
+| Graph | `--graph-passed` | `#4CAF50` |
+| Graph | `--graph-failed` | `#F44336` |
+| Graph | `--graph-planning` | `#2196F3` |
+| Graph | `--graph-gating` | `#9C27B0` |
+| Elevation | `--shadow` | `none` |
+| Elevation | `--elev-1` | `0 1px 2px rgba(0,0,0,.20)` |
+| Elevation | `--elev-2` | `0 2px 8px rgba(0,0,0,.24)` |
+| Elevation | `--elev-3` | `0 6px 20px rgba(0,0,0,.30)` |
+| Elevation | `--elev-hover` | `0 6px 18px var(--accent-glow)` (runtime-derived in concept; precompute per F3-431) |
+| Geometry | `--border-radius` | `4px` |
+| Geometry | `--border-width` | `1px` |
+| Geometry | `--radius-xs` | `2px` |
+| Geometry | `--radius-sm` | `4px` |
+| Geometry | `--radius-md` | `6px` |
+| Geometry | `--radius-lg` | `8px` |
+| Geometry | `--radius-xl` | `10px` |
+| Geometry | `--radius-pill` | not defined (inherits root: `999px`) |
+| Geometry | `--grid-gap` | `24px` |
+| Motion | `--ease-default` | `var(--ease-smooth)` (resolves to `cubic-bezier(.4,0,.2,1)`) |
+| Motion | `--motion-med` | `200ms` |
+| Motion | `--sheen-dur` | not defined (inherits root: `.6s`) |
+| Typography | `--display-font` | `'Inter', system-ui, sans-serif` |
+| Typography | `--body-font` | `'Inter', system-ui, sans-serif` |
+| Typography | `--base-font-size` | `15px` |
+| Typography | `--line-height` | `1.6` |
+| Typography | `--letter-spacing` | `0.02em` |
+
+#### glass-dark (02-css-tokens.part.html:342-383)
+
+| Group | Token | Value |
+|---|---|---|
+| Surfaces | `--background` | `#241B36` |
+| Surfaces | `--surface` | `rgba(var(--glass-tint-rgb), var(--glass-alpha))` (runtime-derived in concept; precompute per F3-431) |
+| Surfaces | `--surface-elevated` | `rgba(58,44,88, calc(var(--glass-alpha) + .08))` (runtime-derived in concept; precompute per F3-431) |
+| Surfaces | `--surface-alt` | not defined at theme scope (glass sets `--surface-alt: transparent` locally on `.left-panel`; no root definition) |
+| Text | `--text-primary` | `#EDE7F8` |
+| Text | `--text-secondary` | `#CFC5E6` |
+| Text | `--text-muted` | `rgba(237,231,248,.55)` |
+| Borders | `--border` | `rgba(255,255,255,.14)` |
+| Borders | `--border-light` | `rgba(255,255,255,.08)` |
+| Accents | `--accent-blue` | `#B79CFF` |
+| Accents | `--accent-magenta` | `#E58BC8` |
+| Accents | `--accent-lime` | `#8FD9A5` |
+| Accents | `--accent-orange` | `#F3B266` |
+| Accents | `--accent-warning` | `#F6C888` |
+| Accents | `--accent-error` | `#F0879B` |
+| Accents | `--accent-primary` | not defined (inherits root: `var(--accent-blue)`; resolves to `#B79CFF` in this variant) |
+| Accents | `--accent-primary-rgb` | `183,156,255` |
+| Graph | `--graph-pending` | `rgba(207,197,230,.55)` |
+| Graph | `--graph-running` | `#F3B266` |
+| Graph | `--graph-passed` | `#8FD9A5` |
+| Graph | `--graph-failed` | `#F0879B` |
+| Graph | `--graph-planning` | `#93A2F2` |
+| Graph | `--graph-gating` | `#E58BC8` |
+| Elevation | `--shadow` | `0 8px 24px rgba(10,5,25,.45)` |
+| Elevation | `--elev-1` | `0 2px 8px rgba(10,5,25,.35)` |
+| Elevation | `--elev-2` | `0 8px 24px rgba(10,5,25,.45)` |
+| Elevation | `--elev-3` | `0 16px 44px rgba(10,5,25,.55)` |
+| Elevation | `--elev-hover` | not defined (inherits root: `0 10px 30px var(--accent-glow)`; runtime-derived in concept; precompute per F3-431) |
+| Geometry | `--border-radius` | `14px` |
+| Geometry | `--border-width` | `0px` |
+| Geometry | `--radius-xs` | not defined (inherits root: `2px`) |
+| Geometry | `--radius-sm` | not defined (inherits root: `6px`) |
+| Geometry | `--radius-md` | not defined (inherits root: `10px`) |
+| Geometry | `--radius-lg` | not defined (inherits root: `16px`) |
+| Geometry | `--radius-xl` | not defined (inherits root: `22px`) |
+| Geometry | `--radius-pill` | not defined (inherits root: `999px`) |
+| Geometry | `--grid-gap` | `24px` |
+| Motion | `--ease-default` | `var(--ease-out)` (resolves to `cubic-bezier(.22,1,.36,1)`) |
+| Motion | `--motion-med` | `320ms` |
+| Motion | `--sheen-dur` | `.7s` |
+| Typography | `--display-font` | `'Inter', system-ui, sans-serif` |
+| Typography | `--body-font` | `'Inter', system-ui, sans-serif` |
+| Typography | `--base-font-size` | `14px` |
+| Typography | `--line-height` | `1.5` |
+| Typography | `--letter-spacing` | `0.01em` |
+
+#### glass-light (02-css-tokens.part.html:385-426)
+
+| Group | Token | Value |
+|---|---|---|
+| Surfaces | `--background` | `#E4CDE4` |
+| Surfaces | `--surface` | `rgba(var(--glass-tint-rgb), var(--glass-alpha))` (runtime-derived in concept; precompute per F3-431) |
+| Surfaces | `--surface-elevated` | `rgba(var(--glass-tint-rgb), calc(var(--glass-alpha) + .18))` (runtime-derived in concept; precompute per F3-431) |
+| Surfaces | `--surface-alt` | not defined at theme scope (glass sets `--surface-alt: transparent` locally on `.left-panel`; no root definition) |
+| Text | `--text-primary` | `#453A5C` |
+| Text | `--text-secondary` | `rgba(69,58,92,.75)` |
+| Text | `--text-muted` | `rgba(69,58,92,.55)` |
+| Borders | `--border` | `rgba(69,58,92,.16)` |
+| Borders | `--border-light` | `rgba(69,58,92,.09)` |
+| Accents | `--accent-blue` | `#8B6ED9` |
+| Accents | `--accent-magenta` | `#C167B4` |
+| Accents | `--accent-lime` | `#3E7D4E` |
+| Accents | `--accent-orange` | `#B26A2A` |
+| Accents | `--accent-warning` | `#8F6410` |
+| Accents | `--accent-error` | `#C0566B` |
+| Accents | `--accent-primary` | not defined (inherits root: `var(--accent-blue)`; resolves to `#8B6ED9` in this variant) |
+| Accents | `--accent-primary-rgb` | `139,110,217` |
+| Graph | `--graph-pending` | `rgba(69,58,92,.40)` |
+| Graph | `--graph-running` | `#B26A2A` |
+| Graph | `--graph-passed` | `#3E7D4E` |
+| Graph | `--graph-failed` | `#C0566B` |
+| Graph | `--graph-planning` | `#7E8BE0` |
+| Graph | `--graph-gating` | `#C167B4` |
+| Elevation | `--shadow` | `0 8px 24px rgba(93,63,133,.16)` |
+| Elevation | `--elev-1` | `0 2px 8px rgba(93,63,133,.10)` |
+| Elevation | `--elev-2` | `0 8px 24px rgba(93,63,133,.16)` |
+| Elevation | `--elev-3` | `0 16px 44px rgba(93,63,133,.22)` |
+| Elevation | `--elev-hover` | not defined (inherits root: `0 10px 30px var(--accent-glow)`; runtime-derived in concept; precompute per F3-431) |
+| Geometry | `--border-radius` | `14px` |
+| Geometry | `--border-width` | `0px` |
+| Geometry | `--radius-xs` | not defined (inherits root: `2px`) |
+| Geometry | `--radius-sm` | not defined (inherits root: `6px`) |
+| Geometry | `--radius-md` | not defined (inherits root: `10px`) |
+| Geometry | `--radius-lg` | not defined (inherits root: `16px`) |
+| Geometry | `--radius-xl` | not defined (inherits root: `22px`) |
+| Geometry | `--radius-pill` | not defined (inherits root: `999px`) |
+| Geometry | `--grid-gap` | `20px` |
+| Motion | `--ease-default` | `var(--ease-out)` (resolves to `cubic-bezier(.22,1,.36,1)`) |
+| Motion | `--motion-med` | `320ms` |
+| Motion | `--sheen-dur` | `.7s` |
+| Typography | `--display-font` | `'Inter', system-ui, sans-serif` |
+| Typography | `--body-font` | `'Inter', system-ui, sans-serif` |
+| Typography | `--base-font-size` | `14px` |
+| Typography | `--line-height` | `1.5` |
+| Typography | `--letter-spacing` | `0.01em` |
+
+#### friendly-dark (default; 02-css-tokens.part.html:436-493)
+
+| Group | Token | Value |
+|---|---|---|
+| Surfaces | `--background` | `#211E26` |
+| Surfaces | `--surface` | `#2A2731` |
+| Surfaces | `--surface-elevated` | `#322E3A` |
+| Surfaces | `--surface-alt` | `#262330` |
+| Text | `--text-primary` | `#F0EDF4` |
+| Text | `--text-secondary` | `#B4AEBE` |
+| Text | `--text-muted` | `#8A8494` |
+| Borders | `--border` | `rgba(240,237,244,.10)` |
+| Borders | `--border-light` | `rgba(240,237,244,.06)` |
+| Accents | `--accent-blue` | `#6FC6E8` |
+| Accents | `--accent-magenta` | `#C3B1E4` |
+| Accents | `--accent-lime` | `#6FDABC` |
+| Accents | `--accent-orange` | `#FFAD93` |
+| Accents | `--accent-warning` | `#FFD97F` |
+| Accents | `--accent-error` | `#FF8A73` |
+| Accents | `--accent-primary` | not defined (inherits root: `var(--accent-blue)`; resolves to `#6FC6E8` in this variant) |
+| Accents | `--accent-primary-rgb` | `111,198,232` |
+| Graph | `--graph-pending` | `#8A8494` |
+| Graph | `--graph-running` | `#FFAD93` |
+| Graph | `--graph-passed` | `#6FDABC` |
+| Graph | `--graph-failed` | `#FF8A73` |
+| Graph | `--graph-planning` | `#6FC6E8` |
+| Graph | `--graph-gating` | `#C3B1E4` |
+| Elevation | `--shadow` | `0 2px 6px rgba(0,0,0,.30), 0 10px 24px rgba(0,0,0,.22)` |
+| Elevation | `--elev-1` | `0 1px 3px rgba(0,0,0,.26)` |
+| Elevation | `--elev-2` | `0 2px 6px rgba(0,0,0,.30), 0 10px 24px rgba(0,0,0,.22)` |
+| Elevation | `--elev-3` | `0 14px 40px rgba(0,0,0,.34)` |
+| Elevation | `--elev-hover` | `0 12px 30px rgba(111,198,232,.20)` |
+| Geometry | `--border-radius` | `14px` |
+| Geometry | `--border-width` | `1px` |
+| Geometry | `--radius-xs` | not defined (inherits root: `2px`) |
+| Geometry | `--radius-sm` | not defined (inherits root: `6px`) |
+| Geometry | `--radius-md` | `14px` |
+| Geometry | `--radius-lg` | `20px` |
+| Geometry | `--radius-xl` | not defined (inherits root: `22px`) |
+| Geometry | `--radius-pill` | not defined (inherits root: `999px`) |
+| Geometry | `--grid-gap` | `20px` |
+| Motion | `--ease-default` | `var(--ease-spring)` (resolves to `cubic-bezier(.34,1.56,.64,1)`) |
+| Motion | `--motion-med` | `260ms` |
+| Motion | `--sheen-dur` | `.55s` |
+| Typography | `--display-font` | `'Cal Sans', 'Nunito', system-ui, sans-serif` |
+| Typography | `--body-font` | `'Quicksand', 'Nunito', system-ui, sans-serif` |
+| Typography | `--base-font-size` | `14.5px` |
+| Typography | `--line-height` | `1.55` |
+| Typography | `--letter-spacing` | `normal` |
+
+#### friendly-light (02-css-tokens.part.html:495-552)
+
+| Group | Token | Value |
+|---|---|---|
+| Surfaces | `--background` | `#FBF7F3` |
+| Surfaces | `--surface` | `#FFFFFF` |
+| Surfaces | `--surface-elevated` | `#FFFFFF` |
+| Surfaces | `--surface-alt` | `#F5EFEA` |
+| Text | `--text-primary` | `#4A4550` |
+| Text | `--text-secondary` | `#6B6473` |
+| Text | `--text-muted` | `#9A93A0` |
+| Borders | `--border` | `#E4DCEA` |
+| Borders | `--border-light` | `#EFEAF3` |
+| Accents | `--accent-blue` | `#3F9CC7` |
+| Accents | `--accent-magenta` | `#9678C9` |
+| Accents | `--accent-lime` | `#2FA183` |
+| Accents | `--accent-orange` | `#F07A55` |
+| Accents | `--accent-warning` | `#D9A62A` |
+| Accents | `--accent-error` | `#E8654C` |
+| Accents | `--accent-primary` | not defined (inherits root: `var(--accent-blue)`; resolves to `#3F9CC7` in this variant) |
+| Accents | `--accent-primary-rgb` | `63,156,199` |
+| Graph | `--graph-pending` | `#9A93A0` |
+| Graph | `--graph-running` | `#F07A55` |
+| Graph | `--graph-passed` | `#2FA183` |
+| Graph | `--graph-failed` | `#E8654C` |
+| Graph | `--graph-planning` | `#3F9CC7` |
+| Graph | `--graph-gating` | `#9678C9` |
+| Elevation | `--shadow` | `0 4px 16px rgba(122,109,140,.12)` |
+| Elevation | `--elev-1` | `0 2px 8px rgba(122,109,140,.10)` |
+| Elevation | `--elev-2` | `0 4px 16px rgba(122,109,140,.12)` |
+| Elevation | `--elev-3` | `0 14px 40px rgba(122,109,140,.20)` |
+| Elevation | `--elev-hover` | `0 10px 26px rgba(90,185,224,.25)` |
+| Geometry | `--border-radius` | `14px` |
+| Geometry | `--border-width` | `1px` |
+| Geometry | `--radius-xs` | not defined (inherits root: `2px`) |
+| Geometry | `--radius-sm` | not defined (inherits root: `6px`) |
+| Geometry | `--radius-md` | `14px` |
+| Geometry | `--radius-lg` | `20px` |
+| Geometry | `--radius-xl` | not defined (inherits root: `22px`) |
+| Geometry | `--radius-pill` | not defined (inherits root: `999px`) |
+| Geometry | `--grid-gap` | `20px` |
+| Motion | `--ease-default` | `var(--ease-spring)` (resolves to `cubic-bezier(.34,1.56,.64,1)`) |
+| Motion | `--motion-med` | `260ms` |
+| Motion | `--sheen-dur` | `.55s` |
+| Typography | `--display-font` | `'Cal Sans', 'Nunito', system-ui, sans-serif` |
+| Typography | `--body-font` | `'Quicksand', 'Nunito', system-ui, sans-serif` |
+| Typography | `--base-font-size` | `14.5px` |
+| Typography | `--line-height` | `1.55` |
+| Typography | `--letter-spacing` | `normal` |
+
+#### Diff-tint variables per variant (04-css-glass-b.part.html:138-192)
+
+The concept defines seven diff-tint custom properties per variant for six variants. Friendly variants define none; friendly editors resolve through the consumer fallback constants baked into the `var()` second arguments at `Concepts/pm6-build/parts/07-css-components-b.part.html:3-29`, which equal the basic-dark values.
+
+| Token | retro-dark | retro-light | basic-light | basic-dark | glass-dark | glass-light | friendly-dark | friendly-light |
+|---|---|---|---|---|---|---|---|---|
+| `--diff-added-bg` | `rgba(0,255,65,0.06)` | `rgba(0,200,50,0.08)` | `rgba(11,128,67,0.06)` | `rgba(61,214,140,0.07)` | `rgba(143,217,165,0.08)` | `rgba(62,125,78,0.06)` | not defined (consumer fallback `rgba(61,214,140,0.07)`) | not defined (consumer fallback `rgba(61,214,140,0.07)`) |
+| `--diff-modified-bg` | `rgba(0,71,171,0.10)` | `rgba(0,71,171,0.06)` | `rgba(0,86,179,0.05)` | `rgba(100,181,246,0.07)` | `rgba(147,162,242,0.08)` | `rgba(126,139,224,0.08)` | not defined (consumer fallback `rgba(100,181,246,0.07)`) | not defined (consumer fallback `rgba(100,181,246,0.07)`) |
+| `--diff-deleted-bg` | `rgba(255,20,147,0.06)` | `rgba(255,20,147,0.06)` | `rgba(211,47,47,0.05)` | `rgba(255,105,180,0.06)` | `rgba(229,139,200,0.06)` | `rgba(193,103,180,0.06)` | not defined (consumer fallback `rgba(255,105,180,0.06)`) | not defined (consumer fallback `rgba(255,105,180,0.06)`) |
+| `--diff-conflict-bg` | `rgba(255,127,39,0.08)` | `rgba(255,127,39,0.07)` | `rgba(230,81,0,0.06)` | `rgba(255,163,71,0.08)` | `rgba(243,178,102,0.08)` | `rgba(178,106,42,0.06)` | not defined (consumer fallback `rgba(255,163,71,0.08)`) | not defined (consumer fallback `rgba(255,163,71,0.08)`) |
+| `--diff-added-flash-bg` | `rgba(0,255,65,0.18)` | `rgba(0,200,50,0.2)` | `rgba(11,128,67,0.16)` | `rgba(61,214,140,0.18)` | `rgba(143,217,165,0.22)` | `rgba(62,125,78,0.16)` | not defined (consumer fallback `rgba(61,214,140,0.18)`) | not defined (consumer fallback `rgba(61,214,140,0.18)`) |
+| `--diff-modified-flash-bg` | `rgba(0,71,171,0.22)` | `rgba(0,71,171,0.16)` | `rgba(0,86,179,0.14)` | `rgba(100,181,246,0.18)` | `rgba(147,162,242,0.22)` | `rgba(126,139,224,0.18)` | not defined (consumer fallback `rgba(100,181,246,0.18)`) | not defined (consumer fallback `rgba(100,181,246,0.18)`) |
+| `--diff-conflict-flash-bg` | `rgba(255,127,39,0.2)` | `rgba(255,127,39,0.18)` | `rgba(230,81,0,0.16)` | `rgba(255,163,71,0.2)` | `rgba(243,178,102,0.22)` | `rgba(178,106,42,0.16)` | not defined (consumer fallback `rgba(255,163,71,0.2)`) | not defined (consumer fallback `rgba(255,163,71,0.2)`) |
+
+Companion editor treatments carried in the same span (04-css-glass-b.part.html:144-196), for completeness of the :138-196 extraction:
+
+| Family scope | Rule | Value |
+|---|---|---|
+| glass-dark | `.editor-minimap` | `background: rgba(16,10,32,0.5); border-left: 1px solid rgba(255,255,255,0.04);` |
+| glass-dark | `.minimap-heat-strip` | `box-shadow: none;` |
+| glass-dark | `.minimap-viewport` | `background: rgba(183,156,255,0.06); border-color: rgba(183,156,255,0.15);` |
+| glass-dark | `.cursor-line-highlight` | `background: rgba(183,156,255,0.04);` |
+| glass-light | `.editor-minimap` | `background: rgba(255,255,255,0.6); border-left: 1px solid rgba(69,58,92,0.08);` |
+| glass-light | `.minimap-heat-strip` | `opacity: 0.7;` |
+| glass-light | `.minimap-viewport` | `background: rgba(139,110,217,0.08); border-color: rgba(139,110,217,0.18);` |
+| retro (both) | `.editor-minimap` | `background: var(--surface); border-left: 2px solid var(--border-light);` |
+| retro (both) | `.minimap-viewport` | `border: 1px solid var(--accent-lime); background: rgba(0,255,65,0.04); border-radius: 0;` |
+| retro (both) | `.minimap-heat-strip` | `border-radius: 0; width: 4px;` |
+| retro (both) | `.editor-tabs .tab.active::after` | `background: var(--accent-lime);` |
+| basic (both) | `.editor-minimap` | `background: var(--surface-elevated);` |
+| basic (both) | `.minimap-viewport` | `background: rgba(100,181,246,0.06); border-color: rgba(100,181,246,0.15);` |
+| basic (both) | `.minimap-heat-strip` | `border-radius: 2px;` |
+
+#### Glass composition constants (03-css-glass-a.part.html:19-49; 04-css-glass-b.part.html:11-56; 29-js-settings-engine.part.html:60-63, 80-86)
+
+| Constant | glass-dark | glass-light |
+|---|---|---|
+| `--glass-tint-rgb` | `46, 34, 72` | `246, 240, 255` |
+| `--glass-alpha` default | `.60` | `.55` |
+| Alpha clamp (settings engine `alphaBounds()`) | lo `0.35`, hi `0.85` | lo `0.45`, hi `0.88` |
+| Alpha parse fallback when persisted value is not a number | `0.55` | `0.55` |
+| `--glass-edge` | `rgba(255, 255, 255, .40)` | `rgba(255, 255, 255, .95)` |
+| `--glass-hairline` | `rgba(255, 255, 255, .16)` | `rgba(255, 255, 255, .55)` |
+| `--pm6-glass-a-rgb` | `183, 156, 255` (violet identity) | `139, 110, 217` (violet identity) |
+| `--pm6-glass-b-rgb` | `229, 139, 200` (dusk-pink identity) | `193, 103, 180` (orchid identity) |
+| `--pm6-glass-sat` | `1.6` | `1.6` |
+| `--pm6-glass-floor` | `rgba(255, 255, 255, .10)` | `rgba(255, 255, 255, .45)` |
+| `--pm6-glass-drop` | `0 12px 30px rgba(10, 5, 25, .45)` | `0 10px 28px rgba(93, 63, 133, .18)` |
+| `--pm6-glass-pane-edge` | `rgba(255, 255, 255, .28)` | `rgba(255, 255, 255, .75)` |
+| `--pm6-glass-pane-k1` | `.73` | `.62` |
+| `--pm6-glass-pane-k2` | `.57` | `.36` |
+| `--pm6-glass-pane-k3` | `.67` | `.47` |
+| `--pm6-glass-pane-shadow` | `rgba(10, 5, 25, .60)` | `rgba(93, 63, 133, .35)` |
+| `--pm6-glass-pane-shadow2` | `rgba(10, 5, 25, .40)` | `rgba(93, 63, 133, .22)` |
+| `--pm6-glass-pane-sheen` | `rgba(255, 255, 255, .16)` | `rgba(255, 255, 255, .50)` |
+| `--pm6-glass-pane-sheen2` | `rgba(255, 255, 255, .08)` | `rgba(255, 255, 255, .25)` |
+| `--pm6-glass-inset` (sky ring around the pane; family-scoped) | `5px` | `5px` |
+| `--pm6-glass-step-1` | `rgba(255, 255, 255, calc(var(--glass-alpha) * .10))` (runtime-derived in concept; precompute per F3-431) | `rgba(255, 255, 255, calc(var(--glass-alpha) * .25))` (runtime-derived in concept; precompute per F3-431) |
+| `--pm6-glass-step-2` | `rgba(255, 255, 255, calc(var(--glass-alpha) * .16))` (runtime-derived in concept; precompute per F3-431) | `rgba(255, 255, 255, calc(var(--glass-alpha) * .55))` (runtime-derived in concept; precompute per F3-431) |
+| `--pm6-glass-step-3` | `rgba(255, 255, 255, calc(var(--glass-alpha) * .28))` (runtime-derived in concept; precompute per F3-431) | `rgba(255, 255, 255, calc(var(--glass-alpha) * 1.1))` (runtime-derived in concept; precompute per F3-431) |
+| `--pm6-glass-plate` | `rgba(16, 10, 32, calc(.35 + var(--glass-alpha) * .78))` (runtime-derived in concept; precompute per F3-431) | `rgba(255, 255, 255, calc(.42 + var(--glass-alpha) * .87))` (runtime-derived in concept; precompute per F3-431) |
+| Pane fill gradient | `linear-gradient(165deg, rgba(var(--glass-tint-rgb), calc(var(--glass-alpha) * var(--pm6-glass-pane-k1))), rgba(var(--glass-tint-rgb), calc(var(--glass-alpha) * var(--pm6-glass-pane-k2))) 40%, rgba(var(--glass-tint-rgb), calc(var(--glass-alpha) * var(--pm6-glass-pane-k3))))` (runtime-derived in concept; precompute per F3-431) | same formula with the glass-light tint, alpha, and k-factors (runtime-derived in concept; precompute per F3-431) |
+| In-viewport backdrop blur (app shell and floating chat) | `blur(34px) saturate(160%)` | `blur(34px) saturate(160%)` |
+
+#### Backdrop-filter budget (F3-431 enumeration)
+
+| Scope | Surface | Filter | Concept source |
+|---|---|---|---|
+| Glass themes | `.app-shell` | `blur(34px) saturate(160%)` | 03-css-glass-a.part.html:71-72 |
+| Glass themes | `.floating-chat` | `blur(34px) saturate(160%)` | 03-css-glass-a.part.html:148-149 |
+| Friendly themes | `.title-bar` | `blur(14px)` | 10x-pm6-css-global.part.html:155-156 |
+| Friendly themes | `.status-bar` | `blur(14px)` | 10x-pm6-css-global.part.html:164-165 |
+| Friendly themes | `.bottom-panel` | `blur(14px)` | 10x-pm6-css-global.part.html:172-173 |
+| Settings modal (all themes) | `.s4-bloom-backdrop` scrim | `blur(6px)` | 10-css-settings.part.html:585-586 |
+| Settings modal (glass themes) | `.s4-panel`, `.s4-psm` slabs | `blur(34px) saturate(160%)` | 10-css-settings.part.html:933-934 |
+
+#### Glass background mode layer inventory (02-css-tokens.part.html:554-733; baked per F3-431)
+
+| Mode | Layers | Layer blur | Drift and parallax | Baked per F3-431 |
+|---|---|---|---|---|
+| `mesh` (default) | One cloudscape layer `.pm6-gbg-mesh-layer` (inset `-8%`): base sky gradient stack plus one billow `::before` layer | `blur(14px) saturate(1.15)` dark, `blur(14px) saturate(1.12)` light | One transform-only drift, `pm-sky-drift 140s ease-in-out infinite alternate` to `translate3d(-1.6%, 1.1%, 0) scale(1.05)` | One pre-blurred bitmap per variant |
+| `depth` | Container carries the base sky plus blur; two parallax wrappers `.pm6-par-far` and `.pm6-par-near` (inset `-8%`); far wrapper `::before` billow layer; six cloud puffs `.pm6-gbg-shape` (three far, three near) | `blur(14px) saturate(1.15)` dark, `blur(14px) saturate(1.12)` light (on the container) | Far billow drift `pm-sky-drift 160s`; puff float `pm-float` with per-shape `--float-dur` of `100s`, `84s`, `72s` (far) and `68s`, `76s`, `64s` (near); pointer parallax `translate3d(calc(var(--par-x, 0) * 4px), calc(var(--par-y, 0) * 2px), 0)` far and `translate3d(calc(var(--par-x, 0) * 10px), calc(var(--par-y, 0) * 6px), 0)` near; all killed under reduced motion | Base sky, far billow layer, and near puff layer baked as separate pre-blurred bitmaps so `--par-x`/`--par-y` offsets still apply per layer |
+| `minimal` | Base gradient sky only (`.pm6-gbg-minimal`), no billow layers | none (static gradients, no filter) | none (static) | One flat gradient bitmap per variant |
+
+#### Friendly cozy pastel hooks (02-css-tokens.part.html:477-492, 536-551)
+
+| Token | friendly-dark | friendly-light |
+|---|---|---|
+| `--pm6-cozy-mint` | `#6FDABC` | `#5FD0B0` |
+| `--pm6-cozy-sky` | `#6FC6E8` | `#5AB9E0` |
+| `--pm6-cozy-coral` | `#FFAD93` | `#FF9E80` |
+| `--pm6-cozy-lav` | `#C3B1E4` | `#B39DDB` |
+| `--pm6-cozy-butter` | `#FFD97F` | `#FFD166` |
+| `--pm6-cozy-card-base` | `#2A2731` | `#FFFFFF` |
+| `--pm6-cozy-mix` | `14%` | `11%` |
+| `--pm6-cozy-border-mix` | `34%` | `30%` |
+| `--pm6-cozy-chrome` | `rgba(40,36,48,.60)` | `rgba(255,255,255,.65)` |
+| `--pm6-cozy-chrome-border` | `rgba(255,255,255,.08)` | `rgba(255,255,255,.85)` |
+| `--pm6-cozy-field` | `rgba(255,255,255,.06)` | `rgba(255,255,255,.70)` |
+| `--pm6-cozy-dot` | `rgba(190,180,210,.06)` | `rgba(122,109,140,.10)` |
+| `--pm6-cozy-glow-mint` | `rgba(95,208,176,.10)` | `rgba(95,208,176,.16)` |
+| `--pm6-cozy-glow-lav` | `rgba(179,157,219,.12)` | `rgba(179,157,219,.18)` |
+| `--pm6-cozy-glow-sky` | `rgba(90,185,224,.09)` | `rgba(90,185,224,.14)` |
+
+The friendly ground (10x-pm6-css-global.part.html:139-147) composes the dot grid as `radial-gradient(var(--pm6-cozy-dot) 1px, transparent 1.5px) 0 0 / 18px 18px` over three pastel corner glows and `var(--background)`; the dot-grid tile size `18px` is the F3-430 preserved token. Category pastels are consumed via `color-mix()` against `--pm6-cozy-card-base` with `--pm6-cozy-mix` and `--pm6-cozy-border-mix` ratios (runtime-derived in concept; precompute per F3-431).
+
+## Settings System Addendum - 2026-07-16
+
+This addendum promotes the user-approved PMConcept6 search-first Settings surface, its shelves and curation service, the setting-row contracts, the canonical settings inventory registry binding, and the theme/settings persistence key additions into canonical PlanUnits. `Concepts/pm6-build/**` remains illustrative source-lineage only per `Plans/usage-feature.md`. This addendum creates no WorkNodes, NodeSeeds, executable queues, implementation files, runtime artifacts, generated wiring rows, production build tasks, final manifests, or PNC-019 receipts.
+
+### F3-432 - Search-First Settings Surface Supersession
+
+```yaml
+plan_unit_id: F3-432
+unit_type: requirement
+status: accepted
+owner_doc: Plans/FinalGUISpec.md
+canonical_text: >-
+  The Settings home surface is the s4 search-first one-box model: a single settings search
+  box at the top of the surface, a row of category chips with attention dots, a per-category
+  bloom modal opened from a chip, and a shelves home beneath the search box composed of the
+  Fix These, Recents, and Suggested shelves. This model supersedes the 19-tab two-level-sidebar
+  Settings registry as the visible Settings surface; the registry table in the Settings
+  (Unified) panel specification is preserved as owner-routing and search/migration lineage
+  only, so its owner-doc mappings continue to route settings detail ownership while no visible
+  tab bar or two-level sidebar renders. Every setting remains searchable and
+  command-addressable: hidden or unsupported settings surface unavailable or unsupported state
+  instead of disappearing silently, and command-palette deep links resolve into the
+  search-first surface.
+gui_related: true
+gui_classification_reason: This unit defines the visible Settings home surface model of search box, category chips, bloom modals, and shelves.
+split_recommended: false
+depends_on: [F3-109, F3-441]
+unblocks: []
+acceptance_criteria:
+- "The Settings home renders one search box, category chips with attention dots, per-category bloom modals, and the Fix These, Recents, and Suggested shelves; no tab bar or two-level sidebar renders."
+- "The former 19-tab registry table is preserved as owner-routing and search/migration lineage and every owner mapping in it remains resolvable."
+- "Every setting, including hidden or unsupported items, remains searchable and command-addressable and shows unavailable or unsupported state instead of disappearing silently."
+- "No WorkNodes, NodeSeeds, executable queues, final node manifests, or production build tasks are created."
+validation_surfaces:
+- "python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits"
+- "python3 scripts/pm-plan-index.py validate"
+risk_class: finalgui_drift
+reasoning_tier: standard
+context_scope: finalgui_standardization
+implementation_surfaces:
+- "Plans/FinalGUISpec.md"
+node_compile_hint:
+  mode: search_first_settings_surface_supersession
+  create_worknodes: false
+source_lineage:
+- "Plans/FinalGUISpec.md:1329"
+- "Plans/FinalGUISpec.md:9363"
+- "Plans/FinalGUISpec.md:16858"
+- "Plans/FinalGUISpec.md:17716"
+- "Concepts/pm6-build (PMConcept6 demo; source-lineage-only per Plans/usage-feature.md)"
+preserved_exact_tokens:
+- "Fix These"
+- "Recents"
+- "Suggested"
+- "bloom"
+negative_constraints:
+- "The Settings surface must not render the 19-tab two-level sidebar as the visible navigation model; the preserved registry table is routing lineage, not UI."
+compatibility_only_notes:
+- "Slint portability: the search box, category chips, shelves, and modal chrome render as opaque precomputed surfaces; no arbitrary-content backdrop blur, no SVG filters, and color math is precomputed rather than runtime-mixed; any glass treatment uses a single blur over a known wallpaper as a pre-blurred asset."
+stale_retired_dispositions:
+- "The 19-tab two-level-sidebar Settings registry is superseded as the visible Settings surface per the 2026-07-16 theme and settings canon promotion; its table in the Settings (Unified) panel specification is preserved as owner-routing and search/migration lineage only."
+owner_boundary_notes:
+- "Owner-doc mappings in the preserved registry table continue to route settings detail ownership; this unit changes surface presentation, not owner boundaries."
+- "The tooltip, scope, origin-badge, and override-display grammar prose of the Settings (Unified) panel specification carries over unchanged to the search-first surface."
+owner_hints:
+- "Plans/FinalGUISpec.md"
+```
+
+### F3-433 - Settings Fuzzy Search And Relevance Contract
+
+```yaml
+plan_unit_id: F3-433
+unit_type: requirement
+status: accepted
+owner_doc: Plans/FinalGUISpec.md
+canonical_text: >-
+  Settings search is a fuzzy multi-token AND contract: the query splits into
+  whitespace-separated tokens, every token must match, and each token matches by
+  case-insensitive subsequence scoring over the id, label, desc, and search[] index fields
+  that the settings inventory registry provides per setting. Relevance adds three boosts to
+  the summed subsequence scores: +40 when the setting is curated, +22 when the setting is
+  simple-tier, and +10 when the setting's derived status is non-ok, consuming the same
+  derived-status feed specified by F3-435. Results are capped at the best 60 matches and
+  render grouped by category with match highlighting on the matched label and description
+  characters. Search input is debounced at 80ms. Keyboard navigation over results: ArrowUp
+  and ArrowDown move the active result, Enter opens the active result through the category
+  deep-link contract, and Escape clears the query and returns to the shelves home.
+gui_related: true
+gui_classification_reason: This unit defines visible settings search behavior including matching, ranking, result caps, highlighting, and keyboard navigation.
+split_recommended: false
+depends_on: [F3-432, F3-441, F3-435]
+unblocks: []
+acceptance_criteria:
+- "Search tokenizes on whitespace, requires every token to match, and scores each token by case-insensitive subsequence over the registry id, label, desc, and search[] fields."
+- "Relevance boosts are +40 curated, +22 simple-tier, and +10 non-ok derived status, consuming registry fields and the F3-435 derived-status feed."
+- "Results cap at the best 60 matches, group by category, and highlight matched characters in label and description text."
+- "Input is debounced at 80ms; ArrowUp and ArrowDown move the active result, Enter opens it through the deep-link contract, and Escape clears the query and returns to the shelves home."
+- "No WorkNodes, NodeSeeds, executable queues, final node manifests, or production build tasks are created."
+validation_surfaces:
+- "python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits"
+- "python3 scripts/pm-plan-index.py validate"
+risk_class: finalgui_drift
+reasoning_tier: standard
+context_scope: finalgui_standardization
+implementation_surfaces:
+- "Plans/FinalGUISpec.md"
+node_compile_hint:
+  mode: settings_fuzzy_search_and_relevance_contract
+  create_worknodes: false
+source_lineage:
+- "Plans/FinalGUISpec.md:1329"
+- "Plans/FinalGUISpec.md:16858"
+- "Plans/FinalGUISpec.md:17716"
+- "Concepts/pm6-build (PMConcept6 demo; source-lineage-only per Plans/usage-feature.md)"
+preserved_exact_tokens:
+- "+40"
+- "+22"
+- "+10"
+- "60"
+- "80ms"
+negative_constraints:
+- "Relevance boost inputs must come from registry fields and the derived-status feed; boosts must not be driven by hardcoded per-setting id lists in UI code."
+compatibility_only_notes:
+- "Slint portability: match highlighting maps to styled text runs over opaque precomputed surfaces; no arbitrary-content backdrop blur, no SVG filters, and color math is precomputed rather than runtime-mixed."
+stale_retired_dispositions: []
+owner_boundary_notes:
+- "The id, label, desc, search[], tier, and curated fields are owned by the settings inventory registry binding (F3-441); the derived-status feed is owned by F3-435; this unit owns the scoring and interaction contract that consumes them."
+owner_hints:
+- "Plans/FinalGUISpec.md"
+```
+
+### F3-434 - Category Chips, Attention Dots, And Bloom Modal
+
+```yaml
+plan_unit_id: F3-434
+unit_type: requirement
+status: accepted
+owner_doc: Plans/FinalGUISpec.md
+canonical_text: >-
+  The Settings home renders 12 category chips, one per category in the settings inventory
+  registry. Each chip shows an attention dot when its category contains any setting with
+  non-ok derived status, driven by the same derived-status feed that populates the Fix These
+  shelf (F3-435). Activating a chip opens that category's bloom modal, which morphs open from
+  the activating chip; under reduced motion the bloom opens without the morph animation. The
+  bloom modal lists the category's simple-tier setting rows first, followed by a
+  "Show N advanced" expander where N is the count of the category's advanced-tier rows, which
+  reveals those rows in place. Each bloom modal carries a per-category two-step Reset control:
+  the first activation arms a confirmation state, a second activation within the confirmation
+  timeout performs the category reset, and the timeout expiring disarms the control back to
+  idle without resetting. The bloom modal supports the deep-link contract
+  open(category, focusSettingId): opening with a focus target scrolls the target row into view
+  and flash-highlights it.
+gui_related: true
+gui_classification_reason: This unit defines visible category chip, attention dot, bloom modal, expander, reset, and deep-link focus behavior.
+split_recommended: false
+depends_on: [F3-432, F3-435, F3-441]
+unblocks: []
+acceptance_criteria:
+- "12 category chips render, one per registry category, and a chip shows an attention dot exactly when its category contains a setting with non-ok derived status."
+- "Activating a chip opens the category bloom modal with a morph from the chip; reduced motion opens the modal without the morph."
+- "The bloom lists simple-tier rows first with a Show N advanced expander that reveals the category's advanced-tier rows in place."
+- "Per-category Reset is two-step: first activation arms confirmation, a second activation within the confirmation timeout performs the reset, and timeout expiry disarms without resetting."
+- "open(category, focusSettingId) opens the category bloom, scrolls the focused row into view, and flash-highlights it."
+- "No WorkNodes, NodeSeeds, executable queues, final node manifests, or production build tasks are created."
+validation_surfaces:
+- "python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits"
+- "python3 scripts/pm-plan-index.py validate"
+risk_class: finalgui_drift
+reasoning_tier: standard
+context_scope: finalgui_standardization
+implementation_surfaces:
+- "Plans/FinalGUISpec.md"
+node_compile_hint:
+  mode: category_chips_attention_dots_and_bloom_modal
+  create_worknodes: false
+source_lineage:
+- "Plans/FinalGUISpec.md:1329"
+- "Plans/FinalGUISpec.md:9363"
+- "Concepts/pm6-build (PMConcept6 demo; source-lineage-only per Plans/usage-feature.md)"
+preserved_exact_tokens:
+- "Show N advanced"
+- "12"
+negative_constraints:
+- "No per-setting favorites or copy-id surfaces render on chips, shelves, bloom rows, or search results."
+compatibility_only_notes:
+- "Slint portability: chips, dots, and the bloom modal render as opaque precomputed surfaces, and the chip-to-modal morph maps to a geometry animation between two opaque surfaces; no arbitrary-content backdrop blur, no SVG filters, and color math is precomputed rather than runtime-mixed; the settings-modal backdrop-filter budget is enumerated by F3-431."
+stale_retired_dispositions: []
+owner_boundary_notes:
+- "Command-palette invocation of the deep link reuses the existing Open setting: {name} palette pattern; this unit mints no new command IDs, and command registration is a separate UI_Command_Catalog and Wiring_Matrix round."
+owner_hints:
+- "Plans/FinalGUISpec.md"
+```
+
+### F3-435 - Fix These Shelf And Status Derivation Contract
+
+```yaml
+plan_unit_id: F3-435
+unit_type: requirement
+status: accepted
+owner_doc: Plans/FinalGUISpec.md
+canonical_text: >-
+  Every setting carries a derived status of ok, needs-setup, or attention, with an optional
+  short status note, and status is always derived from live subsystem state rather than
+  authored as data. Subsystem status publishers own the derivation: provider and auth
+  subsystems publish needs-setup for provider-scoped settings whose provider or account is
+  not authenticated, and path and probe validation publishes attention for settings whose
+  current value fails validation, such as missing or invalid paths and failing probes.
+  Publishers re-emit their status on subsystem state change and whenever a settings surface
+  opens. The Fix These shelf lists the settings with non-ok derived status, capped at 12,
+  ordered attention before needs-setup and then by category order. The same derived-status
+  feed drives the category-chip attention dots (F3-434) and the +10 non-ok search relevance
+  boost (F3-433); no surface derives status independently.
+gui_related: true
+gui_classification_reason: This unit defines the visible Fix These shelf and the derived-status feed behind attention dots, status pills, and search boosts.
+split_recommended: false
+depends_on: [F3-432, F3-441]
+unblocks: []
+acceptance_criteria:
+- "Per-setting status (ok, needs-setup, attention, with optional note) is derived from live subsystem state; the settings inventory registry carries no status values."
+- "Provider and auth subsystems publish needs-setup for unauthenticated provider-scoped settings, and path and probe validation publishes attention for failing values."
+- "Status publishers re-emit on subsystem state change and on settings surface open."
+- "The Fix These shelf lists non-ok settings, capped at 12, ordered attention before needs-setup and then by category order."
+- "Category-chip attention dots and the +10 non-ok search boost consume this same derived-status feed."
+- "No WorkNodes, NodeSeeds, executable queues, final node manifests, or production build tasks are created."
+validation_surfaces:
+- "python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits"
+- "python3 scripts/pm-plan-index.py validate"
+risk_class: finalgui_drift
+reasoning_tier: standard
+context_scope: finalgui_standardization
+implementation_surfaces:
+- "Plans/FinalGUISpec.md"
+node_compile_hint:
+  mode: fix_these_shelf_and_status_derivation_contract
+  create_worknodes: false
+source_lineage:
+- "Plans/FinalGUISpec.md:1329"
+- "Plans/FinalGUISpec.md:9363"
+- "Concepts/pm6-build (PMConcept6 demo; source-lineage-only per Plans/usage-feature.md)"
+preserved_exact_tokens:
+- "needs-setup"
+- "attention"
+- "12"
+negative_constraints:
+- "Status must not be authored as static inventory data."
+compatibility_only_notes:
+- "Slint portability: attention dots and status presentation render as opaque precomputed surfaces; no arbitrary-content backdrop blur, no SVG filters, and color math is precomputed rather than runtime-mixed."
+stale_retired_dispositions:
+- "The concept sidecar's static per-setting status values are demo residue; the canonical settings inventory registry excludes status fields and status is derived at runtime."
+owner_boundary_notes:
+- "Provider, auth, path, and probe subsystem behavior remains owned by the respective subsystem docs; this unit owns the GUI-facing status vocabulary, the publisher obligations and re-emit triggers, and the Fix These shelf presentation."
+owner_hints:
+- "Plans/FinalGUISpec.md"
+```
+
+### F3-436 - Recents Shelf And Persistence
+
+```yaml
+plan_unit_id: F3-436
+unit_type: requirement
+status: accepted
+owner_doc: Plans/FinalGUISpec.md
+canonical_text: >-
+  User edits mark settings into the Recents shelf as a most-recent-first, deduplicated list
+  capped at 8 entries and persisted at `settings_recents:v1`. Editing a setting that is
+  already on the list moves it to the front rather than duplicating it. The list records real
+  user edits only: the concept's seeded recents rows (theme and ui-scale) are demo
+  scaffolding, not canonical defaults, and a fresh profile starts with an empty Recents
+  shelf. Shelf-level dedupe precedence across Fix These, Recents, and Suggested is owned by
+  the curation service contract (F3-437).
+gui_related: true
+gui_classification_reason: This unit defines the visible Recents shelf and its persistence behavior.
+split_recommended: false
+depends_on: [F3-432, F3-444]
+unblocks: []
+acceptance_criteria:
+- "User edits append settings to a most-recent-first deduplicated Recents list capped at 8, persisted at settings_recents:v1; re-editing a listed setting moves it to the front."
+- "A fresh profile starts with an empty Recents shelf; the concept's seeded theme and ui-scale recents rows are not promoted as defaults."
+- "No WorkNodes, NodeSeeds, executable queues, final node manifests, or production build tasks are created."
+validation_surfaces:
+- "python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits"
+- "python3 scripts/pm-plan-index.py validate"
+risk_class: finalgui_drift
+reasoning_tier: standard
+context_scope: finalgui_standardization
+implementation_surfaces:
+- "Plans/FinalGUISpec.md"
+node_compile_hint:
+  mode: recents_shelf_and_persistence
+  create_worknodes: false
+source_lineage:
+- "Plans/FinalGUISpec.md:1329"
+- "Plans/FinalGUISpec.md:2301"
+- "Concepts/pm6-build (PMConcept6 demo; source-lineage-only per Plans/usage-feature.md)"
+preserved_exact_tokens:
+- "8"
+- "settings_recents:v1"
+negative_constraints:
+- "Do not promote the concept's seeded theme and ui-scale recents rows as default Recents content; the shelf reflects real user edits only."
+compatibility_only_notes:
+- "Slint portability: the Recents shelf renders as an ordered list bound to typed persisted state; no arbitrary-content backdrop blur, no SVG filters, and color styling is precomputed rather than runtime-mixed."
+stale_retired_dispositions: []
+owner_boundary_notes:
+- "Storage-key registration for settings_recents:v1 is owned by F3-444; cross-shelf dedupe precedence is owned by F3-437."
+owner_hints:
+- "Plans/FinalGUISpec.md"
+```
+
+### F3-437 - Suggested Shelf Curation Service Contract
+
+```yaml
+plan_unit_id: F3-437
+unit_type: requirement
+status: accepted
+owner_doc: Plans/FinalGUISpec.md
+canonical_text: >-
+  The Suggested shelf is produced by a deterministic, fully local settings curation service
+  that merges three candidate layers. Layer one, curated baseline: settings whose `curated`
+  flag is set in the settings inventory registry (24 curated at promotion), ranked by
+  inventory order as the curation rank; curators update `Plans/settings_inventory.json`, not
+  UI code. Layer two, context signals (project-aware): settings whose owning subsystem
+  reports an available-but-default capability in the current project, a state distinct from
+  the needs-setup and attention statuses that route to Fix These; examples are container
+  configuration present suggesting docker settings, a GitHub remote suggesting github and
+  actions settings, a detected test framework with testing policy unset suggesting testing
+  settings, and configured MCP servers suggesting MCP settings. Context signals come from the
+  same subsystem status publishers as F3-435 plus existing project capability detection.
+  Layer three, usage signals (behavior-aware): settings related to recently used features via
+  local per-project rolling 30-day feature-usage counters, with the relation expressed by the
+  sparse authored `related_features` field on inventory registry rows (empty allowed;
+  populated per category at authoring time for the ai, safety, code, memory, planning, branching, media, web, personas, and extensions categories). Candidates are
+  ranked deterministically: score equals the layer weight (context 300, usage 200, curated
+  100) plus a usage-recency bonus of 0-50 scaled by days since last use, with curation rank
+  as the tiebreak; the sort is stable and the shelf caps at 12 entries. Dedupe precedence
+  across shelves is Fix These over Recents over Suggested, so a setting appears on exactly
+  one shelf. Each suggestion card exposes a dismiss control; dismissals persist at
+  `settings_suggestions_dismissed:v1`, scoped to the project when the driving signal was
+  project-scoped and global otherwise, and dismissed entries expire after 90 days. The
+  service refreshes, debounced, on settings surface open, on subsystem status-change events,
+  and on project switch. When the context and usage layers are empty the shelf falls back to
+  the curated baseline only; when all layers are empty the shelf is hidden. The service is
+  fully local: it collects no telemetry and makes no network calls.
+gui_related: true
+gui_classification_reason: This unit defines the visible Suggested shelf and the curation service contract that populates it.
+split_recommended: false
+depends_on: [F3-432, F3-435, F3-436, F3-441]
+unblocks: []
+acceptance_criteria:
+- "Suggested candidates merge exactly three layers: registry curated flags (24 curated at promotion, ranked by inventory order), available-but-default context signals from the F3-435 status publishers plus project capability detection, and related_features usage signals from local per-project rolling 30-day feature-usage counters."
+- "Ranking is deterministic: layer weights context 300, usage 200, curated 100, plus a usage-recency bonus of 0-50 scaled by days since last use and a curation-rank tiebreak, stable-sorted and capped at 12."
+- "Dedupe precedence Fix These over Recents over Suggested leaves each setting on exactly one shelf, and per-card dismissals persist at settings_suggestions_dismissed:v1 with 90-day expiry, project-scoped when the driving signal was project-scoped and global otherwise."
+- "The service refreshes debounced on settings surface open, subsystem status change, and project switch; empty context and usage layers fall back to the curated baseline only, all-empty layers hide the shelf, and the service collects no telemetry and makes no network calls."
+- "No WorkNodes, NodeSeeds, executable queues, final node manifests, or production build tasks are created."
+validation_surfaces:
+- "python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits"
+- "python3 scripts/pm-plan-index.py validate"
+risk_class: finalgui_drift
+reasoning_tier: standard
+context_scope: finalgui_standardization
+implementation_surfaces:
+- "Plans/FinalGUISpec.md"
+node_compile_hint:
+  mode: suggested_shelf_curation_service_contract
+  create_worknodes: false
+source_lineage:
+- "Plans/FinalGUISpec.md:1329"
+- "Concepts/pm6-build (PMConcept6 demo; source-lineage-only per Plans/usage-feature.md)"
+- "PMConcept6 demonstrates only the curated baseline layer; the context-signal, usage-signal, ranking, dismissal, and refresh clauses are Plans-canonical extensions decided at the 2026-07-16 promotion."
+preserved_exact_tokens:
+- "curated"
+- "24"
+- "available-but-default"
+- "related_features"
+- "300"
+- "200"
+- "100"
+- "0-50"
+- "12"
+- "settings_suggestions_dismissed:v1"
+- "90"
+negative_constraints:
+- "The curation service must not transmit usage or context signals off the local machine; no telemetry collection and no network calls are part of this contract."
+- "Curated membership is registry data: curators update Plans/settings_inventory.json, and the Suggested shelf must not hardcode a curated list in UI code."
+- "Available-but-default context signals must not be conflated with needs-setup or attention statuses, which route to Fix These."
+compatibility_only_notes:
+- "Slint portability: the curation service is pure local computation over typed state feeding a list model; suggestion cards render as opaque precomputed surfaces with no arbitrary-content backdrop blur, no SVG filters, and color math precomputed rather than runtime-mixed."
+stale_retired_dispositions: []
+owner_boundary_notes:
+- "Subsystem status publishers are owned by F3-435; the curated and related_features registry fields are owned by F3-441; settings_suggestions_dismissed:v1 key registration is owned by F3-444; command-catalog registration for the dismiss control is handled by the command and wiring registration seal, and this unit mints no cmd IDs."
+owner_hints:
+- "Plans/FinalGUISpec.md"
+```
+
+### F3-438 - Setting Row Renderer, Badge, And Scope Contract
+
+```yaml
+plan_unit_id: F3-438
+unit_type: requirement
+status: accepted
+owner_doc: Plans/FinalGUISpec.md
+canonical_text: >-
+  Setting rows render their control by mapping the inventory type field to a renderer. The
+  renderer set is: toggle, select, radio, slider with a value bubble showing the current
+  value, number, text, path with a Browse control, color, action with working-then-done verb
+  states on invocation, multiselect, list, and keyvalue, where multiselect, list, and
+  keyvalue render as expandable editors that open in place beneath the row. The 824-setting
+  inventory's rows resolve across eleven of these renderer types at promotion; the color
+  renderer is part of the contract and serves color-typed rows. Rows show badges from the
+  vocabulary restart, adjudication, and new; status pills for ok, needs-setup, and attention
+  from the derived-status feed; and scope tags from the six scopes global, project, run,
+  persona, account, and provider. A row whose scope includes both project and global renders
+  an inherit-origin line disclosing that the effective value inherits from the global scope
+  and can be overridden at project scope.
+gui_related: true
+gui_classification_reason: This unit defines visible setting row control renderers, badge and status pill vocabulary, scope tags, and the inherit-origin line.
+split_recommended: false
+depends_on: [F3-432, F3-441]
+unblocks: []
+acceptance_criteria:
+- "Renderer selection maps the inventory type field to the renderer set toggle, select, radio, slider, number, text, path, color, action, multiselect, list, and keyvalue; multiselect, list, and keyvalue render as expandable editors."
+- "The slider renderer shows a value bubble, the path renderer includes a Browse control, and the action renderer shows working-then-done verb states on invocation."
+- "Rows render badges only from the vocabulary restart, adjudication, and new, and status pills only from ok, needs-setup, and attention."
+- "Scope tags render from the six scopes global, project, run, persona, account, and provider, and rows scoped both project and global render an inherit-origin line."
+- "No WorkNodes, NodeSeeds, executable queues, final node manifests, or production build tasks are created."
+validation_surfaces:
+- "python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits"
+- "python3 scripts/pm-plan-index.py validate"
+risk_class: finalgui_drift
+reasoning_tier: standard
+context_scope: finalgui_standardization
+implementation_surfaces:
+- "Plans/FinalGUISpec.md"
+node_compile_hint:
+  mode: setting_row_renderer_badge_and_scope_contract
+  create_worknodes: false
+source_lineage:
+- "Plans/FinalGUISpec.md:1329"
+- "Concepts/pm6-build (PMConcept6 demo; source-lineage-only per Plans/usage-feature.md)"
+preserved_exact_tokens:
+- "toggle"
+- "select"
+- "radio"
+- "slider"
+- "number"
+- "text"
+- "path"
+- "color"
+- "action"
+- "multiselect"
+- "list"
+- "keyvalue"
+- "Browse"
+- "restart"
+- "adjudication"
+- "new"
+- "global"
+- "project"
+- "run"
+- "persona"
+- "account"
+- "provider"
+negative_constraints:
+- "Renderer selection must consume the inventory type field only; renderers must not be inferred from labels, descriptions, or id patterns."
+compatibility_only_notes:
+- "Slint portability: control renderers map to native widget composition and expandable editors to conditional in-place composition over opaque precomputed surfaces; no arbitrary-content backdrop blur, no SVG filters, and color math is precomputed rather than runtime-mixed."
+stale_retired_dispositions: []
+owner_boundary_notes:
+- "Scope semantics, origin badges, and the override-display grammar remain carried by the Settings (Unified) panel specification prose; badge semantics route to their owner contracts (restart rules and adjudication ownership); this unit owns the visible row presentation vocabulary."
+owner_hints:
+- "Plans/FinalGUISpec.md"
+```
+
+### F3-439 - Instant Apply Model And Save Exceptions
+
+```yaml
+plan_unit_id: F3-439
+unit_type: requirement
+status: accepted
+owner_doc: Plans/FinalGUISpec.md
+canonical_text: >-
+  Settings apply instantly on change. The settings experience exposes no global Save control,
+  no undo history, no import/export surface, no per-setting copy-id affordance, and no
+  favorites surface. The per-category two-step Reset is the only bulk action. Exactly two
+  exceptions to instant apply exist: the Permissions surface keeps its existing dirty/save
+  review model, and the Project Settings Modal keeps an explicit Save with Cancel (F3-442),
+  which is the only Save in the settings experience.
+gui_related: true
+gui_classification_reason: This unit defines the user-facing apply model for settings changes.
+split_recommended: false
+depends_on: [F3-432]
+unblocks: []
+acceptance_criteria:
+- "Setting changes take effect immediately on change with no global Save step, no undo history, no import/export, no copy-id, and no favorites surfaces."
+- "The per-category two-step Reset is the only bulk action available in settings."
+- "The only exceptions to instant apply are the Permissions dirty/save review model and the Project Settings Modal explicit Save."
+- "No WorkNodes, NodeSeeds, executable queues, final node manifests, or production build tasks are created."
+validation_surfaces:
+- "python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits"
+- "python3 scripts/pm-plan-index.py validate"
+risk_class: finalgui_drift
+reasoning_tier: standard
+context_scope: finalgui_standardization
+implementation_surfaces:
+- "Plans/FinalGUISpec.md"
+node_compile_hint:
+  mode: instant_apply_model_and_save_exceptions
+  create_worknodes: false
+source_lineage:
+- "Plans/FinalGUISpec.md:1329"
+- "Concepts/pm6-build (PMConcept6 demo; source-lineage-only per Plans/usage-feature.md)"
+preserved_exact_tokens:
+- "Reset"
+- "dirty/save"
+negative_constraints:
+- "No global Save, undo history, import/export, copy-id, or favorites surfaces are added to settings."
+compatibility_only_notes:
+- "Slint portability: instant apply maps to typed state setters invoked on control change; no arbitrary-content backdrop blur, no SVG filters, and color styling is precomputed rather than runtime-mixed."
+stale_retired_dispositions: []
+owner_boundary_notes:
+- "The Permissions dirty/save review model remains owned by its existing Permissions surface contract; this unit records only its exemption from instant apply. The per-category Reset interaction is owned by F3-434."
+owner_hints:
+- "Plans/FinalGUISpec.md"
+```
+
+### F3-440 - Settings Live-Apply Wiring Map
+
+```yaml
+plan_unit_id: F3-440
+unit_type: requirement
+status: accepted
+owner_doc: Plans/FinalGUISpec.md
+canonical_text: >-
+  The instant-apply model binds specific settings to live shell surfaces: the theme setting
+  drives the theme engine and persists at `theme:v1`; the glass background mode setting
+  drives the glass composition layer and persists at `glass_background_mode:v1`; the glass
+  alpha setting drives `--glass-alpha` within the per-theme clamps of F3-429 and persists at
+  `glass_alpha:v1`; the reduce-animations setting drives the application reduced-motion
+  state; and the chat layout mode setting drives the chat mount layout. Each binding applies
+  on change with no reload. The concept's interface-density live-apply hook had no consumer
+  and is demo residue excluded from this canonical wiring map.
+gui_related: true
+gui_classification_reason: This unit defines visible live-apply bindings between settings and shell surfaces.
+split_recommended: false
+depends_on: [F3-425, F3-428, F3-429, F3-432, F3-444]
+unblocks: []
+acceptance_criteria:
+- "Changing theme, glass background mode, glass alpha, reduce-animations, or chat layout mode applies live to the theme engine, glass composition, --glass-alpha within clamps, reduced-motion state, and chat mount layout respectively, with no reload."
+- "The theme, glass background mode, and glass alpha bindings persist through theme:v1, glass_background_mode:v1, and glass_alpha:v1 respectively."
+- "The interface-density hook is excluded from the wiring map as demo residue and gains no canonical binding."
+- "No WorkNodes, NodeSeeds, executable queues, final node manifests, or production build tasks are created."
+validation_surfaces:
+- "python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits"
+- "python3 scripts/pm-plan-index.py validate"
+risk_class: finalgui_drift
+reasoning_tier: standard
+context_scope: finalgui_standardization
+implementation_surfaces:
+- "Plans/FinalGUISpec.md"
+node_compile_hint:
+  mode: settings_live_apply_wiring_map
+  create_worknodes: false
+source_lineage:
+- "Plans/FinalGUISpec.md:1329"
+- "Plans/FinalGUISpec.md:2291"
+- "Concepts/pm6-build (PMConcept6 demo; source-lineage-only per Plans/usage-feature.md)"
+preserved_exact_tokens:
+- "theme:v1"
+- "glass_background_mode:v1"
+- "glass_alpha:v1"
+- "--glass-alpha"
+negative_constraints:
+- "Do not promote the concept's interface-density hook into the live-apply wiring map; it had no consumer and is demo residue."
+compatibility_only_notes:
+- "Slint portability: live-apply bindings map to typed state setters; theme switches swap precomputed per-variant token tables and glass alpha updates a single scalar, with no arbitrary-content backdrop blur, no SVG filters, and no runtime color math."
+stale_retired_dispositions:
+- "The concept's interface-density live-apply hook is demo residue with no consumer; it is excluded from the canonical wiring map and retired without replacement."
+owner_boundary_notes:
+- "Theme engine and token tables are owned by F3-425 and F3-426; glass composition and background modes by F3-427 and F3-428; glass alpha clamps by F3-429; storage-key registration by F3-444."
+owner_hints:
+- "Plans/FinalGUISpec.md"
+```
+
+### F3-441 - Settings Inventory Registry Binding
+
+```yaml
+plan_unit_id: F3-441
+unit_type: requirement
+status: accepted
+owner_doc: Plans/FinalGUISpec.md
+canonical_text: >-
+  `Plans/settings_inventory.json` is the canonical inventory registry of all 824 settings
+  across 12 categories. Its shape is owned by `Plans/settings_inventory.schema.json` with
+  schema_id `pm.settings_inventory.v1`. Registry rows carry id, label, desc, type, options,
+  default, scope, tier, recommended, curated, search, badges, and related_features, where
+  related_features is the sparse mapping vocabulary consumed by the curation service
+  usage-signal layer (F3-437). The demo runtime fields value, status, and src are dropped and
+  excluded by the schema: setting values live in real settings storage, status is derived
+  live per F3-435, and src was concept scaffolding. Registry provenance pins the concept
+  sidecar extraction `Concepts/pm6-build/sidecar/pm_settings_data.json` at sha256
+  9b24e5bcf7f3dae8f0251215eb113c357d1a0ee22f185ac035e8969fd76b5c8d as source-lineage-only.
+  Settings surfaces, including search, category chips, bloom modals, shelves, row renderers,
+  and the Project Settings Modal, bind to this registry rather than hardcoding inventory
+  rows.
+gui_related: true
+gui_classification_reason: This unit binds the visible settings surfaces to their canonical inventory registry.
+split_recommended: false
+depends_on: []
+unblocks: []
+acceptance_criteria:
+- "Plans/settings_inventory.json parses as JSON and conforms to Plans/settings_inventory.schema.json (schema_id pm.settings_inventory.v1); schema conformance is enforced by this unit's acceptance criteria, not a machine gate."
+- "The registry contains 824 settings across 12 categories, including the exact seven Case L Storage & Retention rows; rows carry id, label, desc, type, options, default, scope, tier, recommended, curated, search, badges, and related_features, and provenance pins the concept sidecar at sha256 9b24e5bcf7f3dae8f0251215eb113c357d1a0ee22f185ac035e8969fd76b5c8d."
+- "The demo runtime fields value, status, and src appear in no registry row and are excluded by the schema."
+- "No WorkNodes, NodeSeeds, executable queues, final node manifests, or production build tasks are created."
+validation_surfaces:
+- "python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits"
+- "python3 scripts/pm-plan-index.py validate"
+risk_class: finalgui_drift
+reasoning_tier: standard
+context_scope: finalgui_standardization
+implementation_surfaces:
+- "Plans/FinalGUISpec.md"
+node_compile_hint:
+  mode: settings_inventory_registry_binding
+  create_worknodes: false
+source_lineage:
+- "Plans/FinalGUISpec.md:1329"
+- "Plans/FinalGUISpec.md:1359"
+- "Concepts/pm6-build/sidecar/pm_settings_data.json (sha256 9b24e5bcf7f3dae8f0251215eb113c357d1a0ee22f185ac035e8969fd76b5c8d)"
+- "Concepts/pm6-build (PMConcept6 demo; source-lineage-only per Plans/usage-feature.md)"
+preserved_exact_tokens:
+- "Plans/settings_inventory.json"
+- "Plans/settings_inventory.schema.json"
+- "pm.settings_inventory.v1"
+- "824"
+- "system.advanced.chat-history-retention"
+- "system.advanced.runtime-history-days"
+- "system.advanced.diagnostic-history-days"
+- "system.advanced.released-safe-point-days"
+- "system.advanced.preserved-terminal-runs"
+- "system.advanced.request-storage-compaction"
+- "system.advanced.inspect-holds-quarantine"
+- "12"
+- "related_features"
+- "9b24e5bcf7f3dae8f0251215eb113c357d1a0ee22f185ac035e8969fd76b5c8d"
+negative_constraints:
+- "The demo runtime fields value, status, and src must not be reintroduced into the registry or its schema."
+- "Settings surfaces must not hardcode inventory rows independently of the registry."
+compatibility_only_notes:
+- "Slint portability: the registry is build-time data compiled into typed setting models; no arbitrary-content backdrop blur, no SVG filters, and no runtime color math are implicated by this binding."
+stale_retired_dispositions: []
+owner_boundary_notes:
+- "Governance registration of the registry pair (Spec_Lock hashes, sharding sources, 00-plans-index rows) is performed by the seal's register-canonical-docs step, not by this unit's text; per-setting runtime policy remains with the owner docs named in the Settings tab registry."
+owner_hints:
+- "Plans/FinalGUISpec.md"
+- "Plans/settings_inventory.json"
+- "Plans/settings_inventory.schema.json"
+```
+
+### F3-442 - Project Settings Modal Reconciliation
+
+```yaml
+plan_unit_id: F3-442
+unit_type: requirement
+status: accepted
+owner_doc: Plans/FinalGUISpec.md
+canonical_text: >-
+  The Project Settings Modal shows project-scope settings derived from the settings inventory
+  registry: every registry row whose scope includes project is eligible, and the modal's rows
+  are generated from the registry rather than authored separately. Rows group into three
+  tabs: General, Environment, and Agent behavior. Each row offers an inherit-vs-override
+  flip: an inheriting row shows the effective global value with its origin, and an overriding
+  row stores a project-scoped value. The modal provides its own scoped substring search over
+  its rows. Changes commit through an explicit Save with a Cancel that discards pending
+  changes; per F3-439 this is the only Save in the settings experience. The concept's 12
+  hardcoded modal rows are a demo shim, not the canonical row set.
+gui_related: true
+gui_classification_reason: This unit defines the visible Project Settings Modal rows, tabs, search, and save model.
+split_recommended: false
+depends_on: [F3-439, F3-441]
+unblocks: []
+acceptance_criteria:
+- "Project Settings Modal rows are derived from inventory registry rows whose scope includes project; the concept's 12 hardcoded rows are not promoted."
+- "Rows group into the General, Environment, and Agent behavior tabs, each row supports the inherit-vs-override flip with inherited-origin display, and the modal offers scoped substring search."
+- "The modal commits through an explicit Save with Cancel discarding pending changes, and this remains the only Save in the settings experience."
+- "No WorkNodes, NodeSeeds, executable queues, final node manifests, or production build tasks are created."
+validation_surfaces:
+- "python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits"
+- "python3 scripts/pm-plan-index.py validate"
+risk_class: finalgui_drift
+reasoning_tier: standard
+context_scope: finalgui_standardization
+implementation_surfaces:
+- "Plans/FinalGUISpec.md"
+node_compile_hint:
+  mode: project_settings_modal_reconciliation
+  create_worknodes: false
+source_lineage:
+- "Plans/FinalGUISpec.md:1329"
+- "Plans/FinalGUISpec.md:1363"
+- "Concepts/pm6-build (PMConcept6 demo; source-lineage-only per Plans/usage-feature.md)"
+preserved_exact_tokens:
+- "General"
+- "Environment"
+- "Agent behavior"
+- "Save"
+- "Cancel"
+negative_constraints:
+- "PSM rows must not be hardcoded independently of the inventory registry."
+compatibility_only_notes:
+- "Slint portability: the modal renders as an opaque precomputed surface with typed row models; no arbitrary-content backdrop blur, no SVG filters, and color styling is precomputed rather than runtime-mixed."
+stale_retired_dispositions: []
+owner_boundary_notes:
+- "Scope vocabulary and row renderer mechanics are owned by F3-438; the instant-apply exception this Save represents is recorded in F3-439; effective-scope display rules follow the existing settings-scope clause in section 7.4.4."
+owner_hints:
+- "Plans/FinalGUISpec.md"
+```
+
+### F3-443 - Glass-Only Setting Lock Rows
+
+```yaml
+plan_unit_id: F3-443
+unit_type: requirement
+status: accepted
+owner_doc: Plans/FinalGUISpec.md
+canonical_text: >-
+  Glass-only settings, specifically the glass background mode setting and the glass alpha
+  slider, render as locked rows with an unsupported-reason chip when a non-glass theme is
+  active. Locked rows remain visible, searchable, and command-addressable rather than
+  disappearing. Lock state derives from the active theme family: the rows unlock when a glass
+  family variant is active and lock under the friendly, retro, and basic families, and the
+  chip names the unsupported reason.
+gui_related: true
+gui_classification_reason: This unit defines visible locked-row presentation for glass-only settings.
+split_recommended: false
+depends_on: [F3-429, F3-438]
+unblocks: []
+acceptance_criteria:
+- "Glass background mode and glass alpha rows render locked with an unsupported-reason chip whenever a non-glass theme is active, and unlock when a glass family variant is active."
+- "Locked rows stay visible, searchable, and command-addressable; lock state derives from the active theme family, not from per-row static data."
+- "No WorkNodes, NodeSeeds, executable queues, final node manifests, or production build tasks are created."
+validation_surfaces:
+- "python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits"
+- "python3 scripts/pm-plan-index.py validate"
+risk_class: finalgui_drift
+reasoning_tier: standard
+context_scope: finalgui_standardization
+implementation_surfaces:
+- "Plans/FinalGUISpec.md"
+node_compile_hint:
+  mode: glass_only_setting_lock_rows
+  create_worknodes: false
+source_lineage:
+- "Plans/FinalGUISpec.md:1329"
+- "Concepts/pm6-build (PMConcept6 demo; source-lineage-only per Plans/usage-feature.md)"
+preserved_exact_tokens:
+- "unsupported-reason chip"
+- "theme family"
+negative_constraints:
+- "Glass-only settings must not disappear from the settings surface under non-glass themes; they render locked with a stated reason."
+compatibility_only_notes:
+- "Slint portability: locked rows are a disabled visual state with a chip label driven by typed theme-family state; no arbitrary-content backdrop blur, no SVG filters, and color styling is precomputed rather than runtime-mixed."
+stale_retired_dispositions: []
+owner_boundary_notes:
+- "Glass alpha clamps and slider behavior are owned by F3-429; row renderer and badge mechanics are owned by F3-438; this unit owns only the lock presentation and its theme-family derivation."
+owner_hints:
+- "Plans/FinalGUISpec.md"
+```
+
+### F3-444 - Theme And Settings Persistence Key Additions
+
+```yaml
+plan_unit_id: F3-444
+unit_type: requirement
+status: accepted
+owner_doc: Plans/FinalGUISpec.md
+canonical_text: >-
+  The section 15.1 persistence key tables register four settings-driven keys. The shell and
+  layout key table gains `glass_background_mode:v1` (active glass background mode; write
+  frequency on change) and `glass_alpha:v1` (user glass alpha value within the per-theme
+  clamps; write frequency on change, debounced 300ms). The chat, settings, and review state
+  key table gains `settings_recents:v1` (most-recent-first deduplicated settings recents
+  list, cap 8; write frequency on change, debounced 300ms) and
+  `settings_suggestions_dismissed:v1` (dismissed Suggested-shelf entries with dismissal
+  timestamps and signal scope, entries expiring after 90 days; write frequency on change).
+  The concept localStorage names pm.theme, pm.glassBg, pm.glassAlpha, and
+  pm.activity_bar_order:v2 are demo shims, not canonical keys: the canonical keys remain
+  `theme:v1` and `activity_bar_order:v1`, and this addendum registers no other new storage
+  keys.
+gui_related: true
+gui_classification_reason: This unit registers GUI persistence keys and write frequencies for theme and settings state.
+split_recommended: false
+depends_on: [F3-217]
+unblocks: []
+acceptance_criteria:
+- "The shell and layout key table registers glass_background_mode:v1 and glass_alpha:v1 with write frequencies, and the chat, settings, and review state table registers settings_recents:v1 and settings_suggestions_dismissed:v1 with write frequencies."
+- "The concept names pm.theme, pm.glassBg, pm.glassAlpha, and pm.activity_bar_order:v2 are recorded as demo shims only; canonical keys remain theme:v1 and activity_bar_order:v1."
+- "No storage keys other than glass_background_mode:v1, glass_alpha:v1, settings_recents:v1, and settings_suggestions_dismissed:v1 are registered by this addendum."
+- "No WorkNodes, NodeSeeds, executable queues, final node manifests, or production build tasks are created."
+validation_surfaces:
+- "python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits"
+- "python3 scripts/pm-plan-index.py validate"
+risk_class: finalgui_drift
+reasoning_tier: standard
+context_scope: finalgui_standardization
+implementation_surfaces:
+- "Plans/FinalGUISpec.md"
+node_compile_hint:
+  mode: theme_and_settings_persistence_key_additions
+  create_worknodes: false
+source_lineage:
+- "Plans/FinalGUISpec.md:2286"
+- "Plans/FinalGUISpec.md:2301"
+- "Plans/FinalGUISpec.md:15136"
+- "Concepts/pm6-build (PMConcept6 demo; source-lineage-only per Plans/usage-feature.md)"
+preserved_exact_tokens:
+- "glass_background_mode:v1"
+- "glass_alpha:v1"
+- "settings_recents:v1"
+- "settings_suggestions_dismissed:v1"
+- "theme:v1"
+- "activity_bar_order:v1"
+- "pm.theme"
+- "pm.glassBg"
+- "pm.glassAlpha"
+- "pm.activity_bar_order:v2"
+negative_constraints:
+- "Do not register any new storage keys in this addendum other than glass_background_mode:v1, glass_alpha:v1, settings_recents:v1, and settings_suggestions_dismissed:v1; canonical keys remain theme:v1 and activity_bar_order:v1."
+- "Do not promote the concept localStorage names pm.theme, pm.glassBg, pm.glassAlpha, or pm.activity_bar_order:v2 as canonical keys; they are demo shims preserved as lineage only."
+compatibility_only_notes:
+- "Slint portability: persistence keys are backend state contracts read and written through typed state; no arbitrary-content backdrop blur, no SVG filters, and no runtime color math are implicated by key registration."
+stale_retired_dispositions: []
+owner_boundary_notes:
+- "This unit mirrors the F3-217 registration shape; F3-217 remains the owner of the pre-existing shell and layout key list, and Plans/storage-plan.md remains the consumer doc for storage record truth."
+owner_hints:
+- "Plans/FinalGUISpec.md"
+```
+
+## PMConcept6 Shell Sweep Addendum - 2026-07-16
+
+This addendum promotes user-approved PMConcept6 shell behaviors (tabstrip recipe, hover micro-interactions, toast stack, status bar chips, terminal customization and split guard, and the testing, agents, and notifications side panels) into canonical PlanUnits. `Concepts/pm6-build/**` remains illustrative source-lineage only per `Plans/usage-feature.md`. This addendum creates no WorkNodes, NodeSeeds, executable queues, implementation files, runtime artifacts, generated wiring rows, production build tasks, final manifests, or PNC-019 receipts. The PMConcept7 Concept Promotion Addendum (2026-07-23) supersedes the toast-stack, status-bar chip, hover-jiggle, and notifications-bell/side-panel portions of this addendum; F3-446, F3-447, F3-448, and F3-453 below are amended in place and F3-460, F3-461, and F3-465 carry the successor canon.
+
+### F3-445 - Unified Non-Editor Tabstrip Recipe
+
+```yaml
+plan_unit_id: F3-445
+unit_type: requirement
+status: accepted
+owner_doc: Plans/FinalGUISpec.md
+canonical_text: >-
+  Non-editor tab systems, including page tabs, side-panel occupant tabs, and bottom-panel
+  tabs, share one tabstrip recipe: tabs lay out on a single non-wrapping row, the strip
+  scrolls horizontally when tabs overflow its width, and tab labels truncate with an
+  ellipsis. Tabs shrink flexibly between a 56px minimum and a 180px maximum width. Editor
+  tabs are explicitly excluded from this recipe and keep the width-aware "+N more" overflow
+  chip specified by F3-421.
+gui_related: true
+gui_classification_reason: This unit defines visible tabstrip layout, scrolling, and label truncation for non-editor tab systems.
+split_recommended: false
+depends_on: [F3-421]
+unblocks: []
+acceptance_criteria:
+- "Page tabs, side-panel occupant tabs, and bottom-panel tabs render on one non-wrapping row that scrolls horizontally on overflow with ellipsized labels."
+- "Tabs in these systems shrink no narrower than 56px and grow no wider than 180px."
+- "Editor tabs keep the F3-421 +N more overflow chip and do not adopt the scroll-and-ellipsis recipe."
+- "No WorkNodes, NodeSeeds, executable queues, final node manifests, or production build tasks are created."
+validation_surfaces:
+- "python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits"
+- "python3 scripts/pm-plan-index.py validate"
+risk_class: finalgui_drift
+reasoning_tier: standard
+context_scope: finalgui_standardization
+implementation_surfaces:
+- "Plans/FinalGUISpec.md"
+node_compile_hint:
+  mode: unified_non_editor_tabstrip_recipe
+  create_worknodes: false
+source_lineage:
+- "Plans/FinalGUISpec.md:27497"
+- "Concepts/pm6-build (PMConcept6 demo; source-lineage-only per Plans/usage-feature.md)"
+preserved_exact_tokens:
+- "56px"
+- "180px"
+- "+N more"
+negative_constraints:
+- "Editor tabs keep the +N more overflow chip; the scroll-and-ellipsis recipe must not replace editor tab overflow behavior."
+compatibility_only_notes:
+- "Slint portability: the tabstrip renders as an opaque horizontally scrollable row of precomputed surfaces; no arbitrary-content backdrop blur, no SVG filters, and color math is precomputed rather than runtime-mixed."
+stale_retired_dispositions: []
+owner_boundary_notes: []
+owner_hints:
+- "Plans/FinalGUISpec.md"
+```
+
+### F3-446 - Shell Hover Micro-Interactions
+
+```yaml
+plan_unit_id: F3-446
+unit_type: requirement
+status: accepted
+owner_doc: Plans/FinalGUISpec.md
+canonical_text: >-
+  Shell elements carrying the sheen treatment, approximately 40 shell elements, receive a
+  hover-lift with a sheen highlight, driven by event delegation from a shared pointer
+  handler and executed as time-bounded animation primitives rather than per-frame style
+  writes. Pointer parallax on background layers runs only while the glass theme family's
+  depth background mode is active, and all document-level pointer-move work, including
+  parallax sampling and the F3-465 magnet spotlight driver, is merged into a single shared
+  document pointer-move handler. Both effects are fully disabled under reduced motion.
+gui_related: true
+gui_classification_reason: This unit defines visible sheen hover-lift and parallax motion on shell controls.
+split_recommended: false
+depends_on: [F3-428]
+unblocks: []
+acceptance_criteria:
+- "Sheen-treated shell elements receive the hover-lift and sheen highlight on hover."
+- "Pointer parallax runs only in the glass depth background mode, and exactly one merged document pointer-move handler services parallax, delegated hover effects, and the F3-465 magnet spotlight driver."
+- "With reduced motion active, sheen hover-lift and parallax are both disabled."
+- "No WorkNodes, NodeSeeds, executable queues, final node manifests, or production build tasks are created."
+validation_surfaces:
+- "python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits"
+- "python3 scripts/pm-plan-index.py validate"
+risk_class: finalgui_drift
+reasoning_tier: standard
+context_scope: finalgui_standardization
+implementation_surfaces:
+- "Plans/FinalGUISpec.md"
+node_compile_hint:
+  mode: shell_hover_micro_interactions
+  create_worknodes: false
+source_lineage:
+- "Plans/FinalGUISpec.md:5482"
+- "Concepts/pm6-build (PMConcept6 demo; source-lineage-only per Plans/usage-feature.md)"
+preserved_exact_tokens:
+- "sheen"
+- "parallax"
+- "depth"
+negative_constraints:
+- "Do not attach per-control pointer-move listeners or multiple document pointer-move handlers for these effects."
+- "Do not run pointer parallax outside the glass depth background mode."
+compatibility_only_notes:
+- "Slint portability: the hover-lift maps to animated hover states on opaque precomputed surfaces with no per-frame style writes; no arbitrary-content backdrop blur, no SVG filters, and color math is precomputed rather than runtime-mixed."
+stale_retired_dispositions:
+- "The one-shot hover jiggle wobble on designated shell controls is retired per PMConcept7 rev 7, superseded by the F3-465 magnet spotlight hover system on the same selector set; the sheen hover-lift and glass depth parallax remain live and stay reduced-motion-disabled."
+owner_boundary_notes: []
+owner_hints:
+- "Plans/FinalGUISpec.md"
+```
+
+### F3-447 - Toast Stack Contract
+
+```yaml
+plan_unit_id: F3-447
+unit_type: requirement
+status: accepted
+owner_doc: Plans/FinalGUISpec.md
+canonical_text: >-
+  Ephemeral toast notifications stage beneath the title-bar notification stack with the
+  newest toast on top and show at most 5 concurrent staged toasts; when a new toast would
+  exceed the cap, the oldest toast is dismissed to make room. Each staged toast
+  auto-dismisses after a 3.4s time to live, and dismissal plays a fade exit animation
+  before removal. Ephemeral toasts are never archived to the shared alert store and leave
+  no store entry. Under reduced motion, staged toasts dismiss instantly with no exit
+  animation.
+gui_related: true
+gui_classification_reason: This unit defines visible ephemeral toast staging, lifetime, and dismissal behavior.
+split_recommended: false
+depends_on: []
+unblocks: []
+acceptance_criteria:
+- "At most 5 staged toasts render concurrently beneath the title-bar notification stack; a new toast beyond the cap evicts the oldest."
+- "Each staged toast auto-dismisses after its 3.4s time to live and plays a fade exit animation on dismissal."
+- "The newest toast stages on top of the staged set."
+- "Ephemeral toasts never archive to the shared alert store and leave no store entry."
+- "Under reduced motion, dismissal is instant with no exit animation."
+- "No WorkNodes, NodeSeeds, executable queues, final node manifests, or production build tasks are created."
+validation_surfaces:
+- "python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits"
+- "python3 scripts/pm-plan-index.py validate"
+risk_class: finalgui_drift
+reasoning_tier: standard
+context_scope: finalgui_standardization
+implementation_surfaces:
+- "Plans/FinalGUISpec.md"
+node_compile_hint:
+  mode: toast_stack_contract
+  create_worknodes: false
+source_lineage:
+- "Plans/FinalGUISpec.md:1484"
+- "Plans/FinalGUISpec.md:1918"
+- "Concepts/pm6-build (PMConcept6 demo; source-lineage-only per Plans/usage-feature.md)"
+preserved_exact_tokens:
+- "5"
+- "3.4s"
+negative_constraints:
+- "Do not render more than 5 concurrent staged toasts or let a toast outlive its time to live without an eviction or dismissal path."
+- "Do not archive an ephemeral toast to the shared alert store or leave any store entry for it."
+compatibility_only_notes:
+- "Slint portability: staged toasts render as opaque precomputed surfaces with translate/opacity/height animations via Slint property animations; no arbitrary-content backdrop blur, no SVG filters, and color math is precomputed rather than runtime-mixed."
+stale_retired_dispositions:
+- "The bottom-right standing toast stack surface is retired per PMConcept7 title-bar notifications; ephemeral toasts now stage beneath the title-bar notification stack owned by F3-460, with the sprout inbox panel owned by F3-461."
+owner_boundary_notes:
+- "F3-460 owns the title-bar notification stack and count badge that hosts this staging area; this unit owns the ephemeral staging cap, ordering, time to live, and exit behavior."
+owner_hints:
+- "Plans/FinalGUISpec.md"
+```
+
+### F3-448 - Status Bar Chip Inventory And Click Behaviors
+
+```yaml
+plan_unit_id: F3-448
+unit_type: requirement
+status: accepted
+owner_doc: Plans/FinalGUISpec.md
+canonical_text: >-
+  The status bar carries a canonical chip inventory: a workspace status menu; an
+  orchestrator status chip; a semantic index ticker; a ports chip; a branch chip; and a
+  sync chip. No platform picker, model picker, chat mode chip, context meter, or
+  notifications bell renders in the status bar; the assistant chat surface owns requested
+  platform, model, and mode with their applies-next-turn registration, the chat context
+  ring owns context usage display, and the title-bar notification stack and count badge
+  own the notification affordance.
+gui_related: true
+gui_classification_reason: This unit defines visible status bar chips and their click behaviors.
+split_recommended: false
+depends_on: []
+unblocks: []
+acceptance_criteria:
+- "The status bar renders exactly the workspace status menu, orchestrator status chip, semantic index ticker, ports, branch, and sync chips."
+- "No platform picker, model picker, chat mode chip, context meter, or notifications bell renders in the status bar."
+- "No WorkNodes, NodeSeeds, executable queues, final node manifests, or production build tasks are created."
+validation_surfaces:
+- "python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits"
+- "python3 scripts/pm-plan-index.py validate"
+risk_class: finalgui_drift
+reasoning_tier: standard
+context_scope: finalgui_standardization
+implementation_surfaces:
+- "Plans/FinalGUISpec.md"
+node_compile_hint:
+  mode: status_bar_chip_inventory_and_click_behaviors
+  create_worknodes: false
+source_lineage:
+- "Plans/FinalGUISpec.md:545"
+- "Plans/FinalGUISpec.md:553"
+- "Concepts/pm6-build (PMConcept6 demo; source-lineage-only per Plans/usage-feature.md)"
+preserved_exact_tokens:
+- "workspace status menu"
+- "semantic index ticker"
+negative_constraints:
+- "Do not reintroduce platform, model, mode, context, or notification chips into the status bar; those affordances are owned by the assistant chat surface, the chat context ring, and the title-bar notification stack."
+compatibility_only_notes:
+- "Slint portability: chips render as opaque precomputed surfaces; no arbitrary-content backdrop blur, no SVG filters, and color math is precomputed rather than runtime-mixed."
+stale_retired_dispositions:
+- "The status-bar platform picker chip and model picker chip are retired per PMConcept7 status-bar trim; the assistant chat surface owns requested platform and model, and the applies-next-turn semantics move with that chat-side platform/model registration (ACD-437 lineage)."
+- "The status-bar chat mode chip is retired; the assistant chat surface owns requested chat mode with the same applies-next-turn registration."
+- "The status-bar context bar chip, including its context-window fill meter and 75% warning presentation, is retired; the chat context ring owns context usage display."
+- "The status-bar notifications bell and its popover are retired per PMConcept7 title-bar notifications; the unread affordance is the title-bar notification stack count badge (F3-460) and the inbox surface is the sprout inbox panel (F3-461)."
+owner_boundary_notes:
+- "Plans/assistant-chat-design.md owns requested platform, model, and mode registration and their applies-next-turn semantics; the title-bar notification stack and inbox are owned by F3-460 and F3-461; this unit records the trimmed status-bar chip inventory."
+owner_hints:
+- "Plans/FinalGUISpec.md"
+```
+
+### F3-449 - Terminal Tab Customization
+
+```yaml
+plan_unit_id: F3-449
+unit_type: requirement
+status: accepted
+owner_doc: Plans/FinalGUISpec.md
+canonical_text: >-
+  Terminal workgroups and individual terminals support user customization from terminal tab
+  context and customize menus: per-workgroup rename, per-terminal rename, an accent color
+  chosen from an 8-color swatch, and an icon chosen from a 20-icon catalog. Chosen names,
+  colors, and icons render on the corresponding workgroup and terminal tabs.
+gui_related: true
+gui_classification_reason: This unit defines visible terminal tab rename, color, and icon customization controls.
+split_recommended: false
+depends_on: [F3-062, F3-063]
+unblocks: []
+acceptance_criteria:
+- "Workgroups and terminals can each be renamed from their tab context or customize menus."
+- "The accent swatch offers exactly 8 colors and the icon catalog offers exactly 20 icons."
+- "Chosen names, colors, and icons render on the corresponding workgroup and terminal tabs."
+- "No WorkNodes, NodeSeeds, executable queues, final node manifests, or production build tasks are created."
+validation_surfaces:
+- "python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits"
+- "python3 scripts/pm-plan-index.py validate"
+risk_class: finalgui_drift
+reasoning_tier: standard
+context_scope: finalgui_standardization
+implementation_surfaces:
+- "Plans/FinalGUISpec.md"
+node_compile_hint:
+  mode: terminal_tab_customization
+  create_worknodes: false
+source_lineage:
+- "Plans/FinalGUISpec.md:6892"
+- "Plans/FinalGUISpec.md:6945"
+- "Concepts/pm6-build (PMConcept6 demo; source-lineage-only per Plans/usage-feature.md)"
+preserved_exact_tokens:
+- "8"
+- "20"
+negative_constraints:
+- "Do not expose customization through hidden gestures only; the tab context or customize menu is the canonical entry point."
+compatibility_only_notes:
+- "Slint portability: context and customize menus render as opaque precomputed surfaces; no arbitrary-content backdrop blur, no SVG filters, and color math is precomputed rather than runtime-mixed."
+stale_retired_dispositions: []
+owner_boundary_notes: []
+owner_hints:
+- "Plans/FinalGUISpec.md"
+```
+
+### F3-450 - Terminal Pane Split Guard
+
+```yaml
+plan_unit_id: F3-450
+unit_type: constraint
+status: accepted
+owner_doc: Plans/FinalGUISpec.md
+canonical_text: >-
+  A terminal workgroup section holds at most 4 leaf panes, arranged in a 2x2 grid at
+  capacity. When a section is at the 4-pane cap, split affordances render disabled with a
+  visible reason instead of disappearing or failing silently.
+gui_related: true
+gui_classification_reason: This unit constrains visible terminal split layout and split affordance states.
+split_recommended: false
+depends_on: [F3-063]
+unblocks: []
+acceptance_criteria:
+- "No split action can create a fifth pane in a terminal workgroup section."
+- "Four panes in a section lay out as a 2x2 grid."
+- "At the cap, split affordances are disabled with a visible reason rather than hidden or silently inert."
+- "No WorkNodes, NodeSeeds, executable queues, final node manifests, or production build tasks are created."
+validation_surfaces:
+- "python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits"
+- "python3 scripts/pm-plan-index.py validate"
+risk_class: finalgui_drift
+reasoning_tier: standard
+context_scope: finalgui_standardization
+implementation_surfaces:
+- "Plans/FinalGUISpec.md"
+node_compile_hint:
+  mode: terminal_pane_split_guard
+  create_worknodes: false
+source_lineage:
+- "Plans/FinalGUISpec.md:6945"
+- "Concepts/pm6-build (PMConcept6 demo; source-lineage-only per Plans/usage-feature.md)"
+preserved_exact_tokens:
+- "4"
+- "2x2"
+negative_constraints:
+- "Split affordances must not silently no-op or disappear at the pane cap; they disable with a reason."
+compatibility_only_notes:
+- "Slint portability: disabled split affordances and their reason presentation render as opaque precomputed surfaces; no arbitrary-content backdrop blur, no SVG filters, and color math is precomputed rather than runtime-mixed."
+stale_retired_dispositions: []
+owner_boundary_notes: []
+owner_hints:
+- "Plans/FinalGUISpec.md"
+```
+
+### F3-451 - Testing Side Panel
+
+```yaml
+plan_unit_id: F3-451
+unit_type: requirement
+status: accepted
+owner_doc: Plans/FinalGUISpec.md
+canonical_text: >-
+  The Testing side panel joins the canonical side-panel inventory. The occupant displays
+  the project's test policy, the last test run status and results, and a run-tests control
+  wired to the test runner subsystem so runs started from the panel execute through the
+  canonical test execution path.
+gui_related: true
+gui_classification_reason: This unit defines a visible side panel and its displayed testing surface.
+split_recommended: false
+depends_on: [F3-042, F3-035]
+unblocks: []
+acceptance_criteria:
+- "Testing appears in the canonical side-panel inventory and opens as a side-panel occupant."
+- "The occupant displays the test policy and the last run status and results."
+- "The run-tests control invokes the test runner subsystem's canonical execution path."
+- "No WorkNodes, NodeSeeds, executable queues, final node manifests, or production build tasks are created."
+validation_surfaces:
+- "python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits"
+- "python3 scripts/pm-plan-index.py validate"
+risk_class: finalgui_drift
+reasoning_tier: standard
+context_scope: finalgui_standardization
+implementation_surfaces:
+- "Plans/FinalGUISpec.md"
+node_compile_hint:
+  mode: testing_side_panel
+  create_worknodes: false
+source_lineage:
+- "Plans/FinalGUISpec.md:5854"
+- "Plans/FinalGUISpec.md:5482"
+- "Concepts/pm6-build (PMConcept6 demo; source-lineage-only per Plans/usage-feature.md)"
+preserved_exact_tokens:
+- "Testing"
+- "test policy"
+negative_constraints:
+- "The panel must not define or duplicate test execution semantics; it displays and wires to the test runner subsystem."
+compatibility_only_notes:
+- "Slint portability: the panel occupant renders as opaque precomputed surfaces; no arbitrary-content backdrop blur, no SVG filters, and color math is precomputed rather than runtime-mixed."
+stale_retired_dispositions: []
+owner_boundary_notes:
+- "Plans/Automated_Testing_System.md owns test execution behavior, policy semantics, runner selection, and result production; this unit records only the Testing panel's presence in the side-panel inventory and its display and wiring surface."
+- "The F3-042 inventory edit (8 panels to 11) lands in the same seal; this unit references plain F3-042."
+owner_hints:
+- "Plans/FinalGUISpec.md"
+```
+
+### F3-452 - Agents Side Panel
+
+```yaml
+plan_unit_id: F3-452
+unit_type: requirement
+status: accepted
+owner_doc: Plans/FinalGUISpec.md
+canonical_text: >-
+  The Agents side panel joins the canonical side-panel inventory. The occupant mirrors the
+  subagent registry, listing active and available subagents, and provides lineage
+  entrypoints that navigate to the corresponding agent lineage views.
+gui_related: true
+gui_classification_reason: This unit defines a visible side panel and its displayed subagent surface.
+split_recommended: false
+depends_on: [F3-042]
+unblocks: []
+acceptance_criteria:
+- "Agents appears in the canonical side-panel inventory and opens as a side-panel occupant."
+- "The occupant lists active and available subagents mirrored from the subagent registry."
+- "Lineage entrypoints navigate to the corresponding agent lineage views."
+- "No WorkNodes, NodeSeeds, executable queues, final node manifests, or production build tasks are created."
+validation_surfaces:
+- "python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits"
+- "python3 scripts/pm-plan-index.py validate"
+risk_class: finalgui_drift
+reasoning_tier: standard
+context_scope: finalgui_standardization
+implementation_surfaces:
+- "Plans/FinalGUISpec.md"
+node_compile_hint:
+  mode: agents_side_panel
+  create_worknodes: false
+source_lineage:
+- "Plans/FinalGUISpec.md:5854"
+- "Concepts/pm6-build (PMConcept6 demo; source-lineage-only per Plans/usage-feature.md)"
+preserved_exact_tokens:
+- "Agents"
+- "subagent registry"
+negative_constraints:
+- "The panel must not maintain its own subagent state; it mirrors the subagent registry."
+compatibility_only_notes:
+- "Slint portability: the panel occupant renders as opaque precomputed surfaces; no arbitrary-content backdrop blur, no SVG filters, and color math is precomputed rather than runtime-mixed."
+stale_retired_dispositions: []
+owner_boundary_notes:
+- "The subagent registry and lineage semantics are owned by their existing planning documents; this unit records the panel's presence in the inventory and its mirror and entrypoint surface."
+owner_hints:
+- "Plans/FinalGUISpec.md"
+```
+
+### F3-453 - Notifications Side Panel And Alert Lifecycle
+
+```yaml
+plan_unit_id: F3-453
+unit_type: requirement
+status: accepted
+owner_doc: Plans/FinalGUISpec.md
+canonical_text: >-
+  This unit owns the shared alert store. Alerts carry an acknowledge (ack) and snooze
+  lifecycle: acknowledging clears an alert's unread state, snoozing hides the alert until
+  its snooze window elapses, and unresolved alerts persist in the store and render in the
+  title-bar sprout inbox list. Unread alerts drive the count badge on the title-bar
+  notification stack (F3-460). The title-bar collapsed stack and the sprout inbox panel
+  render from this one alert store; no surface keeps a private copy of alert state.
+gui_related: true
+gui_classification_reason: This unit defines the shared alert store, alert lifecycle controls, and the unread indicator contract.
+split_recommended: false
+depends_on: [F3-042]
+unblocks: []
+acceptance_criteria:
+- "Alerts support acknowledge and snooze; ack clears unread state and snooze hides the alert until its snooze window elapses; unresolved alerts persist in the shared alert store."
+- "Unread alerts drive the count badge on the title-bar notification stack (F3-460)."
+- "The title-bar collapsed stack and the sprout inbox panel render from one shared alert store; no surface keeps a private alert copy."
+- "No WorkNodes, NodeSeeds, executable queues, final node manifests, or production build tasks are created."
+validation_surfaces:
+- "python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits"
+- "python3 scripts/pm-plan-index.py validate"
+risk_class: finalgui_drift
+reasoning_tier: standard
+context_scope: finalgui_standardization
+implementation_surfaces:
+- "Plans/FinalGUISpec.md"
+node_compile_hint:
+  mode: notifications_side_panel_and_alert_lifecycle
+  create_worknodes: false
+source_lineage:
+- "Plans/FinalGUISpec.md:72"
+- "Plans/FinalGUISpec.md:5854"
+- "Concepts/pm6-build (PMConcept6 demo; source-lineage-only per Plans/usage-feature.md)"
+preserved_exact_tokens:
+- "ack"
+- "snooze"
+- "count badge"
+negative_constraints:
+- "No surface may maintain a private alert copy; the title-bar collapsed stack and the sprout inbox panel consume the one shared alert store."
+- "Alert severity, source, and owner-route data follow the shared notification model; the inbox panel must not invent local alert state."
+compatibility_only_notes:
+- "Slint portability: the inbox list, count badge, and lifecycle controls render as opaque precomputed surfaces; no arbitrary-content backdrop blur, no SVG filters, and color math is precomputed rather than runtime-mixed."
+stale_retired_dispositions:
+- "The dedicated Notifications side panel affordance is retired per PMConcept7 title-bar notifications; the alert store and ack/snooze lifecycle survive in this unit, and the rendering surfaces are the title-bar notification stack (F3-460) and the sprout inbox panel (F3-461)."
+- "The activity-bar Notifications item and its rail unread dot are retired; the unread affordance is the title-bar notification stack count badge (F3-460)."
+- "The status-bar notifications bell and its popover are retired; the amended F3-448 status-bar inventory no longer includes a bell."
+owner_boundary_notes:
+- "The design table listed F3-448 and F3-453 as mutually dependent; the cycle was resolved one-way and stays one-way after the PMConcept7 retarget: F3-453 owns the shared alert store and depends only on F3-042, while the title-bar stack and inbox presentation units (F3-460, F3-461) depend on F3-453."
+- "The F3-042 inventory edit (8 panels to 11) landed in the 2026-07-16 seal; the 2026-07-23 PMConcept7 promotion retires the notifications panel from that inventory. This unit references plain F3-042."
+owner_hints:
+- "Plans/FinalGUISpec.md"
+```
+
+## PMConcept7 Concept Promotion Addendum - 2026-07-23
+
+This addendum promotes user-approved PMConcept7 title-bar notification, page-chrome, tab-motion, hover-system, boot-paint, chat-rail, and wizard-runhead behaviors (ChatGuiUpdates2 workstreams, revs 4-9.2) into canonical PlanUnits. `Concepts/PMConcept7.html` and `Concepts/ChatGuiUpdates2.md` remain illustrative source-lineage only. This addendum creates no WorkNodes, NodeSeeds, executable queues, implementation files, runtime artifacts, generated wiring rows, production build tasks, final manifests, or PNC-019 receipts.
+
+### F3-460 - Title-Bar Notification Stack And Count Badge
+
+```yaml
+plan_unit_id: F3-460
+unit_type: requirement
+status: accepted
+owner_doc: Plans/FinalGUISpec.md
+canonical_text: >-
+  The title bar hosts a rightward notification stack with a count badge, sitting between
+  the title-bar page tabs and the title-bar search, and this stack is the sole in-app
+  notification affordance. Ephemeral toasts stage beneath the stack per the F3-447 staging
+  contract and never join the stack or the alert store. Durable or important notifications
+  stage and then join the collapsed stack with a join animation; the unread count renders
+  on the count badge, and stacked items render from the shared alert store owned by F3-453
+  with no private alert state on any surface. Theme chrome: glass renders the collapsed
+  stack with the glass plate family and a mild left-mask peek from rgba(0,0,0,.72) to
+  solid by 4%; retro renders a hard offset shadow; friendly renders free-floating cozy
+  solid cards on the cozy card base fill with the stack and panel above page content.
+  OS/system-tray notifications are a separate delivery layer and are unchanged.
+gui_related: true
+gui_classification_reason: This unit defines the visible title-bar notification stack, staging, join, and count badge behavior.
+split_recommended: false
+depends_on: [F3-453]
+unblocks: []
+acceptance_criteria:
+- "The title bar renders the rightward notification stack and count badge between the title-bar page tabs and the title-bar search, and no other in-app surface offers a standing notification affordance."
+- "Ephemeral toasts stage beneath the stack per the F3-447 contract and never join the stack or leave an alert store entry."
+- "Durable notifications join the collapsed stack with a join animation, and the count badge renders the unread count from the shared alert store."
+- "Glass renders the collapsed-stack left mask as a mild peek from rgba(0,0,0,.72) to solid by 4%, retro renders a hard offset shadow, and friendly renders free-floating cozy solid cards above page content."
+- "No WorkNodes, NodeSeeds, executable queues, final node manifests, or production build tasks are created."
+validation_surfaces:
+- "python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits"
+- "python3 scripts/pm-plan-index.py validate"
+risk_class: finalgui_drift
+reasoning_tier: standard
+context_scope: finalgui_standardization
+implementation_surfaces:
+- "Plans/FinalGUISpec.md"
+node_compile_hint:
+  mode: title_bar_notification_stack_and_count_badge
+  create_worknodes: false
+source_lineage:
+- "Concepts/PMConcept7.html (PMConcept7 demo rev 9.2; source-lineage-only per Plans/usage-feature.md)"
+- "Concepts/ChatGuiUpdates2.md (PM8 workstream and rev 4-9.2 ship notes; source-lineage-only)"
+preserved_exact_tokens:
+- "count badge"
+- "rgba(0,0,0,.72)"
+- "4%"
+negative_constraints:
+- "Do not reintroduce a bottom-right standing toast stack, a status-bar notifications bell, an activity-bar notifications shortcut or unread dot, or a dedicated Notifications side panel affordance."
+- "Do not keep private alert state on the stack; stacked items render from the F3-453 shared alert store."
+compatibility_only_notes:
+- "Slint portability: the collapsed stack, staged toasts, and count badge render as opaque precomputed surfaces with translate/opacity/height animations via Slint property animations; no arbitrary-content backdrop blur, no SVG filters, and color math is precomputed rather than runtime-mixed."
+stale_retired_dispositions:
+- "The bottom-right standing toast stack surface is retired; ephemeral toasts stage beneath the title-bar notification stack per the amended F3-447 contract."
+- "The status-bar notifications bell and its popover are retired per the amended F3-448 inventory; the unread affordance is this unit's count badge."
+owner_boundary_notes:
+- "F3-453 owns the shared alert store and ack/snooze lifecycle; F3-447 owns the ephemeral staging cap, ordering, time to live, and exit; F3-461 owns the sprout inbox panel and kind-specific action rows."
+owner_hints:
+- "Plans/FinalGUISpec.md"
+```
+
+### F3-461 - Notification Inbox Sprout Panel And Kind Action Rows
+
+```yaml
+plan_unit_id: F3-461
+unit_type: requirement
+status: accepted
+owner_doc: Plans/FinalGUISpec.md
+canonical_text: >-
+  Clicking the title-bar notification stack expands a sprout inbox panel using the same
+  corner-origin sprout motion family as the chat popouts. Single-item dismiss animates a
+  height spring with a size-bounce while the panel is open; Clear all runs a bottom-to-top
+  collapse-up and then the panel sprout-closes with no empty flash; Esc and outside-click
+  close the panel. Cards render kind-specific compact action rows: HITL cards offer
+  Approve, Decline, Details, and Explain with Explain read-only; Permission cards offer
+  Deny, Once, Session, and Always with pattern edit on Always per the Permissions ladder;
+  FileSafe cards follow the FileSafe ladder with its 60s TTL; Concern cards require
+  rationale for dismiss, resolve, or acknowledge per the Contracts rationale rules; Usage
+  and Wizard cards carry their compact rows. Full questionnaire forms stay on owner
+  surfaces; title-bar cards expose compact action rows plus optional rationale or Explain
+  only. Details is the click-through label, and click-through routes via
+  primary_route_payload / cmd.alert.open_source with the Contracts route_kind enumeration
+  including toast. Dismissing a card never resolves the underlying blocker, and ephemeral
+  cards are X-dismiss only. The inbox list bottom fade starts at 96% with bottom padding
+  so card bottoms are not clipped.
+gui_related: true
+gui_classification_reason: This unit defines the visible sprout inbox panel, its dismiss and clear motions, and kind-specific compact action rows.
+split_recommended: false
+depends_on: [F3-460, F3-453]
+unblocks: []
+acceptance_criteria:
+- "Clicking the stack opens the sprout inbox with the corner-origin sprout motion family; Esc and outside-click close it."
+- "Single-item dismiss plays a height spring with size-bounce while the panel is open, and Clear all collapses items bottom-to-top before the panel sprout-closes with no empty flash."
+- "Kind-specific compact action rows render per card kind (HITL, Permission, FileSafe, Concern, Usage, Wizard), and full questionnaire forms remain on owner surfaces."
+- "Details click-through routes via primary_route_payload / cmd.alert.open_source, dismissing a card never resolves the underlying blocker, and ephemeral cards are X-dismiss only."
+- "The inbox list bottom fade starts at 96% and bottom padding keeps card bottoms unclipped."
+- "No WorkNodes, NodeSeeds, executable queues, final node manifests, or production build tasks are created."
+validation_surfaces:
+- "python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits"
+- "python3 scripts/pm-plan-index.py validate"
+risk_class: finalgui_drift
+reasoning_tier: standard
+context_scope: finalgui_standardization
+implementation_surfaces:
+- "Plans/FinalGUISpec.md"
+node_compile_hint:
+  mode: notification_inbox_sprout_panel_and_kind_action_rows
+  create_worknodes: false
+source_lineage:
+- "Concepts/PMConcept7.html (PMConcept7 demo rev 9.2; source-lineage-only per Plans/usage-feature.md)"
+- "Concepts/ChatGuiUpdates2.md (PM8 workstream and rev 4-9.2 ship notes; source-lineage-only)"
+preserved_exact_tokens:
+- "Details"
+- "primary_route_payload"
+- "cmd.alert.open_source"
+- "route_kind"
+- "60s"
+- "96%"
+negative_constraints:
+- "Do not embed full questionnaire forms in title-bar cards; compact action rows plus optional rationale or Explain only."
+- "Do not let card dismissal resolve a blocking item; dismiss and resolve stay distinct."
+compatibility_only_notes:
+- "Slint portability: the sprout inbox panel and its cards render as opaque precomputed surfaces with translate/opacity/height animations via Slint property animations; no arbitrary-content backdrop blur, no SVG filters, and color math is precomputed rather than runtime-mixed."
+stale_retired_dispositions:
+- "The dedicated Notifications side panel rendering affordance is retired; the sprout inbox panel is the durable-alert rendering surface, while F3-453 continues to own the alert store and lifecycle."
+owner_boundary_notes:
+- "HITL, Permission, FileSafe, and Concern action semantics are owned by their existing planning documents (HITL blocked-sequence and allowed_action_ids, the Permissions ladder, the FileSafe ladder and TTL, and the Contracts rationale and route_kind rules); this unit owns the inbox presentation and compact-row surface only."
+owner_hints:
+- "Plans/FinalGUISpec.md"
+```
+
+### F3-462 - Page Header Projects-Like Layout
+
+```yaml
+plan_unit_id: F3-462
+unit_type: requirement
+status: accepted
+owner_doc: Plans/FinalGUISpec.md
+canonical_text: >-
+  On non-retro themes, the Orchestrator, Usage, and Planning Wizard workspace page headers
+  match the Projects page top layout: title cluster left, actions and meta right, open
+  flex, and no dense full-bleed IDE chrome bar. The friendly theme family renders rounded
+  inset header boxes using radius-lg and the cozy card surface; the glass and basic
+  families render the open Projects-like layout; the retro family keeps its existing
+  chrome bars.
+gui_related: true
+gui_classification_reason: This unit defines visible page-header layout and theme box presentation.
+split_recommended: false
+depends_on: []
+unblocks: []
+acceptance_criteria:
+- "Orchestrator, Usage, and Planning Wizard workspace headers on non-retro themes lay out title cluster left and actions/meta right with open flex and no full-bleed chrome bar."
+- "Friendly renders rounded inset header boxes (radius-lg, cozy card surface); glass and basic render open Projects-like headers; retro keeps its chrome bars."
+- "No WorkNodes, NodeSeeds, executable queues, final node manifests, or production build tasks are created."
+validation_surfaces:
+- "python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits"
+- "python3 scripts/pm-plan-index.py validate"
+risk_class: finalgui_drift
+reasoning_tier: standard
+context_scope: finalgui_standardization
+implementation_surfaces:
+- "Plans/FinalGUISpec.md"
+node_compile_hint:
+  mode: page_header_projects_like_layout
+  create_worknodes: false
+source_lineage:
+- "Concepts/PMConcept7.html (PMConcept7 demo rev 9.2; source-lineage-only per Plans/usage-feature.md)"
+- "Concepts/ChatGuiUpdates2.md (PM8 workstream and rev 4-9.2 ship notes; source-lineage-only)"
+preserved_exact_tokens:
+- "radius-lg"
+negative_constraints:
+- "Do not render a dense full-bleed IDE chrome bar for these page headers on non-retro themes."
+compatibility_only_notes:
+- "Slint portability: header boxes render as opaque precomputed surfaces; no arbitrary-content backdrop blur, no SVG filters, and color math is precomputed rather than runtime-mixed."
+stale_retired_dispositions: []
+owner_boundary_notes:
+- "Plans/Orchestrator_Page.md, Plans/usage-feature.md, and Plans/Planning_Wizard.md own their pages' content and data semantics; this unit owns top-of-page header layout presentation only."
+owner_hints:
+- "Plans/FinalGUISpec.md"
+```
+
+### F3-463 - Orchestrator Tab Strip Theme Presentation
+
+```yaml
+plan_unit_id: F3-463
+unit_type: requirement
+status: accepted
+owner_doc: Plans/FinalGUISpec.md
+canonical_text: >-
+  The Orchestrator tab strip keeps its tab set unchanged and restyles presentation per
+  theme. Friendly renders a rounded cozy pill bar under the header pill with a visible
+  gap, and active tabs are mint pills with no underline. Glass renders a rounded frosted
+  bar matching the Projects sort-by toolbar, glass step-2 with hairline and inset edge,
+  with the active tab at step-3. Retro and basic keep the legacy underline chrome strip.
+  The strip carries bottom margin so the Node Graph pane and other panes do not sit flush
+  beneath it.
+gui_related: true
+gui_classification_reason: This unit defines visible Orchestrator tab-strip theme skins and the content gap beneath the strip.
+split_recommended: false
+depends_on: []
+unblocks: []
+acceptance_criteria:
+- "The Orchestrator tab set (Progress, Plan Compile, Seams, Node Graph, Evidence, History, Ledger) is unchanged by this unit; only presentation changes."
+- "Friendly renders the rounded cozy pill bar with mint active pills and no underline; glass renders the frosted step-2 bar with hairline and inset edge and a step-3 active tab; retro and basic keep the legacy underline strip."
+- "The strip has bottom margin so the Node Graph pane and other panes do not sit flush beneath it."
+- "No WorkNodes, NodeSeeds, executable queues, final node manifests, or production build tasks are created."
+validation_surfaces:
+- "python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits"
+- "python3 scripts/pm-plan-index.py validate"
+risk_class: finalgui_drift
+reasoning_tier: standard
+context_scope: finalgui_standardization
+implementation_surfaces:
+- "Plans/FinalGUISpec.md"
+node_compile_hint:
+  mode: orchestrator_tab_strip_theme_presentation
+  create_worknodes: false
+source_lineage:
+- "Concepts/PMConcept7.html (PMConcept7 demo rev 9.2; source-lineage-only per Plans/usage-feature.md)"
+- "Concepts/ChatGuiUpdates2.md (PM8 workstream and rev 4-9.2 ship notes; source-lineage-only)"
+preserved_exact_tokens:
+- "step-2"
+- "step-3"
+negative_constraints:
+- "Do not change the Orchestrator tab set, tab order, or tab semantics from this unit; presentation only."
+compatibility_only_notes:
+- "Slint portability: the tab strip renders as opaque precomputed surfaces; no arbitrary-content backdrop blur, no SVG filters, and color math is precomputed rather than runtime-mixed."
+stale_retired_dispositions: []
+owner_boundary_notes:
+- "The Orchestrator tab set and tab semantics are owned by Plans/Orchestrator_Page.md; this unit owns tab-strip theme presentation and the content gap only."
+owner_hints:
+- "Plans/FinalGUISpec.md"
+```
+
+### F3-464 - Page Tab Sliding Ink And Directional Page Transitions
+
+```yaml
+plan_unit_id: F3-464
+unit_type: requirement
+status: accepted
+owner_doc: Plans/FinalGUISpec.md
+canonical_text: >-
+  The active page-tab chrome is a single shared ink element that springs between tabs,
+  animating position and width with spring stiffness 500 and damping 35, while the active
+  tab itself keeps only its text color and weight. Per-theme ink skins: retro renders a
+  lime slab with border, basic renders an accent slab, glass renders a step-3 frost pill
+  with inset edge, and friendly renders a mint-mix pill with glow. Page changes animate
+  directionally from tab order: the leaving page slides out 50px against the travel
+  direction with a 150ms linear fade, and the entering page slides in from 50px over 300ms
+  with a cubic-bezier(.25,1,.5,1) crossfade, with no blank gap and no full-page blur. The
+  ink resyncs with a snap and no spring on theme or motion change, window resize, and
+  fonts-ready. Under reduced motion the ink snaps and the panel animation is skipped
+  entirely. First paint never runs an enter animation; page transitions gate until after
+  boot.
+gui_related: true
+gui_classification_reason: This unit defines visible page-tab active chrome motion and directional page transitions.
+split_recommended: false
+depends_on: [F3-034]
+unblocks: []
+acceptance_criteria:
+- "A single shared ink element animates position and width between page tabs with spring stiffness 500 and damping 35, and the active tab keeps only text color and weight."
+- "Page changes slide directionally from tab order: exit 50px against direction with a 150ms linear fade, enter from 50px over 300ms with a cubic-bezier(.25,1,.5,1) crossfade, with no blank gap and no full-page blur."
+- "The ink snap-resyncs on theme or motion change, window resize, and fonts-ready; reduced motion snaps the ink and skips the panel animation entirely."
+- "First paint never runs an enter animation and transitions gate until after boot."
+- "No WorkNodes, NodeSeeds, executable queues, final node manifests, or production build tasks are created."
+validation_surfaces:
+- "python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits"
+- "python3 scripts/pm-plan-index.py validate"
+risk_class: finalgui_drift
+reasoning_tier: standard
+context_scope: finalgui_standardization
+implementation_surfaces:
+- "Plans/FinalGUISpec.md"
+node_compile_hint:
+  mode: page_tab_sliding_ink_and_directional_page_transitions
+  create_worknodes: false
+source_lineage:
+- "Concepts/PMConcept7.html (PMConcept7 demo rev 9.2; source-lineage-only per Plans/usage-feature.md)"
+- "Concepts/ChatGuiUpdates2.md (PM8 workstream and rev 4-9.2 ship notes; source-lineage-only)"
+preserved_exact_tokens:
+- "500"
+- "35"
+- "50px"
+- "150ms"
+- "300ms"
+- "cubic-bezier(.25,1,.5,1)"
+negative_constraints:
+- "Do not insert a blank gap between the leaving and entering pages and do not blur the full page during transitions."
+compatibility_only_notes:
+- "Slint portability: the ink and page panels render as opaque precomputed surfaces with translate/opacity/width animations via Slint property animations; no arbitrary-content backdrop blur, no SVG filters, and color math is precomputed rather than runtime-mixed."
+stale_retired_dispositions: []
+owner_boundary_notes:
+- "F3-445 owns the non-editor tabstrip layout recipe; F3-468 owns the boot paint and first-paint transition gate this unit consumes; this unit owns the shared ink and directional transition presentation."
+owner_hints:
+- "Plans/FinalGUISpec.md"
+```
+
+### F3-465 - Magnet Spotlight Hover System
+
+```yaml
+plan_unit_id: F3-465
+unit_type: requirement
+status: accepted
+owner_doc: Plans/FinalGUISpec.md
+canonical_text: >-
+  The selector set formerly covered by the one-shot hover jiggle runs a pointer-tracking
+  magnet and spotlight hover system. The hovered box translates a few pixels toward the
+  pointer via a spring using the standalone translate channel only, never transform-matrix
+  composition that fights entrance animations. A continuous-intensity pointer-local accent
+  ring renders as a border band with a soft interior wash and an outward bloom, and
+  intensity ramps continuously from a bleed distance outside the box to full inside with
+  no snap at edges. Overlaying panels must not light boxes beneath them, and nested
+  targets resolve to the outer box. Per-theme feel knobs cover ring size and softness,
+  magnet strength, and spring stiffness and damping: retro is stiff with a small hard
+  ring, basic is restrained, glass has a wide soft ring and stronger magnet, and friendly
+  is springy with micro-overshoot, with the accent color riding the theme accent. Reduced
+  motion kills the entire system by clearing translate and glow and stopping the engine.
+  One shared animation driver services the system, effect writes are compositor-friendly
+  translate and opacity writes, and the driver self-suspends when nothing is hovered,
+  settling, or glowing.
+gui_related: true
+gui_classification_reason: This unit defines visible magnet lean, spotlight ring, wash, and bloom hover behavior on shell boxes.
+split_recommended: false
+depends_on: []
+unblocks: []
+acceptance_criteria:
+- "Every box in the former jiggle selector set runs the magnet and spotlight hover system with spring translate toward the pointer and a continuous-intensity accent ring, interior wash, and outward bloom."
+- "Intensity ramps continuously from a bleed distance outside the box with no snap at edges; overlaying panels do not light boxes beneath them, and nested targets resolve to the outer box."
+- "Per-theme knobs give retro a stiff small hard ring, basic restraint, glass a wide soft ring with stronger magnet, and friendly springy micro-overshoot, with the accent color riding the theme accent."
+- "Reduced motion clears translate and glow and stops the engine; one shared self-suspending driver performs compositor-friendly translate and opacity writes."
+- "No WorkNodes, NodeSeeds, executable queues, final node manifests, or production build tasks are created."
+validation_surfaces:
+- "python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits"
+- "python3 scripts/pm-plan-index.py validate"
+risk_class: finalgui_drift
+reasoning_tier: standard
+context_scope: finalgui_standardization
+implementation_surfaces:
+- "Plans/FinalGUISpec.md"
+node_compile_hint:
+  mode: magnet_spotlight_hover_system
+  create_worknodes: false
+source_lineage:
+- "Concepts/PMConcept7.html (PMConcept7 demo rev 9.2; source-lineage-only per Plans/usage-feature.md)"
+- "Concepts/ChatGuiUpdates2.md (PM8 workstream and rev 4-9.2 ship notes; source-lineage-only)"
+preserved_exact_tokens:
+- "magnet"
+- "spotlight"
+- "bleed"
+- "translate"
+negative_constraints:
+- "Do not compose the magnet through transform-matrix writes that fight entrance animations; use the standalone translate channel."
+- "Do not attach per-element pointer-move listeners; one shared driver services the whole selector set through the merged document pointer-move handler."
+compatibility_only_notes:
+- "Slint portability: the magnet maps to translate plus an animated spring, pointer tracking maps to TouchArea.mouse-cursor-position, the ring renders as a radial-gradient Rectangle with an inner cover instead of a mask, the wash is a second under-content Rectangle, and the bloom is a drop-shadow on the box (ScrollView clips automatically with no fixed proxy needed); no blend modes, filters, or canvas."
+stale_retired_dispositions:
+- "The F3-446 one-shot hover jiggle wobble is retired on its entire selector set and superseded by this magnet and spotlight system; the F3-446 sheen hover-lift and glass depth parallax remain live."
+owner_boundary_notes:
+- "F3-446 owns the sheen hover-lift, glass depth parallax, and the single merged document pointer-move handler this system rides on."
+owner_hints:
+- "Plans/FinalGUISpec.md"
+```
+
+### F3-466 - Friendly Editor File Tab Shape
+
+```yaml
+plan_unit_id: F3-466
+unit_type: requirement
+status: accepted
+owner_doc: Plans/FinalGUISpec.md
+canonical_text: >-
+  On the friendly theme family, editor file tabs render as top-rounded folder tabs with
+  radius-md applied to the top corners only and a cozy mint active fill; they do not
+  render as full pills on a bordered strip.
+gui_related: true
+gui_classification_reason: This unit defines the visible friendly-theme editor file tab shape and active fill.
+split_recommended: false
+depends_on: []
+unblocks: []
+acceptance_criteria:
+- "Friendly editor file tabs round only their top corners at radius-md and use the cozy mint active fill."
+- "Friendly editor file tabs do not render as full pills on a bordered strip."
+- "No WorkNodes, NodeSeeds, executable queues, final node manifests, or production build tasks are created."
+validation_surfaces:
+- "python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits"
+- "python3 scripts/pm-plan-index.py validate"
+risk_class: finalgui_drift
+reasoning_tier: standard
+context_scope: finalgui_standardization
+implementation_surfaces:
+- "Plans/FinalGUISpec.md"
+node_compile_hint:
+  mode: friendly_editor_file_tab_shape
+  create_worknodes: false
+source_lineage:
+- "Concepts/PMConcept7.html (PMConcept7 demo rev 9.2; source-lineage-only per Plans/usage-feature.md)"
+- "Concepts/ChatGuiUpdates2.md (PM8 workstream and rev 4-9.2 ship notes; source-lineage-only)"
+preserved_exact_tokens:
+- "radius-md"
+negative_constraints:
+- "Do not render friendly editor file tabs as full pills on a bordered strip."
+compatibility_only_notes:
+- "Slint portability: editor tabs render as opaque precomputed surfaces with per-corner radii; no arbitrary-content backdrop blur, no SVG filters, and color math is precomputed rather than runtime-mixed."
+stale_retired_dispositions: []
+owner_boundary_notes:
+- "F3-421 owns editor tab overflow behavior; this unit owns the friendly-theme tab shape and active fill only."
+owner_hints:
+- "Plans/FinalGUISpec.md"
+```
+
+### F3-467 - Friendly Pill Field End Clearance
+
+```yaml
+plan_unit_id: F3-467
+unit_type: requirement
+status: accepted
+owner_doc: Plans/FinalGUISpec.md
+canonical_text: >-
+  On the friendly theme family, pill-shaped chrome, including text, search, and select
+  fields and pill controls, carries enough inline padding, roughly half the control height
+  and 12-14px at default sizes, that glyphs clear the rounded ends, and overflow stays
+  visible so the focus glow is not clipped.
+gui_related: true
+gui_classification_reason: This unit defines visible friendly-theme pill field padding and focus glow clearance.
+split_recommended: false
+depends_on: []
+unblocks: []
+acceptance_criteria:
+- "Friendly pill fields and pill controls pad inline by roughly half the control height (12-14px at default sizes) so glyphs clear the rounded ends."
+- "Focus glow renders unclipped on friendly pill chrome with overflow visible."
+- "No WorkNodes, NodeSeeds, executable queues, final node manifests, or production build tasks are created."
+validation_surfaces:
+- "python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits"
+- "python3 scripts/pm-plan-index.py validate"
+risk_class: finalgui_drift
+reasoning_tier: standard
+context_scope: finalgui_standardization
+implementation_surfaces:
+- "Plans/FinalGUISpec.md"
+node_compile_hint:
+  mode: friendly_pill_field_end_clearance
+  create_worknodes: false
+source_lineage:
+- "Concepts/PMConcept7.html (PMConcept7 demo rev 9.2; source-lineage-only per Plans/usage-feature.md)"
+- "Concepts/ChatGuiUpdates2.md (PM8 workstream and rev 4-9.2 ship notes; source-lineage-only)"
+preserved_exact_tokens:
+- "12-14px"
+negative_constraints:
+- "Do not clip the focus glow on friendly pill chrome and do not let glyphs enter the rounded ends."
+compatibility_only_notes:
+- "Slint portability: pill fields render as opaque precomputed surfaces with static padding values; no arbitrary-content backdrop blur, no SVG filters, and color math is precomputed rather than runtime-mixed."
+stale_retired_dispositions: []
+owner_boundary_notes: []
+owner_hints:
+- "Plans/FinalGUISpec.md"
+```
+
+### F3-468 - Boot Paint And First-Paint Transition Gate
+
+```yaml
+plan_unit_id: F3-468
+unit_type: requirement
+status: accepted
+owner_doc: Plans/FinalGUISpec.md
+canonical_text: >-
+  Theme boot stamps a pre-paint layer with the persisted theme's solid background color
+  and color-scheme before heavy styles and assets settle, fonts load non-blocking via
+  preload then swap, and page-enter transitions are gated until after first paint so boot
+  never runs an opacity-zero enter animation or a double flash.
+gui_related: true
+gui_classification_reason: This unit defines visible boot paint, font loading, and first-paint transition gating behavior.
+split_recommended: false
+depends_on: []
+unblocks: []
+acceptance_criteria:
+- "Boot stamps the persisted theme's solid background and color-scheme on a pre-paint layer before heavy styles and assets settle."
+- "Fonts load non-blocking via preload then swap."
+- "Page-enter transitions gate until after first paint; boot never runs an opacity-zero enter animation or a double flash."
+- "No WorkNodes, NodeSeeds, executable queues, final node manifests, or production build tasks are created."
+validation_surfaces:
+- "python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits"
+- "python3 scripts/pm-plan-index.py validate"
+risk_class: finalgui_drift
+reasoning_tier: standard
+context_scope: finalgui_standardization
+implementation_surfaces:
+- "Plans/FinalGUISpec.md"
+node_compile_hint:
+  mode: boot_paint_and_first_paint_transition_gate
+  create_worknodes: false
+source_lineage:
+- "Concepts/PMConcept7.html (PMConcept7 demo rev 9.2; source-lineage-only per Plans/usage-feature.md)"
+- "Concepts/ChatGuiUpdates2.md (PM8 workstream and rev 4-9.2 ship notes; source-lineage-only)"
+preserved_exact_tokens:
+- "color-scheme"
+negative_constraints:
+- "Do not render-block first paint on font loading and do not run an enter animation on first paint."
+compatibility_only_notes:
+- "Slint portability: the pre-paint layer maps to painting the persisted theme's solid background at window creation before content loads; no arbitrary-content backdrop blur, no SVG filters, and color math is precomputed rather than runtime-mixed."
+stale_retired_dispositions: []
+owner_boundary_notes:
+- "F3-464 consumes this gate for page transitions; this unit owns the boot paint and the gate itself."
+owner_hints:
+- "Plans/FinalGUISpec.md"
+```
+
+### F3-469 - Chats Rail Presentation And Resize Collapse
+
+```yaml
+plan_unit_id: F3-469
+unit_type: requirement
+status: accepted
+owner_doc: Plans/FinalGUISpec.md
+canonical_text: >-
+  The chat sidebar rail label is Chats and renders at 11.5px in both expanded and
+  collapsed states with no size jump, and the compact new-thread plus control is 18x18
+  and vertically centered. No stream provenance banner renders, so first paint of a
+  thread is the first user message. Collapse is resize-driven with no chevron collapse
+  control: a resize observer toggles collapsed chrome below a 148px width threshold, the
+  rail minimum width is 72px, and the collapsed state changes content chrome only without
+  locking width or disabling resize. Collapsed rows truncate the title at 10px, hide
+  status, timestamp, and summary, and use the thread-status color for row border and
+  glow, role accent for working or unread and muted for read or draft, with active
+  collapsed rows keeping the glow plus a left accent bar. The expanded selected thread
+  renders a tinted fill mixing the accent or role color into the surface, a 3px inset
+  left accent bar, a hairline outer ring, and a bolder title, with role colors carried to
+  bar and border and per-theme shadows: retro hard offset, glass soft glow, friendly
+  cozy. The presentation applies to both the docked and pop-out chat mounts, which share
+  the sidebar builder.
+gui_related: true
+gui_classification_reason: This unit defines visible chats rail labeling, collapse geometry, row chrome, and selection presentation.
+split_recommended: false
+depends_on: []
+unblocks: []
+acceptance_criteria:
+- "The rail label reads Chats at 11.5px in both expanded and collapsed states, and the compact new-thread control is 18x18 and vertically centered."
+- "No provenance banner renders; collapse is resize-driven below the 148px threshold with a 72px minimum width, no chevron control, and no width locking in the collapsed state."
+- "Collapsed rows truncate titles at 10px, hide status, timestamp, and summary, and carry thread-status border and glow; active collapsed rows keep the glow and a left accent bar."
+- "The expanded selected thread shows a tinted fill, a 3px inset left accent bar, a hairline outer ring, and a bolder title with per-theme shadows, on both docked and pop-out mounts."
+- "No WorkNodes, NodeSeeds, executable queues, final node manifests, or production build tasks are created."
+validation_surfaces:
+- "python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits"
+- "python3 scripts/pm-plan-index.py validate"
+risk_class: finalgui_drift
+reasoning_tier: standard
+context_scope: finalgui_standardization
+implementation_surfaces:
+- "Plans/FinalGUISpec.md"
+node_compile_hint:
+  mode: chats_rail_presentation_and_resize_collapse
+  create_worknodes: false
+source_lineage:
+- "Concepts/PMConcept7.html (PMConcept7 demo rev 9.2; source-lineage-only per Plans/usage-feature.md)"
+- "Concepts/ChatGuiUpdates2.md (PM8 workstream and rev 4-9.2 ship notes; source-lineage-only)"
+preserved_exact_tokens:
+- "Chats"
+- "11.5px"
+- "18x18"
+- "148px"
+- "72px"
+- "10px"
+- "3px"
+negative_constraints:
+- "Do not reintroduce a chevron collapse button and do not lock rail width or disable resize in the collapsed state."
+- "Do not render a stream provenance banner ahead of the first user message."
+compatibility_only_notes:
+- "Slint portability: rail rows, glow, and accent bars render as opaque precomputed surfaces with width-threshold state switching; no arbitrary-content backdrop blur, no SVG filters, and color math is precomputed rather than runtime-mixed."
+stale_retired_dispositions:
+- "The HISTORY rail label, the chevron collapse control, and the stream provenance banner are retired per PMConcept7 chats rail cleanup; resize-driven collapse and the Chats label supersede them."
+owner_boundary_notes:
+- "Chat rail behavior, thread lifecycle, and rail data semantics are owned by Plans/assistant-chat-design.md (ACD-444 chats rail cleanup); this unit owns geometry, thresholds, and presentation."
+owner_hints:
+- "Plans/FinalGUISpec.md"
+```
+
+### F3-470 - Planning Wizard Runhead One-Liner
+
+```yaml
+plan_unit_id: F3-470
+unit_type: requirement
+status: accepted
+owner_doc: Plans/FinalGUISpec.md
+canonical_text: >-
+  The Planning Wizard workspace runhead is one line: the project title, a state/PRD chip,
+  and the Replay control. The long PlanningRun / revision / seed meta line is removed
+  from the header; PlanningRun identity, revision, and seed remain data-model canon and
+  may surface in an inspector or rail, just not in the top one-liner.
+gui_related: true
+gui_classification_reason: This unit defines the visible Planning Wizard workspace runhead presentation.
+split_recommended: false
+depends_on: []
+unblocks: []
+acceptance_criteria:
+- "The wizard workspace runhead renders one line with the project title, a state/PRD chip, and the Replay control."
+- "No PlanningRun / revision / seed meta line renders in the runhead; that identity remains available off-header through an inspector or rail surface."
+- "No WorkNodes, NodeSeeds, executable queues, final node manifests, or production build tasks are created."
+validation_surfaces:
+- "python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits"
+- "python3 scripts/pm-plan-index.py validate"
+risk_class: finalgui_drift
+reasoning_tier: standard
+context_scope: finalgui_standardization
+implementation_surfaces:
+- "Plans/FinalGUISpec.md"
+node_compile_hint:
+  mode: planning_wizard_runhead_one_liner
+  create_worknodes: false
+source_lineage:
+- "Concepts/PMConcept7.html (PMConcept7 demo rev 9.2; source-lineage-only per Plans/usage-feature.md)"
+- "Concepts/ChatGuiUpdates2.md (PM8 workstream and rev 4-9.2 ship notes; source-lineage-only)"
+preserved_exact_tokens:
+- "Replay"
+negative_constraints:
+- "Do not render the PlanningRun / revision / seed meta line in the runhead."
+compatibility_only_notes:
+- "Slint portability: the runhead renders as a single opaque precomputed row; no arbitrary-content backdrop blur, no SVG filters, and color math is precomputed rather than runtime-mixed."
+stale_retired_dispositions:
+- "The runhead PlanningRun / revision / seed meta line is retired as demo-fixture presentation; PlanningRun identity, revision, and seed remain data-model canon in Plans/Planning_Wizard.md, including approval CAS payloads."
+owner_boundary_notes:
+- "PlanningRun identity, revision, and seed data-model canon, including approval CAS payloads, stays in Plans/Planning_Wizard.md; this unit owns header presentation only."
+owner_hints:
+- "Plans/FinalGUISpec.md"
+```
+
+## Cozy Shelves Panel Reconciliation Addendum - 2026-07-27
+
+This addendum reconciles the winning Cozy Shelves left-rail concept family (`Concepts/rail-concepts/QwenRailConcepts/c2-cozy-shelves.html` and `Concepts/rail-concepts/QwenRailConcepts/c2-cozy-shelves-files.html`, both source-lineage-only) against FinalGUISpec canon and closes the spec gaps the panel review exposed. It pins the side-panel width envelope per user decision 2026-07-27, makes this document the canonical owner of the unified shelf-expander contract and its web-to-Slint motion portability map, establishes the per-theme category shelf palette indirection layer, registers the missing panel-state persistence keys and Slint panel host files, adds successor presentation canon for the Agents panel over F3-452, records the left-versus-right rail placement as an explicitly carried deviation, and points the panel-context deep-link envelope extensions at Crosswalk ownership. Concept HTML, CSS, colors, class names, and demo data are never copied into spec or implementation. This addendum creates no WorkNodes, NodeSeeds, executable queues, implementation files, runtime artifacts, generated wiring rows, production build tasks, final manifests, or PNC-019 receipts.
+
+### F3-471 - Side Panel Width Envelope Pin
+
+```yaml
+plan_unit_id: F3-471
+unit_type: requirement
+status: accepted
+owner_doc: Plans/FinalGUISpec.md
+canonical_text: >-
+  The side-panel width envelope is pinned per user decision 2026-07-27: 240px minimum,
+  480px maximum, 280px default initial width. This unit supersedes the F3-035 sentence
+  making the side panel "resizable between a 220px minimum and a 50vw maximum"; the rest
+  of F3-035's structural-zone canon is unchanged. F3-034's preserved 240-480px
+  shell-diagram tokens, F3-072's 240px clamp token, and F3-196's 240px-minimum responsive
+  tiers are declared consistent with this pin and need no amendment. 220px is demoted to a
+  test-only adversarial width: fit harnesses may render panels at 220px to prove graceful
+  degradation below the floor, but no shipping surface may open, resize to, or persist a
+  side panel narrower than 240px. The space-accounting example figure of 380px at
+  1920x1080 remains an illustrative example only; 280px is the canonical default width.
+gui_related: true
+gui_classification_reason: This unit pins the visible side-panel width envelope and default width.
+split_recommended: false
+depends_on: [F3-035]
+unblocks: []
+acceptance_criteria:
+- "The side panel enforces a 240px minimum, a 480px maximum, and a 280px default initial width."
+- "The F3-035 220px-minimum / 50vw-maximum sentence is superseded by this unit; F3-034, F3-072, and F3-196 stand as consistent without amendment."
+- "220px appears only in fit-harness adversarial tests; no shipping surface opens, resizes to, or persists a side panel narrower than 240px."
+- "No WorkNodes, NodeSeeds, executable queues, final node manifests, or production build tasks are created by this PlanUnit."
+validation_surfaces:
+- "python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits"
+- "python3 scripts/pm-plan-index.py validate"
+risk_class: finalgui_drift
+reasoning_tier: standard
+context_scope: finalgui_standardization
+implementation_surfaces:
+- "Plans/FinalGUISpec.md"
+node_compile_hint:
+  mode: side_panel_width_envelope_pin
+  create_worknodes: false
+source_lineage:
+- "User decision 2026-07-27 (Cozy Shelves panel review ratification)"
+- "Concepts/rail-concepts/QwenRailConcepts/c2-cozy-shelves.html (Cozy Shelves winning concept; source-lineage-only per Plans/usage-feature.md)"
+preserved_exact_tokens:
+- "240px"
+- "480px"
+- "280px"
+- "220px"
+- "50vw"
+negative_constraints:
+- "Do not let any shipping surface open, resize to, or persist a side panel narrower than 240px; 220px exists only as a test-only adversarial width."
+compatibility_only_notes:
+- "Slint portability: width clamping is plain layout constraint math on opaque precomputed surfaces; no arbitrary-content backdrop blur, no SVG filters, and color math is precomputed rather than runtime-mixed."
+- "The 380px side-panel figure in the space-accounting example remains illustrative lineage, not a default."
+stale_retired_dispositions:
+- "The F3-035 220px-minimum / 50vw-maximum sentence (2026-07-16 lineage) is superseded by this unit's 240px / 480px / 280px envelope; it stays findable in F3-035 as superseded lineage."
+owner_boundary_notes:
+- "F3-035 continues to own the structural-zone model; this unit owns only the width envelope numbers and the 220px test-only demotion."
+owner_hints:
+- "Plans/FinalGUISpec.md"
+```
+
+### F3-472 - Unified Shelf Expander Contract
+
+```yaml
+plan_unit_id: F3-472
+unit_type: requirement
+status: accepted
+owner_doc: Plans/FinalGUISpec.md
+canonical_text: >-
+  This unit is the canonical owner of the unified shelf-expander pattern used by
+  expandable rows across all side-panel occupants; other planning documents reference
+  this contract and do not re-own it. Rows are collapsed by default. Each row header is
+  one single accessible activation control (a real button in accessibility terms) that
+  exposes its expanded or collapsed state (aria-expanded semantics on web-lineage
+  surfaces; accessible-expanded in Slint). Keyboard contract: Enter or Space toggles the
+  focused header; Escape collapses the expanded row and returns focus to its header. The
+  expanded body renders slots in fixed order: kv-facts, then status-detail, then
+  blocked-reason-detail, then actions, then overflow. The body is capped at approximately
+  200px with internal scroll beyond the cap. Blocked reasons are always visible outside
+  the collapsible body: a blocked row's collapsed header carries the blocked summary, so
+  collapsing never hides blockage. Panels may opt into single-open exclusivity; a
+  user-pinned row stays open and is exempt from exclusivity eviction. Destructive actions
+  inside expander bodies route through the shared confirm surface, never inline. Blocked
+  payloads render from blocked_reason_code plus the ordered allowed_action_ids[]; panels
+  render the delivered action set and never invent actions.
+gui_related: true
+gui_classification_reason: This unit defines the visible expander row anatomy, slot order, keyboard behavior, and blocked-reason visibility contract.
+split_recommended: false
+depends_on: []
+unblocks: []
+acceptance_criteria:
+- "Expander rows are collapsed by default, headed by one accessible button exposing expanded state, toggled by Enter/Space, and collapsed by Escape with focus returned to the header."
+- "Expanded bodies render slots in the fixed order kv-facts, status-detail, blocked-reason-detail, actions, overflow, capped at approximately 200px with internal scroll."
+- "Blocked rows keep their blocked summary visible in the collapsed header; exclusivity is opt-in per panel and pinned rows are exempt from eviction."
+- "Destructive expander actions route through the shared confirm surface, and blocked payloads render blocked_reason_code plus ordered allowed_action_ids[] without invented actions."
+- "No WorkNodes, NodeSeeds, executable queues, final node manifests, or production build tasks are created by this PlanUnit."
+validation_surfaces:
+- "python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits"
+- "python3 scripts/pm-plan-index.py validate"
+risk_class: finalgui_drift
+reasoning_tier: standard
+context_scope: finalgui_standardization
+implementation_surfaces:
+- "Plans/FinalGUISpec.md"
+node_compile_hint:
+  mode: unified_shelf_expander_contract
+  create_worknodes: false
+source_lineage:
+- "Concepts/rail-concepts/QwenRailConcepts/c2-cozy-shelves.html (Cozy Shelves winning concept; source-lineage-only per Plans/usage-feature.md)"
+- "Concepts/rail-concepts/QwenRailConcepts/c2-cozy-shelves-files.html (Cozy Shelves files concept; source-lineage-only)"
+preserved_exact_tokens:
+- "aria-expanded"
+- "kv-facts"
+- "status-detail"
+- "blocked-reason-detail"
+- "blocked_reason_code"
+- "allowed_action_ids[]"
+- "200px"
+negative_constraints:
+- "No panel may hide a blocked reason inside the collapsible body, render destructive actions without the shared confirm surface, or invent actions outside the delivered allowed_action_ids[]."
+- "No other document may re-own this expander contract; consumers reference this unit."
+compatibility_only_notes:
+- "Slint portability: the header is a TouchArea plus FocusScope delegate exposing accessible-expanded; expansion animates the height of a clipped rect to a measured content height; surfaces are opaque and precomputed with no arbitrary-content backdrop blur, no SVG filters, and precomputed color math."
+stale_retired_dispositions: []
+owner_boundary_notes:
+- "Blocked payload semantics (blocked_reason_code, allowed_action_ids[]) are owned by the canonical blocked/recovery contracts; this unit owns only their placement and rendering order inside expander rows."
+- "The shared confirm surface is owned by its existing canon; this unit routes destructive expander actions to it."
+owner_hints:
+- "Plans/FinalGUISpec.md"
+```
+
+### F3-473 - Expander Motion Portability Map
+
+```yaml
+plan_unit_id: F3-473
+unit_type: requirement
+status: accepted
+owner_doc: Plans/FinalGUISpec.md
+canonical_text: >-
+  The concept family's web motion idioms map to Slint primitives one-for-one, and
+  implementations use only the Slint side of the map: (1) CSS grid-rows expansion spring
+  maps to an animated height property on a clipped rect; (2) max-height tween maps to an
+  animation toward the measured content height, never an arbitrary cap; (3) box-shadow
+  attention pulse maps to an opacity/scale ring overlay element; (4) underline width ink
+  maps to a scaleX or x transform animation on an ink rect; (5) corner sprout menu maps
+  to a PopupWindow with a corner-origin transform; (6) scroll-reveal maps to a one-shot
+  entrance stagger on first model paint, never re-triggered on scroll; (7) reduced-motion
+  parity applies to every row of this map: when reduced motion is set, mapped animations
+  complete instantly, including zero transition-delay equivalents so no delayed state
+  flips remain.
+gui_related: true
+gui_classification_reason: This unit defines the visible motion vocabulary for panel expanders and its Slint expression.
+split_recommended: false
+depends_on: [F3-472]
+unblocks: []
+acceptance_criteria:
+- "Each web idiom in the map (grid-rows spring, max-height tween, box-shadow pulse, width ink, sprout menu, scroll-reveal) has exactly the stated Slint primitive and no DOM-shaped emulation."
+- "Entrance stagger runs once on first model paint and never re-triggers on scroll."
+- "Reduced motion completes all mapped animations instantly with zero transition-delay equivalents."
+- "No WorkNodes, NodeSeeds, executable queues, final node manifests, or production build tasks are created by this PlanUnit."
+validation_surfaces:
+- "python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits"
+- "python3 scripts/pm-plan-index.py validate"
+risk_class: finalgui_drift
+reasoning_tier: standard
+context_scope: finalgui_standardization
+implementation_surfaces:
+- "Plans/FinalGUISpec.md"
+node_compile_hint:
+  mode: expander_motion_portability_map
+  create_worknodes: false
+source_lineage:
+- "Concepts/rail-concepts/QwenRailConcepts/c2-cozy-shelves.html (Cozy Shelves winning concept; source-lineage-only per Plans/usage-feature.md)"
+- "Concepts/rail-concepts/QwenRailConcepts/c2-cozy-shelves-files.html (Cozy Shelves files concept; source-lineage-only)"
+preserved_exact_tokens:
+- "PopupWindow"
+- "scaleX"
+negative_constraints:
+- "Do not port web motion idioms literally (no max-height caps, no shadow-blur animation, no scroll-linked reveal); only the Slint column of the map ships."
+compatibility_only_notes:
+- "Slint portability: all mapped motions are property animations on opaque precomputed surfaces; no arbitrary-content backdrop blur, no SVG filters, and color math is precomputed rather than runtime-mixed."
+stale_retired_dispositions: []
+owner_boundary_notes:
+- "F3-472 owns what the expander shows; this unit owns only how its state changes move."
+owner_hints:
+- "Plans/FinalGUISpec.md"
+```
+
+### F3-474 - Category Shelf Palette Indirection Layer
+
+```yaml
+plan_unit_id: F3-474
+unit_type: requirement
+status: accepted
+owner_doc: Plans/FinalGUISpec.md
+canonical_text: >-
+  Category shelf colors resolve through a per-theme --cat-* indirection token family
+  (user decision 2026-07-27). By default every --cat-* token aliases the theme's existing
+  accent tokens, so most themes add no new colors. Exactly two themes override:
+  retro-dark sets the category green to #4CAF50 and the category blue to #2196F3, and
+  basic-light sets the category purple to #9C27B0 and the category amber to #F57C00.
+  --accent-primary is reserved for selection state and never doubles as a category color.
+  Category tint fills use the fixed tint steps 7%, 11%, 16%, and 20% over the panel base
+  color, precomputed per theme at build time; no runtime color mixing occurs.
+gui_related: true
+gui_classification_reason: This unit defines the visible category color system for panel shelves and its theme overrides.
+split_recommended: false
+depends_on: []
+unblocks: []
+acceptance_criteria:
+- "Category colors resolve only through the --cat-* indirection family; defaults alias theme accent tokens with overrides existing solely in retro-dark (#4CAF50, #2196F3) and basic-light (#9C27B0, #F57C00)."
+- "--accent-primary renders selection state only and never serves as a category color."
+- "Category tints are the precomputed 7%, 11%, 16%, and 20% steps over the panel base per theme; no runtime color mixing."
+- "No WorkNodes, NodeSeeds, executable queues, final node manifests, or production build tasks are created by this PlanUnit."
+validation_surfaces:
+- "python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits"
+- "python3 scripts/pm-plan-index.py validate"
+risk_class: finalgui_drift
+reasoning_tier: standard
+context_scope: finalgui_standardization
+implementation_surfaces:
+- "Plans/FinalGUISpec.md"
+node_compile_hint:
+  mode: category_shelf_palette_indirection_layer
+  create_worknodes: false
+source_lineage:
+- "User decision 2026-07-27 (Cozy Shelves panel review ratification)"
+- "Concepts/rail-concepts/QwenRailConcepts/c2-cozy-shelves.html (Cozy Shelves winning concept; source-lineage-only per Plans/usage-feature.md)"
+preserved_exact_tokens:
+- "--cat-*"
+- "--accent-primary"
+- "#4CAF50"
+- "#2196F3"
+- "#9C27B0"
+- "#F57C00"
+- "7%"
+- "11%"
+- "16%"
+- "20%"
+negative_constraints:
+- "Do not use --accent-primary as a category color, and do not add per-theme category overrides beyond the retro-dark and basic-light pairs without a new user decision."
+compatibility_only_notes:
+- "Slint portability: the --cat-* family expresses as Theme-global category tokens with all tint steps precomputed at build time as opaque colors; no arbitrary-content backdrop blur, no SVG filters, and no runtime color mixing."
+stale_retired_dispositions: []
+owner_boundary_notes:
+- "Theme Token Tables remain the canonical per-theme value store; this unit adds the category indirection family and its two override sets to that canon."
+owner_hints:
+- "Plans/FinalGUISpec.md"
+```
+
+### F3-475 - Side Panel State Persistence Key Registrations
+
+```yaml
+plan_unit_id: F3-475
+unit_type: requirement
+status: accepted
+owner_doc: Plans/FinalGUISpec.md
+canonical_text: >-
+  The dot-v1 panel-state key family gains four registrations:
+  docker_manager_panel_state.v1:{project_id}, testing_panel_state.v1:{project_id},
+  agents_panel_state.v1:{project_id}, and source_control_panel_state.v1:{project_id},
+  joining the existing search_panel_state.v1, gha_panel_state.v1, and
+  artifact_panel_state.v1 registrations (F3-217). Plans/storage-plan.md remains the
+  schema owner for every panel-state key; this unit is the GUI-side cross-registration
+  that names the keys and their per-project scope, and the storage plan must carry the
+  matching schema rows. The F3-162 source_control.project_state.{project_id} mention
+  remains a separate data-scope record and is not this panel UX-state key.
+gui_related: true
+gui_classification_reason: This unit registers the persistence keys behind visible panel UX state restoration.
+split_recommended: false
+depends_on: [F3-217]
+unblocks: []
+acceptance_criteria:
+- "docker_manager_panel_state.v1:{project_id}, testing_panel_state.v1:{project_id}, agents_panel_state.v1:{project_id}, and source_control_panel_state.v1:{project_id} are registered in the dot-v1 panel-state family."
+- "Plans/storage-plan.md remains the schema owner and carries the matching schema rows; this unit adds no schema shapes."
+- "source_control.project_state.{project_id} (F3-162) stays a distinct data-scope record, not conflated with the panel UX-state key."
+- "No WorkNodes, NodeSeeds, executable queues, final node manifests, or production build tasks are created by this PlanUnit."
+validation_surfaces:
+- "python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits"
+- "python3 scripts/pm-plan-index.py validate"
+risk_class: finalgui_drift
+reasoning_tier: standard
+context_scope: finalgui_standardization
+implementation_surfaces:
+- "Plans/FinalGUISpec.md"
+node_compile_hint:
+  mode: side_panel_state_persistence_key_registrations
+  create_worknodes: false
+source_lineage:
+- "Concepts/rail-concepts/QwenRailConcepts/c2-cozy-shelves.html (Cozy Shelves winning concept; source-lineage-only per Plans/usage-feature.md)"
+- "Concepts/rail-concepts/QwenRailConcepts/c2-cozy-shelves-files.html (Cozy Shelves files concept; source-lineage-only)"
+preserved_exact_tokens:
+- "docker_manager_panel_state.v1:{project_id}"
+- "testing_panel_state.v1:{project_id}"
+- "agents_panel_state.v1:{project_id}"
+- "source_control_panel_state.v1:{project_id}"
+negative_constraints:
+- "Do not define key schemas here; Plans/storage-plan.md owns all panel-state schemas, retention, and migration."
+compatibility_only_notes:
+- "Slint portability: state restoration renders through opaque precomputed surfaces; restored state is structure only and panels revalidate before claiming live status."
+stale_retired_dispositions: []
+owner_boundary_notes:
+- "Cross-registration: Plans/storage-plan.md owns the schema rows for these four keys; FinalGUISpec owns only the GUI-side registration and per-project scoping statement."
+owner_hints:
+- "Plans/FinalGUISpec.md"
+```
+
+### F3-476 - Slint Panel Host File Inventory Additions
+
+```yaml
+plan_unit_id: F3-476
+unit_type: requirement
+status: accepted
+owner_doc: Plans/FinalGUISpec.md
+canonical_text: >-
+  The panels/ Slint host-file inventory adds panels/search_panel.slint,
+  panels/source_control_panel.slint, panels/github_actions_panel.slint,
+  panels/testing_panel.slint, panels/agents_panel.slint, and
+  panels/artifacts_panel.slint, so every canonical side-panel occupant has a named host
+  file; file_manager_panel.slint and docker_manager_panel.slint are already listed. Where
+  the FABLE-addendum Slint Host File Inventory table names the same surface under a
+  ui/<domain>/ path, both spellings denote one planned host surface, with the panels/
+  spelling as the panel-occupant host. These paths are planned GUI host locations only;
+  they create no implementation files and authorize no source tree.
+gui_related: true
+gui_classification_reason: This unit names the planned Slint host files behind visible side-panel occupants.
+split_recommended: false
+depends_on: []
+unblocks: []
+acceptance_criteria:
+- "The panels/ inventory lists host files for search, source control, GitHub Actions, testing, agents, and artifacts panels in addition to the existing file manager and docker manager entries."
+- "Duplicate ui/<domain>/ spellings in the FABLE Slint Host File Inventory resolve to the same planned surface, not a second file."
+- "No implementation files are created and no source tree is authorized by these registrations."
+- "No WorkNodes, NodeSeeds, executable queues, final node manifests, or production build tasks are created by this PlanUnit."
+validation_surfaces:
+- "python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits"
+- "python3 scripts/pm-plan-index.py validate"
+risk_class: finalgui_drift
+reasoning_tier: standard
+context_scope: finalgui_standardization
+implementation_surfaces:
+- "Plans/FinalGUISpec.md"
+node_compile_hint:
+  mode: slint_panel_host_file_inventory_additions
+  create_worknodes: false
+source_lineage:
+- "Concepts/rail-concepts/QwenRailConcepts/c2-cozy-shelves.html (Cozy Shelves winning concept; source-lineage-only per Plans/usage-feature.md)"
+preserved_exact_tokens:
+- "panels/search_panel.slint"
+- "panels/source_control_panel.slint"
+- "panels/github_actions_panel.slint"
+- "panels/testing_panel.slint"
+- "panels/agents_panel.slint"
+- "panels/artifacts_panel.slint"
+negative_constraints:
+- "Do not treat these planned host paths as created files or as authorization for a source tree."
+compatibility_only_notes:
+- "Slint portability: host files are the planned mount points for opaque precomputed panel surfaces; no arbitrary-content backdrop blur, no SVG filters, and color math is precomputed rather than runtime-mixed."
+stale_retired_dispositions:
+- "The prior panels/ inventory state that named only chat and file manager panel host files is superseded by this fuller inventory; the FABLE Slint Host File Inventory table remains findable lineage for its ui/<domain>/ spellings."
+owner_boundary_notes:
+- "This unit amends the host-file inventory only; panel behavior stays with each panel's owner units and docs."
+owner_hints:
+- "Plans/FinalGUISpec.md"
+```
+
+### F3-477 - Agents Panel Presentation Canon
+
+```yaml
+plan_unit_id: F3-477
+unit_type: requirement
+status: accepted
+owner_doc: Plans/FinalGUISpec.md
+canonical_text: >-
+  The Agents side panel (F3-452) gains successor presentation canon. Lifecycle: the panel
+  renders one UI lifecycle vocabulary - queued, running, blocked(awaiting_input |
+  awaiting_approval | throttled), attention_required, recovering, completed, failed -
+  projected from coordination events; Plans/Contracts_V0.md and the Executor own the
+  runtime enums, and this unit states the projection mapping without re-owning any
+  runtime state machine (F3-452 <-> OSI-175, OSI-190, OSI-425..OSI-432 linkage). Lane:
+  the panel's lane display is the capability_lane identity; tier-era words never render.
+  Queue visibility: queued rows show queue position, enqueued-since duration, and the
+  blocking reference when admission is deferred. Attention ordering: rows order blocked >
+  running > queued > completed. Blocked rows render the literal blocking question and the
+  waiting duration in the collapsed header per the F3-472 blocked-outside rule.
+  Per-agent economics render tokens, cost, and context-fill; absent values render as n/a
+  and never as 0. When the registry feed is stale the panel dims rows and shows a
+  mirror-stale strip; staleness never overwrites agent state. OSI TaskStatus emoji glyphs
+  map to bundled SVG icon_id entries; no emoji ever renders. The panel has no file-locks
+  section: file-lock semantics are retired, and rows may show declared touch sets and
+  file-activity claims only.
+gui_related: true
+gui_classification_reason: This unit defines the visible Agents panel lifecycle chips, queue and attention presentation, economics, staleness treatment, and icon substitution.
+split_recommended: false
+depends_on: [F3-452, F3-472]
+unblocks: []
+acceptance_criteria:
+- "The panel renders only the projected lifecycle vocabulary queued, running, blocked(awaiting_input | awaiting_approval | throttled), attention_required, recovering, completed, failed, mapped from coordination events without re-owning runtime enums."
+- "Lane display is capability_lane identity; queued rows show position, enqueued-since, and the blocking reference; rows order blocked > running > queued > completed."
+- "Blocked rows show the literal blocking question and waiting duration in the collapsed header; economics render n/a for absent values and never 0."
+- "Registry-feed staleness dims rows and shows a mirror-stale strip without overwriting agent state; OSI TaskStatus emoji glyphs render as bundled SVG icon_ids and no emoji ever renders."
+- "The panel renders no file-locks section; only declared touch sets and file-activity claims appear."
+- "No WorkNodes, NodeSeeds, executable queues, final node manifests, or production build tasks are created by this PlanUnit."
+validation_surfaces:
+- "python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits"
+- "python3 scripts/pm-plan-index.py validate"
+risk_class: finalgui_drift
+reasoning_tier: standard
+context_scope: finalgui_standardization
+implementation_surfaces:
+- "Plans/FinalGUISpec.md"
+node_compile_hint:
+  mode: agents_panel_presentation_canon
+  create_worknodes: false
+source_lineage:
+- "Concepts/rail-concepts/QwenRailConcepts/c2-cozy-shelves.html (Cozy Shelves winning concept; source-lineage-only per Plans/usage-feature.md)"
+- "Plans/orchestrator-subagent-integration.md (OSI-175, OSI-190, OSI-425..OSI-432 registry-mirror and tracking canon)"
+preserved_exact_tokens:
+- "queued"
+- "running"
+- "awaiting_input"
+- "awaiting_approval"
+- "throttled"
+- "attention_required"
+- "recovering"
+- "capability_lane"
+- "n/a"
+- "icon_id"
+negative_constraints:
+- "Do not re-own runtime lifecycle enums; Contracts_V0 and the Executor own them, and this panel renders the stated projection only."
+- "Do not render emoji glyphs, tier-era vocabulary, a file-locks section, or absent economics values as 0."
+- "Do not source panel rows from .puppet-master/state side files; rows render from seglog/redb coordination projections per the OSI registry-mirror canon."
+compatibility_only_notes:
+- "Slint portability: lifecycle chips, queue rows, stale strip, and economics render as opaque precomputed surfaces with property animations; no arbitrary-content backdrop blur, no SVG filters, and color math is precomputed rather than runtime-mixed."
+stale_retired_dispositions:
+- "File-lock semantics are retired for the Agents panel; declared touch sets and file-activity claims are the only file-facing rows."
+owner_boundary_notes:
+- "F3-452 remains the panel's inventory and registry-mirror anchor; Plans/Contracts_V0.md and the Executor own runtime enums; Plans/orchestrator-subagent-integration.md (OSI-175, OSI-190, OSI-425..OSI-432) owns tracking truth; this unit owns presentation and the projection statement only."
+owner_hints:
+- "Plans/FinalGUISpec.md"
+```
+
+### F3-478 - Rail Placement Carried Deviation
+
+```yaml
+plan_unit_id: F3-478
+unit_type: requirement
+status: accepted
+owner_doc: Plans/FinalGUISpec.md
+canonical_text: >-
+  The Cozy Shelves concept family mounts the panel rail on the left edge; the canonical
+  shell slot for side-panel occupants remains the right-hand side panel until a dedicated
+  placement decision is taken. This is recorded as an explicitly carried deviation:
+  concept artifacts may continue to render a left rail without spec force, wiring-row
+  ui_location strings are unaffected until the placement decision lands, and no unit may
+  cite the concept family as authority for a left-mounted shell.
+gui_related: true
+gui_classification_reason: This unit records the visible rail-placement deviation between concept and canonical shell.
+split_recommended: false
+depends_on: [F3-035]
+unblocks: []
+acceptance_criteria:
+- "The canonical side-panel slot remains right-hand; the concept family's left rail is a carried deviation with no spec force."
+- "Wiring-row ui_location strings are unchanged until a dedicated placement decision lands."
+- "No unit cites the concept family as authority for a left-mounted shell."
+- "No WorkNodes, NodeSeeds, executable queues, final node manifests, or production build tasks are created by this PlanUnit."
+validation_surfaces:
+- "python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits"
+- "python3 scripts/pm-plan-index.py validate"
+risk_class: finalgui_drift
+reasoning_tier: standard
+context_scope: finalgui_standardization
+implementation_surfaces:
+- "Plans/FinalGUISpec.md"
+node_compile_hint:
+  mode: rail_placement_carried_deviation
+  create_worknodes: false
+source_lineage:
+- "Concepts/rail-concepts/QwenRailConcepts/c2-cozy-shelves.html (Cozy Shelves winning concept; source-lineage-only per Plans/usage-feature.md)"
+- "Concepts/rail-concepts/QwenRailConcepts/c2-cozy-shelves-files.html (Cozy Shelves files concept; source-lineage-only)"
+preserved_exact_tokens:
+- "ui_location"
+negative_constraints:
+- "Do not change side-panel placement, ui_location strings, or shell-slot canon on the basis of the concept family; only a dedicated placement decision may do so."
+compatibility_only_notes:
+- "Slint portability: placement is a layout-slot decision over opaque precomputed surfaces; no arbitrary-content backdrop blur, no SVG filters, and color math is precomputed rather than runtime-mixed."
+stale_retired_dispositions: []
+owner_boundary_notes:
+- "F3-035 owns the structural-zone model including the right-hand side-panel slot; this unit records the deviation and its resolution condition only."
+owner_hints:
+- "Plans/FinalGUISpec.md"
+```
+
+### F3-479 - Panel Context Deep-Link Envelope Extension Pointer
+
+```yaml
+plan_unit_id: F3-479
+unit_type: requirement
+status: accepted
+owner_doc: Plans/FinalGUISpec.md
+canonical_text: >-
+  The shared route/deep-link payload (F3-102) is to gain panel-context envelope fields
+  for the search, testing, agents, artifacts, and files panels, registered in
+  Plans/Crosswalk.md, which owns the envelope schema. Intended fields: search -
+  search_query, search_scope, query_session_id, result_ref; testing - test_run_id,
+  test_node_ref, failure_ref; agents - agent_id, capability_lane, blocked_sequence_ref;
+  artifacts - artifact_id, artifact_kind, receipt_ref; files - file_path,
+  selection_range, reveal_in_tree. This unit is a registration pointer only: FinalGUISpec
+  consumes the envelope, and Plans/Crosswalk.md owns field names, shapes, and versioning
+  and may adjust field naming at registration time without amending this unit.
+gui_related: true
+gui_classification_reason: This unit points the panel deep-link context fields at the Crosswalk-owned envelope so cross-surface pivots can land inside panels.
+split_recommended: false
+depends_on: [F3-102]
+unblocks: []
+acceptance_criteria:
+- "Panel-context envelope fields for search, testing, agents, artifacts, and files are registered in Plans/Crosswalk.md with this unit's intended field lists as input."
+- "FinalGUISpec consumes the envelope; Crosswalk.md owns field names, shapes, and versioning, and naming adjustments at registration time require no amendment here."
+- "No second routing model is created; the fields extend the one shared route/deep-link payload."
+- "No WorkNodes, NodeSeeds, executable queues, final node manifests, or production build tasks are created by this PlanUnit."
+validation_surfaces:
+- "python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits"
+- "python3 scripts/pm-plan-index.py validate"
+risk_class: finalgui_drift
+reasoning_tier: standard
+context_scope: finalgui_standardization
+implementation_surfaces:
+- "Plans/FinalGUISpec.md"
+node_compile_hint:
+  mode: panel_context_deep_link_envelope_extension_pointer
+  create_worknodes: false
+source_lineage:
+- "Concepts/rail-concepts/QwenRailConcepts/c2-cozy-shelves.html (Cozy Shelves winning concept; source-lineage-only per Plans/usage-feature.md)"
+- "Concepts/rail-concepts/QwenRailConcepts/c2-cozy-shelves-files.html (Cozy Shelves files concept; source-lineage-only)"
+preserved_exact_tokens:
+- "query_session_id"
+- "blocked_sequence_ref"
+- "reveal_in_tree"
+negative_constraints:
+- "Do not define envelope schema here and do not mint a second routing model; Plans/Crosswalk.md owns the envelope and Contracts_V0 owns the route payload."
+compatibility_only_notes:
+- "Slint portability: deep-link landings render through existing opaque precomputed panel surfaces; no arbitrary-content backdrop blur, no SVG filters, and color math is precomputed rather than runtime-mixed."
+stale_retired_dispositions: []
+owner_boundary_notes:
+- "Plans/Crosswalk.md owns the panel-context envelope registration; Plans/Contracts_V0.md owns the canonical route payload and object_kind enum; this unit is a consumer-side pointer naming intended fields only."
+owner_hints:
+- "Plans/FinalGUISpec.md"
+```
+
+### F3-480 - Rail Panel Presentation Repairs (Cozy Shelves fix wave)
+
+```yaml
+plan_unit_id: F3-480
+unit_type: requirement
+status: accepted
+owner_doc: Plans/FinalGUISpec.md
+canonical_text: >-
+  Four presentation contracts hardened during the 2026-07-27 Cozy Shelves fix wave are
+  canon for every rail panel: (1) UNCLIPPED POPUPS - any popup surface opened from rail
+  panel content (branch menus, Docker context, sort menus, workflow ref pickers, File
+  Manager root and context menus) renders above and unclipped by panel scrollers,
+  accordion clip wrappers, and transform/will-change containing blocks; the HTML concept
+  realizes this by portaling the open menu to the document body with fixed positioning
+  and restoring it to its home node on close, and the Slint realization is PopupWindow,
+  which is unclipped by construction. (2) EXPANDER CHEVRON CONTRACT - a collapsed
+  expander chevron points right and rotates 90 degrees to point down when open; the
+  rotation binds to the direct header chevron of the toggled expander only, never to
+  nested chevrons inside an opened ancestor, and icon hydration must not copy host
+  transform classes onto the nested vector so rotation is applied exactly once.
+  (3) MEASURE-BASED LABEL FITTING - pill, banner-status, and chip labels degrade by
+  measurement at the current rail width through a per-control fit ladder (full form,
+  abbreviated form, then symbol or icon-only where declared), with banner fitting
+  applying a crowding check that reserves the panel title's minimum share before a
+  status pill may keep its longer form; width tiers (min/mid/wide) remain layout-chrome
+  signals only (padding, owner hide, generic icon-only tab chrome) and never decide
+  label truncation; the Slint realization selects among precomputed label variants by
+  measured available width. (4) ONE-SHOT PANEL ENTER + ABRUPT-ONLY REMEASURE - the
+  panel enter animation applies once on activation and is removed on completion (never
+  a persistent animation on the active view, which restarts on style invalidation and
+  reads as a black flash), and expanded-accordion height remeasure runs only on abrupt
+  width changes (width presets, drag release, window resize) and never per continuous
+  drag frame.
+gui_related: true
+gui_classification_reason: This unit pins visible popup layering, chevron motion, label degradation, and enter-animation behavior for all rail panels.
+split_recommended: false
+depends_on: [F3-471, F3-472, F3-473]
+unblocks: []
+acceptance_criteria:
+- "No rail-panel popup is ever clipped by a panel scroller, accordion clip wrapper, or transform containing block; the Slint surface for every such popup is PopupWindow."
+- "Opening an expander rotates exactly one chevron (its own header chevron); nested collapsed rows inside an open ancestor keep right-pointing chevrons."
+- "Label shortening decisions are made by measurement against available width via the declared fit ladder; no label truncation decision keys off the min/mid/wide tier attribute."
+- "Panel activation animates once and leaves no persistent animation on the active view; accordion remeasure never runs on continuous drag frames."
+- "No WorkNodes, NodeSeeds, executable queues, final node manifests, or production build tasks are created by this PlanUnit."
+validation_surfaces:
+- "python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits"
+- "python3 scripts/pm-plan-index.py validate"
+risk_class: finalgui_drift
+reasoning_tier: standard
+context_scope: finalgui_standardization
+implementation_surfaces:
+- "Plans/FinalGUISpec.md"
+node_compile_hint:
+  mode: rail_panel_presentation_repairs
+  create_worknodes: false
+source_lineage:
+- "Concepts/ChatGuiUpdates2.md section 'Cozy Shelves rail concepts (2026-07-27)' (fix-wave change ledger; source-lineage-only)"
+- "Concepts/rail-concepts/QwenRailConcepts/c2-cozy-shelves.html (source-lineage-only)"
+- "Concepts/rail-concepts/QwenRailConcepts/c2-cozy-shelves-files.html (source-lineage-only)"
+preserved_exact_tokens:
+- "PopupWindow"
+- "data-fit"
+negative_constraints:
+- "Do not re-clip popups inside panel scrollers; do not decide label truncation from width-tier attributes; do not leave persistent enter animations on active views."
+compatibility_only_notes:
+- "Slint portability: popup layering via PopupWindow; label variants precomputed and chosen by measured width; enter animation is a one-shot property animation; no arbitrary-content backdrop blur, no SVG filters, precomputed color math."
+stale_retired_dispositions:
+- "Hardcoded px-breakpoint label swapping in earlier concept revisions is retired lineage; measure-based fitting supersedes it."
+owner_boundary_notes:
+- "F3-472 owns expander anatomy; F3-473 owns the motion map; this unit owns popup layering, chevron uniqueness, label-fit policy, and enter/remeasure timing."
+owner_hints:
+- "Plans/FinalGUISpec.md"
+```
+
+### F3-481 - Left-Hand Rail Placement Canon
+
+```yaml
+plan_unit_id: F3-481
+unit_type: decision
+status: accepted
+owner_doc: Plans/FinalGUISpec.md
+canonical_text: >-
+  Ratified decision (2026-07-27): the side-panel occupant stack (activity bar plus the
+  single panel slot hosting search, chat, files, source_control, github_actions,
+  docker_manager, testing, agents, artifacts, run_debug) mounts on the LEFT edge of the
+  shell. This supersedes the right-hand slot language in the section 3/4 shell prose and
+  closes the carried deviation recorded by F3-478: the concept family (PMConcept7 and the
+  Cozy Shelves rail concepts) has always rendered the rail on the left, and canon now
+  matches. Earlier right-hand phrasing is preserved findable as lineage and must not be
+  cited as live placement authority. Surface-location strings in wiring rows and help
+  copy authored after this date say left-hand; existing rows are corrected opportunistically
+  as they are touched, and GATE-010 evidence must not fail a row solely for a stale
+  right-hand location string authored before this date.
+gui_related: true
+gui_classification_reason: This unit fixes the shell-level side on which every rail panel mounts.
+split_recommended: false
+depends_on: [F3-478]
+unblocks: []
+acceptance_criteria:
+- "The activity bar and panel slot render on the left shell edge in the Slint build."
+- "F3-478's carried-deviation record is closed by this ruling and cited only as lineage."
+- "No WorkNodes, NodeSeeds, executable queues, final node manifests, or production build tasks are created by this PlanUnit."
+validation_surfaces:
+- "python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits"
+- "python3 scripts/pm-plan-index.py validate"
+risk_class: finalgui_drift
+reasoning_tier: standard
+context_scope: finalgui_standardization
+implementation_surfaces:
+- "Plans/FinalGUISpec.md"
+node_compile_hint:
+  mode: left_rail_placement_canon
+  create_worknodes: false
+source_lineage:
+- "Concepts/PMConcept7.html (renders the rail left; source-lineage-only)"
+- "Concepts/rail-concepts/QwenRailConcepts/c2-cozy-shelves.html (source-lineage-only)"
+preserved_exact_tokens: []
+negative_constraints:
+- "Do not cite pre-2026-07-27 right-hand slot prose as live placement authority."
+stale_retired_dispositions:
+- "Right-hand side-panel slot phrasing in sections 3.2/4.1 and older wiring-row ui_location strings become findable lineage superseded by this ruling."
+owner_boundary_notes:
+- "F3-478 recorded the deviation; this unit resolves it. Wiring-row string hygiene is owned by Plans/Wiring_Matrix.production.json maintenance."
+owner_hints:
+- "Plans/FinalGUISpec.md"
+```
+
+## Run & Debug Revival Addendum - 2026-07-27
+
+This addendum reactivates the classical DAP Run & Debug rail panel as canonical GUI spec per ratified user decisions 2026-07-27: the panel returns to the left rail with activity-bar icon label "Debug" and open-panel title "Debug & Run"; multi-session debugging is permitted with a status-dot session picker and per-session sub-tabs in the bottom Debug tab; the gear button opens the project's launch config file in the editor surface while "Add Configuration" opens an inline form in the panel; and the bottom-zone Debug tab is the debug session runtime surface (program stdout/stderr, adapter console, session chrome) while the rail panel is the control GUI (launch configs, transport, breakpoints, variables/watch, call stack). The design adapts research lineage from microsoft/vscode `src/vs/workbench/contrib/debug`, zed-industries/zed `crates/debugger_ui`, Lapce, Theia, and nvim-dap-ui; these remain research lineage only, and `Concepts/rail-concepts/**` and `Concepts/pm6-build/**` remain illustrative source-lineage only per Plans/usage-feature.md — concept HTML, CSS, colors, class names, and demo data are never copied into spec or implementation. Command semantics for the new `cmd.run_debug.*` family live in Plans/Commands_System.md Run & Debug Revival Addendum §7.2 with registration in Plans/UI_Command_Catalog.md Run & Debug Revival Addendum; both are referenced here, never restated. This addendum creates no WorkNodes, NodeSeeds, executable queues, implementation files, runtime artifacts, generated wiring rows, production build tasks, final manifests, or PNC-019 receipts.
+
+### F3-482 - Run & Debug Panel Identity and Activity Bar Placement
+
+```yaml
+plan_unit_id: F3-482
+unit_type: requirement
+status: accepted
+owner_doc: Plans/FinalGUISpec.md
+canonical_text: >-
+  The classical DAP Run & Debug rail panel is reactivated in the left rail per user
+  decision 2026-07-27. The activity-bar icon label reads "Debug"; the open panel is
+  titled "Debug & Run". The icon sits directly below the Tests icon as its own
+  activity-bar entry. Activity-bar icons and shortcuts remain user-adjustable and
+  sortable under the existing customization contract, so canonical docs never pin a
+  fixed ordinal or Ctrl+N index for this icon. `run_debug` remains the
+  cmd.panel.switch destination id for this panel per the Plans/UI_Command_Catalog.md
+  closed vocabulary (referenced, not restated). This placement fixes the gap where
+  `run_debug` appeared in the ten-id side-panel inventory (F3-042) but in no
+  activity-bar group.
+gui_related: true
+gui_classification_reason: This unit defines the visible activity-bar icon label, panel title, and placement of the Run & Debug rail entry.
+split_recommended: false
+depends_on: [F3-042]
+unblocks: []
+acceptance_criteria:
+- "The activity-bar icon for the run_debug panel reads \"Debug\" and the open panel is titled \"Debug & Run\"."
+- "The Debug icon sits directly below the Tests icon as its own activity-bar entry, with no fixed ordinal or Ctrl+N index pinned anywhere in canonical docs."
+- "cmd.panel.switch resolves the run_debug destination id per the UI_Command_Catalog closed vocabulary."
+- "No WorkNodes, NodeSeeds, executable queues, final node manifests, or production build tasks are created by this PlanUnit."
+validation_surfaces:
+- "python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits"
+- "python3 scripts/pm-plan-index.py validate"
+risk_class: finalgui_drift
+reasoning_tier: standard
+context_scope: run_debug_revival
+implementation_surfaces:
+- "Plans/FinalGUISpec.md"
+node_compile_hint:
+  mode: run_debug_panel_identity_and_activity_bar_placement
+  create_worknodes: false
+source_lineage:
+- "user-decision:2026-07-27-run-debug-revival"
+- "microsoft/vscode src/vs/workbench/contrib/debug (research lineage)"
+- "zed-industries/zed crates/debugger_ui (research lineage)"
+- "Plans/FinalGUISpec.md:683 (run_debug panel inventory row)"
+- "Plans/FinalGUISpec.md:27670 (Activity Bar Groups And Shortcut Binding addendum; run_debug previously ungrouped)"
+preserved_exact_tokens:
+- "Debug"
+- "Debug & Run"
+- "run_debug"
+- "Tests"
+negative_constraints:
+- "Do not pin a fixed activity-bar ordinal or Ctrl+N index for the Debug icon; icons and shortcuts remain user-adjustable and sortable under the existing customization contract."
+- "Do not restate the cmd.panel.switch closed vocabulary; reference Plans/UI_Command_Catalog.md."
+- "No WorkNodes, NodeSeeds, executable queues, final node manifests, or production build tasks are created by this PlanUnit."
+compatibility_only_notes:
+- "Slint portability: the activity-bar entry is a standard rail icon button with a text tooltip; no web-only primitives are required."
+stale_retired_dispositions:
+- "The Activity Bar Groups And Shortcut Binding addendum's ungrouped run_debug gap is resolved by this placement; the four-group list there remains otherwise unchanged."
+owner_boundary_notes:
+- "F3-042 owns the side-panel inventory; this unit owns only the run_debug entry's presentation and placement."
+owner_hints:
+- "Plans/FinalGUISpec.md"
+```
+
+### F3-483 - Debug Session State Machine
+
+```yaml
+plan_unit_id: F3-483
+unit_type: requirement
+status: accepted
+owner_doc: Plans/FinalGUISpec.md
+canonical_text: >-
+  Debug session states are none, initializing, running, paused, terminated, and
+  adapter_crashed; transitions flow none to initializing to running, running and
+  paused interchange, and any active state to terminated. DAP event-to-UI mapping:
+  stopped moves the session to paused and populates inspection surfaces; continued
+  moves the session to running and CLEARS inspection values so no stale variables
+  show while running; terminated and exited move the session to terminated with the
+  exit code retained; output routes to stream surfaces only; thread refreshes the
+  thread list. initializing shows progress and disables Start. adapter_crashed
+  surfaces an explicit error state with a Restart Adapter action and auto-restarts
+  once per the reliability mitigation in F3-259 (referenced). A single
+  debug-session store fed by DAP events is the sole truth: every surface (rail
+  chip, transport enablement, bottom-tab chrome, status-bar color) derives from it,
+  and no surface polls another. Transport enablement law: Continue is shown when
+  paused, Pause when running; step commands are enabled only while paused; Stop and
+  Disconnect are enabled whenever a session exists; Disconnect replaces Stop for
+  attach sessions.
+gui_related: true
+gui_classification_reason: This unit defines the visible session-state chips, transport enablement, and inspection clear/populate behavior driven by DAP events.
+split_recommended: false
+depends_on: [F3-259]
+unblocks: []
+acceptance_criteria:
+- "All six states (none, initializing, running, paused, terminated, adapter_crashed) and the stated DAP event-to-UI mapping hold on every debug surface."
+- "A continued event clears inspection values; no stale variables render while running."
+- "Transport enablement follows the stated law, including the Disconnect-for-attach swap and steps enabled only while paused."
+- "Every surface derives from the single debug-session store; no surface polls another surface."
+- "No WorkNodes, NodeSeeds, executable queues, final node manifests, or production build tasks are created by this PlanUnit."
+validation_surfaces:
+- "python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits"
+- "python3 scripts/pm-plan-index.py validate"
+risk_class: finalgui_drift
+reasoning_tier: standard
+context_scope: run_debug_revival
+implementation_surfaces:
+- "Plans/FinalGUISpec.md"
+node_compile_hint:
+  mode: debug_session_state_machine
+  create_worknodes: false
+source_lineage:
+- "user-decision:2026-07-27-run-debug-revival"
+- "microsoft/vscode src/vs/workbench/contrib/debug (research lineage)"
+- "zed-industries/zed crates/debugger_ui (research lineage)"
+- "nvim-dap-ui (research lineage)"
+- "Plans/FinalGUISpec.md:17921 (F3-259 DAP debugger reliability risk row)"
+preserved_exact_tokens:
+- "none"
+- "initializing"
+- "running"
+- "paused"
+- "terminated"
+- "adapter_crashed"
+- "stopped"
+- "continued"
+- "output"
+- "thread"
+- "Restart Adapter"
+- "Continue"
+- "Pause"
+- "Stop"
+- "Disconnect"
+negative_constraints:
+- "Do not render stale inspection values while a session is running; continued clears them."
+- "Do not let any surface derive session state from another surface; the single debug-session store is the sole truth."
+- "No WorkNodes, NodeSeeds, executable queues, final node manifests, or production build tasks are created by this PlanUnit."
+compatibility_only_notes:
+- "Slint portability: session state maps to a single observable model with derived bindings per surface; state chips and transport enablement are plain property bindings."
+stale_retired_dispositions: []
+owner_boundary_notes:
+- "This unit owns the session state machine and transport enablement law; F3-259 owns the reliability risk row (timeouts, single auto-restart) it references."
+owner_hints:
+- "Plans/FinalGUISpec.md"
+```
+
+### F3-484 - Multi-Session Debug Policy
+
+```yaml
+plan_unit_id: F3-484
+unit_type: requirement
+status: accepted
+owner_doc: Plans/FinalGUISpec.md
+canonical_text: >-
+  Multiple concurrent debug sessions per project are permitted; this supersedes the
+  F3-259 one-session-per-project cap, whose amendment is recorded there via stale
+  disposition. Sessions include child sessions nested under their parents. The
+  session picker is a compact dropdown with status dots (starting shows a spinner,
+  running green, paused yellow, terminated red with a strikethrough label) and a
+  per-row close action on hover. Exactly one session is focused at a time, and ALL
+  controls (transport, variables, watch, call stack, console input) act on the
+  focused session. Starting a configuration that is already running prompts a
+  duplicate-session confirm. The bottom Debug tab shows one sub-tab per session,
+  and closing a sub-tab offers terminate.
+gui_related: true
+gui_classification_reason: This unit defines the visible session picker, focus model, and per-session sub-tab behavior.
+split_recommended: false
+depends_on: [F3-483]
+unblocks: []
+acceptance_criteria:
+- "Multiple concurrent sessions per project run simultaneously, with child sessions nested under parents in the picker."
+- "The picker shows the stated status-dot vocabulary and per-row close on hover."
+- "Exactly one focused session exists at a time and every control acts on it."
+- "Starting an already-running configuration prompts a duplicate-session confirm; closing a bottom-tab sub-tab offers terminate."
+- "No WorkNodes, NodeSeeds, executable queues, final node manifests, or production build tasks are created by this PlanUnit."
+validation_surfaces:
+- "python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits"
+- "python3 scripts/pm-plan-index.py validate"
+risk_class: finalgui_drift
+reasoning_tier: standard
+context_scope: run_debug_revival
+implementation_surfaces:
+- "Plans/FinalGUISpec.md"
+node_compile_hint:
+  mode: multi_session_debug_policy
+  create_worknodes: false
+source_lineage:
+- "user-decision:2026-07-27-run-debug-revival"
+- "zed-industries/zed crates/debugger_ui (research lineage; status-dot session picker)"
+- "microsoft/vscode src/vs/workbench/contrib/debug (research lineage)"
+preserved_exact_tokens:
+- "starting"
+- "running"
+- "paused"
+- "terminated"
+negative_constraints:
+- "Do not enforce a one-session-per-project cap; that cap is retired and recorded as a stale disposition on F3-259."
+- "Do not let controls act on any session other than the focused session."
+- "No WorkNodes, NodeSeeds, executable queues, final node manifests, or production build tasks are created by this PlanUnit."
+compatibility_only_notes:
+- "Slint portability: the picker dropdown renders via PopupWindow; status dots are precomputed color glyphs with no runtime color mixing."
+stale_retired_dispositions: []
+owner_boundary_notes:
+- "This unit owns session multiplicity, nesting, picking, and focus; session states themselves are owned by F3-483."
+owner_hints:
+- "Plans/FinalGUISpec.md"
+```
+
+### F3-485 - Run & Debug Panel Layout Canon
+
+```yaml
+plan_unit_id: F3-485
+unit_type: requirement
+status: accepted
+owner_doc: Plans/FinalGUISpec.md
+canonical_text: >-
+  The Run & Debug rail panel lays out in fixed shelf order: (1) LAUNCH ROW: a
+  config dropdown (portal menu listing launch configs grouped with recents first,
+  an "Add Configuration…" item, and an "Edit configurations file" item), a primary
+  Start Debugging split button with a Run Without Debugging secondary action, and a
+  gear button that opens the launch config file in the editor surface; (2) SESSION
+  shelf: session rows with status dots and a focused-session highlight, a transport
+  strip (Continue/Pause toggle, Step Over, Step Into, Step Out, Restart,
+  Stop/Disconnect), the session picker per F3-484, and a Reveal Output action;
+  (3) VARIABLES & WATCH unified shelf whose content rules F3-486 owns; (4) CALL
+  STACK shelf per F3-487; (5) BREAKPOINTS shelf per F3-488. Shelf order is fixed as
+  listed; shelves use the unified shelf-expander contract (F3-472, referenced, not
+  restated), and collapse state persists per the F3-475 persistence-key discipline.
+  EMPTY STATES: no-config (a welcome state with a "Run and Debug" primary button, a
+  "create a configuration" inline form entry, and the gear hidden), configured-idle
+  (full launch row, inspection shelves present but empty), running (inspection
+  shelves dimmed and emptied per F3-483's cleared-on-continued rule), paused
+  (shelves populated), and terminated (a banner with the exit code and a Restart
+  action). Panel width, motion, and fitting follow F3-471, F3-473, and F3-480
+  (referenced).
+gui_related: true
+gui_classification_reason: This unit defines the visible section-by-section layout and empty-state vocabulary of the Run & Debug rail panel.
+split_recommended: false
+depends_on: [F3-472, F3-475]
+unblocks: []
+acceptance_criteria:
+- "The panel renders the five sections in the fixed order LAUNCH ROW, SESSION, VARIABLES & WATCH, CALL STACK, BREAKPOINTS."
+- "The launch row carries the config dropdown with recents-first grouping, \"Add Configuration…\", and \"Edit configurations file\" items, the Start Debugging split button with Run Without Debugging, and the gear button opening the config file in the editor surface."
+- "All five empty/running/paused/terminated states render exactly as specified, including the hidden gear in no-config and the exit-code banner with Restart in terminated."
+- "Shelves follow the F3-472 expander contract and persist collapse state per F3-475."
+- "No WorkNodes, NodeSeeds, executable queues, final node manifests, or production build tasks are created by this PlanUnit."
+validation_surfaces:
+- "python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits"
+- "python3 scripts/pm-plan-index.py validate"
+risk_class: finalgui_drift
+reasoning_tier: standard
+context_scope: run_debug_revival
+implementation_surfaces:
+- "Plans/FinalGUISpec.md"
+node_compile_hint:
+  mode: run_debug_panel_layout_canon
+  create_worknodes: false
+source_lineage:
+- "user-decision:2026-07-27-run-debug-revival"
+- "microsoft/vscode src/vs/workbench/contrib/debug (research lineage)"
+- "zed-industries/zed crates/debugger_ui (research lineage)"
+- "eclipse-theia/theia debug plugin (research lineage)"
+preserved_exact_tokens:
+- "Add Configuration…"
+- "Edit configurations file"
+- "Start Debugging"
+- "Run Without Debugging"
+- "Run and Debug"
+- "create a configuration"
+- "Reveal Output"
+- "Restart"
+negative_constraints:
+- "Do not reorder the five shelves; shelf order is fixed as listed."
+- "Do not restate the unified shelf-expander contract; reference F3-472."
+- "No WorkNodes, NodeSeeds, executable queues, final node manifests, or production build tasks are created by this PlanUnit."
+compatibility_only_notes:
+- "Slint portability: portal menus render via PopupWindow; shelf collapse is the F3-472/F3-473 animated-height idiom; all surfaces are opaque precomputed rects."
+stale_retired_dispositions: []
+owner_boundary_notes:
+- "This unit owns panel section order and empty states; shelf content rules are owned by F3-486, F3-487, and F3-488; expander mechanics are owned by F3-472; width envelope by F3-471."
+owner_hints:
+- "Plans/FinalGUISpec.md"
+```
+
+### F3-486 - Unified Variables and Watch Shelf
+
+```yaml
+plan_unit_id: F3-486
+unit_type: requirement
+status: accepted
+owner_doc: Plans/FinalGUISpec.md
+canonical_text: >-
+  Watches live INSIDE the variables shelf as a pinned watch group above the scopes
+  (the Zed one-shelf pattern, not two sections). Add-watch is a shelf-header action
+  that opens an inline input row. Watch expressions re-evaluate on each pause with
+  the DAP evaluate context 'watch', and only the affected expression re-evaluates
+  when one is added. Scopes render as a lazy tree with locals first, auto-expanding
+  the first non-expensive scope on pause. Variable rows offer context actions: Set
+  Value (inline input via DAP setVariable, capability-gated), Copy Value, Copy as
+  Expression, and Add to Watch. All values are relative to the selected stack frame
+  per F3-487, and all values clear on continue per F3-483.
+gui_related: true
+gui_classification_reason: This unit defines the visible variables/watch shelf structure, inline inputs, and row context actions.
+split_recommended: false
+depends_on: [F3-485]
+unblocks: []
+acceptance_criteria:
+- "Watches render as a pinned group above scopes inside the single variables shelf; no separate watch section exists."
+- "Watch re-evaluation uses DAP evaluate context 'watch' on each pause, and adding one watch re-evaluates only that expression."
+- "Scopes render lazily with locals first and auto-expand of the first non-expensive scope on pause."
+- "The four context actions (Set Value, Copy Value, Copy as Expression, Add to Watch) are present, with Set Value capability-gated."
+- "No WorkNodes, NodeSeeds, executable queues, final node manifests, or production build tasks are created by this PlanUnit."
+validation_surfaces:
+- "python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits"
+- "python3 scripts/pm-plan-index.py validate"
+risk_class: finalgui_drift
+reasoning_tier: standard
+context_scope: run_debug_revival
+implementation_surfaces:
+- "Plans/FinalGUISpec.md"
+node_compile_hint:
+  mode: unified_variables_and_watch_shelf
+  create_worknodes: false
+source_lineage:
+- "user-decision:2026-07-27-run-debug-revival"
+- "zed-industries/zed crates/debugger_ui (research lineage; unified variables/watch shelf)"
+- "microsoft/vscode src/vs/workbench/contrib/debug (research lineage)"
+preserved_exact_tokens:
+- "watch"
+- "Set Value"
+- "Copy Value"
+- "Copy as Expression"
+- "Add to Watch"
+negative_constraints:
+- "Do not split watches into a separate shelf section; the pinned watch group lives inside the variables shelf."
+- "Do not duplicate session state-machine semantics; F3-483 owns clear-on-continue and this unit references it."
+- "No WorkNodes, NodeSeeds, executable queues, final node manifests, or production build tasks are created by this PlanUnit."
+compatibility_only_notes:
+- "Slint portability: the lazy scope tree renders via Slint model views with on-demand row population; inline input rows are standard line edits."
+stale_retired_dispositions: []
+owner_boundary_notes:
+- "This unit owns variables/watch content rules; the shelf's placement and expander mechanics are owned by F3-485 and F3-472; frame selection is owned by F3-487."
+owner_hints:
+- "Plans/FinalGUISpec.md"
+```
+
+### F3-487 - Call Stack Shelf
+
+```yaml
+plan_unit_id: F3-487
+unit_type: requirement
+status: accepted
+owner_doc: Plans/FinalGUISpec.md
+canonical_text: >-
+  The call stack shelf renders a thread-grouped frame list with the main thread
+  first. Each frame row shows the frame name plus file:line. Clicking a frame
+  selects it (variables and watch re-scope per F3-486) and opens the file in the
+  editor surface. Library or otherwise de-emphasized frames collapse into a "Show N
+  more frames" row. A Restart Frame inline action appears when the adapter
+  capability exists and is hidden otherwise (capability-gated). A shelf-header Show
+  Execution Point action returns the editor to the pause location. Thread rows show
+  "Paused on {reason}" labels.
+gui_related: true
+gui_classification_reason: This unit defines the visible call-stack frame list, frame selection, and execution-point affordances.
+split_recommended: false
+depends_on: [F3-485]
+unblocks: []
+acceptance_criteria:
+- "Frames group by thread with the main thread first, and each frame row shows name plus file:line."
+- "Frame click re-scopes variables/watch and opens the file in the editor surface."
+- "De-emphasized frames collapse into a \"Show N more frames\" row; Restart Frame is capability-gated and hidden when unsupported."
+- "The shelf-header Show Execution Point action returns the editor to the pause location, and thread rows show \"Paused on {reason}\"."
+- "No WorkNodes, NodeSeeds, executable queues, final node manifests, or production build tasks are created by this PlanUnit."
+validation_surfaces:
+- "python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits"
+- "python3 scripts/pm-plan-index.py validate"
+risk_class: finalgui_drift
+reasoning_tier: standard
+context_scope: run_debug_revival
+implementation_surfaces:
+- "Plans/FinalGUISpec.md"
+node_compile_hint:
+  mode: call_stack_shelf
+  create_worknodes: false
+source_lineage:
+- "user-decision:2026-07-27-run-debug-revival"
+- "microsoft/vscode src/vs/workbench/contrib/debug (research lineage)"
+- "zed-industries/zed crates/debugger_ui (research lineage)"
+preserved_exact_tokens:
+- "Show N more frames"
+- "Restart Frame"
+- "Show Execution Point"
+- "Paused on {reason}"
+negative_constraints:
+- "Do not render Restart Frame when the adapter lacks the capability; capability-gated controls are hidden, never disabled-empty."
+- "Do not duplicate session state-machine semantics; F3-483 owns pause/populate behavior and this unit references it."
+- "No WorkNodes, NodeSeeds, executable queues, final node manifests, or production build tasks are created by this PlanUnit."
+compatibility_only_notes:
+- "Slint portability: the thread-grouped frame list renders via Slint model views; file:line labels use the standard editor-open navigation path."
+stale_retired_dispositions: []
+owner_boundary_notes:
+- "This unit owns the call-stack shelf content; frame-driven re-scoping of values is owned by F3-486; shelf placement is owned by F3-485."
+owner_hints:
+- "Plans/FinalGUISpec.md"
+```
+
+### F3-488 - Breakpoint Canon
+
+```yaml
+plan_unit_id: F3-488
+unit_type: requirement
+status: accepted
+owner_doc: Plans/FinalGUISpec.md
+canonical_text: >-
+  Breakpoint types are line, conditional (expression and/or hit-count), logpoint (a
+  log message with {} interpolation that does not pause), function breakpoint, and
+  exception breakpoints (adapter-provided filters rendered as checkbox rows). The
+  breakpoints shelf lists all breakpoints with an activation toggle per row, a type
+  glyph (logpoint diamond, conditional badge showing the condition), a file:line
+  label that opens the source in the editor on click, and an inline edit strip
+  (mode selector: Expression / Hit Count / Log Message, plus a single-line input;
+  Enter commits, Esc cancels) reachable from a per-row edit action. Header actions:
+  Add Function Breakpoint, Toggle All Activations, Remove All. Breakpoint states
+  are enabled, disabled (dimmed), and unverified (hollow, adapter-rejected at
+  session time, with the reason on hover). Breakpoints are project state that
+  persists across sessions and app restarts; storage keys are referenced from
+  Plans/storage-plan.md, not restated. Editor-gutter sync: the gutter marker and
+  the shelf row are two renderers of the same breakpoint record; the record is the
+  truth with a single owner, and toggling either renderer updates both.
+gui_related: true
+gui_classification_reason: This unit defines the visible breakpoint shelf rows, glyphs, edit strip, and gutter-sync rendering contract.
+split_recommended: false
+depends_on: [F3-485]
+unblocks: []
+acceptance_criteria:
+- "All five breakpoint types (line, conditional, logpoint, function, exception) are representable with the stated glyphs and checkbox filter rows."
+- "Each row carries an activation toggle, type glyph, file:line open-source label, and per-row edit action opening the inline edit strip with Enter-commit and Esc-cancel."
+- "Header actions are exactly Add Function Breakpoint, Toggle All Activations, and Remove All."
+- "Enabled, disabled (dimmed), and unverified (hollow with hover reason) states render distinctly; breakpoints persist across sessions and restarts."
+- "Gutter marker and shelf row render one shared breakpoint record; toggling either updates both."
+- "No WorkNodes, NodeSeeds, executable queues, final node manifests, or production build tasks are created by this PlanUnit."
+validation_surfaces:
+- "python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits"
+- "python3 scripts/pm-plan-index.py validate"
+risk_class: run_debug_spec_drift
+reasoning_tier: standard
+context_scope: run_debug_revival
+implementation_surfaces:
+- "Plans/FinalGUISpec.md"
+node_compile_hint:
+  mode: breakpoint_canon
+  create_worknodes: false
+source_lineage:
+- "user-decision:2026-07-27-run-debug-revival"
+- "microsoft/vscode src/vs/workbench/contrib/debug (research lineage)"
+- "nvim-dap-ui (research lineage)"
+preserved_exact_tokens:
+- "Expression"
+- "Hit Count"
+- "Log Message"
+- "Add Function Breakpoint"
+- "Toggle All Activations"
+- "Remove All"
+- "enabled"
+- "disabled"
+- "unverified"
+negative_constraints:
+- "Do not own or restate breakpoint storage keys; Plans/storage-plan.md owns them and this unit references them."
+- "Do not render two independent breakpoint truths; gutter and shelf are renderers of one record."
+- "No WorkNodes, NodeSeeds, executable queues, final node manifests, or production build tasks are created by this PlanUnit."
+compatibility_only_notes:
+- "Slint portability: shelf rows and the gutter marker bind to one shared model; type glyphs are precomputed assets with no runtime color mixing."
+stale_retired_dispositions: []
+owner_boundary_notes:
+- "This unit owns breakpoint types, row anatomy, states, and gutter sync; shelf placement is owned by F3-485; persistence keys are owned by Plans/storage-plan.md."
+owner_hints:
+- "Plans/FinalGUISpec.md"
+```
+
+### F3-489 - Launch Profile Schema
+
+```yaml
+plan_unit_id: F3-489
+unit_type: requirement
+status: accepted
+owner_doc: Plans/FinalGUISpec.md
+canonical_text: >-
+  The project-scoped launch profile record carries the fields: id, label, adapter
+  (debug adapter id from the registry per F3-494), request (launch | attach),
+  program, args[], env{}, cwd, pre_launch_task (optional task ref), console routing
+  (internal_console | integrated_terminal | external_terminal — adapter messages
+  always go to the Debug Console surface; program stdout/stderr go to the Debug
+  Console only under internal_console, to the Process pane TTY under
+  integrated_terminal, and to an OS terminal under external_terminal, per the DAP
+  OutputEvent category versus RunInTerminal reverse-request split), stop_on_entry,
+  and presentation (group, order, recent flag). Storage is project-scoped with
+  storage keys owned by the Plans/storage-plan.md addendum (referenced, not
+  restated). The canonical file format is a `.pm/launch.json`-compatible JSON
+  document so existing launch.json muscle memory applies. The settings inventory
+  row `code.execution.debug-configurations` (Plans/settings_inventory.json)
+  surfaces this list under Code & Execution > Execution Environment. This unit
+  supersedes the "Settings > Debug" placement prose in the §18 MVP row and the
+  "subsections under Settings > Advanced" placement prose in the activity-bar
+  settings-registry addendum; both supersessions are recorded here and the old
+  blocks are NOT modified.
+gui_related: true
+gui_classification_reason: This unit defines the launch configuration surface, its editor-file format, and where the configuration list appears in settings.
+split_recommended: false
+depends_on: []
+unblocks: []
+acceptance_criteria:
+- "The launch profile record carries exactly the stated fields, including the three-value console routing enum with the stated OutputEvent versus RunInTerminal semantics."
+- "The canonical file is `.pm/launch.json`-compatible JSON; storage is project-scoped with keys referenced from Plans/storage-plan.md."
+- "`code.execution.debug-configurations` surfaces the list under Code & Execution > Execution Environment."
+- "Both supersessions (Settings > Debug row; Settings > Advanced subsection prose) are recorded in this unit's canonical_text with the old blocks left unmodified."
+- "No WorkNodes, NodeSeeds, executable queues, final node manifests, or production build tasks are created by this PlanUnit."
+validation_surfaces:
+- "python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits"
+- "python3 scripts/pm-plan-index.py validate"
+risk_class: run_debug_spec_drift
+reasoning_tier: standard
+context_scope: run_debug_revival
+implementation_surfaces:
+- "Plans/FinalGUISpec.md"
+node_compile_hint:
+  mode: launch_profile_schema
+  create_worknodes: false
+source_lineage:
+- "user-decision:2026-07-27-run-debug-revival"
+- "microsoft/vscode src/vs/workbench/contrib/debug (research lineage; launch.json format)"
+- "eclipse-theia/theia debug plugin (research lineage)"
+- "Plans/FinalGUISpec.md:2991 (Settings > Debug row; superseded placement lineage)"
+- "Plans/FinalGUISpec.md:27689 (Settings > Advanced subsection prose; superseded placement lineage)"
+preserved_exact_tokens:
+- "id"
+- "label"
+- "adapter"
+- "request"
+- "launch"
+- "attach"
+- "program"
+- "args[]"
+- "env{}"
+- "cwd"
+- "pre_launch_task"
+- "internal_console"
+- "integrated_terminal"
+- "external_terminal"
+- "stop_on_entry"
+- ".pm/launch.json"
+- "code.execution.debug-configurations"
+negative_constraints:
+- "Do not own or restate launch-profile storage keys; Plans/storage-plan.md owns them and this unit references them."
+- "Do not modify the superseded Settings > Debug or Settings > Advanced placement blocks; the supersessions live only in this unit."
+- "No WorkNodes, NodeSeeds, executable queues, final node manifests, or production build tasks are created by this PlanUnit."
+compatibility_only_notes:
+- "Slint portability: the inline add-configuration form and dropdown rows are standard form controls; JSON file editing reuses the existing editor surface."
+stale_retired_dispositions:
+- "The §18 MVP row placement 'Run & Debug side-panel surface + Settings > Debug' is superseded: the configuration list now surfaces under Code & Execution > Execution Environment via the settings inventory row; the old row stays findable as lineage."
+- "The activity-bar settings-registry addendum's 'subsections under Settings > Advanced' placement prose is superseded for debug configurations by the same Code & Execution > Execution Environment placement; the old prose stays findable as lineage."
+owner_boundary_notes:
+- "This unit owns the launch profile record shape and settings placement; adapter ids come from the F3-494 registry; storage keys are owned by Plans/storage-plan.md; the settings inventory row itself is owned by Plans/settings_inventory.json."
+owner_hints:
+- "Plans/FinalGUISpec.md"
+```
+
+### F3-490 - Bottom Debug Tab Canon
+
+```yaml
+plan_unit_id: F3-490
+unit_type: requirement
+status: accepted
+owner_doc: Plans/FinalGUISpec.md
+canonical_text: >-
+  The bottom-zone Debug tab is the debug session runtime surface with three states.
+  EMPTY (no session ever): a config picker, a Start Debugging action, and a hint
+  that output appears here; this state must not reference any rail panel by name.
+  ATTACHED: per-session sub-tabs when more than one session exists per F3-484; a
+  session chrome row with adapter identity, a mirrored state chip per F3-483,
+  elapsed time, and Terminate/Disconnect actions; a CONSOLE pane that is the
+  OutputEvent sink rendering adapter/console messages distinctly from program
+  stdout/stderr with stream tags, plus an evaluate-expression REPL input row at the
+  bottom that is enabled only while a session exists and keeps per-session input
+  history; and a PROCESS pane hosting the debuggee TTY when the launch profile's
+  console routing is integrated_terminal per F3-489, absent otherwise. TERMINATED:
+  the chrome row shows the exit code plus a Restart action, and console scrollback
+  is retained, never destroyed on session end. The Console pane is the Debug
+  Console pane whose ownership boundaries (REPL/evaluation versus stdout
+  separation) are owned by Plans/Section15_MVP_Promoted_Features_Spec.md —
+  referenced, not restated. This unit resolves the bottom-zone enumeration
+  inconsistency: the bottom zone's debugger occupant IS this Debug tab, hosting the
+  Debug Console pane plus session chrome and the conditional Process pane; the
+  §7.20.2 pane list's "Debug Console" entry and the locked-decision "classical
+  debugger surface" entry both resolve here. Reveal and focus behavior follows
+  F3-491.
+gui_related: true
+gui_classification_reason: This unit defines the visible bottom-zone Debug tab states, session chrome, console, and conditional process pane.
+split_recommended: false
+depends_on: [F3-483, F3-489]
+unblocks: []
+acceptance_criteria:
+- "The tab renders EMPTY, ATTACHED, and TERMINATED states exactly as specified; EMPTY names no rail panel."
+- "ATTACHED shows per-session sub-tabs per F3-484, the session chrome row (adapter identity, mirrored state chip, elapsed time, Terminate/Disconnect), the CONSOLE pane with stream tags and session-gated REPL input with per-session history, and the PROCESS pane only under integrated_terminal routing."
+- "TERMINATED shows exit code plus Restart and retains console scrollback."
+- "The §7.20.2 'Debug Console' entry and the locked-decision 'classical debugger surface' entry both resolve to this tab."
+- "No WorkNodes, NodeSeeds, executable queues, final node manifests, or production build tasks are created by this PlanUnit."
+validation_surfaces:
+- "python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits"
+- "python3 scripts/pm-plan-index.py validate"
+risk_class: run_debug_spec_drift
+reasoning_tier: standard
+context_scope: run_debug_revival
+implementation_surfaces:
+- "Plans/FinalGUISpec.md"
+node_compile_hint:
+  mode: bottom_debug_tab_canon
+  create_worknodes: false
+source_lineage:
+- "user-decision:2026-07-27-run-debug-revival"
+- "microsoft/vscode src/vs/workbench/contrib/debug (research lineage)"
+- "zed-industries/zed crates/debugger_ui (research lineage)"
+- "Plans/FinalGUISpec.md:1787 (§7.20.2 Debug, Problems, Output, and Ports pane list)"
+- "Plans/Section15_MVP_Promoted_Features_Spec.md (Debug Console pane ownership; referenced)"
+preserved_exact_tokens:
+- "Start Debugging"
+- "Terminate"
+- "Disconnect"
+- "Restart"
+- "integrated_terminal"
+- "Debug Console"
+negative_constraints:
+- "Do not re-own Debug Console REPL/evaluation versus stdout separation semantics; Plans/Section15_MVP_Promoted_Features_Spec.md owns them and this unit references them."
+- "Do not destroy console scrollback on session end."
+- "The EMPTY state must not reference any rail panel by name."
+- "No WorkNodes, NodeSeeds, executable queues, final node manifests, or production build tasks are created by this PlanUnit."
+compatibility_only_notes:
+- "Slint portability: the PROCESS pane reuses the existing terminal widget; the CONSOLE pane is a virtualized scrollback view with a bottom input row."
+stale_retired_dispositions:
+- "The bottom-zone enumeration inconsistency between the §7.20.2 pane list's 'Debug Console' entry and the locked-decision 'classical debugger surface' entry is resolved: both resolve to this Debug tab."
+owner_boundary_notes:
+- "This unit owns the Debug tab's states, chrome, and pane composition; Debug Console REPL semantics are owned by Plans/Section15_MVP_Promoted_Features_Spec.md; reveal/focus handoff is owned by F3-491."
+owner_hints:
+- "Plans/FinalGUISpec.md"
+```
+
+### F3-491 - Panel-to-Bottom-Tab Handoff Contract
+
+```yaml
+plan_unit_id: F3-491
+unit_type: requirement
+status: accepted
+owner_doc: Plans/FinalGUISpec.md
+canonical_text: >-
+  Cross-surface handoff uses named actions only: Reveal Output (rail to bottom:
+  focuses the bottom Debug tab, un-collapsing the bottom zone if needed), Show in
+  Run & Debug (bottom tab to rail: focuses the rail panel), and frame/breakpoint
+  click, which performs editor navigation only and never steals panel or tab focus.
+  On session start, the bottom Debug tab reveals itself if the bottom zone is
+  collapsed but does NOT steal keyboard focus. On pause (a stopped event without
+  preserveFocusHint), the editor reveals the top frame and the rail inspection
+  shelves populate, and when new output arrives the bottom tab shows an
+  unread-output badge instead of stealing focus. Honoring preserveFocusHint
+  suppresses the editor reveal. This unit extends the F3-044 reveal/focus owner
+  boundary (referenced) and names the command ids that perform reveals:
+  cmd.run_debug.console.reveal and cmd.run_debug.terminal.reveal, whose semantics
+  are referenced from Plans/Commands_System.md §7.2, not restated.
+gui_related: true
+gui_classification_reason: This unit defines the visible focus, reveal, and unread-badge behavior across the rail panel, bottom tab, and editor.
+split_recommended: false
+depends_on: [F3-483]
+unblocks: []
+acceptance_criteria:
+- "Reveal Output and Show in Run & Debug perform the stated focus moves, including bottom-zone un-collapse."
+- "Session start reveals the bottom Debug tab without stealing keyboard focus; pause reveals the top frame in the editor unless preserveFocusHint is set."
+- "New output produces an unread-output badge on the bottom tab rather than a focus steal; frame/breakpoint clicks navigate the editor only."
+- "No WorkNodes, NodeSeeds, executable queues, final node manifests, or production build tasks are created by this PlanUnit."
+validation_surfaces:
+- "python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits"
+- "python3 scripts/pm-plan-index.py validate"
+risk_class: finalgui_drift
+reasoning_tier: high
+context_scope: run_debug_revival
+implementation_surfaces:
+- "Plans/FinalGUISpec.md"
+node_compile_hint:
+  mode: panel_to_bottom_tab_handoff_contract
+  create_worknodes: false
+source_lineage:
+- "user-decision:2026-07-27-run-debug-revival"
+- "microsoft/vscode src/vs/workbench/contrib/debug (research lineage; preserveFocusHint semantics)"
+- "Plans/FinalGUISpec.md:691 (F3-044 Run & Debug side-panel owner boundary; extended)"
+- "Plans/Commands_System.md (Run & Debug Revival Addendum §7.2; referenced)"
+preserved_exact_tokens:
+- "Reveal Output"
+- "Show in Run & Debug"
+- "preserveFocusHint"
+- "cmd.run_debug.console.reveal"
+- "cmd.run_debug.terminal.reveal"
+negative_constraints:
+- "Do not steal keyboard focus on session start or on new output; use reveal-without-focus and the unread-output badge."
+- "Do not restate cmd.run_debug.* semantics; reference Plans/Commands_System.md §7.2."
+- "No WorkNodes, NodeSeeds, executable queues, final node manifests, or production build tasks are created by this PlanUnit."
+compatibility_only_notes:
+- "Slint portability: reveal-without-focus is a visibility/tab-selection change decoupled from focus transfer; the unread badge is a precomputed dot plus count on the tab header."
+stale_retired_dispositions: []
+owner_boundary_notes:
+- "This unit extends the F3-044 reveal/focus owner boundary for debug surfaces; F3-044 retains the general run_debug owner boundary; command semantics stay owned by Plans/Commands_System.md."
+owner_hints:
+- "Plans/FinalGUISpec.md"
+```
+
+### F3-492 - Debug Hotkey Bindings
+
+```yaml
+plan_unit_id: F3-492
+unit_type: requirement
+status: accepted
+owner_doc: Plans/FinalGUISpec.md
+canonical_text: >-
+  Debug hotkeys bind through the Rust-side registry per the existing shortcut
+  registry rule (referenced): F5 maps to cmd.run_debug.start when no session exists
+  and to cmd.run_debug.continue when paused; Ctrl+F5 maps to
+  cmd.run_debug.start_no_debug; F10 maps to cmd.run_debug.step_over; F11 maps to
+  cmd.run_debug.step_into; Shift+F11 maps to cmd.run_debug.step_out; Shift+F5 maps
+  to cmd.run_debug.stop (or disconnect for attach sessions per F3-483's
+  Stop/Disconnect swap). Keys are scoped so they dispatch only when the editor,
+  rail, or bottom zone has focus, and never inside text inputs. On macOS, F-key
+  normalization accounts for the fn-layer so the same bindings hold whether the
+  hardware row sends function keys or media keys.
+gui_related: true
+gui_classification_reason: This unit defines the keyboard-facing debug command bindings and their dispatch scoping.
+split_recommended: false
+depends_on: [F3-483, F3-059]
+unblocks: []
+acceptance_criteria:
+- "The six bindings (F5, Ctrl+F5, F10, F11, Shift+F11, Shift+F5) map to the stated cmd.run_debug.* commands, including the F5 start-versus-continue split and the attach-session disconnect swap."
+- "Bindings dispatch only from editor, rail, or bottom-zone focus and never inside text inputs."
+- "macOS F-key normalization preserves the bindings across fn-layer hardware modes."
+- "No WorkNodes, NodeSeeds, executable queues, final node manifests, or production build tasks are created by this PlanUnit."
+validation_surfaces:
+- "python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits"
+- "python3 scripts/pm-plan-index.py validate"
+risk_class: finalgui_drift
+reasoning_tier: standard
+context_scope: run_debug_revival
+implementation_surfaces:
+- "Plans/FinalGUISpec.md"
+node_compile_hint:
+  mode: debug_hotkey_bindings
+  create_worknodes: false
+source_lineage:
+- "user-decision:2026-07-27-run-debug-revival"
+- "microsoft/vscode src/vs/workbench/contrib/debug (research lineage)"
+- "Plans/FinalGUISpec.md:806 (F-key label table)"
+- "Plans/FinalGUISpec.md:814 (Rust-side shortcut registry rule)"
+preserved_exact_tokens:
+- "F5"
+- "Ctrl+F5"
+- "F10"
+- "F11"
+- "Shift+F11"
+- "Shift+F5"
+- "cmd.run_debug.start"
+- "cmd.run_debug.continue"
+- "cmd.run_debug.start_no_debug"
+- "cmd.run_debug.step_over"
+- "cmd.run_debug.step_into"
+- "cmd.run_debug.step_out"
+- "cmd.run_debug.stop"
+negative_constraints:
+- "Do not redefine the key label list; F3-059 owns shortcut tiers and labels and this unit owns only the command bindings."
+- "Do not dispatch debug hotkeys inside text inputs."
+- "No WorkNodes, NodeSeeds, executable queues, final node manifests, or production build tasks are created by this PlanUnit."
+compatibility_only_notes:
+- "Slint portability: key dispatch scopes map to focused-surface checks in the Rust-side registry; no platform-specific key handling leaks into Slint view code."
+stale_retired_dispositions: []
+owner_boundary_notes:
+- "F3-059 owns the shortcut tiers and key labels; this unit owns only the debug command bindings; command semantics are owned by Plans/Commands_System.md §7.2."
+owner_hints:
+- "Plans/FinalGUISpec.md"
+```
+
+### F3-493 - Run & Debug Accessibility Contract
+
+```yaml
+plan_unit_id: F3-493
+unit_type: requirement
+status: accepted
+owner_doc: Plans/FinalGUISpec.md
+canonical_text: >-
+  The variables/watch and call-stack trees use treegrid semantics (role=treegrid,
+  rows role=row, expandable rows exposing aria-expanded). The breakpoint shelf
+  exposes each row as a labeled control group (activation toggle, source link,
+  edit) with screen-reader labels naming type and state, e.g. "conditional
+  breakpoint, enabled, import.rs line 58". Session-state transitions (paused,
+  running, terminated, adapter_crashed) are announced via a polite live region. On
+  pause, focus is offered to the call stack's top frame without yanking it; the
+  user can dismiss the offer. Transport controls carry keybinding hints in their
+  tooltips and aria-labels. All shelf expanders follow the unified shelf-expander
+  contract's keyboard and aria rules (F3-472, referenced, not restated).
+gui_related: true
+gui_classification_reason: This unit defines the assistive-technology semantics, announcements, and focus offers for all debug surfaces.
+split_recommended: false
+depends_on: [F3-483, F3-472]
+unblocks: []
+acceptance_criteria:
+- "Variables/watch and call-stack trees expose treegrid roles with aria-expanded on expandable rows."
+- "Breakpoint rows announce type and state in screen-reader labels (e.g. \"conditional breakpoint, enabled, import.rs line 58\")."
+- "Session-state transitions announce via a polite live region; pause offers focus to the top frame without taking it, and the offer is dismissible."
+- "Transport control tooltips and aria-labels carry keybinding hints; shelf expanders follow F3-472 keyboard/aria rules."
+- "No WorkNodes, NodeSeeds, executable queues, final node manifests, or production build tasks are created by this PlanUnit."
+validation_surfaces:
+- "python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits"
+- "python3 scripts/pm-plan-index.py validate"
+risk_class: finalgui_drift
+reasoning_tier: standard
+context_scope: run_debug_revival
+implementation_surfaces:
+- "Plans/FinalGUISpec.md"
+node_compile_hint:
+  mode: run_debug_accessibility_contract
+  create_worknodes: false
+source_lineage:
+- "user-decision:2026-07-27-run-debug-revival"
+- "microsoft/vscode src/vs/workbench/contrib/debug (research lineage; debug accessibility patterns)"
+preserved_exact_tokens:
+- "role=treegrid"
+- "role=row"
+- "aria-expanded"
+- "conditional breakpoint, enabled, import.rs line 58"
+negative_constraints:
+- "Do not yank focus to the call stack on pause; focus is offered and dismissible."
+- "Do not restate shelf-expander keyboard/aria mechanics; reference F3-472."
+- "No WorkNodes, NodeSeeds, executable queues, final node manifests, or production build tasks are created by this PlanUnit."
+compatibility_only_notes:
+- "Slint portability: treegrid and live-region semantics map to Slint accessible-role and accessible-label properties; announcements use the platform accessibility bridge."
+stale_retired_dispositions: []
+owner_boundary_notes:
+- "This unit owns debug-surface accessibility semantics; the generic shelf-expander keyboard/aria rules remain owned by F3-472."
+owner_hints:
+- "Plans/FinalGUISpec.md"
+```
+
+### F3-494 - Debug Adapter Registry and Portability
+
+```yaml
+plan_unit_id: F3-494
+unit_type: requirement
+status: accepted
+owner_doc: Plans/FinalGUISpec.md
+canonical_text: >-
+  A debug adapter registry, analogous to the LSPSupport server catalog
+  (referenced), maps languages to debug adapters with bundle/install policy and
+  integrates with Plans/BinaryLocator_Spec.md for adapter binary discovery
+  (referenced). This unit closes the deferred "debug adapter model" contract noted
+  in the Plans/Runtime_Artifacts_Panel.md consume-list: Runtime_Artifacts consumes
+  this registry by reference. DAP capability-gated UI law: any control whose DAP
+  capability is absent (restart frame, set value, data breakpoints, terminate
+  threads, completions) is hidden, never rendered disabled-empty. Portability:
+  under native builds the adapter is a spawned local process; under web/WASM builds
+  debugging is web_supported_via_trusted_local_daemon, with the trusted daemon
+  owning the adapter subprocess per the §2.4 daemon contract (referenced).
+  High-frequency projections (variables, output) throttle repaints per the terminal
+  30fps precedent (referenced). Per-request timeouts (10s evaluate, 30s launch) and
+  one auto-restart apply per F3-259 (referenced).
+gui_related: true
+gui_classification_reason: This unit defines how adapter availability and capabilities shape visible debug controls across native and web builds.
+split_recommended: false
+depends_on: [F3-259]
+unblocks: []
+acceptance_criteria:
+- "The registry maps languages to adapters with bundle/install policy and BinaryLocator-based discovery; Runtime_Artifacts consumes it by reference, closing the deferred debug-adapter-model contract."
+- "Every capability-gated control is hidden when its DAP capability is absent; no disabled-empty controls render."
+- "Native builds spawn local adapter processes; web/WASM builds run web_supported_via_trusted_local_daemon per the §2.4 daemon contract."
+- "High-frequency projections throttle repaints per the terminal 30fps precedent; timeouts and single auto-restart follow F3-259."
+- "No WorkNodes, NodeSeeds, executable queues, final node manifests, or production build tasks are created by this PlanUnit."
+validation_surfaces:
+- "python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits"
+- "python3 scripts/pm-plan-index.py validate"
+risk_class: finalgui_drift
+reasoning_tier: high
+context_scope: run_debug_revival
+implementation_surfaces:
+- "Plans/FinalGUISpec.md"
+node_compile_hint:
+  mode: debug_adapter_registry_and_portability
+  create_worknodes: false
+source_lineage:
+- "user-decision:2026-07-27-run-debug-revival"
+- "microsoft/vscode src/vs/workbench/contrib/debug (research lineage)"
+- "lapce/lapce DAP integration (research lineage)"
+- "Plans/LSPSupport.md (server catalog analogue; referenced)"
+- "Plans/BinaryLocator_Spec.md (adapter binary discovery; referenced)"
+- "Plans/Runtime_Artifacts_Panel.md (deferred debug adapter model consume-list entry; closed here)"
+preserved_exact_tokens:
+- "debug adapter model"
+- "web_supported_via_trusted_local_daemon"
+- "10s evaluate"
+- "30s launch"
+negative_constraints:
+- "Do not render capability-gated controls as disabled-empty; absent capabilities hide the control."
+- "Do not spawn adapter subprocesses in the web/WASM renderer; the trusted daemon owns them."
+- "No WorkNodes, NodeSeeds, executable queues, final node manifests, or production build tasks are created by this PlanUnit."
+compatibility_only_notes:
+- "Slint portability: repaint throttling uses the same frame-coalescing idiom as the terminal 30fps precedent; adapter process and daemon transport stay in Rust, never in Slint view code."
+stale_retired_dispositions:
+- "The deferred 'debug adapter model' contract in Plans/Runtime_Artifacts_Panel.md is closed by this registry; Runtime_Artifacts consumes it by reference."
+owner_boundary_notes:
+- "This unit owns the adapter registry, capability-gated UI law, and portability policy; reliability timeouts and auto-restart remain owned by F3-259; binary discovery semantics remain owned by Plans/BinaryLocator_Spec.md."
+owner_hints:
+- "Plans/FinalGUISpec.md"
+```
+
+### F3-495 - Debug Terminology Boundary
+
+```yaml
+plan_unit_id: F3-495
+unit_type: requirement
+status: accepted
+owner_doc: Plans/FinalGUISpec.md
+canonical_text: >-
+  Debug terminology is fixed: the rail icon reads "Debug" and the open panel is
+  titled "Debug & Run" (the classical DAP debugger); "Assistant Debug Mode" is the
+  chat investigation overlay owned by Plans/assistant-chat-design.md §1.0B
+  (referenced); "Debug Console" is the bottom-zone REPL/evaluation pane per
+  Plans/Section15_MVP_Promoted_Features_Spec.md (referenced); and the
+  `system.advanced.debug-mode` settings row is an app-diagnostics toggle unrelated
+  to debugging user code. Docs, palettes, labels, and help text must use these
+  names exactly and never collapse them. This unit satisfies the CS-009
+  terminology-boundary constraint (referenced). The cmd.debug.* family remains
+  assistant-investigation scoped (Plans/Commands_System.md §7.1, referenced) and
+  the classical debugger family is cmd.run_debug.* (Plans/Commands_System.md §7.2,
+  referenced).
+gui_related: true
+gui_classification_reason: This unit fixes the user-visible names and labels that distinguish the four debug-adjacent surfaces.
+split_recommended: false
+depends_on: []
+unblocks: []
+acceptance_criteria:
+- "The four names (\"Debug\" icon, \"Debug & Run\" panel, \"Assistant Debug Mode\", \"Debug Console\") and the `system.advanced.debug-mode` row are used exactly and never collapsed across docs, palettes, labels, and help text."
+- "cmd.debug.* stays assistant-investigation scoped and cmd.run_debug.* stays classical-debugger scoped."
+- "No WorkNodes, NodeSeeds, executable queues, final node manifests, or production build tasks are created by this PlanUnit."
+validation_surfaces:
+- "python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits"
+- "python3 scripts/pm-plan-index.py validate"
+risk_class: finalgui_drift
+reasoning_tier: standard
+context_scope: run_debug_revival
+implementation_surfaces:
+- "Plans/FinalGUISpec.md"
+node_compile_hint:
+  mode: debug_terminology_boundary
+  create_worknodes: false
+source_lineage:
+- "user-decision:2026-07-27-run-debug-revival"
+- "Plans/assistant-chat-design.md (§1.0B Assistant Debug Mode; referenced)"
+- "Plans/Section15_MVP_Promoted_Features_Spec.md (Debug Console pane; referenced)"
+- "Plans/Commands_System.md (§7.1 cmd.debug.* and §7.2 cmd.run_debug.*; referenced)"
+preserved_exact_tokens:
+- "Debug"
+- "Debug & Run"
+- "Assistant Debug Mode"
+- "Debug Console"
+- "system.advanced.debug-mode"
+- "cmd.debug.*"
+- "cmd.run_debug.*"
+negative_constraints:
+- "Do not collapse the four debug-adjacent names into one term in any doc, palette, label, or help text."
+- "Do not use cmd.debug.* for classical debugger actions or cmd.run_debug.* for assistant-investigation actions."
+- "No WorkNodes, NodeSeeds, executable queues, final node manifests, or production build tasks are created by this PlanUnit."
+compatibility_only_notes: []
+stale_retired_dispositions: []
+owner_boundary_notes:
+- "This unit owns only the terminology boundary; Assistant Debug Mode semantics stay owned by Plans/assistant-chat-design.md and Debug Console pane semantics by Plans/Section15_MVP_Promoted_Features_Spec.md."
+owner_hints:
+- "Plans/FinalGUISpec.md"
+```
+
+### F3-496 - Run & Debug Demo Concept Integration
+
+```yaml
+plan_unit_id: F3-496
+unit_type: requirement
+status: accepted
+owner_doc: Plans/FinalGUISpec.md
+canonical_text: >-
+  The Concepts/pm6-build PMConcept7 demo carries a `panel-run` view implementing
+  F3-485 through F3-488 with fixture data: two sessions (a paused parent
+  "tastebook-api — cargo run" and a running child attach session), a populated
+  locals scope, two watches, a four-frame main thread, and line, conditional,
+  logpoint, and disabled breakpoints plus exception filter rows. The bottom Debug
+  tab in the demo implements F3-490's empty and attached states. The demo session
+  store mirrors F3-483's state machine so demo actions (start, stop, select,
+  reveal) drive both surfaces. Concepts/pm6-build/** remains illustrative
+  source-lineage only per Plans/usage-feature.md.
+gui_related: true
+gui_classification_reason: This unit defines the demo-renderable fixture composition of the run/debug rail panel and bottom tab.
+split_recommended: false
+depends_on: [F3-485, F3-490]
+unblocks: []
+acceptance_criteria:
+- "The PMConcept7 demo `panel-run` view renders F3-485..F3-488 with the stated fixture data (two sessions, populated locals, two watches, four-frame main thread, four breakpoint kinds plus exception filters)."
+- "The demo bottom Debug tab renders F3-490's empty and attached states."
+- "Demo actions (start, stop, select, reveal) drive both surfaces through a demo store mirroring F3-483's state machine."
+- "No WorkNodes, NodeSeeds, executable queues, final node manifests, or production build tasks are created by this PlanUnit."
+validation_surfaces:
+- "python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits"
+- "python3 scripts/pm-plan-index.py validate"
+risk_class: finalgui_drift
+reasoning_tier: standard
+context_scope: run_debug_revival
+implementation_surfaces:
+- "Plans/FinalGUISpec.md"
+node_compile_hint:
+  mode: run_debug_demo_concept_integration
+  create_worknodes: false
+source_lineage:
+- "user-decision:2026-07-27-run-debug-revival"
+- "Concepts/pm6-build (PMConcept7 demo; source-lineage-only per Plans/usage-feature.md)"
+- "zed-industries/zed crates/debugger_ui (research lineage)"
+preserved_exact_tokens:
+- "panel-run"
+- "tastebook-api — cargo run"
+negative_constraints:
+- "Do not treat Concepts/pm6-build/** demo data, HTML, CSS, or class names as spec or implementation input; it stays illustrative source-lineage only per Plans/usage-feature.md."
+- "No WorkNodes, NodeSeeds, executable queues, final node manifests, or production build tasks are created by this PlanUnit."
+compatibility_only_notes:
+- "Slint portability: demo fixtures map to static model data behind the same Slint model views used by the live surfaces."
+stale_retired_dispositions: []
+owner_boundary_notes:
+- "This unit owns only demo fixture composition; live panel, tab, and state-machine semantics stay owned by F3-483 through F3-491."
+owner_hints:
+- "Plans/FinalGUISpec.md"
+```
+
+
+## PMConcept7 Cozy Shelves Integration Addendum - 2026-07-28
+
+This addendum records the integration of the ratified Cozy Shelves rail concepts (`Concepts/rail-concepts/QwenRailConcepts/c2-cozy-shelves.html` and `c2-cozy-shelves-files.html`, both source-lineage-only per `Plans/usage-feature.md`) into the `Concepts/PMConcept7.html` build via the `Concepts/pm6-build` parts pipeline, the retirement of three superseded panel views, and the application of the F3-471 width envelope to the PM7 shell. It creates no WorkNodes, NodeSeeds, executable queues, implementation files, runtime artifacts, generated wiring rows, production build tasks, final manifests, or PNC-019 receipts.
+
+### F3-497 - Cozy Shelves PM7 Panel Integration
+
+```yaml
+plan_unit_id: F3-497
+unit_type: requirement
+status: accepted
+owner_doc: Plans/FinalGUISpec.md
+canonical_text: >-
+  The eight Cozy Shelves rail panels (File Manager, Search, Source Control, GitHub
+  Actions, Docker, Testing, Agents, Runtime Artifacts) are integrated into
+  Concepts/PMConcept7.html through Concepts/pm6-build parts: panel markup in
+  12-html-side-panels.part.html, the pm6-css-cozy-shelves style part, and the
+  pm6-js-cozy-shelves behavior part. The c2 panel ids carry over verbatim
+  (panel-files/search/source/git/docker/artifacts/testing/agents); the retired
+  pm6-panel-testing and pm6-panel-agents ids migrate to panel-testing and
+  panel-agents everywhere (activity bar data-targets, panels.show, hook census).
+  Shared behaviors run on the integrated layer: the spring accordion with
+  keyboard/aria per F3-472, body-portaled rail menus per F3-480, measure-based
+  data-fit label shortening driven by a ResizeObserver on the side-panel slot,
+  one-shot panel enter per F3-480 (the slideInLeft animation on .side-panel-view
+  is removed), the --cat-* category palette per F3-474, and the File Manager
+  context menu keeping its hook id fileContextMenu. The File Manager keeps its
+  c2 explorer/changed/open segmented tabs, measured tree animator, hover quick
+  actions, multi-select, filter, hide-ignored, and worktree root menu.
+gui_related: true
+gui_classification_reason: This unit records the user-visible integration of the winning rail panels into the PMConcept7 concept build.
+split_recommended: false
+depends_on: [F3-471, F3-472, F3-474, F3-480]
+unblocks: []
+acceptance_criteria:
+- "All eight panels open from the activity bar in the built Concepts/PMConcept7.html with every expander collapsed by default except the c2-sanctioned open shelves (File Manager MODIFIED/ADDED/UNTRACKED/OPEN EDITORS and the Artifacts INVESTIGATION shelf)."
+- "Accordion expand/collapse works by click and Enter/Space with aria-expanded syncing; rail menus paint above shelves and restore their home node on close."
+- "The slideInLeft animation no longer appears on .side-panel-view; panel entrance runs once per activation via .pm-panel-enter."
+- "No WorkNodes, NodeSeeds, executable queues, final node manifests, or production build tasks are created by this PlanUnit."
+validation_surfaces:
+- "python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits"
+- "python3 scripts/pm-plan-index.py validate"
+risk_class: finalgui_drift
+reasoning_tier: standard
+context_scope: pm7_cozy_shelves_integration
+implementation_surfaces:
+- "Concepts/pm6-build/parts/12-html-side-panels.part.html"
+- "Concepts/pm6-build/parts/10x-pm6-css-cozy-shelves.part.html"
+- "Concepts/pm6-build/parts/29x-pm6-js-cozy-shelves.part.html"
+node_compile_hint:
+  mode: pm7_cozy_shelves_integration_record
+  create_worknodes: false
+source_lineage:
+- "Concepts/rail-concepts/QwenRailConcepts/c2-cozy-shelves.html (winning concept; source-lineage-only)"
+- "Concepts/rail-concepts/QwenRailConcepts/c2-cozy-shelves-files.html (winning files concept; source-lineage-only)"
+- "Concepts/ChatGuiUpdates2.md (Cozy Shelves rail concepts 2026-07-27 contracts; source-lineage-only)"
+preserved_exact_tokens:
+- "fileContextMenu"
+- "panel-testing"
+- "panel-agents"
+- "slideInLeft"
+negative_constraints:
+- "Do not hand-edit Concepts/PMConcept7.html or Concepts/pm6-build/PMConcept6.assembled.html; all changes flow through the parts pipeline."
+- "Do not treat Concepts/pm6-build/** as implementation authority; it remains illustrative source-lineage only."
+compatibility_only_notes:
+- "Slint portability follows F3-473: only transform/opacity/height animations, portal menus map to PopupWindow, label fitting by measure never by width class."
+stale_retired_dispositions: []
+owner_boundary_notes:
+- "F3-472 owns the shelf-expander contract and F3-480 owns the presentation repairs; this unit records their application to the PM7 build and owns no new presentation rules."
+owner_hints:
+- "Plans/FinalGUISpec.md"
+```
+
+### F3-498 - Width Envelope Applied to PM7 Shell
+
+```yaml
+plan_unit_id: F3-498
+unit_type: requirement
+status: accepted
+owner_doc: Plans/FinalGUISpec.md
+canonical_text: >-
+  The F3-471 width envelope (240 minimum, 280 default, 480 maximum) is applied to
+  the PM7 shell: --files-panel-w defaults to 280px, the narrow-range 220px floors
+  become 240px (220 remains the adversarial test-only width and is not a product
+  floor), the side-panel-slot clamp becomes min-width 240px and max-width
+  min(480px, 50vw), the drag resizer caps at 480px, and the former !important
+  220px narrow-viewport override now resolves through the 240px floor. The
+  data-wtier attribute is computed on the slot by measure (min under 250px, mid
+  through 400px, wide above) and gates layout chrome only, never label text per
+  F3-480's measure-based fitting rule.
+gui_related: true
+gui_classification_reason: This unit pins the user-visible side panel width behavior of the PM7 shell to the ratified envelope.
+split_recommended: false
+depends_on: [F3-471, F3-497]
+unblocks: []
+acceptance_criteria:
+- "The side panel defaults to 280px, clamps between 240px and 480px (viewport permitting), and no 220px product floor remains in the shell."
+- "data-wtier on the slot reflects the measured width and gates only layout chrome."
+- "No WorkNodes, NodeSeeds, executable queues, final node manifests, or production build tasks are created by this PlanUnit."
+validation_surfaces:
+- "python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits"
+- "python3 scripts/pm-plan-index.py validate"
+risk_class: finalgui_drift
+reasoning_tier: standard
+context_scope: pm7_cozy_shelves_integration
+implementation_surfaces:
+- "Concepts/pm6-build/parts/02-css-tokens.part.html"
+- "Concepts/pm6-build/parts/09-css-bento-themes.part.html"
+- "Concepts/pm6-build/parts/10x-pm6-css-global.part.html"
+node_compile_hint:
+  mode: pm7_width_envelope_record
+  create_worknodes: false
+source_lineage:
+- "Plans/FinalGUISpec.md (F3-471 width envelope pin)"
+preserved_exact_tokens:
+- "240"
+- "280"
+- "480"
+- "data-wtier"
+negative_constraints:
+- "Do not reintroduce a 220px product floor; 220 remains adversarial test-only."
+- "Do not gate label text on data-wtier; labels shorten by measure only (F3-480)."
+compatibility_only_notes:
+- "Slint: the same clamp constants apply to the Slint panel host; measure-based fitting maps to layout re-evaluation, not width-class breakpoints."
+stale_retired_dispositions: []
+owner_boundary_notes:
+- "F3-471 owns the envelope values; this unit owns only their application to the PM7 shell surfaces."
+owner_hints:
+- "Plans/FinalGUISpec.md"
+```
+
+### F3-499 - Activity Bar Debug Entry and Panel Id Canon
+
+```yaml
+plan_unit_id: F3-499
+unit_type: requirement
+status: accepted
+owner_doc: Plans/FinalGUISpec.md
+canonical_text: >-
+  The activity bar carries a Debug icon directly below the Tests icon as its own
+  entry (rail label "Debug", opening the Debug & Run panel per F3-482), wired
+  with data-target="panel-run", making the cmd.panel.switch run_debug
+  destination resolve to a real, reachable panel for the first time in the PM7
+  build. The Testing and Agents panel ids are canonical as panel-testing and
+  panel-agents (the retired pm6-panel-testing and pm6-panel-agents ids are gone
+  from markup, data-targets, and the hook census). Icon order and Ctrl+number
+  bindings remain user-adjustable per the existing customization contract; the
+  hotkey handler live-queries icon order and never hardcodes this icon's index.
+gui_related: true
+gui_classification_reason: This unit defines the user-visible activity bar entry and panel id canon for the reactivated Debug & Run panel.
+split_recommended: false
+depends_on: [F3-482, F3-497]
+unblocks: []
+acceptance_criteria:
+- "The Debug icon appears below Tests and opens the Debug & Run panel; cmd.panel.switch with panel_id run_debug resolves to the same view."
+- "No pm6-panel-testing or pm6-panel-agents id remains in the built document."
+- "Reordering icons by drag changes Ctrl+number assignment without code changes."
+- "No WorkNodes, NodeSeeds, executable queues, final node manifests, or production build tasks are created by this PlanUnit."
+validation_surfaces:
+- "python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits"
+- "python3 scripts/pm-plan-index.py validate"
+risk_class: finalgui_drift
+reasoning_tier: standard
+context_scope: pm7_cozy_shelves_integration
+implementation_surfaces:
+- "Concepts/pm6-build/parts/11-html-shell-open.part.html"
+- "Concepts/pm6-build/parts/29x-pm6-js-panels.part.html"
+node_compile_hint:
+  mode: activity_bar_debug_entry_record
+  create_worknodes: false
+source_lineage:
+- "user-decision:2026-07-27-run-debug-revival"
+preserved_exact_tokens:
+- "Debug"
+- "panel-run"
+- "run_debug"
+negative_constraints:
+- "Do not pin a fixed ordinal or Ctrl+N index for the Debug icon in canonical docs."
+- "Do not resurrect the pm6-panel-testing or pm6-panel-agents ids."
+compatibility_only_notes:
+- "Slint: the activity bar model carries the same entries; hotkey assignment follows the model order, not a constant table."
+stale_retired_dispositions: []
+owner_boundary_notes:
+- "F3-482 owns the Debug & Run panel identity and placement canon; this unit owns the PM7 build realization and the panel id cleanup."
+owner_hints:
+- "Plans/FinalGUISpec.md"
+```
+
+### F3-500 - Retired Panel View Removals
+
+```yaml
+plan_unit_id: F3-500
+unit_type: requirement
+status: accepted
+owner_doc: Plans/FinalGUISpec.md
+canonical_text: >-
+  Two superseded side-panel views are removed from the PM7 build: panel-unraid
+  (a self-declared redirect stub whose destination lives in the Docker panel's
+  Publish view) and pm6-panel-notify (the Notifications side panel, retired when
+  the title-bar notification stack became the sole in-app notification
+  affordance per the 2026-07-23 promotion). Their hook-census rows, dead render
+  wiring, and prototype action registrations (panels.ack, panels.snooze,
+  panels.test_run, panels.debug_start, panels.git_commit, panels.docker_view,
+  panels.art_filter) are removed with them; ack/snooze lifecycle semantics
+  continue unchanged on the title-bar stack per F3-447/F3-460.
+gui_related: true
+gui_classification_reason: This unit records the removal of user-visible panel views that canon already retired or redirected.
+split_recommended: false
+depends_on: [F3-497]
+unblocks: []
+acceptance_criteria:
+- "No panel-unraid or pm6-panel-notify view remains in the built document, and no activity-bar icon references them."
+- "The named prototype action registrations no longer exist in the demo engine registry."
+- "Notifications remain available exclusively through the title-bar stack."
+- "No WorkNodes, NodeSeeds, executable queues, final node manifests, or production build tasks are created by this PlanUnit."
+validation_surfaces:
+- "python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits"
+- "python3 scripts/pm-plan-index.py validate"
+risk_class: finalgui_drift
+reasoning_tier: standard
+context_scope: pm7_cozy_shelves_integration
+implementation_surfaces:
+- "Concepts/pm6-build/parts/12-html-side-panels.part.html"
+- "Concepts/pm6-build/parts/29x-pm6-js-panels.part.html"
+- "Concepts/pm6-build/contracts/HOOKS.md"
+node_compile_hint:
+  mode: retired_panel_view_removals_record
+  create_worknodes: false
+source_lineage:
+- "Plans/FinalGUISpec.md (F3-447/F3-460 title-bar notification canon)"
+preserved_exact_tokens:
+- "panel-unraid"
+- "pm6-panel-notify"
+negative_constraints:
+- "Do not reintroduce a Notifications side panel; the title-bar stack is the sole notification affordance."
+- "Do not resurrect the removed prototype action ids as canonical commands."
+compatibility_only_notes:
+- "None."
+stale_retired_dispositions:
+- "The old Run & Debug demo view (panel-run markup with a launch-config dropdown and static session cards) is replaced by the Debug & Run panel per F3-485/F3-496."
+owner_boundary_notes:
+- "F3-447/F3-460 own the notification affordance decision; this unit records only the view removal mechanics."
 owner_hints:
 - "Plans/FinalGUISpec.md"
 ```

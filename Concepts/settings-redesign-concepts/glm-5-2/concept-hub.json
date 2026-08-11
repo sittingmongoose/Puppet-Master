@@ -1,0 +1,69 @@
+{
+  "schemaVersion": 1,
+  "topic": "settings-redesign",
+  "model": "GLM-5.2",
+  "presentation": "hybrid",
+  "order": 20,
+  "widthControl": {
+    "enabled": true,
+    "label": "Settings width",
+    "role": "page",
+    "min": 760,
+    "max": 2500,
+    "step": 10,
+    "default": 1280,
+    "presets": [760, 900, 1280, 1700, 2200, 2500],
+    "previewWidth": "test"
+  },
+  "entries": [
+    {
+      "id": "concept-01-control-room",
+      "title": "01 Control Room — GLM-5.2",
+      "path": "concept-01-control-room.html",
+      "openPath": "concept-01-control-room.html",
+      "openActions": "both",
+      "controlMode": "standard",
+      "tags": ["editorial", "command-center", "book-toc", "memory", "mcp"],
+      "order": 10
+    },
+    {
+      "id": "concept-02-atlas",
+      "title": "02 Atlas — GLM-5.2",
+      "path": "concept-02-atlas.html",
+      "openPath": "concept-02-atlas.html",
+      "openActions": "both",
+      "controlMode": "standard",
+      "tags": ["spatial", "focus-and-context", "minimap", "crew", "skills"],
+      "order": 20
+    },
+    {
+      "id": "concept-03-stack",
+      "title": "03 Stack — GLM-5.2",
+      "path": "concept-03-stack.html",
+      "openPath": "concept-03-stack.html",
+      "openActions": "both",
+      "controlMode": "standard",
+      "tags": ["single-surface", "progressive-disclosure", "flip", "personas", "context"],
+      "order": 30
+    },
+    {
+      "id": "concept-04-stream",
+      "title": "04 Stream — GLM-5.2",
+      "path": "concept-04-stream.html",
+      "openPath": "concept-04-stream.html",
+      "openActions": "both",
+      "controlMode": "standard",
+      "tags": ["continuous-document", "landmark-rail", "lsp", "terminal", "media"],
+      "order": 40
+    }
+  ],
+  "workspace": {
+    "path": "index.html",
+    "title": "GLM-5.2 Settings Bakeoff — comparison surface",
+    "openActions": "both",
+    "controlMode": "internal",
+    "previewWidth": 1440,
+    "tags": ["gallery", "comparison", "index"],
+    "order": 5
+  }
+}

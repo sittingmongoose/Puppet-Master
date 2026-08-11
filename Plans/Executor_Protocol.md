@@ -413,7 +413,7 @@ ContractRef: ContractName:Plans/Decision_Policy.md, ContractName:Plans/orchestra
 | `blocked_reason_code` | `headless_ask_denied` | 0 | — | No | blocked or denied outcome; never silently retry |
 | `blocked_reason_code` | `filesafe_blocked` | 0 | — | No | never auto-retry; honor FileSafe restore requirements |
 | `blocked_reason_code` | `external_side_effect_blocked` | 0 | — | No | preserve local work and wait for approval/decline |
-| `failure_class` | `storage_io` | 1 | brief delay | Yes | single retry on I/O failure |
+| `failure_class` | `storage_io` | owner-routed by `storage_io_class` | owner-routed | Conditional | Storage owns the closed class and retry budget: `interrupted` permits at most three immediate adapter retries and `transient_busy` permits exactly one retry after 250 ms; every other class is non-retryable. Adapter retries do not create a new Executor attempt. |
 | `failure_class` | `quota_exceeded` | 0 | — | No | user action or later retry window |
 | `failure_class` | `graph_integrity` | 0 | — | No | hard fail; replan path only |
 | `blocked_reason_code` | `replan_required` | 0 | — | No | remain blocked until patch or replan is applied |
@@ -433,6 +433,8 @@ Closed mapping requirements:
 Per-class (`per-class`) retry rules:
 - `provider_transient` uses exponential backoff with base `1s`, factor `2x`, and cap `4s`: `1s -> 2s -> 4s`
 - `rate_limited` remains distinct from `provider_transient`; executor policy MUST preserve that distinction when deciding backoff, surfacing state, or opening circuit breakers
+- `storage_io` consumes the storage-owned `storage_io_class` result and exact retry facts; Executor MUST NOT broaden retryability, restart a canonical write as a new attempt, buffer pseudo-durable work, or auto-resume a blocked attempt after storage recovery
+- while storage reports `storage_access_mode != writer`, no mutation-capable attempt may enter dispatch; an explicit storage recovery action may make the owning runtime action available again, but the blocked episode remains until that action is separately admitted
 - generic retry without prior classification is prohibited
 
 ContractRef: ContractName:Plans/Decision_Policy.md, ContractName:Plans/Architecture_Invariants.md, ContractName:Plans/CLI_Bridged_Providers.md
@@ -630,6 +632,93 @@ ContractRef: ContractName:Plans/Contracts_V0.md, ContractName:Plans/Decision_Pol
 ### Runtime recovery attempt identity and safe points
 Every dispatch creates or reuses a first-class `attempt_id`. Mutation-capable attempts and remediation apply steps MUST create a runtime `safe_point_id` before execution. Safe points are runtime recovery anchors only; they are not restore points.
 ContractRef: ContractName:Plans/Contracts_V0.md, ContractName:Plans/storage-plan.md, ContractName:Plans/WorktreeGitImprovement.md
+
+### Canonical Executor intake/receipt recovery propagation
+
+The materialized `executor_intake_report` and `attempt_receipt` families consume their exact machine-registry recovery dispositions: `authority_class = canonical_non_rebuildable` and `strategy = restore_from_mandatory_backup`. Executor MUST NOT reconstruct either canonical family from EventRecords, runtime or audit projections, UI state, worker/controller prose, receipt summaries, or other derived views. Those surfaces may diagnose the loss but cannot become canonical intake, attempt, completion, or dispatch authority.
+
+If either required family record is corrupt, unavailable, or cannot be verified, Executor keeps the affected intake/completion truth `blocked` or unknown and admits no completion or dispatch. Admission may be reconsidered only after Storage durably completes the verified whole-boundary mandatory-backup recovery, restores the exact canonical family bytes, and Executor reruns ordinary schema, identity, lineage, currentness, and admission checks. Writer availability, a fresh projection, or a UI success state never auto-resumes work or certifies completion.
+
+Positive oracle: verified mandatory-backup recovery restores the exact `executor_intake_report` and `attempt_receipt` records at one durable Storage recovery boundary; only a subsequent successful ordinary Executor revalidation may admit the corresponding completion or dispatch.
+
+Negative oracle: with either canonical family corrupt or unavailable, matching EventRecords, projections, UI state, summaries, or worker/controller claims cannot reconstruct success, mint or reuse an attempt, accept completion, or dispatch work; the posture remains blocked or unknown.
+
+ContractRef: ContractName:Plans/storage-plan.md#canonical-redb-recovery-and-first-run-proof, ContractName:Plans/storage_value_registry.json#/families/executor_intake_report, ContractName:Plans/storage_value_registry.json#/families/attempt_receipt, DecisionID:PD-L-01, DecisionID:PD-L-02, DecisionID:PD-L-03
+
+### Conversation restore-point no-effect boundary
+
+Assistant Chat owns `cmd.chat.create_restore_point`, `cmd.chat.branch_from_restore`, and `cmd.chat.delete_restore_point` under `PD-RSP-08`. Executor consumes those commands as a strict no-execution boundary: create, apply/branch, replay, refusal/failure, and delete create no runtime `attempt_id`, no successor attempt, no runtime `safe_point_id`, no Executor worktree or file/repository/index mutation, and no scheduler or worker dispatch. A successful `branched` result creates only the Assistant Chat-owned new conversation `thread_id` and `branch_id`; it does not become Executor lineage or completion evidence.
+
+Executor owns no conversation restore-point retention timer, clock, janitor cadence, count-pressure selection, hold release, or expiry transition. It consumes Storage and Assistant Chat retention truth and MUST NOT infer `reference_release`, age/count eligibility, or an `expired` transition from UI/projection state.
+
+Positive oracle: each existing restore-point command produces only its Assistant Chat/Storage-owned record, conversation branch, lifecycle, or no-event result while Executor attempt, safe-point, worktree/file, and dispatch state remains byte-for-byte unchanged.
+
+Negative oracle: any restore-point create/apply/delete path that mints or reuses an Executor attempt, creates a successor attempt or runtime safe point, mutates a worktree/file/repository/index, dispatches work, or runs an Executor-owned retention timer violates the contract and must fail closed.
+
+ContractRef: ContractName:Plans/assistant-chat-design.md#branching-conversations, ContractName:Plans/storage-plan.md#Case-L-6, ContractName:Plans/storage_value_registry.json#/families/restore_point_record, DecisionID:PD-RSP-08
+
+### Approved baseline-target retry and restore lifecycle
+
+This section owns Executor admission, blocked-episode continuity, successor-attempt identity, and dispatch ordering for approved decision `PD-RSP-07`. `Plans/WorktreeGitImprovement.md` owns the filesystem/Git effect and postcondition of each `baseline_target`; `Plans/FileSafe.md` owns safe-point capture, exact-replace restore, equality, journal, rollback, and restart reconciliation; `Plans/Contracts_V0.md` owns the closed restore outcomes and reason codes; `Plans/storage-plan.md` owns the safe-point record, restore transaction, snapshot custody, recovery-anchor persistence, and retention. Executor MUST consume those owners by reference and MUST NOT implement a second restore engine, redefine manifest equality, or infer durable state from UI projections.
+
+`baseline_target` is closed to `safe_point | historical_commit | worktree_head`. Runtime rejects an unknown value, a missing conditionally required field, an abbreviated or moving Git ref where an exact commit OID is required, a repo/worktree mismatch, or digest drift. It MUST NOT substitute a base branch, current worktree, latest safe point, or current `HEAD`.
+
+| Target | Executor admission fields | Executor lifecycle effect after Worktree/FileSafe proves the target postcondition |
+| --- | --- | --- |
+| `safe_point` | `safe_point_id`, `repo_id`, `worktree_id`; the owning command/episode identities remain required | Link the exact restore transaction and baseline receipt, then mint a successor `attempt_id`. The prior attempt remains immutable. |
+| `historical_commit` | exact `historical_commit_oid`, `repo_id`, and source `worktree_id` for lineage | Link the new isolated worktree identity and exact resolved commit OID, then mint a successor `attempt_id`; the source attempt/worktree remains preserved. |
+| `worktree_head` | `repo_id`, `worktree_id`, `expected_head_oid`, `expected_state_sha256`, and explicit dirty-state confirmation when dirty | Link the verified live-state receipt without restore or checkout, then mint a successor `attempt_id`. |
+
+Command admission is narrower than enum validity:
+
+- `cmd.runtime.restore_safe_point_then_retry` accepts only `baseline_target = safe_point`. It requires the current blocked episode to expose that exact `allowed_action_id`, the same `blocked_sequence`, and the named safe point/repo/worktree identity.
+- `cmd.orchestrator.safe_point_retry` and compatibility alias `cmd.orchestrator.restore_safe_point_then_retry` accept the same wrapper input: `{ project_id, run_id, node_id, blocked_sequence, attempt_id, safe_point_id, repo_id, worktree_id, baseline_target: "safe_point", permission_snapshot_id? }`. Admission validates optional `permission_snapshot_id` against current permission state and consumes it. Both apply the identical deterministic transform to the exact canonical payload `{ project_id, run_id, node_id, blocked_sequence, attempt_id, safe_point_id, repo_id, worktree_id, baseline_target: "safe_point" }` before dispatch. The sole domain/handler pair is `cmd.runtime.restore_safe_point_then_retry` / `handlers::runtime::restore_safe_point_then_retry`; wrapper and alias share its result, `safe_point.restored` producer, effects, idempotency identity, and admission decision.
+- When `requires_safe_point_restore = true`, `restore_safe_point_then_retry` is the only legal rerun verb. `retry_now`, `start_fresh_attempt`, and resume paths are rejected even if they carry a syntactically valid target.
+- `cmd.runtime.retry_now` and `cmd.runtime.start_fresh_attempt` may accept any of the three targets only when the active blocked/retry policy allows that verb and every target-specific field is present. Selecting `safe_point` on either verb still invokes the same FileSafe restore transaction; it is not a weaker restore.
+- A retry/fresh-attempt command that carries no SCM target may follow only an owner-defined non-SCM retry path. It MUST NOT infer one of the three values from current UI focus or branch state.
+
+#### Restore-before-rerun sequence
+
+1. Load the canonical blocked episode and verify its `{run_id, node_id, blocked_sequence, prior_attempt_id}` plus ordered `allowed_action_ids[]`. Reject stale command identity without changing the episode.
+2. Verify that the storage owner still permits durable mutation, that the safe-point record and snapshot refs are restore-eligible, and that the blocked/recovery hold is durable. If the only legal remedy is not durably anchored, keep the episode blocked and do not start restore or dispatch.
+3. Ask the Worktree owner to validate exact repo/worktree/branch identity and acquire the applicable mutation fence. For `safe_point`, invoke the FileSafe transaction and wait for its restart-reconcilable terminal result. For the other targets, invoke the Worktree-owned baseline preparation and exact postcondition check.
+4. Persist the baseline-preparation result and all source-control/FileSafe receipt refs before creating runnable successor state. A command retry while an operation is nonterminal resumes or reconciles that operation by identity; it MUST NOT launch a concurrent second restore or worktree preparation.
+5. Only a proved-ready baseline may mint the new `attempt_id`, bind worktree ownership, and persist successor lineage to the prior attempt, blocked episode, baseline target, OIDs/digests, and receipts. No worker process or external side effect starts before that durable admission point.
+6. The recovery anchor releases only through the storage-owned terminal rule. For `superseded_with_verified_successor`, the successor baseline receipt, new attempt/worktree binding, and admission record MUST all be durable first; process exit, run archival, elapsed time, or an unverified successor does not release it.
+
+#### Result-to-lifecycle mapping
+
+Executor consumes, rather than redefines, the Contracts/FileSafe outcome meanings:
+
+| Owner result | Executor action |
+| --- | --- |
+| `restored_clean` or `restore_skipped` with the required equality proof | Continue the sequence to durable successor-attempt admission. `restore_skipped` still requires zero path mutation and exact target equality. |
+| `restore_refused` | Mint no successor attempt, preserve the current blocked episode and worktree ownership, record the exact reason, and expose only actions valid for that reason. |
+| `restore_failed` | Mint no successor attempt. Because FileSafe has proved rollback equality, keep the original blocked episode/anchor and record the failed recovery action without claiming target restoration. |
+| `restore_recovery_required` | Mint no successor attempt; retain the mutation fence, safe-point/restore-transaction holds, worktree ownership, and blocked episode until explicit reconciliation proves a terminal state. |
+| `restored_with_conflicts` from safe-point or Chat-revert restore | Treat as an owner-contract violation, keep dispatch fenced, and route to recovery diagnostics; exact-replace restore cannot use this compatibility outcome. |
+
+For `historical_commit`, a missing/non-commit OID or any mismatch after isolated-worktree creation refuses admission and leaves the source unchanged. If partial provisioning cannot be proven safely removable, preserve that allocation as blocked recovery rather than deleting it optimistically. For `worktree_head`, either OID or state-digest drift refuses admission without checkout, reset, stash, clean, or byte mutation. Explicit dirty-state confirmation authorizes binding only; it does not waive conflict, active-Git-operation, FileSafe, permission, or write-scope blockers.
+
+If a required safe point is missing or corrupt, the episode becomes or remains `recovery_unavailable`, restore is disabled with the exact owner reason, local work and worktree ownership remain preserved, and no cleanup, timer, or retry converts it to resolved. Only explicit abandon, replan, or owner-verified recovery may change that posture.
+
+If canonical storage degrades during this sequence, storage-owned retry and access-mode rules apply. Executor does not replay the recovery command as an automatic attempt and does not resume blocked work merely because writer access later returns.
+
+#### Acceptance oracles
+
+| Fixture | Required Executor oracle |
+| --- | --- |
+| `RSP-BASELINE-001` | Exact named safe point/worktree is restored and verified before exactly one new attempt becomes runnable. |
+| `RSP-BASELINE-002` | Exact immutable commit OID produces a clean isolated attempt worktree; source dirty bytes, index, branch, and ownership remain unchanged/preserved. |
+| `RSP-BASELINE-003` | Exact live `HEAD` plus state digest binds without any SCM mutation; dirty state survives byte-for-byte and is attributed to the successor attempt. |
+| `RSP-BASELINE-004` | Unknown target, missing conditional field, moving/abbreviated historical ref, identity mismatch, or digest drift is rejected with no substitution and no successor attempt. |
+| `RSP-ATOMIC-001` / `RSP-ATOMIC-003` | Restart or third-party-edit injection never dispatches from an unproved intermediate tree; target/rollback equality may continue, otherwise recovery-required remains fenced. |
+| `RSP-RETENTION-001` / `RSP-RETENTION-003` | A long-lived restore-required episode retains its legal remedy; a pre-existing missing/corrupt remedy stays truthfully blocked and never becomes retryable by cleanup. |
+| storage-I/O fault during safe-point/baseline receipt persistence | Exact storage-owner retry count is observed; exhausted/non-retryable I/O admits no mutation-capable attempt and recovery does not auto-resume it. |
+
+Negative oracles: no worker dispatch before the baseline receipt is durable; no reused prior `attempt_id`; no generic retry while `requires_safe_point_restore = true`; no anchor release before a verified successor; no exact-OID substitution; no dirty-state discard; and no success inferred from projection/UI state.
+
+ContractRef: ContractName:Plans/WorktreeGitImprovement.md, ContractName:Plans/FileSafe.md, ContractName:Plans/Contracts_V0.md, ContractName:Plans/storage-plan.md, DecisionID:PD-RSP-07, DecisionID:PD-RSP-04, DecisionID:PD-RSP-06
 
 For MVP cleanup, the executor uses the canonical workspace or `/remote` project binding plus safe points, restore points, and explicit temporary-vs-durable mutation lineage. It must not require sandbox worktree `/jail` semantics for ordinary debug instrumentation cleanup.
 
@@ -4475,7 +4564,7 @@ plan_unit_id: EP-072
 unit_type: requirement
 status: accepted
 owner_doc: Plans/Executor_Protocol.md
-canonical_text: Every retry, resume-after-prerequisite, or safe-point-restored rerun creates a new attempt_id; prior attempts remain immutable, and post-lock execution must preserve runtime identity plus corroboration/promotion/runtime context.
+canonical_text: Every admitted retry, resume-after-prerequisite, or safe-point-restored rerun creates a new attempt_id only after its selected baseline_target postcondition and durable baseline receipt are proved; prior attempts remain immutable, restore-required episodes accept only restore_safe_point_then_retry, and post-lock execution preserves blocked/recovery anchors plus runtime identity.
 gui_related: false
 gui_classification_reason: This unit defines runtime/governance execution behavior, not GUI presentation.
 split_recommended: false
@@ -4484,6 +4573,9 @@ unblocks: []
 acceptance_criteria:
 - The covered source span remains losslessly available for exact-text audit.
 - The covered behavior is addressable through this fine-grained PlanUnit instead of EP-001.
+- "`safe_point`, exact `historical_commit` OID, and exact `worktree_head` OID/state-digest targets are conditionally validated without substitution."
+- A successor attempt is not runnable before the owner baseline result and receipt are durable; refused, failed, or recovery-required preparation mints no runnable successor.
+- A restore-required blocked episode retains the same blocked identity and recovery anchor until verified successor, explicit abandonment, replan, or owner-verified recovery satisfies the owning terminal rule.
 - ContractRefs, exact tokens, examples, negative constraints, compatibility notes, stale/retired dispositions, owner boundaries, and source lineage remain traceable.
 - No WorkNodes, NodeSeeds, executable queues, final node manifests, or production build tasks are created.
 validation_surfaces:
@@ -4510,6 +4602,8 @@ preserved_exact_tokens:
 - /corroboration/promotion/runtime
 negative_constraints:
 - After graph lock, execution must not fall back to identity-blind planning-artifact-centric execution.
+- Do not bypass restore_safe_point_then_retry when requires_safe_point_restore is true.
+- Do not release a recovery anchor or dispatch a successor from an unproved baseline.
 compatibility_only_notes: []
 stale_retired_dispositions: []
 owner_boundary_notes: []
@@ -6051,13 +6145,15 @@ status: accepted
 owner_doc: Plans/Executor_Protocol.md
 canonical_text: >-
   Executor intake and dispatch must establish a source-control execution context and model-resolution context before mutation-capable work starts. The execution context preserves repo_id, worktree_id, worktree_path, branch_ref, branch_head_state, baseline_commit_oid, head_commit_oid, safe_point_id, changed_files, conflict_refs, dirty_state_policy, conflict_policy, merge_policy, github_policy, rollback_available, rollback_ref, and restore_command_or_action. Model routing preserves requested_lane, requested_model_profile, effective_model_profile, fallback_used, fallback_reason, and capability_checks. PlanCompile does not own source control; source control, worktrees, safe points, snapshots, rollback, FileSafe, and GitHub promotion apply after Executor accepts WorkNode requests.
-  This PlanUnit is the source-control execution contract, and GitHub optional promotion cannot replace local execution truth.
+  This PlanUnit is the source-control execution contract, and GitHub optional promotion cannot replace local execution truth. Recovery/fresh-attempt preflight conditionally validates the closed safe_point, historical_commit, and worktree_head baseline targets; an exact baseline receipt and verified postcondition precede successor-attempt dispatch.
 gui_related: false
 gui_classification_reason: Execution preflight and model receipt fields are backend runtime contracts.
 depends_on: [EP-099, MS-111, W-072, F2-189]
 unblocks: [EP-102, POA-048, RAP-029]
 acceptance_criteria:
   - Mutation-capable WorkNodes have repo/worktree/baseline/safe-point context before risky execution.
+  - Historical recovery accepts only a full immutable commit OID and preserves the source dirty worktree; worktree-head recovery performs no mutation and requires exact OID plus state digest.
+  - Safe-point retry consumes FileSafe/Contracts/storage owner results and preserves blocked/recovery anchors on refusal, verified rollback, recovery-required, or unavailable recovery material.
   - Model resolution receipts are captured before dispatch and visible to receipt consumers.
   - GitHub is optional promotion/output and local source-control/worktree state remains execution truth.
 validation_surfaces:
@@ -6094,6 +6190,7 @@ preserved_exact_tokens:
 negative_constraints:
   - Do not make PlanCompile own source-control mutation.
   - Do not require GitHub for local-only project completion.
+  - Do not substitute branch names, moving refs, current HEAD, another worktree, or a newer safe point for the commanded baseline.
 owner_hints:
   - Plans/Executor_Protocol.md
   - Plans/WorktreeGitImprovement.md
@@ -7115,3 +7212,14 @@ If sub-counters disagree with `attempt_count`, the executor records `attempt_cou
 Repairs row `sfk-13a077c1b96ec11515ca81d4`.
 
 Dedup identity is `event_name + node_id + attempt_id + event_sequence`. Timestamp is metadata only. If `event_sequence` is missing in imported source, the migration reader derives `event_sequence` from stable event-stream order and records `dedup_sequence_derived = true`. New executor events must carry monotonic `event_sequence` per attempt.
+
+
+## Known-37 run-start and recovery-unavailable admission
+
+Status: `STATICALLY_MATERIALIZED`; dispatch/runtime behavior is `NOT_EXECUTABLE_UNDER_THIS_TRANSACTION`.
+
+Before `run.started`, Executor assembles and persists one complete immutable `pm.requested_effective_runtime@1.0.0` record, resolves its exact key/ref/digest and all six owner refs, copies the minimum v2 joins, and requires envelope/payload/snapshot equality. The sequence is `candidate -> admission_validated -> runtime_identity_resolved -> activated -> start_recorded`; the barrier event is durable before provider/tool execution attributable to the run. Same semantic start replays the original; a different digest is an idempotency conflict. Thin, missing, mutable, stale, secret-bearing, or historically unresolvable snapshots fail closed.
+
+For a `recovery_unavailable` episode, Executor revalidates `project_id, run_id, node_id, blocked_sequence, safe_point_id, anchor_ref, snapshot_refs, reason`, current ordered membership, permission/storage access, exclusivity, and pre/post-attempt identity. Pre-attempt event/request/result omits `attempt_id`; its anchor/receipt carries required-present null. Post-attempt surfaces require the exact existing prior attempt ID.
+
+The only new handlers are `handlers::runtime::locate_and_verify_recovery` and `handlers::runtime::abandon_recovery`. Transition order is current admission, command verification/confirmation, durable typed result and `recovery_unavailable_resolution_receipt`, atomic anchor release, then projection refresh/downstream admission. Replan releases only after durable admitted replan; conditional fresh attempt releases only after a distinct successor and baseline receipt, using `superseded_with_verified_successor`. A refused, failed, stale, unavailable, or uncommitted result leaves the anchor `recovery_unavailable`.

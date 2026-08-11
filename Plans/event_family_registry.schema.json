@@ -1,0 +1,453 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://puppetmaster.local/schemas/event_family_registry/1.0.0/event_family_registry.schema.json",
+  "title": "Puppet Master persisted event-family registry",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "$schema",
+    "schema_id",
+    "schema_version",
+    "registry_revision",
+    "owner_doc",
+    "unknown_event_disposition",
+    "families",
+    "retention_assignment_id",
+    "retention_assignment_version"
+  ],
+  "properties": {
+    "$schema": {
+      "const": "https://puppetmaster.local/schemas/event_family_registry/1.0.0/event_family_registry.schema.json"
+    },
+    "schema_id": {
+      "const": "pm.event_family_registry.v1"
+    },
+    "schema_version": {
+      "const": "2.0.0"
+    },
+    "registry_revision": {
+      "type": "string",
+      "pattern": "^[0-9]{4}-[0-9]{2}-[0-9]{2}\\.[1-9][0-9]*$"
+    },
+    "owner_doc": {
+      "const": "Plans/storage-plan.md#case-l-5-eventrecord-persistence-legacy-normalization-and-dedupe"
+    },
+    "unknown_event_disposition": {
+      "const": "quarantine_without_checkpoint_advance"
+    },
+    "families": {
+      "type": "array",
+      "minItems": 1,
+      "items": {
+        "$ref": "#/$defs/family"
+      }
+    },
+    "retention_assignment_id": {
+      "const": "RET-K37-ASSIGNMENT-001"
+    },
+    "retention_assignment_version": {
+      "const": "1.0.0"
+    }
+  },
+  "$defs": {
+    "nonEmptyString": {
+      "type": "string",
+      "minLength": 1
+    },
+    "jsonPointer": {
+      "type": "string",
+      "pattern": "^(?:/(?:[^~/]|~0|~1)*)+$"
+    },
+    "pointerArray": {
+      "type": "array",
+      "uniqueItems": true,
+      "items": {
+        "$ref": "#/$defs/jsonPointer"
+      }
+    },
+    "payloadSchema": {
+      "type": "object",
+      "required": [
+        "$schema",
+        "$id",
+        "type",
+        "additionalProperties",
+        "required",
+        "properties"
+      ],
+      "properties": {
+        "$schema": {
+          "const": "https://json-schema.org/draft/2020-12/schema"
+        },
+        "$id": {
+          "type": "string",
+          "minLength": 1
+        },
+        "type": {
+          "const": "object"
+        },
+        "additionalProperties": {
+          "const": false
+        },
+        "required": {
+          "type": "array",
+          "minItems": 1,
+          "uniqueItems": true,
+          "items": {
+            "type": "string",
+            "minLength": 1
+          }
+        },
+        "properties": {
+          "type": "object",
+          "minProperties": 1,
+          "additionalProperties": {
+            "anyOf": [
+              {
+                "type": "object"
+              },
+              {
+                "type": "boolean"
+              }
+            ]
+          }
+        }
+      },
+      "additionalProperties": true
+    },
+    "payloadSchemaRef": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "path",
+        "json_pointer",
+        "schema_id"
+      ],
+      "properties": {
+        "path": {
+          "type": "string",
+          "pattern": "^Plans/[^/].*\\.json$"
+        },
+        "json_pointer": {
+          "type": "string",
+          "pattern": "^#(?:/.*)?$"
+        },
+        "schema_id": {
+          "$ref": "#/$defs/nonEmptyString"
+        }
+      }
+    },
+    "alias": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "alias_event_type",
+        "canonical_event_type"
+      ],
+      "properties": {
+        "alias_event_type": {
+          "$ref": "#/$defs/nonEmptyString"
+        },
+        "canonical_event_type": {
+          "$ref": "#/$defs/nonEmptyString"
+        }
+      }
+    },
+    "identityPointers": {
+      "type": "object",
+      "additionalProperties": false,
+      "properties": {
+        "project_id": {
+          "$ref": "#/$defs/pointerArray"
+        },
+        "thread_id": {
+          "$ref": "#/$defs/pointerArray"
+        },
+        "run_id": {
+          "$ref": "#/$defs/pointerArray"
+        },
+        "node_id": {
+          "$ref": "#/$defs/pointerArray"
+        },
+        "attempt_id": {
+          "$ref": "#/$defs/pointerArray"
+        },
+        "actor_ref": {
+          "$ref": "#/$defs/pointerArray"
+        },
+        "requested_account_ref": {
+          "$ref": "#/$defs/pointerArray"
+        },
+        "effective_account_ref": {
+          "$ref": "#/$defs/pointerArray"
+        },
+        "correlation_id": {
+          "$ref": "#/$defs/pointerArray"
+        },
+        "causation_event_id": {
+          "$ref": "#/$defs/pointerArray"
+        },
+        "parent_event_id": {
+          "$ref": "#/$defs/pointerArray"
+        },
+        "payload_ref": {
+          "$ref": "#/$defs/pointerArray"
+        }
+      }
+    },
+    "redaction": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "mode",
+        "transform_id",
+        "transform_version"
+      ],
+      "properties": {
+        "mode": {
+          "enum": [
+            "reject_unhandled_secrets",
+            "versioned_transform"
+          ]
+        },
+        "transform_id": {
+          "type": [
+            "string",
+            "null"
+          ]
+        },
+        "transform_version": {
+          "type": [
+            "string",
+            "null"
+          ]
+        }
+      },
+      "allOf": [
+        {
+          "if": {
+            "properties": {
+              "mode": {
+                "const": "reject_unhandled_secrets"
+              }
+            },
+            "required": [
+              "mode"
+            ]
+          },
+          "then": {
+            "properties": {
+              "transform_id": {
+                "const": null
+              },
+              "transform_version": {
+                "const": null
+              }
+            }
+          },
+          "else": {
+            "properties": {
+              "transform_id": {
+                "$ref": "#/$defs/nonEmptyString"
+              },
+              "transform_version": {
+                "$ref": "#/$defs/nonEmptyString"
+              }
+            }
+          }
+        }
+      ]
+    },
+    "legacy": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "aliases",
+        "admitted_extensions",
+        "identity_json_pointers",
+        "referenced_event_id_pointer",
+        "redaction"
+      ],
+      "properties": {
+        "aliases": {
+          "type": "array",
+          "uniqueItems": true,
+          "items": {
+            "$ref": "#/$defs/alias"
+          }
+        },
+        "admitted_extensions": {
+          "type": "array",
+          "uniqueItems": true,
+          "items": {
+            "type": "string",
+            "pattern": "^[A-Za-z_][A-Za-z0-9_]*$"
+          }
+        },
+        "identity_json_pointers": {
+          "$ref": "#/$defs/identityPointers"
+        },
+        "referenced_event_id_pointer": {
+          "anyOf": [
+            {
+              "$ref": "#/$defs/jsonPointer"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "redaction": {
+          "$ref": "#/$defs/redaction"
+        }
+      }
+    },
+    "family": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "family_id",
+        "family_revision",
+        "event_type",
+        "scope_policy",
+        "semantic_owner_doc",
+        "payload_owner_doc",
+        "payload_schema_id",
+        "legacy",
+        "source_refs",
+        "retention_policy_ref"
+      ],
+      "properties": {
+        "family_id": {
+          "type": "string",
+          "pattern": "^event-family-[a-z0-9]+(?:-[a-z0-9]+)*$"
+        },
+        "family_revision": {
+          "type": "string",
+          "pattern": "^[1-9][0-9]*\\.[0-9]+\\.[0-9]+$"
+        },
+        "event_type": {
+          "type": "string",
+          "pattern": "^[a-z][a-z0-9_]*(?:\\.[a-z][a-z0-9_]*)+$"
+        },
+        "scope_policy": {
+          "enum": [
+            "application_only",
+            "project_only",
+            "application_or_project",
+            "inherits_referenced_event"
+          ]
+        },
+        "semantic_owner_doc": {
+          "$ref": "#/$defs/nonEmptyString"
+        },
+        "payload_owner_doc": {
+          "$ref": "#/$defs/nonEmptyString"
+        },
+        "payload_schema_id": {
+          "$ref": "#/$defs/nonEmptyString"
+        },
+        "payload_schema": {
+          "$ref": "#/$defs/payloadSchema"
+        },
+        "payload_schema_ref": {
+          "$ref": "#/$defs/payloadSchemaRef"
+        },
+        "legacy": {
+          "$ref": "#/$defs/legacy"
+        },
+        "source_refs": {
+          "type": "array",
+          "minItems": 1,
+          "uniqueItems": true,
+          "items": {
+            "$ref": "#/$defs/nonEmptyString"
+          }
+        },
+        "retention_policy_ref": {
+          "$ref": "#/$defs/retention_policy_ref"
+        }
+      },
+      "oneOf": [
+        {
+          "required": [
+            "payload_schema"
+          ],
+          "not": {
+            "required": [
+              "payload_schema_ref"
+            ]
+          }
+        },
+        {
+          "required": [
+            "payload_schema_ref"
+          ],
+          "not": {
+            "required": [
+              "payload_schema"
+            ]
+          }
+        }
+      ],
+      "allOf": [
+        {
+          "if": {
+            "properties": {
+              "scope_policy": {
+                "const": "inherits_referenced_event"
+              }
+            },
+            "required": [
+              "scope_policy"
+            ]
+          },
+          "then": {
+            "properties": {
+              "legacy": {
+                "properties": {
+                  "referenced_event_id_pointer": {
+                    "$ref": "#/$defs/jsonPointer"
+                  }
+                }
+              }
+            }
+          },
+          "else": {
+            "properties": {
+              "legacy": {
+                "properties": {
+                  "referenced_event_id_pointer": {
+                    "const": null
+                  }
+                }
+              }
+            }
+          }
+        }
+      ]
+    },
+    "retention_policy_ref": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "registry_schema_id",
+        "policy_id",
+        "policy_version"
+      ],
+      "properties": {
+        "registry_schema_id": {
+          "const": "pm.storage_value_registry.v2"
+        },
+        "policy_id": {
+          "type": "string",
+          "pattern": "^[A-Z][A-Z0-9-]*$"
+        },
+        "policy_version": {
+          "type": "string",
+          "pattern": "^[1-9][0-9]*\\.[0-9]+\\.[0-9]+$"
+        }
+      }
+    }
+  }
+}

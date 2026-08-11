@@ -183,18 +183,21 @@ ContractRef: ContractName:Plans/Run_Modes.md, ContractName:Plans/Contracts_V0.md
 
 ContractRef: ContractName:Plans/FileManager.md, ContractName:Plans/GitHub_Integration.md, ContractName:Plans/FinalGUISpec.md
 
-### 1.1 Chat controls: platform, model, and reasoning/effort
+### 1.1 Chat controls: persona, model, mode, and effort
 
-The chat window must allow the user to change platform, model, reasoning/effort, and worktree binding without leaving the chat.
+The chat window must allow the user to change persona, model, mode, reasoning/effort, and worktree binding without leaving the chat. Provider/platform selection is owned by the assistant chat surface (see below) with applies-next-turn semantics; it is not a standing chat-header dropdown, and the formerly planned status-bar platform chip is retired (the status bar carries no platform, model, mode, or context chips).
 
-Required controls (placement: chat header strip, same area as the context indicator / mode controls):
+Required controls (placement: the chat header selector row, in the order Persona | Model | Mode, rendered as equal-shrink slots whose labels ellipsize when narrow; the worktree icon button is appended after the selector row):
 
 | Control | Requirement |
 |---|---|
-| **Provider** | Dropdown listing available provider entries from the account-bound Provider -> models registry. Selection applies to the current thread and the next turn. Data comes from Models/Multi-Account/Contracts capability snapshots; no hardcoding and no legacy `platform_specs` authority. |
-| **Model** | Dropdown listing models for the currently selected provider entry. Models are dynamically discovered where supported, cached, and user-manageable via Settings or a manage-models entrypoint. Fallback model lists come from the shared provider/model registry and capability resolver, never `platform_specs::fallback_model_ids(platform)`. |
-| **Reasoning / effort** | Shown only when the active platform supports it. Applies to the next turn rather than interrupting an in-flight response. |
-| **Worktree** | Icon button (rightmost in header strip, after Reasoning/effort). Dropdown for per-thread worktree binding: create, unbind, merge, PR, remove. Visual states: unbound (dimmed glyph), bound-clean (lit glyph), bound-dirty (lit glyph + dot indicator), bound-conflict (lit glyph + warning triangle). Hidden when the active project has no git repository. Full specification in the "Worktrees in Assistant" section below. |
+| **Persona** | Selector-row entrypoint to the Personas system (persona control canon later in this document). Selection applies to the current thread and the next turn. |
+| **Model** | Dropdown listing models for the currently selected provider entry. Models are dynamically discovered where supported, cached, and user-manageable via Settings or a manage-models entrypoint. Fallback model lists come from the shared provider/model registry and capability resolver, never `platform_specs::fallback_model_ids(platform)`. Selecting a model chains into the reasoning/effort popout. |
+| **Mode** | Selector-row slot for the chat mode (Ask, Agent, Debug, Plan, Deep Plan). Mode selection is part of the selector row, not a separate button strip. |
+| **Reasoning / effort** | Reached through model-selection chaining rather than a standing header dropdown. Shown only when the active platform supports it. Applies to the next turn rather than interrupting an in-flight response. |
+| **Worktree** | Icon button (rightmost in header strip, appended after the selector row). Dropdown for per-thread worktree binding: create, unbind, merge, PR, remove. Visual states: unbound (dimmed glyph), bound-clean (lit glyph), bound-dirty (lit glyph + dot indicator), bound-conflict (lit glyph + warning triangle). Hidden when the active project has no git repository. Full specification in the "Worktrees in Assistant" section below. |
+
+Platform selection (assistant chat surface): the requested platform/provider for a thread is selected from the assistant chat surface, listing available provider entries from the account-bound Provider -> models registry. Selection applies to the current thread and the next turn. Data comes from Models/Multi-Account/Contracts capability snapshots; no hardcoding and no legacy `platform_specs` authority. There is no status-bar platform chip and the chat header re-introduces no standalone platform dropdown.
 
 ContractRef: ContractName:Plans/Models_System.md, ContractName:Plans/Prompt_Pipeline.md, ContractName:Plans/FinalGUISpec.md, ContractName:Plans/WorktreeGitImprovement.md
 
@@ -960,8 +963,14 @@ ContractRef: ContractName:Plans/FileManager.md, ContractName:Plans/UI_Command_Ca
 
 Restore and review boundaries:
 - `cmd.chat.revert` is the canonical entrypoint for `Revert last agent edit`
-- omitted `target_message_id` resolves to the latest assistant turn in the current thread with persisted file mutations
-- if that assistant turn touched multiple files, the revert applies to the whole turn across all affected files
+- omitted `target_message_id` resolves once to the latest eligible assistant turn in the current thread with persisted file mutations; no eligible turn returns `no_eligible_mutating_turn` without opening a FileSafe restore transaction
+- the resolved target is one immutable whole-turn mutation record containing `project_id`, `repo_id`, `worktree_id`, `target_message_id`, the complete canonical-absolute affected-path set, mutation lineage, and the expected whole-turn manifest ref/SHA-256; Chat never re-resolves that record through current focus, branch, `working_directory`, or a later assistant turn
+- if that assistant turn touched multiple files, the revert exact-replaces the whole manifest scope across all affected files through FileSafe; it never reports per-file or partial success
+- FileSafe owns target and blob verification, the pre-restore rollback snapshot, durable operation journal, path CAS, same-directory promotion, post-state equality, rollback equality, restart reconciliation, remote custody, and recovery holds; Chat consumes the closed outcomes `restored_clean | restore_skipped | restore_refused | restore_failed | restore_recovery_required` without relabeling them
+- `restored_clean` requires exact target equality; `restore_skipped` requires preflight equality and zero path mutation; `restore_refused` is pre-mutation; `restore_failed` requires verified equality with the recorded pre-restore state after rollback; and `restore_recovery_required` retains the mutation fence, transaction, holds, and worktree ownership. `restored_with_conflicts` is invalid for Chat revert.
+- a replay of the same Chat command/idempotency identity returns the already-recorded result or resumes/reconciles the same nonterminal FileSafe transaction; it never starts a second restore against a newly selected turn
+- conversation/transcript, queue, and thread lifecycle state never rewind on `cmd.chat.revert`; editor refresh occurs only after the owner result is durable, and a removed target worktree is refused without recreating directories
+- Case L does not settle prompt-versus-proceed UX for `cmd.chat.revert`: a registered surface may show preflight/confirmation or proceed under its existing command and permission policy, but either path must use the identical immutable target and FileSafe guarantees above
 - `cmd.chat.rewind` remains conversation-history rewind only
 - Chat may preview or summarize diff/review context, but Source Control owns hunk actions, compare targets, conflict resolution, final stage / mark-resolved actions, and Git /unstage/discard mutations
 - Chat-thread diff cards use a preview-vs-open-vs-rollback boundary: preview is a compact chat-thread summary, open routes to the owner file/diff surface, and rollback routes through restore/rollback history rather than hidden chat-local diff mutation.
@@ -1100,19 +1109,22 @@ Allowed transitions:
 | `suspended` | `deleted` | `cmd.chat.thread.delete` | Terminal for ordinary navigation. |
 | `archived` | `deleted` | `cmd.chat.thread.delete` or retention policy | Terminal for ordinary navigation. |
 
-No transition restores `deleted` to another lifecycle state. Compliance-only tombstones may remain outside ordinary chat navigation and must not be treated as restorable threads.
+No transition restores `deleted` to another lifecycle state. Deletion immediately writes the storage-owned content-free tombstone/deletion record and hides the thread from ordinary navigation, search, context assembly, and export projections. Active canonical transcript, message, attachment/blob, mirror, search, and derived content is physically purged within 24 hours unless a legal, preserve, restore-point source-lineage, descendant, or in-flight application hold protects the referenced bytes. A hold delays physical purge only: it does not unhide the thread, re-enable `cmd.chat.thread.restore`, or turn a restore-point branch into thread undo.
+
+The content-free deletion tombstone remains indefinitely. Backups may retain deleted bytes for at most 30 days unless held and MUST replay the tombstone before exposing any restored thread projection. Delete confirmation and completion copy MUST NOT promise an undo window: deleted threads have no ordinary restore transition, and a separately retained conversation restore point can create only a new thread/branch under the restore-point contract below; it never resurrects the deleted source `thread_id`.
 
 Persistence behavior by state:
 - `creating`: keep only lightweight draft shell metadata; no durable transcript is required until the first user message commits
 - `active`: keep the full transcript, queue state, thread metadata, runtime references, and restorable UI state
 - `suspended`: keep the durable transcript and metadata, but drop ephemeral auto-follow, focus, and non-restorable streaming affordances
 - `archived`: keep transcript, lineage, citations, attachments, and audit metadata while pruning transient composer state, active queue state, and nonessential caches according to retention policy
-- `deleted`: remove the thread from normal user-visible chat surfaces; only minimal tombstone or ledger records required for integrity, sync, or retention compliance may remain
+- `deleted`: immediately remove the thread from normal user-visible chat surfaces, purge unheld active-canon content within 24 hours, retain the content-free tombstone indefinitely, and keep held bytes inaccessible until the hold releases and purge completes
 
 Rules:
 - lifecycle transitions MUST be explicit and auditable
 - archiving does not rewrite message ids, thread lineage, or worktree lineage
 - deletion is terminal for ordinary user navigation even if compliance metadata is retained elsewhere
+- physical purge delay under a hold is not an undo or restore promise, and deleting a thread never clears restore-point descendant/application/preserve/legal/source-lineage holds
 - restore commands must validate that retained attachments, worktree refs, and source-thread refs still belong to the same project or degrade with an inline restore error
 
 ContractRef: ContractName:Plans/storage-plan.md, ContractName:Plans/FinalGUISpec.md, ContractName:Plans/Decision_Policy.md
@@ -1200,10 +1212,30 @@ Runtime identity display rules:
 
 ContractRef: ContractName:Plans/Prompt_Pipeline.md, ContractName:Plans/Multi-Account.md, ContractName:Plans/storage-plan.md
 ### Branching conversations
-- restore-and-branch creates a new `thread_id` and `branch_id` linked to the source restore point and source thread
-- branch labels are visible in history and thread navigation
-- branching from a running or dirty thread requires confirmation that names the preserved source state and the new branch target
-- branch lineage remains queryable for restore/history and usage attribution
+
+#### Immutable conversation restore-point lifecycle
+
+Assistant Chat owns user-facing restore-point creation, application/branching, and lifecycle under approved `PD-RSP-08`. Storage owns the materialized `restore_point_record` at `rp:{project_id}:{restore_point_id}`, its canonical value schema, persistence, holds, and retention. Contracts owns the `restore_point.created | applied | expired | deleted | corrupt` event envelopes. Runtime Artifacts may project the record, but `runtime_artifact.restore_point` is neither the record nor a runtime safe point.
+
+Creation is explicit through `cmd.chat.create_restore_point { project_id, thread_id, source_message_id, idempotency_key }`. Chat resolves one inclusive message boundary in one current conversation branch and persists an immutable record containing `source_thread_id`, `source_branch_id`, `source_message_id`, context/provenance refs, attachment refs, citation refs, `record_sha256`, `status = available`, creation time, hold refs, and optional `safe_point_id`. The record freezes the conversation state needed to materialize that boundary; it contains no workspace file bodies, secrets, credentials, ephemeral stream state, or queued messages. An optional `safe_point_id` is lineage only. Equal create identity plus equal semantic content returns the original record/result; the same identity with different content is refused and never overwrites the record.
+
+Application is only `cmd.chat.branch_from_restore { project_id, restore_point_id, source_thread_id, expected_restore_point_sha256, new_thread_title? }`. Before creation, the surface discloses the exact source thread/branch/message boundary, whether the source is running or dirty, and that the target will be a new thread/conversation branch. Chat verifies the canonical record, project/source identity, expected hash, status, permissions, storage-writer posture, refs, and holds, then materializes the frozen boundary into a new `thread_id` and `branch_id`. Only result `branched` creates those identities and emits exactly one `restore_point.applied`; `refused` and `failed` return no target IDs and emit no application event. Replaying the same command execution identity/application intent returns its recorded result and, for `branched`, the same new thread/branch IDs without emitting a duplicate event or creating a second branch. A deliberate second branch from the same available record requires a new command execution identity and produces a distinct application record. Successful application appends an application ref and does not consume or mutate the record. Every `branched`, `refused`, `failed`, and replay path leaves the source thread, source conversation branch, source worktree, files, Git/index state, queue, and runtime safe points unchanged. A combined conversation-plus-filesystem restore is not this command and would require a separately registered, explicitly confirmed composite transaction.
+
+Status is closed to immutable `available -> expired | deleted | corrupt`. `cmd.chat.delete_restore_point { project_id, restore_point_id, expected_restore_point_sha256 }` may transition an available record to `deleted` only after exact-hash and permission/storage preflight and only when descendant-branch, in-flight-application, explicit-preserve, legal-hold, and required source-lineage refs permit it. A protected record stays available and delete is refused; delete never clears a hold. The same delete identity is idempotent and returns the recorded terminal result, while a stale expected hash is refused. A successful application is not a lifecycle transition.
+
+The current machine registry binds every `restore_point.*` row to `RP-RESTOREPOINT-90D-AFTER-RELEASE@1.0.0`. Expiry eligibility begins inclusively at the owner-proven `reference_release + 7,776,000 seconds`, never at creation time, payload time, filename time, mtime, or an inferred release. The project cap is `2,048`; count pressure selects only the oldest eligible record, and eligible expiry retains the required hash summary. Descendant `branch:<branch_id>`, `application:<application_id>`, preserve/legal holds, in-flight application, source-lineage refs, live refs, backup/rollback refs, recovery anchors, and maintenance refs override both age and count eligibility until their owner-defined release evidence is durable. Assistant Chat does not invent a timer or window, infer release from an observed absence of holds, or clear any ref. Artifact projections may become unavailable or expire independently only when regenerable from the retained canonical record; they never delete the `rp:` record or clear holds.
+
+Source-thread deletion remains terminal and immediately hides the source even when a restore-point hold delays byte purge. If the verified frozen boundary and all required retained refs remain available under their holds, branching may still create a new thread while keeping the deleted source hidden; the UI states that this is a new branch, not undo. If deletion/retention already purged any content required to materialize the boundary, application returns `refused` with unavailable reason `source_deleted_content_unavailable`, creates no thread/branch, does not reconstruct from a tombstone or backup projection, and leaves the restore-point record/status unchanged for truthful inspection.
+
+Expired, deleted, corrupt, stale-hash, source-content-unavailable, permission-denied, viewer/blocked-storage, held-delete, or in-progress records remain inspectable through their record/artifact refs with the exact unavailable reason and no enabled apply/delete mutation that would violate the state. Restore-point views route by `restore_point_id`, `record_ref`, and `record_sha256`; they never use `safe_point_id` as primary identity.
+
+Registration remains a hard machine dependency rather than prose activation. `Plans/UI_Command_Catalog.md` now provides one canonical row for each of `cmd.chat.create_restore_point`, `cmd.chat.branch_from_restore`, and `cmd.chat.delete_restore_point`, and `Plans/Wiring_Matrix.production.json` supplies their current one-handler reverse coverage. Dispatch still fails closed if current catalog membership, handler coverage, required owner family, or argument/result contract is absent or mismatched; stale hand-maintained ghost examples cannot override the live-derived result.
+
+Restore-and-branch creates a new `thread_id` and `branch_id` linked to the exact source restore point and source thread. Branch labels are visible in history and thread navigation, and lineage remains queryable for restore/history and usage attribution.
+
+Conversation restore points are distinct from runtime safe points. Runtime `sp:{run_id}:{node_id}:{attempt_id}:{safe_point_id}` records are FileSafe/Executor recovery anchors that may exact-replace a worktree through the journaled FileSafe transaction. Conversation `rp:{project_id}:{restore_point_id}` records branch frozen chat state and never restore files. `cmd.chat.revert` targets an immutable assistant-turn mutation manifest through FileSafe; it is neither restore-point application nor conversation rewind.
+
+ContractRef: ContractName:Plans/storage-plan.md, ContractName:Plans/Contracts_V0.md, ContractName:Plans/FileSafe.md, ContractName:Plans/Executor_Protocol.md, ContractName:Plans/UI_Command_Catalog.md, ContractName:Plans/Runtime_Artifacts_Panel.md, ContractName:Plans/Wiring_Matrix.md, DecisionID:PD-RSP-08, DecisionID:PD-RSP-09
 
 ### Session browser interaction
 - project/session browsing may open or focus a thread, but active-thread navigation remains local to the chat shell
@@ -2020,6 +2052,7 @@ Placement and control shape:
 - the control lives in the top-right of the chat window.
 - it appears immediately to the right of the chat search bar.
 - it renders as an icon with a dropdown arrow.
+- the popover is click-to-open as a corner-origin sprout popout per the header chrome menu contract (ACD-442); hover does not open it, `aria-expanded` is tracked on the trigger, and opening another header menu closes it.
 - opening the dropdown exposes `Mute`, `Focus`, `Subcompact`, and `Turn Off`.
 
 Mode behavior:
@@ -2856,7 +2889,7 @@ Source Control owns the Worktrees row layout and filters that Assistant Chat lin
 
 ### W.1 Chat header worktree button
 
-**Placement:** Chat header strip, after the Reasoning/effort control (rightmost existing control). The header strip currently contains: Platform, Model, Reasoning/effort. The Worktree button is appended after these. Mode buttons (Ask, Agent, Debug, Plan, Deep Plan) are separate from the header strip and not adjacent to this button.
+**Placement:** Chat header strip, after the selector row (rightmost control). The header strip contains the selector row: Persona, Model, Mode. The Worktree button is appended after these. Mode selection (Ask, Agent, Debug, Plan, Deep Plan) is the third selector-row slot rather than a separate button strip adjacent to this button.
 
 **Visual states:**
 - **Unbound (default):** Dimmed worktree glyph icon. No label text. Tooltip: "No worktree — click to create"
@@ -2893,6 +2926,7 @@ ContractRef: ContractName:Plans/FinalGUISpec.md, ContractName:Plans/Wiring_Matri
 ContractRef: ContractName:Plans/UI_Command_Catalog.md, ContractName:Plans/Contracts_V0.md
 
 **Behavior rules:**
+- The dropdown is hosted as a click-to-open corner-origin sprout popout with the theme-matched popout chrome shared by the other chat header menus (ACD-442); the trigger's state color is applied through stylesheet rules only (no inline style pinning), and trigger hover matches the Context Lens trigger hover treatment in all themes
 - Changing binding mid-thread is allowed; change applies to the next turn (same semantics as platform/model changes per §1.1)
 - While a turn is in-flight, the dropdown is read-only (no binding changes during execution)
 - `Unbind` sets thread binding to None; agent's next turn uses main project dir
@@ -3069,6 +3103,8 @@ Thread worktree cleanup is scoped to thread delete, not archive/unarchive lifecy
 When the extended delete confirmation uses explicit button copy, `Delete and keep worktree` deletes the thread, unbinds it, and leaves the worktree on disk as orphaned/manual Source Control inventory. `Delete and remove worktree` deletes the thread, unbinds it, and prunes the worktree; if the worktree is dirty and the user chooses that destructive option, PM uses `git worktree remove --force <path>` plus `git branch -D <branch>` after the warning label has been shown.
 
 Unbind has no dedicated undo in MVP: the worktree remains on disk as a manual worktree, and any future undo toast is post-MVP rather than part of the initial cleanup flow.
+
+Worktree keep/remove is independent of the storage-owned thread-content deletion result. On confirmation, the thread is logically deleted and hidden immediately; unheld active-canon content is purged within 24 hours, the content-free tombstone remains indefinitely, and backup bytes remain at most 30 days unless held with tombstone replay before visibility. A protected content hold may defer byte purge but does not defer logical deletion or create an undo. The dialog MUST NOT offer `Undo delete`; if a separately retained conversation restore point can still branch verified held boundary material, that action creates a new thread/branch and never restores this deleted source thread or its worktree binding.
 
 
 **Trigger:** Thread is deleted while it has a worktree binding.
@@ -3898,8 +3934,10 @@ unit_type: requirement
 status: accepted
 owner_doc: Plans/assistant-chat-design.md
 canonical_text: >-
-  The chat header exposes platform, model, reasoning/effort, and worktree
-  controls. Selections apply to the next turn and do not interrupt a streaming
+  The chat header exposes model, reasoning/effort, and worktree
+  controls; requested platform/provider selection is owned by the assistant chat
+  surface rather than a standing header dropdown or a status-bar chip. Selections
+  apply to the next turn and do not interrupt a streaming
   response.
 gui_related: true
 gui_classification_reason: Header dropdowns, icons, and worktree visual states are direct UI controls.
@@ -3908,6 +3946,7 @@ unblocks: []
 acceptance_criteria:
   - Provider and model lists come from the account-bound Provider -> models registry plus the Models_System capability resolver rather than hardcoded UI lists.
   - Platform, model, effort, and worktree changes apply to the next turn while an in-flight response completes with its prior selection.
+  - Requested platform selection is reachable from the assistant chat surface without a standing chat-header platform dropdown or status-bar platform chip.
 validation_surfaces:
   - python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits
   - python3 scripts/pm-plan-index.py validate
@@ -3935,6 +3974,8 @@ negative_constraints:
   - "Do not use legacy `platform_specs` or `platform_specs.rs` as the active provider/model capability source."
 compatibility_only_notes:
   - "Legacy `platform_specs` and `fallback_model_ids(platform)` tokens are retired source-lineage only."
+stale_retired_dispositions:
+  - "Standing chat-header platform dropdown retired (superseded by ACD-437 selector-row canon); the interim status-bar platform chip relocation is also retired per the PMConcept7 status-bar trim - requested platform is owned by the assistant chat surface with applies-next-turn semantics."
 owner_hints:
   - Plans/assistant-chat-design.md
   - Plans/Models_System.md
@@ -6884,7 +6925,11 @@ plan_unit_id: ACD-074
 unit_type: requirement
 status: accepted
 owner_doc: Plans/assistant-chat-design.md
-canonical_text: Thread lifecycle state is separate from operational status markers and follows creating -> active -> suspended -> archived -> deleted with explicit, auditable transitions.
+canonical_text: >-
+  Thread lifecycle state is separate from operational status markers and follows
+  creating -> active -> suspended -> archived -> deleted with explicit, auditable
+  transitions. Deleted is terminal: logical hide is immediate, unheld active-canon
+  content is purged within 24 hours, and the content-free tombstone is indefinite.
 gui_related: false
 gui_classification_reason: Thread lifecycle state and transitions are storage/runtime behavior, not GUI implementation.
 depends_on: [ACD-071]
@@ -6893,6 +6938,8 @@ acceptance_criteria:
   - Lifecycle state stays separate from attention_required, blocked, completed, or failed operational status markers.
   - Lifecycle transitions follow the canonical path and allowed transitions.
   - Lifecycle transitions are explicit and auditable.
+  - Deleted has no ordinary restore edge and is removed immediately from navigation, search, context, and export projections.
+  - A protected hold may delay physical purge but cannot unhide or restore the source thread.
 validation_surfaces:
   - python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits
   - python3 scripts/pm-plan-index.py validate
@@ -6908,13 +6955,18 @@ node_compile_hint:
   create_worknodes: false
 source_lineage:
   - Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:assistant-chat-design-S0052
+  - Case-L:L-005
+  - Case-L:L-015
+  - Case-L:PD-L015-04
 preserved_exact_tokens:
   - "creating -> active -> suspended -> archived -> deleted"
   - "attention_required"
   - "blocked"
   - "completed"
   - "failed"
-negative_constraints: []
+negative_constraints:
+  - Do not represent a hold-delayed physical purge as an undo window.
+  - Do not restore a deleted source thread through conversation restore-point branching.
 owner_hints:
   - Plans/assistant-chat-design.md
   - Plans/storage-plan.md
@@ -6928,9 +6980,11 @@ unit_type: requirement
 status: accepted
 owner_doc: Plans/assistant-chat-design.md
 canonical_text: >-
-  Thread lifecycle persistence keeps or prunes transcript, queue state,
-  metadata, restorable UI state, caches, and tombstones by lifecycle state while
-  preserving lineage and treating deletion as terminal for ordinary navigation.
+  Thread lifecycle persistence keeps or prunes transcript, queue state, metadata,
+  restorable UI state, caches, and tombstones by lifecycle state. Thread deletion
+  immediately hides content, physically purges unheld active canon within 24 hours,
+  retains a content-free tombstone indefinitely, and permits backup bytes for at most
+  30 days unless held, with tombstone replay before restored visibility.
 gui_related: false
 gui_classification_reason: Lifecycle persistence and retention behavior are storage/runtime requirements.
 depends_on: [ACD-074]
@@ -6938,7 +6992,10 @@ unblocks: []
 acceptance_criteria:
   - Active threads keep full transcript, queue state, metadata, runtime references, and restorable UI state.
   - Suspended and archived states prune only the allowed transient state.
-  - Deletion removes the thread from normal user-visible chat surfaces while retaining only required integrity, sync, or compliance metadata.
+  - Deletion immediately removes the thread from normal user-visible chat surfaces and active context/export projections.
+  - Unheld canonical message, attachment/blob, mirror, search, and derived content is physically purged within 24 hours.
+  - The content-free tombstone remains indefinitely, backups retain deleted bytes for no more than 30 days unless held, and restore replays tombstones before visibility.
+  - Legal, preserve, restore-point source-lineage, descendant, and in-flight application holds delay byte purge without restoring the source thread.
 validation_surfaces:
   - python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits
   - python3 scripts/pm-plan-index.py validate
@@ -6954,6 +7011,9 @@ node_compile_hint:
   create_worknodes: false
 source_lineage:
   - Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:assistant-chat-design-S0052
+  - Case-L:L-005
+  - Case-L:L-015
+  - Case-L:PD-L015-04
 preserved_exact_tokens:
   - "creating"
   - "active"
@@ -6963,6 +7023,7 @@ preserved_exact_tokens:
 negative_constraints:
   - "archiving does not rewrite message ids, thread lineage, or worktree lineage"
   - "deletion is terminal for ordinary user navigation"
+  - Delete confirmation and completion copy must not promise ordinary undo.
 owner_hints:
   - Plans/assistant-chat-design.md
   - Plans/storage-plan.md
@@ -7426,34 +7487,65 @@ plan_unit_id: ACD-086
 unit_type: requirement
 status: accepted
 owner_doc: Plans/assistant-chat-design.md
-canonical_text: Restore-and-branch creates a new thread_id and branch_id linked to the source restore point and source thread, and branch lineage remains queryable for restore, history, and usage attribution.
-gui_related: false
-gui_classification_reason: Branch identity and lineage are storage/history behavior, not GUI implementation.
-depends_on: [ACD-071]
+canonical_text: >-
+  Assistant Chat owns immutable conversation-boundary restore points. Explicit
+  creation freezes conversation and provenance refs without file bodies; applying
+  an available exact-hash record creates a new thread_id and branch_id while leaving
+  the source thread/worktree unchanged; holds govern delete/expiry eligibility; and
+  unavailable or source-deleted-content states refuse without fabricating a branch.
+gui_related: true
+gui_classification_reason: Conversation restore-point creation, status, unavailable reasons, branching, and source-preservation disclosure are user-visible behavior.
+depends_on: [ACD-071, CV-320, SP-242, CS-057]
 unblocks: [ACD-087]
 acceptance_criteria:
-  - Restore-and-branch creates new thread and branch identities.
-  - Branch lineage is linked to the source restore point and source thread.
-  - Branch lineage remains queryable for restore/history and usage attribution.
+  - cmd.chat.create_restore_point freezes one inclusive source message boundary with conversation/provenance/attachment/citation refs, record hash, and no workspace file bodies.
+  - Equal create identity and semantic content returns the same record; conflicting content never overwrites it.
+  - Only branched creates new thread and conversation branch identities and appends exactly one restore_point.applied; refused and failed return no target IDs and emit no application event.
+  - Replaying one branch command/application identity returns the same recorded result and target identities without a duplicate restore_point.applied; a second intentional branch requires a new identity.
+  - Branched, refused, failed, and replay leave source thread, source conversation branch, source worktree, files, Git/index state, queue, and runtime safe points unchanged.
+  - Lifecycle is immutable available -> expired, deleted, or corrupt; successful application does not consume the record.
+  - RP-RESTOREPOINT-90D-AFTER-RELEASE@1.0.0 expires only at the inclusive owner-proven reference_release plus 7,776,000 seconds or oldest-eligible count pressure, after every hold/live/recovery/preserve/backup/rollback/maintenance ref is released.
+  - Descendant branch, application, preserve, legal, in-flight application, and source-lineage refs protect the record and required material.
+  - A deleted source remains hidden; branching is allowed only from still-verified held boundary material and is labeled a new branch, never undo.
+  - Missing purged source material returns refused with source_deleted_content_unavailable and creates no new identity.
+  - Restore-point record and artifact routes use restore_point_id, record_ref, and record_sha256; optional safe_point_id is lineage only.
 validation_surfaces:
+  - RSP-RP-001
+  - RSP-RP-002
+  - RSP-RP-003
+  - RSP-RP-004
+  - RSP-CMD-001
   - python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits
   - python3 scripts/pm-plan-index.py validate
-risk_class: branch_lineage
-reasoning_tier: standard
+risk_class: conversation_restore_point_lifecycle_or_source_mutation
+reasoning_tier: high
 context_scope: branching
 implementation_surfaces:
   - Plans/assistant-chat-design.md
   - Plans/storage-plan.md
+  - Plans/Contracts_V0.md
+  - Plans/UI_Command_Catalog.md
+  - Plans/Runtime_Artifacts_Panel.md
 node_compile_hint:
-  mode: branch_conversation_lineage
+  mode: conversation_restore_point_lifecycle
   create_worknodes: false
+  create_nodeseeds: false
 source_lineage:
   - Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:assistant-chat-design-S0056
+  - Case-L:L-022
+  - Case-L:PD-RSP-08
 preserved_exact_tokens:
   - "restore-and-branch"
   - "thread_id"
   - "branch_id"
-negative_constraints: []
+  - "rp:{project_id}:{restore_point_id}"
+  - "available"
+  - "expired"
+  - "deleted"
+  - "corrupt"
+negative_constraints:
+  - Do not conflate conversation restore points with runtime safe points or cmd.chat.revert.
+  - Do not branch from unavailable or unverifiable content and do not resurrect a deleted source thread.
 owner_hints:
   - Plans/assistant-chat-design.md
   - Plans/storage-plan.md
@@ -7466,32 +7558,53 @@ plan_unit_id: ACD-087
 unit_type: requirement
 status: accepted
 owner_doc: Plans/assistant-chat-design.md
-canonical_text: Branch labels are visible in history and thread navigation, and branching from a running or dirty thread requires confirmation that names the preserved source state and new branch target.
+canonical_text: >-
+  Restore-point controls disclose the exact source conversation boundary and new
+  target before branching, expose record/artifact status and unavailable reason,
+  and consume their current canonical command rows and one-handler wiring.
+  Branching is a new conversation branch and never source-thread undo or
+  filesystem restore.
 gui_related: true
 gui_classification_reason: Branch labels and confirmation prompts are user-visible UI behavior.
 depends_on: [ACD-086]
 unblocks: []
 acceptance_criteria:
   - Branch labels appear in history and thread navigation.
-  - Branching from running or dirty threads requires explicit confirmation naming source state and branch target.
+  - Branching discloses the exact source thread, branch, message boundary, running or dirty source state, and new target before creation.
+  - cmd.chat.create_restore_point, cmd.chat.branch_from_restore, and cmd.chat.delete_restore_point each resolve to one current catalog row and one sole-handler production-wiring row; mismatch fails closed.
+  - Branch payload requires project_id, restore_point_id, source_thread_id, and expected_restore_point_sha256; only branched creates a target.
+  - Only branched emits exactly one restore_point.applied; replay emits no duplicate, and refused/failed return no target IDs or application event.
+  - Every branch result and replay preserves source thread/branch/worktree/files/Git/index/queue/safe points.
+  - Expired, deleted, corrupt, stale-hash, source-content-unavailable, permission, storage, hold, and in-progress states show the exact unavailable reason and no enabled invalid action.
+  - Delete uses expected-hash and hold preflight, is idempotent, never clears a protected ref, and never implies deleted-thread undo.
 validation_surfaces:
+  - RSP-RP-002
+  - RSP-RP-004
+  - RSP-CMD-001
   - python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits
   - python3 scripts/pm-plan-index.py validate
-risk_class: branch_user_confirmation
-reasoning_tier: standard
+risk_class: restore_point_ghost_command_or_misleading_undo
+reasoning_tier: high
 context_scope: branching
 implementation_surfaces:
   - Plans/assistant-chat-design.md
   - Plans/FinalGUISpec.md
+  - Plans/UI_Command_Catalog.md
+  - Plans/Wiring_Matrix.md
 node_compile_hint:
   mode: branch_conversation_ui_confirmation
   create_worknodes: false
 source_lineage:
   - Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:assistant-chat-design-S0056
+  - Case-L:L-022
+  - Case-L:PD-RSP-08
 preserved_exact_tokens:
   - "branch labels"
   - "running or dirty thread"
-negative_constraints: []
+  - "cmd.chat.branch_from_restore"
+negative_constraints:
+  - Do not infer registration from Assistant Chat prose; require current live-derived catalog and production-wiring coverage.
+  - Do not present restore-and-branch as undo or file restoration.
 owner_hints:
   - Plans/assistant-chat-design.md
   - Plans/FinalGUISpec.md
@@ -12444,7 +12557,9 @@ owner_doc: Plans/assistant-chat-design.md
 canonical_text: >-
   Context Lens is a top-right chat control immediately right of chat search,
   rendered as an icon plus dropdown exposing `Mute`, `Focus`, `Subcompact`,
-  and `Turn Off`.
+  and `Turn Off`. The dropdown is a click-to-open corner-origin sprout popover
+  per the header chrome menu contract (ACD-442); hover does not open it and
+  `aria-expanded` is tracked on the trigger.
 gui_related: true
 gui_classification_reason: Context Lens placement and dropdown controls are visible chat UI.
 depends_on: [ACD-191]
@@ -12453,6 +12568,7 @@ acceptance_criteria:
   - Context Lens lives in the top-right of the chat window.
   - The control appears immediately to the right of chat search.
   - Dropdown exposes Mute, Focus, Subcompact, and Turn Off.
+  - The popover opens on click as a corner-origin sprout with aria-expanded tracked on the trigger; hover alone does not open it.
 validation_surfaces:
   - python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits
   - python3 scripts/pm-plan-index.py validate
@@ -13523,34 +13639,57 @@ plan_unit_id: ACD-217
 unit_type: constraint
 status: accepted
 owner_doc: Plans/assistant-chat-design.md
-canonical_text: Chat separates `cmd.chat.revert` file restore from `cmd.chat.rewind` conversation rewind.
+canonical_text: >-
+  Chat resolves cmd.chat.revert to one immutable whole-turn mutation manifest and
+  delegates exact replacement to the FileSafe manifest, journal, rollback,
+  equality, restart, remote-custody, hold, and closed-outcome contract. It never
+  rewinds conversation state, merges, partially succeeds, or re-resolves paths
+  through current working_directory; cmd.chat.rewind remains conversation-only.
 gui_related: true
 gui_classification_reason: Revert and rewind are visible chat command behaviors.
-depends_on: [ACD-215]
+depends_on: [ACD-215, F2-200, F2-201, F2-202, F2-204, CV-320]
 unblocks: []
 acceptance_criteria:
-  - cmd.chat.revert restores files.
+  - cmd.chat.revert resolves one eligible assistant turn and the complete canonical-absolute whole-turn mutation manifest before FileSafe admission.
+  - Omitted target selects the latest eligible mutating assistant turn; no eligible turn returns no_eligible_mutating_turn without a restore transaction.
+  - restored_clean and restore_failed require target and rollback equality respectively; restore_recovery_required retains every fence and hold.
+  - restored_with_conflicts and partial per-file success are invalid.
+  - Same command identity returns the recorded result or reconciles the same nonterminal transaction without selecting a newer turn.
   - cmd.chat.rewind rewinds conversation state.
   - The two command IDs are not conflated.
+  - Prompt-versus-proceed remains command and permission policy latitude and cannot weaken target immutability or FileSafe guarantees.
 validation_surfaces:
+  - RSP-CHAT-001
+  - RSP-ATOMIC-001
+  - RSP-ATOMIC-002
+  - RSP-ATOMIC-003
   - python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits
   - python3 scripts/pm-plan-index.py validate
-risk_class: chat_gap
+risk_class: chat_revert_partial_or_unverified_restore
 reasoning_tier: high
 context_scope: commands
 implementation_surfaces:
   - Plans/assistant-chat-design.md
+  - Plans/FileSafe.md
+  - Plans/Contracts_V0.md
   - Plans/UI_Command_Catalog.md
 node_compile_hint:
-  mode: revert_rewind_split
+  mode: chat_revert_filesafe_parity
   create_worknodes: false
+  create_nodeseeds: false
 source_lineage:
   - Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:assistant-chat-design-S0101
+  - Case-L:L-006
+  - Case-L:L-024
+  - Case-L:PD-RSP-09
 preserved_exact_tokens:
   - "cmd.chat.revert"
   - "cmd.chat.rewind"
+  - "restore_recovery_required"
 negative_constraints:
   - "cmd.chat.revert and cmd.chat.rewind must remain separate."
+  - Do not turn prompt-versus-proceed latitude into a weaker restore contract.
+  - Do not report success for a subset of the immutable whole-turn mutation scope.
 owner_hints:
   - Plans/assistant-chat-design.md
   - Plans/UI_Command_Catalog.md
@@ -18008,16 +18147,18 @@ unit_type: requirement
 status: accepted
 owner_doc: Plans/assistant-chat-design.md
 canonical_text: >-
-  Chat header appends the Worktree button after Reasoning/effort; mode buttons
-  remain separate; the button is visible in Ask, Agent, Debug, Plan, and Deep
-  Plan and hidden when the active project has no git repository.
+  Chat header appends the Worktree button after the Persona, Model, Mode
+  selector row (ACD-437); the button is a click-to-open trigger for the
+  worktree sprout popout (ACD-442); the button is visible in Ask, Agent,
+  Debug, Plan, and Deep Plan and hidden when the active project has no git
+  repository.
 gui_related: true
 gui_classification_reason: Chat header placement, visibility, and mode presentation are visible Assistant Chat UI.
 depends_on: [ACD-318]
 unblocks: [ACD-323]
 acceptance_criteria:
-  - The Worktree button appears after the Reasoning/effort control in the chat header strip.
-  - Mode buttons remain separate from the header strip and are not adjacent to the Worktree button.
+  - The Worktree button appears after the Persona, Model, Mode selector row in the chat header strip.
+  - Clicking the button toggles the worktree sprout popout; hover alone does not open it.
   - The button is visible in Ask, Agent, Debug, Plan, and Deep Plan and hidden when no git repository is active.
 validation_surfaces:
   - python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits
@@ -18035,14 +18176,15 @@ node_compile_hint:
 source_lineage:
   - Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:assistant-chat-design-S0148
 preserved_exact_tokens:
-  - "Reasoning/effort"
   - "Ask"
   - "Agent"
   - "Debug"
   - "Plan"
   - "Deep Plan"
 negative_constraints:
-  - "Mode buttons are separate from the header strip and not adjacent to this button."
+  - "Hover alone must not open the worktree popout."
+stale_retired_dispositions:
+  - "Placement after a standing Reasoning/effort header control retired; effort is reached through model-selection chaining (ACD-437/ACD-438) and the Worktree button follows the Persona, Model, Mode selector row."
 owner_hints:
   - Plans/assistant-chat-design.md
   - Plans/FinalGUISpec.md
@@ -18055,14 +18197,19 @@ plan_unit_id: ACD-323
 unit_type: requirement
 status: accepted
 owner_doc: Plans/assistant-chat-design.md
-canonical_text: Worktree header icon states are unbound, bound clean, bound dirty, and bound conflict, using theme tokens and compact overflow behavior.
+canonical_text: >-
+  Worktree header icon states are unbound, bound clean, bound dirty, and bound
+  conflict, using theme tokens and compact overflow behavior. State colors are
+  applied through stylesheet rules only, never inline style pinning, so trigger
+  hover matches the Context Lens trigger hover treatment in all themes.
 gui_related: true
 gui_classification_reason: Worktree icon states, colors, indicators, tooltips, and overflow behavior are visible UI.
 depends_on: [ACD-322]
 unblocks: [ACD-324, ACD-341]
 acceptance_criteria:
   - Unbound, bound clean, bound dirty, and bound conflict icon states render with the specified tooltips and indicators.
-  - Icon colors resolve through theme tokens rather than hardcoded hex values.
+  - Icon colors resolve through theme tokens rather than hardcoded hex values, applied via stylesheet rules rather than inline styles.
+  - Worktree trigger hover matches the Context Lens trigger hover treatment in all themes, including bound states.
   - Accessibility announcements and compact overflow behavior match the source span.
 validation_surfaces:
   - python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits
@@ -18089,6 +18236,7 @@ preserved_exact_tokens:
   - "aria-live=\"polite\""
 negative_constraints:
   - "Icon colors must not use hardcoded hex values."
+  - "State colors must not be pinned via inline style attributes; hover treatment is CSS-owned."
   - "Narrow controls degrade to icon-only controls rather than wrapping text into the compact chat header."
 owner_hints:
   - Plans/assistant-chat-design.md
@@ -18105,7 +18253,10 @@ owner_doc: Plans/assistant-chat-design.md
 canonical_text: >-
   Worktree dropdown rows differ for unbound and bound states, including `None`,
   `Create Worktree…`, branch/path/status info, `Unbind`, `Merge into Base…`,
-  `Create PR…`, and destructive `Remove Worktree`.
+  `Create PR…`, and destructive `Remove Worktree`. The dropdown is hosted as a
+  click-to-open corner-origin sprout popout with the theme-matched popout
+  chrome shared by the other chat header menus (ACD-442); the row set is
+  unchanged by that hosting.
 gui_related: true
 gui_classification_reason: Worktree dropdown rows and actions are visible chat header UI.
 depends_on: [ACD-323]
@@ -18114,6 +18265,7 @@ acceptance_criteria:
   - The unbound dropdown shows `None` and `Create Worktree…`.
   - The bound dropdown shows branch name, path, status, `Unbind`, `Merge into Base…`, `Create PR…`, and destructive `Remove Worktree`.
   - Info labels and status pills have no action.
+  - The dropdown opens on click as a corner-origin sprout popout using the shared theme-matched popout chrome, with the same row set.
 validation_surfaces:
   - python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits
   - python3 scripts/pm-plan-index.py validate
@@ -23577,13 +23729,13 @@ unit_type: requirement
 status: accepted
 owner_doc: Plans/assistant-chat-design.md
 canonical_text: >-
-  The chat header context circle, hover status module, More Details action, Compact Now action, Context Detail Pane, message info-popover, and Raw/Curated views consume the same UsageRecord/context projection records used by Usage, Ledger, Runtime Artifacts, Run Graph, and Orchestrator. The context circle is an entrypoint and status disclosure, not a cost calculator. Hover shows stateful usage, tokens, context, cost, quota, freshness, and hidden/background contribution summaries from UsageRecord projections. More Details opens or focuses the editor-tab Context Detail Pane through canonical route/open. Compact Now dispatches only `cmd.chat.compact_context` and never recalculates usage. Message info-popovers link to the message-scoped UsageRecord/context rows by usage_event_ref, provider_attempt_ref, attempt_id, node_id, tool_call_id, raw_payload_ref, trace_ref, or receipt refs when available. Curated view renders normalized provider, token, context, cost, quota, authority, settlement, and source-confidence fields; Raw view renders redacted raw_payload_ref, redaction_status, provider_payload_hash, omitted evidence counts, and permission state without exposing secrets.
+  The chat header context circle, click-opened context status module, More Details action, Compact Now action, Context Detail Pane, message info-popover, and Raw/Curated views consume the same UsageRecord/context projection records used by Usage, Ledger, Runtime Artifacts, Run Graph, and Orchestrator. The context circle is an entrypoint and status disclosure, not a cost calculator. The context status module (opened by clicking the context circle per ACD-441; hovering the circle shows only an accent glow affordance) shows stateful usage, tokens, context, cost, quota, freshness, and hidden/background contribution summaries from UsageRecord projections. More Details opens or focuses the editor-tab Context Detail Pane through canonical route/open. Compact Now dispatches only `cmd.chat.compact_context` and never recalculates usage. Message info-popovers link to the message-scoped UsageRecord/context rows by usage_event_ref, provider_attempt_ref, attempt_id, node_id, tool_call_id, raw_payload_ref, trace_ref, or receipt refs when available. Curated view renders normalized provider, token, context, cost, quota, authority, settlement, and source-confidence fields; Raw view renders redacted raw_payload_ref, redaction_status, provider_payload_hash, omitted evidence counts, and permission state without exposing secrets.
 gui_related: true
 gui_classification_reason: Defines visible chat context, usage, compact, detail-pane, and message inspection behavior.
 depends_on: [ACD-092, ACD-410, UF-085, UF-086, UF-087, RAP-043]
 unblocks: []
 acceptance_criteria:
-  - Context circle hover displays provider authority, estimated cost or value state, stale projection state, partial settlement state, unknown confidence or value state, hidden_byok, hidden_subscription, disabled, and not_exposed states using UsageRecord value_state, projection state, settlement_status, cost_status, source_class, source_authority, and source_confidence values high, medium, low, or unknown, not chat-local math.
+  - The click-opened context status module displays provider authority, estimated cost or value state, stale projection state, partial settlement state, unknown confidence or value state, hidden_byok, hidden_subscription, disabled, and not_exposed states using UsageRecord value_state, projection state, settlement_status, cost_status, source_class, source_authority, and source_confidence values high, medium, low, or unknown, not chat-local math.
   - "`More Details` opens the editor-tab Context Detail Pane through route/open and preserves usage_event_ref plus attempt_id, provider_attempt_ref, node_id, tool_call_id, trace_ref, receipt refs, and raw_payload_ref when present."
   - "`Compact Now` dispatches only `cmd.chat.compact_context`, preserves the context epoch, and does not mutate or recompute historical UsageRecord totals."
   - Context Detail Pane displays cache_read, cache_write, cache_write_1h or cache_write_ttl, output_total, output_visible, reasoning/thoughts, provider_total, context_estimate, counting_semantics, settlement_status, and projection_freshness when present.
@@ -23631,12 +23783,610 @@ preserved_exact_tokens:
 negative_constraints:
   - Do not implement a chat-local cost model or message-local usage schema.
   - Do not treat context_estimate as billing, cost, quota, or provider authority.
-  - Do not make hover disclosure dispatch compaction or detail navigation without explicit user action.
+  - Do not make context module disclosure dispatch compaction or detail navigation without explicit user action.
   - Do not expose unredacted raw provider payloads, credentials, account identifiers, or local paths in Raw view.
   - Do not keep `cmd.chat.open_thread_usage`, `cmd.chat.focus_thread_usage`, or `cmd.chat.close_thread_usage` as canonical chat commands.
+stale_retired_dispositions:
+  - "Hover-opened context status module retired per PMConcept7 context ring canon; the module opens on click (ACD-441) and ring hover shows only an accent glow affordance."
 owner_hints:
   - Plans/assistant-chat-design.md
   - Plans/usage-feature.md
   - Plans/UI_Command_Catalog.md
   - Plans/FinalGUISpec.md
+```
+
+## PMConcept6 Chat Polish Addendum - 2026-07-16
+
+This addendum promotes user-approved PMConcept6 chat polish behaviors into canonical PlanUnits. `Concepts/pm6-build/**` remains illustrative source-lineage only per `Plans/usage-feature.md`. This addendum creates no WorkNodes, NodeSeeds, executable queues, implementation files, runtime artifacts, generated wiring rows, production build tasks, final manifests, or PNC-019 receipts.
+
+### ACD-435 - Stream Footer Pill Content Contract
+
+```yaml
+plan_unit_id: ACD-435
+unit_type: requirement
+status: accepted
+owner_doc: Plans/assistant-chat-design.md
+canonical_text: >-
+  The collapsed chat stream footer pill shows a subagent chip (status dot plus label) that
+  opens the footer fan-out, and a files chip summarizing the thread's touched files: a single
+  file renders as its path with +N added and -N removed line totals, and multiple files render
+  as "N file changes" with aggregate totals. A middle-dot separator renders between the chips
+  when both are visible, and chips shrink with label ellipsis on long content. Threads with
+  diagnostics also render a problems row that links to the Problems bottom tab. Rewind
+  actions live in the composer rewind FAB and never render in the stream footer.
+gui_related: true
+gui_classification_reason: Defines visible chat footer chip content and routing behavior.
+depends_on: [ACD-013, ACD-058, ACD-059, ACD-216, ACD-217]
+unblocks: []
+acceptance_criteria:
+  - "The subagent chip renders a status dot plus label, shrinks with ellipsis, and opens the footer fan-out on activation."
+  - "The files chip renders one file as path with +N and -N totals and multiple files as N file changes with aggregate totals, with added totals styled distinctly from removed totals."
+  - "A middle-dot separator renders only when both chips are visible."
+  - "Threads with diagnostics render a problems row that opens the Problems bottom tab scoped to the thread's diagnostics."
+  - "No rewind affordance renders in the footer."
+  - "No WorkNodes, NodeSeeds, executable queues, final node manifests, or production build tasks are created."
+validation_surfaces:
+  - python3 scripts/pm-plan-index.py validate
+  - python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits
+risk_class: chat_footer_projection_drift
+reasoning_tier: standard
+context_scope: assistant_chat_footer
+implementation_surfaces:
+  - Plans/assistant-chat-design.md
+node_compile_hint:
+  mode: chat_stream_footer_pill_content_contract
+  create_worknodes: false
+source_lineage:
+  - "Plans/assistant-chat-design.md:4086"
+  - "Plans/assistant-chat-design.md:6147"
+  - "Plans/assistant-chat-design.md:13480"
+  - "Concepts/pm6-build (PMConcept6 demo; source-lineage-only per Plans/usage-feature.md)"
+preserved_exact_tokens:
+  - "+N"
+  - "N file changes"
+  - "Problems"
+negative_constraints:
+  - "Rewind actions must not render in the stream footer."
+  - "Footer content contracts must not hardcode demo thread names."
+compatibility_only_notes:
+  - "Slint portability: chips are opaque precomputed surfaces; diff totals use precomputed per-theme colors; no arbitrary-content backdrop blur and no SVG filters."
+stale_retired_dispositions: []
+owner_boundary_notes:
+  - "Plans/FinalGUISpec.md owns the footer pill geometry (F3-422); this unit records footer content and routing semantics."
+owner_hints:
+  - Plans/assistant-chat-design.md
+```
+
+### ACD-436 - Footer FAB Fan-Out Behavior
+
+```yaml
+plan_unit_id: ACD-436
+unit_type: requirement
+status: accepted
+owner_doc: Plans/assistant-chat-design.md
+canonical_text: >-
+  Activating a footer chip expands an upward fan-out menu anchored to the footer pill. File
+  items open the corresponding editor diff tabs. Subagent items scroll the stream to the
+  matching subagent card and flash-highlight it. Only one fan-out is open at a time, and the
+  fan-out participates in the chat single-overlay invariant.
+gui_related: true
+gui_classification_reason: Defines visible footer fan-out menu behavior.
+depends_on: [ACD-435, ACD-151, ACD-152, ACD-155]
+unblocks: []
+acceptance_criteria:
+  - "Footer chips expand an upward fan-out menu anchored to the pill."
+  - "File items open editor diff tabs for the selected file."
+  - "Subagent items scroll to and flash-highlight the matching subagent card in the stream."
+  - "The fan-out respects the single-overlay invariant."
+  - "No WorkNodes, NodeSeeds, executable queues, final node manifests, or production build tasks are created."
+validation_surfaces:
+  - python3 scripts/pm-plan-index.py validate
+  - python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits
+risk_class: chat_footer_projection_drift
+reasoning_tier: standard
+context_scope: assistant_chat_footer
+implementation_surfaces:
+  - Plans/assistant-chat-design.md
+node_compile_hint:
+  mode: chat_footer_fab_fan_out_behavior
+  create_worknodes: false
+source_lineage:
+  - "Plans/assistant-chat-design.md:10566"
+  - "Plans/assistant-chat-design.md:10739"
+  - "Concepts/pm6-build (PMConcept6 demo; source-lineage-only per Plans/usage-feature.md)"
+preserved_exact_tokens:
+  - "fan-out"
+negative_constraints:
+  - "The fan-out must not dispatch rewind actions."
+compatibility_only_notes:
+  - "Slint portability: the fan-out is a native popup surface; stagger motion is optional and disabled under reduced motion; no arbitrary-content backdrop blur and no SVG filters."
+stale_retired_dispositions: []
+owner_boundary_notes: []
+owner_hints:
+  - Plans/assistant-chat-design.md
+```
+
+### ACD-437 - Selector Row Persona Model Mode Contract
+
+```yaml
+plan_unit_id: ACD-437
+unit_type: requirement
+status: accepted
+owner_doc: Plans/assistant-chat-design.md
+canonical_text: >-
+  The chat header selector row renders exactly three equal-shrink slots in the order Persona,
+  Model, Mode, with label ellipsis when narrow. The persona selector is the chat entrypoint
+  to the Personas system. Provider/platform selection is owned by the assistant chat surface
+  and keeps applies-next-turn semantics and the account-bound Provider -> models registry
+  data contract; there is no status-bar platform chip. Reasoning/effort is reached through
+  model-selection chaining. The worktree icon button is appended after the selector row.
+gui_related: true
+gui_classification_reason: Defines visible chat header selector row order and control relocation.
+depends_on: [ACD-270, ACD-424, F3-400]
+unblocks: []
+acceptance_criteria:
+  - "The selector row renders Persona, Model, Mode in that order as equal-shrink slots with label ellipsis when narrow."
+  - "The persona slot opens the Personas selection surface governed by the persona control canon."
+  - "Platform selection is available from the assistant chat surface with applies-next-turn semantics and registry-driven data; there is no status-bar platform chip and the chat header has no standalone platform dropdown."
+  - "The worktree icon button renders after the selector row."
+  - "No WorkNodes, NodeSeeds, executable queues, final node manifests, or production build tasks are created."
+validation_surfaces:
+  - python3 scripts/pm-plan-index.py validate
+  - python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits
+risk_class: chat_header_contract_drift
+reasoning_tier: standard
+context_scope: assistant_chat_header
+implementation_surfaces:
+  - Plans/assistant-chat-design.md
+node_compile_hint:
+  mode: chat_selector_row_persona_model_mode_contract
+  create_worknodes: false
+source_lineage:
+  - "Plans/assistant-chat-design.md:186"
+  - "Plans/assistant-chat-design.md:2859"
+  - "Plans/assistant-chat-design.md:15723"
+  - "Concepts/pm6-build (PMConcept6 demo; source-lineage-only per Plans/usage-feature.md)"
+preserved_exact_tokens:
+  - "Persona"
+  - "Model"
+  - "Mode"
+negative_constraints:
+  - "The chat header must not re-introduce a standalone Platform dropdown."
+compatibility_only_notes:
+  - "Slint portability: selector slots are opaque widgets with text ellipsis; popouts map to native popup surfaces; no arbitrary-content backdrop blur, no SVG filters, precomputed color math."
+stale_retired_dispositions:
+  - "Status-bar platform chip relocation retired per the PMConcept7 status-bar trim (Plans/FinalGUISpec.md F3-448 dispositions); requested platform ownership stays on the assistant chat surface with applies-next-turn semantics."
+owner_boundary_notes:
+  - "Plans/FinalGUISpec.md owns selector-row layout geometry (F3-423); this unit records ordering, relocation, and behavior semantics."
+owner_hints:
+  - Plans/assistant-chat-design.md
+```
+
+### ACD-438 - Model To Effort Popout Chaining And Single-Overlay Invariant
+
+```yaml
+plan_unit_id: ACD-438
+unit_type: requirement
+status: accepted
+owner_doc: Plans/assistant-chat-design.md
+canonical_text: >-
+  Selecting a model closes the model mini-popout and automatically opens the reasoning-effort
+  popout above the model button, offering High, Medium, and Low; selecting an effort closes
+  the popout. At most one of the thoroughness popout, mode popout, model popout, effort
+  popout, or the footer fan-out stack is open at a time. The effort labels High, Medium, and
+  Low are a distinct control from Plan Thoroughness and its Light, Balanced, and Comprehensive
+  labels.
+gui_related: true
+gui_classification_reason: Defines visible model and effort popout chaining behavior.
+depends_on: [ACD-424, ACD-035, F3-400, F3-318]
+unblocks: []
+acceptance_criteria:
+  - "Model selection closes the model popout and opens the effort popout above the model button."
+  - "The effort popout offers High, Medium, and Low; selection closes the popout and applies on the next turn."
+  - "At most one of thoroughness, mode, model, effort popouts or the footer fan-out is open at a time."
+  - "Effort High/Medium/Low and Plan Thoroughness Light/Balanced/Comprehensive remain distinct controls with distinct labels."
+  - "No WorkNodes, NodeSeeds, executable queues, final node manifests, or production build tasks are created."
+validation_surfaces:
+  - python3 scripts/pm-plan-index.py validate
+  - python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits
+risk_class: chat_header_contract_drift
+reasoning_tier: standard
+context_scope: assistant_chat_header
+implementation_surfaces:
+  - Plans/assistant-chat-design.md
+node_compile_hint:
+  mode: chat_model_to_effort_popout_chaining
+  create_worknodes: false
+source_lineage:
+  - "Plans/assistant-chat-design.md:2806"
+  - "Plans/assistant-chat-design.md:5112"
+  - "Plans/FinalGUISpec.md:20696"
+  - "Concepts/pm6-build (PMConcept6 demo; source-lineage-only per Plans/usage-feature.md)"
+preserved_exact_tokens:
+  - "High"
+  - "Medium"
+  - "Low"
+negative_constraints:
+  - "Effort High/Medium/Low labels must not be merged with Plan Thoroughness Light/Balanced/Comprehensive."
+compatibility_only_notes:
+  - "Slint portability: chained popouts map to sequential native popup surfaces anchored to the model button; no arbitrary-content backdrop blur, no SVG filters, precomputed color math."
+stale_retired_dispositions: []
+owner_boundary_notes: []
+owner_hints:
+  - Plans/assistant-chat-design.md
+```
+
+
+## Immutable conversation restore-point lifecycle - Known-37 completion
+
+Status: `STATICALLY_MATERIALIZED`; runtime behavior is `NOT_EXECUTABLE_UNDER_THIS_TRANSACTION`.
+
+The sole corrupt edge is `available -> corrupt`, selected in this order: missing record uses the separate unavailable path; trusted record-hash mismatch selects `record_hash_mismatch`; otherwise present undecodable/invalid record selects `unreadable_record`; missing referenced material stays separate and leaves the record `available`; present material hash/length mismatch selects `corrupt_referenced_material`; only then may supported-scope failure select `unsupported_content_scope`. No fifth reason or alias exists.
+
+The exact reason/evidence pairs are:
+
+| reason_code | evidence_kind | required branch |
+|---|---|---|
+| `record_hash_mismatch` | `record_hash_comparison` | non-null unequal record hashes; referenced-material fields absent |
+| `unreadable_record` | `record_decode_failure` | `expected_hash=null`, valid observed hash; referenced-material fields absent |
+| `corrupt_referenced_material` | `referenced_material_integrity_check` | equal record hashes; one canonical material ref; all material hashes/lengths present; at least one unequal pair |
+| `unsupported_content_scope` | `content_scope_validation` | equal record hashes; canonical material ref; material comparison fields absent |
+
+The current writer is `Plans/event_payload_restore_point_corrupt.schema.json#` at payload ID `.../restore_point_corrupt/2.0.0`; the exact v1 is reader-only. Storage uses `MIG-RESTORE-POINT-CORRUPT-PAYLOAD-001@1.0.0` and quarantine reason `restore_point_corrupt_v1_upgrade_unresolvable`.
+
+Recovery-unavailable UI consumes, without reordering, either `[open_details, locate_and_verify_recovery, replan, abandon_recovery]` or the admitted isolated-successor form with `start_fresh_attempt` between replan and abandonment. It dispatches only the canonical commands, displays the owner reason and preserved-local-work warning, and treats only a committed domain result plus `recovery_unavailable_resolution_receipt` as success. UI acknowledgement alone never releases, cleans up, retries, or creates a successor.
+
+## PMConcept7 Concept Promotion Addendum - 2026-07-23
+
+This addendum promotes user-approved PMConcept7 chat behaviors (ChatGuiUpdates2 workstreams, revs 4-9.2) into canonical PlanUnits: the corner-origin sprout popout motion family, the effort/thoroughness option-count resize in place, the context ring click sprout and glow, the header chrome menu sprouts with theme-matched popout chrome, the chat more-options kebab menu, and the Chats rail cleanup with resize-driven collapse. `Concepts/PMConcept7.html` and `Concepts/ChatGuiUpdates2.md` remain illustrative source-lineage only. This addendum creates no WorkNodes, NodeSeeds, executable queues, implementation files, runtime artifacts, generated wiring rows, production build tasks, final manifests, or PNC-019 receipts.
+
+### ACD-439 - Corner-Origin Sprout Popout Motion Contract
+
+```yaml
+plan_unit_id: ACD-439
+unit_type: requirement
+status: accepted
+owner_doc: Plans/assistant-chat-design.md
+canonical_text: >-
+  Chat transient popouts - the model, mode, persona, effort, and thoroughness selector
+  popouts, the header chrome menus, and the context status module - share one corner-origin
+  sprout motion contract: each popout sprouts from and collapses into the corner or edge
+  nearest its trigger, opening in roughly 300ms with overshoot easing from a non-uniform
+  closed scale and closing in roughly 220ms with opacity held until late followed by a short
+  fade. Search-driven size changes in the model and persona popouts spring the height with
+  overshoot and a brief size-bounce. The modes popout opens directly on its Ask, Agent,
+  Debug, Plan, and Deep Plan options with no search field, while model and persona popouts
+  keep search. Under reduced motion, open and close render as instant show/hide. The
+  single-overlay invariant of ACD-438 is preserved.
+gui_related: true
+gui_classification_reason: Defines visible open/close motion and search behavior for chat popouts.
+split_recommended: false
+depends_on: [ACD-438]
+unblocks: [ACD-440, ACD-441, ACD-442]
+acceptance_criteria:
+  - "Model, mode, persona, effort, and thoroughness popouts sprout from and collapse into the corner or edge nearest their trigger, with an overshoot open and a late-fade close."
+  - "Search-driven size changes in the model and persona popouts spring the height with overshoot and a brief size-bounce."
+  - "The modes popout opens directly on Ask, Agent, Debug, Plan, and Deep Plan options with no search field, while model and persona popouts keep search."
+  - "At most one popout, flyout, or fan-out is open at a time per ACD-438, and reduced motion renders open and close as instant show/hide."
+  - "No WorkNodes, NodeSeeds, executable queues, final node manifests, or production build tasks are created."
+validation_surfaces:
+  - "python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits"
+  - "python3 scripts/pm-plan-index.py validate"
+risk_class: chat_header_contract_drift
+reasoning_tier: standard
+context_scope: assistant_chat_header
+implementation_surfaces:
+  - Plans/assistant-chat-design.md
+node_compile_hint:
+  mode: corner_origin_sprout_popout_motion_contract
+  create_worknodes: false
+source_lineage:
+  - "Concepts/PMConcept7.html (PMConcept7 demo rev 9.2; source-lineage-only per Plans/usage-feature.md)"
+  - "Concepts/ChatGuiUpdates2.md (PM8 workstream and rev 4-9.2 ship notes; source-lineage-only)"
+preserved_exact_tokens:
+  - "corner-origin"
+  - "sprout"
+  - "Deep Plan"
+negative_constraints:
+  - "Popouts must not open from a fixed origin unrelated to their trigger, and the modes popout must not re-introduce a search field."
+compatibility_only_notes:
+  - "Slint portability: sprout popouts render as opaque precomputed popup surfaces with translate/opacity/height animations via Slint property animations; no arbitrary-content backdrop blur, no SVG filters, and color math is precomputed rather than runtime-mixed."
+stale_retired_dispositions:
+  - "Fixed-origin popout open/close motion retired; all chat transient popouts use the nearest-corner sprout family."
+owner_boundary_notes: []
+owner_hints:
+  - Plans/assistant-chat-design.md
+```
+
+### ACD-440 - Effort And Thoroughness Option-Count Resize In Place
+
+```yaml
+plan_unit_id: ACD-440
+unit_type: requirement
+status: accepted
+owner_doc: Plans/assistant-chat-design.md
+canonical_text: >-
+  The effort/thoroughness side flyout resizes in place: when the flyout is already open and
+  the hovered row changes to one whose available option count differs, the open flyout
+  spring-resizes its height with overshoot and a brief size-bounce instead of re-running the
+  sprout open. First open uses the corner-origin sprout of ACD-439, and hovering the same row
+  again only repositions and refreshes content. This applies to the model-effort flyout and
+  to the mode Plan/Deep Plan thoroughness flyout, which share the same flyout portal.
+gui_related: true
+gui_classification_reason: Defines visible side-flyout resize behavior when option counts change.
+split_recommended: false
+depends_on: [ACD-438, ACD-439]
+unblocks: []
+acceptance_criteria:
+  - "With the flyout open, hovering a row with a different available option count spring-resizes the flyout height in place with overshoot and a brief size-bounce, without re-running the sprout open."
+  - "First open uses the corner-origin sprout; same-row hover repositions and refreshes content only."
+  - "The behavior applies to model-effort and to mode Plan/Deep Plan thoroughness through the same flyout portal."
+  - "No WorkNodes, NodeSeeds, executable queues, final node manifests, or production build tasks are created."
+validation_surfaces:
+  - "python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits"
+  - "python3 scripts/pm-plan-index.py validate"
+risk_class: chat_header_contract_drift
+reasoning_tier: standard
+context_scope: assistant_chat_header
+implementation_surfaces:
+  - Plans/assistant-chat-design.md
+node_compile_hint:
+  mode: effort_thoroughness_option_count_resize_in_place
+  create_worknodes: false
+source_lineage:
+  - "Concepts/PMConcept7.html (PMConcept7 demo rev 9.2; source-lineage-only per Plans/usage-feature.md)"
+  - "Concepts/ChatGuiUpdates2.md (PM8 workstream and rev 4-9.2 ship notes; source-lineage-only)"
+preserved_exact_tokens:
+  - "size-bounce"
+  - "Plan"
+  - "Deep Plan"
+negative_constraints:
+  - "An option-count change while the flyout is open must not re-sprout the flyout from its origin."
+compatibility_only_notes:
+  - "Slint portability: the side flyout renders as an opaque precomputed popup surface whose height change animates via Slint property animations with overshoot easing; no arbitrary-content backdrop blur, no SVG filters, and color math is precomputed rather than runtime-mixed."
+stale_retired_dispositions: []
+owner_boundary_notes:
+  - "Effort/thoroughness option semantics and label distinctness stay owned by ACD-438; this unit owns the resize-in-place presentation behavior."
+owner_hints:
+  - Plans/assistant-chat-design.md
+```
+
+### ACD-441 - Context Ring Click Sprout And Glow
+
+```yaml
+plan_unit_id: ACD-441
+unit_type: requirement
+status: accepted
+owner_doc: Plans/assistant-chat-design.md
+canonical_text: >-
+  The chat header context ring is a click-to-open trigger for the context status module:
+  clicking the ring, or pressing Enter or Space while the ring is focused, toggles the module
+  as a corner-origin sprout popout anchored to the ring, and `aria-expanded` tracks the open
+  state. Hovering the ring shows only a soft accent glow affordance and never opens the
+  module; the glow holds while the module is open. The ring renders at 15px display size and
+  no numeric token label renders beside the ring; usage figures render inside the module.
+  This applies to both the docked and floating chat mounts.
+gui_related: true
+gui_classification_reason: Defines visible context ring trigger, glow, size, and module open behavior.
+split_recommended: false
+depends_on: [ACD-089, ACD-434, ACD-439]
+unblocks: []
+acceptance_criteria:
+  - "Clicking the context ring, or pressing Enter or Space while it is focused, toggles the context status module as a corner-origin sprout anchored to the ring, with aria-expanded tracked."
+  - "Hovering the ring shows only a soft accent glow and does not open the module; the glow holds while the module is open."
+  - "The ring renders at 15px display size with no adjacent numeric token label; usage figures render inside the module."
+  - "The behavior is identical in the docked and floating chat mounts."
+  - "No WorkNodes, NodeSeeds, executable queues, final node manifests, or production build tasks are created."
+validation_surfaces:
+  - "python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits"
+  - "python3 scripts/pm-plan-index.py validate"
+risk_class: chat_header_contract_drift
+reasoning_tier: standard
+context_scope: assistant_chat_header
+implementation_surfaces:
+  - Plans/assistant-chat-design.md
+node_compile_hint:
+  mode: context_ring_click_sprout_and_glow
+  create_worknodes: false
+source_lineage:
+  - "Concepts/PMConcept7.html (PMConcept7 demo rev 9.2; source-lineage-only per Plans/usage-feature.md)"
+  - "Concepts/ChatGuiUpdates2.md (PM8 workstream and rev 4-9.2 ship notes; source-lineage-only)"
+preserved_exact_tokens:
+  - "15px"
+  - "aria-expanded"
+negative_constraints:
+  - "Hover alone must not open the context status module, and no token label renders beside the ring."
+  - "The module is an anchored transient popout; it must not re-introduce the retired detached usage pop-out (ACD-252)."
+compatibility_only_notes:
+  - "Slint portability: the ring glow renders as a precomputed halo/drop-shadow surface and the module as an opaque precomputed popup surface with translate/opacity/height animations via Slint property animations; no arbitrary-content backdrop blur, no SVG filters, and color math is precomputed rather than runtime-mixed."
+stale_retired_dispositions:
+  - "Hover-opened context module retired (see ACD-434 dispositions); click is the sole module-open gesture."
+  - "Beside-ring numeric token label retired; usage figures render inside the module."
+owner_boundary_notes:
+  - "ACD-434 owns the module's UsageRecord projection content and data contract; this unit owns the trigger, glow, size, and open/close presentation."
+owner_hints:
+  - Plans/assistant-chat-design.md
+```
+
+### ACD-442 - Header Chrome Menu Sprouts And Theme-Matched Popout Chrome
+
+```yaml
+plan_unit_id: ACD-442
+unit_type: requirement
+status: accepted
+owner_doc: Plans/assistant-chat-design.md
+canonical_text: >-
+  The chat header worktree menu, Context Lens popover, context status module, and
+  more-options menu are click-to-open corner-origin sprout popouts: click toggles, click
+  outside or picking an item closes with the same collapse, opening one header menu closes
+  the others, and `aria-expanded` is tracked on each trigger. Their popout chrome uses the
+  same surface contract as the model/mode selector popouts - surface-elevated fill, border
+  edge, radius-md corner, and elev-3 shadow - with glass themes sharing one plate rule with
+  the selector portals and retro zeroing the radius. The worktree trigger color is applied
+  through stylesheet rules only, with no inline style pinning, and worktree trigger hover
+  matches the Context Lens trigger hover in all themes.
+gui_related: true
+gui_classification_reason: Defines visible header menu open behavior and shared popout chrome.
+split_recommended: false
+depends_on: [ACD-439]
+unblocks: [ACD-443]
+acceptance_criteria:
+  - "Worktree menu, Context Lens popover, context status module, and more-options menu open on click as corner-origin sprouts; click outside or item pick closes; opening one header menu closes the others; aria-expanded is tracked on each trigger."
+  - "Header menu chrome uses the selector-popout surface contract (surface-elevated fill, border edge, radius-md corner, elev-3 shadow); glass themes share one plate rule with the selector portals and retro zeroes radius."
+  - "The worktree trigger color is CSS-only with no inline style pinning, and worktree trigger hover matches Context Lens trigger hover in all themes."
+  - "No WorkNodes, NodeSeeds, executable queues, final node manifests, or production build tasks are created."
+validation_surfaces:
+  - "python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits"
+  - "python3 scripts/pm-plan-index.py validate"
+risk_class: chat_header_contract_drift
+reasoning_tier: standard
+context_scope: assistant_chat_header
+implementation_surfaces:
+  - Plans/assistant-chat-design.md
+node_compile_hint:
+  mode: header_chrome_menu_sprouts_and_theme_matched_popout_chrome
+  create_worknodes: false
+source_lineage:
+  - "Concepts/PMConcept7.html (PMConcept7 demo rev 9.2; source-lineage-only per Plans/usage-feature.md)"
+  - "Concepts/ChatGuiUpdates2.md (PM8 workstream and rev 4-9.2 ship notes; source-lineage-only)"
+preserved_exact_tokens:
+  - "surface-elevated"
+  - "radius-md"
+  - "elev-3"
+  - "aria-expanded"
+negative_constraints:
+  - "Header menus must not open on hover, must not carry hardcoded radii or raw shadow values outside the shared chrome tokens, and must not pin trigger colors via inline styles."
+compatibility_only_notes:
+  - "Slint portability: header menus render as opaque precomputed popup surfaces sharing one precomputed chrome (fill, edge, corner radius, shadow) with the selector popouts, animated with translate/opacity/height Slint property animations; no arbitrary-content backdrop blur, no SVG filters, and color math is precomputed rather than runtime-mixed."
+stale_retired_dispositions:
+  - "Hover-opened header menus and hardcoded per-menu radii/shadows retired; all header menus share the click-to-open sprout and the selector-popout chrome contract."
+owner_boundary_notes:
+  - "Plans/FinalGUISpec.md owns app-wide theme tokens and glass plate recipes; this unit binds the chat header menus to those shared contracts."
+owner_hints:
+  - Plans/assistant-chat-design.md
+```
+
+### ACD-443 - Chat More-Options Kebab Menu
+
+```yaml
+plan_unit_id: ACD-443
+unit_type: requirement
+status: accepted
+owner_doc: Plans/assistant-chat-design.md
+canonical_text: >-
+  The docked chat header consolidates its standalone thread-management icon buttons into one
+  more-options kebab: a vertical-ellipsis inline-SVG button whose click sprout-opens a menu
+  listing Duplicate thread, Archive thread, Pop out, and Close chat as full-width rows with
+  icon plus label. The floating chat header kebab menu lists Cycle layout and Close chat. Of
+  these actions only Archive dispatches a cataloged command (`cmd.chat.archive`); Duplicate,
+  Pop out, Cycle layout, and Close remain surface affordances without new command
+  registrations. The kebab follows the header chrome menu sprout and chrome contract
+  (ACD-442) and tracks `aria-expanded`.
+gui_related: true
+gui_classification_reason: Defines the visible more-options kebab and its menu contents.
+split_recommended: false
+depends_on: [ACD-071, ACD-442]
+unblocks: []
+acceptance_criteria:
+  - "The docked chat header shows one vertical-ellipsis kebab instead of a row of standalone Duplicate/Archive/Pop out/Close icon buttons; its menu lists Duplicate thread, Archive thread, Pop out, and Close chat as full-width rows with icon plus label."
+  - "The floating chat header kebab menu lists Cycle layout and Close chat."
+  - "Archive dispatches `cmd.chat.archive`; Duplicate, Pop out, Cycle layout, and Close remain surface affordances with no new command registrations."
+  - "The kebab menu opens and closes per the ACD-442 sprout and chrome contract with aria-expanded tracked."
+  - "No WorkNodes, NodeSeeds, executable queues, final node manifests, or production build tasks are created."
+validation_surfaces:
+  - "python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits"
+  - "python3 scripts/pm-plan-index.py validate"
+risk_class: chat_header_contract_drift
+reasoning_tier: standard
+context_scope: assistant_chat_header
+implementation_surfaces:
+  - Plans/assistant-chat-design.md
+node_compile_hint:
+  mode: chat_more_options_kebab_menu
+  create_worknodes: false
+source_lineage:
+  - "Concepts/PMConcept7.html (PMConcept7 demo rev 9.2; source-lineage-only per Plans/usage-feature.md)"
+  - "Concepts/ChatGuiUpdates2.md (PM8 workstream and rev 4-9.2 ship notes; source-lineage-only)"
+preserved_exact_tokens:
+  - "Duplicate thread"
+  - "Archive thread"
+  - "Pop out"
+  - "Close chat"
+  - "Cycle layout"
+  - "cmd.chat.archive"
+negative_constraints:
+  - "Do not register new commands for Duplicate, Pop out, Cycle layout, or Close in this pass; only `cmd.chat.archive` is cataloged among the menu actions."
+  - "The kebab glyph is an inline SVG, not an emoji glyph."
+compatibility_only_notes:
+  - "Slint portability: the kebab menu renders as an opaque precomputed popup surface with translate/opacity/height animations via Slint property animations; no arbitrary-content backdrop blur, no SVG filters, and color math is precomputed rather than runtime-mixed."
+stale_retired_dispositions:
+  - "Docked chat header row of four standalone icon buttons (Duplicate thread, Archive thread, Pop out, Close chat) retired; the actions are hosted in the more-options kebab menu."
+owner_boundary_notes: []
+owner_hints:
+  - Plans/assistant-chat-design.md
+```
+
+### ACD-444 - Chats Rail Cleanup And Resize Collapse
+
+```yaml
+plan_unit_id: ACD-444
+unit_type: requirement
+status: accepted
+owner_doc: Plans/assistant-chat-design.md
+canonical_text: >-
+  The chat thread sidebar is labeled `Chats`, with the label rendered at the same size in
+  expanded and collapsed states so the title does not jump, and a compact vertically centered
+  new-thread control in the header row. The stream provenance banner is removed from thread
+  first paint, so the first painted row is the first user message; thread provenance remains
+  available through thread metadata and audit surfaces. Rail collapse is resize-driven, not a
+  button: there is no chevron collapse control, crossing the collapse width threshold toggles
+  collapsed chrome only, and the collapsed state neither locks the rail width nor disables
+  resize. Collapsed rows show a truncated title and hide status, timestamp, and summary,
+  while row border and glow take the thread-status color (role accent for working/unread,
+  muted for read/draft); active collapsed rows keep the glow plus a left accent bar. Expanded
+  selected threads show a tinted fill, an inset left accent bar, a hairline outer ring, and a
+  bolder title, with role colors carried to the bar and border. The docked and pop-out chat
+  mounts share the sidebar builder and behave identically.
+gui_related: true
+gui_classification_reason: Defines visible thread sidebar labeling, provenance, collapse, and selection behavior.
+split_recommended: false
+depends_on: [ACD-071]
+unblocks: []
+acceptance_criteria:
+  - "The thread sidebar label reads Chats at an unchanged size across expanded and collapsed states, with a compact vertically centered new-thread control."
+  - "No stream provenance banner renders in the thread; first paint is the first user message, and provenance stays reachable through thread metadata/audit surfaces."
+  - "There is no chevron collapse control; crossing the collapse width threshold toggles collapsed chrome only, without locking width or disabling resize."
+  - "Collapsed rows truncate the title, hide status/timestamp/summary, and carry the thread-status color on border and glow; active collapsed rows keep glow plus a left accent bar."
+  - "Expanded selected threads show tinted fill, inset left accent bar, hairline outer ring, and bolder title with role colors on bar and border, identically in docked and pop-out mounts."
+  - "No WorkNodes, NodeSeeds, executable queues, final node manifests, or production build tasks are created."
+validation_surfaces:
+  - "python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits"
+  - "python3 scripts/pm-plan-index.py validate"
+risk_class: thread_selector_ui
+reasoning_tier: standard
+context_scope: threads
+implementation_surfaces:
+  - Plans/assistant-chat-design.md
+  - Plans/FinalGUISpec.md
+node_compile_hint:
+  mode: chats_rail_cleanup_and_resize_collapse
+  create_worknodes: false
+source_lineage:
+  - "Concepts/PMConcept7.html (PMConcept7 demo rev 9.2; source-lineage-only per Plans/usage-feature.md)"
+  - "Concepts/ChatGuiUpdates2.md (PM8 workstream and rev 4-9.2 ship notes; source-lineage-only)"
+preserved_exact_tokens:
+  - "Chats"
+  - "thread-status"
+negative_constraints:
+  - "Do not render a provenance banner as thread content, and do not re-introduce a collapse button or a collapsed state that locks rail width or disables resize."
+compatibility_only_notes:
+  - "Slint portability: rail rows, accent bars, and glows render as opaque precomputed surfaces with translate/opacity/height animations via Slint property animations, and collapse chrome toggles on an observed width property; no arbitrary-content backdrop blur, no SVG filters, and color math is precomputed rather than runtime-mixed."
+stale_retired_dispositions:
+  - "Sidebar HISTORY label retired; the rail is labeled Chats."
+  - "Chevron collapse button retired; collapse is resize-driven content-chrome toggling."
+  - "Stream provenance banner (Thread created from ... injected context) retired from thread first paint; provenance remains in thread metadata and audit surfaces."
+owner_boundary_notes:
+  - "Plans/FinalGUISpec.md F3-469 owns chats-rail geometry, pixel thresholds, and per-theme presentation skins; this unit owns the chat-behavior semantics (label, provenance removal, resize-driven collapse, selection and status disclosure)."
+owner_hints:
+  - Plans/assistant-chat-design.md
 ```

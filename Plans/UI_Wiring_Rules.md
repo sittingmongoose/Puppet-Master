@@ -21,9 +21,9 @@ ContractRef: Primitive:UICommand, ContractName:Plans/Contracts_V0.md#7-uicommand
 
 ### 0.1 GUI concept reconciliation input
 
-When a GUI concept artifact is included in a reconciliation packet, `Concepts/PuppetMasterDashComp.html` is the primary concept input for wiring review until superseded by a newer explicit concept artifact in the same packet. The path token `/PuppetMasterDashComp.html` is evidence lineage, not a live Plans owner path; UI wiring canon remains in this document, GUI product/layout canon remains in `Plans/FinalGUISpec.md`, and command canon remains in `Plans/UI_Command_Catalog.md`.
+When a GUI concept artifact is included in a reconciliation packet, `Concepts/PMConcept7.html` (PMConcept7 demo rev 9.2 lineage, built by `Concepts/pm7-tools/build_pm7.py` from `Concepts/pm6-build` parts) is the primary concept input for wiring review, with `Concepts/ChatGuiUpdates2.md` as its concept change ledger, until superseded by a newer explicit concept artifact in the same packet. The path tokens `/PMConcept7.html` and `/ChatGuiUpdates2.md` are evidence lineage, not live Plans owner paths; UI wiring canon remains in this document, GUI product/layout canon remains in `Plans/FinalGUISpec.md`, and command canon remains in `Plans/UI_Command_Catalog.md`.
 
-`Concepts/PMConcept.html` is likewise a GUI concept-lineage input when cited by a transfer source; `/PMConcept.html` drives reconciliation targeting and wiring review but MUST NOT be copied verbatim into canon or treated as a live owner path.
+`Concepts/PuppetMasterDashComp.html` and `Concepts/PMConcept.html` are prior concept inputs retained as historical concept lineage when cited by a transfer source; the path tokens `/PuppetMasterDashComp.html` and `/PMConcept.html` remain evidence lineage for reconciliation targeting of their own packets and MUST NOT be copied verbatim into canon or treated as live owner paths.
 
 For the 2026-07-02 GUI/PMConcept readiness repair, `Plans/PMConcept_Control_Reconciliation.json` is the machine-readable concept reconciliation artifact and `Plans/Wiring_Matrix.production.json` is the schema-validated production wiring artifact. PMConcept controls without production command/state/handler/receipt/test coverage remain concept lineage only. PMConcept local/demo/mock data is `concept_fixture_only` unless a canonical owner doc replaces it with a real projected state contract.
 
@@ -41,7 +41,7 @@ The wiring layer remains deliberately small: rows key off `ui_command_id`, handl
 
 Runtime action wiring reconciles old `cmd.graph` / `cmd.graph.*` recovery actions to canonical `cmd.runtime` / `cmd.runtime.*` command contracts. Package, lane, and `/package/lane` promotion controls must dispatch through cataloged command IDs rather than ad hoc UI confirms or untyped wiring shortcuts.
 
-Reserved slash-command override policy must resolve into one command-catalog rule: real `cmd.chat`, `cmd.chat.*`, `cmd.orchestrator`, and `cmd.orchestrator.*` IDs must be cataloged before UI wiring lands, and referenced-but-uncataloged IDs such as `cmd.chat.run_user_command`, `cmd.orchestrator.switch_tab`, and `cmd.chat.branch_from_restore` remain gate failures until cataloged, aliased, or retired.
+Reserved slash-command override policy must resolve into one command-catalog rule: real `cmd.chat`, `cmd.chat.*`, `cmd.orchestrator`, and `cmd.orchestrator.*` IDs must be cataloged before UI wiring lands. Ghost-command validation is derived fresh from current normative `cmd.*` references, current catalog membership, and current production handler/reverse coverage on every check; any referenced-but-uncataloged, multiply registered, or handlerless ID fails closed. This document does not maintain an example list whose status can become stale.
 
 Runtime-artifact wiring consumes `Plans/Runtime_Artifacts_Panel.md` and `/Runtime_Artifacts_Panel.md` for envelope ownership; per-family behavior and bridge-governance semantics are verified by owner references, not by copying runtime-artifact payload rules into wiring rows.
 
@@ -89,7 +89,7 @@ acceptance_criteria:
   - Product layout, command catalog membership, runtime event schemas, storage projections, and evidence schemas remain with their owner docs.
 validation_surfaces:
   - python3 scripts/pm-plans-verify.py lint-contractrefs
-  - python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-001-standardize-plans
+  - python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits
 risk_class: owner_drift
 reasoning_tier: standard
 context_scope: ui_wiring
@@ -303,6 +303,7 @@ unblocks: []
 acceptance_criteria:
   - Verification runs without paid UI tooling or manual inspection.
   - GATE-010 failures block progression.
+  - Ghost-command findings are derived from current normative command references, catalog rows, and production handler/reverse coverage; no hand-maintained example list can override the live result.
   - Evidence bundles produced by checks conform to Plans/evidence.schema.json.
 validation_surfaces:
   - GATE-010
@@ -593,3 +594,73 @@ No WorkNodes, NodeSeeds, executable build tasks, Spec Lock refresh, shard regene
 This addendum repairs non-runtime UI wiring rows without creating WorkNodes, implementation files, runtime artifacts, or PNC-019 evidence.
 
 - Repairs `sfk-58d6d13ed1139428d3f6a692`: `handler_location` grammar is `{crate_root}::{module_path}::{function_name}`. Pre-implementation rows use `handler_status = planned` with `owner_doc_ref`; implementation-ready rows require `handler_status = resolved` and a real module path. Missing handler fallback is `handler_status = missing` and blocks buildability rather than inventing a source path.
+
+## PMConcept7 Home Workspace wiring rules — 2026-08-04
+
+Home Workspace is a reconciliation input for UI wiring. Every visible menu item,
+grab handle, Browser action, File Manager Open-in-Panel action, drop target, and
+semantic resize endpoint has exactly one production wiring row. Preview movement
+and resize are local projection updates; only semantic drop/resize end dispatches
+the typed command and persists the committed layout once.
+
+Popup/flyout disclosure controls are explicitly view-local and are recorded in the
+control census with a `view_only` disposition rather than fabricated command rows.
+The compact Home popup has exactly three top-level rows; its Panel 1 through Panel 4
+leaf targets, each surface menu leaf, File Manager target leaf, terminal add/split
+leaf, drop endpoint, and committed resizer endpoint resolve to one typed production
+row and one executable test. Disabled rows project the owner-provided reason and
+dispatch zero commands.
+
+Rows must prove the command ID, typed payload, expected layout/terminal revision,
+correlation and idempotency values, projected availability, disabled reason,
+effect/event or no-persist disposition, explicit invocation path, focus return,
+keyboard access, and no unexpected event. The production matrix is the concrete
+coverage artifact; this document does not re-own layout or event field schemas.
+Home rows cite `Plans/FinalGUISpec.md`, `Plans/FileManager.md`,
+`Plans/Section15_MVP_Promoted_Features_Spec.md`, and
+`Plans/home_workspace_layout.schema.json` as appropriate.
+
+### UIW-010 - Home Control Census And Semantic Commit Wiring
+
+```yaml
+plan_unit_id: UIW-010
+unit_type: requirement
+status: accepted
+owner_doc: Plans/UI_Wiring_Rules.md
+canonical_text: Every Home control, submenu leaf, grab handle, drop target, resizer, and disabled state is source-hashed and resolves to a selector, state selector, canonical command or view-only disposition, event/receipt, handler, production row, and executable test with zero omissions.
+gui_related: true
+gui_classification_reason: This unit owns concrete UI-to-command wiring completeness for the Home workspace.
+split_recommended: false
+depends_on: [UIW-009, F3-501, UCC-144, CV-323]
+unblocks: []
+acceptance_criteria:
+- Disclosure-only menu/flyout actions are view_only; each selected leaf maps to exactly one command and exact result/event family.
+- Pointermove and live resize preview have no command/event/persistence mapping; one changed pointer-up/drop has one semantic mapping.
+- Disabled terminal cap and Collapse states carry exact accessible reasons and zero dispatch.
+- The source-hashed control census reports unresolved_count=0 and every production row names an executable test, not declarative prose alone.
+validation_surfaces:
+- python3 scripts/pm-validate-wiring-matrix.py
+- node Concepts/pm7-tools/verify/home_workspace_matrix.mjs
+- python3 scripts/pm-plan-index.py validate
+risk_class: home_wiring_orphan
+reasoning_tier: standard
+context_scope: home_control_wiring
+implementation_surfaces: [Plans/UI_Wiring_Rules.md, Plans/Wiring_Matrix.production.json, Plans/PMConcept7_Home_Workspace_Control_Reconciliation.json]
+node_compile_hint:
+  mode: home_control_wiring
+  create_worknodes: false
+source_lineage:
+- PMConcept7_Home_Workspace_Audit_Packet_v1/shared/04_COMMAND_EVENT_STORAGE_WIRING.md
+preserved_exact_tokens: [view_only, unresolved_count, pointermove, disabled reason]
+negative_constraints:
+- Do not count a declarative wiring row as executable test proof.
+- Do not fabricate commands for disclosure-only controls.
+compatibility_only_notes: []
+stale_retired_dispositions:
+- The prior non-census Home reconciliation summary is superseded by the source-hashed control census.
+owner_hints: [Plans/UI_Wiring_Rules.md, Plans/Wiring_Matrix.production.json]
+```
+
+## PMConcept7 Cozy Shelves Integration Addendum - 2026-07-28
+
+§0.1 update: `Concepts/PMConcept7.html` remains the primary concept input for wiring review, now carrying the integrated Cozy Shelves rail panels (File Manager, Search, Source Control, GitHub Actions, Docker, Testing, Agents, Runtime Artifacts per `Plans/FinalGUISpec.md` F3-497) and the Debug & Run panel with its fleshed bottom Debug tab (Run & Debug Revival, F3-482..F3-496). `Plans/CozyShelves_PM7_Control_Reconciliation.json` preserves the historical 2026-07-29 integrated-panel census, but it is not currentness evidence after the PM6/PM7 rebaseline; a true re-census is required before restoring any 100% command-coverage claim. `Plans/CozyShelves_Control_Reconciliation.json` remains the concept-phase census of the source-lineage `Concepts/rail-concepts/**` files and is current at its relocated `QwenRailConcepts/**` paths. Independently of the deferred PM7 census, the catalog and wiring rows retain the named command dispositions: the `cmd.run_debug.*` family is registered in the Run & Debug Revival Addendum and wired in `Plans/Wiring_Matrix.production.json` (rows `catalog.run_debug_*`), and `cmd.chat.open` is recorded as a compatibility alias of `cmd.chat.open_thread` (exclusions-registered, no second primary row). This note creates no WorkNodes, NodeSeeds, executable queues, implementation files, runtime artifacts, generated wiring rows, production build tasks, final manifests, or PNC-019 receipts.

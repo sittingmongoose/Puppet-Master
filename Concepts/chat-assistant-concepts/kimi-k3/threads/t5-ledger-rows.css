@@ -1,0 +1,153 @@
+/* ============================================================================
+   Kimi K3 — T5 Ledger Rows presentation (scoped [data-k3-thread="t5"]).
+   The transcript as a dense bookkeeping ledger:
+     - a 64px role-tag gutter at the left ("YOU" / "ASST" via the message
+       role attribute);
+     - full-bleed hairline row separators between messages;
+     - dotted leaders running from activity stage labels to their durations;
+     - mono meta at 50% opacity;
+     - work chips ruled like ledger total rows.
+   Token-driven so all 8 themes render complete; status rides weight / tint —
+   never a colored left-side accent border.
+
+   Geometry (compact list padding 8px 14px):
+     gutter:        list-x 0..64           (role-tag column)
+     row content:   list-x 64..            (message prose + payloads)
+   ========================================================================== */
+
+[data-k3-thread="t5"] {
+  height: 100%;
+  min-height: 0;
+  display: flex;
+  flex-direction: column;
+}
+[data-k3-thread="t5"] .k3t-root {
+  flex: 1 1 auto;
+  min-height: 0;
+}
+
+/* ---- the list: dense rows, hairline separators --------------------------- */
+[data-k3-thread="t5"] .k3t-list {
+  gap: 0;
+  padding: 4px 0 8px;
+}
+
+/* ---- each message is a ledger row: 64px role-tag gutter + content ---------
+   minmax(0,1fr) (not bare 1fr) so the content track can shrink below its
+   min-content width — the nowrap dotted leaders would otherwise force the
+   column (and with it the activity/work cards) wider than a 520px viewport. */
+[data-k3-thread="t5"] .k3t-msg {
+  position: relative;
+  display: grid;
+  grid-template-columns: 64px minmax(0, 1fr);
+  column-gap: 12px;
+  align-items: start;
+  padding: 8px 14px 8px 0;
+  border-bottom: var(--border-width, 1px) solid var(--border-light);
+}
+[data-k3-thread="t5"] .k3t-list > .k3t-msg:last-child { border-bottom: 0; }
+
+/* ---- role-tag gutter ("YOU" / "ASST") ------------------------------------- */
+[data-k3-thread="t5"] .k3t-msg[data-role]::before {
+  grid-column: 1;
+  align-self: start;
+  padding: 2px 0;
+  text-align: center;
+  font-family: var(--mono-font, monospace);
+  font-size: var(--fs-2xs, 10px);
+  font-weight: 700;
+  letter-spacing: .06em;
+  color: var(--text-muted);
+  background: var(--surface-elevated);
+  border-right: var(--border-width, 1px) solid var(--border-light);
+  user-select: none;
+}
+[data-k3-thread="t5"] .k3t-msg[data-role="user"]::before { content: "YOU"; }
+[data-k3-thread="t5"] .k3t-msg[data-role="assistant"]::before { content: "ASST"; }
+
+/* ---- prose column: dense, mono meta -------------------------------------- */
+[data-k3-thread="t5"] .k3t-msg-body {
+  grid-column: 2;
+  font-size: var(--fs-sm, 12px);
+  line-height: 1.5;
+  color: var(--text-primary);
+}
+[data-k3-thread="t5"] .k3t-msg[data-role="user"] .k3t-msg-body { color: var(--text-secondary); }
+
+/* hover row + payloads share the prose column */
+[data-k3-thread="t5"] .k3t-msg-hover,
+[data-k3-thread="t5"] .k3t-card,
+[data-k3-thread="t5"] .k3t-stage-rail { grid-column: 2; }
+
+/* mono meta at 50% opacity */
+[data-k3-thread="t5"] .k3t-hover-meta,
+[data-k3-thread="t5"] .k3t-meta-text,
+[data-k3-thread="t5"] .k3t-stage-dur {
+  font-family: var(--mono-font, monospace);
+  opacity: .5;
+}
+
+/* ---- dotted leaders in activity stage rows (label ... duration) -----------
+   The leader dots are decorative overflow: the row must clip them rather
+   than grow to fit, or they would widen the content track. */
+[data-k3-thread="t5"] .k3t-stage {
+  align-items: baseline;
+  gap: 0;
+  min-width: 0;
+  overflow: hidden;
+}
+[data-k3-thread="t5"] .k3t-stage-label {
+  flex: 0 1 auto;
+  min-width: 0;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+[data-k3-thread="t5"] .k3t-stage-label::after {
+  content: " ........................................................................";
+  margin-left: 4px;
+  letter-spacing: 2px;
+  color: var(--text-muted);
+  opacity: .4;
+}
+[data-k3-thread="t5"] .k3t-stage-dur {
+  flex: 0 0 auto;
+  margin-left: auto;
+  white-space: nowrap;
+}
+
+/* ---- work chip: ruled like a ledger total row ----------------------------- */
+[data-k3-thread="t5"] .k3t-work-chip {
+  margin-top: 6px;
+  padding: 6px 10px;
+  background: var(--surface);
+  border: var(--border-width, 1px) solid var(--border-light);
+  border-top: var(--border-width, 2px) double var(--border);
+  border-radius: var(--radius-xs, 2px);
+}
+[data-k3-thread="t5"] .k3t-work-chip .k3t-rowhead { font-family: var(--mono-font, monospace); }
+
+/* ---- thread-level work zone + live region align to the content column ---- */
+[data-k3-thread="t5"] .k3t-endzone { padding: 0 14px 12px 64px; }
+[data-k3-thread="t5"] .k3t-live {
+  margin: 0 14px 12px 64px;
+  padding: 6px 10px;
+  background: var(--surface);
+  border: var(--border-width, 1px) solid var(--border-light);
+  border-radius: var(--radius-xs, 2px);
+  font-family: var(--mono-font, monospace);
+}
+
+/* ---- hover row: tight, mono ------------------------------------------------ */
+[data-k3-thread="t5"] .k3t-msg-hover {
+  margin-top: 3px;
+  font-size: var(--fs-2xs, 10px);
+}
+
+/* focus tint rides the row background, never an accent border */
+[data-k3-thread="t5"] .k3t-msg.is-focused {
+  margin: 0;
+  padding: 8px 14px 8px 0;
+  background: var(--accent-soft);
+  border-radius: 0;
+}

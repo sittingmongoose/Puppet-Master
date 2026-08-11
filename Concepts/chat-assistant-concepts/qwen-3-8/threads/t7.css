@@ -1,0 +1,439 @@
+/* T7 · aloft — every surface lives in a horizontal chip band ABOVE the
+    transcript; a chip grows into a full-width card when opened (grid-rows),
+    and the transcript below is pure conversation. At narrow widths the band
+    reads as a floating dock card lifted off the transcript. */
+
+.pmq-thread[data-structure="aloft"] {
+  container-type: inline-size;
+  container-name: pmqt7;
+}
+
+/* ---- the band ---- */
+
+.pmq-t7 .pmq-surfaceband {
+  position: relative;
+  z-index: 2;
+  flex-direction: row;
+  flex-wrap: wrap;
+  align-content: flex-start;
+  align-items: flex-start;
+  gap: 7px;
+  max-height: 38%;
+  padding: 11px 14px 12px;
+  background: linear-gradient(to bottom,
+    color-mix(in srgb, var(--surface-elevated) 55%, transparent),
+    color-mix(in srgb, var(--surface-elevated) 18%, transparent));
+  border-bottom: 1px solid var(--border);
+  /* ambient depth edge under the band, theme-driven */
+  box-shadow:
+    inset 0 -8px 14px -10px color-mix(in srgb, var(--background-deep) 70%, transparent),
+    0 1px 0 color-mix(in srgb, var(--surface-elevated) 35%, transparent);
+}
+
+/* ---- chips ---- */
+
+.pmq-t7 .pmq-surfaceband .pmq-surface {
+  flex: 0 1 auto;
+  min-width: 0;
+  max-width: 100%;
+  border-radius: var(--radius-pill);
+  background: var(--surface);
+  transition:
+    border-color var(--dur-fast) var(--ease-out),
+    box-shadow var(--dur-fast) var(--ease-out),
+    border-radius var(--dur-med) var(--ease-out),
+    transform var(--dur-fast) var(--ease-spring);
+}
+
+.pmq-t7 .pmq-surfaceband .pmq-surface:hover {
+  transform: translateY(-1px);
+  border-color: var(--border-strong);
+  box-shadow: var(--elev-hover);
+}
+
+/* an opened chip grows into a card spanning the band */
+.pmq-t7 .pmq-surfaceband .pmq-surface:has(.pmq-gw.pmq-open) {
+  flex: 1 1 100%;
+  border-radius: var(--radius-lg);
+}
+
+/* always-live cards (artifacts, browser) share rows instead */
+.pmq-t7 .pmq-surfaceband .pmq-surface:has(.pmq-surface-head-static) {
+  flex: 1 1 250px;
+  border-radius: var(--radius-lg);
+}
+
+.pmq-t7 .pmq-surfaceband .pmq-surface-head {
+  padding: 5px 12px;
+  gap: 7px;
+}
+
+.pmq-t7 .pmq-surfaceband .pmq-surface-head > .pmq-ico:first-child { width: 13px; height: 13px; }
+
+.pmq-t7 .pmq-surfaceband .pmq-surface-title { font-size: var(--fs-xs); }
+
+.pmq-t7 .pmq-surfaceband .pmq-goal-status { padding: 1px 8px; }
+
+.pmq-t7 .pmq-surfaceband .pmq-todo-count,
+.pmq-t7 .pmq-surfaceband .pmq-sg-counts { font-size: var(--fs-2xs); }
+
+.pmq-t7 .pmq-surfaceband .pmq-gw {
+  transition: grid-template-rows var(--dur-med) var(--ease-gentle-overshoot);
+}
+
+.pmq-t7 .pmq-surfaceband .pmq-gw > .pmq-gwi {
+  opacity: 1;
+  visibility: visible;
+  transition: opacity var(--dur-med) var(--ease-out) 60ms, visibility 0s linear 0s;
+}
+
+.pmq-t7 .pmq-surfaceband .pmq-gw:not(.pmq-open) > .pmq-gwi {
+  opacity: 0;
+  visibility: hidden;
+  transition: opacity var(--dur-fast) var(--ease-out), visibility 0s linear var(--dur-fast);
+}
+
+/* ---- narrow: the aloft band becomes a floating dock card ---- */
+
+@container pmqt7 (max-width: 699px) {
+  .pmq-t7 .pmq-surfaceband {
+    margin: 10px 12px 0;
+    padding: 10px 12px 12px;
+    border: 1px solid var(--border);
+    border-radius: var(--radius-lg);
+    background: var(--surface-elevated);
+    box-shadow:
+      var(--elev-2),
+      0 16px 28px -22px color-mix(in srgb, var(--background-deep) 92%, transparent),
+      inset 0 1px 0 color-mix(in srgb, var(--text-primary) 6%, transparent);
+  }
+}
+
+/* ---- the pure transcript below ---- */
+
+.pmq-t7 .pmq-stream {
+  position: relative;
+  z-index: 1;
+  padding: 26px 22px 30px;
+  gap: 15px;
+  max-width: 860px;
+  width: 100%;
+  margin: 0 auto;
+}
+
+.pmq-t7-role {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  margin: 2px 0 6px 13px;
+  font-family: var(--display-font);
+  font-size: 9.5px;
+  font-weight: 800;
+  letter-spacing: 0.17em;
+  text-transform: uppercase;
+  color: var(--text-faint);
+}
+
+.pmq-t7-role::before {
+  content: "";
+  width: 16px;
+  height: 2px;
+  background: color-mix(in srgb, var(--accent-primary) 50%, transparent);
+}
+
+.pmq-t7 .pmq-msg.pmq-user .pmq-msg-inner { align-items: flex-end; }
+
+.pmq-t7 .pmq-msg.pmq-user .pmq-body {
+  max-width: 82%;
+  font-size: var(--fs-md);
+  line-height: 1.55;
+}
+
+.pmq-t7 .pmq-msg.pmq-user .pmq-msg-hover { justify-content: flex-end; }
+
+.pmq-t7 .pmq-msg.pmq-assistant .pmq-body {
+  max-width: 70ch;
+  font-size: var(--fs-md);
+  line-height: 1.66;
+}
+
+/* ---- live-count chips ---- */
+
+/* the kit base rule forces band surfaces to width:100%; chips sit inline.
+   The head's width:100% contributes nothing to the chip's intrinsic size, so
+   let it size to content and still fill a grown (full-width) chip. */
+/* container-type:inline-size on .pmq-surface makes its size content-blind;
+   chips must size to their label instead */
+.pmq-t7 .pmq-surfaceband .pmq-t7-chip {
+  width: max-content;
+  max-width: 100%;
+  container-type: normal;
+}
+
+.pmq-t7 .pmq-surfaceband .pmq-t7-chip > .pmq-surface-head {
+  width: auto;
+  min-width: 100%;
+}
+
+.pmq-t7 .pmq-surfaceband .pmq-t7-chip .pmq-surface-title {
+  font-family: var(--mono-font);
+  font-size: var(--fs-2xs);
+  font-weight: 600;
+  letter-spacing: 0.02em;
+  font-variant-numeric: tabular-nums;
+}
+
+/* ---- chip cards: an opened chip grows to a full-width band card ---- */
+
+.pmq-t7 .pmq-surfaceband .pmq-t7-chipwrap {
+  transition: grid-template-rows var(--dur-med) var(--ease-gentle-overshoot);
+}
+
+.pmq-t7 .pmq-surfaceband .pmq-t7-chipcard {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  padding: 9px 10px 10px;
+}
+
+/* builder cards nested in a chip card read as cards, not dock chips */
+.pmq-t7 .pmq-surfaceband .pmq-t7-chipcard .pmq-surface {
+  flex: none;
+  width: 100%;
+  border-radius: var(--radius-md);
+}
+
+.pmq-t7 .pmq-surfaceband .pmq-t7-chipcard .pmq-surface:hover {
+  transform: none;
+  box-shadow: var(--elev-1);
+}
+
+.pmq-t7 .pmq-surfaceband .pmq-t7-chip .pmq-surface-head { min-height: 26px; }
+
+/* ---- questionnaire dock: numbered chips + the active chip's card ---- */
+
+.pmq-t7-quest {
+  position: relative;
+  z-index: 1;
+  width: 100%;
+  max-width: min(100%, 800px);
+  margin: 0 auto;
+}
+
+.pmq-t7-qrow {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: flex-start;
+  gap: 7px;
+}
+
+.pmq-t7-qchip {
+  flex: 0 0 auto;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 26px;
+  height: 26px;
+  border: 1px solid var(--border);
+  border-radius: var(--radius-pill);
+  background: var(--surface);
+  color: var(--text-faint);
+  font-family: var(--mono-font);
+  font-size: var(--fs-2xs);
+  font-weight: 700;
+  font-variant-numeric: tabular-nums;
+  transition:
+    border-color var(--dur-fast) var(--ease-out),
+    background-color var(--dur-fast) var(--ease-out),
+    color var(--dur-fast) var(--ease-out),
+    box-shadow var(--dur-fast) var(--ease-out),
+    transform var(--dur-fast) var(--ease-spring);
+}
+
+.pmq-t7-qchip:hover {
+  border-color: var(--border-strong);
+  color: var(--text-secondary);
+  transform: translateY(-1px);
+}
+
+/* answered = filled */
+.pmq-t7-qchip.pmq-answered {
+  background: var(--accent-soft);
+  border-color: color-mix(in srgb, var(--accent-primary) 45%, transparent);
+  color: var(--accent-primary);
+}
+
+.pmq-t7-qchip.pmq-here {
+  border-color: var(--accent-primary);
+  color: var(--text-primary);
+  box-shadow: 0 0 0 3px var(--accent-glow);
+  transform: translateY(-1px) scale(1.06);
+}
+
+.pmq-t7-qchip.pmq-here.pmq-answered { color: var(--accent-primary); }
+
+/* the active chip, grown: full-width card row inside the dock */
+.pmq-t7 .pmq-t7-qgrow {
+  flex: 1 1 100%;
+  max-width: 100%;
+  transition: grid-template-rows var(--dur-med) var(--ease-out);
+}
+
+.pmq-t7-qcard {
+  border: 1px solid var(--border-strong);
+  border-radius: var(--radius-lg);
+  background: var(--surface-elevated);
+  box-shadow: var(--elev-2);
+  overflow: hidden;
+}
+
+.pmq-t7-qcard-head {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding: 8px 8px 8px 12px;
+  border-bottom: 1px solid var(--border);
+  font-family: var(--display-font);
+  font-size: var(--fs-xs);
+  font-weight: 800;
+  letter-spacing: 0.05em;
+  color: var(--text-secondary);
+}
+
+.pmq-t7-qcard-head > .pmq-ico { width: 13px; height: 13px; color: var(--accent-warning); flex: none; }
+
+.pmq-t7-qnum { display: inline-grid; font-variant-numeric: tabular-nums; }
+.pmq-t7-qnum > * { grid-area: 1 / 1; }
+
+.pmq-t7-qcancel { margin-left: auto; }
+
+.pmq-t7-qbody {
+  display: flex;
+  flex-direction: column;
+  gap: 9px;
+  padding: 11px 12px;
+}
+
+.pmq-t7-qprompt {
+  font-size: var(--fs-md);
+  font-weight: 700;
+  line-height: 1.45;
+  color: var(--text-primary);
+}
+
+.pmq-t7-qoptional {
+  margin-left: 6px;
+  font-size: var(--fs-2xs);
+  font-weight: 700;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--text-faint);
+}
+
+/* options as dock rows */
+.pmq-t7-qopts { display: flex; flex-direction: column; gap: 6px; }
+
+.pmq-t7-qopt {
+  display: flex;
+  align-items: center;
+  gap: 9px;
+  width: 100%;
+  min-height: 30px;
+  padding: 5px 11px;
+  border: 1px solid var(--border);
+  border-radius: var(--radius-md);
+  background: var(--surface);
+  color: var(--text-secondary);
+  font-size: var(--fs-sm);
+  text-align: left;
+  transition:
+    border-color var(--dur-fast) var(--ease-out),
+    background-color var(--dur-fast) var(--ease-out),
+    color var(--dur-fast) var(--ease-out),
+    transform var(--dur-fast) var(--ease-spring);
+}
+
+.pmq-t7-qopt:hover {
+  border-color: var(--border-strong);
+  background: var(--hover-fill);
+  color: var(--text-primary);
+  transform: translateY(-1px);
+}
+
+.pmq-t7-qopt.pmq-on {
+  border-color: color-mix(in srgb, var(--accent-primary) 55%, transparent);
+  background: var(--accent-softer);
+  color: var(--text-primary);
+}
+
+.pmq-t7-qmark {
+  position: relative;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 14px;
+  height: 14px;
+  flex: none;
+  border: 1.5px solid var(--border-strong);
+  border-radius: var(--radius-pill);
+  transition: border-color var(--dur-fast) var(--ease-out);
+}
+
+.pmq-t7-qopt.pmq-on .pmq-t7-qmark { border-color: var(--accent-primary); }
+
+.pmq-t7-qmark::after {
+  content: "";
+  width: 6px;
+  height: 6px;
+  border-radius: 50%;
+  background: var(--accent-primary);
+  transform: scale(0);
+  transition: transform var(--dur-fast) var(--ease-spring);
+}
+
+.pmq-t7-qopt.pmq-on .pmq-t7-qmark::after { transform: none; }
+
+.pmq-t7-qmark:has(.pmq-ico)::after { display: none; }
+
+.pmq-t7-qmark .pmq-ico {
+  width: 10px;
+  height: 10px;
+  color: var(--accent-primary);
+  opacity: 0;
+  transform: scale(0.5);
+  transition: opacity var(--dur-fast) var(--ease-out), transform var(--dur-fast) var(--ease-spring);
+}
+
+.pmq-t7-qopt.pmq-on .pmq-t7-qmark .pmq-ico { opacity: 1; transform: none; }
+
+.pmq-t7-qfree {
+  width: 100%;
+  min-height: 64px;
+  resize: vertical;
+  padding: 8px 10px;
+  border: 1px solid var(--border);
+  border-radius: var(--radius-md);
+  background: var(--surface);
+  font-size: var(--fs-sm);
+  line-height: 1.5;
+  transition: border-color var(--dur-fast) var(--ease-out), box-shadow var(--dur-fast) var(--ease-out);
+}
+
+.pmq-t7-qfree:focus {
+  outline: none;
+  border-color: var(--accent-primary);
+  box-shadow: 0 0 0 3px var(--accent-glow);
+}
+
+/* footer actions, right-aligned */
+.pmq-t7-qfoot {
+  display: flex;
+  justify-content: flex-end;
+  gap: 8px;
+  padding: 9px 12px;
+  border-top: 1px solid var(--border);
+  background: color-mix(in srgb, var(--surface-sunken) 55%, transparent);
+}
+
+/* .pmq-btn's display overrides the UA [hidden] rule; restore it here */
+.pmq-t7-qfoot [hidden] { display: none; }

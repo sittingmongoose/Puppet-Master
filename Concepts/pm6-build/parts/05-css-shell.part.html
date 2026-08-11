@@ -27,11 +27,27 @@
       align-items: center;
       padding: 0 var(--md);
       gap: var(--lg);
+      min-width: 0; /* don’t let min-content blow past the shell */
+      width: 100%;
+      max-width: 100%;
+      box-sizing: border-box;
       font-family: var(--display-font);
       font-weight: 700;
       font-size: 14px;
+      position: relative;
+      z-index: 50; /* menus/sprouts must paint above .main-area */
+      overflow: visible;
     }
-    .title-bar .app-name { color: var(--text-primary); }
+    .title-bar .app-name {
+      color: var(--text-primary);
+      white-space: nowrap;
+      flex: 0 0 auto;
+      margin-inline-start: 0; /* inset comes only from title-bar padding */
+    }
+    /* Left cluster: brand + project never shrink; gap stays title-bar gap */
+    .title-bar #projectMenuWrap {
+      flex: 0 0 auto;
+    }
     .title-bar .project-dropdown {
       display: flex;
       align-items: center;
@@ -43,17 +59,98 @@
       cursor: pointer;
       font-family: var(--body-font);
       font-size: 13px;
+      flex: 0 0 auto;
     }
-    .title-bar .title-spacer { flex: 1; }
+    /* Project trigger: labeled full mode vs 32×32 folder icon */
+    .title-bar #projectMenuWrap .pm6-tb-project-ico {
+      display: none;
+      width: 16px;
+      height: 16px;
+      flex-shrink: 0;
+    }
+    .title-bar #projectMenuWrap[data-mode="icon"] .pm6-tb-menu-trigger {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      width: 32px;
+      height: 32px;
+      padding: 0;
+      gap: 0;
+      box-sizing: border-box;
+    }
+    .title-bar #projectMenuWrap[data-mode="icon"] #projectMenuLabel,
+    .title-bar #projectMenuWrap[data-mode="icon"] .pm6-tb-project-chevron {
+      display: none;
+    }
+    .title-bar #projectMenuWrap[data-mode="icon"] .pm6-tb-project-ico {
+      display: block;
+    }
+    .title-bar .title-spacer { flex: 1; } /* legacy; unused when notify-slot present */
+    .title-bar .notify-slot {
+      flex: 0 0 auto;
+      --rs-stack-w: 248px;
+      min-width: 72px;
+      width: var(--rs-stack-w);
+      max-width: 248px;
+      height: 32px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      position: relative;
+      /* Sit just after page tabs with a modest nudge — not ml:auto (rev 9.4
+         parked it in the far-right search/theme cluster). */
+      margin: 0 var(--xs, 2px) 0 24px;
+      z-index: 45;
+    }
     .title-bar .page-tabs {
       display: flex;
       align-items: center;
-      gap: var(--sm);
-      margin-left: 3rem;
+      gap: 2px;
+      margin-left: var(--md);
       font-size: 12px;
+      flex: 0 0 auto;
+      min-width: max-content;
+      position: relative;
+    }
+    .title-bar .page-tabs .page-tab.is-overflow {
+      display: none !important;
+    }
+    .title-bar .pm6-tb-pages-more {
+      flex: 0 0 auto;
+      position: relative;
+      margin-left: 2px;
+      z-index: 60; /* above notify/search slots; menu escapes below bar */
+    }
+    .title-bar .pm6-tb-pages-more[hidden] {
+      display: none !important;
+    }
+    .title-bar .pm6-tb-pages-more-btn {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      width: 28px;
+      height: 28px;
+      padding: 0;
+      gap: 0;
+      box-sizing: border-box;
+    }
+    .title-bar .pm6-tb-pages-more-ico {
+      display: block;
+      width: 14px;
+      height: 14px;
+    }
+    .title-bar .pm6-tb-pages-more-item {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+    .title-bar .pm6-tb-pages-more-item svg {
+      width: 14px;
+      height: 14px;
+      flex-shrink: 0;
     }
     .title-bar .page-tabs .page-tab {
-      padding: var(--xs) var(--md);
+      padding: 2px 6px;
       cursor: pointer;
       color: var(--text-secondary);
       border: var(--border-width) solid transparent;
@@ -70,18 +167,133 @@
       color: var(--surface);
       border-color: transparent;
     }
-    .title-bar .search-bar {
-      width: 200px;
-      max-width: 240px;
-      padding: 2px var(--md);
+    /* Search wrap: ml:auto so search|theme stay right; width via --tb-search-w */
+    .title-bar .pm6-tb-search-wrap {
+      --tb-search-w: 170px;
+      position: relative;
+      flex: 0 0 auto;
+      margin-left: auto;
+      display: flex;
+      align-items: center;
+      z-index: 46;
+    }
+    .title-bar .pm6-tb-search-wrap .search-bar {
+      margin-left: 0;
+      width: var(--tb-search-w);
+      max-width: 180px;
+      min-width: 0;
+      padding: 2px var(--sm);
       font-size: 12px;
       background: var(--surface-elevated);
       border: var(--border-width) solid var(--border);
       border-radius: var(--border-radius);
       color: var(--text-primary);
+      flex: 0 0 auto;
+      box-sizing: border-box;
+      transition: width 160ms var(--ease-out, ease);
     }
+    .title-bar .pm6-tb-search-wrap[data-mode="icon"] .search-bar {
+      display: none;
+    }
+    .title-bar .pm6-tb-search-btn {
+      display: none;
+      align-items: center;
+      justify-content: center;
+      width: 32px;
+      height: 32px;
+      padding: 0;
+      flex: 0 0 auto;
+      background: var(--surface-elevated);
+      border: var(--border-width) solid var(--border);
+      border-radius: var(--border-radius);
+      color: var(--text-secondary);
+      cursor: pointer;
+      box-sizing: border-box;
+    }
+    .title-bar .pm6-tb-search-wrap[data-mode="icon"] .pm6-tb-search-btn {
+      display: inline-flex;
+    }
+    .title-bar .pm6-tb-search-btn:hover {
+      color: var(--text-primary);
+    }
+    .title-bar .pm6-tb-search-btn[aria-expanded="true"] {
+      color: var(--text-primary);
+      background: var(--accent-soft, var(--surface));
+    }
+    .title-bar .pm6-tb-search-btn svg {
+      display: block;
+      width: 16px;
+      height: 16px;
+    }
+    /* Sprout popdown — same motion contract as empty notify .rs-panel */
+    .title-bar .pm6-tb-search-pop {
+      position: absolute;
+      top: calc(100% + 6px);
+      right: 0;
+      width: 280px;
+      max-width: min(280px, 90vw);
+      padding: 8px;
+      z-index: 220;
+      background: var(--surface-elevated);
+      border: 1px solid var(--border);
+      border-radius: var(--radius-md, 8px);
+      box-shadow: var(--elev-3, 0 8px 24px rgba(0,0,0,.18));
+      box-sizing: border-box;
+      --rs-sprout-ox: 88%;
+      --rs-sprout-oy: 0%;
+      --rs-sprout-tx: 0px;
+      --rs-sprout-ty: -8px;
+      --rs-sprout-sx: 0.72;
+      --rs-sprout-sy: 0.48;
+      transform-origin: var(--rs-sprout-ox) var(--rs-sprout-oy);
+      opacity: 0;
+      transform: translate3d(var(--rs-sprout-tx), var(--rs-sprout-ty), 0)
+        scale3d(var(--rs-sprout-sx), var(--rs-sprout-sy), 1);
+      visibility: hidden;
+      pointer-events: none;
+      transition:
+        opacity 160ms var(--ease-out, ease),
+        transform 300ms cubic-bezier(0.22, 1.55, 0.36, 1),
+        visibility 0s linear 300ms;
+      will-change: transform, opacity;
+    }
+    .title-bar .pm6-tb-search-pop.open,
+    .title-bar .pm6-tb-search-pop.is-open {
+      opacity: 1;
+      transform: translate3d(0, 0, 0) scale3d(1, 1, 1);
+      visibility: visible;
+      pointer-events: auto;
+      transition:
+        opacity 140ms var(--ease-out, ease),
+        transform 300ms cubic-bezier(0.22, 1.55, 0.36, 1),
+        visibility 0s;
+    }
+    .title-bar .pm6-tb-search-pop.is-closing {
+      opacity: 0;
+      transform: translate3d(var(--rs-sprout-tx), var(--rs-sprout-ty), 0)
+        scale3d(var(--rs-sprout-sx), var(--rs-sprout-sy), 1);
+      visibility: hidden;
+      pointer-events: none;
+      transition:
+        opacity 45ms ease-in 175ms,
+        transform 220ms cubic-bezier(0.45, 0.05, 0.55, 0.2),
+        visibility 0s linear 220ms;
+    }
+    .title-bar .pm6-tb-search-pop-input {
+      width: 100%;
+      box-sizing: border-box;
+      padding: 8px 12px;
+      font-size: 13px;
+      font-family: var(--body-font);
+      background: var(--surface);
+      border: var(--border-width) solid var(--border);
+      border-radius: var(--border-radius);
+      color: var(--text-primary);
+    }
+    .title-bar .pm6-tb-search-pop-input::placeholder { color: var(--text-muted); }
     .title-bar .search-bar::placeholder { color: var(--text-muted); }
-    .title-bar .theme-select {
+    .title-bar .theme-select,
+    .title-bar .pm6-tb-menu-trigger {
       padding: 2px var(--sm);
       background: var(--surface-elevated);
       border: var(--border-width) solid var(--border);
@@ -89,7 +301,132 @@
       color: var(--text-primary);
       font-size: 12px;
       cursor: pointer;
+      flex-shrink: 0;
     }
+    /* Theme trigger: sun/moon morph icon + family name (full) vs 32×32 icon-only */
+    .title-bar #themeMenuWrap .pm6-tb-theme-ico {
+      display: block;
+      width: 16px;
+      height: 16px;
+      flex-shrink: 0;
+      overflow: visible;
+    }
+    .title-bar #themeMenuWrap[data-mode="icon"] .pm6-tb-menu-trigger {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      width: 32px;
+      height: 32px;
+      padding: 0;
+      gap: 0;
+      box-sizing: border-box;
+    }
+    .title-bar #themeMenuWrap[data-mode="icon"] #themeMenuLabel {
+      display: none;
+    }
+
+    /* ---- sun / moon morph icon: driven by #themeSelect[data-mode-icon].
+       sun = core + rays, moon = mask circle slides in to bite the crescent,
+       auto = the morph itself looping. Transform/opacity only. ---- */
+    #themeSelect .pm6-tt-core,
+    #themeSelect .pm6-tt-rays,
+    #themeSelect .pm6-tt-bite {
+      transform-box: view-box;
+      transform-origin: 12px 12px;
+      transition:
+        transform 400ms cubic-bezier(0.22, 1, 0.36, 1),
+        opacity 400ms cubic-bezier(0.22, 1, 0.36, 1);
+    }
+    #themeSelect .pm6-tt-bite { transform: translate(13px, -13px); }
+    #themeSelect[data-mode-icon="moon"] .pm6-tt-bite { transform: translate(0, 0); }
+    #themeSelect[data-mode-icon="moon"] .pm6-tt-rays { opacity: 0; transform: scale(0.3); }
+    #themeSelect[data-mode-icon="moon"] .pm6-tt-core { transform: scale(1.12); }
+    @keyframes pm6-tt-auto-bite {
+      from { transform: translate(13px, -13px); }
+      to { transform: translate(0, 0); }
+    }
+    @keyframes pm6-tt-auto-rays {
+      from { opacity: 1; transform: scale(1); }
+      to { opacity: 0; transform: scale(0.3); }
+    }
+    #themeSelect[data-mode-icon="auto"] .pm6-tt-bite {
+      animation: pm6-tt-auto-bite 3s ease-in-out infinite alternate;
+    }
+    #themeSelect[data-mode-icon="auto"] .pm6-tt-rays {
+      animation: pm6-tt-auto-rays 3s ease-in-out infinite alternate;
+    }
+    @media (prefers-reduced-motion: reduce) {
+      #themeSelect .pm6-tt-core,
+      #themeSelect .pm6-tt-rays,
+      #themeSelect .pm6-tt-bite { transition: none; }
+      /* static half-morph: mask halfway in, rays half out */
+      #themeSelect[data-mode-icon="auto"] .pm6-tt-bite { animation: none; transform: translate(6.5px, -6.5px); }
+      #themeSelect[data-mode-icon="auto"] .pm6-tt-rays { animation: none; opacity: 0.5; transform: scale(0.65); }
+    }
+    [data-motion="reduced"] #themeSelect .pm6-tt-core,
+    [data-motion="reduced"] #themeSelect .pm6-tt-rays,
+    [data-motion="reduced"] #themeSelect .pm6-tt-bite { transition: none; }
+    [data-motion="reduced"] #themeSelect[data-mode-icon="auto"] .pm6-tt-bite { animation: none; transform: translate(6.5px, -6.5px); }
+    [data-motion="reduced"] #themeSelect[data-mode-icon="auto"] .pm6-tt-rays { animation: none; opacity: 0.5; transform: scale(0.65); }
+
+    /* ---- theme menu: Light/Dark/Auto segmented control + family rows ---- */
+    .pm6-tt-modes {
+      display: flex;
+      gap: 2px;
+      margin: 2px 8px 6px;
+      padding: 2px;
+      background: var(--surface);
+      border: 1px solid var(--border-light);
+      border-radius: var(--radius-pill);
+    }
+    .pm6-tt-mode {
+      flex: 1;
+      border: none;
+      background: none;
+      color: var(--text-secondary);
+      font-family: var(--body-font);
+      font-size: 11px;
+      font-weight: 600;
+      line-height: 1.3;
+      padding: 3px 6px;
+      border-radius: var(--radius-pill);
+      cursor: pointer;
+      transition:
+        color var(--motion-fast) var(--ease-default),
+        background var(--motion-fast) var(--ease-default);
+    }
+    .pm6-tt-mode:hover { color: var(--text-primary); }
+    .pm6-tt-mode[aria-checked="true"] {
+      background: var(--accent-soft);
+      color: var(--accent-primary);
+    }
+    .pm6-tt-divider {
+      height: 1px;
+      background: var(--border-light);
+      margin: 0 0 4px;
+    }
+    .pm6-tt-family .pm6-tt-name { flex: 1 1 auto; min-width: 0; }
+    .pm6-tt-chips { display: inline-flex; gap: 4px; flex: none; }
+    .pm6-tt-chip {
+      width: 14px;
+      height: 14px;
+      border-radius: 50%;
+      border: 1px solid var(--border);
+      box-sizing: border-box;
+    }
+    .pm6-tt-chip.is-active {
+      box-shadow: 0 0 0 2px color-mix(in srgb, var(--accent-primary) 65%, transparent);
+    }
+    /* Swatch chips show each family's real canvas colors, whatever theme is
+       active — raw hex therefore lives under a [data-theme] scope. */
+    [data-theme] .pm6-tt-chip[data-chip="friendly-dark"] { background: #211E26; }
+    [data-theme] .pm6-tt-chip[data-chip="friendly-light"] { background: #FBF7F3; }
+    [data-theme] .pm6-tt-chip[data-chip="glass-dark"] { background: #241B36; }
+    [data-theme] .pm6-tt-chip[data-chip="glass-light"] { background: #E4CDE4; }
+    [data-theme] .pm6-tt-chip[data-chip="retro-dark"] { background: #1A1A1A; }
+    [data-theme] .pm6-tt-chip[data-chip="retro-light"] { background: #F5F0E8; }
+    [data-theme] .pm6-tt-chip[data-chip="basic-dark"] { background: #121212; }
+    [data-theme] .pm6-tt-chip[data-chip="basic-light"] { background: #EAECEF; }
 
     .main-area {
       display: flex;
@@ -279,9 +616,15 @@
       color: var(--text-primary);
       background: var(--surface-elevated);
     }
-    #abMoreBtn[data-empty="1"] { display: none; }
-    /* the tray target must be droppable even while it is still empty */
-    body.pm-ab-dragging #abMoreBtn[data-empty="1"] { display: flex; }
+    /* More stays visible so reorder/hide is discoverable; empty = muted affordance */
+    #abMoreBtn[data-empty="1"] {
+      display: flex;
+      opacity: 0.45;
+    }
+    #abMoreBtn[data-empty="1"]:hover,
+    body.pm-ab-dragging #abMoreBtn[data-empty="1"] {
+      opacity: 1;
+    }
     .pm-ab-tray {
       position: fixed;
       z-index: 12000;
@@ -362,7 +705,11 @@
       flex-direction: column;
       min-height: 0;
       overflow: hidden;
-      padding: var(--md);
+      /* No bottom gutter: every page inside already carries its own bottom
+         padding, so this one only cost vertical room in the editor and the
+         dashboard. NB the density rule in pm6-css-global overrides this
+         shorthand outright — keep the two in step. */
+      padding: var(--md) var(--md) 0;
       position: relative;
     }
 
@@ -552,7 +899,7 @@
 
     .chat-thread-sidebar {
       width: var(--chat-sidebar-w, 200px);
-      min-width: 160px;
+      min-width: 72px;
       max-width: 400px;
       resize: horizontal;
       background: var(--surface-elevated);
@@ -560,42 +907,59 @@
       display: flex;
       flex-direction: column;
       overflow: hidden;
-      transition: width 0.2s ease;
     }
-    .chat-thread-sidebar.collapsed {
-      width: 120px !important;
-      min-width: 120px !important;
-      resize: none;
-    }
+    /* .collapsed is content-only (toggled by resize width) — never locks width */
     .chat-thread-sidebar .sidebar-title {
-      padding: var(--md);
+      padding: 6px 8px;
       font-weight: 600;
-      font-size: 12px;
+      font-size: 11.5px;
       border-bottom: 1px solid var(--border-light);
       display: flex;
       justify-content: space-between;
       align-items: center;
+      gap: 4px;
+      min-height: 30px;
+      box-sizing: border-box;
     }
-    .chat-thread-sidebar .sidebar-title .collapse-btn {
-      background: none;
-      border: none;
-      color: var(--text-muted);
-      cursor: pointer;
-      display: flex;
-      align-items: center;
-    }
-    .chat-thread-sidebar .sidebar-title .collapse-btn:hover {
-      color: var(--text-primary);
-    }
-    .chat-thread-sidebar.collapsed .sidebar-title .collapse-btn svg {
-      transform: rotate(180deg);
-    }
+    .chat-thread-sidebar .sidebar-title .collapse-btn { display: none !important; }
     .chat-thread-list {
       flex: 1;
       overflow-y: auto;
+      overflow-x: hidden;
       padding: var(--sm);
+      min-width: 0;
+    }
+    /* Frosted scroll-under (Task 5): the thread list scrolls BEHIND the
+       sidebar's own title row. This is entirely local to
+       .chat-thread-sidebar and does NOT touch the chat header's overlap
+       cascade in pm6-css-chat: that cascade lifts .chat-body and
+       .chat-main, and the sidebar deliberately sits inside .chat-body's
+       padding ("the sidebar stays untouched under the plate") — which is
+       exactly what leaves its top edge free to carry a plate of its own.
+       Measured (PM_FROST -> --pm6-chat-sidehead-h) because the row is
+       rebuilt with a label + count by pm6-js-chat and re-padded again in
+       the collapsed state. The sidebar is the overflow:hidden clipper and
+       the title sits flush at its top, so the title's own box is the lift. */
+    .chat-thread-sidebar { --pm6-chat-sidehead-h: 30px; }
+    .chat-thread-sidebar .sidebar-title {
+      position: relative;
+      z-index: 5;
+      background: color-mix(in srgb, var(--surface-elevated) 72%, transparent);
+      -webkit-backdrop-filter: blur(11px) saturate(140%);
+      backdrop-filter: blur(11px) saturate(140%);
+    }
+    /* glass blur budget: no nested backdrop-filter inside the pane */
+    [data-theme^="glass"] .chat-thread-sidebar .sidebar-title {
+      -webkit-backdrop-filter: none;
+      backdrop-filter: none;
+      background: color-mix(in srgb, var(--surface-elevated) 88%, transparent);
+    }
+    .chat-thread-sidebar .chat-thread-list {
+      margin-top: calc(-1 * var(--pm6-chat-sidehead-h, 30px));
+      padding-top: calc(var(--pm6-chat-sidehead-h, 30px) + var(--sm));
     }
     .chat-thread-item {
+      --thread-status-glow: var(--text-muted);
       padding: 1px var(--sm);
       margin-bottom: var(--sm);
       cursor: pointer;
@@ -608,7 +972,16 @@
       flex-direction: column;
       gap: 1px;
       position: relative;
+      margin-left: 0;
+      margin-right: 0;
     }
+    .chat-thread-item.role-assistant { --thread-status-glow: var(--text-primary); }
+    [data-theme^="retro"] .chat-thread-item.role-assistant { --thread-status-glow: var(--accent-lime); }
+    .chat-thread-item.role-interviewer { --thread-status-glow: var(--accent-lime); }
+    .chat-thread-item.role-doc { --thread-status-glow: var(--accent-orange); }
+    .chat-thread-item.role-prd { --thread-status-glow: var(--accent-magenta); }
+    .chat-thread-item[data-status="read"],
+    .chat-thread-item[data-status="draft"] { --thread-status-glow: var(--text-muted); }
     [data-theme="basic-light"] .chat-thread-item,
     [data-theme="basic-dark"] .chat-thread-item { box-shadow: none; }
     .chat-thread-item:hover { background: var(--surface-elevated); }
@@ -621,21 +994,31 @@
       box-shadow: 3px 3px 0 color-mix(in srgb, var(--accent-blue) 55%, transparent);
     }
     
+    .chat-thread-item {
+      min-width: 0;
+      max-width: 100%;
+      overflow-x: hidden;
+      box-sizing: border-box;
+    }
     .chat-thread-item .thread-top-row {
       display: flex;
       align-items: center;
       gap: var(--xs);
+      min-width: 0;
+      max-width: 100%;
     }
     .chat-thread-item .thread-timestamp {
       font-size: 10px;
       color: var(--text-muted);
       min-width: 24px;
+      flex-shrink: 0;
     }
     .chat-thread-item .thread-title {
       font-weight: bold;
       color: var(--text-primary);
       font-size: 12px;
-      flex: 1;
+      flex: 1 1 0;
+      min-width: 0;
       white-space: nowrap;
       overflow: hidden;
       text-overflow: ellipsis;
@@ -645,6 +1028,8 @@
       gap: var(--xs);
       align-items: flex-start;
       margin-top: 2px;
+      min-width: 0;
+      max-width: 100%;
     }
     .chat-thread-item .thread-status-col {
       width: 24px;
@@ -685,12 +1070,15 @@
       color: var(--text-muted);
       font-family: var(--body-font);
       flex: 1;
+      min-width: 0;
       margin-top: -1px;
       display: -webkit-box;
       -webkit-line-clamp: 2;
       -webkit-box-orient: vertical;
       overflow: hidden;
       line-height: 1.3;
+      overflow-wrap: anywhere;
+      word-break: break-word;
     }
     
     .chat-thread-sidebar.collapsed .chat-thread-item .thread-summary,
@@ -815,6 +1203,10 @@
       padding: var(--md);
       margin-bottom: var(--md);
       font-size: 11px;
+      max-width: 100%;
+      min-width: 0;
+      box-sizing: border-box;
+      overflow-x: auto;
     }
     .debug-thread-header .debug-target {
       font-weight: 700;
@@ -823,6 +1215,9 @@
       display: flex;
       align-items: center;
       gap: var(--sm);
+      flex-wrap: wrap;
+      min-width: 0;
+      overflow-wrap: anywhere;
     }
     .debug-thread-header .debug-target .debug-stage-badge {
       font-size: 9px;
@@ -852,6 +1247,10 @@
       padding: var(--sm) var(--md);
       margin: var(--sm) 0 var(--md);
       font-size: 10px;
+      max-width: 100%;
+      min-width: 0;
+      box-sizing: border-box;
+      overflow-x: auto;
     }
     .debug-investigation-ctx .ctx-title {
       font-weight: 700;
@@ -861,10 +1260,13 @@
     }
     .debug-investigation-ctx .ctx-item {
       display: flex;
-      align-items: center;
+      align-items: flex-start;
       gap: var(--sm);
       padding: 2px 0;
       color: var(--text-secondary);
+      min-width: 0;
+      overflow-wrap: anywhere;
+      word-break: break-word;
     }
     .debug-investigation-ctx .ctx-item .ctx-type {
       font-size: 9px;

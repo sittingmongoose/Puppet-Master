@@ -4,18 +4,11 @@
     (function() {
       'use strict';
       function logCmd() {}
-      /* pm6 W2 (js-integration): delegate to the single promoted implementation in
-         pm6-js-globals when present, so there is exactly one toast pipeline at
-         runtime. The inline fallback only covers a globals parse failure. */
+      /* pm6 W2 / title-bar notify: delegate to window.toast (globals).
+         Fallback console only — bottom #pmToastStack is retired. */
       function toast(msg) {
         if (window.toast) { window.toast(msg); return; }
-        var stack = document.getElementById('pmToastStack');
-        if (!stack) return;
-        var t = document.createElement('div');
-        t.className = 'pm-toast';
-        t.textContent = msg;
-        stack.appendChild(t);
-        setTimeout(function() { t.remove(); }, 3400);
+        try { console.log('[toast]', msg); } catch (e0) {}
       }
       var DND_MIME = 'application/x-puppet-master-term-pane';
       var COLOR_PALETTE = ['#7ee787', '#79c0ff', '#ffa657', '#ff7b72', '#d2a8ff', '#56d4dd', '#e3b341', '#8b949e'];
@@ -1489,29 +1482,43 @@
           var prev = rz.previousElementSibling;
           var next = rz.nextElementSibling;
           if (prev && next && window.registerResizer) {
+            var isCol = rz.classList.contains('resizer-col');
+            /* Capture the prev+next total ONCE per drag: recomputing it every
+               move let flex gaps + fractional rects drift until the 80/40px
+               floors were unsatisfiable and the split could never shrink back */
+            var dragTotal = 0, startX = 0, startY = 0, startPrev = 0;
             window.registerResizer(rz, {
-              isHorizontal: rz.classList.contains('resizer-col'),
+              isHorizontal: isCol,
+              onStart: function(e) {
+                dragTotal = 0; startX = e.clientX; startY = e.clientY; startPrev = 0;
+              },
               onMove: function(e) {
-                if (rz.classList.contains('resizer-col') && prev.parentNode) {
-                  var total = prev.getBoundingClientRect().width + next.getBoundingClientRect().width;
-                  var pw = e.clientX - prev.getBoundingClientRect().left;
-                  if (pw > 80 && total - pw > 80) {
-                    prev.style.flex = 'none';
-                    next.style.flex = 'none';
-                    prev.style.width = pw + 'px';
-                    next.style.width = (total - pw) + 'px';
-                  }
-                } else if (!rz.classList.contains('resizer-col') && prev.parentNode) {
-                  var total = prev.getBoundingClientRect().height + next.getBoundingClientRect().height;
-                  var ph = e.clientY - prev.getBoundingClientRect().top;
-                  if (ph > 40 && total - ph > 40) {
-                    prev.style.flex = 'none';
-                    next.style.flex = 'none';
-                    prev.style.height = ph + 'px';
-                    next.style.height = (total - ph) + 'px';
-                  }
+                if (!prev.parentNode) return;
+                var pr = prev.getBoundingClientRect();
+                var nr = next.getBoundingClientRect();
+                if (isCol) {
+                  if (!dragTotal) { dragTotal = pr.width + nr.width; startPrev = pr.width; }
+                  var pw = Math.max(80, Math.min(startPrev + (e.clientX - startX), dragTotal - 80));
+                  prev.style.setProperty('flex', 'none', 'important');
+                  next.style.setProperty('flex', 'none', 'important');
+                  prev.style.setProperty('width', pw + 'px', 'important');
+                  next.style.setProperty('width', (dragTotal - pw) + 'px', 'important');
+                } else {
+                  if (!dragTotal) { dragTotal = pr.height + nr.height; startPrev = pr.height; }
+                  var ph = Math.max(40, Math.min(startPrev + (e.clientY - startY), dragTotal - 40));
+                  prev.style.setProperty('flex', 'none', 'important');
+                  next.style.setProperty('flex', 'none', 'important');
+                  prev.style.setProperty('height', ph + 'px', 'important');
+                  next.style.setProperty('height', (dragTotal - ph) + 'px', 'important');
                 }
               }
+            });
+            rz.addEventListener('dblclick', function() {
+              [prev, next].forEach(function(el) {
+                el.style.removeProperty('width');
+                el.style.removeProperty('height');
+                el.style.removeProperty('flex');
+              });
             });
           }
         });
@@ -1584,15 +1591,19 @@
         if (!tab) return;
         window.PM_PAGES.go(tab.getAttribute('data-page'));
       }, true);
-      /* ── pm6 W2 (js-integration): #themeSelect persistence shim ────────────
-         The legacy change handler (js-terminal-demo) only stamps data-theme.
-         For parity with Settings > Appearance > Theme, also persist
-         localStorage['pm.theme'] so the head boot snippet restores the choice;
-         the settings engine reads the same key and re-syncs its own controls. */
+      /* ── pm6 W2 (js-integration): theme persistence shim ────────────
+         Title-bar theme is a sprout menu (#themeSelect trigger). PM_THEME
+         owns the family x mode model and persists pm.themeFamily /
+         pm.themeMode / pm.theme itself (a slug alone cannot encode 'auto',
+         so this listener must not second-guess it). It only back-fills the
+         legacy pm.theme slug when PM_THEME is absent. */
       (function() {
         var ts = document.getElementById('themeSelect');
         if (!ts) return;
         ts.addEventListener('change', function() {
-          try { localStorage.setItem('pm.theme', this.value); } catch (e0) {}
+          if (window.PM_THEME && typeof window.PM_THEME.set === 'function') return;
+          var v = this.getAttribute('data-value') || this.value;
+          if (!v) return;
+          try { localStorage.setItem('pm.theme', v); } catch (e0) {}
         });
       })();

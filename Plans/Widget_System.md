@@ -1090,6 +1090,17 @@ Phase 2B batch 198 atomized `Widget_System-S0001` through `Widget_System-S0009` 
 
 ## FABLE Deferred Action Concrete Repair Addendum - 2026-07-08
 
+## PMConcept7 Home Workspace boundary clarification — 2026-08-04
+
+Home Workspace surfaces (`editor_panel_*`, `dashboard`, `chat`, and terminal
+sections) are shell presentation surfaces, not Dashboard widgets. The Home layout
+may reuse U10 interaction semantics such as lift, placeholder, reflow, edge zones,
+cancellation, and save-on-drop, but it does not import Widget System hostability,
+DOM order as canonical state, Dashboard widget layout, or any `cmd.widget.*`
+command. Dashboard widget movement remains owned by this document and its existing
+projection contract; moving the Dashboard surface itself is owned by the Home
+workspace owner.
+
 This addendum repairs non-runtime widget rows without creating WorkNodes, implementation files, runtime artifacts, or PNC-019 evidence.
 
 - Repairs `sfk-27612d81432b8c866dbb6e76`: `widget-custom-metrics` is the canonical id for custom metric widgets. Fields are `widget_id`, `metric_id`, `query_ref`, `unit`, `refresh_interval_seconds`, `empty_state_copy_id`, and `owner_doc_ref`.

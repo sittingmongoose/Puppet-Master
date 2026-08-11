@@ -1,0 +1,266 @@
+/* PANEL BAKEOFF — Puppet Master control kit
+   =====================================================================
+   Replacements for every OS-native control, in the app's own house style.
+
+   Forked from:
+     visual   .pm6-tb-menu / .pm6-tb-menu-item   PMConcept7.html:12435-12536
+     motion   the six --pm6-sprout-* vars + the spring curve  PM7:38105 / :39305
+     place    openTermCtxMenu's viewport clamp                PM7:18969
+
+   The one deliberate departure from the source: everything here is PORTALED
+   to document.body. .pm6-tb-menu is position:absolute, which is right in a
+   title bar and wrong inside .pm6-sp-content (overflow-y:auto) — that is why
+   .context-menu-mock and .pm6-fm-rootdd clip in the panel today.
+
+   Slint constraints honoured throughout (F3-431, FinalGUISpec.md:28543):
+     - no runtime color-mix() beyond the :root-declared --accent-soft, which
+       resolves to one value per theme, i.e. a Slint colour constant
+     - no alpha calc(), no SVG filters, no mix-blend-mode
+     - NO new backdrop-filter: that budget is closed at 7 surfaces
+     - every hit target is at least 24px (FinalGUISpec.md:2144 section 13.5)
+   ===================================================================== */
+
+/* ============================== shared shell ============================== */
+.pm-pop {
+  position: fixed;
+  z-index: 1200;
+  min-width: 200px;
+  max-width: min(340px, calc(100vw - 16px));
+  padding: var(--xs) 0;
+  background: var(--surface-elevated);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-md);
+  box-shadow: var(--elev-3);
+  color: var(--text-primary);
+  font-family: var(--body-font);
+  font-size: var(--fs-xs);
+  overflow-y: auto;
+  overscroll-behavior: contain;
+
+  /* house sprout contract — same six variables, same spring */
+  --pm6-sprout-ox: 50%;  --pm6-sprout-oy: 0%;
+  --pm6-sprout-tx: 0px;  --pm6-sprout-ty: -8px;
+  --pm6-sprout-sx: .72;  --pm6-sprout-sy: .48;
+  transform-origin: var(--pm6-sprout-ox) var(--pm6-sprout-oy);
+  opacity: 0;
+  transform: translate3d(var(--pm6-sprout-tx), var(--pm6-sprout-ty), 0)
+             scale3d(var(--pm6-sprout-sx), var(--pm6-sprout-sy), 1);
+  visibility: hidden;
+  pointer-events: none;
+  transition: opacity 45ms ease-in 175ms,
+              transform 220ms cubic-bezier(.45, .05, .55, .2),
+              visibility 0s linear 220ms;
+}
+.pm-pop.is-open {
+  opacity: 1;
+  transform: translate3d(0, 0, 0) scale3d(1, 1, 1);
+  visibility: visible;
+  pointer-events: auto;
+  transition: opacity 140ms var(--ease-out, ease),
+              transform 300ms cubic-bezier(.22, 1.55, .36, 1),
+              visibility 0s;
+}
+[data-motion="reduced"] .pm-pop,
+[data-motion="reduced"] .pm-pop.is-open { transition: none; transform: none; }
+@media (prefers-reduced-motion: reduce) {
+  .pm-pop, .pm-pop.is-open { transition: none; transform: none; }
+}
+
+/* ------------------------------- items ---------------------------------- */
+.pm-pop-item {
+  display: flex;
+  align-items: center;
+  gap: var(--md);
+  width: 100%;
+  min-height: 28px;              /* > the 24px floor */
+  padding: 6px 12px;
+  border: 0;
+  background: transparent;
+  color: var(--text-primary);
+  font: inherit;
+  font-weight: 600;
+  text-align: left;
+  cursor: pointer;
+}
+.pm-pop-item:hover,
+.pm-pop-item.is-active,
+.pm-pop-item:focus-visible { background: var(--accent-soft); outline: none; }
+.pm-pop-item .pm-pop-ico { width: 14px; height: 14px; flex: none; opacity: .8; }
+.pm-pop-item .pm-pop-lbl { flex: 1 1 auto; min-width: 0; overflow: hidden;
+                           text-overflow: ellipsis; white-space: nowrap; }
+.pm-pop-item .pm-pop-hint { flex: none; font-size: var(--fs-2xs); color: var(--text-muted);
+                            font-weight: 500; font-family: var(--mono-font); }
+.pm-pop-item .pm-pop-check { width: 14px; flex: none; opacity: 0; }
+.pm-pop-item.is-selected .pm-pop-check { opacity: 1; }
+.pm-pop-item.is-selected { color: var(--text-primary); background: var(--accent-soft); }
+.pm-pop-item.is-danger { color: var(--accent-error); }
+
+/* Disabled items stay VISIBLE, focusable, and carry their reason inline.
+   Required by GI-017, GAAAF-005 and CRAU-021: a user must learn that the
+   command exists and why it is unavailable. Never a native title tooltip. */
+.pm-pop-item[aria-disabled="true"] { cursor: not-allowed; opacity: .62; }
+.pm-pop-item[aria-disabled="true"]:hover { background: transparent; }
+.pm-pop-reason {
+  display: block;
+  padding: 0 12px 6px 38px;
+  margin-top: -2px;
+  font-size: var(--fs-2xs);
+  line-height: var(--lh-body);
+  color: var(--text-muted);
+}
+.pm-pop-reason code {
+  font-family: var(--mono-font);
+  color: var(--accent-warning);
+}
+.pm-pop-sep { height: 1px; margin: var(--xs) 0; background: var(--border-light, var(--border)); }
+.pm-pop-head {
+  padding: 5px 12px 4px;
+  font-size: var(--fs-2xs);
+  font-weight: 700;
+  letter-spacing: .08em;
+  text-transform: uppercase;
+  color: var(--text-muted);
+}
+
+/* =============================== pm-select ===============================
+   Replaces every <select>. Trigger + portaled listbox. Slint: ComboBox for
+   plain string options, PopupWindow + ListView once options carry icons,
+   counts or reason lines — which is most of ours. */
+.pm-select { position: relative; display: inline-flex; min-width: 0; }
+.pm-select-trigger {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--sm);
+  width: 100%;
+  min-width: 0;
+  min-height: 24px;
+  padding: 3px var(--md);
+  background: var(--surface-elevated);
+  border: var(--border-width, 1px) solid var(--border-light, var(--border));
+  border-radius: var(--radius-sm);
+  color: var(--text-primary);
+  font-family: var(--body-font);
+  font-size: var(--fs-xs);
+  font-weight: 600;
+  cursor: pointer;
+  text-align: left;
+}
+.pm-select-trigger:hover { border-color: var(--accent-primary); }
+.pm-select-trigger:focus-visible { outline: 2px solid var(--accent-primary); outline-offset: 1px; }
+.pm-select-trigger[aria-expanded="true"] { background: var(--accent-soft); }
+.pm-select-label { flex: 1 1 auto; min-width: 0; overflow: hidden;
+                   text-overflow: ellipsis; white-space: nowrap; }
+.pm-select-caret { flex: none; width: 10px; height: 10px; opacity: .7; }
+.pm-select-list { padding: var(--xs) 0; }
+
+/* ================================ pm-menu ================================
+   Dropdown / overflow. The load-bearing component for narrow panels: at
+   240px anything that is not the single primary action lives in here, and
+   the popup is allowed to be wider than the panel. */
+.pm-menu { position: relative; display: inline-flex; }
+.pm-menu-trigger {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  min-width: 24px;
+  min-height: 24px;
+  padding: 0 2px;
+  background: transparent;
+  border: 0;
+  border-radius: var(--radius-xs);
+  color: var(--text-muted);
+  cursor: pointer;
+}
+.pm-menu-trigger:hover { color: var(--text-primary); background: var(--accent-soft); }
+.pm-menu-trigger:focus-visible { outline: 2px solid var(--accent-primary); outline-offset: 1px; }
+.pm-menu-trigger[aria-expanded="true"] { color: var(--text-primary); background: var(--accent-soft); }
+.pm-menu-trigger svg { width: 14px; height: 14px; display: block; }
+
+/* ============================ pm-context-menu ============================
+   Replaces .context-menu-mock (PM7:4879). Same visual vocabulary as pm-menu
+   so the app finally has ONE menu look — today .pm-term-ctx-menu (PM7:3449)
+   and .context-menu-mock are two different designs. */
+.pm-ctx { min-width: 210px; }
+.pm-ctx .pm-pop-item .pm-pop-hint { margin-left: var(--md); }
+.pm-ctx-sub-caret { width: 10px; height: 10px; flex: none; opacity: .7; }
+
+/* =============================== pm-tooltip ==============================
+   The app has NO tooltip component: 322 native title attributes, zero custom
+   tooltips. In a 240px panel every icon-only control depends on this.
+   Singleton, portaled, viewport-clamped. Slint: a Rectangle in a PopupWindow
+   driven by TouchArea.has-hover plus a Timer, with accessible-description
+   set on the anchor so screen readers get it (section 13.4). */
+.pm-tooltip {
+  position: fixed;
+  z-index: 1400;
+  max-width: 260px;
+  padding: 4px 8px;
+  background: var(--surface-elevated);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-sm);
+  box-shadow: var(--elev-2);
+  color: var(--text-primary);
+  font-family: var(--body-font);
+  font-size: var(--fs-2xs);
+  line-height: var(--lh-body);
+  pointer-events: none;
+  opacity: 0;
+  transition: opacity 90ms var(--ease-out, ease);
+}
+.pm-tooltip.is-open { opacity: 1; }
+[data-motion="reduced"] .pm-tooltip { transition: none; }
+
+/* ======================== pm-confirm / pm-input-sheet ====================
+   Replaces confirm() and prompt(). Anchored inside the panel column when
+   invoked from a panel, so it reads as "this panel is asking"; centred when
+   invoked globally. Width is capped to the panel so it works at 240px. */
+.pm-sheet-scrim {
+  position: fixed; inset: 0; z-index: 1500;
+  background: rgba(0, 0, 0, .38);
+  display: flex; align-items: center; justify-content: center;
+  opacity: 0; transition: opacity 120ms var(--ease-out, ease);
+}
+.pm-sheet-scrim.is-open { opacity: 1; }
+.pm-sheet {
+  width: min(340px, calc(100vw - 24px));
+  max-height: calc(100vh - 48px);
+  overflow-y: auto;
+  padding: var(--lg);
+  background: var(--surface-elevated);
+  border: var(--border-width, 1px) solid var(--border);
+  border-radius: var(--radius-md);
+  box-shadow: var(--elev-3);
+  color: var(--text-primary);
+  font-family: var(--body-font);
+  display: flex; flex-direction: column; gap: var(--md);
+}
+.pm-sheet-title { font-size: var(--fs-sm); font-weight: 700; }
+.pm-sheet-body  { font-size: var(--fs-xs); line-height: var(--lh-body); color: var(--text-secondary); }
+.pm-sheet-label { font-size: var(--fs-2xs); color: var(--text-muted); }
+.pm-sheet-input {
+  width: 100%; min-height: 28px;
+  padding: 5px var(--md);
+  background: var(--surface);
+  border: var(--border-width, 1px) solid var(--border-light, var(--border));
+  border-radius: var(--radius-sm);
+  color: var(--text-primary);
+  font-family: var(--body-font); font-size: var(--fs-xs);
+}
+.pm-sheet-input:focus-visible { outline: 2px solid var(--accent-primary); outline-offset: 1px; }
+.pm-sheet-err { font-size: var(--fs-2xs); color: var(--accent-error); min-height: 12px; }
+.pm-sheet-actions { display: flex; gap: var(--sm); justify-content: flex-end; }
+.pm-sheet-btn {
+  min-height: 24px; padding: 4px 12px;
+  background: var(--surface); color: var(--text-primary);
+  border: var(--border-width, 1px) solid var(--border-light, var(--border));
+  border-radius: var(--radius-sm);
+  font-family: var(--body-font); font-size: var(--fs-2xs); font-weight: 600;
+  cursor: pointer;
+}
+.pm-sheet-btn:hover { border-color: var(--accent-primary); background: var(--accent-soft); }
+.pm-sheet-btn--primary {
+  background: var(--accent-primary); border-color: var(--accent-primary); color: var(--surface);
+}
+.pm-sheet-btn--danger {
+  background: var(--accent-error); border-color: var(--accent-error); color: var(--surface);
+}

@@ -1,0 +1,423 @@
+:root {
+  color-scheme: dark;
+  --font-body: "Avenir Next", "Trebuchet MS", sans-serif;
+  --font-display: "Iowan Old Style", "Palatino Linotype", serif;
+  --font-compact: "DIN Alternate", "Avenir Next Condensed", sans-serif;
+  --font-code: "SFMono-Regular", "Cascadia Mono", monospace;
+
+  /* Friendly Dark is the review default. Structural dividers stay quiet;
+     interactive boundaries and semantic text have independent contrast roles. */
+  --canvas: oklch(18% 0.018 305);
+  --chrome: oklch(22% 0.021 305);
+  --surface: oklch(25% 0.022 305);
+  --surface-raised: oklch(29% 0.026 305);
+  --surface-sunken: oklch(16% 0.015 305);
+  --ink: oklch(95% 0.014 305);
+  --ink-soft: oklch(82% 0.02 305);
+  --ink-muted: oklch(69% 0.018 305);
+  --divider: oklch(43% 0.03 305);
+  --control-border: oklch(57% 0.04 305);
+  --control-border-strong: oklch(68% 0.045 305);
+
+  --accent-fill: oklch(78% 0.115 213);
+  --accent-text: oklch(80% 0.105 213);
+  --accent-on-fill: oklch(17% 0.025 213);
+  --accent-surface: oklch(30% 0.052 213);
+  --status-success-text: oklch(82% 0.13 151);
+  --status-success-border: oklch(72% 0.11 151);
+  --status-success-surface: oklch(27% 0.045 151);
+  --status-warning-text: oklch(87% 0.115 78);
+  --status-warning-border: oklch(76% 0.105 78);
+  --status-warning-surface: oklch(29% 0.05 78);
+  --status-danger-text: oklch(80% 0.14 25);
+  --status-danger-border: oklch(70% 0.13 25);
+  --status-danger-surface: oklch(27% 0.052 25);
+  --status-managed-text: oklch(82% 0.08 280);
+  --status-managed-border: oklch(72% 0.07 280);
+  --status-managed-surface: oklch(28% 0.042 280);
+  --focus-ring: oklch(86% 0.135 213);
+  --selection-surface: oklch(34% 0.065 213);
+  --selection-text: oklch(96% 0.012 213);
+
+  /* Compatibility aliases used by the existing concept adapters. New work
+     should prefer the semantic names above. */
+  --line: var(--control-border);
+  --line-strong: var(--control-border-strong);
+  --accent: var(--accent-fill);
+  --accent-soft: var(--accent-surface);
+  --accent-ink: var(--accent-on-fill);
+  --success: var(--status-success-text);
+  --success-soft: var(--status-success-surface);
+  --warning: var(--status-warning-text);
+  --warning-soft: var(--status-warning-surface);
+  --danger: var(--status-danger-text);
+  --danger-soft: var(--status-danger-surface);
+  --managed: var(--status-managed-text);
+  --managed-soft: var(--status-managed-surface);
+  --focus: var(--focus-ring);
+
+  --radius-xs: 5px;
+  --radius-sm: 8px;
+  --radius-md: 13px;
+  --radius-lg: 20px;
+  --border-size: 1px;
+  --shadow-sm: 0 6px 18px oklch(8% 0.02 305 / 0.2);
+  --shadow-lg: 0 22px 60px oklch(8% 0.02 305 / 0.35);
+  --material-blur: 0px;
+  --motion-fast: 120ms;
+  --motion-state: 240ms;
+  --motion-scene: 320ms;
+  --motion-distance: 1;
+  --ease-out: cubic-bezier(0.16, 1, 0.3, 1);
+  --ease-in-out: cubic-bezier(0.65, 0, 0.35, 1);
+}
+
+[data-theme="friendly-dark"] {
+  color-scheme: dark;
+}
+
+[data-theme="friendly-light"] {
+  color-scheme: light;
+  --canvas: oklch(96% 0.016 55);
+  --chrome: oklch(93% 0.022 55);
+  --surface: oklch(98% 0.011 55);
+  --surface-raised: oklch(99% 0.008 55);
+  --surface-sunken: oklch(90% 0.024 55);
+  --ink: oklch(24% 0.025 310);
+  --ink-soft: oklch(38% 0.029 310);
+  --ink-muted: oklch(49% 0.026 310);
+  --divider: oklch(76% 0.032 310);
+  --control-border: oklch(56% 0.045 310);
+  --control-border-strong: oklch(43% 0.055 310);
+  --accent-fill: oklch(43% 0.135 218);
+  --accent-text: oklch(41% 0.13 218);
+  --accent-on-fill: oklch(98% 0.01 218);
+  --accent-surface: oklch(91% 0.045 218);
+  --status-success-text: oklch(40% 0.12 151);
+  --status-success-border: oklch(45% 0.12 151);
+  --status-success-surface: oklch(92% 0.04 151);
+  --status-warning-text: oklch(41% 0.125 72);
+  --status-warning-border: oklch(47% 0.125 72);
+  --status-warning-surface: oklch(92% 0.045 72);
+  --status-danger-text: oklch(42% 0.16 25);
+  --status-danger-border: oklch(48% 0.16 25);
+  --status-danger-surface: oklch(93% 0.04 25);
+  --status-managed-text: oklch(42% 0.105 280);
+  --status-managed-border: oklch(48% 0.105 280);
+  --status-managed-surface: oklch(92% 0.035 280);
+  --focus-ring: oklch(36% 0.165 218);
+  --selection-surface: oklch(84% 0.07 218);
+  --selection-text: oklch(22% 0.04 218);
+  --shadow-sm: 0 7px 20px oklch(38% 0.035 55 / 0.13);
+  --shadow-lg: 0 24px 70px oklch(38% 0.035 55 / 0.2);
+}
+
+[data-theme="glass-dark"] {
+  color-scheme: dark;
+  --canvas: oklch(18% 0.05 294);
+  --chrome: oklch(23% 0.055 294 / 0.94);
+  --surface: oklch(27% 0.06 294 / 0.92);
+  --surface-raised: oklch(32% 0.065 294 / 0.94);
+  --surface-sunken: oklch(15% 0.045 294 / 0.96);
+  --ink: oklch(96% 0.018 294);
+  --ink-soft: oklch(84% 0.032 294);
+  --ink-muted: oklch(71% 0.03 294);
+  --divider: oklch(47% 0.065 294);
+  --control-border: oklch(61% 0.075 294);
+  --control-border-strong: oklch(72% 0.075 294);
+  --accent-fill: oklch(80% 0.115 317);
+  --accent-text: oklch(82% 0.105 317);
+  --accent-on-fill: oklch(18% 0.05 317);
+  --accent-surface: oklch(34% 0.075 317);
+  --focus-ring: oklch(88% 0.12 317);
+  --selection-surface: oklch(39% 0.09 317);
+  --material-blur: 16px;
+}
+
+[data-theme="glass-light"] {
+  color-scheme: light;
+  --canvas: oklch(91% 0.04 305);
+  --chrome: oklch(96% 0.027 305 / 0.94);
+  --surface: oklch(98% 0.021 305 / 0.92);
+  --surface-raised: oklch(99% 0.015 305 / 0.96);
+  --surface-sunken: oklch(88% 0.045 305 / 0.92);
+  --ink: oklch(24% 0.05 294);
+  --ink-soft: oklch(37% 0.048 294);
+  --ink-muted: oklch(48% 0.043 294);
+  --divider: oklch(75% 0.06 294);
+  --control-border: oklch(55% 0.08 294);
+  --control-border-strong: oklch(42% 0.09 294);
+  --accent-fill: oklch(42% 0.16 310);
+  --accent-text: oklch(40% 0.15 310);
+  --accent-on-fill: oklch(98% 0.015 310);
+  --accent-surface: oklch(90% 0.055 310);
+  --status-success-text: oklch(39% 0.12 151);
+  --status-success-border: oklch(45% 0.12 151);
+  --status-success-surface: oklch(91% 0.04 151);
+  --status-warning-text: oklch(40% 0.125 72);
+  --status-warning-border: oklch(46% 0.125 72);
+  --status-warning-surface: oklch(92% 0.045 72);
+  --status-danger-text: oklch(41% 0.16 25);
+  --status-danger-border: oklch(47% 0.16 25);
+  --status-danger-surface: oklch(93% 0.04 25);
+  --status-managed-text: oklch(40% 0.115 280);
+  --status-managed-border: oklch(46% 0.115 280);
+  --status-managed-surface: oklch(91% 0.04 280);
+  --focus-ring: oklch(34% 0.175 310);
+  --selection-surface: oklch(84% 0.075 310);
+  --selection-text: oklch(21% 0.055 310);
+  --material-blur: 16px;
+}
+
+[data-theme="retro-dark"] {
+  color-scheme: dark;
+  --font-body: "DIN Alternate", "Avenir Next Condensed", sans-serif;
+  --font-display: "Copperplate", "DIN Alternate", sans-serif;
+  --canvas: oklch(14% 0.024 145);
+  --chrome: oklch(18% 0.03 145);
+  --surface: oklch(21% 0.035 145);
+  --surface-raised: oklch(25% 0.04 145);
+  --surface-sunken: oklch(11% 0.02 145);
+  --ink: oklch(93% 0.025 145);
+  --ink-soft: oklch(80% 0.038 145);
+  --ink-muted: oklch(68% 0.038 145);
+  --divider: oklch(44% 0.07 145);
+  --control-border: oklch(55% 0.09 145);
+  --control-border-strong: oklch(70% 0.12 145);
+  --accent-fill: oklch(84% 0.19 142);
+  --accent-text: oklch(86% 0.17 142);
+  --accent-on-fill: oklch(13% 0.025 142);
+  --accent-surface: oklch(27% 0.07 142);
+  --focus-ring: oklch(90% 0.18 142);
+  --selection-surface: oklch(32% 0.09 142);
+  --radius-xs: 0;
+  --radius-sm: 0;
+  --radius-md: 0;
+  --radius-lg: 0;
+  --border-size: 2px;
+  --shadow-sm: 5px 5px 0 oklch(7% 0.02 145 / 0.72);
+  --shadow-lg: 10px 10px 0 oklch(7% 0.02 145 / 0.72);
+}
+
+[data-theme="retro-light"] {
+  color-scheme: light;
+  --font-body: "DIN Alternate", "Avenir Next Condensed", sans-serif;
+  --font-display: "Copperplate", "DIN Alternate", sans-serif;
+  --canvas: oklch(93% 0.028 85);
+  --chrome: oklch(88% 0.035 85);
+  --surface: oklch(97% 0.018 85);
+  --surface-raised: oklch(99% 0.012 85);
+  --surface-sunken: oklch(84% 0.04 85);
+  --ink: oklch(19% 0.035 250);
+  --ink-soft: oklch(33% 0.04 250);
+  --ink-muted: oklch(45% 0.04 250);
+  --divider: oklch(68% 0.055 250);
+  --control-border: oklch(50% 0.07 250);
+  --control-border-strong: oklch(34% 0.09 250);
+  --accent-fill: oklch(38% 0.16 255);
+  --accent-text: oklch(36% 0.15 255);
+  --accent-on-fill: oklch(98% 0.01 255);
+  --accent-surface: oklch(86% 0.055 255);
+  --status-success-text: oklch(36% 0.135 151);
+  --status-success-border: oklch(42% 0.135 151);
+  --status-success-surface: oklch(88% 0.045 151);
+  --status-warning-text: oklch(37% 0.135 72);
+  --status-warning-border: oklch(43% 0.135 72);
+  --status-warning-surface: oklch(89% 0.05 72);
+  --status-danger-text: oklch(38% 0.17 25);
+  --status-danger-border: oklch(44% 0.17 25);
+  --status-danger-surface: oklch(90% 0.045 25);
+  --status-managed-text: oklch(38% 0.125 280);
+  --status-managed-border: oklch(44% 0.125 280);
+  --status-managed-surface: oklch(89% 0.045 280);
+  --focus-ring: oklch(31% 0.18 255);
+  --selection-surface: oklch(79% 0.08 255);
+  --selection-text: oklch(17% 0.045 255);
+  --radius-xs: 0;
+  --radius-sm: 0;
+  --radius-md: 0;
+  --radius-lg: 0;
+  --border-size: 2px;
+  --shadow-sm: 5px 5px 0 oklch(37% 0.035 85 / 0.3);
+  --shadow-lg: 10px 10px 0 oklch(37% 0.035 85 / 0.3);
+}
+
+[data-theme="basic-dark"] {
+  color-scheme: dark;
+  --font-body: "Avenir Next", "Trebuchet MS", sans-serif;
+  --font-display: "Avenir Next", "Trebuchet MS", sans-serif;
+  --canvas: oklch(15% 0.012 252);
+  --chrome: oklch(18% 0.014 252);
+  --surface: oklch(21% 0.015 252);
+  --surface-raised: oklch(25% 0.018 252);
+  --surface-sunken: oklch(12% 0.01 252);
+  --ink: oklch(95% 0.012 252);
+  --ink-soft: oklch(82% 0.016 252);
+  --ink-muted: oklch(68% 0.016 252);
+  --divider: oklch(42% 0.022 252);
+  --control-border: oklch(55% 0.03 252);
+  --control-border-strong: oklch(67% 0.035 252);
+  --accent-fill: oklch(76% 0.12 250);
+  --accent-text: oklch(79% 0.105 250);
+  --accent-on-fill: oklch(15% 0.02 250);
+  --accent-surface: oklch(28% 0.05 250);
+  --focus-ring: oklch(84% 0.13 250);
+  --selection-surface: oklch(33% 0.065 250);
+  --radius-xs: 3px;
+  --radius-sm: 5px;
+  --radius-md: 8px;
+  --radius-lg: 12px;
+  --shadow-sm: none;
+  --shadow-lg: none;
+}
+
+[data-theme="basic-light"] {
+  color-scheme: light;
+  --font-body: "Avenir Next", "Trebuchet MS", sans-serif;
+  --font-display: "Avenir Next", "Trebuchet MS", sans-serif;
+  --canvas: oklch(94% 0.012 252);
+  --chrome: oklch(91% 0.014 252);
+  --surface: oklch(98% 0.008 252);
+  --surface-raised: oklch(99% 0.006 252);
+  --surface-sunken: oklch(88% 0.018 252);
+  --ink: oklch(21% 0.02 252);
+  --ink-soft: oklch(35% 0.022 252);
+  --ink-muted: oklch(47% 0.022 252);
+  --divider: oklch(73% 0.025 252);
+  --control-border: oklch(55% 0.04 252);
+  --control-border-strong: oklch(40% 0.05 252);
+  --accent-fill: oklch(39% 0.15 250);
+  --accent-text: oklch(37% 0.14 250);
+  --accent-on-fill: oklch(98% 0.008 250);
+  --accent-surface: oklch(89% 0.045 250);
+  --status-success-text: oklch(38% 0.125 151);
+  --status-success-border: oklch(44% 0.125 151);
+  --status-success-surface: oklch(91% 0.04 151);
+  --status-warning-text: oklch(39% 0.135 72);
+  --status-warning-border: oklch(45% 0.135 72);
+  --status-warning-surface: oklch(91% 0.045 72);
+  --status-danger-text: oklch(40% 0.165 25);
+  --status-danger-border: oklch(46% 0.165 25);
+  --status-danger-surface: oklch(92% 0.04 25);
+  --status-managed-text: oklch(39% 0.115 280);
+  --status-managed-border: oklch(45% 0.115 280);
+  --status-managed-surface: oklch(91% 0.04 280);
+  --focus-ring: oklch(32% 0.18 250);
+  --selection-surface: oklch(82% 0.075 250);
+  --selection-text: oklch(17% 0.04 250);
+  --radius-xs: 3px;
+  --radius-sm: 5px;
+  --radius-md: 8px;
+  --radius-lg: 12px;
+  --shadow-sm: none;
+  --shadow-lg: none;
+}
+
+::selection {
+  background: var(--selection-surface);
+  color: var(--selection-text);
+}
+
+/* These compatibility selectors carry the new split text/border roles into
+   the existing shared primitives without requiring every concept adapter to
+   know about theme implementation details. */
+html .status-label.success {
+  color: var(--status-success-text);
+  border-color: var(--status-success-border);
+  background: var(--status-success-surface);
+}
+html .status-label.warning {
+  color: var(--status-warning-text);
+  border-color: var(--status-warning-border);
+  background: var(--status-warning-surface);
+}
+html .status-label.danger {
+  color: var(--status-danger-text);
+  border-color: var(--status-danger-border);
+  background: var(--status-danger-surface);
+}
+html .status-label.managed {
+  color: var(--status-managed-text);
+  border-color: var(--status-managed-border);
+  background: var(--status-managed-surface);
+}
+html .action-button {
+  color: var(--accent-on-fill);
+  border-color: var(--accent-fill);
+  background: var(--accent-fill);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  :root {
+    --motion-fast: 1ms;
+    --motion-state: 1ms;
+    --motion-scene: 1ms;
+    --motion-distance: 0;
+  }
+}
+
+[data-reduced-motion="1"] {
+  --motion-fast: 1ms;
+  --motion-state: 1ms;
+  --motion-scene: 1ms;
+  --motion-distance: 0;
+}
+
+@media (forced-colors: active) {
+  :root,
+  [data-theme] {
+    --canvas: Canvas;
+    --chrome: Canvas;
+    --surface: Canvas;
+    --surface-raised: Canvas;
+    --surface-sunken: Canvas;
+    --ink: CanvasText;
+    --ink-soft: CanvasText;
+    --ink-muted: GrayText;
+    --divider: ButtonBorder;
+    --control-border: ButtonBorder;
+    --control-border-strong: CanvasText;
+    --accent-fill: Highlight;
+    --accent-text: LinkText;
+    --accent-on-fill: HighlightText;
+    --accent-surface: Canvas;
+    --status-success-text: CanvasText;
+    --status-success-border: CanvasText;
+    --status-success-surface: Canvas;
+    --status-warning-text: CanvasText;
+    --status-warning-border: CanvasText;
+    --status-warning-surface: Canvas;
+    --status-danger-text: CanvasText;
+    --status-danger-border: CanvasText;
+    --status-danger-surface: Canvas;
+    --status-managed-text: CanvasText;
+    --status-managed-border: CanvasText;
+    --status-managed-surface: Canvas;
+    --focus-ring: Highlight;
+    --selection-surface: Highlight;
+    --selection-text: HighlightText;
+    --shadow-sm: none;
+    --shadow-lg: none;
+    --material-blur: 0px;
+  }
+
+  .action-button {
+    border-color: ButtonText !important;
+    background: ButtonFace !important;
+    color: ButtonText !important;
+  }
+
+  :is(.view-kicker, .result-kind, .model-owner, .gallery-kicker, .gallery-model, .concept-card header span) {
+    color: LinkText !important;
+  }
+
+  :is(.status-label, .activity-button.active, .manager-tab.active) {
+    border-color: CanvasText !important;
+    background: Canvas !important;
+    color: CanvasText !important;
+  }
+
+  :is(.pm-shell, .receipt, .search-results, .frame-stage) {
+    box-shadow: none !important;
+  }
+}

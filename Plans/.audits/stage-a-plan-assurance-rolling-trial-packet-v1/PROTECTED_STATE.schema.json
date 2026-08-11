@@ -1,0 +1,50 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://puppet-master.local/schemas/plan-assurance/protected-state.v1.json",
+  "title": "Plan Assurance Protected Repository State Receipt",
+  "type": "object",
+  "additionalProperties": false,
+  "required": ["schema_version", "receipt_id", "trial_id", "generation_id", "phase", "contract_sha256", "repository_root", "authorized_run_root", "collector_sha256", "command_contract_sha256", "captured_at_utc", "git_state", "protected_entries", "source_snapshot_population_sha256", "run_root_exists", "state_payload_sha256", "terminal"],
+  "properties": {
+    "schema_version": {"const": "1.0.0"},
+    "receipt_id": {"type": "string", "minLength": 1},
+    "trial_id": {"type": "string", "minLength": 1},
+    "generation_id": {"type": "string", "minLength": 1},
+    "phase": {"enum": ["BEFORE", "AFTER"]},
+    "contract_sha256": {"$ref": "#/$defs/sha256"},
+    "repository_root": {"type": "string", "minLength": 1},
+    "authorized_run_root": {"type": "string", "minLength": 1},
+    "collector_sha256": {"$ref": "#/$defs/sha256"},
+    "command_contract_sha256": {"$ref": "#/$defs/sha256"},
+    "captured_at_utc": {"type": "string", "format": "date-time"},
+    "git_state": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["head_commit", "head_tree", "symbolic_ref", "status_porcelain_v1_z_raw", "status_porcelain_v1_z_excluding_run_root", "index_entries_z", "staged_diff_binary", "tracked_diff_binary"],
+      "properties": {
+        "head_commit": {"type": "string", "pattern": "^[0-9a-f]{40}$"},
+        "head_tree": {"type": "string", "pattern": "^[0-9a-f]{40}$"},
+        "symbolic_ref": {"type": ["string", "null"]},
+        "status_porcelain_v1_z_raw": {"$ref": "#/$defs/blob"},
+        "status_porcelain_v1_z_excluding_run_root": {"$ref": "#/$defs/blob"},
+        "index_entries_z": {"$ref": "#/$defs/blob"},
+        "staged_diff_binary": {"$ref": "#/$defs/blob"},
+        "tracked_diff_binary": {"$ref": "#/$defs/blob"}
+      }
+    },
+    "protected_entries": {"type": "array", "minItems": 1, "items": {"$ref": "#/$defs/entry"}},
+    "source_snapshot_population_sha256": {"$ref": "#/$defs/sha256"},
+    "run_root_exists": {"type": "boolean"},
+    "state_payload_sha256": {"$ref": "#/$defs/sha256"},
+    "terminal": {"enum": ["PASS", "INPUT_DRIFT_STOP", "BLOCKED", "INVALID"]}
+  },
+  "allOf": [
+    {"if": {"properties": {"phase": {"const": "BEFORE"}}}, "then": {"properties": {"run_root_exists": {"const": false}}}},
+    {"if": {"properties": {"phase": {"const": "AFTER"}}}, "then": {"properties": {"run_root_exists": {"const": true}}}}
+  ],
+  "$defs": {
+    "sha256": {"type": "string", "pattern": "^[0-9a-f]{64}$"},
+    "blob": {"type": "object", "additionalProperties": false, "required": ["encoding", "bytes", "sha256", "data"], "properties": {"encoding": {"const": "base64"}, "bytes": {"type": "integer", "minimum": 0}, "sha256": {"$ref": "#/$defs/sha256"}, "data": {"type": "string"}}},
+    "entry": {"type": "object", "additionalProperties": false, "required": ["scope_id", "path", "entry_kind", "mode", "bytes", "sha256"], "properties": {"scope_id": {"enum": ["plans_population", "bound_input"]}, "path": {"type": "string", "minLength": 1}, "entry_kind": {"const": "regular_file"}, "mode": {"type": "integer", "minimum": 0}, "bytes": {"type": "integer", "minimum": 0}, "sha256": {"$ref": "#/$defs/sha256"}}}
+  }
+}

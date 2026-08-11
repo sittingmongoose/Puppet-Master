@@ -1,0 +1,93 @@
+{
+  "schema_id": "pm.chat_assistant_demo_trigger_contract.v2",
+  "purpose": "Deterministic concept/demo harness events; not production toolbar commands.",
+  "families": {
+    "history": [
+      "peek",
+      "pin_compact",
+      "pin_full",
+      "unpin",
+      "switch_thread"
+    ],
+    "question": [
+      "prepare",
+      "open",
+      "select",
+      "next",
+      "validation_error",
+      "skip",
+      "cancel",
+      "submit"
+    ],
+    "goal": [
+      "start",
+      "progress",
+      "pause",
+      "resume",
+      "update",
+      "replan",
+      "blocked",
+      "complete"
+    ],
+    "todo": [
+      "add",
+      "complete",
+      "reopen",
+      "block"
+    ],
+    "subagent": [
+      "spawn",
+      "queue",
+      "progress",
+      "complete",
+      "fail",
+      "retry"
+    ],
+    "activity": [
+      "thinking_summary",
+      "search",
+      "read",
+      "fetch",
+      "browser",
+      "test",
+      "edit",
+      "generate"
+    ],
+    "diff": [
+      "create",
+      "update",
+      "open"
+    ],
+    "artifact": [
+      "loading",
+      "ready",
+      "switch",
+      "error",
+      "close"
+    ],
+    "decision": [
+      "approval_open",
+      "details",
+      "approve",
+      "deny",
+      "branch"
+    ],
+    "thread": [
+      "send_request",
+      "receive_response",
+      "spawn_related",
+      "branch"
+    ],
+    "system": [
+      "port_collision",
+      "worktree_collision",
+      "reset"
+    ]
+  },
+  "requirements": [
+    "Triggers must be deterministic for automated tests and visual capture.",
+    "Reset must restore one known initial state.",
+    "Renderers may vary by concept while consuming the same semantic events.",
+    "Do not expose these as permanent production Chat toolbar buttons."
+  ]
+}

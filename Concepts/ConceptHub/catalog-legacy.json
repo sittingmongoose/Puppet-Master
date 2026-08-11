@@ -1,0 +1,222 @@
+{
+  "schemaVersion": 1,
+  "topics": [
+    {"id": "usage", "label": "Usage", "description": "Usage, quota, reset, and context-pressure concepts", "order": 10, "widthControl": {"enabled": true, "label": "Page width", "role": "page", "min": 360, "max": 2500, "step": 1, "default": 1280, "presets": [360, 768, 1280, 1920, 2500], "previewWidth": "test"}},
+    {"id": "notifications", "label": "Notifications", "description": "Title-bar and system notification concepts", "order": 20, "widthControl": {"enabled": true, "label": "App width", "role": "page", "min": 520, "max": 1920, "step": 1, "default": 1280, "presets": [520, 768, 1280, 1600, 1920], "previewWidth": "test"}},
+    {"id": "rail", "label": "Rail", "description": "Activity rail and left-side panel concepts", "order": 30, "widthControl": {"enabled": true, "label": "Panel width", "role": "panel", "min": 220, "max": 560, "step": 1, "default": 280, "presets": [220, 280, 420, 560], "previewWidth": 1200}},
+    {"id": "chat-assistant", "label": "Chat Assistant", "description": "Docked and floating assistant workspaces", "order": 40, "widthControl": {"enabled": true, "label": "Chat width", "role": "chat", "min": 520, "max": 1200, "step": 1, "default": 750, "presets": [520, 750, 975, 1200], "previewWidth": 1440}},
+    {"id": "icons", "label": "Icons", "description": "Identity, app icon, tray, and loading-mark systems", "order": 50, "widthControl": {"enabled": false, "label": "Workspace width", "role": "none", "default": 1440, "previewWidth": 1440}}
+  ],
+  "models": [
+    {
+      "id": "usage:qwen-usage",
+      "topic": "usage",
+      "model": "Qwen",
+      "folder": "usage-concepts/QwenUsageConcept",
+      "presentation": "hybrid",
+      "order": 10,
+      "entries": [
+        {"id": "u1-signal", "title": "U1 Signal", "path": "u1-signal.html", "tags": ["triage", "attention"], "order": 10},
+        {"id": "u2-stream", "title": "U2 Stream", "path": "u2-stream.html", "tags": ["timeline", "ledger"], "order": 20},
+        {"id": "u3-cockpit", "title": "U3 Cockpit", "path": "u3-cockpit.html", "tags": ["telemetry", "dense"], "order": 30},
+        {"id": "u4-focus", "title": "U4 Focus", "path": "u4-focus.html", "tags": ["focus", "spacious"], "order": 40},
+        {"id": "u5-cozy-console", "title": "U5 Cozy Console", "path": "u5-cozy-console.html", "tags": ["cozy", "shelves"], "order": 50},
+        {"id": "u6-workspace", "title": "U6 Workspace", "path": "u6-workspace.html", "tags": ["master-detail", "workspace"], "order": 60},
+        {"id": "u7-board", "title": "U7 Board", "path": "u7-board.html", "tags": ["widgets", "board"], "order": 70},
+        {"id": "u8-canvas", "title": "U8 Canvas", "path": "u8-canvas.html", "tags": ["widgets", "canvas"], "order": 80},
+        {"id": "u9-deck", "title": "U9 Deck", "path": "u9-deck.html", "tags": ["widgets", "deck"], "order": 90},
+        {"id": "u10-prism", "title": "U10 Prism", "path": "u10-prism.html", "tags": ["widgets", "focus", "provider-scope"], "order": 100}
+      ],
+      "workspace": {"path": "index.html", "title": "Qwen Usage Index", "openActions": "both", "controlMode": "internal", "previewWidth": 1440, "tags": ["index", "dashboard", "configurator"], "order": 5}
+    },
+    {
+      "id": "notifications:notify-protos",
+      "topic": "notifications",
+      "model": "Unknown — notify-protos",
+      "folder": "Notification-concepts/notify-protos",
+      "presentation": "hybrid",
+      "unknownModel": true,
+      "order": 10,
+      "entries": [
+        {"id": "rightward-stack", "title": "01 Rightward Stack", "path": "01-rightward-stack.html", "tags": ["stack", "inbox"], "order": 10},
+        {"id": "bell-accordion", "title": "02 Bell Accordion", "path": "02-bell-accordion.html", "tags": ["bell", "accordion"], "order": 20},
+        {"id": "chip-rail", "title": "03 Chip Rail", "path": "03-chip-rail.html", "tags": ["chips", "rail"], "order": 30},
+        {"id": "latest-morph", "title": "04 Latest Morph", "path": "04-latest-morph.html", "tags": ["morph", "latest"], "order": 40},
+        {"id": "drop-then-dock", "title": "05 Drop Then Dock", "path": "05-drop-then-dock.html", "tags": ["dock", "motion"], "order": 50},
+        {"id": "fan-deck", "title": "06 Fan Deck", "path": "06-fan-deck.html", "tags": ["deck", "motion"], "order": 60}
+      ],
+      "workspace": {"path": "index.html", "title": "Notification Prototype Workspace", "openActions": "both", "controlMode": "internal", "tags": ["dashboard", "configurator"], "order": 5}
+    },
+    {
+      "id": "rail:qwen",
+      "topic": "rail",
+      "model": "Qwen",
+      "folder": "rail-concepts/QwenRailConcepts",
+      "presentation": "hybrid",
+      "order": 10,
+      "entries": [
+        {"id": "control-room", "title": "C1 Control Room", "path": "c1-control-room.html", "tags": ["dense", "operations"], "order": 10},
+        {"id": "cozy-shelves", "title": "C2 Cozy Shelves", "path": "c2-cozy-shelves.html", "tags": ["cozy", "shelves"], "order": 20},
+        {"id": "single-thread", "title": "C3 Single Thread", "path": "c3-single-thread.html", "tags": ["focus", "thread"], "order": 30},
+        {"id": "paper-trail", "title": "C4 Paper Trail", "path": "c4-paper-trail.html", "tags": ["ledger", "history"], "order": 40},
+        {"id": "attention-deck", "title": "C5 Attention Deck", "path": "c5-attention-deck.html", "tags": ["attention", "deck"], "order": 50},
+        {"id": "split-rail", "title": "C6 Split Rail", "path": "c6-split-rail.html", "tags": ["split", "navigation"], "order": 60},
+        {"id": "source-staging", "title": "Bonus Source: Staging Board", "path": "bonus-source-a.html", "tags": ["source", "bonus"], "order": 70},
+        {"id": "source-stream", "title": "Bonus Source: Git Stream", "path": "bonus-source-b.html", "tags": ["source", "bonus"], "order": 80},
+        {"id": "docker-fleet", "title": "Bonus Docker: Fleet Grid", "path": "bonus-docker-a.html", "tags": ["docker", "bonus"], "order": 90},
+        {"id": "docker-topology", "title": "Bonus Docker: Compose Topology", "path": "bonus-docker-b.html", "tags": ["docker", "bonus"], "order": 100},
+        {"id": "artifacts-wall", "title": "Bonus Artifacts: Evidence Wall", "path": "bonus-artifacts-a.html", "tags": ["artifacts", "bonus"], "order": 110},
+        {"id": "artifacts-log", "title": "Bonus Artifacts: Audit Log", "path": "bonus-artifacts-b.html", "tags": ["artifacts", "bonus"], "order": 120}
+      ],
+      "workspace": {"path": "index.html", "title": "Qwen Rail Index", "openActions": "both", "controlMode": "internal", "tags": ["index", "dashboard", "configurator"], "order": 5}
+    },
+    {
+      "id": "rail:opus",
+      "topic": "rail",
+      "model": "Opus",
+      "folder": "rail-concepts/panel-bakeoffOpus",
+      "presentation": "hybrid",
+      "order": 20,
+      "entries": [
+        {"id": "gallery", "title": "Opus Panel Gallery", "path": "gallery.html", "openActions": "both", "controlMode": "internal", "tags": ["matrix", "panels"], "order": 10}
+      ],
+      "workspace": {"path": "index.html", "title": "Opus Panel Bakeoff Index", "openActions": "both", "controlMode": "internal", "tags": ["index", "matrix", "panels"], "order": 5}
+    },
+    {
+      "id": "rail:kimi",
+      "topic": "rail",
+      "model": "Kimi",
+      "folder": "rail-concepts/panel-protosKimi",
+      "presentation": "workspace",
+      "order": 30,
+      "workspace": {"path": "index.html", "title": "Kimi Panel Prototypes", "openActions": "both", "controlMode": "internal", "tags": ["matrix", "panels"]}
+    },
+    {
+      "id": "rail:cursor-side-panels",
+      "topic": "rail",
+      "model": "Cursor",
+      "folder": "rail-concepts/side-panel-cursor",
+      "presentation": "hybrid",
+      "order": 40,
+      "entries": [
+        {"id": "stacked-rail", "title": "01 Stacked Rail", "path": "shells/01-stacked-rail.html", "tags": ["shell", "stacked"], "order": 10},
+        {"id": "segment-strip", "title": "02 Segment Strip", "path": "shells/02-segment-strip.html", "tags": ["shell", "segmented"], "order": 20},
+        {"id": "inspector-sheet", "title": "03 Inspector Sheet", "path": "shells/03-inspector-sheet.html", "tags": ["shell", "inspector"], "order": 30},
+        {"id": "command-toolbar", "title": "04 Command Toolbar", "path": "shells/04-command-toolbar.html", "tags": ["shell", "commands"], "order": 40},
+        {"id": "icon-spine", "title": "05 Icon Spine", "path": "shells/05-icon-spine.html", "tags": ["shell", "icons"], "order": 50},
+        {"id": "focus-ladder", "title": "06 Focus Ladder", "path": "shells/06-focus-ladder.html", "tags": ["shell", "focus"], "order": 60},
+        {"id": "lab-studio", "title": "Cursor Panel Lab Studio", "path": "labs/studio.html", "openActions": "both", "controlMode": "internal", "tags": ["lab", "variants", "configurator"], "order": 70}
+      ],
+      "workspace": {"path": "index.html", "title": "Cursor Side-panel Index", "openActions": "both", "controlMode": "internal", "tags": ["index", "navigation"], "order": 5}
+    },
+    {
+      "id": "rail:unknown-panel-protos",
+      "topic": "rail",
+      "model": "Unknown — panel-protos",
+      "folder": "rail-concepts/panel-protos",
+      "presentation": "workspace",
+      "unknownModel": true,
+      "order": 50,
+      "workspace": {"path": "index.html", "title": "Panel Prototypes", "openActions": "both", "controlMode": "internal", "tags": ["variants", "panels"]}
+    },
+    {
+      "id": "chat-assistant:grok-4-5",
+      "topic": "chat-assistant",
+      "model": "Grok 4.5",
+      "folder": "chat-assistant-concepts/grok-4-5",
+      "presentation": "workspace",
+      "order": 10,
+      "workspace": {"path": "index.html", "title": "Grok 4.5 Chat Workspace", "openActions": "both", "controlMode": "internal", "tags": ["chat", "matrix"]}
+    },
+    {
+      "id": "chat-assistant:kimi-k3",
+      "topic": "chat-assistant",
+      "model": "Kimi K3",
+      "folder": "chat-assistant-concepts/kimi-k3",
+      "presentation": "workspace",
+      "order": 20,
+      "workspace": {"path": "index.html", "title": "Kimi K3 Chat Workspace", "openActions": "both", "controlMode": "internal", "tags": ["chat", "matrix"]}
+    },
+    {
+      "id": "chat-assistant:opus-5",
+      "topic": "chat-assistant",
+      "model": "Opus 5",
+      "folder": "chat-assistant-concepts/opus-5",
+      "presentation": "workspace",
+      "order": 30,
+      "workspace": {"path": "index.html", "title": "Opus 5 Chat Workspace", "openActions": "both", "controlMode": "internal", "tags": ["chat", "matrix"]}
+    },
+    {
+      "id": "chat-assistant:qwen-3-8",
+      "topic": "chat-assistant",
+      "model": "Qwen 3.8",
+      "folder": "chat-assistant-concepts/qwen-3-8",
+      "presentation": "workspace",
+      "order": 40,
+      "workspace": {"path": "index.html", "title": "Qwen 3.8 Chat Workspace", "openActions": "both", "controlMode": "internal", "tags": ["chat", "matrix"]}
+    },
+    {
+      "id": "icons:cursor",
+      "topic": "icons",
+      "model": "Cursor",
+      "folder": "Icon-Concepts/Cursoricon",
+      "presentation": "workspace",
+      "order": 10,
+      "workspace": {"path": "index.html", "title": "Cursor Icon Mix Lab", "openActions": "none", "controlMode": "internal", "tags": ["icons", "configurator"]}
+    },
+    {
+      "id": "icons:fable",
+      "topic": "icons",
+      "model": "Fable",
+      "folder": "Icon-Concepts/Fableicon",
+      "presentation": "workspace",
+      "order": 20,
+      "workspace": {"path": "index.html", "title": "Fable Icon Theme Pack", "openActions": "none", "controlMode": "internal", "tags": ["icons", "themes"]}
+    },
+    {
+      "id": "icons:glm",
+      "topic": "icons",
+      "model": "GLM",
+      "folder": "Icon-Concepts/GLMicon",
+      "presentation": "workspace",
+      "order": 30,
+      "workspace": {"path": "index.html", "title": "GLM Icon Lab", "openActions": "none", "controlMode": "internal", "tags": ["icons", "lab"]}
+    },
+    {
+      "id": "icons:kimi",
+      "topic": "icons",
+      "model": "Kimi",
+      "folder": "Icon-Concepts/Kimiicon",
+      "presentation": "workspace",
+      "order": 40,
+      "workspace": {"path": "dashboard.html", "title": "Kimi Icon and Loading Suite", "openActions": "none", "controlMode": "internal", "tags": ["icons", "loading"]}
+    },
+    {
+      "id": "icons:opus",
+      "topic": "icons",
+      "model": "Opus",
+      "folder": "Icon-Concepts/Opusicon",
+      "presentation": "workspace",
+      "order": 50,
+      "workspace": {"path": "index.html", "title": "Opus Icon Lab", "openActions": "none", "controlMode": "internal", "tags": ["icons", "lab"]}
+    },
+    {
+      "id": "icons:qwen",
+      "topic": "icons",
+      "model": "Qwen",
+      "folder": "Icon-Concepts/Qwenicon",
+      "presentation": "workspace",
+      "order": 60,
+      "workspace": {"path": "index.html", "title": "Qwen Logo Kit", "openActions": "none", "controlMode": "internal", "tags": ["icons", "logo"]}
+    },
+    {
+      "id": "icons:sol",
+      "topic": "icons",
+      "model": "Sol",
+      "folder": "Icon-Concepts/Solicon",
+      "presentation": "workspace",
+      "order": 70,
+      "workspace": {"path": "index.html", "title": "Sol Identity and Loader Gallery", "openActions": "none", "controlMode": "internal", "tags": ["icons", "loading"]}
+    }
+  ]
+}

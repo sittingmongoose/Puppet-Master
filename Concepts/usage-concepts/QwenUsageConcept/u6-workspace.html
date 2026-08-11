@@ -1,0 +1,1332 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="friendly-dark">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<link rel="icon" href="data:,">
+<title>U6 · Workspace — Usage — Puppet Master Concepts</title>
+<script>(function(){try{var ok=['friendly-dark','friendly-light','retro-dark','retro-light','basic-light','basic-dark','glass-dark','glass-light'];var t=localStorage.getItem('pm.theme');if(ok.indexOf(t)===-1)t='friendly-dark';var d=document.documentElement;d.setAttribute('data-theme',t);d.style.colorScheme=/-dark$/.test(t)?'dark':'light';}catch(e){}})();</script>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="preload" as="style" href="https://fonts.googleapis.com/css2?family=Cal+Sans&family=Inter:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;500;700;800&family=Nunito:wght@400;600;700;800&family=Outfit:wght@400;500;600;700&family=Quicksand:wght@400;500;600;700&family=Rajdhani:wght@400;500;600;700&family=Sora:wght@500;600;700;800&display=swap" onload="this.onload=null;this.rel='stylesheet'">
+<noscript><link href="https://fonts.googleapis.com/css2?family=Cal+Sans&family=Inter:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;500;700;800&family=Nunito:wght@400;600;700;800&family=Outfit:wght@400;500;600;700&family=Quicksand:wght@400;500;600;700&family=Rajdhani:wght@400;500;600;700&family=Sora:wght@500;600;700;800&display=swap" rel="stylesheet"></noscript>
+<link rel="stylesheet" href="_shared/themes.css">
+<link rel="stylesheet" href="_shared/base.css">
+<link rel="stylesheet" href="_shared/usage-shared.css">
+<link rel="stylesheet" href="_shared/usage-context.css">
+<style>
+/* keyboard-operable ledger sort headers (activated in the concept script) */
+th[data-sort]:focus-visible { outline: 2px solid var(--accent-primary); outline-offset: -2px; }
+
+.u6-work { flex: 1 1 auto; min-height: 0; display: flex; }
+
+.u6-rail { flex: 0 0 268px; min-width: 0; display: flex; flex-direction: column; border-right: 1px solid var(--border-light); background: color-mix(in srgb, var(--text-primary) 2%, transparent); }
+.u6-railsearch { flex: none; padding: var(--md) var(--md) var(--sm); }
+.u6-railscroll { position: relative; flex: 1 1 auto; min-height: 0; overflow-y: auto; overflow-x: hidden; padding: 0 var(--sm) var(--md); scrollbar-width: thin; scrollbar-color: var(--pm6-sb-thumb) transparent; }
+.u6-railscroll::-webkit-scrollbar { width: 10px; }
+.u6-railscroll::-webkit-scrollbar-thumb { background: var(--pm6-sb-thumb); border: 3px solid transparent; background-clip: padding-box; border-radius: 8px; }
+.u6-rgroup { display: flex; align-items: center; gap: 7px; font-family: var(--display-font); font-size: 8.5px; font-weight: 700; letter-spacing: 1.4px; text-transform: uppercase; color: var(--text-muted); padding: 10px 8px 5px; white-space: nowrap; }
+.u6-rgroup::after { content: ''; flex: 1 1 auto; height: 1px; background: var(--border-light); }
+.u6-rgroup .gc { font-family: var(--mono-font); letter-spacing: 0; color: var(--text-muted); }
+
+.u6-row { position: relative; display: flex; align-items: flex-start; gap: 8px; padding: 7px 8px 7px 13px; border-radius: var(--radius-md); cursor: pointer; min-width: 0; transition: background var(--motion-fast) var(--ease-out); }
+.u6-row:hover { background: color-mix(in srgb, var(--text-primary) 5%, transparent); }
+/* selection reads as a haloed node in the gutter, never a vertical edge bar */
+.u6-row::before { content: ''; position: absolute; left: var(--sm); top: 50%; transform: translateY(-50%); width: 5px; height: 5px; border-radius: 50%; background: transparent; box-shadow: 0 0 0 0 transparent; pointer-events: none; transition: background var(--motion-fast) var(--ease-out), box-shadow var(--motion-fast) var(--ease-out); }
+.u6-row:hover::before { background: color-mix(in srgb, var(--accent-primary) 45%, transparent); box-shadow: 0 0 0 3px color-mix(in srgb, var(--accent-primary) 10%, transparent); }
+/* selection rides a sliding dossier tab (.u6-railind, painted under the rows) that
+   springs along the rail; the row's own halo + name tint ease in on top of it */
+.u6-railind { position: absolute; left: var(--sm); right: var(--sm); top: 0; height: 0; z-index: 0; border-radius: var(--radius-md); border: 1px solid color-mix(in srgb, var(--accent-primary) 22%, transparent); background: color-mix(in srgb, var(--accent-primary) 9%, transparent); opacity: 0; pointer-events: none; transition: transform var(--mo-spring-dur) var(--mo-spring-ease), height var(--mo-settle-dur) var(--mo-settle-ease), opacity var(--mo-settle-dur) var(--pm-ease-out); }
+.u6-railind.placed { opacity: 1; }
+.u6-row.active::before { background: var(--accent-primary); box-shadow: 0 0 0 3px color-mix(in srgb, var(--accent-primary) 22%, transparent); }
+.u6-row.active .u6-row-name { color: var(--accent-primary); }
+.u6-row .us-dot { margin-top: 5px; }
+.u6-row-ico { flex: none; width: 20px; height: 20px; margin-top: 1px; border-radius: var(--radius-sm); display: inline-flex; align-items: center; justify-content: center; background: color-mix(in srgb, var(--cat, var(--accent-primary)) 15%, transparent); color: var(--cat, var(--accent-primary)); }
+.u6-row-ico svg { width: 11px; height: 11px; }
+.u6-row-main { flex: 1 1 auto; min-width: 0; display: flex; flex-direction: column; gap: 3px; }
+.u6-row-top { display: flex; align-items: baseline; gap: 6px; min-width: 0; }
+.u6-row-name { flex: 0 1 auto; min-width: 0; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; font-size: var(--fs-sm); font-weight: 600; color: var(--text-primary); }
+.u6-row-val { margin-left: auto; flex: none; font-family: var(--mono-font); font-size: var(--fs-2xs); font-weight: 700; color: var(--text-primary); font-variant-numeric: tabular-nums; }
+.u6-row-val .vs { font-size: 8px; padding: 0 6px; }
+.u6-rbar { display: block; height: 3px; border-radius: var(--radius-pill); background: var(--border-light); overflow: hidden; }
+.u6-rbar .us-fill { height: 100%; }
+.u6-row-meta { font-size: var(--fs-2xs); color: var(--text-muted); white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+/* pressure-queue rank tick: the index is sorted, and it should read as sorted */
+.u6-rank { flex: none; font-family: var(--mono-font); font-size: 9px; font-weight: 700; letter-spacing: .04em; color: var(--text-muted); opacity: .75; transform: translateY(-.5px); }
+.u6-rank.hot { color: var(--tone-err-text); opacity: 1; }
+.u6-row.p-hot .u6-row-val { color: var(--tone-err-text); }
+.u6-row.p-hot .u6-row-name { font-weight: 700; }
+.u6-row.p-warn .u6-row-val { color: var(--tone-warn-text); }
+/* pressure breathes: the rail mini-bar tone pulses gently, deeper and faster the
+   hotter the subject, so load reads at a glance without shouting */
+@keyframes u6Breathe { 0%, 100% { opacity: 1; } 50% { opacity: var(--u6-breathe-lo, .5); } }
+.u6-row.p-hot .u6-rbar .us-fill { animation: u6Breathe var(--mo-pulse, 1.8s) ease-in-out infinite; }
+.u6-row.p-warn .u6-rbar .us-fill { --u6-breathe-lo: .74; animation: u6Breathe calc(var(--mo-pulse, 1.8s) * 1.7) ease-in-out -.9s infinite; }
+.u6-railfoot { flex: none; display: flex; align-items: center; gap: 5px; padding: var(--sm) var(--md); border-top: 1px solid var(--border-light); font-size: 9px; color: var(--text-muted); white-space: nowrap; overflow: hidden; }
+.u6-railfoot kbd { font-family: var(--mono-font); font-size: 8.5px; line-height: 1.5; padding: 0 4px; border: 1px solid var(--border-light); border-bottom-width: 2px; border-radius: var(--radius-xs); background: color-mix(in srgb, var(--text-primary) 4%, transparent); color: var(--text-secondary); }
+
+/* status strip — a weighted triage band, not six equal cells: one focal pressure
+   block, a cost cluster, a quieter signals cluster, then freshness. Hairlines
+   only between zones; hierarchy comes from size + weight + tone. */
+.u6-strip { flex: none; display: flex; align-items: stretch; margin: var(--md) var(--us-pad) 0; border: 1px solid color-mix(in srgb, var(--accent-primary) 16%, var(--border-light)); border-radius: var(--radius-lg); background: var(--surface-elevated); box-shadow: var(--elev-1); overflow-x: auto; overflow-y: hidden; scrollbar-width: thin; }
+.u6-st-focal { flex: none; display: flex; flex-direction: column; justify-content: center; gap: 6px; padding: var(--md) var(--lg); min-width: 300px; border-right: 1px solid var(--border-light); background: color-mix(in srgb, var(--accent-primary) 7%, transparent); }
+.u6-st-kick { display: flex; align-items: center; gap: 5px; font-family: var(--display-font); font-size: 8.5px; font-weight: 700; letter-spacing: 1.3px; text-transform: uppercase; color: var(--text-muted); white-space: nowrap; }
+.u6-st-kick svg { width: 11px; height: 11px; flex: none; }
+.u6-st-frow { display: flex; align-items: center; gap: var(--md); min-width: 0; }
+.u6-st-big { flex: none; font-family: var(--num-font); font-weight: 800; font-size: 30px; line-height: .95; letter-spacing: .3px; color: var(--accent-primary); font-variant-numeric: tabular-nums; }
+/* the focal KPI counts to its value (suffix rides ::after so the counter owns the
+   digits) and eases in each time the strip re-arms */
+.u6-st-big[data-counter]::after { content: '%'; }
+@keyframes u6KickIn { from { opacity: 0; transform: translateY(6px) scale(.97); } }
+.u6-st-focal .u6-st-big { animation: u6KickIn var(--mo-settle-dur) var(--mo-spring-ease) both; }
+.u6-st-fmeta { flex: 1 1 auto; min-width: 0; display: flex; flex-direction: column; gap: 4px; }
+.u6-st-fname { font-size: var(--fs-sm); font-weight: 700; color: var(--text-primary); white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+.u6-st-bar { width: 100%; max-width: 152px; height: 4px; }
+.u6-st-band { flex: 1 1 auto; min-width: 0; display: flex; align-items: stretch; }
+.u6-st-grp { flex: 1 1 0; min-width: 0; display: flex; flex-direction: column; justify-content: center; gap: 6px; padding: var(--md) var(--lg); }
+.u6-st-grp + .u6-st-grp { border-left: 1px solid var(--border-light); }
+.u6-st-gk { display: flex; align-items: center; gap: 5px; font-family: var(--display-font); font-size: 8.5px; font-weight: 700; letter-spacing: 1.3px; text-transform: uppercase; color: var(--text-muted); white-space: nowrap; }
+.u6-st-gk svg { width: 11px; height: 11px; flex: none; }
+.u6-st-cells { display: flex; gap: var(--lg); min-width: 0; }
+.u6-st-c { flex: 1 1 0; min-width: 0; display: flex; flex-direction: column; gap: 2px; }
+.u6-st-v { font-family: var(--mono-font); font-size: var(--fs-md, 13px); font-weight: 700; color: var(--text-primary); font-variant-numeric: tabular-nums; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; min-width: 0; }
+.u6-st-c.prim .u6-st-v { font-size: 15px; }
+.u6-st-c.quiet .u6-st-v { font-size: var(--fs-2xs); font-weight: 600; color: var(--text-secondary); }
+.u6-st-c.quiet .u6-st-v.ok { color: var(--tone-ok-text); } .u6-st-c.quiet .u6-st-v.err { color: var(--tone-err-text); } .u6-st-c.quiet .u6-st-v.warn { color: var(--tone-warn-text); }
+.u6-st-s { font-size: var(--fs-2xs); color: var(--text-muted); white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+.u6-st-s .vs { font-size: 8px; padding: 0 6px; }
+.u6-st-fresh { flex: none; display: flex; flex-direction: column; justify-content: center; gap: 5px; padding: var(--md) var(--lg); min-width: 168px; border-left: 1px solid var(--border-light); }
+@media (max-width: 1180px) { .u6-st-cells { flex-direction: column; gap: 6px; } }
+@media (max-width: 1000px) { .u6-st-fresh { display: none; } }
+@media (max-width: 860px) { .u6-st-band { flex-direction: column; } .u6-st-grp + .u6-st-grp { border-left: none; border-top: 1px solid var(--border-light); } }
+
+.u6-detail { position: relative; flex: 1 1 auto; min-width: 0; min-height: 0; overflow-y: auto; overflow-x: hidden; padding: var(--us-pad); scrollbar-width: thin; scrollbar-color: var(--pm6-sb-thumb) transparent; }
+.u6-detail::-webkit-scrollbar { width: 10px; }
+.u6-detail::-webkit-scrollbar-thumb { background: var(--pm6-sb-thumb); border: 3px solid transparent; background-clip: padding-box; border-radius: 8px; }
+.u6-dwrap { display: flex; flex-direction: column; gap: var(--us-gap); width: 100%; max-width: 1280px; margin: 0 auto; }
+/* dossier swap — pulling the next file off the pressure queue: a ghost of the
+   outgoing dossier drifts away and fades above while the incoming one slides in
+   from the direction you moved through the index, landing with a touch of spring */
+/* geometry (left/top/width) is pinned inline to the outgoing pane's offsets */
+.u6-swap-ghost { position: absolute; z-index: 5; pointer-events: none; }
+.u6-swap-ghost.u6-out-up { --u6-swap-exit-y: -14px; }
+.u6-swap-ghost.u6-out-up, .u6-swap-ghost.u6-out-down { animation: u6SwapOut var(--mo-settle-dur) var(--pm-ease-in) both; }
+@keyframes u6SwapOut { to { opacity: 0; transform: translateY(var(--u6-swap-exit-y, 14px)) scale(.992); } }
+#u6DetailBody.u6-in-down { animation: u6SwapInDown var(--mo-spring-dur) var(--mo-spring-ease) both; }
+#u6DetailBody.u6-in-up { animation: u6SwapInUp var(--mo-spring-dur) var(--mo-spring-ease) both; }
+@keyframes u6SwapInDown { from { opacity: 0; transform: translateY(22px) scale(.995); } }
+@keyframes u6SwapInUp { from { opacity: 0; transform: translateY(-22px) scale(.995); } }
+/* dossier sections cascade in briskly behind the swap — a workbench, not theatre */
+@keyframes u6SecIn { from { opacity: 0; transform: translateY(7px); } }
+.u6-sec-in { animation: u6SecIn var(--mo-settle-dur) var(--pm-ease-out) both; }
+/* wide + ultra-wide: the detail pane earns its width — the rail widens a little and
+   the wrap soaks the pane, so master-detail never sits beside a void at 2200/2500 */
+@media (min-width: 1600px) { .u6-rail { flex: 0 0 300px; } .u6-dwrap { max-width: 1560px; } }
+@media (min-width: 1900px) { .u6-rail { flex: 0 0 320px; } .u6-dwrap { max-width: none; } }
+@media (min-width: 2350px) { .u6-rail { flex: 0 0 356px; } }
+
+.u6-dhead { display: flex; align-items: center; gap: var(--md); min-width: 0; }
+.u6-dh-ico { flex: none; width: 36px; height: 36px; border-radius: var(--radius-md); display: inline-flex; align-items: center; justify-content: center; background: color-mix(in srgb, var(--cat, var(--accent-primary)) 16%, transparent); color: var(--cat, var(--accent-primary)); box-shadow: var(--elev-1); }
+.u6-dh-ico svg { width: 17px; height: 17px; }
+.u6-dh-t { flex: 1 1 auto; min-width: 0; display: flex; flex-direction: column; gap: 2px; }
+.u6-dh-k { font-family: var(--mono-font); font-size: 8.5px; font-weight: 700; letter-spacing: .14em; text-transform: uppercase; color: var(--text-muted); white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+.u6-dh-t h2 { margin: 0; font-family: var(--display-font); font-size: 21px; font-weight: 800; line-height: 1.1; letter-spacing: .2px; color: var(--text-primary); white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+/* the provider dossier is the heart of the workspace — it opens bigger */
+.u6-dhead.dossier { padding-bottom: var(--sm); border-bottom: 1px solid var(--border-light); }
+.u6-dhead.dossier .u6-dh-ico { width: 44px; height: 44px; }
+.u6-dhead.dossier .u6-dh-ico svg { width: 20px; height: 20px; }
+.u6-dhead.dossier h2 { font-size: 25px; }
+.u6-dh-sub { font-size: var(--fs-2xs); color: var(--text-muted); white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+.u6-dh-acts { margin-left: auto; flex: none; display: flex; align-items: center; gap: var(--sm); flex-wrap: wrap; justify-content: flex-end; }
+/* pressure-rank badge: where this subject sits in the triage queue */
+.u6-prio { display: inline-flex; align-items: baseline; gap: 5px; font-family: var(--mono-font); font-size: var(--fs-2xs); font-weight: 700; color: var(--text-secondary); padding: 2px 9px; border-radius: var(--radius-pill); border: 1px solid var(--border-light); background: color-mix(in srgb, var(--text-primary) 4%, transparent); white-space: nowrap; }
+.u6-prio i { font-style: normal; font-size: 8px; font-weight: 700; letter-spacing: .06em; text-transform: uppercase; color: var(--text-muted); }
+.u6-prio.hot { color: var(--tone-err-text); border-color: color-mix(in srgb, var(--tone-err) 35%, transparent); background: color-mix(in srgb, var(--tone-err) 8%, transparent); }
+.u6-prio.hot i { color: var(--tone-err-text); }
+
+.u6-duo { display: grid; grid-template-columns: minmax(0, 1.25fr) minmax(0, 1fr); gap: var(--us-gap); align-items: start; }
+.u6-duo.eq { grid-template-columns: minmax(0, 1fr) minmax(0, 1fr); }
+/* triage queue, not a pair of equal alert cards: the blocked guard leads full
+   width and loud; the quota warning sits beneath it, deliberately quieter */
+.u6-attn { display: flex; flex-direction: column; gap: var(--sm); }
+@media (max-width: 1080px) { .u6-duo, .u6-duo.eq { grid-template-columns: minmax(0, 1fr); } }
+
+.u6-attn-c { display: flex; align-items: center; gap: var(--md); padding: var(--md) var(--lg); min-width: 0; border-radius: var(--radius-lg); border: 1px solid color-mix(in srgb, var(--tone-err) 35%, var(--border-light)); background: color-mix(in srgb, var(--tone-err) 7%, var(--surface-elevated)); box-shadow: var(--elev-1); cursor: pointer; transition: box-shadow var(--motion-med) var(--ease-out), transform var(--motion-med) var(--ease-out); }
+.u6-attn-c:hover { box-shadow: var(--elev-2); transform: translateY(-1px); }
+.u6-attn-c.warnv { border-color: color-mix(in srgb, var(--tone-warn) 40%, var(--border-light)); background: color-mix(in srgb, var(--tone-warn) 7%, var(--surface-elevated)); }
+.u6-attn-c.sec { padding: var(--sm) var(--lg); border-color: color-mix(in srgb, var(--tone-warn) 24%, var(--border-light)); background: color-mix(in srgb, var(--tone-warn) 4%, var(--surface-elevated)); box-shadow: none; }
+.u6-attn-c.sec > .us-dot { width: 8px; height: 8px; }
+.u6-attn-c.sec .u6-attn-t b { font-size: var(--fs-xs); }
+.u6-attn-c > .us-dot { width: 10px; height: 10px; }
+.u6-attn-c > .us-dot.ok { box-shadow: 0 0 0 3px color-mix(in srgb, var(--tone-ok) 20%, transparent); }
+.u6-attn-c > .us-dot.warn { box-shadow: 0 0 0 3px color-mix(in srgb, var(--tone-warn) 20%, transparent); }
+.u6-attn-c > .us-dot.err { box-shadow: 0 0 0 3px color-mix(in srgb, var(--tone-err) 20%, transparent); }
+.u6-attn-t { flex: 1 1 auto; min-width: 0; }
+.u6-attn-t b { display: block; font-size: var(--fs-sm); font-weight: 700; color: var(--text-primary); white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+.u6-attn-t span { display: block; font-size: var(--fs-2xs); color: var(--text-secondary); white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+
+.u6-pan { min-width: 0; display: flex; flex-direction: column; border-radius: var(--radius-lg); border: 1px solid color-mix(in srgb, var(--cat, var(--accent-primary)) 14%, var(--border-light)); background: color-mix(in srgb, var(--cat, var(--accent-primary)) 4%, var(--surface-elevated)); box-shadow: var(--elev-1); transition: box-shadow var(--motion-med) var(--ease-out); }
+.u6-pan:hover { box-shadow: var(--elev-2); }
+.u6-panh { display: flex; align-items: center; gap: var(--sm); min-height: var(--us-sec-h); min-width: 0; padding: var(--sm) var(--md); border-bottom: 1px solid color-mix(in srgb, var(--cat, var(--accent-primary)) 12%, var(--border-light)); background: color-mix(in srgb, var(--cat, var(--accent-primary)) 7%, transparent); border-radius: var(--radius-lg) var(--radius-lg) 0 0; }
+.u6-panico { flex: none; width: 20px; height: 20px; border-radius: var(--radius-sm); display: inline-flex; align-items: center; justify-content: center; background: color-mix(in srgb, var(--cat, var(--accent-primary)) 18%, transparent); color: var(--cat, var(--accent-primary)); }
+.u6-panico svg { width: 11px; height: 11px; }
+.u6-pant { font-family: var(--display-font); font-size: var(--fs-xs); font-weight: 700; letter-spacing: .07em; text-transform: uppercase; color: var(--text-primary); white-space: nowrap; }
+.u6-panm { margin-left: auto; min-width: 0; display: flex; align-items: center; gap: 8px; font-size: var(--fs-2xs); color: var(--text-muted); white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+.u6-panm > * { min-width: 0; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+.u6-panb { padding: var(--md); display: flex; flex-direction: column; gap: var(--us-row); min-width: 0; }
+
+.u6-qitem { display: grid; grid-template-columns: 18px minmax(0, 1.15fr) minmax(0, 1.4fr) 42px 96px; gap: var(--sm) var(--md); align-items: center; padding: 6px; min-width: 0; border-radius: var(--radius-md); cursor: pointer; transition: background var(--motion-fast) var(--ease-out), transform var(--motion-fast) var(--ease-out); }
+/* the shared .us-meter grid reserves a 30px label slot (and a 40px pct slot) even
+   when a row supplies its own name/pct columns — that reservation stranded the
+   track as a stub. Here the meter is track-only: let it soak its grid column.
+   Every row shares the same grid, so all track edges stay pixel-aligned. */
+.u6-qitem .us-meter { display: block; min-width: 0; }
+.u6-qitem .us-meter .us-track { display: block; width: 100%; min-width: 0; }
+.u6-qitem:hover { background: color-mix(in srgb, var(--accent-primary) 7%, transparent); transform: translateX(2px); }
+.u6-qitem .nm { font-size: var(--fs-sm); font-weight: 600; color: var(--text-primary); white-space: nowrap; overflow: hidden; text-overflow: ellipsis; display: flex; align-items: center; gap: 6px; min-width: 0; }
+.u6-qitem .nm span.nmt { overflow: hidden; text-overflow: ellipsis; white-space: nowrap; min-width: 0; }
+.u6-qitem .pc { font-family: var(--mono-font); font-size: var(--fs-2xs); font-weight: 700; color: var(--text-primary); text-align: right; font-variant-numeric: tabular-nums; }
+.u6-qitem .rs { font-family: var(--mono-font); font-size: var(--fs-2xs); color: var(--text-muted); white-space: nowrap; overflow: hidden; text-overflow: ellipsis; min-width: 0; text-align: right; }
+/* ultrawide: the 1.15fr name track hoarded width on the wide Overview pane, so a
+   short provider name left the pressure mini-bar stranded mid-row with a large
+   gap before the right-aligned %/reset. Re-weight the row so the meter is the
+   hero track that visibly bridges name -> value (the name keeps a readable floor
+   and still ellipsises; the reset column holds its content width). Every row of
+   the panel shares this one template, so all track edges stay pixel-aligned. */
+@media (min-width: 1900px) {
+  .u6-qitem { grid-template-columns: 18px minmax(120px, 0.62fr) minmax(0, 2.4fr) 44px 96px; }
+}
+/* squished: the 5-col quota row crushes the name (the long "unknown reset" +
+   value-state chip steal the width). Collapse to dot/name/meter/pct and let the
+   name keep its full text. */
+@media (max-width: 560px) {
+  .u6-qitem { grid-template-columns: auto minmax(0, 1fr) minmax(0, 1.3fr) 38px; }
+  .u6-qitem .rs { display: none; }
+  .u6-qitem .nm .vs { display: none; }
+}
+
+.u6-chart { display: flex; flex-direction: column; gap: 6px; padding-top: var(--sm); }
+.u6-plotarea { position: relative; height: 120px; display: flex; align-items: flex-end; gap: 5px; }
+.u6-gl { position: absolute; left: 0; right: 0; height: 1px; background: var(--border-light); pointer-events: none; z-index: 0; }
+.u6-bline { position: absolute; left: 0; right: 0; height: 0; border-top: 2px solid color-mix(in srgb, var(--tone-err) 55%, transparent); z-index: 3; pointer-events: none; }
+.u6-bline span { position: absolute; right: 0; top: -15px; font-size: 8px; font-weight: 700; letter-spacing: .07em; text-transform: uppercase; color: var(--tone-err-text); background: color-mix(in srgb, var(--tone-err) 10%, transparent); padding: 0 5px; border-radius: var(--radius-xs); }
+.u6-col { position: relative; z-index: 1; flex: 1 1 0; min-width: 0; height: 100%; display: flex; align-items: flex-end; }
+.u6-stack { display: flex; flex-direction: column-reverse; width: 100%; gap: 1px; height: 120px; }
+.u6-stack i { display: block; width: 100%; height: 0; min-height: 0; border-radius: var(--radius-xs); background: currentColor; transition: height var(--mo-chart-transition-dur, 400ms) var(--mo-chart-transition-ease, ease); }
+.u6-stack .s-inp { color: var(--ser-inp); } .u6-stack .s-out { color: var(--ser-out); }
+.u6-stack .s-rea { color: var(--ser-rea); } .u6-stack .s-cache { color: var(--ser-cache); }
+.u6-col .tip { position: absolute; bottom: calc(100% + 4px); left: 50%; transform: translateX(-50%); z-index: 10; background: var(--surface-elevated); border: 1px solid var(--border-light); border-radius: var(--radius-sm); padding: 4px 8px; font-size: var(--fs-2xs); color: var(--text-primary); white-space: nowrap; pointer-events: none; opacity: 0; transition: opacity var(--motion-fast) var(--ease-out); box-shadow: var(--elev-2); }
+.u6-col:hover .tip { opacity: 1; }
+.u6-xrow { display: flex; gap: 5px; }
+.u6-xrow b { flex: 1 1 0; min-width: 0; font-size: 9px; font-weight: 600; color: var(--text-muted); text-align: center; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+.u6-legend { display: flex; gap: var(--md); flex-wrap: wrap; font-size: var(--fs-2xs); color: var(--text-secondary); margin-top: 2px; }
+.u6-legend > * { display: inline-flex; align-items: center; gap: 5px; cursor: pointer;
+  border: none; background: none; padding: 0; font: inherit; color: inherit;
+  transition: opacity var(--mo-hover-dur, 120ms) var(--mo-hover-ease, ease-out); }
+.u6-legend > *.muted { opacity: .3; }
+.u6-swatch { width: 9px; height: 9px; border-radius: var(--radius-xs); display: inline-block; }
+.u6-winbtns { display: inline-flex; gap: 2px; border: 1px solid var(--border-light); border-radius: var(--radius-pill); padding: 2px; background: var(--surface); }
+.u6-winbtns button { font-family: var(--mono-font); font-size: var(--fs-2xs); font-weight: 700; padding: 2px 9px; border-radius: var(--radius-pill); color: var(--text-muted); transition: all var(--motion-fast) var(--ease-out); }
+.u6-winbtns button:hover { color: var(--text-primary); background: color-mix(in srgb, var(--text-primary) 6%, transparent); }
+.u6-winbtns button.on { color: var(--accent-primary); background: var(--accent-soft); }
+
+.u6-donuts { display: flex; gap: var(--lg); flex-wrap: wrap; align-items: flex-end; }
+.u6-donut { display: flex; flex-direction: column; align-items: center; gap: 4px; min-width: 62px; }
+.u6-donut svg { width: 62px; height: 62px; }
+.u6-donut .dbg { fill: none; stroke: var(--border-light); stroke-width: 6; }
+.u6-donut .dfill { fill: none; stroke-width: 6; stroke-linecap: round; transform: rotate(-90deg); transform-origin: center; transition: stroke-dashoffset var(--mo-data-refresh-dur, 800ms) var(--pm-ease-smooth, ease); }
+.u6-donut text { font-family: var(--num-font); font-size: 12px; font-weight: 700; fill: var(--text-primary); text-anchor: middle; dominant-baseline: central; }
+.u6-donut small { font-size: var(--fs-2xs); color: var(--text-secondary); max-width: 82px; text-align: center; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+.u6-presets { display: flex; align-items: center; gap: var(--sm); flex-wrap: wrap; }
+.u6-presets .k { font-size: var(--fs-2xs); color: var(--text-muted); }
+.u6-pchip { padding: 2px 10px; border-radius: var(--radius-pill); border: 1px solid var(--border-light); background: transparent; font-family: var(--mono-font); font-size: var(--fs-2xs); font-weight: 700; color: var(--text-muted); cursor: pointer; transition: all var(--motion-fast) var(--ease-out); }
+.u6-pchip:hover { color: var(--text-primary); border-color: var(--border); transform: translateY(-1px); }
+.u6-pchip.on { color: var(--accent-primary); background: var(--accent-soft); border-color: color-mix(in srgb, var(--accent-primary) 40%, transparent); }
+
+.u6-runout { display: flex; align-items: center; gap: 6px; flex-wrap: wrap; font-size: var(--fs-2xs); color: var(--text-secondary); }
+.u6-runout svg { width: 11px; height: 11px; flex: none; color: var(--text-muted); }
+.u6-runout .ro-l { font-family: var(--mono-font); font-size: 9px; font-weight: 700; letter-spacing: .06em; text-transform: uppercase; color: var(--text-muted); }
+.u6-qbig { display: flex; align-items: center; gap: var(--lg); min-width: 0; padding: var(--sm) var(--md); border-radius: var(--radius-md); background: color-mix(in srgb, var(--cat, var(--accent-primary)) 5%, transparent); }
+.u6-qbig .us-big { flex: none; font-size: 42px; }
+.u6-qbig-r { flex: 1 1 auto; min-width: 0; display: flex; flex-direction: column; gap: 6px; }
+.u6-bigbar { display: block; height: 10px; border-radius: var(--radius-pill); background: var(--border-light); overflow: hidden; }
+.u6-bigbar .us-fill { height: 100%; }
+.u6-noread { display: flex; align-items: center; gap: var(--sm); flex-wrap: wrap; padding: var(--md); border: 1px solid var(--border-light); border-radius: var(--radius-md); background: color-mix(in srgb, var(--text-primary) 3%, transparent); font-size: var(--fs-xs); color: var(--text-secondary); }
+.u6-kv { display: grid; grid-template-columns: repeat(auto-fit, minmax(128px, 1fr)); gap: var(--sm); }
+.u6-kvi { display: flex; flex-direction: column; gap: 2px; min-width: 0; }
+.u6-kvi b { font-size: 9px; font-weight: 700; letter-spacing: .05em; text-transform: uppercase; color: var(--text-muted); }
+.u6-kvi span { font-size: var(--fs-xs); color: var(--text-primary); overflow-wrap: anywhere; }
+/* the shared .us-proj chip and .us-cost are white-space:nowrap (usage-shared.css),
+   which makes the Projected provenance chip overflow its narrow auto-fit .u6-kv
+   cell and collide with the Policy value. Scoped local equivalent (_shared stays
+   untouched): inside kv cells the chip and cost may wrap, staying visible in-cell */
+.u6-kv .us-proj { white-space: normal; max-width: 100%; }
+.u6-kv .us-cost { white-space: normal; overflow-wrap: anywhere; }
+
+.u6-crow { display: grid; grid-template-columns: minmax(110px, 1.05fr) auto minmax(110px, 1fr) auto auto; gap: var(--sm) var(--md); align-items: center; padding: 6px 2px; min-width: 0; border-bottom: 1px solid var(--border-light); font-size: var(--fs-xs); }
+.u6-crow:last-child { border-bottom: none; }
+.u6-cname { font-weight: 600; color: var(--text-primary); white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+.u6-cnums { font-family: var(--mono-font); font-size: var(--fs-2xs); color: var(--text-secondary); white-space: nowrap; text-align: right; }
+.u6-cnums.dim { color: var(--text-muted); }
+.u6-csave { font-family: var(--mono-font); font-weight: 700; color: var(--tone-ok); white-space: nowrap; text-align: right; }
+.u6-csave.zero { color: var(--text-secondary); } .u6-csave.na { color: var(--text-muted); font-weight: 500; }
+.u6-cnote { grid-column: 1 / -1; margin-top: -2px; font-size: var(--fs-2xs); color: var(--text-muted); line-height: var(--lh-body); }
+.u6-crow:hover, .u6-fam:hover { background: color-mix(in srgb, var(--text-primary) 4%, transparent); }
+@media (max-width: 700px) {
+  .u6-crow { grid-template-columns: minmax(0, 1fr) auto; }
+  .u6-crow .us-meter, .u6-cnums { grid-column: 1 / -1; }
+  .u6-cnums { text-align: left; }
+}
+
+.u6-acc { display: flex; flex-direction: column; gap: 6px; padding: var(--md); min-width: 0; background: var(--surface); border: 1px solid var(--border-light); border-radius: var(--radius-md); transition: border-color var(--motion-fast) var(--ease-out), box-shadow var(--motion-fast) var(--ease-out); }
+.u6-acc:hover { box-shadow: var(--elev-1); }
+.u6-acc.effective { border-color: color-mix(in srgb, var(--tone-ok) 45%, transparent); }
+.u6-acc-h { display: flex; align-items: center; gap: var(--sm); flex-wrap: wrap; min-width: 0; }
+.u6-acc-name { font-size: var(--fs-sm); font-weight: 700; color: var(--text-primary); }
+.u6-acc-mail { font-size: var(--fs-2xs); color: var(--text-muted); font-family: var(--mono-font); overflow: hidden; text-overflow: ellipsis; }
+.u6-acc-status { display: flex; align-items: center; gap: 7px; font-size: var(--fs-xs); color: var(--text-secondary); line-height: var(--lh-body); min-width: 0; }
+.u6-acc-status > span:nth-child(2) { min-width: 0; overflow: hidden; text-overflow: ellipsis; }
+.u6-cd { font-family: var(--mono-font); font-weight: 700; font-size: var(--fs-sm); color: var(--tone-warn); letter-spacing: .05em; }
+.u6-marker { display: inline-flex; align-items: center; gap: 4px; font-size: var(--fs-2xs); font-weight: 700; padding: 1px 8px; border-radius: var(--radius-pill); white-space: nowrap; }
+.u6-marker svg { width: 9px; height: 9px; }
+.u6-marker.req { background: color-mix(in srgb, var(--tone-info) 14%, transparent); color: var(--tone-info-text); }
+.u6-marker.eff { background: color-mix(in srgb, var(--tone-ok) 14%, transparent); color: var(--tone-ok-text); }
+.u6-acc-note { font-size: var(--fs-2xs); color: var(--text-muted); line-height: var(--lh-body); display: flex; gap: 6px; align-items: flex-start; }
+.u6-acc-note svg { width: 12px; height: 12px; flex: none; margin-top: 1px; }
+
+.u6-guard { display: flex; flex-direction: column; gap: var(--sm); padding: var(--md); min-width: 0; border-radius: var(--radius-md); background: var(--surface); border: 1px solid color-mix(in srgb, var(--tone-err) 35%, transparent); }
+.u6-guard.warn { border-color: color-mix(in srgb, var(--tone-warn) 40%, transparent); }
+.u6-guard.ok { border-color: var(--border-light); }
+.u6-guard-h { display: flex; align-items: center; gap: var(--sm); flex-wrap: wrap; min-width: 0; }
+.u6-guard-h > svg { width: 15px; height: 15px; flex: none; }
+.u6-guard.blocked .u6-guard-h > svg { color: var(--tone-err); }
+.u6-guard.warn .u6-guard-h > svg { color: var(--tone-warn); }
+.u6-guard.ok .u6-guard-h > svg { color: var(--tone-ok); }
+.u6-guard-name { font-family: var(--mono-font); font-size: var(--fs-xs); font-weight: 700; color: var(--text-primary); overflow: hidden; text-overflow: ellipsis; }
+.u6-guard-body { font-size: var(--fs-xs); color: var(--text-secondary); line-height: var(--lh-body); }
+.u6-gacts { display: flex; gap: var(--sm); flex-wrap: wrap; }
+.u6-why { border: 1px solid var(--border-light); border-radius: var(--radius-sm); overflow: hidden; }
+.u6-why-t { display: flex; align-items: center; gap: 6px; width: 100%; padding: 6px var(--md); font-size: var(--fs-2xs); font-weight: 700;
+  font-family: inherit; text-align: left; border: none; color: var(--text-secondary); cursor: pointer; user-select: none;
+  background: color-mix(in srgb, var(--text-primary) 3%, transparent); }
+.u6-why-t .car { display: inline-flex; transition: transform var(--motion-fast) var(--ease-out); }
+.u6-why-t .car svg { width: 11px; height: 11px; }
+.u6-why.open .u6-why-t .car { transform: rotate(90deg); }
+.u6-why-b { display: grid; grid-template-rows: 0fr; opacity: 0; padding: 0 var(--md); transition: grid-template-rows var(--motion-med) var(--ease-out), opacity var(--motion-med) var(--ease-out), padding var(--motion-med) var(--ease-out); }
+.u6-why-b > * { overflow: hidden; min-height: 0; }
+.u6-why.open .u6-why-b { grid-template-rows: 1fr; opacity: 1; padding: var(--sm) var(--md) var(--md); }
+.u6-dgrid { display: grid; grid-template-columns: repeat(auto-fill, minmax(150px, 1fr)); gap: var(--sm); padding: 2px 0; }
+.u6-di { display: flex; flex-direction: column; gap: 2px; min-width: 0; }
+.u6-di b { font-size: 9px; font-weight: 700; letter-spacing: .05em; text-transform: uppercase; color: var(--text-muted); }
+.u6-di span { font-size: var(--fs-xs); color: var(--text-primary); overflow-wrap: anywhere; }
+.u6-tag { display: inline-flex; padding: 2px 9px; border-radius: var(--radius-pill); border: 1px solid var(--border-light); background: color-mix(in srgb, var(--text-primary) 3%, transparent); font-family: var(--mono-font); font-size: var(--fs-2xs); color: var(--text-secondary); white-space: nowrap; }
+.u6-tags { display: flex; flex-wrap: wrap; gap: var(--sm); }
+
+.u6-gate { display: flex; align-items: center; gap: var(--md); flex-wrap: wrap; padding: var(--sm) 2px; }
+.u6-gate b { font-size: var(--fs-sm); color: var(--text-primary); }
+.u6-gate .sub { font-size: var(--fs-2xs); color: var(--text-muted); flex-basis: 100%; }
+
+.u6-fam { display: grid; grid-template-columns: minmax(140px, 1.1fr) minmax(0, 1.4fr) auto; gap: var(--sm) var(--md); align-items: center; padding: 4px 2px; min-width: 0; }
+.u6-fam-name { font-size: var(--fs-xs); font-weight: 600; color: var(--text-primary); white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+.u6-fam-tok { font-family: var(--mono-font); font-size: var(--fs-2xs); color: var(--text-muted); text-align: right; white-space: nowrap; }
+
+.u6-sigrow { display: flex; align-items: flex-start; gap: 7px; font-size: var(--fs-xs); line-height: var(--lh-body); padding: 3px 0; }
+.u6-sigrow .sd { width: 7px; height: 7px; border-radius: 50%; flex: none; margin-top: 5px; }
+.u6-sigrow.win .sd { background: var(--tone-ok); } .u6-sigrow.imp .sd { background: var(--tone-info); } .u6-sigrow.risk .sd { background: var(--tone-warn); }
+.u6-sigrow .st { color: var(--text-secondary); min-width: 0; }
+.u6-grade { font-family: var(--num-font); font-weight: 800; font-size: 44px; line-height: 1; letter-spacing: .5px; }
+.u6-grade.g-ok { color: var(--tone-ok-text); } .u6-grade.g-warn { color: var(--tone-warn-text); } .u6-grade.g-err { color: var(--tone-err-text); }
+
+.u6-lctrl { display: flex; gap: var(--sm); flex-wrap: wrap; align-items: center; }
+.u6-lsearch { flex: 1 1 160px; max-width: 280px; }
+.u6-live { display: inline-flex; align-items: center; gap: 6px; font-size: var(--fs-2xs); font-weight: 700; color: var(--tone-ok-text); white-space: nowrap; }
+.u6-lcaret { width: 20px; height: 20px; display: inline-flex; align-items: center; justify-content: center; border: none; background: transparent; border-radius: var(--radius-xs); color: var(--text-muted); cursor: pointer; transition: all var(--motion-fast) var(--ease-out); }
+.u6-lcaret:hover { color: var(--accent-primary); background: var(--accent-soft); }
+.u6-lcaret svg { width: 12px; height: 12px; transition: transform var(--motion-fast) var(--ease-out); }
+.u6-lcaret.open svg { transform: rotate(90deg); }
+.u6-ldetail td { background: color-mix(in srgb, var(--text-primary) 3%, transparent); white-space: normal; }
+[data-ldetail]:not([hidden]) { animation: u6DetIn var(--mo-tab-in-dur, 200ms) var(--pm-ease-out, ease-out); }
+@keyframes u6DetIn { from { opacity: 0; transform: translateY(-3px); } to { opacity: 1; transform: none; } }
+.u6-drill { display: flex; align-items: center; gap: var(--md); flex-wrap: wrap; margin-top: var(--sm); }
+.u6-ref { font-size: var(--fs-2xs); color: var(--text-muted); }
+.u6-ref b { font-family: var(--mono-font); font-weight: 600; color: var(--text-secondary); }
+.u6-lsum { display: flex; gap: var(--md); flex-wrap: wrap; align-items: center; font-size: var(--fs-2xs); color: var(--text-muted); }
+.u6-lsum b { color: var(--text-primary); }
+.u6-empty { display: flex; align-items: center; gap: var(--sm); padding: var(--md); border: 1px solid var(--border-light); border-radius: var(--radius-md); color: var(--text-muted); font-size: var(--fs-xs); }
+.u6-empty svg { width: 14px; height: 14px; flex: none; }
+
+.u6-btn { display: inline-flex; align-items: center; gap: 6px; padding: 5px 13px; border-radius: var(--radius-pill); border: 1px solid var(--border-light); background: transparent; color: var(--text-secondary); font-family: var(--body-font); font-size: var(--fs-2xs); font-weight: 700; white-space: nowrap; cursor: pointer; transition: all var(--motion-fast) var(--ease-out); }
+.u6-btn svg { width: 11px; height: 11px; }
+.u6-btn:hover { color: var(--text-primary); border-color: var(--border); background: var(--accent-soft); transform: translateY(-1px); }
+.u6-btn:active { transform: scale(.97); }
+.u6-btn.primary { color: var(--accent-primary); background: var(--accent-soft); border-color: transparent; }
+
+@media (max-width: 860px) {
+  .u6-work { flex-direction: column; }
+  .u6-rail { flex: 0 0 auto; width: auto; max-height: 34vh; border-right: none; border-bottom: 1px solid var(--border-light); }
+}
+
+[data-theme^="retro"] .u6-strip, [data-theme^="retro"] .u6-pan, [data-theme^="retro"] .u6-attn-c, [data-theme^="retro"] .u6-dh-ico, [data-theme^="retro"] .u6-row, [data-theme^="retro"] .u6-railind { border-radius: 0; }
+[data-theme^="retro"] .u6-strip, [data-theme^="retro"] .u6-pan { border-width: 2px; }
+[data-theme^="retro"] .u6-winbtns, [data-theme^="retro"] .u6-btn, [data-theme^="retro"] .u6-pchip, [data-theme^="retro"] .u6-tag, [data-theme^="retro"] .u6-marker, [data-theme^="retro"] .u6-prio, [data-theme^="retro"] .u6-railfoot kbd { border-radius: 2px; }
+[data-theme^="basic"] .u6-pan, [data-theme^="basic"] .u6-strip, [data-theme^="basic"] .u6-attn-c { box-shadow: none; }
+[data-theme^="glass"] .u6-pan { border-color: var(--glass-hairline); box-shadow: none; background: rgba(var(--glass-tint-rgb), calc(var(--glass-alpha) + .05)); }
+[data-theme^="glass"] .u6-strip, [data-theme^="glass"] .u6-attn-c, [data-theme^="glass"] .u6-acc, [data-theme^="glass"] .u6-guard { background: rgba(var(--glass-tint-rgb), calc(var(--glass-alpha) + .05)); border-color: var(--glass-hairline); }
+th[data-sort] { cursor: pointer; user-select: none; }
+/* sort direction is a real SVG (PMIcons arrowUp geometry) via mask, never a text glyph */
+th[data-sort].asc::after, th[data-sort].desc::after {
+  content: ''; display: inline-block; width: 7px; height: 7px; margin-left: 5px; vertical-align: 1px;
+  background: currentColor; opacity: .7;
+  -webkit-mask: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%23000' stroke-width='3' stroke-linecap='round' stroke-linejoin='round'%3E%3Cline x1='12' y1='19' x2='12' y2='5'/%3E%3Cpolyline points='5 12 12 5 19 12'/%3E%3C/svg%3E") no-repeat center / contain;
+  mask: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%23000' stroke-width='3' stroke-linecap='round' stroke-linejoin='round'%3E%3Cline x1='12' y1='19' x2='12' y2='5'/%3E%3Cpolyline points='5 12 12 5 19 12'/%3E%3C/svg%3E") no-repeat center / contain; }
+th[data-sort].desc::after { transform: rotate(180deg); }
+[data-theme^="glass"] .u6-panh { border-bottom-color: var(--glass-hairline, transparent); }
+[data-theme^="glass"] .u6-rail { background: transparent; }
+
+@media (prefers-reduced-motion: reduce) {
+  .u6-stack i, .u6-donut .dfill, .u6-row, .u6-qitem, .u6-btn, .u6-pchip, .u6-attn-c { transition: none; }
+  .u6-railind, #u6DetailBody.u6-in-up, #u6DetailBody.u6-in-down, .u6-swap-ghost, .u6-sec-in, .u6-st-focal .u6-st-big { transition: none; animation: none; }
+  .u6-row.p-hot .u6-rbar .us-fill, .u6-row.p-warn .u6-rbar .us-fill { animation: none; }
+}
+html[data-reduced-motion="1"] .u6-stack i, html[data-reduced-motion="1"] .u6-donut .dfill { transition: none; }
+html[data-reduced-motion="1"] .u6-railind, html[data-reduced-motion="1"] #u6DetailBody.u6-in-up, html[data-reduced-motion="1"] #u6DetailBody.u6-in-down, html[data-reduced-motion="1"] .u6-swap-ghost, html[data-reduced-motion="1"] .u6-sec-in, html[data-reduced-motion="1"] .u6-st-focal .u6-st-big { transition: none; animation: none; }
+html[data-reduced-motion="1"] .u6-row.p-hot .u6-rbar .us-fill, html[data-reduced-motion="1"] .u6-row.p-warn .u6-rbar .us-fill { animation: none; }
+html[data-reduced-motion="1"] .u6-qitem:hover, html[data-reduced-motion="1"] .u6-attn-c:hover, html[data-reduced-motion="1"] .u6-btn:hover, html[data-reduced-motion="1"] .u6-pchip:hover { transform: none; }
+</style>
+</head>
+<body>
+<div id="app"></div>
+
+<template id="usage-page">
+  <div class="us-page u6">
+
+    <header class="us-head">
+      <h1 class="us-head-title">Usage</h1>
+      <div class="us-head-sub">AI cost &amp; usage for <b>Tastebook</b> — a master–detail workspace over every quota, account, guard and ledger row. Refreshes every <b>5 min</b> · history kept <b>90 days</b></div>
+      <span class="us-fresh" id="u6Fresh"><span class="d"></span><span id="u6FreshTxt">current · as of 14:42</span></span>
+      <div class="us-head-acts">
+        <button class="us-hbtn" id="u6Refresh" title="Refresh usage projections" aria-label="Refresh usage projections"><i data-ico="refresh" class="pm-ico"></i></button>
+        <button class="us-hbtn primary" title="Export usage as JSON" aria-label="Export usage as JSON" data-demo-action="usage.export" data-demo-arg="Usage exported to usage-tastebook.json (demo)"><i data-ico="exportIc" class="pm-ico"></i></button>
+      </div>
+    </header>
+
+    <div class="u6-strip" id="u6Strip" aria-label="Global usage strip"></div>
+
+    <div class="u6-work">
+      <aside class="u6-rail" aria-label="Usage subjects">
+        <div class="u6-railsearch">
+          <label class="pm-input"><i data-ico="search" class="pm-ico sm"></i><input id="u6Search" type="text" placeholder="Filter providers…" aria-label="Filter providers by name"></label>
+        </div>
+        <div class="u6-railscroll" id="u6RailScroll" role="listbox" aria-label="Subjects, providers sorted by pressure"></div>
+        <div class="u6-railfoot" aria-hidden="true"><kbd>↑</kbd><kbd>↓</kbd> move&nbsp;·&nbsp;<kbd>↵</kbd> open&nbsp;·&nbsp;sorted by pressure</div>
+      </aside>
+      <section class="u6-detail" id="u6Detail" role="region" aria-label="Selected subject detail">
+        <div class="u6-dwrap" id="u6DetailBody"></div>
+      </section>
+    </div>
+
+  </div>
+</template>
+
+<script src="_shared/icons.js"></script>
+<script src="_shared/usage-icons.js"></script>
+<script src="_shared/usage-data.js"></script>
+<script src="_shared/menu.js"></script>
+<script src="_shared/usage-chrome.js"></script>
+<script src="_shared/usage-context.js"></script>
+<script>
+PMUsageChrome.boot({ badge: { id: 'U6', name: 'Workspace' } });
+if (window.PMContext) window.PMContext.mountTriggers(document.getElementById('sbChips'));
+
+(function () {
+  'use strict';
+  var D = window.USAGE, fmt = window.USfmt, R = window.USrender;
+  function $(id) { return document.getElementById(id); }
+  function prov(o) { return o ? { source: o.source_class, conf: o.source_confidence, fresh: o.projection_freshness } : null; }
+  function hydrate(scope) {
+    scope.querySelectorAll('i[data-ico]').forEach(function (el) {
+      el.innerHTML = window.PMIcon(el.getAttribute('data-ico'), el.className);
+    });
+  }
+
+  var provOrder = D.quotas.slice().sort(function (a, b) {
+    var au = a.used == null ? -1 : a.used, bu = b.used == null ? -1 : b.used;
+    if (au !== bu) return bu - au;
+    return a.name.localeCompare(b.name);
+  });
+  var current = 'overview';
+  var chartWin = '24h';
+  var mutedSeries = {};
+  var LF = { q: '', plat: '', rep: '' };
+  var LSORT = { key: '', dir: 1 };
+
+  function quotaTone(q) {
+    if (q.used != null) return R.fillTone(q.used);
+    var t = (window.USvs[q.vs] || { tone: 'mute' }).tone;
+    return t === 'ok' || t === 'warn' || t === 'err' ? t : 'mute';
+  }
+  function resetText(q) {
+    if (q.reset == null) return 'no reset exposed';
+    if (q.reset === 'unknown') return 'unknown reset';
+    return 'resets ' + q.reset + (q.resetAt ? ' · at ' + q.resetAt : '');
+  }
+  function quotaForLedgerProv(prov) {
+    var p = String(prov).toLowerCase();
+    if (p === 'claude') return 'claude';
+    if (p === 'claude code') return 'claude-code';
+    if (p.indexOf('codex') === 0) return p.indexOf('plus') !== -1 ? 'codex-plan' : 'codex-api';
+    if (p.indexOf('copilot') === 0) return 'copilot';
+    if (p.indexOf('gemini') === 0) return p.indexOf('workspace') !== -1 ? 'gemini-ws' : 'gemini';
+    if (p.indexOf('antigravity') === 0) return 'antigravity';
+    if (p === 'cursor') return 'cursor';
+    if (p === 'opencode') return 'opencode';
+    if (p.indexOf('ollama') === 0) return 'ollama';
+    if (p.indexOf('windsurf') === 0) return 'windsurf';
+    return null;
+  }
+  function accountsForQuota(q) {
+    var out = [];
+    D.accounts.forEach(function (a, i) {
+      if (q.name.indexOf(a.prov) === 0 || q.id.indexOf(a.prov.toLowerCase()) === 0) out.push({ a: a, i: i });
+    });
+    return out;
+  }
+  function cacheForQuota(q) {
+    return D.cache.filter(function (c) {
+      if (c.name === q.name) return true;
+      if (q.id === 'codex-plan' && c.name === 'Codex (Plus)') return true;
+      if (q.id === 'copilot' && c.name === 'Copilot') return true;
+      return false;
+    });
+  }
+  function gatingForQuota(q) {
+    var g = D.planGating.filter(function (x) { return x.prov === q.name; });
+    return g[0] || null;
+  }
+
+  function renderStrip() {
+    var gB = D.guards.filter(function (g) { return g.state === 'blocked'; }).length;
+    var gW = D.guards.filter(function (g) { return g.state === 'warn'; }).length;
+    var pct = Math.round(D.budget.spentMTD / D.budget.monthlyLimit * 100);
+    var measured = provOrder.filter(function (q) { return q.used != null; });
+    var top = measured[0], next = measured[1];
+    var topTone = top ? R.fillTone(top.used) : 'mute';
+    var bigColor = topTone === 'hot' ? 'var(--tone-err-text)' : (topTone === 'warn' ? 'var(--tone-warn-text)' : 'var(--accent-primary)');
+    $('u6Strip').innerHTML =
+      '<section class="u6-st-focal" aria-label="Top quota pressure">' +
+        '<span class="u6-st-kick">' + R.ic('gauge') + 'top pressure \u00b7 ' + (top ? top.win + ' window' : '\u2014') + '</span>' +
+        '<div class="u6-st-frow">' +
+          '<span class="u6-st-big"' + (top ? ' data-counter="' + top.used + '" data-decimals="0"' : '') + ' style="color:' + bigColor + '">' + (top ? top.used + '%' : '\u2014') + '</span>' +
+          '<span class="u6-st-fmeta">' +
+            '<span class="u6-st-fname">' + (top ? top.name : '') + '</span>' +
+            '<span class="u6-rbar u6-st-bar"><span class="us-fill ' + topTone + '" data-fill="' + (top ? top.used : 0) + '" style="--wf:' + (top ? top.used : 0) + '%"></span></span>' +
+            '<span class="u6-st-s">resets ' + (top && top.reset !== 'unknown' ? top.reset : '\u2014') + (next ? ' \u00b7 next in queue: ' + next.name + ' at ' + next.used + '%' : '') + '</span>' +
+            '<span class="u6-st-s">' + R.projChip(D.projectionMeta) + '</span>' +
+          '</span>' +
+        '</div>' +
+      '</section>' +
+      '<div class="u6-st-band">' +
+        '<section class="u6-st-grp" aria-label="Cost"><span class="u6-st-gk">' + R.ic('wallet') + 'cost</span><div class="u6-st-cells">' +
+          '<div class="u6-st-c prim"><span class="u6-st-v"><span data-counter="' + D.burn.perHour.toFixed(2) + '" data-prefix="$" data-decimals="2">$' + D.burn.perHour.toFixed(2) + '</span>/hr</span><span class="u6-st-s">burn rate \u00b7 $' + D.burn.perDay.toFixed(1) + '/day pace \u00b7 ' + fmt.cost(D.spend['5h']) + ' last 5h</span></div>' +
+          '<div class="u6-st-c prim"><span class="u6-st-v"><span data-counter="' + D.budget.spentMTD.toFixed(2) + '" data-prefix="$" data-decimals="2">' + fmt.cost(D.budget.spentMTD) + '</span></span><span class="u6-st-s">spent MTD \u00b7 ' + pct + '% of ' + fmt.cost(D.budget.monthlyLimit) + ' \u00b7 ' + R.projChip(prov(D.budget)) + '</span></div>' +
+        '</div></section>' +
+        '<section class="u6-st-grp" aria-label="Signals"><span class="u6-st-gk">' + R.ic('shield') + 'signals</span><div class="u6-st-cells">' +
+          '<div class="u6-st-c quiet"><span class="u6-st-v ok">' + (D.contextByRole ? '<span data-counter="' + D.contextByRole.cacheHitRate + '" data-decimals="1">' + D.contextByRole.cacheHitRate + '</span>%' : '\u2014') + '</span><span class="u6-st-s">ctx cache hit \u00b7 \u2212' + fmt.cost(D.cacheTotalSaved) + ' provider cache today</span></div>' +
+          '<div class="u6-st-c quiet"><span class="u6-st-v ' + (gB ? 'err' : 'ok') + '"><span data-counter="' + gB + '" data-decimals="0">' + gB + '</span> blocked \u00b7 <span data-counter="' + gW + '" data-decimals="0">' + gW + '</span> warn</span><span class="u6-st-s">guards \u00b7 token spike paused node n-19</span></div>' +
+        '</div></section>' +
+      '</div>' +
+      '<div class="u6-st-fresh">' +
+        '<span class="us-fresh" id="u6Fresh"><span class="d"></span><span id="u6FreshTxt">' + D.projectionHealth + ' \u00b7 as of ' + D.asOf + '</span></span>' +
+        '<span class="u6-st-s">next auto-refresh ' + D.nextAutoRefresh + ' \u00b7 every ' + D.refreshMin + ' min</span>' +
+      '</div>';
+  }
+
+  function provRowHTML(q, i) {
+    var tone = quotaTone(q);
+    var hot = q.used != null && q.used >= 90;
+    var warm = q.used != null && q.used >= 70 && !hot;
+    var pulse = hot ? ' pulse' : '';
+    var val = q.used != null ? q.used + '%' : R.chip(q.vs);
+    var bar = q.used != null ? '<span class="u6-rbar"><span class="us-fill ' + tone + '" data-fill="' + q.used + '" style="--wf:' + q.used + '%"></span></span>' : '';
+    var rank = '<span class="u6-rank' + (hot ? ' hot' : '') + '">' + String(i + 1).padStart(2, '0') + '</span>';
+    return '<div class="u6-row' + (hot ? ' p-hot' : warm ? ' p-warn' : '') + '" data-sub="q:' + q.id + '" data-filter="' + (q.name + ' ' + q.plan).toLowerCase() + '" role="option" tabindex="-1" aria-selected="false" title="' + q.name + ' · ' + q.plan + '">' +
+      '<span class="us-dot ' + tone + pulse + '"></span>' +
+      '<span class="u6-row-main">' +
+        '<span class="u6-row-top">' + rank + '<span class="u6-row-name">' + q.name + '</span><span class="u6-row-val">' + val + '</span></span>' +
+        bar +
+        '<span class="u6-row-meta">' + q.plan + ' · ' + resetText(q) + '</span>' +
+      '</span></div>';
+  }
+  function metaRowHTML(id, ico, label, val, meta, dot, cat) {
+    return '<div class="u6-row" data-sub="' + id + '" role="option" tabindex="-1" aria-selected="false" style="--cat:' + cat + '">' +
+      '<span class="u6-row-ico">' + R.ic(ico) + '</span>' +
+      '<span class="u6-row-main">' +
+        '<span class="u6-row-top"><span class="u6-row-name">' + label + '</span><span class="u6-row-val">' + val + '</span></span>' +
+        '<span class="u6-row-meta"><span class="us-dot ' + dot + '" style="width:6px;height:6px;margin-right:5px"></span>' + meta + '</span>' +
+      '</span></div>';
+  }
+
+  function renderRail() {
+    var gB = D.guards.filter(function (g) { return g.state === 'blocked'; }).length;
+    var gW = D.guards.filter(function (g) { return g.state === 'warn'; }).length;
+    var cds = D.accounts.filter(function (a) { return a.cooldownSec != null && a.cooldownSec > 0; }).length;
+    var ctxPct = Math.round(D.contextBudget.totalTokens / D.contextBudget.limit * 100);
+    var html = '<span class="u6-railind" aria-hidden="true"></span><div class="u6-rgroup">Pinned</div>';
+    html += '<div class="u6-row" data-sub="overview" role="option" tabindex="-1" aria-selected="false" style="--cat:var(--accent-primary)">' +
+      '<span class="u6-row-ico">' + R.ic('grid') + '</span>' +
+      '<span class="u6-row-main">' +
+        '<span class="u6-row-top"><span class="u6-row-name">Overview</span><span class="u6-row-val">' + D.quotas.length + ' providers</span></span>' +
+        '<span class="u6-row-meta"><span class="us-dot ok" style="width:6px;height:6px;margin-right:5px"></span>pressure-sorted composite · as of ' + D.asOf + '</span>' +
+      '</span></div>';
+    html += '<div class="u6-rgroup">Providers · by pressure <span class="gc">' + D.quotas.length + '</span></div>';
+    html += provOrder.map(provRowHTML).join('');
+    html += '<div class="u6-rgroup">Workspace</div>';
+    html += metaRowHTML('guard', 'shield', 'Guard', gB + ' blk · ' + gW + ' warn', 'token_spike paused node n-19', gB ? 'err' : 'ok', 'var(--accent-error)');
+    html += metaRowHTML('budget', 'pie', 'Budget', Math.round(D.budget.spentMTD / D.budget.monthlyLimit * 100) + '% of ' + fmt.cost(D.budget.monthlyLimit), 'policy: block at limit', 'warn', 'var(--accent-lime)');
+    html += metaRowHTML('cache', 'layers', 'Cache', '\u2212$' + D.cacheTotalSaved.toFixed(2), 'saved today · zero \u2260 unsupported', 'ok', 'var(--accent-lime)');
+    html += metaRowHTML('tools', 'chip', 'Tools', D.tools.length + ' tools', 'p50/p95 · err · index_used', 'info', 'var(--accent-blue)');
+    html += metaRowHTML('accounts', 'users', 'Accounts', D.accounts.length + ' accts', cds + ' cooling down · requested vs effective', cds ? 'warn' : 'ok', 'var(--accent-blue)');
+    html += metaRowHTML('context', 'brain', 'Context', ctxPct + '% full', fmt.tok(D.contextBudget.totalTokens) + ' / ' + fmt.tok(D.contextBudget.limit) + ' tokens', ctxPct >= 90 ? 'warn' : 'info', 'var(--accent-orange)');
+    html += metaRowHTML('ledger', 'clipboard', 'Ledger', '<span id="u6RailLedgerN">' + D.ledger.length + '</span> events', 'live · usage event ref per row', 'ok', 'var(--accent-lime)');
+    html += metaRowHTML('coaching', 'spark', 'Coaching', 'grade ' + D.efficiency.grade, D.efficiency.score + '/100 · wins · improvements · risks', 'info', 'var(--accent-magenta)');
+    $('u6RailScroll').innerHTML = html;
+    hydrate($('u6RailScroll'));
+    window.USrender.deText($('u6RailScroll'));
+  }
+
+  var railIndPlaced = false;
+  function railIndex(id) {
+    var rows = $('u6RailScroll').querySelectorAll('.u6-row');
+    for (var i = 0; i < rows.length; i++) { if (rows[i].getAttribute('data-sub') === id) return i; }
+    return -1;
+  }
+  function placeRailInd(instant) {
+    var ind = $('u6RailScroll').querySelector('.u6-railind');
+    var row = $('u6RailScroll').querySelector('.u6-row.active');
+    if (!ind) return;
+    if (!row || row.hasAttribute('hidden')) { ind.classList.remove('placed'); return; }
+    if (instant) ind.style.transition = 'none';
+    ind.style.transform = 'translateY(' + row.offsetTop + 'px)';
+    ind.style.height = row.offsetHeight + 'px';
+    if (instant) { void ind.offsetWidth; ind.style.transition = ''; }
+    ind.classList.add('placed');
+  }
+  window.addEventListener('resize', function () { if (railIndPlaced) placeRailInd(true); });
+
+  function select(id) {
+    var prev = current;
+    current = id;
+    $('u6RailScroll').querySelectorAll('.u6-row').forEach(function (r) {
+      var on = r.getAttribute('data-sub') === id;
+      r.classList.toggle('active', on);
+      r.setAttribute('aria-selected', on ? 'true' : 'false');
+      r.setAttribute('tabindex', on ? '0' : '-1');
+    });
+    placeRailInd(!railIndPlaced);
+    railIndPlaced = true;
+    /* dossier swap direction follows travel through the pressure-sorted index */
+    var dir = 0;
+    if (prev !== id) {
+      var a = railIndex(prev), b = railIndex(id);
+      if (a !== -1 && b !== -1 && a !== b) dir = b > a ? 1 : -1;
+    }
+    renderDetail(dir);
+  }
+
+  function pan(ico, title, meta, body, cat) {
+    return '<section class="u6-pan" style="--cat:' + (cat || 'var(--accent-blue)') + '">' +
+      '<header class="u6-panh"><span class="u6-panico">' + R.ic(ico) + '</span><span class="u6-pant">' + title + '</span>' +
+      (meta ? '<span class="u6-panm">' + meta + '</span>' : '') + '</header>' +
+      '<div class="u6-panb">' + body + '</div></section>';
+  }
+  function dhead(ico, title, sub, acts, cat, klass, kick) {
+    return '<div class="u6-dhead' + (klass ? ' ' + klass : '') + '" style="--cat:' + (cat || 'var(--accent-primary)') + '">' +
+      '<span class="u6-dh-ico">' + R.ic(ico) + '</span>' +
+      '<div class="u6-dh-t">' + (kick ? '<span class="u6-dh-k">' + kick + '</span>' : '') + '<h2>' + title + '</h2><span class="u6-dh-sub">' + sub + '</span></div>' +
+      '<div class="u6-dh-acts">' + (acts || '') + '</div></div>';
+  }
+  function prioHTML(q) {
+    var rank = -1;
+    for (var i = 0; i < provOrder.length; i++) { if (provOrder[i].id === q.id) { rank = i + 1; break; } }
+    if (rank < 1) return '';
+    var hot = q.used != null && q.used >= 90;
+    return '<span class="u6-prio' + (hot ? ' hot' : '') + '" title="position in the pressure-sorted queue">P' + rank + '<i>of ' + provOrder.length + ' \u00b7 by pressure</i></span>';
+  }
+  function sigRows(list, cls) {
+    return list.map(function (s) { return '<div class="u6-sigrow ' + cls + '"><span class="sd"></span><span class="st">' + s.text + '</span></div>'; }).join('');
+  }
+  function donutHTML(name, pct, toneVar) {
+    pct = Math.min(100, Math.max(0, pct));
+    return '<span class="u6-donut"><svg viewBox="0 0 64 64" role="img" aria-label="' + name + ' at ' + pct + '%">' +
+      '<circle class="dbg" cx="32" cy="32" r="26"></circle>' +
+      '<circle class="dfill" cx="32" cy="32" r="26" stroke="' + toneVar + '" data-pct="' + pct + '" style="stroke-dasharray:163.4;stroke-dashoffset:163.4"></circle>' +
+      '<text x="32" y="33">' + pct + '%</text></svg><small>' + name + '</small></span>';
+  }
+  var toneVar = { ok: 'var(--tone-ok)', warn: 'var(--tone-warn)', hot: 'var(--tone-err)' };
+
+  function legendHTML() {
+    var series = [['inp', 'Input', '--ser-inp'], ['out', 'Output', '--ser-out'], ['rea', 'Reasoning', '--ser-rea'], ['cache', 'Cache r/w', '--ser-cache']];
+    return series.map(function (s) {
+      return '<button type="button" data-series="' + s[0] + '" class="' + (mutedSeries[s[0]] ? 'muted' : '') + '" aria-pressed="' + String(!mutedSeries[s[0]]) + '" title="Toggle ' + s[1] + ' series"><span class="u6-swatch" style="background:var(' + s[2] + ')"></span>' + s[1] + '</button>';
+    }).join('');
+  }
+  function winbtnsHTML() {
+    return '<span class="u6-winbtns">' + ['5h', '24h', '7d'].map(function (w) {
+      return '<button type="button" data-cw="' + w + '" class="' + (w === chartWin ? 'on' : '') + '">' + w + '</button>';
+    }).join('') + '</span>';
+  }
+  function chartInnerHTML() {
+    var ds = D.chart[chartWin] || D.chart['24h'];
+    var sums = ds.cols.map(function (c) { return c[1] + c[2] + c[3] + c[4]; });
+    var max = Math.max.apply(null, sums) || 1;
+    var cols = ds.cols.map(function (c) {
+      var segs = [['inp', c[1]], ['out', c[2]], ['rea', c[3]], ['cache', c[4]]].map(function (s) {
+        var h = (s[1] / max * 100).toFixed(1);
+        return '<i class="s-' + s[0] + '" data-h="' + h + '" style="opacity:' + (mutedSeries[s[0]] ? '.12' : '1') + '"></i>';
+      }).join('');
+      return '<div class="u6-col"><span class="tip"><b>' + c[0] + '</b> · in ' + c[1] + ' · out ' + c[2] + ' · rea ' + c[3] + ' · cache ' + c[4] + '</span>' +
+        '<span class="u6-stack">' + segs + '</span></div>';
+    }).join('');
+    var gl = [25, 50, 75].map(function (p) { return '<span class="u6-gl" style="bottom:' + p + '%"></span>'; }).join('');
+    return '<div class="u6-chart">' +
+      '<div class="u6-plotarea">' + gl + cols + '<span class="u6-bline" style="bottom:' + D.chartBudgetLine + '%"><span>budget ' + D.budget.warningThreshold + '%</span></span></div>' +
+      '<div class="u6-xrow">' + ds.cols.map(function (c) { return '<b>' + c[0] + '</b>'; }).join('') + '</div>' +
+      '<div class="u6-legend">' + legendHTML() + '</div></div>';
+  }
+  function animateChartSegs(scope) {
+    var rm = window.USrender.isRM();
+    (scope || document).querySelectorAll('.u6-stack i[data-h]').forEach(function (seg, i) {
+      var h = parseFloat(seg.getAttribute('data-h')) || 0;
+      if (rm) { seg.style.height = h + '%'; return; }
+      setTimeout(function () { seg.style.height = h + '%'; }, Math.min(i, 48) * 14);
+    });
+  }
+  function refreshChart() {
+    var box = $('u6ChartBox');
+    if (box) box.innerHTML = chartInnerHTML();
+    var meta = $('u6ChartMeta');
+    if (meta) meta.textContent = (D.chart[chartWin] || D.chart['24h']).note;
+    document.querySelectorAll('[data-cw]').forEach(function (b) { b.classList.toggle('on', b.getAttribute('data-cw') === chartWin); });
+    if (box) animateChartSegs(box);
+  }
+
+  function dOverview() {
+    var top = provOrder.filter(function (q) { return q.used != null; })[0];
+    var blocked = D.guards.filter(function (g) { return g.state === 'blocked'; });
+    var attn = '';
+    if (blocked.length) {
+      var g = blocked[0];
+      attn += '<div class="u6-attn-c" data-goto="guard"><span class="us-dot err pulse"></span>' +
+        '<span class="u6-attn-t"><b>' + g.title + '</b><span>' + g.where + ' · ' + g.t + ' · cost avoided ' + '\u2248 $1.84' + '</span></span>' +
+        '<button class="u6-btn" data-goto="guard">' + R.ic('shield') + 'Open guard</button></div>';
+    }
+    attn += '<div class="u6-attn-c warnv sec" data-goto="q:' + top.id + '"><span class="us-dot warn pulse"></span>' +
+      '<span class="u6-attn-t"><b>' + top.name + ' at ' + top.used + '% of its ' + top.win + ' window</b><span>' + top.plan + ' · ' + resetText(top) + '</span></span>' +
+      '<button class="u6-btn" data-goto="q:' + top.id + '">' + R.ic('thermo') + 'Open ' + top.name + '</button></div>';
+
+    var qlist = provOrder.slice(0, 6).map(function (q) {
+      var t = quotaTone(q);
+      return '<div class="u6-qitem" data-goto="q:' + q.id + '">' +
+        '<span class="us-dot ' + t + (q.used >= 90 ? ' pulse' : '') + '"></span>' +
+        '<span class="nm"><span class="nmt">' + q.name + '</span>' + (q.vs !== 'measured' ? R.chip(q.vs) : '') + '</span>' +
+        '<span class="us-meter">' + R.meter(q.used) + '</span>' +
+        '<span class="pc">' + q.used + '%</span>' +
+        '<span class="rs">' + (q.reset === 'unknown' ? 'unknown reset' : q.reset) + '</span></div>';
+    }).join('');
+
+    var pctMTD = Math.round(D.budget.spentMTD / D.budget.monthlyLimit * 100);
+    var budgetBody =
+      '<div style="display:flex;gap:var(--lg);align-items:center;flex-wrap:wrap">' +
+        donutHTML('Spent MTD', pctMTD, toneVar[R.fillTone(pctMTD)]) +
+        '<div class="u6-kv" style="flex:1;min-width:180px">' +
+          '<div class="u6-kvi"><b>Spent MTD</b><span class="us-cost">' + fmt.cost(D.budget.spentMTD) + '</span></div>' +
+          '<div class="u6-kvi"><b>Projected</b><span class="us-cost">' + fmt.cost(D.budget.projectedMTD) + ' ' + R.projChip(prov(D.budget)) + '</span></div>' +
+          '<div class="u6-kvi"><b>Policy</b><span>block at limit</span></div>' +
+          '<div class="u6-kvi"><b>Warn at</b><span>' + D.budget.warningThreshold + '%</span></div>' +
+        '</div></div>' +
+      R.meterRow('MTD', pctMTD) +
+      '<div><button class="u6-btn" data-goto="budget">' + R.ic('pie') + 'Open budget · presets</button></div>';
+
+    var sigBody =
+      '<div class="us-foot" style="margin-bottom:2px"><span style="font-weight:700;color:var(--tone-ok-text)">WINS</span></div>' + sigRows(D.signals.wins.slice(0, 2), 'win') +
+      '<div class="us-foot" style="margin:6px 0 2px"><span style="font-weight:700;color:var(--tone-info-text)">IMPROVEMENTS</span></div>' + sigRows(D.signals.improvements.slice(0, 2), 'imp') +
+      '<div class="us-foot" style="margin:6px 0 2px"><span style="font-weight:700;color:var(--tone-warn-text)">RISKS</span></div>' + sigRows(D.signals.risks.slice(0, 2), 'risk') +
+      '<div><button class="u6-btn" data-goto="coaching">' + R.ic('spark') + 'Open coaching</button></div>';
+
+    return dhead('grid', 'Overview', 'curated composite · ' + D.quotas.length + ' providers sorted by pressure · as of ' + D.asOf, R.chip('measured') + ' ' + R.conf('high') + ' ' + R.projChip(D.projectionMeta), 'var(--accent-primary)') +
+      '<div class="u6-attn">' + attn + '</div>' +
+      /* pairing is height-balanced so neither column strands a void on a tall
+         partner: the two tall panels (quota list, signal feed) share a row and
+         the two short panels (chart, budget) share the next — a composed desk,
+         not two short cards floating beside two tall ones */
+      '<div class="u6-duo">' +
+        pan('thermo', 'Quota pressure', 'top 6 · click to drill in', qlist, 'var(--accent-orange)') +
+        pan('spark', 'Signals', 'wins · improvements · risks', sigBody, 'var(--accent-magenta)') +
+      '</div>' +
+      '<div class="u6-duo">' +
+        pan('trend', 'Token analytics', '<span id="u6ChartMeta">last 24h</span>' + winbtnsHTML(), '<div id="u6ChartBox">' + chartInnerHTML() + '</div>', 'var(--accent-magenta)') +
+        pan('pie', 'Budget pulse', fmt.cost(D.budget.monthlyLimit) + ' limit', budgetBody, 'var(--accent-lime)') +
+      '</div>' +
+      '<div class="us-foot">' + R.ic('help') + '<span>Missing a number? Every quota carries a value-state chip — <b>disabled, not exposed, hidden, unknown</b> are states, never zero. Projections refreshed ' + D.asOfMin + 'm ago; next auto-refresh ' + D.nextAutoRefresh + '.</span></div>';
+  }
+
+  function cacheRowHTML(c) {
+    if (c.state === 'unsupported') {
+      return '<div class="u6-crow"><span class="u6-cname">' + c.name + '</span>' + R.chip('unsupported') +
+        '<span class="u6-cnums dim">provider does not expose cache fields</span><span class="u6-cnums dim">\u2014</span><span class="u6-csave na">\u2014</span>' +
+        (c.note ? '<div class="u6-cnote">' + c.note + '</div>' : '') + '</div>';
+    }
+    var zero = (c.save || 0) === 0;
+    var note = c.zeroNote ? '<div class="u6-cnote">' + c.zeroNote + '</div>' : (c.missReason ? '<div class="u6-cnote">miss reason: ' + c.missReason + '</div>' : '');
+    return '<div class="u6-crow"><span class="u6-cname">' + c.name + '</span>' + R.chip(c.state) +
+      '<span class="us-meter">' + R.meter(c.hit, 'ok') + '<span class="pc">' + c.hit + '%</span></span>' +
+      '<span class="u6-cnums">r ' + fmt.tok(c.cr) + ' · w ' + fmt.tok(c.cw) + '</span>' +
+      '<span class="u6-csave' + (zero ? ' zero' : '') + '">' + (zero ? '$0.00' : '\u2212$' + c.save.toFixed(2)) + '</span>' + note + '</div>';
+  }
+
+  function ledgerRowHTML(r, key, fresh, withProv) {
+    var main = '<tr' + (fresh ? ' class="us-new"' : '') + ' data-lrow="' + key + '">' +
+      '<td><button class="u6-lcaret" data-lk="' + key + '" title="Show details" aria-label="Show details" aria-expanded="false">' + R.ic('chevR') + '</button></td>' +
+      '<td class="mono">' + r.t + '</td>' +
+      '<td class="ev-' + r.ev + '">' + (R.evLabel[r.ev] || r.ev) + '</td>' +
+      '<td class="mono">' + r.run + ' \u00b7 ' + r.lane + '</td>' +
+      (withProv ? '<td>' + r.prov + '</td>' : '') +
+      '<td class="mono">' + r.model + '</td>' +
+      '<td class="num">' + fmt.num(r.tin) + '</td><td class="num">' + fmt.num(r.tout) + '</td>' +
+      '<td class="num">' + (r.cr == null ? '<span class="dim" title="not reported">\u2014</span>' : fmt.num(r.cr)) + '</td>' +
+      '<td>' + R.chip(r.rep) + '</td>' +
+      '<td class="num">' + (r.cost ? fmt.cost(r.cost) : '$0.00') + '</td></tr>';
+    var kv = r.detail || {};
+    var cells = Object.keys(kv).map(function (k) { return '<div class="u6-di"><b>' + window.USrender.humanCap(k) + '</b><span>' + window.USrender.human(kv[k]) + '</span></div>'; }).join('') +
+      '<div class="u6-di"><b>Latency</b><span>' + r.lat + '</span></div>' +
+      '<div class="u6-di"><b>Account</b><span class="mono">' + r.acct + '</span></div>';
+    var det = '<tr class="u6-ldetail" data-ldetail="' + key + '" hidden><td></td><td colspan="' + (withProv ? 10 : 9) + '"><div class="u6-dgrid">' + cells + '</div>' +
+      '<div class="u6-drill"><span class="u6-ref">usage event ref <b>' + (r.ref || '\u2014') + '</b></span>' +
+      '<button class="u6-btn" data-demo-action="usage.drill" data-demo-arg="Open in Orchestrator \u00b7 ' + (r.ref || '') + '">' + R.ic('external') + 'Open in Orchestrator</button></div></td></tr>';
+    return main + det;
+  }
+
+  function acctCardHTML(x) {
+    var a = x.a;
+    var markers = (a.requested ? '<span class="u6-marker req">' + R.ic('user') + 'requested</span>' : '') +
+      (a.effective ? '<span class="u6-marker eff">' + R.ic('check') + 'effective</span>' : '');
+    var dot = a.pressure === 'cooldown' || a.pressure === 'exhausted' ? 'err' : (a.pressure === 'approaching_threshold' ? 'warn' : 'ok');
+    var cd = a.cooldownSec != null ? ' <span class="u6-cd" data-cd-idx="' + x.i + '">' + R.fmtCd(a.cooldownSec) + '</span>' : '';
+    var presMap = { ok: 'measured', approaching_threshold: 'estimated', cooldown: 'blocked', exhausted: 'failed' };
+    var presChip = a.pressure !== 'ok' ? R.chip(presMap[a.pressure]) : '';
+    var lv = a.lastValidated ? 'validated ' + a.lastValidated + ' ago' : (a.resetAt ? 'back at ' + a.resetAt : '');
+    return '<div class="u6-acc' + (a.effective ? ' effective' : '') + '">' +
+      '<div class="u6-acc-h"><span class="u6-acc-name">' + a.prov + ' \u00b7 ' + a.name + '</span><span class="u6-acc-mail">' + a.mail + '</span>' + markers + '</div>' +
+      '<div class="u6-acc-status"><span class="us-dot ' + dot + (dot !== 'ok' ? ' pulse' : '') + '"></span><span>' + a.status + cd + '</span><span style="margin-left:auto;flex:none">' + presChip + '</span></div>' +
+      (lv ? '<div class="u6-acc-note">' + R.ic('clock') + '<span>' + lv + (a.reason ? ' · ' + a.reason : '') + '</span></div>' : '') +
+      (a.note ? '<div class="u6-acc-note">' + R.ic('info') + '<span>' + a.note + '</span></div>' : '') + '</div>';
+  }
+
+  function dProvider(qid) {
+    var q = D.quotas.filter(function (x) { return x.id === qid; })[0];
+    if (!q) return dOverview();
+    var acts = prioHTML(q) + ' ' + R.chip(q.vs) + ' ' + R.conf(q.conf);
+
+    var qBody = '';
+    if (q.used != null) {
+      var t = R.fillTone(q.used);
+      qBody += '<div class="u6-qbig"><span class="us-big ' + t + '">' + q.used + '%</span>' +
+        '<span class="u6-qbig-r"><span class="us-bigk">' + q.win + ' window \u00b7 ' + q.kind + ' \u00b7 scope ' + q.scope + '</span>' +
+        '<span class="u6-bigbar"><span class="us-fill ' + t + '" data-fill="' + q.used + '" style="--wf:' + q.used + '%"></span></span></span></div>';
+      (q.windows || []).slice(1).forEach(function (w) {
+        if (w.used != null) qBody += R.meterRow(w.id || w.window_kind, w.used);
+      });
+      if (q.premiumLeft != null) {
+        var pu = Math.round((1 - q.premiumLeft / q.premiumTotal) * 100);
+        qBody += R.meterRow('prem', pu, pu >= 90 ? 'hot' : 'warn');
+        qBody += '<div class="us-foot">' + R.ic('info') + '<span><b>' + q.premiumLeft + ' of ' + q.premiumTotal + '</b> premium requests left this month \u2014 included models remain available after exhaustion.</span></div>';
+      }
+      (q.windows || []).forEach(function (w) {
+        if (!w.runOutLabel) return;
+        qBody += '<div class="u6-runout">' + R.ic('timer') + '<span class="ro-l">' + w.label + '</span><span title="' + w.runOutBasis + '">' + w.runOutLabel + '</span>' + R.chip(w.runOutState) + R.conf(w.runOutConf) + '</div>';
+      });
+    } else {
+      qBody += '<div class="u6-noread">' + R.chip(q.vs) + ' ' + R.conf(q.conf) + '<span>No usable reading this cycle \u2014 this is a state, never a zero.</span></div>';
+    }
+    qBody += '<div class="u6-kv">' +
+      '<div class="u6-kvi"><b>Window model</b><span>' + q.kind + ' \u00b7 ' + q.win + '</span></div>' +
+      '<div class="u6-kvi"><b>Reset</b><span>' + resetText(q) + '</span></div>' +
+      '<div class="u6-kvi"><b>Plan</b><span>' + q.plan + '</span></div>' +
+      '<div class="u6-kvi"><b>Scope</b><span>' + q.scope + '</span></div></div>';
+    if (q.note) qBody += '<div class="us-foot">' + R.ic('info') + '<span>' + q.note + '</span></div>';
+
+    var cs = cacheForQuota(q);
+    var cacheBody = cs.length
+      ? cs.map(cacheRowHTML).join('')
+      : '<div class="u6-empty">' + R.ic('layers') + '<span>No cache line reported for this provider \u2014 absent, not zero.</span></div>';
+
+    var accts = accountsForQuota(q);
+    var acctBody = accts.length
+      ? accts.map(acctCardHTML).join('')
+      : '<div class="u6-empty">' + R.ic('users') + '<span>No account rows are tied to this provider.</span></div>';
+
+    var mid = pan('dial', 'Quota & window', R.chip(q.vs), qBody, 'var(--accent-blue)') +
+      pan('layers', 'Prompt cache', 'zero \u2260 unsupported', cacheBody, 'var(--accent-lime)');
+
+    var gate = gatingForQuota(q);
+    var right = '';
+    if (gate) {
+      var gt = { ok: 'ok', included_premium_exhausted: 'warn', rate_limited: 'warn', unverified: 'mute', plan_not_included: 'err' }[gate.state] || 'mute';
+      right += pan('key', 'Plan gating', gate.state.replace(/_/g, ' '),
+        '<div class="u6-gate"><span class="vs vs-' + gt + '">' + gate.status + '</span><b>' + gate.status + '</b><span class="sub">' + gate.sub + (gate.extra ? ' \u00b7 ' + gate.extra : '') + '</span></div>',
+        'var(--accent-orange)');
+    }
+    right += pan('users', 'Accounts', 'requested vs effective', acctBody, 'var(--accent-blue)');
+
+    var rows = D.ledger.filter(function (r) { return quotaForLedgerProv(r.prov) === q.id; });
+    var subtotal = rows.reduce(function (s, r) { return s + (r.cost || 0); }, 0);
+    var ledgerBody;
+    if (rows.length) {
+      ledgerBody = '<div class="us-tblwrap" style="max-height:340px"><table class="us-tbl"><thead><tr>' +
+        '<th style="width:24px" aria-label="Expand"></th><th>Time</th><th>Event</th><th>Run \u00b7 lane</th><th>Model</th>' +
+        '<th class="num">In</th><th class="num">Out</th><th class="num">Cache r</th><th>Report</th><th class="num">Cost</th>' +
+        '</tr></thead><tbody id="u6ProvLedgerBody">' +
+        rows.map(function (r, i) { return ledgerRowHTML(r, 'p' + i, false, false); }).join('') +
+        '</tbody></table></div>' +
+        '<div class="u6-lsum"><span><b>' + rows.length + '</b> events in window</span><span>subtotal <b class="us-cost">' + fmt.cost(subtotal) + '</b></span><span>cost lands on the effective account</span></div>';
+    } else {
+      ledgerBody = '<div class="u6-empty">' + R.ic('clipboard') + '<span>No ledger events for this provider in the current window.</span></div>';
+    }
+
+    return dhead('dial', q.name, q.plan + ' \u00b7 ' + q.kind + ' window \u00b7 scope ' + q.scope + ' \u00b7 ' + resetText(q), acts, 'var(--accent-blue)', 'dossier', 'provider dossier \u00b7 ' + q.id) +
+      '<div class="u6-duo eq">' + mid + '</div>' +
+      '<div class="u6-duo eq">' + right + '</div>' +
+      pan('clipboard', 'Event ledger', 'filtered to ' + q.name, ledgerBody, 'var(--accent-lime)') +
+      '<div class="us-foot">' + R.ic('help') + '<span>Every reading carries a value-state chip and source confidence \u2014 <b>' + q.name + '</b> is shown exactly as reported; missing is never rendered as zero.</span></div>';
+  }
+
+  function guardCardHTML(g) {
+    var cls = g.state === 'blocked' ? 'blocked' : (g.state === 'warn' ? 'warn' : 'ok');
+    var stChip = { blocked: 'blocked', warn: 'estimated', allowed: 'measured', watch: 'unknown' }[g.state] || 'unknown';
+    var why = '<div class="u6-why"><button type="button" class="u6-why-t" aria-expanded="false"><span class="car">' + R.ic('chevR') + '</span>Why was this ' + g.state + '?</button>' +
+      '<div class="u6-why-b"><div class="u6-dgrid">' + g.why.map(function (kv) { return '<div class="u6-di"><b>' + kv[0] + '</b><span>' + kv[1] + '</span></div>'; }).join('') + '</div></div></div>';
+    var actions = g.state === 'blocked'
+      ? '<div class="u6-gacts"><button class="u6-btn primary" data-demo-action="usage.anomaly_keep" data-demo-arg="Keep blocking ' + g.kind + '">' + R.ic('check') + 'Looks right \u2014 keep blocking</button>' +
+        '<button class="u6-btn" data-demo-action="usage.anomaly_allow" data-demo-arg="Allow once: ' + g.kind + '">It was expected \u2014 allow once</button></div>'
+      : '';
+    return '<div class="u6-guard ' + cls + '"><div class="u6-guard-h">' + R.ic('shield') +
+      '<span class="u6-guard-name">' + g.title + '</span>' + R.chip(stChip) + '<span class="u6-tag">severity ' + g.severity + '</span></div>' +
+      '<div class="u6-guard-body">' + g.body + '</div>' +
+      '<div class="u6-guard-body" style="color:var(--text-muted)">' + g.where + ' \u00b7 ' + g.t + '</div>' + why + actions + '</div>';
+  }
+
+  function dGuard() {
+    var cards = D.guards.map(guardCardHTML).join('');
+    var cfg = '<div class="u6-dgrid">' +
+      '<div class="u6-di"><b>Window</b><span>' + D.guardConfig.windowMin + ' min</span></div>' +
+      '<div class="u6-di"><b>Spike ratio</b><span>' + D.guardConfig.spikeRatio + '\u00d7 baseline</span></div>' +
+      '<div class="u6-di"><b>Confidence</b><span class="mono">' + D.guardConfig.confidence + '</span></div>' +
+      '<div class="u6-di"><b>Guard types</b><span>' + D.guardTypes.length + ' defined</span></div></div>' +
+      '<hr class="us-hr"><div class="u6-tags">' + D.guardTypes.map(function (t) { return '<span class="u6-tag">' + t + '</span>'; }).join('') + '</div>';
+    return dhead('shield', 'Anomaly & quota guard', '1h window \u00b7 3.0\u00d7 spike \u00b7 decisions carry a why-receipt', R.chip('measured'), 'var(--accent-error)') +
+      pan('siren', 'Active guard decisions', D.guards.length + ' in window', cards, 'var(--accent-error)') +
+      pan('sliders', 'Guard configuration', 'pure logic \u00b7 native-friendly', cfg, 'var(--accent-blue)') +
+      '<div class="us-foot">' + R.ic('info') + '<span>Guards pause paid calls on the offending node only; the run continues from its safe point. Blocked decisions always show the rule, the observation and the cost avoided.</span></div>';
+  }
+
+  function presetRowHTML() {
+    return '<div class="u6-presets"><span class="k">Warn at</span>' + D.budget.presets.map(function (p) {
+      return '<button type="button" class="u6-pchip' + (p === D.budget.warningThreshold ? ' on' : '') + '" data-preset="' + p + '">' + p + '%</button>';
+    }).join('') + '</div>';
+  }
+
+  function dBudget() {
+    var pctSpent = Math.round(D.budget.spentMTD / D.budget.monthlyLimit * 100);
+    var pctProj = Math.round(D.budget.projectedMTD / D.budget.monthlyLimit * 100);
+    var provDonuts = provOrder.filter(function (q) { return q.used != null; }).map(function (q) {
+      return donutHTML(q.name, q.used, toneVar[R.fillTone(q.used)]);
+    }).join('');
+    var donuts = donutHTML('Spent MTD', pctSpent, toneVar[R.fillTone(pctSpent)]) +
+      donutHTML('Projected', pctProj, toneVar[R.fillTone(pctProj)]) + provDonuts;
+    var forecast = '<div class="u6-kv">' +
+      '<div class="u6-kvi"><b>Month pace</b><span class="us-cost" style="color:var(--tone-warn-text)">' + fmt.cost(D.forecast.monthPace) + ' ' + R.projChip(prov(D.budget)) + '</span></div>' +
+      '<div class="u6-kvi"><b>vs last month</b><span>+' + D.forecast.monthPaceDelta + '% ' + R.chip('estimated') + '</span></div>' +
+      '<div class="u6-kvi"><b>5h block projection</b><span class="us-cost">' + fmt.cost(D.forecast.blockProjection) + ' ' + R.projChip(D.projectionMeta) + '</span></div>' +
+      '<div class="u6-kvi"><b>Burn</b><span class="us-cost">$' + D.burn.perHour.toFixed(2) + '/hr \u00b7 $' + D.burn.perDay.toFixed(1) + '/day</span></div></div>' +
+      R.meterRow('MTD', pctSpent) + R.meterRow('proj', pctProj, R.fillTone(pctProj));
+    return dhead('pie', 'Budgets & spend', 'monthly limit ' + fmt.cost(D.budget.monthlyLimit) + ' \u00b7 policy block at limit \u00b7 spent ' + fmt.cost(D.budget.spentMTD), R.chip(D.spendBasis === 'estimated' ? 'pricing_estimated' : 'measured') + ' ' + R.projChip(prov(D.budget)), 'var(--accent-lime)') +
+      pan('pie', 'Budget donuts', 'MTD \u00b7 projected \u00b7 per provider', '<div class="u6-donuts">' + donuts + '</div>', 'var(--accent-lime)') +
+      '<div class="u6-duo">' +
+        pan('sliders', 'Warning threshold', 'presets exactly 50 / 80 / 90 / 95 / 100', presetRowHTML() + '<div class="us-foot">' + R.ic('info') + '<span>Policy is <b>' + D.budget.policy.replace(/_/g, ' ') + '</b>. A budget does not cap spend by itself \u2014 the policy decides what happens at the limit.</span></div>', 'var(--accent-blue)') +
+        pan('trend', 'Forecast', 'list-rate basis \u00b7 may differ from your bill', forecast, 'var(--accent-magenta)') +
+      '</div>' +
+      '<div class="us-foot">' + R.ic('info') + '<span>The analytics chart draws the budget threshold as a solid line at ' + D.chartBudgetLine + '% of typical peak (see Overview \u00b7 Token analytics). Spend basis: <b>list-rate estimate</b> \u2014 projected ' + fmt.cost(D.budget.projectedMTD) + ' by month end.</span></div>';
+  }
+
+  function dCache() {
+    var rows = D.cache.map(cacheRowHTML).join('');
+    return dhead('layers', 'Prompt-cache savings', 'zero \u2260 unsupported \u00b7 misses carry reasons', R.chip('measured'), 'var(--accent-lime)') +
+      pan('layers', 'Savings by provider', '\u2212$' + D.cacheTotalSaved.toFixed(2) + ' saved today', rows +
+        '<hr class="us-hr"><div class="us-foot">' + R.ic('info') + '<span>Saved about <b>$' + D.cacheTotalSaved.toFixed(2) + '</b> today from provider caches. Entries expire on their own \u2014 Puppet Master cannot clear provider caches.</span></div>', 'var(--accent-lime)') +
+      '<div class="us-foot">' + R.ic('help') + '<span>A measured zero means caching is idle right now; <b>unsupported</b> means the provider exposes no cache fields at all. Those are different facts, rendered differently.</span></div>';
+  }
+
+  function dTools() {
+    var rows = D.tools.map(function (t) {
+      var errCls = t.err >= 5 ? 'err' : t.err >= 2 ? 'warn' : 'ok';
+      var idx = t.idx == null ? '<span class="dim">\u2014</span>' : '<span class="us-meter" style="min-width:80px">' + R.meter(t.idx, 'info') + '<span class="pc">' + t.idx + '%</span></span>';
+      return '<tr><td class="mono">' + window.USrender.humanCap(t.tool) + '</td><td class="num">' + fmt.num(t.calls) + '</td>' +
+        '<td class="num">' + t.p50 + 'ms</td><td class="num">' + fmt.num(t.p95) + 'ms</td>' +
+        '<td><span class="vs vs-' + errCls + '">' + t.err.toFixed(1) + '%</span></td><td>' + idx + '</td></tr>';
+    }).join('');
+    var body = '<div class="us-tblwrap"><table class="us-tbl">' +
+      '<thead><tr><th>Tool</th><th class="num">Calls</th><th class="num">p50</th><th class="num">p95</th><th>Error rate</th><th>index_used</th></tr></thead>' +
+      '<tbody>' + rows + '</tbody></table></div>' +
+      '<div class="us-foot">' + R.ic('info') + '<span><b>index_used</b> marks tools whose results were served from the local index instead of re-reading sources \u2014 a missing value means the tool does not report the signal.</span></div>';
+    return dhead('chip', 'Tool usage', 'last 24h \u00b7 latency p50/p95 \u00b7 error rate \u00b7 index_used', R.chip('measured'), 'var(--accent-blue)') +
+      pan('chip', 'Tools', 'last 24h', body, 'var(--accent-blue)');
+  }
+
+  function dAccounts() {
+    var cards = D.accounts.map(function (a, i) { return acctCardHTML({ a: a, i: i }); }).join('');
+    var hist = D.pressureHistory.map(function (h) {
+      var tone = h.kind === 'switch' ? 'info' : (h.state === 'exhausted' ? 'err' : (h.state === 'approaching' ? 'warn' : 'mute'));
+      return '<div class="us-wc"><span class="q">' + h.t + ' \u00b7 ' + h.text + '</span><span class="a" style="color:var(--tone-' + tone + '-text)">' + h.reason + '</span></div>';
+    }).join('');
+    return dhead('users', 'Accounts & pressure', 'requested vs effective \u00b7 canonical pressure states \u00b7 cooldowns tick live', R.chip('measured'), 'var(--accent-blue)') +
+      pan('users', 'Accounts', D.accounts.length + ' configured', cards, 'var(--accent-blue)') +
+      pan('history', 'Pressure & switch history', 'append-only records', hist +
+        '<div class="us-foot" style="margin-top:var(--sm)">' + R.ic('info') + '<span>Requested is the account you chose; effective is the one doing the work; cost lands on effective.</span></div>', 'var(--accent-orange)');
+  }
+
+  function dContext() {
+    var cb = D.contextBudget;
+    var pct = Math.round(cb.totalTokens / cb.limit * 100);
+    var fams = cb.families.map(function (f) {
+      return '<div class="u6-fam"><span class="u6-fam-name">' + f.name + '</span>' +
+        '<span class="us-meter">' + R.meter(f.share, 'info') + '<span class="pc">' + f.share + '%</span></span>' +
+        '<span class="u6-fam-tok">' + fmt.tok(f.tokens) + '</span></div>';
+    }).join('');
+    var omitted = cb.omitted.map(function (o) {
+      return '<div class="us-wc"><span class="q">' + o.name + '</span><span class="a part">' + o.reason + '</span></div>';
+    }).join('');
+    var head = '<div class="u6-qbig"><span class="us-big ' + R.fillTone(pct) + '">' + pct + '%</span>' +
+      '<span class="u6-qbig-r"><span class="us-bigk">' + fmt.tok(cb.totalTokens) + ' of ' + fmt.tok(cb.limit) + ' context tokens in use</span>' +
+      '<span class="u6-bigbar"><span class="us-fill ' + R.fillTone(pct) + '" data-fill="' + pct + '" style="--wf:' + pct + '%"></span></span></span></div>';
+    return dhead('brain', 'Context budget by source', 'what is eating the window \u00b7 omissions carry reason receipts', R.chip('measured'), 'var(--accent-orange)') +
+      pan('inbox', 'Families', cb.families.length + ' source families', head + fams, 'var(--accent-orange)') +
+      pan('filter', 'Omitted / deferred', 'with reason receipt', omitted || '<div class="u6-empty">' + R.ic('check') + '<span>Nothing omitted this session.</span></div>', 'var(--accent-blue)');
+  }
+
+  function ledgerMatches(r) {
+    if (LF.plat && r.prov !== LF.plat) return false;
+    if (LF.rep && r.rep !== LF.rep) return false;
+    if (LF.q) {
+      var hay = (r.t + ' ' + r.ev + ' ' + r.run + ' ' + r.lane + ' ' + r.prov + ' ' + r.model + ' ' + r.acct).toLowerCase();
+      if (hay.indexOf(LF.q) === -1) return false;
+    }
+    return true;
+  }
+  function renderLedgerBody() {
+    var tb = $('u6LedgerBody');
+    if (!tb) return;
+    var shown = 0;
+    var rows = D.ledger.filter(function (r) { return ledgerMatches(r); });
+    if (LSORT.key) {
+      var num = { tin: 1, tout: 1, cr: 1, cost: 1 };
+      rows = rows.slice().sort(function (a, b) {
+        var av = a[LSORT.key], bv = b[LSORT.key];
+        if (num[LSORT.key]) { av = av == null ? -1 : av; bv = bv == null ? -1 : bv; return (av - bv) * LSORT.dir; }
+        return String(av == null ? '' : av).localeCompare(String(bv == null ? '' : bv)) * LSORT.dir;
+      });
+    }
+    tb.innerHTML = rows.map(function (r, i) { shown++; return ledgerRowHTML(r, i, false, true); }).join('');
+    var c = $('u6LedgerCount');
+    if (c) c.textContent = shown + ' of ' + D.ledger.length + ' events';
+  }
+  /* the detail thead is rebuilt on every subject render, so re-apply keyboard
+     affordance (tabindex) and reflect the persisted LSORT state as aria-sort */
+  function syncLedgerSortHeaders() {
+    document.querySelectorAll('#u6Detail th[data-sort]').forEach(function (th) {
+      if (!th.hasAttribute('tabindex')) th.setAttribute('tabindex', '0');
+      var on = LSORT.key === th.getAttribute('data-sort');
+      th.classList.toggle('asc', on && LSORT.dir === 1);
+      th.classList.toggle('desc', on && LSORT.dir === -1);
+      th.setAttribute('aria-sort', on ? (LSORT.dir === 1 ? 'ascending' : 'descending') : 'none');
+    });
+  }
+  function wireLedgerPane() {
+    var provs = {};
+    D.ledger.forEach(function (r) { provs[r.prov] = 1; });
+    $('u6PlatMenu').innerHTML = '<button type="button" class="pm6-tb-menu-item' + (LF.plat ? '' : ' is-selected') + '" role="menuitem" data-value="">All platforms</button>' +
+      Object.keys(provs).sort().map(function (p) { return '<button type="button" class="pm6-tb-menu-item' + (LF.plat === p ? ' is-selected' : '') + '" role="menuitem" data-value="' + p + '">' + p + '</button>'; }).join('');
+    $('u6RepMenu').innerHTML = '<button type="button" class="pm6-tb-menu-item' + (LF.rep ? '' : ' is-selected') + '" role="menuitem" data-value="">Any reporting</button>' +
+      ['measured', 'estimated', 'unsupported'].map(function (r) { return '<button type="button" class="pm6-tb-menu-item' + (LF.rep === r ? ' is-selected' : '') + '" role="menuitem" data-value="' + r + '">' + r + '</button>'; }).join('');
+    $('u6PlatLabel').textContent = LF.plat || 'All platforms';
+    $('u6RepLabel').textContent = LF.rep || 'Any reporting';
+    window.PMMenu.init($('u6DetailBody'));
+    $('u6PlatMenu').addEventListener('pm-menu-pick', function (ev) { LF.plat = ev.detail.value || ''; renderLedgerBody(); });
+    $('u6RepMenu').addEventListener('pm-menu-pick', function (ev) { LF.rep = ev.detail.value || ''; renderLedgerBody(); });
+    $('u6LedgerSearch').value = LF.q;
+    $('u6LedgerSearch').addEventListener('input', function () { LF.q = this.value.toLowerCase(); renderLedgerBody(); });
+    renderLedgerBody();
+    syncLedgerSortHeaders();
+  }
+  function dLedger() {
+    var controls = '<div class="u6-lctrl">' +
+      '<label class="pm-input u6-lsearch"><i data-ico="search" class="pm-ico sm"></i><input id="u6LedgerSearch" type="text" placeholder="Search platform, model, run, lane\u2026" aria-label="Search ledger"></label>' +
+      '<div class="pm6-tb-menu-wrap"><button type="button" class="pm6-tb-menu-trigger" aria-controls="u6PlatMenu"><span class="pm6-tb-menu-label" id="u6PlatLabel">All platforms</span><i data-ico="chevD" class="pm-ico sm"></i></button>' +
+      '<div class="pm6-tb-menu" id="u6PlatMenu" role="menu" aria-label="Filter platform" data-pm-menu-select></div></div>' +
+      '<div class="pm6-tb-menu-wrap"><button type="button" class="pm6-tb-menu-trigger" aria-controls="u6RepMenu"><span class="pm6-tb-menu-label" id="u6RepLabel">Any reporting</span><i data-ico="chevD" class="pm-ico sm"></i></button>' +
+      '<div class="pm6-tb-menu" id="u6RepMenu" role="menu" aria-label="Filter reporting" data-pm-menu-select></div></div>' +
+      '<button class="u6-btn" data-demo-action="usage.ledger_json" data-demo-arg="Ledger copied as normalized UsageRecord JSON (demo)">' + R.ic('braces') + 'JSON</button>' +
+      '<span class="u6-live" style="margin-left:auto"><span class="us-dot ok pulse"></span>live \u2014 new events append as the run works</span></div>';
+    var table = '<div class="us-tblwrap" style="max-height:420px"><table class="us-tbl"><thead><tr>' +
+      '<th style="width:24px" aria-label="Expand"></th><th data-sort="t" title="Sort by time">Time</th><th data-sort="ev" title="Sort by event">Event</th><th data-sort="run" title="Sort by run">Run \u00b7 lane</th><th data-sort="prov" title="Sort by platform">Platform</th><th data-sort="model" title="Sort by model">Model</th>' +
+      '<th class="num" data-sort="tin" title="Sort by input tokens">In</th><th class="num" data-sort="tout" title="Sort by output tokens">Out</th><th class="num" data-sort="cr" title="Sort by cache reads">Cache r</th><th data-sort="rep" title="Sort by reporting">Report</th><th class="num" data-sort="cost" title="Sort by cost">Cost</th>' +
+      '</tr></thead><tbody id="u6LedgerBody"></tbody></table></div>';
+    var foot = '<div class="us-foot" style="margin-top:var(--sm)">' + R.ic('info') + '<span id="u6LedgerFoot">Every row carries a stable usage event ref; drill-through preserves it. Cost is attributed to the effective account \u2014 requested \u2260 billed.</span></div>';
+    return dhead('clipboard', 'Event ledger', 'normalized UsageRecords \u00b7 window last 5h \u00b7 cost lands on the effective account', R.chip('measured'), 'var(--accent-lime)') +
+      pan('clipboard', 'Events', '<span id="u6LedgerCount"></span>', controls + table + foot, 'var(--accent-lime)');
+  }
+
+  function dCoaching() {
+    var e = D.efficiency;
+    var comps = e.components.map(function (c) {
+      return '<div class="u6-fam"><span class="u6-fam-name">' + c.k + ' (' + Math.round(c.w * 100) + '%)</span>' +
+        '<span class="us-meter">' + R.meter(c.v, c.adverse ? 'hot' : 'ok') + '<span class="pc">' + c.v + '%</span></span>' +
+        '<span class="u6-fam-tok">' + (c.adverse ? 'lower is better' : '') + '</span></div>';
+    }).join('');
+    var gtone = (typeof e.score === 'number' && !isNaN(e.score))
+      ? (e.score >= 85 ? 'g-ok' : e.score >= 70 ? 'g-warn' : 'g-err')
+      : (function () { var L = String(e.grade).trim().charAt(0).toUpperCase(); return (L === 'A' || L === 'B') ? 'g-ok' : (L === 'C' ? 'g-warn' : 'g-err'); })();
+    var grade = '<div style="display:flex;align-items:center;gap:var(--lg);flex-wrap:wrap">' +
+      '<span class="u6-grade ' + gtone + '">' + e.grade + '</span>' +
+      '<div class="u6-kv" style="flex:1;min-width:200px">' +
+        '<div class="u6-kvi"><b>Score</b><span>' + e.score + '/100</span></div>' +
+        '<div class="u6-kvi"><b>Retry tax</b><span>' + e.retryTaxPct + '% \u00b7 ' + fmt.cost(e.retryTaxUsd) + '</span></div>' +
+        '<div class="u6-kvi"><b>Basis</b><span>pure logic \u00b7 no cloud scoring</span></div></div></div>' + comps;
+    var wc = D.whatCounts.map(function (w) {
+      var cls = w.counts === true ? 'yes' : (w.counts === false ? 'no' : 'part');
+      var lbl = w.counts === true ? 'counts' : (w.counts === false ? 'no' : 'partial');
+      return '<div class="us-wc"><span class="q">' + w.q + (w.note ? ' \u2014 ' + w.note : '') + '</span><span class="a ' + cls + '">' + lbl + '</span></div>';
+    }).join('');
+    var attr = D.attribution.map(function (a) {
+      return '<div class="u6-fam"><span class="u6-fam-name">' + a.name + '</span>' +
+        '<span class="us-meter">' + R.meter(a.pct, 'purple') + '<span class="pc">' + a.pct + '%</span></span><span class="u6-fam-tok"></span></div>';
+    }).join('');
+    return dhead('spark', 'Coaching & efficiency', 'grade ' + e.grade + ' \u00b7 ' + e.score + '/100 \u00b7 what counts toward usage', R.chip('measured') + ' ' + R.projChip(D.projectionMeta), 'var(--accent-magenta)') +
+      '<div class="u6-duo">' +
+        pan('gauge', 'Efficiency', 'one-shot \u00b7 cache \u00b7 retry tax', grade, 'var(--accent-magenta)') +
+        pan('spark', 'Signals', 'wins \u00b7 improvements \u00b7 risks',
+          '<div class="us-foot" style="margin-bottom:2px"><span style="font-weight:700;color:var(--tone-ok-text)">WINS</span></div>' + sigRows(D.signals.wins, 'win') +
+          '<div class="us-foot" style="margin:6px 0 2px"><span style="font-weight:700;color:var(--tone-info-text)">IMPROVEMENTS</span></div>' + sigRows(D.signals.improvements, 'imp') +
+          '<div class="us-foot" style="margin:6px 0 2px"><span style="font-weight:700;color:var(--tone-warn-text)">RISKS</span></div>' + sigRows(D.signals.risks, 'risk'), 'var(--accent-blue)') +
+      '</div>' +
+      '<div class="u6-duo">' +
+        pan('scale', 'What counts', 'the billing honesty matrix', wc, 'var(--accent-orange)') +
+        pan('pie', 'Attribution by entity', 'share of session spend', attr, 'var(--accent-lime)') +
+      '</div>';
+  }
+
+  var BUILDERS = { overview: dOverview, guard: dGuard, budget: dBudget, cache: dCache, tools: dTools, accounts: dAccounts, context: dContext, ledger: dLedger, coaching: dCoaching };
+
+  /* top sections cascade in behind the swap; deeper sections become scroll
+     reveals (.pm-rev) — the dossier is long and the reveal belongs to the reader */
+  function stageSections(el, rm) {
+    var stag = 24;
+    try { var t = parseFloat(getComputedStyle(document.documentElement).getPropertyValue('--mo-stagger')); if (isFinite(t) && t > 0) stag = t; } catch (e) {}
+    Array.prototype.forEach.call(el.children, function (kid, i) {
+      if (i >= 3) { kid.classList.add('pm-rev'); return; }
+      if (!rm) { kid.classList.add('u6-sec-in'); kid.style.animationDelay = (i * stag) + 'ms'; }
+    });
+  }
+
+  function renderDetail(dir) {
+    var el = $('u6DetailBody');
+    var html;
+    if (current.indexOf('q:') === 0) html = dProvider(current.slice(2));
+    else html = (BUILDERS[current] || dOverview)();
+    var sc = $('u6Detail');
+    var rm = R.isRM();
+    /* lift a ghost of the outgoing dossier so it can drift away over the incoming one */
+    var ghost = null;
+    if (dir && !rm) {
+      ghost = el.cloneNode(true);
+      ghost.removeAttribute('id');
+      ghost.querySelectorAll('[id]').forEach(function (n) { n.removeAttribute('id'); });
+      ghost.querySelectorAll('.u6-sec-in').forEach(function (n) { n.classList.remove('u6-sec-in'); n.style.animationDelay = ''; });
+      ghost.classList.remove('u6-in-up', 'u6-in-down');
+      ghost.classList.add('u6-swap-ghost', dir > 0 ? 'u6-out-up' : 'u6-out-down');
+      ghost.setAttribute('aria-hidden', 'true');
+      ghost.style.left = el.offsetLeft + 'px';
+      ghost.style.top = el.offsetTop + 'px';
+      ghost.style.width = el.offsetWidth + 'px';
+    }
+    el.innerHTML = html;
+    hydrate(el);
+    window.USrender.deText(el);
+    if (current === 'ledger') wireLedgerPane();
+    if (window.PMUsageShell) window.PMUsageShell.wireDemoActions(el);
+    sc.scrollTop = 0;
+    if (ghost) {
+      sc.appendChild(ghost);
+      ghost.addEventListener('animationend', function () { if (ghost.parentNode) ghost.parentNode.removeChild(ghost); });
+      setTimeout(function () { if (ghost.parentNode) ghost.parentNode.removeChild(ghost); }, 1200);
+    }
+    el.classList.remove('u6-in-up', 'u6-in-down');
+    if (dir && !rm) {
+      void el.offsetWidth;
+      el.classList.add(dir > 0 ? 'u6-in-down' : 'u6-in-up');
+    }
+    stageSections(el, rm);
+    requestAnimationFrame(function () {
+      R.animateFills(el);
+      R.animateCounters(el);
+      R.animateDonuts(el);
+      animateChartSegs(el);
+    });
+  }
+
+  document.addEventListener('click', function (ev) {
+    var t = ev.target;
+    var sth = t.closest('th[data-sort]');
+    if (sth && t.closest('#u6Detail')) {
+      var k = sth.getAttribute('data-sort');
+      if (LSORT.key === k) LSORT.dir = -LSORT.dir; else { LSORT.key = k; LSORT.dir = 1; }
+      t.closest('thead').querySelectorAll('th[data-sort]').forEach(function (x) { x.classList.remove('asc', 'desc'); x.removeAttribute('aria-sort'); });
+      sth.classList.add(LSORT.dir === 1 ? 'asc' : 'desc');
+      sth.setAttribute('aria-sort', LSORT.dir === 1 ? 'ascending' : 'descending');
+      if (current === 'ledger') renderLedgerBody();
+      return;
+    }
+    var g = t.closest('[data-goto]');
+    if (g) { select(g.getAttribute('data-goto')); return; }
+    var cw = t.closest('[data-cw]');
+    if (cw) { chartWin = cw.getAttribute('data-cw'); refreshChart(); return; }
+    var lg = t.closest('[data-series]');
+    if (lg) {
+      var k = lg.getAttribute('data-series');
+      mutedSeries[k] = !mutedSeries[k];
+      lg.classList.toggle('muted', !!mutedSeries[k]);
+      lg.setAttribute('aria-pressed', String(!mutedSeries[k]));
+      var box = $('u6ChartBox');
+      if (box) box.querySelectorAll('.s-' + k).forEach(function (s) { s.style.opacity = mutedSeries[k] ? '.12' : '1'; });
+      return;
+    }
+    var why = t.closest('.u6-why-t');
+    if (why) {
+      var w = why.parentElement;
+      w.classList.toggle('open');
+      why.setAttribute('aria-expanded', String(w.classList.contains('open')));
+      return;
+    }
+    var car = t.closest('[data-lk]');
+    if (car) {
+      var key = car.getAttribute('data-lk');
+      var scope = car.closest('tbody') || document;
+      var det = scope.querySelector('[data-ldetail="' + key + '"]');
+      if (det) {
+        det.hidden = !det.hidden;
+        car.classList.toggle('open', !det.hidden);
+        car.setAttribute('aria-expanded', String(!det.hidden));
+      }
+      return;
+    }
+    var ps = t.closest('[data-preset]');
+    if (ps) {
+      D.budget.warningThreshold = parseInt(ps.getAttribute('data-preset'), 10);
+      renderDetail();
+      if (window.toast) window.toast('Budget warning threshold set to ' + ps.getAttribute('data-preset') + '% (demo)');
+    }
+  });
+  /* keyboard sort: activate the focused ledger header via the same click path */
+  $('u6Detail').addEventListener('keydown', function (ev) {
+    var th = ev.target.closest && ev.target.closest('th[data-sort]');
+    if (th && (ev.key === 'Enter' || ev.key === ' ')) { ev.preventDefault(); th.click(); }
+  });
+
+  $('u6RailScroll').addEventListener('click', function (ev) {
+    var row = ev.target.closest('.u6-row');
+    if (!row) return;
+    select(row.getAttribute('data-sub'));
+    row.focus();
+  });
+  $('u6RailScroll').addEventListener('keydown', function (ev) {
+    var rows = Array.prototype.slice.call($('u6RailScroll').querySelectorAll('.u6-row:not([hidden])'));
+    var idx = rows.indexOf(document.activeElement);
+    var next = null;
+    if (ev.key === 'ArrowDown') next = Math.min(idx + 1, rows.length - 1);
+    else if (ev.key === 'ArrowUp') next = Math.max(idx - 1, 0);
+    else if (ev.key === 'Home') next = 0;
+    else if (ev.key === 'End') next = rows.length - 1;
+    else if ((ev.key === 'Enter' || ev.key === ' ') && idx !== -1) { ev.preventDefault(); select(rows[idx].getAttribute('data-sub')); return; }
+    if (next == null || !rows[next]) return;
+    ev.preventDefault();
+    rows[next].focus();
+    select(rows[next].getAttribute('data-sub'));
+  });
+
+  $('u6Search').addEventListener('input', function () {
+    var q = this.value.trim().toLowerCase();
+    $('u6RailScroll').querySelectorAll('.u6-row[data-filter]').forEach(function (r) {
+      r.hidden = q !== '' && r.getAttribute('data-filter').indexOf(q) === -1;
+    });
+  });
+
+  $('u6Refresh').addEventListener('click', function () {
+    var b = this;
+    b.classList.add('spinning');
+    var ft = $('u6FreshTxt');
+    if (ft) ft.textContent = 'refreshing\u2026';
+    var fr = $('u6Fresh');
+    if (fr) fr.classList.add('stale');
+    setTimeout(function () {
+      b.classList.remove('spinning');
+      renderStrip();
+      requestAnimationFrame(function () { R.animateFills($('u6Strip')); R.animateCounters($('u6Strip')); });
+      renderDetail();
+      if (window.toast) window.toast('Usage projections refreshed (demo)');
+    }, 900);
+  });
+
+  var liveIdx = 0, liveRef = 2000;
+  setInterval(function () {
+    if (document.visibilityState !== 'visible') return;
+    var src = D.livePool[liveIdx++ % D.livePool.length];
+    var r = {};
+    Object.keys(src).forEach(function (k) { r[k] = src[k]; });
+    r.ref = 'ue-47-' + (liveRef++);
+    var now = new Date();
+    r.t = String(now.getHours()).padStart(2, '0') + ':' + String(now.getMinutes()).padStart(2, '0');
+    D.ledger.unshift(r);
+    if (D.ledger.length > 48) D.ledger.pop();
+    var rl = $('u6RailLedgerN');
+    if (rl) rl.textContent = D.ledger.length;
+    var key = 'L' + Date.now();
+    if (current === 'ledger' && ledgerMatches(r)) {
+      var tb = $('u6LedgerBody');
+      if (tb) {
+        tb.insertAdjacentHTML('afterbegin', ledgerRowHTML(r, key, true, true));
+        var c = $('u6LedgerCount');
+        if (c) c.textContent = tb.querySelectorAll('[data-lrow]').length + ' of ' + D.ledger.length + ' events';
+      }
+    } else if (current.indexOf('q:') === 0 && quotaForLedgerProv(r.prov) === current.slice(2)) {
+      var pb = $('u6ProvLedgerBody');
+      if (pb) pb.insertAdjacentHTML('afterbegin', ledgerRowHTML(r, key, true, false));
+    }
+  }, 9000);
+
+  setInterval(function () {
+    if (document.visibilityState !== 'visible') return;
+    D.accounts.forEach(function (a, i) {
+      if (a.cooldownSec != null && a.cooldownSec > 0) {
+        a.cooldownSec--;
+        document.querySelectorAll('[data-cd-idx="' + i + '"]').forEach(function (el) { el.textContent = R.fmtCd(a.cooldownSec); });
+      }
+    });
+  }, 1000);
+
+  renderRail();
+  renderStrip();
+  requestAnimationFrame(function () { R.animateFills($('u6Strip')); R.animateCounters($('u6Strip')); R.animateFills($('u6RailScroll')); });
+  select('overview');
+})();
+</script>
+</body>
+</html>

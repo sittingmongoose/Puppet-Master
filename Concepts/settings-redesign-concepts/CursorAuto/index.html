@@ -1,0 +1,213 @@
+<!doctype html>
+<html lang="en" data-theme="friendly-dark" data-motion="full">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+  <link rel="icon" href="data:,">
+  <title>CursorAuto — Settings Redesign Bakeoff Gallery</title>
+  <link rel="stylesheet" href="shared/css/pm-themes.css">
+  <link rel="stylesheet" href="shared/css/pm-shell.css">
+  <link rel="stylesheet" href="shared/css/ca-components.css">
+  <style>
+    .gal { height: 100%; overflow: auto; padding: 28px 32px 48px; }
+    .gal-inner { max-width: 1080px; margin-inline: auto; }
+    .gal-eyebrow { display: flex; align-items: center; gap: 10px; font-size: 11px; letter-spacing: .12em; text-transform: uppercase; color: var(--pm-ink-faint); }
+    .gal-model { font: inherit; letter-spacing: inherit; text-transform: inherit; color: var(--pm-accent); border: 1px solid var(--pm-line); border-radius: var(--pm-radius-s); padding: 2px 8px; background: var(--pm-bg-raised); }
+    .gal h1 { margin: 10px 0 6px; font-size: 26px; letter-spacing: -0.01em; color: var(--pm-ink); }
+    .gal-lede { margin: 0 0 4px; max-width: 72ch; color: var(--pm-ink-dim); font-size: 14px; }
+    .gal-note { margin: 0 0 26px; max-width: 72ch; color: var(--pm-ink-faint); font-size: 12.5px; }
+    .gal-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(320px, 1fr)); gap: 16px; margin-bottom: 34px; }
+    .gal-card { display: flex; flex-direction: column; gap: 10px; border: 1px solid var(--pm-line); border-radius: var(--pm-radius-l); background: var(--pm-bg-raised); padding: 18px; box-shadow: var(--pm-shadow-1); }
+    .gal-card-head { display: flex; align-items: center; gap: 10px; }
+    .gal-card-head svg { inline-size: 22px; block-size: 22px; color: var(--pm-accent); flex: none; }
+    .gal-num { font-size: 11px; letter-spacing: .1em; color: var(--pm-ink-faint); text-transform: uppercase; }
+    .gal-card h2 { margin: 0; font-size: 18px; color: var(--pm-ink); }
+    .gal-thesis { margin: 0; font-size: 13px; color: var(--pm-ink-dim); }
+    .gal-try { margin: 0; padding-inline-start: 18px; font-size: 12.5px; color: var(--pm-ink-dim); display: grid; gap: 4px; }
+    .gal-meta { font-size: 11.5px; color: var(--pm-ink-faint); }
+    .gal-open { margin-top: auto; align-self: flex-start; display: inline-flex; align-items: center; gap: 6px; font-size: 12.5px; font-weight: 600; color: var(--pm-accent-ink); background: var(--pm-accent); border-radius: var(--pm-radius-m); padding: 7px 14px; text-decoration: none; }
+    .gal-open svg { inline-size: 14px; block-size: 14px; }
+    .gal-open:focus-visible { outline: 2px solid var(--pm-focus); outline-offset: 2px; }
+    .gal-section { border: 1px solid var(--pm-line); border-radius: var(--pm-radius-l); background: var(--pm-bg-raised); padding: 18px 20px; margin-bottom: 16px; }
+    .gal-section h2 { margin: 0 0 8px; font-size: 15px; color: var(--pm-ink); }
+    .gal-section ul { margin: 0; padding-inline-start: 18px; display: grid; gap: 5px; font-size: 12.5px; color: var(--pm-ink-dim); }
+    .gal-section code { font-family: var(--pm-font-mono); font-size: 11.5px; background: var(--pm-bg-sunken); border-radius: var(--pm-radius-s); padding: 1px 5px; }
+  </style>
+</head>
+<body>
+  <div class="pmx-frame">
+    <header class="pmx-topbar">
+      <span class="pmx-brand">
+        <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4 6.5 12 2l8 4.5v9L12 20l-8-4.5z"/><path d="m4 6.5 8 4.5 8-4.5M12 11v9"/></svg>
+        <span class="pmx-wordmark">PUPPET MASTER</span>
+      </span>
+      <nav class="pmx-tabs" aria-label="Pages">
+        <a class="pmx-tab" href="#">Chat</a>
+        <a class="pmx-tab" href="#">Editor</a>
+        <a class="pmx-tab" href="#">Goals</a>
+        <a class="pmx-tab" href="#" aria-current="page">Settings</a>
+      </nav>
+      <span class="pmx-search"><svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="11" cy="11" r="7"/><path d="m20 20-3.5-3.5"/></svg><span>Search</span></span>
+      <span class="pmx-model">Claude Opus</span>
+      <span class="pmx-model" data-concept-model="CursorAuto" title="Concept attribution">CursorAuto</span>
+      <span class="pmx-controls">
+        <select data-shell-theme aria-label="Theme">
+          <option value="friendly-dark">Friendly Dark</option>
+          <option value="friendly-light">Friendly Light</option>
+          <option value="glass-dark">Glass Dark</option>
+          <option value="glass-light">Glass Light</option>
+          <option value="retro-dark">Retro Dark</option>
+          <option value="retro-light">Retro Light</option>
+          <option value="basic-dark">Basic Dark</option>
+          <option value="basic-light">Basic Light</option>
+        </select>
+        <button type="button" data-shell-motion aria-pressed="false" aria-label="Toggle reduced motion" title="Reduced motion off">
+          <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4 12h4l2-6 4 12 2-6h4"/></svg>
+        </button>
+        <button type="button" data-shell-toggle="side" aria-pressed="true" aria-label="Toggle side panel"><svg viewBox="0 0 24 24" aria-hidden="true"><rect x="4" y="4" width="16" height="16" rx="2"/><path d="M9.5 4v16"/></svg></button>
+        <button type="button" data-shell-toggle="chat" aria-pressed="true" aria-label="Toggle Assistant panel"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M5 5h14v11H9l-4 3z"/></svg></button>
+        <button type="button" data-shell-toggle="bottom" aria-pressed="true" aria-label="Toggle bottom panel"><svg viewBox="0 0 24 24" aria-hidden="true"><rect x="4" y="4" width="16" height="16" rx="2"/><path d="M4 14h16"/></svg></button>
+        <select data-shell-width aria-label="Page width">
+          <option value="full" selected>Full width</option>
+          <option value="760">760 px</option>
+          <option value="900">900 px</option>
+          <option value="1280">1280 px</option>
+          <option value="1700">1700 px</option>
+          <option value="2200">2200 px</option>
+          <option value="2500">2500 px</option>
+        </select>
+      </span>
+    </header>
+
+    <nav class="pmx-rail" aria-label="Activity">
+      <button type="button" class="pmx-rail-btn" aria-label="Files"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4 7a2 2 0 0 1 2-2h4l2 2h6a2 2 0 0 1 2 2v8a2 2 0 0 1-2 2H6a2 2 0 0 1-2-2z"/></svg></button>
+      <button type="button" class="pmx-rail-btn" aria-label="Search"><svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="11" cy="11" r="7"/><path d="m20 20-3.5-3.5"/></svg></button>
+      <button type="button" class="pmx-rail-btn" aria-label="Settings" aria-current="true"><svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="3"/><path d="M19 12a7 7 0 0 0-.1-1.2l2-1.5-2-3.4-2.3 1a7 7 0 0 0-2.1-1.2L14 3h-4l-.5 2.7a7 7 0 0 0-2.1 1.2l-2.3-1-2 3.4 2 1.5a7 7 0 0 0 0 2.4l-2 1.5 2 3.4 2.3-1a7 7 0 0 0 2.1 1.2L10 21h4l.5-2.7a7 7 0 0 0 2.1-1.2l2.3 1 2-3.4-2-1.5A7 7 0 0 0 19 12z"/></svg></button>
+    </nav>
+
+    <aside class="pmx-side" aria-label="Project files">
+      <h2 class="pmx-side-h">puppet-master</h2>
+      <div class="pmx-tree">
+        <span class="pmx-tree-row" data-depth="0"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4 7a2 2 0 0 1 2-2h4l2 2h6a2 2 0 0 1 2 2v8a2 2 0 0 1-2 2H6a2 2 0 0 1-2-2z"/></svg>Concepts</span>
+        <span class="pmx-tree-row" data-depth="1"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4 7a2 2 0 0 1 2-2h4l2 2h6a2 2 0 0 1 2 2v8a2 2 0 0 1-2 2H6a2 2 0 0 1-2-2z"/></svg>settings-redesign-concepts</span>
+        <span class="pmx-tree-row" data-depth="2"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M6 3h8l4 4v14H6z"/><path d="M14 3v4h4"/></svg>CursorAuto</span>
+      </div>
+    </aside>
+
+    <main class="pmx-stage">
+      <div class="gal">
+        <div class="gal-inner">
+          <div class="gal-eyebrow">Settings redesign bakeoff <span class="gal-model" data-concept-model="CursorAuto">Concept model: CursorAuto</span></div>
+          <h1>Four ways to rebuild Settings</h1>
+          <p class="gal-lede">Four genuinely different information architectures over one shared settings system: the same demo data, the same eight themes, the same state rules — four different answers to search, navigation, managers, and motion.</p>
+          <p class="gal-note">This gallery is a comparison surface, not a ranking. Open each concept in the ConceptHub to exercise width, theme, and reduced-motion controls.</p>
+
+          <div class="gal-grid">
+            <section class="gal-card" aria-label="Concept 01 Harbor">
+              <div class="gal-card-head">
+                <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M3 18h18"/><path d="M5 18V9l7-4 7 4v9"/><path d="M9 18v-5h6v5"/></svg>
+                <div><div class="gal-num">Concept 01</div><h2>Harbor</h2></div>
+              </div>
+              <p class="gal-thesis"><strong>Pier-desk IA.</strong> Harbor search first, at most a few tide notices, then berth cards. Workspace is pier slips beside a cargo document. Managers are drydocks and lockers.</p>
+              <ul class="gal-try">
+                <li>Pier-desk search reshapes the berth directory</li>
+                <li>Slip scrollspy with docking transitions</li>
+                <li>Providers + Memory + Terminal (LSP opens with full checklist)</li>
+              </ul>
+              <div class="gal-meta">Motion: docking — berth origin to workspace, settle before text.</div>
+              <a class="gal-open" href="concept-01-harbor.html">Open Harbor <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M5 12h14m-6-6 6 6-6 6"/></svg></a>
+            </section>
+
+            <section class="gal-card" aria-label="Concept 02 Score">
+              <div class="gal-card-head">
+                <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4 6h16M4 12h16M4 18h10"/><circle cx="18" cy="18" r="2"/></svg>
+                <div><div class="gal-num">Concept 02</div><h2>Score</h2></div>
+              </div>
+              <p class="gal-thesis"><strong>Cue-sheet IA.</strong> Hero cue search, cue notices, then movement plates. Workspace is a single-column score with a top rehearsal-mark rail and a light side index. Managers are ensemble cast and instruments.</p>
+              <ul class="gal-try">
+                <li>Hero cue search morphs into ranked cue sheets</li>
+                <li>Rehearsal-mark rail tracks scroll position</li>
+                <li>Providers + Personas + MCP</li>
+              </ul>
+              <div class="gal-meta">Motion: cueing — marks ink in; page-turn between movements.</div>
+              <a class="gal-open" href="concept-02-score.html">Open Score <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M5 12h14m-6-6 6 6-6 6"/></svg></a>
+            </section>
+
+            <section class="gal-card" aria-label="Concept 03 Switchboard">
+              <div class="gal-card-head">
+                <svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="6" cy="8" r="2"/><circle cx="6" cy="16" r="2"/><circle cx="18" cy="12" r="2"/><path d="M8 8h6l4 4M8 16h6l4-4"/></svg>
+                <div><div class="gal-num">Concept 03</div><h2>Switchboard</h2></div>
+              </div>
+              <p class="gal-thesis"><strong>Operator patch-bay IA.</strong> Destinations are labeled jacks with readiness text+icon. Workspace is a patch sheet beside the jack strip. Managers are patch bays; ordinary settings hang as policies.</p>
+              <ul class="gal-try">
+                <li>Docked operator search (<code>/</code>) with jack tickets</li>
+                <li>Lit jacks track the viewport (no color-only meaning)</li>
+                <li>Providers + Context &amp; Instructions + Skills/Plugins/Tools</li>
+              </ul>
+              <div class="gal-meta">Motion: patching — jack acknowledge, brief route line, no endless pulse.</div>
+              <a class="gal-open" href="concept-03-switchboard.html">Open Switchboard <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M5 12h14m-6-6 6 6-6 6"/></svg></a>
+            </section>
+
+            <section class="gal-card" aria-label="Concept 04 Archive">
+              <div class="gal-card-head">
+                <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4 7h16v12H4z"/><path d="M4 7l2-3h12l2 3"/><path d="M9 12h6"/></svg>
+                <div><div class="gal-num">Concept 04</div><h2>Archive</h2></div>
+              </div>
+              <p class="gal-thesis"><strong>Archival retrieval IA.</strong> Home is a finding-aid desk. Destinations are collection guides. Workspace is one box’s folders with a running header. Managers are special collections with the same retrieval grammar.</p>
+              <ul class="gal-try">
+                <li>Finding-aid search with call-number hits</li>
+                <li>Folder outline + document; sticky running header</li>
+                <li>Providers + Crew + Media</li>
+              </ul>
+              <div class="gal-meta">Motion: retrieval — one folder open, then stillness.</div>
+              <a class="gal-open" href="concept-04-archive.html">Open Archive <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M5 12h14m-6-6 6 6-6 6"/></svg></a>
+            </section>
+          </div>
+
+          <section class="gal-section" aria-label="Shared system">
+            <h2>One shared system underneath</h2>
+            <ul>
+              <li>Shared demo dataset (<code>shared/data/pm-settings-demo.js</code>): 11 humanized categories, 129+ settings, providers covering required connection states, managers, spellcheck, notices, recents.</li>
+              <li>Shared engine (<code>shared/lib</code>): fuzzy search + deep links, scrollspy/jump, pub/sub store with honest simulated receipts, ConceptHub bridge.</li>
+              <li>All eight themes and reduced motion. No emoji, no category pills, no colored left-accent status borders.</li>
+            </ul>
+          </section>
+        </div>
+      </div>
+    </main>
+
+    <aside class="pmx-chat" aria-label="Assistant panel">
+      <h2 class="pmx-chat-h">Assistant</h2>
+      <div class="pmx-chat-log">
+        <div class="pmx-msg" data-from="user">Compare the four settings concepts without picking a winner.</div>
+        <div class="pmx-msg" data-from="assistant">Open each one and try search, scrollspy, and a manager under every theme. Differences are architectural, not cosmetic.</div>
+      </div>
+      <div class="pmx-composer">
+        <input type="text" placeholder="Message the Assistant" disabled aria-label="Message the Assistant (disabled in concept preview)">
+      </div>
+    </aside>
+
+    <section class="pmx-bottom" aria-label="Bottom panel">
+      <div class="pmx-bottom-tabs" role="tablist">
+        <button type="button" class="pmx-bottom-tab" role="tab" aria-selected="true">Terminal</button>
+        <button type="button" class="pmx-bottom-tab" role="tab" aria-selected="false">Problems</button>
+      </div>
+      <div class="pmx-bottom-body">
+        <div>puppet-master % python3 Concepts/ConceptHub/validate.py Concepts/settings-redesign-concepts/CursorAuto</div>
+      </div>
+    </section>
+
+    <footer class="pmx-status">
+      <span class="pmx-status-item">main</span>
+      <span class="pmx-status-spacer"></span>
+      <span class="pmx-status-item">CursorAuto bakeoff</span>
+    </footer>
+  </div>
+
+  <script src="shared/lib/pm-bridge.js"></script>
+  <script src="shared/lib/pm-shell.js"></script>
+  <script>
+    document.addEventListener("DOMContentLoaded", function () { window.PMShell.init(); });
+  </script>
+</body>
+</html>

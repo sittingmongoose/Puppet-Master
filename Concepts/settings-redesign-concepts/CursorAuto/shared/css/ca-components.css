@@ -1,0 +1,1700 @@
+/* ============================================================================
+   ca-components.css — shared primitives for all four concepts (prefix `ca-`)
+   ----------------------------------------------------------------------------
+   Requires ca-themes.css (tokens). Everything here is theme-driven; no
+   hard-coded palette values except in the data-URI SVG icon set below.
+
+   Ground rules honored file-wide:
+   - No emoji. Icons are inline SVG data-URIs applied as masks (they inherit
+     `currentColor`, so they track the theme).
+   - No colored left-side borders for status or selection — status is carried
+     by badge TEXT + icon + color (never color alone). Selection uses
+     background tints, bottom lines, or rings.
+   - No text clipping: no ellipsis truncation, no fixed-height text boxes.
+     Everything wraps.
+   - User-visible strings are humanized; state names render as
+     "Not configured", "Effective value differs", etc.
+
+   Row DOM contract:
+     <div class="ca-row" data-state="managed" data-exposure="standard">
+       <div class="ca-row-main">
+         <div class="ca-row-label">Label <span class="ca-badge" ...>…</span></div>
+         <div class="ca-row-desc">Plain-language description.</div>
+       </div>
+       <div class="ca-row-control">…switch/select/…</div>
+       <div class="ca-row-state">…state badge…</div>
+       <div class="ca-row-reason">…managed/unavailable reason (optional)…</div>
+       <div class="ca-row-effective">Requested <b class="ca-eff">A</b> →
+         Effective <b class="ca-eff">B</b> — reason (optional)</div>
+     </div>
+   ========================================================================== */
+
+/* --------------------------------------------------------------------------
+   Inline SVG icon set (masks; inherit currentColor). `--ca-ic-*` custom
+   properties are consumed by badges, rows, notices, chips, and the generic
+   `.ca-ic` span: <span class="ca-ic" style="--ca-ic:var(--ca-ic-lock)"></span>
+   -------------------------------------------------------------------------- */
+:root {
+  --ca-ic-lock: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 16'%3E%3Cpath d='M8 1a3.5 3.5 0 0 0-3.5 3.5V7H4a1 1 0 0 0-1 1v6a1 1 0 0 0 1 1h8a1 1 0 0 0 1-1V8a1 1 0 0 0-1-1h-.5V4.5A3.5 3.5 0 0 0 8 1zM6 7V4.5a2 2 0 1 1 4 0V7H6z'/%3E%3C/svg%3E");
+  --ca-ic-check: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 16'%3E%3Cpath d='M13.7 3.9 6.4 11.2 2.3 7.1l1.4-1.4 2.7 2.7 5.9-5.9z'/%3E%3C/svg%3E");
+  --ca-ic-star: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 16'%3E%3Cpath d='M8 1.3l2.05 4.15 4.58.67-3.32 3.23.79 4.57L8 11.94l-4.1 2.16.79-4.57L1.37 6.15l4.58-.67z'/%3E%3C/svg%3E");
+  --ca-ic-triangle: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 16'%3E%3Cpath d='M8 1.6 15 14H1z'/%3E%3C/svg%3E");
+  --ca-ic-layers: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 16'%3E%3Cpath d='M8 1 15 5.3 8 9.6 1 5.3zM2.6 8.4 8 11.4l5.4-3L15 9.2 8 13.5 1 9.2z'/%3E%3C/svg%3E");
+  --ca-ic-sparkle: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 16'%3E%3Cpath d='M8 1l1.7 4.8L14.5 7.5l-4.8 1.7L8 14l-1.7-4.8L1.5 7.5l4.8-1.7z'/%3E%3C/svg%3E");
+  --ca-ic-dashcircle: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 16'%3E%3Ccircle cx='8' cy='8' r='5.4' fill='none' stroke='black' stroke-width='1.8' stroke-dasharray='2.8 2.4'/%3E%3C/svg%3E");
+  --ca-ic-pencil: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 16'%3E%3Cpath d='M2 11.3V14h2.7l7-7L9 4.3zM13.9 5.6a1 1 0 0 0 0-1.4l-2.1-2.1a1 1 0 0 0-1.4 0l-1 1 3.5 3.5z'/%3E%3C/svg%3E");
+  --ca-ic-diamond: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 16'%3E%3Cpath d='M8 1.5 14.5 8 8 14.5 1.5 8z'/%3E%3C/svg%3E");
+  --ca-ic-swap: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 16'%3E%3Cpath d='M1 5h9V2.6L14.5 6 10 9.4V7H1zM15 11H6v2.4L1.5 10 6 6.6V9h9z'/%3E%3C/svg%3E");
+  --ca-ic-redo: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 16'%3E%3Cpath d='M13.4 8A5.4 5.4 0 1 1 8 2.6c1.5 0 2.9.6 3.9 1.6L10.5 5.6H15V1.1l-1.9 1.9A7.2 7.2 0 1 0 15.2 8z'/%3E%3C/svg%3E");
+  --ca-ic-shield: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 16'%3E%3Cpath d='M8 1l6 2.2v4.1c0 3.6-2.5 6.3-6 7.7-3.5-1.4-6-4.1-6-7.7V3.2z'/%3E%3C/svg%3E");
+  --ca-ic-bolt: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 16'%3E%3Cpath d='M9 1 2.5 9H7l-1 6L12.5 7H8z'/%3E%3C/svg%3E");
+  --ca-ic-tag: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 16'%3E%3Cpath d='M1.5 1.5h6L14 8a1.5 1.5 0 0 1 0 2.1l-4.4 4.4a1.5 1.5 0 0 1-2.1 0L1 8z'/%3E%3C/svg%3E");
+  --ca-ic-flask: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 16'%3E%3Cpath d='M6 1h4v1.5H9V7l3.6 6.3A1.6 1.6 0 0 1 11.2 15.5H4.8a1.6 1.6 0 0 1-1.4-2.2L7 7V2.5H6z'/%3E%3C/svg%3E");
+  --ca-ic-chevron-r: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 16'%3E%3Cpath d='M6 3l5 5-5 5' fill='none' stroke='black' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'/%3E%3C/svg%3E");
+  --ca-ic-chevron-d: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 16'%3E%3Cpath d='M3 6l5 5 5-5' fill='none' stroke='black' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'/%3E%3C/svg%3E");
+  --ca-ic-x: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 16'%3E%3Cpath d='M4 4l8 8M12 4l-8 8' fill='none' stroke='black' stroke-width='2' stroke-linecap='round'/%3E%3C/svg%3E");
+  --ca-ic-info: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 16'%3E%3Cpath d='M8 1a7 7 0 1 0 0 14A7 7 0 0 0 8 1zM7 7h2v5H7zM7 4h2v2H7z'/%3E%3C/svg%3E");
+}
+
+.ca-ic {
+  display: inline-block;
+  inline-size: 14px;
+  block-size: 14px;
+  flex: none;
+  background: currentColor;
+  -webkit-mask: var(--ca-ic, none) center / contain no-repeat;
+  mask: var(--ca-ic, none) center / contain no-repeat;
+}
+
+/* Search result highlight */
+mark {
+  background: color-mix(in srgb, var(--pm-accent) 28%, transparent);
+  color: inherit;
+  border-radius: 2px;
+  padding-inline: 1px;
+}
+
+/* Small text utilities */
+.ca-muted { color: var(--pm-ink-dim); }
+.ca-faint { color: var(--pm-ink-faint); }
+.ca-mono { font-family: var(--pm-font-mono); }
+
+/* ==========================================================================
+   Buttons
+   ========================================================================== */
+.ca-btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 6px;
+  padding: 6px 12px;
+  border: 1px solid var(--pm-line);
+  border-radius: var(--pm-radius-s);
+  background: var(--pm-bg-raised);
+  color: var(--pm-ink);
+  font: inherit;
+  font-size: 12.5px;
+  font-weight: 550;
+  cursor: pointer;
+  transition:
+    background-color calc(140ms * var(--pm-motion-scale, 1)) ease,
+    border-color calc(140ms * var(--pm-motion-scale, 1)) ease,
+    transform calc(90ms * var(--pm-motion-scale, 1)) ease;
+}
+
+.ca-btn:hover { border-color: var(--pm-ink-faint); }
+.ca-btn:active { transform: translateY(1px); }
+
+.ca-btn[data-variant="primary"] {
+  background: var(--pm-accent);
+  color: var(--pm-accent-ink);
+  border-color: transparent;
+}
+
+.ca-btn[data-variant="quiet"] {
+  background: transparent;
+  border-color: transparent;
+  color: var(--pm-ink-dim);
+}
+
+.ca-btn[data-variant="quiet"]:hover { color: var(--pm-ink); }
+
+.ca-btn[data-variant="danger"] {
+  background: var(--pm-danger);
+  color: var(--pm-on-status);
+  border-color: transparent;
+}
+
+.ca-btn:disabled {
+  opacity: .5;
+  cursor: not-allowed;
+  transform: none;
+}
+
+/* ==========================================================================
+   Badges — state / scope / exposure / restart / effect.
+   Meaning is carried by TEXT + ICON + color, never color alone.
+   ========================================================================== */
+.ca-badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 5px;
+  padding: 3px 8px;
+  border: 1px solid var(--pm-line);
+  border-radius: 999px;
+  background: transparent;
+  color: var(--pm-ink-dim);
+  font-size: 11px;
+  font-weight: 550;
+  line-height: 1.35;
+  white-space: nowrap;
+}
+
+.ca-badge::before {
+  content: "";
+  inline-size: 11px;
+  block-size: 11px;
+  flex: none;
+  background: currentColor;
+  -webkit-mask: var(--ca-ic, none) center / contain no-repeat;
+  mask: var(--ca-ic, none) center / contain no-repeat;
+}
+
+.ca-badge:not([data-icon])::before { display: none; }
+
+/* --- state badges (data-kind="state") --- */
+.ca-badge[data-kind="state"][data-state="default"] {
+  --ca-ic: var(--ca-ic-check);
+  color: var(--pm-ink-faint);
+}
+
+.ca-badge[data-kind="state"][data-state="recommended"] {
+  --ca-ic: var(--ca-ic-star);
+  color: var(--pm-rec);
+  border-color: color-mix(in srgb, var(--pm-rec) 45%, transparent);
+}
+
+.ca-badge[data-kind="state"][data-state="inherited"] {
+  --ca-ic: var(--ca-ic-layers);
+  background: var(--pm-bg-sunken);
+}
+
+.ca-badge[data-kind="state"][data-state="auto"] {
+  --ca-ic: var(--ca-ic-sparkle);
+  color: var(--pm-info);
+  border-color: color-mix(in srgb, var(--pm-info) 40%, transparent);
+}
+
+.ca-badge[data-kind="state"][data-state="not-configured"] {
+  --ca-ic: var(--ca-ic-dashcircle);
+  border-style: dashed;
+  color: var(--pm-ink-faint);
+}
+
+.ca-badge[data-kind="state"][data-state="managed"] {
+  --ca-ic: var(--ca-ic-lock);
+  background: var(--pm-bg-sunken);
+}
+
+.ca-badge[data-kind="state"][data-state="custom"] {
+  --ca-ic: var(--ca-ic-pencil);
+  color: var(--pm-accent);
+  border-color: color-mix(in srgb, var(--pm-accent) 40%, transparent);
+}
+
+.ca-badge[data-kind="state"][data-state="unavailable"] {
+  --ca-ic: var(--ca-ic-diamond);
+  color: var(--pm-ink-faint);
+}
+
+.ca-badge[data-kind="state"][data-state="effective-differs"] {
+  --ca-ic: var(--ca-ic-swap);
+  color: var(--pm-warn);
+  border-color: color-mix(in srgb, var(--pm-warn) 45%, transparent);
+}
+
+/* --- scope badges (turn / thread / goal / project / global) --- */
+.ca-badge[data-kind="scope"] {
+  background: var(--pm-bg-sunken);
+  font-size: 10.5px;
+  padding: 2px 7px;
+}
+
+/* --- exposure badges --- */
+.ca-badge[data-kind="exposure"][data-exposure="advanced"] {
+  color: var(--pm-ink-dim);
+}
+
+.ca-badge[data-kind="exposure"][data-exposure="expert"] {
+  --ca-ic: var(--ca-ic-triangle);
+  color: var(--pm-warn);
+  border-color: color-mix(in srgb, var(--pm-warn) 45%, transparent);
+}
+
+.ca-badge[data-kind="exposure"][data-exposure="managed"] {
+  --ca-ic: var(--ca-ic-lock);
+  background: var(--pm-bg-sunken);
+}
+
+.ca-badge[data-kind="exposure"][data-exposure="diagnostic"] {
+  --ca-ic: var(--ca-ic-flask);
+  font-family: var(--pm-font-mono);
+  font-size: 10.5px;
+}
+
+.ca-badge[data-kind="exposure"][data-exposure="unavailable"] {
+  --ca-ic: var(--ca-ic-diamond);
+  color: var(--pm-ink-faint);
+}
+
+/* --- restart / reconnect badges --- */
+.ca-badge[data-kind="restart"] {
+  --ca-ic: var(--ca-ic-redo);
+}
+
+/* --- effect badges (cost / privacy / safety / performance) --- */
+.ca-badge[data-kind="effect"][data-effect="cost"] {
+  --ca-ic: var(--ca-ic-tag);
+}
+
+.ca-badge[data-kind="effect"][data-effect="privacy"] {
+  --ca-ic: var(--ca-ic-shield);
+}
+
+.ca-badge[data-kind="effect"][data-effect="safety"] {
+  --ca-ic: var(--ca-ic-triangle);
+}
+
+.ca-badge[data-kind="effect"][data-effect="performance"] {
+  --ca-ic: var(--ca-ic-bolt);
+}
+
+/* ==========================================================================
+   Settings row
+   ========================================================================== */
+.ca-row {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: flex-start;
+  gap: 5px 18px;
+  padding: 14px 16px;
+  border-bottom: 1px solid var(--pm-line);
+}
+
+.ca-row-main {
+  flex: 1 1 300px;
+  min-inline-size: 0;
+  display: grid;
+  gap: 3px;
+}
+
+.ca-row-label {
+  display: flex;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 6px;
+  font-weight: 600;
+  color: var(--pm-ink);
+}
+
+.ca-row-desc {
+  color: var(--pm-ink-dim);
+  font-size: 12.5px;
+  max-inline-size: 64ch;
+}
+
+.ca-row-control {
+  flex: 0 0 auto;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding-block-start: 2px;
+}
+
+.ca-row-state {
+  flex: 0 0 auto;
+  margin-inline-start: auto;
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  padding-block-start: 2px;
+}
+
+.ca-row-reason,
+.ca-row-effective {
+  flex: 1 0 100%;
+  font-size: 12px;
+  color: var(--pm-ink-dim);
+}
+
+.ca-row-effective .ca-eff {
+  font-family: var(--pm-font-mono);
+  font-size: 11.5px;
+  padding: 1px 5px;
+  border-radius: var(--pm-radius-s);
+  background: var(--pm-bg-sunken);
+  color: var(--pm-ink);
+}
+
+/* managed: control reads as locked, reason line carries the why */
+.ca-row[data-state="managed"] .ca-row-control {
+  opacity: .55;
+}
+
+/* unavailable: dimmed + reason chip (never color-only) */
+.ca-row[data-state="unavailable"] .ca-row-main,
+.ca-row[data-state="unavailable"] .ca-row-control {
+  opacity: .55;
+}
+
+/* exposure: subdued treatments for non-standard rows */
+.ca-row[data-exposure="advanced"] .ca-row-label {
+  color: var(--pm-ink-dim);
+  font-weight: 550;
+}
+
+.ca-row[data-exposure="expert"] .ca-row-label {
+  color: var(--pm-ink-dim);
+  font-weight: 550;
+}
+
+/* expert "risky" marker: text chip + warning icon (not color-only) */
+.ca-row[data-exposure="expert"][data-risky] .ca-row-label::before {
+  content: "";
+  inline-size: 12px;
+  block-size: 12px;
+  flex: none;
+  background: var(--pm-danger);
+  -webkit-mask: var(--ca-ic-triangle) center / contain no-repeat;
+  mask: var(--ca-ic-triangle) center / contain no-repeat;
+}
+
+.ca-row[data-exposure="expert"][data-risky] .ca-row-label::after {
+  content: "Risky";
+  font-size: 10.5px;
+  font-weight: 600;
+  padding: 2px 7px;
+  border: 1px solid color-mix(in srgb, var(--pm-danger) 50%, transparent);
+  border-radius: 999px;
+  color: var(--pm-danger);
+}
+
+.ca-row[data-exposure="diagnostic"] .ca-row-label {
+  font-family: var(--pm-font-mono);
+  font-size: 12px;
+  font-weight: 500;
+  color: var(--pm-ink-dim);
+}
+
+/* ==========================================================================
+   Controls
+   ========================================================================== */
+
+/* --- toggle switch: <button class="ca-switch" role="switch" aria-checked="true"> --- */
+.ca-switch {
+  position: relative;
+  inline-size: 38px;
+  block-size: 22px;
+  flex: none;
+  padding: 0;
+  border: 1px solid var(--pm-line);
+  border-radius: 999px;
+  background: var(--pm-bg-sunken);
+  cursor: pointer;
+  transition:
+    background-color calc(160ms * var(--pm-motion-scale, 1)) ease,
+    border-color calc(160ms * var(--pm-motion-scale, 1)) ease;
+}
+
+.ca-switch::after {
+  content: "";
+  position: absolute;
+  inset-block-start: 2px;
+  inset-inline-start: 2px;
+  inline-size: 16px;
+  block-size: 16px;
+  border-radius: 50%;
+  background: var(--pm-ink-dim);
+  transition:
+    transform calc(160ms * var(--pm-motion-scale, 1)) ease,
+    background-color calc(160ms * var(--pm-motion-scale, 1)) ease;
+}
+
+.ca-switch[aria-checked="true"] {
+  background: var(--pm-accent);
+  border-color: transparent;
+}
+
+.ca-switch[aria-checked="true"]::after {
+  transform: translateX(16px);
+  background: var(--pm-accent-ink);
+}
+
+.ca-switch:disabled {
+  opacity: .5;
+  cursor: not-allowed;
+}
+
+/* --- segmented radio group:
+     <div class="ca-seg" role="radiogroup"><button role="radio" aria-checked="true">… --- */
+.ca-seg {
+  display: inline-flex;
+  gap: 2px;
+  padding: 2px;
+  border: 1px solid var(--pm-line);
+  border-radius: var(--pm-radius-s);
+  background: var(--pm-bg-sunken);
+}
+
+.ca-seg > [role="radio"] {
+  border: 0;
+  background: transparent;
+  color: var(--pm-ink-dim);
+  font: inherit;
+  font-size: 12px;
+  padding: 4px 10px;
+  border-radius: calc(var(--pm-radius-s) - 2px);
+  cursor: pointer;
+  white-space: nowrap;
+  transition:
+    background-color calc(140ms * var(--pm-motion-scale, 1)) ease,
+    color calc(140ms * var(--pm-motion-scale, 1)) ease;
+}
+
+.ca-seg > [role="radio"][aria-checked="true"] {
+  background: var(--pm-bg-raised);
+  color: var(--pm-ink);
+  box-shadow: var(--pm-shadow-1);
+  font-weight: 600;
+}
+
+/* --- styled native select wrapper --- */
+.ca-select {
+  position: relative;
+  display: inline-block;
+  max-inline-size: 100%;
+}
+
+.ca-select > select {
+  -webkit-appearance: none;
+  appearance: none;
+  max-inline-size: 100%;
+  padding: 6px 28px 6px 10px;
+  border: 1px solid var(--pm-line);
+  border-radius: var(--pm-radius-s);
+  background: var(--pm-bg-raised);
+  color: var(--pm-ink);
+  font: inherit;
+  font-size: 12.5px;
+  cursor: pointer;
+}
+
+.ca-select::after {
+  content: "";
+  position: absolute;
+  inset-inline-end: 10px;
+  inset-block-start: 50%;
+  translate: 0 -50%;
+  inline-size: 11px;
+  block-size: 11px;
+  background: var(--pm-ink-faint);
+  -webkit-mask: var(--ca-ic-chevron-d) center / contain no-repeat;
+  mask: var(--ca-ic-chevron-d) center / contain no-repeat;
+  pointer-events: none;
+}
+
+/* --- slider --- */
+.ca-slider {
+  -webkit-appearance: none;
+  appearance: none;
+  inline-size: 160px;
+  block-size: 22px;
+  background: transparent;
+  cursor: pointer;
+}
+
+.ca-slider::-webkit-slider-runnable-track {
+  block-size: 4px;
+  border-radius: 999px;
+  border: 1px solid var(--pm-line);
+  background: var(--pm-bg-sunken);
+}
+
+.ca-slider::-webkit-slider-thumb {
+  -webkit-appearance: none;
+  inline-size: 14px;
+  block-size: 14px;
+  margin-block-start: -6px;
+  border: 0;
+  border-radius: 50%;
+  background: var(--pm-accent);
+  box-shadow: var(--pm-shadow-1);
+}
+
+.ca-slider::-moz-range-track {
+  block-size: 4px;
+  border-radius: 999px;
+  border: 1px solid var(--pm-line);
+  background: var(--pm-bg-sunken);
+}
+
+.ca-slider::-moz-range-thumb {
+  inline-size: 14px;
+  block-size: 14px;
+  border: 0;
+  border-radius: 50%;
+  background: var(--pm-accent);
+}
+
+/* --- text input wrapper with unambiguous empty-state chip.
+     Contract: <span class="ca-text" data-empty-hint="auto|inherit|not-configured">
+                 <input placeholder="Describe the expected value"></span>
+     While the input is empty (placeholder shown), a chip appears at the
+     trailing edge stating what emptiness MEANS — "Auto", "Inherit", or
+     "Not configured" — so a blank field is never ambiguous. */
+.ca-text {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  border: 1px solid var(--pm-line);
+  border-radius: var(--pm-radius-s);
+  background: var(--pm-bg-raised);
+  padding-inline-end: 6px;
+}
+
+.ca-text > input {
+  flex: 1 1 auto;
+  min-inline-size: 48px;
+  border: 0;
+  background: transparent;
+  color: var(--pm-ink);
+  font: inherit;
+  font-size: 12.5px;
+  padding: 6px 4px 6px 10px;
+}
+
+.ca-text > input::placeholder {
+  color: var(--pm-ink-faint);
+}
+
+.ca-text > input:focus { outline: none; }
+
+.ca-text:focus-within {
+  outline: 2px solid var(--pm-focus);
+  outline-offset: 1px;
+}
+
+.ca-text[data-empty-hint]:has(> input:placeholder-shown)::after {
+  flex: none;
+  font-size: 10.5px;
+  font-weight: 600;
+  padding: 2px 7px;
+  border: 1px dashed var(--pm-ink-faint);
+  border-radius: 999px;
+  color: var(--pm-ink-dim);
+}
+
+.ca-text[data-empty-hint="auto"]:has(> input:placeholder-shown)::after { content: "Auto"; }
+.ca-text[data-empty-hint="inherit"]:has(> input:placeholder-shown)::after { content: "Inherit"; }
+.ca-text[data-empty-hint="not-configured"]:has(> input:placeholder-shown)::after { content: "Not configured"; }
+
+/* --- stepper --- */
+.ca-stepper {
+  display: inline-flex;
+  align-items: stretch;
+  border: 1px solid var(--pm-line);
+  border-radius: var(--pm-radius-s);
+  overflow: hidden;
+  background: var(--pm-bg-raised);
+}
+
+.ca-stepper > button {
+  inline-size: 26px;
+  border: 0;
+  background: transparent;
+  color: var(--pm-ink-dim);
+  font: inherit;
+  font-size: 13px;
+  cursor: pointer;
+}
+
+.ca-stepper > button:hover { background: var(--pm-bg-sunken); }
+
+.ca-stepper > input {
+  inline-size: 44px;
+  border: 0;
+  padding: 5px 2px;
+  background: transparent;
+  color: var(--pm-ink);
+  font: inherit;
+  font-size: 12.5px;
+  text-align: center;
+  -moz-appearance: textfield;
+  appearance: textfield;
+}
+
+.ca-stepper > input::-webkit-outer-spin-button,
+.ca-stepper > input::-webkit-inner-spin-button {
+  -webkit-appearance: none;
+  margin: 0;
+}
+
+/* --- color swatch --- */
+.ca-swatch {
+  inline-size: 24px;
+  block-size: 24px;
+  padding: 0;
+  border: 1px solid var(--pm-line);
+  border-radius: var(--pm-radius-s);
+  background: var(--swatch, var(--pm-bg-sunken));
+  cursor: pointer;
+}
+
+.ca-swatch[aria-pressed="true"] {
+  outline: 2px solid var(--pm-focus);
+  outline-offset: 2px;
+}
+
+/* ==========================================================================
+   Notice card — one status chip (stable top/right), one actionable headline,
+   one consequence line, one primary action, optional quiet secondary.
+   ========================================================================== */
+.ca-notice {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) auto;
+  grid-template-areas:
+    "head    chip"
+    "body    body"
+    "actions actions";
+  gap: 4px 12px;
+  padding: 14px 16px;
+  border: 1px solid var(--pm-line);
+  border-radius: var(--pm-radius-m);
+  background: var(--pm-bg-raised);
+}
+
+.ca-notice-chip {
+  grid-area: chip;
+  align-self: start;
+  display: inline-flex;
+  align-items: center;
+  gap: 5px;
+  padding: 3px 8px;
+  border: 1px solid currentColor;
+  border-radius: 999px;
+  font-size: 11px;
+  font-weight: 600;
+  white-space: nowrap;
+}
+
+.ca-notice-chip::before {
+  content: "";
+  inline-size: 11px;
+  block-size: 11px;
+  flex: none;
+  background: currentColor;
+  -webkit-mask: var(--ca-ic, none) center / contain no-repeat;
+  mask: var(--ca-ic, none) center / contain no-repeat;
+}
+
+.ca-notice[data-kind="attention"] .ca-notice-chip {
+  color: var(--pm-danger);
+  --ca-ic: var(--ca-ic-triangle);
+}
+
+.ca-notice[data-kind="setup"] .ca-notice-chip {
+  color: var(--pm-info);
+  --ca-ic: var(--ca-ic-chevron-r);
+}
+
+.ca-notice[data-kind="recommended"] .ca-notice-chip {
+  color: var(--pm-rec);
+  --ca-ic: var(--ca-ic-star);
+}
+
+.ca-notice-head {
+  grid-area: head;
+  align-self: start;
+  font-weight: 650;
+  font-size: 14px;
+  color: var(--pm-ink);
+}
+
+.ca-notice-body {
+  grid-area: body;
+  color: var(--pm-ink-dim);
+  font-size: 12.5px;
+}
+
+.ca-notice-actions {
+  grid-area: actions;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  margin-block-start: 6px;
+}
+
+/* ==========================================================================
+   Destinations — navigational places (rows or tiles), never filter pills.
+   Rectangular silhouette, hover raise, trailing chevron.
+   ========================================================================== */
+.ca-dest-row {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  inline-size: 100%;
+  padding: 12px 14px;
+  border: 1px solid var(--pm-line);
+  border-radius: var(--pm-radius-m);
+  background: var(--pm-bg-raised);
+  color: inherit;
+  font: inherit;
+  text-align: start;
+  cursor: pointer;
+  transition:
+    transform calc(140ms * var(--pm-motion-scale, 1)) ease,
+    box-shadow calc(140ms * var(--pm-motion-scale, 1)) ease,
+    border-color calc(140ms * var(--pm-motion-scale, 1)) ease;
+}
+
+.ca-dest-row:hover,
+.ca-dest-row:focus-visible {
+  transform: translateY(-1px);
+  box-shadow: var(--pm-shadow-2);
+  border-color: color-mix(in srgb, var(--pm-accent) 35%, var(--pm-line));
+}
+
+.ca-dest-icon {
+  flex: none;
+  inline-size: 34px;
+  block-size: 34px;
+  display: grid;
+  place-items: center;
+  border-radius: var(--pm-radius-s);
+  background: var(--pm-bg-sunken);
+  color: var(--pm-ink-dim);
+}
+
+.ca-dest-icon svg {
+  inline-size: 17px;
+  block-size: 17px;
+}
+
+.ca-dest-main {
+  flex: 1 1 auto;
+  min-inline-size: 0;
+  display: grid;
+  gap: 2px;
+}
+
+.ca-dest-title {
+  font-weight: 600;
+  color: var(--pm-ink);
+}
+
+.ca-dest-purpose {
+  color: var(--pm-ink-dim);
+  font-size: 12.5px;
+}
+
+.ca-dest-status {
+  flex: none;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  color: var(--pm-ink-dim);
+  font-size: 12px;
+}
+
+.ca-dest-chevron {
+  flex: none;
+  inline-size: 15px;
+  block-size: 15px;
+  background: var(--pm-ink-faint);
+  -webkit-mask: var(--ca-ic-chevron-r) center / contain no-repeat;
+  mask: var(--ca-ic-chevron-r) center / contain no-repeat;
+  transition:
+    transform calc(140ms * var(--pm-motion-scale, 1)) ease,
+    background-color calc(140ms * var(--pm-motion-scale, 1)) ease;
+}
+
+.ca-dest-row:hover .ca-dest-chevron,
+.ca-dest-row:focus-visible .ca-dest-chevron {
+  transform: translateX(2px);
+  background: var(--pm-ink-dim);
+}
+
+/* tile variant: same semantics, card silhouette */
+.ca-dest-card {
+  display: grid;
+  gap: 8px;
+  align-content: start;
+  padding: 14px;
+  border: 1px solid var(--pm-line);
+  border-radius: var(--pm-radius-m);
+  background: var(--pm-bg-raised);
+  color: inherit;
+  font: inherit;
+  text-align: start;
+  cursor: pointer;
+  transition:
+    transform calc(140ms * var(--pm-motion-scale, 1)) ease,
+    box-shadow calc(140ms * var(--pm-motion-scale, 1)) ease,
+    border-color calc(140ms * var(--pm-motion-scale, 1)) ease;
+}
+
+.ca-dest-card:hover,
+.ca-dest-card:focus-visible {
+  transform: translateY(-1px);
+  box-shadow: var(--pm-shadow-2);
+  border-color: color-mix(in srgb, var(--pm-accent) 35%, var(--pm-line));
+}
+
+.ca-dest-card .ca-dest-status {
+  font-size: 11.5px;
+}
+
+/* ==========================================================================
+   Inventory table / key-value list
+   ========================================================================== */
+.ca-table {
+  inline-size: 100%;
+  border-collapse: collapse;
+  font-size: 12.5px;
+}
+
+.ca-table th {
+  padding: 8px 12px;
+  border-bottom: 1px solid var(--pm-line);
+  color: var(--pm-ink-faint);
+  font-size: 11px;
+  font-weight: 600;
+  letter-spacing: .06em;
+  text-align: start;
+}
+
+.ca-table td {
+  padding: 9px 12px;
+  border-bottom: 1px solid var(--pm-line);
+  color: var(--pm-ink-dim);
+  vertical-align: top;
+}
+
+.ca-table tbody tr:hover { background: var(--pm-bg-raised); }
+
+.ca-kv {
+  display: grid;
+  grid-template-columns: minmax(120px, 200px) minmax(0, 1fr);
+  gap: 5px 16px;
+  margin: 0;
+  font-size: 12.5px;
+}
+
+.ca-kv > dt { color: var(--pm-ink-faint); }
+
+.ca-kv > dd {
+  margin: 0;
+  min-inline-size: 0;
+  color: var(--pm-ink);
+}
+
+/* ==========================================================================
+   Tabs (underline style) / accordion
+   ========================================================================== */
+.ca-tabs {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 2px;
+  border-bottom: 1px solid var(--pm-line);
+}
+
+.ca-tab {
+  padding: 8px 12px;
+  border: 0;
+  background: none;
+  color: var(--pm-ink-dim);
+  font: inherit;
+  font-size: 13px;
+  cursor: pointer;
+  box-shadow: inset 0 -2px 0 transparent;
+  transition:
+    color calc(140ms * var(--pm-motion-scale, 1)) ease,
+    box-shadow calc(140ms * var(--pm-motion-scale, 1)) ease;
+}
+
+.ca-tab[aria-selected="true"] {
+  color: var(--pm-ink);
+  font-weight: 600;
+  box-shadow: inset 0 -2px 0 var(--pm-accent);
+}
+
+.ca-accordion {
+  border: 1px solid var(--pm-line);
+  border-radius: var(--pm-radius-m);
+  background: var(--pm-bg-raised);
+}
+
+.ca-accordion > summary {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding: 12px 14px;
+  cursor: pointer;
+  font-weight: 600;
+  color: var(--pm-ink);
+  list-style: none;
+}
+
+.ca-accordion > summary::-webkit-details-marker { display: none; }
+
+.ca-accordion > summary::after {
+  content: "";
+  margin-inline-start: auto;
+  inline-size: 12px;
+  block-size: 12px;
+  flex: none;
+  background: var(--pm-ink-faint);
+  -webkit-mask: var(--ca-ic-chevron-d) center / contain no-repeat;
+  mask: var(--ca-ic-chevron-d) center / contain no-repeat;
+  transition: transform calc(160ms * var(--pm-motion-scale, 1)) ease;
+}
+
+.ca-accordion[open] > summary::after { transform: rotate(180deg); }
+
+.ca-accordion-body {
+  padding: 0 14px 14px;
+  color: var(--pm-ink-dim);
+  font-size: 12.5px;
+}
+
+/* ==========================================================================
+   Overlays: scrim / drawer / dialog
+   ========================================================================== */
+.ca-scrim {
+  position: fixed;
+  inset: 0;
+  z-index: 65;
+  background: rgba(8, 8, 12, .38);
+  animation: pm-fade calc(160ms * var(--pm-motion-scale, 1)) ease both;
+}
+
+@keyframes ca-fade {
+  from { opacity: 0; }
+  to { opacity: 1; }
+}
+
+.ca-drawer {
+  position: fixed;
+  z-index: 70;
+  display: flex;
+  flex-direction: column;
+  background: var(--pm-bg-raised);
+  border: 1px solid var(--pm-line);
+  box-shadow: var(--pm-shadow-2);
+}
+
+.ca-drawer[data-side="right"] {
+  inset-block: 0;
+  inset-inline-end: 0;
+  inline-size: min(420px, 92vw);
+  border-block: 0;
+  border-inline-end: 0;
+  animation: pm-drawer-in-r calc(200ms * var(--pm-motion-scale, 1)) cubic-bezier(.22, .61, .36, 1) both;
+}
+
+.ca-drawer[data-side="bottom"] {
+  inset-inline: 0;
+  inset-block-end: 0;
+  max-block-size: 72vh;
+  border-inline: 0;
+  border-block-end: 0;
+  border-radius: var(--pm-radius-l) var(--pm-radius-l) 0 0;
+  animation: pm-drawer-in-b calc(200ms * var(--pm-motion-scale, 1)) cubic-bezier(.22, .61, .36, 1) both;
+}
+
+@keyframes ca-drawer-in-r {
+  from { transform: translateX(28px); opacity: 0; }
+  to { transform: none; opacity: 1; }
+}
+
+@keyframes ca-drawer-in-b {
+  from { transform: translateY(28px); opacity: 0; }
+  to { transform: none; opacity: 1; }
+}
+
+.ca-dialog {
+  position: fixed;
+  inset: 0;
+  margin: auto;
+  z-index: 75;
+  inline-size: min(480px, 92vw);
+  block-size: fit-content;
+  max-block-size: 84vh;
+  overflow: auto;
+  padding: 18px;
+  border: 1px solid var(--pm-line);
+  border-radius: var(--pm-radius-l);
+  background: var(--pm-bg-raised);
+  box-shadow: var(--pm-shadow-2);
+  animation: pm-pop calc(180ms * var(--pm-motion-scale, 1)) cubic-bezier(.22, .61, .36, 1) both;
+}
+
+@keyframes ca-pop {
+  from { transform: scale(.97); opacity: 0; }
+  to { transform: none; opacity: 1; }
+}
+
+/* ==========================================================================
+   Toast stack (top-right, role="status") — the honest simulated receipt.
+   PMStore.receipt() builds these; pages may also use the classes directly.
+   ========================================================================== */
+.ca-toast-stack {
+  position: fixed;
+  inset-block-start: 14px;
+  inset-inline-end: 14px;
+  z-index: 90;
+  display: grid;
+  gap: 8px;
+  inline-size: min(340px, 92vw);
+}
+
+.ca-toast {
+  display: flex;
+  align-items: flex-start;
+  gap: 9px;
+  padding: 10px 12px;
+  border: 1px solid var(--pm-line);
+  border-radius: var(--pm-radius-m);
+  background: var(--pm-bg-raised);
+  box-shadow: var(--pm-shadow-2);
+  color: var(--pm-ink);
+  font-size: 12.5px;
+  animation: ca-toast-in calc(220ms * var(--pm-motion-scale, 1)) cubic-bezier(.22, .61, .36, 1) both;
+}
+
+.ca-toast-icon {
+  flex: none;
+  inline-size: 15px;
+  block-size: 15px;
+  margin-block-start: 1px;
+}
+
+.ca-toast[data-kind="info"] .ca-toast-icon { color: var(--pm-info); }
+.ca-toast[data-kind="ok"] .ca-toast-icon { color: var(--pm-ok); }
+.ca-toast[data-kind="warn"] .ca-toast-icon { color: var(--pm-warn); }
+.ca-toast[data-kind="danger"] .ca-toast-icon { color: var(--pm-danger); }
+
+.ca-toast.is-leaving {
+  opacity: 0;
+  transform: translateX(10px);
+  transition:
+    opacity calc(180ms * var(--pm-motion-scale, 1)) ease,
+    transform calc(180ms * var(--pm-motion-scale, 1)) ease;
+}
+
+@keyframes ca-toast-in {
+  from { opacity: 0; transform: translateX(14px); }
+  to { opacity: 1; transform: none; }
+}
+
+/* ==========================================================================
+   Context menu
+   ========================================================================== */
+.ca-menu {
+  position: fixed;
+  z-index: 85;
+  min-inline-size: 180px;
+  padding: 4px;
+  border: 1px solid var(--pm-line);
+  border-radius: var(--pm-radius-m);
+  background: var(--pm-bg-raised);
+  box-shadow: var(--pm-shadow-2);
+  animation: pm-fade calc(120ms * var(--pm-motion-scale, 1)) ease both;
+}
+
+.ca-menu-item {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  inline-size: 100%;
+  padding: 6px 10px;
+  border: 0;
+  border-radius: var(--pm-radius-s);
+  background: none;
+  color: var(--pm-ink);
+  font: inherit;
+  font-size: 12.5px;
+  text-align: start;
+  cursor: pointer;
+}
+
+.ca-menu-item:hover,
+.ca-menu-item:focus-visible {
+  background: var(--pm-bg-sunken);
+  outline: none;
+}
+
+.ca-menu-item[aria-disabled="true"] {
+  color: var(--pm-ink-faint);
+  cursor: not-allowed;
+}
+
+.ca-menu-keys {
+  margin-inline-start: auto;
+  color: var(--pm-ink-faint);
+  font-size: 11px;
+}
+
+.ca-menu-sep {
+  block-size: 1px;
+  margin: 4px 6px;
+  background: var(--pm-line);
+}
+
+/* ==========================================================================
+   Tooltip — an aid on hover/focus, NEVER the sole carrier of critical
+   meaning (critical text must also live in visible copy).
+   ========================================================================== */
+[data-tip] { position: relative; }
+
+[data-tip]::after {
+  content: attr(data-tip);
+  position: absolute;
+  inset-block-end: calc(100% + 6px);
+  inset-inline-start: 50%;
+  translate: -50% 2px;
+  z-index: 95;
+  inline-size: max-content;
+  max-inline-size: 240px;
+  padding: 6px 9px;
+  border: 1px solid var(--pm-line);
+  border-radius: var(--pm-radius-s);
+  background: var(--pm-bg-sunken);
+  color: var(--pm-ink);
+  box-shadow: var(--pm-shadow-1);
+  font-size: 11.5px;
+  font-weight: 400;
+  line-height: 1.4;
+  white-space: normal;
+  opacity: 0;
+  pointer-events: none;
+  transition:
+    opacity calc(140ms * var(--pm-motion-scale, 1)) ease,
+    translate calc(140ms * var(--pm-motion-scale, 1)) ease;
+}
+
+[data-tip]:hover::after,
+[data-tip]:focus-visible::after {
+  opacity: 1;
+  translate: -50% 0;
+}
+
+/* ==========================================================================
+   Empty state / skeleton / chip / health dot
+   ========================================================================== */
+.ca-empty {
+  display: grid;
+  place-items: center;
+  gap: 6px;
+  padding: 36px 20px;
+  text-align: center;
+}
+
+.ca-empty-icon {
+  inline-size: 30px;
+  block-size: 30px;
+  color: var(--pm-ink-faint);
+}
+
+.ca-empty-icon svg {
+  inline-size: 100%;
+  block-size: 100%;
+}
+
+.ca-empty-title {
+  font-weight: 600;
+  font-size: 13.5px;
+  color: var(--pm-ink-dim);
+}
+
+.ca-empty-guidance {
+  font-size: 12.5px;
+  color: var(--pm-ink-faint);
+  max-inline-size: 46ch;
+}
+
+/* Skeleton shimmer: slow, low-contrast, never flashes. Reduced motion gets
+   a static block (the global kill switch also stops the animation). */
+.ca-skeleton {
+  display: block;
+  border-radius: var(--pm-radius-s);
+  background: linear-gradient(
+    90deg,
+    var(--pm-bg-raised) 25%,
+    color-mix(in srgb, var(--pm-ink) 7%, var(--pm-bg-raised)) 50%,
+    var(--pm-bg-raised) 75%
+  );
+  background-size: 200% 100%;
+  animation: ca-sheen 1600ms linear infinite;
+}
+
+@keyframes ca-sheen {
+  from { background-position: 200% 0; }
+  to { background-position: -200% 0; }
+}
+
+[data-motion="reduced"] .ca-skeleton {
+  animation: none;
+  background: var(--pm-bg-raised);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .ca-skeleton {
+    animation: none;
+    background: var(--pm-bg-raised);
+  }
+}
+
+/* Small removable token — ONLY for value tokens (applied scopes, aliases,
+   dictionary words). Never for primary category navigation. */
+.ca-chip {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  padding: 3px 8px;
+  border: 1px solid var(--pm-line);
+  border-radius: 999px;
+  background: var(--pm-bg-sunken);
+  color: var(--pm-ink-dim);
+  font-size: 11.5px;
+}
+
+.ca-chip-x {
+  display: grid;
+  place-items: center;
+  inline-size: 14px;
+  block-size: 14px;
+  padding: 0;
+  border: 0;
+  background: none;
+  color: var(--pm-ink-faint);
+  cursor: pointer;
+}
+
+.ca-chip-x::before {
+  content: "";
+  inline-size: 9px;
+  block-size: 9px;
+  background: currentColor;
+  -webkit-mask: var(--ca-ic-x) center / contain no-repeat;
+  mask: var(--ca-ic-x) center / contain no-repeat;
+}
+
+/* Health dot — ALWAYS paired with a visible text label (never dot-only). */
+.ca-healthdot {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  font-size: 12px;
+  color: var(--pm-ink-dim);
+}
+
+.ca-healthdot-dot {
+  inline-size: 8px;
+  block-size: 8px;
+  flex: none;
+}
+
+.ca-healthdot[data-state="ok"] .ca-healthdot-dot {
+  border-radius: 50%;
+  background: var(--pm-ok);
+}
+
+.ca-healthdot[data-state="warn"] .ca-healthdot-dot {
+  background: var(--pm-warn);
+  clip-path: polygon(50% 0, 100% 100%, 0 100%);
+}
+
+.ca-healthdot[data-state="danger"] .ca-healthdot-dot {
+  border-radius: 2px;
+  background: var(--pm-danger);
+}
+
+.ca-healthdot[data-state="info"] .ca-healthdot-dot {
+  background: var(--pm-info);
+  transform: rotate(45deg);
+}
+
+.ca-healthdot[data-state="unknown"] .ca-healthdot-dot {
+  border-radius: 50%;
+  box-shadow: inset 0 0 0 1.5px var(--pm-ink-faint);
+}
+
+/* ==========================================================================
+   Focus-visible everywhere (uses --pm-focus)
+   ========================================================================== */
+.ca-btn:focus-visible,
+.ca-switch:focus-visible,
+.ca-seg > [role="radio"]:focus-visible,
+.ca-select > select:focus-visible,
+.ca-slider:focus-visible,
+.ca-stepper > button:focus-visible,
+.ca-stepper > input:focus-visible,
+.ca-swatch:focus-visible,
+.ca-tab:focus-visible,
+.ca-accordion > summary:focus-visible,
+.ca-dest-row:focus-visible,
+.ca-dest-card:focus-visible,
+.ca-chip-x:focus-visible,
+.ca-menu-item:focus-visible {
+  outline: 2px solid var(--pm-focus);
+  outline-offset: 2px;
+}
+
+.ca-select > select:focus-visible,
+.ca-tab:focus-visible,
+.ca-accordion > summary:focus-visible {
+  outline-offset: -2px;
+}
+
+/* ==========================================================================
+   Supplementary shared classes used by ca-views.js renderers
+   ========================================================================== */
+
+/* value source line inside a settings row */
+.ca-row-src {
+  flex-basis: 100%;
+  font-size: 11px;
+  color: var(--pm-ink-faint);
+}
+
+.ca-help { color: var(--pm-ink-faint); cursor: help; vertical-align: -2px; }
+
+/* slider with live value bubble */
+.ca-sliderwrap { display: inline-flex; align-items: center; gap: 8px; }
+.ca-slider-val {
+  min-inline-size: 44px;
+  font-size: 11.5px;
+  color: var(--pm-ink-dim);
+  font-variant-numeric: tabular-nums;
+}
+
+/* search results list (shared by all four concepts) */
+.ca-hits-group {
+  padding: 8px 12px 4px;
+  font-size: 10.5px;
+  font-weight: 650;
+  letter-spacing: .08em;
+  text-transform: uppercase;
+  color: var(--pm-ink-faint);
+}
+
+.ca-hits-empty {
+  padding: 14px 16px;
+  font-size: 12.5px;
+  color: var(--pm-ink-faint);
+}
+
+.ca-hit {
+  display: grid;
+  grid-template-columns: auto minmax(0, 1fr) auto;
+  align-items: center;
+  gap: 10px;
+  inline-size: 100%;
+  padding: 8px 12px;
+  border: 0;
+  background: transparent;
+  color: var(--pm-ink);
+  font: inherit;
+  font-size: 12.5px;
+  text-align: start;
+  cursor: pointer;
+}
+
+.ca-hit[aria-selected="true"] { background: var(--pm-bg-sunken); }
+
+.ca-hit-kind {
+  font-size: 10px;
+  font-weight: 650;
+  letter-spacing: .06em;
+  text-transform: uppercase;
+  color: var(--pm-ink-faint);
+  border: 1px solid var(--pm-line);
+  border-radius: 999px;
+  padding: 2px 7px;
+  white-space: nowrap;
+}
+
+.ca-hit-title { min-inline-size: 0; overflow-wrap: anywhere; }
+.ca-hit-sub { font-size: 11px; color: var(--pm-ink-faint); white-space: nowrap; }
+
+/* icon buttons (favorite, hide/show) */
+.ca-iconbtn {
+  display: inline-grid;
+  place-items: center;
+  inline-size: 26px;
+  block-size: 26px;
+  padding: 0;
+  border: 1px solid transparent;
+  border-radius: var(--pm-radius-s);
+  background: transparent;
+  color: var(--pm-ink-faint);
+  cursor: pointer;
+  transition: color calc(140ms * var(--pm-motion-scale, 1)) ease,
+    border-color calc(140ms * var(--pm-motion-scale, 1)) ease;
+}
+
+.ca-iconbtn svg { inline-size: 15px; block-size: 15px; }
+.ca-iconbtn:hover { color: var(--pm-ink); border-color: var(--pm-line); }
+.ca-iconbtn.is-on { color: var(--pm-rec); }
+.ca-iconbtn.is-on svg { fill: currentColor; }
+.ca-iconbtn:focus-visible { outline: 2px solid var(--pm-focus); outline-offset: 1px; }
+
+/* model alias (click to edit inline) */
+.ca-alias {
+  border: 0;
+  background: transparent;
+  color: var(--pm-ink-faint);
+  font: inherit;
+  font-size: 11.5px;
+  font-style: italic;
+  cursor: text;
+  padding: 1px 4px;
+  border-radius: var(--pm-radius-s);
+}
+
+.ca-alias:hover { color: var(--pm-ink-dim); background: var(--pm-bg-sunken); }
+
+.ca-alias-edit {
+  inline-size: 120px;
+  border: 1px solid var(--pm-line);
+  border-radius: var(--pm-radius-s);
+  background: var(--pm-bg-raised);
+  color: var(--pm-ink);
+  font: inherit;
+  font-size: 11.5px;
+  padding: 2px 6px;
+}
+
+.ca-model-caps { display: inline-flex; flex-wrap: wrap; gap: 5px; }
+.ca-model.is-hidden .ca-row-main { opacity: .55; }
+.ca-swatches { display: inline-flex; gap: 6px; flex-wrap: wrap; }
+
+/* catalog + diagnostics log */
+.ca-catalog { display: grid; gap: 8px; justify-items: start; }
+
+.ca-logs {
+  display: grid;
+  gap: 3px;
+  padding: 10px 12px;
+  border: 1px solid var(--pm-line);
+  border-radius: var(--pm-radius-m);
+  background: var(--pm-bg-sunken);
+  font-family: var(--pm-font-mono);
+  font-size: 11.5px;
+  color: var(--pm-ink-dim);
+}
+
+.ca-log-line { overflow-wrap: anywhere; }
+
+.ca-setup-steps { margin: 0 0 10px; padding-inline-start: 20px; display: grid; gap: 4px; font-size: 12.5px; color: var(--pm-ink-dim); }
+.ca-setup { margin-block-start: 8px; }
+
+/* spellcheck demo — subtle underline, never autocorrect */
+.ca-spell-demo {
+  border: 1px solid var(--pm-line);
+  border-radius: var(--pm-radius-m);
+  background: var(--pm-bg-raised);
+  padding: 14px 16px;
+  display: grid;
+  gap: 10px;
+}
+
+.ca-spell-text { margin: 0; font-size: 13.5px; line-height: 1.6; color: var(--pm-ink); }
+
+.ca-spell {
+  text-decoration: underline wavy var(--pm-warn);
+  text-decoration-thickness: 1px;
+  text-underline-offset: 3px;
+  border-radius: 2px;
+  cursor: pointer;
+}
+
+.ca-spell:hover, .ca-spell:focus-visible { background: color-mix(in srgb, var(--pm-warn) 14%, transparent); outline: none; }
+
+.ca-spell-note { margin: 0; font-size: 11.5px; color: var(--pm-ink-faint); }
+.ca-spell-dicts { display: flex; flex-wrap: wrap; gap: 6px; }
+
+/* generic quiet panel box for concept-composed surfaces */
+.ca-panel {
+  border: 1px solid var(--pm-line);
+  border-radius: var(--pm-radius-m);
+  background: var(--pm-bg-raised);
+  padding: 14px 16px;
+}
+
+.ca-panel-h {
+  margin: 0 0 8px;
+  font-size: 13px;
+  font-weight: 650;
+  color: var(--pm-ink);
+}
+
+/* ==========================================================================
+   States drawer (ca-states.js)
+   ========================================================================== */
+.ca-states {
+  position: fixed;
+  inset-block-end: 18px;
+  inset-inline-end: 18px;
+  z-index: 80;
+  font-family: var(--pm-font);
+}
+.ca-states-fab {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  padding: 8px 14px;
+  border: 1px solid var(--pm-line);
+  border-radius: 999px;
+  background: var(--pm-bg-raised);
+  color: var(--pm-ink);
+  font: inherit;
+  font-size: 12px;
+  font-weight: 600;
+  box-shadow: var(--pm-shadow-2);
+  cursor: pointer;
+}
+.ca-states-fab:focus-visible {
+  outline: 2px solid var(--pm-focus);
+  outline-offset: 2px;
+}
+.ca-states-panel {
+  position: absolute;
+  inset-block-end: calc(100% + 8px);
+  inset-inline-end: 0;
+  inline-size: min(280px, calc(100vw - 32px));
+  max-block-size: min(70vh, 520px);
+  overflow: auto;
+  padding: 12px;
+  border: 1px solid var(--pm-line);
+  border-radius: var(--pm-radius-m);
+  background: var(--pm-bg-raised);
+  box-shadow: var(--pm-shadow-2);
+  display: grid;
+  gap: 8px;
+}
+.ca-states-h {
+  font-size: 13px;
+  font-weight: 700;
+}
+.ca-states-note {
+  margin: 0;
+  font-size: 11.5px;
+  color: var(--pm-ink-faint);
+}
+.ca-states-list {
+  display: grid;
+  gap: 4px;
+}
+.ca-states-item {
+  display: grid;
+  gap: 2px;
+  text-align: start;
+  padding: 8px 10px;
+  border: 1px solid transparent;
+  border-radius: var(--pm-radius-s);
+  background: transparent;
+  color: inherit;
+  font: inherit;
+  cursor: pointer;
+}
+.ca-states-item:hover,
+.ca-states-item:focus-visible {
+  background: color-mix(in srgb, var(--pm-accent) 10%, transparent);
+  border-color: var(--pm-line);
+}
+.ca-states-item b { font-size: 12.5px; font-weight: 650; }
+.ca-states-item span { font-size: 11px; color: var(--pm-ink-dim); }
+.ca-states-actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px;
+  padding-block-start: 4px;
+  border-block-start: 1px solid var(--pm-line);
+}
+
+/* Collapsed providers expand */
+.ca-provider-fold {
+  border: 1px solid var(--pm-line);
+  border-radius: var(--pm-radius-m);
+  background: var(--pm-bg-sunken);
+  margin-block-end: 10px;
+  overflow: clip;
+}
+.ca-provider-fold > summary {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  flex-wrap: wrap;
+  padding: 12px 14px;
+  cursor: pointer;
+  list-style: none;
+  font-weight: 650;
+}
+.ca-provider-fold > summary::-webkit-details-marker { display: none; }
+.ca-provider-fold > summary .ca-fold-meta {
+  margin-inline-start: auto;
+  font-size: 11.5px;
+  font-weight: 500;
+  color: var(--pm-ink-dim);
+}
+.ca-provider-fold[open] > summary {
+  border-block-end: 1px solid var(--pm-line);
+  background: color-mix(in srgb, var(--pm-accent) 6%, transparent);
+}
+.ca-provider-fold-body { padding: 12px 14px 16px; display: grid; gap: 10px; }
+
+/* Free-models auth route strip */
+.ca-auth-routes {
+  display: grid;
+  gap: 8px;
+  margin-block: 10px;
+}
+.ca-auth-route {
+  display: grid;
+  gap: 4px;
+  padding: 10px 12px;
+  border: 1px solid var(--pm-line);
+  border-radius: var(--pm-radius-s);
+  background: var(--pm-bg-raised);
+}
+.ca-auth-route b { font-size: 12.5px; }
+.ca-auth-route span { font-size: 11.5px; color: var(--pm-ink-dim); }
+
+/* Warning / details disclosure */
+.ca-disclose {
+  border: 1px solid var(--pm-line);
+  border-radius: var(--pm-radius-s);
+  padding: 8px 12px;
+  background: var(--pm-bg-sunken);
+}
+.ca-disclose > summary {
+  cursor: pointer;
+  font-weight: 600;
+  font-size: 12.5px;
+}
+.ca-disclose-body {
+  margin-block-start: 8px;
+  font-size: 12px;
+  color: var(--pm-ink-dim);
+}
+
+/* Notice: never clip horizontally; single action stack */
+.ca-notice {
+  overflow: visible;
+  min-inline-size: 0;
+}
+.ca-notice-actions {
+  flex-wrap: wrap;
+}

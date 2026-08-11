@@ -1,0 +1,79 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://puppet-master.local/schemas/plan-assurance/research-portfolio.v1.json",
+  "title": "Plan Assurance Research Portfolio",
+  "type": "object",
+  "additionalProperties": false,
+  "required": ["schema_version", "schema_id", "portfolio_id", "portfolio_kind", "trial_id", "family_id", "generation_id", "worker_context_id", "expectation_packet_sha256", "surface_ledger_sha256", "detailed_plan_assertions_withheld_until_lock", "operation_receipts", "source_cards", "creative_exploration", "research_failures", "unsearched_areas", "created_at_utc", "locked_at_utc", "portfolio_payload_sha256", "terminal"],
+  "properties": {
+    "schema_version": {"const": "1.0.0"},
+    "schema_id": {"const": "pm.plan_assurance.research_portfolio.v1"},
+    "portfolio_id": {"type": "string", "minLength": 1},
+    "portfolio_kind": {"enum": ["open_discovery", "failure_recovery"]},
+    "trial_id": {"type": "string", "minLength": 1},
+    "family_id": {"enum": ["USAGE_ACCOUNTING_TRUTH", "WEB_RESEARCH_BEHAVIOR", "ACCESSIBILITY_CONTROL_CONTRACTS", "MIGRATIONS_DURABLE_STATE"]},
+    "generation_id": {"type": "string", "minLength": 1},
+    "worker_context_id": {"type": "string", "minLength": 1},
+    "expectation_packet_sha256": {"$ref": "#/$defs/sha256"},
+    "surface_ledger_sha256": {"$ref": "#/$defs/sha256"},
+    "detailed_plan_assertions_withheld_until_lock": {"type": "boolean"},
+    "operation_receipts": {"type": "array", "minItems": 2, "items": {"$ref": "#/$defs/operation"}},
+    "source_cards": {"type": "array", "minItems": 1, "items": {"$ref": "#/$defs/source_card"}},
+    "creative_exploration": {"$ref": "#/$defs/creative"},
+    "research_failures": {"type": "array", "items": {"$ref": "#/$defs/limitation_row"}},
+    "unsearched_areas": {"type": "array", "items": {"$ref": "#/$defs/limitation_row"}},
+    "created_at_utc": {"type": "string", "format": "date-time"},
+    "locked_at_utc": {"type": "string", "format": "date-time"},
+    "portfolio_payload_sha256": {"$ref": "#/$defs/sha256"},
+    "terminal": {"enum": ["DONE", "STOPPED", "MATERIAL_BLOCKER"]}
+  },
+  "$defs": {
+    "sha256": {"type": "string", "pattern": "^[0-9a-f]{64}$"},
+    "operation": {
+      "type": "object", "additionalProperties": false,
+      "required": ["operation_id", "worker_context_id", "operation_kind", "tool_id", "request_sha256", "response_sha256", "capture_ref", "capture_sha256", "query_or_url_identity_sha256", "url", "started_at_utc", "finished_at_utc", "terminal", "failure_reason", "source_card_ids"],
+      "properties": {
+        "operation_id": {"type": "string", "minLength": 1}, "worker_context_id": {"type": "string", "minLength": 1},
+        "operation_kind": {"enum": ["search", "open", "read", "extract", "browser_observe"]}, "tool_id": {"type": "string", "minLength": 1},
+        "request_sha256": {"$ref": "#/$defs/sha256"}, "response_sha256": {"$ref": "#/$defs/sha256"},
+        "capture_ref": {"type": "string", "minLength": 1}, "capture_sha256": {"$ref": "#/$defs/sha256"},
+        "query_or_url_identity_sha256": {"$ref": "#/$defs/sha256"}, "url": {"type": ["string", "null"]},
+        "started_at_utc": {"type": "string", "format": "date-time"}, "finished_at_utc": {"type": "string", "format": "date-time"},
+        "terminal": {"enum": ["PASS", "PARTIAL", "FAILED", "DENIED", "TIMEOUT"]}, "failure_reason": {"type": ["string", "null"]},
+        "source_card_ids": {"type": "array", "uniqueItems": true, "items": {"type": "string", "minLength": 1}}
+      }
+    },
+    "source_card": {
+      "type": "object", "additionalProperties": false,
+      "required": ["source_card_id", "source_identity_sha256", "url", "title", "publisher_or_author", "source_class", "independence_family", "evidence_roles", "operation_receipt_ids", "named_surface_ids", "bounded_claim", "claim_key", "relation", "evidence_capture_ref", "response_sha256", "evidence_start_byte", "evidence_end_byte", "evidence_slice_sha256", "locator", "entailment", "authority_fitness", "applicability", "currentness", "content_sha256", "limitations", "proposed_disposition"],
+      "properties": {
+        "source_card_id": {"type": "string", "minLength": 1}, "source_identity_sha256": {"$ref": "#/$defs/sha256"},
+        "url": {"type": "string", "minLength": 1}, "title": {"type": "string", "minLength": 1}, "publisher_or_author": {"type": "string", "minLength": 1},
+        "source_class": {"enum": ["official", "standard_regulation", "implementation_test", "issue_failure", "direct_comparator", "adjacent_alternative", "disconfirming", "research_failure"]},
+        "independence_family": {"type": "string", "minLength": 1},
+        "evidence_roles": {"type": "array", "minItems": 1, "uniqueItems": true, "items": {"enum": ["normative_constraint", "implementation_behavior", "failure_existence", "applicability", "contradiction", "comparator_behavior", "adjacent_inspiration", "challenged_assumption"]}},
+        "operation_receipt_ids": {"type": "array", "minItems": 1, "uniqueItems": true, "items": {"type": "string", "minLength": 1}},
+        "named_surface_ids": {"type": "array", "uniqueItems": true, "items": {"type": "string", "minLength": 1}},
+        "bounded_claim": {"type": "string", "minLength": 1}, "claim_key": {"type": "string", "minLength": 1}, "relation": {"enum": ["supports", "contradicts", "limits", "applicability"]},
+        "evidence_capture_ref": {"type": "string", "minLength": 1}, "response_sha256": {"$ref": "#/$defs/sha256"},
+        "evidence_start_byte": {"type": "integer", "minimum": 0}, "evidence_end_byte": {"type": "integer", "minimum": 1}, "evidence_slice_sha256": {"$ref": "#/$defs/sha256"},
+        "locator": {"type": "string", "pattern": "^bytes:[0-9]+-[0-9]+$"},
+        "entailment": {"enum": ["direct", "strong_inference", "weak_inference", "none"]}, "authority_fitness": {"enum": ["fit", "limited", "not_fit", "unresolved"]},
+        "applicability": {"enum": ["applicable", "conditional", "not_applicable", "unresolved"]}, "currentness": {"enum": ["current", "stale", "unknown"]},
+        "content_sha256": {"$ref": "#/$defs/sha256"}, "limitations": {"type": "array", "items": {"type": "string"}},
+        "proposed_disposition": {"enum": ["adopt", "adapt", "reject", "conditional", "inspiration_only", "unresolved"]}
+      }
+    },
+    "creative": {
+      "type": "object", "additionalProperties": false,
+      "required": ["outcome", "rows", "no_material_findings_rationale", "followed_material_surprises", "unresolved_surprise_refs"],
+      "properties": {
+        "outcome": {"enum": ["material_findings", "no_material_findings"]},
+        "rows": {"type": "array", "items": {"type": "object", "additionalProperties": false, "required": ["creative_id", "kind", "statement", "source_card_ids", "outcome_or_risk_link", "disposition", "rationale"], "properties": {"creative_id": {"type": "string", "minLength": 1}, "kind": {"enum": ["user_enhancement", "alternative_model", "challenged_assumption", "rejected_behavior", "failure_lesson", "no_meaningful_analogue"]}, "statement": {"type": "string", "minLength": 1}, "source_card_ids": {"type": "array", "minItems": 1, "uniqueItems": true, "items": {"type": "string", "minLength": 1}}, "outcome_or_risk_link": {"type": "string", "minLength": 1}, "disposition": {"enum": ["adopt", "adapt", "reject", "conditional", "inspiration_only", "unresolved"]}, "rationale": {"type": "string", "minLength": 1}}}},
+        "no_material_findings_rationale": {"type": ["string", "null"]}, "followed_material_surprises": {"type": "boolean"},
+        "unresolved_surprise_refs": {"type": "array", "uniqueItems": true, "items": {"type": "string", "minLength": 1}}
+      }
+    },
+    "limitation_row": {"type": "object", "additionalProperties": false, "required": ["row_id", "subject", "reason", "materiality", "reopen_condition"], "properties": {"row_id": {"type": "string", "minLength": 1}, "subject": {"type": "string", "minLength": 1}, "reason": {"type": "string", "minLength": 1}, "materiality": {"enum": ["critical", "major", "moderate", "minor"]}, "reopen_condition": {"type": "string", "minLength": 1}}}
+  }
+}

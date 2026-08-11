@@ -1,0 +1,693 @@
+{
+  "schema_id": "pm.plan_assurance.rolling_trial_contract",
+  "schema_version": "1.0.0",
+  "packet_id": "stage-a-plan-assurance-rolling-trial-packet-v1",
+  "packet_status": "design_only_trial_not_authorized",
+  "created_on": "2026-07-16",
+  "objective": "Evaluate the revised Plan Assurance method on four capability families while structurally covering the whole canonical Plans corpus once and avoiding repeated whole-corpus rereads.",
+  "frozen_method_finding": {
+    "experiment": "F3",
+    "terminal_state": "FINAL_VALID_NEGATIVE_STOP",
+    "immutable": true,
+    "permitted_use": "method-design lineage and calibration only",
+    "forbidden_uses": [
+      "relabel F3",
+      "use hidden oracle rows as pilot planning input",
+      "use hidden source identity to cap semantic credit"
+    ]
+  },
+  "authority": {
+    "trial_launch_authorized": false,
+    "canonical_plan_writes_authorized": false,
+    "generated_or_governance_writes_authorized": false,
+    "governance_seal_authorized": false,
+    "planning_wizard_implementation_authorized": false,
+    "buildability_certification_authorized": false,
+    "product_or_runtime_certification_authorized": false,
+    "git_write_authorized": false,
+    "external_research_authorized_by_this_packet": false,
+    "model_or_api_calls_authorized_by_this_packet": false,
+    "launch_commands": [],
+    "future_trial_write_scope": "must be supplied by a separate launch authority and must be a new audit-local run root",
+    "next_authority_boundary": "A separate explicit parent/user decision must authorize one exact trial generation, immutable inputs, run root, budgets, and external-transmission scope. Packet readiness alone is not launch authority."
+  },
+  "future_launch_authority_chain": {
+    "order": ["PROTECTED_BEFORE", "LAUNCH_REQUEST", "TRUSTED_LAUNCH_CAPABILITY", "LAUNCH_AUTHORITY", "single-use marker", "semantic execution", "PROTECTED_AFTER"],
+    "trust_boundary": "Packet readiness and offline files cannot authenticate a sender. The trial controller must first freeze LAUNCH_REQUEST, then receive one fresh nonce-bound structured authorization message through Codex platform-controlled collaboration sender metadata from the exact expected parent task, consume that attestation in the same controller turn, and bind the exact payload plus observed sender, target, message ID, turn ID, platform-created time, and consumption time into TRUSTED_LAUNCH_CAPABILITY. A path, thread ID, pasted delegation, quoted approval, self-hash, or controller-authored boolean is never authority.",
+    "offline_verification_boundary": "Offline validation verifies exact request, transmission, execution-envelope, nonce, expiry, replay, and artifact bindings only. It cannot cryptographically prove collaboration-message authorship and must emit TRIAL_BLOCKED:UNVERIFIABLE_AUTHORITY_LINEAGE when live platform sender metadata is unavailable.",
+    "unavailable_trust_anchor_terminal": "TRIAL_BLOCKED:UNVERIFIABLE_AUTHORITY_LINEAGE",
+    "single_use_rule": "The launch authority and trusted capability each permit one use. The controller must atomically create the bound marker before any model, network, research, or semantic action; a preexisting marker is a blocked nonstart.",
+    "binding_rule": "The external capability approves the exact launch-binding hash derived from the request, including contract, validator, source snapshot, protected-before receipt and state, run root, budgets, topology, and external-transmission manifest, and binds that approval to one exact structured authorization payload and one platform message/turn identity."
+  },
+  "future_preflight_baseline_requirements": {
+    "comparison_basis": "fresh current bytes at trial freeze, not HEAD and not a clean-worktree assumption",
+    "required_receipts": [
+      "Git HEAD identity",
+      "raw porcelain-v1-z bytes plus a deterministic normalized view that excludes only untracked rows strictly below the authority-bound run root",
+      "index entries from git ls-files --stage -z",
+      "staged-diff bytes and SHA-256",
+      "tracked-diff bytes and SHA-256",
+      "content, mode, size, and SHA-256 manifest for protected canonical, generated, governance, and input scopes"
+    ],
+    "pre_existing_dirty_state": "must be disclosed and preserved; the controller may not clean, reset, checkout, or restamp it",
+    "concurrent_change_behavior": "any protected input change after freeze yields INPUT_DRIFT_STOP; do not silently rebase the trial",
+    "allowed_write_roots": 1,
+    "allowed_write_root_kind": "new trial-generation audit root supplied by separate launch authority"
+  },
+  "bound_inputs": [
+    {
+      "id": "F3_SYNTHESIS_REPORT",
+      "path": "/Users/jaredsmacbookair/Documents/PuppetMaster/Plans/.audits/stage-a-f3-postexperiment-synthesis/FINAL_REPORT.md",
+      "sha256": "78e1a48b35b96611db59250ef16c3be18c8eb64de7e46e81681b6761c9cd54b4",
+      "bytes": 21871,
+      "use": "method revision authority"
+    },
+    {
+      "id": "METHOD_REVISION",
+      "path": "/Users/jaredsmacbookair/Documents/PuppetMaster/Plans/.audits/stage-a-f3-postexperiment-synthesis/METHOD_REVISION.json",
+      "sha256": "5e9667328de5c4ba39ad7361333adfe3bee4f231dc441dfcac454606d33c292d",
+      "bytes": 11350,
+      "use": "machine-readable method authority"
+    },
+    {
+      "id": "PLANS_INDEX_AT_PACKET_DESIGN",
+      "path": "/Users/jaredsmacbookair/Documents/PuppetMaster/Plans/00-plans-index.md",
+      "sha256": "5dc9e25c0ad82dc719cfc93477fdbe39f66ed893109900172d77400cff0417ed",
+      "bytes": 334437,
+      "use": "live canonical routing evidence; must be freshly snapshotted again at trial launch"
+    },
+    {
+      "id": "PLANNING_WIZARD_AT_PACKET_DESIGN",
+      "path": "/Users/jaredsmacbookair/Documents/PuppetMaster/Plans/Planning_Wizard.md",
+      "sha256": "2a67a9d2dc647121903502751c2bf8f37a27f4f3e88e86897be79405e1efeae7",
+      "bytes": 92541,
+      "use": "owner-contract evidence only; no implementation"
+    },
+    {
+      "id": "F3_FINAL_REPORT",
+      "path": "/Users/jaredsmacbookair/.codex/worktrees/0296/PuppetMaster/Plans/.audits/stage-a-f3-neutral-output-rerun-controller/FINAL_REPORT.md",
+      "sha256": "32e75fbeb4315110ca54ab84716137747a7e406c945d7cefe8e1afcf3b94f0ce",
+      "bytes": 2843,
+      "use": "immutable F3 terminal evidence"
+    },
+    {
+      "id": "F3_CONTROLLER_DECISION",
+      "path": "/Users/jaredsmacbookair/.codex/worktrees/0296/PuppetMaster/Plans/.audits/stage-a-f3-neutral-output-rerun-controller/CONTROLLER_DECISION.json",
+      "sha256": "9937e14e045819bf7f620c1103038162d2c33891378b1adb86d2a40f2a234309",
+      "bytes": 4382,
+      "use": "immutable F3 decision evidence"
+    },
+    {
+      "id": "F3_BENCHMARK_PACKET",
+      "path": "/Users/jaredsmacbookair/.codex/worktrees/0296/PuppetMaster/Plans/.audits/stage-a-b2-verification-f2-controller/selected/BENCHMARK_PACKET.json",
+      "sha256": "b06bf0844e9eecdfe690a683cb6fbf7e9bff2cb6b39929aea87303f33298545f",
+      "bytes": 47348,
+      "use": "benchmark-design diagnostic only; excluded from pilot semantic roles"
+    },
+    {
+      "id": "F3_CONTROLS",
+      "path": "/Users/jaredsmacbookair/.codex/worktrees/0296/PuppetMaster/Plans/.audits/stage-a-b2-verification-f2-controller/selected/CONTROLS.json",
+      "sha256": "0870bcd3d2e762f7fbdbd8a5beaf552deaacd404ab97b46f9a069d55cd74ce34",
+      "bytes": 2203,
+      "use": "control-design diagnostic only; excluded from pilot semantic roles"
+    }
+  ],
+  "trial_scope": {
+    "repository_root": "/Users/jaredsmacbookair/Documents/PuppetMaster",
+    "plans_root": "/Users/jaredsmacbookair/Documents/PuppetMaster/Plans",
+    "mode": "read_only_capability_sliced_whole_corpus_pilot",
+    "claim_boundary": "whole-corpus structural mapping plus four-family semantic pilot; never whole-corpus semantic assurance",
+    "structural_population": "every path under Plans at the authorized launch snapshot except the exact separately authorized future run root, which must be absent at freeze and is excluded solely to prevent outputs from becoming inputs",
+    "semantic_population": "every file classified canonical by the live Plans index and owner-routing rules, including canonical machine-readable contracts",
+    "required_structural_units": [
+      "canonical_document",
+      "substantive_section",
+      "plan_unit",
+      "acceptance_unit",
+      "relevant_cross_reference"
+    ],
+    "path_classes": [
+      "canonical",
+      "generated",
+      "governance_support",
+      "source_lineage",
+      "audit",
+      "retired",
+      "unknown"
+    ],
+    "unknown_path_policy": "block_before_semantic_work",
+    "exclusion_policy": "Every excluded path and nonsubstantive segment must retain an explicit reason and evidence; exclusions do not silently disappear from structural counts.",
+    "reread_policy": "After the map freezes, semantic workers receive only hash-bound capability slices and cited spans. Full-corpus rereads require a changed-snapshot invalidation and separate controller disposition.",
+    "v1_structural_invalidation_mode": "initial snapshot only: prior snapshot/hash, direct deltas, propagation edges, impact sets, and cache-reuse claims must all be empty. Any protected input drift stops this generation; v1 never fabricates incremental closure without a separately bound prior structural artifact.",
+    "pilot_family_ids": [
+      "USAGE_ACCOUNTING_TRUTH",
+      "WEB_RESEARCH_BEHAVIOR",
+      "ACCESSIBILITY_CONTROL_CONTRACTS",
+      "MIGRATIONS_DURABLE_STATE"
+    ],
+    "pilot_modes": {
+      "USAGE_ACCOUNTING_TRUTH": "novel_method_signal",
+      "WEB_RESEARCH_BEHAVIOR": "novel_method_signal",
+      "ACCESSIBILITY_CONTROL_CONTRACTS": "revealed_known_answer_realization_calibration_excluded_from_discovery_efficacy",
+      "MIGRATIONS_DURABLE_STATE": "novel_method_signal"
+    }
+  },
+  "canonical_identity_spec": {
+    "identity_version": "pm.plan_assurance.identity.v1",
+    "filesystem_population": "lstat every entry beneath Plans; hash regular files only; count directories; any symlink or nonregular entry is recorded and blocks G1 until explicitly dispositioned by later authority",
+    "relative_paths": "UTF-8, Unicode NFC, forward slash, relative to repository root, no dot segments",
+    "file_content_hash": "SHA-256 of exact file bytes; no newline or encoding normalization",
+    "mode_encoding": "base-10 integer of st_mode permission bits in canonical JSON",
+    "markdown_section_partition": "exact nonoverlapping half-open byte ranges over original bytes; preamble is a section; headings inside fenced code do not split; concatenated ranges must reproduce the file byte-for-byte",
+    "semantic_anchor": "SHA-256 over UTF-8 NFC text with CRLF/CR converted to LF, heading ancestry and parser-kind included; code-fence bodies and all non-line-ending whitespace remain exact",
+    "machine_node_identity": "stable registry ID plus exact JSON Pointer; array rows require an owner-defined stable key or remain identity-unresolved",
+    "canonical_json": "UTF-8 JSON with Unicode NFC strings, sorted object keys, array order preserved unless the field is declared a set, separators comma and colon without spaces, ensure_ascii=false, no trailing newline, and no floating-point value in an identity-bearing object",
+    "artifact_binding_hash": "SHA-256 of the exact canonical_json bytes for every cross-artifact binding; later run artifacts must be serialized in that canonical form",
+    "set_ordering": "sort unique members by UTF-8 byte order before canonical JSON serialization",
+    "hash_preimage": "UTF-8 bytes of identity_version, NUL, artifact kind, NUL, canonical payload bytes",
+    "acceptance_identity": "parent PlanUnit ID plus normalized criterion semantic hash; ordinal display IDs are aliases only",
+    "closure_fingerprint_components": [
+      "obligation semantic hash",
+      "authority and decision hashes",
+      "applicability and named-surface denominator hash",
+      "evidence-sufficiency and freshness hash",
+      "scenario-realization hash",
+      "consumer-propagation hash",
+      "validation-contract hash",
+      "risk and uncertainty hashes",
+      "Plan-anchor hashes"
+    ],
+    "retrieval_diagnostic_exclusion": "exact-source retrieval records are stored in a separate artifact and are never included in the semantic graph hash or closure fingerprint",
+    "required_validator": "validate_trial_artifacts.py"
+  },
+  "schemas": {
+    "launch_request": "LAUNCH_REQUEST.schema.json",
+    "trusted_launch_capability": "TRUSTED_LAUNCH_CAPABILITY.schema.json",
+    "launch_authority": "LAUNCH_AUTHORITY.schema.json",
+    "protected_state": "PROTECTED_STATE.schema.json",
+    "source_snapshot": "SOURCE_SNAPSHOT.schema.json",
+    "structural_map": "STRUCTURAL_COVERAGE_MAP.schema.json",
+    "surface_ledger": "SURFACE_INSTANCE_LEDGER.schema.json",
+    "research_operation_capture": "RESEARCH_OPERATION_CAPTURE.schema.json",
+    "research_portfolio": "RESEARCH_PORTFOLIO.schema.json",
+    "research_adequacy_receipt": "RESEARCH_ADEQUACY_RECEIPT.schema.json",
+    "required_control_registry": "REQUIRED_CONTROL_REGISTRY.schema.json",
+    "fresh_challenge_receipt": "FRESH_CHALLENGE_RECEIPT.schema.json",
+    "obligation_graph": "CAPABILITY_OBLIGATION_GRAPH.schema.json",
+    "assurance_result": "ASSURANCE_RESULT.schema.json",
+    "trial_summary": "TRIAL_SUMMARY.schema.json",
+    "cross_artifact_validator": "validate_trial_artifacts.py"
+  },
+  "stages": [
+    {
+      "id": "S0_PREFLIGHT_AND_FREEZE",
+      "purpose": "Bind the launch authority, fresh repository snapshot, input population, dirty-state receipt, budgets, and audit-local write root before any semantic work.",
+      "inputs": ["separate launch authority", "live Plans tree", "Git read-only state"],
+      "outputs": ["SOURCE_SNAPSHOT.json", "PROTECTED_BEFORE.json", "LAUNCH_REQUEST.json; then a live collaboration-sender-attested TRUSTED_LAUNCH_CAPABILITY.json capture and LAUNCH_AUTHORITY.json"],
+      "semantic_workers": 0,
+      "exit_gate": "G0_PROTOCOL_AND_AUTHORITY"
+    },
+    {
+      "id": "S1_STRUCTURAL_MAP",
+      "purpose": "Inventory and map the whole corpus once, resolve structural units and cross-references, and assign every included segment to at least one capability or a justified exclusion.",
+      "inputs": ["SOURCE_SNAPSHOT.json"],
+      "outputs": ["STRUCTURAL_COVERAGE_MAP.json", "CAPABILITY_SLICE_MANIFESTS/"],
+      "semantic_workers": 0,
+      "exit_gate": "G1_WHOLE_CORPUS_MAP"
+    },
+    {
+      "id": "S2_SURFACE_DENOMINATOR",
+      "purpose": "Derive named actors, journeys, entrypoints, surfaces, controls, commands, events, services, stores, artifacts, providers, and states from mapped source facts.",
+      "inputs": ["STRUCTURAL_COVERAGE_MAP.json"],
+      "outputs": ["SURFACE_INSTANCE_LEDGER.json"],
+      "semantic_workers": 0,
+      "exit_gate": "G2_NAMED_DENOMINATOR"
+    },
+    {
+      "id": "S3_INDEPENDENT_DISCOVERY",
+      "purpose": "For each pilot, independently construct local obligations and conduct creative open external exploration before comparing detailed Plan assertions.",
+      "inputs": ["EXPECTATION_PACKET.json containing intent, risk, named surface facts, target platforms, explicit non-goals, and owner identities but no detailed target Plan assertions", "expectation packet SHA-256"],
+      "outputs": ["LOCAL_EXPECTATIONS.json", "LOCAL_EXPECTATIONS_LOCK.json", "RESEARCH_PORTFOLIO.json", "DISCOVERY_CLAIMS.json", "DISCOVERY_LOCK.json", "RESEARCH_ADEQUACY_RECEIPT.json"],
+      "semantic_workers_per_capability": 2,
+      "exit_gate": "G3_DISCOVERY_AND_ADEQUACY"
+    },
+    {
+      "id": "S4_CONDITIONAL_FAILURE_RECOVERY",
+      "purpose": "Recover concrete operational failure, issue, implementation, contradiction, freshness, or applicability evidence only when an adequacy trigger fires.",
+      "inputs": ["research adequacy receipt", "unresolved high-risk claims"],
+      "outputs": ["FAILURE_EVIDENCE_CARDS.json", "ADEQUACY_RECOVERY_RECEIPT.json"],
+      "semantic_workers_per_capability_maximum": 1,
+      "conditional": true,
+      "exit_gate": "G3_DISCOVERY_AND_ADEQUACY"
+    },
+    {
+      "id": "S5_GRAPH_ADJUDICATION",
+      "purpose": "Merge supported claims, preserve contradictions and uncertainty, attach exhaustive contribution edges, and attribute losses without inventing unresearched claims.",
+      "inputs": ["detailed mapped Plan slice revealed only after local/research locks", "local expectations", "research claims", "surface ledger"],
+      "outputs": ["CAPABILITY_OBLIGATION_GRAPH.json", "GRAPH_MERGE_RECEIPT.json"],
+      "semantic_workers": 0,
+      "controller_authority": "normalize, deduplicate, type, and fail closed; unresolved semantic conflicts remain unresolved",
+      "exit_gate": "G4_GRAPH_INTEGRITY"
+    },
+    {
+      "id": "S6_NAMED_SCENARIO_REALIZATION",
+      "purpose": "Bind every consequential applicable obligation to named instances, states, transitions, failure paths, consumers, controls, and acceptance oracles, then run a cross-family rotated challenger that was not an author of the target family graph.",
+      "inputs": ["CAPABILITY_OBLIGATION_GRAPH.json", "SURFACE_INSTANCE_LEDGER.json"],
+      "outputs": ["NAMED_SCENARIOS.json", "CONTROL_RESULTS.json", "FRESH_CHALLENGE_RECEIPT.json"],
+      "semantic_workers": "one already-open LOCAL_EXPECTATION_MODELER from another family, reused without a new context",
+      "exit_gate": "G5_REALIZATION_AND_CONTROLS"
+    },
+    {
+      "id": "S7_COVERAGE_FEEDBACK",
+      "purpose": "Run bounded, slice-only targeted passes for uncovered critical/major obligations and unresolved adequacy, recomputing only invalidated graph fragments.",
+      "inputs": ["coverage frontier", "loss ledger"],
+      "outputs": ["TARGETED_PASS_RECEIPTS.jsonl", "updated graph and scenarios"],
+      "semantic_workers": "reuse already assigned family workers; no additional default role",
+      "exit_gate": "G6_FRONTIER_STABILITY"
+    },
+    {
+      "id": "S8_RESULT_AND_INVARIANCE",
+      "purpose": "Report separated metrics, per-stage loss, cost, latency, limitations, protected-state invariance, and a non-certifying method decision.",
+      "inputs": ["all frozen family artifacts", "PROTECTED_BEFORE.json"],
+      "outputs": ["ASSURANCE_RESULT.json per family", "TRIAL_SUMMARY.json", "PROTECTED_AFTER.json"],
+      "semantic_workers": 0,
+      "exit_gate": "G7_TRIAL_REPORTING"
+    }
+  ],
+  "roles": [
+    {
+      "id": "TRIAL_CONTROLLER",
+      "count": 1,
+      "write_authority": "future audit-local run root only",
+      "may": ["bind inputs", "dispatch bounded roles", "merge typed outputs", "compute metrics", "stop the trial"],
+      "must_not": ["invent unsupported external claims", "certify own Plan quality", "write canonical Plans", "exceed budget or topology"]
+    },
+    {
+      "id": "LOCAL_EXPECTATION_MODELER",
+      "default_per_active_capability": 1,
+      "write_authority": "none",
+      "initial_view": "exact hash-bound EXPECTATION_PACKET only; no detailed target Plan assertions, no external research output, no expected finding list, and no F3 hidden material",
+      "may": ["construct expected obligations", "trace common-visible owner-consumer seams", "propose named scenarios", "after its own locks, challenge a different family graph under the rotation schedule"],
+      "must_not": ["perform external research", "edit Plans", "self-certify"]
+    },
+    {
+      "id": "OPEN_DISCOVERY_RESEARCHER",
+      "default_per_active_capability": 1,
+      "write_authority": "none",
+      "initial_view": "capability intent, risk, named surface facts, target platforms, and non-goals; detailed Plan assertions withheld until open exploration locks",
+      "may": ["perform creative external exploration", "follow surprising adjacent ideas", "challenge assumptions", "record rejected inspiration"],
+      "must_not": ["silently adopt comparator behavior", "edit Plans", "claim product authority"]
+    },
+    {
+      "id": "FAILURE_EVIDENCE_RESEARCHER",
+      "maximum_per_active_capability": 1,
+      "conditional": true,
+      "write_authority": "none",
+      "activation": "one or more research adequacy triggers are true",
+      "may": ["target real failures", "inspect issue evidence", "inspect implementations and tests", "seek disconfirming or applicability evidence"],
+      "must_not": ["run without trigger", "satisfy a fixed source quota", "edit Plans", "certify readiness"]
+    },
+    {
+      "id": "CROSS_FAMILY_CHALLENGER",
+      "physical_worker": "an already-open LOCAL_EXPECTATION_MODELER from a different family",
+      "new_contexts": 0,
+      "write_authority": "none",
+      "rotation": {
+        "USAGE_ACCOUNTING_TRUTH": "MIGRATIONS_DURABLE_STATE local modeler",
+        "WEB_RESEARCH_BEHAVIOR": "ACCESSIBILITY_CONTROL_CONTRACTS local modeler",
+        "ACCESSIBILITY_CONTROL_CONTRACTS": "WEB_RESEARCH_BEHAVIOR local modeler",
+        "MIGRATIONS_DURABLE_STATE": "USAGE_ACCOUNTING_TRUTH local modeler"
+      },
+      "view": "locked target graph, named scenarios, controls, loss ledger, and visible evidence after target graph authors finish",
+      "may": ["identify missing obligations", "challenge applicability/authority", "test named realization", "emit a read-only challenge receipt"],
+      "must_not": ["edit the graph", "see F3 hidden material", "certify buildability", "challenge its own family"]
+    }
+  ],
+  "topology": {
+    "global_active_unit_ceiling_including_controller": 12,
+    "global_specialist_ceiling": 11,
+    "default_semantic_workers_per_active_capability": 2,
+    "conditional_failure_workers_per_active_capability_maximum": 1,
+    "four_pilots_may_run_concurrently": true,
+    "queue_rule": "With four base pairs active, at most three conditional recovery workers run concurrently; any additional recovery activation queues.",
+    "descendant_spawning": "forbidden unless a later authority explicitly changes the topology",
+    "single_writer": "TRIAL_CONTROLLER",
+    "fresh_challenge_without_extra_context": true,
+    "worker_terminal_reporting": "Every worker must issue exactly one DONE, STOPPED, or MATERIAL_BLOCKER terminal receipt to the controller; absence stops that lane and is never inferred as success."
+  },
+  "research_policy": {
+    "principle": "mandatory external discovery pulse with variable depth; creativity first, adequacy recovery second",
+    "user_links": "optional seeds, never prerequisites",
+    "open_exploration": {
+      "directions": [
+        "official platform or provider constraints",
+        "standards and regulations when applicable",
+        "direct comparators",
+        "adjacent products and alternative mental models",
+        "real implementations and tests",
+        "issues, regressions, postmortems, and operational failure evidence",
+        "ideas that improve user outcomes beyond parity",
+        "disconfirming evidence and explicit reasons not to copy"
+      ],
+      "fixed_source_quota": null,
+      "required_behavior": "Follow material surprises and record obligation yield, challenged assumptions, optional inspiration, rejected behavior, and unresolved limits."
+    },
+    "adequacy_triggers": [
+      "high-risk capability has no concrete issue, regression, postmortem, or operational failure evidence",
+      "applicable official or standards authority is missing, stale, or contradicted",
+      "no direct comparator, adjacent alternative, or real implementation informed the problem model",
+      "material applicability or platform behavior remains uncertain",
+      "sources disagree on a consequential claim",
+      "a named critical surface has no external failure or implementation evidence where such evidence should exist"
+    ],
+    "recovery": {
+      "worker": "FAILURE_EVIDENCE_RESEARCHER",
+      "maximum_concurrent_per_capability": 1,
+      "focus": "only triggered inadequacies and uncovered high-risk claims",
+      "cannot_silently_pass_when_unavailable": true,
+      "evidence_binding": "Every source card and direct evidence claim resolves to an exact UTF-8 byte slice of a typed request/response operation capture whose identity, activity type, target, challenge, response hash, and invocation lineage are bound.",
+      "closure_rule": "After recovery, recompute every adequacy trigger from qualifying direct, current, applicable, authority-fit evidence across the combined open and recovery portfolios; no worker-authored closed flag can override a remaining trigger."
+    },
+    "saturation": {
+      "successive_targeted_passes_required": 2,
+      "new_critical_or_major_obligations_each_pass": 0,
+      "material_semantic_changes_each_pass": 0,
+      "unresolved_adequacy_gaps": 0,
+      "failed_or_unavailable_research": "visible limitation or RESEARCH_LIMITED; never silently adequate"
+    },
+    "cache": {
+      "key_components": ["capability", "ecosystem", "platform", "source identity", "retrieved_at", "claim scope"],
+      "reuse_across_pilots": true,
+      "invalidate_on": ["source freshness expiry", "source content hash change", "platform/provider version change", "applicability change", "contradiction"],
+      "do_not_invalidate_on": ["wording-only Plan edit", "unrelated capability change"]
+    }
+  },
+  "budgets": {
+    "campaign": {
+      "wall_clock_seconds_maximum": 43200,
+      "model_input_tokens_maximum": 2020000,
+      "model_output_tokens_maximum": 380000,
+      "all_reported_tokens_maximum": 2400000,
+      "semantic_contexts_maximum": 12,
+      "semantic_context_definition": "unique semantic worker contexts across the four families; controller merge/reporting work is budgeted separately and is not relabeled as a semantic worker context",
+      "external_search_queries_maximum": 120,
+      "external_page_opens_maximum": 240,
+      "wall_clock_target_seconds": 10800,
+      "raw_response_bytes_maximum_each": 1048576,
+      "artifact_bytes_maximum": 41943040,
+      "artifact_files_maximum": 640,
+      "shared_artifact_overhead_bytes_reserved": 8388608,
+      "shared_artifact_overhead_files_reserved": 128
+    },
+    "structural_and_surface_stages": {
+      "model_input_tokens_target": 0,
+      "model_output_tokens_target": 0,
+      "require_deterministic_extraction_first": true
+    },
+    "per_family": {
+      "base_worker_all_reported_tokens_maximum_each": 200000,
+      "base_worker_input_tokens_maximum_each": 170000,
+      "base_worker_output_tokens_maximum_each": 30000,
+      "conditional_failure_worker_all_reported_tokens_maximum": 120000,
+      "conditional_failure_worker_input_tokens_maximum": 100000,
+      "conditional_failure_worker_output_tokens_maximum": 20000,
+      "family_all_reported_tokens_maximum": 520000,
+      "family_input_tokens_maximum": 440000,
+      "family_output_tokens_maximum": 80000,
+      "semantic_contexts_maximum": 3,
+      "external_search_queries_maximum": 30,
+      "external_page_opens_maximum": 60,
+      "wall_clock_target_seconds": 5400,
+      "wall_clock_seconds_maximum": 10800,
+      "targeted_followups_maximum_per_existing_worker": 2,
+      "targeted_passes_maximum": 4,
+      "closure_cycles_maximum": 2,
+      "infrastructure_retries_maximum": 1,
+      "semantic_retries_maximum": 0,
+      "artifact_bytes_maximum": 8388608,
+      "artifact_files_maximum": 128
+    },
+    "controller_merge_and_reporting": {
+      "all_reported_tokens_maximum": 320000,
+      "input_tokens_maximum": 260000,
+      "output_tokens_maximum": 60000,
+      "includes_cross_family_seam_passes": true
+    },
+    "token_accounting": {
+      "effective_total_rule": "use native_total_tokens when non-null; otherwise use derived_total_tokens only when every component and inclusion flag is non-null",
+      "derived_total_when_output_includes_reasoning": "input_tokens + visible_output_tokens",
+      "derived_total_when_output_excludes_reasoning": "input_tokens + visible_output_tokens + reasoning_output_tokens",
+      "cached_input_rule": "cached_input_tokens is a diagnostic subset of input_tokens and is never added again",
+      "worker_fuse_reconciliation": "Bind every resource receipt to exactly one worker through context_id and to one unique invocation through invocation_id; classify its canonical role, stage, activity kind, target, challenge and activity hash; group every direct infrastructure retry by its immediate prior invocation; derive exact timestamp-based wall time, input/output/effective totals, follow-up counts, and closure-cycle counts; and enforce the role-specific base-worker or conditional-failure-worker ceilings before within_fuse or METHOD_SLICE_READY may be true.",
+      "aggregation": "family and campaign fuses sum effective_total exactly once per receipt",
+      "missing_telemetry": "if neither native nor exact derived total exists, within_fuse must be false and method status is METHOD_SLICE_REVISE with affordability_unproven; scale readiness is forbidden",
+      "dollars": "native-only; null is never zero and requires a non-null reason"
+    },
+    "research_operation_reservation": "Each family owns at most 30 searches and 60 opens; v1 does not rebalance one family's unused reservation to another family.",
+    "budget_behavior": "Hard ceilings. Anticipating or reaching a ceiling yields BUDGET_STOP before another semantic pass; it is not an integrity failure. Deliberate evasion or falsified accounting is SAFETY_ABORT. Missing native or exactly derivable token telemetry blocks affordability and scale-readiness claims even when semantic findings remain usable."
+  },
+  "risk_tiers": [
+    {
+      "id": "R1",
+      "definition": "narrow, local, reversible, and without money, security, privacy, or data-loss exposure"
+    },
+    {
+      "id": "R2",
+      "definition": "cross-surface, stateful, third-party, or moderate user-truth exposure"
+    },
+    {
+      "id": "R3",
+      "definition": "money, identity/auth, privacy/security, migration/data loss, autonomous external action, volatile ecosystem, or critical accessibility",
+      "pilot_default": true
+    }
+  ],
+  "metrics": [
+    {
+      "id": "SEMANTIC_COVERAGE",
+      "definition": "severity-weighted applicable obligation semantic state: complete=1, partial=0.5, absent/unresolved/contradicted=0. Evidence-backed not-applicable and authorized scope exclusions are removed from the applicable denominator and reported separately. Accepted residual risk earns zero semantic credit.",
+      "semantic_credit_uses_exact_source_identity": false
+    },
+    {
+      "id": "EVIDENCE_SUFFICIENCY",
+      "definition": "obligations whose support meets required authority, entailment, freshness, applicability, contradiction, and limitation rules divided by obligations requiring evidence"
+    },
+    {
+      "id": "EXACT_SOURCE_RETRIEVAL_DIAGNOSTIC",
+      "definition": "overlap with benchmark-pinned source identities when an independent benchmark supplies them",
+      "may_cap_semantic_credit": false,
+      "pilot_default": "not_applicable"
+    },
+    {
+      "id": "CLAIM_PRECISION",
+      "definition": "non-rejected claims with an exhaustive valid contribution edge and supported semantic core divided by all non-rejected claims"
+    },
+    {
+      "id": "AUTHORITY_SAFETY",
+      "definition": "classification accuracy plus raw counts of invented authority, unsafe adoption, concealed contradiction, and unsupported product-policy assertions"
+    },
+    {
+      "id": "NAMED_SCENARIO_REALIZATION",
+      "definition": "applicable obligations bound to every affected named instance and required scenario with an acceptance oracle divided by obligations requiring named realization; residual-risk naming and generic templates earn zero realization credit"
+    },
+    {
+      "id": "DISPOSITION_COMPLETENESS",
+      "definition": "applicable gaps with an explicit open, blocked, excluded, accepted-residual, or repair disposition divided by all gaps; this measures truthful handling only and contributes no semantic or realization credit"
+    },
+    {
+      "id": "CONTROL_RESULTS",
+      "definition": "per-control pass, fail, blocked, not_applicable, answerability, and component coverage; no aggregate zero may hide partial realization"
+    },
+    {
+      "id": "GROUNDED_NOVELTY",
+      "definition": "count and severity of externally grounded, applicable, non-duplicative ideas that improve outcomes, challenge assumptions, or add useful alternatives"
+    },
+    {
+      "id": "CRITICAL_MISSES",
+      "definition": "open critical obligations, named critical instances without realization, critical contradictions, and critical research-adequacy failures, reported as raw rows"
+    },
+    {
+      "id": "COST_AND_LATENCY",
+      "definition": "observed per-role/per-stage input, output, cached, and reasoning tokens; search/open counts; wall and active latency; dollar cost when observable; nulls remain explicit"
+    }
+  ],
+  "loss_categories": [
+    "STRUCTURAL_MAPPING",
+    "SURFACE_DISCOVERY",
+    "LOCAL_OBLIGATION_DISCOVERY",
+    "EXTERNAL_DISCOVERY",
+    "FAILURE_EVIDENCE_RECOVERY",
+    "EVIDENCE_QUALITY",
+    "APPLICABILITY",
+    "ADJUDICATION",
+    "NAMED_REALIZATION",
+    "CROSS_TOPIC_PLACEMENT",
+    "CONTROL_ANSWERABILITY",
+    "EXACT_SOURCE_RETRIEVAL_DIAGNOSTIC_ONLY"
+  ],
+  "gates": [
+    {
+      "id": "G0_PROTOCOL_AND_AUTHORITY",
+      "pass": "separate exact launch authority, fresh absent run root, source snapshot, protected-state receipt, declared external-transmission scope, and budgets all bind; trial_launch_authorized becomes true only in that separate artifact"
+    },
+    {
+      "id": "G1_WHOLE_CORPUS_MAP",
+      "pass": "100% of Plans paths classified; zero unknown paths; 100% of canonical docs and substantive sections mapped; all PlanUnits and acceptance units mapped; every relevant cross-reference resolved or explicitly unresolved; every included segment capability-assigned or justified excluded"
+    },
+    {
+      "id": "G2_NAMED_DENOMINATOR",
+      "pass": "all discovered named instances are source-backed or explicitly provisional; denominator counts reconcile; templates are separate and cannot satisfy named instances; critical owner/consumer surfaces have no unresolved identity collision"
+    },
+    {
+      "id": "G3_DISCOVERY_AND_ADEQUACY",
+      "pass": "base independent workers complete; a typed hash-bound research portfolio proves actual search/open/read operations and source-card provenance; creative outcomes and unsearched limits remain visible; all adequacy triggers are controller-derived from the portfolio; triggered recovery completes or is visibly limited; every adequate evidence claim resolves through current applicable authority-fit source cards; no hidden benchmark material is exposed"
+    },
+    {
+      "id": "G4_GRAPH_INTEGRITY",
+      "pass": "all non-rejected claims have exhaustive typed contribution edges; evidence and exact-source diagnostics are separate; contradictions and uncertainty remain visible; all IDs and edges resolve"
+    },
+    {
+      "id": "G5_REALIZATION_AND_CONTROLS",
+      "pass": "the exact frozen 33-control registry is evaluated through a closed 12-component vector; every answerable control binds named ledger instances, graph obligations, and structured scenarios; every required scenario carries lifecycle, transition, concurrency, retry, restart, cancellation, authority, failure/recovery, user-truth, observability, environment, oracle, and builder-discretion semantics; a separate rotated fresh-challenge receipt covers the exact obligations, instances, and controls; every gap remains visible and dispositioned; generic templates close zero named instances. Real Plan gaps may remain without failing this method gate."
+    },
+    {
+      "id": "G6_FRONTIER_STABILITY",
+      "pass": "two successive targeted passes add zero critical/major obligations, make zero material semantic changes, leave zero unresolved adequacy gaps, and surface every consequential product decision as resolved, blocked, or explicit open work"
+    },
+    {
+      "id": "G7_TRIAL_REPORTING",
+      "pass": "all separate metrics and stage losses reported; observed cost/latency present or explicitly null; canonical/Git/protected invariance passes; no certification or buildability claim; accessibility is reported separately as revealed realization calibration and excluded from discovery-efficacy and scale-signal aggregation"
+    }
+  ],
+  "plan_slice_gates": [
+    {
+      "id": "P1_PLAN_SEMANTIC_ENVELOPE",
+      "pass": "all critical/high-risk applicable obligations are specified, evidence-backed not-applicable, or authorized scope exclusions. Accepted residual risk remains explicit and earns zero semantic credit, but does not qualify a Plan slice as ready within the envelope."
+    },
+    {
+      "id": "P2_PLAN_NAMED_REALIZATION",
+      "pass": "all required critical named instances and controls have complete realization and deterministic oracles; generic patterns and accepted residual labels cannot substitute"
+    },
+    {
+      "id": "P3_PLAN_DECISION_VISIBILITY",
+      "pass": "no consequential product decision is hidden and every accepted residual risk has exact authority, consequence, expiry, and reopen conditions"
+    }
+  ],
+  "stop_rules": {
+    "family_success": [
+      "G3 through G6 pass for that family",
+      "all critical/major Plan gaps and misses are truthfully surfaced and attributed, whether or not repaired",
+      "two-pass frontier saturation is met",
+      "research unavailable or stale is not silently treated as pass",
+      "the rotated cross-family challenger completed and its findings were dispositioned"
+    ],
+    "campaign_success": [
+      "G0 through G7 pass",
+      "all four required pilot families have a terminal result",
+      "two successive cross-family seam passes add zero critical/major obligation or material semantic change, with at most four seam passes",
+      "no family result is missing a required metric",
+      "campaign remains within hard budgets",
+      "protected-state invariance passes",
+      "all method slices are METHOD_SLICE_READY; Plan slices may be PLAN_SLICE_NOT_READY_GAPS_FOUND",
+      "scale-signal aggregation uses exactly Usage, Web, and Migrations; Accessibility remains a separately reported revealed realization calibration",
+      "no family terminal is RESEARCH_LIMITED, BUDGET_STOP, METHOD_SLICE_BLOCKED, METHOD_SLICE_INVALID, INPUT_DRIFT_STOP, or SAFETY_ABORT"
+    ],
+    "immediate_fail_closed": [
+      "write outside authorized future trial root",
+      "canonical or generated-governance mutation",
+      "Git index, commit, push, or publication write",
+      "hidden F3 benchmark truth exposed to a pilot semantic role",
+      "fabricated evidence or actual unauthorized external action",
+      "topology breach that cannot be quarantined",
+      "misleading semantic credit tied to exact hidden source identity"
+    ],
+    "valid_method_negative": [
+      "unsupported mandatory promotion or authority overreach in a model output",
+      "false critical blocker",
+      "claim classification failure"
+    ],
+    "budget_terminal": "Anticipated or reached hard ceiling maps to BUDGET_STOP; only concealment, evasion, or falsified receipt maps to SAFETY_ABORT.",
+    "no_forced_success": "A valid negative or limited result is preferable to relaxing gates, hiding cost, or inventing coverage."
+  },
+  "result_dimensions": {
+    "scale_inference_eligible_pilot_ids": [
+      "USAGE_ACCOUNTING_TRUTH",
+      "WEB_RESEARCH_BEHAVIOR",
+      "MIGRATIONS_DURABLE_STATE"
+    ],
+    "calibration_only_pilot_ids": ["ACCESSIBILITY_CONTROL_CONTRACTS"],
+    "method_slice_statuses": [
+      "METHOD_SLICE_READY",
+      "METHOD_SLICE_REVISE",
+      "METHOD_SLICE_BLOCKED",
+      "METHOD_SLICE_INVALID"
+    ],
+    "plan_slice_statuses": [
+      "PLAN_SLICE_READY_WITHIN_ENVELOPE",
+      "PLAN_SLICE_NOT_READY_GAPS_FOUND",
+      "PLAN_SLICE_LIMITED",
+      "PLAN_SLICE_NOT_EVALUATED"
+    ],
+    "separation_rule": "Finding critical Plan gaps may be a successful method result. Method readiness never implies Plan readiness, and Plan readiness never implies implementation or buildability proof."
+  },
+  "terminal_states": [
+    {
+      "id": "READY_FOR_SCALE_DECISION",
+      "meaning": "The four-family method trial met its protocol, quality, stability, cost, and invariance gates. Scale inference uses only the three novel-signal pilots; Accessibility is separate revealed realization calibration. Scaling still requires separate authority."
+    },
+    {
+      "id": "VALID_NEGATIVE_METHOD_REVISE",
+      "meaning": "The protocol remained valid, but method quality, controls, stability, or cost failed. Preserve evidence and revise the method."
+    },
+    {
+      "id": "RESEARCH_LIMITED",
+      "meaning": "Required current or adequate external evidence was unavailable; report bounded findings without high-assurance status."
+    },
+    {
+      "id": "BUDGET_STOP",
+      "meaning": "A hard budget was reached before valid completion; preserve partial evidence and do not infer failure or readiness."
+    },
+    {
+      "id": "TRIAL_BLOCKED",
+      "meaning": "A required input, authority, answerability condition, or infrastructure capability was unavailable before a valid result."
+    },
+    {
+      "id": "TRIAL_INVALID",
+      "meaning": "Protocol integrity was lost without a safety mutation; scientific conclusions are invalid."
+    },
+    {
+      "id": "INPUT_DRIFT_STOP",
+      "meaning": "Protected input changed after freeze. Before semantic work this is a blocked nonstart; after semantic work the affected generation is invalid and cannot be silently restamped."
+    },
+    {
+      "id": "SAFETY_ABORT",
+      "meaning": "A forbidden write, hidden-truth exposure, fabricated evidence, actual unauthorized action, destructive action, deliberate accounting evasion, or irreparable lineage breach occurred. Unsupported semantic promotion alone is a valid method-negative, not this terminal."
+    }
+  ],
+  "required_outputs_if_later_authorized": [
+    "LAUNCH_REQUEST.json prepared after protected-state freeze",
+    "EXTERNAL_TRANSMISSION_MANIFEST.json enumerating exact model-visible corpus and output classes before user/parent approval",
+    "TRUSTED_LAUNCH_CAPABILITY.json captured from fresh Codex platform-controlled collaboration sender metadata and bound to the frozen request and nonce; offline files alone cannot authorize",
+    "LAUNCH_AUTHORITY.json supplied by separate authority",
+    "SOURCE_SNAPSHOT.json",
+    "PROTECTED_BEFORE.json",
+    "STRUCTURAL_COVERAGE_MAP.json",
+    "SURFACE_INSTANCE_LEDGER.json",
+    "REQUIRED_CONTROL_REGISTRY.json",
+    "RESEARCH_PORTFOLIO.json and RESEARCH_ADEQUACY_RECEIPT.json for each pilot family",
+    "CAPABILITY_OBLIGATION_GRAPH.json",
+    "ASSURANCE_RESULT.json for each of four pilot families",
+    "ARTIFACT_VALIDATION.json for the structural map, surface ledger, every family graph, and every family result",
+    "FRESH_CHALLENGE_RECEIPT.json for each pilot family",
+    "TARGETED_PASS_RECEIPTS.jsonl for each pilot family",
+    "RESOURCE_RECEIPTS.jsonl with exact token inclusion flags",
+    "TRIAL_SUMMARY.json",
+    "PROTECTED_AFTER.json"
+  ],
+  "non_claims": [
+    "This packet does not authorize or execute the trial.",
+    "A trial result does not edit or repair Plans.",
+    "A Plan Assurance result is not runtime, implementation, buildability, security, or product certification.",
+    "The packet does not implement Planning Wizard.",
+    "The packet does not prove absolute completeness in an open world."
+  ]
+}

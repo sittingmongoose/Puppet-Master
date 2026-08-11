@@ -131,6 +131,19 @@ Route side-effect rules:
 All UI commands (button clicks, keyboard shortcuts, context menu items) normalize to a standard record:
 ```
 
+## Known-37 recovery-unavailable catalog rows - 2026-07-18
+
+| Ordered owner action | Canonical command | Sole handler | Label | Payload/result authority |
+|---|---|---|---|---|
+| `locate_and_verify_recovery` | `cmd.runtime.locate_and_verify_recovery` | `handlers::runtime::locate_and_verify_recovery` | Locate and verify recovery | `LocateAndVerifyRecoveryRequest` / `LocateAndVerifyRecoveryResult` |
+| `abandon_recovery` | `cmd.runtime.abandon_recovery` | `handlers::runtime::abandon_recovery` | Abandon recovery | `AbandonRecoveryRequest` / `AbandonRecoveryResult` |
+
+These are the only new catalog IDs. They have no chat-, graph-, orchestrator-, FileSafe-, or provider-local peer command and no generic repair alias. The catalog projects the owner-provided `allowed_action_ids[]` in exact order: `open_details`, `locate_and_verify_recovery`, `replan`, optional owner-admitted `start_fresh_attempt`, then `abandon_recovery`. It neither sorts nor reconstructs membership. Ordinary restore and retry remain disabled while the anchor is `recovery_unavailable`.
+
+Every dispatch carries the exact current blocked episode, anchor, snapshot set, five-value reason, and attempt branch. Pre-attempt payloads omit `attempt_id`; post-attempt payloads require the current exact value. Locate collects one non-secret FileSafe-normalized recovery source and discloses verification requirements. Abandon requires explicit `abandon_recovery_and_preserve_local_work` confirmation, durable confirmation authority, and preserved-work acknowledgement. Disabled projections retain the exact owner reason, including stale projection, permission/storage failure, operation in progress, source verification failure, or missing explicit confirmation; they never map an unknown state to an enabled action.
+
+The strict `UICommandResponse` contains a reference to the matching typed domain result. `ack_status`, `result_status`, button dismissal, or accepted dispatch is not success. A successful locate displays owner-verified material, receipt-backed `resolved`, and preserved work. A successful abandonment displays receipt-backed `abandoned_by_user`, preserved work, and `cleanup_performed = false`. Refused, recoverable failure, missing receipt, or `not_committed` preserves the anchor and displays no release, recovery, cleanup, retry, or successor claim. Replay displays the original result and receipt identity without implying a second side effect.
+
 {
   command_id: string,
   command_type: 'action' | 'navigation' | 'state_change' | 'modal',
@@ -211,7 +224,7 @@ Tiers-tab widgets are compatibility-only: `widget.tier_tree` renders a Phase/Tas
 
 `History` commands that expose `Delete Run` require durable historical `/audit` semantics, confirmation strength, and retention/disposition behavior before deletion can be treated as a safe catalog action.
 
-The path-based `open_file` target uses `OpenFile { path, line?, range?, target_group? }`; `target_group` selects editor placement only and does not replace route_target, OpenSubject, or object identity.
+The path-based `open_file` target uses `OpenFile { path, line?, range?, target_editor_panel_id?, target_editor_group_id?, target_group? }`; the panel and group fields select editor placement only and do not replace route_target, OpenSubject, or object identity. `target_group` remains an explicit compatibility alias for `target_editor_group_id`.
 
 Subject-open and generalized route focus are first-class route/open behavior: `subject-open` wrappers cover `/route`, `/navigation`, `/focus/show`, and `routed-open` pivots so `cross-surface` commands do not keep accreting as `one-off` cases.
 
@@ -596,31 +609,6 @@ Rules:
 
 ContractRef: ContractName:Plans/GitHub_Integration.md, ContractName:Plans/FinalGUISpec.md, ContractName:Plans/Wiring_Matrix.md
 
-
-| Command ID | Label | Description | Keybind | Preconditions |
-|---|---|---|---|---|
-| `cmd.actions.rerun` | Rerun Workflow | Re-triggers the selected workflow run | — | `actions_panel_visible && selected_run` |
-| `cmd.actions.rerun_failed` | Rerun Failed Jobs | Re-triggers only failed jobs in selected run | — | `actions_panel_visible && selected_run && has_failed_jobs` |
-| `cmd.actions.cancel` | Cancel Run | Cancels the in-progress workflow run | — | `actions_panel_visible && selected_run && run_in_progress` |
-| `cmd.github.actions.pin` | Pin Workflow | Pins a workflow to the GitHub Actions Workflows surface for quick access and health-badge tracking; `cmd.actions.pin` is a compatibility alias | — | `actions_panel_visible && selected_workflow` |
-| `cmd.github.actions.unpin` | Unpin Workflow | Removes a pinned workflow from the GitHub Actions Workflows surface; `cmd.actions.unpin` is a compatibility alias | — | `actions_panel_visible && pinned_workflow_selected` |
-| `cmd.github.actions.open_run` | Open Run | Opens a GitHub Actions run detail in the GitHub Actions surface | — | `actions_panel_visible && selected_run` |
-| `cmd.github.actions.open_job` | Open Job | Opens the selected job within a run detail | — | `actions_panel_visible && selected_run && selected_job` |
-| `cmd.github.actions.open_step_logs` | Open Step Logs | Opens logs for the selected job/step, preserving `/job/step` context | — | `actions_panel_visible && selected_job && selected_step` |
-| `cmd.github.actions.open_related_diff` | Open Related Diff | Opens Source Control review/diff context correlated from an Actions run, job, or failing step | — | `selected_run && related_diff_available` |
-| `cmd.github.actions.open_related_worktree` | Open Related Worktree | Opens the worktree correlated from an Actions run, job, or failing step | — | `selected_run && related_worktree_available` |
-| `cmd.github.actions.compare_last_success` | Compare Last Success | Compares the selected run against the last successful run for the same workflow and branch | — | `actions_panel_visible && selected_run` |
-| `cmd.github.actions.validate_dispatch_readiness` | Validate Dispatch Readiness | Revalidates workflow dispatch readiness before rerun, dispatch, or hosted-admin mutation | — | `actions_panel_visible && selected_workflow` |
-| `cmd.actions.view_logs` | View Logs | Opens full log output for selected job/step | — | `actions_panel_visible && selected_job` |
-| `cmd.actions.open_in_browser` | Open in Browser | Opens the workflow run on GitHub.com | — | `actions_panel_visible && selected_run` |
-
-Rules:
-- Actions-to-code commands bridge GitHub Actions to Source Control without moving ownership of hosted runs into Source Control.
-- `open_related_diff` and `open_related_worktree` use receipt-backed run id, commit range, changed files, branch, and worktree refs when available.
-- If exact correlation is unavailable, commands show candidate commit ranges, workflow file diffs, or related worktrees with an uncertainty label instead of auto-opening a guessed target.
-
-ContractRef: ContractName:Plans/GitHub_Integration.md, ContractName:Plans/FinalGUISpec.md, ContractName:Plans/Wiring_Matrix.md
-
 ### 2.5A Docker Manager command family
 
 | Command ID | Label | Description | Preconditions |
@@ -731,7 +719,7 @@ The grouped token `cmd.chat.{new,archive,delete,rename,pin,export,search}` denot
 |---|---|---|---|
 | `cmd.chat.new` | New Thread | Creates or focuses a fresh assistant thread shell; `thread_id` is minted when the first user message commits | `chat_available` |
 | `cmd.chat.archive` | Archive Thread | Archives the selected thread while preserving transcript, lineage, citations, attachments, and audit metadata | `thread_selected && !active_run_in_thread` |
-| `cmd.chat.delete` | Delete Thread | Deletes the selected thread from ordinary navigation after retention/worktree cleanup confirmation | `thread_selected && delete_confirmed && !active_run_in_thread` |
+| `cmd.chat.delete` | Delete Thread | After explicit thread-delete confirmation, persists the content-free deletion/tombstone authority, removes the thread immediately from ordinary navigation/search/context/export, and requests physical content purge within 24 hours unless a legal hold delays purge; it does not delete a message or silently release worktree/recovery holds. | `thread_selected && delete_confirmed && !active_run_in_thread && deletion_family_available` |
 | `cmd.chat.rename` | Rename Thread | Renames the selected thread title without changing thread_id, message ids, or worktree lineage | `thread_selected` |
 | `cmd.chat.pin` | Pin Thread | Pins or unpins the selected thread in the thread list without changing lifecycle state | `thread_selected` |
 | `cmd.chat.export` | Export Thread | Exports the selected thread transcript and permitted metadata to the supported local export format | `thread_selected` |
@@ -813,7 +801,7 @@ Rules:
 
 | Command ID | Payload | Domain event(s) | UI surface(s) |
 |---|---|---|---|
-| `cmd.browser.open_workspace_preview` | `{ project_id, target, workspace_tab_id }` | `browser.session.created`, `browser.session.state_changed` | File preview, command palette, editor/browser tab |
+| `cmd.browser.open_workspace_preview` | `{ project_id, target, workspace_tab_id, target_editor_panel_id?, target_editor_group_id? }` | `workspace.layout_changed` when targeted placement changes, `browser.session.created`, `browser.session.state_changed` | File preview, command palette, editor/browser tab |
 | `cmd.browser.open_detached_preview` | `{ project_id, target, source_workspace_tab_id }` | `browser.session.created`, `browser.session.state_changed` | File preview, command palette, detached browser |
 | `cmd.browser.focus_browser_tab` | `{ browser_session_id }` | layout/UI state only | editor/browser tab surface |
 | `cmd.browser.detach_browser_tab` | `{ browser_session_id }` | `browser.session.state_changed` | editor/browser tab surface |
@@ -947,7 +935,7 @@ ContractRef: ContractName:Plans/assistant-chat-design.md, ContractName:Plans/Sec
 | `cmd.chat.copy_message` | `{ thread_id, message_id }` | Copy the rendered message content. |
 | `cmd.chat.retry_message` | `{ thread_id, message_id }` | Re-run the selected failed/cancelled assistant turn. |
 | `cmd.chat.rewind` | `{ thread_id, target_message_id }` | Rewind conversation history only (`conversation-only`); does not restore files. |
-| `cmd.chat.revert` | `{ thread_id, target_message_id? }` | Restore persisted file mutations from one assistant turn; omitted `target_message_id` resolves to the latest assistant turn in the thread with persisted file mutations. |
+| `cmd.chat.revert` | `{ project_id, thread_id, target_message_id?, repo_id, worktree_id, expected_turn_manifest_sha256, idempotency_key }` | Restore the complete immutable whole-turn mutation manifest through the FileSafe exact-replace journal; omitted `target_message_id` resolves to the latest eligible mutating assistant turn. The command never rewinds conversation state or branches from a conversation restore point. |
 | `cmd.chat.add_file_reference` | `{ project_id, thread_id?, path, line_range? }` | Insert a visible file reference chip into the composer. File-only in MVP; folder references are out of scope. |
 
 Canonical signature lock: `cmd.chat.add_file_reference { project_id, thread_id?, path, line_range? }`.
@@ -969,6 +957,8 @@ Message-level availability and code-block actions:
 Revert rules:
 - when the resolved assistant turn touched multiple files, `cmd.chat.revert` reverts the whole turn across all affected files
 - `cmd.chat.revert` routes through the canonical FileSafe file-restore pipeline and uses the absolute file paths recorded in the assistant turn's file mutation log; it must not reinterpret relative paths through the current `working_directory`
+- the resolved turn record must match `expected_turn_manifest_sha256`, `repo_id`, and `worktree_id` before mutation; `no_eligible_mutating_turn`, a stale manifest, or an identity mismatch refuses without creating a FileSafe transaction
+- after resolution, the command consumes the same `restored_clean | restore_skipped | restore_refused | restore_failed | restore_recovery_required` truth, manifest/rollback equality, restart reconciliation, custody, and recovery holds as safe-point restore; `restored_with_conflicts` and partial multi-file success are invalid
 - after a successful revert, affected editors refresh from the canonical mutation pipeline
 - `cmd.chat.rewind` MUST NOT be used as a file-restore alias
 - `cmd.chat.resend_last_user_message` is distinct from `cmd.chat.retry_message`; resend replays the latest user-authored input, while retry re-runs a failed or cancelled assistant turn
@@ -982,7 +972,7 @@ ContractRef: ContractName:Plans/Crosswalk.md, ContractName:Plans/storage-plan.md
 
 Debug Mode uses the canonical `cmd.debug.*` UICommand family owned by `Plans/Commands_System.md`; these are internal wiring IDs, not User Commands. The catalog bridge preserves the concrete IDs `cmd.debug.start`, `cmd.debug.stop`, `cmd.debug.pause`, `cmd.debug.resume`, `cmd.debug.add_breakpoint`, `cmd.debug.remove_breakpoint`, `cmd.debug.clear_breakpoints`, `cmd.debug.view_evidence`, `cmd.debug.step`, and `cmd.debug.collect_snapshot`, while leaving investigation lifecycle semantics, preconditions, and evidence behavior in `Commands_System.md`.
 
-ContractRef: ContractName:Plans/Commands_System.md#5.2.8-debug-mode-uicommand-family
+ContractRef: ContractName:Plans/Commands_System.md#7.1-debug-mode-dispatch-family
 
 ### 2.7 Chat slash commands (reserved)
 
@@ -1161,16 +1151,26 @@ Canonical recovery commands use one shared namespace: `cmd.runtime.*`. Legacy re
 | --- | --- | --- |
 | `approve` | `cmd.runtime.approve` | `{ run_id, node_id, blocked_sequence, attempt_id? }` |
 | `decline` | `cmd.runtime.decline` | `{ run_id, node_id, blocked_sequence, attempt_id? }` |
-| `retry_now` | `cmd.runtime.retry_now` | `{ run_id, node_id, attempt_id, repo_id?, worktree_id?, baseline_target? }` |
+| `retry_now` | `cmd.runtime.retry_now` | `{ project_id, run_id, node_id, blocked_sequence, attempt_id, repo_id?, worktree_id?, baseline_target?, safe_point_id?, historical_commit_oid?, expected_head_oid?, expected_state_sha256?, dirty_state_confirmed?, idempotency_key }` |
 | `resume_after_prerequisite` | `cmd.runtime.resume_after_prerequisite` | `{ run_id, node_id, blocked_sequence, attempt_id? }` |
-| `restore_safe_point_then_retry` | `cmd.runtime.restore_safe_point_then_retry` | `{ run_id, node_id, attempt_id, safe_point_id, repo_id, worktree_id, baseline_target }` |
-| `start_fresh_attempt` | `cmd.runtime.start_fresh_attempt` | `{ run_id, node_id, attempt_id?, repo_id?, worktree_id?, baseline_target? }` |
+| `restore_safe_point_then_retry` | `cmd.runtime.restore_safe_point_then_retry` | `{ project_id, run_id, node_id, blocked_sequence, attempt_id, safe_point_id, repo_id, worktree_id, baseline_target: "safe_point", idempotency_key }` |
+| `start_fresh_attempt` | `cmd.runtime.start_fresh_attempt` | `{ project_id, run_id, node_id, blocked_sequence, attempt_id?, repo_id?, worktree_id?, baseline_target?, safe_point_id?, historical_commit_oid?, expected_head_oid?, expected_state_sha256?, dirty_state_confirmed?, idempotency_key }` |
 | `replan` | `cmd.runtime.replan` | `{ run_id, node_id, attempt_id? }` |
 | `skip_node` | `cmd.runtime.skip_node` | `{ run_id, node_id, attempt_id? }` |
 | `abort_run` | `cmd.runtime.abort_run` | `{ run_id }` |
 | `open_details` | `cmd.runtime.open_attempt_details` | `{ run_id, node_id, attempt_id? }` |
 
-SCM-targeted retry and `/fresh-attempt` commands support the same worktree reuse policy as restore. `baseline_target` is the closed candidate enum `safe_point | historical_commit | worktree_head`. When a recovery command carries `repo_id`, `worktree_id`, or `baseline_target`, runtime dispatch must validate the targeted worktree and baseline exactly and must reject the command rather than silently substitute another worktree or baseline.
+SCM-targeted retry and `/fresh-attempt` commands support the same worktree reuse policy as restore. `baseline_target` is closed to `safe_point | historical_commit | worktree_head`; the former stale candidate wording is superseded. Conditional payload and effect are exact:
+
+| `baseline_target` | Conditionally required immutable inputs | Effect and successful postcondition |
+|---|---|---|
+| `safe_point` | `safe_point_id`, `repo_id`, `worktree_id` | FileSafe exact-replaces the complete named-worktree manifest. Only `restored_clean` or zero-mutation `restore_skipped` with target equality may produce the durable baseline receipt used for successor-attempt admission. |
+| `historical_commit` | full immutable `historical_commit_oid`, `repo_id`, source `worktree_id` | Preserve the source byte-for-byte and create a distinct isolated clean worktree at that exact commit OID; the durable result carries the new `worktree_id`. No abbreviated, branch, tag, remote, reflog, symbolic, or moving ref is accepted. |
+| `worktree_head` | `repo_id`, `worktree_id`, full `expected_head_oid`, `expected_state_sha256`, and `dirty_state_confirmed = true` when dirty | Perform no checkout, reset, stash, clean, branch move, index rewrite, or file mutation. Bind only when the recomputed OID and FileSafe state digest still match exactly. |
+
+`cmd.runtime.restore_safe_point_then_retry` admits only `baseline_target = safe_point`. When `requires_safe_point_restore = true`, it is the only legal rerun command. `cmd.runtime.retry_now` and `cmd.runtime.start_fresh_attempt` accept a target only when the blocked/retry owner admits that verb and every field in the matching row is present. Unknown values, missing conditional fields, stale `blocked_sequence`, repo/worktree mismatch, moving or abbreviated refs, missing/non-commit OIDs, and digest drift refuse without target substitution, successor attempt, cleanup, or automatic replay.
+
+ContractRef: ContractName:Plans/Executor_Protocol.md#approved-baseline-target-retry-and-restore-lifecycle, ContractName:Plans/WorktreeGitImprovement.md#approved-exact-baseline-target-SCM-contract, ContractName:Plans/FileSafe.md#11.1.2b, ContractName:Plans/Contracts_V0.md#safe_point.restored
 
 ### Navigation commands
 - `cmd.runtime.open_queue_analysis` -> `{ run_id, scheduler_pass_id }`
@@ -2504,7 +2504,7 @@ plan_unit_id: UCC-025
 unit_type: requirement
 status: accepted
 owner_doc: Plans/UI_Command_Catalog.md
-canonical_text: Object routes use canonical domain IDs, compatibility widgets remain display-only, History deletion needs durable audit and disposition semantics, OpenFile preserves placement as target_group only, subject-open wrappers cover route/focus pivots, and resume_url is route transport.
+canonical_text: Object routes use canonical domain IDs, compatibility widgets remain display-only, History deletion needs durable audit and disposition semantics, OpenFile preserves placement through target_editor_panel_id/target_editor_group_id with target_group as a compatibility alias, subject-open wrappers cover route/focus pivots, and resume_url is route transport.
 gui_related: true
 gui_classification_reason: This unit preserves user-visible GUI command, command-palette, routing, wiring, or surface behavior.
 split_recommended: false
@@ -2538,7 +2538,7 @@ preserved_exact_tokens:
 - widget.tier_tree
 - widget.progress_bars
 - Delete Run
-- OpenFile { path, line?, range?, target_group? }
+- OpenFile { path, line?, range?, target_editor_panel_id?, target_editor_group_id?, target_group? }
 - subject-open
 - /route
 - /navigation
@@ -4306,7 +4306,7 @@ plan_unit_id: UCC-056
 unit_type: requirement
 status: accepted
 owner_doc: Plans/UI_Command_Catalog.md
-canonical_text: Chat thread lifecycle and discovery commands create, archive, delete, rename, pin, export, and search threads while preserving transcript, lineage, citations, attachments, audit metadata, stable thread_id, and message focus behavior.
+canonical_text: Chat thread lifecycle and discovery commands create, archive, delete, rename, pin, export, and search threads while preserving lineage and stable identity; cmd.chat.delete is a separately confirmed whole-thread action that immediately removes ordinary projections, requests physical content purge within 24 hours unless held, and preserves a content-free tombstone plus non-content authority receipts.
 gui_related: false
 gui_classification_reason: This unit preserves backend/governance command identity, metadata, compatibility, or owner-boundary rules without primary visual presentation.
 split_recommended: false
@@ -4318,6 +4318,7 @@ depends_on:
 unblocks: []
 acceptance_criteria:
 - UCC-056 remains addressable as a fine-grained UI Command Catalog PlanUnit with source-span coverage.
+- cmd.chat.delete remains distinct from unsupported message-level delete and discloses legal-hold-delayed physical purge without promising ordinary unarchive.
 - ContractRefs, anchors or aliases, exact tokens, negative constraints, compatibility notes, stale/retired dispositions, owner boundaries, and source lineage from the source spans remain preserved.
 - No WorkNodes, NodeSeeds, executable queues, final node manifests, production build tasks, implementation files, or source code are created by this PlanUnit.
 validation_surfaces:
@@ -4348,8 +4349,11 @@ preserved_exact_tokens:
 - citations
 - attachments
 - audit metadata
+- storage_deletion_record
+- storage.deletion_lifecycle_changed
 negative_constraints:
 - Grouped chat lifecycle token does not denote message-level delete or file-restore behavior.
+- Thread deletion must not clear legal, recovery, worktree, backup, or audit authority merely to satisfy the purge target.
 preserved_contractrefs:
 - 'ContractRef: ContractName:Plans/assistant-chat-design.md, ContractName:Plans/storage-plan.md, ContractName:Plans/FinalGUISpec.md'
 compatibility_only_notes: []
@@ -5413,7 +5417,7 @@ plan_unit_id: UCC-075
 unit_type: requirement
 status: accepted
 owner_doc: Plans/UI_Command_Catalog.md
-canonical_text: cmd.chat.rewind remains conversation-only, while cmd.chat.revert restores persisted file mutations through the canonical FileSafe pipeline using recorded absolute paths and refreshes affected editors through the mutation pipeline.
+canonical_text: cmd.chat.rewind remains conversation-only, while cmd.chat.revert resolves one immutable eligible assistant-turn whole-mutation manifest and exact-replaces its complete recorded scope through the canonical FileSafe manifest, verified rollback, journal, equality, restart, remote-custody, and recovery-hold rules using recorded absolute identities; it never partially restores a multi-file turn or changes conversation state.
 gui_related: true
 gui_classification_reason: This unit preserves user-visible GUI command, command-palette, routing, wiring, or surface behavior.
 split_recommended: false
@@ -5422,9 +5426,11 @@ depends_on:
 - PDS-004
 - PDS-005
 - PNC-001
+- F2-204
 unblocks: []
 acceptance_criteria:
 - UCC-075 remains addressable as a fine-grained UI Command Catalog PlanUnit with source-span coverage.
+- cmd.chat.revert returns the exact FileSafe restore outcomes, never restored_with_conflicts or partial success, and no_eligible_mutating_turn creates no FileSafe transaction.
 - ContractRefs, anchors or aliases, exact tokens, negative constraints, compatibility notes, stale/retired dispositions, owner boundaries, and source lineage from the source spans remain preserved.
 - No WorkNodes, NodeSeeds, executable queues, final node manifests, production build tasks, implementation files, or source code are created by this PlanUnit.
 validation_surfaces:
@@ -5451,9 +5457,13 @@ preserved_exact_tokens:
 - working_directory
 - affected editors
 - canonical mutation pipeline
+- whole-turn mutation manifest
+- no_eligible_mutating_turn
+- restore_recovery_required
 negative_constraints:
 - cmd.chat.rewind MUST NOT be used as a file-restore alias.
 - cmd.chat.revert must not reinterpret relative paths through the current working_directory.
+- cmd.chat.revert must not rewind conversation state, merge target content, or report partial multi-file success.
 preserved_contractrefs:
 - 'ContractRef: ContractName:Plans/Crosswalk.md, ContractName:Plans/storage-plan.md, ContractName:Plans/FinalGUISpec.md'
 compatibility_only_notes: []
@@ -5563,7 +5573,7 @@ preserved_exact_tokens:
 negative_constraints:
 - Debug Mode UICommand IDs are internal wiring IDs, not User Commands.
 preserved_contractrefs:
-- 'ContractRef: ContractName:Plans/Commands_System.md#5.2.8-debug-mode-uicommand-family'
+- 'ContractRef: ContractName:Plans/Commands_System.md#7.1-debug-mode-dispatch-family'
 compatibility_only_notes: []
 stale_retired_dispositions: []
 owner_hints:
@@ -6319,7 +6329,13 @@ plan_unit_id: UCC-090
 unit_type: requirement
 status: accepted
 owner_doc: Plans/UI_Command_Catalog.md
-canonical_text: SCM-targeted retry and fresh-attempt recovery commands support the same worktree reuse policy as restore; baseline_target is the closed safe_point/historical_commit/worktree_head enum and runtime dispatch must validate repo, worktree, and baseline exactly.
+canonical_text: >-
+  SCM-targeted retry and fresh-attempt recovery commands use the closed
+  safe_point/historical_commit/worktree_head baseline_target enum with per-value exact fields and
+  effects: safe_point exact-replaces the named worktree, historical_commit creates an isolated
+  clean worktree at a full immutable commit OID while preserving the source, and worktree_head
+  binds the exact live OID/state digest without mutation; runtime rejects missing, stale, moving,
+  mismatched, or substitute identity.
 gui_related: false
 gui_classification_reason: This unit preserves backend/governance command identity, metadata, compatibility, or owner-boundary rules without primary visual presentation.
 split_recommended: false
@@ -6331,6 +6347,7 @@ depends_on:
 unblocks: []
 acceptance_criteria:
 - UCC-090 remains addressable as a fine-grained UI Command Catalog PlanUnit with source-span coverage.
+- Each baseline target requires its exact immutable fields and produces only its owner-defined effect/postcondition before durable successor admission.
 - ContractRefs, anchors or aliases, exact tokens, negative constraints, compatibility notes, stale/retired dispositions, owner boundaries, and source lineage from the source spans remain preserved.
 - No WorkNodes, NodeSeeds, executable queues, final node manifests, production build tasks, implementation files, or source code are created by this PlanUnit.
 validation_surfaces:
@@ -7963,7 +7980,7 @@ Every command in this addendum returns the `UICommandResponse` envelope from `Pl
 
 | Command ID | Payload fields | Result fields | Error/disabled fields | Receipt or event effect |
 |---|---|---|---|---|
-| `cmd.theme.set_mode` | `project_id?`, `scope`, `mode`, `expected_theme_revision`, `idempotency_key` | `theme_revision`, `effective_mode`, `contrast_profile` | `stale_projection`, `permission_denied`, `invalid_args` | `settings.theme.updated` |
+| `cmd.theme.set_mode` | `project_id?`, `scope`, `mode` (`light`, `dark`, or `auto`), `expected_theme_revision`, `idempotency_key` | `theme_revision`, `effective_mode`, `effective_variant` (resolved theme; in `auto` it tracks OS `prefers-color-scheme` live), `contrast_profile` | `stale_projection`, `permission_denied`, `invalid_args` | `settings.theme.updated` |
 | `cmd.theme.set_accent` | `project_id?`, `scope`, `accent_token`, `expected_theme_revision`, `idempotency_key` | `theme_revision`, `effective_accent_token` | `invalid_args`, `stale_projection` | `settings.theme.updated` |
 | `cmd.theme.set_density` | `project_id?`, `scope`, `density`, `expected_theme_revision`, `idempotency_key` | `theme_revision`, `effective_density` | `invalid_args`, `stale_projection` | `settings.theme.updated` |
 | `cmd.theme.preview` | `scope`, `theme_patch`, `preview_surface`, `ttl_ms` | `preview_id`, `expires_at_utc` | `invalid_args`, `handler_unavailable` | explicit dispatch receipt |
@@ -8186,4 +8203,2824 @@ owner_hints:
   - Plans/UI_Command_Catalog.md
   - Plans/Wiring_Matrix.md
   - Plans/Contracts_V0.md
+```
+
+## PMConcept6 Control Census Command Addendum - 2026-07-16
+
+This addendum registers the command rows required by the 300-row PMConcept6 interactive-control census and by owner docs that already name command families absent from this catalog. It compiles owner-doc obligations into UI_Command_Catalog ownership. It does not create WorkNodes, NodeSeeds, executable queues, implementation files, runtime dispatch, generated governance artifacts, or a governance seal. Every command row below follows the section 2.0 command entry contract (`command_id`, `label`, `description`, `preconditions`, `command_kind`) and receives a production wiring row per Wiring_Matrix.md section 4.2. Concept controls remain source lineage only; `Concepts/pm6-build/**` defines no commands (Plans/usage-feature.md).
+
+### Run Graph canvas interaction commands
+
+Run-graph interaction commands adopt the ids named verbatim in `Plans/Run_Graph_View.md` (RGV-017 and the repair row at :1073) and `Plans/Orchestrator_Page.md` (:2324). Shared disabled reasons for this family are `graph_unloaded`, `modal_capture`, `read_only_layout`, `selection_locked`, and `permission_denied`; controls render disabled states with a reason rather than disappearing. All rows except `cmd.run_graph.drag_node` are view-projection interactions that never mutate run, node, or projection state; graph text search highlights matches in place and does not rewrite focused-run state except through an explicit route.
+
+| Command ID | Label | Description | Preconditions | command_kind |
+|------------|-------|-------------|----------------|--------------|
+| `cmd.run_graph.pan` | Pan Graph Canvas | Pans the Node Graph viewport by pointer drag without mutating run, node, or projection state. | `graph_loaded && !modal_capture` | `shell_view` |
+| `cmd.run_graph.zoom` | Zoom Graph Canvas | Zooms in or out or fits the full graph to the viewport, updating the zoom percent chip. | `graph_loaded && !modal_capture` | `shell_view` |
+| `cmd.run_graph.drag_node` | Drag Graph Node | Moves a node within the graph layout; requires editable layout mode. | `graph_loaded && editable_layout_mode` | `domain_action` |
+| `cmd.run_graph.open_minimap_target` | Navigate Via Minimap | Moves the viewport to the minimap click or drag-scrub target. | `graph_loaded && !modal_capture` | `shell_view` |
+| `cmd.run_graph.open_context_menu` | Open Graph Context Menu | Opens the node or canvas context menu listing route-consuming actions; opening mutates nothing. | `graph_loaded` | `shell_view` |
+| `cmd.run_graph.keyboard_navigate` | Keyboard Navigate Graph | Moves node focus with Arrow, Home, and End keys with visible focus and pointer parity. | `graph_loaded && !modal_capture` | `shell_view` |
+| `cmd.run_graph.set_selection` | Set Graph Selection | Selects or deselects graph nodes by click and multi-select; selection is view state. | `graph_loaded && !selection_locked` | `shell_view` |
+| `cmd.run_graph.set_problems_filter` | Set Problems-Only Filter | Sets or clears the Problems only view filter (attention_required, blocked, degraded); off by default, resets on focused-run change, never persisted globally. | `graph_loaded` | `shell_view` |
+| `cmd.run_graph.search` | Search Graph | Filters and highlights graph text matches in place, preserving full-graph context. | `graph_loaded` | `shell_view` |
+
+ContractRef: ContractName:Plans/Run_Graph_View.md, ContractName:Plans/Orchestrator_Page.md, ContractName:Plans/Contracts_V0.md
+
+### Orchestrator projection-action and safe-point retry commands
+
+`cmd.orchestrator.safe_point_retry` preserves the Orchestrator_Page.md/OP-033 UI identity while adopting the later Case L exact restore contract. It normalizes to `cmd.runtime.restore_safe_point_then_retry`; `cmd.orchestrator.restore_safe_point_then_retry` remains a compatibility alias for that same runtime command. Neither wrapper owns restore, retry, baseline, or attempt semantics. The seam and evidence commands register the Seams/Evidence subview toggles under the same convention as `cmd.orchestrator.switch_tab`: shell/view state reached through a stable command id.
+
+| Command ID | Label | Description | Preconditions | command_kind |
+|------------|-------|-------------|----------------|--------------|
+| `cmd.orchestrator.safe_point_retry` | Retry From Safe Point | Dispatches the modal-confirmed wrapper input `{ project_id, run_id, node_id, blocked_sequence, attempt_id, safe_point_id, repo_id, worktree_id, baseline_target: "safe_point", permission_snapshot_id? }`. Admission validates optional permission evidence against current permission state, consumes it, and normalizes exactly to `cmd.runtime.restore_safe_point_then_retry` domain args. The four pre-modal availability reasons remain exactly `safe_point_missing`, `state_changed`, `permission_denied`, and `operation_in_progress`; post-resolution FileSafe/SCM refusal and recovery reasons remain distinct under the Case L command contract. | `allowed_action_id == restore_safe_point_then_retry && safe_point_available && state_current && permission_allowed && !operation_in_progress` | `domain_action` |
+| `cmd.orchestrator.restore_safe_point_then_retry` | Restore Safe Point Then Retry | Compatibility alias accepting the same wrapper input as `cmd.orchestrator.safe_point_retry`, applying the identical permission-validation/consumption transform, and normalizing directly to `cmd.runtime.restore_safe_point_then_retry`; it has no independent handler, result, effect, admission, idempotency, or EventRecord producer. | `allowed_action_id == restore_safe_point_then_retry && safe_point_available && state_current && permission_allowed && !operation_in_progress` | `domain_action` |
+| `cmd.orchestrator.copy_run_id` | Copy Run Id | Copies the focused run id to the clipboard; no persisted mutation. | `run_focused` | `shell_view` |
+| `cmd.orchestrator.export_ledger` | Export Ledger JSON | Exports the visible filtered Ledger projection (active filters and sort) as JSON with `usage_event_ref` provenance per row; projection export only, no raw records, evidence payloads, or secrets. | `ledger_projection_visible` | `domain_action` |
+| `cmd.orchestrator.set_seam_expansion` | Set Seam Expansion | Expands or collapses one seam (`scope: "one"`, `seam_id`) or all seams (`scope: "all"`); view-local, mutates no seam records. | `seams_view_visible` | `shell_view` |
+| `cmd.orchestrator.set_evidence_filter` | Set Evidence Filter | Sets or clears (`node_id: null`) the Evidence tab node filter as view projection state. | `evidence_view_visible` | `shell_view` |
+
+ContractRef: ContractName:Plans/Orchestrator_Page.md, ContractName:Plans/UI_Wiring_Rules.md, ContractName:Plans/Contracts_V0.md
+
+### Wizard and Plan Compile replay projection commands
+
+| Command ID | Label | Description | Preconditions | command_kind |
+|------------|-------|-------------|----------------|--------------|
+| `cmd.planning_wizard.replay` | Replay Planning Flow | Rewinds the wizard view to its intake stage and replays the planning flow presentation view-locally; the live PlanningRun, ledger records, approvals, and any PlanCompileRun are unaffected, and exiting replay restores the live wizard state. | `planning_run_recorded` | `shell_view` |
+| `cmd.plan_compile.replay` | Replay Compile Waves | Steps or plays the read-only replay of recorded compile waves; never re-executes compilation, never creates or rebinds a PlanCompileRun, and labels frames as historical replay. | `compile_waves_recorded` | `shell_view` |
+
+ContractRef: ContractName:Plans/Planning_Wizard.md, ContractName:Plans/Orchestrator_Page.md
+
+### Permissions settings command family
+
+Adopted verbatim from `Plans/Permissions_System.md` (Permissions UI Commands And Error States; :8723-8724; AC-PM11). Settings route: `settings.permissions`. Directory picker dispatch name: `permissions.external_directory.pick`. Save dirty-state values: `clean`, `dirty`, `saving`, `saved`, `save_failed`, `conflict_refresh_required`. Rule mutations persist through the atomic TOML write contract with `loaded_config_hash` conflict detection.
+
+| Command ID | Label | Description | Preconditions | command_kind |
+|------------|-------|-------------|----------------|--------------|
+| `cmd.permissions.open` | Open Permissions Settings | Opens the `settings.permissions` route. | `settings_available` | `navigation_wrapper` |
+| `cmd.permissions.create_global_rule` | Create Global Permission Rule | Persists a durable global approval rule with `{ tool_pattern, action, scope_key?, created_at, created_by_thread_id }`; survives restart and is revocable. | `permission_config_writable` | `domain_action` |
+| `cmd.permissions.create_project_rule` | Create Project Permission Rule | Persists a durable project-scope approval rule with the same record fields and revocability. | `project_selected && permission_config_writable` | `domain_action` |
+| `cmd.permissions.update_rule` | Update Permission Rule | Mutates an existing rule under the save dirty-state machine and atomic write rules. | `rule_exists && permission_config_writable` | `domain_action` |
+| `cmd.permissions.reorder_rule` | Reorder Permission Rule | Moves a rule within its scope; validation errors are `rule_not_found`, `target_index_out_of_range`, and `scope_mismatch`. | `rule_exists && permission_config_writable` | `domain_action` |
+| `cmd.permissions.delete_rule` | Delete Permission Rule | Removes a rule with atomic TOML persistence and write-conflict detection. | `rule_exists && permission_config_writable` | `domain_action` |
+| `cmd.permissions.validate_rule` | Validate Permission Rule | Validates a rule draft and surfaces validation errors without persisting. | `rule_draft_present` | `domain_action` |
+| `cmd.permissions.review_request` | Review Permission Request | Opens the canonical approval/settings path with `approval_scope_key` and `requesting_context`. | `approval_request_present` | `navigation_wrapper` |
+| `cmd.permissions.revoke` | Revoke Durable Approval | Revokes a durable rule; requires `rule_id` or `approval_scope_key` plus scope. | `revocable_rule_exists` | `domain_action` |
+| `cmd.permissions.pick_external_directory` | Pick External Directory | Opens the native directory picker and adds the chosen path; duplicate path error `external_directory_duplicate_path`, invalid glob error `external_directory_invalid_glob`. | `picker_available` | `domain_action` |
+
+ContractRef: ContractName:Plans/Permissions_System.md, ContractName:Plans/Contracts_V0.md
+
+### Testing panel command rows
+
+The first six ids are adopted verbatim from `Plans/Automated_Testing_System.md` (GUI Result Surfacing, :1871). Button states derive from `TestRunReceipt.status`: watch and cancel enable for `queued|running`, open receipt enables for any terminal state, export bundle enables when `log_artifact_refs[]` or `visual_artifact_refs[]` is non-empty. `cmd.testing.run` completes the family for the Testing side panel run entry point (F3-451); testing stays runtime-disabled until an adapter is configured, the capability probe returns available, the permission snapshot is current, and required fixtures exist. `cmd.testing.open_panel` is a `navigation_wrapper` that normalizes to the side-panel switch route with panel_id testing per the UCC-014 alias discipline.
+
+| Command ID | Label | Description | Preconditions | command_kind |
+|------------|-------|-------------|----------------|--------------|
+| `cmd.testing.open_panel` | Open Testing Panel | Opens the Testing side panel; normalizes to the panel-switch route with panel_id testing. | `panel_available` | `navigation_wrapper` |
+| `cmd.testing.run` | Run Tests | Starts a test run through the canonical adapter execution path, producing a `TestAdapterInvocation` and a `TestRunReceipt`. | `adapter_configured && capability_probe_available && permission_snapshot_current && fixtures_present` | `domain_action` |
+| `cmd.testing.watch_run` | Watch Test Run | Watches a queued or running test run; view/subscription only, never starts or completes tests. | `run_status_queued_or_running` | `domain_action` |
+| `cmd.testing.cancel_run` | Cancel Test Run | Cancels a queued or running run; the outcome lands as `TestRunReceipt.status` `cancelled` and deletes no receipts. | `run_status_queued_or_running && permission_allowed` | `domain_action` |
+| `cmd.testing.open_receipt` | Open Test Run Receipt | Opens the `TestRunReceipt` for a terminal-state run through the route/open contract. | `run_status_terminal` | `navigation_wrapper` |
+| `cmd.testing.open_failure` | Open Test Failure | Opens a `failure_refs[]` entry detail through the route/open contract. | `failure_refs_present` | `navigation_wrapper` |
+| `cmd.testing.export_bundle` | Export Test Bundle | Exports run logs and visual artifacts as a bundle per the record/bundle/view export taxonomy. | `log_or_visual_artifacts_present` | `domain_action` |
+
+ContractRef: ContractName:Plans/Automated_Testing_System.md, ContractName:Plans/FinalGUISpec.md
+
+### Terminal rule-4.2 coverage completion rows
+
+`cmd.terminal.terminate_session`, `cmd.terminal.kill_session`, and `cmd.terminal.reattach_section` are adopted verbatim from the Wiring_Matrix.md terminal command table and WM-021 preserved tokens. `cmd.terminal.reveal` is minted here for the reveal action rule 4.2 requires by name, following the bare-verb precedent of `cmd.terminal.open` and `cmd.terminal.show`. These four rows close the rule-4.2 terminal coverage hole (reveal, terminate, kill, reattach); the remaining rule-4.2 verbs are already covered by cataloged rows (`show`, `rerun`, `split_pane`, `close_pane`, `clear_scrollback`, `restart_replace`, `detach`, `focus_session`).
+
+| Command ID | Label | Description | Preconditions | command_kind |
+|------------|-------|-------------|----------------|--------------|
+| `cmd.terminal.reveal` | Reveal Terminal Session | Reveals the bottom panel and terminal tab and scrolls the target session into view without spawning a duplicate shell. | `session_exists` | `shell_view` |
+| `cmd.terminal.terminate_session` | Terminate Terminal Session | Requests graceful shutdown for the selected live session; distinct from kill. | `session_live` | `domain_action` |
+| `cmd.terminal.kill_session` | Kill Terminal Session | Forces termination for the selected live session; must not present the old session as still live. | `session_live` | `domain_action` |
+| `cmd.terminal.reattach_section` | Reattach Terminal Section | Returns a detached terminal section to docked layout with preserved tab, pane, and session identity. | `section_detached` | `shell_view` |
+
+ContractRef: ContractName:Plans/Wiring_Matrix.md, ContractName:Plans/Section15_MVP_Promoted_Features_Spec.md
+
+### Account, provider route, and usage projection commands
+
+`cmd.account.select_profile` is adopted verbatim from `Plans/Multi-Account.md` (:5088): per-action disabled reasons are `auth_missing`, `auth_expired`, `profile_locked`, `provider_unavailable`, and `policy_denied`; empty state copy id is `accounts.empty.no_profiles`; switches land in the append-only `account_switch_event` history (Plans/usage-feature.md:70). `cmd.provider.switch_route` is adopted verbatim from the FinalGUISpec.md CTA Card Contracts `rate_limit` row (`provider_id`, `retry_after_ms`). The usage commands start the `cmd.usage` production family for the surface `Plans/usage-feature.md` owns; exports follow the record/bundle/view taxonomy (:69) - view export output never becomes canonical record truth.
+
+| Command ID | Label | Description | Preconditions | command_kind |
+|------------|-------|-------------|----------------|--------------|
+| `cmd.account.select_profile` | Select Account Profile | Switches the effective account/profile; rows support click and keyboard activation. | `profile_available` | `domain_action` |
+| `cmd.provider.switch_route` | Switch Provider Route | Accepts a provider re-route, preferring an alternate provider/plan until the quota window resets; carries `provider_id` and `retry_after_ms` context. | `alternate_route_available` | `domain_action` |
+| `cmd.usage.export` | Export Usage Projection | Exports the current usage projection as JSON with `scope` `snapshot` or `ledger`; ledger scope preserves `usage_event_refs` per row. The Usage page head affordance is an icon-only button carrying `title` and `aria-label` accessible names per the GATE-010 icon-only rules; behavior unchanged. | `usage_projection_loaded` | `domain_action` |
+| `cmd.usage.refresh` | Refresh Usage Projections | Re-reads usage projections from provider routes on demand; background refresh continues independently and the UI never blocks. The Usage page head affordance is an icon-only button carrying `title` and `aria-label` accessible names per the GATE-010 icon-only rules; behavior unchanged. | `provider_routes_configured` | `domain_action` |
+
+ContractRef: ContractName:Plans/Multi-Account.md, ContractName:Plans/usage-feature.md, ContractName:Plans/FinalGUISpec.md
+
+### Browser pane navigation commands
+
+| Command ID | Label | Description | Preconditions | command_kind |
+|------------|-------|-------------|----------------|--------------|
+| `cmd.browser.navigate` | Navigate Browser Pane | Navigates the embedded browser pane to a URL within the session-class policy; preserves session class and recovery identity. | `browser_session_active && navigation_allowed` | `domain_action` |
+| `cmd.browser.reload` | Reload Browser Pane | Reloads the embedded browser pane. `cmd.gui_dev_preview.reload` is dev/test-build only and must not be reused for this production command. | `browser_session_active` | `domain_action` |
+
+ContractRef: ContractName:Plans/Wiring_Matrix.md, ContractName:Plans/FinalGUISpec.md
+
+### Projects list lifecycle commands
+
+| Command ID | Label | Description | Preconditions | command_kind |
+|------------|-------|-------------|----------------|--------------|
+| `cmd.project.archive` | Archive Project | Archives a project from the projects list; reversible, never a disk delete. | `project_listed` | `domain_action` |
+| `cmd.project.remove` | Remove Project From List | Removes a project from the list without touching the working tree. | `project_listed` | `domain_action` |
+| `cmd.project.refresh` | Refresh Projects List | Rescans and refreshes the projects list projection. | `projects_view_visible` | `domain_action` |
+| `cmd.project.open_settings` | Open Project Settings | Opens the Project Settings Modal (F3-442) for a project through the route/open contract. | `project_listed` | `navigation_wrapper` |
+
+ContractRef: ContractName:Plans/FinalGUISpec.md, ContractName:Plans/Contracts_V0.md
+
+### Chat composer selector, queue, thread, and web-operation commands
+
+`cmd.chat.platform` registers the requested-platform selection owned by the assistant chat surface per ACD-437: applies-next-turn semantics over the account-bound Provider -> models registry; no status-bar chip exists for platform selection and the chat header re-introduces no standalone platform dropdown. `cmd.chat.plan_thoroughness` registers the Plan Thoroughness selector per ACD-035/ACD-438: enum Light, Balanced, Comprehensive, default Balanced, distinct from effort High/Medium/Low, recorded as `requested_plan_thoroughness` / `effective_plan_thoroughness`. The web-operation rows extend the `cmd.chat.web` family; approve/decline stay on `cmd.runtime.approve` / `cmd.runtime.decline` per the UCC-082 do-not-overfit boundary.
+
+| Command ID | Label | Description | Preconditions | command_kind |
+|------------|-------|-------------|----------------|--------------|
+| `cmd.chat.web.cancel` | Cancel Web Operation | Cancels an in-flight web operation (research/crawl/fetch card) by `web_operation_id`, preserving provenance. | `web_operation_in_flight` | `domain_action` |
+| `cmd.chat.web.request_again` | Request Web Operation Again | Re-requests a declined or cancelled web operation with the same payload; re-entry passes through the approval gate and never bypasses it. | `web_operation_terminal` | `domain_action` |
+| `cmd.chat.switch_thread` | Switch Chat Thread | Focuses an existing chat thread from the thread list by `thread_id`; no thread mutation. | `thread_exists` | `navigation_wrapper` |
+| `cmd.chat.queue.remove` | Remove Queued Message | Removes a queued, not-yet-dispatched composer message from the send queue; dispatched messages are unaffected. | `queued_message_exists` | `domain_action` |
+| `cmd.chat.platform` | Set Requested Platform | Sets the requested platform for the thread from the assistant chat surface; applies next turn. No status-bar chip and no standalone chat-header platform dropdown. | `platform_registry_loaded` | `domain_action` |
+| `cmd.chat.plan_thoroughness` | Set Plan Thoroughness | Sets Plan Thoroughness (Light, Balanced, Comprehensive) for Plan and Deep Plan; applies next turn. | `plan_mode_selected` | `domain_action` |
+
+ContractRef: ContractName:Plans/assistant-chat-design.md, ContractName:Plans/Contracts_V0.md
+
+### Settings home bloom and suggestion commands
+
+These rows do not alter the registry-owned non-command convention for setting mutations (F3-438/F3-439/F3-441): `bloom.open` is an open/deep-link surface command in the mold of `cmd.settings.open_notifications`, `category.reset` is a command-shaped bulk action behind the F3-434 two-step confirmation, and `suggestion.dismiss` is the F3-437 per-card dismiss control.
+
+| Command ID | Label | Description | Preconditions | command_kind |
+|------------|-------|-------------|----------------|--------------|
+| `cmd.settings.bloom.open` | Open Category Bloom | Opens a category bloom modal, optionally deep-linked via `open(category, focusSettingId)`; a focus target scrolls into view and flash-highlights; reduced motion opens without the morph. | `settings_registry_loaded` | `shell_view` |
+| `cmd.settings.category.reset` | Reset Settings Category | Resets every setting in a category to registry defaults; two-step: first activation arms confirmation, second activation within the timeout resets, timeout expiry disarms without resetting. | `category_bloom_open` | `domain_action` |
+| `cmd.settings.suggestion.dismiss` | Dismiss Suggested Setting | Dismisses a Suggested-shelf entry; persists at `settings_suggestions_dismissed:v1`, project-scoped when the driving signal was project-scoped, 90-day expiry, fully local. | `suggestion_visible` | `domain_action` |
+
+ContractRef: ContractName:Plans/FinalGUISpec.md
+
+### Docker container start and Unraid template commands
+
+`cmd.docker.container.start` completes the reserved `cmd.docker.container.*` lifecycle subfamily beside `stop` and `restart`. The template rows register the Unraid template flows the 2.5A operational coverage text names (`/auth/template`, `/publish/template`); template publish is gated by the `domain.image_publish` permission class, which is never implied by local build approval.
+
+| Command ID | Label | Description | Preconditions | command_kind |
+|------------|-------|-------------|----------------|--------------|
+| `cmd.docker.container.start` | Start Container | Starts a stopped container by `container_ref`; distinct from `cmd.docker.run`, which creates a container from an image. | `container_stopped && capability_snapshot_current` | `domain_action` |
+| `cmd.docker.template.commit` | Commit Unraid Template | Commits Unraid template changes to the template repository with template identity and receipt evidence. | `template_dirty && capability_snapshot_current` | `domain_action` |
+| `cmd.docker.template.push` | Push Unraid Template | Publishes the Unraid template; requires the `domain.image_publish` permission class. | `template_committed && permission_allowed` | `domain_action` |
+
+ContractRef: ContractName:Plans/Containers_Registry_and_Unraid.md, ContractName:Plans/Permissions_System.md
+
+### Source Control pull request commands
+
+Panel-scoped PR actions are first-class Source Control route commands with exact SCM context payload (repo, worktree, compare target, baseline, run/attempt lineage) per the 2.5A operational wiring requirements. They are distinct from the thread-bound `cmd.chat.worktree.pr` / `cmd.chat.worktree.merge` rows (UCC-058), which stay assistant-thread-scoped.
+
+| Command ID | Label | Description | Preconditions | command_kind |
+|------------|-------|-------------|----------------|--------------|
+| `cmd.source_control.pr.create` | Create Pull Request | Creates a pull request from the Source Control panel with repo, source worktree/branch, target branch, and compare payload; deterministic disabled state for missing scopes, expired auth, or no GitHub remote. | `github_auth_valid && github_remote_present` | `domain_action` |
+| `cmd.source_control.pr.merge` | Merge Pull Request | Merges the selected pull request; protected-branch mutation routes the `domain.git_destructive_remote` permission class. | `pr_open && merge_allowed && github_auth_valid` | `domain_action` |
+
+ContractRef: ContractName:Plans/GitHub_Integration.md, ContractName:Plans/Permissions_System.md, ContractName:Plans/Contracts_V0.md
+
+## Case L command registration and storage-gate propagation - 2026-07-17
+
+This section is the exclusive catalog-owner registration for the approved Case L durable-state controls. The registration is mechanically required by `UIW-002` and `UIW-003`: each approved interactive control emits exactly one typed UICommand and no UI surface calls a storage, FileSafe, Worktree, Executor, or Chat owner directly. It consumes the approved owner contracts and creates no second storage algorithm, restore engine, retention policy, EventRecord envelope, or product choice.
+
+The global storage gate applies before command-local permission or business validation on every dispatch path, including direct handlers. An unknown/missing access result fails closed. A mutation-capable command requires `storage_access_mode = writer` unless its row below is an explicitly admitted recovery-shell control. In `viewer`, only frozen/manual-refresh inspection, read-only search/copy/export/navigation, and visibly ephemeral view-local state are allowed; durable/runtime/external mutation returns `storage_read_only`. A returned writer posture never automatically replays a blocked command. An unsupported/newer store is metadata-diagnostics-only and exposes only the owner intents `check_for_update | choose_compatible_backup | open_diagnostics | quit`, not a live viewer or mutation command.
+
+Case L domain actions carry an idempotency identity in the UICommand envelope even when the row's domain arguments do not repeat it. For the app-root lifetime, a replay with the same `(scope_partition, event_type, idempotency_key)` and semantic digest returns the original owner result; a conflicting digest fails closed and appends nothing. Every persisted event uses Contracts-owned EventRecord `schema_version = 2.0.0`, `scope_kind`, and conditional `project_id`; the catalog never builds a local event envelope.
+
+### Storage access, root recovery, navigation, retention, and project deletion rows
+
+These are the seventeen stable Case L IDs forced by approved controls. `storage.legal_hold.manage` remains the protected owner permission/action token; the UICommand is separately named `cmd.storage.legal_hold.manage`.
+
+| Command ID | Args schema and normalization | Owner precondition / permission | Owner result and EventRecord v2 binding | command_kind |
+|---|---|---|---|---|
+| `cmd.storage.viewer.refresh` | `{ storage_instance_id, root_generation, captured_manifest_generation }`; direct storage viewer action | `storage_access_mode == viewer && compatible_snapshot_available` | Replaces only the captured frozen read snapshot/high-water mark; no durable mutation and no domain event. | `shell_view` |
+| `cmd.storage.try_write_mode` | `{ storage_instance_id, logical_root_fingerprint, root_generation, captured_manifest_generation }`; storage admission action | `storage_access_mode == viewer && storage_mode_reason == lock_held`; ordinary permission checks still apply | Closes readers and reruns continuity, safety, version, integrity, generation, OS-lock, recovery, and migration admission. Returns the owner `storage_access_mode`/`storage_mode_reason`; emits only a Contracts-registered application-scoped recovery event such as `storage.boot_recovery` when that owner operation actually occurs. It never auto-resumes work. | `domain_action` |
+| `cmd.storage.retry` | `{ storage_instance_id, logical_root_fingerprint, root_generation, storage_io_class }`; storage admission action | `storage_mode_reason == storage_io_exhausted`; only the explicit user probe is admitted | Revalidates writeability, root identity, versions, integrity, lock, and checkpoints and returns the owner access status. It repairs no bytes and never auto-replays a blocked command; owner recovery evidence, if produced, is application-scoped EventRecord 2.0. | `domain_action` |
+| `cmd.storage.root.use_previous` | `{ expected_bootstrap_binding_sha256, previous_storage_instance_id, previous_root_ref }`; root-recovery action | `storage_mode_reason == root_mismatch && previous_root_reachable && permission_allowed` | Revalidates and reuses the previously bound root without deleting/overwriting another root; consumes owner receipt/status. No unregistered event type is invented. | `domain_action` |
+| `cmd.storage.root.choose` | `{ expected_bootstrap_binding_sha256, candidate_root_ref }`; root picker plus owner preflight | `storage_mode_reason == root_mismatch && permission_allowed` | Selects one candidate for owner continuity/version/integrity validation; selection alone is not writer authority and never initializes an empty root. | `domain_action` |
+| `cmd.storage.root.copy_and_switch` | `{ expected_bootstrap_binding_sha256, source_storage_instance_id, source_root_generation, source_root_ref, destination_root_ref }`; relocation action | `storage_mode_reason == root_mismatch && source_verified && destination_preflight_passed && permission_allowed` | Runs copy-validate-switch with binding update last and retains the verified source as recovery copy. Returns the owner relocation receipt/status; no peer event is minted. | `domain_action` |
+| `cmd.storage.root.start_new_instance` | `{ expected_bootstrap_binding_sha256, expected_prior_storage_instance_id?, confirmation_strength: "strong" }`; new-instance recovery action | `storage_mode_reason == root_mismatch && strong_confirmation_complete && permission_allowed` | Mints a new `storage_instance_id`, preserves prior binding history, and never overwrites/deletes the prior root. A stale binding refuses before creation. | `domain_action` |
+| `cmd.storage.fallback.return_fast_forward` | `{ storage_instance_id, fallback_branch_id, fallback_base_sha256, logical_root_fingerprint, expected_logical_base_sha256 }`; fallback reconciliation action | `fallback_active && logical_root_matches_fallback_base && permission_allowed` | Runs only the owner fast-forward copy-validate-switch. `fallback_diverged` refuses this command; no automatic merge/overwrite exists and both stores remain recoverable. | `domain_action` |
+| `cmd.storage.fallback.keep_logical_root` | Closed `StorageFallbackDispositionRequest` keep variant: common fields only, with `command_id = "cmd.storage.fallback.keep_logical_root"` and `confirmation = "retain_fallback_and_select_logical"`; direct recovery-shell action | `storage_access_mode == viewer && storage_mode_reason == fallback_diverged && permission_allowed && confirmation == "retain_fallback_and_select_logical" && !operation_in_progress` | Dispatches only `handlers::storage::fallback_keep_logical_root`; consumes `StorageFallbackDispositionResult`, retains both roots, and writes `StorageFallbackResolutionReceipt` without an EventRecord. | `domain_action` |
+| `cmd.storage.fallback.fork_new_instance` | Closed `StorageFallbackDispositionRequest` fork variant: common fields only, with `command_id = "cmd.storage.fallback.fork_new_instance"` and `confirmation = "create_inactive_candidate_without_switch"`; direct recovery-shell action | `storage_access_mode == viewer && storage_mode_reason == fallback_diverged && permission_allowed && confirmation == "create_inactive_candidate_without_switch" && !operation_in_progress` | Dispatches only `handlers::storage::fallback_fork_new_instance`; consumes `StorageFallbackDispositionResult`, returns only the inactive candidate binding without changing active bootstrap selection, retains both roots, and writes `StorageFallbackResolutionReceipt` without an EventRecord. | `domain_action` |
+| `cmd.storage.fallback.export_both` | Closed `StorageFallbackDispositionRequest` export variant: common fields plus only `destination_ref` and `encryption_key_ref`, with `command_id = "cmd.storage.fallback.export_both"` and `confirmation = "encrypt_exact_bytes_and_retain_sources"`; direct recovery-shell export action | `storage_access_mode == viewer && storage_mode_reason == fallback_diverged && permission_allowed && confirmation == "encrypt_exact_bytes_and_retain_sources" && destination_available && encryption_key_available && !operation_in_progress` | Dispatches only `handlers::storage::fallback_export_both`; consumes `StorageFallbackDispositionResult`, returns output `export_custody` for the encrypted exact-byte package, retains both roots until separate cleanup, and writes `StorageFallbackResolutionReceipt` without an EventRecord. | `domain_action` |
+| `cmd.storage.open_value` | `{ storage_instance_id, root_generation, store_family_id, value_key_ref, route_target, open_subject }`; normalizes to `route_target`/`OpenSubject` | compatible captured value is readable under ordinary read/export permission | Opens exact redacted owner-resolved identity at the captured high-water mark; raw path is never authority and no state changes. | `navigation_wrapper` |
+| `cmd.storage.open_root` | `{ storage_instance_id, root_generation, root_kind, root_ref, route_target, open_subject }`, where `root_kind = logical_root | active_root | relocation_source | fallback_recovery_copy`; normalizes to `route_target`/`OpenSubject` | exact retained root identity is safely revealable under ordinary read/export permission | Reveals/navigates to the exact target only; it cannot select authority, promote writer mode, initialize, relocate, clear a hold, or fall back to an empty surface. | `navigation_wrapper` |
+| `cmd.storage.legal_hold.manage` | `{ scope_kind, project_id?, hold_id, action, semantic_scope_ref, reason, expected_hold_sha256? }`, `action = set | clear` | `storage_access_mode == writer && permission(storage.legal_hold.manage) && reason_present && retention_hold_record_available` | Produces the durable `retention_hold_record` receipt plus `storage.retention_hold_changed` EventRecord 2.0 with `scope_kind = application | project` and matching conditional `project_id`. Holds compose by union and never clear automatically. | `domain_action` |
+| `cmd.storage.compaction.request` | `{ storage_instance_id, retention_policy_ref, reason? }`; owner-admitted maintenance request only | `storage_access_mode == writer && permission_allowed && storage_maintenance_operation_available && maintenance_lease_available` | Requests owner evaluation; it never directly compacts or bypasses holds/anchors/refs. Accepted lifecycle uses application-scoped `storage.compaction_lifecycle_changed` EventRecord 2.0 and the `storage_maintenance_operation` row. | `domain_action` |
+| `cmd.settings.open_storage_retention` | `{ project_id?, route_target, open_subject }`; navigation to `Advanced > Storage & Retention` | settings inventory and route target are available | Opens the owner-backed Settings surface. Individual settings remain registry-owned/non-command values; this command changes no retention value and emits no domain event. | `navigation_wrapper` |
+| `cmd.project.delete_data` | `{ project_id, expected_project_data_sha256, confirmation_strength: "strong", reason? }`; destructive project-data intent, distinct from `cmd.project.remove` | `storage_access_mode == writer && project_data_enumerated && strong_confirmation_complete && permission_allowed && storage_deletion_record_available` | Persists the project-scoped `storage_deletion_record` and `storage.deletion_lifecycle_changed` EventRecord 2.0, removes project content only through owner compaction, and blocks on ambiguous/cross-project reachability or holds. It never means Remove project from list. | `domain_action` |
+
+`cmd.chat.delete` remains the sole catalog thread-delete ID; the planning alternate spelling is not a second registration. It requires explicit confirmation of immediate logical removal, purge within 24 hours unless held, indefinite content-free tombstone, and backup-byte retention up to 30 days unless held. It binds to project-scoped `storage_deletion_record` and `storage.deletion_lifecycle_changed`; message-level delete remains unsupported. `cmd.project.remove` remains list-only, while `cmd.project.delete_data` is the separately confirmed data-purge intent.
+
+Both deletion commands consume the Storage-owned lifecycle without directly purging or clearing holds. Owner progress is `requested -> logically_hidden`, then `logically_hidden -> held|purge_pending`, `held -> purge_pending` only after every owner-cleared hold and complete eligibility revalidation, and `purge_pending -> purged` only after verified committed successor-generation authority; `purged` is terminal. `compaction_generation` is absent outside `purge_pending|purged`, optional non-negative integer for `purge_pending`, and required non-negative integer for `purged`. `failed` is admitted only from `requested|logically_hidden|purge_pending`, requires non-empty reason, remains fenced, and retries with the same deletion/idempotency identity only after holds, tombstone, scope, storage-writer posture, and purge/compaction authority are revalidated. Refusal, ambiguity, replay, hold, and unavailable authority append no duplicate success event and perform no purge.
+
+The three divergence dispositions consume the Contracts-owned closed `StorageFallbackDispositionRequest` exactly. Common required fields are `command_id`, `idempotency_key`, `actor_ref`, `confirmation`, `expected_storage_instance_id`, `expected_logical_root_fingerprint`, `expected_root_generation`, `expected_fallback_branch_id`, `expected_fallback_base_ref`, `expected_logical_head_sha256`, `expected_fallback_head_sha256`, and `expected_bootstrap_binding_sha256`. Keep and fork allow only those common fields. Export adds only `destination_ref` and `encryption_key_ref`; additional or wrong-variant fields are invalid. The required `confirmation` constants are respectively `retain_fallback_and_select_logical`, `create_inactive_candidate_without_switch`, and `encrypt_exact_bytes_and_retain_sources`. `expected_root_generation` is a nonnegative integer; instance and branch IDs use their owner UUID identities; `expected_fallback_base_ref` is the immutable owner ref and never a raw path. `expected_logical_root_fingerprint` and every `*_sha256` value are lowercase 64-hex SHA-256. The sole storage handler revalidates every CAS component immediately before any effect; a missing, malformed, or changed component returns `state_changed` and performs no authority change, fork, export, cleanup, or receipt of success.
+
+Every command consumes the same closed `StorageFallbackDispositionResult`. Its required fields are `command_id`, `idempotency_key`, `outcome`, `reason_code`, `storage_access_mode`, `storage_mode_reason`, `active_bootstrap_binding_sha256`, `logical_head_sha256`, `fallback_head_sha256`, `retained_logical_root_ref`, `retained_fallback_root_ref`, `binding_changed`, `cleanup_performed`, `owner_receipt_ref`, `candidate_binding`, and `export_custody`; both variant fields are required-present and nullable. `outcome` is exactly `applied | replayed | refused | failed_recoverable`. Applied/replayed returns use `reason_code = null` and a non-null owner receipt. Refusal reasons are limited to `invalid_request | permission_denied | confirmation_required | state_changed | idempotency_conflict | operation_in_progress | invalid_destination`; recoverable-failure reasons are limited to `integrity_failure | storage_io_exhausted | encryption_unavailable | custody_verification_failed`. Keep success has `binding_changed = true` and both variants null. Fork success has `binding_changed = false`, `export_custody = null`, and only the closed inactive `candidate_binding`; the active bootstrap binding is unchanged. Export success has `binding_changed = false`, `candidate_binding = null`, and only the closed output `export_custody`; its `manifest_ref` is custody evidence produced by the owner, never request input, and the active binding and both source heads remain unchanged. Refused/failed_recoverable results set both variants null, claim no binding change or cleanup, and use only owner reason codes. `cleanup_performed` is always false, and both root refs remain retained.
+
+Each disposition is independently permissioned and requires its command-specific typed `confirmation` value. The UI names the exact two retained roots, the selected disposition, and for export the destination/key refs before dispatch; it presents output manifest custody only after a successful owner result. Disabled reasons are closed to `fallback_not_diverged | state_changed | integrity_failure | permission_denied | confirmation_required | operation_in_progress | required_family_unavailable`, with `destination_unavailable | encryption_key_unavailable` additionally admitted only for export. The command-envelope `(command_id, idempotency_key, semantic_digest)` is the owner receipt identity: replay returns the same `StorageFallbackDispositionResult` and `StorageFallbackResolutionReceipt`, while an identity reused with different CAS or export content refuses. `StorageFallbackResolutionReceipt` is the sole durable audit artifact. All three rows MUST NOT emit or imply `storage.fallback_reconciled`, a generic command-applied event, or any other EventRecord family. `cmd.storage.fallback.return_fast_forward` remains a separate unchanged-base action and is never an alias for a divergence disposition.
+
+The catalog consumes the owner enums without aliases: `storage_access_mode = writer | viewer | blocked`; `storage_mode_reason = normal | lock_held | lock_indeterminate | unsupported_store_version | unsafe_filesystem_no_fallback | storage_io_exhausted | root_mismatch | root_unavailable | fallback_diverged`; and `storage_io_class = interrupted | transient_busy | capacity_exhausted | quota_exhausted | read_only_media | permission_denied | device_unavailable | lock_conflict | integrity_failure | invalid_path`. Only `interrupted` (at most three immediate adapter attempts) and `transient_busy` (exactly once after 250 ms) receive owner automatic retry; command dispatch adds no retry budget and unknown storage I/O maps owner-side to `device_unavailable`.
+
+Closed Case L storage dispatch reasons consumed by these rows are the owner tokens `storage_read_only | storage_io_exhausted | unsupported_store_version | root_mismatch | root_unavailable | fallback_diverged | permission_denied | operation_in_progress | state_changed | integrity_failure | invalid_path`. A missing/deferred/ambiguous/unsupported required machine family returns `required_family_unavailable`. Root-binding/hash or captured-generation change returns `state_changed`. Unknown/malformed command or owner state blocks without mutation. Recovery-shell exceptions admit only the exact state named in their row; they do not weaken the global write gate.
+
+No catalog ID exists for generic verify, repair, salvage, Doctor mutation, force-open, `try_anyway`, force-cancel, rollback-now, skip-step, arbitrary retry, automatic merge/overwrite, in-place downgrade, or live newer-store viewing. `cmd.storage.compaction.request` is not direct compaction, and no retention command infers destructive eligibility from prefix, key, path, filename, mtime, ordering, or focus.
+
+ContractRef: ContractName:Plans/storage-plan.md#Case-L-3, ContractName:Plans/storage-plan.md#Case-L-4, ContractName:Plans/Commands_System.md#0.3, ContractName:Plans/Contracts_V0.md#EventRecord, ContractName:Plans/storage_value_registry.json, ContractName:Plans/UI_Wiring_Rules.md#UIW-002, ContractName:Plans/UI_Wiring_Rules.md#UIW-003
+
+### Exact recovery, Chat revert, and conversation restore-point command contracts
+
+| Command ID | Normalization / exact domain arguments | Required registry families and scope | Result, EventRecord, and idempotency |
+|---|---|---|---|
+| `cmd.runtime.restore_safe_point_then_retry` | Canonical runtime action; `{ project_id, run_id, node_id, blocked_sequence, attempt_id, safe_point_id, repo_id, worktree_id, baseline_target: "safe_point" }` | `safe_point_record`, `safe_point_restore_transaction`, `recovery_anchor_record`; project scope | FileSafe outcome is exactly `restored_clean | restore_skipped | restore_refused | restore_failed | restore_recovery_required`; only the first two with equality and durable baseline receipt can admit a successor attempt. Producer emits project-scoped `safe_point.restored` EventRecord 2.0 once by command-envelope idempotency identity. |
+| `cmd.runtime.retry_now` | Canonical runtime action; common blocked identity plus the conditionally exact `baseline_target` row above | matching target families/receipts; project scope | Same target-specific owner result and durable baseline admission; no target is inferred and no automatic retry occurs. |
+| `cmd.runtime.start_fresh_attempt` | Canonical runtime action; common blocked identity plus the conditionally exact `baseline_target` row above | matching target families/receipts; project scope | Same target-specific owner result; a new attempt is minted only after durable postcondition/receipt and never reuses the prior `attempt_id`. |
+| `cmd.orchestrator.safe_point_retry` | `normalization.kind = wrapper`, `normalizes_to_contract = cmd.runtime.restore_safe_point_then_retry`, `alias_of_command_id = null`; accepts the canonical domain fields plus optional `permission_snapshot_id` | same safe-point families and project scope | Admission validates the optional permission snapshot against current permission state, consumes it, and dispatches the exact canonical payload to `handlers::runtime::restore_safe_point_then_retry`. Result, effects, `safe_point.restored` producer, idempotency, and admission are identical to the runtime action. |
+| `cmd.orchestrator.restore_safe_point_then_retry` | `normalization.kind = compatibility_alias`, `normalizes_to_contract = cmd.runtime.restore_safe_point_then_retry`, `alias_of_command_id = cmd.orchestrator.safe_point_retry`; accepts the same wrapper input and applies the identical deterministic transform | same safe-point families and project scope | Dispatches the exact canonical payload to `handlers::runtime::restore_safe_point_then_retry` and returns the identical runtime result; no second handler, event, effect, admission, or idempotency domain. |
+| `cmd.chat.revert` | Canonical Chat action; `{ project_id, thread_id, target_message_id?, repo_id, worktree_id, expected_turn_manifest_sha256 }`; Chat resolves one immutable whole-turn mutation record | FileSafe snapshot/transaction custody plus matching recovery holds; project scope | Same FileSafe outcome/equality/restart truth as safe-point restore. FileSafe maps its snapshot wrapper to the Contracts-owned project-scoped safe-point restore family; no `restore_point.*` event and no transcript rewind. `no_eligible_mutating_turn` creates no transaction. |
+| `cmd.chat.create_restore_point` | Canonical Chat lifecycle action; `{ project_id, thread_id, source_message_id, idempotency_key }` | `restore_point_record` at `rp:{project_id}:{restore_point_id}`; project scope | Freezes one inclusive source message boundary and produces `restore_point.created` EventRecord 2.0 with immutable status `available`. Equal identity plus equal semantic content returns the original record; conflicting content is refused without overwrite. It stores conversation/provenance/attachment/citation refs and hashes, never workspace file bodies, secrets, ephemeral stream state, or queued messages. |
+| `cmd.chat.branch_from_restore` | Canonical Chat lifecycle action; `{ project_id, restore_point_id, source_thread_id, expected_restore_point_sha256, new_thread_title? }` | `restore_point_record`; project scope | Before creation discloses the exact source thread/branch/message boundary, running/dirty source state, and new target. Result is exactly `branched | refused | failed`; only `branched` creates new `thread_id`/conversation `branch_id` and emits exactly one `restore_point.applied` EventRecord 2.0. Replay returns the recorded result and same target IDs without a duplicate event. `refused`/`failed` return no target IDs and emit no event. Every first execution and replay leaves source thread/branch/worktree/files/Git/index/queue/safe points unchanged. |
+| `cmd.chat.delete_restore_point` | Canonical Chat lifecycle action; `{ project_id, restore_point_id, expected_restore_point_sha256 }` | `restore_point_record` plus descendant-branch, application, preserve, legal-hold, in-flight, and source-lineage refs; project scope | May transition only exact-hash `available` to `deleted` and emit `restore_point.deleted` EventRecord 2.0 after permission/writer/hold preflight. A protected record stays available and delete is refused; replay returns the recorded result. It never clears a hold, consumes an application, or deletes source thread/worktree/files. |
+
+Restore-point status is closed to immutable `available -> expired | deleted | corrupt`; successful application is not a lifecycle transition and does not consume the record. Current policy is `RP-RESTOREPOINT-90D-AFTER-RELEASE@1.0.0`: expiry eligibility is inclusive at owner-proven `reference_release + 7,776,000 seconds`, and count pressure at `2,048/project` selects only the oldest eligible record. Descendant branch/application refs, preserve/legal holds, in-flight application, source-lineage, live, recovery, backup, rollback, and maintenance refs override age and count eligibility until their owner-defined release evidence is durable. The catalog exposes no timer, undo, release inference, or hold-clear shortcut. A deleted source stays hidden: branch is permitted only while the exact frozen boundary and every required retained ref still verify, and otherwise returns `refused` with `source_deleted_content_unavailable`, creates no identity, reconstructs nothing from tombstone/backup projection, and leaves record status unchanged. Expired, deleted, corrupt, expected-hash-mismatch, source-content-unavailable, permission, `storage_read_only`, `storage_io_exhausted`, hold, `operation_in_progress`, and missing-family states remain inspectable with the exact unavailable reason but fail without a new thread or invalid mutation. The application result remains `branched | refused | failed`, not a FileSafe restore outcome. Create/branch/delete registrations remove the former `cmd.chat.branch_from_restore` ghost-ID blocker and remain separate from `cmd.chat.revert`.
+
+The safe-point/Chat-revert closed conflict reasons are exactly `worktree_path_mismatch | branch_mismatch | head_mismatch | baseline_stale | snapshot_missing | snapshot_corrupt | snapshot_scope_unsupported | target_path_conflict | restore_conflict | concurrent_edit_conflict | historical_commit_missing | restore_recovery_required | canonicalization_failed | permission_denied`. Orchestrator availability may additionally expose `safe_point_missing | state_changed | operation_in_progress`; Chat may return `no_eligible_mutating_turn` before transaction creation. Unknown outcome/reason fails closed, retains fences/holds, emits no success, and routes to diagnostics.
+
+ContractRef: ContractName:Plans/Commands_System.md#0.3, ContractName:Plans/Executor_Protocol.md#approved-baseline-target-retry-and-restore-lifecycle, ContractName:Plans/WorktreeGitImprovement.md#approved-exact-baseline-target-SCM-contract, ContractName:Plans/FileSafe.md#11.1.2b, ContractName:Plans/Contracts_V0.md#safe_point.restored, ContractName:Plans/storage_value_registry.json, DecisionID:PD-RSP-01, DecisionID:PD-RSP-04, DecisionID:PD-RSP-07, DecisionID:PD-RSP-08, DecisionID:PD-RSP-09
+
+### UCC-110 - Run Graph Canvas Interaction Command Family
+
+```yaml
+plan_unit_id: UCC-110
+unit_type: command_contract
+status: accepted
+owner_doc: Plans/UI_Command_Catalog.md
+canonical_text: >-
+  Run Graph canvas interaction commands are `cmd.run_graph.pan`, `cmd.run_graph.zoom`, `cmd.run_graph.drag_node`,
+  `cmd.run_graph.open_minimap_target`, `cmd.run_graph.open_context_menu`, `cmd.run_graph.keyboard_navigate`,
+  `cmd.run_graph.set_selection`, `cmd.run_graph.set_problems_filter`, and `cmd.run_graph.search`, adopting the ids
+  named in Run_Graph_View.md RGV-017 and its repair addendum verbatim. Shared disabled reasons are graph_unloaded,
+  modal_capture, read_only_layout, selection_locked, and permission_denied. All rows except drag_node are
+  view-projection interactions that never mutate run, node, or projection state; drag_node requires editable layout
+  mode. The problems filter is off by default, filters to attention_required, blocked, and degraded elements, resets
+  on focused-run change, and is never persisted globally. Graph search highlights matches in place and does not
+  rewrite focused-run state except through an explicit route.
+gui_related: true
+gui_classification_reason: Registers user-visible graph canvas pointer, keyboard, minimap, filter, and search commands.
+depends_on: [RGV-017, OP-030, UCC-024]
+unblocks: []
+acceptance_criteria:
+  - Every graph canvas interaction control dispatches one of the nine stable command IDs above.
+  - Disabled states render with one of the five shared disabled reasons instead of hiding the control.
+  - set_problems_filter is off by default, resets across focused-run changes, and never persists globally.
+  - Non-drag rows mutate no run, node, or projection state; drag_node is unavailable outside editable layout mode.
+validation_surfaces:
+  - python3 scripts/pm-plan-index.py validate
+  - python3 scripts/pm-plans-verify.py validate-wiring-matrix
+risk_class: run_graph_command_catalog_gap
+reasoning_tier: high
+context_scope: run_graph_canvas_commands
+implementation_surfaces:
+  - Plans/UI_Command_Catalog.md
+  - Plans/Run_Graph_View.md
+  - Plans/Wiring_Matrix.md
+node_compile_hint:
+  mode: run_graph_canvas_command_catalog
+  create_worknodes: false
+  create_nodeseeds: false
+source_lineage:
+  - "Plans/Run_Graph_View.md:1073"
+  - "Plans/Run_Graph_View.md:1147-1210"
+  - "Plans/Orchestrator_Page.md:2324"
+  - "Concepts/pm6-build (PMConcept6 demo; source-lineage-only per Plans/usage-feature.md)"
+preserved_exact_tokens:
+  - "cmd.run_graph.pan"
+  - "cmd.run_graph.zoom"
+  - "cmd.run_graph.drag_node"
+  - "cmd.run_graph.open_minimap_target"
+  - "cmd.run_graph.open_context_menu"
+  - "cmd.run_graph.keyboard_navigate"
+  - "cmd.run_graph.set_selection"
+  - "cmd.run_graph.set_problems_filter"
+  - "cmd.run_graph.search"
+  - "graph_unloaded"
+  - "modal_capture"
+  - "read_only_layout"
+  - "selection_locked"
+  - "permission_denied"
+negative_constraints:
+  - Do not mutate run, node, or projection state from view-projection interaction commands.
+  - Do not persist the problems filter globally or across unrelated projects.
+  - Do not mint differently spelled duplicates of the RGV-017 interaction ids.
+owner_hints:
+  - Plans/UI_Command_Catalog.md
+  - Plans/Run_Graph_View.md
+  - Plans/Wiring_Matrix.md
+```
+
+### UCC-111 - Orchestrator Projection Actions And Safe Point Retry
+
+```yaml
+plan_unit_id: UCC-111
+unit_type: command_contract
+status: accepted
+owner_doc: Plans/UI_Command_Catalog.md
+canonical_text: >-
+  Orchestrator projection-action commands are `cmd.orchestrator.safe_point_retry` (the OP-033 UI identity reconciled
+  to the later Case L exact-restore contract), `cmd.orchestrator.copy_run_id`, `cmd.orchestrator.export_ledger`
+  (OP-031), `cmd.orchestrator.set_seam_expansion`, and `cmd.orchestrator.set_evidence_filter`. Safe-point retry
+  carries project/run/node/blocked/attempt, exact safe-point/repo/worktree, baseline_target safe_point,
+  optional permission snapshot, and the command-envelope idempotency identity; requires the named confirmation modal before dispatch;
+  preserves the four pre-modal disabled reasons safe_point_missing, state_changed, permission_denied, and
+  operation_in_progress; and normalizes to cmd.runtime.restore_safe_point_then_retry. The compatibility alias
+  cmd.orchestrator.restore_safe_point_then_retry has no second handler or authority. Ledger export serializes only the visible filtered
+  projection with usage_event_ref provenance. Seam expansion and evidence filter are shell/view commands following
+  the cmd.orchestrator.switch_tab subview convention and mutate no records.
+gui_related: true
+gui_classification_reason: Registers user-visible Orchestrator retry, export, clipboard, and subview commands.
+depends_on: [OP-031, OP-033, UCC-023, UCC-089]
+unblocks: []
+acceptance_criteria:
+  - No cmd.orchestrator.safe_point_retry dispatch occurs without the named confirmation modal.
+  - Safe-point retry disabled reasons are exactly safe_point_missing, state_changed, permission_denied, and operation_in_progress.
+  - The four availability reasons do not collapse later snapshot_corrupt, snapshot_scope_unsupported, concurrent_edit_conflict, baseline_stale, or restore_recovery_required outcomes.
+  - Both Orchestrator spellings normalize to cmd.runtime.restore_safe_point_then_retry with baseline_target safe_point and exact repository/worktree/blocked identity.
+  - Both spellings accept the same wrapper input; optional permission_snapshot_id is validated against current permission state and consumed before the exact canonical payload reaches handlers::runtime::restore_safe_point_then_retry.
+  - Both spellings share the runtime result, safe_point.restored producer, effects, idempotency identity, and admission decision; no peer handler or receipt-only/no-event execution path exists.
+  - Ledger export preserves usage_event_ref and usage_record_id provenance and exports no raw records, evidence payloads, or secrets.
+  - Seam expansion and evidence filter commands are view-local and mutate no seam or evidence records.
+validation_surfaces:
+  - python3 scripts/pm-plan-index.py validate
+  - python3 scripts/pm-plans-verify.py validate-wiring-matrix
+risk_class: orchestrator_command_catalog_gap
+reasoning_tier: high
+context_scope: orchestrator_projection_commands
+implementation_surfaces:
+  - Plans/UI_Command_Catalog.md
+  - Plans/Orchestrator_Page.md
+  - Plans/Wiring_Matrix.md
+node_compile_hint:
+  mode: orchestrator_projection_command_catalog
+  create_worknodes: false
+  create_nodeseeds: false
+source_lineage:
+  - "Plans/Orchestrator_Page.md:2322"
+  - "Plans/Orchestrator_Page.md:2453-2607"
+  - "Concepts/pm6-build (PMConcept6 demo; source-lineage-only per Plans/usage-feature.md)"
+preserved_exact_tokens:
+  - "cmd.orchestrator.safe_point_retry"
+  - "cmd.orchestrator.copy_run_id"
+  - "cmd.orchestrator.export_ledger"
+  - "cmd.orchestrator.set_seam_expansion"
+  - "cmd.orchestrator.set_evidence_filter"
+  - "safe_point_missing"
+  - "state_changed"
+  - "permission_denied"
+  - "operation_in_progress"
+negative_constraints:
+  - Do not dispatch cmd.orchestrator.safe_point_retry without the named confirmation.
+  - Do not create retry authority outside the runtime recovery family normalization.
+  - Do not include raw records, evidence payloads, or secrets in ledger exports.
+owner_hints:
+  - Plans/UI_Command_Catalog.md
+  - Plans/Orchestrator_Page.md
+  - Plans/Wiring_Matrix.md
+```
+
+### UCC-112 - Wizard And Plan Compile Replay Commands
+
+```yaml
+plan_unit_id: UCC-112
+unit_type: command_contract
+status: accepted
+owner_doc: Plans/UI_Command_Catalog.md
+canonical_text: >-
+  Replay projection commands are `cmd.planning_wizard.replay` (PWIZ-020 Replay planning flow) and
+  `cmd.plan_compile.replay` (OP-032 Plan Compile replay). Both are view-local shell_view commands: wizard replay
+  rewinds the wizard presentation to intake over already-recorded planning state and leaves the live PlanningRun,
+  ledger records, approvals, and any PlanCompileRun unchanged; compile replay steps or plays recorded compile waves
+  read-only, never re-executes compilation, never creates or rebinds a PlanCompileRun, and labels frames as
+  historical replay.
+gui_related: true
+gui_classification_reason: Registers user-visible wizard and compile replay controls as stable commands.
+depends_on: [PWIZ-020, OP-032, UCC-097]
+unblocks: []
+acceptance_criteria:
+  - Wizard replay performs no ledger mutations, requires no re-approval, and creates no new compile.
+  - Compile replay mutates no compile records and presents frames labeled as historical replay.
+  - Replay position and playback state are view-local and discarded with the view.
+validation_surfaces:
+  - python3 scripts/pm-plan-index.py validate
+  - python3 scripts/pm-plans-verify.py validate-wiring-matrix
+risk_class: replay_command_catalog_gap
+reasoning_tier: standard
+context_scope: replay_projection_commands
+implementation_surfaces:
+  - Plans/UI_Command_Catalog.md
+  - Plans/Planning_Wizard.md
+  - Plans/Orchestrator_Page.md
+node_compile_hint:
+  mode: replay_projection_command_catalog
+  create_worknodes: false
+  create_nodeseeds: false
+source_lineage:
+  - "Plans/Planning_Wizard.md:1615-1670"
+  - "Plans/Orchestrator_Page.md:2504-2556"
+  - "Concepts/pm6-build (PMConcept6 demo; source-lineage-only per Plans/usage-feature.md)"
+preserved_exact_tokens:
+  - "cmd.planning_wizard.replay"
+  - "cmd.plan_compile.replay"
+  - "Replay planning flow"
+  - "historical replay"
+negative_constraints:
+  - Do not re-execute compilation, create, rebind, or duplicate PlanCompileRuns from replay controls.
+  - Do not mutate ledger state, approvals, or PlanningRun currentness from wizard replay.
+owner_hints:
+  - Plans/UI_Command_Catalog.md
+  - Plans/Planning_Wizard.md
+  - Plans/Orchestrator_Page.md
+```
+
+### UCC-113 - Permissions Settings Command Family
+
+```yaml
+plan_unit_id: UCC-113
+unit_type: command_contract
+status: accepted
+owner_doc: Plans/UI_Command_Catalog.md
+canonical_text: >-
+  The Permissions settings command family adopts the ten ids named in Permissions_System.md verbatim:
+  `cmd.permissions.open`, `cmd.permissions.create_project_rule`, `cmd.permissions.create_global_rule`,
+  `cmd.permissions.update_rule`, `cmd.permissions.reorder_rule`, `cmd.permissions.delete_rule`,
+  `cmd.permissions.revoke`, `cmd.permissions.pick_external_directory`, `cmd.permissions.validate_rule`, and
+  `cmd.permissions.review_request`. Settings route is settings.permissions. Durable rule creation persists
+  approval records that survive restart and remain revocable. The directory picker dispatch name is
+  permissions.external_directory.pick with error codes external_directory_duplicate_path and
+  external_directory_invalid_glob; reorder validation errors are rule_not_found, target_index_out_of_range, and
+  scope_mismatch; save dirty state values are clean, dirty, saving, saved, save_failed, and
+  conflict_refresh_required. review_request opens the canonical approval path with approval_scope_key and
+  requesting_context; approve/decline decisions stay on the runtime HITL commands and are not permissions-family
+  commands.
+gui_related: true
+gui_classification_reason: Registers user-visible permissions settings, rule CRUD, picker, review, and revocation commands.
+depends_on: [UCC-010, UCC-023]
+unblocks: []
+acceptance_criteria:
+  - Every Permissions settings GUI control routes through one of the ten stable command IDs.
+  - Rule mutations persist through the atomic TOML write contract with loaded_config_hash conflict detection.
+  - review_request opens the approval path without deciding it; approval decisions remain runtime HITL commands.
+  - pick_external_directory surfaces duplicate-path and invalid-glob errors by their canonical codes.
+validation_surfaces:
+  - python3 scripts/pm-plan-index.py validate
+  - python3 scripts/pm-plans-verify.py validate-wiring-matrix
+risk_class: permissions_command_catalog_gap
+reasoning_tier: high
+context_scope: permissions_settings_commands
+implementation_surfaces:
+  - Plans/UI_Command_Catalog.md
+  - Plans/Permissions_System.md
+  - Plans/Wiring_Matrix.md
+node_compile_hint:
+  mode: permissions_settings_command_catalog
+  create_worknodes: false
+  create_nodeseeds: false
+source_lineage:
+  - "Plans/Permissions_System.md:8977-8990"
+  - "Plans/Permissions_System.md:8723-8724"
+  - "Plans/Permissions_System.md:1032"
+preserved_exact_tokens:
+  - "cmd.permissions.open"
+  - "cmd.permissions.create_project_rule"
+  - "cmd.permissions.create_global_rule"
+  - "cmd.permissions.update_rule"
+  - "cmd.permissions.reorder_rule"
+  - "cmd.permissions.delete_rule"
+  - "cmd.permissions.revoke"
+  - "cmd.permissions.pick_external_directory"
+  - "cmd.permissions.validate_rule"
+  - "cmd.permissions.review_request"
+  - "settings.permissions"
+  - "permissions.external_directory.pick"
+negative_constraints:
+  - Do not mint permissions-family approve/decline commands; HITL decisions stay on cmd.runtime.approve and cmd.runtime.decline.
+  - Do not bypass the atomic TOML persistence and conflict-detection rules from rule mutation commands.
+owner_hints:
+  - Plans/UI_Command_Catalog.md
+  - Plans/Permissions_System.md
+  - Plans/Wiring_Matrix.md
+```
+
+### UCC-114 - Testing Panel Command Rows
+
+```yaml
+plan_unit_id: UCC-114
+unit_type: command_contract
+status: accepted
+owner_doc: Plans/UI_Command_Catalog.md
+canonical_text: >-
+  Testing panel commands adopt the six ids named in Automated_Testing_System.md verbatim -
+  `cmd.testing.open_panel`, `cmd.testing.watch_run`, `cmd.testing.cancel_run`, `cmd.testing.open_receipt`,
+  `cmd.testing.open_failure`, and `cmd.testing.export_bundle` - and add `cmd.testing.run` for the Testing side
+  panel run entry point (F3-451). Button states derive from TestRunReceipt.status: watch and cancel enable for
+  queued or running, open receipt enables for any terminal state, and export bundle enables when
+  log_artifact_refs[] or visual_artifact_refs[] is non-empty. cmd.testing.run dispatches through the canonical
+  adapter execution path producing a TestAdapterInvocation and TestRunReceipt and stays unavailable until an
+  adapter is configured, the capability probe returns available, the permission snapshot is current, and required
+  fixtures exist. cmd.testing.open_panel is a navigation_wrapper normalizing to the side-panel switch route with
+  panel_id testing.
+gui_related: true
+gui_classification_reason: Registers user-visible testing panel open, run, watch, cancel, receipt, failure, and export commands.
+depends_on: [F3-451, UCC-014]
+unblocks: []
+acceptance_criteria:
+  - Every Testing panel control routes through one of the seven stable command IDs.
+  - Watch/cancel/open-receipt/export enablement derives from TestRunReceipt.status and artifact refs as specified.
+  - cmd.testing.run produces TestAdapterInvocation and TestRunReceipt evidence and never claims PNC-019 lifecycle certification.
+  - cmd.testing.open_panel normalizes to the panel-switch route instead of carrying panel state.
+validation_surfaces:
+  - python3 scripts/pm-plan-index.py validate
+  - python3 scripts/pm-plans-verify.py validate-wiring-matrix
+risk_class: testing_command_catalog_gap
+reasoning_tier: high
+context_scope: testing_panel_commands
+implementation_surfaces:
+  - Plans/UI_Command_Catalog.md
+  - Plans/Automated_Testing_System.md
+  - Plans/Wiring_Matrix.md
+node_compile_hint:
+  mode: testing_panel_command_catalog
+  create_worknodes: false
+  create_nodeseeds: false
+source_lineage:
+  - "Plans/Automated_Testing_System.md:1871-1875"
+  - "Plans/Automated_Testing_System.md:1877-1881"
+  - "Concepts/pm6-build (PMConcept6 demo; source-lineage-only per Plans/usage-feature.md)"
+preserved_exact_tokens:
+  - "cmd.testing.open_panel"
+  - "cmd.testing.run"
+  - "cmd.testing.watch_run"
+  - "cmd.testing.cancel_run"
+  - "cmd.testing.open_receipt"
+  - "cmd.testing.open_failure"
+  - "cmd.testing.export_bundle"
+  - "TestRunReceipt"
+negative_constraints:
+  - Do not enable run/watch/cancel/export outside their TestRunReceipt.status and artifact-ref conditions.
+  - Do not treat cmd.testing.run receipts as PNC-019 lifecycle certification evidence.
+owner_hints:
+  - Plans/UI_Command_Catalog.md
+  - Plans/Automated_Testing_System.md
+  - Plans/Wiring_Matrix.md
+```
+
+### UCC-115 - Terminal Rule Coverage Completion Rows
+
+```yaml
+plan_unit_id: UCC-115
+unit_type: command_contract
+status: accepted
+owner_doc: Plans/UI_Command_Catalog.md
+canonical_text: >-
+  Terminal coverage completion registers `cmd.terminal.reveal`, `cmd.terminal.terminate_session`,
+  `cmd.terminal.kill_session`, and `cmd.terminal.reattach_section`, closing the Wiring_Matrix.md section 4.2
+  reveal/terminate/kill/reattach coverage hole. terminate_session requests graceful shutdown, kill_session forces
+  termination, and reattach_section returns a detached section to docked layout with preserved tab, pane, and
+  session identity - all three adopted verbatim from the Wiring_Matrix.md terminal command table and WM-021.
+  cmd.terminal.reveal reveals the bottom panel and terminal tab and scrolls the target session into view without
+  spawning a duplicate shell. cmd.terminal.restart_replace remains the canonical restart row; the WM-021 token
+  cmd.terminal.restart_session is owner-doc lineage for the same replace-with-new-runtime action and is not a
+  second command.
+gui_related: true
+gui_classification_reason: Registers user-visible terminal reveal, terminate, kill, and reattach commands.
+depends_on: [UCC-067, UCC-068]
+unblocks: []
+acceptance_criteria:
+  - Rule 4.2 terminal coverage (reveal, show, rerun, split, close, clear, restart, terminate, kill, detach, reattach, focus-session) resolves to cataloged commands with production wiring rows.
+  - terminate and kill remain distinct commands with distinct escalation semantics.
+  - reattach_section preserves tab, pane, and session identity across the layout change.
+  - reveal focuses the existing bound session and never spawns a duplicate shell.
+validation_surfaces:
+  - python3 scripts/pm-plan-index.py validate
+  - python3 scripts/pm-plans-verify.py validate-wiring-matrix
+risk_class: terminal_command_catalog_gap
+reasoning_tier: high
+context_scope: terminal_coverage_commands
+implementation_surfaces:
+  - Plans/UI_Command_Catalog.md
+  - Plans/Wiring_Matrix.md
+  - Plans/Section15_MVP_Promoted_Features_Spec.md
+node_compile_hint:
+  mode: terminal_coverage_command_catalog
+  create_worknodes: false
+  create_nodeseeds: false
+source_lineage:
+  - "Plans/Wiring_Matrix.md:216"
+  - "Plans/Wiring_Matrix.md:433-436"
+  - "Plans/Wiring_Matrix.md:1889-1943"
+preserved_exact_tokens:
+  - "cmd.terminal.reveal"
+  - "cmd.terminal.terminate_session"
+  - "cmd.terminal.kill_session"
+  - "cmd.terminal.reattach_section"
+negative_constraints:
+  - Do not mint cmd.terminal.reattach or other differently spelled duplicates of the WM-021 ids.
+  - Do not collapse terminate and kill into one command or imply a killed session remains live.
+owner_hints:
+  - Plans/UI_Command_Catalog.md
+  - Plans/Wiring_Matrix.md
+  - Plans/Section15_MVP_Promoted_Features_Spec.md
+```
+
+### UCC-116 - Account Provider Route And Usage Projection Commands
+
+```yaml
+plan_unit_id: UCC-116
+unit_type: command_contract
+status: accepted
+owner_doc: Plans/UI_Command_Catalog.md
+canonical_text: >-
+  Account, provider-route, and usage commands are `cmd.account.select_profile` (adopted verbatim from
+  Multi-Account.md; disabled reasons auth_missing, auth_expired, profile_locked, provider_unavailable, and
+  policy_denied; empty state copy id accounts.empty.no_profiles; switches land in append-only account_switch_event
+  history), `cmd.provider.switch_route` (adopted verbatim from the FinalGUISpec.md CTA rate_limit row with
+  provider_id and retry_after_ms), `cmd.usage.export` (scope snapshot or ledger; ledger rows preserve
+  usage_event_refs; view export output never becomes canonical record truth), and `cmd.usage.refresh` (on-demand
+  provider-route projection re-read; background refresh continues independently).
+gui_related: true
+gui_classification_reason: Registers user-visible account switching, provider re-route, and usage export/refresh commands.
+depends_on: [MA-069, UCC-109]
+unblocks: []
+acceptance_criteria:
+  - Account/profile rows activate cmd.account.select_profile by click and keyboard and surface the five per-action disabled reasons.
+  - Provider re-route acceptance carries provider_id and retry_after_ms and changes no account auth silently.
+  - Usage export output follows the record/bundle/view taxonomy and preserves usage_event_refs in ledger scope.
+  - Usage refresh never blocks the UI and does not replace background refresh.
+validation_surfaces:
+  - python3 scripts/pm-plan-index.py validate
+  - python3 scripts/pm-plans-verify.py validate-wiring-matrix
+risk_class: usage_account_command_catalog_gap
+reasoning_tier: high
+context_scope: account_provider_usage_commands
+implementation_surfaces:
+  - Plans/UI_Command_Catalog.md
+  - Plans/Multi-Account.md
+  - Plans/usage-feature.md
+  - Plans/Wiring_Matrix.md
+node_compile_hint:
+  mode: account_provider_usage_command_catalog
+  create_worknodes: false
+  create_nodeseeds: false
+source_lineage:
+  - "Plans/Multi-Account.md:5088"
+  - "Plans/FinalGUISpec.md:27233"
+  - "Plans/usage-feature.md:69-70"
+  - "Plans/usage-feature.md:137"
+  - "Concepts/pm6-build (PMConcept6 demo; source-lineage-only per Plans/usage-feature.md)"
+preserved_exact_tokens:
+  - "cmd.account.select_profile"
+  - "cmd.provider.switch_route"
+  - "cmd.usage.export"
+  - "cmd.usage.refresh"
+  - "account_switch_event"
+  - "accounts.empty.no_profiles"
+negative_constraints:
+  - Do not treat usage exports as canonical record truth or include unauthorized provider/account details.
+  - Do not switch accounts or routes without recording the append-only switch history.
+owner_hints:
+  - Plans/UI_Command_Catalog.md
+  - Plans/Multi-Account.md
+  - Plans/usage-feature.md
+  - Plans/FinalGUISpec.md
+```
+
+### UCC-117 - Browser Pane Navigation Commands
+
+```yaml
+plan_unit_id: UCC-117
+unit_type: command_contract
+status: accepted
+owner_doc: Plans/UI_Command_Catalog.md
+canonical_text: >-
+  Browser pane navigation commands are `cmd.browser.navigate` and `cmd.browser.reload`. Both operate on the
+  embedded browser pane within the session-class policy from the Wiring_Matrix.md browser invariants
+  (workspace_preview, detached_preview, automation_session, auth_session), preserve session class and recovery
+  identity (URL, tabs, originating session), and never reclassify a session. `cmd.gui_dev_preview.reload` remains
+  dev/test-build only and is not reused for production reload.
+gui_related: true
+gui_classification_reason: Registers user-visible browser pane URL navigation and reload commands.
+depends_on: [UCC-061, UCC-063]
+unblocks: []
+acceptance_criteria:
+  - Navigate and reload preserve session class and recovery identity and never auto-resume automation or auth work.
+  - Navigation outside the session policy is unavailable with a projected disabled reason.
+  - Production reload does not dispatch cmd.gui_dev_preview.reload.
+validation_surfaces:
+  - python3 scripts/pm-plan-index.py validate
+  - python3 scripts/pm-plans-verify.py validate-wiring-matrix
+risk_class: browser_command_catalog_gap
+reasoning_tier: standard
+context_scope: browser_pane_navigation_commands
+implementation_surfaces:
+  - Plans/UI_Command_Catalog.md
+  - Plans/Wiring_Matrix.md
+node_compile_hint:
+  mode: browser_pane_navigation_command_catalog
+  create_worknodes: false
+  create_nodeseeds: false
+source_lineage:
+  - "Plans/Wiring_Matrix.md (Browser session, capture, and recovery wiring invariants)"
+  - "Concepts/pm6-build (PMConcept6 demo; source-lineage-only per Plans/usage-feature.md)"
+preserved_exact_tokens:
+  - "cmd.browser.navigate"
+  - "cmd.browser.reload"
+negative_constraints:
+  - Do not reuse cmd.gui_dev_preview.reload as the production browser reload.
+  - Do not reclassify or auto-resume automation or auth sessions from navigation commands.
+owner_hints:
+  - Plans/UI_Command_Catalog.md
+  - Plans/Wiring_Matrix.md
+  - Plans/FinalGUISpec.md
+```
+
+### UCC-118 - Projects List Lifecycle Commands
+
+```yaml
+plan_unit_id: UCC-118
+unit_type: command_contract
+status: accepted
+owner_doc: Plans/UI_Command_Catalog.md
+canonical_text: >-
+  Projects list lifecycle commands are `cmd.project.archive` (reversible, never a disk delete),
+  `cmd.project.remove` (removes the list entry without touching the working tree), `cmd.project.refresh`
+  (rescans the projects list projection), and `cmd.project.open_settings` (opens the F3-442 Project Settings
+  Modal through the route/open contract). Archive and remove carry confirmation_strength in their command
+  contracts; their confirmation surfaces remain view state.
+gui_related: true
+gui_classification_reason: Registers user-visible projects list archive, remove, refresh, and settings commands.
+depends_on: [F3-442, UCC-032]
+unblocks: []
+acceptance_criteria:
+  - Archive is reversible and performs no disk deletion; remove never touches the working tree.
+  - Refresh re-reads the list projection without mutating project records.
+  - open_settings routes through route/open identity to the Project Settings Modal.
+validation_surfaces:
+  - python3 scripts/pm-plan-index.py validate
+  - python3 scripts/pm-plans-verify.py validate-wiring-matrix
+risk_class: project_command_catalog_gap
+reasoning_tier: standard
+context_scope: projects_list_commands
+implementation_surfaces:
+  - Plans/UI_Command_Catalog.md
+  - Plans/FinalGUISpec.md
+  - Plans/Wiring_Matrix.md
+node_compile_hint:
+  mode: projects_list_command_catalog
+  create_worknodes: false
+  create_nodeseeds: false
+source_lineage:
+  - "Plans/FinalGUISpec.md (F3-442)"
+  - "Concepts/pm6-build (PMConcept6 demo; source-lineage-only per Plans/usage-feature.md)"
+preserved_exact_tokens:
+  - "cmd.project.archive"
+  - "cmd.project.remove"
+  - "cmd.project.refresh"
+  - "cmd.project.open_settings"
+negative_constraints:
+  - Do not delete project data from archive or remove; both are list-scope operations.
+owner_hints:
+  - Plans/UI_Command_Catalog.md
+  - Plans/FinalGUISpec.md
+```
+
+### UCC-119 - Chat Composer Selector Queue And Web Operation Commands
+
+```yaml
+plan_unit_id: UCC-119
+unit_type: command_contract
+status: accepted
+owner_doc: Plans/UI_Command_Catalog.md
+canonical_text: >-
+  Chat additions are `cmd.chat.web.cancel` and `cmd.chat.web.request_again` (web-operation card lifecycle in the
+  cmd.chat.web family; approval decisions stay on cmd.runtime.approve and cmd.runtime.decline),
+  `cmd.chat.switch_thread` (thread-list focus by thread_id completing the UCC-056 thread lifecycle family),
+  `cmd.chat.queue.remove` (removes a queued, not-yet-dispatched composer message), `cmd.chat.platform` (requested
+  platform owned by the assistant chat surface, no status-bar chip; applies next turn over the account-bound
+  Provider -> models registry per ACD-437), and
+  `cmd.chat.plan_thoroughness` (Light, Balanced, Comprehensive; default Balanced; distinct from effort High,
+  Medium, Low per ACD-438; recorded as requested_plan_thoroughness and effective_plan_thoroughness).
+gui_related: true
+gui_classification_reason: Registers user-visible chat web-op, thread switch, queue, platform, and thoroughness commands.
+depends_on: [ACD-035, ACD-437, ACD-438, UCC-056, UCC-082]
+unblocks: []
+acceptance_criteria:
+  - Web-op cancel and request-again preserve web_operation_id provenance and never bypass the approval gate.
+  - switch_thread focuses an existing thread without mutating it.
+  - queue.remove affects only queued, not-yet-dispatched messages.
+  - Platform and Plan Thoroughness selections apply next turn and stay distinct controls with distinct labels.
+validation_surfaces:
+  - python3 scripts/pm-plan-index.py validate
+  - python3 scripts/pm-plans-verify.py validate-wiring-matrix
+risk_class: chat_command_catalog_gap
+reasoning_tier: high
+context_scope: chat_composer_commands
+implementation_surfaces:
+  - Plans/UI_Command_Catalog.md
+  - Plans/assistant-chat-design.md
+  - Plans/Wiring_Matrix.md
+node_compile_hint:
+  mode: chat_composer_command_catalog
+  create_worknodes: false
+  create_nodeseeds: false
+source_lineage:
+  - "Plans/assistant-chat-design.md:23758-23870"
+  - "Plans/assistant-chat-design.md:2604-2605"
+  - "Plans/assistant-chat-design.md:5108-5147"
+  - "Concepts/pm6-build (PMConcept6 demo; source-lineage-only per Plans/usage-feature.md)"
+preserved_exact_tokens:
+  - "cmd.chat.web.cancel"
+  - "cmd.chat.web.request_again"
+  - "cmd.chat.switch_thread"
+  - "cmd.chat.queue.remove"
+  - "cmd.chat.platform"
+  - "cmd.chat.plan_thoroughness"
+  - "requested_plan_thoroughness"
+  - "effective_plan_thoroughness"
+negative_constraints:
+  - Do not mint web-specific approve/decline commands; decisions stay on cmd.runtime.approve and cmd.runtime.decline.
+  - Do not merge Plan Thoroughness with effort or re-introduce a chat-header platform dropdown.
+stale_retired_dispositions:
+  - "Status-bar platform chip anchoring for cmd.chat.platform retired per PMConcept7 status-bar trim; the assistant chat surface owns requested-platform selection with applies-next-turn semantics (command ID, payload, and events unchanged)."
+owner_hints:
+  - Plans/UI_Command_Catalog.md
+  - Plans/assistant-chat-design.md
+  - Plans/Wiring_Matrix.md
+```
+
+### UCC-120 - Settings Home Bloom And Suggestion Commands
+
+```yaml
+plan_unit_id: UCC-120
+unit_type: command_contract
+status: accepted
+owner_doc: Plans/UI_Command_Catalog.md
+canonical_text: >-
+  Settings home commands are `cmd.settings.bloom.open` (opens a category bloom modal with the F3-434 deep-link
+  contract open(category, focusSettingId); focus targets scroll into view and flash-highlight; reduced motion
+  skips the morph), `cmd.settings.category.reset` (two-step per-category reset: first activation arms
+  confirmation, second activation within the timeout resets to registry defaults, timeout expiry disarms), and
+  `cmd.settings.suggestion.dismiss` (per-card Suggested-shelf dismiss persisting at
+  settings_suggestions_dismissed:v1 with project-or-global scoping and 90-day expiry, fully local). These rows do
+  not change the F3-438/F3-439/F3-441 convention that individual setting mutations are registry-owned and
+  command-less.
+gui_related: true
+gui_classification_reason: Registers user-visible settings bloom open, category reset, and suggestion dismiss commands.
+depends_on: [F3-434, F3-436, F3-437, F3-441]
+unblocks: []
+acceptance_criteria:
+  - bloom.open honors the deep-link contract and reduced-motion behavior.
+  - category.reset never resets without the two-step confirmation completing inside the timeout.
+  - suggestion.dismiss persists at settings_suggestions_dismissed:v1 with the F3-437 scoping and expiry and makes no network calls.
+  - Individual setting mutations remain registry-owned and command-less.
+validation_surfaces:
+  - python3 scripts/pm-plan-index.py validate
+  - python3 scripts/pm-plans-verify.py validate-wiring-matrix
+risk_class: settings_command_catalog_gap
+reasoning_tier: standard
+context_scope: settings_home_commands
+implementation_surfaces:
+  - Plans/UI_Command_Catalog.md
+  - Plans/FinalGUISpec.md
+  - Plans/Wiring_Matrix.md
+node_compile_hint:
+  mode: settings_home_command_catalog
+  create_worknodes: false
+  create_nodeseeds: false
+source_lineage:
+  - "Plans/FinalGUISpec.md:28854-28900 (F3-434)"
+  - "Plans/FinalGUISpec.md:29031-29080 (F3-437)"
+  - "Concepts/pm6-build (PMConcept6 demo; source-lineage-only per Plans/usage-feature.md)"
+preserved_exact_tokens:
+  - "cmd.settings.bloom.open"
+  - "cmd.settings.category.reset"
+  - "cmd.settings.suggestion.dismiss"
+  - "settings_suggestions_dismissed:v1"
+negative_constraints:
+  - Do not convert registry-owned setting mutations into commands via these rows.
+  - Do not perform a category reset without the completed two-step confirmation.
+owner_hints:
+  - Plans/UI_Command_Catalog.md
+  - Plans/FinalGUISpec.md
+```
+
+### UCC-121 - Docker Container Start And Unraid Template Commands
+
+```yaml
+plan_unit_id: UCC-121
+unit_type: command_contract
+status: accepted
+owner_doc: Plans/UI_Command_Catalog.md
+canonical_text: >-
+  Docker Manager additions are `cmd.docker.container.start` (starts a stopped container by container_ref,
+  completing the reserved cmd.docker.container lifecycle subfamily beside stop and restart; distinct from
+  cmd.docker.run which creates a container from an image), `cmd.docker.template.commit`, and
+  `cmd.docker.template.push` (Unraid template commit and publish flows named by the operational coverage text).
+  Template publish requires the domain.image_publish permission class, which is never implied by local build
+  approval; mutating rows carry capability_snapshot_ref per the UCC-049 row identity.
+gui_related: true
+gui_classification_reason: Registers user-visible container start and Unraid template commit/push commands.
+depends_on: [UCC-040, UCC-049, UCC-051]
+unblocks: []
+acceptance_criteria:
+  - container.start targets container_ref identity and is unavailable for running containers.
+  - Template commit and push are separate commands with separate receipts.
+  - Template push is blocked without a domain.image_publish approval.
+validation_surfaces:
+  - python3 scripts/pm-plan-index.py validate
+  - python3 scripts/pm-plans-verify.py validate-wiring-matrix
+risk_class: docker_command_catalog_gap
+reasoning_tier: standard
+context_scope: docker_template_commands
+implementation_surfaces:
+  - Plans/UI_Command_Catalog.md
+  - Plans/Containers_Registry_and_Unraid.md
+  - Plans/Wiring_Matrix.md
+node_compile_hint:
+  mode: docker_template_command_catalog
+  create_worknodes: false
+  create_nodeseeds: false
+source_lineage:
+  - "Plans/UI_Command_Catalog.md (2.5A operational coverage: /auth/template, /publish/template)"
+  - "Plans/Permissions_System.md (Domain-Sensitive Permission Classes)"
+  - "Concepts/pm6-build (PMConcept6 demo; source-lineage-only per Plans/usage-feature.md)"
+preserved_exact_tokens:
+  - "cmd.docker.container.start"
+  - "cmd.docker.template.commit"
+  - "cmd.docker.template.push"
+  - "domain.image_publish"
+negative_constraints:
+  - Do not reuse cmd.docker.run for starting stopped containers.
+  - Do not imply template publish permission from local build approval.
+owner_hints:
+  - Plans/UI_Command_Catalog.md
+  - Plans/Containers_Registry_and_Unraid.md
+  - Plans/Permissions_System.md
+```
+
+### UCC-122 - Source Control Pull Request Commands
+
+```yaml
+plan_unit_id: UCC-122
+unit_type: command_contract
+status: accepted
+owner_doc: Plans/UI_Command_Catalog.md
+canonical_text: >-
+  Source Control pull request commands are `cmd.source_control.pr.create` and `cmd.source_control.pr.merge`.
+  Both are panel-scoped first-class route commands carrying exact SCM context payload (repo, worktree, compare
+  target, baseline, run/attempt lineage) per the 2.5A operational wiring requirements, with deterministic
+  disabled-state behavior for missing scopes, expired auth, or no GitHub remote. They are distinct from the
+  thread-bound cmd.chat.worktree.pr and cmd.chat.worktree.merge rows, which remain assistant-thread-scoped.
+  PR merge of protected branches routes the domain.git_destructive_remote permission class.
+gui_related: true
+gui_classification_reason: Registers user-visible Source Control panel PR create and merge commands.
+depends_on: [UCC-044, UCC-058]
+unblocks: []
+acceptance_criteria:
+  - PR create and merge carry the exact SCM context payload and GitHub auth disabled-state behavior.
+  - Panel PR commands never impersonate or replace the thread-bound worktree PR commands.
+  - Protected-branch merges are blocked without a domain.git_destructive_remote approval.
+validation_surfaces:
+  - python3 scripts/pm-plan-index.py validate
+  - python3 scripts/pm-plans-verify.py validate-wiring-matrix
+risk_class: source_control_command_catalog_gap
+reasoning_tier: high
+context_scope: source_control_pr_commands
+implementation_surfaces:
+  - Plans/UI_Command_Catalog.md
+  - Plans/GitHub_Integration.md
+  - Plans/Wiring_Matrix.md
+node_compile_hint:
+  mode: source_control_pr_command_catalog
+  create_worknodes: false
+  create_nodeseeds: false
+source_lineage:
+  - "Plans/UI_Command_Catalog.md (2.5A operational wiring requirements)"
+  - "Plans/Permissions_System.md (Domain-Sensitive Permission Classes)"
+  - "Concepts/pm6-build (PMConcept6 demo; source-lineage-only per Plans/usage-feature.md)"
+preserved_exact_tokens:
+  - "cmd.source_control.pr.create"
+  - "cmd.source_control.pr.merge"
+  - "domain.git_destructive_remote"
+negative_constraints:
+  - Do not reuse thread-bound cmd.chat.worktree.pr or cmd.chat.worktree.merge for panel-scoped PR actions.
+  - Do not merge protected branches without the domain-sensitive approval.
+owner_hints:
+  - Plans/UI_Command_Catalog.md
+  - Plans/GitHub_Integration.md
+  - Plans/Permissions_System.md
+```
+
+### UCC-123 - Case L Storage Access Root And Navigation Commands
+
+```yaml
+plan_unit_id: UCC-123
+unit_type: command_contract
+status: accepted
+owner_doc: Plans/UI_Command_Catalog.md
+canonical_text: >-
+  Case L registers the storage controls cmd.storage.viewer.refresh, cmd.storage.try_write_mode,
+  cmd.storage.retry, cmd.storage.root.use_previous, cmd.storage.root.choose,
+  cmd.storage.root.copy_and_switch, cmd.storage.root.start_new_instance,
+  cmd.storage.fallback.return_fast_forward, cmd.storage.fallback.keep_logical_root,
+  cmd.storage.fallback.fork_new_instance, cmd.storage.fallback.export_both,
+  cmd.storage.open_value, and cmd.storage.open_root.
+  Every direct handler consumes the owner writer/viewer/blocked gate; recovery controls rerun the
+  exact owner preflight without automatic blocked-command replay; navigation carries stable
+  storage/root/value refs plus route_target/OpenSubject and never selects authority; and fallback
+  return is available only when the logical root still equals the immutable fallback base.
+gui_related: true
+gui_classification_reason: Registers visible viewer, recovery, root continuity, fallback, and storage navigation controls.
+depends_on: [UIW-002, UIW-003, SP-238, SP-239, SP-240]
+unblocks: []
+acceptance_criteria:
+  - Every durable, runtime, or external mutation path, including direct handlers, fails with storage_read_only outside writer mode unless it is the exact owner-admitted recovery control.
+  - Viewer refresh changes only the frozen captured read snapshot; Try write mode and Retry storage rerun every owner gate and never replay blocked work.
+  - Root mismatch exposes only use-previous, choose, copy-and-switch, and strongly confirmed new-instance actions; no empty-root initialization or prior-root overwrite occurs.
+  - Fallback return is fast-forward-only with exact base equality; divergence cannot merge, overwrite, or continue writing.
+  - Divergence exposes exactly keep_logical_root, fork_new_instance, and export_both with full component CAS revalidation, lowercase 64-hex hashes, distinct permission/confirmation, typed results, owner receipts, and both roots retained.
+  - Fork returns only a candidate binding and never changes active bootstrap selection; export is encrypted exact-byte custody bound to explicit destination, non-secret manifest, and key refs.
+  - open_value and open_root use stable identity and route/open contracts and cannot establish writer authority.
+validation_surfaces:
+  - future Case L viewer and direct-handler inventory
+  - future root mismatch, relocation crash-cut, and fallback divergence fixtures
+  - python3 scripts/pm-plan-index.py validate
+risk_class: case_l_storage_command_gate_or_root_recovery_drift
+reasoning_tier: high
+context_scope: case_l_storage_access_root_navigation_commands
+implementation_surfaces:
+  - Plans/UI_Command_Catalog.md
+  - Plans/Commands_System.md
+  - Plans/storage-plan.md
+  - Plans/Contracts_V0.md
+node_compile_hint:
+  mode: case_l_storage_access_root_command_contract
+  create_worknodes: false
+  create_nodeseeds: false
+source_lineage:
+  - Case-L:L-011
+  - Case-L:L-012
+  - Case-L:L-014
+  - Case-L:L-018
+  - Case-L:L012-C1..L012-C4
+  - Case-L:L014-C1..L014-C4
+  - Case-L:L018-C1..L018-C3
+  - Case-L:L011-C1..L011-C3
+  - Plans/UI_Wiring_Rules.md:UIW-002..UIW-003
+preserved_exact_tokens:
+  - storage_read_only
+  - Retry storage
+  - Try write mode
+  - fallback_diverged
+  - storage_access_mode
+  - cmd.storage.viewer.refresh
+  - cmd.storage.try_write_mode
+  - cmd.storage.retry
+  - cmd.storage.root.use_previous
+  - cmd.storage.root.choose
+  - cmd.storage.root.copy_and_switch
+  - cmd.storage.root.start_new_instance
+  - cmd.storage.fallback.return_fast_forward
+  - cmd.storage.fallback.keep_logical_root
+  - cmd.storage.fallback.fork_new_instance
+  - cmd.storage.fallback.export_both
+  - cmd.storage.open_value
+  - cmd.storage.open_root
+negative_constraints:
+  - Do not add generic verify, repair, salvage, force-open, try_anyway, force-cancel, automatic merge, or automatic overwrite commands.
+  - Do not infer root, lock, or value authority from a raw path, UI focus, stale projection, or visible enabled control.
+  - Do not emit a new EventRecord family for a fallback-divergence disposition; audit is the storage-owner receipt only.
+owner_hints:
+  - Plans/UI_Command_Catalog.md
+```
+
+### UCC-124 - Case L Retention Hold Compaction And Deletion Commands
+
+```yaml
+plan_unit_id: UCC-124
+unit_type: command_contract
+status: accepted
+owner_doc: Plans/UI_Command_Catalog.md
+canonical_text: >-
+  Case L registers cmd.storage.legal_hold.manage with the distinct protected authorization
+  token storage.legal_hold.manage, cmd.storage.compaction.request as an owner-admitted request,
+  cmd.settings.open_storage_retention as navigation, and cmd.project.delete_data as the strongly
+  confirmed project-content purge intent distinct from cmd.project.remove. Existing cmd.chat.delete
+  immediately performs logical deletion and requests physical content purge within 24 hours unless
+  held while preserving a content-free tombstone and owner-governed receipts.
+gui_related: true
+gui_classification_reason: Registers visible retention, legal-hold, compaction-request, settings, and destructive deletion controls and confirmations.
+depends_on: [UIW-002, UIW-003, SP-237, CV-319, UCC-056, UCC-118]
+unblocks: []
+acceptance_criteria:
+  - Hold set and clear require storage.legal_hold.manage, actor identity, reason, expected state when supplied, and a durable retention_hold_record plus EventRecord v2 receipt.
+  - Compaction request never directly compacts or bypasses holds, recovery/recent-run/live/backup/rollback/maintenance refs, registry policy, or the maintenance lease.
+  - Storage and Retention settings navigation creates no peer setting command; registry-owned values enforce owner minima.
+  - cmd.chat.delete discloses immediate logical removal, the 24-hour purge target, legal-hold delay, and content-free tombstone retention.
+  - cmd.project.remove remains list-only and cmd.project.delete_data remains a separate strongly confirmed, project-scoped data-purge intent.
+validation_surfaces:
+  - future RET, CMP, DEL, and legal-hold command fixtures
+  - future thread/project deletion confirmation and hold-blocked snapshots
+  - python3 scripts/pm-plan-index.py validate
+risk_class: case_l_retention_or_deletion_command_bypass
+reasoning_tier: high
+context_scope: case_l_retention_hold_compaction_deletion_commands
+implementation_surfaces:
+  - Plans/UI_Command_Catalog.md
+  - Plans/storage-plan.md
+  - Plans/Contracts_V0.md
+  - Plans/FinalGUISpec.md
+node_compile_hint:
+  mode: case_l_retention_deletion_command_contract
+  create_worknodes: false
+  create_nodeseeds: false
+source_lineage:
+  - Case-L:L-005
+  - Case-L:L-010
+  - Case-L:L-015
+  - Case-L:PD-L005-01..PD-L005-07
+  - Case-L:PD-L015-01..PD-L015-05
+preserved_exact_tokens:
+  - storage.legal_hold.manage
+  - cmd.storage.legal_hold.manage
+  - cmd.storage.compaction.request
+  - cmd.settings.open_storage_retention
+  - cmd.chat.delete
+  - cmd.project.remove
+  - cmd.project.delete_data
+  - storage.retention_hold_changed
+  - storage.compaction_lifecycle_changed
+  - storage.deletion_lifecycle_changed
+negative_constraints:
+  - Do not make legal hold an ordinary setting toggle or clear it automatically.
+  - Do not make request mean direct compaction or infer destructive eligibility from names, paths, times, ordering, or focus.
+  - Do not collapse Remove project from list into Delete Puppet Master project data or add message-level delete.
+owner_hints:
+  - Plans/UI_Command_Catalog.md
+```
+
+### UCC-125 - Case L Exact Baseline And Restore Command Contract
+
+```yaml
+plan_unit_id: UCC-125
+unit_type: command_contract
+status: accepted
+owner_doc: Plans/UI_Command_Catalog.md
+canonical_text: >-
+  Runtime retry commands use the closed baseline_target values safe_point, historical_commit,
+  and worktree_head with conditionally exact immutable inputs and owner effects. Safe-point restore
+  exact-replaces the named worktree through FileSafe; historical commit preserves the source and
+  creates a clean isolated worktree at the full commit OID; worktree head binds without mutation to
+  the exact OID and state digest. cmd.orchestrator.safe_point_retry and its compatibility alias both
+  normalize to cmd.runtime.restore_safe_point_then_retry with baseline_target safe_point and no
+  independent handler, result, event, or idempotency authority.
+gui_related: true
+gui_classification_reason: Defines user-dispatched recovery payloads, confirmation, disabled states, and truthful outcomes.
+depends_on: [UCC-089, UCC-090, UCC-095, UCC-111, F2-200, F2-201, F2-202, F2-203, CV-320]
+unblocks: []
+acceptance_criteria:
+  - Every baseline value requires exactly its owner-defined immutable fields and rejects unknown/missing/stale/moving identities without substitution.
+  - restore_safe_point_then_retry accepts only safe_point and is the only rerun verb when requires_safe_point_restore is true.
+  - A successor attempt is admitted only after target postcondition, owner equality where applicable, and durable baseline/restore receipt.
+  - restore_refused, restore_failed, and restore_recovery_required mint no successor; restored_with_conflicts is invalid for exact safe-point or Chat-revert operations.
+  - Orchestrator wrappers preserve OP-033 confirmation/availability semantics but cannot collapse later corruption, scope, concurrency, baseline, or recovery-required reasons.
+  - Wrapper and compatibility alias inputs differ from canonical args only by optional permission_snapshot_id; admission validates and consumes it, and both transforms produce exact canonical args for the sole runtime handler.
+  - Runtime, wrapper, and alias share one result, safe_point.restored producer, effect set, idempotency identity, and admission decision; no peer handler or no-event execution path exists.
+validation_surfaces:
+  - RSP-BASELINE-001
+  - RSP-BASELINE-002
+  - RSP-BASELINE-003
+  - RSP-BASELINE-004
+  - RSP-ATOMIC-001
+  - RSP-ATOMIC-003
+  - python3 scripts/pm-plan-index.py validate
+risk_class: case_l_baseline_or_restore_command_drift
+reasoning_tier: high
+context_scope: case_l_baseline_restore_command_contract
+implementation_surfaces:
+  - Plans/UI_Command_Catalog.md
+  - Plans/Executor_Protocol.md
+  - Plans/WorktreeGitImprovement.md
+  - Plans/FileSafe.md
+  - Plans/Contracts_V0.md
+node_compile_hint:
+  mode: case_l_baseline_restore_command_contract
+  create_worknodes: false
+  create_nodeseeds: false
+source_lineage:
+  - Case-L:L-006
+  - Case-L:L-020
+  - Case-L:L-021
+  - Case-L:L-024
+  - Case-L:PD-RSP-01..PD-RSP-07
+preserved_exact_tokens:
+  - safe_point
+  - historical_commit
+  - worktree_head
+  - historical_commit_oid
+  - expected_head_oid
+  - expected_state_sha256
+  - restored_clean
+  - restore_skipped
+  - restore_refused
+  - restore_failed
+  - restore_recovery_required
+  - cmd.orchestrator.safe_point_retry
+  - cmd.orchestrator.restore_safe_point_then_retry
+  - cmd.runtime.restore_safe_point_then_retry
+negative_constraints:
+  - Do not accept current or restore_point as baseline_target values.
+  - Do not resolve abbreviated, branch, tag, remote, reflog, symbolic, moving, focused, latest, or substitute refs.
+  - Do not expose a worktree as runnable before the durable baseline receipt exists.
+owner_hints:
+  - Plans/UI_Command_Catalog.md
+```
+
+### UCC-126 - Case L Chat Revert And Conversation Restore Point Commands
+
+```yaml
+plan_unit_id: UCC-126
+unit_type: command_contract
+status: accepted
+owner_doc: Plans/UI_Command_Catalog.md
+canonical_text: >-
+  cmd.chat.revert resolves one immutable whole-turn mutation manifest and then uses FileSafe exact-
+  replace, verified rollback, equality, restart, custody, and hold truth without transcript rewind or
+  partial success. Conversation lifecycle separately registers cmd.chat.create_restore_point,
+  cmd.chat.branch_from_restore, and cmd.chat.delete_restore_point against restore_point_record;
+  branching creates new conversation thread/branch identity from one verified inclusive boundary,
+  preserves source thread/branch/worktree/files/Git/index/queue/safe points, and treats optional
+  safe_point_id as lineage only without file restore. Current policy is
+  RP-RESTOREPOINT-90D-AFTER-RELEASE@1.0.0: expiry eligibility is inclusive at owner-proven
+  reference_release + 7,776,000 seconds; the maximum is 2,048 restore points per project; count
+  pressure deletes only the oldest eligible restore point; and descendant branch/application refs,
+  preserve/legal holds, in-flight application, source-lineage, live, recovery, backup, rollback, and
+  maintenance refs override age and count eligibility and block deletion until their owner-defined
+  release evidence is durable.
+gui_related: true
+gui_classification_reason: Registers user-facing Chat revert and restore-point create, branch, and delete controls with disclosures and outcomes.
+depends_on: [UCC-075, F2-200, F2-201, F2-202, F2-204, CV-320, SP-242]
+unblocks: []
+acceptance_criteria:
+  - Chat revert restores the complete multi-file turn or proves rollback/recovery-required as one transaction; no eligible turn creates no transaction.
+  - Restore-point create persists an immutable available record and project-scoped restore_point.created EventRecord 2.0 with stable idempotency.
+  - Create freezes one inclusive message boundary; equal identity/content returns the original and conflicting content is refused without overwrite.
+  - Branch consumes the expected record hash and discloses source boundary/state/new target; only branched creates identity and emits exactly one restore_point.applied, while replay returns the same recorded target without a duplicate event.
+  - Refused and failed return no target IDs and no restore_point.applied event; first execution and replay preserve source thread/branch/worktree/files/Git/index/queue/safe points.
+  - Delete transitions only unprotected exact-hash available state, follows every hold/ref, never clears a hold, and never deletes the source thread, worktree, safe point, or descendant branch.
+  - Restore-point status remains available, expired, deleted, or corrupt; successful application does not consume it, and RP-RESTOREPOINT-90D-AFTER-RELEASE@1.0.0 expires only at the inclusive owner-proven release boundary or oldest-eligible count pressure after every overriding ref is released.
+  - A deleted source remains hidden; missing retained boundary content returns source_deleted_content_unavailable without new identity or reconstruction.
+validation_surfaces:
+  - RSP-CHAT-001
+  - RSP-RP-001
+  - RSP-RP-002
+  - RSP-RP-003
+  - RSP-RP-004
+  - RSP-CMD-001
+  - python3 scripts/pm-plan-index.py validate
+risk_class: case_l_chat_restore_identity_or_atomicity_drift
+reasoning_tier: high
+context_scope: case_l_chat_revert_restore_point_commands
+implementation_surfaces:
+  - Plans/UI_Command_Catalog.md
+  - Plans/assistant-chat-design.md
+  - Plans/FileSafe.md
+  - Plans/Contracts_V0.md
+  - Plans/storage-plan.md
+node_compile_hint:
+  mode: case_l_chat_restore_command_contract
+  create_worknodes: false
+  create_nodeseeds: false
+source_lineage:
+  - Case-L:L-006
+  - Case-L:L-022
+  - Case-L:PD-RSP-08
+  - Case-L:PD-RSP-09
+preserved_exact_tokens:
+  - cmd.chat.revert
+  - cmd.chat.create_restore_point
+  - cmd.chat.branch_from_restore
+  - cmd.chat.delete_restore_point
+  - restore_point.created
+  - restore_point.applied
+  - available
+  - expired
+  - deleted
+  - corrupt
+  - branched
+  - refused
+  - failed
+  - no_eligible_mutating_turn
+  - source_deleted_content_unavailable
+  - RP-RESTOREPOINT-90D-AFTER-RELEASE@1.0.0
+negative_constraints:
+  - Do not combine conversation branch with FileSafe restore or treat a restore point as a baseline target.
+  - Do not rewind transcript state, restore only part of a turn, consume a successful restore-point application, resurrect a deleted source, invent expiry, or mutate source conversation/worktree/file/SCM/queue/runtime-safe-point state.
+owner_hints:
+  - Plans/UI_Command_Catalog.md
+```
+
+## Cozy Shelves Panel Reconciliation Addendum - 2026-07-27
+
+This addendum absorbs the command-ID census of the winning Cozy Shelves left-rail concept (`Concepts/rail-concepts/QwenRailConcepts/c2-cozy-shelves.html` and `c2-cozy-shelves-files.html`, source lineage only; concept HTML defines no commands) into catalog canon, following the PMConcept aliases-and-retirements precedent (2026-07-02) and the PMConcept6 census addendum mechanism (2026-07-16). Every prototype token is adjudicated in the reconciliation table below as canonical, alias-of a recorded target, newly registered, or retired; new canonical rows carry the full section 2.0 metadata contract (`command_kind`, availability class, confirmation class for destructive rows, `disabled_reason` codes from the closed set at the UCC-049..106 schema overlay, and owning panel/domain). In-catalog contradictions (Docker container lifecycle naming, compose alias targets, K8s context verbs, GitHub Actions open-in-browser triplication, panel detach naming, terminal focus) are adjudicated by the new PlanUnits below; no existing PlanUnit block, preserved exact token, canonical text, or retired bridge is edited, and supersession is expressed only through the new units' explicit amendment notes. The implementation base is the c2 concept files patched in place (user decision 2026-07-27). Destructive confirmations route through the shared confirm surface referenced by the unified expander row contract, which is owned outside this catalog; blocked states carry `blocked_reason_code` plus ordered `allowed_action_ids[]` mapping to `cmd.runtime.*` per UCC-093/UCC-094. Every row registered here remains incomplete until a production Wiring_Matrix.md section 4.2 row binds command id to handler, UI surface, and acceptance checks. This addendum does not create WorkNodes, NodeSeeds, executable queues, final node manifests, or production build tasks.
+
+Structural repair recorded here: the GitHub Actions command family table in section 2.4 was duplicated verbatim (a second copy differing only in em-dash keybind cells and lacking the legacy-alias rule). The duplicate copy without the legacy-alias rule has been deleted; the surviving table is the one carrying the `cmd.github_actions.*` legacy-alias rule. No row content changed.
+
+Metadata legend for the registration tables: availability classes are `always` (enabled whenever the owning panel is visible), `selection` (requires a selected subject), `live_subject` (requires a queued/running/live subject), `record_only` (requires a terminal/recorded subject), and `capability` (gated on probe/config/auth capability state). Confirmation classes are `none`, `two_step` (arm/confirm per the settings category-reset precedent), and `strong` (strong confirmation for destructive deletion, through the shared confirm surface). `disabled_reasons` values come only from the closed set `unsupported`, `not_configured`, `unauthorized`, `unreachable`, `degraded`, `partial_capability`, `blocked_state_required`, `stale_projection`, `permission_required`.
+
+### Cozy Shelves command reconciliation
+
+| Token | Disposition | Canonical target and notes |
+|---|---|---|
+| `cmd.search.find_in_files` | canonical (existing) | Section 2.9 row; `scope` argument retained |
+| `cmd.search.open_result` | canonical (existing) | `route_target` subject-open row |
+| `cmd.search.next_result` | canonical (registered below) | id sanctioned by the 2026-07-02 aliases table; concrete row supplied here |
+| `cmd.search.previous_result` | canonical (registered below) | same |
+| `cmd.search.set_scope` | canonical (registered below) | standalone scope command; `find_in_files` scope arg unchanged |
+| `cmd.search.rebuild_index` | canonical (existing) | Section 2.9 row |
+| `cmd.search.replace_all` | canonical (existing) | destructive; preserved query-session payload; preview flow unchanged |
+| `cmd.search.replace_selected` | canonical (existing) | |
+| `cmd.search.toggle_regex` | newly registered | |
+| `cmd.search.toggle_case` | newly registered | |
+| `cmd.search.toggle_word` | newly registered | |
+| `cmd.git.open_diff` | alias-of `cmd.git.diff_open` | recorded in the 2026-07-02 table |
+| `cmd.git.show_commit` | alias-of `cmd.source_control.history_open_commit` | recorded in the 2026-07-02 table |
+| `cmd.git.stage_hunks` / `cmd.git.unstage_hunks` / `cmd.git.discard_hunks` | canonical (existing) | discard keeps its destructive tiered confirmation |
+| `cmd.git.diff_set_compare_target` | canonical (existing) | |
+| `cmd.git.stash_pop` | retired -> `cmd.source_control.stash.pop` | markup migrates; row registered below |
+| `cmd.git.stash_drop` | retired -> `cmd.source_control.stash.drop` | destructive; row registered below |
+| `cmd.git.switch_branch` | retired -> `cmd.source_control.branch.switch` | row registered below (+ `branch.create`) |
+| `cmd.source_control.generate_commit_message` | canonical (registered below) | |
+| `panels.git_commit` | retired -> `cmd.git.commit` | row registered below |
+| `git.create_pr` | retired -> `cmd.github.pr.create` | row registered below |
+| `cmd.git.worktree.open` | canonical (existing) | UCC-054 family |
+| `cmd.git.worktree.open_files` | alias-of `cmd.git.worktree.open` | open plus File Manager focus argument |
+| `cmd.git.worktree.open_other` | retired -> `cmd.git.worktree.open` with target argument | select-then-open covers it; no new row |
+| `cmd.git.worktree.compare` | canonical (existing) | |
+| `cmd.git.worktree.merge` | canonical (registered below) | project scope; never reuses `cmd.chat.worktree.merge` |
+| `cmd.git.worktree.remove` | canonical (existing) | destructive escalation ladder unchanged |
+| `cmd.git.worktree.lock` / `cmd.git.worktree.unlock` | newly registered | |
+| `cmd.git.pull` / `cmd.git.push` / `cmd.git.fetch` | newly registered | core remote verbs promised by the Source Control coverage prose; no prior concrete rows existed anywhere in the catalog; push inherits the force-push-with-lease ladder from WorktreeGitImprovement.md |
+| `cmd.docker.browser_login` | cross-registered | behavior owned by Containers_Registry_and_Unraid.md (DockerHub browser/device login + `docker.auth.browser_login.*` events); this row supplies catalog registration only |
+| `cmd.docker.save_pat` | cross-registered | behavior owned by Containers_Registry_and_Unraid.md; catalog registration only |
+| `cmd.github.connect` | canonical (existing) | Section 2.1 |
+| `cmd.github.actions.open_run` | canonical (existing) | Section 2.4 family row; metadata completed below |
+| `cmd.github.actions.open_in_github` | canonical (registered below) | aliases recorded: `cmd.actions.open_in_browser`, `cmd.github.actions.open_run_in_browser` |
+| `cmd.github.actions.compare_last_success` | canonical (existing) | Section 2.4 family row; metadata completed below |
+| `cmd.actions.rerun` | alias-of `cmd.github.actions.rerun` | `cmd.actions.*` has no minting authority; canonical row registered below |
+| `cmd.actions.rerun_failed` | alias-of `cmd.github.actions.rerun_failed` | canonical row registered below |
+| `cmd.actions.cancel` | alias-of `cmd.github.actions.cancel` | canonical row registered below |
+| `cmd.github.actions.dispatch` | newly registered | carries typed workflow_dispatch inputs payload |
+| `cmd.github.actions.pin` / `cmd.github.actions.unpin` | canonical (existing) | |
+| `cmd.docker.set_context` | alias-of `cmd.docker.context.select` | UCC-049 preserved token; the bare K8s-era `set_context` form still normalizes to `cmd.docker.k8s.select_context` per section 2.5B |
+| `cmd.docker.run` (prototype start-stopped usage) | retired -> `cmd.docker.container.start` | `cmd.docker.run` itself stays live as create-from-image |
+| `cmd.docker.container.stop` | canonical (registered below) | `cmd.docker.stop` becomes a recorded compatibility alias |
+| `cmd.docker.container.restart` | canonical (registered below) | `cmd.docker.restart` becomes a recorded compatibility alias |
+| `cmd.docker.container.start` | canonical (existing) | 2026-07-16 census row |
+| `cmd.docker.container.view_logs` | canonical (existing) | UCC-105 |
+| `cmd.docker.container.attach_shell` | canonical (registered below) | token existed in UCC-105 canonical text; concrete row supplied |
+| `cmd.docker.container.inspect` | newly registered | |
+| `cmd.docker.container.delete` | canonical (registered below) | UCC-049 preserved token; destructive |
+| `cmd.docker.build` | alias-of `cmd.docker.build.image` (selected path) | existing section 2.5A alias |
+| `cmd.docker.image.push` | alias (existing) | `domain.image_publish` class unchanged |
+| `cmd.docker.image.tag` / `cmd.docker.image.inspect` / `cmd.docker.image.delete` | newly registered | delete is destructive |
+| `cmd.docker.compose_up` | alias-of `cmd.docker.compose.up` | alias target adjudicated by UCC-137 below |
+| `cmd.docker.compose.up` / `cmd.docker.compose.down` / `cmd.docker.compose.restart` | newly registered | whole-file group verbs beside the existing subset rows |
+| `cmd.docker.compose.up_subset` / `cmd.docker.compose.down_subset` | canonical (existing) | |
+| `cmd.docker.compose.scenario.save` / `.run` / `.edit` / `.delete` | canonical (existing) | flat `compose.save_scenario` / `compose.run_scenario` forms are recorded compatibility aliases |
+| `cmd.docker.compose.open_file` | newly registered | compose YAML to editor handoff |
+| `cmd.docker.cleanup.scan` | canonical (registered below) | token existed in UCC-105 canonical text |
+| `cmd.docker.cleanup.prune` | canonical (registered below) | destructive |
+| `cmd.docker.template.commit` / `cmd.docker.template.push` | canonical (existing) | 2026-07-16 census rows; `domain.image_publish` on push |
+| `cmd.docker.open_dockerfile` | canonical (existing token) | UCC-049; build-pane wiring row required |
+| `cmd.docker.k8s.select_context` / `cmd.docker.k8s.select_namespace` | canonical (existing) | `set_context` / `set_namespace` remain recorded compatibility aliases per section 2.5B |
+| `cmd.testing.run` | canonical (existing) | run-scoped family |
+| `cmd.testing.watch_run` | canonical (existing) | distinct from session-scoped `cmd.testing.session.watch` |
+| `cmd.testing.open_receipt` | canonical (existing) | record-only availability |
+| `cmd.testing.export_bundle` | canonical (existing) | |
+| `cmd.testing.quarantine` | newly registered | plus `cmd.testing.quarantine.release` |
+| `cmd.testing.session.redaction.inspect` | canonical (existing) | session-scoped family |
+| `panels.show` (Open in Artifacts) | retired -> `cmd.panel.switch` with `panel_id: artifacts` | |
+| `cmd.artifacts.sort` | newly registered | `shell_view` |
+| `cmd.artifacts.play_recording` | newly registered | record-only availability |
+| `cmd.artifacts.watch_recording` | newly registered | live-subject availability |
+| `web.sources` | retired -> `cmd.artifacts.show_sources` | newly registered `navigation_wrapper` |
+| `panels.open_chat` | retired -> `cmd.panel.switch` with `panel_id: chat` | |
+| Show in Ledger / Show in Usage labels | canonical (existing) | `cmd.artifacts.show_in_ledger` / `cmd.artifacts.show_in_usage` |
+| `cmd.file.open` | newly registered | subject-open over the `OpenFile{path,line?,range?,target_editor_panel_id?,target_editor_group_id?,target_group?}` route |
+| `cmd.file.open_with` | canonical (existing) | |
+| `cmd.file.open_in_system_default` | reserved (proposed) | stays disabled in MVP |
+| `cmd.file.new_file` / `new_folder` / `rename` / `delete` / `copy_path` / `copy_nodes` / `cut_nodes` / `paste_nodes` / `save_local_copy` | canonical (existing) | CRUD closure; delete keeps its destructive class |
+| `cmd.file.copy_full_path` / `cmd.file.copy_relative_path` | alias wrappers (existing) | `format = absolute` / `relative` over `cmd.file.copy_path` |
+| `cmd.file.refresh` | newly registered | |
+| `cmd.file.reveal` | newly registered | FileManager `/reveal` |
+| `cmd.file.expand_capped` | newly registered | `shell_view` row-cap Show more |
+| `cmd.editor.close_tab` | newly registered | `cmd.editor.*` prefix reserved here |
+| `cmd.chat.add_file_reference` | canonical (existing) | signature lock unchanged |
+| `cmd.panel.switch` | canonical (existing) | destination vocabulary proof row below |
+| `cmd.panel.detach` | alias-of `cmd.panel.undock` | recorded compatibility alias |
+| `cmd.terminal.open` (rail bare-focus usage) | markup migrates -> `cmd.terminal.show` | `cmd.terminal.open` row remains live and distinct; the two rows never collapse (see UCC-138) |
+| `cmd.chat.open_at` | retired -> `cmd.chat.open_thread` | newly registered `navigation_wrapper` |
+| `page.go` / `demo.toast` / `demo.reason` | demo fixtures (retired) | concept-shell fixtures; never registered |
+| `cmd.agents.show` / `cmd.agents.open_thread` / `cmd.agents.open_node` | newly registered | `cmd.agents.*` prefix reserved here; mirror stays read-only |
+
+### GitHub Actions registration and adjudication rows
+
+`cmd.github.actions.*` is the sole minting namespace for hosted-run actions; `cmd.actions.*` retains no minting authority and its rerun/rerun_failed/cancel/open_in_browser rows become recorded compatibility aliases of the canonical ids below, following the pin/unpin alias precedent already in the section 2.4 table. `cmd.github.actions.open_in_github` is the single canonical open-on-GitHub command; `cmd.actions.open_in_browser` and `cmd.github.actions.open_run_in_browser` are recorded compatibility aliases and neither may become a second primary name. The `open_run` and `compare_last_success` rows below complete the metadata contract for the existing section 2.4 rows without changing their labels, descriptions, or preconditions.
+
+| Command ID | Label | command_kind | Availability | Confirmation | disabled_reasons | Owner |
+|---|---|---|---|---|---|---|
+| `cmd.github.actions.open_run` | Open Run | `navigation_wrapper` | selection (`actions_panel_visible && selected_run`) | none | `unauthorized`, `unreachable` | github_actions |
+| `cmd.github.actions.open_in_github` | Open in GitHub | `navigation_wrapper` | selection (`selected_run`) | none | `unauthorized`, `unreachable`, `not_configured` | github_actions |
+| `cmd.github.actions.compare_last_success` | Compare Last Success | `navigation_wrapper` | selection (`selected_run && last_success_resolvable`) | none | `unreachable`, `degraded` | github_actions |
+| `cmd.github.actions.rerun` | Rerun Workflow | `domain_action` | selection (`selected_run && rerun_allowed`) | none | `unauthorized`, `unreachable`, `stale_projection`, `permission_required` | github_actions |
+| `cmd.github.actions.rerun_failed` | Rerun Failed Jobs | `domain_action` | selection (`selected_run && has_failed_jobs`) | none | `unauthorized`, `unreachable`, `stale_projection`, `permission_required` | github_actions |
+| `cmd.github.actions.cancel` | Cancel Run | `domain_action` | live_subject (`run_in_progress`) | two_step | `unauthorized`, `unreachable`, `stale_projection` | github_actions |
+| `cmd.github.actions.dispatch` | Dispatch Workflow | `domain_action` | capability (`workflow_dispatchable && dispatch_readiness_valid`) | two_step | `not_configured`, `unauthorized`, `unreachable`, `degraded` | github_actions |
+
+ContractRef: ContractName:Plans/GitHub_Integration.md, ContractName:Plans/Wiring_Matrix.md
+
+### Agents panel navigation rows
+
+The `cmd.agents.*` prefix is reserved as a first-party family for the Agents rail panel. All three rows are read-only navigation over the agents/subagents mirror; the mirror mutates nothing, and agent lifecycle actions (pause, cancel, retry, reroute) remain owned by their runtime/orchestrator command owners rather than this family.
+
+| Command ID | Label | command_kind | Availability | Confirmation | disabled_reasons | Owner |
+|---|---|---|---|---|---|---|
+| `cmd.agents.show` | Show Agents Panel | `navigation_wrapper` | always | none | `unsupported` | agents |
+| `cmd.agents.open_thread` | Open Agent Thread | `navigation_wrapper` | selection (`agent_thread_ref_resolvable`) | none | `stale_projection` | agents |
+| `cmd.agents.open_node` | Open Agent Node | `navigation_wrapper` | selection (`node_ref_resolvable`) | none | `stale_projection` | agents |
+
+ContractRef: ContractName:Plans/Orchestrator_Page.md, ContractName:Plans/Wiring_Matrix.md
+
+### Runtime Artifacts panel rows
+
+| Command ID | Label | command_kind | Availability | Confirmation | disabled_reasons | Owner |
+|---|---|---|---|---|---|---|
+| `cmd.artifacts.sort` | Sort Artifacts | `shell_view` | always | none | `unsupported` | artifacts |
+| `cmd.artifacts.play_recording` | Play Recording | `domain_action` | record_only (`recording_artifact_terminal`) | none | `degraded`, `stale_projection` | artifacts |
+| `cmd.artifacts.watch_recording` | Watch Live Recording | `domain_action` | live_subject (`recording_in_progress`) | none | `degraded`, `unreachable` | artifacts |
+| `cmd.artifacts.show_sources` | Show Sources | `navigation_wrapper` | selection (`artifact_source_refs_present`) | none | `stale_projection` | artifacts |
+
+ContractRef: ContractName:Plans/Runtime_Artifacts_Panel.md, ContractName:Plans/Wiring_Matrix.md
+
+### Source Control depth rows
+
+These rows resolve the underdefined `cmd.source_control.stash.*` compatibility-family declaration into first-class commands (list/create/apply/pop/drop; pop is added because the declared family lacked it) and supply the branch selector commands the section 2.5 coverage prose promises. `cmd.git.commit` registers the commit action the prototype's `panels.git_commit` token retires into. Stash drop and pop route the shared confirm surface; all mutating rows inherit projection-freshness gating.
+
+| Command ID | Label | command_kind | Availability | Confirmation | disabled_reasons | Owner |
+|---|---|---|---|---|---|---|
+| `cmd.git.commit` | Commit | `domain_action` | selection (`git_available && staged_changes_present`) | none | `blocked_state_required`, `stale_projection`, `permission_required` | source_control |
+| `cmd.source_control.generate_commit_message` | Generate Commit Message | `domain_action` | selection (`changes_present && assistant_available`) | none | `not_configured`, `degraded`, `permission_required` | source_control |
+| `cmd.source_control.branch.switch` | Switch Branch | `domain_action` | capability (`git_available && branch_exists && working_tree_safe`) | none | `blocked_state_required`, `stale_projection` | source_control |
+| `cmd.source_control.branch.create` | Create Branch | `domain_action` | capability (`git_available`) | none | `stale_projection`, `permission_required` | source_control |
+| `cmd.source_control.stash.list` | List Stashes | `shell_view` | capability (`git_available`) | none | `unreachable` | source_control |
+| `cmd.source_control.stash.create` | Create Stash | `domain_action` | selection (`dirty_working_tree`) | none | `stale_projection` | source_control |
+| `cmd.source_control.stash.apply` | Apply Stash | `domain_action` | selection (`stash_selected`) | none | `blocked_state_required`, `stale_projection` | source_control |
+| `cmd.source_control.stash.pop` | Pop Stash | `domain_action` | selection (`stash_selected`) | two_step | `blocked_state_required`, `stale_projection` | source_control |
+| `cmd.source_control.stash.drop` | Drop Stash | `domain_action` | selection (`stash_selected`) | two_step | `stale_projection`, `permission_required` | source_control |
+
+ContractRef: ContractName:Plans/GitHub_Integration.md, ContractName:Plans/WorktreeGitImprovement.md, ContractName:Plans/Wiring_Matrix.md
+
+### Worktree and GitHub PR rows
+
+`cmd.git.worktree.merge` mints the project-scope worktree merge the UCC-054 family lacked; per UCC-122's negative constraint it never reuses the thread-bound `cmd.chat.worktree.merge`. Lock and unlock register the worktree lock flags from the worktree research and W-doc lineage. `cmd.github.pr.create` is the GitHub-domain, API-only PR creation command (per GitHub_API_Auth_and_Flows) that the prototype token `git.create_pr` retires into; it is distinct from, and does not alias or replace, the panel-scoped `cmd.source_control.pr.create` route command (UCC-122) or the thread-bound `cmd.chat.worktree.pr`. All three PR-creation scopes stay live with wiring recording which surface dispatches which.
+
+| Command ID | Label | command_kind | Availability | Confirmation | disabled_reasons | Owner |
+|---|---|---|---|---|---|---|
+| `cmd.git.worktree.merge` | Merge Worktree | `domain_action` | selection (`worktree_selected && merge_target_resolvable && !merge_locked`) | two_step | `blocked_state_required`, `stale_projection`, `permission_required` | source_control |
+| `cmd.git.worktree.lock` | Lock Worktree | `domain_action` | selection (`worktree_selected && !worktree_locked`) | none | `stale_projection` | source_control |
+| `cmd.git.worktree.unlock` | Unlock Worktree | `domain_action` | selection (`worktree_locked`) | none | `stale_projection`, `permission_required` | source_control |
+| `cmd.github.pr.create` | Create PR on GitHub | `domain_action` | capability (`github_auth_valid && github_remote_present`) | none | `unauthorized`, `unreachable`, `not_configured` | github domain |
+
+ContractRef: ContractName:Plans/GitHub_Integration.md, ContractName:Plans/WorktreeGitImprovement.md, ContractName:Plans/Wiring_Matrix.md
+
+### Search panel completion rows
+
+Result navigation, standalone scope, and the three query-flag toggles get concrete rows; `find_in_files`, `open_result`, `replace_all`, `replace_selected`, and `rebuild_index` keep their existing section 2.9 rows and payloads unchanged (replace flows keep the preserved-query-session payload and preview-before-apply behavior; no re-registration here).
+
+| Command ID | Label | command_kind | Availability | Confirmation | disabled_reasons | Owner |
+|---|---|---|---|---|---|---|
+| `cmd.search.next_result` | Next Search Result | `shell_view` | selection (`query_session_active && results_present`) | none | `stale_projection` | search |
+| `cmd.search.previous_result` | Previous Search Result | `shell_view` | selection (`query_session_active && results_present`) | none | `stale_projection` | search |
+| `cmd.search.set_scope` | Set Search Scope | `shell_view` | always | none | `unsupported` | search |
+| `cmd.search.toggle_regex` | Toggle Regex | `shell_view` | always | none | `unsupported` | search |
+| `cmd.search.toggle_case` | Toggle Match Case | `shell_view` | always | none | `unsupported` | search |
+| `cmd.search.toggle_word` | Toggle Whole Word | `shell_view` | always | none | `unsupported` | search |
+
+ContractRef: ContractName:Plans/LSPSupport.md, ContractName:Plans/Wiring_Matrix.md
+
+### Testing quarantine rows and run/session scope split
+
+The run-scoped family `cmd.testing.run` / `watch_run` / `cancel_run` / `open_receipt` / `open_failure` / `export_bundle` / `open_panel` is the canon for test runs; the session-scoped family `cmd.testing.session.open` / `watch` / `background` / `redaction.inspect` is a distinct canon for visible test sessions. Both families stay live, neither aliases the other, and `watch_run` versus `session.watch` is a scope split, not a duplication. Quarantine is a state mutation over test identity, not a run action, and releases only through its paired command.
+
+| Command ID | Label | command_kind | Availability | Confirmation | disabled_reasons | Owner |
+|---|---|---|---|---|---|---|
+| `cmd.testing.quarantine` | Quarantine Test | `domain_action` | record_only (`failing_test_identified`) | two_step | `stale_projection`, `permission_required` | testing |
+| `cmd.testing.quarantine.release` | Release From Quarantine | `domain_action` | selection (`quarantined_test_selected`) | two_step | `stale_projection`, `permission_required` | testing |
+
+ContractRef: ContractName:Plans/Automated_Testing_System.md, ContractName:Plans/Wiring_Matrix.md
+
+### File Manager, editor, and chat navigation rows
+
+`cmd.file.open` is the bare subject-open command over the canonical `OpenFile{path,line?,range?,target_editor_panel_id?,target_editor_group_id?,target_group?}` route; it does not duplicate `cmd.file.open_with` (explicit target picker) and does not touch the ten-row CRUD closure, which stays intact per UCC-108. `target_group` is compatibility-only and normalizes to `target_editor_group_id`; Panel 1..4 values belong to `target_editor_panel_id`, never to `cmd.file.open_with`. `cmd.editor.close_tab` reserves the `cmd.editor.*` prefix for editor tab lifecycle. `cmd.chat.open_thread` is the cross-surface thread entry wrapper the prototype token `cmd.chat.open_at` retires into; it carries route/OpenSubject identity, opens the chat panel when closed, and does not duplicate the chat-panel-local `cmd.chat.switch_thread` row, with wiring recording the seam. `cmd.chat.add_file_reference` keeps its existing row and canonical signature lock unchanged.
+
+| Command ID | Label | command_kind | Availability | Confirmation | disabled_reasons | Owner |
+|---|---|---|---|---|---|---|
+| `cmd.file.open` | Open File | `navigation_wrapper` | selection (`file_node_selected`) | none | `blocked_state_required` | files |
+| `cmd.file.refresh` | Refresh File Tree | `domain_action` | always | none | `unreachable`, `degraded` | files |
+| `cmd.file.reveal` | Reveal in File Tree | `navigation_wrapper` | selection (`subject_resolvable`) | none | `stale_projection` | files |
+| `cmd.file.expand_capped` | Show More Rows | `shell_view` | selection (`capped_rows_present`) | none | `unsupported` | files |
+| `cmd.editor.close_tab` | Close Editor Tab | `shell_view` | selection (`tab_open`) | two_step when dirty, else none | `blocked_state_required` | files |
+| `cmd.chat.open_thread` | Open Chat Thread | `navigation_wrapper` | selection (`thread_exists`) | none | `stale_projection` | chat |
+
+ContractRef: ContractName:Plans/FileManager.md, ContractName:Plans/assistant-chat-design.md, ContractName:Plans/Wiring_Matrix.md
+
+### Docker Manager lifecycle, image, and cleanup rows
+
+Container lifecycle naming is adjudicated in favor of the reserved `cmd.docker.container.*` subfamily per the UCC-121 direction: `cmd.docker.container.stop` and `cmd.docker.container.restart` are canonical beside the already-registered `cmd.docker.container.start`, and the section 2.5A `cmd.docker.stop` / `cmd.docker.restart` rows become recorded compatibility aliases of them; the UCC-105 preserved tokens survive as alias evidence, and no existing row or unit is edited. `attach_shell`, `cleanup.scan`, and `cleanup.prune` were already named as existing tokens in UCC-105 canonical text; the rows below supply their concrete metadata. Docker Manager keeps its six subview tabs with distinct glyphs and abbreviated mid-width labels (user decision 2026-07-27); no new tab-switch commands are minted and subview switching stays on the existing switch_subview view-state.
+
+| Command ID | Label | command_kind | Availability | Confirmation | disabled_reasons | Owner |
+|---|---|---|---|---|---|---|
+| `cmd.docker.container.stop` | Stop Container | `domain_action` | live_subject (`container_running`) | none | `unreachable`, `stale_projection` | docker_manager |
+| `cmd.docker.container.restart` | Restart Container | `domain_action` | selection (`container_selected`) | none | `unreachable`, `stale_projection` | docker_manager |
+| `cmd.docker.container.attach_shell` | Attach Shell | `domain_action` | live_subject (`container_running && capability_snapshot_current`) | none | `unsupported`, `unauthorized`, `unreachable` | docker_manager |
+| `cmd.docker.container.inspect` | Inspect Container | `navigation_wrapper` | selection (`container_selected`) | none | `unreachable` | docker_manager |
+| `cmd.docker.container.delete` | Delete Container | `domain_action` | selection (`container_selected && !container_running`) | strong | `blocked_state_required`, `stale_projection`, `permission_required` | docker_manager |
+| `cmd.docker.image.tag` | Tag Image | `domain_action` | selection (`image_selected`) | none | `stale_projection` | docker_manager |
+| `cmd.docker.image.inspect` | Inspect Image | `navigation_wrapper` | selection (`image_selected`) | none | `unreachable` | docker_manager |
+| `cmd.docker.image.delete` | Delete Image | `domain_action` | selection (`image_selected && !image_in_use`) | strong | `blocked_state_required`, `stale_projection`, `permission_required` | docker_manager |
+| `cmd.docker.cleanup.scan` | Scan for Reclaimable Space | `domain_action` | capability (`docker_available`) | none | `unreachable`, `degraded` | docker_manager |
+| `cmd.docker.cleanup.prune` | Prune Reclaimable Space | `domain_action` | record_only (`scan_results_present`) | strong | `stale_projection`, `permission_required` | docker_manager |
+
+ContractRef: ContractName:Plans/Containers_Registry_and_Unraid.md, ContractName:Plans/Wiring_Matrix.md
+
+### Docker compose and context adjudication rows
+
+Whole-file compose group verbs join the existing subset and scenario rows. The prior note that `cmd.docker.compose_up` aliases a full-compose scenario run is superseded by UCC-137: `compose_up` (and any `compose_down` usage) are recorded compatibility aliases of `cmd.docker.compose.up` / `cmd.docker.compose.down`. The dotted `cmd.docker.compose.scenario.save/run/edit/delete` rows remain canonical and the flat `compose.save_scenario` / `compose.run_scenario` spellings are recorded compatibility aliases. `cmd.docker.k8s.select_context` / `select_namespace` remain canonical with `set_context` / `set_namespace` as recorded aliases (existing section 2.5B statement, restated as adjudicated canon); the Docker-engine context selector is `cmd.docker.context.select` with the prototype's `cmd.docker.set_context` recorded as its alias.
+
+| Command ID | Label | command_kind | Availability | Confirmation | disabled_reasons | Owner |
+|---|---|---|---|---|---|---|
+| `cmd.docker.compose.up` | Compose Up | `domain_action` | selection (`compose_file_selected`) | none | `not_configured`, `unreachable` | docker_manager |
+| `cmd.docker.compose.down` | Compose Down | `domain_action` | live_subject (`compose_running`) | none | `unreachable`, `stale_projection` | docker_manager |
+| `cmd.docker.compose.restart` | Compose Restart | `domain_action` | live_subject (`compose_running`) | none | `unreachable`, `stale_projection` | docker_manager |
+| `cmd.docker.compose.open_file` | Open Compose File | `navigation_wrapper` | selection (`compose_file_selected`) | none | `blocked_state_required` | docker_manager |
+
+ContractRef: ContractName:Plans/Containers_Registry_and_Unraid.md, ContractName:Plans/FileManager.md, ContractName:Plans/Wiring_Matrix.md
+
+### cmd.panel.switch destination vocabulary (route-owner proof)
+
+`cmd.panel.switch` remains a `shell_view` side-panel command with a controlled destination vocabulary. The closed canonical `panel_id` set is exactly: `search`, `chat`, `files`, `source_control`, `github_actions`, `docker_manager`, `testing`, `agents`, `artifacts`, `run_debug`. Any other destination value is a dispatch error; object-targeting contexts continue to use route-consuming wrapper commands per the existing `cmd.panel.switch` boundary rule, and prototype tokens `panels.show` and `panels.open_chat` retire into `cmd.panel.switch` with `panel_id: artifacts` and `panel_id: chat` respectively. `cmd.panel.undock` / `cmd.panel.redock` remain the canonical float/dock pair with `cmd.panel.detach` recorded as a compatibility alias of `cmd.panel.undock`.
+
+ContractRef: ContractName:Plans/FinalGUISpec.md, ContractName:Plans/Wiring_Matrix.md
+
+### Cozy Shelves Reconciliation PlanUnits
+
+### UCC-127 - Cozy Shelves Reconciliation Adoption And Namespace Reservations
+
+```yaml
+plan_unit_id: UCC-127
+unit_type: command_contract
+status: accepted
+owner_doc: Plans/UI_Command_Catalog.md
+canonical_text: >-
+  The Cozy Shelves command reconciliation table (2026-07-27) is catalog canon: every prototype token from
+  Concepts/rail-concepts/QwenRailConcepts/c2-cozy-shelves.html and c2-cozy-shelves-files.html is adjudicated as canonical,
+  alias-of a recorded target, newly registered, or retired, and concept markup migrates to the adjudicated ids
+  when the c2 files are patched in place as the implementation base (user decision 2026-07-27). The cmd.agents.*
+  and cmd.editor.* prefixes are reserved first-party command families. page.go, demo.toast, and demo.reason are
+  retired concept-shell demo fixtures and never become catalog rows. The verbatim-duplicated GitHub Actions
+  command family table copy lacking the legacy-alias rule is deleted; the surviving section 2.4 table carrying
+  the legacy-alias rule is the single canonical family table.
+gui_related: true
+gui_classification_reason: Governs which user-visible command ids the Cozy Shelves rail panels may dispatch.
+depends_on: [UCC-002]
+unblocks: []
+acceptance_criteria:
+  - Every prototype command token has exactly one recorded disposition in the reconciliation table.
+  - cmd.agents.* and cmd.editor.* resolve as reserved first-party prefixes.
+  - Only one GitHub Actions family table exists in section 2.4 and it carries the legacy-alias rule.
+  - No WorkNodes, NodeSeeds, executable queues, final node manifests, or production build tasks are created by this PlanUnit.
+validation_surfaces:
+  - python3 scripts/pm-plan-index.py validate
+  - python3 scripts/pm-plans-verify.py validate-wiring-matrix
+risk_class: ui_command_catalog_drift
+reasoning_tier: standard
+context_scope: cozy_shelves_command_reconciliation
+implementation_surfaces:
+  - Plans/UI_Command_Catalog.md
+  - Plans/Wiring_Matrix.md
+node_compile_hint:
+  mode: cozy_shelves_command_reconciliation
+  create_worknodes: false
+  create_nodeseeds: false
+source_lineage:
+  - "Concepts/rail-concepts/QwenRailConcepts/c2-cozy-shelves.html (Cozy Shelves concept; source-lineage-only)"
+  - "Concepts/rail-concepts/QwenRailConcepts/c2-cozy-shelves-files.html (Cozy Shelves concept; source-lineage-only)"
+  - "user decision 2026-07-27 (implementation base = c2 concept files patched in place)"
+preserved_exact_tokens:
+  - "cmd.agents.*"
+  - "cmd.editor.*"
+negative_constraints:
+  - Do not copy Cozy Shelves HTML, CSS, or class names into spec canon; concept files are source lineage only.
+  - Do not register page.go, demo.toast, or demo.reason as catalog rows.
+owner_hints:
+  - Plans/UI_Command_Catalog.md
+```
+
+### UCC-128 - GitHub Actions Namespace Promotion And Open-In-GitHub Adjudication
+
+```yaml
+plan_unit_id: UCC-128
+unit_type: command_contract
+status: accepted
+owner_doc: Plans/UI_Command_Catalog.md
+canonical_text: >-
+  cmd.github.actions.rerun, cmd.github.actions.rerun_failed, cmd.github.actions.cancel, and
+  cmd.github.actions.dispatch are canonical hosted-run mutation commands; cmd.actions.rerun,
+  cmd.actions.rerun_failed, and cmd.actions.cancel are recorded compatibility aliases with no minting
+  authority, following the pin/unpin alias precedent. cmd.github.actions.open_in_github is the single
+  canonical open-on-GitHub command with cmd.actions.open_in_browser and
+  cmd.github.actions.open_run_in_browser as recorded compatibility aliases. dispatch carries a typed
+  workflow_dispatch inputs payload and requires dispatch readiness validation. open_run and
+  compare_last_success keep their existing section 2.4 rows with metadata completed by this addendum.
+gui_related: true
+gui_classification_reason: Registers user-visible GitHub Actions panel rerun, cancel, dispatch, and open-in-GitHub controls.
+depends_on: [UCC-047, UCC-048]
+unblocks: []
+acceptance_criteria:
+  - cmd.actions.rerun, rerun_failed, and cancel normalize to their cmd.github.actions.* canonical targets through recorded alias metadata.
+  - Exactly one canonical open-on-GitHub command exists and both legacy spellings are recorded aliases.
+  - dispatch is blocked until dispatch readiness validation passes and carries typed inputs.
+  - No WorkNodes, NodeSeeds, executable queues, final node manifests, or production build tasks are created by this PlanUnit.
+validation_surfaces:
+  - python3 scripts/pm-plan-index.py validate
+  - python3 scripts/pm-plans-verify.py validate-wiring-matrix
+risk_class: github_actions_command_catalog_gap
+reasoning_tier: standard
+context_scope: cozy_shelves_github_actions_commands
+implementation_surfaces:
+  - Plans/UI_Command_Catalog.md
+  - Plans/GitHub_Integration.md
+  - Plans/Wiring_Matrix.md
+node_compile_hint:
+  mode: cozy_shelves_github_actions_command_catalog
+  create_worknodes: false
+  create_nodeseeds: false
+source_lineage:
+  - "Concepts/rail-concepts/QwenRailConcepts/c2-cozy-shelves.html (Cozy Shelves concept; source-lineage-only)"
+  - "Plans/UI_Command_Catalog.md (section 2.4 GitHub Actions command family)"
+preserved_exact_tokens:
+  - "cmd.github.actions.rerun"
+  - "cmd.github.actions.rerun_failed"
+  - "cmd.github.actions.cancel"
+  - "cmd.github.actions.dispatch"
+  - "cmd.github.actions.open_in_github"
+negative_constraints:
+  - Do not mint new commands under cmd.actions.*.
+  - Do not let cmd.actions.open_in_browser or cmd.github.actions.open_run_in_browser become primary names.
+owner_hints:
+  - Plans/UI_Command_Catalog.md
+  - Plans/GitHub_Integration.md
+```
+
+### UCC-129 - Agents Panel Navigation Command Family
+
+```yaml
+plan_unit_id: UCC-129
+unit_type: command_contract
+status: accepted
+owner_doc: Plans/UI_Command_Catalog.md
+canonical_text: >-
+  cmd.agents.show, cmd.agents.open_thread, and cmd.agents.open_node are the Agents rail panel navigation
+  commands. cmd.agents.show normalizes to the side-panel switch route with panel_id agents per the UCC-014
+  alias discipline; open_thread and open_node are route-consuming navigation wrappers over stable
+  thread/node refs. The agents mirror is read-only: this family mutates no agent, run, node, or thread
+  state, and agent lifecycle actions remain owned by their runtime and orchestrator command owners.
+gui_related: true
+gui_classification_reason: Registers user-visible Agents panel show and open navigation controls.
+depends_on: [UCC-014]
+unblocks: []
+acceptance_criteria:
+  - cmd.agents.show normalizes to the panel-switch route with panel_id agents.
+  - open_thread and open_node consume route/OpenSubject identity and mutate nothing.
+  - No agent lifecycle mutation command exists under cmd.agents.*.
+  - No WorkNodes, NodeSeeds, executable queues, final node manifests, or production build tasks are created by this PlanUnit.
+validation_surfaces:
+  - python3 scripts/pm-plan-index.py validate
+  - python3 scripts/pm-plans-verify.py validate-wiring-matrix
+risk_class: agents_command_catalog_gap
+reasoning_tier: standard
+context_scope: cozy_shelves_agents_commands
+implementation_surfaces:
+  - Plans/UI_Command_Catalog.md
+  - Plans/Orchestrator_Page.md
+  - Plans/Wiring_Matrix.md
+node_compile_hint:
+  mode: cozy_shelves_agents_command_catalog
+  create_worknodes: false
+  create_nodeseeds: false
+source_lineage:
+  - "Concepts/rail-concepts/QwenRailConcepts/c2-cozy-shelves.html (Cozy Shelves concept; source-lineage-only)"
+preserved_exact_tokens:
+  - "cmd.agents.show"
+  - "cmd.agents.open_thread"
+  - "cmd.agents.open_node"
+negative_constraints:
+  - Do not add mutation commands to the read-only agents mirror family.
+owner_hints:
+  - Plans/UI_Command_Catalog.md
+  - Plans/Orchestrator_Page.md
+```
+
+### UCC-130 - Runtime Artifacts Panel Command Rows
+
+```yaml
+plan_unit_id: UCC-130
+unit_type: command_contract
+status: accepted
+owner_doc: Plans/UI_Command_Catalog.md
+canonical_text: >-
+  cmd.artifacts.sort is a shell_view list-order command registered for palette parity; cmd.artifacts.play_recording
+  plays a terminal recorded artifact (record-only availability); cmd.artifacts.watch_recording binds a live
+  in-progress recording (live-subject availability); cmd.artifacts.show_sources is the navigation wrapper the
+  prototype token web.sources retires into, opening source refs through route/OpenSubject identity. Artifact
+  record schemas remain owned by Runtime_Artifacts_Panel.md and its contracts; these rows are projections over
+  that owner truth.
+gui_related: true
+gui_classification_reason: Registers user-visible Runtime Artifacts sort, playback, watch, and sources controls.
+depends_on: [UCC-109]
+unblocks: []
+acceptance_criteria:
+  - play_recording enables only for terminal recorded artifacts; watch_recording only for live recordings.
+  - show_sources consumes route/OpenSubject identity; web.sources appears nowhere in production markup.
+  - sort mutates view projection state only.
+  - No WorkNodes, NodeSeeds, executable queues, final node manifests, or production build tasks are created by this PlanUnit.
+validation_surfaces:
+  - python3 scripts/pm-plan-index.py validate
+  - python3 scripts/pm-plans-verify.py validate-wiring-matrix
+risk_class: artifacts_command_catalog_gap
+reasoning_tier: standard
+context_scope: cozy_shelves_artifacts_commands
+implementation_surfaces:
+  - Plans/UI_Command_Catalog.md
+  - Plans/Runtime_Artifacts_Panel.md
+  - Plans/Wiring_Matrix.md
+node_compile_hint:
+  mode: cozy_shelves_artifacts_command_catalog
+  create_worknodes: false
+  create_nodeseeds: false
+source_lineage:
+  - "Concepts/rail-concepts/QwenRailConcepts/c2-cozy-shelves.html (Cozy Shelves concept; source-lineage-only)"
+preserved_exact_tokens:
+  - "cmd.artifacts.sort"
+  - "cmd.artifacts.play_recording"
+  - "cmd.artifacts.watch_recording"
+  - "cmd.artifacts.show_sources"
+negative_constraints:
+  - Do not let artifact command rows own artifact record schemas; Runtime_Artifacts_Panel.md owner contracts remain truth.
+owner_hints:
+  - Plans/UI_Command_Catalog.md
+  - Plans/Runtime_Artifacts_Panel.md
+```
+
+### UCC-131 - Source Control Branch Stash And Commit Rows
+
+```yaml
+plan_unit_id: UCC-131
+unit_type: command_contract
+status: accepted
+owner_doc: Plans/UI_Command_Catalog.md
+canonical_text: >-
+  cmd.source_control.branch.switch and cmd.source_control.branch.create register the branch selector the
+  section 2.5 coverage prose promises. cmd.source_control.stash.list, stash.create, stash.apply, stash.pop,
+  and stash.drop resolve the underdefined stash.* compatibility-family declaration into first-class rows,
+  adding pop which the declared family lacked; the prototype tokens cmd.git.stash_pop and cmd.git.stash_drop
+  retire into stash.pop and stash.drop. cmd.git.commit registers the commit action the prototype token
+  panels.git_commit retires into. cmd.source_control.generate_commit_message registers the AI commit-message
+  action. Stash pop and drop use two-step confirmation through the shared confirm surface; mutating rows
+  inherit projection-freshness gating.
+gui_related: true
+gui_classification_reason: Registers user-visible Source Control branch, stash, commit, and commit-message controls.
+depends_on: [UCC-044]
+unblocks: []
+acceptance_criteria:
+  - Each stash flow (list, create, apply, pop, drop) resolves to exactly one first-class command row.
+  - branch.switch is blocked with a reason on unsafe working trees instead of disappearing.
+  - panels.git_commit, cmd.git.stash_pop, cmd.git.stash_drop, and cmd.git.switch_branch appear nowhere in production markup.
+  - No WorkNodes, NodeSeeds, executable queues, final node manifests, or production build tasks are created by this PlanUnit.
+validation_surfaces:
+  - python3 scripts/pm-plan-index.py validate
+  - python3 scripts/pm-plans-verify.py validate-wiring-matrix
+risk_class: source_control_command_catalog_gap
+reasoning_tier: standard
+context_scope: cozy_shelves_source_control_commands
+implementation_surfaces:
+  - Plans/UI_Command_Catalog.md
+  - Plans/GitHub_Integration.md
+  - Plans/Wiring_Matrix.md
+node_compile_hint:
+  mode: cozy_shelves_source_control_command_catalog
+  create_worknodes: false
+  create_nodeseeds: false
+source_lineage:
+  - "Concepts/rail-concepts/QwenRailConcepts/c2-cozy-shelves.html (Cozy Shelves concept; source-lineage-only)"
+  - "Plans/UI_Command_Catalog.md (section 2.5 stash compatibility-family declaration)"
+preserved_exact_tokens:
+  - "cmd.git.commit"
+  - "cmd.source_control.generate_commit_message"
+  - "cmd.source_control.branch.switch"
+  - "cmd.source_control.branch.create"
+  - "cmd.source_control.stash.list"
+  - "cmd.source_control.stash.create"
+  - "cmd.source_control.stash.apply"
+  - "cmd.source_control.stash.pop"
+  - "cmd.source_control.stash.drop"
+negative_constraints:
+  - Do not leave any stash flow resolving to the underdefined compatibility family instead of a first-class row.
+owner_hints:
+  - Plans/UI_Command_Catalog.md
+  - Plans/GitHub_Integration.md
+```
+
+### UCC-132 - Project-Scope Worktree Merge Lock Unlock And GitHub PR Create
+
+```yaml
+plan_unit_id: UCC-132
+unit_type: command_contract
+status: accepted
+owner_doc: Plans/UI_Command_Catalog.md
+canonical_text: >-
+  cmd.git.worktree.merge mints the project-scope worktree merge the UCC-054 family lacked; per the UCC-122
+  negative constraint it never reuses the thread-bound cmd.chat.worktree.merge. cmd.git.worktree.lock and
+  cmd.git.worktree.unlock register worktree lock flags. cmd.github.pr.create is the GitHub-domain API-only
+  PR creation command that the prototype token git.create_pr retires into, gated on github_auth_valid and
+  github_remote_present; it is distinct from, and neither aliases nor replaces, the panel-scoped
+  cmd.source_control.pr.create route command and the thread-bound cmd.chat.worktree.pr. All three PR-creation
+  scopes stay live and wiring records which surface dispatches which.
+gui_related: true
+gui_classification_reason: Registers user-visible worktree merge, lock, unlock, and GitHub PR creation controls.
+depends_on: [UCC-054, UCC-055, UCC-058, UCC-122]
+unblocks: []
+acceptance_criteria:
+  - Worktree merge is project-scoped, two-step confirmed, and blocked with a reason on dirty, conflicted, or merge-locked worktrees.
+  - Lock and unlock mutate only worktree lock state.
+  - cmd.github.pr.create, cmd.source_control.pr.create, and cmd.chat.worktree.pr remain three distinct live commands with recorded scope boundaries.
+  - No WorkNodes, NodeSeeds, executable queues, final node manifests, or production build tasks are created by this PlanUnit.
+validation_surfaces:
+  - python3 scripts/pm-plan-index.py validate
+  - python3 scripts/pm-plans-verify.py validate-wiring-matrix
+risk_class: source_control_command_catalog_gap
+reasoning_tier: high
+context_scope: cozy_shelves_worktree_pr_commands
+implementation_surfaces:
+  - Plans/UI_Command_Catalog.md
+  - Plans/WorktreeGitImprovement.md
+  - Plans/GitHub_Integration.md
+  - Plans/Wiring_Matrix.md
+node_compile_hint:
+  mode: cozy_shelves_worktree_pr_command_catalog
+  create_worknodes: false
+  create_nodeseeds: false
+source_lineage:
+  - "Concepts/rail-concepts/QwenRailConcepts/c2-cozy-shelves.html (Cozy Shelves concept; source-lineage-only)"
+  - "Plans/UI_Command_Catalog.md (UCC-054/UCC-055 project-scope worktree family, UCC-122 PR rows)"
+preserved_exact_tokens:
+  - "cmd.git.worktree.merge"
+  - "cmd.git.worktree.lock"
+  - "cmd.git.worktree.unlock"
+  - "cmd.github.pr.create"
+negative_constraints:
+  - Do not reuse thread-bound cmd.chat.worktree.merge or cmd.chat.worktree.pr for panel-scoped actions.
+  - Do not alias cmd.github.pr.create to cmd.source_control.pr.create or collapse the two rows.
+owner_hints:
+  - Plans/UI_Command_Catalog.md
+  - Plans/WorktreeGitImprovement.md
+  - Plans/GitHub_Integration.md
+```
+
+### UCC-133 - Search Result Navigation Scope And Flag Toggle Rows
+
+```yaml
+plan_unit_id: UCC-133
+unit_type: command_contract
+status: accepted
+owner_doc: Plans/UI_Command_Catalog.md
+canonical_text: >-
+  cmd.search.next_result and cmd.search.previous_result register result navigation over the preserved query
+  session; cmd.search.set_scope registers the standalone scope command (the scope argument on find_in_files
+  and replace_in_files is unchanged); cmd.search.toggle_regex, cmd.search.toggle_case, and
+  cmd.search.toggle_word register the query flag toggles. All six are shell_view rows that mutate search view
+  state only. The existing find_in_files, open_result, replace_all, replace_selected, and rebuild_index rows
+  and payloads are unchanged, including the destructive replace preview-before-apply behavior.
+gui_related: true
+gui_classification_reason: Registers user-visible Search panel navigation, scope, and flag toggle controls.
+depends_on: [UCC-002]
+unblocks: []
+acceptance_criteria:
+  - Result navigation operates only within an active preserved query session.
+  - Flag toggles and scope changes never mutate file or index state.
+  - Existing search rows keep their payload shapes unchanged.
+  - No WorkNodes, NodeSeeds, executable queues, final node manifests, or production build tasks are created by this PlanUnit.
+validation_surfaces:
+  - python3 scripts/pm-plan-index.py validate
+  - python3 scripts/pm-plans-verify.py validate-wiring-matrix
+risk_class: search_command_catalog_gap
+reasoning_tier: standard
+context_scope: cozy_shelves_search_commands
+implementation_surfaces:
+  - Plans/UI_Command_Catalog.md
+  - Plans/LSPSupport.md
+  - Plans/Wiring_Matrix.md
+node_compile_hint:
+  mode: cozy_shelves_search_command_catalog
+  create_worknodes: false
+  create_nodeseeds: false
+source_lineage:
+  - "Concepts/rail-concepts/QwenRailConcepts/c2-cozy-shelves.html (Cozy Shelves concept; source-lineage-only)"
+  - "Plans/UI_Command_Catalog.md (2026-07-02 aliases table sanctioning set_scope/next_result/previous_result)"
+preserved_exact_tokens:
+  - "cmd.search.next_result"
+  - "cmd.search.previous_result"
+  - "cmd.search.set_scope"
+  - "cmd.search.toggle_regex"
+  - "cmd.search.toggle_case"
+  - "cmd.search.toggle_word"
+negative_constraints:
+  - Do not let shell_view search rows mutate files, indexes, or replace state.
+owner_hints:
+  - Plans/UI_Command_Catalog.md
+  - Plans/LSPSupport.md
+```
+
+### UCC-134 - Testing Quarantine Rows And Run Session Scope Split
+
+```yaml
+plan_unit_id: UCC-134
+unit_type: command_contract
+status: accepted
+owner_doc: Plans/UI_Command_Catalog.md
+canonical_text: >-
+  cmd.testing.quarantine and cmd.testing.quarantine.release register the quarantine state mutation over test
+  identity with two-step confirmation. The run-scoped family cmd.testing.run, watch_run, cancel_run,
+  open_receipt, open_failure, export_bundle, and open_panel is the canon for test runs; the session-scoped
+  family cmd.testing.session.open, watch, background, and redaction.inspect is a distinct canon for visible
+  test sessions. Both families stay live, neither aliases the other, and watch_run versus session.watch is a
+  scope split rather than a duplication.
+gui_related: true
+gui_classification_reason: Registers user-visible Testing quarantine controls and fixes the run/session family split.
+depends_on: [UCC-108]
+unblocks: []
+acceptance_criteria:
+  - Quarantine and release are separate commands with separate receipts and two-step confirmation.
+  - No alias metadata links the run-scoped and session-scoped testing families.
+  - No WorkNodes, NodeSeeds, executable queues, final node manifests, or production build tasks are created by this PlanUnit.
+validation_surfaces:
+  - python3 scripts/pm-plan-index.py validate
+  - python3 scripts/pm-plans-verify.py validate-wiring-matrix
+risk_class: testing_command_catalog_gap
+reasoning_tier: standard
+context_scope: cozy_shelves_testing_commands
+implementation_surfaces:
+  - Plans/UI_Command_Catalog.md
+  - Plans/Automated_Testing_System.md
+  - Plans/Wiring_Matrix.md
+node_compile_hint:
+  mode: cozy_shelves_testing_command_catalog
+  create_worknodes: false
+  create_nodeseeds: false
+source_lineage:
+  - "Concepts/rail-concepts/QwenRailConcepts/c2-cozy-shelves.html (Cozy Shelves concept; source-lineage-only)"
+  - "Plans/Automated_Testing_System.md (GUI Result Surfacing)"
+preserved_exact_tokens:
+  - "cmd.testing.quarantine"
+  - "cmd.testing.quarantine.release"
+negative_constraints:
+  - Do not alias run-scoped testing commands to session-scoped ones or collapse the two families.
+owner_hints:
+  - Plans/UI_Command_Catalog.md
+  - Plans/Automated_Testing_System.md
+```
+
+### UCC-135 - File Manager Editor And Chat Navigation Rows
+
+```yaml
+plan_unit_id: UCC-135
+unit_type: command_contract
+status: accepted
+owner_doc: Plans/UI_Command_Catalog.md
+canonical_text: >-
+  cmd.file.open is the bare subject-open command over the canonical OpenFile route contract, distinct from
+  cmd.file.open_with and additive beside the intact ten-row CRUD closure. cmd.file.refresh rescans the file
+  tree projection; cmd.file.reveal is the /reveal navigation wrapper; cmd.file.expand_capped is the shell_view
+  row-cap expansion. cmd.editor.close_tab registers editor tab lifecycle under the reserved cmd.editor.*
+  prefix with a dirty-state confirm. cmd.chat.open_thread is the cross-surface chat thread entry wrapper that
+  cmd.chat.open_at retires into; it opens the chat panel when closed and does not duplicate the panel-local
+  cmd.chat.switch_thread row. cmd.chat.add_file_reference keeps its existing row and signature lock unchanged.
+gui_related: true
+gui_classification_reason: Registers user-visible file open, refresh, reveal, row-cap, editor tab, and chat thread controls.
+depends_on: [UCC-108, UCC-014]
+unblocks: []
+acceptance_criteria:
+  - cmd.file.open resolves through the OpenFile route contract and does not duplicate any CRUD closure row.
+  - expand_capped mutates only view projection state.
+  - close_tab requires confirmation only for dirty tabs.
+  - cmd.chat.open_at appears nowhere in production markup.
+  - No WorkNodes, NodeSeeds, executable queues, final node manifests, or production build tasks are created by this PlanUnit.
+validation_surfaces:
+  - python3 scripts/pm-plan-index.py validate
+  - python3 scripts/pm-plans-verify.py validate-wiring-matrix
+risk_class: file_manager_command_catalog_gap
+reasoning_tier: standard
+context_scope: cozy_shelves_file_editor_chat_commands
+implementation_surfaces:
+  - Plans/UI_Command_Catalog.md
+  - Plans/FileManager.md
+  - Plans/assistant-chat-design.md
+  - Plans/Wiring_Matrix.md
+node_compile_hint:
+  mode: cozy_shelves_file_editor_chat_command_catalog
+  create_worknodes: false
+  create_nodeseeds: false
+source_lineage:
+  - "Concepts/rail-concepts/QwenRailConcepts/c2-cozy-shelves-files.html (Cozy Shelves concept; source-lineage-only)"
+  - "Plans/FileManager.md (/reveal, OpenFile route, CRUD closure)"
+preserved_exact_tokens:
+  - "cmd.file.open"
+  - "cmd.file.refresh"
+  - "cmd.file.reveal"
+  - "cmd.file.expand_capped"
+  - "cmd.editor.close_tab"
+  - "cmd.chat.open_thread"
+negative_constraints:
+  - Do not duplicate the ten CRUD closure rows or the cmd.file.open_with row.
+  - Do not collapse cmd.chat.open_thread and cmd.chat.switch_thread into one row.
+owner_hints:
+  - Plans/UI_Command_Catalog.md
+  - Plans/FileManager.md
+  - Plans/assistant-chat-design.md
+```
+
+### UCC-136 - Docker Container Lifecycle Adjudication Image And Cleanup Rows
+
+```yaml
+plan_unit_id: UCC-136
+unit_type: command_contract
+status: accepted
+owner_doc: Plans/UI_Command_Catalog.md
+canonical_text: >-
+  Container lifecycle naming is adjudicated per the UCC-121 direction: cmd.docker.container.stop and
+  cmd.docker.container.restart are canonical beside cmd.docker.container.start, and the section 2.5A
+  cmd.docker.stop and cmd.docker.restart rows become recorded compatibility aliases of them. This amendment
+  supersedes the bare-verb presentation without editing the UCC-105 preserved tokens, which survive as alias
+  evidence. cmd.docker.container.attach_shell, cmd.docker.cleanup.scan, and cmd.docker.cleanup.prune receive
+  concrete metadata rows for tokens already named existing in UCC-105 canonical text.
+  cmd.docker.container.inspect, cmd.docker.container.delete, cmd.docker.image.tag, cmd.docker.image.inspect,
+  and cmd.docker.image.delete register the expander actions; container and image delete are destructive with
+  strong confirmation, and prune is destructive over scan results. Docker Manager keeps six subview tabs with
+  distinct glyphs and abbreviated mid-width labels (user decision 2026-07-27); no tab-switch commands are
+  minted.
+gui_related: true
+gui_classification_reason: Registers and adjudicates user-visible Docker container, image, and cleanup controls.
+depends_on: [UCC-049, UCC-105, UCC-121]
+unblocks: []
+acceptance_criteria:
+  - cmd.docker.stop and cmd.docker.restart dispatch only as recorded aliases normalizing to cmd.docker.container.stop and cmd.docker.container.restart.
+  - Container and image delete require strong confirmation through the shared confirm surface.
+  - Prune enables only after a scan and never deletes beyond the scan result set.
+  - No WorkNodes, NodeSeeds, executable queues, final node manifests, or production build tasks are created by this PlanUnit.
+validation_surfaces:
+  - python3 scripts/pm-plan-index.py validate
+  - python3 scripts/pm-plans-verify.py validate-wiring-matrix
+risk_class: docker_command_catalog_gap
+reasoning_tier: high
+context_scope: cozy_shelves_docker_lifecycle_commands
+implementation_surfaces:
+  - Plans/UI_Command_Catalog.md
+  - Plans/Containers_Registry_and_Unraid.md
+  - Plans/Wiring_Matrix.md
+node_compile_hint:
+  mode: cozy_shelves_docker_lifecycle_command_catalog
+  create_worknodes: false
+  create_nodeseeds: false
+source_lineage:
+  - "Concepts/rail-concepts/QwenRailConcepts/c2-cozy-shelves.html (Cozy Shelves concept; source-lineage-only)"
+  - "Plans/UI_Command_Catalog.md (UCC-105 existing-token list; UCC-121 container subfamily direction)"
+  - "user decision 2026-07-27 (Docker Manager keeps 6 subview tabs)"
+preserved_exact_tokens:
+  - "cmd.docker.container.stop"
+  - "cmd.docker.container.restart"
+  - "cmd.docker.container.attach_shell"
+  - "cmd.docker.container.inspect"
+  - "cmd.docker.container.delete"
+  - "cmd.docker.image.tag"
+  - "cmd.docker.image.inspect"
+  - "cmd.docker.image.delete"
+  - "cmd.docker.cleanup.scan"
+  - "cmd.docker.cleanup.prune"
+negative_constraints:
+  - Do not mint further bare-verb cmd.docker.* container lifecycle commands.
+  - Do not reuse cmd.docker.run for starting stopped containers.
+owner_hints:
+  - Plans/UI_Command_Catalog.md
+  - Plans/Containers_Registry_and_Unraid.md
+```
+
+### UCC-137 - Docker Compose Group Verbs Scenario Aliases And Context Adjudication
+
+```yaml
+plan_unit_id: UCC-137
+unit_type: command_contract
+status: accepted
+owner_doc: Plans/UI_Command_Catalog.md
+canonical_text: >-
+  cmd.docker.compose.up, cmd.docker.compose.down, and cmd.docker.compose.restart register whole-file compose
+  group verbs beside the existing subset and scenario rows; cmd.docker.compose_up (and any compose_down
+  usage) are recorded compatibility aliases of them, superseding the earlier note aliasing compose_up to a
+  full-compose scenario run. cmd.docker.compose.scenario.save, run, edit, and delete remain canonical with
+  the flat compose.save_scenario and compose.run_scenario spellings recorded as compatibility aliases.
+  cmd.docker.compose.open_file registers the compose YAML to editor handoff over the OpenFile route.
+  cmd.docker.k8s.select_context and cmd.docker.k8s.select_namespace are canonical with set_context and
+  set_namespace recorded aliases; cmd.docker.context.select is the canonical Docker-engine context selector
+  with the prototype token cmd.docker.set_context recorded as its alias.
+gui_related: true
+gui_classification_reason: Registers and adjudicates user-visible Docker compose, scenario, and context controls.
+depends_on: [UCC-049, UCC-121]
+unblocks: []
+acceptance_criteria:
+  - compose_up dispatches only as a recorded alias normalizing to cmd.docker.compose.up.
+  - Flat scenario spellings normalize to the dotted scenario family through recorded alias metadata.
+  - open_file resolves through the OpenFile route and never edits compose state itself.
+  - Exactly one canonical selector exists for Docker-engine context and one each for K8s context and namespace.
+  - No WorkNodes, NodeSeeds, executable queues, final node manifests, or production build tasks are created by this PlanUnit.
+validation_surfaces:
+  - python3 scripts/pm-plan-index.py validate
+  - python3 scripts/pm-plans-verify.py validate-wiring-matrix
+risk_class: docker_command_catalog_gap
+reasoning_tier: standard
+context_scope: cozy_shelves_docker_compose_commands
+implementation_surfaces:
+  - Plans/UI_Command_Catalog.md
+  - Plans/Containers_Registry_and_Unraid.md
+  - Plans/FileManager.md
+  - Plans/Wiring_Matrix.md
+node_compile_hint:
+  mode: cozy_shelves_docker_compose_command_catalog
+  create_worknodes: false
+  create_nodeseeds: false
+source_lineage:
+  - "Concepts/rail-concepts/QwenRailConcepts/c2-cozy-shelves.html (Cozy Shelves concept; source-lineage-only)"
+  - "Plans/UI_Command_Catalog.md (section 2.5A compose rows and 2.5B context statement; UCC-049 preserved tokens)"
+preserved_exact_tokens:
+  - "cmd.docker.compose.up"
+  - "cmd.docker.compose.down"
+  - "cmd.docker.compose.restart"
+  - "cmd.docker.compose.open_file"
+negative_constraints:
+  - Do not let flat scenario spellings or compose_up become primary names.
+  - Do not mint a second Docker-engine or Kubernetes context selector.
+owner_hints:
+  - Plans/UI_Command_Catalog.md
+  - Plans/Containers_Registry_and_Unraid.md
+```
+
+### UCC-138 - Panel Switch Destination Vocabulary Undock Alias And Terminal Focus Adjudication
+
+```yaml
+plan_unit_id: UCC-138
+unit_type: command_contract
+status: accepted
+owner_doc: Plans/UI_Command_Catalog.md
+canonical_text: >-
+  cmd.panel.switch carries a controlled destination vocabulary: the closed canonical panel_id set is exactly
+  search, chat, files, source_control, github_actions, docker_manager, testing, agents, artifacts, and
+  run_debug; other values are dispatch errors and object targeting stays in route-consuming wrappers.
+  Prototype tokens panels.show and panels.open_chat retire into cmd.panel.switch with panel_id artifacts and
+  chat. cmd.panel.undock and cmd.panel.redock remain the canonical float/dock pair with cmd.panel.detach a
+  recorded compatibility alias of cmd.panel.undock. For the Cozy Shelves rail terminal-focus control,
+  cmd.terminal.show is the canonical dispatch target and the prototype's cmd.terminal.open usage in that
+  bare-focus context is recorded as an alias mapping for markup migration only; the cmd.terminal.open catalog
+  row itself stays a live, distinct row and the two rows never collapse into one normalized target, per the
+  existing non-collapse rule.
+gui_related: true
+gui_classification_reason: Fixes user-visible panel switching, undock naming, and terminal focus dispatch for the rail shell.
+depends_on: [UCC-014, UCC-108]
+unblocks: []
+acceptance_criteria:
+  - cmd.panel.switch rejects panel_id values outside the closed ten-id set.
+  - cmd.panel.detach dispatches only as a recorded alias normalizing to cmd.panel.undock.
+  - The rail terminal-focus control dispatches cmd.terminal.show; cmd.terminal.open remains a live distinct row and does not normalize to cmd.terminal.show.
+  - No WorkNodes, NodeSeeds, executable queues, final node manifests, or production build tasks are created by this PlanUnit.
+validation_surfaces:
+  - python3 scripts/pm-plan-index.py validate
+  - python3 scripts/pm-plans-verify.py validate-wiring-matrix
+risk_class: shell_command_catalog_drift
+reasoning_tier: high
+context_scope: cozy_shelves_shell_commands
+implementation_surfaces:
+  - Plans/UI_Command_Catalog.md
+  - Plans/FinalGUISpec.md
+  - Plans/Wiring_Matrix.md
+node_compile_hint:
+  mode: cozy_shelves_shell_command_catalog
+  create_worknodes: false
+  create_nodeseeds: false
+source_lineage:
+  - "Concepts/rail-concepts/QwenRailConcepts/c2-cozy-shelves.html (Cozy Shelves concept; source-lineage-only)"
+  - "Plans/UI_Command_Catalog.md (UCC-014 alias discipline; panel undock/redock rows; terminal non-collapse rule)"
+preserved_exact_tokens:
+  - "cmd.panel.switch"
+  - "panel_id"
+  - "run_debug"
+negative_constraints:
+  - Do not extend the panel_id vocabulary without a new catalog adjudication row.
+  - Do not collapse cmd.terminal.open and cmd.terminal.show into one normalized target.
+owner_hints:
+  - Plans/UI_Command_Catalog.md
+  - Plans/FinalGUISpec.md
+```
+
+## Run & Debug Revival Addendum - 2026-07-27
+
+This addendum registers, at row level, the `cmd.run_debug.*` classical DAP debugger dispatch family minted by `Plans/Commands_System.md` Run & Debug Revival Addendum §7.2 (39 ids, semantics, availability and confirmation classes, and the closed disabled-reason set owned there and consumed here by reference only), registers the `cmd.run.*` orchestrator run-control trio per §7.3, records the `cmd.debug.*` production wiring-location re-home into the assistant Debug Mode investigation surface, and fixes two stale ContractRef anchors in this document (the retired 5.2.8-era debug-family anchor now targets the §7.1 Debug Mode dispatch family anchor). Every token below is adjudicated in the reconciliation table; the new rows carry the catalog row-level metadata contract (`command_kind`, availability class, confirmation class, `disabled_reasons` subsets drawn only from the closed sets at §7.2/§7.3, and owner) while family semantics, preconditions, and the debug session state machine remain owned by `Plans/Commands_System.md` §7.2/§7.3 and `Plans/FinalGUISpec.md` Run & Debug Revival Addendum F3-482..F3-496 (referenced by unit id only, never restated). The CS-009 boundary stands: `cmd.debug.*` remains the assistant-investigation family (§7.1 owns its semantics, unchanged), and classical debugger dispatch uses only `cmd.run_debug.*`. No existing PlanUnit block, preserved exact token, canonical text, retired bridge, or wiring-matrix row is edited by this addendum. This addendum does not create WorkNodes, NodeSeeds, executable queues, final node manifests, implementation files, runtime artifacts, or production build tasks; `Concepts/**` materials remain source-lineage-only.
+
+Metadata legend for the registration tables: availability classes are written cozy-style as `session_state (<precondition>)` (availability follows the debug session state machine per §7.2), `selection (<precondition>)` (requires a selected subject), and `always` (enabled whenever the owning surface is visible). Confirmation classes are `none`, `two_step`, and `strong` (destructive, dispatching only through the shared confirm surface per §7.2). `disabled_reasons` values come only from the closed sets at `Plans/Commands_System.md` §7.2 (`unsupported`, `not_configured`, `adapter_unavailable`, `session_state_mismatch`, `capability_absent`, `stale_projection`, `permission_required`) and §7.3 (`stale_projection`, `permission_required`, `unreachable`).
+
+### Run & Debug command reconciliation
+
+| Token | Disposition | Canonical target and notes |
+|---|---|---|
+| **Session lifecycle and stepping** | | |
+| `cmd.run_debug.start` | newly registered | registered below; Plans/Commands_System.md §7.2 owns semantics |
+| `cmd.run_debug.start_no_debug` | newly registered | registered below; Plans/Commands_System.md §7.2 owns semantics |
+| `cmd.run_debug.stop` | newly registered | registered below; Plans/Commands_System.md §7.2 owns semantics |
+| `cmd.run_debug.disconnect` | newly registered | registered below; Plans/Commands_System.md §7.2 owns semantics |
+| `cmd.run_debug.restart` | newly registered | registered below; Plans/Commands_System.md §7.2 owns semantics |
+| `cmd.run_debug.attach` | newly registered | registered below; Plans/Commands_System.md §7.2 owns semantics |
+| `cmd.run_debug.pause` | newly registered | registered below; Plans/Commands_System.md §7.2 owns semantics |
+| `cmd.run_debug.continue` | newly registered | registered below; Plans/Commands_System.md §7.2 owns semantics |
+| `cmd.run_debug.step_over` | newly registered | registered below; Plans/Commands_System.md §7.2 owns semantics |
+| `cmd.run_debug.step_into` | newly registered | registered below; Plans/Commands_System.md §7.2 owns semantics |
+| `cmd.run_debug.step_out` | newly registered | registered below; Plans/Commands_System.md §7.2 owns semantics |
+| `cmd.run_debug.session.select` | newly registered | registered below; Plans/Commands_System.md §7.2 owns semantics |
+| **Launch configuration** | | |
+| `cmd.run_debug.config.select` | newly registered | registered below; Plans/Commands_System.md §7.2 owns semantics |
+| `cmd.run_debug.config.add` | newly registered | registered below; Plans/Commands_System.md §7.2 owns semantics |
+| `cmd.run_debug.config.edit` | newly registered | registered below; Plans/Commands_System.md §7.2 owns semantics |
+| `cmd.run_debug.config.delete` | newly registered | destructive, `strong`; registered below; Plans/Commands_System.md §7.2 owns semantics |
+| `cmd.run_debug.config.open_file` | newly registered | registered below; Plans/Commands_System.md §7.2 owns semantics |
+| **Breakpoints** | | |
+| `cmd.run_debug.breakpoint.toggle` | newly registered | registered below; Plans/Commands_System.md §7.2 owns semantics |
+| `cmd.run_debug.breakpoint.edit` | newly registered | registered below; Plans/Commands_System.md §7.2 owns semantics |
+| `cmd.run_debug.breakpoint.add_function` | newly registered | registered below; Plans/Commands_System.md §7.2 owns semantics |
+| `cmd.run_debug.breakpoint.remove_all` | newly registered | destructive, `strong`; registered below; Plans/Commands_System.md §7.2 owns semantics |
+| `cmd.run_debug.breakpoint.toggle_activation` | newly registered | registered below; Plans/Commands_System.md §7.2 owns semantics |
+| `cmd.run_debug.breakpoint.goto_source` | newly registered | registered below; Plans/Commands_System.md §7.2 owns semantics |
+| `cmd.run_debug.breakpoint.set_exception_filters` | newly registered | registered below; Plans/Commands_System.md §7.2 owns semantics |
+| **Watch and variables** | | |
+| `cmd.run_debug.watch.add` | newly registered | registered below; Plans/Commands_System.md §7.2 owns semantics |
+| `cmd.run_debug.watch.edit` | newly registered | registered below; Plans/Commands_System.md §7.2 owns semantics |
+| `cmd.run_debug.watch.remove` | newly registered | registered below; Plans/Commands_System.md §7.2 owns semantics |
+| `cmd.run_debug.watch.remove_all` | newly registered | registered below; Plans/Commands_System.md §7.2 owns semantics |
+| `cmd.run_debug.variables.set_value` | newly registered | registered below; Plans/Commands_System.md §7.2 owns semantics |
+| `cmd.run_debug.variables.copy_value` | newly registered | registered below; Plans/Commands_System.md §7.2 owns semantics |
+| `cmd.run_debug.variables.copy_expression` | newly registered | registered below; Plans/Commands_System.md §7.2 owns semantics |
+| `cmd.run_debug.variables.add_to_watch` | newly registered | registered below; Plans/Commands_System.md §7.2 owns semantics |
+| **Call stack, console, and process pane** | | |
+| `cmd.run_debug.callstack.select_frame` | newly registered | registered below; Plans/Commands_System.md §7.2 owns semantics |
+| `cmd.run_debug.callstack.restart_frame` | newly registered | registered below; Plans/Commands_System.md §7.2 owns semantics |
+| `cmd.run_debug.callstack.show_execution_point` | newly registered | registered below; Plans/Commands_System.md §7.2 owns semantics |
+| `cmd.run_debug.console.evaluate` | newly registered | registered below; Plans/Commands_System.md §7.2 owns semantics |
+| `cmd.run_debug.console.clear` | newly registered | registered below; Plans/Commands_System.md §7.2 owns semantics |
+| `cmd.run_debug.console.reveal` | newly registered | registered below; Plans/Commands_System.md §7.2 owns semantics |
+| `cmd.run_debug.terminal.reveal` | newly registered | registered below; Plans/Commands_System.md §7.2 owns semantics |
+| **Orchestrator run-control trio** | | |
+| `cmd.run.resume` | newly registered | registered below; Plans/Commands_System.md §7.3 owns semantics |
+| `cmd.run.view_log` | newly registered | registered below; Plans/Commands_System.md §7.3 owns semantics |
+| `cmd.run.stop` | newly registered | `two_step`; registered below; Plans/Commands_System.md §7.3 owns semantics |
+| **Debug investigation verification and cleanup** | | |
+| `cmd.debug.record_verification` | newly registered | registered below; Plans/Commands_System.md §7.4 owns semantics; closes the §1.0B verification hole |
+| `cmd.debug.run_cleanup` | newly registered | `two_step`; registered below; Plans/Commands_System.md §7.4 owns semantics; closes the §1.0B cleanup hole |
+
+### Run & Debug registration rows
+
+The tables below supply catalog row-level registration only. Labels and preconditions mirror `Plans/Commands_System.md` §7.2/§7.3 verbatim by reference; availability classes, confirmation classes, and disabled-reason subsets map the §7.2/§7.3 class lists without restating family semantics.
+
+Session lifecycle, stepping, and session selection:
+
+| Command ID | Label | command_kind | Availability | Confirmation | disabled_reasons | Owner |
+|---|---|---|---|---|---|---|
+| `cmd.run_debug.start` | Start Debugging | `domain_action` | session_state (`config_selected && !session_initializing`) | none | `not_configured`, `adapter_unavailable`, `session_state_mismatch`, `stale_projection`, `permission_required` | run_debug |
+| `cmd.run_debug.start_no_debug` | Run Without Debugging | `domain_action` | session_state (`config_selected`) | none | `not_configured`, `session_state_mismatch`, `stale_projection` | run_debug |
+| `cmd.run_debug.stop` | Stop Session | `domain_action` | session_state (`session_active`) | none | `session_state_mismatch`, `stale_projection` | run_debug |
+| `cmd.run_debug.disconnect` | Disconnect | `domain_action` | session_state (`session_active && session_is_attach`) | none | `session_state_mismatch`, `stale_projection` | run_debug |
+| `cmd.run_debug.restart` | Restart Session | `domain_action` | session_state (`session_active or session_terminated`) | none | `session_state_mismatch`, `stale_projection` | run_debug |
+| `cmd.run_debug.attach` | Attach to Process | `domain_action` | session_state (`adapter_available`) | none | `adapter_unavailable`, `session_state_mismatch`, `permission_required` | run_debug |
+| `cmd.run_debug.pause` | Pause | `domain_action` | session_state (`session_running`) | none | `session_state_mismatch`, `stale_projection` | run_debug |
+| `cmd.run_debug.continue` | Continue | `domain_action` | session_state (`session_paused`) | none | `session_state_mismatch`, `stale_projection` | run_debug |
+| `cmd.run_debug.step_over` | Step Over | `domain_action` | session_state (`session_paused`) | none | `session_state_mismatch`, `stale_projection` | run_debug |
+| `cmd.run_debug.step_into` | Step Into | `domain_action` | session_state (`session_paused`) | none | `session_state_mismatch`, `stale_projection` | run_debug |
+| `cmd.run_debug.step_out` | Step Out | `domain_action` | session_state (`session_paused`) | none | `session_state_mismatch`, `stale_projection` | run_debug |
+| `cmd.run_debug.session.select` | Select Session | `domain_action` | selection (`session_count > 0`) | none | `stale_projection` | run_debug |
+
+Launch configuration:
+
+| Command ID | Label | command_kind | Availability | Confirmation | disabled_reasons | Owner |
+|---|---|---|---|---|---|---|
+| `cmd.run_debug.config.select` | Select Configuration | `domain_action` | selection (`config_count > 0`) | none | `not_configured`, `stale_projection` | run_debug |
+| `cmd.run_debug.config.add` | Add Configuration | `domain_action` | selection (`panel_visible`) | none | `not_configured` | run_debug |
+| `cmd.run_debug.config.edit` | Edit Configuration | `domain_action` | selection (`config_selected`) | none | `not_configured`, `stale_projection` | run_debug |
+| `cmd.run_debug.config.delete` | Delete Configuration | `domain_action` | selection (`config_selected && !config_in_use_by_active_session`) | strong | `not_configured`, `stale_projection` | run_debug |
+| `cmd.run_debug.config.open_file` | Open Configurations File | `navigation_wrapper` | always | none | `unsupported` | run_debug |
+
+Breakpoints:
+
+| Command ID | Label | command_kind | Availability | Confirmation | disabled_reasons | Owner |
+|---|---|---|---|---|---|---|
+| `cmd.run_debug.breakpoint.toggle` | Toggle Breakpoint | `domain_action` | selection (`breakpoint_selected`) | none | `stale_projection` | run_debug |
+| `cmd.run_debug.breakpoint.edit` | Edit Breakpoint | `domain_action` | selection (`breakpoint_selected`) | none | `stale_projection` | run_debug |
+| `cmd.run_debug.breakpoint.add_function` | Add Function Breakpoint | `domain_action` | always | none | `capability_absent` | run_debug |
+| `cmd.run_debug.breakpoint.remove_all` | Remove All Breakpoints | `domain_action` | selection (`has_breakpoints`) | strong | `not_configured`, `stale_projection` | run_debug |
+| `cmd.run_debug.breakpoint.toggle_activation` | Toggle All Activations | `domain_action` | selection (`has_breakpoints`) | none | `not_configured`, `stale_projection` | run_debug |
+| `cmd.run_debug.breakpoint.goto_source` | Go to Breakpoint Source | `navigation_wrapper` | selection (`breakpoint_selected`) | none | `stale_projection` | run_debug |
+| `cmd.run_debug.breakpoint.set_exception_filters` | Set Exception Filters | `domain_action` | selection (`adapter_supports_exception_filters`) | none | `capability_absent` | run_debug |
+
+Watch and variables:
+
+| Command ID | Label | command_kind | Availability | Confirmation | disabled_reasons | Owner |
+|---|---|---|---|---|---|---|
+| `cmd.run_debug.watch.add` | Add Watch | `domain_action` | selection (`session_exists_or_panel_visible`) | none | `not_configured`, `stale_projection` | run_debug |
+| `cmd.run_debug.watch.edit` | Edit Watch | `domain_action` | selection (`watch_selected`) | none | `stale_projection` | run_debug |
+| `cmd.run_debug.watch.remove` | Remove Watch | `domain_action` | selection (`watch_selected`) | none | `stale_projection` | run_debug |
+| `cmd.run_debug.watch.remove_all` | Remove All Watches | `domain_action` | selection (`has_watches`) | none | `not_configured`, `stale_projection` | run_debug |
+| `cmd.run_debug.variables.set_value` | Set Variable Value | `domain_action` | session_state (`session_paused && variable_writable`) | none | `capability_absent`, `session_state_mismatch`, `stale_projection` | run_debug |
+| `cmd.run_debug.variables.copy_value` | Copy Value | `domain_action` | selection (`variable_selected`) | none | `stale_projection` | run_debug |
+| `cmd.run_debug.variables.copy_expression` | Copy as Expression | `domain_action` | selection (`variable_selected`) | none | `stale_projection` | run_debug |
+| `cmd.run_debug.variables.add_to_watch` | Add to Watch | `domain_action` | selection (`variable_selected`) | none | `stale_projection` | run_debug |
+
+Call stack, console, and process pane:
+
+| Command ID | Label | command_kind | Availability | Confirmation | disabled_reasons | Owner |
+|---|---|---|---|---|---|---|
+| `cmd.run_debug.callstack.select_frame` | Select Frame | `domain_action` | session_state (`session_paused && frame_present`) | none | `session_state_mismatch`, `stale_projection` | run_debug |
+| `cmd.run_debug.callstack.restart_frame` | Restart Frame | `domain_action` | session_state (`session_paused && adapter_supports_restart_frame`) | none | `capability_absent`, `session_state_mismatch`, `stale_projection` | run_debug |
+| `cmd.run_debug.callstack.show_execution_point` | Show Execution Point | `navigation_wrapper` | session_state (`session_paused`) | none | `session_state_mismatch`, `stale_projection` | run_debug |
+| `cmd.run_debug.console.evaluate` | Evaluate Expression | `domain_action` | session_state (`session_active`) | none | `session_state_mismatch`, `stale_projection` | run_debug |
+| `cmd.run_debug.console.clear` | Clear Console | `domain_action` | always | none | `unsupported` | run_debug |
+| `cmd.run_debug.console.reveal` | Reveal Debug Tab | `navigation_wrapper` | always | none | `unsupported` | run_debug |
+| `cmd.run_debug.terminal.reveal` | Reveal Process Pane | `navigation_wrapper` | session_state (`session_active && console_routing == integrated_terminal`) | none | `unsupported`, `session_state_mismatch`, `stale_projection` | run_debug |
+
+Orchestrator run-control trio:
+
+| Command ID | Label | command_kind | Availability | Confirmation | disabled_reasons | Owner |
+|---|---|---|---|---|---|---|
+| `cmd.run.resume` | Resume Run | `domain_action` | selection (`run_interrupted`) | none | `stale_projection`, `permission_required`, `unreachable` | orchestrator_runs |
+| `cmd.run.view_log` | View Run Log | `navigation_wrapper` | selection (`run_selected`) | none | `stale_projection` | orchestrator_runs |
+| `cmd.run.stop` | Stop Run | `domain_action` | selection (`run_active`) | two_step | `stale_projection`, `permission_required`, `unreachable` | orchestrator_runs |
+
+ContractRef: ContractName:Plans/Commands_System.md, ContractName:Plans/FinalGUISpec.md, ContractName:Plans/Orchestrator_Page.md, ContractName:Plans/Run_Graph_View.md, ContractName:Plans/Wiring_Matrix.md
+
+### Debug investigation verification and cleanup rows
+
+These two rows extend the §7.1 `cmd.debug.*` investigation family per `Plans/Commands_System.md` §7.4, closing the verification-recording and cleanup-dispatch holes in the `Plans/assistant-chat-design.md` §1.0B closed phase model. Neither row re-scopes the family: `cmd.debug.*` remains assistant-investigation only (CS-009), and classical DAP dispatch uses `cmd.run_debug.*`.
+
+| Command ID | Label | command_kind | Availability | Confirmation | disabled_reasons | Owner |
+|---|---|---|---|---|---|---|
+| `cmd.debug.record_verification` | Record Verification Result | `domain_action` | selection (`investigation_active && at_verification_phase`) | none | `stale_projection`, `phase_not_reached` | assistant_debug |
+| `cmd.debug.run_cleanup` | Run Investigation Cleanup | `domain_action` | selection (`investigation_active && verification_recorded`) | two_step | `stale_projection`, `phase_not_reached`, `preservation_hold_active` | assistant_debug |
+
+ContractRef: ContractName:Plans/Commands_System.md, ContractName:Plans/assistant-chat-design.md, ContractName:Plans/Wiring_Matrix.md
+
+### Debug family re-home and terminology note
+
+The ten `cmd.debug.*` production wiring rows (`catalog.debug_start` through `catalog.debug_view_evidence`) are re-homed in `Plans/Wiring_Matrix.production.json` from the `Run & Debug > Debug controls` location to the assistant Debug Mode investigation surface, in the same wave as this addendum. `cmd.debug.*` semantics are unchanged and remain owned by `Plans/Commands_System.md` §7.1; classical debugger dispatch uses only `cmd.run_debug.*` per the CS-009 boundary. Terminology follows `Plans/FinalGUISpec.md` F3-495 (referenced).
+
+### UCC-139 - Run & Debug Family Catalog Registration
+
+```yaml
+plan_unit_id: UCC-139
+unit_type: requirement
+status: accepted
+owner_doc: Plans/UI_Command_Catalog.md
+canonical_text: >-
+  All 39 cmd.run_debug.* ids minted by Plans/Commands_System.md Run & Debug Revival
+  Addendum §7.2 are registered in this catalog with per-row availability class,
+  confirmation class, disabled-reason subset, command_kind, and owner metadata per
+  the registration tables above. Plans/Commands_System.md §7.2 owns family
+  semantics, preconditions, and the closed disabled-reason set (referenced, never
+  restated); the catalog remains the row-level metadata owner per the existing
+  catalog/Commands boundary.
+gui_related: true
+gui_classification_reason: Registers row-level metadata for the visible classical debugger controls, their enabled/disabled states, and destructive confirmation surfaces.
+depends_on: [UCC-138]
+unblocks: [UCC-140, UCC-141]
+acceptance_criteria:
+  - Every cmd.run_debug.* id from Plans/Commands_System.md §7.2 appears exactly once in the adjudication table and exactly once in the registration tables above.
+  - Each registration row declares exactly one availability class, one confirmation class, a disabled-reason subset drawn only from the §7.2 closed set, a command_kind, and owner run_debug.
+  - cmd.run_debug.config.delete and cmd.run_debug.breakpoint.remove_all carry confirmation class strong; all other cmd.run_debug.* rows carry none.
+  - No WorkNodes, NodeSeeds, executable queues, final node manifests, or production build tasks are created by this PlanUnit.
+validation_surfaces:
+  - python3 scripts/pm-plan-index.py validate
+  - python3 scripts/pm-plans-verify.py validate-wiring-matrix
+risk_class: shell_command_catalog_drift
+reasoning_tier: high
+context_scope: run_debug_revival
+implementation_surfaces:
+  - Plans/UI_Command_Catalog.md
+  - Plans/Commands_System.md
+  - Plans/FinalGUISpec.md
+node_compile_hint:
+  mode: run_debug_family_catalog_registration
+  create_worknodes: false
+  create_nodeseeds: false
+source_lineage:
+  - user-decision:2026-07-27-run-debug-revival
+  - "Plans/Commands_System.md (Run & Debug Revival Addendum §7.2, CS-063; referenced)"
+  - "Plans/FinalGUISpec.md (Run & Debug Revival Addendum F3-482..F3-496; referenced)"
+preserved_exact_tokens:
+  - cmd.run_debug.*
+  - cmd.run_debug.start
+  - cmd.run_debug.breakpoint.edit
+  - cmd.run_debug.console.reveal
+negative_constraints:
+  - No WorkNodes, NodeSeeds, executable queues, final node manifests, or production build tasks are created by this PlanUnit.
+  - Do not restate Commands_System §7.2 semantics in this unit or its tables beyond row-level metadata fields.
+  - Do not restate the Debug tab or rail panel layout or the debug session state machine here; Plans/FinalGUISpec.md F3-482..F3-496 owns that canon and is referenced by unit id only.
+  - Do not re-scope or restate cmd.debug.* semantics; the assistant-investigation boundary per CS-009 and §7.1 stands unchanged.
+owner_hints:
+  - Plans/UI_Command_Catalog.md
+  - Plans/Commands_System.md
+```
+
+### UCC-140 - Orchestrator Run-Control Trio Catalog Registration
+
+```yaml
+plan_unit_id: UCC-140
+unit_type: requirement
+status: accepted
+owner_doc: Plans/UI_Command_Catalog.md
+canonical_text: >-
+  cmd.run.resume, cmd.run.view_log, and cmd.run.stop are registered in this
+  catalog per Plans/Commands_System.md §7.3 with availability class selection,
+  confirmation two_step on cmd.run.stop and none on the other two rows, and
+  disabled-reason subsets drawn only from the §7.3 closed set. The registration
+  resolves the dangling cmd.run.* references from Plans/FinalGUISpec.md's
+  run_interrupted CTA card. Run lifecycle semantics remain owned by
+  Plans/Orchestrator_Page.md and Plans/Run_Graph_View.md (referenced, never
+  restated).
+gui_related: true
+gui_classification_reason: The trio backs the visible run_interrupted CTA card primary and secondary actions and the run log reveal.
+depends_on: [UCC-139]
+unblocks: []
+acceptance_criteria:
+  - cmd.run.resume, cmd.run.view_log, and cmd.run.stop each appear exactly once in the adjudication table and exactly once in the registration tables above, with owner orchestrator_runs.
+  - All three rows declare availability class selection; cmd.run.stop carries confirmation class two_step and the other two carry none.
+  - Disabled reasons on the three rows come only from the closed set stale_projection, permission_required, unreachable.
+  - No WorkNodes, NodeSeeds, executable queues, final node manifests, or production build tasks are created by this PlanUnit.
+validation_surfaces:
+  - python3 scripts/pm-plan-index.py validate
+  - python3 scripts/pm-plans-verify.py validate-wiring-matrix
+risk_class: shell_command_catalog_drift
+reasoning_tier: standard
+context_scope: run_debug_revival
+implementation_surfaces:
+  - Plans/UI_Command_Catalog.md
+  - Plans/Commands_System.md
+  - Plans/Orchestrator_Page.md
+  - Plans/Run_Graph_View.md
+node_compile_hint:
+  mode: orchestrator_run_control_trio_catalog_registration
+  create_worknodes: false
+  create_nodeseeds: false
+source_lineage:
+  - user-decision:2026-07-27-run-debug-revival
+  - "Plans/Commands_System.md (Run & Debug Revival Addendum §7.3, CS-064; referenced)"
+  - "Plans/FinalGUISpec.md (run_interrupted CTA card contract row; referenced)"
+preserved_exact_tokens:
+  - cmd.run.resume
+  - cmd.run.view_log
+  - cmd.run.stop
+  - run_interrupted
+negative_constraints:
+  - No WorkNodes, NodeSeeds, executable queues, final node manifests, or production build tasks are created by this PlanUnit.
+  - Do not restate run lifecycle semantics here; Plans/Orchestrator_Page.md and Plans/Run_Graph_View.md own run lifecycle canon.
+  - Do not mint additional cmd.run.* ids in this unit or its tables.
+owner_hints:
+  - Plans/UI_Command_Catalog.md
+  - Plans/Orchestrator_Page.md
+```
+
+### UCC-141 - Debug Family Wiring Re-Home Record
+
+```yaml
+plan_unit_id: UCC-141
+unit_type: requirement
+status: accepted
+owner_doc: Plans/UI_Command_Catalog.md
+canonical_text: >-
+  The ten cmd.debug.* production wiring rows (catalog.debug_start,
+  catalog.debug_stop, catalog.debug_pause, catalog.debug_resume,
+  catalog.debug_add_breakpoint, catalog.debug_remove_breakpoint,
+  catalog.debug_clear_breakpoints, catalog.debug_view_evidence, catalog.debug_step,
+  catalog.debug_collect_snapshot) are re-homed in Plans/Wiring_Matrix.production.json
+  from the Run & Debug > Debug controls location to the assistant Debug Mode
+  investigation surface, with the matrix edited in the same wave as this addendum.
+  cmd.debug.* semantics are unchanged and remain owned by Plans/Commands_System.md
+  §7.1; the CS-009 boundary is satisfied because classical debugger dispatch uses
+  only cmd.run_debug.*. Terminology follows Plans/FinalGUISpec.md F3-495
+  (referenced).
+gui_related: true
+gui_classification_reason: Records which user-visible surface the assistant Debug Mode investigation controls are wired to.
+depends_on: [UCC-139, UCC-077]
+unblocks: []
+acceptance_criteria:
+  - All ten catalog.debug_* wiring rows are recorded as re-homed to the assistant Debug Mode investigation surface; no row changes its ui_command_id or handler contract.
+  - cmd.debug.* remains scoped to assistant-thread investigation control per CS-009 and Commands_System §7.1; no cmd.debug.* id is re-registered as a classical debugger dispatch id.
+  - No WorkNodes, NodeSeeds, executable queues, final node manifests, or production build tasks are created by this PlanUnit.
+validation_surfaces:
+  - python3 scripts/pm-plan-index.py validate
+  - python3 scripts/pm-plans-verify.py validate-wiring-matrix
+risk_class: shell_command_catalog_drift
+reasoning_tier: standard
+context_scope: run_debug_revival
+implementation_surfaces:
+  - Plans/UI_Command_Catalog.md
+  - Plans/Wiring_Matrix.production.json
+  - Plans/FinalGUISpec.md
+node_compile_hint:
+  mode: debug_family_wiring_rehome_record
+  create_worknodes: false
+  create_nodeseeds: false
+source_lineage:
+  - user-decision:2026-07-27-run-debug-revival
+  - "Plans/Commands_System.md (§7.1 debug dispatch family, CS-009 boundary; referenced)"
+  - "Plans/FinalGUISpec.md (F3-495 terminology; referenced)"
+preserved_exact_tokens:
+  - cmd.debug.*
+  - catalog.debug_start
+  - catalog.debug_view_evidence
+  - cmd.run_debug.*
+negative_constraints:
+  - No WorkNodes, NodeSeeds, executable queues, final node manifests, or production build tasks are created by this PlanUnit.
+  - Do not restate or re-scope cmd.debug.* semantics; Plans/Commands_System.md §7.1 owns them unchanged.
+  - Do not edit Wiring_Matrix.production.json or Wiring_Matrix.md from this unit; the matrix re-home is recorded here and owned by the wiring matrix editors.
+owner_hints:
+  - Plans/UI_Command_Catalog.md
+  - Plans/Wiring_Matrix.md
+```
+
+### UCC-142 - Debug Investigation Verification and Cleanup Catalog Registration
+
+```yaml
+plan_unit_id: UCC-142
+unit_type: requirement
+status: accepted
+owner_doc: Plans/UI_Command_Catalog.md
+canonical_text: >-
+  cmd.debug.record_verification and cmd.debug.run_cleanup are registered with the
+  per-row availability, confirmation, and disabled-reason metadata in the table above,
+  extending the cmd.debug.* investigation family per Plans/Commands_System.md §7.4 and
+  closing the §1.0B verification-recording and cleanup-dispatch holes found in the
+  2026-07-27 assistant Debug Mode gap audit. Plans/Commands_System.md §7.4 owns family
+  semantics (referenced); the catalog remains the row-level metadata owner per the
+  existing catalog/Commands boundary.
+gui_related: true
+gui_classification_reason: Verification recording and cleanup dispatch surface as investigation banner/header controls in Assistant Chat's Debug Mode overlay.
+split_recommended: false
+depends_on: [UCC-141, UCC-077]
+unblocks: []
+acceptance_criteria:
+  - Both rows resolve in this catalog with command_kind, availability, confirmation, disabled_reasons, and owner metadata matching Plans/Commands_System.md §7.4.
+  - cmd.debug.run_cleanup carries confirmation class two_step and dispatches only through the shared confirm surface.
+  - Disabled reasons for both rows come only from the closed set: stale_projection, phase_not_reached, preservation_hold_active.
+  - No WorkNodes, NodeSeeds, executable queues, final node manifests, or production build tasks are created by this PlanUnit.
+validation_surfaces:
+  - python3 scripts/pm-plan-index.py validate
+  - python3 scripts/pm-plans-verify.py validate-wiring-matrix
+risk_class: shell_command_catalog_drift
+reasoning_tier: standard
+context_scope: run_debug_revival
+implementation_surfaces:
+  - Plans/UI_Command_Catalog.md
+  - Plans/Commands_System.md
+  - Plans/Wiring_Matrix.production.json
+node_compile_hint:
+  mode: debug_investigation_verification_cleanup_catalog
+  create_worknodes: false
+  create_nodeseeds: false
+source_lineage:
+  - user-decision:2026-07-27-run-debug-revival
+  - "Plans/assistant-chat-design.md (§1.0B closed debug phase model; verification/cleanup phases)"
+preserved_exact_tokens:
+  - cmd.debug.record_verification
+  - cmd.debug.run_cleanup
+  - verification_recorded
+  - preservation_hold_active
+negative_constraints:
+  - No WorkNodes, NodeSeeds, executable queues, final node manifests, or production build tasks are created by this PlanUnit.
+  - Do not restate Plans/Commands_System.md §7.4 semantics beyond row-level metadata fields.
+  - Do not re-scope these ids to classical DAP debugging; cmd.run_debug.* remains the sole classical namespace (CS-009).
+stale_retired_dispositions: []
+owner_boundary_notes:
+  - "Plans/Commands_System.md §7.1/§7.4 own cmd.debug.* family semantics; this unit owns only catalog row metadata for the verification/cleanup pair."
+owner_hints:
+  - Plans/UI_Command_Catalog.md
+  - Plans/Commands_System.md
+```
+
+## PMConcept7 Cozy Shelves Integration Addendum - 2026-07-28
+
+This addendum adjudicates the one command-id hole found by the PMConcept7 integration closure re-check (`cmd.chat.open`) and records the resulting alias. It creates no WorkNodes, NodeSeeds, executable queues, implementation files, runtime artifacts, generated wiring rows, production build tasks, final manifests, or PNC-019 receipts.
+
+### PM7 integration command reconciliation
+
+| Token | Disposition | Canonical target and notes |
+|---|---|---|
+| `cmd.chat.open` | alias-of `cmd.chat.open_thread` | found by the 2026-07-28 PM7 integration closure re-check (present in the concept census without an adjudication row); chat-open affordances route the canonical thread-open command; exclusions-registered, never a second primary wiring row |
+
+### UCC-143 - Chat Open Alias Adjudication
+
+```yaml
+plan_unit_id: UCC-143
+unit_type: requirement
+status: accepted
+owner_doc: Plans/UI_Command_Catalog.md
+canonical_text: >-
+  cmd.chat.open is adjudicated as a compatibility alias of cmd.chat.open_thread:
+  every chat-open affordance in the integrated panels routes the canonical
+  thread-open command, the alias is exclusions-registered so it never becomes a
+  second primary wiring row. The historical PMConcept7 integrated-panels census
+  recorded all 135 unique command tokens as canonical or recorded alias at
+  census time. That census is not currentness evidence after the PM6/PM7
+  rebaseline; a fresh census is required before any current 100%
+  integrated-panel claim.
+gui_related: true
+gui_classification_reason: Chat-open controls are user-visible affordances in the rail panels.
+split_recommended: false
+depends_on: [UCC-142]
+unblocks: []
+acceptance_criteria:
+- "cmd.chat.open resolves as a recorded alias of cmd.chat.open_thread in this catalog and the exclusions registry."
+- "No production wiring row registers cmd.chat.open as a primary command."
+- "The preserved PM7 census is explicitly historical/deferred; a fresh census must report zero unresolved tokens before it can serve as currentness evidence."
+- "No WorkNodes, NodeSeeds, executable queues, final node manifests, or production build tasks are created by this PlanUnit."
+validation_surfaces:
+- "python3 scripts/pm-plan-index.py validate"
+- "python3 scripts/pm-plans-verify.py validate-wiring-matrix"
+risk_class: shell_command_catalog_drift
+reasoning_tier: standard
+context_scope: pm7_cozy_shelves_integration
+implementation_surfaces:
+- "Plans/UI_Command_Catalog.md"
+- "Plans/Wiring_Matrix.production.exclusions.json"
+node_compile_hint:
+  mode: chat_open_alias_adjudication
+  create_worknodes: false
+  create_nodeseeds: false
+source_lineage:
+- "Concepts/rail-concepts/QwenRailConcepts/c2-cozy-shelves.html (source-lineage-only)"
+- "Plans/CozyShelves_PM7_Control_Reconciliation.json (historical PM7 census; currentness deferred pending true re-census)"
+preserved_exact_tokens:
+- "cmd.chat.open"
+- "cmd.chat.open_thread"
+negative_constraints:
+- "No WorkNodes, NodeSeeds, executable queues, final node manifests, or production build tasks are created by this PlanUnit."
+- "Do not register cmd.chat.open as a canonical production command; it is alias-only."
+stale_retired_dispositions: []
+owner_boundary_notes:
+- "cmd.chat.open_thread's canonical row semantics are owned by the existing chat command sections; this unit owns only the alias adjudication."
+owner_hints:
+- Plans/UI_Command_Catalog.md
+```
+
+## PMConcept7 Deferred Token Hygiene Addendum - 2026-07-29
+
+This addendum adjudicates the 6 tokens recorded in the scope note of `Plans/CozyShelves_PM7_Control_Reconciliation.json` (the historical 2026-07-28 PM7 census). Each token is classified as newly registered, parser-false-positive, or generic family root, following the PMConcept6 census addendum mechanism (2026-07-16) and the Cozy Shelves command reconciliation table pattern (2026-07-27). These token dispositions do not make the historical PM7 census current against the rebaselined sources. No existing PlanUnit block, preserved exact token, canonical text, or retired bridge is edited. This addendum creates no WorkNodes, NodeSeeds, executable queues, implementation files, runtime artifacts, final manifests, or production build tasks.
+
+### Deferred token reconciliation
+
+| Token | Disposition | Canonical target and notes |
+|---|---|---|
+| `cmd.chat.debug_investigation.promote` | newly registered | Promote-investigation button on the assistant chat debug card (`Concepts/pm6-build/parts/29x-pm6-js-chat-data.part.html`); semantics per `Plans/assistant-chat-design.md` (promote a debug investigation to user-visible attention); registration row supplied below |
+| `cmd.chat.debug_investigation.dismiss` | newly registered | Dismiss-investigation button on the same card; evidence bundle kept on dismiss per `Plans/assistant-chat-design.md`; registration row supplied below |
+| `cmd.notifications.mapping` | parser-false-positive (generic family root) | Bare reference in PM_SETTINGS_DATA (`Concepts/pm6-build/parts/28-js-settings-data.part.html`); canonical verb `cmd.notifications.mapping.update` unchanged; recorded in `Plans/Wiring_Matrix.production.exclusions.json` as a generic family root |
+| `cmd.sound.mapping` | parser-false-positive (generic family root) | Bare reference in PM_SETTINGS_DATA; canonical verb `cmd.sound.mapping.set` unchanged; recorded in `Plans/Wiring_Matrix.production.exclusions.json` as a generic family root |
+| `cmd.plan_compile.open_build.` | parser-false-positive (prose punctuation) | Trailing-dot capture from the sentence-final period after `cmd.plan_compile.open_build` in PRD mock prose (`Concepts/pm6-build/parts/26-js-prd-annotations.part.html`); the canonical no-dot id is registered (PRD/Planning launch table) and unchanged |
+| `cmd.chat.web.` | parser-false-positive (prefix string) | Trailing-dot capture from the comment prefix reference "Commands live under cmd.chat.web.*." in `Concepts/pm6-build/parts/29x-pm6-js-demo-engine-a.part.html`; the `cmd.chat.web` family and its exclusions-registered root are unchanged |
+
+### Debug investigation registration rows
+
+The `cmd.chat.debug_investigation.*` pair registers as assistant-chat-scoped domain actions over the Debug Mode investigation card. `Plans/assistant-chat-design.md` owns the surface semantics; the `Plans/Commands_System.md` section 7 boundary keeps `cmd.run_debug.*` as the sole classical DAP namespace (CS-009), and these ids never re-scope to classical debugging.
+
+| Command ID | Label | command_kind | Availability | Confirmation | disabled_reasons | Owner |
+|---|---|---|---|---|---|---|
+| `cmd.chat.debug_investigation.promote` | Promote Debug Investigation | `domain_action` | selection (`debug_investigation_card_visible`) | none | `stale_projection` | assistant_chat |
+| `cmd.chat.debug_investigation.dismiss` | Dismiss Debug Investigation Card | `domain_action` | selection (`debug_investigation_card_visible`) | none | `stale_projection` | assistant_chat |
+
+ContractRef: ContractName:Plans/assistant-chat-design.md, ContractName:Plans/Wiring_Matrix.md
+
+## PMConcept7 Home Workspace command reconciliation — 2026-08-04
+
+The Home workspace reuses `cmd.panel.undock`, `cmd.panel.redock`,
+`cmd.browser.open_workspace_preview`, `cmd.browser.open_detached_preview`,
+`cmd.browser.detach_browser_tab`, `cmd.file.open`, `cmd.terminal.reattach_section`,
+and `cmd.theme.set_mode` where their existing
+owner contracts already cover the action. `cmd.panel.switch` retains its closed
+side-panel vocabulary and is not extended with editor panels, Dashboard, or
+terminal sections. `cmd.file.open_with`, `cmd.widget.*`, and
+`cmd.terminal.move_pane` retain their existing owner semantics and are not
+overloaded with Home surface or workgroup placement semantics.
+
+### New command IDs
+
+| Command ID | Typed arguments and effect | Owner |
+|---|---|---|
+| `cmd.editor.open_panel` | `project_id`, `workspace_tab_id`, `editor_panel_id`, `target_host?`, `target_slot_index?`, `expected_layout_revision`, `idempotency_key`; opens one stable editor panel without creating buffers | FileManager/FinalGUISpec |
+| `cmd.editor.close_panel` | `project_id`, `workspace_tab_id`, `editor_panel_id`, `close_reason`, `expected_layout_revision`, `idempotency_key`; hides the panel without closing tabs or dirty buffers | FileManager/FinalGUISpec |
+| `cmd.workspace_layout.move_surface` | `project_id`, `workspace_tab_id`, `surface_instance_id`, `source_host`, `target_host`, `target_slot_index?`, `target_surface_instance_id?`, `insertion_edge?`, `expected_layout_revision`, `idempotency_key`; one semantic move commit | FinalGUISpec/storage-plan |
+| `cmd.workspace_layout.resize_surface` | `project_id`, `workspace_tab_id`, `surface_instance_id`, committed width/height/flex values, `expected_layout_revision`, `idempotency_key`; one resize-end commit | FinalGUISpec/storage-plan |
+| `cmd.workspace_layout.set_collapsed` | `project_id`, `workspace_tab_id`, `surface_instance_id`, `collapsed`, `expected_layout_revision`, `idempotency_key`; changes presentation collapse only | FinalGUISpec/storage-plan |
+| `cmd.workspace_layout.reset` | `project_id`, `workspace_tab_id`, `expected_layout_revision`, `idempotency_key`; resets Home placement only | FinalGUISpec/storage-plan |
+| `cmd.terminal.move_workgroup` | `project_id`, `terminal_workgroup_id`, `source_terminal_section_id`, `target_terminal_section_id?`, `create_target_section`, `target_workspace_host?`, `target_slot_index?`, `preserve_session_identity=true`, expected terminal/layout revisions, `idempotency_key`; moves the whole workgroup without minting a PTY | Section15/storage-plan |
+
+### Open-file and Browser target extension
+
+`OpenFile` carries `path`, `line?`, `range?`,
+`target_editor_panel_id?`, and `target_editor_group_id?`. `target_group?`
+is retained only as an explicit compatibility alias for
+`target_editor_group_id?`; it is not a second semantic target.
+`cmd.browser.open_workspace_preview` accepts the same optional editor panel/group
+target fields and retains focused-panel behavior when omitted. No near-duplicate
+open or layout command is introduced.
+
+When either optional editor target causes a persisted panel-visibility or Browser
+placement change, the command also emits `workspace.layout_changed` with the exact
+changed surface IDs, hosts, slot, revision, and persistence result. A no-change
+focus emits no fabricated layout event; the existing Browser session events remain
+canonical for Browser creation and state.
+
+Every Home command uses the standard typed UICommand envelope, expected layout
+revision, idempotency key, projected availability, and disabled reason. Preview
+frames do not dispatch commands, persist records, or emit domain events.
+
+Opening the compact Home menu, either side flyout, a surface options popup, or the
+File Manager target flyout is disclosure-only and remains view-local. Selecting
+one leaf dispatches exactly one semantic command. An already-open panel or already
+active Browser target uses the same command ID with a typed `no_change` receipt;
+it never mints a second identity. Disabled terminal limits and an ineligible
+Collapse action do not dispatch. Persistence failure returns the command's typed
+failed/rolled-back receipt and emits no success event.
+
+### UCC-144 - Home Workspace Command Routing And Leaf Semantics
+
+```yaml
+plan_unit_id: UCC-144
+unit_type: requirement
+status: accepted
+owner_doc: Plans/UI_Command_Catalog.md
+canonical_text: Home disclosure controls are view-local and every selected leaf maps one-to-one to the existing typed panel, Browser, file, terminal, theme, or bounded Home command family with projected disabled/no-change/failure semantics and no command overload.
+gui_related: true
+gui_classification_reason: This unit owns command IDs, typed arguments, availability, disabled reasons, and results for visible Home controls.
+split_recommended: false
+depends_on: [UCC-143, F3-501]
+unblocks: [CV-323, F-080, SMPFS-138, UIW-010]
+acceptance_criteria:
+- cmd.file.open_with retains exactly source_editor, image_viewer, workspace_preview, detached_preview, and diff_review; Panel 1 through Panel 4 routing is only on cmd.file.open/OpenFile fields.
+- No Home surface uses cmd.widget.* and cmd.panel.switch keeps its existing side-panel vocabulary.
+- Open/focus Browser in Panels 1 through 4 uses cmd.browser.open_workspace_preview with target_editor_panel_id and target_editor_group_id.
+- One changed drop/resize dispatches and persists exactly once; pointermove, disclosure, cancellation, unchanged drop, and disabled actions do not dispatch a changed command.
+- Every applied/no_change/failed result follows CV-323 and the exact canonical event family.
+validation_surfaces:
+- python3 scripts/pm-validate-wiring-matrix.py
+- node Concepts/pm7-tools/verify/home_workspace_matrix.mjs
+- python3 scripts/pm-plan-index.py validate
+risk_class: home_command_overload_or_orphan
+reasoning_tier: standard
+context_scope: home_command_routing
+implementation_surfaces: [Plans/UI_Command_Catalog.md, Plans/Wiring_Matrix.production.json, Concepts/pm7-tools/home_workspace_source.py]
+node_compile_hint:
+  mode: home_command_catalog
+  create_worknodes: false
+source_lineage:
+- PMConcept7_Home_Workspace_Audit_Packet_v1/shared/04_COMMAND_EVENT_STORAGE_WIRING.md
+preserved_exact_tokens: [cmd.file.open_with, cmd.file.open, cmd.browser.open_workspace_preview, cmd.widget.*, no_change]
+negative_constraints:
+- Do not add Panel 1 through Panel 4 to cmd.file.open_with.
+- Do not dispatch on pointermove or popup disclosure.
+- Do not mint near-duplicate Home commands.
+compatibility_only_notes:
+- target_group is only an alias of target_editor_group_id.
+stale_retired_dispositions: []
+owner_hints: [Plans/UI_Command_Catalog.md, Plans/Contracts_V0.md, Plans/UI_Wiring_Rules.md]
 ```

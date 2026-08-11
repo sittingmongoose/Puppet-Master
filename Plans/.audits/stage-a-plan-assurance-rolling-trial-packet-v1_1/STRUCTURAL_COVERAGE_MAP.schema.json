@@ -1,0 +1,17 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://puppet-master.local/schemas/plan-assurance/structural-coverage-map.v1.1.json",
+  "type": "object", "additionalProperties": false,
+  "required": ["schema_version", "packet_id", "trial_id", "generation_id", "source_snapshot_sha256", "source_population_sha256", "source_physical_population_sha256", "source_classification_population_sha256", "source_counts", "canonical_population_count", "noncanonical_class_commitments", "active_structural_map", "active_structural_map_sha256", "clean_rebuild_sha256", "terminal"],
+  "properties": {
+    "schema_version": {"const": "1.1.0"}, "packet_id": {"const": "stage-a-plan-assurance-rolling-trial-packet-v1_1"},
+    "trial_id": {"type": "string", "minLength": 1}, "generation_id": {"type": "string", "minLength": 1},
+    "source_snapshot_sha256": {"$ref": "#/$defs/sha"}, "source_population_sha256": {"$ref": "#/$defs/sha"},
+    "source_physical_population_sha256": {"$ref": "#/$defs/sha"}, "source_classification_population_sha256": {"$ref": "#/$defs/sha"},
+    "source_counts": {"type": "object"}, "canonical_population_count": {"type": "integer", "minimum": 1},
+    "noncanonical_class_commitments": {"type": "array", "minItems": 6, "items": {"type": "object", "additionalProperties": false, "required": ["path_class", "entry_count", "population_sha256", "semantic_reread"], "properties": {"path_class": {"enum": ["generated", "governance_support", "source_lineage", "audit", "retired", "unknown"]}, "entry_count": {"type": "integer", "minimum": 0}, "population_sha256": {"$ref": "#/$defs/sha"}, "semantic_reread": {"const": false}}}},
+    "active_structural_map": {"type": "object"}, "active_structural_map_sha256": {"$ref": "#/$defs/sha"},
+    "clean_rebuild_sha256": {"$ref": "#/$defs/sha"}, "terminal": {"enum": ["PASS", "BLOCKED", "INVALID"]}
+  },
+  "$defs": {"sha": {"type": "string", "pattern": "^[0-9a-f]{64}$"}}
+}

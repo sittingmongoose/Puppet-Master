@@ -1,0 +1,415 @@
+/* ============================================================================
+   Kimi K3 — fake Puppet Master shell chrome.
+   Deliberately plain: it exists to create realistic spacing pressure around
+   the Assistant Chat module. Token-driven throughout (with fallbacks so it
+   also renders standalone before base.css lands); the 8 PM themes transform
+   it. Motion is limited to short hover fades so the global reduced-motion
+   kill-switch ([data-motion="reduced"]) neutralizes everything.
+   No colored left-side accent borders anywhere.
+   ========================================================================== */
+
+.k3s-shell {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+  height: 100vh;
+  overflow: hidden;
+  background: var(--background, #14161b);
+  color: var(--text-primary, #e7eaf0);
+  font-family: var(--body-font, system-ui, -apple-system, "Segoe UI", sans-serif);
+  font-size: var(--fs-sm, 13px);
+  line-height: var(--lh-body, 1.5);
+}
+.k3s-shell [hidden] { display: none !important; }
+
+/* --- shared bits ------------------------------------------------------------ */
+
+.k3s-icon-btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 26px;
+  height: 26px;
+  padding: 0;
+  border: 0;
+  border-radius: var(--radius-sm, 6px);
+  background: transparent;
+  color: var(--text-secondary, #b6bdc9);
+  cursor: pointer;
+  transition: background-color 120ms ease, color 120ms ease;
+}
+.k3s-icon-btn:hover {
+  background: var(--accent-soft, rgba(127, 127, 127, .16));
+  color: var(--text-primary, #e7eaf0);
+}
+.k3s-icon-btn svg { width: 16px; height: 16px; }
+
+.k3s-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  padding: 6px 12px;
+  border: var(--border-width, 1px) solid var(--border, rgba(148, 163, 184, .28));
+  border-radius: var(--radius-sm, 6px);
+  background: var(--surface-elevated, var(--surface, #232733));
+  color: var(--text-primary, #e7eaf0);
+  font: inherit;
+  cursor: pointer;
+  transition: background-color 120ms ease, border-color 120ms ease;
+}
+.k3s-btn:hover { border-color: var(--accent-primary, #7ea6ff); }
+
+/* Minimal standalone styling for the agent tag; base.css owns the real one. */
+.k3s-shell .k3-agent-tag {
+  flex: 0 0 auto;
+  padding: 2px 8px;
+  border: var(--border-width, 1px) solid var(--border, rgba(148, 163, 184, .28));
+  border-radius: 999px;
+  background: var(--accent-soft, rgba(127, 127, 127, .14));
+  color: var(--accent-primary, #7ea6ff);
+  font-size: var(--fs-2xs, 10px);
+  font-weight: 650;
+  letter-spacing: .02em;
+  white-space: nowrap;
+}
+
+/* --- 1. title bar ------------------------------------------------------------ */
+
+.k3s-titlebar {
+  flex: 0 0 36px;
+  height: 36px;
+  box-sizing: border-box;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 10px;
+  padding: 0 10px;
+  background: var(--surface, #1c1f27);
+  border-bottom: var(--border-width, 1px) solid var(--border, rgba(148, 163, 184, .28));
+}
+.k3s-title-left {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  min-width: 0;
+}
+.k3s-title-name {
+  font-weight: 650;
+  font-size: var(--fs-sm, 13px);
+  white-space: nowrap;
+}
+.k3s-title-project {
+  color: var(--text-muted, #8a93a3);
+  font-size: var(--fs-xs, 11px);
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+.k3s-title-right {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  flex: 0 0 auto;
+}
+
+/* --- 2. main row -------------------------------------------------------------- */
+
+.k3s-main {
+  flex: 1 1 auto;
+  min-height: 0;
+  display: flex;
+}
+
+/* --- 2a. app rail ------------------------------------------------------------- */
+
+.k3s-rail {
+  flex: 0 0 auto;
+  width: 240px;
+  box-sizing: border-box;
+  display: flex;
+  flex-direction: column;
+  padding: 8px;
+  background: var(--surface, #1c1f27);
+  border-right: var(--border-width, 1px) solid var(--border, rgba(148, 163, 184, .28));
+}
+.k3s-rail.is-closed { width: 72px; }
+.k3s-rail-items {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+}
+.k3s-rail-item {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  width: 100%;
+  box-sizing: border-box;
+  padding: 7px 10px;
+  border: 0;
+  border-radius: var(--radius-sm, 6px);
+  background: transparent;
+  color: var(--text-secondary, #b6bdc9);
+  font: inherit;
+  text-align: left;
+  white-space: nowrap;
+  cursor: default;
+}
+.k3s-rail-item.is-active {
+  background: var(--accent-soft, rgba(127, 127, 127, .16));
+  color: var(--text-primary, #e7eaf0);
+  font-weight: 600;
+}
+.k3s-rail-ic {
+  display: inline-flex;
+  flex: 0 0 auto;
+  width: 17px;
+  height: 17px;
+}
+.k3s-rail-ic svg { width: 17px; height: 17px; }
+.k3s-rail-label {
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+.k3s-rail-foot { margin-top: auto; }
+.k3s-rail-btn { cursor: pointer; transition: background-color 120ms ease, color 120ms ease; }
+.k3s-rail-btn:hover {
+  background: var(--accent-soft, rgba(127, 127, 127, .16));
+  color: var(--text-primary, #e7eaf0);
+}
+.k3s-rail.is-closed .k3s-rail-item {
+  justify-content: center;
+  padding-left: 0;
+  padding-right: 0;
+}
+.k3s-rail.is-closed .k3s-rail-label { display: none; }
+
+/* --- 2b. center --------------------------------------------------------------- */
+
+.k3s-center {
+  flex: 1 1 auto;
+  min-width: 0;
+  display: flex;
+  flex-direction: column;
+  background: var(--background, #14161b);
+}
+
+.k3s-tabs {
+  flex: 0 0 auto;
+  display: flex;
+  align-items: flex-end;
+  gap: 2px;
+  padding: 6px 8px 0;
+  background: var(--surface, #1c1f27);
+  border-bottom: var(--border-width, 1px) solid var(--border, rgba(148, 163, 184, .28));
+  overflow-x: auto;
+}
+.k3s-tab {
+  display: flex;
+  align-items: center;
+  gap: 7px;
+  max-width: 220px;
+  box-sizing: border-box;
+  padding: 6px 8px 6px 10px;
+  border: var(--border-width, 1px) solid transparent;
+  border-bottom: 0;
+  border-radius: var(--radius-sm, 6px) var(--radius-sm, 6px) 0 0;
+  background: transparent;
+  color: var(--text-muted, #8a93a3);
+  font: inherit;
+  cursor: pointer;
+  white-space: nowrap;
+  transition: background-color 120ms ease, color 120ms ease;
+}
+.k3s-tab:hover { color: var(--text-secondary, #b6bdc9); }
+.k3s-tab.is-active {
+  background: var(--background, #14161b);
+  border-color: var(--border, rgba(148, 163, 184, .28));
+  color: var(--text-primary, #e7eaf0);
+  font-weight: 600;
+}
+.k3s-tab-ic {
+  display: inline-flex;
+  flex: 0 0 auto;
+  width: 14px;
+  height: 14px;
+}
+.k3s-tab-ic svg { width: 14px; height: 14px; }
+.k3s-tab-label {
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+.k3s-tab-close {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 18px;
+  height: 18px;
+  padding: 0;
+  flex: 0 0 auto;
+  border: 0;
+  border-radius: var(--radius-sm, 6px);
+  background: transparent;
+  color: var(--text-muted, #8a93a3);
+  cursor: pointer;
+  transition: background-color 120ms ease, color 120ms ease;
+}
+.k3s-tab-close:hover {
+  background: var(--accent-soft, rgba(127, 127, 127, .18));
+  color: var(--text-primary, #e7eaf0);
+}
+.k3s-tab-close svg { width: 12px; height: 12px; }
+
+.k3s-tab-body {
+  flex: 1 1 auto;
+  min-height: 0;
+  overflow: auto;
+  padding: 18px 20px;
+}
+.k3s-tab-title {
+  margin: 0 0 6px;
+  font-size: var(--fs-md, 14px);
+  font-weight: 650;
+}
+.k3s-tab-meta {
+  color: var(--text-muted, #8a93a3);
+  font-size: var(--fs-xs, 11px);
+  margin-bottom: 14px;
+  word-break: break-all;
+}
+.k3s-tab-note {
+  margin: 0;
+  color: var(--text-secondary, #b6bdc9);
+}
+
+.k3s-dash {
+  flex: 1 1 auto;
+  min-height: 0;
+  overflow: auto;
+  padding: 22px 24px;
+}
+.k3s-dash-title {
+  margin: 0 0 16px;
+  font-size: var(--fs-lg, 16px);
+  font-weight: 600;
+  color: var(--text-muted, #8a93a3);
+}
+.k3s-dash-cards {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(150px, 1fr));
+  gap: 10px;
+  max-width: 720px;
+}
+.k3s-card {
+  background: var(--surface, #1c1f27);
+  border: var(--border-width, 1px) solid var(--border, rgba(148, 163, 184, .28));
+  border-radius: var(--radius-md, 10px);
+  padding: 12px 14px;
+}
+.k3s-card-num {
+  font-size: 20px;
+  font-weight: 650;
+  font-variant-numeric: tabular-nums;
+}
+.k3s-card-label {
+  margin-top: 2px;
+  color: var(--text-muted, #8a93a3);
+  font-size: var(--fs-xs, 11px);
+}
+
+/* --- 2c. chat dock ------------------------------------------------------------ */
+
+.k3s-dock {
+  flex: 0 0 auto;
+  width: clamp(520px, var(--k3-chat-w, 750px), 1200px);
+  min-width: 0;
+  display: flex;
+  flex-direction: column;
+  background: var(--surface, #1c1f27);
+  border-left: var(--border-width, 1px) solid var(--border, rgba(148, 163, 184, .28));
+}
+.k3s-dock-root {
+  flex: 1 1 auto;
+  min-height: 0;
+  display: flex;
+  flex-direction: column;
+}
+.k3s-dock-placeholder {
+  flex: 1 1 auto;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
+  padding: 20px;
+  text-align: center;
+}
+.k3s-dock-note {
+  color: var(--text-muted, #8a93a3);
+}
+
+/* --- 3. floating pop-out window -------------------------------------------------- */
+
+.k3s-float {
+  position: absolute;
+  z-index: 900;
+  display: flex;
+  flex-direction: column;
+  max-width: calc(100vw - 48px);
+  background: var(--surface, #1c1f27);
+  border: var(--border-width, 1px) solid var(--border, rgba(148, 163, 184, .28));
+  border-radius: var(--radius-md, 10px);
+  box-shadow: var(--elev-4, var(--elev-3, 0 18px 48px rgba(0, 0, 0, .42)));
+  overflow: hidden;
+}
+.k3s-float-head {
+  flex: 0 0 auto;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding: 6px 8px 6px 10px;
+  background: var(--surface-elevated, var(--surface, #232733));
+  border-bottom: var(--border-width, 1px) solid var(--border, rgba(148, 163, 184, .28));
+  cursor: grab;
+  user-select: none;
+  touch-action: none;
+}
+.k3s-float-head.is-dragging { cursor: grabbing; }
+.k3s-float-grip {
+  flex: 0 0 auto;
+  width: 10px;
+  height: 14px;
+  opacity: .55;
+  background-image: radial-gradient(circle, var(--text-muted, #8a93a3) 1px, transparent 1.4px);
+  background-size: 5px 5px;
+}
+.k3s-float-title {
+  flex: 1 1 auto;
+  min-width: 0;
+  max-width: 46vw;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  font-size: var(--fs-xs, 11px);
+  font-weight: 600;
+}
+.k3s-float-bodywrap {
+  flex: 0 0 auto;
+  width: var(--k3-chat-w, 750px);
+  height: min(72vh, 720px);
+  min-width: max(380px, min(var(--k3-chat-w, 750px), 40vw));
+  min-height: 320px;
+  max-width: calc(100vw - 48px);
+  max-height: calc(100vh - 96px);
+  resize: both;
+  overflow: hidden;
+  display: flex;
+  flex-direction: column;
+  background: var(--surface, #1c1f27);
+}
+.k3s-float-root {
+  flex: 1 1 auto;
+  min-height: 0;
+  display: flex;
+  flex-direction: column;
+}

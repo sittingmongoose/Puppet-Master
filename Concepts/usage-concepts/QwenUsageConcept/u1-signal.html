@@ -1,0 +1,1056 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="friendly-dark">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<link rel="icon" href="data:,">
+<title>U1 · Signal — Usage — Puppet Master Concepts</title>
+<script>(function(){try{var ok=['friendly-dark','friendly-light','retro-dark','retro-light','basic-light','basic-dark','glass-dark','glass-light'];var t=localStorage.getItem('pm.theme');if(ok.indexOf(t)===-1)t='friendly-dark';var d=document.documentElement;d.setAttribute('data-theme',t);d.style.colorScheme=/-dark$/.test(t)?'dark':'light';}catch(e){}})();</script>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="preload" as="style" href="https://fonts.googleapis.com/css2?family=Cal+Sans&family=Inter:wght@400;500;600;700&family=Nunito:wght@400;600;700;800&family=Orbitron:wght@500;700&family=Quicksand:wght@400;500;600;700&family=Rajdhani:wght@400;500;600;700&display=swap" onload="this.onload=null;this.rel='stylesheet'">
+<noscript><link href="https://fonts.googleapis.com/css2?family=Cal+Sans&family=Inter:wght@400;500;600;700&family=Nunito:wght@400;600;700;800&family=Orbitron:wght@500;700&family=Quicksand:wght@400;500;600;700&family=Rajdhani:wght@400;500;600;700&display=swap" rel="stylesheet"></noscript>
+<link rel="stylesheet" href="_shared/themes.css">
+<link rel="stylesheet" href="_shared/base.css">
+<link rel="stylesheet" href="_shared/usage-shared.css">
+<style>
+.u1 .us-scroll { padding: var(--us-pad) var(--us-pad) calc(var(--us-pad) + 26px); }
+
+.u1-kick { display: flex; align-items: center; gap: 7px; font-family: var(--mono-font); font-size: var(--fs-2xs); letter-spacing: .14em; text-transform: uppercase; color: var(--text-muted); }
+.u1-kick svg { width: 11px; height: 11px; }
+
+.u1-band { --bt: var(--tone-err); position: relative; overflow: hidden; display: grid; grid-template-columns: minmax(0,1.35fr) minmax(0,1fr); gap: var(--md) var(--xl); align-items: stretch; margin-bottom: var(--us-gap); padding: var(--lg) var(--xl); border-radius: var(--radius-lg); border: 1px solid color-mix(in srgb, var(--bt) 24%, var(--border-light)); background: radial-gradient(130% 190% at 0% 0%, color-mix(in srgb, var(--bt) 10%, transparent), transparent 55%), linear-gradient(90deg, color-mix(in srgb, var(--bt) 6%, transparent), transparent 60%), var(--surface-elevated); box-shadow: var(--elev-1), 0 16px 38px -18px color-mix(in srgb, var(--bt) 50%, transparent); transition: box-shadow var(--motion-med) var(--ease-out), border-color var(--motion-med) var(--ease-out); }
+.u1-band.calm { --bt: var(--tone-ok); border-color: color-mix(in srgb, var(--tone-ok) 24%, var(--border-light)); }
+/* status reads through the medallion + tint + halo — never a painted left rail */
+.u1-band::after { content: ''; position: absolute; inset: 0; pointer-events: none; background: linear-gradient(105deg, transparent 34%, color-mix(in srgb, var(--text-primary) 6%, transparent) 47%, transparent 58%); transform: translateX(-130%); transition: transform .5s var(--ease-out); }
+.u1-band:hover::after { transform: translateX(130%); }
+.u1-kick i[data-ico] { width: 22px; height: 22px; border-radius: var(--radius-sm); background: color-mix(in srgb, var(--bt) 16%, transparent); color: var(--bt); box-shadow: 0 0 0 3px color-mix(in srgb, var(--bt) 12%, transparent); }
+.u1-kick span { color: var(--text-muted); }
+.u1-band-l { min-width: 0; display: flex; flex-direction: column; justify-content: center; }
+.u1-sit { font-family: var(--display-font); font-weight: 700; font-size: 16px; line-height: 1.45; letter-spacing: .2px; color: var(--text-primary); margin: 7px 0 var(--md); }
+.u1-sit .hot { color: var(--tone-err-text); }
+.u1-sit .warm { color: var(--tone-warn-text); }
+.u1-sit .quiet { color: var(--text-muted); }
+.u1-tally { display: flex; gap: var(--sm); flex-wrap: wrap; }
+.u1-tick { flex: 0 0 auto; display: inline-flex; align-items: center; gap: 7px; padding: 3px 10px 3px 8px; border: 1px solid var(--border-light); border-radius: var(--radius-sm); background: color-mix(in srgb, var(--tc) 8%, transparent); cursor: default; transition: transform var(--motion-fast) var(--ease-out), box-shadow var(--motion-fast) var(--ease-out); }
+.u1-tick::before { content: ''; width: 6px; height: 6px; border-radius: 50%; flex: none; background: var(--tc); box-shadow: 0 0 0 3px color-mix(in srgb, var(--tc) 16%, transparent); }
+.u1-tick:hover { transform: translateY(-1px); box-shadow: var(--elev-1); }
+.u1-tick .n { font-family: var(--display-font); font-weight: 700; font-size: var(--fs-sm); color: var(--text-primary); line-height: 1.2; }
+.u1-tick .l { font-size: 9px; font-weight: 700; letter-spacing: .09em; text-transform: uppercase; color: var(--text-muted); }
+.u1-band-r { display: flex; gap: var(--lg); align-items: stretch; border-left: 1px solid var(--border-light); padding-left: var(--xl); min-width: 0; }
+.u1-band-r > * { min-width: 0; }
+.u1-spendmain { flex: 0 0 auto; display: flex; flex-direction: column; justify-content: center; gap: 4px; min-width: 0; }
+.u1-spendbig { font-family: var(--display-font); font-weight: 800; font-size: clamp(28px, 9vw, 42px); line-height: 1; letter-spacing: .4px; color: var(--text-primary); font-variant-numeric: tabular-nums; white-space: nowrap; }
+.u1-spendlbl { display: flex; align-items: center; gap: 6px; flex-wrap: wrap; font-size: var(--fs-2xs); color: var(--text-muted); letter-spacing: .04em; }
+.u1-reads { flex: 1 1 auto; display: flex; flex-direction: column; justify-content: center; min-width: 0; }
+.u1-read { display: flex; align-items: baseline; justify-content: space-between; gap: var(--sm); padding: 5px 0; border-bottom: 1px solid var(--border-light); min-width: 0; }
+.u1-read:last-child { border-bottom: none; }
+.u1-read .k { display: inline-flex; align-items: center; gap: 5px; font-size: 9px; font-weight: 700; letter-spacing: .12em; text-transform: uppercase; color: var(--text-muted); white-space: nowrap; }
+.u1-read .k svg { width: 10px; height: 10px; flex: none; }
+.u1-read .v { font-family: var(--mono-font); font-weight: 700; font-size: var(--fs-sm); color: var(--text-primary); white-space: nowrap; overflow: hidden; text-overflow: ellipsis; min-width: 0; text-align: right; }
+.u1-read .v small { font-size: var(--fs-2xs); font-weight: 600; color: var(--text-muted); }
+.u1-read .v.warn { color: var(--tone-warn-text); } .u1-read .v.err { color: var(--tone-err-text); } .u1-read .v.ok { color: var(--tone-ok-text); }
+@media (max-width: 1400px) {
+  .u1-band { grid-template-columns: minmax(0,1fr); }
+  .u1-band-r { border-left: none; padding-left: 0; border-top: 1px solid var(--border-light); padding-top: var(--md); }
+}
+/* squished: when the spend figure + read rows share a row the reads get crushed
+   to mid-word clips — stack them vertically so the labels keep full width */
+@media (max-width: 620px) {
+  .u1-band-r { flex-direction: column; gap: var(--md); }
+}
+
+.u1-sec-tag { display: flex; align-items: center; gap: var(--md); margin: 2px 0 var(--sm); min-width: 0; }
+.u1-tagline { flex: none; font-family: var(--display-font); font-size: 10px; font-weight: 700; letter-spacing: .18em; padding: 2px 9px; border-radius: var(--radius-xs); }
+.u1-tagline.err { color: var(--tone-err-text); background: color-mix(in srgb, var(--tone-err) 12%, transparent); }
+.u1-tagline.warn { color: var(--tone-warn-text); background: color-mix(in srgb, var(--tone-warn) 13%, transparent); }
+.u1-tagmeta { flex: 0 1 auto; font-size: var(--fs-2xs); color: var(--text-muted); letter-spacing: .05em; text-transform: uppercase; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; min-width: 0; }
+.u1-sepline { flex: 1 1 auto; height: 1px; background: var(--border-light); min-width: 12px; }
+.u1-tagcount { flex: none; font-family: var(--mono-font); font-size: var(--fs-2xs); font-weight: 700; color: var(--text-muted); white-space: nowrap; }
+
+.u1-now { --nowtone: var(--tone-err); position: relative; overflow: hidden; display: grid; grid-template-columns: minmax(0,1fr) auto; gap: var(--md) var(--xl); align-items: stretch; margin-bottom: var(--us-gap); padding: var(--lg) var(--xl); border-radius: var(--radius-lg); border: 1px solid color-mix(in srgb, var(--nowtone) 35%, var(--border-light)); background: linear-gradient(90deg, color-mix(in srgb, var(--nowtone) 8%, transparent), transparent 46%), var(--surface-elevated); box-shadow: var(--elev-1), 0 16px 40px -18px color-mix(in srgb, var(--nowtone) 55%, transparent); transition: box-shadow var(--motion-med) var(--ease-out), border-color var(--motion-med) var(--ease-out); }
+.u1-now:hover { box-shadow: var(--elev-2), 0 18px 44px -18px color-mix(in srgb, var(--nowtone) 60%, transparent); }
+.u1-now.warn { --nowtone: var(--tone-warn); border-color: color-mix(in srgb, var(--tone-warn) 40%, var(--border-light)); }
+.u1-now.info { --nowtone: var(--tone-info); border-color: color-mix(in srgb, var(--tone-info) 35%, var(--border-light)); }
+/* the leading pulse dot becomes a haloed status node — emphasis without an edge bar */
+.u1-nowkick .us-dot { width: 10px; height: 10px; box-shadow: 0 0 0 4px color-mix(in srgb, var(--nowtone) 16%, transparent); }
+.u1-nowkick { display: flex; align-items: center; gap: 8px; flex-wrap: wrap; font-size: 9px; font-weight: 700; letter-spacing: .13em; text-transform: uppercase; color: var(--text-muted); }
+.u1-sevtag { padding: 2px 8px; border-radius: var(--radius-pill); font-size: 9px; font-weight: 700; letter-spacing: .08em; text-transform: uppercase; white-space: nowrap; }
+.u1-sevtag.err { color: var(--tone-err-text); background: color-mix(in srgb, var(--tone-err) 14%, transparent); }
+.u1-sevtag.warn { color: var(--tone-warn-text); background: color-mix(in srgb, var(--tone-warn) 15%, transparent); }
+.u1-sevtag.info { color: var(--tone-info-text); background: color-mix(in srgb, var(--tone-info) 14%, transparent); }
+.u1-sevtag.mute { color: var(--tone-mute-text); background: color-mix(in srgb, var(--tone-mute) 14%, transparent); }
+.u1-nowtitle { font-family: var(--display-font); font-weight: 700; font-size: 19px; line-height: 1.3; letter-spacing: .2px; color: var(--text-primary); margin: 7px 0 5px; min-width: 0; }
+.u1-nowbody { font-size: var(--fs-sm); color: var(--text-secondary); line-height: var(--lh-body); min-width: 0; }
+.u1-nowwhere { font-family: var(--mono-font); font-size: var(--fs-2xs); color: var(--text-muted); margin-top: 5px; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+.u1-nowstats { flex: none; display: flex; flex-direction: column; gap: var(--sm); justify-content: center; align-items: flex-end; text-align: right; border-left: 1px solid var(--border-light); padding-left: var(--xl); min-width: 150px; }
+.u1-nstat b { display: block; font-family: var(--display-font); font-weight: 700; font-size: var(--fs-lg); color: var(--nowtone); letter-spacing: .3px; max-width: 220px; }
+.u1-nstat span { font-size: 9px; font-weight: 700; letter-spacing: .1em; text-transform: uppercase; color: var(--text-muted); }
+.u1-nowacts { display: flex; gap: var(--sm); flex-wrap: wrap; margin-top: var(--md); }
+@media (max-width: 1000px) { .u1-now { grid-template-columns: minmax(0,1fr); } .u1-nowstats { border-left: none; padding-left: 0; border-top: 1px solid var(--border-light); padding-top: var(--md); align-items: flex-start; text-align: left; flex-direction: row; flex-wrap: wrap; gap: var(--md); } }
+
+.u1-deck { display: flex; flex-direction: column; gap: var(--sm); margin-bottom: var(--us-gap); }
+.u1-card { display: grid; grid-template-columns: 30px minmax(0,1fr); gap: var(--sm) var(--md); align-items: start; padding: var(--md) var(--lg) var(--md) var(--md); border: 1px solid var(--border-light); border-radius: var(--radius-md); background: linear-gradient(180deg, color-mix(in srgb, var(--sev, var(--tone-warn)) 5%, transparent), transparent 40%), var(--surface-elevated); min-width: 0; transition: transform var(--motion-fast) var(--ease-out), box-shadow var(--motion-fast) var(--ease-out), border-color var(--motion-fast) var(--ease-out); }
+.u1-card:hover { transform: translateX(3px); box-shadow: var(--elev-1), 0 12px 28px -16px color-mix(in srgb, var(--sev, var(--tone-warn)) 50%, transparent); border-color: color-mix(in srgb, var(--sev, var(--tone-warn)) 35%, var(--border-light)); }
+/* the rank column becomes a severity-tinted tile; a leading dot + wash carry severity instead of an edge bar */
+.u1-rank { font-family: var(--display-font); font-size: var(--fs-sm); font-weight: 700; color: var(--text-primary); text-align: center; letter-spacing: .05em; align-self: start; padding: 4px 0; border-radius: var(--radius-sm); background: color-mix(in srgb, var(--sev, var(--tone-warn)) 14%, transparent); transition: background var(--motion-fast) var(--ease-out); }
+.u1-c-kick::before { content: ''; width: 7px; height: 7px; border-radius: 50%; flex: none; background: var(--sev, var(--tone-warn)); box-shadow: 0 0 0 3px color-mix(in srgb, var(--sev, var(--tone-warn)) 16%, transparent); }
+/* flat/retro: status via tint + glyph + dot only — no colored ambient halo */
+:is([data-theme^="basic"], [data-theme^="retro"]) :is(.u1-band, .u1-now) { box-shadow: var(--elev-1); }
+:is([data-theme^="basic"], [data-theme^="retro"]) :is(.u1-card, .u1-now):hover { box-shadow: var(--elev-2); }
+[data-theme^="basic"] :is(.u1-band, .u1-now, .u1-card), [data-theme^="basic"] :is(.u1-card, .u1-now):hover { box-shadow: none; }
+:is([data-theme^="basic"], [data-theme^="retro"]) :is(.u1-tick::before, .u1-c-kick::before) { box-shadow: none; }
+:is([data-theme^="basic"], [data-theme^="retro"]) :is(.u1-kick i[data-ico], .u1-nowkick .us-dot, .u1-sigcol h4 svg) { box-shadow: none; }
+/* hover life: cues respond to their container (glows scoped to themes that allow them) */
+.u1-card:hover .u1-rank { background: color-mix(in srgb, var(--sev, var(--tone-warn)) 22%, transparent); }
+.u1-kick i[data-ico], .u1-c-kick::before { transition: box-shadow var(--motion-med) var(--ease-out); }
+.u1-nowkick .us-dot { transition: box-shadow var(--motion-med) var(--ease-out); }
+:is([data-theme^="friendly"], [data-theme^="glass"]) .u1-band:hover .u1-kick i[data-ico] { box-shadow: 0 0 0 4px color-mix(in srgb, var(--bt) 18%, transparent); }
+:is([data-theme^="friendly"], [data-theme^="glass"]) .u1-card:hover .u1-c-kick::before { box-shadow: 0 0 0 4px color-mix(in srgb, var(--sev, var(--tone-warn)) 24%, transparent); }
+:is([data-theme^="friendly"], [data-theme^="glass"]) .u1-now:hover .u1-nowkick .us-dot { box-shadow: 0 0 0 5px color-mix(in srgb, var(--nowtone) 20%, transparent); }
+/* flat themes keep hover feedback through a border tint instead of a glow */
+[data-theme^="basic"] .u1-band:hover { border-color: color-mix(in srgb, var(--bt) 45%, var(--border-light)); }
+[data-theme^="basic"] .u1-now:hover { border-color: color-mix(in srgb, var(--nowtone) 45%, var(--border-light)); }
+.u1-c-main { min-width: 0; grid-column: 2 / -1; }
+.u1-c-kick { display: flex; align-items: center; gap: 6px; flex-wrap: wrap; font-size: 9px; font-weight: 700; letter-spacing: .11em; text-transform: uppercase; color: var(--text-muted); margin-bottom: 3px; }
+.u1-c-kick .vs { text-transform: none; letter-spacing: 0; }
+.u1-c-title { font-family: var(--display-font); font-size: 14px; font-weight: 700; color: var(--text-primary); white-space: nowrap; overflow: hidden; text-overflow: ellipsis; min-width: 0; }
+.u1-c-sum { font-size: var(--fs-2xs); color: var(--text-secondary); line-height: var(--lh-body); margin-top: 2px; display: -webkit-box; -webkit-line-clamp: 2; -webkit-box-orient: vertical; overflow: hidden; min-width: 0; }
+.u1-sidetxt { font-family: var(--mono-font); font-size: var(--fs-2xs); color: var(--text-muted); white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+.u1-c-meta { grid-column: 2 / -1; display: flex; align-items: center; gap: 5px var(--md); flex-wrap: wrap; min-width: 0; }
+.u1-c-meta .u1-sidetxt { max-width: none; }
+.u1-c-meta .u1-mright { margin-left: auto; }
+.u1-c-meters { grid-column: 2 / -1; display: flex; flex-direction: column; gap: 6px; min-width: 0; }
+.u1-c-meters .us-meter { width: 100%; }
+.u1-c-act { grid-column: 2 / -1; display: flex; gap: var(--sm); flex-wrap: wrap; margin-top: 2px; }
+.u1-c-span { grid-column: 2 / -1; min-width: 0; }
+@media (max-width: 1000px) { .u1-card { grid-template-columns: 24px minmax(0,1fr); } }
+
+.u1-why { border: 1px solid var(--border-light); border-radius: var(--radius-sm); overflow: hidden; margin-top: var(--sm); }
+.u1-why-t { display: flex; align-items: center; gap: 6px; padding: 6px var(--md); font-size: var(--fs-2xs); font-weight: 700; color: var(--text-secondary); cursor: pointer; user-select: none; background: color-mix(in srgb, var(--text-primary) 3%, transparent); transition: color var(--motion-fast) var(--ease-out); }
+.u1-why-t:hover { color: var(--text-primary); }
+.u1-why-t .car { transition: transform var(--motion-fast) var(--ease-out); display: inline-flex; }
+.u1-why-t .car svg { width: 10px; height: 10px; }
+.u1-why.open .u1-why-t .car { transform: rotate(90deg); }
+.u1-why-b { display: grid; grid-template-rows: 0fr; opacity: 0; padding: 0 var(--md); transition: grid-template-rows var(--motion-med) var(--ease-out), opacity var(--motion-med) var(--ease-out), padding var(--motion-med) var(--ease-out); }
+.u1-why-b > * { overflow: hidden; min-height: 0; }
+.u1-why.open .u1-why-b { grid-template-rows: 1fr; opacity: 1; padding: var(--sm) var(--md) var(--md); }
+.u1-dgrid { display: grid; grid-template-columns: repeat(auto-fill, minmax(150px, 1fr)); gap: var(--sm); padding: 2px 0; }
+.u1-di { display: flex; flex-direction: column; gap: 2px; min-width: 0; }
+.u1-di b { font-size: 9px; color: var(--text-muted); text-transform: uppercase; letter-spacing: .05em; font-weight: 700; }
+.u1-di span { font-size: var(--fs-xs); color: var(--text-primary); overflow-wrap: anywhere; }
+
+.u1-clear { margin-bottom: var(--us-gap); border: 1px solid var(--border-light); border-radius: var(--radius-lg); background: var(--surface); overflow: hidden; }
+.u1-clearhead { display: flex; align-items: center; gap: var(--sm); padding: var(--md) var(--lg); min-height: var(--us-sec-h); cursor: pointer; user-select: none; transition: background var(--motion-fast) var(--ease-out); }
+.u1-clearhead:hover { background: color-mix(in srgb, var(--tone-ok) 5%, transparent); }
+.u1-clearico { color: var(--tone-ok); flex: none; }
+.u1-clearico svg { width: 13px; height: 13px; }
+.u1-cleart { font-family: var(--display-font); font-size: var(--fs-xs); font-weight: 700; letter-spacing: .12em; color: var(--text-secondary); white-space: nowrap; }
+.u1-clearm { flex: 1 1 auto; min-width: 0; font-size: var(--fs-2xs); color: var(--text-muted); white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+.u1-chev { color: var(--text-muted); flex: none; transition: transform var(--motion-med) var(--ease-default); }
+.u1-chev svg { width: 12px; height: 12px; }
+.u1-clear.open .u1-chev { transform: rotate(180deg); }
+.u1-clearbody { display: grid; grid-template-rows: 0fr; opacity: 0; padding: 0 var(--lg); transition: grid-template-rows var(--motion-med) var(--ease-out), opacity var(--motion-med) var(--ease-out), padding var(--motion-med) var(--ease-out); }
+.u1-clearbody > * { overflow: hidden; min-height: 0; }
+.u1-clear[data-acc].open .u1-clearbody { grid-template-rows: 1fr; opacity: 1; padding: var(--md) var(--lg) var(--lg); }
+.u1-cgroup { font-size: 9px; font-weight: 700; letter-spacing: .12em; text-transform: uppercase; color: var(--text-muted); margin-top: var(--xs); }
+.u1-clearrow { display: grid; grid-template-columns: minmax(130px,1.15fr) minmax(120px,1fr) minmax(120px,1.4fr) auto auto; gap: var(--sm) var(--md); align-items: center; padding: 5px 2px; border-bottom: 1px solid var(--border-light); font-size: var(--fs-2xs); color: var(--text-secondary); min-width: 0; transition: background var(--motion-fast) var(--ease-out); }
+.u1-clearrow:hover { background: color-mix(in srgb, var(--text-primary) 4%, transparent); }
+.u1-clearrow:last-of-type { border-bottom: none; }
+.u1-clearrow .nm { font-weight: 600; color: var(--text-secondary); white-space: nowrap; overflow: hidden; text-overflow: ellipsis; min-width: 0; }
+.u1-clearrow .wm { font-family: var(--mono-font); color: var(--text-muted); white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+.u1-clearrow .rs { font-family: var(--mono-font); color: var(--text-muted); white-space: nowrap; }
+@media (max-width: 1000px) { .u1-clearrow { grid-template-columns: minmax(110px,1fr) minmax(90px,1.2fr) auto; } .u1-clearrow .wm { display: none; } }
+
+.u1-coach { margin-bottom: var(--us-gap); border-radius: var(--radius-lg); border: 1px solid color-mix(in srgb, var(--tone-info) 22%, var(--border-light)); background: color-mix(in srgb, var(--tone-info) 4%, var(--surface-elevated)); box-shadow: var(--elev-1); min-width: 0; }
+.u1-coachhead { display: flex; align-items: center; gap: var(--sm); padding: var(--md) var(--lg); min-height: var(--us-sec-h); background: color-mix(in srgb, var(--tone-info) 8%, transparent); border-radius: var(--radius-lg) var(--radius-lg) 0 0; min-width: 0; }
+.u1-cico { width: 22px; height: 22px; flex: none; display: inline-flex; align-items: center; justify-content: center; border-radius: var(--radius-sm); background: color-mix(in srgb, var(--tone-info) 16%, transparent); color: var(--tone-info); }
+.u1-cico svg { width: 12px; height: 12px; }
+.u1-ctitle { font-family: var(--display-font); font-size: var(--fs-xs); font-weight: 700; letter-spacing: .1em; color: var(--text-primary); white-space: nowrap; overflow: hidden; text-overflow: ellipsis; min-width: 0; }
+.u1-cmeta { margin-left: auto; flex: none; font-family: var(--mono-font); font-size: var(--fs-2xs); color: var(--text-muted); white-space: nowrap; }
+.u1-coachbody { display: grid; grid-template-columns: minmax(230px,.85fr) minmax(0,1.6fr); gap: var(--md); padding: var(--md) var(--lg) var(--lg); min-width: 0; }
+.u1-coachl { display: flex; flex-direction: column; gap: var(--md); min-width: 0; }
+.u1-gradebox { display: flex; align-items: center; gap: var(--md); padding: var(--md) var(--lg); border: 1px solid var(--border-light); border-radius: var(--radius-md); background: var(--surface); transition: box-shadow var(--motion-fast) var(--ease-out); }
+.u1-gradebox:hover { box-shadow: var(--elev-1); }
+.u1-grade { font-family: var(--display-font); font-size: 36px; font-weight: 800; line-height: 1; color: var(--tone-ok); letter-spacing: .5px; }
+.u1-grademeta { display: flex; flex-direction: column; gap: 2px; font-size: var(--fs-2xs); color: var(--text-muted); min-width: 0; }
+.u1-grademeta b { font-family: var(--mono-font); font-size: var(--fs-sm); color: var(--text-primary); }
+.u1-comps { display: flex; flex-direction: column; gap: var(--sm); padding: var(--sm) var(--md); border: 1px solid var(--border-light); border-radius: var(--radius-md); background: var(--surface); }
+.u1-comp { display: flex; align-items: center; gap: var(--sm); min-width: 0; }
+.u1-comp .lb { flex: 0 0 108px; font-size: var(--fs-2xs); font-weight: 600; color: var(--text-secondary); white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+.u1-comp .wt { flex: none; font-family: var(--mono-font); font-size: 9px; color: var(--text-muted); width: 30px; text-align: right; }
+.u1-sigcols { display: grid; grid-template-columns: repeat(3, minmax(0,1fr)); gap: var(--md); min-width: 0; }
+@media (max-width: 480px) { .u1-sigcols { grid-template-columns: minmax(0,1fr); } }
+.u1-sigcol { border: 1px solid var(--border-light); border-radius: var(--radius-md); background: linear-gradient(180deg, color-mix(in srgb, var(--sc) 8%, transparent), transparent 34%), var(--surface); padding: var(--md); min-width: 0; transition: box-shadow var(--motion-fast) var(--ease-out); }
+.u1-sigcol:hover { box-shadow: var(--elev-1); }
+.u1-sigcol h4 { display: flex; align-items: center; gap: 6px; margin: 0 0 6px; font-size: 9px; font-weight: 700; letter-spacing: .13em; text-transform: uppercase; color: var(--text-secondary); }
+/* the header glyph becomes a tinted icon-chip — category reads without a top bar */
+.u1-sigcol h4 svg { width: 11px; height: 11px; padding: 5px; box-sizing: content-box; border-radius: var(--radius-sm); background: color-mix(in srgb, var(--sc) 16%, transparent); box-shadow: 0 0 0 3px color-mix(in srgb, var(--sc) 12%, transparent); transition: box-shadow var(--motion-fast) var(--ease-out); }
+:is([data-theme^="friendly"], [data-theme^="glass"]) .u1-sigcol:hover h4 svg { box-shadow: 0 0 0 4px color-mix(in srgb, var(--sc) 20%, transparent); }
+.u1-sigitem { display: flex; align-items: flex-start; gap: 6px; font-size: var(--fs-2xs); color: var(--text-secondary); line-height: var(--lh-body); padding: 5px 0; border-bottom: 1px solid color-mix(in srgb, var(--border-light) 60%, transparent); }
+.u1-sigitem:last-child { border-bottom: none; }
+.u1-sigitem .txt { flex: 1 1 auto; min-width: 0; }
+.u1-sigitem .save { flex: none; font-family: var(--mono-font); font-weight: 700; font-size: 9px; color: var(--tone-ok-text); background: color-mix(in srgb, var(--tone-ok) 12%, transparent); padding: 1px 6px; border-radius: var(--radius-pill); white-space: nowrap; }
+@media (max-width: 1150px) { .u1-coachbody { grid-template-columns: minmax(0,1fr); } }
+
+.u1-refkicker { display: flex; align-items: center; gap: var(--md); margin: 6px 0 var(--md); }
+.u1-refkicker .ln { flex: 1 1 auto; height: 1px; background: var(--border-light); min-width: 10px; }
+.u1-refkicker span:not(.ln) { flex: none; font-family: var(--mono-font); font-size: 9px; font-weight: 700; letter-spacing: .18em; text-transform: uppercase; color: var(--text-muted); }
+
+.u1-ref { position: relative; border: 1px solid var(--border-light); border-radius: var(--radius-lg); background: var(--surface); margin-bottom: var(--us-gap); min-width: 0; }
+.u1-ref::before { content: ''; position: absolute; left: 8px; right: 8px; top: 0; height: 1px; background: linear-gradient(90deg, transparent, color-mix(in srgb, var(--text-primary) 9%, transparent), transparent); pointer-events: none; }
+.u1-pair { display: grid; grid-template-columns: minmax(0,1fr) minmax(0,1fr); gap: var(--us-gap); align-items: start; margin-bottom: var(--us-gap); }
+.u1-pair > .u1-ref { margin-bottom: 0; }
+@media (max-width: 1150px) { .u1-pair { grid-template-columns: minmax(0,1fr); } .u1-pair > .u1-ref { margin-bottom: 0; } }
+.u1-refh { display: flex; align-items: center; flex-wrap: wrap; gap: var(--sm) var(--md); padding: var(--md) var(--lg); min-height: var(--us-sec-h); border-bottom: 1px solid var(--border-light); }
+.u1-refh .rico { width: 22px; height: 22px; flex: none; display: inline-flex; align-items: center; justify-content: center; border-radius: var(--radius-sm); background: color-mix(in srgb, var(--accent-primary) 14%, transparent); color: var(--accent-primary); box-shadow: 0 0 0 3px color-mix(in srgb, var(--accent-primary) 12%, transparent); }
+.u1-refh .rico svg { width: 12px; height: 12px; }
+.u1-refh .t { font-family: var(--display-font); font-size: var(--fs-xs); font-weight: 700; letter-spacing: .12em; text-transform: uppercase; color: var(--text-secondary); white-space: nowrap; }
+.u1-refh .m { margin-left: auto; flex: 0 1 auto; font-size: var(--fs-2xs); color: var(--text-muted); white-space: nowrap; overflow: hidden; text-overflow: ellipsis; min-width: 0; }
+.u1-refb { padding: var(--md) var(--lg) var(--lg); display: flex; flex-direction: column; gap: var(--us-row); min-width: 0; }
+
+.u1-winbtns { display: inline-flex; gap: 2px; border: 1px solid var(--border-light); border-radius: var(--radius-pill); padding: 2px; flex: none; }
+.u1-winbtns button { font-family: var(--mono-font); font-size: var(--fs-2xs); font-weight: 700; padding: 2px 9px; border-radius: var(--radius-pill); color: var(--text-muted); cursor: pointer; transition: all var(--motion-fast) var(--ease-out); }
+.u1-winbtns button:hover { color: var(--text-primary); }
+.u1-winbtns button.on { color: var(--accent-primary); background: var(--accent-soft); }
+.u1-chartwrap { position: relative; padding-top: var(--sm); }
+.u1-gridlines { position: absolute; left: 0; right: 0; bottom: 16px; height: 122px; pointer-events: none; }
+.u1-gridlines i { position: absolute; left: 0; right: 0; height: 1px; background: color-mix(in srgb, var(--text-primary) 9%, transparent); }
+.u1-gridlines .u1-bline { position: absolute; left: 0; right: 0; height: 0; border-top: 2px solid color-mix(in srgb, var(--tone-err) 55%, transparent); z-index: 3; }
+.u1-gridlines .u1-bline span { position: absolute; right: 0; top: -15px; font-size: 8px; font-weight: 700; letter-spacing: .07em; color: var(--tone-err-text); text-transform: uppercase; white-space: nowrap; }
+.u1-chart { display: flex; align-items: flex-end; gap: 5px; height: 150px; position: relative; }
+.u1-col { flex: 1 1 0; min-width: 0; display: flex; flex-direction: column; gap: 3px; position: relative; }
+.u1-colstack { display: flex; flex-direction: column-reverse; height: 122px; gap: 1px; }
+.u1-colstack i { display: block; width: 100%; border-radius: var(--radius-xs); background: currentColor; height: 0; transition: height .7s var(--ease-smooth); min-height: 0; }
+.u1-colstack .s-inp { color: var(--ser-inp); } .u1-colstack .s-out { color: var(--ser-out); }
+.u1-colstack .s-rea { color: var(--ser-rea); } .u1-colstack .s-cache { color: var(--ser-cache); }
+.u1-col b { font-size: 9px; font-weight: 600; color: var(--text-muted); text-align: center; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+.u1-col .tip { position: absolute; bottom: calc(100% + 4px); left: 50%; transform: translateX(-50%); background: var(--surface-elevated); border: 1px solid var(--border-light); padding: 4px 8px; border-radius: var(--radius-sm); font-size: var(--fs-2xs); color: var(--text-primary); white-space: nowrap; pointer-events: none; opacity: 0; transition: opacity var(--motion-fast) var(--ease-out); z-index: 10; box-shadow: var(--elev-2); }
+.u1-col:hover .tip { opacity: 1; }
+.u1-legend { display: flex; gap: var(--md); flex-wrap: wrap; font-size: var(--fs-2xs); color: var(--text-secondary); margin-top: var(--sm); }
+.u1-legend span { display: inline-flex; align-items: center; gap: 4px; cursor: pointer; transition: opacity var(--motion-fast) var(--ease-out); }
+.u1-legend span.muted { opacity: .3; }
+.u1-swatch { width: 9px; height: 9px; border-radius: var(--radius-xs); display: inline-block; }
+
+.u1-spendrow { display: flex; align-items: baseline; gap: var(--md); flex-wrap: wrap; }
+.u1-spend-sub { font-size: var(--fs-2xs); color: var(--text-muted); }
+.u1-donuts { display: flex; gap: var(--md) var(--lg); flex-wrap: wrap; align-items: flex-end; margin-top: var(--sm); }
+.u1-donut { display: flex; flex-direction: column; align-items: center; gap: 4px; min-width: 62px; }
+.u1-donut svg { width: 62px; height: 62px; }
+.u1-donut .dbg { fill: none; stroke: var(--border-light); stroke-width: 6; }
+.u1-donut .dfill { fill: none; stroke-width: 6; stroke-linecap: round; transform: rotate(-90deg); transform-origin: center; transition: stroke-dashoffset 1.1s var(--ease-smooth); }
+.u1-donut text { font-family: var(--display-font); font-size: 12px; font-weight: 700; fill: var(--text-primary); text-anchor: middle; dominant-baseline: central; }
+.u1-donut small { font-size: var(--fs-2xs); color: var(--text-secondary); max-width: 82px; text-align: center; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+.u1-presets { display: flex; align-items: center; gap: var(--sm); flex-wrap: wrap; margin-top: var(--sm); }
+.u1-presets .k { font-size: var(--fs-2xs); color: var(--text-muted); }
+.u1-pchip { padding: 2px 10px; border-radius: var(--radius-pill); border: 1px solid var(--border-light); font-size: var(--fs-2xs); font-weight: 700; color: var(--text-muted); cursor: pointer; transition: all var(--motion-fast) var(--ease-out); font-family: var(--mono-font); }
+.u1-pchip:hover { color: var(--text-primary); border-color: var(--border); transform: translateY(-1px); }
+.u1-pchip.on { color: var(--accent-primary); background: var(--accent-soft); border-color: color-mix(in srgb, var(--accent-primary) 40%, transparent); }
+.u1-pchip:active, .u1-winbtns button:active { transform: scale(.95); }
+
+.u1-crow { display: grid; grid-template-columns: minmax(110px,1.1fr) auto 1.3fr auto auto; gap: var(--sm) var(--md); align-items: center; padding: 6px 2px; border-bottom: 1px solid var(--border-light); font-size: var(--fs-xs); min-width: 0; }
+.u1-crow:last-of-type { border-bottom: none; }
+.u1-cname { color: var(--text-primary); font-weight: 600; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; min-width: 0; }
+.u1-cnums { font-family: var(--mono-font); font-size: var(--fs-2xs); color: var(--text-secondary); white-space: normal; overflow-wrap: anywhere; text-align: right; }
+.u1-csave { font-family: var(--mono-font); font-weight: 700; color: var(--tone-ok-text); white-space: nowrap; text-align: right; }
+.u1-csave.zero { color: var(--text-secondary); } .u1-csave.na { color: var(--text-muted); font-weight: 500; }
+.u1-cnote { grid-column: 1 / -1; font-size: var(--fs-2xs); color: var(--text-muted); line-height: var(--lh-body); margin-top: -2px; padding-left: 2px; }
+@media (max-width: 1000px) { .u1-crow { grid-template-columns: minmax(100px,1fr) auto auto; } .u1-crow .us-meter { grid-column: 1 / -1; } }
+
+.u1-fam { display: grid; grid-template-columns: minmax(130px,1.1fr) 1.4fr auto; gap: var(--sm) var(--md); align-items: center; padding: 4px 2px; min-width: 0; }
+.u1-fam-name { font-size: var(--fs-xs); color: var(--text-primary); font-weight: 600; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; min-width: 0; }
+.u1-fam-tok { font-family: var(--mono-font); font-size: var(--fs-2xs); color: var(--text-muted); text-align: right; white-space: nowrap; }
+
+.u1-accts { display: grid; grid-template-columns: repeat(auto-fit, minmax(255px, 1fr)); gap: var(--md); }
+.u1-acct { display: flex; flex-direction: column; gap: 6px; padding: var(--md); background: var(--surface-elevated); border-radius: var(--radius-md); border: 1px solid var(--border-light); min-width: 0; transition: border-color var(--motion-fast) var(--ease-out), box-shadow var(--motion-fast) var(--ease-out); }
+.u1-acct:hover { box-shadow: var(--elev-1); }
+.u1-acct.effective { border-color: color-mix(in srgb, var(--tone-ok) 45%, transparent); }
+.u1-acct-h { display: flex; align-items: center; gap: var(--sm); flex-wrap: wrap; min-width: 0; }
+.u1-acct-name { font-family: var(--display-font); font-size: 14px; font-weight: 700; color: var(--text-primary); white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+.u1-acct-mail { font-size: var(--fs-2xs); color: var(--text-muted); font-family: var(--mono-font); white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+.u1-acct-status { font-size: var(--fs-xs); color: var(--text-secondary); display: flex; align-items: center; gap: 7px; line-height: var(--lh-body); min-width: 0; }
+.u1-acct-status .st { flex: 1 1 auto; min-width: 0; }
+.u1-cd { font-family: var(--mono-font); font-weight: 700; font-size: var(--fs-sm); color: var(--tone-warn); letter-spacing: .05em; }
+.u1-marker { display: inline-flex; align-items: center; gap: 4px; font-size: var(--fs-2xs); font-weight: 700; padding: 1px 8px; border-radius: var(--radius-pill); white-space: nowrap; }
+.u1-marker.req { background: color-mix(in srgb, var(--tone-info) 14%, transparent); color: var(--tone-info-text); }
+.u1-marker.eff { background: color-mix(in srgb, var(--tone-ok) 14%, transparent); color: var(--tone-ok-text); }
+.u1-acct-note { font-size: var(--fs-2xs); color: var(--text-muted); line-height: var(--lh-body); }
+
+.u1-lctrl { display: flex; gap: var(--sm); flex-wrap: wrap; align-items: center; margin-bottom: var(--sm); }
+.u1-lsearch { flex: 1 1 160px; max-width: 280px; }
+.u1-live { display: inline-flex; align-items: center; gap: 6px; font-size: var(--fs-2xs); color: var(--tone-ok-text); font-weight: 700; white-space: nowrap; }
+.u1-caret { cursor: pointer; color: var(--text-muted); width: 18px; text-align: center; user-select: none; display: inline-block; transition: transform var(--motion-fast) var(--ease-out); }
+.u1-caret.open { transform: rotate(90deg); }
+.u1-detail td { background: var(--surface); white-space: normal; }
+
+.u1-prov { display: grid; grid-template-columns: minmax(0,1.1fr) minmax(0,.9fr); gap: var(--lg); min-width: 0; }
+@media (max-width: 1000px) { .u1-prov { grid-template-columns: minmax(0,1fr); } }
+.u1-asof { display: flex; flex-direction: column; gap: 4px; padding: var(--sm) var(--md); border: 1px solid var(--border-light); border-radius: var(--radius-md); background: var(--surface-elevated); }
+.u1-asof .row { display: flex; align-items: baseline; justify-content: space-between; gap: var(--sm); font-size: var(--fs-2xs); min-width: 0; }
+.u1-asof .row .k { color: var(--text-muted); text-transform: uppercase; letter-spacing: .08em; font-size: 9px; font-weight: 700; white-space: nowrap; }
+.u1-asof .row .v { font-family: var(--mono-font); color: var(--text-primary); white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+.u1-attr { display: flex; align-items: center; gap: var(--sm); padding: 3px 2px; min-width: 0; }
+.u1-attr .nm { flex: 0 0 110px; font-size: var(--fs-2xs); color: var(--text-secondary); white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+.u1-attr .pc { flex: none; width: 34px; text-align: right; font-family: var(--mono-font); font-size: var(--fs-2xs); color: var(--text-primary); font-weight: 700; }
+
+.u1-btn { display: inline-flex; align-items: center; gap: 6px; padding: 5px 13px; border-radius: var(--radius-pill); border: 1px solid var(--border-light); background: transparent; color: var(--text-secondary); font-size: var(--fs-2xs); font-weight: 700; cursor: pointer; transition: all var(--motion-fast) var(--ease-out); font-family: var(--body-font); white-space: nowrap; }
+.u1-btn svg { width: 11px; height: 11px; }
+.u1-btn:hover { color: var(--text-primary); border-color: var(--border); background: var(--accent-soft); transform: translateY(-1px); }
+.u1-btn.primary { color: var(--accent-primary); background: var(--accent-soft); border-color: transparent; }
+.u1-btn.danger { color: var(--tone-err-text); border-color: color-mix(in srgb, var(--tone-err) 35%, transparent); }
+.u1-btn.danger:hover { background: color-mix(in srgb, var(--tone-err) 9%, transparent); border-color: color-mix(in srgb, var(--tone-err) 55%, transparent); }
+.u1-btn:active { transform: scale(.97); }
+.u1-noact { font-size: var(--fs-2xs); color: var(--text-muted); font-style: italic; }
+
+[data-theme^="retro"] .u1-band, [data-theme^="retro"] .u1-now { border-width: 2px; }
+[data-theme^="basic"] .u1-band::after, [data-theme^="basic"] .u1-card:hover, [data-theme^="basic"] .u1-tick:hover { transform: none; }
+[data-theme^="basic"] .u1-band::after { display: none; }
+</style>
+</head>
+<body>
+<div id="app"></div>
+
+<template id="usage-page">
+  <div class="us-page u1">
+
+    <header class="us-head">
+      <h1 class="us-head-title">Usage</h1>
+      <div class="us-head-sub">AI cost &amp; usage for <b>Tastebook</b> — sorted by what needs you first. Refreshes every <b>5 min</b> · history kept <b>90 days</b></div>
+      <span class="us-fresh" id="u1Fresh"><span class="d"></span><span id="u1FreshTxt"></span></span>
+      <div class="us-head-acts">
+        <button class="us-hbtn" id="u1Refresh" title="Refresh usage projections" aria-label="Refresh usage projections"><i data-ico="refresh" class="pm-ico"></i></button>
+        <button class="us-hbtn primary" title="Export usage as JSON" aria-label="Export usage as JSON"><i data-ico="exportIc" class="pm-ico"></i></button>
+      </div>
+    </header>
+
+    <div class="us-scroll">
+
+      <section class="u1-band" id="u1Band" aria-label="Triage status line">
+        <div class="u1-band-l">
+          <div class="u1-kick"><i data-ico="activity" class="pm-ico sm"></i><span id="u1Kick">SITUATION</span></div>
+          <div class="u1-sit" id="u1Sit"></div>
+          <div class="u1-tally" id="u1Tally"></div>
+        </div>
+        <div class="u1-band-r">
+          <div class="u1-spendmain">
+            <span class="u1-spendbig" id="u1SpendBig" data-counter="14.27" data-prefix="$">$0.00</span>
+            <span class="u1-spendlbl" id="u1SpendLbl"></span>
+          </div>
+          <div class="u1-reads" id="u1Reads"></div>
+        </div>
+      </section>
+
+      <div class="u1-sec-tag"><span class="u1-tagline err" id="u1NowTag">NOW</span><span class="u1-tagmeta" id="u1NowMeta">the single most urgent item</span><span class="u1-sepline"></span></div>
+      <div id="u1Now"></div>
+
+      <div class="u1-sec-tag"><span class="u1-tagline warn">DECK</span><span class="u1-tagmeta">severity-ranked concerns — handled top to bottom</span><span class="u1-sepline"></span><span class="u1-tagcount" id="u1DeckCount"></span></div>
+      <div class="u1-deck" id="u1Deck"></div>
+
+      <section class="u1-clear" data-acc aria-label="All clear — healthy providers">
+        <div class="u1-clearhead" data-collapse>
+          <span class="u1-clearico"><i data-ico="check" class="pm-ico sm"></i></span>
+          <span class="u1-cleart">ALL CLEAR</span>
+          <span class="u1-clearm" id="u1ClearMeta"></span>
+          <span class="u1-chev"><i data-ico="chevD" class="pm-ico sm"></i></span>
+        </div>
+        <div class="u1-clearbody" id="u1ClearBody"></div>
+      </section>
+
+      <section class="u1-coach" aria-label="Coaching — what to do next">
+        <div class="u1-coachhead">
+          <span class="u1-cico"><i data-ico="spark" class="pm-ico sm"></i></span>
+          <span class="u1-ctitle">COACHING — WHAT TO DO NEXT</span>
+          <span class="u1-cmeta" id="u1GradeMeta"></span>
+        </div>
+        <div class="u1-coachbody">
+          <div class="u1-coachl">
+            <div class="u1-gradebox">
+              <span class="u1-grade" id="u1Grade"></span>
+              <span class="u1-grademeta" id="u1GradeBox"></span>
+            </div>
+            <div class="u1-comps" id="u1Comps"></div>
+          </div>
+          <div class="u1-sigcols" id="u1Sigs"></div>
+        </div>
+      </section>
+
+      <div class="u1-refkicker"><span class="ln"></span><span>REFERENCE — FULL PICTURE, NO URGENCY</span><span class="ln"></span></div>
+
+      <div class="u1-pair">
+        <section class="u1-ref" aria-label="Token analytics">
+          <div class="u1-refh">
+            <span class="rico"><i data-ico="trend" class="pm-ico sm"></i></span>
+            <span class="t">Token analytics</span>
+            <span class="m" id="u1ChartMeta"></span>
+            <span class="u1-winbtns" id="u1ChartWin"></span>
+          </div>
+          <div class="u1-refb">
+            <div class="u1-chartwrap">
+              <div class="u1-gridlines" id="u1Grid" aria-hidden="true"></div>
+              <div class="u1-chart" id="u1Chart"></div>
+            </div>
+            <div class="u1-legend" id="u1Legend"></div>
+          </div>
+        </section>
+
+        <section class="u1-ref" aria-label="Budget and spend">
+          <div class="u1-refh">
+            <span class="rico"><i data-ico="pie" class="pm-ico sm"></i></span>
+            <span class="t">Budget &amp; spend</span>
+            <span class="m" id="u1BudgetMeta"></span>
+          </div>
+          <div class="u1-refb">
+            <div class="u1-spendrow">
+              <span class="us-big" id="u1BudgetSpend" data-counter="187.42" data-prefix="$">$0.00</span>
+              <span class="u1-spend-sub">spent MTD of <b class="us-cost" id="u1BudgetLimit"></b> limit · projected <b class="us-cost" id="u1BudgetProj"></b> by month end</span>
+            </div>
+            <div class="u1-donuts" id="u1Donuts"></div>
+            <div class="u1-presets" id="u1Presets"></div>
+            <div class="us-foot" style="margin-top:var(--sm)"><i data-ico="info" class="pm-ico sm"></i><span id="u1PolicyFoot"></span></div>
+          </div>
+        </section>
+      </div>
+
+      <div class="u1-pair">
+        <section class="u1-ref" aria-label="Prompt-cache savings">
+          <div class="u1-refh">
+            <span class="rico"><i data-ico="layers" class="pm-ico sm"></i></span>
+            <span class="t">Prompt-cache savings</span>
+            <span class="m" id="u1CacheMeta">zero ≠ unsupported</span>
+          </div>
+          <div class="u1-refb" id="u1Cache"></div>
+        </section>
+
+        <section class="u1-ref" aria-label="Context budget">
+          <div class="u1-refh">
+            <span class="rico"><i data-ico="inbox" class="pm-ico sm"></i></span>
+            <span class="t">Context budget by source</span>
+            <span class="m" id="u1CtxMeta"></span>
+          </div>
+          <div class="u1-refb" id="u1Context"></div>
+        </section>
+      </div>
+
+      <section class="u1-ref" aria-label="Tool usage">
+        <div class="u1-refh">
+          <span class="rico"><i data-ico="chip" class="pm-ico sm"></i></span>
+          <span class="t">Tool usage</span>
+          <span class="m">latency p50/p95 · error rate · index_used · last 24h</span>
+        </div>
+        <div class="u1-refb" id="u1Tools"></div>
+      </section>
+
+      <section class="u1-ref" aria-label="Accounts and pressure">
+        <div class="u1-refh">
+          <span class="rico"><i data-ico="users" class="pm-ico sm"></i></span>
+          <span class="t">Accounts &amp; pressure</span>
+          <span class="m" id="u1AcctCount"></span>
+        </div>
+        <div class="u1-refb" id="u1Accounts"></div>
+      </section>
+
+      <section class="u1-ref" aria-label="Event ledger">
+        <div class="u1-refh">
+          <span class="rico"><i data-ico="clipboard" class="pm-ico sm"></i></span>
+          <span class="t">Event ledger</span>
+          <span class="m" id="u1LedgerCount"></span>
+        </div>
+        <div class="u1-refb">
+          <div class="u1-lctrl">
+            <label class="pm-input u1-lsearch"><i data-ico="search" class="pm-ico sm"></i><input id="u1LedgerSearch" type="text" placeholder="Search platform, model, run, lane…" aria-label="Search ledger"></label>
+            <div class="pm6-tb-menu-wrap" id="u1PlatWrap">
+              <button type="button" class="pm6-tb-menu-trigger" aria-controls="u1PlatMenu"><span class="pm6-tb-menu-label" id="u1PlatLabel">All platforms</span><i data-ico="chevD" class="pm-ico sm"></i></button>
+              <div class="pm6-tb-menu" id="u1PlatMenu" role="menu" aria-label="Filter platform" data-pm-menu-select></div>
+            </div>
+            <div class="pm6-tb-menu-wrap" id="u1RepWrap">
+              <button type="button" class="pm6-tb-menu-trigger" aria-controls="u1RepMenu"><span class="pm6-tb-menu-label" id="u1RepLabel">Any reporting</span><i data-ico="chevD" class="pm-ico sm"></i></button>
+              <div class="pm6-tb-menu" id="u1RepMenu" role="menu" aria-label="Filter reporting" data-pm-menu-select></div>
+            </div>
+            <button class="u1-btn" id="u1LedgerJson" data-demo-action="usage.export_json" data-demo-arg="Ledger exported as JSON (demo)"><i data-ico="braces" class="pm-ico sm"></i>JSON</button>
+            <span class="u1-live" style="margin-left:auto"><span class="us-dot ok pulse"></span>live — new events append as the run works</span>
+          </div>
+          <div class="us-tblwrap" style="max-height:380px">
+            <table class="us-tbl">
+              <thead><tr>
+                <th style="width:20px" aria-label="Expand"></th>
+                <th>Time</th><th>Event</th><th>Run · lane</th><th>Platform</th><th>Model</th>
+                <th class="num">In</th><th class="num">Out</th><th class="num">Cache r</th>
+                <th>Report</th><th class="num">Cost</th>
+              </tr></thead>
+              <tbody id="u1LedgerBody"></tbody>
+            </table>
+          </div>
+          <div class="us-foot" style="margin-top:var(--sm)"><i data-ico="info" class="pm-ico sm"></i><span id="u1LedgerFoot"></span></div>
+        </div>
+      </section>
+
+      <section class="u1-ref" aria-label="Provenance and counting rules">
+        <div class="u1-refh">
+          <span class="rico"><i data-ico="book" class="pm-ico sm"></i></span>
+          <span class="t">Provenance &amp; counting rules</span>
+          <span class="m">missing ≠ zero · every number carries its state</span>
+        </div>
+        <div class="u1-refb">
+          <div class="u1-prov">
+            <div style="min-width:0">
+              <div class="u1-asof" id="u1AsOf"></div>
+              <div class="us-foot" style="margin:var(--sm) 0 var(--xs)"><i data-ico="info" class="pm-ico sm"></i><span>Disabled, not-exposed, hidden and unknown are <b>states</b>, never zero. A missing bar is explained by its chip — it is never assumed to be empty headroom.</span></div>
+              <div class="u1-cgroup" style="margin-bottom:2px">WHAT COUNTS AS SPEND</div>
+              <div id="u1WC"></div>
+            </div>
+            <div style="min-width:0">
+              <div class="u1-cgroup" style="margin-bottom:4px">WHERE THE SPEND WENT</div>
+              <div id="u1Attr"></div>
+              <div class="us-foot" style="margin-top:var(--sm)"><i data-ico="history" class="pm-ico sm"></i><span id="u1BasisNote"></span></div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <div class="us-foot" style="padding:0 2px var(--md)"><i data-ico="help" class="pm-ico sm"></i><span>Signal sorts the canonical UsageRecord projections by severity — blocked before pressure before watch. Costs are list-rate estimates; your actual bill may differ. As of <b>14:42</b> · next auto-refresh <b>14:47</b>.</span></div>
+    </div>
+  </div>
+</template>
+
+<script src="_shared/icons.js"></script>
+<script src="_shared/usage-icons.js"></script>
+<script src="_shared/usage-data.js"></script>
+<script src="_shared/menu.js"></script>
+<script src="_shared/usage-chrome.js"></script>
+<script>
+PMUsageChrome.boot({ badge: { id: 'U1', name: 'Signal' } });
+
+(function () {
+  'use strict';
+  var D = window.USAGE, fmt = window.USfmt, R = window.USrender;
+  function $(id) { return document.getElementById(id); }
+  function rewire() { if (window.PMUsageShell && window.PMUsageShell.wireDemoActions) window.PMUsageShell.wireDemoActions(document); }
+
+  function whyHTML(g, i, prefix) {
+    return '<div class="u1-why" data-why="' + prefix + i + '"><div class="u1-why-t"><span class="car">' + R.ic('chevR') + '</span>Why was this ' + g.state + '?</div>' +
+      '<div class="u1-why-b"><div class="u1-dgrid">' + g.why.map(function (kv) { return '<div class="u1-di"><b>' + kv[0] + '</b><span>' + kv[1] + '</span></div>'; }).join('') + '</div></div></div>';
+  }
+  function wireWhy(scope) {
+    (scope || document).querySelectorAll('.u1-why-t').forEach(function (t) {
+      if (t._wired) return; t._wired = true;
+      t.addEventListener('click', function () { t.parentElement.classList.toggle('open'); });
+    });
+  }
+  function pickStat(g, keys) {
+    for (var i = 0; i < keys.length; i++) {
+      for (var j = 0; j < g.why.length; j++) { if (g.why[j][0] === keys[i]) return g.why[j]; }
+    }
+    return g.why[0];
+  }
+  function altQuota(exclId) {
+    var c = D.quotas.filter(function (q) { return q.used != null && q.vs === 'measured' && q.id !== exclId; })
+      .sort(function (a, b) { return a.used - b.used; })[0];
+    return c || null;
+  }
+  function routeBtn(label, arg) {
+    return '<button class="u1-btn" data-demo-action="usage.route" data-demo-arg="' + arg + '">' + R.ic('swap') + label + '</button>';
+  }
+
+  /* ---------------- triage model: merge guards + quotas + accounts, rank by severity ---------------- */
+  function buildItems() {
+    var items = [];
+    D.guards.forEach(function (g, i) {
+      var sevW = { high: 3, medium: 2, low: 1 }[g.severity] || 1;
+      var it = { type: 'guard', g: g, gi: i, title: g.title, sum: g.body, where: g.where + ' · ' + g.t };
+      if (g.state === 'blocked') { it.rank = 0; it.tone = 'err'; it.tag = 'BLOCKED'; it.v = 100 + sevW; it.chip = R.chip('blocked'); }
+      else if (g.state === 'warn') { it.rank = 1; it.tone = 'warn'; it.tag = 'WARN'; it.v = 60 + sevW; it.chip = R.chip('estimated'); }
+      else if (g.state === 'watch') { it.rank = 2; it.tone = 'info'; it.tag = 'WATCH'; it.v = 46 + sevW; it.chip = R.chip('local_estimated'); }
+      else { it.rank = 2; it.tone = 'mute'; it.tag = 'ALLOWED'; it.v = 40 + sevW; it.chip = R.chip('measured'); }
+      items.push(it);
+    });
+    D.quotas.forEach(function (q) {
+      if (q.used == null || q.used < 70) return;
+      var it = { type: 'quota', q: q, title: q.name + ' — ' + q.used + '% of its ' + q.win + ' window used', sum: q.note || (q.plan + ' · ' + q.kind), where: q.plan + ' · ' + q.kind + ' · ' + q.win + ' window · resets ' + (q.reset || 'unknown') };
+      if (q.used >= 90) { it.rank = 0; it.tone = 'err'; it.tag = q.used + '% WINDOW'; it.v = q.used; }
+      else { it.rank = 1; it.tone = 'warn'; it.tag = q.used + '% WINDOW'; it.v = q.used; }
+      it.chip = R.chip(q.vs);
+      items.push(it);
+    });
+    D.accounts.forEach(function (a, i) {
+      if (a.pressure === 'ok') return;
+      var it = { type: 'acct', a: a, ai: i, title: a.prov + ' · ' + a.name + ' — ' + a.pressure.replace(/_/g, ' '), sum: a.status, where: a.mail + (a.lastValidated ? ' · validated ' + a.lastValidated + ' ago' : '') };
+      if (a.pressure === 'exhausted') { it.rank = 0; it.tone = 'err'; it.tag = 'EXHAUSTED'; it.v = 95; it.chip = R.chip('failed'); }
+      else if (a.pressure === 'cooldown') { it.rank = 1; it.tone = 'warn'; it.tag = 'COOLDOWN'; it.v = 84; it.chip = R.chip('blocked'); }
+      else { it.rank = 1; it.tone = 'warn'; it.tag = 'APPROACHING'; it.v = 88; it.chip = R.chip('estimated'); }
+      items.push(it);
+    });
+    items.sort(function (x, y) { return x.rank - y.rank || y.v - x.v; });
+    return items;
+  }
+  function sideHTML(it) {
+    if (it.type === 'quota') {
+      var q = it.q;
+      return '<span class="u1-sidetxt">' + R.ic('timer') + ' resets ' + (q.reset === 'unknown' || !q.reset ? 'unknown' : q.reset) + '</span>';
+    }
+    if (it.type === 'acct') {
+      var a = it.a;
+      var cd = a.cooldownSec != null ? '<span class="u1-sidetxt"><span class="u1-cd" data-cd-idx="' + it.ai + '">' + R.fmtCd(a.cooldownSec) + '</span></span>' : '';
+      var extra = a.pressure === 'approaching_threshold' ? '<span class="u1-sidetxt">' + (D.quotas.filter(function (q) { return q.id === 'copilot'; })[0] || {}).premiumLeft + ' premium left</span>' : '';
+      return cd + extra + '<span class="u1-sidetxt">' + (a.resetAt ? 'back at ' + a.resetAt : (a.lastValidated ? 'validated ' + a.lastValidated + ' ago' : '')) + '</span>';
+    }
+    var st = pickStat(it.g, ['Observed', 'Cost avoided', 'Hit rate', 'Confidence']);
+    return '<span class="u1-sidetxt" style="font-weight:700;color:var(--text-primary)">' + st[1] + '</span><span class="u1-sidetxt">' + st[0] + '</span>';
+  }
+  function actsHTML(it) {
+    if (it.type === 'guard') {
+      var g = it.g;
+      if (g.state === 'blocked') {
+        return '<button class="u1-btn primary" data-demo-action="usage.anomaly_keep" data-demo-arg="Keep blocking ' + g.kind + ' on node n-19">' + R.ic('shieldCk') + 'Looks right — keep blocking</button>' +
+          '<button class="u1-btn" data-demo-action="usage.anomaly_allow" data-demo-arg="Allow once: ' + g.kind + '">' + R.ic('play') + 'It was expected — allow once</button>';
+      }
+      if (g.state === 'warn') return '<button class="u1-btn" data-demo-action="usage.cache_stabilize" data-demo-arg="Stabilize system-prompt prefix order on lane-c-frontend">' + R.ic('pin') + 'Stabilize prefix order</button>';
+      if (g.state === 'watch') return '<button class="u1-btn" data-demo-action="usage.guard_ack" data-demo-arg="Acknowledged: ' + g.kind + ' estimator active">' + R.ic('check') + 'Acknowledge</button>';
+      return '<span class="u1-noact">no action needed — below the 3.0× limit</span>';
+    }
+    if (it.type === 'acct') {
+      var a = it.a;
+      if (a.pressure === 'cooldown') {
+        var sib = D.accounts.filter(function (x) { return x.prov === a.prov && x.pressure === 'ok'; })[0];
+        return routeBtn(sib ? 'Route to ' + sib.name : 'Route ' + a.prov + ' work elsewhere', 'Route ' + a.prov + ' work to ' + (sib ? sib.name : 'another account') + ' until ' + (a.resetAt || 'cooldown ends'));
+      }
+      var alt = altQuota('copilot');
+      return routeBtn('Route new work to ' + (alt ? alt.name : 'another provider'), 'Route new ' + a.prov + ' work to ' + (alt ? alt.name : 'another provider') + ' (premium requests nearly exhausted)');
+    }
+    var q = it.q, alt2 = altQuota(q.id);
+    return routeBtn('Route to ' + (alt2 ? alt2.name : 'another provider'), 'Route new ' + q.name + ' work to ' + (alt2 ? alt2.name + ' (' + alt2.used + '% used)' : 'another provider'));
+  }
+
+  /* ---------------- status line ---------------- */
+  function renderBand(items) {
+    var act = items.filter(function (i) { return i.rank === 0; }).length;
+    var press = items.filter(function (i) { return i.rank === 1; }).length;
+    var watch = items.filter(function (i) { return i.rank === 2; }).length;
+    var calm = D.quotas.filter(function (q) { return q.used != null && q.used < 70; }).length;
+    var unread = D.quotas.filter(function (q) { return q.used == null; }).length;
+    $('u1Band').classList.toggle('calm', act === 0);
+    $('u1Kick').textContent = 'SITUATION · AS OF ' + D.asOf + ' · NEXT AUTO-REFRESH ' + D.nextAutoRefresh;
+    var parts = [];
+    var blockedG = D.guards.filter(function (g) { return g.state === 'blocked'; }).length;
+    if (blockedG) parts.push('<b class="hot">' + blockedG + ' guard blocking spend</b>');
+    var hot = D.quotas.filter(function (q) { return q.used != null && q.used >= 90; }).length;
+    if (hot) parts.push('<b class="hot">' + hot + ' provider past 90% of its window</b>');
+    var ap = D.accounts.filter(function (a) { return a.pressure !== 'ok'; }).length;
+    if (ap) parts.push('<b class="warm">' + ap + ' accounts under pressure</b>');
+    var warmQ = D.quotas.filter(function (q) { return q.used != null && q.used >= 70 && q.used < 90; }).length;
+    if (warmQ) parts.push('<b class="warm">' + warmQ + ' quota crossing its window</b>');
+    $('u1Sit').innerHTML = parts.length
+      ? parts.join(' · ') + ' <span class="quiet">— ' + calm + ' providers calm, ' + unread + ' unreadable-by-design.</span>'
+      : 'All quiet — no guards, no pressure, every readable provider inside its window.';
+    var ticks = [
+      { n: act, l: 'needs action', t: 'var(--tone-err)' },
+      { n: press, l: 'pressure', t: 'var(--tone-warn)' },
+      { n: watch, l: 'watch', t: 'var(--tone-info)' },
+      { n: calm, l: 'calm', t: 'var(--tone-ok)' },
+      { n: unread, l: 'unreadable', t: 'var(--tone-mute)' }
+    ];
+    $('u1Tally').innerHTML = ticks.map(function (k) {
+      return '<span class="u1-tick" style="--tc:' + k.t + '" title="' + k.n + ' ' + k.l + '"><span class="n">' + k.n + '</span><span class="l">' + k.l + '</span></span>';
+    }).join('');
+    $('u1SpendBig').dataset.counter = D.spend['5h'];
+    $('u1SpendLbl').innerHTML = 'spend · last 5h ' + R.chip('pricing_estimated') + ' <span style="color:var(--text-muted)">list-rate basis — may differ from your bill</span>';
+    var cp = D.quotas.filter(function (q) { return q.id === 'copilot'; })[0];
+    var reads = [
+      { ico: 'bolt', k: 'burn', v: '$' + D.burn.perHour.toFixed(2) + '<small>/hr</small>', s: '$' + D.burn.perDay.toFixed(2) + '/day pace', cls: '' },
+      { ico: 'trend', k: 'month pace', v: fmt.cost(D.forecast.monthPace), s: '+' + D.forecast.monthPaceDelta + '% vs last mo', cls: 'warn' },
+      { ico: 'layers', k: 'cache saved', v: '\u2212$' + D.cacheTotalSaved.toFixed(2), s: 'today · provider caches', cls: 'ok' },
+      { ico: 'hourglass', k: 'block end', v: fmt.cost(D.forecast.blockProjection), s: 'projected at 5h mark', cls: '' },
+      { ico: 'thermo', k: 'top window', v: (cp ? cp.used + '%' : '\u2014'), s: cp ? cp.name : '', cls: cp && cp.used >= 90 ? 'err' : 'warn' }
+    ];
+    $('u1Reads').innerHTML = reads.map(function (r) {
+      return '<div class="u1-read"><span class="k">' + R.ic(r.ico) + r.k + '</span><span class="v ' + r.cls + '">' + r.v + ' <small>' + r.s + '</small></span></div>';
+    }).join('');
+  }
+
+  /* ---------------- NOW hero + severity deck ---------------- */
+  function nowHTML(it) {
+    var cls = it.tone === 'err' ? '' : (it.tone === 'warn' ? ' warn' : ' info');
+    var stats = it.type === 'guard'
+      ? [pickStat(it.g, ['Observed', 'Hit rate', 'Confidence']), pickStat(it.g, ['Cost avoided', 'Decision', 'Suggestion'])]
+      : it.type === 'quota'
+        ? [[it.q.used + '%', it.q.win + ' window used'], [it.q.sevenUsed != null ? it.q.sevenUsed + '%' : '\u2014', '7-day window']]
+        : [[it.a.pressure === 'cooldown' && it.a.cooldownSec != null ? R.fmtCd(it.a.cooldownSec) : '\u2014', it.a.pressure === 'cooldown' ? 'cooldown remaining' : 'pressure state'], [it.a.resetAt || '\u2014', it.a.resetAt ? 'back at' : 'no reset time']];
+    return '<section class="u1-now' + cls + '" aria-label="Most urgent item">' +
+      '<div style="min-width:0">' +
+        '<div class="u1-nowkick"><span class="us-dot ' + (it.tone === 'mute' ? 'info' : it.tone) + ' pulse"></span><span class="u1-sevtag ' + it.tone + '">' + it.tag + '</span><span>' + (it.type === 'guard' ? 'anomaly guard · ' + it.g.kind : it.type === 'quota' ? 'quota · ' + it.q.plan : 'account · ' + it.a.prov) + '</span></div>' +
+        '<h2 class="u1-nowtitle">' + it.title + '</h2>' +
+        '<div class="u1-nowbody">' + it.sum + '</div>' +
+        '<div class="u1-nowwhere">' + it.where + '</div>' +
+        (it.type === 'guard' ? whyHTML(it.g, 99, 'now') : '') +
+        '<div class="u1-nowacts">' + actsHTML(it) + '</div>' +
+      '</div>' +
+      '<div class="u1-nowstats">' + stats.map(function (s) { return '<span class="u1-nstat"><b>' + s[0] + '</b><span>' + s[1] + '</span></span>'; }).join('') +
+      '</div></section>';
+  }
+  function cardHTML(it, i) {
+    var meters = it.type === 'quota'
+      ? '<div class="u1-c-meters">' + R.meterRow('5h', it.q.used) + (it.q.sevenUsed != null ? R.meterRow('7d', it.q.sevenUsed) : '') + '</div>'
+      : '';
+    return '<article class="u1-card" style="--sev:var(--tone-' + it.tone + ')">' +
+      '<span class="u1-rank">' + String(i + 1).padStart(2, '0') + '</span>' +
+      '<div class="u1-c-main">' +
+        '<div class="u1-c-kick"><span class="u1-sevtag ' + it.tone + '">' + it.tag + '</span><span>' + (it.type === 'guard' ? 'guard · ' + it.g.t : it.type === 'quota' ? 'quota · ' + it.q.kind + ' · ' + it.q.win : 'account · ' + it.a.prov) + '</span>' + (it.type === 'quota' ? R.conf(it.q.conf) : '') + it.chip + '</div>' +
+        '<div class="u1-c-title">' + it.title + '</div>' +
+        '<div class="u1-c-sum">' + it.sum + '</div>' +
+      '</div>' +
+      '<div class="u1-c-meta">' + sideHTML(it) + '</div>' +
+      meters +
+      (it.type === 'guard' ? '<div class="u1-c-span">' + whyHTML(it.g, i, 'c') + '</div>' : '') +
+      '<div class="u1-c-act">' + actsHTML(it) + '</div>' +
+    '</article>';
+  }
+  function renderTriage() {
+    var items = buildItems();
+    var now = items[0], deck = items.slice(1);
+    renderBand(items);
+    $('u1NowMeta').textContent = now ? (now.type === 'guard' ? 'an anomaly guard needs your call' : now.type === 'quota' ? 'a provider window is nearly spent' : 'an account needs relief') : 'nothing urgent';
+    $('u1Now').innerHTML = now ? nowHTML(now) : '<section class="u1-now info"><div><div class="u1-nowkick"><span class="us-dot ok"></span><span class="u1-sevtag" style="color:var(--tone-ok-text);background:color-mix(in srgb,var(--tone-ok) 14%, transparent)">ALL CLEAR</span></div><h2 class="u1-nowtitle">Nothing needs you right now</h2><div class="u1-nowbody">No guard is blocking, no provider is past its window, and every account is inside its thresholds. The deck below is empty — the reference shelves further down tell the full story.</div></div></section>';
+    $('u1DeckCount').textContent = deck.length + ' queued';
+    $('u1Deck').innerHTML = deck.length ? deck.map(cardHTML).join('') : '<div class="us-foot"><i data-ico="check" class="pm-ico sm"></i><span>Deck empty — everything else ranked calm.</span></div>';
+    wireWhy();
+    rewire();
+  }
+
+  /* ---------------- all clear ---------------- */
+  function clearRow(q, muted) {
+    var bars = q.used != null
+      ? R.meterRow('', q.used).replace('<span class="lb"></span>', '')
+      : '<span style="font-size:var(--fs-2xs);color:var(--text-muted);font-style:italic">no reading — see chip</span>';
+    return '<div class="u1-clearrow"' + (muted ? ' style="opacity:.75"' : '') + '>' +
+      '<span class="nm">' + q.name + '</span>' +
+      '<span class="wm">' + q.plan + ' · ' + q.kind + ' · ' + q.win + '</span>' +
+      bars +
+      '<span class="rs">' + R.ic('timer') + ' ' + (q.reset ? (q.reset === 'unknown' ? 'unknown reset' : 'resets ' + q.reset) : 'no reset') + '</span>' +
+      R.chip(q.vs) +
+      (q.note ? '<span class="u1-cnote" style="grid-column:1/-1">' + q.note + '</span>' : '') +
+    '</div>';
+  }
+  function renderClear() {
+    var calm = D.quotas.filter(function (q) { return q.used != null && q.used < 70; });
+    var unread = D.quotas.filter(function (q) { return q.used == null; });
+    $('u1ClearMeta').textContent = calm.length + ' providers calm & below 70% · ' + unread.length + ' unreadable-by-design — expand to verify';
+    $('u1ClearBody').innerHTML =
+      '<div style="display:flex;flex-direction:column;gap:var(--us-row)">' +
+      '<div class="u1-cgroup">CALM — INSIDE THEIR WINDOWS</div>' +
+      calm.map(function (q) { return clearRow(q, false); }).join('') +
+      '<div class="u1-cgroup" style="margin-top:var(--md)">UNREADABLE — A STATE, NOT ZERO</div>' +
+      unread.map(function (q) { return clearRow(q, true); }).join('') +
+      '<div class="us-foot" style="margin-top:var(--sm)"><i data-ico="info" class="pm-ico sm"></i><span>These rows are quiet because nothing crossed a threshold — each chip states <b>why</b> there is no bar (hidden, disabled, passthrough, local). None of it is assumed to be zero.</span></div>' +
+      '</div>';
+  }
+
+  /* ---------------- coaching ---------------- */
+  function renderCoach() {
+    var e = D.efficiency;
+    $('u1GradeMeta').textContent = 'grade ' + e.grade + ' · ' + e.score + '/100 · retry tax ' + e.retryTaxPct + '%';
+    $('u1Grade').textContent = e.grade;
+    $('u1GradeBox').innerHTML = '<b>' + e.score + '/100</b><span>efficiency score' + (e.partial ? ' · partial data' : '') + '</span><span>retry tax ' + e.retryTaxPct + '% ≈ ' + fmt.cost(e.retryTaxUsd) + '</span>';
+    $('u1Comps').innerHTML = e.components.map(function (c) {
+      return '<div class="u1-comp"><span class="lb" title="' + c.k + '">' + c.k + (c.adverse ? ' (lower = better)' : '') + '</span>' +
+        '<span class="us-track"><span class="us-fill ' + (c.adverse ? (c.v >= 15 ? 'hot' : 'warn') : R.fillTone(100 - c.v) === 'hot' ? 'warn' : 'ok') + '" data-fill="' + c.v + '" style="--wf:' + c.v + '%"></span></span>' +
+        '<span class="pc us-num" style="width:34px">' + c.v + '%</span><span class="wt">' + Math.round(c.w * 100) + '%</span></div>';
+    }).join('');
+    function col(title, ico, toneVar, list, cls) {
+      return '<div class="u1-sigcol" style="--sc:var(' + toneVar + ')"><h4>' + R.ic(ico) + title + '</h4>' +
+        list.map(function (s) { return '<div class="u1-sigitem ' + cls + '"><span class="txt">' + s.text + '</span>' + (s.save ? '<span class="save">\u2248 $' + s.save.toFixed(2) + '/session</span>' : '') + '</div>'; }).join('') + '</div>';
+    }
+    $('u1Sigs').innerHTML =
+      col('RISKS — ACT', 'siren', '--tone-warn', D.signals.risks) +
+      col('IMPROVEMENTS', 'target', '--tone-info', D.signals.improvements) +
+      col('WINS — HOLD', 'check', '--tone-ok', D.signals.wins);
+  }
+
+  /* ---------------- analytics chart ---------------- */
+  var chartWin = '24h', mutedSeries = {};
+  function renderChartWin() {
+    $('u1ChartWin').innerHTML = ['5h', '24h', '7d'].map(function (w) {
+      return '<button data-cw="' + w + '" class="' + (w === chartWin ? 'on' : '') + '">' + w + '</button>';
+    }).join('');
+    $('u1ChartWin').querySelectorAll('[data-cw]').forEach(function (b) {
+      b.addEventListener('click', function () { chartWin = b.dataset.cw; renderChartWin(); renderChart(); });
+    });
+  }
+  function renderChart() {
+    var ds = D.chart[chartWin] || D.chart['24h'];
+    $('u1ChartMeta').textContent = ds.note;
+    var cols = ds.cols.map(function (c) {
+      return '<div class="u1-col"><span class="tip">' + c[0] + ': ' + c[1] + '% in · ' + c[2] + '% out · ' + c[3] + '% rea · ' + c[4] + '% cache</span>' +
+        '<span class="u1-colstack">' +
+          '<i class="s-inp" data-h="' + c[1] + '"></i><i class="s-out" data-h="' + c[2] + '"></i>' +
+          '<i class="s-rea" data-h="' + c[3] + '"></i><i class="s-cache" data-h="' + c[4] + '"></i>' +
+        '</span><b>' + c[0] + '</b></div>';
+    }).join('');
+    $('u1Chart').innerHTML = cols;
+    $('u1Grid').innerHTML = '<i style="top:0"></i><i style="top:25%"></i><i style="top:50%"></i><i style="top:75%"></i>' +
+      '<span class="u1-bline" style="bottom:' + D.chartBudgetLine + '%"><span>budget ' + D.budget.warningThreshold + '%</span></span>';
+    var series = [['inp', 'Input', '--ser-inp'], ['out', 'Output', '--ser-out'], ['rea', 'Reasoning', '--ser-rea'], ['cache', 'Cache r/w', '--ser-cache']];
+    $('u1Legend').innerHTML = series.map(function (s) {
+      return '<span data-series="' + s[0] + '" class="' + (mutedSeries[s[0]] ? 'muted' : '') + '" role="button" tabindex="0" title="Toggle ' + s[1] + ' series"><span class="u1-swatch" style="background:var(' + s[2] + ')"></span>' + s[1] + '</span>';
+    }).join('');
+    $('u1Legend').querySelectorAll('[data-series]').forEach(function (it) {
+      function tog() {
+        var k = it.dataset.series; mutedSeries[k] = !mutedSeries[k];
+        it.classList.toggle('muted', !!mutedSeries[k]);
+        $('u1Chart').querySelectorAll('.s-' + k).forEach(function (seg) { seg.style.opacity = mutedSeries[k] ? '.12' : '1'; });
+      }
+      it.addEventListener('click', tog);
+      it.addEventListener('keydown', function (e) { if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); tog(); } });
+    });
+    requestAnimationFrame(function () {
+      var rm = window.USrender.isRM();
+      $('u1Chart').querySelectorAll('.u1-colstack i[data-h]').forEach(function (seg, i) {
+        var h = (parseFloat(seg.dataset.h) || 0) * 0.6;
+        if (rm) { seg.style.height = Math.min(h, 58) + '%'; return; }
+        setTimeout(function () { seg.style.height = Math.min(h, 58) + '%'; }, i * 14);
+      });
+    });
+  }
+
+  /* ---------------- budget donuts + presets ---------------- */
+  function donut(name, pct, toneVar) {
+    return '<span class="u1-donut"><svg viewBox="0 0 64 64" role="img" aria-label="' + name + ' window ' + pct + '%">' +
+      '<circle class="dbg" cx="32" cy="32" r="26"></circle>' +
+      '<circle class="dfill" cx="32" cy="32" r="26" stroke="' + toneVar + '" data-pct="' + pct + '" style="stroke-dasharray:163.4;stroke-dashoffset:163.4"></circle>' +
+      '<text x="32" y="33">' + pct + '%</text></svg><small title="' + name + '">' + name + '</small></span>';
+  }
+  function renderDonuts() {
+    var toneVar = { ok: 'var(--tone-ok)', warn: 'var(--tone-warn)', hot: 'var(--tone-err)' };
+    var dts = D.quotas.filter(function (q) { return q.used != null; }).sort(function (a, b) { return b.used - a.used; });
+    $('u1Donuts').innerHTML = dts.map(function (q) { return donut(q.name, q.used, toneVar[R.fillTone(q.used)]); }).join('');
+    $('u1Presets').innerHTML = '<span class="k">Warn at</span>' + D.budget.presets.map(function (p) {
+      return '<button class="u1-pchip' + (p === D.budget.warningThreshold ? ' on' : '') + '" data-preset="' + p + '">' + p + '%</button>';
+    }).join('');
+    $('u1Presets').querySelectorAll('[data-preset]').forEach(function (b) {
+      b.addEventListener('click', function () {
+        D.budget.warningThreshold = parseInt(b.dataset.preset, 10);
+        renderDonuts(); renderChart();
+        if (window.toast) window.toast('Budget warning threshold set to ' + b.dataset.preset + '% (demo)');
+      });
+    });
+    R.animateDonuts($('u1Donuts'));
+  }
+  function renderBudget() {
+    $('u1BudgetSpend').dataset.counter = D.budget.spentMTD;
+    $('u1BudgetLimit').textContent = fmt.cost(D.budget.monthlyLimit);
+    $('u1BudgetProj').textContent = fmt.cost(D.budget.projectedMTD);
+    $('u1BudgetMeta').textContent = 'monthly limit ' + fmt.cost(D.budget.monthlyLimit) + ' · ' + D.budget.policy.replace(/_/g, ' ');
+    $('u1PolicyFoot').innerHTML = 'Budget presets are exactly <b>50 / 80 / 90 / 95 / 100</b>. A budget does not cap spend by itself — policy is <b>' + D.budget.policy.replace(/_/g, ' ') + '</b>. Donuts show each provider\u2019s current window, not the monthly pool.';
+    renderDonuts();
+  }
+
+  /* ---------------- cache ---------------- */
+  function renderCache() {
+    var rows = D.cache.map(function (c) {
+      if (c.state === 'unsupported') {
+        return '<div class="u1-crow"><span class="u1-cname">' + c.name + '</span>' + R.chip('unsupported') +
+          '<span class="u1-cnums" style="color:var(--text-muted)">provider does not expose cache fields</span><span class="u1-cnums" style="color:var(--text-muted)">\u2014</span><span class="u1-csave na">\u2014</span>' +
+          (c.note ? '<div class="u1-cnote">' + c.note + '</div>' : '') + '</div>';
+      }
+      var zero = (c.save || 0) === 0;
+      var note = c.zeroNote ? '<div class="u1-cnote">' + c.zeroNote + '</div>' : (c.missReason ? '<div class="u1-cnote">miss reason: ' + c.missReason + '</div>' : '');
+      return '<div class="u1-crow"><span class="u1-cname">' + c.name + '</span>' + R.chip(c.state) +
+        '<span class="us-meter">' + R.meter(c.hit, zero ? 'info' : 'ok') + '<span class="pc">' + c.hit + '%</span></span>' +
+        '<span class="u1-cnums">r ' + fmt.tok(c.cr) + ' · w ' + fmt.tok(c.cw) + '</span>' +
+        '<span class="u1-csave' + (zero ? ' zero' : '') + '">' + (zero ? '$0.00' : '\u2212$' + c.save.toFixed(2)) + '</span>' + note + '</div>';
+    }).join('');
+    $('u1Cache').innerHTML = rows +
+      '<div class="us-foot" style="margin-top:var(--sm)"><i data-ico="info" class="pm-ico sm"></i><span>Saved about <b>$' + D.cacheTotalSaved.toFixed(2) + '</b> today from provider caches. Entries expire on their own — Puppet Master cannot clear provider caches.</span></div>';
+  }
+
+  /* ---------------- context budget ---------------- */
+  function renderContext() {
+    var cb = D.contextBudget;
+    $('u1CtxMeta').textContent = fmt.tok(cb.totalTokens) + ' / ' + fmt.tok(cb.limit) + ' tokens';
+    var rows = cb.families.map(function (f) {
+      return '<div class="u1-fam"><span class="u1-fam-name" title="' + (f.note || '') + '">' + f.name + '</span>' +
+        '<span class="us-meter">' + R.meter(f.share, 'info') + '<span class="pc">' + f.share + '%</span></span>' +
+        '<span class="u1-fam-tok">' + fmt.tok(f.tokens) + '</span></div>';
+    }).join('');
+    var omitted = cb.omitted.map(function (o) {
+      return '<div class="us-wc"><span class="q">' + o.name + '</span><span class="a part">' + o.reason + '</span></div>';
+    }).join('');
+    $('u1Context').innerHTML = rows +
+      '<hr class="us-hr">' +
+      '<div class="us-foot" style="margin-bottom:4px"><i data-ico="info" class="pm-ico sm"></i><span>Omitted / deferred catalog entries carry a reason receipt.</span></div>' + omitted;
+  }
+
+  /* ---------------- tools ---------------- */
+  function renderTools() {
+    var rows = D.tools.map(function (t) {
+      var errCls = t.err >= 5 ? 'err' : t.err >= 2 ? 'warn' : 'ok';
+      var idx = t.idx == null ? '<span class="dim">\u2014</span>' : '<span class="us-meter" style="min-width:70px">' + R.meter(t.idx, 'info') + '<span class="pc">' + t.idx + '%</span></span>';
+      return '<tr><td class="mono">' + t.tool + '</td><td class="num">' + fmt.num(t.calls) + '</td>' +
+        '<td class="num">' + t.p50 + 'ms</td><td class="num">' + fmt.num(t.p95) + 'ms</td>' +
+        '<td><span class="vs vs-' + errCls + '">' + t.err.toFixed(1) + '%</span></td><td>' + idx + '</td></tr>';
+    }).join('');
+    $('u1Tools').innerHTML = '<div class="us-tblwrap"><table class="us-tbl">' +
+      '<thead><tr><th>Tool</th><th class="num">Calls</th><th class="num">p50</th><th class="num">p95</th><th>Error rate</th><th>index_used</th></tr></thead>' +
+      '<tbody>' + rows + '</tbody></table></div>';
+  }
+
+  /* ---------------- accounts ---------------- */
+  function renderAccounts() {
+    var presChip = { ok: R.chip('measured'), approaching_threshold: R.chip('estimated'), cooldown: R.chip('blocked'), exhausted: R.chip('failed') };
+    var cards = D.accounts.map(function (a, i) {
+      var markers = (a.requested ? '<span class="u1-marker req">\u25cf requested</span>' : '') + (a.effective ? '<span class="u1-marker eff">\u2713 effective</span>' : '');
+      var cd = a.cooldownSec != null ? ' <span class="u1-cd" data-cd-idx="' + i + '">' + R.fmtCd(a.cooldownSec) + '</span>' : '';
+      var dot = a.pressure === 'cooldown' || a.pressure === 'exhausted' ? 'err' : (a.pressure === 'approaching_threshold' ? 'warn' : 'ok');
+      var note = a.note ? '<div class="u1-acct-note">' + R.ic('info') + ' ' + a.note + '</div>' : '';
+      return '<div class="u1-acct' + (a.effective ? ' effective' : '') + '">' +
+        '<div class="u1-acct-h"><span class="u1-acct-name">' + a.prov + ' \u00b7 ' + a.name + '</span><span class="u1-acct-mail">' + a.mail + '</span>' + markers + '</div>' +
+        '<div class="u1-acct-status"><span class="us-dot ' + dot + (dot !== 'ok' ? ' pulse' : '') + '"></span><span class="st">' + a.status + cd + '</span><span style="margin-left:auto;flex:none">' + (a.pressure !== 'ok' ? presChip[a.pressure] : R.conf('high')) + '</span></div>' +
+        note + '</div>';
+    }).join('');
+    var hist = D.pressureHistory.map(function (h) {
+      var tone = h.kind === 'switch' ? 'info' : (h.state === 'exhausted' ? 'err' : (h.state === 'approaching' ? 'warn' : 'mute'));
+      return '<div class="us-wc"><span class="q">' + h.t + ' \u00b7 ' + h.text + '</span><span class="a" style="color:var(--tone-' + tone + '-text)">' + h.reason + '</span></div>';
+    }).join('');
+    $('u1Accounts').innerHTML = '<div class="u1-accts">' + cards + '</div>' +
+      '<hr class="us-hr">' +
+      '<div class="us-foot" style="margin-bottom:4px"><i data-ico="history" class="pm-ico sm"></i><span><b>Pressure &amp; switch history</b> (append-only) — requested is the account you chose; effective is the one doing the work; cost lands on effective.</span></div>' + hist;
+    $('u1AcctCount').textContent = D.accounts.length + ' accounts · requested vs effective · cooldowns tick live';
+  }
+  setInterval(function () {
+    if (document.visibilityState !== 'visible') return;
+    D.accounts.forEach(function (a, i) {
+      if (a.cooldownSec != null && a.cooldownSec > 0) {
+        a.cooldownSec--;
+        document.querySelectorAll('[data-cd-idx="' + i + '"]').forEach(function (el) { el.textContent = R.fmtCd(a.cooldownSec); });
+      }
+    });
+  }, 1000);
+
+  /* ---------------- ledger ---------------- */
+  var LF = { q: '', plat: '', rep: '' };
+  function matches(r) {
+    if (LF.plat && r.prov !== LF.plat) return false;
+    if (LF.rep && r.rep !== LF.rep) return false;
+    if (LF.q) { var hay = (r.t + ' ' + r.ev + ' ' + r.run + ' ' + r.lane + ' ' + r.prov + ' ' + r.model + ' ' + r.acct).toLowerCase(); if (hay.indexOf(LF.q) === -1) return false; }
+    return true;
+  }
+  function ledgerRow(r, idx, fresh) {
+    var main = '<tr class="' + (fresh ? 'us-new' : '') + '" data-lrow="' + idx + '">' +
+      '<td><span class="u1-caret" role="button" tabindex="0" aria-label="Show details">\u25b8</span></td>' +
+      '<td class="mono">' + r.t + '</td>' +
+      '<td class="ev-' + r.ev + '">' + (R.evLabel[r.ev] || r.ev) + '</td>' +
+      '<td class="mono">' + r.run + ' \u00b7 ' + r.lane + '</td>' +
+      '<td>' + r.prov + '</td><td class="mono">' + r.model + '</td>' +
+      '<td class="num">' + fmt.num(r.tin) + '</td><td class="num">' + fmt.num(r.tout) + '</td>' +
+      '<td class="num">' + (r.cr == null ? '<span class="dim" title="not reported">\u2014</span>' : fmt.num(r.cr)) + '</td>' +
+      '<td>' + R.chip(r.rep) + '</td>' +
+      '<td class="num">' + (r.cost ? fmt.cost(r.cost) : '$0.00') + '</td></tr>';
+    var kv = r.detail || {};
+    var cells = Object.keys(kv).map(function (k) { return '<div class="u1-di"><b>' + k + '</b><span>' + kv[k] + '</span></div>'; }).join('') +
+      '<div class="u1-di"><b>Latency</b><span>' + r.lat + '</span></div><div class="u1-di"><b>usage_event_ref</b><span class="mono">' + (r.ref || '\u2014') + '</span></div><div class="u1-di"><b>Account</b><span class="mono">' + r.acct + '</span></div>';
+    var det = '<tr class="u1-detail" data-ldetail="' + idx + '" hidden><td></td><td colspan="10"><div class="u1-dgrid">' + cells + '</div>' +
+      '<div style="margin-top:var(--sm)"><button class="u1-btn" data-demo-action="usage.drill" data-demo-arg="Open in Orchestrator · ' + (r.ref || '') + '">' + R.ic('external') + 'Open in Orchestrator \u21b5</button></div></td></tr>';
+    return main + det;
+  }
+  function wireLedgerRows(tbody) {
+    tbody.querySelectorAll('[data-lrow]').forEach(function (row) {
+      var car = row.querySelector('.u1-caret');
+      if (!car || car._wired) return; car._wired = true;
+      function tog() { var det = tbody.querySelector('[data-ldetail="' + row.dataset.lrow + '"]'); if (!det) return; det.hidden = !det.hidden; car.classList.toggle('open', !det.hidden); }
+      car.addEventListener('click', tog);
+      car.addEventListener('keydown', function (e) { if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); tog(); } });
+    });
+  }
+  function renderLedger() {
+    var tbody = $('u1LedgerBody');
+    var shown = 0;
+    tbody.innerHTML = D.ledger.map(function (r, i) { if (!matches(r)) return ''; shown++; return ledgerRow(r, i, false); }).join('');
+    $('u1LedgerCount').textContent = shown + ' of ' + D.ledger.length + ' events · cost lands on the effective account';
+    $('u1LedgerFoot').textContent = 'Every row carries a stable usage_event_ref; drill-through preserves it. Window: last 5h · normalized UsageRecords.';
+    wireLedgerRows(tbody);
+    rewire();
+  }
+  function buildLedgerMenus() {
+    var provs = {}; D.ledger.forEach(function (r) { provs[r.prov] = 1; });
+    $('u1PlatMenu').innerHTML = '<button type="button" class="pm6-tb-menu-item is-selected" role="menuitem" data-value="">All platforms</button>' +
+      Object.keys(provs).sort().map(function (p) { return '<button type="button" class="pm6-tb-menu-item" role="menuitem" data-value="' + p + '">' + p + '</button>'; }).join('');
+    $('u1RepMenu').innerHTML = '<button type="button" class="pm6-tb-menu-item is-selected" role="menuitem" data-value="">Any reporting</button>' +
+      ['measured', 'estimated', 'unsupported'].map(function (r) { return '<button type="button" class="pm6-tb-menu-item" role="menuitem" data-value="' + r + '">' + r + '</button>'; }).join('');
+    $('u1PlatMenu').addEventListener('pm-menu-pick', function (ev) { LF.plat = ev.detail.value || ''; $('u1PlatLabel').textContent = ev.detail.value || 'All platforms'; renderLedger(); });
+    $('u1RepMenu').addEventListener('pm-menu-pick', function (ev) { LF.rep = ev.detail.value || ''; $('u1RepLabel').textContent = ev.detail.value || 'Any reporting'; renderLedger(); });
+  }
+  $('u1LedgerSearch').addEventListener('input', function () { LF.q = this.value.toLowerCase(); renderLedger(); });
+
+  var liveIdx = 0, liveRef = 2000;
+  setInterval(function () {
+    if (document.visibilityState !== 'visible') return;
+    var src = D.livePool[liveIdx++ % D.livePool.length];
+    var r = {}; Object.keys(src).forEach(function (k) { r[k] = src[k]; });
+    r.ref = 'ue-47-' + (liveRef++);
+    var now = new Date(); r.t = String(now.getHours()).padStart(2, '0') + ':' + String(now.getMinutes()).padStart(2, '0');
+    D.ledger.unshift(r); if (D.ledger.length > 40) D.ledger.pop();
+    if (!matches(r)) return;
+    var tbody = $('u1LedgerBody');
+    var tmp = document.createElement('tbody'); tmp.innerHTML = ledgerRow(r, 'L' + Date.now(), true);
+    while (tmp.firstChild) tbody.insertBefore(tmp.firstChild, tbody.firstChild);
+    wireLedgerRows(tbody);
+    rewire();
+    $('u1LedgerCount').textContent = tbody.querySelectorAll('[data-lrow]').length + ' of ' + D.ledger.length + ' events · cost lands on the effective account';
+  }, 9000);
+
+  /* ---------------- provenance ---------------- */
+  function renderProv() {
+    $('u1AsOf').innerHTML =
+      '<div class="row"><span class="k">As of</span><span class="v">' + D.asOf + ' (' + D.asOfMin + 'm ago)</span></div>' +
+      '<div class="row"><span class="k">Projection health</span><span class="v">' + D.projectionHealth + '</span></div>' +
+      '<div class="row"><span class="k">Next auto-refresh</span><span class="v">' + D.nextAutoRefresh + ' · every ' + D.refreshMin + ' min</span></div>' +
+      '<div class="row"><span class="k">Retention</span><span class="v">' + D.retentionDays + ' days</span></div>' +
+      '<div class="row"><span class="k">Spend basis</span><span class="v">' + D.spendBasis + ' ' + R.chip('pricing_estimated') + '</span></div>' +
+      '<div class="row"><span class="k">Guard window</span><span class="v">' + D.guardConfig.windowMin + ' min · ' + D.guardConfig.spikeRatio + '\u00d7 spike</span></div>';
+    $('u1WC').innerHTML = D.whatCounts.map(function (w) {
+      var a = w.counts === true ? '<span class="a yes">COUNTS</span>' : w.counts === false ? '<span class="a no">DOESN\u2019T</span>' : '<span class="a part">PARTIAL</span>';
+      return '<div class="us-wc"><span class="q">' + w.q + (w.note ? ' <span style="color:var(--text-muted)">— ' + w.note + '</span>' : '') + '</span>' + a + '</div>';
+    }).join('');
+    $('u1Attr').innerHTML = D.attribution.map(function (at) {
+      return '<div class="u1-attr"><span class="nm" title="' + at.name + '">' + at.name + '</span>' +
+        '<span class="us-track"><span class="us-fill info" data-fill="' + at.pct + '" style="--wf:' + at.pct + '%"></span></span>' +
+        '<span class="pc">' + at.pct + '%</span></div>';
+    }).join('');
+    $('u1BasisNote').innerHTML = 'Attribution by orchestrator entity (Claude Code /usage pattern). List-rate pricing is an estimate — the provider console remains the billing source of truth.';
+  }
+
+  /* ---------------- refresh + boot ---------------- */
+  $('u1FreshTxt').textContent = D.projectionHealth + ' · as of ' + D.asOf;
+  $('u1Refresh').addEventListener('click', function () {
+    var b = this; b.classList.add('spinning');
+    $('u1FreshTxt').textContent = 'refreshing\u2026';
+    $('u1Fresh').classList.add('stale');
+    setTimeout(function () {
+      b.classList.remove('spinning');
+      $('u1Fresh').classList.remove('stale');
+      $('u1FreshTxt').textContent = D.projectionHealth + ' · as of ' + D.asOf;
+      renderAll();
+      if (window.toast) window.toast('Usage projections refreshed (demo)');
+    }, 900);
+  });
+
+  function renderAll() {
+    renderTriage();
+    renderClear();
+    renderCoach();
+    renderChartWin();
+    renderChart();
+    renderBudget();
+    renderCache();
+    renderContext();
+    renderTools();
+    renderAccounts();
+    renderLedger();
+    renderProv();
+    R.animateCounters(document);
+    R.animateFills(document);
+  }
+  buildLedgerMenus();
+  renderAll();
+})();
+</script>
+</body>
+</html>

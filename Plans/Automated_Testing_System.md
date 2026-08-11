@@ -1850,6 +1850,370 @@ relationship_to_prior_reports: Adds test strategy to prior terminal requirements
 compile_disposition: create_new_planunit
 ```
 
+## Case L Durable-State Acceptance Fixture Contract - 2026-07-17
+
+Status: `accepted` specification only. No fixture in this section is claimed executed merely because it is named, parsed, or linked.
+
+This section is the Automated Testing System consumer for the approved Case L durable-state owner contracts. It owns fixture orchestration, fault-injection coverage, deterministic oracle evaluation, and linked `TestRunReceipt` evidence. It does not own storage algorithms, EventRecord envelopes, restore outcomes, FileSafe equality, SCM baseline effects, migration receipts, retention policy values, or release admission. Those remain with `Plans/storage-plan.md`, `Plans/Contracts_V0.md`, `Plans/event_record.schema.json`, `Plans/FileSafe.md`, `Plans/WorktreeGitImprovement.md`, `Plans/Executor_Protocol.md`, `Plans/storage_value_registry.json`, and `Plans/Release_Supply_Chain.md`.
+
+Each Case L fixture manifest and linked receipt records the exact fixture ID, owner-contract refs/revisions, app/store/EventRecord/registry versions, setup and fault boundary, expected closed outcome, required negative assertions, before/after semantic and byte digests where applicable, observed outcome, evidence/log/artifact refs, adapter/platform, and freshness. An unavailable adapter or absent fixture is `blocked`, not pass. `skipped` or `inconclusive` cannot satisfy a required oracle. Re-running the same bytes/state must produce the same owner-defined result where determinism is required.
+
+### Migration, compatibility, canonical-redb recovery, and store backup/restore
+
+| Fixture | Required oracle |
+| --- | --- |
+| `FX-L001-REDB-AHEAD` | One-ahead redb enters `blocked_newer_store`; no writer/projector/migration starts; target bytes are identical before/after. |
+| `FX-L001-SEGLOG-AHEAD` | One-ahead seglog header/generation has the same blocked/no-mutation result. |
+| `FX-L001-EVENT-AHEAD` | A future EventRecord halts before the record with unavailable projection health and pinned last-supported sequence; no skip, quarantine, append, or rewrite. |
+| `FX-L001-DOWNGRADE-WRITES` | Only a compatible whole-boundary backup is offered; post-backup writes produce exact `post_backup_writes_will_be_lost` disclosure before restore. |
+| `FX-L002-CRASH-AFTER-BACKUP` | Restart reconciles the durable journal and never ordinary-opens mixed state. |
+| `FX-L002-CRASH-MID-STEP` | Kill at every step boundary resumes/restores idempotently and produces exactly one terminal migration receipt. |
+| `FX-L002-CRASH-BEFORE-STAMP` | Pre-stamp mixed versions exist only under the active journal and restore before ordinary open after interruption. |
+| `FX-L002-CRASH-AFTER-STAMP` | Restart re-verifies then commits or restores without blindly replaying committed steps. |
+| `FX-L002-VERIFY-CORRUPT` | Corrupt migrated output fails full verification, protects the pre-migration backup, and permits only one automatic restore attempt. |
+| `FX-L002-RECEIPT-ROUNDTRIP` | Exactly one terminal `pm.storage_value.migration_receipt.v1` identity exists and reads back every RSC-008 field, including both `store_transitions[]` and `family_transitions[]`; `rollback_result` is present on every receipt and may be null, while `verification_result` and `terminal_status` match the expected terminal state. |
+| `FX-L003-CORRUPT-META` | Continuity evidence plus missing meta is never first run and never reinitializes the store. |
+| `FX-L003-CORRUPT-FAMILY` | Each canonical non-rebuildable family routes to verified backup and exact loss disclosure. For `executor_intake_report` and `attempt_receipt`, exact canonical records and a durable verified Storage recovery boundary are required before ordinary Executor revalidation may admit completion or dispatch; EventRecords, runtime/audit projections, UI state, summaries, and worker/controller claims cannot reconstruct success, and unavailable or corrupt authority remains blocked or unknown. |
+| `FX-L003-FRESH-BASELINE` | Verified baseline exists before first mutation-capable startup; baseline failure blocks mutation. |
+| `FX-L016-ACTIVE-WRITE` | Quiesced active-load backup restores one manifest boundary with exact hashes, consistent redb/seglog/checkpoints, and rebuilt disposable projections. |
+| `FX-L016-NEWER-BACKUP` | Newer-version backup is refused before mutation and current bytes remain unchanged. |
+| `FX-L016-KILL-RESTORE` | Kill at every store-promotion boundary; restart converges to the fully original or fully restored verified store set, never a mixed ordinary-open state. |
+| `FX-L025-PREV-MAJOR-ALIAS` | N-1 alias copy-forwards once, proves semantic equality, removes the live residual only after verification, and is idempotent on rerun. |
+| `FX-L025-TOO-OLD` | N-2 without an explicit edge blocks without best-effort mutation. |
+| `FX-L032-NOSPACE` | One byte below required space records exact values/reason and performs no backup or mutation; before/after target hashes match. |
+| `FX-L032-PROGRESS-INTERRUPT` | Journal phases/step counts are monotonic; cancellation closes after preflight; the exact interruption copy is `Keep Puppet Master open. If interrupted, recovery will resume on the next launch.`; force-cancel/try-anyway remain absent; restart displays/resumes the journal-derived recovery phase. |
+| `MIGRATION-COMMAND-INVENTORY-001` | Startup exposes read-only metadata diagnostics, state-valid retry/update/compatible-backup/quit actions, and offline journaled restore only; generic live verify/repair/salvage, Doctor mutation, store editing, bypass tokens, or retry actions that mutate bytes are absent. |
+
+### Seglog durability and restart convergence
+
+The exact fixture inventory is `SEG-FX-001`, `SEG-FX-002`, `SEG-FX-003`, `SEG-FX-004`, `SEG-FX-005`, `SEG-FX-006`, `SEG-FX-007`, `SEG-FX-008`, `SEG-FX-009`, `SEG-FX-010`, `SEG-FX-011`, `SEG-FX-012`, `SEG-FX-013`, `SEG-FX-014`, `SEG-FX-015`, `SEG-FX-016`, `SEG-FX-017`, and `SEG-FX-018`. The exact global-oracle inventory is `SEG-OR-001`, `SEG-OR-002`, `SEG-OR-003`, `SEG-OR-004`, `SEG-OR-005`, `SEG-OR-006`, `SEG-OR-007`, `SEG-OR-008`, `SEG-OR-009`, `SEG-OR-010`, `SEG-OR-011`, and `SEG-OR-012`. They are required without renaming or weakening. The suite covers payload/framing/header bit flips; active and closed segments; valid/unprovable resynchronization; acknowledged watermark loss; frame/segment/manifest/directory barrier faults; mutation-gating safe-point/checkpoint/approval power cuts; sequence-lease crash boundaries; checkpoint/survivor reconciliation; rotation/truncation/compaction/janitor restart cuts; disclosure precision; and stale checklist/pointer rejection.
+
+The global result must prove deterministic survivors and recovery IDs, no success before both append barriers plus directory durability, no mutation without a surviving synced prerequisite receipt, no sequence reuse, exactly one manifest-selected active generation after recovery, unchanged closed-source hashes, sequence/event rather than timestamp checkpoint truth, degraded projection health when canon has a hole, idempotent recovery events, exact/bounded/unknown disclosure fidelity, and live pointer/checklist fidelity.
+
+### Storage I/O, aggregate lock/viewer, root continuity, and fallback
+
+| Fixture | Required oracle |
+| --- | --- |
+| `STIO-001-CLOSED-CLASS` | Inject every closed storage-I/O class at seglog, redb, checkpoint, safe-point, rotation, migration/backup, JSONL, and Tantivy writes; observe the exact class, retry count, and final access mode. |
+| `STIO-002-SAFEPOINT-ENOSPC` | ENOSPC during the pre-attempt safe point causes no project mutation, external side effect, or attempt dispatch. |
+| `STIO-003-CHECKPOINT-ENOSPC` | ENOSPC after projection/before checkpoint keeps the old checkpoint; restart replays deterministically and no false freshness is acknowledged. |
+| `STIO-004-APPEND-ENOSPC` | Failed seglog append is not acknowledged, later appends are rejected, existing verified records remain readable, and no memory-buffered event appears after recovery. |
+| `STIO-005-RECOVERY-PROBE` | Explicit retry revalidates identity/version/integrity/lock/checkpoint before writer mode; outage/recovery times remain distinct and blocked attempts do not auto-resume. |
+| `STIO-006-RECOVERY-FAIL` | Failed recovery probe retains viewer/blocked posture and the owned writer lock. |
+| `LOCK-001-LIVE` | Live lock yields a non-writer frozen viewer with zero writer components. |
+| `LOCK-002-STALE-DIAGNOSTIC` | Heartbeat older than 10 seconds never authorizes takeover while the OS lock is held. |
+| `LOCK-003-STALE-OWNER-FREE-OS` | New process acquires the free OS lock first, replaces diagnostics atomically, and becomes the sole writer. |
+| `LOCK-004-INDETERMINATE` | Invalid/missing owner diagnostics plus held OS lock produces `lock_indeterminate`, never forced takeover. |
+| `LOCK-005-ADAPTER-RACE` | Unix `flock` and Windows `LockFileEx` two-process races produce exactly one writer and no loser writer handle. |
+| `LOCK-006-VIEWER-INVENTORY` | Every command/direct handler is allowed or disabled; mutation bypass returns `storage_read_only`; no presentation-only gate exists. |
+| `LOCK-007-REFRESH-PROMOTE` | Manual refresh remains coherent and write-free; promotion closes readers and reruns every startup gate; a newer store remains under L-001 refusal. |
+| `ROOT-001-EMPTY-OVERRIDE` | Known populated root plus empty override creates no new store and identifies the prior instance. |
+| `ROOT-002-REMOVED-OVERRIDE` | Bootstrap binding prevents silent default-root initialization when a populated override disappears. |
+| `ROOT-003-IDENTITY-MISMATCH` | Another instance, markerless bytes, or corrupt/missing manifest routes to explicit block/recovery without mutating either candidate or reinitializing schema version. |
+| `ROOT-004-RELOCATION-CRASH` | Kill at every relocation step opens the last verified binding or blocks; source stays recoverable and no empty product appears. |
+| `ROOT-005-CROSS-VOLUME` | Destination validation precedes binding change and no cross-filesystem atomic-rename assumption is made. |
+| `ROOT-006-MISSING-OR-AMBIGUOUS` | Missing bound volume or multiple lineage candidates blocks for explicit action; precedence alone never mutates a candidate. |
+| `FALLBACK-001-DETERMINISTIC-ROOT` | All canonical stores and the aggregate lock move together under the deterministic fallback; unsafe bootstrap root refuses fallback. |
+| `FALLBACK-002-TWO-HOST-DIVERGENCE` | A changed base closes the second host's writes and cannot auto-merge or overwrite either store. |
+| `FALLBACK-003-RETURN-CRASH` | Unchanged-base return at every cut selects the last verified store or blocks with no lost fallback. |
+| `FALLBACK-004-EXPLICIT-DISPOSITION` | Keep-logical and fork-local-as-new preserve unimported lineage exactly and never mutate the unselected store. |
+| `FALLBACK-005-UNSTABLE-CAPTURE` | Corrupt/changing logical-root capture admits no fallback write and stays viewer/blocked. |
+
+### EventRecord 2.0 scope, compatibility, legacy normalization, dedupe, and replay
+
+| Fixture | Required oracle |
+| --- | --- |
+| `EVT2-SCOPE-001` | Application events require `scope_kind=application` and `project_id=null`; project events require `scope_kind=project` and non-empty project ID; both persist/index in the exact partition without a fake project. |
+| `EVT2-SCOPE-NEG-001` | Application+project ID, project+null, missing/unknown scope, unregistered family policy, and a project sentinel are rejected/quarantined before append with no checkpoint advance. |
+| `EVT2-LEGACY-GOLDEN-001` | Two runs, process restart, another locale/timezone, and two independent implementations use UTC RFC 3339 with nine fractional digits plus registered extensions/identity pointers and emit byte-identical RFC 8785 JSON, canonical MessagePack, IDs, timestamps, migration object, index row, and one projection effect from the same EventEnvelopeV1 input/context. |
+| `EVT2-LEGACY-QUARANTINE-001` | Header/envelope or project conflicts, invalid time, unregistered alias, missing payload schema, and unhandled secrets quarantine with the exact reason and no checkpoint advance. |
+| `EVT2-LEGACY-IMMUTABLE-001` | Legacy normalization changes neither source segment hash, append count, nor tail sequence; v2 index rebuild returns the same row/projection. |
+| `EVT2-DEDUPE-001` | Global event-ID and scoped idempotency duplicates return the original only for the same semantic digest; different digest conflicts; lifetime remains longer than ordinary TTL. |
+| `EVT2-DEDUPE-CRASH-001` | Crash after seglog append/before dedupe-index update catches up on restart; retry returns the original locator and canonical append count remains one; failed catch-up appends nothing. |
+| `EVT2-REPLAY-ONLY-001` | Normal append rejects `projector_replay_only` without mutation; compatibility replay commits each owned rebuildable projection/checkpoint once and every tool/network/notification/scheduler/outbox/usage/command/append side-effect spy stays zero. |
+| `EVT2-INDEX-001` | `event_record_index.v2:{scope_partition}:{sequence_id_20}:{event_id}` uses `app` or reversible project partition plus zero-padded unsigned sequence; key/value scope mismatch is corruption and rebuild returns exact rows. |
+| `EVT2-VERSION-001` | V1 then V2 generations replay in stable sequence; a reader lacking V2 refuses even read-only inspection instead of a partial view; a 1.0 reader/writer performs no mutation on V2; a V2 writer never emits V1 or rewrites legacy/V1 on ordinary open. |
+
+#### K37 retained-inline restore and seglog EventRecord oracles
+
+Every oracle in this subsection is `NOT_EXECUTABLE_UNDER_THIS_TRANSACTION`. It is planned/static acceptance prose, not executed evidence. For each of `restore_point.applied`, `restore_point.created`, `restore_point.deleted`, `restore_point.expired`, and `seglog.event_appended`, a positive must use the exact registered family/event pair, inline schema `$id`, structured retention ref, EventRecord `pm.event.v0@2.0.0`, and owner scope. Project rows require a non-empty envelope project ID byte-equal to the payload project ID. `seglog.event_appended` inherits the referenced event's application/project partition. The outer event discriminator and payload-schema ID must equal the selected row. Same identity/digest returns the original durable result with one append; a different digest is `idempotency_conflict`; unavailable dedupe proof is `dedupe_unavailable`; `projector_replay_only` produces no canonical or external side effect. Wrong discriminator/schema/version/scope, missing or extra fields, wrong type, empty required identity/ref/item, illegal const/enum, invalid RFC 3339 time, unknown alias/policy/owner, unhandled secret, or unprovable join rejects or quarantines. Every negative/refusal has zero append and zero checkpoint advance; it also has zero owner mutation, projection effect, dispatch, and destructive action.
+
+`restore_point.applied` planned/static oracle set:
+
+- **First branched:** the exact closed twelve-field payload has `schema_version=1.0.0`, persisted `result=branched`, non-empty identities/refs/target IDs, equal lowercase 64-hex expected/observed hashes, valid `applied_at_utc`, matching project envelope, and creates exactly one target thread/branch pair and one event.
+- **Replay:** the same `application_id` and application intent returns the recorded `branched` result and exact target pair with zero new branch and zero new event.
+- **Project and source joins:** envelope/payload project, outer event/schema, expected/observed hash, source thread/branch, and restore-point identity all agree; first execution and replay preserve source thread, conversation branch, worktree, files, Git/index, queue, runtime safe points, and restore-point lifecycle.
+- **Persisted negatives:** reject `result=refused|failed|other`, missing result, missing/empty target ID, missing/empty source/application/restore/project identity, malformed or unequal hash, wrong version/time, extra property, envelope mismatch, changed replay target, duplicate append/branch, source mutation, or restore-point consumption/transition.
+- **Refused command result:** exactly `refused`, no target IDs, event-count delta zero, no source or restore-point mutation; replay returns the same no-event result.
+- **Failed command result:** exactly `failed`, no target IDs, event-count delta zero, no source or restore-point mutation; replay returns the same no-event result. Any event for refused/failed first execution or replay is a hard failure.
+
+`restore_point.created` planned/static oracle set:
+
+- `RSC-P01` — Exact required payload, const `1.0.0`, non-empty identities/refs/hash, RFC 3339 creation time, const `available`, project equality, and arrays of non-empty strings may emit exactly one event only after the immutable record is durable.
+- `RSC-P02` — Absent `safe_point_id` and present non-empty `safe_point_id` both validate; the latter is lineage only and causes no file/worktree mutation.
+- `RSC-P03` — Same create identity/digest returns the original record/event result with no duplicate append.
+- `RSC-N01` — Missing/extra field, wrong version/status/type, empty scalar, invalid time, bad array item, unresolved ref, record-ref/hash mismatch, project mismatch, unknown policy, or secret rejects/quarantines with no append or checkpoint advance.
+- `RSC-N02` — Same identity with different content returns `idempotency_conflict`; no overwrite, second record/event, or checkpoint movement.
+- `RSC-N03` — Unavailable family/schema, permission, or writer posture creates no record and no event.
+
+`restore_point.deleted` planned/static oracle set:
+
+- `RSD-P01` — One exact-hash unprotected `available` record with permission/writer/hold/ref authority transitions once to `deleted`; `prior_hash` identifies the pre-transition record.
+- `RSD-P02` — Replay returns the recorded terminal result with no duplicate append.
+- `RSD-N01` — Malformed payload, wrong version/status, empty ID/ref/hash/reason, invalid time, project/actor conflict, unresolved ref, unknown policy, or secret rejects/quarantines with record and checkpoint unchanged.
+- `RSD-N02` — Protected, held, stale-hash, already-terminal/non-available, permission-denied, viewer/blocked, in-flight, source-lineage-required, or storage-preflight failure remains `available`, clears no hold, and appends nothing.
+- `RSD-N03` — Replay produces no second append; same identity/different digest conflicts without mutation.
+
+`restore_point.expired` planned/static oracle set:
+
+- `RSE-P01` — One `available` fully eligible record at or after inclusive `reference_release + 7,776,000 seconds`, with no overriding ref, exact row/payload policy equality, prior-hash equality, at least one non-empty release-evidence ref, and valid occurrence time transitions once to `expired`.
+- `RSE-P02` — Count pressure selects only the oldest eligible record at `2,048/project` and retains the required hash summary.
+- `RSE-N01` — Malformed payload, wrong version/status, empty ID/hash/evidence, empty evidence array, invalid time, project/policy mismatch, unknown policy, unresolved evidence, or secret rejects/quarantines with no append or checkpoint advance.
+- `RSE-N02` — Before the inclusive boundary, still held/referenced/protected, non-available, or unprovable eligibility preserves the record and performs no expiry/destructive action.
+- `RSE-N03` — Policy inference from prefix/name/path/mtime/timestamp/array position/similar family fails closed with no expiry append or checkpoint advance.
+
+`seglog.event_appended` planned/static oracle set:
+
+- `SEA-P01` — After the referenced canonical frame and manifest watermark are synchronized, one observability payload with non-negative matching sequence, exact matching event type, resolvable event/segment refs, valid time, optional non-empty writer, and inherited scope validates against the schema and append receipt.
+- `SEA-P02` — Retention resolves exactly to `RP-SEGLOG-7D@1.0.0`: creation anchor, 604,800 seconds, 500,000/instance, oldest-eligible eviction, hold protection, and compact expiry.
+- `SEA-N01` — Negative/non-integer sequence, invalid type grammar, empty/unresolved ref, invalid time, empty writer, extra field, or secret rejects/quarantines without observability append or checkpoint movement.
+- `SEA-N02` — Type/sequence/segment receipt mismatch or inherited-scope mismatch rejects; no partition is fabricated.
+- `SEA-N03` — Missing/mismatched policy, held eviction, premature expiry, or physical-metadata inference grants no compaction/destructive eligibility.
+- `SEA-N04` — Substituting the observability row for its referenced canonical event is rejected; the referenced event remains authoritative.
+
+#### Case L exact static fixture and verifier registration
+
+The committed static oracle for `EVT2-LEGACY-GOLDEN-001`, `EVT2-LEGACY-QUARANTINE-001`, and `EVT2-LEGACY-IMMUTABLE-001` is exactly `tests/fixtures/event_record/legacy_normalization/golden/event_envelope_v1_to_event_record_v2.json`. Its machine authorities are `Plans/event_family_registry.json`, `Plans/event_family_registry.schema.json`, `Plans/event_record.schema.json`, and the `event_record_index` row in `Plans/storage_value_registry.json`. Runtime-artifact schema coverage uses exactly `tests/fixtures/runtime_artifacts/golden/runtime_artifact_fixtures.json`, `Plans/runtime_artifact_envelope.schema.json`, the 19 `Plans/runtime_artifact_<type>.schema.json` files, and `Plans/runtime_artifact_restore_point.schema.json` as the unchanged dedicated restore-point authority.
+
+Targeted static commands are:
+
+```text
+python3 scripts/pm-plans-verify.py validate-runtime-artifact-schemas
+python3 scripts/pm-plans-verify.py validate-case-l-non-event-materialization
+python3 scripts/pm-implementation-readiness.py self-test
+python3 scripts/pm-implementation-readiness.py validate
+python3 scripts/pm-plans-verify.py validate-implementation-readiness
+```
+
+`validate-case-l-non-event-materialization` is a static owner/consumer oracle for only the approved `PD-PROBE-L011-01 A/A/A/A/A`, `PD-PROBE-L020-01 A/A/A`, `PD-PROBE-L032-01 A`, and mechanical `PGF-010` materialization. Its pass result cannot close an EventRecord denominator/depth obligation and cannot certify runtime behavior, buildability, governance, PNC-019, or Case L.
+
+The L-032 oracle loads `Plans/storage_recovery_contracts.schema.json` as Draft 2020-12 and requires exactly `migration_preflight_result` and `migration_progress_snapshot`. Its in-memory suite has six named positives and fourteen named negatives. Positives cover ready at the exact free-space boundary, blocked one byte below with `blocked_insufficient_space`, the ten-percent reserve branch, cancellable preflight, non-cancellable applying with paired bytes, and committed progress linked to the sole `pm.storage_value.migration_receipt.v1` terminal receipt. Negatives cover wrong outcome/reason pairings, both wrong free-space comparisons, both arithmetic formulas, an unknown phase, unpaired or overrun bytes, overrun steps, post-preflight cancellation, ETA, percentage, and committed-without-receipt. The assertion evaluator uses integer ceiling arithmetic for `reserve_bytes = max(268435456, ceil(0.10 * (backup_bytes + staging_bytes)))`, exact addition for `required_free_bytes`, `0 <= completed_steps <= total_steps`, and `0 <= bytes_done <= bytes_total` when paired bytes are present. It also compares `migration_receipt.value_schema.properties.preflight_result` to the sidecar definition after recursively removing only `$comment`; no other keyword or value is ignored. `migration_receipt` remains the only migration storage family and sole terminal durable query authority. `migration_progress_snapshot` is journal-derived, is not a receipt or storage family, and must not be registered as an EventRecord family.
+
+The L-011 static oracle loads the live `Approved fallback-divergence disposition owner contract` from Storage and the live `Storage fallback divergence command envelopes` from Contracts, then requires owner equality in the Catalog, Commands System, and exactly one production row at each of `storage.fallback.keep_logical_root`, `storage.fallback.fork_new_instance`, and `storage.fallback.export_both`; `cmd.storage.fallback.resolve_divergence` is rejected. The complete Args-schema and ownership/result cells of each of the three primary Catalog rows must equal the closed owner declaration, not merely contain selected markers: `StorageFallbackDispositionRequest` has the common fields `command_id`, `idempotency_key`, `actor_ref`, `confirmation`, and all eight explicit CAS components; keep/fork admit only those 12 fields, while export admits only those 12 plus `destination_ref` and `encryption_key_ref`. An added or wrong-variant field in any primary row fails closed even when the later shared prose block remains correct. Commands System must state the exact storage/Contracts-owned request/result relationship and Catalog registration/consumer-only boundary; catalog ownership is invalid. The exact confirmations are `retain_fallback_and_select_logical`, `create_inactive_candidate_without_switch`, and `encrypt_exact_bytes_and_retain_sources`; `confirmation_strength` is not a substitute, and request-side `manifest_ref`, result variants, receipts, or custody fields fail closed. Every row must also preserve the lowercase 64-hex rule, a distinct sole storage handler, command-envelope replay identity, both-root retention, and receipt-only/no-EventRecord effects.
+
+The same oracle requires each complete production `acceptance_checks[0]` request declaration to equal its owner-derived grammar exactly. It does not stop at the first semicolon or use a finite forbidden-field blacklist as proof of closure, so an appended field-bearing suffix or analogous unknown extra on any of the three rows fails closed. It also requires the closed 16-field `StorageFallbackDispositionResult` with only `applied | replayed | refused | failed_recoverable`; `candidate_binding` and `export_custody` are required-present nullable fields. Keep success changes only the governed active binding and has both variants null. Fork success returns only the closed inactive candidate, keeps `export_custody=null`, and leaves the active binding unchanged. Export success keeps `candidate_binding=null`, leaves active binding and both source heads unchanged, and carries `manifest_ref` only inside the closed output `export_custody`; refused/failed variants are null and cannot claim binding change, cleanup, or custody verification. The Contracts owner list for `StorageFallbackResolutionReceipt` must equal exactly all 26 required fields from `receipt_id` through `completed_at_utc`, with nullable variant fields required-present. The receipt remains the sole durable audit artifact and no EventRecord is permitted. Missing/duplicate reverse coverage, shared/wrong handlers, a generic receipt placeholder, an event effect, any receipt-field omission, missing or extra request/result fields, wrong command confirmation, active-binding mutation, lossy export, or source-root cleanup fails the static oracle.
+
+The L-020 static oracle scans exactly the nine current command surfaces—UI Command Catalog, production Wiring Matrix, UI Wiring Rules, Commands System, Assistant Chat, Final GUI, Worktree Git Improvement, Executor Protocol, and Orchestrator Page—and requires zero `retry_scope`. The canonical runtime command, Orchestrator wrapper, and compatibility alias must have one production row each, the same `handlers::runtime::restore_safe_point_then_retry`, `safe_point.restored`, event effect, state/disabled projections, idempotency, result, and admission contract. Wrapper and alias accept the same canonical fields plus optional `permission_snapshot_id`; admission validates it against current permission state, consumes it, and applies the identical deterministic transform before the sole handler. A peer Orchestrator handler, wrapper-only field reaching runtime, receipt-only/no-event peer path, mismatched effect, or divergent admission fails closed.
+
+The `PGF-010` static oracle derives command existence from the live catalog and reverse coverage from the live production matrix. `cmd.chat.branch_from_restore` must resolve only to `handlers::chat::branch_from_restore`; result is closed to `branched | refused | failed`; only first `branched` returns target IDs and emits exactly one `restore_point.applied`; replay returns the same result/target IDs without duplicate emission; refused/failed return no target IDs and no event. First execution and replay preserve source thread, source conversation branch, worktree, files, Git/index state, queue, and runtime safe points. UI Wiring Rules must keep the ghost-command check live-derived from current normative references, catalog membership, and production handler/reverse coverage; a stale example list cannot satisfy it.
+
+`self-test` must recompute both positive legacy normalizations, canonical JSON and MessagePack bytes, generation-qualified index rows, projection digests/counts, source immutability/deltas, the complete named quarantine matrix, the L-032 six-positive/fourteen-negative matrix, and the L-011 owner-equality negative matrix. L-011 mutations must reject missing reverse wiring, shared/wrong handlers, `confirmation_strength`, missing and wrong command confirmation, missing `actor_ref`, every missing CAS position, export request `manifest_ref`, request-side custody, each retired success token `kept_logical_root | fork_candidate_created | exported`, an omitted required result field, non-null wrong variants, fork/export active-binding changes, a generic receipt placeholder, and an invented EventRecord. In addition, it must reject an unknown extra in each complete primary Catalog Args cell, the exact catalog-owned Commands regression, an appended unknown request suffix in each of the three complete production request declarations, and omission of every one of the 26 `StorageFallbackResolutionReceipt` fields in turn, including `completed_at_utc`. Existing L-020 retry/effect divergence, `PGF-010` event/ghost drift, and comment-only versus semantic registry mutations remain mandatory. `validate` and its wrapper remain fail-closed while `event_denominator_unresolved`, event-family contract-depth obligations, Spec Lock hashes, generated currentness, or PNC-019 executable authority are unresolved. A red result caused by those named residuals is truthful; removing the residual, accepting an unknown family, registering a wildcard/default family, or treating an open `{}` payload/item schema as depth-complete is not an allowed repair.
+
+The historical Known-37 event-family slice is a **KNOWN-KERNEL STATIC contract-depth set at 37/37**: each row in that bounded slice has an exact owner-routed payload contract, closed required spine and applicable enums/conditions, retention authority, and planned positive/negative/replay/quarantine oracles at canonical Plans surfaces. The live registry is revision `2026-08-04.1` with 39 rows; the two later rows do not retroactively enlarge the Known-37 assignment. July Event Authority evidence records the 37-row slice plus at least 248 confirmed persisted-unregistered families, at least 40 unresolved exact rows, and 68 excluded rows. It proves only a source-dated persisted floor of at least 285 with denominator status `UNKNOWN_OPEN`; bulk registration is forbidden and fresh reconciliation is required. The bound external-custody inputs are `EA-27_PRODUCER_UNION_AND_DENOMINATOR.json` (SHA-256 `644c6d0bc913eaed62f41e231fdb7e04f55d270549fcdede73a0869994111e47`; `union_rows_sha256=aa9c365904788eba74df73bb1b5eecaae903a6aa167e0514b7937198aa0dbf4d`) and `EA-29_TERMINAL_FINDINGS_RESIDUALS_CONTRACT_DEPTH_REPAIR_AND_WAVE1_CHECKPOINT.md` (SHA-256 `17820aef1b498acf2e5165bee106171ff1ef35a1b23fa67d0cc23e291a8ed7bf`) under `PuppetMaster-AssuranceLab` custody. Static prose/schema presence is not fixture execution, validator or gate success, shard or generated-governance currentness, runtime behavior, harness evidence, certification, buildability, Case L closure, or denominator completion. Unknown/unregistered events still quarantine without checkpoint advance.
+
+These checks are static plan/schema/fixture evidence. The PNC-019 harness must run the non-event validator before constructing a harness result or writing a receipt, then stop fail-closed on the live EventRecord denominator/depth critical. Updating its source-consumer and preflight shape is not a harness execution, runtime lifecycle result, certification receipt, buildability proof, or Case L finding closure.
+
+### Exact-replace restore, truthful envelopes, and SCM boundaries
+
+| Fixture | Required oracle |
+| --- | --- |
+| `RSP-ATOMIC-001` | Kill after every multi-path operation; restart ends at exact target, exact rollback, or fenced recovery-required, and the outcome matches the proven digest. |
+| `RSP-ATOMIC-002` | Apply failure plus verified rollback emits only `restore_failed`; post digest equals pre/admission digest. |
+| `RSP-ATOMIC-003` | Concurrent third state is not overwritten; `restore_recovery_required` persists and dispatch remains fenced. |
+| `RSP-EQUAL-001` | Complete manifest/SCM equality emits `restore_skipped` with zero target-path mutations. |
+| `RSP-INTEGRITY-001` / `RSP-INTEGRITY-002` | Corrupt manifest or missing/corrupt blob emits `restore_refused` plus exact reason before mutation; admission digest is unchanged. |
+| `RSP-INTEGRITY-003` | Post-apply mismatch verifies rollback and `restore_failed` or remains recovery-required; never `restored_clean`. |
+| `RSP-SCOPE-001` | Tracked, staged, unstaged, untracked, explicitly mutation-scoped ignored, symlink, executable, and submodule cases include/exclude and round-trip exactly within the FileSafe manifest boundary. |
+| `RSP-BASELINE-001` | `safe_point` exact-replaces only the named worktree/branch, restores captured pre-attempt dirty state, and admits exactly one successor attempt after durable proof. |
+| `RSP-BASELINE-002` | `historical_commit` uses a full immutable commit OID to create a distinct clean worktree; dirty source bytes/index/branch/ownership remain unchanged. |
+| `RSP-BASELINE-003` | `worktree_head` validates exact full HEAD plus state digest and explicit dirt confirmation with zero SCM/file mutation. |
+| `RSP-BASELINE-004` | Unknown target, missing conditional field, moving/abbreviated ref, missing/non-commit OID, identity mismatch, or digest drift refuses with no substitution or successor attempt. |
+| `RSP-RETENTION-001` through `RSP-RETENTION-003` | Open recovery holds outlive ordinary retention; release permits only later owner cleanup; missing/corrupt recovery material preserves local work and never falsely resolves. |
+| `RSP-KEY-001`, `RSP-REGISTRY-001`, `RSP-REGISTRY-002` | Only canonical `sp:` writes exist; aliases resolve uniquely or fail closed; required split rows are materialized and a deferred/bundled launch dependency is rejected. |
+| `RSP-RP-001` through `RSP-RP-004` | Conversation restore points branch to a new thread/branch, preserve the source thread/worktree/files, apply `RP-RESTOREPOINT-90D-AFTER-RELEASE@1.0.0` with its exact release boundary/cap/oldest-eligible/overriding-ref rules, and refuse stale/corrupt input without filesystem restore. Create/apply/delete and replay/refusal/failure leave Executor attempt, successor-attempt, runtime-safe-point, worktree/file, and dispatch state unchanged; no retention timer or expiry transition is Executor-owned. |
+| `RSP-CMD-001` / `RSP-CHAT-001` | Command IDs/conditional fields/wiring are singular and complete; multi-file Chat revert has the same FileSafe transaction truth and does not rewind the conversation. |
+
+The exact restore inventory is `RSP-ATOMIC-001`, `RSP-ATOMIC-002`, `RSP-ATOMIC-003`, `RSP-EQUAL-001`, `RSP-INTEGRITY-001`, `RSP-INTEGRITY-002`, `RSP-INTEGRITY-003`, `RSP-SCOPE-001`, `RSP-RETENTION-001`, `RSP-RETENTION-002`, `RSP-RETENTION-003`, `RSP-KEY-001`, `RSP-REGISTRY-001`, `RSP-REGISTRY-002`, `RSP-BASELINE-001`, `RSP-BASELINE-002`, `RSP-BASELINE-003`, `RSP-BASELINE-004`, `RSP-RP-001`, `RSP-RP-002`, `RSP-RP-003`, `RSP-RP-004`, `RSP-CMD-001`, and `RSP-CHAT-001`.
+
+### Retention, anchors, compaction, deletion, quarantine, and maintenance exclusion
+
+- `RET-001-expiry-boundary`, `RET-002-cardinality-tie`, `RET-003-hold-set-clear`, `RET-004-unknown-policy`, `RET-005-janitor-resume`, and `RET-006-settings-minimum` prove inclusive expiry, deterministic count ties, hold set/clear, fail-safe unknown policy, journal restart cursor, and reject-not-clamp settings minima.
+- `ANCHOR-001-old-open-block`, `ANCHOR-002-release`, `ANCHOR-003-multiple-anchors`, `ANCHOR-004-snapshot-missing`, and `ANCHOR-005-atomic-publish` prove blocked recovery survival, exact release conditions, unioned anchors, truthful `recovery_unavailable`, and no half-published blocked episode/anchor.
+- `CMP-001-retained-set`, `CMP-002-index-checkpoint`, `CMP-003-projection-rebuild`, `CMP-004-crash-phases`, `CMP-005-maintenance-exclusion`, and `CMP-006-backup-pin` prove the exact retained set and unchanged semantic IDs, index/checkpoint translation, shadow projection swap, phase-driven crash recovery with one `CURRENT` generation, maintenance-lease exclusion, and pre-migration backup pinning.
+
+#### K37 compaction lifecycle event owner oracles (K37-CMP-OC-001)
+
+Every `K37-CMP-P01..P13` and `K37-CMP-N01..N15` oracle is `NOT_EXECUTABLE_UNDER_THIS_TRANSACTION`. `CMP-004-crash-phases` is the crash-cut consumer anchor. Prose registration does not mean passed; Storage remains the semantic owner.
+
+- `K37-CMP-P01` — Matching survivor digest and complete semantic map select `translate_by_semantic_identity`; every entry preserves sequence/event identity, target refs are current, retired refs are absent, and checkpoint advance waits for verification.
+- `K37-CMP-P02` — Mismatch or unprovable translation selects `invalidate_and_rebuild`; affected rows invalidate and rebuild from the nearest matching survivor checkpoint or first retained event, with no interim advance.
+- `K37-CMP-P03` — Complete verified target shadow plus synchronized target `CURRENT` selects `activate_verified_target_shadow`; target generation activates once and pending state clears once.
+- `K37-CMP-P04` — Unprovable/nonexistent shadow selects `rebuild_from_survivors`; affected derived state is discarded and rebuilt over the authoritative target survivor set before publication or checkpoint advance.
+- `K37-CMP-P05` — Each action member traverses exactly `preparing -> building -> verified -> commit_pending -> committed -> finalized` with every predecessor postcondition, target proof, survivor/removal map, and action/phase join established and closed-source hashes unchanged.
+- `K37-CMP-P06` — Failure from `preparing|building|verified|commit_pending` with unchanged source `CURRENT` reaches only `failed`, carries non-empty reason, preserves source authority, and publishes no target/checkpoint/projection.
+- `K37-CMP-P07` — Publication ambiguity from each nonterminal ordinary phase reaches `recovery_required`, carries non-empty reason, preserves both sides, and keeps mutation/maintenance/projector/checkpoint fences active.
+- `K37-CMP-P08` — Crash after target `CURRENT` and before activation/finalization converges on the same identity through `recovery_required -> committed -> finalized` with one target and no duplicate physical/event effect.
+- `K37-CMP-P09` — Proof that `CURRENT` never left the valid source converges `recovery_required -> failed`, preserves source authority, and leaves immutable failed history.
+- `K37-CMP-P10` — Crash at every builder, artifact, pending-generation, `CURRENT`, activation, pending-clear, finalization, and next-active cut yields exactly one `CURRENT` generation and never selects by mtime/filename.
+- `K37-CMP-P11` — `recovery_required|failed` require one non-empty `failure_reason`; the six ordinary phases forbid it; no peer evidence property is admitted.
+- `K37-CMP-P12` — Identical transition replay after restart returns the original durable result with append count/effect one; terminal failure retry uses a new `compaction_id` only after every current gate revalidates.
+- `K37-CMP-P13` — Compaction raced against migration, restore, salvage, and backup-boundary capture admits exactly one lock/lease holder; refusal emits no lifecycle success event or overlapping write.
+- `K37-CMP-N01` — Reject unknown, empty, alias, case variant, generic, packet-007, or third action-domain member; analogy grants no compatibility.
+- `K37-CMP-N02` — Reject semantic translation without matching survivor digest and complete unambiguous sequence/event mapping, including timestamp/physical-ref derivation.
+- `K37-CMP-N03` — Reject target-shadow activation before complete target proof/target `CURRENT`, with source `CURRENT`, or with shadow/index/checkpoint/removal-map disagreement.
+- `K37-CMP-N04` — Reject skipped, reversed, same-state-as-new, unlisted, or terminal outgoing edges, including direct recovery finalization, committed failure, and edges from terminal states.
+- `K37-CMP-N05` — Reject `failed` without proven unchanged pre-`CURRENT` source authority; ambiguous or possibly post-`CURRENT` failure is `recovery_required`.
+- `K37-CMP-N06` — Reject recovery egress without exact source-failure or verified-target-commit proof and reject fence clearing while unresolved.
+- `K37-CMP-N07` — Reject missing/empty/null exceptional reason, reason on an ordinary phase, or a new evidence field.
+- `K37-CMP-N08` — Reject source mutation, active-segment inclusion, wrong target generation, changed semantic bytes/identity/order/hash/gaps, early source deletion, or retired physical refs.
+- `K37-CMP-N09` — Reject mtime, filename, newest-looking directory, advisory index, projection freshness, or event order as visibility authority; synchronized `CURRENT` alone selects.
+- `K37-CMP-N10` — Reject stale policy revision/hash, unresolved refs, ineligible held/live/backup/rollback source, missing lock/lease, or competing owner; no success append.
+- `K37-CMP-N11` — Different digest for one identity returns `idempotency_conflict`; unavailable proof returns `dedupe_unavailable`; neither appends, projects, advances, dispatches, or mutates.
+- `K37-CMP-N12` — Reject replay that repeats physical effect, semantic append, checkpoint advance, dispatch, or namespace mutation.
+- `K37-CMP-N13` — Reject raw secret/credential/token/path/machine identity/event content or unregistered redaction transform.
+- `K37-CMP-N14` — Reject treating action selection as applied before the phase predicate; early/exceptional/failed rows cannot activate, publish, clear pending, or delete source.
+- `K37-CMP-N15` — Reject reuse of terminal identity for a new attempt; same digest returns original, different digest conflicts, and a new attempt uses a new identity after revalidation.
+
+Every `K37-CMP-N01..N15` rejection has zero append, zero owner mutation, zero projection effect, zero checkpoint advance, zero command/tool/provider/network dispatch, and zero source/target namespace mutation.
+
+- `DEL-001-thread`, `DEL-002-held-thread`, `DEL-003-shared-project-seglog`, and `DEL-004-backup-restore` prove immediate logical hide, held purge disclosure, cross-project isolation, the 24-hour purge contract, content-free tombstone retention, and tombstone replay preventing deleted content from reappearing after backup restore.
+- `Q-001-gui-reset`, `Q-002-critical-invalid`, `Q-003-derived-rebuild`, `Q-004-recovery-migration`, `Q-005-quarantine-cap`, `Q-006-raw-export-redaction`, and `Q-007-corrupt-quarantine` prove raw-byte custody before reset/migration, critical-family fail-closed behavior, derived rebuild, CAS-published recovery, no unresolved critical cap eviction, routine-export redaction, and quarantine-integrity refusal.
+
+#### K37 deletion lifecycle event owner oracles (K37-DEL-OC-001)
+
+Every case in this subsection is `NOT_EXECUTABLE_UNDER_THIS_TRANSACTION`; it is planned/static acceptance prose and never a runtime, fixture, gate, or certification claim.
+
+Shared envelope admission for the four Storage rows is exact. `storage.compaction_lifecycle_changed` requires application scope and envelope `project_id=null`. For deletion, retention hold, and quarantine, absent payload `project_id` requires application scope with envelope `project_id=null`; a present non-empty payload `project_id` requires project scope and byte-equal envelope project ID. Empty, sentinel, multiple, conflicting, or unprovable candidates quarantine before append with no checkpoint advance. In every row, outer `event_type`, `payload_schema_id`, inline `$id`, family revision, structured retention ref, replay identity, and registered redaction posture must join exactly.
+
+Positive cases require:
+
+- application scope with payload project ID absent, envelope `project_id=null`, exact row/schema/version/retention, and required spine;
+- project scope with the same non-empty project ID in payload/envelope and one scope partition;
+- ordinary thread deletion `requested -> logically_hidden`, immediate ordinary projection removal, content-free tombstone preservation, and eligible unheld purge through owner compaction within the 24-hour contract;
+- held deletion `logically_hidden -> held`, disclosure of current blockers, and no purge until owner-cleared holds plus complete revalidation;
+- `purge_pending` both without generation and with a non-negative integer generation, never as visibility or success authority;
+- terminal `purge_pending -> purged` only after verified committed successor authority, with required non-negative generation matching the durable deletion record;
+- each admitted `requested|logically_hidden|purge_pending -> failed` carrying non-empty reason, no generation, fencing, and no success claim;
+- retry after failure with the same `deletion_id` and existing deletion-operation idempotency identity, after revalidating holds, tombstone, scope, storage writer, and purge/compaction authority;
+- backup restore replaying tombstones before visibility so deleted content does not reappear; and
+- identical replay returning the original result with append count one and no duplicate purge/projection effect.
+
+Negative/zero-effect cases require:
+
+- reject/quarantine missing/extra/wrong schema, version, type, enum, empty ID/ref/item, duplicate hold item, invalid deadline, or other malformed payload;
+- quarantine application+project ID, project+missing/null/mismatched payload project ID, unknown scope, sentinel, or conflicting candidates with no scope substitution;
+- reject negative, fractional, string, or null event generation; generation outside `purge_pending|purged`; missing generation for `purged`; missing/empty failure reason for `failed`; or failure reason on any other state;
+- reject `held -> failed|purged`, purge while blockers remain, `purged -> *`, or any unlisted edge while preserving the prior valid state;
+- refuse direct UI/command/segment purge, missing tombstone, unverified/uncommitted generation, newest-by-mtime authority, ambiguous/cross-project reachability, or path/name/time/focus/order scope inference;
+- refuse/quarantine viewer/blocked storage, missing writer, unavailable maintenance/compaction/family/schema/retention authority, or unavailable dedupe proof;
+- return `idempotency_conflict` for one identity with a different digest;
+- reject raw secret/credential/token/password/API key/OAuth/local path/deleted content in event or tombstone; and
+- fail backup restore that exposes deleted content before tombstone replay.
+
+Every deletion rejection/refusal has zero new append, zero owner-state mutation, zero projection effect, zero checkpoint advance, zero purge/compaction dispatch, and zero hold clear.
+
+#### K37 retention-hold lifecycle event owner oracles
+
+All are `NOT_EXECUTABLE_UNDER_THIS_TRANSACTION`. Positives cover application/project set and clear through protected `cmd.storage.legal_hold.manage`, matching optional project identity, exact actor/reason/semantic scope/target policy/anchor/affected refs/receipt, one scoped event, and union composition of multiple holds. Clearing one hold never clears another and holds never clear automatically. Row retention remains `RP-AUTHORITY-INDEFINITE@1.0.0` even when payload `policy_ref` names a finite held-target policy.
+
+Negatives reject malformed schema/version/scope, empty ref/item, duplicate affected ref, unknown action, policy/row conflation, unauthorized or missing actor/reason/expected state, missing writer/family, scope conflict, automatic clear, clearing another hold, refusal, and replay duplication. Each has zero append, zero owner mutation, zero projection effect, zero checkpoint advance, zero dispatch, and zero unauthorized hold set/clear.
+
+#### K37 value-quarantine lifecycle event owner oracles
+
+All are `NOT_EXECUTABLE_UNDER_THIS_TRANSACTION`. Positives cover each admitted risk/state pair and legal edge: `detected -> secured`; `secured -> migrated|restored|recovery_blocked`, plus `reset_to_default` only for `Q-RESETTABLE` and `rebuilt` only for `Q-DERIVED|Q-MIRROR`; and resolved `migrated|rebuilt|reset_to_default|restored -> purged`. Exact `raw.bin`, custody manifest, and append-only recovery receipt synchronize before live-key mutation. Unknown schema/upgrader remains `recovery_blocked`; unresolved `Q-CRITICAL` remains indefinite and cap pressure blocks new mutation-capable writes.
+
+Negatives reject direct detected-to-resolution, resolution before secured, critical reset/rebuild, class-invalid reset/rebuild, `recovery_blocked -> purged`, transition out of `purged`, purge without resolved custody/hold authority, cap eviction, missing/empty raw custody hash/ref, schema identity conflict, illegal risk/state pair, project/scope conflict, raw secret/content in the event, defaulting unknown content, refusal, and replay duplication. Each has zero append, zero live-value mutation, zero projection effect, zero checkpoint advance, zero dispatch, and zero unauthorized purge/hold action.
+
+Migration, compaction, store restore, salvage, and backup-boundary capture must be raced in both orders. Exactly one maintenance lease holder proceeds; the second operation receives the owner-defined refusal and no overlapping canonical write occurs. Kill/restart cases must use the storage-owned phase tables and must never pick authority by mtime, filename, or newest-looking directory.
+
+### Required-MVP storage-family registry routing
+
+- `REGISTRY-MVP-001` asserts exactly one materialized machine row, canonical key, closed value schema, owner/producer/consumer, migration, recovery, retention, and redaction disposition for every storage-owner-required MVP family, including `migration_receipt`, `editor_buffer_recovery_state`, `editor_workspace_state`, `hotreload_state`, `onboarding_state`, safe-point/restore transaction/restore point, EventRecord dedupe/index/checkpoint, and hold/anchor/maintenance/quarantine/deletion families.
+- `REGISTRY-MVP-002` separates current-key cases from compatibility cases. First-launch, valid-current-row, and corrupt-current-row oracles use the canonical keys `editor_state.v1:{project_id}:{file_path_hash}`, `editor_workspace_state.v1:{project_id}`, `hotreload_state.v1:{project_id}`, and `onboarding_state.v1:{project_id}`. `editor_buffer_recovery_state` uses the per-file canonical key and has no compatibility alias or copy-forward case. Coordinator-owned old-key copy-forward cases are exactly `editor_state:v1:{project_id}` for `editor_workspace_state`, `hotreload_state:v1:{project_id}` for `hotreload_state`, and `onboarding:v1` for `onboarding_state`; the global onboarding alias fails closed when project identity is ambiguous. All compatibility aliases are read-only and never receive new writes.
+- `REGISTRY-MVP-NEG-001` removes or defers each launch-critical family and falsifies recovery/retention metadata in turn; validation and mutation admission fail closed, and no prose key template or bundled multi-owner row substitutes for machine authority.
+
+### Mandatory negative acceptance
+
+No Case L suite passes if any of the following occurs: incompatible/preflight refusal mutates target bytes; a half-migrated or mixed-restored store ordinary-opens; a canonical redb family is reported recovered by projection rebuild; a committed migration lacks verification/receipt read-back; a future EventRecord is skipped or rewritten; legacy normalization appends or changes source bytes; replay-only causes external/canonical side effects; `restored_clean` lacks target equality; `restore_failed` lacks rollback equality; exact restore emits `restored_with_conflicts`; a third-party SCM state is overwritten; a moving/abbreviated ref substitutes for an immutable OID; cleanup deletes held/anchored/referenced authority; compaction rewrites closed source bytes or selects by mtime; Executor accepts completion or dispatch from EventRecords, projections, UI state, summaries, or worker/controller claims while `executor_intake_report` or `attempt_receipt` is corrupt, unavailable, or not restored behind a durable verified Storage recovery boundary; a conversation restore-point create/apply/delete path creates or reuses an Executor attempt, successor attempt, runtime safe point, worktree/file/repository/index mutation, worker/scheduler dispatch, or Executor-owned retention timer; or schema/plan/fixture registration is reported as executed runtime proof.
+
+ContractRef: ContractName:Plans/storage-plan.md, ContractName:Plans/Contracts_V0.md#EventRecord, ContractName:Plans/event_record.schema.json, ContractName:Plans/FileSafe.md, ContractName:Plans/WorktreeGitImprovement.md, ContractName:Plans/Executor_Protocol.md, ContractName:Plans/storage_value_registry.json, ContractName:Plans/Release_Supply_Chain.md, DecisionID:PD-RSP-01, DecisionID:PD-RSP-07, DecisionID:PD-L015-03
+
+### ATS-024 - Case L Durable-State Fault, Compatibility, Restore, And Retention Fixtures
+
+```yaml
+plan_unit_id: ATS-024
+unit_type: requirement
+status: accepted
+owner_doc: Plans/Automated_Testing_System.md
+canonical_text: >-
+  Automated Testing executes the approved Case L migration, newer-store, mandatory-backup, crash/restart,
+  seglog durability, storage-I/O, lock/viewer, root/fallback, EventRecord 2.0 and legacy-normalization,
+  exact-replace restore, SCM-baseline, retention/anchor/compaction/deletion/quarantine, and
+  maintenance-exclusion fixtures against their canonical owners. Every positive outcome and negative
+  no-mutation/no-false-success oracle is receipt-backed; fixture registration, schema validity,
+  skipped/inconclusive results, and owner prose never substitute for execution.
+gui_related: false
+gui_classification_reason: This unit owns automated backend durability, compatibility, fault-injection, and receipt evidence rather than presentation.
+depends_on: [ATS-001, ATS-003, ATS-004]
+unblocks: [RSC-009]
+acceptance_criteria:
+  - FX-L001-*, FX-L002-*, FX-L003-*, FX-L016-*, FX-L025-*, and FX-L032-* prove exact refusal, migration, receipt, backup, restore, compatibility, and disk/progress outcomes with byte-digest evidence.
+  - Migration command-inventory evidence proves diagnostics/retry are read-only gates and exposes no generic live repair/salvage/Doctor mutation, bypass, post-preflight force-cancel, or try-anyway path.
+  - SEG-FX-001..018 plus SEG-OR-001..012 prove barrier durability, survivor determinism, sequence nonreuse, crash convergence, closed immutability, checkpoint/projection truth, and disclosure fidelity.
+  - STIO, LOCK, ROOT, and FALLBACK fixtures prove exact retry/failure posture, one OS-authoritative writer, mutation-proof viewer behavior, continuity/relocation recovery, and no automatic divergent-store merge or overwrite.
+  - EventRecord 2.0 fixtures prove closed scope pairs, exact v2 lookup keys, byte-identical in-memory-only legacy normalization, lifetime dedupe/catch-up, strict V1/V2 reader compatibility, and replay-only side-effect isolation.
+  - RSP fixture families prove exact target/rollback equality, truthful restore envelopes, restart fencing, canonical safe-point identity, SCM baseline effects, source preservation, and Chat parity.
+  - RET, ANCHOR, CMP, DEL, and Q fixtures consume the named K37 retained-inline owner-oracle subsections and prove both compaction action domains, the complete ordinary/exceptional graph, exactly one CURRENT-selected generation, retention/hold/cleanup behavior, deletion aftermath, quarantine custody, envelope/scope joins, replay idempotency, and the no-append/zero-effect posture with owner-backed evidence.
+  - REGISTRY-MVP fixtures prove complete machine routing for every required family and reject missing, deferred, bundled, or false recovery/retention authority.
+  - Missing, blocked, skipped, inconclusive, stale, or merely schema-valid evidence cannot satisfy a required oracle or release gate.
+validation_surfaces:
+  - python3 scripts/pm-plan-index.py validate
+  - future Case L durable-state fixture adapter and TestRunReceipt suite
+risk_class: case_l_durable_state_false_positive_oracle
+reasoning_tier: high
+context_scope: case_l_migration_restore_eventrecord_retention_testing
+implementation_surfaces:
+  - Plans/Automated_Testing_System.md
+  - Plans/storage-plan.md
+  - Plans/Contracts_V0.md
+  - Plans/event_record.schema.json
+  - Plans/FileSafe.md
+  - Plans/WorktreeGitImprovement.md
+  - Plans/Executor_Protocol.md
+  - Plans/storage_value_registry.json
+  - Plans/Release_Supply_Chain.md
+node_compile_hint:
+  mode: case_l_durable_state_fixture_contract
+  create_worknodes: false
+  create_nodeseeds: false
+source_lineage:
+  - Case-L:L-001..L-033
+  - Case-L:PD-L-01..PD-L-06
+  - Case-L:EVT-01..EVT-07
+  - Case-L:PD-RSP-01..PD-RSP-09
+  - Case-L:PD-L005-01..PD-L033-03
+  - Case-L:SEG-D-001..SEG-D-029
+  - PuppetMaster-AssuranceLab/orchestration-2026-07-17/phase2-case-L/CASE_L_APPROVAL_2026-07-17.md
+  - PuppetMaster-AssuranceLab/orchestration-2026-07-17/phase2-case-L/planning/CONSUMER_PROPAGATION_MAP.md
+preserved_exact_tokens:
+  - "blocked_newer_store"
+  - "projector_replay_only"
+  - "restore_refused"
+  - "restore_recovery_required"
+  - "historical_commit_oid"
+  - "expected_state_sha256"
+  - "CURRENT"
+  - "recovery_unavailable"
+negative_constraints:
+  - Do not redefine owner algorithms, enums, keys, retention values, receipt schemas, or SCM effects in testing.
+  - Do not report restored_clean without target equality or restore_failed without rollback equality.
+  - Do not treat green parsers, validators, registered fixtures, or unexecuted receipts as runtime, closure, buildability, certification, or completeness proof.
+owner_hints:
+  - Plans/Automated_Testing_System.md
+  - Plans/storage-plan.md
+  - Plans/FileSafe.md
+```
+
 ## FABLE Deferred Action Concrete Repair Addendum - 2026-07-08
 
 This addendum is canonical automated-testing spec text for deferred non-runtime FABLE rows. It creates no WorkNodes, NodeSeeds, executable queues, runtime artifacts, implementation files, production build tasks, final manifests, or PNC-019 receipts, and it does not mark `buildability_gate_passed` true.
@@ -1888,3 +2252,646 @@ This owner note closes or dispositions non-runtime rows from `Plans/.audits/fabl
 - `registry_line 333` (explicitly_deferred; source line 1128; `sfk-a86063e06fec52acf396acb6`): Explicitly deferred: closing this row requires a dedicated owner-doc/schema/detail lane beyond safe non-runtime hygiene; no buildability or runtime proof is claimed here. Source summary: - [HIGH] 6 (L279-281): entire document is gated behind an undefined future "runtime_disabled enabled" event with no trigger criteria.
 
 <!-- FABLE_REMAINING_ACTION_PLAN_REPAIR_20260708_END -->
+
+## Known-37 owner-oracle materialization and execution-status ledger - 2026-07-18
+
+This is canonical acceptance/test-spec prose. `STATICALLY_MATERIALIZED` means the closed Plans contract exists and was checked structurally in this transaction; it is not a fixture, runtime, gate, harness, or certification pass. Every behavioral acceptance case remains `NOT_EXECUTABLE_UNDER_THIS_TRANSACTION`; no unchanged checker demonstrated execution of those cases here.
+
+### Static materialization accounting
+
+- `K37-STATIC-01` — `STATICALLY_MATERIALIZED` — The exact 31 authorized new JSON paths exist and parse; the 21 Goal roots and nine standalone schemas are Draft 2020-12 meta-valid; the catalog data validates.
+- `K37-STATIC-02` — `STATICALLY_MATERIALIZED` — All 21 Goal roots are self-contained, closed, select their exact event const and schema ID, and carry mechanically identical common definitions.
+- `K37-STATIC-03` — `STATICALLY_MATERIALIZED` — The historical Known-37 event-family slice validates at 2.0.0 / 2026-07-18.2 / RET-K37-ASSIGNMENT-001@1.0.0; exactly 37 rows in that bounded slice have revision 2.0.0 and the 23/4/5/3/1/1 retention distribution. This is not a currentness claim for the live 39-row revision `2026-08-04.1`.
+- `K37-STATIC-04` — `STATICALLY_MATERIALIZED` — The storage registry validates against the unchanged schema, has exactly 24 policy IDs, and contains the exact requested_effective_runtime and recovery_unavailable_resolution_receipt rows once in both required-family arrays.
+- `K37-STATIC-05` — `STATICALLY_MATERIALIZED` — The seven governed v1 reader definitions are byte-semantic deep-equals of the prior active inline definitions, while the seven active roots are v2 writer-only registry selections.
+- `K37-STATIC-06` — `STATICALLY_MATERIALIZED` — The two recovery commands each have one exact wiring row, sole runtime handler, typed request/result reference, receipt effect, empty expected-event set, and blocked-state admission prose.
+- `K37-STATIC-07` — `STATICALLY_MATERIALIZED` — The retained-inline remaining-nine row schemas and their owner/consumer clauses form a 37/37 historical KNOWN-KERNEL STATIC contract-depth account; the source-dated at-least-248 confirmed persisted-unregistered floor, at-least-40 unresolved exact rows, 68 exclusions, and `UNKNOWN_OPEN` complete denominator remain explicit residuals, and no runtime, fixture, gate, shard, harness, certification, buildability, or closure result is inferred.
+
+### Goal Runtime v2 event acceptance oracles
+
+- `EA-UND-0001-GOAL-POS` — `NOT_EXECUTABLE_UNDER_THIS_TRANSACTION` — Append a permission block with exact permission evidence, ordered action IDs containing `request_approval`, and matching CAS; projection becomes `blocked` and exposes the exact cause/safe action.
+- `EA-UND-0001-GOAL-NEG` — `NOT_EXECUTABLE_UNDER_THIS_TRANSACTION` — Reject unknown blocker/reason/action, missing cause/scope, action set not containing next action, generic `try_anyway`, or block from a terminal state.
+- `EA-UND-0002-GOAL-POS` — `NOT_EXECUTABLE_UNDER_THIS_TRANSACTION` — Cancel a running mutated Goal only after referenced settlements are durable; projection becomes terminal `cancelled`.
+- `EA-UND-0002-GOAL-NEG` — `NOT_EXECUTABLE_UNDER_THIS_TRANSACTION` — Reject `mutation_started=false` with rollback refs, true with empty settlement refs, missing cancellation scope, or cancellation of terminal Goal.
+- `EA-UND-0003-GOAL-POS` — `NOT_EXECUTABLE_UNDER_THIS_TRANSACTION` — Record a child `running->completed` edge with receipt ref; parent revision advances while parent status remains unchanged.
+- `EA-UND-0003-GOAL-NEG` — `NOT_EXECUTABLE_UNDER_THIS_TRANSACTION` — Reject equal/unknown child states, completed child without receipt, illegal child edge, or any attempt to set parent completion in this payload.
+- `EA-UND-0004-GOAL-POS` — `NOT_EXECUTABLE_UNDER_THIS_TRANSACTION` — From `verifying`, validate canonical completion receipt, exhaustive satisfied/not-applicable criteria, passing/waived validators, then commit `completed`.
+- `EA-UND-0004-GOAL-NEG` — `NOT_EXECUTABLE_UNDER_THIS_TRANSACTION` — Reject missing/corrupt receipt, unsatisfied/deferred criterion, failed/blocked/unwaived skipped validator, worker claim, projection substitute, or wrong source state.
+- `EA-UND-0005-GOAL-POS` — `NOT_EXECUTABLE_UNDER_THIS_TRANSACTION` — Create previously absent Goal at revision 1 with verified control-envelope hash, non-empty criteria, exact scope/budget/model policy; projection is `created`.
+- `EA-UND-0005-GOAL-NEG` — `NOT_EXECUTABLE_UNDER_THIS_TRANSACTION` — Reject expected revision, revision other than 1, duplicate Goal ID, hash mismatch, null optional, unknown enum, or write scope without authority evidence.
+- `EA-UND-0006-GOAL-POS` — `NOT_EXECUTABLE_UNDER_THIS_TRANSACTION` — Record a standard-tier no-mutation optional-check degradation with risks/actions and exception evidence; projection is `degraded`, not success.
+- `EA-UND-0006-GOAL-NEG` — `NOT_EXECUTABLE_UNDER_THIS_TRANSACTION` — Reject empty risks/actions, strong-tier required-check degradation, missing exception/approval proof, degradation from a fenced/terminal state, or any completion claim.
+- `EA-UND-0007-GOAL-POS` — `NOT_EXECUTABLE_UNDER_THIS_TRANSACTION` — Capture current source evidence with valid span/hash and matching outer/inner redaction; evidence index advances while state is preserved.
+- `EA-UND-0007-GOAL-NEG` — `NOT_EXECUTABLE_UNDER_THIS_TRANSACTION` — Reject wrong hash syntax, invalid locator branch, artifact snapshot without snapshot ref, raw secret, redaction mismatch, unknown currentness used as proof, or any retention value invented by fallback.
+- `EA-UND-0008-GOAL-POS` — `NOT_EXECUTABLE_UNDER_THIS_TRANSACTION` — Append `scheduled->running` with a non-empty task delta and artifact hashes; second identical fingerprint includes repeat count/marker and remains visible.
+- `EA-UND-0008-GOAL-NEG` — `NOT_EXECUTABLE_UNDER_THIS_TRANSACTION` — Reject disallowed state pair, empty task delta, repeat>=2 without marker, marker with repeat<2, stale status_before, or use of progressed to claim blocked/completed.
+- `EA-UND-0009-GOAL-POS` — `NOT_EXECUTABLE_UNDER_THIS_TRANSACTION` — Record a validated verification or completion receipt with complete child/WorkNode refs and passing outputs; state remains unchanged.
+- `EA-UND-0009-GOAL-NEG` — `NOT_EXECUTABLE_UNDER_THIS_TRANSACTION` — Reject missing receipt, invalid certifier enum, certified decision with failed output, exception without approval, incomplete declared dependency receipts, or treating receipt-recorded as Goal completion.
+- `EA-UND-0010-GOAL-POS` — `NOT_EXECUTABLE_UNDER_THIS_TRANSACTION` — Replan running Goal for scope reduction, decide every affected child, preserve only revalidated evidence, and commit `running` at the new revision.
+- `EA-UND-0010-GOAL-NEG` — `NOT_EXECUTABLE_UNDER_THIS_TRANSACTION` — Reject new revision mismatch, missing/extra child decision, unknown interruption/action, stale evidence, terminal/limit source, or child steering without referenced disposition.
+- `EA-UND-0011-GOAL-POS` — `NOT_EXECUTABLE_UNDER_THIS_TRANSACTION` — Schedule a created Goal with `dispatch`, due eligibility, queue, budget snapshot, writer storage, current permission, and resolved recovery truth.
+- `EA-UND-0011-GOAL-NEG` — `NOT_EXECUTABLE_UNDER_THIS_TRANSACTION` — Reject dispatch without queue/due time/admission evidence, unknown priority/reason/action, stale CAS, viewer/blocked storage, unknown recovery, or scheduling a terminal Goal.
+- `EA-UND-0012-GOAL-POS` — `NOT_EXECUTABLE_UNDER_THIS_TRANSACTION` — Stop a running Goal at a validated safe point after durable child/tool settlement, with `resumable=true`; projection is fenced `stopped`.
+- `EA-UND-0012-GOAL-NEG` — `NOT_EXECUTABLE_UNDER_THIS_TRANSACTION` — Reject resumable without safe point, before-mutation with settlements, unsettled after-mutation as resumable, unknown stop reason/boundary, or treating stop as cancellation/completion.
+- `EA-UND-0013-GOAL-POS` — `NOT_EXECUTABLE_UNDER_THIS_TRANSACTION` — Record a permission check `blocked/approval_required` by output/log refs and block evidence; state is preserved pending named block event.
+- `EA-UND-0013-GOAL-NEG` — `NOT_EXECUTABLE_UNDER_THIS_TRANSACTION` — Reject embedded tool output/secret, failed/unknown without log, approval-required without evidence, deny+passed, unknown check enum, or direct state mutation.
+- `EA-UND-0014-GOAL-POS` — `NOT_EXECUTABLE_UNDER_THIS_TRANSACTION` — Apply one exact scope delta with previous/new revision relation, mark affected child stale, and fence dispatch pending replan.
+- `EA-UND-0014-GOAL-NEG` — `NOT_EXECUTABLE_UNDER_THIS_TRANSACTION` — Reject zero deltas, revision mismatch, child in active and stale sets, malformed delta branch, update during verifying/terminal, or implicit child re-steer.
+- `EA-UND-0015-GOAL-POS` — `NOT_EXECUTABLE_UNDER_THIS_TRANSACTION` — Record passed verification with cycle ID, verifier, closures, no findings/risks; projection is `verifying` and still awaits completion event.
+- `EA-UND-0015-GOAL-NEG` — `NOT_EXECUTABLE_UNDER_THIS_TRANSACTION` — Reject no cycle ID, passed with findings/risks, failed without finding, blocked without risk/block evidence, third repeated strong failure without adjudicator, or implicit completion.
+- `EA-UND-0016-GOAL-POS` — `NOT_EXECUTABLE_UNDER_THIS_TRANSACTION` — Block a running GoalRun with validated block receipt, preserved work, exact scope and owner-valid action set; projection becomes `blocked`.
+- `EA-UND-0016-GOAL-NEG` — `NOT_EXECUTABLE_UNDER_THIS_TRANSACTION` — Reject missing receipt, empty actions, invalid recovery action, preserved mutation omitted, blocked update with no new evidence, or block from terminal/stopped run.
+- `EA-UND-0017-GOAL-POS` — `NOT_EXECUTABLE_UNDER_THIS_TRANSACTION` — Cancel a running mutated GoalRun after durable settlement/rollback evidence; projection becomes terminal `cancelled`.
+- `EA-UND-0017-GOAL-NEG` — `NOT_EXECUTABLE_UNDER_THIS_TRANSACTION` — Reject activation-aborted with mutation, false mutation with refs, true mutation without settlement, terminal source, or settlement self-report without referenced record.
+- `EA-UND-0018-GOAL-POS` — `NOT_EXECUTABLE_UNDER_THIS_TRANSACTION` — From `verifying`, validate certification receipt, complete WorkNode receipts, passing/waived validators, empty risks, and commit `certified`.
+- `EA-UND-0018-GOAL-NEG` — `NOT_EXECUTABLE_UNDER_THIS_TRANSACTION` — Reject worker/projection claim, missing receipt, incomplete WorkNode refs, certified with risks, exception without risk+approval, failed validator, or wrong source state.
+- `EA-UND-0019-GOAL-POS` — `NOT_EXECUTABLE_UNDER_THIS_TRANSACTION` — Replan failed-verification run to a distinct WorkGraph, increment generation, disposition every affected node, and commit `repairing`.
+- `EA-UND-0019-GOAL-NEG` — `NOT_EXECUTABLE_UNDER_THIS_TRANSACTION` — Reject same graph refs, skipped generation, unpaired affected node, unknown disposition/action, ready/terminal source, or WorkNode dispatch from this event itself.
+- `EA-UND-0020-GOAL-POS` — `NOT_EXECUTABLE_UNDER_THIS_TRANSACTION` — At `start_event_pending`, validate activation receipt and exact accepted active requests, append once, then atomically expose `active/running`. Alias `GoalRunStarted` normalizes with evidence.
+- `EA-UND-0020-GOAL-NEG` — `NOT_EXECUTABLE_UNDER_THIS_TRANSACTION` — Reject partial/mixed required set, mutation requests under read-only mode, missing authority/identity/budget/storage proof, `BuildStarted`, duplicate with different digest, or any pre-append dispatch/charge.
+- `EA-UND-0021-GOAL-POS` — `NOT_EXECUTABLE_UNDER_THIS_TRANSACTION` — Stop a running GoalRun with settled children and validated safe point; projection becomes fenced resumable `stopped`.
+- `EA-UND-0021-GOAL-NEG` — `NOT_EXECUTABLE_UNDER_THIS_TRANSACTION` — Reject resumable without safe point/current admission evidence, unsettled child work, unknown reason, terminal source, or silent resume without new valid replan revision.
+
+### Goal Runtime common outcomes
+
+- `GOAL-COMMON-01` — `NOT_EXECUTABLE_UNDER_THIS_TRANSACTION` — Wrong/missing row schema ID, wrong event const, extra property, null in non-null field, unknown enum, malformed conditional branch => Reject validation; append nothing.
+- `GOAL-COMMON-02` — `NOT_EXECUTABLE_UNDER_THIS_TRANSACTION` — Outer/inner project, account, actor, correlation, causation, event type, schema, run, or optional thread join conflict => Reject `identity_mismatch`; append nothing.
+- `GOAL-COMMON-03` — `NOT_EXECUTABLE_UNDER_THIS_TRANSACTION` — Missing foreign ref or referenced record fails its owner schema/currentness check => Reject `unresolved_reference`; append nothing.
+- `GOAL-COMMON-04` — `NOT_EXECUTABLE_UNDER_THIS_TRANSACTION` — Stale `expected_goal_revision` => Return `revision_conflict`; append and projection unchanged.
+- `GOAL-COMMON-05` — `NOT_EXECUTABLE_UNDER_THIS_TRANSACTION` — Duplicate same identity/digest => Return original durable result; no second append/transition/side effect.
+- `GOAL-COMMON-06` — `NOT_EXECUTABLE_UNDER_THIS_TRANSACTION` — Duplicate same identity/different digest => Return `idempotency_conflict`; append and projection unchanged.
+- `GOAL-COMMON-07` — `NOT_EXECUTABLE_UNDER_THIS_TRANSACTION` — Dedupe proof unavailable => Return `dedupe_unavailable`; append nothing, schedule nothing, certify nothing.
+- `GOAL-COMMON-08` — `NOT_EXECUTABLE_UNDER_THIS_TRANSACTION` — Unknown event/schema/version or unsupported EventRecord reader => Quarantine/refuse live projection without checkpoint advance; no best-effort history.
+- `GOAL-COMMON-09` — `NOT_EXECUTABLE_UNDER_THIS_TRANSACTION` — Raw or unhandled secret => Reject before append; no redaction transform is used to legitimize the write.
+- `GOAL-COMMON-10` — `NOT_EXECUTABLE_UNDER_THIS_TRANSACTION` — Illegal lifecycle edge or terminal-state mutation => Reject `illegal_transition`; append nothing.
+- `GOAL-COMMON-11` — `NOT_EXECUTABLE_UNDER_THIS_TRANSACTION` — Storage `viewer` => Frozen historical read only at one proven high-water mark; no producer, scheduler, projector writer, receipt writer, permission action, provider call, or durable/external mutation.
+- `GOAL-COMMON-12` — `NOT_EXECUTABLE_UNDER_THIS_TRANSACTION` — Storage/root/integrity/recovery truth unknown => Goal/GoalRun is blocked or remains unknown; no mutation/certification. A disposable survivor projection may be `degraded` only with explicit recovery provenance and never as receipt authority.
+- `GOAL-COMMON-13` — `NOT_EXECUTABLE_UNDER_THIS_TRANSACTION` — Permission denial/approval required => Named `goal.blocked`/`goal_run.blocked`, exact permission evidence and actions; never failed or complete; approval cannot widen a Storage/FileSafe block.
+- `GOAL-COMMON-14` — `NOT_EXECUTABLE_UNDER_THIS_TRANSACTION` — Verifier unavailable => Lightweight may degrade with receipt/evidence; standard only if no mutation/required check affected; strong blocks. Never silently certifies.
+- `GOAL-COMMON-15` — `NOT_EXECUTABLE_UNDER_THIS_TRANSACTION` — Unknown consequential choice outside `EA-DEV-K37-001` => Record `SAME_CLASS_BLOCKER` and stop before choosing.
+
+### Known-37 retention assignment acceptance matrix (RET-K37-ASSIGNMENT-001@1.0.0)
+
+- `P1` — `NOT_EXECUTABLE_UNDER_THIS_TRANSACTION` — **Catalog topology:** exactly one active catalog exists at `storage_value_registry.json#/retention_policies`; baseline 21 plus the three exact additions equals 24 unique IDs.
+- `P2` — `NOT_EXECUTABLE_UNDER_THIS_TRANSACTION` — **Schema closure:** the event-family registry root requires `RET-K37-ASSIGNMENT-001@1.0.0`; every family requires the closed three-field ref; additional ref fields fail.
+- `P3` — `NOT_EXECUTABLE_UNDER_THIS_TRANSACTION` — **Historical Known-37 set equality:** obligation IDs are exactly `EA-UND-0001-RET..EA-UND-0037-RET`; application IDs are exactly `EA-PA-0001..0037`; every accepted event/family pair occurs once; assignment counts are exactly `23+4+5+3+1+1=37`. This oracle does not claim equality with the live 39-row registry.
+- `P4` — `NOT_EXECUTABLE_UNDER_THIS_TRANSACTION` — **Referential equality:** every ref resolves to exactly one policy record at version `1.0.0`; all record fields equal §3 or existing accepted canon.
+- `P5` — `NOT_EXECUTABLE_UNDER_THIS_TRANSACTION` — **Runtime fixture:** `run.started`, `goal_run.started`, and `goal_run.replanned` resolve to 31,536,000 seconds after `run_completion`, 1,000,000/run plus 5,000,000/project, hold protection, successor compaction.
+- `P6` — `NOT_EXECUTABLE_UNDER_THIS_TRANSACTION` — **Seglog fixture:** `seglog.event_appended` resolves to 604,800 seconds from creation, 500,000/instance, and compact-only expired unheld rows.
+- `P7` — `NOT_EXECUTABLE_UNDER_THIS_TRANSACTION` — **Restore fixture:** all five `restore_point.*` rows resolve to the project-resolvable release-anchored policy; `restore_point.expired.payload.retention_policy_ref` equals its row policy ID.
+- `P8` — `NOT_EXECUTABLE_UNDER_THIS_TRANSACTION` — **Authority fixture:** blocked, receipt, audit, certification, deletion-tombstone, hold, integrity, and quarantine rows assigned indefinite cannot be count-evicted under pressure.
+- `P9` — `NOT_EXECUTABLE_UNDER_THIS_TRANSACTION` — **Migration fixture:** exact source revision migrates once, leaves EventRecord bytes/identity unchanged, creates one existing-family migration receipt, and a rerun returns the recorded terminal result without rebinding or semantic duplication.
+- `N1` — `NOT_EXECUTABLE_UNDER_THIS_TRANSACTION` — Reject a missing ref; a scalar ref; an extra ref property; unknown catalog ID; unknown policy ID; wrong policy version; duplicate policy record; or duplicate event assignment.
+- `N2` — `NOT_EXECUTABLE_UNDER_THIS_TRANSACTION` — Reject `RP-DELIVERY-365D` for any runtime row: its terminal-transition anchor and 100,000/project ceiling are non-equivalent.
+- `N3` — `NOT_EXECUTABLE_UNDER_THIS_TRANSACTION` — Reject `RP-SAFEPOINT-90D-AFTER-RELEASE` for the five restore-point rows: their payloads do not require a run identity, so its 64/run primary cap is not deterministically enforceable.
+- `N4` — `NOT_EXECUTABLE_UNDER_THIS_TRANSACTION` — Reject any TTL, anchor, count scope/limit, overflow, hold, or expiry mismatch against the exact record.
+- `N5` — `NOT_EXECUTABLE_UNDER_THIS_TRANSACTION` — Reject policy inference from `goal.*`, `goal_run.*`, `restore_point.*`, `storage.*`, event/family name, producer, owner, filename, key, mtime, payload timestamp, array position, or a similar existing family.
+- `N6` — `NOT_EXECUTABLE_UNDER_THIS_TRANSACTION` — Reject an unapproved outside-kernel event, missing known row, extra row, changed family ID, changed semantic owner, or event-type alias as assignment-set membership.
+- `N7` — `NOT_EXECUTABLE_UNDER_THIS_TRANSACTION` — Reject held-row eviction; count eviction of indefinite authority; expiry before inclusive `anchor + ttl`; or compaction while a legal, recovery, preserved/recent-run, live-ref, backup, rollback, or maintenance anchor remains.
+- `N8` — `NOT_EXECUTABLE_UNDER_THIS_TRANSACTION` — Reject payload/row conflation: `storage.retention_hold_changed.payload.policy_ref` cannot replace the row ref; `goal.evidence_captured` payload policy cannot shorten the row policy; `restore_point.expired` cannot acknowledge a mismatched payload policy.
+- `N9` — `NOT_EXECUTABLE_UNDER_THIS_TRANSACTION` — Reject a same-revision ref mutation, same-version policy rewrite, historical Known-37 migration without exact source currentness/backup/receipt, partial Known-37 publication, or a blocked/rolled-back migration exposed as current. This does not authorize publication of the live 39-row registry as complete.
+- `N10` — `NOT_EXECUTABLE_UNDER_THIS_TRANSACTION` — Any unknown, stale, conflicting, non-equivalent, or unprovable case quarantines without checkpoint advance and blocks destructive eligibility. Conservative indefinite preservation is a failure posture, not a fabricated successful ref.
+
+`P6` and `P7` consume the full row-local planned/static catalogs registered under **K37 retained-inline restore and seglog EventRecord oracles**: the `RSC-*`, `RSD-*`, `RSE-*`, and `SEA-*` sets plus the `restore_point.applied` first/replay/refused/failed/source-preservation cases. Retention lookup alone cannot satisfy their payload, envelope, transition, replay, no-append, or zero-effect obligations, and none is executable or passed by this prose registration.
+
+### Platform capability positive and negative oracles
+
+- `CAP-POS-001 catalog ref resolves` — `NOT_EXECUTABLE_UNDER_THIS_TRANSACTION` — Active catalog revision `1` contains one cited active entry; the complete `PlatformCapabilityRef` resolves uniquely and schema validation passes.
+- `CAP-POS-002 live precedence` — `NOT_EXECUTABLE_UNDER_THIS_TRANSACTION` — Valid live evidence says `supports_available`, valid provider/static evidence says `supports_unavailable`; result is `effective_state=available`, `degradation_reason=none`, `resolution_source=live_runtime_discovery`, while all three refs remain in precedence order.
+- `CAP-POS-003 provider fallback` — `NOT_EXECUTABLE_UNDER_THIS_TRANSACTION` — Live evidence is absent because the entry does not require/produce it, valid provider evidence says `supports_degraded`; result is `degraded`, `provider_policy_limited`, selected provider ref.
+- `CAP-POS-004 static fallback` — `NOT_EXECUTABLE_UNDER_THIS_TRANSACTION` — No higher allowed source exists and valid static evidence says `supports_degraded`; result is `degraded`, `static_baseline_only`, selected baseline ref.
+- `CAP-POS-005 explicit negative` — `NOT_EXECUTABLE_UNDER_THIS_TRANSACTION` — Selected live evidence says `supports_unavailable`; result is `unavailable`, `runtime_absent`, never `unknown`.
+- `CAP-POS-006 not requested` — `NOT_EXECUTABLE_UNDER_THIS_TRANSACTION` — `requested_state=not_requested` yields only `effective_state=not_evaluated`, `degradation_reason=none`, null selection fields, and an empty evidence array.
+- `CAP-POS-007 deterministic bytes` — `NOT_EXECUTABLE_UNDER_THIS_TRANSACTION` — Two evaluations with byte-identical frozen catalog and evidence inputs produce identical sorted evidence, payload canonical JSON, and EventRecord producer semantic digest.
+- `CAP-POS-008 historical replay` — `NOT_EXECUTABLE_UNDER_THIS_TRANSACTION` — An event referencing a known superseded immutable revision validates and replays against that revision without recomputation against the active revision.
+- `CAP-POS-009 admitted legacy alias` — `NOT_EXECUTABLE_UNDER_THIS_TRANSACTION` — One owner-approved `capability_key` alias and complete typed evidence sidecar normalize to the exact v2 ref/payload and record migration provenance.
+- `CAP-POS-010 scope identities` — `NOT_EXECUTABLE_UNDER_THIS_TRANSACTION` — Application evaluation persists outer `project_id=null`; project evaluation persists its one exact project ID; neither duplicates the field inside the payload.
+- `CAP-NEG-001 open capability identity` — `NOT_EXECUTABLE_UNDER_THIS_TRANSACTION` — raw `capability_key`, display name, unknown ID, or missing catalog tuple used instead of `capability_ref`
+- `CAP-NEG-002 stale new-write revision` — `NOT_EXECUTABLE_UNDER_THIS_TRANSACTION` — new evaluation begins with a superseded, retired, missing, or mutated catalog revision
+- `CAP-NEG-003 unknown requested/effective token` — `NOT_EXECUTABLE_UNDER_THIS_TRANSACTION` — provider/model `supported`, legacy boolean/string, `unknown`, or any value outside the two target enums
+- `CAP-NEG-004 illegal state pair` — `NOT_EXECUTABLE_UNDER_THIS_TRANSACTION` — `not_requested/available`, `required/not_evaluated`, or any nonlisted requested/effective pair
+- `CAP-NEG-005 illegal reason product` — `NOT_EXECUTABLE_UNDER_THIS_TRANSACTION` — `available/runtime_partial`, `degraded/none`, or reason/source mismatch
+- `CAP-NEG-006 insufficient unavailable proof` — `NOT_EXECUTABLE_UNDER_THIS_TRANSACTION` — `effective_state=unavailable` with missing evidence or a selected finding other than `supports_unavailable`
+- `CAP-NEG-007 evidence ref mismatch` — `NOT_EXECUTABLE_UNDER_THIS_TRANSACTION` — provider source paired with runtime receipt, duplicate source kind, selected ref absent from the array, or wrong subject/revision
+- `CAP-NEG-008 stale or unverified evidence` — `NOT_EXECUTABLE_UNDER_THIS_TRANSACTION` — provider/model `stale|unverified`, mutable local path, missing source revision, or current-time substitution
+- `CAP-NEG-009 raw secret` — `NOT_EXECUTABLE_UNDER_THIS_TRANSACTION` — token, credential, OAuth value, account root, or other secret-bearing evidence content instead of a ref
+- `CAP-NEG-010 same-source owner conflict` — `NOT_EXECUTABLE_UNDER_THIS_TRANSACTION` — two live receipts disagree for the same subject and frozen revision
+- `CAP-NEG-011 legacy analogy` — `NOT_EXECUTABLE_UNDER_THIS_TRANSACTION` — value imported from retired `platform_specs`, fixture-only data, or provider/model enum without registered owner mapping
+- `CAP-NEG-012 ambiguous migration` — `NOT_EXECUTABLE_UNDER_THIS_TRANSACTION` — absent requested string, unknown alias, raw legacy evidence string without typed sidecar, or payload/outer identity disagreement
+- `CAP-NEG-013 extra or omitted field` — `NOT_EXECUTABLE_UNDER_THIS_TRANSACTION` — any additional payload/catalog/ref property or omission of a required nullable field
+- `CAP-NEG-014 scope conflict` — `NOT_EXECUTABLE_UNDER_THIS_TRANSACTION` — application scope with non-null project, project scope without a project, or conflicting outer/payload legacy project identities
+
+### Restore-point corruption owner oracles
+
+- `EA-OC-004-POS-01` — `NOT_EXECUTABLE_UNDER_THIS_TRANSACTION` — An `available` same-project record with two unequal valid record hashes, no referenced-material fields, matching `record_hash_comparison` evidence, and no extras validates and emits exactly one `record_hash_mismatch` event with `status=corrupt`.
+- `EA-OC-004-POS-02` — `NOT_EXECUTABLE_UNDER_THIS_TRANSACTION` — Present hashable record bytes with `expected_hash=null`, valid `observed_hash`, a reproducible decode/schema failure, no referenced-material fields, and matching `record_decode_failure` evidence validate and emit exactly one `unreadable_record` event.
+- `EA-OC-004-POS-03` — `NOT_EXECUTABLE_UNDER_THIS_TRANSACTION` — A valid `available` record with equal record hashes, one present canonical material ref, all four material comparison fields, at least one unequal comparison pair, and matching integrity evidence validates and emits exactly one `corrupt_referenced_material` event.
+- `EA-OC-004-POS-04` — `NOT_EXECUTABLE_UNDER_THIS_TRANSACTION` — A valid `available` record with equal record hashes, one present canonical material ref, no material comparison fields, and matching scope evidence proving the item is outside supported scope validates and emits exactly one `unsupported_content_scope` event.
+- `EA-OC-004-POS-05` — `NOT_EXECUTABLE_UNDER_THIS_TRANSACTION` — Re-delivery under the same Contracts-owned EventRecord identity and same semantic digest returns the original append result and creates no second semantic event; same identity with a different digest is `idempotency_conflict`.
+- `EA-OC-004-POS-06` — `NOT_EXECUTABLE_UNDER_THIS_TRANSACTION` — `MIG-RESTORE-POINT-CORRUPT-PAYLOAD-001@1.0.0` selects the exact local v1-reader pointer for a frozen `/1.0.0` `record_hash_mismatch`, `corrupt_referenced_material`, or `unsupported_content_scope` payload and, with exactly one immutable identity-matching evidence result satisfying section 7.1, produces the exact root-`#` `/2.0.0` compatibility value for the same event identity while the v1 source bytes and semantic event count remain unchanged.
+- `EA-OC-004-NEG-01` — `NOT_EXECUTABLE_UNDER_THIS_TRANSACTION` — Missing canonical restore-point record produces no corrupt event and no corrupt state claim.
+- `EA-OC-004-NEG-02` — `NOT_EXECUTABLE_UNDER_THIS_TRANSACTION` — Valid record with a ref whose target is absent produces no corrupt event; it stays on the separate missing/unavailable path and the record remains `available`.
+- `EA-OC-004-NEG-03` — `NOT_EXECUTABLE_UNDER_THIS_TRANSACTION` — `reason_code=missing_material`, any fifth token, any generic string, or any alias is rejected/quarantined.
+- `EA-OC-004-NEG-04` — `NOT_EXECUTABLE_UNDER_THIS_TRANSACTION` — Remove each required field once; add each forbidden field once; replace each non-null field with null once. Every case is rejected without append/checkpoint advance.
+- `EA-OC-004-NEG-05` — `NOT_EXECUTABLE_UNDER_THIS_TRANSACTION` — Swap any `evidence_kind` between reason rows, use an unresolved/stale evidence ref, or make evidence identity disagree with project/restore/material identity. Every case is rejected/quarantined.
+- `EA-OC-004-NEG-06` — `NOT_EXECUTABLE_UNDER_THIS_TRANSACTION` — Use equal record hashes for mismatch, unequal record hashes for a referenced-material branch, or equal material hashes and lengths for corrupt material. Every case is rejected as a wrong branch.
+- `EA-OC-004-NEG-07` — `NOT_EXECUTABLE_UNDER_THIS_TRANSACTION` — Use a wrong project, non-`available` record, ambiguous ref, unknown `referenced_material_field`, or additional payload property. Every case is rejected.
+- `EA-OC-004-NEG-08` — `NOT_EXECUTABLE_UNDER_THIS_TRANSACTION` — Put raw record/material bytes, secret data, credential values, local absolute paths, or an unhandled secret inside the event/evidence ref. Every case is rejected/quarantined.
+- `EA-OC-004-NEG-09` — `NOT_EXECUTABLE_UNDER_THIS_TRANSACTION` — Simultaneously make the record hash mismatch and decode fail; the result must be `record_hash_mismatch`, proving the fixed precedence. Simultaneously corrupt referenced material and make it unsupported; the result must be `corrupt_referenced_material`.
+- `EA-OC-004-NEG-10` — `NOT_EXECUTABLE_UNDER_THIS_TRANSACTION` — Make record/material availability or integrity indeterminate through I/O failure. The result is unknown/quarantined, not missing, unreadable, or corrupt.
+- `EA-OC-004-NEG-11` — `NOT_EXECUTABLE_UNDER_THIS_TRANSACTION` — Attempt a new `/1.0.0` write; mutate the frozen v1 object; alias v1 to v2; use any carrier path, pointer, schema ID, or upgrader identity other than section 3.1; upgrade without exactly one identity-matching immutable evidence result; map a v1 `unreadable_record` while its string `expected_hash` is asserted as trustworthy; omit any v2-required value; retain duplicate inline/ref schemas; or publish the payload successor outside packet 002's complete registry/family-revision transaction. Every case quarantines with `reason=restore_point_corrupt_v1_upgrade_unresolvable` without append or checkpoint advance.
+
+### run.started owner oracles
+
+- `RUN-P01` — `NOT_EXECUTABLE_UNDER_THIS_TRANSACTION` — Exact no-fallback regular start. A regular run with no explicit strategy request, legal `none` overlay, matching requested/effective platform/model/Persona, a valid account pair, and a complete matching snapshot appends one event with `requested_strategy = null`, `strategy = hte`, and `strategy_resolution_reason = regular_hte_default`.
+- `RUN-P02` — `NOT_EXECUTABLE_UNDER_THIS_TRANSACTION` — Regular DAE allowed. A regular run with `requested_strategy = dae` and snapshot evidence `dae_allowed == true` appends one event with `strategy = dae` and `regular_dae_allowed`.
+- `RUN-P03` — `NOT_EXECUTABLE_UNDER_THIS_TRANSACTION` — Regular DAE deterministic fallback. A regular run with requested DAE and owner evidence `dae_allowed != true` appends one event with `strategy = hte`, `regular_dae_disallowed`, and unchanged requested DAE truth.
+- `RUN-P04` — `NOT_EXECUTABLE_UNDER_THIS_TRANSACTION` — Yolo DAE. A yolo run with a DAE-capable effective platform appends one event with `strategy = dae` and `yolo_requires_dae`.
+- `RUN-P05` — `NOT_EXECUTABLE_UNDER_THIS_TRANSACTION` — Provider/model/account/Persona fallback. An admitted run with unequal requested/effective joins appends only when the complete snapshot contains owner-valid deterministic evidence for every difference and the inline joins match the resolved snapshot exactly.
+- `RUN-P06` — `NOT_EXECUTABLE_UNDER_THIS_TRANSACTION` — Non-account-backed route. A valid server/profile-backed route appends with both account ID keys present and `null`, while account binding/auth evidence remains in the complete snapshot.
+- `RUN-P07` — `NOT_EXECUTABLE_UNDER_THIS_TRANSACTION` — Replay. Re-delivery of the same semantic start under the same scoped idempotency identity returns/reuses the existing event and preserves one durable start.
+- `RUN-P08` — `NOT_EXECUTABLE_UNDER_THIS_TRANSACTION` — Envelope equality. A project/run/thread/time/account-ref instance whose repetitions and resolutions all agree appends and projects without normalization changes.
+- `RUN-P09` — `NOT_EXECUTABLE_UNDER_THIS_TRANSACTION` — Machine target resolution. A full `pm.requested_effective_runtime@1.0.0` record whose key equals `snapshot_ref`, project partition and ID parse exactly, digest recomputes, every owner ref resolves, and every inline value agrees validates under both the standalone schema and the identical storage-registry value schema.
+- `RUN-P10` — `NOT_EXECUTABLE_UNDER_THIS_TRANSACTION` — Historical stability. After current mode, model, account, provider, or Persona settings change, replay of the event resolves the original stored key and returns the original snapshot bytes and joins; no current value appears in the historical result.
+- `RUN-P11` — `NOT_EXECUTABLE_UNDER_THIS_TRANSACTION` — Governed legacy upgrade. A frozen v1 payload with a section-4 ref to an already-complete immutable target upgrades through `MIG-RUN-STARTED-PAYLOAD-001@1.0.0` to the exact v2 replay representation, preserves source bytes and EventRecord identity, records migration lineage, and does not append another semantic start.
+- `RUN-P12` — `NOT_EXECUTABLE_UNDER_THIS_TRANSACTION` — Coordinated row. The current `event-family-run-started` row is accepted only with packet-002 family/registry revision and retention ref plus packet-005 `/2.0.0` payload schema ref in the same transaction.
+
+### Recovery-unavailable owner-oracle contract
+
+- `P01` — `NOT_EXECUTABLE_UNDER_THIS_TRANSACTION` — Pre-attempt event: a valid event omits `attempt_id`; its anchor stores `attempt_id = null`; its reason is one exact enum member; its action array equals one exact section-5 array; local work is true and all refs resolve.
+- `P02` — `NOT_EXECUTABLE_UNDER_THIS_TRANSACTION` — Post-attempt event: a valid event requires one non-empty `attempt_id` equal across blocked episode, event, anchor, request, result, and receipt.
+- `P03` — `NOT_EXECUTABLE_UNDER_THIS_TRANSACTION` — Reason coverage: one canonical case for each of the five reason values validates; changing only the reason to an unknown value fails.
+- `P04` — `NOT_EXECUTABLE_UNDER_THIS_TRANSACTION` — Ordering: every admitted list starts `open_details`, then `locate_and_verify_recovery`, then `replan`; conditional fresh attempt appears only between replan and abandonment; `abandon_recovery` is last.
+- `P05` — `NOT_EXECUTABLE_UNDER_THIS_TRANSACTION` — Locate success: current identity/member plus a FileSafe-normalized source and exact owner verification produces `applied`, a committed receipt, `released/resolved`, verified refs/hash/evidence, and no cleanup.
+- `P06` — `NOT_EXECUTABLE_UNDER_THIS_TRANSACTION` — Locate replay: byte-identical request and idempotency key returns the original result/receipt and performs no second release.
+- `P07` — `NOT_EXECUTABLE_UNDER_THIS_TRANSACTION` — Replan release: release occurs only after the existing replan is current-member admitted and durably recorded, with `resolved`.
+- `P08` — `NOT_EXECUTABLE_UNDER_THIS_TRANSACTION` — Fresh successor: conditional membership appears only with all existing isolated baseline preconditions; release waits for a distinct durable successor/baseline receipt and uses `superseded_with_verified_successor`.
+- `P09` — `NOT_EXECUTABLE_UNDER_THIS_TRANSACTION` — Abandon success: current explicit user authority, exact confirmation, preserved-work acknowledgement, and committed receipt produce `released/abandoned_by_user`, with `cleanup_performed = false`.
+- `P10` — `NOT_EXECUTABLE_UNDER_THIS_TRANSACTION` — UI projection: every GUI/chat/graph/orchestrator consumer renders the exact ordered array and dispatches through the one catalog mapping; the shared UI response points to the domain result and owner receipt.
+
+### run.started negative oracles
+
+- `RUN-N01` — `NOT_EXECUTABLE_UNDER_THIS_TRANSACTION` — Reject a missing or empty `requested_effective_snapshot_ref`, an unresolvable target, or a compatibility/thin target that lacks any required requested/effective domain.
+- `RUN-N02` — `NOT_EXECUTABLE_UNDER_THIS_TRANSACTION` — Reject inline/snapshot mismatch for any mode, overlay, strategy, platform, model, account, Persona, project, run, thread, or time value.
+- `RUN-N03` — `NOT_EXECUTABLE_UNDER_THIS_TRANSACTION` — Reject omitted required nullable keys; `requested_strategy`, `requested_account_id`, and `effective_account_id` must be present even when `null`.
+- `RUN-N04` — `NOT_EXECUTABLE_UNDER_THIS_TRANSACTION` — Reject `null` for every non-null field and reject empty strings for every ID/ref.
+- `RUN-N05` — `NOT_EXECUTABLE_UNDER_THIS_TRANSACTION` — Reject a fifth runtime mode, eighth overlay, third strategy, seventh strategy-reason token, unknown alias, extra property, or generic free-string reason.
+- `RUN-N06` — `NOT_EXECUTABLE_UNDER_THIS_TRANSACTION` — Reject `requested_strategy = dae` in ask/plan and reject `requested_strategy = hte` in yolo.
+- `RUN-N07` — `NOT_EXECUTABLE_UNDER_THIS_TRANSACTION` — For yolo with `dae_allowed != true`, fail before provider spawn with `yolo_requires_dae_provider`; assert that no `run.started` event exists.
+- `RUN-N08` — `NOT_EXECUTABLE_UNDER_THIS_TRANSACTION` — Reject any mode/overlay pair outside section 5.2, including debug with ask/plan and plan/deep_plan with regular/yolo.
+- `RUN-N09` — `NOT_EXECUTABLE_UNDER_THIS_TRANSACTION` — Reject an unexplained unequal runtime-mode or overlay pair.
+- `RUN-N10` — `NOT_EXECUTABLE_UNDER_THIS_TRANSACTION` — Reject an unequal platform/model/account/Persona pair without owner-valid evidence in the complete snapshot.
+- `RUN-N11` — `NOT_EXECUTABLE_UNDER_THIS_TRANSACTION` — Reject noncanonical model display labels, provider-native account labels as account IDs, and `_persona_id` field aliases.
+- `RUN-N12` — `NOT_EXECUTABLE_UNDER_THIS_TRANSACTION` — Reject a non-account-backed route with either account ID non-null, and reject an account-backed admitted run with `effective_account_id = null`.
+- `RUN-N13` — `NOT_EXECUTABLE_UNDER_THIS_TRANSACTION` — Reject payload/envelope project, run, thread, timestamp, or account-ref disagreement; do not repair either side.
+- `RUN-N14` — `NOT_EXECUTABLE_UNDER_THIS_TRANSACTION` — Reject raw secrets/auth values/local paths in either inline fields or the referenced snapshot.
+- `RUN-N15` — `NOT_EXECUTABLE_UNDER_THIS_TRANSACTION` — Reject a second append for the same semantic start; quarantine an idempotency-key reuse with a different semantic digest.
+- `RUN-N16` — `NOT_EXECUTABLE_UNDER_THIS_TRANSACTION` — Reject fixture-only values or current-settings replay reconstruction not attested by an owner/source derivation.
+- `RUN-N17` — `NOT_EXECUTABLE_UNDER_THIS_TRANSACTION` — Reject a target with the wrong schema path, `$id`, `schema_id`, `schema_version`, key prefix, project partition, snapshot ID grammar, digest grammar, digest value, or key/ref equality; reject a same-key different-byte write as `requested_effective_runtime_identity_conflict`.
+- `RUN-N18` — `NOT_EXECUTABLE_UNDER_THIS_TRANSACTION` — Reject a target missing any required-present field or any of the six owner refs; reject syntactically present but historically unresolvable owner refs, a missing storage-registry registration, a thin `execution_unit_context`, or a ref that resolves only by filesystem/current-project discovery.
+- `RUN-N19` — `NOT_EXECUTABLE_UNDER_THIS_TRANSACTION` — Reject reconstruction or backfill from current settings, current provider/model catalogs, current account choice, current Persona, or current runtime policy after target loss; report historical unavailability and quarantine instead.
+- `RUN-N20` — `NOT_EXECUTABLE_UNDER_THIS_TRANSACTION` — Reject new writes using payload `/1.0.0`, a v1 payload with invented defaults, an in-place v1 rewrite, or a v1 upgrade without an exact complete section-4 target; use `run_started_v1_upgrade_unresolvable` and do not advance projection.
+- `RUN-N21` — `NOT_EXECUTABLE_UNDER_THIS_TRANSACTION` — Reject a packet-002/005 split row: v2 family with v1 payload, v2 payload with family revision 1.0.0 or missing retention ref, duplicate embedded and referenced payload schemas, or any payload schema ID/ref mismatch.
+
+### Recovery-unavailable negative oracles
+
+- `N01` — `NOT_EXECUTABLE_UNDER_THIS_TRANSACTION` — pre-attempt event/request/result with any `attempt_id`, including null or synthesized text;
+- `N02` — `NOT_EXECUTABLE_UNDER_THIS_TRANSACTION` — post-attempt event/request/result missing `attempt_id`, carrying null/empty, or disagreeing with the current prior attempt;
+- `N03` — `NOT_EXECUTABLE_UNDER_THIS_TRANSACTION` — unknown or missing reason; wrong reason-to-current-event equality; or promotion of `state_changed`, `safe_point_missing`, `baseline_stale`, or another nearby token;
+- `N04` — `NOT_EXECUTABLE_UNDER_THIS_TRANSACTION` — empty/duplicate/unordered action list, absent current membership, or any forbidden member;
+- `N05` — `NOT_EXECUTABLE_UNDER_THIS_TRANSACTION` — `start_fresh_attempt` membership without a fully satisfiable isolated non-safe-point target contract;
+- `N06` — `NOT_EXECUTABLE_UNDER_THIS_TRANSACTION` — restore or ordinary retry while the anchor is `recovery_unavailable`;
+- `N07` — `NOT_EXECUTABLE_UNDER_THIS_TRANSACTION` — stale blocked sequence, anchor, snapshot set, reason, permission, or projection;
+- `N08` — `NOT_EXECUTABLE_UNDER_THIS_TRANSACTION` — raw path/raw bytes/moving ref as `recovery_source_ref`, or owner verification with missing identity/equality evidence;
+- `N09` — `NOT_EXECUTABLE_UNDER_THIS_TRANSACTION` — locate result claiming applied with uncommitted/missing receipt, no verified hash/evidence, a non-null reason, or a non-released anchor;
+- `N10` — `NOT_EXECUTABLE_UNDER_THIS_TRANSACTION` — abandonment without actor-bound durable confirmation, exact confirmation constant, preserved-work acknowledgement, current membership, or committed receipt;
+- `N11` — `NOT_EXECUTABLE_UNDER_THIS_TRANSACTION` — abandonment mapped to `abort_run`, cleanup, deletion, worktree detachment, or a higher-level terminal state;
+- `N12` — `NOT_EXECUTABLE_UNDER_THIS_TRANSACTION` — conflicting reuse of an idempotency key or replay that changes result, receipt, release reason, actor, source, or snapshot refs;
+- `N13` — `NOT_EXECUTABLE_UNDER_THIS_TRANSACTION` — failed/refused/unknown domain result projected as UI success;
+- `N14` — `NOT_EXECUTABLE_UNDER_THIS_TRANSACTION` — age, exit, archive, run completion, worktree unbinding, compaction, retention pressure, or cleanup releasing the anchor;
+- `N15` — `NOT_EXECUTABLE_UNDER_THIS_TRANSACTION` — any new EventRecord family, generic `*.command_applied` event, FileSafe-local command namespace, or second handler.
+
+
+### Storage boot, integrity, and recovery owner oracles
+
+- `BR-P01` — `NOT_EXECUTABLE_UNDER_THIS_TRANSACTION` — all six enum members validate in otherwise conforming fixtures and map one-to-one to the six approved semantic classes.
+- `BR-P02` — `NOT_EXECUTABLE_UNDER_THIS_TRANSACTION` — two input permutations normalize to identical ordered arrays and the same `recovery_set_id`; the persisted payload is already canonical.
+- `BR-P03` — `NOT_EXECUTABLE_UNDER_THIS_TRANSACTION` — same-episode retry returns the byte-equivalent prior result/EventRecord and append count remains one.
+- `BR-P04` — `NOT_EXECUTABLE_UNDER_THIS_TRANSACTION` — a later episode with the exact same semantic work set has a higher epoch, new set ID, and direct `repeat_of` to the earliest event.
+- `BR-P05` — `NOT_EXECUTABLE_UNDER_THIS_TRANSACTION` — a final active-segment ref resolves to the manifest row/hash and projector admission occurs only after reconciliation and durable barrier append.
+- `BR-N01` — `NOT_EXECUTABLE_UNDER_THIS_TRANSACTION` — unknown, generic repair/salvage, maintenance-enum-only, duplicate, empty, unsorted, or more-than-bound items reject.
+- `BR-N02` — `NOT_EXECUTABLE_UNDER_THIS_TRANSACTION` — negative generation/epoch, noncanonical decimal, malformed segment ref, `opening` presented as writable final state, or ref/hash/manifest mismatch rejects.
+- `BR-N03` — `NOT_EXECUTABLE_UNDER_THIS_TRANSACTION` — no integrity/recovery evidence, a kind not attested by evidence/journal, or a referenced result from another storage instance rejects.
+- `BR-N04` — `NOT_EXECUTABLE_UNDER_THIS_TRANSACTION` — same set ID/different input is conflict; same-episode duplicate append rejects; later exact repeat without `repeat_of`, with a chain, or pointing anywhere but the earliest matching event rejects.
+- `BR-N05` — `NOT_EXECUTABLE_UNDER_THIS_TRANSACTION` — CRC/range, survivor, recovery-aftermath, or disclosure fields attributed to this event reject; projector/mutation admission before durable convergence rejects.
+- `IN-P01` — `NOT_EXECUTABLE_UNDER_THIS_TRANSACTION` — seeded bit flips at prefix, header, payload, segment, manifest, watermark, and sequence boundaries yield the exact corresponding token only after the required evidence verifies.
+- `IN-P02` — `NOT_EXECUTABLE_UNDER_THIS_TRANSACTION` — a header-CRC mismatch includes both uint32 CRCs, exact byte precision, no event refs, and reproducible offsets.
+- `IN-P03` — `NOT_EXECUTABLE_UNDER_THIS_TRANSACTION` — a payload-CRC mismatch with verified header identity may use `exact_event` and carries matching byte, one-sequence, and event-ref evidence.
+- `IN-P04` — `NOT_EXECUTABLE_UNDER_THIS_TRANSACTION` — no later candidate produces `unknown_segment_remainder`, EOF as `next_good_offset`, the exact remainder byte tuple, no invented sequence/event identity, and a conservative watermark relation.
+- `IN-P05` — `NOT_EXECUTABLE_UNDER_THIS_TRANSACTION` — identical evidence and content-addressed report return the same `integrity_id` and original event.
+- `IN-N01` — `NOT_EXECUTABLE_UNDER_THIS_TRANSACTION` — unknown/alias failure, segment, watermark, or precision member rejects; similarly named maintenance enums are not aliases.
+- `IN-N02` — `NOT_EXECUTABLE_UNDER_THIS_TRANSACTION` — lone CRC, out-of-range CRC, CRC on a forbidden class, impossible offsets, empty/reversed range, unsorted/duplicate refs, or precision/field mismatch rejects.
+- `IN-N03` — `NOT_EXECUTABLE_UNDER_THIS_TRANSACTION` — header failure with event refs, exact-event precision without verified frame identity, or fabricated advisory-index identity rejects.
+- `IN-N04` — `NOT_EXECUTABLE_UNDER_THIS_TRANSACTION` — possible acknowledged loss labeled wholly-above, manifest overriding disagreeing bytes, or unknown remainder converted to exact/bounded proof rejects and blocks mutation.
+- `IN-N05` — `NOT_EXECUTABLE_UNDER_THIS_TRANSACTION` — recovery action, survivor, receipt, disclosure, `repeat_of`, or projector/checkpoint effect attributed to detection rejects.
+- `RA-P01` — `NOT_EXECUTABLE_UNDER_THIS_TRANSACTION` — each six-action fixture validates only its exact matrix row, exact checkpoint/projection pair, integrity-link rule, and disclosure value.
+- `RA-P02` — `NOT_EXECUTABLE_UNDER_THIS_TRANSACTION` — truncation changes length/hash exactly to the verified prefix, records the exact tail range, stays wholly above watermark, and preserves the verified checkpoint.
+- `RA-P03` — `NOT_EXECUTABLE_UNDER_THIS_TRANSACTION` — proven exclusion leaves bytes unchanged, changes manifest authority, records exact ranges/gaps, yields the reproducible survivor digest, and forces derived-state rebuild.
+- `RA-P04` — `NOT_EXECUTABLE_UNDER_THIS_TRANSACTION` — verified backup restore round-trips hashes/length/boundary evidence and sets disclosure from the exact rollback-loss condition.
+- `RA-P05` — `NOT_EXECUTABLE_UNDER_THIS_TRANSACTION` — identical canonical recovery input returns the original receipt/event with one physical effect and one semantic append.
+- `RA-P06` — `NOT_EXECUTABLE_UNDER_THIS_TRANSACTION` — barrier receipt and event append precede any permitted projector resume/rebuild or mutation admission.
+- `RA-N01` — `NOT_EXECUTABLE_UNDER_THIS_TRANSACTION` — unknown/alias action, checkpoint, or projection member; forbidden action/aftermath combination; generic repair/salvage; or maintenance-enum substitution rejects.
+- `RA-N02` — `NOT_EXECUTABLE_UNDER_THIS_TRANSACTION` — missing/mismatched integrity link, adoption carrying a link, truncation not wholly above watermark, block action with changed bytes/manifest, or exclusion with unknown precision rejects.
+- `RA-N03` — `NOT_EXECUTABLE_UNDER_THIS_TRANSACTION` — noncanonical, overlapping, reversed, duplicate, or over-bound ranges/gaps; recovery use of `retention_compaction`; false hash/length; or unverifiable survivor rejects.
+- `RA-N04` — `NOT_EXECUTABLE_UNDER_THIS_TRANSACTION` — missing/unsynced/circular self-append receipt, receipt/result mismatch, suppressed required disclosure, or backup-loss disclosure false rejects.
+- `RA-N05` — `NOT_EXECUTABLE_UNDER_THIS_TRANSACTION` — same recovery ID/different canonical input is conflict; retry with a second physical effect/event rejects; third-state crash ambiguity blocks.
+- `RA-N06` — `NOT_EXECUTABLE_UNDER_THIS_TRANSACTION` — projector start/checkpoint advance before convergence, mutation on possible acknowledged loss, fabricated event identity, or advisory index/mtime override rejects.
+
+Deterministic replay, fail-closed quarantine, no checkpoint advance, no duplicate semantic effect, no raw-secret admission, and no authority promotion remain required wherever named above. Static materialization is never substituted for execution evidence.
+
+## Cozy Shelves Panel Reconciliation Addendum - 2026-07-27
+
+This addendum closes the Testing-surface spec gaps exposed by the winning Cozy Shelves left-rail concept (`Concepts/rail-concepts/QwenRailConcepts/c2-cozy-shelves.html` and `c2-cozy-shelves-files.html`, source lineage only; no concept HTML, CSS, or class names are copied into spec). It follows the FABLE addendum pattern of this document: prose intent, then new PlanUnits. No existing PlanUnit block, preserved exact token, canonical text, or retired bridge is edited; supersession is expressed only through the new units' explicit amendment notes. Four things are adjudicated here: (1) the two `cmd.testing.*` command families are reconciled with the UI Command Catalog's Cozy Shelves addendum (UCC-134) - the run-scoped family is canon for runs, the session-scoped family stays a distinct live canon, and the newly minted `cmd.testing.quarantine` / `cmd.testing.quarantine.release` rows are registered as consumed here; (2) the three divergent TestRunReceipt field inventories (ATS-004, ATS-019 host fields, FABLE file format) are merged into one canonical field table of which all three prior inventories become views; (3) the receipt `status` enum gains `skipped` as a first-class distinct status that is never counted as pass, and `blocked` is adjudicated non-terminal with explicit watch/cancel gating; (4) the Testing rail panel gets a presentation contract binding the five FABLE regions to the shared unified expander row contract (owned outside this document by the GUI spec surface; referenced, never re-owned here) and restating the receipt-honesty invariants. The implementation base is the c2 concept files patched in place, and the rail width envelope is 240px minimum / 480px maximum / 280px default with 220px as a test-only adversarial width (user decision 2026-07-27). This addendum does not create WorkNodes, NodeSeeds, executable queues, final node manifests, or production build tasks.
+
+### Merged TestRunReceipt field schema
+
+The canonical TestRunReceipt is the union below. The ATS-004 inventory, the ATS-019 containerized-host inventory, and the FABLE file format (Test Adapter Interface And TestRunReceipt, 2026-07-08) are henceforth three views of this one schema: none is edited, none is retired, and no view may be cited as the complete schema. `visual_evidence_refs[]` is the canonical spelling; `visual_artifact_refs[]` is the recorded FABLE-file-format compatibility spelling of the same field. `receipt_id` (receipt identity) and `test_run_id` (run identity) are distinct fields and both are required.
+
+| Field | Presence | Source view | Notes |
+|---|---|---|---|
+| `test_run_id` | required | FABLE file format | run identity |
+| `receipt_id` | required | ATS-004 | receipt identity, distinct from `test_run_id` |
+| `adapter_id` | required | FABLE file format | |
+| `test_kind` | required | FABLE file format | |
+| `target_ref` | required | FABLE file format | |
+| `started_at_utc` | required | FABLE file format | |
+| `ended_at_utc` | required, null until terminal | FABLE file format | null while `queued`, `running`, or `blocked` |
+| `status` | required | FABLE file format | enum per ATS-027 below |
+| `passed_count` / `failed_count` / `skipped_count` / `error_count` | required | FABLE file format | on `cancelled` these carry the partial counts observed before cancellation |
+| `log_artifact_refs[]` | required, may be empty | FABLE file format | |
+| `visual_evidence_refs[]` | required, may be empty | ATS-004 / ATS-019 | `visual_artifact_refs[]` is the FABLE compatibility spelling |
+| `coverage_ref` | optional | FABLE file format | |
+| `failure_refs[]` | required, may be empty | FABLE file format | |
+| `schema_version` | required | FABLE file format | |
+| `test_strategy_ref` | required | ATS-004 | |
+| `test_case_refs` | required | ATS-004 | |
+| `generated_test_ids` / `reused_test_ids` | required, may be empty | ATS-004 | |
+| `verification_command` | required | ATS-004 | |
+| `expected_artifacts` | required | ATS-004 | |
+| `evidence_refs` | required | ATS-004 | |
+| `flake_policy` | required | ATS-004 | |
+| `test_gap_policy` | required | ATS-004 | |
+| `host_capability_ref` | required when containerized host used | ATS-019 | |
+| `host_profile_id` | required when containerized host used | ATS-019 | or host requirement shape |
+| `host_instance_ref` or `host_instance_id` | required when containerized host used | ATS-019 | |
+| `host_assignment_ref` or `host_assignment_id` | required when containerized host used | ATS-019 | |
+| `runtime_family` | required when containerized host used | ATS-019 | |
+| `runtime_context_ref` | required when containerized host used | ATS-019 | |
+| `compose_scenario_ref` | optional | ATS-019 | |
+| image/build refs | required when containerized host used | ATS-019 | |
+| port/access URL refs | required when containerized host used | ATS-019 | |
+| preflight receipt ref | required when containerized host used | ATS-019 | |
+| launch receipt ref | required when containerized host used | ATS-019 | |
+| harness probe receipt ref | required when containerized host used | ATS-019 | |
+| cleanup receipt ref | required when containerized host used | ATS-019 | also the artifact-disposition carrier for `cancelled` runs |
+| retain-on-failure state | required when containerized host used | ATS-019 | |
+| blocker payload | required when blocked | ATS-019 | `blocked_reason_code` plus ordered `allowed_action_ids[]` |
+
+### ATS-025 - Testing Command Family Adjudication And Quarantine Consumption
+
+```yaml
+plan_unit_id: ATS-025
+unit_type: requirement
+status: accepted
+owner_doc: Plans/Automated_Testing_System.md
+canonical_text: >-
+  The run-scoped family cmd.testing.run, cmd.testing.watch_run, cmd.testing.cancel_run, cmd.testing.open_receipt,
+  cmd.testing.open_failure, cmd.testing.export_bundle, and cmd.testing.open_panel is the canonical command surface
+  for test runs. The session-scoped family cmd.testing.session.open, cmd.testing.session.watch,
+  cmd.testing.session.background, and cmd.testing.session.redaction.inspect is a distinct live canon for visible
+  test sessions per the 2026-07-02 addendum. Both families stay live, neither aliases the other, and watch_run
+  versus session.watch is a scope split, not a duplication - this mirrors and consumes UI_Command_Catalog UCC-134
+  rather than re-adjudicating it. cmd.testing.quarantine and cmd.testing.quarantine.release (minted by UCC-134,
+  two-step confirmation) are registered here as consumed commands: quarantine is a state mutation over test
+  identity, not a run action; it produces its own receipt, changes counting only through the flaky counting
+  policy of ATS-028, never deletes or edits any TestRunReceipt, and releases only through its paired command.
+  Rerun and rerun-failed-only are affordances over cmd.testing.run carrying rerun_of_receipt_ref and failed_only
+  selection arguments; no new command id is minted by this document.
+gui_related: true
+gui_classification_reason: Adjudicates the user-visible Testing command families and quarantine controls consumed by the Testing rail panel.
+depends_on: [ATS-009, ATS-010, UCC-134]
+unblocks: [ATS-028]
+acceptance_criteria:
+  - No alias metadata links the run-scoped and session-scoped testing families, and both remain live.
+  - cmd.testing.quarantine and cmd.testing.quarantine.release produce separate receipts, mutate test identity state only, and never delete or mutate TestRunReceipt records.
+  - Rerun and rerun-failed-only dispatch through cmd.testing.run with rerun_of_receipt_ref and failed_only arguments rather than new command ids.
+  - No WorkNodes, NodeSeeds, executable queues, final node manifests, or production build tasks are created by this PlanUnit.
+validation_surfaces:
+  - python3 scripts/pm-plan-index.py validate
+  - python3 scripts/pm-plans-verify.py validate-wiring-matrix
+risk_class: testing_command_family_drift
+reasoning_tier: standard
+context_scope: cozy_shelves_testing_command_adjudication
+implementation_surfaces:
+  - Plans/Automated_Testing_System.md
+  - Plans/UI_Command_Catalog.md
+  - Plans/Wiring_Matrix.md
+node_compile_hint:
+  mode: cozy_shelves_testing_command_adjudication
+  create_worknodes: false
+  create_nodeseeds: false
+source_lineage:
+  - "Concepts/rail-concepts/QwenRailConcepts/c2-cozy-shelves.html (Cozy Shelves concept; source-lineage-only)"
+  - "Plans/UI_Command_Catalog.md (UCC-134, Cozy Shelves Panel Reconciliation Addendum - 2026-07-27)"
+  - "Plans/Automated_Testing_System.md (GUI visible testing repair addendum 2026-07-02; FABLE GUI Result Surfacing 2026-07-08)"
+preserved_exact_tokens:
+  - "cmd.testing.run"
+  - "cmd.testing.watch_run"
+  - "cmd.testing.session.watch"
+  - "cmd.testing.quarantine"
+  - "cmd.testing.quarantine.release"
+  - "rerun_of_receipt_ref"
+  - "failed_only"
+negative_constraints:
+  - Do not alias run-scoped testing commands to session-scoped ones or collapse the two families.
+  - Do not let quarantine or release delete, edit, or reinterpret any existing TestRunReceipt.
+  - Do not mint new cmd.* ids in this document; command minting authority stays with UI_Command_Catalog.md.
+owner_hints:
+  - Plans/Automated_Testing_System.md
+  - Plans/UI_Command_Catalog.md
+```
+
+### ATS-026 - Merged Canonical TestRunReceipt Field Schema
+
+```yaml
+plan_unit_id: ATS-026
+unit_type: requirement
+status: accepted
+owner_doc: Plans/Automated_Testing_System.md
+canonical_text: >-
+  The merged TestRunReceipt field table in this addendum is the one canonical TestRunReceipt schema: the union of
+  the ATS-004 inventory (receipt_id, test_strategy_ref, test_case_refs, generated_test_ids, reused_test_ids,
+  verification_command, expected_artifacts, evidence_refs, visual_evidence_refs, flake_policy, test_gap_policy),
+  the ATS-019 containerized-host inventory, and the FABLE file format (test_run_id, adapter_id, test_kind,
+  target_ref, started_at_utc, ended_at_utc, status, counts, log_artifact_refs, visual_artifact_refs, coverage_ref,
+  failure_refs, schema_version). Amendment note: this supersedes-by-extension the three prior inventories, which
+  remain unedited and accurate as views of the merged schema; no prior inventory may be cited as complete.
+  receipt_id and test_run_id are distinct required identities. visual_evidence_refs is canonical and
+  visual_artifact_refs is its recorded FABLE compatibility spelling. Host fields are required exactly when a
+  containerized host is used. A cancelled receipt carries the partial passed/failed/skipped/error counts observed
+  before cancellation plus the artifact disposition through the cleanup/retention receipt ref; cancellation
+  deletes no receipts and no artifacts outside recorded retention policy.
+gui_related: false
+gui_classification_reason: This unit owns the receipt data schema; presentation of the receipt belongs to ATS-028.
+depends_on: [ATS-004, ATS-019]
+unblocks: [ATS-027, ATS-028]
+acceptance_criteria:
+  - Schema fixtures validate the full merged field table, including presence rules (required, required-when-containerized, required-when-blocked, null-until-terminal) for every field.
+  - A receipt satisfying only one prior inventory fails validation whenever the run context requires fields from another view.
+  - Cancelled receipts prove partial counts plus artifact disposition, and prove that no receipt or retained artifact was deleted by cancellation.
+  - No WorkNodes, NodeSeeds, executable queues, final node manifests, or production build tasks are created by this PlanUnit.
+validation_surfaces:
+  - python3 scripts/pm-plan-index.py validate
+  - future merged TestRunReceipt schema fixtures
+risk_class: test_run_receipt_schema_divergence
+reasoning_tier: high
+context_scope: cozy_shelves_testrunreceipt_merge
+implementation_surfaces:
+  - Plans/Automated_Testing_System.md
+  - Plans/Contracts_V0.md
+  - Plans/Runtime_Artifacts_Panel.md
+node_compile_hint:
+  mode: cozy_shelves_testrunreceipt_merged_schema
+  create_worknodes: false
+  create_nodeseeds: false
+source_lineage:
+  - "Plans/Automated_Testing_System.md (ATS-004; ATS-019; FABLE Test Adapter Interface And TestRunReceipt 2026-07-08)"
+  - "Concepts/rail-concepts/QwenRailConcepts/c2-cozy-shelves.html (Cozy Shelves concept; source-lineage-only)"
+preserved_exact_tokens:
+  - "TestRunReceipt"
+  - "test_run_id"
+  - "receipt_id"
+  - "test_strategy_ref"
+  - "flake_policy"
+  - "test_gap_policy"
+  - "host_capability_ref"
+  - "visual_evidence_refs"
+  - "schema_version"
+negative_constraints:
+  - Do not edit, retire, or fork the three prior inventories; they remain views of the merged schema.
+  - Do not allow any single prior view to be cited as the complete TestRunReceipt schema.
+  - Do not let cancellation delete receipts or bypass recorded retention disposition.
+owner_hints:
+  - Plans/Automated_Testing_System.md
+  - Plans/Contracts_V0.md
+```
+
+### ATS-027 - TestRunReceipt Status Enum Skipped And Blocked Adjudication
+
+```yaml
+plan_unit_id: ATS-027
+unit_type: requirement
+status: accepted
+owner_doc: Plans/Automated_Testing_System.md
+canonical_text: >-
+  The TestRunReceipt status enum is queued, running, passed, failed, skipped, cancelled, blocked, and
+  inconclusive. Amendment note: this supersedes-by-extension the FABLE 2026-07-08 status list by adding skipped
+  as a first-class distinct status; the FABLE list is not edited. skipped is never counted as, rendered as, or
+  aggregated into pass at any level - run, row, rollup, or gate - and a skipped run never satisfies a required
+  oracle, matching the existing fail-closed posture. Terminal statuses are exactly passed, failed, skipped,
+  cancelled, and inconclusive. blocked is non-terminal: a blocked run keeps watch enabled (view-only), keeps
+  cancel enabled subject to permission, does not enable open_receipt terminal affordances, carries the blocker
+  payload (blocked_reason_code plus ordered allowed_action_ids[]), and resolves only by transitioning to running,
+  cancelled, or another terminal status. blocked is never failed and never pass.
+gui_related: true
+gui_classification_reason: Status enum membership and terminality directly gate the watch, cancel, and open-receipt affordances users see.
+depends_on: [ATS-026]
+unblocks: [ATS-028]
+acceptance_criteria:
+  - Enum fixtures accept exactly the eight members and reject aliases, unknown members, and skipped-as-pass aggregation at every rollup level.
+  - Blocked-run fixtures prove watch and cancel remain enabled, terminal-only affordances remain disabled, and the blocker payload carries blocked_reason_code plus ordered allowed_action_ids[].
+  - Transition fixtures prove blocked resolves only to running, cancelled, or a terminal status, and that no terminal state transitions further.
+  - No WorkNodes, NodeSeeds, executable queues, final node manifests, or production build tasks are created by this PlanUnit.
+validation_surfaces:
+  - python3 scripts/pm-plan-index.py validate
+  - future merged TestRunReceipt schema fixtures
+risk_class: test_status_false_positive
+reasoning_tier: high
+context_scope: cozy_shelves_test_status_enum
+implementation_surfaces:
+  - Plans/Automated_Testing_System.md
+  - Plans/Contracts_V0.md
+node_compile_hint:
+  mode: cozy_shelves_test_status_adjudication
+  create_worknodes: false
+  create_nodeseeds: false
+source_lineage:
+  - "Plans/Automated_Testing_System.md (FABLE Test Adapter Interface And TestRunReceipt 2026-07-08; Case L skipped/inconclusive posture)"
+  - "Concepts/rail-concepts/QwenRailConcepts/c2-cozy-shelves.html (Cozy Shelves concept; source-lineage-only)"
+preserved_exact_tokens:
+  - "skipped"
+  - "blocked"
+  - "inconclusive"
+  - "blocked_reason_code"
+  - "allowed_action_ids"
+negative_constraints:
+  - Do not count, render, or aggregate skipped as pass anywhere.
+  - Do not treat blocked as terminal, as failed, or as pass.
+  - Do not enable terminal-only affordances for a blocked run.
+owner_hints:
+  - Plans/Automated_Testing_System.md
+  - Plans/UI_Command_Catalog.md
+```
+
+### ATS-028 - Testing Rail Panel Presentation And Receipt Honesty Contract
+
+```yaml
+plan_unit_id: ATS-028
+unit_type: requirement
+status: accepted
+owner_doc: Plans/Automated_Testing_System.md
+canonical_text: >-
+  The Testing rail panel renders the regions run_list, active_run_detail, failure_list, artifact_preview, and
+  redaction_notice inside the rail width envelope of 240px minimum, 480px maximum, 280px default, with 220px as a
+  test-only adversarial width (user decision 2026-07-27). Every run row and failure row binds to the shared
+  unified expander row contract owned outside this document: collapsed by default, header as a single accessible
+  button with aria-expanded, body slot order kv-facts then status-detail then blocked-reason-detail then actions
+  then overflow, roughly 200px body cap with internal scroll, blocked reasons always visible outside the
+  collapsible body, and destructive actions routed through the shared confirm surface. All row and button states
+  derive from TestRunReceipt.status per ATS-027; no panel-local run state is invented. Receipt-honesty
+  invariants: receipts are marked stale/retired and visually dimmed when relevant files change after the run or
+  when the receipt is rehydrated after app restart, and stale green is visually distinct from fresh green;
+  errored (error_count from harness/compile/setup failure) renders distinct from failed and ranks above failed in
+  rollups using severity order running > errored > failed > queued > passed > skipped; a run in which zero tests
+  executed renders as a warning-state receipt and never green; completed_with_approved_verification_exception
+  never renders as passed. Rerun and rerun-failed-only affordances appear on terminal receipts per ATS-025 and
+  are hidden or disabled with reason while a run is queued, running, or blocked. Flaky tests show n/m attempt
+  badges and a passed-with-flaky-count summary, governed by an explicit flaky counting-policy setting whose
+  default never hides flakiness; repeated flaky results feed the cmd.testing.quarantine suggestion flow.
+  Cancelled runs render their partial counts plus artifact disposition from the receipt. The panel is a
+  projection/consumer only: it cites, never re-owns, the visible-session surface (ATS-009), artifact presentation
+  (Runtime_Artifacts_Panel.md), and the expander contract owner.
+gui_related: true
+gui_classification_reason: This unit defines the visible Testing panel regions, expander binding, status rendering, and honesty invariants.
+depends_on: [ATS-025, ATS-026, ATS-027, ATS-009]
+unblocks: []
+acceptance_criteria:
+  - The five regions render within the 240/480/280 envelope without horizontal overflow, and the 220px adversarial fixture degrades without hiding blocked reasons or the redaction_notice.
+  - Expander fixtures prove collapsed-by-default rows, single-button aria-expanded headers, the canonical body slot order, the body cap with internal scroll, and blocked reasons outside the collapsible body.
+  - Honesty fixtures prove stale/retired dimming after file change and app restart, errored-distinct-from-failed rendering and severity ranking, zero-tests-ran warning never green, and approved-exception never rendered as passed.
+  - Flaky fixtures prove n/m attempt badges, passed-with-flaky-count summaries, counting-policy setting effect, and the quarantine suggestion flow; cancelled fixtures prove partial counts plus artifact disposition rendering.
+  - Rerun fixtures prove rerun and rerun-failed-only appear only on terminal receipts and carry disabled reasons otherwise.
+  - No WorkNodes, NodeSeeds, executable queues, final node manifests, or production build tasks are created by this PlanUnit.
+validation_surfaces:
+  - python3 scripts/pm-plan-index.py validate
+  - python3 scripts/pm-plans-verify.py validate-wiring-matrix
+compatibility_only_notes:
+  - "Slint compatibility: panel surfaces are opaque precomputed surfaces; no arbitrary-content backdrop blur, no SVG filters, color math precomputed; glass appears only as pre-blurred wallpaper."
+risk_class: testing_panel_receipt_honesty_gap
+reasoning_tier: high
+context_scope: cozy_shelves_testing_panel_presentation
+implementation_surfaces:
+  - Plans/Automated_Testing_System.md
+  - Plans/UI_Command_Catalog.md
+  - Plans/Runtime_Artifacts_Panel.md
+  - Plans/Wiring_Matrix.md
+node_compile_hint:
+  mode: cozy_shelves_testing_panel_presentation
+  create_worknodes: false
+  create_nodeseeds: false
+source_lineage:
+  - "Concepts/rail-concepts/QwenRailConcepts/c2-cozy-shelves.html (Cozy Shelves concept; source-lineage-only)"
+  - "Plans/Automated_Testing_System.md (FABLE GUI Result Surfacing 2026-07-08; ATS-009 visible sessions and redaction)"
+  - "user decision 2026-07-27 (rail width envelope 240/480/280, 220 test-only)"
+preserved_exact_tokens:
+  - "run_list"
+  - "active_run_detail"
+  - "failure_list"
+  - "artifact_preview"
+  - "redaction_notice"
+  - "completed_with_approved_verification_exception"
+  - "blocked_reason_code"
+  - "allowed_action_ids"
+negative_constraints:
+  - Do not invent panel-local run states; all states derive from TestRunReceipt.status.
+  - Do not render skipped, blocked, zero-tests-ran, stale, or approved-exception receipts as green or passed.
+  - Do not re-own the visible-session surface, artifact presentation, or the unified expander contract; cite their owners.
+  - Do not copy concept HTML, CSS, or class names into spec or production surfaces.
+owner_hints:
+  - Plans/Automated_Testing_System.md
+  - Plans/UI_Command_Catalog.md
+  - Plans/Runtime_Artifacts_Panel.md
+```
+
+## PMConcept7 Home Workspace test contract — 2026-08-04
+
+The Home Workspace live matrix is a required GUI/runtime fixture family, not a
+visual-only smoke test. It covers panel/browser/File Manager paths; movement,
+docking, floating, resize, cancellation, lost capture, Escape/blur, and reduced
+motion; terminal section/workgroup limits and identity preservation; reload,
+corruption, migration, and off-screen recovery; one-command/one-persist semantic
+commit behavior; and zero console/page errors. The visual matrix captures
+`1024x768`, `1280x800`, `1600x900`, and `2200x1200` in default, all-open,
+edge-docked, and floating layouts, with all eight themes for all-open, Friendly
+Dark and Glass Light across all layouts, plus reduced-motion captures.
+
+The required cross-product is exactly 72 deterministic fresh-context cases:
+eight themes by four viewports with all surfaces open (32), Friendly Dark and
+Glass Light by four additional layouts by four viewports (32), and both anchor
+themes by reduced motion by four viewports (8). Additional layouts are default,
+edge-docked, floating, and terminal-max. Listeners for console and page errors are
+installed before navigation, non-loopback requests are blocked, storage/theme/motion
+state is seeded deterministically, and each case records geometry, identity, and
+runtime errors. A direct headful pass additionally checks perceived no-jump pickup,
+reflow, glow/recovery, scrolling, real blur, keyboard/focus, clipping, popup
+fallback, and cursor cleanup.
+
+Each fixture records the layout revision before and after the gesture, command
+count, persistence count, stable surface identities, and any disabled reason. A
+cancelled or rejected gesture must prove byte-equivalent model restoration and zero
+semantic dispatch/persist. Identity fixtures prove no duplicate buffer, browser
+session, chat identity, terminal session, or PTY. Screenshots are evidence only
+when paired with the live harness result and page/console error log.
+
+### ATS-029 - Home Workspace Executable Certification Matrix
+
+```yaml
+plan_unit_id: ATS-029
+unit_type: requirement
+status: accepted
+owner_doc: Plans/Automated_Testing_System.md
+canonical_text: Home Workspace certification combines source-hashed control-to-command coverage, live visible interaction tests, persistence and fault-injection tests, stable-identity lifecycle tests, zero browser errors, and an exact 72-case visual matrix plus a direct headful pass.
+gui_related: true
+gui_classification_reason: The verification exercises and captures user-visible Home behavior across themes, sizes, layouts, motion, menus, gestures, and failures.
+split_recommended: false
+depends_on: [ATS-028, F3-501, F3-502, F3-503, UIW-010, SP-245]
+unblocks: []
+acceptance_criteria:
+- All four editor and Browser targets and all four File Manager targets are exercised through visible production controls.
+- Every surface host route, resizer, cancellation path, terminal cap, popup fallback, corruption variant, migration, write failure, reload, and second clean reload is executable.
+- Fifth pane and fifth section rejection are visibly disabled with exact reasons and zero dispatch.
+- The visual matrix contains exactly 72 deterministic fresh-context captures and has zero major overlap, clipping, false controls, console errors, page errors, or focus/cursor residue.
+- A fresh second pipeline build is byte-identical to Concepts/PMConcept7.html and all PM7/static/Plans/governance gates pass in disposable shadows.
+validation_surfaces:
+- node Concepts/pm7-tools/verify/home_workspace_matrix.mjs
+- node Concepts/pm7-tools/verify/smoke.mjs
+- python3 scripts/pm-plans-verify.py run-gates
+- python3 scripts/pm-plan-index.py validate
+risk_class: false_green_home_certification
+reasoning_tier: standard
+context_scope: home_live_certification
+implementation_surfaces: [Plans/Automated_Testing_System.md, Concepts/pm7-tools/verify/home_workspace_matrix.mjs]
+node_compile_hint:
+  mode: home_executable_matrix
+  create_worknodes: false
+source_lineage:
+- PMConcept7_Home_Workspace_Audit_Packet_v1/audit/05_LIVE_VISUAL_TEST_PROTOCOL.md
+preserved_exact_tokens: [72, zero console errors, second clean reload, byte-identical]
+negative_constraints:
+- Do not substitute an internal API for a missing visible production control.
+- Do not count screenshots or declarative wiring rows alone as test proof.
+compatibility_only_notes: []
+stale_retired_dispositions:
+- The prior 15-check 34-shot Home harness is retired as certification authority.
+owner_hints: [Plans/Automated_Testing_System.md, Plans/UI_Wiring_Rules.md]
+```

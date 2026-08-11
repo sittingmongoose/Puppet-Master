@@ -1,0 +1,559 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="friendly-dark">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>C3 · Single Thread — Puppet Master Rail Concepts</title>
+<script>(function(){try{var ok=['friendly-dark','friendly-light','retro-dark','retro-light','basic-light','basic-dark','glass-dark','glass-light'];var t=localStorage.getItem('pm.theme');if(ok.indexOf(t)===-1)t='friendly-dark';var d=document.documentElement;d.setAttribute('data-theme',t);d.style.colorScheme=/-dark$/.test(t)?'dark':'light';}catch(e){}})();</script>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="preload" as="style" href="https://fonts.googleapis.com/css2?family=Cal+Sans&family=Inter:wght@400;500;600;700&family=Nunito:wght@400;600;700;800&family=Orbitron:wght@500;700&family=Quicksand:wght@400;500;600;700&family=Rajdhani:wght@400;500;600;700&display=swap" onload="this.onload=null;this.rel='stylesheet'">
+<noscript><link href="https://fonts.googleapis.com/css2?family=Cal+Sans&family=Inter:wght@400;500;600;700&family=Nunito:wght@400;600;700;800&family=Orbitron:wght@500;700&family=Quicksand:wght@400;500;600;700&family=Rajdhani:wght@400;500;600;700&display=swap" rel="stylesheet"></noscript>
+<link rel="stylesheet" href="_shared/themes.css">
+<link rel="stylesheet" href="_shared/base.css">
+<style>
+/* =====================================================================
+   C3 — SINGLE THREAD (focus tunnel)
+   Only one section occupies the panel at a time; a scrollable depth rail
+   at the top moves you between sections. Because each section gets the
+   whole height, the layout is editorial and roomy — the most legible of
+   the six at minimum width, and at maximum width it simply breathes more.
+   Big section titles + a short category accent rule anchor each pane.
+   ===================================================================== */
+.side-panel-view { background: var(--surface); }
+
+.st-head {
+  flex: none; display: flex; align-items: center; gap: var(--md);
+  padding: var(--lg); min-width: 0; overflow: hidden;
+}
+.st-hico { width: 26px; height: 26px; flex: none; border-radius: var(--radius-md); display: flex; align-items: center; justify-content: center; background: var(--accent-soft); color: var(--accent-primary); }
+.st-hico svg { width: 14px; height: 14px; }
+.st-htitle { font-family: var(--display-font); font-size: 12px; font-weight: 700; letter-spacing: .6px; flex: 1 1 auto; min-width: max-content; white-space: nowrap; }
+.st-hstatus { margin-left: auto; flex: 0 1 auto; min-width: 0; max-width: 50%; display: inline-flex; align-items: center; gap: 6px; font-size: 9.5px; font-weight: 700; padding: 3px 9px; border-radius: var(--radius-pill); background: color-mix(in srgb, var(--graph-passed) 14%, transparent); color: var(--graph-passed); white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+.st-hstatus .dot { width: 7px; height: 7px; flex: none; }
+
+.st-rail { flex: none; display: flex; gap: var(--sm); padding: 0 var(--lg) var(--md); border-bottom: 1px solid var(--border-light); }
+.st-chip { flex: none; display: inline-flex; align-items: center; gap: 6px; padding: 6px 11px; border-radius: var(--radius-pill); border: 1px solid var(--border-light); color: var(--text-secondary); font-size: 10px; font-weight: 700; letter-spacing: .03em; transition: all var(--motion-fast) var(--ease-out); }
+.st-chip svg { width: 12px; height: 12px; }
+.st-chip:hover { color: var(--text-primary); border-color: var(--border); }
+.st-chip.active { color: var(--accent-primary); background: var(--accent-soft); border-color: color-mix(in srgb, var(--accent-primary) 38%, transparent); box-shadow: inset 0 -2px 0 var(--accent-primary); }
+.st-cnt { font-family: var(--mono-font); font-size: 9px; padding: 0 5px; border-radius: var(--radius-pill); background: color-mix(in srgb, var(--text-primary) 8%, transparent); color: var(--text-muted); }
+.st-chip.active .st-cnt { background: color-mix(in srgb, var(--accent-primary) 18%, transparent); color: var(--accent-primary); }
+
+.st-body { flex: 1; min-height: 0; }
+.st-pane { padding: var(--lg); }
+.st-htitle2 { font-family: var(--display-font); font-size: 15px; font-weight: 700; letter-spacing: .3px; display: flex; align-items: baseline; gap: var(--md); }
+.st-hsub { font-family: var(--body-font); font-size: 10.5px; font-weight: 500; color: var(--text-muted); letter-spacing: 0; }
+.st-rule { height: 3px; width: 34px; border-radius: 2px; background: var(--cat, var(--accent-blue)); margin: var(--md) 0 var(--lg); }
+
+/* roomy rows */
+.st-row { display: flex; align-items: center; gap: var(--md); padding: 9px 4px; border-bottom: 1px solid var(--border-light); min-width: 0; }
+.st-row:last-child { border-bottom: none; }
+.st-main { min-width: 0; flex: 1; display: flex; flex-direction: column; gap: 1px; }
+.st-name { font-size: 12.5px; font-weight: 600; color: var(--text-primary); white-space: nowrap; overflow: hidden; text-overflow: ellipsis; display: flex; align-items: center; gap: 6px; }
+.st-meta { font-size: 10.5px; color: var(--text-muted); white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+.st-mono { font-family: var(--mono-font); }
+.st-dot { width: 9px; height: 9px; border-radius: 50%; flex: none; }
+
+.st-kv { display: flex; align-items: baseline; justify-content: space-between; gap: var(--md); padding: 6px 0; font-size: 12px; border-bottom: 1px dashed var(--border-light); }
+.st-k { color: var(--text-muted); flex: none; }
+.st-v { color: var(--text-primary); text-align: right; min-width: 0; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+
+.st-pane .pm-btn { padding: 9px 14px; font-size: 11px; font-weight: 700; }
+.st-btns { display: flex; flex-wrap: wrap; gap: var(--md); margin-top: var(--lg); }
+.st-btns .pm-btn { flex: 1 1 auto; min-width: 0; overflow: hidden; text-overflow: ellipsis; }
+
+/* search roomy */
+.st-flags { display: flex; align-items: center; gap: var(--md); margin-top: var(--lg); }
+.st-flag { font-family: var(--mono-font); font-size: 12px; font-weight: 700; padding: 6px 12px; border-radius: var(--radius-md); border: 1px solid var(--border-light); color: var(--text-muted); }
+.st-flag.on { color: var(--accent-primary); background: var(--accent-soft); border-color: color-mix(in srgb, var(--accent-primary) 40%, transparent); }
+.st-scope .pm6-tb-menu-trigger { border: 1px solid var(--border-light); border-radius: var(--radius-md); margin-left: auto; padding: 6px 12px; font-size: 11px; }
+.st-file { margin-top: var(--md); }
+.st-fileh { display: flex; align-items: center; gap: var(--md); font-family: var(--mono-font); font-size: 12px; color: var(--accent-blue); padding: 8px 0 4px; cursor: pointer; border-top: 1px solid var(--border-light); }
+.st-fileh:first-child { border-top: none; }
+.st-fileh svg { width: 13px; height: 13px; }
+.st-fileh b { margin-left: auto; font-weight: 400; color: var(--text-muted); }
+.st-hit { display: flex; gap: var(--md); align-items: baseline; padding: 5px 6px; border-radius: var(--radius-md); cursor: pointer; }
+.st-hit:hover { background: var(--accent-soft); }
+.st-ln { font-family: var(--mono-font); font-size: 11px; color: var(--text-muted); min-width: 30px; text-align: right; flex: none; }
+.st-hit code { font-family: var(--mono-font); font-size: 11px; color: var(--text-secondary); white-space: nowrap; overflow: hidden; text-overflow: ellipsis; min-width: 0; }
+.st-hit em { font-style: normal; color: var(--text-primary); background: color-mix(in srgb, var(--accent-warning) 24%, transparent); border-radius: 3px; padding: 0 2px; }
+
+.st-log { font-family: var(--mono-font); font-size: 10.5px; line-height: 1.6; background: color-mix(in srgb, var(--graph-failed) 6%, var(--surface-elevated)); border-left: 3px solid var(--graph-failed); border-radius: var(--radius-sm); padding: var(--md) var(--lg); margin: var(--md) 0; }
+.st-log div { white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+.st-log .fail { color: var(--graph-failed); }
+
+/* worktrees roomy cards */
+.st-wt { border: 1px solid var(--border-light); border-radius: var(--radius-lg); padding: var(--md) var(--lg); margin-bottom: var(--md); background: var(--surface-elevated); }
+.st-wt-top { display: flex; align-items: center; gap: var(--md); min-width: 0; }
+.st-pill { font-size: 9.5px; font-weight: 700; padding: 2px 9px; border-radius: var(--radius-pill); flex: none; }
+.st-pill.clean { color: var(--graph-passed); background: color-mix(in srgb, var(--graph-passed) 14%, transparent); }
+.st-pill.dirty { color: var(--accent-warning); background: color-mix(in srgb, var(--accent-warning) 16%, transparent); }
+.st-branch { font-family: var(--mono-font); font-size: 12px; color: var(--text-primary); min-width: 0; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+.st-owner { font-size: 10px; color: var(--text-muted); margin-left: auto; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; max-width: 45%; }
+.st-wt-acts { display: flex; flex-wrap: wrap; gap: var(--sm); margin-top: var(--md); }
+.st-wt-acts .pm-btn { padding: 6px 10px; font-size: 10px; }
+
+/* commits roomy */
+.st-commit { padding: 8px 0; border-bottom: 1px solid var(--border-light); cursor: pointer; }
+.st-commit:last-of-type { border-bottom: none; }
+.st-sha { font-family: var(--mono-font); font-size: 12px; color: var(--accent-blue); }
+.st-age { font-size: 10.5px; color: var(--text-muted); margin-left: auto; }
+.st-msg { font-size: 12px; color: var(--text-secondary); margin-top: 2px; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+
+/* graph */
+.st-graph { font-family: var(--mono-font); font-size: 11.5px; display: flex; flex-direction: column; gap: 6px; }
+.st-gn { display: flex; align-items: center; gap: var(--md); }
+.st-gn .dot { width: 9px; height: 9px; }
+.st-gind { padding-left: 18px; position: relative; }
+.st-gind::before { content: ''; position: absolute; left: 4px; top: -8px; width: 9px; height: 15px; border-left: 2px solid var(--border); border-bottom: 2px solid var(--border); border-radius: 0 0 0 4px; }
+
+/* chain */
+.st-chain { position: relative; padding-left: 30px; }
+.st-chain::before { content: ''; position: absolute; left: 11px; top: 14px; bottom: 14px; width: 2px; background: var(--border-light); }
+.st-stage { position: relative; display: flex; align-items: center; gap: var(--md); padding: 7px 0; min-width: 0; }
+.st-stage i { position: absolute; left: -30px; width: 22px; height: 22px; display: flex; align-items: center; justify-content: center; font-family: var(--mono-font); font-size: 10px; font-style: normal; border-radius: 50%; background: var(--surface-elevated); border: 2px solid var(--border); color: var(--text-muted); }
+.st-stage.done i { border-color: var(--graph-passed); color: var(--graph-passed); }
+.st-stage.now i { border-color: var(--graph-running); color: var(--graph-running); animation: stP 1.6s var(--ease-out) infinite; }
+@keyframes stP { 0%,100% { box-shadow: 0 0 0 0 color-mix(in srgb, var(--graph-running) 35%, transparent); } 50% { box-shadow: 0 0 0 5px transparent; } }
+.st-stage-l { font-size: 12px; color: var(--text-secondary); flex: 1; min-width: 0; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+.st-stage.done .st-stage-l { color: var(--text-primary); }
+
+/* artifact roomy rows */
+.st-art { border: 1px solid var(--border-light); border-left: 3px solid var(--cat, var(--accent-blue)); border-radius: var(--radius-md); padding: var(--md) var(--lg); margin-bottom: var(--md); cursor: pointer; transition: box-shadow var(--motion-fast) var(--ease-out); }
+.st-art:hover { box-shadow: var(--elev-1); }
+.st-r1 { display: flex; align-items: center; gap: var(--md); min-width: 0; }
+.st-fam { font-family: var(--mono-font); font-size: 9px; padding: 2px 8px; border-radius: var(--radius-sm); background: color-mix(in srgb, var(--cat, var(--accent-blue)) 14%, transparent); color: var(--cat, var(--accent-blue)); flex: none; }
+.st-rlabel { font-size: 12.5px; font-weight: 600; color: var(--text-primary); flex: 1; min-width: 0; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+.st-prev { font-family: var(--mono-font); font-size: 10.5px; color: var(--text-secondary); margin-top: 4px; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+.st-rmeta { font-size: 10px; color: var(--text-muted); margin-top: 3px; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+.st-prov { display: flex; flex-wrap: wrap; gap: var(--sm); align-items: center; margin-top: var(--md); }
+.st-prov .pm-minibtn { width: auto; padding: 0 10px; height: 24px; font-size: 10px; font-weight: 700; }
+
+/* min tier: rail collapses to icon+count */
+.side-panel-slot[data-wtier="min"] .st-clabel { display: none; }
+.side-panel-slot[data-wtier="min"] .st-pane { padding: var(--md); }
+.side-panel-slot[data-wtier="min"] .st-htitle2 { font-size: 13px; }
+.side-panel-slot[data-wtier="min"] .st-owner { display: none; }
+.side-panel-slot[data-wtier="min"] .st-hstatus { display: none; }
+.side-panel-slot[data-wtier="min"] .st-htitle { font-size: 10.5px; letter-spacing: .2px; }
+</style>
+</head>
+<body>
+<div id="app"></div>
+<template id="rail-panels">
+
+  <!-- SEARCH -->
+  <div class="side-panel-view" id="panel-search">
+    <div class="st-head"><span class="st-hico"><i data-ico="search" class="pm-ico"></i></span><span class="st-htitle">SEARCH</span><span class="st-hstatus"><span class="dot dot-ok"></span>index ready · 1,284</span></div>
+    <div class="st-rail pm-scrollx">
+      <button class="st-chip active" data-tab="q"><i data-ico="search" class="pm-ico sm"></i><span class="st-clabel">Query</span></button>
+      <button class="st-chip" data-tab="r"><i data-ico="layers" class="pm-ico sm"></i><span class="st-clabel">Results</span><span class="st-cnt">16</span></button>
+      <button class="st-chip" data-tab="i"><i data-ico="refresh" class="pm-ico sm"></i><span class="st-clabel">Index</span></button>
+    </div>
+    <div class="st-body rail-scroll">
+      <section class="st-pane" data-pane="q" style="--cat:var(--accent-blue)">
+        <div class="st-htitle2">Query<span class="st-hsub">find in files</span></div><div class="st-rule"></div>
+        <label class="pm-input" style="border-radius:var(--radius-md)"><i data-ico="search" class="pm-ico sm"></i><input placeholder="Search in files..." value="quantity" aria-label="Search in files"></label>
+        <div class="st-flags">
+          <button class="st-flag" title="Regex" onclick="this.classList.toggle('on')">.*</button>
+          <button class="st-flag" title="Case sensitive" onclick="this.classList.toggle('on')">Aa</button>
+          <button class="st-flag" title="Whole word" onclick="this.classList.toggle('on')">\b</button>
+          <div class="pm6-tb-menu-wrap st-scope"><button type="button" class="pm6-tb-menu-trigger" aria-controls="stScopeMenu"><span class="pm6-tb-menu-label">All Files</span><i data-ico="chevD" class="pm-ico sm"></i></button>
+            <div class="pm6-tb-menu" id="stScopeMenu" role="menu" aria-label="Search scope" data-pm-menu-select>
+              <button type="button" class="pm6-tb-menu-item is-selected" role="menuitem" data-value="all" data-label="All Files" data-demo-action="cmd.search.set_scope" data-demo-arg="cmd.search.set_scope -> all">All Files</button>
+              <button type="button" class="pm6-tb-menu-item" role="menuitem" data-value="open" data-label="Open Files" data-demo-action="cmd.search.set_scope" data-demo-arg="cmd.search.set_scope -> open">Open Files</button>
+              <button type="button" class="pm6-tb-menu-item" role="menuitem" data-value="src" data-label="src/ only" data-demo-action="cmd.search.set_scope" data-demo-arg="cmd.search.set_scope -> src/">src/ only</button>
+              <button type="button" class="pm6-tb-menu-item" role="menuitem" data-value="web" data-label="web/ only" data-demo-action="cmd.search.set_scope" data-demo-arg="cmd.search.set_scope -> web/">web/ only</button>
+            </div></div>
+        </div>
+      </section>
+      <section class="st-pane pm-hidden" data-pane="r" style="--cat:var(--accent-magenta)">
+        <div class="st-htitle2">Results<span class="st-hsub">16 in 6 files · "quantity"</span></div><div class="st-rule"></div>
+        <div class="st-file"><div class="st-fileh" data-demo-action="cmd.search.open_result" data-demo-arg="cmd.search.open_result -> import.rs"><i data-ico="file" class="pm-ico sm"></i>src/services/import.rs<b>3</b></div>
+          <div class="st-hit" data-demo-action="cmd.search.open_result" data-demo-arg="cmd.search.open_result -> import.rs:41"><span class="st-ln">41</span><code>fn parse_<em>quantity</em>(raw: &amp;str) -&gt; Result&lt;Qty&gt;</code></div>
+          <div class="st-hit" data-demo-action="cmd.search.open_result" data-demo-arg="cmd.search.open_result -> import.rs:58"><span class="st-ln">58</span><code>// "1 1/2 cup" must not become <em>quantity</em> 11/2</code></div>
+          <div class="st-hit" data-demo-action="cmd.search.open_result" data-demo-arg="cmd.search.open_result -> import.rs:73"><span class="st-ln">73</span><code>normalize_units(<em>quantity</em>, unit)</code></div></div>
+        <div class="st-file"><div class="st-fileh" data-demo-action="cmd.search.open_result" data-demo-arg="cmd.search.open_result -> recipes.rs"><i data-ico="file" class="pm-ico sm"></i>src/routes/recipes.rs<b>2</b></div>
+          <div class="st-hit" data-demo-action="cmd.search.open_result" data-demo-arg="cmd.search.open_result -> recipes.rs:112"><span class="st-ln">112</span><code>pub <em>quantity</em>: f32,</code></div>
+          <div class="st-hit" data-demo-action="cmd.search.open_result" data-demo-arg="cmd.search.open_result -> recipes.rs:240"><span class="st-ln">240</span><code>ingredient.<em>quantity</em> * servings_ratio</code></div></div>
+        <div class="st-file"><div class="st-fileh" data-demo-action="cmd.search.open_result" data-demo-arg="cmd.search.open_result -> Editor.svelte"><i data-ico="file" class="pm-ico sm"></i>web/src/lib/Editor.svelte<b>2</b></div>
+          <div class="st-hit" data-demo-action="cmd.search.open_result" data-demo-arg="cmd.search.open_result -> Editor.svelte:88"><span class="st-ln">88</span><code>&lt;input bind:value={row.<em>quantity</em>} /&gt;</code></div></div>
+        <div class="st-file"><div class="st-fileh" data-demo-action="cmd.search.open_result" data-demo-arg="cmd.search.open_result -> QuantityStepper.svelte"><i data-ico="file" class="pm-ico sm"></i><span style="flex:1;min-width:0;overflow:hidden;text-overflow:ellipsis;white-space:nowrap">web/src/lib/components/recipe/editor/QuantityStepper.svelte</span><b>4</b></div>
+          <div class="st-hit" data-demo-action="cmd.search.open_result" data-demo-arg="cmd.search.open_result -> QuantityStepper.svelte:12"><span class="st-ln">12</span><code>&lt;input bind:value={row.<em>quantity</em>} on:change={() =&gt; normalize_units(row.<em>quantity</em>, row.unit)} /&gt;</code></div>
+          <div class="st-hit" data-demo-action="cmd.search.open_result" data-demo-arg="cmd.search.open_result -> QuantityStepper.svelte:34"><span class="st-ln">34</span><code>const parsed = parse_<em>quantity</em>(raw); // "1 1/2 cup" must stay 1.5, not 11/2</code></div>
+          <div class="st-hit" data-demo-action="cmd.search.open_result" data-demo-arg="cmd.search.open_result -> QuantityStepper.svelte:56"><span class="st-ln">56</span><code>export function step_<em>quantity</em>(value: number, delta: number, unit: string): number</code></div>
+          <div class="st-hit" data-demo-action="cmd.search.open_result" data-demo-arg="cmd.search.open_result -> QuantityStepper.svelte:88"><span class="st-ln">88</span><code><em>quantity</em>: clamp(<em>quantity</em>, MIN_<em>quantity</em>, MAX_<em>quantity</em>)</code></div></div>
+        <div class="st-file"><div class="st-fileh" data-demo-action="cmd.search.open_result" data-demo-arg="cmd.search.open_result -> mixed_fractions.rs"><i data-ico="file" class="pm-ico sm"></i><span style="flex:1;min-width:0;overflow:hidden;text-overflow:ellipsis;white-space:nowrap">src/services/import/normalize_units/mixed_fractions.rs</span><b>3</b></div>
+          <div class="st-hit" data-demo-action="cmd.search.open_result" data-demo-arg="cmd.search.open_result -> mixed_fractions.rs:41"><span class="st-ln">41</span><code>fn parse_<em>quantity</em>(raw: &amp;str) -&gt; Result&lt;Qty, NormalizeError&gt; {</code></div>
+          <div class="st-hit" data-demo-action="cmd.search.open_result" data-demo-arg="cmd.search.open_result -> mixed_fractions.rs:58"><span class="st-ln">58</span><code>assert_eq!(qty.value, 1.5); // mixed fraction "<em>quantity</em>" must not explode</code></div>
+          <div class="st-hit" data-demo-action="cmd.search.open_result" data-demo-arg="cmd.search.open_result -> mixed_fractions.rs:73"><span class="st-ln">73</span><code>normalize_units(<em>quantity</em>, unit).map_err(NormalizeError::from)</code></div></div>
+        <div class="st-file"><div class="st-fileh" data-demo-action="cmd.search.open_result" data-demo-arg="cmd.search.open_result -> +page.server.ts"><i data-ico="file" class="pm-ico sm"></i><span style="flex:1;min-width:0;overflow:hidden;text-overflow:ellipsis;white-space:nowrap">web/src/routes/(app)/recipes/[id]/edit/+page.server.ts</span><b>3</b></div>
+          <div class="st-hit" data-demo-action="cmd.search.open_result" data-demo-arg="cmd.search.open_result -> +page.server.ts:22"><span class="st-ln">22</span><code>export const load = async ({ params, fetch }) =&gt; load_recipe_<em>quantity</em>(params.id)</code></div>
+          <div class="st-hit" data-demo-action="cmd.search.open_result" data-demo-arg="cmd.search.open_result -> +page.server.ts:67"><span class="st-ln">67</span><code>const <em>quantity</em> = await fetch(`/api/recipes/${id}/<em>quantity</em>`)</code></div>
+          <div class="st-hit" data-demo-action="cmd.search.open_result" data-demo-arg="cmd.search.open_result -> +page.server.ts:104"><span class="st-ln">104</span><code>return { recipe, <em>quantity</em>, servings_ratio, normalized_units }</code></div></div>
+        <div class="st-btns"><button class="pm-btn" data-demo-action="cmd.search.replace_selected" data-demo-arg="cmd.search.replace_selected -> current match">Replace</button><button class="pm-btn pm-btn-primary" data-demo-action="cmd.search.replace_all" data-demo-arg="cmd.search.replace_all -> 16 across 6 files">Replace all</button></div>
+        <div class="st-btns"><button class="pm-btn" data-demo-action="cmd.search.previous_result" data-demo-arg="cmd.search.previous_result">Prev</button><button class="pm-btn" data-demo-action="cmd.search.next_result" data-demo-arg="cmd.search.next_result">Next</button></div>
+      </section>
+      <section class="st-pane pm-hidden" data-pane="i" style="--cat:var(--accent-lime)">
+        <div class="st-htitle2">Index<span class="st-hsub">tantivy</span></div><div class="st-rule"></div>
+        <div class="st-kv"><span class="st-k">Status</span><span class="st-v"><span class="pm-chip pm-chip-ok">READY</span></span></div>
+        <div class="st-kv"><span class="st-k">Documents</span><span class="st-v">1,284</span></div>
+        <div class="st-kv"><span class="st-k">Last indexed</span><span class="st-v">commit abc12ef · 4m</span></div>
+        <div class="st-kv"><span class="st-k">Engine</span><span class="st-v st-mono">tantivy</span></div>
+        <div class="st-btns"><button class="pm-btn" data-demo-action="cmd.search.rebuild_index" data-demo-arg="cmd.search.rebuild_index -> rebuild queued"><i data-ico="refresh" class="pm-ico sm"></i>Rebuild index</button></div>
+      </section>
+    </div>
+  </div>
+
+  <!-- SOURCE -->
+  <div class="side-panel-view" id="panel-source">
+    <div class="st-head"><span class="st-hico"><i data-ico="source" class="pm-ico"></i></span><span class="st-htitle">SOURCE CONTROL</span><span class="st-hstatus"><span class="dot dot-ok"></span>5 stg · 4 wip</span></div>
+    <div class="st-rail pm-scrollx">
+      <button class="st-chip active" data-tab="ch"><i data-ico="diff" class="pm-ico sm"></i><span class="st-clabel">Changes</span><span class="st-cnt">9</span></button>
+      <button class="st-chip" data-tab="cm"><i data-ico="check" class="pm-ico sm"></i><span class="st-clabel">Commit</span></button>
+      <button class="st-chip" data-tab="wt"><i data-ico="layers" class="pm-ico sm"></i><span class="st-clabel">Worktrees</span><span class="st-cnt">6</span></button>
+      <button class="st-chip" data-tab="hi"><i data-ico="clock" class="pm-ico sm"></i><span class="st-clabel">History</span></button>
+      <button class="st-chip" data-tab="gr"><i data-ico="source" class="pm-ico sm"></i><span class="st-clabel">Graph</span></button>
+      <button class="st-chip" data-tab="br"><i data-ico="branch" class="pm-ico sm"></i><span class="st-clabel">Branches</span></button>
+    </div>
+    <div class="st-body rail-scroll">
+      <section class="st-pane" data-pane="ch" style="--cat:var(--accent-lime)">
+        <div class="st-htitle2">Changes<span class="st-hsub">branch</span></div><div class="st-rule"></div>
+        <div class="pm6-tb-menu-wrap" style="display:block;margin-bottom:var(--lg)"><button type="button" class="pm6-tb-menu-trigger" style="width:100%;justify-content:space-between;border:1px solid var(--border-light);border-radius:var(--radius-md);padding:9px 12px" aria-controls="stBranchMenu"><span style="display:inline-flex;align-items:center;gap:8px"><i data-ico="branch" class="pm-ico sm"></i><span class="pm6-tb-menu-label st-mono">main</span></span><i data-ico="chevD" class="pm-ico sm"></i></button>
+          <div class="pm6-tb-menu pm6-tb-menu-left" id="stBranchMenu" role="menu" aria-label="Switch branch" data-pm-menu-select style="min-width:230px">
+            <button type="button" class="pm6-tb-menu-item is-selected" role="menuitem" data-value="main" data-label="main" data-demo-action="demo.toast" data-demo-arg="cmd.git.switch_branch -> main">main <span class="pm6-tb-menu-meta">current</span></button>
+            <button type="button" class="pm6-tb-menu-item" role="menuitem" data-value="lane-b" data-label="orch/lane-b-api" data-demo-action="demo.toast" data-demo-arg="cmd.git.switch_branch -> orch/lane-b-api (read-only)">orch/lane-b-api <span class="pm6-tb-menu-meta">run #47</span></button>
+            <button type="button" class="pm6-tb-menu-item" role="menuitem" data-value="lane-d" data-label="orch/lane-d-infra" data-demo-action="demo.toast" data-demo-arg="cmd.git.switch_branch -> orch/lane-d-infra (read-only)">orch/lane-d-infra <span class="pm6-tb-menu-meta">run #47</span></button>
+            <button type="button" class="pm6-tb-menu-item" role="menuitem" data-value="import" data-label="thread/import-fixes" data-demo-action="demo.toast" data-demo-arg="cmd.git.switch_branch -> thread/import-fixes">thread/import-fixes <span class="pm6-tb-menu-meta">thread</span></button>
+            <button type="button" class="pm6-tb-menu-item" role="menuitem" data-value="spike" data-label="spike/r2-storage" data-demo-action="demo.toast" data-demo-arg="cmd.git.switch_branch -> spike/r2-storage">spike/r2-storage <span class="pm6-tb-menu-meta">manual</span></button>
+          </div></div>
+        <div class="st-kv"><span class="st-k">Sync</span><span class="st-v">0 incoming · 2 outgoing</span></div>
+        <div class="st-kv"><span class="st-k">Projection</span><span class="st-v"><span class="pm-chip pm-chip-ok">current</span> <span class="pm-chip pm-chip-ok">healthy</span></span></div>
+        <div style="margin-top:var(--lg);font-family:var(--display-font);font-size:9.5px;letter-spacing:1.4px;color:var(--accent-lime)">STAGED · 5</div>
+        <div class="st-row"><span class="st-dot" style="background:var(--accent-lime)"></span><span class="st-main"><span class="st-name">recipes.rs <span class="pm-gs pm-gs-mod">M</span></span><span class="st-meta">staged · HEAD vs index</span></span><button class="pm-minibtn" title="Unstage" data-demo-action="cmd.git.unstage_hunks" data-demo-arg="cmd.git.unstage_hunks -> recipes.rs"><i data-ico="minus" class="pm-ico sm"></i></button><button class="pm-minibtn danger" title="Discard" data-demo-action="cmd.git.discard_hunks" data-demo-arg="cmd.git.discard_hunks -> recipes.rs"><i data-ico="x" class="pm-ico sm"></i></button></div>
+        <div class="st-row"><span class="st-dot" style="background:var(--accent-lime)"></span><span class="st-main"><span class="st-name">RecipeCard.svelte <span class="pm-gs pm-gs-staged">A</span></span><span class="st-meta">staged · new file</span></span><button class="pm-minibtn" title="Unstage" data-demo-action="cmd.git.unstage_hunks" data-demo-arg="cmd.git.unstage_hunks -> RecipeCard.svelte"><i data-ico="minus" class="pm-ico sm"></i></button><button class="pm-minibtn danger" title="Discard" data-demo-action="cmd.git.discard_hunks" data-demo-arg="cmd.git.discard_hunks -> RecipeCard.svelte"><i data-ico="x" class="pm-ico sm"></i></button></div>
+        <div class="st-row"><span class="st-dot" style="background:var(--accent-lime)"></span><span class="st-main"><span class="st-name">src/services/import/normalize_units/mixed_fractions.rs <span class="pm-gs pm-gs-mod">M</span></span><span class="st-meta">staged · HEAD vs index</span></span><button class="pm-minibtn" title="Unstage" data-demo-action="cmd.git.unstage_hunks" data-demo-arg="cmd.git.unstage_hunks -> mixed_fractions.rs"><i data-ico="minus" class="pm-ico sm"></i></button><button class="pm-minibtn danger" title="Discard" data-demo-action="cmd.git.discard_hunks" data-demo-arg="cmd.git.discard_hunks -> mixed_fractions.rs"><i data-ico="x" class="pm-ico sm"></i></button></div>
+        <div class="st-row"><span class="st-dot" style="background:var(--accent-lime)"></span><span class="st-main"><span class="st-name">web/src/lib/components/recipe/editor/QuantityStepper.svelte <span class="pm-gs pm-gs-staged">A</span></span><span class="st-meta">staged · new file</span></span><button class="pm-minibtn" title="Unstage" data-demo-action="cmd.git.unstage_hunks" data-demo-arg="cmd.git.unstage_hunks -> QuantityStepper.svelte"><i data-ico="minus" class="pm-ico sm"></i></button><button class="pm-minibtn danger" title="Discard" data-demo-action="cmd.git.discard_hunks" data-demo-arg="cmd.git.discard_hunks -> QuantityStepper.svelte"><i data-ico="x" class="pm-ico sm"></i></button></div>
+        <div class="st-row"><span class="st-dot" style="background:var(--accent-lime)"></span><span class="st-main"><span class="st-name">.github/workflows/ci-build-test-and-publish.yml <span class="pm-gs pm-gs-mod">M</span></span><span class="st-meta">staged · HEAD vs index</span></span><button class="pm-minibtn" title="Unstage" data-demo-action="cmd.git.unstage_hunks" data-demo-arg="cmd.git.unstage_hunks -> ci-build-test-and-publish.yml"><i data-ico="minus" class="pm-ico sm"></i></button><button class="pm-minibtn danger" title="Discard" data-demo-action="cmd.git.discard_hunks" data-demo-arg="cmd.git.discard_hunks -> ci-build-test-and-publish.yml"><i data-ico="x" class="pm-ico sm"></i></button></div>
+        <div style="margin-top:var(--md);font-family:var(--display-font);font-size:9.5px;letter-spacing:1.4px;color:var(--accent-warning)">UNSTAGED · 4</div>
+        <div class="st-row"><span class="st-dot" style="background:var(--accent-warning)"></span><span class="st-main"><span class="st-name">image.rs <span class="pm-gs pm-gs-mod">M</span></span><span class="st-meta">index vs working</span></span><button class="pm-minibtn" title="Stage" data-demo-action="cmd.git.stage_hunks" data-demo-arg="cmd.git.stage_hunks -> image.rs"><i data-ico="plus" class="pm-ico sm"></i></button><button class="pm-minibtn danger" title="Discard" data-demo-action="cmd.git.discard_hunks" data-demo-arg="cmd.git.discard_hunks -> image.rs"><i data-ico="x" class="pm-ico sm"></i></button></div>
+        <div class="st-row"><span class="st-dot" style="background:var(--accent-warning)"></span><span class="st-main"><span class="st-name">crates/puppet-core/src/artifacts/projection_freshness.rs <span class="pm-gs pm-gs-mod">M</span></span><span class="st-meta">index vs working</span></span><button class="pm-minibtn" title="Stage" data-demo-action="cmd.git.stage_hunks" data-demo-arg="cmd.git.stage_hunks -> projection_freshness.rs"><i data-ico="plus" class="pm-ico sm"></i></button><button class="pm-minibtn danger" title="Discard" data-demo-action="cmd.git.discard_hunks" data-demo-arg="cmd.git.discard_hunks -> projection_freshness.rs"><i data-ico="x" class="pm-ico sm"></i></button></div>
+        <div class="st-row"><span class="st-dot" style="background:var(--accent-warning)"></span><span class="st-main"><span class="st-name">web/src/routes/(app)/recipes/[id]/edit/+page.server.ts <span class="pm-gs pm-gs-mod">M</span></span><span class="st-meta">index vs working</span></span><button class="pm-minibtn" title="Stage" data-demo-action="cmd.git.stage_hunks" data-demo-arg="cmd.git.stage_hunks -> +page.server.ts"><i data-ico="plus" class="pm-ico sm"></i></button><button class="pm-minibtn danger" title="Discard" data-demo-action="cmd.git.discard_hunks" data-demo-arg="cmd.git.discard_hunks -> +page.server.ts"><i data-ico="x" class="pm-ico sm"></i></button></div>
+        <div class="st-row"><span class="st-dot" style="background:var(--accent-warning)"></span><span class="st-main"><span class="st-name">web/src/lib/components/recipe/editor/QuantityStepper.svelte <span class="pm-gs pm-gs-mod">M</span></span><span class="st-meta">index vs working · partially staged</span></span><button class="pm-minibtn" title="Stage" data-demo-action="cmd.git.stage_hunks" data-demo-arg="cmd.git.stage_hunks -> QuantityStepper.svelte"><i data-ico="plus" class="pm-ico sm"></i></button><button class="pm-minibtn danger" title="Discard" data-demo-action="cmd.git.discard_hunks" data-demo-arg="cmd.git.discard_hunks -> QuantityStepper.svelte"><i data-ico="x" class="pm-ico sm"></i></button></div>
+        <div class="st-btns"><button class="pm-btn" data-demo-action="demo.toast" data-demo-arg="cmd.git.pull -> up to date">Pull</button><button class="pm-btn" data-demo-action="demo.toast" data-demo-arg="cmd.git.push -> 2 pushed">Push</button><button class="pm-btn" data-demo-action="demo.toast" data-demo-arg="cmd.git.fetch -> refreshed">Fetch</button></div>
+      </section>
+      <section class="st-pane pm-hidden" data-pane="cm" style="--cat:var(--accent-warning)">
+        <div class="st-htitle2">Commit<span class="st-hsub">3 files</span></div><div class="st-rule"></div>
+        <label class="pm-input" style="border-radius:var(--radius-md)"><input aria-label="Commit message" placeholder="Commit message..."></label>
+        <div class="st-btns"><button class="pm-minibtn" title="Generate with AI" data-demo-action="cmd.source_control.generate_commit_message" data-demo-arg="cmd.source_control.generate_commit_message"><i data-ico="spark" class="pm-ico sm"></i></button><button class="pm-btn pm-btn-primary" style="flex:1" data-demo-action="panels.git_commit" data-demo-arg="cmd.git.commit -> committed 3 files"><i data-ico="check" class="pm-ico sm"></i>Commit</button></div>
+        <div class="pm-footnote">git mutations do not join editor undo · empty commit handled distinctly</div>
+      </section>
+      <section class="st-pane pm-hidden" data-pane="wt" style="--cat:var(--accent-magenta)">
+        <div class="st-htitle2">Worktrees<span class="st-hsub">6 active</span></div><div class="st-rule"></div>
+        <div class="pm-chiprow" style="padding:0 0 var(--md)"><button class="pm-chipbtn active">All</button><button class="pm-chipbtn">Threads</button><button class="pm-chipbtn">Orch</button><button class="pm-chipbtn">Manual</button></div>
+        <div class="st-wt"><div class="st-wt-top"><span class="st-pill clean">clean</span><span class="st-branch">orch/lane-b-api</span><span class="st-owner">lane-b API</span></div><div class="st-kv"><span class="st-k">Path</span><span class="st-v st-mono">.worktrees/orch-lane-b-api-import-normalize-units</span></div><div class="st-kv"><span class="st-k">Base</span><span class="st-v">main · 2h</span></div><div class="st-wt-acts"><button class="pm-btn" data-demo-action="demo.toast" data-demo-arg="cmd.git.worktree.open -> lane-b (read-only)">Open</button><button class="pm-btn" data-demo-action="cmd.git.open_diff" data-demo-arg="cmd.git.open_diff -> +310 -42">Compare</button><button class="pm-btn" data-demo-action="demo.toast" data-demo-arg="cmd.git.worktree.merge -> lane-b">Merge</button><button class="pm-btn" data-demo-action="page.go" data-demo-arg="Opening lane: lane-b API">Lane</button><button class="pm-btn" aria-disabled="true" data-demo-reason="blocked_by_gate" data-demo-action="demo.reason" data-demo-arg="Owned by run #47">Remove</button></div></div>
+        <div class="st-wt"><div class="st-wt-top"><span class="st-pill dirty">dirty</span><span class="st-branch">orch/lane-d-infra</span><span class="st-owner">lane-d infra</span></div><div class="st-kv"><span class="st-k">PR</span><span class="st-v">none yet — run #47</span></div><div class="st-wt-acts"><button class="pm-btn" data-demo-action="demo.toast" data-demo-arg="cmd.git.worktree.open -> lane-d">Open</button><button class="pm-btn" data-demo-action="cmd.git.open_diff" data-demo-arg="cmd.git.open_diff -> +188 -23">Compare</button><button class="pm-btn" data-demo-action="git.create_pr" data-demo-arg="cmd.github.pr.create -> draft PR">Create PR</button><button class="pm-btn" data-demo-action="page.go" data-demo-arg="Opening lane: lane-d infra">Lane</button></div></div>
+        <div class="st-wt"><div class="st-wt-top"><span class="st-pill clean">clean</span><span class="st-branch">thread/import-fixes</span><span class="st-owner">Thread</span></div><div class="st-wt-acts"><button class="pm-btn" data-demo-action="demo.toast" data-demo-arg="cmd.git.worktree.open -> thread">Open</button><button class="pm-btn" data-demo-action="demo.toast" data-demo-arg="cmd.chat.open -> thread">Thread</button><button class="pm-btn" data-demo-action="demo.toast" data-demo-arg="cmd.git.worktree.merge">Merge</button><button class="pm-btn" data-demo-action="cmd.git.worktree.remove" data-demo-arg="cmd.git.worktree.remove -> confirm">Remove</button></div></div>
+        <div class="st-wt"><div class="st-wt-top"><span class="st-pill clean">clean</span><span class="st-branch">spike/r2-storage</span><span class="st-owner">Manual</span></div><div class="st-wt-acts"><button class="pm-btn" data-demo-action="demo.toast" data-demo-arg="cmd.git.worktree.open -> spike">Open</button><button class="pm-btn" data-demo-action="cmd.git.open_diff" data-demo-arg="cmd.git.open_diff -> +64 -0">Compare</button><button class="pm-btn" data-demo-action="cmd.git.worktree.remove" data-demo-arg="cmd.git.worktree.remove -> confirm">Remove</button></div></div>
+        <div class="st-wt"><div class="st-wt-top"><span class="st-pill clean">clean</span><span class="st-branch">feature/mixed-fraction-unit-aware-parser</span><span class="st-owner">lane-e parser</span></div><div class="st-kv"><span class="st-k">Path</span><span class="st-v st-mono">.worktrees/feature-mixed-fraction-unit-aware-parser</span></div><div class="st-kv"><span class="st-k">Base</span><span class="st-v">main · 1h</span></div><div class="st-wt-acts"><button class="pm-btn" data-demo-action="demo.toast" data-demo-arg="cmd.git.worktree.open -> lane-e (read-only)">Open</button><button class="pm-btn" data-demo-action="cmd.git.open_diff" data-demo-arg="cmd.git.open_diff -> +142 -37">Compare</button><button class="pm-btn" data-demo-action="demo.toast" data-demo-arg="cmd.git.worktree.merge -> lane-e">Merge</button><button class="pm-btn" data-demo-action="page.go" data-demo-arg="Opening lane: lane-e parser">Lane</button></div></div>
+        <div class="st-wt"><div class="st-wt-top"><span class="st-pill dirty">dirty</span><span class="st-branch">spike/projection-freshness-health-matrix</span><span class="st-owner">spike</span></div><div class="st-kv"><span class="st-k">Path</span><span class="st-v st-mono">.worktrees/spike-projection-freshness-health-matrix</span></div><div class="st-kv"><span class="st-k">PR</span><span class="st-v">none yet — manual spike</span></div><div class="st-wt-acts"><button class="pm-btn" data-demo-action="demo.toast" data-demo-arg="cmd.git.worktree.open -> spike-projection">Open</button><button class="pm-btn" data-demo-action="cmd.git.open_diff" data-demo-arg="cmd.git.open_diff -> +88 -12">Compare</button><button class="pm-btn" data-demo-action="git.create_pr" data-demo-arg="cmd.github.pr.create -> draft PR">Create PR</button><button class="pm-btn" data-demo-action="cmd.git.worktree.remove" data-demo-arg="cmd.git.worktree.remove -> confirm">Remove</button></div></div>
+        <div class="st-btns"><button class="pm-btn" style="flex:1 1 100%" data-demo-action="demo.toast" data-demo-arg="cmd.git.worktree.create -> wizard">+ New Worktree</button></div>
+      </section>
+      <section class="st-pane pm-hidden" data-pane="hi" style="--cat:var(--accent-orange)">
+        <div class="st-htitle2">History<span class="st-hsub">recent</span></div><div class="st-rule"></div>
+        <div class="st-commit" data-demo-action="demo.toast" data-demo-arg="cmd.git.show_commit -> abc12ef"><div style="display:flex;align-items:baseline;gap:var(--md)"><span class="st-sha">abc12ef</span><span class="st-age">4m</span></div><div class="st-msg">feat(search): tantivy query endpoint + ranked results over the recipe full-text index (1,284 docs)</div></div>
+        <div class="st-commit" data-demo-action="demo.toast" data-demo-arg="cmd.git.show_commit -> def34ab"><div style="display:flex;align-items:baseline;gap:var(--md)"><span class="st-sha">def34ab</span><span class="st-age">2h</span></div><div class="st-msg">refactor(import): split mixed-fraction normalization into a unit-aware parser with property-based tests</div></div>
+        <div class="st-commit" data-demo-action="demo.toast" data-demo-arg="cmd.git.show_commit -> 789feed"><div style="display:flex;align-items:baseline;gap:var(--md)"><span class="st-sha">789feed</span><span class="st-age">1d</span></div><div class="st-msg">chore(ci): pin buildx and enable multi-arch manifest-list digests for amd64 and arm64</div></div>
+        <div class="st-commit" data-demo-action="demo.toast" data-demo-arg="cmd.git.show_commit -> 456beef"><div style="display:flex;align-items:baseline;gap:var(--md)"><span class="st-sha">456beef</span><span class="st-age">2d</span></div><div class="st-msg">feat(artifacts): add projection_freshness x projection_health matrix to runtime receipt rows</div></div>
+        <div class="st-commit" data-demo-action="demo.toast" data-demo-arg="cmd.git.show_commit -> 901cafe"><div style="display:flex;align-items:baseline;gap:var(--md)"><span class="st-sha">901cafe</span><span class="st-age">3d</span></div><div class="st-msg">feat(web): bind QuantityStepper value into web/src/lib/components/recipe/editor</div></div>
+        <div class="st-commit" data-demo-action="demo.toast" data-demo-arg="cmd.git.show_commit -> 234d00d"><div style="display:flex;align-items:baseline;gap:var(--md)"><span class="st-sha">234d00d</span><span class="st-age">4d</span></div><div class="st-msg">chore(ci): compose stack + registry cache for ghcr.io/jared/tastebook-web:edge-2026.07.24</div></div>
+        <div class="st-btns"><button class="pm-btn" data-demo-action="cmd.git.diff_set_compare_target" data-demo-arg="cmd.git.diff_set_compare_target">Set compare target</button></div>
+      </section>
+      <section class="st-pane pm-hidden" data-pane="gr" style="--cat:var(--accent-blue)">
+        <div class="st-htitle2">Graph<span class="st-hsub">branches</span></div><div class="st-rule"></div>
+        <div class="st-graph"><div class="st-gn"><span class="dot" style="background:var(--accent-blue)"></span>main · abc12ef</div><div class="st-gn st-gind"><span class="dot" style="background:var(--accent-magenta)"></span>orch/lane-b-api</div><div class="st-gn st-gind"><span class="dot" style="background:var(--accent-magenta)"></span>orch/lane-d-infra</div><div class="st-gn st-gind"><span class="dot" style="background:var(--accent-lime)"></span>thread/import-fixes</div><div class="st-gn st-gind" style="min-width:0"><span class="dot" style="background:var(--accent-orange)"></span><span style="flex:1;min-width:0;overflow:hidden;text-overflow:ellipsis;white-space:nowrap">feature/mixed-fraction-unit-aware-parser</span></div></div>
+        <div class="st-btns"><button class="pm-btn" data-demo-action="page.go" data-demo-arg="Opening Orchestrator -> full graph">Open full graph</button></div>
+      </section>
+      <section class="st-pane pm-hidden" data-pane="br" style="--cat:var(--text-muted)">
+        <div class="st-htitle2">Branches &amp; Stash<span class="st-hsub">7 · 1</span></div><div class="st-rule"></div>
+        <div class="st-row"><span class="st-dot" style="background:var(--accent-lime)"></span><span class="st-main"><span class="st-name st-mono">main</span></span><span class="pm-chip pm-chip-ok">current</span></div>
+        <div class="st-row" data-demo-action="demo.toast" data-demo-arg="cmd.git.switch_branch -> orch/lane-b-api"><span class="st-dot" style="background:var(--text-muted)"></span><span class="st-main"><span class="st-name st-mono">orch/lane-b-api</span></span></div>
+        <div class="st-row" data-demo-action="demo.toast" data-demo-arg="cmd.git.switch_branch -> orch/lane-d-infra"><span class="st-dot" style="background:var(--text-muted)"></span><span class="st-main"><span class="st-name st-mono">orch/lane-d-infra</span></span></div>
+        <div class="st-row" data-demo-action="demo.toast" data-demo-arg="cmd.git.switch_branch -> thread/import-fixes"><span class="st-dot" style="background:var(--text-muted)"></span><span class="st-main"><span class="st-name st-mono">thread/import-fixes</span></span></div>
+        <div class="st-row" data-demo-action="demo.toast" data-demo-arg="cmd.git.switch_branch -> spike/r2-storage"><span class="st-dot" style="background:var(--text-muted)"></span><span class="st-main"><span class="st-name st-mono">spike/r2-storage</span></span></div>
+        <div class="st-row" data-demo-action="demo.toast" data-demo-arg="cmd.git.switch_branch -> feature/mixed-fraction-unit-aware-parser"><span class="st-dot" style="background:var(--text-muted)"></span><span class="st-main"><span class="st-name st-mono">feature/mixed-fraction-unit-aware-parser</span></span></div>
+        <div class="st-row" data-demo-action="demo.toast" data-demo-arg="cmd.git.switch_branch -> spike/projection-freshness-health-matrix"><span class="st-dot" style="background:var(--text-muted)"></span><span class="st-main"><span class="st-name st-mono">spike/projection-freshness-health-matrix</span></span></div>
+        <div style="margin-top:var(--lg);font-family:var(--display-font);font-size:9.5px;letter-spacing:1.4px;color:var(--accent-warning)">STASH</div>
+        <div class="st-row"><span class="st-dot" style="background:var(--accent-warning)"></span><span class="st-main"><span class="st-name st-mono">stash@{0}</span><span class="st-meta">WIP editing web/src/lib/components/recipe/editor/QuantityStepper.svelte (hunk 2/4)</span></span><button class="pm-minibtn" title="Pop" data-demo-action="cmd.git.stash_pop" data-demo-arg="cmd.git.stash_pop -> applied &amp; dropped"><i data-ico="arrowUp" class="pm-ico sm"></i></button><button class="pm-minibtn danger" title="Drop" data-demo-action="cmd.git.stash_drop" data-demo-arg="cmd.git.stash_drop -> confirm"><i data-ico="trash" class="pm-ico sm"></i></button></div>
+      </section>
+    </div>
+  </div>
+
+  <!-- ACTIONS -->
+  <div class="side-panel-view" id="panel-git">
+    <div class="st-head"><span class="st-hico"><i data-ico="actions" class="pm-ico"></i></span><span class="st-htitle">GITHUB ACTIONS</span><span class="st-hstatus" style="background:color-mix(in srgb,var(--graph-running) 14%,transparent);color:var(--graph-running)"><span class="dot dot-run"></span>2/3 green</span></div>
+    <div class="st-rail pm-scrollx">
+      <button class="st-chip active" data-tab="cn"><i data-ico="key" class="pm-ico sm"></i><span class="st-clabel">Connect</span></button>
+      <button class="st-chip" data-tab="ru"><i data-ico="play" class="pm-ico sm"></i><span class="st-clabel">Runs</span></button>
+      <button class="st-chip" data-tab="tr"><i data-ico="warn" class="pm-ico sm"></i><span class="st-clabel">Triage</span><span class="st-cnt">1</span></button>
+      <button class="st-chip" data-tab="wf"><i data-ico="cog" class="pm-ico sm"></i><span class="st-clabel">Workflows</span></button>
+      <button class="st-chip" data-tab="se"><i data-ico="cog" class="pm-ico sm"></i><span class="st-clabel">Secrets</span></button>
+    </div>
+    <div class="st-body rail-scroll">
+      <section class="st-pane" data-pane="cn" style="--cat:var(--accent-lime)">
+        <div class="st-htitle2">Connection<span class="st-hsub">github api</span></div><div class="st-rule"></div>
+        <div class="st-kv"><span class="st-k">Account</span><span class="st-v">jared-dev <span class="pm-chip pm-chip-ok">connected</span></span></div>
+        <div class="st-kv"><span class="st-k">Requested = effective</span><span class="st-v">jared-dev</span></div>
+        <div class="st-kv"><span class="st-k">Scopes</span><span class="st-v st-mono">repo · read:user · user:email</span></div>
+        <div class="pm-note"><i data-ico="warn" class="pm-ico sm pm-note-glyph"></i><span><b>workflow</b> scope missing — you can view runs but cannot dispatch. Reconnect to add it.</span></div>
+        <div class="st-btns"><button class="pm-btn" data-demo-action="cmd.github.connect" data-demo-arg="cmd.github.connect -> device-code flow started"><i data-ico="refresh" class="pm-ico sm"></i>Reconnect + workflow scope</button></div>
+      </section>
+      <section class="st-pane pm-hidden" data-pane="ru" style="--cat:var(--accent-blue)">
+        <div class="st-htitle2">Current Branch<span class="st-hsub">main · webhook 12s</span></div><div class="st-rule"></div>
+        <div class="st-kv"><span class="st-k">Readiness</span><span class="st-v">2 of 3 recent green</span></div>
+        <div class="st-row" data-demo-action="cmd.github.actions.open_run" data-demo-arg="cmd.github.actions.open_run -> #313"><span class="st-dot dot-run"></span><span class="st-main"><span class="st-name">ci-build-test-and-publish — rerun after mixed-fraction parser fix</span><span class="st-meta">#313 · import-fixes · running</span></span><span class="pm-chip pm-chip-warn">running</span></div>
+        <div class="st-row" data-demo-action="cmd.github.actions.open_run" data-demo-arg="cmd.github.actions.open_run -> #312"><span class="st-dot" style="background:var(--graph-passed)"></span><span class="st-main"><span class="st-name">ci-build-test-and-publish — build + test + multi-arch manifest publish</span><span class="st-meta">#312 · main · 2h ago</span></span><span class="pm-chip pm-chip-ok">success</span></div>
+        <div class="st-row" data-demo-action="cmd.github.actions.open_run" data-demo-arg="cmd.github.actions.open_run -> #311"><span class="st-dot" style="background:var(--graph-passed)"></span><span class="st-main"><span class="st-name">ci-build-test-and-publish — build + test</span><span class="st-meta">#311 · lane-b-api · 3h</span></span><span class="pm-chip pm-chip-ok">success</span></div>
+        <div class="st-row" data-demo-action="cmd.github.actions.open_run" data-demo-arg="cmd.github.actions.open_run -> #310"><span class="st-dot" style="background:var(--graph-failed)"></span><span class="st-main"><span class="st-name">ci-build-test-and-publish — build + test</span><span class="st-meta">#310 · import-fixes · 5h</span></span><span class="pm-chip pm-chip-err">failed</span></div>
+        <div class="st-row" data-demo-action="cmd.github.actions.open_run" data-demo-arg="cmd.github.actions.open_run -> #309"><span class="st-dot" style="background:var(--graph-passed)"></span><span class="st-main"><span class="st-name">release-tag-and-publish-manifest-list — tag + signed digest</span><span class="st-meta">#309 · main · 1d</span></span><span class="pm-chip pm-chip-ok">success</span></div>
+        <div class="st-row" data-demo-action="cmd.github.actions.open_run" data-demo-arg="cmd.github.actions.open_run -> #308"><span class="st-dot" style="background:var(--graph-failed)"></span><span class="st-main"><span class="st-name">deploy-infra-terraform-plan-apply — plan + apply</span><span class="st-meta">#308 · lane-d-infra · 1d</span></span><span class="pm-chip pm-chip-err">failed</span></div>
+        <div class="st-row" data-demo-action="cmd.github.actions.open_run" data-demo-arg="cmd.github.actions.open_run -> #307"><span class="st-dot" style="background:var(--graph-passed)"></span><span class="st-main"><span class="st-name">docker-bake-multi-arch-manifest-digests — amd64 + arm64</span><span class="st-meta">#307 · main · 2d</span></span><span class="pm-chip pm-chip-ok">success</span></div>
+        <div class="st-kv" style="margin-top:var(--md)"><span class="st-k">Status checks</span><span class="st-v">no open PR yet</span></div>
+      </section>
+      <section class="st-pane pm-hidden" data-pane="tr" style="--cat:var(--graph-failed)">
+        <div class="st-htitle2">Failure Triage<span class="st-hsub">#310 · test</span></div><div class="st-rule"></div>
+        <div class="st-kv"><span class="st-k">Failing</span><span class="st-v">job test · step cargo test</span></div>
+        <div class="st-log"><div class="fail">test import::normalize_units::tests::mixed_fraction_does_not_explode ... FAILED</div><div>thread 'import::normalize_units::tests::mixed_fraction_does_not_explode' panicked at src/services/import.rs:58:9</div><div>assertion `left == right` failed: qty.value == 1.5 (got 11.5 from "1 1/2 cup")</div><div>"1 1/2 cup" parsed as 11/2 — mixed fraction normalization exploded</div><div>note: run with RUST_BACKTRACE=1 environment variable to display a full backtrace</div></div>
+        <div class="st-kv"><span class="st-k">Changed files</span><span class="st-v st-mono">src/services/import/normalize_units/mixed_fractions.rs</span></div>
+        <div class="st-kv"><span class="st-k">Likely next</span><span class="st-v">rerun after parser fix</span></div>
+        <div class="st-btns"><button class="pm-btn pm-btn-primary" data-demo-action="cmd.actions.rerun" data-demo-arg="cmd.actions.rerun -> rerunning #310">Rerun</button><button class="pm-btn" data-demo-action="cmd.github.actions.compare_last_success" data-demo-arg="cmd.github.actions.compare_last_success -> #310 vs #312">Last green</button><button class="pm-btn" data-demo-action="cmd.github.actions.open_in_github" data-demo-arg="Opening run #310 on github.com">Browser</button></div>
+      </section>
+      <section class="st-pane pm-hidden" data-pane="wf" style="--cat:var(--accent-orange)">
+        <div class="st-htitle2">Workflows<span class="st-hsub">dispatch</span></div><div class="st-rule"></div>
+        <div class="st-row"><span class="st-main"><span class="st-name">ci-build-test-and-publish — build, test, and publish</span><span class="st-meta">ci-build-test-and-publish.yml · push + PR</span></span><button class="pm-btn" aria-disabled="true" data-demo-reason="missing workflow scope" data-demo-action="demo.reason" data-demo-arg="Dispatch blocked: missing workflow scope">Dispatch</button></div>
+        <div class="st-row"><span class="st-main"><span class="st-name">release-tag-and-publish-manifest-list — tag + signed digest</span><span class="st-meta">release-tag-and-publish.yml · tag</span></span><button class="pm-btn" aria-disabled="true" data-demo-reason="missing workflow scope" data-demo-action="demo.reason" data-demo-arg="Dispatch blocked: missing workflow scope">Dispatch</button></div>
+        <div class="st-row"><span class="st-main"><span class="st-name">deploy-infra-terraform-plan-apply — plan + apply</span><span class="st-meta">deploy-infra-terraform.yml · manual</span></span><button class="pm-btn" aria-disabled="true" data-demo-reason="missing workflow scope" data-demo-action="demo.reason" data-demo-arg="Dispatch blocked: missing workflow scope">Dispatch</button></div>
+        <div class="st-row"><span class="st-main"><span class="st-name">docker-bake-multi-arch-manifest-digests — amd64 + arm64</span><span class="st-meta">docker-bake-multi-arch.yml · schedule</span></span><button class="pm-btn" aria-disabled="true" data-demo-reason="missing workflow scope" data-demo-action="demo.reason" data-demo-arg="Dispatch blocked: missing workflow scope">Dispatch</button></div>
+        <div class="pm-footnote">Dispatch is blocked: not_configured (workflow scope). Recovery: Reconnect above.</div>
+      </section>
+      <section class="st-pane pm-hidden" data-pane="se" style="--cat:var(--text-muted)">
+        <div class="st-htitle2">Secrets &amp; Variables<span class="st-hsub">names only</span></div><div class="st-rule"></div>
+        <div class="st-kv"><span class="st-k st-mono">DOCKER_USER</span><span class="pm-chip pm-chip-ok">set</span></div>
+        <div class="st-kv"><span class="st-k st-mono">DOCKER_PAT</span><span class="pm-chip pm-chip-err">missing</span></div>
+        <div class="st-kv"><span class="st-k st-mono">REGISTRY_URL</span><span class="pm-chip pm-chip-ok">set</span></div>
+        <div class="st-kv"><span class="st-k st-mono">REGISTRY_TOKEN</span><span class="pm-chip pm-chip-ok">set</span></div>
+        <div class="st-kv"><span class="st-k st-mono">R2_ACCESS_KEY_ID</span><span class="pm-chip pm-chip-ok">set</span></div>
+        <div class="st-kv"><span class="st-k st-mono">R2_SECRET_ACCESS_KEY</span><span class="pm-chip pm-chip-err">missing</span></div>
+        <div class="st-kv"><span class="st-k st-mono">UNRAID_TEMPLATE_REPO</span><span class="pm-chip pm-chip-ok">set</span></div>
+        <div class="st-btns"><button class="pm-btn" data-demo-action="cmd.github.actions.open_in_github" data-demo-arg="Opening repository settings — values never display here">Manage on GitHub</button></div>
+      </section>
+    </div>
+  </div>
+
+  <!-- DOCKER -->
+  <div class="side-panel-view" id="panel-docker">
+    <div class="st-head"><span class="st-hico"><i data-ico="docker" class="pm-ico"></i></span><span class="st-htitle">DOCKER MANAGER</span><span class="st-hstatus"><span class="dot dot-ok"></span>ctx default</span></div>
+    <div class="st-rail pm-scrollx">
+      <button class="st-chip active" data-tab="containers"><i data-ico="layers" class="pm-ico sm"></i><span class="st-clabel">Containers</span></button>
+      <button class="st-chip" data-tab="images"><i data-ico="layers" class="pm-ico sm"></i><span class="st-clabel">Images</span></button>
+      <button class="st-chip" data-tab="compose"><i data-ico="layers" class="pm-ico sm"></i><span class="st-clabel">Compose</span></button>
+      <button class="st-chip" data-tab="registries"><i data-ico="db" class="pm-ico sm"></i><span class="st-clabel">Registries</span></button>
+      <button class="st-chip" data-tab="build"><i data-ico="flame" class="pm-ico sm"></i><span class="st-clabel">Build</span></button>
+      <button class="st-chip" data-tab="publish"><i data-ico="upload" class="pm-ico sm"></i><span class="st-clabel">Publish</span></button>
+    </div>
+    <div class="st-body rail-scroll">
+      <section class="st-pane" data-pane="containers" style="--cat:var(--accent-blue)">
+        <div class="st-htitle2">Containers<span class="st-hsub">3 run · 1 exit · 1 restart</span></div><div class="st-rule"></div>
+        <div class="st-row"><span class="st-dot" style="background:var(--graph-passed)"></span><span class="st-main"><span class="st-name">tastebook-api</span><span class="st-meta">jared/tastebook-api:1.4.2-rc.1@sha256:9f2c4b8a1e77 · :8080 · up 3h</span></span><button class="pm-minibtn" title="Logs" data-demo-action="cmd.docker.container.view_logs" data-demo-arg="cmd.docker.container.view_logs -> api"><i data-ico="terminal" class="pm-ico sm"></i></button><span class="pm-rmetric">CPU 12%</span></div>
+        <div class="st-row"><span class="st-dot" style="background:var(--graph-passed)"></span><span class="st-main"><span class="st-name">tastebook-import-worker-batch</span><span class="st-meta">jared/tastebook-import-worker:1.4.2-rc.1@sha256:3a7d0c · up 3h · queue idle</span></span><button class="pm-minibtn" title="Logs" data-demo-action="cmd.docker.container.view_logs" data-demo-arg="cmd.docker.container.view_logs -> worker"><i data-ico="terminal" class="pm-ico sm"></i></button></div>
+        <div class="st-row"><span class="st-dot" style="background:var(--graph-passed)"></span><span class="st-main"><span class="st-name">postgres-16-alpine-primary</span><span class="st-meta">postgres:16.3-alpine3.19@sha256:c1f09e2b · :5432 · up 2d</span></span><button class="pm-minibtn" title="Logs" data-demo-action="cmd.docker.container.view_logs" data-demo-arg="cmd.docker.container.view_logs -> postgres"><i data-ico="terminal" class="pm-ico sm"></i></button></div>
+        <div class="st-row"><span class="st-dot" style="background:var(--graph-pending)"></span><span class="st-main"><span class="st-name">redis-7-alpine-cache</span><span class="st-meta">redis:7.2-alpine3.19 · exited (0) · 41m</span></span><button class="pm-minibtn" title="Start" data-demo-action="cmd.docker.run" data-demo-arg="cmd.docker.run -> start redis"><i data-ico="play" class="pm-ico sm"></i></button></div>
+        <div class="st-row"><span class="st-dot dot-run"></span><span class="st-main"><span class="st-name">tastebook-import-worker-retry</span><span class="st-meta">restarting 3/5 · mixed-fraction backlog</span></span><button class="pm-minibtn" title="Logs" data-demo-action="cmd.docker.container.view_logs" data-demo-arg="cmd.docker.container.view_logs -> import-worker"><i data-ico="terminal" class="pm-ico sm"></i></button><span class="pm-rmetric">CPU 46%</span></div>
+        <div class="st-row"><span class="st-dot" style="background:var(--graph-passed)"></span><span class="st-main"><span class="st-name">ghcr-io-jared-tastebook-web-edge</span><span class="st-meta">ghcr.io/jared/tastebook-web:edge-2026.07.24@sha256:77be41 · :3000 · up 1h</span></span><button class="pm-minibtn" title="Logs" data-demo-action="cmd.docker.container.view_logs" data-demo-arg="cmd.docker.container.view_logs -> web-edge"><i data-ico="terminal" class="pm-ico sm"></i></button><span class="pm-rmetric">CPU 8%</span></div>
+        <div class="st-row"><span class="st-dot" style="background:var(--graph-passed)"></span><span class="st-main"><span class="st-name">tastebook-import-worker-batch-2</span><span class="st-meta">up 40m · processing mixed fractions</span></span><button class="pm-minibtn" title="Logs" data-demo-action="cmd.docker.container.view_logs" data-demo-arg="cmd.docker.container.view_logs -> worker-batch-2"><i data-ico="terminal" class="pm-ico sm"></i></button></div>
+        <div class="st-row"><span class="st-dot" style="background:var(--graph-passed)"></span><span class="st-main"><span class="st-name">postgres-16-alpine-replica-read</span><span class="st-meta">:5433 · up 2d · replica lag 0s</span></span><button class="pm-minibtn" title="Logs" data-demo-action="cmd.docker.container.view_logs" data-demo-arg="cmd.docker.container.view_logs -> replica-read"><i data-ico="terminal" class="pm-ico sm"></i></button></div>
+        <div class="st-row"><span class="st-dot" style="background:var(--graph-passed)"></span><span class="st-main"><span class="st-name">registry-localhost-5000-pull-cache</span><span class="st-meta">localhost:5000/registry:2 · up 5d · mirror</span></span><button class="pm-minibtn" title="Logs" data-demo-action="cmd.docker.container.view_logs" data-demo-arg="cmd.docker.container.view_logs -> pull-cache"><i data-ico="terminal" class="pm-ico sm"></i></button></div>
+        <div class="pm-sumcard"><div class="pm-sumcard-h">FLEET SUMMARY<span class="c">9 ctr</span></div><div class="pm-2col"><div class="pm-occ"><span class="nm">CPU avg</span><span class="bar"><i style="width:34%"></i></span><span class="v">34%</span></div><div class="pm-occ"><span class="nm">MEM avg</span><span class="bar warn"><i style="width:61%"></i></span><span class="v">61%</span></div></div><div class="pm-sumcard-h" style="margin-top:var(--md)">RECENT EVENTS</div><div class="pm-li"><span class="dot dot-run"></span><span class="pm-li-n">import-worker restarting</span><span class="pm-li-m">attempt 3/5 · OOM</span></div><div class="pm-li"><span class="dot dot-warn"></span><span class="pm-li-n">registry-cache exited</span><span class="pm-li-m">OOM killed 18m</span></div><div class="pm-li"><span class="dot dot-ok"></span><span class="pm-li-n">tastebook-web healthy</span><span class="pm-li-m">:3000 · up 9h</span></div><div class="pm-acts"><button class="pm-btn" data-demo-action="demo.toast" data-demo-arg="Showing images">Images</button><button class="pm-btn" data-demo-action="demo.toast" data-demo-arg="Showing compose">Compose</button><button class="pm-btn" data-demo-action="cmd.docker.cleanup.scan" data-demo-arg="cmd.docker.cleanup.scan -> dry-run frees 1.2 GB">Cleanup</button></div></div>
+        <div class="pm-footnote">Logs stream into the Docker terminal group below.</div>
+      </section>
+      <section class="st-pane pm-hidden" data-pane="images" style="--cat:var(--accent-magenta)">
+        <div class="st-htitle2">Images<span class="st-hsub">1.08 GB</span></div><div class="st-rule"></div>
+        <div class="st-kv"><span class="st-k st-mono" style="overflow:hidden;text-overflow:ellipsis;white-space:nowrap;min-width:0;flex:0 1 auto">jared/tastebook-api:1.4.2-rc.1@sha256:9f2c4b8a1e77</span><span class="st-v">412 MB</span></div>
+        <div class="st-kv"><span class="st-k st-mono" style="overflow:hidden;text-overflow:ellipsis;white-space:nowrap;min-width:0;flex:0 1 auto">jared/tastebook-import-worker:1.4.2-rc.1@sha256:3a7d0c</span><span class="st-v">388 MB</span></div>
+        <div class="st-kv"><span class="st-k st-mono" style="overflow:hidden;text-overflow:ellipsis;white-space:nowrap;min-width:0;flex:0 1 auto">postgres:16.3-alpine3.19@sha256:c1f09e2b</span><span class="st-v">243 MB</span></div>
+        <div class="st-kv"><span class="st-k st-mono" style="overflow:hidden;text-overflow:ellipsis;white-space:nowrap;min-width:0;flex:0 1 auto">ghcr.io/jared/tastebook-web:edge-2026.07.24@sha256:77be41</span><span class="st-v">356 MB</span></div>
+        <div class="st-kv"><span class="st-k st-mono" style="overflow:hidden;text-overflow:ellipsis;white-space:nowrap;min-width:0;flex:0 1 auto">jared/tastebook-api:1.4.1@sha256:aa11bb22cc33dd44</span><span class="st-v">405 MB</span></div>
+        <div class="st-kv"><span class="st-k st-mono" style="overflow:hidden;text-overflow:ellipsis;white-space:nowrap;min-width:0;flex:0 1 auto">jared/tastebook-import-worker:1.4.1@sha256:dd44ee55ff66</span><span class="st-v">371 MB</span></div>
+        <div class="st-kv"><span class="st-k st-mono" style="overflow:hidden;text-overflow:ellipsis;white-space:nowrap;min-width:0;flex:0 1 auto">postgres:16.2-alpine3.18@sha256:ff66aa77bb88</span><span class="st-v">240 MB</span></div>
+        <div class="st-kv"><span class="st-k st-mono" style="overflow:hidden;text-overflow:ellipsis;white-space:nowrap;min-width:0;flex:0 1 auto">redis:7.2-alpine3.19@sha256:8899cc00dd11</span><span class="st-v">41 MB</span></div>
+        <div class="st-btns"><button class="pm-btn" data-demo-action="demo.toast" data-demo-arg="cmd.docker.pull -> postgres:16-alpine (up to date)">Pull</button><button class="pm-btn" data-demo-action="cmd.docker.cleanup.scan" data-demo-arg="cmd.docker.cleanup.scan -> dry-run frees 1.2 GB">Cleanup Advisor</button></div>
+      </section>
+      <section class="st-pane pm-hidden" data-pane="compose" style="--cat:var(--accent-lime)">
+        <div class="st-htitle2">Compose<span class="st-hsub">tastebook</span></div><div class="st-rule"></div>
+        <div class="st-row"><span class="st-dot" style="background:var(--graph-passed)"></span><span class="st-main"><span class="st-name">db</span><span class="st-meta">postgres:16.3-alpine3.19@sha256:c1f09e2b</span></span></div>
+        <div class="st-row"><span class="st-dot" style="background:var(--graph-passed)"></span><span class="st-main"><span class="st-name">cache</span><span class="st-meta">redis:7.2-alpine3.19</span></span></div>
+        <div class="st-row"><span class="st-dot" style="background:var(--graph-pending)"></span><span class="st-main"><span class="st-name">web</span><span class="st-meta">ghcr.io/jared/tastebook-web:edge-2026.07.24@sha256:77be41</span></span></div>
+        <div class="st-row"><span class="st-dot" style="background:var(--graph-pending)"></span><span class="st-main"><span class="st-name">worker</span><span class="st-meta">jared/tastebook-import-worker:1.4.2-rc.1@sha256:3a7d0c</span></span></div>
+        <div class="st-row"><span class="st-dot" style="background:var(--graph-passed)"></span><span class="st-main"><span class="st-name">api</span><span class="st-meta">jared/tastebook-api:1.4.2-rc.1@sha256:9f2c4b8a1e77</span></span></div>
+        <div class="st-row"><span class="st-dot" style="background:var(--graph-passed)"></span><span class="st-main"><span class="st-name">replica</span><span class="st-meta">postgres:16.3-alpine3.19 · read replica · lag 0s</span></span></div>
+        <div class="st-row"><span class="st-dot" style="background:var(--graph-passed)"></span><span class="st-main"><span class="st-name">registry-cache</span><span class="st-meta">localhost:5000/registry:2 · pull-through mirror</span></span></div>
+        <div class="st-btns"><button class="pm-btn pm-btn-primary" style="flex:1 1 100%" data-demo-action="cmd.docker.compose_up" data-demo-arg="cmd.docker.compose_up -> bringing up stack">Compose up</button></div>
+        <div style="margin-top:var(--lg);font-family:var(--display-font);font-size:9.5px;letter-spacing:1.4px;color:var(--accent-orange)">SCENARIOS</div>
+        <div class="st-row"><span class="st-main"><span class="st-name">dev — web + db only</span><span class="st-meta">profile dev · ports 5173,5432</span></span><button class="pm-minibtn" title="Run" data-demo-action="cmd.docker.compose.scenario.run" data-demo-arg="scenario.run -> dev"><i data-ico="play" class="pm-ico sm"></i></button></div>
+        <div class="st-row"><span class="st-main"><span class="st-name">import-load — worker x3 <span class="pm-chip pm-chip-warn">stale</span></span><span class="st-meta">compose changed since save</span></span><button class="pm-minibtn" aria-disabled="true" data-demo-reason="stale scenario" data-demo-action="demo.reason" data-demo-arg="Scenario stale — edit to refresh"><i data-ico="play" class="pm-ico sm"></i></button></div>
+        <div class="st-row"><span class="st-main"><span class="st-name">full-stack — api + web + worker x3 + db + cache + registry-cache</span><span class="st-meta">profile full · ports 3000,5173,5432,6379</span></span><button class="pm-minibtn" title="Run" data-demo-action="cmd.docker.compose.scenario.run" data-demo-arg="scenario.run -> full-stack"><i data-ico="play" class="pm-ico sm"></i></button></div>
+      </section>
+      <section class="st-pane pm-hidden" data-pane="registries" style="--cat:var(--accent-blue)">
+        <div class="st-htitle2">Registries</div><div class="st-rule"></div>
+        <div class="st-kv"><span class="st-k">Docker Hub</span><span class="st-v"><span class="pm-chip pm-chip-ok">authenticated</span> jared</span></div>
+        <div class="st-kv"><span class="st-k st-mono">localhost:5000</span><span class="st-v"><span class="pm-chip pm-chip-ok">reachable</span></span></div>
+        <div class="st-kv"><span class="st-k st-mono">ghcr.io</span><span class="st-v"><span class="pm-chip pm-chip-warn">not_configured</span></span></div>
+        <div class="st-kv"><span class="st-k st-mono">registry.unraid.net</span><span class="st-v"><span class="pm-chip pm-chip-ok">reachable</span></span></div>
+        <div class="st-kv"><span class="st-k st-mono" style="overflow:hidden;text-overflow:ellipsis;white-space:nowrap;min-width:0;flex:0 1 auto">registry.gitlab.com/jared/tastebook-infra</span><span class="st-v"><span class="pm-chip pm-chip-err">unreachable</span></span></div>
+        <div class="st-btns"><button class="pm-btn" data-demo-action="demo.toast" data-demo-arg="Browsing Docker Hub: jared/tastebook">Browse jared/tastebook</button></div>
+      </section>
+      <section class="st-pane pm-hidden" data-pane="build" style="--cat:var(--accent-orange)">
+        <div class="st-htitle2">Build / Bake</div><div class="st-rule"></div>
+        <div class="st-kv"><span class="st-k">Dockerfile target</span><span class="st-v st-mono">runtime</span></div>
+        <div class="st-kv"><span class="st-k">Tag</span><span class="st-v st-mono">jared/tastebook-api:1.4.2-rc.1</span></div>
+        <div class="st-kv"><span class="st-k">Digest</span><span class="st-v">— not built yet</span></div>
+        <div class="st-kv"><span class="st-k">Platforms</span><span class="st-v">amd64 + arm64</span></div>
+        <div class="st-btns"><button class="pm-btn pm-btn-primary" style="flex:1 1 100%" data-demo-action="cmd.docker.build" data-demo-arg="cmd.docker.build -> building runtime (buildx)">Build image</button></div>
+      </section>
+      <section class="st-pane pm-hidden" data-pane="publish" style="--cat:var(--accent-magenta)">
+        <div class="st-htitle2">Publish Chain<span class="st-hsub">v1.2 -> Unraid</span></div><div class="st-rule"></div>
+        <div class="st-chain">
+          <div class="st-stage now"><i>1</i><span class="st-stage-l">Local build — docker-bake multi-arch manifest (buildx, amd64 + arm64)</span><span class="pm-chip">pending</span></div>
+          <div class="st-stage"><i>2</i><span class="st-stage-l">Push tag + digest</span><span class="pm-chip">pending</span></div>
+          <div class="st-stage done"><i>3</i><span class="st-stage-l">Hub repo jared/tastebook-api:1.4.2-rc.1@sha256:9f2c4b8a1e77</span><span class="pm-chip pm-chip-ok">exists</span></div>
+          <div class="st-stage done"><i>4</i><span class="st-stage-l">Unraid template repo</span><span class="pm-chip pm-chip-ok">ready_to_push</span></div>
+          <div class="st-stage"><i>5</i><span class="st-stage-l">Unraid follow-on</span><span class="pm-chip">waiting</span></div>
+        </div>
+        <div class="st-btns"><button class="pm-btn" data-demo-action="cmd.docker.image.push" data-demo-arg="cmd.docker.image.push -> push approves push only">Push image</button><button class="pm-btn" data-demo-action="cmd.docker.template.commit" data-demo-arg="cmd.docker.template.commit -> committed">Commit tpl</button><button class="pm-btn" data-demo-action="cmd.docker.template.push" data-demo-arg="cmd.docker.template.push -> pushing template repo">Push tpl</button></div>
+        <div class="pm-footnote">Repo creation is a hard gate · digest receipts recorded · partial chains show a missing-link marker.</div>
+      </section>
+    </div>
+  </div>
+
+  <!-- TESTING -->
+  <div class="side-panel-view" id="panel-testing">
+    <div class="st-head"><span class="st-hico"><i data-ico="tests" class="pm-ico"></i></span><span class="st-htitle">TESTING</span><span class="st-hstatus"><span class="dot dot-ok"></span>214 pass</span></div>
+    <div class="st-rail pm-scrollx">
+      <button class="st-chip active" data-tab="run"><i data-ico="play" class="pm-ico sm"></i><span class="st-clabel">Run</span></button>
+      <button class="st-chip" data-tab="pol"><i data-ico="eye" class="pm-ico sm"></i><span class="st-clabel">Policy</span></button>
+      <button class="st-chip" data-tab="ev"><i data-ico="artifacts" class="pm-ico sm"></i><span class="st-clabel">Evidence</span></button>
+    </div>
+    <div class="st-body rail-scroll">
+      <section class="st-pane" data-pane="run" style="--cat:var(--accent-lime)">
+        <div class="st-htitle2">Last Run<span class="st-hsub">passed</span></div><div class="st-rule"></div>
+        <div class="st-kv"><span class="st-k">Suite</span><span class="st-v">cargo test — import worker normalize_units mixed fractions</span></div>
+        <div class="st-kv"><span class="st-k">Passed</span><span class="st-v">214</span></div>
+        <div class="st-kv"><span class="st-k">Failed</span><span class="st-v">0</span></div>
+        <div class="st-kv"><span class="st-k">Skipped</span><span class="st-v">3</span></div>
+        <div class="st-kv"><span class="st-k">Duration</span><span class="st-v">3.4s</span></div>
+        <div class="st-kv"><span class="st-k">When</span><span class="st-v">4m ago · lane-b retry 2/2</span></div>
+        <div class="st-kv"><span class="st-k">History</span><span class="st-v">1 failed -> fixed (import suite)</span></div>
+        <div class="st-btns"><button class="pm-btn pm-btn-primary" data-demo-action="cmd.testing.run" data-demo-arg="cmd.testing.run -> TestAdapterInvocation queued">Run tests</button><button class="pm-btn" data-demo-action="cmd.testing.watch_run" data-demo-arg="cmd.testing.watch_run -> subscribed">Watch</button></div>
+        <div class="st-btns"><button class="pm-btn" data-demo-action="cmd.testing.open_receipt" data-demo-arg="cmd.testing.open_receipt -> tr-2214">Receipt</button><button class="pm-btn" data-demo-action="cmd.testing.export_bundle" data-demo-arg="cmd.testing.export_bundle -> exported">Export</button><button class="pm-btn" aria-disabled="true" data-demo-reason="no active run" data-demo-action="demo.reason" data-demo-arg="Cancel enabled only for queued/running">Cancel</button></div>
+        <div style="margin-top:var(--lg);font-family:var(--display-font);font-size:9.5px;letter-spacing:1.4px;color:var(--accent-lime)">RECENT RUNS · 5</div>
+        <div class="st-row" data-demo-action="cmd.testing.open_receipt" data-demo-arg="cmd.testing.open_receipt -> tr-2214"><span class="st-dot" style="background:var(--graph-passed)"></span><span class="st-main"><span class="st-name">cargo test — src/services/import/normalize_units/mixed_fractions.rs</span><span class="st-meta">214 passed · 3.4s · lane-b retry 2/2</span></span></div>
+        <div class="st-row" data-demo-action="cmd.testing.open_receipt" data-demo-arg="cmd.testing.open_receipt -> tr-2213"><span class="st-dot" style="background:var(--graph-passed)"></span><span class="st-main"><span class="st-name">cargo test — puppet-core artifacts projection_freshness x projection_health matrix</span><span class="st-meta">88 passed · 2.1s · main</span></span></div>
+        <div class="st-row" data-demo-action="cmd.testing.open_receipt" data-demo-arg="cmd.testing.open_receipt -> tr-2212"><span class="st-dot" style="background:var(--graph-passed)"></span><span class="st-main"><span class="st-name">playwright — recipe editor QuantityStepper bind value roundtrip</span><span class="st-meta">12 passed · 41s · lane-c</span></span></div>
+        <div class="st-row" data-demo-action="cmd.testing.open_receipt" data-demo-arg="cmd.testing.open_receipt -> tr-2211"><span class="st-dot" style="background:var(--accent-warning)"></span><span class="st-main"><span class="st-name">playwright — recipe upload flow before/after screenshot pair</span><span class="st-meta">flaked 3x · last on lane-b retry 1/2</span></span></div>
+        <div class="st-row" data-demo-action="cmd.testing.open_receipt" data-demo-arg="cmd.testing.open_receipt -> tr-2210"><span class="st-dot" style="background:var(--graph-failed)"></span><span class="st-main"><span class="st-name">cargo test — ci-build-test-and-publish multi-arch manifest digest</span><span class="st-meta">1 failed -> fixed (import suite)</span></span></div>
+        <div style="margin-top:var(--lg);font-family:var(--display-font);font-size:9.5px;letter-spacing:1.4px;color:var(--accent-warning)">FLAKY · 3</div>
+        <div class="st-row"><span class="st-dot" style="background:var(--accent-warning)"></span><span class="st-main"><span class="st-name">import::normalize_units::mixed_fraction_does_not_explode</span><span class="st-meta">flaked 3x · last on lane-b retry 1/2</span></span></div>
+        <div class="st-row"><span class="st-dot" style="background:var(--accent-warning)"></span><span class="st-main"><span class="st-name">web::recipe_editor::quantity_stepper_roundtrip</span><span class="st-meta">flaked 2x · screenshot timing</span></span></div>
+        <div class="st-row"><span class="st-dot" style="background:var(--accent-warning)"></span><span class="st-main"><span class="st-name">artifacts::projection_freshness::matrix_stale_window</span><span class="st-meta">flaked 5x · clock skew</span></span></div>
+      </section>
+      <section class="st-pane pm-hidden" data-pane="pol" style="--cat:var(--accent-blue)">
+        <div class="st-htitle2">Policy</div><div class="st-rule"></div>
+        <div class="st-kv"><span class="st-k">Visibility</span><span class="st-v"><span class="pm-chip pm-chip-ok">show_when_possible</span></span></div>
+        <div class="pm-footnote">Nodes surface test evidence whenever the runner reports it; silent runs are flagged stale.</div>
+      </section>
+      <section class="st-pane pm-hidden" data-pane="ev" style="--cat:var(--accent-warning)">
+        <div class="st-htitle2">Evidence<span class="st-hsub">redacted</span></div><div class="st-rule"></div>
+        <div class="pm-note"><i data-ico="info" class="pm-ico sm pm-note-glyph"></i><span>Screenshots and recordings are redacted before display. <u style="cursor:pointer" data-demo-action="cmd.testing.session.redaction.inspect" data-demo-arg="cmd.testing.session.redaction.inspect -> redaction profile">Inspect profile</u></span></div>
+        <div class="st-btns"><button class="pm-btn" data-demo-action="panels.show" data-demo-arg="Opening Runtime Artifacts -> validation evidence">Open in Artifacts</button></div>
+      </section>
+    </div>
+  </div>
+
+  <!-- AGENTS -->
+  <div class="side-panel-view" id="panel-agents">
+    <div class="st-head"><span class="st-hico"><i data-ico="agents" class="pm-ico"></i></span><span class="st-htitle">AGENTS</span><span class="st-hstatus" style="background:color-mix(in srgb,var(--graph-running) 14%,transparent);color:var(--graph-running)"><span class="dot dot-run"></span>3 active</span></div>
+    <div class="st-rail pm-scrollx">
+      <button class="st-chip active" data-tab="act"><i data-ico="agents" class="pm-ico sm"></i><span class="st-clabel">Active</span><span class="st-cnt">3</span></button>
+      <button class="st-chip" data-tab="ab"><i data-ico="info" class="pm-ico sm"></i><span class="st-clabel">About</span></button>
+    </div>
+    <div class="st-body rail-scroll">
+      <section class="st-pane" data-pane="act" style="--cat:var(--accent-magenta)">
+        <div class="st-htitle2">Active Subagents<span class="st-hsub">registry mirror</span></div><div class="st-rule"></div>
+        <div class="st-row" data-demo-action="demo.toast" data-demo-arg="Opening thread -> lane-b worker (run #47)"><span class="st-dot dot-run"></span><span class="st-main"><span class="st-name">lane-b worker <span class="pm-chip">running</span></span><span class="st-meta">rust-engineer · Codex · editing web/src/lib/components/recipe/editor/QuantityStepper.svelte (hunk 2/4)</span></span><span class="pm-rmetric">ELAPSED</span></div>
+        <div class="st-row" data-demo-action="demo.toast" data-demo-arg="Opening thread -> Test Sleuth"><span class="st-dot" style="background:var(--graph-passed)"></span><span class="st-main"><span class="st-name">Test Sleuth <span class="pm-chip pm-chip-ok">done</span></span><span class="st-meta">debug-prober · running cargo test -p puppet-core import::normalize_units (retry 2/2)</span></span><span class="pm-rmetric">ELAPSED</span></div>
+        <div class="st-row" data-demo-action="demo.toast" data-demo-arg="Opening thread -> Auditor (queued)"><span class="st-dot" style="background:var(--graph-pending)"></span><span class="st-main"><span class="st-name">Auditor <span class="pm-chip">waiting</span></span><span class="st-meta">security-auditor · reviewing diff of crates/puppet-core/src/artifacts/projection_freshness.rs</span></span></div>
+        <div class="st-row" style="opacity:.6" data-demo-action="demo.toast" data-demo-arg="Opening history -> Docs Writer"><span class="st-dot" style="background:var(--graph-pending)"></span><span class="st-main"><span class="st-name">Docs Writer <span class="pm-chip">complete</span></span><span class="st-meta">finished 12m ago · schema.org Recipe structured-data markup coverage 2026</span></span></div>
+        <div class="st-row" data-demo-action="demo.toast" data-demo-arg="Opening thread -> Import Fixer (run #48)"><span class="st-dot dot-run"></span><span class="st-main"><span class="st-name">Import Fixer <span class="pm-chip">running</span></span><span class="st-meta">rust-engineer · editing src/services/import/normalize_units/mixed_fractions.rs (hunk 1/4)</span></span></div>
+        <div class="st-row" data-demo-action="demo.toast" data-demo-arg="Opening thread -> CI Watcher (run #313)"><span class="st-dot dot-run"></span><span class="st-main"><span class="st-name">CI Watcher <span class="pm-chip">running</span></span><span class="st-meta">ci-monitor · watching .github/workflows/ci-build-test-and-publish.yml #313</span></span><span class="pm-rmetric">ELAPSED</span></div>
+        <div class="st-row" data-demo-action="demo.toast" data-demo-arg="Opening thread -> Release Bot"><span class="st-dot" style="background:var(--graph-passed)"></span><span class="st-main"><span class="st-name">Release Bot <span class="pm-chip pm-chip-ok">done</span></span><span class="st-meta">release-automation · pin buildx + multi-arch manifest-list digests for amd64 and arm64</span></span></div>
+        <div class="st-row" style="opacity:.6" data-demo-action="demo.toast" data-demo-arg="Opening history -> Site Reader"><span class="st-dot" style="background:var(--graph-pending)"></span><span class="st-main"><span class="st-name">Site Reader <span class="pm-chip">complete</span></span><span class="st-meta">finished 25m ago · seriouseats.com/the-food-lab/why-fractions-break-our-parser</span></span></div>
+        <div class="st-btns"><button class="pm-btn" data-demo-action="cmd.panel.switch" data-demo-arg="cmd.panel.switch -> chat">Open Chat</button></div>
+      </section>
+      <section class="st-pane pm-hidden" data-pane="ab" style="--cat:var(--accent-blue)">
+        <div class="st-htitle2">About this panel</div><div class="st-rule"></div>
+        <div class="pm-sumcard"><div class="pm-sumcard-h">LANE CAPACITY<span class="c">3 lanes</span></div><div class="pm-occ"><span class="nm">lane-b · api</span><span class="bar warn"><i style="width:80%"></i></span><span class="v">4/5</span></div><div class="pm-occ"><span class="nm">lane-d · infra</span><span class="bar"><i style="width:40%"></i></span><span class="v">2/5</span></div><div class="pm-occ"><span class="nm">lane-e · projection</span><span class="bar"><i style="width:20%"></i></span><span class="v">1/5</span></div></div>
+<div class="pm-sumcard"><div class="pm-sumcard-h">QUEUED WORK<span class="c">3</span></div><div class="pm-li"><span class="dot" style="background:var(--graph-pending)"></span><span class="pm-li-n">Schema migration review</span><span class="pm-li-m">behind Auditor</span></div><div class="pm-li"><span class="dot" style="background:var(--graph-pending)"></span><span class="pm-li-n">Flaky-test quarantine sweep</span><span class="pm-li-m">import suite</span></div><div class="pm-li"><span class="dot" style="background:var(--graph-pending)"></span><span class="pm-li-n">Coverage report upload</span><span class="pm-li-m">retry 2/2</span></div></div>
+<div class="pm-sumcard"><div class="pm-sumcard-h">RECENTLY COMPLETED<span class="c">last 3</span></div><div class="pm-li"><span class="dot dot-ok"></span><span class="pm-li-n">Fixture Gardener</span><span class="pm-li-m">regression fixture · 18m</span></div><div class="pm-li"><span class="dot dot-ok"></span><span class="pm-li-n">CI Shepherd</span><span class="pm-li-m">buildx pin · 24m</span></div><div class="pm-li"><span class="dot dot-ok"></span><span class="pm-li-n">Release Wrangler</span><span class="pm-li-m">manifest digests · 31m</span></div></div>
+        <div class="pm-footnote">This panel mirrors the subagent registry (active + available) and provides lineage entrypoints into the owning threads. It holds no private subagent state — expand a row's thread for the work stream.</div>
+      </section>
+    </div>
+  </div>
+
+  <!-- ARTIFACTS -->
+  <div class="side-panel-view" id="panel-artifacts">
+    <div class="st-head"><span class="st-hico"><i data-ico="artifacts" class="pm-ico"></i></span><span class="st-htitle">RUNTIME ARTIFACTS</span><span class="st-hstatus"><span class="dot dot-ok"></span>6 rec</span></div>
+    <div class="st-rail pm-scrollx">
+      <button class="st-chip active" data-tab="feed"><i data-ico="layers" class="pm-ico sm"></i><span class="st-clabel">Feed</span></button>
+      <button class="st-chip" data-tab="inv"><i data-ico="layers" class="pm-ico sm"></i><span class="st-clabel">Investigation</span></button>
+    </div>
+    <div class="st-body rail-scroll">
+      <section class="st-pane" data-pane="feed" style="--cat:var(--accent-blue)">
+        <div class="st-htitle2">Feed<span class="st-hsub">compact receipts</span></div><div class="st-rule"></div>
+        <div class="pm-chiprow" style="padding:0 0 var(--md)"><button class="pm-chipbtn active">All</button><button class="pm-chipbtn">Web</button><button class="pm-chipbtn">Browser</button><button class="pm-chipbtn">Evidence</button></div>
+        <div class="st-art" style="--cat:var(--accent-lime)" data-demo-action="demo.toast" data-demo-arg="Opening diff -> import.rs (+38 -9)"><div class="st-r1"><span class="st-fam">code_diff</span><span class="st-rlabel">Import quantity parser fix for src/services/import/normalize_units/mixed_fractions.rs</span><span class="pm-chip pm-chip-ok">success</span></div><div class="st-prev">src/services/import.rs +38 -9 · regression fixture</div><div class="st-rmeta">2 files · node n-19 · 6m</div></div>
+        <div class="st-art" style="--cat:var(--accent-lime)" data-demo-action="cmd.testing.open_receipt" data-demo-arg="Opening validation receipt"><div class="st-r1"><span class="st-fam">validation_test</span><span class="st-rlabel">cargo test — import suite normalize_units mixed fractions</span><span class="pm-chip pm-chip-ok">pass on retry</span></div><div class="st-prev">214 passed · 1 failed -> fixed · 3.4s</div><div class="st-rmeta">retry 2/2 · lane-b · 5m</div></div>
+        <div class="st-art" style="--cat:var(--accent-blue)" data-demo-action="demo.toast" data-demo-arg="Opening screenshot"><div class="st-r1"><span class="st-fam">screenshot</span><span class="st-rlabel">Recipe editor upload flow — web/src/lib/components/recipe/editor/QuantityStepper.svelte</span><span class="pm-chip pm-chip-ok">success</span></div><div class="st-prev">Before/after pair · EXIF strip</div><div class="st-rmeta">2 captures · lane-c · 14m</div></div>
+        <div class="st-art" style="--cat:var(--accent-magenta)"><div class="st-r1"><span class="st-fam">api_web_call</span><span class="st-rlabel">Searching Web: schema.org Recipe structured-data markup coverage 2026</span><span class="pm-chip pm-chip-ok">completed</span></div><div class="st-prev">query = "schema.org Recipe markup coverage 2026"</div><div class="st-rmeta">model-native · cache miss · 5 sources (3 read)</div><div class="st-prov"><span class="pm-chip">agent_judgment</span><span class="pm-chip">scope *</span><span class="pm-chip pm-chip-ok">approved</span><button class="pm-minibtn" data-demo-action="web.sources" data-demo-arg="Opening 5 sources">Sources 5</button><button class="pm-minibtn" data-demo-action="panels.open_chat" data-demo-arg="cmd.panel.switch -> chat">Chat</button></div></div>
+        <div class="st-art" style="--cat:var(--accent-magenta)"><div class="st-r1"><span class="st-fam">browser_recording</span><span class="st-rlabel">Reading Site: seriouseats.com/the-food-lab/why-fractions-break-our-parser</span><span class="pm-chip pm-chip-ok">completed</span></div><div class="st-prev">Site Reader sr-114 · 42 actions · read receipt</div><div class="st-rmeta">citation [3] · 2 fields redacted</div><div class="st-prov"><button class="pm-minibtn" data-demo-action="demo.toast" data-demo-arg="Opening browser evidence drawer">Open</button><button class="pm-minibtn" data-demo-action="demo.toast" data-demo-arg="Replaying 42 actions (read-only)">Watch</button></div></div>
+        <div class="st-art" style="--cat:var(--accent-lime)" data-demo-action="demo.toast" data-demo-arg="Opening diff -> mixed_fractions.rs (+142 -37)"><div class="st-r1"><span class="st-fam">code_diff</span><span class="st-rlabel">refactor(import): split mixed-fraction normalization into a unit-aware parser</span><span class="pm-chip pm-chip-ok">success</span></div><div class="st-prev">src/services/import/normalize_units/mixed_fractions.rs +142 -37 · property-based tests</div><div class="st-rmeta">4 files · node n-22 · 9m</div></div>
+        <div class="st-art" style="--cat:var(--accent-lime)" data-demo-action="cmd.testing.open_receipt" data-demo-arg="Opening validation receipt -> projection matrix"><div class="st-r1"><span class="st-fam">validation_test</span><span class="st-rlabel">cargo test — projection_freshness x projection_health matrix</span><span class="pm-chip pm-chip-ok">passed</span></div><div class="st-prev">crates/puppet-core/src/artifacts/projection_freshness.rs · 88 passed · 2.1s</div><div class="st-rmeta">lane-b · node n-19 · 11m</div></div>
+        <div class="st-art" style="--cat:var(--accent-blue)" data-demo-action="demo.toast" data-demo-arg="Opening screenshot -> QuantityStepper"><div class="st-r1"><span class="st-fam">screenshot</span><span class="st-rlabel">QuantityStepper before/after pair</span><span class="pm-chip pm-chip-ok">success</span></div><div class="st-prev">web/src/lib/components/recipe/editor/QuantityStepper.svelte · EXIF strip</div><div class="st-rmeta">2 captures · lane-c · 18m</div></div>
+        <div class="st-art" style="--cat:var(--accent-magenta)"><div class="st-r1"><span class="st-fam">api_web_call</span><span class="st-rlabel">Searching Web: seriouseats.com/the-food-lab/why-fractions-break-our-parser</span><span class="pm-chip pm-chip-ok">completed</span></div><div class="st-prev">query = "why mixed fractions break our quantity parser" · provenance recorded</div><div class="st-rmeta">model-native · cache miss · 6 sources (4 read)</div><div class="st-prov"><span class="pm-chip">agent_judgment</span><span class="pm-chip">scope *</span><span class="pm-chip pm-chip-ok">approved</span><button class="pm-minibtn" data-demo-action="web.sources" data-demo-arg="Opening 6 sources">Sources 6</button><button class="pm-minibtn" data-demo-action="panels.open_chat" data-demo-arg="cmd.panel.switch -> chat">Chat</button></div></div>
+        <div class="st-art" style="--cat:var(--accent-magenta)"><div class="st-r1"><span class="st-fam">browser_recording</span><span class="st-rlabel">Reading Site: schema.org Recipe structured-data markup coverage 2026</span><span class="pm-chip pm-chip-ok">completed</span></div><div class="st-prev">Site Reader sr-118 · 63 actions · read receipt · provenance recorded</div><div class="st-rmeta">citation [4] · 1 field redacted</div><div class="st-prov"><button class="pm-minibtn" data-demo-action="demo.toast" data-demo-arg="Opening browser evidence drawer">Open</button><button class="pm-minibtn" data-demo-action="demo.toast" data-demo-arg="Replaying 63 actions (read-only)">Watch</button></div></div>
+        <div class="st-art" style="--cat:var(--accent-orange)" data-demo-action="demo.toast" data-demo-arg="Opening image bake receipt"><div class="st-r1"><span class="st-fam">image_bake</span><span class="st-rlabel">Docker image bake — multi-arch manifest list</span><span class="pm-chip pm-chip-ok">success</span></div><div class="st-prev">jared/tastebook-api:1.4.2-rc.1@sha256:9f2c4b8a1e77 · amd64 + arm64</div><div class="st-rmeta">buildx · digest recorded · 22m</div></div>
+        <div class="st-art" style="--cat:var(--accent-blue)" data-demo-action="demo.toast" data-demo-arg="Opening runtime receipt -> projection_freshness"><div class="st-r1"><span class="st-fam">runtime_receipt</span><span class="st-rlabel">projection_freshness runtime receipt row</span><span class="pm-chip pm-chip-ok">fresh + healthy</span></div><div class="st-prev">crates/puppet-core/src/artifacts/projection_freshness.rs · fresh + healthy</div><div class="st-rmeta">receipt row · node n-19 · 25m</div></div>
+        <div class="pm-empty">Research run in progress — its api_web_call artifact lands here with citations when the run completes.</div>
+      </section>
+      <section class="st-pane pm-hidden" data-pane="inv" style="--cat:var(--accent-orange)">
+        <div class="st-htitle2">Investigation<span class="st-hsub">inv-import-7x</span></div><div class="st-rule"></div>
+        <div style="display:flex;flex-wrap:wrap;gap:var(--sm);margin-bottom:var(--md)"><span class="pm-chip pm-chip-ok">final_state: fixed</span><span class="pm-chip">stop: verified_fix</span><span class="pm-chip">artifacts: 7</span><span class="pm-chip pm-chip-ok">verification: strong</span></div>
+        <div class="st-row" data-demo-action="demo.toast" data-demo-arg="baseline — failing suite"><span class="st-fam">baseline</span><span class="st-meta" style="flex:1">validation_test · failing suite import::normalize_units::mixed_fraction_does_not_explode</span></div>
+        <div class="st-row" data-demo-action="demo.toast" data-demo-arg="repro — fixture import exploded 7x"><span class="st-fam">repro</span><span class="st-meta" style="flex:1">browser_recording · fixture import exploded 7x on the seriouseats.com parser repro</span></div>
+        <div class="st-row" data-demo-action="demo.toast" data-demo-arg="diagnosis — parse trace"><span class="st-fam">diagnosis</span><span class="st-meta" style="flex:1">tool_llm_trace · normalize_units mixed-fraction parse trace</span></div>
+        <div class="st-row" data-demo-action="demo.toast" data-demo-arg="fix — parser patch + fixture"><span class="st-fam">fix</span><span class="st-meta" style="flex:1">code_diff · parser patch src/services/import/normalize_units/mixed_fractions.rs</span></div>
+        <div class="st-row" data-demo-action="demo.toast" data-demo-arg="verification — 214 passed"><span class="st-fam">verify</span><span class="st-meta" style="flex:1">validation_test · suite green · 214 passed on lane-b retry 2/2</span></div>
+        <div class="st-row" data-demo-action="demo.toast" data-demo-arg="regression — mixed_fraction fixture"><span class="st-fam">regression</span><span class="st-meta" style="flex:1">validation_test · mixed_fraction_does_not_explode fixture added to import suite</span></div>
+        <div class="st-row" data-demo-action="demo.toast" data-demo-arg="provenance — web citation"><span class="st-fam">provenance</span><span class="st-meta" style="flex:1">api_web_call · seriouseats.com/the-food-lab/why-fractions-break-our-parser</span></div>
+        <div class="st-btns"><button class="pm-btn" data-demo-action="page.go" data-demo-arg="Opening Orchestrator -> Evidence">Open in Orchestrator</button></div>
+      </section>
+    </div>
+  </div>
+
+</template>
+<script src="_shared/icons.js"></script>
+<script src="_shared/menu.js"></script>
+<script src="_shared/chrome.js"></script>
+<script>PMChrome.boot({ badge: { id: 'C3', name: 'Single Thread' } });</script>
+</body>
+</html>

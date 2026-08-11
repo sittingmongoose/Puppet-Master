@@ -1,0 +1,311 @@
+{
+  "$defs": {
+    "restore_point_corrupt_1_0_0_compatibility_reader": {
+      "$id": "https://puppetmaster.local/schemas/event_payloads/restore_point_corrupt/1.0.0",
+      "$schema": "https://json-schema.org/draft/2020-12/schema",
+      "additionalProperties": false,
+      "properties": {
+        "expected_hash": {
+          "type": "string"
+        },
+        "observed_hash": {
+          "type": "string"
+        },
+        "occurred_at_utc": {
+          "type": "string"
+        },
+        "project_id": {
+          "type": "string"
+        },
+        "reason_code": {
+          "type": "string"
+        },
+        "restore_point_id": {
+          "type": "string"
+        },
+        "schema_version": {
+          "minLength": 1,
+          "type": "string"
+        },
+        "status": {
+          "enum": [
+            "corrupt"
+          ],
+          "type": "string"
+        }
+      },
+      "required": [
+        "schema_version",
+        "restore_point_id",
+        "project_id",
+        "expected_hash",
+        "observed_hash",
+        "status",
+        "reason_code",
+        "occurred_at_utc"
+      ],
+      "type": "object"
+    }
+  },
+  "$id": "https://puppetmaster.local/schemas/event_payloads/restore_point_corrupt/2.0.0",
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "additionalProperties": false,
+  "oneOf": [
+    {
+      "not": {
+        "anyOf": [
+          {
+            "required": [
+              "referenced_material_field"
+            ]
+          },
+          {
+            "required": [
+              "referenced_material_ref"
+            ]
+          },
+          {
+            "required": [
+              "expected_material_hash"
+            ]
+          },
+          {
+            "required": [
+              "observed_material_hash"
+            ]
+          },
+          {
+            "required": [
+              "expected_material_length"
+            ]
+          },
+          {
+            "required": [
+              "observed_material_length"
+            ]
+          }
+        ]
+      },
+      "properties": {
+        "evidence_kind": {
+          "const": "record_hash_comparison"
+        },
+        "expected_hash": {
+          "pattern": "^[0-9a-f]{64}$",
+          "type": "string"
+        },
+        "reason_code": {
+          "const": "record_hash_mismatch"
+        }
+      }
+    },
+    {
+      "not": {
+        "anyOf": [
+          {
+            "required": [
+              "referenced_material_field"
+            ]
+          },
+          {
+            "required": [
+              "referenced_material_ref"
+            ]
+          },
+          {
+            "required": [
+              "expected_material_hash"
+            ]
+          },
+          {
+            "required": [
+              "observed_material_hash"
+            ]
+          },
+          {
+            "required": [
+              "expected_material_length"
+            ]
+          },
+          {
+            "required": [
+              "observed_material_length"
+            ]
+          }
+        ]
+      },
+      "properties": {
+        "evidence_kind": {
+          "const": "record_decode_failure"
+        },
+        "expected_hash": {
+          "type": "null"
+        },
+        "reason_code": {
+          "const": "unreadable_record"
+        }
+      }
+    },
+    {
+      "properties": {
+        "evidence_kind": {
+          "const": "referenced_material_integrity_check"
+        },
+        "expected_hash": {
+          "pattern": "^[0-9a-f]{64}$",
+          "type": "string"
+        },
+        "reason_code": {
+          "const": "corrupt_referenced_material"
+        }
+      },
+      "required": [
+        "referenced_material_field",
+        "referenced_material_ref",
+        "expected_material_hash",
+        "observed_material_hash",
+        "expected_material_length",
+        "observed_material_length"
+      ]
+    },
+    {
+      "not": {
+        "anyOf": [
+          {
+            "required": [
+              "expected_material_hash"
+            ]
+          },
+          {
+            "required": [
+              "observed_material_hash"
+            ]
+          },
+          {
+            "required": [
+              "expected_material_length"
+            ]
+          },
+          {
+            "required": [
+              "observed_material_length"
+            ]
+          }
+        ]
+      },
+      "properties": {
+        "evidence_kind": {
+          "const": "content_scope_validation"
+        },
+        "expected_hash": {
+          "pattern": "^[0-9a-f]{64}$",
+          "type": "string"
+        },
+        "reason_code": {
+          "const": "unsupported_content_scope"
+        }
+      },
+      "required": [
+        "referenced_material_field",
+        "referenced_material_ref"
+      ]
+    }
+  ],
+  "properties": {
+    "evidence_kind": {
+      "enum": [
+        "record_hash_comparison",
+        "record_decode_failure",
+        "referenced_material_integrity_check",
+        "content_scope_validation"
+      ]
+    },
+    "evidence_ref": {
+      "minLength": 1,
+      "type": "string"
+    },
+    "expected_hash": {
+      "anyOf": [
+        {
+          "pattern": "^[0-9a-f]{64}$",
+          "type": "string"
+        },
+        {
+          "type": "null"
+        }
+      ]
+    },
+    "expected_material_hash": {
+      "pattern": "^[0-9a-f]{64}$",
+      "type": "string"
+    },
+    "expected_material_length": {
+      "maximum": 18446744073709551615,
+      "minimum": 0,
+      "type": "integer"
+    },
+    "observed_hash": {
+      "pattern": "^[0-9a-f]{64}$",
+      "type": "string"
+    },
+    "observed_material_hash": {
+      "pattern": "^[0-9a-f]{64}$",
+      "type": "string"
+    },
+    "observed_material_length": {
+      "maximum": 18446744073709551615,
+      "minimum": 0,
+      "type": "integer"
+    },
+    "occurred_at_utc": {
+      "format": "date-time",
+      "type": "string"
+    },
+    "project_id": {
+      "minLength": 1,
+      "type": "string"
+    },
+    "reason_code": {
+      "enum": [
+        "record_hash_mismatch",
+        "unreadable_record",
+        "corrupt_referenced_material",
+        "unsupported_content_scope"
+      ]
+    },
+    "referenced_material_field": {
+      "enum": [
+        "context_provenance_refs",
+        "attachment_refs",
+        "citation_refs"
+      ]
+    },
+    "referenced_material_ref": {
+      "minLength": 1,
+      "type": "string"
+    },
+    "restore_point_id": {
+      "minLength": 1,
+      "type": "string"
+    },
+    "schema_version": {
+      "const": "2.0.0"
+    },
+    "status": {
+      "const": "corrupt"
+    }
+  },
+  "required": [
+    "schema_version",
+    "restore_point_id",
+    "project_id",
+    "status",
+    "reason_code",
+    "expected_hash",
+    "observed_hash",
+    "evidence_kind",
+    "evidence_ref",
+    "occurred_at_utc"
+  ],
+  "type": "object"
+}

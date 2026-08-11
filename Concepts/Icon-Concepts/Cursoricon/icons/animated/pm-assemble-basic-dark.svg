@@ -1,0 +1,104 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 43.2 43.2" id="pmx-assemble-basic-dark">
+<defs><clipPath id="tileClip-basic-dark"><rect width="43.2" height="43.2" rx="3"/></clipPath><linearGradient id="shimGrad-basic-dark" x1="0" y1="0" x2="1" y2="0"><stop offset="0" stop-color="#FFFFFF" stop-opacity="0"/><stop offset=".45" stop-color="#FFFFFF" stop-opacity=".32"/><stop offset=".55" stop-color="#FFFFFF" stop-opacity=".32"/><stop offset="1" stop-color="#FFFFFF" stop-opacity="0"/></linearGradient><filter id="bloom-basic-dark" x="-40%" y="-40%" width="180%" height="180%"><feGaussianBlur in="SourceGraphic" stdDeviation="1.1" result="b"/><feMerge><feMergeNode in="b"/><feMergeNode in="SourceGraphic"/></feMerge></filter></defs>
+<rect id="tile-basic-dark" width="43.2" height="43.2" rx="3" fill="#2D2D2D"/>
+<rect x=".5" y=".5" width="42.2" height="42.2" rx="2.6" fill="none" stroke="rgba(255,255,255,.14)" stroke-width="1"/>
+<g id="artwrap-basic-dark" class="a-unit">
+<g id="shadowDup-basic-dark" class="a-shadow" display="none" opacity=".5">
+  <g transform="translate(1.6 1.6)">
+    <path fill="#64B5F6" d="M16.87,14.44l3.89,1.72-12.34,5.47c-.4.18-.87.18-1.27,0-.63-.28-.94-.86-.94-1.44s.31-1.16.94-1.44l9.72-4.31Z"/>
+    <path fill="#64B5F6" d="M37.76,7.6c0,.58-.31,1.16-.93,1.44l-9.73,4.31-3.88-1.72,12.33-5.47c.41-.18.87-.18,1.28,0,.62.27.93.85.93,1.44Z"/>
+    <path fill="#64B5F6" d="M36.83,21.63c-.21.09-.43.13-.64.13s-.44-.04-.64-.13l-13.56-6.01-3.89-1.72-10.95-4.86c-1.25-.56-1.25-2.33,0-2.88.2-.09.42-.13.64-.13s.43.04.63.13l13.57,6.01,3.88,1.73,10.96,4.85c1.24.55,1.24,2.32,0,2.88Z"/>
+    <path fill="#64B5F6" d="M9.34,28.55c0,.19-.03.34-.1.43-.07.09-.17.16-.31.21.14.05.24.13.31.26.07.12.1.25.1.38v1.73c0,.13,0,.23.03.31.02.08.04.14.08.19.03.05.08.08.13.1.05.02.12.03.19.04.13.02.23.08.3.16s.11.2.11.34c0,.15-.05.27-.14.36s-.21.14-.37.14c-.25,0-.47-.02-.65-.06-.19-.04-.34-.12-.47-.22-.12-.1-.22-.25-.28-.43-.06-.18-.1-.42-.1-.7v-1.62c0-.15-.02-.25-.07-.32-.05-.07-.13-.11-.24-.13-.14-.02-.25-.08-.32-.17s-.11-.21-.11-.37c0-.13.04-.25.11-.34.07-.09.18-.15.31-.17.12-.02.2-.06.25-.14.05-.07.08-.18.08-.33v-1.62c0-.3.03-.54.1-.72s.17-.33.29-.43.28-.17.47-.21c.19-.04.39-.05.62-.05.16,0,.29.04.38.13.09.09.14.21.14.37,0,.14-.04.25-.11.34-.08.09-.18.14-.31.16-.07,0-.13.02-.19.04-.05.02-.09.06-.13.1-.03.05-.06.11-.08.19-.02.08-.03.18-.03.31v1.73Z"/>
+    <path fill="#64B5F6" d="M34.64,29.01c0-.13,0-.23-.03-.31-.02-.08-.04-.14-.08-.19-.03-.05-.08-.08-.13-.1-.05-.02-.11-.04-.19-.04-.13-.02-.23-.08-.31-.16-.08-.08-.11-.2-.11-.34,0-.16.05-.29.14-.37.09-.08.22-.13.38-.13.22,0,.43.02.62.05.19.04.34.11.47.21s.22.25.29.43.1.42.1.72v1.62c0,.15.03.26.08.33.05.07.14.12.25.14.13.02.24.08.31.17.07.09.11.2.11.34s-.04.27-.11.37-.18.15-.32.17c-.11.02-.19.06-.24.13-.05.07-.07.18-.07.32v1.62c0,.29-.03.52-.1.7-.06.18-.16.33-.28.43-.13.1-.28.18-.47.22-.19.04-.4.06-.65.06-.15,0-.27-.05-.37-.14s-.14-.21-.14-.36.04-.25.11-.34.17-.14.3-.16c.07,0,.14-.02.19-.04.05-.02.1-.06.13-.1.03-.05.06-.11.08-.19.02-.08.03-.18.03-.31v-1.73c0-.13.03-.26.1-.38.07-.12.17-.21.31-.26-.14-.05-.24-.12-.31-.21-.07-.09-.1-.23-.1-.43v-1.73Z"/>
+    <path fill="#64B5F6" d="M26.38,32.54l3.13-6.67c.16-.34.35-.59.59-.74.23-.15.5-.22.79-.22.48,0,.84.14,1.1.42s.38.65.38,1.1v10.3c0,.38-.11.68-.34.89-.23.21-.53.32-.91.32s-.66-.11-.88-.32-.33-.51-.33-.89v-7l-2.34,4.92c-.15.32-.32.54-.52.65s-.42.17-.68.17-.49-.06-.69-.17-.38-.34-.52-.65l-2.3-4.86v6.94c0,.38-.11.68-.33.89s-.52.32-.9.32-.66-.11-.88-.32-.33-.51-.33-.89v-10.3c0-.45.12-.82.37-1.1.24-.28.61-.42,1.09-.42.3,0,.56.07.79.22s.44.39.61.74l3.13,6.67Z"/>
+    <path fill="#64B5F6" d="M12.93,36.25c-.55,0-1-.16-1.32-.48-.33-.33-.5-.75-.5-1.27v-10.37c0-.52.16-.94.49-1.27.32-.32.75-.49,1.26-.49h3.3c.78,0,1.49.09,2.12.28.65.19,1.21.48,1.67.86.47.38.84.87,1.09,1.45.25.56.38,1.23.38,1.99,0,1.5-.49,2.67-1.45,3.48-.94.79-2.21,1.19-3.8,1.19h-1.47v2.89c0,.52-.16.94-.49,1.27-.32.32-.75.49-1.26.49ZM15.79,28.44c.76,0,1.33-.13,1.63-.37.28-.22.41-.59.41-1.12,0-.46-.13-.79-.41-1.01-.3-.24-.87-.37-1.63-.37h-1.1v2.87h1.1Z"/>
+  </g></g>
+<g id="puppets-basic-dark" class="a-puppets">
+  <path id="bracketL-basic-dark" class="a-brkL" fill="#64B5F6" d="M9.34,28.55c0,.19-.03.34-.1.43-.07.09-.17.16-.31.21.14.05.24.13.31.26.07.12.1.25.1.38v1.73c0,.13,0,.23.03.31.02.08.04.14.08.19.03.05.08.08.13.1.05.02.12.03.19.04.13.02.23.08.3.16s.11.2.11.34c0,.15-.05.27-.14.36s-.21.14-.37.14c-.25,0-.47-.02-.65-.06-.19-.04-.34-.12-.47-.22-.12-.1-.22-.25-.28-.43-.06-.18-.1-.42-.1-.7v-1.62c0-.15-.02-.25-.07-.32-.05-.07-.13-.11-.24-.13-.14-.02-.25-.08-.32-.17s-.11-.21-.11-.37c0-.13.04-.25.11-.34.07-.09.18-.15.31-.17.12-.02.2-.06.25-.14.05-.07.08-.18.08-.33v-1.62c0-.3.03-.54.1-.72s.17-.33.29-.43.28-.17.47-.21c.19-.04.39-.05.62-.05.16,0,.29.04.38.13.09.09.14.21.14.37,0,.14-.04.25-.11.34-.08.09-.18.14-.31.16-.07,0-.13.02-.19.04-.05.02-.09.06-.13.1-.03.05-.06.11-.08.19-.02.08-.03.18-.03.31v1.73Z"/>
+  <path id="bracketR-basic-dark" class="a-brkR" fill="#64B5F6" d="M34.64,29.01c0-.13,0-.23-.03-.31-.02-.08-.04-.14-.08-.19-.03-.05-.08-.08-.13-.1-.05-.02-.11-.04-.19-.04-.13-.02-.23-.08-.31-.16-.08-.08-.11-.2-.11-.34,0-.16.05-.29.14-.37.09-.08.22-.13.38-.13.22,0,.43.02.62.05.19.04.34.11.47.21s.22.25.29.43.1.42.1.72v1.62c0,.15.03.26.08.33.05.07.14.12.25.14.13.02.24.08.31.17.07.09.11.2.11.34s-.04.27-.11.37-.18.15-.32.17c-.11.02-.19.06-.24.13-.05.07-.07.18-.07.32v1.62c0,.29-.03.52-.1.7-.06.18-.16.33-.28.43-.13.1-.28.18-.47.22-.19.04-.4.06-.65.06-.15,0-.27-.05-.37-.14s-.14-.21-.14-.36.04-.25.11-.34.17-.14.3-.16c.07,0,.14-.02.19-.04.05-.02.1-.06.13-.1.03-.05.06-.11.08-.19.02-.08.03-.18.03-.31v-1.73c0-.13.03-.26.1-.38.07-.12.17-.21.31-.26-.14-.05-.24-.12-.31-.21-.07-.09-.1-.23-.1-.43v-1.73Z"/>
+  <g id="glyphM-basic-dark" class="a-m a-followR"><path fill="#64B5F6" d="M26.38,32.54l3.13-6.67c.16-.34.35-.59.59-.74.23-.15.5-.22.79-.22.48,0,.84.14,1.1.42s.38.65.38,1.1v10.3c0,.38-.11.68-.34.89-.23.21-.53.32-.91.32s-.66-.11-.88-.32-.33-.51-.33-.89v-7l-2.34,4.92c-.15.32-.32.54-.52.65s-.42.17-.68.17-.49-.06-.69-.17-.38-.34-.52-.65l-2.3-4.86v6.94c0,.38-.11.68-.33.89s-.52.32-.9.32-.66-.11-.88-.32-.33-.51-.33-.89v-10.3c0-.45.12-.82.37-1.1.24-.28.61-.42,1.09-.42.3,0,.56.07.79.22s.44.39.61.74l3.13,6.67Z"/></g>
+  <g id="glyphP-basic-dark" class="a-p a-followL">
+    <path id="glyphPFill-basic-dark" fill="#64B5F6" d="M12.93,36.25c-.55,0-1-.16-1.32-.48-.33-.33-.5-.75-.5-1.27v-10.37c0-.52.16-.94.49-1.27.32-.32.75-.49,1.26-.49h3.3c.78,0,1.49.09,2.12.28.65.19,1.21.48,1.67.86.47.38.84.87,1.09,1.45.25.56.38,1.23.38,1.99,0,1.5-.49,2.67-1.45,3.48-.94.79-2.21,1.19-3.8,1.19h-1.47v2.89c0,.52-.16.94-.49,1.27-.32.32-.75.49-1.26.49ZM15.79,28.44c.76,0,1.33-.13,1.63-.37.28-.22.41-.59.41-1.12,0-.46-.13-.79-.41-1.01-.3-.24-.87-.37-1.63-.37h-1.1v2.87h1.1Z"/>
+    <path id="glyphPKeyline-basic-dark" fill="#2D2D2D" d="M16.15,22.88c.74,0,1.4.09,1.98.26.58.17,1.08.43,1.49.76.41.34.73.76.95,1.26.22.5.33,1.1.33,1.79,0,1.35-.42,2.38-1.27,3.09-.85.71-2.01,1.07-3.48,1.07h-1.97v3.39c0,.38-.11.68-.34.91-.23.23-.53.34-.91.34-.42,0-.74-.11-.98-.34-.23-.23-.35-.53-.35-.91v-10.37c0-.38.11-.68.34-.91.23-.23.53-.34.91-.34h3.3M14.18,28.94h1.6c.9,0,1.54-.16,1.94-.48.4-.32.6-.82.6-1.51,0-.61-.2-1.08-.6-1.4-.4-.32-1.05-.48-1.94-.48h-1.6v3.87M16.15,21.88h-3.3c-.65,0-1.21.22-1.62.64-.29.28-.63.8-.63,1.62v10.37c0,.65.23,1.21.65,1.63.29.29.82.63,1.68.63.64,0,1.2-.22,1.62-.63.29-.29.63-.81.63-1.62v-2.39h.97c1.71,0,3.09-.44,4.12-1.3,1.08-.91,1.63-2.21,1.63-3.86,0-.82-.14-1.56-.42-2.19-.28-.65-.7-1.2-1.23-1.63-.51-.42-1.13-.74-1.84-.95-.67-.2-1.43-.3-2.26-.3h0ZM15.18,26.07h.6c.9,0,1.22.18,1.32.26.07.05.22.18.22.62,0,.36-.08.61-.22.73-.1.08-.42.26-1.32.26h-.6v-1.87h0Z"/>
+  </g>
+  <rect id="caret-basic-dark" class="a-caret" x="21.35" y="24.4" width="1.05" height="7.8" rx="0.45" fill="#64B5F6" display="none"/>
+</g>
+<g class="a-barclip">
+  <g transform="translate(21.99 13.89)"><g class="a-bar"><g transform="translate(-21.99 -13.89)">
+    <g id="bar-basic-dark">
+      <path id="barTipL-basic-dark" class="a-barTipL" fill="#64B5F6" d="M16.87,14.44l3.89,1.72-12.34,5.47c-.4.18-.87.18-1.27,0-.63-.28-.94-.86-.94-1.44s.31-1.16.94-1.44l9.72-4.31Z"/>
+      <path id="barTipR-basic-dark" class="a-barTipR" fill="#64B5F6" d="M37.76,7.6c0,.58-.31,1.16-.93,1.44l-9.73,4.31-3.88-1.72,12.33-5.47c.41-.18.87-.18,1.28,0,.62.27.93.85.93,1.44Z"/>
+      <path id="barMain-basic-dark" class="a-barMain" fill="#64B5F6" d="M36.83,21.63c-.21.09-.43.13-.64.13s-.44-.04-.64-.13l-13.56-6.01-3.89-1.72-10.95-4.86c-1.25-.56-1.25-2.33,0-2.88.2-.09.42-.13.64-.13s.43.04.63.13l13.57,6.01,3.88,1.73,10.96,4.85c1.24.55,1.24,2.32,0,2.88Z"/>
+      <line id="barLine-basic-dark" class="a-barLine" x1="6.6" y1="7.0" x2="36.6" y2="21.3" stroke="#64B5F6" stroke-width="1.9" stroke-linecap="round" display="none"/>
+    </g>
+  </g></g></g></g>
+<g id="strings-basic-dark" class="a-strings">
+  <g transform="translate(14.9 15.6)"><g class="a-strL"><g transform="translate(-14.9 -15.6)">
+    <rect id="stringL-basic-dark" x="14.42" y="15.6" width=".97" height="8.59" rx=".48" fill="#64B5F6"/>
+  </g></g></g>
+  <g transform="translate(29.34 16.28)"><g class="a-strR"><g transform="translate(-29.34 -16.28)">
+    <rect id="stringR-basic-dark" x="28.85" y="16.28" width=".97" height="12.18" rx=".48" fill="#64B5F6"/>
+  </g></g></g></g>
+<g id="pulses-basic-dark" display="none">
+  <line id="pulseL-basic-dark" x1="14.9" y1="15.6" x2="14.9" y2="24.19" stroke="#64B5F6" stroke-width="1.35" stroke-linecap="round" opacity=".95"/>
+  <line id="pulseR-basic-dark" x1="29.34" y1="16.28" x2="29.34" y2="28.46" stroke="#64B5F6" stroke-width="1.35" stroke-linecap="round" opacity=".95"/>
+</g>
+<g id="shimmer-basic-dark" display="none" clip-path="url(#tileClip-basic-dark)">
+  <g transform="rotate(18 21.6 21.6)">
+    <rect class="band" x="-10" y="-28" width="16" height="100" fill="url(#shimGrad-basic-dark)"/>
+  </g></g>
+<!-- dim-floor marker .4 -->
+</g><style>
+/* assemble x basic-dark — film */
+@media (prefers-reduced-motion: no-preference) {
+  #pmx-assemble-basic-dark .a-bar { animation: pmAsmBar-assemble-basic-dark 3200ms cubic-bezier(.22,1,.36,1) infinite; }
+  #pmx-assemble-basic-dark .a-strL {
+    animation: pmAsmStrL-assemble-basic-dark 3200ms cubic-bezier(.22,1,.36,1) infinite;
+    transform-origin: 50% 0%;
+  }
+  #pmx-assemble-basic-dark .a-strR {
+    animation: pmAsmStrR-assemble-basic-dark 3200ms cubic-bezier(.22,1,.36,1) infinite;
+    transform-origin: 50% 0%;
+  }
+  #pmx-assemble-basic-dark .a-brkL, #pmx-assemble-basic-dark .a-brkR { animation: pmAsmBrk-assemble-basic-dark 3200ms cubic-bezier(.37,0,.63,1) infinite; }
+  #pmx-assemble-basic-dark .a-p, #pmx-assemble-basic-dark .a-m {
+    animation: pmAsmGlyph-assemble-basic-dark 3200ms cubic-bezier(.22,1,.36,1) infinite;
+    transform-box: fill-box; transform-origin: 50% 50%;
+  }
+  #pmx-assemble-basic-dark .a-unit { animation: pmAsmUnit-assemble-basic-dark 3200ms cubic-bezier(.37,0,.63,1) infinite; }
+  @keyframes pmAsmBar-assemble-basic-dark {
+    0% { opacity: 0; transform: scale(.94); }
+    10% { opacity: 1; transform: scale(1); }
+    72% { opacity: 1; transform: scale(1); }
+    100% { opacity: 1; transform: scale(1); }
+  }
+  @keyframes pmAsmStrL-assemble-basic-dark {
+    0%, 8% { transform: scaleY(0); opacity: 1; }
+    22% { transform: scaleY(1); opacity: 1; }
+    100% { transform: scaleY(1); opacity: 1; }
+  }
+  @keyframes pmAsmStrR-assemble-basic-dark {
+    0%, 12% { transform: scaleY(0); opacity: 1; }
+    26% { transform: scaleY(1); opacity: 1; }
+    100% { transform: scaleY(1); opacity: 1; }
+  }
+  @keyframes pmAsmBrk-assemble-basic-dark {
+    0%, 24% { opacity: 0; }
+    36% { opacity: 1; }
+    100% { opacity: 1; }
+  }
+  @keyframes pmAsmGlyph-assemble-basic-dark {
+    0%, 34% { opacity: 0; transform: scale(.88); }
+    48% { opacity: 1; transform: scale(1.02); }
+    54% { opacity: 1; transform: scale(1); }
+    100% { opacity: 1; transform: scale(1); }
+  }
+  @keyframes pmAsmUnit-assemble-basic-dark {
+    0%, 72% { opacity: 1; }
+    88%, 100% { opacity: 0; }
+  }
+}
+:root[data-motion="reduced"] #pmx-assemble-basic-dark *, :root[data-reduced-motion="1"] #pmx-assemble-basic-dark * { animation: none !important; filter: none !important; }
+:root[data-motion="reduced"] #pmx-assemble-basic-dark .a-bar, :root[data-motion="reduced"] #pmx-assemble-basic-dark .a-strL, :root[data-motion="reduced"] #pmx-assemble-basic-dark .a-strR, :root[data-motion="reduced"] #pmx-assemble-basic-dark .a-brkL, :root[data-motion="reduced"] #pmx-assemble-basic-dark .a-brkR, :root[data-motion="reduced"] #pmx-assemble-basic-dark .a-p, :root[data-motion="reduced"] #pmx-assemble-basic-dark .a-m, :root[data-motion="reduced"] #pmx-assemble-basic-dark .a-unit, :root[data-reduced-motion="1"] #pmx-assemble-basic-dark .a-bar, :root[data-reduced-motion="1"] #pmx-assemble-basic-dark .a-strL, :root[data-reduced-motion="1"] #pmx-assemble-basic-dark .a-strR, :root[data-reduced-motion="1"] #pmx-assemble-basic-dark .a-brkL, :root[data-reduced-motion="1"] #pmx-assemble-basic-dark .a-brkR, :root[data-reduced-motion="1"] #pmx-assemble-basic-dark .a-p, :root[data-reduced-motion="1"] #pmx-assemble-basic-dark .a-m, :root[data-reduced-motion="1"] #pmx-assemble-basic-dark .a-unit { opacity: 1 !important; transform: none !important; }
+</style>
+</svg>

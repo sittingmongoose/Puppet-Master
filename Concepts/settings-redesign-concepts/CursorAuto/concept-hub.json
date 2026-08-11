@@ -1,0 +1,65 @@
+{
+  "schemaVersion": 1,
+  "topic": "settings-redesign",
+  "model": "CursorAuto",
+  "presentation": "hybrid",
+  "order": 120,
+  "widthControl": {
+    "enabled": true,
+    "label": "Page width",
+    "role": "page",
+    "min": 760,
+    "max": 2500,
+    "step": 10,
+    "default": 1280,
+    "presets": [760, 900, 1280, 1700, 2200, 2500],
+    "previewWidth": "test"
+  },
+  "entries": [
+    {
+      "id": "concept-01-harbor",
+      "title": "CursorAuto · Harbor",
+      "path": "concept-01-harbor.html",
+      "openPath": "concept-01-harbor.html",
+      "openActions": "both",
+      "controlMode": "standard",
+      "tags": ["settings", "harbor", "berthing"],
+      "order": 10
+    },
+    {
+      "id": "concept-02-score",
+      "title": "CursorAuto · Score",
+      "path": "concept-02-score.html",
+      "openPath": "concept-02-score.html",
+      "openActions": "both",
+      "controlMode": "standard",
+      "tags": ["settings", "score", "editorial"],
+      "order": 20
+    },
+    {
+      "id": "concept-03-switchboard",
+      "title": "CursorAuto · Switchboard",
+      "path": "concept-03-switchboard.html",
+      "openPath": "concept-03-switchboard.html",
+      "openActions": "both",
+      "controlMode": "standard",
+      "tags": ["settings", "switchboard", "routing"],
+      "order": 30
+    },
+    {
+      "id": "concept-04-archive",
+      "title": "CursorAuto · Archive",
+      "path": "concept-04-archive.html",
+      "openPath": "concept-04-archive.html",
+      "openActions": "both",
+      "controlMode": "standard",
+      "tags": ["settings", "archive", "retrieval"],
+      "order": 40
+    }
+  ],
+  "workspace": {
+    "title": "CursorAuto · Settings Bakeoff Gallery",
+    "path": "index.html",
+    "controlMode": "internal"
+  }
+}

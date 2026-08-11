@@ -1,0 +1,75 @@
+// PmLoadingIcon — Slint-native loading indicator for Puppet Master.
+//
+// Why this exists: Slint renders SVGs through resvg, which is a STATIC
+// renderer (no CSS/SMIL animation, and no <style> support). The static
+// icons in ../static/ use presentation-attribute fills only, so they
+// render correctly here; the MOTION lives in Slint, where it belongs.
+//
+// Drop this file into your Slint project and use:
+//   import { PmLoadingIcon } from "pm-loading-icon.slint";
+//   PmLoadingIcon { theme-tile: ...; } // or just set `source-name`
+//
+// Verified against the Slint 1.17 language reference (Timer, animate).
+
+component PmLoadingIcon inherits Rectangle {
+    // Public API
+    in property <length> size: 48px;
+    in property <duration> period: 650ms;      // one pulse half-cycle
+    in property <float> dim: 0.45;             // opacity at the dim phase
+    in property <bool> running: true;          // freeze (full opacity) when false
+    in property <image> source: @image-url("../static/pm-icon-friendly-dark.svg");
+
+    width: size;
+    height: size;
+
+    property <bool> bright: true;
+
+    Image {
+        width: 100%;
+        height: 100%;
+        source: parent.source;
+        opacity: !parent.running ? 1 : (parent.bright ? 1 : parent.dim);
+        animate opacity {
+            duration: parent.period;
+            easing: ease-in-out;
+        }
+    }
+
+    Timer {
+        interval: parent.period;
+        running: parent.running;
+        triggered() => { parent.bright = !parent.bright; }
+    }
+}
+
+// Alternative: a spinning glyph-only mark. Pair with a glyph-only SVG
+// (transparent tile) if you prefer rotation over pulsing. Slint rotates
+// natively, so the SVG stays a static frame.
+component PmLoadingSpinner inherits Rectangle {
+    in property <length> size: 32px;
+    in property <duration> period: 900ms;
+    in property <image> source: @image-url("../static/pm-icon-friendly-dark.svg");
+
+    width: size;
+    height: size;
+
+    property <angle> spin: 0deg;
+    property <bool> go: true;
+
+    Image {
+        width: 100%;
+        height: 100%;
+        source: parent.source;
+        rotate: parent.spin;
+        animate rotate {
+            duration: parent.period;
+            easing: linear;
+        }
+    }
+
+    Timer {
+        interval: parent.period;
+        running: parent.go;
+        triggered() => { parent.spin += 360deg; }
+    }
+}

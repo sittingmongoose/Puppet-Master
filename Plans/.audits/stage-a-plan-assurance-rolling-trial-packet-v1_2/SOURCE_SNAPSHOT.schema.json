@@ -1,0 +1,29 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://puppet-master.local/schemas/plan-assurance/source-snapshot.v1.2.json",
+  "type": "object",
+  "additionalProperties": false,
+  "required": ["schema_version", "packet_id", "receipt_id", "snapshot_id", "trial_id", "generation_id", "packet_core_population_sha256", "plans_root", "run_root_binding", "algorithm", "classifier_binding", "counts", "physical_population_sha256", "classification_population_sha256", "population_sha256", "stable_double_scan", "bucket_shards", "terminal", "snapshot_payload_sha256"],
+  "properties": {
+    "schema_version": {"const": "1.2.0"},
+    "packet_id": {"const": "stage-a-plan-assurance-rolling-trial-packet-v1_2"},
+    "receipt_id": {"type": "string", "minLength": 1},
+    "snapshot_id": {"$ref": "#/$defs/sha"},
+    "trial_id": {"const": "stage-a-plan-assurance-rolling-trial-v1_2-run-001"},
+    "generation_id": {"const": "generation-v1_2-001-20260717"},
+    "packet_core_population_sha256": {"$ref": "#/$defs/sha"},
+    "plans_root": {"type": "string", "minLength": 1},
+    "run_root_binding": {"type": "object", "required": ["policy_id", "run_root_raw", "run_root_canonical", "repo_relative_run_root", "direct_parent_raw", "basename", "trial_id", "nfc_required", "ascii_basename_required", "no_symlink_ancestors", "absent_observed", "ancestor_chain", "ancestor_chain_sha256", "binding_sha256"]},
+    "algorithm": {"type": "object", "required": ["algorithm_id", "directory_link_count_policy_id", "directory_link_count_rule", "stable_double_scan_required"], "properties": {"algorithm_id": {"const": "pm.plan_assurance.source_snapshot.merkle.v1.2"}, "directory_link_count_policy_id": {"const": "pm.plan_assurance.directory_link_count.null.v1.2"}, "directory_link_count_rule": {"type": "string", "minLength": 1}, "stable_double_scan_required": {"const": true}}},
+    "classifier_binding": {"type": "object"},
+    "counts": {"type": "object", "required": ["entry_count", "regular_file_count", "directory_entry_count", "symlink_count", "nonregular_count", "multi_link_regular_file_count", "unknown_classification_count"]},
+    "physical_population_sha256": {"$ref": "#/$defs/sha"},
+    "classification_population_sha256": {"$ref": "#/$defs/sha"},
+    "population_sha256": {"$ref": "#/$defs/sha"},
+    "stable_double_scan": {"type": "object", "required": ["identical"], "properties": {"identical": {"const": true}}},
+    "bucket_shards": {"type": "array", "minItems": 16, "maxItems": 16, "items": {"type": "object", "required": ["shard_index", "ref", "bytes", "file_sha256", "payload_sha256"]}},
+    "terminal": {"enum": ["PASS", "BLOCKED", "INVALID"]},
+    "snapshot_payload_sha256": {"$ref": "#/$defs/sha"}
+  },
+  "$defs": {"sha": {"type": "string", "pattern": "^[0-9a-f]{64}$"}}
+}

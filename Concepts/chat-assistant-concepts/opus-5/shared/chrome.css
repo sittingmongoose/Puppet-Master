@@ -1,0 +1,431 @@
+/* PMX shared chrome — Opus 5
+ * Selector row, header tools, thread history. Placement varies per window concept;
+ * these styles govern only the internals so behavior reads identically everywhere.
+ */
+
+.pmx-chrome { min-width: 0; }
+
+/* ---------------------------------------------------------------- header tools */
+
+.pmx-chrome-header {
+  display: flex;
+  align-items: center;
+  gap: 3px;
+  min-width: 0;
+  flex-wrap: nowrap;
+}
+
+.pmx-chrome-btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 26px;
+  height: 26px;
+  flex: 0 0 auto;
+  padding: 0;
+  border: 1px solid transparent;
+  border-radius: var(--radius-sm);
+  background: transparent;
+  color: var(--text-muted);
+  cursor: pointer;
+  transition: background var(--motion-fast) var(--ease-default), color var(--motion-fast) var(--ease-default);
+}
+.pmx-chrome-btn:hover { background: var(--surface-elevated); color: var(--text-primary); }
+.pmx-chrome-btn[aria-pressed="true"] {
+  background: color-mix(in srgb, var(--accent-primary) 18%, transparent);
+  color: var(--text-primary);
+}
+
+.pmx-chrome-ring {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 26px; height: 26px;
+  flex: 0 0 auto;
+  padding: 0;
+  border: none;
+  border-radius: 50%;
+  background: transparent;
+  color: var(--accent-primary);
+  cursor: pointer;
+  transition: filter var(--motion-fast) var(--ease-default);
+}
+/* Hover is only a glow affordance; the module opens on click. */
+.pmx-chrome-ring:hover { filter: drop-shadow(0 0 4px color-mix(in srgb, var(--accent-primary) 65%, transparent)); }
+
+.pmx-chrome-ctx { display: flex; flex-direction: column; padding: 0 var(--md) var(--sm); }
+.pmx-chrome-ctx-row {
+  display: flex; justify-content: space-between; gap: var(--md);
+  padding: 3px 0; font-size: var(--fs-xs);
+  border-bottom: 1px solid color-mix(in srgb, var(--border) 45%, transparent);
+}
+.pmx-chrome-ctx-row:last-child { border-bottom: none; }
+.pmx-chrome-ctx-row > span:first-child { color: var(--text-muted); }
+.pmx-chrome-ctx-row > span:last-child { color: var(--text-primary); font-variant-numeric: tabular-nums; }
+.pmx-chrome-ctx-acts { display: flex; flex-direction: column; }
+
+.pmx-chrome-lens-desc {
+  display: block;
+  font-size: var(--fs-2xs);
+  color: var(--text-muted);
+  margin-top: 1px;
+}
+.pmx-chrome-lens-budget {
+  padding: var(--sm) var(--md);
+  font-size: var(--fs-2xs);
+  color: var(--text-muted);
+  border-top: 1px solid var(--border);
+}
+
+/* ---------------------------------------------------------------- selector row */
+
+.pmx-chrome-selhost { display: flex; min-width: 0; margin-left: auto; }
+
+.pmx-chrome-selrow {
+  display: flex;
+  align-items: center;
+  gap: 3px;
+  min-width: 0;
+}
+
+.pmx-chrome-sel {
+  display: inline-flex;
+  align-items: baseline;
+  gap: 4px;
+  min-width: 0;
+  max-width: 152px;
+  padding: 3px var(--sm);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-sm);
+  background: transparent;
+  color: var(--text-primary);
+  font: inherit;
+  font-size: var(--fs-2xs);
+  cursor: pointer;
+  transition: border-color var(--motion-fast) var(--ease-default);
+}
+.pmx-chrome-sel:hover { border-color: var(--accent-primary); }
+.pmx-chrome-sel-label { color: var(--text-muted); flex: 0 0 auto; }
+.pmx-chrome-sel-value {
+  min-width: 0; overflow: hidden; text-overflow: ellipsis; white-space: nowrap;
+  font-weight: 600;
+}
+.pmx-chrome-sel svg { flex: 0 0 auto; opacity: .6; }
+
+/* Worktree is a fourth pill, shown only where applicable — hidden entirely (not just at a
+ * narrow width) when selectors.js determines the active thread's project has no worktree. */
+.pmx-chrome-selrow[data-pmx-worktree="0"] .pmx-chrome-sel[data-kind="worktree"] { display: none; }
+
+/* The single collapsed affordance for the narrowest tier. Hidden until that tier applies. */
+.pmx-chrome-sel-more {
+  display: none;
+  align-items: center;
+  gap: 4px;
+  flex: 0 0 auto;
+  padding: 3px var(--sm);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-sm);
+  background: transparent;
+  color: var(--text-primary);
+  font: inherit;
+  font-size: var(--fs-2xs);
+  cursor: pointer;
+  transition: border-color var(--motion-fast) var(--ease-default);
+}
+.pmx-chrome-sel-more:hover { border-color: var(--accent-primary); }
+.pmx-chrome-sel-more svg { flex: 0 0 auto; opacity: .7; }
+
+/* Narrow-width degradation, three steps, and nothing is ever allowed to overflow
+ * horizontally: full label -> icon plus value -> a single "More" affordance. */
+@container pmx-chat (max-width: 780px) {
+  .pmx-chrome-sel-label { display: none; }
+  .pmx-chrome-sel { max-width: 104px; }
+}
+@container pmx-chat (max-width: 620px) {
+  .pmx-chrome-sel { max-width: 78px; padding: 3px 5px; }
+  .pmx-chrome-sel svg { display: none; }
+  .pmx-chrome-header { gap: 1px; }
+  .pmx-chrome-btn { width: 24px; height: 24px; }
+}
+@container pmx-chat (max-width: 540px) {
+  .pmx-chrome-sel { display: none; }
+  .pmx-chrome-sel-more { display: inline-flex; }
+}
+
+/* ---------------------------------------------------------------- search results */
+
+.pmx-search-scopes { display: flex; gap: 4px; padding: var(--sm) var(--sm) 0; }
+.pmx-search-scope {
+  flex: 1 1 0;
+  padding: 4px var(--sm);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-sm);
+  background: transparent;
+  color: var(--text-muted);
+  font: inherit; font-size: var(--fs-2xs); cursor: pointer;
+}
+.pmx-search-scope[aria-pressed="true"] {
+  background: color-mix(in srgb, var(--accent-primary) 18%, transparent);
+  border-color: var(--accent-primary);
+  color: var(--text-primary);
+  font-weight: 600;
+}
+
+.pmx-search-results { max-height: 280px; overflow-y: auto; }
+.pmx-search-hit {
+  display: block; width: 100%; text-align: left;
+  padding: var(--sm) var(--md);
+  border: none; border-top: 1px solid color-mix(in srgb, var(--border) 45%, transparent);
+  background: transparent; cursor: pointer; font: inherit;
+}
+.pmx-search-hit:hover { background: var(--surface); }
+.pmx-search-snip {
+  font-size: var(--fs-xs); color: var(--text-primary); line-height: 1.45;
+  overflow-wrap: anywhere;
+}
+.pmx-search-tags { display: flex; flex-wrap: wrap; gap: 6px; margin-top: 3px; }
+.pmx-search-tags > span { font-size: var(--fs-2xs); color: var(--text-muted); }
+
+/* ---------------------------------------------------------------- thread history */
+
+.pmx-chrome-history { display: flex; flex-direction: column; min-height: 0; height: 100%; }
+.pmx-chrome-hlist { display: flex; flex-direction: column; gap: 1px; overflow-y: auto; min-height: 0; }
+
+/* The row is a CONTAINER holding two controls: one that selects the thread and one
+ * that opens its menu. It is not itself a button — nesting a button inside a button
+ * is invalid and the inner control becomes unreachable by keyboard in some engines. */
+.pmx-chrome-hrow {
+  display: flex;
+  align-items: flex-start;
+  gap: 2px;
+  width: 100%;
+  border-radius: var(--radius-sm);
+  background: transparent;
+  color: var(--text-primary);
+  min-width: 0;
+  transition: background var(--motion-fast) var(--ease-default);
+}
+.pmx-chrome-hrow:hover { background: var(--surface-elevated); }
+
+.pmx-chrome-hrow-main {
+  display: flex;
+  align-items: flex-start;
+  gap: var(--md);
+  flex: 1 1 auto;
+  min-width: 0;
+  padding: var(--sm) var(--md);
+  border: none;
+  background: transparent;
+  color: inherit;
+  font: inherit;
+  text-align: left;
+  cursor: pointer;
+  border-radius: inherit;
+}
+.pmx-chrome-hrow-body { display: flex; flex-direction: column; gap: 3px; flex: 1 1 auto; min-width: 0; }
+
+/* Active row: fill plus weight. No left accent border anywhere in this file. */
+.pmx-chrome-hrow.is-active {
+  background: color-mix(in srgb, var(--accent-primary) 15%, transparent);
+}
+.pmx-chrome-hrow.is-active .pmx-chrome-htitle { font-weight: 700; }
+
+/* ---------------------------------------------------------------- status symbol
+ * Replaces the state word. Sized to the cap height of the title so a column of
+ * rows keeps one optical baseline. Colour comes from the --graph-* tokens, which
+ * exist per theme, so status stays legible on all eight. */
+.pmx-chrome-hstatus {
+  position: relative;
+  flex: 0 0 auto;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 14px;
+  height: 14px;
+  margin-top: 1px;
+  color: var(--graph-pending);
+}
+.pmx-chrome-hstatus svg { display: block; width: 13px; height: 13px; }
+
+.pmx-chrome-hstatus[data-pmx-status="working"]   { color: var(--graph-running); }
+.pmx-chrome-hstatus[data-pmx-status="attention"] { color: var(--graph-gating); }
+.pmx-chrome-hstatus[data-pmx-status="blocked"]   { color: var(--graph-failed); }
+.pmx-chrome-hstatus[data-pmx-status="paused"]    { color: var(--graph-planning); }
+.pmx-chrome-hstatus[data-pmx-status="finished"]  { color: var(--graph-passed); }
+.pmx-chrome-hstatus[data-pmx-status="idle"]      { color: var(--text-muted); opacity: .6; }
+
+/* Motion is aimed at individual shapes INSIDE the glyph rather than at the whole
+ * mark. Rotating an entire icon moves parts that should hold still — which is what
+ * made the earlier gauge read as a ball wandering into different corners.
+ *
+ * transform-box: view-box is load-bearing. The default (fill-box) would rotate the
+ * arc about its OWN bounding box, so a quarter-arc would swing around its own
+ * corner instead of around the circle it belongs to. */
+.pmx-arc-spin {
+  transform-box: view-box;
+  transform-origin: 12px 12px;
+  animation: pmx-spin 1.1s linear infinite;
+}
+
+/* The core pulses on a different, slower rate than the arc spins. Two independent
+ * rates read as activity; one rate alone is easy to mistake for decoration. */
+.pmx-core-pulse {
+  transform-box: view-box;
+  transform-origin: 12px 12px;
+  animation: pmx-core-breathe 1.9s ease-in-out infinite;
+}
+@keyframes pmx-core-breathe {
+  0%, 100% { opacity: 1;   transform: scale(1); }
+  50%      { opacity: .45; transform: scale(.7); }
+}
+
+/* The check draws itself once when a thread lands in the finished state. */
+.pmx-check-stroke {
+  --pmx-dash: 11;
+  stroke-dasharray: var(--pmx-dash);
+  animation: pmx-draw-stroke var(--motion-med) var(--ease-out) both;
+}
+
+[data-motion="reduced"] .pmx-arc-spin,
+[data-motion="reduced"] .pmx-core-pulse,
+[data-motion="reduced"] .pmx-check-stroke {
+  animation: none !important;
+  opacity: 1 !important;
+  transform: none !important;
+  stroke-dashoffset: 0 !important;
+}
+@media (prefers-reduced-motion: reduce) {
+  .pmx-arc-spin, .pmx-core-pulse, .pmx-check-stroke {
+    animation: none !important;
+    opacity: 1 !important;
+    transform: none !important;
+    stroke-dashoffset: 0 !important;
+  }
+}
+
+/* ---------------------------------------------------------------- row menu */
+.pmx-chrome-hmore {
+  flex: 0 0 auto;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 26px;
+  height: 26px;
+  margin: var(--sm) var(--sm) 0 0;
+  padding: 0;
+  border: 1px solid transparent;
+  border-radius: var(--radius-sm);
+  background: transparent;
+  color: var(--text-muted);
+  cursor: pointer;
+  opacity: 0;
+  transition:
+    opacity var(--motion-fast) var(--ease-default),
+    background var(--motion-fast) var(--ease-default),
+    color var(--motion-fast) var(--ease-default);
+}
+.pmx-chrome-hrow:hover .pmx-chrome-hmore,
+.pmx-chrome-hrow:focus-within .pmx-chrome-hmore,
+.pmx-chrome-hmore:focus-visible { opacity: 1; }
+.pmx-chrome-hmore:hover { background: var(--surface); color: var(--text-primary); }
+.pmx-chrome-hmore:active { transform: scale(.92); }
+.pmx-chrome-hmore svg { width: 14px; height: 14px; display: block; }
+
+/* Touch and keyboard users get no hover, so the control must not be hover-gated
+ * for them. Coarse pointers see it permanently. */
+@media (hover: none) {
+  .pmx-chrome-hmore { opacity: 1; }
+}
+
+.pmx-chrome-hrow-top { display: flex; align-items: baseline; gap: 5px; min-width: 0; }
+.pmx-chrome-htitle {
+  flex: 1 1 auto; min-width: 0;
+  overflow: hidden; text-overflow: ellipsis; white-space: nowrap;
+  font-size: var(--fs-xs); font-weight: 600;
+}
+.pmx-chrome-htime { flex: 0 0 auto; font-size: var(--fs-2xs); color: var(--text-muted); }
+
+.pmx-chrome-hmarks { display: flex; flex-wrap: wrap; gap: 4px; }
+.pmx-chrome-hmark,
+.pmx-chrome-hstate {
+  font-size: var(--fs-2xs);
+  padding: 0 5px;
+  border-radius: var(--radius-pill);
+  background: var(--surface-elevated);
+  color: var(--text-muted);
+}
+.pmx-chrome-hstate { color: var(--text-secondary); font-weight: 600; }
+.pmx-chrome-hrow[data-archived="1"] .pmx-chrome-htitle { color: var(--text-muted); }
+
+/* In a horizontal strip host (w2), rows become chips on one line. The status
+ * symbol survives the collapse to a chip — it is the one thing that must stay,
+ * since scanning many threads at once is exactly what the strip is for. */
+.w2-chips .pmx-chrome-history { height: auto; }
+.w2-chips .pmx-chrome-hlist { flex-direction: row; gap: 6px; overflow: visible; }
+.w2-chips .pmx-chrome-hrow {
+  width: auto; max-width: 190px; flex: 0 0 auto;
+  border: 1px solid var(--border);
+  border-radius: var(--radius-pill);
+}
+.w2-chips .pmx-chrome-hrow-main { padding: 3px var(--md); gap: 6px; align-items: center; }
+.w2-chips .pmx-chrome-hmarks { display: none; }
+.w2-chips .pmx-chrome-htime { display: none; }
+.w2-chips .pmx-chrome-hmore {
+  width: 20px; height: 20px; margin: 0 3px 0 0; align-self: center;
+}
+
+/* ---------------------------------------------------------------- docked mode
+ * The same rows, pinned open beside the transcript instead of overlaying it.
+ * Only spacing and the separator change: a pinned column is read alongside the
+ * conversation rather than instead of it, so it has to be quieter. */
+.pmx-chrome-history[data-pmx-docked="1"] .pmx-chrome-hlist { gap: 2px; }
+.pmx-chrome-history[data-pmx-docked="1"] .pmx-chrome-hrow-main { padding: 5px var(--md); }
+.pmx-chrome-history[data-pmx-docked="1"] .pmx-chrome-hmark { font-size: var(--fs-2xs); }
+
+/* Below this width a pinned column and a readable conversation cannot both fit,
+ * and the conversation wins — it is the product. The pin STATE is not discarded,
+ * only its effect suspended, so widening restores what the user asked for. */
+@container pmx-chat (max-width: 620px) {
+  .pmx-chrome-history[data-pmx-docked="1"] .pmx-chrome-hmarks { display: none; }
+}
+
+/* ==========================================================================
+   Pin controls — one appearance across every concept
+   Each window docks history in its own idiom (a drawer becomes a column, a sheet
+   locks at a detent, a pane refuses to collapse), but the CONTROL has to be the
+   same recognisable object everywhere, or pinning would look like a different
+   feature in each concept. Only the class prefix differs.
+   ========================================================================== */
+.w1-drawer-pin, .w2-strip-pin, .w4-pane-pin, .w6-sheet-pin, .w7-col-pin {
+  display: inline-flex; align-items: center; justify-content: center;
+  width: 24px; height: 24px; padding: 0; flex: 0 0 auto;
+  border: 1px solid transparent; border-radius: var(--radius-sm);
+  background: transparent; color: var(--text-muted); cursor: pointer;
+  transition:
+    color var(--motion-fast) var(--ease-default),
+    background var(--motion-fast) var(--ease-default),
+    border-color var(--motion-fast) var(--ease-default),
+    transform var(--motion-med) var(--ease-spring-real);
+}
+.w1-drawer-pin:hover, .w2-strip-pin:hover, .w4-pane-pin:hover,
+.w6-sheet-pin:hover, .w7-col-pin:hover { color: var(--text-primary); background: var(--surface); }
+.w1-drawer-pin:active, .w2-strip-pin:active, .w4-pane-pin:active,
+.w6-sheet-pin:active, .w7-col-pin:active { transform: scale(.9); }
+
+/* Engaged. The rotation is the tell: a colour change alone reads as hover, but a
+   pin that has visibly turned reads as driven home. It settles on the theme's own
+   spring, so it snaps on retro and overshoots on friendly. */
+.w1-drawer-pin[aria-pressed="true"], .w2-strip-pin[aria-pressed="true"],
+.w4-pane-pin[aria-pressed="true"], .w6-sheet-pin[aria-pressed="true"],
+.w7-col-pin[aria-pressed="true"] {
+  color: var(--accent-primary);
+  background: var(--accent-soft);
+  border-color: var(--accent-glow);
+  transform: rotate(-45deg);
+}
+.w1-drawer-pin svg, .w2-strip-pin svg, .w4-pane-pin svg,
+.w6-sheet-pin svg, .w7-col-pin svg { width: 13px; height: 13px; display: block; }
+
+[data-motion="reduced"] .w1-drawer-pin, [data-motion="reduced"] .w2-strip-pin,
+[data-motion="reduced"] .w4-pane-pin, [data-motion="reduced"] .w6-sheet-pin,
+[data-motion="reduced"] .w7-col-pin { transition: none !important; }

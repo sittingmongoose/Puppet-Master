@@ -1,0 +1,146 @@
+{
+  "themes": {
+    "basic-light": {
+      "badge": "#0056B3",
+      "glyph": "#FFFFFF",
+      "r": 4,
+      "page": "#EAECEF",
+      "ink": "#1A1A1A"
+    },
+    "basic-dark": {
+      "badge": "#64B5F6",
+      "glyph": "#121212",
+      "r": 4,
+      "page": "#121212",
+      "ink": "#E8E8E8"
+    },
+    "retro-light": {
+      "badge": "#0047AB",
+      "glyph": "#F5F0E8",
+      "r": 0,
+      "page": "#F5F0E8",
+      "ink": "#1A1A1A"
+    },
+    "retro-dark": {
+      "badge": "#00FF41",
+      "glyph": "#1A1A1A",
+      "r": 0,
+      "page": "#1A1A1A",
+      "ink": "#E0E0E0"
+    },
+    "glass-light": {
+      "badge": "#8B6ED9",
+      "glyph": "#FFFFFF",
+      "r": 9,
+      "page": "#E4CDE4",
+      "ink": "#453A5C"
+    },
+    "glass-dark": {
+      "badge": "#B79CFF",
+      "glyph": "#241B36",
+      "r": 9,
+      "page": "#241B36",
+      "ink": "#EDE7F8"
+    },
+    "friendly-light": {
+      "badge": "#3F9CC7",
+      "glyph": "#FFFFFF",
+      "r": 9,
+      "page": "#FBF7F3",
+      "ink": "#4A4550"
+    },
+    "friendly-dark": {
+      "badge": "#6FC6E8",
+      "glyph": "#211E26",
+      "r": 9,
+      "page": "#211E26",
+      "ink": "#F0EDF4"
+    }
+  },
+  "styles": {
+    "puppet-sway": {
+      "label": "Puppet Sway",
+      "desc": "Control bar rocks while the strings swing the {PM} marionette. The signature."
+    },
+    "breathe": {
+      "label": "Breathe",
+      "desc": "Braces grow and shrink on the inhale; PM counter-pulses; soft glow."
+    },
+    "string-pluck": {
+      "label": "String Pluck",
+      "desc": "Strings ripple with a damped pluck; the bar wobbles in sympathy."
+    },
+    "draw-on": {
+      "label": "Draw On",
+      "desc": "The mark traces itself in strokes, fills, holds, and loops."
+    },
+    "mobile-spin": {
+      "label": "Mobile Spin",
+      "desc": "The whole hanging assembly rotates slowly, like a crib mobile."
+    },
+    "sheen": {
+      "label": "Sheen",
+      "desc": "A diagonal light sweep crosses the badge. The classic 'working' cue."
+    }
+  },
+  "static": [
+    "static/icon-basic-light.svg",
+    "static/icon-basic-dark.svg",
+    "static/icon-retro-light.svg",
+    "static/icon-retro-dark.svg",
+    "static/icon-glass-light.svg",
+    "static/icon-glass-dark.svg",
+    "static/icon-friendly-light.svg",
+    "static/icon-friendly-dark.svg"
+  ],
+  "animated": [
+    "animated/puppet-sway-basic-light.svg",
+    "animated/puppet-sway-basic-dark.svg",
+    "animated/puppet-sway-retro-light.svg",
+    "animated/puppet-sway-retro-dark.svg",
+    "animated/puppet-sway-glass-light.svg",
+    "animated/puppet-sway-glass-dark.svg",
+    "animated/puppet-sway-friendly-light.svg",
+    "animated/puppet-sway-friendly-dark.svg",
+    "animated/breathe-basic-light.svg",
+    "animated/breathe-basic-dark.svg",
+    "animated/breathe-retro-light.svg",
+    "animated/breathe-retro-dark.svg",
+    "animated/breathe-glass-light.svg",
+    "animated/breathe-glass-dark.svg",
+    "animated/breathe-friendly-light.svg",
+    "animated/breathe-friendly-dark.svg",
+    "animated/string-pluck-basic-light.svg",
+    "animated/string-pluck-basic-dark.svg",
+    "animated/string-pluck-retro-light.svg",
+    "animated/string-pluck-retro-dark.svg",
+    "animated/string-pluck-glass-light.svg",
+    "animated/string-pluck-glass-dark.svg",
+    "animated/string-pluck-friendly-light.svg",
+    "animated/string-pluck-friendly-dark.svg",
+    "animated/draw-on-basic-light.svg",
+    "animated/draw-on-basic-dark.svg",
+    "animated/draw-on-retro-light.svg",
+    "animated/draw-on-retro-dark.svg",
+    "animated/draw-on-glass-light.svg",
+    "animated/draw-on-glass-dark.svg",
+    "animated/draw-on-friendly-light.svg",
+    "animated/draw-on-friendly-dark.svg",
+    "animated/mobile-spin-basic-light.svg",
+    "animated/mobile-spin-basic-dark.svg",
+    "animated/mobile-spin-retro-light.svg",
+    "animated/mobile-spin-retro-dark.svg",
+    "animated/mobile-spin-glass-light.svg",
+    "animated/mobile-spin-glass-dark.svg",
+    "animated/mobile-spin-friendly-light.svg",
+    "animated/mobile-spin-friendly-dark.svg",
+    "animated/sheen-basic-light.svg",
+    "animated/sheen-basic-dark.svg",
+    "animated/sheen-retro-light.svg",
+    "animated/sheen-retro-dark.svg",
+    "animated/sheen-glass-light.svg",
+    "animated/sheen-glass-dark.svg",
+    "animated/sheen-friendly-light.svg",
+    "animated/sheen-friendly-dark.svg"
+  ]
+}

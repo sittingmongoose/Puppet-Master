@@ -281,6 +281,8 @@
        ====================================================== */
     [data-theme^="glass"] .title-bar .project-dropdown,
     [data-theme^="glass"] .title-bar .theme-select,
+    [data-theme^="glass"] .title-bar .pm6-tb-menu-trigger,
+    [data-theme^="glass"] .title-bar .pm6-tb-search-btn,
     [data-theme^="glass"] .title-bar .search-bar {
       background: var(--pm6-glass-step-2);
       border: 1px solid var(--glass-hairline);
@@ -775,13 +777,47 @@
     [data-theme^="glass"] .primary-content {
       padding: 2px;
     }
+    /* pm7 A1: keep the 5px glass col / 2px row lines inside the shared
+       expanded grab-zone geometry (content-box clip) */
     [data-theme^="glass"] .resizer-col {
-      width: 5px;
+      width: 12px;
+      margin: 0 -3.5px;
+      padding: 0 3.5px;
       background: transparent;
+      background-clip: content-box;
     }
     [data-theme^="glass"] .resizer-row {
-      height: 2px;
+      height: 9px;
+      margin: -3.5px 0;
+      padding: 3.5px 0;
       background: transparent;
+      background-clip: content-box;
+    }
+    /* Glass: slightly stronger halo so the grab-glow reads on the slab edge.
+       Must mirror the two-layer streak+bloom structure from pm6-css-bento —
+       a single closest-side gradient here would collapse to a round blob on
+       the new 46x180 halo box and lose the falloff along the bar. */
+    [data-theme^="glass"] .resizer-col::after {
+      background:
+        radial-gradient(ellipse 4px 48% at 50% 50%,
+          rgba(var(--accent-primary-rgb), .92),
+          rgba(var(--accent-primary-rgb), .34) 40%,
+          rgba(var(--accent-primary-rgb), 0) 100%),
+        radial-gradient(ellipse 55% 22% at 50% 50%,
+          rgba(var(--accent-primary-rgb), .48),
+          rgba(var(--accent-primary-rgb), .18) 55%,
+          rgba(var(--accent-primary-rgb), 0) 100%);
+    }
+    [data-theme^="glass"] .resizer-row::after {
+      background:
+        radial-gradient(ellipse 48% 4px at 50% 50%,
+          rgba(var(--accent-primary-rgb), .92),
+          rgba(var(--accent-primary-rgb), .34) 40%,
+          rgba(var(--accent-primary-rgb), 0) 100%),
+        radial-gradient(ellipse 22% 55% at 50% 50%,
+          rgba(var(--accent-primary-rgb), .48),
+          rgba(var(--accent-primary-rgb), .18) 55%,
+          rgba(var(--accent-primary-rgb), 0) 100%);
     }
     [data-theme^="glass"] .terminal-pane {
       padding-top: var(--xs);

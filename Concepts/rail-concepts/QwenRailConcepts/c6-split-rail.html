@@ -1,0 +1,611 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="friendly-dark">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>C6 · Split Rail — Puppet Master Rail Concepts</title>
+<script>(function(){try{var ok=['friendly-dark','friendly-light','retro-dark','retro-light','basic-light','basic-dark','glass-dark','glass-light'];var t=localStorage.getItem('pm.theme');if(ok.indexOf(t)===-1)t='friendly-dark';var d=document.documentElement;d.setAttribute('data-theme',t);d.style.colorScheme=/-dark$/.test(t)?'dark':'light';}catch(e){}})();</script>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="preload" as="style" href="https://fonts.googleapis.com/css2?family=Cal+Sans&family=Inter:wght@400;500;600;700&family=Nunito:wght@400;600;700;800&family=Orbitron:wght@500;700&family=Quicksand:wght@400;500;600;700&family=Rajdhani:wght@400;500;600;700&display=swap" onload="this.onload=null;this.rel='stylesheet'">
+<noscript><link href="https://fonts.googleapis.com/css2?family=Cal+Sans&family=Inter:wght@400;500;600;700&family=Nunito:wght@400;600;700;800&family=Orbitron:wght@500;700&family=Quicksand:wght@400;500;600;700&family=Rajdhani:wght@400;500;600;700&display=swap" rel="stylesheet"></noscript>
+<link rel="stylesheet" href="_shared/themes.css">
+<link rel="stylesheet" href="_shared/base.css">
+<style>
+/* =====================================================================
+   C6 — SPLIT RAIL
+   The panel itself carries a thin vertical glyph gutter — a recursive
+   secondary nav of the panel's own sections — beside a dense, keyboard-
+   first content column. The gutter gives constant orientation, so the
+   content can be information-dense (tight rows, mono values) without
+   feeling lost. Arrow Up/Down on the gutter moves sections. At max width
+   the gutter grows abbreviated labels; at min width it's a glyph strip.
+   ===================================================================== */
+.side-panel-view { background: var(--surface); }
+
+.sr-shell { flex: 1; display: flex; min-height: 0; }
+.sr-gutter {
+  flex: none; width: var(--sr-g, 42px);
+  background: var(--surface-alt, var(--surface));
+  border-right: 1px solid var(--border-light);
+  display: flex; flex-direction: column; align-items: stretch;
+  padding: var(--sm) 0; gap: 2px; overflow: hidden;
+}
+[data-theme^="friendly"] .sr-gutter { background: color-mix(in srgb, var(--pm6-cozy-card-base) 60%, transparent); border-right-color: var(--pm6-cozy-chrome-border); }
+[data-theme^="glass"] .sr-gutter { background: rgba(var(--glass-tint-rgb), calc(var(--glass-alpha) * .5)); border-right-color: var(--glass-hairline); }
+.sr-gbtn {
+  position: relative; flex: none; width: 100%;
+  display: flex; flex-direction: column; align-items: center; gap: 2px;
+  padding: 8px 0; color: var(--text-secondary); cursor: pointer;
+  border-left: 2px solid transparent;
+  font-family: var(--display-font); font-size: 7.5px; font-weight: 700; letter-spacing: .4px;
+  transition: color var(--motion-fast) var(--ease-out), background var(--motion-fast) var(--ease-out);
+}
+.sr-gbtn svg { width: 15px; height: 15px; }
+.sr-gbtn .gl { display: none; line-height: 1; text-transform: uppercase; }
+.sr-gbtn .gc { position: absolute; top: 4px; right: 6px; min-width: 12px; height: 12px; padding: 0 3px; border-radius: var(--radius-pill); background: color-mix(in srgb, var(--accent-primary) 22%, transparent); color: var(--accent-primary); font-family: var(--mono-font); font-size: 8px; font-weight: 700; display: flex; align-items: center; justify-content: center; }
+.sr-gbtn:hover { color: var(--text-primary); background: var(--accent-soft); }
+.sr-gbtn.active { color: var(--accent-primary); border-left-color: var(--accent-primary); background: var(--accent-soft); }
+.sr-gbtn:focus-visible { outline: 2px solid var(--accent-primary); outline-offset: -2px; }
+
+.sr-content { flex: 1; min-width: 0; position: relative; }
+.sr-pane { position: absolute; inset: 0; display: flex; flex-direction: column; padding: var(--md) var(--lg) var(--lg); }
+.sr-pane.pm-hidden { display: none; }
+.sr-ph { flex: none; display: flex; align-items: center; gap: var(--md); margin-bottom: var(--md); min-width: 0; }
+.sr-pt { font-family: var(--display-font); font-size: 10px; font-weight: 700; letter-spacing: 1px; color: var(--text-primary); flex: 1 1 auto; min-width: 0; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+.sr-pc { font-family: var(--mono-font); font-size: 9px; color: var(--text-muted); flex: none; }
+.sr-scroll { flex: 1; min-height: 0; overflow-y: auto; overflow-x: hidden; }
+
+/* dense rows */
+.sr-row { display: flex; align-items: center; gap: var(--sm); padding: 4px 2px; border-bottom: 1px solid var(--border-light); min-width: 0; cursor: default; }
+.sr-row:last-child { border-bottom: none; }
+.sr-row.click { cursor: pointer; }
+.sr-row.click:hover { background: var(--accent-soft); }
+.sr-ri { width: 12px; height: 12px; flex: none; color: var(--text-muted); }
+.sr-dot { width: 7px; height: 7px; border-radius: 50%; flex: none; }
+.sr-main { min-width: 0; flex: 1; display: flex; flex-direction: column; }
+.sr-name { font-size: 11px; font-weight: 600; color: var(--text-primary); white-space: nowrap; overflow: hidden; text-overflow: ellipsis; display: flex; align-items: center; gap: 5px; }
+.sr-sub { font-size: 9px; color: var(--text-muted); white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+.sr-val { font-family: var(--mono-font); font-size: 9.5px; color: var(--text-secondary); flex: none; max-width: 46%; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+.sr-mono { font-family: var(--mono-font); }
+.sr-kv { display: flex; justify-content: space-between; gap: var(--md); font-size: 10.5px; padding: 3px 2px; border-bottom: 1px dashed var(--border-light); }
+.sr-kv:last-child { border-bottom: none; }
+.sr-k { color: var(--text-muted); flex: none; }
+.sr-v { color: var(--text-primary); text-align: right; min-width: 0; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+
+.sr-group { font-family: var(--display-font); font-size: 8px; letter-spacing: 1.3px; color: var(--text-muted); padding: var(--md) 2px 3px; display: flex; align-items: center; gap: var(--sm); }
+.sr-group::after { content: ''; flex: 1; height: 1px; background: var(--border-light); }
+
+.sr-pane .pm-btn { padding: 5px 9px; min-height: 24px; font-size: 9.5px; }
+.sr-btns { display: flex; flex-wrap: wrap; gap: var(--sm); margin-top: var(--md); }
+.sr-btns .pm-btn { flex: 1 1 auto; min-width: 0; overflow: hidden; text-overflow: ellipsis; }
+.sr-acts { display: flex; flex-wrap: wrap; gap: var(--sm); margin-top: var(--sm); }
+.sr-acts .pm-btn { padding: 4px 8px; min-height: 22px; font-size: 9px; }
+
+.sr-flags { display: flex; align-items: center; gap: var(--sm); margin-top: var(--sm); }
+.sr-flag { font-family: var(--mono-font); font-size: 10px; font-weight: 700; padding: 3px 8px; border: 1px solid var(--border-light); border-radius: var(--radius-xs); color: var(--text-muted); }
+.sr-flag.on { color: var(--accent-primary); background: var(--accent-soft); border-color: color-mix(in srgb, var(--accent-primary) 40%, transparent); }
+.sr-scope .pm6-tb-menu-trigger { border: 1px solid var(--border-light); border-radius: var(--radius-xs); margin-left: auto; padding: 3px 8px; font-family: var(--mono-font); font-size: 9.5px; }
+
+.sr-hit { display: flex; gap: var(--sm); align-items: baseline; padding: 2px 2px 2px 16px; border-radius: var(--radius-xs); cursor: pointer; }
+.sr-hit:hover { background: var(--accent-soft); }
+.sr-ln { font-family: var(--mono-font); font-size: 9px; color: var(--text-muted); min-width: 22px; text-align: right; flex: none; }
+.sr-hit code { font-family: var(--mono-font); font-size: 9.5px; color: var(--text-secondary); white-space: nowrap; overflow: hidden; text-overflow: ellipsis; min-width: 0; }
+.sr-hit em { font-style: normal; color: var(--text-primary); background: color-mix(in srgb, var(--accent-warning) 24%, transparent); border-radius: 2px; padding: 0 1px; }
+.sr-file { display: flex; align-items: center; gap: var(--sm); font-family: var(--mono-font); font-size: 10px; color: var(--accent-blue); padding: 5px 2px 2px; cursor: pointer; }
+.sr-file svg { width: 11px; height: 11px; }
+.sr-file b { margin-left: auto; font-weight: 400; color: var(--text-muted); }
+
+.sr-log { font-family: var(--mono-font); font-size: 9px; line-height: 1.5; background: color-mix(in srgb, var(--graph-failed) 6%, var(--surface-elevated)); border-left: 2px solid var(--graph-failed); border-radius: var(--radius-xs); padding: var(--sm) var(--md); margin: var(--sm) 0; }
+.sr-log div { white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+.sr-log .fail { color: var(--graph-failed); }
+
+/* expandable worktree rows */
+.sr-wt { border: 1px solid var(--border-light); border-radius: var(--radius-xs); margin-bottom: var(--sm); }
+.sr-wt-h { display: flex; align-items: center; gap: var(--sm); padding: 5px 7px; cursor: pointer; min-width: 0; }
+.sr-wt-h .chev { width: 10px; height: 10px; color: var(--text-muted); transition: transform var(--motion-med) var(--ease-default); flex: none; }
+.sr-wt.open .chev { transform: rotate(90deg); }
+.sr-wt-b { display: none; padding: 2px 7px 7px; }
+.sr-wt.open .sr-wt-b { display: block; }
+
+.sr-graph { font-family: var(--mono-font); font-size: 9.5px; display: flex; flex-direction: column; gap: 3px; }
+.sr-gn { display: flex; align-items: center; gap: var(--sm); }
+.sr-gn .dot { width: 7px; height: 7px; }
+.sr-gind { padding-left: 14px; position: relative; }
+.sr-gind::before { content: ''; position: absolute; left: 3px; top: -6px; width: 7px; height: 11px; border-left: 1px solid var(--border); border-bottom: 1px solid var(--border); }
+
+.sr-chain { position: relative; padding-left: 20px; }
+.sr-chain::before { content: ''; position: absolute; left: 7px; top: 9px; bottom: 9px; width: 1px; background: var(--border-light); }
+.sr-stage { position: relative; display: flex; align-items: center; gap: var(--sm); padding: 3px 0; min-width: 0; }
+.sr-stage i { position: absolute; left: -20px; width: 14px; height: 14px; display: flex; align-items: center; justify-content: center; font-family: var(--mono-font); font-size: 8px; font-style: normal; border-radius: 50%; background: var(--surface-elevated); border: 1px solid var(--border); color: var(--text-muted); }
+.sr-stage.done i { border-color: var(--graph-passed); color: var(--graph-passed); }
+.sr-stage.now i { border-color: var(--graph-running); color: var(--graph-running); }
+.sr-stage-l { font-size: 10px; color: var(--text-secondary); flex: 1; min-width: 0; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+
+.sr-fam { font-family: var(--mono-font); font-size: 8px; padding: 1px 5px; border-radius: 2px; background: color-mix(in srgb, var(--accent-blue) 14%, transparent); color: var(--accent-blue); flex: none; }
+
+.side-panel-slot[data-wtier="min"] { --sr-g: 32px; }
+.side-panel-slot[data-wtier="min"] .sr-pane { padding: var(--sm) var(--md) var(--md); }
+.side-panel-slot[data-wtier="min"] .sr-gbtn svg { width: 13px; height: 13px; }
+.side-panel-slot[data-wtier="min"] .sr-gbtn .gc { right: 3px; }
+.side-panel-slot[data-wtier="min"] .sr-val,
+.side-panel-slot[data-wtier="min"] .sr-sub,
+.side-panel-slot[data-wtier="min"] .sr-pc { display: none; }
+.side-panel-slot[data-wtier="wide"] { --sr-g: 60px; }
+.side-panel-slot[data-wtier="wide"] .sr-gbtn .gl { display: block; }
+</style>
+</head>
+<body>
+<div id="app"></div>
+<template id="rail-panels">
+
+  <!-- SEARCH -->
+  <div class="side-panel-view" id="panel-search">
+    <div class="sr-shell">
+      <div class="sr-gutter" role="tablist" aria-label="Search sections">
+        <button class="sr-gbtn active" data-tab="q" role="tab" title="Query"><i data-ico="search"></i><span class="gl">Query</span></button>
+        <button class="sr-gbtn" data-tab="r" role="tab" title="Results"><i data-ico="layers"></i><span class="gl">Hits</span><span class="gc">16</span></button>
+        <button class="sr-gbtn" data-tab="i" role="tab" title="Index"><i data-ico="refresh"></i><span class="gl">Index</span></button>
+      </div>
+      <div class="sr-content">
+        <div class="sr-pane" data-pane="q">
+          <div class="sr-ph"><span class="sr-pt">QUERY</span><span class="sr-pc">find in files</span></div>
+          <div class="sr-scroll"><label class="pm-input"><i data-ico="search" class="pm-ico sm"></i><input placeholder="Search in files..." value="quantity" aria-label="Search in files"></label>
+            <div class="sr-flags">
+              <button class="sr-flag" title="Regex" onclick="this.classList.toggle('on')">.*</button>
+              <button class="sr-flag" title="Case sensitive" onclick="this.classList.toggle('on')">Aa</button>
+              <button class="sr-flag" title="Whole word" onclick="this.classList.toggle('on')">\b</button>
+              <div class="pm6-tb-menu-wrap sr-scope"><button type="button" class="pm6-tb-menu-trigger" aria-controls="srScopeMenu"><span class="pm6-tb-menu-label">All Files</span><i data-ico="chevD" class="pm-ico sm"></i></button>
+                <div class="pm6-tb-menu" id="srScopeMenu" role="menu" aria-label="Search scope" data-pm-menu-select>
+                  <button type="button" class="pm6-tb-menu-item is-selected" role="menuitem" data-value="all" data-label="All Files" data-demo-action="cmd.search.set_scope" data-demo-arg="cmd.search.set_scope -> all">All Files</button>
+                  <button type="button" class="pm6-tb-menu-item" role="menuitem" data-value="open" data-label="Open Files" data-demo-action="cmd.search.set_scope" data-demo-arg="cmd.search.set_scope -> open">Open Files</button>
+                  <button type="button" class="pm6-tb-menu-item" role="menuitem" data-value="src" data-label="src/ only" data-demo-action="cmd.search.set_scope" data-demo-arg="cmd.search.set_scope -> src/">src/ only</button>
+                  <button type="button" class="pm6-tb-menu-item" role="menuitem" data-value="web" data-label="web/ only" data-demo-action="cmd.search.set_scope" data-demo-arg="cmd.search.set_scope -> web/">web/ only</button>
+                </div></div>
+            </div>
+            <div class="sr-btns"><button class="pm-btn" data-demo-action="cmd.search.replace_selected" data-demo-arg="cmd.search.replace_selected -> current match">Replace</button><button class="pm-btn pm-btn-primary" data-demo-action="cmd.search.replace_all" data-demo-arg="cmd.search.replace_all -> 7 across 3">Replace all</button></div>
+            <div class="sr-btns"><button class="pm-btn" data-demo-action="cmd.search.previous_result" data-demo-arg="cmd.search.previous_result">Prev</button><button class="pm-btn" data-demo-action="cmd.search.next_result" data-demo-arg="cmd.search.next_result">Next</button></div>
+          </div>
+        </div>
+        <div class="sr-pane pm-hidden" data-pane="r">
+          <div class="sr-ph"><span class="sr-pt">RESULTS</span><span class="sr-pc">16 in 6</span></div>
+          <div class="sr-scroll">
+            <div class="sr-file" data-demo-action="cmd.search.open_result" data-demo-arg="cmd.search.open_result -> import.rs"><i data-ico="file"></i>src/services/import.rs<b>3</b></div>
+            <div class="sr-hit" data-demo-action="cmd.search.open_result" data-demo-arg="cmd.search.open_result -> import.rs:41"><span class="sr-ln">41</span><code>fn parse_<em>quantity</em>(raw: &amp;str) -> Result&lt;Quantity, NormalizeUnitsError&gt; {</code></div>
+            <div class="sr-hit" data-demo-action="cmd.search.open_result" data-demo-arg="cmd.search.open_result -> import.rs:58"><span class="sr-ln">58</span><code>// "1 1/2 cup" -> <em>quantity</em> 11/2 via normalize_units mixed_fractions parser</code></div>
+            <div class="sr-hit" data-demo-action="cmd.search.open_result" data-demo-arg="cmd.search.open_result -> import.rs:73"><span class="sr-ln">73</span><code>normalize_units(<em>quantity</em>, unit)</code></div>
+            <div class="sr-file" data-demo-action="cmd.search.open_result" data-demo-arg="cmd.search.open_result -> recipes.rs"><i data-ico="file"></i>src/routes/recipes.rs<b>2</b></div>
+            <div class="sr-hit" data-demo-action="cmd.search.open_result" data-demo-arg="cmd.search.open_result -> recipes.rs:112"><span class="sr-ln">112</span><code>pub <em>quantity</em>: f32,</code></div>
+            <div class="sr-hit" data-demo-action="cmd.search.open_result" data-demo-arg="cmd.search.open_result -> recipes.rs:240"><span class="sr-ln">240</span><code>ingredient.<em>quantity</em> * ratio</code></div>
+            <div class="sr-file" data-demo-action="cmd.search.open_result" data-demo-arg="cmd.search.open_result -> Editor.svelte"><i data-ico="file"></i>web/src/lib/Editor.svelte<b>2</b></div>
+            <div class="sr-hit" data-demo-action="cmd.search.open_result" data-demo-arg="cmd.search.open_result -> Editor.svelte:88"><span class="sr-ln">88</span><code>bind:value={row.<em>quantity</em>}</code></div>
+            <div class="sr-file" data-demo-action="cmd.search.open_result" data-demo-arg="cmd.search.open_result -> QuantityStepper.svelte"><i data-ico="file"></i>web/src/lib/components/recipe/editor/QuantityStepper.svelte<b>4</b></div>
+            <div class="sr-hit" data-demo-action="cmd.search.open_result" data-demo-arg="cmd.search.open_result -> QuantityStepper.svelte:12"><span class="sr-ln">12</span><code>export let <em>quantity</em>: number;</code></div>
+            <div class="sr-hit" data-demo-action="cmd.search.open_result" data-demo-arg="cmd.search.open_result -> QuantityStepper.svelte:33"><span class="sr-ln">33</span><code>function step<em>Quantity</em>(delta: number, unit: string): void {</code></div>
+            <div class="sr-hit" data-demo-action="cmd.search.open_result" data-demo-arg="cmd.search.open_result -> QuantityStepper.svelte:47"><span class="sr-ln">47</span><code>const next = clamp(<em>quantity</em> + delta, min, max) // mixed_fractions aware stepper</code></div>
+            <div class="sr-hit" data-demo-action="cmd.search.open_result" data-demo-arg="cmd.search.open_result -> QuantityStepper.svelte:90"><span class="sr-ln">90</span><code>on:change={() => commit<em>Quantity</em>(value)}</code></div>
+            <div class="sr-file" data-demo-action="cmd.search.open_result" data-demo-arg="cmd.search.open_result -> mixed_fractions.rs"><i data-ico="file"></i>src/services/import/normalize_units/mixed_fractions.rs<b>3</b></div>
+            <div class="sr-hit" data-demo-action="cmd.search.open_result" data-demo-arg="cmd.search.open_result -> mixed_fractions.rs:19"><span class="sr-ln">19</span><code>pub fn parse_mixed_<em>quantity</em>(raw: &amp;str) -> Result&lt;f64, ParseError&gt; {</code></div>
+            <div class="sr-hit" data-demo-action="cmd.search.open_result" data-demo-arg="cmd.search.open_result -> mixed_fractions.rs:58"><span class="sr-ln">58</span><code>// "1 1/2 cup" => <em>quantity</em> 1.5 (property: never explodes on mixed fractions)</code></div>
+            <div class="sr-hit" data-demo-action="cmd.search.open_result" data-demo-arg="cmd.search.open_result -> mixed_fractions.rs:104"><span class="sr-ln">104</span><code>assert_eq!(<em>quantity</em>, 1.5);</code></div>
+            <div class="sr-file" data-demo-action="cmd.search.open_result" data-demo-arg="cmd.search.open_result -> projection_freshness.rs"><i data-ico="file"></i>crates/puppet-core/src/artifacts/projection_freshness.rs<b>3</b></div>
+            <div class="sr-hit" data-demo-action="cmd.search.open_result" data-demo-arg="cmd.search.open_result -> projection_freshness.rs:27"><span class="sr-ln">27</span><code>fn projection_<em>quantity</em>_freshness(rows: &amp;[ReceiptRow]) -> Freshness {</code></div>
+            <div class="sr-hit" data-demo-action="cmd.search.open_result" data-demo-arg="cmd.search.open_result -> projection_freshness.rs:66"><span class="sr-ln">66</span><code>stale_if(<em>quantity</em>_age &gt; TTL)</code></div>
+            <div class="sr-hit" data-demo-action="cmd.search.open_result" data-demo-arg="cmd.search.open_result -> projection_freshness.rs:88"><span class="sr-ln">88</span><code>matrix.push((<em>quantity</em>_freshness, projection_health)) // runtime receipt rows</code></div>
+          </div>
+        </div>
+        <div class="sr-pane pm-hidden" data-pane="i">
+          <div class="sr-ph"><span class="sr-pt">INDEX</span><span class="sr-pc">tantivy</span></div>
+          <div class="sr-scroll">
+            <div class="sr-kv"><span class="sr-k">Status</span><span class="sr-v"><span class="pm-chip pm-chip-ok">READY</span></span></div>
+            <div class="sr-kv"><span class="sr-k">Documents</span><span class="sr-v">1,284</span></div>
+            <div class="sr-kv"><span class="sr-k">Last indexed</span><span class="sr-v">abc12ef · 4m</span></div>
+            <div class="sr-kv"><span class="sr-k">Engine</span><span class="sr-v sr-mono">tantivy</span></div>
+            <div class="sr-btns"><button class="pm-btn" data-demo-action="cmd.search.rebuild_index" data-demo-arg="cmd.search.rebuild_index -> rebuild queued"><i data-ico="refresh" class="pm-ico sm"></i>Rebuild index</button></div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- SOURCE -->
+  <div class="side-panel-view" id="panel-source">
+    <div class="sr-shell">
+      <div class="sr-gutter" role="tablist" aria-label="Source sections">
+        <button class="sr-gbtn active" data-tab="ch" role="tab" title="Changes"><i data-ico="diff"></i><span class="gl">Chg</span><span class="gc">9</span></button>
+        <button class="sr-gbtn" data-tab="cm" role="tab" title="Commit"><i data-ico="check"></i><span class="gl">Commit</span></button>
+        <button class="sr-gbtn" data-tab="wt" role="tab" title="Worktrees"><i data-ico="layers"></i><span class="gl">Wtree</span><span class="gc">6</span></button>
+        <button class="sr-gbtn" data-tab="hi" role="tab" title="History"><i data-ico="clock"></i><span class="gl">Hist</span></button>
+        <button class="sr-gbtn" data-tab="gr" role="tab" title="Graph"><i data-ico="source"></i><span class="gl">Graph</span></button>
+        <button class="sr-gbtn" data-tab="br" role="tab" title="Branches"><i data-ico="branch"></i><span class="gl">Branch</span></button>
+      </div>
+      <div class="sr-content">
+        <div class="sr-pane" data-pane="ch">
+          <div class="sr-ph"><span class="sr-pt">CHANGES</span><span class="sr-pc">5 in 4 out</span></div>
+          <div class="sr-scroll">
+            <div class="pm6-tb-menu-wrap" style="display:block;margin-bottom:var(--sm)"><button type="button" class="pm6-tb-menu-trigger" style="width:100%;justify-content:space-between;border:1px solid var(--border-light);border-radius:var(--radius-xs)" aria-controls="srBranchMenu"><span style="display:inline-flex;align-items:center;gap:6px"><i data-ico="branch" class="pm-ico sm"></i><span class="pm6-tb-menu-label sr-mono">main</span></span><i data-ico="chevD" class="pm-ico sm"></i></button>
+              <div class="pm6-tb-menu pm6-tb-menu-left" id="srBranchMenu" role="menu" aria-label="Switch branch" data-pm-menu-select style="min-width:220px">
+                <button type="button" class="pm6-tb-menu-item is-selected" role="menuitem" data-value="main" data-label="main" data-demo-action="demo.toast" data-demo-arg="cmd.git.switch_branch -> main">main <span class="pm6-tb-menu-meta">current</span></button>
+                <button type="button" class="pm6-tb-menu-item" role="menuitem" data-value="lane-b" data-label="orch/lane-b-api" data-demo-action="demo.toast" data-demo-arg="cmd.git.switch_branch -> orch/lane-b-api (read-only)">orch/lane-b-api <span class="pm6-tb-menu-meta">run #47</span></button>
+                <button type="button" class="pm6-tb-menu-item" role="menuitem" data-value="lane-d" data-label="orch/lane-d-infra" data-demo-action="demo.toast" data-demo-arg="cmd.git.switch_branch -> orch/lane-d-infra (read-only)">orch/lane-d-infra <span class="pm6-tb-menu-meta">run #47</span></button>
+                <button type="button" class="pm6-tb-menu-item" role="menuitem" data-value="import" data-label="thread/import-fixes" data-demo-action="demo.toast" data-demo-arg="cmd.git.switch_branch -> thread/import-fixes">thread/import-fixes <span class="pm6-tb-menu-meta">thread</span></button>
+                <button type="button" class="pm6-tb-menu-item" role="menuitem" data-value="spike" data-label="spike/r2-storage" data-demo-action="demo.toast" data-demo-arg="cmd.git.switch_branch -> spike/r2-storage">spike/r2-storage <span class="pm6-tb-menu-meta">manual</span></button>
+              </div></div>
+            <div class="sr-group">STAGED · 5</div>
+            <div class="sr-row"><span class="sr-dot" style="background:var(--accent-lime)"></span><span class="sr-main"><span class="sr-name">recipes.rs <span class="pm-gs pm-gs-mod">M</span></span></span><button class="pm-minibtn" title="Unstage" data-demo-action="cmd.git.unstage_hunks" data-demo-arg="cmd.git.unstage_hunks -> recipes.rs"><i data-ico="minus" class="pm-ico sm"></i></button><button class="pm-minibtn danger" title="Discard" data-demo-action="cmd.git.discard_hunks" data-demo-arg="cmd.git.discard_hunks -> recipes.rs"><i data-ico="x" class="pm-ico sm"></i></button></div>
+            <div class="sr-row"><span class="sr-dot" style="background:var(--accent-lime)"></span><span class="sr-main"><span class="sr-name">RecipeCard.svelte <span class="pm-gs pm-gs-staged">A</span></span></span><button class="pm-minibtn" title="Unstage" data-demo-action="cmd.git.unstage_hunks" data-demo-arg="cmd.git.unstage_hunks -> RecipeCard.svelte"><i data-ico="minus" class="pm-ico sm"></i></button><button class="pm-minibtn danger" title="Discard" data-demo-action="cmd.git.discard_hunks" data-demo-arg="cmd.git.discard_hunks -> RecipeCard.svelte"><i data-ico="x" class="pm-ico sm"></i></button></div>
+            <div class="sr-row"><span class="sr-dot" style="background:var(--accent-lime)"></span><span class="sr-main"><span class="sr-name">src/services/import/normalize_units/mixed_fractions.rs <span class="pm-gs pm-gs-mod">M</span></span></span><button class="pm-minibtn" title="Unstage" data-demo-action="cmd.git.unstage_hunks" data-demo-arg="cmd.git.unstage_hunks -> mixed_fractions.rs"><i data-ico="minus" class="pm-ico sm"></i></button><button class="pm-minibtn danger" title="Discard" data-demo-action="cmd.git.discard_hunks" data-demo-arg="cmd.git.discard_hunks -> mixed_fractions.rs"><i data-ico="x" class="pm-ico sm"></i></button></div>
+            <div class="sr-row"><span class="sr-dot" style="background:var(--accent-lime)"></span><span class="sr-main"><span class="sr-name">web/src/routes/(app)/recipes/[id]/edit/+page.server.ts <span class="pm-gs pm-gs-staged">A</span></span></span><button class="pm-minibtn" title="Unstage" data-demo-action="cmd.git.unstage_hunks" data-demo-arg="cmd.git.unstage_hunks -> +page.server.ts"><i data-ico="minus" class="pm-ico sm"></i></button><button class="pm-minibtn danger" title="Discard" data-demo-action="cmd.git.discard_hunks" data-demo-arg="cmd.git.discard_hunks -> +page.server.ts"><i data-ico="x" class="pm-ico sm"></i></button></div>
+            <div class="sr-row"><span class="sr-dot" style="background:var(--accent-lime)"></span><span class="sr-main"><span class="sr-name">.github/workflows/ci-build-test-and-publish.yml <span class="pm-gs pm-gs-mod">M</span></span></span><button class="pm-minibtn" title="Unstage" data-demo-action="cmd.git.unstage_hunks" data-demo-arg="cmd.git.unstage_hunks -> ci-build-test-and-publish.yml"><i data-ico="minus" class="pm-ico sm"></i></button><button class="pm-minibtn danger" title="Discard" data-demo-action="cmd.git.discard_hunks" data-demo-arg="cmd.git.discard_hunks -> ci-build-test-and-publish.yml"><i data-ico="x" class="pm-ico sm"></i></button></div>
+            <div class="sr-group">UNSTAGED · 4</div>
+            <div class="sr-row"><span class="sr-dot" style="background:var(--accent-warning)"></span><span class="sr-main"><span class="sr-name">image.rs <span class="pm-gs pm-gs-mod">M</span></span></span><button class="pm-minibtn" title="Stage" data-demo-action="cmd.git.stage_hunks" data-demo-arg="cmd.git.stage_hunks -> image.rs"><i data-ico="plus" class="pm-ico sm"></i></button><button class="pm-minibtn danger" title="Discard" data-demo-action="cmd.git.discard_hunks" data-demo-arg="cmd.git.discard_hunks -> image.rs"><i data-ico="x" class="pm-ico sm"></i></button></div>
+            <div class="sr-row"><span class="sr-dot" style="background:var(--accent-warning)"></span><span class="sr-main"><span class="sr-name">crates/puppet-core/src/artifacts/projection_freshness.rs <span class="pm-gs pm-gs-mod">M</span></span></span><button class="pm-minibtn" title="Stage" data-demo-action="cmd.git.stage_hunks" data-demo-arg="cmd.git.stage_hunks -> projection_freshness.rs"><i data-ico="plus" class="pm-ico sm"></i></button><button class="pm-minibtn danger" title="Discard" data-demo-action="cmd.git.discard_hunks" data-demo-arg="cmd.git.discard_hunks -> projection_freshness.rs"><i data-ico="x" class="pm-ico sm"></i></button></div>
+            <div class="sr-row"><span class="sr-dot" style="background:var(--accent-warning)"></span><span class="sr-main"><span class="sr-name">web/src/lib/components/recipe/editor/QuantityStepper.svelte <span class="pm-gs pm-gs-mod">M</span></span></span><button class="pm-minibtn" title="Stage" data-demo-action="cmd.git.stage_hunks" data-demo-arg="cmd.git.stage_hunks -> QuantityStepper.svelte"><i data-ico="plus" class="pm-ico sm"></i></button><button class="pm-minibtn danger" title="Discard" data-demo-action="cmd.git.discard_hunks" data-demo-arg="cmd.git.discard_hunks -> QuantityStepper.svelte"><i data-ico="x" class="pm-ico sm"></i></button></div>
+            <div class="sr-row"><span class="sr-dot" style="background:var(--accent-warning)"></span><span class="sr-main"><span class="sr-name">src/services/import.rs <span class="pm-gs pm-gs-mod">M</span></span></span><button class="pm-minibtn" title="Stage" data-demo-action="cmd.git.stage_hunks" data-demo-arg="cmd.git.stage_hunks -> import.rs"><i data-ico="plus" class="pm-ico sm"></i></button><button class="pm-minibtn danger" title="Discard" data-demo-action="cmd.git.discard_hunks" data-demo-arg="cmd.git.discard_hunks -> import.rs"><i data-ico="x" class="pm-ico sm"></i></button></div>
+            <div class="sr-kv" style="margin-top:var(--sm)"><span class="sr-k">Projection</span><span class="sr-v"><span class="pm-chip pm-chip-ok">current</span> <span class="pm-chip pm-chip-ok">healthy</span></span></div>
+            <div class="sr-btns"><button class="pm-btn" data-demo-action="demo.toast" data-demo-arg="cmd.git.pull -> up to date">Pull</button><button class="pm-btn" data-demo-action="demo.toast" data-demo-arg="cmd.git.push -> 2 pushed">Push</button><button class="pm-btn" data-demo-action="demo.toast" data-demo-arg="cmd.git.fetch -> refreshed">Fetch</button></div>
+          </div>
+        </div>
+        <div class="sr-pane pm-hidden" data-pane="cm">
+          <div class="sr-ph"><span class="sr-pt">COMMIT</span><span class="sr-pc">3 files</span></div>
+          <div class="sr-scroll"><label class="pm-input"><input aria-label="Commit message" placeholder="Commit message..."></label>
+            <div class="sr-btns"><button class="pm-minibtn" title="Generate with AI" data-demo-action="cmd.source_control.generate_commit_message" data-demo-arg="cmd.source_control.generate_commit_message"><i data-ico="spark" class="pm-ico sm"></i></button><button class="pm-btn pm-btn-primary" style="flex:1" data-demo-action="panels.git_commit" data-demo-arg="cmd.git.commit -> committed 3 files"><i data-ico="check" class="pm-ico sm"></i>Commit</button></div>
+            <div class="pm-footnote">git mutations do not join editor undo.</div>
+          </div>
+        </div>
+        <div class="sr-pane pm-hidden" data-pane="wt">
+          <div class="sr-ph"><span class="sr-pt">WORKTREES</span><span class="sr-pc">6 active</span></div>
+          <div class="sr-scroll">
+            <div class="pm-chiprow" style="padding:0 0 var(--sm)"><button class="pm-chipbtn active">All</button><button class="pm-chipbtn">Threads</button><button class="pm-chipbtn">Orch</button><button class="pm-chipbtn">Manual</button></div>
+            <div class="sr-wt" data-acc><div class="sr-wt-h" data-collapse><i data-ico="chevR" class="pm-ico chev"></i><span class="pm-chip pm-chip-ok" style="font-size:8px">clean</span><span class="sr-name sr-mono">orch/lane-b-api</span></div><div class="sr-wt-b"><div class="sr-kv"><span class="sr-k">Path</span><span class="sr-v sr-mono">.worktrees/lane-b-api</span></div><div class="sr-kv"><span class="sr-k">Base</span><span class="sr-v">main · 2h</span></div><div class="sr-acts"><button class="pm-btn" data-demo-action="demo.toast" data-demo-arg="cmd.git.worktree.open -> lane-b (read-only)">Open</button><button class="pm-btn" data-demo-action="cmd.git.open_diff" data-demo-arg="cmd.git.open_diff -> +310 -42">Compare</button><button class="pm-btn" data-demo-action="page.go" data-demo-arg="Opening lane: lane-b API">Lane</button><button class="pm-btn" aria-disabled="true" data-demo-reason="blocked_by_gate" data-demo-action="demo.reason" data-demo-arg="Owned by run #47">Remove</button></div></div></div>
+            <div class="sr-wt" data-acc><div class="sr-wt-h" data-collapse><i data-ico="chevR" class="pm-ico chev"></i><span class="pm-chip pm-chip-warn" style="font-size:8px">dirty</span><span class="sr-name sr-mono">orch/lane-d-infra</span></div><div class="sr-wt-b"><div class="sr-kv"><span class="sr-k">PR</span><span class="sr-v">none yet — run #47</span></div><div class="sr-acts"><button class="pm-btn" data-demo-action="demo.toast" data-demo-arg="cmd.git.worktree.open -> lane-d">Open</button><button class="pm-btn" data-demo-action="cmd.git.open_diff" data-demo-arg="cmd.git.open_diff -> +188 -23">Compare</button><button class="pm-btn" data-demo-action="git.create_pr" data-demo-arg="cmd.github.pr.create -> draft PR">Create PR</button></div></div></div>
+            <div class="sr-wt" data-acc><div class="sr-wt-h" data-collapse><i data-ico="chevR" class="pm-ico chev"></i><span class="pm-chip pm-chip-ok" style="font-size:8px">clean</span><span class="sr-name sr-mono">thread/import-fixes</span></div><div class="sr-wt-b"><div class="sr-acts"><button class="pm-btn" data-demo-action="demo.toast" data-demo-arg="cmd.git.worktree.open -> thread">Open</button><button class="pm-btn" data-demo-action="demo.toast" data-demo-arg="cmd.chat.open -> thread">Thread</button><button class="pm-btn" data-demo-action="cmd.git.worktree.remove" data-demo-arg="cmd.git.worktree.remove -> confirm">Remove</button></div></div></div>
+            <div class="sr-wt" data-acc><div class="sr-wt-h" data-collapse><i data-ico="chevR" class="pm-ico chev"></i><span class="pm-chip pm-chip-ok" style="font-size:8px">clean</span><span class="sr-name sr-mono">spike/r2-storage</span></div><div class="sr-wt-b"><div class="sr-acts"><button class="pm-btn" data-demo-action="demo.toast" data-demo-arg="cmd.git.worktree.open -> spike">Open</button><button class="pm-btn" data-demo-action="cmd.git.worktree.remove" data-demo-arg="cmd.git.worktree.remove -> confirm">Remove</button></div></div></div>
+            <div class="sr-wt" data-acc><div class="sr-wt-h" data-collapse><i data-ico="chevR" class="pm-ico chev"></i><span class="pm-chip pm-chip-warn" style="font-size:8px">dirty</span><span class="sr-name sr-mono">orch/lane-e-artifacts-projection</span></div><div class="sr-wt-b"><div class="sr-kv"><span class="sr-k">Path</span><span class="sr-v sr-mono">.worktrees/lane-e-artifacts-projection-freshness-matrix</span></div><div class="sr-kv"><span class="sr-k">Base</span><span class="sr-v">main · 40m</span></div><div class="sr-acts"><button class="pm-btn" data-demo-action="demo.toast" data-demo-arg="cmd.git.worktree.open -> lane-e (read-only)">Open</button><button class="pm-btn" data-demo-action="cmd.git.open_diff" data-demo-arg="cmd.git.open_diff -> +412 -88">Compare</button><button class="pm-btn" data-demo-action="page.go" data-demo-arg="Opening lane: lane-e artifacts">Lane</button></div></div></div>
+            <div class="sr-wt" data-acc><div class="sr-wt-h" data-collapse><i data-ico="chevR" class="pm-ico chev"></i><span class="pm-chip pm-chip-ok" style="font-size:8px">clean</span><span class="sr-name sr-mono">thread/fraction-parser-property-tests</span></div><div class="sr-wt-b"><div class="sr-kv"><span class="sr-k">Path</span><span class="sr-v sr-mono">.worktrees/thread-fraction-parser-property-tests</span></div><div class="sr-kv"><span class="sr-k">Base</span><span class="sr-v">import-fixes · 1h</span></div><div class="sr-acts"><button class="pm-btn" data-demo-action="demo.toast" data-demo-arg="cmd.git.worktree.open -> thread">Open</button><button class="pm-btn" data-demo-action="demo.toast" data-demo-arg="cmd.chat.open -> thread">Thread</button><button class="pm-btn" data-demo-action="cmd.git.worktree.remove" data-demo-arg="cmd.git.worktree.remove -> confirm">Remove</button></div></div></div>
+            <button class="pm-btn" style="width:100%;margin-top:var(--sm)" data-demo-action="demo.toast" data-demo-arg="cmd.git.worktree.create -> wizard">+ New Worktree</button>
+          </div>
+        </div>
+        <div class="sr-pane pm-hidden" data-pane="hi">
+          <div class="sr-ph"><span class="sr-pt">HISTORY</span><span class="sr-pc">recent</span></div>
+          <div class="sr-scroll">
+            <div class="sr-row click" data-demo-action="demo.toast" data-demo-arg="cmd.git.show_commit -> abc12ef"><span class="sr-main"><span class="sr-name sr-mono">abc12ef</span><span class="sr-sub">feat(search): tantivy query endpoint</span></span><span class="sr-val">4m</span></div>
+            <div class="sr-row click" data-demo-action="demo.toast" data-demo-arg="cmd.git.show_commit -> def34ab"><span class="sr-main"><span class="sr-name sr-mono">def34ab</span><span class="sr-sub">feat(ratings): schema + API + stars</span></span><span class="sr-val">2h</span></div>
+            <div class="sr-row click" data-demo-action="demo.toast" data-demo-arg="cmd.git.show_commit -> 789feed"><span class="sr-main"><span class="sr-name sr-mono">789feed</span><span class="sr-sub">chore: compose stack + registry cache</span></span><span class="sr-val">1d</span></div>
+            <div class="sr-row click" data-demo-action="demo.toast" data-demo-arg="cmd.git.show_commit -> a1b2c3d"><span class="sr-main"><span class="sr-name sr-mono">a1b2c3d</span><span class="sr-sub">refactor(import): split mixed-fraction normalization into a unit-aware parser with property-based tests</span></span><span class="sr-val">1d</span></div>
+            <div class="sr-row click" data-demo-action="demo.toast" data-demo-arg="cmd.git.show_commit -> e4f5a6b"><span class="sr-main"><span class="sr-name sr-mono">e4f5a6b</span><span class="sr-sub">feat(artifacts): add projection_freshness x projection_health matrix to runtime receipt rows</span></span><span class="sr-val">2d</span></div>
+            <div class="sr-row click" data-demo-action="demo.toast" data-demo-arg="cmd.git.show_commit -> c7d8e9f"><span class="sr-main"><span class="sr-name sr-mono">c7d8e9f</span><span class="sr-sub">chore(ci): pin buildx and enable multi-arch manifest-list digests for amd64 and arm64</span></span><span class="sr-val">3d</span></div>
+            <div class="sr-btns"><button class="pm-btn" data-demo-action="cmd.git.diff_set_compare_target" data-demo-arg="cmd.git.diff_set_compare_target">Set compare target</button></div>
+          </div>
+        </div>
+        <div class="sr-pane pm-hidden" data-pane="gr">
+          <div class="sr-ph"><span class="sr-pt">GRAPH</span></div>
+          <div class="sr-scroll"><div class="sr-graph"><div class="sr-gn"><span class="dot" style="background:var(--accent-blue)"></span>main · abc12ef</div><div class="sr-gn sr-gind"><span class="dot" style="background:var(--accent-magenta)"></span>orch/lane-b-api</div><div class="sr-gn sr-gind"><span class="dot" style="background:var(--accent-magenta)"></span>orch/lane-d-infra</div><div class="sr-gn sr-gind"><span class="dot" style="background:var(--accent-lime)"></span>thread/import-fixes</div></div>
+            <div class="sr-btns"><button class="pm-btn" data-demo-action="page.go" data-demo-arg="Opening Orchestrator -> full graph">Open full graph</button></div>
+          </div>
+        </div>
+        <div class="sr-pane pm-hidden" data-pane="br">
+          <div class="sr-ph"><span class="sr-pt">BRANCHES &amp; STASH</span><span class="sr-pc">6 · 1</span></div>
+          <div class="sr-scroll">
+            <div class="sr-row"><span class="sr-dot" style="background:var(--accent-lime)"></span><span class="sr-main"><span class="sr-name sr-mono">main</span></span><span class="pm-chip pm-chip-ok">current</span></div>
+            <div class="sr-row click" data-demo-action="demo.toast" data-demo-arg="cmd.git.switch_branch -> orch/lane-b-api"><span class="sr-dot" style="background:var(--text-muted)"></span><span class="sr-main"><span class="sr-name sr-mono">orch/lane-b-api</span></span></div>
+            <div class="sr-row click" data-demo-action="demo.toast" data-demo-arg="cmd.git.switch_branch -> thread/import-fixes"><span class="sr-dot" style="background:var(--text-muted)"></span><span class="sr-main"><span class="sr-name sr-mono">thread/import-fixes</span></span></div>
+            <div class="sr-row click" data-demo-action="demo.toast" data-demo-arg="cmd.git.switch_branch -> spike/r2-storage"><span class="sr-dot" style="background:var(--text-muted)"></span><span class="sr-main"><span class="sr-name sr-mono">spike/r2-storage</span></span></div>
+            <div class="sr-row click" data-demo-action="demo.toast" data-demo-arg="cmd.git.switch_branch -> orch/lane-d-infra"><span class="sr-dot" style="background:var(--text-muted)"></span><span class="sr-main"><span class="sr-name sr-mono">orch/lane-d-infra</span></span></div>
+            <div class="sr-row click" data-demo-action="demo.toast" data-demo-arg="cmd.git.switch_branch -> orch/lane-e-artifacts-projection"><span class="sr-dot" style="background:var(--text-muted)"></span><span class="sr-main"><span class="sr-name sr-mono">orch/lane-e-artifacts-projection</span></span></div>
+            <div class="sr-group">STASH</div>
+            <div class="sr-row"><span class="sr-dot" style="background:var(--accent-warning)"></span><span class="sr-main"><span class="sr-name sr-mono">stash@{0}</span><span class="sr-sub">WIP image resize ladder</span></span><button class="pm-minibtn" title="Pop" data-demo-action="cmd.git.stash_pop" data-demo-arg="cmd.git.stash_pop -> applied &amp; dropped"><i data-ico="arrowUp" class="pm-ico sm"></i></button><button class="pm-minibtn danger" title="Drop" data-demo-action="cmd.git.stash_drop" data-demo-arg="cmd.git.stash_drop -> confirm"><i data-ico="trash" class="pm-ico sm"></i></button></div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ACTIONS -->
+  <div class="side-panel-view" id="panel-git">
+    <div class="sr-shell">
+      <div class="sr-gutter" role="tablist" aria-label="Actions sections">
+        <button class="sr-gbtn active" data-tab="cn" role="tab" title="Connection"><i data-ico="key"></i><span class="gl">Auth</span></button>
+        <button class="sr-gbtn" data-tab="ru" role="tab" title="Runs"><i data-ico="play"></i><span class="gl">Runs</span><span class="gc">7</span></button>
+        <button class="sr-gbtn" data-tab="tr" role="tab" title="Triage"><i data-ico="warn"></i><span class="gl">Triage</span></button>
+        <button class="sr-gbtn" data-tab="wf" role="tab" title="Workflows"><i data-ico="layers"></i><span class="gl">Flow</span></button>
+        <button class="sr-gbtn" data-tab="se" role="tab" title="Secrets"><i data-ico="cog"></i><span class="gl">Secr</span></button>
+      </div>
+      <div class="sr-content">
+        <div class="sr-pane" data-pane="cn">
+          <div class="sr-ph"><span class="sr-pt">CONNECTION</span><span class="sr-pc">connected</span></div>
+          <div class="sr-scroll">
+            <div class="sr-kv"><span class="sr-k">Account</span><span class="sr-v">jared-dev</span></div>
+            <div class="sr-kv"><span class="sr-k">Req = effective</span><span class="sr-v">jared-dev</span></div>
+            <div class="sr-kv"><span class="sr-k">Scopes</span><span class="sr-v sr-mono">repo · read:user</span></div>
+            <div class="pm-note"><i data-ico="warn" class="pm-ico sm pm-note-glyph"></i><span><b>workflow</b> scope missing — view runs only, no dispatch.</span></div>
+            <div class="sr-btns"><button class="pm-btn" data-demo-action="cmd.github.connect" data-demo-arg="cmd.github.connect -> device-code flow started"><i data-ico="refresh" class="pm-ico sm"></i>Reconnect + workflow</button></div>
+          </div>
+        </div>
+        <div class="sr-pane pm-hidden" data-pane="ru">
+          <div class="sr-ph"><span class="sr-pt">RUNS · main</span><span class="sr-pc">webhook 12s</span></div>
+          <div class="sr-scroll">
+            <div class="sr-kv"><span class="sr-k">Readiness</span><span class="sr-v">2 of 3 green</span></div>
+            <div class="sr-row click" data-demo-action="cmd.github.actions.open_run" data-demo-arg="cmd.github.actions.open_run -> #312"><span class="sr-dot" style="background:var(--graph-passed)"></span><span class="sr-main"><span class="sr-name">CI — build + test</span><span class="sr-sub">#312 · main · 2h</span></span><span class="pm-chip pm-chip-ok">ok</span></div>
+            <div class="sr-row click" data-demo-action="cmd.github.actions.open_run" data-demo-arg="cmd.github.actions.open_run -> #311"><span class="sr-dot" style="background:var(--graph-passed)"></span><span class="sr-main"><span class="sr-name">CI — build + test</span><span class="sr-sub">#311 · lane-b · 3h</span></span><span class="pm-chip pm-chip-ok">ok</span></div>
+            <div class="sr-row click" data-demo-action="cmd.github.actions.open_run" data-demo-arg="cmd.github.actions.open_run -> #310"><span class="sr-dot" style="background:var(--graph-failed)"></span><span class="sr-main"><span class="sr-name">CI — build + test</span><span class="sr-sub">#310 · import-fixes · 5h</span></span><span class="pm-chip pm-chip-err">fail</span></div>
+            <div class="sr-row click" data-demo-action="cmd.github.actions.open_run" data-demo-arg="cmd.github.actions.open_run -> #309"><span class="sr-dot" style="background:var(--graph-passed)"></span><span class="sr-main"><span class="sr-name">ci-build-test-and-publish</span><span class="sr-sub">#309 · main · 6h</span></span><span class="pm-chip pm-chip-ok">ok</span></div>
+            <div class="sr-row click" data-demo-action="cmd.github.actions.open_run" data-demo-arg="cmd.github.actions.open_run -> #308"><span class="sr-dot" style="background:var(--graph-passed)"></span><span class="sr-main"><span class="sr-name">docker-bake-multi-arch-manifest</span><span class="sr-sub">#308 · release · 9h</span></span><span class="pm-chip pm-chip-ok">ok</span></div>
+            <div class="sr-row click" data-demo-action="cmd.github.actions.open_run" data-demo-arg="cmd.github.actions.open_run -> #307"><span class="sr-dot" style="background:var(--graph-failed)"></span><span class="sr-main"><span class="sr-name">import-property-based-tests</span><span class="sr-sub">#307 · import-fixes · 11h</span></span><span class="pm-chip pm-chip-err">fail</span></div>
+            <div class="sr-row click" data-demo-action="cmd.github.actions.open_run" data-demo-arg="cmd.github.actions.open_run -> #306"><span class="sr-dot dot-run"></span><span class="sr-main"><span class="sr-name">artifact-projection-freshness-matrix</span><span class="sr-sub">#306 · lane-e · running</span></span><span class="pm-chip">run</span></div>
+            <div class="sr-kv" style="margin-top:var(--sm)"><span class="sr-k">Status checks</span><span class="sr-v">no open PR yet</span></div>
+          </div>
+        </div>
+        <div class="sr-pane pm-hidden" data-pane="tr">
+          <div class="sr-ph"><span class="sr-pt">TRIAGE #310</span><span class="sr-pc">test</span></div>
+          <div class="sr-scroll">
+            <div class="sr-kv"><span class="sr-k">Failing</span><span class="sr-v">step cargo test</span></div>
+            <div class="sr-log"><div class="fail">thread 'import::normalize_units::tests::mixed_fraction_does_not_explode' panicked at src/services/import.rs:58:9</div><div>assertion `left == right` failed: qty.value == 1.5 (got 11.5 from "1 1/2 cup")</div><div>"1 1/2 cup" parsed as 11/2 instead of 3/2</div><div class="fail">test import::normalize_units ... FAILED</div><div>note: run with RUST_BACKTRACE=1 environment variable to display a full backtrace</div></div>
+            <div class="sr-kv"><span class="sr-k">Changed</span><span class="sr-v sr-mono">import.rs</span></div>
+            <div class="sr-btns"><button class="pm-btn pm-btn-primary" data-demo-action="cmd.actions.rerun" data-demo-arg="cmd.actions.rerun -> rerunning #310">Rerun</button><button class="pm-btn" data-demo-action="cmd.github.actions.compare_last_success" data-demo-arg="cmd.github.actions.compare_last_success -> #310 vs #312">Last green</button><button class="pm-btn" data-demo-action="cmd.github.actions.open_in_github" data-demo-arg="Opening run #310 on github.com">Browser</button></div>
+          </div>
+        </div>
+        <div class="sr-pane pm-hidden" data-pane="wf">
+          <div class="sr-ph"><span class="sr-pt">WORKFLOWS</span></div>
+          <div class="sr-scroll">
+            <div class="sr-row"><span class="sr-main"><span class="sr-name">CI — build + test</span><span class="sr-sub">ci.yml · push + PR</span></span><button class="pm-btn" aria-disabled="true" data-demo-reason="missing workflow scope" data-demo-action="demo.reason" data-demo-arg="Dispatch blocked: missing workflow scope">Dispatch</button></div>
+            <div class="sr-row"><span class="sr-main"><span class="sr-name">Release</span><span class="sr-sub">release.yml · tag</span></span><button class="pm-btn" aria-disabled="true" data-demo-reason="missing workflow scope" data-demo-action="demo.reason" data-demo-arg="Dispatch blocked: missing workflow scope">Dispatch</button></div>
+            <div class="sr-row"><span class="sr-main"><span class="sr-name">ci-build-test-and-publish</span><span class="sr-sub">ci-build-test-and-publish.yml · push + PR + tag</span></span><button class="pm-btn" aria-disabled="true" data-demo-reason="missing workflow scope" data-demo-action="demo.reason" data-demo-arg="Dispatch blocked: missing workflow scope">Dispatch</button></div>
+            <div class="sr-row"><span class="sr-main"><span class="sr-name">docker-bake-multi-arch-manifest</span><span class="sr-sub">docker-bake.yml · release tag · amd64+arm64</span></span><button class="pm-btn" aria-disabled="true" data-demo-reason="missing workflow scope" data-demo-action="demo.reason" data-demo-arg="Dispatch blocked: missing workflow scope">Dispatch</button></div>
+            <div class="sr-row"><span class="sr-main"><span class="sr-name">import-property-based-tests</span><span class="sr-sub">import-property-tests.yml · PR · normalize_units</span></span><button class="pm-btn" aria-disabled="true" data-demo-reason="missing workflow scope" data-demo-action="demo.reason" data-demo-arg="Dispatch blocked: missing workflow scope">Dispatch</button></div>
+            <div class="pm-footnote">Dispatch blocked: not_configured (workflow scope).</div>
+          </div>
+        </div>
+        <div class="sr-pane pm-hidden" data-pane="se">
+          <div class="sr-ph"><span class="sr-pt">SECRETS</span><span class="sr-pc">names only</span></div>
+          <div class="sr-scroll">
+            <div class="sr-kv"><span class="sr-k sr-mono">DOCKER_USER</span><span class="pm-chip pm-chip-ok">set</span></div>
+            <div class="sr-kv"><span class="sr-k sr-mono">DOCKER_PAT</span><span class="pm-chip pm-chip-err">missing</span></div>
+            <div class="sr-kv"><span class="sr-k sr-mono">REGISTRY_URL</span><span class="pm-chip pm-chip-ok">set</span></div>
+            <div class="sr-kv"><span class="sr-k sr-mono">TASTEBOOK_API_TOKEN</span><span class="pm-chip pm-chip-ok">set</span></div>
+            <div class="sr-kv"><span class="sr-k sr-mono">IMPORT_WORKER_QUEUE_URL</span><span class="pm-chip pm-chip-ok">set</span></div>
+            <div class="sr-kv"><span class="sr-k sr-mono" style="min-width:0;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;flex:0 1 auto">ARTIFACT_PROJECTION_BUCKET_FRESHNESS_MATRIX</span><span class="pm-chip pm-chip-err">missing</span></div>
+            <div class="sr-btns"><button class="pm-btn" data-demo-action="cmd.github.actions.open_in_github" data-demo-arg="Opening repository settings — values never display here">Manage on GitHub</button></div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- DOCKER -->
+  <div class="side-panel-view" id="panel-docker">
+    <div class="sr-shell">
+      <div class="sr-gutter" role="tablist" aria-label="Docker sections">
+        <button class="sr-gbtn active" data-tab="containers" role="tab" title="Containers"><i data-ico="monitor"></i><span class="gl">Ctr</span><span class="gc">9</span></button>
+        <button class="sr-gbtn" data-tab="images" role="tab" title="Images"><i data-ico="layers"></i><span class="gl">Img</span></button>
+        <button class="sr-gbtn" data-tab="compose" role="tab" title="Compose"><i data-ico="grip"></i><span class="gl">Comp</span></button>
+        <button class="sr-gbtn" data-tab="registries" role="tab" title="Registries"><i data-ico="db"></i><span class="gl">Reg</span></button>
+        <button class="sr-gbtn" data-tab="build" role="tab" title="Build"><i data-ico="flame"></i><span class="gl">Build</span></button>
+        <button class="sr-gbtn" data-tab="publish" role="tab" title="Publish"><i data-ico="upload"></i><span class="gl">Pub</span></button>
+      </div>
+      <div class="sr-content">
+        <div class="sr-pane" data-pane="containers">
+          <div class="sr-ph"><span class="sr-pt">CONTAINERS</span><span class="sr-pc">7·1·1</span></div>
+          <div class="sr-scroll">
+            <div class="sr-row"><span class="sr-dot" style="background:var(--graph-passed)"></span><span class="sr-main"><span class="sr-name">tastebook-api</span><span class="sr-sub">:8080 · up 3h</span></span><button class="pm-minibtn" title="Logs" data-demo-action="cmd.docker.container.view_logs" data-demo-arg="cmd.docker.container.view_logs -> api"><i data-ico="terminal" class="pm-ico sm"></i></button><span class="pm-rmetric">CPU 14%</span></div>
+            <div class="sr-row"><span class="sr-dot" style="background:var(--graph-passed)"></span><span class="sr-main"><span class="sr-name">tastebook-worker</span><span class="sr-sub">up 3h · idle</span></span><button class="pm-minibtn" title="Logs" data-demo-action="cmd.docker.container.view_logs" data-demo-arg="cmd.docker.container.view_logs -> worker"><i data-ico="terminal" class="pm-ico sm"></i></button></div>
+            <div class="sr-row"><span class="sr-dot" style="background:var(--graph-passed)"></span><span class="sr-main"><span class="sr-name">postgres</span><span class="sr-sub">:5432 · up 2d</span></span><button class="pm-minibtn" title="Logs" data-demo-action="cmd.docker.container.view_logs" data-demo-arg="cmd.docker.container.view_logs -> postgres"><i data-ico="terminal" class="pm-ico sm"></i></button><span class="pm-rmetric">CPU 3%</span></div>
+            <div class="sr-row"><span class="sr-dot" style="background:var(--graph-pending)"></span><span class="sr-main"><span class="sr-name">redis</span><span class="sr-sub">exited · 41m</span></span><button class="pm-minibtn" title="Start" data-demo-action="cmd.docker.run" data-demo-arg="cmd.docker.run -> start redis"><i data-ico="play" class="pm-ico sm"></i></button></div>
+            <div class="sr-row"><span class="sr-dot dot-run"></span><span class="sr-main"><span class="sr-name">import-worker</span><span class="sr-sub">restarting 3/5</span></span><button class="pm-minibtn" title="Logs" data-demo-action="cmd.docker.container.view_logs" data-demo-arg="cmd.docker.container.view_logs -> import-worker"><i data-ico="terminal" class="pm-ico sm"></i></button><span class="pm-rmetric">CPU 41%</span></div>
+            <div class="sr-row"><span class="sr-dot dot-run"></span><span class="sr-main"><span class="sr-name">tastebook-import-worker-batch</span><span class="sr-sub">restarting 2/5 · queue deep</span></span><button class="pm-minibtn" title="Logs" data-demo-action="cmd.docker.container.view_logs" data-demo-arg="cmd.docker.container.view_logs -> import-worker-batch"><i data-ico="terminal" class="pm-ico sm"></i></button></div>
+            <div class="sr-row"><span class="sr-dot" style="background:var(--graph-passed)"></span><span class="sr-main"><span class="sr-name">postgres-16-alpine-primary</span><span class="sr-sub">:5432 · up 2d · primary</span></span><button class="pm-minibtn" title="Logs" data-demo-action="cmd.docker.container.view_logs" data-demo-arg="cmd.docker.container.view_logs -> postgres-primary"><i data-ico="terminal" class="pm-ico sm"></i></button></div>
+            <div class="sr-row"><span class="sr-dot" style="background:var(--graph-passed)"></span><span class="sr-main"><span class="sr-name">ghcr.io/jared/tastebook-web:edge-2026.07.24</span><span class="sr-sub">:3000 · up 1h</span></span><button class="pm-minibtn" title="Logs" data-demo-action="cmd.docker.container.view_logs" data-demo-arg="cmd.docker.container.view_logs -> tastebook-web"><i data-ico="terminal" class="pm-ico sm"></i></button></div>
+            <div class="sr-row"><span class="sr-dot" style="background:var(--graph-pending)"></span><span class="sr-main"><span class="sr-name">redis-cache-session-store</span><span class="sr-sub">exited · 12m</span></span><button class="pm-minibtn" title="Start" data-demo-action="cmd.docker.run" data-demo-arg="cmd.docker.run -> start redis-session-store"><i data-ico="play" class="pm-ico sm"></i></button></div>
+            <div class="pm-sumcard"><div class="pm-sumcard-h">FLEET SUMMARY<span class="c">9 ctr</span></div><div class="pm-2col"><div class="pm-occ"><span class="nm">CPU avg</span><span class="bar"><i style="width:34%"></i></span><span class="v">34%</span></div><div class="pm-occ"><span class="nm">MEM avg</span><span class="bar warn"><i style="width:61%"></i></span><span class="v">61%</span></div></div><div class="pm-sumcard-h" style="margin-top:var(--md)">RECENT EVENTS</div><div class="pm-li"><span class="dot dot-run"></span><span class="pm-li-n">import-worker restarting</span><span class="pm-li-m">attempt 3/5 · OOM</span></div><div class="pm-li"><span class="dot dot-warn"></span><span class="pm-li-n">registry-cache exited</span><span class="pm-li-m">OOM killed 18m</span></div><div class="pm-li"><span class="dot dot-ok"></span><span class="pm-li-n">tastebook-web healthy</span><span class="pm-li-m">:3000 · up 9h</span></div><div class="pm-acts"><button class="pm-btn" data-demo-action="demo.toast" data-demo-arg="Showing images">Images</button><button class="pm-btn" data-demo-action="demo.toast" data-demo-arg="Showing compose">Compose</button><button class="pm-btn" data-demo-action="cmd.docker.cleanup.scan" data-demo-arg="cmd.docker.cleanup.scan -> dry-run frees 1.2 GB">Cleanup</button></div></div>
+            <div class="pm-footnote">Logs stream into the Docker terminal group below.</div>
+          </div>
+        </div>
+        <div class="sr-pane pm-hidden" data-pane="images">
+          <div class="sr-ph"><span class="sr-pt">IMAGES</span><span class="sr-pc">1.08 GB</span></div>
+          <div class="sr-scroll">
+            <div class="sr-kv"><span class="sr-k sr-mono">jared/tastebook:v1.1</span><span class="sr-v">412 MB</span></div>
+            <div class="sr-kv"><span class="sr-k sr-mono">worker:v1.1</span><span class="sr-v">388 MB</span></div>
+            <div class="sr-kv"><span class="sr-k sr-mono">postgres:16-alpine</span><span class="sr-v">243 MB</span></div>
+            <div class="sr-kv"><span class="sr-k sr-mono">redis:7-alpine</span><span class="sr-v">41 MB</span></div>
+            <div class="sr-kv"><span class="sr-k sr-mono" style="min-width:0;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;flex:0 1 auto">jared/tastebook-api:1.4.2-rc.1@sha256:9f2c4b8a1e77</span><span class="sr-v" style="flex:none">512 MB</span></div>
+            <div class="sr-kv"><span class="sr-k sr-mono" style="min-width:0;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;flex:0 1 auto">jared/tastebook-import-worker:1.4.2-rc.1@sha256:3a7d0c</span><span class="sr-v" style="flex:none">488 MB</span></div>
+            <div class="sr-kv"><span class="sr-k sr-mono" style="min-width:0;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;flex:0 1 auto">postgres:16.3-alpine3.19@sha256:c1f09e2b</span><span class="sr-v" style="flex:none">243 MB</span></div>
+            <div class="sr-kv"><span class="sr-k sr-mono" style="min-width:0;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;flex:0 1 auto">ghcr.io/jared/tastebook-web:edge-2026.07.24@sha256:77be41</span><span class="sr-v" style="flex:none">396 MB</span></div>
+            <div class="sr-btns"><button class="pm-btn" data-demo-action="demo.toast" data-demo-arg="cmd.docker.pull -> postgres:16-alpine (up to date)">Pull</button><button class="pm-btn" data-demo-action="cmd.docker.cleanup.scan" data-demo-arg="cmd.docker.cleanup.scan -> dry-run frees 1.2 GB">Cleanup</button></div>
+          </div>
+        </div>
+        <div class="sr-pane pm-hidden" data-pane="compose">
+          <div class="sr-ph"><span class="sr-pt">COMPOSE</span><span class="sr-pc">tastebook</span></div>
+          <div class="sr-scroll">
+            <div class="sr-row"><span class="sr-dot" style="background:var(--graph-passed)"></span><span class="sr-main"><span class="sr-name">db</span><span class="sr-sub">postgres:16</span></span></div>
+            <div class="sr-row"><span class="sr-dot" style="background:var(--graph-passed)"></span><span class="sr-main"><span class="sr-name">cache</span><span class="sr-sub">redis:7</span></span></div>
+            <div class="sr-row"><span class="sr-dot" style="background:var(--graph-pending)"></span><span class="sr-main"><span class="sr-name">web</span><span class="sr-sub">v1.1</span></span></div>
+            <div class="sr-row"><span class="sr-dot" style="background:var(--graph-pending)"></span><span class="sr-main"><span class="sr-name">worker</span><span class="sr-sub">v1.1</span></span></div>
+            <div class="sr-row"><span class="sr-dot" style="background:var(--graph-passed)"></span><span class="sr-main"><span class="sr-name">import-worker</span><span class="sr-sub">1.4.2-rc.1 · batch</span></span></div>
+            <div class="sr-row"><span class="sr-dot dot-run"></span><span class="sr-main"><span class="sr-name">projection-freshness-worker</span><span class="sr-sub">1.4.2-rc.1 · rebuilding matrix</span></span></div>
+            <div class="sr-row"><span class="sr-dot" style="background:var(--graph-passed)"></span><span class="sr-main"><span class="sr-name">registry-cache-mirror</span><span class="sr-sub">redis:7 · pull-through</span></span></div>
+            <div class="sr-btns"><button class="pm-btn pm-btn-primary" style="flex:1 1 100%" data-demo-action="cmd.docker.compose_up" data-demo-arg="cmd.docker.compose_up -> bringing up stack">Compose up</button></div>
+            <div class="sr-group">SCENARIOS</div>
+            <div class="sr-row"><span class="sr-main"><span class="sr-name">dev — web + db</span><span class="sr-sub">ports 5173,5432</span></span><button class="pm-minibtn" title="Run" data-demo-action="cmd.docker.compose.scenario.run" data-demo-arg="scenario.run -> dev"><i data-ico="play" class="pm-ico sm"></i></button></div>
+            <div class="sr-row"><span class="sr-main"><span class="sr-name">import-load x3 <span class="pm-chip pm-chip-warn">stale</span></span></span><button class="pm-minibtn" aria-disabled="true" data-demo-reason="stale scenario" data-demo-action="demo.reason" data-demo-arg="Scenario stale — edit to refresh"><i data-ico="play" class="pm-ico sm"></i></button></div>
+            <div class="sr-row"><span class="sr-main"><span class="sr-name">full-stack x web+db+cache+worker+import</span><span class="sr-sub">ports 3000,5432,6379</span></span><button class="pm-minibtn" title="Run" data-demo-action="cmd.docker.compose.scenario.run" data-demo-arg="scenario.run -> full-stack"><i data-ico="play" class="pm-ico sm"></i></button></div>
+          </div>
+        </div>
+        <div class="sr-pane pm-hidden" data-pane="registries">
+          <div class="sr-ph"><span class="sr-pt">REGISTRIES</span></div>
+          <div class="sr-scroll">
+            <div class="sr-kv"><span class="sr-k">Docker Hub</span><span class="sr-v"><span class="pm-chip pm-chip-ok">auth</span> jared</span></div>
+            <div class="sr-kv"><span class="sr-k sr-mono">localhost:5000</span><span class="sr-v"><span class="pm-chip pm-chip-ok">ok</span></span></div>
+            <div class="sr-kv"><span class="sr-k sr-mono">ghcr.io</span><span class="sr-v"><span class="pm-chip pm-chip-warn">not_cfg</span></span></div>
+            <div class="sr-kv"><span class="sr-k sr-mono" style="min-width:0;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;flex:0 1 auto">registry.tastebook.internal:5000</span><span class="sr-v"><span class="pm-chip pm-chip-ok">auth</span></span></div>
+            <div class="sr-btns"><button class="pm-btn" data-demo-action="demo.toast" data-demo-arg="Browsing Docker Hub: jared/tastebook">Browse</button></div>
+          </div>
+        </div>
+        <div class="sr-pane pm-hidden" data-pane="build">
+          <div class="sr-ph"><span class="sr-pt">BUILD / BAKE</span></div>
+          <div class="sr-scroll">
+            <div class="sr-kv"><span class="sr-k">Target</span><span class="sr-v sr-mono">runtime</span></div>
+            <div class="sr-kv"><span class="sr-k">Tag</span><span class="sr-v sr-mono">v1.2</span></div>
+            <div class="sr-kv"><span class="sr-k">Digest</span><span class="sr-v">— not built</span></div>
+            <div class="sr-kv"><span class="sr-k">Platforms</span><span class="sr-v">amd64+arm64</span></div>
+            <div class="sr-btns"><button class="pm-btn pm-btn-primary" style="flex:1 1 100%" data-demo-action="cmd.docker.build" data-demo-arg="cmd.docker.build -> building runtime (buildx)">Build image</button></div>
+          </div>
+        </div>
+        <div class="sr-pane pm-hidden" data-pane="publish">
+          <div class="sr-ph"><span class="sr-pt">PUBLISH CHAIN</span><span class="sr-pc">v1.2->Unraid</span></div>
+          <div class="sr-scroll">
+            <div class="sr-chain">
+              <div class="sr-stage now"><i>1</i><span class="sr-stage-l">Local build</span><span class="pm-chip">pend</span></div>
+              <div class="sr-stage"><i>2</i><span class="sr-stage-l">Push tag + digest</span><span class="pm-chip">pend</span></div>
+              <div class="sr-stage done"><i>3</i><span class="sr-stage-l">Hub repo</span><span class="pm-chip pm-chip-ok">exists</span></div>
+              <div class="sr-stage done"><i>4</i><span class="sr-stage-l">Template repo</span><span class="pm-chip pm-chip-ok">ready</span></div>
+              <div class="sr-stage"><i>5</i><span class="sr-stage-l">Unraid follow-on</span><span class="pm-chip">wait</span></div>
+            </div>
+            <div class="sr-btns"><button class="pm-btn" data-demo-action="cmd.docker.image.push" data-demo-arg="cmd.docker.image.push -> push approves push only">Push</button><button class="pm-btn" data-demo-action="cmd.docker.template.commit" data-demo-arg="cmd.docker.template.commit -> committed">Commit tpl</button><button class="pm-btn" data-demo-action="cmd.docker.template.push" data-demo-arg="cmd.docker.template.push -> pushing template repo">Push tpl</button></div>
+            <div class="pm-footnote">Repo creation is a hard gate · digest receipts recorded · missing-link markers.</div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- TESTING -->
+  <div class="side-panel-view" id="panel-testing">
+    <div class="sr-shell">
+      <div class="sr-gutter" role="tablist" aria-label="Testing sections">
+        <button class="sr-gbtn active" data-tab="run" role="tab" title="Run"><i data-ico="play"></i><span class="gl">Run</span></button>
+        <button class="sr-gbtn" data-tab="pol" role="tab" title="Policy"><i data-ico="eye"></i><span class="gl">Pol</span></button>
+        <button class="sr-gbtn" data-tab="ev" role="tab" title="Evidence"><i data-ico="artifacts"></i><span class="gl">Evid</span></button>
+      </div>
+      <div class="sr-content">
+        <div class="sr-pane" data-pane="run">
+          <div class="sr-ph"><span class="sr-pt">LAST RUN</span><span class="sr-pc">passed</span></div>
+          <div class="sr-scroll">
+            <div class="sr-kv"><span class="sr-k">Suite</span><span class="sr-v">cargo test — import</span></div>
+            <div class="sr-kv"><span class="sr-k">Passed</span><span class="sr-v">214</span></div>
+            <div class="sr-kv"><span class="sr-k">Skipped</span><span class="sr-v">3</span></div>
+            <div class="sr-kv"><span class="sr-k">Duration</span><span class="sr-v">3.4s</span></div>
+            <div class="sr-kv"><span class="sr-k">When</span><span class="sr-v">4m · retry 2/2</span></div>
+            <div class="sr-kv"><span class="sr-k">History</span><span class="sr-v">1 failed -> fixed</span></div>
+            <div class="sr-btns"><button class="pm-btn pm-btn-primary" data-demo-action="cmd.testing.run" data-demo-arg="cmd.testing.run -> TestAdapterInvocation queued">Run tests</button><button class="pm-btn" data-demo-action="cmd.testing.watch_run" data-demo-arg="cmd.testing.watch_run -> subscribed">Watch</button></div>
+            <div class="sr-btns"><button class="pm-btn" data-demo-action="cmd.testing.open_receipt" data-demo-arg="cmd.testing.open_receipt -> tr-2214">Receipt</button><button class="pm-btn" data-demo-action="cmd.testing.export_bundle" data-demo-arg="cmd.testing.export_bundle -> exported">Export</button><button class="pm-btn" aria-disabled="true" data-demo-reason="no active run" data-demo-action="demo.reason" data-demo-arg="Cancel enabled only for queued/running">Cancel</button></div>
+            <div class="sr-group">RUNS</div>
+            <div class="sr-row click" data-demo-action="cmd.testing.open_receipt" data-demo-arg="cmd.testing.open_receipt -> tr-2214"><span class="sr-dot" style="background:var(--graph-passed)"></span><span class="sr-main"><span class="sr-name">cargo test -p puppet-core import::normalize_units</span></span><span class="sr-val">214 ok</span></div>
+            <div class="sr-row click" data-demo-action="cmd.testing.open_receipt" data-demo-arg="cmd.testing.open_receipt -> tr-2213"><span class="sr-dot" style="background:var(--graph-passed)"></span><span class="sr-main"><span class="sr-name">cargo test -p puppet-core artifacts::projection_freshness</span></span><span class="sr-val">88 ok</span></div>
+            <div class="sr-row click" data-demo-action="cmd.testing.open_receipt" data-demo-arg="cmd.testing.open_receipt -> tr-2212"><span class="sr-dot dot-run"></span><span class="sr-main"><span class="sr-name">web vitest run routes/(app)/recipes/[id]/edit</span></span><span class="sr-val">running</span></div>
+            <div class="sr-row click" data-demo-action="cmd.testing.open_receipt" data-demo-arg="cmd.testing.open_receipt -> tr-2211"><span class="sr-dot" style="background:var(--graph-failed)"></span><span class="sr-main"><span class="sr-name">cargo test import::normalize_units::mixed_fraction_does_not_explode</span></span><span class="sr-val">1 fail</span></div>
+            <div class="sr-row click" data-demo-action="cmd.testing.open_receipt" data-demo-arg="cmd.testing.open_receipt -> tr-2210"><span class="sr-dot" style="background:var(--graph-passed)"></span><span class="sr-main"><span class="sr-name">pytest tests/import/test_normalize_units_mixed_fractions.py</span></span><span class="sr-val">42 ok</span></div>
+            <div class="sr-group">FLAKY</div>
+            <div class="sr-row"><span class="sr-dot" style="background:var(--accent-warning)"></span><span class="sr-main"><span class="sr-name">import::mixed_fraction_retry</span><span class="sr-sub">fails 2 of 5 reruns</span></span><span class="sr-val">2/5</span></div>
+            <div class="sr-row"><span class="sr-dot" style="background:var(--accent-warning)"></span><span class="sr-main"><span class="sr-name">artifacts::projection_freshness::matrix_snapshot</span><span class="sr-sub">passes on retry</span></span><span class="sr-val">retry</span></div>
+            <div class="sr-row"><span class="sr-dot" style="background:var(--accent-warning)"></span><span class="sr-main"><span class="sr-name">recipe_editor::quantity_stepper_focus</span><span class="sr-sub">intermittent focus loss</span></span><span class="sr-val">watch</span></div>
+          </div>
+        </div>
+        <div class="sr-pane pm-hidden" data-pane="pol">
+          <div class="sr-ph"><span class="sr-pt">POLICY</span></div>
+          <div class="sr-scroll"><div class="sr-kv"><span class="sr-k">Visibility</span><span class="sr-v"><span class="pm-chip pm-chip-ok">show_when_possible</span></span></div><div class="pm-footnote">Nodes surface test evidence whenever the runner reports it; silent runs are flagged stale.</div></div>
+        </div>
+        <div class="sr-pane pm-hidden" data-pane="ev">
+          <div class="sr-ph"><span class="sr-pt">EVIDENCE</span></div>
+          <div class="sr-scroll"><div class="pm-note"><i data-ico="info" class="pm-ico sm pm-note-glyph"></i><span>Recordings redacted before display. <u style="cursor:pointer" data-demo-action="cmd.testing.session.redaction.inspect" data-demo-arg="cmd.testing.session.redaction.inspect">Inspect profile</u></span></div><div class="sr-btns"><button class="pm-btn" data-demo-action="panels.show" data-demo-arg="Opening Runtime Artifacts -> evidence">Open in Artifacts</button></div></div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- AGENTS -->
+  <div class="side-panel-view" id="panel-agents">
+    <div class="sr-shell">
+      <div class="sr-gutter" role="tablist" aria-label="Agent sections">
+        <button class="sr-gbtn active" data-tab="act" role="tab" title="Active"><i data-ico="agents"></i><span class="gl">Active</span><span class="gc">5</span></button>
+        <button class="sr-gbtn" data-tab="ab" role="tab" title="About"><i data-ico="info"></i><span class="gl">Info</span></button>
+      </div>
+      <div class="sr-content">
+        <div class="sr-pane" data-pane="act">
+          <div class="sr-ph"><span class="sr-pt">ACTIVE SUBAGENTS</span><span class="sr-pc">mirror</span></div>
+          <div class="sr-scroll">
+            <div class="sr-row click" data-demo-action="demo.toast" data-demo-arg="Opening thread -> lane-b worker (run #47)"><span class="sr-dot dot-run"></span><span class="sr-main"><span class="sr-name">lane-b worker <span class="pm-chip">run</span></span><span class="sr-sub">rust-engineer · Codex · editing src/api.rs · 2m</span></span><span class="pm-rmetric">ELAPSED</span></div>
+            <div class="sr-row click" data-demo-action="demo.toast" data-demo-arg="Opening thread -> Test Sleuth"><span class="sr-dot" style="background:var(--graph-passed)"></span><span class="sr-main"><span class="sr-name">Test Sleuth <span class="pm-chip pm-chip-ok">done</span></span><span class="sr-sub">debug-prober · 42s</span></span><span class="pm-rmetric">ELAPSED</span></div>
+            <div class="sr-row click" data-demo-action="demo.toast" data-demo-arg="Opening thread -> Auditor (queued)"><span class="sr-dot" style="background:var(--graph-pending)"></span><span class="sr-main"><span class="sr-name">Auditor <span class="pm-chip">wait</span></span><span class="sr-sub">security-auditor · queued</span></span></div>
+            <div class="sr-row click" style="opacity:.6" data-demo-action="demo.toast" data-demo-arg="Opening history -> Docs Writer"><span class="sr-dot" style="background:var(--graph-pending)"></span><span class="sr-main"><span class="sr-name">Docs Writer <span class="pm-chip">done</span></span><span class="sr-sub">finished 12m</span></span></div>
+            <div class="sr-row click" data-demo-action="demo.toast" data-demo-arg="Opening thread -> import-fraction-parser"><span class="sr-dot dot-run"></span><span class="sr-main"><span class="sr-name">import-fraction-parser <span class="pm-chip">run</span></span><span class="sr-sub">rust-engineer · running cargo test -p puppet-core import::normalize_units (retry 2/2)</span></span><span class="pm-rmetric">ELAPSED</span></div>
+            <div class="sr-row click" data-demo-action="demo.toast" data-demo-arg="Opening thread -> artifact-projection-auditor"><span class="sr-dot dot-run"></span><span class="sr-main"><span class="sr-name">artifact-projection-auditor <span class="pm-chip">run</span></span><span class="sr-sub">reviewing diff of crates/puppet-core/src/artifacts/projection_freshness.rs</span></span></div>
+            <div class="sr-row click" style="opacity:.6" data-demo-action="demo.toast" data-demo-arg="Opening history -> recipe-editor-migrator"><span class="sr-dot" style="background:var(--graph-passed)"></span><span class="sr-main"><span class="sr-name">recipe-editor-migrator <span class="pm-chip pm-chip-ok">done</span></span><span class="sr-sub">editing web/src/lib/components/recipe/editor/QuantityStepper.svelte (hunk 2/4)</span></span></div>
+            <div class="sr-row click" style="opacity:.6" data-demo-action="demo.toast" data-demo-arg="Opening history -> infra-buildx-pinner"><span class="sr-dot" style="background:var(--graph-passed)"></span><span class="sr-main"><span class="sr-name">infra-buildx-pinner <span class="pm-chip pm-chip-ok">done</span></span><span class="sr-sub">chore(ci): pin buildx and enable multi-arch manifest-list digests for amd64 and arm64</span></span></div>
+            <div class="sr-btns"><button class="pm-btn" data-demo-action="cmd.panel.switch" data-demo-arg="cmd.panel.switch -> chat">Open Chat</button></div>
+          </div>
+        </div>
+        <div class="sr-pane pm-hidden" data-pane="ab">
+          <div class="sr-ph"><span class="sr-pt">ABOUT</span></div>
+          <div class="sr-scroll"><div class="pm-sumcard"><div class="pm-sumcard-h">LANE CAPACITY<span class="c">3 lanes</span></div><div class="pm-occ"><span class="nm">lane-b · api</span><span class="bar warn"><i style="width:80%"></i></span><span class="v">4/5</span></div><div class="pm-occ"><span class="nm">lane-d · infra</span><span class="bar"><i style="width:40%"></i></span><span class="v">2/5</span></div><div class="pm-occ"><span class="nm">lane-e · projection</span><span class="bar"><i style="width:20%"></i></span><span class="v">1/5</span></div></div>
+<div class="pm-sumcard"><div class="pm-sumcard-h">QUEUED WORK<span class="c">3</span></div><div class="pm-li"><span class="dot" style="background:var(--graph-pending)"></span><span class="pm-li-n">Schema migration review</span><span class="pm-li-m">behind Auditor</span></div><div class="pm-li"><span class="dot" style="background:var(--graph-pending)"></span><span class="pm-li-n">Flaky-test quarantine sweep</span><span class="pm-li-m">import suite</span></div><div class="pm-li"><span class="dot" style="background:var(--graph-pending)"></span><span class="pm-li-n">Coverage report upload</span><span class="pm-li-m">retry 2/2</span></div></div>
+<div class="pm-sumcard"><div class="pm-sumcard-h">RECENTLY COMPLETED<span class="c">last 3</span></div><div class="pm-li"><span class="dot dot-ok"></span><span class="pm-li-n">Fixture Gardener</span><span class="pm-li-m">regression fixture · 18m</span></div><div class="pm-li"><span class="dot dot-ok"></span><span class="pm-li-n">CI Shepherd</span><span class="pm-li-m">buildx pin · 24m</span></div><div class="pm-li"><span class="dot dot-ok"></span><span class="pm-li-n">Release Wrangler</span><span class="pm-li-m">manifest digests · 31m</span></div></div>
+<div class="pm-footnote">Mirrors the subagent registry (active + available) with lineage entrypoints. Holds no private subagent state — expand a thread for the work stream.</div></div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ARTIFACTS -->
+  <div class="side-panel-view" id="panel-artifacts">
+    <div class="sr-shell">
+      <div class="sr-gutter" role="tablist" aria-label="Artifact sections">
+        <button class="sr-gbtn active" data-tab="feed" role="tab" title="Feed"><i data-ico="layers"></i><span class="gl">Feed</span><span class="gc">12</span></button>
+        <button class="sr-gbtn" data-tab="inv" role="tab" title="Investigation"><i data-ico="book"></i><span class="gl">Inv</span></button>
+      </div>
+      <div class="sr-content">
+        <div class="sr-pane" data-pane="feed">
+          <div class="sr-ph"><span class="sr-pt">FEED</span><span class="sr-pc">receipts</span></div>
+          <div class="sr-scroll">
+            <div class="pm-chiprow" style="padding:0 0 var(--sm)"><button class="pm-chipbtn active">All</button><button class="pm-chipbtn">Web</button><button class="pm-chipbtn">Browser</button><button class="pm-chipbtn">Evidence</button></div>
+            <div class="sr-row click" data-demo-action="demo.toast" data-demo-arg="Opening diff -> import.rs (+38 -9)"><span class="sr-fam">code_diff</span><span class="sr-main"><span class="sr-name">Import quantity parser fix</span><span class="sr-sub">+38 -9 · node n-19 · 6m</span></span><span class="pm-chip pm-chip-ok">ok</span></div>
+            <div class="sr-row click" data-demo-action="cmd.testing.open_receipt" data-demo-arg="Opening validation receipt"><span class="sr-fam">valid_test</span><span class="sr-main"><span class="sr-name">cargo test — import suite</span><span class="sr-sub">214 passed · retry 2/2 · 5m</span></span><span class="pm-chip pm-chip-ok">retry</span></div>
+            <div class="sr-row click" data-demo-action="demo.toast" data-demo-arg="Opening screenshot"><span class="sr-fam">screenshot</span><span class="sr-main"><span class="sr-name">Recipe editor upload</span><span class="sr-sub">before/after · EXIF · 14m</span></span><span class="pm-chip pm-chip-ok">ok</span></div>
+            <div class="sr-row"><span class="sr-fam">api_web</span><span class="sr-main"><span class="sr-name">Searching Web: schema.org</span><span class="sr-sub">cache miss · 5 src · approved</span></span><button class="pm-minibtn" title="Sources" data-demo-action="web.sources" data-demo-arg="Opening 5 sources">5</button></div>
+            <div class="sr-row"><span class="sr-fam">browser</span><span class="sr-main"><span class="sr-name">Reading seriouseats.com</span><span class="sr-sub">sr-114 · 42 actions · redacted</span></span><button class="pm-minibtn" title="Open" data-demo-action="demo.toast" data-demo-arg="Opening browser evidence drawer"><i data-ico="eye" class="pm-ico sm"></i></button></div>
+            <div class="sr-row"><span class="sr-dot dot-run"></span><span class="sr-main"><span class="sr-name">Research in progress</span><span class="sr-sub">api_web_call lands here when done</span></span></div>
+            <div class="sr-row click" data-demo-action="demo.toast" data-demo-arg="Opening diff -> mixed_fractions.rs (+210 -42)"><span class="sr-fam">code_diff</span><span class="sr-main"><span class="sr-name">Normalize units mixed-fractions parser split</span><span class="sr-sub">+210 -42 · node n-22 · 8m</span></span><span class="pm-chip pm-chip-ok">ok</span></div>
+            <div class="sr-row click" data-demo-action="cmd.testing.open_receipt" data-demo-arg="Opening validation receipt"><span class="sr-fam">valid_test</span><span class="sr-main"><span class="sr-name">cargo test -p puppet-core import::normalize_units</span><span class="sr-sub">214 passed · retry 2/2 · 7m</span></span><span class="pm-chip pm-chip-ok">retry</span></div>
+            <div class="sr-row click" data-demo-action="demo.toast" data-demo-arg="Opening screenshot"><span class="sr-fam">screenshot</span><span class="sr-main"><span class="sr-name">QuantityStepper focus-ring before/after</span><span class="sr-sub">provenance web/src/lib/components/recipe/editor/QuantityStepper.svelte · 9m</span></span><span class="pm-chip pm-chip-ok">ok</span></div>
+            <div class="sr-row"><span class="sr-fam">api_web</span><span class="sr-main"><span class="sr-name">Searching Web: schema.org Recipe structured-data markup coverage 2026</span><span class="sr-sub">provenance: cache miss · 5 src · approved</span></span><button class="pm-minibtn" title="Sources" data-demo-action="web.sources" data-demo-arg="Opening 5 sources">5</button></div>
+            <div class="sr-row"><span class="sr-fam">browser</span><span class="sr-main"><span class="sr-name">Reading seriouseats.com/the-food-lab/why-fractions-break-our-parser</span><span class="sr-sub">provenance: sr-118 · 63 actions · redacted</span></span><button class="pm-minibtn" title="Open" data-demo-action="demo.toast" data-demo-arg="Opening browser evidence drawer"><i data-ico="eye" class="pm-ico sm"></i></button></div>
+            <div class="sr-row click" data-demo-action="demo.toast" data-demo-arg="Opening runtime receipt"><span class="sr-fam">receipt</span><span class="sr-main"><span class="sr-name">artifact projection_freshness x projection_health matrix</span><span class="sr-sub">provenance crates/puppet-core/src/artifacts/projection_freshness.rs · 3m</span></span><span class="pm-chip pm-chip-ok">ok</span></div>
+          </div>
+        </div>
+        <div class="sr-pane pm-hidden" data-pane="inv">
+          <div class="sr-ph"><span class="sr-pt">INVESTIGATION</span><span class="sr-pc">inv-import-7x</span></div>
+          <div class="sr-scroll">
+            <div class="pm-chiprow" style="padding:0 0 var(--sm)"><span class="pm-chip pm-chip-ok">fixed</span><span class="pm-chip">verified_fix</span><span class="pm-chip">artifacts: 5</span><span class="pm-chip pm-chip-ok">strong</span></div>
+            <div class="sr-row click" data-demo-action="demo.toast" data-demo-arg="baseline — failing suite"><span class="sr-fam">baseline</span><span class="sr-main"><span class="sr-name">validation_test · failing</span></span></div>
+            <div class="sr-row click" data-demo-action="demo.toast" data-demo-arg="repro — fixture import exploded 7x"><span class="sr-fam">repro</span><span class="sr-main"><span class="sr-name">browser_recording · fixture</span></span></div>
+            <div class="sr-row click" data-demo-action="demo.toast" data-demo-arg="diagnosis — parse trace"><span class="sr-fam">diagnose</span><span class="sr-main"><span class="sr-name">tool_llm_trace · parse</span></span></div>
+            <div class="sr-row click" data-demo-action="demo.toast" data-demo-arg="fix — parser patch"><span class="sr-fam">fix</span><span class="sr-main"><span class="sr-name">code_diff · parser patch</span></span></div>
+            <div class="sr-row click" data-demo-action="demo.toast" data-demo-arg="verification — 214 passed"><span class="sr-fam">verify</span><span class="sr-main"><span class="sr-name">validation_test · green</span></span></div>
+            <div class="sr-row click" data-demo-action="demo.toast" data-demo-arg="evidence — seriouseats fraction parser recording"><span class="sr-fam">evidence</span><span class="sr-main"><span class="sr-name">browser_recording · seriouseats fraction parser</span></span></div>
+            <div class="sr-btns"><button class="pm-btn" data-demo-action="page.go" data-demo-arg="Opening Orchestrator -> Evidence">Open in Orchestrator</button></div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+</template>
+<script src="_shared/icons.js"></script>
+<script src="_shared/menu.js"></script>
+<script src="_shared/chrome.js"></script>
+<script>
+PMChrome.boot({ badge: { id: 'C6', name: 'Split Rail' } });
+/* keyboard-first gutter: Arrow Up/Down moves between sections */
+document.addEventListener('keydown', function (ev) {
+  if (ev.key !== 'ArrowUp' && ev.key !== 'ArrowDown') return;
+  var g = document.activeElement && document.activeElement.closest ? document.activeElement.closest('.sr-gbtn') : null;
+  if (!g) return;
+  ev.preventDefault();
+  var btns = Array.prototype.slice.call(g.parentElement.querySelectorAll('.sr-gbtn'));
+  var i = btns.indexOf(g);
+  var n = btns[(i + (ev.key === 'ArrowDown' ? 1 : -1) + btns.length) % btns.length];
+  n.focus(); n.click();
+});
+</script>
+</body>
+</html>

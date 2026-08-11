@@ -8,22 +8,22 @@
     {
       "note": "Small INV-022 repair for watcher reconciliation and SCM hot-path avoidance.",
       "path": "Plans/Architecture_Invariants.md",
-      "sha256": "6d940af76f0d50c6f92e8692ebc817938edcf6015f12a2072bc063517d7020f1"
+      "sha256": "a1488a98949bf363a0c763a51dae6dc4db5261708c7828eeca492e65f251c543"
     },
     {
       "note": "Verifier file enumeration now honors git tracked/non-ignored files before fallback scanning.",
       "path": "scripts/pm-plans-verify.py",
-      "sha256": "1ce51088f55bcc9810dc51fcd74cb4283505b20532f81835285b419113d5e100"
+      "sha256": "e5baa8b91a726f3a43087ed4d082fcf11c8ddd21a3b7a5f536acea247dbe4ba6"
     },
     {
       "note": "Spec Lock hashes refreshed after support and owner-doc changes.",
       "path": "Plans/Spec_Lock.json",
-      "sha256": "91ceb0b84346e06aa77a9ca7e76733084171803bd4481920f4e73ddbf650b2d3"
+      "sha256": "fb6aaaf8fa4f5cff7e615a33464878ce38e84e2517572604980b4dcb9ddf88c3"
     },
     {
       "note": "Schema-valid auto-decision row for the audit result.",
       "path": "Plans/auto_decisions.jsonl",
-      "sha256": "912d0afbf3a8491a7b17513ef2bceb6551daba3fae97eb78892649e24102f57d"
+      "sha256": "e0ef6825d10bc437e00edd7db8a6a0f284357eb2e8234c2e9a32b19652b9737f"
     },
     {
       "note": "Shard regeneration report after Architecture_Invariants.md changed.",

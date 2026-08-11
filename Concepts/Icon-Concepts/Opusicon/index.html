@@ -1,0 +1,692 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Opusicon — Puppet Master icon lab</title>
+<!--
+  Loaded as CLASSIC scripts on purpose. <script type="module"> is subject to
+  CORS and fails under file://, which is how this page is meant to be opened.
+  Classic <script src> has no such restriction. There is no fetch() anywhere:
+  every artifact is generated in-page from pm-core.js, so the preview and the
+  downloaded bytes are the same string by construction.
+-->
+<script src="pm-core.js?v=3"></script>
+<script src="pm-export.js?v=3"></script>
+<style>
+/* ---------------------------------------------------------------------------
+   Chrome is deliberately NEUTRAL and never adopts the selected PM theme.
+   Judging "does #00FF41 hold on #1A1A1A at 16px" requires a stable surround --
+   if the whole page were also retro-dark the eye adapts and the mark reads as
+   less vivid than it will in the app. The accent below (amber) appears in no
+   PMConcept7 theme, so nothing in the UI can be mistaken for a theme colour.
+   Theme fidelity lives inside the stages, which reproduce real tokens.
+   --------------------------------------------------------------------------- */
+:root{
+  --bg:#151517; --panel:#1C1C20; --panel-2:#232328; --line:#2E2E35;
+  --ink:#F2F2F3; --ink-2:#A8A8AE; --ink-3:#75757D;
+  --accent:#C9A227; --accent-soft:rgba(201,162,39,.14);
+  --ok:#4FA46A; --bad:#C4553D;
+  --mono:ui-monospace,'SF Mono',Menlo,Consolas,monospace;
+  --r:10px;
+}
+*{box-sizing:border-box}
+html,body{margin:0;padding:0}
+body{
+  background:var(--bg); color:var(--ink);
+  font:14px/1.5 -apple-system,BlinkMacSystemFont,'Segoe UI',system-ui,sans-serif;
+  -webkit-font-smoothing:antialiased;
+}
+h1,h2,h3{margin:0;font-weight:650}
+button{font:inherit;color:inherit;background:none;border:none;cursor:pointer}
+a{color:var(--accent)}
+
+/* masthead ---------------------------------------------------------------- */
+.mast{display:flex;align-items:center;gap:14px;padding:16px 22px;border-bottom:1px solid var(--line);
+  position:sticky;top:0;background:var(--bg);z-index:60}
+.mast .logo{width:30px;height:30px;flex:none}
+.mast h1{font-size:15px;letter-spacing:.01em}
+/* Bakeoff identifier — names which model produced this folder. */
+.model-tag{flex:none;font-size:13px;font-weight:800;letter-spacing:.06em;
+  color:#151517;background:var(--accent);padding:5px 13px;border-radius:6px}
+.mast .sub{color:var(--ink-3);font-size:12px;margin-left:auto;text-align:right;line-height:1.35}
+
+/* control rail ------------------------------------------------------------ */
+.rail{padding:12px 22px;border-bottom:1px solid var(--line);background:var(--panel);
+  position:sticky;top:63px;z-index:55}
+.ctl{display:flex;align-items:center;gap:9px;flex-wrap:wrap;margin:6px 0}
+.ctl-k{font-size:10px;letter-spacing:.1em;text-transform:uppercase;color:var(--ink-3);
+  width:74px;flex:none;font-weight:700}
+.chip{display:inline-flex;align-items:center;gap:7px;padding:5px 11px;border-radius:99px;
+  border:1px solid var(--line);background:var(--panel-2);color:var(--ink-2);font-size:12.5px;
+  transition:background .12s,border-color .12s,color .12s}
+.chip:hover{border-color:#43434d;color:var(--ink)}
+.chip[aria-pressed="true"]{background:var(--accent-soft);border-color:var(--accent);color:var(--ink)}
+.chip .dot{width:11px;height:11px;border-radius:50%;flex:none;border:1px solid rgba(255,255,255,.22)}
+.chip .sw{width:16px;height:16px;border-radius:4px;flex:none;border:1px solid rgba(255,255,255,.16);
+  display:inline-block;position:relative}
+.chip .sw i{position:absolute;inset:3px;border-radius:2px}
+input[type=range]{accent-color:var(--accent);width:130px}
+.tog{display:inline-flex;align-items:center;gap:7px;font-size:12.5px;color:var(--ink-2)}
+.hint{font-size:11.5px;color:var(--ink-3)}
+
+/* layout ------------------------------------------------------------------ */
+.cols{display:grid;grid-template-columns:minmax(0,1fr) 330px;gap:20px;padding:20px 22px;align-items:start}
+@media (max-width:1080px){.cols{grid-template-columns:1fr}}
+.card{background:var(--panel);border:1px solid var(--line);border-radius:var(--r);padding:16px;margin-bottom:18px}
+.card > h3{font-size:10.5px;letter-spacing:.1em;text-transform:uppercase;color:var(--ink-3);margin-bottom:12px}
+
+/* hero -------------------------------------------------------------------- */
+.hero{display:grid;grid-template-columns:1fr 1fr;gap:14px}
+.hero.one{grid-template-columns:1fr}
+.stage{border-radius:8px;display:flex;align-items:center;justify-content:center;
+  padding:26px;min-height:190px;position:relative;overflow:hidden}
+.stage img{display:block;max-width:100%}
+.cap{display:flex;justify-content:space-between;align-items:baseline;margin-top:8px;font-size:11.5px;color:var(--ink-3)}
+.ratio{font-family:var(--mono);font-size:11px}
+.ratio.ok{color:var(--ok)} .ratio.bad{color:var(--bad)}
+.stage.sel{outline:2px solid var(--accent);outline-offset:2px}
+
+/* ruler ------------------------------------------------------------------- */
+.ruler{display:flex;align-items:flex-end;gap:20px;flex-wrap:wrap;padding:16px;border-radius:8px}
+.ruler .u{text-align:center}
+.ruler .u img{display:block;margin:0 auto 6px}
+.ruler .u span{font-family:var(--mono);font-size:10px;color:var(--ink-3)}
+.ruler-note{font-size:11.5px;color:var(--ink-3);margin-top:10px}
+
+/* title-bar simulation ----------------------------------------------------- */
+.tb-stage{border-radius:10px;overflow:hidden;position:relative;min-height:118px}
+.tb-wall{position:absolute;inset:0}
+.title-bar{height:40px;display:flex;align-items:center;gap:12px;padding:0 8px;
+  font-weight:700;font-size:14px;position:relative;z-index:2}
+.title-bar .brandmark{display:flex;align-items:center;flex:none}
+.title-bar .brandmark svg,.title-bar .brandmark img{display:block}
+.title-bar .app-name{white-space:nowrap;flex:0 0 auto}
+.title-bar .pill{font-size:11.5px;font-weight:600;padding:4px 10px;border-radius:99px;opacity:.9}
+.title-bar .tabs{display:flex;gap:12px;font-size:11.5px;font-weight:600;opacity:.62}
+.tb-body{position:relative;z-index:1;padding:10px 14px 14px;display:flex;gap:10px}
+.tb-body .ph{height:44px;border-radius:8px;flex:1}
+.tb-note{font-size:11.5px;color:var(--ink-3);margin-top:9px}
+
+/* export ------------------------------------------------------------------ */
+.btn{display:flex;align-items:center;gap:9px;width:100%;padding:9px 12px;border-radius:8px;
+  border:1px solid var(--line);background:var(--panel-2);color:var(--ink);font-size:13px;margin-bottom:8px;
+  transition:border-color .12s,background .12s}
+.btn:hover{border-color:var(--accent);background:var(--accent-soft)}
+.btn.primary{border-color:var(--accent);background:var(--accent-soft)}
+.btn svg{flex:none}
+.btn .sz{margin-left:auto;font-family:var(--mono);font-size:11px;color:var(--ink-3)}
+select{background:var(--panel-2);color:var(--ink);border:1px solid var(--line);border-radius:6px;
+  padding:5px 8px;font:inherit;font-size:12.5px}
+.src{font-family:var(--mono);font-size:10.5px;line-height:1.45;color:var(--ink-2);background:#111114;
+  border:1px solid var(--line);border-radius:8px;padding:10px;max-height:190px;overflow:auto;
+  white-space:pre-wrap;word-break:break-all}
+.prog{height:4px;border-radius:99px;background:var(--panel-2);overflow:hidden;margin-top:6px;display:none}
+.prog i{display:block;height:100%;background:var(--accent);width:0}
+
+/* sheet ------------------------------------------------------------------- */
+.tabs-bar{display:flex;gap:6px;padding:0 22px;border-bottom:1px solid var(--line)}
+.tabs-bar button{padding:10px 14px;font-size:12.5px;color:var(--ink-3);border-bottom:2px solid transparent;margin-bottom:-1px}
+.tabs-bar button[aria-selected="true"]{color:var(--ink);border-bottom-color:var(--accent)}
+.sheet{padding:20px 22px 60px}
+.grid{display:grid;gap:14px;grid-template-columns:repeat(auto-fill,minmax(168px,1fr))}
+.cell{border:1px solid var(--line);border-radius:9px;overflow:hidden;background:var(--panel);cursor:pointer;
+  transition:border-color .12s,transform .12s}
+.cell:hover{border-color:var(--accent);transform:translateY(-1px)}
+.cell .st{display:flex;align-items:center;justify-content:center;padding:20px;min-height:118px}
+.cell .mt{padding:8px 10px;border-top:1px solid var(--line);font-size:11px;color:var(--ink-2);
+  display:flex;justify-content:space-between;gap:6px}
+.cell .mt b{font-weight:600;color:var(--ink)}
+.cell .mt span{font-family:var(--mono);font-size:10px;color:var(--ink-3)}
+.badge{display:inline-block;font-size:9.5px;letter-spacing:.05em;text-transform:uppercase;
+  padding:2px 6px;border-radius:4px;background:var(--panel-2);color:var(--ink-3);border:1px solid var(--line)}
+.badge.warn{color:#D8A33F;border-color:#5A4520}
+.toast{position:fixed;bottom:22px;left:50%;transform:translateX(-50%) translateY(20px);
+  background:var(--panel-2);border:1px solid var(--accent);color:var(--ink);padding:10px 18px;
+  border-radius:99px;font-size:13px;opacity:0;pointer-events:none;transition:all .18s;z-index:99}
+.toast.on{opacity:1;transform:translateX(-50%) translateY(0)}
+</style>
+</head>
+<body>
+
+<header class="mast">
+  <span class="logo" id="mastLogo"></span>
+  <span class="model-tag">Opus</span>
+  <div>
+    <h1>Opusicon — Puppet Master icon lab</h1>
+    <div class="hint">8 themes · 4 forms · 2 polarities · 8 motions</div>
+  </div>
+  <div class="sub">
+    Every asset is generated in this page.<br>
+    No network requests — works from <code>file://</code>.
+  </div>
+</header>
+
+<nav class="rail">
+  <div class="ctl"><span class="ctl-k">Theme</span><span id="cTheme"></span></div>
+  <div class="ctl"><span class="ctl-k">Form</span><span id="cForm"></span></div>
+  <div class="ctl"><span class="ctl-k">Polarity</span><span id="cPol"></span></div>
+  <div class="ctl"><span class="ctl-k">Motion</span><span id="cMotion"></span></div>
+  <div class="ctl"><span class="ctl-k">Timing</span>
+    <input type="range" id="speed" min="0.35" max="2.5" step="0.05" value="1">
+    <span class="hint" id="speedV">1.00×</span>
+    <label class="tog"><input type="checkbox" id="reduce"> simulate reduced motion</label>
+    <button class="chip" id="resync">Resync</button>
+  </div>
+</nav>
+
+<main class="cols">
+  <div>
+    <section class="card">
+      <h3>Inspector — on the theme's real ground</h3>
+      <div class="hero" id="hero"></div>
+    </section>
+
+    <section class="card">
+      <h3>Size ruler — where the artwork breaks down</h3>
+      <div class="ruler" id="ruler"></div>
+      <div class="ruler-note" id="rulerNote"></div>
+    </section>
+
+    <section class="card">
+      <h3>In the real title bar</h3>
+      <div class="tb-stage" id="tbStage"></div>
+      <div class="tb-note" id="tbNote"></div>
+    </section>
+  </div>
+
+  <aside>
+    <section class="card">
+      <h3>Export</h3>
+      <button class="btn primary" id="dlSvg"><span id="iSvg"></span>Download SVG</button>
+      <button class="btn" id="dlPng"><span id="iPng"></span>Download PNG
+        <select id="pngSize" class="sz">
+          <option>16</option><option>32</option><option>64</option><option>128</option>
+          <option>256</option><option selected>512</option><option>1024</option>
+        </select>
+      </button>
+      <button class="btn" id="cpSrc"><span id="iCopy"></span>Copy SVG source</button>
+      <button class="btn" id="dlZipTheme"><span id="iZip1"></span>Bundle this theme<span class="sz">.zip</span></button>
+      <button class="btn" id="dlZipAll"><span id="iZip2"></span>Bundle everything<span class="sz">.zip</span></button>
+      <div class="prog" id="prog"><i></i></div>
+    </section>
+    <section class="card">
+      <h3>Source</h3>
+      <div class="src" id="srcBox"></div>
+    </section>
+  </aside>
+</main>
+
+<div class="tabs-bar" role="tablist">
+  <button role="tab" aria-selected="true" data-sheet="forms">Themes &times; forms</button>
+  <button role="tab" aria-selected="false" data-sheet="motion">Motion lab</button>
+  <button role="tab" aria-selected="false" data-sheet="tiers">Optical tiers</button>
+</div>
+<section class="sheet"><div class="grid" id="sheet"></div></section>
+
+<div class="toast" id="toast"></div>
+
+<script>
+(function () {
+  'use strict';
+  var PM = window.PMCore, EX = window.PMExport;
+
+  /* Inline SVG icons only — this project forbids emoji glyphs anywhere. */
+  var ICONS = {
+    download: '<path d="M12 3v12m0 0 4-4m-4 4-4-4M4 17v2a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2v-2"/>',
+    copy: '<rect x="9" y="9" width="11" height="11" rx="2"/><path d="M5 15V5a2 2 0 0 1 2-2h10"/>',
+    zip: '<path d="M4 7a2 2 0 0 1 2-2h4l2 2h6a2 2 0 0 1 2 2v8a2 2 0 0 1-2 2H6a2 2 0 0 1-2-2z"/><path d="M12 9v6m-2-3h4"/>'
+  };
+  function icon(k, s) {
+    return '<svg viewBox="0 0 24 24" width="' + (s || 16) + '" height="' + (s || 16) + '" fill="none" ' +
+      'stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">' +
+      ICONS[k] + '</svg>';
+  }
+
+  var FORMS = [
+    { id: 'tile',   label: 'App tile',   note: 'Dock, taskbar, installer' },
+    { id: 'mark',   label: 'Title-bar mark', note: 'replaces the wordmark' },
+    { id: 'tray',   label: 'Tray',       note: 'menu bar / notification area' },
+    { id: 'lockup', label: 'Lockup',     note: 'mark + wordmark' }
+  ];
+
+  var S = {
+    theme: 'friendly-dark', form: 'tile', polarity: 'ground',
+    motion: 'none', speed: 1, reduce: false, sheet: 'forms'
+  };
+
+  /* -- the ONE place an artifact is described -------------------------------
+     Both the preview and the download call this, so they cannot diverge. */
+  function spec(over) {
+    var o = over || {};
+    var form = o.form || S.form, theme = o.theme || S.theme, size = o.size || 512;
+    var motion = ('motion' in o) ? o.motion : S.motion;
+    if (motion === 'none') motion = null;
+
+    if (form === 'lockup') return { kind: 'lockup', theme: theme, size: o.size || 64 };
+    if (form === 'tray') {
+      // Plans/FinalGUISpec.md:574 — the tray icon changes to the accent colour
+      // while the orchestrator is running, so the tray has two states.
+      var running = o.trayRunning;
+      return { kind: 'svg', args: {
+        theme: theme, form: running ? 'mark' : 'mono', tier: 'micro', size: size, motion: motion
+      } };
+    }
+    if (form === 'mark') return { kind: 'svg', args: {
+      theme: theme, form: 'mark', tier: o.tier || 'small', size: size, motion: motion } };
+    return { kind: 'svg', args: {
+      theme: theme, form: 'tile', polarity: o.polarity || S.polarity,
+      tier: o.tier || 'full', size: size, motion: motion } };
+  }
+
+  function build(sp) {
+    if (sp.kind === 'lockup') return PM.buildLockup({ theme: sp.theme, size: sp.size });
+    var a = Object.assign({}, sp.args, { speed: S.speed });
+    var svg = PM.buildSVG(a);
+    if (S.reduce) svg = svg.replace('<style>', '<style>\n#bars,#str-l,#str-r,#pm,#bar-main,#bar-counter{animation:none!important;transform:none!important;opacity:1!important}');
+    return svg;
+  }
+
+  function fileName(sp, ext) {
+    if (sp.kind === 'lockup') return 'pm-lockup-' + sp.theme + '.' + ext;
+    var a = sp.args, bits = ['pm'];
+    if (a.form === 'mono') bits.push('tray');
+    else if (a.form === 'mark') bits.push(a.tier === 'micro' ? 'tray-running' : 'mark');
+    else bits.push('tile', a.polarity);
+    if (a.form !== 'mono') bits.push(a.theme);
+    if (a.motion) bits.push(a.motion);
+    return bits.join('-') + '.' + ext;
+  }
+
+  /* -- preview primitive ---------------------------------------------------
+     <img> + data URI, never inline SVG. Each <img> is an isolated document, so
+     the 8 loaders on the motion lab do not collide on @keyframes names or on
+     ids (#bars, #str-l ...) the way inlined copies would — and the bytes in
+     the src ARE the bytes we hand to the download. */
+  function imgFor(sp, cssSize, extra) {
+    var svg = build(sp);
+    var el = document.createElement('img');
+    el.src = EX.dataURI(svg);
+    el.alt = '';
+    if (cssSize) { el.style.width = cssSize + 'px'; el.style.height = 'auto'; }
+    if (extra) el.style.cssText += ';' + extra;
+    el._svg = svg; el._spec = sp;
+    return el;
+  }
+
+  var $ = function (id) { return document.getElementById(id); };
+  function toast(m) {
+    var t = $('toast'); t.textContent = m; t.classList.add('on');
+    clearTimeout(t._t); t._t = setTimeout(function () { t.classList.remove('on'); }, 1900);
+  }
+
+  /* -- controls ------------------------------------------------------------ */
+  function chip(label, pressed, onclick, inner) {
+    var b = document.createElement('button');
+    b.className = 'chip'; b.setAttribute('aria-pressed', pressed ? 'true' : 'false');
+    b.innerHTML = (inner || '') + '<span>' + label + '</span>';
+    b.onclick = onclick;
+    return b;
+  }
+
+  function renderControls() {
+    var t = $('cTheme'); t.innerHTML = '';
+    PM.THEMES.forEach(function (th) {
+      var sw = '<span class="sw" style="background:' + th.bg + '"><i style="background:' + th.accent + '"></i></span>';
+      t.appendChild(chip(th.label, S.theme === th.slug, function () { S.theme = th.slug; renderAll(); }, sw));
+    });
+    var f = $('cForm'); f.innerHTML = '';
+    FORMS.forEach(function (fo) {
+      f.appendChild(chip(fo.label, S.form === fo.id, function () { S.form = fo.id; renderAll(); }));
+    });
+    var p = $('cPol'); p.innerHTML = '';
+    [['ground', 'Theme ground'], ['flood', 'Accent flood']].forEach(function (x) {
+      var b = chip(x[1], S.polarity === x[0], function () { S.polarity = x[0]; renderAll(); });
+      if (S.form !== 'tile') { b.disabled = true; b.style.opacity = .4; b.title = 'Tile form only'; }
+      p.appendChild(b);
+    });
+    var m = $('cMotion'); m.innerHTML = '';
+    m.appendChild(chip('Still', S.motion === 'none', function () { S.motion = 'none'; renderAll(); }));
+    PM.MOTIONS.forEach(function (mo) {
+      var b = chip(mo.name, S.motion === mo.id, function () { S.motion = mo.id; renderAll(); });
+      b.title = mo.blurb + (mo.slint ? '' : '  [web only — not portable to Slint]');
+      if (!mo.slint) b.innerHTML += ' <span class="badge warn">web</span>';
+      if (mo.determinate) b.innerHTML += ' <span class="badge">progress</span>';
+      m.appendChild(b);
+    });
+  }
+
+  /* -- inspector ----------------------------------------------------------- */
+  function renderHero() {
+    var h = $('hero'); h.innerHTML = '';
+    var th = PM.theme(S.theme);
+
+    function panel(polarity, label) {
+      var wrap = document.createElement('div');
+      var st = document.createElement('div');
+      st.className = 'stage';
+      st.style.background = th.bg;
+      var sp = spec({ polarity: polarity, size: 512 });
+      st.appendChild(imgFor(sp, 150));
+      wrap.appendChild(st);
+      var cap = document.createElement('div');
+      cap.className = 'cap';
+      var c = PM.colorsFor(S.theme, polarity);
+      var ok = c.ratio >= 3;
+      cap.innerHTML = '<span>' + label + (c.adjusted ? ' <span class="badge">tile deepened</span>' : '') + '</span>' +
+        '<span class="ratio ' + (ok ? 'ok' : 'bad') + '">' + c.ratio.toFixed(2) + ':1</span>';
+      wrap.appendChild(cap);
+      return wrap;
+    }
+
+    if (S.form === 'tile') {
+      h.className = 'hero';
+      h.appendChild(panel('ground', 'Theme ground'));
+      h.appendChild(panel('flood', 'Accent flood'));
+    } else if (S.form === 'tray') {
+      h.className = 'hero';
+      [['idle', false, '#B9B9C0'], ['orchestrator running', true, null]].forEach(function (x) {
+        var wrap = document.createElement('div');
+        var st = document.createElement('div'); st.className = 'stage'; st.style.background = th.bg;
+        st.appendChild(imgFor(spec({ trayRunning: x[1], size: 128 }), 84));
+        wrap.appendChild(st);
+        var cap = document.createElement('div'); cap.className = 'cap';
+        cap.innerHTML = '<span>' + x[0] + '</span><span class="ratio">' +
+          (x[1] ? th.accent : 'alpha mask') + '</span>';
+        wrap.appendChild(cap);
+        h.appendChild(wrap);
+      });
+    } else {
+      h.className = 'hero one';
+      var wrap = document.createElement('div');
+      var st = document.createElement('div'); st.className = 'stage'; st.style.background = th.bg;
+      st.appendChild(imgFor(spec({ size: S.form === 'lockup' ? 64 : 256 }), S.form === 'lockup' ? 300 : 130));
+      wrap.appendChild(st);
+      var cap = document.createElement('div'); cap.className = 'cap';
+      cap.innerHTML = '<span>' + FORMS.filter(function (f) { return f.id === S.form; })[0].note + '</span>' +
+        (S.form === 'lockup' ? '<span class="badge warn">wordmark is live text</span>' : '');
+      wrap.appendChild(cap);
+      h.appendChild(wrap);
+    }
+  }
+
+  /* -- size ruler ---------------------------------------------------------- */
+  var RULER = [16, 20, 24, 32, 48, 64, 128];
+  function renderRuler() {
+    var r = $('ruler'); r.innerHTML = '';
+    var th = PM.theme(S.theme);
+    r.style.background = th.bg;
+    RULER.forEach(function (px) {
+      var u = document.createElement('div'); u.className = 'u';
+      // tier is chosen per size, exactly as a real consumer would
+      var tier = PM.tierFor(px);
+      var sp = spec({ size: px, tier: tier });
+      u.appendChild(imgFor(sp, px));
+      var lab = document.createElement('span'); lab.textContent = px + ' · ' + tier;
+      u.appendChild(lab);
+      r.appendChild(u);
+    });
+    $('rulerNote').textContent =
+      'Each sample is built at its own tier. Below 25px the mark becomes a redrawn micro rig; ' +
+      '25–63px uses the small rig; 64px and up is the authored artwork with PM and brackets. ' +
+      'Scaling one geometry across this range puts the strings at 0.36px and the brackets at 0.23px.';
+  }
+
+  /* -- title-bar simulation ------------------------------------------------ */
+  function renderTitleBar() {
+    var th = PM.theme(S.theme), st = $('tbStage');
+    st.innerHTML = '';
+    st.style.background = th.bg;
+
+    var wall = document.createElement('div'); wall.className = 'tb-wall';
+    if (th.family === 'glass') {
+      wall.style.background = th.mode === 'dark'
+        ? 'radial-gradient(60% 50% at 18% 8%,#5E4494 0%,transparent 66%),radial-gradient(55% 45% at 85% 18%,#7A4C8C 0%,transparent 64%),' + th.bg
+        : 'radial-gradient(60% 50% at 18% 8%,#F3E2F6 0%,transparent 66%),radial-gradient(55% 45% at 85% 18%,#E8D3F0 0%,transparent 64%),' + th.bg;
+    } else if (th.family === 'friendly') {
+      wall.style.background =
+        'radial-gradient(46% 38% at 16% 6%,' + (th.mode === 'dark' ? 'rgba(95,208,176,.10)' : 'rgba(95,208,176,.16)') + ',transparent 65%),' +
+        'radial-gradient(50% 42% at 88% 12%,' + (th.mode === 'dark' ? 'rgba(179,157,219,.12)' : 'rgba(179,157,219,.18)') + ',transparent 65%),' + th.bg;
+    }
+    st.appendChild(wall);
+
+    var bar = document.createElement('header');
+    bar.className = 'title-bar';
+    bar.style.color = th.text;
+    // per-family chrome, matching PMConcept7
+    if (th.family === 'friendly') {
+      bar.style.cssText += ';margin:8px 12px 2px;padding:0 16px;max-width:calc(100% - 24px);' +
+        'border-radius:20px;background:' + (th.mode === 'dark' ? 'rgba(40,36,48,.82)' : 'rgba(255,255,255,.88)') +
+        ';border:1px solid ' + (th.mode === 'dark' ? 'rgba(255,255,255,.08)' : 'rgba(255,255,255,.85)') +
+        ';backdrop-filter:blur(14px)';
+    } else if (th.family === 'glass') {
+      bar.style.cssText += ';background:transparent;border-bottom:none';
+    } else {
+      bar.style.cssText += ';background:' + th.surface + ';border-bottom:' +
+        (th.family === 'retro' ? '2px' : '1px') + ' solid ' + (th.family === 'retro' ? '#4A463F' : '#3a3a42');
+    }
+    if (th.family === 'retro') bar.style.fontFamily = "ui-monospace,'SF Mono',Menlo,monospace";
+
+    var brand = document.createElement('span');
+    brand.className = 'brandmark';
+    brand.appendChild(imgFor(spec({ form: 'mark', size: 24, tier: 'small' }), 24));
+    bar.appendChild(brand);
+
+    var name = document.createElement('span');
+    name.className = 'app-name'; name.textContent = 'Puppet Master';
+    bar.appendChild(name);
+
+    var pill = document.createElement('span');
+    pill.className = 'pill'; pill.textContent = 'tastebook';
+    pill.style.background = th.family === 'glass' ? 'rgba(255,255,255,.12)' : th.surface;
+    pill.style.border = '1px solid ' + (th.mode === 'dark' ? 'rgba(255,255,255,.12)' : 'rgba(0,0,0,.10)');
+    if (th.family === 'retro') pill.style.borderRadius = '2px';
+    bar.appendChild(pill);
+
+    var tabs = document.createElement('span');
+    tabs.className = 'tabs';
+    tabs.innerHTML = '<span>Home</span><span>Projects</span><span>Orchestrator</span>';
+    bar.appendChild(tabs);
+
+    st.appendChild(bar);
+
+    var body = document.createElement('div'); body.className = 'tb-body';
+    for (var i = 0; i < 3; i++) {
+      var ph = document.createElement('div'); ph.className = 'ph';
+      ph.style.background = th.family === 'glass'
+        ? 'rgba(255,255,255,' + (th.mode === 'dark' ? '.07' : '.35') + ')' : th.surface;
+      ph.style.border = '1px solid ' + (th.mode === 'dark' ? 'rgba(255,255,255,.07)' : 'rgba(0,0,0,.07)');
+      if (th.family === 'retro') ph.style.borderRadius = '0';
+      body.appendChild(ph);
+    }
+    st.appendChild(body);
+
+    $('tbNote').textContent = 'The 40px bar, its per-family geometry and the 24px mark are reproduced from ' +
+      'PMConcept7. Type falls back to system fonts — Cal Sans, Quicksand, Orbitron and Rajdhani are not loaded here.';
+  }
+
+  /* -- contact sheets ------------------------------------------------------ */
+  function cell(sp, title, sub, bg, px) {
+    var c = document.createElement('div'); c.className = 'cell';
+    var st = document.createElement('div'); st.className = 'st';
+    st.style.background = bg;
+    st.appendChild(imgFor(sp, px || 76));
+    c.appendChild(st);
+    var mt = document.createElement('div'); mt.className = 'mt';
+    mt.innerHTML = '<b>' + title + '</b><span>' + sub + '</span>';
+    c.appendChild(mt);
+    c.onclick = function () {
+      EX.save(build(sp), fileName(sp, 'svg'), 'image/svg+xml;charset=utf-8');
+      toast('Saved ' + fileName(sp, 'svg'));
+    };
+    c.title = 'Click to download ' + fileName(sp, 'svg');
+    return c;
+  }
+
+  function renderSheet() {
+    var g = $('sheet'); g.innerHTML = '';
+    if (S.sheet === 'forms') {
+      PM.THEMES.forEach(function (th) {
+        FORMS.forEach(function (fo) {
+          if (fo.id === 'tray' && th.slug !== S.theme) return;   // tray is theme-independent
+          var sp = spec({ theme: th.slug, form: fo.id, size: fo.id === 'lockup' ? 64 : 256, motion: 'none' });
+          g.appendChild(cell(sp, th.label, fo.label, th.bg, fo.id === 'lockup' ? 150 : 76));
+        });
+      });
+    } else if (S.sheet === 'motion') {
+      PM.MOTIONS.forEach(function (mo) {
+        var sp = spec({ theme: S.theme, form: 'tile', size: 256, motion: mo.id });
+        var c = cell(sp, mo.name, mo.slint ? 'slint ok' : 'web only', PM.theme(S.theme).bg, 84);
+        g.appendChild(c);
+      });
+    } else {
+      [16, 20, 24, 32, 48, 64, 96, 128].forEach(function (px) {
+        var tier = PM.tierFor(px);
+        var sp = spec({ size: px, tier: tier, motion: 'none' });
+        g.appendChild(cell(sp, px + 'px', tier, PM.theme(S.theme).bg, px));
+      });
+    }
+  }
+
+  /* -- export -------------------------------------------------------------- */
+  function currentSpec() { return spec({ size: 512 }); }
+
+  $('dlSvg').onclick = function () {
+    var sp = currentSpec();
+    EX.save(build(sp), fileName(sp, 'svg'), 'image/svg+xml;charset=utf-8');
+    toast('Saved ' + fileName(sp, 'svg'));
+  };
+  $('dlPng').onclick = function (e) {
+    if (e.target.tagName === 'SELECT') return;
+    var px = parseInt($('pngSize').value, 10);
+    var sp = spec({ size: px, tier: PM.tierFor(px) });
+    var svg = build(sp);
+    var job = (sp.kind === 'lockup')
+      ? EX.toPNGRect(svg, Math.round(px * 147.2 / 43.2), px)
+      : EX.toPNG(svg, px);
+    job.then(function (bytes) {
+      EX.save(bytes, fileName(sp, 'svg').replace(/\.svg$/, '-' + px + '.png'), 'image/png');
+      toast('Saved PNG at ' + px + 'px');
+    }).catch(function (err) { toast('PNG failed: ' + err.message); });
+  };
+  $('cpSrc').onclick = function () {
+    EX.copy(build(currentSpec())).then(function (ok) { toast(ok ? 'SVG source copied' : 'Copy blocked'); });
+  };
+
+  function bundle(themes, label) {
+    var files = [], prog = $('prog'), bar = prog.firstElementChild;
+    prog.style.display = 'block';
+    var sizes = [16, 32, 64, 128, 256, 512, 1024];
+    var chain = Promise.resolve();
+    var steps = 0, total = themes.length * (4 + sizes.length) + PM.MOTIONS.length * themes.length;
+
+    themes.forEach(function (th) {
+      ['ground', 'flood'].forEach(function (pol) {
+        ['micro', 'small', 'full'].forEach(function (tier) {
+          files.push({ name: 'svg/tile/pm-tile-' + th.slug + '-' + pol + '-' + tier + '.svg',
+            data: PM.buildSVG({ theme: th.slug, form: 'tile', polarity: pol, tier: tier, size: 512 }) });
+        });
+      });
+      files.push({ name: 'svg/mark/pm-mark-' + th.slug + '.svg',
+        data: PM.buildSVG({ theme: th.slug, form: 'mark', tier: 'small', size: 128 }) });
+      files.push({ name: 'svg/lockup/pm-lockup-' + th.slug + '.svg',
+        data: PM.buildLockup({ theme: th.slug, size: 64 }) });
+      PM.MOTIONS.forEach(function (mo) {
+        files.push({ name: 'svg/loading/pm-loading-' + mo.id + '-' + th.slug + '.svg',
+          data: PM.buildSVG({ theme: th.slug, form: 'tile', polarity: 'ground', tier: 'full', size: 256, motion: mo.id }) });
+      });
+      // PNG raster set for the app icon
+      sizes.forEach(function (px) {
+        chain = chain.then(function () {
+          var tier = PM.tierFor(px);
+          return EX.toPNG(PM.buildSVG({ theme: th.slug, form: 'tile', polarity: 'ground', tier: tier, size: px }), px)
+            .then(function (bytes) {
+              files.push({ name: 'png/' + px + '/pm-tile-' + th.slug + '.png', data: bytes });
+              steps++; bar.style.width = Math.round(steps / total * 100) + '%';
+            });
+        });
+      });
+    });
+
+    // theme-independent artifacts
+    files.push({ name: 'svg/tray/pm-tray-idle.svg', data: PM.buildSVG({ form: 'mono', tier: 'micro', size: 64 }) });
+    PM.PARTS.forEach(function (p) {
+      files.push({ name: 'slint/parts/' + p + '.svg', data: PM.buildPart(p, 'full') });
+      files.push({ name: 'slint/parts/' + p + '-small.svg', data: PM.buildPart(p, 'small') });
+    });
+    files.push({ name: 'README.txt', data: bundleReadme(themes) });
+
+    chain.then(function () {
+      var zip = EX.zipStore(files);
+      EX.save(zip, 'opusicon-' + label + '.zip', 'application/zip');
+      prog.style.display = 'none'; bar.style.width = '0';
+      toast('Bundled ' + files.length + ' files');
+    }).catch(function (e) {
+      prog.style.display = 'none';
+      toast('Bundle failed: ' + e.message);
+    });
+  }
+
+  function bundleReadme(themes) {
+    var L = ['Opusicon — Puppet Master icon set', '', 'Generated by Concepts/Opusicon/index.html.', ''];
+    L.push('Themes included: ' + themes.map(function (t) { return t.slug; }).join(', '), '');
+    L.push('Contrast (WCAG 1.4.11 non-text floor is 3:1):');
+    themes.forEach(function (t) {
+      ['ground', 'flood'].forEach(function (p) {
+        var c = PM.colorsFor(t.slug, p);
+        L.push('  ' + t.slug + ' / ' + p + '  tile ' + c.tile + '  mark ' + c.mark + '  ' + c.ratio.toFixed(2) + ':1');
+      });
+    });
+    L.push('', 'Motions (web SVG uses CSS keyframes):');
+    PM.MOTIONS.forEach(function (m) {
+      L.push('  ' + m.id + ' — ' + m.name + (m.slint ? '' : '  [WEB ONLY: uses stroke-dashoffset]'));
+    });
+    L.push('', 'IMPORTANT — Slint / resvg:',
+      '  resvg renders only the static SVG 1.1 subset and has no animation support.',
+      '  The animated SVGs in svg/loading/ will render as a FROZEN FIRST FRAME in',
+      '  Slint. For the app, compose slint/parts/*.svg and animate them natively',
+      '  with animation-tick(). See slint/PMLogo.slint.', '');
+    L.push('The lockup wordmark is live <text>. Convert it to outlines before using',
+      'it anywhere resvg renders, or use the PNG export instead.');
+    return L.join('\n');
+  }
+
+  $('dlZipTheme').onclick = function () { bundle([PM.theme(S.theme)], S.theme); };
+  $('dlZipAll').onclick = function () { bundle(PM.THEMES, 'all'); };
+
+  /* -- wiring -------------------------------------------------------------- */
+  $('speed').oninput = function () {
+    S.speed = parseFloat(this.value);
+    $('speedV').textContent = S.speed.toFixed(2) + '×';
+    renderAll();
+  };
+  $('reduce').onchange = function () { S.reduce = this.checked; renderAll(); };
+  $('resync').onclick = function () { renderAll(); toast('Animations resynced'); };
+  Array.prototype.forEach.call(document.querySelectorAll('.tabs-bar button'), function (b) {
+    b.onclick = function () {
+      Array.prototype.forEach.call(document.querySelectorAll('.tabs-bar button'), function (x) {
+        x.setAttribute('aria-selected', x === b ? 'true' : 'false');
+      });
+      S.sheet = b.dataset.sheet; renderSheet();
+    };
+  });
+
+  function renderAll() {
+    renderControls(); renderHero(); renderRuler(); renderTitleBar(); renderSheet();
+    var svg = build(currentSpec());
+    $('srcBox').textContent = svg.length > 2600 ? svg.slice(0, 2600) + '\n… (' + svg.length + ' bytes total)' : svg;
+  }
+
+  $('iSvg').innerHTML = icon('download');
+  $('iPng').innerHTML = icon('download');
+  $('iCopy').innerHTML = icon('copy');
+  $('iZip1').innerHTML = icon('zip');
+  $('iZip2').innerHTML = icon('zip');
+  $('mastLogo').innerHTML = PM.buildSVG({ theme: 'friendly-dark', form: 'tile', polarity: 'ground', tier: 'full', size: 30 })
+    .replace(/^<\?xml[^>]*\?>\s*/, '');
+
+  renderAll();
+})();
+</script>
+</body>
+</html>

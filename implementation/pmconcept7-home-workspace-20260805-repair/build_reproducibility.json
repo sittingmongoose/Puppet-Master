@@ -1,0 +1,64 @@
+{
+  "schema_id": "pm.pm7_build_reproducibility.v1",
+  "status": "PASS",
+  "generated_artifact": "Concepts/PMConcept7.html",
+  "output_bytes": 3424764,
+  "output_sha256": "91665182b3db3c7ce53018f4ea12e82fc6c65c0abc8b9c0e5c72869d887f21db",
+  "authored_t20_source": {
+    "path": "Concepts/pm7-tools/home_workspace_source.py",
+    "sha256": "3e5a3fe2f8b5f5800a834ebe1e96ccdbc4c63ed735c1f559bbb2ff164d37b7b9"
+  },
+  "pipeline": {
+    "path": "Concepts/pm7-tools/build_pm7.py",
+    "sha256": "0dad8e24045e986945aa8253366a46668fa044a9c4848b1b3a37be297dad8eb9",
+    "transform_range": "T01-T20",
+    "all_transforms_passed": true,
+    "static_gates": {
+      "base_pin": "PASS",
+      "brace_balance": "PASS",
+      "css_vars_defined": "PASS",
+      "js_node_check": "PASS",
+      "no_emoji": "PASS"
+    }
+  },
+  "base": {
+    "path": "Concepts/pm7-tools/base/PM7-base.html",
+    "raw_sha256": "da9c17b4b6744c17492dfd40fbe415bcfcbaed8f856043d133f427938405e87a",
+    "normalized_pinned_sha256": "27a5d1da059608df2ebd248120f57f616721bca1245fc606f4885b5ac25ff4d2"
+  },
+  "checked_in_build_report": {
+    "path": "Concepts/pm7-tools/build_report.json",
+    "sha256": "41e221448fc9474723f41b14319f30e2fde2856fccb8ee5e39f184cc30000672"
+  },
+  "clean_builds": [
+    {
+      "label": "final-a",
+      "temporary_output": "/tmp/pm7-final-a.T6mrcU/PMConcept7.html",
+      "exit_code": 0,
+      "bytes": 3424764,
+      "sha256": "91665182b3db3c7ce53018f4ea12e82fc6c65c0abc8b9c0e5c72869d887f21db"
+    },
+    {
+      "label": "final-b",
+      "temporary_output": "/tmp/pm7-final-b.2BGJs4/PMConcept7.html",
+      "exit_code": 0,
+      "bytes": 3424764,
+      "sha256": "91665182b3db3c7ce53018f4ea12e82fc6c65c0abc8b9c0e5c72869d887f21db"
+    }
+  ],
+  "staged_index_build": {
+    "source": "Git index extracted with git checkout-index plus the unchanged tracked no-emoji checker",
+    "transform_count": 20,
+    "all_transforms_passed": true,
+    "all_static_gates_passed": true,
+    "bytes": 3424764,
+    "sha256": "91665182b3db3c7ce53018f4ea12e82fc6c65c0abc8b9c0e5c72869d887f21db",
+    "equals_checked_in_artifact": true
+  },
+  "byte_comparisons": {
+    "checked_in_equals_final_a": true,
+    "final_a_equals_final_b": true,
+    "checked_in_equals_staged_index_build": true
+  },
+  "hand_edited_output_only_change_detected": false
+}

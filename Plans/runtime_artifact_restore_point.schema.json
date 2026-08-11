@@ -1,1 +1,1026 @@
-{"$schema":"https://json-schema.org/draft/2020-12/schema","$id":"pm.runtime_artifact.restore_point.schema.v1","title":"Runtime Artifact restore_point","type":"object","additionalProperties":false,"required":["schema_id","artifact_id","artifact_type","project_id","run_id","attempt_id","created_at_utc","projection_freshness","projection_health","retention_class","routing_refs","type_payload"],"properties":{"schema_id":{"type":"string","const":"pm.runtime_artifact.restore_point.schema.v1"},"artifact_id":{"type":"string","minLength":1},"artifact_type":{"type":"string","const":"restore_point"},"project_id":{"type":"string","minLength":1},"run_id":{"type":"string","minLength":1},"attempt_id":{"type":"string","minLength":1},"thread_id":{"type":"string"},"node_id":{"type":"string"},"provider_attempt_ref":{"type":"string"},"usage_event_ref":{"type":"string"},"receipt_refs":{"type":"array","items":{"type":"string","minLength":1}},"producer_ref":{"type":"string"},"actor_ref":{"type":"string"},"created_at_utc":{"type":"string","minLength":1},"summary":{"type":"string"},"detail_ref":{"type":"string"},"content_ref":{"type":"string"},"source_surface":{"type":"string"},"projection_freshness":{"type":"string"},"projection_health":{"type":"string"},"retention_class":{"type":"string"},"routing_refs":{"type":"array","minItems":1,"items":{"type":"string","minLength":1}},"type_payload":{"type":"object","minProperties":1}}}
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "pm.runtime_artifact.restore_point.schema.v1",
+  "title": "Runtime Artifact restore_point",
+  "description": "Closed Runtime Artifacts projection of an Assistant Chat conversation restore point. The canonical restore_point_record remains authoritative through record_ref and record_sha256; this projection never restores files.",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "schema_id",
+    "artifact_id",
+    "artifact_type",
+    "project_id",
+    "created_at_utc",
+    "projection_freshness",
+    "projection_health",
+    "retention_class",
+    "routing_refs",
+    "type_payload"
+  ],
+  "properties": {
+    "schema_id": {
+      "const": "pm.runtime_artifact.restore_point.schema.v1"
+    },
+    "artifact_id": {
+      "$ref": "#/$defs/non_empty_string"
+    },
+    "artifact_type": {
+      "const": "restore_point"
+    },
+    "project_id": {
+      "$ref": "#/$defs/non_empty_string"
+    },
+    "run_id": {
+      "description": "Optional runtime-attribution bridge only; it is not restore-point identity or authority.",
+      "$ref": "#/$defs/non_empty_string"
+    },
+    "attempt_id": {
+      "description": "Optional runtime-attribution bridge only; it is not restore-point identity or authority.",
+      "$ref": "#/$defs/non_empty_string"
+    },
+    "thread_id": {
+      "description": "Optional outer-envelope attribution. The authoritative source conversation identity is type_payload.source_thread_id.",
+      "$ref": "#/$defs/non_empty_string"
+    },
+    "node_id": {
+      "$ref": "#/$defs/non_empty_string"
+    },
+    "provider_attempt_ref": {
+      "$ref": "#/$defs/non_empty_string"
+    },
+    "usage_event_ref": {
+      "$ref": "#/$defs/non_empty_string"
+    },
+    "usage_record_id": {
+      "$ref": "#/$defs/non_empty_string"
+    },
+    "receipt_refs": {
+      "$ref": "#/$defs/unique_refs"
+    },
+    "producer_ref": {
+      "$ref": "#/$defs/non_empty_string"
+    },
+    "actor_ref": {
+      "$ref": "#/$defs/non_empty_string"
+    },
+    "created_at_utc": {
+      "$ref": "#/$defs/date_time"
+    },
+    "summary": {
+      "type": "string"
+    },
+    "detail_ref": {
+      "$ref": "#/$defs/non_empty_string"
+    },
+    "content_ref": {
+      "$ref": "#/$defs/non_empty_string"
+    },
+    "source_surface": {
+      "$ref": "#/$defs/non_empty_string"
+    },
+    "projection_freshness": {
+      "enum": [
+        "current",
+        "refreshing",
+        "stale"
+      ]
+    },
+    "projection_health": {
+      "enum": [
+        "healthy",
+        "degraded",
+        "unavailable"
+      ]
+    },
+    "retention_class": {
+      "enum": [
+        "ephemeral",
+        "session",
+        "project",
+        "governed",
+        "debug_retained"
+      ]
+    },
+    "routing_refs": {
+      "$ref": "#/$defs/non_empty_unique_refs"
+    },
+    "type_payload": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "restore_point_id",
+        "project_id",
+        "source_thread_id",
+        "source_branch_id",
+        "source_message_id",
+        "record_ref",
+        "record_sha256",
+        "status",
+        "source_state",
+        "availability",
+        "retention",
+        "holds",
+        "context_provenance_refs",
+        "attachment_refs",
+        "citation_refs",
+        "actions",
+        "workspace_effects",
+        "redaction_profile",
+        "contains_raw_secrets"
+      ],
+      "properties": {
+        "restore_point_id": {
+          "$ref": "#/$defs/non_empty_string"
+        },
+        "project_id": {
+          "$ref": "#/$defs/non_empty_string"
+        },
+        "source_thread_id": {
+          "$ref": "#/$defs/non_empty_string"
+        },
+        "source_branch_id": {
+          "$ref": "#/$defs/non_empty_string"
+        },
+        "source_message_id": {
+          "$ref": "#/$defs/non_empty_string"
+        },
+        "record_ref": {
+          "$ref": "#/$defs/non_empty_string"
+        },
+        "record_sha256": {
+          "$ref": "#/$defs/sha256"
+        },
+        "status": {
+          "enum": [
+            "available",
+            "expired",
+            "deleted",
+            "corrupt"
+          ]
+        },
+        "source_state": {
+          "description": "Conversation-boundary materialization state. A deleted source remains deleted even when held boundary material is still branchable.",
+          "enum": [
+            "active",
+            "deleted_boundary_retained",
+            "deleted_content_unavailable",
+            "unavailable"
+          ]
+        },
+        "availability": {
+          "$ref": "#/$defs/availability"
+        },
+        "retention": {
+          "type": "object",
+          "additionalProperties": false,
+          "required": [
+            "retention_policy_ref",
+            "retention_state",
+            "expires_at_utc",
+            "eligibility_evidence_refs"
+          ],
+          "properties": {
+            "retention_policy_ref": {
+              "$ref": "#/$defs/non_empty_string"
+            },
+            "retention_state": {
+              "enum": [
+                "retained",
+                "eligible_for_expiry",
+                "expired",
+                "deleted"
+              ]
+            },
+            "expires_at_utc": {
+              "oneOf": [
+                {
+                  "$ref": "#/$defs/date_time"
+                },
+                {
+                  "type": "null"
+                }
+              ]
+            },
+            "eligibility_evidence_refs": {
+              "$ref": "#/$defs/unique_refs"
+            }
+          }
+        },
+        "holds": {
+          "type": "object",
+          "additionalProperties": false,
+          "required": [
+            "hold_refs",
+            "reference_refs",
+            "has_protected_refs"
+          ],
+          "properties": {
+            "hold_refs": {
+              "$ref": "#/$defs/unique_refs"
+            },
+            "reference_refs": {
+              "$ref": "#/$defs/unique_refs"
+            },
+            "has_protected_refs": {
+              "type": "boolean"
+            }
+          }
+        },
+        "context_provenance_refs": {
+          "$ref": "#/$defs/unique_refs"
+        },
+        "attachment_refs": {
+          "$ref": "#/$defs/unique_refs"
+        },
+        "citation_refs": {
+          "$ref": "#/$defs/unique_refs"
+        },
+        "safe_point_id": {
+          "description": "Optional runtime safe-point lineage bridge. It is never restore-point identity or file-restore authority.",
+          "$ref": "#/$defs/non_empty_string"
+        },
+        "safe_point_semantics": {
+          "const": "lineage_only"
+        },
+        "safe_point_restores_files": {
+          "const": false
+        },
+        "actions": {
+          "type": "object",
+          "additionalProperties": false,
+          "required": [
+            "create",
+            "branch",
+            "delete",
+            "open",
+            "apply"
+          ],
+          "properties": {
+            "create": {
+              "allOf": [
+                {
+                  "$ref": "#/$defs/command_action"
+                },
+                {
+                  "properties": {
+                    "command_id": {
+                      "const": "cmd.chat.create_restore_point"
+                    }
+                  }
+                }
+              ]
+            },
+            "branch": {
+              "allOf": [
+                {
+                  "$ref": "#/$defs/command_action"
+                },
+                {
+                  "properties": {
+                    "command_id": {
+                      "const": "cmd.chat.branch_from_restore"
+                    }
+                  }
+                }
+              ]
+            },
+            "delete": {
+              "allOf": [
+                {
+                  "$ref": "#/$defs/command_action"
+                },
+                {
+                  "properties": {
+                    "command_id": {
+                      "const": "cmd.chat.delete_restore_point"
+                    }
+                  }
+                }
+              ]
+            },
+            "open": {
+              "$ref": "#/$defs/route_action"
+            },
+            "apply": {
+              "allOf": [
+                {
+                  "$ref": "#/$defs/command_action"
+                },
+                {
+                  "properties": {
+                    "command_id": {
+                      "const": "cmd.chat.branch_from_restore"
+                    },
+                    "semantics": {
+                      "const": "conversation_branch_only"
+                    }
+                  },
+                  "required": [
+                    "semantics"
+                  ]
+                }
+              ]
+            }
+          }
+        },
+        "workspace_effects": {
+          "type": "object",
+          "additionalProperties": false,
+          "required": [
+            "restores_files",
+            "mutates_source_thread",
+            "mutates_source_branch",
+            "mutates_source_worktree",
+            "mutates_git_index",
+            "mutates_runtime_safe_points"
+          ],
+          "properties": {
+            "restores_files": {
+              "const": false
+            },
+            "mutates_source_thread": {
+              "const": false
+            },
+            "mutates_source_branch": {
+              "const": false
+            },
+            "mutates_source_worktree": {
+              "const": false
+            },
+            "mutates_git_index": {
+              "const": false
+            },
+            "mutates_runtime_safe_points": {
+              "const": false
+            }
+          }
+        },
+        "redaction_profile": {
+          "enum": [
+            "no_secrets",
+            "redacted_refs_only"
+          ]
+        },
+        "contains_raw_secrets": {
+          "const": false
+        }
+      },
+      "dependentRequired": {
+        "safe_point_id": [
+          "safe_point_semantics",
+          "safe_point_restores_files"
+        ],
+        "safe_point_semantics": [
+          "safe_point_id",
+          "safe_point_restores_files"
+        ],
+        "safe_point_restores_files": [
+          "safe_point_id",
+          "safe_point_semantics"
+        ]
+      },
+      "allOf": [
+        {
+          "if": {
+            "properties": {
+              "status": {
+                "const": "available"
+              }
+            },
+            "required": [
+              "status"
+            ]
+          },
+          "then": {
+            "properties": {
+              "retention": {
+                "properties": {
+                  "retention_state": {
+                    "enum": [
+                      "retained",
+                      "eligible_for_expiry"
+                    ]
+                  }
+                }
+              }
+            }
+          }
+        },
+        {
+          "if": {
+            "properties": {
+              "status": {
+                "const": "expired"
+              }
+            },
+            "required": [
+              "status"
+            ]
+          },
+          "then": {
+            "$ref": "#/$defs/expired_record_state"
+          }
+        },
+        {
+          "if": {
+            "properties": {
+              "status": {
+                "const": "deleted"
+              }
+            },
+            "required": [
+              "status"
+            ]
+          },
+          "then": {
+            "$ref": "#/$defs/deleted_record_state"
+          }
+        },
+        {
+          "if": {
+            "properties": {
+              "status": {
+                "const": "corrupt"
+              }
+            },
+            "required": [
+              "status"
+            ]
+          },
+          "then": {
+            "$ref": "#/$defs/corrupt_record_state"
+          }
+        },
+        {
+          "if": {
+            "properties": {
+              "source_state": {
+                "const": "deleted_content_unavailable"
+              },
+              "status": {
+                "const": "available"
+              }
+            },
+            "required": [
+              "source_state",
+              "status"
+            ]
+          },
+          "then": {
+            "$ref": "#/$defs/source_deleted_content_unavailable_state"
+          }
+        },
+        {
+          "if": {
+            "properties": {
+              "source_state": {
+                "const": "unavailable"
+              },
+              "status": {
+                "const": "available"
+              }
+            },
+            "required": [
+              "source_state",
+              "status"
+            ]
+          },
+          "then": {
+            "$ref": "#/$defs/source_unavailable_state"
+          }
+        }
+      ]
+    }
+  },
+  "$defs": {
+    "non_empty_string": {
+      "type": "string",
+      "minLength": 1
+    },
+    "date_time": {
+      "type": "string",
+      "format": "date-time"
+    },
+    "sha256": {
+      "type": "string",
+      "pattern": "^[0-9a-f]{64}$"
+    },
+    "unique_refs": {
+      "type": "array",
+      "items": {
+        "$ref": "#/$defs/non_empty_string"
+      },
+      "uniqueItems": true
+    },
+    "non_empty_unique_refs": {
+      "type": "array",
+      "minItems": 1,
+      "items": {
+        "$ref": "#/$defs/non_empty_string"
+      },
+      "uniqueItems": true
+    },
+    "unavailable_reason": {
+      "enum": [
+        "expired",
+        "deleted",
+        "corrupt",
+        "expected_hash_mismatch",
+        "source_deleted_content_unavailable",
+        "source_unavailable",
+        "permission_denied",
+        "storage_read_only",
+        "storage_blocked",
+        "storage_io_exhausted",
+        "hold_protected",
+        "operation_in_progress",
+        "missing_family",
+        "projection_stale",
+        "projection_degraded",
+        "projection_unavailable",
+        "record_unavailable"
+      ]
+    },
+    "availability": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "state",
+        "unavailable_reason"
+      ],
+      "properties": {
+        "state": {
+          "enum": [
+            "available",
+            "unavailable"
+          ]
+        },
+        "unavailable_reason": {
+          "oneOf": [
+            {
+              "$ref": "#/$defs/unavailable_reason"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        }
+      },
+      "allOf": [
+        {
+          "if": {
+            "properties": {
+              "state": {
+                "const": "available"
+              }
+            },
+            "required": [
+              "state"
+            ]
+          },
+          "then": {
+            "properties": {
+              "unavailable_reason": {
+                "type": "null"
+              }
+            }
+          },
+          "else": {
+            "properties": {
+              "unavailable_reason": {
+                "$ref": "#/$defs/unavailable_reason"
+              }
+            }
+          }
+        }
+      ]
+    },
+    "action_base": {
+      "type": "object",
+      "required": [
+        "availability",
+        "unavailable_reason",
+        "outcome_ref"
+      ],
+      "properties": {
+        "availability": {
+          "enum": [
+            "available",
+            "unavailable"
+          ]
+        },
+        "unavailable_reason": {
+          "oneOf": [
+            {
+              "$ref": "#/$defs/unavailable_reason"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "outcome_ref": {
+          "oneOf": [
+            {
+              "$ref": "#/$defs/non_empty_string"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        }
+      },
+      "allOf": [
+        {
+          "if": {
+            "properties": {
+              "availability": {
+                "const": "available"
+              }
+            },
+            "required": [
+              "availability"
+            ]
+          },
+          "then": {
+            "properties": {
+              "unavailable_reason": {
+                "type": "null"
+              }
+            }
+          },
+          "else": {
+            "properties": {
+              "unavailable_reason": {
+                "$ref": "#/$defs/unavailable_reason"
+              }
+            }
+          }
+        }
+      ]
+    },
+    "command_action": {
+      "allOf": [
+        {
+          "$ref": "#/$defs/action_base"
+        },
+        {
+          "type": "object",
+          "additionalProperties": false,
+          "required": [
+            "availability",
+            "unavailable_reason",
+            "outcome_ref",
+            "command_id"
+          ],
+          "properties": {
+            "availability": {
+              "enum": [
+                "available",
+                "unavailable"
+              ]
+            },
+            "unavailable_reason": {
+              "oneOf": [
+                {
+                  "$ref": "#/$defs/unavailable_reason"
+                },
+                {
+                  "type": "null"
+                }
+              ]
+            },
+            "outcome_ref": {
+              "oneOf": [
+                {
+                  "$ref": "#/$defs/non_empty_string"
+                },
+                {
+                  "type": "null"
+                }
+              ]
+            },
+            "command_id": {
+              "$ref": "#/$defs/non_empty_string"
+            },
+            "semantics": {
+              "type": "string",
+              "minLength": 1
+            }
+          }
+        }
+      ]
+    },
+    "route_action": {
+      "allOf": [
+        {
+          "$ref": "#/$defs/action_base"
+        },
+        {
+          "type": "object",
+          "additionalProperties": false,
+          "required": [
+            "availability",
+            "unavailable_reason",
+            "outcome_ref",
+            "route_ref"
+          ],
+          "properties": {
+            "availability": {
+              "enum": [
+                "available",
+                "unavailable"
+              ]
+            },
+            "unavailable_reason": {
+              "oneOf": [
+                {
+                  "$ref": "#/$defs/unavailable_reason"
+                },
+                {
+                  "type": "null"
+                }
+              ]
+            },
+            "outcome_ref": {
+              "oneOf": [
+                {
+                  "$ref": "#/$defs/non_empty_string"
+                },
+                {
+                  "type": "null"
+                }
+              ]
+            },
+            "route_ref": {
+              "$ref": "#/$defs/non_empty_string"
+            }
+          }
+        }
+      ]
+    },
+    "terminal_action_state": {
+      "type": "object",
+      "properties": {
+        "actions": {
+          "type": "object",
+          "properties": {
+            "branch": {
+              "properties": {
+                "availability": {
+                  "const": "unavailable"
+                }
+              }
+            },
+            "delete": {
+              "properties": {
+                "availability": {
+                  "const": "unavailable"
+                }
+              }
+            },
+            "apply": {
+              "properties": {
+                "availability": {
+                  "const": "unavailable"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "expired_record_state": {
+      "allOf": [
+        {
+          "properties": {
+            "availability": {
+              "properties": {
+                "state": {
+                  "const": "unavailable"
+                },
+                "unavailable_reason": {
+                  "const": "expired"
+                }
+              }
+            },
+            "retention": {
+              "properties": {
+                "retention_state": {
+                  "const": "expired"
+                }
+              }
+            },
+            "actions": {
+              "properties": {
+                "branch": {
+                  "properties": {
+                    "unavailable_reason": {
+                      "const": "expired"
+                    }
+                  }
+                },
+                "delete": {
+                  "properties": {
+                    "unavailable_reason": {
+                      "const": "expired"
+                    }
+                  }
+                },
+                "apply": {
+                  "properties": {
+                    "unavailable_reason": {
+                      "const": "expired"
+                    }
+                  }
+                }
+              }
+            }
+          }
+        },
+        {
+          "$ref": "#/$defs/terminal_action_state"
+        }
+      ]
+    },
+    "deleted_record_state": {
+      "allOf": [
+        {
+          "properties": {
+            "availability": {
+              "properties": {
+                "state": {
+                  "const": "unavailable"
+                },
+                "unavailable_reason": {
+                  "const": "deleted"
+                }
+              }
+            },
+            "retention": {
+              "properties": {
+                "retention_state": {
+                  "const": "deleted"
+                }
+              }
+            },
+            "actions": {
+              "properties": {
+                "branch": {
+                  "properties": {
+                    "unavailable_reason": {
+                      "const": "deleted"
+                    }
+                  }
+                },
+                "delete": {
+                  "properties": {
+                    "unavailable_reason": {
+                      "const": "deleted"
+                    }
+                  }
+                },
+                "apply": {
+                  "properties": {
+                    "unavailable_reason": {
+                      "const": "deleted"
+                    }
+                  }
+                }
+              }
+            }
+          }
+        },
+        {
+          "$ref": "#/$defs/terminal_action_state"
+        }
+      ]
+    },
+    "corrupt_record_state": {
+      "allOf": [
+        {
+          "properties": {
+            "availability": {
+              "properties": {
+                "state": {
+                  "const": "unavailable"
+                },
+                "unavailable_reason": {
+                  "const": "corrupt"
+                }
+              }
+            },
+            "actions": {
+              "properties": {
+                "branch": {
+                  "properties": {
+                    "unavailable_reason": {
+                      "const": "corrupt"
+                    }
+                  }
+                },
+                "delete": {
+                  "properties": {
+                    "unavailable_reason": {
+                      "const": "corrupt"
+                    }
+                  }
+                },
+                "apply": {
+                  "properties": {
+                    "unavailable_reason": {
+                      "const": "corrupt"
+                    }
+                  }
+                }
+              }
+            }
+          }
+        },
+        {
+          "$ref": "#/$defs/terminal_action_state"
+        }
+      ]
+    },
+    "source_deleted_content_unavailable_state": {
+      "type": "object",
+      "properties": {
+        "availability": {
+          "properties": {
+            "state": {
+              "const": "unavailable"
+            },
+            "unavailable_reason": {
+              "const": "source_deleted_content_unavailable"
+            }
+          }
+        },
+        "actions": {
+          "type": "object",
+          "properties": {
+            "branch": {
+              "properties": {
+                "availability": {
+                  "const": "unavailable"
+                },
+                "unavailable_reason": {
+                  "const": "source_deleted_content_unavailable"
+                }
+              }
+            },
+            "apply": {
+              "properties": {
+                "availability": {
+                  "const": "unavailable"
+                },
+                "unavailable_reason": {
+                  "const": "source_deleted_content_unavailable"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "source_unavailable_state": {
+      "type": "object",
+      "properties": {
+        "availability": {
+          "properties": {
+            "state": {
+              "const": "unavailable"
+            },
+            "unavailable_reason": {
+              "const": "source_unavailable"
+            }
+          }
+        },
+        "actions": {
+          "type": "object",
+          "properties": {
+            "branch": {
+              "properties": {
+                "availability": {
+                  "const": "unavailable"
+                },
+                "unavailable_reason": {
+                  "const": "source_unavailable"
+                }
+              }
+            },
+            "apply": {
+              "properties": {
+                "availability": {
+                  "const": "unavailable"
+                },
+                "unavailable_reason": {
+                  "const": "source_unavailable"
+                }
+              }
+            }
+          }
+        }
+      }
+    }
+  }
+}

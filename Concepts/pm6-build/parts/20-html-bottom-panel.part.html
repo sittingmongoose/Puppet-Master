@@ -183,17 +183,63 @@
               </div>
             </div>
 
-            <div class="bottom-host-panel" id="bottomDebugHost">
-              <div class="pm-bottom-linked-header">
-                <span class="pm6-bottom-kicker">Debug</span>
-                <span>DAP bridge &mdash; evaluate timeout 10s &middot; launch 30s &middot; max 1 debug session / project</span>
+            <div class="bottom-host-panel" id="bottomDebugHost" data-rd-state="empty">
+              <div class="rd-empty" data-rd="empty">
+                <div class="pm-bottom-linked-header">
+                  <span class="pm6-bottom-kicker">Debug</span>
+                  <span>DAP bridge &mdash; evaluate timeout 10s &middot; launch 30s</span>
+                </div>
+                <div class="pm6-bottom-empty">
+                  <span class="pm6-ico pm6-bottom-empty-ico" data-pm6-icon="plug"></span>
+                  <div class="pm6-bottom-empty-kicker">Not configured</div>
+                  <div class="pm6-bottom-empty-title">No debug session attached</div>
+                  <div class="pm6-bottom-empty-hint">Program output, adapter console, and process I/O appear here once a session starts.</div>
+                  <div class="rd-empty-acts">
+                    <div class="pm6-tb-menu-wrap"><button type="button" class="pm6-tb-menu-trigger" aria-controls="rdEmptyCfg" aria-label="Select launch configuration"><i data-ico="layers" class="pm-ico sm"></i><span class="pm6-tb-menu-label">tastebook-api &mdash; cargo run</span><i data-ico="chevD" class="pm-ico sm"></i></button><div class="pm6-tb-menu pm6-tb-menu-left" id="rdEmptyCfg" role="menu" aria-label="Launch configurations" data-pm-menu-select><button type="button" class="pm6-tb-menu-item is-selected" role="menuitem" data-value="api" data-label="tastebook-api — cargo run" data-demo-action="cmd.run_debug.config.select" data-demo-arg="cmd.run_debug.config.select -> tastebook-api — cargo run">tastebook-api &mdash; cargo run</button><button type="button" class="pm6-tb-menu-item" role="menuitem" data-value="web" data-label="vite dev — tastebook-web" data-demo-action="cmd.run_debug.config.select" data-demo-arg="cmd.run_debug.config.select -> vite dev — tastebook-web">vite dev &mdash; tastebook-web</button><button type="button" class="pm6-tb-menu-item" role="menuitem" data-value="tests" data-label="cargo test — import worker suite" data-demo-action="cmd.run_debug.config.select" data-demo-arg="cmd.run_debug.config.select -> cargo test — import worker suite">cargo test &mdash; import worker suite</button><button type="button" class="pm6-tb-menu-item" role="menuitem" data-value="compose" data-label="compose stack — full dev" data-demo-action="cmd.run_debug.config.select" data-demo-arg="cmd.run_debug.config.select -> compose stack — full dev">compose stack &mdash; full dev</button></div></div>
+                    <button type="button" class="pm-tiny-btn rd-startbtn" data-demo-action="cmd.run_debug.start" data-demo-arg="cmd.run_debug.start -> tastebook-api — cargo run (from Debug tab)">Start Debugging</button>
+                    <button type="button" class="pm-tiny-btn" data-demo-action="cmd.run_debug.attach" data-demo-arg="cmd.run_debug.attach -> open process picker">Attach&hellip;</button>
+                  </div>
+                </div>
               </div>
-              <div class="pm6-bottom-empty">
-                <span class="pm6-ico pm6-bottom-empty-ico" data-pm6-icon="plug"></span>
-                <div class="pm6-bottom-empty-kicker">Not configured</div>
-                <div class="pm6-bottom-empty-title">No debug session attached</div>
-                <div class="pm6-bottom-empty-hint">Run #47 builds and tests in the terminal without a debugger. Add a launch profile in Settings &gt; Toolchains, then attach from Run &amp; Debug.</div>
-                <button type="button" class="pm-tiny-btn" data-demo-action="demo.reason" data-demo-arg="not_configured">Attach debugger</button>
+              <div class="rd-live" data-rd="live" hidden>
+                <div class="rd-sestabs" role="tablist" aria-label="Debug sessions">
+                  <span class="rd-sestab active" role="tab" aria-selected="true" data-sess="rd-1" data-demo-action="cmd.run_debug.session.select" data-demo-arg="cmd.run_debug.session.select -> tastebook-api — cargo run"><span class="sh-sdot is-paused"></span> tastebook-api &mdash; cargo run</span>
+                  <span class="rd-sestab" role="tab" aria-selected="false" data-sess="rd-2" data-demo-action="cmd.run_debug.session.select" data-demo-arg="cmd.run_debug.session.select -> attach — import worker"><span class="sh-sdot is-running"></span> attach &mdash; import worker</span>
+                </div>
+                <div class="rd-chrome">
+                  <span class="rd-adapter">CodeLLDB &middot; DAP :54112</span>
+                  <span class="rd-state is-paused" id="rdChromeState">paused</span>
+                  <span class="rd-elapsed" id="rdChromeElapsed">00:42</span>
+                  <span class="rd-chrome-btns">
+                    <button type="button" class="pm-tiny-btn" data-demo-action="cmd.run_debug.restart" data-demo-arg="cmd.run_debug.restart -> tastebook-api — cargo run">Restart</button>
+                    <button type="button" class="pm-tiny-btn" data-demo-action="cmd.run_debug.stop" data-demo-arg="cmd.run_debug.stop -> tastebook-api — cargo run">Terminate</button>
+                    <button type="button" class="pm-tiny-btn" data-demo-action="cmd.run_debug.disconnect" data-demo-arg="cmd.run_debug.disconnect -> detach" data-demo-disabled="1" data-demo-reason="focused session is a launch session">Disconnect</button>
+                    <button type="button" class="pm-tiny-btn" data-demo-action="cmd.panel.switch" data-demo-arg="cmd.panel.switch -> run_debug">Show in Run &amp; Debug</button>
+                  </span>
+                </div>
+                <div class="rd-console" id="rdConsole">
+                  <div class="rd-line"><span class="rd-tag rd-tag-adapter">ADAPTER</span><span class="rd-text">CodeLLDB v1.11 &middot; attached to pid 88431 &middot; source maps resolved</span></div>
+                  <div class="rd-line"><span class="rd-tag rd-tag-stdout">STDOUT</span><span class="rd-text">    Finished `dev` profile [unoptimized + debuginfo] in 8.42s</span></div>
+                  <div class="rd-line"><span class="rd-tag rd-tag-adapter">ADAPTER</span><span class="rd-text">breakpoint hit &middot; import.rs:58 &middot; thread main</span></div>
+                  <div class="rd-line"><span class="rd-tag rd-tag-stdout">STDOUT</span><span class="rd-text">test result: ok. 214 passed; 0 failed; 0 ignored</span></div>
+                  <div class="rd-line"><span class="rd-tag rd-tag-stderr">STDERR</span><span class="rd-text">warning: unused variable `servings_hint`</span></div>
+                  <div class="rd-line"><span class="rd-tag rd-tag-repl">REPL</span><span class="rd-text">&rsaquo; qty.value &rarr; 11.5</span></div>
+                </div>
+                <div class="rd-replrow">
+                  <span class="rd-prompt">&rsaquo;</span>
+                  <input id="rdReplInput" type="text" placeholder="Evaluate expression (paused frames only)" aria-label="Evaluate expression in debug console">
+                  <button type="button" class="pm-tiny-btn" data-demo-action="cmd.run_debug.console.clear" data-demo-arg="cmd.run_debug.console.clear -> console cleared">Clear</button>
+                </div>
+              </div>
+              <div class="rd-term" data-rd="term" hidden>
+                <div class="rd-chrome">
+                  <span class="rd-adapter">Session ended &middot; exit code 0</span>
+                  <span class="rd-chrome-btns">
+                    <button type="button" class="pm-tiny-btn" data-demo-action="cmd.run_debug.restart" data-demo-arg="cmd.run_debug.restart -> tastebook-api — cargo run">Restart</button>
+                    <button type="button" class="pm-tiny-btn" data-demo-action="cmd.panel.switch" data-demo-arg="cmd.panel.switch -> run_debug">Show in Run &amp; Debug</button>
+                  </span>
+                </div>
+                <div class="pm6-bottom-empty-hint rd-termnote">Console scrollback retained above.</div>
               </div>
             </div>
           </div>

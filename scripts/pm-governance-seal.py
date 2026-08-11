@@ -6,6 +6,9 @@ from __future__ import annotations
 import argparse
 import hashlib
 import json
+import os
+import re
+import tempfile
 from datetime import datetime, timezone
 from pathlib import Path
 from typing import Any
@@ -13,6 +16,19 @@ from typing import Any
 
 ROOT = Path(__file__).resolve().parents[1]
 PLANS = ROOT / "Plans"
+
+SPEC_LOCK_SCHEMA_VERSION_RULES = {
+    "storage_value_registry": {
+        "target": "pm.storage_value_registry.v2",
+        "allowed_from": {
+            "pm.storage_value_registry.v1",
+            "pm.storage_value_registry.v2",
+        },
+    },
+}
+SPEC_LOCK_SCHEMA_VERSION_KEY_RE = re.compile(r"^[a-z][a-z0-9_]*$")
+SPEC_LOCK_SCHEMA_ID_RE = re.compile(r"^pm(?:\.[a-z0-9][a-z0-9_-]*)+\.v[0-9]+$")
+SHA256_RE = re.compile(r"^[0-9a-f]{64}$")
 
 
 def repo_path(path: str | Path) -> Path:
@@ -40,6 +56,32 @@ def load_json(path: Path) -> Any:
 
 def write_json(path: Path, data: Any) -> None:
     path.write_text(json.dumps(data, indent=2, ensure_ascii=False) + "\n", encoding="utf-8")
+
+
+def write_json_atomic(path: Path, data: Any) -> None:
+    """Replace a JSON file atomically after the complete payload is ready."""
+    payload = json.dumps(data, indent=2, ensure_ascii=False) + "\n"
+    temp_path: Path | None = None
+    try:
+        with tempfile.NamedTemporaryFile(
+            mode="w",
+            encoding="utf-8",
+            dir=path.parent,
+            prefix=f".{path.name}.",
+            suffix=".tmp",
+            delete=False,
+        ) as handle:
+            temp_path = Path(handle.name)
+            handle.write(payload)
+            handle.flush()
+            os.fsync(handle.fileno())
+        if path.exists():
+            os.chmod(temp_path, path.stat().st_mode & 0o7777)
+        os.replace(temp_path, path)
+        temp_path = None
+    finally:
+        if temp_path is not None:
+            temp_path.unlink(missing_ok=True)
 
 
 def read_jsonl(path: Path) -> list[dict[str, Any]]:
@@ -285,23 +327,173 @@ def split_pair(value: str, option: str) -> tuple[str, str]:
     return left, right
 
 
-def refresh_spec_lock(path: Path) -> dict[str, Any]:
-    data = load_json(path)
-    changed_paths: list[str] = []
-    for entry in data.get("canonical_ssot_hashes", {}).get("files", []):
+def parse_schema_version_assignments(values: list[str]) -> list[dict[str, str]]:
+    requests: dict[str, str] = {}
+    for raw in values:
+        if raw.count("=") != 1:
+            raise SystemExit(
+                f"--schema-version invalid assignment {raw!r}: expected exactly KEY=SCHEMA_ID"
+            )
+        if any(character.isspace() for character in raw):
+            raise SystemExit(
+                f"--schema-version invalid assignment {raw!r}: whitespace is not allowed"
+            )
+        key, target = raw.split("=", 1)
+        if not key or not target:
+            raise SystemExit(
+                f"--schema-version invalid assignment {raw!r}: key and schema ID must be non-empty"
+            )
+        if not SPEC_LOCK_SCHEMA_VERSION_KEY_RE.fullmatch(key):
+            raise SystemExit(f"--schema-version invalid key {key!r}")
+        if not SPEC_LOCK_SCHEMA_ID_RE.fullmatch(target):
+            raise SystemExit(f"--schema-version invalid schema ID {target!r}")
+        rule = SPEC_LOCK_SCHEMA_VERSION_RULES.get(key)
+        if rule is None:
+            raise SystemExit(f"--schema-version key is not supported: {key}")
+        if key in requests:
+            raise SystemExit(f"--schema-version key was assigned more than once: {key}")
+        if target != rule["target"]:
+            raise SystemExit(
+                f"--schema-version target is not supported for {key}: {target}; expected {rule['target']}"
+            )
+        requests[key] = target
+    return [{"key": key, "target": requests[key]} for key in sorted(requests)]
+
+
+def load_spec_lock(path: Path) -> Any:
+    try:
+        return load_json(path)
+    except FileNotFoundError:
+        raise SystemExit(f"Spec Lock does not exist: {path}") from None
+    except IsADirectoryError:
+        raise SystemExit(f"Spec Lock is not a file: {path}") from None
+    except json.JSONDecodeError as exc:
+        raise SystemExit(f"Spec Lock is not valid JSON: {path}: {exc.msg}") from None
+    except OSError as exc:
+        raise SystemExit(f"Spec Lock could not be read: {path}: {exc}") from None
+
+
+def validate_schema_changing_spec_lock(
+    data: Any,
+    requests: list[dict[str, str]],
+) -> list[dict[str, str]]:
+    if not isinstance(data, dict):
+        raise SystemExit("Spec Lock root must be a JSON object")
+    if data.get("schema_id") != "pm.spec_lock.v1":
+        raise SystemExit("Spec Lock schema_id must equal pm.spec_lock.v1")
+    schema_versions = data.get("schema_versions")
+    if not isinstance(schema_versions, dict):
+        raise SystemExit("Spec Lock schema_versions must be an existing JSON object")
+
+    updates: list[dict[str, str]] = []
+    for request in requests:
+        key = request["key"]
+        target = request["target"]
+        if key not in schema_versions:
+            raise SystemExit(f"Spec Lock schema_versions is missing requested key: {key}")
+        current = schema_versions[key]
+        if not isinstance(current, str):
+            raise SystemExit(f"Spec Lock schema_versions.{key} must be a string")
+        rule = SPEC_LOCK_SCHEMA_VERSION_RULES[key]
+        if current not in rule["allowed_from"]:
+            raise SystemExit(
+                f"Spec Lock schema_versions.{key} transition is not supported: {current} -> {target}"
+            )
+        if current != target:
+            updates.append({"from": current, "key": key, "to": target})
+
+    return updates
+
+
+def validate_schema_changing_hash_inventory(data: dict[str, Any]) -> list[tuple[str, dict[str, Any], Path]]:
+    registry = data.get("canonical_ssot_hashes")
+    if not isinstance(registry, dict):
+        raise SystemExit("Spec Lock canonical_ssot_hashes must be a JSON object")
+    if registry.get("hash_alg") != "sha256":
+        raise SystemExit("Spec Lock canonical_ssot_hashes.hash_alg must equal sha256")
+    files = registry.get("files")
+    if not isinstance(files, list) or not files:
+        raise SystemExit("Spec Lock canonical_ssot_hashes.files must be a non-empty JSON array")
+
+    seen: set[str] = set()
+    validated: list[tuple[str, dict[str, Any], Path]] = []
+    for index, entry in enumerate(files):
+        if not isinstance(entry, dict):
+            raise SystemExit(f"Spec Lock canonical_ssot_hashes.files[{index}] must be a JSON object")
         rel = entry.get("path")
-        if not rel:
-            continue
+        if not isinstance(rel, str) or not rel or rel.strip() != rel:
+            raise SystemExit(
+                f"Spec Lock canonical_ssot_hashes.files[{index}].path must be a non-empty trimmed string"
+            )
+        digest = entry.get("sha256")
+        if not isinstance(digest, str) or not SHA256_RE.fullmatch(digest):
+            raise SystemExit(
+                f"Spec Lock canonical_ssot_hashes.files[{index}].sha256 must be a lowercase SHA-256 digest"
+            )
+        if rel in seen:
+            raise SystemExit(f"Spec Lock canonical_ssot_hashes.files contains duplicate path: {rel}")
+        seen.add(rel)
         target = repo_path(rel)
-        if not target.exists() or not target.is_file():
+        try:
+            is_file = target.is_file()
+        except OSError:
+            is_file = False
+        if not is_file:
+            raise SystemExit(f"Spec Lock registered SSOT path is missing or not a file: {rel}")
+        validated.append((rel, entry, target))
+    return validated
+
+
+def refresh_spec_lock(
+    path: Path,
+    schema_version_requests: list[dict[str, str]] | None = None,
+) -> dict[str, Any]:
+    requests = sorted(schema_version_requests or [], key=lambda request: request["key"])
+    data = load_spec_lock(path)
+    schema_version_updates: list[dict[str, str]] = []
+    if requests:
+        schema_version_updates = validate_schema_changing_spec_lock(data, requests)
+        schema_versions = data["schema_versions"]
+        for request in requests:
+            schema_versions[request["key"]] = request["target"]
+        hash_entries = validate_schema_changing_hash_inventory(data)
+    else:
+        hash_entries = []
+        if isinstance(data, dict):
+            for entry in data.get("canonical_ssot_hashes", {}).get("files", []):
+                if not isinstance(entry, dict):
+                    continue
+                rel = entry.get("path")
+                if not rel:
+                    continue
+                target = repo_path(rel)
+                if not target.exists() or not target.is_file():
+                    continue
+                hash_entries.append((rel, entry, target))
+
+    changed_paths: list[str] = []
+    for rel, entry, target in hash_entries:
+        try:
+            digest = sha256_file(target)
+        except OSError as exc:
+            if requests:
+                raise SystemExit(f"Spec Lock registered SSOT path could not be hashed: {rel}: {exc}") from None
             continue
-        digest = sha256_file(target)
         if entry.get("sha256") != digest:
             entry["sha256"] = digest
             changed_paths.append(rel)
-    if changed_paths:
-        write_json(path, data)
-    return {"path": str(path.relative_to(ROOT)), "changed": bool(changed_paths), "updated_hashes": changed_paths}
+    changed_paths.sort()
+    schema_version_updates.sort(key=lambda update: update["key"])
+    changed = bool(schema_version_updates or changed_paths)
+    if changed:
+        write_json_atomic(path, data)
+    return {
+        "path": str(path.relative_to(ROOT)),
+        "changed": changed,
+        "schema_version_requests": requests,
+        "schema_version_updates": schema_version_updates,
+        "updated_hashes": changed_paths,
+    }
 
 
 def refresh_evidence(path: Path, args: argparse.Namespace) -> dict[str, Any]:
@@ -417,12 +609,15 @@ def sync_plan_sharding_evidence(evidence_path: Path, report_path: Path) -> dict[
 
 
 def cmd_refresh(args: argparse.Namespace) -> int:
+    schema_version_requests = parse_schema_version_assignments(args.schema_version)
+    if schema_version_requests and not args.spec_lock:
+        raise SystemExit("--schema-version requires --spec-lock")
     report: dict[str, Any] = {"spec_lock": None, "evidence": []}
     if args.spec_lock:
-        report["spec_lock"] = refresh_spec_lock(repo_path(args.spec_lock))
+        report["spec_lock"] = refresh_spec_lock(repo_path(args.spec_lock), schema_version_requests)
     for evidence_path in args.evidence:
         report["evidence"].append(refresh_evidence(repo_path(evidence_path), args))
-    print(json.dumps(report, indent=2, ensure_ascii=False))
+    print(json.dumps(report, indent=2, ensure_ascii=False, sort_keys=True))
     return 0
 
 
@@ -455,7 +650,7 @@ def cmd_register_canonical_docs(args: argparse.Namespace) -> int:
             args.plan_graph,
             "Plans/_shards/**",
             "Plans/.evidence/plan-sharding-2026-06-09/evidence.json",
-            "Plans/.evidence/plan-sharding-2026-06-09/reports/shard_report.json",
+            "Plans/.evidence/plan-sharding-2026-06-09/shard_report.json",
         ]
         contract_refs = [
             "PolicyRule:Decision_Policy.md#spec-lock-update-protocol",
@@ -487,6 +682,13 @@ def main() -> int:
     sub = parser.add_subparsers(dest="command", required=True)
     refresh = sub.add_parser("refresh", help="Refresh Spec Lock and evidence artifact hashes.")
     refresh.add_argument("--spec-lock", default=None, help="Spec_Lock.json path to refresh.")
+    refresh.add_argument(
+        "--schema-version",
+        action="append",
+        default=[],
+        metavar="KEY=SCHEMA_ID",
+        help="Update an explicitly supported existing Spec Lock schema_versions key before refreshing hashes.",
+    )
     refresh.add_argument("--evidence", action="append", default=[], help="Evidence bundle to refresh.")
     refresh.add_argument("--ledger-command", default=None, help="Canonical ledger validation command to record.")
     refresh.add_argument("--record-command", action="append", default=[], help="Additional successful command to record.")

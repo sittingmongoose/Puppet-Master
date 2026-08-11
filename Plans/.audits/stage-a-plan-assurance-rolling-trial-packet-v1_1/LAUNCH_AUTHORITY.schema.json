@@ -1,0 +1,26 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://puppet-master.local/schemas/plan-assurance/launch-authority.v1.1.json",
+  "type": "object", "additionalProperties": false,
+  "required": ["schema_version", "packet_id", "packet_core_population_sha256", "trial_id", "generation_id", "base_contract_sha256", "repair_contract_sha256", "effective_contract_sha256", "base_artifact_validator_sha256", "v1_1_artifact_validator_sha256", "launch_request_ref", "launch_request_sha256", "launch_binding_sha256", "authority_mode", "trusted_capability_ref", "trusted_capability_sha256", "trusted_capability_id", "authorization_message_sha256", "observed_sender_task_path", "observed_message_id", "observed_turn_id", "one_use_nonce_sha256", "offline_cryptographic_verification", "single_use_marker_ref", "max_uses", "trial_launch_authorized", "run_root", "external_research_authorized", "model_calls_authorized", "external_transmission_disclosed_and_accepted", "canonical_plan_writes_authorized", "generated_or_governance_writes_authorized", "git_write_authorized", "budget_contract_sha256", "source_snapshot_must_be_fresh", "source_snapshot_sha256", "source_snapshot_population_sha256", "protected_before_receipt_sha256", "protected_before_invariance_sha256", "external_transmission_manifest_sha256", "execution_envelope_sha256", "issued_at_utc", "expires_at_utc", "authority_payload_sha256"],
+  "properties": {
+    "schema_version": {"const": "1.1.0"}, "packet_id": {"const": "stage-a-plan-assurance-rolling-trial-packet-v1_1"}, "packet_core_population_sha256": {"$ref": "#/$defs/sha"},
+    "trial_id": {"type": "string", "minLength": 1}, "generation_id": {"type": "string", "minLength": 1},
+    "base_contract_sha256": {"const": "e034bbd8531f793490a6098261e94845cadf4ec632df63f7d3377f762c728c9a"}, "repair_contract_sha256": {"$ref": "#/$defs/sha"}, "effective_contract_sha256": {"$ref": "#/$defs/sha"},
+    "base_artifact_validator_sha256": {"const": "115f2610dc422f730a54d33d029261f8a5aa64e05ddbffde14c540990f7e07d8"}, "v1_1_artifact_validator_sha256": {"$ref": "#/$defs/sha"},
+    "launch_request_ref": {"const": "LAUNCH_REQUEST.json"}, "launch_request_sha256": {"$ref": "#/$defs/sha"}, "launch_binding_sha256": {"$ref": "#/$defs/sha"},
+    "authority_mode": {"const": "codex_live_orchestrator_sender"}, "trusted_capability_ref": {"const": "AUTHORITY/TRUSTED_LAUNCH_CAPABILITY.json"},
+    "trusted_capability_sha256": {"$ref": "#/$defs/sha"}, "trusted_capability_id": {"type": "string", "minLength": 1}, "authorization_message_sha256": {"$ref": "#/$defs/sha"},
+    "observed_sender_task_path": {"type": "string", "pattern": "^/root(?:/|$)"}, "observed_message_id": {"type": "string", "minLength": 1}, "observed_turn_id": {"type": "string", "minLength": 1},
+    "one_use_nonce_sha256": {"$ref": "#/$defs/sha"}, "offline_cryptographic_verification": {"const": false}, "single_use_marker_ref": {"const": "AUTHORITY/LAUNCH_AUTHORITY_USED.json"},
+    "max_uses": {"const": 1}, "trial_launch_authorized": {"const": true}, "run_root": {"type": "string", "minLength": 1},
+    "external_research_authorized": {"const": true}, "model_calls_authorized": {"const": true}, "external_transmission_disclosed_and_accepted": {"const": true},
+    "canonical_plan_writes_authorized": {"const": false}, "generated_or_governance_writes_authorized": {"const": false}, "git_write_authorized": {"const": false},
+    "budget_contract_sha256": {"$ref": "#/$defs/sha"}, "source_snapshot_must_be_fresh": {"const": true},
+    "source_snapshot_sha256": {"$ref": "#/$defs/sha"}, "source_snapshot_population_sha256": {"$ref": "#/$defs/sha"},
+    "protected_before_receipt_sha256": {"$ref": "#/$defs/sha"}, "protected_before_invariance_sha256": {"$ref": "#/$defs/sha"},
+    "external_transmission_manifest_sha256": {"$ref": "#/$defs/sha"}, "execution_envelope_sha256": {"$ref": "#/$defs/sha"},
+    "issued_at_utc": {"type": "string", "format": "date-time"}, "expires_at_utc": {"type": "string", "format": "date-time"}, "authority_payload_sha256": {"$ref": "#/$defs/sha"}
+  },
+  "$defs": {"sha": {"type": "string", "pattern": "^[0-9a-f]{64}$"}}
+}

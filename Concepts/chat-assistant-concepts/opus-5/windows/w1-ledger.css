@@ -1,0 +1,384 @@
+/* w1 "Ledger" — Opus 5
+ *
+ * Thread history costs ZERO permanent width: it arrives as an overlay drawer and leaves.
+ * Work surfaces gather in a bottom shelf that has no height until something is active.
+ * Net effect: the transcript is the full chat width at every moment.
+ *
+ * Every rule is scoped under [data-pmx-window="w1"]. A test parses this file and fails any
+ * selector outside that scope.
+ */
+
+[data-pmx-window="w1"] .w1-shell {
+  container-type: inline-size;
+  container-name: pmx-chat;
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+  min-width: 0;
+  overflow: hidden;
+  background: var(--surface);
+  color: var(--text-primary);
+  border-left: 1px solid var(--border);
+}
+
+/* ---------------------------------------------------------------- header */
+
+[data-pmx-window="w1"] .w1-header {
+  display: flex;
+  align-items: center;
+  gap: var(--sm);
+  padding: var(--sm) var(--md);
+  border-bottom: 1px solid var(--border);
+  background: var(--surface);
+  flex: 0 0 auto;
+  min-width: 0;
+}
+
+[data-pmx-window="w1"] .w1-brand {
+  display: flex;
+  align-items: baseline;
+  gap: 6px;
+  min-width: 0;
+  flex: 0 1 auto;
+}
+[data-pmx-window="w1"] .w1-brand-name {
+  font-size: var(--fs-sm);
+  font-weight: 600;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+[data-pmx-window="w1"] .w1-brand-sep { color: var(--text-muted); opacity: .6; }
+[data-pmx-window="w1"] .w1-brand-model {
+  font-size: var(--fs-2xs);
+  color: var(--text-muted);
+  letter-spacing: .05em;
+  white-space: nowrap;
+}
+
+[data-pmx-window="w1"] .w1-history-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 5px;
+  padding: 4px var(--sm);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-sm);
+  background: transparent;
+  color: var(--text-secondary);
+  font: inherit;
+  font-size: var(--fs-xs);
+  cursor: pointer;
+  flex: 0 0 auto;
+  transition: background var(--motion-fast) var(--ease-default),
+              color var(--motion-fast) var(--ease-default);
+}
+[data-pmx-window="w1"] .w1-history-btn:hover {
+  background: var(--surface-elevated);
+  color: var(--text-primary);
+}
+/* Open state reads as a filled control, never as a left accent bar. */
+[data-pmx-window="w1"] .w1-history-btn[aria-expanded="true"] {
+  background: color-mix(in srgb, var(--accent-primary) 16%, transparent);
+  border-color: color-mix(in srgb, var(--accent-primary) 45%, transparent);
+  color: var(--text-primary);
+}
+
+[data-pmx-window="w1"] .w1-header-tools {
+  margin-left: auto;
+  min-width: 0;
+  display: flex;
+  justify-content: flex-end;
+}
+
+/* ---------------------------------------------------------------- transcript */
+
+[data-pmx-window="w1"] .w1-main {
+  position: relative;
+  flex: 1 1 auto;
+  min-height: 0;
+  display: flex;
+  flex-direction: column;
+}
+
+[data-pmx-window="w1"] .w1-transcript {
+  flex: 1 1 auto;
+  min-height: 0;
+  overflow-y: auto;
+  overflow-x: hidden;
+}
+
+/* ---------------------------------------------------------------- history drawer */
+
+[data-pmx-window="w1"] .w1-drawer-scrim {
+  position: absolute;
+  inset: 0;
+  z-index: 3;
+  background: color-mix(in srgb, var(--background) 62%, transparent);
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity var(--motion-med) var(--ease-default);
+}
+[data-pmx-window="w1"] .w1-drawer-scrim[data-open="1"] { opacity: 1; pointer-events: auto; }
+
+[data-pmx-window="w1"] .w1-drawer {
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  left: 0;
+  z-index: 4;
+  width: min(320px, 86%);
+  display: flex;
+  flex-direction: column;
+  /* The drawer covers the transcript behind it, so it must be OPAQUE. In the glass themes
+   * `--surface-elevated` alone is translucent and the transcript would read straight through
+   * a menu that is in front in z-order — painting it as an image over an opaque base keeps
+   * the theme's tint while guaranteeing whatever sits behind is actually hidden. */
+  background-color: var(--background);
+  background-image: linear-gradient(var(--surface-elevated), var(--surface-elevated));
+  border-right: 1px solid var(--border);
+  box-shadow: var(--elev-3);
+  transform: translateX(-100%);
+  visibility: hidden;
+  transition: transform var(--motion-med) var(--ease-default),
+              visibility 0s linear var(--motion-med);
+}
+[data-pmx-window="w1"] .w1-drawer[data-open="1"] {
+  transform: translateX(0);
+  visibility: visible;
+  transition: transform var(--motion-med) var(--ease-default), visibility 0s;
+}
+
+[data-pmx-window="w1"] .w1-drawer-head {
+  display: flex;
+  align-items: center;
+  gap: var(--sm);
+  padding: var(--sm) var(--md);
+  border-bottom: 1px solid var(--border);
+  flex: 0 0 auto;
+}
+[data-pmx-window="w1"] .w1-drawer-title {
+  font-size: var(--fs-xs);
+  font-weight: 600;
+  letter-spacing: .04em;
+  text-transform: uppercase;
+  color: var(--text-muted);
+}
+[data-pmx-window="w1"] .w1-drawer-close {
+  margin-left: auto;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 24px;
+  height: 24px;
+  border: none;
+  background: transparent;
+  color: var(--text-muted);
+  border-radius: var(--radius-sm);
+  cursor: pointer;
+}
+[data-pmx-window="w1"] .w1-drawer-close:hover {
+  background: var(--surface);
+  color: var(--text-primary);
+}
+/* Not a scroller. The history module mounts its own scrolling list inside this
+ * element; making this one scroll as well meant two nested `overflow-y: auto`
+ * boxes, each reserving a stable scrollbar gutter, for 20px of dead column on the
+ * right against a flush left edge. */
+[data-pmx-window="w1"] .w1-drawer-body {
+  flex: 1 1 auto;
+  min-height: 0;
+  overflow: hidden;
+}
+
+/* ---------------------------------------------------------------- work shelf */
+
+/* Zero height when nothing is active. This is the whole point of the concept: no surface
+ * reserves permanent space, so an ordinary conversation gets the entire window. */
+[data-pmx-window="w1"] .w1-shelf {
+  flex: 0 0 auto;
+  display: flex;
+  flex-direction: column;
+  min-height: 0;
+  max-height: 46%;
+  border-top: 1px solid var(--border);
+  background: var(--surface);
+}
+[data-pmx-window="w1"] .w1-shelf:empty,
+[data-pmx-window="w1"] .w1-shelf[data-empty="1"] {
+  border-top: none;
+  max-height: 0;
+  overflow: hidden;
+}
+
+[data-pmx-window="w1"] .w1-shelf-bar {
+  display: flex;
+  align-items: center;
+  gap: var(--sm);
+  padding: 5px var(--md);
+  flex: 0 0 auto;
+}
+[data-pmx-window="w1"] .w1-shelf-label {
+  font-size: var(--fs-2xs);
+  font-weight: 600;
+  letter-spacing: .05em;
+  text-transform: uppercase;
+  color: var(--text-muted);
+}
+[data-pmx-window="w1"] .w1-shelf-body {
+  flex: 1 1 auto;
+  min-height: 0;
+  overflow-y: auto;
+  padding: 0 var(--md) var(--sm);
+}
+
+[data-pmx-window="w1"] .w1-surface-host { display: block; min-width: 0; }
+
+/* A question outranks the work surfaces: it takes the shelf and pushes them down. */
+[data-pmx-window="w1"] .w1-question-host { display: block; min-width: 0; }
+[data-pmx-window="w1"] .w1-question-host:not(:empty) {
+  padding: var(--sm) var(--md);
+  border-top: 1px solid var(--border);
+  background: var(--surface-elevated);
+}
+
+/* ---------------------------------------------------------------- composer */
+
+[data-pmx-window="w1"] .w1-composer { flex: 0 0 auto; min-width: 0; }
+
+/* ---------------------------------------------------------------- narrow width
+ * At the minimum width the header gives up its labels before anything gives up content. */
+
+@container pmx-chat (max-width: 620px) {
+  [data-pmx-window="w1"] .w1-history-btn-label { display: none; }
+  [data-pmx-window="w1"] .w1-history-btn { padding: 4px 6px; }
+  [data-pmx-window="w1"] .w1-brand-sep,
+  [data-pmx-window="w1"] .w1-brand-model { display: none; }
+  [data-pmx-window="w1"] .w1-header { padding: var(--sm); gap: 6px; }
+  [data-pmx-window="w1"] .w1-shelf { max-height: 40%; }
+  [data-pmx-window="w1"] .w1-drawer { width: min(300px, 92%); }
+}
+
+/* ---------------------------------------------------------------- pop-out */
+
+[data-pmx-window="w1"] .w1-shell[data-w1-mount="popout"] {
+  border-left: none;
+  border-radius: var(--radius-lg);
+  box-shadow: var(--elev-3);
+}
+[data-pmx-window="w1"] .w1-shell[data-w1-mount="popout"] .w1-drawer { width: min(360px, 80%); }
+
+/* ---------------------------------------------------------------- pinned column
+ * The same drawer, taking width instead of covering. Nothing is rebuilt: the
+ * element leaves the overlay layer and joins the flow, which is why the rows keep
+ * their scroll position and selection across the switch.
+ */
+[data-pmx-window="w1"] .w1-drawer-pin {
+  display: inline-flex; align-items: center; justify-content: center;
+  width: 24px; height: 24px; padding: 0; margin-left: auto;
+  border: 1px solid transparent; border-radius: var(--radius-sm);
+  background: transparent; color: var(--text-muted); cursor: pointer;
+  transition:
+    color var(--motion-fast) var(--ease-default),
+    background var(--motion-fast) var(--ease-default),
+    transform var(--motion-fast) var(--ease-spring-real);
+}
+[data-pmx-window="w1"] .w1-drawer-pin:hover { color: var(--text-primary); background: var(--surface); }
+[data-pmx-window="w1"] .w1-drawer-pin:active { transform: scale(.9); }
+[data-pmx-window="w1"] .w1-drawer-pin[aria-pressed="true"] {
+  color: var(--accent-primary);
+  background: var(--accent-soft);
+  border-color: var(--accent-glow);
+  /* A quarter turn marks the state change as an action rather than a repaint. */
+  transform: rotate(-45deg);
+}
+[data-pmx-window="w1"] .w1-drawer-close { margin-left: 0; }
+
+/* Keyed on data-w1-pin-active, which is "pinned AND there is room", computed in
+ * syncDrawer. A container query cannot express it: the nearest container here is
+ * the shell, whose inline size is the CHAT width, not the space the column and
+ * transcript share. */
+[data-pmx-window="w1"] .w1-shell[data-w1-pin-active="1"] .w1-main { flex-direction: row; }
+[data-pmx-window="w1"] .w1-shell[data-w1-pin-active="1"] .w1-drawer {
+  /* The drawer is appended AFTER the transcript in the DOM, so as a flex item it
+   * would dock on the RIGHT — while the overlay form slides in from the LEFT.
+   * The open animation and the docked result disagreed, which reads as the panel
+   * teleporting across the window. Reordering visually is right here: moving the
+   * node would change focus order for no benefit, since the drawer is a sibling
+   * panel rather than content that follows the transcript. */
+  order: -1;
+  position: relative;
+  inset: auto;
+  z-index: 1;
+  flex: 0 0 clamp(200px, 24%, 280px);
+  width: auto;
+  transform: none;
+  visibility: visible;
+  box-shadow: none;
+  /* Back to a plain surface: the opaque double-paint exists to hide the
+   * transcript, and a pinned column is not covering anything. */
+  background-color: transparent;
+  background-image: none;
+}
+[data-pmx-window="w1"] .w1-shell[data-w1-pin-active="1"] .w1-drawer-scrim { display: none; }
+
+/* Suspended: the user's pin is still set, but the stage is too narrow to honour it
+ * without destroying the reading column — which is the product. The drawer simply
+ * behaves as an overlay again until there is room. No rule needed; the base
+ * overlay styles already apply because data-w1-pin-active is "0". */
+
+/* ---------------------------------------------------------------- reduced motion
+ * The drawer must land fully open or fully closed, never mid-slide. Killing the transition
+ * alone is not enough — the delayed visibility leg would leave a closed drawer hit-testable. */
+
+[data-motion="reduced"][data-pmx-window="w1"] .w1-drawer,
+[data-motion="reduced"][data-pmx-window="w1"] .w1-drawer-scrim {
+  transition: none !important;
+}
+[data-motion="reduced"][data-pmx-window="w1"] .w1-drawer[data-open="0"] { visibility: hidden !important; }
+[data-motion="reduced"][data-pmx-window="w1"] .w1-drawer[data-open="1"] { visibility: visible !important; }
+
+/* ---------------------------------------------------------------- signature motion
+ * A ledger is a record that gets POSTED to. Rows settle in sequence rather than
+ * appearing at once, so the drawer reads as a register being filled in, and the
+ * bottom shelf rises only when it actually has something to hold.
+ */
+@keyframes pmx-w1-post {
+  from { opacity: 0; transform: translateY(-6px); }
+  to   { opacity: 1; transform: none; }
+}
+@keyframes pmx-w1-shelf-rise {
+  from { opacity: 0; transform: translateY(10px); }
+  to   { opacity: 1; transform: none; }
+}
+
+[data-pmx-window="w1"] .w1-drawer-body > * {
+  animation: pmx-w1-post var(--motion-med) var(--ease-spring-real) both;
+}
+[data-pmx-window="w1"] .w1-drawer-body > *:nth-child(1) { animation-delay: 32ms; }
+[data-pmx-window="w1"] .w1-drawer-body > *:nth-child(2) { animation-delay: 64ms; }
+[data-pmx-window="w1"] .w1-drawer-body > *:nth-child(3) { animation-delay: 96ms; }
+[data-pmx-window="w1"] .w1-drawer-body > *:nth-child(4) { animation-delay: 128ms; }
+[data-pmx-window="w1"] .w1-drawer-body > *:nth-child(5) { animation-delay: 160ms; }
+[data-pmx-window="w1"] .w1-drawer-body > *:nth-child(6) { animation-delay: 192ms; }
+[data-pmx-window="w1"] .w1-drawer-body > *:nth-child(7) { animation-delay: 224ms; }
+[data-pmx-window="w1"] .w1-drawer-body > *:nth-child(8) { animation-delay: 224ms; }
+
+[data-pmx-window="w1"] .w1-shelf {
+  animation: pmx-w1-shelf-rise var(--motion-med) var(--ease-spring-real) both;
+}
+[data-pmx-window="w1"] .w1-history-btn {
+  transition: transform var(--motion-fast) var(--ease-default);
+}
+[data-pmx-window="w1"] .w1-history-btn:active { transform: scale(.96); }
+
+[data-motion="reduced"][data-pmx-window="w1"] .w1-drawer-body > *,
+[data-motion="reduced"][data-pmx-window="w1"] .w1-shelf {
+  animation: none !important; opacity: 1 !important; transform: none !important;
+}
+@media (prefers-reduced-motion: reduce) {
+  [data-pmx-window="w1"] .w1-drawer-body > *,
+  [data-pmx-window="w1"] .w1-shelf {
+    animation: none !important; opacity: 1 !important; transform: none !important;
+  }
+}

@@ -1,0 +1,765 @@
+<!doctype html>
+<html lang="en" data-theme="basic-dark" data-reduced-motion="0">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Deck — Settings Command Center — Qwen 5.8</title>
+<link rel="stylesheet" href="_shared/pm-shell.css">
+<style>
+.dk-home, .dk-work { flex: 1; min-height: 0; overflow-y: auto; }
+.dk-enter { animation: dkEnter .38s cubic-bezier(.2,.8,.2,1) both; }
+@keyframes dkEnter { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: none; } }
+.dk-stage > * { animation: dkStage .34s cubic-bezier(.2,.8,.2,1) both; }
+.dk-stage > *:nth-child(2) { animation-delay: .05s; }
+.dk-stage > *:nth-child(3) { animation-delay: .1s; }
+.dk-stage > *:nth-child(4) { animation-delay: .15s; }
+@keyframes dkStage { from { opacity: 0; transform: translateY(8px); } to { opacity: 1; transform: none; } }
+
+.dk-wrap { max-width: 1120px; margin: 0 auto; padding: 26px 30px 70px; width: 100%; }
+.dk-head { display: flex; align-items: flex-end; justify-content: space-between; gap: 16px; flex-wrap: wrap; margin-bottom: 18px; }
+.dk-kicker { font-size: 11px; letter-spacing: .14em; text-transform: uppercase; color: var(--text-3); font-family: var(--font-mono); }
+.dk-title { font-size: 26px; font-weight: 750; color: var(--text-1); margin: 2px 0 0; letter-spacing: -.01em; }
+.dk-head-meta { display: flex; gap: 8px; flex-wrap: wrap; }
+
+.dk-cmd { position: relative; margin-bottom: 22px; }
+.dk-cmd-field { display: flex; align-items: center; gap: 10px; background: var(--surface); border: 1px solid var(--border-strong); border-radius: var(--radius-m); padding: 12px 14px; }
+.dk-cmd-field:focus-within { border-color: var(--accent); box-shadow: 0 0 0 3px var(--accent-soft); }
+.dk-cmd-field input { flex: 1; background: none; border: none; outline: none; color: var(--text-1); font-size: 14.5px; font-family: var(--font-mono); }
+.dk-cmd-field .pm-ico { color: var(--accent); }
+.dk-drop { position: absolute; left: 0; right: 0; top: calc(100% + 6px); z-index: 50; background: var(--surface); border: 1px solid var(--border-strong); border-radius: var(--radius-m); box-shadow: var(--shadow); max-height: 380px; overflow-y: auto; padding: 6px; }
+.dk-drop[hidden] { display: none; }
+.dk-drop-group { font-family: var(--font-mono); font-size: 10.5px; letter-spacing: .1em; text-transform: uppercase; color: var(--text-3); padding: 8px 10px 4px; }
+.dk-drop-item { display: flex; align-items: center; gap: 10px; width: 100%; text-align: left; background: none; border: none; border-radius: var(--radius-s); padding: 8px 10px; cursor: pointer; color: var(--text-1); }
+.dk-drop-item:hover, .dk-drop-item.active { background: var(--accent-soft); }
+.dk-drop-item .path { color: var(--text-3); font-size: 11px; font-family: var(--font-mono); }
+
+.dk-board-cap, .dk-mod-cap { font-family: var(--font-mono); font-size: 11px; letter-spacing: .12em; text-transform: uppercase; color: var(--text-3); margin: 0 0 8px; display: flex; align-items: center; gap: 8px; }
+.dk-board { display: flex; flex-direction: column; gap: 8px; margin-bottom: 26px; }
+.dk-notice { display: grid; grid-template-columns: 150px minmax(0, 1fr) auto; gap: 14px; align-items: center; background: var(--surface); border: 1px solid var(--border); border-radius: var(--radius-m); padding: 11px 14px; }
+.pm-app[data-wtier="squeezed"] .dk-notice { grid-template-columns: 1fr; gap: 8px; }
+.dk-notice .reason { color: var(--text-2); font-size: 12px; margin-top: 2px; }
+.dk-notice .head { color: var(--text-1); font-weight: 650; font-size: 13px; }
+.dk-notice-actions { display: flex; gap: 8px; justify-content: flex-end; flex-wrap: wrap; }
+.dk-calm { border: 1px dashed var(--border-strong); border-radius: var(--radius-m); padding: 16px; color: var(--text-2); font-size: 12.5px; }
+
+.dk-mods { display: grid; grid-template-columns: repeat(auto-fill, minmax(300px, 1fr)); gap: 12px; }
+.dk-mod { display: flex; flex-direction: column; gap: 8px; text-align: left; background: var(--surface); border: 1px solid var(--border); border-radius: var(--radius-m); padding: 16px; cursor: pointer; min-height: 148px; }
+.dk-mod { transition: border-color .16s, background-color .16s; }
+.dk-mod:hover { border-color: var(--accent); background: var(--surface-2); }
+.dk-mod-top { display: flex; align-items: center; gap: 10px; }
+.dk-mod-ico { width: 32px; height: 32px; border-radius: var(--radius-s); background: var(--surface-3); border: 1px solid var(--border); display: flex; align-items: center; justify-content: center; color: var(--accent); }
+.dk-mod h3 { margin: 0; font-size: 14.5px; color: var(--text-1); font-weight: 700; }
+.dk-mod p { margin: 0; color: var(--text-2); font-size: 12px; flex: 1; }
+.dk-mod-readout { display: flex; flex-wrap: wrap; gap: 5px; align-items: center; }
+.dk-mod-open { display: flex; align-items: center; gap: 6px; color: var(--accent); font-size: 12px; font-weight: 650; font-family: var(--font-mono); }
+.dk-led { width: 8px; height: 8px; border-radius: 50%; display: inline-block; flex: none; }
+.dk-led-ok { background: var(--ok); } .dk-led-warn { background: var(--warn); } .dk-led-err { background: var(--err); } .dk-led-off { background: var(--text-3); }
+
+.dk-strip { position: sticky; top: 0; z-index: 30; background: var(--bg-shell); border-bottom: 1px solid var(--border); padding: 10px 18px; display: flex; gap: 10px; align-items: center; }
+[data-chrome-blur="on"] .dk-strip { backdrop-filter: var(--chrome-blur); }
+.dk-strip .pm-back { flex: none; }
+.dk-tabs { display: flex; gap: 4px; overflow-x: auto; flex: 1; min-width: 0; scrollbar-width: none; }
+.dk-tabs::-webkit-scrollbar { display: none; }
+.dk-tab { position: relative; border: none; background: none; color: var(--text-2); font-size: 12.5px; padding: 7px 12px; cursor: pointer; white-space: nowrap; border-radius: var(--radius-s); font-family: var(--font-mono); transition: background-color .18s, color .18s; }
+.dk-tab:hover { color: var(--text-1); background: var(--surface-2); }
+.dk-tab.active { color: var(--accent); background: var(--accent-soft); font-weight: 700; }
+.dk-strip .dk-search-mini { display: flex; align-items: center; gap: 7px; background: var(--surface); border: 1px solid var(--border-strong); border-radius: var(--radius-s); padding: 6px 10px; flex: 0 1 260px; min-width: 150px; }
+.dk-strip .dk-search-mini input { flex: 1; min-width: 0; border: none; outline: none; background: none; color: var(--text-1); font-size: 12px; font-family: var(--font-mono); }
+
+.dk-doc { max-width: 780px; margin: 0 auto; padding: 24px 22px 90px; }
+.dk-sub { margin-bottom: 30px; scroll-margin-top: 66px; }
+.dk-sub h2 { font-size: 16px; color: var(--text-1); margin: 0 0 10px; display: flex; align-items: center; gap: 10px; }
+.dk-sub h2 .idx { font-family: var(--font-mono); color: var(--text-3); font-size: 12px; }
+.dk-row { border: 1px solid var(--border); border-radius: var(--radius-s); background: var(--surface); margin-bottom: 6px; }
+.dk-row-line { display: flex; align-items: center; gap: 12px; padding: 10px 14px; }
+.dk-row-line > div:first-child { flex: 1; min-width: 0; }
+.dk-row-label { color: var(--text-1); font-weight: 600; font-size: 13px; display: flex; align-items: center; gap: 8px; flex-wrap: wrap; }
+.dk-row-desc { color: var(--text-3); font-size: 11.5px; margin-top: 1px; }
+.dk-row-ctl { display: flex; align-items: center; gap: 8px; flex: none; }
+.dk-readout { font-family: var(--font-mono); font-size: 12px; color: var(--accent); background: var(--accent-soft); border-radius: var(--radius-s); padding: 3px 8px; white-space: nowrap; }
+.dk-row-detail { display: none; border-top: 1px solid var(--border); background: var(--surface-3); padding: 10px 14px; font-size: 12px; color: var(--text-2); font-family: var(--font-mono); }
+.dk-row.open .dk-row-detail { display: block; }
+.dk-row[data-hidden="true"] { display: none; }
+
+.dk-console { border: 1px solid var(--border); border-radius: var(--radius-m); background: var(--surface); margin-bottom: 10px; overflow: hidden; }
+.dk-console-head { display: flex; align-items: center; gap: 10px; padding: 11px 14px; cursor: pointer; flex-wrap: wrap; }
+.dk-console-head:hover { background: var(--surface-2); }
+.dk-console-head .name { font-weight: 700; color: var(--text-1); font-size: 13.5px; }
+.dk-console-head .pm-ico.chev { margin-left: auto; color: var(--text-3); transition: transform .2s; }
+.dk-console.open .pm-ico.chev { transform: rotate(90deg); }
+.dk-console-body { display: none; border-top: 1px solid var(--border); padding: 12px 14px; }
+.dk-console.open .dk-console-body { display: block; animation: pmReveal .22s ease both; }
+.dk-kv { display: grid; grid-template-columns: 160px 1fr; gap: 3px 12px; font-size: 12px; margin: 8px 0; }
+.dk-kv dt { color: var(--text-3); font-family: var(--font-mono); }
+.dk-kv dd { margin: 0; color: var(--text-1); }
+.dk-actions { display: flex; gap: 8px; flex-wrap: wrap; margin-top: 10px; align-items: center; }
+.dk-cap-line { font-family: var(--font-mono); font-size: 11px; letter-spacing: .1em; text-transform: uppercase; color: var(--text-3); margin: 18px 0 8px; }
+.dk-model-line { display: flex; align-items: center; gap: 10px; padding: 8px 10px; border: 1px solid var(--border); border-radius: var(--radius-s); margin-bottom: 6px; background: var(--surface-3); flex-wrap: wrap; }
+.dk-model-line .name { font-weight: 650; color: var(--text-1); }
+.dk-model-line .meta { color: var(--text-3); font-family: var(--font-mono); font-size: 11px; }
+.dk-fav { background: none; border: none; color: var(--text-3); cursor: pointer; padding: 2px; display: inline-flex; }
+.dk-fav.on { color: var(--warn); }
+.dk-role-grid { display: grid; grid-template-columns: 160px 1fr 1fr; gap: 8px 12px; font-size: 12px; align-items: baseline; }
+.pm-app[data-wtier="squeezed"] .dk-role-grid { grid-template-columns: 1fr; }
+.dk-role-grid .h { font-family: var(--font-mono); font-size: 10.5px; letter-spacing: .1em; color: var(--text-3); text-transform: uppercase; }
+.dk-role-grid .eff { color: var(--text-1); font-weight: 650; }
+.dk-role-grid .req { color: var(--text-3); }
+.dk-note-card { border: 1px dashed var(--border-strong); border-radius: var(--radius-m); padding: 13px 15px; color: var(--text-2); font-size: 12.5px; margin-bottom: 12px; background: var(--surface-3); }
+
+.dk-wave { display: flex; gap: 6px; align-items: center; flex-wrap: wrap; }
+.dk-wave-m { width: 26px; height: 26px; border-radius: 50%; border: 2px solid var(--accent); display: inline-flex; align-items: center; justify-content: center; color: var(--accent); background: none; }
+.dk-wave-m.admitted { background: var(--accent); color: var(--accent-contrast); }
+.dk-wave-m.queued { border-style: dashed; opacity: .7; }
+.dk-term-preview { border-radius: var(--radius-s); padding: 10px 12px; font-family: var(--font-mono); font-size: 11.5px; margin-top: 8px; border: 1px solid var(--border); }
+.dk-pal { display: flex; gap: 4px; margin-top: 8px; }
+.dk-pal span { width: 16px; height: 16px; border-radius: 3px; border: 1px solid var(--border-strong); }
+</style>
+</head>
+<body data-concept-model="Qwen 5.8" data-concept="deck">
+<div id="app"></div>
+<script src="_shared/concept-hub-bridge.js"></script>
+<script src="_shared/pm-icons.js"></script>
+<script src="_shared/pm-demo-data.js"></script>
+<script src="_shared/pm-state.js"></script>
+<script src="_shared/pm-settings-core.js"></script>
+<script src="_shared/pm-shell.js"></script>
+<script>
+(function () {
+  "use strict";
+  var MODEL = "Qwen 5.8";
+  var shell = window.PMShell.mount({ conceptName: "Deck concept", model: MODEL });
+  var content = shell.content;
+  var INDEX = window.PMCore.buildSearchIndex();
+  var IMPLEMENTED = { providers: true, crew: true, terminal: true, lsp: true };
+  var MANAGER_HOME = { memory: "Ledger", "context-sources": "Ledger", skills: "Ledger", mcp: "Atlas", personas: "Spoke", media: "Spoke" };
+  var spy = null;
+  var activeDrop = -1;
+  var openConsoles = {};
+
+  function dest(id) { return window.PMDemoData.destinations.filter(function (d) { return d.id === id; })[0]; }
+  function esc(s) { return String(s).replace(/[&<>"]/g, function (c) { return { "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;" }[c]; }); }
+  function led(kind) { return '<span class="dk-led dk-led-' + kind + '" aria-hidden="true"></span>'; }
+
+  function route() {
+    var v = window.PMState.state.view;
+    if (spy) { spy.destroy(); spy = null; }
+    if (v.name === "home") renderHome(); else renderWork(v);
+  }
+
+  function renderHome() {
+    var st = window.PMState.state;
+    var attn = st.notices.filter(function (n) { return n.kind === "attention"; });
+    var others = st.notices.filter(function (n) { return n.kind !== "attention"; });
+    var html = '<div class="dk-home dk-enter" id="dk-home"><div class="dk-wrap dk-stage">' +
+      '<div class="dk-head"><div><div class="dk-kicker">SETTINGS // DECK // ' + MODEL + '</div><h1 class="dk-title">Command center</h1></div>' +
+      '<div class="dk-head-meta">' +
+        '<span class="pm-badge pm-badge-ok">' + led("ok") + " 7 destinations healthy</span>" +
+        '<span class="pm-badge pm-badge-warn">' + led("warn") + " " + attn.length + " need decisions</span>" +
+        '<span class="pm-badge">' + window.PMIcons.get("robot", 11) + " Route: Claude Sonnet 4.5</span>" +
+      "</div></div>" +
+      '<div class="dk-cmd"><label class="dk-cmd-field">' + window.PMIcons.get("search", 17) +
+        '<input id="dk-q" placeholder="Search or type a command… (settings, providers, models, managers)" autocomplete="off" aria-label="Search settings">' +
+        '<span class="pm-kbd">Enter</span></label>' +
+        '<div class="dk-drop" id="dk-drop" hidden></div></div>' +
+      '<div class="dk-board-cap">' + window.PMIcons.get("alertCircle", 13) + " Status board</div>" +
+      '<div class="dk-board">' +
+        (st.notices.length ? st.notices.map(function (n) {
+          var chip = n.kind === "attention" ? '<span class="pm-badge pm-badge-danger">' + led("err") + " " + esc(n.status) + "</span>"
+            : n.kind === "continue" ? '<span class="pm-badge pm-badge-info">' + led("warn") + " " + esc(n.status) + "</span>"
+            : '<span class="pm-badge pm-badge-ok">' + led("ok") + " " + esc(n.status) + "</span>";
+          return '<div class="dk-notice" data-notice="' + n.id + '"><div>' + chip + "</div>" +
+            '<div><div class="head">' + esc(n.headline) + '</div><div class="reason">' + esc(n.reason) + "</div></div>" +
+            '<div class="dk-notice-actions"><button class="pm-btn pm-btn-primary pm-btn-sm" data-na>' + esc(n.action) + "</button>" +
+            (n.secondary ? '<button class="pm-btn pm-btn-quiet pm-btn-sm" data-ns>' + esc(n.secondary) + "</button>" : "") +
+            "</div></div>";
+        }).join("") : '<div class="dk-calm">' + window.PMIcons.get("checkCircle", 14) + " All systems nominal. No notices — this is the calm state.</div>") +
+      "</div>" +
+      '<div class="dk-mod-cap">' + window.PMIcons.get("grid", 13) + " Destinations</div>" +
+      '<div class="dk-mods">' +
+        window.PMDemoData.destinations.map(function (d) {
+          var ledKind = d.status.kind === "attention" ? "err" : d.status.kind === "setup" ? "warn" : "ok";
+          return '<button class="dk-mod" data-dest="' + d.id + '">' +
+            '<div class="dk-mod-top"><span class="dk-mod-ico">' + window.PMIcons.get(d.icon, 16) + '</span><h3>' + esc(d.title) + "</h3></div>" +
+            "<p>" + esc(d.purpose) + "</p>" +
+            '<div class="dk-mod-readout">' + led(ledKind) + '<span class="pm-note">' + esc(d.status.summary) + "</span>" +
+            '<span class="pm-badge">' + d.subcategories.length + " sections</span></div>" +
+            '<span class="dk-mod-open">OPEN ' + window.PMIcons.get("arrowRight", 13) + "</span>" +
+          "</button>";
+        }).join("") +
+      "</div>" +
+    "</div></div>";
+    content.innerHTML = html;
+    bindHome();
+  }
+
+  function bindHome() {
+    var q = document.getElementById("dk-q");
+    var drop = document.getElementById("dk-drop");
+    var hits = [];
+
+    function run() {
+      var v = q.value.trim();
+      activeDrop = -1;
+      if (!v) { drop.hidden = true; return; }
+      hits = window.PMCore.search(v, INDEX);
+      if (!hits.length) {
+        drop.innerHTML = '<div class="dk-drop-group">No matches</div><div class="dk-note-card" style="margin:6px">Try “continuation”, “spellcheck”, “OAuth”, or a provider name.</div>';
+        drop.hidden = false; return;
+      }
+      var groups = {};
+      hits.forEach(function (h) {
+        var g = h.kind === "setting" ? "Settings" : h.kind === "manager" ? "Managers" : (h.kind === "provider" || h.kind === "model") ? "Providers & models" : h.kind === "persona" ? "Personas" : "Destinations";
+        (groups[g] = groups[g] || []).push(h);
+      });
+      var html = "";
+      Object.keys(groups).forEach(function (g) {
+        html += '<div class="dk-drop-group">' + g + "</div>";
+        groups[g].forEach(function (h) {
+          html += '<button class="dk-drop-item" data-hit><span style="flex:1;min-width:0">' + esc(h.title) + '<br><span class="path">' + esc(h.path.join(" › ")) + "</span></span>" + window.PMIcons.get("arrowRight", 13) + "</button>";
+        });
+      });
+      drop.innerHTML = html;
+      drop.hidden = false;
+      drop.querySelectorAll("[data-hit]").forEach(function (el, i) {
+        el.addEventListener("mousedown", function (ev) { ev.preventDefault(); go(hits[i]); });
+      });
+    }
+    function go(h) {
+      drop.hidden = true;
+      var t = Object.assign({}, h.target);
+      t.focusSetting = t.setting || null;
+      window.PMState.navigate(t);
+    }
+    q.addEventListener("input", run);
+    q.addEventListener("focus", run);
+    q.addEventListener("blur", function () { setTimeout(function () { drop.hidden = true; }, 140); });
+    q.addEventListener("keydown", function (e) {
+      var items = drop.querySelectorAll("[data-hit]");
+      if (e.key === "ArrowDown") { e.preventDefault(); activeDrop = Math.min(activeDrop + 1, items.length - 1); mark(items); }
+      else if (e.key === "ArrowUp") { e.preventDefault(); activeDrop = Math.max(activeDrop - 1, 0); mark(items); }
+      else if (e.key === "Enter" && hits.length) { e.preventDefault(); go(hits[Math.max(activeDrop, 0)]); }
+      else if (e.key === "Escape") { drop.hidden = true; }
+    });
+    function mark(items) { items.forEach(function (b, i) { b.classList.toggle("active", i === activeDrop); }); }
+
+    content.querySelectorAll("[data-dest]").forEach(function (b) {
+      b.addEventListener("click", function () { window.PMState.navigate({ name: "workspace", category: b.getAttribute("data-dest") }); });
+    });
+    content.querySelectorAll("[data-notice]").forEach(function (card) {
+      var n = window.PMState.state.notices.filter(function (x) { return x.id === card.getAttribute("data-notice"); })[0];
+      if (!n) return;
+      var na = card.querySelector("[data-na]");
+      var ns = card.querySelector("[data-ns]");
+      if (na) na.addEventListener("click", function () { noticeGo(n); });
+      if (ns) ns.addEventListener("click", function () { noticeGo(n, true); });
+    });
+  }
+
+  function noticeGo(n, secondary) {
+    if (secondary && n.id === "gemini-probe") { window.PMState.navigate({ name: "workspace", category: "models", manager: "providers", provider: "gemini-cli" }); return; }
+    if (secondary && n.id === "anthropic-usage") { window.PMState.receipt("Deep link to Usage", "Usage shows measured balances and forecasts. Simulated navigation.", "info"); return; }
+    if (n.id === "gemini-probe") { window.PMState.navigate({ name: "workspace", category: "models", manager: "providers", provider: "gemini-cli" }); return; }
+    if (n.id === "anthropic-usage") { window.PMState.navigate({ name: "workspace", category: "models", manager: "providers", provider: "anthropic" }); return; }
+    if (n.id === "mcp-docs") { window.PMState.navigate({ name: "workspace", category: "extensions", subcategory: "mcp" }); return; }
+    if (n.id === "continue-media") { window.PMState.navigate({ name: "workspace", category: "media", subcategory: "media-io", setting: "media.io.audio-input" }); return; }
+    if (n.id === "rec-persona") { window.PMState.navigate({ name: "workspace", category: "models", subcategory: "personas" }); return; }
+    if (n.id === "rec-snapshot") { window.PMState.navigate({ name: "workspace", category: "system", subcategory: "backups", setting: "system.backups.pre-risky" }); return; }
+    window.PMState.receipt(n.action, "Simulated notice action.", "sim");
+  }
+
+  function settingRow(s, i) {
+    var meta = window.PMCore.settingMeta(s);
+    var ctl = "";
+    var readout = '<span class="dk-readout">' + esc(s.type === "toggle" ? (s.value ? "ON" : "OFF") : s.value) + "</span>";
+    if (s.type === "toggle") ctl = '<button class="pm-toggle" role="switch" aria-pressed="' + (s.value ? "true" : "false") + '" data-ctl ' + (meta.disabled ? "disabled" : "") + '></button>';
+    else if (s.type === "select") ctl = '<select class="pm-select" data-ctl ' + (meta.disabled ? "disabled" : "") + ">" + (s.options || []).map(function (o) { return "<option" + (o === s.value ? " selected" : "") + ">" + esc(o) + "</option>"; }).join("") + "</select>";
+    else if (s.type === "segment") ctl = '<span class="pm-seg" data-ctl>' + (s.options || []).map(function (o) { return '<button data-seg="' + esc(o) + '" class="' + (o === s.value ? "active" : "") + '">' + esc(o) + "</button>"; }).join("") + "</span>";
+    else if (s.type === "text") ctl = '<input class="pm-input" data-ctl value="' + esc(s.value) + '"' + (meta.disabled ? " disabled" : "") + ">";
+    else if (s.type === "action") ctl = '<button class="pm-btn pm-btn-sm" data-ctl>' + esc(s.actionLabel || "Open") + "</button>";
+    var badges = meta.badges.map(function (b) { return '<span class="pm-badge pm-badge-' + b.kind + '">' + esc(b.label) + "</span>"; }).join("");
+    var hidden = window.PMState.state.ui.disclosure === "standard" && s.tier !== "standard";
+    return '<div class="dk-row" data-setting-id="' + s.id + '" data-hidden="' + hidden + '">' +
+      '<div class="dk-row-line"><div>' +
+        '<div class="dk-row-label">' + esc(s.label) + " " + badges + "</div>" +
+        '<div class="dk-row-desc">' + esc(s.desc) + "</div></div>" +
+        '<div class="dk-row-ctl">' + readout + ctl +
+        (s.source === "custom" || s.source === "inherited" ? '<button class="pm-btn pm-btn-quiet pm-btn-sm" data-reset>Reset</button>' : "") +
+        '<button class="pm-btn pm-btn-quiet pm-btn-sm pm-btn-ico" data-details aria-expanded="false">' + window.PMIcons.get("chevronDown", 12) + "</button>" +
+      "</div></div>" +
+      '<div class="dk-row-detail">id ' + esc(s.id) + " · source " + esc(meta.sourceLabel) + " · scope " + esc(s.scope) + " · tier " + esc(s.tier) +
+      (s.requested ? " · requested " + esc(s.requested) : "") + (s.effective ? " · effective " + esc(s.effective) : "") +
+      (s.reason ? " · " + esc(s.reason) : "") + (s.inheritedFrom ? " · inherited from " + esc(s.inheritedFrom) : "") + (s.managedBy ? " · managed by " + esc(s.managedBy) : "") +
+      "</div></div>";
+  }
+
+  function providersConsole(v) {
+    var st = window.PMState.state;
+    var html = '<div class="dk-cap-line">Catalog feeds</div>' +
+      st.catalogs.map(function (c) {
+        return '<div class="dk-console open"><div class="dk-console-head" data-console-toggle>' +
+          (c.state === "refreshing" ? '<span class="pm-badge pm-badge-info">' + led("warn") + " Refreshing — last-known-good active</span>" : '<span class="pm-badge pm-badge-ok">' + led("ok") + " Current</span>") +
+          '<span class="name">' + esc(c.name) + '</span><span class="meta pm-note">checked ' + esc(c.lastChecked) + " · " + esc(c.version) + '</span><span class="pm-ico chev">' + window.PMIcons.get("chevronRight", 14) + "</span></div>" +
+          '<div class="dk-console-body"><dl class="dk-kv">' +
+          "<dt>Last activated</dt><dd>" + esc(c.lastActivated) + "</dd>" +
+          "<dt>Last known good</dt><dd>" + (c.lastKnownGood ? "Yes — bad updates are quarantined" : "No") + "</dd>" +
+          (c.materialChanges.length ? "<dt>Material changes</dt><dd>" + c.materialChanges.map(esc).join("; ") + "</dd>" : "") +
+          '</dl><div class="dk-actions"><button class="pm-btn pm-btn-sm" data-catalog-refresh="' + c.id + '"' + (c.state === "refreshing" ? " disabled" : "") + ">" + (c.state === "refreshing" ? "Refreshing…" : "Refresh now") + "</button></div></div></div>";
+      }).join("");
+
+    var groups = ["Installed tools & signed-in apps", "Connected accounts", "API connections", "Server connections", "Free & community models"];
+    groups.forEach(function (g) {
+      var ps = st.providers.filter(function (p) { return p.group === g; });
+      if (!ps.length) return;
+      html += '<div class="dk-cap-line">' + esc(g) + "</div>";
+      ps.forEach(function (p) { html += providerConsole(p, v); });
+    });
+    html += '<div class="dk-cap-line">Agent role assignments — requested vs effective</div>' +
+      '<div class="dk-console open"><div class="dk-console-body"><div class="dk-role-grid">' +
+      '<span class="h">Role</span><span class="h">Requested</span><span class="h">Effective</span>' +
+      st.roles.map(function (r) {
+        return '<span>' + esc(r.label) + '</span><span class="req">' + esc(r.requested) + '</span><span class="eff">' + esc(r.effective) +
+          (r.differs ? ' <span class="pm-badge pm-badge-diff">Differs</span>' : "") + (r.note ? ' <span class="pm-note">' + esc(r.note) + "</span>" : "") + "</span>";
+      }).join("") + "</div></div></div>";
+    return html;
+  }
+
+  function providerConsole(p, v) {
+    var open = openConsoles["p:" + p.id] || (v && v.provider === p.id);
+    var chip = p.state === "ready" ? '<span class="pm-badge pm-badge-ok">' + led("ok") + " Connected</span>"
+      : p.state === "attention" ? '<span class="pm-badge pm-badge-warn">' + led("warn") + " Decision needed</span>"
+      : p.state === "invocation-failed" ? '<span class="pm-badge pm-badge-danger">' + led("err") + " Invocation failed</span>"
+      : p.state === "needs-setup" ? '<span class="pm-badge pm-badge-info">' + led("warn") + " Setup required</span>"
+      : '<span class="pm-badge">' + led("off") + " Not installed</span>";
+    var html = '<div class="dk-console' + (open ? " open" : "") + '" data-provider="' + p.id + '" data-console-key="p:' + p.id + '">' +
+      '<div class="dk-console-head" data-console-toggle>' + chip + '<span class="name">' + esc(p.name) + '</span><span class="pm-note">' + esc(p.stateLabel) + '</span><span class="pm-ico chev">' + window.PMIcons.get("chevronRight", 14) + "</span></div>" +
+      '<div class="dk-console-body">';
+    if (p.state === "not-installed") {
+      html += "<p class=\"pm-note\">" + esc(p.install.note) + '</p><div class="dk-actions"><button class="pm-btn pm-btn-primary pm-btn-sm" data-pa="install">Install</button><button class="pm-btn pm-btn-sm" data-pa="diagnostics">About CLI-owned login</button></div></div></div>';
+      return html;
+    }
+    if (p.setup) {
+      html += "<p class=\"pm-note\">" + esc(p.setup.note) + "</p><ol style=\"margin:6px 0 0 18px;padding:0;color:var(--text-2);font-size:12px\">" + p.setup.steps.map(function (s) { return "<li>" + esc(s) + "</li>"; }).join("") +
+        '</ol><div class="dk-actions"><button class="pm-btn pm-btn-primary pm-btn-sm" data-pa="setup">Start setup</button></div></div></div>';
+      return html;
+    }
+    if (p.state === "signed-out") {
+      html += '<div class="dk-console" style="margin-bottom:8px"><div class="dk-console-head">' +
+        '<span class="pm-badge pm-badge-warn">' + led("warn") + " Installed — signed out</span>" +
+        '<span class="name">No active profile</span></div>' +
+        '<div class="dk-console-body"><p class="pm-note" style="margin:0 0 8px">' + esc(p.login.note) + "</p>" +
+        '<div class="dk-actions"><button class="pm-btn pm-btn-primary pm-btn-sm" data-pa="login">Launch CLI login</button>' +
+        '<button class="pm-btn pm-btn-sm" data-pa="rescan">Rescan installation</button></div></div></div>';
+    }
+    html += p.accounts.slice().sort(function (a, b) { return (a.priority || 1) - (b.priority || 1); }).map(function (a) {
+      var bits = [];
+      if (a.usage) {
+        if (a.usage.included === "exhausted") bits.push('<span class="pm-badge pm-badge-danger">' + led("err") + " Included usage exhausted</span>");
+        else if (a.usage.included) bits.push('<span class="pm-badge">' + esc(a.usage.included) + "</span>");
+        if (a.usage.remaining && a.usage.included !== "exhausted") bits.push('<span class="pm-note">remaining ' + esc(a.usage.remaining) + "</span>");
+        if (a.usage.extra) bits.push('<span class="pm-note">' + esc(a.usage.extra) + "</span>");
+        if (a.usage.reset) bits.push('<span class="pm-note">reset ' + esc(a.usage.reset) + "</span>");
+        if (a.usage.pressure) bits.push('<span class="pm-note">pressure ' + esc(a.usage.pressure) + "</span>");
+      }
+      return '<div class="dk-console' + (openConsoles["a:" + a.id] ? " open" : "") + '" style="margin-bottom:8px" data-account="' + a.id + '" data-console-key="a:' + a.id + '"><div class="dk-console-head" data-console-toggle>' +
+        (a.preferred ? '<span class="pm-badge pm-badge-info">' + led("ok") + " Preferred</span>" : "") +
+        (a.enabled === false ? '<span class="pm-badge pm-badge-warn">' + led("warn") + " Disabled</span>" : "") +
+        '<span class="name">' + esc(a.label) + "</span>" +
+        (a.nickname ? '<span class="pm-badge">' + esc(a.nickname) + "</span>" : "") +
+        (a.sticky ? '<span class="pm-badge pm-badge-muted">Sticky</span>' : "") +
+        (a.state === "authenticated" ? '<span class="pm-badge pm-badge-warn">' + led("warn") + " Authenticated ≠ ready</span>" : "") +
+        '<span class="pm-ico chev">' + window.PMIcons.get("chevronRight", 14) + "</span></div>" +
+        '<div class="dk-console-body">' +
+        '<dl class="dk-kv">' +
+        "<dt>Auth owner</dt><dd>" + esc(a.authOwner) + " — " + esc(a.authKind) + "</dd>" +
+        "<dt>Transport</dt><dd>" + esc(a.transport) + "</dd>" +
+        (a.isolation ? "<dt>Isolation</dt><dd>" + esc(a.isolation) + "</dd>" : "") +
+        (a.identity ? "<dt>Identity</dt><dd>" + esc(a.identity) + "</dd>" : "") +
+        (a.health ? "<dt>Health</dt><dd>catalog " + esc(a.health.catalog) + " · generation " + esc(a.health.generation) + "</dd>" : "") +
+        "<dt>Priority</dt><dd>" + (a.priority || 1) +
+        ' <button class="pm-btn pm-btn-quiet pm-btn-sm pm-btn-ico" data-acc-up aria-label="Raise account priority">' + window.PMIcons.get("chevronDown", 10) + "</button>" +
+        '<button class="pm-btn pm-btn-quiet pm-btn-sm pm-btn-ico" data-acc-down aria-label="Lower account priority">' + window.PMIcons.get("chevronDown", 10) + "</button></dd>" +
+        "</dl>" +
+        '<div class="dk-actions" style="margin-top:0">' + bits.join("") + "</div>" +
+        (a.probe ? '<div class="dk-actions"><span class="pm-badge pm-badge-danger">' + led("err") + " Probe failed " + esc(a.probe.at) + '</span><span class="pm-note">' + esc(a.probe.detail) + "</span></div>" : "") +
+        '<div class="dk-actions">' +
+        (a.enabled !== false && !a.preferred ? '<button class="pm-btn pm-btn-primary pm-btn-sm" data-use-account="' + a.id + '">Use for future requests</button>' : "") +
+        (a.preferred ? '<span class="pm-note">Future requests use this account. Running work is never retargeted.</span>' : "") +
+        '<button class="pm-btn pm-btn-sm" data-nickname>' + (a.nickname ? "Edit nickname" : "Add nickname") + "</button>" +
+        '<button class="pm-btn pm-btn-sm" data-sticky>Sticky: ' + (a.sticky ? "On" : "Off") + "</button>" +
+        '<button class="pm-btn pm-btn-sm" data-enable>' + (a.enabled === false ? "Enable" : "Disable") + "</button>" +
+        '<button class="pm-btn pm-btn-sm" data-pa="reconnect">Reconnect</button>' +
+        '<button class="pm-btn pm-btn-sm" data-pa="probe">Readiness probe</button>' +
+        '<button class="pm-btn pm-btn-sm" data-pa="diagnostics">Diagnostics</button>' +
+        ((p.id === "gemini-cli" || p.id === "codex-cli") ? '<button class="pm-btn pm-btn-sm" data-pa="update">Check for CLI update</button>' : "") +
+        '<button class="pm-btn pm-btn-quiet pm-btn-sm" data-open-usage>Open Usage</button>' +
+        "</div>" +
+        (a.usage && a.usage.included === "exhausted" && a.continuationOptions ? '<div class="dk-actions"><label class="pm-note">What happens next:</label><select class="pm-select" data-continuation>' + a.continuationOptions.map(function (o) { return "<option>" + esc(o) + "</option>"; }).join("") + "</select></div>" : "") +
+        "</div></div>";
+    }).join("");
+    if (p.models.length) {
+      html += '<div class="dk-cap-line">Models — priority order</div>' +
+        p.models.slice().sort(function (a, b) { return (a.hidden ? 1 : 0) - (b.hidden ? 1 : 0) || a.priority - b.priority; }).map(function (m) {
+          var stateChip = m.state === "available" ? '<span class="pm-badge pm-badge-ok">' + led("ok") + " Available</span>"
+            : m.state === "unverified" ? '<span class="pm-badge pm-badge-warn">' + led("warn") + " Unverified</span>"
+            : m.state === "needs-setup" ? '<span class="pm-badge pm-badge-info">' + led("warn") + " Needs setup</span>"
+            : '<span class="pm-badge pm-badge-danger">' + led("err") + " Unavailable</span>";
+          return '<div class="dk-model-line" data-model="' + m.id + '"' + (m.hidden ? ' style="opacity:.62"' : "") + '>' +
+            '<button class="dk-fav' + (m.favorite ? " on" : "") + '" data-fav aria-pressed="' + m.favorite + '" aria-label="Favorite">' + window.PMIcons.get("star", 14) + "</button>" +
+            '<span class="name">' + esc(m.name) + "</span>" +
+            (m.alias ? '<span class="meta">alias ' + esc(m.alias) + "</span>" : "") +
+            (m.hidden ? '<span class="pm-badge pm-badge-muted">Hidden</span>' : "") +
+            stateChip +
+            '<span class="meta">P' + m.priority + " · " + esc(m.context) + " ctx" + (m.effort.length ? " · effort" : "") + (m.fast ? " · Normal/Fast" : "") + (m.free ? " · " + esc(m.free) : "") + "</span>" +
+            '<span style="margin-left:auto;display:flex;gap:4px">' +
+            '<button class="pm-btn pm-btn-quiet pm-btn-sm pm-btn-ico" data-up aria-label="Raise priority">' + window.PMIcons.get("chevronDown", 11) + "</button>" +
+            '<button class="pm-btn pm-btn-quiet pm-btn-sm pm-btn-ico" data-down aria-label="Lower priority">' + window.PMIcons.get("chevronDown", 11) + "</button>" +
+            '<button class="pm-btn pm-btn-sm" data-alias>Alias</button>' +
+            '<button class="pm-btn pm-btn-sm" data-hide>' + (m.hidden ? "Show" : "Hide") + "</button>" +
+            (m.effort.length ? '<select class="pm-select" data-effort-sel style="padding:3px 6px;font-size:11px">' + m.effort.map(function (e) { return "<option>" + e + "</option>"; }).join("") + "</select>" : "") +
+            (m.fast ? '<span class="pm-seg"><button class="active" data-speed="Normal" style="padding:2px 7px;font-size:11px">N</button><button data-speed="Fast" style="padding:2px 7px;font-size:11px">F</button></span>' : "") +
+            "</span>" +
+            (m.reason ? '<div class="pm-note" style="width:100%;color:var(--warn)">' + esc(m.reason) + "</div>" : "") +
+            '<div class="pm-note" style="width:100%">Evidence: ' + esc(m.evidence) + "</div>" +
+          "</div>";
+        }).join("");
+    }
+    html += "</div></div>";
+    return html;
+  }
+
+  function crewConsole() {
+    var st = window.PMState.state;
+    return st.crewTemplates.map(function (c) {
+      var admitted = c.id === "crew-design" ? 2 : c.concurrency;
+      var waves = c.id === "crew-design" ? 3 : c.id === "crew-release" ? 2 : 1;
+      var members = c.members.map(function (m, i) {
+        var cls = i < admitted ? "admitted" : "queued";
+        return '<span class="dk-wave-m ' + cls + '" title="' + esc(m.role) + '">' + window.PMIcons.get("persona", 12) + "</span>";
+      }).join("");
+      return '<div class="dk-console' + ((openConsoles["c:" + c.id] !== undefined ? openConsoles["c:" + c.id] : c.id === "crew-design") ? " open" : "") + '" data-crew="' + c.id + '" data-console-key="c:' + c.id + '"><div class="dk-console-head" data-console-toggle>' +
+        '<span class="name">' + esc(c.name) + '</span><span class="pm-note">' + esc(c.purpose) + '</span><span class="pm-ico chev">' + window.PMIcons.get("chevronRight", 14) + "</span></div>" +
+        '<div class="dk-console-body">' +
+        '<div class="dk-wave">' + members +
+        '<span class="pm-badge pm-badge-info">Requested ' + c.requested + '</span>' +
+        '<span class="pm-badge pm-badge-warn">Admitted ' + admitted + ' concurrent</span>' +
+        '<span class="pm-badge">' + waves + " wave(s)</span>" +
+        '<span class="pm-badge">' + esc(c.routePolicy) + " routes</span></div>" +
+        '<div class="pm-note" style="margin-top:6px">' + esc(c.capacityNote) + "</div>" +
+        '<dl class="dk-kv">' +
+        "<dt>Members</dt><dd>" + c.members.map(function (m) {
+          return esc(m.role) + " — " + esc(m.persona) + ", route: " + esc(m.route) + ", candidates: " + m.candidates.map(esc).join(" / ");
+        }).join(" · ") + "</dd>" +
+        "<dt>Composition</dt><dd>requested " + c.requested + " · allowed " + esc(c.minMax) + "</dd>" +
+        "<dt>Guards</dt><dd>spend " + esc(c.guards.spend) + " · time " + esc(c.guards.time) + "</dd>" +
+        "<dt>Reserve</dt><dd>" + (c.reserve ? "Synthesis, testing, verification & repair reserved" : "Off") + "</dd>" +
+        "<dt>Worktrees</dt><dd>" + esc(c.worktree) + "</dd>" +
+        "<dt>Ports & test resources</dt><dd>" + esc(c.ports) + "</dd>" +
+        "<dt>Child spawning</dt><dd>" + esc(c.childDepth) + "</dd>" +
+        "<dt>Coordination</dt><dd>" + esc(c.board) + " · reducer: " + esc(c.reducer) + "</dd>" +
+        "<dt>Failure policy</dt><dd>" + esc(c.failure) + "</dd>" +
+        "</dl>" +
+        '<div class="dk-actions"><button class="pm-btn pm-btn-sm" data-crew-act="edit">Edit template</button><button class="pm-btn pm-btn-sm" data-crew-act="dryrun">Dry-run forecast</button></div>' +
+        "</div></div>";
+    }).join("");
+  }
+
+  function terminalConsole() {
+    var st = window.PMState.state;
+    return st.terminalProfiles.map(function (t) {
+      var line = '<div class="dk-term-preview" style="background:' + t.palette[0] + '">' +
+        '<span style="color:' + t.palette[2] + '">$ build</span> <span style="color:' + t.palette[4] + '">python3</span> <span style="color:' + t.palette[7] + '">assemble.py</span> <span style="color:' + t.palette[3] + '">--gate g3</span> <span style="color:' + t.palette[5] + ">ok</span></div>";
+      return '<div class="dk-console' + ((openConsoles["t:" + t.id] !== undefined ? openConsoles["t:" + t.id] : t.isDefault) ? " open" : "") + '" data-term="' + t.id + '" data-console-key="t:' + t.id + '"><div class="dk-console-head" data-console-toggle>' +
+        (t.isDefault ? '<span class="pm-badge pm-badge-info">Default</span>' : "") +
+        '<span class="name">' + esc(t.name) + '</span><span class="pm-note">' + esc(t.shell) + '</span><span class="pm-ico chev">' + window.PMIcons.get("chevronRight", 14) + "</span></div>" +
+        '<div class="dk-console-body">' +
+        '<dl class="dk-kv">' +
+        "<dt>Font</dt><dd>" + esc(t.font) + "</dd>" +
+        "<dt>Colors</dt><dd>" + esc(t.colors) + "</dd>" +
+        "<dt>Opacity</dt><dd>" + t.opacity + "%</dd>" +
+        "<dt>Cursor</dt><dd>" + esc(t.cursor) + "</dd>" +
+        "<dt>Copy on select</dt><dd>" + (t.copyOnSelect ? "On" : "Off") + "</dd>" +
+        "<dt>Working directory</dt><dd>" + esc(t.cwd) + "</dd>" +
+        "<dt>Transcript retention</dt><dd>" + esc(t.retention) + "</dd>" +
+        "<dt>Startup</dt><dd>" + esc(t.startup) + "</dd>" +
+        "</dl>" +
+        '<div class="dk-pal">' + t.palette.map(function (c) { return '<span style="background:' + c + '"></span>'; }).join("") + "</div>" +
+        line +
+        '<div class="dk-actions"><button class="pm-btn pm-btn-sm" data-term-act="edit">Edit profile</button>' +
+        (!t.isDefault ? '<button class="pm-btn pm-btn-sm" data-term-act="default">Make default</button>' : "") +
+        '<button class="pm-btn pm-btn-sm" data-term-act="diag">Startup diagnostics</button></div>' +
+        "</div></div>";
+    }).join("");
+  }
+
+  function lspConsole() {
+    var st = window.PMState.state;
+    return st.lspServers.map(function (l) {
+      var chip = l.state === "running" ? '<span class="pm-badge pm-badge-ok">' + led("ok") + " Running</span>"
+        : l.state === "installed" ? '<span class="pm-badge pm-badge-info">' + led("off") + " Installed — idle</span>"
+        : '<span class="pm-badge pm-badge-warn">' + led("warn") + " Not installed</span>";
+      return '<div class="dk-console' + ((openConsoles["l:" + l.id] !== undefined ? openConsoles["l:" + l.id] : l.state === "running") ? " open" : "") + '" data-lsp="' + l.id + '" data-console-key="l:' + l.id + '"><div class="dk-console-head" data-console-toggle>' +
+        chip + '<span class="name">' + esc(l.name) + '</span><span class="pm-note">' + esc(l.executable) + " " + esc(l.version) + '</span><span class="pm-ico chev">' + window.PMIcons.get("chevronRight", 14) + "</span></div>" +
+        '<div class="dk-console-body">' +
+        '<dl class="dk-kv">' +
+        "<dt>Language coverage</dt><dd>" + esc(l.coverage) + "</dd>" +
+        "<dt>Scope</dt><dd>" + esc(l.scope) + "</dd>" +
+        "<dt>Startup mode</dt><dd>" + esc(l.startup) + "</dd>" +
+        "<dt>Capabilities</dt><dd>" + esc(l.capabilities) + "</dd>" +
+        "<dt>Conflicts</dt><dd>" + esc(l.conflicts) + "</dd>" +
+        "<dt>Health</dt><dd>" + esc(l.health) + "</dd>" +
+        "<dt>Formatting</dt><dd>" + (l.state === "running" ? "Owned by LSP (see Languages & LSP settings)" : "n/a") + "</dd>" +
+        "</dl>" +
+        (l.logs.length ? '<details style="margin-top:6px"><summary class="pm-note" style="cursor:pointer">Logs</summary>' + l.logs.map(function (x) { return '<div class="at-log" style="font-family:var(--font-mono);font-size:11px;color:var(--text-2);padding:2px 0">' + esc(x) + "</div>"; }).join("") + "</details>" : "") +
+        '<div class="dk-actions">' +
+        (l.state === "running" ? '<button class="pm-btn pm-btn-sm" data-lsp-act="restart">Restart</button>' : "") +
+        (l.state === "installed" ? '<button class="pm-btn pm-btn-sm pm-btn-primary" data-lsp-act="start">Start</button>' : "") +
+        (l.state === "not-installed" ? '<button class="pm-btn pm-btn-sm pm-btn-primary" data-lsp-act="install">Install</button>' : "") +
+        '<button class="pm-btn pm-btn-sm" data-lsp-act="diag">Diagnostics</button>' +
+        "</div></div></div>";
+    }).join("");
+  }
+
+  function managerNote(sub) {
+    var where = MANAGER_HOME[sub.manager] || "another concept";
+    return '<div class="dk-note-card">' + window.PMIcons.get("info", 13) + " The full <b>" + esc(window.PMCore.managerTitle(sub.manager)) + "</b> console is demonstrated in the " + where + " concept of this set. Deck keeps it reachable here with its surrounding settings.</div>";
+  }
+
+  function renderWork(v) {
+    var d = dest(v.category);
+    if (!d) { renderHome(); return; }
+    var st = window.PMState.state;
+    var disc = st.ui.disclosure;
+    var html = '<div class="dk-work dk-enter" id="dk-work">' +
+      '<div class="dk-strip">' +
+        '<button class="pm-btn pm-btn-quiet pm-btn-sm pm-back" id="dk-back">' + window.PMIcons.get("arrowLeft", 13) + " Deck</button>" +
+        '<span class="pm-badge" style="flex:none">' + esc(d.title) + "</span>" +
+        '<div class="dk-tabs" id="dk-tabs">' +
+        d.subcategories.map(function (s) { return '<button class="dk-tab" data-sub="' + s.id + '">' + esc(s.title) + "</button>"; }).join("") +
+        "</div>" +
+        '<label class="dk-search-mini">' + window.PMIcons.get("search", 13) + '<input id="dk-q2" placeholder="Search…" aria-label="Search in Settings"></label>' +
+        '<span class="pm-seg" id="dk-disc" style="flex:none">' +
+        ["standard", "advanced", "all"].map(function (x) { return '<button data-disc="' + x + '" class="' + (disc === x ? "active" : "") + '" style="padding:3px 8px;font-size:11px">' + (x === "standard" ? "Std" : x === "advanced" ? "Adv" : "All") + "</button>"; }).join("") +
+        "</span>" +
+      "</div>" +
+      '<div class="dk-doc" id="dk-doc">' +
+      d.subcategories.map(function (sub, i) {
+        var mgr = "";
+        if (sub.manager) {
+          if (sub.manager === "providers") mgr = providersConsole(v);
+          else if (sub.manager === "crew") mgr = crewConsole();
+          else if (sub.manager === "terminal") mgr = terminalConsole();
+          else if (sub.manager === "lsp") mgr = lspConsole();
+          else mgr = managerNote(sub);
+        }
+        return '<section class="dk-sub" data-sub-section="' + sub.id + '">' +
+          "<h2><span class=\"idx\">" + String(i + 1).padStart(2, "0") + "</span> " + esc(sub.title) + (sub.manager ? ' <span class="pm-badge pm-badge-muted">manager</span>' : "") + "</h2>" +
+          mgr + sub.settings.map(settingRow).join("") +
+        "</section>";
+      }).join("") +
+      "</div></div>";
+    content.innerHTML = html;
+    bindWork(v, d);
+  }
+
+  function bindWork(v, d) {
+    var scroller = document.getElementById("dk-work");
+    var doc = document.getElementById("dk-doc");
+    var tabs = content.querySelectorAll(".dk-tab");
+    document.getElementById("dk-back").addEventListener("click", function () { window.PMState.navigate({ name: "home" }); });
+
+    spy = window.PMCore.scrollspy(scroller, function () {
+      return d.subcategories.map(function (s) { return { id: s.id, el: doc.querySelector('[data-sub-section="' + s.id + '"]') }; });
+    }, function (id) {
+      tabs.forEach(function (b) {
+        var on = b.getAttribute("data-sub") === id;
+        b.classList.toggle("active", on);
+        if (on) b.scrollIntoView({ inline: "center", block: "nearest", behavior: window.PMCore.reducedMotion() ? "auto" : "smooth" });
+      });
+    }, { offset: 70 });
+
+    tabs.forEach(function (b) { b.addEventListener("click", function () { spy.jumpTo(b.getAttribute("data-sub")); }); });
+
+    document.getElementById("dk-disc").querySelectorAll("[data-disc]").forEach(function (b) {
+      b.addEventListener("click", function () {
+        window.PMState.state.ui.disclosure = b.getAttribute("data-disc");
+        content.querySelectorAll("[data-setting-id]").forEach(function (row) {
+          var s = window.PMState.getSetting(row.getAttribute("data-setting-id"));
+          row.setAttribute("data-hidden", window.PMState.state.ui.disclosure === "standard" && s.tier !== "standard");
+        });
+        content.querySelectorAll("#dk-disc [data-disc]").forEach(function (x) { x.classList.toggle("active", x === b); });
+        window.PMState.receipt("Exposure changed", "Showing " + b.getAttribute("data-disc") + " rows.", "info");
+        if (spy) spy.refresh();
+      });
+    });
+
+    document.getElementById("dk-q2").addEventListener("keydown", function (e) {
+      if (e.key !== "Enter") return;
+      var hits = window.PMCore.search(e.target.value, INDEX);
+      if (!hits.length) { window.PMState.receipt("No matches", "Nothing found.", "info"); return; }
+      var t = Object.assign({}, hits[0].target);
+      t.focusSetting = t.setting || null;
+      window.PMState.navigate(t);
+    });
+
+    doc.addEventListener("click", function (e) {
+      var toggle = e.target.closest("[data-console-toggle]");
+      if (toggle) {
+        var consoleEl = toggle.closest(".dk-console");
+        consoleEl.classList.toggle("open");
+        var key = consoleEl.getAttribute("data-console-key");
+        if (key) openConsoles[key] = consoleEl.classList.contains("open");
+      }
+      var row = e.target.closest("[data-setting-id]");
+      var btn = e.target.closest("button, select");
+      if (row && btn) {
+        var id = row.getAttribute("data-setting-id");
+        var s = window.PMState.getSetting(id);
+        if (btn.matches("[data-ctl].pm-toggle")) { window.PMState.setSettingValue(id, !(s.value === true)); patchRow(id); return; }
+        if (btn.matches("[data-seg]")) { window.PMState.setSettingValue(id, btn.getAttribute("data-seg")); patchRow(id); return; }
+        if (btn.matches("[data-reset]")) { window.PMState.resetSetting(id); patchRow(id); return; }
+        if (btn.matches("[data-details]")) { row.classList.toggle("open"); btn.setAttribute("aria-expanded", row.classList.contains("open")); return; }
+        if (btn.matches("[data-ctl]") && btn.tagName === "BUTTON") {
+          if (s.id === "models.providers.refresh") { window.PMState.refreshCatalog("models-dev"); return; }
+          window.PMState.receipt(s.actionLabel || "Opened", s.label + ": honest simulated result.", "sim");
+          return;
+        }
+      }
+      mgrClick(e);
+    });
+    doc.addEventListener("change", function (e) {
+      var row = e.target.closest("[data-setting-id]");
+      if (row && e.target.matches("[data-ctl]")) {
+        var id = row.getAttribute("data-setting-id");
+        window.PMState.setSettingValue(id, e.target.value);
+        patchRow(id);
+      }
+      if (e.target.matches("[data-continuation]")) window.PMState.receipt("Continuation saved", "Anthropic Max: " + e.target.value + " — future requests only.", "ok");
+      if (e.target.matches("[data-effort-sel]")) window.PMState.receipt("Effort preference saved", "Applies when supported by the model.", "ok");
+    });
+
+    function mgrClick(e) {
+      var t;
+      if ((t = e.target.closest("[data-catalog-refresh]"))) { window.PMState.refreshCatalog(t.getAttribute("data-catalog-refresh")); return; }
+      var pc = e.target.closest("[data-provider]");
+      if (pc) {
+        var pid = pc.getAttribute("data-provider");
+        var acctEl = e.target.closest("[data-account]");
+        var aid = acctEl ? acctEl.getAttribute("data-account") : null;
+        if ((t = e.target.closest("[data-use-account]"))) { window.PMState.setPreferredAccount(pid, t.getAttribute("data-use-account")); rerender("providers"); return; }
+        if (aid && (t = e.target.closest("[data-nickname]"))) {
+          var acc = window.PMState.accountById(pid, aid);
+          var nn = prompt("Nickname for " + acc.label + ":", acc.nickname || "");
+          if (nn !== null) { window.PMState.setAccountNickname(pid, aid, nn.trim()); rerender("providers"); }
+          return;
+        }
+        if (aid && (t = e.target.closest("[data-sticky]"))) { var a1 = window.PMState.accountById(pid, aid); window.PMState.setAccountSticky(pid, aid, !a1.sticky); rerender("providers"); return; }
+        if (aid && (t = e.target.closest("[data-enable]"))) { var a2 = window.PMState.accountById(pid, aid); window.PMState.setAccountEnabled(pid, aid, a2.enabled === false); rerender("providers"); return; }
+        if (aid && (t = e.target.closest("[data-acc-up]"))) { window.PMState.moveAccountPriority(pid, aid, -1); rerender("providers"); return; }
+        if (aid && (t = e.target.closest("[data-acc-down]"))) { window.PMState.moveAccountPriority(pid, aid, 1); rerender("providers"); return; }
+        if ((t = e.target.closest("[data-pa]"))) {
+          var act = t.getAttribute("data-pa");
+          if (act === "setup") { window.PMState.receipt("Setup opened", "Mistral setup: account, key, scopes, caveats, back to the model row. Simulated.", "sim"); return; }
+          window.PMState.providerAction(pid, act); return;
+        }
+        if ((t = e.target.closest("[data-open-usage]"))) { window.PMState.receipt("Deep link to Usage", "Usage owns measured state. Simulated navigation.", "info"); return; }
+        var ml = e.target.closest("[data-model]");
+        if (ml) {
+          var mid = ml.getAttribute("data-model");
+          if ((t = e.target.closest("[data-fav]"))) { window.PMState.toggleFavorite(pid, mid); rerender("providers"); return; }
+          if ((t = e.target.closest("[data-up]"))) { window.PMState.movePriority(pid, mid, -1); rerender("providers"); return; }
+          if ((t = e.target.closest("[data-down]"))) { window.PMState.movePriority(pid, mid, 1); rerender("providers"); return; }
+          if ((t = e.target.closest("[data-alias]"))) {
+            var p = window.PMState.providerById(pid);
+            var m = p.models.filter(function (x) { return x.id === mid; })[0];
+            var next = prompt("Alias for " + m.name + ":", m.alias || "");
+            if (next !== null) { window.PMState.setAlias(pid, mid, next.trim()); rerender("providers"); }
+            return;
+          }
+          if ((t = e.target.closest("[data-hide]"))) { window.PMState.toggleHidden(pid, mid); rerender("providers"); return; }
+          if ((t = e.target.closest("[data-speed]"))) { t.parentNode.querySelectorAll("[data-speed]").forEach(function (x) { x.classList.toggle("active", x === t); }); window.PMState.receipt("Speed preference saved", t.getAttribute("data-speed") + " requested when genuinely supported.", "ok"); return; }
+        }
+      }
+      var crew = e.target.closest("[data-crew]");
+      if (crew && (t = e.target.closest("[data-crew-act]"))) {
+        var c = window.PMState.state.crewTemplates.filter(function (x) { return x.id === crew.getAttribute("data-crew"); })[0];
+        if (t.getAttribute("data-crew-act") === "dryrun") window.PMState.receipt("Dry-run forecast", c.name + ": " + c.capacityNote + " Sourced from Usage; the runtime decides admission.", "info");
+        else window.PMState.receipt("Edit template", c.name + ": composition editor is simulated here.", "sim");
+        return;
+      }
+      var lsp = e.target.closest("[data-lsp]");
+      if (lsp && (t = e.target.closest("[data-lsp-act]"))) {
+        var lv = window.PMState.state.lspServers.filter(function (x) { return x.id === lsp.getAttribute("data-lsp"); })[0];
+        var la = t.getAttribute("data-lsp-act");
+        if (la === "restart") window.PMState.receipt("Restart queued", lv.name + " language server will restart. Simulated.", "sim");
+        if (la === "start") window.PMState.receipt("Start queued", lv.name + " server starts on the first matching file. Simulated.", "sim");
+        if (la === "install") window.PMState.receipt("Install started", lv.executable + " installation is simulated in this concept.", "sim");
+        if (la === "diag") window.PMState.receipt("Diagnostics", lv.name + ": " + lv.health + ". Simulated report.", "info");
+        return;
+      }
+      var term = e.target.closest("[data-term]");
+      if (term && (t = e.target.closest("[data-term-act]"))) {
+        var tp = window.PMState.state.terminalProfiles.filter(function (x) { return x.id === term.getAttribute("data-term"); })[0];
+        var a = t.getAttribute("data-term-act");
+        if (a === "default") { window.PMState.state.terminalProfiles.forEach(function (x) { x.isDefault = x.id === tp.id; }); window.PMState.receipt("Default profile changed", tp.name + " is now the default for new terminals.", "ok"); rerender("terminal"); }
+        else if (a === "diag") window.PMState.receipt("Startup diagnostics", tp.name + ": shell resolved, font fallbacks ok. Simulated.", "sim");
+        else window.PMState.receipt("Edit profile", tp.name + ": profile editor is simulated here.", "sim");
+        return;
+      }
+    }
+
+    function patchRow(id) {
+      var s = window.PMState.getSetting(id);
+      var el = content.querySelector('[data-setting-id="' + id + '"]');
+      if (!el) return;
+      var tmp = document.createElement("div");
+      tmp.innerHTML = settingRow(s);
+      var fresh = tmp.firstChild;
+      fresh.classList.toggle("open", el.classList.contains("open"));
+      el.replaceWith(fresh);
+    }
+    function rerender(which) {
+      var subId = which === "providers" ? "providers" : which === "crew" ? "crew" : "terminal";
+      var section = content.querySelector('[data-sub-section="' + subId + '"]');
+      if (!section) return;
+      var h2 = section.querySelector("h2");
+      var rows = section.querySelectorAll(":scope > .dk-row");
+      section.innerHTML = "";
+      section.appendChild(h2);
+      var tmp = document.createElement("div");
+      tmp.innerHTML = which === "providers" ? providersConsole(window.PMState.state.view) : which === "crew" ? crewConsole() : terminalConsole();
+      while (tmp.firstChild) section.appendChild(tmp.firstChild);
+      rows.forEach(function (r) { section.appendChild(r); });
+      if (spy) spy.refresh();
+    }
+    window._deckPatch = { patchRow: patchRow, rerender: rerender };
+
+    if (v.subcategory) spy.jumpTo(v.subcategory, function () { focusV(v); });
+    else if (v.manager) {
+      var subForMgr = null;
+      d.subcategories.forEach(function (s) { if (s.manager === v.manager) subForMgr = s.id; });
+      if (subForMgr) { spy.jumpTo(subForMgr, function () { focusV(v); }); return; }
+      focusV(v);
+    } else { scroller.scrollTop = 0; focusV(v); }
+  }
+
+  function focusV(v) {
+    if (v.focusSetting) {
+      var el = content.querySelector('[data-setting-id="' + v.focusSetting + '"]');
+      if (el) { el.scrollIntoView({ block: "center", behavior: window.PMCore.reducedMotion() ? "auto" : "smooth" }); window.PMCore.focusFlash(el); }
+    } else if (v.provider) {
+      var card = content.querySelector('[data-provider="' + v.provider + '"]');
+      if (card) { card.classList.add("open"); card.scrollIntoView({ block: "center", behavior: window.PMCore.reducedMotion() ? "auto" : "smooth" }); window.PMCore.focusFlash(card); }
+    }
+  }
+
+  window.PMState.subscribe(function (kind) {
+    if (kind === "navigate") { route(); return; }
+    if (kind === "scenario") { route(); return; }
+    if (kind === "catalog" && window.PMState.state.view.name === "workspace" && window.PMState.state.view.category === "models" && window._deckPatch) window._deckPatch.rerender("providers");
+  });
+
+  route();
+})();
+</script>
+</body>
+</html>

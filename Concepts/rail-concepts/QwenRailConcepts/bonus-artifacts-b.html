@@ -1,0 +1,321 @@
+<!DOCTYPE html>
+<!-- BONUS A2 · panel-artifacts · Audit Log -->
+<html lang="en" data-theme="friendly-dark">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<link rel="icon" href="data:,">
+<title>BONUS A2 · panel-artifacts · Audit Log — Puppet Master Rail Concepts</title>
+<script>(function(){try{var ok=['friendly-dark','friendly-light','retro-dark','retro-light','basic-light','basic-dark','glass-dark','glass-light'];var t=localStorage.getItem('pm.theme');if(ok.indexOf(t)===-1)t='friendly-dark';var d=document.documentElement;d.setAttribute('data-theme',t);d.style.colorScheme=/-dark$/.test(t)?'dark':'light';}catch(e){}})();</script>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="preload" as="style" href="https://fonts.googleapis.com/css2?family=Cal+Sans&family=Inter:wght@400;500;600;700&family=Nunito:wght@400;600;700;800&family=Orbitron:wght@500;700&family=Quicksand:wght@400;500;600;700&family=Rajdhani:wght@400;500;600;700&display=swap" onload="this.onload=null;this.rel='stylesheet'">
+<noscript><link href="https://fonts.googleapis.com/css2?family=Cal+Sans&family=Inter:wght@400;500;600;700&family=Nunito:wght@400;600;700;800&family=Orbitron:wght@500;700&family=Quicksand:wght@400;500;600;700&family=Rajdhani:wght@400;500;600;700&display=swap" rel="stylesheet"></noscript>
+<link rel="stylesheet" href="_shared/themes.css">
+<link rel="stylesheet" href="_shared/base.css">
+<style>
+.aB-head{flex:none;display:flex;align-items:center;gap:var(--md);padding:var(--lg);min-width:0;overflow:hidden;border-bottom:1px solid var(--border-light)}
+.aB-hico{width:26px;height:26px;flex:none;border-radius:var(--radius-md);display:flex;align-items:center;justify-content:center;background:var(--accent-soft);color:var(--accent-primary)}
+.aB-title{font-family:var(--display-font);font-size:11px;font-weight:700;letter-spacing:.6px;flex:1 1 auto;min-width:max-content;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.aB-stat{margin-left:auto;flex:0 1 auto;min-width:0;max-width:52%;font-family:var(--mono-font);font-size:9.5px;color:var(--text-muted);white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.aB-scroll{flex:1;min-height:0;overflow-y:auto;overflow-x:hidden;padding:var(--md) var(--lg) var(--lg)}
+
+.aB-chips{padding:0 0 var(--md)}
+.aB-famkey{display:flex;flex-wrap:wrap;gap:var(--md) var(--lg);padding:2px 2px var(--md)}
+.aB-fk{display:inline-flex;align-items:center;gap:5px;font-family:var(--mono-font);font-size:8.5px;color:var(--text-muted);white-space:nowrap;min-width:0}
+.aB-fk i{width:3px;height:10px;border-radius:1px;background:var(--fc);flex:none;font-style:normal}
+
+.aB-day{display:flex;align-items:baseline;gap:var(--md);margin:var(--md) 0 var(--sm)}
+.aB-day-l{font-family:var(--display-font);font-size:8.5px;font-weight:700;letter-spacing:2.2px;color:var(--text-muted)}
+.aB-day-r{font-family:var(--mono-font);font-size:8.5px;color:var(--text-muted);margin-left:auto;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;min-width:0}
+
+.aB-row{display:grid;grid-template-columns:46px 3px minmax(0,1fr);gap:var(--sm);align-items:stretch;padding:5px 0;min-width:0}
+.aB-row + .aB-row{border-top:1px solid color-mix(in srgb, var(--border-light) 55%, transparent)}
+.aB-ts{font-family:var(--mono-font);font-size:9.5px;font-variant-numeric:tabular-nums;color:var(--text-muted);text-align:right;white-space:nowrap;padding-top:3px;min-width:0}
+.aB-stripe{border-radius:2px;background:var(--fc,var(--graph-pending));box-shadow:0 0 6px color-mix(in srgb, var(--fc,transparent) 45%, transparent);transition:box-shadow var(--motion-fast) var(--ease-out),filter var(--motion-fast) var(--ease-out)}
+.aB-fam-diff{--fc:var(--graph-passed)}
+.aB-fam-test{--fc:var(--accent-lime)}
+.aB-fam-shot{--fc:var(--accent-blue)}
+.aB-fam-web{--fc:var(--accent-magenta)}
+.aB-fam-rec{--fc:color-mix(in srgb, var(--accent-magenta) 55%, var(--accent-orange))}
+.aB-row:hover .aB-stripe{box-shadow:0 0 10px color-mix(in srgb, var(--fc,transparent) 80%, transparent)}
+.aB-body{min-width:0;display:flex;flex-direction:column;gap:3px;padding:2px 4px;border-radius:var(--radius-xs);transition:background var(--motion-fast) var(--ease-out)}
+.aB-row:hover .aB-body{background:color-mix(in srgb, var(--text-primary) 5%, transparent)}
+.aB-top{display:flex;align-items:center;gap:var(--sm);min-width:0}
+.aB-lab{flex:1 1 auto;min-width:0;font-size:11px;font-weight:600;color:var(--text-primary);white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.aB-row:hover .aB-lab{color:var(--fc,var(--text-primary))}
+.aB-top .pm-chip{font-size:8px;padding:1px 6px;letter-spacing:.06em}
+.aB-meta{font-family:var(--mono-font);font-size:9.5px;color:var(--text-muted);white-space:nowrap;overflow:hidden;text-overflow:ellipsis;min-width:0}
+.aB-meta b{font-weight:400;color:var(--text-secondary)}
+
+.aB-acc{margin-top:4px;border:1px solid var(--border-light);border-radius:var(--radius-xs);background:color-mix(in srgb, var(--surface-elevated) 82%, transparent);overflow:hidden}
+.aB-acch{display:flex;align-items:center;gap:6px;padding:4px 8px;cursor:pointer;min-width:0;user-select:none;transition:background var(--motion-fast) var(--ease-out)}
+.aB-acch:hover{background:var(--accent-soft)}
+.aB-acch .pm-ico{transition:transform var(--motion-med) var(--ease-spring);flex:none;color:var(--text-muted)}
+.aB-acc.open .aB-acch .pm-ico{transform:rotate(90deg)}
+.aB-accl{font-family:var(--display-font);font-size:8px;font-weight:700;letter-spacing:1.8px;color:var(--fc,var(--text-muted));white-space:nowrap}
+.aB-accc{margin-left:auto;font-family:var(--mono-font);font-size:8.5px;color:var(--text-muted);white-space:nowrap;overflow:hidden;text-overflow:ellipsis;min-width:0}
+.aB-accb{min-width:0}
+.aB-pl{display:flex;align-items:baseline;justify-content:space-between;gap:var(--md);padding:2.5px 8px;font-size:10px;min-width:0}
+.aB-pl:first-child{padding-top:5px}
+.aB-pl:last-child{padding-bottom:7px}
+.aB-pk{flex:none;font-size:8px;font-weight:700;letter-spacing:1.2px;text-transform:uppercase;color:var(--text-muted)}
+.aB-pv{font-family:var(--mono-font);font-size:9.5px;color:var(--text-secondary);text-align:right;min-width:0;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.aB-pv.ok{color:var(--graph-passed)}
+
+.aB-inc{margin-top:var(--lg);border:1px solid color-mix(in srgb, var(--graph-failed) 32%, var(--border-light));border-left:3px solid var(--graph-failed);border-radius:var(--radius-md);background:var(--surface-elevated);box-shadow:var(--elev-1);overflow:hidden;transition:box-shadow var(--motion-med) var(--ease-out)}
+.aB-inc:hover{box-shadow:var(--elev-2)}
+.aB-inc-h{display:flex;align-items:center;gap:var(--md);padding:var(--md) var(--md) var(--sm);min-width:0}
+.aB-inc-ico{width:22px;height:22px;flex:none;border-radius:var(--radius-xs);display:flex;align-items:center;justify-content:center;background:color-mix(in srgb, var(--graph-failed) 14%, transparent);color:var(--graph-failed)}
+.aB-inc-t{flex:1 1 auto;min-width:0;font-family:var(--display-font);font-size:9.5px;font-weight:700;letter-spacing:1.4px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.aB-inc-id{font-family:var(--mono-font);font-size:8.5px;color:var(--text-muted);white-space:nowrap}
+.aB-inc-sub{display:flex;align-items:center;gap:var(--sm);padding:0 var(--md) var(--sm);min-width:0}
+.aB-inc-name{flex:1 1 auto;min-width:0;font-family:var(--mono-font);font-size:9.5px;color:var(--text-secondary);white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.aB-inc-chips{display:flex;gap:var(--sm);flex:none}
+.aB-rrow{display:flex;align-items:center;gap:var(--md);padding:5px var(--md);min-width:0;cursor:pointer;border-top:1px solid color-mix(in srgb, var(--border-light) 60%, transparent);transition:background var(--motion-fast) var(--ease-out),transform var(--motion-fast) var(--ease-out),box-shadow var(--motion-fast) var(--ease-out)}
+.aB-rrow:hover{background:var(--accent-soft);transform:translateX(2px);box-shadow:inset 2px 0 0 var(--accent-primary)}
+.aB-rname{flex:1 1 auto;min-width:0;font-size:10.5px;font-weight:600;color:var(--text-primary);white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.aB-rpath{font-family:var(--mono-font);font-size:8.5px;color:var(--text-muted);white-space:nowrap;overflow:hidden;text-overflow:ellipsis;min-width:0;max-width:44%}
+.aB-rrow .pm-chip{font-size:8px;padding:1px 6px}
+.aB-inc-f{display:flex;align-items:center;gap:var(--sm);padding:var(--sm) var(--md) var(--md);min-width:0}
+.aB-inc-f .pm-btn{flex:1 1 auto;min-width:0;font-size:10px;min-height:26px;padding:4px 8px}
+.aB-foot{margin-top:var(--md)}
+
+.side-panel-slot[data-wtier="min"] .aB-row{grid-template-columns:38px 3px minmax(0,1fr)}
+.side-panel-slot[data-wtier="min"] .aB-ts{font-size:8.5px}
+.side-panel-slot[data-wtier="min"] .aB-rpath{display:none}
+.side-panel-slot[data-wtier="min"] .aB-inc-f{flex-wrap:wrap}
+.side-panel-slot[data-wtier="wide"] .aB-accb .pm-acc-inner{display:grid;grid-template-columns:1fr 1fr;column-gap:var(--lg);align-content:start}
+</style>
+</head>
+<body>
+<div id="app"></div>
+<template id="rail-panels">
+  <div class="side-panel-view" id="panel-artifacts">
+    <div class="aB-head"><span class="aB-hico"><i data-ico="clock" class="pm-ico"></i></span><span class="aB-title">RUNTIME ARTIFACTS</span><span class="aB-stat">14 events</span></div>
+    <div class="pm-chiprow aB-chips">
+      <button class="pm-chipbtn active" data-demo-action="cmd.artifacts.filter" data-demo-arg="cmd.artifacts.filter -> all (14 events)">All</button>
+      <button class="pm-chipbtn" data-demo-action="cmd.artifacts.filter" data-demo-arg="cmd.artifacts.filter -> diffs (2)">Diffs</button>
+      <button class="pm-chipbtn" data-demo-action="cmd.artifacts.filter" data-demo-arg="cmd.artifacts.filter -> tests (4)">Tests</button>
+      <button class="pm-chipbtn" data-demo-action="cmd.artifacts.filter" data-demo-arg="cmd.artifacts.filter -> shots (2)">Shots</button>
+      <button class="pm-chipbtn" data-demo-action="cmd.artifacts.filter" data-demo-arg="cmd.artifacts.filter -> web (3)">Web</button>
+      <button class="pm-chipbtn" data-demo-action="cmd.artifacts.filter" data-demo-arg="cmd.artifacts.filter -> recs (3)">Recs</button>
+    </div>
+    <div class="aB-scroll rail-scroll">
+      <div class="aB-famkey">
+        <span class="aB-fk aB-fam-diff"><i></i>diff</span>
+        <span class="aB-fk aB-fam-test"><i></i>test</span>
+        <span class="aB-fk aB-fam-shot"><i></i>shot</span>
+        <span class="aB-fk aB-fam-web"><i></i>web</span>
+        <span class="aB-fk aB-fam-rec"><i></i>rec</span>
+      </div>
+
+      <div class="aB-day"><span class="aB-day-l">TODAY</span><span class="aB-day-r">14 events · 5 families · 3 provenance</span></div>
+
+      <div class="aB-row aB-fam-test">
+        <span class="aB-ts">14:32:08</span><span class="aB-stripe"></span>
+        <div class="aB-body">
+          <div class="aB-top"><span class="aB-lab">validation_test: mixed_fraction_does_not_explode</span><span class="dot dot-run"></span><span class="pm-chip pm-chip-warn">running</span></div>
+          <div class="aB-meta">running cargo test -p puppet-core import::normalize_units (retry 2/2)</div>
+        </div>
+      </div>
+
+      <div class="aB-row aB-fam-shot">
+        <span class="aB-ts">14:31:51</span><span class="aB-stripe"></span>
+        <div class="aB-body">
+          <div class="aB-top"><span class="aB-lab">screenshot: steppers-restored-014.png</span><span class="pm-chip pm-chip-ok">captured</span></div>
+          <div class="aB-meta">web/src/lib/components/recipe/editor/QuantityStepper.svelte · 1440x900 · 212 KB</div>
+        </div>
+      </div>
+
+      <div class="aB-row aB-fam-diff">
+        <span class="aB-ts">14:30:12</span><span class="aB-stripe"></span>
+        <div class="aB-body">
+          <div class="aB-top"><span class="aB-lab">code_diff: refactor(import): split mixed-fraction normalization into a unit-aware parser with property-based tests</span><span class="pm-chip pm-chip-ok">+38 -9</span></div>
+          <div class="aB-meta">src/services/import/normalize_units/mixed_fractions.rs · HEAD vs index</div>
+          <div class="aB-acc" data-acc>
+            <div class="aB-acch" data-collapse tabindex="0" role="button" aria-expanded="false"><i data-ico="chevR" class="pm-ico sm"></i><span class="aB-accl">PROVENANCE</span><span class="aB-accc">agent_judgment · scope * · approved</span></div>
+            <div class="aB-accb">
+              <div class="aB-pl"><span class="aB-pk">agent_judgment</span><span class="aB-pv ok">verified_fix</span></div>
+              <div class="aB-pl"><span class="aB-pk">scope</span><span class="aB-pv">*</span></div>
+              <div class="aB-pl"><span class="aB-pk">approved</span><span class="aB-pv ok">yes · Jared 14:29</span></div>
+              <div class="aB-pl"><span class="aB-pk">sources</span><span class="aB-pv">2 refs · diff sha 9f2c4b8a1e77</span></div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="aB-row aB-fam-web">
+        <span class="aB-ts">14:28:44</span><span class="aB-stripe"></span>
+        <div class="aB-body">
+          <div class="aB-top"><span class="aB-lab">api_web_call: seriouseats.com/the-food-lab/why-fractions-break-our-parser</span><span class="pm-chip">200 · 1.8s</span></div>
+          <div class="aB-meta">thread/import-worker-mixed-fraction-fix · 41 KB payload</div>
+          <div class="aB-acc" data-acc>
+            <div class="aB-acch" data-collapse tabindex="0" role="button" aria-expanded="false"><i data-ico="chevR" class="pm-ico sm"></i><span class="aB-accl">PROVENANCE</span><span class="aB-accc">agent_judgment · scope web · 2 sources</span></div>
+            <div class="aB-accb">
+              <div class="aB-pl"><span class="aB-pk">agent_judgment</span><span class="aB-pv">useful_context</span></div>
+              <div class="aB-pl"><span class="aB-pk">scope</span><span class="aB-pv">web_search</span></div>
+              <div class="aB-pl"><span class="aB-pk">approved</span><span class="aB-pv ok">auto · policy allow</span></div>
+              <div class="aB-pl"><span class="aB-pk">sources</span><span class="aB-pv">2 · seriouseats.com + unicode.org</span></div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="aB-row aB-fam-rec">
+        <span class="aB-ts">14:26:33</span><span class="aB-stripe"></span>
+        <div class="aB-body">
+          <div class="aB-top"><span class="aB-lab">browser_recording: editor-quantity-stepper-repro.webm</span><span class="pm-chip">11 acts</span></div>
+          <div class="aB-meta">web/src/routes/(app)/recipes/[id]/edit/+page.server.ts · 00:47</div>
+        </div>
+      </div>
+
+      <div class="aB-row aB-fam-test">
+        <span class="aB-ts">14:24:17</span><span class="aB-stripe"></span>
+        <div class="aB-body">
+          <div class="aB-top"><span class="aB-lab">validation_test: cargo test -p puppet-core</span><span class="pm-chip pm-chip-err">failed</span></div>
+          <div class="aB-meta">thread 'import::normalize_units::tests::mixed_fraction_does_not_explode' panicked at src/services/import.rs:58:9</div>
+        </div>
+      </div>
+
+      <div class="aB-row aB-fam-test">
+        <span class="aB-ts">14:22:05</span><span class="aB-stripe"></span>
+        <div class="aB-body">
+          <div class="aB-top"><span class="aB-lab">validation_test: mixed_fraction_does_not_explode</span><span class="pm-chip pm-chip-err">failed</span></div>
+          <div class="aB-meta">assertion `left == right` failed: qty.value == 1.5 (got 11.5 from "1 1/2 cup")</div>
+        </div>
+      </div>
+
+      <div class="aB-row aB-fam-shot">
+        <span class="aB-ts">14:19:58</span><span class="aB-stripe"></span>
+        <div class="aB-body">
+          <div class="aB-top"><span class="aB-lab">screenshot: quantity-11_5-overflow-013.png</span><span class="pm-chip pm-chip-err">repro</span></div>
+          <div class="aB-meta">web/src/lib/components/recipe/editor/QuantityStepper.svelte · 1440x900 · 198 KB</div>
+        </div>
+      </div>
+
+      <div class="aB-row aB-fam-web">
+        <span class="aB-ts">14:17:40</span><span class="aB-stripe"></span>
+        <div class="aB-body">
+          <div class="aB-top"><span class="aB-lab">api_web_call: schema.org Recipe structured-data markup coverage 2026</span><span class="pm-chip">200 · 2.2s</span></div>
+          <div class="aB-meta">query: "schema.org Recipe structured-data markup coverage 2026" · 12 KB</div>
+        </div>
+      </div>
+
+      <div class="aB-row aB-fam-rec">
+        <span class="aB-ts">14:14:26</span><span class="aB-stripe"></span>
+        <div class="aB-body">
+          <div class="aB-top"><span class="aB-lab">browser_recording: import-wizard-batch-flow.webm</span><span class="pm-chip">23 acts</span></div>
+          <div class="aB-meta">tastebook-import-worker-batch · 02:11 · 6.4 MB</div>
+        </div>
+      </div>
+
+      <div class="aB-row aB-fam-diff">
+        <span class="aB-ts">14:11:09</span><span class="aB-stripe"></span>
+        <div class="aB-body">
+          <div class="aB-top"><span class="aB-lab">code_diff: feat(artifacts): add projection_freshness x projection_health matrix to runtime receipt rows</span><span class="pm-chip pm-chip-ok">+212 -44</span></div>
+          <div class="aB-meta">crates/puppet-core/src/artifacts/projection_freshness.rs · vs main</div>
+          <div class="aB-acc" data-acc>
+            <div class="aB-acch" data-collapse tabindex="0" role="button" aria-expanded="false"><i data-ico="chevR" class="pm-ico sm"></i><span class="aB-accl">PROVENANCE</span><span class="aB-accc">agent_judgment · scope * · pending</span></div>
+            <div class="aB-accb">
+              <div class="aB-pl"><span class="aB-pk">agent_judgment</span><span class="aB-pv">candidate_fix</span></div>
+              <div class="aB-pl"><span class="aB-pk">scope</span><span class="aB-pv">*</span></div>
+              <div class="aB-pl"><span class="aB-pk">approved</span><span class="aB-pv">pending review · run #47</span></div>
+              <div class="aB-pl"><span class="aB-pk">sources</span><span class="aB-pv">1 · projection_freshness.rs</span></div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="aB-row aB-fam-test">
+        <span class="aB-ts">14:08:52</span><span class="aB-stripe"></span>
+        <div class="aB-body">
+          <div class="aB-top"><span class="aB-lab">validation_test: baseline import suite</span><span class="pm-chip pm-chip-ok">passed 41/41</span></div>
+          <div class="aB-meta">cargo test -p puppet-core import · 0.94s · baseline for inv-import-7x</div>
+        </div>
+      </div>
+
+      <div class="aB-row aB-fam-web">
+        <span class="aB-ts">14:05:37</span><span class="aB-stripe"></span>
+        <div class="aB-body">
+          <div class="aB-top"><span class="aB-lab">api_web_call: ghcr.io manifest-list digest check</span><span class="pm-chip">200 · 0.9s</span></div>
+          <div class="aB-meta">ghcr.io/jared/tastebook-web:edge-2026.07.24@sha256:77be41</div>
+        </div>
+      </div>
+
+      <div class="aB-row aB-fam-rec">
+        <span class="aB-ts">14:02:14</span><span class="aB-stripe"></span>
+        <div class="aB-body">
+          <div class="aB-top"><span class="aB-lab">browser_recording: edit-page-baseline-walkthrough.webm</span><span class="pm-chip">7 acts</span></div>
+          <div class="aB-meta">web/src/routes/(app)/recipes/[id]/edit/+page.server.ts · 01:03</div>
+        </div>
+      </div>
+
+      <div class="aB-day"><span class="aB-day-l">YESTERDAY</span><span class="aB-day-r">2 events</span></div>
+
+      <div class="aB-row aB-fam-diff">
+        <span class="aB-ts">18:47:22</span><span class="aB-stripe"></span>
+        <div class="aB-body">
+          <div class="aB-top"><span class="aB-lab">code_diff: chore(ci): pin buildx and enable multi-arch manifest-list digests for amd64 and arm64</span><span class="pm-chip pm-chip-ok">+16 -3</span></div>
+          <div class="aB-meta">.github/workflows/ci-build-test-and-publish.yml · merged 9d41f7c</div>
+        </div>
+      </div>
+
+      <div class="aB-row aB-fam-shot">
+        <span class="aB-ts">18:31:07</span><span class="aB-stripe"></span>
+        <div class="aB-body">
+          <div class="aB-top"><span class="aB-lab">screenshot: unraid-template-ports-009.png</span><span class="pm-chip pm-chip-ok">captured</span></div>
+          <div class="aB-meta">ops/unraid/templates/tastebook-api-1.4.xml · 1280x800 · 164 KB</div>
+        </div>
+      </div>
+
+      <div class="aB-inc">
+        <div class="aB-inc-h">
+          <span class="aB-inc-ico"><i data-ico="flame" class="pm-ico sm"></i></span>
+          <span class="aB-inc-t">INCIDENT</span>
+          <span class="aB-inc-id">inv-import-7x</span>
+        </div>
+        <div class="aB-inc-sub">
+          <span class="aB-inc-name">thread/import-worker-mixed-fraction-fix</span>
+          <span class="aB-inc-chips"><span class="pm-chip pm-chip-err">open</span><span class="pm-chip">5 arts</span></span>
+        </div>
+        <div class="aB-rrow" data-demo-action="cmd.artifacts.open_role" data-demo-arg="cmd.artifacts.open_role -> inv-import-7x / baseline">
+          <span class="dot dot-ok"></span><span class="aB-rname">baseline</span><span class="aB-rpath">validation_test · passed 41/41 · 0.94s</span>
+        </div>
+        <div class="aB-rrow" data-demo-action="cmd.artifacts.open_role" data-demo-arg="cmd.artifacts.open_role -> inv-import-7x / repro">
+          <span class="dot dot-err"></span><span class="aB-rname">repro</span><span class="aB-rpath">browser_recording · editor-quantity-stepper-repro.webm</span>
+        </div>
+        <div class="aB-rrow" data-demo-action="cmd.artifacts.open_role" data-demo-arg="cmd.artifacts.open_role -> inv-import-7x / diagnosis">
+          <span class="dot dot-warn"></span><span class="aB-rname">diagnosis</span><span class="aB-rpath">thread 'import::normalize_units::tests::mixed_fraction_does_not_explode' panicked at src/services/import.rs:58:9</span>
+        </div>
+        <div class="aB-rrow" data-demo-action="cmd.artifacts.open_role" data-demo-arg="cmd.artifacts.open_role -> inv-import-7x / fix">
+          <span class="dot dot-run"></span><span class="aB-rname">fix</span><span class="aB-rpath">code_diff · mixed_fractions.rs · +38 -9</span>
+        </div>
+        <div class="aB-rrow" data-demo-action="cmd.artifacts.open_role" data-demo-arg="cmd.artifacts.open_role -> inv-import-7x / verify">
+          <span class="dot dot-run"></span><span class="aB-rname">verify</span><span class="aB-rpath">validation_test · retry 2/2 · 00:41 elapsed</span>
+        </div>
+        <div class="aB-rrow" aria-disabled="true" data-demo-reason="cleanup unlocks when verify passes" data-demo-action="demo.reason" data-demo-arg="cleanup is blocked: verify still running (retry 2/2) - unlocks on green">
+          <span class="dot dot-idle"></span><span class="aB-rname">cleanup</span><span class="aB-rpath">pending verify</span>
+        </div>
+        <div class="aB-inc-f">
+          <button type="button" class="pm-btn pm-btn-primary" data-demo-action="page.go" data-demo-arg="Opening Orchestrator -> inv-import-7x">Open in Orchestrator</button>
+          <button type="button" class="pm-btn" data-demo-action="cmd.artifacts.bundle_download" data-demo-arg="cmd.artifacts.bundle_download -> inv-import-7x.zip (5 artifacts)">Bundle</button>
+        </div>
+      </div>
+
+      <div class="pm-footnote aB-foot">Audit trail is append-only — retention 90d · export via Bundle.</div>
+    </div>
+  </div>
+  <div class="side-panel-view" id="panel-search"><div style="display:flex;flex:1;align-items:center;justify-content:center;padding:24px;text-align:center;color:var(--text-muted);font-size:11px;line-height:1.5">This bonus variant explores an alternate design for search. The full six-concept rail set lives in c1..c6-*.html.</div></div>
+  <div class="side-panel-view" id="panel-source"><div style="display:flex;flex:1;align-items:center;justify-content:center;padding:24px;text-align:center;color:var(--text-muted);font-size:11px;line-height:1.5">This bonus variant explores an alternate design for source. The full six-concept rail set lives in c1..c6-*.html.</div></div>
+  <div class="side-panel-view" id="panel-git"><div style="display:flex;flex:1;align-items:center;justify-content:center;padding:24px;text-align:center;color:var(--text-muted);font-size:11px;line-height:1.5">This bonus variant explores an alternate design for git. The full six-concept rail set lives in c1..c6-*.html.</div></div>
+  <div class="side-panel-view" id="panel-docker"><div style="display:flex;flex:1;align-items:center;justify-content:center;padding:24px;text-align:center;color:var(--text-muted);font-size:11px;line-height:1.5">This bonus variant explores an alternate design for docker. The full six-concept rail set lives in c1..c6-*.html.</div></div>
+  <div class="side-panel-view" id="panel-testing"><div style="display:flex;flex:1;align-items:center;justify-content:center;padding:24px;text-align:center;color:var(--text-muted);font-size:11px;line-height:1.5">This bonus variant explores an alternate design for testing. The full six-concept rail set lives in c1..c6-*.html.</div></div>
+  <div class="side-panel-view" id="panel-agents"><div style="display:flex;flex:1;align-items:center;justify-content:center;padding:24px;text-align:center;color:var(--text-muted);font-size:11px;line-height:1.5">This bonus variant explores an alternate design for agents. The full six-concept rail set lives in c1..c6-*.html.</div></div>
+</template>
+<script src="_shared/icons.js"></script>
+<script src="_shared/menu.js"></script>
+<script src="_shared/chrome.js"></script>
+<script>PMChrome.boot({ badge: { id: 'A2', name: 'Audit Log' } }); PMRail.showPanel('panel-artifacts');</script>
+</body>
+</html>

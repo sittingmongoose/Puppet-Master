@@ -1,0 +1,80 @@
+<!DOCTYPE html><html><body><pre id="out">running…</pre>
+<script>
+(async () => {
+  const base = 'http://127.0.0.1:8943';
+  const shells = ['01-stacked-rail','02-segment-strip','03-inspector-sheet','04-command-toolbar','05-icon-spine','06-focus-ladder'];
+  const labs = ['search','source','actions','docker','tests','agents','artifacts'];
+  const issues = [];
+  async function load(url) {
+    const iframe = document.createElement('iframe');
+    iframe.style.cssText='position:fixed;left:-9999px;width:1200px;height:900px';
+    document.body.appendChild(iframe);
+    await new Promise((res, rej) => {
+      iframe.onload = () => setTimeout(res, 250);
+      iframe.onerror = rej;
+      iframe.src = url;
+    });
+    return iframe;
+  }
+  for (const s of shells) {
+    const iframe = await load(base + '/shells/' + s + '.html?audit=1');
+    const w = iframe.contentWindow;
+    const d = iframe.contentDocument;
+    try {
+      if (!w.SPProto || !w.SPPanels) { issues.push(s+': scripts missing'); continue; }
+      if (d.querySelectorAll('select').length) issues.push(s+': has select');
+      if (d.querySelectorAll('.sp-panel').length !== 7) issues.push(s+': panel count '+d.querySelectorAll('.sp-panel').length);
+      const panels = ['search','source','actions','docker','tests','agents','artifacts'];
+      for (const id of panels) {
+        d.querySelector('.ab-btn[data-panel="'+id+'"]').click();
+        const p = d.querySelector('.sp-panel.active');
+        if (!p || p.getAttribute('data-panel') !== id) issues.push(s+': cannot activate '+id);
+        w.SPProto.setWidth(220);
+        const slot = d.getElementById('sideSlot').getBoundingClientRect();
+        let bad=0;
+        p.querySelectorAll('.sp-row,.sp-head,.sp-footer,.sp-rail').forEach(el => {
+          if (el.getBoundingClientRect().right > slot.right + 2) bad++;
+        });
+        if (bad) issues.push(s+': overflow '+id+'@220='+bad);
+      }
+      // sprout smoke on search
+      d.querySelector('.ab-btn[data-panel="search"]').click();
+      const trig = d.querySelector('.sp-panel.active .sp-sprout-trigger');
+      if (!trig) issues.push(s+': search no sprout');
+      else {
+        trig.click();
+        if (!d.querySelector('.sp-sprout-menu.open') && !document.querySelector('.sp-sprout-menu.open') && !w.document.querySelector('.sp-sprout-menu.open')) {
+          // menus portaled to iframe body
+          if (!w.document.body.querySelector('.sp-sprout-menu.open')) issues.push(s+': sprout open fail');
+        }
+        w.document.body.click();
+      }
+    } catch (e) {
+      issues.push(s+': exception '+e.message);
+    }
+    iframe.remove();
+  }
+  for (const lab of labs) {
+    const iframe = await load(base + '/labs/' + lab + '.html?audit=1');
+    const w = iframe.contentWindow;
+    const d = iframe.contentDocument;
+    try {
+      if (!w.SPProto) { issues.push('lab '+lab+': scripts missing'); continue; }
+      if (d.querySelectorAll('select').length) issues.push('lab '+lab+': select');
+      const variants = d.querySelectorAll('[data-variant]');
+      if (variants.length !== 6) issues.push('lab '+lab+': variant chips '+variants.length);
+      for (let i=0;i<variants.length;i++) {
+        variants[i].click();
+        await new Promise(r=>setTimeout(r,50));
+        const p = d.querySelector('#labPanel .sp-panel.active');
+        if (!p) issues.push('lab '+lab+' v'+i+': no panel');
+        else if (p.getAttribute('data-panel') !== lab) issues.push('lab '+lab+' v'+i+': wrong panel '+p.getAttribute('data-panel'));
+      }
+    } catch (e) {
+      issues.push('lab '+lab+': '+e.message);
+    }
+    iframe.remove();
+  }
+  document.getElementById('out').textContent = JSON.stringify({ok: issues.length===0, issues}, null, 2);
+})();
+</script></body></html>

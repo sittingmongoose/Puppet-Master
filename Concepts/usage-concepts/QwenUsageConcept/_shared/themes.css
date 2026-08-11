@@ -1,0 +1,730 @@
+/* ============================================================================
+   rail-concepts/_shared/themes.css
+   PM6 token contract + all 8 theme tables, extracted VERBATIM from
+   Concepts/PMConcept7.html (SECTION 2 core-css, lines 156-663) so every
+   concept page renders with the exact production token values.
+   Source-lineage only — canonical spec is Plans/FinalGUISpec.md Theme System
+   Addendum (F3-425/F3-426).
+   ============================================================================ */
+
+:root {
+  --xs: 2px;
+  --sm: 4px;
+  --md: 8px;
+  --lg: 12px;
+  --xl: 16px;
+  --border-width: 2px;
+  --border-radius: 0px;
+  --display-font: 'Sora', 'Inter', system-ui, sans-serif;
+  --body-font: 'Outfit', 'Inter', system-ui, sans-serif;
+  --base-font-size: 14px;
+  --line-height: 1.4;
+  --letter-spacing: normal;
+  --grid-gap: 24px;
+  /* -- new PM6 tokens (verbatim contract block) -- */
+  --radius-xs:2px; --radius-sm:6px; --radius-md:10px; --radius-lg:16px; --radius-xl:22px; --radius-pill:999px;
+  --accent-primary:var(--accent-blue); --accent-primary-rgb:0,71,171;
+  --accent-soft:color-mix(in srgb, var(--accent-primary) 12%, transparent);
+  --accent-glow:color-mix(in srgb, var(--accent-primary) 25%, transparent);
+  --elev-1:0 1px 2px rgba(0,0,0,.12); --elev-2:0 4px 14px rgba(0,0,0,.16);
+  --elev-3:0 12px 36px rgba(0,0,0,.22); --elev-hover:0 10px 30px var(--accent-glow);
+  --motion-fast:120ms; --motion-med:240ms; --motion-slow:420ms;
+  /* --pm-motion-k: per-theme motion-intensity multiplier (= --motion-med / 240ms, P12).
+     Scales the semantic --mo-* tokens defined in usage-shared.css; instant/data tiers stay fixed. */
+  --pm-motion-k:1;
+  --ease-out:cubic-bezier(.22,1,.36,1); --ease-spring:cubic-bezier(.34,1.56,.64,1);
+  --ease-smooth:cubic-bezier(.4,0,.2,1); --ease-snap:cubic-bezier(.2,0,0,1);
+  --ease-default:var(--ease-smooth); --sheen-dur:.6s;
+  --fs-2xs:10px; --fs-xs:11px; --fs-sm:12px; --fs-md:14px; --fs-lg:16px; --fs-xl:20px; --fs-2xl:26px; --fs-3xl:32px;
+  /* -- type voice + scale (TYP-1): one deliberate voice per theme family, a
+     numeric voice with real tabular figures for hero numbers, and a confident
+     display scale (hero > display > h1 > h2 > h3 > body > small > micro).
+     Existing --fs-2xs..--fs-3xl untouched; these are additive. -- */
+  --num-font: 'Inter', system-ui, sans-serif;
+  --num-features: 'tnum' 1;
+  --fs-hero: 48px; --fs-display: 34px; --fs-h1: 27px; --fs-h2: 22px; --fs-h3: 18px;
+  --fs-body: var(--base-font-size); --fs-small: var(--fs-sm); --fs-micro: var(--fs-2xs);
+  --lh-hero: .95; --lh-display: 1.05;
+  --ls-hero: -0.02em; --ls-caps: .12em;
+  --fw-hero: 800; --fw-strong: 700; --fw-em: 600; --fw-quiet: 500;
+  --lh-tight:1.2; --lh-body:1.55; --2xl:24px; --3xl:32px; --density:1;
+  --activity-bar-w:72px; --files-panel-w:260px; --chat-panel-w:550px; --chat-sidebar-w:200px;
+  --tile-size:220px; --floating-chat-w:550px;
+  --glass-alpha:.55; --glass-tint-rgb:46,34,72; --panel-blur:16px; --panel-blur-sm:10px;
+  --glass-edge:rgba(255,255,255,.35); --glass-hairline:rgba(255,255,255,.08);
+  /* -- baseline-undefined var fix (six names referenced by legacy CSS/JS) -- */
+  --mono-font: 'JetBrains Mono', ui-monospace, 'SF Mono', 'Cascadia Mono', Menlo, Consolas, monospace;
+  --font-mono: var(--mono-font);
+  --bg: var(--background);
+  --accent-red: var(--accent-error);
+  --accent-blue-rgb: var(--accent-primary-rgb);
+  --glass-glow-color: var(--accent-glow);
+}
+
+/* scrollbar hooks (opt-in panes only — see .rail-scroll in base.css) */
+:root {
+  --pm6-sb-thumb: color-mix(in srgb, var(--text-primary) 16%, transparent);
+  --pm6-sb-thumb-hover: color-mix(in srgb, var(--text-primary) 30%, transparent);
+  --pm6-sb-radius: 8px;
+}
+* { scrollbar-width: none; }
+*::-webkit-scrollbar { width: 0; height: 0; }
+*::-webkit-scrollbar-button { display: none; height: 0; width: 0; }
+*::-webkit-scrollbar-corner { background: transparent; }
+*::-webkit-scrollbar-track { background: transparent; }
+*::-webkit-scrollbar-thumb {
+  background: var(--pm6-sb-thumb);
+  border: 3px solid transparent; background-clip: padding-box;
+  border-radius: var(--pm6-sb-radius);
+}
+*::-webkit-scrollbar-thumb:hover { background: var(--pm6-sb-thumb-hover); }
+
+/* ============================================================================
+   THEME 1 - RETRO DARK (square corners, hard offsets, snap motion)
+   ============================================================================ */
+[data-theme="retro-dark"] {
+  --background: #1A1A1A;
+  --surface: #1A1A1A;
+  --surface-elevated: #252525;
+  --text-primary: #E0E0E0;
+  --text-secondary: #A6A6A6;
+  --text-muted: #909090;
+  --border: #A8ACB3;
+  --border-light: #3A3D42;
+  --accent-blue: #0047AB;
+  --accent-magenta: #FF1493;
+  --accent-lime: #00FF41;
+  --accent-orange: #FF7F27;
+  --accent-warning: #FFB300;
+  --accent-error: #FF5252;
+  --accent-primary: var(--accent-lime);
+  --accent-primary-rgb: 0,255,65;
+  --graph-pending: #6C757D;
+  --graph-running: #FF9800;
+  --graph-passed: #4CAF50;
+  --graph-failed: #F44336;
+  --graph-planning: #2196F3;
+  --graph-gating: #9C27B0;
+  --shadow: 3px 3px 0 rgba(224,224,224,.55);
+  --pm6-rb-shadow-hard: 3px 3px 0 rgba(224,224,224,.55);
+  --elev-1: 2px 2px 0 rgba(224,224,224,.40);
+  --elev-2: 3px 3px 0 rgba(224,224,224,.55);
+  --elev-3: 5px 5px 0 rgba(224,224,224,.55);
+  --elev-hover: 4px 4px 0 var(--accent-glow);
+  /* retro voice: a genuine terminal — JetBrains Mono display (real 800,
+     inherently tabular digits) over the condensed-industrial Rajdhani body.
+     Replaces Orbitron (sci-fi cliché, no weight past 700). */
+  --display-font: 'JetBrains Mono', ui-monospace, 'SF Mono', Menlo, monospace;
+  --display-font-sm: 'Rajdhani', system-ui, sans-serif;
+  --body-font: 'Rajdhani', system-ui, sans-serif;
+  --num-font: 'JetBrains Mono', ui-monospace, Menlo, monospace;
+  --fs-hero: 40px; --ls-hero: -0.01em; /* mono glyphs run wide — trim the hero */
+  --base-font-size: 15px;
+  --line-height: 1.55;
+  --border-radius: 0px;
+  --border-width: 2px;
+  --border-width-inner: 1px;
+  --radius-xs: 2px;
+  --radius-sm: 0px;
+  --radius-md: 0px;
+  --radius-lg: 0px;
+  --radius-xl: 0px;
+  --radius-pill: 2px;
+  --grid-gap: 24px;
+  --ease-default: var(--ease-snap);
+  --motion-med: 140ms;
+  --pm-motion-k: .58;
+  --sheen-dur: .35s;
+}
+
+/* ============================================================================
+   THEME 2 - RETRO LIGHT
+   ============================================================================ */
+[data-theme="retro-light"] {
+  --background: #F5F0E8;
+  --surface: #F5F0E8;
+  --surface-elevated: #FAF7F2;
+  --text-primary: #1A1A1A;
+  --text-secondary: #444444;
+  --text-muted: #524F49;
+  --border: #4A463F;
+  --border-light: #D8D1C7;
+  --accent-blue: #0047AB;
+  --accent-magenta: #FF1493;
+  --accent-lime: #00FF41;
+  --accent-orange: #FF7F27;
+  --accent-warning: #F57C00;
+  --accent-error: #D32F2F;
+  --accent-primary: var(--accent-blue);
+  --accent-primary-rgb: 0,71,171;
+  --graph-pending: #ADB5BD;
+  --graph-running: #FFB74D;
+  --graph-passed: #66BB6A;
+  --graph-failed: #EF5350;
+  --graph-planning: #42A5F5;
+  --graph-gating: #AB47BC;
+  --shadow: 3px 3px 0 rgba(26,26,26,.30);
+  --pm6-rb-shadow-hard: 3px 3px 0 rgba(26,26,26,.30);
+  --elev-1: 2px 2px 0 rgba(26,26,26,.22);
+  --elev-2: 3px 3px 0 rgba(26,26,26,.30);
+  --elev-3: 5px 5px 0 rgba(26,26,26,.30);
+  --elev-hover: 4px 4px 0 var(--accent-glow);
+  /* retro voice: a genuine terminal — JetBrains Mono display (real 800,
+     inherently tabular digits) over the condensed-industrial Rajdhani body.
+     Replaces Orbitron (sci-fi cliché, no weight past 700). */
+  --display-font: 'JetBrains Mono', ui-monospace, 'SF Mono', Menlo, monospace;
+  --display-font-sm: 'Rajdhani', system-ui, sans-serif;
+  --body-font: 'Rajdhani', system-ui, sans-serif;
+  --num-font: 'JetBrains Mono', ui-monospace, Menlo, monospace;
+  --fs-hero: 40px; --ls-hero: -0.01em; /* mono glyphs run wide — trim the hero */
+  --base-font-size: 15px;
+  --line-height: 1.55;
+  --border-radius: 0px;
+  --border-width: 2px;
+  --border-width-inner: 1px;
+  --radius-xs: 2px;
+  --radius-sm: 0px;
+  --radius-md: 0px;
+  --radius-lg: 0px;
+  --radius-xl: 0px;
+  --radius-pill: 2px;
+  --grid-gap: 24px;
+  --ease-default: var(--ease-snap);
+  --motion-med: 140ms;
+  --pm-motion-k: .58;
+  --sheen-dur: .35s;
+}
+
+/* ============================================================================
+   THEME 3 - BASIC LIGHT (calm, flat, smooth motion)
+   ============================================================================ */
+[data-theme="basic-light"] {
+  --background: #EAECEF;
+  --surface: #EAECEF;
+  --surface-elevated: #FFFFFF;
+  --text-primary: #1A1A1A;
+  --text-secondary: #3B3B3B;
+  --text-muted: #5C6470;
+  --border: #C4C4C4;
+  --border-light: #E0E0E0;
+  --accent-blue: #0056B3;
+  --accent-magenta: #D32F2F;
+  --accent-lime: #0B8043;
+  --accent-orange: #E65100;
+  --accent-warning: #E65100;
+  --accent-error: #C62828;
+  --accent-primary-rgb: 0,86,179;
+  --graph-pending: #ADB5BD;
+  --graph-running: #FF9800;
+  --graph-passed: #4CAF50;
+  --graph-failed: #F44336;
+  --graph-planning: #2196F3;
+  --graph-gating: #9C27B0;
+  --shadow: none;
+  --elev-1: 0 1px 2px rgba(0,0,0,.08);
+  --elev-2: 0 2px 8px rgba(0,0,0,.10);
+  --elev-3: 0 6px 20px rgba(0,0,0,.14);
+  --elev-hover: 0 6px 18px var(--accent-glow);
+  --base-font-size: 15px;
+  --line-height: 1.6;
+  --letter-spacing: 0.02em;
+  /* basic voice: Inter kept DELIBERATELY as the crisp neutral grotesque —
+     the plain foil against which the other families read. Hero numbers ride
+     Inter 800 with true tabular figures instead of the OS font. */
+  --display-font: 'Inter', system-ui, sans-serif;
+  --body-font: 'Inter', system-ui, sans-serif;
+  --num-font: 'Inter', system-ui, sans-serif;
+  --fs-hero: 44px;
+  --border-radius: 4px;
+  --border-width: 1px;
+  --radius-xs: 2px;
+  --radius-sm: 4px;
+  --radius-md: 6px;
+  --radius-lg: 8px;
+  --radius-xl: 10px;
+  --grid-gap: 24px;
+  --ease-default: var(--ease-smooth);
+  --motion-med: 200ms;
+  --pm-motion-k: .83;
+}
+
+/* ============================================================================
+   THEME 4 - BASIC DARK
+   ============================================================================ */
+[data-theme="basic-dark"] {
+  --background: #121212;
+  --surface: #1E1E1E;
+  --surface-elevated: #2D2D2D;
+  --text-primary: #E8E8E8;
+  --text-secondary: #A0A0A0;
+  /* a11y (M1): raised from #6B7280 (2.85:1 on elevated) to clear 4.5:1 — still below --text-secondary */
+  --text-muted: #8F95A2;
+  --border: #424242;
+  --border-light: #333333;
+  --accent-blue: #64B5F6;
+  --accent-magenta: #FF69B4;
+  --accent-lime: #3DD68C;
+  --accent-orange: #FFA347;
+  --accent-warning: #FFB74D;
+  --accent-error: #EF5350;
+  --accent-primary-rgb: 100,181,246;
+  --graph-pending: #6C757D;
+  --graph-running: #FF9800;
+  --graph-passed: #4CAF50;
+  --graph-failed: #F44336;
+  --graph-planning: #2196F3;
+  --graph-gating: #9C27B0;
+  --shadow: none;
+  --elev-1: 0 1px 2px rgba(0,0,0,.20);
+  --elev-2: 0 2px 8px rgba(0,0,0,.24);
+  --elev-3: 0 6px 20px rgba(0,0,0,.30);
+  --elev-hover: 0 6px 18px var(--accent-glow);
+  --base-font-size: 15px;
+  --line-height: 1.6;
+  --letter-spacing: 0.02em;
+  /* basic voice: Inter kept DELIBERATELY as the crisp neutral grotesque —
+     the plain foil against which the other families read. Hero numbers ride
+     Inter 800 with true tabular figures instead of the OS font. */
+  --display-font: 'Inter', system-ui, sans-serif;
+  --body-font: 'Inter', system-ui, sans-serif;
+  --num-font: 'Inter', system-ui, sans-serif;
+  --fs-hero: 44px;
+  --border-radius: 4px;
+  --border-width: 1px;
+  --radius-xs: 2px;
+  --radius-sm: 4px;
+  --radius-md: 6px;
+  --radius-lg: 8px;
+  --radius-xl: 10px;
+  --grid-gap: 24px;
+  --ease-default: var(--ease-smooth);
+  --motion-med: 200ms;
+  --pm-motion-k: .83;
+}
+
+/* ============================================================================
+   THEMES 5 & 6 - GLASS DARK / GLASS LIGHT - "ONE PANE OF GLASS"
+   Every fill derives from --glass-alpha (transparency slider).
+   ============================================================================ */
+[data-theme="glass-dark"] {
+  --background: #241B36;
+  --glass-tint-rgb: 46,34,72;
+  --glass-alpha: .60;
+  --surface: rgba(var(--glass-tint-rgb), var(--glass-alpha));
+  --surface-elevated: rgba(58,44,88, calc(var(--glass-alpha) + .08));
+  --text-primary: #EDE7F8;
+  --text-secondary: #CFC5E6;
+  --text-muted: rgba(237,231,248,.64);
+  --border: rgba(255,255,255,.14);
+  --border-light: rgba(255,255,255,.08);
+  --accent-blue: #B79CFF;
+  --accent-magenta: #E58BC8;
+  --accent-lime: #8FD9A5;
+  --accent-orange: #F3B266;
+  --accent-warning: #F6C888;
+  --accent-error: #F0879B;
+  --accent-primary-rgb: 183,156,255;
+  --graph-pending: rgba(207,197,230,.55);
+  --graph-running: #F3B266;
+  --graph-passed: #8FD9A5;
+  --graph-failed: #F0879B;
+  --graph-planning: #93A2F2;
+  --graph-gating: #E58BC8;
+  --shadow: 0 8px 24px rgba(10,5,25,.45);
+  --elev-1: 0 2px 8px rgba(10,5,25,.35);
+  --elev-2: 0 8px 24px rgba(10,5,25,.45);
+  --elev-3: 0 16px 44px rgba(10,5,25,.55);
+  --glass-edge: rgba(255,255,255,.40);
+  --glass-hairline: rgba(255,255,255,.16);
+  /* glass voice: clean geometric — Sora display (sharp technical digits,
+     real 800) over an Outfit geometric body; no more Inter/system-ui. */
+  --display-font: 'Sora', 'Outfit', system-ui, sans-serif;
+  --body-font: 'Outfit', 'Inter', system-ui, sans-serif;
+  --num-font: 'Sora', 'Inter', system-ui, sans-serif;
+  --fs-hero: 52px; --ls-hero: -0.03em; /* glass is airy — let the hero breathe */
+  --border-radius: 14px;
+  --border-width: 0px;
+  --base-font-size: 14px;
+  --line-height: 1.5;
+  --letter-spacing: 0.01em;
+  --grid-gap: 24px;
+  --ease-default: var(--ease-out);
+  --motion-med: 320ms;
+  --pm-motion-k: 1.33;
+  --sheen-dur: .7s;
+  /* -- PMConcept7 glass material tokens (PMConcept7.html L1623-1645 verbatim).
+        The app shell is ONE glass slab (base.css); every interior surface rides
+        the slider-driven steps below — plain rgba, never its own blur. -- */
+  --pm6-glass-a-rgb: 183,156,255;
+  --pm6-glass-b-rgb: 229,139,200;
+  --pm6-glass-sat: 1.6;
+  --pm6-glass-floor: rgba(255,255,255,.10);
+  --pm6-glass-drop: 0 12px 30px rgba(10,5,25,.45);
+  --pm6-glass-pane-edge: rgba(255,255,255,.28);
+  --pm6-glass-pane-k1: .73;
+  --pm6-glass-pane-k2: .57;
+  --pm6-glass-pane-k3: .67;
+  --pm6-glass-pane-shadow: rgba(10,5,25,.60);
+  --pm6-glass-pane-shadow2: rgba(10,5,25,.40);
+  --pm6-glass-pane-sheen: rgba(255,255,255,.16);
+  --pm6-glass-pane-sheen2: rgba(255,255,255,.08);
+  --pm6-glass-inset: 5px;
+  --pm6-glass-step-1: rgba(255,255,255, calc(var(--glass-alpha) * .10));
+  --pm6-glass-step-2: rgba(255,255,255, calc(var(--glass-alpha) * .16));
+  --pm6-glass-step-3: rgba(255,255,255, calc(var(--glass-alpha) * .28));
+  --pm6-glass-plate: rgba(16,10,32, calc(.35 + var(--glass-alpha) * .78));
+  /* -- wallpaper: pre-baked look, zero runtime blur (PMConcept7.html minimal sky
+        L794-801, depth-mode puff colors L778-783, pre-saturated) -- */
+  --pm6-glass-sky:
+    radial-gradient(ellipse 50% 38% at 15% 10%, #6E4FA3 0%, transparent 68%),
+    radial-gradient(ellipse 46% 34% at 85% 8%,  #46387E 0%, transparent 70%),
+    radial-gradient(ellipse 62% 44% at 50% 102%,#B25E8E 0%, transparent 72%),
+    radial-gradient(ellipse 38% 28% at 98% 60%, #D08256 0%, transparent 70%),
+    linear-gradient(168deg, #3A2B58 0%, #2C2148 48%, #52325C 100%);
+  --pm6-glass-puff-a: radial-gradient(closest-side, rgba(184,117,189,.5), transparent 75%);
+  --pm6-glass-puff-b: radial-gradient(closest-side, rgba(149,108,207,.45), transparent 75%);
+  --pm6-glass-puff-c: radial-gradient(closest-side, rgba(235,150,138,.45), transparent 75%);
+}
+
+[data-theme="glass-light"] {
+  --background: #E9E0F1;
+  /* aligned to PMConcept7 (L1646-1648): tint 246,240,255 / alpha .55 */
+  --glass-tint-rgb: 246,240,255;
+  --glass-alpha: .55;
+  --surface: rgba(var(--glass-tint-rgb), var(--glass-alpha));
+  --surface-elevated: rgba(var(--glass-tint-rgb), calc(var(--glass-alpha) + .16));
+  --text-primary: #382E4E;
+  --text-secondary: rgba(58,48,80,.86);
+  /* a11y (M1): bumped .70 -> .75 (4.45:1 -> 4.6:1 alpha-composited on the plate) — still clearly muted under --text-secondary (.86) */
+  --text-muted: rgba(58,48,80,.75);
+  --border: rgba(69,58,92,.22);
+  --border-light: rgba(69,58,92,.14);
+  --accent-blue: #8B6ED9;
+  --accent-magenta: #C167B4;
+  --accent-lime: #3E7D4E;
+  --accent-orange: #B26A2A;
+  --accent-warning: #8F6410;
+  --accent-error: #C0566B;
+  /* a11y (M2+M3): --accent-primary as TEXT for on-state chips/toggles/primary buttons was
+     3.04–3.45:1 on the plate (--accent-blue). Override with a same-hue deeper violet that
+     clears 4.5:1 on the plate AND its own accent-soft tint; borders/fills only gain
+     non-text contrast. M3: film audit caught raw-accent .on controls (e.g. .wd-wins "24h")
+     at 4.4:1 on the deeper deck-panel variant — deepened #6C47CF -> #6643C3 (4.8:1 there).
+     --accent-blue / --tone-info stay as-is; the pane gradient
+     (--pm6-glass-a-rgb) keeps the original 139,110,217 glass character. */
+  --accent-primary: #6643C3;
+  --accent-primary-rgb: 102,67,195;
+  --graph-pending: rgba(69,58,92,.40);
+  --graph-running: #B26A2A;
+  --graph-passed: #3E7D4E;
+  --graph-failed: #C0566B;
+  --graph-planning: #7E8BE0;
+  --graph-gating: #C167B4;
+  --shadow: 0 8px 24px rgba(93,63,133,.16);
+  --elev-1: 0 2px 8px rgba(93,63,133,.16);
+  --elev-2: 0 8px 24px rgba(93,63,133,.16);
+  --elev-3: 0 16px 44px rgba(93,63,133,.22);
+  --glass-edge: rgba(255,255,255,.95);
+  --glass-hairline: rgba(255,255,255,.55);
+  /* glass voice: clean geometric — Sora display (sharp technical digits,
+     real 800) over an Outfit geometric body; no more Inter/system-ui. */
+  --display-font: 'Sora', 'Outfit', system-ui, sans-serif;
+  --body-font: 'Outfit', 'Inter', system-ui, sans-serif;
+  --num-font: 'Sora', 'Inter', system-ui, sans-serif;
+  --fs-hero: 52px; --ls-hero: -0.03em; /* glass is airy — let the hero breathe */
+  --border-radius: 14px;
+  --border-width: 1px;
+  --base-font-size: 14px;
+  --line-height: 1.5;
+  --letter-spacing: 0.01em;
+  --grid-gap: 20px;
+  --ease-default: var(--ease-out);
+  --motion-med: 320ms;
+  --pm-motion-k: 1.33;
+  --sheen-dur: .7s;
+  /* -- PMConcept7 glass-light variant tokens (PMConcept7.html L1646-1668
+        verbatim): morning-sky pane, bright steps, near-opaque white plate -- */
+  --pm6-glass-a-rgb: 139,110,217;
+  --pm6-glass-b-rgb: 193,103,180;
+  --pm6-glass-sat: 1.6;
+  --pm6-glass-floor: rgba(255,255,255,.45);
+  --pm6-glass-drop: 0 10px 28px rgba(93,63,133,.18);
+  --pm6-glass-pane-edge: rgba(255,255,255,.75);
+  --pm6-glass-pane-k1: .62;
+  --pm6-glass-pane-k2: .36;
+  --pm6-glass-pane-k3: .47;
+  --pm6-glass-pane-shadow: rgba(93,63,133,.35);
+  --pm6-glass-pane-shadow2: rgba(93,63,133,.22);
+  --pm6-glass-pane-sheen: rgba(255,255,255,.50);
+  --pm6-glass-pane-sheen2: rgba(255,255,255,.25);
+  --pm6-glass-inset: 5px;
+  --pm6-glass-step-1: rgba(255,255,255, calc(var(--glass-alpha) * .25));
+  --pm6-glass-step-2: rgba(255,255,255, calc(var(--glass-alpha) * .55));
+  --pm6-glass-step-3: rgba(255,255,255, calc(var(--glass-alpha) * 1.1));
+  --pm6-glass-plate: rgba(255,255,255, calc(.42 + var(--glass-alpha) * .87));
+  /* -- wallpaper: pre-baked look, zero runtime blur (PMConcept7.html minimal sky
+        L786-793, depth-mode puff colors L772-777, pre-saturated) -- */
+  --pm6-glass-sky:
+    radial-gradient(ellipse 46% 34% at 12% 8%,  #F5A9CB 0%, transparent 68%),
+    radial-gradient(ellipse 52% 40% at 88% 6%,  #C9A6EE 0%, transparent 70%),
+    radial-gradient(ellipse 60% 42% at 50% 100%,#9FA8EF 0%, transparent 72%),
+    radial-gradient(ellipse 40% 30% at 100% 55%,#F2B9A4 0%, transparent 70%),
+    linear-gradient(165deg, #F0D6EC 0%, #D9C4F0 45%, #B9B7F2 100%);
+  --pm6-glass-puff-a: radial-gradient(closest-side, rgba(255,255,255,.9), transparent 75%);
+  --pm6-glass-puff-b: radial-gradient(closest-side, rgba(216,189,252,.8), transparent 75%);
+  --pm6-glass-puff-c: radial-gradient(closest-side, rgba(248,198,238,.7), transparent 75%);
+}
+
+/* ============================================================================
+   THEMES 7 & 8 - FRIENDLY DARK (DEFAULT) / FRIENDLY LIGHT - "COZY"
+   Cal Sans display + Quicksand body, warm paper/charcoal grounds, pastel
+   category accents, tinted cards, frosted chrome.
+   ============================================================================ */
+[data-theme="friendly-dark"] {
+  --background: #211E26;
+  --surface: #2A2731;
+  --surface-elevated: #322E3A;
+  --surface-alt: #262330;
+  --text-primary: #F0EDF4;
+  --text-secondary: #B4AEBE;
+  /* a11y (M1): raised from #8A8494 (3.66:1 on elevated cards) to clear 4.5:1 — still below --text-secondary */
+  --text-muted: #9B96A4;
+  --border: rgba(240,237,244,.10);
+  --border-light: rgba(240,237,244,.06);
+  --accent-blue: #6FC6E8;
+  --accent-magenta: #C3B1E4;
+  --accent-lime: #6FDABC;
+  --accent-orange: #FFAD93;
+  --accent-warning: #FFD97F;
+  --accent-error: #FF8A73;
+  --accent-primary-rgb: 111,198,232;
+  --graph-pending: #8A8494;
+  --graph-running: #FFAD93;
+  --graph-passed: #6FDABC;
+  --graph-failed: #FF8A73;
+  --graph-planning: #6FC6E8;
+  --graph-gating: #C3B1E4;
+  --shadow: 0 2px 6px rgba(0,0,0,.30), 0 10px 24px rgba(0,0,0,.22);
+  --elev-1: 0 1px 3px rgba(0,0,0,.26);
+  --elev-2: 0 2px 6px rgba(0,0,0,.30), 0 10px 24px rgba(0,0,0,.22);
+  --elev-3: 0 14px 40px rgba(0,0,0,.34);
+  --elev-hover: 0 12px 30px rgba(111,198,232,.20);
+  /* friendly voice: warm humanist — Cal Sans display for lettered headlines,
+     Quicksand body, and Nunito (real 800, round figures) as the numeric voice
+     so hero numbers never fall through Cal Sans to the OS font. */
+  --display-font: 'Cal Sans', 'Nunito', system-ui, sans-serif;
+  --body-font: 'Quicksand', 'Nunito', system-ui, sans-serif;
+  --num-font: 'Nunito', 'Quicksand', system-ui, sans-serif;
+  --fs-hero: 46px;
+  --base-font-size: 14.5px;
+  --line-height: 1.55;
+  --letter-spacing: normal;
+  --border-radius: 14px;
+  --border-width: 1px;
+  --radius-md: 14px;
+  --radius-lg: 20px;
+  --grid-gap: 20px;
+  --ease-default: var(--ease-spring);
+  --motion-med: 260ms;
+  --pm-motion-k: 1.08;
+  --sheen-dur: .55s;
+  /* cozy hooks (dark derivation: same pastels, slightly brighter) */
+  --pm6-cozy-mint: #6FDABC;
+  --pm6-cozy-sky: #6FC6E8;
+  --pm6-cozy-coral: #FFAD93;
+  --pm6-cozy-lav: #C3B1E4;
+  --pm6-cozy-butter: #FFD97F;
+  --pm6-cozy-card-base: #2A2731;
+  --pm6-cozy-mix: 14%;
+  --pm6-cozy-border-mix: 34%;
+  --pm6-cozy-chrome: rgba(40,36,48,.60);
+  --pm6-cozy-chrome-border: rgba(255,255,255,.08);
+  --pm6-cozy-field: rgba(255,255,255,.06);
+  --pm6-cozy-dot: rgba(190,180,210,.06);
+  --pm6-cozy-glow-mint: rgba(95,208,176,.10);
+  --pm6-cozy-glow-lav: rgba(179,157,219,.12);
+  --pm6-cozy-glow-sky: rgba(90,185,224,.09);
+}
+
+[data-theme="friendly-light"] {
+  --background: #FBF7F3;
+  --surface: #FFFFFF;
+  --surface-elevated: #FFFFFF;
+  --surface-alt: #F5EFEA;
+  --text-primary: #4A4550;
+  --text-secondary: #6B6473;
+  /* a11y (M1): raised from #9A93A0 (2.79–2.98:1) to clear 4.5:1 on white AND the darkest
+     cozy card tint — still visibly weaker than --text-secondary (5.0:1 vs 5.7:1) */
+  --text-muted: #746C7B;
+  --border: #E4DCEA;
+  --border-light: #EFEAF3;
+  --accent-blue: #3F9CC7;
+  --accent-magenta: #9678C9;
+  --accent-lime: #2FA183;
+  --accent-orange: #F07A55;
+  --accent-warning: #D9A62A;
+  --accent-error: #E8654C;
+  /* a11y (M2): --accent-primary used AS TEXT for on-state chips/toggles was 3.09:1
+     (--accent-blue). Override it with a same-hue deeper petrol that clears 4.5:1 on the
+     white surface, the lavender cozy card AND its own 12% accent-soft chip tint.
+     --accent-blue / --tone-info stay vivid for dots, fills and chart series. */
+  --accent-primary: #296B8A;
+  --accent-primary-rgb: 41,107,138;
+  --graph-pending: #9A93A0;
+  --graph-running: #F07A55;
+  --graph-passed: #2FA183;
+  --graph-failed: #E8654C;
+  --graph-planning: #3F9CC7;
+  --graph-gating: #9678C9;
+  --shadow: 0 4px 16px rgba(122,109,140,.12);
+  --elev-1: 0 2px 8px rgba(122,109,140,.10);
+  --elev-2: 0 4px 16px rgba(122,109,140,.12);
+  --elev-3: 0 14px 40px rgba(122,109,140,.20);
+  --elev-hover: 0 10px 26px rgba(90,185,224,.25);
+  /* friendly voice: warm humanist — Cal Sans display for lettered headlines,
+     Quicksand body, and Nunito (real 800, round figures) as the numeric voice
+     so hero numbers never fall through Cal Sans to the OS font. */
+  --display-font: 'Cal Sans', 'Nunito', system-ui, sans-serif;
+  --body-font: 'Quicksand', 'Nunito', system-ui, sans-serif;
+  --num-font: 'Nunito', 'Quicksand', system-ui, sans-serif;
+  --fs-hero: 46px;
+  --base-font-size: 14.5px;
+  --line-height: 1.55;
+  --letter-spacing: normal;
+  --border-radius: 14px;
+  --border-width: 1px;
+  --radius-md: 14px;
+  --radius-lg: 20px;
+  --grid-gap: 20px;
+  --ease-default: var(--ease-spring);
+  --motion-med: 260ms;
+  --pm-motion-k: 1.08;
+  --sheen-dur: .55s;
+  /* cozy hooks (approved mockup palette, pure pastels) */
+  --pm6-cozy-mint: #5FD0B0;
+  --pm6-cozy-sky: #5AB9E0;
+  --pm6-cozy-coral: #FF9E80;
+  --pm6-cozy-lav: #B39DDB;
+  --pm6-cozy-butter: #FFD166;
+  --pm6-cozy-card-base: #FFFFFF;
+  --pm6-cozy-mix: 11%;
+  --pm6-cozy-border-mix: 30%;
+  --pm6-cozy-chrome: rgba(255,255,255,.65);
+  --pm6-cozy-chrome-border: rgba(255,255,255,.85);
+  --pm6-cozy-field: rgba(255,255,255,.70);
+  --pm6-cozy-dot: rgba(122,109,140,.10);
+  --pm6-cozy-glow-mint: rgba(95,208,176,.16);
+  --pm6-cozy-glow-lav: rgba(179,157,219,.18);
+  --pm6-cozy-glow-sky: rgba(90,185,224,.14);
+}
+
+/* glass: left-panel sees the clearest transparency step (F3-427 step 1) */
+[data-theme^="glass"] { --surface-alt: transparent; }
+
+/* ============================================================================
+   Reduced motion (F3-440 reduce-animations + prefers-reduced-motion).
+   This is the SINGLE blanket kill-switch (the usage-shared.css duplicate was
+   removed). It freezes motion but never hides state: targeted state-preserving
+   rules (fills jump to final width, sprout drops transform but keeps opacity,
+   tab panels snap) live next to their components in usage-shared.css /
+   usage-tabs.css.
+   ============================================================================ */
+html[data-reduced-motion="1"] *,
+html[data-reduced-motion="1"] *::before,
+html[data-reduced-motion="1"] *::after {
+  animation-duration: 0.001ms !important;
+  animation-iteration-count: 1 !important;
+  transition-duration: 0.001ms !important;
+  scroll-behavior: auto !important;
+}
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after {
+    animation-duration: 0.001ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.001ms !important;
+    scroll-behavior: auto !important;
+  }
+}
+
+/* ============================================================================
+   Legible status TEXT tones (WCAG AA). The raw --tone-* values stay vivid for
+   dots / fills / borders / glyph icons; these -text variants are shifted toward
+   black (light themes) or white (dark themes) so status words, chips and gauge
+   readouts clear 4.5:1 on each theme's surface AND on the 14% tinted chip bg.
+   Computed per theme; swap text-color usages to these, keep raw tones elsewhere.
+
+   a11y (M3): film-level audit caught .vs-* value-state chips at 3.45–4.49:1
+   IN SITU — the 14%-tinted chip bg sits on tinted cozy cards / warm telemetry
+   panels / glass plates that are lighter (dark themes) or darker (light themes)
+   than the plain surface, so the M1 surface math under-reported. Each flagged
+   ink below was re-deepened within its own hue (dark themes toward white,
+   light themes toward black — hue + tone identity preserved, never flattened
+   to gray) until it clears 4.75:1 against the worst measured in-situ backdrop.
+   ============================================================================ */
+[data-theme="friendly-dark"]  { --tone-ok-text:#7bddc1; --tone-warn-text:#ffd97f; --tone-err-text:#ffa290; --tone-info-text:#6fc6e8; --tone-purple-text:#c3b1e4; --tone-mute-text:#c3c0c8; }
+[data-theme="friendly-light"] { --tone-ok-text:#206d58; --tone-warn-text:#795d18; --tone-err-text:#a64836; --tone-info-text:#2d708e; --tone-purple-text:#735c9b; --tone-mute-text:#5d5961; }
+[data-theme="retro-dark"]     { --tone-ok-text:#81c784; --tone-warn-text:#ffbb19; --tone-err-text:#f77f76; --tone-info-text:#6792cd; --tone-purple-text:#ff59b3; --tone-mute-text:#a7a7a7; }
+[data-theme="retro-light"]    { --tone-ok-text:#39693c; --tone-warn-text:#7c3f00; --tone-err-text:#a13836; --tone-info-text:#0047ab; --tone-purple-text:#b90e6b; --tone-mute-text:#524f49; }
+[data-theme="basic-dark"]     { --tone-ok-text:#8fcd91; --tone-warn-text:#ffb952; --tone-err-text:#f88980; --tone-info-text:#64b5f6; --tone-purple-text:#ff7fbf; --tone-mute-text:#b7bbc2; }
+[data-theme="basic-light"]    { --tone-ok-text:#2e682f; --tone-warn-text:#963500; --tone-err-text:#a42d24; --tone-info-text:#0056b3; --tone-purple-text:#b12727; --tone-mute-text:#535964; }
+[data-theme="glass-dark"]     { --tone-ok-text:#8fd9a5; --tone-warn-text:#f6ca8d; --tone-err-text:#f295a6; --tone-info-text:#bca3ff; --tone-purple-text:#e897ce; --tone-mute-text:#ede7f8; }
+[data-theme="glass-light"]    { --tone-ok-text:#2e5c39; --tone-warn-text:#523909; --tone-err-text:#843b4a; --tone-info-text:#5b488e; --tone-purple-text:#794070; --tone-mute-text:#453a5c; }
+
+/* ============================================================================
+   Meter FILL tones (WCAG 1.4.11 non-text, >=3:1 vs the track). The raw --tone-*
+   values stay as dots / chart / glyph colors; these -fill variants nudge the
+   lightness within the same hue (darker on light themes, brighter on darks)
+   until the fill clears 3:1 against each theme's measured worst-case track.
+   Consumed by .us-fill in usage-shared.css via var(--us-fill-*, raw fallback).
+   Themes with no override here (glass-dark, friendly-dark, basic-dark and the
+   ok/warn/info tones that already pass) keep their current vivid fills.
+   ============================================================================ */
+/* ============================================================================
+   Canonical numeric voice (TYP-1). Hero numbers must ALWAYS resolve to a
+   loaded face with real tabular figures — never through Cal Sans (no digits)
+   to system-ui. The html-qualified selectors outrank the interim per-concept
+   `:root { --num-font: var(--display-font) }` shims so every theme family's
+   big numbers are deterministic; concept agents can drop those shims.
+   ============================================================================ */
+html[data-theme^="friendly"] { --num-font: 'Nunito', 'Quicksand', system-ui, sans-serif; }
+html[data-theme^="glass"]    { --num-font: 'Sora', 'Inter', system-ui, sans-serif; }
+html[data-theme^="retro"]    { --num-font: 'JetBrains Mono', ui-monospace, Menlo, monospace; }
+html[data-theme^="basic"]    { --num-font: 'Inter', system-ui, sans-serif; }
+
+[data-theme="basic-light"]    { --us-fill-ok:#3d8c40; --us-fill-warn:#da4d00; --us-fill-hot:#f22415; --us-fill-info:#0056b3; }
+[data-theme="friendly-light"] { --us-fill-ok:#2b9479; --us-fill-warn:#a67e1e; --us-fill-hot:#e55337; --us-fill-info:#2e7fa6; }
+[data-theme="glass-light"]    { --us-fill-hot:#bf5368; --us-fill-info:#8161d6; --us-fill-purple:#b64da7; }
+[data-theme="retro-dark"]     { --us-fill-hot:#f54f43; --us-fill-info:#4d9aff; --us-fill-purple:#ff2a9d; }
+[data-theme="retro-light"]    { --us-fill-ok:#39813d; --us-fill-warn:#b35b00; --us-fill-hot:#e31915; --us-fill-info:#0047ab; --us-fill-purple:#df0078; }
+
+/* ============================================================================
+   Muted / neutral meter FILL tones (WCAG 1.4.11, >=3:1 vs track AND surface).
+   The mute fill is deliberately desaturated — a theme-tinted gray that reads
+   as "inactive/unknown", never as an active ok/warn/hot state. Lightness is
+   adjusted within each family's neutral hue; character comes from the tint.
+   Consumed by .us-fill.mute in usage-shared.css via var(--us-fill-mute, ...).
+   ============================================================================ */
+[data-theme="retro-dark"]     { --us-fill-mute:#97998f; }
+[data-theme="retro-light"]    { --us-fill-mute:#6e6a62; }
+[data-theme="basic-dark"]     { --us-fill-mute:#848b96; }
+[data-theme="basic-light"]    { --us-fill-mute:#767d88; }
+[data-theme="glass-dark"]     { --us-fill-mute:#a89fc0; }
+[data-theme="glass-light"]    { --us-fill-mute:#6e6480; }
+[data-theme="friendly-dark"]  { --us-fill-mute:#9b96a4; }
+[data-theme="friendly-light"] { --us-fill-mute:#746c7b; }
+
+/* ============================================================================
+   PMTabs count-badge recipe (WCAG 1.4.3, >=4.5:1). The badge must survive any
+   backdrop — including the active-tab ink — so both halves are OPAQUE per-theme
+   values: a hue-matched well + an ink of the same family. Dark themes keep the
+   vivid accent as ink over a deep well; light themes deepen the ink within the
+   accent hue (glass-light violet -> #5b34b8) over a pale well.
+   ============================================================================ */
+[data-theme="retro-dark"]     { --pm-badge-bg:#1c3a24; --pm-badge-ink:var(--accent-primary); }
+[data-theme="retro-light"]    { --pm-badge-bg:#dbe5f4; --pm-badge-ink:var(--accent-primary); }
+[data-theme="basic-dark"]     { --pm-badge-bg:#182635; --pm-badge-ink:var(--accent-primary); }
+[data-theme="basic-light"]    { --pm-badge-bg:#dee9f6; --pm-badge-ink:var(--accent-primary); }
+[data-theme="glass-dark"]     { --pm-badge-bg:#2b2145; --pm-badge-ink:var(--accent-primary); }
+[data-theme="glass-light"]    { --pm-badge-bg:#e2d9f3; --pm-badge-ink:#5b34b8; }
+[data-theme="friendly-dark"]  { --pm-badge-bg:#152a35; --pm-badge-ink:var(--accent-primary); }
+[data-theme="friendly-light"] { --pm-badge-bg:#eaf7fc; --pm-badge-ink:var(--accent-primary); }

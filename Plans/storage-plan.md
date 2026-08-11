@@ -239,7 +239,10 @@ All storage lives under a single **app data root** (for example `~/.puppet-maste
 | `storage/jsonl/` | Human-readable JSONL mirror emitted by projectors |
 | `storage/tantivy/projects/{project_id}/` | Per-project Tantivy indices (`chat`, `code`, `logs`, optional `docs`) |
 | `storage/blobs/` | Blob store for large secrets-scrubbed payloads referenced by `blob_ref` |
-| `storage/backups/` | Optional point-in-time recovery copies |
+| `storage/backups/` | Required verified recovery snapshots and protected pre-migration/pre-restore backups; JSON/JSONL exports are not backups |
+| `storage/migrations/` | Same-root migration, restore, recovery, and maintenance journals/intents |
+| `storage/restore-staging/` | Offline, checksum-verified restore staging; never an ordinary-open store |
+| `storage/quarantine/` | Exact-byte custody for invalid canonical values and interrupted recovery evidence |
 
 ContractRef: ContractName:Plans/FinalGUISpec.md, ContractName:Plans/GitHub_Integration.md
 
@@ -398,16 +401,13 @@ Every seglog record MUST include a CRC32 checksum computed over the record paylo
 
 ContractRef: ContractName:Plans/Architecture_Invariants.md, ContractName:Plans/Executor_Protocol.md
 
-On read, CRC32 MUST be validated before the record is processed. If validation fails:
-- the corrupt record is skipped
-- PM emits a recovery/integrity event including record offset and expected vs observed CRC
-- projectors resume from the last known-good checkpoint rather than replaying the corrupt record
+On read, CRC32 MUST be validated before the record is processed. The payload-only generation-1 framing below is compatibility/source-lineage only and MUST NOT be implemented by the first product writer. `SeglogFrameV2` in the Case L durable-state owner canon protects the fixed framing prefix, header metadata, and payload independently. A corrupt frame is skipped only when its boundary and the next candidate are fully validated; otherwise the loss unit is the exact resynchronization range or segment remainder. Closed source segments are never modified in place, acknowledged-range loss blocks mutation, recovery emits deterministic integrity/recovery evidence, and projectors rebuild from the declared survivor set.
 
 ContractRef: ContractName:Plans/Contracts_V0.md, ContractName:Plans/Runtime_Artifacts_Panel.md
 
 #### 2.2.2 Concrete wire format
 
-Seglog uses a length-prefixed binary record stream. The canonical payload codec is MessagePack; mirrors and diagnostics may expose the same envelope in JSON, but JSON is not the on-disk authority.
+The following `SeglogRecord` / `SeglogHeader` layout is design-generation-1 source-lineage only. The canonical first writer uses the later `SeglogFrameV2` owner contract in this document and never mixes frame generations in one segment. The canonical payload codec remains MessagePack; mirrors and diagnostics may expose the same envelope in JSON, but JSON is not the on-disk authority.
 
 Canonical record structure:
 ```text
@@ -456,29 +456,29 @@ Rules:
 #### 2.2.4 Replay and rebuild rules
 
 Replay/rebuild rules:
-- redb projections, JSONL mirror files, and Tantivy indices are rebuildable from seglog plus stable checkpoints; none of them outrank seglog as authority
-- on restart, replay begins from the last committed checkpoint `{ segment_generation, segment_name, byte_offset, last_seq }`
-- if the active segment ends with a partial/corrupt tail, rebuild truncates only after the last verified record and records the recovery action
-- rebuild MUST preserve `sequence_id` ordering; regenerated mirrors or indices may differ in file timestamps but not in semantic event order
+- registry-classified redb projections/indexes/checkpoints, JSONL mirror files, and Tantivy indices are rebuildable from seglog plus stable checkpoints; canonical non-rebuildable redb families are not projections and restore from verified backup
+- on restart, replay begins from the last committed checkpoint `{ manifest_generation, recovery_epoch, segment_generation, segment_name, byte_offset, last_sequence_id, last_event_id, survivor_prefix_sha256, projector_schema_version }`
+- if the active segment ends with an invalid unacknowledged tail, recovery follows the journaled watermark/postcondition rules in the Case L durable-state owner canon; bytes at or below the durable watermark are never called harmless crash tail
+- rebuild MUST preserve `sequence_id` ordering and the declared survivor set; timestamps never steer replay, resume, compaction translation, or dedupe
 
 ContractRef: ContractName:Plans/Architecture_Invariants.md, ContractName:Plans/Executor_Protocol.md, ContractName:Plans/Contracts_V0.md
 
 #### 2.2.5 EventRecord persistence boundary
 
-`EventRecord` persistence is canonical only for the envelope materialized in `Plans/Contracts_V0.md#EventRecord` and `Plans/event_record.schema.json` (`schema_id = pm.event.v0`, `schema_version = 1.0.0`). This section defines the storage value boundary; it does not materialize every redb family or every event-type payload schema.
+`EventRecord` persistence is canonical only for the envelope owned by `Plans/Contracts_V0.md#EventRecord` and materialized by `Plans/event_record.schema.json`. New writers target `schema_id = pm.event.v0`, `schema_version = 2.0.0`; the frozen `1.0.0` envelope remains a read-only compatibility input. This section owns persistence, scope partitioning, replay, dedupe, and legacy normalization, not the envelope schema or producer semantics.
 
 Rules:
 - Seglog is the authoritative append-only store for persisted `EventRecord` values. The seglog record payload is the MessagePack-encoded EventRecord envelope; JSON/JSONL mirrors are diagnostics and exports only.
 - The seglog header may duplicate `event_type`, `sequence_id`, source/observed timestamps, and payload length for scanning and corruption recovery, but the decoded EventRecord value remains the semantic record.
 - Physical append identity is `{segment_generation, segment_name, byte_offset, sequence_id, event_id}`. Replay order is segment generation, segment lexical order, byte offset, and `sequence_id`; timestamps never reorder replay.
-- redb MUST NOT become a second mutable event source of truth. redb may store checkpoints, projections, idempotency indexes, and lookup rows keyed as `event_record_index.v1:{project_id}:{sequence_id}:{event_id}` with value `{schema_id, schema_version, event_type, segment_ref, byte_offset, payload_sha256, idempotency_key, correlation_id, causation_event_id?, persisted_at_utc}`. These rows point back to seglog and are rebuildable.
+- redb MUST NOT become a second mutable event source of truth. redb may store checkpoints, projections, dedicated dedupe indexes, and lookup rows keyed as `event_record_index.v2:{scope_partition}:{sequence_id_20}:{event_id}`. `scope_partition` is exactly `app` for `scope_kind = application` and `project~{base64url_no_pad(UTF8(project_id))}` for project scope. These rows point back to seglog and are rebuildable.
 - The value encoding for the canonical EventRecord is MessagePack with the exact top-level fields from `Plans/event_record.schema.json`. A stored value missing `schema_version` is invalid and must be quarantined or migrated before projection.
-- `schema_version` is part of the durable value, projector checkpoint, and redb lookup value. Projectors MUST reject a record whose `schema_id` or `schema_version` is unsupported rather than inferring a shape from `event_type`.
+- `schema_version` is part of the durable value, projector checkpoint, and redb lookup value. Projectors halt before an unsupported record, set health `unavailable` with reason `unsupported_schema_version`, preserve `last_supported_sequence_id`, and do not skip, quarantine, or mutate an otherwise valid future-version record.
 - `payload_schema_id` dispatches concrete event-type payload validation. `Contracts_V0.md` owns the envelope; storage-plan owns payload schema registration, replay, retention, and projection storage mechanics; producer docs own event semantics. Until a concrete payload schema exists for a given event family, that family is not materially complete.
-- Replay and idempotency use `event_id`, `idempotency_key`, `sequence_id`, and `replay_policy`. Duplicate delivery returns the original append/projection result when `event_id` or `idempotency_key` matches the policy; timestamp equality is not a dedupe rule.
+- Replay and idempotency use `event_id`, `idempotency_key`, `sequence_id`, `scope_partition`, `event_type`, and `replay_policy`. `event_id` is app-root-global for the store lifetime; the selected idempotency identity is `(scope_partition, event_type, idempotency_key)`. Append admission synchronously catches dedicated dedupe indexes through the verified seglog tail under the writer lock or returns `dedupe_unavailable` without append or memory buffering. Timestamp equality is never a dedupe rule.
 - Retention and compaction never rewrite closed seglog segments in place. Compaction may rebuild redb projections, lookup rows, JSONL mirrors, and Tantivy indexes; canonical EventRecord values are retained or migrated through append-only successor records plus governed retention/legal-hold policy.
 - Raw secrets, tokens, passwords, credentials, API keys, OAuth values, local credential paths, and local machine secrets are invalid in EventRecord envelope or payload content. Secret-bearing operational data is represented only by non-secret refs governed by permission/account custody.
-- Legacy `EventEnvelopeV1` values with `ts`, `seq`, `type`, and `payload` are accepted by readers only as compatibility input. Upgraders map `type` to `event_type`, populate required identity/version/idempotency/redaction/replay/migration fields, and record `migration.compatibility_event_type`; new writers MUST emit EventRecord.
+- Legacy `EventEnvelopeV1` values with `ts`, `seq`, `type`, and `payload` are accepted by readers only as compatibility input. They normalize deterministically in memory for projector replay, never append or rewrite, use RFC 8785/SHA-256-derived `legacy-event-v1:{digest}` and `legacy-envelope-v1:{digest}` identities, and carry `replay_policy = projector_replay_only`. Unknown scope/payload mappings, identity conflicts, invalid timestamps, and unhandled secrets quarantine fail-closed. New writers emit only EventRecord `2.0.0`.
 - This Tier 0C-1 boundary records partial closure for EventRecord persistence only. It does not claim `attempt_record`, `receipt`, `lane`, `worktree`, provider stream, runtime lifecycle, clean-room harness, GUI, security, behavioral acceptance, or all redb value schemas are complete.
 
 ContractRef: ContractName:Plans/Contracts_V0.md#EventRecord, ContractName:Plans/event_record.schema.json, SchemaID:pm.event.v0
@@ -1454,10 +1454,11 @@ ContractRef: ContractName:Plans/FileSafe.md, ContractName:Plans/Run_Modes.md, Co
 
 ### Storage-owned rewrite contract
 All non-append durable-store rewrites MUST use same-directory temporary files and atomic promotion.
-- Replacement writes for state files, manifests, checkpoints, segment rewrites, or similar durable storage artifacts MUST create `<target>.tmp.<random>` in the target directory, write the full replacement payload there, `fsync` the temp file, and then rename/promote it into place.
+- Replacement writes for state files, manifests, checkpoints, segment rewrites, or similar durable storage artifacts MUST create `<target>.tmp.<random>` in the target directory, write the full replacement payload there, `fsync` the temp file, rename/promote it into place, and synchronize the affected/destination parent directory before reporting durable success or returning a durable acknowledgement.
+- Canonical file create, link, unlink, segment creation/closure, manifest promotion, recovery-intent promotion/removal, and compaction-file promotion MUST synchronize the file and affected/destination parent directory. If a cross-directory rename is ever allowed, both source and destination parent directories MUST be synchronized; this rule does not itself authorize cross-directory rename.
 - Append-only seglog/event writers are exempt from temp-rename promotion, but they remain subject to durable flush and corruption-detection rules.
 - Per-session temp directories MAY hold scratch artifacts or janitor-managed work files, but they MUST NOT be used for replacement writes that rely on same-filesystem atomic rename.
-- Failure to create the temp file, `fsync` it, or rename/promote it is a hard error; PM MUST NOT silently fall back to direct overwrite.
+- Failure to create the temp file, `fsync` it, rename/promote it, synchronize the affected/destination parent directory, or establish the strongest OS-equivalent directory-entry durability primitive is a hard error. PM MUST NOT silently fall back to direct overwrite, report durable success, or return a durable acknowledgement. Writable startup MUST fail when canonical-store directory durability cannot be established.
 
 ContractRef: ContractName:Plans/FileSafe.md, ContractName:Plans/GitHub_Integration.md
 
@@ -1477,15 +1478,13 @@ Durable-store safety rules:
 - Never rewrite durable files via cross-filesystem temp paths when the final correctness contract depends on atomic rename.
 - Janitor cleanup MAY remove abandoned temp files, but it MUST NOT touch active durable targets or preserved checkpoints.
 - When a durable store is unavailable, writers fail closed and surface a structured error instead of downgrading silently to temp-only persistence.
-- Detect `unsafe-filesystem` classes such as NFS, remote mounts without reliable locking, and roots that cannot prove same-directory atomic rename semantics before opening writers. If a safe local durable-store fallback is available, route writer state, lock files, and session snapshots there while keeping the selected logical root as lineage; otherwise enter `/read-only` viewer mode.
-- Migration backups follow `backup-before-any-migration-step`: snapshot the affected canonical store before validation, schema rewrite, file promotion, destructive cleanup, or rollback-sensitive repair begins, and keep that backup addressable until the migration result has been verified.
+- Detect `unsafe-filesystem` classes such as NFS, remote mounts without reliable locking, and roots that cannot prove same-directory atomic rename semantics before opening writers. A safe-local fallback is one detached, exact-base branch under the bootstrap root; every canonical store and the aggregate lock move together. Return is explicit fast-forward-only, divergence closes writes, and no automatic merge/overwrite is permitted.
+- Migration backups follow `backup-before-any-migration-step`: snapshot the shared canonical boundary before validation, schema rewrite, file promotion, destructive cleanup, or rollback-sensitive repair begins, and keep that verified backup addressable through terminal receipt round-trip and the required successor-backup/support-window conditions.
 
 ContractRef: ContractName:Plans/FileSafe.md, ContractName:Plans/GitHub_Integration.md, ContractName:Plans/storage-plan.md
 
 #### Active durable-store lock identity
-The active durable-store lock is keyed by `(storage_root, authority_scope, store_family)`.
-- Session or run ids are not sufficient durable-store lock identities by themselves.
-- Store families that require independent recovery or retention policies must not share a lock identity merely because they live under the same root.
+MVP uses one aggregate canonical-store lock keyed by `(active_root_fingerprint, authority_scope = canonical_store_set, store_family = canonical)` at `<active_root>/pm.lock`. It covers seglog, redb, canonical session snapshots, checkpoint writers, migration, backup/restore, retention, and compaction; partial canonical-family acquisition does not exist. Session/run IDs are not lock identities. Regex-index publication and unrelated cache builders retain their separately owned subsystem locks.
 
 ContractRef: ContractName:Plans/storage-plan.md, ContractName:Plans/Run_Modes.md
 
@@ -1502,9 +1501,9 @@ ContractRef: ContractName:Plans/FileSafe.md, ContractName:Plans/Prompt_Pipeline.
 | MCP connection and auth-handle caches | Max cardinality | Registered server count x active auth scopes | Superseded or idle handles are evicted instead of accumulating indefinitely. |
 | LSP session and host/root attachment maps | Max cardinality | Open project/worktree roots x configured servers | Restart/rebind replaces prior attachments instead of widening the map. |
 | Projector and analytics work queues | Max queue depth | Per-projector batch limits plus checkpoint/resume contract | Excess work spills via checkpointed resume rather than unbounded in-memory growth. |
-| Persisted event records and `seglog.event_appended` append observability | TTL + cardinality | Run/thread retention policy plus segment checkpoint boundaries | Default TTL is inherited from the owning event family retention window; cleanup is triggered by janitor sweep and segment compaction, with legal-hold or preserved-run anchors opting out explicitly. |
-| Safe points, snapshot metadata, and undo indexes | TTL + cardinality | Session/run lineage plus configured retention window | Preserved or legal-hold items opt out explicitly; ordinary session artifacts age out. |
-| Temp artifacts and stale rewrite remnants | TTL | Janitor sweep plus configured max age | `.tmp.*` rewrite remnants and abandoned scratch artifacts are cleaned deterministically. |
+| Persisted event records and `seglog.event_appended` append observability | TTL + cardinality | Registered `retention_policy_ref`; never prefix/mtime inference | Approval/receipt/audit authority, deletion tombstones, and source lineage retain indefinitely; non-authority security diagnostics plus migration/recovery operational history retain 2,555 days; runtime 365 days; chat until thread deletion with 250,000 events/thread and successor roll; usage 90 days; append observability 7 days; unknown policy retains indefinitely and is materially incomplete. |
+| Safe points, snapshot metadata, and undo indexes | Anchored then TTL + cardinality | `RP-SAFEPOINT-90D-AFTER-RELEASE` | Indefinite while referenced; after last release retain 90 days, at most 64/run and 2,048/project; held items do not participate in eviction. |
+| Temp artifacts and stale rewrite remnants | TTL | Janitor sweep plus configured max age | Unreferenced `.tmp.*` artifacts retain 24 hours, capped at 10,000/root; maintenance/recovery references override cleanup. |
 
 ContractRef: ContractName:Plans/FileSafe.md, ContractName:Plans/Prompt_Pipeline.md, ContractName:Plans/LSPSupport.md
 
@@ -1560,7 +1559,7 @@ ContractRef: ContractName:Plans/Executor_Protocol.md, ContractName:Plans/Contrac
 
 **Write:** Store results in redb under `rollups` namespace (e.g. `usage_5h.{platform}`, `usage_7d.{platform}`, `tool_latency.{window}`, **`tool_usage.{window}`**, `tool_usage_meta.{window}`). Usage view and tool usage widget read from these keys; no direct seglog read for dashboard.
 
-**Checkpoint:** Store "last scanned up to seq X" or "last scanned timestamp" in redb so the next run doesn't rescan from the beginning. Idempotent: recomputing the same window and writing the same keys is safe.
+**Checkpoint:** Store the last scanned `sequence_id` plus manifest/recovery generation and survivor-prefix identity in redb so the next run does not rescan from the beginning. Timestamps are observation/filter metadata only and MUST NOT resume or order replay. Recomputing the same sequence-bounded window and writing the same keys is idempotent.
 
 ### 2.6 Assistant worktree event schemas
 
@@ -1590,7 +1589,7 @@ For `chat.thread_worktree_pr_failed`, `phase` is the exact enum `push | api`: us
 
 ## 3. Implementation checklist
 - [ ] **Resolve app data root** and create `storage/seglog`, `storage/redb`, `storage/jsonl`, `storage/tantivy`.
-- [ ] **Implement seglog writer:** envelope format (ts, seq, type, payload); rotation by size or day; flush on append.
+- [ ] **Implement seglog writer:** SeglogFrameV2 carrying MessagePack EventRecord, protected resync prefix/header/payload, durable sequence lease, group/barrier commit, synced manifest watermark, parent-directory durability, and rotation by size threshold, clean shutdown, maintenance, or frame/schema-generation change.
 - [ ] **Define event type schemas** for `chat.message`, `chat.thread_created`, `run.started`, `run.completed`, `usage.event`, `tool.invoked` (include optional `success`, `error`, `thread_id` per Plans/Tools.md §8.0), optional `tool.denied`, runtime checkpoint-marker events, and any editor lifecycle events per FileManager.md.
 - [ ] **Implement redb schema + migrations:** namespaces (settings, sessions, runs, checkpoints, editor, rollups, review_rules); key patterns as in §2.3; migration runner and version bump.
 - [ ] **Implement projector: seglog -> JSONL mirror** (tail, checkpoint, write mirror).
@@ -1924,13 +1923,13 @@ ContractRef: ContractName:Plans/LSPSupport.md, ContractName:Plans/GitHub_Integra
 
 | Problem | Solution |
 |---------|----------|
-| **seglog corruption or partial write** | Append-only with flush and last-complete-record recovery. CRC32 per record is mandatory; validate on every read; corrupt record -> skip + recovery event. |
-| **redb corruption** | Restore from backup or rebuild projections from canonical seglog. |
+| **seglog corruption or partial write** | Validate SeglogFrameV2 in fixed order, recover through durable watermark plus deterministic resynchronization, preserve closed bytes, disclose exact/bounded/unknown loss, and rebuild projections from the survivor set. Acknowledged-range loss blocks mutation. |
+| **redb corruption** | Derived rows rebuild only from their registered retained source. Canonical non-rebuildable rows restore from a mandatory verified backup; continuity evidence prevents corrupt meta from masquerading as first run. |
 | **Projector falls behind** | Buffer events in bounded batches and checkpoint only after a successful commit. |
 | **Analytics scan blocks UI** | Run analytics scans in the background; UI shows last committed rollup plus freshness state. |
-| **Disk full / storage I/O** | Surface a user-facing error, stop unsafe writes, and retry only per storage I/O policy. |
-| **Migration failure** | Leave previous version intact; do not open a half-migrated store. |
-| **Multiple app instances** | Acquire exclusive flock on the active durable-store `lock-path` / `pm.lock` derived from the selected logical storage root or safe-local fallback before any writes. If the lock is held, enter `/read-only` viewer mode and notify the user. |
+| **Disk full / storage I/O** | Classify with the closed storage-I/O taxonomy. Only `interrupted` and `transient_busy` auto-retry; exhausted canonical I/O closes write admission, retains an owned lock, forbids pseudo-durable buffering, and requires explicit revalidation. |
+| **Migration failure** | Reconcile the durable migration journal, restore once from the verified pre-migration backup, and block after failed restore. Mixed family/store versions never ordinary-open. |
+| **Multiple app instances** | Acquire the aggregate handle-lifetime OS lock (`flock` or `CreateFileW` + `LockFileEx`). Owner heartbeat is diagnostic only. A lock-conflict viewer is frozen/manual-refresh and promotion is explicit full revalidation. |
 
 ContractRef: ContractName:Plans/Architecture_Invariants.md, ContractName:Plans/Executor_Protocol.md, ContractName:Plans/storage-plan.md
 
@@ -1940,18 +1939,18 @@ ContractRef: ContractName:Plans/Architecture_Invariants.md, ContractName:Plans/E
 | **API contract (caller handling errors)** | `append()` / redb write operations return structured `Result`; no silent swallow. |
 | **Projector panic or crash** | Do not advance checkpoint; restart from last good checkpoint. |
 | **File record LRU eviction** | Cap in-memory file records at 10,000 entries and rebuild lazily on access. |
-| **Boot-time janitor** | After active durable-store lock acquisition, sweep stale `.tmp.*` artifacts, validate lock freshness, and emit a `storage.boot_recovery` event if cleanup was required. |
+| **Boot-time janitor** | After OS-lock acquisition and maintenance recovery, remove only unreferenced artifacts under a frozen cutoff/cursor; same recovery IDs dedupe repeated cleanup and no boot event is emitted when nothing changed. |
 | **DB / redb shutdown hygiene** | Close the DB handle in the shutdown sequence before process exit. |
 
 ContractRef: ContractName:Plans/Architecture_Invariants.md, ContractName:Plans/Executor_Protocol.md, ContractName:Plans/FileSafe.md
 
-## 7. Enhancements
+## 7. Backup, restore, compaction, and optional storage enhancements
 
-- **Compaction:** Specified in §2.2.1. Optional for MVP, but when enabled it MUST preserve `seq`, exclude the active segment, and keep replay/projector correctness intact.
-- **Backup/restore:** Scheduled backups MUST snapshot canonical stores at one shared boundary, validate checksums before restore, and rebuild disposable projections (JSONL/Tantivy) after restore rather than treating them as authoritative.
+- **Compaction:** Normative mechanics are in `Case L durable-state owner canon` below. Compaction copies the exact retained set into a verified successor generation, preserves semantic identities, publishes through the same-directory `CURRENT` pointer, and never rewrites a closed source segment.
+- **Backup/restore:** Verified shared-boundary backups are required for canonical non-rebuildable redb state. Restore is selected in the startup recovery shell but executes offline through staged verification and a durable journal; JSON/JSONL exports are not restore inputs.
 - **Export:** Export thread or run history to JSONL/JSON for user (e.g. from seglog or JSONL mirror filtered by thread_id).
 - **Read replicas:** Not applicable for embedded redb; if we move to a server-backed store later, read replicas can serve dashboard/Usage reads.
-- **Per-project seglog:** Specified in §2.1.2; default remains app-global.
+- **Per-project seglog:** The MVP seglog is app-global under `storage/seglog`; EventRecord scope partitions projects. Per-project physical logs are deferred and are not specified by this plan.
 - **Event schema registry:** Required infrastructure for payload validation and doc generation; this plan owns payload registry/workflow while `Plans/Contracts_V0.md` owns the top-level envelope.
 - **Streaming projector:** Optional richer UX path; correctness still depends on committed projector state and durable checkpoints.
 
@@ -1962,7 +1961,7 @@ ContractRef: ContractName:Plans/Architecture_Invariants.md, ContractName:Plans/E
 ### 8.1 Phased implementation order
 
 - **Phase 1 -- seglog foundation**
-  Build first: app data root resolution, directory creation (`storage/seglog`, `storage/redb`, `storage/jsonl`, `storage/tantivy`), and seglog writer only (envelope format, seq, flush, optional rotation by size/day). No projectors, no redb.
+  Build first: root continuity and aggregate-lock admission, directory creation, and the single-writer SeglogFrameV2 path carrying MessagePack EventRecord, fixed resynchronization prefix, header/payload integrity, durable sequence lease, batch/barrier acknowledgement, commit watermark, and deterministic rotation on size threshold, clean shutdown, explicit maintenance, or frame/schema-generation change. No projectors and no redb product writers.
   **Exit criterion:** We can append events and read them back (by tailing or reading the segment file).
 
 - **Phase 2 -- redb and schema**
@@ -2000,14 +1999,16 @@ ContractRef: ContractName:Plans/Architecture_Invariants.md, ContractName:Plans/E
 ### 8.3 Startup and shutdown
 
 **Startup order:**
-1. Resolve the app data root (environment override optional).
-2. Probe the selected storage root for durable-store safety, including `unsafe-filesystem` / NFS posture, and establish any required safe local fallback before durable stores are opened.
-3. Derive the active durable-store root and its `lock-path`, then acquire exclusive `pm.lock` ownership before any writer opens durable state. If the lock is already held, PM enters `/read-only` viewer mode and stops before writer startup.
-4. Create `storage/seglog`, `storage/redb`, `storage/jsonl`, `storage/tantivy` if missing.
-5. Open redb and run migrations.
-6. Open the seglog writer.
-7. Start projectors that tail seglog and write JSONL/Tantivy/checkpoints.
-8. Start optional analytics schedulers and per-project index services.
+1. Resolve `bootstrap_root`, read its binding, and probe the selected logical root before creating anything.
+2. Prove continuity/first-run status, unsafe-filesystem posture, and any exact-base fallback branch; mismatch/unavailability blocks instead of initializing.
+3. Derive `active_root` and acquire the aggregate handle-lifetime OS lock. Lock conflict enters the bounded frozen viewer; indeterminate/unsupported locking blocks or follows the governed fallback rule.
+4. Reconcile nonterminal relocation, restore, migration, recovery, compaction, deletion, and quarantine intents before normal store open.
+5. Read minimum store-version metadata and refuse every unsupported newer redb/seglog/EventRecord version without projector/writer/store mutation.
+6. Load/reconstruct the seglog manifest, recover rotation/tail/corruption deterministically, publish barrier recovery evidence, and establish the survivor set and durable watermark.
+7. Open redb under the migration coordinator, reconcile any nonterminal journal, run required forward migration, verify, and persist its receipt.
+8. Ensure the required verified baseline/due recovery snapshot exists; failure closes mutation admission.
+9. Reconcile checkpoints/dedupe indexes and rebuild derived projections from the declared survivor set.
+10. Start ordinary seglog writer/projectors/analytics only after storage access is `writer`; then admit mutation-capable runtime.
 
 If durable-store fallback is active, PM routes lock files, durable DB state, and session snapshot metadata to the safe local fallback while preserving the selected logical storage root for lineage and user-visible diagnostics.
 
@@ -2043,9 +2044,10 @@ ContractRef: ContractName:Plans/Wiring_Matrix.md, ContractName:Plans/Tools.md, C
 ### 8.4 First run / empty state
 
 
-- **Dirs:** If app data root exists but `storage/*` dirs are missing, create them (§2.1).
+- **First-run proof:** Initialization is allowed only when bootstrap binding/root identity, redb, retained seglog, migration/restore journals, and backup manifests are all absent. Existing continuity evidence plus missing meta/store bytes is corruption/incomplete-store recovery, never first run.
+- **Dirs:** Create `storage/*` only after first-run or continuity proof and aggregate-lock acquisition.
 - **Seglog:** If `storage/seglog/` is empty, writer creates the first segment on first append; projectors reading checkpoint "none" start from offset 0 and see no events until the first append.
-- **redb:** On first open, if no `schema_version` (or missing `meta` namespace), run initial migration that creates all namespaces and sets `schema_version` to 1. redb is created on first open if the file does not exist (standard redb behavior).
+- **redb:** A genuinely new root runs the initial migration and verifies a baseline backup before mutation-capable startup. A present redb file or any continuity evidence with missing `meta`/`schema_version` enters recovery and MUST NOT reinitialize.
 - **Projectors:** When checkpoint is missing, treat as "start from beginning of seglog" (first segment, offset 0); when seglog is empty, no work.
 **Analytics Scan When Checkpoint Missing (Resolved):**
 
@@ -9840,7 +9842,8 @@ plan_unit_id: SP-131
 unit_type: requirement
 status: accepted
 owner_doc: Plans/storage-plan.md
-canonical_text: All non-append durable-store rewrites use same-directory temporary files, fsync, and rename/promote; append-only seglog writers remain subject to durable flush and corruption detection, and replacement-write failures are hard errors without direct-overwrite fallback.
+canonical_text: >-
+  All non-append durable-store rewrites use same-directory temporary files, fsync, rename/promote, and affected/destination-parent synchronization before durable success or acknowledgement. Canonical file create, link, unlink, segment creation/closure, manifest promotion, recovery-intent promotion/removal, and compaction-file promotion synchronize the file and affected/destination parent; any allowed cross-directory rename synchronizes both source and destination parents without this unit authorizing cross-directory rename. Failure of the strongest OS-equivalent directory-entry durability primitive is a hard error, forbids direct-overwrite fallback or durable acknowledgement, and fails writable startup when canonical-store directory durability cannot be established; append-only seglog writers remain subject to durable flush and corruption detection.
 gui_related: false
 gui_classification_reason: This unit preserves backend durable storage rewrite atomicity and failure rules.
 split_recommended: false
@@ -9854,6 +9857,9 @@ acceptance_criteria:
 - This Storage Plan PlanUnit remains addressable with source-span coverage for batch 177.
 - ContractRefs, anchors or aliases, exact tokens, negative constraints, compatibility notes, stale/retired dispositions, owner boundaries, and source lineage from the source span remain preserved.
 - No WorkNodes, NodeSeeds, executable queues, final node manifests, production build tasks, implementation files, or source code are created by this PlanUnit.
+- Durable success or acknowledgement is impossible until staged-content fsync, rename/promote, and affected/destination-parent synchronization complete.
+- Canonical create, link, unlink, segment creation/closure, manifest promotion, recovery-intent promotion/removal, and compaction-file promotion synchronize the affected/destination parent; any allowed cross-directory rename synchronizes both source and destination parents, and unavailable platform-equivalent directory-entry durability fails canonical-store writable startup.
+- SEG-FX-009 with SEG-OR-010 proves that a fault after rename/promote and before parent-directory synchronization is a hard error with no durable success or acknowledgement and restart never claims an unproven promotion.
 validation_surfaces:
 - python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits
 - python3 scripts/pm-plan-index.py validate
@@ -9879,9 +9885,22 @@ preserved_exact_tokens:
 - same-filesystem atomic rename
 - hard error
 - direct overwrite
+- affected parent directory
+- destination parent directory
+- both source and destination parent directories
+- durable success
+- durable acknowledgement
+- platform-equivalent directory-entry durability
+- canonical-store directory durability
+- fail writable startup
+- SEG-FX-009
+- SEG-OR-010
 negative_constraints:
 - Per-session temp directories MUST NOT be used for replacement writes that rely on same-filesystem atomic rename.
 - Failure to create the temp file, fsync it, or rename/promote it is a hard error; PM MUST NOT silently fall back to direct overwrite.
+- PM MUST NOT report durable success or return a durable acknowledgement before affected/destination-parent synchronization completes.
+- An allowed cross-directory rename MUST NOT report durable success until both source and destination parent directories are synchronized; this conditional rule MUST NOT be read as authorization for cross-directory rename.
+- PM MUST NOT fall back to direct overwrite or admit writable startup when platform-equivalent directory-entry durability cannot be established for the canonical store.
 preserved_contractrefs:
 - 'ContractRef: ContractName:Plans/FileSafe.md, ContractName:Plans/GitHub_Integration.md'
 compatibility_only_notes: []
@@ -10438,7 +10457,7 @@ plan_unit_id: SP-141
 unit_type: requirement
 status: accepted
 owner_doc: Plans/storage-plan.md
-canonical_text: Analytics scans read seglog or JSONL mirror in order over canonical windows, compute usage, tool latency, error rate, and tool usage rollups, exclude denied/FileSafe-blocked calls from tool_usage, and checkpoint last scanned sequence or timestamp idempotently.
+canonical_text: Analytics scans read seglog or JSONL mirror in sequence order over canonical windows, compute usage, tool latency, error rate, and tool usage rollups, exclude denied/FileSafe-blocked calls from tool_usage, and checkpoint sequence plus survivor identity idempotently; timestamps filter windows but never resume replay.
 gui_related: false
 gui_classification_reason: This unit preserves backend analytics scan, computation, and checkpoint semantics.
 split_recommended: false
@@ -10483,13 +10502,14 @@ preserved_exact_tokens:
 - tool.denied
 - FileSafe blocks
 - last scanned up to seq X
-- last scanned timestamp
+- last scanned timestamp (retired compatibility wording only)
 - Idempotent
 negative_constraints:
 - tool.denied events and FileSafe blocks do not contribute to tool_usage.{window}.
 preserved_contractrefs: []
 compatibility_only_notes: []
-stale_retired_dispositions: []
+stale_retired_dispositions:
+- Last-scanned timestamp checkpoints are retired; sequence and survivor identity are canonical.
 owner_hints:
 - Plans/storage-plan.md
 ```
@@ -12804,7 +12824,7 @@ plan_unit_id: SP-179
 unit_type: requirement
 status: accepted
 owner_doc: Plans/storage-plan.md
-canonical_text: Storage recovery rules preserve seglog last-complete-record recovery, redb backup or canonical-seglog rebuild, bounded projector commits, checkpoint loss rebuild, and projector panic/crash behavior that restarts from the last good checkpoint without advancing it.
+canonical_text: Storage recovery validates SeglogFrameV2 against the durable watermark and deterministic survivor set, restores canonical non-rebuildable redb only from verified backup, rebuilds only registry-declared derived state from retained canon, and keeps checkpoint/projector crash recovery sequence- and survivor-bound without advancing on failed commit.
 gui_related: false
 gui_classification_reason: This unit preserves backend seglog, redb, checkpoint, and projector recovery rules.
 split_recommended: false
@@ -12836,7 +12856,7 @@ preserved_exact_tokens:
 - Append-only with flush
 - last-complete-record recovery
 - CRC32
-- corrupt record -> skip + recovery event
+- corrupt record -> skip + recovery event (retired except when one-frame boundary and successor are independently validated)
 - redb corruption
 - Restore from backup
 - canonical seglog
@@ -12853,8 +12873,10 @@ negative_constraints:
 preserved_contractrefs:
 - 'ContractRef: ContractName:Plans/Architecture_Invariants.md, ContractName:Plans/Executor_Protocol.md, ContractName:Plans/storage-plan.md'
 - 'ContractRef: ContractName:Plans/Architecture_Invariants.md, ContractName:Plans/Executor_Protocol.md, ContractName:Plans/FileSafe.md'
-compatibility_only_notes: []
-stale_retired_dispositions: []
+compatibility_only_notes:
+- Last-complete-record and bare skip wording is compatibility lineage only; SP-236 owns current recovery mechanics.
+stale_retired_dispositions:
+- Unproven one-record skip and generic redb rebuild are retired.
 owner_hints:
 - Plans/storage-plan.md
 ```
@@ -13020,7 +13042,8 @@ source_lineage:
 - Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:storage-plan-S0102
 preserved_exact_tokens:
 - Compaction
-- §2.2.1
+- '## 7. Backup, restore, compaction, and optional storage enhancements'
+- '#### Immutable-segment compaction and publication'
 - Optional for MVP
 - MUST preserve seq
 - exclude the active segment
@@ -13088,7 +13111,7 @@ preserved_exact_tokens:
 - server-backed store
 - dashboard/Usage reads
 - Per-project seglog
-- §2.1.2
+- '#### 2.2.5 EventRecord persistence boundary'
 - app-global
 - Event schema registry
 - payload validation
@@ -16400,13 +16423,13 @@ canonical_text: >-
   pm.event.v0 envelope in Plans/Contracts_V0.md#EventRecord and
   Plans/event_record.schema.json. Seglog is the authoritative append-only
   MessagePack EventRecord store; redb may store rebuildable checkpoints,
-  projections, idempotency indexes, and event_record_index.v1 lookup rows that
+  projections, dedicated dedupe indexes, and event_record_index.v2 scope-partitioned lookup rows that
   point back to seglog. Replay ordering uses segment generation, segment order,
   byte offset, and sequence_id rather than timestamps. Stored values require
   schema_version, reject unsupported schema_id/schema_version pairs, use
   event_id and idempotency_key according to replay_policy, preserve
-  redaction/no-secret rules, and migrate legacy EventEnvelopeV1 type values into
-  EventRecord event_type with migration metadata.
+  redaction/no-secret rules, and normalize legacy EventEnvelopeV1 values deterministically
+  in memory with projector_replay_only rather than rewriting or appending them.
 gui_related: false
 gui_classification_reason: This unit defines storage value encoding, replay, and projection boundaries, not GUI presentation.
 depends_on: [SP-001, CV-309]
@@ -16416,7 +16439,9 @@ acceptance_criteria:
   - EventRecord values are MessagePack encoded and conform to Plans/event_record.schema.json.
   - redb event lookup rows carry schema_id, schema_version, event_type, segment refs, offset, payload hash, idempotency, and causality refs while pointing back to seglog.
   - Replay order is deterministic and not timestamp-derived.
-  - Legacy EventEnvelopeV1 is compatibility input only and new writers emit EventRecord.
+  - Application/project scope partitions validate without fake project identities; new writers emit EventRecord 2.0.0 only.
+  - Legacy EventEnvelopeV1 is compatibility input only, normalizes byte-deterministically in memory, and never rewrites the source on ordinary open.
+  - Dedupe indexes catch up to the verified seglog tail or append fails closed without mutation.
   - This is partial closure for EventRecord persistence only; not all redb value schemas or payload schemas are materialized.
 validation_surfaces:
   - python3 scripts/pm-implementation-readiness.py validate
@@ -16440,7 +16465,7 @@ preserved_exact_tokens:
   - "`EventRecord`"
   - "`pm.event.v0`"
   - "`schema_version`"
-  - "`event_record_index.v1:{project_id}:{sequence_id}:{event_id}`"
+  - "`event_record_index.v2:{scope_partition}:{sequence_id_20}:{event_id}`"
   - "`event_id`"
   - "`idempotency_key`"
   - "`sequence_id`"
@@ -16474,10 +16499,12 @@ canonical_text: >-
   rows are fully materialized for ApprovedPlanPack, PlanApproved outbox,
   PlanCompileRun, compiler wave contract, WorkGraph draft, WorkNodeRequest,
   Executor intake report, attempt receipt, EventRecord index, blocked
-  projection, and goal receipt. Later GUI, provider, analytics, terminal,
-  browser, project-state, coordination mirror export, worktree/lane, permission/safe-point, and feature
-  projection families are inventoried as deferred_not_build_blocking with an
-  owner, reason, and reopen condition. Persisted values require schema_version,
+  projection, and goal receipt. Case L additionally requires materialized migration,
+  editor recovery/workspace, hotreload, onboarding, safe-point/restore transaction,
+  restore-point, EventRecord dedupe, retention/anchor/maintenance/quarantine/deletion
+  families under the registry-owner repair. Permission snapshots and genuinely later
+  GUI/provider/feature projections remain independently deferred with owner, reason,
+  and reopen condition. Persisted values require schema_version,
   name key shape and value owner, specify replay, migration, retention and
   compaction behavior, and reject raw secrets, tokens, passwords, credentials,
   API keys, OAuth values, local credential paths, or local machine secrets.
@@ -16488,7 +16515,8 @@ unblocks: []
 acceptance_criteria:
   - Plans/storage_value_registry.json parses and conforms to Plans/storage_value_registry.schema.json.
   - Every registered storage family has key_shape, value_schema_id/ref, owner_doc, producer, consumers, schema_version, encoding, replay, migration, retention/compaction, redaction/no-secret, and legacy/canonical crosswalk status.
-  - Launch-critical rows are materialized for approved_plan_pack, plan_approved_outbox, plan_compile_run, compiler_wave_contract, workgraph_draft, worknode_request, executor_intake_report, attempt_receipt, event_record_index, blocked_projection, and goal_receipt.
+  - Launch-critical rows include the original Tier 0C-2 set plus Case L migration receipt, safe-point record, and safe-point restore transaction; no mutation-capable path depends on a deferred bundled family.
+  - Required-MVP editor, hotreload, onboarding, restore-point, dedupe, retention/anchor/maintenance/quarantine/deletion rows are materialized with closed value schemas before implementation depends on them.
   - Every persisted value requires schema_version and materialized schemas carry matching schema_id and schema_version constants.
   - Non-critical families are not prose-only authority; deferred rows include owner, reason, and reopen condition.
   - Coordination event, read-model, and debug mirror export families are registered as non-launch-critical storage families; mirrors remain compatibility/debug surfaces only.
@@ -16523,7 +16551,7 @@ preserved_exact_tokens:
   - "`WorkNodeRequest`"
   - "`Executor intake`"
   - "`attempt receipt`"
-  - "`event_record_index.v1:{project_id}:{sequence_id}:{event_id}`"
+  - "`event_record_index.v2:{scope_partition}:{sequence_id_20}:{event_id}`"
   - "`blocked_projection.v1:{project_id}:{node_id}`"
   - "`goal_receipt.v1:{project_id}:{receipt_id}`"
   - "`coordination.agent_registered`"
@@ -16792,4 +16820,1121 @@ owner_hints:
   - Plans/storage-plan.md
   - Plans/usage-feature.md
   - Plans/Contracts_V0.md
+```
+
+## Case L durable-state owner canon - 2026-07-17
+
+Status: `accepted`
+
+This section is the canonical storage-owner repair for Case L. It supersedes earlier same-file wording that permits payload-only framing as the first writer, one-record skip without a proven next boundary, timestamp checkpoints, optional recovery backups, silent first-run initialization, unspecified lock freshness, live best-effort viewing of newer stores, or unspecified retention/compaction aftermath. Compatibility text remains source-lineage only where retained above.
+
+Approved source refs:
+
+- `Plans/.audits/plan-assurance-handoff-2026-07-17/HANDOFF.md#phase-2--execute-the-case-l-repairs-parallel-with-phase-1`
+- `Case-L:CASE_L_APPROVAL_2026-07-17.md`
+- `Case-L:DECISION_REGISTER.md`
+- `Case-L:REPAIR_BRIEF.md#L-001..L-033`
+- `Case-L:planning/MIGRATION_BACKUP_REPAIR_PLAN.md`
+- `Case-L:planning/SEGLOG_RECOVERY_REPAIR_PLAN.md`
+- `Case-L:planning/RETENTION_COMPACTION_REPAIR_PLAN.md`
+- `Case-L:planning/LOCKING_ROOT_IO_REPAIR_PLAN.md`
+- `Case-L:planning/EVENT_RECORD_REPAIR_PLAN.md`
+- `Case-L:planning/RESTORE_SAFEPOINT_REPAIR_PLAN.md`
+- `Case-L:planning/REGISTRY_REPAIR_PLAN.md`
+
+Approved decision binding is exact:
+
+- Bundle A: `PD-L-01` through `PD-L-06`.
+- Bundle B: `SEG-D-001` through `SEG-D-023`; `SEG-D-024` through `SEG-D-029` are canon-forced repair/acceptance rules.
+- Bundle C: `PD-L005-01` through `PD-L005-07`, `PD-L010-01` through `PD-L010-03`, `PD-L015-01` through `PD-L015-05`, `PD-L033-01` through `PD-L033-03`, and `PD-SCHEMA-01`.
+- Bundle D: `L012-C1` through `L012-C4`, `L014-C1` through `L014-C4`, `L018-C1` through `L018-C3`, and `L011-C1` through `L011-C3`.
+- Bundle E: `EVT-01` through `EVT-07`.
+- Bundle F: `PD-RSP-01` through `PD-RSP-09`.
+
+If a planning proposal conflicts with the approved Decision Register, the approved Decision Register wins. In particular, `PD-SCHEMA-01` requires the structured retention registry successor `pm.storage_value_registry.v2` / `2.0.0`; earlier proposal text suggesting a `1.1.0` registry document is source-lineage only.
+
+Authority is deliberately split:
+
+1. `Plans/Contracts_V0.md` and `Plans/event_record.schema.json` own the shared EventRecord envelope and closed cross-surface enums.
+2. This document owns physical persistence, store admission, migration, backup/restore, seglog durability/recovery, retention/compaction, root/lock/I/O, key namespaces, and storage aftermath.
+3. `Plans/storage_value_registry.schema.json` and `Plans/storage_value_registry.json` own machine-readable family rows, value schemas, recovery dispositions, and retention-policy materialization; this prose does not duplicate their complete schemas.
+4. `Plans/FileSafe.md` owns worktree restore mechanics/equality; `Plans/WorktreeGitImprovement.md` owns baseline worktree effects; `Plans/assistant-chat-design.md` owns conversation restore-point lifecycle. Storage owns their durable keys, refs, journals, and retention only.
+5. Consumer docs present or invoke owner outcomes and MUST NOT define peer storage algorithms, alternate state enums, alternate key namespaces, or weaker failure behavior.
+
+ContractRef: ContractName:Plans/Contracts_V0.md#EventRecord, ContractName:Plans/event_record.schema.json, ContractName:Plans/storage_value_registry.schema.json, ContractName:Plans/storage_value_registry.json, ContractName:Plans/FileSafe.md, ContractName:Plans/WorktreeGitImprovement.md, ContractName:Plans/assistant-chat-design.md, PolicyRule:Decision_Policy.md§2
+
+### Case L-1. Compatibility admission, migration, canonical redb, and backup/restore
+
+#### Store-version admission and downgrade
+
+Before directory initialization over an existing root, writer/projector start, migration, compatibility rewrite, or ordinary read open, read only the minimum version metadata and compare:
+
+- redb store integer `schema_version` against the supported graph range;
+- seglog frame/header version and `segment_generation` against the supported reader set;
+- every encountered EventRecord `{schema_id, schema_version}` against registered readers/upgraders.
+
+Closed `storage_open_state` values are:
+
+`checking | compatible | migrating | recovering | blocked_newer_store | blocked_unsupported_old_store | blocked_integrity | blocked_recovery_failed | ready`
+
+Any version above the relevant ceiling enters `blocked_newer_store`, leaves the entire target root byte-for-byte unchanged, and starts no store, projector, normal writer, janitor, or migration. A projector that encounters a future EventRecord halts before it, sets `projection_health = unavailable`, reason `unsupported_schema_version`, and preserves `last_supported_sequence_id`. It never skips or quarantines an otherwise valid future record.
+
+Metadata-only compatibility diagnostics may show writer/supported versions without opening the store as live `/read-only` viewer. Allowed actions are update/check, choose a verified compatible backup, diagnostics, and quit; `try_anyway` does not exist. In-place/downward migration is unsupported. Downgrade means offline whole-boundary restore of a backup supported by the running app. Writes after that backup boundary are explicitly disclosed as the rollback loss window.
+
+The blocked-newer-store startup surface displays: `This data was written by Puppet Master {writer_version}. This version supports storage through {max_supported_version}. Update Puppet Master or restore a compatible backup. Your data was not changed.` Its stable action intents are `check_for_update | choose_compatible_backup | open_diagnostics | quit`; it exposes no force-open, live-viewer, or mutation path.
+
+SourceRef: `PD-L-04`, `PD-L-05`, `EVT-07`, `CL-L-001`, `Case-L:L-001`
+
+#### Migration coordinator and state machine
+
+`StorageMigrationCoordinator` is the only migration actor. It holds the aggregate canonical-store lock and maintenance lease and persists a same-root, atomic, file-and-parent-synchronized journal before backup or mutation.
+
+Closed phases are:
+
+`preflight | backup_in_progress | backup_verified | applying | pre_stamp_verified | stamp_committed | post_stamp_verifying | committed | restore_required | restoring | rolled_back | blocked`
+
+Required order and aftermath:
+
+1. Preflight source/target versions, registered graph edge, step bounds, backup capacity, root identity, lock, and required free bytes.
+2. Produce and verify the shared-boundary pre-migration backup.
+3. Persist `backup_verified` before the first migration step.
+4. Apply stable, idempotent step IDs; each redb step is its own durable transaction and is journaled only after commit.
+5. Run pre-stamp verification over every affected row/schema/key/alias/ref/checkpoint, not a sample.
+6. Commit the store-level version stamp last. Store integer version chooses the migration graph; exact per-family semantic transitions validate its edge.
+7. Close/reopen without product writers, run post-stamp verification, persist and read back the terminal migration receipt, then mark `committed`.
+
+Mixed store/family versions are legal only under the matching nonterminal journal while the exclusive lock is held. Mixed versions without that journal are `half_migrated_detected` and block. Restart before `backup_verified` discards only incomplete backup staging and returns to preflight. Restart from `backup_verified` through `pre_stamp_verified` restores the verified backup before ordinary open. Restart after `stamp_committed` re-verifies and commits or restores. One automatic restore attempt is permitted; failure enters `blocked` and never loops or ordinary-opens.
+
+`verified` requires backup manifest/schema/hash/size closure, exact step coverage/order, every affected value validating against the target family schema, alias disposition, store/family target agreement, readable retained seglog/EventRecord generations, checkpoint/index bounds, root/boundary identity agreement, read-only reopen, and migration-receipt round trip. The backup stays protected until post-stamp verification, receipt round trip, and a later compatible verified snapshot.
+
+SourceRef: `PD-L-02`, `PD-L-03`, `CL-L-002`, `CL-L-003`, `CL-L-004`, `Case-L:L-002`
+
+#### Canonical redb recovery and first-run proof
+
+Registry authority classes distinguish `canonical_non_rebuildable`, `canonical_dual_homed`, `derived_rebuildable`, and compatibility/deferred state. Only a materialized derived family may rebuild from its registered retained source. Canonical non-rebuildable redb state remains canonical in redb and uses `restore_from_mandatory_backup`; it MUST NOT be described as a rebuildable projection.
+
+A stable, out-of-root bootstrap binding and in-root `storage_instance_id`/root manifest are continuity evidence. Genuine first run requires all of these to be absent: binding/identity, redb file, retained seglog, migration/restore/maintenance journal, and backup manifest. Existing continuity evidence plus missing redb meta or `schema_version` is `corrupt_or_incomplete_store`; it never initializes or silently wipes.
+
+Verified recovery-snapshot service level:
+
+- verified baseline after genuine initial store creation and before mutation-capable startup;
+- snapshot within five minutes after the first dirty canonical mutation;
+- at least once per dirty 24-hour window;
+- clean-shutdown snapshot when dirty;
+- retain the three newest rolling snapshots plus protected migration/restore/hold refs.
+
+If a required baseline/due snapshot cannot be verified, close mutation admission and enter viewer/recovery or blocked posture; diagnostics remain available. Disclose last verified boundary, affected family IDs, and maximum known loss window. Do not silently waive the requirement.
+
+SourceRef: `PD-L-01`, `PD-L-02`, `PD-L-03`, `L018-C1`, `CL-L-005`, `CL-L-006`, `Case-L:L-003`
+
+#### Shared-boundary backup and offline restore
+
+Backup refs are path-independent `backup:{backup_id}`. A completed backup has closed manifest authority containing relative files, SHA-256 and size, store/app versions, root identity, backup kind, and one durable seglog boundary `{segment_generation, segment_name, byte_offset, sequence_id}`. Backup kinds are `baseline | rolling | clean_shutdown | pre_migration | pre_restore | manual`.
+
+Backup capture pauses new canonical mutations, crosses the seglog durable barrier, lets required projectors commit through the boundary or marks them disposable/stale, closes canonical handles, copies only canonical stores into same-filesystem staging, writes/verifies the manifest last, synchronizes files/directories, atomically promotes, and reopens. JSONL/Tantivy and other derived stores rebuild after restore.
+
+Restore selection occurs in the startup recovery shell; `StorageRecoveryCoordinator` executes offline with canonical stores closed:
+
+1. verify manifest/root/hash/size/version ceilings before live mutation;
+2. refuse a newer backup; an older supported backup may migrate forward in staging;
+3. capture verified `pre_restore` state when readable, otherwise quarantine exact current bytes;
+4. materialize/verify staging and persist the restore journal before promotion;
+5. quarantine current files, promote staged files through same-filesystem atomic operations, and journal every promotion;
+6. after interruption, complete only a verified staging set or restore verified quarantine; never ordinary-open mixed stores;
+7. rebuild disposable projections and verify the restored boundary before terminal success.
+
+Closed `data_loss_risk.class` is `none | post_backup_writes_will_be_lost | unknown_due_corruption`. Non-`none` requires explicit confirmation and boundary/family disclosure. JSON/JSONL export is not an importable MVP backup.
+
+SourceRef: `PD-L-05`, `PD-L-06`, `CL-L-007`, `CL-L-008`, `Case-L:L-016`
+
+#### Alias lifecycle, migration history, and preflight
+
+App major N MUST register a migration edge from supported N-1. N-2 needs an explicit edge or blocks as unsupported old state. Aliases are migration-reader inputs only: copy-forward to the canonical key, validate semantic equality, stop new alias writes, remove the live residual only after pre-stamp verification, and preserve prior bytes in the protected backup. Rerun yields the same canonical value and no duplicate receipt.
+
+The machine registry must materialize one migration-receipt family produced by `StorageMigrationCoordinator`; release validation consumes it rather than defining a peer receipt. Completed history carries store and family transitions, preflight, backup ref, steps, verification, rollback, data-loss risk, terminal status, app/journal refs, and timestamps. Failed/nonterminal attempts remain discoverable through external journal evidence.
+
+Each step declares `max_extra_bytes`. Preflight requires:
+
+`required_free_bytes = backup_bytes + staging_bytes + max(268435456, ceil(0.10 * (backup_bytes + staging_bytes)))`
+
+`MigrationPreflightResult` is owned by `Plans/storage_recovery_contracts.schema.json#/$defs/migration_preflight_result` and has exactly the required fields `outcome`, `reason_code`, `filesystem_ref`, `free_bytes`, `required_free_bytes`, `backup_bytes`, `staging_bytes`, `reserve_bytes`, and `checked_at_utc`. `filesystem_ref` is a non-secret stable identity, never an absolute path. `reserve_bytes` MUST equal `max(268435456, ceil(0.10 * (backup_bytes + staging_bytes)))`, and `required_free_bytes` MUST equal `backup_bytes + staging_bytes + reserve_bytes`. The sidecar's mandatory `x-puppet-master-assertions` vocabulary enforces those relations; an implementation or validation path that cannot enforce it fails preflight and MUST NOT treat structural Draft 2020-12 validation alone as `ready`.
+
+The approved result vocabulary is exact: `outcome = ready | blocked`, with required-present `reason_code = null | blocked_insufficient_space`. `ready` requires `reason_code = null` and `free_bytes >= required_free_bytes`. `blocked` requires `reason_code = blocked_insufficient_space` and `free_bytes < required_free_bytes`. No other outcome/reason pairing exists. Inability to measure every required input or construct a conforming result blocks outside the result contract rather than fabricating a schema-valid value. A blocked preflight starts no backup, writes no migration journal beyond any already-created no-mutation admission evidence, and mutates no canonical store.
+
+`MigrationProgressSnapshot` is owned by `Plans/storage_recovery_contracts.schema.json#/$defs/migration_progress_snapshot` and is derived only from the matching durable migration journal. Its phase is exactly one of the twelve coordinator phases above. `completed_steps` and `total_steps` are non-negative with `completed_steps <= total_steps`. `bytes_done` and `bytes_total` are either both absent or both present and non-negative with `bytes_done <= bytes_total`; they are present only when the journal has a measurable byte boundary. Percentage and ETA fields are forbidden. `cancellable=true` exists only during `preflight`; every later phase requires false. Cancellation during preflight produces no migration receipt. From `backup_in_progress` onward, interruption is recovered from the journal and cannot become a force-cancel or try-anyway path.
+
+Terminal receipt linkage is exact. `committed` and `rolled_back` require `terminal_receipt_ref` to the one storage-registry `pm.storage_value.migration_receipt.v1` value. `blocked` after a `ready` preflight requires that same receipt authority; `blocked` caused by the no-mutation `blocked_insufficient_space` preflight has no terminal migration receipt and carries only its preflight result. Every nonterminal phase forbids `terminal_receipt_ref`. The snapshot is never a receipt, and neither this sidecar nor Contracts creates a peer migration receipt.
+
+From `backup_in_progress` through every nonterminal post-preflight phase, the visible interruption copy is: `Keep Puppet Master open. If interrupted, recovery will resume on the next launch.` Force-cancel and try-anyway are absent after preflight. A blocked migration/restore offers only the state-valid subset of retry recovery, update, compatible-backup selection, metadata diagnostics, and quit.
+
+ContractRef: ContractName:Plans/storage_recovery_contracts.schema.json#/$defs/migration_preflight_result, ContractName:Plans/storage_recovery_contracts.schema.json#/$defs/migration_progress_snapshot, ContractName:Plans/Contracts_V0.md#storage-compatibility-and-migration-status-envelope, ContractName:Plans/storage_value_registry.json#/families/migration_receipt/value_schema
+
+#### MVP verification, repair, and salvage invocation boundary
+
+The approved MVP exposes read-only metadata diagnostics plus the startup recovery shell operations above. It does not expose a generic user- or support-invocable live verify/repair/salvage command, a Doctor mutation mode, an in-place store editor, or a bypass token. `Retry storage` and retry-recovery actions re-run closed admission/verification gates; they do not repair bytes. Backup restore remains offline and journaled. Internal migration, restore, compaction, quarantine, and any future salvage algorithm remain coordinator-owned maintenance operations under the aggregate lock and maintenance lease. Adding a generic repair/salvage command is a new product decision requiring Contracts/command/wiring/security ownership; consumers MUST NOT invent one from diagnostics wording.
+
+SourceRef: `PD-L-04`, `PD-L-05`, `PD-L-06`, `CL-L-009`, `CL-L-010`, `CL-L-011`, `Case-L:L-025`, `Case-L:L-031`, `Case-L:L-032`
+
+### Case L-2. SeglogFrameV2, acknowledgement, corruption, and crash convergence
+
+#### Frame generation and validation
+
+The first implementation writes `SeglogFrameV2`; generation 1 is read-only compatibility and is never mixed with V2 in one segment. Every V2 frame starts with a fixed 48-byte little-endian prefix containing magic `PMSEGR2\0`, frame version, bounded header/payload lengths, flags, segment generation, sequence ID, header CRC, payload CRC, prefix CRC, and zero reserved field. CRC uses CRC32/ISO-HDLC; `prefix_crc32` covers the prefix with its own field zeroed. Header metadata is canonical fixed-order MessagePack, at most 4 KiB; inline payload is at most 16 MiB, with larger content using `payload_ref`.
+
+Validation order is fixed: magic; prefix CRC; supported frame version/reserved zero; caps/file bounds; generation/strict sequence; header CRC/decode; payload CRC; decompression bounds; EventRecord schema; duplicate identity cross-check. Resynchronization scans bytewise to the first candidate passing every check. A trustworthy frame length permits one-frame skip only when the computed next boundary validates. Otherwise loss is the exact byte range to the next valid candidate or segment remainder.
+
+Loss disposition is closed:
+
+| Condition | Physical action | Aftermath |
+|---|---|---|
+| Invalid active EOF wholly after durable watermark | journaled truncate after adopting valid unacknowledged frames | clean recovery summary; no acknowledged-loss claim |
+| Proven one-frame or bounded resync hole | active file seals degraded; closed file unchanged | disclosed hole; rebuild projections from survivors |
+| No later valid candidate | truncate only if wholly unacknowledged tail; otherwise preserve/seal | remainder unavailable; mutation blocked |
+| Any possible loss at/below durable watermark | never clean or silently accepted | global integrity block until verified backup restore or separately governed future loss acceptance |
+
+SourceRef: `SEG-D-001` through `SEG-D-005`, `Case-L:L-004`
+
+#### Manifest, append acknowledgement, and sequence authority
+
+`storage/seglog/manifest.v1.msgpack` is disk-first publication/recovery control metadata, never a second EventRecord source. It records manifest/recovery generation, segment inventory/hashes/ranges/states, active durable commit watermark/group digest, sequence lease/high-water mark, excluded ranges, retired inputs, and survivor-prefix digest.
+
+Append success requires two barriers:
+
+1. complete frame writes plus active-segment `sync_all`;
+2. atomic manifest watermark promotion plus parent-directory synchronization.
+
+Only then may append resolve with a synced `AppendReceipt`. `persisted_at_utc` is assigned at commit-group seal and becomes persistence evidence only with that receipt. Ordinary group commit seals on the first of 10 ms, 64 records, or 1 MiB. `durability_class = barrier` forces immediate commit for safe points, runtime checkpoints, approvals, mutation-authorizing receipts/outboxes, and storage recovery events. No mutation or external side effect may continue without the synced prerequisite receipt.
+
+Sequence ranges are durably leased in blocks of 4,096 before issuance; unused IDs after crash are abandoned, never reused. Gaps are legal only with closed reason `allocator_lease_abandoned | corruption_loss | retention_compaction`.
+
+Every file create/rename/unlink/promotion synchronizes the file and destination parent directory; canonical operations fail closed when platform-equivalent directory-entry durability cannot be established.
+
+SourceRef: `SEG-D-006` through `SEG-D-011`, `Case-L:L-007`, `Case-L:L-029`
+
+#### Survivor checkpoints and projection aftermath
+
+Seglog-derived checkpoints contain `manifest_generation`, `recovery_epoch`, segment cursor, `last_sequence_id`, `last_event_id`, `survivor_prefix_sha256`, and projector schema version. Timestamp is observation metadata only. Compaction remaps by semantic sequence/event only when the survivor digest matches; otherwise invalidate/rebuild.
+
+Loss impact uses verified frame metadata first, then neighboring sequences/filename range/watermark/lease, then advisory index rows cross-checked by hashes/identity. It records exact/bounded/unknown precision without promoting projections to authority. A projector that may have consumed excluded bytes discards affected derived state and rebuilds from the nearest matching survivor checkpoint or the first retained event. Freshness may become `current` relative to the survivor set, but health remains `degraded` with gap/recovery provenance.
+
+Unknown or mutation-authorizing loss blocks mutation-capable runtime. Read-only History/Ledger/evidence inspection may continue. Persistent disclosure distinguishes unacknowledged tail, one record, bounded range, and unknown remainder; it never says repaired when canonical bytes were lost.
+
+SourceRef: `SEG-D-012` through `SEG-D-016`, `Case-L:L-013`, `Case-L:L-028`
+
+#### Crash-idempotent maintenance
+
+Every destructive/namespace-changing recovery persists a same-directory intent with deterministic recovery ID, target preimage hash/length, exact postcondition, and manifest precondition before mutation. Restart applies from the precondition, continues from the exact postcondition, or fails closed on a third state. Semantic recovery events dedupe by deterministic ID.
+
+Rotation seals pending groups, persists intent, closes/renames the old active, creates `.opening`, promotes one new active, publishes the manifest, and removes the intent. Startup resolves zero/two-active states from intent+manifest+ranges; ambiguity fails closed, never by mtime.
+
+Tail truncation records target length and prefix/tail hashes, truncates only matching preimage, synchronizes file, publishes watermark/recovery epoch, and dedupes the barrier recovery event. Active midstream corruption seals degraded; closed corruption never changes bytes.
+
+Boot recovery completes seglog recovery before redb projectors or mutation admission. Janitor removes only intent-governed/unreferenced artifacts and emits one summary per deterministic recovery set.
+
+SourceRef: `SEG-D-017` through `SEG-D-023`, `Case-L:L-019`
+
+### Case L-3. Retention, holds, compaction, deletion, and quarantine
+
+#### Retention authority and defaults
+
+Every materialized family/event registration carries an exact structured `retention_policy_ref`; prefix, filename, key name, and mtime MUST NOT infer destructive policy. Unknown policy defaults to indefinite/no-count-eviction and is `materially_incomplete`.
+
+Minimum event-class defaults:
+
+| Class | Window/cardinality | Expiry behavior |
+|---|---|---|
+| Approval, receipt, audit authority, deletion tombstone, source lineage | indefinite; no count eviction | storage pressure fails closed |
+| Non-authority security diagnostics and migration/recovery operational history | 2,555 days; 2,000,000/project | expired unheld rows only; otherwise fail closed |
+| Runtime/run/node/attempt | 365 days after run completion; 1,000,000/run and 5,000,000/project | successor compaction |
+| Chat content | indefinite while thread exists; 250,000/thread | roll linked successor; never evict content silently |
+| Usage/ordinary telemetry | 90 days; 2,000,000/project | compact expired unheld rows |
+| `seglog.event_appended` | 7 days; 500,000/instance | compact expired unheld rows |
+| Coordination | 180 days after run completion; 1,000,000/project | compact expired unheld rows |
+| Released safe points | 90 days after last hold release; 64/run and 2,048/project | oldest eligible only; retained hash summary 365 days |
+
+Expiry is inclusive at `anchor + ttl`. Count order is `(retention_anchor_at_utc, sequence_id?, stable_object_id)`. Legal hold, recovery/preserved/recent-run anchor, live ref, backup, rollback, or maintenance ref overrides age/count eligibility. Latest 25 terminal runs/project receive the automatic `recent_run` anchor; becoming 26th clears only that automatic anchor.
+
+Janitor runs after lock/recovery at startup and every 6 hours, processing at most 10,000 keys or 512 MiB per pass with a durable cursor and frozen cutoff. Compaction evaluates every 24 hours and at 20% reclaimable, 1 GiB reclaimable, or priority deletion intent.
+
+The search-first Settings inventory exposes `Advanced > Storage & Retention`. It permits user configuration of history, diagnostic, and released-safe-point windows only at or above the owner minima; attempts to shorten below those minima are rejected with the owner reason. It shows effective chat/runtime/diagnostic/safe-point policies, the latest-25-run preservation default, compaction/storage-pressure status, and read-only legal-hold/quarantine state. Legal-hold set/clear remains the protected `storage.legal_hold.manage` command rather than an ordinary toggle; manual compaction is an owner-routed maintenance request and cannot bypass eligibility, hold, or maintenance-lease rules.
+
+SourceRef: `PD-L005-01` through `PD-L005-07`, `PD-SCHEMA-01`, `Case-L:L-005`
+
+#### Holds and recovery anchors
+
+Legal holds require `storage.legal_hold.manage`, actor, reason, and durable set/clear receipt; they never clear automatically. Multiple holds compose by union.
+
+A blocked episode with `requires_safe_point_restore = true`, its canonical safe-point record, snapshot/blob refs, and `recovery_anchor_record` publish as one durability unit. Release is allowed only for `resolved | superseded_with_verified_successor | abandoned_by_user`; run completion, age, archive, exit, or worktree unbinding is insufficient. If a required snapshot is missing/corrupt, state becomes `recovery_unavailable`, remains blocked and anchored, preserves local work, disables restore, and requires locate/verified recovery, replan, or explicit abandonment with receipt.
+
+SourceRef: `PD-L010-01` through `PD-L010-03`, `PD-RSP-06`, `Case-L:L-010`
+
+#### Immutable-segment compaction and publication
+
+Migration, compaction, restore, salvage, and backup-boundary capture are mutually exclusive under the aggregate lock plus one maintenance lease. Compaction operates only on a frozen closed source boundary.
+
+Closed phases are:
+
+`preparing | building | verified | commit_pending | committed | finalized | recovery_required | failed`
+
+The builder copies the exact retained EventRecord set in original semantic order to `segment_generation = source + 1`, preserving `sequence_id`, `event_id`, idempotency, causality, timestamps, payload bytes/hash, and gaps. It builds complete target index/checkpoints/shadow projections and a content-free removal/translation manifest. The active segment is excluded.
+
+Publication order is:
+
+1. persist redb `pending_generation` plus target refs/manifest hash;
+2. atomically replace same-directory `storage/seglog/CURRENT` and synchronize its parent; this is visibility authority;
+3. activate target redb generation, clear pending, finalize, then create the next target active segment.
+
+Before `CURRENT`, source wins. After `CURRENT`, target wins and startup finalizes or blocks; it never chooses newest by mtime. Old source deletion waits for target verification and cleared refs. Checkpoints translate by semantic identity or rebuild; index rows never retain retired physical refs.
+
+##### Compaction lifecycle event action and exceptional-phase contract
+
+`storage.compaction_lifecycle_changed` records the deterministic aftermath modes selected for one `compaction_id`; the action tokens do not by themselves claim that an outcome has been applied. `checkpoint_action` is closed, in order, to `translate_by_semantic_identity | invalidate_and_rebuild`. Translation is admitted only when the survivor digest matches and every carried checkpoint/index position resolves by preserved semantic `sequence_id`/`event_id`; no retired physical segment ref survives, and the prior authoritative checkpoint remains in force until target verification. If survivor equality or any semantic mapping is absent, mismatched, ambiguous, timestamp-derived, or physical-ref-derived, `invalidate_and_rebuild` invalidates the affected checkpoint/index rows and rebuilds from the nearest matching survivor checkpoint or, when none matches, the first retained event. Checkpoint authority advances only after byte/semantic equality and target-generation coverage are proven.
+
+`projection_action` is closed, in order, to `activate_verified_target_shadow | rebuild_from_survivors`. `activate_verified_target_shadow` activates only the complete target-generation shadow verified against the exact retained EventRecord set, survivor/removal map, target indexes/checkpoints, and target generation, and only after synchronized `CURRENT` selects that target; activation and pending-state clear occur once. When a complete target shadow is absent or unprovable, `rebuild_from_survivors` discards affected derived state and rebuilds from the nearest matching survivor checkpoint or the first retained event. No target projection or projector checkpoint is published until that rebuild covers the authoritative target survivor set. There is no `none`, `preserve`, `advance`, generic `recovery`, `swap`, `resume`, generic `rebuild`, packet-007 token, open-string member, or best-effort fallback in either domain.
+
+The exact phase meanings and terminality for one `compaction_id` are:
+
+| Phase | Storage authority meaning | Terminal? |
+|---|---|---:|
+| `preparing` | Aggregate lock and maintenance lease are held; the closed source boundary, policy revision/hash, target identity, and aftermath modes are selected; no target publication authority exists. | no |
+| `building` | The immutable source remains authoritative while the successor EventRecord set, indexes, checkpoints, shadow projections, and removal/translation manifest are built. | no |
+| `verified` | Target bytes and required target artifacts verify against the exact retained semantic set; source still wins because `CURRENT` has not changed. | no |
+| `commit_pending` | `pending_generation` plus target refs/manifest hash are durable; source still wins while `CURRENT` is proven unchanged. Unknown or target-selected `CURRENT` cannot remain ordinary `commit_pending`. | no |
+| `committed` | Synchronized `CURRENT` selects the verified target and target redb activation is complete or proven complete; target wins while finalization may remain. | no |
+| `finalized` | Target is authoritative, pending state is cleared, finalization is complete, the next active target segment exists, and old-source deletion remains separately gated by cleared refs. | yes, success |
+| `recovery_required` | Authority or post-publication convergence is unresolved; mutation-capable runtime and new maintenance remain fenced while both sides are reconciled from bytes, intent/journal, manifest, and `CURRENT`, never mtime. | no; only the two proof-gated exits below |
+| `failed` | The attempt ended before target publication with source authority proven, or recovery ambiguity resolved to that source-authoritative failure; target publication/activation is not claimed. | yes, non-success |
+
+The only ordinary chain is `preparing -> building -> verified -> commit_pending -> committed -> finalized`. Each successor requires the predecessor's complete durable postcondition; skipped, reversed, same-state-as-new, and alternate ordinary edges are illegal. The complete adjacency is:
+
+```text
+preparing         -> building | failed | recovery_required
+building          -> verified | failed | recovery_required
+verified          -> commit_pending | failed | recovery_required
+commit_pending    -> committed | failed | recovery_required
+committed         -> finalized | recovery_required
+recovery_required -> committed | failed
+finalized         -> <terminal>
+failed            -> <terminal>
+```
+
+The exceptional predicates are exact. `preparing | building | verified | commit_pending -> failed` is admitted only when readable `CURRENT` is proven unchanged on the valid source generation, no target visibility or activation occurred, and the durable non-empty `failure_reason` records the fenced non-success. Those same phases enter `recovery_required` when `CURRENT`, intent/journal, manifest, pending-generation state, target state, or publication postcondition is ambiguous, conflicting, or cannot prove source authority; both sides are preserved and mutation, maintenance, projector publication, and checkpoint advance remain fenced. `commit_pending -> recovery_required` is mandatory when `CURRENT` may select the target but activation/finalization is incomplete or unproven. `committed -> recovery_required` preserves target authority when finalization, pending clear, next-active creation, or their postconditions are incomplete, conflicting, or unproven; source rollback and direct failure are forbidden.
+
+`recovery_required -> failed` requires proof that `CURRENT` remained on the valid source, the source boundary is authoritative, and no target visibility/activation occurred. `recovery_required -> committed` requires proof that synchronized `CURRENT` selects the already-verified target, target bytes/artifacts match, and target activation is complete or is completed idempotently; it then continues through `committed -> finalized`. Direct `recovery_required -> finalized`, `committed -> failed`, and any edge out of `finalized | failed` are forbidden. Even when physical finalization is already complete after restart, the lifecycle first proves `committed` and then records the ordinary `committed -> finalized` successor without repeating physical effects.
+
+`failure_reason` is the sole exceptional evidence field: a non-empty string required exactly for `recovery_required | failed` and forbidden for all six ordinary phases. No reason-code enum or peer recovery-evidence field is authorized. Action tokens name selected modes during early, exceptional, or failed phases without fabricating success. For `verified | commit_pending`, required target artifacts are verified but source remains authoritative while `CURRENT` is unchanged. For `committed | finalized`, the selected outcomes are applied and proven against the target selected by `CURRENT`. `recovery_required` preserves the selected/last-proven modes without a success claim; `failed` preserves the attempted modes while forbidding target activation, target checkpoint advance, and source deletion.
+
+Authority order is fixed: verified immutable source/target bytes plus the frozen semantic set; same-directory intent/journal and manifest under lock/lease; target artifact verification; synchronized `storage/seglog/CURRENT` as the sole visibility selector; redb pending/active generation reconciled to `CURRENT`; the admitted lifecycle EventRecord and disposable projection as observations; then GUI, diagnostics, search, indexes, mtimes, and filenames as non-authoritative views. No later layer overrides an earlier disagreement.
+
+Restart of a nonterminal ordinary phase resumes the same `compaction_id` and `storage_maintenance_operation` only at the next legal edge whose predecessor postcondition is proven; missing or conflicting proof enters `recovery_required`. Restart in `recovery_required` retains the same identities, lineage, refs, policy revision/hash, and action tokens and stays fenced until one proof-gated exit is established. Restart after `finalized | failed` returns the original terminal result. Explicit retry after `failed` is a new attempt with a new `compaction_id`, after revalidating current `CURRENT`, frozen source generation, policy revision/hash, retention/hold/live-ref/backup/rollback eligibility, aggregate lock, maintenance lease, and target allocation. Reusing a terminal identity with the same semantic digest returns the original result; a different digest returns `idempotency_conflict`. A later compaction after `finalized` is likewise a new operation.
+
+Global `event_id` and scoped `(scope_partition, event_type, idempotency_key)` identities remain authoritative for app-root lifetime. Same identity and semantic digest returns the original durable result; different digest returns `idempotency_conflict`; unavailable dedupe proof returns `dedupe_unavailable`. Re-observation without a new postcondition is replay, not a new append. `projector_replay_only` rebuilds only owned disposable projections/checkpoints and cannot append, dispatch, notify, charge, mutate canonical values, or select Storage authority. Unknown or unregistered action, phase, schema, owner, alias, transition, retention, identity, or secret authority quarantines without checkpoint advance; raw credentials, secrets, local paths, and machine-local state are rejected before append. Every refusal/rejection has zero append, zero projection effect, zero checkpoint advance, zero command/tool/provider/network dispatch, and zero source/target namespace mutation.
+
+SourceRef: `PD-L015-01` through `PD-L015-03`, `SEG-D-021`, `Case-L:L-015`, `Case-L:L-030`
+
+#### Thread/project deletion
+
+Thread deletion immediately persists a content-free tombstone/deletion record and removes the thread from normal navigation/search/context/export projections. It forces rotation when needed and physically purges active canonical content, message/attachment/blob content, mirrors, search, and derived rows within 24 hours unless held. Non-content audit/runtime receipts remain under their owner policy. Backups retain deleted bytes at most 30 days unless held and MUST replay tombstones before visibility after restore.
+
+`Remove project from list` remains a registry/UI tombstone only. `Delete Puppet Master project data` is a separately confirmed destructive intent that compacts project content from the app-global seglog. Ambiguous/cross-project reachability blocks instead of inferring from path/name/time.
+
+`storage.deletion_lifecycle_changed` uses required spine `schema_version`, `deletion_id`, semantic `deletion_scope_ref`, `state`, `actor_ref`, `hold_blockers`, `purge_deadline_utc`, and content-free `tombstone_ref`; only `project_id`, `compaction_generation`, and `failure_reason` are conditional. Event-payload state conditions are exact: `requested | logically_hidden | held` forbid both conditional evidence fields; `purge_pending` permits an absent or non-negative integer `compaction_generation` and forbids `failure_reason`; `purged` requires non-negative integer `compaction_generation` and forbids `failure_reason`; `failed` forbids `compaction_generation` and requires a non-empty `failure_reason`. A pending generation is not visibility authority, and `purged` is admitted only after owner compaction proves a verified committed successor generation.
+
+The ordinary graph is `requested -> logically_hidden`; `logically_hidden -> held` when current hold evaluation yields blockers; `logically_hidden -> purge_pending` when holds are absent and scope, tombstone, writer, and purge/compaction authority are current; `held -> purge_pending` only after every blocking hold is owner-cleared and the complete eligibility set is revalidated; and `purge_pending -> purged` only with verified committed successor-generation and content-free tombstone authority. Direct `requested -> purge_pending|purged`, `logically_hidden -> purged`, `held -> purged`, purge while a blocker remains, and every transition out of terminal `purged` are forbidden.
+
+Failure ingress is closed to `requested | logically_hidden | purge_pending -> failed`. `held -> failed` is forbidden because hold disclosure remains `held`; `purged -> failed` is forbidden because purge is terminal. `failed` is fenced, retryable non-success. Retry reuses the same `deletion_id` and existing deletion-operation idempotency identity, does not mint a new lifecycle or retry identity, and revalidates holds, tombstone, scope, storage-writer posture, and purge/compaction authority before a graph-valid successor. It creates no fixed bypass from `failed` to `purge_pending` or `purged`.
+
+Admission order is fail closed: validate the EventRecord/payload discriminator, schema/version, current-state conditional, and dual-scope equality; resolve the same durable deletion record/current state and replay identity; revalidate deletion scope and cross-project reachability; revalidate all holds; prove the content-free tombstone and logical hide; prove writer and owner maintenance/compaction authority; for `purged`, prove the verified committed successor generation; then append at most one semantic event and advance owned projections/checkpoints only after those proofs. UI/command acceptance is not purge authority. Same EventRecord identity/digest returns the original durable result with one append and no duplicate purge/projection effect; a different digest returns `idempotency_conflict`; unavailable dedupe proof returns `dedupe_unavailable`. Every refusal or rejection has zero new append, zero owner-state mutation, zero projection effect, zero checkpoint advance, zero purge/compaction dispatch, and zero hold clear.
+
+SourceRef: `PD-L015-04`, `PD-L015-05`, `Case-L:L-005`, `Case-L:L-015`
+
+#### Invalid-value quarantine
+
+Before invalid canonical bytes are reset, removed, migrated, or replaced, write exact `raw.bin` plus closed custody manifest and append-only recovery receipts under same-filesystem quarantine; synchronize file and parent before live-key mutation. Closed states are:
+
+Closed transition edges are exactly: `detected -> secured`; `secured -> migrated | rebuilt | reset_to_default | restored | recovery_blocked`; and `migrated | rebuilt | reset_to_default | restored -> purged`. There is no direct `detected` resolution, no `recovery_blocked -> purged`, and no transition out of `purged`.
+
+Only resettable GUI/projection state may secure then reset to owner defaults. Authority, receipts, blocked state, safe points, holds, and audit state fail closed. Unknown schema/upgrader stays `recovery_blocked`.
+
+Risk classes are `Q-CRITICAL | Q-RESETTABLE | Q-DERIVED | Q-MIRROR`. Unresolved critical quarantine is indefinite and never cap-evicted; cap pressure blocks new mutation-capable writes. Raw bytes inherit source permissions, stay out of routine export, and require protected explicit export.
+
+SourceRef: `PD-L033-01` through `PD-L033-03`, `Case-L:L-033`
+
+### Case L-4. Storage I/O, aggregate lock/viewer, root continuity, and fallback
+
+#### Closed operational vocabulary
+
+Required identities are `bootstrap_root`, `logical_root`, `active_root`, stable random `storage_instance_id`, normalized-path `logical_root_fingerprint`, monotonic `root_generation`, `fallback_branch_id`, and exact `fallback_base`.
+
+Closed `storage_access_mode` is `writer | viewer | blocked`. Closed minimum `storage_mode_reason` is:
+
+`normal | lock_held | lock_indeterminate | unsupported_store_version | unsafe_filesystem_no_fallback | storage_io_exhausted | root_mismatch | root_unavailable | fallback_diverged`
+
+The bootstrap binding is outside root-selection precedence; the in-root identity manifest carries instance/generation and optional fallback lineage. Raw local locators remain local/redacted.
+
+SourceRef: `L018-C1`, `Case-L:L-018`
+
+#### Storage-I/O taxonomy and failure gate
+
+Closed `storage_io_class` is:
+
+`interrupted | transient_busy | capacity_exhausted | quota_exhausted | read_only_media | permission_denied | device_unavailable | lock_conflict | integrity_failure | invalid_path`
+
+`interrupted` retries the same syscall at most three immediate adapter attempts. `transient_busy` retries exactly once after 250 ms. Nothing else auto-retries; unknown maps fail-closed to `device_unavailable`.
+
+Exhausted/nonretryable canonical I/O closes the global write gate, rejects new canonical writes/mutation-capable attempts, stops projectors/checkpoints/analytics/maintenance writers, retains an already-held lock, and enters validated viewer or blocked. No canonical event/receipt is buffered as pseudo-durable memory state. ENOSPC never deletes authority, active segments, backups, or safe points to continue. An optional 8 MiB diagnostic reserve is best effort only.
+
+Explicit `Retry storage` probes writeability, root identity, versions, integrity, lock, and checkpoints before writer mode; blocked attempts do not auto-resume.
+
+SourceRef: `L012-C1` through `L012-C4`, `Case-L:L-012`
+
+#### Aggregate OS lock and viewer envelope
+
+One aggregate canonical-store `pm.lock` per active root is held for the OS handle lifetime. Unix uses nonblocking exclusive `flock`; Windows uses `CreateFileW` plus nonblocking exclusive `LockFileEx`; result is `acquired | held | indeterminate | unsupported`. Unsupported/untrustworthy semantics route to unsafe-root handling.
+
+PID, mtime, owner file, and heartbeat are diagnostics only. Heartbeat interval is 2 seconds and diagnostic stale threshold 10 seconds. A stale heartbeat never authorizes takeover while the OS lock is held. Takeover acquires OS lock first, then replaces/synchronizes owner diagnostics; the lock file is never deleted/renamed to seize authority.
+
+Lock-conflict viewer is a frozen, manually refreshable compatible snapshot at one high-water mark. It starts no writer, migration, janitor, projector/checkpoint writer, analytics, compaction, backup, settings/history/session writer, agent/run/provider side effect, or external mutation. View-local state is visibly ephemeral. Mutation-capable commands remain discoverable but disabled with `storage_read_only`. Promotion is never automatic: close readers, rerun continuity/safety/version/integrity/generation checks, acquire lock, run recovery/migration, then start writers. Newer-store policy remains the metadata-only block above.
+
+A writer degraded by I/O to viewer retains its owned lock until recovery/exit. A process that cannot establish a safe read snapshot is `blocked`, not an empty viewer.
+
+SourceRef: `L014-C1` through `L014-C4`, `PD-L-04`, `Case-L:L-014`
+
+#### Root continuity, relocation, and unsafe fallback
+
+Probe before directory creation. Binding/candidate outcomes are deterministic:
+
+- no binding plus absent/empty candidate: genuine first run after lock;
+- matching instance: ordinary continuity;
+- binding plus absent/empty candidate, different instance, missing prior volume, or corrupt identity: block/recovery, never initialize;
+- populated markerless candidate: `legacy_unbound` viewer/recovery, never first run.
+
+Mismatch offers use previous, choose, copy-and-switch, or strongly confirmed new instance. Relocation is copy-validate-switch: lock source/destination deterministically, freeze verified source boundary, stage destination, verify identity/checksums/versions/replay, promote, update bootstrap binding last, reopen/verify, and retain source as recovery copy. Crash selects the last verified binding or blocks; cross-volume rename atomicity is never assumed.
+
+Unsafe fallback uses exactly `<bootstrap_root>/storage-fallbacks/<logical_root_fingerprint>/` after safety probe. Every canonical store and aggregate lock moves together. It is a detached branch with stable instance, unique branch ID, and exact `fallback_base`; cross-host exclusion is not claimed. Return is explicit fast-forward-only when logical root still equals base. Changed base closes local writes as `fallback_diverged`; automatic merge/overwrite is forbidden and both stores remain recoverable. Preserving logical, forking fallback as a new instance, or exporting both are explicit dispositions.
+
+SourceRef: `L018-C1` through `L018-C3`, `L011-C1` through `L011-C3`, `Case-L:L-011`, `Case-L:L-018`
+
+#### Approved fallback-divergence disposition owner contract
+
+`PD-PROBE-L011-01 A/A/A/A/A` fixes three distinct owner actions. Their exact IDs are `cmd.storage.fallback.keep_logical_root`, `cmd.storage.fallback.fork_new_instance`, and `cmd.storage.fallback.export_both`. They are independently visible and independently permission-admitted; no generic `resolve_divergence` command, disposition enum dispatch, automatic merge, overwrite, authority inference, or cleanup shortcut is equivalent.
+
+The divergence lifecycle is closed to `awaiting_disposition | applying_keep_logical_root | applying_fork_new_instance | applying_export_both | logical_root_selected | fork_candidate_ready | export_custody_complete | recovery_required`. `fallback_diverged` keeps local write admission closed. `logical_root_selected` is the only one of these commands that changes active bootstrap selection. `fork_candidate_ready` returns an inactive candidate and leaves the active bootstrap binding byte-for-byte unchanged. `export_custody_complete` is custody evidence only and leaves divergence/authority selection unchanged. Refusal or recoverable failure returns to `awaiting_disposition` or `recovery_required`, keeps writes closed, and preserves both roots.
+
+Every command uses the common typed input envelope in `Plans/Contracts_V0.md#storage-fallback-divergence-command-envelopes`. It requires `command_id`, `idempotency_key`, `actor_ref`, command-specific confirmation, and all eight explicit compare-and-swap fields: `expected_storage_instance_id`, `expected_logical_root_fingerprint`, `expected_root_generation`, `expected_fallback_branch_id`, `expected_fallback_base_ref`, `expected_logical_head_sha256`, `expected_fallback_head_sha256`, and `expected_bootstrap_binding_sha256`. Every SHA-256 value is lowercase 64-hex. The handler re-reads and revalidates every component under the aggregate fallback lock, the logical-root lock when safely acquirable, and the maintenance lease; a compound digest or a consumer's cached availability state cannot replace any component.
+
+Authority order is normative:
+
+1. Validate the closed command variant and required fields; reject wrong-variant or unexpected fields.
+2. Evaluate current authorization for that exact command ID and its command-specific confirmation. Visibility, a stale permission snapshot, or access to one sibling command grants no authority.
+3. Resolve `(command_id, idempotency_key)`. The same canonical request digest returns the original result and owner receipt; a different digest is `idempotency_conflict` and mutates nothing.
+4. Acquire the owner maintenance/lock boundary, prove `fallback_diverged`, and compare all eight current values with the supplied CAS values. Any mismatch is `state_changed`, releases newly acquired locks, and mutates neither root, binding, destination, nor receipt authority.
+5. Persist crash-reconciliation intent before any mutation, execute only the selected operation, verify its postcondition, and finalize exactly one owner receipt. Startup converges to the pre-operation state with no success receipt or the verified post-operation state with the same receipt; it never guesses from mtime or partial output.
+
+Operation semantics are exact:
+
+- `cmd.storage.fallback.keep_logical_root` verifies the current logical root, records that fallback changes were not imported, selects the logical root by a binding-last crash-convergent transition, and retains the fallback at its verified head as a recovery copy. It never copies fallback bytes into, merges with, overwrites, or cleans the logical root.
+- `cmd.storage.fallback.fork_new_instance` mints a new `storage_instance_id`, validates the fallback bytes and parent lineage, and returns `candidate_binding_ref` plus `candidate_bootstrap_binding_sha256` with `candidate_binding_state = inactive`. It does not update active bootstrap selection, logical-root bytes, or the active binding hash. A later explicit activation is a separate owner operation outside this command.
+- `cmd.storage.fallback.export_both` additionally requires explicit `destination_ref` and non-secret `encryption_key_ref`. It captures the exact bytes of both verified source roots, writes an encrypted recovery-custody package, and verifies the package can reproduce every manifest length and SHA-256 before success. Its non-secret manifest records the package/root refs, byte lengths/hashes, encryption algorithm/version, and key ref but no key material, credential, token, or raw local path. Both source roots remain retained after success or failure; there is no automatic cleanup, deletion, import, binding change, or authority switch.
+
+The typed result is `applied | replayed | refused | failed_recoverable`. `applied`/`replayed` require `reason_code=null` and the same durable `owner_receipt_ref`; refusal is limited to `invalid_request | permission_denied | confirmation_required | state_changed | idempotency_conflict | operation_in_progress | invalid_destination`, while recoverable failure is limited to `integrity_failure | storage_io_exhausted | encryption_unavailable | custody_verification_failed`. No failure makes either root disposable or reopens write admission.
+
+`StorageFallbackResolutionReceipt` is the sole durable audit record for these commands. It carries `receipt_id`, `command_id`, `idempotency_key`, canonical request SHA-256, disposition, outcome/reason, actor ref, all eight observed CAS fields, before/after active binding SHA-256, before/after logical/fallback head SHA-256, retained logical/fallback refs, optional new instance/candidate binding fields, optional export package/manifest/key refs, `binding_changed`, `cleanup_performed=false`, and completion time. It contains no secrets or raw paths. These actions emit no `EventRecord`; in particular they do not register or produce `storage.fallback_reconciled` or any substitute event family.
+
+Acceptance oracles:
+
+- Altering any one CAS component returns `state_changed`, creates no successful receipt, and leaves both roots, active binding, and export destination unchanged.
+- Keep-logical success changes only the governed selection/diagnostic metadata, leaves both captured heads recoverable, and imports zero fallback bytes.
+- Fork success has a new instance with verified parent lineage, an inactive candidate binding, unchanged logical root and active bootstrap binding, and no automatic activation on restart.
+- Export success decrypts/verifies to the exact captured bytes for both roots, exposes only non-secret manifest/key refs, changes neither source head nor binding, and performs no cleanup.
+- Same-key/same-request retry returns the byte-equivalent result and same receipt; same-key/different-request is a no-mutation conflict. Crash cuts at every intent/copy/manifest/binding/receipt boundary converge to one verified outcome without duplicate receipt or action.
+- Event-family inventory remains unchanged; the only durable audit artifact is the owner receipt.
+
+ContractRef: ContractName:Plans/Contracts_V0.md#storage-fallback-divergence-command-envelopes, ContractName:Plans/storage-plan.md#root-continuity-relocation-and-unsafe-fallback, ContractName:Plans/Decision_Log.md#DL-033
+
+### Case L-5. EventRecord persistence, legacy normalization, and dedupe
+
+Contracts owns the EventRecord `2.0.0` envelope. Storage enforces:
+
+- `scope_kind = application | project`; application requires `project_id = null`, project requires a non-empty project ID; no sentinel/fake project;
+- `scope_partition = app` or `project~{base64url_no_pad(UTF8(project_id))}`;
+- each persisted event family has closed `scope_policy = application_only | project_only | application_or_project | inherits_referenced_event`; unknown mapping quarantines;
+- v1 EventRecord remains project-scope compatibility input and is not rewritten merely to add scope;
+- new writers emit only `2.0.0`; older writers do not mutate it.
+
+Read-only inspection of an EventRecord `2.0.0` root requires a reader that validates `2.0.0`; a reader lacking that support refuses open rather than projecting a partial or best-effort view. Canonical lookup keys are `event_record_index.v2:{scope_partition}:{sequence_id_20}:{event_id}`, where application scope uses `app`, project scope uses `project~{base64url_no_pad(UTF8(project_id))}`, and `sequence_id_20` is zero-padded unsigned decimal. Key/value scope mismatch is corruption.
+
+Legacy `EventEnvelopeV1` normalization uses the exact `{ts, seq, type, payload}` envelope plus admitted extensions, verified physical cursor/header, and registered family identity JSON pointers only. It MUST NOT use current time, random ID, mtime, absolute path, process, UI selection, or mutable session/account state. Conflicting identity candidates quarantine rather than choosing one. Define `canonical_ts` as UTC RFC 3339 with exactly nine fractional digits and trailing `Z`; RFC 8785-canonicalize `{ts: canonical_ts, seq, type, payload, extensions: recognized_extensions_sorted_by_name}` and take its lowercase SHA-256 as `legacy_digest`.
+
+Every synthesized/copied field has this closed formula:
+
+| EventRecord 2.0 field | Legacy normalization formula |
+|---|---|
+| `schema_id`, `schema_version` | constants `pm.event.v0`, `2.0.0` in the transient normalized view |
+| `scope_kind`, `project_id` | apply registered `scope_policy`; project uses the conflict-checked registered candidate, application uses null, and missing/unknown required scope quarantines |
+| `event_id`, `idempotency_key` | `legacy-event-v1:{legacy_digest}`; `legacy-envelope-v1:{legacy_digest}` |
+| `event_type` | exact legacy `type` after registered compatibility-alias normalization; unregistered alias quarantines |
+| `thread_id`, `run_id`, `node_id`, `attempt_id` | conflict-checked registered candidate or null |
+| `actor_ref` | registered non-secret actor ref or reserved `pm.actor_ref/legacy-unknown` |
+| `requested_account_ref`, `effective_account_ref` | registered non-secret ref or null |
+| `occurred_at_utc` | `canonical_ts`; invalid/ambiguous legacy timestamp quarantines |
+| `observed_at_utc` | verified header `observed_timestamp_ns` rendered identically, otherwise `occurred_at_utc` |
+| `persisted_at_utc` | `observed_at_utc`; legacy read time is forbidden |
+| `sequence_id` | verified header sequence when present and equal to legacy `seq`, otherwise legacy `seq`; disagreement quarantines |
+| `producer_sequence_id` | null |
+| `correlation_id` | registered correlation ref or `event_id` |
+| `causation_event_id`, `parent_event_id` | registered candidate or null; never infer adjacency |
+| `payload_schema_id` | registered compatibility payload schema for normalized `event_type`; missing registration quarantines |
+| `payload`, `payload_ref` | payload unchanged after schema/no-secret validation; registered legacy ref or null |
+| `redaction_profile` | `no_secrets`, or `redacted` only through a registered versioned transform; otherwise quarantine |
+| `replay_policy` | constant `projector_replay_only` |
+| `migration.*` | source ID `pm.event.envelope_v1`, null source version, migration ID `event-envelope-v1-to-event-record-v2@1`, and exact original `type` as compatibility event type |
+
+Canonical MessagePack recursively orders maps by UTF-8 key bytes and uses shortest valid encodings with no NaN/infinity. Re-normalization of the same envelope, verified header/cursor, and registry revision yields identical canonical JSON/MessagePack/index/projection effect. Identity conflicts, invalid time, missing scope/payload schema, and unhandled secrets quarantine without checkpoint advance.
+
+`projector_replay_only` is constructed only by compatibility replay from existing bytes; normal append rejects `replay_only_not_appendable`. It may atomically update owned rebuildable projections/checkpoints/index/mirrors only. It MUST NOT append seglog, mutate canonical values, dispatch work/commands/tools/providers/network, notify, charge usage, publish outbox, mutate safe points, or create another canonical event.
+
+Global `event_id` and scoped `(scope_partition, event_type, idempotency_key)` identities are enforced for app-root lifetime. Same identity+semantic digest returns the original result; different digest is `idempotency_conflict`. Dedicated dedupe indexes are rebuildable accelerators with a verified tail checkpoint. Stale/absent/corrupt indexes synchronously catch up under writer lock or append fails `dedupe_unavailable`; no buffer/defer.
+
+SourceRef: `EVT-01` through `EVT-07`, `Case-L:L-008`, `Case-L:L-009`, `Case-L:L-023`
+
+### Case L-6. Safe-point, restore transaction, restore point, and required-MVP persistence
+
+Storage owns persistence only; FileSafe/Worktree/Assistant Chat retain behavior ownership.
+
+Canonical safe-point key is:
+
+`sp:{run_id}:{node_id}:{attempt_id}:{safe_point_id}`
+
+`safe_point.sp:{...}` is read-only copy-forward migration alias. `safe_point:<safe_point_id>` is lookup-only and resolves through a unique canonical identity; ambiguity is integrity failure. New writes use only `sp:`.
+
+The machine registry must split/materialize distinct families for `safe_point_record`, `safe_point_restore_transaction`, and `restore_point_record`; critical safe-point/restore-transaction rows are launch-critical and may not remain in a deferred bundled permission row. Permission snapshot remains separately owner-routed. Restore-point persistence key is `rp:{project_id}:{restore_point_id}`; an optional safe-point ref is lineage only and cannot silently restore files.
+
+Storage persists FileSafe transaction phases exactly:
+
+`prepared | applying | verifying_target | committed | rolling_back | verifying_rollback | rolled_back | recovery_required`
+
+Only verified `committed` and `rolled_back` resolve automatically. `recovery_required` retains mutation fence, transaction, safe-point, worktree, and blocked holds. Contracts owns outcomes/reason enums; storage MUST NOT record `restored_clean` without exact target digest or `restore_failed` without exact pre-restore rollback digest.
+
+Snapshot manifests/blobs live content-addressed under the resolved storage root outside the worktree; events/values contain refs/hashes, never file bodies. Remote projects keep custody on the authorized remote with no silent local fallback. Safe-point hold refs include attempt, blocked episode, nonterminal restore transaction, preserved run, and legal hold.
+
+Required-MVP storage family routing also includes these distinct materialized families and keys:
+
+- per-file `editor_buffer_recovery_state` at `editor_state.v1:{project_id}:{file_path_hash}`;
+- sibling project-wide `editor_workspace_state` at `editor_workspace_state.v1:{project_id}`; Final GUI's `editor_state:v1:{project_id}` is its read-only migration alias and MUST NOT route to the per-file family or contain unsaved buffer bytes;
+- `hotreload_state` at `hotreload_state.v1:{project_id}`, with `hotreload_state:v1:{project_id}` read-only during migration;
+- `onboarding_state` at `onboarding_state.v1:{project_id}`, with global `onboarding:v1` read-only and copy-forward permitted only when the project target is unambiguous.
+
+Storage prose is routing inventory until the machine registry owner materializes the rows; this section does not hand-author their closed value schemas. Required-family aliases are coordinator-owned copy-forward inputs, not lazy ordinary-writer rewrite-on-save rules.
+
+SourceRef: `PD-RSP-01` through `PD-RSP-09`, `Case-L:L-006`, `Case-L:L-017`, `Case-L:L-020`, `Case-L:L-021`, `Case-L:L-022`, `Case-L:L-024`
+
+### Case L-7. Required acceptance oracles
+
+Owner acceptance is fixture/oracle based; prose or green governance alone is not runtime proof.
+
+| Findings | Required oracle families |
+|---|---|
+| `L-001`, `L-002`, `L-003`, `L-016`, `L-025`, `L-031`, `L-032` | `FX-L001-*`, `FX-L002-*`, `FX-L003-*`, `FX-L016-*`, `FX-L025-*`, `FX-L032-*` from migration/backup planning; before/after target hash proves no mutation on refused open/preflight; command inventory proves diagnostics/retry do not expose generic repair/salvage mutation |
+| `L-004`, `L-007`, `L-013`, `L-019`, `L-026`, `L-028`, `L-029`, `L-030` | `SEG-FX-001..018` and `SEG-OR-001..012`; bit flips, barrier faults, sequence leases, rotation/truncation/compaction cuts, survivor determinism, closed immutability, directory durability, truthful disclosure |
+| `L-005`, `L-010`, `L-015`, `L-033` | `RET-*`, `ANCHOR-*`, `CMP-*`, `DEL-*`, `Q-*`; exact expiry/count/hold behavior, atomic anchor publication, generation recovery, deletion SLO, secured-before-reset and cap failure |
+| `L-011`, `L-012`, `L-014`, `L-018` | closed-class I/O injection, two-process Unix/Windows races, complete viewer command inventory/direct-handler bypass, empty-known-root/relocation crash cuts, two-host fallback divergence |
+| `L-008`, `L-009`, `L-023` | app/project scope schema/index round trips, two-implementation legacy golden bytes, dedupe catch-up/crash, replay-only side-effect spies at zero |
+| `L-006`, `L-020`, `L-021`, `L-022`, `L-024` | `RSP-ATOMIC-*`, `RSP-EQUAL-*`, `RSP-INTEGRITY-*`, `RSP-RETENTION-*`, `RSP-KEY-*`, `RSP-REGISTRY-*`, `RSP-BASELINE-*`, `RSP-RP-*`, `RSP-CMD-*`, `RSP-CHAT-*` |
+
+Mandatory global outcomes:
+
+- no ordinary-open half-migrated/mixed restore state;
+- no acknowledged append without segment+manifest+directory barriers;
+- no mutation without a surviving synced safe-point/checkpoint/approval prerequisite;
+- no sequence reuse; every gap has a closed reason;
+- repeated recovery over identical bytes yields the same survivor set, IDs, manifest, and projection aftermath;
+- no closed source-segment byte changes;
+- no cleanup deletes held/anchored/referenced authority;
+- no viewer or direct-handler path mutates durable/runtime/external state;
+- no newer/incompatible/corrupt root is silently initialized or best-effort opened;
+- no restore success/failure outcome is stronger than verified final equality;
+- no registry/gate pass is reported as executed runtime durability proof.
+
+ContractRef: ContractName:Plans/Automated_Testing_System.md, ContractName:Plans/Release_Supply_Chain.md, PolicyRule:Decision_Policy.md§2
+
+### SP-235 - Case L Migration Backup And Canonical Redb Recovery
+
+```yaml
+plan_unit_id: SP-235
+unit_type: storage_contract
+status: accepted
+owner_doc: Plans/storage-plan.md
+canonical_text: >-
+  Storage admits stores only after version-ceiling and continuity checks; runs migration through a crash-decidable external journal, verified shared-boundary backup, exact arithmetic preflight, journal-derived bounded progress, last stamp, post-stamp verification, and the one durable registry receipt; keeps canonical non-rebuildable redb state recoverable through mandatory verified snapshots; and permits downgrade only through offline compatible whole-boundary restore with explicit data-loss disclosure.
+gui_related: true
+gui_classification_reason: Compatibility, migration, backup failure, corruption, and restore produce blocking startup/recovery states and exact user actions.
+split_recommended: false
+depends_on: [SP-048, SP-053, SP-133, SP-180, SP-182, SP-187, SP-191, SP-231]
+unblocks: []
+acceptance_criteria:
+  - One-version-ahead redb, seglog, and EventRecord fixtures leave target hashes unchanged and enter blocked_newer_store.
+  - Every migration crash cut converges to verified committed or verified rollback with exactly one receipt and no ordinary-open mixed state.
+  - Fresh install has a verified baseline before mutation; corrupt meta never becomes first run.
+  - Active-write backup and kill-mid-restore fixtures restore one verified shared boundary or retain the verified original.
+  - Alias and disk-preflight fixtures are idempotent and mutate nothing on unsupported-old/insufficient-space outcomes.
+  - The recovery sidecar enforces the exact required-free formula, ready/blocked reason and free-byte pairings, all twelve phases, paired byte counts, bounded step counts, preflight-only cancellation, and terminal receipt relationships.
+  - Startup command inventory exposes only approved diagnostics/recovery actions and no generic user/support live repair, salvage, Doctor mutation, or bypass path.
+validation_surfaces:
+  - future Case L migration backup fixture suite
+  - python3 scripts/pm-plan-index.py validate
+risk_class: migration_backup_canonical_redb_recovery
+reasoning_tier: high
+context_scope: case_l_durable_state
+implementation_surfaces: [Plans/storage-plan.md, Plans/storage_recovery_contracts.schema.json, Plans/storage_value_registry.json, Plans/Contracts_V0.md, Plans/Release_Supply_Chain.md]
+node_compile_hint:
+  mode: migration_backup_recovery_contract
+  create_worknodes: false
+  create_nodeseeds: false
+source_lineage: [Case-L:L-001, Case-L:L-002, Case-L:L-003, Case-L:L-016, Case-L:L-025, Case-L:L-031, Case-L:L-032, Case-L:PD-L-01..PD-L-06]
+preserved_exact_tokens: [blocked_newer_store, StorageMigrationCoordinator, backup-before-any-migration-step, migration_preflight_result, migration_progress_snapshot, blocked_insufficient_space, data_loss_risk]
+negative_constraints:
+  - Do not in-place downgrade, try anyway, ordinary-open a mixed store, or describe canonical redb state as rebuildable.
+  - Do not claim runtime backup or migration execution from plan validation.
+owner_hints: [Plans/storage-plan.md]
+```
+
+### SP-236 - Case L SeglogFrameV2 Durability And Recovery
+
+```yaml
+plan_unit_id: SP-236
+unit_type: storage_contract
+status: accepted
+owner_doc: Plans/storage-plan.md
+canonical_text: >-
+  SeglogFrameV2 independently protects framing, header metadata, and payload; resynchronizes only through fully validated candidates; acknowledges only after segment and manifest barriers plus directory durability; never reuses sequence IDs; and converges rotation, truncation, recovery, janitor, and compaction through deterministic intents while disclosing every canonical-history gap and rebuilding projections from the survivor set.
+gui_related: true
+gui_classification_reason: Integrity loss and recovery create persistent blocked/read-only disclosure and recovery-report actions.
+split_recommended: false
+depends_on: [SP-025, SP-026, SP-027, SP-028, SP-131, SP-139, SP-179, SP-180, SP-200, SP-230]
+unblocks: []
+acceptance_criteria:
+  - Payload/framing bit flips in active and closed segments yield the exact documented loss unit and identical survivors on rerun.
+  - No append reports success before both durable barriers and required parent-directory synchronization.
+  - Safe-point/checkpoint/approval barrier fault injection proves no downstream mutation without a surviving synced receipt.
+  - Rotation, truncation, janitor, and compaction crash cuts converge with one semantic recovery episode and unchanged closed-source hashes.
+  - Checkpoints never use timestamps and rebuilt projections with a hole remain health degraded with exact provenance.
+validation_surfaces:
+  - future Case L seglog durability recovery fixture suite
+  - python3 scripts/pm-plan-index.py validate
+risk_class: seglog_durability_recovery_drift
+reasoning_tier: high
+context_scope: case_l_seglog_recovery
+implementation_surfaces: [Plans/storage-plan.md, Plans/Contracts_V0.md, Plans/Runtime_Artifacts_Panel.md]
+node_compile_hint:
+  mode: seglog_frame_v2_recovery_contract
+  create_worknodes: false
+  create_nodeseeds: false
+source_lineage: [Case-L:L-004, Case-L:L-007, Case-L:L-013, Case-L:L-019, Case-L:L-026, Case-L:L-028, Case-L:L-029, Case-L:L-030, Case-L:SEG-D-001..SEG-D-029]
+preserved_exact_tokens: [SeglogFrameV2, PMSEGR2, prefix_crc32, commit watermark, survivor_prefix_sha256]
+negative_constraints:
+  - Do not claim one-record loss without a validated next boundary or modify closed segments in place.
+  - Do not acknowledge on write or buffer flush alone.
+owner_hints: [Plans/storage-plan.md]
+```
+
+### SP-237 - Case L Retention Compaction Deletion And Quarantine
+
+```yaml
+plan_unit_id: SP-237
+unit_type: storage_contract
+status: accepted
+owner_doc: Plans/storage-plan.md
+canonical_text: >-
+  Structured storage-owned retention policies define exact windows, cardinalities, holds, janitor budgets, and fail-safe unknown-policy behavior; safe-point recovery anchors survive unresolved blocks; compaction publishes a verified immutable successor generation through CURRENT; thread/project deletion has explicit logical and physical outcomes; and invalid values are durably quarantined before any governed reset, rebuild, migration, or replacement.
+gui_related: true
+gui_classification_reason: Retention settings, legal holds, deletion status, and quarantine recovery require user-visible protected surfaces.
+split_recommended: false
+depends_on: [SP-028, SP-135, SP-137, SP-138, SP-139, SP-180, SP-182, SP-200, SP-231]
+unblocks: []
+acceptance_criteria:
+  - Expiry/cardinality fixtures choose the same eligible set and never select held/anchored/referenced authority.
+  - An unresolved restore-required block older than 90 days retains its safe point, blobs, worktree refs, and recovery receipts.
+  - Compaction crash cuts yield exactly one CURRENT-selected generation, complete target indexes/checkpoints, and unchanged semantic identities.
+  - Thread/project deletion fixtures meet logical-hide and physical-purge rules without affecting unrelated app/project records.
+  - Invalid critical values never reset or cap-evict before exact-byte custody; resettable/derived fixtures follow their closed outcomes.
+  - Storage and Retention settings accept longer windows, reject values below owner minima, expose holds read-only, and route hold mutation through the protected command.
+validation_surfaces:
+  - future Case L retention compaction quarantine fixture suite
+  - python3 scripts/pm-plan-index.py validate
+risk_class: retention_compaction_recovery_loss
+reasoning_tier: high
+context_scope: case_l_retention_compaction
+implementation_surfaces: [Plans/storage-plan.md, Plans/storage_value_registry.json, Plans/FileSafe.md]
+node_compile_hint:
+  mode: retention_compaction_quarantine_contract
+  create_worknodes: false
+  create_nodeseeds: false
+source_lineage: [Case-L:L-005, Case-L:L-010, Case-L:L-015, Case-L:L-033, Case-L:PD-L005-01..PD-L033-03]
+preserved_exact_tokens: [retention_policy_ref, storage.legal_hold.manage, CURRENT, recovery_unavailable, Q-CRITICAL]
+negative_constraints:
+  - Do not infer destructive retention from prefix, path, filename, or mtime.
+  - Do not call validators or registry presence runtime retention/compaction proof.
+owner_hints: [Plans/storage-plan.md]
+```
+
+### SP-238 - Case L Storage IO Admission And Recovery
+
+```yaml
+plan_unit_id: SP-238
+unit_type: requirement
+status: accepted
+owner_doc: Plans/storage-plan.md
+canonical_text: >-
+  Canonical storage I/O uses a closed storage_io_class taxonomy, exact bounded retry budgets, write-site-specific ENOSPC/EDQUOT aftermath, fail-closed canonical-write admission, validated viewer-or-blocked degradation with owned-lock retention, and explicit recovery without memory pseudo-durability or automatic blocked-agent resume.
+gui_related: true
+gui_classification_reason: Storage exhaustion produces a visible read-only/blocked state and explicit recovery actions.
+split_recommended: false
+depends_on: [SP-131, SP-180, SP-181, SP-187]
+unblocks: []
+acceptance_criteria:
+  - Every named write site maps injected OS errors to one class, exact retry count, and exact final access mode.
+  - ENOSPC at seglog, redb, checkpoint, safe point, rotation, migration, and projection sites yields no partial success or unsafe follow-on mutation.
+  - Exhausted canonical I/O retains an already-held lock and admits no new mutation-capable attempt.
+  - Recovery revalidates identity, integrity, version, lock, and checkpoints before writer mode; blocked attempts remain blocked.
+validation_surfaces: [future Case L storage I/O fault fixture suite]
+risk_class: storage_io_aftermath_drift
+reasoning_tier: high
+context_scope: canonical_storage_io
+implementation_surfaces: [Plans/storage-plan.md, Plans/Executor_Protocol.md, Plans/FinalGUISpec.md]
+node_compile_hint:
+  mode: storage_io_taxonomy_and_degradation
+  create_worknodes: false
+  create_nodeseeds: false
+source_lineage: [Case-L:L-012, Case-L:L012-C1..L012-C4]
+preserved_exact_tokens: [storage_io_class, ENOSPC, EDQUOT, 250 ms, storage_io_exhausted]
+negative_constraints:
+  - Canonical writes are not buffered and later represented as durable.
+  - Consumers cannot broaden nonretryable classes.
+owner_hints: [Plans/storage-plan.md]
+```
+
+### SP-239 - Case L Aggregate Lock And Viewer Envelope
+
+```yaml
+plan_unit_id: SP-239
+unit_type: requirement
+status: accepted
+owner_doc: Plans/storage-plan.md
+canonical_text: >-
+  The aggregate canonical-store pm.lock uses handle-lifetime OS authority with diagnostic heartbeat, OS-lock-first stale takeover, Unix flock and Windows LockFileEx parity, a complete frozen/manual-refresh viewer envelope, direct-handler storage gating, and explicit full-revalidation promotion.
+gui_related: true
+gui_classification_reason: Lock conflict and promotion govern visible viewer state, disabled actions, refresh, and recovery copy.
+split_recommended: false
+depends_on: [SP-129, SP-134, SP-180, SP-187, SP-238]
+unblocks: []
+acceptance_criteria:
+  - Two racing processes on each supported adapter produce exactly one writer.
+  - Stale diagnostics never authorize takeover while the OS lock is held.
+  - Viewer starts no writer-capable subsystem and every mutating command/direct handler reports storage_read_only.
+  - Promotion closes viewers and reruns every startup gate before enabling writer services.
+validation_surfaces: [future Case L storage lock viewer fixture suite]
+risk_class: storage_lock_split_brain
+reasoning_tier: high
+context_scope: aggregate_storage_lock_and_viewer
+implementation_surfaces: [Plans/storage-plan.md, Plans/FinalGUISpec.md, Plans/UI_Command_Catalog.md]
+node_compile_hint:
+  mode: aggregate_storage_lock_and_viewer_envelope
+  create_worknodes: false
+  create_nodeseeds: false
+source_lineage: [Case-L:L-014, Case-L:L014-C1..L014-C4]
+preserved_exact_tokens: [pm.lock, flock, LockFileEx, storage_read_only, Try write mode]
+negative_constraints:
+  - Diagnostic metadata is not lock authority.
+  - Viewer promotion is never automatic and never authorizes newer-store access.
+owner_hints: [Plans/storage-plan.md]
+```
+
+### SP-240 - Case L Root Continuity Relocation And Fallback Branch
+
+```yaml
+plan_unit_id: SP-240
+unit_type: requirement
+status: accepted
+owner_doc: Plans/storage-plan.md
+canonical_text: >-
+  Startup proves storage continuity with an out-of-root bootstrap binding and stable in-root identity before creation; mismatches fail closed; relocation is copy-validate-switch with binding update last and source retention; and unsafe fallback is one deterministic detached exact-base branch whose divergence exposes only three independently admitted explicit-CAS owner commands for logical-root selection, inactive-candidate fork, or exact-byte encrypted dual-root custody, with no automatic merge, overwrite, activation, cleanup, or EventRecord.
+gui_related: true
+gui_classification_reason: Root mismatch, relocation, fallback, and divergence require startup recovery and persistent attention surfaces.
+split_recommended: false
+depends_on: [SP-015, SP-129, SP-132, SP-133, SP-187, SP-191, SP-239]
+unblocks: []
+acceptance_criteria:
+  - Known prior state plus an empty selected root never initializes silently.
+  - Relocation crash cuts select the verified source/destination or block and preserve the source.
+  - All fallback stores/locks move together and carry unique branch plus exact base identity.
+  - Two-host changed-base reconciliation closes writes and preserves both stores without automatic merge/overwrite.
+  - All eight explicit CAS components are revalidated owner-side; any changed component mutates no root, binding, destination, or successful receipt.
+  - Fork returns an inactive candidate and leaves active bootstrap selection unchanged; export decrypts/verifies exact source bytes and cleans up neither source.
+  - Idempotent retry returns the same owner receipt, and no fallback-divergence disposition emits or registers an EventRecord.
+validation_surfaces: [future Case L root continuity fallback fixture suite]
+risk_class: storage_root_orphan_and_fallback_divergence
+reasoning_tier: high
+context_scope: root_continuity_and_fallback
+implementation_surfaces: [Plans/storage-plan.md, Plans/Contracts_V0.md, Plans/FinalGUISpec.md, Plans/Commands_System.md]
+node_compile_hint:
+  mode: storage_root_continuity_and_fallback_branch
+  create_worknodes: false
+  create_nodeseeds: false
+source_lineage: [Case-L:L-011, Case-L:L-018, Case-L:L011-C1..L018-C3, Case-L:PD-PROBE-L011-01-A/A/A/A/A]
+preserved_exact_tokens: [storage_instance_id, root_generation, fallback_branch_id, fallback_base, fallback_diverged, cmd.storage.fallback.keep_logical_root, cmd.storage.fallback.fork_new_instance, cmd.storage.fallback.export_both]
+negative_constraints:
+  - Root precedence cannot replace continuity proof.
+  - Fallback never claims cross-host exclusion or automatic merge.
+  - Fork cannot switch active bootstrap selection, export cannot clean either source, and owner audit cannot mint a new EventRecord family.
+owner_hints: [Plans/storage-plan.md]
+```
+
+### SP-241 - Case L EventRecord Scope Legacy And Dedupe Persistence
+
+```yaml
+plan_unit_id: SP-241
+unit_type: storage_contract
+status: accepted
+owner_doc: Plans/storage-plan.md
+canonical_text: >-
+  Storage persists EventRecord 2.0 with explicit application/project scope partitions, globally unique event IDs, scoped store-lifetime idempotency, fail-closed dedupe-index catch-up, deterministic in-memory-only EventEnvelopeV1 normalization, and a projector_replay_only envelope that can mutate only owned rebuildable projections atomically.
+gui_related: false
+gui_classification_reason: This unit defines event persistence, replay, normalization, and dedupe rather than presentation.
+split_recommended: false
+depends_on: [SP-230, SP-231, CV-309]
+unblocks: []
+acceptance_criteria:
+  - App/project scope fixtures validate/index without fake project identities and reject every invalid cross-field pair.
+  - Two independent normalizers emit byte-identical legacy EventRecord/index/projection results and never change source bytes/tail.
+  - Every synthesized legacy field matches the closed formula table; conflicting identity, scope, payload-schema, time, or secret inputs quarantine without checkpoint advance.
+  - Dedupe catch-up/crash fixtures keep one canonical append and return the original result; unavailable catch-up appends nothing.
+  - Replay-only side-effect spies remain zero and projector/checkpoint writes commit atomically once.
+validation_surfaces:
+  - future Case L EventRecord fixture suite
+  - python3 scripts/pm-plan-index.py validate
+risk_class: eventrecord_scope_legacy_dedupe_drift
+reasoning_tier: high
+context_scope: eventrecord_persistence_v2
+implementation_surfaces: [Plans/storage-plan.md, Plans/Contracts_V0.md, Plans/event_record.schema.json, Plans/storage_value_registry.json]
+node_compile_hint:
+  mode: eventrecord_v2_persistence_contract
+  create_worknodes: false
+  create_nodeseeds: false
+source_lineage: [Case-L:L-008, Case-L:L-009, Case-L:L-023, Case-L:EVT-01..EVT-07]
+preserved_exact_tokens: [scope_kind, scope_partition, projector_replay_only, dedupe_unavailable, legacy-event-v1]
+negative_constraints:
+  - Do not invent a fake project, rewrite legacy bytes on ordinary open, or admit replay-only through normal append.
+  - Do not use timestamps for ordering or dedupe.
+owner_hints: [Plans/storage-plan.md, Plans/Contracts_V0.md]
+```
+
+### SP-242 - Case L Safe Point Restore Transaction And Restore Point Storage
+
+```yaml
+plan_unit_id: SP-242
+unit_type: storage_contract
+status: accepted
+owner_doc: Plans/storage-plan.md
+canonical_text: >-
+  Storage owns the canonical sp key, read-only legacy aliases, content-addressed snapshot custody, launch-critical safe-point and restore-transaction persistence, nonterminal transaction holds/restart phases, reference-based retention anchors, and the rp restore-point persistence namespace while FileSafe, Worktree, Contracts, and Assistant Chat retain mechanics, outcome, baseline, and product-lifecycle ownership.
+gui_related: true
+gui_classification_reason: Persisted restore/recovery state and restore-point availability drive visible recovery and branch actions.
+split_recommended: false
+depends_on: [SP-144, SP-170, SP-200, SP-207, SP-231, F2-189]
+unblocks: []
+acceptance_criteria:
+  - New writes use only canonical sp identity; aliases resolve/copy-forward uniquely or fail closed.
+  - Critical safe-point and restore-transaction families are materialized and no mutation path depends on a deferred bundled row.
+  - Nonterminal restore restart ends at verified target/rollback or recovery_required with holds/fence intact.
+  - Storage never records restored_clean or restore_failed without the Contracts/FileSafe-owned equality proof.
+  - Restore-point records branch conversation state without silently restoring files and remain separate from runtime safe points.
+validation_surfaces:
+  - future Case L restore safe-point fixture suite
+  - python3 scripts/pm-plan-index.py validate
+risk_class: safe_point_restore_storage_drift
+reasoning_tier: high
+context_scope: safe_point_restore_persistence
+implementation_surfaces: [Plans/storage-plan.md, Plans/storage_value_registry.json, Plans/FileSafe.md, Plans/assistant-chat-design.md]
+node_compile_hint:
+  mode: safe_point_restore_storage_contract
+  create_worknodes: false
+  create_nodeseeds: false
+source_lineage: [Case-L:L-006, Case-L:L-010, Case-L:L-020, Case-L:L-021, Case-L:L-022, Case-L:L-024, Case-L:PD-RSP-01..PD-RSP-09]
+preserved_exact_tokens:
+  - "sp:{run_id}:{node_id}:{attempt_id}:{safe_point_id}"
+  - recovery_required
+  - "rp:{project_id}:{restore_point_id}"
+negative_constraints:
+  - Do not duplicate FileSafe restore mechanics, Worktree baseline effects, Contracts outcome enums, or Chat restore-point lifecycle in storage.
+  - Do not treat safe points and restore points as one family.
+owner_hints: [Plans/storage-plan.md, Plans/FileSafe.md]
+```
+
+### SP-243 - Case L Required MVP Storage Family Routing
+
+```yaml
+plan_unit_id: SP-243
+unit_type: schema_contract
+status: accepted
+owner_doc: Plans/storage-plan.md
+canonical_text: >-
+  The machine storage registry must materialize migration receipt, editor buffer recovery, editor workspace state, hotreload state, onboarding state, safe-point record, safe-point restore transaction, restore-point record, dedupe indexes/checkpoint, retention/anchor/maintenance/quarantine/deletion records, and truthful recovery/retention dispositions before any build path depends on them; storage prose remains routing inventory rather than a peer value schema.
+gui_related: false
+gui_classification_reason: This unit routes backend machine registry authority and does not define GUI presentation.
+split_recommended: false
+depends_on: [SP-231, SP-235, SP-237, SP-241, SP-242]
+unblocks: []
+acceptance_criteria:
+  - Every required family has exactly one machine registry row, canonical key, closed materialized value schema, owner, producer/consumer, migration, recovery, retention, and redaction disposition.
+  - Compatibility keys are read-only aliases and are never another row's canonical write key.
+  - Every critical family exists, is materialized, and is launch-critical; no mixed-owner bundled row remains.
+  - Registry v2 structured retention and recovery metadata validates without changing storage behavior authority.
+validation_surfaces:
+  - python3 scripts/pm-implementation-readiness.py validate
+  - python3 scripts/pm-implementation-readiness.py self-test
+risk_class: required_mvp_storage_registry_omission
+reasoning_tier: high
+context_scope: case_l_registry_owner_routing
+implementation_surfaces: [Plans/storage-plan.md, Plans/storage_value_registry.schema.json, Plans/storage_value_registry.json]
+node_compile_hint:
+  mode: case_l_required_storage_family_routing
+  create_worknodes: false
+  create_nodeseeds: false
+source_lineage: [Case-L:L-002, Case-L:L-003, Case-L:L-005, Case-L:L-008, Case-L:L-010, Case-L:L-015, Case-L:L-017, Case-L:L-021, Case-L:L-023, Case-L:L-033]
+preserved_exact_tokens: [pm.storage_value_registry.v2, migration_receipt, safe_point_record, retention_policy_ref, recovery_disposition]
+negative_constraints:
+  - Do not hand-edit generated shards/evidence or claim runtime proof from registry validation.
+  - Do not let prose-only templates become implementation authority.
+owner_hints: [Plans/storage-plan.md, Plans/storage_value_registry.json]
+```
+
+
+## Known-37 Case L owner materialization
+
+Status: `STATICALLY_MATERIALIZED`. This section is the Storage owner contract for the approved 55-path Plans-only transaction. It does not claim fixture, validator, runtime, gate, certification, buildability, Case L closure, or closure of `CL-CRIT-EVENT-AUTHORITY-001`.
+
+### Known-37 retention assignment (`RET-K37-ASSIGNMENT-001@1.0.0`)
+
+The sole catalog is `Plans/storage_value_registry.json#/retention_policies`, schema `pm.storage_value_registry.v2@2.0.0`. Each event family in the historical Known-37 assignment has exactly one closed `retention_policy_ref = {registry_schema_id, policy_id, policy_version}`, with `registry_schema_id=pm.storage_value_registry.v2` and version `1.0.0`. That bounded assignment used `pm.event_family_registry.v1`, instance schema version `2.0.0`, revision `2026-07-18.2`; exactly 37 families in that historical slice have revision `2.0.0`. The live registry is now revision `2026-08-04.1` with 39 rows. The two later rows are not retroactively part of the Known-37 assignment, and this section does not assert a complete current registry or current denominator.
+
+Currentness boundary (2026-08-10): the July Event Authority union records 37 registered rows, at least 248 confirmed persisted-unregistered families, at least 40 unresolved exact rows, and 68 excluded rows. It proves only a source-dated persisted floor of at least 285 and leaves the complete denominator `UNKNOWN_OPEN`. This claim is bound to `EA-27_PRODUCER_UNION_AND_DENOMINATOR.json` (SHA-256 `644c6d0bc913eaed62f41e231fdb7e04f55d270549fcdede73a0869994111e47`; `union_rows_sha256=aa9c365904788eba74df73bb1b5eecaae903a6aa167e0514b7937198aa0dbf4d`) and `EA-29_TERMINAL_FINDINGS_RESIDUALS_CONTRACT_DEPTH_REPAIR_AND_WAVE1_CHECKPOINT.md` (SHA-256 `17820aef1b498acf2e5165bee106171ff1ef35a1b23fa67d0cc23e291a8ed7bf`) under external `PuppetMaster-AssuranceLab` custody. This lower-bound evidence requires fresh reconciliation against current sources; it forbids bulk registration and does not close material contract depth, Case L, PNC-019, buildability, or `CL-CRIT-EVENT-AUTHORITY-001`. Unknown or unregistered families remain quarantined without checkpoint advance.
+
+The three catalog additions are exact:
+
+| policy | mode/anchor/TTL | cardinality | overflow/hold/expiry |
+|---|---|---|---|
+| `RP-RUNTIME-365D@1.0.0` | `fixed_ttl`, `run_completion`, 31,536,000 seconds | 1,000,000/run plus 5,000,000/project | `roll_successor`, hold eligible, `compact` |
+| `RP-SEGLOG-7D@1.0.0` | `fixed_ttl`, `creation`, 604,800 seconds | 500,000/instance | `evict_oldest_eligible`, hold eligible, `compact` |
+| `RP-RESTOREPOINT-90D-AFTER-RELEASE@1.0.0` | `anchored_then_ttl`, `reference_release`, 7,776,000 seconds | 2,048/project | `evict_oldest_eligible`, hold eligible, `retain_hash_summary` |
+
+All have `source_policy_ref=null`, `max_bytes=null`; only runtime has additional project cardinality. Existing `RP-AUTHORITY-INDEFINITE`, `RP-OPERATIONAL-2555D`, and `RP-SAFEPOINT-90D-AFTER-RELEASE` remain unchanged.
+
+| event types | exact policy | count |
+|---|---|---:|
+| `goal.blocked`, `goal.cancelled`, `goal.child_status_changed`, `goal.completed`, `goal.created`, `goal.degraded`, `goal.evidence_captured`, `goal.progressed`, `goal.receipt_recorded`, `goal.replanned`, `goal.scheduled`, `goal.stopped`, `goal.tool_check_recorded`, `goal.updated`, `goal.verification_decided`, `goal_run.blocked`, `goal_run.cancelled`, `goal_run.certified`, `goal_run.stopped`, `storage.deletion_lifecycle_changed`, `storage.integrity_detected`, `storage.retention_hold_changed`, `storage.value_quarantine_changed` | `RP-AUTHORITY-INDEFINITE@1.0.0` | 23 |
+| `platform.capability_evaluated`, `storage.boot_recovery`, `storage.compaction_lifecycle_changed`, `storage.recovery_applied` | `RP-OPERATIONAL-2555D@1.0.0` | 4 |
+| `restore_point.applied`, `restore_point.corrupt`, `restore_point.created`, `restore_point.deleted`, `restore_point.expired` | `RP-RESTOREPOINT-90D-AFTER-RELEASE@1.0.0` | 5 |
+| `goal_run.replanned`, `goal_run.started`, `run.started` | `RP-RUNTIME-365D@1.0.0` | 3 |
+| `safe_point.recovery_unavailable` | `RP-SAFEPOINT-90D-AFTER-RELEASE@1.0.0` | 1 |
+| `seglog.event_appended` | `RP-SEGLOG-7D@1.0.0` | 1 |
+
+`goal.evidence_captured.payload.retention_policy_ref` is evidence-object policy and cannot shorten the row policy. `restore_point.expired.payload.retention_policy_ref` must equal row policy ID `RP-RESTOREPOINT-90D-AFTER-RELEASE`. `storage.retention_hold_changed.payload.policy_ref` is the held target policy and need not equal the row policy.
+
+`MIG-EVENT-RETENTION-KNOWN37-001` is the historical Known-37 migration only. It requires exact source registry `1.0.0/2026-07-18.1`, the exact 37 stable event/family pairs with no refs, mandatory backup, exact event-type assignment, unchanged EventRecord bytes/identity, full set/referential/hold verification, and one existing `pm.storage_value.migration_receipt.v1`. It is not a migration recipe or currentness proof for the live 39-row registry. Missing/extra/duplicate/conflicting/unknown input quarantines; a blocked or rolled-back migration cannot expose the new assignment.
+
+### Goal Runtime persistence and dispatch
+
+The 21 v2 Goal roots at `Plans/event_payloads/goal_runtime/*.schema.json#` are the sole new writers. The legacy aggregate `Plans/goal_runtime_events.schema.json` is immutable reader-only input. V1 may enter only a registered legacy normalizer and `projector_replay_only`; it may rebuild disposable projections but may not emit, mutate, schedule, approve, charge, write a receipt, or certify.
+
+All v2 rows use `replay_policy=dedupe_by_idempotency_key`, reject unhandled secrets, have no redaction transform, and use the matrix semantic identity tuple. Same identity/digest returns the original durable result; same identity/different digest is `idempotency_conflict`; unavailable proof is `dedupe_unavailable`. Stale CAS is `revision_conflict`. Unknown schema/event/enum, illegal transition, unresolved ref, identity join conflict, raw secret, viewer storage, or unknown recovery truth appends nothing and advances no checkpoint. Canonical receipts stay distinct from disposable projections.
+
+### Event-specific v1 reader to v2 writer bindings
+
+Each old object remains exact, immutable, reader/upgrader-only inside its event-specific artifact. New append admission accepts only root `#`.
+
+| event | old reader pointer | v2 writer ID | upgrader | quarantine reason |
+|---|---|---|---|---|
+| `platform.capability_evaluated` | `Plans/event_payload_platform_capability_evaluated.schema.json#/$defs/platform_capability_evaluated_1_0_0_compatibility_reader` | `https://puppetmaster.local/schemas/event_payloads/platform_capability_evaluated/2.0.0` | `MIG-PLATFORM-CAPABILITY-EVALUATED-PAYLOAD-001@1.0.0` | `quarantine_without_checkpoint_advance` |
+| `restore_point.corrupt` | `Plans/event_payload_restore_point_corrupt.schema.json#/$defs/restore_point_corrupt_1_0_0_compatibility_reader` | `https://puppetmaster.local/schemas/event_payloads/restore_point_corrupt/2.0.0` | `MIG-RESTORE-POINT-CORRUPT-PAYLOAD-001@1.0.0` | `restore_point_corrupt_v1_upgrade_unresolvable` |
+| `run.started` | `Plans/event_payload_run_started.schema.json#/$defs/run_started_1_0_0_compatibility_reader` | `https://puppetmaster.local/schemas/event_payloads/run_started/2.0.0` | `MIG-RUN-STARTED-PAYLOAD-001@1.0.0` | `run_started_v1_upgrade_unresolvable` |
+| `safe_point.recovery_unavailable` | `Plans/event_payload_safe_point_recovery_unavailable.schema.json#/$defs/safe_point_recovery_unavailable_1_0_0_compatibility_reader` | `https://puppetmaster.local/schemas/event_payloads/safe_point_recovery_unavailable/2.0.0` | `MIG-SAFE-POINT-RECOVERY-UNAVAILABLE-PAYLOAD-001@1.0.0` | `safe_point_recovery_unavailable_v1_upgrade_unresolvable` |
+| `storage.boot_recovery` | `Plans/event_payload_storage_boot_recovery.schema.json#/$defs/storage_boot_recovery_1_0_0_compatibility_reader` | `https://puppetmaster.local/schemas/event_payloads/storage_boot_recovery/2.0.0` | `MIG-STORAGE-BOOT-RECOVERY-PAYLOAD-001@1.0.0` | `storage_boot_recovery_v1_upgrade_unresolvable` |
+| `storage.integrity_detected` | `Plans/event_payload_storage_integrity_detected.schema.json#/$defs/storage_integrity_detected_1_0_0_compatibility_reader` | `https://puppetmaster.local/schemas/event_payloads/storage_integrity_detected/2.0.0` | `MIG-STORAGE-INTEGRITY-DETECTED-PAYLOAD-001@1.0.0` | `storage_integrity_detected_v1_upgrade_unresolvable` |
+| `storage.recovery_applied` | `Plans/event_payload_storage_recovery_applied.schema.json#/$defs/storage_recovery_applied_1_0_0_compatibility_reader` | `https://puppetmaster.local/schemas/event_payloads/storage_recovery_applied/2.0.0` | `MIG-STORAGE-RECOVERY-APPLIED-PAYLOAD-001@1.0.0` | `storage_recovery_applied_v1_upgrade_unresolvable` |
+
+Every binding first validates the exact old ID/pointer, derives every v2 value only from immutable owner evidence, validates the root, records source/target/upgrader lineage, preserves source bytes and semantic-event cardinality, and never appends a replacement event. Any missing, conflicting, ambiguous, secret-bearing, or unprovable input takes the listed quarantine disposition with no successor publication, checkpoint advance, projection mutation, dispatch, release, or default.
+
+### Requested/effective runtime custody
+
+`requested_effective_runtime` is a launch-critical `redb` / `messagepack_canonical` family, schema `pm.requested_effective_runtime@1.0.0`, owned by Contracts and produced by Executor before run activation. Key and `snapshot_ref` are byte-identical:
+
+`requested_effective_runtime.v1:{project~base64url_no_pad(UTF8(project_id))}:{snapshot_id}:{snapshot_sha256}`.
+
+`snapshot_sha256` is lowercase SHA-256 of RFC 8785 canonical JSON with only `snapshot_ref` and `snapshot_sha256` omitted. All 34 fields are required; exactly `thread_id`, `requested_strategy`, `requested_account_id`, `effective_account_id`, and `account_switch_reason` are nullable. The six owner joins are `run_modes_resolution_ref`, `models_resolution_ref`, `capability_snapshot_ref`, `multi_account_resolution_ref`, `persona_resolution_ref`, and `auth_resolution_ref`.
+
+This family is `canonical_non_rebuildable`, requires mandatory backup, restore from backup, user disclosure on loss, and a mutation fence while unresolved. It is retained at least as long as every referencing EventRecord/hold. Historical replay resolves exact bytes and never reconstructs from current settings. Same key/different bytes is `requested_effective_runtime_identity_conflict`.
+
+### Recovery-unavailable event, receipt, and release
+
+The v2 event reasons are exactly `snapshot_missing | snapshot_corrupt | snapshot_scope_unsupported | snapshot_identity_stale | snapshot_unanchored`. Its allowed actions are exactly the base or conditional isolated-successor arrays issued by FileSafe/Executor. The anchor is established only with event, blocked episode, holds, preserved local work, action list, and establishing receipt as one durability unit.
+
+The sole receipt family is `recovery_unavailable_resolution_receipt`, schema `pm.storage_value.recovery_unavailable_resolution_receipt.v1@1.0.0`, key `recovery_unavailable_resolution_receipt.v1:{project_id}:{anchor_id}:{receipt_id}`, `redb_and_seglog`, `messagepack_canonical`, launch-critical, and present once in both required-family arrays. All 30 fields are required; nullable fields are `attempt_id, reason_code, confirmation_ref, recovery_source_ref, release_reason, verified_manifest_sha256, verification_evidence_ref`. `cleanup_performed=false`.
+
+Receipt command is `cmd.runtime.locate_and_verify_recovery | cmd.runtime.abandon_recovery`; resolution is `owner_verified_recovery | abandoned_by_user`; outcomes are `applied | replayed | refused | failed_recoverable`. Locate success releases `resolved` with verified refs/hash/evidence. Abandon success releases `abandoned_by_user` with confirmation and no cleanup. Every nonsuccess preserves `recovery_unavailable`, null release, and the before snapshot set. Replay returns the original result/receipt and performs no second transition. The authority is indefinite, `canonical_dual_homed`, `restore_backup_then_replay`, mandatory-backup, fail-closed, and never deleted by age, exit, archive, completion, pressure, worktree unbinding, compaction, or cleanup.
+
+### Storage recovery event payloads
+
+All three current writers are self-contained v2 roots with exact frozen v1 readers and the bindings above.
+
+- `storage.boot_recovery`: interrupted kinds are exactly `migration | backup_restore | rotation_truncation | compaction | deletion_quarantine | root_relocation`. Segment state is `opening | active | closed | sealed_degraded`. At least one integrity/recovery ref exists; arrays are sorted/unique/bounded at 4096. Deterministic `recovery_set_id` uses RFC 8785/SHA-256. Same episode replays; an exact later work-set repeat uses a new epoch/set ID and direct `repeat_of` to the earliest matching event.
+- `storage.integrity_detected`: failure class is exactly `frame_integrity | header_integrity | payload_integrity | segment_integrity | manifest_integrity | watermark_integrity | sequence_integrity`; watermark relation is `wholly_above_durable_watermark | at_or_below_durable_watermark | straddles_durable_watermark | unknown_durable_watermark_relation`; precision remains `exact_event | exact_byte_range | bounded_sequence_range | unknown_segment_remainder`. CRC pairs, offsets, ranges, event refs, and class/precision products follow the closed schema; detection never performs recovery or advances a checkpoint.
+- `storage.recovery_applied`: action is exactly `adopt_valid_tail | seal_degraded | truncate_unacknowledged_tail | exclude_proven_range | restore_verified_backup | block_mutation`; checkpoint action is `advance_to_verified_survivor | preserve_verified_checkpoint | invalidate_and_rebuild | restore_verified_checkpoint | hold_without_advance`; projection action is `resume_from_verified_checkpoint | rebuild_from_verified_survivor | remain_stopped`. The exact schema enforces the integrity-link, pre/post hash/length, excluded-range, sequence-gap, survivor-digest, receipt, disclosure, and aftermath cross-products. Recovery converges and durably appends before projector/mutation admission.
+
+Identifiers are `pm.storage.integrity.v1:{sha256}`, `pm.storage.recovery.v1:{sha256}`, and `pm.storage.recovery_set.v1:{sha256}` over their canonical owner input objects. Unsigned values are `0..18446744073709551615`, CRC is `0..4294967295`, hashes are lowercase 64-hex, ranges are canonical/coalesced, and collections are capped at 4096. Unknown enum/schema/identity/range/receipt/relation authority quarantines without checkpoint advance and blocks mutation.
+
+### Owner-oracle status
+
+`P1..P9`, `N1..N10`; the Goal row/common cases; `CAP-POS-001..010`, `CAP-NEG-001..014`; `EA-OC-004-POS-01..06`, `EA-OC-004-NEG-01..11`; run-start positive 1..12 and negative 1..21; recovery-unavailable `P01..P10`, `N01..N15`; and `BR/IN/RA` positive/negative IDs are normative. Schema/registry structure is `STATICALLY_MATERIALIZED`. Replay, crash-cut, append-count, durability, filesystem, projector, checkpoint, disclosure, command, release, and mutation behavior is `NOT_EXECUTABLE_UNDER_THIS_TRANSACTION`. No case is claimed passed.
+
+## PMConcept7 Home Workspace layout — 2026-08-04
+
+Storage owns the project/workspace-tab-scoped Home presentation record under the
+canonical key `home_workspace_layout.v1:{project_id}:{workspace_tab_id}` and the
+registered family `home_workspace_layout`. The prototype's localStorage mirror is
+`pm.homeWorkspaceLayout:v1:{project_id}:{workspace_tab_id}` and must carry the same
+semantic record. The typed field authority is
+`Plans/home_workspace_layout.schema.json`; this document owns scope, restore,
+migration, and failure behavior rather than duplicating that schema.
+
+The record stores stable surface references, host/slot placement, size, visibility,
+collapse state, floating bounds, last dock location, focus order, layout revision,
+validation, migration metadata, and save time only. It must not copy editor buffers
+or tabs, dirty/undo/save authority, terminal pane trees/transcripts/PTYs, browser
+history/session state, Chat threads/messages, or Dashboard widget positions/config.
+Each semantic mutation is revision-checked and persisted once. Pointer-move and
+resize-preview frames are local and never become storage writes, commands, or
+EventRecords.
+
+Restore reads the canonical key, then the compatibility colon key through the
+StorageMigrationCoordinator. A record is accepted only after schema, stable-identity,
+four-editor, four-terminal-section, four-visible-pane, bounds, and project/workspace
+scope validation. Corrupt, stale, ambiguous, or off-screen records are quarantined
+or rejected atomically, replaced with safe defaults, written to the canonical key,
+and disclosed through the validation/recovery projection. Duplicate identities and
+future versions are invalid and follow the same quarantine path. Floating bounds
+outside the usable work area clamp to a visible safe rectangle; if clamping cannot
+prove visibility, the surface falls back to `home_main` and retains its last dock
+location. Exact native window position restoration on Wayland is best effort and
+uses that same valid-dock fallback. Copy-forward is forward-only and canonical
+writes never target a compatibility key.
+
+Persistence is transactional: validate the candidate, write the canonical record,
+read it back, and only then advance the committed model/revision or emit a success
+event with `persisted=true`. Write or readback failure restores the exact previous
+model, records a typed failure receipt, emits no success EventRecord, and does not
+increment successful-persistence counters. Recovery and migration are considered
+durable only after the normalized canonical record reads back successfully; the
+next reload must validate as clean.
+
+### SP-245 - Home Workspace Layout Transaction And Recovery
+
+```yaml
+plan_unit_id: SP-245
+unit_type: schema_contract
+status: accepted
+owner_doc: Plans/storage-plan.md
+canonical_text: The sole Home layout schema authority is pm.home_workspace_layout.v1 in Plans/home_workspace_layout.schema.json, stored per project/workspace tab under home_workspace_layout.v1; earlier key/schema identifiers are read-only migration inputs and all mutation, migration, and recovery writes are transactional and readback-verified.
+gui_related: true
+gui_classification_reason: The persisted layout determines visible Home placement, recovery disclosure, sizes, collapse state, and restored focus.
+split_recommended: false
+depends_on: [SP-244, F3-501]
+unblocks: []
+acceptance_criteria:
+- The registry and standalone schema both use schema_id pm.home_workspace_layout.v1 and the registry points to the standalone schema owner.
+- Candidate mutation validates, writes, reads back, and only then advances revision/counters or emits persisted=true.
+- Write/readback failure rolls back exactly and emits a failure receipt without a success event.
+- Corrupt, duplicate, future-version, malformed, and off-screen records are quarantined and replaced by a safe canonical record; a second reload is clean.
+- Compatibility keys and earlier schema identifiers are read-only copy-forward sources and are never written.
+- The record carries domain references only and never duplicates editor, terminal, Browser, Chat, or Dashboard internal authority.
+validation_surfaces:
+- python3 scripts/pm-implementation-readiness.py validate
+- node Concepts/pm7-tools/verify/home_workspace_matrix.mjs
+- python3 scripts/pm-plan-index.py validate
+risk_class: home_layout_persistence_drift
+reasoning_tier: standard
+context_scope: home_layout_storage
+implementation_surfaces: [Plans/storage-plan.md, Plans/storage_value_registry.json, Plans/home_workspace_layout.schema.json]
+node_compile_hint:
+  mode: home_layout_persistence
+  create_worknodes: false
+source_lineage:
+- PMConcept7_Home_Workspace_Audit_Packet_v1/shared/04_COMMAND_EVENT_STORAGE_WIRING.md
+preserved_exact_tokens: [pm.home_workspace_layout.v1, home_workspace_layout.v1, persisted=true, Wayland]
+negative_constraints:
+- Do not write compatibility keys.
+- Do not emit a success event or advance successful counters before readback verification.
+compatibility_only_notes:
+- Earlier Home key and schema identifiers are migration inputs only.
+stale_retired_dispositions:
+- pm.storage_value.home_workspace_layout.v1 is retired as a competing schema identifier.
+owner_hints: [Plans/storage-plan.md, Plans/home_workspace_layout.schema.json, Plans/storage_value_registry.json]
+```
+
+## Run & Debug Revival Addendum - 2026-07-27
+
+This addendum registers the project-scoped persistence key family for classical debugger workspace state (launch profiles, breakpoints, watch expressions) consumed by the rail "Debug & Run" panel and bottom-zone Debug tab whose layout and field schema canon lives in `Plans/FinalGUISpec.md` Run & Debug Revival Addendum (F3-482..F3-496, referenced by unit id only, never restated). It owns only keys, lifetimes, and migration rules, and it creates no WorkNodes, NodeSeeds, executable queues, final node manifests, implementation files, or production build tasks.
+
+### SP-244 - Debug Workspace Persistence Keys
+
+```yaml
+plan_unit_id: SP-244
+unit_type: schema_contract
+status: accepted
+owner_doc: Plans/storage-plan.md
+canonical_text: >-
+  The project-scoped persistence key family for classical debug state is registered as: launch profile
+  records under pm.debug.launch_profiles:v1 (project-scoped, survives restart, forward-only migration;
+  field schema owned by Plans/FinalGUISpec.md F3-489 and consumed by reference - this unit owns only
+  keys, lifetimes, and migration rules and never restates fields); breakpoint records under
+  pm.debug.breakpoints:v1 (project-scoped; records keyed by stable breakpoint id carrying
+  file/line/type/condition/hit-count/log-message/enabled - the breakpoint record truth that F3-488's
+  gutter and shelf renderers sync from, referenced); watch expressions under pm.debug.watches:v1
+  (project-scoped ordered list of expression strings); shelf collapse state follows the F3-475
+  side-panel persistence key discipline (referenced, not restated); runtime session state (paused
+  data, console scrollback) is never persisted - session-ephemeral per F3-483 (referenced); debug
+  session records link into the existing dev_session_record.v1 identity family (referenced) via
+  dap_session_id.
+gui_related: true
+gui_classification_reason: Launch profiles, breakpoints, and watch expressions persist the state of user-visible Debug & Run panel shelves and gutter renderers.
+split_recommended: false
+depends_on: [SP-243]
+unblocks: []
+acceptance_criteria:
+  - All three key strings are project-scoped, survive restart, and carry forward-only migration rules; no session-ephemeral runtime state (paused data, console scrollback) is written to any persisted key.
+  - Breakpoint records under pm.debug.breakpoints:v1 are keyed by stable breakpoint id and remain the single record truth that F3-488 gutter and shelf renderers sync from (referenced).
+  - Debug session records link into the dev_session_record.v1 identity family via dap_session_id without minting a parallel session identity family.
+  - No WorkNodes, NodeSeeds, executable queues, final node manifests, or production build tasks are created by this PlanUnit.
+  - No launch-profile field definitions appear in this unit (F3-489 owns the schema).
+validation_surfaces:
+  - python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits
+  - python3 scripts/pm-plan-index.py validate
+risk_class: storage_drift
+reasoning_tier: standard
+context_scope: run_debug_revival
+implementation_surfaces: [Plans/storage-plan.md]
+node_compile_hint:
+  mode: debug_workspace_persistence_keys
+  create_worknodes: false
+  create_nodeseeds: false
+source_lineage:
+  - user-decision:2026-07-27-run-debug-revival
+  - Plans/FinalGUISpec.md (Run & Debug Revival Addendum F3-482..F3-496; referenced)
+preserved_exact_tokens: [pm.debug.launch_profiles:v1, pm.debug.breakpoints:v1, pm.debug.watches:v1]
+negative_constraints:
+  - Do not restate F3-489 launch-profile fields; the schema is consumed by reference only.
+  - Do not own panel collapse keys here; the F3-475 side-panel persistence key discipline is referenced, not restated.
+  - Do not persist runtime session state (paused data, console scrollback); it is session-ephemeral per F3-483 (referenced).
+  - No WorkNodes, NodeSeeds, executable queues, final node manifests, or production build tasks are created by this PlanUnit.
+owner_hints: [Plans/storage-plan.md, Plans/FinalGUISpec.md]
 ```
