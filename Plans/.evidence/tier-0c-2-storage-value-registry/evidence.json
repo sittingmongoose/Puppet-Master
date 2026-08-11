@@ -13,17 +13,17 @@
     {
       "note": "Generated buildability report must remain blocked.",
       "path": "Plans/.implementation_readiness/buildability_gate_report.json",
-      "sha256": "9e9f2d37e0b460ae579479d32e3e9ed15bb4d57f9a4d9f05b7e8478a6fd995a6"
+      "sha256": "49bf98c49699691327b3bd347fa0bc396880bf5f5922344a08cc4c29962901d6"
     },
     {
       "note": "Node readiness report remains runtime-disabled.",
       "path": "Plans/.plan_index/node_readiness_report.json",
-      "sha256": "97eae907aaa08c59c7050473d2ea817ed592ceaea169aa001bc5613e82495e5a"
+      "sha256": "1bfa03b7ccba068a0d61c438b4b0893497316b8ea61aad2422b152e23d028193"
     },
     {
       "note": "Governance hash lock after refresh.",
       "path": "Plans/Spec_Lock.json",
-      "sha256": "171f4aceab4ac39afcfaeaa7b20af3cf243e2063da3ba389f25e6b0322a8b516"
+      "sha256": "8d633f312c58568ca0211983322b455dc779c597a2bc1803210120109c23488f"
     }
   ],
   "checks": [
@@ -186,6 +186,11 @@
     {
       "cmd": "python3 scripts/pm-plans-verify.py validate-auto-decisions",
       "exit_code": 0
+    },
+    {
+      "cmd": "python3 -c \"import json,runpy; g=runpy.run_path('scripts/pm-governance-seal.py'); print(json.dumps(g['register_spec_lock_files'](g['repo_path']('Plans/Spec_Lock.json'), ['scripts/pm_pnc019_currentness.py']), sort_keys=True))\"",
+      "exit_code": 0,
+      "stdout_excerpt": "{\"added_files\": [\"scripts/pm_pnc019_currentness.py\"], \"changed\": true, \"path\": \"Plans/Spec_Lock.json\", \"updated_hashes\": []}"
     }
   ],
   "contract_refs_satisfied": [

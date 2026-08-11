@@ -215,11 +215,11 @@
       },
       {
         "path": "scripts/pm-implementation-readiness.py",
-        "sha256": "aa3934a570118aa324b6a3779216f8002bfe93bc1dc514793ee117e627c3eb78"
+        "sha256": "b797fea4eef268f232d943a550254d8d5517f014ed3cfda67a511bedc7c86996"
       },
       {
         "path": "scripts/pm-plan-index.py",
-        "sha256": "cf2b174a1120db498797f9f38e14a0900b1273302b6891442182e52930495b44"
+        "sha256": "04a5aca73043d24a99a2622f89fbcb6e35ba49375ade7a4e048b3bc647b35396"
       },
       {
         "path": "Plans/.implementation_readiness/readiness_blockers.jsonl",
@@ -231,7 +231,7 @@
       },
       {
         "path": "Plans/.implementation_readiness/buildability_gate_report.json",
-        "sha256": "9e9f2d37e0b460ae579479d32e3e9ed15bb4d57f9a4d9f05b7e8478a6fd995a6"
+        "sha256": "49bf98c49699691327b3bd347fa0bc396880bf5f5922344a08cc4c29962901d6"
       },
       {
         "path": "Plans/event_record.schema.json",
@@ -267,7 +267,7 @@
       },
       {
         "path": "scripts/pm-pnc019-certification-harness.py",
-        "sha256": "72b2013d385b87d3bf3d1c99a6e9b67577914a0b3853dce65b6cce5b4dd0d365"
+        "sha256": "64eda5ee8f931b545b228569db6e3cb55de009811327bd52d11358599bf90314"
       },
       {
         "path": "Plans/web_agent_policy_fixtures.json",
@@ -328,6 +328,10 @@
       {
         "path": "Plans/storage_recovery_contracts.schema.json",
         "sha256": "66cb1b8bacd9e9179cbc7ef4b961686a87ea95733298408daf06ca25a0fe1814"
+      },
+      {
+        "path": "scripts/pm_pnc019_currentness.py",
+        "sha256": "b4c6bf9b28330db29931153e7e8620602748865c6ed0745bedde1bc505696f9b"
       }
     ],
     "hash_alg": "sha256"
